@@ -1,0 +1,483 @@
+  clc
+  clear all
+  [data] = xlsread("temperature8hrdata.xlsx");
+
+  %%
+
+  figure
+  plot(data)
+  xlabel ("Reading #")
+  ylabel ("Temperature, C")
+  title ("Temperature Data")
+
+  %%
+
+  N = floor(0.9*numel(data));
+  dataTrain = data(1:N+1);
+  dataTest = data(N+1:end);
+
+  %%
+
+  mu = mean(dataTrain);
+  sig = std(dataTrain);
+dataTrainStandardized = (dataTrain - mu) / sig;
+
+  %%
+
+  XTrain = dataTrainStandardized(1:end-1);
+  YTrain = dataTrainStandardized(2:end);
+
+  %%
+
+  numFeatures = 1;
+  numResponses = 1;
+  numHiddenUnits = 200;
+
+  layers = [...
+  sequenceInputLayer(numFeatures)
+
+  lstmLayer(numHiddenUnits)
+  fullyConnectedLayer(numResponses)
+
+  regressionLayer];
+  options = trainingOptions("adam", ...
+
+  "MaxEpochs", 250,...
+  "GradientThreshold",1,...
+  "InitialLearnRate", 0.005,...
+  "LearnRateSchedule", "piecewise",...
+  "LearnRateDropPeriod", 125,...
+  "LearnRateDropFactor", 0.1,...
+
+  "Verbose", 0,...
+  'Plots','training-progress');
+net = trainNetwork(XTrain,YTrain, layers,options);
+
+Figure 6.4: MATLAB code for LSTM network analysis.
+  %%
+
+  dataTestStandardized = (dataTest - mu) / sig;
+  XTest = dataTestStandardized(1:end-1);
+
+  net = predictAndUpdateState(net,XTrain);
+  [net,YPred] =
+
+  predictAndUpdateState(net,YTrain(end));
+  numTimeStepsTest = numel(XTest);
+  for i = 2:numTimeStepsTest
+  [net,YPred(:,i)] =
+
+  predictAndUpdateState(net,YPred(:,i-
+  1),'ExecutionEnvironment','cpu');
+  end
+  YPred = sig*YPred + mu;
+  YTest = dataTest(2:end);
+
+  rmse = sqrt(mean((YPred - YTest).^2));
+  figure
+
+  plot(dataTrain(1:end-1))
+  hold on
+
+  idx = N:(N+numTimeStepsTest);
+  plot(idx,[data(N) YPred],'.-')
+
+  hold off
+  xlabel("Reading ")
+  ylabel("Temperature, C")
+  title ("Forecast")
+  legend(["Observed" "Forecast"])
+  legend ('location', 'northwest')
+
+Figure 6.4: MATLAB code for LSTM network analysis
+(continued).
+Figure 6.5: Plot of original temperature data; the inset picture
+shows part of the data in Excel file.
+Figure 6.6: Results from training of LSTM network; upper: plots
+of RMSE and loss; lower: low RMSE value shown in the
+workspace.
+Figure 6.7: Data forecasted from the LSTM network.
+OceanofPDF.com
+Chapter 7  Text mining
+
+7.1  Introduction
+
+Because of the extent of digitization in the transportation sector
+and the advancements in social media usage, large amounts of
+textual data are generated in the form of reports, documents, and
+social media posts. Analyzing this textual data can generate easily
+understandable knowledge. Text mining helps understand the
+structure and meaning of human language by analyzing the words
+in the text. It converts unstructured text in documents, social media
+posts, and databases into structured data suitable for data analysis.
+Text mining tasks include data extraction from the sources,
+preprocessing the text into tokens, cleaning the text, creating a bag
+of words, and then further performing text mining on the tokens by
+finding word frequencies, text visualization, topic modeling,
+sentiment analysis, etc. Text mining can either be conducted as a
+standalone process, or it can be used as a preprocessing step for
+performing other data analysis with the summarized data obtained
+through text mining.
+
+  Text mining in transportation can be applied to roadways,
+railways, and other sectors for accident and crash analysis, traffic
+and mobility analysis, transportation construction and
+infrastructure, driver behavior analysis, smart city planning, etc. In
+this chapter, we apply different text mining techniques to extract
+useful information from the textual data using R software.
+
+7.2  Text extraction
+
+Text data can be extracted from different types of documents such
+as .txt files, .csv files, .pdf files, or through webscraping. We will
+read data from the pdf file Overview of motor vehicle traffic crashes
+in 2022.pdf (→NHTSA, 2024) and perform data mining on the text
+content. We will use the packages “tm” and “pdftools” in R to
+perform text mining.
+
+7.2.1  Extracting data from a pdf file
+
+Prior to executing the R code, place the pdf file in a specific folder
+and note the path where the file is present. To extract data from pdf
+files using R, we use the list.files() function to create a vector of pdf
+file names that need to be extracted from the folder. The statement
+in R Code Snippet 1 will read the name of the pdf document from
+the specified path “C:/textmining/pdffiles/”, the working directory
+where the file is present. The object “filename” will contain the
+name of the file from the specified folder as shown in the Output
+for R Code Snippet1.
+
+  filesname <- list.files(path="C:/textmining/pdffiles/", pattern
+  = "pdf$")
+
+  filename
+
+R Code Snippet 1
+
+  Output for R Code Snippet 1
+  We will use the functions from the packages “tm” and
+“pdftools” to create a corpus. A “corpus” is a collection of text that
+must be analyzed. A corpus can be easily understood by the text
+mining functions. The Corpus() function will read the file name
+present in the working directory or from the specified path and
+create a corpus object that contains text from the pdf file. After
+creating the corpus, we clean the data by removing the punctuation
+in the text using the tm_map() function. Prior to executing the
+corpus function, we must set the working directory to the folder
+where the pdf files are present as shown in R Code Snippet 2. The
+output for the corpus object “PdfCorpus1” displays the number of
+documents it read as shown in Output for R Code Snippet 2. In this
+example, we are reading only one pdf file from the specified path.
+Hence, the output shows as one document.
+
+  By placing multiple files in the same path or the working
+directory, we can read multiple pdf files and perform text mining on
+multiple files.
+
+  library(pdftools)
+
+  library(tm)
+
+  setwd("C:/textmining/pdffiles/")
+
+  PdfCorpus<- Corpus(URISource(filename), readerControl =
+  list(reader = readPDF))
+
+  PdfCorpus1 <- tm_map(PdfCorpus, removePunctuation, ucp =
+  TRUE)
+
+  PdfCorpus1
+
+R Code Snippet 2
+
+  Output for R Code Snippet 2
+7.2.2  Creating bag of words, term document matrix,
+and word frequencies
+
+Bag of words is the process of creating a numeric representation of
+the text to be analyzed in the form of a matrix called a “term
+document matrix” (tdm). The tdm contains individual words and
+the frequencies of the words by ignoring the grammar part and the
+order of the words in which they appear. To create the tdm, the
+corpus is split into individual words/tokens called “tokenization.”
+Additional preprocessing steps are also applied such as removing
+the stop words, stemming, converting text to lowercase, and
+removing numbers while creating the tdm as shown in R Code
+Snippet 3. Removing the stop words will declutter the text by
+eliminating the words that are not meaningful in our analysis. Stop
+words are words used in articles, prepositions, conjunctions, etc.
+Converting the text to lowercase normalizes the text by treating the
+same words that occur in upper and lower case equally. Stemming
+is another form of normalization where words are reduced to their
+stem. By applying stemming, words with different suffixes are
+treated similarly. The resulting term document matrix can be
+viewed using the View() function, as shown in the Output for R code
+Snippet 3.
+
+  Pdfcorpus.tdm <- TermDocumentMatrix(PdfCorpus1,
+
+  control = list(
+
+  stopwords = TRUE,
+
+  tolower = TRUE,
+
+  stemming = TRUE,
+
+  removeNumbers = TRUE))
+  View(data.frame(as.matrix(Pdfcorpus.tdm)))
+R Code Snippet 3
+
+  Output for R Code Snippet 3
+  A data frame is then created with the term document matrix for
+the ease of use in further analysis as shown in Code Snippet 4. The
+resulting data frame contains the tokens and the frequency of
+occurrence of the words in the document, as seen in the Output for
+R Code Snippet 4.
+  Pdfcorpus.freq=data.frame(as.data.frame(as.matrix(Pdfcorpu
+  s.tdm)))
+  Pdfcorpus.freq1=data.frame(rownames(Pdfcorpus.freq),Pdfc
+  orpus.freq[1])
+  rownames(Pdfcorpus.freq1)=NULL
+  colnames(Pdfcorpus.freq1)=c('Term', ‘Frequency’)
+  View(Pdfcorpus.freq1)
+R Code Snippet 4
+
+  Output for R Code Snippet 4
+  The words in the data frame can be filtered to identify the most
+frequently occurring words using filters as shown in the R Code
+Snippet 5. The Output for R Code Snippet 5 displays the words that
+occur greater than or equal to 10 times in the document in the
+sorted order of the frequency.
+  #retrieve only those words which have word frequencies > 10
+  Pdfcorpus.freq2=subset(Pdfcorpus.freq1,Frequency>=10)
+  Pdfcorpus.freq2=Pdfcorpus.freq2[order(-
+  Pdfcorpus.freq2$Frequency), ]
+  View(Pdfcorpus.freq2)
+R Code Snippet 5
+
+  Output for R Code Snippet 5
+7.2.3  Creating word cloud
+
+A word cloud is a visual representation of text in a corpus. In a word
+cloud, words are displayed in varying sizes based on frequency. The
+larger the size of the words, the more frequently they occur. The
+“word cloud” package in R is used to create word clouds.
+
+  A simple word cloud can be created directly from the corpus
+without preprocessing as shown in R Code Snippet 6. However, the
+frequencies will be calculated on the go while creating the visual.
+Hence, we need to wait a while for the word cloud generation, even
+for a small corpus. Another downside is that the word cloud may
+not reveal useful insights prior to preprocessing. A word cloud can
+also be created using the preprocessed text by specifying the words
+and the frequencies from the data frame we created using the term
+document matrix as shown in R Code Snippet 6. This can eliminate
+the computational time a corpus takes during the word cloud
+creation. The esthetics of the word cloud such as a color, font,
+maximum number of words, and orientation of the words can be
+changed with different options while creating the word cloud.
+Output for R Code Snippet 6a displays a word cloud created using a
+corpus whereas Output for R Code Snippet 6b displays a word cloud
+that is created using the terms and their frequencies from the tdm.
+
+  library("wordcloud")
+
+  #Word cloud with corpus
+
+  wordcloud (PdfCorpus1, random.order=F, rot.per = 0.3,
+  vfont=c("serif","bold"), colors=brewer.pal(8,'Accent'))
+
+  #Word cloud with terms and frequencies
+
+  wordcloud (words=Pdfcorpus.freq2$Term,
+  Pdfcorpus.freq2$Frequency, max.words=100,
+  vfont=c('serif','bold italic'), colors=brewer.pal(8,'Dark2'))
+R Code Snippet 6
+  Output for R Code Snippet 6a: Word Cloud with Corpus
+  Output for R Code Snippet 6b: Word Cloud with Terms and
+Frequencies
+
+7.2.4  Sentiment analysis
+
+In some text mining tasks, understanding the author’s positive or
+negative intent is important. Sentiment analysis captures the
+emotional intent (degree of positivity or negativity) of the text in a
+document. Sentiment analysis algorithms use pre-compiled
+dictionaries to assign numerical sentiment values to words. We use
+the “syuzhet” package in R to find the sentiment in documents. The
+package allows us to choose from one of the four dictionaries:
+syuzhet, bing, afinn, and nrc. The get_sentiment() function
+calculates the polarity score with the default “suuzhet” dictionary,
+indicating positive sentiment for high polarity score and negative
+sentiment for low polarity score. We can also specify the
+dictionaries as shown in R Code Snippet 7. The get_sentiment()
+function can be applied only to a text vector. Hence, we need to
+create a text vector from the pdf file. In R Code Snippet 7, we first
+read the file name from the working directory using the list.files()
+function. We then use the lapply() function to read text from the pdf
+file and create a text vector. We use the get_sentiment() function to
+get the polarity score. The polarity score for the pdf file we read is
+displayed in Output for R Code Snippet 7.
+
+  In addition to finding the positive and negative tone, the
+syuzhet package allows us to find the scores for human emotions in
+the text such as anger, anticipation, disgust, fear, joy, sadness,
+surprise, trust, negative, and positive as shown in R Code Snippet 7.
+
+  setwd("C:/textmining/pdffiles/")
+
+  filename_sentiment <- list.files( pattern = "pdf$")
+
+  text <- lapply(filename_sentiment, pdf_text)
+
+  library(syuzhet)
+
+  # polarity score with syuzhet method
+
+  polarity_score = get_sentiment(text)
+
+  polarity_score
+
+  # polarity score with other methods
+
+  polarity = data.frame (Syuzhet =
+  get_sentiment(text,method='syuzhet'),
+
+  Bing = get_sentiment (text,method='bing'),
+  AFinn = get_sentiment (text,method='afinn'),
+  NRC = get_sentiment (text,method='nrc'))
+  emotion=get_nrc_sentiment(as.character(text))
+  emotion
+
+R Code Snippet 7
+  The Output for R Code Snippet 7 indicates a polarity score for
+
+the pdf file we read as 3.95; this is a low value indicating a negative
+tone. If we read multiple files, we can compare the polarity score to
+know if the files have comparatively positive or negative tone. The
+polarity values with other methods is also displayed in the output.
+Each polarity method uses a different scale for measuring the
+polarity. The values for human emotion are also displayed in the
+output.
+
+  Output for R Code Snippet 7
+
+7.2.5  Topic modeling and clustering
+
+Topic modeling is a data mining approach that is used to identify
+terms that go together in documents. Topic modeling methods help
+identify the topics within a large corpus without human
+intervention. It results in fast information retrieval since documents
+do not need to be read to identify the important topics within them.
+Popular topic modeling techniques are: hierarchical clustering, K-
+means clustering, and latent dirichlet algorithm (LDA). While all the
+methods identify topics, they differ in speed and accuracy.
+
+7.2.5.1  Hierarchical clustering
+
+Clustering groups words such that words within a group are similar
+to each other and dissimilar to the other groups. In hierarchical
+clustering, the proximate terms are iteratively grouped creating a
+tree diagram called a “dendrogram.” Hierarchical clustering is a
+good starting point for clustering as it does not require prior
+knowledge of the number of clusters. We will use the preprocessed
+corpus: the term document matrix “Pdfcorpus.tdm” created in
+Section 7.2.2 of this chapter to apply hierarchical clustering and
+identify the important topics within the pdf document. A view of the
+term document matrix after removing the sparse terms can be seen
+with R Code Snippet 8 and its output.
+
+  Pdfcorpus.tdm1=removeSparseTerms(Pdfcorpus.tdm,0.99)
+
+  View(data.frame(as.matrix(Pdfcorpus.tdm1)))
+
+R Code Snippet 8
+  Output for R Code Snippet 8
+  We create a distance matrix with the terms in the term
+document matrix. The dist() function calculates the distances
+between each pair of words in the term document matrix. We then
+use the distance matrix as input for the hclust() function from the
+“cluster” package to perform hierarchical clustering to cluster the
+terms based on the distances between terms with the specified
+method. We can plot the dendrogram using the plot() function as
+shown in R Code Snippet 9. The dendrogram displays terms on the
+x-axis and the distances between the terms on the y-axis as shown
+in the Output for R Code Snippet 9a. Due to the number of words in
+the text, the labels on the x-axis can overlap. The branches in the
+dendrogram indicate clusters. We can also visualize the number of
+cuts to form topics on the dendrogram by using the rect.clust()
+function as shown in Output for R Code Snippet 9b. We specify the
+number of cuts in the rect.clust() function as four in R Code Snippet
+9. The red blocks in the Output for R Code Snippet 9b indicate the
+cluster composition of the words.
+
+  distance = dist(Pdfcorpus.tdm1,method='euclidean')
+  library(cluster)
+  Hclusters=hclust(d=distance,method='ward.D')
+  plot(Hclusters)
+  rect.hclust(Hclusters,k=4,border='red2')
+R Code Snippet 9
+
+  Output for R Code Snippet 9a
+  Output for R Code Snippet 9b
+  With the cuttree function we can actually identify the terms with
+their associated clusters. The cluster assignments can be seen in
+Output for R Code Snippet 10a. We can append the cluster
+assignments to a data frame for further topic analysis as shown in R
+Code Snippet 10. A view of the data frame with terms, their
+frequencies and the topic assignments can be seen in Output for R
+Code Snippet 10b. An Excel spreadsheet is created with the data
+frame for further detailed analysis to identify the main topic in each
+of these four clusters.
+
+  PdfTopics=cutree(Hclusters,k=4)
+
+  PdfTopics
+
+  df=data.frame(as.data.frame(as.matrix(Pdfcorpus.tdm1)),Pdf
+  Topics)
+
+  df1=data.frame(rownames(df),df)
+
+  rownames(df1)=NULL
+  colnames(df1)=c('Term','Frequency','Topic')
+  View(df1)
+  library(openxlsx)
+  write.xlsx(df1,"PdfTopics.xlsx")
+R Code Snippet 10
+
+  Output for R Code Snippet 10a
+  Output for R Code Snippet 10b
+
+7.2.5.2  K-means clustering
+
+K-means clustering is another clustering technique that groups the
+terms into k number of partitions such that the terms in a group are
+similar to each other and dissimilar to others. We use the distance
+matrix created in Section 7.2.5.1 to apply K-means clustering on the
+text in term document matrix to create three clusters as shown in R
+Code Snippet 11. The cluster assignments of the text can be seen in
+Output for R Code Snippet 11a. We further append the cluster
+assignments to a data frame for further topic analysis as shown in R
+Code Snippet 11. A view of the data frame with terms, their
+frequencies, and the topic assignments can be seen in Output for R
+Code Snippet 11b. An Excel spreadsheet is created with the data
+frame for further detailed analysis to identify the main topic in each
+of these three clusters.
+
+  Kcluster= kmeans(distance,3)
+  Kcluster$cluster
+  dfkcluster=data.frame(as.data.frame(as.matrix(Pdfcorpus.td
+  m1)),Kcluster$cluster)
+  df1kcluster=data.frame(rownames(dfkcluster),dfkcluster)
+  rownames(df1kcluster)=NULL
+  colnames(df1kcluster)=c('Term','Frequency','Topic')
+  View(df1kcluster)
+  library(openxlsx)
+  write.xlsx(df1kcluster,"PdfTopics_Kcluster.xlsx")
+
+R Code Snippet 11
+
+  Output for R Code Snippet 11a
+

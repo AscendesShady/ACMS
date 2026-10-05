@@ -1,0 +1,1092 @@
+  Graph neural networks Chapter | 9 163
+
+FIGURE 9.10 Car keypoints detection results in various views.
+
+FIGURE 9.11 Example graph.
+
+9.6 Exercises
+9.6.1 Questions
+
+ 1. Describe the difference between the adjacency matrix and the degree ma-
+  trix of a graph.
+
+ 2. Is GNN a type of supervised learning method or unsupervised learning
+  method?
+
+ 3. In Fig. 9.11, a graph is depicted; write down the adjacency matrix based on
+  this ﬁgure.
+
+ 4. We use a simpliﬁed spatial approach to fulﬁll the graph neural network
+  layer based on Fig. 9.11, Y = AW X, where X is the nodes input value X =
+  [1, 2, 3, 4, 5, 6]T and W is the weight matrix with all elements equaling to
+  one. Write out the output Y .
+
+ 5. In spatial-based GNNs, the equation may appear like Y = σ (AW X), where
+  σ is an activation function. Explain why it needs the σ function.
+
+ 6. The adjacency matrix is the key to describe the topological structure for the
+  data. Why do studies allow the diagonal elements of the adjacency matrix
+  A be one in GNN (A˜ = A + I )?
+
+ 7. Explain the key difference between Graph Convolutional Neural Network
+  (GCN) and Graph Attention Network (GAT).
+
+ 8. In a graph dataset, if the degrees of all the nodes in the graph are equal to
+  one, will you use a GCN to process the data? Explain the reason.
+
+ 9. In a convolutional layer, the input and output may not have the same dimen-
+  sion. Is this the same for the graph convolutional layer? Explain the reason
+164 Machine Learning for Transportation Research and Applications
+
+  and the difference between a convolutional layer and a graph convolutional
+  layer.
+10. List ﬁve transportation related scenarios that can apply GNN.
+Chapter 10
+
+Generative adversarial networks
+
+Generative modeling is a type of machine learning where the aim is to model the
+distribution that a given set of data (e.g. images, audio) came from. Normally
+this is an unsupervised problem, in the sense that the models are trained on a
+large collection of data. When trained successfully, we can use the generative
+models to estimate the likelihood of each observation and to create new samples
+from the underlying distribution. For instance, recall that the MNIST dataset was
+obtained by scanning handwritten zip code digits from envelopes. So, consider
+the distribution of all the digits people ever write in zip codes. The training
+examples can be viewed as samples from this distribution. If we ﬁt a generative
+model, we’re trying to learn about the distribution from the training samples.
+Notice that this process doesn’t use the labels, so it’s an unsupervised learning
+problem. The reasons of train a generative model can be:
+
+1. Most straightforwardly, we may want to generate realistic samples, e.g., for
+  trafﬁc image data-generation applications.
+
+2. We may wish to model the data distribution in order to tell which of several
+  candidate outputs is more likely.
+
+3. We may want to train a generative model in order to learn useful high-level
+  features that can be applied to other tasks.
+
+  There are various of deep generative models in widespread use today, such
+as generative adversarial networks, variational autoencoders, ﬂow-based mod-
+els, and diffusion models. Generative adversarial network, or GAN for short, is
+an unsupervised learning task in machine learning that involves automatically
+discovering and learning the regularities or patterns in input data in such a way
+that the model can be used to generate or output new examples that plausibly
+could have been drawn from the original dataset. GANs are a clever way of train-
+ing a generative model by framing the problem as a supervised learning problem
+with two submodels: the generator model that we train to generate new exam-
+ples, and the discriminator model that tries to classify examples as either real
+(from the domain) or fake (generated). The two models are trained together in
+a zero-sum game, adversarial, until the discriminator model is fooled about half
+the time, meaning the generator model is generating plausible examples.
+
+  In this chapter, we will introduce the structure and the formulation of GANs.
+In addition, we will also show several case studies to present the application
+scenarios of GANs.
+
+Machine Learning for Transportation Research and Applications  165
+https://doi.org/10.1016/B978-0-32-396126-4.00015-1
+Copyright © 2023 Elsevier Inc. All rights reserved.
+166 Machine Learning for Transportation Research and Applications
+
+10.1 Generative adversarial network (GAN)
+
+10.1.1 Binary classiﬁcation
+Given a data distribution pdata (x, y) with y ∈ {0, 1}, we would like to ﬁt a bi-
+nary classiﬁer pφ(y | x) to the conditional distribution pdata (y | x). A maximum
+likelihood estimate of the parameters φ is obtained by solving the following op-
+timization task:
+
+φ∗ = arg maxEpdata(x,y) log pφ (y | x) .  (10.1)
+
+  φ
+
+Assume the dataset is balanced, i.e., pdata (y) = Bern(0.5), then the stated ob-
+jective is equivalent to
+
+φ∗ = arg maxEpdata (x|y=1) log pφ (y = 1 | x)  (10.2)
+
+  φ
+
+  + Epdata (x|y=0) log 1 − pφ (y = 1 | x) .
+
+The negation of the maximum likelihood objective is also known as the cross-
+entropy loss.
+
+10.1.2 Original GAN formulation as binary classiﬁcation
+
+The generative adversarial network (GAN) approach (Goodfellow et al., 2020)
+constructs a binary classiﬁcation task to assist the learning of the generative
+model distribution pθ (x) to ﬁt the data distribution pdata (x). This is done by
+labeling all the datapoints sampled from the data distribution as “real” data and
+those sampled from the model as “fake” data. In other words, a joint distribution
+p˜(x, y) is constructed as follows for the binary classiﬁcation task:
+
+p˜(x, y) = p˜(x | y)p˜(y), p˜(y) = Bern(0.5),  (10.3)
+p˜(x | y) = pdata(x), y = 1
+
+  pθ (x), y = 0.
+
+Fitting a binary classiﬁer (“discriminator”) with pφ(y = 1 | x) = Dφ(x) to p˜(y |
+x) can be done by maximizing the maximum likelihood objective:
+
+φ∗(θ ) = arg maxL(θ , φ),  (10.4)
+
+  φ
+
+L(θ , φ) := Epdata(x) log Dφ(x) + Epθ (x) log 1 − Dφ(x) .
+
+Notice the dependence of the objective on the generative model parameter θ
+since the “data distribution” p˜(x, y) of the binary classiﬁcation task depends
+
+on pθ (x). Then, the training of the generative model pθ (x) aims at fooling the
+Generative adversarial networks Chapter | 10 167
+
+discriminator, by minimizing the log probability of making the right decisions:
+
+θ ∗(φ) = arg minEpθ (x) log 1 − Dφ(x) .  (10.5)
+
+  θ
+
+In summary, the two-player game objective for training the GAN generator and
+discriminator is
+
+min max L(θ , φ).  (10.6)
+
+  θφ
+
+  GANs learns to map the simple latent distribution to the more complex data
+distribution. To capture the complex data distribution pdata , GANs architecture
+should have enough capacity. GANs is based on the concept of a noncoopera-
+tive game of two networks, a generator G, and a discriminator D, in which G
+and D play against each other. GANs can be part of deep generative models or
+generative neural models, where G and D are parameterized via neural networks
+and updates are made in parameter space.
+
+  Both G and D play a minimax game, where G’s main aim is to produce
+samples similar to the samples produced from real data distribution and D’s
+main goal is to discriminate the samples generated by G and samples generated
+from the real data distribution by assigning higher and lower probabilities to
+samples from real data and generated by G, respectively. On the other hand, the
+main target of GANs training is to keep moving the generated samples in the
+direction of the real data manifolds through the use of the gradient information
+from D.
+
+  In GANs, x is data extracted from the real data distribution, pdata, the noise
+vector z is taken from a Gaussian prior distribution with zero-mean and unit
+variance pz, while pg refers the G’s distribution over data x. Latent vector z is
+passed to G as an input and then G outputs an image G(z) with the aim that D
+cannot differentiate between G(z) and D(x) data samples, i.e., G(z) resembles
+with D(x) as close as possible. In addition, D simultaneously tries to restrain
+itself from getting fooled by G. D is a classiﬁer where D(x) = 1 if x ∼ pdata
+and D(x) = 0 if x ∼ pg, i.e., x is from pdata or from pg.
+
+10.1.3 Objective (loss) function
+
+An objective function tries to match real data distribution pdata with pg. Basic
+GANs use two objective functions: (1) D minimizes the negative log-likelihood
+for binary classiﬁcation; (2) G maximizes the probability of generated samples
+for being real. D parameters are denoted by θD, which are trained to maximize
+the loss to distinguish between the real and fake samples. G parameters are
+denoted by θG, which are optimized such that the D is not able to distinguish
+between real and fake samples generated by G. θG is trained to minimize the
+same loss that θD is maximizing. Hence, it is a zero-sum game where players
+compete with each other. The following minimax objective applied for training
+168 Machine Learning for Transportation Research and Applications
+
+G and D models jointly via solving
+
+min max V (G, D) = min max Ex∼pdata log D(x) + Ez∼pz log 1 − D G(z) .
+θG θD  GD
+
+  (10.7)
+
+V (G, D) is a binary cross entropy function, commonly used in binary classiﬁ-
+
+cation problems. In Eq. (10.7), for updating the model parameters, training of
+
+G and D are performed by back-propagating the loss via their respective mod-
+
+els. In practice, Eq. (10.7) is solved by alternating the following two gradient
+
+updates:
+
+  θ t+1 D = θDt + λt ∇θD V Dt , Gt and θ t+1 G = θGt + λt ∇θG V Dt+1, Gt ,
+  (10.8)
+
+where θG is the parameter of G, θD is the parameter D, λ is the learning
+rate, and t is the iteration number. In practice, the second term in Eq. (10.7),
+log(1 − D(G(z))) saturates and makes insufﬁcient gradient ﬂow through G, i.e.,
+the gradient’s value gets smaller and stop learning. To overcome the vanish-
+ing gradient problem, the objective function in Eq. (10.7) is reframed into two
+separate objectives:
+
+max Ex∼pdata log D(x) + Ez∼pz log 1 − D G(z) and  (10.9)
+
+ θD
+
+max Ez∼pz log D G(z) .
+
+ θG
+
+Moreover, G’s gradient for these two separate objectives have the same ﬁxed
+
+points and are always trained in the same direction. After the cost computation
+
+in Eq. (10.8), back-propagation can be used to update the model parameters.
+
+Because of these two different objectives, the update rule is given as
+
+  θDt+1, θGt+1  ⎧  if D(x) predicts wrong  (10.10)
+  ⎪⎨ Update  if D(G(z)) predicts wrong
+  ← ⎪⎩ Update  if D(G(z)) predicts correct.
+
+  Update
+
+  If D and G are given enough capability with sufﬁcient training iterations, G
+can convert a simple latent distribution pg into more complex distributions, i.e.,
+pg converges to pdata , such as pg = pdata .
+
+10.1.4 Optimization algorithm
+
+In GANs, optimization is to ﬁnd (global) equilibrium of the minmax game,
+i.e., the saddle point of minmax objective. Gradient-based optimization meth-
+ods are widely used to ﬁnd the local optima for classical minimization and
+saddle point problems. Any traditional gradient-based optimization technique
+can be used for minimizing each player’s cost simultaneously which leads to
+the Nash equilibrium. Basic GANs uses the simultaneous gradient descent for
+  Generative adversarial networks Chapter | 10 169
+
+ﬁnding the Nash equilibrium and update D’s and G’s parameters by simultane-
+ously using gradient descent on D’s and G’s utility functions. Each player D and
+G tries to minimize its own cost/objective function for ﬁnding a Nash equilib-
+rium (θD, θG) , JD (θD, θG) for the D and JG (θD, θG) for the G, i.e., JD is at a
+minimum w.r.t. θD and JG is at a minimum w.r.t. θG.
+
+  Minimax optimization for Nash equilibrium. The total cost of all players in
+a zero-sum game is always zero. In addition, a zero-sum game is also known as
+a minimax game because solution includes minimization and maximization in
+an outer and inner loop, respectively. Therefore, i.e.,
+
+  JG + JD = 0
+  JG = −JD.
+
+  All the GANs game designed earlier apply the same cost function to the
+D, JD, but they vary in G’s cost, JG. In these cases, D uses the same optimal
+strategy. D’s cost function is as follows w.r.t. θD:
+
+JD (θD, θG) = − 1 Ex pdata log D(x) − 1 Ez log 1 − D G(z)  . (10.11)
+2  2
+
+  Eq. (10.11) represents the standard cross-entropy cost, which is minimized
+during the training of a standard binary classiﬁer with a sigmoid output. In the
+minimax game, G attempts to minimize and maximize the log probability of D
+being correct and being mistaken, respectively. In GANs, training of a classiﬁer
+is performed on two minibatches of data: a real data minibatch having examples’
+label 1 and another minibatch from G having examples’ label 0, i.e., the density
+ratio between true and generated data distribution is represented as follows:
+
+  D(x) = pdata (x) p = p(x | y = 1) = p(y = 1 | x) = g(x) p(x | y = 0) p(y = 0 | x) 1 − D∗ D∗(x)(x).
+
+  Here, y = 0 means generated data and y = 1 means real data. p(y = 1) =
+p(y = 0) is assumed.
+
+  Through training D, we get an estimate of the ratio pdata (x)/pg(x) at every
+point x. D learns to distinguish samples from data for any given G. The optimal
+D for a ﬁxed G is given by DG∗ (x) = P P data (dxat)a+(xP)g(x) . After sufﬁcient training
+steps, G and D with enough capacity will converge to pg = pdata , i.e., D cannot
+discriminate between two distributions. For optimal D, the minimax game in
+
+Eq. (10.7) can now be reformulated as follow:
+
+  JD = −2 log 2 + 2 DJ S pdata pg ,  (10.12)
+
+where DJ S denotes Jensen–Shannon divergence. When D is optimal, G mini-
+mizes Jensen–Shannon divergence (JSD) mentioned in Eq. (10.12) which is an
+alternative similarity measure between two probability distributions, bounded
+170 Machine Learning for Transportation Research and Applications
+
+by [0, 1]. In the basic GANs, it is feasible to estimate neural samplers through
+approximate minimization of the symmetric JSD.
+
+  DJ S pdata pg = 1 DKL pdata 1 pdata + pg
+  2  2
+
+  + 1 DKL pg 1 pdata + pg ,
+  2  2
+
+where DKL denotes the KL divergence.
+
+JSD is based on KL divergence, but it is symmetric, and it always has a ﬁnite
+
+value. Because DJ S pdata pg is an appropriate divergence measure between
+
+distributions, i.e., the real data distribution pdata can be approximated properly
+
+when sufﬁcient training samples exist and model class pg can represent pdata .
+
+The JSD between two distributions is always nonnegative and zero when two
+  J∗
+distributions  are  equivalent,  =  −2 log 2  is  the  global  minimum  of  JD  which
+  D
+shows pg = pdata .
+Given the minimax objective, pg = pdata occurs at a saddle point θG, θD.
+
+The saddle point of a loss function occurs at a point that is minimal w.r.t. one
+
+set of weights and maximal w.r.t. another. GANs training interchanges between
+
+minimization and maximization steps. Thus, ﬁnding Nash equilibrium in GANs
+
+is a very challenging problem because objective functions are non-convex, pa-
+
+rameters are continuous, and the parameter space is high-dimensional, e.g., an
+
+update to θD that decreases JD can increase JG and an update to θG that de-
+
+creases JG can increase JD, i.e., training fails to converge. GANs are still hard
+
+to train and training suffers from the following problems, such as difﬁculty
+
+converging and instability, and mode collapse. A lot of techniques and GAN
+
+variants can help solve these problem, but they will not be discussed in this
+
+chapter due to the space limits.
+
+10.2 Case studies: GAN-based roadway trafﬁc state
+  estimation
+
+Trafﬁc state information plays an important role in relieving trafﬁc congestion.
+Accurate trafﬁc state information can help administrators effectively manage
+the transportation network and travelers better plan their trips. Existing ma-
+chine learning methods have contributed a lot to trafﬁc estimation by adopting
+new datasets or designing novel methodologies. Trafﬁc ﬂow parameters in a
+transportation network have correlation over both time and space according
+to the trafﬁc ﬂow theory. Thus, incorporating trafﬁc ﬂow theory is beneﬁcial
+for improving the accuracy of trafﬁc state estimation. However, most of the
+learning-based models in the literature fail to do so when estimating a trafﬁc
+state. Thus, as Fig. 10.1 shows, this case study details attempts to present how
+GAN can help the process of generating/estimating trafﬁc along a road/corridor,
+while incorporating trafﬁc ﬂow theory.
+  Generative adversarial networks Chapter | 10 171
+
+FIGURE 10.1 Estimating trafﬁc states on the freeway segment on I-5 corridor in Seattle, WA.
+
+10.2.1 Problem formulation
+Trafﬁc ﬂow theory, such as the cell transmission model Daganzo (1994), in-
+dicates that trafﬁc ﬂow, trafﬁc density, and trafﬁc velocity in a transportation
+network are correlated. Further, these correlations exist in both time and space.
+Incorporating these spatiotemporal correlations can improve the accuracy of
+trafﬁc state estimation. For example, studies has attempted to input trafﬁc ﬂow
+and trafﬁc velocity to LSTM models to improve trafﬁc velocity prediction. Spa-
+tiotemporal correlations among trafﬁc ﬂow parameters are also incorporated in
+trafﬁc state estimation. However, in those studies, spatiotemporal correlations
+among trafﬁc ﬂow parameters are only mined from data, and no speciﬁc the-
+oretical correlations are deﬁned due to their relatively ﬁxed model structures.
+GANs are able to incorporate correlations among trafﬁc ﬂow parameters from
+both the data and theory due to their ﬂexible framework.
+
+  The trafﬁc state-estimation problem addressed in this case study can be de-
+scribed as follows. We choose trafﬁc ﬂow and trafﬁc density as inputs to our
+proposed model. As trafﬁc ﬂow and trafﬁc density evolve with time and space,
+both trafﬁc ﬂow and trafﬁc density within a given spatiotemporal area can be
+represented as a 2-D matrix. We assume the number of time intervals for the
+study period is n and that the road segment can be divided into m discrete cells.
+The n∗(m + 1) trafﬁc ﬂow matrix is denoted as F with each element q(t, l) rep-
+resenting the trafﬁc ﬂow at location l at time t. The n ∗ m trafﬁc density matrix
+is denoted as K with each element k(t, s) representing the trafﬁc density in cell
+s at time t. The problem addressed in this study is how to estimate or predict
+the missing values in F and K, given known elements in each matrix. Note that
+172 Machine Learning for Transportation Research and Applications
+
+the proposed model can be viewed as a deep-learning-based and data-driven cell
+transmission model if the known elements are boundary conditions.
+
+10.2.2 Model: generative adversarial architecture for
+  spatiotemporal trafﬁc-state estimation
+
+In this case study, the proposed methodology for trafﬁc state estimation utilizes
+the G and D networks (both are LSTM networks), pretrained with uncorrupted
+data, to reconstruct trafﬁc state. Denote the corrupted trafﬁc state matrix as y. We
+do not use D to update y by maximizing D(y). Similar to the image inpainting
+(Yeh et al., 2016), maximizing D(y) does not lead to the desired reconstruction.
+This is mainly because y is neither on the pdata manifold, nor on the G manifold,
+and the corrupted data is not drawn from those distributions. Therefore, we con-
+sider using both G and D for reconstruction. To quantify the ‘closest’ mapping
+from y to the reconstruction, we deﬁne three loss functions: a contextual loss, a
+perceptual loss, and a conservative loss.
+
+  Contextual loss: We need to incorporate the information from the known
+information of the given corrupted trafﬁc state matrix into the trafﬁc state esti-
+mation. The contextual loss is used to measure the context similarity between
+the reconstructed trafﬁc state matrix and the uncorrupted portion. The contextual
+loss is deﬁned as
+
+Lcontextual (z) = M G(z) − M y 1,  (10.13)
+
+where M is a binary matrix having the same dimension as the output trafﬁc
+matrices of G, denoting the mask of the corrupted trafﬁc matrix. Elements equal
+to one in M indicate the corresponding element in the corrupted trafﬁc matrix
+is uncorrupted. Elements equal to zero in M indicate the corresponding element
+in the corrupted trafﬁc matrix is missing. denotes the element-wise product
+operation. The corrupted portion, i.e., (1 − M) y is not used in the loss. The
+choice of the 1-norm is empirical.
+
+  Perceptual loss: The perceptual loss encourages the reconstructed trafﬁc
+state matrix to be similar to the samples drawn from the training set. This is
+achieved by updating z to fool D. As a result, D will predict G(z) to be from the
+training data with a high probability. We use the same loss for fooling D as in
+GANs:
+
+Lperceptual (z) = log 1 − D G(z) .  (10.14)
+
+Without Lperceptual , some reconstructed trafﬁc state matrices tend to be unreal-
+istic.
+
+  Conservative loss: According to the conservation law of trafﬁc ﬂow, the
+spatiotemporal relationship between trafﬁc volume and trafﬁc density can be
+described as
+
+k(t + 1, s) = k(t, s) + t qin (t, s) − qout (t, s) ,  (10.15)
+  xs
+Generative adversarial networks Chapter | 10 173
+
+where k(t, s) is the vehicle density of cell s at time index t, qin (t, s) and
+qout (t, s) are the total ﬂows (in vehicles per unit time) entering and leaving cells
+during the time interval [t · t, (t + 1) · t], respectively. t is the sampling
+
+duration, and xs is the length of cell s. In the context of trafﬁc state estimation
+using GAA, the conservative loss is deﬁned as
+
+KG(z)(t + 1, s) = KG(z)(t, s) +  t FG(z)(t, s) − FG(z)(t, s + 1) , (10.16)
+  xs
+
+where KG(z) and FG(z) are the trafﬁc density matrix and the trafﬁc ﬂow matrix
+generated by the pretrained G, respectively. Eq. (10.16) describes the theoretical
+spatiotemporal correlation among trafﬁc ﬂow and trafﬁc density. Thus, it helps
+to improve the accuracy of trafﬁc state estimation.
+
+  With the deﬁned loss functions, the trafﬁc state matrix with missing values
+can be mapped to the closest Z in the latent representation space. z is updated
+using back-propagation with the total loss of
+
+zˆ = arg min Lcontextual (z) + λpLperceptual (z) + λcLconservative (z) , (10.17)
+
+  z
+
+where λp and λc are weighting parameters. In practice, the weighting parameters
+
+have to be relatively small to ensure the trafﬁc state-estimation accuracy. After
+ﬁnding zˆ, the estimated trafﬁc state can be obtained by
+
+xreconstructed = M y + (1 − M) G(zˆ).  (10.18)
+
+At this stage, the GAN-based model for roadway trafﬁc state estimation is es-
+tablished.
+
+10.2.3 Results
+
+This case study proposes a generative adversarial architecture (GAA) with an
+LSTM discriminator and an LSTM generator both containing 16 hidden neu-
+rons in the hidden layer. The proposed generative adversarial architecture for
+spatiotemporal trafﬁc state estimation is evaluated on the loop data collected
+from a segment of the I-5 freeway in Seattle as shown in Fig. 10.1. The segment
+of interest of the I-5 freeway has six loop detectors installed along it. The data
+is collected every 20 sec covering the whole year of 2015.
+
+  Each training data record in the experiment consists of data across one hour
+from the six loop detectors. In the evaluation, two-thirds of the data are ran-
+domly selected for training, and the rest is used for validation.
+
+  Four types of GAAs are evaluated, including a GAA without perceptual loss
+and conservative loss (GAA model 1); a GAA without perceptual loss (GAA
+model 2); a GAA without conservative loss (GAA model 3); and a GAA with
+174 Machine Learning for Transportation Research and Applications
+
+FIGURE 10.2 Model comparison result.
+
+perceptual loss and conservative loss (GAA model 4). The four types of GAAs
+are compared with the existing Bayesian network approach proposed by (Sun et
+al., 2006) in the experiment.
+
+  Each record in the testing dataset is a pair of average trafﬁc ﬂow and trafﬁc
+density measurements computed over one hour. We used the data in the previous
+half hour (i.e., 6*5 minutes) to predict trafﬁc ﬂow and trafﬁc density in the next
+half hour (i.e., the next 6*5 minutes). Fig. 10.2 shows the trafﬁc state estimated
+by the ﬁve models on the dataset. These ﬁgures shows the trafﬁc ﬂow estimated
+by the ﬁve models from 7:00AM to 7:00PM on Oct. 10, 2015. In the trafﬁc ﬂow
+estimation, the difference between the GAA without conservative loss and the
+GAA without perceptual loss is marginal in terms of MAPE, with only 0.08%
+MAPE difference, while, in other cases, the GAA without conservative loss out-
+performs the GAA without perceptual loss.
+  Generative adversarial networks Chapter | 10 175
+
+10.3 Case study: conditional GAN-based taxi hotspots
+  prediction
+
+It is of practical importance to predict taxi hotspots in urban trafﬁc networks.
+However, the identiﬁcation of taxi hotspot is generally inﬂuenced by multiple
+sources of dependence. To address this problem, this case study (Yu et al., 2020)
+was designed to investigate how the integration of clustering models and deep
+learning approaches can learn and extract the network-wide taxi hotspots in both
+temporal and spatial dimensions. A conditional generative adversarial network
+with a long short-term memory structure (LSTM-CGAN) model was proposed
+for taxi hotspot prediction, which is capable of capturing the spatial and tempo-
+ral variations of the taxi hotspots in the same time. The proposed LSTM–CGAN
+model was then trained by the network-wide hotspot data. The comparative
+analyses suggest that the proposed LSTM–CGAN model outperformed other
+benchmark methods and demonstrate great potential to enable many shared mo-
+bility applications.
+
+10.3.1 Problem formulation
+
+The emergence of deep learning approaches has the potential to advance the
+understanding of taxi-based mobility demands and to enable the network-wide
+short-term taxi hotspot prediction. The primary objective of this case study is
+to develop a network-wide taxi hotspot prediction framework via an integra-
+tion model of clustering and deep learning approaches. To solve the hotspot
+prediction problem, a spatiotemporal equivalent distance is applied in the a
+density-based clustering approach to cluster geocoded taxi pickup objects into a
+list of spatiotemporal taxi hotspot indicators, so that spatial distribution and pos-
+sible temporal correlation of homogeneous mobility characteristics is naturally
+captured. Inspired by Liang et al. (2018), a adversarial architecture, namely the
+conditional generative adversarial network with long short-term memory struc-
+ture (LSTM-CGAN), is modeled to capture the spatiotemporal distribution of
+taxi hotspots using the clustering results and corresponding information.
+
+10.3.2 Model: LSTM-CGAN-based-hotspot prediction
+
+An overview the taxi hotspot extraction and prediction framework is illustrated
+in Fig. 10.3. The network-wide taxi-hotspot extraction and prediction frame-
+work is developed by integrating a density-based spatiotemporal clustering algo-
+rithm with noise (DBSTCAN) and a conditional generative adversarial network
+with long short-term memory structure (LSTM–CGAN). The DBSTCAN algo-
+rithm was applied to capture the spatiotemporal correlation of taxi pickups by
+applying the spatiotemporal distance.
+
+  The basic adversarial architecture in the LSTM–CGAN model consists of the
+generative structure G and the discriminate structure D. The proposed LSTM–
+CGAN model enables the GAN model to cope with conditional information and
+176 Machine Learning for Transportation Research and Applications
+
+FIGURE 10.3 Framework overview for the spatiotemporal hotspot identiﬁcation and prediction.
+
+FIGURE 10.4 Conditional GAN in the proposed LSTM–CGAN model.
+
+LSTM technique. More speciﬁcally, the generator G captures the data distribu-
+tion, and the discriminator D estimates the probability that a sample come from
+the true data rather than generative network G. For data requirement, the ad-
+versarial architecture are trained in a semi-supervised way, which requires no
+additional label information. For output results, the generative adversarial net-
+work is able to approximating intractable probabilities, while other approaches
+tends to learn the average pattern.
+
+  In this case study, considering the fact that the location of taxi hotspots is
+inﬂuenced by various types of dependencies, conditional information is applied
+in both generator G and discriminator D as an additional input layer. With the
+conditional information, the generator G is able to specify the most probable
+outputs within the underlying distribution. The conditional structure applied
+in the proposed LSTM–CGAN model is illustrated in Fig. 10.4. Generator G
+builds a mapping function from a prior noise distribution pz and the conditional
+information y to a data space, termed G(z | y). At the same time, the output
+D (x | yx) from discriminator D scales the probability that input data x comes
+from true data rather than G. Both G and D are trained simultaneously. The
+parameters in generator G are adjusted to fool the D, while the parameters in
+D are estimated to maximize the capability of identifying both the true data and
+samples output from G. In other words, generator G and discriminator D play
+  Generative adversarial networks Chapter | 10 177
+
+a two-player minimax game, where G is updated to maximize the similarity
+between random samples and true data.
+
+  Furthermore, considering the temporal dependencies of taxi hotspots, two
+LSTM neural networks are utilized in the G and D, respectively. The LSTM
+neural network has an beneﬁt for dealing with long-term memory in temporal
+issues. A LSTM cell maps the input vector sequence {x, yx} to an output vector
+sequence ht by T0 iterations. In the proposed LSTM–CGAN structures, two
+LSTM neural networks are utilized. In the sample layout, shown in Fig. 10.4,
+a generator G consists of seven layers, which are one random generation layer,
+and six LSTM layers; and a discriminator D also consists of four LSTM layers,
+one fully connected layer and one softmax layer. In this case study, different cell
+numbers in a single LSTM layer were tested. In order to prevent over-ﬁtting, we
+further apply the dropout method with a probability of 0.7 at each LSTM layer,
+which means that 30% cells are randomly ignored in each layer. The input of the
+D is designed to include a sequence of historical hotspot xr for each temporal
+unit and the corresponding conditional information yxr , i.e., the taxi hotspot
+information in previous temporal unit and the time-of-day information.
+
+10.3.3 Results
+
+The taxi trajectory data and taximeter data used in this paper was collected from
+Beijing taxi companies. The number of referred taxis was 68,310. As shown in
+the annual city report of Beijing, the total number of operating taxis was around
+68,000, which indicated that the authors obtained all the accessible taxi data
+during the study period. The total number of pick-up records in the study area
+was 2,640,826. The study period was two weeks (from Nov. 2, 2015 to Nov. 15,
+2015). More speciﬁcally, data from Nov. 2 to Nov. 12 was used as the training
+set, data form Nov. 13 was used as a validating set, and the other two days were
+used for testing. The major purpose of this study was to develop the extrac-
+tion and prediction framework for taxi hotspots and examined its feasibility and
+predictive performance under prevailing conditions. Two week trafﬁc data under
+prevailing conditions is sufﬁcient to demonstrate major, regular trafﬁc-operation
+patterns for the proposed method to capture the spatiotemporal features in terms
+of preliminary testing purposes. Fig. 10.5 shows the spatial distribution of taxi
+pickups in various time periods for both weekday.
+
+  In order to better understand the superiority of the proposed method against
+the reference methods, especially for the unbalanced dataset, the receiver oper-
+ating characteristic (ROC) curve is employed, and the performance of difference
+approaches is measured by the area under the curve (AUC). More speciﬁcally,
+the ROC curve is a graphical plot that illustrates the prediction performance of
+the proposed model as the discrimination threshold is varied. It is created by
+plotting the true positive rate (1-FIT-N), against the false positive rate (FIT-P),
+and the area under the receiver operating characteristic (AUROC). Fig. 10.6 il-
+lustrated the ROC curves for the prediction performance of the ﬁve methods.
+178 Machine Learning for Transportation Research and Applications
+
+FIGURE 10.5 Spatial distribution of taxi pickups in various time periods.
+
+FIGURE 10.6 ROC curves for the prediction performance considering various thresholds.
+
+Note that the prediction performance using 0.5 as the threshold is labeled with
+a solid block on each curve. As shown in Fig. 10.6, almost all ﬁve methods
+perform better than the random classiﬁer, except for the MA method when the
+threshold is very low. It was found that the proposed LSTM–CGAN outper-
+formed all the other methods, followed by the LSTM–GAN model, the LSTM
+model, the ARIMA model, and the MA method, which are all baseline methods.
+10.4 Case study: GAN-based pavement image data
+
+  transferring
+Pavement distress signiﬁcantly endangers trafﬁc safety and reduces road life.
+Automated pavement damage-detection technology plays a pivotal role in the
+rapid evaluation of road conditions and maintenance. Images have become the
+primary data source for pavement distress detection due to their accessible
+collection and available sophisticated processing methods. A wide variety of
+devices are used for data collection, such as driving recorders, car cameras,
+  Generative adversarial networks Chapter | 10 179
+
+and unmanned aerial vehicles. This diversity of application scenarios makes the
+styles and elements of images quite distinct. Due to the different placements and
+angles of the collection equipment, apparent differences lie in those images in
+terms of the complexity of the background elements, the degree of inclination,
+and distortion of the pavement distress. Thus, distress detection models should
+be able to adapt to different scenarios, which is called cross-scene distress de-
+tection. Unexpected perspectives and unseen elements are potential reasons for
+a model’s poor performance in a new scenario, resulting in higher requirements
+for these methods when applying existing models to new scenarios. In this case
+study (Li et al., 2021b), we introduce a CNN-based cross-scene transfer-learning
+pipeline, which combines the advantages of model transfer and data transfer.
+
+10.4.1 Problem formulation
+
+CNN-based cross-scene transfer-learning pipeline combines the advantages of
+model transfer and data transfer. In data transfer, a GAN is adopted to transfer
+the existing training data. In this process, some training data for the new scenes
+are synthesized by performing the style transfer on the original training data.
+In model transfer, the domain-adaptive method is used to transfer the domain
+knowledge generated from the existing models, which is not the scope of this
+case study and so is not presented. The data transfer method is proposed to syn-
+thesize images based on the existing source domain for the case of insufﬁcient
+training data. The main target of this problem is to transfer pictures of the orig-
+inal data set to the new scene style via a generative adversarial network.
+
+10.4.2 Model: CycleGAN-based image style transfer
+
+In this case study, CycleGAN (Zhu et al., 2017) was selected and trained to
+convert one type of image into another kind of image, achieving style conversion
+of the original data set images to a new scene. The training set of the object
+detection model requires a large amount of manually annotated data, which is
+costly and inefﬁcient. GAN can automatically complete this process. The two
+parts (the generator and the discriminator) promote each other’s optimization
+through a game, which is a very efﬁcient and low-cost method.
+
+  The framework of the CycleGAN is shown in Fig. 10.7. The generation net-
+work takes random samples from the feasible region as input, and its output
+needs to imitate the real samples in the training set as much as possible. Si-
+multaneously, the input of the discriminating network is the real sample or the
+output of the generating network. Its purpose is to distinguish the output of the
+generating network from the real samples as much as possible. The generation
+network must deceive the discrimination network as much as possible. The two
+networks confront each other and constantly adjust their parameters. The ulti-
+mate goal is to make the discriminating network unable to judge whether the
+generated network’s output is correct or not.
+180 Machine Learning for Transportation Research and Applications
+
+FIGURE 10.7 Framework of CycleGAN.
+
+  The most signiﬁcant advantage of CycleGAN is that only unpaired data are
+needed during training. If a model that converts the style of an image from a
+sunny day to a cloudy day is trained, any sunny and cloudy image data can
+be used for training, instead of pairs of sunny and cloudy images at the same
+location. This excellent scalability is suitable for the conversion of pavement
+images. When training other types of GANs, pairs of distress images are needed,
+which means that identical distresses need to be collected in different scenarios,
+which is obviously impossible. The ability to train with unpaired data is the most
+crucial reason why we chose to use CycleGAN.
+
+  This model consists of two unidirectional GANs, as shown in Fig. 10.7. The
+ﬁrst one contains a generator, Gxy, to translate image style, Ix, from domain
+X (labeled data set) to domain Y (unlabeled data set in a new scene) and a
+discriminator, Dy, to discriminate image differences. We designate the source
+distribution as IX and assume we have access to a true target distribution IY .
+(In our case, samples from X and Y have consistent content yet distinct style.)
+Our objective is to learn a mapping X → Y (namely, the conditional P (Y |
+X)) to achieve style transfer. Typically, we build a generator Gxy instantiated
+by a CNN. The generator, Gxy, strives to make the generated image, G(x), as
+similar as possible to Iy from domain Y . In contrast, Dy seeks to distinguish
+the generated sample, G(x), from the real example, Iy. Adversarial losses are
+applied to both mapping functions as:
+
+LGAN Gxy , Dy , X, Y =  (10.19)
+E log Dy(y) + E log 1 − Dy Gxy (x) .
+
+  During training, Gxy tries to minimize the losses, and the discriminator, Dy,
+maximizes them as much as possible. The second GAN is similar to the ﬁrst
+one, but the mapping relationship is reversed, including a generator, Gyx, and
+a discriminator, Dx. Based on two sets of loss functions, a cyclic consistency
+Generative adversarial networks Chapter | 10 181
+
+FIGURE 10.8 Examples of the results of data transfer.
+
+loss is added to ensure that the original image can be obtained when image Ix
+is converted to domain Y and then converted back to domain X. The cyclic
+consistency loss is shown as
+
+Lcyc Gxy , Gyx =  Gxy Gyx (y) − y 1 ,  (10.20)
+E Gyx Gxy (x) − x 1 + E
+
+where Gyx Gxy (x) − x 1 and Gxy Gyx (y) − y 1 represent the ﬁrst-order
+distance between the two images. All the images after GAN style transfer need
+fast and straightforward manual screening. Unreasonable images (such as a car
+in the sky or a twisted road) will be ﬁltered out and not used as training data.
+
+10.4.3 Results
+
+To test the proposed pipeline’s performance, pavement distress data sets data set
+images were collected by a portable onboard camera set upon the top rear of a
+vehicle. This top-view data set is named TV. Because it was taken from a bird’s
+eye perspective, most of the images’ elements are road surfaces, including some
+tree shadows and small sections of cars. Another data set of pavement distress
+contains images obtained from a front view angle, FV, which were obtained with
+a driving recorder. The scene elements covered are more complex than in the
+TV data set. The shooting angle, equipment, and scene elements covered by the
+two data sets’ images are thus different. These differences are sufﬁcient to allow
+us to verify the performance of the transfer pipeline. To better test the transfer
+method’s performance, the TV data set with simple scene elements was used
+as the basic data set to train the basic model. The FV data set, which contains
+many items that do not appear in the basic data set, was used as a new scene
+data set for transfer.
+
+  The effect of data transfer technology is explored based on the two datasets.
+Fig. 10.8 shows examples of data transfer. When evaluating the effect of Cycle-
+182 Machine Learning for Transportation Research and Applications
+
+GAN, 50 synthetic images of new scenes with 50 real images are blended. Then,
+these 100 images were randomly shown to three experts who were engaged in
+road maintenance. They were asked to make a judgment as to whether the prof-
+fered image was real or synthetic. The results show that the images synthesized
+by CycleGAN successfully passed the visual Turing test.
+
+10.5 Exercises
+
+ 1. Which of the following statement is wrong?
+  a. When training the discriminator, we want its output to be as close to 1
+  as possible for real samples.
+  b. When training the discriminator, we want the output to be as close to 0
+  as possible for fake samples.
+  c. When training the generator, we want the output of the discriminator
+  is as close to 0 as possible.
+  d. When training the generator, we want the output of the discriminator
+  to be as close to 1 as possible.
+
+ 2. Which of the following statements is wrong about the latent vector z for
+  obtaining higher quality generated samples?
+  a. The need for the partition of the exerciser, the constant observation and
+  the difference of observation.
+  b. Make the latent vector z as close as possible to the distribution of the
+  real samples, while avoiding biasing the generator towards a narrow
+  part of the distribution of the real samples.
+  c. Obtain the latent vectors’s semantic features by using unsupervised
+  learning.
+
+ 3. In GAN, the discriminator network D is a binary classiﬁcation network. Is
+  it possible to change the D into a multi-class classiﬁcation network, and
+  explain your answer?
+
+ 4. Write down the minimax formulation of GAN and explain it in two sen-
+  tences.
+
+ 5. The training process of GAN may be unstable since it may encounter the
+  gradient vanishing and mode collapse problem. Use your own words to
+  describe what are the gradient vanishing and mode collapse problems.
+
+ 6. Try to explain the origination of the two problems from GAN’s model
+  mechanism perspective.
+
+ 7. One representative application of GAN is data augmentation, especially
+  generating very complex data. Describe ﬁve scenarios in which you can
+  use GAN to generate transportation data.
+
+ 8. What are the trade-offs between GANs and other generative models?
+ 9. How should we evaluate GANs, and when should we use them?
+10. What is the relationship between GANs and adversarial examples?
+Chapter 11
+
+Edge and parallel artiﬁcial
+intelligence
+
+11.1 Edge computing concept
+
+As a key driver for recent smart city applications, big data has been going
+through a radical shift—from the cloud data centers to the edge of the network,
+closer to where they are generated, such as smart sensors, mobile units, and In-
+ternet of Things (IoT) devices. An estimation states that about 20 ZB of data
+trafﬁc can be handled by all the cloud datacenters globally in 2021, while, in
+total, 850 ZB of data will be generated at the network edge at the same time.
+If primarily relying the traditional cloud computing framework to transmit all
+the raw data to the cloud for processing and storage, not only will the network
+capacity be overwhelmed, but also privacy and cybersecurity concerns will also
+be escalated.
+
+  The science and engineering community is aware of the need to shift the
+computing workload away from the centralized cloud to the logical edge of
+the network. Edge computing, as a new solution to address this data explosion
+challenge, enables handling data generated from edge devices closer to the local
+clients who produce it. In edge computing, data is processed by an IoT device
+itself or by a local computer, rather than it all being transmitted to the cloud data
+centers. Edge computing is efﬁcient in network-wide data processing because of
+its (1) reduced communication bandwidth, (2) reduced computation load at the
+centralized cloud, and (3) reduced overall cost for sensors, computation, data
+transmission, and maintenance. It is also more scalable, and at the same time,
+makes privacy protection easier by eliminating or reducing the use of raw data
+on the cloud.
+
+11.2 Edge artiﬁcial intelligence
+
+The data explosion has not only motivated the emergence of edge computing but
+also new advances in artiﬁcial intelligence (AI) applications. AI has empowered
+innovations and greatly changed the environment we live in—from online ser-
+vices to ofﬂine activities concerning many aspects of the world. AI models have
+high demands for data and computation power. The training of AI models, such
+as DNNs, may take days and weeks to complete. Inference with AI models is
+also less efﬁcient than traditional statistical models.
+
+Machine Learning for Transportation Research and Applications  183
+https://doi.org/10.1016/B978-0-32-396126-4.00016-3
+Copyright © 2023 Elsevier Inc. All rights reserved.
+184 Machine Learning for Transportation Research and Applications
+
+  Earlier, AI models were often operated on the cloud or at least by a capable
+computer with powerful computation and storage supports. Within the context
+of edge computing, AI is also rapidly shifting from the cloud to decentralized
+network edges to enhance the intelligence of smart city applications. This is an
+unstoppable trend, but it has created new barriers we need to overcome. Given
+the resources and energy constraints on edge devices, it is very challenging to
+run AI tasks with a high computation demand. On the other hand, high efﬁciency
+is critical in many emerging applications, which poses another challenge for the
+design and engineering implementation of AI techniques.
+
+  Edge AI currently refers to the deployment of AI models, mostly deep neu-
+ral networks, such as CNN and RNN, on the network edge. In transportation
+systems, the edge nodes are normally individual road users or civil infrastruc-
+ture components. Vehicles’ onboard units, pedestrians’ wearable devices, trafﬁc
+signal heads, street lights, people’s smartphones, and so on, can be an edge node
+to perform certain intelligent transportation AI tasks. They can also be set up as
+edge servers to integrate computations in a local region (e.g., a road segment
+or an intersection). Edge AI models are trained on a separate machine (e.g., a
+server or a workstation) and then optimized for deployment on edge nodes for
+inference. It is expected that the training and inference will be integrated on the
+edge in the near future.
+
+11.3 Parallel artiﬁcial intelligence
+
+Parallel artiﬁcial intelligence is a concept associated with edge artiﬁcial intel-
+ligence, but from a system angle looking at the subject. Since the tasks are
+distributed from a centralized server to the network edge nodes, it is natural
+that the computation shifts from a sequential manner to a more parallel manner.
+Tasks are broken down into pieces. Parallel AI is multi-tasking that can occur
+either on an individual device or multiple devices. On a single-edge device, e.g.,
+an IoT computer, multi-thread system architecture can be designed to operate a
+variety of tasks. For example, road mask segmentation and trafﬁc ﬂow detection
+can be two parallel tasks operating on the same edge roadside unit in differ-
+ent threads. While multi-threading puts more computation resource restrictions
+on every single task, communication and information sharing between differ-
+ent tasks are easier. Multiple-device parallel AI aims at large-scale applications.
+Proper system architecture with a computation and communication mechanism
+for subsystems is necessary. Subsystem cooperation and data sharing among
+multiple entities require careful design to make the entire system work in an
+efﬁcient and effective manner. National ITS architecture and regional ITS ar-
+chitectures currently specify the information ﬂow and roles of participants for a
+speciﬁc ITS task. It would be helpful in the future edition of ITS architectures
+to specify more detailed agency cooperation towards parallel intelligence in ITS
+applications. Lately, federated learning, as a distributed and parallel learning
+mechanism, has been emerging in the ITS ﬁeld to support parallel and edge AI,
+with an emphasis on data privacy protection.
+  Edge and parallel artiﬁcial intelligence Chapter | 11 185
+
+11.4 Federated learning concept
+
+Federated learning is a method for distributed model training across many de-
+
+vices. A single machine-learning model is stored in the central cloud server.
+
+Each device has its own data, and they do not share raw data with one another
+
+due to barriers, such as privacy issues, regulations, or technology constraints.
+
+The data is stored locally and is often heterogeneous as well. Federated learn-
+
+ing, though conducts learning tasks in a distributed manner, is different from
+
+traditional distributed learning in a few ways. Traditional distributed learning
+
+happens on the cloud for big data processing. The vast amount of data is usu-
+
+ally the same dataset yet distributed on multiple machines to process the data in
+
+a parallel manner. However, these data are expected with the same distribution
+
+(e.g., the same mean and variance). In federated learning, data are from multiple
+
+worker nodes. Some worker nodes can be unstable, and the data stored across
+
+all worker nodes are imbalanced and not independent and identically distributed
+
+(IID). At the same time, users have control of their devices (e.g., cell phones)
+
+and can terminate data sharing at any time.
+
+  Assume there are multiple edge nodes node1, node2, ... noden. N odei has
+
+the private dataset Di. The loss function of the machine learning model on the
+central server is L(·). The devices train local models using local datasets and
+
+synchronize metadata on the central cloud server, instead of transmitting raw
+
+data to the cloud. Typical metadata transmitted to the cloud server is the lo-
+
+cal  weight  wi  at  time  t  for  nod ei .  In  one  synchronization,  node  computes  its
+
+  t
+updated weight wti+1 with step size γt as follows:
+
+  wti+1 = wt − γt · ∂f (wt,i ) (i = 1, 2, · · · , n).  (11.1)
+  ∂w
+
+  Note that this local update can run one or multiple iterations before the meta-
+
+data transmission. On the cloud, it receives the weights from all nodes and uses
+an aggregated function A(·) for the integration of all the uploaded weights. In
+this way, the weights for the overall model are updated for the new round:
+
+  wt+1 = A wt1, wt2, · · · , wnt .  (11.2)
+
+  A simple and effective aggregation method is federated averaging, which
+basically takes the average of all the local weights at the cloud server (McMahan
+et al., 2017).
+
+11.5 Federated learning methods
+
+11.5.1 Horizontal federated learning
+Horizontal federated learning (HFL) is introduced in which datasets share the
+same set of features yet different samples. For example, two cities have different
+186 Machine Learning for Transportation Research and Applications
+
+roadways and sensor groups, but the data needed for trafﬁc management is simi-
+lar and the sensor features are the same (e.g., volume, occupancy, and speed). In
+horizontal federated learning, agents collaborate and share subsets of updates of
+parameters. Agents update the parameters locally and upload them to the cloud,
+thus jointly training the centralized model with other agents.
+
+  HFL is confronted with several unique challenges when compared to other
+machine learning models. First, in Non-Independent Identical Distribution
+(Non-IID), the distribution of data in each device is not representative of the
+global data distribution. The category of samples on each agent could vary. Deal-
+ing with Non-IID data may signiﬁcantly increase the processing complexity and
+error rates. Second, the data distribution among different agents may be unbal-
+anced. The number of samples could vary because some agents produce much
+more data than others. The number of samples for each category could also be
+different: Two agents both have category A and category B, but the ratio of sam-
+ple numbers A over B on agent 1 is far larger than that on agent 2. Unbalanced
+data creates problems of heterogeneity and increased training complexity. HFL
+can be denoted as
+
+  Xi = Xj , Yi = Yj , Ii = Ij , ∀Di , Dj , i = j.
+
+11.5.2 Vertical federated learning
+
+In HFL, data have various sample spaces yet share same feature space. Verti-
+cal federated learning (VFL) is another FL method in which the data have the
+same sample space but a different feature space. The data among agents are
+vertically partitioned. Data samples are shared, but features are distributed on
+multiple devices. For example, if a car insurance company would like to better
+estimate customers’ discount rates, they tend to integrate data from outside their
+insurance company to train a model, e.g., from banks and hospitals. However,
+these organizations cannot share the raw data with the insurance company due
+to regulations on privacy and security. In order to share information, separate
+models should be trained at these different organizations, and only the interme-
+diate outputs and their gradients will be shared. This is also different from HFL,
+in which the exchanged messages are global and local model parameters. Note
+that this is a typical VFL example because every organization has all the sample
+IDs (insurance policyholders) yet the data features are handled separately.
+
+  VFL has the advantages of being ﬂexible and keeping local secrets. VFL
+can explore deeper feature dimensions and acquire a better learning model. Up
+to now, while there has been much less effort in investigating challenges and
+solutions in VFL than in HFL, the research gap and motivation have inspired
+some researchers to put efforts into VFL. Wei et al. recently proposed a general
+VFL process (Wei et al., 2022), including seven steps:
+• Private set intersection;
+• Bottom model forward propagation;
+  Edge and parallel artiﬁcial intelligence Chapter | 11 187
+
+• Forward output transmission;
+• Top model forward propagation;
+• Top model backward propagation;
+• Backward output transmission;
+• Bottom model backward propagation.
+
+11.6 Case study 1: parallel and edge AI in multi-task trafﬁc
+  surveillance
+
+11.6.1 Motivations
+
+This case study is treated in our paper Ke et al. (2022). Smart transportation
+surveillance in city-scale applications has a high demand for computing ser-
+vices to process, analyze, and store big transportation data. Conventionally, data
+were mostly born and processed in cloud datacenters. Cloud computing was
+widely recognized as the best computing service for big data processing and AI
+tasks. The network bandwidth and capacity could be overwhelmed in modern
+smart transportation applications if one employs the traditional cloud computing
+scheme; also, privacy and security issues are further raised.
+
+  Research on developing edge computing systems for smart transportation
+is still in an early stage. The major challenge is the sharp contrast between
+the demand for high efﬁciency/intelligence and the computing/communication
+constraint on IoT devices, even for a single task. The state-of-the-art solutions
+are model compression and cloud-edge computing integration. Model compres-
+sion reduces the size of the neural networks or other models via pruning or
+quantization, therefore, increasing the inference speed. Cloud-edge computing
+integration splits the computation, thus balancing the workload on the edge and
+the cloud to achieve optimal performance.
+
+  As a critical component of the smart city, smart transportation is facing
+opportunities and challenges in the new era of AI and advanced computing
+matching the trend of being more efﬁcient and integrated. Current edge ITS
+systems mainly focus on a single task without the ability to carry out multi-
+ple surveillance tasks in a real-time and parallel manner. To ﬁll this gap, this
+study explores a multi-task system for road and trafﬁc surveillance with parallel
+edge artiﬁcial intelligence. Speciﬁcally, this system makes contributions to the
+ﬁeld with a multi-thread edge architecture, an efﬁcient clustering method for
+road mask extraction, an AI trigger method aiming at parallel edge processing,
+a vehicle detector, and a road surface-condition classiﬁer.
+
+11.6.2 Parallel edge computing system architecture
+
+Unlike some state-of-the-art architecture for splitting the computation loads
+to the edge and cloud, the proposed architecture (see Fig. 11.1) is designed
+to operate mostly on the edge device, and, in this case, the Raspberry Pi 4
+edge computer. There are three parallel threads operating independently in this
+

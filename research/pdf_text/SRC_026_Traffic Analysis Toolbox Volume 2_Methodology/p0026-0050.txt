@@ -1,0 +1,1371 @@
+  Table 2. Relevance of traffic analysis tool categories with respect to study
+  area/geographic scope.
+
+  Analytical Tools/Methodologies
+
+Analytical  Sketch  Travel  Analytical/  Traffic  Macroscopic  Mesoscopic  Microscopic
+  Context/  Planning  Demand  Deterministic  Optimi-  Simulation  Simulation  Simulation
+Geographic  Models  Tools (HCM-  zation
+
+  Scope  Based)
+
+  Planning
+
+Location Isolated ○ ○ ● ∅ ○ ○ ○
+
+Segment  ●  ○  ● 1  ○  ∅  ∅  ∅
+
+Corridor/  ∅  ●  ○  ○  ∅  ∅  ∅
+Small  N/A  N/A  N/A
+Network  ∅  ●  N/A  N/A
+
+Region
+
+  Design
+
+Isolated Location N/A N/A ● ● ● ∅ ●
+
+Segment  N/A  ○  ●  ∅  ●  ●  ●
+
+Corridor/  ○  ○  ●  ●  ●
+
+Small  N/A  ∅
+
+Network
+
+Region  N/A  ∅  N/A  N/A  ○  ○  ∅
+
+  Operations/Construction
+
+Isolated Location N/A N/A ● ● ● ∅ ●
+
+Segment  ∅  ○  ●  ●  ●  ●  ●
+
+Corridor/  ○  ●  ●  ●
+
+Small  N/A  ∅  ∅
+
+Network
+
+Region  N/A  ∅  N/A  N/A  ∅  ○  ∅
+
+Notes: ● Specific context is generally addressed by the corresponding analytical tool/methodology.
+
+  ∅ Some of the analytical tools/methodologies address the specific context and some do not.
+
+  ○ The particular analytical tool/methodology does not generally address the specific context.
+
+  N/A The particular methodology is not appropriate for use in addressing the specific context.
+
+  1For linear networks
+
+2.2.2 Facility Type
+
+This section discusses the ability of the tools to analyze various facility types. Definitions
+for the facility types were based on HCM 2000. The relevance of the analytical tool
+categories with respect to the facility-type criterion is presented in table 3. The facility
+types include:
+
+  18
+Table 3. Relevance of traffic analysis tool categories with respect to facility type.
+
+  Analytical Tools/Methodologies
+
+  Analytical/
+
+  Travel  Deterministic Traffic
+  Demand
+  Facility  Sketch  Models  Tools (HCM- Optimiza- Macroscopic  Mesoscopic  Microscopic
+  Type  Planning  Simulation  Simulation
+  ∅  Based)  tion Simulation
+Isolated  ○  ●  ●
+Intersection  ○  ○  ●  ●  ●  ○
+Roundabout  ●  ●  ●  ∅
+  ●  ●  ●  ○  ∅  ●
+Arterial  ●  ●  ●
+  ∅  ●  ●  ●  ●  ●  ●
+Highway  ●  ●
+  ∅  ●  ∅  ●  ∅  ●
+Freeway  ●  ●
+  ○  ○  ●  ∅  ●  ●  ●
+HOV Lane  ●  ●
+HOV Bypass  ∅  ∅  ○  ●
+Lane  ○  ∅
+Ramp  ○  ○  ∅  ∅  ○
+Auxiliary  ○  ●
+Lane  ○  ●  ●  ●  ○  ●
+Reversible  ○  ○  ●
+Lane  ○  ∅  ∅  ●  ●
+Truck Lane  ○
+  ○  ∅  ○  ○  ○
+Bus Lane
+  ●  ∅  ∅  ∅
+Toll Plaza
+Light-Rail  ●  ○  ○  ∅
+Line
+  ∅  ∅  ○  ○
+Notes: ●
+  ●  ○  ○  ○
+  ∅
+  Specific context is generally addressed by the corresponding analytical tool/methodology.
+  ○  Some of the analytical tools/methodologies address the specific context and some do not.
+  The particular analytical tool/methodology does not generally address the specific context.
+
+• Isolated Intersection: Single crossing point between two or more roadway facilities.
+
+• Roundabout: Unsignalized intersection with a circulatory roadway around a central
+  island with all entering vehicles yielding to circulating traffic.
+
+• Arterial: Signalized street that primarily serves through traffic and that secondarily
+  provides access to abutting properties (signal spacing of 3.2 kilometers (km) (2 miles
+  (mi)) or less.
+
+• Highway: High-speed roadway connecting major areas or arterials, with little or no
+  traffic signal interruption (e.g., two-lane highway, expressway).
+
+• Freeway: Multilane, divided highway with a minimum of two lanes for the exclusive
+  use of traffic in each direction and full control of access without traffic interruption.
+
+  19
+• HOV Lane: Exclusive highway or street lane for vehicles with a defined minimum
+  number of occupants (more than one), including buses, taxis, or carpools (may be used
+  by other traffic under certain circumstances, such as during off-peak hours, for making
+  a right or left turn, or by motorcycles, depending on the jurisdiction’s traffic laws).
+
+• HOV Bypass Lane: Exclusive on-ramp lane for vehicles with a defined minimum
+  number of occupants (more than one), including buses, taxis, carpools, for specified
+  time periods.
+
+• Ramp: Short segment of roadway connecting two roadway facilities.
+
+• Auxiliary Lane: Additional lane on a freeway to connect an on-ramp and an off-ramp.
+
+• Reversible Lane: Roadway lane that changes directions during different hours of the
+  day (reversible lanes are typically used to help alleviate congestion by accommodating
+  the peak direction of traffic).
+
+• Truck Lane: Designated lane for commercial vehicles, but not for public transit vehicles.
+
+• Bus Lane: Highway or street lane reserved primarily for buses during specified
+  periods (may be used by other traffic under certain circumstances, such as for making
+  a right or left turn, or by taxis, motorcycles, or carpools that meet the requirements of
+  the jurisdiction’s traffic laws).
+
+• Toll Plaza: Facility where payment transaction for the use of the roadway takes place
+  (may be located upstream or downstream of the toll facility).
+
+• Light-Rail Line: Electric-powered railway system operating single cars or short trains
+  on a variety of alignment types on a partially controlled right-of-way.
+
+Notes and Assumptions:
+
+• Generally, it is not appropriate to optimize a two-lane highway or roundabout.
+
+2.2.3 Travel Mode
+
+Table 4 presents a matrix rating the appropriateness of each tool category in analyzing the
+different travel modes. The definitions for the travel modes are based on HCM 2000:
+
+• SOV: Vehicle with the driver as the only occupant.
+
+• HOV: Vehicle with a defined minimum number of occupants (more than one), including
+  buses, taxis, carpools, and vanpools.
+
+• Bus: Self-propelled, rubber-tired road vehicle designed to carry a substantial number
+  of passengers and commonly operated on streets and highways.
+
+  20
+Table 4. Relevance of traffic analysis tool categories with respect to travel mode.
+
+  Analytical Tools/Methodologies
+
+  Travel  Sketch  Travel  Analytical/  Traffic  Macroscopic  Mesoscopic  Microscopic
+  Mode  Planning  Demand  Deterministic  Optimi-  Simulation  Simulation  Simulation
+  Models  Tools (HCM-  zation
+SOV  ●  ●  ●
+  ●  Based)  ●  ●
+HOV  ∅  ●  ●  ●
+  ●  ●  ●  ●
+Bus  ∅  ●  ∅  ∅
+  ∅  ∅  ∅
+Rail  ∅  ∅  ∅  ∅
+Truck  ∅  ∅  ∅  ∅
+Motorcycle  ∅  ○  ○
+  ○  ○  ○  ○  ○
+Bicycle  ∅  ∅
+  ∅  ∅  ∅  ∅  ∅
+Pedestrian  ○  ∅
+  ∅  ○  ○  ○
+Notes: ●
+  ∅  ○  ○
+  ∅
+  ∅  ∅  ∅
+  ○
+  Specific context is generally addressed by the corresponding analytical tool/methodology.
+  Some of the analytical tools/methodologies address the specific context and some do not.
+  The particular analytical tool/methodology does not generally address the specific context.
+
+• Rail: Transit system using trains operating in exclusive or shared rights-of-way
+  (includes both light and heavy rail systems).
+
+• Truck: Heavy vehicle engaging primarily in the transport of goods and materials or in
+  the delivery of services other than public transportation.
+
+• Motorcycle: Self-propelled vehicle with two wheels in tandem that may be ridden by a
+  maximum of two persons.
+
+• Bicycle: Vehicle with two wheels in tandem that is propelled by human power and is
+  usually ridden by one person.
+
+• Pedestrian: Individual traveling on foot.
+
+2.2.4 Management Strategy and Applications
+
+The following are the major classifications of transportation management strategies
+(adapted from the National ITS Architecture):
+
+• Freeway Management: Controls, guides, and warns traffic in order to improve the
+  flow of people and goods on limited-access facilities. Examples of freeway
+  management include the integration of surveillance information with freeway road
+
+  21
+  geometry; vehicle control, such as ramp metering; dynamic message signs (DMS); and
+  highway advisory radio (HAR).
+
+• Arterial Intersections: Includes intersection or arterial operations, such as geometric
+  improvements, parking adjustments, and signal timing for individual intersections.
+  These improvements would typically involve capacity analysis, LOS analysis, and
+  unsignalized and signalized intersection studies.
+
+• Arterial Management: Applies State and local planning, capital, and regulatory and
+  management tools to enhance and/or preserve the transportation functions of the
+  arterial roadway through the use of surveillance devices, advanced signal algorithms,
+  and coordination.
+
+• Incident Management: Manages unexpected incidents so that the impact on the
+  transportation network and traveler safety is minimized. Includes incident detection
+  capabilities through roadway surveillance devices and incident response through
+  coordination with freeway service patrols and emergency response agencies.
+
+• Emergency Management: Represents public safety and other agency systems that
+  support coordinated emergency response, including police, fire, emergency medical
+  services, hazardous materials (HazMat) response teams, Mayday service providers,
+  and security/surveillance services that improve traveler security in public areas.
+
+• Work Zones: Uses traffic control devices (signs, channeling devices, barriers, etc.) and
+  traveler information to maximize the availability of roadways during construction or
+  maintenance while minimizing the impact on the traveling public and highway
+  workers.
+
+• Special Events: Manages planned events so that the impact on the transportation
+  network and traveler safety is minimized through coordination with other traffic
+  management, maintenance and construction management, and emergency
+  management centers, and event promoters.
+
+• Advanced Public Transportation System (APTS): Applies advanced technologies to
+  the operations, maintenance, customer information, planning, and management
+  functions for the transit agency. APTS includes advanced communications between
+  the transit departments and the public, personnel and other operating entities such as
+  emergency response services, and traffic management systems; automatic vehicle
+  locator (AVL); traffic signal priority; transit operations software; advanced transit
+  scheduling systems (ATSS); transit security; and fleet maintenance.
+
+• Advanced Traveler Information System (ATIS): Ranges from simply providing fixed
+  transit schedule information to multimodal traveler information, including real-time
+  traffic conditions and transit schedules, and information to support mode and route
+  selection.
+
+  22
+• Electronic Payment System: Allows travelers to pay for transportation services by
+  electronic means, including tolls, transit fares, and parking.
+
+• Rail Grade Crossing Monitors: Manages traffic at highway-rail intersections where
+  operational requirements demand advanced features. Includes the capabilities from
+  the Standard Rail Crossing equipment package and augments these with additional
+  safety features, including positive barrier systems and wayside interface equipment
+  that detects or communicates with the approaching train.
+
+• Commercial Vehicle Operations (CVO): Performs advanced functions that support
+  commercial vehicle operations, including communications between drivers, fleet
+  managers, and roadside officials; automates identification and safety processing at
+  mainline speeds; and timely and accurately collects HazMat cargo information after a
+  vehicle incident.
+
+• Advanced Vehicle Control and Safety System (AVCSS): Includes vehicle safety
+  systems such as vehicle or driver safety monitoring; longitudinal, lateral, or
+  intersection warning control or collision avoidance; pre-crash restraint; and automated
+  highway systems.
+
+• Weather Management: Includes automated collection of weather condition data and
+  the use of that data to detect hazards such as ice, high winds, snow, dense fog, etc.
+  This information can be used to provide road condition information and more
+  effectively deploy maintenance and construction resources.
+
+• Travel Demand Management (TDM): TDM strategies are designed to maximize
+  person throughput or influence the need for or time of travel. They are typically
+  implemented in urban areas to reduce traffic congestion and air pollution, and to
+  increase the efficiency of the transportation system. TDM strategies include employer
+  trip reduction programs, vanpool programs, the construction of park-and-ride lots,
+  and alternative work schedules.
+
+Table 5 summarizes tool category relevance for analyzing major traffic management
+strategies. A more detailed listing of management strategies, which can be helpful in the
+selection of a specific traffic analysis tool, is presented in appendix C.
+
+Notes and Assumptions:
+
+• Some analytical/deterministic tools can estimate the impact of incidents, work zones,
+  special events, and weather through reductions in capacity for specific times and
+  locations. However, they cannot model the temporal and spatial effects of congestion.
+
+• Macroscopic and mesoscopic models assume macroscopic traffic behavior (e.g., all
+  vehicles travel at the same average speed). Therefore, they are not well suited to
+  evaluate traffic management strategies that require the sensing of individual vehicles
+  (e.g., adaptive control at individual intersections or arterials).
+
+  23
+Table 5. Relevance of traffic analysis tool categories with respect to management
+  strategy and applications.
+
+  Analytical Tools/Methodologies
+
+  Analytical/
+
+Management  Travel  Deterministic Traffic
+Strategy and  Demand
+Applications  Sketch  Models  Tools (HCM- Optimiza- Macroscopic  Mesoscopic  Microscopic
+  Planning  Simulation  Simulation
+  Based)  tion Simulation
+
+Management Freeway ● ∅ ∅ ● ● ● ●
+
+Intersections Arterial ○ ○ ● ● ● ● ●
+
+Management Arterial ∅ ∅ ∅ ● ● ● ●
+
+Management Incident ∅ ○ ∅ ○ ● ● ●
+
+Emergency Management ∅ ○ ∅ ○ ∅ ∅ ∅
+
+Work Zones  ∅  ○  ●  ○  ●  ●  ●
+
+Special Events  ∅  ○  ●  ○  ∅  ∅  ∅
+
+Advanced
+
+Transportation Public ∅ ○ ○ ○ ○ ○ ∅
+
+System
+
+Advanced
+
+Information Traveler ∅ ○ ○ ○ ∅ ∅ ∅
+
+System
+
+Electronic  ○  ○  ○  ○  ○  ●
+
+Payment  ∅
+
+System
+
+Rail Grade  ○  ○  ○  ○  ○  ●
+
+Crossing  ∅
+
+Monitors
+
+Commercial  ○  ○  ○  ○  ○
+
+Vehicle  ∅  ∅
+
+Operations
+
+Advanced
+
+Control and Vehicle ∅ ○ ○ ○ ○ ○ ∅
+
+Safety System
+
+Management Weather ○ ○ ○ ○ ∅ ∅ ∅
+
+Demand Mgmt Travel ● ● ∅ ○ ∅ ∅ ∅
+Notes: ● Specific context is generally addressed by the corresponding analytical tool/methodology.
+
+  ∅ Some of the analytical tools/methodologies address the specific context and some do not.
+
+  ○ The particular analytical tool/methodology does not generally address the specific context.
+
+  24
+2.2.5 Traveler Response
+
+In response to different operational improvements, travelers can change their route of
+travel, change their time of travel (temporal choice), can use a different mode of
+transportation, change their destination, or completely cancel or create a new trip
+(induced/foregone demand). Table 6 indicates how well or how poorly the analytical tool
+categories can model the following traveler responses:
+
+• Route Diversions: Captures changes in travel routes, including pre-trip route
+  diversion and en route diversion.
+
+• Mode Shifts: Captures changes regarding the selection of travel modes.
+
+• Departure Time Choices: Captures changes in the time of travel.
+
+• Destination Changes: Represents changes to travel destinations.
+
+• Induced/Foregone Demand: Estimates new trips (induced demand) or foregone trips
+  resulting from the implementation of traffic management strategies.
+
+Table 6. Relevance of traffic analysis tool categories with respect to traveler response.
+
+  Analytical Tools/Methodologies
+
+  Traveler  Sketch  Travel  Analytical/  Traffic  Macroscopic  Mesoscopic  Microscopic
+  Response  Planning  Demand  Deterministic  Optimi-  Simulation  Simulation  Simulation
+  Models  Tools (HCM-  zation
+Route
+Diversion  Based)
+
+  Pre-Trip  ∅  ○  N/A  ○  ●  ●  ●
+
+  En Route  ∅  ●  N/A  ○  ∅  ∅  ∅
+
+Mode Shift  ∅  ●  N/A  ○  ∅  ∅  ∅
+
+Departure  ∅  ○  N/A  ○  ∅  ∅  ∅
+Time Choice
+Destination  N/A  ∅  N/A  N/A  N/A  ○  ○
+Change
+Induced/  ∅  ∅  N/A  N/A  N/A  N/A  ∅
+Foregone
+Demand  Specific context is generally addressed by the corresponding analytical tool/methodology.
+  Some of the analytical tools/methodologies address the specific context and some do not.
+Notes: ●  The particular analytical tool/methodology does not generally address the specific context.
+  The particular methodology is not appropriate for use in addressing the specific context.
+  ∅
+
+  ○
+
+  N/A
+
+  25
+Notes and Assumptions:
+
+• Analytical/deterministic models assume that traffic demand is fixed throughout the
+  analytical period. Although it may be possible to specify changes in demand (e.g.,
+  changes caused by diversion during an incident), the amount of diverted traffic and
+  the time periods must be specified a priori by the analyst.
+
+• Most models require that the origin-destination (O-D) distribution be provided. Some
+  mesoscopic models are capable of updating the O-D trips in real time; however, they
+  may not be capable of modeling the destination choice.
+
+• For ramp metering strategies, some traffic optimization modules may be used to
+  determine optimal ramp metering rates.
+
+• Most traffic optimization models assume constant demand.
+
+• Most traffic analysis tools are not capable of predicting destination changes or
+  induced/foregone demand as a result of transportation improvements. Readers of this
+  document should consider this when applying criteria weights to these items in the
+  tool selection worksheet (appendix B).
+
+2.2.6 Performance Measures
+
+This section discusses the ability of the tool categories to produce various performance
+measures in the areas of safety, efficiency, mobility, productivity, and the environment (as
+summarized in table 7). The performance measures discussed in this section include:
+
+• Level of Service (LOS): Qualitative measure describing operational conditions within
+  a traffic stream, based on service measures such as speed and travel time, freedom to
+  maneuver, traffic interruptions, comfort, and convenience. Ranges from LOS A (best)
+  to LOS F (worst).
+
+• Speed: Rate of motion (expressed in distance per unit of time).
+
+• Travel Time: Average time spent by vehicles traversing a facility, including control
+  delay, in seconds or minutes per vehicle.
+
+• Volume: Number of persons or vehicles passing a point on a roadway during some
+  time interval (expressed in vehicles, bicycles, or persons per hour).
+
+• Travel Distance: Extent of the space between the trip origin and the destination,
+  measured along a vehicular route.
+
+• Ridership: Number of passengers on the transit system being evaluated.
+
+• Average Vehicle Occupancy (AVO): Average number of persons per vehicle,
+  including transit vehicles, on the transportation facility or system.
+
+  26
+• Volume-to-Capacity (V/C) Ratio: Ratio of flow rate to capacity for a transportation
+  facility.
+
+• Density: Number of vehicles on a roadway segment averaged over space (usually
+  expressed in vehicles per mile or vehicles per mile per lane).
+
+• Vehicle-Miles of Travel (VMT)/Person-Miles of Travel (PMT): Total distance
+  traveled by all vehicles or persons on a transportation facility or network during a
+  specified time period (expressed in miles).
+
+• Vehicle-Hours of Travel (VHT)/Person-Hours of Travel (PHT): Total travel time
+  spent by all vehicles or persons on a transportation facility or network during a
+  specified time period (expressed in hours).
+
+• Delay: Additional travel time experienced by travelers at speeds less than the free-
+  flow (posted) speed (expressed in seconds or minutes).
+
+• Queue Length: Length of queued vehicles waiting to be served by the system
+  (expressed in distance or number of vehicles).
+
+• Number of Stops: Number of stops experienced by the section and/or corridor (based
+  on some minimum travel speed).
+
+• Crashes: Number of crashes on a transportation facility or network.
+
+• Incident Duration: Includes all crashes and vehicle incidents, such as running out of
+  gas and mechanical problems. It is calculated from the moment the vehicle or object
+  obstructs travel until the incident is cleared (expressed in minutes or hours).
+
+• Travel Time Reliability: Travel time reliability is a quantification of the unexpected
+  non-recurring delay associated with excess travel demand, incidents, weather, or
+  special events. There are several methods for predicting reliability or variability in
+  travel times. Reliability of travel time is a significant benefit to travelers as individuals
+  are better able to predict their travel time and budget less time for their trip.
+
+• Emissions: Predicted emissions for each pollutant type on a transportation facility or
+  network.
+
+• Fuel Consumption: Fuel consumption rate associated with the use of a transportation
+  facility or network.
+
+• Noise: Sound level produced by traffic (expressed in decibels).
+
+• Mode Split: Percentage of travelers using each travel mode (SOV, HOV, transit,
+  bicycle, pedestrian, etc.).
+
+  27
+• Benefit/Cost: Ratio of annualized, monetized benefits to total costs associated with
+  transportation improvement(s).
+
+Table 7. Relevance of traffic analysis tool categories with respect to performance
+  measures.
+
+  Analytical Tools/Methodologies
+
+ Performance  Sketch  Travel  Analytical/  Traffic  Macroscopic  Mesoscopic  Microscopic
+  Measures  Planning  Demand  Deterministic  Optimi-  Simulation  Simulation  Simulation
+  Models  Tools (HCM-  zation
+LOS  ○  ∅  ∅  ∅
+  ●  ∅  Based)  ●
+Speed  ●  ●  ●  ●
+  ∅  ●  ●  ●  ●  ●  ●
+Travel Time  ●  ●  ●  ●  ●
+  ●  ∅  ●  ●  ●
+Volume  ●
+Travel  ○  ●  ∅  ∅
+Distance  ○  ○  ○  ○
+Ridership  ○
+Average  ∅  ○  ○  ○
+Vehicle
+Occupancy  ○  ∅  ○  ○  ○  ○  ○
+(AVO)
+V/C Ratio  ○  ●  ●  ∅  ∅  ∅  ∅
+
+Density  ○  ○  ●  ●  ●  ●  ●
+
+VMT/PMT  ∅  ●  ∅  ∅  ●  ●  ●
+
+VHT/PHT  ∅  ●  ∅  ∅  ●  ●  ●
+
+Delay  ∅  ●  ●  ●  ●  ●  ●
+
+Queue Length  ○  ○  ●  ●  ●  ●  ●
+Number of
+Stops  ∅  ○  ○  ○  ○  ∅  ●
+Crashes
+Incident  ∅  ○  ○  ○  ○  ∅  ∅
+Duration
+Travel Time  ○  ○  ○  ○  ○  ∅  ∅
+Reliability
+Emissions  ∅  ○  ○  ○  ○  ○  ○
+Fuel
+Consumption  ∅  ○  ○  ○  ○  ∅  ∅
+Noise
+  ∅  ○  ○  ○  ∅  ∅  ∅
+Mode Split
+  ∅  ○  ○  ○  ○  ○  ○
+Benefit/Cost
+  ○  ●  ●  ∅  ∅  ∅  ∅
+Notes: ●
+  ∅  ○  ○  ○  ○  ○  ○
+  ∅
+  Specific context is generally addressed by the corresponding analytical tool/methodology.
+  ○  Some of the analytical tools/methodologies address the specific context and some do not.
+  The particular analytical tool/methodology does not generally address the specific context.
+
+  28
+Notes and Assumptions:
+
+• Practitioners should consider the reliability of the tools used before interpreting the
+  results. The level of accuracy depends on several factors, including the accuracy and
+  level of detail of the input data, analytical assumptions, the calibration of the tool to
+  local conditions, and the accuracy of the analytical methodology.
+
+• Relevance factors for the performance measures listed in table 7 are based on the
+  assumption that these measures are generally direct outputs of the tool category.
+
+• Table 7 does not take into consideration post-processing tools that can produce these
+  measures.
+
+2.2.7 Tool/Cost-Effectiveness
+
+While the first six criteria help to evaluate the appropriateness of each tool category from a
+technical perspective, the seventh criteria (tool/cost-effectiveness) helps evaluate
+management and operational considerations for selecting the most appropriate tool
+category. Resource requirements, whether they are financial, personnel, or skill-related,
+can be a major consideration in selecting an analytical tool. In addition, using a more
+advanced and data-intensive tool may provide a greater understanding of the alternatives;
+however, accurate and detailed data are still needed to produce representative results. The
+level of effort and the operational characteristics criteria to be considered are summarized
+in table 8 and include the following:
+
+• Tool Capital Cost: What is the average capital cost to acquire the traffic analysis tool?
+  In this category, tools that cost, on average, less than $1,000 are considered to be
+  inexpensive, while tools that cost from $1,000 to $5,000 are considered to be mid-range.
+  Any tools that cost more than $5,000 are considered to be expensive. Inexpensive tools
+
+  are indicated in table 8 by a solid circle (●), mid-range tools are indicated by a null (or
+  neutral) symbol (∅), and expensive tools are indicated by an empty circle (○).
+
+• Level of Effort (Cost/Training): Is the tool methodology type easy to learn? Does it
+  require expensive and/or lengthy training sessions? Tools requiring little or no training
+
+  are indicated by a ●, tools requiring a moderate amount of training are indicated by a
+  ∅, and tools requiring expensive and lengthy training are indicated by an ○.
+
+• Easy to Use: Is the tool generally user-friendly? (For example, Microsoft® Windows®-
+  based tools have drag-and-drop features, etc.) Easy-to-use and intuitive tools are
+
+  indicated by a ●. Tools requiring a significant amount of additional coding and/or
+  data input and analysis are cumbersome and are indicated by an ○. Those in between
+
+  are indicated by a ∅.
+
+• Popular/Well Trusted: Is the tool popular and well regarded by current users? If yes,
+
+  the tool category is indicated by a ●. Tools that are frequently used, but the accuracy
+
+  29
+  of the results is highly constrained by data input and methodology constraints are
+  indicated by a ∅. Tools that are generally not used in practice at this time are indicated
+
+  by an ○.
+
+• Hardware Requirements: How much computer power is necessary to adequately run
+  the analysis? Tools that can be used on older computers and require minimal
+
+  computing power are considered to have low hardware requirements (○), tools that
+
+  require a large amount of computing power (memory and hard-drive space) are
+
+  considered to have high hardware requirements (●), and tools that fall in between are
+
+  considered to have medium hardware requirements (∅).
+
+• Data Requirements: What is the typical amount of input data required to perform the
+  analysis? The input data may include traffic volume, speed limit, traffic signal timing,
+  intersection/roadway geometric characteristics, the number of general-purpose and
+  HOV lanes, ramp metering locations and their timings, detector locations, O-D trip
+
+  tables, etc. Low data requirements are indicated by a ●, moderate data requirements
+  are indicated by a ∅, and data-intensive tools are indicated by an ○.
+
+• Computer Run Time: Assuming that adequate computer hardware is available, how
+  long does the tool take to perform the analysis? Run times of less than 5 minutes are
+
+  considered minimal (●), run times averaging from 5 minutes to 1 hour are considered
+  moderate (∅), and run times lasting more than 1 hour per run are considered long (○).
+
+• Post-Processing Requirements: Does the tool generally produce output in formats
+  that require no further post-processing or reformatting? Many tools cannot calculate
+  travel time directly; instead, users must invest additional time to generate this output
+  from speed and distance information. Tools requiring little or no post-processing or
+
+  reformatting are indicated by a ●, those with moderate amounts are indicated by a ∅,
+
+  and tools requiring a significant amount of post-processing and/or additional coding
+
+  are indicated by an ○.
+
+• Documentation: Does the tool have a detailed and well-written user’s manual? Are
+  there articles and reports on past projects evaluated using this type of tool? Excellent
+
+  documentation is indicated by a ●, moderate documentation is indicated by a ∅, and
+  little or no documentation is indicated by an ○.
+
+• User Support: Is technical support generally available for this tool? Are there mailing
+  lists, chat rooms, or newsgroups dedicated to this tool where users can communicate
+
+  with each other? Tools with a high level of user support are indicated by a ●,
+  moderate support is indicated by a ∅, and no support is indicated by an ○.
+
+• Key Parameters Can Be User-Defined: Does the tool allow for customization of the
+  key analytical parameters? Is the tool flexible enough to allow for customization (e.g.,
+  many microsimulation tools are flexible enough to allow users to add custom
+
+  30
+  programming codes in addition to the standard package)? Available customization is
+
+  indicated by a ●, limited customization capabilities are indicated by a ∅, and lack of
+  customization is indicated by an ○.
+
+• Default Values Are Provided: Does the tool generally provide default values for its
+  parameters, rates, or impact values? In some cases, there is not enough time and
+  resources to collect the appropriate values for all of the necessary parameters (e.g.,
+  average walking speed, average reaction time, etc.). Tools with defaults available for
+
+  most parameters are indicated by a ●, tools with some defaults are indicated by a ∅,
+  and tools with few or no defaults available are indicated by an ○.
+
+• Integration With Other Software: Does the tool generally have export/import
+  features to/from other software (e.g., integration with Microsoft® Excel, Geographic
+  Information Systems (GIS) tools, other traffic analysis tools, etc.)? Simple
+
+  export/import features are indicated by a ●, tools with some or limited capabilities are
+  indicated by a ∅, and tools with no import/export capabilities are indicated by an ○.
+
+• Animation/Presentation: Does the tool have animation/presentation features (e.g.,
+  animated, colorful, three-dimensional views, zoom-in/-out capabilities, detailed link
+  views as opposed to “stick figures,” ability to produce charts and tables, etc.)?
+
+  31
+  Table 8. Relevance of traffic analysis tool categories with respect to tool/cost
+  effectiveness.
+
+  Analytical Tools/Methodologies
+
+  Tool/Cost  Sketch  Travel  Analytical/  Traffic  Macroscopic  Mesoscopic  Microscopic
+Effectiveness  Planning  Demand  Deterministic  Optimi-  Simulation  Simulation  Simulation
+  Models  Tools (HCM-  zation
+
+  Based)
+
+Cost Tool Capital ● ○ ● ● ∅ ○ ○
+
+Level of Effort  ●  ○  ●  ∅  ∅  ○  ○
+
+Easy to Use  ●  ○  ●  ∅  ∅  ○  ○
+
+Trusted Popular/Well ∅ ∅ ● ● ∅ ○ ∅
+
+Requirements Hardware ● ∅ ● ● ○ ○ ○
+
+Requirements Data ● ○ ● ● ○ ○ ○
+
+Time Computer Run ● ∅ ● ● ● ○ ○
+
+Post-  ○  ●  ●
+
+Processing  ∅  ∅  ∅  ∅
+
+Requirements
+
+Documentation  ∅  ∅  ●  ∅  ∅  ∅  ∅
+
+User Support  ∅  ●  ○  ○  ∅  ∅  ∅
+
+Key
+
+Can Be User- Parameters ∅ ● ∅ ∅ ● ● ●
+
+Defined
+
+Are Provided Default Values ● ○ ● ● ● ● ●
+
+Integration
+
+With Other Software (e.g., ○ ∅ ∅ ∅ ∅ ∅ ∅
+
+Excel, GIS)
+
+Presentation Animation/ ○ ∅ ○ ○ ∅ ● ●
+Note: See section 2.2.7 above for descriptions of ●, ∅, and ○, for each subcriteria.
+
+  32
+3.0 Methodology for Selecting a Traffic Analysis
+  Tool
+
+The purpose of this section is to provide guidance to users on how to use the criteria
+presented in section 2.0 to select the appropriate analytical tool category. Worksheets are
+provided in this section to help users work through the process of selecting the
+appropriate tool for addressing the project’s goals and objectives. In addition, an
+automated tool has been developed to implement these steps. This tool can be found on
+the FHWA Traffic Analysis Tools Web site at:
+http://ops.fhwa.dot.gov/Travel/Traffic_Analysis_Tools/traffic_analysis_tools.htm
+
+3.1 Steps for Selecting the Appropriate Tool Category
+
+This section details the recommended steps for selecting the appropriate tool category for
+the task. Depending on the project, more than one analytical tool may be capable of
+analyzing and producing the desired output. It should also be recognized that one specific
+tool might not be able to address all of the project’s needs. Multiple tools may be desirable
+for conducting a particular study and those tools may or may not be from the same tool
+category.
+
+Appendix B contains a worksheet that may be used to assist with the tool category
+selection process. Using the steps described below, fill out the cells of table 13:
+
+1. Define the context of the project and assign context relevance weights (column 2). In
+
+most cases, the most appropriate tool category or tool depends on the type of project
+
+and the level of detail required by each project context. Therefore, the first step is to
+
+carefully think about the context of the project (whether it is planning, design, or
+
+operations/construction) and the goals, objectives, issues, and needs of the project.
+
+Next, enter the analytical context relevance weight in column 2, depending on the type
+
+of study. The values entered in column 2 should range from 0 (not relevant) to 5 (most
+
+relevant). For example, if the project is a long-range plan, the context relevance weight
+should be 5 for “Planning” and 0 for “Design” and “Operations/Construction.” For
+
+definitions of the analytical contexts, refer to section 2.1.
+
+  1 2 Step 1 – Determine the project
+
+  context (planning, design, or
+
+  Context  operations/construction). Define
+  the project’s goals and objectives,
+Criteria  Relevance  needs, and issues. Enter the
+  context weights into Column 2.
+0 Analysis Context (0 = not relevant, 5 = most relevant)  Values range from 0 (not relevant)
+  to 5 (most relevant).
+Planning  5
+
+Design  0
+
+Operations/Construction  0
+
+  Figure 3. Selecting the appropriate tool category, step 1.
+
+  33
+2. Assign subcriteria relevance weights (column 2). In this step, the user assigns
+  relevance weights to subcriteria within each type of criterion. Subcriteria that are
+  highly desirable as part of the project should be given higher weights. The relevance
+  values that should be entered in column 2 range from 0 (not relevant) to 5 (most
+  relevant). Enter the weights for each subcriterion as they relate to each other and the
+  needs of the project.
+
+  Here are some examples for assigning relevance weights:
+
+  a. Geographic Scope: If the study area consists of a 8-km-long (5-mi-long) freeway
+  segment with two parallel arterials on each side, plus all connecting streets, a
+  weight of 5 should be given to “Corridor/Small Network” and weights of 0 should
+  be given to all other subcriteria.
+
+  b. Facility Type: If the facility types in the study area are primarily a freeway, its
+  parallel arterials, and the connecting ramps and streets, but there are also auxiliary
+  lanes and HOV lanes and the impact on those is not as important, a weight of 5
+  should be given to “Freeway,” “Arterial,” and “Ramps,” while a weight of 3 might
+  be given to “HOV Lane” and “Auxiliary Lane.” Weights of 0 would be given to the
+  other facility-type subcriteria.
+
+  c. Travel Mode: The project involves ramp metering and data related to SOV, HOV,
+  and truck modes are available. However, the project focus is on the SOV mode. A
+  weight of 5 would be given to “SOV,” a 2 would be given to “HOV,” a 1 would be
+  given to “Truck,” and weights of 0 would be given to the other modes.
+
+  d. Management Strategy/Application: The project involves ramp metering only. A
+  weight of 5 would be given to “Freeway Management” and the other subcriteria
+  would be given weights of 0.
+
+  e. Traveler Response: It is anticipated that there will be some route diversion as a
+  result of ramp metering, so it should be given a high weight. There may be some
+  mode shift or departure time choice; however, they are not nearly as relevant for
+  the analysis. “Route Diversion” should be given a weight of 5, “Mode Shift” and
+  “Departure Time Choice” should each be given a 2, and the other traveler
+  responses should be given weights of 0.
+
+  f. Performance Measures: The stakeholders for this project are interested in travel
+  speed, volume, and the travel time changes anticipated from the ramp metering
+  project. A benefit/cost comparison is also desired for determining whether the
+  project is worthwhile to implement. The measures to be considered for the
+  benefit/cost comparison include mobility (delay), travel time reliability, safety
+  (crashes), emissions, and fuel consumption. Weights of 5 would be given to
+  “Speed,” “Volume,” “Travel Time,” “Delay,” “Travel Time Reliability,” “Crashes,”
+  “Emissions,” “Fuel Consumption,” and “Benefit/Cost.” Many of these measures
+  are based on VMT and VHT/PHT. Therefore, if some of the desired measures are
+  not available, “VMT/PHT” and “VHT/PHT” measures would each be given a
+  weight of 4. Because this is a ramp metering project, it would also be desirable to
+
+  34
+  know the queue length, but it is not required, so a weight of 2 would be given to
+  “Queue Length.” The other performance measure subcriteria would be given
+
+  weights of 0.
+
+g. Tool/Cost-Effectiveness: There is an adequate budget for addressing all aspects of
+  the project, including the costs of acquiring the tool, staff training, hardware
+  requirements, and analytical runs. The high priorities for the project in this area
+  involve confidence in the results, the ability of the tool to be adjusted to local
+  conditions, and that the results can be easily produced and presented to the
+  stakeholders. In this case, weights of 5 would be given to “Popular/Well Trusted,”
+  “Post-Processing Requirements,” “Key Parameters Can Be User-Defined,” and
+  “Animation/Presentation Features.” Weights of 3 would be given to “Easy to
+  Use,” “Data Requirements,” and “Default Values Are Provided.” Weights of 2
+  would be given to “Low Tool Costs,” “Level of Effort/Training,”
+  “Documentation,” and “User Support.” In addition, a weight of 1 would be given
+  to “Hardware Requirements.” “Integration With Other Software” is not a concern
+  and would be given a weight of 0.
+
+  1  2
+
+  Sub-
+
+  Criteria
+
+Criteria  Relevance
+
+1 Geographic Scope (0 = not relevant, 5 = most relevant)  Step 2 – Enter sub-criteria
+  relevance for each criterion into
+Isolated Location  0  Column 2. Values range between
+  0 (not relevant) and 5 (most
+Segment  5  relevant).
+
+Corridor/Small Network  0
+
+Region  0
+
+  Figure 4. Selecting the appropriate tool category, step 2.
+
+3. Assign tool relevance values (column 3). Most of these values are provided as part of
+
+  the worksheet (appendix B) based on the assessment presented in tables 1 through 8.
+
+  Only the geographic scope criterion requires user input of tool relevance values in
+
+  column 3. Using the appropriate analytical context and the tool relevance factors
+  presented in table 2, enter the tool relevance values for “Geographic Scope” in
+
+  column 3:
+
+  a. For every solid circle (●), assign a value of 10.
+
+b. For every null symbol (∅), assign a value of 5.
+
+c. For every empty circle (○), assign a value of 0.
+
+d. For every not applicable (N/A), assign a value of -99.
+
+  35
+  Step 3 – Fro m table 2, enter
+
+  relevance fa ctors for Geographic
+
+  Scope criteria into Column 3
+
+  using the appropriate analytical
+
+  context. Use the following values:
+
+  1  (●) = 10 points2; (∅) = 5 points,  3
+  (○) = 0 points, (N/A) = -99 points.  Tool Category Relevance*
+
+  Sub-  Analytical Traffic Macro
+  (HCM) Opt Sim
+  Criteria Sketch  Meso  Micro
+  Sim  Sim
+Criteria  Relevance Plan TDM
+  0  0
+1 Geographic Scope (0 = not relevant, 5 = most relevant)  5  5
+  5  5
+Isolated Location  0  0  0  10  5  0  -99  -99
+
+Segment  5  10  0  10  0  5
+
+Corridor/Small Network  0  5  10  0  0  5
+
+Region  0  5  10  -99  -99  -99
+
+  Figure 5. Selecting the appropriate tool category, step 3.
+
+4. Multiply columns 2 and 3 (column 4). For the analytical context and each subcriterion,
+  multiply the entries in column 2 by the entries in each subcolumn in column 3, and
+  enter the products into the appropriate cells in column 4.
+
+  Step 4 – M ultiply t he value in
+  Colum n 2 by eac h tool cat egory
+  value in Col umn 3, and ent er the
+  values into Col um n 4.
+
+2  4
+  Column 2 x Column 3
+  Sub-  Too
+ Criteria  Sketch  Sketch  TDM  Analytical Traffic Macro  Meso  Micro
+Relevance  Plan  Aincro  Plan  (HCM) Opt Sim  Sim  Sim
+  TDM i(mH
+
+0  0  0  0x0 = 0  0  0  0  0  0  0
+  5x10 = 50
+5  10  0  0x5 = 0  0  50  0  25  25  25
+  0x5 = 0
+0  5  10  0  0  0  0  0  0
+
+0  5  10  0  0  0  0  0  0
+
+  Figure 6. Selecting the appropriate tool category, step 4.
+
+5. Sum the values of column 4. For the analytical context and each criterion, add up the
+  values for each tool category in column 4 and enter the result into the “Subtotal” row
+  in column 4.
+
+6. Count the number of subcriteria relevance weights greater than 0. For the analytical
+  context and each criterion, count the number of relevance weights in column 2 that are
+  greater than 0 and enter the value into the “Relevance Weights Above 0” cell.
+
+  36
+7. Calculate the criteria ratings. Divide the values in the “Subtotal” rows by the number
+  of “Relevance Weights Above 0” cell and enter the amount into the “Weighted
+  Subtotal” row in order to normalize the scores. Repeat this process for each criterion.
+
+  4
+  Column 2 x Column 3
+
+  Sketch  Analytical Traffic Macro  Meso  Micro
+  (HCM) Opt Sim  Sim  Sim
+Step 5 – S um values for eac h tool  Plan  TDM
+category and criteria into t he  0  0  0  0  0
+“Subtotal” row.  0  0  Step506 – Count 0the numbe2r5of  25
+  50  0  relevance weights (Column 2) that  25  0
+  0  0
+  0  0  are greater than zero.000  0  25
+  0
+  0  0  0  0  0  25
+  0
+  Subtotal 0+50+0+0=50  50  0  25  25
+
+  Relevance Weights Above 0 1
+
+  WEIGHTED SUBTOTAL 50/1 = 50  50  0  25  25
+
+  Step 7 – Divide the values i n the
+  “Subtotal” rows by the
+  “Relevanc e W eights Above 0”
+  cell, enter i nto t he “W eight ed
+  Subtotal” row.
+
+  Figure 7. Selecting the appropriate tool category, steps 5–7.
+
+8. Group weighted subtotals (column 7). Copy the weighted subtotals for the analytical
+  context and seven criteria from their respective rows to column 7 at the bottom of the
+  worksheet.
+
+  7  Step 8 – Copy all weighted
+  Weighted Subtotals  subtotals into Column 7.
+
+Sketch  Analytical Traffic Macro  Meso  Micro
+ Plan  Sim  Sim
+  TDM (HCM) Opt Sim
+  50  25  25
+  0  50  0  25
+
+WEIGHTED SUBTOTAL 50  0  50  0  25  25  25
+
+  WEIGHTED SUBTOTAL
+
+  WEIGHTED SUBTOTAL
+
+  WEIGHTED SUBTOTAL
+
+  WEIGHTED SUBTOTAL
+
+  WEIGHTED SUBTOTAL
+
+  WEIGHTED SUBTOTAL
+
+  Figure 8. Selecting the appropriate tool category, step 8.
+
+9. Review and reassess weighted subtotals. Review the values in column 7 for each
+  criterion and tool category, with particular focus on the negative values. For each
+  negative criteria value, identify the source of the negative value (column 4) and verify
+  the subcriteria relevance in column 2. Make adjustments as necessary to the subcriteria
+  relevance values based on the project’s goals and objectives, priorities, needs, and
+  issues.
+
+  37
+10. Assign criteria relevance weights (column 6). The prior weighting scheme (column 2)
+  was applied to the subcriteria within each major criteria category. This step involves
+  weighting the major criteria categories against each other. This should be based on the
+  project’s goals and objectives, priorities, needs, and issues. For the analytical context
+  and each of the seven criteria, assign the appropriate weights, ranging from 0 (not
+  relevant) to 5 (most relevant). If a user wants to weight each of the criteria and
+  analytical context equally, a weight of 5 can be applied to all. A different weighting
+  scheme may be used if greater differentiations between criteria are necessary. The user
+  should carefully consider the project’s priorities, needs, and constraints when selecting
+  the criteria weights.
+
+  6  7  Step 9 – Revi ew negative values
+  Weighted Subtotals  in Col umn 7 and reassess
+Criteria  relevance values for s ubcriteria.
+ Rele-
+ vance  Sketch  Analytical Traffic Macro Meso  Micro
+  Plan  Sim
+  5  TDM (HCM) Opt Sim Sim
+  3  50  0
+  3  50  50  25  0  25  25  25
+  3  15  33
+  4  16  0  50  0  25  25  21
+  1  19  30
+  5  13  33  20  16  23  21  22
+  5  13  23
+  20  25  13  13  13  21  11
+
+  13  17  20  27  27
+
+  23 Step 1-026–6A4ssig n re0levance22  22
+
+  16 weights1f6or t he a n1a6lytical c1o8ntext 22
+  11 and seve22n criteria,1r9anging1f9rom 0 10
+
+  (not relevant) to 5 (most relevant) .
+
+  Figure 9. Selecting the appropriate tool category, steps 9 and 10.
+
+11. Multiply columns 6 and 7 (column 8). For each context/criterion, multiply the value
+  in column 6 by each of the subcolumns in column 7 and enter the result into the
+  appropriate cells in column 8.
+
+  Step 11 – M ultiply t he value in
+  Colum n 6 by Col um n 7 for each
+  tool category, and enter t he values
+  in Col umn 8.
+
+  6  7  8
+Criteria
+  TDM  Weig  Column 6 x Column 7
+ Rele-  AnaMlyitcirco
+ vance  Sketch  50  Sketch  Analytical Traffic Macro  Meso  Micro
+  Plan  0  (HCSiMm)  Plan  Sim  Sim
+  5  33  TDM  (HCM) Opt Sim
+  3  50  25  25  250  125  0
+  3  50  13  50  150  250  125  0  125  75  75
+  3  15  23  20  45  0  63  98
+  4  16  16  13  49  150  0  75  62  64
+  1  19  11  17  76  100  108  120
+  5  13  -2664  13  75  60  48  70  22  22
+  5  13  16  65  52  110  114
+  20  22  100  23  39  38  38  50  57
+  82
+  57  68  80  108
+
+  -124  0  22
+
+  78  82  91
+
+  111  93  93
+
+  Figure 10. Selecting the appropriate tool category, step 11.
+  38
+12. Determine the best tool categories. Sum the products of the multiplication for each
+  tool category in column 8 and enter the values in the “Weighted Totals” row at the
+
+  bottom of the worksheet. The tool categories with the highest totals based on this
+
+  mathematical process are the most appropriate tools for the task.
+
+Step 12 – Sum values of each sub-
+column in Column 8 and enter in
+the “Weighted Totals” cells.
+
+WEIGHTED TOTALS 748  639  507  340  621  614  549
+
+Most Appropriate Tool Categories: 1.  Sketch Plan
+
+2.  TDM
+
+  Step 13 – Select the top two tool
+  categories. Given the users’ input
+  into this worksheet, these are the
+  most appropriate tool types for
+  consideration.
+
+  Figure 11. Selecting the appropriate tool category, steps 12 and 13.
+
+13. Select the top two tool categories for further consideration. It is recommended that
+  the user further explore the available tools for the top two most appropriate tool
+  categories, particularly if the total scores are close in value. Tool categories with final
+  scores of less than 0 should not be considered. It should be recognized that one specific
+  tool may not be able to address all of the project’s needs. Multiple tools may be
+  necessary for conducting a particular study and those tools may or may not be from
+  the same tool category. Each of the subcriteria with high relevance factors and low
+  scores in column 4 will need to be assessed to determine if that particular category of
+  tool weakness can be overcome through other means (e.g., there is a need for
+  microsimulation; however, the computer resources are insufficient to accommodate
+  the analytical needs).
+
+3.2 Examples for Using the Tool Category Selection Worksheets
+
+The following are three examples for using the tool category selection worksheets.
+
+3.2.1 Example 1: Ramp Metering Corridor Study
+
+A State department of transportation (DOT) needs to assess the future impact of ramp
+metering. Without the convenience of a field experiment, the DOT must estimate the
+volume, speed, and travel time impacts of ramp metering on a freeway corridor, the
+ramps, and the parallel arterials. The study corridor is approximately 24 km long (15 mi
+long), running north-south, with one parallel arterial on each side of the freeway less than
+0.8 km (0.5 mi) away. The impact of passenger cars is the focus of the study for both the
+SOV and HOV travel modes. Ramp metering strategies to be considered include fixed-time
+and adaptive ramp metering, with the following parameter permutations: (1) with and
+
+  39
+without queue control, (2) with and without HOV bypass lanes, and (3) restrictive and less
+restrictive metering rates. Since ramp metering may cause diversion of traffic to the
+parallel arterials, the ability of the traffic analysis tool to adapt to dynamic traffic
+conditions is crucial to the project. In addition, the corridor is currently undergoing major
+infrastructure changes. HOV lanes are being constructed at the southern portion of the
+corridor and a few interchanges are being realigned.
+
+The project manager has stressed that deployment of ramp meters at this corridor will not
+occur without the support of the local city partners. The State DOT and the local traffic
+jurisdictions have developed excellent working relationships over the years; however, the
+cities are reluctant to support the ramp metering project because they fear that the traffic
+queues at the on-ramps and route diversion would reduce the performance of their
+arterials. Therefore, an objective of the evaluation is to select the ramp metering strategy
+that can be accepted by all stakeholders. The ability of the tool to produce animated
+results is preferred, but is not crucial; however, the tool must be well accepted and widely
+used.
+
+The project team consists of experienced analysts and engineers who are equipped with
+high-performance computers. The State has obtained the arterial/interchange signal
+timings from the local cities in preparation for this project. Old aerial photographs
+showing the corridor before construction work and design drawings from the
+construction sites are available.
+
+Project Assessment
+
+Based on the information provided, the following can be used to summarize the project:
+
+• Project Context: Design
+
+• Project Goal: Evaluation and selection of optimal ramp metering strategy
+
+• Project Objectives and Background:
+
+  − Analyze fixed-time and adaptive ramp metering under various operating
+  parameters.
+
+  − Corridor study area is 24 km (15 mi), with two parallel arterials.
+  − Focus on roadways and passenger vehicles.
+  − Aerial photographs, design drawings, and existing signal timings are available.
+  − Volume, speed, and travel time are the main output.
+  − Traveler response, particularly route diversion, is crucial.
+  − Good presentation/animation capabilities are preferred.
+  − Tool should be versatile yet sensitive enough to model small variations in
+
+  parameters.
+  − Tool should be popular/well-trusted by the industry.
+
+  40
+Tool Category Selection Worksheet for Example 1
+
+Table 9, which can be found at the end of this section, shows a completed worksheet for
+this example. Based on the analysis performed using the worksheet, this project can be
+best evaluated using three different tool categories (there are only two negative final
+scores, while three of seven scores are close). The most appropriate tool category is the
+microscopic simulation tools, followed by macroscopic and mesoscopic simulation tools.
+
+3.2.2 Example 2: ITS Long-Range Plan
+
+A metropolitan planning organization (MPO) plans to assess the future costs and benefits
+of ITS investments in its jurisdiction. The study area is the entire metropolitan area, which
+is about 1300 km2 (500 mi2); however, the MPO is only concerned about travel on
+freeways, highways, and major arterials.
+
+A skeleton network with nodes, links, and trip table data is available from the local travel
+demand model. Aerial photographs are available. However, they are a few years old, but
+the major transportation infrastructure has not changed and no changes are expected in
+the future. Alternative modes of transportation (e.g., transit, motorcycles, trucks, and light
+rail) are important; however, the focus of the study is the impact on passenger cars. The
+ITS strategies to be considered include ramp metering, incident management, arterial
+management, and advanced traveler information systems (ATIS). The MPO has
+developed O-D trip tables for both existing and future scenarios. At least five different
+alternatives will need to be analyzed. As for the output, the MPO Board is mostly
+concerned with the benefit/cost ratios related to each of the ITS alternatives. If necessary,
+a second tool may be used to convert the output into monetary terms.
+
+The project manager is an experienced modeler who has worked with demand forecasting
+tools in the past, but most of her team members are relatively new to the field. However,
+the team members are computer-savvy and seem to absorb new ideas extremely well,
+given the availability of learning resources. This project has a healthy budget; however,
+time is of the essence, since the board needs to submit a report to the finance department
+by the end of the fiscal year, which is only 6 months away.
+
+Project Assessment
+
+Based on the information provided, the following can be used to summarize the project:
+
+• Project Context: Planning
+
+• Project Goal: Benefit/cost evaluation of ITS investments
+
+• Project Objectives and Background:
+
+  − Analyze the impacts related to the deployment of ITS strategies: ramp metering,
+  incident management, arterial management, and ATIS.
+
+  41
+  − Large study area is 1300 km2 (500 mi2).
+  − Focus on roadways and passenger vehicles.
+  − O-D matrices and skeleton network are available.
+  − Benefit/cost ratios are the main output.
+  − Tool should be easy to use and have good documentation.
+  − Deadline is in 6 months.
+
+Tool Category Selection Worksheet for Example 2
+
+The completed worksheet for this example is shown in table 10, located at the end of this
+section. Criteria and subcriteria weights that address the project’s goals and objectives
+were given higher values. Based on the analysis performed for this example, the most
+appropriate tool category is the travel demand model. The sketch-planning tool category
+should also be considered since the scores are reasonably close. The user should further
+explore the specific tools that fall within these two categories to determine which tool(s)
+best serves the needs of the project. Other tool categories in this example have scores of
+less than 0 and should not be considered for analysis.
+
+3.2.3 Example 3: Arterial Signal Coordination and Preemption
+
+A city traffic department is conducting a major traffic signal timing improvement on one
+of its most critical arterials, which is about 16 km long (10 mi long). This study is being
+conducted in conjunction with a large redevelopment project that hopes to revive the
+economy in this section of town. Multiple interest groups, neighborhood groups, and city
+jurisdictions are involved with the project.
+
+The arterial is vital to the city and currently serves all travel modes; however, the city is
+most interested in improving travel on the arterial for passenger vehicles, buses, and light
+rail, primarily through the use of signal coordination. No major alignment changes are
+being considered; however, traffic signal preemption for buses and light rail is a major
+component that will be introduced for the first time in this city. Many citizens are not
+familiar with the technology and are quite skeptical about its effectiveness. In fact, many
+perceive that preemption would result in worse traffic conditions. Therefore, an
+evaluation process and an outreach program highlighting the benefits of the project to the
+community are needed. The results of the analysis must be presented to the public and the
+stakeholders in the most effective manner.
+
+The best and most experienced staff members have been assigned to this project. They are
+experts in a few modeling and simulation tools, but are looking for the best tool available
+with a short and flat learning curve. Otherwise, they are more inclined to use the tools that
+they are already familiar with. The computers available for the project are older Intel®
+Pentium® II machines. The city maintains good records for traffic volumes and roadway
+geometrics for the entire arterial and parallel roadways, and is interested in evaluating as
+many performance measures as can be provided by the tool. However, the following three
+performance measures are crucial: LOS, speed, and intersection delays, both at the
+
+  42
+

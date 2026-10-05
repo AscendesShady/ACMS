@@ -1,0 +1,987 @@
+substantial. Furthermore, this strategy works only in the areas where these
+smart breakers are installed.
+
+Paper 2: Detect Speed Breakers and Prevent Accidents Using Sensors and
+AI
+
+This paper addresses the use of AI in road safety. The device notifies drivers
+to take precautions to avoid such places by utilising car sensors and the AI
+algorithm. This pre-warning system can either visually or audibly alert the
+driver away from such areas or even slow down the car through mechanical
+intervention, significantly reducing accidents due to drivers who either
+ignore or overestimate the height of bumps. It also looks into the possibility
+of applying artificial intelligence to data processing from an automobile's
+in-vehicle network. Here, the system may predict collisions even before
+occurring by training machine learning models with data to enable
+precautionary measures such as automated braking. Overall, this paper has
+presented enormous potential for AI to make our roads from hazard-prone
+to safe.
+
+Paper 3: Accident Detection and Alert System
+
+This study suggests an app for smartphones that detects accidents. It keeps
+an eye out for abrupt speed changes that could point to a collision using
+sensors like accelerometers and GPS. The software notifies the user when it
+senses a jolt. The user can either confirm an emergency or cancel the alert
+within ten seconds. The app instantly notifies emergency services and pre-
+selected contacts of a help request if no answer is received. Response times
+can be greatly accelerated by doing this, possibly saving lives.
+
+Paper 4: Design and Development of Speed Breaker Detection and
+Automatic Speed Control System in Vehicle
+
+In this article, the author claims that in traditional automobile braking
+systems, several operating mechanisms are used. These include hydraulic,
+pneumatic, air, and mechanical systems. However, all of these braking
+mechanisms rely completely on manual operation as they receive either
+their signal or the input power directly from the driver. Adverse weather
+conditions, such as rainfall or fog, can limit the view of the warning signs
+that display speed limits, thus causing the brake to malfunction since it
+receives wrong information from the driver. Also, because driving is at
+night, the chances of accidents are high since drivers might not respond in
+time. Additionally, there are no precautions against causing vehicle damage
+during accidents. This method fails to reduce harm to the two cars and
+people as well.
+
+Paper 5: Speed Breaker Detection and Speed Reduction Using Machine
+Learning
+
+This study shows how CNNs may be used for promising detection of speed
+bumps in road photographs. The chosen method can scale well with various
+road conditions, assures great precision, and allows real-time integration
+into driver-assistance systems. However, some restrictions must be taken
+into account. The quality and variety of the training data are decisive factors
+for the model's efficiency. Biased or low-quality training data would lead to
+misidentifications. The solution should be robust by considering the
+extension of the training data with some illumination, weather, and speed-
+bump variations. Better performance can also be achieved with adjusted
+hyperparameters, tweaking the CNN architecture to optimally maximise its
+extremes.
+
+15 Conclusion
+
+Speed breakers and vehicle accident detection systems, enhanced with alert
+sensors, represent a significant leap in ensuring the safety of roads and
+reducing accidents. This proposed method includes the detection of speed
+breakers and pit holes during rainy or foggy seasons to alert drivers, causing
+them to slow down and avert from the road. To detect speed bumps or pit
+holes during the rainy season with greater precision, machine learning
+techniques like these are advised.
+
+  Datasets should be collected, and the factors required have to be noted
+so that the warning sensors can be used for implementing efficient potholes,
+speed breakers, and accident detection systems. To a great extent, the
+systems depend on the timeliness and quality of the features taken into
+account, besides the completeness and quality of the data being gathered for
+precise and prompt detection.
+References
+
+1. Theerthagiri P, Ruby AU, Chandran JGC, Sardar TH, Shafeeq BMA (2024) Deep SqueezeNet
+  learning model for diagnosis and prediction of maize leaf diseases. J Big Data 11(1):112
+
+2.
+  Subbarao E, Gite P, Sharma A, Vyakaranam L, Sardar TH, Taqui SN, Kalam MA (2023)
+  Investigation of solar energy for urban areas and metropolitan communities using machine
+  learning. Electr Power Compon Syst 1–11
+
+3.
+  Sardar TH, Faizabadi AR, Ansari Z (2017) An analysis of data processing using Mapreduce
+  paradigm on the Hadoop framework. Int J Emerg Res Manag Technol 6(5)
+
+4.
+  Sardar TH, Sarkar R, Ahmed SJ, Bandyopadhyay A (2023) A novel ensemble methodology to
+  validate fuzzy clusters of big data. In: Proceedings of the fourth international conference on
+  trends in computational and cognitive engineering: TCCE 2022. Springer Nature Singapore,
+  Singapore, pp 267–278
+
+5.
+  Sardar TH, Khatun A, Khan S (2017) Design of energy aware collection tree protocol in wireless
+  sensor network. In:2017 IEEE international conference on circuits and systems (ICCS). IEEE, pp
+  12–17
+
+6.
+  Sardar TH, Faizabadi AR, Ansari Z (2017) An evaluation of MapReduce framework in cluster
+  analysis. In: 2017 international conference on intelligent computing, instrumentation and control
+  technologies (ICICICT). IEEE, pp 110–114
+
+7.
+  Khatun A, Sardar TH (2025) Cryptography algorithms to prevent different security attacks. In:
+  Next generation mechanisms for data encryption. CRC Press, pp 35–46
+
+8.
+  Sardar TH, Muttineni A, Ranjan R (2024) The future of big data in customer experience and
+  inventory management. In: Big data computing. CRC Press, pp 233–248
+
+9.
+  Sardar TH, Das S, Pandey BK. Explainable AI (XAI): concepts and theory. In: medical data
+  analysis and processing using explainable artificial intelligence. CRC Press, pp 1–18
+
+10.
+  Reddy V, Nagesh S (2016) Smart phone based speed breaker early warning system
+
+11.
+  Ajay S, Govind G, Dharmendhar S, Parthasarathy J (2019) Automatic speed breaker on time
+  demand using embedded systems. Int J Eng Res Technol (IJERT) 8(4)
+
+12.
+  Mahadik A, Chaudhar S, Nitnaware A, Ingale H, Jadhav TA. Design and development of speed-
+  breaker detection and automatic speed control system in vehicle. Department of Mechanical
+  Engineering, SCOE, Pune, Maharashtra, India
+
+13.
+  Singh G, Kumar R, Kashtriya P (2018) Detection of potholes and speed breaker on road. In:
+  2018 first international conference on secure cyber computing and communication (ICSCCC),
+  pp 490–495 [Online]
+
+14.
+  Ansari S (2021) Building a realtime pothole detection system using machine learning and
+  computer vision. Towards Data Sci
+15.
+  Kaushik V, Kalyan BS (2022) Pothole detection system: a review of different methods used for
+  detection. In: 2022 second international conference on computer science, engineering and
+  applications (ICCSEA), Gunupur, India
+
+  OceanofPDF.com
+© The Author(s), under exclusive license to Springer Nature Switzerland AG 2025
+S. Mallik et al. (eds.), Applications of Computational Learning and IoT in Smart Road
+Transportation System, Springer Tracts on Transportation and Traffic 22
+https://doi.org/10.1007/978-3-031-87627-1_3
+
+Integrating Machine Learning and IoT:
+Pioneering Solutions for Sustainable
+Smart Cities
+
+Pavanalaxmi1, 2, Kripa1, 2, Roopashree Nayak1, 2 , A. B. Abhishek1, 2 and
+M. Praveen Kumar1, 2
+(1) Sahyadri College of Engineering and Management, Adyar, Mangaluru,
+
+  India
+(2) Affiliated to Visvesvaraya Technological University, Belagavi,
+
+  Karnataka, India
+
+  Roopashree Nayak
+  Email: roopashree.ec@sahyadri.edu.in
+
+Abstract
+Smart cities are changing due to machine learning (ML) and the Internet of
+Things (IoT), advancing liability, sustainability, and increased efficiency.
+They maximise urban services, from public safety and environmental
+monitoring to transportation and energy management, using machine
+learning algorithms and interconnected IoT devices. Through predictive
+maintenance, anomaly detection, and sophisticated analytics, the integration
+of ML expands the possibilities of IoT systems. By detecting and notifying
+authorities of odd activity or possible security risks, incorporating
+surveillance systems with ML can improve crime prevention and response.
+ML algorithms examine this data to enhance efforts to create a healthier and
+cleaner urban environment by offering insights into pollution trends and
+health hazards. Significant infrastructure and technological investments are
+also required to deploy and keep these cutting-edge systems. Government
+agencies, stakeholders in the corporate sector, and society must work
+together effectively to address these issues and guarantee data’s secure and
+moral use. In summary, the development of smart cities depends on the
+fusion of machine learning and the IoT.
+
+Keywords IoT – Sensors – Smart city
+
+1 Introduction
+
+Scientifically enhanced (by electric systems and millions of sensors that
+gather technical information), the metropolitan region is a smart city. Data
+is employed to improve city operations by delivering critical information
+that efficiently manages resources, assets, and services. This information,
+which derives from people, things, and their properties or states, as well as
+other phenomena in conjunction with our city’s infrastructure and
+ecosystem, assists in observing and learning about neighbourhoods over
+time. Waste management, investigation of crimes, data centres, educational
+institutions, libraries, healthcare facilities, and other community services,
+traffic and transportation systems, power plants, services, urban forestry,
+and distribution of water networks are the factors where urban life is
+dependent. These are then sent up for processing and analysis, as a smart
+city is defined based on its ability to monitor itself, including the use of
+technology by local government. A smart city is a developed metropolitan
+region that utilises state-of-the-art information and communication
+technology (ICT) to promote sustainable growth, increase the effectiveness
+of city services, and raise the standard of living for its residents.
+
+1.1 Evolution of Smart Cities
+1.1.1 Initial Thoughts and Sources (1980s–1990s)
+
+  Smart cities are an idea that emerged from digital cities, which tried to
+  use digital platforms to improve urban administration.
+  The connectivity between the different types was improved with the help
+  of communication and the Internet.
+
+1.1.2 First Generation (Early 2000)
+  The Pilot Projects, such as security-related surveillance and energy
+  management using smart meters, were used in the cities to make smart
+  cities.
+  Basic connectivity during this era was made possible with the help of
+  digital infrastructure and internet technologies.
+
+1.1.3 Second Generation (2010)
+
+  The integration of more smart technologies is used to improve the
+  functions of the urban area.
+  The IoT devices flourished to provide real-time data for efficient urban
+  management using big data analytics.
+
+1.1.4 Third Generation (2020)
+
+  Artificial Intelligence and machine learning innovations make cities more
+  responsive and adaptable by helping to forecast and optimize urban
+  operations.
+  Urban development satisfies public requirements, and contemporary
+  smart cities strongly emphasise citizen participation and participatory
+  government.
+
+1.2 Role of Technology in Shaping Modern Urban
+Environments
+
+Internet of Things (IoTs) and Data Analytics enable linking devices and
+sensors across the city and gathering enormous amounts of information,
+which is at the core of smart cities. Then, this information is examined to
+monitor and control energy usage, traffic patterns, environmental quality,
+and public safety. By utilising data analytics, municipality developers may
+make well-informed decisions that improve the quality of life for people
+and result in more efficient municipal systems.
+
+  Smart technology makes integrating renewable energy sources like
+wind, solar, and electricity into the metropolitan grid easier. In addition to
+lowering cities’ carbon footprint, this guarantees a more reliable and
+affordable energy source. Smart grids improve energy efficiency even
+further by using technology to control the supply and demand for
+electricity.
+  E-governance is also embraced by smart cities, which use digital
+platforms to improve citizen-government communication. These platforms
+encourage transparency, increase citizen participation in city development
+and decision-making processes, and enhance the effectiveness of public
+services.
+
+2 Foundation of Smart Cities
+
+2.1 Overview of IoT and Its Significance
+
+IoT is a method that allows them to take control of these devices by
+combining already-existing resources across the Internet. Early in the
+1990s, the Auto-ID Labs at Massachusetts Institute of Technology (MIT)
+presented the initial idea of the IoT [1]. The first IoT application to be built
+and the term “IoT” to be coined was the Trojan Room coffee pot [2]. IoT is
+a potential network model that enables interactions via heterogeneous
+networks between ubiquitous objects such as people, computers, gadgets,
+and cars. The IoT refers to the network connectivity of disparate items
+embedded with sensors, software, electronics, and network connections,
+such as devices, cars, buildings, and many more. In the future, IoT will be a
+major player in several industries, including demotics, healthcare, home
+automation, transportation, and enhanced education [3]. To take precise
+actions in those areas for improvement, IoT systems often can sense objects
+and measure and compute data. For instance, in systems connected to
+healthcare, some medical equipment can be used to track patients’ vital
+signs, such as blood pressure, temperature, and heart rate. This makes it
+easier for doctors to treat patients in an emergency since they can quickly
+assess their condition and begin treating them.
+
+  One of the main functions of the IoT is to assemble and analyze
+environmental information to apply the knowledge gained to enhance the
+public’s quality of life. This technology was created in response to the need
+for innovation and for things to be sufficiently capable of measuring,
+interpreting, discerning, and altering their surroundings. Applications for
+IoT can be found in several areas, including agriculture, the environment,
+smart cities, smart homes, smart healthcare, and smart video surveillance
+[4]. Numerous sectors, including tourism, public safety, transportation, and
+city consumption, are enhanced as smart cities use this.
+2.1.1 Key Components of IoT
+
+The IoT is a collection of networked systems, sensors, and gadgets that can
+communicate with one another. These gadgets might range from
+commonplace home goods like thermostats and refrigerators to
+sophisticated urban infrastructures and industrial machinery.
+
+  Sensors
+
+The sensors carry the information gathered from the surroundings of the
+physical objects. The data collection from simple sensors such as
+temperature sensors to complex sensors like industrial robots are used in
+smart cities. These sensors measure different parameters like temperature,
+motion, light, humidity, etc.
+
+  Interconnectivity
+
+IoT devices are interconnected with the help of the internet, enabling them
+to transfer and receive data. The interconnectivity can be provided with the
+help of a cellular network, Wi-Fi, IoT protocols, and LoRa.
+
+  Processing of Data
+
+The information composed from the sensors needs to be processed and
+verified. This process is carried out in centralised data centres or cloud
+service stations. The processed data can be utilised to take actions based on
+the requirements.
+
+  Interface with User
+
+The information from the IoT devices is provided to the users with the help
+of mobile apps, voice assistants, or web dashboards. These data will allow
+the users to monitor and control their used IoT devices.
+
+  Actuators
+
+Based on the processed data, the actuators performed physical actions on a
+few IoT systems.
+
+3 Integration of IoT in Smart Cities
+
+Smart cities represent a growing reality, helping enable the sustainable and
+high-quality development of populations in metropolitan regions
+worldwide. ML is a tool that allows models to be prepared with data sets
+before live deployment. Based on expected responses, learning associations
+across a wide range of data forms (i.e., numbers, images, etc.). It may drive
+changes in utility business models, enabling new and improved services and
+creating more sustainable mobility with less inconvenience. It tackles
+correlated issues around urban planning efficiency and citizen service
+integration to provide individual results [5].
+
+  Sensors and actuators are installed in a smart city to capture relevant
+data across the city. These messages consist of readings from the devices
+and actuation commands, making them communicate with the IoT platform
+via various network technologies. The smart city applications used the
+stored information on the IoT platform to solve several city problems. The
+technology for smart city applications is related to data security and
+privacy, which are gaining prominence as two key elements of future IoT
+[6].
+
+  The IoT is acknowledged as a revolutionary technology that broadens
+its application to various contexts and fields. New research from McKinsey
+estimates that by 2025, the IoT could have an annual economic impact of up
+to $11.1 trillion, making it the most valuable disruptive technology of all,
+outstanding even mobile Internet, knowledge-work automation, cloud
+computing, and sophisticated robots in terms of value [1]. The context-
+aware services that underpin the creation of intelligent spaces are supported
+by the information IoT delivers. A Smart City seeks to create a thriving
+ecosystem where inhabitants’ lives are enhanced, and new opportunities
+arise due to streamlined city operations and increased efficiency [7, 8].
+
+  Applications like waste management, street lighting, public safety,
+parking, water, electricity, and traffic. Infrastructure must be installed to
+enable a sense of key city factors and the control and actuation of various
+elements to support all these application areas. Infrastructure that is made
+available across many application areas in a homogenous and resilient
+manner, rather than being restricted to silos, will be the key to realising the
+full potential of IoT in Smart Cities. The main obstacles are integrating
+disparate IoT machinery and obtaining the necessary scalability and safety
+to share information among authorised parties while keeping it safe from
+unauthorised access.
+
+  In this perspective, the most valuable resource is the data continuously
+generated by many sensors embedded in real-world environments [9]. The
+trade operations utilising the data that powers Smart City services as the
+raw material must be permitted if systems to monitor the origin, calibre, and
+worth of the information transferred are to be implemented [6].
+
+3.1 IoT in Smart Cities
+
+A smart city is a metropolitan region with digital data-driven technologies
+that optimise resource utilisation and public service delivery. Environment,
+smart residents, smart economy, smart government, and smart lifestyle are
+the six main parts of a smart city. IoT is naturally concentrated on
+technology, whereas smart cities are more user-focused. They are all
+heading in the same direction—better services for contemporary cities (Fig.
+1) [10].
+Fig. 1 Relationship between IoT and smart cities [8]
+
+3.1.1 Data Collection
+
+Identification and sensing are two categories into which IoT data collecting
+may be divided. Finding an object’s address and ID within a network is the
+main goal of the identification procedure. Electronic Product Codes (EPC)
+and Ubiquitous Codes (uCode) are two commonly used data identification
+techniques in the IoT. It is possible for an object’s ID in a network to not be
+unique. An address is utilised to recognise that object in this instance
+properly. Additionally, a network may include private and public Internet
+Protocols (IPs), such as IPv4 and IPv6. Data is collected during the sensing
+process using sensing equipment like actuators, smart sensors, wearable
+sensors, cell phones, etc. The development of single-board computers is one
+of the most significant advances in this field (SBCs). SBCs have an
+application processor that can run sophisticated operating systems such as
+Windows, Linux, or Android. They can be integrated with sensors, built-in
+TCP/IP, and security firewalls and are usually set for placement with little
+configuration required.
+
+3.1.2 Data Delivery
+
+In IoT-enabled networks, communication protocols are important in
+defining how the data in IoT gets sent. These days, there is a broad usage of
+different communication protocols such as LTE-Advanced, WiFi, etc.
+Among the most popular protocols used for IoT data links is the IEEE
+802.15.4. The base of this protocol comprises setting up source and
+destination addresses for headers, frame formats, and node-to-node
+communication. Another crucial technique of data transport is WiFi, which
+allows data transfer between smart devices in ad hoc deployments without
+using any routers. Bluetooth is a short-wavelength radio communication
+technology that enables smart devices to interchange information over a
+relatively short area.
+
+3.1.3 Data Analysis
+
+Several software platforms and operating systems have been developed to
+analyse IoT records. Unlike PCs or mobile devices, many of them will be
+found in commercial and open-source categories. Real-time operating
+systems are extensively utilised in managing hardware resources, hosting
+applications, and processing real-time information. They are essential to the
+development of trustworthy IoT solutions in the fields of
+telecommunications, transportation, and automotive. Cloud platforms, also
+called the fog in cloud computing, are another important computational
+component of IoT, providing many useful application-specific services in
+several application domains [8].
+
+3.2 Role of IoT in Smart Cities
+
+Waste Management: Because of the high expense of the service and the
+issue with garbage being stored in landfills, waste management is a
+foremost worry in various contemporary cities. However, major cost
+reductions and financial and environmental benefits may exist from the
+greater use of ICT solutions in this field. One way to lower garbage
+collection costs and enhance recycling quality is using smart waste
+containers, which can identify the quantity of weight and optimise the path
+for collector trucks. The IoT will link intelligent trash containers, or end
+devices, to a control centre to realise this smart waste management service.
+Optimisation software will process the data and choose the finest means to
+operate the collector truck fleet.
+
+Air Quality: An urban IoT can offer ways to monitor the air quality in
+parks, busy places, and fitness trails. Furthermore, communication services
+can be made available so runners’ devices can connect to the infrastructure
+and execute health applications. Individuals can always locate the healthiest
+route for outdoor activities in this way and stay in constant contact with
+their favourite personal training software. Installing pollution and air
+quality sensors across the city and making the sensor information accessible
+to the common civic is necessary to execute such a service.
+
+Noise Monitoring: Like carbon dioxide (CO), an air pollutant, noise is
+considered auditory pollution. To that end, local officials have previously
+passed rules to limit noise levels during particular hours in the city centre. A
+metropolitan IoT can provide a noise monitoring service to track how much
+noise is made in the locations that use it at any given hour. A metropolitan
+IoT can provide a noise monitoring service to gauge the quantity of noise
+generated in the areas that use the service. Using sound detection
+algorithms can be utilised to enforce public safety and create a space–time
+map of the noise pollution in the area. This service can enhance both the
+calm of city nights and the trust of landlords of community establishments.
+
+Traffic Congestion: Following in the footsteps of air quality and noise
+monitoring, monitoring traffic congestion in the city is one potential Smart
+City service that urban IoT can provide. Although many cities have
+previously implemented camera-based traffic monitoring systems, low-
+power wide-area communication can offer a denser data source. Modern
+cars’ sensing capabilities and GPS systems can be used to monitor traffic. A
+combination of acoustic and air quality sensors can also monitor traffic on a
+particular route. Both municipal authorities and residents value this
+information greatly: the former use it to control traffic and post officers
+when necessary. In contrast, the latter use it to better plan their shopping
+trips to the city centre or choose the best route to the office.
+
+City Energy Consumption: Besides providing an air quality monitoring
+service, a metropolitan IoT may be able to monitor the city’s overall energy
+consumption. This would allow citizens and government agencies to
+understand how much energy is needed for various services, such as traffic
+lights, public lighting, heating and cooling of buildings, and control
+cameras. As a result, it will be feasible to determine the main foundations of
+energy consumption.
+
+Smart Parking: This service provides vehicles with the optimum route to
+park in the city by utilising smart displays and road sensors. This service
+has many benefits, such as lessening traffic jams, making residents happy,
+and reducing CO emissions from vehicles that find parking spots faster. An
+electronic parking permit verification system can be implemented in spots
+designated for occupants or the incapacitated using short-range
+communication technologies like NFC or Radio Frequency Identifiers
+(RFID). This will improve services for those residents who can legally
+occupy those spaces and provide an effective means of swiftly identifying
+infractions.
+
+Smart Lighting: The efficiency of street lighting can be increased to
+optimise the street lamp intensity based on factors such as the time of day,
+weather, and crowd size. For such a service to work properly, street lighting
+must be connected to the Smart City infrastructure. The increasing quantity
+of linked locations may be leveraged to provide WiFi to the general public.
+It will also be easy to add a fault detection system on top of the street light
+controllers [11].
+
+Healthcare: IoT technology in smart cities offers numerous benefits in the
+healthcare sector. Among such uses are automatic data collection and
+sensing, person identification, and tracking of people and things, such as
+patients, employees, and ambulances. Regarding people and goal tracking,
+patient status is tracked in a clinic or hospital to facilitate better and quicker
+hospital workflow. The availability of various organs for transplantation,
+blood products, and ambulance locations are tracked online. Patients are
+identified in a database to reduce the possibility of errors and avoid
+receiving incorrect medications, dosages, or treatments. Staff authentication
+aims to enhance how staff members behave with patients. In terms of
+gathering and sensing data, it facilitates expediting data processing and
+averting human error. The implementation of sensor devices allows for
+diagnosing patient problems and the real-time provision of information on
+patient health indicators, such as medication compliance. Heterogeneous
+wireless access-based techniques are used to evaluate the patient’s status
+utilising bio-signal monitoring, allowing patient data to be accessed from
+any location [12].
+
+4 Applications in Smart Cities
+
+4.1 Intelligent Transportation System
+
+The extensive accessibility of low-cost, wireless networking and high-
+quality sensors has allowed the emergence of the latest field of study called
+“Internet-of-Things.” The area, for instance, offers a great deal of potential
+to enhance smart cities, smart homes, and smart transportation technologies.
+For IoT-based applications to make sense overall, the physical infrastructure
+that is put in place is essential. Notably, the nature of research challenges
+varies greatly among nations with inadequate infrastructure. Roadside units
+(RSUs) can be useful for rerouting commuters in industrialised nations
+around gridlock. When people commute to and from work daily, they
+follow typical patterns. Due to the delayed arrival of emergency services
+and traffic accidents at the scene, congestion during these periods results in
+economic loss, pollution, and even fatalities.
+  This allows for classifying network traffic data, including traffic data
+from mobile devices, IoT networks, traffic data, and smart cities. Factors
+including traffic classification, data mining, and datasets are critical to
+machine learning’s [13] performance. The extraction, selection, ML
+approach, and its applications should all be included in the network traffic
+classification. To better anticipate traffic patterns, we can categorise cars
+into the following groups using an IOV system: The first category contains
+techniques created in consideration of the time-series forecast; they include,
+but are not limited to, constituent factor analyses, indices, multiplication
+models, and addition models. Techniques based on chaos theory include
+fuzzy logic and neural networks for intelligent control and adaptive control.
+
+4.1.1 Traffic Management
+
+A commonly used solution to address traffic operation problems is an ITM
+system. ITM systems can upgrade the quality of passenger and logistics
+transit while easing traffic congestion. Improvements in the public’s quality
+of life decide how intelligent and sustainable the development of IoT-based
+ITM Systems is. Smart-city governance is a key.
+
+  Element of ITM [14] initiatives since it grows design techniques for
+better policies. The public value of creative services is one of the main
+tenets of the smart-city management system [15]. The previous few decades
+have seen an increase in the intelligence of mobile appliances, sensors, and
+actuators, making it easier for devices to communicate and do complex
+tasks. Almost all instruments, wireless sensors, embedded systems, and
+smart mobile devices are linked to the internet or a local network leading
+into the IoT.
+
+4.2 Energy Management
+
+Energy management is an inspirational area for emerging renewable energy
+sources [16]. However, as decentralised energy production grows, power
+grid administrators find that managing electricity flows requires more
+quality and reliability and less imbalance between supply and demand.
+Achieving optimal energy procurement and usage across the company,
+minimising energy expenditures without compromising productivity, and
+minimising environmental effects are the main goals of an energy
+management system. Due to the high consumption in residential structures,
+modern energy management is a crucial and complicated topic that calls for
+improved user comfort and energy optimisation.
+
+  The objective of all the frameworks developed by researchers to tackle
+the energy management problem was to preserve the equilibrium between
+energy consumption and user comfort. Yet, the issue remains unsolved
+because of its complexity. An inclusive and intelligent energy management
+system (IEMS) seeks to deliver overall energy efficiency in terms of
+improved power generation, adaptability, and renewable energy systems. It
+also aims to lower energy costs, improve energy consumption, raise
+stability, and lower carbon dioxide emissions. Using the Internet of Energy
+(IoE) network, ML, a relatively new technique, could estimate energy
+efficiency more accurately.
+
+4.2.1 Demand Prediction and Resource Allocation
+
+Smart cities are developed metropolitan areas with modern technology [17]
+that employ ICTs to address specific issues and support the implementation
+of sustainable social, economic, or environmental growth. In recent years,
+altering metropolitan regions into smart cities has been a global goal. Many
+cities have created master plans to accomplish this goal in many ways.
+When incorporated into a smart city plan, 5G technology raises living
+standards and productivity while lowering expenses and resource
+consumption.
+
+  Intelligent services offer additional accommodations, resources, shared
+infrastructure, flexibility, and better quality of experience (QoE) and quality
+of service (quality of service) methodologies, depending on the location of
+the essential infrastructure and services. These services improve civilians’
+quality of life and enhance the user experience [18, 19].
+
+4.2.2 Integration of Renewable Energy Sources
+
+Recently, the focus of energy use [20] has shifted to low-carbon renewable
+energy sources, emphasising the need to protect the environment and public
+health over the long term. To fulfil the growing need for affordable,
+sustainable energy, the issue is understanding and recognising the
+increasing quantity of renewable energy sources. Cost and climate change
+are problems that government organisations, customers, and distributors all
+face. AI signalled the establishment of a new age in technology and
+sustainable development.
+4.3 Public Safety
+
+Artificial intelligence is also expected to impact significantly long-term
+public safety and security for expansion [21]. AI has raised the threshold for
+smart cities, creating high-tech hotspots out of many new IoT sectors and
+regular communities.
+
+  The open-source data mining application Waikato Environment for
+Knowledge Analysis (WEKA) was used to compare violent crime trends
+from the Communities and Crime Unnormalized Dataset with actual crime
+statistical data [22, 23].
+
+  It is possible to incorporate Knowledge Flow, a new graphical user
+interface that can take the role of Internet Explorer while keeping in mind
+WEKA [24]. It provides a more narrowly focused view of data mining
+concerning the process orientation, in which certain learning components
+are used graphically to represent a specific information flow. The viability
+of applying a predictive analysis of crime estimates in a metropolitan
+setting is examined in Ref. [25]. Housebreaking, street robbery, and battery
+were the three types of criminal behaviour incorporated into 200 m × 250 m
+grids for the retrospective study. The prediction index, precision, and direct
+hit rate were used to evaluate the forecasts.
+
+  The outcomes of the biweekly projections show that utilising a
+predictive analysis methodology on the data can produce accurate
+predictions. They concluded that comparing the monthly estimations with a
+day-night gap between them can significantly improve the findings. In Ref.
+[26], machine learning was used to investigate crime predictions. Using
+560,000 crime reports from 2003 to 2018, they conducted a study that
+found that 39–44% of crimes may be predicted using machine learning
+algorithms.
+
+4.3.1 Surveillance Systems and Anomaly Detection
+
+One of the easiest ways to spot odd activity inside and outside a building is
+to have a monitoring system that can recognise and report abnormal
+conduct automatically. A rising number of distributed surveillance cameras
+are positioned in communal spaces such as parks, shopping centres,
+airports, and so forth to assure public safety and security [27, 28]. While
+computer vision algorithms can automatically and successfully identify
+abnormal events, extensive surveillance video collections still require
+arduous, imprecise, and time-consuming manual analysis.
+  A strange occurrence can be recognised in a surveillance video if there
+is target overlap, a high frame rate, target obscuration, noise, or poor
+handling. Identifying anomalies from the incoming visual data becomes
+more challenging when vision sensors detect many objects, including
+regular people and unusual targets. Additionally, because anomalous events
+are unpredictable, rare, and hard to define, it is difficult to gather all odd
+samples and define anomalies precisely for an AI model because they are
+unbounded, rare, and hard to define.
+
+  Additionally, abnormality detection may identify a wide range of
+anomalies, all of which fall under the category of universal anomalies [29,
+30]. Numerous conventional feature-based anomaly detection methods exist
+[31]; however, due to their limitations, they are ineffective in complicated
+monitoring scenarios [32]. Although the current algorithms for classifying
+surveillance abnormalities are undoubtedly adaptable, their high degree of
+domain specificity prevents them from categorising every possible type of
+surveillance anomaly [33].
+
+  Finding abnormalities in videos using AI models for anomaly
+identification has been the subject of extensive research. Artificial
+intelligence techniques are differentiated into three groups: unsupervised,
+supervised, and semi-supervised systems, based on the variables found in
+the training sets [34]. It has been revealed that future prediction-based,
+frame reconstruction and clustering techniques effectively detect anomalies
+when labels are missing from the training datasets [35, 36]. These
+algorithms have several issues when applied to real security video data.
+Aberrant and normal data are added to the supervised learning training set
+to overcome these limitations.
+
+  More specifically, compared to strongly supervised approaches, weakly
+supervised techniques can assist in resolving anomaly identification
+problems by simply adding video-level labels for normal and abnormal
+events to the training set [37]. A video is viewed in MIL as a bag full of
+instances of clips, and anomaly labels are learned at the instance level
+through the use of bag-level annotations. Events that diverge from expected
+typical behaviour are referred to as anomalies, which is why semi-
+supervised approaches are helpful [38].
+
+5 Challenges and Considerations
+5.1 Risks Associated with Interconnected IoT Devices
+
+A smart city is a network of interconnected computerised systems that smart
+devices can access and control, encompassing many facets of human
+existence, including maintenance, education, logistics, transportation, and
+healthcare. Many technologies are used to mechanise each step, which still
+needs finance and labour. Smart cities can significantly improve urban
+management and facilities by incorporating cutting-edge technology like
+ML and the IoT. Through Denial of Service and Distributed Denial of
+Service attacks, hackers can make smart city networks unusable, impacting
+transportation, communication, and utility systems and cause widespread
+chaos. Hackers can identify faulty IoT devices through cybercriminals who
+have unauthorised access to and control them. These can be used as an entry
+point for initiating more attacks on interconnected city systems.
+
+  The information collected from different sensors in a smart city can be
+manipulated by hackers accessing it illegally. This could result in
+interruptions to essential services and inaccurate readings. If attackers have
+physical access to sensors and can directly modify the hardware,
+negotiating the quality of the information is possible. The IoT system may
+be provided with false information, leading to inaccurate decisions.
+Attackers provide such wrong sensor signals to mislead the IoT system.
+Communication among different units of smart city plans can be interfered
+with, and exposure of private information is possible by hacking into
+sensors and other components within the application.
+
+  The sensors in IoT systems collect information about people’s locations,
+and a huge amount of information is available in the system, which can
+affect people’s privacy, leading to unauthorised tracking. If collected
+biometric information is not handled securely and ethically for different
+reasons, it could infringe on people’s privacy rights. Detailed profiles of
+individuals and organisations can be prepared by combining sensors, which
+might reveal sensitive information about them. In a shared system, privacy
+conflict may arise by recognising who owns and has authority over sensor
+information. The dependability and functioning of the IoT system may be
+jeopardised by inaccurate or manipulated sensor data, which can result in
+erroneous judgments and decisions.
+
+  While designing IoT devices, it is common to neglect security measures
+as manufacturers prioritise maximum utility and efficiency. Because of the
+default usernames and passwords of the IoT devices, they are more
+susceptible to hacking if they are not changed after installation.
+
+  The hacker may unethically capture the user’s sensitive information
+because of inadequate data encryption in IoT device communications.
+When software related to IoT devices is not updated regularly, and if its
+problems are not addressed regularly, it can attract hackers for unauthorised
+access to information. Quality municipal facilities can be provided to the
+user when the government safeguards digital infrastructure through careful
+planning and diverse approaches [39].
+
+5.2 Strategies for Ensuring Data Security and Protecting
+Privacy
+
+The IoT devices and central servers should communicate securely to ensure
+data privacy. Illegal access and information breaches can be prevented
+using robust encryption and secure communication protocols. Updating IoT
+systems and devices to tackle identified vulnerabilities frequently is
+important. The smart city’s network should be updated regularly through a
+central patch management system. Cybersecurity risks or anomalies can be
+recognised by utilising ML algorithms. Threats can be avoided if response
+mechanism procedures are introduced in the communication protocols used.
+Communication between sensors and other components needs to be
+encrypted to safeguard the transferred information. Better authentication
+and access controls can be used to ensure that only authorised entities are
+connected to sensors. Secure communication approaches should be used to
+protect information accuracy between sensors and the overall system. The
+design of the sensors used in the IoT systems should include protocols to
+cope with environmental conditions and ensure reliability in various
+situations. Reliable and secure communication protocols should be used to
+encrypt information in transit and prevent eavesdropping. Network activity,
+identifying anonymous intruders within the system and their unwanted
+access to the system, can be monitored using Intrusion Detection and
+Prevention Systems (IDPS). Device security can be enhanced; hence,
+addressing the known vulnerabilities is made easier by regularly updating
+the firmware and software. The users of the smart city system should be
+aware of how the information collection takes place within the system.
+Users should be given the capability to control privacy settings and provide
+the opportunity to give consent to share information within the shared
+media. Establishing rigorous authentication and authorisation procedures
+can provide authorised access to IoT devices. While installing IoT devices
+and applications in smart cities, an assessment strategy should be built to
+assess the associated risk, and different modelling approaches need to be
+created to identify various threats involved. User privacy can be protected
+by decentralising the identity management system. State-of-the-art
+techniques. Decentralising the system could facilitate data collection and
+processing from IoT devices [37].
+
+5.3 Role of Government and Stakeholders in Supporting
+Infrastructure Development
+
+A vision of the government is the improvement of a metropolitan city or a
+portion of a town along the value chain—and a leadership team is the
+foundation of the government’s main function. The following stage is to
+work with various stakeholders to understand the digital journey that all
+parties can share. This knowledge will ultimately assist as the driver’s travel
+guide. Rules that protect residents’ interests, such as data privacy, are
+essential to city management. For stakeholders and PPPs to work together
+on professional and smart city developmental schemes, governments play a
+critical role in establishing the ecosystem. Significant improvements are
+being made to city planning when there are increasing demands and
+opportunities for resource efficiency and sustainability in cities. Better
+transport, water supply, trash disposal, healthcare, and education could all
+be areas of great emphasis for improved services. A few examples of digital
+resources utilised to improve city intelligence are meters, cameras, and
+sensor technology. Future-focused solutions and cutting-edge service
+development are frequently the main goals of municipal plans. Several
+stakeholders are involved in making the city smarter than before. Local
+politicians, who decide the correct project to be initiated for a city to be
+smart, are the first stakeholders. Civil servants design these projects
+relevant to be smart. Since they frequently establish the physical boundaries
+and contents of new districts, architects play a vital part in the early phases
+of district development. Before the local plan’s finalisation, construction
+companies were given a chance to provide feedback. Many companies
+provide infrastructure to develop the city and make it smarter. Strategic
+planner’s and residents’ ideas are utilised as input for these developments
+[40].
+6 Conclusion
+
+The issue of how smart cities will look further depends on the effective use
+of machine learning and IoT. Nevertheless, attaining this vision is
+challenging, and it implies cooperation between the government, industries,
+and ordinary people. In conclusion, all the changes in the urban realm can
+be a blessing if dealt with; all the dilemmas can be solved through a
+coordinated approach to urban planning and design. In the case of
+governments, they are required to ensure that they provide the necessary
+policies and funds. At the same time, industries are supposed to embrace
+change and operate with professionalism and a sound ethical compass, with
+society fulfilling the role of demanding change and inclusiveness. Through
+such cooperation, the emergence of a better and more resistant post-crisis
+city environment and technology to improve the quality of life will be
+possible.
+
+  The changes in sustainability, efficiency, and quality of life are
+determined by analysing the role of machine learning and IoT in smart
+cities. Such advances aggrandise the capacity of cities to balance and
+oversee the resources, diminish the damaging blows on the natural world,
+and enhance municipal services. Thus, safe cities are achieved through the
+help of technologies such as ML and IoT support, creating healthier and
+more sustainable living environments in cities. Therefore, with the
+development of the smart cities concept, the further implementation of such
+technologies will remain essential to building the future of a sustainable,
+efficient, and high-quality city. Smart cities have a promising future with
+numerous machine learning and IoT development possibilities. All these
+developments can potentially improve the quality of life in a town and, in
+turn, the inhabitant’s quality of life. Nevertheless, realising these
+advantages will be preceded by ethical, security, and infrastructure
+considerations. Suppose the mentioned issues are solved in advance. In that
+case, cities will benefit from implementing ML and IoT systems to make
+urban spaces more intelligent and responsive in favour of every inhabitant.
+
+References
+
+1. Ménard A (2017) How can we recognize the real power of the Internet of Things? Adv Robot
+  1:4–5
+2.
+  Theerthagiri P, Ruby AU, Chandran JGC, Sardar TH, Shafeeq BMA (2024) Deep SqueezeNet
+  learning model for diagnosis and prediction of maize leaf diseases. J Big Data 11(1):112
+
+3.
+  Subbarao E, Gite P, Sharma A, Vyakaranam L, Sardar TH, Taqui SN et al (2023) Investigation of
+  solar energy for urban areas and metropolitan communities using machine learning. Electr Power
+  Compon Syst 1–11
+
+4.
+  Sardar TH, Faizabadi AR, Ansari Z (2017) An analysis of data processing using Mapreduce
+  paradigm on the Hadoop framework. Int J Emerg Res Manag Technol 6(5)
+
+5.
+  Sardar TH, Sarkar R, Ahmed SJ, Bandyopadhyay A (2023) A novel ensemble methodology to
+  validate fuzzy clusters of big data. In: Proceedings of the fourth international conference on
+  trends in computational and cognitive engineering: TCCE 2022. Springer Nature Singapore,
+  Singapore, pp 267–278
+
+6.
+  Sardar TH, Khatun A, Khan S (2017) Design of energy aware collection tree protocol in wireless
+  sensor network. In: 2017 IEEE international conference on circuits and systems (ICCS). IEEE,
+  pp 12–17
+
+7.
+  Sardar TH, Faizabadi AR, Ansari Z (2017) An evaluation of MapReduce framework in cluster
+  analysis. In: 2017 International conference on intelligent computing, instrumentation and control
+  technologies (ICICICT). IEEE, pp 110–114
+
+8.
+  Alavi AH, Jiao P, Buttlar WG, Lajnef N (2018) Internet of things-enabled smart cities: state-of-
+  the-art and future trends. Meas J Int Meas Confed 129(July):589–606. https://​doi.o​ rg/​10.​1016/j​.​
+  measurement.2​ 018.​07.​067
+  [Crossref]
+
+9.
+  Khatun A, Sardar TH (2025) Cryptography algorithms to prevent different security attacks. In:
+  Next generation mechanisms for data encryption. CRC Press, pp 35–46
+
+10.
+  Perera C, Zaslavsky A, Christen P, Georgakopoulos D (2014) Context aware computing for the
+  internet of things: a survey. IEEE Commun Surv Tutor 16(1):414–454. https://​doi.o​ rg/​10.​1109/​
+  SURV.​2013.​042313.​00197
+  [Crossref]
+
+11.
+  Zanella A, Bui N, Castellani A, Vangelista L, Zorzi M (2014) Internet of things for smart cities.
+  IEEE Internet Things J 1(1):22–32. https://​doi.o​ rg/​10.​1109/J​ IOT.​2014.​2306328
+  [Crossref]
+
+12.
+  Sardar TH, Das S, Pandey BK (2023) Explainable AI (XAI): concepts and theory. In: Medical
+  data analysis and processing using explainable artificial intelligence. CRC Press, pp 1–18
+
+13.
+  Prakash J, Murali L, Manikandan N, Nagaprasad N, Ramaswamy K (2024) A vehicular network
+  based intelligent transport system for smart cities using machine learning algorithms. Sci Rep
+  14(1):1–17. https://​doi.o​ rg/​10.​1038/s​ 41598-023-50906-6
+  [Crossref]
+
+14.
+  Lilhore UK et al (2022) Design and implementation of an ML and IoT based adaptive traffic-
+  management system for smart cities. Sensors 22(8). https://​doi.o​ rg/​10.​3390/s​ 22082908
+15.
+  Olayode IO, Severino A, Campisi T, Tartibu LK (2022) Prediction of vehicular traffic flow using
+  Levenberg-Marquardt artificial neural network model: Italy road transportation system. Commun
+  Sci Lett Univ Žilina 24(2):E74–E86. https://​doi.o​ rg/​10.​26552/C​ OM.​C.2​ 022.​2.​E74-E86
+  [Crossref]
+
+16.
+  Akram AS, Abbas S, Khan MA, Athar A, Ghazal TM, Al Hamadi H (2024) Smart energy
+  management system using machine learning. Comput Mater Contin 78(1):959–973. https://​doi.​
+  org/​10.​32604/c​ mc.2​ 023.​032216
+
+17.
+  Omar Abdulkareem Mahmood AK, Abdellah AR, Muthanna A (2022) Distributed edge
+  computing for resource allocation in smart cities based on the IoT. Information 13(7)
+
+18.
+  Beştepe F, Yildirim SÖ (2022) Acceptance of IoT-based and sustainability-oriented smart city
+  services: a mixed methods study. Sustain Cities Soc 80:103794, [Online]. https://​doi.o​ rg/​10.​
+  1016/j​.​scs.​2022.​103794
+
+19.
+  Kuru K (2021) Planning the future of smart cities with swarms of fully autonomous unmanned
+  aerial vehicles using a novel framework. IEEE Access 9:6571–6595. https://​doi.o​ rg/​10.​1109/​
+  ACCESS.2​ 020.​3049094
+  [Crossref]
+
+20.
+  McClendon L, Meghanathan N (2015) Using machine learning algorithms to analyze crime data.
+  Mach Learn Appl Int J 2(1):1–12. https://​doi.o​ rg/​10.​5121/m​ laij.​2015.​2101
+  [Crossref]
+
+21.
+  Doohan NV, Kadam S, Phursule R, Wadne VS, Junnarkar A (2022) Implementation of AI based
+  safety and security system integration for smart city. Int J Electr Electron Res 10(3):518–522.
+  https://​doi.o​ rg/​10.​37391/I​JEER.​100319
+  [Crossref]
+
+22.
+  Rummens A, Hardyns W, Pauwels L (2017) The use of predictive analysis in spatiotemporal
+  crime forecasting: building and testing a model in an urban context. Appl Geogr 86:255–261
+
+23.
+  Eibe Frank IHW, Hall M, Trigg L, Holmes G (2004) Data mining in bioinformatics using Weka.
+  Bioinformatics 20(15):2479–2481, [Online]. https://​pubmed.n​ cbi.n​ lm.​nih.g​ ov/1​ 5073010/​
+
+24.
+  Kim S, Joshi P, Kalsi PS, Taheri P (2018) Crime analysis through machine learning. In: 2018
+  IEEE 9th annual information technology, electronics and mobile communication conference
+  (IEMCON), pp 415–420. https://​doi.o​ rg/​10.​1109/I​EMCON.2​ 018.​8614828
+
+25.
+  Muhammad Islam SH, Dukyil AS, Alyahya S (2023) An IoT enable anomaly detection system
+  for smart city surveillance. Sensors 23(4), [Online]. https://​www.​mdpi.​com/​1424-8220/​23/4​ /​
+  2358
+
+26.
+  Husman MA et al (2021) Unmanned aerial vehicles for crowd monitoring and analysis.
+  Electronics 10(23):1–18. https://​doi.o​ rg/​10.​3390/e​ lectronics102329​ 74
+  [Crossref]
+
+27.
+  Chu CYD, Wenqing H (2018) Sparse coding guided spatiotemporal feature learning for
+  abnormal event detection in large videos. IEEE Trans Multimed 21(1):246–255, [Online]. https://​
+  doi.o​ rg/​10.​1109/T​ MM.2​ 018.​2846411
+

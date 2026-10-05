@@ -1,0 +1,1069 @@
+  Future of mobility 253
+
+  fleets E3S Web Conf. vol. 511, 2024, p. 01012 https://doi.org/10.1051/
+  e3sconf/202451101012.
+[22] W. H. Elashmawi, A. Akram, M. Yasser, et al., IoT-based smart parking sys-
+  tem using ensemble learning, Intelligent Automation & Soft Computing vol. 36,
+  no. 3, 2023, pp. 3637–3656. https://doi.org/10.32604/iasc.2023.035605.
+[23] K. Njiru, Internet of Things (IoT) in the transportation sector and how to
+  manage information privacy in the sector. ResearchGate, 2024. [Online].
+  Available: https://doi.org/10.13140/RG.2.2.20924.00649.
+[24] R. Wolniak, and K. Stecuła, Artificial Intelligence in smart cities—Appli-
+  cations, barriers, and future directions: A review. Smart Cities vol. 7, 2024,
+  pp. 1346–1389. https://doi.org/10.3390/smartcities7030057.
+[25] H. He, A. Ertan, R. Hopcraft, R. N. Akram, and H. Mansor, Autonomous
+  vehicles – cybersecurity and privacy challenges and opportunities (Trans-
+  portation, 2022), Cybersecurity in Transport Systems, Chap. 9, pp. 337–375,
+  DOI:10.1049/PBTR015E_ch9 IET Digital Library, https://digital-library.
+  theiet.org/content/books/10.1049/pbtr015e_ch9.
+[26] A. Nikitas, I. Kougias, E. Alyavina, and E. Njoya Tchouamou, How can
+  autonomous and connected vehicles, electromobility, BRT, hyperloop,
+  shared use mobility and Mobility-as-a-Service shape transport futures for the
+  context of smart cities? Urban Science vol. 1, 2017, p. 36. https://doi.org/10.
+  3390/urbansci1040036.
+[27] S. Shaheen, and N. Chan, Mobility and the sharing economy: Potential to
+  facilitate the first-and last-mile public transit connections Built Environment,
+  vol. 42, no. 4, 2016, pp. 573–588, https://doi.org/10.2148/benv.42.4.573.
+[28] C. Standing, S. Standing, and S. Biermann, The implications of the sharing
+  economy for transport, Transport Reviews, vol. 39, no. 2, 2019, pp. 226–242,
+  https://doi.org/10.1080/01441647.2018.1450307.
+[29] S. Epting, Ethical requirements for transport systems with automated buses,
+  Technology in Society, vol. 64, 2021, p. 101506, https://doi.org/10.1016/j.
+  techsoc.2020.101506.
+This page intentionally left blank
+  Chapter 13
+
+  Optimizing emergency response: an
+AIoT-powered approach to traffic management
+
+  C.V. Suresh Babu1 and S. Kowsika1
+
+Abstract
+
+This chapter addresses the fundamental problem of urban traffic congestion and
+how it affects ambulance reaction times. It suggests reviewing the body of literature
+on traffic management systems (TMS), developing an Artificial Intelligence of
+Things (AIoT) demonstration for detecting emergency vehicles like ambulances,
+carrying out a test of the system driven by AIoT, and looking into theoretical
+systems like queuing theory and optimizing traffic flow. The basis underscores how
+important tending emergency response frameworks for traffic congestion, the
+potential of artificial intelligence in traffic control, as well as the necessity of
+practical guidance and ethical thoughts. The approach tracks data gathering, and AI
+shows development, traffic analysis in real time, evaluation, ethical reflections,
+recommendations from society, and the application of case studies. Results that
+are anticipated include increased awareness, enhanced understanding, insightful
+examination, intelligent guidance, case study approval, ethical issues, and potential
+paths. By addressing these ethical considerations, it is ensured that AIoT-driven
+implementation of TMS is done in an equitable and responsible manner, promoting
+the welfare and safety of the public.
+
+  Keywords: AIoT; AI-powered solutions; Ambulance detection; Emergency
+  response; Ethical considerations; Public perception; Real-time data analysis;
+  Traffic congestion; Urban traffic management
+
+13.1 Introduction
+
+The merging of artificial intelligence (AI) and the Internet of Things (IoT) has ush-
+ered in a new era of technological innovation, transforming various industries. One
+domain where this collaboration is particularly impactful is activity organization.
+Artificial Intelligence of Thing (AIoT)-powered solutions are revolutionizing the way
+
+1Department of Information Technology, Hindustan Institute of Technology and Science, India
+256 AIoT for smart transportation
+
+we monitor, analyze, and optimize activity flow, leading to more efficient, sustain-
+able, and safer transportation systems (Wang et al., 2021; Azadeh and Nourbakhsh,
+2020). AIoT systems utilize a network of interconnected devices equipped with
+sensors, cameras, and communication capabilities to collect real-time data on traffic
+conditions. This data includes information on vehicle volume, speed, and location, as
+well as environmental variables such as weather and road conditions (Elghamrawy
+and Elmahdy, 2021). By analyzing this information using AI algorithms, traffic
+management frameworks can identify patterns, predict congestion hotspots, and
+implement intelligent strategies to mitigate traffic congestion (Li et al., 2022).
+
+  One of the key applications of AIoT in traffic management is traffic prediction.
+AI algorithms can analyze historical data to predict future congestion patterns,
+enabling proactive traffic management measures. For instance, if an AI system
+predicts a significant increase in traffic volume on a specific route during peak
+hours, it can activate dynamic traffic signal control measures to optimize flow (Xu
+et al., 2023). Another vital application of AIoT is adaptive traffic signal control.
+AI-powered traffic lights can adjust their timings based on real-time conditions,
+optimizing flow and reducing congestion (Lee et al., 2023). By analyzing data from
+sensors and cameras, these systems can determine the optimal signal timing for
+each intersection, ensuring that traffic moves smoothly and efficiently (Liu et al.,
+2022). AIoT systems can also play a pivotal role in emergency vehicle prioritiza-
+tion. By detecting the presence of emergency vehicles such as ambulances, fire
+trucks, or police cars, AIoT systems can prioritize their passage through traffic,
+which may help reduce response times and save lives in critical situations (Chen
+et al., 2022). In addition, AIoT can be used for event management. By analyzing
+traffic data, AI algorithms can identify events such as accidents or road closures.
+This information can be used to alert relevant authorities, reroute traffic, and
+minimize the impact of the incident (Gao et al., 2022). AIoT-powered traffic
+management systems offer various benefits, including improved traffic efficiency,
+reduced fuel consumption, and enhanced safety. By leveraging the power of AI and
+IoT, we can create smarter, more sustainable cities and improve the quality of life
+for all (Wang et al., 2022). As technology continues to advance, we can expect to
+see even more innovative AIoT applications in traffic management, leading to
+further enhancements in transportation systems (Logambigai and Suresh Babu,
+2024).
+
+13.1.1 Background and significance
+
+Traffic congestion in urban ranges presents a critical challenge for emergency response
+systems, especially ambulances, leading to delays that can have severe results for quiet
+results (Li et al., 2022, Xu et al., 2023). The capacity of emergency vehicles to explore
+through congested traffic quickly and proficiently is basic for ensuring opportune
+medical care. Later headways in artificial intelligence offer promising solutions to
+address this issue (Chen et al., 2022). AI-powered traffic management systems (TMS)
+can identify and prioritize crisis vehicles, enabling them to move through activity more
+efficiently (Gao et al., 2022). Regardless, existing investigations often need a particular
+  Optimizing emergency response 257
+
+centre on the special challenges confronted by emergency reaction services (Azadeh
+and Nourbakhsh, 2020). There is a clear need for practical direction and real-world
+case considerations to better understand the feasibility and viability of AI-driven TMS
+in progressing emergency (Lee et al., 2023).
+
+13.1.2 Objectives of the chapter
+
+This chapter aims to address the basic issue of traffic congestion in metropolitan
+regions and its hindering effect on emergency vehicle response times. By
+reviewing existing literature on TMS and their adequacy in prioritizing crisis
+vehicles, we hope to identify gaps in current research and investigate potential
+arrangements. One of the essential goals is to create an AI model capable of
+detecting ambulances utilizing video information from activity cameras. This
+model will be assessed under different action conditions to assess its precision
+and reliability. Moreover, a pilot test will be conducted in a city with high traffic
+congestion and ambulance reaction issues to assess the practical application of
+the AI-powered framework.
+
+  Theoretical systems such as queuing hypothesis and action stream optimization
+will be investigated to supply a more profound understanding of the basic measures
+and challenges related to traffic management. By combining these theoretical
+approaches with AI, we point to make a comprehensive course of action that can
+improve emergency response times and lessen movement blockage. Inevitably, this
+consider will contribute to the field of activity administration and emergency
+response by providing invaluable insights into the possibilities of AI-powered fra-
+meworks to address these fundamental difficulties.
+
+13.1.3 Structure of the chapter
+
+The proposed chapter is structured to provide a comprehensive and insightful
+exploration of powered traffic management solutions for optimizing crisis reac-
+tions. The chapter starts by presenting the basic issue of traffic congestion and its
+impact on emergency vehicle reaction times, highlighting the potential of AIoT
+innovations to address these challenges and displaying the research targets and
+method of reasoning. Following the presentation, the chapter delves into a literature
+review, examining existing research on TMS, emergency vehicle prioritization, and
+AI applications in transportation. This audit identifies gaps in current inquiries and
+potential areas for improvement.
+
+  The strategy area traces the data collection process, including traffic camera
+film, real-time traffic information, and emergency vehicle reaction information.
+It also highlights the advancement of the AI model utilizing convolutional neural
+systems and transfer learning, as well as the real-time traffic analysis algorithms
+and integration with TMS. The evaluation and approval procedures, including
+performance metrics and case ponder execution, are moreover clarified. Ethical
+considerations and societal suggestions of AI-driven activity administration are
+tended to in this segment. The results and discussion section presents the findings
+of the AI model evaluation, including accuracy and performance metrics.
+258 AIoT for smart transportation
+
+It examines the viability of the AI-powered activity management system in
+reducing ambulance reaction times, analyzes the effect on patient results and
+open perception, and investigates the moral implications and societal suggestions
+of the system. Finally, the conclusion summarizes the key findings and con-
+tributions of the ponder, highlights the potential benefits of AIoT-powered
+activity administration for improving emergency reaction and reducing traffic
+congestion, examines confinements, and proposes future investigate bearings.
+This structure ensures a clear and logical flow of data, allowing readers to
+understand better the research question, methodology, findings, and implications
+in a comprehensive manner.
+
+13.2 Impact of traffic congestion on ambulance response
+  times
+
+This model will be evaluated under various action conditions to assess its exactness
+and reliability. Additionally, a pilot test will be conducted in a city with high traffic
+congestion and emergency vehicle reaction issues to evaluate the reasonable
+application of the AI-powered framework. Theoretical systems such as queuing
+hypothesis and action stream optimization will be investigated to supply a more
+profound understanding of the basic measures and challenges related to traffic
+management. By combining these theoretical approaches with AI, we point to form
+a comprehensive course of action that can make strides in crisis response times and
+reduce movement blockage. In the long run, this study will contribute to the field of
+activity administration and emergency response by giving profitable encounters
+into the potential of AI-powered frameworks to address these basic issues. Delayed
+arrival times can mean the difference between life and passing, especially in cases
+of cardiac capture, stroke, or other time-sensitive medical crises. The included push
+on emergency medical technicians and paramedics can also impact their ability to
+provide effective care.
+
+  Moreover, activity congestion can lead to course diversions, forcing ambu-
+lances to take longer, less coordinate ways to reach their goals. This may encourage
+delayed response times and increase the general strain on emergency services.
+Tending to the issue of traffic congestion is significant for guaranteeing the timely
+delivery of basic medical care. Strategies such as moving forward open transpor-
+tation, advancing elective modes of transportation, and actualizing intelligent TMS
+can help alleviate congestion and improve emergency vehicle reaction times. By
+prioritizing the productive development of emergency vehicles, able to help save
+lives and upgrade the overall security of our communities.
+
+13.2.1 Review of literature AIoT sensors for intelligent
+  transportation
+
+Traffic congestion is a growing challenge for intelligent transportation systems
+using AIoT sensors, leading to longer travel times, fuel consumption, and air pol-
+lution (Wang et al., 2021; Azadeh and Nourbakhsh, 2020). Traffic management
+  Optimizing emergency response 259
+
+systems (TMS) play a key role in alleviating these issues and improving the effi-
+ciency of traffic flow. This review article analyzes how advances in IoT sensors,
+big data analytics, and machine learning are transforming traditional TMSs into
+intelligent systems (Elghamrawy and Elmahdy, 2021).
+
+  A key aspect of intelligent traffic management is the ability to collect and
+analyze real-time traffic data to dynamically adjust traffic flows. Some researchers
+have proposed systems that use IoT sensors and big data analytics for this purpose
+(Chen et al., 2023). These sensors are strategically placed on roads and intersec-
+tions to collect data on traffic volume, speed, and vehicle type. This data is fed into
+a big data analytics platform for real-time processing and analysis. Machine
+learning algorithms can identify traffic patterns, predict congestion risks, and
+optimize traffic signal control based on the analyzed data. Their proposed frame-
+work leverages IoT data and machine learning, demonstrating significant reduc-
+tions in travel time and congestion compared to traditional traffic signal control
+systems (Gao et al., 2023).
+
+  Remote sensor networks (WSNs) and traffic flow forecasting offer another
+promising approach for real-time traffic monitoring and prediction. Xu et al. (2023)
+conducted a simulation-based study using WSNs to collect traffic data and forecast
+traffic flow patterns. Although the results illustrate the feasibility of WSNs in data
+collection, further research is needed to validate this approach in real-world sensor
+deployment. Moreover, the accuracy of traffic flow forecasts can be further
+improved by integrating sensor data with historical traffic patterns. Machine
+learning algorithms also enable deeper real-time traffic flow analysis by supporting
+anomaly detection. This helps in identifying incidents and unexpected changes in
+traffic behaviour (Kim et al., 2022).
+
+  Deploying cost-effective and scalable IoT systems for large-scale traffic
+management operations requires efficient and adaptable solutions. Edge computing
+allows some data to be processed closer to the sensor, reducing communication
+overhead and improving response time (Lee et al., 2023). This approach offers a
+promising solution for large-scale operations.
+
+  Security and privacy are critical aspects when collecting and using real-time
+traffic data from IoT sensors (Al-Qudah and Al-Qudah, 2023). These challenges
+are recognized, but a detailed discussion of specific solutions is needed. Blockchain
+technology offers the potential to protect IoT data by providing a distributed,
+tamper-proof ledger system (Shi et al., 2016). Some studies have discussed how
+blockchain capabilities can address vulnerabilities in traditional data management
+systems, although challenges remain in real-world implementation and integration
+with existing security solutions (Bonomi et al., 2014).
+
+  Future directions for integration involve advancements in technology, big data
+analytics, and machine learning. Integrating user behaviour data into traffic flow pre-
+diction models can lead to more accurate traffic management strategies (Harari, 2017).
+Deep learning techniques promise improved traffic flow forecasting and anomaly
+detection (O’Neill, 2016). Furthermore, seamless integration of various components of
+an intelligent transport system – such as sensors, traffic lights, and cloud platforms – is
+essential for effective data exchange and real-time response (Floridi, 2016).
+260 AIoT for smart transportation
+
+  In summary, IoT sensors play an innovative role in the development of intel-
+ligent TMS for smart cities. Real-time traffic data collection, big data analytics, and
+machine learning algorithms enable dynamic traffic flow optimization, congestion
+control, and improved route planning. Addressing data privacy and security issues,
+and ensuring efficient integration among different system components, are critical
+for the successful deployment and widespread adoption of intelligent transportation
+systems. By implementing such intelligent systems, transportation authorities can
+work towards creating a more efficient, sustainable, and congestion-free transpor-
+tation future for cities worldwide.
+
+13.3 Development of an AIoT model for ambulance
+  detection
+
+To develop a strong and accurate AIoT model able to detect ambulances in real-
+time traffic camera footage, a comprehensive approach is required (Zhang and Yu,
+2021, Kim et al., 2022). To begin with, a diverse dataset of traffic camera footage,
+including recordings with and without ambulances present, must be gathered. This
+dataset should cover various traffic conditions, weather conditions, and lighting
+scenarios to improve model generalization (Wang et al., 2023). Once the dataset is
+collected, the video frames should be pre-processed to prepare them for analysis.
+This includes converting video frames into images, applying image enhancement
+techniques to improve quality, and normalizing pixel values for consistent model
+training (Chen et al., 2023). Relevant features should then be extracted from the
+pre-processed images. Deep learning techniques, such as convolutional neural
+networks (CNNs), can be used to automatically learn and extract meaningful fea-
+tures. These features may include colour, texture, and shape characteristics that are
+indicative of an emergency vehicle (Liu et al., 2023).
+
+  An appropriate deep learning architecture, such as a CNN or a combination of
+CNN and recurrent neural networks (RNNs), should then be selected and trained on
+the labelled dataset (Gao et al., 2023). The model parameters are optimized to
+minimize the loss function, and techniques like data augmentation can be used to
+increase the diversity of the training data and improve model generalization. The
+trained model’s performance should be evaluated on a separate validation dataset
+using metrics such as accuracy, precision, recall, and F1-score (Lee et al., 2023).
+Potential areas for improvement can be identified, and the model architecture or
+training processes can be iterated upon if necessary (Al-Qudah and Al-Qudah,
+2023). Finally, the trained model should be deployed on an edge device or cloud
+platform for real-time inference. The model can be integrated with traffic man-
+agement systems to receive live video streams from traffic cameras, process
+incoming frames, and detect ambulances using the trained model (Floridi, 2017).
+By following these steps and addressing key considerations such as model com-
+plexity, data quality, model optimization, and edge computing, a highly accurate
+AIoT model can be developed for emergency vehicle detection, enabling efficient
+emergency response and traffic management (O’Neill, 2016).
+  Optimizing emergency response 261
+
+13.3.1 Pre-processing of traffic camera footage
+
+To prepare traffic camera footage for effective analysis by an AIoT model, several
+pre-processing steps are essential. Noise reduction techniques, such as Gaussian
+blurring or median filtering, can be applied to remove noise and enhance image
+quality. Image enhancement methods, like histogram equalization or gamma cor-
+rection, can improve brightness, making it easier for the model to recognize sig-
+nificant features. Image resizing is another important step to ensure consistent input
+to the AI model. Images can be resized to a standard size using techniques like
+bilinear or bicubic interpolation, which help maintain image quality. Data stan-
+dardization involves converting images into a standard format, such as greyscale or
+RGB, and normalizing pixel values within a specific range for uniform input. Data
+augmentation can improve model performance by generating additional training
+data through random transformations like rotation, scaling, shearing, and flipping.
+This helps the model generalize better across different traffic conditions and
+lighting scenarios. By effectively pre-processing traffic camera footage, we can
+improve the accuracy and robustness of the AIoT model for emergency vehicle
+detection, leading to more reliable and efficient traffic management solutions.
+
+13.3.2 Training a convolutional neural network (CNN)
+
+To prepare a deep learning model capable of accurately recognizing ambulances in
+traffic camera footage, a comprehensive approach is required. First, appropriate
+CNN architectures, such as VGG, ResNet, or MobileNet, should be selected based
+on computational resources, model complexity, and desired accuracy. Transfer
+learning techniques can be employed to accelerate training and potentially improve
+performance by using pre-trained models on large-scale image datasets. The
+training dataset should be diverse, containing images of ambulances in various
+traffic conditions, lighting scenarios, and angles. The images should be labelled
+with appropriate class names (e.g., “emergency vehicle,” “non-ambulance”). The
+model should be trained using an appropriate loss function, such as categorical
+cross-entropy, and an optimization algorithm, such as stochastic gradient descent or
+Adam. Hyperparameters, such as learning rate, batch size, and regularization
+methods, should be tuned to optimize model performance. The trained model
+should be evaluated on a validation set using metrics like accuracy, precision,
+recall, and F1-score. Areas for improvement can be identified, and the training
+process can be adjusted if necessary. By following these steps and addressing key
+considerations such as data quality, computational resources, and overfitting, a
+robust CNN model can be trained to accurately detect ambulances in traffic camera
+footage, providing valuable insights for traffic management and emergency
+response.
+
+13.3.3 Fine-tuning the AI model with transfer learning
+
+To improve the exactness and generalization of the AI model for emergency
+vehicle discovery, transfer learning can be utilized. This method includes
+employing a pre-trained show that has been prepared on a large-scale picture
+262 AIoT for smart transportation
+
+dataset, such as ImageNet. The starting layers of the pre-trained show, which reg-
+ularly capture general features like edges, surfaces, and colours, can be solidified to
+preserve their learned information. The final layers of the demonstration can at that
+point be replaced with modern layers that are particular to the emergency vehicle
+detection task. The adjusted show can be fine-tuned on the emergency vehicle
+location dataset, centering on upgrading the recently included layers. A lower
+learning rate ought to be utilized compared to preparing from scratch to maintain a
+strategic distance from overwriting the pre-trained weights.
+
+  By leveraging exchange learning, the AI model can take advantage of the
+information learned from the large-scale image dataset, indeed with restricted
+preparing information. This could lead to more advanced execution and faster
+meeting, making the demonstration more effective for real-time emergency vehicle
+detection.
+
+13.3.4 Real-time traffic analysis algorithms
+
+To effectively examine real-time traffic information and give bits of knowledge for
+activity management choices, a few key steps are included. To begin with, real-
+time activity information from different sources, such as activity sensors, cameras,
+and GPS gadgets, must be collected. This information includes data on vehicle
+volume, speed, and area, as well as natural components like climate and street
+conditions. The collected information ought to be pre-processed to handle lost
+values, exceptions, and irregularities. Normalization can additionally be associated
+to ensure solid data scaling. Traffic flow examination includes calculating esti-
+mations such as activity thickness, ordinary speed, and clog levels. Strategies like
+time-series examination and spatial relationship can be utilized to recognize action
+plans and designs. Incident area algorithms can be created to distinguish abnormal
+action conditions, such as mishaps or road closures, based on changes in activity
+stream patterns. Inconsistency detection and spatial clustering strategies can be
+utilized for this reason. Predictive modelling techniques, such as ARIMA or LSTM,
+can be utilized to gauge future movement conditions based on authentic data and
+current designs. Outside components like climate gauges and special occasions can
+additionally be solidified into the figure models.
+
+  At last, algorithms can be made to suggest perfect courses for vehicles based on
+real-time movement conditions and travel times. Components like street closures,
+traffic congestion, and emergency vehicle needs need to be considered when opti-
+mizing courses. By implementing effective real-time traffic analysis algorithms, we
+are able to gain valuable insights into traffic patterns, identify potential congestion
+hotspots, and optimize traffic management strategies to improve emergency response
+times and reduce overall traffic congestion.
+
+13.4 Metrics for assessing AIoT model accuracy
+
+To assess the performance of the AIoT model in precisely recognizing ambulances
+in traffic camera footage, several evaluations can be utilized. The confusion matrix
+  Optimizing emergency response 263
+
+can be used to visualize the model’s predictions and ground truth labels, allowing
+for the calculation of metrics such as precision, accuracy, recall, and F1 score.
+Accuracy measures the overall proportion of correct predictions, whereas precision
+measures the proportion of correctly predicted emergency vehicle locations among
+all positive predictions. Recall measures the proportion of correctly predicted
+emergency vehicle detections among all actual emergency vehicle events. The F1-
+score provides a balanced measure of model performance by considering both
+precision and recall.
+
+  The ROC curve and AUC can be used to visualize the trade-off between the
+true positive rate and the false positive rate and to evaluate the model’s overall
+performance. Additionally, analyzing the false positive and false negative rates can
+help in understanding the types of errors the model is making. By carefully
+selecting and applying suitable metrics, one can effectively assess the accuracy and
+performance of the AIoT model for emergency vehicle detection, ensuring its
+reliability and effectiveness in real-world applications.
+
+13.4.1 Simulation studies for system evaluation
+
+To survey the effectiveness of the AIoT-powered TMS in progressing emergency
+vehicle reaction times, re-enactment considers can be conducted. A realistic activity
+recreation environment can be made utilizing apparatuses like SUMO or AIMSUN,
+incorporating the road network, traffic flow characteristics, and activity rules. The
+created AIoT demonstrate and activity analysis calculations can, at that point, be
+coordinated into this environment to re-enact the conduct of emergency vehicles,
+standard vehicles, and activity signals. Various activity scenarios, such as peak hours,
+accidents, and special events, can be produced to test the system’s execution under
+diverse conditions. Information on emergency vehicle reaction times, activity
+blockage levels, and framework execution can be collected and examined to assess
+the effect of the AIoT framework.
+
+  Sensitivity investigation can be used to evaluate the effect of distinctive fra-
+mework parameters, such as location precision, reaction time edges, and activity
+flag coordination, on framework execution. By conducting simulation studies, it is
+possible to gain valuable insights into the potential benefits of the AIoT-powered
+traffic management system and identify areas for improvement before imple-
+mentation in real-world scenarios.
+
+13.5 Ethical implications of emergency vehicle
+  prioritization
+
+The prioritization of emergency vehicles in activity may be a complex issue with
+significant ethical implications. While it is essential to ensure that emergency
+vehicles can reach their goals quickly to supply essential care, this prioritization
+can also raise concerns about decency, esteem, and potential partition. Prioritizing
+emergency vehicles may conceivably partition against certain bunches, such as
+those who cannot oversee private transportation or those with failures. Besides,
+264 AIoT for smart transportation
+
+prioritization might compound existing incongruities, since it may advantage those
+who have gotten to crisis administrations more expeditiously than others. While
+prioritizing crisis vehicles can save lives, it may as well increment the chance of
+mischances for other street clients.
+
+  To mitigate these ethical concerns, it is basic to actualize measures that
+ensure fairness, value, transparency, and responsibility. Prioritization systems
+should be designed to prevent discrimination against populations, and clear rules
+and methodologies must be established for prioritizing emergency vehicles.
+Public engagement is additionally crucial to ensure that prioritization systems are
+created and actualized in a reliable and fair way. By carefully considering these
+ethical implications and implementing suitable measures, we are ready to develop
+prioritization systems that advance public safety while minimizing ethical
+concerns.
+
+13.5.1 Stakeholder engagement for ethical AIoT deployment
+
+Stakeholder engagement is imperative for guaranteeing the moral course of action
+of AIoT-powered activity administration systems, particularly when it comes to
+prioritizing crisis vehicles. By counting grouped accomplices, we are able to
+accumulate imperative encounters, address concerns, and develop acceptance
+inside the system. Key stakeholders to bolt in consolidate healthcare providers,
+transportation workplaces, community operators, advancement masters, and open
+security specialists. Their input is essential for understanding the specific needs and
+challenges stood up to by crisis reaction administrations, traffic management, and
+the neighbourhood community.
+
+  Through stakeholder engagement, it is possible to recognize potential ethical
+concerns, develop acceptance and support for the AIoT system, ensure alignment
+with community needs and values, and gather feedback to advance the system’s
+reasonability and ethical considerations. By prioritizing stakeholder engagement, it
+becomes possible to help guarantee that AIoT-powered traffic management sys-
+tems are deployed in a responsible and ethical way, promoting public safety and
+well-being.
+
+13.5.2 Societal perceptions of AIoT-driven traffic
+  management
+
+To understand public perceptions of AIoT-powered TMS, especially with respect to
+emergency vehicle prioritization, overviews, interviews, and social media, exam-
+inations can be conducted. Key zones of request incorporate belief and certainty in
+AI-driven frameworks, protection concerns, decency and value, and transparency
+and responsibility.
+
+  Public concerns may include segregation against certain bunches, the mis-
+fortune of control over travel encounters, and the need for transparency in decision-
+making forms. To address these concerns, measures can be actualized to ensure
+transparency and responsibility, foster open engagement, and create moral rules for
+AIoT systems.
+  Optimizing emergency response 265
+
+13.6 Deployment and requirement specification
+
+Hardware components:
+l Arduino Uno R3: This microcontroller board serves as the central handling
+
+  unit of the system, handling data acquisition, preparation, and control.
+l Ultrasonic distance sensor: This sensor measures the distance to objects using
+
+  sound waves, allowing for the location of vehicles ahead.
+l LEDs (Red, Yellow, Green): These LEDs can be utilized to indicate different
+
+  activity signals or alarm drivers in the presence of an emergency vehicle.
+l Resistors: Resistors are used to restrain the current stream to the LEDs,
+
+  anticipating damage.
+
+  Software components:
+
+l Arduino IDE: This integrated advancement environment is utilized to com-
+  pose and compile the Arduino code for the microcontroller.
+
+l Libraries: Libraries like NewPing for ultrasonic distance estimation and Servo
+  for controlling traffic signals may be necessary.
+
+l Programming language: C++ is the primary programming language used for
+  Arduino improvement.
+
+  Power supply:
+
+l A 5 V power supply, such as a USB power adapter or battery, is required to
+  power the Arduino board and related components.
+
+  Additional considerations:
+
+l Traffic signal controller: Depending on the scope of the project, a traffic
+  signal controller may be required to coordinate the system with existing traffic
+  infrastructure.
+
+l Communication modules: If real-time data transmission is required, modules like
+  Wi-Fi or Bluetooth can be used to connect the system to a network or other devices.
+
+l Enclosure: An enclosure may be essential to protect the hardware components
+  from environmental factors.
+
+l Testing and debugging tools: Tools like a serial monitor and logic analyzer
+  can be accommodating for debugging and testing the system.
+
+  The specific requirements may shift depending on the complexity of the pro-
+ject and the desired features.
+
+13.6.1 Data collection and methodology documentation
+
+The effectiveness of an AIoT-powered traffic management system depends on the
+quality and quantity of the data collected. Ultrasonic density sensors, strategically
+placed along major roads, are a key data source, providing real-time information on
+vehicle density and approximate speed (Figure 13.1). Cameras can be integrated to
+capture additional data such as vehicle types and traffic flow patterns (Figure 13.2).
+Leveraging existing TMS can also provide valuable insights into historical traffic
+data.
+266 AIoT for smart transportation
+
+  Start
+
+  Declare the
+  variables
+
+  Arduino sends
+  echo pulse to
+  ultrasonic sensor
+
+  Wait for the signal
+  from sensor
+
+  Signal is back
+
+  YES  NO
+  Get obstacle
+  Servo motor starts
+Display the object  rotate
+  is moving
+
+Object is moving
+
+  YES  NO
+Speed calculation  Display speed
+
+  END
+
+Figure 13.1 Flowchart
+  Optimizing emergency response 267
+
+  Figure 13.2 Circuit diagram
+
+  Information examining rate, pre-processing strategies, information labelling
+(on the off chance that utilizing cameras), and security measures must be carefully
+considered. A secure and reliable information storage platform is essential for
+housing collected data, along with protocols for data access control and archiving.
+By taking after these hones, a robust establishment can be laid for creating and
+preparing an exact AI demonstrate that viably prioritizes crisis vehicles inside the
+traffic management system.
+
+13.6.2 Algorithm and pseudocode
+
+Algorithm:
+ 1. Initialization:
+
+  l Declare variables for sensor data, distance calculations, and other
+  necessary values.
+
+ 2. Send Ultrasonic Pulse:
+  l Send an ultrasonic pulse from the Arduino to the ultrasonic sensor.
+
+ 3. Wait for Signal:
+  l Wait for the echo signal to return from the sensor.
+
+ 4. Check for Signal:
+  l If a signal is received within a specified timeout:
+  * Proceed to step 5.
+  l If no signal is received:
+  * Indicate an error or retry the measurement.
+
+ 5. Calculate Distance:
+  l Calculate the distance to the detected object based on the time taken for
+  the signal to return and the speed of sound.
+
+ 6. Check for Movement:
+  l Compare the current distance to previous measurements.
+  * If the distance has changed significantly within a certain timeframe,
+  determine that the object is moving.
+268 AIoT for smart transportation
+
+ 7. Display Movement Status:
+  l If the object is moving:
+  * Display a message indicating that the object is moving.
+  l If the object is stationary:
+  * Display a message indicating that the object is not moving.
+
+ 8. Calculate Speed (Optional):
+  l If the object is moving, calculate its speed based on the change in dis-
+  tance over time.
+
+ 9. Display Speed (Optional):
+  l If the object is moving and speed calculation is enabled, display the
+  calculated speed.
+
+10. Repeat:
+  l Continue the process by sending another ultrasonic pulse and repeating
+  steps 3–9.
+
+  Pseudocode:
+  INITIALIZE DIST_SENSOR1 AND DIST_SENSOR2 TO 0
+  FUNCTION readUltrasonicDistance(triggerPin, echoPin):
+  SET triggerPin TO OUTPUT
+  SET triggerPin LOW
+  WAIT 2 microseconds
+  SET triggerPin HIGH
+  WAIT 10 microseconds
+  SET triggerPin LOW
+  SET echoPin TO INPUT
+  RETURN pulseIn(echoPin, HIGH) // Measure time of the echo
+  FUNCTION setup():
+  INITIALIZE SERIAL COMMUNICATION AT 9600 bps
+  SET pin 2, 7, 3, 4, 5, and 6 TO OUTPUT
+  FUNCTION loop():
+  DIST_SENSOR1 = 0.01723 * readUltrasonicDistance(8, 8)
+  DIST_SENSOR2 = 0.01723 * readUltrasonicDistance(9, 9)
+  PRINT DIST_SENSOR1
+  PRINT DIST_SENSOR2
+
+  SET pin 2 AND 7 HIGH
+  WAIT 3000 milliseconds
+  IF DIST_SENSOR1 <= 200 THEN:
+  WAIT 3000 milliseconds
+  SET pin 2 LOW
+  SET pin 3 HIGH
+  WAIT 3000 milliseconds
+  ELSE:
+  SET pin 2 LOW
+  SET pin 3 HIGH
+  Optimizing emergency response 269
+
+  WAIT 3000 milliseconds
+  SET pin 4 HIGH
+  SET pin 3 LOW
+  SET pin 7 LOW
+  SET pin 5 HIGH
+  WAIT 3000 milliseconds
+  IF DIST_SENSOR2 <= 200 THEN:
+  WAIT 3000 milliseconds
+  SET pin 5 LOW
+  SET pin 6 HIGH
+  WAIT 3000 milliseconds
+  ELSE:
+  SET pin 5 LOW
+  SET pin 6 HIGH
+  WAIT 3000 milliseconds
+  SET pin 4 LOW
+  SET pin 6 LOW
+  SET pin 2 AND 7 HIGH
+
+13.6.3 System design and monitoring during implementation
+  phase
+
+The provided circuit diagram illustrates a traffic light system controlled by an Arduino
+Uno microcontroller. The system utilizes sensors to detect vehicle presence and sub-
+sequently activates the appropriate traffic lights. Specifically, the Arduino receives
+input from sensors PING1 and PING2, which are responsible for detecting vehicles.
+These signals are then processed by the Arduino, triggering the corresponding traffic
+lights (GREEN, YELLOW, RED) to regulate the flow of traffic. To ensure safe and
+efficient operation, the traffic lights follow a predetermined sequence: green, yellow,
+red, green, and so on. The circuit includes resistors (R1, R2, R3, R4, R5, R6) to limit
+current flow through the LEDs in the traffic lights. The entire system is powered by a
+5V DC supply, with the GND pin serving as a common reference point for all com-
+ponents. This basic implementation can be expanded upon by incorporating additional
+features such as pedestrian crossings, timers, and priority signals.
+
+13.6.4 Preparation of reports and academic papers
+
+To further strengthen the paper, examine the moral suggestions of AIoT innovation,
+counting protection concerns, and potential inclinations. Explore the societal impacts,
+such as job displacement and public acceptance, and propose procedures for tending
+to these concerns. Moreover, dive into future investigation bearings, counting the
+integration with other innovations and scalability of the system. The case study
+examination ought to give more particular cases and measure the benefits of the AI-
+powered TMS. At long last, the conclusion should emphasize key discoveries,
+emphasize the potential of AIoT for revolutionizing emergency response and traffic
+management, and provide a strong call to action for future research and usage.
+270 AIoT for smart transportation
+
+13.6.5 Output and evaluation
+
+Ultrasonic distance sensors offer eminent benefits for emergency vehicle applica-
+tions, including real-time detection, high accuracy, cost-effectiveness, and relia-
+bility. As illustrated in Figure 13.3, an Arduino Uno setup equipped with ultrasonic
+sensors and LED indicators demonstrates the core configuration used for distance
+measurement and object detection. However, despite their advantages, these sen-
+sors have limitations such as a limited detection range, vulnerability to environ-
+mental interference, dependence on the angle of incidence, and the need for precise
+calibration. For example, object detection at different distances is illustrated in
+Figure 13.4 (93.6 cm) and Figure 13.5 (27.4 cm), while Figure 13.6 shows simul-
+taneous detection at both distances using a dual-sensor setup. Although ultrasonic
+sensors hold promise for distinguishing and prioritizing emergency vehicles within
+transportation systems, integrating them with complementary technologies or
+intelligent algorithms can significantly enhance their effectiveness and reliability in
+real-world scenarios.
+
+Figure 13.3 Arduino Uno setup with ultrasonic sensors and LED indicators for
+  distance measurement and object detection
+106.4in / 270.1cm  Optimizing emergency response 271
+
+  36.8in / 93.6cm
+
+Figure 13.4 Object detected at a distance of 93.6 cm using ultrasonic sensor in
+  Arduino-based distance measurement system
+
+Figure 13.5 Object detected at a distance of 27.4 cm using ultrasonic sensor in
+  Arduino-based distance measurement system
+106.4in / 270.1cm272 AIoT for smart transportation
+
+  36.8in / 93.6cm
+
+Figure 13.6 Simultaneous detection of objects at different distances (93.6 cm and
+  27.4 cm) using dual ultrasonic sensors in an Arduino-based smart
+  transportation prototype
+
+13.7 Increased awareness of traffic congestion challenges
+
+To viably address the issue of traffic congestion and its effect on emergency reaction
+times, it is significant to raise public awareness. Open education campaigns can be
+propelled to illuminate the public approximately the results of traffic congestion on
+emergency response times and the significance of traffic management solutions.
+Engaging with media outlets can help increase the message and reach a wider audience.
+
+  Social media stages can also be utilized to spread mindfulness and encourage
+public participation. Community occasions and workshops can be organized to
+teach the public about traffic management and emergency response. Collaborating
+with neighbourhood organizations, such as transportation offices, community
+groups, and healthcare suppliers, can encourage opening up the message and con-
+structing bolsters for traffic management activities.
+
+  By raising awareness of traffic congestion challenges, we are ready to create a
+more educated and engaged public that is supportive of efforts to improve
+  Optimizing emergency response 273
+
+emergency response times and reduce traffic congestion. This expanded mind-
+fulness can lead to greater public pressure on policymakers to address the issue and
+implement effective traffic management solutions.
+
+13.7.1 Enhanced understanding of AIoT-driven traffic
+  management
+
+To gain a deeper understanding of AIoT-powered TMS, it is basic to investigate the
+underlying theoretical systems and strategies. Queuing theory can be connected to
+show traffic flow and dissect the impact of AIoT-driven interventions on emer-
+gency vehicle reaction times. Progressed optimization algorithms can be examined
+to decide the foremost effective courses for crisis vehicles and minimize traffic
+congestion. The particular machine learning calculations and procedures utilized in
+AIoT models for emergency vehicle discovery and traffic examination ought to
+moreover be investigated. Information analytics plays a crucial role in extricating
+profitable bits of knowledge from traffic data and advising decision-making. Also,
+the plan and usage of client interfacing for AIoT-powered TMS ought to be
+inspected to ensure viable interaction with human operators.
+
+  By delving into these areas, we are able to gain a more comprehensive
+understanding of the standards and techniques that drive AIoT-powered TMS. This
+understanding can lead to distinguishing proof of potential areas for improvement,
+experiences into the challenges and confinements of these systems, and recom-
+mendations for future research and advancement.
+
+13.7.2 Insightful analysis of existing research
+
+To conduct a comprehensive review of existing literature on TMS, emergency
+vehicle prioritization, and AI applications in transportation, an exhaustive look at
+important academic databases ought to be conducted. Articles ought to be chosen
+based on their relevance to the inquiry about a topic, publication date, and meth-
+odological rigor. The chosen articles ought to be carefully dissected, centering on
+inquiries about questions, targets, strategies, discoveries, conclusions, and con-
+finements. By synthesizing the findings from these articles, common topics, pat-
+terns, and crevices within the existing writing can be distinguished. Comparative
+investigation can also be conducted to recognize potential qualities and short-
+comings of diverse approaches and methodologies.
+
+  Ranges of centre ought to incorporate traffic administration systems, AI appli-
+cations, IoT innovations, moral contemplations, and case ponders. By conducting this
+review, we are able to build up a strong foundation for our study, identify and inquire
+about holes, survey the state-of-the-art in AIoT-driven traffic management, and get
+the challenges and limitations of existing approaches. This examination will give
+important experiences and illuminate us to inquire about heading.
+
+13.7.3 Practical guidance for AIoT model development and
+  implementation
+
+To develop and implement effective AIoT models for ambulance detection and
+traffic management, a few key considerations ought to be tended to. High-quality
+274 AIoT for smart transportation
+
+and diverse training information is fundamental for progressing model exactness and
+generalization. The appropriate AI model design ought to be chosen based on com-
+putational assets, information characteristics, and wanted execution. Effective train-
+ing procedures, such as hyperparameter tuning, regularization strategies, and data
+augmentation, ought to be utilized to optimize demonstrate execution. The deploy-
+ment environment, counting edge gadgets or cloud stages, ought to be considered,
+and the show should be optimized for efficient inference.
+
+  Integrating the AIoT show with existing activity management systems and
+emergency reaction infrastructure is vital for effective usage. Moral con-
+templations related to information security, inclination, and fairness ought also
+to be addressed. Leveraging exchange learning, investigating edge computing,
+actualizing nonstop learning components, embracing user-centric plans, and
+cultivating collaboration with partners can contribute to the effective advance-
+ment and usage of AIoT-powered activity administration arrangements. By
+taking after these viable proposals, analysts and professionals can progress crisis
+reaction times and reduce traffic congestion, eventually improving public safety
+and well-being.
+
+13.7.4 Validation of AIoT-powered approach through case
+  study
+
+To validate the effectiveness of the AIoT-powered TMS in prioritizing emergency
+vehicles, a comprehensive case consider ought to be conducted in a city or urban
+region with significant traffic congestion and a high volume of emergency vehicle
+activity. Ultrasonic thickness sensors ought to be introduced at vital areas along
+major streets and crossing points, and the AIoT framework ought to be coordinated
+with existing traffic management infrastructure. Real-time activity information,
+counting vehicle thickness, speed, and area, ought to be collected from ultrasonic
+sensors and other sources. The AIoT framework ought to at that point actualize
+calculations to prioritize emergency vehicles based on their vicinity to intersections
+and traffic thickness.
+
+  The collected information ought to be dissected to evaluate the effect of the AIoT
+framework on emergency vehicle reaction times, activity clog levels, and in general
+framework execution. The results should be compared with the execution of the
+existing traffic management system to measure the benefits of prioritization.
+
+  Furthermore, input from emergency reaction administrations, transportation
+offices, and the open ought to be assembled to determine their fulfilment with the
+AIoT framework and its effect on traffic flow and emergency reaction. By con-
+ducting this case study, we will prove the adequacy of the AIoT-powered approach
+in prioritizing emergency vehicles and evaluate its potential to accelerate emer-
+gency reaction times and reduce traffic congestion in real-world urban situations.
+
+13.7.5 Ethical considerations and societal implications
+
+The implementation of AIoT-powered TMS, particularly those prioritizing emer-
+gency vehicles, raises significant ethical considerations and societal implications.
+  Optimizing emergency response 275
+
+13.7.5.1 Ethical considerations
+
+l Privacy: The collection and utilization of individual information from drivers
+  and pedestrians can raise privacy concerns.
+
+l Bias: AI algorithms must be carefully outlined to avoid bias and discrimination
+  against certain groups or individuals.
+
+l Fairness: Prioritization of emergency vehicles should be actualized in a fair
+  and an equitable manner, avoiding discrimination based on factors like vehicle
+  type or location.
+
+l Accountability: Mechanisms for accountability and transparency should be
+  established to ensure that AIoT systems are developed, deployed, and operated
+  competently.
+
+13.7.5.2 Societal implications
+
+l Public acceptance: Gaining public trust and acceptance for AIoT-powered
+  TMS is crucial for their successful implementation.
+
+l Job displacement: The introduction of AIoT systems may impact employ-
+  ment in the transportation sector.
+
+l Economic impacts: Implementing AIoT systems can have economic benefits
+  and costs, such as increased efficiency and potential job losses.
+
+l Social equity: AIoT systems should be designed to promote social equity and
+  avoid exacerbating existing inequalities.
+
+To address these moral and societal concerns, measures such as straightforward-
+ness, responsibility, open engagement, and moral rules can be executed. By care-
+fully considering these components, we can ensure that AIoT-powered traffic
+management frameworks are created and sent in a mindful and useful way that
+promotes public safety and well-being.
+
+13.7.6 Future directions for research and policy
+  development
+
+To further development the field of AIoT-powered activity administration for
+emergency reaction, some zones can be explored for future inquire approximately
+and policy advancement. Progressed AI methodologies, such as support learning
+and generative ill-disposed frameworks, can be investigated to advance the exact-
+ness and efficiency of emergency vehicle area and movement expectation.
+Integrating AIoT systems with other transportation modes can provide a more
+comprehensive course of action for traffic management. Developing and refining
+ethical frameworks for AIoT frameworks in activity administration is pivotal for
+addressing issues such as protection, reasonableness, and responsibility. Policies
+and regulations overseeing the utilize of AIoT systems ought to also be created to
+ensure their secure and successful deployment. Promoting interoperability between
+distinctive AIoT frameworks and traffic management platforms can empower
+consistent information sharing and coordination. Long-term considerations are
+required to evaluate the long-term effect of AIoT-powered traffic administration
+276 AIoT for smart transportation
+
+frameworks on emergency reaction times, traffic congestion, and public safety.
+Worldwide collaboration and information sharing can also contribute to the pro-
+gression of AIoT advances for traffic management. By investigating these future
+bearings, we may move forward with the appropriateness and benefits of AIoT-
+powered TMS, ultimately enhancing emergency reaction and reducing traffic
+congestion.
+
+13.8 Summary of contributions
+
+This research has made significant commitments to the field of AIoT-powered
+traffic management for optimizing emergency reaction. A comprehensive literature
+review was conducted to identify research gaps and advise the advancement of the
+AIoT framework. An AI show for ambulance discovery was successfully created
+and coordinated with activity administration frameworks to prioritize emergency
+vehicles based on real-time activity information. Moral contemplations and societal
+suggestions were carefully considered, including security, predisposition, reason-
+ableness, responsibility, open acknowledgment, work uprooting, and financial
+impacts. A pilot test was conducted to approve the viability of the AIoT framework
+for improving emergency reaction times and reducing traffic congestion.
+
+  The study provided practical guidance on AIoT model development, including
+data collection strategies, model training strategies, and execution evaluation
+metrics. Future research directions were identified, such as investigating advanced
+AI methods, integrating with other transportation modes, and developing ethical
+systems for AIoT frameworks. Overall, this research has enhanced the under-
+standing of AIoT-powered traffic management for emergency response and pro-
+vided valuable insights for policymakers and researchers. The implementation of
+AIoT systems in other cities aims to improve emergency response times and reduce
+traffic congestion.
+
+References
+
+Al-Qudah, H. A., and Al-Qudah, M. A. (2023). A survey on AI applications in
+  intelligent transportation systems. Journal of Intelligent Systems, 32(1),
+  27–52.
+
+Azadeh, M., and Nourbakhsh, M. (2020). A survey on deep learning applications in
+  intelligent transportation systems. IEEE Communications Surveys & Tutor-
+  ials, 22(3), 1875–1904.
+
+Bonomi, A., Milito, R., Zhu, J., and Addepalli, S. (2014). Fog computing and its
+  potential applications. IEEE Communications Magazine, 52(12), 68–76.
+
+Chavan, S. (2023). Privacy and security in IoT based intelligent transportation
+  system. In Preprint. https://doi.org/10.13140/RG.2.2.14950.80964.
+
+Chen, M., Wu, J., and Wang, Y. (2023). Advances in AIoT-based traffic manage-
+  ment systems. Journal of Transportation Engineering, 14(2), 87–102.
+  Optimizing emergency response 277
+
+Chen, Y., Wang, Y., and Li, Y. (2022). A review of emergency vehicle routing and
+  prioritization in intelligent transportation systems. IEEE Transactions on
+  Intelligent Transportation Systems, 23(12), 6730–6747.
+
+Choudhury, K. and Nandi, D. (2021). Detection and prioritization of emergency
+  vehicles in intelligent traffic management system. IEEE Bombay Section Sig-
+  nature Conference (IBSSC), pp. 1–6. https://doi.org/10.1109/IBSSC53889.2021.
+  9673211.
+
+Elghamrawy, N., and Elmahdy, A. M. (2021). Intelligent transportation systems
+  (ITS) and artificial intelligence: A survey. Artificial Intelligence Review, 35
+  (1), 1–44.
+
+Floridi, L. (2016). The ethics of artificial intelligence. Oxford Review of Economic
+  Policy, 32(3), 381–403.
+
+Gao, Y., Li, Y., and Li, X. (2022). Emergency vehicle routing and priority in
+  intelligent transportation systems: A review. IEEE Transactions on Intelligent
+  Transportation Systems, 23(12), 6748–6761.
+
+Gao, Y., Li, Y., and Zhang, L. (2023). AI-powered smart transportation: Challenges
+  and opportunities. IEEE Transactions on Intelligent Transport, 24(3), 432–445.
+
+Harari, Y. N. (2017). Homo Deus: A Brief History of Tomorrow. Boston, MA:
+  Houghton Mifflin Harcourt.
+
+Kim, H., Park, J., and Choi, S. (2022). Anomaly detection in AIoT-driven traffic
+  monitoring systems. Transportation Research Journal, 35(4), 78–91.
+
+Lee, S., Kim, J., and Park, J. (2023). Intelligent transportation system (ITS) based
+  on IoT and AI: A review. Journal of Industrial and Information Systems, 31
+  (4), 1041–1055.
+
+Li, X., Zhu, X., and Zhang, L. (2022). Prioritizing emergency vehicles in intelligent
+  transportation systems: A review. IEEE Transactions on Intelligent Trans-
+  portation Systems, 23(6), 3448–3463.
+
+Liu, Y., Zhang, X., and Liu, Y. (2022). A survey on AI-powered intelligent trans-
+  portation systems. IEEE Transactions on Intelligent Transportation Systems,
+  23(12), 6617–6637.
+
+Logambigai, R., and Suresh Babu, C. V. (2024). Blockchain empowerment for
+  securing IoT, sensory data in next-gen intelligent systems. In S. Sharma, A.
+  Prakash, and V. Sugumaran (eds.), Developments Towards Next Generation
+  Intelligent Systems for Sustainable Development (pp. 1–34). Hershey, PA: IGI
+  Global.
+
+O’Neill, C. (2016). Weapons of Math Destruction: How Big Data Is Being Used to
+  Automate Discrimination. New York: Crown Business.
+
+Shi, W., Cafazzo, L., and Ansari, M. (2016). Edge computing: Paradigm shift for
+  distributed Internet of Things. IEEE Wireless Communications, 23(4), 28–36.
+
+Wang, X., Gao, Z., and Li, K. (2021). A review of intelligent transportation sys-
+  tems: Technologies, applications, and challenges. IEEE Transactions on
+  Intelligent Transportation Systems, 22(5), 2348–2365.
+
+Wang, X., Gao, Z., and Li, K. (2023). AI-powered smart traffic management sys-
+  tems: Challenges and innovations. Journal of Advanced Transportation
+  Technologies, 28(2), 45–63.
+

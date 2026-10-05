@@ -1,0 +1,1442 @@
+2.2 Stochastic Optimal Transportation Problems  41
+
+2.2.2 Proof of Duality Theorem and Its Application
+
+In this section, we prove Theorems 2.4 and 2.5 and Corollary 2.3.
+  We ﬁrst give technical lemmas and then prove Theorem 2.4.
+
+Lemma 2.1 Suppose that (A.0) holds. Let ( , F , {Ft }t≥0, P ), X0 and {W (t)}t≥0
+be a complete ﬁltered probability space, an (F0)-adapted random variable, and
+a d-dimensional (Ft )-Brownian motion for which W (0) = 0, respectively. For an
+Rd -valued, (Ft )-progressively measurable stochastic process {u(t)}0≤t≤1, consider
+a solution to the following:
+
+  t  t
+
+Xu(t) = X0 + u(s)ds + σ (s, Xu(s))dW (s),  t ∈ [0, 1].  (2.66)
+
+  0  0
+
+If E[  1  |u(t  )|d  t  ]  is  ﬁnite,  then  {X  u  (t  )}0≤t  ≤1  ∈  A  with βXu (t, Xu)  =  Xu
+  0
+  E[u(t)|Ft ],
+
+dtdP –a.e.. In particular, by Jensen’s inequality,
+
+  1  1
+E L(t, Xu(t); u(t))dt ≥ E L(t, Xu(t); βXu (t, Xu))dt .
+  (2.67)
+
+  0  0
+
+Proof of Proposition 2.1 Equation (2.66) has a unique strong solution from (A.0).
+We give a sketch of the proof. We ﬁrst prove the existence.
+
+  X0(t) := X0 +  t  t  (2.68)
+Xn+1(t) := X0 +  t ∈ [0, 1], n ≥ 0.
+  u(s )d s,  σ (s, Xn(s))dW (s),
+
+  0  0
+
+  t
+
+  u(s)ds +
+
+  0
+
+Then
+
+  ∞
+
+  E  sup |Xn+1(t) − Xn(t)| < ∞.  (2.69)
+
+  n=0 0≤t ≤1
+
+Indeed,
+
+  ⎧  t  t ∈ [0, 1], n ≥ 1,
+  ⎪⎪⎪  t ∈ [0, 1], n = 0.
+  ⎪⎨  {σ (s, Xn(s)) − σ (s, Xn−1(s))}dW (s),
+Xn+1(t)−Xn(t) = ⎪⎪⎪
+  ⎪⎩  0
+
+  t
+
+  σ (s, X0(s))dW (s),
+
+  0
+42  2 Stochastic Optimal Transportation Problem
+
+Let Lσ denote the Lipschitz constant of σ . Then, by Doob’s inequality and by
+induction, for n ≥ 1,
+
+E sup |Xn+1(s) − Xn(s)|2 ≤ 4E  t
+
+  0≤s≤t  |σ (s, Xn(s)) − σ (s, Xn−1(s))|2ds
+
+  0
+
+  t
+  ≤ 4L2σ E sup |Xn(α) − Xn−1(α)|2 ds
+  0  0≤α≤s
+
+  ≤ (4L2σ )n t (n + 1)! ||σ || n+1 2∞, t ∈ [0, 1].
+
+Notice that Xn+1(s) − Xn(s) is square integrable from (A.0) though Xn(s) is not
+necessarily.
+
+  Equation (2.69) implies that {{Xn(t)}0≤t≤1; n ≥ 1} is a Cauchy sequence of
+C([0, 1]; Rd), a.s. In particular, there exists {X∞(t)}0≤t≤1 such that the following
+holds:
+
+  lim sup |Xn(t) − X∞(t)| = 0, a.s.,  (2.70)
+
+  n→∞ 0≤t ≤1
+
+  t  2
+
+  E sup {σ (s, Xn(s)) − σ (s, X∞(s))}dW (s)  (2.71)
+
+  0≤t≤1 0
+
+  ≤ 4E  1  n→∞
+
+  |σ (s, Xn(s)) − σ (s, X∞(s))|2ds → 0,
+
+  0
+
+by Doob’s inequality and by the bounded convergence theorem.
+  Taking a subsequence if necessary, let n → ∞ in (2.68). Then from (2.70) and
+
+(2.71), one can show that {X∞(t)}0≤t≤1 is a solution to (2.66).
+  We prove the uniqueness. If (2.66) holds with u = ui, i = 1, 2, then
+
+  t  t ∈ [0, 1].
+
+  Xu1 (t) − Xu2 (t) = {σ (s, Xu1 (s)) − σ (s, Xu2 (s))}dW (s),
+
+  0
+
+In the same way as above, by Doob’s inequality, for t ∈ [0, 1],
+
+  t
+E sup |Xu1 (s) − Xu2 (s))|2 ≤ 4L2σ E sup |Xu1 (α) − Xu2 (α)|2 ds.
+  0≤s≤t  0  0≤α≤s
+
+Gronwall’s inequality implies that Xu1 = Xu2 .
+2.2 Stochastic Optimal Transportation Problems  43
+
+  Since E[  1  |u(t )|d t ]  is  ﬁnite,  there  exists  a  Borel  measurable  βXu  :  [0, 1] ×
+  0
+C([0, 1]) −→ Rd for which ω → βXu(t, ω) is B(C([0, t]))+-measurable for all
+t ∈ [0, 1] and for which
+
+  E[u(t)|FtXu ] = βXu (t, Xu)  (2.72)
+
+(see [100, pp. 114 and 270]). To complete the proof, we prove that
+
+  t
+
+  Y (t) := Xu(t) − X0 − βXu (s, Xu)ds
+
+  0
+
+is  an  Xu  with  a  quadratic  variational  processes  (  t  aij (s, Xu(s))
+  0
+  (Ft )-martingale
+
+ds)di,j=1. Indeed, if this is true, then the martingale representation theorem (see,
+
+e.g. [75]) implies that
+
+  t  t
+  Xu(t) = X0 + βXu(s, Xu)ds + σ (s, Xu(s))dWXu (s),
+  0 ≤ t ≤ 1.
+  0  0  (2.73)
+
+  Xu  Xu
+It is easy to see that Y (t) is Ft -adapted. Since Fs ⊂ Fs , if 0 ≤ s ≤ t, then
+
+  E[Y (t) − Y (s)|FsXu ]  (2.74)
+
+  = E (u(γ ) − βXu (γ , X t u))dγ + σ (γ , X t u(γ ))dW (γ ) FsXu
+  s  s
+
+  t Xu Xu
+
+  = E[u(γ ) − E[u(γ )|Fγ ]|Fs ]dγ
+
+  s
+
+  +E E  tu
+
+  σ (γ , Xu(γ ))dW (γ ) Fs F Xs = 0.
+
+  s
+
+For any f ∈ Cb2(R) and i, j = 1, · · · , d, by the Itô formula (see, e.g. [75]),
+
+  E[f (Yi (t) − Yi(s))f (Yj (t) − Yj (s))|FsXu ]  (2.75)
+
+  t  aij (γ , Xu(γ ))Df (Yi (γ ) − Yi(s))Df (Yj (γ ) − Yj (s))
+
+  =E
+
+  s
+
+  + 1 aii(γ , Xu(γ ))D2f (Yi (γ ) − Yi (s))f (Yj (γ ) − Yj (s))
+  2
+
+  + 1 ajj (γ , Xu(γ ))f (Yi (γ ) − Yi (s))D2f (Yj (γ ) − Yj (s)) dγ FsXu .
+  2
+44  2 Stochastic Optimal Transportation Problem
+
+  Xu
+
+Indeed, since Y (t) is Ft -adapted, for γ ≥ s,
+
+  E[f (Yi (γ ) − Yi (s))Df (Yj (γ ) − Yj (s))(uj (γ ) − βXu,j (γ , Xu))|FsXu ]
+= E[E[f (Yi(γ ) − Yi (s))Df (Yj (γ ) − Yj (s))(uj (γ ) − E[uj (γ )|FγXu ])|FγXu ]|FsXu ]
+= E[f (Yi (γ ) − Yi (s))Df (Yj (γ ) − Yj (s))
+
+  × E[uj (γ ) − E[uj (γ )|FγXu]|FγXu ]|FsXu ] = 0,
+
+where  u(s)  =  (ui (s))di=1,  βXu(s, Xu)  =  (  β  X  u  ,  i  (  s  ,  X  u  )  )  d  .  For  n  ≥  1,  take  f  such
+  i=1
+that f (x) = x if |x| ≤ n. Then on the set ∩k=i,j {sups≤γ ≤t |Yk(γ ) − Yk(s)| ≤ n},
+
+  E[(Yi(t) − Yi(s))(Yj (t) − Yj (s))|FsXu ] = E  aij (γ , X t u(γ ))dγ FsXu .
+
+  s
+
+  (2.76)
+
+Since sups≤γ ≤t |Y (γ ) − Y (s)| is ﬁnite a.s., the proof is complete.
+  For any s ≥ 0 and P ∈ P(Rd ),
+
+  P (s) := ν ∈ A˜ ν1,0 = P ,  L(t, x; u)ν(dtdxdu) ≤ s .  (2.77)
+
+  [0,1]×Rd ×Rd
+
+The following lemma plays a crucial role in this section (see [112]).
+
+Lemma 2.2 Suppose that (A.0.0,i), (A.1,i), and (A.2) hold. Then for any s ≥ 0 and
+compact set K ⊂ P(Rd ), the set ∪P ∈K P (s) is compact in P([0, 1] × Rd × Rd ),
+where P(Rd ) and P([0, 1] × Rd × Rd ) are endowed with a weak topology.
+
+Proof of Proposition 2.1 We only have to consider the case where ∪P ∈K P (s) =
+∅. We ﬁrst prove that ∪P ∈K P (s) is tight. From (A.2), for sufﬁciently large r > 0,
+
+  ν([0, 1] × Rd × Brc)  (2.78)
+  ν ∈ ∪P ∈K P (s).
+  ≤ 1 |u|ν(dtdxdu)
+  r [0,1]×Rd ×Brc
+
+  ≤ 1 L(t, x; u)ν(dtdxdu) ≤ s ,
+  r [0,1]×Rd ×Rd  r
+
+Take ψ ∈ C∞ b (Rd ; [0, 1]) for which ψ(x) = 0 if |x| ≤ 1 and = 1 if |x| ≥ 2, and
+  ψr (x) := ψ x .
+  r
+2.2 Stochastic Optimal Transportation Problems  45
+
+Then, from (2.22), (A.0.0,i), and (A.2), there exists C > 0 such that for sufﬁciently
+large r ≥ 1 and any t ∈ [0, 1],
+
+  ν1,t (B2cr ) ≤  ψ  x  ν1,t (dx)  (2.79)
+
+  Rd  r
+
+= ψ x ν1,0(dx)
+  Rd  r
+
+  +  2r2 1 a(s, x), Dx2ψ xr  + 1 u, Dx ψ x  ν (d s d x d u)
+  r  r
+  [0,t ]×Rd ×Rd
+
+≤ ν1,0(Brc) + C 1 +  L(t, x; u)ν(dtdxdu)
+  r  [0,1]×Rd ×Rd
+
+≤ ν1,0(Brc) + C(1 + s) ,  ν ∈ ∪P ∈K P (s).
+  r
+
+Since ν1,0 ∈ K, (2.78)–(2.79) imply the tightness of ∪P ∈K P (s).  P (s) and
+  Next, we prove that ∪P ∈K P (s) is closed. Suppose that νn ∈ ∪P ∈K
+
+that νn → ν as n → ∞ weakly. Then it is easy to see that
+
+  L(t, x; u)ν(dtdxdu)  (2.80)
+
+  [0,1]×Rd ×Rd
+
+  ≤ lim inf  L(t, x; u)νn(dtdxdu) ≤ s
+  n→∞ [0,1]×Rd ×Rd
+
+from (A1,i). We can also prove that (νn)1,0 is convergent. Indeed, for any f˜ ∈
+C([0, 1]) and f ∈ Cb1,2([0, 1] × Rd ), multiply f˜ and the both sides of (2.22) with
+ν replaced by νn and then integrate in t. Then since νn ∈ ∪P ∈K P (s), we have the
+following from (A.0.0,i) and (A.2):
+
+  1  f˜(t)dt f (0, x)(νn)1,0(dx)
+
+  (2.81)
+
+  0  Rd
+
+=  [0,1]×Rd ×Rd  f˜(t)f (t, x) −  1
+
+  f˜(s)ds Lt,x,uf (t, x) νn(dtdxdu)
+
+  t
+
+→  [0,1]×Rd ×Rd  f˜(t)f (t, x) −  1
+
+  f˜(s)ds Lt,x,uf (t, x) ν(dtdxdu), n → ∞,
+
+  t
+
+  1  Rd  f (t, x)ν1(t, dx) −  [0,t]×Rd ×Rd  Ls,x,uf (s, x)ν(dsdxdu)
+
+= f˜(t)dt
+
+  0
+
+(see (2.22) for notation). Here we used the following: since νn(dt × Rd × Rd ) = dt,
+
+  ν(dt × Rd × Rd ) = dt.  (2.82)
+46  2 Stochastic Optimal Transportation Problem
+
+Equation (2.81) implies that ν1,t (dx) exists, ν satisﬁes (2.22) and ν1,0 =
+limn→∞(νn)1,0 ∈ K since K is compact. It is easy to see that (2.21) holds from
+(2.80) and that ν ∈ A˜.
+
+  We recall the following result.
+
+Lemma 2.3 (See (2.42) and [61, pp. 185–188]) Suppose that (A.0) and (A.3) hold.
+Then for any n ≥ 1, f ∈ U Cb(Rd ), t ∈ [0, 1] and Q ∈ P(Rd ),
+
+  1
+  ϕn(t, x; f )Q(dx) = sup E f (X(1)) − L(s, X(s); βX(s, X))ds
+  Rd
+  t
+
+  X ∈ At , |βX(s, X)| ≤ n, P X(t) = Q . (2.83)
+
+  From Lemma 2.1, (A.0) implies that for any t ∈ [0, 1], X ∈ At , and n ≥ 1, the
+following has a unique solution: for s ∈ [t, 1],
+
+Xn(s) = X(t) +  s  s
+
+  1[0,n](|βX(α, X)|)βX(α, X)dα +  σ (α, Xn(α))dWX(α).
+
+  t  t
+
+  (2.84)
+
+Xn ∈ At and the following holds (see (2.72)):
+
+  βXn (s, Xn) = E[1[0,n](|βX(s, X)|)βX(s, X)|FsXn ].
+
+The following also holds.
+
+Lemma 2.4 Suppose that (A.0) holds. Then for any t ∈ [0, 1] and X ∈ At , there
+exists a subsequence {Xn(k)}k≥1 ⊂ At of (2.84) such that
+
+  lim sup |Xn(k)(s) − X(s)| = 0, a.s..  (2.85)
+
+  k→∞ t ≤s≤1
+
+Proof of Proposition 2.1 For the sake of simplicity, we assume that t = 0.
+
+  s  (2.86)
+
+  τm := inf s ∈ [0, 1] |βX(α, X)|dα > m (→ ∞ as m → ∞).
+
+  0
+
+Then we have
+
+  lim E sup |Xn(s) − X(s)|2 = 0 for m ≥ 1.  (2.87)
+
+  n→∞ 0≤s≤τm
+2.2 Stochastic Optimal Transportation Problems  47
+
+This is true, since
+
+  X(s) − Xn(s)  s
+
+  s  (σ (α, X(α)) − σ (α, Xn(α)))dWX(α).
+
+= 1(n,∞)(|βX(α, X)|)βX(α, X)dα +  0
+
+  0
+
+By the Gronwall and Doob inequalities and a standard method, for m ≥ 1,
+
+E sup |Xn(s) − X(s)|2
+
+  0≤s ≤τm
+
+  τm  2
+
+≤ 2E  1(n,∞)(|βX(s, X)|)|βX(s, X)|ds  exp(8L2σ ) → 0,  n → ∞,
+
+  0
+
+by the bounded convergence theorem. Here Lσ denotes the Lipschitz constant of σ
+and we used the following:
+
+  τm
+
+  1(n,∞)(|βX(s, X)|)|βX(s, X)|ds ≤ m.
+
+  0
+
+Since an L2-convergent sequence of random variables has an a.s. convergent
+subsequence, one can take, by a diagonal method, a subsequence {n(k)}k≥1 so that
+
+ lim sup |Xn(k)(t) − X(t)| → 0 for each m ≥ 1, a.s..  (2.88)
+
+k→∞ 0≤t ≤τm
+
+Since P (∪m≥1{τm = 1}) = 1, the proof is complete.
+
+  ϕ(t, x; f ) := lim ϕn(t, x; f )
+
+  n→∞
+
+(see (2.42) for notation). Then the following holds.
+
+Lemma 2.5 Suppose that (A.0)–(A.3) hold. Then for any f ∈ U Cb(Rd ), Q ∈
+P(Rd ) and t ∈ [0, 1],
+
+  ϕ(t, x; f )Q(dx)  (2.89)
+
+  Rd
+
+  1
+
+  = sup E f (X(1)) − L(s, X(s); βX(s, X))ds .
+
+  X∈At ,P X(t)=Q  t
+
+ϕ(t, x; f ) is the minimal bounded continuous viscosity solution of (2.39) with
+ϕ(1, x) = f (x).
+48  2 Stochastic Optimal Transportation Problem
+
+Proof of Proposition 2.1 We write ϕ(t, x; f ) = ϕ(t, x) and ϕn(t, x; f ) = ϕn(t, x)
+
+for the sake of simplicity. We ﬁrst prove (2.89). It is easy to see that the left-hand
+
+side is less than or equal to the right-hand side in (2.89) from Lemma 2.3. We
+prove the opposite inequality. For X ∈ At for which P X(t) = Q and for which
+E[ t1 L(s, X(s); βX(s, X))ds] is ﬁnite, take {Xn(k)}k≥1 in Lemma 2.4. Then for
+k ≥ 1, from Lemma 2.3,
+
+  ϕn(k)(t, x)Q(dx)  (2.90)
+
+  Rd
+
+  1
+
+  ≥ E f (Xn(k)(1)) − L(s, Xn(k)(s); βXn(k)(s, Xn(k)))ds
+
+  t
+
+  1
+
+  ≥ E f (Xn(k)(1)) − L(s, Xn(k)(s); 1[0,n(k)](|βX(s, X)|)βX(s, X))ds
+
+  t
+
+  1  as k → ∞,
+
+  → E f (X(1)) − L(s, X(s); βX(s, X))ds
+
+  t
+
+by Jensen’s inequality and the dominated convergence theorem, Indeed, (A.1,i) and
+(A.3,ii) imply that L(t, x; 0) is bounded and the following holds:
+
+  0 ≤ L(s, Xn(k)(s); 1[0,n(k)](|βX(s, X)|)βX(s, X))  (2.91)
+  ≤ (1 + CL)L(s, X(s); 1[0,n(k)](|βX(s, X)|)βX(s, X))
+  ≤ (1 + CL){L(s, X(s); βX(s, X)) + L(s, X(s); 0)}.
+
+  ϕ is bounded since setting Q(dy) = δx (dy) in (2.89), from (A.3,ii),
+
+  1  (2.92)
+
+  sup f (y) ≥ ϕ(t, x) ≥ E f (X0(1)) − L(s, X0(s); 0)ds X0(t) = x
+
+  y ∈Rd  t
+
+  ≥ inf f (y) − sup L(s, y; 0) > −∞
+  y ∈Rd
+  (s,y )∈[0,1]×Rd
+
+(see (2.66) for notation).
+
+  We prove the upper semicontinuity of ϕ. For (t, x) ∈ Rd and n ≥ 1, take Xn,t,x ∈
+At for which Xn,t,x(t) = x and
+
+  ϕ(t, x) − 1 < E  f (Xn,t,x(1)) −  1
+  n
+  L(s, Xn,t,x (s); βXn,t,x (s, Xn,t,x ))ds .
+
+  t
+
+  (2.93)
+2.2 Stochastic Optimal Transportation Problems  49
+
+Then from (2.92),
+
+  1
+
+  E  L(s, Xn,t,x (s); βXn,t,x (s, Xn,t,x ))ds  (2.94)
+
+  t
+
+  ≤ 2 sup |f (y)| + sup L(s, y; 0) + 1 < ∞.
+
+  y∈Rd  (s ,y )∈[0,1]×Rd
+
+Xn,t,x(u) := x for u < t.
+
+  νn,t,x (dsdydu)  (2.95)
+
+:= d sP (Xn,t,x (s),bXn,t,x (s,Xn,t,x (s)))(dyd u)
+
+= 1[0,t](s)dsδx (dy)δ0(du) + 1(t,1](s)dsP Xn,t,x (s)(dy)δbXn,t,x (s,y)(du)
+
+(see (2.16) for notation). Then νn,t,x ∈ A˜ with Ls,y,u replaced by the following:
+for f ∈ C1,2([0, 1] × Rd ),
+
+Lt,s,y,uf (s, y) := ∂s f (s, y) + 1 1(t,1](s)a(s, y), Dx2f (s, y) + u, Dx f (s, y) .
+  2
+  (2.96)
+
+In the same way as in Lemma 2.2, one can show that as (n, t, x) → (∞, t0, x0),
+νn,t,x has a convergent subsequence. Approximate 1(t0,1] by a bounded continuous
+function in L1([0, 1], dt). Then the limit νt0,x0 ∈ A˜ with Ls,y,u replaced by
+Lt0,s,y,u and the following holds:
+
+  1[0,t0](s)νt0,x0(dsdydu) = 1[0,t0](s)dsδx0 (dy)δ0(du).
+
+In particular, by Jensen’s inequality and Trevisan’s superposition principle,
+
+  lim sup ϕ(t, x)  (2.97)
+
+(t ,x )→(t0,x0 )
+
+≤ f (y)(ν(t0,x0))1,1(dy) −  [t0,1]×Rd ×Rd  L(s, y; u)ν(t0,x0)(dsdydu)
+Rd
+
+≤ f (y)(ν(t0,x0))1,1(dy) −  L(s, y; bν(t0,x0) (s, y))ds(ν(t0,x0))1,s (dy)
+
+  Rd  [t0,1]×Rd
+
+≤ ϕ(t0, x0)
+
+(see (2.22) and (2.32) for notation).
+50  2 Stochastic Optimal Transportation Problem
+
+  We prove the lower semicontinuity of ϕ. Since ϕn ↑ ϕ, n → ∞ and ϕn(t, x; f )
+is continuous,
+
+  lim inf ϕ(t, x) ≥ lim inf ϕn(t, x) = ϕn(t0, x0) → ϕ(t0, x0),  n → ∞.
+(t ,x )→(t0,x0 )  (t ,x )→(t0,x0 )  (2.98)
+
+  Since ϕn(t, x; f ) is the unique bounded continuous viscosity solution of the HJB
+Eqn. (2.39) with ϕn(1, x; f ) = f (x) and with H replaced by Hn, one can prove that
+ϕ is a viscosity solution of (2.39) by a standard argument. Indeed, Hn ↑ H (resp.
+ϕn ↑ ϕ) uniformly on every compact subset of [0, 1] × Rd × Rd (resp. [0, 1] × Rd )
+as n → ∞ by Dini’s Theorem, since Hn ↑ H (resp. ϕn ↑ ϕ) as n → ∞ and Hn and
+
+H (resp. ϕn and ϕ) are continuous.
+  Let ϕ be a bounded continuous viscosity solution of (2.39) with ϕ(1, x) = f (x).
+
+Then ϕ is a bounded continuous viscosity supersolution of (2.39) with ϕ(1, x) =
+f (x) and with H replaced by Hn for all n ≥ 1, since Hn ≤ H . Since ϕn(t, x; f )
+is a bounded continuous viscosity solution of (2.39) with ϕn(1, x; f ) = f (x) and
+
+with H replaced by Hn, by the comparison principle (see [61, p. 249, Theorem 9.1]),
+ϕn(t, x; f ) ≤ ϕ(t, x). Letting n → ∞, the proof is over.
+
+Remark 2.9 The right-hand side of (2.89) is a ﬁnite horizon stochastic optimal
+
+control problem (see [61]) and the following holds:
+
+  1
+
+  sup  E f (X(1)) − L(s, X(s); βX(s, X))ds  (2.99)
+
+  X∈At ,P X(t )−1=Q  t
+
+  = sup  f (x)P (dx) − V[t,1](Q, P ) .
+
+  P ∈P(Rd )  Rd
+
+Here V[t,1] denotes V with [0, 1] replaced by [t, 1].
+
+  To prove Theorem 2.4, we improve the idea in [119, Theorem 2.1].
+
+Proof of Theorem 2.4 V (P0, ·) ≡ ∞. Indeed, for X0 for which P X0(0) = P0,
+P1 := P X0(1) (see (2.66) for notation). Then, from (A.1,i) and (A.3,ii),
+
+  V (P0, P1) ≤ sup{L(t, x; 0)|(t, x) ∈ [0, 1] × Rd } < ∞.  (2.100)
+
+Consider P → V (P0, P ) as a function on the space of ﬁnite signed Borel measures
+on Rd , by putting V (P0, P ) = +∞ for P ∈ P(Rd ). Then it is convex and lower
+semicontinuous in the weak topology from Proposition 2.1 and Lemma 2.2. From
+[48, Theorem 2.2.15 and Lemma 3.2.3],
+
+  V (P0, P1) = sup  f (x)P1(dx) − VP0 ∗ (f ) ,  (2.101)
+
+  f ∈Cb(Rd )  Rd
+2.2 Stochastic Optimal Transportation Problems  51
+
+where for f ∈ Cb(Rd ),
+
+  VP0 ∗ (f ) := sup  f (x)P (dx) − V (P0, P ) .  (2.102)
+
+  P ∈P(Rd )  Rd
+
+Denote by V (P0, P1) the right-hand side of (2.38). Then, from Lemma 2.5 and
+(2.101),
+
+  V (P0, P1) ≥ V (P0, P1).
+We prove the opposite inequality. Take ρ ∈ C∞ 0 ([−1, 1]d) for which ρ(x)dx ∈
+P(Rd ). For ε > 0 and f ∈ Cb(Rd ),
+
+  ρε(x) := ε−d ρ(x/ε),
+  fε(x) := f (y)ρε(x − y)dy, x ∈ Rd .
+
+  Rd
+
+Then fε ∈ Cb∞(Rd ) and, from Lemma 2.5,
+
+  V (P0, P1) ≥ fε(x)P1(dx) − VP0 ∗ (fε).  (2.103)
+
+  Rd
+
+Take Xε ∈ A , ε > 0 for which P Xε(0) = P0 and
+
+VP∗0 (fε) − ε < E[fε(Xε(1))] − E  1  (2.104)
+
+  L(t, Xε(t); βXε (t, Xε))dt .
+
+  0
+
+Then from (2.100), {VP∗0(fε)}ε>0 is bounded below and dtP Xε(t)(dx)δbXε(t,Xε(t))
+(du) has a convergent subsequence in A˜ from Lemma 2.2 (see (2.16) for notation).
+By Trevisan’s superposition principle, for any weak limit point ν, there exists Xν ∈
+
+A such that
+
+  βXν (t, Xν ) = bν(t, Xν (t)),  dtdP –a.e.,  (2.105)
+  ν(dtdx × Rd ) = dtP Xν (t)(dx)
+
+(see (2.34) for notation). By Fatou’s lemma and Jensen’s inequality (see (2.32)–
+(2.33)),
+
+lim sup VP∗0 (fε) ≤ E[f (Xν (1))] −  [0,1]×Rd ×Rd  L(t, x; u)ν(dtdxdu) (2.106)
+ε→0
+
+  ≤ E[f (Xν (1))] − E  1
+  ≤ VP∗0 (f )
+  L(t, Xν (t); bν (t, Xν(t)))dt
+
+  0
+52  2 Stochastic Optimal Transportation Problem
+
+since
+
+  E[fε(Xε(1))] = ρ(z)dzE[f (Xε(1) + εz)].
+
+  Rd
+
+Equations (2.101), (2.103), and (2.106) imply that
+  V (P0, P1) ≥ V (P0, P1),
+
+which completes the proof.
+  We give the following for the sake of completeness.
+
+Proposition 2.3 Suppose that (A.2) and (A.4,ii,iii) hold. Then, for any r > 0,
+
+  sup{|DzH (t, x; z)||(t, x, z) ∈ [0, 1] × Rd × Rd , |z| < r} < ∞.  (2.107)
+
+Proof of Theorem 2.4 For any r > 0, there exists R(r) > 0 such that  (2.108)
+  inf{|DuL(t, x; u)||(t, x, u) ∈ [0, 1] × Rd × Rd , |u| > R(r)} ≥ r.
+
+Indeed,
+
+  inf{|DuL(t, x; u)||(t, x) ∈ [0, 1] × Rd }  |u| → ∞,
+  ≥ 1|u| inf{L(t, x; u) − L(t, x; 0)|(t, x) ∈ [0, 1] × Rd } → ∞,
+
+from (A.2) and (A4,ii,iii) since from (A.4,ii), for any (t, x, u) ∈ [0, 1] × Rd × Rd ,
+
+  L(t, x; 0) ≥ L(t, x; u) + DuL(t, x; u), −u .
+
+The supremum in (2.107) is less than or equal to R(r)(< ∞). Indeed, if this is not
+true, then there exists (t, x, z) ∈ [0, 1] × Rd × Rd for which
+
+  |z| < r, |DzH (t, x; z)| > R(r).
+
+The second inequality implies that the following holds: from (2.108),
+  |z| = |DuL(t, x; DzH (t, x; z))| ≥ r
+
+from (A.2) and (A.4,ii) (see, e.g. [152, 2.1.3]), which is a contradiction.
+
+  As a preparation for the proof of Theorem 2.5, we give the following lemma
+which also implies (2.45).
+2.2 Stochastic Optimal Transportation Problems  53
+
+Lemma 2.6 Suppose that (A.2), (A.3,ii), and (A.4) hold. Then, for any maximizing
+sequence {ϕn}n≥1 of Corollary 2.2 and any minimizer {X(t)}0≤t≤1 of V (P0, P1),
+P0, P1 ∈ P(Rd ), which is ﬁnite, (2.44)–(2.45) hold.
+
+Proof of Theorem 2.4 The duality in Corollary 2.2 implies, by Itô’s formula, that
+the following holds:
+
+  1  (2.109)
+
+E L(t, X(t); βX(t, X))dt
+
+  0
+
+= lim E  1
+
+  n→∞  { βX(t, X), Dx ϕn(t, X(t)) − H (t, X(t); Dxϕn(t, X(t)))}dt .
+
+  0
+
+From (A.1), the following holds (see, e.g. [152]): for any (t, x, u) ∈ [0, 1]×Rd ×Rd ,
+
+  L(t, x; u) = sup { z, u − H (t, x; z)}.  (2.110)
+
+  z∈Rd
+
+Therefore (2.109) implies (2.44). Equation (2.45) is true from (2.44), (A.2), and
+(A.4,ii) (see, e.g. [152, 2.1.3]).
+
+Proof of Theorem 2.5 Take a maximizing sequence {ϕn}n≥1 of Corollary 2.2. Then
+for any minimizer {X(t)}0≤t≤1 of V (P0, P1), by Itô’s formula,
+
+ϕn(t, X(t)) − ϕn(0, X(0))  (2.111)
+
+  t
+
+= { bX(s, X(s)), Dx ϕn(s, X(s)) − H (s, X(s); Dx ϕn(s, X(s)))}ds
+
+  0
+
+  t  t ∈ [0, 1].
+
+  + Dx ϕn(s, X(s)), σ (s, X(s))dWX (s) ,
+
+  0
+
+By Doob’s inequality (see [75]),
+
+E sup  t  (2.112)
+
+  0≤t ≤1  Dx ϕn(s, X(s)), σ (s, X(s))dWX (s)
+
+  0
+
+  t  2
+
+  − DuL(s, X(s); bX(s, X(s))), σ (s, X(s))dWX (s)
+
+  0
+
+≤ 4E  1
+
+  |σ (s, X(s))t (Dx ϕn(s, X(s)) − DuL(s, X(s); bX(s, X(s))))|2ds
+
+  0
+54  2 Stochastic Optimal Transportation Problem
+
+  ≤ 4CE  1
+
+  {L(s, X(s); bX(s, X(s))) − bX(s, X(s)), Dx ϕn(s, X(s))
+
+  0
+
+  +H (s, X(s); Dx ϕn(s, X(s)))}ds
+
+  → 0 as n → ∞
+
+from (2.44), where
+
+C := 2 sup{ σ (t, x)t Du2L(t, x; u)−1σ (t, x)z, z |t ∈ [0, 1], x, u, z ∈ Rd , |z| = 1}.
+
+Indeed, for a twice differentiable, strictly convex function f : Rd −→ [0, ∞) for
+which f (u)/|u| → ∞ as |u| → ∞ and (u, z) ∈ Rd × Rd , by Taylor’s Theorem,
+there exists θ ∈ (0, 1) such that
+
+  f (u) − { u, z − f ∗(z)}
+  = f ∗(z) − f ∗(Df (u)) − Df ∗(Df (u)), z − Df (u)
+  = 1 D2f ∗(Df (u) + θ (z − Df (u)))(z − Df (u)), z − Df (u) ,
+
+  2
+
+and D2f ∗(z) = D2f (Df ∗(z))−1 (see [152, 2.1.3]). Here
+
+  f ∗(z) := sup{ z, u − f (u)|u ∈ Rd }.
+
+From (2.44), (2.111), and (2.112), ϕn(1, y) − ϕn(0, x) is convergent in L1(Rd ×
+Rd , P (X(0),X(1))).
+
+  From (A.4) and (A.5), P X(·) is absolutely continuous with respect to P X0(·) (see
+
+(2.66) for notation). Indeed, by Taylor’s Theorem, there exists θ ∈ (0, 1) such that
+
+  L(t, x; u) = L(t, x; 0) + DuL(t, x; 0), u + 1 Du2L(t, x; θ u)u, u .
+  2
+
+In particular, since X0 has a transition probability density (see, e.g. [66]),
+
+  p(t, y) := P (X(t) ∈ dy) exists , t ∈ (0, 1],  t ∈ (0, 1].
+  dy
+
+  p(0, x; t, y) := P (X(t) ∈ dy|X(0) = x) exists P0(dx)–a.e.,
+  dy
+2.2 Stochastic Optimal Transportation Problems  55
+
+Therefore P (X(0),X(1))(dxdy) is absolutely continuous with respect to P0(dx)
+P1(dy). Indeed,
+
+  P (X(0),X(1))(dxdy) = p(0, x; 1, y) P0(dx)P1(dy).
+  p(1, y)
+
+Hence, from [135, Proposition 2], there exist measurable functions fi on Rd ,
+i = 0, 1 such that
+
+ lim E[|ϕn(1, X(1)) − ϕn(0, X(0)) − {f1(X(1)) − f0(X(0))}|] = 0. (2.113)
+
+n→∞
+
+  t  (2.114)
+
+Y (t) := f0(X(0)) + L(s, X(s); bX(s, X(s)))ds
+
+  0
+
+  t
+
++ DuL(s, X(s); bX(s, X(s))), σ (s, X(s))dWX(s) .
+
+  0
+
+From Lemma 2.6 and (2.111)–(2.113), (2.46) holds.
+
+  We can prove Corollary 2.3 in exactly the same way as in Theorem 2.5.
+
+Proof of Corollary 2.3 The Duality Theorem holds under (A.4)’. Indeed, (A.4)’
+implies that (A.0)–(A.3) hold and that the unique classical solution to the HJB Eqn.
+(2.39) is also the minimal bounded continuous viscosity solution to the HJB Eqn.
+(2.39) if ϕ(1, ·) ∈ C3b (Rd ), as we explained before we stated Corollary 2.3 (see also
+Lemma 2.5). In particular, Corollary 2.2 holds under (A.4)’. (A.4)’ implies (A.5)
+and the proof of Theorem 2.5 can be applied even though (A.4) does not hold. In
+particular,
+
+  1  (2.115)
+
+f1(X(1)) − f0(X(0)) − c(s, X(s))ds
+
+  0
+
+  1
+
+= a(s, X(s))−1(bX(s, X(s)) − ξ(s, X(s))), dX(s) − ξ(s, X(s))ds >
+
+  0
+
+− 1 1 |σ (s, X(s))−1(bX(s, X(s)) − ξ(s, X(s)))|2ds,
+  20
+
+which completes the proof (see [100]).
+
+2.2.3 Finiteness of SOT
+
+In this section, we give a sufﬁcient condition under which V (P0, P1) is ﬁnite, which
+implies the existence of a semimartingale with a given diffusion matrix and initial
+and terminal distributions. The idea of the proof is to show the ﬁniteness of the
+56  2 Stochastic Optimal Transportation Problem
+
+supremum in the Duality Theorem for V (P0, P1). Our result also gives an approach,
+in the framework of “stochastic optimal transportation”, to the construction of an h-
+path process for Brownian motion with given initial and terminal distributions, in
+that we do not solve Schrödinger’s Func. Eqn. Instead, we only prove the ﬁniteness
+of and the Duality Theorem for V (P0, P1). The result in this section is from [115]
+and completes the program of this approach, though Jamison’s result [80] doesn’t
+assume any integrality condition.
+
+  The following are assumptions:
+
+(C.1). p(t, x) := Pt (dx)/dx exists and is absolutely continuous in x for t = 0, 1.
+(C.2). The following is ﬁnite: for μ(dxdy) := p(0, x)p(1, y)dxdy,
+
+  1
+
+  dt  L(t, (1 − t)x + ty; 3(y − x))μ(dxdy)  (2.116)
+
+  0  Rd ×Rd
+
+  1  L t, (1 − t)x + ty;
+
+  + min  Rd ×Rd
+
+  0
+
+  1 1 − t a(t, (1 − t)x + ty)Dx log p(0, x) μ(dxdy),
+
+  L t, (1 − t)x + ty;
+
+  Rd ×Rd
+
+  1 a(t, (1 − t)x + ty)Dy log p(1, y) μ(dxdy) dt.
+  t
+
+  Let Vcla(P0, P1) denote the supremum in the Duality Theorem in Corollary 2.2,
+i.e.,
+
+  Vcla(P0, P1) := sup  ϕ(1, x)P1(dx) − ϕ(0, x)P0(dx) ,  (2.117)
+
+  Rd  Rd
+
+where the supremum is taken over all classical solutions ϕ to the HJB Eqn. (2.39).
+
+Theorem 2.7 (See [115]) Suppose that (A.2) and (A.4) hold. Then for any P0, P1 ∈
+P(Rd ) such that (C.1)–(C.2) hold, Vcla(P0, P1) is ﬁnite.
+
+  The following gives a sufﬁcient condition for the ﬁniteness of V (·, ·). It can be
+obtained easily from Corollary 2.2 and Theorem 2.7 and the proof is omitted.
+
+Corollary 2.4 (See [115]) Suppose that (A.2), (A.3,ii), and (A.4) hold. Then for
+any P0, P1 ∈ P(Rd ) such that (C.1)–(C.2) hold, V (P0, P1) is ﬁnite, a minimizer
+{X(t)}0≤t≤1 of V (P0, P1) exists and (2.45) holds.
+2.2 Stochastic Optimal Transportation Problems  57
+
+  Before we state a corollary to Corollary 2.4, we introduce a stronger and simpler
+assumption than (C.2):
+
+(C.2)’. There exists r > 1 such that the following holds:
+
+  (|x|r + |Dx log p(t, x)|r )p(t, x)dx < ∞, t = 0, 1.  (2.118)
+
+Rd
+
+Applying  Corollary  2.4  to  L  =  (1  +  |u|2)  r  for  r  >  1,  the  following  holds.
+  2
+
+Corollary 2.5 (See [115]) Suppose that σ is uniformly nondegenerate and σij ∈
+Cb1,2([0, 1] × Rd ), i, j = 1, · · · , d. Then for any P0, P1 ∈ P(Rd ) such that (C.1)
+and (C.2)’ hold, there exists {X(t)}0≤t≤1 ∈ A such that the following holds:
+
+  dX(t) = bX(t, X(t))dt + σ (t, X(t))dWX(t),  0 ≤ t ≤ 1,  (2.119)
+
+P X(t)−1 = Pt , t = 0, 1,
+
+  1
+
+  E |bX(t, X(t))|r dt < +∞.
+
+  0
+
+In particular, if r = 2, then there uniquely exists the h-path process for Brownian
+motion on the time interval [0, 1] with initial and terminal distributions P0 and P1,
+respectively.
+
+  Let xt denote a transpose of a vector x. Then
+
+  {Dxt a(t, x)}t =  d ∂aij (t, x) d  .
+
+  i=1 ∂xi  j =1
+
+We state the key lemma for the proof of Theorem 2.7.
+Lemma 2.7 Suppose that (A.0)–(A.2) hold. Then for any P0, P1 ∈ P(Rd ) such
+that (C.1)–(C.2) hold, the following holds: for any solution ϕ(t, x) ∈ Cb1,2([0, 1] ×
+Rd ) of the HJB Eqn. (2.39),
+
+  ϕ(1, y)p(1, y)dy − ϕ(0, x)p(0, x)dx  (2.120)
+
+  Rd  Rd
+
+≤ 1 dt 1  L(t, (1 − t)x + ty;
+  20  Rd ×Rd
+
+  2(y − x) + {Dzt a(t, (1 − t)x + ty)}t )μ(dxdy)
+
++ 1 min 1  L t, (1 − t)x + ty;
+  20
+  Rd ×Rd
+58  2 Stochastic Optimal Transportation Problem
+
+  1 1 − t a(t, (1 − t)x + ty)Dx log p(0, x) μ(dxdy),
+
+  L t, (1 − t)x + ty;
+
+  Rd ×Rd
+
+  1 a(t, (1 − t)x + ty)Dy log p(1, y) μ(dxdy) dt.
+  t
+
+Proof of Corollary 2.3 On a Borel probability space (Rd × Rd , B(Rd × Rd ), μ)
+(see (C.2) for notation),
+
+X(t) = X(t; x, y) := (1 − t)x + ty, (t, x, y) ∈ [0, 1] × Rd × Rd . (2.121)
+
+Denote by p(t, x), (t, x) ∈ (0, 1) × Rd , the probability density function of X(t),
+i.e.,
+
+  p(t, z) := p(1, y) Rd (1 − t)d 1 p 0, z − ty 1 − t dy  (2.122)
+  (t, z) ∈ (0, 1) × Rd .
+  = p(0, x) d1 p 1, z − (1 − t)x dx,tt
+  Rd
+
+Then, for any solution ϕ(t, x) ∈ Cb1,2([0, 1] × Rd ) of the HJB Eqn. (2.39),
+
+  ϕ(1, y)p(1, y)dy − ϕ(0, x)p(0, x)dx  (2.123)
+
+  Rd  Rd
+
+  1  ∂ϕ(t, X(t))
+
+  = E Dx ϕ(t, X(t)), X(1) − X(0) +  ∂t  dt
+
+  0
+
+  1 12
+  = E Dx ϕ(t, X(t)), X(1) − X(0) − Dx ϕ(t, X(t)), a(t, X(t))
+  0  2
+
+  − H (t, X(t); Dxϕ(t, X(t))) dt
+
+  1 = E D {D x ϕ(t, X(t)), X(1) − X(0) + xt (a(t, X(t))p(t, X(t)))}t
+  2p(t, X(t))
+  0
+
+  − H (t, X(t); Dxϕ(t, X(t))) dt
+
+  ≤ 1 E L t, X(t); X(1) − X(0) + {Dxt (a(t, X(t))p(t, X(t)))}t dt
+  2p(t, X(t))
+  0
+2.2 Stochastic Optimal Transportation Problems  59
+
+≤  11  E[L(t, X(t); 2(X(1) − X(0)) + {Dxa(t, X(t))} )t  t
+
+  20
+
+  + L(t, X(t); a(t, X(t))Dx log p(t, X(t)))]dt.
+
+We explain why the last equality and the following inequalities in (2.123) hold.
+
+Since Dx log p(t, x) ∈ L1(p(t, x)dx) for t = 0, 1 from (A.0), (A.2), and (C.1)–
+(C.2), Dx log p(t, x) ∈ L1(p(t, x)dtdx) and the last equality in (2.123) is true.
+Indeed, from (2.122), for t ∈ (0, 1),
+
+  Dzp(t, z)  (2.124)
+  dx,
+=  Dz log p  z − ty  1  z − ty
+  0, 1 − t  p(1, y) (1 − t)d p  0, 1 − t dy,
+  Rd
+  z − (1 − t)x
+=  Dz log p  z − (1 − t)x  1  1,
+  1,  p(0, x) td p
+  Rd  t
+  t
+
+dz–a.e. Equation (2.124) implies the following:
+
+  1
+
+  dt |Dzp(t, z)|dz  (2.125)
+
+  0  Rd
+
+  1
+  ≤ dt 2 1
+  0 1 − t Rd ×Rd  p(1, y)|Dxp(0, x)|dxdy
+
+  11
+  + dt  p(0, x)|Dyp(1, y)|dxdy
+  12 t Rd ×Rd
+
+  = log 2 (|Dxp(0, x)| + |Dxp(1, x)|)dx < ∞.
+
+  Rd
+
+The ﬁrst inequality in (2.123) is true from (2.110). The second inequality in (2.123)
+is true. Indeed, u → L(t, x; u) is convex from (A.1,ii) and
+
+{Dxt (a(t, x)p(t, x))}t =  d ∂(aij (t, x)p(t, x)) d
+  =
+  i=1 ∂xi  j =1
+
+  d ∂aij (t, x) d  p(t, x) + a(t, x)Dxp(t, x)
+
+  i=1 ∂xi  j =1
+
+since a(t, x) is symmetric.
+60  2 Stochastic Optimal Transportation Problem
+
+  The following completes the proof: for t ∈ (0, 1),
+
+  E[L(t, X(t); a(t, X(t))Dx log p(t, X(t)))]  (2.126)
+  ⎧
+  ⎪⎪  z − ty
+  ⎪⎪  L t, z; a(t, z)Dz log p 0,
+  ⎪⎪ Rd ×Rd  1−t
+  ⎪  z − ty
+  ⎪⎪⎪⎨ × p(1, y)  1
+  d p 0,  dydz,
+  (1 − t)  1−t
+  ≤  z − (1 − t)x
+  ⎪⎪
+  ⎪⎪  L t, z; a(t, z)Dz log p 1,
+  ⎪⎪ Rd ×Rd  t
+  ⎪
+  ⎪⎪⎪  1  z − (1 − t)x
+  ⎩ × p(0, x) d p 1,  dxdz.
+  t  t
+
+Equation (2.126) is true from (A.1,ii). Indeed, from (2.122) and (2.124),
+
+  ⎧  z − ty  1  z − ty
+  ⎪⎪
+  ⎪⎪  Dz log p 0,  1−t  p(1, y)  (1 − t)  d p 0,  1−t  dy
+  ⎪⎪ Rd
+  ⎪⎪⎪  z − ty  ,
+  ⎪⎪  1
+  ⎨  p(1, y)  d p 0,  dy
+  (1 − t)  1−t
+Dz log p(t, z) = ⎪⎪  Rd  z − (1 − t)x  1  z − (1 − t)x
+
+  ⎪⎪  Dz log p 1,  p(0, x) d p 1,  dx
+  ⎪⎪ Rd  t  t  t
+  ⎪⎪⎪  .
+  ⎪⎪  1  z − (1 − t)x
+  ⎩  p(0, x) d p 1,  dx
+  t  t
+  Rd
+
+By Jensen’s inequality,
+
+  L(t, z; a(t, z)Dz log p(t, z))
+  ⎧
+  ⎪⎪ 1  z − ty
+  ⎪⎪  L t, z; a(t, z)Dz log p 0,
+  ⎪⎪ p(t, z) Rd  1−t
+  ⎪⎪⎪  z − ty
+  ⎪⎨ × p(1, y)  1  d p 0,  dy,
+
+  ≤ ⎪⎪ 1  (1 − t)  1 − t z − (1 − t)x
+
+  ⎪⎪  L t, z; a(t, z)Dz log p 1,
+  ⎪⎪ p(t, z) Rd  t
+  ⎪⎪⎪  z − (1 − t)x
+  ⎪⎩ × p(0, x) td p 1, t dx.1
+
+  We prove Theorem 2.7.  (2.127)
+Proof of Theorem 2.7 On the right-hand side of (2.120), from (A.4, ii),
+
+  L(t, (1 − t)x + ty; 2(y − x) + {Dzt a(t, (1 − t)x + ty)}t )
+  ≤ 2 L(t, (1 − t)x + ty; 3(y − x))
+
+  3
+  + 1 L(t, (1 − t)x + ty; 3{Dzt a(t, (1 − t)x + ty)}t ).
+  3
+2.2 Stochastic Optimal Transportation Problems  61
+
+L(t  ,  (1  −  t  )x  +  t  y  ;  {Dzt  a  (t  ,  (1  −  t  )x  +  t  y  )}t  )  is  bounded  from  (A.4,iii),  since  Dt  a  (t  ,  z  )
+
+  z
+
+is bounded from (A.4,i). In particular, Vcla(P0, P1) is ﬁnite from Lemma 2.7 since
+
+(A.4,ii) implies (A.1) and since the set over which the supremum is taken in
+
+Vcla(P0, P1) is not empty (see the explanation below (2.43)).
+
+We prove Corollary 2.5.
+
+Proof of Corollary 2.5  Set  L  =  (1  +  |  u  |  2  )  r  .  Then  (A.2)–(A.4)  are  satisﬁed  and
+  2
+
+(2.116) can be rewritten as follows:
+
+  dt (1 + |3(y − x)| 1 2) 2r μ(dxdy)  (2.128)
+  Rd ×Rd
+  0  r
+  2
+  1  12
+  1+  a(t, (1 − t)x + ty)Dx log p(0, x)  μ(d x dy ),
++ min  1−t
+  Rd ×Rd
+  0
+
+  12  r
+  1 + a(t, (1 − t)x + ty)Dy log p(1, y)  2
+
+  t  μ(dxdy) dt.
+
+  Rd ×Rd
+
+The following (2.129)–(2.130) imply that (C.2) holds from (C.2’).
+
+(1 + |3(y  −  x  )|2)  r  ≤  2  r  (1  +  3r  |y  − x|r )  ≤  2  r  (1  +  6r  (|y  |r  + |x|r )),  (2.129)
+  2  2  2
+
+since for any x, y ≥ 0,
+
+  (x + y) 2r ≤ (2 max(x, y)) 2r ≤ 2 2r (x 2r + y 2r ).
+
+In the same way, we have
+
+  1  12  r
+  1+  a(t, (1 − t)x + ty)Dx log p(0, x)  2
+  min  1−t
+  μ(d x dy ),
+  0
+  Rd ×Rd
+
+  Rd ×Rd  1 2 2r  (2.130)
+  1 + a(t, (1 − t)x + ty)Dy log p(1, y) μ(dxdy) dt
+
+  t
+
+  1
+
+  2  (1  +  |2a(t ,  (1  −  t )x  +  ty)Dx  log  p(0,  x)|2)  r  μ(d x dy )
+  2
+≤ dt
+  Rd ×Rd
+  0
+
+  1  (1  +  |2a(t ,  (1  −  t )x  +  ty)Dy  log  p(1,  y)|2)  r  μ(d x dy )
+  2
+  + dt
+  12 Rd ×Rd
+
+≤ 2 2r 1 + 2r−1 sup |a(t, z)|r  Rd ×Rd  |Dx log p(0, x)|r μ(dxdy)
+
+  (t ,z)∈[0,1]×Rd
+
+  + 2r−1 sup |a(t, z)|r  Rd ×Rd  |Dy log p(1, y)|r μ(dxdy) ,
+
+  (t ,z)∈[0,1]×Rd
+
+which completes the proof.
+62  2 Stochastic Optimal Transportation Problem
+
+2.3 Zero-Noise Limit of SOT
+
+In this section, we show that one can solve Monge’s problem with a quadratic cost
+by the zero-noise limit of the SOT, the minimizer of which is an h-path process. We
+also show that the zero-noise limit of the Duality Theorem for the SOT gives the
+Duality Theorem for the OT. The purpose of such research is that we would like
+to study the OT in the framework of the SOT as a problem of the principle of least
+action for particle systems.
+
+2.3.1 Monge’s Problem by the Zero-Noise Limit of SOT
+
+By the zero-noise limit of h-path processes, we prove the existence and the unique-
+ness of the minimizer of Monge’s problem with a quadratic cost, independently of
+Kantorovich’s approach (see [108]). In this sense, the SOT can be also considered
+the OT with a random external force.
+
+  For ε > 0 and P1 ∈ P(Rd ),
+
+  P1,ε(dy) := g(ε, ·) ∗ P1(dy) =  g(ε, y − z)P1(dz) dy,  (2.131)
+
+  Rd
+
+where g denotes a Gaussian kernel (see (1.47)).
+  Let {X√ε(t)}0≤t≤1 be an h-path process in Corollary 2.3 in the case where
+
+σ (t, x) = ε × Id, ξ ≡ 0, c ≡ 0, and P1 is replaced by P1,ε and let hε denote the h-
+
+function (see also Theorems 1.2 and 3.1, and [80]). That is, there exist nonnegative
+σ -ﬁnite Borel measures ν1,ε(dx) and ν2,ε(dx) = ν2,ε(x)dx such that the following
+
+holds in a weak sense:
+
+  dXε(t) = εDx log hε(t, Xε(t))dt + √εdWXε (t), 0 < t < 1, (2.132)
+
+  P Xε(0) = P0, P Xε(1) = P1,ε,
+
+  με(dxdy) := P (Xε(0),Xε(1))(dxdy) = ν1,ε(dx)g(ε, y − x)ν2,ε(x)dx,
+  ⎧
+  ⎪⎪⎨ g(ε(1 − t), x − y)ν2,ε(y)dy, (t, x) ∈ [0, 1) × Rd ,
+  hε(t, x) := Rd
+  ⎪⎪⎩
+  ν2,ε(x), (t, x) ∈ {1} × R .d
+
+Here one can assume that X0 := Xε(0) is independent of ε. We write VS,ε :=
+V in the case where L = (2ε)−1|u|2 under the setting stated above. Then
+from Corollary 2.3 (see also [156]), {Xε(t)}0≤t≤1 is the unique minimizer of
+
+VS,ε(P0, P1,ε), provided it is ﬁnite.
+  It seems likely that the h-path process {Xε(t)}0≤t≤1 converges, as ε → 0, to the
+
+minimizer of Monge’s problem TM (P0, P1) in (2.7) with c(x, y) = |y − x|2 (see
+2.3 Zero-Noise Limit of SOT  63
+
+(1.31)). But it is not trivial that the limit is a function of t and X0 since a continuous
+strong Markov process which is of bounded variation in time is not necessarily a
+function of the initial point and time (see [137] and also [107]). Independently of
+known results on the Monge–Kantorovich problem, we show that 2εVS,ε(P0, P1,ε)
+converges to TM (P0, P1) and that Xε(1) is convergent in L2 and the limit is the
+minimizer of TM (P0, P1) with c(x, y) = |y − x|2, as ε → 0. This a probabilistic
+proof of the existence of the minimizer of TM (P0, P1) with c(x, y) = |y − x|2.
+
+  We recall the deﬁnition of cyclic monotonicity of a set.
+
+Deﬁnition 2.6 A nonempty set A ∈ Rd × Rd is called cyclically monotone if for
+any n ≥ 1 and any (xi, yi ) ∈ A, i = 1, · · · , n,
+
+  n  (2.133)
+
+  yi , xi+1 − xi ≤ 0
+
+  i=1
+
+(see, e.g. [152, p. 80]), where xn+1 := x1.
+
+  P2(Rd ) := P ∈ P(Rd ) |x|2P (dx) < ∞ ,  (2.134)
+
+  Rd  (2.135)
+  (2.136)
+ Pac(Rd ) := {ρ(x)dx ∈ P(Rd )},
+P2,ac(Rd ) := P2(Rd ) ∩ Pac(Rd ).
+
+Then the following holds.
+
+Theorem 2.8 (See [108]) For any P0, P1 ∈ P2(Rd ), {με}ε∈(0,1] is tight and any
+weak limit point of {με}ε∈(0,1], as ε → 0, is supported on a cyclically monotone set.
+
+  Since a cyclically monotone set in Rd × Rd is contained in the subdifferential
+of a proper lower semicontinuous convex function on Rd and since a proper convex
+function is differentiable dx–a.e. in the interior of its domain (see [152, pp. 52, 82]),
+we obtain the following.
+
+Corollary 2.6 (See [108]) For any P0 ∈ P2,ac(Rd ) and P1 ∈ P2(Rd ) and for
+any weak limit point μ of {με}ε∈(0,1] as ε → 0, there exists a proper lower
+semicontinuous convex function ϕ : Rd −→ (−∞, ∞] such that
+
+μ(dxdy) = P0(dx)δDϕ(x)(dy).  (2.137)
+
+Remark 2.10 For any P0, P1 ∈ P2,ac(Rd ), Corollary 2.6 gives a probabilistic proof
+of the existence of a solution to the following Monge–Ampère equation:
+
+p(0, x) = p(1, Dϕ(x)) det(D2ϕ(x))  (2.138)
+64  2 Stochastic Optimal Transportation Problem
+
+in the sense that P0(Dϕ)−1 = P1 (see (C.1) for notation). For the regularity
+results on the solution to (2.138), see [152, pp. 140–141], [9, Theorem 1.1] and
+the references therein.
+
+  bε(t, x) := εDx log hε(t, x)  (2.139)
+
+(see (2.132) for notation). The following which can be proved from Theorem 2.8
+and Corollary 2.6, independently of known results on the OT (see [4, 21, 22, 88,
+130, 144, 152]) is our main result in this section.
+
+Theorem 2.9 (See [108]) Suppose that c(x, y) = |y − x|2. Then for any P0 ∈
+P2,ac(Rd ) and P1 ∈ P2(Rd ),
+
+  lim 2εVS,ε(P0, P1,ε) = TM (P0, P1) < ∞.  (2.140)
+
+  ε→0
+
+In particular, Dϕ in Corollary 2.6 is the unique minimizer of TM (P0, P1), and the
+following holds:
+
+  lim E  1  (2.141)
+
+  ε→0  |bε(t, Xε(t)) − (Dϕ(X0) − X0)|2dt = 0,
+
+  0
+
+  lim E sup |Xε(t) − {X0 + t (Dϕ(X0) − X0)}|2 = 0.  (2.142)
+
+  ε→0 0≤t ≤1
+
+  As far as we know, the following is not known.
+Corollary 2.7 Suppose that c(x, y) = |y − x|2. Then for any P0 ∈ P2,ac(Rd ),
+P1 ∈ P2(Rd ), and Dϕ in Corollary 2.6, the following holds: for t ∈ [0, 1)
+
+  lim E sup |bε(s, Xε(s)) − (Dϕ(X0) − X0)|2 = 0.  (2.143)
+
+  ε→0 0≤s≤t
+
+Remark 2.11 If hε(t, x) ∈ C1,3([0, 1) × Rd ), then from Theorem 3.2 in Sect. 3.1.1,
+
+  ∂t bε(t, x) + ε bε(t, x) + Dx bε(t, x)bε(t, x) = 0,  (t, x) ∈ [0, 1) × Rd ,
+  2  (2.144)
+
+where Dx f (t, x)  :=  (  ∂fi  (  t  ,  x  )  /  ∂  x  j  )  d  j  =1  for f (t, x)  :=  (  fi  (  t  ,  x  )  )  d  .  Equa-
+  i,  i=1
+
+tion (2.144) implies that {bε(t, Xε(t))}0≤t<1 is an (FtXε )-local martingale, which
+
+we prove by a different approach in the proof of Corollary 2.7. It also implies that
+
+a drift vector of an h-path process is not necessarily a martingale in the case where
+
+a(t, x) is not a constant matrix.
+2.3 Zero-Noise Limit of SOT  65
+
+  The following is known on the OT with c(x, y) = |y − x|2 though it is not used
+in the proof of Theorem 2.9.
+
+(i) Suppose that P0, P1 ∈ P2(Rd ). Then a probability measure supported on a
+  cyclically monotone set in Rd × Rd is a minimizer of T (P0, P1) (see [88, 144]
+  and also [152, pp. 66, 82], [4, Theorem 3.2]]).
+
+(ii) Suppose that P0 ∈ P2,ac(Rd ) and P1 ∈ P2(Rd ). Then there exists a convex
+  function ϕ such that P0(dx)δDϕ(x)(dy) is the unique minimizer of T (P0, P1)
+  (see [21, 22]).
+
+  Using these facts, we have the following from Theorem 2.8 and Corollary 2.6.
+
+Corollary 2.8 (See [108]) Suppose that c(x, y) = |y − x|2. Then (i) for any
+P0, P1 ∈ P2(Rd ), any weak limit point of {με}ε∈(0,1] as ε → 0 is a minimizer
+of T (P0, P1). (ii) For any P0 ∈ P2,ac(Rd ) and P1 ∈ P2(Rd ), με weakly converges
+to the unique minimizer of T (P0, P1), as ε → 0.
+
+  We considered P1,ε, instead of P1, to avoid technical assumptions in Theo-
+rem 2.9. As far as the zero-noise limit of h-path processes is concerned, there
+
+is no reason to perturb the terminal distribution P1. From a probabilistic interest,
+we discuss the zero-noise limit of h-path processes for Brownian motion with the
+
+terminal distribution P1.
+  Replace P1,ε by P1 above. Instead, if we assume that P1 ∈ P2,ac(Rd ), then one
+
+can deﬁne με, hε(t, x), Xε(t) and bε(s, x) in the same way as in Theorem 2.9 (see
+(2.132)).
+
+  ⎧  P (dx) = p(x)dx,  (2.145)
+S (P ) := Rd ⎨ {log p(x)}p(x)dx,  ot her wi s e.
+
+  ⎩∞,
+
+In addition to the condition P0, P1 ∈ P2(Rd ), assume that S (P1) is ﬁnite. Then
+VS,ε(P0, P1) is ﬁnite for ε > 0 (see Proposition 3.3) and a result similar to
+Theorem 2.9 and Corollary 2.8 holds for Xε. More precisely, the following, the
+proof of which we omit, holds. We refer readers to [108].
+
+Proposition 2.4 (See [108]) Suppose that c(x, y) = |y − x|2. Then (i) for any
+P0, P1 ∈ P2(Rd ), {με}ε∈(0,1] is tight and any weak limit point of {με}ε∈(0,1] as
+ε → 0 is a minimizer of T (P0, P1). (ii) For any P0 ∈ P2,ac(Rd ) and P1 ∈ P2(Rd ),
+με weakly converges to the unique minimizer of T (P0, P1), as ε → 0. (iii) For any
+P0 ∈ P2,ac(Rd ) and P1 ∈ P2(Rd ) for which S (P1) is ﬁnite, VS,ε(P0, P1) is ﬁnite
+for ε > 0,
+
+lim 2εVS,ε(P0, P1) = TM (P0, P1)  (2.146)
+
+ε→0
+

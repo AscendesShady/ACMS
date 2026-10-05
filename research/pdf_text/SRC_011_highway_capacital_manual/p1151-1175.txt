@@ -1,0 +1,1460 @@
+Highway Capacity Manual 2000System State
+
+  of each vehicle. The numerical example on car following illustrates the use of continuous
+  variables.
+
+  EXHIBIT 31-10. SYSTEM STATE VERSUS TIME DURING PRETIMED SIGNAL OPERATION
+  6
+
+  5
+
+  4
+
+  3
+
+  2
+
+  1
+
+  5 10 15 20 25 30 35 40 45 50 55 60
+  Time (s)
+
+Stochastic and  SINGLE TOLL BOOTH
+deterministic event-
+based exercise  This exercise considers a toll booth operation. The state variable is the number of
+  vehicles in the system (i.e., at the toll booth or waiting in line). The events include
+  vehicle arrivals, entry of a vehicle into the toll booth, and departure of a vehicle from the
+  toll booth. The time-step logic is event based, involving discrete steps of variable length.
+  The three processing logics are joining the back of queue, waiting for the toll booth to be
+  empty before moving forward, and paying a toll before departing.
+
+  First, assume that a vehicle arrives every 10 s and the service time at the toll booth is
+  5 s. Exhibit 31-11 shows the changes in system state that occur. This is a deterministic
+  model; no randomness is allowed. Either a vehicle is present (1) or it is not present (0).
+  At t = 0 the first vehicle arrives. It requires 5 s to be processed and then leaves. At
+  t = 10 s, the next vehicle arrives, and the process repeats. Note that the delay for each of
+  the nine vehicles is zero, and the state of the system is always either 1 or 0 depending on
+  whether a vehicle is being served at the toll booth or not.
+
+  The exercise could be altered slightly by introducing a stochastic element. Assume
+  that the average interval between arrivals is 10 s but the interarrival times can range from
+  4 to 16 s (Exhibit 31-6 shows how this looks). Further, assume that the average service
+  time is 5 s but the actual service times can range from 3 to 7 s. Then for the same nine
+  vehicles, a realization of how the events might unfold is shown in Exhibit 31-12.
+
+  The information in the columns of Exhibit 31-12 is as follows:
+  • Vehicle Number shows a numerical index for the vehicles (i.e., 1 to 9),
+  • Random Variable Headway lists the random number that determines the
+  interarrival time (headway),
+  • Headway gives the headway from the previous vehicle [4 + Random Variable
+  Headway * (16 – 4)],
+  • Arrive gives arrival time based on the headway,
+
+Chapter 31 - Simulation and Other Models  31-12
+Illustrative Simulation Model Numerical Exercises
+  Vehicles in the System  Highway Capacity Manual 2000
+  EXHIBIT 31-11. SYSTEM STATE VERSUS TIME DURING TOLL BOOTH OPERATIONS
+
+  1
+
+  0 10 20 30 40 50 60 70 80
+  Time (s)
+
+  EXHIBIT 31-12. STOCHASTIC TOLL BOOTH MODEL
+
+Vehicle Random Variable Headway Arrive Random Variable Service Start of End of Delay
+
+Number  Headway  Service Time Time Service Service (s)
+
+1  0.8672  14.4  14.4  0.8871  6.5  14.4 20.9 0.0
+
+2  0.8598  14.3  28.7  0.9447  6.8  28.7 35.5 0.0
+
+3  0.0204  4.2  33.0  0.7159  5.9  35.5 41.4 2.5
+
+4  0.0642  4.8  37.7  0.1672  3.7  41.4 45.1 3.7
+
+5  0.0012  4.0  41.8  0.8501  6.4  45.1 51.5 3.3
+
+6  0.4421  9.3  51.1  0.6317  5.5  51.5 57.0 0.4
+
+7  0.0469  4.6  55.6  0.5022  5.0  57.0 62.0 1.4
+
+8  0.4436  9.3  64.9  0.6696  5.7  64.9 70.6 0.0
+
+9  0.8326  14.0  78.9  0.3274  4.3  78.9 83.2 0.0
+
+  • Random Variable Service Time shows the random number for determining the
+service time,
+
+  • Service Time is 3 + Random Variable Service Time * (7 – 3),
+  • Start of Service is the time when service starts (vehicle enters toll booth),
+  • End of Service is time when service ends (vehicle leaves toll booth), and
+  • Delay gives delay in seconds.
+  The entries in Exhibit 31-12 depict the following system realization. The first vehicle
+enters the system at t = 14.4 s based on a headway of 4 + 0.8672 * (16 – 4) = 14.4 s,
+which is based on the random number (0.8672). It also has a service time of 3 + 0.8871 *
+(7 – 3) = 6.5 s based on a second random number (0.8871). The same logic pertains to
+Vehicles 2 through 4.
+  For Vehicle 5, the headway is 4 + 0.0012 * (16 – 4) = 4.0 s, so its arrival time is 41.8
+s. But at t = 41.8 s, the toll booth is already occupied. Thus, Vehicle 5 must wait until
+the toll booth is free at t = 45.0 s before it can begin its service time. This wait produces
+a delay of 3.3 s. Then at t = 45.1 s, Vehicle 5 begins service and emerges 3 + 0.8501 *
+(7 – 3) = 6.4 s later when its service is complete. Vehicle 5 leaves the toll booth at t =
+51.5 s, which allows Vehicle 6 to enter. Vehicle 6 has, in turn, been waiting, having
+arrived at t = 51.1 s.
+  The resulting trend in system state is shown in Exhibit 31-13. Note that the number
+of vehicles in the system now reaches two, not just one, and that the length of time when
+vehicles are present varies, illustrating the effect of adding randomness (i.e.,
+stochasticity). In fact, because of the randomness, the third, fourth, fifth, sixth, and
+seventh vehicles experience delays of 2.5, 3.7, 3.3, 0.4, and 1.4 s, respectively. These are
+not large values, but they are nonzero values, in contrast to those in the deterministic
+solution considered earlier. The total delay is 11.3 s, or an average delay of 1.25 s per
+vehicle. Hence a situation in which there is delay exists in the stochastic case, although
+
+  31-13  Chapter 31 - Simulation and Other Models
+  Illustrative Simulation Model Numerical Exercises
+Highway Capacity Manual 2000
+
+  there was none in the deterministic case, even though the same average values were used
+  for both.
+
+  EXHIBIT 31-13. STATE TRENDS: STOCHASTIC MODEL
+  2
+
+  Number of Vehicles in System  1
+
+  0
+  Time (s)
+
+Continuous and  As discussed earlier in the pretimed signal exercise, a more complicated simulation
+stochastic time-based  model could be developed in which the model accounts for the acceleration and
+exercise  deceleration behavior of each vehicle. Also, the vehicle acceleration and deceleration
+  trajectories could be treated as being stochastic instead of deterministic. Note that as the
+  model becomes more stochastic, the randomness will increase and, all else being equal,
+  the delays will increase, as found in this exercise. In such a model, the state variables
+  would become the location and speed of each vehicle, and these variables would be
+  continuous rather than discrete.
+
+  Many of today’s traffic simulation models include subroutines that are intended to
+  account for these aspects of system behavior, and continuous variables must be used to
+  represent the state of the system.
+
+  CAR FOLLOWING
+
+  This car-following exercise uses a model that is both stochastic and time based. The
+  model is stochastic in that the behavior of the vehicles is subject to randomness and time
+  based in that the time-step logic involves advancing from one 0.1-s interval to the next, at
+  each point checking to see if the system state needs to be updated in response to
+  unfolding events.
+
+  Assume that a line of cars is moving single file in a single lane. Each vehicle has its
+  own randomly determined entry time, initial speed (also the target speed), initial
+  acceleration, maximum acceleration rate, and maximum deceleration rate. The initial
+  acceleration is zero. Driver type is also random, determined by the initial speed (faster
+  implies more aggressive). An influence zone determines the range over which cars are
+  sensitive to the presence of cars ahead of them. Following cars slow down if they get too
+  close to the car ahead, and they accelerate if the car spacing allows them to do so.
+
+  At every time step, the model reevaluates the state of each vehicle, determines if it
+  should be accelerating or decelerating, and updates its speed and location accordingly.
+  Therefore there are 2 * n state variables, where n is the number of vehicles in the system.
+  The state variables are the speeds and positions of all vehicles. The events include all
+  updates to vehicle position and speed, which occur every time step. The processing logic
+  indicates how the car is to respond to the situations it encounters.
+
+Chapter 31 - Simulation and Other Models  31-14
+Illustrative Simulation Model Numerical Exercises
+  Highway Capacity Manual 2000
+
+Some parts of the processing logic are simple. Equations 31-1 and 31-2 are used to
+
+update the nth vehicle’s position and time from time step t to time step t + ∆t:
+
+  xn(t + ∆t) = xn(t) + vn(t) * ∆t  (31-1)
+
+  vn(t + ∆t) = vn(t) + an(t) * ∆t  (31-2)
+
+where  = position of nth vehicle at time t,
+  xn(t)  = speed of nth vehicle at time t,
+  vn(t)  = acceleration of nth vehicle at time t, and
+  an(t)  = duration of one time step (0.1 s in this example).
+  ∆t
+
+  The complex part of the processing logic relates to determining appropriate values
+for an(t). For this example, it is assumed that the lead vehicle is behaving erratically and
+is following a sinusoidal acceleration pattern. Equation 31-3 is used for the calculation.
+
+  a1 (t ) = − sin(2nt / 50 )  (31-3)
+
+  For subsequent vehicles, the acceleration rules are as follows. These rules should not
+be construed as ideal, correct, or comprehensive but rather are used here for illustration.
+
+  If the vehicle ahead (i.e., vehicle n – 1) is beyond the influence zone, Equation 31-4
+is used:
+
+  max[0,an (t ) + 0.1 * RanVar ] if v n (t ) ≤ V n   (31-4)
+  an (t + ∆t ) =   
+  min[0,an (t ) − 0.1 * RanVar ] if v n (t ) > V n 
+
+where RanVar is a random variable uniformly distributed between 0 and 1 and Vn is the
+desired speed for Vehicle n. Effectively, if the car needs to accelerate toward its desired
+speed, it does.
+
+  If the vehicle ahead is within the influence zone, the following vehicle takes action to
+avoid a collision. The calculation begins by computing the relative speed and distance
+from the subject vehicle (n) to the vehicle ahead (n – 1) using Equations 31-5 and 31-6.
+
+  ∆vn (t ) = vn −1 (t ) − vn (t )  (31-5)
+
+  ∆dn (t ) = dn −1 (t ) − dn (t )  (31-6)
+
+If ∆vn(t) is negative (Vehicle n is closing on Vehicle n – 1), Equation 31-7 is used:
+
+     ∆v n (t )   (31-7)
+  an (t + ∆t ) = min0,an (t ) + k   
+     ∆dn (t ) 
+
+  Note that the term inside the square brackets is negative, so an(t + ∆t) is zero or
+negative, and k is a constant.
+
+  If ∆vn(t) is positive (the subject vehicle has slowed down too much), Equations 31-8
+and 31-9 are used:
+
+  max[0,an (t ) + Θ * ∆v n (t ) * ∆dn (t )] if v n (t ) ≤ V n   (31-8)
+  an (t + ∆t ) =   
+  min[0,an (t ) − 0.1 * RanVar ]  if v n (t ) > V n 
+
+always subject to the requirement that
+
+  anmin ≤ an (t ) ≤ amax n  (31-9)
+
+  min  and  max  are  the  maximum  deceleration  and  acceleration  rates  possible,  and  Θ is  a
+
+an  an
+
+constant.
+
+Physically, this means that if the vehicle ahead is further away than the influence
+
+zone, the subject vehicle simply hovers about its target speed. However, if the subject
+
+vehicle encounters the vehicle ahead, it then decelerates to avoid overtaking that vehicle,
+
+and does so more quickly the greater the relative speed between the two vehicles and the
+
+  31-15  Chapter 31 - Simulation and Other Models
+  Illustrative Simulation Model Numerical Exercises
+Highway Capacity Manual 2000
+
+  smaller the relative spacing. If the vehicle ahead is moving faster because the subject
+  vehicle has slowed down too much, the subject vehicle tries to reaccelerate toward its
+  desired speed and will accelerate most quickly if it finds a large relative speed and a large
+  relative spacing.
+
+  Time-space trajectories of vehicles can be traced as their paths are produced by a car-
+  following simulation model. The slopes of the lines are the speeds of vehicles. Examples
+  of such time-space trajectories are shown in Exhibits 10-1 and 10-8.
+
+  V. TYPICAL APPLICATIONS OF MODELS
+
+  Simulation models should be considered when the desired study of performance in a
+traffic situation is not explicitly covered by HCM methodologies presented in Part III of
+this manual or when the traffic situation is very difficult to analyze using empirical and
+analytical models. Exhibit 31-14 summarizes situations that might be addressed more
+effectively by simulation models.
+
+  EXHIBIT 31-14.  SUMMARY OF TYPICAL MODEL APPLICATIONS
+  HCM Chapter  Traffic Situation
+Interrupted-Flow Conditions
+Applicable to all interrupted-flow  Oversaturated flow analysis (except  for signalized  intersections)
+methodologies  Bus activity  and yield)
+  On-street parking
+15. Urban Streets  Special lane use
+  Queue spillback
+16. Signalized Intersections  Pedestrian/bicycle interactions
+  Effects of signal coordination
+17. Unsignalized Intersections  Mix of signals and no signals (stop
+18. Pedestrians  Effects of driveways
+19. Bicycles  Effects of midblock bottlenecks
+26. Interchange Ramp Terminals  Signal timing plan development
+27. Transit  Geometrically offset intersections
+Uninterrupted-Flow Conditions  Alternative arrival characteristics
+Applicable to all uninterrupted-flow  Phase skips
+methodologies  Pedestrian actuation
+  Timing plan development
+20. Two-Lane Highways  Two-way left turns
+21. Multilane Highways  Yield-controlled intersection delay
+22. Freeway Facilities  Effects of pedestrian actuation
+23. Basic Freeway Segments  See interrupted-flow situations
+24. Freeway Weaving  See interrupted-flow situations
+25. Ramps and Ramp Junctions  See interrupted-flow situations
+
+  Bottlenecks  power-
+  Oversaturated flow analysis
+  Time-varying demands
+  Unbalanced lane use
+  Special lane restrictions
+  Surveillance, work zones
+  Combination of terrain and traffic characteristics such as
+  weight ratios or coefficient of variation of desired speeds
+  See uninterrupted-flow situations
+  HOV lanes
+  See uninterrupted-flow situations
+  Complex weaving areas
+  Ramp metering
+
+Chapter 31 - Simulation and Other Models  31-16
+Illustrative Simulation Model Numerical Exercises
+  Highway Capacity Manual 2000
+
+  How a simulation model represents the traffic situation under evaluation is an
+important factor in selection of an appropriate model. For example, when queuing is
+evaluated from a design perspective, the analyst is concerned with the 85th-percentile or
+95th-percentile back-of-queue situation rather than the average or 50th-percentile queue.
+In this case, a stochastic, microscopic model would better support the analysis compared
+with deterministic, macroscopic models, where the average queue would be appropriate.
+
+PERFORMANCE MEASURES  Certain performance
+  measures may be desired that
+  Before the analyst can select the appropriate model, the performance measures that  the HCM cannot deliver
+realistically reflect attributes of the problem under study must be identified. For example,
+when studying oversaturated conditions, the analyst must use a model that quantifies the
+effects of queuing as well as stops and delay. If the methodologies in this manual do not
+provide a particular performance measure of interest to the analyst (e.g., fuel
+consumption and emissions), a simulation model might be required. Exhibit 31-15
+summarizes important performance measures discussed in HCM chapters on interrupted
+flow methodologies. Exhibit 31-16 summarizes important performance measures for
+uninterrupted-flow methodologies.
+
+EXHIBIT 31-15. PERFORMANCE MEASURES FOR INTERRUPTED-FLOW HCM METHODOLOGIES
+
+  Queue Cycle  Fuel  Demand/
+
+HCM Chapter  Delay Stops Throughput Length Failure Consumption Speed Capacity
+
+  & Emissions
+
+15. Urban  √ mdnc  √  mdnc mdnc  mdnc  √  √
+Streets
+
+16. Signalized  √ mdnc  √  √ mdnc  mdnc  dna  √
+
+Intersections
+
+17. Unsignalized √ mdnc  √  √  dna  mdnc  dna  √
+
+Intersections
+
+18. Pedestrians √ dna  √  √  dna  dna  dna  √
+
+19. Bicycles  √ mdnc  √  dna dna  dna  dna  √
+
+26. Interchange √ mdnc  √  √ mdnc  mdnc  dna  √
+
+Ramp Terminals
+
+27. Transit  dna dna  √  dna dna  dna  √  dna
+
+Notes:
+dna = does not apply; mdnc = methodology does not compute
+
+EXHIBIT 31-16. PERFORMANCE MEASURES FOR UNINTERRUPTED-FLOW HCM METHODOLOGIES
+
+HCM Chapter  Speed Delay Throughput Density % Time  Passing/  Fuel  Demand/
+  Spent  Overtaking  Consumption  Capacity
+  & Emissions
+  Following  √  √
+  dna  mdnc  √
+20. Two-Lane  √  √  √  mdnc  √  dna  dna
+Highways  dna  mdnc  √
+  dna  √
+21. Multilane  √ mdnc  √  √  dna  dna  mdnc  √
+Highways
+  mdnc
+22. Freeway  √  √  √  √  dna
+Facilities  mdnc
+
+23. Basic Freeway √ mdnc  √  √  dna  mdnc
+
+Segments
+
+24. Freeway  √ mdnc  √  √  dna
+Weaving
+
+25. Ramps &  √ mdnc  √  √  dna
+Junctions
+
+Notes:
+dna = does not apply; mdnc = methodology does not compute
+
+  31-17  Chapter 31 - Simulation and Other Models
+  Typical Applications of Models
+Highway Capacity Manual 2000
+
+The same terms  An important issue when a simulation model is selected is the exact definitions of the
+sometimes have different  performance measures provided, particularly when a comparison of performance
+definitions between  measures produced by different simulation models is to be made. Often, a performance
+alternative models  measure is given the same name in various programs, but its definition and interpretation
+  differ. For example, a model may define stop delay as the time during which a vehicle
+It is important to  has a speed lower than 8 km/h, whereas another model may define stop delay as the time
+understand underlying  during which a vehicle has a speed of 0 km/h.
+assumptions used in
+simulation models to  APPLYING A MODEL
+make proper application
+of them  Many assumptions are made to represent the simulated network. A lack of
+  understanding or improper use of simulation models may result in unrealistic outcomes
+  and provide incorrect information for decision making. Thus, considerable skill and
+  attention to detail must be exercised in order to derive reliable results from the simulation
+  model.
+
+  Exhibit 31-17 presents an eight-step procedure for determining which model or
+  models to use when the HCM methodologies do not provide the information needed.
+  Each step in this procedure is described in the following subsections.
+
+  EXHIBIT 31-17. MODEL SELECTION AND APPLICATION
+
+  Steps  Description
+
+  1 Project scoping  Determine objectives, results needed
+  2 HCM methodology assessment  Check HCM capabilities
+  3 Model selection  Select a suitable model given needs
+  4 Data assembly  Gather input data for model
+  5 Data input  Prepare input data sets for model
+  6 Calibration and validation  Ensure credibility of model outputs
+  7 Output analysis  Interpret output results
+  8 Alternatives analysis  Conduct analysis
+
+  Determining Project Scope
+
+  The first step is to identify the problem and to define the purpose of the study. A
+  properly defined problem and project scope will lead to a correct selection of models or
+  procedures for the project. Answers to the following questions will assist in scoping the
+  project:
+
+  1. Does the network being studied include urban streets, freeways, or rural highways
+  or any combination of them?
+
+  2. What are the size and topology (isolated junctions, linear arterial, grid) of the
+  network?
+
+  3. What type of vehicles (cars, carpools, buses, trucks) should be considered?
+  4. What traffic control methods (regulatory signs, pretimed signals, actuated signals,
+  real-time traffic adaptive signals, and ramp metering signals) should be considered?
+  5. Should oversaturated traffic conditions be considered?
+  6. What is the duration of the analysis period?
+  7. Do the geometric conditions of the roadway facility change during the analysis
+  period?
+  8. Does the traffic demand fluctuate significantly during the analysis period?
+  9. Does the traffic control change during the analysis period?
+  10. What model output and level of detail are anticipated from the model?
+  11. What information is available for model input, model calibration, and
+  validation?
+  12. Is there more than one method to be considered for the analysis?
+
+Chapter 31 - Simulation and Other Models  31-18
+Typical Applications of Models
+  Highway Capacity Manual 2000
+
+Assessing HCM Methodologies
+
+  The purpose of the next step is to assess the capability of the existing HCM
+methodologies and to determine if these methodologies can be applied to the issues that
+are raised in the first step. In addressing these issues, two major questions should be
+answered: What are the limitations of the HCM methodologies? Can these limitations be
+overcome? Limitations of the existing HCM methodologies are identified in Part III of
+this manual. If it is determined that a traffic simulation model is needed or advisable, the
+analyst continues to the next step.
+
+Selecting a Model
+
+  Each simulation model, depending on the application, has its own strengths and
+weaknesses. It is important to relate relevant model features to needs of an analysis and
+determine which model satisfies these needs to the greatest extent. The following criteria
+are considered in selecting a model: model capabilities, data availability, ease of use,
+required resources, model applications and past performance, and validation and
+calibration.
+
+  Each of the criteria is explained in detail in the next subsections. Above all, the
+analyst must review the user's guide of the selected model to get a more detailed
+description of its characteristics.
+
+Model Capabilities
+
+  Review of model capabilities is probably the most important aspect of selecting a
+simulation model. Simulation model results may be of no value if the model is not
+capable of addressing the issues raised in Step 1 and providing satisfactory results. Some
+key features can be used to evaluate a model’s capabilities, such as size of network,
+network representation, traffic representation, traffic composition, traffic operations,
+traffic control, and model output.
+
+  • Size of Network: Most models have size limitations regarding the network to be
+analyzed. The key network parameters limited by the model include number of nodes,
+number of links, number of lanes per link, and number of sign- or signal-controlled
+intersections.
+
+  • Network Representation: Network representation refers to the model’s capability
+in representing the network geometries for urban streets, freeways, or rural highways or
+any combination of them, ranging from single intersections to grid networks. For urban
+streets, major geometric elements include lane channelization at intersections, turning
+pockets, and bus bays and stops. For freeways, major geometric elements are
+acceleration lanes, deceleration lanes, auxiliary lanes, on-ramps, off-ramps, lane
+additions, lane drops, horizontal curvature, and grade. Elements for rural highways
+include grade, curvature, passing and no-passing zones, and sight distance for overtaking
+and passing.
+
+  • Traffic Representation: In the representation of how traffic flows in the model, the
+terms microscopic, mesoscopic, and macroscopic are commonly used, based on the level
+of aggregation. Because of their microscopic and stochastic nature, microscopic models
+have the ability to simulate sophisticated vehicle movements, allowing analysts to
+perform complex traffic analyses such as those for weaving areas. In contrast,
+mesoscopic and macroscopic models are generally not appropriate for evaluating
+complex traffic conditions since they use aggregate measures of flows or densities to
+measure vehicle movements.
+
+  • Traffic Composition: Traffic composition represents the mix of cars, buses, trucks,
+and carpools in the network and is used to incorporate the differences in performance
+characteristics among types of vehicles.
+
+  • Traffic Operations: The model should be capable of modeling real-world traffic
+operations such as complex merging, diverging, and weaving maneuvers at interchanges,
+
+31-19  Chapter 31 - Simulation and Other Models
+  Typical Applications of Models
+Highway Capacity Manual 2000
+
+HOV lanes, bus transit operations, lane channelization at intersections, lane restrictions,
+lane blockages, and parking activities.
+
+  • Traffic Control: For street intersections, control methods include yield signs, two-
+way stop signs, all-way stop signs, pretimed signals, actuated signals, and real-time traffic
+adaptive control signals. Those commonly used for freeway on-ramps are clock time (or
+pretimed) control, demand and capacity control, occupancy control, speed control, HOV
+priority at ramps, integrated (areawide) ramp control, ramp metering optimization, and
+dynamic real-time ramp metering control with flow prediction capabilities. Signal
+coordination between traffic signals or between on-ramp signals and traffic signals on
+adjacent streets may also need to be considered.
+
+  • Model Output: There are two types of model output, graphics files and static
+measures of effectiveness (MOEs). Graphics files provide graphics output, including
+animation, so that users can visually examine the simulation model results. Static MOEs
+provide output for numerical analysis.
+
+Data Availability
+
+  The next criterion identifies data requirements and potential data sources so that the
+disparity between data needs and data availability can be identified. In general,
+microscopic models require more intensive and detailed data than do mesoscopic and
+macroscopic models. Three different types of data are required to make the application
+of the traffic simulation model successful: data for model input, data for model
+calibration, and data for model validation.
+
+  • Data for Model Input: The basic data items required to describe the network and
+the traffic conditions to be studied can be categorized into four major groups.
+
+  1. Transportation Network Data: Most models use the link-node concept to represent
+the network, in which a link represents a roadway segment and a node is an intersection
+or change in roadway geometry. The link data include link length, number of lanes per
+link, lane additions, lane drops, turning pockets, lane channelization at intersections,
+grade, and horizontal curvature. The node data include node coordinates and types of
+control.
+
+  2. Traffic Control Data: Detailed control data should be provided for all control
+points, such as street intersections or freeway on- and off-ramps. Sign controls include
+yield signs, two-way stop signs, and all-way stop signs. Signal controls include pretimed
+signals, actuated signals, or real-time traffic adaptive signals. Ramp metering control
+methods include clock time (pretimed) control, demand and capacity control, occupancy
+control, and dynamic real-time ramp control with demand prediction capability. Timing
+data are required for all signal controls. Detector data such as type and location of the
+detector are required for actuated and traffic-adaptive signals.
+
+  3. Traffic Operations Data: To model the real-world traffic environment, most
+simulation models take link-specific operations data as input, such as roadway capacity,
+lane use, lane restriction, desired free-flow speed, HOV lanes, parking activities, lane
+blockages, and bus transit operations.
+
+  4. Traffic Demand Data: Different models may require traffic demand data in
+different formats. The most commonly used demand data are traffic demand at the
+network boundary or within the network, traffic turning percentages at intersections or
+freeway junctions, O-D trip tables, path-based trips between origins and destinations, and
+traffic composition.
+
+  • Data for Model Calibration: Calibration is the process of quantifying model
+parameters using real-world data so that the model can realistically represent the traffic
+environment being analyzed. Vehicle characteristics and driver characteristics are the
+key parameters, which may be site specific and require calibration. These data take the
+form of scalar elements and statistical distributions that are referenced by the model. In
+general, simulation models are developed and calibrated on the basis of limited site-
+specific data available to the model developers. These parameters may not be
+
+Chapter 31 - Simulation and Other Models  31-20
+Typical Applications of Models
+  Highway Capacity Manual 2000
+
+transferable and therefore may not accurately represent the local situation. In that case,
+the analyst has to examine the model results with caution and identify the default
+parameters that must be overridden to better reflect local conditions. Most simulation
+models allow the analyst to override the default driver behavior data and vehicle data to
+better match local conditions, thereby allowing for model calibration.
+
+  1. Driver Behavior Data: Driver behavior is not homogeneous, and thus different
+drivers may behave differently given the same traffic conditions. Most of the
+microscopic models represent stochastic or random driver behavior (from passive to
+aggressive drivers) by taking statistical distributions of behavior-related parameters such
+as desired free-flow speed, queue discharge headway, acceptable gaps for lane changing
+and car following, and driver response to advance information and warning signs.
+
+  2. Vehicle Data: Vehicle data represent characteristics and performance of the types
+of vehicles in the network. Different vehicle types (e.g., cars, buses, single-unit trucks,
+semitrailers) have different characteristics as well as different performance attributes.
+They vary in terms of vehicle length, maximum acceleration, maximum deceleration,
+emissions rate, and fuel consumption rate. All of the models provide default vehicle
+characteristics and performance data. These data need to be overridden only when the
+local vehicle data are known to be different from the default data provided by the model.
+
+  • Data for Model Validation: Validation is the process of comparing model results
+with corresponding data observed in the field and ensuring that such results realistically
+represent the real-world system. Only measurable data collected in the field can be used
+to validate model results. Validation can be performed at the component system level as
+well as for the model as a whole, depending on the purposes of the application. The most
+commonly used data for validation are queue length, travel time, delay, speed, density,
+and throughput. Individual vehicle trajectories are often used to validate the model at the
+microscopic level.
+
+  • Data Sources: Data collection is a costly undertaking. Analysts should explore all
+possibilities to leverage previous efforts in data collection. The analyst should identify
+which data are currently available and which data are missing and therefore need to be
+collected in the field. Most of the static network, traffic, and control data can be collected
+from local agencies. These include design drawings for geometries, signal timing plans,
+actuated controller settings, traffic volume and patterns, traffic composition, and transit
+schedules.
+
+Ease of Use
+
+  Assumptions and complex theories are used in the simulation model to represent the
+real-world dynamic traffic environment. Therefore, useful tools like input-output
+graphical display and debugging tools that are easily understandable are important criteria
+in the selection of a model. Although ease of use is important in a simulation model, the
+fact that a particular model is easy to use does not necessarily imply that it is the correct
+model of choice. The following five criteria can be considered when ease of use of a
+simulation model is assessed:
+
+  • Preprocessor: input data handling (user-friendly preprocessor);
+  • Postprocessor: output file generation for subsequent analysis;
+  • Graphics displays: graphic output capabilities, both animated and static;
+  • On-line help: quality of on-line help support; and
+  • Calibration and validation: ability to provide guidelines and data sets for
+calibration and validation.
+
+Required Resources
+
+  The following issues regarding resources should be addressed in the selection of a
+model:
+
+  • Costs to run the model: These costs include data collection and input preparation,
+hardware and software acquisition, and model use and maintenance.
+
+31-21  Chapter 31 - Simulation and Other Models
+  Typical Applications of Models
+Highway Capacity Manual 2000
+
+Data requirements of a  • Staff expertise: Intelligent use of the model is key to success. The analyst should
+model are an important  understand the theory behind the model to eliminate improper use and avoid unnecessary
+financial consideration  questions or problems during the course of the project.
+
+Calibration can also be  • Technical support: Quality and timely support are of importance in the acquisition
+performed on HCM  of a model.
+models
+  Model Applications and Past Performance
+
+  Credibility and user acceptance of a model are built on the model's past applications
+  and experiences. No models are error free when first released and require continuous
+  maintenance as well as periodic enhancements.
+
+  Validation and Calibration
+
+  It is important to assess how extensively a given model has been validated. In many,
+  but not all, cases, simulation models are validated as part of the formulation and
+  development process. Certainly those that have been validated are nominally better to
+  use than those that have not been validated. Generally, models that have been in use for
+  some time are likely to have been assessed and validated by various researchers or those
+  who are using them in practice. It is useful to look for evidence of this validation in
+  professional journals and periodicals, which are valuable sources during model selection.
+
+  Some simulation models also allow the user to set critical parameters to values more
+  valid for local conditions. This procedure calibrates the model so it provides better
+  results than would be possible if default values were used. In certain situations, where
+  default values do not really apply, this can be an important model feature. The analyst
+  should determine what model parameters can be adjusted in this manner.
+
+  Assembling Data
+
+  Data assembly involves collecting the data required (but are not already available)
+  for the selected model. Data collection is a costly undertaking. Analysts should
+  capitalize on previous modeling efforts and identify data availability from local agencies.
+  Once existing data are assembled, users should develop a comprehensive plan for
+  collecting those that are missing. In some cases, a pilot data collection effort may be
+  needed to ensure that the developed data collection plan is workable before a full-scale
+  effort is conducted.
+
+  Inputting Data
+
+  When all required data are in hand, the next step is to create the input files in a
+  format required by the selected model. The following are the most commonly used
+  methods for creating input files:
+
+  • Importing from a traffic database: Many analysts have large amounts of data in a
+  variety of formats for the general purpose of traffic analysis. Such databases can be used
+  to create input files.
+
+  • Converting from the existing data of other models: Many traffic models use the
+  same or similar data for modeling purposes so that these data may be shared. Some
+  traffic simulation models are accompanied by utility programs that allow the user to
+  convert data into input files required by other models.
+
+  • Entering the data from scratch: Many traffic models have their own specific input
+  data preprocessors, most of which take advantage of the state of the art in software, which
+  aids the analyst with input data edit checking. These advanced features of the input data
+  preprocessor eliminate cumbersome coding efforts. In addition, some input preprocessors
+  include on-line help features.
+
+  Calibrating and Validating Models
+
+  Model calibration and validation refers to the process by which the analyst confirms
+  that the model does in fact provide a reasonable approximation of reality. The user
+
+Chapter 31 - Simulation and Other Models  31-22
+Typical Applications of Models
+  Highway Capacity Manual 2000
+
+should run the model with the data set describing the existing network and traffic
+scenarios (i.e., the baseline case) and then compare the simulation model results with the
+observed data collected in the field. The primary objective of this activity is to adjust the
+parameters in the model so that simulation model results correspond to real-world
+situations. Adjustment of these parameters is called calibration. If the model is not
+properly calibrated or validated on the basis of limited site-specific data, the analyst
+should use it with great caution. Validation occurs when the output of the model is
+statistically compared with the baseline case observed in the field. Typical baseline case
+parameters are speed, delay, and queue length. Although traffic simulation models
+generally provide default values that represent average conditions for these calibration
+data elements, it is the responsibility of the analyst to quantify these data to the extent
+practicable through field observation rather than to accept these default values.
+
+  With respect to microscopic models, all of the driver behavior–related and vehicle
+performance–related parameters are likely to be site specific and may require calibration.
+These parameters include distribution of desired free-flow speed by driver type; headway
+distributions for lane changing, car following, and queue discharge at intersections; and
+drivers’ responses to signs, signals, and geometric changes. In macroscopic and
+mesoscopic models, only a few link-specific parameters can be calibrated, such as
+capacity, desired free-flow speed, and speed-flow-density relationships.
+
+  Several critical issues must be addressed when an initial simulation model run is
+conducted for the baseline case. First, the model should be able to properly represent the
+initial state of the traffic environment before any statistics can be collected for analysis.
+Second, the time should be long enough to cover the entire analysis period. Third, if the
+model can handle time-varying input, the analyst should specify the dynamic input
+conditions that describe the traffic environment to the extent possible. For example, if
+1 h of traffic is to be simulated, the analyst should always specify the variation in demand
+volumes over that hour at an appropriate level of detail rather than specifying average,
+constant values of volume.
+
+  Finally, the analyst should know how to interpret the simulation model results, draw
+any inferences from them, and determine whether they constitute a reasonable and valid
+representation of the traffic environment. Given the complex processes taking place in
+the real-world traffic environment, the user must be alert to the possibilities that the
+model’s features may be deficient in adequately representing some important process;
+the specified input data, calibration, or both are inaccurate or inadequate; the results
+provided are of insufficient detail to meet the project objectives; the statistical analysis of
+the results is flawed (as discussed in the following section); or the model has bugs or
+some of its algorithms are incorrect, therefore necessitating revision. If animation
+displays are provided by the model, this option should always be exercised to identify any
+anomalies.
+
+  If the simulation model results do not reasonably match the observed data collected
+in the field, the user should identify the cause-and-effect relationships between the
+observed and simulated data and the calibration parameters and perform calibration and
+validation of the model. Information on calibration and validation of models may be
+found in the references to this chapter (2, 3, 22, 32, 38, 39, 49, 51, 63, 64 ).
+
+Analyzing Output
+
+  Proper output analysis is one of the most important aspects of any study using a
+simulation model. A variety of techniques are used, particularly for stochastic models, to
+arrive at inferences that are supportable by the output.
+
+  Once the model is calibrated and validated, the user can conduct a statistical analysis
+of the simulation model results for the baseline case with calibrated parameters. If the
+selected simulation model is stochastic in nature, simulation model results produced by a
+single run of the model represent only point estimates in the sample population. Typical
+goals of data analysis using output from stochastic model experiments are to present point
+
+31-23  Chapter 31 - Simulation and Other Models
+  Typical Applications of Models
+Highway Capacity Manual 2000
+
+  estimates of the performance measures and to form confidence intervals around these
+  estimates. Point estimates and confidence intervals for the performance measures can be
+  obtained either from one run or from a set of replications of the system, using
+  independent random number streams. The analyst should refer to previous studies for
+  details on the design and analysis of stochastic simulation models (2–4,14,22,26,27,31,
+  40,51,57,58, 68,73,92,97,103,106).
+
+  Analyzing Alternatives
+
+  When satisfactory simulation model results are obtained from the baseline case, the
+  user can prepare data sets for alternative cases by varying geometry, controls, and traffic
+  demand. If the model is calibrated and validated on the basis of the observed data, values
+  of these calibrated parameters should also be used in the alternatives analysis, assuming
+  that driver behavior and vehicle characteristics in the baseline case are the same as those
+  in the alternative cases.
+
+  Traffic simulation models produce a variety of performance measures for alternatives
+  analysis. As discussed in Step 1 (see Exhibit 31-17), the user should identify what model
+  performance measures and level of detail are anticipated. These performance measures,
+  such as travel time, delay, speed, and throughput, should be quantifiable for alternatives
+  analysis. Some models provide utility programs or postprocessors, allowing users to
+  easily perform the analysis. If animation is provided by the model, the user can gain
+  insight into how each alternative performs and can conduct a side-by-side comparison
+  graphically.
+
+Chapter 31 - Simulation and Other Models  31-24
+Typical Applications of Models
+  Highway Capacity Manual 2000
+
+Problem No.  VI. EXAMPLE PROBLEMS
+
+  1  Descriptions
+  2  Develop timing plan for a network of signalized intersections
+  3  Add capacity to existing freeway bottleneck area
+  Develop an off-line diversion plan for freeway incidents
+
+  31-25  Chapter 31 - Simulation and Other Models
+  Example Problems
+Highway Capacity Manual 2000
+
+  EXAMPLE PROBLEM 1
+
+  The Objective Develop a timing plan for a network of signalized intersections.
+
+  The Facts
+  √ Timing plan should be developed using p.m. peak-hour volumes and capacities.
+  √ Optimal signal timing is required.
+  √ Approximately 10 percent trucks on the entire network.
+  √ Mixed actuated and pretimed signal controls.
+  √ There are 120 signalized intersections in the network.
+  √ Field-observed delay data are available on some key approaches.
+
+  Project Scope On the basis of this problem description, the analyst is looking for an
+  evaluation procedure that
+
+  • Evaluates a network of intersections,
+  • Optimizes signal timing, and
+  • Computes traffic patterns in a deterministic manner.
+
+  HCM Assessment The HCM does not evaluate systems of intersections to develop
+  optimum timing plans.
+
+  Model Selection Five criteria identify a model capable of addressing the issues of
+  interest:
+  1. Model capabilities
+
+  • Network size: approximately 150 intersections or nodes.
+  • Network representation: at a microscopic level and on a lane basis.
+  • Traffic composition: mix of automobiles and trucks.
+  • Traffic operations: realistic lane changing, merging, diverging, weaving modeling
+  logic required at intersections. Logic for lane channelization at intersections is also
+  desirable.
+  • Traffic control: actuated and coordinated signals.
+  • Model outputs: graphics outputs and static performance measures (speed,
+  throughput, delays, on a segment basis).
+  2. Data requirements
+  • System descriptors: it is assumed that transportation network data, traffic control
+  data, traffic operations data, and traffic demand data are all available for input.
+  • Calibration and validation benchmarks: observed arterial speed and throughput
+  are available for model calibration and validation. Delay data at some approaches are
+  available at some signalized intersections.
+  3. Ease of use
+  The model needs to be easy to use and have graphical capabilities on both input and
+  output to facilitate model development and debugging as well as results assimilation and
+  analysis.
+  4. Resources required
+  Three resources are important:
+  • Cost to run the model,
+  • Staff expertise, and
+  • Technical support.
+  The cost of the software may not be an issue, depending on the size of the project.
+  However, knowledge of use of the model is key to the success of the model application.
+  The analyst also needs to ensure that technical support for the model will be available.
+  5. Model applications or past experience
+
+Chapter 31 - Simulation and Other Models  31-26
+Example Problems
+  Highway Capacity Manual 2000
+
+  The analytical staff should contact their technical support staff and the model
+developers to learn about experience with this model in similar application situations (i.e.,
+assessing the impact of signal timing from the system perspective).
+
+Data Assembly  Check the data required for the selected model and assemble the
+data accordingly.
+
+Data Input Use an input data preprocessor to create the network model for the
+problem situation.
+
+Model Calibration and Validation
+  • Run the model for the baseline case conditions (without the lane addition) and the
+
+default values of the parameters.
+  • Compare the baseline case model results with the observed field data.
+  • Calibrate the key model parameters to match the baseline case model results and
+
+the observed data to the extent possible; repeat this step by calibrating other parameters.
+  Make sure that the simulation model results are valid statistically.
+
+Output Analysis Make multiple runs for the baseline case in order to address
+stochastic issues and make the performance measures (arterial speed and delay at select
+intersections) statistically meaningful.
+
+Alternatives Analysis Perform the same analysis (i.e., make multiple runs) for the
+proposed case with the lane addition and values of the calibrated parameters.
+
+  31-27  Chapter 31 - Simulation and Other Models
+  Example Problems
+Highway Capacity Manual 2000
+
+  EXAMPLE PROBLEM 2
+
+  The Objective Add capacity to an existing freeway bottleneck area.
+
+  The Facts
+  √ Network encompasses a freeway, parallel arterial street, and several crossing
+  streets.
+  √ Interchanges connect the freeway to the surface street network.
+  √ Freeway traffic includes 95 percent passenger cars and 5 percent trucks.
+  √ Surface street traffic includes 98 percent passenger cars and 2 percent trucks.
+  √ Mixed actuated and coordinated signal controls on surface streets.
+  √ Analysis period between 7 and 9 a.m. with 30-min peak period.
+  √ There is a proposal to add a new lane to the freeway bottleneck area.
+  √ Assume demand remains unchanged after capacity is increased at the bottleneck.
+
+  Project Scope On the basis of the description of the project, an areawide analysis is
+  required, and systemwide speed and delay need to be observed to assess the effect of a
+  lane addition to the bottleneck area.
+
+  HCM Assessment Refer to Part IV and also to Chapter 22, “Freeway Facilities.”
+
+  Model Selection Five criteria identify a model capable of addressing the issues of
+  interest:
+  1. Model capabilities
+
+  • Network size: approximately 50 freeway links, 20 freeway nodes, 150 street links,
+  and 50 street nodes. This is a small network and should be accommodated by most
+  models.
+
+  • Network representation: at a microscopic level and on a lane basis.
+  • Traffic composition: mix of automobiles and trucks.
+  • Traffic operations: realistic lane changing, merging, diverging, weaving modeling
+  logic required at interchanges and intersections. Logic for lane channelization at
+  intersections is also desirable.
+  • Traffic control: actuated and coordinated signals on streets.
+  • Model outputs: graphics outputs and static performance measures (speed,
+  throughput, delays on a link basis).
+  2. Data requirements
+  • System descriptors: it is assumed that transportation network data, traffic control
+  data, traffic operations data, and traffic demand data are all available for input.
+  • Calibration and validation benchmarks: observed link speed and throughput are
+  available for model calibration and validation.
+  3. Ease of use
+  The model needs to be easy to use and have graphical capabilities on both input and
+  output to facilitate model development and debugging as well as results assimilation and
+  analysis.
+  4. Resources required
+  Three resources are important:
+  • Cost to run the model,
+  • Staff expertise, and
+  • Technical support.
+  The cost of the software may not be an issue, depending on the size of the project.
+  However, knowledge of use of the model is key to the success of the model application.
+  The user also needs to ensure that technical support for the model will be available.
+
+Chapter 31 - Simulation and Other Models  31-28
+Example Problems
+  Highway Capacity Manual 2000
+
+5. Model applications or past experience
+  The analytical staff should contact their technical support staff and the model
+
+developers to learn about experience with this model in similar application situations (i.e.,
+assessing the impact of capacity increase from the system perspective).
+
+Data Assembly Check the data required for the selected model and assemble the data
+accordingly.
+
+Data Input Use an input data preprocessor to create the network model for the
+problem situation.
+
+Model Calibration and Validation
+  • Run the model for the baseline case conditions (without the lane addition) and the
+
+default values of the parameters.
+  • Compare the baseline case model results with the observed field data.
+  • Calibrate the key model parameters to match the baseline case model results and
+
+the observed data to the extent possible; repeat this step by calibrating other parameters.
+  Make sure that the simulation model results are valid statistically.
+
+Output Analysis Make multiple runs for the baseline case in order to address
+stochastic issues and make the performance measures (system speed and delay)
+statistically meaningful.
+
+Alternatives Analysis
+  • Perform the same analysis (i.e., make multiple runs) for the proposed case with
+
+the lane addition and values of the calibrated parameters.
+  • Compare the system speed and system delay for the baseline and the proposed
+
+cases and assess the effect of the added lane capacity on network performance.
+
+31-29  Chapter 31 - Simulation and Other Models
+  Example Problems
+Highway Capacity Manual 2000
+
+  EXAMPLE PROBLEM 3
+
+  The Objective Develop an off-line diversion plan for freeway incidents.
+
+  The Facts
+  √ Same facts as in Example Problem 3.
+  √ Instead of adding a new lane to freeway bottleneck area, identify intelligent
+  transportation system (ITS) technologies that can help to reduce the nonrecurring
+  congestion.
+
+  Project Scope On the basis of the description of the project, an areawide analysis is
+  required, and systemwide speed and delay need to be observed to assess the effect of
+  off-line diversion plans using ITS technologies.
+
+  HCM Assessment Refer to Chapter 22.
+
+  Model Selection Five criteria identify a model capable of addressing the issues of
+  interest:
+  1. Model capabilities
+
+  • Network size: approximately 50 freeway links, 20 freeway nodes, 150 street links,
+  and 50 street nodes. This is a small network and should be accommodated by most
+  models.
+
+  • Network representation: at a microscopic level and on a lane basis.
+  • Traffic representation: either micro- or mesoscopic; microscopic is desirable.
+  • Traffic composition: mix of automobiles and trucks.
+  • Traffic operations: realistic lane changing, merging, diverging, weaving modeling
+  logic required at interchanges and intersections. Logic for lane channelization at
+  intersections is also desirable.
+  • Traffic control: on-ramp closure, off-ramp diversion, freeway traffic diversion, a
+  new signal control plan during the diversion period to favor diverted traffic.
+  • Model outputs: graphics outputs and static performance measures (speed,
+  throughput, delays on the link).
+  2. Data requirements
+  • System descriptors: it is assumed that transportation network data, traffic control
+  data, traffic operations data, and traffic demand data are all available for input.
+  • Traffic management plan: proposed traffic diversion plan (e.g., percent of freeway
+  traffic to be diverted to streets).
+  • Signal timing plan: a proposed signal timing plan during the diversion period to
+  favor diverted freeway traffic.
+  • Calibration and validation benchmarks: observed link speed and throughput are
+  available for model calibration and validation.
+  3. Ease of use
+  The model needs to be easy to use and have graphical capabilities on both input and
+  output to facilitate model development and debugging as well as results assimilation and
+  analysis.
+  4 Resources required
+  Three resources stand out as being important:
+  • Cost to run the model,
+  • Staff expertise, and
+  • Technical support.
+  The cost of the software may not be an issue, depending on the size of the project.
+  However, knowledge of use of the model is key to the success of the model application.
+  The user also needs to ensure that technical support for the model will be available.
+
+Chapter 31 - Simulation and Other Models  31-30
+Example Problems
+  Highway Capacity Manual 2000
+
+5. Model applications or past experience
+  May contact model developers or the technical support center for past experience
+
+with this model application (i.e., assessing the impact of incidents on the network).
+
+Data Assembly  Check the data required for the selected model and assemble the
+data accordingly.
+
+Data Input Use an input data preprocessor to create the network model for the
+problem situation.
+
+Model Calibration and Validation
+  • Run the model for the baseline case conditions (without an incident) and the
+
+default values of the parameters.
+  • Compare the baseline case model results with the observed field data (with no
+
+incident).
+  • Calibrate the key model parameters to match the baseline case model results and
+
+the observed data to the extent possible; repeat this step by calibrating other parameters.
+  • Run the baseline case with an incident but without any incident diversion plan.
+
+Output Analysis Make multiple runs for the baseline case in order to address
+stochastic issues and make sure the performance measures of interest (system speed
+and delay) are statistically meaningful.
+
+Alternatives Analysis
+  • Perform the same analysis (multiple runs) for the proposed diversion plan.
+  • Compare the system speed and system delay for the baseline case and the
+
+proposed case and assess the effect of the proposed diversion plan on the network in the
+case with the incident.
+
+  31-31  Chapter 31 - Simulation and Other Models
+  Example Problems
+Highway Capacity Manual 2000
+
+  VII. REFERENCES
+
+ 1. Special Report 209: Highway Capacity Manual, 3rd ed. (1997 update). TRB,
+  National Research Council, Washington, D.C., 1998.
+
+ 2. Gartner, N., C. Messer, and A. Rathi. Monograph on Traffic Flow Theory.
+  FHWA, U.S. Department of Transportation, June 1997.
+
+ 3. Rathi, A. K., and M. Venigalla. Variance Reduction Applied to Urban Network
+  Traffic Simulation. In Transportation Research Record 1365, TRB, National
+  Research Council, Washington, D.C., 1992.
+
+ 4. Torres, J. F., A. Halati, A. Gafarian, and S. Guevrekian. Statistical Guidelines for
+  Simulation Experiments, Vols. 1, 2, and 3. JFT Associates. FHWA, U.S.
+  Department of Transportation, June 1983.
+
+ 5. DiCesare, F., P. Kulp, M. Gile, and G. F. List. The Application of Petri Nets to the
+  Modeling, Analysis and Control of Intelligent Urban Traffic Networks in Valette.
+  Application and Theory of Petri Nets 1994: Proc., 15th International Conference,
+  Zaragoza, Spain, 1994, pp. 2–15.
+
+ 6. Kulp, P. The Application of Petri Nets to Modeling and Analysis of Traffic
+  Networks. Master’s Thesis. Rensselaer Polytechnic Institute, Troy, N.Y., 1994.
+
+ 7. Mahmassani, H. S., T. Hu, and R. Jayakrishnan. Network Performance Under
+  System Optimal and User Equilibrium Dynamic Assignments: Implications for
+  Advanced Traveler Information Systems. In Transportation Research Record
+  1408, TRB, National Research Council, Washington, D.C., 1993, pp. 83–93.
+
+ 8. Törn, A. A. Simulation Graphs: A General Tool for Modeling Simulation Design.
+  Simulation, Vol. 37, No. 6, 1981, pp. 187–194.
+
+ 9. Törn, A. A. The Simulation Net Approach to Modeling and Simulation.
+  Simulation, Vol. 57, No. 3, 1991, pp. 196–198.
+
+10. Wang, H. Modeling and Analysis of Traffic Signal Systems Using Petri Nets.
+  Ph.D. dissertation. Rensselaer Polytechnic Institute, Troy, N.Y., 1992.
+
+11. Wang, H., G. F. List, and F. DiCesare. Modeling and Evaluation of Traffic Signal
+  Control Using Timed Petri Nets. Proc., 1993 IEEE International Conference on
+  Systems, Man and Cybernetics 2, Le Touquet, France, IEEE, 1993, pp. 180–185.
+
+12. Akcelik, R. Traffic Signals: Capacity and Timing Analysis. Research Report
+  ARR 123. Australian Road Research Board, 1981.
+
+13. Akcelik, R. Estimation of Green Times and Cycle Time for Vehicle-Actuated
+  Signals. In Transportation Research Record 1457, TRB, National Research
+  Council, Washington, D.C., 1994, pp. 63–72.
+
+14. Akcelik, R. Capacity Research and Applications in Australia 1994–1998. Road
+  and Transport Research, Vol. 7, No. 3, 1998, pp. 58–65.
+
+15. Akcelik, R., E. Chung, and M. Besley. Roundabouts: Capacity and Performance
+  Analysis. Research Report ARR 321. Australian Road Research Board, 1998.
+
+16. Alvarez, L. Activity Based Highway Capacity Analysis: A Case Study. Proc.,
+  IEEE Conference on Intelligent Transportation Systems, IEEE, 1997, pp. 153–158.
+
+17. Antoniotti, M., A. Desphande, and A. Girault. Microsimulation Analysis of
+  Multiple Merge Junctions Under Autonomous AHS Operation. Proc., IEEE
+  Conference on Intelligent Transportation Systems, IEEE, 1997, pp. 147–152.
+
+18. Bang, K. L., A. Carlsson, and A. Palgunadi. Development of Speed-Flow
+  Relationships for Indonesian Rural Roads Using Empirical Data and Simulation.
+  In Transportation Research Record 1484, TRB, National Research Council,
+  Washington, D.C., 1995, pp. 24–32.
+
+19. Banks, J. H. Effect of Response Limitations on Traffic-Responsive Ramp
+  Metering. In Transportation Research Record 1394, TRB, National Research
+  Council, Washington, D.C., 1993, pp. 17–25.
+
+20. Ben-Akiva, M., H. N. Koutsopoulos, and A. Mukundan. A Dynamic Traffic
+  Model System for ATMS/ATIS Operations. IVHS Journal, Vol. 2, No. 1, 1994.
+
+Chapter 31 - Simulation and Other Models  31-32
+References
+  Highway Capacity Manual 2000
+
+21. Bifulco, G. N., and U. Crisalli. Dealing with Capacity Constraints Within
+  Stochastic User Equilibrium Assignment Models. In Fourth International
+  Conference on Urban Transport and the Environment for the 21st Century,
+  Computational Mechanics Publications, Ashurst, U.K., 1998, pp. 237–246.
+
+22. Bonneson, J. A., and J. W. Fitts. Effect of Upstream Signal on Non-Priority
+  Movement Capacity and Delay. In Transportation Research Record 1572, TRB,
+  National Research Council, Washington, D.C., 1996, pp. 174–182.
+
+23. Brackstone, M., and M. McDonald. Modeling of Motorway Operations. In
+  Transportation Research Record 1485, TRB, National Research Council,
+  Washington, D.C., 1995, pp. 56–60.
+
+24. Chang, G.-L., L. Zhuang, and C. Perez. Permitted Left-Turn Capacity of
+  Exclusive Lanes: Simulation-Based Empirical Method. In Transportation
+  Research Record 1457, TRB, National Research Council, Washington, D.C., 1994,
+  pp. 96–103.
+
+25. Cho, M. Y., A. J. Lichtenberg, and M. A. Lieberman. Minimum Stopping
+  Distance for Linear Control of an Automatic Car Following System. IEEE
+  Transactions on Vehicular Technology, Vol. 45, No. 2, 1996.
+
+26. Courage, K. G., C. Wallace, and R. Alqasem. Modeling the Effect of Traffic
+  Signal Progression on Delay. In Transportation Research Record 1194, TRB,
+  National Research Council, Washington, D.C., 1988, pp. 139–146.
+
+27. Daganzo, C. F. The Cell Transmission Model: A Simple Dynamic Representation
+  of Highway Traffic Consistent with the Hydrodynamic Theory. Transportation
+  Research, Vol. 28B, No. 4, 1994, pp. 269–287.
+
+28. Dorothy, P. W., Th. L. Maleck, and K. K. Miller. Operational Aspects of the
+  Michigan Urban Diamond Interchange. In Transportation Research Record 1612,
+  TRB, National Research Council, Washington, D.C., 1998, pp. 55–66.
+
+29. Dowling, R. G., and W. W. K. Cheng. Evaluation of Speed Measurement and
+  Prediction Techniques for Signalized Arterials. In Transportation Research
+  Record 1564, TRB, National Research Council, Washington, D.C., 1996, pp. 20–
+  29.
+
+30. Duan, J.-y., and P. Yang. Microscopic Simulator of Traffic Flow. Proc.,
+  Conference on Traffic and Transportation Studies, ASCE, 1998, pp. 633–641.
+
+31. Engelbrecht, R. J., D. B. Fambro, N. M. Rouphail, and A. A. Barkawi. Validation
+  of Generalized Delay Model for Oversaturated Conditions. In Transportation
+  Research Record 1572, TRB, National Research Council, Washington, D.C., 1996,
+  pp. 122–130.
+
+32. Fambro, D. B., and N. M. Rouphail. Generalized Delay Model for Signalized
+  Intersections and Arterial Streets. In Transportation Research Record 1572, TRB,
+  National Research Council, Washington, D.C., 1996, pp. 112–121.
+
+33. Ferrara, T. C., and T. N. Lam. Analysis of Bicycle Delays at Intersections and
+  Crossings by Computer Simulation. In Transportation Research Record 706,
+  TRB, National Research Council, Washington, D.C., 1979, pp. 36–44.
+
+34. Fi, I. Application of Traffic Simulation in the Design of Intersection Systems
+  Concerning Traffic and Environment. Civil Engineering, Vol. 40, No. 2, 1996, pp.
+  85–94.
+
+35. Gal-Tzur, A., D. Mahalel, and J. N. Prashker. Signal Design for Congested
+  Networks Based on Metering. In Transportation Research Record 1398, TRB,
+  National Research Council, Washington, D.C., 1993, pp. 111–118.
+
+36. Gazis, D. C. Optimum Control of a System of Oversaturated Intersections.
+  Operations Research, Vol. 12, No. 6, 1964, pp. 815–831.
+
+37. Gerlough, D. L., and M. J. Huber. Special Report 165: Traffic Flow Theory: A
+  Monograph. TRB, National Research Council, Washington, D.C., 1975.
+
+38. Gerlough, D. L., and F. C. Barnes. Poisson and Other Distributions in Traffic.
+  Eno Foundation, 1977.
+
+31-33  Chapter 31 - Simulation and Other Models
+  References
+Highway Capacity Manual 2000
+
+  39. Gerlough, D. L. Special Report 79: Simulation of Traffic Flow. HRB, National
+  Research Council, Washington, D.C., 1964.
+
+  40. Giannopoulos, G. A., and M. A. S. Mustafa. Saturation Flow and Capacity of
+  Shared Lanes: Comparative Evaluation of Estimation Methods. In Transportation
+  Research Record 1555, TRB, National Research Council, Washington, D.C., 1996,
+  pp. 50–58.
+
+  41. Hunt, J. G., and L. D. Griffiths. Vehicle Capacity at Pedestrian Crossings in the
+  United Kingdom. Proc., International Symposium on Highway Capacity and
+  Level of Service, 1991, pp. 181–191.
+
+  42. Hunt, J. G., and A. H. K. Al-Neami. Effectiveness of Pedestrian Facilities at
+  Signal Controlled Junctions. Proc., Institution of Civil Engineers, Transport, Vol.
+  111, No. 4, 1995, pp. 268–277.
+
+  43. Janson, B. N., and J. Robles. Quasi-Continuous Dynamic Traffic Assignment
+  Model. In Transportation Research Record 1493, TRB, National Research
+  Council, Washington, D.C., 1995, pp. 199–206.
+
+  44. Jayakrishnan, R., H. S. Mahmassani, and T. Y. Hu. An Evaluation Tool for
+  Advanced Traffic Information and Management Systems in Urban Networks.
+  Transportation Research, Vol. 2C, No. 3, 1994, pp. 129–147.
+
+  45. Johnson, M. E. Multivariate Statistical Simulation. Wiley, 1987.
+  46. Kikuchi, S., and P. Chakroborty. Car Following Model Based on Fuzzy Inference
+
+  System. In Transportation Research Record 1365, TRB, National Research
+  Council, Washington, D.C., 1992, pp. 82–91.
+  47. Kosonen, I. Simulation Tool for Traffic Signal Control Planning. Conference
+  Publication 320. IEEE, 1990, pp. 72–76.
+  48. Kuek, S. S., and W. C. Wong. Ordered Dynamic Channel Assignment Scheme
+  with Reassignment in Highway Microcells. IEEE Transactions on Vehicular
+  Technology, Vol. 41, No. 3, 1992, pp. 271–277.
+  49. Kuhne, R. D., and M. B. Rodiger. Macroscopic Simulation Model for Freeway
+  Traffic with Jams and Stop-Start Waves. Winter Simulation Conference, 1991, pp.
+  762–770.
+  50. Kurth, D. L., A. Van den Hout, and B. Ives. Implementation of Highway Capacity
+  Manual-Based Volume-Delay Functions in Regional Traffic Assignment Process.
+  In Transportation Research Record 1556, TRB, National Research Council,
+  Washington, D.C., 1996, pp. 27–36.
+  51. Kyte, M., W. Kittelson, T. Z. Zhong, B. Robinson, and M. Vandehey. Analysis of
+  Traffic Operations at All-Way Stop-Controlled Intersections by Simulation. In
+  Transportation Research Record 1555, TRB, National Research Council,
+  Washington, D.C., 1996, pp. 65–73.
+  52. Lee, J.-K., and J. J. Lee. Discrete Event Modeling and Simulation for Flow
+  Control in an Automated Highway System. Transportation Research, Vol. 5C,
+  Nos. 3 and 4, 1997, pp. 179-195.
+  53. Lewis, P. A. W. Simulation Methodology for Statisticians, Operations Analysts,
+  and Engineers. Wadsworth & Brooks, 1989.
+  54. Lewis, T. G., and B. J . Smith. Computer Principles of Modeling and Simulation.
+  Houghton Mifflin Company, 1979.
+  55. Li, J., N. M. Rouphail, and R. Akcelik. Overflow Delay Estimation for a Simple
+  Intersection with Fully Actuated Signal Control. In Transportation Research
+  Record 1457, TRB, National Research Council, Washington, D.C., 1994, pp. 73–
+  81.
+  56. Lieberman, E. Integrating GIS, Simulation and Animation. Winter Simulation
+  Conference, 1991, pp. 771–775.
+  57. Lin, F.-B. Saturation Flow and Capacity of Shared Permissive Left-Turn Lane.
+  Journal of Transportation Engineering, ASCE, Vol. 118, No. 5, pp. 611–630.
+
+Chapter 31 - Simulation and Other Models  31-34
+References
+  Highway Capacity Manual 2000
+
+58. Lin, P.-S., and K. G. Courage. Phase Time Prediction for Traffic-Actuated
+  Intersections. In Transportation Research Record 1555, TRB, National Research
+  Council, Washington, D.C., 1996, pp. 17–22.
+
+59. Liu, C. C. Bandwidth-Constrained Delay Optimization for Signal Systems. ITE
+  Journal, Vol. 58, No. 12, 1988, pp. 21–26.
+
+60. Lygeros, J., and D. N. Godbole. Interface Between Continuous and Discrete-Event
+  Controllers for Vehicle Automation. IEEE Transactions on Vehicular Technology,
+  Vol. 46, No. 1, 1997, pp. 229–241.
+
+61. Madu, C. N. Experimental Statistical Designs and Analysis in Simulation
+  Modeling. Quorum Books, 1993.
+
+62. Mahmassani, H. S., S. Peeta, T. Y. Hu, and A. K. Ziliaskopoulos. Dynamic
+  Traffic Assignment with Multiple User Classes for Real-Time ATIS/ATMS
+  Applications. Proc., Advanced Traffic Management Conference, St. Petersburg,
+  Fla., 1993, pp. 91–117.
+
+63. May, A. D. Traffic Flow Fundamentals. Prentice-Hall, Englewood, N.J., 1990.
+64. May, A. D. Traffic Management from Theory to Practice: Past, Present, Future.
+
+  In Transportation Research Record 1457, TRB, National Research Council,
+  Washington, D.C., 1994, pp. 5–14.
+65. McDonald, M., J. Wu, and M. Brackstone. Development of a Fuzzy Logic Based
+  Microscopic Motorway Simulation Model. Proc., IEEE Conference on Intelligent
+  Transportation Systems, IEEE, 1997, pp. 82–87.
+66. McDonald, M., M. Brackstone, and D. Jeffery. Data Requirements and Sources
+  for the Calibration of Microscopic Motorway Simulation Models. Proc., Vehicle
+  Navigation and Information Systems Conference, IEEE, 1993, pp. 233–238.
+67. McGhee, C. C., and E. D. Arnold, Jr. Review and Evaluation of Methods for
+  Analyzing Capacity at Signalized Intersections. In Transportation Research
+  Record 1572, TRB, National Research Council, Washington, D.C., 1996, pp. 160–
+  166.
+68. Messer, C. J., and J. A. Bonneson. Capacity Analysis of Interchange Ramp
+  Terminals. NCHRP Project 3-47. Final Report: NCHRP Web Document 12.
+  TRB, National Research Council, Washington, D.C., 1997.
+69. Michalopoulos, P. G., and G. Stephanopoulos. Optimal Control of Oversaturated
+  Intersections: Theoretical and Practical Considerations. Traffic Engineering and
+  Control, Vol. 19, No. 5, 1978, pp. 216–221.
+70. Milton, J. S., and J. C. Arnold. Introduction to Probability and Statistics.
+  McGraw-Hill, Inc., New York, 1995.
+71. Morgan, B. J. T. Elements of Simulation. Chapman and Hall, 1984.
+72. Nakamura, H., M. Kuwahara, and M. Koshi. Simulation Model for the Evaluation
+  of Weaving Capacity. Proc., International Symposium on Highway Capacity and
+  Level of Service, 1991, pp. 259–270.
+73. Ostrom, B., L. Leiman, and A. D. May. Suggested Procedures for Analyzing
+  Freeway Weaving Sections. In Transportation Research Record 1398, TRB,
+  National Research Council, Washington, D.C., 1993, pp. 42–48.
+74. Ozaki, H. Simultaneous Analysis of a Signalized Intersection. Proc.,
+  International Symposium on Highway Capacity and Level of Service, 1991, pp.
+  271–282.
+75. Parker, M. T. Effect of Heavy Goods Vehicles and Following Behaviour on
+  Capacity at Motorway Roadwork Sites. Traffic Engineering and Control, Vol. 37,
+  No. 9, 1996, pp. 524–531.
+76. Peeta, S., and H. S. Mahamassani. Multiple User Classes Real-Time Traffic
+  Assignment for Online Operations: A Rolling Horizon Solution Framework.
+  Transportation Research, Vol. 3C, 1995, pp. 83–98.
+77. Peeta, S., H. S. Mahmassani, R. Rothery, and R. Herman. Effectiveness of Real-
+  Time Information Strategies in Situations of Non-Recurrent Congestion. Proc.,
+
+31-35  Chapter 31 - Simulation and Other Models
+  References
+Highway Capacity Manual 2000
+
+  2nd International Conference on Applications of Advanced Technologies in
+  Transportation Engineering, ASCE, 1991, pp. 409–413.
+  78. Pignataro, L. J., W. R. McShane, K. W. Crowley, B. Lee, and T. W. Casey.
+  NCHRP Report 194: Traffic Control in Oversaturated Street Networks. TRB,
+  National Research Council, Washington, D.C., 1978.
+  79. Porche, I., and S. Lafortune. Dynamic Traffic Control: Decentralized and
+  Coordinated Methods. Proc., IEEE Conference on Intelligent Transportation
+  Systems, IEEE, 1997, pp. 930–935.
+  80. Prosser, N., and M. Dunne. A Procedure for Estimating Movement Capacities at
+  Signalized Paired Intersections. Proc., 2nd International Symposium on Highway
+  Capacity, Vol. 2, Sydney, Australia, 1994, pp. 473–492.
+  81. Rakha, H., M. Van Aerde, E. R. Case, and A. Ugge. Evaluating the Benefits and
+  Interactions of Route Guidance and Traffic Control Strategies Using Simulation.
+  Proc., First Vehicle Navigation and Information Systems Conference, 1989, pp.
+  296–303.
+  82. Ran, B., S. Leight, and B. Chang. Microscopic Simulation for AHS Merging
+  Analysis. Proc., International Conference on Applications of Advanced
+  Technologies in Transportation Engineering, ASCE, 1998, pp. 77–82.
+  83. Ripley, B. D. Stochastic Simulation. Wiley, 1987.
+  84. Roberston, D. I. Control of Congested Networks in Urban Areas. Proc.,
+  Advanced Traffic Management Conference, Large Urban Systems, 1993.
+  85. Rouphail, N. M., and R. Akcelik. Preliminary Model of Queue Interaction at
+  Signalized Paired Intersections. Proc., Australian Road Research Board, Vol. 16,
+  No. 5, 1992, pp. 325–345.
+  86. Rubinstein, R. Y. Modern Simulation and Modeling. Wiley Interscience, 1998.
+  87. Sabanayagam, S., J. J. Schuster, and S. Konyk. Traffic Simulation at Unsignalized
+  Intersections Using GPSS. Microcomputer Applications in Transportation III,
+  ASCE, 1989, pp. 425–433.
+  88. Sanwal, K. K., K. Petty, J. Walrand, and Y. Fawaz. Extended Macroscopic Model
+  for Traffic Flow. Transportation Research, Vol. 30B, No. 1, pp. 1–9.
+  89. Shafer, J. H. Easing Tappan Zee Bridge Congestion. Public Works, Vol. 125, No.
+  1, 1994, pp. 35–36.
+  90. Shi, Y. S., K. Wang, and Z. S. Yang. Research on Data Stream Coding of Vehicle
+  Saturation in ITS. Proc., Conference on Traffic and Transportation Studies,
+  ASCE, 1998, pp. 662–671.
+  91. Skabardonis, A., and R. Dowling. Improved Speed-Flow Relationships for
+  Planning Applications. In Transportation Research Record 1572, TRB, National
+  Research Council, Washington, D.C., 1996, pp. 18–23.
+  92. Skabardonis, A., and A. D. May. Comparative Analysis of Computer Models for
+  Arterial Signal Timing. In Transportation Research Record 1021, TRB, National
+  Research Council, Washington, D.C., 1985, pp. 45–52.
+  93. Smith, M. J. A Local Traffic Control Policy Which Automatically Maximizes the
+  Overall Travel Capacity of an Urban Road Network. Traffic Engineering and
+  Control, Vol. 21, 1980, pp. 298–302.
+  94. Stephanedes, Y. J., P. G. Michalopoulos, and R. A. Plum. Improved Estimation of
+  Traffic Flow for Real Time Control. In Transportation Research Record 795,
+  TRB, National Research Council, Washington, D.C., 1981, pp. 28–39.
+  95. Troutbeck, R. J. Effect of Heavy Vehicles at Australian Traffic Circles and
+  Unsignalized Intersections. In Transportation Research Record 1398, TRB,
+  National Research Council, Washington, D.C., 1993, pp. 54–60.
+  96. Unsal, C., P. Kachroo, and J. S. Bay. Simulation Study of Learning Automata
+  Games in Automated Highway Systems. Proc., IEEE Conference on Intelligent
+  Transportation Systems, IEEE, 1997, pp. 936–941.
+
+Chapter 31 - Simulation and Other Models  31-36
+References
+

@@ -1,0 +1,485 @@
+visualization is suitable for specific types of variables. To create data
+visualizations in R, we use the ggplot2 package. With ggplot2, we
+can create high-quality visualization in different contexts.
+Installation and loading of the “ggplot2” package are shown in R
+Code Snippet 31.
+
+  install.packages("ggplot2")
+
+  library(ggplot2)
+
+R Code Snippet 31
+  Histogram: Histograms display the distribution of a numerical
+
+variable. In R Code Snippet 32, we create a histogram for
+vehiclemiles variable. In a histogram, the variable is displayed on
+the X-axis and frequency on the Y-axis.
+
+  ggplot(data=TrafficData) +
+  geom_histogram(aes(x=VehicleMiles23), na.rm=TRUE,
+  bins=10, binwidth=NULL, colour='navy',fill='grey')
+
+R Code Snippet 32
+  Output for R Code Snippet 32: Histogram
+  Bar chart: A bar chart describes a categorical variable. In R Code
+Snippet 33, we create a bar chart for the region variable. The
+categorical variable is shown on the x-axis and the frequency on the
+y-axis.
+
+  ggplot(data=TrafficData) +
+  geom_bar(aes(x=Region,fill=Region), na.rm=TRUE )
+
+R Code Snippet 33
+  Output for R Code Snippet 33: Bar Chart
+  Bar chart with numerical and categorical variable: A bar chart can
+display the aggregated values of the numerical variable for each
+category of the categorical variable as shown in R Code Snippet 34.
+
+  meanmiles <-
+  aggregate(TrafficData$VehicleMiles23,by=list(TrafficData$Reg
+  ion),FUN=mean)
+
+  names(meanmiles)<- c('REGION','MeanMiles23')
+
+  ggplot(data=meanmiles) +
+  geom_bar(aes(x=REGION,y=MeanMiles23),
+  stat='identity',colour="black",fill="grey")
+
+R Code Snippet 34
+  Output for R Code Snippet 34: Bar Chart with a Numerical
+Variable
+
+  Column chart: A column chart displays the cross classification
+between two categorical variables as shown in R Code Snippet 35.
+
+  ggplot(data=TrafficData) + geom_bar(aes(x=Region,fill=State),
+  na.rm=TRUE )
+
+R Code Snippet 35
+  Output for R Code Snippet 35: Column Chart
+  Boxplot: A boxplot displays five number summaries of a
+numerical variable (minimum, first quartile, median, third quartile,
+and maximum). It also facilitates comparison of the five number
+summaries across levels of categories by including a categorical
+column as shown in R Code Snippet 36.
+
+  ggplot(data=TrafficData) +
+  geom_boxplot(aes(x=as.factor(Region),y=VehicleMiles23),
+  colour='black',fill='grey', na.rm=TRUE )
+
+R Code Snippet 36
+  Output for R Code Snippet 36: Boxplot
+  Scatterplot: A scatterplot displays the relationship between two
+numerical variables, with one variable on the x-axis and the other
+on the y-axis. The geom_point() function creates a scatterplot. The
+labs() function is used to change the label names on the x-axis and
+y-axis. The different options given in the theme() function can
+customize the size of the plot title, x-axis, and y-axis title. The option
+given in the theme() function customizes the size, color, and title
+position. The options in theme() can also customize the x-axis title
+as well as the x-axis text. In R Code Snippet 37, we create a
+scatterplot.
+
+  ggplot(data=TrafficData) +
+  geom_point(aes(x=NumberOfStations,y=VehicleMiles23),
+  colour="navy",alpha=0.7,na.rm=TRUE) +
+  labs (y= "Vehicle Miles in 2023", x = "Number of Stations") +
+  labs (title = "Scatterplot") +
+  theme (plot.title=element_text(colour="darkgreen", size = 16,
+  face="bold.italic"), axis.text=element_text(size=12), axis.title.x
+  = element_text (size = 14, face = "bold")) #Scatterplot
+
+R Code Snippet 37
+  Output for R Code Snippet 37: Scatterplot
+  Scatterplot with categorical variable: A scatterplot can include a
+third dimension by displaying a categorical variable with data points
+in different colors for different categories as shown in R code
+Snippet 38. By giving the appropriate options for legend.position
+and legend.text in the theme() function, we can customize the
+position of the legend and the size of the text in legend.
+
+  ggplot(data=TrafficData) +
+  geom_point(aes(x=NumberOfStations,y=VehicleMiles22,colou
+  r=Region),
+
+  alpha=0.7,na.rm=TRUE) + theme(legend.position = "left",
+
+  legend.text=element_text(colour= "red",size=10,face="bold"))
+
+R Code Snippet 38
+  Output for R Code Snippet 38: Scatterplot with a Categorical
+Variable
+
+  Bubble plot: A bubble plot incorporates the third dimension of a
+scatterplot as a numerical variable indicated by the size of the data
+points and color coded with a categorical column as shown in R
+Code Snippet 39.
+
+  ggplot(data=TrafficData) +
+  geom_point(aes(x=NumberOfStations,y=VehicleMiles23,size=
+  VehicleMiles22, colour=Region), alpha=0.7,na.rm=TRUE)
+  #bubbleplot with categorical
+
+R Code Snippet 39
+  R Code Snippet 39: Bubble Plot
+  Geospatial map: A geospatial map displays the regions by
+mapping the default map to the datasets. To create a map of the
+United States displaying a numerical measure for each state in the
+United States, a variable named “state” with region names must
+exist in the dataset.
+  In R Code Snippet 40, we create a geospatial map. The R code
+renames the first column that has state information to “state.” The
+plot_usmap() function creates a US map using the TrafficData
+dataset by color coding the VehicleMiles23 with the default colors.
+The Output for R Code Snippet 40 shows the vehicle miles traveled
+in 2023 in different states of the United States.
+
+  library(usmap)
+  colnames(TrafficData)[1] <- "state"
+  plot_usmap(data = TrafficData, values = "VehicleMiles23",
+  color = "white") +
+  theme(legend.position = "right") #geospatial map
+R Code Snippet 40
+
+  R Code Snippet 40: Geospatial map
+  To add a color gradient of our choice, we use the
+scale_fill_grading() function. The theme() function is used to
+customize the position of the legend as shown in R Code Snippet 41.
+  plot_usmap(data = TrafficData, values = "VehicleMiles23",
+  color = "white") +
+  scale_fill_gradient(name = "VehicleMiles23", low = "lightblue",
+  high = "darkgreen", label = scales::comma) +
+  theme(legend.position = "right") #geospatial map
+R Code Snippet 41
+
+  R Code Snippet 41: Geospatial Map with Color Gradient
+
+2.6  Basic statistical analysis with MATLAB
+
+The following pages contain example MATLAB codes and outputs to
+conduct basic statistical analyses, which were discussed in Chapter
+1. The lines in green font indicate the steps that are followed for the
+analysis.
+
+  →Figures 2.2 and →2.3 show the code for mean, median, mode,
+range, quartiles, and output.
+ % Example dataset of asphalt contents from quality control tests of a
+  % pavement construction project
+
+data = [6.5, 6.6, 6.4, 6.5, 6.5, 6.3, 6.6, 6.8, 6.5,
+  6.5];
+
+  % Calculate statistics
+  meanValue = mean(data);
+  medianValue = median(data);
+  modeValue = mode(data);
+  rangeValue = range(data);
+  quartiles = quantile(data, [0.25, 0.5, 0.75]);
+
+  % Display calculated statistics in the Command Window
+
+  disp(['Mean: ', num2str(meanValue)]);
+  disp(['Median: ', num2str(medianValue)]);
+
+  disp(['Mode: ', num2str(modeValue)]);
+  disp(['Range: ', num2str(rangeValue)]);
+  disp(['1st Quartile: ', num2str(quartiles(1))]);
+  disp(['3rd Quartile: ', num2str(quartiles(3))]);
+
+  % Create a histogram to visualize the data distribution
+
+  figure;
+  histogram(data, 'Normalization', 'probability',
+
+  'BinWidth', 0.05);
+  title('Data Distribution');
+
+  % Adjust the limits of the plot to make space for the annotations
+
+  xlim([min(data)-0.1 max(data)+0.1]);
+  ylim([0 0.5]);
+
+  % Add statistics to the plot in two columns
+ left_x = min(data) - 0.1; % X-coordinate for the left column
+
+  right_x = max(data) - 0.1; % X-coordinate for the right
+  column
+
+ text(left_x, 0.45, ['Mean: ', num2str(meanValue)],
+  'FontSize', 12, 'Color', 'k');
+
+  text(left_x, 0.40, ['Median: ',
+num2str(medianValue)], 'FontSize', 12, 'Color', 'k');
+  text(left_x, 0.35, ['Mode: ', num2str(modeValue)],
+  'FontSize', 12, 'Color', 'k');
+
+text(right_x, 0.45, ['Range: ', num2str(rangeValue)],
+  'FontSize', 12, 'Color', 'k');
+
+  text(right_x, 0.40, ['1st Quartile: ',
+  num2str(quartiles(1))], 'FontSize', 12, 'Color',
+
+  'k');
+  text(right_x, 0.35, ['3rd Quartile: ',
+  num2str(quartiles(3))], 'FontSize', 12, 'Color',
+
+  'k');
+
+Figure 2.2: Example MATLAB code for descriptive statistics.
+
+Figure 2.3: Output from code for basic statistics.
+→Figures 2.4 and →2.5 show the code for generating the histogram
+calculating variance and standard deviation as well as the output.
+
+ % Example dataset of asphalt contents from quality control tests of a
+  % pavement construction project
+
+data = [6.5, 6.6, 6.4, 6.5, 6.5, 6.3, 6.6, 6.8, 6.5,
+  6];
+
+  % Calculate statistics
+  varianceValue = var(data); % Variance
+  stdDevValue = std(data); % Standard deviation
+  % Create a histogram to visualize the data distribution
+
+  figure;
+  histogram(data, 'Normalization', 'probability',
+
+  'BinWidth', 0.05);
+  title('Data Distribution');
+
+  % Adjust the limits of the plot to make space for the annotations
+
+  xlim([min(data)-0.5, max(data)+0.5]);
+  ylim([0, 0.5]);
+
+  % Add variance and standard deviation to the plot
+
+  text(min(data)-0.4, 0.45, ['Variance: ',
+  num2str(varianceValue, '%.2f')], 'FontSize', 12,
+
+  'Color', 'r');
+  text(min(data)-0.4, 0.40, ['Std Dev: ',
+  num2str(stdDevValue, '%.2f')], 'FontSize', 12,
+
+  'Color', 'r');
+
+Figure 2.4: Example MATLAB code to calculate variance and
+standard deviation.
+Figure 2.5: Standard deviation and variance for example data.
+
+→Figures 2.6 and →2.7 show the code for generating the
+distribution and calculating kurtosis and the output.
+  % Sample data
+
+data = [1.2, 1.5, 2.1, 1.8, 2.5, 1.9, 2.2, 2.0, 1.7,
+
+  2.3];
+
+  % Calculate the sample mean and standard deviation
+
+  sampleMean = mean(data);
+
+  sampleStd = std(data);
+
+ % Calculate the numerator and denominator components of sample
+  kurtosis
+
+  n = length(data);
+
+  numerator = sum((data - sampleMean).^4) / n;
+
+  denominator = (sampleStd^4);
+
+  % Calculate the sample kurtosis
+
+  sampleKurtosis = (numerator / denominator) - 3;
+
+  % Create a histogram to visualize the data distribution
+
+  figure;
+
+  histogram(data, 'Normalization', 'probability',
+
+  'BinWidth', 0.2);
+
+  title('Data Distribution');
+
+  xlabel('Data Values');
+
+  ylabel('Probability');
+
+  % % Determine the x and y coordinates for the text annotation
+  % xPos = sampleMean - 1.5; % Adjust this value as needed
+  % yPos = 0.25; % Adjust this value as needed
+  %
+  % % Add a text annotation for the sample kurtosis value
+
+  % text(xPos, yPos, ['Sample Kurtosis: ', num2str(sampleKurtosis)],
+  'FontSize', 12);
+
+  % In this modified code, we calculate xPos and yPos to position the
+  % Determine the x and y coordinates for the text annotation
+  xPos = 1; % Adjust this value for the x-coordinate
+  yPos = 0.18; % Adjust this value for the y-coordinate
+  % Add the text annotation to the plot
+
+  text(xPos, yPos, ['Kurtosis: ',
+  num2str(sampleKurtosis)], 'FontSize', 12,
+  'FontWeight', 'bold');
+
+Figure 2.6: Example MATLAB code for kurtosis.
+
+Figure 2.7: Distribution and kurtosis.
+→Figures 2.8 and →2.9 show the code for generating a scatterplot
+with a correlation coefficient and the output.
+  % Generate example data
+
+  x = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]; % x data
+  y = [2, 4, 5, 7, 8, 10, 11, 13, 15, 16]; % y data
+
+  % Calculate the correlation coefficient
+
+  corr_coeff = 0.99;
+
+  % Create a scatter plot of the data
+
+  figure;
+  scatter(x, y, 'filled');
+  title('Scatter Plot with Correlation Coefficient');
+
+  xlabel('X Data');
+  ylabel('Y Data');
+
+  % Add the correlation coefficient to the plot
+
+  text(2, 15, ['Correlation Coefficient: ',
+  num2str(corr_coeff)], 'FontSize', 12);
+
+Figure 2.8: Example MATLAB code for the correlation coefficient.
+Figure 2.9: Plot of x and y data with a correlation coefficient.
+
+→Figures 2.10 and →2.11 show the data and the code for
+generating a correlation plot and the output.
+  data = readtable('ip_datasheet.xlsx');
+  corrplot(data)
+
+MAS NMAS P475 CU CC CAA AC ACC TEXTURE
+
+12.5 9.5  63 20 1.5 97 64 4.7 0.48
+
+12.5 9.5  76 20 1.5 97 76 5.7 0.34
+
+12.5 9.5  62 14.7 1 94 64 5.7 0.4
+
+25 19  52 30 1 89 64 3.6 0.51
+
+19 12.5 46 17.1 2.1 98 76 3.9 0.36
+
+12.5 9.5  76 20 1.1 93 64 5.6 0.26
+
+12.5 9.5  68 20 1.5 86 64 5  0.49
+
+25 19  36 33.3 5.3 100 64 3.8 0.4
+
+12.5 9.5  73 15 0.8 88 64 6  0.35
+
+12.5 9.5  76 18 1.2 95 64 5  0.6
+
+25 19  46 17.5 1.9 97 76 3.6 0.43
+
+19 12.5 72 15.6 0.7 80 64 5.9 0.27
+
+Figure 2.10: Code and data for correlation matrix.
+Figure 2.11: Example MATLAB code and correlation matrix.
+
+→Figures 2.12 and →2.13 show the data and the code for
+generating a covariance plot and the output.
+  % Example data
+  data1 = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]; % first set of
+
+  data
+data2 = [2, 4, 5, 7, 8, 10, 11, 13, 15, 16]; % second
+
+  set of data
+  % Calculate the covariance matrix
+
+  covarianceMatrix = cov(data1, data2);
+
+  % Extract the covariance value
+
+  covarianceValue = covarianceMatrix(1, 2);
+
+  % Create a scatter plot of the data
+
+  scatter(data1, data2, 'filled');
+  title('Scatter Plot with Covariance Value');
+
+  xlabel('Data 1');
+  ylabel('Data 2');
+
+  % Add the covariance value to the plot
+
+  text(2, 15, ['Covariance: ',
+  num2str(covarianceValue)], 'FontSize', 12);
+
+Figure 2.12: Example MATLAB code for covariance.
+Figure 2.13: Plot of x and y data with covariance.
+
+Example of application of Bayes’ theorem: Let’s consider a
+transportation-related example where we want to estimate the
+probability of a person using a certain mode of transportation given
+their age category. For example, Bayes’ theorem is used to update
+the probability estimate based on age category. The example
+shown in →Figure 2.14 calculates the posterior probability of a
+person using a car given their age category (see the output at the
+bottom of the figure).
+  % Sample data
+
+  ageCategories = {'Young', 'Adult', 'Senior'};
+  transportationModes = {'Car', 'Bus', 'Train',
+
+  'Walking', 'Biking'};
+
+  % Prior probabilities P(Transportation Mode)
+P_Transportation = [0.4, 0.2, 0.1, 0.2, 0.1]; % Adjust
+
+  as needed
+  % Conditional probabilities P(Age Category | Transportation Mode)
+
+  % Example values, adjust based on your scenario
+
+  P_Young_given_Mode = [0.6, 0.2, 0.1, 0.05, 0.03];
+  P_Adult_given_Mode = [0.3, 0.5, 0.2, 0.1, 0.05];
+  P_Senior_given_Mode = [0.1, 0.3, 0.5, 0.2, 0.1];
+
+% Age distribution in the population (prior probability of age category)
+
+  P_Young = 0.3;
+  P_Adult = 0.5;
+  P_Senior = 0.2;
+
+  % Bayes' theorem: P(Mode|Age) = (P(Age|Mode) * P(Mode)) / P(Age)
+ % where P(Age) = P(Age|Mode) * P(Mode) + P(Age|~Mode) * P(~Mode)
+% Example: Calculate the posterior probability of using a Car given the
+
+  person is Young
+  modeIndex = 1; % Index of 'Car' in transportationModes
+
+  ageIndex = 1; % Index of 'Young' in ageCategories
+
+  P_Mode_given_Age = (P_Young_given_Mode(ageIndex) *
+  P_Transportation(modeIndex)) / ...
+  (P_Young_given_Mode(ageIndex) *
+  P_Transportation(modeIndex) + ...
+  P_Young_given_Mode(ageIndex) * (1 -
+  P_Transportation(modeIndex)));
+
+  % Display the results
+
+  fprintf('Prior Probability of using Car (P(Car)):
+  %.2f%%\n', P_Transportation(modeIndex) * 100);
+
+fprintf('Conditional Probability of being Young given
+  Car (P(Young|Car)): %.2f%%\n',
+

@@ -1,0 +1,1741 @@
+  Highway Capacity Manual 2000
+
+movement together with a minimal description of the signal design and related operating
+parameters.
+
+COMPUTATIONAL STEPS
+
+  Exhibit 16-18 gives the five types of analysis. Although the methodology is capable
+of computations for all five, the specific procedures and worksheets are designed for the
+first of these (i.e., a solution for LOS). In the development of alternative signal and
+geometric designs, it is often necessary to consider changes simultaneously in both.
+Rarely can signalization be considered in isolation from geometric design and vice versa.
+Thus, the most frequent type of analysis would consider such alternatives on a trial-and-
+error basis and would not attempt to hold one constant and solve for the other.
+
+  EXHIBIT 16-18.  TYPES OF ANALYSIS COMMONLY PERFORMED
+
+  Type  Given  Objective  Comments/Assumptions Required
+Operational
+  Volume  LOS  None
+  (LOS)  Signal timing
+  Geometrics  Maximum service flow  Requires iterative procedure, with
+Design (vp)  rate  complex interactions possible
+  Signal timing
+  Design  Geometrics  Signal timing  Initial estimate of signal timing
+  (Sig)  Desired LOS  needed to perform iterative solution
+  Geometrics
+  Design  Volume  Initial assumptions on geometrics
+  (Geom)  Geometrics  Xcm  needed to perform iterative solution
+  Desired LOS
+ Planning  Most inputs are estimates
+  (Xcm)  Volume
+  Signal timing
+  Desired LOS
+
+  Volume
+  Signal timing
+
+  Operational analysis is divided into five modules: input, volume adjustment,  Left-Turn
+saturation flow rate, capacity analysis, and LOS. The computations for each of these  Adjustment
+modules are conducted or summarized on the appropriate worksheet.
+  Cases
+  In addition to the module-related worksheets, supplementary worksheets are
+provided to handle computations that are more complex. An overview of the information  Lane
+flow among all worksheets is presented in Exhibit 16-19, which also shows the proper
+treatment of all combinations of left-turn lanes and phasing. A given lane group may  Phasing  LT  LT
+have
+  Protected  Excl Share
+  • Left turns from an exclusive lane,  Permitted
+  • Left turns from a shared lane, or  Prot/Perm  1  4
+  • No left turns at all.
+When left turns are present, the signal phasing may provide  2  5
+  • Permitted left-turn operation,
+  • Protected left-turn operation, or  3  6
+  • A combination of protected and permitted left turns.
+There are six different possibilities, each of which must be handled in a slightly different  One set of worksheets is used
+manner using the worksheets.  for each analysis period
+
+Input Parameters
+
+  The input parameters are the geometric, volume, and signalization characteristics
+needed to perform computations. When an existing intersection is under study, most of
+these data will be obtained from field studies. When future conditions are under
+consideration, traffic data will be forecast and geometric and signal designs will be based
+on existing conditions or will be proposed. The Input Worksheet is shown in Exhibit
+16-20.
+
+  16-27  Chapter 16 - Signalized Intersections
+  Applications
+Highway Capacity Manual 2000
+
+  EXHIBIT 16-19. FLOW OF WORKSHEETS AND APPENDICES TO PERFORM OPERATIONAL ANALYSIS
+
+  Create  Volume  Input  Start
+  de facto LT  adjustment  Worksheet
+  worksheet
+  lane
+
+  Saturation
+  flow rate
+  worksheet
+
+  to fRT
+
+  Shared  LT Lane  Exclusive
+  No LT
+  Perm  LT  Prot/Perm  in lane  Perm  LT  Prot/Perm
+  Case 5  Protection  group  Case 2  Protection
+  Exhibit C16-1  fLT = 1.0  Exhibit C16-1
+  Prot  Prot
+  Case 1
+  Case 4  Exhibit C16-1  Case 3
+  Exhibit C16-1  Exhibit C16-1
+
+  Supplemental  Supplemental  Supplemental
+  worksheet  worksheets for  worksheet for effects
+  for fLT  effects of peds on  of peds and bicycles
+  (App. C)  LT, fLpb (App. D)  on RT, fRpb (App. D)
+
+  Case 6  Supplemental  Protected phase
+  Exhibit C16-1  worksheet  Case 1
+  for fLT
+  (App. C)  Exhibit C16-1
+
+  Yes  PL ≥ 1  No
+  and N>1?
+
+  Alternative for d1  Protected  Permitted phase
+  protected + permitted  phase  supplemental
+
+  worksheet Exhibit  saturation flow  worksheet
+  C16-9 or C16-10  rate  for fLT
+  Supplemental effect
+  of initial queue on  Capacity and LOS  Permitted
+  control delay - d3  Worksheet  saturation flow
+  rate (App. C)
+  (App. E)
+
+  Back-of-Queue  Capacity and  No Queue carryover at Yes  Analyze next
+  Worksheet  LOS Worksheet  end of period?  period
+
+  The upper third of the worksheet contains a schematic intersection drawing on which
+basic volume and geometric data are recorded. The details of lane geometrics should be
+shown within the intersection diagram. Details should include
+
+  • Number of lanes,
+  • Lane widths,
+  • Grade (plus sign is upgrade),
+  • Traffic movements using each lane (shown by arrows),
+  • Existence and location of curb parking lanes,
+  • Existence and location of bus stops,
+  • Existence and length of storage bays, and
+  • Other features such as channelization.
+  When geometric conditions are not known, a design should be proposed based on
+state or local practice. Chapter 10 may be consulted for assistance in establishing a
+design for analysis. When separate left-turn lanes exist, the procedures assume that the
+storage length is adequate. This assumption should be checked against the criteria in
+Chapter 10.
+  The middle portion of the worksheet consists of a tabulation of volume and timing
+data for each movement. Hourly volume or 15-min flow rate and volume-related
+parameters are entered into the tabulation in the middle of the worksheet. Separate
+entries are required for each approach and for each movement if appropriate. Note that
+RTOR volume should be removed from the total RT volume before the RT volume is
+entered on the worksheet.
+
+Chapter 16 - Signalized Intersections  16-28
+Applications
+  Highway Capacity Manual 2000
+
+  EXHIBIT 16-20. INPUT WORKSHEET
+
+  INPUT WORKSHEET
+
+General Information  Site Information
+
+Analyst  _______________________________  Intersection  _____________________________
+Agency or Company  _______________________________  Area Type
+Date Performed  _______________________________  Jurisdiction  " CBD  " Other
+Analysis Time Period  _______________________________  Analysis Year
+  _____________________________
+
+  _____________________________
+
+Intersection Geometry
+
+  grade=  = Pedestrian Button
+
+  Street  = Lane Width
+  = Through
+  Show North Arrow  = Right
+
+  grade=
+
+  = Left
+
+  = Through + Right
+
+  grade=  = Left + Through
+
+  Street
+  = Left + Right
+
+  = Left + Through + Right
+
+  grade=
+
+Volume and Timing Input
+
+  EB  WB  NB  SB
+
+  LT TH RT1 LT TH RT1 LT TH RT1 LT TH RT1
+
+Volume, V (veh/h)
+
+% heavy vehicles, % HV
+
+Peak-hour factor, PHF
+
+Pretimed (P) or actuated (A)
+
+Start-up lost time, l1 (s)
+Extension of effective green time, e (s)
+
+Arrival type, AT
+
+Approach pedestrian volume,2 vped (p/h)
+Approach bicycle volume,2 vbic (bicycles/h)
+Parking (Y or N)
+
+Parking maneuvers, Nm (maneuvers/h)
+Bus stopping, NB (buses/h)
+Min. timing for pedestrians,3 Gp (s)
+
+Signal Phasing Plan
+
+D  Ø1  Ø2  Ø3  Ø4  Ø5  Ø6  Ø7  Ø8
+I
+A
+G
+R
+A
+M
+
+Timing G =  G =  G =  G =  G =  G =  G =  G =
+  Y =  Y =  Y =  Y =  Y =  Y =  Y =  Y =
+  Permitted turns
+  Protected turns  Pedestrian  Cycle length, C = _____ s
+
+Notes
+
+1. RT volumes, as shown, exclude RTOR.
+2. Approach pedestrian and bicycle volumes are those that conflict with right turns from the subject approach.
+3. Refer to Equation 16-2.
+
+  For percent heavy vehicles and peak-hour factor, an average value for an entire
+approach can be used for all movements. For arrival type, either a value for P or the
+designation of type (1 to 6) is entered. Each approach movement is identified as pretimed
+(P) or actuated (A), and start-up lost time (l1) and extension time (e) for each approach
+movement are entered. For pedestrians and bicycles, the volumes are those occurring in
+the crosswalk that conflicts with right turns from the subject approach.
+
+  16-29  Chapter 16 - Signalized Intersections
+  Applications
+Highway Capacity Manual 2000
+
+Appendix B provides  When data for some of these variables are not available or forecasts cannot be
+recommendations for  adequately established, default values may be used. Guidelines on the use of defaults are
+establishing signal  presented in Chapter 10 of this manual.
+design
+  The sequence of signal phases is diagrammed in the eight boxes at the bottom of the
+  input worksheet. Each box is used to show a single phase or subphase during which the
+  allowable movements remain constant. For each phase, the actual green time (G) and the
+  actual yellow-plus-all-red time (Y) are shown. For most cases, an assumed or existing
+  signal design will be used. For some analyses, however, the signal timing and phasing
+  will not be known. Setting timing and phasing for the purposes of analysis will influence
+  the determination of lane groups. This portion of the signal design may be established on
+  the basis of state or local practice. For additional suggestions on establishing the type of
+  control and phase sequence, Appendix B should be consulted.
+
+  The timing of the signal will not be known when signal timing design is to be
+  established. It may or may not be known when actuated signals are in place, depending
+  on whether average phase durations were observed in the field. Estimates, however,
+  cannot be computed until the first half of the capacity analysis module is complete. Other
+  computations may proceed without this information. Appendix B contains
+  recommendations for establishing phase times based on an assumed signal type and phase
+  sequence and for estimating the average phase lengths of actuated signals when
+  observations are not available.
+
+  The establishment of signal timing will usually involve iterative computations. It is
+  preferable, therefore, to specify a complete signal timing for analysis using trial-and-error
+  computations to determine an appropriate final timing. As an alternative, the timing plan
+  may be synthesized using the planning application presented in Chapter 10 of this
+  manual. If a fully implementable timing plan is required, a variety of signal timing
+  optimization models are commercially available.
+
+  Volume Adjustment and Saturation Flow Rate
+
+  The second major analysis module focuses on adjustment of hourly movement
+  volumes to flow rates for a peak 15-min period within the hour and on establishment of
+  lane groups. A worksheet for designating lane groups, making volume adjustments, and
+  computing saturation flow rate is shown in Exhibit 16-21. For this worksheet, the hourly
+  volume (V) for each approach and movement is taken from the Input Worksheet and the
+  flow rate, vp, is computed. Lane groups are established and associated flow rates and
+  turn proportions are noted. For saturation flow rate, adjustment factors are identified and
+  an adjusted saturation flow is computed for each lane group.
+
+  Capacity Analysis
+
+  In the Capacity and LOS Worksheet (Exhibit 16-22), information and computational
+  results from the input, volume adjustment, and saturation flow rate modules are combined
+  to compute the capacity and v/c of each lane group and the delay and LOS for each lane
+  group and approach and for the intersection as a whole.
+
+  The top portion of the worksheet is used to compute capacities. Phase numbers and
+  types are entered in the first two rows. Phase type is included to accommodate left turns
+  that have both protected and permitted phases. In this case, the protected phase will be
+  the primary phase and the permitted phase will be the secondary phase. The primary and
+  secondary phases must be represented by separate column entries on this worksheet, and
+  certain quantities, such as lane group capacity, must be computed as the sum of the
+  primary and secondary phase values in the lower portion of the worksheet. Primary
+  phase entries should be designated P in this row. Secondary phase entries should be
+  designated S.
+
+  The flow rate for each lane group is obtained from the Volume Adjustment and
+  Saturation Flow Rate Worksheet and entered in this worksheet. In the case of lane groups
+  with both protected and permitted phases, for computation of the critical v/c ratio, Xc, it
+
+Chapter 16 - Signalized Intersections  16-30
+Applications
+  Highway Capacity Manual 2000
+
+is necessary to apportion the total flow rate between the primary and secondary phases. It
+is appropriate to consider whichever phase is displayed first to be fully saturated by left-
+turn traffic and to apply any residual flow to the phase that is displayed second.
+
+  EXHIBIT 16-21. VOLUME ADJUSTMENT AND SATURATION FLOW RATE WORKSHEET
+
+  VOLUME ADJUSTMENT AND SATURATION FLOW RATE WORKSHEET
+General Information
+
+Project Description______________________________________________________________________________________
+
+Volume Adjustment
+
+  EB  WB  NB  SB
+
+  LT TH RT LT TH RT LT TH RT LT TH RT
+
+Volume, V (veh/h)
+Peak-hour factor, PHF
+Adjusted flow rate, vp = V/PHF (veh/h)
+Lane group
+
+Adjusted flow rate in lane group, v (veh/h)
+
+Proportion1 of LT or RT (PLT or PRT)  -  -  -  -
+
+Saturation Flow Rate (see Exhibit 16-7 to determine adjustment factors)
+
+Base saturation flow, so (pc/h/ln)
+
+Number of lanes, N
+
+Lane width adjustment factor, fw
+
+Heavy-vehicle adjustment factor, fHV
+
+Grade adjustment factor, fg
+
+Parking adjustment factor, fp
+
+Bus blockage adjustment factor, fbb
+
+Area type adjustment factor, fa
+
+Lane utilization adjustment factor, fLU
+
+Left-turn adjustment factor, fLT
+
+Right-turn adjustment factor, fRT
+
+Left-turn ped/bike adjustment factor, fLpb
+
+Right-turn ped/bike adjustment factor, fRpb
+
+Adjusted saturation flow, s (veh/h)
+s = so N fw fHV fg fp fbb fa fLU fLT fRT fLpb fRpb
+Notes
+
+1. PLT = 1.000 for exclusive left-turn lanes, and PRT = 1.000 for exclusive right-turn lanes. Otherwise, they are equal to the proportions
+  of turning volumes in the lane group.
+
+  16-31  Chapter 16 - Signalized Intersections
+  Applications
+Highway Capacity Manual 2000
+
+  EXHIBIT 16-22. CAPACITY AND LOS WORKSHEET
+
+  CAPACITY AND LOS WORKSHEET
+
+  General information
+
+  Project Description _____________________________________________________________________________________
+
+  Capacity Analysis
+
+  Phase number
+  Phase type
+
+  Lane group
+
+  Adjusted flow rate, v (veh/h)
+
+  Saturation flow rate, s (veh/h)
+
+  Lost time, tL (s), tL = l1 + Y – e
+  Effective green time, g (s), g = G + Y – tL
+  Green ratio, g/C
+  Lane group capacity,1 c = s(g/C), (veh/h)
+
+  v/c ratio, X
+
+  Flow ratio, v/s
+
+  Critical lane group/phase (√)
+  Sum of flow ratios for critical lane groups, Yc
+  Yc = ∑ (critical lane groups, v/s)
+  Total lost time per cycle, L (s)
+
+  Critical flow rate to capacity ratio, Xc
+  Xc = (Yc)(C)/(C – L)
+
+  Lane Group Capacity, Control Delay, and LOS Determination
+
+  EB  WB  NB  SB
+
+  Lane group
+
+  Adjusted flow rate,2 v (veh/h)
+
+  Lane group capacity,2 c (veh/h)
+
+  v/c ratio,2 X = v/c
+
+  Total green ratio,2 g/C
+  Uniform delay, d1 = 0.50 C [1 – (g/C)]2 1 – [min(1, X)g/C] (s/veh)
+
+  Incremental delay calibration,3 k
+
+  Incremental delay,4 d2
+  d2 = 900T[(X – 1) + (X – 1)2 + 8kIX cT ] (s/veh)
+  Initial queue delay, d3 (s/veh) (Appendix F)
+
+  Uniform delay, d1 (s/veh) (Appendix F)
+
+  Progression adjustment factor, PF
+
+  Delay, d = d1(PF) + d2 + d3 (s/veh)
+
+  LOS by lane group (Exhibit 16-2)
+  Delay by approach, dA = ∑(d)(v) ∑v (s/veh)
+  LOS by approach (Exhibit 16-2)
+
+  Approach flow rate, vA (veh/h)  (s/veh)  Intersection LOS (Exhibit 16-2)
+  Intersection delay, dI = ∑(dA)(vA)
+
+  ∑vA
+
+  Notes
+
+  1. For permitted left turns, the minimum capacity is (1 + PL)(3600/C).
+  2. Primary and secondary phase parameters are summed to obtain lane group parameters.
+  3. For pretimed or nonactuated signals, k = 0.5. Otherwise, refer to Exhibit 16-13.
+  4. T = analysis duration (h); typically T = 0.25, which is for the analysis duration of 15 min.
+
+  I = upstream filtering metering adjustment factor; I = 1 for isolated intersections.
+
+Effective green time  The adjusted saturation flow rate for each lane group is obtained directly from the
+defined  Volume Adjustment and Saturation Flow Rate Worksheet. The flow ratio for each lane
+  group is computed as v/s and entered in columns representing primary and secondary
+  phases.
+
+  The next step is to calculate movement lost time for all primary and secondary
+  phases using the start-up lost time (l1), extension time (e), and yellow-plus-all-red time
+
+Chapter 16 - Signalized Intersections  16-32
+Applications
+  Highway Capacity Manual 2000
+
+(Y). Effective green times are calculated using actual green time (G) and movement lost  Minimum capacity for
+time (tL). Then the g/C ratio for each lane group, the effective green time divided by the  permitted left turns
+cycle length, is computed and used to compute lane group capacity. Effective green
+times can be taken as equal to the actual green time plus the change-and-clearance  For an analysis of an initial
+interval minus the lost time for the movement.  queue, see Appendix F
+  See Appendix E for analysis
+  The capacity of each lane group is computed from Equation 16-6 as the saturation  of protected-plus-permitted
+flow rate times the green ratio. A minimum capacity value based on sneakers per cycle  phasing
+must be imposed as a practical matter for all permitted left-turning movements. This
+value may be computed as indicated on the worksheet.
+
+  The v/c ratio (X) for each lane group is computed. At this point in the computations,
+critical lane groups and lost time per cycle may be identified according to the guidelines
+discussed. A critical lane group is defined as the lane group with the highest flow ratio in
+each phase or set of phases. When overlapping phases exist, all possible combinations of
+critical lane groups must be examined for the combination producing the highest sum of
+flow ratios. Critical lane groups are identified by a check mark. The flow ratios for
+critical lane groups are summed. The critical v/c ratio, Xc, which indicates the degree of
+saturation associated with the geometrics, volumes, and signal phasing, is then computed.
+
+Delay and Level of Service
+
+  The LOS module combines the results of the volume adjustment, saturation flow
+rate, and capacity analysis modules to find the average control delay per vehicle in each
+lane group. LOS is directly related to delay and is found from Exhibit 16-2. The
+worksheet for this module is also shown in Exhibit 16-22. Lane group capacities and
+flow rates are the sum of primary and secondary phases from the capacity analysis
+section.
+
+  Delay is found from Equations 16-9 through 16-14. The worksheet is designed for
+computation of the uniform and incremental delay terms separately. The uniform delay is
+multiplied by the progression adjustment factor (PF) to account for the impact of
+progression. The value of PF is obtained from Exhibit 16-12. If a measured or estimated
+value of P was used in lieu of the arrival type in the computation of PF, the arrival type
+may be determined from Exhibit 16-11. In this case, the platoon ratio, Rp, must first be
+estimated by Rp = PC/g.
+
+  When no residual queue exists from a previous time period, the initial queue delay
+term, d3, is equal to zero. When an initial queue of vehicles exists at the start of the
+analysis period (observed at the beginning of the red phase), the procedures in Appendix
+F are used to modify the calculation of d1, to calculate d3, and to determine delay and
+LOS.
+
+  For exclusive left-turn lane groups with both protected and permitted phases, the
+supplemental worksheet presented in Exhibit 16-23 is used for calculation of uniform
+delay. Discussions of this procedure are also included in Appendix E.
+
+  The second term of the delay equation accounts for the incremental delay, that is, the
+delay over and above uniform delay due to random arrivals rather than uniform arrivals
+and those due to cycles that fail. It is based on the v/c ratio (X) and the capacity for the
+lane group (c). The capacity for each lane group is taken from the top part of the
+Capacity and LOS Worksheet.
+
+  The incremental delay calibration factor (k) is obtained from Exhibit 16-13. This
+value is a function of the controller type and degree of saturation. For isolated
+intersections, the upstream filtering or metering adjustment factor (I) is set equal to 1.0.
+Refer to Chapter 15 for further information on this factor. The second-term delay is
+computed using Equation 16-12.
+
+16-33  Chapter 16 - Signalized Intersections
+  Applications
+Highway Capacity Manual 2000
+
+  EXHIBIT 16-23. SUPPLEMENTAL UNIFORM DELAY WORKSHEET FOR LEFT TURNS FROM EXCLUSIVE
+  LANES WITH PROTECTED AND PERMITTED PHASES
+
+  SUPPLEMENTAL UNIFORM DELAY WORKSHEET FOR LEFT TURNS FROM EXCLUSIVE
+  LANES WITH PROTECTED AND PERMITTED PHASES
+
+  General Information
+
+  Project Description ____________________________________________________________________________________
+
+  v/c Ratio Computation
+
+  EB  WB  NB  SB
+
+  Cycle length, C (s)
+
+  Protected phase eff. green interval, g (s)
+
+  Opposing queue effective green interval, gq (s)
+  Unopposed green interval, gu (s)
+  Red time, r (s)
+
+  r = C – g – gq – gu
+
+  Arrival rate, qa (veh/s)
+  qa = v 3600 * max[X, 1.0]
+
+  Protected phase departure rate, sp (veh/s)
+  sp = s 3600
+  Permitted phase departure rate, ss (veh/s)
+  ss = s(gq + gu) (gu * 3600)
+  If leading left (protected + permitted)
+  v/c ratio, Xperm = qa(gq + gu) ss gu
+  If lagging left (permitted + protected)
+  v/c ratio, Xperm = ss g qa(r + gq + gu) u
+  If leading left (protected + permitted)
+  v/c ratio, Xprot = qa(r + g) sp g
+  If lagging left (permitted + protected)
+
+  v/c ratio, Xprot is N/A
+
+  Uniform Queue Size and Delay Computations
+
+  Queue at beginning of green arrow, Qa
+  Queue at beginning of unsaturated green, Qu
+  Residual queue, Qr
+  Uniform delay, d1
+
+  Uniform Queue Size and Delay Equations
+
+  Case  Qa  Qu  Qr  d1
+  qar  qagq  0  [0.50/(q aC)][rQ a + Qa2/(sp– q a) + gqQu + Qu2/(ss – qa)]
+  If Xperm ≤ 1.0 & Xprot ≤ 1.0 1  qar  Qr + qagq  [0.50/(qaC)][rQ a + g(Qa + Qr) + gq(Qr + Qu) + Qu2/(ss – qa)]
+  If Xperm ≤ 1.0 & Xprot > 1.0 2  Qr + qar  qagq  Qa – g(sp – qa)  [0.50/(q aC)][g qQu + gu(Qu + Qr) + r(Q r + Qa) + Qa2/(sp– qa)]
+  If Xperm > 1.0 & Xprot ≤ 1.0 3  0  qa(r + gq)  Qu – gu(ss – qa)  [0.50/(q aC)][(r + gq)Qu + Qu2/(ss – q a )]
+  If Xperm ≤ 1.0 (lagging lefts) 4  qa(r + gq)  [0.50/(q aC)][(r + gq)Qu + gu(Qu + Qa) + Qa2/(sp – q a)]
+  If Xperm > 1.0 (lagging lefts) 5  Qu – g u(ss – qa )  0
+
+  0
+
+  Delay and LOS are found by multiplying the uniform delay by the progression factor
+and adding the result to the incremental delay and initial queue delay, in accordance with
+Equation 16-9. The LOS corresponding to this delay, taken from Exhibit 16-2, is entered
+on the Capacity and LOS Worksheet.
+
+  In the event that the analysis period is oversaturated or when there is a final residual
+queue at the end of the analysis period, additional analysis periods should be studied until
+the residual queue no longer occurs.
+
+Chapter 16 - Signalized Intersections  16-34
+Applications
+  Highway Capacity Manual 2000
+
+  The average delay per vehicle is found for each approach by adding the product of
+the lane group flow rate and the delay for each lane group on the approach and dividing
+by the total approach flow rate. LOS is determined from Exhibit 16-2.
+
+  The average control delay per vehicle for the intersection as a whole is found by
+adding the product of the approach flow rate and the approach delay for all approaches
+and dividing the sum by the total intersection flow rate. This weighted-average delay is
+entered at the bottom of the Capacity and LOS Worksheet. The overall intersection LOS
+is found from Exhibit 16-2.
+
+INTERPRETATION OF RESULTS
+
+  The computations discussed in the previous section result in an estimation of the
+average delay per vehicle in each lane group for each approach and for the intersection as
+a whole. LOS is directly related to delay values and is assigned on that basis. LOS is a
+measure of the acceptability of delay levels to motorists at a given intersection. When
+delays are unacceptable, the causes of delay should be carefully examined. Although the
+discussion below is clearly not exhaustive, some of the more common situations are as
+follows.
+
+  1. LOS is an indication of the general acceptability of delay to drivers. It should be
+noted that this is somewhat subjective: what might be acceptable in a large city is not
+necessarily acceptable in a smaller city or rural area.
+
+  2. When delay levels are acceptable for the intersection as a whole but are
+unacceptable for certain lane groups, the phase plan, allocation of green time, or both
+might be examined to provide for more efficient handling of the disadvantaged movement
+or movements.
+
+  3. When delay levels are unacceptable but v/c ratios are relatively low, the cycle
+length may be too long for prevailing conditions, the phase plan may be inefficient, or
+both. It should be noted, however, that when signals are part of a coordinated system, the
+cycle length at individual intersections is determined by system considerations, and
+alterations at isolated locations may not be practical.
+
+  4. When both delay levels and v/c ratios are unacceptable, the situation is critical.
+Delay is already high, and demand is near or over capacity. In such situations, the delay
+may increase rapidly with small changes in demand. The full range of potential
+geometric and signal design improvements should be considered in the search for
+improvements.
+
+  The following point must be emphasized: unacceptable delay can exist where
+capacity is a problem as well as in cases in which it is adequate. Further, acceptable
+delay levels do not automatically ensure that capacity is sufficient. Delay and LOS, like
+capacity, are complex variables influenced by a wide range of traffic, roadway, and
+signalization conditions. The operational analysis techniques presented here are useful in
+estimating the performance characteristics of the intersection and in providing basic
+insights into probable causal factors.
+
+  The determination of LOS is based on average control delay. It is possible,
+however, for average delay to decrease with increasing volumes if the volume increases
+occur in movements with less than the average delay. Even with increases in more than
+one movement on an approach, the net effect can still be a decrease in average delay if
+the movements with less than average delay increase sufficiently.
+
+  One way to avoid this anomaly is to consider the change in mean delay on a lane-
+group-by-lane-group basis rather than by averaging delay over the entire intersection.
+Adding traffic to a particular lane group will always increase the delay for that lane group
+(as long as all other factors remain unchanged).
+
+  These procedures do not, however, account for all possible conditions. The
+influences of such characteristics as specific curb-corner radii, intersection angle,
+combinations of grades on various approaches, odd geometric features (offset
+intersections, narrowing on the departure lanes, etc.), and other unusual site-specific
+
+16-35  Chapter 16 - Signalized Intersections
+  Applications
+Highway Capacity Manual 2000
+
+The analysis requires  conditions are not addressed in the methodology. Field studies may be conducted in such
+use of demand volumes,  cases to determine delay directly (see Appendix A) and or to calibrate the prevailing
+not departure volumes,  saturation flow rate (see Appendix H).
+to make a proper
+estimate  At the completion of a capacity calculation, the characteristics of the intersection
+  have been defined. These characteristics must be evaluated in their own right as well as
+  in conjunction with the delays and LOS resulting from the delay and LOS calculation.
+  Some key factors to consider when the results of capacity computations are assessed are
+  identified in the following text. A critical v/c ratio of greater than 1.0 indicates that the
+  signal and geometric design cannot accommodate the combination of critical flows at the
+  intersection. The given demand in these movements exceeds the capacity of the
+  intersection to handle them. The condition may be ameliorated by increased cycle length,
+  changes in the phasing plan, and basic changes in geometrics.
+
+  Computations should be conducted using arrival volumes. When the v/c ratios are
+  less than 1.0, arrival and departure volumes are the same. When v/c ratios are greater
+  than 1.0, either for an individual lane group or for the overall intersection, departure
+  volumes are less than arrival volumes. By definition, future volume forecasts are also
+  arrival volumes. When counts of actual departure volumes are used in analysis, the actual
+  v/c ratio cannot be greater than 1.0. If v/c ratios greater than 1.0 persist for actual
+  departure volumes, it is an indication that the intersection operates more efficiently than
+  anticipated by these computational techniques or that the saturation flow rates used in the
+  calculations are lower than those actually experienced in the field.
+
+  When the critical v/c ratio is acceptable but the v/c ratios for critical lane groups vary
+  widely, the green-time allocation should be reexamined, because disproportionate
+  distribution of available green is indicated. If permitted left turns result in extreme
+  reductions in saturation flow rate for applicable lane groups, protected phasing might be
+  considered. If the critical v/c ratio exceeds 1.0, it is unlikely that the existing geometric
+  and signal design can accommodate the demand. Changes in either or both should be
+  considered. When v/c ratios are unacceptable and signal phasing already includes
+  protective phasing for significant turning movements, it is probable that geometric
+  changes will be required to ameliorate the condition.
+
+  The capacity of an intersection is a complex variable depending on a large number of
+  prevailing traffic, roadway, and signalization conditions. Suggestions on interpretation
+  are not meant to be exhaustive or complete but merely to point out some of the more
+  common problems that can be identified from the Capacity and LOS Worksheet results.
+
+  ANALYSIS TOOLS
+
+  The worksheets shown in Exhibits 16-20, 16-21, and 16-22 and provided in
+  Appendix I can be used to perform Operational (LOS), Design (vp), Design (Sig), and
+  Design (Geom) analysis types. The worksheets shown in Chapter 10, Appendix B, can
+  be used to perform Planning (Xcm) applications.
+
+Chapter 16 - Signalized Intersections  16-36
+Applications
+  IV. EXAMPLE PROBLEMS  Highway Capacity Manual 2000
+
+Problem No  Description  Application
+  1  Find LOS of signalized intersection  Operational (LOS)
+  2  Find LOS of signalized intersection  Operational (LOS)
+  3  Find LOS of signalized intersection  Operational (LOS)
+  4  Find LOS of proposed improvements on existing intersection
+  5  Find capacity of intersection with projected volumes  Planning (Xcm)
+  6  Find maximum service volume of approach for desired LOS  Planning (Xcm)
+
+  Design (vp)
+
+  16-37  Chapter 16 - Signalized Intersections
+  Example Problems
+Highway Capacity Manual 2000
+
+  EXAMPLE PROBLEM 1
+
+The Intersection The intersection of Third Avenue (NB/SB) and Main Street (EB/WB)
+is located in the central business district (CBD) of a small urban area. Intersection
+geometry and flow characteristics are shown on the Input Worksheet.
+
+The Question What are the delay and peak-hour LOS of this intersection?
+
+The Facts  √ Third Avenue has two lanes, one in each direction,
+  √ EB and WB HV = 5 percent,  √ Main Street has four lanes, two in each direction,
+  √ NB and SB HV = 8 percent,  √ No parking at intersection,
+  √ PHF = 0.90,  √ Pedestrian volume = 100 p/h, all approaches,
+  √ Two-phase signal,  √ Bicycle volume = 20 bicycles/h, all approaches,
+  √ NB-SB green = 36 s,  √ Movement lost time = 4 s, and
+  √ EB-WB green = 26 s,  √ Level terrain.
+  √ Yellow = 4 s,
+
+Comments
+
+  √ Assume crosswalk width = 3.0 m for all approaches,
+  √ Assume base saturation flow rate = 1,900 pc/h/ln,
+  √ Assume ET = 2.0,
+  √ No buses, and
+  √ 70.0-s cycle length, with green times given.
+
+Steps  100 p * 1h * 70 s = 1. 944 p
+1. Pedestrians/cycle.  h 3,600 s
+
+2. Minimum effective green time  L
+  required for pedestrians (use  Gp = 3.2 + 1.2 + 0.27Nped
+  Equation 16-2).
+  9.0
+3. Compare minimum effective  Gp (Main) = 3.2 + + 0.27(1.944) = 11.2 s
+  green time required for
+  pedestrians with actual  1.2
+  effective green.
+  Gp (Third) = 3.2 +  13.2  + 0.27(1.944) = 14.7 s
+4. Proportions of left and right
+  turns.  1.2
+
+5. Lane width adjustment factor  Gp (Main) = 26 s, which is >11.2 s
+  (use Exhibit 16-7).  Gp (Third) = 36 s, which is >14.7 s
+
+6. Heavy-vehicle adjustment  Proportions of left- and right-turn traffic are found by
+  factor (use Exhibit 16-7).  dividing the appropriate turning volumes by the total
+  lane group volume.
+7. Percent grade adjustment  PLT (EB) = 65 = 0.090
+  factor (use Exhibit 16-7).
+  65 + 620 + 35
+  fw = 1+ (W − 3.6)
+
+  9
+  fw (EB) = 1+ (3. 3 − 3.6) = 0. 967
+
+  9
+
+  fHV = 100
+  100 + % HV(ET − 1)
+
+  fHV (EB) = 100 = 0. 952
+  100 + 5(2.0 − 1)
+
+  0% grade, fg = 1.000
+
+Chapter 16 - Signalized Intersections  16-38
+Example Problems
+  Highway Capacity Manual 2000
+
+8. Parking adjustment factor  No parking maneuvers, fp = 1.000
+  (use Exhibit 16-7).  No buses stopping, fbb = 1.000
+  For CBD, fa = 0.900
+9. Bus blockage adjustment
+  factor (use Exhibit 16-7).  Refer to Exhibit 10-23. This factor is applied to
+  establish the conditions in the worst lane within each
+10. Area type adjustment factor  lane group. Otherwise, the results would reflect the
+  (use Exhibit 16-7).  average of all lanes of the defined lane groups. Use
+  fLU = 0.950 for EB and WB approaches, and fLU =
+11. Lane utilization adjustment  1.000 for NB and SB approaches.
+  factor (use Exhibit 16-7).
+  The left turn is permitted, hence a special procedure
+12. Left-turn adjustment factor.  is needed. The EB and WB left turns are opposed
+  by multilane approaches. The supplemental
+13. Right-turn adjustment factor  worksheet for multilane approaches is used. The
+  (use Exhibit 16-7).  NB and SB left turns are opposed by single-lane
+  approaches. The supplemental worksheet for a
+14. Left-turn pedestrian/bicycle  single-lane approach is used.
+  adjustment factor.
+  For NB and SB single-lane approaches: fRT = 1.0 –
+15. Right-turn pedestrian/bicycle  0.135PRT
+  adjustment factor.  For EB and WB shared-lane approaches: fRT = 1.0–
+  0.150PRT
+16. Saturation flow.
+  Supplemental worksheet for pedestrian-bicycle
+17. Lane group capacity.  effects is used.
+
+18. v/c ratio.  Supplemental worksheet for pedestrian-bicycle
+19. Determine critical lane group  effects is used.
+  s = so N fw fHV fg fp fbb fLU fa fLT fRT fLpb fRpb
+  in each timing phase.
+  s(EB) = 1900 * 2 * 0.967 * 0.952 * 1.000 * 1.000 *
+20. Flow ratio of critical lane  1.000 * 0.900 * 0.950 * 0.716 * 0.993 * 0.997 * 0.992
+  groups.  = 2103 veh/h
+
+21. Sum of critical flow ratios.  c = s(g/C)
+22. Critical flow rate to capacity
+  c(EB) = 2103(0.371) = 780 veh/h
+  ratio.  v/c(EB) = 800 = 1.026
+
+  780
+
+  The lane group with the highest v/c ratio in a phase
+
+  is considered the critical lane group. In this case,
+
+  EB and SB lane groups are critical in Phases 1 and
+
+  2, respectively.
+
+  v/s(EB) = 800 = 0.380
+  2103
+
+  v/s(SB) = 667 = 0.410
+  1625
+
+  Yc = 0.380 + 0.410 = 0.790
+
+  Yc * C
+  Xc = C – L
+
+  Xc =  0.790(70.0)  = 0.892
+
+  70.0 – 8
+
+  16-39  Chapter 16 - Signalized Intersections
+  Example Problems
+Highway Capacity Manual 2000
+
+23. Uniform delay.   g2
+  0. 50C1− 
+24. Incremental delay.   C
+  d1 =  g 
+25. Progression adjustment  1− min(1, X) 
+  factor (use Exhibit 16-12).    C
+
+26. Lane group delay.  d1(EB) =  0. 50(70.0)(1− 0. 371)2  = 22.015 s/veh
+27. Intersection delay.
+  1− 0. 371(1.0)
+28. LOS by lane group,
+  approach, and intersection.  d2 = 900T[(X − 1) + (...) ]  (...)] =
+  d2 (EB) = 900(0. 25)[(1.026 − 1) +
+
+  39.011 s/veh
+
+  PF (EB) = 0.926
+
+  d = d1PF + d2 + d3
+  d (EB) = 22.015(0.926) + 39.011 + 0 = 59.4 s/veh
+  dI = ∑ (dA )(vA )
+
+  ∑ vA
+  dI = (59.4 * 800) + (31.0 * 833) + (14.4 * 466) + (21.9 * 667)
+
+  (800 + 833 + 466 + 667)
+
+  = 34.2 s/veh
+
+  LOS (EB lane group) = E
+  LOS (EB approach) = E
+  LOS Intersection = C
+
+  The calculation results are summarized as follows,
+
+Direction/ v/c g/C  Unif Progr Lane Cal  Incr  Lane  Lane Delay LOS by
+  Grp by App App
+  LnGrp  Ratio Ratio Delay d1 Fact PF Grp Term k Delay d2 Grp  LOS
+
+  Cap  Delay
+
+  EB/LTR 1.026 0.371 22.015 0.926 780  0.5  39.011 59.4  E  59.4  E
+
+  WB/LTR 0.842 0.371 20.138 1.111 989  0.5  8.647 31.0  C  31.0  C
+
+  NB/LTR 0.561 0.514 11.617 1.000 830  0.5  2.734 14.4  B  14.4  B
+
+  SB/LTR 0.799 0.514 14.028 1.000 835  0.5  7.882 21.9  C  21.9  C
+
+  Intersection Delay = 34.2 s/veh  Intersection LOS = C
+
+Alternatives
+
+  Two alternatives are considered: a new lane utilization adjustment factor and new
+
+signal timing.
+  The purpose of the lane utilization adjustment factor (fLU) is to account for uneven
+
+distribution of traffic in multilane roadways, and it is reflected in saturation flow rates.
+
+  Typically, traffic volume is evenly distributed between lanes at high v/c ratios, and the
+lane utilization adjustment factor is close to 1.000. In this analysis, fLU is only applicable to
+Main Street because it has multiple lanes. v/c ratios of 1.026 and 0.842 are considered
+high, and it is assumed that traffic volume is evenly distributed, with fLU = 1.000.
+
+  The performance is reassessed using fLU = 1.000 and the results are summarized as
+follows.
+
+Direction/  v/c g/C Unif  Progr  Ln Grp Cal Incr  Ln Grp  Ln Grp  Delay  LOS
+ Ln Grp  Ratio Ratio Delay d1  Factor  Capacity Term k Delay d2  Delay  LOS  by App  by App
+
+ EB/LTR  0.945 0.371 21.323  PF  847 0.5  20.134 39.9  D  39.9  D
+WB/LTR  0.798 0.371 19.671  1044 0.5  28.2  C
+ NB/LTR  0.561 0.514 11.617  0.926  830 0.5  6.365 28.2  C  14.4  B
+ SB/LTR  0.799 0.514 14.028  835 0.5  21.9  C
+  Intersection Delay = 27.7 s/veh  1.111  2.734 14.4  B
+
+  1.000  7.882 21.9  C
+
+  1.000
+
+  Intersection LOS = C
+
+Chapter 16 - Signalized Intersections  16-40
+Example Problems
+  Highway Capacity Manual 2000
+
+  The assumption of fLU = 1.000 has reduced the delay from 34.2 s/veh to 27.7 s/veh.
+  The other alternative is to optimize the operation by reallocating green times without
+changing fLU.
+  As shown in the calculation results, currently the v/c ratios between critical lane
+groups are not balanced. The v/c ratio of the EB lane group is much higher than that of
+the SB lane group. This imbalance results in much higher delay experienced by one
+critical lane group than by the other.
+  A new signal timing is introduced by reallocating 1.0 s to the east-west phase from the
+north-south phase. The resulting signal timing is 27.0 s for the east-west phase and
+35.0 s for the north-south phase.
+  The intersection operation is reassessed with the new timing, and the results are
+summarized as follows.
+
+Direction/  v/c g/C Unif Progr  Ln Grp  Cal  Incr Ln Grp Ln Grp  Delay  LOS by
+ Ln Grp  Ratio Ratio Delay d1 Factor  Cap  Term k  Delay Delay LOS  by App  App
+
+ EB/LTR  PF  823  0.5  d2  47.9  47.9
+WB/LTR  1032  0.5  28.1  28.1
+ NB/LTR  0.972  0.386  21.118  0.926  806  0.5  25.265 44.8  D  17.3  17.3
+ SB/LTR  0.807  0.386  19.165  1.111  812  0.5  34.0  34.0
+  0.578  0.500  12.307  1.000  6.766 28.1  C
+  0.821  0.500  14.843  1.000
+  3.011 15.3  B
+
+  9.132 24.0  C
+
+  Intersection Delay = 29.8 s/veh  Intersection LOS = C
+
+  After reallocation of green times, v/c ratios for critical lane groups are more balanced,
+and the overall intersection performance (in terms of delay) has improved from 34.2 s/veh
+to 29.8 s/veh.
+
+  16-41  Chapter 16 - Signalized Intersections
+  Example Problems
+Highway Capacity Manual 2000
+
+Example Problem 1  INPUT WORKSHEET
+
+  General Information  Site Information
+
+  Analyst  _____W__LL________________________  Intersection  ___T_h_ir_d_A_v_e_n_u_e_/M__a_in__S_t_r_e_et_______
+  Agency or Company  _____C_E_I________________________  Area Type
+  Date Performed  _____4_/_1_2_/9_9_____________________  Jurisdiction  "X CBD  " Other
+  Analysis Time Period  _____4_-_6__P_M_____________________  Analysis Year
+  _____________________________
+
+  _________19__9_9_________________
+
+  Intersection Geometry
+
+  grade= 0% 4.5 m  Third Avenue  = Pedestrian Button
+
+  Street  Show North Arrow  = Lane Width
+  = Through
+  grade= 0%  = Right
+  = Left
+  100(20)  100(20)  100(20)  3.3 m  = Through + Right
+  100(20)  3.3 m  = Left + Through
+  = Left + Right
+  3.3 m  Main Street
+  3.3 m
+  Street
+  grade= 0%
+
+  = Left + Through + Right
+
+  4.5 m grade= 0%
+
+  Volume and Timing Input
+
+  LT  EB  WB  NB  SB
+  TH RT1  LT TH RT1  LT TH RT1  LT TH RT1
+  Volume, V (veh/h)  65  620 35  30 700 20  30 370 20  40 510 50
+  55  55 5  88 8  88 8
+  % heavy vehicles, % HV  5  0.90
+  P  0.90  0.90  0.90
+  Peak-hour factor, PHF  P  P  P
+  4
+  Pretimed (P) or actuated (A)  100  2  3  3
+  20  100  100  100
+  Start-up lost time, l1 (s)  N  20  20  20
+  Extension of effective green time, e (s)  0  N  N  N
+  0  0  0  0
+  Arrival type, AT  11.2  0  0  0
+  11.2  14.7  14.7
+  Approach pedestrian volume,2 vped (p/h)
+  Approach bicycle volume,2 vbic (bicycles/h)
+  Parking (Y or N)
+
+  Parking maneuvers, Nm (maneuvers/h)
+  Bus stopping, NB (buses/h)
+  Min. timing for pedestrians,3 Gp (s)
+
+  Signal Phasing Plan
+
+  D  Ø1  Ø2  Ø3  Ø4  Ø5  Ø6  Ø7  Ø8
+  I  G = 26.0
+  A  Y = 4.0  G = 36.0 G =  G =  G =  G =  G =  G =
+  G  Y = 4.0  Y =  Y =  Y =  Y =  Y =  Y =
+  R
+  A
+  M
+  Timing
+
+  Protected turns  Permitted turns  Cycle length, C = __7_0_.0_ s
+  Pedestrian
+
+  Notes
+
+  1. RT volumes, as shown, exclude RTOR.
+  2. Approach pedestrian and bicycle volumes are those that conflict with right turns from the subject approach.
+  3. Refer to Equation 16-2.
+
+Chapter 16 - Signalized Intersections  16-42
+Example Problems
+  Highway Capacity Manual 2000
+
+  Example Problem 1
+
+  VOLUME ADJUSTMENT AND SATURATION FLOW RATE WORKSHEET
+General Information
+
+Project Description_____E_x_a_m_p_le__P_ro_b_l_e_m__1 ___________________________________________________________________
+
+Volume Adjustment
+
+  EB  WB  NB  SB
+  LT TH RT
+  LT TH RT LT TH RT LT TH RT  40 510 50
+
+Volume, V (veh/h)  65 620 35 30 700 20 30 370 20  0.90
+Peak-hour factor, PHF  44 567 56
+Adjusted flow rate, vp = V/PHF (veh/h)  0.90  0.90  0.90
+Lane group
+  72 689 39 33 778 22 33 411 22
+
+Adjusted flow rate in lane group, v (veh/h)  800  833  466  667
+
+Proportion1 of LT or RT (PLT or PRT)  0.090 - 0.049 0.040 - 0.027 0.071 - 0.048 0.067 - 0.083
+
+Saturation Flow Rate (see Exhibit 16-7 to determine adjustment factors)
+
+Base saturation flow, so (pc/h/ln)  1900  1900  1900  1900
+
+Number of lanes, N  2  2  1  1
+
+Lane width adjustment factor, fw  0.967  0.967  1.100  1.100
+
+Heavy-vehicle adjustment factor, fHV  0.952  0.952  0.926  0.926
+
+Grade adjustment factor, fg  1.000  1.000  1.000  1.000
+
+Parking adjustment factor, fp  1.000  1.000  1.000  1.000
+
+Bus blockage adjustment factor, fbb  1.000  1.000  1.000  1.000
+
+Area type adjustment factor, fa  0.900  0.900  0.900  0.900
+
+Lane utilization adjustment factor, fLU  0.950  0.950  1.000  1.000
+
+Left-turn adjustment factor, fLT  0.716  0.901  0.937  0.951
+
+Right-turn adjustment factor, fRT  0.993  0.996  0.994  0.989
+
+Left-turn ped/bike adjustment factor, fLpb  0.997  0.998  0.999  0.998
+
+Right-turn ped/bike adjustment factor, fRpb  0.992  0.995  0.996  0.994
+
+Adjusted saturation flow, s (veh/h)  2103  2665  1614  1625
+
+s = so N fw fHV fg fp fbb fa fLU fLT fRT fLpb fRpb
+
+Notes
+
+1. PLT = 1.000 for exclusive left-turn lanes, and PRT = 1.000 for exclusive right-turn lanes. Otherwise, they are equal to the proportions
+  of turning volumes in the lane group.
+
+  16-43  Chapter 16 - Signalized Intersections
+  Example Problems
+Highway Capacity Manual 2000
+
+Example Problem 1  SUPPLEMENTAL WORKSHEET FOR PERMITTED LEFT TURNS
+  OPPOSED BY SINGLE-LANE APPROACH
+
+  General Information
+
+  Project Description ____E_x_a_m__p_le_P_r_o_b_le_m__1___________________________________________________________________
+
+  Input
+
+  EB  WB  NB  SB
+  Cycle length, C (s)
+  Total actual green time for LT lane group,1 G (s)  70.0  36.0
+  Effective permitted green time for LT lane group,1 g (s)  36.0
+  36.0  36.0
+  Opposing effective green time, go (s)  1
+  Number of lanes in LT lane group,2 N  36.0  44
+  0.067
+  Adjusted LT flow rate, vLT (veh/h)  36.0  0.071
+  Proportion of LT volume in LT lane group, PLT  466
+  Proportion of LT volume in opposing flow, PLTo  1  4
+  Adjusted flow rate for opposing approach, vo (veh/h)
+  Lost time for LT lane group, tL  33  0.856
+
+  0.071  9.061
+
+  0.067  1.00
+  12.505
+  667
+  0.486
+  4  8.328
+
+  Computation  23.495
+  0
+  LT volume per cycle, LTC = vLTC/3600  0.642  0.929
+  Opposing flow per lane, per cycle,  2.2
+  12.969  1.0
+  volc = voC/3600 (veh/C/ln)  0.059
+  1.00  0
+  Opposing platoon ratio, Rpo (refer to Exhibit 16-11)  14.779
+  0.951
+  gf = G[e–0.860(LTC0.629)] – tL  gf ≤ g (except exclusive  0.486
+  left-turn lanes)3  12.201
+
+  Opposing queue ratio, qro = max[1 – Rpo(go/C), 0]  21.221
+  0
+  gq = 4.943volc0.762qro1.061 – tL  gq ≤ g  0.933
+  2.7
+  gu = g – gq if gq ≥ gf, or  1.0
+  0.060
+  gu = g – gf if gq < gf  0
+
+  n = max[(gq – gf)/2, 0]  0.937
+
+  PTHo = 1 – PLTo
+
+  EL1 (refer to Exhibit C16-3)
+
+  EL2 = max[(1 – PTHon)/PLTo, 1.0]
+
+  fmin = 2(1 + PLT)/g
+
+  gdiff = max[gq – gf, 0] (except when left-turn volume
+  is 0)4
+
+  fLT = fm = [gf/g] +  gu/g  + gdiff/g
+  1 + PLT(EL1 – 1) 1 + PLT(EL2 – 1)
+  (fmin ≤ fm ≤ 1.00)
+
+  Notes
+
+  1. Refer to Exhibits C16-4, C16-5, C16-6, C16-7, and C16-8 for case-specific parameters and adjustment factors.
+  2. For exclusive left-turn lanes, N is equal to the number of exclusive left-turn lanes. For shared left-turn lanes, N is equal to the sum of
+
+  the shared left-turn, through, and shared right-turn (if one exists) lanes in that approach.
+  3. For exclusive left-turn lanes, gf = 0, and skip the next step. Lost time, tL, may not be applicable for protected-permitted case.
+  4. If the opposing left-turn volume is 0, then gdiff = 0.
+
+Chapter 16 - Signalized Intersections  16-44
+Example Problems
+  Highway Capacity Manual 2000
+
+  Example Problem 1
+
+  SUPPLEMENTAL WORKSHEET FOR PERMITTED LEFT TURNS
+  OPPOSED BY MULTILANE APPROACH
+
+General Information
+
+Project Description _____E_x_a_m_p_l_e_P_r_o_b_le_m__1__________________________________________________________________
+
+Input
+
+  EB  WB  NB  SB
+
+Cycle length, C (s)  26.0  70.0
+Total actual green time for LT lane group,1 G (s)  26.0  26.0
+Effective permitted green time for LT lane group,1 g (s)  26.0  26.0
+  2  26.0
+Opposing effective green time, go (s)  2  2
+Number of lanes in LT lane group,2 N  72  2
+  0.090  33
+Number of lanes in opposing approach, No  833
+Adjusted LT flow rate, vLT (veh/h)  4  0.040
+Proportion of LT volume in LT lane group,3 PLT  800
+Adjusted flow rate for opposing approach, vo (veh/h)  4
+Lost time for LT lane group, tL
+
+Computation
+
+LT volume per cycle, LTC = vLTC/3600  1.400  0.642
+  0.950  0.950
+Opposing lane utilization factor, fLUo (refer to Volume
+Adjustment and Saturation Flow Rate Worksheet)  8.525  8.187
+  4.461  9.684
+Opposing flow per lane, per cycle  0.67
+volc = voC 3600NofLUo (veh/C/ln)  0.751  1.33
+gf = G[e–0.882(LTC0.717)] – tL gf ≤ g (except for exclusive  11.303  0.506
+left-turn lanes)1, 4  8.027
+  14.697
+Opposing platoon ratio, Rpo (refer to Exhibit 16-11)  3.3  16.316
+Opposing queue ratio, qro = max[1 – Rpo(go/C), 0]  3.2
+
+  volcqro
+
+gq = 0.5 – [volc(1 – qro)/go] – tL, volc(1 – qro)/go ≤ 0.49
+(note case-specific parameters)1
+gu = g – gq if gq ≥ gf, or
+gu = g – gf if gq < gf
+EL1 (refer to Exhibit C16-3)
+
+PL = PLT 1 + (gf + gu/EL1 + 4.24) (N – 1)g  0.268  0.095
+
+(except with multilane subject approach)5  0.098  0.084
+fmin = 2(1 + PL)/g  0.521  0.892
+fm = [gf/g] + [gu/g] 1 + PL(EL1 – 1) 1 , (fmin ≤ fm ≤ 1.00)  0.716  0.901
+
+fLT = [fm + 0.91(N – 1)]/N (except for permitted left
+turns)6
+
+Notes
+
+ 1. Refer to Exhibits C16-4, C16-5, C16-6, C16-7, and C16-8 for case-specific parameters and adjustment factors.
+ 2. For exclusive left-turn lanes, N is equal to the number of exclusive left-turn lanes. For shared left-turn lanes, N is equal to the sum of the
+
+  shared left-turn, through, and shared right-turn (if one exists) lanes in that approach.
+ 3. For exclusive left-turn lanes, PLT = 1.
+ 4. For exclusive left-turn lanes, gf = 0, and skip the next step. Lost time, tL, may not be applicable for protected-permitted case.
+ 5. For a multilane subject approach, if PL ≥ 1 for a left-turn shared lane, then assume it to be a de facto exclusive left-turn lane and redo the
+
+  calculation.
+ 6. For permitted left turns with multiple exclusive left-turn lanes fLT = fm.
+
+  16-45  Chapter 16 - Signalized Intersections
+  Example Problems
+Highway Capacity Manual 2000
+
+Example Problem 1  SUPPLEMENTAL WORKSHEET FOR PEDESTRIAN-BICYCLE EFFECTS
+  ON PERMITTED LEFT TURNS AND RIGHT TURNS
+
+  General Information
+
+  Project Description ____E_x_a_m__pl_e_P_r_o_b_le_m__1___________________________________________________________________
+
+  Permitted Left Turns
+
+  EB  WB  NB  SB
+
+  Effective pedestrian green time,1,2 gp (s)  26.0  26.0  36.0  36.0
+  Conflicting pedestrian volume,1 vped (p/h)  100  100  100  100
+  vpedg = vped (C/gp)  269  269  194  194
+  OCCpedg = vpedg/2000 if (vpedg ≤ 1000) or
+  OCCpedg = 0.4 + vpedg/10,000 if (1000 < vpedg ≤ 5000)  0.135  0.135  0.097  0.097
+  Opposing queue clearing green,3,4 gq (s)
+  Effective pedestrian green consumed by opposing  11.303  8.027  12.201  8.328
+
+  vehicle queue, gq/gp; if gq ≥ gp then fLpb = 1.0  0.435  0.309  0.339  0.231
+  OCCpedu = OCCpedg [1 – 0.5(gq/gp)]
+  Opposing flow rate,3 vo (veh/h)  0.106  0.114  0.081  0.086
+  OCCr = OCCpedu [e–(5/3600)vo]  833  800  667  466
+  Number of cross-street receiving lanes,1 Nrec  0.033  0.038
+  Number of turning lanes,1 Nturn  1  0.032  0.045
+  ApbT = 1 – OCCr if Nrec = Nturn  1  1  2  2
+  ApbT = 1 – 0.6(OCCr) if Nrec > Nturn  1  1  1
+  Proportion of left turns,5 PLT  0.967
+  Proportion of left turns using protected phase,6 PLTA  0.962  0.981  0.973
+  fLpb = 1.0 – PLT(1 – ApbT)(1 – PLTA)  0.090
+  0  0.040  0.071  0.067
+  Permitted Right Turns  0.997  0  0  0
+
+  0.998  0.999  0.998
+
+  Effective pedestrian green time,1,2 gp (s)  26.0  26.0  36.0  36.0
+  Conflicting pedestrian volume,1 vped (p/h)  100  100  100  100
+  Conflicting bicycle volume,1,7 vbic (bicycles/h)  20  20  20  20
+  vpedg = vped(C/gp)  269  269  194  194
+  OCCpedg = vpedg/2000 if (vpedg ≤ 1000), or
+  OCCpedg = 0.4 + vpedg/10,000 if (1000 < vpedg ≤ 5000)  0.135  0.135  0.097  0.097
+  Effective green,1 g (s)
+  26.0  26.0  36.0  36.0
+  vbicg = vbic(C/g)  54  54  39  39
+  OCCbicg = 0.02 + vbicg/2700  0.040
+  OCCr = OCCpedg + OCCbicg – (OCCpedg)(OCCbicg)  0.170  0.040  0.034  0.034
+  Number of cross-street receiving lanes,1 Nrec  1  0.170  0.128  0.128
+  Number of turning lanes,1 Nturn  1
+  ApbT = 1 – OCCr if Nrec = Nturn  1  2  2
+  0.830  1  1  1
+  ApbT = 1 – 0.6(OCCr) if Nrec > Nturn  0.049
+  0  0.830  0.923  0.923
+  Proportion of right turns,5 PRT  0.992  0.027  0.048  0.083
+  Proportion of right turns using protected phase,8 PRTA
+  fRpb = 1.0 – PRT(1 – ApbT)(1 – PRTA)  0  0  0
+  0.995  0.996  0.994
+
+  Notes  5. Refer to Volume Adjustment and Saturation Flow Rate Worksheet.
+  6. Ideally determined from field data; alternatively, assume it equal to
+  1. Refer to Input Worksheet.
+  2. If intersection signal timing is given, use Walk + flashing Don't Walk (use G + Y if  (1 – permitted phase fLT)/0.95.
+  7. If vbic = 0 then vbicg = 0, OCCbicg = 0, and OCCr = OCCpedg.
+  no pedestrian signals). If signal timing must be estimated, use (Green Time – Lost  8. PRTA is the proportion of protected green over the total green, gprot/(gprot
+  Time per Phase) from Quick Estimation Control Delay and LOS Worksheet.
+  3. Refer to supplemental worksheets for left turns.  + gperm). If only permitted right-turn phase exists, then PRTA = 0.
+  4. If unopposed left turn, then gq = 0, vo = 0, and OCCr = OCCpedu = OCCpedg.
+
+Chapter 16 - Signalized Intersections  16-46
+Example Problems
+  Highway Capacity Manual 2000
+
+  CAPACITY AND LOS WORKSHEET  Example Problem 1
+
+General information
+
+Project Description _____E_x_a_m__p_le_P_r_o_b_le_m__1__________________________________________________________________
+
+Capacity Analysis  1  1  22
+
+Phase number  PPPP
+Phase type
+
+Lane group
+
+Adjusted flow rate, v (veh/h)  800 833 466  667
+  1625
+Saturation flow rate, s (veh/h)  2103 2665 1614  4
+  36.0
+Lost time, tL (s), tL = l1 + Y – e  44  4  0.514
+Effective green time, g (s), g = G + Y – tL  835
+Green ratio, g/C  26.0 26.0 36.0  0.799
+Lane group capacity,1 c = s(g/C), (veh/h)  0.410
+  0.371 0.371 0.514  √
+v/c ratio, X
+  780 989 830
+Flow ratio, v/s
+  1.026 0.842 0.561
+Critical lane group/phase (√)
+Sum of flow ratios for critical lane groups, Yc  0.380
+Yc = ∑ (critical lane groups, v/s)
+Total lost time per cycle, L (s)  √
+
+Critical flow rate to capacity ratio, Xc  0.790
+Xc = (Yc)(C)/(C – L)
+  8
+  0.892
+
+Lane Group Capacity, Control Delay, and LOS Determination
+
+  EB  WB  NB  SB
+
+Lane group
+
+Adjusted flow rate,2 v (veh/h)  800  833  466  667
+  780  989  830  835
+Lane group capacity,2 c (veh/h)  1.026  0.842  0.561  0.799
+  0.371  0.371  0.514  0.514
+v/c ratio,2 X = v/c  22.015  20.138  11.617  14.028
+  0.5  0.5
+Total green ratio,2 g/C  0.5  0.5
+Uniform delay, d1 = 0.50 C [1 – (g/C)]2 1 – [min(1, X)g/C] (s/veh)  39.011  7.882
+  0  0
+Incremental delay calibration,3 k
+  0.926  1.000
+Incremental delay,4 d2  59.4  8.647  2.734  21.9
+d2 = 900T[(X – 1) + (X – 1)2 + 8kIX cT ](s/veh)  E  0  0
+Initial queue delay, d3 (s/veh) (Appendix F)  C
+  59.4
+Uniform delay, d1 (s/veh) (Appendix F)  E  21.9
+  C
+Progression adjustment factor, PF  800  1.111  1.000
+  31.0  14.4  667
+Delay, d = d1(PF) + d2 + d3 (s/veh)  34.2
+  C  B  C
+LOS by lane group (Exhibit 16-2)
+Delay by approach, dA = ∑(d)(v) ∑v (s/veh)  31.0  14.4
+LOS by approach (Exhibit 16-2)
+  C  B
+
+Approach flow rate, vA (veh/h)  833  466
+Intersection delay, dI = ∑(dA)(vA)
+  (s/veh)  Intersection LOS (Exhibit 16-2)
+  ∑vA
+
+Notes
+
+1. For permitted left turns, the minimum capacity is (1 + PL)(3600/C).
+2. Primary and secondary phase parameters are summed to obtain lane group parameters.
+3. For pretimed or nonactuated signals, k = 0.5. Otherwise, refer to Exhibit 16-13.
+4. T = analysis duration (h); typically T = 0.25, which is for the analysis duration of 15 min.
+
+  I = upstream filtering metering adjustment factor; I = 1 for isolated intersections.
+
+  16-47  Chapter 16 - Signalized Intersections
+  Example Problems
+Highway Capacity Manual 2000
+
+  EXAMPLE PROBLEM 2
+
+The Intersection The intersection of Sixth Street (NB) and Western Boulevard
+(EB/WB) is located in an outlying area. Intersection geometry and flow characteristics are
+shown on the Input Worksheet.
+
+The Question  What are the delay and peak-hour LOS for this intersection?
+
+The Facts  √ Western Boulevard has two lanes in
+  √ EB and WB HV = 10 percent,  each direction plus an added left-turn
+  √ NB HV = 5 percent,  lane for EB,
+  √ PHF = 0.95,
+  √ No parking EB/WB,  √ Sixth Street is a NB one-way street with
+  √ Arrival Type 3,  two lanes,
+  √ Movement lost time = 4 s, each phase
+  √ Sixth Street NB grade = -2 percent  √ Bicycle volume = 20 bicycles/h, all
+  √ Three-phase signal,  approaches,
+  √ Western Blvd. bus stopping = 20 b/h,
+  √ Pedestrian volume = 50 p/h, all  √ NB parking = 20 maneuvers/h, and
+  approaches,  √ Peak-hour volume data, by approach
+  √ All lane widths are 3.6 m,
+  and movement, are shown on the
+  Input Worksheet.
+
+Comments
+
+  √ Assume a range of cycle lengths of 70 s to 100 s. This range relates to default
+  values given in Chapter 10,
+
+  √ Assume crosswalk width = 3.0 m for all approaches,
+  √ Assume N/S crosswalks are 18.0 m long and E/W crosswalks are 13.2 m long,
+  √ Assume base saturation flow rate = 1,900 pc/h/ln,
+  √ Assume ET = 2.0, and
+  √ Signal timing and cycle length are not given, therefore the quick estimation method
+
+  is required to determine these two parameters.
+
+Steps
+
+1. The quick estimation method is used to determine the signal phasing and cycle length.
+  Known or assumed input data are entered on the Input Worksheet.
+
+2. In the Left-Turn Treatment Worksheet, EBLT is treated as a protected phase and
+  NBLT as an unopposed phase. EBLT is treated as a protected phase because (vL)(vo)
+
+  exceeds 90,000 with two opposing through lanes.
+
+3. For each intersection approach, a Lane Volume Worksheet is completed and critical
+  lane volumes are determined.
+
+4. Using the computed critical lane volumes, cycle length is computed as 31.9 s (see
+  Quick Estimation Control Delay and LOS Worksheet). However, we use 70.0 s since
+  this was set by the analyst as the “minimum.”
+
+  Green times are computed for EB/WB and NB phases. The Quick Estimation Control
+  Delay and LOS Worksheet is used. For example, for Phase 1:
+
+   126 
+
+  g = (70 − 12)  + tL = 7. 2 s + 4.0 = 11. 2 s
+
+   1014 
+
+  These computed green times are now used as input for the next steps.
+
+5. The timing for Phases 1, 2, and 3 is 11.2 s, 27.4 s, and 31.4 s, respectively. After
+  yellow time is subtracted, the effective green is 7.2 s, 23.4 s, and 27.4 s, respectively.
+
+6. Pedestrians/cycle.  50 p * 1h * 70 s = 0.972 p/cycle
+  h 3,600 s
+
+Chapter 16 - Signalized Intersections  16-48
+Example Problems
+  Highway Capacity Manual 2000
+
+7. Minimum effective green  L
+  time required for pedestrians  Gp = 3.2 + 1.2 + 0.27Nped
+  (use Equation 16-2).
+  Gp(Western) = 3.2 +  18.0  + 0.27(0.972) = 18.5 s
+8. Compare minimum effective
+  green time required for  1.2
+  pedestrians with actual
+  effective green.  Gp(Sixth) = 3.2 +  13.2  + 0.27(0.972) = 14.5 s
+
+9. Proportion of left turns and  1.2
+  right turns.
+  g(Western) = 23.4 s, which is >18.5 s
+10. Lane width adjustment factor
+  (use Exhibit 16-7).  g(Sixth) = 27.4 s, which is >14.5 s
+
+11. Heavy-vehicle adjustment  Proportions of left- and right-turn traffic are found by
+  factor (use Exhibit 16-7).  dividing the appropriate turning volumes by the total
+  lane group volume.
+12. Percent grade adjustment  PLT (EB) = 1.000 for the exclusive left-turn lane
+  factor (use Exhibit 16-7).  fw = 1+ (W − 3.6)
+
+13. Parking adjustment factor  9
+  (use Exhibit 16-7).  fw (EB) = 1+ (3.6 − 3.6) = 1.000
+
+14. Bus blockage adjustment  9
+  factor (use Exhibit 16-7).  fHV = 100
+
+15. Area type adjustment factor  100 + % HV(ET − 1)
+  (use Exhibit 16-7).  fHV (EB) = 100 = 0. 909
+
+16. Lane utilization adjustment  100 + 10(2.0 − 1)
+  factor (use Exhibit 16-7).  0% grade, fg = 1.000
+
+17. Left-turn adjustment factor  No parking maneuvers (EB and WB), fp = 1.000
+  (use Exhibit 16-7).  20 parking maneuvers/hour (NB), fp = 0.900
+  No bus stopping (NB), fbb = 1.0
+18. Right-turn adjustment factor  20 buses/hour stopping (EB and WB), fbb = 0.960
+  (use Exhibit 16-7).  For outlying areas, fa = 1.000
+
+19. Left-turn pedestrian/bicycle  Refer to Exhibit 10-23. This factor is applied to
+  adjustment factor (use  establish the conditions in the worst lane within each
+  Exhibit 16-7).  lane group. Otherwise, the results would reflect the
+  average of all lanes of the defined lane groups. Use
+20. Right-turn pedestrian/bicycle  fLU = 0.950 for all through movements.
+  adjustment factor (use  fLT applies to the EB left turn. For protected LT,
+  Exhibit 16-7).  fLT = 0.950. For permitted LT, the supplemental
+  worksheet for multilane approaches is used. fLT
+  (permitted) = 0.149. NB left turn is treated as a shared
+  lane protected left turn because it has no opposing
+  flow. fLT (NB) = 0.998 (use equation in Exhibit 16-7).
+  fRT is applied to NB and WB right turns.
+  fRT = 1.0 – 0.150PRT
+  Supplemental worksheet for pedestrian-bicycle effects
+  is used.
+
+  Supplemental worksheet for pedestrian-bicycle effects
+  is used.
+
+  16-49  Chapter 16 - Signalized Intersections
+  Example Problems
+Highway Capacity Manual 2000
+
+21. Saturation flow (use  s = so N fw fHV fg fp fbb fLU fa fLT fRT fLpb fRpb
+  Equation 16-4).  s(EBLT prot) = 1900 * 1 * 1.000 * 0.909 * 1.000 *
+  1.000 * 1.000 * 1.000 * 1.000 * 0.950 * 1.000 * 1.000 *
+22. Lane group capacity (use  1.000 = 1641 veh/h
+  Equation 16-6).
+  c = s(g/C)
+23. v/c ratio.  c(EBLT prot) = 1641(0.103) = 169 veh/h
+  v/c(EB) = 126 = 0.746
+24. Determine critical lane group
+  in each timing phase.  169
+
+25. Flow ratio of critical lane  The lane group with the highest v/c ratio in a phase is
+  group.  considered the critical lane group. The critical lane
+  groups are EBLT (protected), WB through, and NB
+26. Sum of critical lane group v/s  through.
+  ratios.  v/s(EBLT Prot) = 126 = 0.077
+
+27. Critical flow rate to capacity  1641
+  ratio.
+  Yc = 0.077 + 0.275 + 0.289 = 0.641
+28. Uniform delay.
+  Yc * C
+29. Incremental delay (use  Xc = C – L
+  Equation 16-13).
+  Xc =  0.641(70.0)  = 0.774
+30. Progression adjustment
+  factor (use Exhibit 16-12).  70.0 – 12
+
+31. Lane group delay (use  Supplemental uniform delay worksheet is needed to
+  Equation 16-10).  compute d1 for the EBLT because it has both
+  protected and permitted phases. d1 (EBLT) =
+32. Approach delay (use
+  Equation 16-14).  11.811 s/veh.
+
+33. Intersection delay (use  d2 = 900T[(X − 1) + (...) ]  (...) ] = 5.748 s/veh
+  Equation 16-15).  d2(EBLT) = 900(0.250)[(0.468 − 1) +
+
+  PF = 1.000 for arrival type 3
+
+  d = d1PF + d2 + d3
+  d (EBLT) = 11.811(1.000) + 5.748 + 0 = 17.6 s/veh
+
+  dA = ∑ (d)(v)
+  ∑v
+
+  dA = (17.6 * 126) + (15.6 * 1,032) = 15.8 s/veh
+  126 + 1,032
+
+  dI = ∑ (dA )(VA )
+  ∑ VA
+
+  dI(EB) = (15. 8 * 1,158) + (28. 8 * 842) + (22. 4 * 894)
+  (1,158 + 842 + 894)
+
+  = 21.6 s/veh
+
+34. LOS by lane group,  LOS (EBLT) = B
+  approach, and intersection  LOS (EB) = B
+  (use Exhibit 16-2).  LOS intersection = C
+
+  The calculation results are summarized as follows.
+
+Chapter 16 - Signalized Intersections  16-50
+Example Problems
+  Highway Capacity Manual 2000
+
+ Direc/  v/c g/C Unif Progr  Ln Grp Cal  Incr Ln Grp Ln Grp Delay  LOS
+Ln Grp  Cap Term k  Delay Delay LOS by App  by App
+  Ratio Ratio Delay Factor
+ EB/L  269 0.500  d2  B
+ EB/T  d1  PF  1556 0.500  5.748 17.6 B  C
+WB/TR  1024 0.500  C
+NB/LTR  0.468 0.494 11.811 1.000  1208 0.5000  2.243 15.6 B 15.8
+
+  0.663 0.494 13.326 1.000  7.429 28.8 C 28.8
+
+  0.822 0.334 21.400 1.000  4.097 22.4 C 22.4
+
+  0.740 0.391 18.266 1.000  Intersection LOS = C
+
+  Intersection Delay = 21.6 s/veh
+
+Alternatives
+  Two alternatives are considered for the EB left-turn treatment: protected only and
+
+permitted-plus-protected. The first alternative is to assess the impact of eliminating the EB
+permitted left-turn phase. The left-turn volume is low and is below the capacity of the
+protected phase. Hence, queue spillovers will not occur.
+
+  The supplemental worksheet for permitted left turns is not needed because there are
+no permitted left turns. The supplemental uniform delay worksheet is also not needed
+because the left turn is contained in a single phase. The intersection performance is
+reassessed and the results are as follows.
+
+Direction/ v/c g/C Unif Progr Lane Cal Incr Lane Lane Delay LOS
+
+LnGrp Ratio Ratio Delay Fact Grp Term Delay Grp Grp by by
+
+  d1  PF  Cap  k  d2 Delay LOS App App
+
+EB/L 0.746 0.103 30.505 1.000 169 0.500 25.564 56.1 E
+
+EB/T 0.663 0.494 13.326 1.000 1556 0.500 2.243 15.6 B 20.0 B
+
+WB/TR 0.822 0.334 21.400 1.000 1024 0.500 7.429 28.8 C 28.3 C
+
+NB/LTR 0.740 0.391 18.266 1.000 1208 0.500 4.097 22.4 C 22.5 C
+
+  Intersection Delay = 23.3 s/veh  Intersection LOS = C
+
+  The elimination of the permitted phase has caused a drop in the left-turn capacity
+from 269 veh/h to 169 veh/h. Correspondingly, the delay has increased from 17.6 s/veh to
+56.1 s/veh. The overall intersection delay has also increased by 1.7 s/veh to 23.3 s/veh.
+
+  From the operational standpoint, the protected-only phase is undesirable because it
+induces additional delay. However, from the safety standpoint, the phase may be
+desirable because safety may be enhanced by reducing the number of accidents caused
+by turning vehicles.
+
+  The second alternative is to reverse the EB left-turn treatment from protected-plus-
+permitted to permitted-plus-protected. The cycle length and phase times are kept the
+same. The intersection performance is reassessed and the results are as follows.
+
+Direc/  v/c g/C Unif Progr  Ln Grp  Cal  Incr  Lane Lane  Delay  LOS
+Ln Grp  Cap  Term k  Delay  Grp Grp  by App  by App
+  Ratio Ratio Delay Factor  d2  Delay LOS
+EB/L  364  0.500  2.593  B
+EB/T  d1  PF  1556  0.500  C
+WB/TR  1024  0.500  2.243  C
+NB/LTR  0.346 0.494 15.626 1.000  1208  0.500  18.2  B
+  7.429
+  0.663 0.494 13.326 1.000  15.6  B 15.9
+  4.097
+  0.822 0.334 21.400 1.000  28.8  C 28.3
+
+  0.740 0.391 18.266 1.000  22.4  C 22.5
+
+  Intersection Delay = 21.7 s/veh  Intersection LOS = C
+
+  Reversing the EB left-turn phase results in a slight increase in delay from 17.6 s/veh
+to 18.2 s/veh. The intersection delay also increases by 0.1 s/veh to 21.7 s/veh.
+
+  In conclusion, solely on the basis of operations, the first option (protected-plus-
+permitted EB left turn) appears to be the most desirable.
+
+  16-51  Chapter 16 - Signalized Intersections
+  Example Problems
+

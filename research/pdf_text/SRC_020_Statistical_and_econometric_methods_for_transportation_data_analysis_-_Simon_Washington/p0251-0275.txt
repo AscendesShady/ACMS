@@ -1,0 +1,1252 @@
+TABLE 10.3
+
+Average Elasticities of the Poisson Regression Model Shown in
+Table 10.2
+
+  Independent Variable  Elasticity
+
+Average annual daily trafﬁc on major road  1.045
+Average annual daily trafﬁc on minor road  0.327
+Median width in feet  –0.228
+Number of driveways within 250 ft of intersection  0.232
+
+  and the reduced model results in X2 = 153.85, which is sufﬁcient to reject
+  the ﬁt of the reduced model. Thus it is very unlikely (p-value less than
+  0.0000001) that randomness alone would produce the observed decrease
+  in the log likelihood function.
+
+  Note that G2 is 186.48, which is only relevant in comparison to other
+  competing models. The R2p is 0.48, which again serves as a comparison
+  to competing models. A model with higher X2, lower G2, and a higher
+  R2p is sought in addition to a more appealing set of individual pre-
+  dictor variables, model speciﬁcation, and agreement with expectation
+  and theory.
+
+  Table 10.3 shows the average elasticities computed for the variables in
+  the model shown in Table 10.2. These elasticities are obtained by enu-
+  merating through the sample (applying Equation 10.5 to all observations)
+  and computing the average of these elasticities.
+
+  Poisson regression is a powerful analysis tool, but, as with all statistical
+methods, it is used inappropriately if its limitations are not fully under-
+stood. There are three common analysis errors (Lee and Mannering, 2002).
+The ﬁrst is failure to recognize that data are truncated. The second is the
+failure to recognize that the mean and variance are not equal, as required
+by the Poisson distribution. The third is the failure to recognize that the
+data contain a preponderance of zeros. These limitations and their remedies
+are now discussed.
+
+10.3 Truncated Poisson Regression Model
+Truncation of data can occur in the routine collection of transportation data.
+For example, if the number of times per week an in-vehicle navigation system
+is used on the morning commute to work, during weekdays, the data are
+right truncated at 5, which is the maximum number of uses in any given
+week. Estimating a Poisson regression model without accounting for this
+truncation will result in biased estimates of the parameter vector F, and
+
+© 2003 by CRC Press LLC
+erroneous inferences will be drawn. Fortunately, the Poisson model is
+adapted easily to account for such truncation. The right-truncated Poisson
+model is written as (see Johnson and Kotz, 1969)
+
+  §« rPyi = ?Pyii yi!A ¬ Pmi i mi! ¼ ,»(10.12)
+
+  ­mi !0¬  ½  ¼
+
+where P(yi) is the probability of commuter i using the system yi times per
+week, Pi is the Poisson parameter for commuter i; mi is the number of uses
+per week; and r is the right truncation (in this case, 5 times per week). A
+
+driver decision-making example of a right-truncated Poisson regression is
+
+provided by Mannering and Hamed (1990a) in their study of weekly depar-
+
+ture delays.
+
+10.4 Negative Binomial Regression Model
+
+A common analysis error is a result of failing to satisfy the property of the
+Poisson distribution that restricts the mean and variance to be equal, when
+E[yi] = VAR[yi]. If this equality does not hold, the data are said to be under
+dispersed (E[yi] > VAR[yi]) or overdispersed (E[yi] < VAR[yi]), and the
+parameter vector is biased if corrective measures are not taken. Overdis-
+persion can arise for a variety of reasons, depending on the phenomenon
+under investigation (for additional discussion and examples, see Karlaftis
+and Tarko, 1998). The primary reason in many studies is that variables
+inﬂuencing the Poisson rate across observations have been omitted from
+the regression.
+
+  The negative binomial model is derived by rewriting Equation 10.2 such
+that, for each observation i,
+
+  Pi = EXP(FXi + Ii),  (10.13)
+
+where EXP(Ii) is a gamma-distributed error term with mean 1 and variance
+E2. The addition of this term allows the variance to differ from the mean
+as below:
+
+VAR[yi] = E[yi][1 + EE[yi]] = E[yi]+ EE[yi]2.  (10.14)
+
+  The Poisson regression model is regarded as a limiting model of the neg-
+
+ative binomial regression model as E approaches zero, which means that the
+selection between these two models is dependent on the value of E. The
+parameter E is often referred to as the overdispersion parameter. The nega-
+tive binomial distribution has the form:
+
+© 2003 by CRC Press LLC
+P(yi ) !  +((1 E)  yi ) ¨ 1 E ¸ 1 E ¨ Pi ¸ yi
+  ©  ¹©  ¹,  (10.15)
+  +(1 E)yi! ª (1 E)  Pi º ª (1 E)  Pi º
+
+where +(.) is a gamma function. This results in the likelihood function:
+
+L(Pi ) !   +((1 E)  yi ) ¨ 1 E ¸ 1 E ¨ Pi ¸ yi©  ¹.  (10.16)
+  ¹©
+  i +(1 E)yi! ª (1 E)  Pi º ª (1 E)  Pi º
+
+  When the data are overdispersed, the estimated variance term is larger
+
+than under a true Poisson process. As overdispersion becomes larger, so does
+
+the estimated variance, and consequently all of the standard errors of param-
+
+eter estimates become inﬂated.
+
+  A test for overdispersion is provided by Cameron and Trivedi (1990) based
+on the assumption that under the Poisson model, (yi  E[yi ])2  E[yi ] has
+mean zero, where E[yi ] is the predicted count Pˆ i . Thus, null and alternative
+hypotheses are generated, such that
+
+  H0: VAR?yi A ! E?yi A  (10.17)
+
+  HA: VAR?yi A ! E?yi A  EgE?yi A ,
+
+where g( E[yi ] ) is a function of the predicted counts that is most often given
+values of g( E[yi ] ) = E[yi ] or g( E[yi ] ) = E[yi ]2 . To conduct this test, a simple
+linear regression is estimated where Zi is regressed on Wi, where
+
+  Zi ! yi  Eyi  2  (10.18)
+
+  E yi   yi
+  2
+  Wi ! gEyi .
+
+  2
+
+After running the regression (Zi = bWi) with g( E[yi ] ) = E[yi ] and g( E[yi ] )
+= E[yi ]2 , if b is statistically signiﬁcant in either case, then H0 is rejected for
+the associated function g.
+
+Example 10.3
+
+  Consider again the Poisson regression model on injury accidents esti-
+  mated previously. Even though the model presented in Example 10.2
+  appears to ﬁt the data fairly well, overdispersion might be expected.
+  Using the regression test proposed by Cameron and Trivedi, with
+
+© 2003 by CRC Press LLC
+TABLE 10.4
+
+Negative Binomial Regression of Injury Accident Data
+
+  Independent Variable  Estimated  t Statistic
+  Parameter
+  –2.37
+Constant  –0.931  3.47
+Average annual daily trafﬁc on major road  0.0000900  3.09
+Average annual daily trafﬁc on minor road  0.000610  –1.99
+Median width in feet  – 0.0670  2.24
+Number of driveways within 250 ft of intersection  0.0632  3.09
+Overdispersion parameter, E  0.516
+Number of observations  84
+Restricted log likelihood (constant term only)  –169.25
+Log likelihood at convergence  –153.28
+Chi-squared (and associated p-value)  31.95
+  (<0.0000001)
+
+g(E[yi]) = E[yi], b = 1.28 with a t statistic = 2.75 and with g(E[yi]) = E[yi]2,
+b = 0.28 with a t statistic = 2.07. Based on the model output, both cases
+are statistically signiﬁcant at the 5% level of signiﬁcance, or 95% level of
+conﬁdence. This result suggests that random sampling does not satisfac-
+torily explain the magnitude of the overdispersion parameter, and a
+Poisson model is rejected in favor of a negative binomial model.
+
+Example 10.4
+
+  With evidence that overdispersion is present, a negative binomial model
+  is estimated using the accident data. The results of the estimated negative
+  binomial regression model are shown in Table 10.4.
+
+  As with the Poisson regression model, the signs of the estimated param-
+  eters are expected and are signiﬁcant. In addition, the overdispersion
+  parameter is statistically signiﬁcant, conﬁrming that the variance is larger
+  than the mean. The restricted log-likelihood test suggests that the ﬁtted
+  model is better than a model with only the constant term.
+
+10.5 Zero-Inﬂated Poisson and Negative Binomial
+  Regression Models
+
+There are certain phenomena where an observation of zero events during
+the observation period can arise from two qualitatively different conditions.
+One condition may result from simply failing to observe an event during
+the observation period. Another qualitatively different condition may result
+from an inability ever to experience an event. Consider the following exam-
+ple. A transportation survey asks how many times a commuter has taken
+
+© 2003 by CRC Press LLC
+mass transit to work during the past week. An observed zero could arise in
+two distinct ways. First, last week the commuter may have opted to take the
+van pool instead of mass transit. Alternatively, the commuter may never take
+transit, as a result of other commitments on the way to and from the place
+of employment. Thus two states are present, one a normal count-process
+state and the other a zero-count state.
+
+  At times what constitutes a zero-count state may be less clear. Consider
+vehicle accidents occurring per year on 1-km sections of highway. For
+straight sections of roadway with wide lanes, low trafﬁc volumes, and no
+roadside objects, the likelihood of a vehicle accident occurring may be
+extremely small, but still present because an extreme human error could
+cause an accident. These sections may be considered in a zero-accident
+state because the likelihood of an accident is so small (perhaps the expec-
+tation would be that a reported accident would occur once in a 100-year
+period). Thus, the zero-count state may refer to situations where the
+likelihood of an event occurring is extremely rare in comparison to the
+normal-count state where event occurrence is inevitable and follows some
+known count process (see Lambert, 1992). Two aspects of this nonquali-
+tative distinction of the zero state are noteworthy. First, there is a prepon-
+derance of zeros in the data — more than would be expected under a
+Poisson process. Second, a sampling unit is not required to be in the zero
+or near zero state into perpetuity, and can move from the zero or near
+zero state to the normal-count state with positive probability. Thus, the
+zero or near zero state reﬂects one of negligible probability compared to
+the normal state.
+
+  Data obtained from two-state regimes (normal-count and zero-count
+states) often suffer from overdispersion if considered as part of a single,
+normal-count state because the number of zeros is inﬂated by the zero-count
+state. Example applications in transportation are found in Miaou (1994) and
+Shankar et al. (1997). It is common not to know if the observation is in the
+zero state  so the statistical analysis process must uncover the separation
+of the two states as part of the model estimation process. Models that account
+for this dual-state system are referred to as zero-inﬂated models (see Mul-
+lahey, 1986; Lambert, 1992; Greene, 2000).
+
+  To address phenomena with zero-inﬂated counting processes, the zero-
+inﬂated Poisson (ZIP) and zero-inﬂated negative binomial (ZINB) regression
+models have been developed. The ZIP model assumes that the events, Y =
+(y1, y2,…yn), are independent and the model is
+
+yi ! 0 with probability pi  1  pi EXPPi  (10.18)
+yi ! y with probability 1  pi EXPPi Pyi .
+
+  y!
+
+© 2003 by CRC Press LLC
+where y is the number of events per period. Maximum likelihood estimates
+are used to estimate the parameters of a ZIP regression model and conﬁdence
+intervals are constructed by likelihood ratio tests.
+
+  The ZINB regression model follows a similar formulation with events, Y =
+(y1, y2,…, yn), independent and
+
+  « 1 »1 E
+  ¬  ¼
+yi ! 0 with probability pi  1  pi ¬ E ¼
+  ¬¨ 1¸ ¼    Pi
+  ¬ ª©  ¹  ¼
+  ­  Eº  ½
+
+  (10.19)
+
+  « ¨¨ 1¸ ¸ 1E  y»
+  ¬ +©© ¹  y¹ ui (1  ui ) ¼
+  ¬ ªªEº º
+yi ! y with probability 1  pi ¬ ¨ 1 ¸  ¼, y = 1, 2, 3...¼
+
+  ¬  +© ¹ y!  ¼
+  ­  ª Eº  ½
+
+where ui ! (1 E) [(1 E)  Pi ] . Maximum likelihood methods are again used
+to estimate the parameters of a ZINB regression model.
+
+  Zero-inﬂated models imply that the underlying data-generating process
+has a splitting regime that provides for two types of zeros. The splitting
+process is assumed to follow a logit (logistic) or probit (normal) probability
+process, or other probability processes. A point to remember is that there
+must be underlying justiﬁcation to believe the splitting process exists
+(resulting in two distinct states) prior to ﬁtting this type of statistical
+model. There should be a basis for believing that part of the process is in
+a zero-count state.
+
+  To test the appropriateness of using a zero-inﬂated model rather than a
+traditional model, Vuong (1989) proposed a test statistic for non-nested
+models that is well suited for situations where the distributions (Poisson or
+negative binomial) are speciﬁed. The statistic is calculated as (for each obser-
+vation i),
+
+  mi ! LN©  ¨ f1yi Xi ¸  ¹,  (10.20)
+  ©  yi  ¹
+  ª  f2  Xi  º
+
+where f1(yi|Xi) is the probability density function of model 1, and f2(yi|Xi) is
+the probability density function of model 2. Using this, Vuong’s statistic for
+testing the non-nested hypothesis of model 1 vs. model 2 is (Greene, 2000;
+Shankar et al., 1997)
+
+© 2003 by CRC Press LLC
+  «¨ 1¸ n »
+  § ¬ª nº
+  n ¬© ¹ mi ¼  nm
+  ­  ½¼
+  V!  i!1  !  ,  (10.21)
+
+  ¨ 1¸ n  2  Sm
+  § © ¹ mi  m
+
+  ª nº
+  i!1
+
+where m is the mean
+
+  § ¨  n¸
+  ©1 n mi ¹ ,
+  ª  i!1 º
+
+Sm is standard deviation, and n is the sample size. Vuong’s value is asymp-
+totically standard normal distributed (to be compared to z-values), and if
+|V| is less than Vcritical (1.96 for a 95% conﬁdence level), the test does not
+support the selection of one model over another. Large positive values of V
+greater than Vcritical favor model 1 over model 2, whereas large negative values
+support model 2. For example, if comparing negative binomial alternatives,
+one would let f1(.) be the density function of the ZINB and f2(.) be the density
+function of the negative binomial model. In this case, assuming a 95% critical
+conﬁdence level, if V > 1.96, the statistic favors the ZINB, whereas a value
+of V < –1.96 favors the negative binomial. Values in between would mean
+that the test was inconclusive. The Vuong test can also be applied in an
+identical manner to test ZIP Poisson and Poisson models.
+
+  Because overdispersion will almost always include excess zeros, it is not
+always easy to determine whether excess zeros arise from true overdispersion
+or from an underlying splitting regime. This could lead one to erroneously
+choose a negative binomial model when the correct model may be a ZIP. For
+example, recall from Equation 10.14 that the simple negative binomial gives
+
+  VAR[yi] = E[yi][1 + EE[yi]].  (10.22)
+
+For the ZIP model it can be shown that
+
+  « pi  »
+  VAR?yi A = E?yi A  ¬1  E?yi A¼ .  (10.23)
+  ­ 1  pi
+  ½
+
+Thus, the term pi/(1 – pi) could be erroneously interpreted as E. For guid-
+ance in unraveling this problem, consider the Vuong statistic comparing
+
+ZINB and negative binomial (with f1(.) the density function of the ZINB
+and f2(.) the density function of the negative binomial model for Equation
+10.20). Shankar et al. (1997) provide model-selection guidelines for this case
+
+based on possible values of the Vuong test and overdispersion parameter
+
+© 2003 by CRC Press LLC
+TABLE 10.5
+
+Decision Guidelines for Model Selection (using the 95% conﬁdence level) among
+Negative Binomial (NB), Poisson, Zero-Inﬂated Poisson (ZIP), and Zero-Inﬂated
+Negative Binomial (ZINB) Models Using the Vuong Statistic and the
+Overdispersion Parameter E
+
+  t Statistic of the NB Overdispersion Parameter E
+
+  <|1.96|  >|1.96|
+
+Vuong statistic for  <– 1.96  ZIP or Poisson as  NB
+  >1.96  alternative to NB  ZINB
+ ZINB(f1(.)) and
+ NB(f2(.)) comparison  ZIP
+
+(E) t statistics. These guidelines, for the 95% conﬁdence level, are presented
+in Table 10.5. Again, it must be stressed that great care must be taken in
+the selection of models. If there is not a compelling reason to suspect that
+two states are present, the use of a zero-inﬂated model may be simply
+capturing model misspeciﬁcation that could result from factors such as
+unobserved effects (heterogeneity) in the data.
+
+Example 10.5
+
+  To determine if a zero-inﬂated process is appropriate for the accident
+  data used in previous examples one must believe that three-legged stop-
+  controlled intersections with two lanes on the minor and four lanes on
+  the major road are capable of being perfectly safe with respect to injury
+  accidents. If convinced that perfectly safe intersections may exist, a zero-
+  inﬂated negative binomial model may be appropriate. The results from
+  such a model are shown in Table 10.6.
+
+  The ﬁrst noteworthy observation is that the negative binomial model with-
+  out zero inﬂation appears to account for the number of observed zeros as
+  well as the zero-inﬂated model. The Vuong statistic of 0.043 suggests that
+  the test is inconclusive. Thus there is no statistical support to select the
+  ZINB model over the standard negative binomial model (see also Table
+  10.5 where the t statistic of E nearly satisﬁes the 95% conﬁdence guidelines
+  used). This intuitively makes sense because there is no compelling reason
+  to believe that intersections, which are noted as accidents hot spots, would
+  be in what might be considered a zero-accident state.
+
+10.6 Panel Data and Count Models
+The time-series nature of count data from a panel (where groups of data are
+available over time) creates a serial correlation problem that must be dealt
+
+© 2003 by CRC Press LLC
+TABLE 10.6
+
+Zero-Inﬂated Negative Binomial Regression of Injury Accident Data: Logistic
+Distribution Splitting Model
+
+  Variable Description  Estimated  t-Statistic
+  Parameter
+
+  Negative Binomial Accident State
+
+Constant  –13.84  –4.33
+Log of average annual daily trafﬁc on major road  1.337  4.11
+Log of average annual daily trafﬁc on minor road  0.289  2.82
+Number of driveways within 250 ft of intersection  0.0817  2.91
+Overdispersion parameter, E  0.0527  1.93
+
+  Zero-Accident State  0.77
+
+Constant  –5.18
+Number of observations  84
+Log likelihood at convergence (Poisson)  –171.52
+Log likelihood at convergence (negative binomial)  –154.40
+Log likelihood at convergence (zero-inﬂated  –154.40
+ negative binomial)
+Poisson zeros: actual/predicted  29/15.6
+Negative binomial zeros: actual/predicted  29/25.5
+Zero-inﬂated negative binomial zeros: actual/  29/25.5
+ predicted
+Vuong statistic for testing zero-inﬂated negative  0.043
+ binomial vs. the normal-count model
+
+with in estimation. Hausman et al. (1984) proposed random- and ﬁxed-effects
+approaches for panel count data to resolve problems of serial correlation.
+The random-effects approach accounts for possible unobserved heterogene-
+ity in the data in addition to possible serial correlation. In contrast, the ﬁxed-
+effects approach does not allow for unobserved heterogeneity.
+
+  Transportation applications of ﬁxed- and random-effects Poisson and
+negative binomial models have been quite limited. However, two studies
+are noteworthy in this regard. Johansson (1996) studied the effect of a
+lowered speed limit on the number of accidents on roadways in Sweden.
+And Shankar et al. (1998) compared standard negative binomial and ran-
+dom-effects negative binomial models in a study of accidents caused by
+median crossovers in Washington State. The reader is referred to these
+sources and Hausman et al. (1984) for additional information on random-
+and ﬁxed-effects count models.
+
+© 2003 by CRC Press LLC
+11
+
+Discrete Outcome Models
+
+Discrete or nominal scale data often play a dominant role in transportation
+because many interesting policy-sensitive analyses deal with such data.
+Examples of discrete data in transportation include the mode of travel (auto-
+mobile, bus, rail transit), the type or class of vehicle owned, and the type of
+a vehicular accident (run-off-road, rear-end, head-on, etc.). From a concep-
+tual perspective, such data are classiﬁed as those involving a behavioral
+choice (choice of mode or type of vehicle to own) or those simply describing
+discrete outcomes of a physical event (type of vehicle accident). The meth-
+odological approach used to model these conceptual perspectives statisti-
+cally is often identical. However, the underlying theory used to derive these
+models is often quite different. Discrete models of behavioral choices are
+derived from economic theory, often leading to additional insights in the
+analysis of model estimation results, whereas models of physical phenomena
+are derived from simple probabilistic theory.
+
+  Some discrete data encountered in transportation applications are
+ordered. An example is telecommuting-frequency data that have outcomes
+of never, sometimes, and frequently. In contrast to data that are not ordered,
+ordinal discrete data possess additional information on the ordering of
+responses that can be used to improve the efﬁciency of the model’s param-
+eter estimates. For example, using the information that “never” is less than
+“sometimes” which is less than “frequently” can increase the efﬁciency of
+parameter estimates. Guidelines and considerations for choosing between
+ordered and unordered discrete modeling approaches are presented later
+in this chapter.
+
+11.1 Models of Discrete Data
+In formulating a statistical model for unordered discrete outcomes, it is
+common to start with a linear function of covariates that inﬂuences speciﬁc
+discrete outcomes. For example, in the event of a vehicular accident,
+possible discrete crash outcomes are rear-end, sideswipe, run-off-road,
+
+© 2003 by CRC Press LLC
+head-on, turning, and other. Let Tin be a linear function that determines
+discrete outcome i for observation n, such that
+
+  Tin = Fi Xin,  (11.1)
+
+where Fi is a vector of estimable parameters for discrete outcome i, and Xin
+is a vector of the observable characteristics (covariates) that determine dis-
+
+crete outcomes for observation n. To arrive at a statistically estimable prob-
+
+abilistic model, a disturbance term Iin is added, giving
+
+  Tin = Fi Xin + Iin.  (11.2)
+
+The addition of the disturbance term is supported on a number of grounds
+
+such as the possibility that (1) variables have been omitted from Equation
+
+11.1 (some important data may not be available), (2) the functional form of
+
+Equation 11.1 may be incorrectly speciﬁed (it may not be linear), (3) proxy
+
+variables may be used (variables that approximate missing variables in the
+database), and (4) variations in Fi that are not accounted for (Fi may vary
+across observations). As is shown later in this chapter, the existence of some
+of these possibilities can have adverse effects on the estimation of Fi, so
+caution must be exercised in the interpretation of Iin.
+
+  To derive an estimable model of discrete outcomes with I denoting all
+
+possible outcomes for observation n, and Pn(i) being the probability of obser-
+vation n having discrete outcome i (i  I)
+
+  Pn(i) = P(Tin u TIn)  I { i.  (11.3)
+
+By substituting Equation 11.2 into Equation 11.3, the latter is written as
+
+  Pn(i) = P(FiXin + Iin u FI XIn + IIn)  I { i  (11.4)
+
+or
+
+  Pn(i) = P(FiXn  FI Xn u IIn  Iin)  I { i.  (11.5)
+
+Estimable models are developed by assuming a distribution of the random
+disturbance term, I. Two popular modeling approaches are probit and logit.
+
+11.2 Binary and Multinomial Probit Models
+A distinction is often drawn between binary models (models that consider
+two discrete outcomes) and multinomial models (models that consider three
+
+© 2003 by CRC Press LLC
+or more discrete outcomes) because the derivation between the two can vary
+
+signiﬁcantly. Probit models arise when the disturbance terms I in Equation
+11.5 are assumed to be normally distributed. In the binary case (two out-
+
+comes, denoted 1 or 2) Equation 11.5 is written as
+
+  Pn(1) = P(F1X1n  F2X2n u I2n  I1n).  (11.6)
+
+This equation estimates the probability of outcome 1 occurring for observa-
+
+tion n, where I1n and I2n are normally distributed with mean = 0, variances
+W  2  W  22,  W12.
+  1  and  respectively,  and  the  covariance  is  An  attractive  feature  of
+
+normally distributed variates is that the addition or subtraction of two nor-
+
+mal variates also produces a normally distributed variate. In this case I2n 
+I1n  W  2  W22  W12.
+  is  normally  distributed  with  mean  zero  and  variance  1  +  –  The
+
+resulting cumulative normal function is
+
+  Pn1 !  1  ´ ␤1X1n␤2X2n W  « 1 2»
+  EXP¬ w ¼dw .  (11.7)
+  2T  ­2 ½
+  g
+
+If * (.) is the standardized cumulative normal distribution, then
+
+  Pn1 ! *©  ¨ ␤1X1n  ␤2X2n ¸  ¹,  (11.8)
+
+  ª  W  º
+
+where  W  =  (W  2  +  W  2  –  W12)0.5.  The  term  1/W  in  Equations  11.7  and  11.8  is  a
+  1  2
+
+scaling of the function determining the discrete outcome and can be set to
+
+any positive value, although W = 1 is typically used. An example of the
+
+general shape of this probability function is shown in Figure 11.1.
+
+  Pn (1)
+  1.0
+
+  0.5
+
+  ␤1X1n – ␤2X2n
+
+FIGURE 11.1
+General shape of probit outcome probabilities.
+
+© 2003 by CRC Press LLC
+  The parameter vector (F) is readily estimated using standard maximum
+likelihood methods. If Hin is deﬁned as being equal to 1 if the observed
+discrete outcome for observation n is i and zero otherwise, the likelihood
+
+function is
+
+    N  I  (11.9)
+
+  L!  Pi Hin ,
+
+  n=1i=1
+
+where N is the total number of observations. In the binary case with i = 1
+or 2, the log likelihood from Equation 11.9 is (again, the log likelihood is
+used in estimation without loss of generality because the log transformation
+does not affect the ordering),
+
+§N ¨ ¨ ␤1X1n  ␤2X2n ¸¹  1  H1n LN*©  ¨ ␤1X1n  ␤2X2n ¸ ¸
+LL ! ©H1nLN*©  ¹¹ . (11.10)
+  ª  ª  W  º  ª  W  ºº
+n=1
+
+  The derivation of the multinomial probit model is provided in numerous
+sources, most notably Daganzo (1979). The problem with the multinomial
+probit is that the outcome probabilities are not closed form and estimation
+of the likelihood functions requires numerical integration. The difﬁculties of
+extending the probit formulation to more than two discrete outcomes have
+led researchers to consider other disturbance term distributions.
+
+11.3 Multinomial Logit Model
+
+From a model estimation perspective, a desirable property of an assumed
+distribution of disturbances (I in Equation 11.5) is that the maximums of
+randomly drawn values from the distribution have the same distribution
+as the values from which they were drawn. The normal distribution does
+not possess this property (the maximums of randomly drawn values from
+the normal distribution are not normally distributed). A disturbance term
+distribution with such a property greatly simpliﬁes model estimation
+because Equation 11.10 could be applied to the multinomial case by replac-
+ing F2X2n with the highest value (maximum) of all other FIXIn { 1. Distribu-
+tions of the maximums of randomly drawn values from some underlying
+distribution are referred to as extreme value distributions (Gumbel, 1958).
+Extreme value distributions are categorized into three families: Type 1, Type
+2, and Type 3 (see Johnson and Kotz, 1970). The most common extreme
+value distribution is the Type 1 distribution (sometimes referred to as the
+Gumbel distribution). It has the desirable property that maximums of ran-
+domly drawn values from the extreme value Type 1 distribution are also
+
+© 2003 by CRC Press LLC
+extreme value Type 1 distributed. The probability density function of the
+extreme value Type 1 distribution is
+
+  fI ! LEXP?LI  [ AEXPEXP?LI  [ A  (11.11)
+
+with corresponding distribution function
+
+  FI ! EXPEXP?LI  [ A ,  (11.12)
+
+where L is a positive scale parameter, [ is a location parameter (mode), and
+the mean is [ + 0.5772/L. An illustration of the extreme value Type 1
+distribution with location parameter equal to zero and various scale param-
+
+eter values is presented in Figure 11.2.
+
+  To derive an estimable model based on the extreme value Type 1 distri-
+
+bution, a revised version of Equation 11.4 yields
+
+Pn i ! P¨ª␤iXin  Iin u  max␤I XIn   I In  ¸  .  (11.13)
+   I{i  º
+
+  For the extreme value Type 1 distribution, if all IIn are independently
+and identically (same variances) distributed random variates with location
+
+parameters [In and a common scale parameter L (which implies equal
+
+  f (x)
+  0.8
+
+  0.6  ω=0
+  η = 0.5
+
+  0.4
+  η=1
+
+  η=2
+
+−2  0  2  4  x
+  6
+
+FIGURE 11.2
+Illustration of an extreme value Type I distribution.
+
+© 2003 by CRC Press LLC
+variances), then the maximum of FI XIn + IIn is extreme value Type 1 dis-
+tributed with location parameter
+
+  § 1 LN  EXPL␤I XIn  (11.14)
+
+  L
+   I{i
+
+and scale parameter L (see Gumbel 1958). If Ind is a disturbance term asso-
+ciated with the maximum of all possible discrete outcomes { i (see Equation
+11.13) with mode equal to zero and scale parameter L, and Fd Xnd is the
+parameter and covariate product associated with the maximum of all pos-
+
+sible discrete outcomes { i, then it can be shown that
+
+  § ␤dXdn ! 1L LN EXPL␤I XIn .  (11.15)
+   I{i
+
+  This result arises because for extreme value Type 1 distributed variates, I,
+the addition of a positive scalar constant, say, a, changes the location param-
+
+eter from [ to [ + a without affecting the scale parameter L (see Johnson
+and Kotz, 1970). So, if Ind has location parameter equal to zero and scale
+parameter L, adding the scalar shown in Equation 11.14 gives an extreme
+value distributed variate with location parameter (FdXnd) equal to Equation
+11.14 (as shown in Equation 11.15) and scale parameter L.
+
+  Using these results, Equation 11.13 is written as
+
+  Pn i ! P␤iXin  Iin u ␤dXdn  Idn  (11.16)
+
+or
+
+  Pn i ! P␤dXdn  Idn  ␤iXin  Iin e 0 .  (11.17)
+
+And, because the difference between two independently distributed extreme
+value Type 1 variates with common scale parameter L is logistic distributed,
+
+  Pni !  1.  (11.18)
+
+Rearranging terms,  1  EXP? L␤dXdn  ␤iXin A
+
+  Pni !  EXP? L␤iXin A .  (11.19)
+  EXP? L␤iXin A  EXP?L␤dXdn A
+
+© 2003 by CRC Press LLC
+Substituting with Equation 11.15 and setting L = 1 (there is no loss of gen-
+erality, Johnson and Kotz, 1970) the equation becomes
+
+  Pni !  § EXP?␤iXin A«  »  (11.20)
+
+  EXP?␤iXin A  EXP¬LN EXP␤I XIn ¼  ½¼
+  ­¬  I{i
+
+or
+
+  Pni !  §EXP?␤iXin A ,  (11.21)
+
+  EXP␤I XIn
+
+  I
+
+which is the standard multinomial logit formulation. For estimation of the
+parameter vectors (F) by maximum likelihood, the log likelihood function is
+
+  § § § N ¨ I «  »¸
+  LL ! © Hin ¬␤iXin  LN EXP␤I XIn ¼ ,  (11.22)
+  ©n=1 ª i=1 ­¬  ½¼º
+  I
+
+where I is the total number of outcomes, H is as deﬁned in Equation 11.9,
+and all other variables are as deﬁned previously.
+
+  When applying the multinomial logit model, it is important to realize that
+the choice of the extreme value Type 1 distribution is made on the basis of
+computational convenience, although this distribution is similar to the nor-
+mal distribution (see Figure 11.3 for a two outcome model and compare with
+Figure 11.1). Other restrictive assumptions made in the derivation of the
+
+  P(i )  Probit
+  1.0
+
+  Logit
+
+  0.5
+
+  ␤1X1n − ␤2X2n
+
+FIGURE 11.3
+Comparison of binary logit and probit outcome probabilities.
+
+© 2003 by CRC Press LLC
+model are the independence of disturbance terms and their common vari-
+ance (homoscedasticity). These assumptions have estimation consequences
+that are discussed later in this chapter.
+
+11.4 Discrete Data and Utility Theory
+
+In many applications it is useful to tie the statistical model to an underlying
+theoretical construct. An example is the economic and transportation litera-
+ture where discrete outcome models have been tied to utility theory. Tradi-
+tional approaches from microeconomic theory have decision makers
+choosing among a set of alternatives such that their utility (satisfaction) is
+maximized subject to the prices of the alternatives and an income constraint
+(see Nicholson, 1978). When dealing with decision-makers’ choices among
+discrete alternatives, discrete outcome models are often referred to as discrete
+choice models, but it is important to remember, in a more general sense, that
+any discrete outcome can, whether a consumer choice or not, be modeled
+using a discrete outcome model.
+
+  Because utility theory consists of decision-makers selecting a utility max-
+imizing alternative based on prices of alternatives and an income con-
+straint, any purchase affects the remaining income and thus all purchases
+are interrelated. This creates an empirical problem because one theoreti-
+cally cannot isolate speciﬁc choice situations. For example, when consid-
+ering a traveler’s choice of mode (e.g., car, bus, or rail), one would also
+have to consider the choice of breakfast cereal because any purchase will
+affect remaining income. This difﬁculty can make the empirical analysis of
+choice data virtually intractable. However, the economic literature provides
+a number of options in this regard by placing restrictions on the utility
+function. To illustrate these, a utility function is deﬁned by the consumption
+of m goods (y1, y2,…, ym) such that
+
+  u = f(y1, y2,…, ym).  (11.23)
+
+  As an extremely restrictive case it is assumed that the consumption of one
+good is independent of the consumption of all other goods. The utility
+function is then written as
+
+  u = f1(y1) + f2(y2) ++ fm(ym).  (11.24)
+
+This is referred to as an additive utility function and, in nearly all applica-
+tions, it is unrealistically restrictive. For example, the application of such an
+assumption implies that the acquisition of two types of breakfast cereal are
+independent, although it is clear that the purchase of one will affect the
+purchase of the other. A more realistic restriction on the utility function is
+
+© 2003 by CRC Press LLC
+to separate decisions into groups and to assume that consumption of goods
+within the groups is independent of those goods in other groups. For exam-
+ple, if utility is a function of the consumption of breakfast cereal and a word-
+processing software package, these two choices are separated and modeled
+in isolation. This is referred to as separability and is an important construct
+in applied economic theory (Phlips, 1974). It is this property that permits the
+focus on speciﬁc choice groups such as the choices of travel mode to work.
+
+  The previous discussion views utility in the traditional sense in that utility
+is maximized subject to an income constraint and this maximization produces
+a demand for goods y1, y2,…, ym. When applying discrete outcome models,
+the utility function is typically written with prices and incomes as arguments.
+When the utility function is written in this way, the utility function is said to
+be indirect, and it can be shown that the relationship between this indirect
+utility and the resulting demand equation for some good m is given by Roy’s
+identity (Phlips, 1974; Mannering and Winston, 1985)
+
+  xV  (11.25)
+  ym0 !  x pm x V ,
+
+  x Inc
+
+where V is the indirect utility, pm is the price of good m, Inc is the income of
+the decision maker, and ym0 is the utility maximizing demand for good m.
+As will be shown later, the application of this equation proves to be critical
+in model development and the economic interpretation of model ﬁndings.
+
+  Applying the utility framework within discrete outcome models is
+straightforward. By using the notation above, T in Equations 11.1 through
+11.3 becomes the utility determining the choice (as opposed to a function
+determining the outcome). But in addition to the restrictions typically
+used in applying utility theory to discrete outcome models (separability
+of utility functions and the use of an indirect utility function with prices
+and income as arguments in the function), behavioral implications are
+noteworthy. The derivations of discrete outcome models provided here
+imply that the model is compensatory. That is, changes in factors that
+determine the function T in Equation 11.1 for each discrete outcome do
+not matter as long as the total value of the function remains the same.
+This is potentially problematic in some utility-maximizing choice situa-
+tions. For example, consider the choice of a vehicle purchase where price,
+fuel efﬁciency, and seating capacity determine the indirect utility (vari-
+ables in the X vector in Equation 11.1). Decision makers with families of
+ﬁve may get very little utility from a two-seat sports car. Yet the model
+assumes that the decision maker is compensated for this by lowering price
+or increasing fuel efﬁciency. Some argue that a more realistic framework
+is one in which there are thresholds beyond which the decision maker
+does not accept an alternative. Models that use thresholds and relax the
+
+© 2003 by CRC Press LLC
+compensatory assumption are referred to as noncompensatory models.
+Because of their inherent complexity, noncompensatory models have been
+rarely used in practice (Tversky, 1972).
+
+11.5 Properties and Estimation of Multinomial Logit Models
+
+The objective of the multinomial logit (MNL) model is to estimate a function
+that determines outcome probabilities. As an example, for choice models
+based on utility theory this function is the indirect utility. To illustrate this,
+consider a commuter’s choice of route from home to work where the choices
+are to take an arterial, a two-lane road, or a freeway. By using the form of
+the MNL model given in Equation 11.21, the choice probabilities for the three
+routes are for each commuter n (n subscripting omitted):
+
+eVa eVt eVf
+Pa ! V V Vf , Pt ! V V Vf , P f ! V V Vf ,  (11.26)
+e a e t e  e a e t e  e a e t e
+
+where P(a), P(t), and P(f), are the probabilities that commuter n selects the
+arterial, two-lane road, and freeway, respectively, and Va, Vt, and Vf are
+corresponding indirect utility functions. Broadly speaking, the variables
+deﬁning these functions are classiﬁed into two groups — those that vary
+across outcome alternatives and those that do not. In route choice, distance
+and number of trafﬁc signals are examples of variables that vary across
+outcome alternatives. Commuter income and other commuter-speciﬁc char-
+acteristics (number of children, number of vehicles, and age of commuting
+vehicle) are variables that do not vary across outcome alternatives. The
+distinction between these two sets of variables is important because the MNL
+model is derived using the difference in utilities (see Equation 11.17). Because
+of this differencing, estimable parameters relating to variables that do not
+vary across outcome alternatives can, at most, be estimated in I – 1 of the
+functions determining the discrete outcome (I is the total number of discrete
+outcomes). The parameter of at least one of the discrete outcomes must be
+normalized to zero to make parameter estimation possible (this is illustrated
+in a forthcoming example).
+
+  Given these two variables types, the utility functions for Equation 11.26
+are deﬁned as
+
+  Va ! F1a  ␤2aX a  ␤3aZ  (11.27)
+  Vt ! F1t  ␤2tXt  ␤3tZ
+  Vf ! F1f  ␤2 f X f  ␤3 f Z
+
+© 2003 by CRC Press LLC
+where Xa, Xt, and Xf are vectors of variables that vary across arterial, two-
+lane, and freeway choice outcomes, respectively, as experienced by com-
+muter n, Z is a vector of characteristics speciﬁc to commuter n, the F1 are
+constant terms, the F2 are vectors of estimable parameters corresponding
+to outcome-speciﬁc variables in X vectors, and the F3 are vectors corre-
+sponding to variables that do not vary across outcome alternatives. Note
+
+that the constant terms are effectively the same as variables that do not
+
+vary across alternative outcomes and at most are estimated for I – 1 of
+
+the outcomes.
+
+Example 11.1
+
+A survey of 151 commuters was conducted. Information was collected
+on their route selection on their morning trip from home to work. All
+commuters departed from the same origin (a large residential complex
+in suburban State College, PA) and went to work in the downtown
+area of State College. Distance was measured precisely from parking
+lot of origin to parking lot of destination, so there is a variance in
+distances among commuters even though they departed and arrived
+in the same general areas. Commuters had a choice of three alternate
+routes: a four-lane arterial (speed limit = 60 km/h, two lanes each
+direction), a two-lane highway (speed limit = 60 km/h, one lane each
+direction), and a limited access four-lane freeway (speed limit = 90
+km/h, two lanes each direction). Each of these three routes shared
+some common portions for access and egress because, for example,
+the same road to the downtown area is used by both freeway and two-
+lane road alternatives since the freeway exits onto the same city street
+as the two-lane road.
+
+To analyze commuters’ choice of route, a MNL model is estimated given
+the variables shown in Table 11.1. Model estimation results are presented
+in Table 11.2. Based on this table, the estimated utility functions are (see
+Equation 11.27)
+
+  Va = –0.942(DISTA)  (11.28)
+  Vt = 1.65 –1.135(DISTT) + 0.128(VEHAGE)
+Vf = –3.20 – 0.694(DISTF) + 0.233(VEHAGE) + 0.766(MALE)
+
+The interpretation of the parameters is straightforward. First, consider
+
+the constant terms. Note that Va does not have a constant. This is because
+constants are estimated as variables that do not vary across alternative
+
+outcomes and therefore can appear in at most I – 1 functions (constants
+are estimated as FX, where X is a vector of 1’s; this vector does not vary
+across alternate outcomes). The lack of constant in the arterial function
+
+establishes it as a 0 baseline. Thus, all else being equal, the two-lane road
+
+is more likely to be selected (with its positive constant) relative to the
+
+© 2003 by CRC Press LLC
+TABLE 11.1
+
+Variables Available for Home to Work Route-Choice Model Estimation
+
+Variable  Variable Description
+  No.
+
+1  Route chosen: 1 if arterial, 2 if two-lane road, 3 if freeway
+
+2  Trafﬁc ﬂow rate of arterial at time of departure (vehicles per hour)
+
+3  Trafﬁc ﬂow rate of two-lane road at time of departure (vehicles per hour)
+
+4  Trafﬁc ﬂow rate of freeway at time of departure (vehicles per hour)
+
+5  Number of trafﬁc signals on the arterial
+
+6  Number of trafﬁc signals on the two-lane road
+
+7  Number of trafﬁc signals on the freeway
+
+8  Distance on the arterial in kilometers
+
+9  Distance on the two-lane road in kilometers
+
+10  Distance on the freeway in kilometers
+
+11  Seat belts: 1 if wearing, 0 if not
+
+12  Number of passengers in vehicle
+
+13  Commuter age in years: 1 if less than 23, 2 if 24 to 29, 3 if 30 to 39, 4 if 40 to 49,
+
+  5 if 50 and older
+
+14  Gender: 1 if male, 0 if female
+
+15  Marital status: 1 if single, 0 if married
+
+16  Number of children in household (aged 16 or younger)
+
+17  Annual household income (U.S. dollars): 1 if less than 20,000, 2 if 20,000 to
+
+  29,999, 3 if 30,000 to 39,999, 4 if 40,000 to 49,999, 5 if more than 50,000
+
+18  Age of the vehicle used on the trip in years
+
+TABLE 11.2
+
+MNL Estimation Results for the Choice of Route to Work
+
+  Independent Variable  Variable  Estimated  t Statistic
+  Mnemonic  Parameter  1.02
+  –1.16
+Two-lane road constant  1.65
+Freeway constant  –3.20  –3.99
+  –5.75
+  Variables That Vary across Alternative Outcomes  –2.24
+
+Distance on the arterial in kilometers  DISTA  –0.942  1.19
+Distance on the two-lane road in kilometers  DISTT  –1.135  1.87
+Distance on the freeway in kilometers  DISTF  –0.694  2.75
+
+  Variables That Do Not Vary across Alternative Outcomes
+
+Male indicator (1 if male commuter, 0 if not;  MALE  0.766
+ deﬁned for the freeway utility function)  VEHAGE
+Vehicle age in years (deﬁned for the two-lane  VEHAGE  0.128
+ road utility function)
+Vehicle age in years (deﬁned for the two-lane  0.233
+ freeway utility function)
+Number of observations  151
+Log likelihood at zero  –165.89
+Log likelihood at convergence  –92.51
+
+© 2003 by CRC Press LLC
+arterial, and the freeway is less likely to be selected relative to the arterial
+(with its negative constant). And, all else being equal, the freeway is less
+likely to be selected than the two-lane road. Omitting a constant from
+the arterial function is arbitrary; a constant could have been omitted from
+one of the other functions instead, and the same convergence of the
+likelihood function would have resulted. The key here is that all of the
+constants are relative and the omission of one constant over another
+simply rescales the remaining constants. For example, if the constant is
+omitted from the two-lane function (so it becomes zero) the estimated
+constant for the arterial is –1.65 and the estimated constant for the free-
+way is –4.85 (thus preserving the same magnitude of differences).
+
+The distance from home to work along the various routes was also
+included in the model. Distance varies across routes so this variable is
+included in all utility functions. The negative sign indicates that increas-
+ing distance decreases the likelihood of a route being selected. The esti-
+mation of separate parameters for the three distances indicates that
+distance is not valued equally on the three routes. In this case, distance
+on the two-lane road is most onerous, followed by distance on the arterial
+and distance on the freeway.
+
+The positive parameter on male indicator variable indicates that men are
+more likely to take the freeway. The vehicle age variables indicate that the
+older the commuting vehicle, the more likely the commuter will drive on
+the freeway, followed by the two-lane road. This variable does not vary
+across alternative outcomes so at most is estimated in I – 1 functions (in
+this case two). Age of the vehicle on the arterial is implicitly set to zero
+and the same relativity logic discussed above for the constants applies.
+
+11.5.1 Statistical Evaluation
+
+The statistical signiﬁcance of individual parameters in an MNL model is
+approximated using a one-tailed t test. To determine if the estimated param-
+eter is signiﬁcantly different from zero, the test statistic t*, which is approx-
+imately t distributed, is
+
+  t* ! F  0 S.E.F ,  (11.29)
+
+where S.E.(F) is the standard error of the parameter. Note that because the
+MNL is derived from an extreme value distribution and not a normal dis-
+tribution, the use of t statistics is not strictly correct although in practice it
+is a reliable approximation.
+
+  A more general and appropriate test is the likelihood ratio test. This test is
+used for a wide variety of reasons, such as assessing the signiﬁcance of indi-
+vidual parameters, evaluating overall signiﬁcance of the model (similar to the
+F test for ordinary least squares regression), examining the appropriateness of
+
+© 2003 by CRC Press LLC
+estimating separate parameters for the same variable in different outcome
+functions (such as the separate distance parameters estimated in Example
+11.1), and examining the transferability of results over time and space. The
+likelihood ratio test statistic is
+
+  X2 = 2[LL(bR) – LL(bU)],  (11.30)
+
+where LL(FR) is the log likelihood at convergence of the “restricted” model,
+and LL(FU) is the log likelihood at convergence of the “unrestricted” model.
+This statistic is G2 distributed with degrees of freedom equal to the difference
+in the numbers of parameters between the restricted and unrestricted model
+(the difference in the number of parameters in the FR and the FU parameter
+vectors). By comparing the improvement in likelihoods as individual vari-
+
+ables are added, this test statistic is the correct way to test for the signiﬁcance
+
+of individual variables because, as mentioned above, the more commonly
+
+used t statistic is based on the assumption of normality, which is not the case
+
+for the MNL model.
+
+Example 11.2
+
+For the model estimated in Example 11.1, it is interesting to test if the
+effects of distance are indeed different across routes (as estimated) or
+whether there is one effect across all routes. To test this, the model shown
+in Table 11.2 needs to be reestimated while constraining the distance
+parameters to be the same across all three functions (see Equation 11.28).
+Keeping all other variables in the model, the single distance parameter
+is estimated as –1.147 (t* of –5.75), and the log likelihood at convergence
+of this restricted model (estimating one instead of three distance param-
+eters) is –94.31. With the unrestricted model’s log likelihood at conver-
+gence of –92.51 (as shown in Table 11.2), the application of Equation 11.30
+yields an X2 value of 3.6. The degrees of freedom are 2 (because two
+fewer parameters are estimated in the restricted model). An X2 value of
+3.6 and 2 degrees of freedom yields a level of conﬁdence of 0.835. Thus,
+using a 90% level of conﬁdence, the model of a single distance effect
+cannot be rejected (the model with individual effects is not preferred to
+the model with a single effect). The interpretation is that sampling vari-
+ability alone can explain the observed difference in log likelihoods, and
+the model with individual distance effects is rejected.
+
+  Finally, a common measure of overall model ﬁt is the V2 statistic (it is
+similar to R2 in regression models in terms of purpose). The V2 statistic is
+
+  V2 ! 1  LL␤  (11.31)
+  LL 0
+
+where LL(F) is the log likelihood at convergence with parameter vector F
+and LL(0) is the initial log likelihood (with all parameters set to zero). The
+
+© 2003 by CRC Press LLC
+perfect model has a likelihood function equal to one (all selected alternative
+
+outcomes are predicted by the model with probability one, and the product
+
+of these across the observations are also equal to one) and the log likelihood
+is zero giving a V2 of one (see Equation 11.31). Thus the V2 statistic lies
+between zero and one, and a statistic close to one suggests that the model
+is predicting the outcomes with near certainty. For Example 11.1, the V2 is
+0.442 [1 – (–92.51/–165.89)].
+
+  As is the case with R2 in regression analysis, the disadvantage of the V2
+statistic is that it will always improve as additional parameters are estimated
+
+even though the additional parameters may be statistically insigniﬁcant. To
+
+account for the estimation of potentially insigniﬁcant parameters, a corrected
+V2 is estimated as
+
+  corrected V2 ! 1  LL␤  K LL0 ,  (11.32)
+
+where K is the number of parameters estimated in the model (the number
+
+of parameters in the vector F). For Example 11.1, the corrected V2 is 0.394
+[1 – ((–92.51 – 8)/–165.89)].
+
+11.5.2 Interpretation of Findings
+
+Two other techniques are used to assess individual parameter estimates:
+elasticities and marginal rates of substitution. Elasticity computations mea-
+sure the magnitude of the impact of speciﬁc variables on the outcome prob-
+abilities. Elasticity is computed from the partial derivative for each
+observation n (n subscripting omitted):
+
+  ExPi ! x Pi v xki ,  (11.33)
+  ki
+  x xki Pi
+
+where P(i) is the probability of outcome i and xki is the value of variable k
+for outcome i. It is readily shown by taking the partial derivative of the MNL
+
+model that Equation 11.33 becomes
+
+  ExPiki ! ?1  Pi A Fkixki .  (11.34)
+
+  Elasticity values are interpreted as the percent effect that a 1% change in
+xki has on the outcome probability P(i). If the computed elasticity value is
+less than one, the variable xki is said to be inelastic and a 1% change in xki
+will have less than a 1% change in outcome i selection probability. If the
+computed elasticity is greater than one it is said to be elastic and a 1% change
+in xki will have more than a 1% change in outcome i selection probability.
+
+© 2003 by CRC Press LLC
+Example 11.3
+
+To determine the elasticities for distances on the three routes based on
+the model estimated in Example 11.1 (assuming this is a tenable model),
+Equation 11.34 is applied over all observations, N (the entire 151 com-
+muters). It is found that the average elasticity for distance (averaged
+over N commuters) on the arterial is –6.48. This means for the average
+commuter a 1% increase in distance on the arterial will decrease the
+probability of the arterial being selected by 6.48%. Among the 151
+commuters in the sample, elasticities range from a high of –13.47 to a
+low of –1.03. The computed average elasticities for distances on the
+two-lane road and the freeway are –3.07 and –6.60, respectively. These
+ﬁndings show that distance on the two-lane road has the least effect
+on the selection probabilities.
+
+  There are a several points to keep in mind when using elasticities. First,
+the values are point elasticities and, as such, are valid only for small changes
+xik and considerable error may be introduced when an elasticity is used to
+estimate the probability change caused by a doubling of xki. Second, elastic-
+ities are not applicable to indicator variables (those variables that take on
+values of 0 or 1 such as the male indicator in Table 11.2). Some measure of
+the sensitivity of indicator variables is made by computing a pseudo-elas-
+ticity. The equation is
+
+ExP(i) ki !  § ? A EXP (␤iXi  EXPFkI xkI
+  I  1,
+  § § ? A EXP (␤iXi  (11.35)
+  EXPFkI xkI  EXPFkI xkI
+  In  I {In
+
+where In is the set of alternate outcomes with xk in the function determining the
+outcome, and I is the set of all possible outcomes. See Shankar and Mannering
+(1996) and Chang and Mannering (1999) for an application of this equation.
+
+  The elasticities described previously are referred to as direct elasticities
+because they capture the effect that a change in a variable determining the
+likelihood of alternative outcome i has on the probability that outcome i will
+be selected. It may also be of interest to determine the effect of a variable
+inﬂuencing the probability of outcome j may have on the probability of
+outcome i. For example, referring to the route choice problem (Example 11.1),
+interest may be centered on knowing how a change in the distance on the
+arterial affects the probability the two-lane road will be chosen. Known as
+a cross-elasticity, its value is computed using the equation:
+
+  Exki Pi ! P j Fkj xkj .  (11.36)
+
+  Note that this equation implies that there is one cross-elasticity for all i (i {
+j). This means that an increase in distance on the arterial results in an equal
+
+© 2003 by CRC Press LLC
+

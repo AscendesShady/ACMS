@@ -1,0 +1,1374 @@
+Chapter 12
+
+Future directions
+
+In this book, we have examined a variety of data used in multiple applications
+of big data in transportation. Probe vehicle data (connected vehicle data), other
+mobility data, socio-demographic data, and economic data can provide profound
+recommendations concerning possible measures and their impact, e.g. for the
+creation of transport models, or toll data and truck-related restrictions. Mobile
+sensing data harvested from smartphones and apps, such as motion and usage
+data, are a valuable source of information, which can help us analyze which
+route or mode of transport was taken. A proper analysis of integrated transporta-
+tion data can also provide valuable assistance in addressing urgent and important
+issues regarding the mobility of the future, e.g., how can new micro-mobility
+services be effectively integrated into the existing mobility offering? All of the
+aforementioned analysis cannot be fulﬁlled without selecting a proper model.
+
+12.1 Future trends of deep learning technologies for
+  transportation
+
+This book introduces multiple representative deep learning models, such as
+CNN, RNN, GNN, and GAN, that have been widely used in solving trans-
+portation problems. Currently, deep learning is perhaps the most effective AI
+technology for numerous data-driven applications. However, there are still sci-
+entists who point to ﬂaws in deep learning where remedies are not clear.
+
+  This section will introduce new trends of deep learning that can complement
+deep learning’s current limitations. Those new trends or solutions may not be
+mentioned in this book, but have the potential to reshape deep learning. Deep
+learning is a rapidly growing domain in AI. Due to its challenges about size and
+diversity of data, various deep learning solutions have been suggested, includ-
+ing introducing reasoning or prior knowledge to deep learning, self-supervised
+learning, etc. On top of the striking performance achieved by deep neural net-
+works, stable, explainable, generalizable, and safe deep learning models might
+attract more attentions in the near future. Several new directions of deep learn-
+ing models based on the authors’ knowledge and experience, especially those
+can be used in the transportation domain, are sketched below:
+
+1. Stable deep learning: deep learning models have achieved striking perfor-
+  mance when testing data and training data share similar distribution, but can
+  signiﬁcantly fail otherwise. To eliminate the impact of distribution shifts be-
+  tween training and testing data, it is crucial to build performance-promising
+
+Machine Learning for Transportation Research and Applications  213
+https://doi.org/10.1016/B978-0-32-396126-4.00017-5
+Copyright © 2023 Elsevier Inc. All rights reserved.
+214 Machine Learning for Transportation Research and Applications
+
+  deep models when conventional assumptions of the known heterogeneity of
+  training data (e.g., domain labels) and the approximately equal capacities
+  of different domains do not hold. Thus, it is promising to design models to
+  remove the dependencies between features via learning weights for training
+  samples and help deep models get rid of spurious correlations and, in turn,
+  concentrate more on the true connection between discriminative features and
+  labels.
+2. Unsupervised learning: If systems can determine their own objectives, do
+  reasoning and problem-solving at a more abstract level, great improvements
+  could be achieved.
+3. Symbol-manipulation and the need for hybrid models: Integration of
+  deep learning with symbolic systems that excel at inference and abstraction
+  could provide better results.
+4. More insight from cognitive and developmental psychology: Better un-
+  derstanding the innate machinery in humans minds, gaining common sense
+  knowledge and human understanding of narrative could be valuable for de-
+  veloping learning models.
+5. Explainable deep learning: Explainability goes one step ahead to explain
+  the internal mechanics of a deep learning system in human terms. It explains
+  what is happening and why every step of the way. Recent advances in AI
+  have enabled algorithms to change and develop quickly, making it even more
+  difﬁcult to interpret what is underlying these models.
+6. Few-shot learning: The advantage of few-shot learning, which is a subﬁeld
+  of machine learning, is being able to work with a small amount of training
+  data. Few-shot learning algorithms are useful to handle with data shortage
+  and computational costs.
+
+12.2 The future of transportation with AI
+
+The transportation domain is undergoing a major change, and much of the
+change is being driven by artiﬁcial intelligence. We have introduced numerous
+representative transportation applications that achieved superior performance
+with the help of deep learning technologies. In the future, we can imagine that
+more AI technologies will be widely and deeply applied in various transporta-
+tion scenarios at different levels, such as the single-vehicle level, trafﬁc-ﬂow
+level, and transportation-system level.
+
+1. Advanced driver-assistance systems: Many car manufacturers have long
+  since started to implement semi-autonomous driving features in their vehi-
+  cles, such as advanced driver-assistance systems (ADAS), to help perform
+  parking procedures, ensure control of the vehicle in bad weather condi-
+  tions, and avoid collisions. The future ADAS solutions will rely more on
+  AI-powered cameras and sensors designed to identify vehicles, obstacles,
+  pedestrians, or passengers’ facial expressions through computer vision, alert
+  the driver, and even trigger autonomous actions. With AI-based ADAS, we
+  Future directions Chapter | 12 215
+
+  can anticipate that adaptive cruise control, forward-collision warning, auto-
+  motive night vision, trafﬁc sign recognition, driver monitoring systems, and
+  more advanced functionalities will be implemented in new vehicles. But, the
+  related machine learning-research areas will still be popular.
+2. Self-driving vehicles: To achieve autonomous driving, AI needs to plan and
+  execute actions without the inﬂuence of a human driver. AI is equipped
+  to perform the same functions as a human driver. It has recognition and
+  decision-making abilities, sensory functions, and the ability to model data
+  with deep learning algorithms. Armed with these innovations, the AI-
+  powered vehicle can perform autonomously. The IoT-based sensors generate
+  an enormous amount of data, which is then translated into useful insight with
+  the help of AI algorithms, object character recognition, machine learning,
+  and computer vision techniques. The role of AI in autonomous vehicles is to
+  make a vehicle’s sensing, prediction, and control exhibit the characteristics
+  of a human driver. AI enables it to see, hear, think, and make decisions by it-
+  self using the data that has been gathered by using the components implanted
+  in the vehicle.
+3. Smart parking: Few things can be more dreadful than trafﬁc and speed-
+  ing tickets, bit one of them is the endless search for a parking space in an
+  overcrowded lot or dense city streets. AI can come to our aid and make this
+  “mission impossible” a bit easier with the help of collected parking-lot infor-
+  mation via cameras and computer vision. Parking guidance and information
+  systems will provide not only parking availability information but the short-
+  est or proper path to the available slots.
+4. Trafﬁc Management and road monitoring: Trafﬁc management systems
+  might be seen as something less glamorous than other high-tech transporta-
+  tion solutions such as autonomous vehicles. However, these systems still
+  represent one of the most useful manifestations of artiﬁcial intelligence in
+  transportation because they make drivers’ lives less stressful, help reduce
+  road accidents, and mitigate pollution. The idea is to deploy a widespread
+  network of sensors and cameras to oversee the trafﬁc ﬂow, monitor road
+  conditions, and identify accidents via computer vision. This allows authori-
+  ties to intervene promptly in the event of accidents, speed up road repair and
+  maintenance operations, and optimize trafﬁc light switching based on vehi-
+  cle density. How to design and properly deploy multi-agent reinforcement
+  learning-based large-scale trafﬁc network control model might be the next
+  step for trafﬁc management.
+
+12.3 Book extension and future plan
+
+This book brieﬂy introduces basic machine learning and representative deep
+learning models. These methods have been widely applied in the transportation
+research domain and applications, including trafﬁc object detection, road trafﬁc
+prediction, trafﬁc state classiﬁcation, among other. With the growth of massive
+216 Machine Learning for Transportation Research and Applications
+
+trafﬁc data and the rapid development of deep learning research, we can imagine
+new technologies including connected autonomous vehicle, autonomous driv-
+ing, digital twins, will fully reform the transportation system.
+
+  To ensure that this textbook continues to provide comprehensive and prompt
+knowledge of machine learning and deep learning applied in the transportation
+domain, the authors will revise the context of the book based on the ongoing
+development of new machine learning technologies and their applications. This
+textbook will also update the exercises, case studies, and sample source code
+in each chapter based on the feedback of the book readers, including students
+it is to be hoped, in future editions. To help teachers use this book and further
+improve the textbooks’ quality, the authors will also provide slides to the public
+and share the latest information on the textbook website.
+Bibliography
+
+Alam, M., Moroni, D., Pieri, G., Tampucci, M., Gomes, M., Fonseca, J., Ferreira, J., Leone, G.R.,
+  2018. Real-time smart parking systems integration in distributed its for smart cities. Journal of
+  Advanced Transportation 2018.
+
+Almeida, T., Lourenço, B., Santos, V., 2020. Road detection based on simultaneous deep learning
+  approaches. Robotics and Autonomous Systems 133, 103605.
+
+Amato, G., Carrara, F., Falchi, F., Gennaro, C., Meghini, C., Vairo, C., 2017. Deep learning for
+  decentralized parking lot occupancy detection. Expert Systems with Applications 72, 327–334.
+
+Amato, G., Carrara, F., Falchi, F., Gennaro, C., Vairo, C., 2016. Car parking occupancy detection
+  using smart camera networks and deep learning. In: 2016 IEEE Symposium on Computers and
+  Communication (ISCC). IEEE, pp. 1212–1217.
+
+Ardestani, S.M., Jin, P.J., Volkmann, O., Gong, J., Zhou, Z., Feeley, C., 2016. 3d accident site
+  reconstruction using unmanned aerial vehicles (uav). Technical report.
+
+Association, A.T., et al., 2017. American trucking trends 2017. Transport Topics.
+Atwood, J., Towsley, D., 2016. Diffusion-convolutional neural networks. Advances in Neural Infor-
+
+  mation Processing Systems 29.
+Avazpour, I., Pitakrat, T., Grunske, L., Grundy, J., 2014. Dimensions and metrics for evaluating
+
+  recommendation systems. In: Recommendation Systems in Software Engineering. Springer,
+  pp. 245–273.
+Barmpounakis, E.N., Vlahogianni, E.I., Golias, J.C., Babinec, A., 2019. How accurate are small
+  drones for measuring microscopic trafﬁc parameters? Transportation Letters 11 (6), 332–340.
+Barofﬁo, L., Bondi, L., Cesana, M., Redondi, A.E., Tagliasacchi, M., 2015. A visual sensor network
+  for parking lot occupancy detection in smart cities. In: 2015 IEEE 2nd World Forum on Internet
+  of Things (WF-IoT). IEEE, pp. 745–750.
+Bayraktar, M.E., Arif, F., Ozen, H., Tuxen, G., 2015. Smart parking-management system for com-
+  mercial vehicle parking at public rest areas. Journal of Transportation Engineering 141 (5),
+  04014094.
+Bengio, Y., Simard, P., Frasconi, P., 1994. Learning long-term dependencies with gradient descent
+  is difﬁcult. IEEE Transactions on Neural Networks 5 (2), 157–166.
+Biçici, S., Zeybek, M., 2021. An approach for the automated extraction of road surface distress from
+  a uav-derived point cloud. Automation in Construction 122, 103475.
+Bolourian, N., Soltani, M.M., Albahria, A., Hammad, A., 2017. High level framework for bridge
+  inspection using lidar-equipped uav. In: ISARC. Proceedings of the International Symposium
+  on Automation and Robotics in Construction, vol. 34. IAARC Publications.
+Breckon, T.P., Barnes, S.E., Eichner, M.L., Wahren, K., 2009. Autonomous real-time vehicle de-
+  tection from a medium-level uav. In: Proc. 24th International Conference on Unmanned Air
+  Vehicle Systems. Citeseer, pp. 29–37.
+Brehar, R.D., Muresan, M.P., Mari¸ta, T., Vancea, C.-C., Negru, M., Nedevschi, S., 2021. Pedes-
+  trian street-cross action recognition in monocular far infrared sequences. IEEE Access 9,
+  74302–74324.
+
+  217
+218 Bibliography
+
+Bruna, J., Zaremba, W., Szlam, A., LeCun, Y., 2014. Spectral networks and deep locally connected
+  networks on graphs. In: 2nd International Conference on Learning Representations. ICLR 2014.
+
+Bulan, O., Loce, R.P., Wu, W., Wang, Y.R., Bernal, E.A., Fan, Z., 2013. Video-based real-time
+  on-street parking occupancy detection system. Journal of Electronic Imaging 22 (4), 041109.
+
+Bush, V., et al., 1945. As we may think. The Atlantic Monthly 176 (1), 101–108.
+Cai, P., Wang, H., Sun, Y., Liu, M., 2022. Dq-gat: towards safe and efﬁcient autonomous driving with
+
+  deep q-learning and graph attention networks. IEEE Transactions on Intelligent Transportation
+  Systems.
+Cakir, F., He, K., Xia, X., Kulis, B., Sclaroff, S., 2019. Deep metric learning to rank. In: Proceedings
+  of the IEEE Conference on Computer Vision and Pattern Recognition, pp. 1861–1870.
+Cao, X., Gao, C., Lan, J., Yuan, Y., Yan, P., 2014. Ego motion guided particle ﬁlter for vehicle
+  tracking in airborne videos. Neurocomputing 124, 168–177.
+Cao, X., Wu, C., Lan, J., Yan, P., Li, X., 2011. Vehicle detection and motion analysis in low-altitude
+  airborne video under urban environment. IEEE Transactions on Circuits and Systems for Video
+  Technology 21 (10), 1522–1533.
+Carletti, V., Greco, A., Saggese, A., Vento, M., 2018. Multi-object tracking by ﬂying cameras based
+  on a forward-backward interaction. IEEE Access 6, 43905–43919.
+Chakraborty, P., Sharma, A., Hegde, C., 2018. Freeway trafﬁc incident detection from cameras: a
+  semi-supervised learning approach. In: 2018 21st International Conference on Intelligent Trans-
+  portation Systems (ITSC). IEEE, pp. 1840–1845.
+Chan-Edmiston, S., Fischer, S., Sloan, S., Wong, M., et al., 2020. Intelligent transportation systems
+  (its) joint program ofﬁce: strategic plan 2020–2025. Technical report, United States. Department
+  of Transportation. Intelligent transportation . . . .
+Che, Z., Purushotham, S., Cho, K., Sontag, D., Liu, Y., 2018. Recurrent neural networks for multi-
+  variate time series with missing values. Scientiﬁc Reports 8 (1), 1–12.
+Chen, A.Y., Chiu, Y.-L., Hsieh, M.-H., Lin, P.-W., Angah, O., 2020a. Conﬂict analytics through the
+  vehicle safety space in mixed trafﬁc ﬂows using uav image sequences. Transportation Research.
+  Part C, Emerging Technologies 119, 102744.
+Chen, C., Liu, B., Wan, S., Qiao, P., Pei, Q., 2020b. An edge trafﬁc ﬂow detection scheme based on
+  deep learning in an intelligent transportation system. IEEE Transactions on Intelligent Trans-
+  portation Systems 22 (3), 1840–1852.
+Chen, J., Ding, G., Yang, Y., Han, W., Xu, K., Gao, T., Zhang, Z., Ouyang, W., Cai, H., Chen, Z.,
+  2021. Dual-modality vehicle anomaly detection via bilateral trajectory tracing. In: Proceedings
+  of the IEEE/CVF Conference on Computer Vision and Pattern Recognition, pp. 4016–4025.
+Chen, L., Ma, N., Wang, P., Li, J., Wang, P., Pang, G., Shi, X., 2020c. Survey of pedestrian ac-
+  tion recognition techniques for autonomous driving. Tsinghua Science and Technology 25 (4),
+  458–470.
+Chen, M., Yu, X., Liu, Y., 2019a. Mpe: a mobility pattern embedding model for predicting next
+  locations. World Wide Web 22 (6), 2901–2920.
+Chen, S., Laefer, D.F., Mangina, E., Zolanvari, I., Byrne, J., 2019. Uav bridge inspection through
+  evaluated 3d reconstructions.
+Chen, X., Li, Z., Yang, Y., Qi, L., Ke, R., 2020d. High-resolution vehicle trajectory extraction and
+  denoising from aerial videos. IEEE Transactions on Intelligent Transportation Systems 22 (5),
+  3190–3202.
+Chen, X., Wu, S., Shi, C., Huang, Y., Yang, Y., Ke, R., Zhao, J., 2020e. Sensing data supported
+  trafﬁc ﬂow prediction via denoising schemes and ann: a comparison. IEEE Sensors Journal 20
+  (23), 14317–14328.
+Chen, Y., Lv, Y., Wang, F.-Y., 2019c. Trafﬁc ﬂow imputation using parallel data and genera-
+  tive adversarial networks. IEEE Transactions on Intelligent Transportation Systems 21 (4),
+  1624–1630.
+Chen, Y.-y., Lv, Y., Li, Z., Wang, F.-Y., 2016. Long short-term memory model for trafﬁc congestion
+  prediction with online open data. In: Intelligent Transportation Systems (ITSC), 2016 IEEE
+  19th International Conference on. IEEE, pp. 132–137.
+  Bibliography 219
+
+Chen, Z., Zhang, J., Tao, D., 2019d. Progressive lidar adaptation for road detection. IEEE/CAA
+  Journal of Automatica Sinica 6 (3), 693–702.
+
+Cheng, B., Collins, M.D., Zhu, Y., Liu, T., Huang, T.S., Adam, H., Chen, L.-C., 2020a.
+  Panoptic-deeplab: a simple, strong, and fast baseline for bottom-up panoptic segmentation.
+  In: Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition,
+  pp. 12475–12485.
+
+Cheng, Y., Rau, S., Srivastava, A., Li, S., Parker, S.T., Perry, E., Ahn, S., Noyce, D.A., 2020b. Data
+  archiving and performance measurement for a multi-state truck parking information manage-
+  ment system (tpims). In: International Conference on Transportation and Development 2020.
+  American Society of Civil Engineers, Reston, VA, pp. 251–260.
+
+Cho, K., van Merrienboer, B., Gulcehre, C., Bahdanau, D., Bougares, F., Schwenk, H., Bengio,
+  Y., 2014. Learning phrase representations using rnn encoder–decoder for statistical machine
+  translation. In: Proceedings of the 2014 Conference on Empirical Methods in Natural Language
+  Processing (EMNLP), pp. 1724–1734.
+
+Cho, W., Park, S., Kim, M.-j., Han, S., Kim, M., Kim, T., Kim, J., Paik, J., 2018. Robust park-
+  ing occupancy monitoring system using random forests. In: 2018 International Conference on
+  Electronics, Information, and Communication (ICEIC). IEEE, pp. 1–4.
+
+Constantinescu, S.-G., Nedelcut, F., 2011. Uav systems in support of law enforcement forces. In:
+  International Conference of Scientiﬁc Paper AFASES, vol. 2011, pp. 1211–1219.
+
+Cordts, M., Omran, M., Ramos, S., Rehfeld, T., Enzweiler, M., Benenson, R., Franke, U., Roth, S.,
+  Schiele, B., 2016. The cityscapes dataset for semantic urban scene understanding. In: Proceed-
+  ings of the IEEE Conference on Computer Vision and Pattern Recognition, pp. 3213–3223.
+
+Cortes, C.E., Lavanya, R., Oh, J.-S., Jayakrishnan, R., 2002. General-purpose methodology for
+  estimating link travel time with multiple-point detection of trafﬁc. Transportation Research
+  Record 1802 (1), 181–189.
+
+Cui, Z., Ke, R., Pu, Z., Wang, Y., 2020. Stacked bidirectional and unidirectional lstm recurrent
+  neural network for forecasting network-wide trafﬁc state with missing values. Transportation
+  Research. Part C, Emerging Technologies 118, 102674.
+
+Cui, Z., Long, Y., 2019. Perspectives on stability and mobility of transit passenger’s travel behaviour
+  through smart card data. IET Intelligent Transport Systems 13 (12), 1761–1769.
+
+Cybenko, G., 1989. Approximation by superpositions of a sigmoidal function. Mathematics of Con-
+  trol, Signals and Systems 2 (4), 303–314.
+
+Daganzo, C.F., 1994. The cell transmission model: a dynamic representation of highway trafﬁc
+  consistent with the hydrodynamic theory. Transportation Research. Part B: Methodological 28
+  (4), 269–287.
+
+Da’u, A., Salim, N., 2019. Recommendation system based on deep learning methods: a systematic
+  review and new directions. Artiﬁcial Intelligence Review, 1–40.
+
+Defferrard, M., Bresson, X., Vandergheynst, P., 2016. Convolutional neural networks on graphs with
+  fast localized spectral ﬁltering. Advances in Neural Information Processing Systems 29.
+
+Djenouri, Y., Zimek, A., Chiarandini, M., 2018. Outlier detection in urban trafﬁc ﬂow distributions.
+  In: 2018 IEEE International Conference on Data Mining (ICDM). IEEE, pp. 935–940.
+
+Dreyfus, S.E., Bellman, R., 1962. Applied Dynamic Programming. Princeton University Press.
+Duan, Y., Lv, Y., Wang, F.Y., 2016. Travel time prediction with LSTM neural network. In: IEEE
+
+  Conference on Intelligent Transportation Systems, Proceedings. ITSC. IEEE, pp. 1053–1058.
+Erkent, Ö., Laugier, C., 2020. Semantic segmentation with unsupervised domain adaptation under
+
+  varying weather conditions for autonomous vehicles. IEEE Robotics and Automation Letters 5
+  (2), 3580–3587.
+Erlik Nowruzi, F., El Ahmar, W.A., Laganiere, R., Ghods, A.H., 2019. In-vehicle occupancy de-
+  tection with convolutional networks on thermal images. In: 2019 IEEE/CVF Conference on
+  Computer Vision and Pattern Recognition Workshops (CVPRW). Long Beach, CA, USA,
+  pp. 941–948.
+Everingham, M., Van Gool, L., Williams, C.K., Winn, J., Zisserman, A., 2010. The Pascal visual
+  object classes (voc) challenge. International Journal of Computer Vision 88 (2), 303–338.
+220 Bibliography
+
+Fan, R., Jiao, J., Pan, J., Huang, H., Shen, S., Liu, M., 2019. Real-time dense stereo embedded in
+  a UAV for road inspection. In: 2019 IEEE/CVF Conference on Computer Vision and Pattern
+  Recognition Workshops (CVPRW). Long Beach, CA, USA, pp. 535–543.
+
+Fan, R., Wang, H., Cai, P., Liu, M., 2020. Sne-roadseg: incorporating surface normal information
+  into semantic segmentation for accurate freespace detection. In: European Conference on Com-
+  puter Vision. Springer, pp. 340–356.
+
+Fang, X., Huang, J., Wang, F., Zeng, L., Liang, H., Wang, H., 2020. Constgat: contextual spatial-
+  temporal graph attention network for travel time estimation at baidu maps. In: Proceedings of
+  the 26th ACM SIGKDD International Conference on Knowledge Discovery & Data Mining,
+  pp. 2697–2705.
+
+Farag, W., 2020. Real-time detection of road lane-lines for autonomous driving. Recent Advances in
+  Computer Science and Communications (Formerly: Recent Patents on Computer Science) 13
+  (2), 265–274.
+
+Feng, J., Rong, C., Sun, F., Guo, D., Li, Y., 2020. Pmf: a privacy-preserving human mobility pre-
+  diction framework via federated learning. Proceedings of the ACM on Interactive, Mobile,
+  Wearable and Ubiquitous Technologies 4 (1), 1–21.
+
+Fernando, T., Denman, S., Sridharan, S., Fookes, C., 2020. Deep inverse reinforcement learning for
+  behavior prediction in autonomous driving: accurate forecasts of vehicle motion. IEEE Signal
+  Processing Magazine 38 (1), 87–96.
+
+Frank, R.J., Davey, N., Hunt, S.P., 2001. Time series prediction and neural networks. Journal of
+  Intelligent & Robotic Systems 31 (1–3), 91–103.
+
+Gal, Y., Ghahramani, Z., 2016. A theoretically grounded application of dropout in recurrent neural
+  networks. In: Advances in Neural Information Processing Systems, pp. 1019–1027.
+
+Geng, B., Tao, D., Xu, C., 2011. Daml: domain adaptation metric learning. IEEE Transactions on
+  Image Processing 20 (10), 2980–2989.
+
+Geng, Y., Cassandras, C.G., 2013. New “smart parking” system based on resource allocation and
+  reservations. IEEE Transactions on Intelligent Transportation Systems 14 (3), 1129–1139.
+
+Gers, F.A., Schmidhuber, J., Cummins, F., 1999. Learning to forget: continual prediction with
+  LSTM.
+
+Glumov, N., Kolomiyetz, E., Sergeyev, V., 1995. Detection of objects on the image using a sliding
+  window mode. Optics and Laser Technology 27 (4), 241–249.
+
+Gomaa, A., Abdelwahab, M.M., Abo-Zahhad, M., 2018. Real-time algorithm for simultaneous ve-
+  hicle detection and tracking in aerial view videos. In: 2018 IEEE 61st International Midwest
+  Symposium on Circuits and Systems (MWSCAS). IEEE, pp. 222–225.
+
+Goodfellow, I., Bengio, Y., Courville, A., 2016. Deep Learning. MIT Press. http://www.
+  deeplearningbook.org.
+
+Goodfellow, I., Pouget-Abadie, J., Mirza, M., Xu, B., Warde-Farley, D., Ozair, S., Courville, A.,
+  Bengio, Y., 2020. Generative adversarial networks. Communications of the ACM 63 (11),
+  139–144.
+
+Greff, K., Srivastava, R.K., Koutnik, J., Steunebrink, B.R., Schmidhuber, J., 2017. LSTM: a
+  search space odyssey. IEEE Transactions on Neural Networks and Learning Systems 28 (10),
+  2222–2232.
+
+Grodi, R., Rawat, D.B., Rios-Gutierrez, F., 2016. Smart parking: parking occupancy monitoring and
+  visualization system for smart cities. In: SoutheastCon 2016. IEEE, pp. 1–5.
+
+Haferkamp, M., Al-Askary, M., Dorn, D., Sliwa, B., Habel, L., Schreckenberg, M., Wietfeld, C.,
+  2017. Radio-based trafﬁc ﬂow detection and vehicle classiﬁcation for future smart cities. In:
+  2017 IEEE 85th Vehicular Technology Conference (VTC Spring). IEEE, pp. 1–5.
+
+Hammond, D.K., Vandergheynst, P., Gribonval, R., 2011. Wavelets on graphs via spectral graph
+  theory. Applied and Computational Harmonic Analysis 30 (2), 129–150.
+
+Han, H., Ma, W., Zhou, M., Guo, Q., Abusorrah, A., 2020a. A novel semi-supervised learning
+  approach to pedestrian reidentiﬁcation. IEEE Internet of Things Journal 8 (4), 3042–3052.
+
+Han, H., Zhou, M., Shang, X., Cao, W., Abusorrah, A., 2020b. Kiss+ for rapid and accurate
+  pedestrian re-identiﬁcation. IEEE Transactions on Intelligent Transportation Systems 22 (1),
+  394–403.
+  Bibliography 221
+
+Haque, K., Mishra, S., Paleti, R., Golias, M.M., Sarker, A.A., Pujats, K., 2017. Truck parking uti-
+  lization analysis using gps data. Journal of Transportation Engineering. Part A, Systems 143
+  (9), 04017045.
+
+Hard, A., Rao, K., Mathews, R., Ramaswamy, S., Beaufays, F., Augenstein, S., Eichner, H., Kid-
+  don, C., Ramage, D., 2018. Federated learning for mobile keyboard prediction. ArXiv preprint.
+  arXiv:1811.03604.
+
+He, K., Gkioxari, G., Dollár, P., Girshick, R., 2017. Mask r-cnn. In: Proceedings of the IEEE Inter-
+  national Conference on Computer Vision, pp. 2961–2969.
+
+He, S., Luo, H., Chen, W., Zhang, M., Zhang, Y., Wang, F., Li, H., Jiang, W., 2020. Multi-domain
+  learning and identity mining for vehicle re-identiﬁcation. In: Proceedings of the IEEE/CVF
+  Conference on Computer Vision and Pattern Recognition Workshops, pp. 582–583.
+
+Heinrich, H.W., et al., 1941. Industrial Accident Prevention. A Scientiﬁc Approach, second edition.
+Henaff, M., Bruna, J., LeCun, Y., 2015. Deep convolutional networks on graph-structured data.
+
+  ArXiv preprint. arXiv:1506.05163.
+Ho, T.-J., Chung, M.-J., 2016. An approach to trafﬁc ﬂow detection improvements of non-contact
+
+  microwave radar detectors. In: 2016 International Conference on Applied System Innovation
+  (ICASI). IEEE, pp. 1–4.
+Hochreiter, S., Schmidhuber, J., 1997. Long short-term memory. Neural Computation 9 (8),
+  1735–1780.
+Hoi, S.C., Liu, W., Chang, S.-F., 2010. Semi-supervised distance metric learning for collaborative
+  image retrieval and clustering. ACM Transactions on Multimedia Computing, Communications,
+  and Applications (TOMM) 6 (3), 1–26.
+Hoi, S.C., Liu, W., Lyu, M.R., Ma, W.-Y., 2006. Learning distance metrics with contextual con-
+  straints for image retrieval. In: 2006 IEEE Computer Society Conference on Computer Vision
+  and Pattern Recognition (CVPR’06), vol. 2. IEEE, pp. 2072–2078.
+Huang, H., Savkin, A.V., Huang, C., 2021. Decentralized autonomous navigation of a uav network
+  for road trafﬁc monitoring. IEEE Transactions on Aerospace and Electronic Systems 57 (4),
+  2558–2564.
+Huang, T.-W., Cai, J., Yang, H., Hsu, H.-M., Hwang, J.-N., 2019. Multi-view vehicle re-
+  identiﬁcation using temporal attention model and metadata re-ranking. In: CVPR Workshops,
+  vol. 2.
+Huang, X., He, P., Rangarajan, A., Ranka, S., 2020. Intelligent intersection: two-stream convolu-
+  tional networks for real-time near-accident detection in trafﬁc video. ACM Transactions on
+  Spatial Algorithms and Systems (TSAS) 6 (2), 1–28.
+Hung, W.-C., Tsai, Y.-H., Liou, Y.-T., Lin, Y.-Y., Yang, M.-H., 2018. Adversarial learning for semi-
+  supervised semantic segmentation. ArXiv preprint .arXiv:1802.07934.
+Ibrahim, M.R., Haworth, J., Christie, N., Cheng, T., 2021. Cyclingnet: detecting cycling near misses
+  from video streams in complex urban scenes with deep learning. IET Intelligent Transport Sys-
+  tems 15 (10), 1331–1344.
+Ismail, K., Sayed, T., Saunier, N., Lim, C., 2009. Automated analysis of pedestrian–vehicle conﬂicts
+  using video data. Transportation Research Record 2140 (1), 44–54.
+Jayaraman, S.K., Tilbury, D.M., Yang, X.J., Pradhan, A.K., Robert, L.P., 2020. Analysis and pre-
+  diction of pedestrian crosswalk behavior during automated vehicle interactions. In: 2020 IEEE
+  International Conference on Robotics and Automation (ICRA). IEEE, pp. 6426–6432.
+Jeon, Y., Ju, H.-I., Yoon, S., 2018. Design of an lpwan communication module based on secure
+  element for smart parking application. In: 2018 IEEE International Conference on Consumer
+  Electronics (ICCE). IEEE, pp. 1–2.
+Jung, S., Song, S., Kim, S., Park, J., Her, J., Roh, K., Myung, H., 2019. Toward autonomous bridge
+  inspection: a framework and experimental results. In: 2019 16th International Conference on
+  Ubiquitous Robots (UR). IEEE, pp. 208–211.
+Kaplan, A., Haenlein, M., 2019. Siri, siri, in my hand: who’s the fairest in the land? On the in-
+  terpretations, illustrations, and implications of artiﬁcial intelligence. Business Horizons 62 (1),
+  15–25.
+222 Bibliography
+
+Karaduman, M., Cınar, A., Eren, H., 2019. Uav trafﬁc patrolling via road detection and tracking in
+  anonymous aerial video frames. Journal of Intelligent & Robotic Systems 95 (2), 675–690.
+
+Kataoka, H., Suzuki, T., Oikawa, S., Matsui, Y., Satoh, Y., 2018. Drive video analysis for the de-
+  tection of trafﬁc near-miss incidents. In: 2018 IEEE International Conference on Robotics and
+  Automation (ICRA). IEEE, pp. 3421–3428.
+
+Kaufmann, S., Kerner, B.S., Rehborn, H., Koller, M., Klenov, S.L., 2018. Aerial observations of
+  moving synchronized ﬂow patterns in over-saturated city trafﬁc. Transportation Research. Part
+  C, Emerging Technologies 86, 393–406.
+
+Ke, R., 2016. A novel framework for real-time trafﬁc ﬂow parameter estimation from aerial videos.
+  PhD thesis.
+
+Ke, R., 2020. Real-Time Video Analytics Empowered by Machine Learning and Edge Computing
+  for Smart Transportation Applications. University of Washington.
+
+Ke, R., Cui, Z., Chen, Y., Zhu, M., Yang, H., Wang, Y., 2020a. Edge computing for real-time near-
+  crash detection for smart transportation applications. ArXiv preprint. arXiv:2008.00549.
+
+Ke, R., Feng, S., Cui, Z., Wang, Y., 2020b. Advanced framework for microscopic and lane-level
+  macroscopic trafﬁc parameters estimation from uav video. IET Intelligent Transport Systems 14
+  (7), 724–734.
+
+Ke, R., Li, W., Cui, Z., Wang, Y., 2020c. Two-stream multi-channel convolutional neural network for
+  multi-lane trafﬁc speed prediction considering trafﬁc volume impact. Transportation Research
+  Record 2674 (4), 459–470.
+
+Ke, R., Li, Z., Kim, S., Ash, J., Cui, Z., Wang, Y., 2016. Real-time bidirectional trafﬁc ﬂow param-
+  eter estimation from aerial videos. IEEE Transactions on Intelligent Transportation Systems 18
+  (4), 890–901.
+
+Ke, R., Li, Z., Tang, J., Pan, Z., Wang, Y., 2018a. Real-time trafﬁc ﬂow parameter estimation from
+  uav video based on ensemble classiﬁer and optical ﬂow. IEEE Transactions on Intelligent Trans-
+  portation Systems 20 (1), 54–64.
+
+Ke, R., Liu, C., Yang, H., Sun, W., Wang, Y., 2022. Real-time trafﬁc and road surveillance with
+  parallel edge intelligence. IEEE Journal of Radio Frequency Identiﬁcation.
+
+Ke, R., Lutin, J., Spears, J., Wang, Y., 2017. A cost-effective framework for automated vehicle-
+  pedestrian near-miss detection through onboard monocular vision. In: Proceedings of the IEEE
+  Conference on Computer Vision and Pattern Recognition Workshops, pp. 25–32.
+
+Ke, R., Zeng, Z., Pu, Z., Wang, Y., 2018b. New framework for automatic identiﬁcation and quantiﬁ-
+  cation of freeway bottlenecks based on wavelet analysis. Journal of Transportation Engineering.
+  Part A, Systems 144 (9), 04018044.
+
+Ke, R., Zhuang, Y., Pu, Z., Wang, Y., 2020d. A smart, efﬁcient, and reliable parking surveillance
+  system with edge artiﬁcial intelligence on iot devices. IEEE Transactions on Intelligent Trans-
+  portation Systems 22 (8), 4962–4974.
+
+Khan, M.A., Ectors, W., Bellemans, T., Janssens, D., Wets, G., 2017. Unmanned aerial vehicle–
+  based trafﬁc analysis: methodological framework for automated multivehicle trajectory extrac-
+  tion. Transportation Research Record 2626 (1), 25–33.
+
+Khan, M.A., Ectors, W., Bellemans, T., Janssens, D., Wets, G., 2018. Unmanned aerial vehicle-
+  based trafﬁc analysis: a case study for shockwave identiﬁcation and ﬂow parameters estimation
+  at signalized intersections. Remote Sensing 10 (3), 458.
+
+Kipf, T.N., Welling, M., 2017. Semi-supervised classiﬁcation with graph convolutional networks.
+  arXiv:1609.02907 [abs].
+
+Klauer, C., Dingus, T.A., Neale, V.L., Sudweeks, J.D., Ramsey, D.J., et al., 2006. The impact of
+  driver inattention on near-crash/crash risk: an analysis using the 100-car naturalistic driving
+  study data.
+
+Klein, L.A., Mills, M.K., Gibson, D.R., et al., 2006. Trafﬁc detector handbook: Volume i. Technical
+  report. Turner-Fairbank Highway Research Center.
+
+Krizhevsky, A., Sutskever, I., Hinton, G.E., 2012. Imagenet classiﬁcation with deep convolutional
+  neural networks. Advances in Neural Information Processing Systems 25, 1097–1105.
+  Bibliography 223
+
+Kulis, B., et al., 2012. Metric learning: a survey. Foundations and Trends in Machine Learning 5
+  (4), 287–364.
+
+Lee, S., Kim, H.G., Ro, Y.M., 2018. Stan: spatio-temporal adversarial networks for abnormal event
+  detection. In: 2018 IEEE International Conference on Acoustics, Speech and Signal Processing
+  (ICASSP). IEEE, pp. 1323–1327.
+
+Lee, S., Park, E., Yi, H., Lee, S.H., 2020. Strdan: synthetic-to-real domain adaptation network for
+  vehicle re-identiﬁcation. In: Proceedings of the IEEE/CVF Conference on Computer Vision and
+  Pattern Recognition Workshops, pp. 608–609.
+
+Lee, S., Yoon, D., Ghosh, A., 2008. Intelligent parking lot application using wireless sensor net-
+  works. In: 2008 International Symposium on Collaborative Technologies and Systems. IEEE,
+  pp. 48–57.
+
+Lei, B., Wang, N., Xu, P., Song, G., 2018. New crack detection method for bridge inspection using
+  uav incorporating image processing. Journal of Aerospace Engineering 31 (5), 04018058.
+
+Leonardi, G., Barrile, V., Palamara, R., Suraci, F., Candela, G., 2018. 3d mapping of pavement
+  distresses using an unmanned aerial vehicle (uav) system. In: International Symposium on New
+  Metropolitan Perspectives. Springer, pp. 164–171.
+
+Li, A., Wang, S., Li, W., Liu, S., Zhang, S., 2020a. Predicting human mobility with federated
+  learning. In: Proceedings of the 28th International Conference on Advances in Geographic In-
+  formation Systems, pp. 441–444.
+
+Li, J., Cao, X., Guo, D., Xie, J., Chen, H., 2020b. Task scheduling with uav-assisted vehicular cloud
+  for road detection in highway scenario. IEEE Internet of Things Journal 7 (8), 7702–7713.
+
+Li, J., Wei, Y., Liang, X., Zhao, F., Li, J., Xu, T., Feng, J., 2017. Deep attribute-preserving metric
+  learning for natural language object retrieval. In: Proceedings of the 25th ACM International
+  Conference on Multimedia, pp. 181–189.
+
+Li, J., Xu, Z., Fu, L., Zhou, X., Yu, H., 2021a. Domain adaptation from daytime to nighttime: a
+  situation-sensitive vehicle detection and trafﬁc ﬂow parameter estimation framework. Trans-
+  portation Research. Part C, Emerging Technologies 124, 102946.
+
+Li, J., Ye, D.H., Chung, T., Kolsch, M., Wachs, J., Bouman, C., 2016. Multi-target detection and
+  tracking from a single camera in unmanned aerial vehicles (uavs). In: 2016 IEEE/RSJ Interna-
+  tional Conference on Intelligent Robots and Systems (IROS). IEEE, pp. 4992–4997.
+
+Li, T., Sanjabi, M., Beirami, A., Smith, V., 2019a. Fair resource allocation in federated learning.
+  ArXiv preprint. arXiv:1905.10497.
+
+Li, Y., Che, P., Liu, C., Wu, D., Du, Y., 2021b. Cross-scene pavement distress detection by a novel
+  transfer learning framework. Computer-Aided Civil and Infrastructure Engineering 36 (11),
+  1398–1415.
+
+Li, Y., Wu, J., Bai, X., Yang, X., Tan, X., Li, G., Wen, S., Zhang, H., Ding, E., 2020c. Multi-
+  granularity tracking with modularlized components for unsupervised vehicles anomaly detec-
+  tion. In: Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition
+  Workshops, pp. 586–587.
+
+Li, Y., Yu, R., Shahabi, C., Liu, Y., 2018. Diffusion convolutional recurrent neural network: data-
+  driven trafﬁc forecasting. In: International Conference on Learning Representations (ICLR ’18).
+
+Li, Y., Zhu, Z., Kong, D., Xu, M., Zhao, Y., 2019b. Learning heterogeneous spatial-temporal rep-
+  resentation for bike-sharing demand prediction. In: Proceedings of the AAAI Conference on
+  Artiﬁcial Intelligence, vol. 33, pp. 1004–1011.
+
+Liang, H., Song, H., Li, H., Dai, Z., 2020. Vehicle counting system using deep learning and multi-
+  object tracking methods. Transportation Research Record 2674 (4), 114–128.
+
+Liang, Y., Cui, Z., Tian, Y., Chen, H., Wang, Y., 2018. A deep generative adversarial architecture for
+  network-wide spatial-temporal trafﬁc-state estimation. Transportation Research Record 2672
+  (45), 87–105.
+
+Lillicrap, T.P., Hunt, J.J., Pritzel, A., Heess, N., Erez, T., Tassa, Y., Silver, D., Wierstra, D., 2015.
+  Continuous control with deep reinforcement learning. ArXiv preprint. arXiv:1509.02971.
+
+Lin, T., Rivano, H., Le Mouël, F., 2017. A survey of smart parking solutions. IEEE Transactions on
+  Intelligent Transportation Systems 18 (12), 3229–3253.
+224 Bibliography
+
+Lin, Y., Saripalli, S., 2012. Road detection from aerial imagery. In: 2012 IEEE International Con-
+  ference on Robotics and Automation. IEEE, pp. 3588–3593.
+
+Ling, X., Sheng, J., Baiocchi, O., Liu, X., Tolentino, M.E., 2017. Identifying parking spaces &
+  detecting occupancy using vision-based iot devices. In: 2017 Global Internet of Things Summit
+  (GIoTS). IEEE, pp. 1–6.
+
+Liu, B., Adeli, E., Cao, Z., Lee, K.-H., Shenoi, A., Gaidon, A., Niebles, J.C., 2020a. Spatiotemporal
+  relationship reasoning for pedestrian intent prediction. IEEE Robotics and Automation Letters 5
+  (2), 3485–3492.
+
+Liu, C., Song, Y., Chang, F., Li, S., Ke, R., Wang, Y., 2022. Posture calibration based cross-view
+  & hard-sensitive metric learning for uav-based vehicle re-identiﬁcation. IEEE Transactions on
+  Intelligent Transportation Systems.
+
+Liu, H., Ma, J., Yan, W., Liu, W., Zhang, X., Li, C., 2018. Trafﬁc ﬂow detection using distributed
+  ﬁber optic acoustic sensing. IEEE Access 6, 68968–68980.
+
+Liu, J., Li, T., Xie, P., Du, S., Teng, F., Yang, X., 2020b. Urban big data fusion based on deep
+  learning: an overview. Information Fusion 53, 123–133.
+
+Liu, W., Yang, H., Yin, Y., 2014. Expirable parking reservations for managing morning commute
+  with parking space constraints. Transportation Research. Part C, Emerging Technologies 44,
+  185–201.
+
+Liu, X., Liu, W., Mei, T., Ma, H., 2016. A deep learning-based approach to progressive vehicle re-
+  identiﬁcation for urban surveillance. In: European Conference on Computer Vision. Springer,
+  pp. 869–884.
+
+Liu, Z., Zhang, W., Gao, X., Meng, H., Tan, X., Zhu, X., Xue, Z., Ye, X., Zhang, H., Wen, S., et
+  al., 2020c. Robust movement-speciﬁc vehicle counting at crowded intersections. In: Proceed-
+  ings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition Workshops,
+  pp. 614–615.
+
+Loewenherz, F., Bahl, V., Wang, Y., 2017. Video analytics towards vision zero. Institute of Trans-
+  portation Engineers. ITE Journal 87 (3), 25.
+
+Lou, L., Zhang, J., Xiong, Y., Jin, Y., 2019. An improved roadside parking space occupancy detec-
+  tion method based on magnetic sensors and wireless signal strength. Sensors 19 (10), 2348.
+
+Lu, C., Hu, F., Cao, D., Gong, J., Xing, Y., Li, Z., 2019. Virtual-to-real knowledge transfer for
+  driving behavior recognition: framework and a case study. IEEE Transactions on Vehicular
+  Technology 68 (7), 6391–6402.
+
+Luo, S., Zhang, X., Hu, J., Xu, J., 2020. Multiple lane detection via combining complementary struc-
+  tural constraints. IEEE Transactions on Intelligent Transportation Systems 22 (12), 7597–7606.
+
+Luo, Z., Branchaud-Charron, F., Lemaire, C., Konrad, J., Li, S., Mishra, A., Achkar, A., Eichel, J.,
+  Jodoin, P.-M., 2018. Mio-tcd: a new benchmark dataset for vehicle classiﬁcation and localiza-
+  tion. IEEE Transactions on Image Processing 27 (10), 5129–5141.
+
+Lyu, N., Wen, J., Duan, Z., Wu, C., 2020. Vehicle trajectory prediction and cut-in collision warning
+  model in a connected vehicle environment. IEEE Transactions on Intelligent Transportation
+  Systems 23 (2), 966–981.
+
+Ma, X., Tao, Z., Wang, Y.Y., Yu, H., Wang, Y.Y., 2015. Long short-term memory neural network for
+  trafﬁc speed prediction using remote microwave sensor data. Transportation Research. Part C,
+  Emerging Technologies 54, 187–197.
+
+Ma, X., Wu, Y.-J., Wang, Y., 2011. Drive net: e-science transportation platform for data sharing,
+  visualization, modeling, and analysis. Transportation Research Record 2215 (1), 37–49.
+
+Makizako, H., Shimada, H., Hotta, R., Doi, T., Tsutsumimoto, K., Nakakubo, S., Makino, K., 2018.
+  Associations of near-miss trafﬁc incidents with attention and executive function among older
+  Japanese drivers. Gerontology 64, 495–502.
+
+Malinovskiy, Y., Saunier, N., Wang, Y., 2012. Pedestrian travel analysis using static bluetooth sen-
+  sors. Transportation Research Board: Journal of the Transportation Research Board, 1–22.
+
+Mallat, S., 1999. A Wavelet Tour of Signal Processing. Elsevier.
+Martchouk, M., Mannering, F., Bullock, D., 2011. Analysis of freeway travel time variability using
+
+  bluetooth detection. Journal of Transportation Engineering 137 (10), 697–704.
+  Bibliography 225
+
+McCord, M.R., Yang, Y., Jiang, Z., Coifman, B., Goel, P.K., 2003. Estimating annual average
+  daily trafﬁc from satellite imagery and air photos: empirical results. Transportation Research
+  Record 1855 (1), 136–142.
+
+McCulloch, W.S., Pitts, W., 1943. A logical calculus of the ideas immanent in nervous activity. The
+  Bulletin of Mathematical Biophysics 5 (4), 115–133.
+
+McMahan, B., Moore, E., Ramage, D., Hampson, S., y Arcas, B.A., 2017. Communication-efﬁcient
+  learning of deep networks from decentralized data. In: Artiﬁcial Intelligence and Statistics.
+  PMLR, pp. 1273–1282.
+
+Menouar, H., Guvenc, I., Akkaya, K., Uluagac, A.S., Kadri, A., Tuncer, A., 2017. Uav-enabled
+  intelligent transportation systems for the smart city: applications and challenges. IEEE Com-
+  munications Magazine 55 (3), 22–28.
+
+Mercader, P., Haddad, J., 2020. Automatic incident detection on freeways based on bluetooth trafﬁc
+  monitoring. Accident Analysis and Prevention 146, 105703.
+
+Mnih, V., Kavukcuoglu, K., Silver, D., Rusu, A.A., Veness, J., Bellemare, M.G., Graves, A., Ried-
+  miller, M., Fidjeland, A.K., Ostrovski, G., et al., 2015. Human-level control through deep
+  reinforcement learning. Nature 518 (7540), 529–533.
+
+Mohan, R., Valada, A., 2021. Efﬁcientps: efﬁcient panoptic segmentation. International Journal of
+  Computer Vision 129 (5), 1551–1579.
+
+Mozaffari, S., Al-Jarrah, O.Y., Dianati, M., Jennings, P., Mouzakitis, A., 2020. Deep learning-based
+  vehicle behavior prediction for autonomous driving applications: a review. IEEE Transactions
+  on Intelligent Transportation Systems 23 (1), 33–47.
+
+Najiya, K., Archana, M., 2018. Uav video processing for trafﬁc surveillence with enhanced vehicle
+  detection. In: 2018 Second International Conference on Inventive Communication and Compu-
+  tational Technologies (ICICCT). IEEE, pp. 662–668.
+
+Newell, G.F., Potts, R.B., 1964. Maintaining a bus schedule. In: Australian Road Research Board
+  (ARRB) Conference, 2nd. 1964, Melbourne, vol. 2(1).
+
+Nieto, R.M., García-Martín, Á., Hauptmann, A.G., Martínez, J.M., 2018. Automatic vacant parking
+  places management system using multicamera vehicle detection. IEEE Transactions on Intelli-
+  gent Transportation Systems 20 (3), 1069–1080.
+
+Nurullayev, S., Lee, S.-W., 2019. Generalized parking occupancy analysis based on dilated convo-
+  lutional neural network. Sensors 19 (2), 277.
+
+Oh, J.-S., Jayakrishnan, R., Recker, W., 2002. Section travel time estimation from point detection
+  data.
+
+Ouali, Y., Hudelot, C., Tami, M., 2020. Semi-supervised semantic segmentation with cross-
+  consistency training. In: Proceedings of the IEEE/CVF Conference on Computer Vision and
+  Pattern Recognition, pp. 12674–12684.
+
+Pan, S.J., Yang, Q., 2009. A survey on transfer learning. IEEE Transactions on Knowledge and Data
+  Engineering 22 (10), 1345–1359.
+
+Park, C., Lee, C., Bahng, H., Tae, Y., Jin, S., Kim, K., Ko, S., Choo, J., 2020. St-grat: a novel
+  spatio-temporal graph attention networks for accurately forecasting dynamically changing road
+  speed. In: Proceedings of the 29th ACM International Conference on Information & Knowledge
+  Management, pp. 1215–1224.
+
+Park, W.-J., Kim, B.-S., Seo, D.-E., Kim, D.-S., Lee, K.-H., 2008. Parking space detection using
+  ultrasonic sensor in parking assistance system. In: 2008 IEEE Intelligent Vehicles Symposium.
+  IEEE, pp. 1039–1044.
+
+Pu, Z., Zhu, M., Li, W., Cui, Z., Guo, X., Wang, Y., 2020. Monitoring public transit ridership ﬂow
+  by passively sensing wi-ﬁ and bluetooth mobile devices. IEEE Internet of Things Journal 8 (1),
+  474–486.
+
+Ren, S., He, K., Girshick, R., Sun, J., 2015. Faster r-cnn: towards real-time object detection with
+  region proposal networks. Advances in Neural Information Processing Systems 28.
+
+Rianto, D., Erwin, I.M., Prakasa, E., Herlan, H., 2018. Parking slot identiﬁcation using local binary
+  pattern and support vector machine. In: 2018 International Conference on Computer, Control,
+  Informatics and Its Applications (IC3INA). IEEE, pp. 129–133.
+226 Bibliography
+
+Rodrigue, J.-P., 2020. The Geography of Transport Systems. Routledge.
+Rodríguez-Canosa, G.R., Thomas, S., Del Cerro, J., Barrientos, A., MacDonald, B., 2012. A real-
+
+  time method to detect and track moving objects (datmo) from unmanned aerial vehicles (uavs)
+  using a single camera. Remote Sensing 4 (4), 1090–1111.
+Rosenblatt, F., 1957. The Perceptron, a Perceiving and Recognizing Automaton Project Para. Cor-
+  nell Aeronautical Laboratory.
+Roshtkhari, M.J., Levine, M.D., 2013. An on-line, real-time learning method for detecting anomalies
+  in videos using spatio-temporal compositions. Computer Vision and Image Understanding 117
+  (10), 1436–1452.
+Rue, H., Held, L., 2005. Gaussian Markov Random Fields: Theory and Applications. Chapman and
+  Hall/CRC.
+Rumelhart, D.E., Hinton, G.E., Williams, R.J., 1986. Learning representations by back-propagating
+  errors. Nature 323 (6088), 533–536.
+Sadek, B.A., Martin, E.W., Shaheen, S.A., 2020. Forecasting truck parking using Fourier transfor-
+  mations. Journal of Transportation Engineering. Part A, Systems 146 (8), 05020006.
+Schuster, M., Paliwal, K.K., 1997. Bidirectional recurrent neural networks. IEEE Transactions on
+  Signal Processing 45 (11), 2673–2681.
+Shao, G., Ma, Y., Malekian, R., Yan, X., Li, Z., 2019. A novel cooperative platform design for
+  coupled usv–uav systems. IEEE Transactions on Industrial Informatics 15 (9), 4913–4922.
+Shastry, A.C., Schowengerdt, R.A., 2005. Airborne video registration and trafﬁc-ﬂow parameter
+  estimation. IEEE Transactions on Intelligent Transportation Systems 6 (4), 391–405.
+Sherstinsky, A., 2020. Fundamentals of recurrent neural network (rnn) and long short-term memory
+  (lstm) network. Physica D. Nonlinear Phenomena 404, 132306.
+Shuman, D.I., Narang, S.K., Frossard, P., Ortega, A., Vandergheynst, P., 2013. The emerging ﬁeld
+  of signal processing on graphs: extending high-dimensional data analysis to networks and other
+  irregular domains. IEEE Signal Processing Magazine 30 (3), 83–98.
+Siam, M., Gamal, M., Abdel-Razek, M., Yogamani, S., Jagersand, M., Zhang, H., 2018. A compar-
+  ative study of real-time semantic segmentation for autonomous driving. In: Proceedings of the
+  IEEE Conference on Computer Vision and Pattern Recognition Workshops, pp. 587–597.
+Sifuentes, E., Casas, O., Pallas-Areny, R., 2011. Wireless magnetic sensor node for vehicle detection
+  with optical wake-up. IEEE Sensors Journal 11 (8), 1669–1676.
+Simonyan, K., Zisserman, A., 2014. Very deep convolutional networks for large-scale image recog-
+  nition. ArXiv preprint. arXiv:1409.1556.
+Singh, D., Mohan, C.K., 2018. Deep spatio-temporal representation for detection of road accidents
+  using stacked autoencoder. IEEE Transactions on Intelligent Transportation Systems 20 (3),
+  879–887.
+Spears, J., Lutin, J., Wang, Y., Ke, R., Clancy, S.M., 2017. Active safety-collision warning pilot in
+  Washington state. Technical report.
+Sprung, M.J., et al., 2018. Freight facts and ﬁgures 2017.
+Stehly, L., Campillo, M., Shapiro, N., 2007. Travel time measurements from noise correlation:
+  stability and detection of instrumental time-shifts. Geophysical Journal International 171 (1),
+  223–230.
+Sultani, W., Chen, C., Shah, M., 2018. Real-world anomaly detection in surveillance videos. In: Pro-
+  ceedings of the IEEE Conference on Computer Vision and Pattern Recognition, pp. 6479–6488.
+Sun, S., Zhang, C., Yu, G., 2006. A bayesian network approach to trafﬁc ﬂow forecasting. IEEE
+  Transactions on Intelligent Transportation Systems 7 (1), 124–132.
+Sun, W., Stoop, E., Washburn, S.S., 2018. Evaluation of commercial truck parking detection for rest
+  areas. Transportation Research Record 2672 (9), 141–151.
+Sutton, R.S., McAllester, D.A., Singh, S.P., Mansour, Y., 2000. Policy gradient methods for rein-
+  forcement learning with function approximation. Advances in Neural Information Processing
+  Systems, 1057–1063.
+Taccari, L., Sambo, F., Bravi, L., Salti, S., Sarti, L., Simoncini, M., Lori, A., 2018. Classiﬁcation
+  of crash and near-crash events from dashcam videos and telematics. In: 2018 21st International
+  Conference on Intelligent Transportation Systems (ITSC). IEEE, pp. 2460–2465.
+  Bibliography 227
+
+Talebpour, A., Mahmassani, H.S., Mete, F., Hamdar, S.H., 2014. Near-crash identiﬁcation in a con-
+  nected vehicle environment. Transportation Research Record 2424 (1), 20–28.
+
+Tao, A., Sapra, K., Catanzaro, B., 2020. Hierarchical multi-scale attention for semantic segmenta-
+  tion. ArXiv preprint. arXiv:2005.10821.
+
+Teutsch, M., Krüger, W., 2012. Detection, segmentation, and tracking of moving objects in uav
+  videos. In: 2012 IEEE Ninth International Conference on Advanced Video and Signal-Based
+  Surveillance. IEEE, pp. 313–318.
+
+Tian, Y., Zhang, K., Li, J., Lin, X., Yang, B., 2018. Lstm-based trafﬁc ﬂow prediction with missing
+  data. Neurocomputing 318, 297–305.
+
+Tieleman, A., Vinke, A., van Alfen, N., van Dijk, J., Pillen, S., van Engelen, B., 2012. Skeletal
+  muscle involvement in myotonic dystrophy type 2. A comparative muscle ultrasound study.
+  Neuromuscular Disorders 22 (6), 492–499.
+
+Treml, M., Arjona-Medina, J., Unterthiner, T., Durgesh, R., Friedmann, F., Schuberth, P., Mayr, A.,
+  Heusel, M., Hofmarcher, M., Widrich, M., et al., 2016. Speeding up semantic segmentation for
+  autonomous driving.
+
+Tsao, P., Ik, T.-U., Chen, G.-W., Peng, W.-C., 2018. Stitching aerial images for vehicle positioning
+  and tracking. In: 2018 IEEE International Conference on Data Mining Workshops (ICDMW).
+  IEEE, pp. 616–623.
+
+Turing, A.M., Haugeland, J., 1950. Computing machinery and intelligence. In: The Turing Test:
+  Verbal Behavior as the Hallmark of Intelligence, pp. 29–56.
+
+Vaswani, A., Shazeer, N., Parmar, N., Uszkoreit, J., Jones, L., Gomez, A.N., Kaiser, Ł., Polosukhin,
+  I., 2017. Attention is all you need. In: Advances in Neural Information Processing Systems,
+  pp. 5998–6008.
+
+Velicˇkovic´, P., Fedus, W., Hamilton, W.L., Liò, P., Bengio, Y., Hjelm, R.D., 2018a. Deep graph
+  infomax. In: International Conference on Learning Representations.
+
+Velicˇkovic´, P., Cucurull, G., Casanova, A., Romero, A., Li, P., Bengio, Y., 2018b. Graph attention
+  networks. In: International Conference on Learning Representations.
+
+Vital, F.d.A.A, Ioannou, P., Gupta, A., 2020. Survey on intelligent truck parking: issues and ap-
+  proaches. IEEE Intelligent Transportation Systems Magazine.
+
+Vítek, S., Melnicˇuk, P., 2017. A distributed wireless camera system for the management of parking
+  spaces. Sensors 18 (1), 69.
+
+Wang, C., Mahadevan, S., 2011. Heterogeneous domain adaptation using manifold alignment. In:
+  Twenty-Second International Joint Conference on Artiﬁcial Intelligence.
+
+Wang, D., Zhang, J., Cao, W., Li, J., Zheng, Y., 2018. When will you arrive? Estimating travel time
+  based on deep neural networks. In: AAAI, vol. 18, pp. 1–8.
+
+Wang, H., He, W., 2011. A reservation-based smart parking system. In: 2011 IEEE Conference on
+  Computer Communications Workshops (INFOCOM WKSHPS). IEEE, pp. 690–695.
+
+Wang, J., Sun, L., 2021. Reducing bus bunching with asynchronous multi-agent reinforcement learn-
+  ing. ArXiv preprint. arXiv:2105.00376.
+
+Wang, K., Li, F., Chen, C.-M., Hassan, M.M., Long, J., Kumar, N., 2021a. Interpreting adversarial
+  examples and robustness for deep learning-based auto-driving systems. IEEE Transactions on
+  Intelligent Transportation Systems.
+
+Wang, W., Peng, Y., Cao, G., Guo, X., Kwok, N., 2020a. Low-illumination image enhancement
+  for night-time uav pedestrian detection. IEEE Transactions on Industrial Informatics 17 (8),
+  5208–5217.
+
+Wang, W., Qie, T., Yang, C., Liu, W., Xiang, C., Huang, K., 2021b. An intelligent lane-changing be-
+  havior prediction and decision-making strategy for an autonomous vehicle. IEEE Transactions
+  on Industrial Electronics 69 (3), 2927–2937.
+
+Wang, X., Qian, Y., Wang, C., Yang, M., 2020b. Map-enhanced ego-lane detection in the missing
+  feature scenarios. IEEE Access 8, 107958–107968.
+
+Wang, Y., Zhang, W., Henrickson, K., Ke, R., Cui, Z., et al., 2016. Digital roadway interactive
+  visualization and evaluation network applications to wsdot operational data usage. Technical
+  report, Washington (State). Dept. of Transportation.
+228 Bibliography
+
+Watkins, C.J., Dayan, P., 1992. Q-learning. Machine Learning 8 (3), 279–292.
+Wei, H., Zheng, G., Gayah, V., Li, Z., 2021. Recent advances in reinforcement learning for trafﬁc
+
+  signal control: a survey of models and evaluation. ACM SIGKDD Explorations Newsletter 22
+  (2), 12–18.
+Wei, K., Li, J., Ma, C., Ding, M., Wei, S., Wu, F., Chen, G., Ranbaduge, T., 2022. Vertical federated
+  learning: challenges, methodologies and experiments. ArXiv preprint. arXiv:2202.04309.
+Williams, R.J., 1992. Simple statistical gradient-following algorithms for connectionist reinforce-
+  ment learning. Reinforcement Learning, 5–32.
+Wrenn, C.A., 2017. Can Autonomous Technology Reduce the Driver Shortage in the Commercial
+  Trucking Industry. PhD thesis, Doctoral dissertation. California Southern University.
+Wu, J., Wang, X., Xiao, X., Wang, Y., 2021. Box-level tube tracking and reﬁnement for vehicles
+  anomaly detection. In: Proceedings of the IEEE/CVF Conference on Computer Vision and Pat-
+  tern Recognition, pp. 4112–4118.
+Wu, J., Xu, H., Zheng, Y., Tian, Z., 2018. A novel method of vehicle-pedestrian near-crash identiﬁ-
+  cation with roadside lidar data. Accident Analysis and Prevention 121, 238–249.
+Wu, Q., Huang, C., Wang, S.-y., Chiu, W.-c., 2007. Robust parking space detection considering inter-
+  space correlation. In: 2007 IEEE International Conference on Multimedia and Expo. IEEE,
+  pp. 659–662.
+Xu, J., Glicksberg, B.S., Su, C., Walker, P., Bian, J., Wang, F., 2021. Federated learning for health-
+  care informatics. Journal of Healthcare Informatics Research 5 (1), 1–19.
+Yamamoto, S., Kurashima, T., Toda, H., 2020. Identifying near-miss trafﬁc incidents in event
+  recorder data. In: Paciﬁc-Asia Conference on Knowledge Discovery and Data Mining. Springer,
+  pp. 717–728.
+Yan, G., Yang, W., Rawat, D.B., Olariu, S., 2011. Smartparking: a secure and intelligent parking
+  system. IEEE Intelligent Transportation Systems Magazine 3 (1), 18–30.
+Yang, H., Ke, R., Cui, Z., Wang, Y., Murthy, K., 2022. Toward a real-time smart parking data
+  management and prediction (spdmp) system by attributes representation learning. International
+  Journal of Intelligent Systems 37 (8), 4437–4470.
+Yang, S., Ma, W., Pi, X., Qian, S., 2019. A deep learning approach to real-time parking occupancy
+  prediction in transportation networks incorporating multiple spatio-temporal data sources.
+  Transportation Research. Part C, Emerging Technologies 107, 248–265.
+Yeh, R., Chen, C., Lim, T.Y., Hasegawa-Johnson, M., Do, M.N., 2016. Semantic image inpainting
+  with perceptual and contextual losses. ArXiv preprint. arXiv:1607.07539.
+Yu, H., Li, Z., Zhang, G., Liu, P., Wang, J., 2020. Extracting and predicting taxi hotspots in spa-
+  tiotemporal dimensions using conditional generative adversarial neural networks. IEEE Trans-
+  actions on Vehicular Technology 69 (4), 3680–3692.
+Yuan, Y., Chen, X., Chen, X., Wang, J., 2019. Segmentation transformer: object-contextual repre-
+  sentations for semantic segmentation. ArXiv preprint. arXiv:1909.11065.
+Zhang, F., Liu, W., Wang, X., Yang, H., 2020a. Parking sharing problem with spatially distributed
+  parking supplies. Transportation Research. Part C, Emerging Technologies 117, 102676.
+Zhang, J., Philip, S.Y., 2019. Broad Learning Through Fusions. Springer.
+Zhang, K., He, Z., Zheng, L., Zhao, L., Wu, L., 2021. A generative adversarial network for travel
+  times imputation using trajectory data. Computer-Aided Civil and Infrastructure Engineering 36
+  (2), 197–212.
+Zhang, M., Li, H., Wang, L., Wang, P., Tian, S., Feng, Y., 2020b. Overtaking behavior prediction of
+  rear vehicle via lstm model. In: CICTP 2020, pp. 3575–3586.
+Zhang, Z., Li, X., Yuan, H., Yu, F., 2013. A street parking system using wireless sensor networks.
+  International Journal of Distributed Sensor Networks 9 (6), 107975.
+Zhang, Z., Tao, M., Yuan, H., 2014. A parking occupancy detection algorithm based on amr sensor.
+  IEEE Sensors Journal 15 (2), 1261–1269.
+Zhao, Y., Wu, W., He, Y., Li, Y., Tan, X., Chen, S., 2021. Good practices and a strong baseline for
+  trafﬁc anomaly detection. In: Proceedings of the IEEE/CVF Conference on Computer Vision
+  and Pattern Recognition, pp. 3993–4001.
+  Bibliography 229
+
+Zhou, H., Kong, H., Wei, L., Creighton, D., Nahavandi, S., 2014. Efﬁcient road detection and track-
+  ing for unmanned aerial vehicle. IEEE Transactions on Intelligent Transportation Systems 16
+  (1), 297–309.
+
+Zhou, H., Kong, H., Wei, L., Creighton, D., Nahavandi, S., 2016. On detecting road regions in a
+  single uav image. IEEE Transactions on Intelligent Transportation Systems 18 (7), 1713–1722.
+
+Zhu, H., Yu, F., 2015. A vehicle parking detection method based on correlation of magnetic signals.
+  International Journal of Distributed Sensor Networks 11 (7), 361242.
+
+Zhu, J., Sun, K., Jia, S., Li, Q., Hou, X., Lin, W., Liu, B., Qiu, G., 2018. Urban trafﬁc density
+  estimation based on ultrahigh-resolution uav video and deep neural network. IEEE Journal of
+  Selected Topics in Applied Earth Observations and Remote Sensing 11 (12), 4968–4981.
+
+Zhu, J.-Y., Park, T., Isola, P., Efros, A.A., 2017. Unpaired image-to-image translation using cycle-
+  consistent adversarial networks. In: Proceedings of the IEEE International Conference on Com-
+  puter Vision, pp. 2223–2232.
+
+Zhuang, Y., Ke, R., Wang, Y., 2019. Innovative method for trafﬁc data imputation based on convo-
+  lutional neural network. IET Intelligent Transport Systems 13 (4), 605–613.
+This page intentionally left blank
+Index
+
+A  GANs, 167
+  learning, 126
+Acoustic sensing, 11  LSTM, 83
+Acoustic sensors, 10  sensing, 127
+Activation function, 6, 41, 43, 59, 60, 82,  Artiﬁcial Intelligence (AI), 3, 9, 183
+  Artiﬁcial neural network, 130
+  83  Attributes features, 125, 126, 130, 131
+  for layer, 55  Attributes Tensor Embedding Component
+Advanced
+  architectures, 81, 88  (ATEC), 128, 129
+  sensing applications, 20  Auto retraining, 128
+  vehicle control systems, 10  Automated vehicle, 3, 22, 23
+Advanced Driver Assistant System  Autonomous driving, 3, 14–16, 23, 109,
+
+  (ADAS), 15  110, 144, 215, 216
+Advanced Trafﬁc Management Systems  Autonomous Vehicle (AV), 4, 14, 15, 22,
+
+  (ATMS), 10  109, 192, 215, 216
+Advanced Traveler Information Systems
+  B
+  (ATIS), 10
+Advanced Vehicle Control Systems  Bayesian network, 174
+  BDLSTM layer, 85
+  (AVCS), 10  Bidirectional LSTM, 81
+Adversarial  Bluetooth sensing, 11, 23
+  Broader class, 103
+  architecture, 175, 176  Bus bunching, 112–114
+  loss, 72, 73, 180
+  loss function, 73  C
+  training, 135
+Aerial  Camera sensors, 14
+  sensing, 4, 9, 10, 17, 18  Car keypoints, 158, 160, 161
+  sensing technologies, 6  Car keypoints detection, 160
+  transportation systems, 10  Centralized sensing, 127
+  vehicles, 23  Centralized sensing system, 127
+Alerts trafﬁc management authorities, 5  City trafﬁc data, 20
+AlexNet architecture, 70  CNN, see Convolution Neural Network
+Annual Average Daily Trafﬁc (AADT),
+  (CNN)
+  18  Collective features, 131
+Appearance features, 189  Commercial Vehicle Operations (CVO),
+Architecture, 59, 61, 62, 70, 77, 79,
+  10
+  81–83, 119, 135  Comprehensive features, 143
+  adversarial, 175, 176
+  231
+232 Index
+
+Computer Vision (CV), 126  Deep Neural Networks (DNN), 6, 9, 41,
+Condition sensing, 5  42, 82, 110, 119, 120, 213
+Contextual loss, 172
+Contrastive Pessimistic Likelihood  Depth sensors for road, 15
+  Deterministic gradient, 103
+  Estimation (CPLE), 12  Deterministic policy gradient, 105
+Controller area network, 195  Diffusion Convolutional Neural Network
+Convolution layer, 59–62, 64, 66–68, 71
+Convolution Neural Network (CNN), 57,  (DCNN), 143
+  Discrimination network, 179
+  67, 81, 82, 143  Discriminative features, 214
+  architecture, 59–63, 66  Domain Adaptation (DA), 119, 120, 134,
+  for data imputation, 69
+Convolution operation, 58–60, 66, 72, 78,  138, 139
+  Dropout layers, 61
+  79, 141–143, 153  DSAE, 74–76
+Convolutional  DSAE approach, 76
+  Dying relu, 46
+  layer, 62, 78, 79, 163, 164
+  network, 141  E
+Convolutional Neural Network (CNN), 6,
+  Ego vehicle, 193–197
+  19, 53, 81, 142  Emergency vehicles, 121
+ConvoPooling layer, 71  Encoder LSTM, 86
+Corrupted trafﬁc, 172  Environmental features, 188
+Corrupted trafﬁc state, 172  Explainable deep learning, 214
+Cross entropy loss, 47  Exploding gradient problems, 55
+
+D  F
+
+Data imputation, 6, 69, 75, 90  Fast Fourier Transforms (FFT), 11
+Data imputation approaches, 75  Feature Fusion Component (FFC), 128
+Dataset preparation, 91  Features
+Dataset samples, 88
+Daytime vehicle detection, 134  learning, 124, 128
+Decentralized network, 184  map, 59–61, 66, 68, 70–72, 78
+Decentralized sensing, 127  prediction, 131
+Decoder network, 86  selection, 39
+Deep  set, 130
+  spatiotemporal, 126
+  learning, 11, 12, 14, 15, 25, 32, 42, 44,  trafﬁc graph convolutional, 148
+  57, 81, 92, 93, 98, 103, 109,  Federated Learning (FL), 7, 184, 185,
+  117, 123, 213
+  202, 203, 208, 211, 212
+  algorithms, 47, 215  algorithm, 202
+  approaches, 125, 175  concept, 185
+  methods, 52  for vehicle trajectory prediction, 202
+  model training, 119  methods, 185
+  models, 19, 55, 213, 215  FedWvg, 202, 204, 205
+  technologies, 214  FedWvg method, 208
+  RL, 95, 103, 106, 108, 110  Flatten layers, 68
+  RL for trafﬁc signal control, 108  Flattening layer, 78
+  RL methods, 109  Forward LSTM layer, 85
+Deep Deterministic Policy Gradient  Forward Neural Network (FNN), 6, 41
+  layers, 54
+  (DDPG), 105
+  Index 233
+
+Freeway trafﬁc, 12  Ground transportation systems, 10, 17
+Fully Connected (FC), 62, 64, 67–69, 78  Groundbased sensors, 17
+
+  layer, 162  H
+Fusing features, 125
+  Heterogeneous sensors, 22
+G  Hidden
+
+Gate activation function, 84  FC layer, 62
+Gated recurrent unit network, 81  layer, 43, 44, 57, 70, 71, 82–84, 161,
+Gated recurrent units (GRU), 83
+Gaussian mixture models (GMM), 27  162, 173
+Generative adversarial architecture  nonlinear layers, 57
+  state, 82, 86, 141, 144, 148, 149
+  (GAA), 172, 173  Historical spatiotemporal trafﬁc data, 91
+  for spatiotemporal trafﬁc, 173  Historical trafﬁc data, 155
+Generative adversarial network (GAN), 6,  Historical trafﬁc state, 52, 87, 151, 155
+  Horizontal federated learning (HFL), 185
+  19, 26, 70, 165–172, 175, 176,  Hotspot prediction, 175
+  179, 180, 182
+  architecture, 167  I
+  style transfer, 181
+  training, 135, 167  Imputing trafﬁc volume, 69
+  training interchanges, 170  Inductive transfer learning, 138
+GPS sensors, 22  Infrared sensors, 10, 13, 20
+Gradient, 30, 31, 45, 47–49, 83, 103–105,  Input Embed Component (IEC), 128
+  167, 168  INRIX dataset, 149
+  ascent, 39, 55, 106  INRIX trafﬁc network, 149
+  descent, 6, 30–33, 35, 39, 55, 102, 103,  Insigniﬁcant features, 37
+  168, 169  Insufﬁcient training data, 179
+  descent method, 55  Intelligent trafﬁc management systems, 5
+  estimator, 104–106  Intelligent transportation, 6
+  exploding problem, 46  Intelligent Transportation Systems (ITS),
+  problem, 83
+  step, 104  2, 9, 158
+  updates, 168  Intelligent Vehicle (IV), 14, 22, 192
+  vanishing, 182
+  vector, 30  K
+Graph Attention Network (GAT), 163
+Graph Convolution Network (GCN), 141,  Key features, 160
+  142
+Graph Convolutional Neural Network  L
+  (GCN), 6, 163
+Graph Markov Network (GMN), 155,  Lane changing (LC), 136
+  157, 158  Lane detection, 15, 16, 18, 23
+Graph Markov Process (GMP), 153  Lane keeping (LK), 136
+Graph Neural Network (GNN), 6, 141,  Latent Dirichlet Allocation (LDA), 27
+  158  Latent features, 130, 131
+Graphics Processing Unit (GPU), 32, 43  Leaky relu, 46
+Gross Domestic Product (GDP), 2  Learning
+Ground transportation, 9
+  algorithm, 43, 98, 114
+  architecture, 126
+  features, 124, 128
+  model, 122
+  objective, 108
+  pretrained, 120
+  process, 57, 99, 126
+234 Index
+
+  rate, 31, 46, 55, 92, 102, 103, 105, 120,  algorithms, 5, 6, 26, 27
+  123, 168  classiﬁers, 189
+  Macroscopic trafﬁc, 18
+  scheme, 122  Macroscopic trafﬁc ﬂow, 23
+  signal, 103  Magnetic sensors, 20
+  strategy, 100  MAPE, see Mean absolute percentage
+  tasks, 47, 120, 124
+LiDAR sensing, 22  error (MAPE)
+Linear regression, 6, 26, 28, 29, 41–43,  Markov Decision Process (MDP), 6, 96,
+
+  196, 197  114
+Linear regression model, 32  Markov network, 155
+Localized features, 143  Markov network for trafﬁc forecasting,
+Loop detectors, 11, 12, 21, 69, 70, 73, 76,
+  155
+  91  Maximum likelihood estimation (MLE),
+  multiple, 91
+Loss  34
+  adversarial, 72, 73, 180  Mean absolute error (MAE), 74, 157
+  function, 28, 41, 42, 46, 64, 68, 84,  Mean absolute percentage error (MAPE),
+
+  157, 170, 172, 180, 185, 208  93, 158, 174
+  in deep learning, 39  prediction, 93
+  in machine learning, 37  Mean percentage error (MPE), 74
+  term, 48  Mean Squared Error (MSE), 68, 93, 149,
+LSTM, 6, 14, 15, 81, 83, 86, 90, 131, 133,
+  157
+  157  Microscopic trafﬁc, 18
+  algorithm, 92  Microwave radar sensors, 10
+  architecture, 83  Minimal loss, 37
+  cell, 83, 84, 148, 177  MNIST dataset, 165
+  decoder, 86  Mobile sensing data, 213
+  for trafﬁc prediction, 157  Mobile trafﬁc sensors, 23
+  hidden state, 92  Model training, 205, 211
+  layer, 83–85, 177  Model training deep learning, 119
+  method, 90  Monitor road conditions, 215
+  model, 88, 89, 91, 92, 171, 178  Motionless vehicles, 10
+  network, 83, 88, 172  Multichannel feature map, 66
+  neural networks, 177  Multilane detection, 16
+  structure, 90  Multilane trafﬁc, 63, 64
+  trafﬁc graph convolutional, 148  Multilane trafﬁc ﬂow patterns, 66
+  variants, 83  Multilayer, 52
+
+M  FNN, 43
+  model, 43
+Machine learning (ML), 1, 4, 5, 9, 25, 41,  neural network, 44
+  42, 46, 57, 82, 95, 117, 118,  perceptron, 43
+  165, 170, 185, 186, 192, 214,  structure, 43, 45
+  215  Multilocation sensing, 11
+  Multiple
+  layers, 43
+  linear layers, 51
+  loop detectors, 91
+  Multistep prediction, 88
+  Multitask learning, 120, 138
+  Index 235
+
+N  Passenger sensing, 15
+  Pavement distress, 178, 179, 181
+Natural language processing (NLP), 81,  Pedestrian, 5, 12, 15, 17, 20, 21, 193, 197,
+  126
+  201
+Network  detection, 17
+  bandwidth, 187, 193, 195  detector, 15
+  capacity, 183  fatalities, 2
+  convolutional, 141  intent recognition, 15
+  LSTM, 83, 88, 172  reidentiﬁcation, 12
+  output, 82  safety, 5
+  parameters, 57  travel time, 11
+  road, 52, 145, 146  violated trafﬁc rules, 201
+  trafﬁc, 25, 87, 145, 146, 148, 149, 151,  Perceptual loss, 172
+  152, 155, 156, 215  PewLSTM, 133
+  transportation, 17, 170, 171  Player, 168, 169
+  Pooling layer, 59, 60, 62, 67, 71, 78
+Neural network, 4, 6, 31, 33, 36, 41, 57,  Predeﬁned road, 189
+  81, 98, 101, 102, 119, 141,  Prediction
+  167, 184, 187  accuracy, 68
+  algorithms, 126
+  architectures, 44, 81  component, 128
+  for trafﬁc forecasting, 151  error, 42
+  layer, 41, 45, 163  features, 131
+  multilayer, 44  framework, 126, 175
+  prediction, 126  framework for taxi hotspots, 177
+  pretrained, 119  MAPE, 93
+  structure, 148  model, 52, 88, 89
+Nighttime training images, 134  neural network, 126
+Nighttime vehicle detection, 134  performance, 43, 93, 177, 178
+Nonlinear activation function, 45, 83  problems, 52, 68
+  result, 73, 133
+O  scheme, 125
+  spatiotemporal, 64
+Object detection, 36, 58, 67, 196  target, 128, 130, 132
+Object detection trafﬁc, 81, 215  task, 52, 64, 68, 90, 128
+Occupancy prediction, 129  time, 131
+Ofﬂine learning, 99  trafﬁc, 5, 9, 52, 67, 84, 86–90, 155
+Ofﬂine learning algorithms, 99
+Onboard sensing, 15, 16, 21  ﬂow, 81
+Onboard sensing vehicle, 4, 9, 14  speed, 64, 86, 87
+Onboard sensors, 14–16  state, 5, 88
+Onboard sensors vehicle, 14  Pretrained
+Online learning, 99  learning, 120
+Optimal learning, 5  model, 119
+Oversaturated trafﬁc, 18  model acquisition, 119
+  neural network, 119
+P  SSD, 123
+  Principal component analysis (PCA), 36
+PAP neural network, 128, 131  Private dataset, 185
+Parallel learning, 100
+Parking detection, 13, 123, 125
+Parking Information Management System
+
+  (PIMS), 125
+236 Index
+
+Private vehicles, 202  trafﬁc, 2, 5, 6
+Probe vehicle, 151  trafﬁc prediction, 6, 86, 215
+Probe vehicle data, 213  user, 10–12, 14, 119, 121, 184, 189,
+
+R  191
+  behavior sensing, 15
+Radar sensors, 14, 20  reidentiﬁcation, 12
+Receiver operating characteristic (ROC),  tracking, 17
+  Roadside, 11
+  177  Roadside units, 11, 184, 192
+Recommendation Systems (RS), 126  Roadway, 10, 53, 109, 186
+Recurrent neural network (RNN), 6, 81,  geometry, 193
+  graph, 145
+  130, 148  intersection, 192
+Regions of interest (ROI), 53  links, 52, 151, 152
+Reinforcement learning (RL), 6, 25, 39,  locations, 145
+  monitoring, 13
+  95–97, 106, 107, 110, 115  segments, 11, 146
+  algorithms, 103, 110  surface, 91
+  learning strategies, 100  trafﬁc, 67, 173
+  method, 102  travel time, 52
+Relieving trafﬁc congestion, 170
+Relu, 45, 46, 55, 60, 71  S
+  activation, 68
+  function, 46, 68  Seeded road segmentation, 19
+  operations, 61  Sensing, 3, 9, 11, 14, 15, 20–23, 126, 127,
+Replay memory, 102, 103, 107
+Representation learning, 123, 126  215
+RL, see Reinforcement learning (RL)  aerial, 4, 9, 10, 17, 18
+Road  algorithms, 21
+  accidents, 215  applications, 18, 22
+  condition, 107, 178, 188  architecture, 127
+  condition monitoring, 15  capability, 20
+  detection, 16, 18  challenges, 6, 20
+  links, 151–153  components, 23
+  localization, 19  functionality, 21
+  maintenance, 182  methods, 20
+  mask, 188, 190  results, 23, 127
+  mask extraction, 187  services, 18
+  mask extraction method, 188  tasks, 22
+  mask segmentation, 184  technologies, 5, 6
+  monitoring, 215  trafﬁc, 4, 5, 9, 162
+  network, 52, 145, 146  urban, 14
+  network structure, 89  Sensors, 5, 9, 10, 13, 14, 156, 214, 215
+  pixels, 188  Sensors onboard, 21
+  regions, 16, 188, 189  Sensors trafﬁc, 23, 89, 151, 158
+  section, 12  Sequence dependency features, 131
+  segment, 26, 28, 33, 34, 52, 109, 149,  Sequence features, 132
+  Sigmoid activation function, 45
+  171, 184  Single layer, 43
+  segmentation, 15  Single LSTM, 14
+  shape, 16  Single Shot Detectors (SSD), 53
+  surface, 19, 21, 181, 189
+Singular value decomposition (SVD), 36  Index 237
+Smart transportation, 5, 162, 187
+Smart transportation applications, 187,  imputation, 19
+  types, 9
+  192  density, 171–174
+Softmax layer, 54, 177  density matrix, 171, 173
+Spatiotemporal  density measurements, 174
+  enforcement, 17
+  features, 126  estimation, 170
+  prediction, 64  fatalities, 2
+  trafﬁc  ﬂow
+  pattern, 66
+  pattern learning, 6, 63  prediction, 81
+  pattern learning in trafﬁc speed  speeds, 67
+  forecasting, 85, 88, 144, 145, 151, 157
+  prediction, 63  forecasting models, 156
+  state, 151  graph, 147
+Stacked LSTM, 130, 131  graph convolutional
+Stochastic gradient ascent, 103  features, 148
+Stochastic gradient descent, 55  LSTM, 148
+Stochastic policy gradient, 103  network for trafﬁc prediction, 145
+Style transfer, 134, 179, 180  impact, 146
+Style transfer architecture, 135  information, 10
+Style transfer GANs, 181  infrastructure, 5
+Supervised learning, 12, 25, 26, 53, 117,  jam, 87
+  lights, 5
+  118, 120, 134, 165  management, 5, 12, 17, 215
+Supervised learning algorithms, 25  management systems, 10, 215
+Supervised manifold alignment (SMA),  matrices, 172
+  monitoring, 17
+  136, 138  network, 25, 87, 145, 146, 148, 149,
+Support Vector Machines (SVM), 27
+Synchronized trafﬁc ﬂow, 18  151, 215
+  object detection, 81, 215
+T  operation data, 10
+  operation tasks, 23
+Target prediction attributes, 132  parameters, 10
+Target vehicle, 197  participants, 7
+Taxi hotspots, 175–177  patterns, 66–68, 85
+Taxi hotspots in urban trafﬁc networks,  pollution, 2
+  prediction, 5, 9, 52, 67, 84, 86–90, 155
+  175
+Temporal features, 130, 131, 133, 202  model, 89
+Temporal learning, 128, 130  problems, 90
+Temporal Learning Component (TLC),  task, 52, 88
+  road, 2, 5, 6
+  128  roadway, 67, 173
+Temporal learning network, 130  safety, 14
+TensorFlow Lite, 122, 123  sensing, 4, 5, 9, 162
+TGC features, 149  sensing locations, 145
+Trafﬁc  sensing technologies, 5
+  sensor stations, 92
+  anomalies, 5
+  cameras, 5, 10
+  congestion, 1, 5, 145
+  controllers, 11
+  data, 5, 19, 69, 148, 177, 216
+
+  collection, 4, 9, 23
+

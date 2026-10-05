@@ -1,0 +1,1113 @@
+Appendix 20.A
+
+TABLE 20.A1 Summary of model 1 (mixed logit without ANA) results.dcont’d  252 PART | IV Image
+
+  Australia  US  Portugal  France  UK
+  LRT
+  BRT  LRT  BRT  LRT  BRT  LRT  BRT  LRT  BRT  e
+  0.006
+Operation period assured (year)  0.006  e  0.006  e  0.006  e  0.006  e  (3.62)  e
+  e
+  (3.62)  (3.62)  (3.62)  (3.62)  e  e
+  e
+Environmental friendliness (% better/  e  e  e  e  0.022  e  e  e  e  e
+  e
+worse vs. car)  (4.73)  e  e
+
+Percent car switched to this mode (%)  e  e  e  e  e  e  0.023  e  e  0.270
+  e  (1.62)
+  (2.00)  0.594
+  (3.83)
+Staff presence on board (1/0)  e  0.298  e  e  e  e  e  e
+  e
+  (2.87)
+  e
+Risk of being closed after assured  e  e  e  e  e  À0.009  e  e
+
+period (%)  (3.61)
+
+Medium level of business attracted to  e  e  e  e  e  e  e  e
+
+station/stop (1/0)
+
+High level of business attracted to sta-  e  e  e  e  e  e  e  e
+
+tion/stop (1/0)
+
+Socioeconomic characteristics
+
+Female (1/0), mean  e  e  e  e  0.400  e  0.428  e
+  (2.04)
+  (2.84)  1.400  e
+  (2.04)
+Female (1/0), std. dev.  e  e  e  e  e  e  e
+  À0.669
+Experience  À0.669  e  À0.669  e  À0.669  e  (1.70)  À0.215  À0.669  e
+Dummy (use BRT_onlyBRT)  (1.70)  (1.70)  (1.70)  e  (2.15)  (1.70)
+  À0.215  e  À0.215  e  À0.215  À0.278  e  À0.215
+Dummy (use LRT_onlyLRT)  e  (2.15)  (2.15)  (2.15)  e  (1.86)  (2.15)
+  À0.278  e  À0.278  e  À0.278  e  À0.278
+Dummy (use LRT_BRTLRT)  e  (1.86)  (1.86)  (1.86)  (1.86)
+
+Summary statistics  À5104.34
+Log-likelihood at zero  À4922.79
+Log-likelihood at convergence  0.036
+McFadden pseudo R2  À1.338
+Info. criterion AIC  7420
+Sample size (number of observations)
+
+500 Halton draws, with panel structure accommodated. Random parameters are unconstrained normal distributions.
+Cultural contrasts of preferences for bus rapid transit and light rail transit Chapter | 20 253
+
+TABLE 20.A2 Willingness to pay estimates model (without ANA).
+
+  Australia  US  France  Portugal  UK
+  LRT  LRT  LRT
+WTP higher construction cost (AUD$m)a to.  BRT  LRT  $0.13  BRT  LRT  $0.22  $1.16
+Reduce the construction time in one year  $1.03  $0.22  e  e  $0.22  e  e
+Increase the population serviced in 1%  $0.54  e  e  $1.03  e  e  e
+Reduce the annual operating costs in million $  $0.36  e  e  $0.35  e  e  e
+Increase the service capacity in 1000 passengers  $0.27  e  e  $0.22  e  e  e
+Reduce the headway in off-peak hours by 1 min  $0.51  e  e  e  e  e  e
+Increase the travel time compared to the car in 1% quicker  $0.04  e  e  $0.06  $0.06
+Reduce the travel cost compared to the car in 1%  $0.12  $0.09  e  e  e
+Require prepaid ticket in the service  $0.08  $0.06  e  $0.08 $0.06  e  e
+Integrate fare availability  e  e  e  e  e
+Have staff presence on-board  $5.34  e  e  $23.22  $19.04  e  e
+Have level boarding  e  $3.48  e  e  e  e  e
+Increase the operation period assured in 1 year  $3.43  e  e  e  e  $0.10  e
+Decrease in 1% the risk of being closed after assured  $0.09  e  e  e
+period  e  e  e  $0.09  e  e  $3.15
+Have a medium level of business attracted to the station/  e  e
+stop  e  e  $6.94
+Have a high level of business attracted to the station/stop  e  e  e  e  e  e  e
+Increase in 1% the cars switched to this mode
+  e  e  e  e
+
+  e  e  $0.36 e
+
+aWTP are presented as AUD$ June 2014.
+Chapter 21
+
+Assessing sources of variation in public
+transport elasticities: some warnings
+
+21.1 Introduction
+
+The worlds of research and practice rely extensively on published estimates of price and service elasticities to develop
+predictions of switching behaviour towards or away from public transport. For at least 55 years we have seen an accu-
+mulation of empirical estimates of direct and cross fare and service elasticities reported in the literature. There are some
+classic reviews such as Goodwin (1992) and Oum et al. (1992),1 which have synthesised many of the better studies
+undertaken prior to 1990.
+
+  Kremers et al. (2002), Nijkamp and Pepping (1998) and Holmgren (2007) have undertaken meta-analyses on samples
+of public transport elasticities to identify systematic sources of variation. They ﬁnd, in particular, that differences in
+elasticities can, in part, be explained by the functional form of the model, whether the estimates reﬂect the short run or long
+run, the nature of the data structure (e.g., cross section, time series etc.), location (such as country or city size) and whether
+data is aggregated or disaggregated.
+
+  A particularly interesting aspect of the studies is the evidence of differences obtained using revealed preference (RP)
+data and that reported in stand alone stated preference (SP) or combined RP/SP data when individual choice or (aggre-
+gated) share models are being used. One of the problems we have with the comparison is that the majority of SP studies do
+not appear to calibrate their models to reproduce base modal shares2 and hence the comparison is likely to reﬂect as much
+the failure to calibrate the model constants rather than any possible systematic under or over estimate of mean elasticity.
+This is an important point, which we will return to in the empirical analysis, since it is easy for sceptics of SP or SP/RP
+applications to argue that they under- or over-estimate compared to models estimated with RP data (although who says that
+it is the correct reference anyway?).
+
+  Unlike the meta analysis studies cited above, which studied each class of elasticity separately, we have pooled the data
+for fare, in-vehicle time and headway direct elasticities, to give us a sample of 319 observations. In some of the previous
+meta-studies (e.g., Kremers et al., 2002), price elasticities from different modes of transport are pooled, but it is the pooling
+of price and service elasticities that is new in this study. The advantage of our approach is that we have a signiﬁcant sample
+size to add conﬁdence to inference, in contrast to the earlier studies where sample sizes were often as low as 12 data points.
+Holmgren’s sample sizes varied from 17 to 81. In addition, the focus is on establishing sources of systematic variations in a
+broad class of direct elasticities, and so the assessment of candidate sources across three key attributes of public transport
+seems appropriate. To control for possible biases attributable to a sub-class (e.g., fares), we introduce dummy variables for
+each sub-class, normalising on one sub-class for identiﬁcation.
+
+  The key purpose of this chapter is to suggest points of assistance for policy makers in the decision as to what extent,
+existing knowledge on behavioural response as captured through direct elasticities, might be used in another context, and
+what are some lessons we can learn from a meta analysis in guiding the deﬁnition of elasticity outputs obtained from new
+primary data.
+
+  The chapter is organised as follows. We describe the data set in the next section and the approach we had adopted to
+establish potential sources of systematic variation. This is followed by the empirical evidence on three key direct elas-
+ticities of public transport, namely fares, in-vehicle time, headway. The chapter concludes with comments on the evidence
+and offers three very speciﬁc warning signals when selecting elasticities from secondary sources for use in particular
+contexts, and when designing new studies that collect primary data.
+
+1. Both articles are ranked as the most cited articles from the Journal of Transport Economics and Policy between 1975 and 2006 (Morrison et al., 2007).
+2. An essential requirement for constructing elasticity estimates since they depend on the choice probabilities or modal shares in addition to the relevant
+parameter estimates and levels of attributes. This is in contrast to willingness to pay which depends only of the ratio of parameter estimates.
+
+Bus Transport. https://doi.org/10.1016/B978-0-12-820132-9.00021-2  257
+Copyright © 2020 Elsevier Inc. All rights reserved.
+258 PART | V Elasticities
+
+21.2 The data source
+
+The data was compiled from 40 available publications (see Appendix 21.B), a number of which were reviews of the
+literature (i.e., Balcombe et al., 2004; Goodwin, 1992; Hanly et al., 2002; Lago et al., 1981; Litman, 2002, 2005; Luk and
+Hepburn, 1993; Bly and Webster, 1981; Oum et al., 1992). Tracking the details on the nature of the data structure (e.g., SP,
+RP, combined SP/RP; aggregate vs. disaggregate data), time period, years, elasticity formula used (e.g., point or arc), and
+estimation method (e.g., single cross section, time series of cross sections, panel) is not easy when one has to rely on
+secondary sources, and even when primary sources are available, there is often limited reporting to establish the precise
+approach adopted.
+
+  The studies that survived our culling are those where we have been able to identify some key crucial features of the
+method used. Speciﬁcally, we set as our minimum requirements, complete information on the type of elasticity (e.g. direct
+or cross), the applicable location, whether the data was SP, RP or SP/RP; the deﬁnition of the fare variable (e.g., an average
+or a speciﬁc ticket type); time of day (notably peak, off-peak or all day); geographical location (i.e., country and city), and
+the speciﬁc mode or mode mix (i.e. bus, train, public transport). Evidence on time period (short vs. long run), the span of
+years of the data, and trip purpose were, surprisingly, poorly documented. In this chapter we have focused on three direct
+elasticities for public transport.
+
+  Having satisﬁed the criteria above, we then compiled the data set and undertook a check of the range of estimated
+elasticities within each segment of interest. On close inspection, for the subset of data of interest herein from the fuller data
+set, including other elasticities (e.g., cross elasticities, fuel price elasticities), we found two studies representing nine data
+points that reported estimates substantially higher that those for the rest of the studies, namely as high as À1.825 for fares
+and À1.920 for in-vehicle time (See Table 21.1). These data points are deemed to be outliers under the rule of exceeding
+two standard deviations around the mean of the sample. Removal of this data reduced the sample size from 328 to 319. The
+ﬁnal data points that have been pooled across fares, in-vehicle time and headways for public transport direct elasticities are
+given in Fig. 21.1, and the ﬁrst and second moments and range are summarised in Table 21.1. The mean estimate
+of À0.395 for fares is close to À0.38 reported in Holmgren (2007) and other reviews such as Goodwin (1992), Oum et al.
+(1992) and Litman (2002). Graphical representation of the data is given in Appendix 21.A for a range of direct elasticities.
+
+  A further breakdown of the elasticity evidence by a number of dimensions is given in Table 21.2 (based on the data
+proﬁle in Appendix 21.A). A number of cells are empty or are not applicable (e.g., single fare effects for in-vehicle time
+and headway). Overall, we ﬁnd that, on average, commuters are less sensitive to fares and in-vehicle time, but more
+sensitive to headways, than non-commuters. When we drill further down, we ﬁnd that evidence from single cross sections
+(in contrast to time series and before-and-after studies) is lower (contrasted to the overall means); responsiveness to fares in
+the peak is similar or less than the overall fare elasticity, similar to the overall estimate for in-vehicle time, and considerably
+lower for headway. Single fare commuters are less fare sensitive that all commuters, which is not unexpected given that
+such individuals tend to be less frequent users, and would normally purchase a weekly or multiride ticket in a regular
+commute. The evidence for SP vs. RP is discussed below, but it suggests that RP and combined SP/RP estimates are higher
+than SP stand alone where data can be compared, namely in-vehicle time elasticity for commuters.
+
+21.3 The evidence
+
+We estimated a large number of ordinary regression models, controlling for heteroskedasticity, in searching for statistically
+signiﬁcant sources of explanation of systematic variation in mean estimates of direct elasticities for fare, in-vehicle time
+and headway. The ﬁnal model is summarised in Table 21.3. Fourteen variables explained 32% of the variation in elasticity
+estimates across the sample. This suggests that there are a myriad of other systematic and non-systematic inﬂuences of
+mean estimates. Other variable assessed included locations (UK, USA), all day fares, SP separated from SP/RP, commuting
+vs. non-commuting, shopping trips, time series, before and after study, pensioner, short run vs. long run, and concession
+vs. non-concession. In meta analysis studies, it is common that representation of elasticities in each class may contributes
+to the lack of signiﬁcance as much a genuine behavioural non-signiﬁcance.
+
+TABLE 21.1 Elasticity evidence from relevant sub-samples.
+
+Elasticity  Sample size  Mean  Std Dev  Minimum  Maximum
+Mix of fares, in-vehicle time and headway  319  À0.408  0.275  À0.002  À1.290
+Fares  241  À0.395  0.274  À0.002  À1.121
+In-vehicle time  57  À0.547  0.374  À0.006  À1.290
+  À0.287  0.184  À0.076  À0.700
+Headway  21
+  Assessing sources of variation in public transport elasticities: some warnings Chapter | 21 259
+
+  Histogram for Variable ALLELAS
+
+  Frequency
+
+  -1.290  -1.106  -.922  -.738  -.554  -.370  -.186  -.002
+
+  ALLELAS
+
+  FIG. 21.1 Elasticity proﬁle of the full sample.
+
+TABLE 21.2 Elasticity evidence from selective sub-samples.
+
+  Fare  In-vehicle time  Headway
+
+Overall  Commuting  Non-commuting  Commuting  Non-commuting  Commuting  Non-commuting
+  À0.429  À0.574  À0.271 (0.167)
+Single  À0.218  (0.271) (204)  À0.441  (0.221) (26)  À0.336  (15)
+cross  (0.215) (37)  À0.270 (0.128) (4)  (0.314) (32)  (0.245) (5)  e
+section  e
+Peak  À0.183  À0.309 (0.242)  À0.089
+  (0.153) (3)  (4)  (0.018) (2)
+Single
+fare  À0.223 (0.222)  À0.230 (0.090)  À0.436 (0.318)  À0.576  À0.186  À0.174
+SP/RP  (34)  (27)  (31)  (0.218) (9)  (0.169) (3)  (0.111) (5)
+  À0.132  À0.458 (0.306)  N/A
+SP  (0.118) (7)  (11)  N/A  N/A  N/A
+  À0.218  À0.621 (0.413)  À0.699
+RP  (0.215) (37)  (27)  À0.564 (0.551)  (0.156) (6)  À0.089  À0.207
+  e  e  (4)  e  (0.018) (2)  (0.083) (6)
+RP,  À0.526 (0.316)
+SP/RP  e  À0.398 (0.231)  (12)  À0.536 (0.228)  e  e
+  (177)  À0.345 (0.225)  (20)
+  À0.218  (16)  À0.574 (0.221)  0.50  À0.313
+  (0.215) (37)  À.429 (0.271)  (26)  (0.137) (3)  (0.199) (9)
+  (204)  À0.389 (0.310)
+  (20)  À0.355  À0.270
+  (0.254) (5)  (0.167) (15)
+
+Each cell deﬁnes the mean, standard deviation and sample size.
+
+  The selection of candidate inﬂuences is based on hypotheses that have either been tested or have arisen out of previous
+empirical studies. As an example, we hypothesise that the class of ticket (which carries a particular price structure) does
+have an inﬂuence of the behavioural response to public transport use. We expect, for example, all other factors held
+constant, (i) that those who choose multiride tickets are less sensitive to fare increases, because the price deal is more
+attractive than other classes; (ii) that a bus and a train are seen as offering different types of services and controlling for this
+is important in capturing responses to changes in fare and service levels; and (iii) the data speciﬁcation paradigms (i.e.,
+stand alone SP, combined SP/RP and stand alone RP data) inﬂuence the evidence since there are mixtures of real and
+hypothetical circumstances being studied, and there is evidence of hypothetical bias associated with choice experiment (see
+Hensher, 2008).
+260 PART | V Elasticities
+
+TABLE 21.3 Sources of systematic variation in elasticities (319 observations).
+
+Explanatory variable  Parameter estimate  T-ratio  Mean of variable  VIF
+Constant
+  À0.3973  À7.54  e  0.00
+
+Fare elasticity speciﬁc dummy (1,0)  À0.03537  À0.837  e  1.86
+
+In-vehicle time elasticity speciﬁc dummy (1,0)  À0.2494  À4.60  e  1.02
+
+Bus mode dummy (1,0)a  À0.0616  À2.10  0.467  1.34
+
+Train mode dummy (1,0)a  À0.10651  À32.96  0.295  1.12
+
+Peak period elasticity (1,0)b  0.1990  6.853  0.341  1.05
+
+All day period elasticity (1,0)b  0.0875  2.04  0.066  1.04
+
+Ticket class e multi ride (1,0)c  À0.2471  À2.87  0.053  1.07
+
+Ticket class e 1 h (1,0)c  À0.51692  À2.13  0.0094  1.04
+
+Ticket class e 4 h (1,0)c  À0.62152  À3.75  0.013  1.94
+
+Ticket class e day (1,0)c  À0.5279  À2.48  0.0063  1.36
+
+Trip purpose e student travel (1,0)  0.1619  3.47  0.0094  1.32
+
+Location Australia and USA (1,0)  0.0813  2.62  0.793  1.15
+Distance (kms) dummy (1,0)d  0.1459
+Combined SP/RP dummy (1,0)e  0.0472  2.94  0.0094  3.41
+
+  2.10  0.329  3.22
+
+R-squared  0.32
+
+a¼ relative to headway elasticity.
+b¼ relative to off-peak only.
+c¼ relative to single and weekly.
+d¼ relative to trips.
+e¼ relative to stand alone revealed preference.
+
+We investigated the prospects of multicollinearity, which can often be a concern in meta analysis using mean estimates
+
+from a sample of studies. A popular way to analyse multicollinearity is in terms of the effect of the intercorrelation of the
+
+regressors on the variance of the least squares parameter estimates. The variance inﬂation factor (VIF) is a measure of this
+
+effect.  VIFi  ¼  1/(1ÀR2k )  where  R2  is  the  R2  obtained  when  the  kth  regressor  is  regressed  on  the  remaining  variables.  The
+
+  k
+optimal value for this statistic is 1.0, which occurs when the R2 is zero or this variable is orthogonal to the other variables.
+
+There is no consensus on what values of the variance inﬂation factor merit attention, or on what one should do with the
+
+results. Some authors (e.g., Chatterjee and Price, 1991) suggest that values in excess of 10 are problematic. In the current
+
+study we are well below this on all regressors (see last column of Table 21.3) and hence can safely reject the presence of
+
+multicollinearity.
+
+The evidence suggests a number of key directional impacts, of which two are particularly important from a
+
+methodology point of view. There is evidence that models that use stand alone RP tend to produce lower mean estimates
+
+than those that have combined RP and SP data. There are very few stand alone SP studies (12 associated with invehicle
+time and commuting), and a tested SP stand alone dummy variable was not signiﬁcant.3 There are some essential caveats
+
+to this e ﬁrstly many RP studies herein are earlier studies (i.e., 1970s in particular) than the majority of the SP/RP
+
+studies, and in general we see an increase in mean estimates over time. Drawing on a separate analysis of 152 obser-
+
+vations (not reported herein), that had information to be able to identify the year of the study, all other factors remaining
+
+constant, the data suggest that as we move back from 2004, each year reduces the mean estimate by 0.00646 (given an
+
+overall average for the 152 data points in which the year is reported of À0.3905). In addition, it seems that the majority
+of studies, RP, SP and mixed SP/RP, are not calibrated4 to reproduce base population model shares, but that the SP
+
+3. Excluding this dummy variable did not impact on the parameter estimate of SP/RP vs. RP.
+4. The secondary sources were checked to establish if calibration had occurred for the 74 elasticities that are SP or SP/RP. We found that the great majority
+of studies did not calibrate. This may be due to the fact that they are, in the majority, research studies by authors such as Hensher (1998), Douglas et al.
+(2003), Hensher and Louviere (1998), Hensher and King (1998), and IPART (1996).
+  Assessing sources of variation in public transport elasticities: some warnings Chapter | 21 261
+
+studies in particular (representing all but 12 of the 74 SP plus SP/RP studies) reproduce stated choice shares which may
+be signiﬁcantly at variance with market shares, and hence the uncalibrated RP constants in the SP models are behav-
+iourally unhelpful. This makes the comparisons somewhat speculative at best, and indeed sends a message that all
+studies5 that report elasticities must ensure and report that the model constants are calibrated to market shares or totals. It
+would be unwise for readers to take away the message that SP/RP studies tend systematically to over- (or even under-)
+estimate elasticity estimates, which sadly appears to be a view in some research circles. The reason may be due to a
+common focus on establishing willingness to pay for speciﬁc attributes which does not require calibrated constants,
+unlike elasticity derivatives.
+
+  The other important ﬁnding is the tendency for fare elasticities to be very sensitive to the class of ticket type. Relative to
+a single and a weekly ticket, the most popular ticket types, we ﬁnd a systematically higher mean estimate for multiride, 1 h,
+4 h and all day ticket types. We were not been able to establish any signiﬁcant variation between the use of unweighted
+average fares and ticket types, given that the contrast between an average fare and fare classes was not statistically
+signiﬁcant.
+
+  Some intuitively plausible variations were established for peak, all day and off-peak estimates. Peak elasticities are
+lower on average than off-peak and all-day estimates, and all day estimates are lower than off-peak (due to inclusion of
+peak and off-peak). The peak estimates have a mean estimate that is on average 0.1958 lower than the overall mean
+of À0.408 (i.e., À0.2122). Bus speciﬁc elasticities are slightly lower than train speciﬁc elasticities, but both are higher
+relative to combined public transport, respectively by À0.0721 and À0.1101. This is an important ﬁnding, suggesting a
+downward bias in bus and train speciﬁc responsiveness when using an estimate based on ignoring the difference between a
+bus and a train.
+
+  After identifying a number of systematic sources of elasticity variation, we have included some elasticity-type dummy
+variables for fares, in-vehicle time and headway (the latter set to zero) to accommodate other sources of variation that are
+speciﬁc to fares, in-vehicle time and headways. As shown in Table 21.1, fare and in-vehicle time elasticities are on average
+greater than the headway elasticities, which is re-afﬁrmed by the negative parameter estimates for the two constants in the
+model. Finally, estimates from USA and Australian cities are signiﬁcantly lower, suggesting that the wealthier cities are
+less sensitive.
+
+  We also ran separate regression models for each of three types of direct elasticities, summarised in Table 21.4.
+Comparisons between the models are not straightforward, given that many of the fare-related variables are not applicable in
+the in-vehicle time and headway models. An important ﬁnding from the separate models is that the distinction between RP
+or SP/RP data has a much higher mean effect for each of the three elasticity types. Although one might expect some of
+these to be lower and some higher relative to the overall estimate in Table 21.1, the models are not strictly comparable
+because some variable are removed from some models. The overall message is clear however; importantly RP estimates are
+lower than combined SP/RP estimates (and most notably for in-vehicle time), ticket class effects are similar and ranked the
+same for fare elasticities, location is only signiﬁcant for fares, and time of day elasticities are not signiﬁcant for in-vehicle
+time and headway. The sample sizes are sufﬁciently small given the descriptive proﬁles in Table 21.2 of speciﬁc segments
+that behavioural inferences drawn from the in-vehicle and headway models must be cautioned.
+
+21.4 Conclusions
+
+The analysis of 319 mean estimates of three classes of direct elasticities for public transport have identiﬁed some sta-
+tistically signiﬁcant inﬂuences that explain 32% of the systematic variation in mean elasticity estimates. The important
+questions to ask about the evidence are “what guidance does it provide when an analyst is using elasticities from secondary
+sources, instead of collecting new evidence from primary local sources?” and “what lessons can be used in the design and
+application of studies privileged to collect new primary data?”.
+
+  When one is evaluating the inﬂuence of pricing and service level policies on public transport patronage, in contexts
+where typically public transport has a relatively small share of the market, especially in countries where the data herein is
+predominantly sourced (i.e., USA, Australia, New Zealand, UK and a few car dominated European countries), the selection
+of a mean elasticity estimate can be the difference between a sizeable or an insigniﬁcant predicted modal switch away from
+or towards public transport.
+
+5. This includes RP studies, although we note than the RP studies typically have sample shares closer to population shares than do SP/RP and especially
+SP stand alone studies, where the elasticities are derived from the RP component of the SP/RP model.
+262 PART | V Elasticities
+
+TABLE 21.4 Sources of systematic variation in each type of elasticity (319 observations) (t-ratio in brackets).
+
+Explanatory variable  Fare  In-vehicle time  Headway
+Constant  À0.455 (À15.5)  À0.062 (À0.34)  À0.518 (À4.5)
+Fare elasticity speciﬁc dummy (1,0)  N/A  N/A  N/A
+In-vehicle time elasticity speciﬁc dummy (1,0)  N/A  7  N/A
+Bus mode dummy (1,0)a  À0.05773 (À1.83)  À0.414 (À2.8)  0.074 (0.87)
+Train mode dummy (1,0)a  À0.138 (À3.6)  À0.413 (À2.6)  0.145 (1.5)
+Peak period elasticity (1,0)b  0.201 (5.6)  À0.090 (1.2)  0.159 (2.6)
+All day period elasticity (1,0)b  0.111 (2.3)  0.012 (0.11)  À0.061 (À0.96)
+Ticket class e multi ride (1,0)c  À0.281 (À3.4)  N/A  N/A
+Ticket class e 1 h (1,0)c  À0.5702 (2.3)  N/A  N/A
+Ticket class e 4 h (1,0)c  À0.6639 (À3.9)  N/A  N/A
+Ticket class e day (1,0)c  À0.581 (2.32)  N/A  N/A
+Trip purpose e student travel (1,0)  0.1449 (3.01)  N/A  N/A
+Location Australia and USA (1,0)  0.1070 (2.9)  À0.077 (À0.775)  No variation
+Distance (kms) dummy (1,0)d  0.149 (3.1)  Not known  No variation
+Combined SP/RP dummy (1,0)e  0.0925 (1.9)  0.228 (2.5)  0.178 (3.1)
+R-squared  0.335  0.118  0.334
+
+Sample size  241  58  20
+
+a¼ relative to headway elasticity.
+b¼ relative to off-peak only.
+c¼ relative to single and weekly.
+d¼ relative to trips.
+e¼ relative to stand alone revealed preference.
+
+  Our preference would always be to collect primary data as a basis for conclusions regarding effects of policy changes.
+The evidence herein offers at least three warning signals in the development of new data sources and in the selection of
+elasticities from secondary sources. First, drawing on public transport elasticities to use in a speciﬁc model context such as
+bus or train, will tend to over-estimate behavioural response. Second, if one believes that elasticities based on stand-alone
+RP data are ‘better’ estimates than those based on combined SP/RP data, then RP estimates will be lower than the estimates
+reported from combined SP/RP data. We caution that this is possibly not a criticism of the underlying behavioural content
+of SP data per se, but due in large measure to the absence of calibration designed to obtain the correct base market shares
+(compared to shares from stated responses), given the role that the dependent variable (e.g., choice probability) plays in the
+formula. The deviations from actual population shares are typically more pronounced in SP/RP data6 than RP data;
+although RP data is not immune from this. Third, accounting for the type of ticket purchased has a clear inﬂuence on fare
+sensitivity. Although we cannot claim that using an average fare estimate in studies will tend to over- or under-estimate fare
+elasticities, the evidence supporting strong differences in behavioural response between ticket types is sufﬁciently
+revealing to warn against ignoring the class of ticket. Relative to a single and a weekly ticket, the most popular ticket types,
+we ﬁnd a systematically higher mean estimate for multiride, 1 h, 4 h and all day ticket types; and with a growing interest in
+marketing such tickets, there is risk that using averages based typically on single fares, will under-estimate switching
+response.
+
+6. This does not have to be the case; however it appears that a large number of studies with an SP component often use quota sampling on segments, since
+smaller samples are collected (relying on the number of choice sets to produced good sized samples for model estimation), rather than Stand alone RP
+studies that have larger sample given that only one observation per person is obtained. These RP samples tend to reﬂect the actual market shares a lot
+closer or are subject to choice based sampled and weighted exogenous maximum likelihood estimation to account for endogenous sampling.
+Appendix 21.A proﬁle of data by elasticity type
+
+  0  Bus Elasticities WRT Bus In-vehicle Time
+-0.5  1
+
+  -1  US  overall (peak/off-peak) (US)  overall (peak/off-peak) (ACT)  peak (Bris)  peak (ACT)  Assessing sources of variation in public transport elasticities: some warnings Chapter | 21 263
+-1.5  peak (US)  peak (US)  off-peak (Bris)  off-peak (ACT)  off-peak (US)
+  all hours (US)  weekday (Bris)  commuter (Syd)  commuter (Syd)  commuter (Syd & Melb)
+  -2  commuter (Aust)  commuter (Aust)  commuter (Aust)  commuter (Aust)  commuter (Aust)
+-2.5  commuter (Aust)  commuter (Aust)  commuter (Aust)
+
+  international
+  peak (US)
+  off-peak (US)
+  commuter (Melb)
+  commuter (Aust)
+
+  Train Elasticities WRT Train In-vehicle Time
+
+ 0.000  peak (Syd)  off-peak (Bris)  off-peak (Syd)
+  commuter (Syd)  overall (peak/off-peak) (Syd)  commuter (Syd & Melb))
+-0.500  commuter (Melb)  commuter (Aust)  commuter (Aust)
+  commuter (Aust)  commuter (Aust)  commuter (Aust)
+-1.000  commuter (Aust)  commuter (Aust)  international
+  peak (US)  peak (London)
+-1.500
+
+  peak (Bris)
+  weekday (Bris)
+  commuter (Syd)
+  commuter (Aust)
+  commuter (Aust)
+  commuter all hours (US)
+  Train Elasticities WRT Train Headway  264 PART | V Elasticities
+
+ 0.00
+-0.20
+-0.40
+-0.60
+-0.80
+
+  peak wrt peak (US)  off-peak wrt off-peak (US)  all hours wrt all hours (US)
+  peak wrt peak (Bris)  peak wrt peak CBD trips (Syd)  peak wrt peak non-CBD trips (Syd)
+  off-peak wrt off-peak (Bris)  off-peak wrt off-peak CBD trips (Syd)  off-peak wrt off-peak non-CBD trips (Syd)
+  weekday wrt weekday (Bris)  weekday wrt weekday (Syd)
+
+  Direct Bus Fare Elasticities
+
+ 0.000  single wrt single (b)  single wrt single (c)  single wrt single (d)
+  travel ten wrt travel ten (b)  travel ten wrt travel ten (c)  travel ten wrt travel ten (d)
+-0.500  travel pass wrt travel pass (b)  bus/ferry travel pass wrt bus/ferry travel pass (c)  bus/ferry travel pass wrt bus/ferry travel pass (d)
+  bus/train/ferry travel pass wrt bus/train/ferry pass (d)  concession: short trips (1 hour ticket) wrt 1 hour ticket  concession: long trips (1 hour ticket) wrt 1 hour ticket
+-1.000  non-concession: long trips (1 hour ticket) wrt 1 hour ticket  concession: short trips (4 hour ticket) wrt 4 hour ticket  concession: long trips (4 hour ticket) wrt 4 hour ticket
+  non-concession: long trips (4 hour ticket) wrt 4 hour ticket  concession: short trips (day ticket) wrt day ticket  concession: long trips (day ticket) wrt day ticket
+-1.500  non-concession: long trips (day ticket) wrt day ticket  concession: short trips (weekly ticket) wrt weekly ticket  concession: long trips (weekly ticket) wrt weekly ticket
+  non-concession: long trips (weekly ticket) wrt weekly ticket  overall  gov overall
+-2.000  overall  overall (peak/off-peak)  overall (peak/off-peak)
+  overall (peak/off-peak)  overall (peak/off-peak)  overall (peak/off-peak)
+  single wrt single (a)  overall  overall  overall
+  travel ten wrt travel ten (a)  all peak  work peak  student peak
+  travel pass wrt travel pass (a)  peak  peak  peak
+  bus/train/ferry travel pass wrt bus/train/ferry pass (c)  peak  peak  all off-peak
+  non-concession: short trips (1 hour ticket) wrt 1 hour ticket  student off-peak  other off-peak  off-peak
+  non-concession: short trips (4 hour ticket) wrt 4 hour ticket  off-peak  off-peak  off-peak
+  non-concession: short trips (day ticket) wrt day ticket
+  non-concession: short trips (weekly ticket) wrt weekly ticket
+  prov overall
+  overall (peak/off-peak)
+  overall (peak/off-peak)
+  commuter
+  other peak
+  peak
+  work off-peak
+  off-peak
+  weekday
+Assessing sources of variation in public transport elasticities: some warnings Chapter | 21 265
+
+ 0.000  Direct Train Fare Elasticities  commuter weekly
+  commuter travel pass
+-0.200  1  commuters off-peak
+  non-commuters single
+-0.400  commuter single  non-commuters travel pass
+  commuter weekly  unknown
+-0.600  commuters single  overall (peak/off-peak)
+  commuters travel pass  overall (peak/off-peak)
+-0.800  non-commuters weekly  not stated
+  unknown  peak
+-1.000  unknown  peak
+  overall (peak/off-peak)  peak
+-1.200  overall (peak/off-peak)  off-peak
+  peak  short distance
+  commuter single  peak  unknown
+  commuter weekly  commuter peak  child
+  commuter travel pass  off-peak  elderly or disabled
+  commuters weekly  off-peak  unknown
+  non-commuters off-peak  long distance
+  unknown  child
+  unknown  adult
+  overall (peak/off-peak)  unknown
+  overall
+  weekday
+  commuter peak
+  commuter peak
+  off-peak
+  off-peak
+  medium distance
+  unknown
+  adult
+  unknown
+
+Appendix 21.B Key data sources
+
+Balcombe, R., Mackett, R., Paully, N., Preston, J., Shires, J., Titheridge, H., Wardman, M., White, P., 2004. The Demand for Public Transport: a Practical
+  Guide. TRL report, TRL593. WWW.DemandForPublicTransport.co.uk.
+
+Bly, P.H., Webster, F.V., 1981. The demand for public transport Part I. The changing environment in which public transport operates. Transport Reviews
+  1 (4), 323e351.
+
+Cervero, R., 1990. Transit pricing research - a review and synthesis. Transportation 17, 117e139.
+Dargay, J., Hanly, M., Bresson, G., Boulahbal, M., Madre, J.L., Pirotte, A., 2002. The main determinants of the demand for public transit: a comparative
+
+  analysis of Great Britain and France. ESRC Transport Studies Unit, University College London.
+Dodgson, J.S., 1985. Beneﬁts of Urban Public Transport Subsidies in Australia. BTE Occasional Paper, 71. AGPS, Canberra.
+Dodgson, J.S., 1986. Beneﬁts of changes in urban public transport subsidies in the major Australian cities. The Economic Record 62 (177), 224e235.
+Douglas, N.J., Franzmann, L.J., Frost, T.W., 2003. The estimation of demand parameters for primary public transport service in Brisbane attributes. In:
+
+  Paper presented at the 26th Australasian Transport Research Forum, Wellington, NZ.
+Fairhurst, M.H., Morris, I.J., 1975. Variations in the demand for bus and rail travel up to 1974. London Transport Executive Report R210, London
+
+  Transport.
+266 PART | V Elasticities
+
+Georges, B., Dargay, J., Madre, J.L., Pirotte, A., 2003. The main determinants of demand for public transport: a comparative analysis of England and
+  France using shrinkage estimators. Transportation Research Part A 37, 605e627.
+
+Gillen, D., 1994. Peak pricing strategies in transportation, utilities, and telecommunications: lessons for road pricing. Curbing Gridlock: Commissioned
+  Papers 2, 115e151.
+
+Glaister, S., Lewis, D., 1978. An integrated fares policy for transport in London. Journal of Public Economics 9, 341e355.
+Goodwin, P., 1992. A review of new demand elasticities with special reference to short and long run effects of price changes. Journal of Transport
+
+  Economics and Policy 26, 155e163.
+Goodwin, P., 1996. Empirical evidence on induced trafﬁc - a review and synthesis. Transportation 23, 35e54.
+Hanly, M., Dargay, J., Goodwin, P., 2002. Review of Income and Price Elasticities in the Demand for Road Trafﬁc. ESRC Transport Studies Unit,
+
+  London.
+Hensher, D.A., 1986. Simultaneous Estimation of Hierarchical Logit Mode Choice Models. In: Transport Research Group, Working Paper No. 24, School
+
+  of Economic and Financial Studies. Macquarie University.
+Hensher, D.A., 1998. Establishing a fare elasticity regime for urban passenger transport. Journal of Transport Economics and Policy 32 (2), 221e246.
+Hensher, D.A., Brewer, A.M., 2001. Transport - an economics and management perspective. Oxford University Press, USA.
+Hensher, D.A., Bullock, R.G., 1979. Price elasticity of commuter mode choice. Transportation Research 13A, 193e202.
+Hensher, D.A., King, J., 1998. Establishing a fare elasticity regime for urban passenger transport: time-based fares for concession and non-concession
+
+  markets segmented by trip length. Journal of Transportation and Statistics 1 (1), 44e57.
+Hensher, D.A., Louviere, J., 1998. A comparison of elasticities derived from multinomial logit, nested logit and heteroscedastic extreme value SP-RP
+
+  discrete choice models. In: Prepared for the 8th World Conference on Transport Research. Institute of Transport Studies, The University of Sydney,
+  Sydney.
+Hensher, D.A., Ton, T.T., 1998. A comparison of the predictive potential of artiﬁcial neural networks and nested logit models for commuter mode choice.
+  Institute of Transport Studies, The University of Sydney, Sydney.
+IPART, 1996. Estimation of public transport fare elasticities in the Sydney region. Independent Pricing and Regulatory Tribunal of, New South Wales.
+Johansson, O., Schipper, L., 1997. Measuring the long run fuel demand of cars: separate estimations of vehicle stock, mean fuel intensity, and mean
+  annual driving distance. Journal of Transport Economics and Policy 31 (3), 277e292.
+Lago, A.M., Mayworm, P., McEnroe, J.M., 1981. Transit service elasticities: Evidence from demonstrations and demand models. Journal of Transport
+  Economics and Policy 15 (2), 99e119.
+Litman, T., 2002. Transit Price Elasticities and Cross-Elasticities - for urban transportation demand modeling. Victoria Transport Policy Institute.
+Litman, T., 2005. Transit price elasticities and cross-elasticities. Journal of Public Transportation 7 (2), 37e58.
+Luk, J., Hepburn, S., 1993. New review of Australian travel demand elasticities. ARRB Research Report 249. Australian Road Research Board, Victoria.
+McFadden, D., 1974. The measurement of urban travel demand. Journal of Public Economics 3, 303e328.
+Oum, T.H., Waters, W.G., Yong, J., 1992. Concepts of price elasticities of transport demand and recent empirical estimates - an interpretative survey.
+  Journal of Transport Economics and Policy 26 (2), 139e154.
+Pham, L., Linsalata, J., 1991. Effects of Fare Changes on Bus Ridership. American Public Transit Association.
+Preston, J., 1997. Public transport elasticities: time for a re-think? Presented to UTSG Conference. University of Oxford Transport Studies Unit, Dublin.
+Small, K., Winston, C., 1999. The Demand for Transportation: Models and Applications. In: Essays in Transportation Economics and Policy, 11-55.
+  Brookings Institute, Washington, D.C.
+Swait, J., Ben-Akiva, M., 1987. Empirical test of a constrained choice discrete model: mode choice in Sao Paulo, Brazil. Transportation Research B 21 (2),
+  103e115.
+Taplin, J.H.E., Hensher, D.A., Smith, B., 1997. Imposing symmetry on a complete matrix of commuter travel elasticities. Institute of Transport Studies,
+  The University of Sydney, Sydney.
+Taplin, J.H.E., Hensher, D.A., Smith, B., 1999. Imposing Symmetry on a Complete Matrix of Commuter Travel Elasticities. Transportation Research 33B,
+  215e232.
+Wallis, I., Schmidt, A., 2003. Australasian travel demand elasticities - an update of the evidence. Draft Paper ARTF 2003.
+Wallis, I., Yates, P., 1990. Public transport patronage trends in New Zealand. Where are all the passengers going? Papers of the Australasian Transport
+  Research Forum.
+Chapter 22
+
+A review of willingness to pay evidence
+on public transport crowding
+
+22.1 Introduction
+
+In the broader literature, crowding is deﬁned as a “psychological state characterised by stress and having motivational
+properties” (Bell et al., 2001, p. 320), which may have a number of behavioural implications such as a perceived lack of
+control, stimulus overload, a lack of behavioural freedom or privacy and the presence of other stressors. Since the
+mid-1970s when Hensher and McLeod (1977) published the ﬁrst study, as far as we are aware, that analysed crowding in
+public transport (PT), transport academics, consultancies and PT policy makers have shown a growing, albeit slow, interest
+in the study of crowding, and how it might be incorporated into the observed sources of utility associated with modal
+choice. A reduction in crowding is regarded as an important component of PT service quality improvement and has
+become a dominating consideration in the design of stations for proposed new rail systems (Hensher et al., 2011b). Most
+recently, a number of studies, discussed below, have empirically estimated PT passengers’ willingness to pay (WTP) for
+reduced crowding. These crowding studies derived estimates of the value of crowding (VoC) and/or investigated its impact
+on the value of travel time savings (VTTS). A common ﬁnding is that the perceived value of travel, walking or waiting
+time increases as the level of crowding increases.
+
+  Table 22.1 summarises the reviewed PT crowding valuation studies, where their key characteristics are provided such
+as the modelling framework, PT mode, location of study, the way of representing crowding, measure of VoC, and trip
+purpose. The majority of studies used logit models (mainly multinomial logit e MNL) with SP data, with the exception of
+Pepper et al. (2003), and all studies covered commuters. The UK and USA studies (see Dowling et al., 2008) investigated
+rail crowding only. Crowding in a multi-mode context is addressed in one study conducted in Australia (Hensher et al.,
+2011b) and one conducted in Israel (Polydoropoulou and Ben-Akiva, 2001). Only Douglas and Karpouzis (2005)
+investigated crowding on platforms, and in access-ways and entrances, and its impact on valuation of waiting time and
+walking time; while other studies focus on in-vehicle crowding.
+
+  Wardman and Whelan (2011) undertook the most extensive meta analysis on crowding to date, using 208 UK
+passenger rail crowding valuations from 14 unpublished studies and one published study, where time multipliers are used
+as the measure of VoC. Travel in a crowded condition is shown to incur an additional cost relative to the same amount of
+trip time in an uncrowded environment and can be valued in terms of equivalent time (e.g., minutes per minute).1 The time
+multiplier can be deﬁned as the ratio of generalised time (travel time plus crowding) and the equivalent travel time without
+crowding. The 208 empirical observations comprise 124 standing multipliers (ranging from 0.94 to 6.05) and 84 seated
+multipliers (ranging from 1.0 to 1.78). Only one of the sampled studies used revealed preference (RP) data, the rest are
+obtained from models estimated using stated preference (SP) data. The meta regression shows that systematic variations in
+time multipliers include seated or standing, load factor and trip purpose.
+
+  The purpose of this chapter is to provide a review of public transport crowding studies that have derived estimates of
+the value of crowding, which offer an international perspective in contrast to the UK emphasis2 of Wardman and Whelan
+(2011). We review published studies from the UK, USA, Australia and Israel. In addition to passenger rail, we also include
+other transport modes such as bus, light rail and metro. Wardman and Whelan (2011) focussed only on in-vehicle
+crowding, whereas we extend the review to include crowding at different locations, i.e., in public transport, access-
+ways, entrances and platforms. In addition to the time multiplier, other measures of value of crowding are presented,
+namely a monetary value per minute or hour, and a monetary value per trip. Given that the majority of reviewed primary
+
+1. Within a linear utility functional form, similar to the monetary value of crowding (i.e., the ratio of the crowding parameter and the cost parameter), the
+valuation of crowding in terms of time is the ratio of the crowding parameter and the time parameter.
+2. The majority of the studies are reports prepared for UK government agencies (e.g., Transport for London).
+
+Bus Transport. https://doi.org/10.1016/B978-0-12-820132-9.00022-4  269
+Copyright © 2020 Elsevier Inc. All rights reserved.
+TABLE 22.1 Summary of reviewed crowding valuation studies.  270 PART | VI Crowding
+
+Whelan and  Modelling  Mode  Location  Survey  Sample  Type of  Way of representing  Measure of  Trip purpose(s)
+Crockett (2009)  framework  Train  UK  year  size  crowding  crowding in  the valuation  Commuting, busi-
+  MNL (SP data)  2008  2314  In vehicle  experiments  of crowding  ness, education,
+Lu et al. (2008)  1321  Number of standing pas-  Time multiplier  other
+  MNL and Heter-  Train  UK  2005  584  In vehicle  sengers and the propor-  Commuting
+Douglas and  oskedastic MNL  Train  tion seated  £/minute
+Karpouzis  (SP data)  Australia 2005  1830  In vehicle  Commuting mainly
+(2006)  620  Probability of occurrence  $/minute and
+  MNL (SP data)  In vehicle  (seating or standing) and  minutes/minute  Commuting, shop-
+Polydoropoulou  144  length of time  (similar to time  ping, education,
+and Ben-Akiva  Nested logit (SP  Bus and  Israel  1999  335  In vehicle  multiplier)  other
+(2001)  data)  mass  Seat (uncrowded or  $/trip  Commuting
+Hensher et al.  transit  Australia 2009  335  crowded) or stand for a
+(2011b)  Error compo-  Bus/light  number of minutes  $/trip and
+  nents logit (SP  rail, train  $/minute
+Pepper et al.  data)  and pro-  Probability of getting a
+(2003)  posed  seat
+  Conjoint  metro
+Douglas and  analysis  Train  Number of standing pas-
+Karpouzis  sengers and the propor-
+(2005)  MNL (SP data)  Train  tion seated
+
+  USA  1999  In vehicle  Desirability level for  $/trip  Commuting
+  Walking  increased seating  Commuting mainly
+  Australia 2003  capacity  $/minute and
+  Waiting  minutes/  Commuting mainly
+Douglas and  MNL (SP data)  Train  Australia 2003  Three levels of crowding  minute
+Karpouzis  in the access-way/
+(2005)  entrance associated of  $/minute and
+  the length of walking  minutes/
+  time  minute
+
+  Three levels of crowding
+  in the platform associ-
+  ated of the length of
+  waiting time
+  A review of willingness to pay evidence on public transport crowding Chapter | 22 271
+
+studies used stated preference (SP) experiments, we pay particular attention to the different presentations of choice
+experiments for VoC, emphasising the way of representing crowding in experiments. In all reviewed SP studies, the
+attribute for the marginal disutility of crowding in the utility functions is deﬁned as its extent interacted with the time under
+that crowding condition, with the exception of Polydoropoulou and Ben-Akiva (2001) where the crowding attribute in the
+utility function is the probability of getting a seat (out of ten times) only. A number of suggestions for future research are
+also provided, along with conclusions.
+
+22.2 Valuation of in-vehicle crowding
+
+Valuing in-vehicle crowding is a key research focus of crowding studies. If the number of passengers increases per unit of
+time, there is a threshold beyond which not everyone is able to ﬁnd a seat and some people need to stand inside a vehicle,
+which has a negative impact on the perception of the travel experience. The presence of passengers standing in aisles inside
+trains or other modes makes it more difﬁcult for passengers that need to board or alight from a vehicle. Therefore, not only
+is the perception or valuation of travel time affected, but the travel time itself increases due to friction effects between
+passengers. As crowding has become a high agenda policy and planning matter in recent times, various ways of assessing
+its role in modal usage and modal choice have been proposed and incorporated in stated choice experiments. A key output
+of the estimated models is the value of crowding (VoC) and hence the beneﬁt of improving crowding, given the speciﬁc
+deﬁnition adopted. In the published literature, in-vehicle VoC has been measured in three alternative ways, as the time
+multiplier, the monetary value per time unit (minute or hour), and the monetary value per trip. These measures of VoC are
+interchangeable if the value of uncrowded time and the trip length are known.
+
+22.2.1 Time multiplier
+
+Whelan and Crockett (2009) investigated the willingness to pay (WTP) for reduced rail crowding in the UK, using a stated
+preference (SP) experiment (see Fig. 22.1 for an example choice question), where the crowding attribute is deﬁned as the
+seat occupancy rate (ranging from 25% to 100%) and the number of standing passengers (ranging from 0 to 70). The
+survey was conducted in 2008, with 2314 train passengers sampled, where the majority of them are commuters (83%).
+Whelan and Crockett speciﬁed time multipliers (seated and standing) in terms of both load factor (the number of
+passengers/the number of seats) and the number of standing passengers per square metre (standing passengers/m2). Their
+results show that the time multiplier increases from 1.0 to 1.83 for seated passengers, and from 1.5 to 2.37 when the load
+factor changes from 80% to 200%; while the time multiplier increases from 1.0 to 1.63 for seated passengers, and from
+
+Situation B  Train B
+  Train A  The journey time is 29 minutes
+
+  The journey time is 43 minutes  The fare is £3.75 (one-way)
+  The fare is £3.10 (one-way)  Sit in the following conditions
+  Sit in the following conditions
+
+100% of seats are occupied, 20 people are  90% of seats are occupied, nobody is standing
+  stood around the carriage
+
+Q24 Which train do you prefer? (Please tick one box only)
+
+Strongly Prefer A  Prefer A  Prefer B  Strongly Prefer B
+
+1  2  3  4
+  CB
+
+  FIG. 22.1 SP choice example of Whelan and Crockett (2009).
+272 PART | VI Crowding
+
+1.53 to 2.04 for standing passengers when the number of standing passengers per square metre increases from 0 to 6.0.
+Whelan and Crockett also investigated the effects of trip purpose, income and distance on the valuation of crowding.
+Wardman and Whelan (2011) suggest that standing passengers/m2 is a better indicator of the disutility associated with
+crowding than the load factor, given that a same load factor may have different levels of crowding across different types of
+trains with varying amounts of seating and standing space.
+
+22.2.2 Monetary value ($) per minute or hour
+
+In addition to the time multiplier, there are other ways to value crowding. In the context of train users, Lu et al. (2008)
+conducted a stated preference experiment in Greater Manchester in 2005, which has ﬁve attributes including in-vehicle
+time, fare, frequency, punctuality and crowding (see Table 22.2 for an illustrative example of their choice experiment),
+where crowding and punctuality were shown as the combination of probability of occurrence and length of time (for
+example, two out of ﬁve times someone stands for whole journey) (i.e., 30 min for Option B in the choice example shown
+in Table 22.2).3 Within a multinomial logit (MNL) framework, the value of crowding was estimated as 12.05 pence per
+person minute or 7.23 pounds per person hour in 2005 (2005£), which is more than twice as much as the value of
+in-vehicle time (i.e., 5.68 pence per minute).
+
+  Douglas and Karpouzis (2006) empirically estimated values of on-train crowding, using an SP experiment, sampling
+584 Sydney train passengers in 2005. All surveys were undertaken on platforms at 17 stations as passengers were waiting
+for their trains during the AM and PM peaks. The respondents were asked to choose between two rail trips differing in wait
+time, onboard train time and the level of crowding (the ﬁve levels of on-train crowding were uncrowded seating, crowded
+seating, standing for 10 min, standing for 20 min and crush standing for 10 min). An example of Douglas and Karpouzis’s
+choice experiment is given in Fig. 22.2.
+
+  On-train crowding adds additional travel cost. Douglas and Karpouzis (2006) estimated that crowded seating would
+lead to a 17% increase in travel time. Given a valuation of crowding in terms of ‘per minute’, the time multiplier is 1.17,
+which is within the seated multiplier range in Wardman and Whelan (2011) of 1.0e1.78. The time multiplier relative to
+uncrowded seating is 1.34 for standing up to 10 min, 1.81 for standing over 20 min or longer, and 2.04 for crush standing
+up to 10 min. Given a value of travel time savings in an uncrowded train carriage (i.e., all crowded seating and standing
+was removed) of $8.45 (in 2003 Australian dollars) (2003$AUD) reported by Douglas Economics (2004) using an SP
+experiment, Douglas and Karpouzis (2006) reported a value of crowding seating of 2003$AUD1.47 per person hour.
+Hence, the generalised cost (i.e., time cost plus crowding cost) when seating in a crowded train is 2003$AUD9.92
+(¼8.45 þ 1.47) per person hour. Other values of crowding levels are provided in Table 22.3. Douglas and Karpouzis
+(2006) also investigated the impact of load factor on the valuation of crowding in a train, and found that there is a
+non-linear relationship between the value of generalised time (travel time plus crowding) and load factor (LF); for example
+the value of time increases from 2003$AUD8.45 per person hour when LF  80% (no crowding cost) to 2003$AUD 8.84
+at 100% loading, and reaches 2003$AUD 12.05 per hour at 200% train loads.
+
+TABLE 22.2 SP choice example of Lu et al. (2008).
+
+Choice 7  Option A  Option B
+Train Type  Super Sprinters  Pacers
+Journey Time  20 min  30 min
+Single Fare  £2.00  £1.80
+Frequency  Every 20 min  Every 10 min
+Punctuality  2 out of 5 times delay for 10 min  Always on time
+Crowding  Enough seats  2 out of 5 times stand for whole journey
+
+Preference
+
+3. This way of representing crowding is also used in a number of unpublished papers, for example TPA (1993 cited in Wardman and Whelan, 2011) where
+crowding was deﬁned as “around a one in ﬁve chance of standing for 15, 30 or 40 min or for the whole journey”.
+  A review of willingness to pay evidence on public transport crowding Chapter | 22 273
+
+  FIG. 22.2 SP choice example of Douglas and Karpouzis (2006).
+
+TABLE 22.3 Monetary values of different levels of crowding (2003$AUD), Douglas and Karpouzis (2006).
+
+  Relative to uncrowded seating
+
+  Additional cost  Generalised cost
+
+Level of crowding  Cents/min  Dollars/h  Cents/min  Cost $/h
+Uncrowded Seating  14.1  8.45  14.1  8.45
+Crowded Seat  2.4  1.47  16.5  9.92
+Stand up to and including 10 min  4.7  2.83  18.8  11.28
+Stand e 15 min  8.1  4.85  22.2  13.30
+Stand e 20 min or longer  11.5  6.88  25.5  15.33
+
+Crush Stand v Uncrushed Stand  10.0  5.98  24.1  14.43
+
+22.2.3 Monetary value ($) per trip
+
+Some studies also presented the VoC estimate associated with a repeated trip. For example, Polydoropoulou and
+Ben-Akiva (2001), in an SP experiment, investigated crowding deﬁned as the probability of getting a seat (out of ten
+times) for bus and mass transit.4 The variable was treated as a linear effect. They found it to be a statistically signiﬁcant
+effect, but did not report a WTP. They provide two cost variables (fare for those with no cars, and fare for those who own
+one or more cars). The WTP calculated from the data (in Israeli shekel (NIS) 1999) is 36.39 NIS and 46.61 NIS
+respectively for 0 and 1-plus cars owned. This suggests that if a traveller can always get a seat (10 out of 10 times), then
+they are willing to pay up to 36.39 NIS to 46.61 NIS for this situation, which translates into (given the linear deﬁnition),
+3.64 NIS to 4.66 NIS per trip. If there is a 50% chance of getting a seat, then the values per trip are 1.82 NIS and 2.33 NIS.
+
+  Hensher et al. (2011b) investigated crowding in four public modes (bus/light rail, train and proposed metro), using an
+SP experiment shown as Fig. 22.3, where the crowding attribute is represented as the combination of the percentage of
+passengers seated (25%e100%) and the number of standing passengers (0e27 for bus/light rail, 0e120 for train and
+0e125 for metro). This attribute was shown as written descriptions and a picture of the train carriage situation. In terms of
+
+4. Although Polydoropoulou and Ben-Akiva (2001) used a nested logit speciﬁcation for revealed preference and stated choice data (ignoring the panel
+nature of the data) for all trip purposes, crowding is only built in their SP part.
+274 PART | VI Crowding
+
+  FIG. 22.3 SP choice example (including pull down menu for crowding diagram) of Hensher et al. (2011b).
+
+a ‘per trip’ value of crowding, the authors considered a number of scenarios such as ‘no one standing and plenty of seats
+available’. Within the range, we have investigated what the best estimates might be when there is a 45% chance that you
+get a seat, which has a median WTP per trip averaging 30 min or 2009$AUD2.76 (or 2009$US2.15) for metro. Compared
+to Polydoropoulou and Ben-Akiva (2001), the ﬁgure in 1999 for Australia, given the Sydney metro estimate in 2009,
+would be 1999$AUD2.06 (or 1999$US1.34) given an exchange rate of $AUD1 ¼ $US0.64518. This is higher than the Tel
+Aviv evidence in 1999 of Polydoropoulou and Ben-Akiva (2001), in the range $US0.44 and $US0.56 (one US dollar was
+equal to 4.14 NIS in 1999). Another way of comparing the evidence is to express these WTP estimates as a percentage of
+the prevailing average wage rate. For the Israel study this is 6.4%e8.2% of the average wage rate and for the Australian
+evidence it is 7.10% of the average wage rate, the latter being in the range of the Tel Aviv evidence. Hensher et al. (2011b)
+also provided the value of crowding in terms of $/minute. For example, if the average travel time in the metro is 30 min,
+then the ‘crowding penalty’ in cents per minute for a probability of 0.5 of getting a seat is 9.9 Australian cents.
+  A review of willingness to pay evidence on public transport crowding Chapter | 22 275
+
+  Pepper et al. (2003) also investigated crowding in trains. The numbers and lengths of New Jersey Transit (NJT)
+commuter trains accessing New York’s Penn Station are currently at the limits of available capacity during peak periods, as
+evidenced by the signiﬁcant number of standees at these times. A study was undertaken to determine the design of the
+multilevel coaches, so that they will provide the extra capacity needed and also reﬂect customers’ preferences. The study
+focused on interior issues, including the seating conﬁguration and seat design, that relate directly to the amount of seated
+(and standee) capacity on the new coaches.
+
+  A computer-based survey, conducted in 1999, was administered to customers to quantify their preferences among key
+elements of the multilevel concepts, and to estimate their WTP for those elements. With regard to the crowding attribute,
+three levels of desirability for increased seating capacity were provided during the survey: same number of seats, 25%
+more seats and 45% more seats. This study found that additional seating capacity, in the conﬁguration preferred by
+customers, provides a substantial net beneﬁt to NJT passengers, equivalent to about US$2.20 fare value per trip in 1999.
+The beneﬁts are higher for this application because of the crowded conditions on existing trains. The study also suggests
+that multilevel coaches and improved interior design have beneﬁts well beyond increased capacity.
+
+  This review of in-vehicle crowding WTP research reveals that SP is the dominant data paradigm for the empirical
+valuation of crowding, and that there exist different ways of representing crowding in SP experiments (e.g., the number of
+standing passengers combined with the percentage of seated passenger, probability of occurrence (seating or standing), and
+the associated length of travel time, probability of getting a seat). There are three measures of crowding valuation (minute/
+minute (or time multiplier), $/minute, and $/trip). As a primary study, only Hensher et al. (2011b) and Douglas and
+Karpouzis (2006) have provided multiple measures of VoC. In addition to the written descriptions of attributes, Hensher
+et al. (2011b), Whelan and Crockett (2009) and Douglas and Karpouzis (2006) also presented pictures in their choice
+experiments to assist respondents understand crowding. All reviewed studies show that crowding conditions increases
+generalised time costs. Litman (2010) concluded that in-vehicle travel time can be valued at about 25% of the average
+wage rate for a seated passenger, 50% of the average wage rate for a standing passenger, and 100% of the average wage
+rate in a crowded bus or train.
+
+22.3 Valuation of crowding in access-ways and platforms
+
+Although crowding on platforms and in access-ways would also incur additional disutility, like in-vehicle crowding, there is a
+very limited literature on the effect that crowding has on waiting time and waiting time valuation. Douglas and Karpouzis
+(2005) is an exception, which provided empirical valuation of crowding on platforms and in access-ways/entrances. Douglas
+and Karpouzis sampled 335 Sydney train passengers in 2003, using an SP experiment (see Fig. 22.4 for an illustrative
+example), and each respondent was required to make a choice between two train journeys represented by different levels of
+crowding in the access-way, entrance and on the platform, where crowding is deﬁned as its extent (uncrowded, average or
+crowded) and the time (minutes) spent in walking (access-way and entrance) or waiting (platform). Douglas and Karpouzis
+
+13  A  B
+
+takes 2 mins in  takes 1 min in
+
+Crowded Entrance  Uncrowded Entrance
+
+  takes 3 mins in  takes 1 min in
+
+  Crowded Accessway  Uncrowded Accessway
+
+wait 3 mins on  wait 6 mins on
+
+Crowded Platform  Average Platform
+
+  FIG. 22.4 Example of an SP choice question (Douglas and Karpouzis, 2005).
+276 PART | VI Crowding
+
+estimated a series of multinomial logit models, and in their ﬁnal model the time parameters for crowding in the access-way
+and the entrance are generic and hence the same VoC for crowding in both locations. Douglas and Karpouzis ﬁrst reported
+their VoC estimates in terms of minutes/minute (expressed relative to medium occupancy platform time). For example, 1 min
+of waiting on the platform under high crowding conditions was estimated to range from 1.7 to 2.5 min of medium-crowding
+waiting time (i.e., 0.7e1.5 min increase as the crowding level increasing from medium to high), and 1 min of walking
+(access-way and entrance) under high-crowding conditions was estimated to range from 1.5 to 1.8 min of medium-crowding
+walking time (i.e., 0.5e0.8 min increase as the crowding level increasing from medium to high). Using the earlier VTTS
+estimates under medium-crowding conditions from Douglas Economics (2004), they also provided the valuations of
+crowding in terms of $/hour. For example, during peak hours, 1 h of waiting on a high crowded platform was valued as
+2003$AUD30.33 per person hour, and 2003$AUD32.56 walking in a high crowded access-way or entrance. Given values of
+waiting and walking times under medium-crowding conditions during peak hours of 2003$AUD14.19 and 2003$AUD21.0
+per person hour, the increased value of high crowding (relative to medium crowding) is 2003$AUD16.14 (¼30.33 e 14.19)
+per person hour when waiting, and 2003$AUD11.56 (¼32.56 e 21.0) per person hour when walking.
+
+22.4 Synthesis of WTP estimates
+
+Summarising the range of estimates of WTP for crowding is a challenge given the disparate deﬁnitions and units in which
+it is expressed within and between studies. We have attempted, however, to do this in Table 22.4 as an easy reference
+source.
+
+22.5 Conclusions and policy implications
+
+Crowding can be a potential threat both to the health of the public transport industry (e.g., delays and low efﬁciency) and
+passengers (e.g., safety and stress issues) (Cox et al., 2006). Hence to reduce crowding is important for improving the
+attractiveness of public transport. Similar to the reduction in travel time and time variability, there is a WTP associated with
+reduced crowding. This chapter has reviewed the few published public transport crowding valuation studies, in which stated
+choice modelling has dominated the literature. Different ways of representing crowding in SP experiments are identiﬁed,
+along with three measures of the value of crowding (i.e., time multiplier, dollar per time unit, and dollar per trip). The
+predominant modal focus is on crowding in a train carriage, although there are some multi-modal exceptions. The impact of
+crowding on travel time has been investigated in almost all studies, and the common ﬁnding is that travelling in crowded
+conditions leads to increased values of travel time savings, with crowding viewed as an additional component of generalised
+time, although careful separation of the crowding effect and travel time effect is important to avoid double counting.
+
+  The evidence herein provides WTP estimates for project appraisal. Inclusion of a treatment of the WTP for reductions
+in crowding in its various deﬁnitional states in the economic evaluation of public transport has become as relevant as the
+valuation of travel time savings and trip time variability (or reliability). This growing area of interest in the crowding
+literature is critical in identifying an extended set of user beneﬁts that can inﬂuence the design of platforms or stations for
+new systems, and the extension of stations for existing systems. Increasing the capacity of platforms would result in an
+opportunity for more carriages per train set and less crowding on platforms and within trains. Determining the WTP to
+avoid crowding at stations and within public transport (including allowing for standing vs. sitting), is also an important
+parameter in the calculation of the optimal number of seats (and hence standing space) that should be provided in a train (or
+bus) under the assumptions of social welfare maximisation and/or some commercial criterion.
+
+  The empirical ﬁndings summarised in this chapter, together with the review by Wardman and Whelan (2011), provides
+a starting point for WTP evidence on crowding; however there is much more research that needs to be undertaken, as
+suggested below. This review suggests a number of important avenues for future PT crowding valuation research. First, it
+is quite likely that passengers may have different perceptions of crowding when sitting or standing in a mode with the same
+crowding level. A few studies have investigated observed traveller heterogeneity using interaction terms in the utility
+function; for example, Whelan and Crockett (2009) investigated the effects of trip purpose, income and distance on the
+valuation of crowding; however unobserved preference heterogeneity at the individual level may also play an important
+role in representing the WTP to reduce crowding. None of the reviewed studies addressed this issue. More advanced
+discrete choice models such as mixed multinomial logit (MMNL) might be used to reveal unobserved between-individual
+
+5. All monetary values are converted into $US2003.
+TABLE 22.4 An Overview of the empirical evidence on WTP for crowding.
+
+Study  Units  Situation  WTP estimate  WTP estimate ($US20035)
+  In-public transport vehicle:
+
+Whelan and Crockett  Time multiplier  Seat occupancy: 25%e100%  1.0e1.83  1.0e1.83
+(2009)  Load factor: 80%e200%  1.5e2.37  1.5e2.37
+  Standing passengers per metre squared: 0e6  1.53e2.04  1.53e2.04
+
+Lu et al. (2008)  £/minute  Prob. of occurrence and length of time standing  12.05 pence/min  18.79 pence/min (or 11.27
+  (£2005)  $/h)
+Douglas and Karpouzis  Crowded seating  A review of willingness to pay evidence on public transport crowding Chapter | 22 277
+(2006)  Standing up for 10 min  0.17 min/min  0.17 min/min
+  Standing up for 15 min  0.34 min/min  0.34 min/min
+  Minutes per minutea  Standing up for 20 min or more  0.57 min/min  0.57 min/min
+  Crush standing up to 10 min  0.81 min/min  0.81 min/min
+  (increase relative to uncrowded seating)  1.04 min/min  1.04 min/min
+  $ per person hourb (increase relative to  Crowded seating
+  Standing up for 10 min  1.47 $/h  0.97 $/h
+  uncrowded seating)  Standing up for 15 min  2.83 $/h  1.87 $/h
+  Standing up for 20 min or more  8.1 $/h  5.35 $/h
+  11.5 $/h  7.59 $/h
+  ($AUD2003)
+
+Polydoropoulou and  Probability of getting a seat for 0 and 1-plus cars
+Ben-Akiva (2001)  owned
+
+  $/trip  If always get a seat
+  50% chance of getting a seat
+  3.64e4.66 $/trip  0.87e1.11 $/trip
+  1.82e2.23 $/trip  0.43e0.53 $/trip
+  (Israeli shekel in
+  1999)
+
+Hensher et al. (2011b)  Based on 30 min trip and combination of percent of  2.76 $/trip  1.5 $/trip
+  passengers seated and standing:  ($AUD2009)  5.5 Australian cents/min
+  $/trip  9.9 Australian
+  $/minute  45% chance of getting a seat  cents/min  (or 3.32 $/h)
+  ($AUD2009)  2.43 $/trip
+  50% chance of getting a seat
+  2.2 $/trip  Continued
+Pepper et al. (2003)  $/trip  Additional seating capacity fare value per trip  ($US1999)
+TABLE 22.4 An Overview of the empirical evidence on WTP for crowding.dcont’d  278 PART | VI Crowding
+
+Study  Units  Situation  WTP estimate  WTP estimate ($US20035)
+  Access and platform locations:
+
+Douglas and Karpouzis  Minutes/minute  Waiting under high crowded conditions
+(2005)  (increase relative to medium crowded)
+  Walking under high crowded conditions  0.7e1.5 min/min  0.7e1.5 min/min
+  (increase relative to medium crowded)  0.5e0.8 min/min  0.5e0.8 min/min
+
+  $/person hour  Waiting on high crowded platform during peak hours
+  (increase relative to medium crowded)
+  Walking in high crowded access-way/entrance during  16.14$/h  10.65 $/h
+  peak hours (relative to medium crowded)  7.63 $/h
+  Waiting on high crowded platform during off-peak  11.56 $/h  8.82 $/h
+  hours (increase relative to medium crowded)  6.37 $/h
+  Walking in high crowded access-way/entrance during  13.36 $/h
+  off-peak hours (relative to medium crowded)
+  9.65 $/h
+  ($AUD2003)
+
+aThe values plus one are equal to time multipliers of corresponding crowding levels relative to uncrowded seating.
+bThe uncrowded seating is valued as 8.45 Australian dollars per hour or 5.58 $US2003.
+A review of willingness to pay evidence on public transport crowding Chapter | 22 279
+
+preference heterogeneity, given that many traveller behaviour studies have found signiﬁcant heterogeneity in taste
+parameters such as travel time and travel time variability (see Li et al., 2010a for a review). The MMNL model also has
+other advantages over the multinomial logit (MNL) model such as allowing for correlation among random parameters
+(Train and Sonnier, 2005), and autocorrelation of one parameter over multiple choice situations, which is important for
+panel data which is commonly used in travel choice studies6 (Gopinath et al., 2005). Given the limited evidence, there
+remains the need for further research to investigate unobserved heterogeneity associated with the crowding parameter(s).7
+
+  All of the reviewed studies encompass the range of interpretations of crowding; however the number of studies
+(published) focussing on a speciﬁc dimension of the WTP for crowding reduction (i.e., time multiplier, $/hour, and $/trip)
+is very small, preventing the implementation of a formal meta regression analysis. The majority of the studies considered
+in-vehicle crowding, and only Douglas and Karpouzis (2005) empirically investigated the impacts of different crowding
+levels on walking time and waiting time valuation. There is a need for studies focused on valuing crowding on the
+platform, and at the station in access-ways and entrances, given that the experience in these locations is also important in
+inﬂuencing modal preferences, and consequently modal choice and project design. A successful public transport system
+requires improvements (e.g., lower crowding and better reliability) across all important stages (access-way, entrance,
+platform, station and in vehicle) of the passenger service chain.
+
+  Another potential limitation of the existing crowding valuation studies is that they all adopt a linear utility speciﬁcation
+following the theory of Random Utility Maximisation, which implicitly assumes that decision making occurs with certainty
+or without risk (see Batley and Ibáñez, 2009; Li and Hensher, 2011). However for repeated trips, typically of commuting in
+particular, the crowding level may vary from trip to trip and a distribution of crowding levels with corresponding
+probabilities of occurrence exists in real markets, similar to the effect of travel time variability. Therefore, the true decision
+making context is subject to ‘risk’ (probabilities of occurrence). The linear utility speciﬁcation implicitly assumes risk
+neutrality (see Bates et al., 2001); however evidence from psychology, behavioural economics (see e.g., Tversky and
+Kahneman, 1992; Holt and Laury, 2002), and recently travel behaviour research, shows that people may be risk averse or
+risk taking (see e.g., Polak et al., 2008; Li et al., 2010b; Hensher et al., 2011a; Hensher and Li, 2012), suggesting non-
+linear utility (or value) functional forms should be used to empirically address the real attitude towards risk. Studies
+cited above by the authors on the valuation on travel time variability, show that empirically addressing risk attitudes in
+choice models is behaviourally very appealing, and is associated with a statistically signiﬁcant improvement in model ﬁt,
+and consequent impact on the valuation of travel time variability. However, all published crowding WTP studies are based
+on the assumption of risk neutrality through the linear utility speciﬁcation.
+
+  In previous choice experiments that have included a measure for crowding, only one level of crowding is used to
+represent crowding for an alternative within a choice set. This ‘deterministic’ crowding is somewhat unrealistic given that
+ﬂuctuations in the demand side and supply side would also inﬂuence crowding; and hence in reality there is a distribution
+of crowding levels. In future stated choice studies a full distribution of crowding over a number of repeated trips should be
+considered. For example, deﬁning three crowding scenarios, a commuter might encounter these three levels of crowding
+(up to a probability of occurrence) when using a PT mode, deﬁned as a low level of crowding (Lcr), an average or common
+(Acr) level, and a high level (Hcr). Each level should be associated with an alternative trip circumstance within a choice
+task, along with corresponding probabilities (probLcr, probAcr and probHcr) of occurrence, to fully represent the crowding
+attribute. As an example, under the attribute-speciﬁc Extended Expected Utility Theoretic model developed by Hensher
+et al. (2011a), a utility function incorporating crowding might be given as Eq. (22.1), as a way to capture the effects of
+crowding preference (e.g., bLcr) and risk attitude (a).
+
+U ¼ bLcrðprobLcrLcraÞ þ bAcrðprobAcrAcraÞ þ bHcrðprobHcrHcraÞ þ bCostCost þ .  (22.1)
+
+6. The error components logit model used in Hensher et al. (2011b) takes into account the pseudo panel nature of their SP data.
+
+7. When using a MMNL model, to select what distribution to represent the random parameter is important. Given that the distribution for crowding is
+likely to be asymmetrical, a skewed normal distribution is suggested.
+

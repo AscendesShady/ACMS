@@ -1,0 +1,1033 @@
+Airline Crew Scheduling  527
+
+  Pairing covers flight 7 twice and therefore it is not considered in the daily
+
+problem. Notice that an additional pairing could have been defined by the set
+
+of duties  However, this pairing covers the same flights as pairing
+
+  Given that both pairings originate at the same crewbase, only one of the two
+
+pairings (the less costly) need to appear in the model. In this example, we assume
+
+that  has lower cost than
+
+  Assuming pairing costs  and  from (14.1) we
+
+obtain the following formulation.
+
+  If we require that at least 3 hours and at most 6 hours of pay be assigned
+to crewbases A and D, and at most 5 hours of pay to crewbase C, then the crew
+balance constraints are
+
+An optimal solution to this problem uses pairings 3 and 5, for a total cost of 9.
+  To obtain a solution to the weekly problem, we need, in addition to solving the
+
+daily problem, to solve a weekly exceptions problem to repair the broken pairings.
+The weekly exceptions problem consists of the following flights.
+528  Handbook of Transportation Science
+
+  Alternatively, we could have solved the problem as a single weekly problem.
+Such a problem would have 43 flight segments and thus 43 cover constraints. Each
+pairing would appear multiple times, associated with the appropriate days of the
+week. For example, pairing would have five copies, one starting on each day
+of the week except Friday and Saturday. The copy that starts on Sunday wraps
+around in time since the next duty period is on Monday. In addition, this weekly
+problem also includes the pairing
+
+The Crew Assignment Problem
+
+In this section, we explain the rostering problem, which has been the focus of
+much of the crew assignment literature.
+
+  Separate rostering problems are solved for each crew type, where a crew type
+is specified both by the crew member rank (such as Captain, First Officer, Flight
+Engineer, etc.) and the fleet family (such as Boeing 767, Airbus 320, etc.) the crew
+members are qualified to fly. For a given crew type, the model input includes the
+set of pairings that must commence each day, and the number of crew members of
+the specified type that must be assigned to each of these pairings. The constraints
+of the rostering model require that:
+
+1. Each pairing in the crew pairing solution is contained in the appropriate num-
+  ber of selected schedules. Note that the rostering model contains one constraint
+  for each pairing commencing on a given day, for each day in the rostering
+  period.
+
+2. Each crew member is assigned to exactly one work schedule. If the airline is
+  not required to use all crew members, a crew member might be assigned to
+  an empty or null schedule – that is, a schedule containing no work.
+
+  Let K be the set of crew members of a given type, let be the set of work
+
+schedules that are feasible for employee  and let P be the set of dated
+
+pairings to be covered. [A dated pairing is a pairing together with the starting
+
+date of the pairing.] represents the minimum number of crew members that
+
+must be assigned to pairing  and is 1 if pairing  is included in
+Airline Crew Scheduling  529
+
+schedule s and 0 otherwise. Decision variable equals 1 if schedule  is
+
+assigned to employee  and 0 otherwise. the cost of schedule  for
+
+employee  represents the schedule cost, which might represent how close
+
+the schedule is to the crew member’s stated preferences, or be set so as to minimize
+
+the number of crew members used. The latter is done by assigning very low costs
+
+to null assignments.
+
+Given this notation, we write the crew rostering formulation, Gamache and
+
+Soumis, 1998, for a given crew member type as
+
+14.4 Solution Algorithms
+
+At their core, the crew pairing and crew assignment models are set partitioning
+and set covering models with one constraint for each task to be performed (i.e. a
+flight or pairing to be covered) and one variable for each feasible combination of
+the tasks.
+
+  These problems are difficult for three reasons. First, even determining whether
+a combination of tasks is feasible can be difficult, given the wide array of rules
+and regulations that must be enforced. Second, these problems often have an
+enormous number of variables – often in the hundreds of millions or more. Third,
+these variables are all integer, further complicating the solution process.
+
+  In this section, we discuss solution approaches to address these difficulties.
+For the purpose of illustration, we focus our attention on the crew pairing problem.
+However, these ideas are applicable to the crew assignment problem as well.
+
+Historical Solution Approaches
+
+One of the major challenges in solving the crew pairing problem arises from
+the shear size of the problem. It is not uncommon for a problem containing
+300 flights to have billions of pairings. Consequently, in early work on the
+pairing problem, only a subset of the pairings were constructed, using heuris-
+tic rules of thumb to guide and limit the construction process. In fact, until
+530  Handbook of Transportation Science
+
+the 1990’s, local improvement heuristics represented the state-of-the-art in crew
+pairing optimization.
+
+  A local improvement heuristic for the crew pairing problem starts with a fea-
+sible solution to the set partitioning problem. Because most airlines only make
+minor changes to their flight schedules from one planning period to the next, feasi-
+ble solutions can usually be constructed manually by modifying the solution used
+in the previous planning period. Then, to find improved schedules, the heuristic
+randomly selects a small number of pairings in the current solution and searches
+for a better solution for the flights covered by that subset of the pairings. The search
+is usually performed by enumerating all possible pairings for the subset of flights
+and solving the small set partitioning IP to optimality using branch-and-bound.
+Often, these small set partitioning problems can be solved quickly since the LP
+relaxations of set partitioning problems with a small number of rows frequently
+have integral or near-integral solutions. This process is repeated until no further
+improvements are found or until some preset time limit is reached. This approach
+is taken in Anbil et al., 1991 and Gershkoff, 1989.
+
+Pairing Generation
+
+In each iteration of a local search heuristic the current incumbent solution is
+improved by considering only a small subset of the flights and the pairings cov-
+ering only these flights. Therefore these heuristics lack the ability to consider the
+whole flight network in a single step and they need a large number of iterations
+before finding a good solution. An additional drawback of the local search heuris-
+tics is that they do not provide a lower bound on the best possible solution value.
+Thus, it is hard to estimate how far the current solution is from the optimum. To
+circumvent these two obstacles more global approaches are needed where at each
+iteration pairings covering all of the flights are generated.
+
+Network Structure for Pairing Generation There are two main types of net-
+works that have been developed in the literature for generating pairings. The first,
+called a flight network, has an arc for each flight in the schedule and arcs repre-
+senting possible connections between flights. The second type of network, a duty
+period network, has an arc for each possible duty period and arcs representing
+possible overnight connections between the duties.
+
+  The network used to model international problems is typically duty period,
+rather than flight, based. That is, nodes represent the start or end of a duty period
+and an arc is included in the network for each possible duty period. Connection
+arcs between duties are included if two duties can be flown consecutively by the
+Airline Crew Scheduling  531
+
+same crew. Domestic operations, on the other hand, typically use flight networks,
+because of the large number of feasible duties.
+
+  Each crew pairing is represented by a network path, but only the subset of
+paths satisfying certain requirements represent pairings. For example, in a flight
+network, a sequence of flights may give a path through the network, but that does
+not guarantee that the resulting duty periods will contain no more than the allowable
+hours of flying or that the resulting pairing will contain fewer than the maximum
+number of duty periods allowed.
+
+Flight Network A typical flight network, Minoux, 1984, Desrosiers et al., 1991,
+has nodes representing the departure and arrival of each flight as well as a source
+s and a sink t. There is an arc representing each flight in the schedule. If there is a
+sparsity of flights arriving and departing an airport, it is often necessary to include
+potential deadhead flights in order to achieve a good, or even feasible, solution. For
+daily problems each flight arc is replicated as many times as the maximum number
+of calendar days allowed in a pairing but pairings are generated only from flights
+operating on the first day. For weekly problems, flight arcs are replicated as many
+times as the maximum number of weeks allowed in a pairing. Because pairings are
+often not allowed to exceed one week in duration, flight arcs need to be replicated
+only once so that pairings that cross over from the end of the week to the beginning
+of the next week, i.e. from Sunday to Monday, can be generated. Of course we
+could allow pairings to cross over without replicating flights by introducing arcs
+from the last day of the week back to the first. However, maintaining an acyclic
+network by replicating flights simplifies the shortest path algorithm for finding
+attractive pairings.
+
+  The source node is connected to the departure node ofeach flight that originates
+at a specified crewbase. The arrival node of every flight that ends at that crewbase is
+connected to the sink. There are also arcs representing legal connections between
+flights. A pair of flights will have a connection arc between them if the arrival
+airport of the first is the same as the departure airport of the second and the time
+between the two flights is either a legal connection within a duty period or a legal
+overnight rest. Note, however, that the required duration of an overnight rest might
+be a function of the attributes of the duty period that precedes it and plus perhaps
+other attributes of the pairing.
+
+  Figure 14.2 shows a partial flight network for the following flight schedule.
+
+  Flight 1: AIRPORT A – AIRPORT B 08:00 – 09:00
+  Flight 2: AIRPORT B – AIRPORT C 10:00 – 11:00
+  Flight 3: AIRPORT C – AIRPORT D 13:00 – 14:00
+  Flight 4: AIRPORT D – AIRPORT A 15:00 – 16:00
+532  Handbook of Transportation Science
+
+The network spans a two-day time horizon and contains two copies of each flight.
+The solid arcs represent flights. With each flight we have a transition through both
+time and space from the departure airport and departure time to the arrival airport
+and arrival time. The dotted arcs represent possible connections between flights.
+Of course, connections are only allowed between pairs of flights that arrive and
+depart from the same airport. Because of minimum and maximum connection time
+limits, the set of connection arcs in the network will generally be a proper subset
+of the set of all possible connections. Note that in the figure each arrival node has
+two connections emanating from it, one to the next departure and the other to the
+same departing flight one day later. In order to generate pairings originating at a
+crewbase, for example, Airport A, we would add a source node s and sink node t
+to this network. We would then connect s to the departure node of every flight arc
+originating at Airport A and connect the arrival node of every flight arriving at A
+to node t.
+
+  It is easy to see that every legal pairing is represented by some s – t path
+in this network. However, there are many s – t paths that do not represent legal
+pairings. The network structure guarantees that we will not connect two flights
+that do not have their respective arrival and departure at the same airport, but it
+does not prevent us from violating other rules like the maximum number of hours
+of flying allowed in a duty period or the maximum TAFB in a pairing.
+
+  Using a duty period network it is possible to build the duty period rules into
+the network, resulting in a much larger arc set.
+
+Duty Period Network This network, Lavoie et al., 1988, Anbil et al., 1994,
+Vance et al., 1997b, has nodes representing the departure and arrival of each duty
+period as well as a source and sink. There are arcs representing each possible
+Airline Crew Scheduling  533
+
+duty period in the flight schedule as well as arcs representing legal connections
+between duties. For daily problems, each duty period is replicated as many times as
+the maximum number of calendar days allowed in a pairing. Similarly, for weekly
+problems, each duty period is replicated as many times as the maximum number
+of weeks allowed in a pairing.
+
+  A pair of duties will have a connection arc between them if the arrival airport
+of the first is the same as the departure airport of the second and the time between
+them is a legal overnight rest. Remember that the required duration of an overnight
+rest might be a function of the attributes of the duty period that precedes it and
+possibly other attributes of the pairing. With the duty period network, unlike the
+flight network, it is possible to build explicitly into the network the requirements
+involving the preceding duty period.
+
+  For daily problems, the no repeated flight rule can be partially enforced by
+allowing connection arcs only between duties that do not share a common flight.
+That is, we can ensure that no two consecutive duties share a common flight, but
+for nonconsecutive duties, e.g. the first and third duties, we cannot prevent flight
+legs from being repeated in this manner.
+
+  Klabjan et al., 2001b propose an approach to store the network compactly.
+They assume that the duty periods are sorted based on the departure airport and
+the duty periods originating at the same airport are sorted in increasing order of
+the departure times. For each node representing a duty period arrival they store
+two pointers. The first pointer points to the earliest connecting duty period and the
+second pointer to the last connecting duty period. Due to the imposed order on
+duty periods, all possible connections are obtained by scanning all duty periods
+between the two stored duty periods. While compact, this network representation
+cannot embed into the network rules that involve two duty periods, for example,
+sharing common flights between two duty periods.
+
+  Figure 14.3 shows a two-day duty period network for the schedule shown
+in Figure 14.2. The solid arcs represent duty periods and the dotted ones repre-
+sent connections between duties. The lighter solid arcs are the single-flight duty
+periods corresponding to each of the four flights in the schedule while the darker
+solid lines correspond to two additional duties, one composed of flights 1 and 2
+and the other composed of flights 3 and 4. It is possible to build more duty periods
+from this set of four flights, but we have chosen to add only two to maintain the
+simplicity of the example. Note that the single flight duty period arcs arrive much
+later than the corresponding flight arcs in the flight network. This is because we
+include the time of the overnight rest in the duration of the duty arc.
+
+  To generate pairings in the flight network starting and ending at a crewbase,
+we add a source and sink node. The source node is connected to the departure node
+534  Handbook of Transportation Science
+
+of each duty period that originates at the specified crewbase. The arrival node of
+every duty period that ends at that crewbase is connected to the sink.
+
+  Many more rules are satisfied by all paths from source to sink in the duty
+period network than the flight network. However, there are still some rules, such
+as the 8-in-24 rule and the no repeating flight rule for nonconsecutive duties, that
+cannot be enforced through the network structure.
+
+Pairing Enumeration Duty period enumeration can be accomplished by a
+depth-first search approach on the flight network. For each flight arc we construct
+all duty periods that start with this flight. We attempt to extend the duty period
+with a flight if there is a corresponding sit connection arc in the flight network and
+all of the other duty feasibility rules are satisfied. In order to enumerate all duty
+periods we have to backtrack whenever we have exploited all sit connection arcs
+originating at a node corresponding to a flight arrival.
+
+  Pairings can be enumerated in a similar way either from the flight network
+or from the duty period network. In pairing enumeration the generation is started
+from every flight or duty that originates at a crew base. Depth-first search is then
+used to extend partial pairings or backtrack.
+
+Partial Generation of Pairings Several methodologies for the crew pairing
+problem require a generation of only a subset of pairings since all of them cannot
+be handled explicitly. An easy way to achieve this is by generating pairings only
+on a subset of flights. This approach is taken in Anbil et al., 1991 and Gershkoff,
+1989. It is substantially more difficult to generate a subset of pairings that cover all
+of the flights in the schedule. Andersson et al., 1998 give some details on how this
+Airline Crew Scheduling  535
+
+operation is carried out at Carmen Crew Pairing. To generate a subset of pairings,
+for each flight they limit the number of possible connections. A certain number of
+short connections is selected and possibly some historically useful connections.
+Their idea is to solve a flight matching problem for each airport before pairing enu-
+meration. Knowledge of ‘good’ connections is essential. Moreover, an experienced
+user might also prune the generation by recognizing useless connections.
+
+  Klabjan et al., 2001b propose the generation of random pairings. When extend-
+ing a branch during enumeration, they choose connections at random. They use
+the connection times as greedy estimates; that is, the probability of selecting a
+connection depends on the connection time. Given that short connections are more
+likely to yield pairings with low cost, the smaller the connection time, the larger the
+probability of selecting the connection. Because in hub-and-spoke flight networks
+there are many connections, the connection selection strategy has to be imple-
+mented carefully. They propose a similar approach for generating random duties.
+Based on this random pairing generation they develop an algorithm for the crew
+pairing problem.
+
+Solving the LP Relaxation
+
+Early work on approximately solving the LP relaxation of (14.1) involves consid-
+ering a large number of pairings and solving the LP relaxation over these pairings.
+Anbil et al., 1992 found an optimal solution to the LP relaxation of (14.1) over
+a large subset of the pairings for an 800 flight instance of a U.S. domestic daily
+problem. Five and a half million feasible pairings were enumerated and the opti-
+mal LP solution was found over this set using a specialized approach referred to
+as SPRINT in which several thousand columns are loaded into the LP solver and
+the LP is optimized over those columns. Then, most of the nonbasic columns are
+discarded, and several thousand more columns are added. This process is contin-
+ued until all columns have been considered. At the end, however, it is necessary
+to price out all nonbasic columns to prove optimality. Bixby et al., 1992 used
+a combination of an interior point method and the simplex method to find the
+optimal LP solution to a very large crew pairing model. Hu and Johnson, 1999
+propose a primal-dual algorithm for solving the LP relaxation over a given number
+of pairings. Their algorithm maintains a dual feasible vector and in every iter-
+ation increases the objective value by considering convex combinations of dual
+solutions.
+
+  As optimization solvers and computers became more sophisticated, there was a
+shift to dynamic column generation techniques that implicitly consider all possible
+pairings in solving the LP relaxation, Anbil et al., 1994, Desaulniers et al., 1998. In
+column generation the set partitioning problem with all possible pairings is referred
+536  Handbook of Transportation Science
+
+to as the master problem. Thus (14.1) is the master problem. A restricted master
+problem is one that contains only a subset of the possible pairing columns. The
+column generation algorithm to solve the crew pairing LP involves the following
+steps:
+
+  Step 1: Solve the Restricted Master Problem – Find the optimal solution to
+  the current restricted master problem containing only a subset of all columns.
+  Step 2: Solve the Pricing Subproblem – Generate one or more columns that
+  may improve the solution. If no columns are found, STOP: the LP relaxation
+  is solved.
+  Step 3: Construct a New Restricted Master Problem – Add to the restricted
+  master problem the columns generated in solving the subproblem and return
+  to Step 1.
+
+  The solution and construction of the restricted master problem (steps 1 and 3)
+can be achieved using optimization software such as CPLEX or OSL. The solution
+of the pricing subproblem (step 2), however, should be tailored to exploit the
+network structure of the problem. The idea is to represent every pairing as a path
+in a network so that the huge number of pairings can be represented efficiently.
+This network is then used to identify variables that may improve the solution,
+without examining all variables. This often can be achieved either by solving multi-
+label shortest path problems on the specially structured network, Desrochers and
+Soumis, 1989, or by enumeration, Marsten, 1994 and Makri and Klabjan, 2001.
+
+Considerations in Solving the Restricted Master Subproblem Until recently
+it was believed that the primal simplex algorithm is the most efficient procedure
+for solving the restricted master subproblem. Given that a primal solution is avail-
+able from the previous iteration, primal simplex can be warm started. However
+primal simplex has two drawbacks. First, the LP relaxations of (14.1) tend to be
+extremely degenerate and therefore primal simplex tend to perform many degen-
+erate steps, and second, the extreme point optimal dual solutions give misleading
+reduced costs and several iterations of column generation are needed. A standard
+trick for removing degeneracy is to randomly perturb the right hand sides. After
+the perturbed LP is solved, the perturbation is removed and the LP is solved to
+optimality. A different approach is presented in du Merle et al., 1999 by adding
+surplus and slack variables with penalties. This corresponds to requiring soft lower
+and upper bounds on the dual variables and penalizing the dual variables if they lie
+outside the bounds. For crew pairing problems this technique substantially reduces
+the number of iterations in column generation. Interior point algorithms yield an
+interior point dual solution, which is a much better indicator of the “usefulness”
+of a column, but lack the benefit of warm starting.
+Airline Crew Scheduling  537
+
+  Barahona and Anbil, 1998 and Barahona and Anbil, 1999 propose a variant
+of the subgradient algorithm, which they call the volume algorithm. At every
+iteration the dual vector is improved in the direction of the subgradient and a primal
+feasible solution is obtained by taking a convex combination of previously obtained
+primal feasible vectors. The volume algorithm is fast, does not have large memory
+requirements, and it produces excellent dual vectors for use in column generation.
+Barahona and Anbil, 1999 claim significant performance improvements over both
+interior point and simplex algorithms.
+
+Pricing Pricing is the problem of selecting pairings that are then added to the
+restricted master problem in step 2. There are two main questions in pricing: what
+is the criteria to select the pairings and how to find pairings that meet the criteria.
+
+  Traditionally, pairings are selected by the reduced cost criterion. Recently
+alternative strategies have been proposed. Bixby et al., 1992 use the pairing cost
+divided by the sum of the dual values of the legs in the pairing as the selection
+criteria. They report a significant decrease in the number of iterations. Hu and
+Johnson, 1999 present a primal-dual algorithm to select the columns with the
+lowest reduced cost based on a dual feasible vector, which is updated in every
+iteration. They also report a significantly lower number of iterations. Another,
+yet unexplored, strategy in the context of column generation would be to use the
+steepest edge pricing rule, Forrest and Goldfarb, 1992.
+
+  There are two approaches for finding pairings that best meet the selection
+criteria. One is combinatorial by using a shortest path algorithm, and the second
+is the brute force approach of enumerating the pairings. In the following sections
+we describe both approaches.
+
+Pricing with Shortest Path Algorithms Until recently shortest path approaches
+have been designed only for the reduced cost criterion. Many algorithms solve the
+pricing problem to find attractive pairings using multilabel or constrained shortest
+path methods on specially structured networks, Desrochers and Soumis, 1988. In
+either the flight or the duty period network, only basic requirements can be built
+into the network structure. Requirements that cannot be built into the network
+structure are enforced through the use of labels. For example, we can maintain a
+label to track the number of hours of flying in the current duty period, the number
+of duties in the pairing, and the 8-in-24 rule. In addition to the labels that control
+the pairing feasibility rules, we need labels to capture the nonlinear components
+of the pairing cost structure.
+
+  Multilabel shortest path approaches differ from single-label approaches in that
+it might be necessary to keep many paths to each intermediate node in the network.
+For example, in solving the crew pairing problem, often it is not known which of
+538  Handbook of Transportation Science
+
+the cost factors will dominate or which rules might prevent a path from resulting
+in a pairing until the complete pairing is specified. Consequently, it is necessary
+to keep track of all nondominated paths to each node between s and t. A path is
+nondominated if there does not exist another single path which is ‘better’ with
+respect to all the costs and rules. By better, we mean that either it is cheaper with
+respect to one of the cost criteria, or it is less restricted with respect to one of the
+rules. For example, if two paths to the same node have all labels identical except
+one has more time-away-from-base than the other, by dominance the one with the
+larger time-away-from-base can be eliminated.
+
+  Figure 14.4 illustrates a label update in a multilabel shortest path procedure.
+Each path carries four labels: the first gives the flying time in the current duty
+period, the second the elapsed time in the current duty period, the third the number
+of segments in the current duty period, and the final one, the number of duties in
+the pairing. At the arrival node of arc A the label values are (3.0, 6.0, 2, 1). For
+the arrival node of arc B the labels are (4.0, 5.0, 4, 1). Now consider the departure
+node of arc C. Two connection arcs both terminate at that node. The connection
+arc from flight A has a duration of two hours and the connection from flight B has
+a duration of one hour. Thus the two possible paths will have labels (3.0, 8.0, 2,
+1) and (4.0, 7.0, 4, 1) respectively. Neither path can be eliminated by dominance
+because one contains less flying time and the other less elapsed time. Thus, we
+must now maintain two sets of labels at the departure node of flight C. Note that
+in this simple example we have only a small number of labels. As the number of
+labels grows, it is generally more difficult to eliminate paths by dominance so that
+a large number of potential paths to each node must be stored.
+Airline Crew Scheduling  539
+
+  Lavoie et al., 1988 and others were successful in using the multi-label shortest
+path procedure to solve the pricing subproblem over duty-based networks. This
+approach works especially well when the number of duty periods is not excessive,
+as demonstrated by Anbil et al., 1994, who used a duty-based network to solve
+international crew problems containing about two to three times as many duties as
+flights. Vance et al., 1997a were also successful in using a duty period network to
+solve a relatively small domestic daily problem.
+
+Pricing By Enumeration The approach of generating all the pairings is an
+alternative solution to pricing. Note that the pairing feasibility rules and the cost
+structure are very complex and therefore a shortest path approach typically requires
+many labels, which makes dominated paths a rare occurrence. In addition, it might
+not even be possible to capture some of the feasibility rules with labels. If a change
+or an update of a feasibility rule is required, major changes in the shortest path
+code might be necessary. Therefore crew scheduling software vendors prefer to
+use pairing enumeration in pricing because they have many customers, each with
+its own feasibility rules.
+
+  For medium and large crew pairing instances enumerating all the pairings can
+be prohibitive and therefore strategies have to be designed to avoid this. Marsten,
+1994 and Anbil et al., 1998 describe crew pairing optimizers that use partial
+enumeration in pricing. Both of these approaches use the reduced cost criterion.
+
+  Makri and Klabjan, 2001 use the selection criterion, introduced by Bixby
+et al., 1992,
+
+where y* is the optimal dual vector to the restricted master subproblem. Pairings
+are enumerated, however they prune the enumeration by providing upper bounds
+on the score of a pairing p, which is defined as
+
+Finding Good Solutions to the IP
+
+Most state-of-the-art approaches combine column generation for solving the LP
+relaxation of the set partitioning problem with a branch-and-bound algorithm to
+find good integer solutions. Because of the large number of possible pairings, for
+all but the smallest problems, these approaches are heuristic in nature. They fall
+into one of three general classes. In the first class are algorithms where column
+generation is performed ‘off-line’. That is, a subset of pairings is enumerated up
+front and the integer program is solved to optimality over this subset. An example
+540  Handbook of Transportation Science
+
+of this type of approach can be found in Hoffman and Padberg, 1993. Because
+even moderate sized problems can have billions of variables, these approaches
+must work on a very small subset.
+
+  The second class of approaches uses dynamic column generation to solve the
+LPrelaxation ofthe set partitioning problem to optimality or near optimality. Then,
+branch-and-bound is applied to obtain the optimal IP solution over the subset of
+columns generated to solve the LP relaxation. Among these approaches is work
+by Anbil et al., 1994 on the international crew pairing problem and Ryan, 1992 on
+the rostering problem. Recently Klabjan et al., 2001b proposed an algorithm that
+solves the LP relaxation of (14.1) and then selects several million pairings with
+low reduced cost to find an integer solution.
+
+  The drawback to these approaches is that there is no guarantee that a good
+solution, or even a feasible solution, exists among a subset of columns that give
+a good LP solution.
+
+  A third class of algorithms allow dynamic column generation throughout
+the branch-and-bound tree. We refer to algorithms of this type as branch-and-
+price approaches. Like branch-and-bound, a branch-and-price procedure is a smart
+enumeration strategy in which an LP relaxation is solved at each node of a branch-
+and-bound tree. The difference is that the huge constraint matrix requires the use of
+column generation. Branch-and-price methodology has been applied to a number
+of problems in transportation, scheduling, and combinatorial optimization. For
+a survey, see Barnhart et al., 1998.
+
+  Recently, a number of groups have developed crew pairing and rostering algo-
+rithms using a branch-and-bound framework with column generation, including
+Desaulniers et al., 1998, Desrosiers et al., 1991, Gamache et al., 1999, Gamache
+et al., 1998, Gamache and Soumis, 1998, Ryan, 1992, Vance et al., 1997a, and
+Anbil et al., 1998.
+
+  Marsten, 1994 combines dynamic pairing generation with variable fixing to
+obtain good integer solutions. To find integer solutions, the variables associated
+with fractional pairings with value close to one are fixed to one sequentially. To
+limit column generation, new pairings are generated only when the bound from
+the LP relaxation increases above a pre-set target.
+
+  Andersson et al., 1998 decouple pairing generation from the optimization
+engine. The algorithm generates pairings several times and solves (14.1) over the
+generated columns. They use the Lagrangian algorithm presented in Wedelin, 1995
+to solve the integer programs.
+
+Branching Rules for the Crew Pairing Problem To be able to generate pairings
+at any node in the branch-and-bound tree, a branching rule that is compatible with
+the pairing generation procedure is needed. The standard rule of branching on
+Airline Crew Scheduling  541
+
+variable dichotomy is difficult to implement. Using such a branching decision, we
+
+would either fix a pairing into the solution  or forbid the use of a pairing
+
+with each decision. It is easy to fix a pairing j into the solution. There
+
+is no need to generate any more pairings containing any of the flights covered by
+
+pairing j, so these flight arcs may be deleted from the pairing generation network.
+
+However, forbidding the use of a specific pairing is difficult since we must forbid
+
+specific paths from being returned by the pairing generation procedure. This could
+
+require finding the (k + l)st shortest path if k pairings have been forbidden by
+
+branching.
+
+The first branching rule presented here is motivated by a general rule for set
+
+partitioning problems developed by Ryan and Foster, 1981. Their rule is based on
+
+the simple observation that given a fractional solution to the LP relaxation of a set
+
+partitioning problem there must exist two columns whose associated variables are
+
+fractional such that they both contain coefficients of one in a common row r and
+
+there exists another row s where one column has a coefficient of one and the other
+
+has a coefficient of zero. This fact leads to a general branching rule where pairs of
+
+rows r and s are required to be covered by the same column on one branch and by
+
+different columns on the other.
+
+Essentially the same logic can be used for crew pairing optimization, but the
+
+rule is modified to maintain tractability. In general, it is difficult to force two specific
+
+flights to either appear only in pairings that contain them both (the first branch)
+
+or to never appear together in the same pairing (the second branch). However,
+
+it is an easy matter to force two flights to appear consecutively in a pairing or
+
+not. If flights r and s satisfy the conditions of the Ryan and Foster rule and they
+
+appear consecutively in at least one of the fractional pairings that contains them
+
+both, branching can be performed by requiring that they appear consecutively in
+
+the pairing that covers them at one node and by requiring that they cannot appear
+
+consecutively in any pairing in the solution at the other node. This strategy is
+
+sometimes referred to as branching on follow-ons because it places restrictions on
+
+which flights can follow flight r in the solution. The flight pair r, s is often termed
+
+a follow-on.
+
+Klabjan et al., 2001b present a different branching rule called timeline branch-
+
+ing. In timeline branching the decision is based on a flight r and a time t. In one
+
+branch we only allow pairings with time of the connection immediately follow-
+
+ing r less than or equal to t. The other branch considers only pairings with time
+
+greater than t of the connection immediately following r. They show that this is a
+
+valid branching rule if the departure times are all different, which can be achieved
+
+by slightly perturbing them. They also combine follow-on branching or timeline
+
+branching with strong branching. Strong branching is a branching rule that chooses
+
+the branching variable (follow-on in the context of crew pairing) by carrying out
+542  Handbook of Transportation Science
+
+several dual simplex iterations for each branching candidate to estimate the change
+in the lower bound, Bixby et al., 1995, Linderoth and Savelsbergh, 1999.
+
+Master Problem Modification We discuss the modifications to the master prob-
+lem for follow-on branching. For timeline branching the modifications are similar.
+To implement follow-on branching, both the master problem with its existing set of
+columns and the column generation subproblem must be modified. On the branch
+where flight r must be followed by flight s in the same pairing, any pairing in
+the restricted master problem that contains r and/or s but does not have the two
+flights appearing consecutively is eliminated. On the branch where the flights can-
+not appear consecutively, any pairing with r and s consecutive is eliminated from
+the restricted master problem.
+
+Flight Network Modification If a flight network is used, flight s can be required
+to follow flight r by eliminating all the connection arcs out of r except the one to
+s. Connections into s from any flight other than r are also deleted. Note that this
+second modification is not absolutely necessary since requiring r to be followed
+by s is sufficient to ensure that s will not be preceded by a flight other than r
+in any pairing in the basis. However, for the subproblem, it is computationally
+advantageous to eliminate as many arcs as possible when a branching decision is
+fixed. Forbidding the connection is implemented by eliminating the arc connecting
+r to s. These network modifications can be accomplished by removing the arcs
+or by giving them a very high cost so that they will not be used in attractive
+pairings. The second approach is generally preferable since it simplifies many of
+the bookkeeping issues associated with storing the network structure and enables
+the same network (with modified costs) to be used to generate pairings at any node
+in the branch-and-bound tree.
+
+Duty Period Network Modification If a duty period network is used, the imple-
+mentation will depend on whether the connection between flights r and s is an
+overnight rest. A connection within a duty period (not an overnight) can be required
+by eliminating all duties that contain either flight but do not have them appearing
+consecutively. The connection can be forbidden by eliminating all duty periods
+containing r and s consecutively. A connection that is an overnight rest can be
+required by eliminating all duties containing flight r that do not end in r and all
+duties containing s that do not begin with s. Then arcs connecting any duty period
+ending in r to a duty period that does not begin with s are deleted, as well as arcs
+connecting a duty period ending in a flight other than r to a duty period beginning
+Airline Crew Scheduling  543
+
+with s. To forbid the connection, we delete connection arcs from any duty period
+ending in r to a duty period beginning in s.
+
+  From the above discussion, we see that the branch on follow-on rule can be
+implemented with either type of pairing generation network simply by eliminating
+arcs from the network.
+
+Parallel Approaches to Crew Pairing
+
+Crew pairing problems with as few as 300 legs for hub-and-spoke networks or
+2000 legs for point-to-point networks can take as much as 10 to 20 hours of
+CPU time to solve and do not necessarily produce an optimal solution. This is
+particularly problematic when conducting ‘what-if’ analysis. One way to decrease
+computation time is to employ parallel algorithms for crew pairing. However, the
+crew pairing model (14.1) is an integer program and parallel algorithms for integer
+programs typically do not scale well. Thus, designing parallel algorithms for the
+crew pairing problem is a challenging problem that has only recently begun to be
+studied.
+
+  One of the most time intensive parts of most crew pairing algorithms is pairing
+generation. The basic idea of a parallel algorithm for pairing generation is to dis-
+tribute the legs originating at crewbases (called starting legs) among the processors,
+with each processor enumerating all the pairings starting with the assigned starting
+legs. Since the computational times to generate all the pairings starting with a given
+leg can vary substantially, load balancing algorithms are needed. Goumopoulos
+et al., 1997 propose a pulling algorithm based on the master/workers paradigm.
+The master distributes the legs one by one to the workers. Whenever a worker
+becomes idle, it queries the master for a new starting leg. Klabjan and Schwan,
+2000 eliminate the master with the processors exchanging the workload among
+themselves.
+
+  In other research, Alefragis et al., 1998, Sanders et al., 1999, and Alefragis
+et al., 2000 focus on parallelizing the pairing enumeration and the Lagrangian
+decomposition algorithm of Andersson et al., 1998. Since the latter algorithm is
+inherently sequential, they describe the steps for parallelizing an iteration of the
+algorithm, i.e. updating the Lagrangian multipliers and computing the subgradient.
+They compute the constraints in parallel and distribute the variables among the
+processors. Note that due to the fine grain parallelism, this algorithm does not
+perform well on architectures with high latency such as a cluster of workstations.
+
+  An entirely different approach is given in Klabjan et al., 2001b. The LP
+relaxation is solved in parallel by generating the pairings in parallel and in each
+iteration the LP is solved with the parallel primal-dual algorithm, Klabjan et al.,
+2000. The IP over a small subset of pairings is solved with a branch-and-bound
+544  Handbook of Transportation Science
+
+algorithm that executes the strong branching rule in parallel. The pairing enumer-
+ation algorithm is scalable but the parallel primal-dual algorithm scales only to
+20 processors.
+
+  The most promising algorithms for parallelization are branch-and-price since
+coarse granularity is easily achievable by evaluating the branch-and-bound nodes
+in parallel. Gedron and Crainic, 1994 give a survey on parallel branch-and-bound
+algorithms. Klabjan, 2001 describes a parallel branch-and-price algorithm. The
+algorithm evaluates the branch-and-bound nodes in parallel and in addition, each
+node is evaluated in parallel. An LP relaxation is solved in parallel by embedding
+parallel column generation in the parallel primal-dual algorithm.
+
+Open Issues
+
+There are still a number of open questions regarding the best method for crew
+pairing optimization. Whether to use dynamic network-based pairing generation
+or a fast pricing procedure like SPRINT is not clear. If pairings can be enumerated
+quickly and accessed off-line in an efficient manner, the SPRINT approach may
+be preferable to network-based generation. If network-based generation is used,
+the type of network that will perform most efficiently might be highly schedule-
+dependent. For point-to-point crew pairing problems, duty period based networks
+have proven to be efficient because the number of possible duty periods grows
+relatively slowly with the number of possible flights. However, for hub-and-spoke
+networks, the results have been mixed. Another open issue is how to manage
+effectively the number of pairings in the constraint matrix; that is, how many
+pairings to add at each iteration and whether or not to delete pairings with high
+reduced cost.
+
+Crew Rostering Solution Approaches
+
+The solution approaches described above apply to both the crew pairing and crew
+assignment problems. We conclude by briefly highlighting some of the research
+conducted specifically for the crew rostering version of the crew assignment prob-
+lem. We also introduce an alternative approach to generating schedules that has
+been used in the crew rostering literature but could also be applied to crew pairing
+generation.
+
+Computational Results Ryan, 1992 solves crew rostering problems with 55
+crew members and 120 pairings. This results in problems containing as many as
+300,000 variables, with solution times ranging from less than 10 minutes to 2–3
+hours.
+Airline Crew Scheduling  545
+
+  Gamache et al., 1998 construct individualized monthly work schedules for
+pilots and officers. Schedules are selected for assignment to crew members based
+on considerations of individual preferences and seniority restrictions. They solve
+24 instances of problems at Air Canada, containing up to 108 pilots and 568
+pairings. Using cutting planes, solution times range from 1 to 8 hours.
+
+A Constraint Programming Approach In some cases, there exist schedule
+rules and regulations that cannot easily be captured in a constrained shortest path
+approach. Moreover, pricing by enumeration may be intractable. Recently con-
+straint programming (CP) approaches to rostering have been proposed. Thorough
+discussions of CP can be found in Lustig and Puget, 2001 and Brailsford et al.,
+1999.
+
+  An example of how constraint programming has been used in crew assignment
+can be found in the work of Fahle et al., 1999 and Junker et al., 1999. They use CP to
+solve the pricing problem for generating columns in the crew assignment problem
+of a major European airline. For each crew, they define a variable that represents
+the set of duties to be assigned to that crew. The domain contains all feasible subsets
+of the set of duties to be covered. They are able to specify constraints that capture
+all of the crew rules and regulations. In addition, they incorporate a shortest path
+component that leverages dual information from the restricted master. This allows
+them to reduce the search space significantly. They are able to solve real-world
+problems successfully, incorporating constraints that could not be captured in a
+constrained shortest path approach.
+
+14.5 Integrating Crew Pairing with Maintenance Routing and Schedule
+  Design
+
+In airline planning, the schedule design, fleet assignment and maintenance routing
+problems are all solved before the crew scheduling problem. Their solutions then
+impact the input to crew pairing. For example, by assigning aircraft types to flights
+in the fleet assignment problem, we partition the flights into smaller sets and solve a
+separate crew scheduling problem for each of these sets, since individual crews can
+only fly certain aircraft types. Thus, solving these planning problems sequentially
+can lead to sub-optimalities, because decisions are made in the earlier problems
+without taking into account their impact on crew scheduling. A fully integrated
+approach to the airline planning process is quite difficult, due to its enormous
+size and complexity. Nonetheless, benefits can be gained by partially integrating
+elements of the planning process. We provide examples of this in the sections that
+follow.
+546  Handbook of Transportation Science
+
+Crew Pairing and Maintenance Routing
+
+Although crew scheduling assigns crews and maintenance routing assigns aircraft,
+there is a connection between these two problems. Specifically, this connection
+deals with the amount of time required between two flights for a connection to
+be crew-feasible. Recall that there is a minimum idle time required between two
+consecutive flights in a duty period. This time is needed, in part, so that the crew can
+move through the terminal from the arrival gate of the first flight to the departure
+gate of the second flight. However, if both of these flights have been assigned to
+the same aircraft in the maintenance routing problem, then the crew will remain
+with the aircraft and therefore this time restriction can be relaxed. Such a crew
+connection, which is feasible only if both flights share a common aircraft in the
+maintenance routing solution, is known as a forced turn.
+
+  When constructing a network for the crew pairing problem, we begin with the
+set of connections that have adequate sit time and then add to this set those forced
+turns implied by the maintenance routing solution. These additional connections
+permit new pairing opportunities and thus can improve the quality of the crew pair-
+ing solution. However, because the forced turns are determined in the maintenance
+routing problem without taking into account the crew pairing objective, solving
+these two problems sequentially can lead to sub-optimal results.
+
+  This potential for sub-optimality is demonstrated in the following example,
+taken from Cohn and Barnhart, 2002. Consider a network of eight flights, denoted
+A through H. As shown in Figure 14.5, this network has three potential forced turns,
+two different feasible solutions to the maintenance routing problem (denoted by
+MR), and four potential pairings. For each of the maintenance solutions, only a
+subset of the pairings are feasible, depending on the forced turns implied by the
+maintenance solution. Thus, given maintenance solution 1, the cost of an optimal
+crew pairing solution is $7, while maintenance solution 2 yields a crew pairing
+problem whose optimal cost is $5.
+Airline Crew Scheduling  547
+
+  This small example highlights how a sequential approach to the maintenance
+routing and crew pairing problems can lead to sub-optimal results. Three different
+approaches have appeared in the literature to address this.
+
+  In the first approach, Klabjan et al., 2002 solve the crew pairing problem before
+they solve the maintenance routing problem. They include all potential forced
+turns in the crew pairing network. Those forced turns contained in the crew pairing
+solution then become required aircraft turns when solving the maintenance routing
+problem. Although this approach can potentially lead to maintenance infeasibility,
+in practice they found feasible solutions for many hub-and-spoke flight networks.
+Additionally, note that whenever a feasible crew pairing solution is found to be
+maintenance feasible, this solution is in fact optimal for the integrated problems,
+when the maintenance routing problem is a feasibility rather than an optimization
+problem. Furthermore, their approach requires no more computational effort than
+the original sequential approach.
+
+  In the second approach, Cordeau et al., 2001 present an integrated model
+that guarantees maintenance feasibility. They maintain the original string-based
+maintenance routing and crew pairing formulations. Like Klabjan et al., 2002, they
+include all potential forced turns in the crew pairing network. They then link the
+two models by adding one constraint for each potential forced turn. The constraint
+for forced turn t states that the number of chosen crew pairings containing forced
+turn t cannot exceed the number of chosen maintenance routes that contain it. This
+results in a large-scale integer program which they solve by branch-and-bound,
+where the LP relaxations are solved by using a Benders decomposition approach
+and column generation.
+
+  A third approach is found in Cohn and Barnhart, 2002. Their approach is simi-
+lar to that of Cordeau et al., 2001, but in place of maintenance string variables, they
+use variables representing complete solutions to the maintenance routing problem.
+This dramatically reduces the number of constraints, because all of the original
+maintenance routing constraints are replaced by a single convexity constraint. This
+reduction in constraints comes at the cost of a potential explosion in the number
+of variables. However, they prove that only a small subset of the feasible mainte-
+nance solutions need to be considered to ensure an optimal result, thereby greatly
+reducing the size of the problem. Furthermore, they prove that the integrality of the
+maintenance solution variables can be relaxed. Thus, their integrated maintenance
+routing and crew pairing model has no more binary decision variables than the
+basic crew pairing model alone.
+
+Crew Pairing and Schedule Planning
+
+Klabjan et al., 2002 study the impact of flight departure times on the crew pairing
+problem. If we are allowed to change the flight departure times, then some paths
+548  Handbook of Transportation Science
+
+in the duty period network that do not satisfy all of the pairing feasibility rules
+might correspond to a pairing in a retimed flight schedule. Consider two flights
+i and j depicted in Figure 14.6. In the original schedule, leg j cannot follow leg
+i in a pairing because it violates the minimum sit connection time. However if
+leg j departs 5 minutes later, then the connection becomes feasible. In a retimed
+flight schedule, additional paths in the duty period network become pairings not
+only due to the minimum sit and rest connection times, but also with respect to the
+maximum duty elapsed time and the 8-in-24 rule.
+
+  The model in Klabjan et al., 2002 is identical to (14.1) except that more
+columns are considered. They develop an algorithm that simultaneously generates
+paths in the duty period network and new departure times such that the generated
+paths correspond to pairings in the retimed flight schedule. Each path defines its
+own flight departure times, but given that in (14.1) every flight segment is covered
+by exactly one pairing, the solution implies a single departure time for each leg.
+
+  They report computational experiments on large fleets of a U.S. domestic
+carrier. A time window w of either 5 or 10 minutes is imposed, i.e. every departure
+time can be changed by at most ±w. New flight departure times should not diverge
+by much from the original times since otherwise it would affect the fleeting cost and
+would substantially disrupt passenger connections. On average, the improvement
+of pay-and-credit for w = 5 minutes is 25% and for w = 10, pay-and-credit
+decreases by 35%. These data clearly show that the crew cost can be substantially
+reduced by slightly retiming departures.
+
+Crew Pairing with Regularity
+
+The crew pairing model (14.1) for the weekly problem minimizes the weekly crew
+cost. However it is unlikely that the resulting pairings could be repeated many
+Airline Crew Scheduling  549
+
+times in the weekly horizon unless such repetition constraints were specifically
+imposed. Thus the solution would lack regularity. Regularity is important with
+respect to crew (and aircraft) schedules, since regular solutions are much easier to
+implement and manage, and, if possible, crews prefer to repeat itineraries.
+
+  In Section 14.2 we described the daily/weekly exceptions methodology for
+solving the weekly problem. This methodology, first, does not necessarily find the
+minimum cost crew schedule even if the daily and the weekly exception problems
+are solved to optimality and second it does not directly take into account regularity.
+Klabjan et al., 2001a present a new model, called the weekly crew pairing model
+with regularity, that captures both the crew cost and regularity in a weekly schedule.
+They solve the model in several stages, where in the first stage they obtain pairings
+with the highest regularity, i.e. those that can repeat seven days a week, in the
+second stage the algorithm yields pairings that can be repeated six times in a week,
+and so forth.
+
+  By using approximations and integer programming as a heuristic, they obtain
+solutions that improve on current practice with respect to both regularity and cost.
+They report computational results on small and large fleets of a major U.S. domestic
+carrier. The improvements on crew cost range from 10% to 40% and their solutions
+have 40-60% higher regularity.
+
+14.6 The Crew Recovery Problem
+
+An airline schedule rarely operates as planned. Maintenance problems, weather
+conditions, and other unplanned events cause frequent disruptions – on a typical
+day, several flights will be delayed or canceled. Each disruption can propagate
+through the system, because it impacts resources such as crews and aircraft that
+are also needed for subsequent flights. The crew recovery problem considers how
+to modify a crew schedule that has been affected by disruptions.
+
+  The recovery problem differs from the planning problem in several ways. One
+of the most fundamental differences is in the time horizon for solving the problem.
+Unlike the planning problem, which is solved as part of a multi-week process, the
+recovery problem must be solved very quickly – often, in minutes. Thus, the goal
+of the crew recovery problem is to find a good solution quickly.
+
+  The second difference between recovery and planning is that the crew recovery
+problem must take into account the recent flying history of the active crews. Each
+crew’s options are limited as a function of the work that has already been performed
+during the current pairing.
+
+  Third, reserve crews can be considered when solving the crew recovery prob-
+lem. These crews have a minimum guaranteed pay, measured in flying hours, and
+550  Handbook of Transportation Science
+
+cannot fly more than a designated monthly maximum. This pay structure adds a
+further level of complexity to the problem.
+
+  Another difference is in the constraints that determine what constitutes a feasi-
+ble pairing. Most airlines use tighter restrictions in their scheduling problems than
+are legally mandated by, for example, tightening the minimum rest connection
+time and the maximum duty elapsed time. This is precisely so that they will have
+some added flexibility in recovering from disruptions. In the recovery problem, on
+the other hand, rules on flying hours are often pushed to their legal limits.
+
+  Perhaps the most significant difference between crew pairing and crew recov-
+ery is in how the objective function is defined. When a schedule is modified to
+address disruptions, active crews are usually paid at least the cost oftheir originally
+scheduled pairings; if a crew is assigned to a modified pairing that has higher cost,
+they receive the higher amount. It is also desirable to keep down the additional
+costs incurred by reserve crews. Furthermore, there are other objectives that are
+important as well, such as returning to the original plan quickly and minimizing
+passenger disruptions. In addition, crew decisions are not made in isolation. They
+must be made in conjunction with decisions about delaying or canceling future
+flights, swapping aircraft, and further issues related to the other resources that
+have been affected by the disruptions. The recovery problem also faces a host of
+safety and labor constraints that restrict what changes can be made. Therefore,
+even deciding what objective to use when recovering from disruption can be a
+difficult question.
+
+  Thus, while crew recovery has much in common with crew pairing, it also
+poses its own unique set of challenges. Although this problem has been addressed
+in limited fashion in the literature, much work remains to be done. In the following
+section, we present one approach to modeling the crew recovery problem, which
+leverages its similarities with crew pairing. In the subsequent section, we highlight
+some of the research on solving the crew recovery problem.
+
+A Crew Recovery Model
+
+We present a crew recovery model from Lettovský, 1997 and Lettovský et al., 2000
+that is similar to the crew pairing model. However, in this recovery model, each
+pairing is specific to a particular crew. For a given crew, all potential pairings begin
+at the next time and location that the crew becomes available, i.e. at the end of their
+current flight or rest period. Each potential pairing for a crew must not only take
+into account work already completed in the current pairing when ensuring that all
+rules and regulations are satisfied, but must also ensure the legality of the crew’s
+remaining schedule. That is, there must be enough time at the completion of this
+modified pairing for a sufficient rest period before the next scheduled pairing is to
+Airline Crew Scheduling  551
+
+begin, and restrictions that span multiple pairings in a schedule (such as monthly
+flying time limits) must not be violated.
+
+  The objective of this model is to minimize the cost of adjusted pairings, reserve
+crews, and deadheaded crews, as well as the cost of canceling flights. The cance-
+lation cost is the cost of re-assigning passengers to other flights as well as hotel
+and meal costs for affected passengers and some estimate of the loss of good will.
+
+  We define the following parameters:
+
+  e equipment type experiencing disruption (this may represent
+  several aircraft types if they are crew compatible),
+  set of flight segments to be covered by crews of equipment
+  type e,
+  set of crews available for equipment type e (including
+  reserve crews),
+  set of pairings that can be flown by crew
+  cost of assigning pairing p,
+  cost of using flight segment l for deadheading,
+  cost estimate of returning the crew to its domicile,
+  cost estimate of canceling flight segment l,
+  1 if flight segment l is included in pairing p, 0 otherwise.
+
+  The variables are:
+
+The airline crew recovery problem for a given equipment type e is
+

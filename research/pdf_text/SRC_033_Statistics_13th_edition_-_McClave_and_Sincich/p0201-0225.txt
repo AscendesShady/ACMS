@@ -1,0 +1,1605 @@
+  SECTION 3.8 ■ Bayes’s Rule (Optional) 199
+
+  D = 5intruder detected6 and Dc = 5intruder not detected6. Hence, we obtain the
+  formula
+
+  P1D 0 Rainy2 =  P1D2P1Rainy 0 D2
+
+  P1D2P1Rainy 0 D2 + P1D 2P1Rainy 0 D 2cc
+
+  1.9021.052
+  = 1.9021.052 + 1.1021.102 = .818
+
+ Example 3.32  Problem Electric wheelchairs are difficult to maneuver for many disabled people. In a
+  paper presented at the 1st International Workshop on Advances in Service Robotics (Mar.
+Bayes’s Rule  2003), researchers applied Bayes’s rule to evaluate an “intelligent” robotic controller
+Application—  that aims to capture the intent of a wheelchair user and aid in navigation. Consider the
+Wheelchair Control  following scenario. From a certain location in a room, a wheelchair user will either (1)
+  turn sharply to the left and navigate through a door, (2) proceed straight to the other side
+  of the room, or (3) turn slightly right and stop at a table. Denote these three events as D
+  (for door), S (Straight), and T (for table). Based on previous trips, P1D2 = .5, P1S2 = .2,
+  and P1T 2 = .3. The wheelchair is installed with a robot-controlled joystick. When the
+  user intends to go through the door, she points the joystick straight 30% of the time;
+  when the user intends to go straight, she points the joystick straight 40% of the time; and,
+  when the user intends to go to the table, she points the joystick straight 5% of the time. If
+  the wheelchair user points the joystick straight, what is her most likely destination?
+
+  Solution Let J = 5joystick is pointed straight6. The user intention percentages can
+
+  be restated as the following conditional probabilities: P1J 0 D2 = .3, P1J 0 S2 = .4, and
+  P1J 0 T 2 = .05. Since the user has pointed the joystick straight, we want to find the
+  following probabilities: P1D 0 J 2, P1S 0 J 2, and P1T 0 J 2. Now, the three events, D, S, and T,
+
+  represent mutually exclusive and exhaustive events, where P1D2 = .5, P1S2 = .2, and
+  P1T 2 = .3. Consequently, we can apply Bayes’s rule as follows:
+
+  P1D 0 J2 = P1J 0 D2 # P1D2 >[P1J 0 D2 # P1D2 + P1J 0 S2 # P1S2 + P1J 0 T2 # P1T 2]
+
+  = 1.321.52 >[1.321.52 + 1.421.22 + 1.0521.32] = .15>.245 = .612
+
+  P1S 0 J2 = P1J 0 S2 # P1S2 >[P1J 0 D2 # P1D2 + P1J 0 S2 # P1S2 + P1J 0 T 2 # P1T2]
+
+  = 1.421.22 >[1.321.52 + 1.421.22 + 1.0521.32] = .08>.245 = .327
+
+  P1T 0 J2 = P1J 0 T 2 # P1T2 >[P1J 0 D2 # P1D2 + P1J 0 S2 # P1S2 + P1J 0 T 2 # P1T2]
+
+  = 1.0521.32 >[1.321.52 + 1.421.22 + 1.0521.32] = .015>.245 = .061
+
+  Note that the largest conditional probability is P1D 0 J2 = .612. Thus, if the joystick is
+
+  pointed straight, the wheelchair user is most likely headed through the door.
+
+  ■ Now Work Exercise 3.136
+
+Exercises 3.132–3.147
+
+Understanding the Principles  Complete parts a through e below.
+  a. Find P1B1 ¨ A2.
+3.132  Explain the difference between the two probabilities  b. Find P1B2 ¨ A2.
+3.133  c. Find P(A) using the results in parts a and b.
+3.134  P1A 0 B2 and P1B 0 A2.
+  d. Find P1B1 0 A2.
+  Why is Bayes’s rule unnecessary for finding P1B 0 A2 if  e. Find P1B2 0 A2.
+
+  events A and B are independent?  3.136  Suppose the events B1, B2, and B3 are mutually exclusive and
+  complementary events such that P1B12 = .2, P1B22 = .15,
+  Why is Bayes’s rule unnecessary for finding P1B 0 A2 if  and P1B32 = .65. Consider another event A such that
+
+  events A and B are mutually exclusive?  P1A 0 B12 = .4, P1A 0 B22 = .25, and P1A 0 B32 = .6. Use
+
+Learning the Mechanics  Bayes’s rule to find
+
+3.135 Suppose the events B1 and B2 are mutually exclusive  a. P1B1 0 A2
+  and complementary events, such that P1B12 = .31  b. P1B2 0 A2
+  and P1B22 = .69. Consider another event A such that  c. P1B3 0 A2
+
+  P1A 0 B12 = .1 and P1A 0 B22 = .5.
+200 CHAPTER 3 ■ Probability
+
+3.137  Suppose the events B1, B2, and B3 are mutu-  b. Given a pair of matched prints, what is the probability
+  ally exclusive and complementary events such that  that a novice will fail to identify the match?
+
+  P1B12 = .55, P1B22 = .35, and P1B32 = .1. Consider  c. Assume the study included 10 participants—5 experts,
+  another event A such that P1A2 = .2. If A is indepen-  and 5 novices. Suppose that a pair of matched prints are
+  presented to a randomly selected study participant and
+  dent of B1, B2, and B3, use Bayes’s rule to show that  the participant fails to identify the match. Is the partic-
+  ipant more likely to be an expert or a novice?
+  P1B1 0 A2 = P1B12 = .55.
+
+Applying the Concepts—Basic  3.141  Tests for Down syndrome. Currently, there are three di-
+  agnostic tests available for chromosome abnormalities in
+3.138  Reverse-engineering gene identification. In Molecular  a developing fetus: triple serum marker screening, ultra-
+  Systems Biology (Vol. 3, 2007), geneticists at the  sound, and amniocentesis. The safest (to both the mother
+  and fetus) and least expensive of the three is the ultra-
+  University of Naples (Italy) used reverse engineering to  sound test. Two San Diego State University statisticians
+  investigated the accuracy of using ultrasound to test for
+  identify genes. They calculated P1G 0 D2, where D is a  Down syndrome (Chance, Summer 2007). Let D denote
+  that the fetus has a genetic marker for Down syndrome
+  gene expression data set of interest and G is a graphical  and N denote that the ultrasound test is normal (i.e., no
+  indication of chromosome abnormalities). Then, the stat-
+  identifier. Several graphical identifiers were investigated.
+  isticians desire the probability P1D 0 N 2. Use Bayes’s rule
+  Suppose that, for two different graphical identifiers
+  and the following probabilities (provided in the article)
+  G1 and G2, P1D 0 G12 = .5 and P1D 0 G22 = .3. Also,  to find the desired probability: P1D2 = 1/80, P1DC2 =
+
+  P1D2 = .34, P1G12 = .2, and P1G22 = .8.  79/80, P1N 0 D2 = 1/2, P1N C 0 D2 = 1/2, P1N 0 DC2 = 1,
+  and P1N C 0 DC2 = 0.
+  a. Use Bayes’s rule to find P1G1 0 D2.
+  b. Use Bayes’s rule to find P1G2 0 D2.
+
+3.139  Drug testing in athletes. When Olympic athletes are tested
+  for illegal drug use (i.e., doping), the results of a single test
+  are used to ban the athlete from competition. In Chance  Applying the Concepts—Intermediate
+  (Spring 2004), University of Texas biostatisticians demon-
+  strated the application of Bayes’s rule to making infer-  3.142  HIV testing and false positives. Bayes’s rule was applied
+  ences about testosterone abuse among Olympic athletes.  to the problem of HIV testing in The American Statistician
+  They used the following example: In a population of 1,000  (Aug. 2008). In North America, the probability of a person
+  athletes, suppose 100 are illegally using testosterone. Of  having HIV is .008. A test for HIV yields either a positive
+  the users, suppose 50 would test positive for testosterone.  or negative result. Given that a person has HIV, the prob-
+  Of the nonusers, suppose 9 would test positive.  ability of a positive test result is .99. (This probability is
+  a. Given that the athlete is a user, find the probability that  called the sensitivity of the test.) Given that a person does
+  not have HIV, the probability of a negative test result is
+  a drug test for testosterone will yield a positive result.  also .99. (This probability is called the specificity of the
+  (This probability represents the sensitivity of the drug  test.) The authors of the article are interested in the prob-
+  test.)  ability that a person actually has HIV given that the test is
+  b. Given that the athlete is a nonuser, find the probabil-  positive.
+  ity that a drug test for testosterone will yield a negative  a. Find the probability of interest for a North American
+  result. (This probability represents the specificity of the
+  drug test.)  by using Bayes’s rule.
+  c. If an athlete tests positive for testosterone, use Bayes’s  b. In East Asia, the probability of a person having HIV is
+  rule to find the probability that the athlete is really dop-
+  ing. (This probability represents the positive predictive  only .001. Find the probability of interest for an East
+  value of the drug test.)  Asian by using Bayes’s rule. (Assume that both the sen-
+  sitivity and specificity of the test are .99.)
+3.140  Fingerprint expertise. A study published in Psychological  c. Typically, if one tests positive for HIV, a follow-up test
+  Science (Aug. 2011) tested the accuracy of experts and  is administered. What is the probability that a North
+  novices in identifying fingerprints. Participants were pre-  American has HIV given that both tests are positive?
+  sented pairs of fingerprints and asked to judge whether  (Assume that the tests are independent.)
+  the prints in each pair matched. The pairs were presented  d. Repeat part c for an East Asian.
+  under three different conditions: prints from the same indi-
+  vidual (match condition), non-matching but similar prints  3.143  Mining for dolomite. Dolomite is a valuable mineral
+  (similar distracter condition), and non-matching and very  that is found in sedimentary rock. During mining oper-
+  dissimilar prints (non-similar distracter condition). The  ations, dolomite is often confused with shale. The radio-
+  percentages of correct decisions made by the two groups  activity features of rock can aid miners in distinguishing
+  under each of the three conditions are listed in the table.  between dolomite and shale rock zones. For example, if
+  the gamma ray reading of a rock zone exceeds 60 API
+  Condition  Fingerprint experts Novices  units, the area is considered to be mostly shale (and is not
+  mined); if the gamma ray reading of a rock zone is less
+  Match  92.12%  74.55%  than 60 API units, the area is considered to be abundant
+  Similar Distracter  99.32%  44.82%  in dolomite (and is mined). Data on 771 core samples in
+  Non-similar Distracter  77.03%  a rock quarry collected by the Kansas Geological Survey
+  100%  revealed that 476 of the samples are dolomite and 295 of
+  the samples are shale. Of the 476 dolomite core samples,
+  Source: Tangen, J. M., et al. “Identifying fingerprint expertise.”  34 had a gamma ray reading greater than 60. Of the 295
+  Psychological Science, Vol. 22, No. 8, Aug. 2011 (Figure 1).
+
+  a. Given a pair of matched prints, what is the probability
+  that an expert will fail to identify the match?
+  shale core samples, 280 had a gamma ray reading greater  Chapter Notes 201
+  than 60. Suppose you obtain a gamma ray reading greater
+  than 60 at a certain depth of the rock quarry. Should this  or “not OK.” As an example, consider the following prob-
+  area be mined?  abilities: The probability an “OK” report is generated in
+  any time period (t) is .8. The probability of an “OK” report
+3.144  Nondestructive evaluation. Nondestructive evaluation  at one time period 1t + 12, given an “OK” report in the
+  (NDE) describes methods that quantitatively characterize  previous time period (t), is .9. Also, the probability of an
+  materials, tissues, and structures by noninvasive means,  “OK” report at one time period 1t + 12, given a “not OK”
+  such as X-ray computed tomography, ultrasonics, and  report in the previous time period (t), is .5. If an “OK” re-
+  acoustic emission. Recently, NDE was used to detect de-  port is generated in one time period, what is the probabil-
+  fects in steel castings (JOM, May 2005). Assume that the  ity that an “OK” report was generated in the previous time
+  probability that NDE detects a “hit” (i.e., predicts a defect  period?
+  in a steel casting) when, in fact, a defect exists is .97. (This
+  is often called the probability of detection.) Assume also  Applying the Concepts—Advanced
+  that the probability that NDE detects a “hit” when, in fact,
+  no defect exists is .005. (This is called the probability of a  3.147 Forensic analysis of JFK assassination bullets. Following
+  false call.) Past experience has shown that a defect occurs  the assassination of President John F. Kennedy (JFK)
+  once in every 100 steel castings. If NDE detects a “hit” for  in 1963, the House Select Committee on Assassinations
+  a particular steel casting, what is the probability that an ac-  (HSCA) conducted an official government investiga-
+  tual defect exists?  tion. The HSCA concluded that although there was a
+  probable conspiracy, involving at least one additional
+3.145  Intrusion detection systems. Refer to the Journal of  shooter other than Lee Harvey Oswald, the additional
+  Research of the National Institute of Standards and  shooter missed all limousine occupants. A recent anal-
+  Technology (Nov.–Dec. 2003) study of a double intrusion  ysis of assassination bullet fragments, reported in the
+  detection system with independent systems, presented in  Annals of Applied Statistics (Vol. 1, 2007), contradicted
+  Exercise 3.98 (p. 186). Recall that if there is an intruder,  these findings, concluding that evidence used to rule out
+  system A sounds an alarm with probability .9 and system  a second assassin by the HSCA is fundamentally flawed.
+  B sounds an alarm with probability .95. If there is no in-  It is well documented that at least two different bullets
+  truder, system A sounds an alarm with probability .2 and  were the source of bullet fragments used in the assas-
+  system B sounds an alarm with probability .1. Now, assume  sination. Let E = 5bullet evidence used by the HSCA6,
+  that the probability of an intruder is .4. If both systems  T = 5two bullets used in the assassination6, and T C =
+  sound an alarm, what is the probability that there is an  5more than two bullets used in the assassination6. Given
+  intruder?  the evidence (E), which is more likely to have oc-
+  curred—two bullets used (T) or more than two bullets
+3.146  Confidence of feedback information for improving quality.  used (TC )?
+  In the semiconductor manufacturing industry, companies  a. The researchers demonstrated that the ratio,
+  strive to improve product quality. One key to improved
+  quality is having confidence in the feedback generated by  P1T 0 E2/P1T C 0 E2, is less than 1. Explain why this result
+  production equipment. A study of the confidence level
+  of feedback information was published in Engineering  supports the theory of more than two bullets used in
+  Applications of Artificial Intelligence (Vol. 26, 2013). At  the assassination of JFK.
+  any point in time during the production process, a report  b. To obtain the result in part a, the researchers first
+  can be generated. The report is classified as either “OK”  showed that
+
+  P1T 0 E2>P1T C 0 E2 = [P1E 0 T2 # P1T2]>[P1E 0 T C2 # P1T C2]
+
+  Demonstrate this equality using Bayes’s theorem.
+
+CHAPTER NOTES  Intersection 161  *Permutations rule 189
+  Law of large numbers 149  Probability rules for sample
+Key Terms  *Multiplicative (counting)
+  points 150
+Note: Items marked with an asterisk (*) are from the optional sections in  rule 176  Sample point 147
+this chapter.  Multiplicative rule of  Sample space 148
+  Tree diagram 148
+Additive rule of probability 165  Compound event 160  probability 175  Two-way table 162
+*Bayesian statistical methods 197  Conditional probability 172  Mutually exclusive  Unconditional
+*Bayes’s rule 198  *Counting rule 187
+Combinations rule 155  Dependent events 178  events 166  probabilities 172
+Combinatorial mathematics 155  Event 152  Odds 208  Union 160
+Complement 163  Experiment 147  *Partitions rule 190  Venn diagram 148
+Complementary events 163  Independent events 178  *Permutation 188
+202 CHAPTER 3 ■ Probability
+
+Key Symbols  Key Ideas
+
+S  Sample space (collection of all sample points)  Probability Rules for k Sample Points, S1, S2, S3, c, Sk
+  1. 0 … P1Ei2 … 1
+A: 51,26 Set of sample points in event A  2. g P1Ei2 = 1
+
+P(A)  Probability of event A  Combinations Rule
+  Counting number of samples of n elements selected from N
+AhB  Union of events A and B (either A or B occurs)  elements
+
+AxB  Intersection of events A and B (both A and B  aNn b = N! n!1N - n2!
+Ac  occur)  N1N - 121N - 22 c1N - n + 12
+
+  Complement of A (event A does not occur)  = n1n - 121n - 22 c122112
+
+A0B  Event A occurs, given that event B occurs
+
+aNb  Number of combinations of N elements taken n
+  n  at a time
+
+N!  N factorial = N1N - 121N - 22 c122112
+
+Bayes’s Rule
+For mutually exclusive events, B1, B2, B3, c, Bk, such that P1B12 + P1B22 + g + P1Bk2 = 1,
+
+  P1Bi 0 A2 =  P1Bi2P1A 0 Bi2
+
+  P1B12P1A 0 B12 + P1B22P1A 0 B22 + g + P1Bk2P1A 0 Bk2
+
+Guide to Selecting Probability Rules
+  Supplementary Exercises 3.148–3.196 203
+
+Supplementary Exercises 3.148–3.196
+
+Note: Starred (*) exercises refer to the optional sections in this chapter.
+
+Understanding the Principles  A
+  13
+3.148  Which of the following pairs of events are mutually
+  exclusive?  5
+  a. A = 5The Tampa Bay Rays win the World Series next
+  B  2C
+  year.6
+  B = 5Evan Longoria, Rays infielder, hits 75 home runs  4  6
+
+  runs next year.6  S
+  b. A = 5Psychiatric patient Tony responds to a stimulus
+  3.155 A fair die is tossed, and the up face is noted. If the number
+  within 5 seconds.6  is less than 3, the die is tossed again; otherwise, a fair coin
+  B = 5Psychiatric patient Tony has the fastest stimulus  is tossed. Consider the following events:
+
+  response time of 2.3 seconds.6  A: 5A tail appears on the coin6
+  c. A = 5High school graduate Cindy enrolls at the  B: 5The die is tossed only one time6
+
+  University of South Florida next year.6  a. List the sample points in the sample space.
+  B = 5High school graduate Cindy does not enroll in  b. Give the probability for each of the sample points.
+  c. Find P(A) and P(B).
+  college next year.6  d. Identify the sample points in Ac, Bc, A ¨ B, and A ∪ B.
+
+3.149  Use the symbols ¨ , ∪ , 0 , and c to convert the following  e. Find P1Ac2, P1Bc2, P1A ¨ B2, P1A ∪ B2, P1A0 B2,
+  and P1B 0 A2.
+  statements into compound events involving events A and
+  B, where A = 5You purchase a notebook computer6 and  f. Are A and B mutually exclusive events? Independent
+  B = 5You vacation in Europe6:  events? Why?
+  a. You purchase a notebook computer or vacation in
+  3.156  A balanced die is thrown once. If a 4 appears, a ball is
+  Europe.  drawn from urn 1; otherwise, a ball is drawn from urn 2.
+  b. You will not vacation in Europe.  urn 1 contains two red, four white and six black balls. Urn
+  c. You purchase a notebook computer and vacation in  2 contains one red and five black balls.
+  a. Find the probability that a red ball is drawn.
+  Europe.  b. Find the probability that urn 1 was used given that a red
+  d. Given that you vacation in Europe, you will not pur-
+  ball was drawn.
+  chase a notebook computer.
+
+Learning the Mechanics
+
+3.150  A sample space consists of four sample points S1, S2, S3,  3.157 Two events, A and B, are independent, with P1A2 = .5
+  and S4, where P1S12 = .3, P1S22 = .3, P1S32 = .2, and
+  P1S42 = .2.  and P1B2 = .3.
+  a. Show that the sample points obey the two probability
+  a. Are A and B mutually exclusive? Why?
+  rules for a sample space.
+  b. Find P1A 0 B2 and P1B 0 A2.
+  b. If an event A = 5S1, S46, find P(A).
+  c. Find P1A ∪ B2.
+
+3.151 A and B are mutually exclusive events, with P1A2 = .3  3.158 Find the numerical value of
+  and P1B2 = .4.  a. 7!
+
+  a. Find P1A 0 B2.  b. a8b
+  7
+  b. Are A and B independent events?
+  c. a9b
+3.152 For two events A and B, suppose P1A2 = .5, P1B2 = .8  1
+  and P1A ¨ B2 = .4. Find P1A ∪ B2.
+  d. P53
+3.153 Given that P1A ¨ B2 = .3 and P1B 0 A2 = .9, find  e. a7b
+
+  P(A).  4
+
+3.154 The Venn diagram in the next column illustrates a sample  f. 0!
+  space containing six sample points and three events A, B,
+  and C. The probabilities of the sample points are:  g. P93
+
+  P112 = .2, P122 = .1, P132 = .2, P142 = .2, P152 = .1,  P80
+
+  and P162 = .2  h.  3
+
+  a. Find P1A ¨ B2, P1B ¨ C2, P1A ∪ C2, P1A ∪ B ∪ C2,  Applet Exercise 3.6
+
+  P1Bc2, P1Ac ¨ B2, P1B 0 C2, and P1B 0 A2.  Use the applet entitled Random Numbers to generate a list of
+  50 numbers between 1 and 100, inclusive. Use the list to find each
+  b. Are A and B independent? Mutually exclusive?  of the following probabilities:
+  Why?
+  a. The probability that a number chosen from the list is
+  c. Are B and C independent? Mutually exclusive?  less than or equal to 50
+  Why?
+204 CHAPTER 3 ■ Probability
+
+  b. The probability that a number chosen from the list is  July 2003). Also, 64% of the sterile couples in Jordan are
+  even  infertile. Find the probability that a Jordanian couple is
+  both sterile and infertile.
+  c. The probability that a number chosen from the list is
+  both less than or equal to 50 and even  3.163  NHTSA new car crash testing. Refer to the National
+  Highway Traffic Safety Administration (NHTSA) crash
+  d. The probability that a number chosen from the list is  CRASH  tests of new car models, presented in Exercise 2.190
+  less than or equal to 50, given that the number is even  (p. 135). Recall that the NHTSA has developed a “star”
+  scoring system, with results ranging from one star (*) to
+  e. Do your results from parts a–d support the conclusion  five stars (*****). The more stars in the rating, the bet-
+  that the events less than or equal to 50 and even are in-  ter the level of crash protection in a head-on collision. A
+  dependent? Explain.  summary of the driver-side star ratings for 98 cars is repro-
+  duced in the accompanying MINITAB printout. Assume
+Applying the Concepts—Basic  that one of the 98 cars is selected at random. State whether
+  each of the following is true or false:
+3.159  Going online for health information. A cyberchondriac is  a. The probability that the car has a rating of two stars
+  defined as a person who regularly searches the Web for
+  health care information. A Harris Poll surveyed 1,010 U.S.  is 4.
+  adults by telephone and asked each respondent how often  b. The probability that the car has a rating of four or five
+  (in the past month) he or she looked for health care infor-
+  mation online. The results are summarized in the follow-  stars is .7857.
+  ing table. Consider the response category of a randomly  c. The probability that the car has a rating of one star
+  selected person who participated in the Harris poll.
+  is 0.
+  Response  Percentage of  d. The car has a better chance of having a two-star rating
+  (# per month)  Respondents
+  than of having a five-star rating.
+  None  25
+  1 or 2  31
+  3–5  25
+  6–9  5
+  10 or more  14
+
+  Total  100%
+
+  Based on “Cyberchondriac” poll. The Harris
+  Poll, July 29, 2008 (Table 3).
+
+  a. List the sample points for the experiment.  3.164 Selecting a sample. A random sample of eight students is
+  b. Assign reasonable probabilities to the sample points.  to be selected from 40 sociology majors for participation
+  c. Find the probability that the respondent looks for  in a special program. In how many different ways can the
+  sample be drawn?
+  health care information online more than two times per
+  month.
+
+3.160  Study of ancient pottery. Refer to the Chance (Fall 2000)  3.165  Fungi in beech forest trees. The current status of the
+  study of ancient pottery found at the Greek settlement of  beech tree species in East Central Europe was evaluated
+  Phylakopi, presented in Exercise 2.186 (p. 134). Of the 837  by Hungarian university professors in Applied Ecology
+  pottery pieces uncovered at the excavation site, 183 were  and Environmental Research (Vol. 1, 2003). Of 188 beech
+  painted. These painted pieces included 14 painted in a cur-  trees surveyed, 49 had been damaged by fungi. Depending
+  vilinear decoration, 165 painted in a geometric decoration,  on the species of fungus, damage will occur on either the
+  and 4 painted in a naturalistic decoration. Suppose 1 of the  trunk, branches, or leaves of the tree. In the damaged
+  837 pottery pieces is selected and examined.  trees, the trunk was affected 85% of the time, the leaves
+  a. What is the probability that the pottery piece is  10% of the time, and the branches 5% of the time.
+  a. Give a reasonable estimate of the probability of a beech
+  painted?
+  b. Given that the pottery piece is painted, what is  tree in East Central Europe being damaged by fungi.
+  b. A fungus-damaged beech tree is selected at random,
+  the probability that it is painted in a curvilinear
+  decoration?  and the area (trunk, leaf, or branch) affected is ob-
+  served. List the sample points for this experiment, and
+3.161  Post office violence. The Wall Street Journal (Sept. 1, 2000)  assign a reasonable probability to each one.
+  reported on an independent study of postal workers and
+  violence at post offices. In a sample of 12,000 postal work-  3.166  Do you have a library card? According to a Harris poll,
+  ers, 600 were physically assaulted on the job in a recent  68% of all American adults have a public library card. The
+  year. Use this information to estimate the probability that  percentages do differ by gender—62% of males have li-
+  a randomly selected postal worker will be physically as-  brary cards compared to 73% of females.
+  saulted on the job during the year.  a. Consider the three probabilities: P1A2 = .68,
+
+3.162 Sterile couples in Jordan. A sterile family is a couple  P1A 0 B2 = .62, and P1A 0 C2 = .73. Define events A, B,
+  that has no children by their deliberate choice or because
+  they are biologically infertile. Researchers at Yarmouk  and C.
+  University (in Jordan) estimated the proportion of sterile  b. Assuming that two-thirds of all American adults are males
+  couples in that country to be .06 (Journal of Data Science,
+  and one-thirds are females, what is the probability that an
+  American adult is a male who owns a library card?
+  Supplementary Exercises 3.148–3.196 205
+
+3.167 Beach erosional hot spots. Beaches that exhibit high ero-  a. List the sample points for this experiment.
+  sion rates relative to the surrounding beach are defined as  b. Assign reasonable probabilities to the sample points.
+  erosional hot spots. The U.S. Army Corps of Engineers is  c. What is the probability that the incident occurs in a
+  conducting a study of beach hot spots. Through an online
+  questionnaire, data are collected on six beach hot spots.  school laboratory?
+  The data are listed in the next table.  d. What is the probability that the incident occurs in either
+
+Beach Hot  Beach  Nearshore  Long-Term  a chemical or a nonchemical plant?
+Spot  Condition  Bar Condition  Erosion Rate  e. What is the probability that the incident does not occur
+  (miles/year)
+  in transit?
+Miami  No dunes/flat  Single, shore  4  f. What is the probability that in a sample of 3 inde-
+  Beach, FL  No dunes/flat  parallel  13
+  Bluff/scarp  Other  35  pendently selected incidents, all 3 occur in a school
+Coney  Single dune  Not estimated  laboratory?
+  Island, NY  Single dune  Single, shore  Not estimated  g. Would you expect the event in part f to occur? Explain.
+  Not observed  parallel  14
+Surfside, CA  Planar  Location  Percent of Incidents
+
+Monmouth  Other  School laboratory  6%
+  Beach, NJ  Planar  In transit  26%
+  Chemical plant  21%
+Ocean City, NJ  Nonchemical plant  35%
+Spring Lake, NJ  Other  12%
+
+Based on Identification and Characterization of Erosional Hotspots, William &  Total  100%
+Mary Virginia Institute of Marine Science, U.S. Army Corps of Engineers Project
+Report, Mar. 18, 2002.  Based on Chen, J. R., et al. “Emergency response of toxic chemicals
+  in Taiwan: The system and case studies.” Process Safety Progress,
+  a. Suppose you record the nearshore bar condition of  Vol. 23, No. 3, Sept. 2004 (Figure 5a).
+  each beach hot spot. Give the sample space for this
+  experiment.  Applying the Concepts—Intermediate
+
+  b. Find the probabilities of the sample points in the sample  3.170  Federal civil trial appeals. The Journal of the American
+  space you defined in part a.  Law and Economics Association (Vol. 3, 2001) published
+  the results of a study of appeals of federal civil trials. The
+  c. What is the probability that a beach hot spot has  accompanying table, extracted from the article, gives a
+  either a planar or single, shore-parallel nearshore bar  breakdown of 2,143 civil cases that were appealed by either
+  condition?  the plaintiff or the defendant. The outcome of the appeal,
+  as well as the type of trial (judge or jury), was determined
+  d. Now suppose you record the beach condition of each  for each civil case. Suppose one of the 2,143 cases is se-
+  beach hot spot. Give the sample space for this experiment.  lected at random and both the outcome of the appeal and
+  the type of trial are observed.
+  e. Find the probabilities of the sample points in the sample
+  space you defined in part d.
+
+  f. What is the probability that the condition of the beach
+  at a particular beach hot spot is not flat?
+
+3.168  Chemical insect attractant. An entomologist is studying
+  the effect of a chemical sex attractant (pheromone) on in-
+  sects. Several insects are released at a site equidistant from  Plaintiff trial win—  Jury  Judge  Totals
+  the pheromone under study and a control substance. If the  reversed
+  pheromone has an effect, more insects will travel toward  194  71  265
+  it rather than toward the control. Otherwise, the insects  Plaintiff trial win—  429  240  669
+  are equally likely to travel in either direction. Suppose the  affirmed/dismissed  111  179
+  pheromone under study has no effect, so that it is equally  731  68  1,030
+  likely that an insect will move toward the pheromone or  Defendant trial win—  1,465  299  2,143
+  toward the control. Suppose four insects are released.  reversed  678
+  a. List or count the number of different ways the insects
+  Defendant trial win—
+  can travel.  affirmed/dismissed
+  b. What is the chance that all four travel toward the
+  Totals
+  pheromone?
+  c. What is the chance that exactly three travel toward the  a. Find P(A), where A = 5jury trial6.
+  b. Find P(B), where B = 5plaintiff trial win is reversed6.
+  pheromone?  c. Are A and B mutually exclusive events?
+  d. What inference would you make if the event in part c  d. Find P1Ac2.
+  e. Find P1A ∪ B2.
+  actually occurs? Explain.  f. Find P1A ¨ B2.
+
+3.169  Toxic chemical incidents. Process Safety Progress (Sept.  3.171 Winning at roulette. Roulette is a very popular game in
+  2004) reported on an emergency response system for in-  many American casinos. In Roulette, a ball spins on a
+  cidents involving toxic chemicals in Taiwan. The system  circular wheel that is divided into 38 arcs of equal length,
+  has logged over 250 incidents since being implemented.  bearing the numbers 00, 0, 1, 2, c, 35, 36. The number of
+  The next table gives a breakdown of the locations where  the arc on which the ball stops is the outcome of one play
+  these incidents occurred. Consider the location of a toxic
+  chemical incident in Taiwan.
+206 CHAPTER 3 ■ Probability
+
+  of the game. The numbers are also colored in the manner  *3.173  Errors in estimating job costs. A construction company
+  shown in the following table.  employs three sales engineers. Engineers 1, 2, and 3 esti-
+  mate the costs of 30%, 20%, and 50%, respectively, of all
+Red: 1, 3, 5, 7, 9, 12, 14, 16, 18, 19, 21, 23, 25, 27, 30, 32, 34, 36  jobs bid on by the company. For i = 1, 2, 3, define Ei to be
+Black: 2, 4, 6, 8, 10, 11, 13, 15, 17, 20, 22, 24, 26, 28, 29, 31, 33, 35  the event that a job is estimated by engineer i. The follow-
+Green: 00, 0  ing probabilities describe the rates at which the engineers
+  make serious errors in estimating costs:
+  Players may place bets on the table in a variety of
+  ways, including bets on odd, even, red, black, high, low,  P1error 0 E12 = .01, P1error 0 E22 = .03, and
+  etc. Consider the following events:  P1error 0 E32 = .02
+
+  A: 5The outcome is an odd number 100 and 0 are  a. If a particular bid results in a serious error in estimating
+  job cost, what is the probability that the error was made
+  considered neither odd nor even.26  by engineer 1?
+
+  B: 5The outcome is a black number.6  b. If a particular bid results in a serious error in estimating
+  C: 5The outcome is a low number 11-182.6  job cost, what is the probability that the error was made
+  by engineer 2?
+  a. Define the event A ¨ B as a specific set of sample points.
+  b. Define the event A ∪ B as a specific set of sample points.  c. If a particular bid results in a serious error in estimating
+  c. Find P1A2, P1B2, P1A ¨ B2, P1A ∪ B2, and P(C) by  job cost, what is the probability that the error was made
+  by engineer 3?
+  summing the probabilities of the appropriate sample
+  d. Based on the probabilities given in parts a–c, which
+  points.  engineer is most likely responsible for making the
+  d. Define the event A ¨ B ¨ C as a specific set of sample  serious error?
+
+  points.  3.174  Elderly wheelchair user study. The American Journal of
+  e. Use the additive rule to find P1A ∪ B2. Are events A  Public Health (Jan. 2002) reported on a study of elderly
+  wheelchair users who live at home. A sample of 306 wheel-
+  and B mutually exclusive? Why?  chair users, age 65 or older, were surveyed about whether
+  f. Find P1A ¨ B ¨ C2 by summing the probabilities of  they had an injurious fall during the year and whether their
+  home featured any one of five structural modifications:
+  the sample points given in part d.  bathroom modifications, widened doorways/hallways,
+  g. Define the event 1A ∪ B ∪ C2 as a specific set of sam-  kitchen modifications, installed railings, and easy-open
+  doors. The responses are summarized in the accompanying
+  ple points.  table. Suppose we select, at random, one of the 306 wheel-
+  h. Find P1A ∪ B ∪ C2 by summing the probabilities of  chair users surveyed.
+
+  the sample points given in part g.
+
+3.172  Cigar smoking and cancer. The Journal of the National
+  Cancer Institute (Feb. 16, 2000) published the results of a
+  study that investigated the association between cigar smok-  Home Features  Injurious Fall(s)  No Falls  Totals
+  ing and death from tobacco-related cancers. Data were
+  obtained for a national sample of 137,243 American men.  All 5  2  7  9
+  The results are summarized in the table below. Each male  At least 1, but not all  26  162  188
+  in the study was classified according to his cigar-smoking  None  20  89  109
+  status and whether or not he died from a tobacco-related
+  cancer.  Totals  48  258  306
+  a. Find the probability that a randomly selected man never
+  Based on Berg, K., Hines, M., and Allen, S. “Wheelchair users at home:
+  smoked cigars and died from cancer.  Few home modifications and many injurious falls.” American Journal of
+  b. Find the probability that a randomly selected man was a  Public Health, Vol. 92, No. 1, Jan. 2002 (Table 1).
+
+  former cigar smoker and died from cancer.  a. Find the probability that the wheelchair user had an in-
+  c. Find the probability that a randomly selected man was a  jurious fall.
+
+  current cigar smoker and died from cancer.  b. Find the probability that the wheelchair user had all five
+  d. Given that a male was a current cigar smoker, find the  features installed in the home.
+
+  probability that he died from cancer.  c. Find the probability that the wheelchair user had no falls
+  e. Given that a male never smoked cigars, find the proba-  and none of the features installed in the home.
+
+  bility that he died from cancer.  d. Given no features installed in the home, find the proba-
+  bility of an injurious fall.
+  Died from Cancer
+
+  Cigars  Yes  No  Totals  *3.175  Matching medical students with residencies. The National
+  Resident Matching Program (NRMP) is a service provided
+  Never Smoked  782 120,747  121,529  to match graduating medical students with residency ap-
+  Former Smoker  7,848  pointments at hospitals. After students and hospital offi-
+  Current Smoker  91  7,757  7,866  cials have evaluated each other, they submit rank-order
+  lists of their preferences to the NRMP. Using a matching
+  141  7,725  algorithm, the NRMP then generates final, nonnegotiable
+  assignments of students to the residency programs of hospi-
+  Totals  1,014 136,229  137,243  tals (www.nrmp.org). Assume that three graduating medical
+  students (#1, #2, and #3) have applied for positions at three
+  Based on Shapiro, J. A., Jacobs, E. J., and Thun, M. J. “Cigar
+  smoking in men and risk of death from tobacco-related cancers.”
+  Journal of the National Cancer Institute, Vol. 92, No. 4, Feb. 16,
+  2000 (Table 2).
+  Supplementary Exercises 3.148–3.196 207
+
+  different hospitals (A, B, and C), each of which has one and  b. If the manufacturer’s claim is true, what is the proba-
+  only one resident opening.  bility that the CVSA will yield an incorrect result for at
+  a. How many different assignments of medical students to  least one of the four suspects?
+
+  hospitals are possible? List them.  c. Suppose that in a laboratory experiment conducted
+  b. Suppose student #1 prefers hospital B. If the NRMP al-  by the U.S. Defense Department on four suspects, the
+  CVSA yielded incorrect results for two of the suspects.
+  gorithm is entirely random, what is the probability that  Make an inference about the true accuracy rate of the
+  the student is assigned to hospital B?  new lie detector.
+
+3.176  Selecting new-car options. A company sells midlevel mod-
+  els of automobiles in eight different styles. A buyer can get
+  an automobile in one of four colors and with either stan-  3.179  Maize seeds. The genetic origin and properties of maize
+  dard or automatic transmission. Would it be reasonable to  (modern-day corn) were investigated in Economic
+  expect a dealer to stock at least one automobile in every  Botany. Seeds from maize ears carry either single spike-
+  combination of style, color, and transmission? At a min-  lets or paired spikelets but not both. Progeny tests on
+  imum, how many automobiles would the dealer have to  approximately 600 maize ears revealed the following in-
+  stock?  formation: Forty percent of all seeds carry single spike-
+  lets, while 60% carry paired spikelets. A seed with single
+3.177  Shooting free throws. In college basketball games, a player  spikelets will produce maize ears with single spikelets
+  may be afforded the opportunity to shoot two consecutive  29% of the time and paired spikelets 71% of the time. A
+  foul shots (free throws).  seed with paired spikelets will produce maize ears with
+  a. Suppose a player who makes (i.e., scores on) 75% of his  single spikelets 26% of the time and paired spikelets 74%
+  of the time.
+  foul shots has been awarded two free throws. If the two  a. Find the probability that a randomly selected maize ear
+  throws are considered independent, what is the proba-
+  bility that the player makes both shots? Exactly one?  seed carries a single spikelet and produces ears with sin-
+  Neither shot?  gle spikelets.
+  b. Suppose a player who makes 75% of his first attempted  b. Find the probability that a randomly selected maize ear
+  foul shots has been awarded two free throws and the out-  seed produces ears with paired spikelets.
+  come on the second shot is dependent on the outcome
+  of the first shot. In fact, if this player makes the first shot,  *3.180  Selecting committee members. The Republican governor
+  he makes 80% of the second shots; and if he misses the  of a state with no income tax is appointing a committee of
+  first shot, he makes 75% of the second shots. In this case,  five members to consider changes in the income tax law.
+  what is the probability that the player makes both shots?  There are 15 state representatives—seven Democrats and
+  Exactly one? Neither shot?  eight Republicans—available for appointment to the com-
+  c. In parts a and b, we considered two ways of modeling  mittee. Assume that the governor selects the committee of
+  the probability that a basketball player makes two con-  five members randomly from the 15 representatives.
+  secutive foul shots. Which model do you think gives a  a. In how many different ways can the committee mem-
+  more realistic explanation of the outcome of shooting
+  foul shots; that is, do you think two consecutive foul  bers be selected?
+  shots are independent or dependent? Explain.  b. What is the probability that no Democrat is appointed
+
+3.178  Lie detector test. Consider a lie detector called the  to the committee? If this were to occur, what would you
+  Computerized Voice Stress Analyzer (CVSA). The manu-  conclude about the assumption that the appointments
+  facturer claims that the CVSA is 98% accurate and, unlike  were made at random? Why?
+  a polygraph machine, will not be thrown off by drugs and  c. What is the probability that the majority of the com-
+  medical factors. However, laboratory studies by the U.S.  mittee members are Republican? If this were to occur,
+  Defense Department found that the CVSA had an accu-  would you have reason to doubt that the governor made
+  racy rate of 49.8%, slightly less than pure chance. Suppose  the selections randomly? Why?
+  the CVSA is used to test the veracity of four suspects.
+  Assume that the suspects’ responses are independent.  3.181  Series and parallel systems. Consider the two systems
+  a. If the manufacturer’s claim is true, what is the probabil-  shown in the schematic below. System A operates properly
+  only if all three components operate properly. (The three
+  ity that the CVSA will correctly determine the veracity  components are said to operate in series.) The probability
+  of all four suspects?  of failure for system A components 1, 2, and 3 is .1, .08,
+  and .13, respectively. Assume that the components operate
+  independently of each other.
+
+  System A: Three Components in Series
+
+  Input  #1  #2  #3  Output
+
+  System B: Two Parallel Subsystems
+
+  #1  Subsystem C  #2
+
+  Input  Output
+
+  Subsystem D  #4
+
+  #3
+208 CHAPTER 3 ■ Probability
+
+  System B comprises two subsystems said to operate in  3.185  Sociology fieldwork methods. Refer to University of New
+  parallel. Each subsystem has two components that oper-  Mexico professor Jane Hood’s study of the fieldwork
+  ate in series. System B will operate properly as long as at  methods used by qualitative sociologists, presented in
+  least one of the subsystems functions properly. The prob-  Exercise 2.195 (p. 136). Recall that she discovered that field-
+  ability of failure for each component in the system is .2.  work methods could be classified into four distinct catego-
+  Assume that the components operate independently of  ries: Interview, Observation plus Participation, Observation
+  each other.  Only, and Grounded Theory. The table that follows, repro-
+  a. Find the probability that System A operates  duced from Teaching Sociology (July 2006), gives the number
+  of sociology field research papers in each category. Suppose
+  properly.  we randomly select one of these research papers and deter-
+  b. What is the probability that at least one of the compo-  mine the method used. Find the probability that the method
+  used is either Interview or Grounded Theory.
+  nents in System A will fail and therefore that the system
+  will fail?  Fieldwork Method  Number of Papers
+  c. Find the probability that System B operates properly.
+  d. Find the probability that exactly one subsystem in  Interview  5,079
+  System B fails.  Observation plus Participation  1,042
+  e. Find the probability that System B fails to operate  Observation Only
+  properly.  Grounded Theory  848
+  f. How many parallel subsystems like the two shown  537
+  would be required to guarantee that the system would
+  operate properly at least 99% of the time?  Based on Hood, J. C. “Teaching against the text: The case of qualitative
+  methods.” Teaching Sociology, Vol. 34, Issue 3 (Exhibit 2).
+3.182  Monitoring the quality of power equipment. Mechanical
+  Engineering (Feb. 2005) reported on the need for wireless
+  networks to monitor the quality of industrial equipment.  3.186  Forest fragmentation study. Refer to the Conservation
+  For example, consider Eaton Corp., a company that devel-  Ecology (Dec. 2003) study of the causes of forest fragmen-
+  ops distribution products. Eaton estimates that 90% of the  tation, presented in Exercise 2.166 (p. 125). Recall that
+  electrical switching devices it sells can monitor the quality  the researchers used advanced high-resolution satellite
+  of the power running through the device. Eaton further es-  imagery to develop fragmentation indexes for each forest.
+  timates that, of the buyers of electrical switching devices  A 3 * 3 grid was superimposed over an aerial photo of the
+  capable of monitoring quality, 90% do not wire the equip-  forest, and each square (pixel) of the grid was classified as
+  ment up for that purpose. Use this information to estimate  forest (F), as earmarked for anthropogenic land use (A),
+  the probability that an Eaton electrical switching device is  or as natural land cover (N). An example of one such grid
+  capable of monitoring power quality and is wired up for  is shown here. The edges of the grid (where an “edge” is an
+  that purpose.  imaginary line that separates any two adjacent pixels) are
+  classified as F–A, F–N, A–A, A–N, N–N, or F–F edges.
+
+*3.183  Repairing a computer system. The local area network
+  (LAN) for the computing system at a large university is
+  temporarily shut down for repairs. Previous shutdowns  A  AN
+  have been due to hardware failure, software failure,
+  or power failure. Maintenance engineers have deter-  N  F  F
+  mined that the probabilities of hardware, software,
+  and power problems are .01, .05, and .02, respectively.  N  F  F
+  They have also determined that if the system expe-
+  riences hardware problems, it shuts down 73% of the  a. Note that there are 12 edges inside the grid. Classify
+  time. Similarly, if software problems occur, the system  each edge as F–A, F–N, A–A, A–N, N–N, or F–F.
+  shuts down 12% of the time; and, if power failure oc-
+  curs, the system shuts down 88% of the time. What is  b. The researchers calculated the fragmentation index
+  the probability that the current shutdown of the LAN  by considering only the F-edges in the grid. Count the
+  is due to hardware failure? software failure? power  number of F-edges. (These edges represent the sample
+  failure?  space for the experiment.)
+
+*3.184  Dream experiment in psychology. A clinical psychologist  c. If an F-edge is selected at random, find the probability
+  is given tapes of 20 subjects discussing their recent dreams.  that it is an F–A edge. (This probability is proportional
+  The psychologist is told that 10 are high-anxiety individu-  to the anthropogenic fragmentation index calculated by
+  als and 10 are low-anxiety individuals. The psychologist’s  the researchers.)
+  task is to select the 10 high-anxiety subjects.
+  a. Count the number of sample points for this experiment.  d. If an F-edge is selected at random, find the probability
+  b. Assuming that the psychologist is guessing, assign prob-  that it is an F–N edge. (This probability is proportional
+  to the natural fragmentation index calculated by the
+  abilities to each of the sample points.  researchers.)
+  c. Find the probability that the psychologist guesses all
+  Applying the Concepts—Advanced
+  classifications correctly.
+  d. Find the probability that the psychologist guesses at  3.187 Odds of winning a horse race. Handicappers for horse
+  races express their beliefs about the probability of each
+  least 9 of the 10 high-anxiety subjects correctly.  horse winning a race in terms of odds. If the probability
+  of event E is P(E ), then the odds in favor of E are P(E )
+  to 1 - P1E2. Thus, if a handicapper assesses a probability
+  Supplementary Exercises 3.148–3.196 209
+
+  of .25 that Smarty Jones will win the Belmont Stakes, the  Drawing an ace and a face card is called blackjack. If the
+  odds in favor of Smarty Jones are 25΋100 to 75΋100, or 1 to 3.  dealer does not draw a blackjack and the player does, the
+  It follows that the odds against E are 1 - P1E2 to P(E ), or  player wins. If both the dealer and player draw blackjack, a
+  3 to 1 against a win by Smarty Jones. In general, if the odds  “push” (i.e., a tie) occurs.
+  in favor of event E are a to b, then P1E2 = a> 1a + b2.  a. What is the probability that the dealer will draw a
+  a. A second handicapper assesses the probability of a
+  blackjack?
+  win by Smarty Jones to be 1΋5. According to the second  b. What is the probability that the player wins with a
+  handicapper, what are the odds in favor of a Smarty
+  blackjack?
+  Jones win?
+  3.191  Accuracy of pregnancy tests. Sixty percent of all women
+  b. A third handicapper assesses the odds in favor of  who submit to pregnancy tests are really pregnant. A
+  certain pregnancy test gives a false positive result with
+  Smarty Jones to be 2 to 3. According to the third  probability .03 and a valid positive result with probability
+  .98. If a particular woman’s test is positive, what is the
+  handicapper, what is the probability of a Smarty  probability that she really is pregnant? [Hint: If A is the
+  event that a woman is pregnant and B is the event that
+  Jones win?  the pregnancy test is positive, then B is the union of the
+  two mutually exclusive events A ¨ B and Ac ¨ B. Also,
+  c. A fourth handicapper assesses the odds against  the probability of a false positive result may be written as
+
+  Smarty Jones winning to be 5 to 3. Find this handicap-  P1B 0 Ac2 = .03.]
+
+  per’s assessment of the probability that Smarty Jones
+
+  will win.
+
+3.188  Sex composition patterns of children in families. In having
+  children, is there a genetic factor that causes some fami-
+  lies to favor one sex over the other? That is, does having  3.192  Chance of winning at “craps.” A version of the dice game
+  boys or girls “run in the family”? This was the question  “craps” is played in the following manner. A player starts
+  of interest in Chance (Fall 2001). Using data collected on  by rolling two balanced dice. If the roll (the sum of the
+  children’s sex for over 4,000 American families that had at  two numbers showing on the dice) results in a 7 or 11, the
+  least two children, the researchers compiled the accompa-  player wins. If the roll results in a 2 or a 3 (called craps),
+  nying table. Make an inference about whether having boys  the player loses. For any other roll outcome, the player
+  or girls “runs in the family.”  continues to throw the dice until the original roll outcome
+  recurs (in which case the player wins) or until a 7 occurs (in
+  Sex Composition of  Frequency  which case the player loses).
+  First Two Children  a. What is the probability that a player wins the game on
+  1,085
+  Boy–Boy  1,086  the first roll of the dice?
+  Boy–Girl  1,111  b. What is the probability that a player loses the game on
+  Girl–Boy
+  Girl–Girl  926  the first roll of the dice?
+  c. If the player throws a total of 4 on the first roll, what is
+  Total  4,208
+  the probability that the game ends (win or lose) on the
+  next roll?
+
+  Based on Rodgers, J. L., and Doughty, D. “Does having  *3.193  The perfect bridge hand. According to a morning news
+  boys or girls run in the family?” Chance, Vol. 14, No. 4,  program, a very rare event recently occurred in Dubuque,
+  Fall 2001 (Table 3).  Iowa. Each of four women playing bridge was astounded to
+  note that she had been dealt a perfect bridge hand. That is,
+3.189  Finding an organ transplant match. One of the problems  one woman was dealt all 13 spades, another all 13 hearts,
+  encountered with organ transplants is the body’s rejection  another all the diamonds, and another all the clubs. What
+  of the transplanted tissue. If the antigens attached to the  is the probability of this rare event?
+  tissue cells of the donor and receiver match, the body will
+  accept the transplanted tissue. Although the antigens in  3.194  Odd Man Out. Three people play a game called “Odd Man
+  identical twins always match, the probability of a match in  Out.” In this game, each player flips a fair coin until the
+  other siblings is .2, and that of a match in two people from  outcome (heads or tails) for one of the players is not the
+  the population at large is .001. Suppose you need a kidney  same as that for the other two players. This player is then
+  and you have a brother and three sisters.  “the odd man out” and loses the game. Find the probabil-
+  a. If one of your four siblings offers a kidney, what is the  ity that the game ends (i.e., either exactly one of the coins
+  will fall heads or exactly one of the coins will fall tails) after
+  probability that the antigens will match?  only one toss by each player. Suppose one of the players,
+  b. If all four siblings offer a kidney, what is the probability  hoping to reduce his chances of being the odd man out,
+  uses a two-headed coin. Will this ploy be successful? Solve
+  that all four antigens will match?  by listing the sample points in the sample space.
+  c. If all four siblings offer a kidney, what is the probability
+  Critical Thinking Challenges
+  that none of the antigens will match?
+  d. Repeat parts b and c, this time assuming that the four  3.195 “Let’s Make a Deal.” Marilyn vos Savant, who is listed
+  in the Guinness Book of World Records Hall of Fame
+  donors were obtained from the population at large.  as having the “Highest IQ,” writes a weekly column in
+  the Sunday newspaper supplement Parade Magazine.
+3.190 Chance of winning at blackjack. Blackjack, a favorite game
+  of gamblers, is played by a dealer and at least one oppo-
+  nent. At the outset of the game, 2 cards of a 52-card bridge
+  deck are dealt to the player and 2 cards to the dealer.
+210 CHAPTER 3 ■ Probability  that disagreed with her. Who is correct, the Ph.D.s or
+  Marilyn?
+  Her column, “Ask Marilyn,” is devoted to games of skill,
+  puzzles, and mind-bending riddles. In one issue (Parade  3.196 Most likely coin-toss sequence. In Parade Magazine’s
+  Magazine, Feb. 24, 1991), vos Savant posed the following  (Nov. 26, 2000) column “Ask Marilyn,” the following
+  question:  question was posed: “I have just tossed a [balanced] coin
+  10 times, and I ask you to guess which of the following
+  Suppose you’re on a game show and you’re given a  three sequences was the result. One (and only one) of the
+  choice of three doors. Behind one door is a car; behind the  sequences is genuine.”
+  others, goats. You pick a door—say, #1—and the host, who
+  knows what’s behind the doors, opens another door—say  1. H H H H H H H H H H
+  #3—which has a goat. He then says to you, “Do you want  2. H H T T H T T H H H
+  to pick door #2?” Is it to your advantage to switch your  3. T T T T T T T T T T
+  choice?
+  Marilyn’s answer to the question posed was “Though
+  Marilyn’s answer: “Yes, you should switch. The  the chances of the three specific sequences occurring ran-
+  first door has a 1΋3 chance of winning [the car], but the  domly are equal … it’s reasonable for us to choose sequence
+  second has a 2΋3 chance [of winning the car].” Predictably,  (2) as the most likely genuine result.” Do you agree?
+  vos Savant’s surprising answer elicited thousands of crit-
+  ical letters, many of them from Ph.D. mathematicians,
+
+Activity Exit Polls  1. Find similar exit poll results in which voters are catego-
+  rized by race, income, education, or some other criteri-
+ Exit polls are conducted in selected locations as voters leave  on for a recent national, state, or local election. Choose
+ their polling places after voting. In addition to being used to  two different examples, and interpret the percentages
+ predict the outcome of elections before the votes are counted,  given as probabilities, or conditional probabilities where
+ these polls seek to gauge tendencies among voters. The results  appropriate.
+ are usually stated in terms of conditional probabilities.
+  2. Use the multiplicative rule of probability to find the probabil-
+  The accompanying table shows the results of exit polling  ities related to the percentages given. [For example, in the
+ that suggest that men were move likely to vote for Mitt Romney,  accompanying table, find P(Obama and Male).] Then inter-
+ while women were more likely to vote for Barack Obama in the  pret each of these probabilities and use them to determine
+ 2012 presidential election. In addition, the table suggests that  the total percentage of the electorate that voted for each
+ more women than men voted in the election. The six percentag-  candidate.
+ es in the last three columns represent conditional probabilities,
+ where the given event is gender.  3. Describe a situation in which a political group might use a form
+  of exit polling to gauge voters’ opinions on a “hot-button”
+2012 Presidential Election, Vote by Gender  topic (e.g., global warming). Identify the political group, the
+  “hot-button” topic, the criterion used to categorize voters, and
+  Obama Romney Other  how the voters’ opinions will be determined. Then describe
+  how the results will be summarized as conditional probabili-
+Male (47%)  45%  52%  3%  ties. How might the results of the poll be used to support a
+  particular agenda?
+Female (53%) 55%  44%  1%
+
+Based on CNN.com
+
+References  Wackerly, D., Mendenhall, W., and Scheaffer, R. L. Mathematical
+  Statistics with Applications, 7th ed. Boston: Duxbury, 2008.
+Bennett, D. J. Randomness. Cambridge, MA: Harvard University Press,
+  1998.  Williams, B. A Sampler on Sampling. New York: Wiley, 1978.
+
+Epstein, R. A. The Theory of Gambling and Statistical Logic, rev. ed.  Winkler, R. L. An Introduction to Bayesian Inference and Decision.
+  New York: Academic Press, 1977.  New York: Holt, Rinehart and Winston, 1972.
+
+Feller, W. An Introduction to Probability Theory and Its Applications,  Wright, G., and Ayton, P., eds. Subjective Probability. New York: Wiley,
+  3rd ed., Vol. 1. New York: Wiley, 1968.  1994.
+
+Lindley, D. V. Making Decisions, 2nd ed. London: Wiley, 1985.
+
+Parzen, E. Modern Probability Theory and Its Applications. New York:
+  Wiley, 1960.
+  Using Technology 211
+
+USING TECHNOLOGY  TI-83/TI-84 Plus Graphing Calculator:
+  Combinations and Permutations
+
+Combinations—Choosing n Elements  Permutations—Choosing n Elements
+from N Elements  from N Elements
+
+Step 1  Enter the value of N.  Step 1  Enter the value of N.
+Step 2  Press MATH, then select PRB.  Step 2  Press MATH. Then select PRB.
+Step 3  Press nCr for combinations.  Step 3  Press nPr for permutations.
+Step 4  Enter the value of n, then press ENTER.  Step 4  Enter the value of n, then press ENTER.
+4 Discrete Random Variables
+
+contents  Where We’ve Been
+
+4.1 Two Types of random Variables  • Used probability to make an inference about a
+4.2 Probability distributions for discrete  population from data in an observed sample
+
+  random Variables  • Used probability to measure the reliability of the
+  inference
+
+4.3 expected Values of discrete random  Where We’re Going
+  Variables
+  • Develop the notion of a random variable (4.1)
+4.4 The Binomial random Variable
+  • Learn that many types of numerical data are
+4.5 The Poisson random Variable  observed values of discrete random variables (4.1)
+  (optional)
+  • Learn the probabilistic properties of discrete
+4.6 The hypergeometric random Variable  random variables (4.2–4.3)
+  (optional)
+  • Study several important types of discrete random
+  variables and their probability models (4.4–4.6)
+  CHAPTER 4 ■ Discrete Random Variables 213
+
+Statistics IN Action Probability in a reverse Cocaine Sting:
+
+  Was Cocaine really Sold?
+
+The American Statistician (May 1991) described an inter- that the missing foil packets
+
+esting application of a discrete probability distribution in contained cocaine. The po-
+
+a case involving illegal drugs. It all started with a “bust” in lice contended, however, that
+
+a midsized Florida city. During the bust, police seized ap- since 4 of the original packets
+
+proximately 500 foil packets of a white, powdery substance, tested positive for cocaine, the
+
+presumably cocaine. Since it is not a crime to buy or sell 2 packets sold in the reverse
+
+nonnarcotic cocaine look-alikes (e.g., inert powders), de- sting were also highly likely
+
+tectives had to prove that the packets actually contained to contain cocaine. In this chapter, two Statistics in Action
+
+cocaine in order to convict their suspects of drug traffick- Revisited examples demonstrate how to use probability mod-
+
+ing. When the police laboratory randomly selected and els to solve the dilemma posed by the police’s reverse sting.
+
+chemically tested 4 of the packets, all 4 tested positive for (The case represented Florida’s first cocaine-possession con-
+
+cocaine. This finding led to the conviction of the traffickers. viction without the actual physical evidence.)
+
+After the conviction, the police decided to use the remaining
+
+foil packets (i.e., those not tested) in reverse sting operations. Two  Statistics IN Action Revisited
+of these packets were randomly selected and sold by undercover
+officers to a buyer. Between the sale and the arrest, however, the  • Using the Binomial Model to Solve the Cocaine Sting Case
+buyer disposed of the evidence. The key question is, Beyond a  (p. 238)
+reasonable doubt, did the defendant really purchase cocaine?
+  • Using the Hypergeometric Model to Solve the Cocaine
+  In court, the defendant’s attorney argued that his client
+
+should not be convicted because the police could not prove  Sting Case (p. 249)
+
+HH  HT  You may have noticed that many of the examples of experiments in Chapter 3 generated
+  quantitative (numerical) observations. The unemployment rate, the percentage of voters
+(2)  (1)  favoring a particular candidate, the cost of textbooks for a school term, and the amount
+  of pesticide in the discharge waters of a chemical plant are all examples of numerical
+TT  TH  measurements of some phenomenon. Thus, most experiments have sample points that
+  correspond to values of some numerical variable.
+(0)  (1)
+  To illustrate, consider the coin-tossing experiment of Chapter 3. Figure 4.1 is a
+  S  Venn diagram showing the sample points when two coins are tossed and the up faces
+  (heads or tails) of the coins are observed. One possible numerical outcome is the total
+Figure 4.1  number of heads observed. This value (0, 1, or 2) is shown in parentheses on the Venn
+  diagram, with one numerical value associated with each sample point. In the jargon
+Venn diagram for coin-tossing  of probability, the variable “total number of heads observed in two tosses of a coin” is
+experiment  called a random variable.
+
+  A random variable is a variable that assumes numerical values associated with the
+  random outcomes of an experiment, where one (and only one) numerical value is
+  assigned to each sample point.
+
+  The term random variable is more meaningful than the term variable alone be-
+  cause the adjective random indicates that the coin-tossing experiment may result in one
+  of the several possible values of the variable—0, 1, and 2—according to the random out-
+  comes of the experiment: HH, HT, TH, and TT. Similarly, if the experiment is to count
+  the number of customers who use the drive-up window of a bank each day, the random
+  variable (the number of customers) will vary from day to day, partly because of the ran-
+  dom phenomena that influence whether customers use the window. Thus, the possible
+  values of this random variable range from 0 to the maximum number of customers the
+  window can serve in a day.
+214  CHAPTER 4 ■ Discrete Random Variables
+
+  We define two different types of random variables, discrete and continuous, in
+  Section 4.1. Then we spend the remainder of the chapter discussing specific types of
+  discrete random variables and the aspects that make them important to the statistician.
+  We discuss continuous random variables in Chapter 5.
+
+4.1 Two Types of Random Variables
+
+  Recall that the sample-point probabilities corresponding to an experiment must sum
+  to 1. Dividing one unit of probability among the sample points in a sample space and,
+  consequently, assigning probabilities to the values of a random variable are not always
+  as easy as the examples in Chapter 3 might lead you to believe. If the number of sample
+  points can be completely listed, the job is straightforward. But if the experiment results
+  in an infinite number of sample points, which is impossible to list, the task of assigning
+  probabilities to the sample points is impossible without the aid of a probability model.
+  The next three examples demonstrate the need for different probability models,
+  depending on the number of values that a random variable can assume.
+
+ Example 4.1  Problem A panel of 10 experts for the Wine Spectator (a national publication) is asked to
+  taste a new white wine and assign it a rating of 0, 1, 2, or 3. A score is then obtained by adding
+Values of a Discrete  together the ratings of the 10 experts. How many values can this random variable assume?
+Random Variable—Wine
+Ratings  Solution A sample point is a sequence of 10 numbers associated with the rating of each
+  expert. For example, one sample point is
+
+  51, 0, 0, 1, 2, 0, 0, 3, 1, 06
+
+  [Note: Using one of the counting rules from Section 3.7, there are a total of 410 = 1,048,576
+  sample points for this experiment.] Now, the random variable assigns a score to each one
+  of these sample points by adding the 10 numbers together. Thus, the smallest score is 0 (if
+  all 10 ratings are 0), and the largest score is 30 (if all 10 ratings are 3). Since every integer
+  between 0 and 30 is a possible score, the random variable denoted by the symbol x can
+  assume 31 values. Note that the value of the random variable for the sample point shown
+  above is x = 8.*
+
+  Look Back Use of the random variable reduces the amount of information required in
+  the experiment—from over 1 million sample points to 31 values of the random variable.
+  Also, this is an example of a discrete random variable, since there is a finite number of
+  distinct possible values. Whenever all the possible values that a random variable can
+  assume can be listed (or counted), the random variable is discrete.
+
+  ■
+
+ Example 4.2  Problem Suppose the Environmental Protection Agency (EPA) takes readings once a
+  month on the amount of pesticide in the discharge water of a chemical company. If the
+Values of a Discrete  amount of pesticide exceeds the maximum level set by the EPA, the company is forced to
+Random Variable—EPA  take corrective action and may be subject to penalty. Consider the random variable x to
+Application  be the number of months before the company’s discharge exceeds the EPA’s maximum
+  level. What values can x assume?
+
+  Solution The company’s discharge of pesticide may exceed the maximum allowable
+  level on the first month of testing, the second month of testing, etc. It is possible that
+  the company’s discharge will never exceed the maximum level. Thus, the set of possible
+
+  *The standard mathematical convention is to use a capital letter (e.g., X) to denote the theoretical random
+  variable. The possible values (or realizations) of the random variable are typically denoted with a lowercase
+  letter (e.g., x). Thus, in Example 4.1, the random variable X can take on the values x = 0, 1, 2, c, 30. Since
+  this notation can be confusing for introductory statistics students, we simplify the notation by using the
+  lowercase x to represent the random variable throughout.
+ Example 4.3  SECTION 4.1 ■ Two Types of Random Variables 215
+
+Values of a  values for the number of months until the level is first exceeded is the set of all positive
+Continuous Random  integers 1, 2, 3, 4, c.
+Variable—Another
+EPA Application  Look Back If we can list the values of a random variable x, even though the list is never
+  ending, we call the list countable and the corresponding random variable discrete. Thus,
+  the number of months until the company’s discharge first exceeds the limit is a discrete
+  random variable.
+
+  ■ Now Work Exercise 4.7
+
+  Problem Refer to Example 4.2. A second random variable of interest is the amount x of
+  pesticide (in milligrams per liter) found in the monthly sample of discharge waters from
+  the same chemical company. What values can this random variable assume?
+
+  Solution Some possible values of x are 1.7, 28.42, and 100.987 milligrams per liter. Unlike the
+  number of months before the company’s discharge exceeds the EPA’s maximum level, the
+  set of all possible values for the amount of discharge cannot be listed (i.e., is not countable).
+  The possible values for the amount x of pesticide would correspond to the points on the
+  interval between 0 and the largest possible value the amount of the discharge could attain,
+  the maximum number of milligrams that could occupy 1 liter of volume. (Practically, the
+  interval would be much smaller, say, between 0 and 500 milligrams per liter.)
+
+  Look Ahead When the values of a random variable are not countable but instead
+  correspond to the points on some interval, we call the variable a continuous random
+  variable. Thus, the amount of pesticide in the chemical plant’s discharge waters is a
+  continuous random variable.
+
+  ■ Now Work Exercise 4.9
+
+  Random variables that can assume a countable number of values are called discrete.
+
+  Random variables that can assume values corresponding to any of the points
+  contained in an interval are called continuous.
+
+  The following are examples of discrete random variables:
+
+  1. The number of seizures an epileptic patient has in a given week: x = 0, 1, 2, c
+  2. The number of voters in a sample of 500 who favor impeachment of the presi-
+
+  dent: x = 0, 1, 2, c, 500
+  3. The shoe size of a tennis player: x = c 5, 5 21, 6, 6 21, 7, 721 c
+  4. The change received for paying a bill: x = 1¢, 2¢, 3¢, c, $1, $1.01, $1.02, c
+  5. The number of customers waiting to be served in a restaurant at a particular
+
+  time: x = 0, 1, 2, c
+  Note that several of the examples of discrete random variables begin with the words
+  The number of. … This wording is very common, since the discrete random variables most
+  frequently observed are counts.The following are examples of continuous random variables:
+  1. The length of time (in seconds) between arrivals at a hospital clinic: 0 … x … ∞
+
+  (infinity)
+  2. The length of time (in minutes) it takes a student to complete a one-hour exam:
+
+  0 … x … 60
+  3. The amount (in ounces) of carbonated beverage loaded into a 12-ounce can in
+
+  a can-filling operation: 0 … x … 12
+  4. The depth (in feet) at which a successful oil-drilling venture first strikes oil:
+
+  0 … x … c, where c is the maximum depth obtainable
+216  CHAPTER 4 ■ Discrete Random Variables
+
+  5. The weight (in pounds) of a food item bought in a supermarket: 0 … x … 500
+  [Note: Theoretically, there is no upper limit on x, but it is unlikely that it would
+  exceed 500 pounds.]
+
+  Discrete random variables and their probability distributions are discussed in this
+  chapter. Continuous random variables and their probability distributions are the topic
+  of Chapter 5.
+
+Exercises 4.1–4.16  4.8 Sound waves from a basketball. Refer to the American
+  Journal of Physics (June 2010) experiment on sound
+Understanding the Principles  waves produced from striking a basketball, Exercise 2.43
+  (p. 80). Recall that the frequencies of sound wave echoes
+ 4.1 Define a discrete random variable.  resulting from striking a hanging basketball with a metal
+  rod were recorded. Classify the random variable, fre-
+ 4.2 Define a continuous random variable.  quency (measured in hertz) of an echo, as discrete or
+  continuous.
+Applying the Concepts—Basic
+  4.9 Mongolian desert ants. Refer to the Journal of
+ 4.3 Type of Random Variable. Classify the following ran-  Biogeography (Dec. 2003) study of ants in Mongolia,
+  dom variables according to whether they are discrete or  presented in Exercise 2.68 (p. 91). Two of the several vari-
+  continuous:  ables recorded at each of 11 study sites were annual rainfall
+  a. The number of students in a class  (in millimeters) and number of ant species. Identify these
+  b. The height of students in a college  variables as discrete or continuous.
+  c. The proportion of girls in a class of 100 students
+  d. The monthly income of employees in a company  4.10 Motivation of drug dealers. Refer to the Applied
+  e. The water flowing through the Hirakud Dam  Psychology in Criminal Justice (Sept. 2009) study of the
+  f. The amount of rainfall in a particular city.  personality characteristics of drug dealers, Exercise 2.102
+  (p. 105). For each of 100 convicted drug dealers, the resea-
+ 4.4 Type of Random Variable. Identify the following random  rchers measured several variables, including the number of
+  variables as discrete or continuous:  prior felony arrests x. Is x a discrete or continuous random
+  a. The life span of an electric bulb  variable? Explain.
+  b. The heart rate (number of beats per minute) of an adult
+  male  Applying the Concepts—Intermediate
+  c. The number of defective push pins produced by a ma-
+  chine in a company  4.11 Nutrition. Give an example of a discrete random variable of
+  d. The temperature in a particular city  interest to a nutritionist.
+  e. The population of fishes in a pond.
+  f. The number of leaks in a 100 kilometer oil pipeline  4.12 Physics. Give an example of a discrete random variable of
+  interest to a physicist.
+ 4.5 Type of Random Variable. Identify the following variables
+  as discrete or continuous:  4.13 Medical. Give an example of a discrete random variable of
+  a. The time span of failure of an electronic component  interest to a doctor in a hospital.
+  b. The number of accidents committed per month in your
+  community  4.14 Artist. Give an example of a discrete random variable of
+  c. The number of machine breakdowns during a given  interest to an artist.
+  day
+  d. The number of matches won by a player  4.15 Irrelevant speech effects. Refer to the Acoustical Science &
+  e. The number of faulty blades in a pack of 100  Technology (Vol. 35, 2014) study of the degree to which the
+  f. The amount of water in a bottle  memorization process is impaired by irrelevant background
+  speech (called irrelevant speech effects), Exercise 2.34
+ 4.6 NHTSA crash tests. The National Highway Traffic Safety  (p. 77). Recall that subjects performed a memorization
+  Administration (NHTSA) has developed a driver-side  task under two conditions: (1) with irrelevant background
+  “star” scoring system for crash-testing new cars. Each  speech and (2) in silence. Let x represent the difference in
+  crash-tested car is given a rating ranging from one star 1*2  the error rates for the two conditions—called the relative
+  to five stars 1*****2: the more stars in the rating, the bet-  difference in error rate (RDER). Explain why x is a con-
+  ter is the level of crash protection in a head-on collision.  tinuous random variable.
+  Suppose that a car is selected and its driver-side star rating
+  is determined. Let x equal the number of stars in the rating.  4.16 Shaft graves in ancient Greece. Refer to the American
+  Is x a discrete or continuous random variable?  Journal of Archaeology (Jan. 2014) study of shaft graves
+  in ancient Greece, Exercise 2.37 (p. 78). Let x represent
+ 4.7 Customers in line at a Subway shop. The number of cus-  the number of decorated sword shafts buried at a dis-
+  tomers, x, waiting in line to order sandwiches at a Subway  covered grave site. Explain why x is a discrete random
+  shop at noon is of interest to the store manager. What val-  variable.
+  ues can x assume? Is x a discrete or continuous random
+  variable?
+  SECTION 4.2 ■ Probability Distributions for Discrete Random Variables 217
+
+4.2 Probability Distributions for Discrete Random Variables
+
+  A complete description of a discrete random variable requires that we specify all the
+  values the random variable can assume and the probability associated with each value. To
+  illustrate, consider Example 4.4.
+
+ Example 4.4  Problem Recall the experiment of tossing two coins (p. 213), and let x be the number of
+  heads observed. Find the probability associated with each value of the random variable x,
+Finding a Probability  assuming that the two coins are fair.
+Distribution—Coin-
+Tossing Experiment  Solution The sample space and sample points for this experiment are reproduced
+  in Figure 4.2. Note that the random variable x can assume values 0, 1, 2. Recall (from
+  HH  HT  Chapter 3) that the probability associated with each of the four sample points is 1∙4.
+  x = 2  x = 1  Then, identifying the probabilities of the sample points associated with each of these
+  values of x, we have
+  TH  TT
+  x = 1  x = 0  P1x = 02 = P1TT2 = 1
+  4
+  S
+  P1x = 12 = P1TH2 + P1HT2 = 1 + = 1 1
+Figure 4.2  44 2
+Venn diagram for the
+two-coin-toss experiment  P1x = 22 = P1HH2 = 1
+  4
+
+  Thus, we now know the values the random variable can assume (0, 1, 2) and how
+  the probability is distributed over those values (1∙4, 1∙2, 1∙4). This dual specification
+  completely describes the random variable and is referred to as the probability
+  distribution, denoted by the symbol p1x2.* The probability distribution for the coin-
+  toss example is shown in tabular form in Table 4.1 and in graphic form in Figure 4.3.
+  Since the probability distribution for a discrete random variable is concentrated at
+  specific points (values of x), the graph in Figure 4.3a represents the probabilities as the
+  heights of vertical lines over the corresponding values of x. Although the representation
+  of the probability distribution as a histogram, as in Figure 4.3b, is less precise (since
+  the probability is spread over a unit interval), the histogram representation will prove
+  useful when we approximate probabilities of certain discrete random variables in
+  Section 4.4.
+
+  p ( x)  p ( x)
+
+  1/2  1/2
+
+Table 4.1  Figure 4.3  1/4  1/4
+Probability Distribution
+for Coin-Toss Experiment:  Probability distribution  x  x
+Tabular Form  for coin-toss experiment:  012  012
+  graphical form  a. Point representation of p(x)  b. Histogram representation of p(x)
+x  p1x2
+
+0  1∙4
+
+1  1∙2  Look Ahead We could also present the probability distribution for x as a formula, but
+  this would unnecessarily complicate a very simple example. We give the formulas for the
+2  1∙4  probability distributions of some common discrete random variables later in the chapter.
+
+  ■ Now Work Exercise 4.23
+
+  *In standard mathematical notation, the probability that a random variable X takes on a value x is denoted
+  P1X = x2 = p1x2. Thus, P1X = 02 = p102, P1X = 12 = p112, etc. In this text, we adopt the simpler
+  p1x2 notation.
+218 CHAPTER 4 ■ Discrete Random Variables
+
+  The probability distribution of a discrete random variable is a graph, table, or
+  formula that specifies the probability associated with each possible value that the
+  random variable can assume.
+
+  Two requirements must be satisfied by all probability distributions for discrete
+  random variables:
+
+  Requirements for the Probability Distribution of a Discrete Random Variable x
+  1. p1x2 Ú 0 for all values of x.
+  2. a p1x2 = 1
+  where the summation of p1x2 is over all possible values of x.*
+
+ Example 4.5  Problem Craps is a popular casino game in which a player throws two dice and bets on the
+
+Probability Distribution  outcome (the sum total of the dots showing on the upper faces of the two dice). Consider
+from a Graph—Playing
+Craps  a $5 wager. On the first toss (called the come-out roll), if the total is 7 or 11 the roller wins
+  $5. If the outcome is a 2, 3, or 12, the roller loses $5 (i.e., the roller wins - $5). For any
+
+  other outcome (4, 5, 6, 8, 9, or 10), a point is established and no money is lost or won on
+
+  that roll (i.e., the roller wins $0). In a computer simulation of repeated tosses of two dice,
+  the outcome x of the come-out roll wager ( - $5, $0, or + $5) was recorded. A relative
+
+  frequency histogram summarizing the results is shown in Figure 4.4. Use the histogram to
+
+  find the approximate probability distribution of x.
+
+Figure 4.4
+
+MINITAB Histogram for $5
+Wager on Come-Out Roll in
+Craps
+
+  Solution The histogram shows that the relative frequencies of the outcomes
+  x = - $5, x = $0, and x = $5 are .1, .65, and .25, respectively. For example, in repeated
+  tosses of two dice, 25% of the outcomes resulted in a sum of 7 or 11 (a $5 win for
+  the roller). Based on our long-run definition of probability given in Chapter 3, these
+  relative frequencies estimate the probabilities of the three outcomes. Consequently,
+  the approximate probability distribution of x, the outcome of the come-out wager in
+  craps, is p1 - $52 = .1, p1$02 = .65, and p1$52 = .25. Note that these probabilities
+  sum to 1.
+
+  *Unless otherwise indicated, summations will always be over all possible values of x.
+  SECTION 4.2 ■ Probability Distributions for Discrete Random Variables 219
+
+  Look Back When two dice are tossed, there is a total of 36 possible outcomes. (Can you
+  list these outcomes, or sample points?) Of these, 4 result in a sum of 2, 3, or 12; 24 result
+  in a sum of 4, 5, 6, 8, 9, or 10; and 8 result in a sum of 7 or 11. Using the rules of probability
+  established in Chapter 3, you can show that the actual probability distribution for
+  x is p1 - $52 = 4/36 = .1111, p1 $02 = 24/36 = .6667, and p1$52 = 8/36 = .2222.
+
+  ■ Now Work Exercise 4.19
+
+  Examples 4.4 and 4.5 illustrate how the probability distribution for a discrete ran-
+  dom variable can be derived, but for many practical situations the task is much more
+  difficult. Fortunately, numerous experiments and associated discrete random variables
+  observed in nature possess identical characteristics. Thus, you might observe a random
+  variable in a psychology experiment that would possess the same probability distribu-
+  tion as a random variable observed in an engineering experiment or a social sample sur-
+  vey. We classify random variables according to type of experiment, derive the probability
+  distribution for each of the different types, and then use the appropriate probability dis-
+  tribution when a particular type of random variable is observed in a practical situation.
+  The probability distributions for most commonly occurring discrete random variables
+  have already been derived. This fact simplifies the problem of finding the probability
+  distributions for random variables, as the next example illustrates.
+
+ Example 4.6  Problem A drought is a period of abnormal dry weather that causes serious problems
+  in the farming industry of the region. University of Arizona researchers used historical
+Probability Distribution  annual data to study the severity of droughts in Texas (Journal of Hydrologic Engineering,
+using a Formula—Texas  Sept./Oct. 2003). The researchers showed that the distribution of x, the number of
+Droughts  consecutive years that must be sampled until a dry (drought) year is observed, can be
+  modeled using the formula
+
+  p1x2 = 1.32 1.72x-1, x = 1, 2, 3, c
+
+  Find the probability that exactly 3 years must be sampled before a drought year occurs.
+
+  Solution We want to find the probability that x = 3. Using the formula, we have
+  p132 = 1.32 1.723-1 = 1.32 1.722 = 1.32 1.492 = .147
+
+  Thus, there is about a 15% chance that exactly 3 years must be sampled before a drought
+  year occurs in Texas.
+
+  Look Back The probability of interest can also be derived using the principles of
+  probability developed in Chapter 3.The event of interest is N1N2D3, where N1 represents
+  no drought occurs in the first sampled year, N2 represents no drought occurs in the
+  second sampled year, and D3 represents a drought occurs in the third sampled year. The
+  researchers discovered that the probability of a drought occurring in any sampled year is .3
+  (and, consequently, the probability of no drought occurring in any sampled year is .7).
+  Using the multiplicative rule of probability for independent events, the probability of
+  interest is 1.721.721.32 = .147.
+
+  ■
+
+  In Sections 4.4–4.6, we describe three important types of discrete random variables,
+  give their probability distributions, and explain where and how they can be applied in
+  practice. (Mathematical derivations of the probability distributions will be omitted, but
+  these details can be found in the chapter references.)
+
+  But first, in Section 4.3, we discuss some descriptive measures of these sometimes
+  complex probability distributions. Since probability distributions are analogous to the
+  relative frequency distributions of Chapter 2, it should be no surprise that the mean and
+  standard deviation are useful descriptive measures.
+220 CHAPTER 4 ■ Discrete Random Variables
+
+Exercises 4.17–4.39  4.21 The random variable x has the following discrete probabil-
+  ity distribution:
+Understanding the Principles
+  x:  5  6  7  8  9
+4.17 How do you represent the probability distribution of a ran-  p(x:)
+  dom variable denoting the number of heads when an unbi-  .2  .3  .2  .1  .2
+  ased coin tossed once?
+  Since the values that x can assume are mutually exclusive
+Learning the Mechanics  events, the event 5x … 76 is the union of three mutually
+  exclusive events:
+4.18 Consider the following probability distribution:
+  5x = 56 ∪ 5x = 66 ∪ 5x = 76
+x:  -5 -2  0  1
+  a. Find P1x … 72.
+p(x)  .1  .2  .3  .4  b. Find P1x 7 72.
+  c. Find P1x … 92.
+  a. List the values that x may assume.  d. Find P1x = 82.
+  b. What is the probability that x is greater than 0?  e. Find P1x … 6 or x 7 72.
+  c. What is the probability that x = - 2?
+  4.22 The random variable x has the discrete probability distribu-
+4.19 A discrete random variable x can assume five possible  tion shown here:
+  values: 20, 21, 22, 23, and 24. The MINITAB histogram at
+  the bottom of the page shows the likelihood of each value.  x:  -4  -3  -2  -1  0
+  a. What is p(22)?  p(x:)
+  b. What is the probability that x equals 20 or 24?  .10  .15  .40  .30  .05
+  c. What is P1x … 232?
+
+4.20 Explain why each of the following is or is not a valid prob-
+  ability distribution for a discrete random variable x:
+
+a. x  0  1  2  3  a. Find P1x … - 12.
+  p(x)  b. Find P1x 7 - 12.
+  .2  .3  .3  .2  c. Find P1x 6 02.
+  d. Find P1x 6 - 22.
+b. x  -2  -1  0  e. Find P1 - 4 6 x 6 - 12.
+  p(x)  f. Find P1x 6 - 32.
+  .25  .50  .20
+  4.23 Toss three fair coins, and let x equal the number of heads
+c. x  4  9  20  observed.
+  p(x)  - .3  a. Identify the sample points associated with this experi-
+  1.0  .3  ment, and assign a value of x to each sample point.
+  b. Calculate p(x) for each value of x.
+d. x  2  3  5  6  c. Construct a probability histogram for p(x).
+  p(x)  d. What is P1x = 2 or x = 32?
+  .15  .20  .40  .35
+
+  Histogram for Exercise 4.19
+SECTION 4.2 ■ Probability Distributions for Discrete Random Variables 221
+
+  Applet Exercise 4.1  Assume that 1 of the 69 cars is selected at random, and
+  let x equal the number of stars in the car’s driver-side star
+Use the applet entitled Random Numbers to generate a list of  rating.
+25 numbers between 1 and 3, inclusive. Let x represent a number  a. Use the information in the printout to find the proba-
+chosen from this list.
+  bility distribution for x.
+  a. What are the possible values of x?  b. Find P1x = 32.
+  b. Give the probability distribution for x in table form.  c. Find P1x 6 42.
+  c. Let y be a number randomly chosen from the set
+  MINITAB Output for Exercise 4.26
+  51, 2, 36. Give the probability distribution for y in
+  table form.  4.27 Downloading apps to your cell phone. According to a
+  d. Compare the probability distributions of x and y in  study, nearly 40% of adult cell phone owners have down-
+  parts b and c. Why should these distributions be approx-  loaded an application (“app”) to their cell phone. The
+  imately the same?  accompanying table gives the probability distribution
+  for x, the number of apps used at least once a week by
+  Applet Exercise 4.2  cell phone owners who have downloaded an app to their
+  phone.
+Run the applet entitled Simulating the Probability of a Head with
+a Fair Coin 10 times with n = 2, resetting between runs, to simu-  Number of Apps Used, x p(x)
+late flipping two coins 10 times. Count and record the number of
+heads each time. Let x represent the number of heads on a single  0  .30
+flip of the coins.
+  1  .24
+  a. What are the possible values of x?
+  b. Use the results of the simulation to find the probability  2  .06
+
+  distribution for x in table form.  3  .06
+  c. Explain why the probability of exactly two heads should
+  4  .05
+  be close to .25.
+  5  .10
+Applying the Concepts—Basic
+  6  .07
+4.24 Size of TV households. According to a region based sur-
+  vey, 26% of all TV households have a size of 1 person,  7  .05
+  36% have a household size of 2, 17% have a household
+  size of 3, and 21% have a household size of 4 or more. Let  8  .03
+  x represent the size (number of people) in a randomly se-
+  lected TV household.  9  .02
+  a. List the possible values of the discrete random variable x.
+  b. What is the probability that x = 2?  10  .02
+  c. What is the probability that x Ú 3?
+  a. Show that the properties of a probability distribution
+4.25 Do social robots walk or roll? Refer to the International  for a discrete random variable are satisfied.
+  Conference on Social Robotics (Vol. 6414, 2010) study
+  of the trend in the design of social robots, Exercise 2.7  b. Find P1x 7 32.
+  (p. 66). Recall that in a random sample of 106 social (or
+  service) robots designed to entertain, educate, and care  4.28 Controlling the water hyacinth. An insect that naturally
+  for human users, 63 were built with legs only, 20 with  feeds on the water hyacinth, one of the world’s worst
+  wheels only, 8 with both legs and wheels, and 15 with  aquatic weeds, is the delphacid. Female delphacids lay
+  neither legs nor wheels. Assume the following: Of the 63  anywhere from one to four eggs onto a water hyacinth
+  robots with legs only, 50 have two legs, 5 have three legs,  blade. The Annals of the Entomological Society of America
+  and 8 have four legs; of the 8 robots with both legs and  (Jan. 2005) published a study of the life cycle of a South
+  wheels, all 8 have two legs. Suppose one of the 106 social  American delphacid species. The following table gives the
+  robots is randomly selected. Let x equal the number of  percentages of water hyacinth blades that have one, two,
+  legs on the robot.  three, and four delphacid eggs:
+  a. List the possible values of x.
+  b. Find the probability distribution of x.  One  Two Three Four
+  c. Find E(x) and give a practical interpretation of its  Egg Eggs Eggs Eggs
+  value.
+  Percentage  40  54  2  4
+4.26 NHTSA crash tests. Refer to the National Highway  of Blades
+  Traffic Safety Administration (NHTSA) crash tests of
+  new car models, presented in Exercise 4.6 (p. 216). A  Source: Sosa, A. J., et al. “Life history of Megamelus scutellaris with
+  summary of the driver-side star ratings for the 69 cars is  description of immature stages,” Annals of the Entomological Society
+  reproduced in the MINITAB printout in the next column.  of America, Vol. 98, No. 1, Jan. 2005 (adapted from Table 1).
+222 CHAPTER 4 ■ Discrete Random Variables
+
+  a. One of the water hyacinth blades in the study is randomly  last names that begin with a later letter of the alphabet to pur-
+  selected, and x, the number of delphacid eggs on the  chase an item before consumers with last names that begin
+  blade, is observed. Give the probability distribution of x.  with earlier letters. To facilitate the analysis, the researchers
+  assigned a number, x, to each consumer based on the first let-
+  b. What is the probability that the blade has at least three  ter of the consumer’s last name. For example, last names be-
+  delphacid eggs?  ginning with “A” were assigned x = 1, last names beginning
+  with “B” were assigned x = 2, and last names beginning with
+4.29 Gender in two-child families. Human Biology (Feb. 2009)  “Z” were assigned x = 26.
+  published a study on the gender of children in two-child  a. If the first letters of consumers’ last names are equally
+  families. In populations where it is just as likely to have
+  a boy as a girl, the probabilities of having two girls, two  likely, find the probability distribution for x.
+  boys, or a boy and a girl are well known. Let x represent  b. Do you believe the probability distribution in part a is
+  the number of boys in a two-child family.
+  a. List the possible ways (sample points) in which a two-  realistic? Explain. How might you go about estimating
+  child family can be gender-configured. (For example,  the true probability distribution for x?
+  BG represents the event that the first child is a boy and
+  the second is a girl.)  4.32 Solar energy cells. According to the Earth Policy Institute
+  b. Assuming boys are just as likely as girls to be born, as-  (July 2013), 60% of the world’s solar energy cells are man-
+  sign probabilities to the sample points in part a.  ufactured in China. Consider a random sample of 5 solar
+  energy cells, and let x represent the number in the sam-
+  c. Use the probabilities, part a, to find the probability dis-  ple that are manufactured in China. In Section 4.4, we
+  tribution for x.  show that the probability distribution for x is given by the
+  formula
+  d. The article reported on the results of the National
+  Health Interview Survey (NHIS) of almost 43,000 two-  15!2 1.62x1.425-x
+  child families. The table gives the proportion of families  p1x2 = 1x!215-x2! ,
+  with each gender configuration. Use this information to
+  revise the probability distribution for x.  where n! = 1n21n-121n-22 c122112
+
+  Gender Configuration  Proportion  a. Explain why x is a discrete random variable.
+  b. Find p(x) for x = 0, 1, 2, 3, 4, and 5.
+  Girl-girl (GG)  .222  c. Show that the properties for a discrete probability dis-
+  Boy-girl (BG)  .259
+  Girl-boy (GB)  .254  tribution are satisfied.
+  Boy-boy (BB)  .265  d. Find the probability that at least 4 of the 5 solar energy
+
+4.30 Environmental vulnerability of amphibians. Many species  cells in the sample are manufactured in China.
+  of amphibians are declining due to dramatic changes in the
+  environment. The environmental vulnerability of amphib-  4.33 Contaminated gun cartridges. A weapons manufac-
+  ian species native to Mexico was examined in Amphibian &  turer uses a liquid propellant to produce gun cartridges.
+  Reptile Conservation (Aug. 2013). The researchers quantified  During the manufacturing process, the propellant can
+  this decline using a modified Environmental Vulnerability  get mixed with another liquid to produce a contaminated
+  Score (EVS) algorithm. Scores ranged from 3 to 20 points,  cartridge. A statistician hired by the company to investi-
+  with higher scores indicating a greater level of environmental  gate the level of contamination in the stored cartridges
+  vulnerability. EVS scores for 382 snake species were deter-  found that 25% of the cartridges in particular lot were
+  mined and are summarized in the table below. Let x repre-  contaminated. Suppose you randomly sample (without
+  sent the EVS score for a randomly selected snake species in  replacement) gun cartridges from this lot until you find
+  Mexico.  a contaminated one. Let x be the number of cartridges
+  a. Specify the probability distribution for EVS score x.  sampled until a contaminated one is found. It is known
+  b. EVS scores greater than 14 are indicative of species that  that the probability distribution for x is given by the
+  are endangered due to high environmental vulnerability.  formula
+  Find P1x 7 142.
+  p1x2 = 1.252 1.752x - 1, x = 1, 2, 3, c
+Applying the Concepts—Intermediate
+  a. Find p122. Interpret this result.
+4.31 The “last name” effect in purchasing. The Journal of Consu-  b. Find p142. Interpret this result.
+  mer Research (Aug. 2011) published a study demonstrating  c. Find P1x Ú 22. Interpret this result.
+  the “last name” effect—i.e., the tendency for consumers with
+  4.34 Variable speed limit control for freeways. A common
+  transportation problem in large cities is congestion on the
+  freeways. In the Canadian Journal of Civil Engineering
+  (Jan. 2013), civil engineers investigated the use of variable
+
+Table for Exercise 4.30
+
+EVS Score  34  5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20  Total
+  7 10 9 19 17 30 25 31 46 52 50 44 24 9 7 0  382
+Number of
+Snake Species 1 1
+
+Source: Wilson, L. D., et al. “A conservation reassessment of the amphibians of Mexico based on the EVS measure.” Amphibian & Reptile Conservation, Vol. 7, No. 1,
+Aug. 2013 (Table 4).
+  SECTION 4.2 ■ Probability Distributions for Discrete Random Variables 223
+
+  speed limits (VSL) to control the congestion problem. The  Line Maximum Capacity, x p(x)
+  study site was an urban freeway in Edmonton, Canada.
+  A portion of the freeway was divided equally into three  1  0  .01
+  sections, and variable speed limits were posted (inde-
+  pendently) in each section. Simulation was used to find the  12  .02
+  optimal speed limits based on various traffic patterns and
+  weather conditions. Probability distributions of the speed  24  .02
+  limits for the three sections were determined. For example,
+  one possible set of distributions is as follows (probabilities  36  .95
+  in parentheses). Section 1: 30 mph (.05), 40 mph (.25), 50
+  mph (.25), 60 mph (.45); Section 2: 30 mph (.10), 40 mph  2  0  .002
+  (.25), 50 mph (.35), 60 mph (.30); Section 3: 30 mph (.15),
+  40 mph (.20), 50 mph (.30), 60 mph (.35).  35  .002
+  a. Verify that the properties of discrete probability distri-
+  70  .996
+  butions are satisfied for each individual section of the
+  freeway.  a. Verify that the properties of discrete probability distri-
+  b. Consider a vehicle that will travel through the three sec-  butions are satisfied for each line in the system.
+  tions of the freeway at a steady (fixed) speed. Let x rep-
+  resent this speed. Find the probability distribution for x.  b. Find the probability that the maximum capacity level
+  c. Refer to part b. What is the probability that the vehicle  for Line 1 will exceed 30 items.
+  can travel at least 50 mph through the three sections of
+  the freeway?  c. Repeat part b for Line 2.
+  d. Now consider the network of two production lines. What
+4.35 Choosing portable grill displays. Refer to the Journal of
+  Consumer Research (Mar. 2003) marketing study of influ-  is the probability that a maximum capacity level of 30
+  encing consumer choices by offering undesirable alterna-  items is maintained throughout the network?
+  tives, presented in Exercise 3.29 (p. 159). Recall that each
+  of 124 college students selected showroom displays for  Applying the Concepts—Advanced
+  portable grills. Five different displays (representing five
+  different-sized grills) were available, but the students were  4.37 Voter preferences for a committee. A “Condorcet” com-
+  instructed to select only three displays in order to maxi-  mittee of, say, 3 members is a committee that is preferred
+  mize purchases of Grill #2 (a smaller grill). The table that  by voters over any other committee of 3 members. A scor-
+  follows shows the grill display combinations and number  ing function was used to determine “Condorcet” commit-
+  of each selected by the 124 students. Suppose 1 of the 124  tees in Mathematical Social Sciences (Nov. 2013). Consider
+  students is selected at random. Let x represent the sum of  a committee with members A, B, and C. Suppose there are
+  the grill numbers selected by that student. (This sum is an  10 voters who each have a preference for a 3-member com-
+  indicator of the size of the grills selected.)  mittee. For example, one voter may prefer a committee
+  a. Find the probability distribution for x.  made up of members A, C, and G. Then this voter’s pref-
+  b. What is the probability that x exceeds 10?  erence score for the {A, B, C} committee is 2, because 2 of
+  the members (A and B) are on this voter’s preferred list.
+Grill Display  Number of Students  For a 3-member committee, voter preference scores range
+Combination  from 0 (no members on the preferred list) to 3 (all mem-
+  35  bers on the preferred list). The table below shows the pre-
+  1–2–3  8  ferred lists of 10 voters for a 3-member committee selected
+  1–2–4  from potential members A, B, C, D, E, F, and G.
+  1–2–5  42
+  2–3–4  4  Voter: 1 2 3 4 5 6 7 8 9 10
+  2–3–5  1
+  2–4–5  ABABDCABAA
+  34  CCBCEECCBC
+  DED F F GGDCG
+Based on Hamilton, R. W. “Why do people suggest what they
+do not want? Using context effects to influence others’ choices.”  a. Find the preference score for committee {A, B, C} for
+Journal of Consumer Research, Vol. 29, Mar. 2003 (Table 1).  each voter.
+
+4.36 Reliability of a manufacturing network. A team of indus-  b. For a randomly selected voter, let x represent the pref-
+  trial management university professors investigated the  erence score for committee {A, B, C}. Determine the
+  reliability of a manufacturing system that involves multiple  probability distribution for x.
+  production lines (Journal of Systems Sciences & Systems
+  Engineering, Mar. 2013). An example of such a network  c. What is the probability that the preference score, x,
+  is a system for producing integrated circuit (IC) cards with  exceeds 2?
+  two production lines set up in sequence. Items (IC cards)
+  first pass through Line 1 and then are processed by Line 2.  d. Is {A, B, C} a “Condorcet” committee?
+  The probability distribution of the maximum capacity level
+  of each line is shown in the next column. Assume the lines  4.38 Punnett square for earlobes. Geneticists use a grid—called
+  operate independently.  a Punnett square—to display all possible gene combina-
+  tions in genetic crosses. (The grid is named for Reginald
+  Punnett, a British geneticist who developed the method in
+  the early 1900s.) The figure on p. 224 is a Punnett square
+  for a cross involving human earlobes. In humans, free
+  earlobes (E) are dominant over attached earlobes (e).
+  Consequently, the gene pairs EE and Ee will result in
+  free earlobes, while the gene pair ee results in attached
+  earlobes. Consider a couple with genes as shown in the
+

@@ -1,0 +1,1326 @@
+176 Intermodal loading units, transfer equipment and satellite communications
+
+  Fig. 13.5 Containerlift vehicle-mounted container transfer device. (Source: Containerlift Ltd, UK.)
+
+vehicle or when stacking (generally, up to a maximum of four high). Their ability to hoist while travelling
+adds to operating speed and provides fast turnround cycles. Telescopic spreaders adjust automatically for
+precise positioning and fast operation, while safety locks ensure that lifting cannot commence until all four
+corner twistlocks are secured. Leading straddle carrier manufacturers Noell of Germany offer, among a
+wide range of models, a small, four-wheel, low-cost version which they call the Easy-Lift, designed for hand-
+ling 20- and 40-foot containers up to 40 tonnes, which it can carry (at up to 16 kilometre/hour) and stack two
+high. It has a choice of two- or four-wheel steering controlled by the operator providing exceptional manoeu-
+vrability for negotiating small areas and positioning containers into awkward corners. Either an open or
+closed driver’s control cabin is available and the machine can also be operated by remote control (using
+infrared technology) allowing the operator to select the best viewing position. In the large straddle carrier
+range, over 500 large Noell straddle carriers are in use worldwide. These feature three-high stacking cap-
+ability, eight-wheel steering, and Noell’s patented maintenance-free suspension system to provide good
+handling over poor surfaces. They have the ability to handle full- and half-height containers in all lengths
+(including 45- and 48-foot-long models) at maximum weights.
+
+  Claiming to be the world market leader in straddle carriers, Valmet of Finland (a product name of Sisu
+Terminal Systems) has over 40 years’ experience in building this type of equipment. Speciﬁcations are
+similar to those described above with the emphasis on good traction from four-wheel drive and smooth
+running, high levels of manoeuvrability, speed of lifting and travel, exceptional visibility, and precise
+control for the operator from high-level cabins. Above all, this type of equipment is claimed to enable ter-
+minals to be set up with a minimum of infrastructure investment, to operate efﬁciently with fast cycle times
+(pickup, lift, carry, position, and put-down) and with an economy of labour.
+13.3.4 Rail-mounted gantry cranes
+The very largest of container terminals, particularly those in ports, invariably feature rail-mounted gantry,
+or stacker, cranes which can lift and load all types of unit-load equipment at maximum weights and can
+  Satellite tracking of vehicles and loading units 177
+
+traverse as many as seven rows of stacked containers and a truck-loading lane. This type of equipment gen-
+erally features electric drive (DC) with thyristor control to provide inﬁnitely variable speed and AC-drive for
+hydraulic pumps, spreader operation and lighting. Cable hoists, mounted on trolleys that traverse the gantry
+(and on which the operator cabin is mounted), are used for lifting and lowering the spreader equipment or
+grapple arms for lifting swap bodies. Leading names in this ﬁeld are again Noell and Valmet, while German
+ﬁrm Kransysteme Rheinberg GmbH (KSR) build both rail-mounted (RMG) and rubber-tyred (RTG) ver-
+sions, the latter having the advantage of ﬂexibility of operation since it is not conﬁned to parallel tracks.
+
+13.4 Other handling equipment
+
+While heavy-duty forklift trucks, reach stackers, and straddle carriers are predominant in the ﬁeld of con-
+tainer and swap body handling, there are many other forms of handling equipment from giant-sized container
+cranes that can perform ship to shore container loading and unloading, in some cases straddling 12 or more
+rows of stacked containers (e.g. by Aumund, Kunz and Hilgers of Germany) to simple roll trailers for mov-
+ing containers within terminals, dockside tractors, and other forms of container lift-and-carry equipment.
+
+13.5 Satellite tracking of vehicles and loading units
+
+Worldwide tracking of containers, swap bodies, semi-trailers, road vehicles, and rail wagons is possible
+with satellite-based tracking systems. Being able to know where swap bodies, containers, unaccompan-
+ied trailers, or vehicles are at any particular point in time, and their status, is a great help in the manage-
+ment control of transport operations and in logistics planning.
+
+13.5.1 ITF intertrafﬁc – global tracker service
+
+An example of this type of system is the Global Tracker Service of Daimler-Benz subsidiary ITF
+Intertrafﬁc, in this particular case with the added advantage that it allows retrieved data to be integrated into
+existing company information systems (a schematic representation of the system is shown in Figure 13.6).
+This simple system locates intermodal loading units using a small transmitter, often called a Data Terminal
+or Asset Tracker Unit, unobtrusively ﬁtted to the load unit (in a small rugged housing) which transmits sig-
+nals back to a conﬁdential electronic mailbox at the ITF Intertrafﬁc Operations Centre identifying the unit’s
+latest position, and if required, other information. Other data, including temperature, shock, weight,
+humidity, door open, and load status, as well as locally input data from hand-held communication systems,
+can be provided via modular hardware units and sensors attached to the load unit which feed information to
+the transmitters. Data terminal interfaces allow the addition of sensors or Radio Frequency Identiﬁcation
+(RFID) tags. Data from loading units is transmitted via Low-Earth Orbit (LEO) satellites ﬁrst to the satel-
+lite network owner’s ground station, then onto ITF Intertrafﬁc’s operations centre and ﬁnally the system
+user’s terminal. Operation is simple: the user makes just one mouse click on the ‘connect’ box on his PC ter-
+minal screen, which instructs the programme to dial the ITF Intertrafﬁc database centre. This automatic-
+ally connects the terminal to the user’s personal mailbox and sends the necessary commands to retrieve the
+positions of loading units. The user can make a number of selections for data retrieval, choosing to col-
+lect data relating all units or just to selected containers or trailers, the latest information only or all informa-
+tion covering a number of days.
+
+  Information is supplied via a standard modem and in standard data format (e.g. dBase) for easy inte-
+gration into logistics management software. This means that standard database management systems can
+access the ﬁles and the data can be used to generate charts showing routes taken, daily logs of positions,
+and other information. MS-Windows-compatible user software displays loading unit positions on vec-
+tored maps or in database format. The service relates all the positions provided by the satellite system to
+178 Intermodal loading units, transfer equipment and satellite communications
+
+  LEO Low-Earth-Orbit Satellites
+
+  Data  Data
+  terminal  terminal
+
+Ground station  1007
+satellite network
+owner and provider  L S-LL 1562
+
+  ITF-operation centre
+
+  User
+  terminal
+
+  Fig. 13.6 System structure for the ITF Intertrafﬁc Global Tracker Service. (Source: ITF Intertrafﬁc.)
+
+reference positions: the ‘proximity calculation’. Each position is given as a line of screen text, such as
+‘10 kilometre north of Munich’. The reference positions are those chosen by the user. An ordinary PC and
+a few simple commands are used to connect the user to ITF Intertrafﬁc’s operations centre (the software sup-
+plied to users of the service can do this). The user programme requires the following PC system:
+
+  ● an 80486-compatible computer with colour screen,
+  ● a mouse,
+  ● at least 40 Megabyte hard disk,
+  ● at least 4 Megabyte of random-access memory (RAM),
+  ● an Hayes-compatible modem,
+  ● WINDOWS 3.0 software (or above).
+  Satellite tracking of vehicles and loading units 179
+
+13.5.2 The ‘Galileo’ global satellite system
+
+The EU’s global navigation and positioning satellite system ‘Galileo’ is beginning to take off in a big way
+with support from the Community’s Trans-European Transport Networks (TEN-Ts) funding programme:
+in fact, it appears as project number 15 in the TEN-T list of projects in page 148. Galileo is Europe’s ini-
+tiative to create a global satellite navigation system offering precise position and timing services for com-
+mercial and personal uses anywhere in the world, using a small and inexpensive receiver. When fully
+deployed, the system will consist of an array of 30 satellites, together with associated infrastructure on the
+ground and newly developed applications and services. Importantly, Galileo will make Europe independ-
+ent in a technological ﬁeld of strategic importance. Cost beneﬁt analyses carried out for the European
+Commission estimate that Europe’s share of the global market for satellite navigation products and services
+may be worth as much as €9 billion each year from 2015 as a result of using Galileo, and that up to 140 000
+new jobs could be created. A wealth of promising applications is already emerging especially in the ﬁelds
+of transport. The Galileo system is designed to respond to the speciﬁc needs of every transport domain,
+including aviation, maritime transport, and road and tall transport even pedestrians will beneﬁt. But
+Galileo will also beneﬁt other professional and personal activities, from civil engineering, social and emer-
+gency services to agriculture and ﬁsheries, banking and ﬁnance, environmental protection, and civil
+protection. From the user’s perspective, Galileo will offer the advantages of complete reliability and
+unprecedented accuracy. It will allow goods, vehicles, and people to be located with approximately 10 times
+greater accuracy than global positioning satellite (GPS), to within a few metres. And unlike GPS, the
+continuity of its signal will be guaranteed. Galileo has been designed speciﬁcally for civilian use worldwide,
+and will provide both a freely available signal and ones restricted to speciﬁc groups such as commercial
+service providers, safety-of-life applications such as aviation, and government users. Galileo will comprise
+a constellation of 30 satellites orbiting at an altitude of nearly 24 000 kilometres. Ground stations will be
+responsible for the management and control of the system. It is claimed that thanks to the compatibility
+and interoperability of Galileo, users throughout the world will gain easier access to signals emitted by the
+navigation satellites and will beneﬁt from much greater efﬁciency: the system will also offer greater accur-
+acy than GPS. The services offered by Galileo will be covered by a guarantee of continuity, which can be
+laid down in a contract; this is seen as very important when risk to human life is involved, as with air trans-
+port for example. In a Press statement issued in December 2004, the European Commission stated that
+Galileo would deﬁnitely become operational in 2008:
+
+  A decisive stage had been reached,’ it said, and ‘it is without a doubt the most wonderful
+  European technological project. We are now on the home straight: next year will see the,
+  launch of the ﬁrst satellites’; said Jacques Barrot, Vice-President of the Commission,
+  ‘Galileo will be as much of a technological revolution as mobile telephony.
+  14
+
+  Carrier Liability in Intermodal Transport
+
+Intermodal and combined road–rail transport offers many practical beneﬁts to freight shippers, to road
+haulage contractors, and to the public at large through reductions in environmental pollution of one form
+or another, as this book shows. While such operations are running smoothly there is a tendency to con-
+clude that a more efﬁcient and effective means of transportation would be hard to conceive. However,
+this is not to say that it is a perfect solution to all long-haul freighting requirements, far from it. When
+things go wrong and the problems arise of having to resolve claims for loss of, or damage to, the goods
+in transit (GIT), the incompatibility of the respective legal regimes relating to carrier liability is quickly
+highlighted. In other words, it is at this point that otherwise efﬁciently conjoined systems appear to leak
+signiﬁcantly at the seams. Confusion reigns, not only among the lay freight shippers and carriers them-
+selves, but also among the legal fraternity (both lawyers and courts) whose job it is to determine whether
+there was negligence, by whom and to what extent, and to assess liability and award compensation.
+
+  One undoubted beneﬁt that can be cited for the through-carriage, door-to-door, of international freight
+from its point of origin to its ﬁnal destination by road vehicle is that liability for any loss, damage, or delay
+to the goods can clearly be laid at the door of the road haulier whose vehicle undertook the whole oper-
+ation. There can be little dispute in such circumstances as to where loss or damage claims should be
+directed. A road haulier who has made proper provision by way of adequate GIT insurance cover to pro-
+tect against international carrier liabilities (Convention Marchandises Routiers (CMR), see later), should
+have little to worry about if such claims arise. Similarly, the original shipper of the goods need to have lit-
+tle worry either since, if he suffers losses, he can readily make a claim on the haulier. Even if more than
+one road haulier is involved in the international freight movement – for example, by the ﬁrst, collecting,
+haulier handing over the loaded semi-trailer to another haulage ﬁrm for delivery – CMR liability is clearly
+established. The same liability regime applies to both carriers, and claims can be resolved accordingly.
+
+  Straightforward though this may sound in principle, in practice matters are not so clear, especially
+where freight loads are sub-contracted between hauliers, one or more of whom may have been under
+the impression that normal UK domestic carrier liability under his own, or Road Haulage Association
+(RHA), Conditions of Carriage would apply. As this chapter clearly shows, where a contract for an inter-
+national haulage journey exists, domestic conditions of carriage (and relevant levels of liability) are
+superseded by CMR. When multimodal operations are introduced into international freighting, an even
+more complex and confused situation obtains. For a start, completely different liability regimes apply to
+the various modal stages of the journey: for example, when road and rail stages are introduced, and
+possibly even carriage by sea. Added to this are the not inconsiderable problems arising from variations
+in liability law between the different countries through which the international consignment passes.
+  Liability in domestic road and rail operations 181
+
+14.1 International agreements
+A clutch of international agreements is currently in existence with each mode having its own agreement
+as follows:
+
+Mode  Liability regime
+Carriage by sea and
+ inland waterway  The Hague Rules (1921) as superseded by the Hague-Visby Rules (1968) and the,
+Carriage by air  as yet unratiﬁed, Hamburg Rules of 1978
+  The Warsaw Convention 1929 as amended by the Hague Protocol 1955 and the
+Carriage by rail  Guadalajara Convention 1961
+  The COTIF Convention 1980 (covering all international carriage by rail), and within
+Carriage by road  this Convention the CIM Rules which relate speciﬁcally to the carriage of goods by
+  rail. Applied in the UK by the International Transport Conventions Act 1983
+  The CMR Convention 1956 (amended by protocol in 1979). Applied in the UK by the
+  Carriage of Goods by Road Act 1965
+
+  For our purposes here it is useful to examine in detail the liability regimes that apply individually to
+domestic road and rail transport (since it must not be assumed that all combined transport operations
+relate to international freighting albeit, currently, most do so), international road and rail freighting, and
+then the United Nations Conference on Trade and Development/International Chamber of Commerce
+(UNCTAD/ICC) Rules for Multimodal Transport Documents.
+
+14.2 Liability in domestic road and rail operations
+
+Many combined transport movements (both in the UK and Europe) are conducted on a purely ‘domestic’
+basis between inland or internal destinations which do not involve the crossing of national frontiers.
+(Note: In the UK, domestic transport excludes freight journeys to the Republic of Ireland which remains
+an international destination whether approached directly by sea from the British mainland or overland
+via Northern Ireland.) For such operations, although not so complex and therefore not so legally fraught
+as those involving the crossing of national boundaries, the road haulier still needs to ensure that he is
+adequately safeguarded as to his legal liabilities. This can be done, ﬁrstly, by limiting liability for the loss
+of or damage to goods entrusted to his care by applying appropriately worded conditions of carriage (e.g.
+those of the RHA but only if he is a member of that organization, it is illegal to do so otherwise) to all
+contracts he undertakes for the carriage of goods; and secondly, by taking out appropriate GIT insurance
+cover. It is useful to mention here that protecting one’s liability in this way is of little use without also
+insuring against the risk of claims arising unless adequate funds are held in reserve from which to meet
+any liabilities which may arise, which could result in very substantial damages.
+
+  Without venturing into the extreme complexities of the law of carriage as it applies to domestic or
+inland transport by land (Glass and Cashmore do an excellent job in this respect in their Introduction
+To The Law of Carriage of Goods, Sweet & Maxwell, London 1989), it is sufﬁce to say that both the
+privately-owned railways and most professional road hauliers (certainly those who are members of
+the RHA) are, in law, ‘private’, as opposed to ‘common’ carriers. The latter, by deﬁnition, hold themselves
+out as being prepared to carry goods for reward for all and sundry without reserving the right to refuse
+to carry any particular goods or for any particular person.
+
+  Private carriers on the other hand do reserve such rights and thus achieve this status. Furthermore,
+they do so by virtue of restricting their liability for loss of or damage to goods entrusted to their care
+182 Carrier liability in intermodal transport
+
+(i.e. as ‘bailees for reward’) only to instances where they are held to have been negligent or guilty of con-
+version. Such restriction of their liability is set out in their respective conditions of carriage as published
+and brought to the attention of all contracting customers of their businesses.
+
+  For example, liability under [the former] British Rail’s (BR’s) August 1986 conditions (now obviously
+superseded by the relevant conditions of the new individual private owners of the former BR’s freight
+businesses), the RHA’s current conditions, and those of the British International Freight Association’s
+(BIFA), which many combined transport operators use, is restricted to:
+
+1. BR: £2000 per tonne.
+2. RHA: £1300 per tonne gross weight or per 2.25 cubic metres, whichever is the greater.
+3. BIFA: approximately £2100 per tonne (based on current value of Special Drawing Right (SDR), see
+
+  below).
+
+By contractual arrangement, the carrier may undertake to shoulder a greater level of liability for high
+value goods, in which case their value should be declared by the consignor/customer and notiﬁed by the
+carrier to the GIT insurer. If this is not done, subsequent claims for loss or damage may be refused by the
+insurer or met only on the basis of the normal (basic) level of cover which may be far from adequate rec-
+ompense to the customer who has suffered the loss.
+
+  In the event of loss or damage to goods in domestic transport, the claimant will need to pursue the rele-
+vant carrier (i.e. road, or rail) to whom the consignment was entrusted, bearing in mind that the original
+contract may have been with a road haulier, who subsequently ships the load by swap body or container
+on rail, or with a private rail-freight company which carries the goods by rail but uses its own road vehicles
+to effect collection and delivery.
+
+14.3 International carriage of goods by road: CMR
+
+Transport operators, whether just a one-man haulage business (i.e. owner driver) or a large ﬁrm, carrying
+goods for reward on international road haulage journeys must comply (Note: Since, in effect CMR applies
+automatically to an international road haulage journey, the haulier has no choice in the matter, but he
+may be carrying out the operation in ignorance of this fact.) with the Convention on the Contract for the
+International Carriage of Goods by Road, 1956 (Convention Relative au Contrat de Transport International
+de Marchandises par Route, commonly referred to as the CMR Convention). This Convention is applied in
+the UK under English law by the provisions of the Carriage of Goods by Road Act 1965. The Convention
+deﬁnes the carriers’ liability and the documents to be carried on vehicles engaged in the international move-
+ment of goods between different countries of which at least one is a party to the CMR Convention.
+
+  The following countries (in addition to all European Union (EU) Member States except Cyprus and
+Malta) are party to the CMR convention:
+
+  ● Belarus
+  ● Bosnia–Herzegovina
+  ● Bulgaria
+  ● Croatia
+  ● Kazakhstan
+  ● Macedonia
+  ● Moldova
+  ● Morocco
+  ● Norway
+  ● Romania
+  ● Russian Federation
+  International carriage of goods by road: CMR 183
+
+  ● Switzerland
+  ● Tajikistan
+  ● Tunisia
+  ● Turkey
+  ● Turkmenistan
+  ● Uzbekistan
+  ● The former Yugoslavia
+
+14.3.1 Applicable law
+
+International Conventions such as CMR override the relevant provisions of national law but only insofar
+as the Convention covers the point at issue. However, not all points of issue that may arise by way of dis-
+pute or claim out of a contract for international carriage are covered by the Convention, in which case
+relevant national law would apply (basically this means the law of the country in which the dispute or
+claim arose and to whose courts the matter is referred). In deciding the outcome of any dispute or claim,
+the courts may refer to either the French or English language texts of the Convention, although the
+French text is not reproduced in the schedule to the Carriage of Goods by Road Act 1965. When refer-
+ring to this Act, a court is still free to consider the French language version of the Convention for clari-
+ﬁcation should difﬁculty be found in determining the precise meaning of any aspect of the English text.
+
+14.3.2 Non-CMR operations and journeys
+
+For the CMR Convention to apply there must be clear evidence of a contract for the international carriage of
+goods for reward. In other words, the carriage of goods on an international journey at no charge, and there-
+fore, outside a contract for carriage as speciﬁed in the Convention, would not be covered by CMR.
+Furthermore, the carriage must be of goods to allow the Convention to apply. For this purpose, it may be
+necessary to examine closely a translation of the French term marchandises to which the Convention
+speciﬁcally applies in its original form. This word primarily translates to mean ‘merchandise’ which may
+not be held by a court to mean precisely the same as ‘goods’ as we understand the term in normal English
+usage.
+
+  Besides these exclusions arising from deﬁning the precise terms of applicability, the Convention has a
+number of more speciﬁc exemptions. Namely, its terms do not apply to:
+
+  ● own-account operations which involve international journeys,
+  ● furniture removals,
+  ● funeral consignments which are transported abroad,
+  ● carriage under an International Postal Convention.
+
+The Convention is also not applicable in respect of international haulage operations between the
+UK (including Northern Ireland) and the Republic of Ireland, or to contracts for the carriage of goods
+between the UK mainland and the Channel Islands (i.e. Guernsey, Jersey, Alderney, Sark and Herm),
+such operations not being legally classed as international journeys. Cabotage journeys (internal journeys
+within a country by a road haulier from another country) are also outside the provisions of the CMR.
+
+14.3.3 Basic requirements of CMR
+
+The CMR Convention automatically applies to every contract for the international carriage of goods by
+road in vehicles for reward, even when the vehicle containing the goods is carried over part of its jour-
+ney by sea, rail or inland waterway, although other conventions may also apply and take precedence over
+CMR. A CMR-type consignment note must be completed for the journey. There is no escape from the
+184 Carrier liability in intermodal transport
+
+Convention’s provisions and road hauliers may not opt out (by agreement with consignors or otherwise)
+from its legal (liability) requirements. Thus, for example, if a road haulier were to be induced to carry
+goods for reward on an international journey knowing nothing of the CMR and its provisions and his
+consequential liability responsibilities, and even without a CMR consignment note in force, the provi-
+sions of the Convention would still apply. Should a legal dispute or claim subsequently arise, he could be
+liable to pay substantial compensation not covered by his domestic GIT insurance policy.
+
+  Even in circumstances where a road haulier may not be aware that a load being carried on one of the
+ﬁrm’s vehicles is destined to continue on, or has previously been moved on, an international journey, and
+where he is not aware of the conditions and implications of CMR, the Convention’s provisions still apply.
+This is particularly relevant where loaded articulated semi-trailers are collected or delivered. It is the load
+and that part of the vehicle which are together at the time of crossing national boundaries which deter-
+mines that a particular journey is legally an international journey to which CMR applies. The Convention
+is not relevant where containers are carried domestically after having been transferred from the vehicle
+or rail wagon which crossed national boundaries; or where loads are trans-shipped between the vehicle
+which undertook the international part of the journey (to which CMR did apply), and local delivery
+vehicles (to which CMR does not apply).
+
+14.3.3.1 CMR conditions for international road haulage journeys
+
+An outline of the principal conditions of the Convention is given here.
+
+ 1. The Convention applies to every contract for carriage of goods, whether wholly by road or partly by
+  road and partly by rail, sea or inland waterway, as long as the goods remain in the original vehicle,
+  on a journey from one country to another, one of which is a contracting party to the Convention
+  (with the exception of UK–Eire and UK mainland–Channel Islands journeys which are ruled not to
+  be international journeys for this purpose). Exemptions to CMR apply to carriage under inter-
+  national postal conventions, funeral consignments and furniture removals.
+
+ 2. The carrier (road haulier) is responsible under the Convention for the actions and omissions of his
+  agents and any other persons whose services are used in carrying out the movement. Even if the
+  original road haulier contracted to undertake the movement sub-contracts the whole of the operation
+  to another road haulier (whose name appears on the CMR consignment note) the ﬁrst (original)
+  haulier remains fully liable under CMR should a dispute or claim arise. This can present problems
+  in a case where, for example, the ﬁrst (original) haulier operates only in domestic transport and thus
+  is covered only by, say, RHA conditions of carriage and is insured accordingly, not being insured to
+  the much higher CMR level of liability.
+
+ 3. A contract for the international carriage of goods for reward is conﬁrmed by making out a CMR
+  consignment note in three original copies, which should be signed by the sender and carrier. Each
+  keeps a copy and the third copy travels on the vehicle with the goods. While a CMR consignment
+  note conﬁrms that a contract exists, the absence of, or failure to raise such a note does not invalidate
+  the contract or dis-apply the terms of the Convention.
+
+ 4. If the goods are carried under a single contract in different vehicles or are divided owing to their
+  different nature, the carrier or the sender can specify that a separate consignment note should be
+  made out for each vehicle or each load of goods.
+
+ 5. The consignment note must contain certain speciﬁed details (see p. 194) and may also contain
+  additional information of use to the parties to the contract. It must state that the carriage is subject
+  to CMR. Although not a ‘title’ to the goods, the consignment note is evidence of the facts it contains
+  (the details shown are presumed to be correct), such as the number of packages etc., and any
+  claim which disputes such facts would have to be backed by substantial independent evidence to the
+  International carriage of goods by road: CMR 185
+
+  contrary. Normally a standard note such as that available from the International Road Transport
+  Union (IRU) is used (or in the UK from the RHA, or the Freight Transport Association, both IRU
+  members).
+ 6. The sender is responsible for all expenses, loss and damage sustained by the carrier as a result of
+  inaccuracies in completion of the consignment note in relation to information supplied by him, even
+  if the road haulier completes the note from information given to him by the sender.
+ 7. On receipt of the goods, the carrier must check the accuracy of the details shown in the consignment
+  note particularly, for example, as to the number of packages, the apparent condition of the goods,
+  their packaging and how they are marked. Any discrepancies or comments about other relevant mat-
+  ters such as the condition of the goods or packages should be noted by a ‘reservation’ on the note.
+  Should the sender request the carrier to check the contents of packages or to have the consignment
+  weighed he must reimburse the carrier any costs incurred in doing so.
+ 8. The sender is liable to the carrier for damage and expenses due to defective packing of the goods
+  unless the defects were known to the carrier, when taking over the goods and he indicated this
+  fact by way of a ‘reservation’ on the note. The absence of such a reservation means that the carrier,
+  if he was aware of the damage, accepted any likely risks of subsequent claims.
+ 9. The sender must attach to the consignment note or make available to the carrier the necessary docu-
+  ments to complete customs formalities. The sender is liable to the carrier for any damage caused by
+  the absence, inadequacy or irregularity of such documents.
+10. The sender has the right of disposal of the goods and may stop transit of the goods or change the
+  delivery address up to the time of delivery to the consignee unless he has stated on the consignment
+  note that the consignee has this right. Once the goods are delivered to the address on the consign-
+  ment note, the consignee has the right of disposal.
+11. A carrier who fails to follow the instructions on the consignment note or who has followed them
+  without requesting the ﬁrst copy of the consignment note to be produced is liable for loss or dam-
+  age caused by such failure.
+12. The carrier must provide the consignee with a second copy of the consignment note at the time of
+  delivering the goods.
+13. If the carrier cannot follow the instructions on the consignment note for any reason, he must ask the
+  sender or the consignee, depending on who has the right of disposal (see item 10 above), for further
+  instructions.
+14. The carrier is liable for the total or partial loss of the goods and for any damage to them occurring
+  between the time when he takes over the goods and the time of their delivery unless the loss, dam-
+  age or delay was caused by a wrongful act or neglect of the claimant. The burden of proof in this
+  case rests with the carrier.
+15. Failure to deliver goods within 30 days of a speciﬁed time limit, or within 60 days from the time
+  when the ﬁrst carrier took them over if there is no time limit for delivery, results in the goods being
+  considered to be lost.
+16. When goods of a dangerous nature are consigned, the carrier must be informed of the nature of the
+  danger and the precautions to be taken.
+17. Calculation of compensation in the event of loss or damage is related to the value of the goods at the
+  place and time they were accepted for carriage but will not exceed a set value (related to SDR, see
+  p. 186–7 for explanation).
+18. Carriage charges, Customs duties and other charges in respect of the carriage are refunded in the
+  case of total loss of the goods and proportionately in the case of partial loss.
+19. Higher levels of compensation may be claimed where the value or a special interest in delivery has
+  been declared or where a surcharge has been paid in respect of a declared value exceeding the limit
+  mentioned in item 17 above.
+186 Carrier liability in intermodal transport
+
+20. In the case of damage the carrier is liable for the amount by which the value of the goods has
+  diminished.
+
+21. The claimant may demand interest in respect of the amount of any claim at 5 per cent per annum
+  from the date on which the claim was sent to the carrier.
+
+22. A carrier cannot avail himself of exclusions or limiting clauses if damage to goods was caused by
+  his wilful misconduct or default, which constitutes wilful misconduct.
+
+23. The consignee is considered to have accepted the goods in a satisfactory condition if he does not indi-
+  cate his reservations at the time of delivery or within 7 days (excluding Sundays and public holidays).
+
+24. In legal proceedings, the plaintiff may bring an action in any court or tribunal of a contracting
+  (i.e. CMR contracting) country, or of a country in which the defendant is normally resident or has
+  his principal place of business, or of a country where the goods were taken over by the carrier or
+  where they were designated for delivery, and in no other courts or tribunals.
+
+25. The period of limitation for an action under the Convention is 1 year, or 3 years in the case of
+  wilful misconduct.
+
+26. Where successive road carriers are involved in a contract under the Convention, each one of them is
+  responsible for the whole operation as a party to the contract. Each successive carrier must give the
+  previous carrier a dated receipt and must enter his name and address on the second copy of the con-
+  signment note.
+
+27. A carrier who has paid compensation arising from a claim may recover the compensation plus inter-
+  est, costs and expenses from other carriers who were parties to the contract subject to:
+  (a) the carrier responsible for the loss or damage paying the compensation
+  (b) each carrier responsible for loss or damage jointly caused shall be liable to pay proportionate
+  compensation or compensation proportionate to its share of the carriage charges if responsibil-
+  ity cannot be apportioned.
+
+28. If a carrier who is due to pay compensation is insolvent, his share must be paid by other carriers who
+  are parties to the contract.
+
+In particular, road hauliers should note that the terms of the carriage contract require carriers taking over
+the goods to check the accuracy of the statements in the consignment note as to the number of packages,
+their marks and numbers, the apparent condition of the goods and their packaging, and they should obvi-
+ously do so for their own protection in the event of later disputes or claims. Under the Convention the
+carrier is responsible for loss, damage or delay from the time of taking over the goods until the time of
+their delivery.
+
+  Furthermore, where goods are handled by a number of carriers on an international journey (e.g. by
+transferring a loaded articulated semi-trailer from one to another), provisions are contained in CMR to
+apportion the liability for loss or damage between all the carriers (based on the relative proportions of the
+total carriage cost charged by each one of them). This is because of the difﬁculties which may arise in
+pinpointing the exact time and place when the damage occurred (unless speciﬁc responsibility can be
+determined), but should one or more of the carriers in this situation default (through insolvency) in meet-
+ing its share of any claim for damage to or loss of the goods then the remaining carrier or carriers will
+have to meet the share of those defaulting.
+
+14.3.4 CMR liability
+
+As stated above, in international road haulage operations (but not own-account road transport operations),
+the carriage automatically comes within the terms of the CMR Convention under which the carrier’s
+liability for claims resulting from loss of or damage to the goods carried is determined by comparison with
+a measure known as Special Drawing Rights (SDRs), whereby compensation must not exceed 8.33 units of
+account per kilogram of gross weight short (gws). SDRs are deﬁned by the International Monetary Fund
+  International carriage of goods by rail: CIM 187
+
+(IMF) as being a unit for converting currency values based on a ‘basket’ of the currencies of the key
+Member States of the IMF and are converted to the national currency of the country in which any claim is
+dealt with in court, and is assessed as to value on the date of the judgement, or on a date agreed to by the
+parties. A treasury certiﬁcate stating the value for that day is taken to be conclusive proof of that fact.
+
+  Note: The value or exchange rate of SDRs on the date of judgement or agreement referred to above
+must not be confused with the date of calculation of the value of the goods which are subject to the claim
+as referred to in item 17 on p. 185.
+
+14.3.4.1 SDR conversion rate
+
+The daily conversion rate for SDR to national currencies can be found in the ﬁnancial newspapers. With
+changing values it is essential that the current value should be established at any particular point in time,
+and adequate insurance cover to at least this level of liability should be carried. To give an approximate
+idea of what this value represents, on 23 February 2005 (bearing in mind the rates change daily), a con-
+version of SDR to sterling at a rate of £1.24915 per kilogram represented a value of £10 405.42 per tonne
+(i.e. calculated as 8.33 units ϫ £1.24915 ϫ 1000 kilogram).
+
+14.4 International carriage of goods by rail: CIM
+
+The Uniform Rules for the International Carriage of Goods by Rail, commonly known and referred to as
+the CIM rules, are an extensive and complex body of legislation, similar in style and structure to CMR
+for international road haulage as described in detail above, but with certain obvious differences relating
+to rail carriage. These Rules are too extensive to reproduce here, but it is useful to outline the important
+liability provisions in the context of this chapter.
+
+  First, however, a number of basic facts should be clariﬁed. For instance:
+
+1. For these rules to apply, the carriage by rail must cross over from the national state in which the orig-
+  inating rail station is located into another different state, both of which states must have adopted this
+  Convention.
+
+2. The railway company to which freight is offered, is bound under the rules to accept such goods for
+  carriage if:
+  – it is in complete wagon loads,
+  – the sender complies with the Uniform Rules,
+  – the carriage can be undertaken by the railway’s normal staff and transport resources,
+  – the carriage is not prevented by circumstances which the railway company cannot avoid and
+  which it is not in a position to remedy.
+
+3. The railway company is not bound to accept goods for carriage if special handling facilities are
+  needed, or if the carriage cannot take place without delay (i.e. if temporary storage is required).
+
+4. Certain goods are not accepted for carriage, particularly articles which:
+  – are prohibited in the territories over which carriage would take place,
+  – form the monopoly of the postal authorities in one of the territories through which carriage would
+  take place,
+  – which due to their mass (i.e. weight) or packaging are not suitable for carriage having regard to
+  the rolling stock of the railway company, or successive railway companies,
+  – are dangerous goods not acceptable for carriage under the regulations for dangerous goods
+  carriage (International Carriage of Dangerous Goods by Rail (RID), see Chapter 16).
+
+5. Certain other goods are accepted for carriage subject to conditions. These comprise:
+  – substances which are permitted under the RID regulations,
+  – funeral consignments,
+188 Carrier liability in intermodal transport
+
+  – live animals (which, generally, must be accompanied by an attendant provided by the consignor),
+  – consignments of a difﬁcult size, weight or packaging.
+
+14.4.1 Liability provisions
+
+The Rules make clear the fact that the railway company which accepts goods for carriage, along with
+a consignment note (as described in detail in Chapter 15) relating to those goods (a separate note being
+required for each consignment or wagon load) is responsible for the carriage over the entire route up to
+the point of delivery. Succeeding railways, by the very act of taking over the goods along with the con-
+signment note(s), become parties to the contract of carriage and must assume the same obligations as the
+accepting railway company.
+
+  Normally, the railway company’s liability is for loss or damage resulting from the total or partial loss
+of, or damage to, the goods between the time of their acceptance for carriage and the time of delivery,
+and for any loss or damage resulting from the transit period being exceeded. However, it is relieved of
+liability if the loss or damage, or exceeding of the transit time, was caused by the following:
+
+1. A fault on the part of the person entitled to the goods.
+2. An order given by the person entitled to the goods.
+3. Other than as a result of a fault on the part of the railway.
+4. Inherent vice of the goods (decay, wastage, etc.).
+5. Circumstances which the railway could not avoid and the consequences of which it was unable to
+
+  prevent.
+6. The special risks inherent in one or more of the following circumstances:
+
+  (a) carriage in open wagons;
+  (b) absence or inadequacy of packing for goods which are liable to loss or damage when not packed
+
+  or when not properly packed;
+  (c) loading operations carried out by the consignor or unloading operations carried out by the
+
+  consignee;
+  (d) defective loading by the consignor;
+  (e) completion by the consignor, the consignee or an agent of either, of the formalities required by
+
+  customs or other administrative authorities;
+  (f) the nature of certain goods which renders them inherently liable to total or partial loss or dam-
+
+  age, especially through breakage, rust, interior and spontaneous decay, desiccation or wastage;
+  (g) irregular, incorrect or incomplete description of articles not acceptable for carriage or accept-
+
+  able subject to conditions, or failure by the consignor to observe the prescribed precautions in
+  respect of articles acceptable subject to conditions;
+  (h) carriage of live animals;
+  (i) carriage which (under provisions applicable or by agreement) must be accompanied by an
+  attendant, if the loss or damage results from risks which the attendant was intended to avert.
+
+The burden of proving that the loss, damage or exceeding of the transit period was due to one of the causes
+listed above rests with the railway company. If it establishes that the loss or damage could have arisen
+from one or more of the special risks referred to in item 6 above, ‘it shall be presumed that it did so arise’
+but the person entitled to the goods has a right to prove that the loss or damage was not attributable
+either wholly or partly to one of those risks. Goods may be presumed lost, without the claimant being
+required to furnish further proof, when they have not been delivered to the consignee or are not being held
+at his disposal within 30 days after the expiry of the transit periods. After having received compensation
+  Compensation for loss 189
+
+for lost goods, claimants may request in writing to be notiﬁed should the goods be recovered within
+1 year.
+
+14.5 Compensation for loss
+
+In the event of total or partial loss of the goods the railway must pay compensation calculated according
+to the commodity exchange quotation or, if there is no such quotation, according to the current market
+price, or if there is neither such quotation nor such price, according to the normal value of goods of the
+same kind and quality at the time and place at which the goods were accepted for carriage. However, the
+amount of compensation payable is limited to a maximum of 17 units of account per kilogram of gross
+mass short (see below), and it may be further limited if the carriage took place under special conditions
+of carriage through special or exceptional tariffs; in other words, if reduced carriage charges were nego-
+tiated then compensation may also be reduced in the event of a loss or damage claim arising. When the
+calculation of compensation necessitates the conversion of amounts expressed in foreign currencies,
+the rules require that conversion is made at the rate of exchange applicable at the time and place of pay-
+ment of the compensation. In addition to any compensation paid, the railway company is required to
+refund carriage charges, Customs duties, and other amounts incurred in connection with carriage of the
+lost goods.
+
+  Limits are placed on the amount of compensation payable where a claim is for loss that arises through
+natural wastage of certain goods. Generally, compensation is only payable when the loss exceeds a stipu-
+lated allowance. This is 2 per cent of the mass (i.e. weight) in the case of liquid goods, goods consigned
+in a moist condition and certain other listed products (see list in the full rules at Appendix I, Article
+41(1(a)). For all other dry goods the allowance is 1 per cent.
+
+  The rules also place limits on the amount of compensation payable for damage to goods and when
+transit periods are exceeded. In the former case, compensation is payable by an amount equivalent to the
+loss in value of the goods but not exceeding:
+
+1. If the whole consignment has lost value through damage, the amount which would have been
+  payable in the case of total loss.
+
+2. If only part of the consignment has lost value through damage, the amount which would have been
+  payable had that part been lost.
+
+Proportionate refunds are made of the carriage and other charges.
+  In the case of loss or damage resulting from the transit period being exceeded, the railway company
+
+must pay compensation not exceeding three times the carriage charges. However, if the delay results in
+total loss of the goods, the amount of compensation payable will be for the total loss only and will not
+include an additional amount in compensation for exceeding the transit period. In fact, in no case will the
+total amount of compensation payable under these rules exceed that which would be payable in the event
+of total loss of the goods. When the loss or damage to goods, exceeding the transit period, the failure to
+perform, or failure to perform properly, the railway company’s additional services provided for in the
+Uniform Rules, has been caused by wilful misconduct or gross negligence on the part of the railway
+company, full compensation for the loss or damage proved is to be paid to the person entitled by the rail-
+way. In case of gross negligence, liability is limited to twice the normal maximum amounts speciﬁed
+under the rules.
+
+  Where there has been a declaration of interest in delivery (i.e. an amount above the normal value of
+the goods to represent other losses which may result from loss or damage to the goods), for which the
+railway company may levy additional charges, further compensation for any loss or damage proved may
+be claimed, above the amounts normally payable under these rules, up to the amount declared. A claim
+for interest on compensation payable may be made, calculated at 5 per cent per annum, from the date of
+190 Carrier liability in intermodal transport
+
+the claim or if no claim has been made, from the day on which legal proceedings are instituted. Interest
+is only be payable if the compensation exceeds four units of account per consignment note.
+
+14.5.1 Unit of account
+
+The unit of account referred to above is the SDR as deﬁned by the IMF. In the case of a state which is not
+a member of the IMF and whose legislation does not permit the application SDRs, the unit of account
+referred to in the Uniform Rules is deemed to be equal to 3 gold francs (the gold franc is deﬁned as 10/31
+of a gram of gold of millesimal ﬁneness 900).
+
+  SDRs for these purposes are exactly as described above in the context of the CMR Convention and
+have the same daily changing value. The calculation of maximum compensation value on a per tonne
+basis is carried out by taking the daily SDR rate (see ﬁnancial newspapers or visit the IMF web site at
+www.imf.org) and multiplying this by 17 (see above), and then by 1000 kilogram. For example, based
+on the SDR rate for 23 February 2005, the ﬁgure would be £1.24915 ϫ 17 ϫ 1000 ϭ £21 235.55 per tonne.
+
+  Note: It may be noted that this is, in fact, almost double the rate for maximum compensation payable
+under the CMR Convention for claims arising in international road transport operations.
+
+14.6 Liability rules for multimodal transport
+
+No single agreement currently made under international law fully covers the diverse liabilities applicable
+to a transport journey involving a combination of modes. The problem with these international conven-
+tions, certainly so far as multimodal transport operations are concerned, is that of proving the mode of
+carriage, and thus the individual liabilities of intermodal operators, being used at the precise time when
+loss of or damage to the goods occurred. The Commission of the European Communities, in fact, iden-
+tiﬁed this very matter (in its report The Future Development of the Common Transport Policy, Brussels,
+December 1992) as a problem that needed further investigation. It suggested the necessity of determin-
+ing the extent to which a more uniform approach to the different regimes of liability of intermodal oper-
+ators between member states and between the different modal stages of an intermodal journey, would
+increase the attractiveness of multimodal services.
+
+  Past attempts to produce a single, all-encompassing solution have failed; take, for example, the non-
+adopted TCM Draft Convention of 1971 on the Combined Transport of Goods (Transport Combines des
+Marchandises), and the United Nations (UN) Convention on International Multimodal Transport of Goods
+(the so-called MT Convention) which was adopted as long ago as 24 May 1980, but which to this day has
+never been brought into force. In the absence of an accepted and ratiﬁed international convention, appli-
+cable solely to multimodal transport, such as the one that the UN had in mind (see above), UNCTAD and
+the ICC in more recent times, jointly devised a set of rules for Multimodal Transport Documents, based
+on the TCM draft convention mentioned above. These rules, which include provisions relating to the lia-
+bility of the multimodal transport operator, became effective from 1 January 1992. They provide such
+operators with a private transport contract having a uniform legal regime, so as to avoid the application
+of a multiplicity of other different regimes, as is currently the case.
+
+  However, even these rules are not widely adopted. For a start, as the ICC advises in its booklet (ICC
+publication no. 481), they are not comprehensive. The shipper in devising a multimodal freighting con-
+tract would still have to devise and add other suitably worded clauses dealing with such matters as route-
+ing, freight and charges, liens, jurisdiction and arbitration, applicable law, and so on to meet his own
+particular requirements. And, secondly, because so many different commercial arrangements are applied
+throughout the industry, no single, uniform set of rules or standard contract terms would appear to be
+capable of providing satisfactory solutions to all the liability problems which might arise in the event of
+an international freight shipment being conveyed by multimodal transport going awry.
+  GIT insurance protection 191
+
+  International multimodal transportation insurers Through Transport Mutual Services (UK) Limited
+(the TT Club), which has been providing this type of insurance for over 30 years, commenting on the
+confused situation, made the following points:
+
+  Multimodal operations are, of course, organized by somebody. This ‘somebody’ is often
+  a freight forwarder who is using his expertise to bolt together various sectors of a journey
+  and offering a through transport document (e.g. a multimodal bill of lading) for the entire
+  carriage. Alternatively, other carriers such as shipping lines or railway companies can
+  offer a through transport option, including collection from the supplier’s premises and
+  delivery from the port/terminus to the consignee’s premises.
+
+  No matter how the transport is organized, generally a through document is issued which
+  incorporates contractual conditions of carriage applying between the multimodal oper-
+  ator and the shipper/consignee. Normally these conditions include provisions dealing
+  with the carrier’s responsibility and liability in the event of loss or damage to the cargo.
+  Typically the provisions are worded so that if the sector of the journey where the loss or
+  damage occurred can be identiﬁed, and liability for that particular method of transport is
+  governed by an international convention or national law, then the carrier will be liable
+  according to those legal conditions. If the exact sector of the journey cannot be identiﬁed
+  or if there is no compulsory convention applicable, then the carrier can limit his liability
+  to an amount of (usually) ‘SDR 2’ or 2 US dollars per kilogram.
+
+  In today’s world, although some containers may move direct to consignee’s premises
+  by rail, almost all multimodal movements will involve some road transport. The road
+  haulier will, of course, be responsible for any loss or damage that occurs while the goods
+  are in his care. His primary liability is, however, to the multimodal transport operator who
+  retains overall responsibility for the safe completion of the whole journey.
+
+  Road haulier’s liability will be determined by the nature of the journey which he under-
+  takes. In Europe this will depend on whether the actual road sector (as distinct from the
+  total journey) is international or not. Movement from Madrid to Barcelona will be subject
+  to the Spanish law on road transport, LOTT, whereas the same consignment moved from
+  Madrid to Marseilles by road will be subject to CMR. As both these are compulsorily
+  applicable to the road journey, the liability of the multimodal carrier will be the same as
+  that of the haulier to whom he has sub-contracted the road carriage.
+
+  It must be stressed that the road haulier will be liable only if it can be proved that he
+  was responsible for the loss or damage. In many multimodal operations the haulier collects
+  a container which is already sealed and delivers the same to the consignee. Provided the
+  container remains sealed and intact the road haulier will normally be able to avoid liability
+  for any damage. The multimodal carrier (i.e. the company which issued the through trans-
+  port document) has no such luxury and will remain responsible for any loss or damage
+  which is established at destination, unless the cause comes within one of a limited num-
+  ber of exclusions and exceptions. Multimodal operators dearly require insurance cover
+  for these liabilities.
+
+14.7 GIT insurance protection
+
+14.7.1 Domestic liabilities
+
+In domestic road haulage operations, insurance cover against the risks of damage to or loss of goods car-
+ried by vehicles is essential in addition to the normal requirement for vehicle cover under national legislation
+(in the UK, e.g. under the Road Trafﬁc Act 1988). Motor vehicle insurance cover (whether covering only
+192 Carrier liability in intermodal transport
+
+minimum legal requirements, or more extensive cover such as comprehensive insurance against damage
+to the vehicle) does not provide for compensation in the case of loss or damage to the goods carried.
+
+  GIT insurance is normally arranged to cover such liabilities as are accepted by professional haulage
+operators in accordance with the published conditions under which they accept goods for carriage.
+Invariably such conditions of carriage stipulate a maximum value per tonne of gross weight or by cubic
+dimension (where capacity is relatively greater than weight) above which liability is not accepted with-
+out prior notiﬁcation and agreement; the RHA sets a limit of £1300 per tonne gross weight or 2.25 cubic
+metres, whichever is the greater. When goods carried are in excess of this level of value, it is incumbent
+on the operator to notify the insurance company accordingly so that additional cover for an appropriate
+amount can be arranged at an extra cost, which is normally passed on to the customer.
+
+  Own-account vehicle ﬂeet operators, while not carrying their own goods under conditions of carriage
+in the same way as professional hauliers, nevertheless need to arrange GIT cover for an amount appro-
+priate to the value of the goods normally carried. Again, additional cover can be arranged, where goods
+of higher value are carried on a one-off or occasional basis.
+
+14.7.2 International liabilities under CMR
+
+For professional road hauliers operating internationally under the terms of the CMR Convention, insur-
+ance cover for the goods carried is a more complex matter. They need to obtain additional cover sufﬁ-
+cient to meet the liabilities which they are bound to carry under the terms of the Convention (based on
+the current value of SDR) as described above. By comparison, current UK domestic GIT liabilities are
+normally rated at £1300 per tonne (i.e. RHA conditions of carriage level) while the current SDR conver-
+sion shows a CMR liability (which may vary on a daily basis) at around £10 400 per tonne (see p. 187
+for calculation).
+  15
+
+  Intermodal Documentation
+  and Authorizations
+
+It is a widely recognized fact that in transport operations, and especially in the case of operations that involve
+cross-border journeys; in other words, international transport journeys, it is essential to get the documenta-
+tion absolutely right. Failure to do so can result in a whole range of problems that may arise in the way of
+delays to consignments, penalties being imposed, additional costs incurred, even loads being rejected at the
+point of delivery. In this context, the term ‘documentation’ can be taken to include a wide range of commer-
+cial documents (such as consignment notes) and legal authorizations (such as community authorizations),
+and road haulage bilateral- and multilateral-journey permits depending, of course, on the journey destination.
+
+  In domestic transport operations, and particularly in domestic road haulage, a whole mishmash of con-
+signment notes of one form or another are used, ranging from printed, multipart, self-copying document
+sets to hand-scribbled collection and delivery instructions on scraps of paper. In general terms, these are
+all satisfactory in their own particular way, and are ﬁne when systems are operating without hiccup, but
+when it comes to tracing consignments and when handling loss or damage claims, scraps of paper are invari-
+ably found to be wanting. Such documents, if they can be called that, rarely make consignor instructions
+clear, delivery instructions are imprecise, other crucial details are omitted or incorrectly recorded, and
+then trying to determine who, or whose employee, scrawled a signature (if indeed anybody at all signed)
+for safe receipt of the goods in good condition can be a nightmare.
+
+  In international transport there is no room for such laxity, particularly since such operations – whether
+conducted by road transport, by rail transport in isolation, or by a combination of modes – are invariably
+undertaken in accordance with, and under the contract terms of, international conventions on road, rail
+or combined/multimodal transport, as the previous chapter in this book shows. In fact, as mentioned in
+the previous chapter, international road haulage operations are subject, automatically, to the provisions
+of the Convention Marchandises Routiers (CMR) Convention. This clearly deﬁnes the form of consign-
+ment note which must be used, and which, in fact, constitutes the contractual basis upon which the car-
+riage is undertaken. Similarly, for through-rail movements which commence in one state and travel to
+another state (both of which are party to the convention) a consignment note conforming to the require-
+ments of the CIM Rules of the COTIF Convention must be raised, conﬁrming both the making of the car-
+riage contract and its content. With the complexity introduced when both road and rail modes are combined
+in a single transport movement, and when the liability issues and documentation requirements are taken
+account of, there is an increasing movement towards the use of combined transport (CT) documents
+where the issuing carrier accepts responsibility for the whole operation as the combined or multimodal
+transport operator (i.e. the CTO or MTO).
+
+  This chapter examines the three main forms of consignment note in use, namely those of the CMR and
+the CIM Conventions (respectively; The Conventions on the Contract for the International Carriage of
+194 Intermodal documentation and authorizations
+
+Goods by Road and by Rail) and the CT document which forms the basis of the United Nations Conference
+on Trade And Development (UNCTAD)/International Chamber of Commerce (ICC) Rules on Multimodal
+Transport Documents. Mention is also made of the form of consignment note needed when undertaking
+international journeys by road on an own-account basis. This chapter also examines the legal provisions
+relating to road haulage issues such as community authorizations, cabotage, road haulage-journey per-
+mits, and various other transit documents and road toll Eurovignettes, for example.
+
+15.1 CMR consignment notes for international haulage journeys
+
+Road hauliers carrying goods for hire and reward on international journeys under the provisions of the
+Convention on the Contract for the International Carriage of Goods by Road (CMR) as described in the
+previous chapter must complete special CMR consignment notes. A copy of the consignment note (see
+Figure 15.1) must be carried on the vehicle to conﬁrm that the carriage is being conducted under a con-
+tract subject to the terms of the CMR Convention. Even in the absence of a CMR note, the carriage will
+still be subject, under international law, to the terms of the Convention although the carrier may not have
+been aware of this fact.
+
+  The consignment note is made out in four original copies, all of which should be signed by both the
+carrier and the consignor of the goods. One copy of the note (printed with red lines) is retained by the
+consignor; the second copy (printed with blue lines) is for the consignee; and the third copy (printed with
+green lines) is for the carrier and must travel forward with the vehicle and remain with it while ever the
+goods are on board. A fourth copy (printed with black lines) may be retained on ﬁle by the originator of
+the document. Where a consignment is divided to travel by different vehicles or by separate means, sep-
+arate CMR consignment notes should be made out for each individual part of the consignment. The fol-
+lowing details must be entered on CMR consignment notes:
+
+Box 1  Sender (name, address, country)
+Box 2  Customs reference/status
+Box 3  Sender’s/agent’s reference
+Box 4  Consignee (name, address, country)
+Box 5  Carrier (name, address, country)
+Box 6  Place and date of taking over the goods
+Box 7  Successive carriers
+Box 8  Place designated for delivery of goods
+Box 9  Marks and numbers, number and kind of packages, description of goods*
+Box 10  Gross weight (kilogram)
+Box 11  Volume (cubic metre)
+Box 12  Carriage charges
+Box 13  Sender’s instructions for customs
+Box 14  Reservations
+Box 15  Documents attached
+Box 16  Special agreements
+Box 17  Goods received
+Box 18  Signature of carrier
+Box 19  Company completing the note
+Box 20  Place, date, signature
+Box 21  Copies to:
+
+  (i) Sender
+  (ii) Consignee
+  (iii) Carrier
+  CMR consignment notes for international haulage journeys 195
+
+  LETTRE DE VOITURE INTERNATIONALE  CMR INTERNATIONAL CONSIGNMENT NOTE
+
+  Sender (Name, Address, Country Expéditeur (Nom, Addresse, Pays))  1 Senders/Agents References  Référence de Ièxpéditeur/de làgent  2/3
+
+193922
+
+  Consignee (name, Address, Country) Destinataire (Nom, Addresse, Pays)  4 Carrier (Name, Address, Country) Transporteur (Nom, Addresse, Pays)  5
+
+Approved by FTA/RHA/SITPRO UK 1981:1987 COPY 1 SENDER  Place & date of taking over the goods (place, country, date)  6 Successive Carriers Transporteurs successifs  7
+  COPY 2 CONSIGNEE
+  COPY 3 CARRIER  Lieu et date de la prise en charge des marchandises (lieu, pays, date)
+
+  Place designated for delivery of goods (place, country)  8
+  Lieu prévu pour la liveraison des marchandises (lieu, pays)
+  This carriage is subject, notwithstanding any clause to the contrary, to the
+  conversion on the Contract for the international Carriage of Goods by Road (CMR)
+  Ce transport est soumis nonobstant toute clause contraire à la Convention Relative au
+  Contract de Transport International de Marchandises par Route (CMR)
+
+*NB FOR  3
+DANGEROUS  Marks & Nos: No & Kind of Packages: Description of Goods* Marques et Nos: No et nature des colis; Désignation des marchandises* 9 Gross weigh (kg) 10 Volume (m )  11
+GOODS
+  Poids Brut (kg)  3
+INDICATE  Cabage (m )
+1. CORRECT
+TECHNICAL
+NAME (PROPER
+SHIPPING
+NAME)
+2. HAZARD
+CLASS
+3. UN NUMBER
+4. FLASHPOINT
+(IF ANY)
+IN°C.
+
+  Carriage Charges Prix de transport  12 Sender's Instructions for Customs, etc... Instructions de l´Expéditeur (optional) 13
+  Reservations Réserves
+  Goods Received/Marchandises Rescues  14 Documents attached Documents Annexés (optional)  15
+
+  Special agreements Conventions particuliéres (optional)  16
+
+  17 Signature of Carrier/Signature du transporteur Company completing this note Société émettrice  19
+
+  18
+
+  Place and Date; Signature  Lieu et date; Signature 20
+
+  Fig. 15.1 CMR consignment note used in international road haulage.
+196 Intermodal documentation and authorizations
+
+*For dangerous goods indicate:
+
+ (i) Correct technical name (i.e. proper shipping name);
+(ii) Hazchem class;
+(iii) UN number;
+(iv) Flashpoint (°C), if applicable.
+
+Where applicable, the consignment note must also contain the following particulars:
+
+1. A statement that trans-shipment to another vehicle is not allowed.
+2. The charges which the sender undertakes to pay.
+3. The amount of ‘cash on delivery’ charges.
+4. A declaration of the value of the goods and the amount representing special interest in delivery.
+5. The sender’s instructions to the carrier regarding insurance of the goods.
+6. The agreed time limit within which the carriage is to be carried out.
+7. A list of documents handed to the carrier.
+
+The consignor or consignee can also add to the consignment note any other particulars that may be use-
+ful to the road haulier.
+
+15.2 Consignment notes for own-account carriage by road
+
+Own-account operators are not required to use the CMR consignment note described above for
+international journeys. For most journeys a simple consignment note is all that is necessary to prove
+that the journey is on own account (i.e. that it is not for hire or reward). It should contain details of the
+following:
+
+1. The vehicle operator.
+2. His trade or business.
+3. The goods being carried.
+4. Their loading and delivery points.
+5. The vehicle being used (by registration number, etc.).
+6. The route to be followed.
+
+In the case of own-account trafﬁc to Germany a more detailed document is required containing the fol-
+lowing particulars:
+
+ 1. The place at which the document was made out and the date it was made out.
+ 2. The name and address of the own-account operator and an accurate description of the nature of his
+
+  business.
+ 3. If the goods are to be accepted from, or delivered to, any other person, the name and address of that
+
+  person, and an accurate description of the nature of his business.
+ 4. Details of the loading point or points.
+ 5. Details of the place or places at which the vehicle is to deliver.
+ 6. Details of the nature of the load (i.e. a description of the goods carried).
+ 7. The gross weight or other indication of the quantity of the load.
+ 8. The carrying capacity of the vehicle by weight.
+ 9. The index mark and registration number of the vehicle or, if these do not exist, the chassis number.
+10. The distance of the loaded journey in Germany in kilometres.
+  CIM consignment notes for international rail journeys 197
+
+11. The point or points at which the frontier is to be crossed.
+12. A signature of the operator or his authorized representative.
+
+15.3 CIM consignment notes for international rail journeys
+
+Under the CIM Uniform Rules for international carriage by rail, a contract of carriage comes into exist-
+ence as soon as the forwarding railway has accepted the goods for carriage together with the consign-
+ment note on which has placed its stamp or made an accounting machine entry, showing the date of
+acceptance. This procedure must be carried out immediately after all the goods to which the consignment
+note relates have been handed over for carriage and, where applicable, any charges due have been paid
+or a security deposited. Once the stamp has been afﬁxed or the accounting machine entry has been made,
+the consignment note becomes evidence of the making and content of the contract.
+
+  The International Union of Combined Road–Rail Transport Companies (UIRR) consignment notes
+(see Figure 15.2) are in duplicate, the second copy of which is stamped by the railway company indicat-
+ing receipt of the goods and the date of their acceptance for carriage. This copy does not have effect as
+the original note accompanying the goods which is handed over to the consignee on delivery, nor is it a
+bill of lading (indicating legal title to the goods). The duplicate copy of the consignment note must be
+produced by the consignor when making any loss or damage claim, if it was he who paid the carriage
+charges. If the charges were paid by the consignee then he must produce the actual consignment note
+when making a claim, if the note has been handed over to him. Without the duplicate copy or the original
+consignment note, or authenticated copies of these documents, making a claim and establishing a right
+to compensation for loss or damage can be extremely difﬁcult, if not impossible.
+
+  It is the duty of the consignor to present to the railway company with a properly completed consign-
+ment note or, where there is more than one consignment, a separate note for each consignment. A single
+consignment note may not normally relate to more than one wagon load. He must attach to the note any
+documents necessary for the completion of customs formalities which may be necessary prior to deliv-
+ery, it being the consignor’s duty (not that of the railway company) to ensure that these documents are
+sufﬁcient for the purpose and correct. The consignor may be held liable by the railway company for loss
+or damage resulting from the absence, insufﬁciency, irregularity, or inaccuracy of such documents. The
+railway company’s duty is to prescribe, for both petite vitesse and grande vitesse trafﬁc, a standard form
+of consignment note, which must include a duplicate for the consignor. The consignor is required to
+choose whichever of these notes is relevant to the service he requires. Only by agreement with the rail-
+way company (or companies) concerned may the consignor select grande vitesse over one part of the
+route and petite vitesse over the remainder. A simpliﬁed form of consignment note may be used in the
+case of certain trafﬁc, notably between adjacent countries.
+
+  Consignment notes must be printed in two or, where necessary, in three languages, at least one of
+which is one of the working languages of the Intergovernmental Organisation for International Carriage
+by Rail (OTIF), headquartered at Berne in Switzerland and whose working languages are French and
+German. The consignment note must contain the following information:
+
+1. The name of the destination station.
+2. The name and address of the consignee; only one individual or legal person may be shown as consignee.
+3. A description of the goods.
+4. The mass (i.e. weight), or comparable information.
+5. The number of packages and a description of the packing in the case of consignments in less than
+
+  wagon loads.
+6. The number of the wagon and, for privately owned wagons where the loading is the duty of the con-
+
+  signor, the tare weight.
+198 Intermodal documentation and authorizations
+
+  TEL.(1) 43 87 41 79 - TELEX 285 625 F  A No :  13 Référence / Referenz / Riferimento
+
+  10 Gare de départ / Versandbahnhof / Stazione di partenza 11
+  / Forwarding station
+
+  12 Déclaration / Erklärungen / Dichiarazioni / Declaration
+
+UIRR
+
+  C Expéditeur / Absender / Mittente / Consignor
+
+Contrat  B Date / Datum / Data
+
+  14 Destinataire / Empfänger / Destinatario / Consignee 15  CENTRE D'EXPLOITATION DE
+
+Vertrag  19 Wagon / Wagen / Vagone / Wagon No.
+
+Contratto
+
+Contract
+
+E Client à facturer / Rechnungsempfänger / Da fatturare a / Firm paying charges  Le transport est soumis à la CIM et aux conditions générales de
+  Ferroutage de I'UIRR et des sociétés de Ferroutage
+
+F Douane de départ / Versandzoll in  Es gelten die CIM und die allgemeinen Geschäftsbedingungen für den Internationalen
+  Dogana di partenza / Export customs  Huckepackehr (UIRR - Bedingungen) und der beteiligten Huckepackgesellschaffen
+  A dédouaner à / Zu verzollen in  Sono valide le norme della CIM e la condizioni generali dell'UIRR e delle società di ferroutage
+  Da sdoganare a / To be cleared through customs at  Transport is subject to the terms of business of the UIRR the piggy-back
+  companies involveld and to CIM conditions of carriage
+23 Tarifs et itinéraires demandés
+  Verlangte Tarife and Wegs
+  Tariffe e itinerari richiesti
+  Tariffs and routes required
+
+24 Gare destinataire  48  Exemplaire pour / Ausfertigung für / Copia per / Copy for.
+  Empfangsbahnhof  D
+  Stazione destinataria  BLANC  : Facturation  ROSE  : Transit
+  Destination station
+  JAUNE FONCÉ : Centre destinataire  VERT  : Expéditeur
+
+  BLEU  : Destinataire  JAUNE CLAIR : Souche
+
+Matériel / Kombisendung25 N° Identification / Kennzeichen No.  Tare / Tara  33  RID  oui / ja / si / yes 26 Poids / Gewicht
+  Genere / Piggy-packNo. Identificazione / Registration N°
+  AB  C  D  Net Kg  Kg  Peso / Weight Kg
+
+  Frigo Kg  Timbre en Compte
+  avec le Trésor
+  ϩ  Autorisation
+  ϩ  du
+  7 juillet 1969
+
+  J1  ϭ
+
+H Description de  Codification de la case / Erläuterung zu Feld 25
+  la marchandise  Codificazioni della casella 25 / Code to box 25
+  Bazeichnung
+  der Güter  25 A  25 C
+  Descrizione
+  della merce  Type / Art / Genere / Material  Plein-Vide / Voll-Leer
+  Description  Pieno-Vuoto / Landen-Empty
+  of Goods  0 Chàssis / Sattelanhänger horizontal
+  verladen / Telaio / Chassis  0 Vide / Leer
+32 Documents douaniers  Vuoto / Empty
+  Zolldokumente  1 Semi-Remorque / Sattelanhänger
+  Documenti doganali  Semirimochio / Semi-trailer  1 Plein / Voll
+  Customs documents  Véhicule articlulé / Sattelzug  Pieno / Laden
+  Plombage / Plombiert  Autoarticolato / Articulated vehicle
+  Piombatura / Seal  2 Emballages vides / Leereladegäte
+  2 ou / oder / od / or  Imballagi vuoti / Empty unit
+
+  Train routier / Lastzug  25 D
+
+J Aide aux constatations éventuelles / Hilfe fur evlt feststellungen  78  Autotreno / Road train  Jumelage / Zusammengehörigkeit
+  3 Carnion / Tracteur / 1.KW solo  Abbinamento / Mariage
+Eventuale constatazione di danni / Potential damages
+  Zugmaschine / Carnion / Tractor unit  1 1" / 1. / I / 1 st
+  Caisse Mobile / Wechselbehälter
+
+1 Déchiré / Gerissen  Ϫ  123  Cassa Mobile / Swap body :  2 2' / 2. / II / 2 nd
+  4 12.19 Յ
+Strappato / Ripped
+  5 9.51 Յ 12.18 m  3 3' / 3. / III / 3 rd
+2 Détaché / Lose  D  C  B  A  6 6.05 Յ 6.30 m
+  Staccato / Lose
+  7 6.31 Յ 7.15 m  K Observations / Vermerke / Osservazioni
+3 Bosselé / Eingebeult  H  G  F  E  8 7.16 Յ 8.30 m  Remarks
+  Ammaccato / Dented  Y 9 8.31 Յ 9.50 m
+
+4 Cassé / Gebrochen
+
+Rotto / Broken  PO  JI
+  RQ
+5 Troué / Durchlöchert  ϭ  ;  <  $
+
+Bucato / Perforated  TS  25 B
+
+6 Plié / Verbogen  Spécialisation / Auflare-Art
+  Z Specializzazioni / Specialised
+Piegato / Bent
+  0 Plateau / Offen
+7 Absent / Fehlend  X  W  V  U  Pianale / Flat
+
+Assente / Missing  1 Savoyarde / Mit Plane
+  Telonato / Tilt
+8 Hors d’état / Ausser Betrieb  N  M  L  K
+  Fuori uso / Out of order  2 Citerne / Tankaufbau
+  Cisterna / Tank
+9 Déformé / Verformt  456
+  3 Frigo / Thermosaufbau
+  Deformato / Out of shape  ϩ:  90  4 Fourgone/ Kofferaufbau
+0 Griffé / Zerkratzt
+  Furgonato / Box
+  Graffiato / Scratched  5 Silo
+
+L'ABSENCE D'INDICATION NE PROUVE PAS L'ÉTAT INTACT DU VÉHICULE LORS DE SA REMISE.  Destinataire / Empfànger
+  Destinatario / Consignee
+L Nom du chauffeur / Namen der Fahrer  M Signature de I'expéditeur / Unterschrift des Absenders
+  Nome dell'au tista / Name of Driver  Firma del mittente / Signature of Sender
+
+  O Nom du chauffeur / Name des Faheres
+  Nome dell'autista / Name of Driver
+
+  82 Pays-Land-Paese Gare-Bahnhof-Starione No
+
+P La société de ferroutage expéditrice  Q La société de ferroutage destinataire  Eliquetic
+  Versand Huckepack gesellschaft  Empfange-Huckepackgesellschaft  de contróle
+  La società di ferroutage mittente  La società di ferroutage destinataria
+  For warding piggy back company  Receiving piggy back company  Kontroll-  Exp,-Vers,-Sped,-Exp. No
+  Elikette
+  N Signature/ Unterschrift / Firma
+
+  Etichetta
+  di
+  controllo
+
+  83 Date d'expédition (jour-mois)  84 Arrivage-Ernpiang
+  Versanddatum (Tag-Monat)  Arrivo No
+
+  Date di
+  spedizione
+  (giorno-mese)
+
+  VOIR CONDITIONS GENERALSES AU VERSO
+
+  Fig. 15.2 UIRR contract/consignment note used combined road–rail transport.
+  Combined/multimodal transport documents 199
+
+7 A detailed list of the documents that are required by customs or other administrative authorities and
+  are attached to the consignment note or shown as held at the disposal of the railway at a named sta-
+  tion or at an ofﬁce of the customs or of any other authority.
+
+8. The name and address of the consignor. Only one individual or legal person may be shown as the
+  consignor. (If required, the consignor must add to his name and address his written, printed, or
+  stamped signature.)
+
+The consignment note must, where appropriate, contain all the other particulars provided for in the Uniform
+Rules, but it must not contain any other details unless they are required or allowed by the laws and regula-
+tions of a state and are not contrary to the Uniform Rules. Nevertheless, the consignor may add as informa-
+tion for the consignee, in the space set apart for the purpose, remarks relating to the consignment, without
+involving the railway in any obligation or liability. He may also stipulate the route to be followed, indicat-
+ing it by reference to frontier points or frontier stations (but only those which are open to trafﬁc between
+the forwarding and destination places concerned) and, where appropriate, to transit stations between rail-
+ways. The consignment note must not be replaced by other documents or supplemented by documents
+other than those prescribed or allowed by the Uniform Rules, the supplementary provisions or the tariffs.
+
+15.4 Combined/multimodal transport documents
+
+15.4.1 TCM Convention
+
+In 1969, a Convention covering combined transport operations (CTOs) was agreed, with the title TCM
+Convention. A further draft Convention was produced in 1971, and although never formally adopted, various
+bodies concerned with CT have followed its provisions. Under the Convention, CTOs could issue a document
+headed ‘Combined Transport Document Governed by the TCM Convention’. The Convention permitted this
+to be either a negotiable document, giving title to the goods, or a simple receipt for the direct delivery of the
+goods to a named consignee. When goods are carried in containers it is often impossible to ascertain at which
+point loss or damage has occurred. In such circumstances the Convention makes the CTO liable, by the issue
+of a CT document, for the loss or damage to the goods occurring while the goods are in his charge, subject to
+certain exceptions embodied in the TCM Convention. However, if it is known where the loss or damage
+occurred, liability is normally determined by the ‘network’ system of liability. Under this system, liability is
+determined in accordance with the appropriate convention or national law, or in certain exceptional circum-
+stances and with prior agreement, by the subcontract between the CTO and the actual carrier.
+
+  The principal contents of the Convention are as follows:
+
+1. Voluntary application of the Convention by the issue of a clearly identiﬁed document likely to be
+  accepted by all parties.
+
+2. It is the responsibility of the CTO to undertake (or arrange for others to undertake) the carriage, and
+  to accept liability throughout the whole CT. At any particular stage the CTO may be either a basic
+  carrier or an operator, arranging for others to provide the actual carriage. Thus, the document men-
+  tioned above may be the CT equivalent of either a shipping line or forwarders’ bill of lading.
+
+3. The information which should be contained in the CT document, leaving it to commercial practice
+  which party should complete the document. The Convention avoids the ambiguity arising from the
+  use of the word ‘containers’ by such expressions as ‘coverings in which goods are packed’ (i.e.
+  traditional packings) and ‘unit loads’ (i.e. palletized or containerized cargo).
+
+4. The responsibility of consignors and the CTO, respectively, for information given in the CT docu-
+  ment. They are now satisfactorily based on commercial and transport practices.
+
+5. Provision for the alternatives of a negotiable- or non-negotiable-type document, that is a document
+  of title enabling a holder to claim delivery of the goods or a simple receipt for the direct delivery of
+200 Intermodal documentation and authorizations
+
+  the goods to a named consignee. It also introduces a ‘fail–safe’ mechanism to govern a case where
+  a document does not state which of these it is.
+6. A ‘dangerous goods’ clause follows precisely the wording of certain existing conventions.
+7. Stipulation of the period in which notice of loss or damage to the goods should be given to the CTO,
+  including loss or damage not immediately apparent with, for example, containerized cargo.
+8. The CTO’s overall liability, and certain exemptions plus the limit of ﬁnancial liability of the CTO,
+  leaving the amount to be ﬁxed at a diplomatic conference.
+9. Establishment of the ‘network’ system of liability; it also deals with the problem of containerized
+  cargo being carried on deck without speciﬁc reference being made to this fact in the document.
+
+In the absence of acceptance of a formal Convention on CT documents, the ICC in Paris, in conjunction
+with the UNCTAD, has adopted a set of Uniform Rules based on the draft TCM Convention mentioned
+above and the so-called ‘Tokyo Rules’ of the Comité Maritime International (CMI). The UNCTAD/ICC
+Rules are now widely recognized and extensively used, their provisions being incorporated within such
+standard CT documents as the International Federation of Freight Forwarders (FIATA) combined bill of
+lading and the Baltic and International Maritime COnference (BIMCO) ‘Combidoc’. However, as the
+ICC has pointed out in its document; UNCTAD/ICC Rules for Multimodal Transport Documents, pub-
+lished by the ICC in Paris in January 1992, these rules cover only part of the normal contents of a multi-
+modal contract, leaving the CTO to add other clauses to suit his particular needs.
+
+15.5 Legal requirements for international road haulage journeys
+
+Despite increasing volumes of international freight being shipped in swap bodies and containers via
+combined road–rail systems, a substantial amount of UK–Europe trafﬁc is still carried door-to-door by
+heavy lorry, crossing the Channel either on the short-sea ferries or on Eurotunnel’s freight shuttle rolling
+motorway service. Whichever of these routes is chosen, the fact remains that a heavy lorry is carrying out
+an international journey and therefore is subject to a whole raft of legal provisions, particularly concern-
+ing authority to operate outside its country of registration.
+
+  For example, international road hauliers whether from the UK journeying into Europe or European
+hauliers entering Great Britain must, by law, comply with European Union (EU) community authoriza-
+tion and cabotage regulations and, if travelling outside the EU, must comply with requirements on road
+haulage permits issued under bilateral agreements, or with the permit requirements of Member States of
+the European Conference of Ministers of Transport (ECMT). Failure to comply fully with any of these
+requirements, as appropriate, could lead to severe delay of the vehicle by the relevant national enforce-
+ment authorities and, potentially, heavy ﬁnancial penalties could be imposed on the operator who could
+face loss or suspension of his right to operate international haulage services.
+
+15.6 Community authorization
+
+One of the most important legislative steps taken in opening the Single European Market (SEM) in 1993
+directly affected road transport by allowing the free movement of goods between Member States. The
+complex and restrictive system of quota allocations for bilateral permits formerly needed for most inter-
+national road haulage journeys within the EU, and for transit trafﬁc to and from certain non-EU member
+countries, was abolished. In its place, a new system of ‘community authorizations’ was implemented
+from 1 January 1993, enabling EU road hauliers to operate freely (i.e. to undertake as many journeys
+as they wish) between Member States, including three European Economic Area (EEA) states, namely
+Liechtenstein, Norway, and Iceland – not to be confused with the quite separate cabotage authorizations
+which are needed by hauliers wishing to collect and deliver goods within EU Member States other than their
+own (see below). International hauliers operating within the EU (apart from when operating domestically
+

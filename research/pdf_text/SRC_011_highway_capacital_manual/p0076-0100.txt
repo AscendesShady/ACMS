@@ -1,0 +1,1504 @@
+Highway Capacity Manual 2000
+
+RQ..................... Average queue storage ratio  RQ—Sped
+rq ...................... Queue at the end of effective red time, veh  Chapter 6 - Symbols
+RQ% .................. Percentile queue storage ratio
+RS .................... Reference sum flow rate, veh/h
+RT .................... Right turn
+RTOR.................. Right turn on red
+S ...................... 1. Average travel speed, km/h (7). 2. Pedestrian speed, m/min (18).
+
+  3. Average passenger-car travel speed, km/h (21, 23). 4. Space mean
+
+  speed of all vehicles in the weaving segment, km/h (24). 5. Space
+
+  mean speed of the ramp influence area, km/h (25). 6. Mean segment
+
+  speed, km/h (29). 7. Link speed, km/h (30).
+s ....................... 1. Saturation flow rate, veh/h or veh/h/ln. 2. Estimated standard
+
+  deviation for the sample (9). 3. Adjusted saturation flow per through
+
+  lane, veh/h (15).
+s .......................... second
+SA ..................... 1. Average travel speed of through vehicles in the segment or the entire
+
+  section, km/h (15). 2. Approach speed at a signalized intersection,
+
+  km/h (16). 3. Average pedestrian travel speed, m/s (18).
+Sats ................... Bicycle travel speed, km/h
+SB .................... Southbound approach or movement
+Sb ..................... Mean bicycle speed on the path, m/s
+sb ..................... Saturation flow rate of the bicycle lane, bicycles/h
+SC .......................Urban street class
+Sf ...................... 1. Speed for a given flow rate, km/h (7). 2. Free-flow speed of train,
+
+  km/h (27). 3. Segment free-flow speed, km/h (29).
+SFF ................... Free-flow speed of the freeway approaching the merge or diverge area,
+
+  km/h
+SFM................... Mean speed of traffic measured in the field, km/h
+SFR ................... The free-flow speed of the ramp at the point of the merge area, km/h
+SFT ...................... Free-flow speed of transit on facility, km/h
+Si .........................1. Pedestrian walking speed over Segment i, m-s (18). 2. Bicycle
+
+  running speed over Segment i, km/h (19). 3. Mean speed of Link i,
+
+  km/h (30).
+si ...................... Saturation flow rate, veh/h
+SL .......................Urban street section length, km
+sL ..................... Lane group saturation flow rate, veh/h
+sl .........................Adjusted saturation flow rate per lane, veh/h
+sLT .................... Filter saturation flow rate of permitted left turns, veh/h/ln
+SM ...................... Speed margin (constant)
+Smax.................. 1. Maximum speed reached, m/s (11). 2. Maximum speed expected in
+
+  a weaving segment, km/h (24).
+Smin .................. Minimum speed expected in a weaving segment, km/h
+sN ..................... Northbound approach service time to all-way stop-controlled
+
+  intersection, s
+Snw ................... Space mean speed of nonweaving vehicles in the weaving segment,
+
+  km/h
+SO..................... 1. Space mean speed of vehicles traveling in outer lanes, km/h (25).
+
+  2. Base bus speed, km/h (27).
+So ..................... 1. Optimum speed, km/h (7). 2. Link free-flow speed, km/h (30).
+so ..................... Base saturation flow rate, pc/h/ln
+Sp ..................... Average pedestrian speed, m/s; mean pedestrian speed on the path, m/s
+
+  (18)
+sp ..................... Protected phase departure rate, veh/s
+Sped .....................Pedestrian speed, m/min
+
+  6-11
+Highway Capacity Manual 2000
+
+Sprog—TL  Sprog ..................Platoon speed from upstream signalized intersection to two-way stop-
+  controlled intersection, m/s
+
+  SR..................... 1. Space mean speed, km/h (7). 2. Space mean speed of vehicles
+  within the ramp influence area, km/h (25).
+
+  ss ..................... Permitted phase departure rate, veh/s
+  ST ..................... 1. Time mean speed, km/h (7). 2. Actual speed of transit on facility
+
+  including all delays, km/h (29).
+  ST .................... Urban street section (or segment) travel time, s
+  St ...................... 1. Bus travel speed, km/h (27). 2. Train travel speed, km/h (27).
+  sTH.................... Saturation flow rate of through traffic, veh/h/ln
+  sW .................... 1. Westbound approach service time to all-way stop-controlled
+
+  intersection, s (17). 2. Space mean speed of weaving vehicles in the
+
+  weaving segment, km/h (24).
+  T ....................... 1. Duration of analysis period, h. 2. Total crosswalk occupancy time,
+
+  p-s (18). 3. Through movement (26). 4. Maximum number of trains
+
+  per hour (27). 5. Duration of analysis subperiod, h (29). 6. The
+
+  expected duration of the demand, h (30).
+  t ..........................1. Duration of initial queue in the analysis period, h (16). 2. Total
+
+  crossing time for pedestrians, s (18). 3. Mean trip time, min/p (29).
+  t' ....................... Length of time during which dispersing platoon passes the subject two-
+
+  way stop-controlled intersection
+  t3,LT ..................... Critical gap adjustment factor for intersection geometry (T-intersection)
+  ta ......................... 1. Average travel time over a length of a highway segment, h (7).
+
+  2. Travel time from the upstream signalized intersection to the subject
+
+  two-way stop-controlled intersection, s (17). 3. Passenger alighting
+
+  time, s/p (27).
+  tb ......................... Passenger boarding time, s/p
+  tbr ........................Operator and braking system reaction time, s
+  Tc ........................Time to clear initial queue present at the start of analysis period, s
+  tc ......................... 1. Single pedestrian critical gap, s (11, 18). 2. Vehicular critical gap
+
+  time at a two-way stop-controlled intersection, s (17). 3. Clearance
+
+  time between successive buses or trains, s (27).
+  tc,base .................. Base critical gap, s
+  tc,G ...................... Critical gap adjustment for approach grade, s
+  tc,HV .................... Critical gap adjustment for heavy vehicles, s
+  tc,T ......................Critical gap adjustment for each part of a two-stage gap acceptance
+
+  process
+  td ......................... Dwell time, s
+  tf ..........................Follow-up time, or the time span between the departure of one vehicle
+
+  from the minor street and the departure of the next vehicle, s
+  tf,base ................... Base follow-up time, s
+  tf,HV ..................... Follow-up time adjustment for heavy vehicles, s
+  tG ........................ Group critical gap, s
+  TH ....................... Through
+  Ti......................... Number of trips originating at Point i
+  ti ..........................1. Travel time of the ith vehicle to traverse the section, h (7). 2. Start-
+
+  up lost time for ith vehicle, s (7).
+  Tij ....................... Number of trips going from Origin Point i to Destination Point j
+  T i′j ....................... Estimated number of trips between Origin Zone i and Destination Zone
+
+  j (29)
+  Tj......................... Number of trips leaving Destination j
+  tjl ......................... Jerk limiting time, s
+  TL ....................... Total intersection lost time, s
+
+Chapter 6 - Symbols  6-12
+Highway Capacity Manual 2000
+
+tL .........................Lost time per phase or movement lost time, s  tL—vb
+TLC .....................Total lateral clearance, m  Chapter 6 - Symbols
+to .........................Time duration the detector is occupied by a passing vehicle, s
+toc........................ Door opening and closing time, s
+tom .......................Operating margin time, s
+Tp ..................... Number of person-trips using Point p
+tpf ..................... Passenger flow time, s/p
+tp,i........................Duration of the blocked period for either the through movement or the
+
+  protected left-turn movement to a two-way stop-controlled intersection,
+
+  s
+tQ...................... Time duration of queue, s
+TR ..................... Total running time on all segments, in a defined urban street section, s
+tr....................... Running time, s
+tr,0 .......................Base bus running time, min/km
+tr,1 .......................Bus running time losses, min/km
+TS .................... Available time-space, m2-s
+Ts ..................... Number of person-trips using Segment s
+ts ...................... 1. Service time, s (17). 2. Pedestrian start-up time, s (11, 18).
+TSc ................... Total time-space available for circulating pedestrians, m2-s
+TSE .....................Effective time-space, m2-s
+tst...................... Time to cover single-track section, s
+TStv .................. Time-space occupied by turning vehicles, m2-s
+TT ..................... Urban street field travel time, s
+Tt ...................... Platoon travel time from upstream signalized intersection to subject
+
+  two-way stop-controlled intersection, s
+tt ....................... Total travel time, s
+TT15 .................. Total travel time for all vehicles on the analysis segment during the
+
+  peak 15-min period, veh-h
+TTx ................... Total travel time for Segment x, veh-h
+TWLTL ................ Two-way left-turn lane
+Tx ........................ Number of person-trips using Segment x
+U .........................Movement at an upstream intersection
+u....................... Initial queue delay parameter
+Ua ..................... Utility function valued for Option a
+Uj...................... Utility function valued for Option j
+Utility ................. Measure of the traveler’s perceived value of an alternative
+V ...................... Hourly volume, veh/h or veh/h/ln
+v ....................... 1. Vehicular flow rate for peak 15-min period, veh/h or veh/h/ln.
+
+  2. Pedestrian unit flow rate, p/min/m (18). 3. Pedestrian volume on
+
+  the subject roadway, p/15-min (18). 4. Total bicycle flow rate, both
+
+  directions, bicycles/h (19). 5. Arrival flow rate at the downstream
+
+  intersection, veh/h (26). 6. Demand rate for current time period (29).
+v5 ..................... Anticipated approach flow rate in Lane 5 of the freeway, pc/h
+v12 .................... Flow rate entering Lanes 1 and 2 immediately upstream of the merge
+
+  influence area or at the beginning of the deceleration lane in the diverge
+
+  influence area, pc/h
+V15 .................... Volume during the peak 15 min of the peak hour, veh/15-min
+v15 .................... Peak 15-min pedestrian flow rate, p/15-min
+v(a)...................... Counted volume for Segment a
+v ′(a) ...................Estimated volume for Segment a
+vA ..................... Approach flow rate, veh/h
+va ..................... Approach flow rate at roundabouts, veh/h
+Vb ..................... Bicycle hourly volume, bicycles/h
+vb ........................1. Bicycle flow rate, bicycles/h (19). 2. Bus flow rate, buses/h (27).
+
+  6-13
+Highway Capacity Manual 2000
+
+vbic—vnw  vbic ...................... Approach bicycle volume, bicycles/h
+  vbicg .................... Bicycle flow rate during the green interval for 1 h, bicycles/h
+  vbo ......................Flow rate of bicycles in the opposing direction, bicycles/h
+  vbs....................... Flow rate of bicycles in the subject direction, bicycles/h
+  v/c ....................... Volume to capacity ratio
+  vc ........................Circulating flow rate at roundabouts, veh/h
+  VCL ...................... Critical lane flow rate, veh/h
+  vco....................... Number of pedestrians waiting to cross the minor street during one
+
+  cycle, p/cycle
+  vc,x ......................The conflicting flow rate for Movement x, that is, the total flow rate
+
+  conflicting with Movement x, veh/h or p/h
+  vD........................Total flow rate on the downstream adjacent ramp from the subject
+
+  ramp, pc/h
+  vd ........................Passenger-car equivalent flow rate for the peak 15-min period in the
+
+  analysis direction, pc/h
+  vdo ......................Number of pedestrians waiting to cross the major street during one
+
+  cycle, p/cycle
+
+  veh ...................... vehicle
+  vep ......................Flow rate in the separate lanes on minor street approach; used to
+
+  compute capacity for flared right-turn approach
+  Vf ........................Observed flow rate for the period when field data were obtained, veh/h
+  vF ........................Maximum total flow rate approaching a merge or diverge area on the
+
+  freeway, pc/h or pc/h/ln
+  vF4eff ................... Effective approaching flow rate for a four-lane freeway segment, pc/h
+  vFO ......................Maximum total flow rate departing from a merge or diverge area on the
+
+  freeway, pc/h
+  vg ........................Unadjusted flow rate for the lane group, veh/h
+  vg1 ......................Unadjusted flow rate on the single lane in the lane group with the
+
+  highest volume
+
+  VHD .................... Vehicle-hours of delay, h
+
+  VHT .................... Vehicle-hours of travel, veh-h
+  vi ......................... 1. Adjusted flow rate for Lane Group i, veh/h (10). 2. Incoming
+
+  pedestrian volume for the subject crosswalk, p/cycle (18). 3. Flow rate
+
+  for Movement i under base conditions during peak 15 min, pc/h (25).
+
+  4. Demand flow rate for Lane Group i, veh/h (26).
+  Viq..................... Total vehicles in queue for field control delay study
+  VkmT ................ Vehicle-kilometers of travel, veh-km
+  VkmT15.............. Total travel on the analysis segment during the peak 15-min period,
+
+  veh-km
+  VkmT60.............. Total travel on the analysis segment during the peak hour, veh-km
+  VkmTx ............... Total travel for Segment x, veh-km
+  VL ........................ Left-turn movement volume, veh/h
+  vL ..................... 1. Lane group flow rate per lane, veh/h (16). 2. Minor left-turn flow
+
+  rate, veh/h (17).
+  vl ...................... Lane group flow rate including initial queue, veh/h
+  vLS .................... Left-turn movement maximum sneakers, veh
+  VLT.................... Left volume per lane, veh/h/ln
+  vLT .................... Adjusted left-turn flow rate, veh/h
+  vm ..................... Maximum flow rate, veh/h or veh/h/ln
+  Vn ........................ Desired speed for Vehicle n
+  vn(t)..................... Speed of nth vehicle at time t
+  Vn–1 .................... Vehicle ahead of subject Vehicle n
+  vnw .................... Total nonweaving flow in the weaving segment, pc/h
+
+Chapter 6 - Symbols  6-14
+Highway Capacity Manual 2000
+
+Vo ..................... Demand volume for the full peak hour in the opposing direction of  Vo—WE
+  travel, veh/h  Chapter 6 - Symbols
+
+vo ..................... 1. Opposing flow rate for permitted left turns, veh/h (16). 2. Outgoing
+  pedestrian volume for the subject crosswalk, p/cycle (18). 3. Flow rate
+
+  of bicycles in the opposing direction, bicycles/h (19). 4. Passenger-car
+
+  equivalent flow rate for the peak 15-min period in the opposing
+
+  direction of travel, pc/h (20). 5. Sum of approach volumes on
+
+  nonsubject approaches, veh/h (30).
+vo1 .................... Larger of the two outer, or nonweaving, flows in the weaving segment,
+
+  pc/h
+vo2 .................... Smaller of the two outer, or nonweaving, flows in the weaving
+
+  segment, pc/h
+vOA ................... Average per lane demand related to flow in the outer lanes, pc/h/ln
+voe .................... Effective opposing flow rate, veh/h
+volc .................... Adjusted opposing flow rate per lane per cycle, veh
+vp ..................... 1. Pedestrian flow rate, p/s (11). 2. Pedestrian unit flow rate, p/min/m
+
+  (18). 3. Peak 15-min passenger-car equivalent flow rate, pc/h/ln (20,
+
+  21, 23, 24, 25).
+vped .....................1. Unit flow rate, p/min/m (11). 2. Conflicting pedestrian flow rate,
+
+  p/h (16).
+vpedg ...................Pedestrian flow rate during the green interval for 1 h, p/h
+vpo .......................Flow rate of pedestrians in the opposing direction, p/h
+vprog ....................Progressed flow rate from upstream signalized intersection to compute
+
+  the effect of upstream signals
+vps .......................Flow rate of pedestrians in the subject direction, p/h
+VR .......................Right-turn movement volume, veh/h
+VR .......................Volume ratio; the ratio of weaving to total flow in the weaving segment
+vR ........................ Total ramp flow rate, pc/h
+vr .........................Volume of right turns at a specific intersection, veh/h
+vR12 .....................Maximum total flow entering the ramp influence area, pc/h
+VRT...................... Right-turn volume per lane, veh/h/ln
+vs ........................Flow rate of bicycles in the subject direction, bicycles/h
+vSH ......................Flow rate in the shared lanes; used to compute capacity for flared
+
+  right-turn approach
+Vstop .................... Stopped vehicles count for field control delay study
+VT........................ Through movement volume, veh/h
+VTH...................... Through volume per lane, veh/h/ln
+Vtot ......................1. Total approach volume, veh/h (10). 2. Total vehicles arriving for
+
+  field control delay study (16).
+vtot .......................Total number of circulating pedestrians in one cycle, p/cycle
+vU........................Total flow rate on the adjacent upstream ramp from the subject ramp,
+
+  pc/h
+vw........................Total weaving flow in the weaving segment, pc/h
+vw1 ......................Larger of the two weaving flows in the weaving segment, pc/h
+vw2 ......................Smaller of the two weaving flows in the weaving segment, pc/h
+vx ........................The flow rate for Movement x for vehicular flows and pedestrian flows,
+
+  veh/h or p/h
+W.........................1. Average lane width, m. 2. Effective width of sidewalk, m (18).
+
+  2. West intersection (26).
+w .........................Lane width, m
+WALK + FDW .....Effective pedestrian green time at a signalized intersection, s
+WB ...................... Westbound approach or movement
+WDW...................Pedestrian Walk plus flashing Don’t Walk, s
+WE.......................Effective walkway width, m
+
+  6-15
+Highway Capacity Manual 2000
+
+Wnw— ϕ  Wnw..................... Weaving intensity factor for prediction of nonweaving speed
+  Wo....................... Sum of widths and shy distances from obstructions on the walkway, m
+  WT...................... Total walkway width, m
+  Ww ..................... Weaving intensity factor for prediction of weaving speed
+  X ......................... Volume to capacity ratio
+  x ..........................1. Mean arrival rate, veh/h (7). 2. Degree of utilization, or vhd/3600
+
+  (17).
+
+  x ........................The mean value of the observation
+  Xb ........................Volume to capacity ratio of bicycle lanes (also termed degree of
+
+  saturation)
+  Xc ........................Critical volume to capacity ratio for the intersection
+  Xcm......................Critical volume to capacity ratio for planning procedure
+  xi ......................... The ith observation of the value
+  xn(t)..................... Position of nth vehicle at time t
+  Xperm ................... Permitted phase volume to capacity ratio for leading or lagging left-turn
+
+  movement with protected-plus-permitted phase
+  Xprot ....................Protected phase volume to capacity ratio for leading or lagging left-turn
+
+  movement with protected-plus-permitted phase
+  Xu ........................Degree of saturation at upstream intersection
+  Y ......................... Yellow plus all-red change and clearance interval (intergreen), s
+  y .......................... Mean service rate, veh/h
+  Yc ........................Sum of flow ratios for critical lane groups
+  Yi ........................ Change and clearance interval time, s
+  z ..........................Subject approach volume divided by 1000, veh/h/1000
+  Za ........................The area under one tail of the normal curve beyond the acceptable
+
+  levels of probability that a queue will form at a bus stop (27), or failure
+
+  rate (29)
+
+  α ........................1. Platoon dispersion factor (17). 2. Constant to adjust degree of
+
+  conflict case probability to account for interdependence of headways
+
+  (17).
+  β ........................ Dispersion factor, or (1 + α )–1
+  ∆ ......................... Minimum arrival (intrabunch) headway, s
+  ∆t ........................ Time interval or duration of one time step
+  ∆v........................ Amount of change in speed
+
+  δt / δx .................. First derivative of travel time with respect to volume to capacity ratio
+
+  θij ........................Offset between through movements at Intersections i and j at
+  interchange ramp terminal, s
+
+  λ ........................Parameter for computing green extension time, veh/s
+  λ x ...................... Arrival rate for approach or Lane x
+
+  ξ ........................Maximum desirable error in the estimate of the mean
+
+  ϕ ........................Proportion of free (unbunched) vehicles
+
+Chapter 6 - Symbols  6-16
+  Highway Capacity Manual 2000
+
+CHAPTER 7
+
+TRAFFIC FLOW PARAMETERS
+
+  CONTENTS
+I. INTRODUCTION .......................................................................................................7-1
+II. UNINTERRUPTED FLOW.........................................................................................7-1
+
+  Volume and Flow Rate .......................................................................................7-1
+  Speed .................................................................................................................7-2
+  Density ...............................................................................................................7-4
+  Headway and Spacing .......................................................................................7-4
+  Relationships Among Basic Parameters ............................................................7-5
+III. INTERRUPTED FLOW..............................................................................................7-6
+  Signal Control .....................................................................................................7-7
+  Stop- or Yield-Controlled Intersections ...............................................................7-8
+  Speed .................................................................................................................7-9
+  Delay ..................................................................................................................7-9
+  Saturation Flow Rate and Lost Time ................................................................7-10
+  Queuing ............................................................................................................7-11
+IV. REFERENCES ........................................................................................................7-13
+
+  EXHIBITS
+
+Exhibit 7-1.  Typical Relationship Between Time Mean and Space Mean Speed .......... 7-3
+Exhibit 7-2.  Generalized Relationships Among Speed, Density, and Flow Rate
+  on Uninterrupted-Flow Facilities.................................................................. 7-5
+Exhibit 7-3.  Conditions at Traffic Interruption in an Approach Lane of a
+  Signalized Intersection ................................................................................7-7
+Exhibit 7-4.  Concept of Saturation Flow Rate and Lost Time ........................................7-8
+Exhibit 7-5.  Queuing Diagram for Signalized Intersection ...........................................7-12
+
+  7-i  Chapter 7 - Traffic Flow Parameters
+  Highway Capacity Manual 2000
+
+  I. INTRODUCTION
+  Three basic variables—volume or flow rate, speed, and density—can be used to
+describe traffic on any roadway. In this manual, volume or traffic flow is a parameter
+common to both uninterrupted- and interrupted-flow facilities, but speed and density
+apply primarily to uninterrupted flow. Some parameters related to flow rate, such as
+spacing and headway, also are used for both types of facilities; other parameters, such as
+saturation flow or gap, are specific to interrupted flow.
+
+II. UNINTERRUPTED FLOW
+
+VOLUME AND FLOW RATE
+
+  Volume and flow rate are two measures that quantify the amount of traffic passing a  Basic concepts for
+point on a lane or roadway during a given time interval. These terms are defined as  uninterrupted-flow facilities:
+follows:  volume, flow rate, speed,
+  density, headway, and
+  • Volume—the total number of vehicles that pass over a given point or section of a  capacity
+lane or roadway during a given time interval; volumes can be expressed in terms of
+annual, daily, hourly, or subhourly periods.  Calculating a peak-hour factor
+
+  • Flow rate—the equivalent hourly rate at which vehicles pass over a given point or
+section of a lane or roadway during a given time interval of less than 1 h, usually 15 min.
+Volume and flow are variables that quantify demand, that is, the number of vehicle
+occupants or drivers (usually expressed as the number of vehicles) who desire to use a
+given facility during a specific time period. Congestion can influence demand, and
+observed volumes sometimes reflect capacity constraints rather than true demand.
+
+  The distinction between volume and flow rate is important. Volume is the number of
+vehicles observed or predicted to pass a point during a time interval. Flow rate represents
+the number of vehicles passing a point during a time interval less than 1 h, but expressed
+as an equivalent hourly rate. A flow rate is the number of vehicles observed in a
+subhourly period, divided by the time (in hours) of the observation. For example, a
+volume of 100 vehicles observed in a 15-min period implies a flow rate of 100 veh/0.25 h
+or 400 veh/h.
+
+  Volume and flow rate can be illustrated by the volumes observed for four
+consecutive 15-min periods. The four counts are 1,000, 1,200, 1,100, and 1,000. The
+total volume for the hour is the sum of these counts, or 4,300 veh. The flow rate,
+however, varies for each 15-min period. During the 15-min period of maximum flow, the
+flow rate is 1,200 veh/0.25 h, or 4,800 veh/h. Note that 4,800 vehicles do not pass the
+observation point during the study hour, but they do pass at that rate for 15 min.
+
+  Consideration of peak flow rates is important in capacity analysis. If the capacity of
+the segment of highway studied is 4,500 veh/h, capacity would be exceeded during the
+peak 15-min period of flow, when vehicles arrive at a rate of 4,800 veh/h, even though
+volume is less than capacity during the full hour. This is a serious problem, because
+dissipating a breakdown of capacity can extend congestion for up to several hours.
+
+  Peak flow rates and hourly volumes produce the peak-hour factor (PHF), the ratio of
+total hourly volume to the peak flow rate within the hour, computed by Equation 7-1:
+
+PHF =  Hourly volume  (7-1)
+
+  Peak flow rate (within the hour)
+
+If 15-min periods are used, the PHF may be computed by Equation 7-2:
+
+  PHF = V  (7-2)
+  4 x V15
+
+  7-1  Chapter 7 - Traffic Flow Parameters
+
+  Introduction
+Highway Capacity Manual 2000
+
+  where  = peak-hour factor,
+  PHF  = hourly volume (veh/h), and
+  V  = volume during the peak 15 min of the peak hour (veh/15 min).
+  V15
+
+  When the PHF is known, it can convert a peak-hour volume to a peak flow rate, as in
+  Equation 7-3:
+
+  v= V  (7-3)
+  PHF
+
+  where  = flow rate for a peak 15-min period (veh/h),
+  v  = peak-hour volume (veh/h), and
+  V  = peak-hour factor.
+
+  PHF
+
+  Equation 7-3 does not need to be used to estimate peak flow rates if traffic counts are
+  available; however, the chosen count interval must identify the maximum 15-min flow
+  period. The rate then can be computed directly as 4 times the maximum 15-min count.
+  When flow rates in terms of vehicles are known, a conversion to a flow rate in terms of
+  passenger car equivalents (pce) can be computed using the PHF and the heavy vehicle
+  factor.
+
+  SPEED
+
+Speed parameters  Although traffic volumes provide a method of quantifying capacity values, speed (or
+  its reciprocal of travel time) is an important measure of the quality of the traffic service
+  provided to the motorist. It is an important measure of effectiveness defining levels of
+  service for many types of facilities, such as rural two-lane highways, urban streets,
+  freeway weaving segments, and others.
+
+  Speed is defined as a rate of motion expressed as distance per unit of time, generally
+  as kilometers per hour (km/h). In characterizing the speed of a traffic stream, a
+  representative value must be used, because a broad distribution of individual speeds is
+  observable in the traffic stream. In this manual, average travel speed is used as the speed
+  measure because it is easily computed from observation of individual vehicles within the
+  traffic stream and is the most statistically relevant measure in relationships with other
+  variables. Average travel speed is computed by dividing the length of the highway, street
+  section, or segment under consideration by the average travel time of the vehicles
+  traversing it. If travel times t1, t2, t3,..., tn (in hours) are measured for n vehicles
+  traversing a segment of length L, the average travel speed is computed using
+  Equation 7-4.
+
+  nL  L  L
+  S= n = n =  (7-4)
+  ∑ti 1 ∑ ti ta
+  i =1  n i =1
+
+  where
+
+  S = average travel speed (km/h),
+  L = length of the highway segment (km),
+  ti = travel time of the ith vehicle to traverse the section (h),
+  n = number of travel times observed, and
+
+  ta = 1 ∑n ti = average travel time over L (h).
+  n i =1
+
+  The travel times in this computation include stopped delays due to fixed interruptions or
+  traffic congestion. They are total travel times to traverse the defined roadway length.
+
+  Several different speed parameters can be applied to a traffic stream. These include
+  the following:
+
+Chapter 7 - Traffic Flow Parameters  7-2
+
+Uninterrupted Flow
+  Highway Capacity Manual 2000
+
+  Average running speed—A traffic stream measure based on the observation of  Average running speed
+vehicle travel times traversing a section of highway of known length. It is the length of  Average travel speed
+the segment divided by the average running time of vehicles to traverse the segment.  Space mean speed
+Running time includes only time that vehicles are in motion.  Time mean speed
+  Free-flow speed
+  Average travel speed—A traffic stream measure based on travel time observed on a
+known length of highway. It is the length of the segment divided by the average travel
+time of vehicles traversing the segment, including all stopped delay times. It is also a
+space mean speed.
+
+  Space mean speed—A statistical term denoting an average speed based on the
+average travel time of vehicles to traverse a segment of roadway. It is called a space
+mean speed because the average travel time weights the average to the time each vehicle
+spends in the defined roadway segment or space.
+
+  Time mean speed—The arithmetic average of speeds of vehicles observed passing a
+point on a highway; also referred to as the average spot speed. The individual speeds of
+vehicles passing a point are recorded and averaged arithmetically.
+
+  Free-flow speed—The average speed of vehicles on a given facility, measured under
+low-volume conditions, when drivers tend to drive at their desired speed and are not
+constrained by control delay.
+
+  For most of the procedures using speed as a measure of effectiveness in this manual,
+average travel speed is the defining parameter. For uninterrupted-flow facilities not
+operating at level of service (LOS) F, the average travel speed is equal to the average
+running speed.
+
+  Exhibit 7-1 shows a typical relationship between time mean and space mean speeds.
+Space mean speed is always less than time mean speed, but the difference decreases as
+the absolute value of speed increases. Based on the statistical analysis of observed data,
+this relationship is useful because time mean speeds often are easier to measure in the
+field than space mean speeds.
+
+  EXHIBIT 7-1. TYPICAL RELATIONSHIP BETWEEN TIME MEAN AND SPACE MEAN SPEED
+  100
+
+  80
+
+Space Mean Speed, SR (km/h)  – 3. 60 042
+
+  .026 * S T
+
+  40 S R= 1
+  20
+
+  0  0  20  40  60  80  100
+
+  Time Mean Speed, ST (km/h)
+
+Source: Drake et al. (1).
+
+  It is possible to calculate both time mean and space mean speeds from a sample of
+individual vehicle speeds. For example, three vehicles are recorded with speeds of 40,
+60, and 80 km/h. The time to traverse 1 km is 1.5 min, 1.0 min, and 0.75 min,
+respectively. The time mean speed is 60 km/h, calculated as (40 + 60 + 80)/3. The space
+mean speed is 55.4 km/h, calculated as (60)[3 ÷ (1.5 + 1.0 + 0.75)].
+
+  7-3  Chapter 7 - Traffic Flow Parameters
+
+  Uninterrupted Flow
+Highway Capacity Manual 2000
+
+  For capacity analysis, speeds are best measured by observing travel times over a
+  known length of highway. For uninterrupted-flow facilities operating in the range of
+  stable flow, the length may be as short as 50 to 100 m for ease of observation.
+
+  As measures of effectiveness, speed criteria must recognize driver expectations and
+  roadway function. For example, a driver expects a higher speed on a freeway than on an
+  urban street. Lower free-flow speeds are tolerable on a roadway with more severe
+  horizontal and vertical alignment, since drivers are not comfortable driving at high
+  speeds. LOS criteria reflect these expectations.
+
+  DENSITY
+
+  Density is the number of vehicles (or pedestrians) occupying a given length of a lane
+  or roadway at a particular instant. For the computations in this manual, density is
+  averaged over time and is usually expressed as vehicles per kilometer (veh/km) or
+  passenger cars per kilometer (pc/km).
+
+  Direct measurement of density in the field is difficult, requiring a vantage point for
+  photographing, videotaping, or observing significant lengths of highway. Density can be
+  computed, however, from the average travel speed and flow rate, which are measured
+  more easily. Equation 7-5 is used for undersaturated traffic conditions.
+
+Computing density  D = v
+  S
+  (7-5)
+
+  where
+
+  v = flow rate (veh/h),
+  S = average travel speed (km/h), and
+  D = density (veh/km).
+
+  A highway segment with a rate of flow of 1,000 veh/h and an average travel speed of
+  50 km/h would have a density of
+
+  D = 1000 veh/h = 20 veh/km
+  50 km/h
+
+  Density is a critical parameter for uninterrupted flow facilities because it characterizes the
+  quality of traffic operations. It describes the proximity of vehicles to one another and
+  reflects the freedom to maneuver within the traffic stream.
+
+  Roadway occupancy is frequently used as a surrogate for density in control systems
+  because it is easier to measure. Occupancy in space is the proportion of roadway length
+  covered by vehicles, and occupancy in time identifies the proportion of time a roadway
+  cross section is occupied by vehicles.
+
+  HEADWAY AND SPACING
+
+  Spacing is the distance between successive vehicles in a traffic stream, measured
+  from the same point on each vehicle (e.g., front bumper, rear axle, etc.). Headway is the
+  time between successive vehicles as they pass a point on a lane or roadway, also
+  measured from the same point on each vehicle.
+
+  These characteristics are microscopic, since they relate to individual pairs of vehicles
+  within the traffic stream. Within any traffic stream, both the spacing and the headway of
+  individual vehicles are distributed over a range of values, generally related to the speed of
+  the traffic stream and prevailing conditions. In the aggregate, these microscopic
+  parameters relate to the macroscopic flow parameters of density and flow rate.
+
+  Spacing is a distance, measured in meters. It can be determined directly by
+  measuring the distance between common points on successive vehicles at a particular
+  instant. This generally requires complex aerial photographic techniques, so that spacing
+  usually derives from other direct measurements. Headway, in contrast, can be easily
+  measured with stopwatch observations as vehicles pass a point on the roadway.
+
+Chapter 7 - Traffic Flow Parameters  7-4
+
+Uninterrupted Flow
+  Highway Capacity Manual 2000
+
+  The average vehicle spacing in a traffic stream is directly related to the density of the  Relationships among density,
+traffic stream, as determined by Equation 7-6.  speed and flow rate, and
+  headway and spacing
+  Density (veh/km) =  1000  (7-6)
+  Illustration of speed-density,
+  spacing (m/veh)  flow-density, and speed-flow
+  relationships
+The relationship between average spacing and average headway in a traffic stream
+depends on speed, as indicated in Equation 7-7.
+
+  Headway (s/veh) = spacing (m/veh)  (7-7)
+  speed (m/s)
+
+This relationship also holds for individual headways and spacings between pairs of
+vehicles. The speed is that of the second vehicle in a pair of vehicles. Flow rate is
+related to the average headway of the traffic stream with Equation 7-8.
+
+  Flow rate (veh/h) =  3600  (7-8)
+
+  headway (s/veh)
+
+RELATIONSHIPS AMONG BASIC PARAMETERS
+
+  Equation 7-5 cites the basic relationship among the three parameters, describing an
+uninterrupted traffic stream. Although the equation v = S * D algebraically allows for a
+given flow rate to occur in an infinite number of combinations of speed and density, there
+are additional relationships restricting the variety of flow conditions at a location.
+
+  Exhibit 7-2 shows a generalized representation of these relationships, which are the
+basis for the capacity analysis of uninterrupted-flow facilities. The flow-density function
+is placed directly below the speed-density relationship because of their common
+horizontal scales, and the speed-flow function is placed next to the speed-density
+relationship because of their common vertical scales. Speed is space mean speed.
+
+EXHIBIT 7-2. GENERALIZED RELATIONSHIPS AMONG SPEED, DENSITY, AND FLOW RATE ON
+  UNINTERRUPTED-FLOW FACILITIES
+
+  Sf  Sf
+
+Speed (km/h)  So  Speed (km/h)  So  Do
+
+  Dj
+
+  O  Do  Dj  O  vm
+
+  Density (veh/km/ln)  Flow (veh/h/ln)
+
+Flow (veh/h/ln)  So
+  vm Sf
+
+  Legend
+  Oversaturated flow
+
+  O  Do  Dj
+
+  Density (veh/km/ln)
+
+Source: Adapted from May (2).
+
+  The form of these functions depends on the prevailing traffic and roadway conditions
+on the segment under study and on its length in determining density. Although the
+diagrams in Exhibit 7-2 show continuous curves, it is unlikely that the full range of the
+functions would appear at any particular location. Survey data usually show
+discontinuities, with part of these curves not present (2).
+
+  7-5  Chapter 7 - Traffic Flow Parameters
+
+  Uninterrupted Flow
+Highway Capacity Manual 2000
+
+  The curves of Exhibit 7-2 illustrate several significant points. First, a zero flow rate
+  occurs under two different conditions. One is when there are no vehicles on the facility—
+  density is zero, and flow rate is zero. Speed is theoretical for this condition and would be
+  selected by the first driver (presumably at a high value). This speed is represented by Sf
+  in the graphs.
+
+  The second is when density becomes so high that all vehicles must stop—the speed
+  is zero, and the flow rate is zero, because there is no movement and vehicles cannot pass
+  a point on the roadway. The density at which all movement stops is called jam density,
+  denoted by Dj in the diagrams.
+
+  Between these two extreme points, the dynamics of traffic flow produce a
+  maximizing effect. As flow increases from zero, density also increases, since more
+  vehicles are on the roadway. When this happens, speed declines because of the
+  interaction of vehicles. This decline is negligible at low and medium densities and flow
+  rates. As density increases, these generalized curves suggest that speed decreases
+  significantly before capacity is achieved. Capacity is reached when the product of
+  density and speed results in the maximum flow rate. This condition is shown as optimum
+  speed So (often called critical speed), optimum density Do (sometimes referred to as
+  critical density), and maximum flow vm.
+
+  The slope of any ray line drawn from the origin of the speed-flow curve to any point
+  on the curve represents density, based on Equation 7-5. Similarly, a ray line in the flow-
+  density graph represents speed. As examples, Exhibit 7-2 shows the average free-flow
+  speed and speed at capacity, as well as optimum and jam densities. The three diagrams
+  are redundant, since if any one relationship is known, the other two are uniquely defined.
+  The speed-density function is used mostly for theoretical work; the other two are used in
+  this manual to define LOS.
+
+  As shown in Exhibit 7-2, any flow rate other than capacity can occur under two
+  different conditions, one with a high speed and low density and the other with high
+  density and low speed. The high-density, low-speed side of the curves represents
+  oversaturated flow. Sudden changes can occur in the state of traffic (i.e., in speed,
+  density, and flow rate). LOS A though E are defined on the low-density, high-speed side
+  of the curves, with the maximum-flow boundary of LOS E placed at capacity; by
+  contrast, LOS F, which describes oversaturated and queue discharge traffic, is represented
+  by the high-density, low-speed part of the functions.
+
+Basic concepts for  III. INTERRUPTED FLOW
+interrupted-flow facilities:
+intersection control,  Interrupted flow is more complex than uninterrupted flow because of the time
+saturation flow rate, lost  dimension involved in allocating space to conflicting traffic streams. On an interrupted-
+time, and queuing  flow facility, flow usually is dominated by points of fixed operation, such as traffic
+  signals and stop signs. These controls have different impacts on overall flow.
+
+  The operational state of traffic at an interrupted traffic-flow facility is defined by the
+  following measures:
+
+  • Volume and flow rate,
+  • Saturation flow and departure headways,
+  • Control variables (stop or signal control),
+  • Gaps available in the conflicting traffic streams, and
+  • Delay.
+  The discussion of volume and flow rate in the first part of this chapter also is applicable
+  to interrupted-flow facilities. An important additional point is the screenline at which the
+  traffic volume or flow rate is surveyed. Traditional intersection traffic counts yield only
+  the number of vehicles that have departed the intersection. The maximum flow is
+
+Chapter 7 - Traffic Flow Parameters  7-6
+
+Uninterrupted Flow
+  Highway Capacity Manual 2000
+
+therefore limited to the capacity of the facility. When demand exceeds capacity and a  Impact of signal control on
+queue is growing, it is advisable to survey traffic upstream, before the congestion.  maximum flow rate
+
+SIGNAL CONTROL
+
+  The most significant source of fixed interruptions on an interrupted-flow facility is
+the traffic signal. Traffic signals periodically halt flow in each movement or set of
+movements. Movement on a given set of lanes is possible only for a portion of the total
+time, because the signal prohibits movement during some periods. Only the time during
+which the signal is effectively green is available for movement. For example, if one set
+of lanes at a signalized intersection receives a 30-s effective green time out of a 90-s total
+cycle, only 30/90 or 1/3 of total time is available for movement on the subject lanes.
+Thus, only 20 minutes of each hour are available for flow on the lanes. If the lanes can
+accommodate a maximum flow rate of 1,500 veh/h with the signal green for a full hour,
+they could accommodate a total rate of flow of only 500 veh/h, since only one-third of
+each hour is available as green.
+
+  Because signal timings are subject to change, it is convenient to express capacities
+and service flow rates for signalized intersections in terms of vehicles per hour (veh/h).
+In the previous example, the maximum flow rate is 1,500 veh/h. This can be converted to
+a real-time value by multiplying it by the ratio of effective green time to the cycle length
+for the signal.
+
+  When the signal turns green, the dynamics of starting a stopped queue of vehicles
+must be considered. Exhibit 7-3 shows a queue of vehicles stopped at a signal. When the
+signal turns green, the queue begins to move. The headway between vehicles can be
+observed as the vehicles cross the stop line of the intersection. The first headway would
+be the elapsed time, in seconds, between the initiation of the green and the crossing of the
+front wheels of the first vehicle over the stop line. The second headway would be the
+elapsed time between the crossing of front wheels of the first and of the second vehicles
+over the stop line. Subsequent headways are measured similarly.
+
+  EXHIBIT 7-3. CONDITIONS AT TRAFFIC INTERRUPTION IN AN APPROACH LANE OF A
+  SIGNALIZED INTERSECTION
+
+n  4  3  2  1
+
+Vehicle in Queue  Departure in Headway  Legend
+  Stop line
+  1  h + t1
+  2  h + t2
+  3  h + t3
+  4  h + t4
+  .
+  .  h
+  .  h
+  .  .
+  .  .
+  n  .
+  h
+
+  The driver of the first vehicle in the queue must observe the signal change to green  Determining average
+and react to the change by releasing the brake and accelerating through the intersection.  headway
+The first headway will be comparatively long, as a result. The second vehicle in the
+queue follows a similar process, except that the reaction and acceleration period can
+occur while the first vehicle is beginning to move. The second vehicle will be moving
+
+  7-7  Chapter 7 - Traffic Flow Parameters
+
+  Interrupted Flow
+Highway Capacity Manual 2000  Headway, h (s)
+
+  faster than the first as it crosses the stop line, because it has length in which to accelerate.
+  Its headway will generally be less than that of the first vehicle. The third and fourth
+  vehicles follow a similar procedure, each achieving a slightly lower headway than the
+  preceding vehicle. After four vehicles, the effect of the start-up reaction and acceleration
+  has dissipated. Successive vehicles then move past the stop line at a steady speed until
+  the last vehicle in the original queue has passed. The headway for these vehicles will be
+  relatively constant.
+
+  In Exhibit 7-3, this constant average headway, denoted as h, is achieved after four
+  vehicles. The headways for the first four vehicles are, on the average, greater than h and
+  are expressed as h + ti, where ti is the incremental headway for the ith vehicle due to the
+  start-up reaction and acceleration. As i increases from 1 to 4, ti decreases.
+
+  Exhibit 7-4 shows a conceptual plot of headways. In this manual, for practical
+  reasons, the fifth vehicle following the beginning of a green is used as the starting point
+  for saturation flow measurements.
+
+  EXHIBIT 7-4. CONCEPT OF SATURATION FLOW RATE AND LOST TIME
+  h = saturation headway (s)
+  s = saturation flow rate = 3600/h (veh/h/ln)
+  ti = start-up lost time for ith vehicle
+
+  N
+
+  l1 = total start-up lost time = ∑ ti
+
+  i = 1
+
+  t1
+  t2
+  t3 t4
+
+  h
+
+  1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16
+  Vehicle in Queue
+
+  The value h represents the saturation headway, estimated as the constant average
+  headway between vehicles after the fourth vehicle in the queue and continuing until the
+  last vehicle that was in the queue at the beginning of the green has cleared the
+  intersection. The saturation headway is the amount of time that a vehicle in the stopped
+  queue takes to pass through a signalized intersection on the green signal, assuming that
+  there is a continuous queue of vehicles moving through the intersection.
+
+  In this manual, the definition of saturation headway differs for interrupted-flow and
+  uninterrupted-flow facilities. For interrupted flow, headway represents the time between
+  the passage of the front axle of one vehicle and of the front axle of the next vehicle over a
+  given cross section of the roadway; for uninterrupted-flow facilities, the vehicle reference
+  points usually are the front bumpers of the vehicles.
+
+  STOP- OR YIELD-CONTROLLED INTERSECTIONS
+
+  The driver on a minor street or turning left from the major street of a two-way stop-
+  controlled intersection faces a specific task: selecting a gap in the priority flow through
+  which to execute the desired movement. The term gap refers to the space between the
+
+Chapter 7 - Traffic Flow Parameters  7-8
+
+Interrupted Flow
+  Highway Capacity Manual 2000
+
+vehicles on the roadway that has the right-of-way at an unsignalized intersection. Gap  Critical gap and gap
+acceptance describes the completion of a vehicle’s movement into a gap.  acceptance
+
+  The capacity of a minor street approach depends on two factors:  Control delay
+  • The distribution of available gaps in the major-street traffic stream, and
+  • The gap sizes required by minor-street drivers to execute their desired movements.
+  The distribution of available gaps in the major-street traffic stream depends on the
+total volume on the street, its directional distribution, the number of lanes on the major
+street, and the degree and type of platooning in the traffic stream. The gap sizes required
+by the minor-street drivers depend on the type of maneuver (left, through, right), the
+number of lanes on the major street, the speed of major-street traffic, sight distances, the
+length of time the minor-street vehicle has been waiting, and driver characteristics
+(eyesight, reaction time, age, etc.). The critical gap is the minimum time interval between
+the front bumpers of two successive vehicles in the major traffic stream that will allow
+the entry of one minor-street vehicle. When more than one minor-street vehicle uses one
+major-street gap, the time headway between the two minor-street vehicles is called
+follow-up time. In general, the follow-up time is shorter than the critical gap.
+Roundabouts operate similarly to two-way stop-controlled intersections. In roundabouts,
+however, entering drivers scan only one stream of traffic—the circulating stream—for an
+acceptable gap.
+  At an all-way stop-controlled intersection, all drivers must come to a complete stop.
+The decision to proceed is based in part on the rules of the road, which suggest that the
+driver on the right has the right-of-way; it also is a function of the traffic condition on the
+other approaches. The departure headway for the subject approach is defined as the time
+between the departure of one vehicle and that of the next behind it. A departure headway
+is considered a saturation headway if the second vehicle stops behind the first at the stop
+line. If there is traffic on one approach only, vehicles can depart as rapidly as the drivers
+can safely accelerate into and clear the intersection. If traffic is present on other
+approaches, the saturation headway on the subject approach will increase, depending on
+the degree of conflict between vehicles.
+  As at signalized intersections, the front axles of two consecutive vehicles are the
+reference points for determining the saturation headways of the vehicles departing from
+the stop line of two-way and all-way stop-controlled intersection approaches. In
+measuring the unobstructed flow of vehicles on the major roadway at a two-way stop-
+controlled intersection, the reference points normally are the front bumpers.
+
+SPEED
+
+  For interrupted-flow conditions, delay rather than speed is the primary measure of
+operations. However, speed measures similar to those for uninterrupted flow are helpful
+in determining the added travel time due to deceleration, movement in queues, and
+acceleration of vehicles passing through an intersection.
+
+DELAY
+
+  Delay is a critical performance measure on interrupted-flow facilities. There are
+several types of delay, but in this manual, control delay is the principal service measure
+for evaluating LOS at signalized and unsignalized intersections. Although the definition
+of control delay is the same for signalized and unsignalized intersections, its application,
+including LOS threshold values, differs.
+
+  Control delay involves movements at slower speeds and stops on intersection
+approaches, as vehicles move up in the queue or slow down upstream of an intersection.
+Drivers frequently reduce speed when a downstream signal is red or there is a queue at
+the downstream intersection approach. Control delay requires the determination of a
+realistic average speed for each roadway segment. Any estimate of the average travel
+speed on urban streets implies the effects of control delay.
+
+7-9  Chapter 7 - Traffic Flow Parameters
+
+  Interrupted Flow
+Highway Capacity Manual 2000
+
+  At two-way stop-controlled and all-way stop-controlled intersections, control delay
+  is the total elapsed time from a vehicle joining the queue until its departure from the
+  stopped position at the head of the queue. The control delay also includes the time
+  required to decelerate to a stop and to accelerate to the free-flow speed.
+
+  SATURATION FLOW RATE AND LOST TIME
+
+  Saturation flow rate is defined as the flow rate per lane at which vehicles can pass
+  through a signalized intersection. By definition, it is computed by Equation 7-9:
+
+Computing saturation  s = 3600  (7-9)
+flow rate and lost time  h
+
+  where
+
+  s = saturation flow rate (veh/h), and
+  h = saturation headway (s).
+
+  The saturation flow rate represents the number of vehicles per hour per lane that can
+  pass through a signalized intersection if the green signal was available for the full hour,
+  the flow of vehicles was never halted, and there were no large headways.
+
+  Each time a flow is stopped, it must start again, with the first four vehicles
+  experiencing the start-up reaction and acceleration headways shown in Exhibit 7-3. In
+  this exhibit, the first four vehicles in the queue encounter headways longer than the
+  saturation headway, h. The increments, ti, are called start-up lost times. The total start-
+  up lost time for the vehicles is the sum of the increments, computed using Equation 7-10.
+
+  N  (7-10)
+
+  l1 = ∑ ti
+
+  i =1
+
+  where
+
+  l1 = total start-up lost time (s),
+  ti = lost time for ith vehicle in queue (s), and
+
+  N = last vehicle in queue.
+
+  Each stop of a stream of vehicles is another source of lost time. When one stream of
+  vehicles stops, safety requires some clearance time before a conflicting stream of traffic is
+  allowed to enter the intersection. This interval when no vehicles use the intersection is
+  called clearance lost time, l2.
+
+  In practice, signal cycles provide for this clearance through change intervals, which
+  can include yellow or all-red indications or both. Drivers generally cannot observe this
+  entire interval but can use the intersection during some portion of it. The clearance lost
+  time, l2, is the portion of this change interval not used by drivers.
+
+  The relationship between saturation flow rate and lost times is a critical one. For any
+  given lane or movement, vehicles use the intersection at the saturation flow rate for a
+  period equal to the available green time plus the change interval minus the start-up and
+  clearance lost times. Because lost time is experienced with each start and stop of a
+  movement, the total amount of time lost over an hour is related to the signal timing. For
+  instance, if a signal has a 60-s cycle length, it will start and stop each movement 60 times
+  per hour, and the total lost time per movement will be 60(l1 + l2).
+
+  Lost time affects capacity and delay. It might appear that the capacity of an
+  intersection would increase with increased cycle length. But this is offset somewhat by
+  the observation that the saturation headway, h, can increase if the length of a continuous
+  green indication increases. Other intersection features, such as turning lanes, also can
+  offset the reduction in capacity due to short cycles. Longer cycle lengths increase the
+  number of vehicles in the queues and can cause the left-turn lane to overflow, reducing
+  capacity by blocking the through-lanes.
+
+Chapter 7 - Traffic Flow Parameters  7-10
+Interrupted Flow
+  Highway Capacity Manual 2000
+
+  As cycle length is increased, the control delay per vehicle also tends to increase,
+assuming that capacity is adequate. Delay, however, is a complex variable affected by
+many other variables besides cycle length.
+
+QUEUING
+
+  When demand exceeds capacity at an approach to a signalized intersection at the start
+of an effective green period, a queue forms (2). Because of the arrival of vehicles during
+the red phases, some vehicles might not clear the intersection during the given green
+phase. A queue also forms when arrivals wait at a service area. The service can be the
+arrival of an accepted gap in a major-street traffic stream, the payment of tolls at a toll
+booth or of parking fees at a parking garage, and so forth. Back of queue refers to the
+number of vehicles queued at an approach to a signalized intersection due to the arrival
+patterns of vehicles and to vehicles unable to clear the intersection during a given green
+phase (i.e., overflow). Most queuing theory relates to undersaturated conditions.
+
+  To predict the characteristics of a queuing system mathematically, it is necessary to
+specify the following system characteristics and parameters (3):
+
+  • Arrival pattern characteristics, including the average rate of arrival and the
+statistical distribution of time between arrivals;
+
+  • Service facility characteristics, including service-time average rates and the
+distribution and number of customers that can be served simultaneously or the number of
+channels available; and
+
+  • Queue discipline characteristics, such as the means of selecting which customer is
+next.
+
+  In oversaturated queues, the arrival rate is higher than the service rate; in
+undersaturated queues, the arrival rate is less than the service rate. The length of an
+undersaturated queue can vary but will reach a steady state with the arrival of vehicles.
+By contrast, the length of an oversaturated queue never will reach a steady state but will
+increase with the arrival of vehicles.
+
+  An undersaturated queue at a signalized intersection is shown in Exhibit 7-5 (2). The
+exhibit assumes queuing on one approach with two signal phases. In each cycle, the
+arrival demand is less than the capacity of the approach; no vehicles wait longer than one
+cycle; and there is no overflow from one cycle to the next. Exhibit 7-5(a) specifies the
+arrival rate, v, in vehicles per hour and is constant for the study period. The service rate,
+s, has two states: zero when the signal is effectively red and up to saturation flow rate
+when the signal is effectively green. Note that the service rate is equal to the saturation
+flow rate only when there is a queue.
+
+  Exhibit 7-5(b) diagrams cumulative vehicles over time. The horizontal line, v, in
+Exhibit 7-5(a) becomes a solid sloping line in Exhibit 7-5(b), with the slope equal to the
+flow rate. Thus the arrival rate goes through the origin and slopes up to the right with a
+slope equal to the arrival rate. Transferring the service rate from Exhibit 7-5(a) to Exhibit
+7-5(b) creates a different graph. During the red period, the service rate is zero, so the
+service is shown as a horizontal line in the lower diagram. At the start of the green
+period, a queue is present, and the service rate is equal to the saturation flow rate. This
+forms a series of triangles, with the cumulative arrival line as the top side of each triangle
+and the cumulative service line forming the other two sides.
+
+  Each triangle represents one cycle length and can be analyzed to calculate the time
+duration of the queue. It starts at the beginning of the red period and continues until the
+queue dissipates. Its value varies between the effective red time and the cycle length, and
+it is computed using Equation 7-11.
+
+  vtQ = s(tQ − r ) or tQ = sr  (7-11)
+  (s − v )
+
+where
+  tQ = time duration of queue (s),
+
+  7-11  Chapter 7 - Traffic Flow Parameters
+  Interrupted Flow
+Highway Capacity Manual 2000
+
+  v = mean arrival rate (veh/h),
+  s = mean service rate (veh/h), and
+  r = effective red time (s).
+
+  EXHIBIT 7-5. QUEUING DIAGRAM FOR SIGNALIZED INTERSECTION
+  (a)
+
+  s
+
+  Service rate (veh/h)  v
+
+  0  Green  Red Green  Red Green
+  Red  Time
+
+  (b)
+
+  Cumulative Vehicles  Arrivals
+
+  0  v tQ Departures  Green
+  Red  s
+
+  Green Red Green Red
+  Time
+
+  The queue length is represented by the vertical distance through the triangle. At the
+  beginning of red, the queue length is zero and increases to its maximum value at the end
+  of the red period. Then the queue length decreases until the arrival line intersects the
+  service line, when the queue length equals zero. Three queue lengths can be derived
+  using the relationship shown in Exhibit 7-5: the maximum queue length, the average
+  queue length while queue is present, and the average queue length; these are shown in
+  Equations 7-12, 7-13, and 7-14, respectively.
+
+Assumptions of queue  vr  (7-12)
+length  QM = 3600
+
+  vr  (7-13)
+  QQ = 7200
+
+  Q = QMtQ  (7-14)
+  2C
+  where
+  QM  = maximum queue length (veh),
+  QQ  = average queue length while queue is present (veh),
+  Q  = average queue length (veh),
+  = mean arrival rate (veh/h),
+  v  = effective red time (s),
+  = cycle length (s), and
+  r  = time duration of queue (s).
+
+  C
+  tQ
+
+Chapter 7 - Traffic Flow Parameters  7-12
+Interrupted Flow
+  Highway Capacity Manual 2000
+
+  The queuing characteristics can be modeled by varying the arrival rate, service rate,
+and timing plan. In real-life situations, arrival rates and service rates are constantly
+changing. These variations complicate the model, but the basic relationships do not
+change. Queue length can be estimated for planning purposes by assuming a storage
+density (the average density of vehicles in the queue) and then using the relationship
+shown in Equation 7-15 (4). Note that demand must be greater than capacity to use this
+relationship.
+
+  QL = T * (v − c )  (7-15)
+  N *ds
+
+where  = queue length (km),
+  QL  = duration of analysis period (h),
+  T  = demand (veh/h),
+  v  = capacity (veh/h),
+  c  = number of lanes, and
+  N  = storage density (veh/km/ln).
+  ds
+
+  IV. REFERENCES
+
+1. Drake, J. S., J. L. Schofer, and A. D. May, Jr. A Statistical Analysis of Speed-
+  Density Hypotheses. In Highway Research Record 154, TRB, National Research
+  Council, Washington, D.C., 1967, pp. 53–87.
+
+2. May, A. D., Jr. Traffic Flow Fundamentals. Prentice-Hall, Englewood Cliffs,
+  N.J., 1990.
+
+3. Gerlough, D., and M. Huber. Special Report 165: Traffic Flow Theory, A
+  Monograph. TRB, National Research Council, Washington, D.C., 1975.
+
+4. Dowling, R. G., W. Kittelson, J. Zegeer, and A. Skabardonis. NCHRP Report
+  387: Planning Techniques to Estimate Speeds and Service Volumes for Planning
+  Applications. TRB, National Research Council, Washington, D.C., 1997.
+
+  7-13  Chapter 7 - Traffic Flow Parameters
+  Interrupted Flow
+  Highway Capacity Manual 2000
+
+CHAPTER 8
+
+TRAFFIC CHARACTERISTICS
+
+  CONTENTS
+
+I. VEHICLE AND HUMAN FACTORS ..........................................................................8-1
+  Motor Vehicle Characteristics .............................................................................8-1
+  Driver Characteristics .........................................................................................8-1
+  Pedestrian Characteristics .................................................................................8-2
+  Bicycle Characteristics .......................................................................................8-2
+  Bus and Light Rail Characteristics .....................................................................8-2
+
+II. DEMAND AND VOLUME ..........................................................................................8-2
+  Seasonal and Monthly Variations .......................................................................8-3
+  Daily Variations ..................................................................................................8-4
+  Hourly Variations ................................................................................................8-4
+  Peak Hour and Analysis Hour ............................................................................8-6
+  Subhourly Variations in Flow ..............................................................................8-9
+  Temporal Distributions .......................................................................................8-9
+  Spatial Distributions .........................................................................................8-10
+  Directional Distribution ..............................................................................8-11
+  Lane Distribution .......................................................................................8-12
+
+III. MEASURED AND OBSERVED VALUES ...............................................................8-13
+  Volumes and Flow Rates .................................................................................8-17
+  Freeways ...................................................................................................8-17
+  Multilane Highways ...................................................................................8-17
+  Rural Two-Way, Two-Lane Highways .......................................................8-20
+  Urban Streets ............................................................................................8-21
+  Speed ...............................................................................................................8-21
+  Trends .......................................................................................................8-21
+  Speed Variation by Time of Day ...............................................................8-23
+  Headway Distributions and Random Flow .......................................................8-25
+  Saturation Flow and Lost Time at Signalized Intersections .............................8-26
+  Saturation Flow at Unsignalized Intersections .................................................8-28
+  Bus and Passenger Flows ...............................................................................8-28
+
+IV. REFERENCES ........................................................................................................8-30
+
+  EXHIBITS
+
+Exhibit 8-1.  Motor Vehicle Weight and Power ..............................................................8-1
+Exhibit 8-2.  Examples of Monthly Traffic Volume Variations for a Freeway .................8-3
+Exhibit 8-3.  Examples of Monthly Traffic Volume Variations for the Same
+  Interstate Highway (Rural and Urban Segments) ...................................... 8-4
+Exhibit 8-4.  Examples of Daily Traffic Variation by Type of Route ...............................8-5
+Exhibit 8-5.  Daily Variation in Traffic by Vehicle Type for Right Lane of an
+  Urban Freeway ..........................................................................................8-5
+Exhibit 8-6.  Examples of Hourly Traffic Variations for Rural Routes ............................ 8-6
+Exhibit 8-7.  Repeatability of Hourly Traffic Variations for Urban Streets ...................... 8-7
+Exhibit 8-8.  Ranked Hourly Volumes ............................................................................8-8
+Exhibit 8-9.  Typical K-Factors .......................................................................................8-9
+Exhibit 8-10.  Relationship Between Short-Term and Hourly Flows .............................. 8-10
+Exhibit 8-11.  Directional Distribution Characteristics .................................................... 8-11
+
+  8-i  Chapter 8 - Traffic Characteristics
+Highway Capacity Manual 2000
+
+  Exhibit 8-12.  Observed Values of K and D on Selected Freeways
+  and Expressways ....................................................................................8-12
+  Exhibit 8-13.  Lane Distribution by Vehicle Type ........................................................... 8-13
+  Exhibit 8-14.  Motor Vehicle Registration ......................................................................8-14
+  Exhibit 8-15.  Rural Interstate Travel by Vehicle Type .................................................. 8-15
+  Exhibit 8-16.  Annual Vehicle Kilometers of Travel ....................................................... 8-16
+  Exhibit 8-17.  Percent Distribution of Traffic by Vehicle Class ......................................8-16
+  Exhibit 8-18.  Maximum Annual Average Daily Traffic Reported on Selected
+  Interstate Routes (1990) ..........................................................................8-18
+  Exhibit 8-19.  Reported Maximum Hourly One-Way Volumes on
+  Selected Freeways ..................................................................................8-19
+  Exhibit 8-20.  Reported Maximum Lane Volumes on Selected Freeways .................... 8-20
+  Exhibit 8-21.  Reported Maximum One-Way Volumes for Selected
+  Multilane Highways ................................................................................. 8-20
+  Exhibit 8-22.  Reported Maximum Volumes on Selected Two-Lane
+  Rural Highways ....................................................................................... 8-21
+  Exhibit 8-23.  Reported Maximum Directional Volumes on Selected
+  Urban Streets ..........................................................................................8-22
+  Exhibit 8-24.  Speed Trends on Rural Interstate Highways .......................................... 8-22
+  Exhibit 8-25.  National Spot Speed Trends for 90-km/h Facilities ................................. 8-23
+  Exhibit 8-26.  Speed and Volume Variations by Hour of Day (Weekdays) .................... 8-24
+  Exhibit 8-27.  Speed and Volume Variations by Hour of Day (Saturdays) .................... 8-25
+  Exhibit 8-28.  Time Headway Distribution for Long Island Expressway ........................ 8-26
+  Exhibit 8-29.  Observed Saturation Flow Rates at Signalized Intersections ................. 8-27
+  Exhibit 8-30.  Research Results on Queue Discharge Headways ................................ 8-28
+  Exhibit 8-31.  Observed Peak-Direction, Peak-Hour Passenger Volumes on U.S.
+  and Canadian Bus Transit Routes—1995 Data ...................................... 8-29
+  Exhibit 8-32.  Observed U.S. and Canadian Light Rail Transit Passenger
+  Volumes, Peak Hour at the Peak Point for Selected Lines
+  (1993–1996 Data) ................................................................................... 8-30
+
+Chapter 8- Traffic Characteristics  8-ii
+  Highway Capacity Manual 2000
+
+  I. VEHICLE AND HUMAN FACTORS
+
+  Three major components affect driving: the vehicle, the roadway/environment, and
+the driver. In this chapter, vehicle and driver characteristics and how they are affected by
+the environment and physical properties of the roadway are identified. The
+characteristics and performance of motor vehicles play a major role in defining the
+fundamentals of traffic flow and capacity. Human behavior also contributes to the
+characteristics of traffic flow on a facility.
+
+MOTOR VEHICLE CHARACTERISTICS  Characteristics of various
+  roadway users
+  This section summarizes the operating characteristics of motor vehicles that should
+be considered in analyzing a facility. The major considerations are vehicle types and
+dimensions, turning radii and offtracking, resistance to motion, power requirements,
+acceleration performance, and deceleration performance. Motor vehicles include
+passenger cars, trucks, vans, buses, recreational vehicles, and motorcycles. These
+vehicles have unique weight, length, size, and operational characteristics. The forces that
+must be overcome by motor vehicles if they are to move are rolling, air, grade, curve, and
+inertial resistance. The weight/power ratios are useful for indicating the overall
+performance in overcoming these forces. Exhibit 8-1 summarizes typical motor vehicle
+weight and power for different vehicle types.
+
+  EXHIBIT 8-1. MOTOR VEHICLE WEIGHT AND POWER
+
+  Motor Vehicles  Empty Weight with  Nominal Power (kW)  Weight-to-Power Ratio
+  Driver (kg)  (kg/kW)
+Passenger car  78
+Large pickup truck  1540  130  19.7
+Two-axle, six-tire truck  1905  130  14.7
+Tractor-semitrailer  4535  242  34.9
+  11,340  46.9
+
+Source: Traffic Engineering Handbook (1).
+
+  Vehicle acceleration and deceleration rates are factors in designing traffic signal
+timing, computing fuel economy and travel time values, and estimating how normal
+traffic flow is resumed after a breakdown. Vehicle acceleration rates of passenger cars
+accelerating after a stop range between 1 and 4 m/s2, while passenger car deceleration
+rates range between 2 and 8 m/s2 (1).
+
+DRIVER CHARACTERISTICS
+
+  Driving is a complex task involving a variety of skills. The most important of these
+skills involve taking in and processing information and making quick decisions based on
+this information. Driver tasks are categorized into three main elements: control,
+guidance, and navigation. Control involves the driver’s interaction with the vehicle in
+terms of speed and direction (accelerating, braking, and steering). Guidance refers to
+maintaining a safe path and keeping the vehicle in the proper lane. Navigation means
+planning and executing a trip.
+
+  The perception and processing of information are important driver characteristics.
+About 90 percent of the information a driver receives is visual. A significant component
+in the successful processing and use of information is the speed with which this
+processing is done. One of the parameters that is used to quantify the speed of processing
+information is perception-reaction time, which represents how quickly a driver can
+respond to an emergency situation. The parameter called sight distance is directly
+associated with reaction time. There are three types of sight distance: stopping, passing,
+and decision. This parameter is used to determine geometric features of transportation
+facilities.
+
+  8-1  Chapter 8 - Traffic Characteristics
+
+  Vehicle and Human Factors
+Highway Capacity Manual 2000
+
+  Other factors like nighttime driving, fatigue, driving under the influence of alcohol
+  and drugs, elderly drivers, and police enforcement contribute to driver behavior on a
+  transportation facility. All these factors can affect the operational parameters of speed,
+  delay, and density.
+
+  PEDESTRIAN CHARACTERISTICS
+
+  Pedestrian speed is probably the most important characteristic of a pedestrian facility
+  that is affected by individual pedestrian behavior and habit. Among several factors that
+  influence walking speed are density, gender, size of platoon, percentage of elderly
+  population, handicapped pedestrian population, and child pedestrian population. An
+  average walking speed of 1.2 m/s is appropriate for typical groups of pedestrians. The
+  amount of space required by a queued or standing pedestrian is 0.75 m2. At signalized
+  intersections pedestrian crossings must be assigned an amount of effective green time
+  based on average walking speed.
+
+  BICYCLE CHARACTERISTICS
+
+  The bicycle and the bicyclist have very different characteristics and exhibit different
+  operation than do drivers of motor vehicles. The typical speed of bicycles is about 25
+  km/h. Among other factors that affect bicycles are the type of bicycle, the bike path
+  surface type, weather conditions, the grade of the path, and the mix of other
+  nonmotorized users on the bike path.
+
+  BUS AND LIGHT RAIL CHARACTERISTICS
+
+  Bus and light rail capacity are affected by vehicle type, loading area performance,
+  and dwell time of the bus or light rail vehicle. Each bus requires a certain amount of
+  service time at stops that varies with the number of boarding and alighting passengers,
+  door configuration, and fare collection method. The minimum safe spacing between
+  buses in motion and the number of loading areas available at any stop also influence the
+  total number of buses and persons that a given facility can carry.
+
+  The total passenger flow rate varies with bus capacity and the trade-off between
+  seated capacity and standees. The largest number of seats and lowest number of standees
+  should occur on longer suburban bus routes or on intercity bus routes where higher levels
+  of comfort are essential. A typical 14-m urban transit bus can normally seat 43
+  passengers and carry up to 37 standees if the aisle circulation space is filled. Similarly,
+  an 18-m articulated bus can carry 65 seated passengers and 55 standees. However, bus
+  operator policy often limits the number of standees to levels below this theoretical
+  capacity.
+
+  II. DEMAND AND VOLUME
+
+  In this manual, demand is the principal measure of the amount of traffic using a
+  given facility. Thus, the term demand relates to vehicles arriving, while the term volume
+  relates to vehicles discharging.
+
+  Traffic demand varies by month of the year, day of the week, hour of the day, and
+  subhourly interval within the hour. These variations are important if highways are to
+  effectively serve peak demands without breakdown. The effects of a breakdown may
+  extend far beyond the time during which demand exceeds capacity and may take up to
+  several hours to dissipate. Thus, highways minimally adequate to handle a peak-hour
+  demand may be subject to breakdown if flow rates within the peak hour exceed capacity.
+
+Chapter 8 - Traffic Characteristics  8-2
+
+Vehicle and Human Factors
+

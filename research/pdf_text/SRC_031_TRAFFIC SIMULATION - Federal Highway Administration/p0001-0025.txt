@@ -1,0 +1,925 @@
+TRAFFIC SIMULATION
+
+BY EDWARD LIEBERMAN18
+  AJAY K. RATHI
+
+  18President, KLD Associates, Inc. 300 Broadway, Huntington Station, NY 11746
+CHAPTER 10 - Frequently used Symbols
+
+  af =  acceleration response of follower vehicle to some stimulus
+  v=  instantaneous speed of lead vehicle
+  instantaneous speed of follower vehicle
+  vf =  projected maximum deceleration rate of lead vehicle
+  d=  projected maximum deceleration rate of follower vehicle
+  reaction time lag of driver in follower vehicle
+  df =  ith replicate of specified seed, S0
+  Rf =  ith random number
+  Ii =  headway separating vehicles (sec)
+  RI =  mean headway (sec)
+  h=  minimum headway (sec)
+  random number
+  H=  ith observation (sample) of an MOE
+  mean of sample
+  hmin =  variance
+  R=  estimate of variance
+
+  XI =  upper 1-/2 critical point of the t distribution with n-1 degrees of freedom
+
+ µx =  mean of m observation of jth batch
+  2=  grand sample mean across batches
+  number of replications of the ith strategy
+  =  variance of statistic, X
+
+tn-1,1-  /2 =
+xj(m) =
+
+  x=
+
+  Ni =
+var(X ) =
+10.  for this purpose as an integral element of the ATMS research
+TRAFFIC SIMULATION  and development activity.
+
+10.1 Introduction  2. Testing new designs
+  Transportation facilities are costly investments. Simulation
+Simulation modeling is an increasingly popular and effective tool  can be applied to quantify traffic performance responding to
+for analyzing a wide variety of dynamical problems which are  different geometric designs before the commitment of
+not amenable to study by other means. These problems are  resources to construction.
+usually associated with complex processes which can not readily
+be described in analytical terms. Usually, these processes are  3. As an element of the design process
+characterized by the interaction of many system components or  The classical iterative design paradigm of conceptual design
+entities. Often, the behavior of each entity and the interaction of  followed by the recursive process of evaluation and design
+a limited number of entities, may be well understood and can be  refinement, can benefit from the use of simulation. Here, the
+reliably represented logically and mathematically with  simulation model can be used for evaluation; the detailed
+acceptable confidence. However, the complex, simultaneous  statistics provided can form the basis for identifying design
+interactions of many system components cannot, in general, be  flaws and limitations. These statistics augmented with
+adequately described in mathematical or logical forms.  animation displays can provide invaluable insights guiding
+  the engineer to improve the design and continue the process.
+Simulation models are designed to "mimic" the behavior of such
+systems. Properly designed models integrate these separate  4. Embed in other tools
+entity behaviors and interactions to produce a detailed,  In addition to its use as a stand-alone tool, simulation sub-
+quantitative description of system performance. Specifically,  models can be integrated within software tools designed to
+simulation models are mathematical/logical representations (or  perform other functions. Examples include: (1) the flow
+abstractions) of real-world systems, which take the form of  model within the TRANSYT-7F signal optimization; (2) the
+software executed on a digital computer in an experimental  DYNASMART simulation model within a dynamic traffic
+fashion.  assignment; (3) the simulation component of the
+  INTEGRATION assignment/control model; (4) the
+The user of traffic simulation software specifies a “scenario”  CORSIM model within the Traffic Research Laboratory
+(e.g., highway network configuration, traffic demand) as model  (TreL) developed for FHWA; and (5) the simulation module
+inputs. The simulation model results describe system  of the EVIPAS actuated signal optimization program.
+operations in two formats: (1) statistical and (2) graphical. The
+numerical results provide the analyst with detailed quantitative  5. Training personnel
+descriptions of what is likely to happen. The graphical and  Simulation can be used in the context of a real-time
+animated representations of the system functions can provide  laboratory to train operators of Traffic Management Centers.
+insights so that the trained observer can gain an understanding  Here, the simulation model, which is integrated with a real-
+of why the system is behaving this way. However, it is the  time traffic control computer, acts as a surrogate for the real-
+responsibility of the analyst to properly interpret the wealth of  world surveillance, communication and traffic environments.
+information provided by the model to gain an understanding of
+cause-and-effect relationships.  6. Safety Analysis
+  Simulation models to “recreate” accident scenarios have
+Traffic simulation models can satisfy a wide range of  proven to be indispensable tools in the search to build safer
+requirements:  vehicles and roadways. An example is the CRASH program
+  used extensively by NHTSA.
+1. Evaluation of alternative treatments
+  With simulation, the engineer can control the experimental    
+  environment and the range of conditions to be explored.
+  Historically, traffic simulation models were used initially to
+  evaluate signal control strategies, and are currently applied
+   75$)),& 6,08/$7,21
+
+This compilation of applications indicates the variety and scope  potential. Unlike the other chapters of this monograph, we will
+of traffic simulation models and is by no means exhaustive.  not focus exclusively on theoretical developments -- although
+Simulation models can also be supportive of analytical models  fundamental simulation building blocks will be discussed.
+such as PASSER, and of computational procedures such as the  Instead, we will describe the properties, types and classes of
+HCS. While these and many other computerized tools do not  traffic simulation models, their strengths and pitfalls, user
+include simulation sub-models, users of these tools can enhance  caveats, and model-building fundamentals. We will emphasize
+their value by applying simulation to evaluate their performance.  how the user can derive the greatest benefits from simulation
+  through proper interpretation of the results, with emphasis on the
+This chapter is intended for transportation professionals,  need to adequately calibrate the model and to apply rigorous
+researchers, students and technical personnel who either  statistical analysis of the results.
+currently use simulation models or who wish to explore their
+
+10.2 When Should the Use of Simulation Models be Considered?
+
+Since simulation models describe a dynamical process in  in order to explain why the resulting statistics were
+statistical and pictorial formats., they can be used to analyze a  produced.
+wide range of applications wherever...
+   Congested conditions persist over a significant time.
+   Mathematical treatment of a problem is infeasible or
+  It must be emphasized that traffic simulation, by itself, cannot be
+  inadequate due to its temporal or spatial scale, and/or  used in place of optimization models, capacity estimation
+  the complexity of the traffic flow process.  procedures, demand modeling activities and design practices.
+  Simulation can be used to support such undertakings, either as
+   The assumptions underlying a mathematical  embedded submodels or as an auxiliary tool to evaluate and
+  extend the results provided by other procedures. Some
+  formulation (e.g., a linear program) or an heuristic  representative statistics (called Measures of Effectiveness,
+  procedure (e.g., those in the Highway Capacity  MOE) provided by traffic simulation models are listed in Table
+  Manual) cast some doubt on the accuracy or  10.1.
+  applicability of the results.
+  Such statistics can be presented for each specified highway
+   The mathematical formulation represents the dynamic  section (network link) and for each specified time period, to
+  yield a level of detail that is both spatially and temporally
+  traffic/control environment as a simpler quasi steady-  disaggregated. Aggregations of these data, by subnetwork and
+  state system.  network-wide, and over specified time periods, may also be
+  provided.
+   There is a need to view vehicle animation displays to
+
+  gain an understanding of how the system is behaving
+
+10.3 Examples of Traffic Simulation Applications
+
+Given the great diversity of applications that are suitable for the  10.3.1 Evaluation of Signal Control
+use of traffic simulation models, the following limited number of  Strategies
+examples provides only a limited representation of past
+experience.  This study (Gartner and Hou, 1992) evaluated and compared the
+  performance of two arterial traffic control strategies,
+
+  
+   75$)),& 6,08/$7,21
+
+Table 10.1
+Simulation Output Statistics: Measures of Effectiveness
+
+Measure for Each Link and for Entire Network
+
+Travel: Vehicle-Miles  Bus Travel Time
+Travel Time: Vehicle-minutes  Bus Moving Time
+Moving Time: Vehicle-minutes  Bus Delay
+Delay Time: Vehicle-minutes  Bus Efficiency: Moving Time
+
+  persons-minutes  Total Travel Time
+Efficiency: Moving Time  Bus Speed
+
+  Total Travel Time  Bus Stops
+Mean Travel Time per Vehicle-Mile  Time bus station capacity exceeded
+Mean Delay per Vehicle-Mile  Time bus station is empty
+Mean Travel Time per vehicle  Fuel consumed
+Mean Time in Queue  CO Emissions
+Mean Stopped Time  HC Emissions
+Mean Speed  NOX Emissions
+Vehicle Stops
+Link Volumes Occupancy
+Mean Link Storage Area Consumed
+Number of Signal Phase Failures
+Average Queue Length
+Maximum Queue Length
+Lane Changes
+Bus Trips
+Bus Person Trips
+
+    
+   75$)),& 6,08/$7,21
+
+MULTIBAND and MAXBAND, employing the TRAF-  system optimal (SO) equilibrium calculations for a specified
+NETSIM simulation model. The paper describes the statistical  network, over a range of traffic loading conditions from
+analysis procedures, the number of simulation replications  unsaturated to oversaturated. This is an example of traffic
+executed and the resulting 95 percent confidence intervals, and  simulation used as a component of a larger model to perform a
+the results of the analysis.  complex analysis of an ITS initiative.
+
+Figure 10.1 is taken from this paper and illustrates how  Figure 10.2 which is taken from the cited paper illustrates how
+simulation can provide objective, accurate data sufficient to  simulation can produce internally consistent results for large
+distinguish between the performance of alternative analytical  scale projects, of sufficient resolution to distinguish between two
+models, within the framework of a controlled experiment.  comparable equilibrium assignment approaches.
+
+10.3.2 Analysis of Equilibrium Dynamic  10.3.3  Analysis of Corridor Design
+  Assignments (Mahmassani and  Alternatives (Korve Engineers
+  Peeta, 1993)  1996)
+
+This large-scale study used the DYNASMART simulation-  This analysis employed the WATSim simulation model to
+assignment model to perform both user equilibrium (UE) and  evaluate alternative scenarios for increasing capacity and
+  improving traffic flow on a freeway connection, SR242, in
+
+  Figure 10.1
+  Average Delay Comparison, Canal Street,
+
+  MULTIBAND & MAXBAND (KLD-242).
+
+  
+   75$)),& 6,08/$7,21
+
+  Figure 10.2
+Comparison of average trip times (minutes) of SO & UE...(KLD-243).
+
+California and ensuring a balanced design relative to freeway  could mitigate the extent and duration of congestion within the
+SR4 on the north and I680 to the south. Design alternatives  area, thereby improving performance and productivity. Here, a
+considered for three future periods (years 2000, 2010, 2020)  new control concept was tested on a real-world test-bed: a
+included geometric changes, widening, HOV lanes and ramp  section of Manhattan. This example illustrates the value in
+metering. Given the scale of this 20-mile corridor and the strong  testing new “high risk” ideas with simulation without exposing
+interactions of projected design changes for the three highways,  the public to possible adverse consequences, and prior to
+the use of simulation provided a statistical basis for quantifying  expending resources to implement these concepts.
+the operational performance of the corridor sections for each
+alternative.  These examples certainly do not represent the full range of traffic
+  simulation applications. Yet, they demonstrate the application
+This example illustrates the use of simulation as an element of  of traffic simulation in the areas of (1) traffic control; (2)
+the design process with the capability of analyzing candidate  transportation planning; (3) design; and (4) research.
+designs of large-scale highway systems in a manner that lies
+beyond the capabilities of a straight-forward HCM analysis.  10.4 Classification of Simulation
+  Models
+10.3.4 Testing New Concepts
+  Almost all traffic simulation models describe dynamical systems
+The TRAF-NETSIM simulation model was used by Rathi and  -- time is always the basic independent variable. Continuous
+Lieberman (1989) to determine whether the application of  simulation models describe how the elements of a system change
+metering control along the periphery of a congested urban area
+
+    
+   75$)),& 6,08/$7,21
+
+state continuously over time in response to continuous stimuli.  processes. The duration of the lane-change maneuver can also
+Discrete simulation models represent real-world systems (that  be calculated.
+are either continuous or discrete) by asserting that their states
+change abruptly at points in time. There are generally two types  A mesoscopic model generally represents most entities at a high
+of discrete models:  level of detail but describes their activities and interactions at a
+  much lower level of detail than would a microscopic model. For
+   Discrete time  example, the lane-change maneuver could be represented for
+   Discrete event  individual vehicles as an instantaneous event with the decision
+  based, say, on relative lane densities, rather than detailed vehicle
+The first, segments time into a succession of known time  interactions.
+intervals. Within each such interval, the simulation model
+computes the activities which change the states of selected  A macroscopic model describes entities and their activities and
+system elements. This approach is analogous to representing an  interactions at a low level of detail. For example, the traffic
+initial-value differential equation in the form of a finite-  stream may be represented in some aggregate manner such as a
+  statistical histogram or by scalar values of flow rate, density and
+difference expression with the independent variable, t.  speed. Lane change maneuvers would probably not be
+  represented at all; the model may assert that the traffic stream is
+Some systems are characterized by entities that are "idle" much  properly allocated to lanes or employ an approximation to this
+of the time. For example, the state of a traffic signal indication  end.
+(say, green) remains constant for many seconds until its state
+changes instantaneously to yellow. This abrupt change in state  High-fidelity microscopic models, and the resulting software, are
+is called an event. Since it is possible to accurately describe the  costly to develop, execute and to maintain, relative to the lower
+operation of the signal by recording its changes in state as a  fidelity models. While these detailed models possess the
+succession of [known or computed] timed events, considerable  potential to be more accurate than their less detailed
+savings in computer time can be realized by only executing these  counterparts, this potential may not always be realized due to the
+events rather than computing the state of the signal second-by-  complexity of their logic and the larger number of parameters
+second. For systems of limited size or those representing entities  that need to be calibrated.
+whose states change infrequently, discrete event simulations are
+more appropriate than are discrete time simulation models, and  Lower-fidelity models are easier and less costly to develop,
+are far more economical in execution time. However, for  execute and to maintain. They carry a risk that their
+systems where most entities experience a continuous change in  representation of the real-world system may be less accurate,
+state (e.g., a traffic environment) and where the model objectives  less valid or perhaps, inadequate. Use of lower-fidelity
+require very detailed descriptions, the discrete time model is  simulations is appropriate if:
+likely to be the better choice.
+   The results are not sensitive to microscopic details.
+Simulation models may also be classified according to the level   The scale of the application cannot accommodate the
+of detail with which they represent the system to be studied:
+  higher execution time of the microscopic model.
+   Microscopic (high fidelity)
+   Mesoscopic (mixed fidelity)   The available model development time and resources
+   Macroscopic (low fidelity)
+  are limited.
+A microscopic model describes both the system entities and their
+interactions at a high level of detail. For example, a lane-change  Within each level of detail, the developer has wide latitude in
+maneuver at this level could invoke the car-following law for the  designing the simulation model. The developer must identify the
+subject vehicle with respect to its current leader, then with  sensitivity of the model's performance to the underlying features
+respect to its putative leader and its putative follower in the  of the real-world process. For example, if the model is to be
+target lane, as well as representing other detailed driver decision  used to analyze weaving sections, then a detailed treatment of
+  lane-change interactions would be required, implying the need
+    for a micro- or mesoscopic model. On the other hand, if the
+   75$)),& 6,08/$7,21
+
+model is designed for freeways characterized by limited merging  Traffic simulation models have taken many forms depending on
+and no weaving, describing the lane-change interactions in great  their anticipated uses. Table 10.2 lists the TRAF family of
+detail is of lesser importance, and a macroscopic model may be  models developed for the Federal Highway Administration
+the suitable choice.  (FHWA), along with other prominent models, and indicates their
+  respective classifications. This listing is necessarily limited.
+Another classification addresses the processes represented by the  Some traffic simulation models consider a single facility
+model: (1) Deterministic; and (2) Stochastic. Deterministic  (NETSIM, NETFLO 1 and 2: surface streets; FRESIM,
+models have no random variables; all entity interactions are  FREFLO: freeways; ROADSIM: two-lane rural roads;
+defined by exact relationships (mathematical, statistical or  (CORSIM) integrates two other simulation models, FRESIM
+logical). Stochastic models have processes which include  and NETSIM; INTEGRATION, DYNASMART, TRANSIMS
+probability functions. For example, a car-following model can  are components of larger systems which include demand models
+be formulated either as a deterministic or stochastic relationship  and control policies; while CARSIM is a stand-alone simulation
+by defining the driver's reaction time as a constant value or as a  of a car-following model. It is seen that traffic simulation models
+random variable, respectively.  take many forms, each of which satisfies a specific area of
+  application.
+
+Table 10.2
+Representative Traffic Simulation Models
+
+  Name  Discrete  Discrete  Micro  Mesoscopic  Macro  Deterministic Stochastic
+  Time  Event  X  X
+NETSIM  X  X  X
+NETFLO 1  X  X  X  X  X
+NETFLO 2  X  X  X  X
+FREFLO  X  X  X
+ROADSIM  X  X  X
+FRESIM  X  X  X
+CORSIM  X  X
+INTEGRATION  X  X
+DYNASMART  X  X
+CARSIM  X  X
+TRANSIMS  X  X
+
+    
+   75$)),& 6,08/$7,21
+
+10.5 Building Traffic Simulation Models  4) Calibrate the Model
+  - Collect/acquire data to calibrate the model.
+The development of a traffic simulation model involves the  - Introduce this data into the model.
+following activities:
+  5) Model Verification
+  1) Define the Problem and the Model Objectives  - Establish that the software executes in accord with
+  - State the purpose for which the model is being  the design specification.
+  developed.  - Perform verification at the model component level.
+  - Define the information that the model must
+  provide.  6) Model Validation
+  - Collect, reduce, organize data for purposes of
+  2) Define the System to be Studied  validation.
+  - Disaggregate the system to identify its major  - Establish that the model describes the real system
+  components.  at an acceptable level of accuracy over its entire
+  - Define the major interactions of these  domain of operation; apply rigorous statistical
+  components.  testing methods.
+  - Identify the information needed as inputs.
+  - Bound the domain of the system to be modeled.  7) Documentation
+  - Executive Summary
+  3) Develop the Model  - Users Manual
+  - Identify the level of complexity needed to satisfy the  - Model documentation: algorithms and software
+  stated objectives.
+  - Classify the model and define its inputs and  The development of a traffic simulation model is not a “single-
+  outputs.  pass” process. At each step in the above sequence, the analyst
+  - Define the flow of data within the model.  must review the activities completed earlier to determine
+  - Define the functions and processes of the model  whether a revision/extension is required before proceeding
+  components.  further. For example, in step 5 the analyst may verify that the
+  - Determine the calibration requirements and form:  software is replicating a model component properly as designed,
+  scalars, statistical distributions,  but that its performance is at a variance with theoretical
+  parametric dependencies.  expectations or with empirical observations. The analyst must
+  - Develop abstractions (i.e., mathematical-logical-  then determine whether the calibration is adequate and accurate
+  statistical algorithms) of each  (step 4); whether the model’s logical/mathematical design is
+  major system component, their activities and  correct and complete (step 3); whether all interactions with other
+  interactions.  model components are properly accounted for and that the
+  - Create a logical structure for integrating these  specified inputs are adequate in number and accuracy (step 2).
+  model components to support the flow of data  This continual feedback is essential; clearly, it would be
+  among them.  pointless to proceed with validation (step 6) if it is known that
+  - Select the software development paradigm,  the verification activity is incomplete.
+  programming language(s), user interface,
+  presentation formats of model results.  Step 3 may be viewed as the most creative activity of the
+  - Design the software: simulation, structured or  development process. The simulation logic must represent all
+  object-oriented programming language; database,  relevant interactions by suitably exploring the universe of
+  relational/object oriented.  possibilities and representing the likely outcome. These
+  - Document the logic and all computational  combinations of interactions are called processes which
+  procedures.
+  - Develop the software code and debug.
+
+  
+   75$)),& 6,08/$7,21
+
+represent specified functions and utilize component models. A  The most popular approach for random number generation is the
+small sample of these is presented below.  “linear congruential method” which employs a recursive
+  equation to produce a sequence of random integers S as:
+10.5.1 Car-Following
+  Si (a Si 1  b) mod c.
+One fundamental interaction present in all microscopic traffic
+simulation models is that between a leader-follower pair of  where the integers chosen are defined as,
+vehicles traveling in the same lane. This interaction takes the  c is the modulus, such that c > 0,
+form of a stimulus-response mechanism:  a is the multiplier such that 0 < a < c,
+  b is the increment such that 0 < b < m, and
+af F (vl,vf,s,dl,df,Rf,Pi)  (10.1)  So is the starting value or the Seed of the  random  number
+  generator, such that 0 < So < c.
+
+where af, the acceleration (response) of the follower vehicle, is  The ith random number denoted by Ri is then generated as
+dependent on a number of (stimulus) factors including:
+
+vl, vf = Speeds of leader, follower vehicles,  Ri Si .
+  c
+  respectively.
+
+s  = Separation distance.
+
+dl, df = Projected deceleration rates of the
+
+  leader, follower vehicles, respectively.  These random number generations are typically used to generate
+  random numbers between 0 and 1. That is, a Uniform (0,1)
+Rf  = Reaction time of the driver in the  random number is generated. Random variates are usually
+  referred to as the sample generated from a distribution other than
+  following vehicle.  the Uniform (0,1). More often than not, these random variates
+  are generated from the Uniform (0,1) random number. A
+Pi  = Other parameters specific to the car-  simulation usually needs random variates during its execution.
+  Based on the distribution specified, there are various analytical
+  following model.  methods employed by the simulation models to generate the
+  random variates. The reader is referred to Law and Kelton
+F() = A mathematical and logical formulation  (1991) or Roberts (1983) for a detailed treatment on this topic.
+  As an example, random variates in traffic simulation are used to
+  relating the response parameter to the  generate a stream of vehicles.
+
+  stimulus factors.
+
+This behavioral model can be referenced (i.e., executed) to
+support other behavioral models such as lane-changing,
+merging, etc.
+
+10.5.2 Random Number Generation  10.5.3 Vehicle Generation
+
+All stochastic models must have the ability to generate random  At the outset of a simulation run, the system is “empty”.
+numbers. Generation of random numbers has historically been  Vehicles are generated at origin points, usually at the periphery
+an area of interest for researchers and practitioners. Before  of the analysis network, according to some headway distribution
+computers were invented, people relied on mechanical devices  based on specified volumes. For example, the shifted negative
+and their observations to generate random numbers. While  exponential distribution will yield the following expression:
+numerous methods in terms of computer programs have been
+devised to generate random numbers, these numbers only  h (H hmin) [ ln(1 R)]  H hmin
+“appear” to be random. This is the reason why some call them
+pseudo-random numbers.
+
+    
+   75$)),& 6,08/$7,21
+
+where  Driver:  Aggressiveness; responsiveness to stimuli;
+  destination (route); other behavioral and decision
+  h = Headway (sec) separating vehicle emissions  processes.
+  H = Mean headway = 3600/V, where V is the
+  Each attribute must be represented by the analyst, some by
+  specified volume, vph  scalars (e.g., vehicle length); some by a functional relationship
+  hmin = Specified minimum headway  (e.g., maximum vehicle acceleration as a function of its current
+  speed); some by a probability distribution (e.g., driver gap
+  (e.g., 1.2 sec/veh)  acceptance behavior). All must be calibrated.
+  R = Random number in the range (0 to 1.0),
+
+  obtained from a pseudo-random number
+  generator.
+
+Suppose the specified volume, V (vph), applies for a 15-minute  The driver-vehicle combination forms a model component, or
+period. If the user elects to guarantee that V is explicitly  entity. This component is defined in terms of its own elemental
+satisfied by the simulation model, it is necessary to generate N  attributes and its functionality is defined in terms of the
+values of h using the above formula repeatedly, generating a new  interactions between these elements. For example, the driver's
+random number each time. Here, N = V/4 is the expected  decision to accelerate at a certain rate may be constrained by the
+number of vehicles to be emitted in 15 minutes. The model  vehicle's operational limitations. In addition, this system
+could then calculate the factor, K:  component interacts with other model entities representing the
+  environment under study, including:
+  M K 15 x60  (10.2)
+  N   roadway geometrics
+  hi   intersection configurations
+  i 1   nearby driver-vehicle entities
+   control devices
+The model would then multiply each of the N values of hi, by K,   lane channelization
+so that the resulting sum of (the revised) hi will be exactly 15   conflicting vehicle movements
+minutes, ensuring that the user’s specification of demand volume
+  As an example, the driver-vehicle entity’s interaction with a
+are satisfied. However, if K C 1.0, then the resulting distribution  control device depends on the type and current state of the device
+  (e.g., a signal with a red indication), the vehicle’s speed, its
+of generated vehicles is altered and one element of stochasticity  distance from stop-bar, the driver’s aggressiveness, etc. It is the
+  developer’s responsibility to design the model components and
+(i.e., the actual number of generated vehicles) is removed. The  their interactions in a manner that satisfies the model objectives
+  and is consistent with its fidelity.
+model developer must either include this treatment (i.e.,
+
+eq.10.2), exclude it; or offer it as a user option with appropriate
+
+documentation.
+
+10.5.4 A Representative Model
+  Component
+
+Consider two elements of every traffic environment: (1) a  10.5.5 Programming Considerations
+vehicle and (2) its driver. Each element can be defined in terms
+of its relevant attributes:  Programming languages, in the context of this chapter, may be
+  classified as simulation and general-purpose languages.
+Vehicle:  Length; width; acceleration limits; deceleration  Simulation languages such as SIMSCRIPT and GPSS/H greatly
+  limit; maximum speed; type (auto, bus, truck, ...);  ease the task of developing simulation software by incorporating
+  maximum turn radius, etc.  many features which compile statistics and perform queuing and
+  other functions common to discrete simulation modeling.
+
+  
+   75$)),& 6,08/$7,21
+
+General-purpose languages may be classified as procedural  While object-oriented languages can produce more reliable
+(e.g., FORTRAN, PASCAL, C, BASIC), or object-oriented  software, they require a higher level of programming skill than
+(e.g., SMALLTALK, C++, JAVA). Object-oriented languages  do procedural languages. The developer should select a
+are gaining prominence since they support the concept of  language which is hardware independent, is supported by the
+reusable software defining objects which communicate with one  major operating systems and is expected to have a long life,
+another to solve a programming task. Unlike procedural  given the rapid changes in the world of software engineering.
+languages, where the functions are separated from, and operate  Other factors which can influence the language selection process
+upon, the data base, objects encapsulate both data describing its  include: (1) the expected life of the simulation model; (2) the
+state, as well as operations (or “methods”) which can change its  skills of the user community; (3) available budget (time and
+state and interact with other objects.  resources) to develop and maintain the software; and (4) a
+  realistic assessment of available software development skills.
+
+10.6 An Illustration of Simulation Model Building
+
+Given the confines of this chapter, we will illustrate the model  It must be emphasized that model development is an iterative
+development process by presenting the highlights of a sample  process. For example, the need for the indicated input
+problem, but avoiding exhaustive detail.  distributions may not have been recognized during this
+  definition phase, but may have emerged later during the
+1) Define the Problem and Model Objectives - An existing  logical design. Note also that the problem is bounded -- no
+  microscopic stochastic simulation model of freeway traffic  grades or horizontal curves are to be considered at this time.
+  does not consider lane-change operations. It has been  See Figure 10.3 for the form of these distributions.
+  determined that this model’s results are unreliable as a result.
+  The purpose of this project is to introduce additional logic  3) Develop the Model - Since this lane-change model is to be
+  into the model to represent lane-changing operations. This  introduced into an existing microscopic stochastic model,
+  addition should provide improved accuracy in estimating  using a procedural language, it will be designed to utilize the
+  speed and delay; in addition it will compute estimates of lane  existing software. The model logic moves each vehicle, each
+  changes by lane, by vehicle type and by direction (to the left
+  and to the right).  time-step, t, starting with the farthest downstream vehicle,
+
+2) Define the System -  then moving the closest upstream vehicle regardless of lane
+  position, etc. At time, to, the vehicle states are shown in
+  Figure 10.4(a).
+
+a) A freeway of up to six lanes -- level tangent  In developing the model, it is essential to identify the
+b) Three vehicle types: passenger car; single-unit truck;  independent functions that need to be performed and to
+  segregate each function into a separate software module, or
+  tractor-trailer truck  routine. Figure 10.5 depicts the structure -- not the flow --
+c) Required inputs: traffic volume (varies with time);  of the software. This structure shows which routines are
+  logically connected, with data flowing between them. Some
+  distributions of free-speed, of acceptable risk (expressed  routines reference others more than once, demonstrating the
+  in terms of deceleration rates if lead vehicle brakes), of  benefits of disaggregating the software into functionally
+  motivation to change lanes, all disaggregated by vehicle  independent modules.
+  type
+d) Drivers are randomly assigned an “aggressiveness index”  As indicated in Table 10.3 which presents the algorithm for
+  ranging from 1 (very aggressive) to 10 (very cautious)  the Lane Change Executive Routine in both “Structured
+  drawn from a uniform distribution to represent the range  English” or “pseudo-code” and as a flow chart, traffic
+  of human behavior.
+
+    
+   75$)),& 6,08/$7,21
+
+  Figure 10.3
+  Several Statistical Distributions.
+
+  
+   75$)),& 6,08/$7,21
+
+  Figure 10.4
+Vehicle Positions during Lane-Change Maneuver
+
+    
+   75$)),& 6,08/$7,21
+
+  Figure 10.5
+  Structure Chart of Simulation Modules
+
+Table 10.3
+Executive Routine
+
+For each vehicle, I:
+  CALL routine MOTIV to determine whether this driver is “motivated” to change lanes, now
+  IF so, THEN
+  CALL routine CANLN to identify which of neighboring lanes (if either) are
+  acceptable as potential target lanes
+  IF the lane to the right is acceptable, THEN
+  CALL routine CHKLC to determine whether a lane-change is feasible, now.
+  Set flag if so.
+  ENDIF
+  IF the lane to the left is acceptable, THEN
+  CALL routine CHKLC to determine whether a lane-change is feasible, now.
+  Set flag, if so.
+  ENDIF
+  IF both lane-change flags are set (lane-change is feasible in either direction), THEN
+  CALL routine SCORE to determine more favorable target lane
+  ELSE IF one lane-change flag is set, THEN
+  Identify that lane
+  ENDIF
+  IF a [favored] target lane exists, THEN
+  CALL routine LCHNG to execute the lane-change
+  Update lane-change statistics
+  ELSE
+  CALL routine CRFLW to move vehicle within this lane
+  Set vehicle’s process code (to indicate vehicle has been moved this time-step)
+  ENDIF
+  ELSE (no lane-change desired)
+  CALL routine CRFLW to move vehicle within its current lane
+  Set vehicle’s process code
+  ENDIF
+
+continue...
+
+  
+   75$)),& 6,08/$7,21
+
+  Figure 10.6
+Flow Diagram.
+
+    
+   75$)),& 6,08/$7,21
+
+simulation models are primarily logical, rather than  systems), are also common in models which simulate
+computational in context. This property reflects the fact that  human decisions.
+traffic operations are largely the outcome of driver decisions
+which themselves are [hopefully!] logical in context. As the  LCHNG: After executing the subject vehicle’s lane-change
+vehicles are processed by the model logic, they transition from  activity, the logic performs some needed
+one state to the next. The reader should reference Table 10.3  bookkeeping:
+and Figures 10.3, 10.4, 10.5 and 10.6 to follow the discussion
+given below for each routine. The “subject vehicle” is shown as  At time, to + t, vehicle 19 acts as the leader for both
+number 19 in Figure 10.4.
+  vehicles 14 and 31, who must “follow” (and are
+Executive:  Controls the flow of processing, activating  constrained by) its presence.
+  (through CALLs) routines to perform the
+  necessary functions. Also updates lane-change  At time, to +2t, the logic asserts that the lane changer
+  statistics.
+  (no. 19) has committed to the lane-change and no longer
+MOTIV: Determines whether a lane-change is required to  influences its former follower, vehicle no. 31. Of course,
+  position the subject vehicle for a downstream  vehicle 14 now follows the lane-change vehicle, 19.
+  maneuver or is desired to improve the vehicle’s
+  operation (increase its speed).  4) Calibrate the Model - Figures 10.3(b) and (c) are
+  distributions which represent the outcome of a calibration
+CANLN: Determines whether either or both adjoining lanes (1  activity. The distribution of free-flow speed is site-specific
+  and 3) are suitable for servicing the subject vehicle.  and can be quantified by direct observation (using paired
+  loop detectors or radar) when traffic conditions are light --
+CHKLC:  Identifies vehicles 22 and 4 as the leader and  LOS A.
+  follower, respectively, in target Lane 1; and vehicles
+  16 and 14, respectively, in target Lane 3. The car-  The distribution of acceptable decelerations would be very
+  following dynamics between the pairs of vehicles, 19  difficult to quantify by direct observation -- if not infeasible.
+  and 22, then 4 and 19 are quantified to assess the  Therefore, alternative approaches should be considered. For
+  prospects for a lane-change to Lane 1. Subsequently,  example...
+  the process is repeated between the pairs of vehicles,
+  19 and 16; then 14 and 19; for a lane-change to Lane   Gather video data (speeds, distance headway) of
+  3. If the gap is inadequate in Lane 1, causing an
+  excessive, and possibly impossible deceleration by  lane-change maneuvers. Then apply the car-
+  either the subject vehicle, 19, or the target follower,  following model with these data to “back-out” the
+  4, to avoid a collision, then Lane 3, would be  implied acceptable decelerations. From a sample
+  identified as the only feasible target lane. In any case,  of adequate size, develop the distribution.
+  CHKLC would identify either Lane 1 or Lane 3, or
+  both, or neither, as acceptable target lanes at this   On a more macro level, gather statistics of lane-
+  time, depending on safety considerations.
+  changes for a section of highway. Execute the
+SCORE:  If both adjoining target lanes are acceptable, then this  simulation model and adjust this distribution of
+  heuristic algorithm emulates driver reasoning to  acceptable deceleration rates until agreement is
+  select the preferable target lane. It is reasonable to  attained between the lane-changes executed by the
+  expect that the target lane with a higher-speed leader  model, and those observed in the real world. This
+  and fewer vehicles -- especially trucks and buses --  is tenuous since it is confounded by the other
+  would be more attractive. Such reasonableness  model features, but may be the best viable
+  algorithms (which are expressed as “rules” in expert  approach.
+
+  It is seen that calibration -- the process of quantifying
+  model parameters using real-world data -- is often a
+  difficult and costly undertaking. Nevertheless, it is a
+
+  
+   75$)),& 6,08/$7,21
+
+  necessary undertaking that must be pursued with   Developing the experimental design of the
+  some creativity and tenacity.
+  validation study, including a variety of "scenarios"
+5)  Model Verification - Following de-bugging,  to be examined.
+
+  verification is a structured regimen to provide   Performing the validation study:
+
+  assurance that the software performs as intended  - Executing the model using input data and
+  calibration data representing the real-world
+  (Note: verification does not address the question, “Are  conditions.
+
+  the model components and their interactions  - Performing the hypothesis testing.
+
+  correct?”). Since simulation models are primarily   Identifying the causes for any failure to satisfy the
+
+  logical constructs, rather than computational ones, the  validation tests and repairing the model
+  accordingly.
+  analyst must perform detailed logical path analyses.
+   Validation should be performed at the component
+  Verification is performed at two levels and generally in
+  the sequence given below:  system level as well as for the model as a whole.
+  For example, Figure 10.7 compares the results
+   Each software routine (bottom-up testing)  produced by a car-following model, with field data
+   Integration of “trees” (top-down testing)...  collected with aerial photographs. Such face
+  validation offers strong assurance that the model
+  When completed, the model developer should be  is valid. This validation activity is iterative -- as
+  convinced that the model is performing in accord with  differences between the model results and the
+  expectations over its entire domain of application.  real-world data emerge, the developer must
+  “repair” the model, then revalidate. Considerable
+6)  Model Validation - Validation establishes that the  skill (and persistence) are needed to successfully
+  validate a traffic simulation model.
+  model behavior accurately and reliably represents the
+
+  real-world system being simulated, over the range of
+
+  conditions anticipated (i.e., the model's "domain").
+
+  Model validation involves the following activities:
+
+  7)  Documentation - Traffic simulation models, as is the
+
+   Acquiring real-world data which, to the extent  case for virtually all transportation models, are data
+
+  possible, extends over the model's domain.  intensive. This implies that users must invest effort in
+
+  data acquisition and input preparation to make use of
+
+   Reducing and structuring these empirical data so  these models. Consequently, it is essential that the
+
+  that they are in the same format as the data  model be documented for...
+  generated by the model.
+   The end user, to provide a “friendly” interface to
+   Establishing validation criteria, stating the
+  ease the burden of model application.
+  underlying hypotheses and selecting the statistical
+  tests to be applied.   Software maintenance personnel.
+   Supervisory personnel who must assess the
+
+  potential benefits of using the model.
+
+10.7 Applying Traffic Simulation Models
+
+Considerable skill and attention to detail must be exercised by  simulation-based analysis.  The following procedure is
+the user in order to derive accurate and reliable results from a  recommended:
+
+    
+   75$)),& 6,08/$7,21
+
+  Figure 10.7
+Comparison of Trajectories of Vehicles from Simulation Versus Field Data for Platoon 123.
+
+Identify the Problem Domain  - Pictorial: static graphics, animation.
+  What information is available as input and calibration data?
+  What highway facilities are involved?
+  - Surface streets (grid, arterial, both), freeways,  - Consider expected accuracy and reliability.
+  rural roads, toll plaza.  - Consider available budget for data acquisition.
+
+  What is the traffic environment?  Are results needed on a relative or absolute basis?
+  - Autos, trucks, buses, LRT, HOV...
+  - Unsaturated, oversaturated conditions.  What other functions and tools are involved?
+  - Capacity analysis
+  What is the control environment?  - Design
+  - Signals (fixed time, actuated, computer-  - Demand modeling
+  controlled), signs  - Signal optimization
+  - Route guidance
+  Is the application real-time or off-line?
+What is the size of the network and duration of the analysis
+period?  Investigate Candidate Traffic Simulation Models
+
+Define the Purpose of the Study  Identify strengths and limitations of each.
+  - Underlying assumptions
+What information is needed from the simulation model?
+  - Statistical: MOE sought, level of detail.
+
+  
+   75$)),& 6,08/$7,21
+
+  - Computing requirements  - Signal timing plans, actuated controller settings.
+  - Availability, clarity, completeness of documentation  - Traffic volume and patterns; traffic composition.
+  - Availability, reliability, timeliness of software  - Transit schedules
+  - Other, as required.
+  support
+  Confirm the accuracy of these data through field observation.
+Estimate extent and cost of data collection for calibration and
+input preparation.  Undertake field data collection for input and for calibration, as
+  required.
+Determine whether model features match problem needs.
+  Identify need for accurate operational traffic data: based on
+Assess level of skill needed to properly apply model.  model’s sensitivity site-specific features; accuracy requirements.
+
+Determine compatibility with other tools/procedures needed for  - Select representative locations to acquire these field
+the analysis.  data.
+
+Assess the Need to Use a Traffic Simulation Model  - Collect data using video or other methods as
+  required: saturation flow rates at intersections; free-
+Is traffic simulation necessary to perform the analysis of the  flow speeds; acceptable gaps for permitted left-turns,
+problem?  etc.
+
+  - Are other tools adequate but less costly?  - Accept model default values or other data from the
+  - Are your skills adequate to properly apply  literature with great care if data collection is
+  infeasible or limited by cost considerations.
+  simulation?
+  - Can the data needed by traffic simulation be  Model Calibration
+
+  acquired?  Calibration is the activity of specifying data describing traffic
+  operations and other features that are site-specific. These data
+  Is traffic simulation highly beneficial even though not  may take the form of scalar elemets and of statistical
+necessary?  distributions that are referenced by the logic of stochastic
+  simulation models. While traffic simulation models generally
+  - Simulation results can confirm results obtained by  provide default value which represent average conditions for
+  other tools.  these calibration data elements, it is the responsibility of the
+  analyst to quantify these data with field observations to the extent
+  - Animation displays needed as a presentation  practicable rather than to accept these default values.
+  medium.
+  Model Execution
+If it is determined that traffic simulation is needed/advisable,
+continue.  The application of a simulation model should be viewed as
+  performing a rigorous statistical experiment. The model must
+Select Traffic Simulation Model  first be executed to initialize its database so that the data
+  properly represents the initial state of the traffic environment.
+Relate relevant model attributes to problem needs.  This requirement can reliably be realized if the environment is
+  initially at equilibrium.
+Determine which model satisfies problem needs to the greatest
+extent. Consider technical, and cost, time, available skills and  Thus, to perform an analysis of congested conditions, the analyst
+support, and risks factors.  should design the experiment so that the initial state of the traffic
+  environment is undersaturated, and then specify the changing
+Data Acquisition
+    
+Obtain reliable records of required information.
+  - Design drawings for geometrics.
+   75$)),& 6,08/$7,21
+
+conditions which, over time, censors the congested state which   Anomolous results (e.g., the creation and growth of
+is of interest. Similarly, the final state of the traffic environment
+should likewise be undersaturated, if feasible.  queues when conditions are believed to be
+  undersaturated) can be examined and traced to valid,
+It is also essential that the analyst properly specify the dynamic  incongested behavior; to errant input specifications; or to
+(i.e., changing) input conditions which describe the traffic  model deficiencies.
+environment. For example, if one-hour of traffic is to be
+simulated, the analyst should always specify the variation in  If the selected traffic simulation lacks an animation feature or if
+demand volumes -- and in other variables -- over that hour at an  questions remain after viewing the animation, then the following
+appropriate level of detail rather than specifying average,  procedures may be applied:
+constant values of volume.
+   Execute the model to replicate existing real-world
+Finally, if animation displays are provided by the model, this
+option should always be exercised, as discussed below.  conditions and compare its results with observed
+  behavior. This “face validation”, which is recommended
+Interpretation of Simulation Results  regardless of the model selected, can identify model or
+  implementation deficiencies.
+Quite possibly, this activity may be the most critical. It is the
+analyst who must determine whether the model results constitute   Perform “sensitivity” tests on the study network by
+a reasonable and valid representation of the traffic environment
+under study, and who is responsible for any inferences drawn  varying key variables and observing model responses in
+from these results. Given the complex processes taking place in  a carefully designed succession of model executions.
+the real-world traffic environment, the analyst must be alert to
+the possibility that (1) the model’s features may be deficient in   Plot these results. A review will probably uncover the
+adequately representing some important process; (2) the input
+data and/or calibration specified is inaccurate or inadequate; (3)  perceived anomalies.
+the results provided are of insufficient detail to meet the project
+objectives; (4) the statistical analysis of the results are flawed (as  Table 10.1 lists representative data elements provided by traffic
+discussed in the following section); or (5) the model has “bugs”  simulation models. Figure 10.8 shows typical graph displays
+or some of its algorithms are incorrect. Animation displays of  while Figure 10.9 displays a "snapshot" of an animation screen.
+the traffic environment (if available) are a most powerful tool for
+analyzing simulation results. A careful and thorough review of  Note that all the graphical displays can be accessed interactively
+this animation can be crucial to the analyst in identifying:  by the user, thus affording the user an efficient means for
+  extracting the sought information and insights from the mass of
+   Cause-and-effect relationships. Specifically the origins  data compiled by the simulation model.
+
+  of congested conditions in the form of growing queues  Proper output analysis is one of the most important aspects of
+  can be observed and related to the factors that caused it.  any simulation study. A variety of techniques are used,
+  particularly for stochastic model output, to arrive at inferences
+  that are supportable by the output. A brief exposition to output
+  analysis of simulation data is paresented next.
+
+10.8 Statistical Analysis of Simulation Data
+
+In most efforts on simulation studies, more often than not a large  a heuristic model, which is then programmed on the computer,
+amount of time and money is spent on model development and  and conclude with a single run of the program to yield an
+coding, but little on analyzing the output data. Simulation  answer. This is a result of overlooking the fact that a simulation
+practitioners therefore have more confidence in their results than  is a sampling experiment implemented on a computer and
+is justified. Unfortunately, many simulation studies begin with  therefore needs appropriate statistical techniques for its design,
+
+  
+   75$)),& 6,08/$7,21
+
+  Figure 10.8
+Graphical Displays.
+
+    
+   75$)),& 6,08/$7,21
+
+  Figure 10.9
+  Animation Snapshot.
+
+analysis, and implementation. Also, more often than not, output  Typical goals of analyzing output data from simulation
+data from simulation experiments are auto correlated and  experiments are to present point estimates of the measures of
+nonstationary. This precludes its analysis using classical  effectiveness (MOE) and form confidence intervals around these
+statistical techniques which are based on independent and  estimates for one particular system design, or to establish which
+identically distributed (IID) observations.  simulated system is the best among different alternate
+
+  
+Back to the main publication page.
+
+   75$)),& 6,08/$7,21
+
+configurations with respect to some specified MOE. Point  system using independent random number streams across
+estimates and confidence intervals for the MOEs can be obtained  replications.
+either from one simulation run or a set of replications of the
+
+10.9 Looking to the Future
+
+With the traffic simulation models now mounted on high-  - Combining simulation with Artificial Intelligence
+performance PCS, and with new graphical user interfaces (GUI)  (AI) software. The simulation can provide the
+becoming available to ease the burden of input preparation, it is  knowledge base in real-time or generate it in
+reasonable to expect that usage of these models will continue to  advance as an off-line activity.
+increase significantly over the coming years.
+  - Integrating traffic simulation models with other tools
+In addition, technology-driven advances in computers, combined  such as: transportation demand models, signal
+with the expanding needs of the Intelligent Transportation  optimization models, GIS, office suites, etc.
+Systems (ITS) program, suggest that the new applications of
+traffic simulation can contribute importantly to this program.  - Providing Internet access.
+Specifically:
+   Real-time simulators which replicate the performance of
+   Simulation support systems of Advanced Traffic
+  TMC operations. These simulators must rely upon
+  Management Systems (ATMS) in the form of:  simulation models as “drivers” to provide the real-world
+  stimuli to ITS real-time software being tested. Such
+- Off-line emulation to test, refine, evaluate, new real-  simulators are invaluable for:
+
+time control policies.  - Testing new ATMS concepts prior to deployment.
+  - Testing interfaces among neighboring TMCs.
+- On-line support to evaluate candidate ad-hoc  - Training TMC operating personnel.
+  - Evaluating different ATMS architectures.
+responses to unscheduled events and to advise the  - Educating practitioners and student.
+  - Demonstrating the benefits of ITS programs to state
+operators at the Traffic Management Center (TMC)
+  and municipal officials and to the public through
+as to the “best” response.  -Real-  animated graphical displays and virtual reality.
+
+time component of an advanced control/guidance
+
+strategy. That is, the simulation model would be a
+
+component of the on-line strategy software.
+
+References  Korve Engineers (1996). State Route 242 Widening Project -
+  Operations Analysis Report to Contra Costa Transportation
+Gartner, N.H. and D. L. Hou (1992). Comparative Evaluation  Authority.
+  of Alternative Traffic Control Strategies,” Transportation
+  Research Record 1360, Transportation Research Board.  Rathi, A.K. and E.B. Lieberman (1989). Effectiveness
+  of Traffic Restraint for a Congested Urban Network: A
+Mahmassani, H.S. and S. Peeta (1993). Network Performance  Simulation Study. Transportation Research Record 1232.
+  Under System Optimal and User Equilibrium Dynamic
+  Assignments: Implications for Advanced Traveler
+  Information Systems Transportation Research Record 1408,
+  Transportation Research Board.
+
+    
+

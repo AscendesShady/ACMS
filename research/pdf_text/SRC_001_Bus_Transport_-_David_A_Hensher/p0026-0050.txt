@@ -1,0 +1,1446 @@
+  Disruptive technology and moving people Chapter | 3 19
+
+TABLE 3.1 Levels of driving automation.
+
+Level  Zero  One  Two  Three  Four  Five
+  Nothing  Accelerates,  Everything e goes
+What the  Accelerates,  breaks and  Assumes full control  Everything, only  everywhere, any
+car does  brakes, or  steers  within narrow  under certain  time, and under any
+  steers  parameters, such as  conditions  conditions
+  Remains in  when driving on the  (e.g., speciﬁc
+What the  Everything  Everything  control,  freeway, but not during  locations, speed,  Nothing e and
+driver  but with  monitors and  merges or exits  weather, time of  unable to assume
+does  some  reacts to  day)  control
+  assistance  conditions  Must be capable of
+  regaining control within  Nothing under
+  10e15 s  certain conditions,
+  but everything at
+  other times
+
+Our take  Your  Present ﬂeet  Now in  Might never be  Where the indus-  Somewhere over
+on  parents’  testing  deployed4  try wants to be  the rainbow
+prospects  car
+
+Sourced from Mervis, J., 2017. Not so fast. Science 358 (6369), 1370e1374. http://doi.org/10.1126/science.358.6369.1370, Table on p. 1372.
+
+  Potential downsides of AVs include accelerated urban sprawl and increased urban congestion, as discussed in
+Section 3.5. Cyber security and privacy issues are also potential concerns, beyond the scope of the present chapter.
+
+  Timing of the widespread implementation of AVs is an area of considerable uncertainty. RethinkX (2017) suggests a
+very aggressive development pathway, as illustrated in the quotation at the start of Section 3.1. In summary, RethinkX
+suggests that:
+
+l approval of fully AVs will lead to a massive ﬁght for market share between MaaS providers5
+l costs will be driven down to gain market share
+l ﬂeets will quickly transition from human-driven ICEs to AEVs
+l high utilisation rates will drive prices way down
+l MaaS will be able to offer shared service at 10%e25% of the cost of self-owned mobility
+l this cost saving opportunity will drive rapid growth in shared MaaS.
+
+  If realized, this pathway would portend massive and dramatic consequences.
+  Most views are much less optimistic in terms of AV rollout. A more evolutionary perspective on penetration of AVs is
+provided by Litman (2018), who sees the time frame for widespread implementation being closer to three decades. Litman
+recognizes the potential beneﬁts of AVs but also sees challenges in implementation, from the lags built into changing the
+vehicle stock because of typical asset life, to higher AV costs, at least in transitioning years, and overstated expectations of
+AV beneﬁts. For example, on safety, Litman notes the often cited expectation of 80%e90% improvements but notes
+offsetting inﬂuences such as hardware and software failures, malicious hacking, increased traveler risk taking, platooning
+risks and increased VKT. In terms of a slower rate of market/user penetration of shared AVs, Litman points to shared AV
+characteristics that will lessen user appeal, these characteristics encompassing AV use in both vehicle-sharing and/or ride-
+sharing modes, such as hardened interiors to facilitate cleaning (e.g., vinyl seats and stainless steel surfaces), minimal
+accessories, security cameras, less convenience, lower status, the need to sometimes share space with strangers and reduced
+travel speeds when multiple drop-offs are involved (involving also reduced reliability). Some of these concerns will, no
+doubt, be met by market segmentation, with users paying a higher price for a higher quality shared vehicle or shared ride
+but this, in itself, will slow more widespread adoption.
+  A supportive view on slower implementation is presented by Wadud (2017), who puts together user cost proﬁles for
+AVs, to assess which user groups are most likely to be potential early adopters of full AV. These user costs include vehicle
+costs and time costs. The chapter focuses on personal ownership, not shared use. Not surprisingly, it ﬁnds that those with
+
+4. Vehicle manufacturers are trying to avoid this release as drivers showed slower response times to hazards and displayed a tendency to overcompensate
+when any driving correction was required in semi-autonomous vehicles (Shen and Neyens, 2017). There are also moral hazard issues in play, as
+demonstrated by the recent high-proﬁle crash of a Tesla S on Autopilot.
+5. Increasingly the space of vehicle manufacturers as they worry who will buy their cars in the future.
+20 PART | 1 Reviews
+
+the highest time values are most likely to be early adopters, these including commercial operations, which encompasses
+taxis and taxi-type services (e.g., Uber) and freight, together with high income households, the latter having high time
+values and tending (in the UK) to drive longer distances. The value of freed up driving time is highest for these groups.
+Extension to lower income groups is seen as a longer-term proposition, although Wadud recognizes that factors like the
+contribution AVs can make to improve personal mobility of some older people, young and persons with a disability are
+likely to make some among these groups become early adopters. Wadud did not explicitly model bus operations but the
+signiﬁcance of time costs in bus costs would make early uptake a real possibility, as reﬂected in the number of trials
+currently underway (e.g., Keolis Navya and Transdev EasyMile in Australia).
+
+3.2.4 Electric vehicles
+
+The possibility of substituting electricity for oil as a fuel source for motor vehicles is of considerable global interest, for
+reasons such as the opportunity for lower emissions of greenhouse gases and air pollutants (NOx, NHMC and PM),
+improved tank-to-wheel efﬁciency (about three times higher than ICEs, according to EU 2017), energy security, lower
+operating costs, and quieter, smoother operation. Opportunities provided by vehicle batteries, and their usage patterns, to
+link electric vehicles (EVs) to distributed energy systems are a further source of appeal. However, challenges such as high
+capital costs, range anxiety (partly linked to a shortage of charging locations), battery size, battery life and management of
+used batteries stand in the way of rapid implementation.
+
+  Global and European sales, however, are currently very small, with plug-in hybrid and battery EV sales, for example,
+representing only 1.2% of all new cars sold in the EU in 2015 (EEA, 2016). The share was 22.5% in Norway (not an EU
+member). On a more positive note, China sold 0.5 m electric vehicles in 2016, including buses and commercial vehicles,
+but is targeting manufacture of 7 million battery cars and hybrid vehicles by 2025 (driven much by air quality concerns).
+Shenzhen, with its ﬂeet of more than 16,300 buses, is the world’s largest and only all-electric bus ﬂeet. Electric bus
+technologies featured prominently in Shenzhen Bus Group’s6 Bukit Merah bus contract bid in Singapore.7 Volvo has
+announced that it will only launch electric and hybrid models starting from 2019. France and the UK have announced plans
+to ban sales of diesel and petrol cars by 2040, with local air quality again a key driver of this change but GHG emission
+reduction is also important. The Netherlands and Norway plan earlier phase out dates.
+
+  Australia’s high GHG emissions should make penetration of EVs powered by renewable energy a high policy priority.
+A relatively fast move towards electric vehicles (EVs), in particular, would be of great assistance in terms of lowering
+emissions outcomes. CSIRO (2017) estimates that electric vehicles are already 50%e70% less emissions intensive than
+ICEs in Australia, arguing they are essential to widespread emissions reductions from light vehicles. They ﬁnd, however,
+that electric vehicles are not yet cost competitive. A recent meta-study of take up forecasts by ENA and CSIRO (2017)
+found that, without signiﬁcant policy interventions or sharp rises in fuel prices, electric vehicle adoption is likely to remain
+well below 15% in Australia by 2030. Electric vehicles are, therefore, currently not expected to provide a major contri-
+bution in reducing light vehicle emissions intensity before 2030. However, mandatory emissions intensity standards, along
+the lines of EU or US standards, would rapidly change this setting.
+
+3.2.5 Conclusion
+
+Autonomous vehicles (AVs) are perhaps the most discussed subject of disruptive technological change in personal
+mobility. Time frames for implementation are contested but there is an air of ultimate inevitability, given the potential
+beneﬁts from AVs in areas such as safety and social inclusion. However, AVs could also have major deleterious effects on
+trafﬁc congestion and other land use transport outcomes. Sections 3.5 and 3.6 consider these matters in more detail and
+discuss how to increase the prospects for beneﬁcial outcomes. Appropriate regulation, technology and business platforms
+made possible by smartphone technologies are central here.
+
+  The time frame for widespread adoption of electric vehicles (EVs) seems likely to be similar to that for roll-out of
+autonomous vehicles (AVs). RethinkX (2017) has argued that economics will tend to bring these two disruptions together,
+albeit that their assessment is that this will happen much faster than other commentators tend to suggest. However, given
+this longer term likelihood, it is convenient in what follows to talk about autonomous electric vehicles (AEVs) for
+discussion about the long term (2-3 decades) in technological disruption. We adopt this approach for most of the remainder
+of the chapter.
+
+6. A subsidiary of Hong Kong-based Transport International.
+7. This tender was subsequently awarded to incumbent SBS Transit on 23 February 2018.
+  Disruptive technology and moving people Chapter | 3 21
+
+3.3 Assessing improvements in societal wellbeing
+
+3.3.1 Common goals for cities and regions
+
+  We have been struck by the commonality between the high level goals that cities in highly developed economies around the world
+  set for themselves, reﬂecting the triple bottom line (economic, social and environmental) goal thinking often associated with the
+  Brundtland Commission
+
+  Stanley et al. (2017, p. 17).
+
+  In line with a triple bottom line sustainability focus, we have generally started from the value position that a city, or
+other region, whose land use and transport systems, and the technologies on which they depend, support the following
+outcomes is likely to become more sustainable over time:
+
+1. Increases economic productivity e Increased Gross Domestic Product per capita is the usual indicator, albeit an
+  imperfect indicator of human needs and their satisfaction
+
+2. Reduces ecological footprint e in terms of the concept of passing on a stock of natural assets that will assist future
+  generations to meet their own needs, however conceived at the time
+
+3. Increases social inclusion and reduces inequality e this is about ensuring that all people have the opportunity to live
+  a good life
+
+4. Improves health and safety outcomes e an essential part of living a good life
+5. Promotes intergenerational equity e this goal is likely to be achieved if the preceding goals are met
+6. Engages its communities widely in development and delivery of land use transport plans and policies. Seen as an
+
+  essential ingredient in social sustainability and a matter of rights
+7. Pursues integrated land use transport plans/policies in the widest sense (e.g., across sectors, levels of government,
+
+  modes, etc). This is primarily about the means of pursuing goals 1 to 5. It is included as a sustainability dimension in its
+  own right because it is so fundamental to achievement.
+
+  Items 1 to 5 in this list relate to outcome goals, while 6 and 7 relate to complementary process goals for sustainability,
+which talk about how outcomes should be pursued. The priority attached to particular goals may vary between different
+cities and regions, but the commonality of the goal listings is striking. These goal listings can be taken as indicators for
+whether the wellbeing of society is likely to be improved or reduced by particular actions. If a particular action is expected
+to produce positive outcomes against some goal areas but negative outcomes on others, as is common, then weights need to
+be attached to particular impacts/goal areas to form a view on the overall merit of the action in question. Tools like cost
+beneﬁt analysis can assist in this process. The goal listing above is taken as a starting point for assessing future transport
+technological disruptions in the present chapter.
+
+3.3.2 Performance indicators
+
+The goals set out in Section 3.3.1 are high level pointers against which technological changes and policy responses thereto
+can be assessed. Being generic, they require more detailed elaboration if progress towards achievement is to be judged.
+Key Performance Indicators can be used to show relative goal achievement on key dimensions. A set of such indicators is
+set out in Table 3.2, to help assess disruptive technological changes in land passenger transport, drawing on the
+Commonwealth’s recent National Cities Performance Framework Report (2017) and Stanley et al. (2017).
+
+  The ﬁrst set of criteria in Table 3.2 relate to user beneﬁts, the scale of which depends on the extent of uptake of the new
+technologies, which itself depends in signiﬁcant part on the service quality of the relevant offerings. If taken to a full
+cost-beneﬁt analysis, then consumers’ surplus type measures would be applied to these user beneﬁts (and costs). The
+blocks of economic, environmental, social and cross-cutting criteria are essentially about externalities, or factors associated
+therewith. These externalities relate to the impacts of the technology, and its use, on third parties and/or on the
+environment, matters that are not usually taken into account by users in making their travel choices and not fully reﬂected
+in market prices. The ﬁnal group of criteria are about governance, relating to the how of implementation.
+
+  In similar vein to these evaluation criteria (KPIs), Robin Chase, Zipcar Co-founder, and a group of leading city and
+transport organizations8 have recently produced a set of Shared Mobility Principles for Livable Cities (Chase, 2017). These
+
+8. These are identiﬁed on the website www.sharedmobilityprinciples.org.
+22 PART | 1 Reviews
+
+TABLE 3.2 KPIs for assessing technological disruption in land passenger transport.
+
+Societal impact criteria  Indicator
+
+User beneﬁts  Number of trips
+  Kilometres travelled
+l Trips
+l Travel distance  Gross domestic (regional) product per hour worked; GRP
+  Deadweight congestion costs
+Externalities  Jobs
+  Public sector borrowing requirement
+Economic KPIs
+l Productivity/output  CO2e emissions
+l Congestion  PM and NOx emissions
+l Employment
+l Government spending/borrowing requirements  Fatalities, personal injuries, property damage
+  Obesity, overweight
+Environmental KPIs  Access by target ‘at-risk’ groups
+l GHG emissions
+l Air pollution  Hectares
+  Hectares and net infrastructure costs
+Social KPIs  Vehicle kilometres by motorized vehicles
+l Safety  VKT by transit
+l Health
+l Social inclusion  Formal and informal mechanisms in place
+  Formal and informal mechanisms in place
+Cross-cutting and/or intermediate impacts KPIs
+l Freeing up space for place making
+l Urban sprawl
+l VKT
+l Impact on transit
+
+Procedural criteria
+
+Governance KPIs
+l Integrated planning/policy
+l Community engagement
+
+Based on Stanley, J., Stanley, J., Hansen, R., 2017. How Great Cities Happen: Integrating People, Land Use and Transport. Edward Elgar, Cheltenham, UK;
+Commonwealth of Australia, Department of the Prime Minister and Cabinet, 2017. National Cities Performance Framework Report. Commonwealth of
+Australia, Canberra. https://www.infrastructure.gov.au/cities/national-cities-performance-framework/ﬁles/National_Cities_Performance_Framework_Final_
+Report.pdf.
+
+principles are very much in line with the KPIs set out in Table 3.2, as applied to delivery of shared mobility. The ten
+principles are:
+
+  1. We plan our cities and their mobility together
+  2. We prioritize people over vehicles
+  3. We support the shared and efﬁcient use of vehicles, lanes, curbs and land
+  4. We engage with stakeholders
+  5. We promote equity
+  6. We lead the transition towards a zero-emission future and renewable energy
+  7. We support fair user fees across all modes
+  8. We aim for public beneﬁts via open data
+  9. We work towards integration and seamless connectivity
+10. We support that autonomous vehicles (AVs) in dense urban areas should be operated only in shared ﬂeets.
+
+  Companies such as BlaBlaCar, Citymapper, Didi, Keolis, LimeBike, Mobike, Motivate, Ofa, Ola, Scoot Networks,
+Transit, Uber, Via and Zipcar have signed up to these principles, demonstrating wide support among a signiﬁcant number
+of stakeholders. The discussion in Sections 3.5 and 3.6 of this chapter draws on these principles, which provide a
+reinforcing sense of direction as to what constitutes a desirable outcome to some of the KPIs set out in Table 3.1.
+
+  The KPIs and principles outlined above provide a structured framework within which disruptive land transport
+technologies can be assessed and managed, to deliver improvements in societal wellbeing.
+  Disruptive technology and moving people Chapter | 3 23
+
+3.4 Some societal trends relevant to technological disruption in land passenger
+  transport
+
+3.4.1 Context
+The disruptive inﬂuences on land passenger transport that are being discussed in this chapter need to be considered against
+the background of the major emerging socio-economic trends into which they intrude. These trends will, for example, have
+important inﬂuences on the likelihood and speed of adoption and the nature and scale of prospective beneﬁts and costs of
+implementation in an Australian setting. The particular trends considered herein are, in no particular order:
+l ageing population
+l personal versus sharing economy
+l rise of knowledge economy
+l increasing inequality
+l need for GHG mitigation
+l increasing urban sprawl.
+
+  Readers will, no doubt, be able to add other major inﬂuences that are important contextually.
+  Population growth has not been speciﬁcally nominated as a separate socio-economic trend, although it is a policy
+variable with a major inﬂuence on current socio-economic outcomes in our cities, particularly the cities with the fastest
+growth rates, Fig. 3.1, for example, shows Victoria’s quarterly population growth over the period from March 1990 to
+March 2017. Rapid population growth has been mainly conﬁned to the last decade, particularly under the inﬂuence of a
+high rate of overseas migration. Overseas migration accounts for about half the total Victorian population growth over the
+past decade. This rate of overseas migration is ultimately a policy variable and should be seen as such. What a continued
+high rate of population growth means, however, is an ampliﬁcation of the signiﬁcance of the socio-economic trends that are
+discussed in this chapter.
+
+3.4.2 Ageing population
+In 2016, some 15% of the Australian population (3.7/24.3 million), were aged 65 or over (AIHW, 2017). By 2056, the
+number of older Australian is projected to increase by 5 million to 8.7 million, or 22% of the total population, increasing
+much faster than the overall rate of population growth.9 Within this growing older cohort, the age distribution is also
+projected to shift upwards. The proportion of older Australians who are aged 65e74 is projected to decline from 57% in
+2016 to 45% in 2046, although numbers in this age range are still projected to grow from 2.1 m to 3.3 m. The proportion
+
+FIG. 3.1 Victorian population growth 1990e2017. Sourced from Australian Bureau of Statistics, 2017. Australian Demographic Statistics, Cat. 3101.0.
+http://www.abs.gov.au/AUSSTATS/abs@.nsf/DetailsPage/3101.0Dec%202017?OpenDocument. (Accessed 24 February 2018), Table 2.
+
+9. All projections presented in this paragraph are taken from AIHW (2017), which draws mainly on ABS (2013).
+24 PART | 1 Reviews
+
+aged 74e85, however, is projected to grow from 30% to 35% of the total of older Australians, increasing from 1.1 to
+2.6 m. Those aged 85 and over accounted for 13% of older Australians in 2016 but this share is projected to grow to 19%
+by 2046, with the numbers in this age category increasing from 0.5 m in 2016 to 1.4 million.
+
+  Along with an increase in population age levels is an increase in age-related health challenges. AIHW (2017), for
+example, reports that one-ﬁfth of Australians aged 65 and over experienced disability in the form of a severe or profound
+core activity limitation. Research by SEU (2003), Browning (2007) and Hensher (2007a,b,c), for example, indicates that
+older age groups are more likely to encounter social exclusion because of a lack of mobility options, particularly if there is
+little or no car availability or if people are not able to, or choose not to, use a car. This is a particular problem in regional
+areas where car dependence is high. By implication, one particular beneﬁt opportunity from disruptive technological
+change in land passenger transport may be the provision of a wider range of mobility opportunities for the growing
+numbers of older Australians, and most particularly for older aged persons among these groups.
+
+  The focus on an ageing population, and mobility-related social exclusion risks associated therewith, is often to the
+detriment of other groups who also face signiﬁcant mobility-related exclusion risks, particularly young people. Young
+people can be both independent and dependent in terms of travel needs. Independence comes from being able to walk or
+cycle for many trips. Dependence comes from reliance on parents/others for car travel. Stanley and Stanley (2018) suggests
+that some young people can be doubly disadvantaged, by living in non-urban locations and coming from low income
+households that are unable to pay for alternative transport (e.g., a second household car or taxi fare). Particular problems
+include access to alternative educational programs, work and entertainment. Thus, while an ageing population trend might
+be apparent for Australia, this should not serve as a vacuum cleaner in terms of sucking up all the interest in terms of who
+might experience mobility-related risks of social exclusion, with youth (for example) a particularly neglected group in this
+regard, as are regional pre-school children and those who care for them (Stanley and Stanley, 2018).
+
+3.4.3 Have your own or be part of a sharing economy?
+
+Recent years have seen a growing interest in what is often generically called the sharing economy. In the transport sector,
+car share models have been in place for many years but the scope of sharing in relation to transport is now extending well
+beyond car sharing.10 More broadly, the focus in the sharing economy is essentially on consumers paying for access to (for
+example) services, rather than owning the means of providing them, and on making better use of underused assets, through
+sharing. It is important to note, however, that sharing and ownership are not necessarily mutually exclusive, as evidenced
+by peer-to-peer carsharing models like CarNextDoor, where vehicles are individually owned then rented out, as compared
+with ﬂeet managed systems like GoGet. The ownership model for autonomous vehicles (either individually owned for sole
+use, individually owned then rented out, or owned by a ﬂeet manager) will have the greatest impact on the number of
+vehicles in the system and the proportion of time they spend on the network (Wong et al., 2017).
+
+3.4.3.1 Shared economy
+
+Botsman (2015) notes that several different business/exchange models are often encompassed in the generic description,
+shared economy. She distinguishes between, and deﬁnes, the
+
+l collaborative economy: an economic system of decentralized networks and marketplaces that unlocks the value of
+  underused assets by matching needs and haves, in ways that bypass traditional middlemen (e.g., Kickstarter)
+
+l sharing economy: an economic system based on sharing underused assets or services, for free or for a fee, directly
+  from individuals (e.g., Airbnb)
+
+l collaborative consumption: the reinvention of traditional market behaviorsdrenting, lending, swapping, sharing,
+  bartering, giftingdthrough technology, taking place in ways and on a scale not possible before the internet
+  (e.g., Zipcar) and
+
+l on-demand services: platforms that directly match customer needs with providers to immediately deliver goods and
+  services (e.g., Uber).
+
+3.4.3.2 New mobility services and millenials
+
+Uber is probably the most well-known passenger transport application in this regard, with its smartphone based platform
+that enables use of underused vehicles. Cervero et al. (2017) note the rapid growth in what they call new age mobility
+
+10. US research suggests that participation in car share schemes lowers car ownership rates. For example, Martin and Shaheen (2011) reported average car
+ownership rates of car share scheme participants of 0.24 vehicles per household, having been 0.47/household before they joined.
+  Disruptive technology and moving people Chapter | 3 25
+
+services, ranging from ride hailing services (e.g., Uber, Lyft) to various forms of micro transit (e.g., UberPool, Lyft Line),
+ﬁlling out the gap between taxis and ﬁxed route/scheduled PT, and peer-to-peer models of providing and accessing
+mobility (e.g., UberX). Cervero et al. note that the main reasons people use Uber and Lyft are ease of payment and ride
+requests via smartphone, together with shorter average wait times than taxis, reﬂecting the way on-demand local and
+integrated trunk PT services need to be thinking. In terms of social trends, they note that these qualities are particularly
+important for Millennials (people born between the early 1980s and early 2000s), who they describe as fuelling the
+meteoric rise in collaborative consumption (Cervero et al., 2017, p. 215).
+
+  Travel habits of Millennials have been a growing research focus, with a number of studies pointing out that car ownership
+is relatively lower among this group than in previous years. Jenkins (2017), for example, points to research by Roy Morgan
+Research that suggests a 5% point reduction in car driving among this group between 2006 and 2016, also noting that half of
+the 200,000 Australians who use car sharing services are Millennials. Similarly, research by University of Michigan found
+that, in the US, 87% of 19 year-olds had a license in 1983, compared to only 69% in 2013 (Godfrey, 2016).
+
+  Delbosc’s (2017) examination of this matter, however, suggests that Millennials are deferring the time of transition to a
+car dependent lifestyle, rather than giving up the car. She draws parallels between this delay in driver licensing and delays
+in full-time work, marriage and child rearing among this generation, suggesting that the life cycle effect of auto-mobility
+peaks in the middle stages of the life cycle.
+
+  Economic pressures, including high youth unemployment and high housing costs, are likely to be reinforcing the
+delayed driver licensing phenomenon among Millennials. However, and importantly, Cervero et al. (2017) note that the
+residential location preferences of Millennials increasingly favour accessible, walkable mixed use neighbourhoods in
+traditional urban cores. These are areas where public transport service provision is usually good. Lower rates of driver
+licensing and car ownership, and higher use of active and public transport, including hailed app-based rides, follow this
+location pattern.
+
+3.4.3.3 Shared vehicle use
+
+The International Transport Forum (2016) has undertaken an informative analysis of what comprehensive roll-out of shared
+vehicle use might mean for societal outcomes. Using Lisbon as a case study, the ITF assumed replacement of all car and bus
+trips in that city by shared vehicle use, provided by ﬂeets of six-seat vehicles offering on-demand door-to-door service,
+supported by eight-seat vehicles and 16 seat mini-buses, serving pop-up stops and providing transfer-free rides. The exercise
+suggested that trafﬁc congestion would disappear, emissions would fall by one-third (more if electric vehicles replaced
+internal combustion engined vehicles) and 95% of parking space would be freed up. Use of individual vehicles would
+increase by a factor of 10, implying shorter vehicle life, faster ﬂeet turnover and more rapid reduction in emissions associated
+therewith. Mobility opportunities would be more widely available, with associated social inclusion beneﬁts, and journey costs
+would be about halved. The study demonstrated the potential opportunities should widespread adoption of shared mobility be
+achievable. One limitation of the model, however, is the assumed homogeneity across the road network,11 disregarding the
+road hierarchy and need to protect places/communities where pedestrians ought to have priority over motorised modes,
+bringing associated noise, air and urban amenity externalities (Wong et al., 2017).
+
+  The point to take from this brief discussion is that there appears to be a signiﬁcant increase taking place in preferences
+for accessing services and assets by means other than outright ownership. In land passenger transport, this is seeing strong
+growth in (for example) demand for ride hailing and shared-ride services (from a low base), with an associated opportunity
+to mitigate the societal costs of Australia’s high rate of car dependence for passenger travel. These societal costs include
+congestion, accident costs, air pollution, climate change and growing health costs. Widespread adoption of shared mobility,
+including by PT, thus holds the promise of considerable societal beneﬁt.
+
+3.4.4 Rise of the knowledge economy
+
+Economic productivity growth is closely linked to an economy’s performance in high technology/knowledge-based goods
+and services. Stanley and Brain (2015) pointed out that the total impact of Sydney’s high technology industry growth
+between 1992 and 2012, including modest multiplier effects, is estimated to account for nearly 70% of total Sydney
+metropolitan area growth in value added, showing the huge signiﬁcance of these activities. The outcome for Melbourne
+was over 60% of total regional growth between 1992 and 2012. These numbers underline the importance of understanding,
+
+11. Indeed, distributor roads will see trafﬁc increase by 76% and local roads by 115% (which can be absorbed and is within their throughput capacity
+limits but will bring associated externalities to communities).
+26 PART | 1 Reviews
+
+in particular, the location determinants of high-tech/knowledge-based industries and the way planning, infrastructure,
+transport services and other policy levers can be used to promote their development, to promote pursuit of the economic
+productivity goal.
+
+  Stanley and Brain (2015) pointed out that productivity levels in Sydney and Melbourne generally decline with
+increasing distance from the centre in Australian cities, reﬂecting structural economic changes and the varying location
+patterns of different industry sectors. DIRD (2015) pointed to the strong growth in business services and long-term decline
+in manufacturing, the former supporting strong central area job growth and high productivity levels, while the latter
+reduces employment opportunities accessible for outer urban residents. Signiﬁcantly, Stanley and Brain (2015) highlighted
+the growing gap between the productivity levels in inner and outer areas of Sydney and Melbourne between 1992 and
+2012, suggesting increasing inequality. The fastest rates of productivity increase have been in places where high-tech/
+knowledge-based economic activities are increasingly concentrating. Some parts of the outer areas in each city (led by
+suburban business parks, though widely skewed in terms of where these are locatedde.g., Sydney’s Macquarie Park12 and
+Norwest Business Park located in the northern suburbs) have achieved increases in productivity levels that are in line with
+the median rate for the city as a whole but most have not.
+
+  Recognizing the signiﬁcance of the structural economic shifts taking place in our major cities, and with a desire to
+both improve productivity growth and ensure that the beneﬁts of this growth are widely shared among residents, city
+land use transport strategies are now generally seeking to support growth in high-tech/knowledge-based economic
+activities, which generally requires clustering and good accessibility, while seeking opportunities to extend the acces-
+sibility of such clusters to a wider range of urban locations and residents. Melbourne and Sydney, in particular, are
+focussing their land use transport strategies in this direction (DELWP, 2017; Greater Sydney Commission, 2017). These
+economic/land use/transport directions form one important part of the broader strategic land use transport context against
+which disruptive technological changes affecting land passenger transport need to be assessed. Will these changes, such
+as the advent of autonomous electric vehicles, support desired economic/land use/transport policy and planning
+directions or might they adversely impact on outcomes in these areas? How can the prospects of beneﬁcial impacts be
+enhanced?
+
+3.4.5 Land use transport integration
+
+The dominance of major transport infrastructure projects in city shaping, and in the economic, social and environmental
+performance of a city, is such that it is crucial for land use transport planning to start with a clear vision of the kind of city
+that is desired and then use transport and other measures to help deliver that result (Cervero, 2014). In this regard, most
+Australian cities and cities in Europe and Canada that are pursuing triple bottom line sustainability goals are commonly
+focussing on achieving more compact urban settlement patterns. The discussion on the rise on the knowledge economy, in
+Section 4.4, is a powerful economic force supporting more compact cities, because of the agglomeration economies
+associated therewith, but the social and environmental effects of sprawl and associated car dependency also point to the
+need for more compact urban growth.
+
+  The focus on achieving more compact cities has often concentrated on increasing densities through high-rise devel-
+opment in central/inner areas, where accessibility levels are usually highest, but there is now also considerable interest in
+medium density development around major transit nodes and along strategic transit corridors, including in inner and
+middle urban areas. Stanley and Brain (2015) drew attention to Vancouver’s success in pursuing growth in strategic transit
+corridors. Reviewing triple bottom line inﬂuences on land use development directions for Australian cities, that paper
+concluded that (Stanley and Brain, 2015, p. 24):
+
+  .the desirable strategic land use development direction for our largest cities then becomes one seeking more compact settlement
+  patterns, anchored by
+
+l the CBD and close surrounds
+l a small number of high tech/knowledge-based clusters (which should form the basis for a polycentric city and focal
+
+  points for inner/middle urban area growth)
+l major transport corridors that link these core nodes to the centre, to each other and to outer areas
+l a series of constituent 20 minute cities.13
+
+12. Now the second largest ofﬁce market in Sydney after the CBD, larger than both North Sydney and Parramatta (Wong, 2017).
+13. By public transport and active modes.
+  Disruptive technology and moving people Chapter | 3 27
+
+  Sydney and Melbourne land use transport planning directions, for example, are generally in line with this orientation,
+reﬂected in Sydney’s three hubs and Melbourne’s National Employment and Innovation Clusters, although Sydney has
+opted for a 30 min city focus, not 20 min.
+
+  Under the current high population growth rates, however, a disproportionate share of population growth in some cities
+is occurring in outer urban areas, which makes achievement of a more compact urban structure more difﬁcult. For example,
+47% of Melbourne’s population growth between 2011 and 2016 occurred in six fringe LGAs: Cardinia, Casey, Hume,
+Melton, Whittlesea and Wyndham, reﬂecting (for example) the city’s high population growth rate and high cost of inner
+and middle urban housing. In terms of the current chapter, an important test of technological disruption in land passenger
+transport will be whether it supports, or undermines, the shaping of more compact cities.
+
+  Strategic public transport development directions to support the compact city land use development directions indicated
+above include, inter alia, provision of:
+
+l high capacity radial networks supporting the central area and surrounds, particularly because of the agglomeration
+  economies associated therewith
+
+l high quality networks serving the major development nodes/clusters throughout the city and along strategic transit
+  (development) corridors, including better connections from the fast growing outer suburbs to proximate nodes/clusters
+  and
+
+l local service levels that support the development of 20/30 min neighbourhoods throughout the city.
+
+  The way that technological disruptions support, or hinder, such strategic transport development directions should also
+form an important part of the assessment of the technologies in question.
+
+3.4.6 Increasing inequality
+
+Analysts have drawn attention to the problem of widening disparities in income levels within some countries. Wilkinson
+and Pickett (2009), for example, point out how the income gap between the richest and poorest 10% in both the US and UK
+widened by about 40% between the mid-70s and mid-90s. Nobel laureate Stiglitz (2012) argues that:
+
+  The simple story of America is this: the rich are getting richer, the richest of the rich are getting still richer, the poor are becoming
+  poorer and more numerous, and the middle class is being hollowed out. The incomes of the middle class are stagnating or falling,
+  and the difference between them and the truly rich is increasing
+
+  Stiglitz (2012, p. 7).
+
+  Picketty (2014) shows that the top decile’s share in US national income increased by over ten percentage points
+between the late 70s and early this century. Wilkinson and Pickett (2009) go on to suggest that reducing inequality tends to
+produce improved outcomes across a range of indicators, such as levels of trust, life expectancy, obesity, math and literacy
+scores and homicide rates. OECD (2014) suggests that rising inequality in the OECD over 25 years resulted in a
+cumulative loss of GDP at the end of the period of 8.5%.
+
+  Using Gini co-efﬁcient data, Nolan et al. (2017) report that, while global inequality had decreased, income inequality is
+high and has been rising sharply among rich (OECD) countries in recent decades. They argue that recent generations are no
+longer on track to be richer than their parents. Nolan et al. show an increasing Gini co-efﬁcient (increasing income inequality)
+for Australia, as does OECD (2017), which shows top income groups beneﬁtted most from the 2003/04 to 2013/14 boom.
+Whiteford (2017) suggests a slight drop in inequality occurred 2013e14 to 2015e16, the richest 20% of households seeing
+their real incomes decline slightly, but that inequality remained higher than at any point before 2007e08.
+
+  Nolan et al. also point out that there has also been a pronounced increase in wealth inequality since 1980 in a number of
+countries, including Australia. They show that increased inequality can lead to erosion of social cohesion and trust, with
+conﬁdence in national governments declining. Importantly, they stress that inequality is not exogenous: for example, they
+suggest that technological change (and globalization) may increase inequality but public policy can respond. For example,
+taxes and social expenditures can be used to reduce income inequality.
+
+  With substantial proportions of national populations now living in cities, elements of the inequality challenge
+summarized above can be seen at city level. Stanley and Brain (2015) showed, for example how productivity levels across
+Sydney and Melbourne decline with increasing distance from the CBD and how the gap between productivity levels in
+inner and outer areas widened over the two decades from 1992. Lower public transport service levels in outer areas, and
+lags in provision of infrastructure and services in outer growth suburbs, compound these problems, particularly in cities
+where population growth is surging. Stanley and Brain (2015) argued that infrastructure investment in public transport,
+28 PART | 1 Reviews
+
+supported by radial and circumferential PT service improvements, can be used to both promote productivity growth and
+reduce inequalities. It showed that, with well-targeted investments, the social (distributional) outcome goal can be pursued
+at the same time as the economic (productivity) goal. Arguments for decent local public transport service levels in outer
+suburbs are also supportive of reducing inequality and stronger communities, in line with the idea of building 20 min
+neighbourhoods, as noted in Section 4.5 (Stanley et al., 2017).
+
+  The urgency of such PT infrastructure and service improvements is compounded by the current high rate of population
+growth in many outer suburban areas, which means these PT improvements should be high on government priority lists.
+Governmental responses to these land use transport integration challenges, to date, have tended to rely on investment in
+heavy rail, rather than more balanced PT investment and service development packages.
+
+3.4.7 Reducing greenhouse gas emissions
+Australia’s 2016e17 greenhouse gas emissions totalled 550 Mt CO2-e, some 9.1% lower than 2005 emissions (DEE,
+2017). Australian transport sector emissions in 2016e17 were 96.5 Mt CO2-e and have grown by over 55% since 1990,
+with the sector’s share of Australian emissions increasing from 15% in 2002 to over 18% in 2016e17 (DEE, 2017).14
+These data suggest that the transport sector is acting as a drag on national GHG emissions reduction performance.
+
+  Road transport represents 84% of transport sector GHG emissions, and must play a lead role in sector emissions
+reduction. Road transport GHG emissions were 72.6 Mt in 2005, increasing to 78 Mt in 2014e1515 and projected to be
+85 Mt in 2020 (DoE, 2015). A business-as-usual (BAU) projection of road transport emissions suggests emissions of
+around 93.6 Mt in 2030 (Stanley et al., 2018). DoE (2015) projects continued growth in Australian road transport GHG
+emissions, fuelled by growth in passenger vehicles and continuation of low oil prices, but argues that ﬁnalisation of fuel
+efﬁciency standards will likely lead to a signiﬁcant downward revision in the emissions outlook for this sector (DOE,
+2015, p. 6).
+
+  If the road transport sector was to be expected to meet the national 26%e28% reduction target by 2030, as per the Paris
+commitment, then emissions would need to fall to about 52e54 Mt CO2-e by 2030, a reduction of about 20 Mt against
+2005 emissions levels but about 40 Mt against 2030 BAU projections. No targets have been adopted in terms of Australian
+vehicular GHG emission standards but Stanley et al. (2018) show that implementation of mandatory emission standards for
+CO2, in line with European or US standards, which might be met by a rapid deployment of hybrid propulsion and electric
+vehicles, is only likely to deliver about three-quarters of the 40 Mt reduction. Nevertheless, this is important progress and,
+as part of an implementation package, governmental incentives should be available for bus ﬂeet replacement by lower
+emission vehicles, given the increased focus that is needed on PT improvements in middle and outer urban areas, where
+bus is the primary mode of PT delivery, to achieve more compact cities. By implication, however, behaviour change
+measures that reduce the rate of growth of motor vehicle use will also be needed if road transport is to carry its share of
+responsibility for lowering GHG emissions. Alternatively, tougher emissions standards will be needed, or a bit of each,
+assuming that the (modest) 26%e28% reduction target is retained. Any roll out of AVs that increased the growth rate in
+vehicle kilometres of road travel could have an adverse impact on Australia meeting its international obligations, unless
+offsetting steps are taken to mitigate emissions growth.
+
+3.4.8 Conclusion
+
+Technological disruption in land passenger transport does not occur in a vacuum. A range of major economic, social and
+environmental trends will inﬂuence the extent to which major disruptions, such as autonomous vehicles, affect societal
+outcomes, whether those effects are positive or negative and the timing of effects. Potential impacts will be bidirectional, in
+terms of policy directions that are likely to deliver the best triple bottom line outcomes, as illustrated in the brief discussion
+on land use transport strategic directions for more compact urban form. AVs, for example, might hold promise of sub-
+stantial improvement in mobility opportunities for some older people and youth. However, unless they are substantially
+fuelled by renewable power sources and managed to mitigate risks of greatly increased usage, with associated risks of
+increased congestion and extended urban sprawl, they cannot be assumed to be a universal force for good.
+
+14. Note that the above numbers do not include electric rail emissions, indirect emissions, or emissions from international shipping and aviation.
+15. About three-quarters from cars and light commercial vehicles.
+  Disruptive technology and moving people Chapter | 3 29
+
+3.5 Scenarios
+
+3.5.1 Two future scenarios and their potential effects
+
+Given the uncertainties involved in predicting the way digital disruption will impact future personal travel choices, and
+matters related thereto, scenarios can be a helpful way to think through what the future might look like, as an aid to shaping
+policy responses to increase the likelihood of better societal outcomes, in terms of the societal goals elaborated in Section
+3.3. A number of papers exploring technological disruption in land passenger transport topic have taken this approach.
+
+  McKinsey & Bloomberg NEF (2016) develop three scenarios, each linked to a speciﬁc type of city environment, which
+they label ‘clean and shared’, ‘private autonomy’ and ‘seamless mobility’. The ‘clean and shared’ scenario is least relevant
+to Australia, since it focuses on developing, dense metropolitan areas such as Istanbul, Delhi and Mumbai. Cervero et al.
+(2017) use ‘optimistic’ and ‘pessimistic’ scenarios, Isaac (2016) talks about a ‘driverless nightmare’ scenario and a
+‘driverless utopia’ scenario, while Susan Shaheen, co-director of the University of California Berkeley Transportation
+Sustainability Research Centre (quoted in Mervis, 2017), talks about ‘utopian’ and ‘dystopian’ scenarios.
+
+  While scenarios often discuss the impacts of pathways on introducing technological change, they tend to be more
+interested in end-points and, therefore, in the current context, tend to assume widespread implementation of AEVs. In that
+event, the separation of scenarios for exploring the possible future impacts of AEVs (including MaaS-type approaches to
+service provision) depends essentially on assumptions about the penetration of shared mobility (vehicle sharing and ride
+sharingdi.e., sharing across time and in space) and the consequences thereof, as compared to personal ownership.
+Optimistic scenarios are based on the assumption of a high level of penetration of shared mobility solutions and pessimistic
+scenarios on a low level of penetration, with personal vehicle use remaining dominant. We use optimistic and pessimistic
+scenarios below and suggest the major likely consequences of each, in terms of matters likely to impact signiﬁcantly on
+user beneﬁts and external costs/beneﬁts, and hence on societal goal achievement. Neither scenario in its entirety is expected
+to be the eventual outcome but proposing two distinctly different futures enables some key risks and opportunity areas to
+be identiﬁed and policy measures to be framed to increase the likelihood of better outcomes being realized. Policy matters
+are discussed primarily in Section 3.6.
+
+  Table 3.3 summarizes our assessment of the broad outcomes associated with each of the two scenarios, drawing partly
+on McKinsey & Bloomberg NEF (2016), Isaac (2016), Cervero et al. (2017) and Litman (2018) and adding our own
+insights. The time frame for the table is such as permits widespread adoption of AEVs. As noted elsewhere, cyber security
+and privacy considerations are not included in this assessment. The following discussion focuses on user beneﬁts and
+externalities. The subsequent discussion about potential impacts on public transport, in Section 3.5.4, includes shorter time
+horizons.
+
+3.5.2 An optimistic scenario
+
+The optimistic scenario assumes that there is substantial penetration of shared mobility, in part because policy settings
+explicitly target this outcome, as discussed in Section 3.6. We ﬁrst consider user beneﬁts from AEVs and then external
+effects. The discussion on the optimistic scenario in this section is more detailed than that of the pessimistic scenario in
+Section 3.5.3, because many comparisons between the two scenarios are included in this section.
+
+3.5.2.1 User impacts
+
+In the optimistic scenario, cheap, accessible, low/zero emission driverless vehicles are widely available on-call, either for
+single use or shared use but shared use mode predominates (perhaps shared in peak periods and operating point-to-point
+off-peak), mainly because the lower marginal user costs associated therewith outweigh potential disadvantages in terms of
+(for example) inconvenience, as compared to private ownership. Shared mobility brokers and/or providers (MaaS) work
+hard at ensuring convenience and reliability are service hallmarks. In terms of user costs, RethinkX (2017) projects this
+shared AV cost at four to ten times cheaper per mile than buying a new car and two to four times cheaper than operating an
+existing vehicle. Litman is much less optimistic on cost reduction potential from shared mobility but still sees savings.
+Travel time reliability beneﬁts are also likely to occur with AEVs, with signiﬁcant gains at a penetration rate of 25% or
+more (Atkins, 2016).
+
+  Availability, convenience and cost of accessing AEVs are such that people see less need to own their own vehicles.
+Those who continue to own their own vehicles increasingly make them available for use by others. Also, giving up a
+substantial element of private vehicle ownership frees up part of the household budget for other uses. Removing the need
+for a driver means that travel time can be used productively, if the passenger so wishes (research is taking place on ways to
+30 PART | 1 Reviews
+
+TABLE 3.3 Scenarios for future mobility.  Optimistic/utopian future  Pessimistic/dystopian future
+
+Societal impact criteria  > than in pessimistic scenario  < than in optimistic scenario
+  < than in pessimistic scenario  > than in optimistic scenario
+User beneﬁts
+  Higher  Lower
+l Trips (i.e. person trips)  Uncertain direction  Uncertain direction
+l Travel distance (person kilometres)  Lower  Higher
+  Lower  Higher
+Externalities
+  Lower  Probably lower but > optimistic
+Economic  Lower  Ditto
+l Productivity/output  More  Less
+l Employment
+l Congestion  Lower accident rate  Lower but > optimistic
+l Government spending/borrowing requirements  Greater inclusion  No change or worse
+
+Environmental  Yes  For some
+l GHG emissions  Yes  Possibly but < optimistic
+l Air pollution  Less pressure  Increased pressure
+l Open space availability near housing  < than pessimistic scenario  > than optimistic scenario
+
+Social  A requirement for delivery  Less likely
+l Safety  A requirement for delivery  Less likely
+l Social inclusion
+
+Cross-cutting and/or intermediate impacts
+l Expanded travel choices
+l Freeing up space for place making
+l Urban sprawl
+l VKT by private car.
+
+Procedural criteria
+
+Governance
+l Integrated planning/policy
+l Community engagement
+
+reduce car sickness associated with working in the vehicle), or to catch up on lost sleep. On the negative side, cheaper
+travel costs will encourage additional trip making, which is likely to add to congestion pressures unless shared mobility
+provides sufﬁcient offset.
+
+  AEVs can provide new mobility opportunities for people who cannot, or choose not to, drive (for whatever reason).
+Older people, youth and people with a disability are often mentioned in this context but there is no reason why these
+improved mobility opportunities cannot also extend to other groups experiencing transport disadvantage, particularly in
+urban areas. Our research on links between mobility, trip making and risk of social exclusion has shown the high value of
+additional trip making by those at such risk (see, for example, Stanley and Hensher, 2011). In the early years of imple-
+mentation, these beneﬁts will probably be limited to higher income households, because of higher capital costs of AEVs
+but, as shared mobility choices start to proliferate, the inclusion beneﬁt opportunity will be more widely available. Greater
+social inclusion is also associated with ﬂow-on external beneﬁts, such as improved mental health, higher employment
+levels, lower medical costs, etc.
+
+  The cheaper cost of AEV travel, particularly by ride-sharing, and the opportunity for new vehicular trips by mobility/
+transport disadvantaged people will combine to mean that the number of person trips increases in the optimistic scenario.
+Given sufﬁcient penetration of shared mobility choices, however, this higher number of person trips can be satisﬁed with a
+slower growth in vehicle kilometres travelled, even though autonomous shared vehicles need re-positioning movements.
+
+3.5.2.2 External beneﬁts/costs
+
+Vehicle platooning, made possible by vehicle-to-infrastructure and vehicle-to-vehicle communication, means that effective
+road/PT system capacity increases with widespread use of AEVs, although separate right-of-way is likely to be required to
+maximize this increase. Friedrich (2016), for example, has estimated the effective road capacity increase achieved by
+purely autonomous trafﬁc at 40% in city trafﬁc and 80% on highways, with other estimates even higher. For example,
+Bierstadt et al. (2014) suggest freeway capacity could double with 100% AVs and Fernandes and Nunes (2012) show
+  Disruptive technology and moving people Chapter | 3 31
+
+theoretically how lane capacity could almost quadruple with optimal platooning. This, and the freeing up of parking space
+attributable to lower personal ownership of vehicles and a greater reliance on ride sharing, means that scarce urban space
+can be released for other community uses, such as local open space, in the optimistic scenario.
+
+  Taking these capacity considerations into account alongside expected slower growth in VKT, as compared to the
+pessimistic scenario, means that realization of the user beneﬁts from AEVs can be achieved with lower congestion
+pressures under the optimistic scenario than in the pessimistic scenario.
+
+  The main beneﬁt of AEVs is often cited as safety, widespread use expected to deliver substantially lower accident rates.
+The 90% or so scale of reductions often cited (e.g., Fleetwood, 2017) are questioned by Litman (2018) but signiﬁcant
+beneﬁts are still in prospect, depending partly on the regulatory environment that is put in place. The greater use of electric
+AVs, fuelled by clean energy sources, and slower growth in VKT under a high penetration rate of shared mobility, should
+combine to deliver lower emissions of GHGs and local pollutants, with associated health beneﬁts.
+
+  With vehicle use in the optimistic scenario now paid for on a more direct pay-by-use basis, active transport is likely to
+account for a higher mode share than in the pessimistic scenario, with multiple societal beneﬁts (e.g., improved health,
+lower congestion). The higher mode shares for active travel will, in turn, be supportive of more compact settlement patterns
+than in the pessimistic scenario. One implication is likely to be relatively higher urban productivity from clustering in the
+optimistic scenario. Also, the more compact urban form will mean a lower level of infrastructure spend on the urban fringe
+and beyond, easing government borrowing requirements.
+
+  It is important at this point to emphasize that that some key external beneﬁt issues tied up in AEV discussions, such as
+GHG emissions savings and lower local air pollution, are important policy matters in their own right and need to be
+resolved in both scenarios. Similarly, much of the social inclusion beneﬁt of AVs (and AEVs) are likely to be available
+under both scenarios, because of the presence of driverless vehicles in each. Second order differences may arise, however,
+in terms of the scale of beneﬁts as between the two scenarios and in the rate at which these beneﬁts arise during the
+transition pathway. For example, the higher levels of VKT expected under the pessimistic scenario will mean higher GHG
+emissions and air pollution, to the extent that this scenario has a higher level of VKT than the optimistic scenario, albeit
+that GHG emissions on both should be well below business-as-usual projections. Similarly, the optimistic scenario should
+be expected to deliver bigger inclusion beneﬁts because it is expected to mean lower unit costs of travel (because of greater
+penetration of shared mobility) and less contrary pressures from accelerated urban sprawl, with fewer associated expected
+adverse impacts on PT availability (harder to ensure in lower density settings), all adding up to net relative inclusion gains
+for the optimistic scenario.
+
+3.5.3 A pessimistic scenario
+
+Much of the discussion in Section 5.2 applies to this section. The pessimistic scenario assumes that attachment to private
+vehicle ownership and use remains strong, such that vehicle sharing and ride sharing play only relatively small roles in
+future mobility provision. McKinsey Bloomberg NEF set up this kind of scenario as follows:
+
+  The attractiveness of the private vehicle. The advent of desirable and highly personalised cars e which would frequently also be
+  electric e may maintain consumers appetite for a private vehicle. In this vision of the future, consumers are likely to value both
+  their privacy when travelling and the independence of owning their own car. Accordingly, car sharing, ride hailing and ride
+  sharing remain complementary options but do not replace commutes on a large scale.
+
+  McKinsey Bloomberg NEF (2016, p. 34).
+
+  In this setting, the personal appeal of private ownership, reinforced by the perceived lower cost of AEVs and
+opportunity to use travel time productively lead to increased personal trips, with vehicle kilometres increasing at least as
+fast as personal trips but most probably much faster, as car owners avail themselves of the opportunity to call up their car
+when they want it (e.g., to collect them), send the vehicle to ﬁnd its own parking space or to serve travel needs of family
+members or friends. With the added demand from those for whom AEVs provide a new travel opportunity (social inclusion
+beneﬁt), growth in VKT will thus be faster in the pessimistic scenario than in the optimistic scenario, but the number of
+person trips may not increase as much as in the optimistic scenario. The pessimistic scenario has more trips on road but
+probably less across all modes. These various inﬂuences mean that trafﬁc congestion is likely to increase relative to the
+optimistic scenario but also probably in absolute terms, more than offsetting the beneﬁt effect of AEVs in terms of
+increasing effective road capacity. They also mean that car parking space will be required in greater quantity than in the
+optimistic scenario, reducing the opportunity to convert such space to other valuable community uses.
+32 PART | 1 Reviews
+
+  The opportunity to work-in-vehicle, or rest/sleep while travelling, instead of having to deal with the driving task, will
+be seen by some people as an opportunity to change place of residence, most likely to consume additional space by moving
+to the peri-urban area or even beyond, extending urban sprawl. This will be a compounding factor increasing VKT under
+the pessimistic scenario, also increasing attendant risks of greater social exclusion for those with fewer mobility choices
+and increased costs of infrastructure and service provision. The opportunity to live further out will be most available to
+those on higher incomes, the sprawl effect, however, tending to worsen public transport travel opportunities available to
+those on lower incomes.
+
+  Increased sprawl under the pessimistic scenario will be associated with reduced urban productivity, in the Bus Industry
+Confederation Policy Paper 5 showing how productivity levels decline with increasing distance from the CBD (Stanley and
+Brain, 2015). Also, the infrastructure costs of accelerated urban sprawl under the pessimistic scenario mean added pressure
+on government borrowing requirements. We see the consequences of greater urban sprawl as potentially the biggest
+single risk from widespread adoption of AEVs. The risks from technological disruption in this regard add to challenges
+to sprawl already being experienced in the larger cities from a high rate of population growth, ahead of requisite
+infrastructure and service provision.
+
+  Employment impacts of AEVs are hard to assess as between the two scenarios. The removal of the need for a driver
+will clearly cause signiﬁcant job loss in sectors such as freight, bus and taxi but offsets of some unknown proportion should
+follow from higher urban productivity associated with the optimistic scenario.
+
+3.5.4 Implications for public transport
+3.5.4.1 Markets subject to most pressure for change
+We now consider the way that AEVs might impact on public transport in coming years. Removing the need for a driver
+makes AEVs an appealing proposition for much public transport and the potential low cost of shared AEVs opens up
+market opportunities for such vehicles to provide services that are currently regarded as ‘public transport’. For example,
+micro transit (6e12 passengers) could provide frequent, demand-responsive service (Litman, 2018), in support of
+supporting development of 20 min neighbourhoods. However, shared mobility solutions will be somewhat harder to
+deliver in the low density settlement patterns that characterize Australian cities and regions than in higher density settings,
+because of service economics. In this section we present a brief outline of public transport service economics, since some
+existing PT services (i.e., shared mobility) may be at considerable risk as MaaS/AEV use grows.
+
+  In service cost terms, public transport service provision confronts a trade-off tension between pursuing patronage or
+ridership, which tends to produce relatively low costs per passenger kilometer and delivers economic and environmental
+beneﬁts, versus service coverage for social inclusion purposes, where costs per passenger kilometre tend to be high. This
+market distinction is often described as being between mass transit services and social transit, or between ridership and
+coverage. Fig. 3.2 characterizes service by mass transit and social transit across a city and links this to characteristics of
+urban structure that have been shown to affect PT patronage and car use (Ewing and Cervero, 2010).
+
+  FIG. 3.2 Aligning PT service with land use.
+  Disruptive technology and moving people Chapter | 3 33
+
+  In outer urban (and regional) areas, land use density and mix (diversity) are usually low and so is PT service
+connectivity but distance from a city’s CBD is relatively high (shown in reciprocal form in Fig. 3.1 as 1/Distance from
+CBD being low). PT service characteristics in this setting are typically relatively low frequency service levels, shorter span
+of operating hours, less direct routes and relatively poor travel time compared to car (including access/egress/wait stages).
+Accessibility is also usually poorer in low density areas, in both the sense that stops may be less accessible than in better
+served areas and in the broader sense that fewer access opportunities will be available by PT, within any given travel time.
+As distance from the fringe reduces (i.e., the CBD is closer), densities increase, land use diversity (mix) typically increases
+and PT connectivity improves, because PT services operate at higher frequency, over longer spans, with more direct routes.
+PT door-to-door travel time improves somewhat relative to that by car (Fig. 3.2).
+
+  PT operating cost per passenger and per passenger kilometer tend to be relatively lower for mass transit services, where
+scale economies are most likely, and higher for the social transit service, recognizing that different PT modes may perform
+some or all of these respective services. Thus, for example, Victorian 2016e17 Budget Paper No. 3 (DTF, 2016) suggests
+that 2015e16 Melbourne public transport costs, mainly operating, were $5.28 per passenger for bus (of which perhaps
+one-ﬁfth is capital cost), $3.35/passenger for train (payments for metropolitan train services) and $1.06/passenger for tram
+(payments for tram services). Conversely, however, capital costs for mass transit, particularly rail and tram/light rail, are
+high relative to social transit, for reasons such as the high cost of land acquisition and/or tunneling (purchase/construction
+of dedicated right-of-way), ﬂeet costs and signaling systems. For example, Melbourne’s Metro Rail Tunnel project has an
+estimated cost of $11 billion, none of which is reﬂected in the $3.35/passenger cost.
+
+  The high capital costs and associated high patronage of rail mass transit services to central cities provides them with
+signiﬁcant natural monopoly characteristics, which suggests multiple sources of supply are unlikely.16 The agglomer-
+ation economies, congestion cost savings and environmental beneﬁts (external beneﬁts) associated with such services
+speak to the importance of strong governmental control over service provision, rather than leaving them to the dictates of
+the private marketplace, where under-provision would be expected, relative to the scale of external beneﬁts. We
+conclude that these natural monopoly characteristics and external beneﬁts are such that, in coming years, the Australian
+mass (trunk) transit market should be remain as public transport as we currently understand it. There is a need to include
+these trunk services in MaaS bundles, for which they will provide a fundamental ingredient. Also, given the important
+service role they will inevitably play therein, providers of mass transit could decide to take on a role as MaaS brokers.
+There is interest, for instance, from Metro Trains Melbourne in access contracts to expand their service offering to cover
+the ﬁrst/last mile to/from stations, through innovative ridesharing programs and partnerships with ride-hailing providers
+(Wong and Hensher, 2018). Developments in other markets, however, are less encouraging, as independent MaaS
+operators attempt to displace public transport with intermediate modes where the proﬁt margin is higher and to sell more
+expensive mobility packages. This issue is the focus of research at ITLS on the broker-supplier interface of MaaS service
+delivery (see Chapter 33).
+
+  Social transit services are much less likely to generate agglomeration economies, congestion savings or environmental
+beneﬁts but can deliver signiﬁcant social inclusion beneﬁts, which our research shows has a high monetary value. Impor-
+tantly, these services can be provided by smaller units than mass transit services, which makes them more open to
+competition from a new provider than is the case with mass transit. It is these local social transit services that we see are most
+likely to face competition from expanded personal travel opportunities offered through MaaS-based shared mobility services.
+Signiﬁcantly, the valuable social inclusion beneﬁts from social (local) transit are also likely to be available from an alternative
+form of local service provision, at least to some extent; they are not unique to local bus services, for example. It thus comes
+down to who can provide an adequate level of social (local) transit-like service most effectively, efﬁciently and sustainably.
+
+  This discussion can be summarized graphically, as in Fig. 3.3AeD. In simple terms, public transport can be cate-
+gorized as either mass transit (trunk services) or local (social) transit. Some of the latter services are well patronized and
+others are less so, as in Fig. 3.3A. There is a general tendency at present for state governments to shift resources into
+expanding mass transit and well patronized local services, as in Fig. 3.3B, sometimes to the detriment of service levels
+on less well patronized social (local) transit service. Roll out of MaaS and AEVs can be expected to put increased
+pressure on the better patronized local transit services, where demand is strongest, probably replacing them with shared
+car/small bus-based services, particularly when these become driverless and lower cost (Fig. 3.3C). This development
+direction reﬂects a blurring of the boundaries between PT as we have known it and private transport. Local transit
+services that have low patronage levels are at risk of losing all or most service in this context, particularly if governments
+rely on the market to provide most local PT-like services, expecting this to be at low cost (through MaaS with AEVs).
+
+16. Although vertical separation of track and services can be used to reduce the degree of natural monopoly.
+34 PART | 1 Reviews
+
+FIG. 3.3 (A): Public transport route service markets e a simple characterization. (B): Current tendency for PT service development. (C): Possible
+consequence of shared mobility growth, by about 2030. (D): Likely PT operator response.
+
+We see this as a major risk exposure in terms of social exclusion: governments seeing MaaS/AEVs as almost the ultimate
+deregulation, with the market providing services to all at a very low cost. This greatly overestimates, we believe, what
+might be possible in terms of commercially-based service offerings in low volume markets. Risks are less if service
+delivery agreements are used to assure service continuity in some form, as discussed below. Fare discounts may remain
+for some types of passengers but there may be fewer services available locally, if patronage levels are poor, on which to
+take advantage of these discounts.
+
+  One likely PT operator response to this evolving setting is suggested in Fig. 3.3D, where the mass transit operator seeks
+to extend their inﬂuence across the full service spectrum, absorbing the MaaS broking role within their business model.
+Within this model, the PT operator may seek to directly provide a wider range of services or else sub-contract others to
+provide some elements. In any event, low patronage local services will remain at greatest risk.
+
+  Some operator cross-subsidy of service costs on lowly patronized social transit routes, from their revenue streams on
+more commercially viable services, might take place, especially if operators seek to grow market share with a view to the
+long term. Nonetheless, if service provision at the low patronage local end is left entirely to the private market place, then
+exclusion risks will increase, particularly in fringe urban/regional areas and in rural/regional settings, where demand
+densities are least supportive of commercially viable offerings for shared mobility. Alternatively, service delivery
+agreements could be used, between authorities, trunk operators and local operators (including MaaS providers and/or
+particular shared mobility providers), to ensure a range of service offerings continues, as discussed in Section 3.4.2.
+
+  The extent to which existing and developing local PT services are under threat from new (MaaS-based) service
+offerings will depend in part on the way future urban development takes place. Australian capital city integrated land use
+transport strategies are increasingly being geared to deliver more compact cities, involving increased densities in outer
+growth areas. For example, the Ministerial Advisory Committee for PlanMelbourne 2017e50, on which one of the present
+authors was a member, proposed a minimum 25 dwellings per hectare for Melbourne’s growth areas and Toronto is now
+working to new Greenﬁeld densities of around this level. If these densities can be achieved, the boundaries between social
+  Disruptive technology and moving people Chapter | 3 35
+
+transit and mass transit will be narrowed, tending to sustain a higher level of mass transit in the form we currently know it
+than if lower densities persist but still likely to see substantial involvement of MaaS and disruption of existing PT at local
+service level by shared mobility services.
+
+  Whilst the suggested future of PT operators absorbing the MaaS broking role within their business model constitutes a
+longer term development, much innovation is already happening, with forays into intermediate modes and new models of
+providing local (coverage) transit. Whilst this is evident from the innovative work of multinational multimodal operators
+(e.g., Transdev, Keolis) in overseas markets, local Australian operators are also keenly exploring this space. In NSW,
+on demand services have being trialed since late 2017 in the form of government-led pilots, with various models deployed in
+Metropolitan Sydney, Outer Metropolitan Sydney and (from late 2018) in Rural and Regional NSW. Existing PT operators
+are partnering with technology providers to deliver these new innovative services (Table 3.4). Whilst this ﬁrst wave of
+services has been government-led, bus operators are rolling out their own on demand services independent of government as
+well. There are varying reasons and levels of enthusiasm for this, with the cynical seeing it as a way to impress and keep/win
+future tenders, given government interest in on demand services. Indeed, on-demand public transport is being integrated as
+part of conventional bus service contracts, as evidenced by the recent SMBSC17 Region 6 contract offering.
+
+  One of the key issues in any business collaboration is that of branding and customer ownership. There exists a view that
+transportation network companies delivering intermediate modes are keen to integrate additional modes (including public
+transport) as part of their existing branding, whilst bus operators are wary of losing their branding and identity in any
+MaaS-type service offering. This concern was raised prominently at the Thredbo 15 conference18 in Stockholm (August
+2017) by Workshop 7 participants on the ‘uberisation’ of public transport and MaaS (Mulley and Kronsell, 2018).
+Research at ITLS is further investigating the conditions for stakeholder support/investment (including from both mode-
+speciﬁc operators and non-mobility providers) in MaaS broker businesses including how brand issues might affect
+bidding power (Hensher, 2018).
+
+3.5.4.2 Public transport service subsidies
+
+Discussion in Section 3.5.4.1 noted that fare concessions may continue under a public transport future in which MaaS,
+using AEVs, provides a signiﬁcant share of local PT. Those fare concessions are usually provided to assist groups of
+people, likely to be transport disadvantaged, to have increased travel opportunities, with seniors and young people/children
+usually eligible, together with a range of others (e.g., health care holders, disability support pensioners). There is no reason,
+a priori, to expect that such fare concessions will be any less relevant in coming years than they are today, to help assure
+better mobility opportunities for potentially transport disadvantaged groups. We thus assume that fare concessions will
+continue. The question remains, though, what might happen to public transport service subsidies currently provided by
+state governments to support PT operations?
+
+TABLE 3.4 Public (bus) transport operators collaborating with technology providers to deliver on demand services.
+
+Bus operator  Platform provider(s)  Service proﬁle
+Keolis Downer  Routematch, via  Keoride on Sydney’s Northern Beaches and Macquarie Park, Newcastle On
+  Demand
+Transit Systems  Bridj (acquisition)  Weatherill Park (Sydney), SMBSC Region 6 (future)
+Premier Illawarra  TaxiCaller  Premier Illawarra On Demand
+Interline Bus  Thoreb Australia  Interline Connect in Edmondson Park (Sydney)
+Services
+Busways  Via  NSW North Coast (Rural and Regional On Demand tender)
+
+Forest Coach Lines  TaxiCaller, Tuup  NSW North Coast (Rural and Regional On Demand tender)
+  (former)
+
+17. Sydney Metropolitan Bus Service Contracts.
+18. The International Conference Series on Competition and Ownership in Land Passenger Transport, commonly known as Thredbo (http://www.thredbo-
+conference-series.org).
+36 PART | 1 Reviews
+
+  The answer to this question depends in part on future road pricing reform. Workshop participants at the Thredbo 15
+Conference (Workshop 5) developed the following formula, to enable estimation of the level of cost recovery that should
+be sought from system users via fares (Stanley and Ljungberg, 2018):
+
+  Amount to be recovered by user fares ¼ MSC À PTEB À MSLC  (3.1)
+
+where:
+
+MSC ¼ (Efﬁcient) Marginal social cost of PT service
+PTEB ¼ the net external beneﬁts of PT (system-external beneﬁts, such as agglomeration economies, health beneﬁts and
+
+environmental beneﬁts, should be funded by beneﬁciaries if possible; system-internal beneﬁts, particularly Mohring
+network scale beneﬁts,19 should be funded by government)
+MSLC ¼ Minimum (safety net) service level cost (which should be funded by government).
+
+  Public transport service subsidies are currently justiﬁed, in large part, because road users do not meet the societal costs
+attributable to their travel choices, including congestion, air pollution, GHG emissions, accident costs, etc. If road use was
+priced so that users were required to fully meet the marginal social costs attributable to their road use, then a large part of
+the system-external beneﬁt component of PTEB, that essentially relates to road use being improperly priced, would drop
+out of the PT fare setting equation, implying higher fares. Lower service costs from shared mobility solutions may mean,
+however, that PT fares may not need to rise. Australian urban PT cost recovery rates around 30% are common on marginal
+costs and, recognizing that some of the elements in Eq. (3.1) will remain under road pricing reform (PT system-internal
+external beneﬁts plus social inclusion beneﬁts), suggests the potential for fares to be at broadly similar levels to today in a
+system where shared mobility solutions provide much of the local transit task.20
+
+  Australian Governments at federal and state level have long resisted road pricing reform, in spite of numerous inquiries
+proposing implementation. However, the erosion of fuel tax revenues, as EVs increasingly penetrate the vehicle market and
+as fuel efﬁciencies of ICEs further improve, will force governments to confront this issue in the medium term, with mass,
+distance, location-based pricing probably the most efﬁcient solution. Furthermore, we argue in Section 3.6 that road pricing
+reform is a crucial weapon in the policy armoury required to maximize the likelihood that AEVs will deliver net societal
+beneﬁts, through the incentives that pricing reform will provide to solutions that involve shared mobility. We therefore
+make the heroic assumption that, within a decade or so, road user charges will much more closely reﬂect the societal costs
+attributable to road use and that PT fares will need to be more cost reﬂective in response.
+
+  Considering Eq. (3.1), in a future road pricing setting where user charges fully reﬂect the social costs associated with
+road use, there remains a long-term argument to support PT and PT-like services because of (1) the continuing wider
+economic beneﬁts (e.g., agglomeration economies) that depend on trunk PT services, (2) network economies and (3) social
+inclusion beneﬁts. In the case of (2), Mohring network external beneﬁts, subsidization of trunk services will be the main
+policy direction and subsidy arrangements should be reﬂected in mass transit service contracts. For (3), social inclusion
+beneﬁts, the focus for incidence is mainly on local transit services, including those lowly patronized services that will be at
+greatest risk under a future with MaaS shared mobility services playing a much larger role. Should operators (who could be
+new local shared mobility providers rather than existing PT providers) be supported to continue to provide some services
+that cater for this market in particular service areas, with service rights the subject of a competitive tendering process or
+negotiated performance-based contracts, as we have argued should continue in the mass transit market? Alternatively,
+should social inclusion support be provided to (particular) users through user-side subsidies, who are then left to choose
+how to use that support, along the lines of the National Disability Insurance Scheme model?
+
+  If social inclusion is seen as a societal priority, then some base level of shared mobility service to support or
+underwrite this outcome is warranted. We see no other way of assuring minimum local mobility opportunities are
+available to ‘at risk’ people. By implication, local shared mobility contracts should be developed to support provision of
+
+19. The Mohring effect (Mohring, 1972) is listed as a potential beneﬁt of public transport in the Externalities: system-internal category. This beneﬁt item
+essentially refers to scale or network beneﬁts that may sometimes accrue to PT users from increased PT service levels. For example, more frequent PT
+services, in response to increasing demand, imply shorter waiting times, with marginal waiting costs less than average waiting costs. For example, Jansson
+et al. (2015) suggest that 30%e75% of urban PT marginal costs might potentially be eligible for subsidization in an optimal pricing model, solely because
+of the Mohring effect.
+20. In support of this proposition, Thredbo 15 Workshop 5 participants concluded that, taking account of the potential scale of externalities:
+system-internal beneﬁts, from the Mohring effect, and the value of (user) social inclusion beneﬁts, cost recovery rates from fares for urban PT of well
+under 50% should commonly be expected, with rural fare cost-recovery rates lower than urban.
+  Disruptive technology and moving people Chapter | 3 37
+
+base social transit service levels, which would be expected to vary by demographic/land use setting. For example,
+expectations should realistically be for a lesser service level in a rural area than in a town. Requisite minimum service
+levels need to be set out in the contracts and might be expressed, for example, in terms of.
+
+l seat kilometres to be supplied per time period/spatial setting, where time periods and spatial settings are speciﬁed, or
+l the maximum wait time for a demand-responsive service, within particular locations and time periods.
+
+  Any such clauses would require mechanisms to be in place (e.g., bonuses, penalties), to help assure compliance.
+In pricing such shared mobility contract services, operators would be expected to take account of opportunities for
+cross-subsidization from more commercially viable services, to increase their chances of placing a successful bid.
+
+  In the interests of more efﬁcient, integrated service delivery at minimum call on the public purse, shared mobility
+service contracts should be as broad as possible, generally seeking to encompass route type PT services, school services
+and community transport service offerings. Depending on the legal context in a particular jurisdiction, shared mobility
+contracts would be open to bidding by mass transit operators, local transit operators and other shared mobility providers,
+including MaaS brokers if they so wished. They would be area-based contracts, to provide sufﬁcient scale to achieve some
+service economies, with population catchments being the basis for area deﬁnition where they exist (e.g., in regional and
+rural areas). Fare concession reimbursements to particular categories of user would continue to be relevant to such services
+(and others), preferably funded from a welfare budget!
+
+  An alternative way to approach social inclusion beneﬁts is to pay the equivalent of a service subsidy to particular
+categories of at-risk users, probably subsuming existing fare concessions, and enable recipients to use the money thus
+allocated to purchase shared mobility services on the market. This would require identiﬁcation of speciﬁc categories of
+eligible customers, for whom the support would be available, and a means of identifying these users when they use a
+shared mobility service. The latter would be easy to achieve through an app-based approach, provided eligible users all had
+access to such technology (most, but not all, will). Shared mobility providers would then claim on the state government for
+services provided, as measured through the app-based system.
+
+  However, identiﬁcation of people at risk of mobility-related social exclusion is no easy task. At-risk groups can be
+readily listed, such as youth, older people, people with a disability, recent arrivals, etc., but risks of mobility-related social
+exclusion do not apply to all members of such groups. Household income is not always a useful indicator, since young
+people from high-income households can be transport disadvantaged. Also, making service subsidy funds available only to
+particular identiﬁed categories of users creates a risk of service not being available to some people who do not ﬁt neatly
+into the deﬁned categories but are, nonetheless, at real risk of mobility-related social exclusion. Similarly, some people
+who are currently eligible for fare concessions have high incomes and are probably not at much risk of mobility-related
+social exclusion. In short, clearly identifying the people likely to be at risk of mobility-related social exclusion is not easy
+and, furthermore, we are concerned about the possible privacy implications of an individual-based test of such risk.
+A further concern arises with person-centred subsidies in low density settings. In such settings, fragmented service
+offerings might arise, reducing the likelihood of a viable base level of service being available to people at risk of mobility-
+related social exclusion (a concern we have with the NDIS). Diseconomies of small scale are a real risk to base local
+service level provision. In our view, only area-wide shared mobility contracts for some base service level, which includes
+ﬂexible demand responsive transport, can deal with these concerns.
+
+  Our preference is thus for a subsidized minimum service level approach to shared mobility service (social transit),
+which supports individual capabilities and allows people to self-select on use, with existing fare concessions continuing.
+Importantly, the subsidy for shared mobility service should be for service, not modes per se, and shared mobility
+contracts should reﬂect this focus. Shared mobility contracts are most relevant in rural, regional and outer urban settings,
+where they could be introduced now, given sufﬁcient institutional will to pursue more integrated service offerings.
+
+3.6 Policy implications
+
+3.6.1 Context
+
+Land passenger transport seems destined to confront major technological disruption over coming decades. This will include
+limited app-based MaaS offerings in the early years, with a much more rapid incursion of such services as AEVs become
+available. The timing of such availability is the subject of much debate but we are inclined to agree with Litman (2018) that
+two to three decades is probably the time frame for widespread availability. This means that there should be time to prepare
+for disruption and to apply policy settings that help to increase the probability that such disruption produces net societal
+beneﬁts. Policy will need to address a wide range of matters, many of which are beyond the scope of the present chapter.
+38 PART | 1 Reviews
+
+We focus here on key land use transport policy settings that will encourage shared mobility to form the dominant method of
+new land passenger transport provision, rather than individual ownership. The scenario analysis in Section 3.5 suggested that
+this is the key to ensuring that net external beneﬁts, rather than net external costs, ﬂow from the disruption.
+
+  Four matters stand out as policy priorities.
+
+1. Developing new shared mobility governance (including data availability) and strategic planning arrangements and
+  associated service delivery contracts for provision of local public/private mobility options that support social inclusion
+  and are integrated with mass transit offerings.
+
+2. Managing land use to ensure that urban sprawl is tightly contained and that opportunities are used to increase the supply
+  of open space within the built-up area, an issue highlighted in the recent report by Infrastructure Australia (2018).
+
+3. Ensuring that transport users meet the social costs attributable to their road use, while ensuring affordable access is
+  available to all at a reasonable level.
+
+4. Implementing mandatory emissions standards for motor vehicle greenhouse gas emissions, to help drive technological
+  change in a climate friendly direction, supported by behaviour change measures that reduce motor vehicle use.
+
+  With the exception of mandatory emissions standards, these three policy areas are all key areas of policy responsibility
+for states, and to a lesser extent, local government at city and regional level, areas which have formed a major focus of the
+Australian Bus Industry Confederation (BIC)’s Moving People policy research. Issues such as policy about emissions
+standards, AEV safety, vehicle design, data and communications management, privacy, cyber security, ethical and legal
+aspects of AEVs are also important but beyond the scope of the present paper. These latter matters are primarily ones
+where the federal government must take the lead. Isaac (2016) includes some informative discussion on such matters.
+
+3.6.2 Improved governance arrangements
+
+There is no clearer statement of principles that should (1) guide strategic planning directions to be pursued through
+governance arrangements to manage introduction of a shared mobility future (including technological change associated
+with AEVs) and (2) inform processes that should characterize those strategic planning directions than the ten principles set
+out in Section 3.2, as follows:
+
+  1. We plan our cities and their mobility together
+  2. We prioritize people over vehicles
+  3. We support the shared and efﬁcient use of vehicles, lanes, curbs and land
+  4. We engage with stakeholders
+  5. We promote equity
+  6. We lead the transition towards a zero-emission future and renewable energy
+  7. We support fair user fees across all modes
+  8. We aim for public beneﬁts via open data
+  9. We work towards integration and seamless connectivity
+10. We support that autonomous vehicles (AVs) in dense urban areas should be operated only in shared ﬂeets.
+
+  The simplicity of these principles belies the difﬁculty of achievement, when judged by past and present failures in land
+use transport integration. For example, not all states can point to integrated long-term land use transport strategies and few,
+if any, have strategies to deliver low transport emission futures.
+
+  Planning land use, transport and related matters (e.g., affordable housing) in an integrated way involves aligning Strategic
+(policy), Tactical (system design) and Operational levels of thinking, which is no easy task. It is most likely to be achieved in
+urban and regional land use transport planning when there is a relationship of trust between the responsible government,
+industry and other stakeholders, with all having the opportunity to shape, in particular, system level responses to meeting high
+level societal outcome goals affected by land use transport development directions. Open consultative planning methods are
+fundamental (Stanley et al., 2017). A trusting partnership should be grounded in (Stanley and Smith, 2013):
+
+1. common core objectives tied to public policy purposes (derived from Strategic level societal outcome goals)
+2. consistency of behaviour and direction (underpinned by broad agreement about Strategic and Tactical directions)
+3. conﬁdence in a partner’s capacity to deliver
+4. respect for each other’s competencies and,
+5. demonstrated commitment to good faith in making and keeping arrangements and in principled behaviour.
+
+  Agreed and shared governance arrangements, including service delivery contracts, provide the glue that ties the
+principles together.
+  Disruptive technology and moving people Chapter | 3 39
+
+  Public transport (shared mobility) system planning arrangements, and associated service delivery contracts, should
+demonstrate leadership by developing improved governance arrangements for shared mobility, reﬂecting both (1) the ﬁve
+trusting partnership qualities and (2) the ten shared mobility principles. This will inevitably require a concerted effort to
+achieve better horizontal and vertical integration of governance arrangements across the whole land transport domain and
+associated domains (e.g., affordable housing). This would constitute a major shift for the better in the way land use
+transport system planning is performed.
+
+  Inter-governmental processes, such as City Deals and infrastructure funding bids, provide opportunities to formally
+require governance arrangements that demonstrate compliance with the trusting partnership and shared mobility principles,
+as gateway conditions on eligibility. They should be used to drive improved planning practice along these lines, leaving
+scope for states and territories to deﬁne their own detailed approaches to outcome achievement. Stanley et al. (2017) have
+argued that a stronger voice for the neighbourhood level is perhaps the biggest single requirement in improved gover-
+nance for more integrated land use transport planning. This applies with particular force to planning for shared mobility,
+since it is at neighbourhood level that many of the largest beneﬁt opportunities will arise, both mobility-related but also in
+terms of improved safety, local pollution reduction and improved place-making.
+
+  At State and Territory level, early development and implementation of service-focussed shared mobility contracts
+would be a positive supportive step along the transition pathway to future governance models that are better suited to
+emerging technological opportunities, while delivering immediate beneﬁts from realizing a more integrated service
+delivery model. Integrated app-based booking/ticketing systems, with a range of on-demand service options, are funda-
+mental to the prospects for MaaS and for shared mobility service in the immediate future and should be a requirement of
+shared mobility contracts. In support of this development direction, we propose a multi-model MaaS trial that focuses on
+ways to demonstrate the value to customers of an integrated app as a one-stop point for accessing all modes and also
+explores how shared mobility contracts might best support delivery of such new mobility opportunities. Such a trial can be
+used to familiarise people with modal opportunities and sell access convenience but also to transition in due course to
+subscription plans that might be revealed by preferences obtained from the trial.
+
+3.6.3 Containing urban sprawl
+
+Land use development directions in Australia’s major cities are increasingly pursuing more compact settlement patterns,
+which can involve ‘hard’ growth boundaries. A major risk from widespread adoption of AEVs, should they mainly proceed
+down a path of personal ownership mode, is that people will choose to take some of the beneﬁts this offers in the form of
+consumption of greater quantities of ex-urban land, adding to sprawl, with its associated economic, social and environ-
+mental costs.
+
+  Road pricing reform, as proposed in Section 6.4 which follows, will ease these pressures, since longer trips will mean
+higher road use charges are in prospect, particularly if AEV roll-out leads to increased urban congestion, which is more
+likely under the personal ownership model. On the land use side, urban growth boundaries provide some protection here,
+provided they are real limits to expansion (i.e., not regularly pushed further out, or set so far out as to be ineffective). They
+need to be complemented by land use planning policies that keep tight control over development on the peri-urban fringe.
+
+  Higher minimum development densities on the urban fringe and beyond would also help to mitigate risks of extended
+urban sprawl and be supportive of development of 20 min neighbourhoods in growth suburbs. These are an important way
+of encouraging delivery of more compact urban form. Toronto is now moving to minimum greenﬁeld densities of 80
+persons plus jobs per hectare, which is around 25 dwellings per hectare, in pursuit of more contained development. This is
+well above current outer urban densities in Australian cities but should be the kind of minimum density outcome pursued in
+Australian urban greenﬁeld settings.
+
+  Fundamental to managing urban sprawl risks from AEVs is consistent pursuit of more compact settlement patterns,
+through strategic land use development directions along the lines outlined in Section 3.4.5, which forms essentially a
+polycentric þ corridors þ neighbourhoods development model.
+
+  Spatially-oriented transport directions to support this land use direction include:
+
+l ensuring strong radial public transport to the centre, where capacity increases are required to cater for continuing strong
+  growth (roads simply cannot carry the expected increased demands and have high external costs in/through central/in-
+  ner areas)
+
+l improving circumferential arterial roads. Road-based public transport and freight should be prioritized in use of these
+  roads
+40 PART | 1 Reviews
+
+l providing fast and frequent trunk public transport services supporting inner/middle urban nodes and development cor-
+  ridors, including for circumferential movement (particularly buses21), linked to the cluster (node)/transit corridor devel-
+  opment focus
+
+l better public transport connections from outer suburbs to areas of employment/activity concentration, including the
+  small number of high tech knowledge-based clusters
+
+l upgraded trunk arterial roads in outer growth areas (to deal with the current backlog rather than encourage further
+  sprawl)
+
+l increased local public transport opportunities in middle and outer neighbourhoods, to support delivery of 20 min
+  neighbourhoods
+
+l improved walking and cycling opportunities throughout the whole city, with a particular focus on clusters/nodes and
+  facilitating a city of 20-min neighbourhoods.
+
+  Care is needed to ensure that these transit oriented development directions do not accentuate gentriﬁcation, a tendency
+that has been observed in a number of settings (Stanley et al., 2017).
+
+  Shared mobility use of AEVs provides an opportunity to re-engineer elements of road space, to cater for the
+requirements of AEVs, prioritizing shared AEVs (and shared vehicles in the transition to AEVs), and to also take back
+some land from parking and vehicle movement, to support place making and active travel. Drop-off spaces will be needed
+for shared mobility in busy locations. Such initiatives are supportive of the preceding strategic development directions.
+More broadly, parking policies should be changed to reduce minimum requirements in locations that are well served by
+transit. Following the London example of establishing and applying connected standards between densities, public
+transport service levels and parking requirements would be a useful initiative. Parking spaces that are provided should be
+priced to better reﬂect the costs associated with their use (integrated with road pricing reform).
+
+3.6.4 Transport pricing reform
+
+We have consistently argued for road transport pricing reform that charges users for the marginal social costs of their travel
+choices and, when this pricing is in place, for public transport pricing (fare setting) to better reﬂect marginal social costs of
+service provision. As argued in Section 3.5.4.2, however, some continued subsidies to public transport will remain
+defensible, because of the presence of wider economic beneﬁts (e.g., agglomeration economies), network effects and social
+inclusion beneﬁts from PT services.
+
+  In an Australian context, perhaps the most notable development on the road pricing front in recent years has been the
+support for road pricing reform expressed by the Productivity Commission (Harris, 2015), the Harper Competition Policy
+Review (Harper et al., 2015) and Infrastructure Australia (2018) at federal level, and by Infrastructure Victoria (2016) at
+state level. While the Productivity Commission, Harper Competition Policy Review and Infrastructure Australia reports are
+all strongly supportive of road pricing reform, however, none has really confronted the prospect that efﬁcient road user
+charges might need to increase substantially, if the societal external costs attributable to road use are to be met by users. All
+seem more concerned about strengthening links between road expenditure, road funding and user charging, in a way that
+gives road users a greater say over resource allocation decisions on roads. These are worthwhile intentions but only part of
+the story. Infrastructure Victoria’s report more readily confronts a need to use price to inﬂuence behavior, without
+necessarily running for cover in terms of whether some resulting transport prices might need to increase. The Victorian
+Government has rejected the Infrastructure Victorian pricing recommendation but IV appears committed to the long term
+merits of its pricing policy direction.
+
+  Stanley and Hensher (2011) concluded that the Australian fuel excise rate at that time was 5e10c/L too low to cover the
+external costs of road use. Updating this work, Stanley and Hensher (2017) suggest that this gap has widened and is
+probably around 15-25c/L today. This underlines both the urgency of reforming the way road use is priced, in the interests
+of improved economic efﬁciency, and the need to be prepared to increase the size of charges on motorists in the process of
+reforming road user charging, rather than artiﬁcially constraining any such pricing reform to being revenue neutral. A
+signiﬁcant increase is warranted, generating substantial additional revenues that can be used to improve roads, public
+transport and other infrastructure or services that mitigate the external costs of road use.
+
+  Fuel is not the most appropriate way to price road use. Longer term, because external costs of road use relate more
+closely to distance travelled than to fuel use (especially as motive technologies change), a distance-based charging
+mechanism should be introduced, with mass and location components to better reﬂect, for example, road damage and
+
+21. Such as SmartBus in Melbourne and Metrobus in Sydney.
+  Disruptive technology and moving people Chapter | 3 41
+
+congestion impacts. The trend towards more fuel-efﬁcient vehicles, albeit slow, accentuates pressure for such a shift in the
+way road use is priced, because of the revenue impact on the federal government budget.
+
+  Signiﬁcantly, in terms of the current chapter, reformed road pricing would increase the cost of road use in areas where
+external costs are high, providing incentives for shared mobility solutions and reducing incentives for further urban sprawl,
+coming through increased ownership/use of AEVs. Mode shares for shared mobility options can be expected to be higher
+under an MSC pricing regime, which is what an efﬁcient pricing system should achieve.
+
+  More radically, and linked to MaaS, Wong et al. (2017, also Chapter 33) proposes a framework that includes
+government in the broker model to allow road pricing to be incorporated as an input into the MaaS package price, to
+optimize/regulate for network efﬁciency (Hensher, 2018). This would go some way towards ameliorating some of the
+potential road capacity issues (and other externalities, including on land use) arising out of demand for smaller and more
+ﬂexibly routed services.
+
+  Regressive distributional consequences are a potential risk with road pricing reform. For example, outer urban resi-
+dents, with low household incomes and poor public transport options, might face higher road use costs but with little
+opportunity to avoid these increases. Fortunately, shared mobility opportunities can help tackle this concern, by increasing
+the availability of demand responsive travel opportunities, supported by speciﬁc social inclusion subsidies that are
+provided through shared mobility contracts (as proposed in Section 3.5.4.2).
+
+3.6.5 Mandatory emissions standards
+
+The case for introducing mandatory motor vehicle emissions standards, in line with European levels, is based on
+Australia’s high rate of GHG emissions and the large and increasing motor vehicle contributions to these emissions, as
+outlined in Section 4.7. By 2021, phased in from 2020, the ﬂeet average to be achieved by all new EU cars is 95 g/km and
+US 2025 targets for all new light vehicles (passenger vehicles and LCVs) are 107 g/km (cars 86 g/km; LCVs 129 g/km).
+CCA (2014) has proposed an Australian standard for light vehicles (new passenger cars and LCVs) of 105 g/km at 2025,
+showing user beneﬁts from this standard well in excess of the costs for achievement.
+
+  Australia should move quickly to implement mandatory GHG emissions standards for motor vehicles (CO2 emission
+rates), in line with European or US timelines. A move to less emissions-intensive passenger vehicles should be made much
+easier in political terms by the departure of relatively emissions-intensive vehicles manufactured in Australia.
+
+  Mandatory emissions standards need to be complemented by the kinds of incentives that countries which already have
+these emissions standards use to further incentivize increased electro-mobility, such as lower sales taxes, lower road taxes,
+access restrictions on dirtier vehicles, education and awareness programs and roll-out of charging infrastructure (Andwari
+et al., 2017). Incentives should include measures to encourage faster take-up of electric buses in various formats
+(e.g., hybrid), as bus use will need to be substantially increased in middle and outer urban areas to support the compact city
+development model and this should be achieved in low emission format, as London is currently doing. Longer term,
+mandatory emissions standards plus comprehensive marginal social cost road pricing (which beneﬁts clean technologies)
+are likely to be the most effective way to ‘encourage’ greater penetration of EVs, from a level playing ﬁeld starting point.
+
+  In terms of cutting motor vehicle GHG emissions, Stanley et al. (2018) show that mandatory emissions standards alone
+will not be sufﬁcient to ensure that road transport makes a proportionate contribution to the currently committed 26%e28%
+reduction in national GHG emissions by 2030. Behaviour change measures are also required, slowing the rate of growth in
+car use and increasing travel by active transport and transit (e.g., on-road priority to shared mobility vehicles, including PT
+and AEV when available, which would help achieve GHG reduction goals and also support wider beneﬁts from AEVs).
+
+Appendix 3.A
+
+From Ho et al. (2018).
+  A study conducted in Sydney identiﬁed the key attributes that potential MaaS subscribers would like to see in a
+
+mobility package. Table 3.A1 shows that on average, Sydney travellers are willing to pay $6.40 for an hour of access to
+car-share or about $64 per day if a full day access is priced at the rate of 10 h e a rule employed in this experimental study
+and also by Sydney-based car-sharing companies such as GoGet. Options for car-sharing also include the car-sharing
+formats (one-way22 or round-trip) and advance booking time which, on average, the respondents are willing to pay an
+extra $7.30 per fortnight for one-way car-sharing and about $1.05 less for every 15 min increase in advance booking time.
+
+22. A proxy for autonomous taxi usage.
+42 PART | 1 Reviews
+
+  TABLE 3.A1 Estimated respondent’s WTP for different mobility entitlements of MaaS plan.
+
+  MaaS component  WTP ($/fortnight)
+  An hour access to car-share  $6.39
+  A full day access to car-share (10 h)  $63.85
+  One-way car-share  $7.27
+  Round trip car-share  $0.00
+  Every 15 min increase in advance booking time  À$1.06
+  A day of unlimited PT use  $5.92
+  10% discount to every taxi bill  $3.68
+
+  10% discount to every ride-sharing bill  $7.18
+
+  Distribution of WTP for example MaaS Plans, dollar/fortnight  EnƟtlement per  Plan 1  Plan 2
+  fortnight
+  .005127  Car days  2  2
+  Car sours  10  15
+  .004114  Car-sharing scheme  one way  round
+  trip
+Density  .003101  Advance noƟce  60 mins  30 mins
+  Taxi discount  10%  20%
+  .002088  Ridesharing discount  10%  10%
+  PT days  4  6
+  Average WTP  $185  $231
+
+  .001075
+
+  .000062  95  191  286  382  477
+  0  WTPPLAN1
+
+  <- Xi ->
+
+  WTPPLAN2
+
+  FIG. 3.A1 Distribution of WTP for example MaaS plans.
+
+The average willingness-to-pay (WTP) for a day of unlimited PT use to be included in a fortnight MaaS plan is $5.90 but
+this varies across the sample with a standard deviation of $2.40 and a maximum of $11.85 (min ¼ 5 cent).
+
+  Placing these WTPs into a context of how MaaS is likely to work in practice, Fig. 3.A1 shows the distribution of
+respondents’ WTP for two example fortnightly MaaS Plans. Plan 1 includes two full days use of car-share (e.g., one day for
+each week’s social outing), 10 h of one-way car-share with a 60-min advance booking time to cover the remaining days of
+the fortnight (e.g., three days per week doing 30-min one-way drop-off/pick-up children at a day care centre en route to/
+from work and 2 h weekly shopping), four days of unlimited PT use per fortnight (e.g., commuting by PT 2 days per week
+when children do not attend day care), and 10% discounts of every taxi and ridesharing (e.g., UberPOOL) bills. The
+average WTP for this example plan is $185 per fortnight. Plan 2 offers more days with unlimited PT use and more car
+hours on a round-trip car-sharing format with shorter notice than Plan 1. The average WTP for this plan is estimated at
+$231 per fortnight.
+Chapter 4
+
+The inﬂuence of the Thredbo series*
+
+In 1988, the late Micheal Beesley CBE and David Hensher had an idea to bring together the leading thinkers on reforms in
+land passenger transport, with a focus on the landmark changes implemented by the Thatcher government in the UK. The
+mere thought of opening up public transport (bus services initially) was anathema to the cosy position in the UK of
+nationalised and heavily subsidised monopoly operations. Making bus (and later rail) services subject to a market test
+through either competition for the market (competitive tendering) or competition in the market (economic deregulation)
+was a bold move politically, and one in which the expected consequences were at best speculative. Michael Beesley had a
+big hand in the drafting of various reform documents (including the key Bus reform paper1) in the UK.
+
+  The inaugural conference (with 100 invitees, mainly from the UK) was held in Thredbo, Australia in 1989. Since that
+time The International Conference on Competition and Ownership of Land Passenger Transport (now known as the
+Thredbo Series) has been held biennially in locations around the world: Tampere, Finland, 1991; Toronto, Canada, 1993;
+Rotorua, New Zealand, 1995; Leeds, UK, 1997; Cape Town, South Africa, 1999; Molde, Norway, 2001; Rio de Janeiro,
+Brazil, 2003; Lisbon, Portugal, 2005; Hamilton Island, Australia, 2007; Delft, The Netherlands, 2009; Durban, South
+Africa, 2011; Oxford, UK, 2013; Santiago, Chile in September 2015; Stockholm, Sweden in August 2017, and Singapore
+in August 2019.2 Full details of the series, including accessible papers, is given at https://thredbo-conference-series.org/.
+The workshop reports for the third, fourth, ﬁfth, sixth and seventh conferences 1995, 1997, 1999 and 2001 were published
+in Transport Reviews.
+
+  The objective of the conference series is to provide an international forum to examine passenger transport competition
+and ownership issues, reporting on recent research and experience and developing conclusions on key issues. The focus is
+on determining the effects of different forms of competition, ownership and organisation for land-based passenger transport
+on operators, users, governments/funders and society as a whole. The conference series is directed towards a broad
+audience of policy makers, planners, decision makers on infrastructure and service operators, consultants, researchers,
+academics and students, and is recognised as one of the most important international forums for analysis and debate of
+competition and ownership issues in land passenger transport.
+
+  The conference typically features plenary sessions over four days and a series of intensive workshops based around
+keynote papers and a series of resource papers providing a range of international perspectives on each issue. There is a
+strong emphasis on what policy lessons can be learnt from recent experience internationally and what issues warrant further
+investigation.
+
+  There is an active community of participants (from over 32 countries) who have been described by Professor Rosario
+Macario (IST Lisbon) as ‘Thredbo dependant’. Indeed, Professor Chris Nash (ITS Leeds) has described the series as the
+best conference he has attended, primarily due to the workshop focus where not only can individuals contribute to the
+debate but the workshop reports form an important historical document of progress in the sector throughout the world. An
+industry participant has described the series as a primary source of inﬂuence and that “.citing Thredbo papers in both
+industry and inter-governmental papers plays an important part in securing a negotiated renewal of service contracts in the
+latest contracting regime.” Another public transport operator commented that the Thredbo series “provided the evidence to
+draw on in securing the 2000 and 2005 Adelaide Metro Contracts and the 2007 Victorian Contract negotiations, in which
+the theme of partnership was also introduced.” A regulator commented that the series “assisted in labour negotiations when
+trends and likely industry changes are discussed, as well as assisting when informing responsible ministers of overseas
+experience and trends.”
+
+* This is an adapted version from the original publication: Hensher, D.A., 2014. Keeping the debate informed on reforms in land passenger transport: the
+inﬂuence of the Thredbo series. Transport Reviews 34 (6), 671e673. https://doi.org/10.1080/01441647.2014.987472. Taylor & Francis Ltd. e www.
+tandfonline.com.
+1. Michael left David Hensher his draft paper.
+2. A site has already been selected for Thredbo 17 in 2021.
+
+Bus Transport. https://doi.org/10.1016/B978-0-12-820132-9.00004-2  43
+
+Copyright © 2020 Elsevier Inc. All rights reserved.
+

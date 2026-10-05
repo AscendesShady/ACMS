@@ -1,0 +1,998 @@
+38 Machine Learning for Transportation Research and Applications
+
+the model. In such a way, we can achieve a stable ﬁt of the model and prevent
+the model having high variance.
+
+  Regularization is the most-used technique to penalize complex models in
+machine learning. It assumes that least weights may produce simpler models and
+hence assist in avoiding overﬁtting. Regularization is deployed by penalizing
+the model weights of high values. It can enhance the performance of models for
+new inputs. Since it makes the magnitude to weighted values low in a model,
+regularization technique is also referred to as weight decay.
+
+  In general, regularization is adopted universally because simple data models
+generalize better and are less prone to overﬁtting. Examples of regularization
+include:
+• Restricting the segments for avoiding redundant groups in K-means;
+• Conﬁning the complexity (weights) of neural networks;
+• Reducing the depth of tree and branches (new features) in random forests.
+
+  Although there are various regularization techniques, the most well-known
+techniques are L1 and L2 regularization. Both L1 and L2 can add a penalty to the
+cost depending upon the model complexity, so that, at the place of computing the
+cost by using a loss function, there will be an auxiliary component, known as the
+regularization terms, added in order to penalizing complex models. By adding
+regularization terms, the value of weights matrices is reduced by assuming that
+a neural network having less weights makes simpler models. Hence, it reduces
+the overﬁtting to a certain level.
+• L1 regularization: It adds an L1 penalty that is equal to the absolute value of
+
+  the magnitude of coefﬁcient, or simply restricting the size of coefﬁcients. L1
+  regularization is the preferred choice when having a high number of features
+  because it provides sparse solutions. Moreover, we obtain the computational
+  advantage because features with zero coefﬁcients can be avoided. For exam-
+  ple, Lasso regression implements this method.
+• L2 Regularization: This adds an L2 penalty that is equal to the square of
+  the magnitude of coefﬁcients. L2 regularization can deal with the multi-
+  collinearity (independent variables are highly correlated) problems through
+  constricting the coefﬁcient and by keeping all the variables. For example,
+  Ridge regression and SVM employ this method.
+• Elastic Net: When L1 and L2 regularization are combined, it becomes the
+  elastic net method and adds a hyper-parameter.
+
+L1 vs. L2
+
+It is often observed that people get confused in selecting the suitable regular-
+ization approach to avoid overﬁtting while training a machine learning model.
+Among many regularization techniques, such as L2 and L1 regularization,
+dropout, data augmentation, and early stopping, we will learn here intuitive dif-
+ferences between L1 and L2 regularization.
+  Machine learning basics Chapter | 3 39
+
+1. Where L1 regularization attempts to estimate the median of data, L2 regular-
+  ization makes estimates for the mean of the data in order to evade overﬁtting.
+
+2. Through including the absolute value of weight parameters, L1 regulariza-
+  tion can add the penalty term in the cost function. On the other hand, L2
+  regularization appends the squared value of weights in the cost function.
+
+3. Feature selection is the characteristic of holding highly signiﬁcant coefﬁ-
+  cients, either very close to zero or not very close to zero, where in general
+  coefﬁcients approaching zero would be eliminated later. This will lead to the
+  sparsity where certain features are expels from the model. In this context, L1
+  regularization can be helpful in features selection by eradicating the unim-
+  portant features, whereas L2 regularization is not recommended for feature
+  selection.
+
+4. L2 has a solution in closed form since it’s a square of a weight; on the other
+  side, L1 doesn’t have a closed-form solution since it includes an absolute
+  value and is a non-differentiable function. Due to this reason, L1 regular-
+  ization is relatively more expensive in computation, can’t be solved in the
+  context of matrix measurement, and heavily relies on approximations.
+
+3.4.3 Gradient descent vs. gradient ascent
+
+Gradient descent and gradient ascent are equivalent from the perspective of
+mathematical representation. Gradient ascent is just the process of maximiz-
+ing an objective function, instead of minimizing a loss function. Everything else
+is entirely the same. Ascent for some loss function is like gradient descent on
+the negative of that loss function.
+
+1. Gradient Descent: gradient descent is minimizing the cost function used in
+  linear regression, and it provides a downward or decreasing slope of cost
+  function. If you want to minimize a function, use the gradient descent. For
+  example, we want to minimize the loss function in deep learning, so we use
+  the gradient descent.
+
+2. Gradient Ascent: gradient ascent is maximizing a function so as to achieve
+  better optimization. For example, in reinforcement learning the goal of pol-
+  icy gradient methods is to maximize the reward/expected return function, so
+  we use the gradient ascent.
+
+3.4.4 K-fold cross-validation
+
+K-fold cross-validation is a technique to compare and select a model when train-
+ing a model. When the training data is scarce, we might not be able to afford
+to withhold enough data to constitute a proper validation set. One popular solu-
+tion to this problem is to employ K-fold cross validation, in which the original
+training data is split into K nonoverlapping subsets. In general, the K-fold cross-
+validation procedure can be described as follows:
+
+1. Shufﬂe the dataset randomly.
+40 Machine Learning for Transportation Research and Applications
+
+2. Split the dataset into K groups.
+3. For each unique group:
+
+  a. Take the group as a hold out or test data set;
+  b. Take the remaining groups as a training data set;
+  c. Fit a model on the training set and evaluate it on the test set;
+  d. Retain the evaluation score and discard the model.
+4. Estimate the training and validation errors by averaging the results from the
+  K experiments.
+
+3.5 Exercises
+
+3.5.1 Questions
+
+1. What is the key difference between supervised learning and unsupervised
+  learning?
+
+2. What is the difference between the tasks fulﬁlled by linear regression and
+  logistic regression?
+
+3. How does linear regression ﬁnd the optimal point?
+4. What are the loss functions used in linear regression?
+5. Why can’t we use the mean square error cost function used in linear regres-
+
+  sion for logistic regression?
+6. What are the differences between L1 and L2 regularization terms?
+7. The logit function is deﬁned as the log of the odds function. What do you
+
+  think the input range of this logit function be in the domain of [0, 1]?
+  a. (−inﬁnity, +inﬁnity);
+  b. (0, +inﬁnity);
+  c. (−inﬁnity, 0);
+  d. (0, 1).
+8. What is the underlying method that is used to ﬁt the training data in the
+  algorithm of logistic regression?
+  a. Jaccard distance;
+  b. Maximum likelihood;
+  c. Least square error;
+  d. None of the options just mentioned.
+9. Which strategy is not for avoiding overﬁtting?
+  a. Adding regularization term in the loss function;
+  b. Making a more complex model;
+  c. Using cross-validation like k-folds;
+  d. Using a validation set while training.
+Chapter 4
+
+Fully connected neural
+networks
+
+Following a brief introduction of machine learning basics, this chapter will in-
+troduce a type of neural network with the most basic structure, i.e., the fully
+connected neural network or feed-forward neural network (FNN). When people
+say neural network, they are normally referring to FNN. FNN with fully connec-
+tions between neurons in different layers of the neural network can solve various
+tasks, like regression and classiﬁcation tasks. In addition, fully connected neu-
+ral network layers are the basic elements of deep neural networks. Thus, in this
+chapter we will introduce the basic structure of FNNs starting from linear re-
+gression to linear neural networks. Key components of deep neural networks,
+including layers, activation functions, and loss functions, are introduced. The
+back-propagation method as the core of neural network training is also elab-
+orated to shed light on the power of deep neural networks. Subsequently, this
+chapter demonstrates transportation applications that can be easily solved by
+FNN.
+
+4.1 Linear regression
+
+In order to make things easier to grasp, we begin with the simplest concepts.
+We will start from classic algorithms and provide the basis for more complex
+techniques in the rest of the book.
+
+  In a linear model, the target can be expressed as a weighted sum of the fea-
+tures. For example, trafﬁc volume can be expressed as a weighted sum of a
+number of lanes and time:
+
+volume = w# of lanes · # of lanes + wtime · time + b.  (4.1)
+
+w# of lanes and wtime are called weights, and b is called a bias (also called an off-
+set or intercept) in a linear model. The weights determine the inﬂuence of each
+feature on the prediction/output (volume), and the bias indicates the predicted
+volume value when all of the features take value 0. We need the bias to increase
+the expressivity of the model. Given a dataset, the goal of the linear model is to
+choose the weights and the bias such that, on average, the predictions best ﬁt the
+true volume observed in the data.
+
+  In machine learning, we usually process high-dimensional data whose linear
+algebra notation will be most convenient for us to write the equation in a simpler
+
+Machine Learning for Transportation Research and Applications  41
+
+https://doi.org/10.1016/B978-0-32-396126-4.00009-6
+
+Copyright © 2023 Elsevier Inc. All rights reserved.
+42 Machine Learning for Transportation Research and Applications
+
+way. When our inputs consist of d features, the prediction yˆ (the “hat” symbol
+yˆ generally denotes predictions/estimates) can be expressed as
+
+  yˆ = w1x1 + . . . + wd xd + b.  (4.2)
+
+  Representing all features as a vector x ∈ Rd and all weights as a vector w ∈
+Rd , the linear model can be described compactly using a dot product:
+
+  yˆ = w x + b.  (4.3)
+
+The vector x ∈ Rd corresponds to features of a single data example (we also call
+
+it a sample). The features of the entire dataset with n samples can be represented
+by a matrix X ∈ Rn×d . Here, X contains one row for every sample and one
+column for every feature. In this way, the predictions yˆ ∈ Rn can be expressed
+
+via the matrix-vector product:
+
+  yˆ = Xw + b.  (4.4)
+
+In the linear regression setting, Eq. (4.4) has an analytic solution with a simple
+
+formula:
+
+  w∗ = X X − X y. 1  (4.5)
+
+Although simple problems like linear regression may have analytic solutions,
+it cannot be applied in deep learning because the requirement of an analytic
+solution is too restrictive to be satisﬁed.
+
+  In the machine learning/deep learning setting, the goal of Eq. (4.4) is to ﬁt
+a good model with the parameters w and b based on a training dataset X and
+the corresponding training labels y. When testing the model, the predicted value
+yˆ will generate the lowest error. One thing to note is that, when we assume the
+best model is a linear model, we cannot expect the prediction error ||yi − yˆi|| for
+the data samples Xi to be exactly zero. Thus, we will incorporate a noise term
+to account for such errors.
+
+  In the deep learning setting, we also have the training dataset and testing
+dataset. It is important to ﬁgure out how to measure the quality of the model
+and how to improve the model during the training procedure, which requires the
+loss function and back-propagation, respectively, which are introduced in the
+following sections.
+
+4.2 Deep neural network fundamentals
+
+4.2.1 Perceptron
+
+A neural network, as a branch of artiﬁcial intelligence methods, has been de-
+veloped and applied to many problems for a considerable time. Perceptron
+Rosenblatt (1957) might be the oldest neural network still in use today. It is
+  Fully connected neural networks Chapter | 4 43
+
+FIGURE 4.1 Multilayer perceptron.
+
+also the simplest fully connected neural network. A very common perceptron
+method is the multilayer perceptron (MLP), normally with three layers, an in-
+put layer, a hidden layer, and an output layer, as shown in Fig. 4.1, where the
+nodes/neurons between layers are all connected without loops. In the hidden
+layer, the node accepts multiple inputs, each input is multiplied by a weight, and
+the products are added up, which is similar to the procedure in linear regression.
+The difference is that, in the neural networks, there are activation functions be-
+tween layers. Neural networks are simulations of biological neurons, where the
+weights simulate the role of synapses in biological neurons to enhance or inhibit
+a signal. The result, after adding a bias value, will act as input in an activation
+function before it is passed to the next layer. An activation function simulates
+the neuron ﬁring or not. For example, in a binary activation function, if the sum
+of weighted inputs and bias is greater than zero, the neuron output is 1 (it ﬁres),
+otherwise 0 (it does not ﬁre).
+
+  A single layer with limited neurons cannot solve the problems when the data
+are nonlinearly separable. Adding one (or more) hidden layers makes it possible
+to solve those problems. Thus, the multilayer structure empowers the neural net-
+works to process data with nonlinear patterns. Per the universal approximation
+theorem, an FNN with one hidden layer can represent any function (Cybenko,
+1989), although, in the early stage training, such a multilayer model is very difﬁ-
+cult without high performance computation devices, like a graphical processing
+unit (GPU).
+
+  Given activation functions and multiple layers, the multilayer FNN still
+cannot work without a learning algorithm, intended to improve the model’s pre-
+diction performance while training. In the 1980s, the back-propagation (BP)
+algorithm enabling learning in a multilayer FNN was proposed (Rumelhart et
+al., 1986), and it soon resulted in a renewed interest in the ﬁeld. In the last
+44 Machine Learning for Transportation Research and Applications
+
+decade, with the help of the BP algorithm and advanced GPU technologies, we
+witnessed the rise of deep learning. Training complex neural networks is no
+longer a big problem to develop a variety of deep neural networks to solve very
+complicated problems.
+
+4.2.2 Hidden layers
+
+A multilayer neural network consists of an input layer, an output layer, and
+one or more hidden layers (between the input and output layers). One of the
+obvious advantages of a multilayer neural network is the capability to model the
+complex mapping relationship between the input and output data. Incorporating
+one or more hidden layers can help the neural network to handle a more general
+class of functions.
+
+  The easiest neural network architecture is stacking many fully connected
+layers on top of each other, where each layer feeds into the layer above it, until
+the neural network generates outputs. In this way, we can consider the ﬁrst L − 1
+layers as the extracted representation of the data and the ﬁnal layer as a linear
+predictor. Taking the MLP as an example, as shown in Fig. 4.1, this MLP has
+four inputs, three outputs, and its hidden layer contains ﬁve hidden units. Since
+the input layer does not involve any calculations, the number of fully connected
+layers in this MLP is two because producing outputs with this network requires
+implementing the computations for both the hidden and output layers. Every
+input element is connected to every neuron in the hidden layer, and each of
+these hidden neurons in turn inﬂuences every neuron in the output layer.
+
+  This basic fully connected layer can be formulated via mathematical equa-
+tions. The input data matrix X ∈ Rn×d has two dimensions, where n denote the
+batch size that X has n sample data/examples where each example has d inputs
+(features). For a one-hidden-layer MLP whose hidden layer has h hidden neu-
+rons/units, the outputs of the hidden layer, i.e., the hidden representations, can
+be denoted as H ∈ Rn×h. H is also known as a hidden-layer variable or a hidden
+variable. Since the hidden and output layers are both fully connected, we have
+the hidden-layer weights W(1) ∈ Rd×h and biases b(1) ∈ R1×h and output-layer
+weights W(2) ∈ Rh×k and biases b(2) ∈ R1×k. Formally, we calculate the outputs
+Y ∈ Rn×k of the one-hidden-layer MLP as follows:
+
+H = XW(1) + b(1)  (4.6)
+Y = HW(2) + b(2).
+
+  Note that, after adding the hidden layer, the neural network has more weight
+parameters to track and update, but whether the neural network’s capability of
+modeling the data has increased is not apparent. You might be surprised to ﬁnd
+out that the answer is NO! The reason is that the hidden units deﬁned in Eq. (4.6)
+are given by an afﬁne function of the inputs, and the outputs (without softmax)
+are just an afﬁne function of the hidden units. Please note that an afﬁne function
+  Fully connected neural networks Chapter | 4 45
+
+of an afﬁne function is itself an afﬁne function. Moreover, a linear model has
+already been able to represent any afﬁne function. We can view the equivalence
+formally by proving that, for any values of the weights, we can just collapse out
+the hidden layer, yielding an equivalent single-layer linear model with parame-
+ters:
+
+Y = XW(1) + b(1) W(2) + b(2)
+
+Y = X W(1)W(2) + b(1)W(2) + b(2)  (4.7)
+
+  W  b
+
+Y = XW + b.
+
+4.2.3 Activation functions
+
+As Eq. (4.7) states, the combination of afﬁne functions are still linear functions.
+Thus, we need to add the nonlinear property into the neural network to build
+the complex mapping relationship between its input and output. Since neural
+networks has a multilayer structure, the nonlinear function can be added be-
+tween different layers, which originated from the role of synapses in biological
+neurons to enhance or inhibit a signal. The nonlinear activation function σ is
+normally applied to the afﬁne function such that a layer with activation function
+can be described as
+
+Y = σ (XW + b).  (4.8)
+
+The activation functions σ are differentiable operators to transform input signals
+to outputs, where the input signals will be adjusted or rescaled to simulate the
+enhancing or inhibiting of the signals. It usually maps the resulting values in
+between 0 to 1 or −1 to 1, like determining whether to activate the neurons of a
+neural network layer or not. There several classical and widely used activation
+functions, like sigmoid, tanh, relu. In the following subsections, we will brieﬂy
+introduce several common and widely used activation functions.
+
+Sigmoid function
+The sigmoid/logistic function curve looks like an S-shape, in which it transforms
+the inputs from the real value domain R to (0, 1):
+
+  sigmoid(x) = 1 1 + exp(−x) . (4.9)
+
+Sigmoid activation function has been widely used for several reasons:
+1. Since the probability of anything existing can only be in the range of 0–1,
+
+  sigmoid looks like it outputs the probability of whether a neuron of the neural
+  network is activated.
+2. The sigmoid function is differentiable and provides a smooth gradient, i.e.,
+  preventing jumps in output values.
+46 Machine Learning for Transportation Research and Applications
+
+However, sigmoid also has its disadvantages in that it can cause a neural network
+to get stuck during the training procedure. The reason will be discussed in the
+following sections.
+
+Tanh function
+
+The hyperbolic tangent (tanh) activation function looks like the sigmoid function
+with s-shape. The range of the tanh function is from −1 to 1:
+
+tanh(x) = 1 + e−2x 2 − 1.  (4.10)
+
+The tanh activation function is differentiable and monotonic, while its derivative
+is not monotonic. It is mainly used for classiﬁcation between two classes. Both
+tanh and sigmoid functions are differentiable, but they have the potential to re-
+sult in vanishing gradient during the training process, which will be addressed
+later.
+
+ReLU function
+
+ReLU is probably the most used activation function in the world right now.
+ReLU and its variants are used in all kinds of neural networks. It does not map
+the input to a limited range, and its function is pretty simply that
+
+ReLU(x) = max(0, x).  (4.11)
+
+As the equations shows, the activated value is zero when x is less than zero
+and equals to itself when x is above or equal to zero. The ReLU function and
+its derivative both are monotonic. Further, its derivatives are particularly well
+behaved: Either they vanish or they just let the argument through. This simple
+structure brings several advantages such that ReLU needs less time and space
+complexity for calculation. It also mitigates the vanishing gradient problem.
+However, it does not avoid the gradient exploding problem. It also introduces
+the dying ReLU problem when the learning rate is too high or there is a large
+negative bias.
+
+  Therefore, there are many variants of the ReLU function, such as the Leaky
+ReLU, which is the most common and effective method to solve a dying ReLU
+problem. Leaky ReLU adds a slight slope in the negative range to prevent the
+dying ReLU problem.
+
+4.2.4 Loss functions
+
+A loss function is a simple concept that evaluates how well the algorithm models
+the dataset. Speciﬁcally, it is calculated to determine the error (loss) between the
+output of our algorithms and the given target value. The loss function calculates
+the loss that is usually a nonnegative number and where smaller values are better
+and perfect predictions incur a loss of 0. In machine learning or deep learning
+Fully connected neural networks Chapter | 4 47
+
+algorithms, there are multiple ways to formulate the loss functions depending
+
+on the speciﬁc learning tasks.
+
+  The most popular loss function in regression problems is the mean squared
+error. When our prediction for an sample data entry i is yˆi and the corresponding
+true label is yi, the squared error is given by:
+
+  1  n
+
+L(yˆi , yi) =  2(yˆi − yi ) . (4.12)
+
+  n i=1
+
+The loss function is used to optimize the weights of a model to achieve a smaller
+loss when we train the model.
+
+  Taking the one-layer neural network described in Eq. (4.8) as an example, the
+loss function is calculated with respect to the weights W and b. Thus, a neural
+network targeted to minimize the loss can be optimized based on the following
+formulation to acquire a set of optimal or near optimal weights:
+
+W∗, b∗ = arg min L(yˆ, y).  (4.13)
+
+  W,b
+
+There are various forms of loss functions depending on speciﬁc tasks. Classi-
+ﬁcation problems usually incorporate the cross entropy loss. When we attempt
+to minimize the distance between two probability distributions, we can use KL
+divergence loss. These loss functions will be introduced in later chapters as they
+are used.
+
+  The loss function is particularly important since it determines the goodness
+of the model ﬁtness. Normally, when the loss is considered small enough in
+the training process, we can terminate training and get a trained model. Before
+getting into the detailed training process, we will ﬁrst introduce how to update
+the neural network weights in the following section.
+
+4.2.5 Back-propagation
+
+The back-propagation algorithm is the core of deep learning since back-
+propagation calculating the gradient of the errors of all layers in a neural net-
+work is the prerequisite to update the weights of the neural network. Before
+explaining back-propagation, we will ﬁrst introduce forward propagation.
+
+Forward propagation
+The aforementioned neural network calculations all belong to forward propa-
+gation (or forward pass). In the forward pass, input data are fed into the neural
+network for calculation and storage of intermediate variables (including outputs)
+in a forward order from the input layer to the output layer, as shown in Fig. 4.2.
+
+  For the sake of simplicity, let us assume that the input example is x ∈ Rd
+and that our hidden layer does not include a bias term. The forward pass can be
+48 Machine Learning for Transportation Research and Applications
+
+FIGURE 4.2 Forward propagation in a fully neural network, taking a two-layer neural network
+(MLP) as an example.
+
+described as follows:
+
+  h = σ (z) = σ (W(1)x),  (4.14)
+
+where W(1) ∈ Rh×d is the weight parameter of the hidden layer, i.e., the ﬁrst
+layer, σ is the activation function, and z = W(1)x is a virtual variable to show the
+calculation process. The obtained hidden variable h with the length of h will be
+
+input to the output layer, i.e., the second layer. Assuming the output layer does
+
+not have an activation function, the output variable of the neural network y can
+be obtained as the product of weight parameters of the output layer W(2) ∈ Rq×h
+and the hidden variable h:
+
+  yˆ = W(2)h.  (4.15)
+
+As Fig. 4.2 shows, the output has two values yˆ = [yˆ1, yˆ2]. Given the label y, we
+can then calculate the loss term via the aforementioned loss function:
+
+  L = loss(yˆ, y).  (4.16)
+
+  Normally, the goal is to minimize the loss function in the neural network
+
+training process. To describe the whole computation process, we refer to J as
+the objective function, which is equivalent to the loss function J = L, in the
+
+following discussion,
+
+Backward propagation
+
+Back-propagation (BP) refers to the method of calculating the gradients of
+all the neural network parameters to update the network’s weights. The for-
+ward computation process traverses from the input to the loss, while the back-
+propagation method traverses the network in reverse order, from the output to
+the input layer, according to the chain rule from calculus.
+  Fully connected neural networks Chapter | 4 49
+
+  The chain rule can help calculate the gradients of all parameters in a neural
+network given the loss, as can be seen in the following example. Assume that
+we have functions Y = f (X) and Z = g(Y), in which the input and the output
+X, Y, Z are tensors of arbitrary shapes. By using the chain rule, we can compute
+the derivative of Z with respect to X via
+
+  ∂Z = prod ∂Z , ∂Y .  (4.17)
+  ∂X  ∂Y ∂X
+
+Here, prod is the matrix–matrix multiplication operator.
+
+To better illustrate the backward propagation of the neural network, we de-
+
+pict the backward computational graphs of the neural network just mentioned in
+
+Fig. 4.3 to show the dependencies of operators and variables within the calcu-
+
+lation. The gray lines show the forward computation graph, and the red dotted
+
+lines describe the backward computation graph associated with the network.
+The weight parameters of this network are represented by W(1) and W(2). The
+
+BP process calculates the gradients of the objective J with respect to all vari-
+
+ables  and  weight  parameters  in  the  neural  network.  Since  J  =  L  and  ∂J  =  1,  the
+  ∂L
+model’s weight updating process targets to calculate ∂L/∂W(1) and ∂L/∂W(2).
+
+To accomplish this, we apply the chain rule and calculate the gradient of each
+
+intermediate variable and parameter, starting from L to the input X in the back-
+
+ward order.
+
+FIGURE 4.3 Back-propagation process in fully connected layers.
+50 Machine Learning for Transportation Research and Applications
+
+  The ﬁrst step is to compute the gradient of the objective function with respect
+to variables of the output layer according to the chain rule:
+
+  ∂J = prod ∂J , ∂L = ∂L .  (4.18)
+  ∂ yˆi  ∂L ∂yˆi ∂yˆi
+
+Based on Eq. (4.15), the gradient ∂J /∂W (2) is calculated in a similar way:
+
+  (2) ∂J = prod ∂J , (2) ∂yˆi .  (4.19)
+  ∂yˆi ∂Wi
+  ∂ Wi
+
+  To obtain the gradient with respect to W(1), we need to continue back-
+propagation along the output layer to the hidden layer. We need to ﬁrst calculate
+the gradient with respect to the hidden layer’s outputs ∂J /∂h, which is given by
+
+  ∂J = prod ∂J , ∂yˆ = w(2) ∂L .  (4.20)
+  ∂h  ∂yˆ ∂h  ∂ yˆ
+
+Taking ∂J /W1(1), as an example, the gradient is given by
+
+∂J = prod ∂J , ∂yˆ1  + prod ∂J , ∂yˆ2  = w1(2) ∂L ∂yˆ + w 1 2(2) ∂L ∂yˆ . (4.21) 2
+∂ h1  ∂yˆ1 ∂h1  ∂yˆ2 ∂h1
+
+  Since the activation function σ applies elementwise, calculating the gradient
+∂J /∂z of the intermediate variable z needs to use the element-wise multiplica-
+tion operator, denoted by :
+
+  ∂J = prod ∂J , ∂h = ∂J  σ (z).  (4.22)
+  ∂z  ∂h ∂z ∂h
+
+  Finally, we can obtain the gradient ∂J /∂W(1) of the model parameters clos-
+est to the input layer. According to the chain rule, we get
+
+  ∂W(1) ∂J = prod ∂J∂z , ∂W(1) ∂z = ∂J∂z x .  (4.23)
+
+4.2.6 Validation dataset
+
+In principle, we should not touch our test set until after we have chosen all our
+hyperparameters. Were we to use the test data in the model selection process,
+there is a risk that we might overﬁt the test data. Then, we would be in serious
+trouble. If we overﬁt our training data, there is always the evaluation on test data
+to keep us honest. But, if we overﬁt the test data, how would we ever know?
+
+  Thus, we should never rely on the test data for model selection. And yet we
+cannot rely solely on the training data for model selection either because we
+  Fully connected neural networks Chapter | 4 51
+
+cannot estimate the generalization error on the very data that we use to train the
+model.
+
+  In practical applications, the picture gets muddier. While ideally we would
+only touch the test data once, to assess the very best model or to compare a small
+number of models to each other, real-world test data is seldom discarded after
+just one use. We can seldom afford a new test set for each round of experiments.
+
+  The common practice to address this problem is to split our data three ways,
+incorporating a validation dataset (or validation set) in addition to the training
+and test datasets. The result is a murky practice where the boundaries between
+validation and test data are worryingly ambiguous. Unless explicitly stated oth-
+erwise, in the experiments in this book, we are really working with what should
+rightly be called training data and validation data, with no true test sets. There-
+fore, the accuracy reported in each experiment of the book is really the validation
+accuracy and not a true test-set accuracy.
+
+4.2.7 Underﬁtting or overﬁtting?
+
+When we compare the training and validation errors, we want to be mindful of
+two common situations. First, we want to watch out for cases where our training
+error and validation error are both substantial but there is a little gap between
+them. If the model is unable to reduce the training error, that could mean that our
+model is too simple (i.e., insufﬁciently expressive) to capture the pattern that we
+are trying to model. Moreover, since the generalization gap between our training
+and validation errors is small, we have reason to believe that we could get away
+with a more complex model. This phenomenon is known as underﬁtting.
+
+  On the other hand, as we already discussed, we want to watch out for the
+cases when our training error is signiﬁcantly lower than our validation error,
+indicating severe overﬁtting. Note that overﬁtting is not always a bad thing.
+Especially, with deep learning, it is well known that the best predictive models
+often perform far better on training data than on holdout data. Ultimately, we
+usually care more about the validation error than about the gap between the
+training and validation errors. Whether we overﬁt or underﬁt can depend both
+on the complexity of our model and the size of the available training datasets,
+two topics that we subsequently discuss.
+
+4.3 Transportation applications
+
+FNNs consisting of multiple linear layers can be considered as extended linear
+models. However, the activation functions bring nonlinear power to the FNN.
+Thus, an FNN can solve a big class of regression and logistic problems in the
+transportation domain.
+52 Machine Learning for Transportation Research and Applications
+
+4.3.1 Trafﬁc prediction
+In this subsection, we take the trafﬁc prediction task as an example to show
+how FNNs can solve regression problems in the transportation domain. Trafﬁc
+prediction is a broad topic in which roadway travel time, trafﬁc speed, trafﬁc
+volume, travel demand, origin-destination (OD), and mobility pattern can all
+be estimated or predicted using deep learning methods. These research areas
+indeed attract much attention in the past several years.
+
+  We ﬁrst take the trafﬁc volume prediction along a corridor as an example,
+the simplest prediction task is to predict the state at a speciﬁc location, such
+as a roadway link. Given a time series of trafﬁc state x = [x1, x2, ..., xt ], the
+prediction task is to take the series as input and generate a predicted state xt+1.
+Hence, the trafﬁc prediction problem can be formulated as learning a f function,
+such that y = f (x), where y is the predicted value of xt+1. Here, we can solve
+this prediction problem by using a multilayer fully connected neural network as
+the f function.
+
+FIGURE 4.4 Trafﬁc state collected by sensors along a corridor.
+
+  A more complicated case is to predict the trafﬁc state along a corridor, as
+shown in Fig. 4.4, where the trafﬁc states at different locations are all input into
+the model to predict the state at another place. For example, the task aims at pre-
+dicting the trafﬁc state at sensor E, taking the trafﬁc states at sensor A, B, C, and
+D as input. If we use a basic FNN as the prediction model, the model structure is
+shown in Fig. 4.5. The model takes the trafﬁc states at various locations xA, xB ,
+xC, xD as input to generated a prediction output yE. Since the prediction task
+needs to use historical data, the trafﬁc state input collected by the i-th sensor is a
+time series of historical trafﬁc states xi = [x1i , xi2, ..., xti]. Thus, the input of the
+model is X = [xA, xB , xC, xD] is a two-dimensional (2D) matrix. In this case,
+this problem aims at ﬁtting the f such that y = f (X) = f ([xA, xB , xC, xD]).
+
+  These two examples focus only on the trafﬁc prediction of a road segment or
+several consecutive segments. If all the segments of the road network are con-
+sidered, a more comprehensive spatiotemporal data model should be adopted.
+  Fully connected neural networks Chapter | 4 53
+
+FIGURE 4.5 Trafﬁc state prediction along a corridor, given states of sensor A, B, C, and D to
+predict the state of sensor E.
+
+Although FNN is a candidate, more suitable deep learning models for solving
+the network-wide trafﬁc prediction will be introduced in later chapters.
+
+4.3.2 Trafﬁc sign image classiﬁcation
+Trafﬁc sign identiﬁcation and classiﬁcation is a necessary functional module of
+self-driving (autonomous) vehicles. It is a process of automatically recogniz-
+ing trafﬁc signs along the road, including speed limit signs, yield signs, merge
+signs, etc. It helps self-driving cars to properly parse and understand the road-
+way around them.
+
+  In this real-world, trafﬁc sign recognition is normally divided into the two
+tasks, localization and recognition.
+• Localization: Localize where the trafﬁc sign is in an input image.
+• Recognition: Take the localized regions of interest (ROI) of trafﬁc signs, as
+
+  shown in Fig. 4.6, and classify them accurately.
+  Though trafﬁc sign recognition can be fulﬁlled in single forward-pass neu-
+ral network-based object detectors, like Faster R-CNNs, Single Shot Detectors
+(SSDs), and RetinaNet, in this section, we take the trafﬁc sign classiﬁcation as
+an example to show how the fully connected neural network can solve a classiﬁ-
+cation task in the transportation domain. The advanced computer vision-related
+deep learning methods will be introduced in detail in the convolutional neural
+network chapter.
+  The trafﬁc sign classiﬁcation problem, like all other classiﬁcation problems,
+is a supervised learning problem, in which one chooses a model from the model
+set F = {Fθ }, where Fθ can be a neural network parameterized by θ , to classify
+a set of trafﬁc sign images X = {xi} as input to the correct labels Y = {yi}
+as the output. If the model is a neural network-based classiﬁer, consisting of
+54 Machine Learning for Transportation Research and Applications
+
+FIGURE 4.6 Trafﬁc sign images for classiﬁcation.
+
+several fully connected layers, you can add a softmax layer as the last layer
+or directly use the cross-entropy loss function to ensure the trained model can
+output correct labels. Please note that the input data as an image is a 2D or
+3D matrix. Using FNN to process the high-dimensional data requires a data
+ﬂattening process that convert high-dimensional data into one-dimensional data.
+Thus, the trafﬁc sign classiﬁcation problem can still be formulated as learning
+a function f such that y = fθ (x), where f can contain several FNN layers and
+other data preprocessing procedures.
+4.4 Exercises
+4.4.1 Questions
+
+ 1. True or False questions:
+  Fully connected neural networks Chapter | 4 55
+
+  • During forward propagation, in the forward function for a layer l,
+  you need to know what is the activation function in a layer (sigmoid,
+  tanh, ReLU, etc.). During back-propagation, the corresponding back-
+  ward function also needs to know what is the activation function for
+  layer l, since the gradient depends on it.
+
+  • The deeper layers of a neural network are typically computing more
+  complex features of the input than the earlier layers.
+
+ 2. Among the following, which ones are “hyperparameters”?
+  a. size of the hidden layers;
+  b. learning rate;
+  c. number of iterations;
+  d. number of layers in the neural network.
+
+ 3. Which is NOT true about gradient descent?
+  a. Gradient descent is intended to ﬁnd the values of a function’s parame-
+  ters that minimize a cost function as much as possible.
+  b. When maximizing an objective function, you can use gradient ascent
+  instead of gradient descent.
+  c. Gradient descent is a speciﬁc design method for neural network opti-
+  mization.
+  d. Stochastic gradient descent is a variant of the gradient descent method
+  that is popular for neural networks training.
+
+ 4. Consider a neural network with two hidden layers, each of which can be
+  represented by yi = σ (xi−1Wi + bi). If the input of the neural network is
+  x0 ∈ R16×1, the input of the second hidden layer is x1 ∈ R32×1, and the
+  output of the second hidden layer is y2 ∈ R16×1, which of the following
+  statement are true (check all that apply)?
+
+  • W1 will have shape (16, 16);
+  • b1 will have shape (16, 1);
+  • y1 will have shape (32, 1);
+  • W2 will have shape (32, 1);
+  • b2 will have shape (16, 1).
+
+ 5. Why is zero initialization of weight not a good initialization technique?
+ 6. Why data is normalization needed in most cases of deep learning models?
+ 7. Why is ReLU the most commonly used activation function?
+ 8. Explain the vanishing and exploding gradient problems.
+ 9. What is the difference between epoch, batch, and iteration in neural net-
+
+  works?
+10. List ﬁve scenarios that you want to use FNN to solve a transportation re-
+
+  lated problem.
+This page intentionally left blank
+Chapter 5
+
+Convolution neural networks
+
+5.1 Convolution neural network fundamentals
+
+5.1.1 From fully connected layers to convolutions
+
+A Convolution Neural Network (CNN) is a deep learning method that takes
+images or image-like inputs, assigns weights and biases to the components via
+a learning process, and carries out different tasks, such as differentiating one
+from the other, localizing interested objects, and learning the relationships be-
+tween regions. A common question is why use CNNs over feed-forward neural
+networks? Images can certainly be ﬂattened and fed into a feed-forward neu-
+ral network as a normal feature vector, like the process shown in Fig. 5.1. This
+could be true when the image is simple, but a CNN is able to capture the spatial
+and temporal dependencies in multiple levels in an image when the input image
+is large and complicated.
+
+  There are two primary issues with fully connected layers. On the one hand,
+the number of network parameters is too large. For a image with the size of
+400 × 300, it has 1.2 × 105 input dimensions. If the fully connected network
+has only one hidden layer with 1,000 neurons, the number of parameters to
+be learned is over 1.2 × 108. This will cost a lot of computation and storage
+resources and is far from the goal of efﬁcient training and inference. On the other
+hand, the machine learning models we have discussed mainly deal with tabular
+data, which means the data is structured as rows corresponding to data points
+and columns corresponding to features. Even for image data, a 2-D image matrix
+is supposed to be converted to a 1-D vector before feeding the fully connected
+neural network. The models have assumed no mechanism for how the input data
+or features interact. This could be due to the simplicity of the data itself or a lack
+of knowledge in guiding the design of data feature interactions. In most of these
+cases, the fully connected neural network is probably the top choice since it can
+learn the high-dimensional features through the hidden nonlinear layers.
+
+  These issues with MLP motivate the use of CNNs. Imagine we have an im-
+age with a complicated scene in which our target is to locate a speciﬁc object
+(e.g., a dog, a person, a bike). What a human will do in this localization task
+is probably to move his/her line of sight from left to right along the top of the
+image, then from left to right in the middle of the image, and later slide the line
+of sight in the same way at the bottom of the image. In this way, the observer
+
+Machine Learning for Transportation Research and Applications  57
+
+https://doi.org/10.1016/B978-0-32-396126-4.00010-2
+
+Copyright © 2023 Elsevier Inc. All rights reserved.
+58 Machine Learning for Transportation Research and Applications
+
+FIGURE 5.1 Flatten a 3 × 3 image into a 9 × 1 vector.
+
+assigns each patch of the image a score by matching each patch to a target object
+image in his/her brain. In traditional computer vision-based object detection, a
+commonly adopted approach is similar to this intuitive way of searching by hu-
+mans, called the Sliding Window approach (Glumov et al., 1995). In the sliding
+window approach, a learned classiﬁer, often with hand-crafted features, assigns
+a score to each image patch in a sliding-window manner. Usually the sliding-
+window approach is applied on multiple scales of the input image to detect the
+same object in different scales. CNN is built upon this intuition, which results in
+much fewer parameters and at the same time makes use of the spatial relation-
+ships among pixels.
+
+5.1.2 Convolutions
+
+Convolution is the fundamental operation of a CNN. In this subsection, we
+brieﬂy introduce the mathematical function convolution. The convolution is of-
+ten between two functions f and g. The convolution operation is written as f ∗ g.
+An asterisk usually indicates multiplication. In advanced calculus, the asterisk
+is used as a symbol for convolution. We will see that convolution is actually a
+type of multiplication. The formal deﬁnition of a convolution is Eq. (5.1):
+
+∞
+(f ∗ g)(t) = f (z)g(t − z)dz.
+−∞  (5.1)
+  Convolution neural networks Chapter | 5 59
+
+FIGURE 5.2 A typical CNN architecture for hand-written digits classiﬁcation.
+
+  g(t − z) indicates a ﬂipped g function, and it is shifted by t. The integral
+turns into the sum for discrete objects, which is shown in Eq. (5.2):
+
+  ∞
+
+  (f ∗ g)(k) =  f (a)g(k − a).  (5.2)
+
+  a=−∞
+
+In the case of 2-D convolution for discrete objects, the operation is as fol-
+
+lows:
+
+  ∞∞
+
+  (f ∗ g)(k, l) =  f (a, b)g(k − a, l − b).  (5.3)
+
+  a=−∞ b=−∞
+
+  The g function is a 2-D function and ﬂipped in both dimensions, and then
+shifted by k and l. The two-dimensional convolution of f ∗ g is essentially the
+
+sum of value multiplications along the two axes.
+
+5.1.3 Architecture
+
+A CNN architecture consists of convolution layers, pooling layers, activation
+functions, a ﬂatten operator, a fully connected layer, and a classiﬁcation function
+(e.g., Softmax). A typical CNN architecture is shown in Fig. 5.2. A convolution
+layer has multiple different kernels/ﬁlters that operate on the input image of
+the feature map from previous layers. Fig. 5.3 displays a convolution operation
+with one kernel/ﬁlter on a 2-D input image/feature. In case of RGB images or
+3-D input features (e.g., videos), the kernel will have three dimensions instead
+of two. The kernel runs in a sliding-window manner on the input image. For
+example, the top left-hand element of the output convolved feature is obtained
+by the kernel’s operation on the top left-hand 3 × 3 grid on the input image, i.e.,
+−2 = 1 × 2 + 0 × 1 + 1 × 0 + 0 × 0 + 0 × 1 + 0 × 0 + (−1) × 1 + 0 × 0 + (−1) × 3.
+60 Machine Learning for Transportation Research and Applications
+
+FIGURE 5.3 Convolution operation.
+
+  A concept in the convolution operation is stride, which determines the step
+a kernel moves in the sliding window operation. If stride length = 1, a kernel
+will operate on all the windows of its size in the input image. The case shown in
+Fig. 5.3 is an example of stride length = 1. If stride length = 2, a kernel will skip
+one image pixel to run the next convolution operation. Another critical compo-
+nent of a convolution layer is the activation function. Similar to a feed-forward
+neural net, sigmoid and ReLU are the two commonly used activation functions.
+However, ReLU is more dominant than Sigmoid in CNN architectures because
+of its advantages computational efﬁciency and in having no vanishing gradient.
+The output size of a convolution layer is
+
+Soutput = Sinput − Sf ilter + 1,  (5.4)
+  Ss t r i d e
+
+where Soutput , Sinput , Sf ilter , Sstride are the sizes of the output, input, ﬁlter, and
+stride of a convolution layer. Also, the number of ﬁlters becomes the number of
+channels in the output feature map of a convolution layer.
+
+  A convolution layer and a pooling layer together form a complete layer of a
+CNN. A pooling layer often appears after a convolution layer. It reduces the size
+of the convolved feature to further improve the processing efﬁciency. A pooling
+operation extracts dominant features in a small window and, at the same time,
+is a positional and rotational invariant. There are two commonly used pooling
+operations: max pooling and average pooling. Max pooling extracts the maxi-
+mum value of a region in the output convolved feature map from the convolution
+layer; average pooling returns the average value of the same region. An exam-
+ple is shown in Fig. 5.4. Max pooling is less sensitive to noises, while average
+pooling is inﬂuenced by all values in the pooling region. Therefore, max pooling
+in general performs better than average pooling. The last few layers are usually
+fully connected layers, which have the same structure as the feed-forward neural
+network structure introduced in last chapter.
+  Convolution neural networks Chapter | 5 61
+
+FIGURE 5.4 Max pooling and average pooling operations.
+
+FIGURE 5.5 The AlexNet CNN architecture.
+
+5.1.4 AlexNet
+AlexNet was the very ﬁrst CNN architecture that used GPU to boost perfor-
+mance (Krizhevsky et al., 2012). It was proposed and won the Imagenet Vi-
+sual Recognition Challenge in 2012. The architecture is presented in Fig. 5.5.
+AlexNet has eight layers, among which ﬁve are convolution layers and three
+are fully connected layers. They all use ReLu as the activation function. Max
+pooling is the pooling operation that follows all convolution layers. The input
+to AlexNet is 227 × 227 × 3. The ﬁrst convolution layer has 96 ﬁlters of size
+11 × 11 with stride 4, and the output is 55 × 55 × 96. The ﬁrst max-pooling layer
+is of size 3 × 3 and stride 2, resulting in a feature map of 27 × 27 × 96. The sec-
+ond convolution layer has 256 ﬁlter of size 5 × 5, and with stride 1 and padding
+2, resulting in a feature map of size 27 × 27 × 256. The second max-pooling
+layer is 3 × 3 with stride 2, and the output is of size 13 × 13 × 256. Likewise,
+AlexNet has third, fourth, and ﬁfth convolution layers with max pooling and
+ReLu operations. The fully connected layers have 4,096, 4,096, and 1,000 neu-
+rons, respectively. Softmax function is the activation function for the last fully
+connected layer. There are two dropout layers following the ﬁrst two fully con-
+nected layers. The dropout rate is 0.5. AlexNet in total has about 62.3 million
+parameters in its architecture.
+62 Machine Learning for Transportation Research and Applications
+
+FIGURE 5.6 The proposed CNN architecture.
+
+5.2 Case study: trafﬁc video sensing
+We showcase an example in trafﬁc video sensing using CNN. More details of
+this example can be found in the authors’ paper Ke et al. (2018a). Speciﬁcally,
+we use CNN for vehicle classiﬁcation in unmanned aerial vehicle (UAV) im-
+ages. With a trial and error process, the architecture of our CNN (see Fig. 5.6)
+was chosen to contain two convolution layers, one pooling layer, and one hidden
+FC layer. The two convolution layers have a same dimension of 32 × 2 × 2 with
+a sigmoid activation function. The pooling layer is added to downsample the
+second convolution layer’s outputs by a scale factor of 2. And the FC layer with
+128 nodes is added between the pooling layer and the ﬁnal outputs. Compared
+to other popular CNN architectures, such as AlexNet (Krizhevsky et al., 2012)
+and VGG (Simonyan and Zisserman, 2014), this CNN structure is lightweight
+with many fewer layers and parameters.
+
+  This is motivated by the requirement for real-time operation on UAVs and a
+smaller number of categories (i.e., vehicle and background). It has been found
+that two convolution layers can already satisfy the accuracy requirement. It is
+worth noting that there is no pooling layer in between the two convolution lay-
+ers. This is because the training and testing losses turn out to be higher, while
+the overall detection speed is not signiﬁcantly improved if adding the pooling
+layer. Based on our tests and analyses, the increased losses are mainly caused by
+the small image size after pooling. Since the dimension of our image samples is
+20 × 13, if they are downsampled by the pooling layer, the features extracted by
+the second convolutional layer would not be as representative.
+
+  We present in Fig. 5.8 two detection results from a classiﬁer with traditional
+hand-crafted features (Haar cascades) and the proposed CNN classiﬁer. It can
+be seen that the false detection rate of the traditional classiﬁer (top) is rather
+high and the detection of CNN looks neat. However, the processing time of
+

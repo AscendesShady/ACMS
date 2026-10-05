@@ -1,0 +1,50 @@
+chunk,covers,verdict,ideas,read_at
+p0001-0025,"Front matter, committee, contents, preface",none,0,2026-10-04 19:48
+p0026-0050,"Ch 2 LOS concepts, ch 3 applications, ch 4 decision making, start of glossary",some,5,2026-10-04 19:48
+p0051-0075,Glossary,none,5,2026-10-04 19:49
+p0076-0100,"Symbols, ch 7 traffic flow parameters, start of ch 8",rich,10,2026-10-04 19:49
+p0101-0125,"Ch 8 traffic characteristics: demand variation, K/D, observed capacities, saturation flow",some,14,2026-10-04 19:50
+p0126-0150,"Ch 8 end bus flows, ch 9 procedures overview and appendices, ch 10 TOC",some,19,2026-10-04 19:50
+p0151-0175,"Ch 10 urban street concepts: street class, signalised flow characteristics, defaults, start of unsignalised",rich,30,2026-10-04 19:51
+p0176-0200,"Ch 10 unsignalised concepts, quick estimation method for signals (App A), start of ch 11",rich,35,2026-10-04 19:51
+p0201-0225,"Ch 11 pedestrian and bicycle concepts, start of ch 12",some,38,2026-10-04 19:51
+p0226-0250,"Ch 12 highway concepts (multilane, two-lane), start of ch 13 freeway concepts",some,42,2026-10-04 19:52
+p0251-0275,"Ch 13 freeway concepts: queue discharge, weaving, ramps, freeway facilities",rich,48,2026-10-04 19:52
+p0276-0300,"Ch 14 transit concepts: bus capacity, priority treatments, LRT, QoS framework start",rich,50,2026-10-04 19:53
+p0301-0325,"Ch 14 QoS, ch 15 urban streets methodology (delay equations, arrival types, LOS by class)",rich,55,2026-10-04 19:53
+p0326-0350,"Ch 15 applications/examples/appendices, ch 16 TOC and intro",some,55,2026-10-04 19:54
+p0351-0375,"Ch 16 signalised intersections methodology: saturation flow factors, critical lane groups, delay, sensitivity",rich,58,2026-10-04 19:54
+p0376-0400,"Ch 16 computational steps, interpretation, example problems 1-2",some,61,2026-10-04 19:54
+p0401-0425,"Ch 16 example problems 2-4 (worksheets, no new method)",none,61,2026-10-04 19:54
+p0426-0450,"Ch 16 examples 5-6, references, App A delay measurement, start App B",some,63,2026-10-04 19:55
+p0451-0475,"Ch 16 App B actuated timing estimation, start App C permitted left adjustment",rich,66,2026-10-04 19:55
+p0476-0500,"Ch 16 App C-F: permitted left, ped/bike factors, p+p delay, initial queue and multi-period delay, start App G",some,68,2026-10-04 19:55
+p0501-0525,"Ch 16 App G back of queue, App H saturation measurement, worksheets, start ch 17",rich,70,2026-10-04 19:56
+p0526-0550,"Ch 17 Part A TWSC: conflicting flows, critical gap, potential capacity, impedance, platoons, two-stage, delay",rich,74,2026-10-04 19:56
+p0551-0575,"Ch 17 Part A end, Part B AWSC model, Part C roundabouts, example list",rich,77,2026-10-04 19:57
+p0576-0600,Ch 17 example problems (worked TWSC/AWSC),none,77,2026-10-04 19:57
+p0601-0625,Ch 17 example problems and worksheets,none,77,2026-10-04 19:57
+p0626-0650,"Ch 17 references and worksheets; ch 18 pedestrians start (walking speed, effective width, walkway LOS)",none,77,2026-10-04 19:57
+p0651-0675,"Ch 18 pedestrians: walkway LOS, platoons, queuing, shared paths, signalised and unsignalised crossings",some,78,2026-10-04 19:57
+p0676-0700,"Ch 18 examples, ch 19 bicycles methodology",some,79,2026-10-04 19:57
+p0701-0725,"Ch 19 examples, ch 20 two-lane highways methodology",some,80,2026-10-04 19:58
+p0726-0750,"Ch 20 two-lane highways: directional segments, upgrades, passing lanes, examples, appendices",none,80,2026-10-04 19:58
+p0751-0775,Ch 21 multilane highways methodology and examples,some,81,2026-10-04 19:58
+p0776-0800,"Ch 21 examples, ch 22 TOC",none,81,2026-10-04 19:58
+p0801-0825,"Ch 22 freeway facilities methodology: capacity reductions, d/c matrix, oversaturated model, strategies",rich,84,2026-10-04 19:58
+p0826-0850,Ch 22 examples and appendix A computational modules,some,85,2026-10-04 19:59
+p0851-0875,"Ch 22 examples end, ch 23 basic freeway segments methodology",some,86,2026-10-04 19:59
+p0876-0900,"Ch 23 examples/appendix composite grade, ch 24 weaving intro",some,87,2026-10-04 19:59
+p0901-0925,"Ch 24 freeway weaving methodology: speed, density, capacity tables",rich,87,2026-10-04 19:59
+p0926-0950,"Ch 24 examples, ch 25 ramps and ramp junctions: v12, capacity, density",rich,88,2026-10-04 19:59
+p0951-0975,"Ch 25 major merge, diverge model, capacities; examples",some,89,2026-10-04 20:00
+p0976-1000,"Ch 25 end/examples, ch 26 interchange ramp terminals: diamond signalisation, offsets, interchange delay",rich,90,2026-10-04 20:00
+p1001-1025,"Ch 27 transit: QoS LOS tables, dwell time, berth capacity, bus lanes",rich,92,2026-10-04 20:00
+p1026-1050,"Ch 27 bus running time, skip-stop, mixed traffic, light rail, examples",some,93,2026-10-04 20:00
+p1051-1075,Ch 28 assessment of multiple facilities: system performance measures; ch 29 corridor start,rich,95,2026-10-04 20:01
+p1076-1100,"Ch 29 corridor example, OD matrix estimation appendix, ch 30 areawide intro",some,97,2026-10-04 20:01
+p1101-1125,"Ch 30 areawide analysis: link speed-flow, node delay, performance measures, transit",some,98,2026-10-04 20:01
+p1126-1150,"Ch 30 end, ch 31 simulation models: descriptors, exercises",some,98,2026-10-04 20:02
+p1151-1175,"Ch 31 simulation: applications, model selection, calibration and validation, examples",some,100,2026-10-04 20:02
+p1176-1200,Ch 31 references and index,none,100,2026-10-04 20:02
+p1201-1207,Index,none,100,2026-10-04 20:02

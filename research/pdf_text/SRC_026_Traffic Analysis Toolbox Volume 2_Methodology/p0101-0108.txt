@@ -1,0 +1,181 @@
+E.7 Microscopic Simulation Models
+
+Examples of microscopic traffic simulation models:
+
+• AIMSUN2 (Advanced Interactive Microscopic Simulator for Urban and Non-Urban
+  Networks): www.tss-bcn.com/aimsun.html
+
+• ANATOLL: www.its.leeds.ac.uk/projects/smartest/append3d.html#a4
+• AUTOBAHN: www.its.leeds.ac.uk/projects/smartest/append3d.html#a5
+• CASIMIR: www.its.leeds.ac.uk/projects/smartest/append3d.html#a6
+• CORSIM/TSIS (Traffic Software Integrated System): www.fhwa-tsis.com
+• DRACULA (Dynamic Route Assignment Combining User Learning and
+
+  Microsimulation): www.its.leeds.ac.uk/software/dracula
+• FLEXSYT-II: www.flexsyt.nl/informatieuk.htm
+• HIPERTRANS (High-Performance Transport): www.cpc.wmin.ac.uk/~traffic
+• HUTSIM (Helsinki University of Technology Simulator):
+
+  www.hut.fi/Units/Transportation/HUTSIM
+• INTEGRATION: www.intgrat.com
+• MELROSE (Mitsubishi Electric Road Traffic Simulation Environment):
+
+  www.its.leeds.ac.uk/projects/smartest/append3d.html#a14
+• MicroSim: www.zpr.uni-koeln.de/GroupBachem/VERKEHR.PG
+• MICSTRAN (Microscopic Simulator Model for Traffic Networks):
+
+  www.its.leeds.ac.uk/projects/smartest/append3d.html#a16
+• MITSIM (Microscopic Traffic Simulator): http://web.mit.edu/its/products.html
+• MIXIC: www.its.leeds.ac.uk/projects/smartest/append3d.html#a18
+• NEMIS: www.its.leeds.ac.uk/projects/smartest/append3d.html#a19
+• PADSIM (Probabilistic Adaptive Simulation Model):
+
+  www.its.leeds.ac.uk/projects/smartest/append3d.html#a21
+• PARAMICS: www.paramics-online.com
+• PHAROS (Public Highway and Road Simulator):
+
+  www.its.leeds.ac.uk/projects/smartest/append3d.html#a23
+
+  93
+• PLANSIM-T: www.its.leeds.ac.uk/projects/smartest/append3d.html#a24
+• ROADSIM (Rural Road Simulator): www.kldassociates.com/simmod.htm
+• SHIVA (Simulated Highways for Intelligent Vehicle Algorithms):
+
+  www.its.leeds.ac.uk/projects/smartest/append3d.html#a25
+• SIGSIM: www.its.leeds.ac.uk/projects/smartest/append3d.html#a26
+• SIMDAC: www.its.leeds.ac.uk/projects/smartest/append3d.html#a27
+• SIMNET: www.its.leeds.ac.uk/projects/smartest/append3d.html#a28
+• SimTraffic: www.trafficware.com
+• SISTM (Simulation of Strategies for Traffic on Motorways):
+
+  www.its.leeds.ac.uk/projects/smartest/append3d.html#a29
+• SITRA B+: www.its.leeds.ac.uk/projects/smartest/append3d.html#a30
+• SITRAS: www.its.leeds.ac.uk/projects/smartest/append3d.html#a31
+• SmartPATH: www.path.berkeley.edu/PATH/Research
+• TEXAS (Texas Model for Intersection Traffic):
+
+  http://mctrans.ce.ufl.edu/store/description.asp?itemID=449
+• TRANSIMS: http://transims.tsasa.lanl.gov
+• TRARR: www.engr.umd.edu/~lovell/lovmay94.html
+• TWOPAS: www.tfhrc.gov/safety/ihsdm/tamweb.htm
+• VISSIM: www.itc-world.com
+• WATSim (Wide Area Traffic Simulation): www.kldassociates.com/unites.htm
+
+E.8 Integrated Traffic Analysis Tools
+
+There are some programs or utilities available that integrate two or more programs to
+provide a common data input format (all allow a user to run several programs). Some
+examples of integrated traffic simulation models include:
+• AAPEX (Arterial Analysis Package Executive):
+
+  http://mctrans.ce.ufl.edu/store/description.asp?itemID=426
+• ITRAF: http://mctrans.ce.ufl.edu/store/description.asp?itemID=445
+
+  94
+• PROGO: http://mctrans.ce.ufl.edu/store/description.asp?itemID=78
+• UNITES (Unified Integrator of Transportation Engineering Software):
+
+  www.kldassociates.com/unites.htm
+
+  95
+Appendix F: References
+
+  Algers, S., E. Bernauer, M. Boero, L. Breheret, C. DiTaranto, M. Dougherty, K. Fox, and
+  J.F. Gabard. Smartest Review of Micro-Simulation Models, Transport RTD, August 1997,
+  (available at www.its.leeds.ac.uk/projects/smartest/index.html, accessed August 2002).
+
+  Byrne, A., et al. Handbook of Computer Models for Traffic Operations Analysis, Publication
+  No. FHWA-FH-11-9290, FHWA, 1980.
+
+  Carvell, J.D., K. Balke, J. Ullman, K. Fitzpatrick, L. Nowlin, and C. Brehmer. Freeway
+  Management Handbook, Publication No. FHWA-SA-97-064, FHWA, August 1997.
+
+  Deterministic Models, University of Maryland (available at
+  www.cs.umd.edu/projects/sdag/netcalliper/Det.html, accessed September 2002).
+
+  Elefteriadou, L., et al. Beyond the Highway Capacity Manual: A Framework for Selecting
+  Simulation Models in Traffic Operational Analysis, Paper No. 991233, Transportation
+  Research Board, Washington, DC, January 1999.
+
+  Freeman, W.J., K.Y. Ho, and E.A. McChesney. An Evaluation of Signalized Intersection
+  System Analysis Techniques, 2002 (available at
+  www.trafficware.com/documents/1999/00055.pdf, accessed September 2002).
+
+  Giguere, R., J.A. Halkias, and J.F. Munro. Deployment of Traffic Software Models: A New
+  FHWA Strategy, A White Paper, FHWA and Oak Ridge National Laboratory, Dec. 11, 2000.
+
+  Highway Capacity Manual 2000, Transportation Research Board, 2000.
+
+  Husch, D. Comparing Capacity Analysis, 2002 (available at
+  www.trafficware.com/compcapanalysis.htm, accessed September 2002).
+
+  Krammes, R.A., G.L. Ullman, G.B. Dresser, and N.R. Davis. Application of Analysis Tools to
+  Evaluate the Travel Impacts of Highway Reconstruction With Emphasis on Microcomputer
+  Applications, FHWA, Washington, DC, March 1989.
+
+  McGhee, C.C. Evaluation of Methods for Freeway Operational Analysis, Final Report, Virginia
+  Transportation Research Council, Charlottesville, VA, October 2001.
+
+  Mekemson, J., E. Herlihy, and S. Wong. Traffic Models Overview Handbook, Publication
+  No. FHWA-SA-93-050, FHWA, 1993.
+
+  Milam, R.T., and F. Choa. HCM & CORSIM—Resolving the Differences, Fehr & Peers
+  Transportation Consultants, 2000.
+
+  97
+National ITS Architecture, FHWA, 2002 (available at
+http://itsarch.iteris.com/itsarch/index.htm, accessed September 2002).
+
+Traffic Flow Theory: A State-of-the-Art Report, Oak Ridge National Laboratory, and
+Transportation Research Board/FHWA, June 1992 (available at
+www.tfhrc.gov/its/tft/tft.htm, accessed November 2002).
+
+Schmidt, M., B. Kwella, H. Lehmann, C. Motschke, and R. Schäfer. Integrated Traffic and Air
+Quality Simulation (available at
+www.ercim.org/publication/Ercim_News/enw34/schmidt.html, accessed September
+2002).
+
+Signal Coordination Strategies, Advanced Traffic Analysis Center (available at
+www.atacenter.org/projects/2001_007.html, accessed September 2002).
+
+Skabardonis, A. Simulation Models for Freeway Corridors: State-of-the-Art and Research Needs
+(preprint), Paper No. 981275, Transportation Research Board, Washington, DC, January
+1998.
+
+Skabardonis, A. Assessment of Traffic Simulation Models, Washington State DOT, Seattle, WA,
+May 1999.
+
+Smith, S., R. Worrall, D. Roden, R.A. Pfefer, and M. Hankey. Application of Freeway
+Simulation Models to Urban Corridors, Volume 1: Final Report, Publication No. FHWA-RD-92-
+103, FHWA, 1992.
+
+“This Week’s Survey Results: Micro-Simulation Software Characteristics, Part I,” The
+Urban Transportation Monitor, Feb. 8, 2002, pp. 8-11.
+
+“This Week’s Survey Results: Micro-Simulation Software Characteristics, Part II,” The
+Urban Transportation Monitor, Feb. 22, 2002, pp. 8-12.
+
+“This Week’s Survey Results: Urban Transportation Planning Software, Part I,” The Urban
+Transportation Monitor, Apr. 5, 2002, pp. 9-11.
+
+“This Week’s Survey Results: Urban Transportation Planning Software, Part II,” The Urban
+Transportation Monitor, Apr. 19, 2002, pp. 8-13.
+
+Traffic Analysis Software Tools, Circular No. E-CO14, Transportation Research
+Board/National Research Council, September 2000.
+
+Traffic Analysis Tools, FHWA (available at
+http://ops.fhwa.dot.gov/Travel/Traffic_Analysis_Tools/traffic_analysis_tools.htm,
+accessed September 2002).
+
+Trueblood, M. Should I Use CORSIM or SimTraffic?, 2002 (available at
+www.trafficware.com/documents/crsmvst.pdf, accessed September 2002).
+
+  98
+Wunderlich, Karl E. Scale and Complexity Tradeoffs in Surface Transportation Modeling,
+Mitretek Systems, 1999.
+
+  99
+Recycled  HRDO-03/07-04(WEB)E
+Recyclable
+

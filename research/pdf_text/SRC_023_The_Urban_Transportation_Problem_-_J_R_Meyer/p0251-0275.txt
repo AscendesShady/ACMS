@@ -1,0 +1,1092 @@
+LINE-HAUL SYSTEMS  231
+
+outbound station, /¡ and d¡ would be equal to 6, and the second term would
+drop out. ) The third term, 1.166pL, represents the total time required for
+loading and unloading passengers over the entire round trip, and thus the
+sum of both inbound and outbound passengers. The computation of load-
+ing and unloading time requirements assumes an average load or unload
+rate of one person per door every 1.75 seconds, the use of three doors,
+double-side loading-unloading, and centralized fare collection at the
+downtown terminal. The final term is a constant 120-second allowance
+for turnaround time. It should be noted that this turnaround time does
+not include any allowance for loading and unloading times, since these
+have been fully incorporated into the third term of the equation.
+
+  The round trip distance, dP the passenger load, pP and the number of
+bus stops per trip, fv will of course depend on the character of service
+offered, the volume level, and distribution of volume along the route. For
+example, where only through service is to be offered and where the vol-
+ume level at each line-haul station is at least 1500 passengers per hour,
+the bus operation can be perfectly differentiated with buses operating
+express in loops between each line-haul station and the downtown ter-
+minal. In this case, there would be g bus loops or one for each mile of
+route length with each requiring V -=- gc hourly bus trips. Consequently,
+the significant features of this type of express bus system can be devel-
+oped reasonably well simply by analyzing only the characteristics pertain-
+ing to the "average" line-haul station for the system. For the 6-, 10-, and
+15-mile route length systems analyzed, the "average" line-haul station is
+one located 3.5, 5.5, and 8 miles, respectively, from the CBD terminal.24
+For other types of operations, fewer than g bus loops might be required,
+necessitating different computational procedures. This would occur, for
+example, in situations where volume levels were low and where multistop
+operation was used to increase load factors and reduce labor and equip-
+ment requirements. (See appendix B.)
+
+  Except in transfer and multistop situations, calculation of the distance
+traveled on an average round trip by bus is straightforward. Under the
+circumstances normally hypothesized in these analyses this distance will
+equal the route length plus 1; thus for the 6-, 10-, and 15-mile route
+lengths assumed for these cost analyses, the average round trip distances
+would be 7, 11, and 16 miles. The computation is more complex with
+multistop and transfer operations because it depends on the specific loops
+and type of operation hypothesized.
+
+  24 Under the 1-mile station-spacing assumptions standard to these cost analyses,
+no station, of course, would be found at the 3.5 and 5.5 distances in the 6- and
+10-mile systems; rather, the average station in that case is a composite or synthesis
+of the two middle stations in the systems, those located at distances of 3 and 4
+miles in the 6-mile system, and those located at distances of 5 and 6 miles in the
+10-mile system.
+232  COMPARATIVE COSTS
+
+  The load factor, p, is simply determined when no transfers are per-
+mitted and at high volume levels. If trip origination densities are high
+enough at every line-haul stop served so that the scheduled frequency
+constraint is automatically satisfied (one bus every two minutes or 30
+buses an hour), then the 1-way load factor in each bus is generally the
+full capacity of the bus, 50 passengers. In other words, if 1500 passengers
+an hour are picked up at each line-haul station (30 buses an hour times
+50 passengers per bus), 50 passengers will be carried in every bus
+(1-way) and the 2-minute headway requirement will be satisfied. For any
+volume lower than that, the number of passengers carried in each bus
+will depend on the total volume, number of stops, and the extent to which
+loads and capacity can be tailored.
+
+  The number of stops on each trip is almost as easily defined, but de-
+pends specifically on the type of service assumed. For example, if non-
+stop express service is to be rendered between each line-haul station and
+the CBD terminal (that is, with no along-the-line service in either direc-
+tion), then obviously only two stops are made on each round trip—one
+at the line-haul station and one at the CBD terminal. If along-the-line
+service is provided, the number of stops depends on the distance traveled
+(and on requirements for multistop operation for through passengers).
+With the assumed 1-mile station spacing and along-the-line service in one
+direction only (nonstop on the return leg), and with no necessity for
+multistops for through service, the average number of stops would equal
+one-half the average round trip distance plus one, the additional one
+being for the CBD terminal. With along-the-line service in both direc-
+tions, the stops required would be the same number as the average round
+trip distance (assuming no transfers are required).
+
+  Once the average trip time is known, the average number of round
+trips that each vehicle can make in an hour, r, can quickly be computed
+by dividing 3600 by the time required for one trip, t. When r is divided
+into the total number of round trips required per hour, R, then the total
+number of required or scheduled bus units, U, can be determined. For
+other than multistop or transfer operations,
+
+(B-lOa)  where — > h\
+
+or
+
+(B-lOb)  Ri = h,  where — < A;
+and
+
+(B-6)
+LINE-HAUL SYSTEMS  233
+
+Similarly, the annual number of bus-miles required by the system, M,
+during the four rush hours can be computed by
+
+(B-8)  M = 1020 drU.
+
+  The only additional computation needed for the analyses of buses
+operating on their own exclusive highways is that for the total number of
+lane-miles of highway required, L. This figure is needed in order to assess
+highway investment and maintenance costs. The specific expression for
+computing the lane-mile requirement is
+
+(B-9)
+
+where HB is the lane capacity of exclusive bus highways (in bus trips per
+lane per h o u r ) . This expression simply represents a totaling of the lane-
+mile requirements for each mile of the route system, beginning with the
+mile closest to the CBD and systematically proceeding outward. For this
+analysis it is generally assumed that HB equals 480, or that 480 buses an
+hour can safely and reasonably travel on one lane at the speeds specified.
+The totaling must take account of the fact that highway capacity can be
+provided only in discrete units, making it necessary to round upward to
+the next highest digit in each particular lane-mile calculation, as denoted
+by the use of the asterisk.
+
+Automobile
+
+  The automobile line-haul analysis is quite simple compared with
+either rail or bus public transit. The automobile line-haul analysis, like
+that for bus, is greatly simplified by confining attention to the "average"
+line-haul station within each system. At uniform densities, each line-haul
+station originates a volume V., which equals the total hourly maximum
+load point volume for the entire system divided by g, the route length in
+miles. The only additional information needed to define U, the number of
+vehicular units (cars here) required per hour is the average load, c, that
+can be expected in each vehicle. The selection of this load is extremely
+important, both to the economics of automobile operation and to deter-
+mination of the quality of service rendered. This load, in turn, is depend-
+ent on the amount of car-pooling practiced by commuters.
+
+  Car-pooling, on the one hand, represents a loss of privacy (though
+probably not so much as in public transit), an increase in waiting or
+delay time, and the loss of schedule flexibility, somewhat as a lower
+schedule frequency reduces the flexibility of transit operation. On the
+positive side, car-pooling means freedom from the driving burden for all
+234  COMPARATIVE COSTS
+
+but one member of the group; freedom to choose one's own company,
+read newspapers, smoke, and so on; and, finally, a reduction in travel cost
+as compared with driving aloné in one's own automobile. A basic prob-
+lem of the line-haul automobile analysis is to select a car occupancy
+figure that will establish a reasonable equivalence between the over-all
+sèrvice rendered by automobiles and by public transit modes. On this
+basis, and somewhat arbitrarily, 1.6 passengers per car have been as-
+sumed during the rush hours in the direction of major flow. This
+figure need not necessarily coincide with current data for urban areas,
+principally because the level of service assumed in this analysis, in both
+absolute and relative terms, with respect to all of the different modes is
+not necessarily comparable to that in the real world.25
+
+  On this basis, and with the assumed four rush hours a day, 255 days
+a year, the total number of automobiles needed is twice the number of
+automobiles needed for a single rush hour, Í7; this U can be estimated
+from the following expression:
+
+(A-1)
+
+Similarly, the mileage requirement (for four rush hours a day, 255 days
+a year) can be expressed by
+
+(A-2)  M = 510 dU,
+
+where d is the average daily round trip distance (in miles).
+  The only other data required for completing the automobile line-haul
+
+analyses are estimates of the number of freeway lane-miles required. This
+calculation is made in essentially the same fashion as that for bus lane
+capacity requirements but is somewhat more complicated because auto-
+mobile capacity per lane tends to be more dependent on the number of
+lanes in the highway.
+
+  Reasonably good estimates of lane capacity are available from free-
+way studies in California, Michigan, and Texas,26 but are not exactly
+applicable to the present analyses because the supporting volume count
+data included mixed traffic, composed of both heavy and light vehicles.
+The present line-haul automobile cost analyses, by contrast, pertain
+strictly to automobiles, with no trucks or buses sharing the facilities.
+
+  25 The 1.6 passengers per automobile per rush hour used in the present analyses
+compared with a 1.9 figure recorded in a 1955 Washington, D.C., O-D Study (see
+p. 29 of Mass Transportation Survey, Civil Engineering Report) and with some
+more recent (1961) data recorded on the Washington, D.C., Pentagon network
+ranging from 1.64 to 1.92 passengers per vehicle in the peak-hour major flow direc-
+tion. Similarly, a figure of 1.8 passengers per vehicle was used in the U.S. National
+Capital Transportation Agency Report, November 1962.
+
+  2 6 See, for example, Freeway Operations, Institute of Traffic Engineers, pp. 9 - 1 2 .
+LINE-HAUL SYSTEMS  235
+
+Furthermore, measured demand as obtained from volume count data
+normally embodies some hourly counts pertaining to facilities used below
+actual capacity. It seemed reasonable or even necessary, moreover, to
+differentiate lane capacities according to number of lanes. Specifically,
+data from a California freeway capacity study27 were used to estimate
+lane capacity and lane requirements for the line-haul automobile cost
+analyses. (See Table 66.) These lane capacities, when divided into the
+actual automobile volumes using each segment of the line-haul automo-
+bile system, rounded upward to the next integer, and summed over all
+segments, provide a total estimate of lane mile requirements.
+
+  TABLE 66
+
+PASSENGER CAR EXPRESSWAY CAPACITIES AT VARIOUS
+  HIGHWAY WIDTHS'1
+
+  No. of  Lane capacity  Total
+  lanes in  (vehicles per lane  roadway capacity
+one direction  (vehicles per hour)
+  per hour)b
+ 1  1000
+ 2  1000  3200
+ 3  1600  4995
+4  1665  6700
+ 5 or more  1675
+  1650
+
+  "All grade separated facilities with both medians and shoulders, etc.
+  bAt average speeds of 35 mph or more.
+
+  SOURCE: G. M. Webb and K. Moskowitz, "California Freeway
+Capacity Study," Highway Research Board Proceedings, 36: 587-641
+(1957).
+
+COST COMPARISONS AND CONCLUSIONS
+
+  Many of the important essentials of the line-haul cost analyses are
+summarized in Figures 34 through 40. Shown in Figure 34 is a compari-
+son of cost per trip incurred by the different transit modes for a complete
+inbound and outbound service at medium population densities and dif-
+ferent maximum load point requirements; panel ( A ) in the figure per-
+tains to 6-mile route systems, panel (B) to 10-mile systems, and panel
+(C) to 15-mile systems. Also shown are the costs for private automobile
+systems at different uniformly distributed and one-way, maximum load
+point volumes for the different route lengths. Figure 35 presents essen-
+tially the same data for high population densities. Figures 36 and 37
+show similar comparisons, at medium and high population densities,
+
+  27 G. M. Webb and K. Moskowitz, "California Freeway Capacity Study—1956"
+Highway Research Board Proceedings, vol. 36, 1957, pp. 587-641.
+236  COMPARATIVE COSTS
+
+One-way hourly passenger requirement  Rail
+  at maximum load point (thousands)  Auto (one-way only)
+  Express bus on exclusive
+  right-of-way
+
+  with transfer required for
+  along-the-line service
+  Freeway flier bus
+  with transfer required for
+  along-the-line service
+
+10  20  30  40  50  5 10  20  30  40  50
+
+One-way hourly passenger requirement  One-way hourly passenger requirement
+  at maximum load point (thousands)
+at maximum load point (thousands)
+
+Figure 34. Line-haul systems: medium population density (for example,
+Pittsburgh) with complete 2-way service.
+
+respectively, but only with one-way service provided; that is, the costs
+are computed on the assumption that return trips in the low volume
+direction are made on a nonstop express basis. Figure 38 presents a
+special set of comparisons between two low-cost forms of line-haul trans-
+port, an existing or "sunk cost" rail system and freeway flier buses
+  loo  Rail
+ ν  Auto (one-way only)
+  Express bus on exclusive
+00e  right-of-way
+υ  with transfer required for
+  22a  along-the-line service
+
+  Freeway flier bus
+  with transfer required for
+  along-the-line service
+
+  (C) 15-mile route
+
+c
+O
+
+  5 10  20  30  40  50
+
+  One-way hourly passenger requirement
+
+  (thousands)
+
+  5 10  20  30  40  50
+
+  One-way hourly passenger requirement  One-way hourly passenger requirement
+  (thousands)
+  (thousands)
+
+  Figure 35. Line-haul systems: high population density (for example, Chi-
+  cago) with complete 2-way service.
+238  COMPARATIVE COSTS
+
+  Rail
+  Auto
+
+  Express bus on exclusive
+  right-of-way (without transfers)
+
+One-way hourly passenger requirement
+  at maximum load point (thousands)
+
+5 10  20  3 0  40  50  5 10  20  30  40
+
+One-way hourly passenger requirement  One-way hourly passenger requirement
+
+at maximum load point (thousands)  at maximum load point (thousands)
+
+Figure 36. Line-haul systems: medium population density with 1-way (in-
+cluding along-the-line) service.
+
+operating without congestion hindrances. Figures 39 and 40 compare
+costs for particular modes under different service specifications.
+
+  It should be noted that all of the volumes shown in the diagrams and
+used to compute the "average trip costs" pertain to the 1-way, maximum
+load point requirements on each system. In systems where 2-way and
+One-way hourly passenger requirement  One-way hourly passenger requirement
+  at maximum load point (thousands)  at maximum load point (thousands)
+
+Figure 37. Line-haul systems: high population density with 1-way (including
+along-the-line) service.
+240  COMPARATIVE COSTS
+
+ 5 10 20 30 40  10  20  30  4tT
+
+One-way hourly passenger requirement  One-way hourly passenger requirement
+  at maximum load point (thousands)
+  at maximum load point (thousands)
+
+  Rail (operating and equipment costs only)
+
+——  Freeway flier bus: high population density
+  with transfer required for along-the-line service
+
+  Freeway flier bus: medium population density
+  with transfer required for along-the-line service
+
+Figure 38. Low-cost line-haul systems: complete 2-way service.
+
+along-the-line services are provided, the actual average cost per trip
+normally would be lower than the costs shown because the total number
+of trips should exceed the 1-way maximum load point requirement; in
+other words, with multistop or minor direction services some trips should
+be completed without adding to capacity requirements at the peak load
+point. In such circumstances, an over-all average cost per trip could be
+calculated as follows:
+
+(5)  ACT0 = ψ ACT,
+  LINE-HAUL SYSTEMS  241
+
+  Medium population density  ISO
+  areas
+  High population density
+  120  areas
+
+  loo
+
+  α
+  «
+
+  *
+  u
+c  e
+o  O
+
+  20  6-mile route
+
+  • 6-mile route
+
+  J L -L  ι  ι  J L _L _L _L
+
+  5 10  20  30  40  50  5 10  20  30  40  50
+
+  One-way hourly passenger requirement  One-way hourly passenger requirement
+
+  at maximum load point (thousands)  at maximum load point (thousands)
+
+  Express and one-way along-the-line service only
+  Complete two-way service
+
+  Figure 39. Comparison of rail costs under different service and operating con-
+  ditions.
+
+  where ACT0 = the over-all average cost per trip for all trips;
+
+  Vm = the 1-way maximum load point volume (or maximum
+  trip volume achieved at any one point as shown on the
+  horizontal axis in the diagrams) ;
+
+  Vt = the total number of trips made;
+
+  ACT = the average cost per trip for maximum load point volume
+  (as these costs are shown on the vertical axis in the dia-
+  grams) where complete 2-way service is provided.
+
+  The total number of trips made would depend, of course, on the demand
+  for along-the-line and reverse commuter trips (as well as the through
+  volume) and this obviously would vary widely from situation to situation,
+  as suggested by the statistics previously reported.
+  Medium population density  High population density
+  areas
+  200
+  18C —  15-mile route
+
+  160 -
+
+  g 140-
+  .& 120 -
+  bo
+
+  G
+
+  100 —
+  >o>l
+  iIs
+  w
+  c
+  o
+
+  20 -  •6-mile route
+
+  6-mile route
+
+  J L _L  J L  10
+  10  20  30  50  10  20  50
+
+  One-way hourly passenger requirement  One-way hourly passenger requirement
+  at maximum load point (thousands)  at maximum load point (thousands)
+
+  Complete two-way service
+
+•  One-way along-the-line service only
+
+  Nonstop express service
+
+Figure 40. Comparison of bus costs under different service and operating con-
+ditions.
+LINE-HAUL SYSTEMS  243
+
+  These over-all average costs per trip, however, would not be as gen-
+erally useful for pricing decisions as the average incremental costs per
+additional trip generated by the addition of more service. On the usually
+justified assumption that maximum point loads control costs, these aver-
+age incremental costs can be approximated by
+
+/(c6\)  ir^-rt VmACTyc — . pa-VmACTs .
+
+where ACT' = the average incremental cost per additional trip;
+
+  Vm = the maximum point load with the more complete service;
+
+  aVm = the maximum point load that would use the system with-
+
+  out the more complete service;
+
+  Vtc = the total volume with the more complete service;
+
+  Vts = the total volume with the less complete service;
+
+  ACTc — the average cost per maximum point load trip of the more
+  complete service at its maximum point load, Vm;
+
+  ACTS = the average cost per maximum point load trip of the sim-
+  ple or less complete service at its maximum point load
+  volume, aVm.
+
+The costs defined by Eq. (6) provide an indication of the revenue level
+that must be met by the additional traffic to make it compensatory. While
+traffic normally would be expected to be greater for the more complex
+than the simpler service, it must be remembered that an improvement
+of service for some customers usually means a loss of service for others.
+If the loss is substantial enough, the total volume and maximum point
+load might decline after the initiation of the "additional" services, and
+over-all average costs could increase materially if the change occurred
+in a range where scale economies were pronounced.
+
+  The cost comparisons reveal that either bus or rail transit is consider-
+ably cheaper than the automobile for meeting peak hour line-haul trans-
+portation requirements when very high corridor volumes are encountered.
+The advantage of transit over private automobile also tends to be in-
+versely related to route length. However, at low corridor volumes, an
+automobile system, even with only 1.6 passengers in each car, is often
+cheaper than either rail or bus transit if transfers are not permitted in the
+bus system; this is particularly true under medium to low population
+density assumptions. Costs can be reduced further for the automobile
+simply by increasing the number of passengers, which results in an al-
+most proportional reduction in automobile costs. With five passengers per
+vehicle, automobile costs per trip drop close to and sometimes below
+those for public transit, even at the highest volumes. Of course, such
+244  COMPARATIVE COSTS
+
+a reduction must be "paid for" in reduced quality of service; and the
+low automobile occupancy rates observed in U.S. cities suggest that many
+commuters regard the drawbacks of car-pooling as not worth these cost
+savings.
+
+  The relatively favorable cost performance of the automobile system
+at low volumes is not too surprising. In our high labor cost economy,
+automobiles have the great virtue of being do-it-yourself vehicles. A pri-
+vate automobile system can "hire" its labor in exactly the amounts re-
+quired. There are no problems of split shifts or finding off-peak employ-
+ment for the driver. In general, there are no labor relations problems or
+costs of advertising, schedule printing, and administration. The private
+automobile also has no empty back-hauls. If parking space is available
+at both ends of the journey, a 1- or 2-person automobile trip will have
+very little waste motion—or, in the jargon, nonrevenue miles. In short,
+trip length will be tailored almost exactly to travel requirements. Excep-
+tions occur mainly with car-pooling—which probably explains some of its
+unpopularity.
+
+  One particularly interesting set of figures emerging from the line-haul
+automobile cost analyses presented are the highway construction and re-
+lated right-of-way costs for the automobile line-haul system when put on
+a per-vehicle-mile basis at medium population densities: 1.5 cents a ve-
+hicle mile for the 15-mile systems; 1.7 for 10 miles; and 1.8 for 6 miles.
+About 5 mills per mile should be added for maintenance to arrive at total
+"user cost" estimates. These figures correspond with the cost estimates
+for high-performance urban expressways developed in chapter 4, and can
+be compared with an estimated 1.1 cent per mile of user tax revenues
+yielded by automobile operations. It should be remembered, however,
+that the highway costs used in this chapter were constructed de novo and
+assumed only four hours of travel per workday, or twenty hours per
+week, of peak utilization; as noted in chapter 4 and shown in Table 30, ex-
+pressways usually experience over two-thirds of their total use during
+off-peak hours and on weekends.
+
+  At high population densities, on the other hand, the construction and
+land acquisition costs per vehicle-mile for the high-performance auto-
+mobile highway would be 6.1 cents at 15 miles, 7.5 at 10 miles, and 9.5
+at 6 miles, including 5 mills for maintenance—again figured only on the
+basis of rush hour usage. It thus seems probable that the present structure
+of user taxes implies some subsidy of urban rush hour highway users
+in very high-density situations. Again, though, any such conclusion must
+be tempered by the consideration that the costs are computed on an ex-
+tremely narrow estimate of the total number of hours of peak utilization.
+
+  A somewhat surprising result of the cost comparisons is that bus transit
+at low and medium densities is almost invariably cheaper than rail. In-
+LINE-HAUL SYSTEMS  245
+
+deed, a freeway flier system, if afforded congestion-free travel, is always
+the cheapest form of high-performance line-haul transit, even at high
+population densities. This efficiency of the freeway flier is attributable, of
+course, to a line-haul structure that can be employed for other purposes,
+namely, the movement of private passenger vehicles and possibly trucks
+as well.
+
+  A bus system operating on its own reserved or exclusive highway
+(express bus on exclusive right-of-way) yields cost characteristics very
+much like those of freeway fliers, except that the absolute cost level is
+usually 15 to 20 per cent higher. The additional costs are enough, more-
+over, so that at high population densities an exclusive bus system almost
+invariably has a higher average cost per trip than does a rail system.
+Only at the very longest route length (15 miles) and at the highest vol-
+umes will an exclusive bus operation record lower costs than a rail transit
+operation at high population densities. At medium densities, on the other
+hand, the bus systems systematically record lower costs than rail. Even
+at medium densities, however, the bus systems do not have a pronounced
+cost advantage over rail transit at the higher volume levels, particularly
+on the shorter route lengths (6 and 10 miles).
+
+  It is also obvious that transfers are a tremendous aid to bus system
+economy at low volume levels, cutting costs sufficiently to allow the
+exclusive highway bus system to keep its advantage over automobile line-
+haul travel even at the low 5000 volume level. The use of transfers at
+low volume levels also improves service for CBD-bound bus travelers;
+this should at least partially compensate for the reduction in service af-
+forded to along-the-line travelers when transfers are introduced. There
+is no particular point, however, in introducing transfers at volume levels
+of 20,000 or more per hour. When volume levels become high enough,
+in fact, there is little difference among the public transit modes in major
+cost or service characteristics.
+
+  Economies also can be achieved on bus systems at volume levels be-
+neath 20,000 hourly by increasing the maximum allowable headway, an
+obvious alternative to transfers as a means of improving load factors at
+low volume levels. For example, at a 10,000 hourly volume and medium
+population density, buses will achieve an over-all cost reduction of ap-
+proximately 18 per cent if maximum allowable headways are increased
+from two to five minutes; at the 5000 volume level the economies are
+even more significant, being approximately 30 per cent. As with trans-
+fers, the economies are achieved by reducing unused capacity. The im-
+portance of these findings about altering headways or introducing trans-
+fers should not be underestimated, since a considerable share of urban
+transit service meets peak hourly demands in these sensitive lower volume
+ranges.
+246  COMPARATIVE COSTS
+
+  Rail systems are clearly at their best when population densities are
+high, runs are short, and trip volumes are high. Such findings are hardly
+unexpected. They mainly reflect the well-known facts that rail systems
+require less right-of-way than do highway systems for handling high
+volume or density workloads, and that rail has a very heavy fixed-cost
+burden. Even the better cost performance of rail on shorter runs is basi-
+cally a result of a shorter route length leading to increased volume den-
+sity. Similarly, higher density of use yields most of the rail economies
+achievable by volume increases. In short, the rail system needs a very
+high traffic concentration in order to turn its special technological advan-
+tages to account.
+
+  Obviously, then, nothing is so conducive to the relative economy of
+rail transit as high volumes and population density. High population den-
+sity increases the costs of all urban transportation systems, but substan-
+tially less for rail than for other modes. This phenomenon also suggests
+that caution is advisable in advancing the view that high-density cities are
+inherently more efficient for commuter transportation than are medium-
+or low-density cities. The crux of the issue is whether high density will
+sharply increase hourly corridor volumes in a given case. Generally
+speaking, it will, but the exact nature of this relationship is not obvious
+since it depends on many factors, not the least of which is the dispersion
+of workplaces.
+
+  Rail costs compare somewhat more favorably when the very heavy
+costs of rail structural investments are ignored. Ignoring such costs may
+be appropriate when structures already exist and there is no plan or
+necessity for replacing them in the future. In Figure 38 the average costs
+per trip, excluding all investment costs associated with rail structures, are
+compared with all costs for the freeway flier bus system. The rail costs
+do include investment costs associated with equipment, however, on the
+grounds that most rail systems are now operating with equipment that
+needs or shortly will need replacement (or has been replaced recently).
+Also, the rail operations hypothesized are probably somewhat more effi-
+ciently tailored to specific demand levels than could be expected in exist-
+ing systems, especially where demand levels have undergone change.
+
+  With structural investment eliminated from the rail cost calculations,
+a freeway flier system is still somewhat cheaper in most cases at medium
+population densities, but not by a large margin. More obviously, an ex-
+isting rail system for which structure costs might legitimately be con-
+sidered sunk often would be a very attractive alternative when population
+and trip densities are high. The fact that an existing rail system is, by
+definition, already in operation and devoid of "starting-up" costs should
+increase this attractiveness. However, the comparisons in Figure 38
+hardly constitute a carte blanche endorsement of efforts to maintain exist-
+LINE-HAUL SYSTEMS  247
+
+ing rail systems at any or all costs, particularly where hourly trip volumes
+have declined or were never high.
+
+  Offering additional along-the-line services seems to make little differ-
+ence in the cost relationships of the different modes. At given volume and
+population density levels, doing so results at most in a 1- or 2-cent in-
+crease in the average cost per trip. In real situations, of course, most
+of this cost increase might be offset by spreading total costs over greater
+volumes with along-the-line service. In general, volume must increase
+about 10 to 15 per cent if average trip costs before and after the addition
+of along-the-line service are to remain equal. The possibility of such
+volume increases will depend on trip patterns and other circumstances
+in particular cases.
+
+  TABLE 67  BY VARIOUS LINE-HAUL  MODES
+
+COMPARATIVE AVERAGE TRIP TIMES TO C B D
+
+  (minutes)
+
+  Trip time when average distance to CBD is
+
+Mode  3.5 mi  5.5 mi  8.0 mi
+
+Rail*  4.2 to 6.2  6.5 to 9.5  9.4 to 13.8
+Bus
+  6.6  9.8  13.8
+  Complete service; no transfer
+  requiredb  6.4 to 6.6  8.2 to 9.8  11.2 to 13.8
+  5.2  7.2  9.6
+  Complete service; transfers  4.7  7.3
+  required for along-the-line  10.7
+  service at low volume levels0
+
+  Express service only
+
+Line-haul auto (at 45 mph)
+
+  aThe lower value in each pair is the time achievable when a third track is added.
+  bSlightly faster times could be achieved at the lower volume levels of 5000 and 10,000;
+in these calculations, a maximum load is assumed.
+  "The faster times are achieved at the low volume levels with transfers required. Expli-
+citly, they apply at the 5000 volume level for the 6-mile round trip route, at 10,000 for
+the 10-mile, and at 20,000 for the 15-mile route.
+
+  It is also certain, however, that adding along-the-line services in bus
+systems will slow service for CBD-bound travelers. This fact is brought
+out by the data in Table 67 on the average CBD trip times that might
+be expected on different line-haul systems under different service assump-
+tions. (Actually, there is no impact upon service under the operating as-
+sumptions used for these analyses in the case of the rail systems; how-
+ever, if the overlapping 3-track line-haul terminal had been eliminated
+from the 3-track rail systems, some slight improvement in rail CBD travel
+times could have been achieved by eliminating the one overlapping stop. )
+As noted previously, service sacrifices for CBD-destined bus commuters
+248  COMPARATIVE COSTS
+
+are considerably less when transfers are incorporated into the systems
+at low volume levels.
+
+  Table 67 also brings out some interesting intermodal comparisons in
+travel times. As might be expected, the automobile is generally the fastest
+line-haul mode, though admittedly the figures are somewhat oversimpli-
+fied since no account is made of the delays incurred for car-pooling, park-
+ing the automobile and so forth. (However, these aspects are fully
+considered in the chapters on residential collection and downtown distribu-
+tion.) Somewhat less expected, however, is the finding that bus systems
+are generally on a par with rail systems in the line haul. This is because
+buses have higher divisibility and thus the opportunity of making fewer
+stops under the service and operating conditions hypothesized (other
+than the complete service bus system with no transfers). It is irrelevant
+that today's bus operations (other than a few freeway fliers) do not pres-
+ently record speeds as fast as rail rapid transit, since most buses operate
+over surface streets and almost never enjoy reserved rights-of-way or other
+congestion-free facilities; even freeway fliers are almost always slowed
+during rush hours by congestion on the freeways used. Fundamentally,
+however, an express bus operation on a congestion-free right-of-way
+should be an inherently faster form of travel than rail transit because
+the bus is a smaller unit of operation and therefore requires fewer
+stops to acquire a full load. In many ways this is also why the line-haul
+automobile system has a comparatively good time performance.
+
+  In general, an automobile system—through its operation, occupancy,
+and parking characteristics—offers flexibility and other advantages un-
+matched by virtually any other type of urban transport. For example,
+car-pooling can be viewed as a mode of low-cost transit available right
+now—a mode, moreover, with service characteristics perhaps as attrac-
+tive as those of almost any conceivable rail or bus system.28 Failure of
+car-pooling to attract more patronage therefore implies that many com-
+muters place so high a value on convenience and service that public
+transit might have serious difficulty trying to win patronage back from
+the private automobile.
+
+  Above all else, private automobile travel lends itself to being "tailored"
+to meet the specific needs of users. If a traveler wants the maximum in
+comfort and convenience and can afford an automobile, he has the option
+now of driving alone and in comfort, with unexcelled schedule frequency,
+and can park close to his workplace (though at a cost of perhaps $1.50
+a trip or more). Other automobile travelers can pool from two to five or
+
+  28 The only service characteristics of car-pooling that are clearly inferior to pub-
+lic transit are schedule frequency and the fact that the driver must devote his full
+attention to driving—that is, he cannot read the newspaper or engage in other
+activities. But for workers keeping regular hours and with common residential
+areas and workplaces, the schedule-frequency differential should not be a too seri-
+ous drawback.
+LINE-HAUL SYSTEMS  249
+
+six persons to a car, drive cheap used cars, park at cheaper, less centrally
+located parking lots (and have to walk farther), and reduce trip costs
+to as low as 10 or 15 cents a passenger. Automobile commuters thus
+have a variety of options, including that of changing their habits from day
+to day and year to year as their tastes and incomes permit. Transit sys-
+tems afford fewer such freedoms, usually offering only a single level of
+service at one cost, on the basis of a long-term commitment.
+
+  Public transit modes are not completely devoid, however, of possi-
+bilities for diversifying service offerings. As already noted, many subtle
+tradeoffs are possible between improving line-haul express and along-the-
+line services, and between requiring and not requiring transfers for real-
+izing some services. Similarly, reducing schedule frequency is often
+a simple way for bus operations to reduce costs, but at the expense of
+increasing average waiting time. The obvious question, therefore, is how
+many actual or potential users of transit find it worth while to wait extra
+time in order to save money. For example, at a 10,000 hourly volume
+level over a 10-mile route system at medium population densities, the
+consumer could be confronted with choices of the following type: going
+by automobile at an average 1-way trip cost of, say, 62 cents with vir-
+tually no waiting time or walking; going by rail at a cost of 54 cents
+per trip with 55 to 60 seconds of waiting time and a short walk;29 going
+by bus with a waiting time of about 60 seconds, a short walk, and a cost
+of 39 or 25 cents per trip, depending on whether the bus operates on its
+own exclusive highway or shares a freeway; or going by bus with a
+waiting time of about 140 seconds and a cost of 28 cents or 15 cents,
+again depending on whether the bus operates on its own exclusive high-
+way facility or shares a freeway. Without considerable knowledge of the
+demand structure for urban travel, it is, of course, impossible to say with
+assurance which alternative consumers would choose, and, more impor-
+tantly, in what numbers. Such questions should be raised and answered,
+however, either implicitly or explicitly in planning urban transportation
+systems.
+
+  All of these cost calculations under different service and design as-
+sumptions point up the old truth that the consumer gets about what he
+pays for. Transit systems can be designed to provide cheaper travel than
+that of automobiles with one or two people in them, but with a loss of
+convenience, privacy, and other amenities travelers are likely to value.
+In sum, if quality of service is highly valued or volumes are low, the
+automobile is almost indisputably the cheapest or best" mode of line-haul
+travel; if lower-quality service is required, or is all that can be afforded,
+the bus has advantages at moderate volumes, and either bus or rail will
+serve well at high volumes.
+
+  29 Rail transit with a 5-minute headway is not worth consideration; it reduces
+service without reducing costs materially.
+Chapter 10 | Residential Collection and Distribution
+
+All too commonly, past urban transportation analyses have either ig-
+nored or dealt casually with the costs of travel between the home and
+the line-haul system. The pattern has been to pass over any transit or
+nontransit costs that travelers incur and to neglect accurate costing of
+additional parking or feeder bus operations created to feed passengers
+to or away from the line-haul facility. For several reasons, this neglect is
+not defensible. Above all, it can hardly be overstressed that it is the cost
+and service characteristics of the entire trip between home and work that
+determine the typical commuter's urban transportation choices, rather
+than simply the circumstances of the line-haul portion of the over-all
+trip.
+
+  The commuter can travel between his home and the line-haul facility
+in many ways: (1) he may walk; (2) his wife may drive him there and
+drop him off (the so-called kiss-and-ride method); (3) he may drive
+his own automobile to the facility and leave it there (the so-called
+park-and-ride method); (4) he may ride a feeder bus; (5) he may ride
+a line-haul express bus that also operates as a feeder bus (here called
+an "incremental or integrated bus"); or (6) he may simply use an auto-
+mobile for the entire trip—which of course would include the distance
+between the line-haul facility and his home (called an "incremental auto"
+system here).
+
+  A full-scale "real world" analysis should consider all alternatives, of
+course, and should stratify or split the population into groups walking,
+using kiss-and-ride, and so forth, according to differences in costs, qual-
+ity of service, value scales, and consumer preferences. The present study,
+however, makes some simplifications in order to reduce the analysis to
+manageable size. In general, for the line-haul rail and express bus sys-
+tem, the residential collection service will not be stratified or split among
+all the above alternatives; instead, each alternative will be costed separ-
+RESIDENTIAL COLLECTION AND DISTRIBUTION  251
+
+ately and on the assumption that it must individually meet a specified
+level of service. The single exception to this "one type of service" rule
+will be the assumption that all passengers living within two blocks of a
+line-haul station walk to it and therefore are deducted from the hypothe-
+sized hourly volume figures. All other passengers are handled by the
+particular type of collection service being considered.
+
+  Every method of getting people to and from the line-haul facility—
+even walking—entails some costs. If large numbers of people are to go
+on foot, they must live in high-density structures and the line-haul facility
+must run close by. In fact, there is a substantial positive correlation be-
+tween residential density and the costs of constructing transportation
+facilities because when density is high, costly elevated or tunneled struc-
+tures usually must be used. (Of course, it may not always be easy to dis-
+entangle cause and effect in this relationship.) Similarly, adding stations
+or stops will encourage walking, but only at a cost. Finally, it usually
+costs more per square foot to build high-rise apartment houses than to
+build single-family dwellings (although the higher cost is often offset by
+more intensive land use).
+
+  It would be interesting to estimate the costs of various methods for in-
+creasing foot travel to line-haul stations, but in the generalized context
+of these analyses any such exercise would probably be so artificial as not
+to be worth the effort. Accordingly, only the five vehicular modes of
+residential service—numbers (2) through (6) in the list above—will
+be specifically costed, with number ( 1 ), walking, being treated as a "no
+cost" service. The systems costed will subsequently be referred to as kiss-
+and-ride, park-and-ride, separate feeder bus, incremental feeder bus, and
+incremental automobile. The first three (and walking too, of course) con-
+ceivably could be used with virtually any kind of line-haul travel. The
+last two are integral parts of specific types of line haul, for both of which
+the cost and performance calculations are always placed on an incre-
+mental basis; that is, all cost, time, and performance characteristics re-
+ported for these two modes are regarded as increments created by the
+addition of residential service to the line-haul function and added to the
+equivalent line-haul-only figures of the preceding chapter.
+
+  Earlier assumptions regarding the maintenance of equivalent service
+will be altered slightly in the cost analyses. First, neither feeder buses
+nor automobiles will be provided with private rights-of-way, but will
+operate on the residential street system. Under these conditions buses
+cannot match the average trip speed of automobiles on the residential
+collection portion of the trip and therefore cannot provide services of
+equal quality. Bus quality is further lowered, in comparison with the
+automobile, by the fact that bus passengers usually have to do more
+walking.
+252  COMPARATIVE COSTS
+
+  Service variables considered especially important in the feeder bus
+operations are frequency of service, walking distance to bus stop, avail-
+ability of seats, and necessity of transfer. Since all transit travelers using
+feeder buses will incur both waiting time and walking penalties, and will
+travel at lower speeds than automobile travelers, the following service
+conditions for bus transit will be honored in a crude effort to establish
+a modicum of service equivalence between feeder bus and automobile:
+seats will be provided for all passengers; bus stops will be located so that
+passengers have to walk no more than two blocks; and feeder bus head-
+ways shall be no more than 10 minutes.
+
+  No specific allowance is made in these service specifications for differ-
+ences in travel times by the different modes. Travel times are calculated,
+however, under a number of different circumstances and compared
+subsequently. A major reason for not attempting to enforce a rigorous
+set of controls on travel time is that the effective travel time by bus
+transit is a function of a very large number of considerations. For ex-
+ample, with costs held constant, it is often possible to improve the effec-
+tive time performance of a bus transit system by reducing scheduled fre-
+quency. Illustrative calculations indicating the nature of these and other
+tradeoffs are reported in Appendix C.
+
+  The foregoing remarks strongly suggest that it is difficult (within rea-
+sonable cost limits) to provide feeder bus service that is comparable in
+most respects to automobile travel for the entire commuter trip. It would
+follow, then, that if equivalent service were required, only the park-
+and-ride and kiss-and-ride1 types of feeder service to transit line-haul
+systems should be included; even these two types of feeder service are
+not comparable, of course, to incremental automobile travel because of
+the required transfer from automobile to transit and waiting time at the
+line-haul station. Indeed, the very omission of any mention of transfers
+as among the service conditions to be controlled in the cost analyses is
+a confession of partial defeat in maintaining service equivalence.
+
+  All of the more essential features of the residential collection problem
+can be illustrated by confining attention to the collection and distribu-
+tion problems encountered in serving just one stop on a line-haul system.
+Accordingly, all of the preliminary cost analyses of the basic residential
+travel modes will be developed exclusively in terms of differences in vol-
+ume and trip origination densities and without regard to differences in
+the route length of the line-haul system. Specifically, four different
+hourly volume levels of passengers entering (or departing f r o m ) a line-
+haul station will be analyzed: 333, 1000, 3000, and 5000. Trip orig-
+ination densities ranging upward from one per block will be considered.
+
+  1 It should be evident that in this case the driver (for example a wife) suffers
+the "discomfort or inconvenience" penalty and time loss involved in providing such
+a "taxi service."
+RESIDENTIAL COLLECTION AND DISTRIBUTION  253
+
+As in the last chapter, moreover, it will be assumed that the line-haul
+station being analyzed is equidistant between two other line-haul stations,
+each of which is 1 mile away; it follows, therefore, that the passenger
+origination volumes are assumed to originate roughly in a land area
+stretching a half-mile along the line-haul facility in either direction from
+the line-haul station.
+
+COST PARAMETERS
+
+  Cost functions for residential feeder service are somewhat different
+from those required for line-haul analyses because no components are
+needed for structural costs associated with highways, roadbeds, and right-
+of-way. This occurs simply because all the services involved use the
+streets or sidewalks normally found in residential areas and assumed to
+be needed for other purposes. For vehicular use, the cost of these streets
+is usually recouped in the form of gasoline taxes, which essentially
+amount to a per-vehicle-mile levy on residential travel and, accordingly,
+can be directly incorporated into the β coefficient in the basic cost func-
+tion. The general residential service cost function therefore is
+
+(1)  TC = aU + βΜ,
+
+where TC specifically refers to total annual costs for four hours of peak-
+period service. The mileage coefficient, β, incorporates street mainte-
+nance and ownership costs and vehicle fuel and maintenance costs to be
+applied to the annual vehicular mileage, M; the a coefficient represents
+vehicle ownership, operator, insurance, overhead, and similar costs to be
+applied to the number of vehicle units, U.
+
+  The a coefficient, or cost per bus unit, for any feeder bus operation
+essentially will have three components: operator costs, capital costs for
+yards and shops, and the debt service costs for the investment in the bus
+itself. As in the line-haul analyses, the bus operator costs are assumed
+to be $8100 a year per bus plus a 10 per cent allowance for bus operator
+break time and sick leave, so that the total annual cost per scheduled
+peak-hour vehicle is $8910. Again as in the line-haul analyses, the in-
+vestment in yards and shops will be assumed to be $4500 per vehicle,
+increased 5 per cent to allow for vehicle downtime, and it will be further
+assumed that these investments have a 50-year life and that a 6 per cent
+rate of interest prevails; under such circumstances the total annual costs
+of yards and shops per bus will be $299. Bus ownership costs for the
+separate feeder bus service will be less than those encountered in the
+line-haul analyses, because a less expensive bus with lesser performance
+capability can be used on strictly residential feeder operations. This bus,
+including modification to incorporate three doors (the third door for use
+at the line-haul station), will cost an estimated $29,100. With allowance
+254  COMPARATIVE COSTS
+
+for 5 per cent downtime, a 6 per cent interest rate, and a 12-year life,
+the annual capital recovery charge for this bus investment is $3655. If
+the higher-performance line-haul vehicle costing $31,200 is employed in-
+stead, these annual charges increase to $3910, and this higher figure is
+used when costing integrated residential and line-haul service (that is,
+the incremental bus). Thus, total cost per unit, or a , is $12,824 for a
+feeder bus service that is completely separated from any line-haul activity,
+and $13,119 for a bus that is used in both residential and line-haul serv-
+ice. There are obviously situations where it would be more economical to
+use smaller capacity and lower cost buses than those assumed here. This
+aspect of optimality has been ignored for simplicity.
+
+  The β coefficient or cost per bus-mile for residential bus analyses must
+incorporate an allowance for the bus' share of residential street construc-
+tion, maintenance, and administration, along with all the other bus oper-
+ating and maintenance expenses usually incorporated into this coefficient.
+It is assumed that appropriate bus highway user charges per mile of bus
+operation on residential surface streets amount to 2.5 cents (about 130
+per cent higher than that for passenger cars). Thus the β coefficient for
+analyzing such operations would be 32.5 cents—the 30 cents used for
+line-haul operations plus the additional 2.5 cents. Accordingly, the basic
+cost function for exclusively residential bus operations would be
+
+(2) TC = $12,824 U + $0.325M (for separate feeder bus),
+
+while the total incremental costs of adding a feeder operation to an exist-
+
+ing line-haul service would be
+
+(3) TC = $13,U9Ur + $0.325Mr (for integrated feeder bus),
+
+where Mr designates miles of additional service on residential streets and
+Ur the extra units required to perform the residential service.2
+
+  Park-and-ride is the most complex of the automobile forms of residen-
+tial service to cost because the cost per vehicle, or a, for this mode must
+include allowance for parking as well as accident (or insurance) costs.
+Estimates of parking costs were discussed in the last chapter in connec-
+tion with analyzing line-haul automobile systems. It was concluded that
+
+  2 The total costs of an integrated residential and line-haul service might not
+equal, however, the simple sum of these residential costs and previously estimated
+line-haul costs. For example, some reductions might be effected by elimination of
+terminals at line-haul stations, though such eliminations would raise problems in
+providing along-the-line and reverse direction services. Also, the volumes of travel
+on the line-haul facilities pertinent to estimating structural costs could be some-
+what modified in the combined service, because with the combined service a basic
+alteration has been made in the service standard; specifically, ten-minute headways
+at residential street corners have been substituted for 2-minute headways at the
+line-haul stations. An interesting alternative for costing the integrated residential
+and line-haul service would be to take the line-haul service system as established
+and costed in the previous chapter and append to it a residential feeder operation
+with optimal characteristics, given the 2-minute headway and other basic service
+conditions hypothesized in chap. 9.
+RESIDENTIAL COLLECTION AND DISTRIBUTION  255
+
+annual parking costs per space can range from $400 or a little more in
+downtown locations to as low as about $150 for paved lots in the sub-
+urbs. On the whole, estimates near the lower end of the spectrum should
+be more generally accurate for residential areas; accordingly, in the cost
+analyses that follow, parking costs per space have been assumed to be
+$150 a year.
+
+  Accident or insurance costs were placed on a per-vehicular-unit basis
+and estimated at $30 a year per automobile. It seems reasonable that the
+accident or insurance costs solely for residential collection service should
+be considerably lower than those for line-haul tripmaking because of
+speed and volume density differences, and since residential trip lengths are
+relatively short. Taken together with the $150 per vehicle already esti-
+mated for annual parking charges, the total α coefficient for the park-and-
+ride cost function can be placed at $180; moreover, since U is the number
+of automobile units needed per hour, this figure should be doubled in
+order to account fully for four rush hours a day.
+
+  The mileage cost for park-and-ride service has three basic constituents :
+vehicle operation and maintenance costs, user charges for residential
+surface streets, and ownership costs associated with the vehicle itself (de-
+preciation, interest on investment, and so forth). As in the line-haul an-
+alyses, the operating and maintenance charges will be estimated on the
+basis of using a more economical "rush hour only" vehicle. The costs
+for repairs, replacement of tires and tubes, gasoline, and oil for such a
+car are estimated as before to be approximately 2.90 cents per vehicle-
+mile. The appropriate charge for using surface streets shared with other
+vehicular traffic will be estimated at 1.17 cents per vehicle-mile.3 The
+ownership costs will be estimated at 6 cents per vehicle-mile.4 Six cents
+a mile is used instead of the 4 cents a mile assumed for all-auto line-haul
+travel because park-and-ride trips are much shorter, thereby reducing the
+distance for spreading the ownership charges and increasing the unit
+costs.
+
+  Combining the 6-cent-per-vehicle-mile ownership cost with the 2.9
+cents of operating and maintenance charges and 1.17 cents of user
+charges, a total β coefficient for park-and-ride of $0.1007 is estimated.
+Therefore, the park-and-ride cost function would be
+
+(4) TC - $360(7 + $0.1007ikf (for park-and-ride auto).
+
+  The cost functions for kiss-and-ride and automobile residential feeder
+service incremental to an automobile line-haul service may be very
+
+  3 E. W. Cope and L. L. Liston, A Discussion of Gasoline Tax Rates and Con-
+sumption, U.S. Department of Commerce, Bureau of Public Roads, U.S. Govern-
+ment Printing Office, Washington, D.C., January 1961.
+
+  4 The assumption underlying use of this figure of 6 cents is that a car can always
+be found to yield this approximate charge for almost any average daily distance
+traveled.
+

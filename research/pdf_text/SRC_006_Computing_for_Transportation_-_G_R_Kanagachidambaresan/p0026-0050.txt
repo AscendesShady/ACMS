@@ -1,0 +1,984 @@
+  FIGURE 1.3 IoV security protocols. ⏎
+
+1. Reliability: Employing confidentiality measures like encipherment, among
+  others, is essential for guaranteeing confidentiality and secrecy of information
+  conveyed. Data collected by various sensors and Internet of Things (IoT) devices
+  placed at various points of interest must be kept private. Such sensitive data can
+  be given a complex security model through the use of visual techniques [19].
+
+2. Authentication: Ensuring robust device identity mechanisms can provide both
+  entity authentication and channel authentication. To maintain authentication, it is
+  imperative to prevent the Illicit takeover of IoT devices or manipulation of
+  sensors and other devices [20].
+
+3. Control of Access: In order to guarantee legitimate access to devices and data, as
+  well as effective access control, policies and procedures need to be established.
+  To uphold the security and assurance of information, as well as the confidentiality
+  of other participating individuals, it is crucial to establish a hierarchical access
+  control mechanism. This mechanism assigns distinct privileges for access to
+  individuals [21].
+
+4. Protection of Privacy: Particularly in this kind of network, privacy is the most
+  crucial issue. Ensuring adherence to the regulations of the specified geographic
+  area will protect privacy. At no time should privacy be sacrificed for
+  computational efficiency. On the other hand, precise traffic recommendations
+  occasionally have the potential to partially violate privacy protection [22].
+
+5. Enforcing Policies: The regulatory body must enforce proper norms and
+  compliance in order to establish communication among diverse automobiles.
+
+6. Preservation of Trust: Once communication commences, privacy cannot be
+  regulated due to device heterogeneity. Establishing trust between the
+  communicating entities before initiating communication is one of the reasons
+  behind this. To enhance the reliability of network communication, the trust
+  management paradigm is employed to prevent security threats and attacks.
+  Additionally, it improves the network’s resilience and the effectiveness of
+  computational resources [23].
+
+7. Middleware Used to Be Secure: The middleware employed for data collection,
+  transportation, and analysis must be safeguarded against manipulation, hardware
+  malfunctions, exploitation-related damages, and potential hijacking. Any security
+  strategy implemented in ITS should be durable enough to support future
+  computing requirements [24].
+
+1.3.1 Cybersecurity Threats in Smart Transportation
+
+Smart transportation systems face various cybersecurity threats that can compromise
+safety, data integrity, and operational continuity:
+
+  Unauthorized Access and Control: Hackers may attempt to gain unauthorized
+  access to control systems within smart transportation infrastructure. This could
+  include traffic control systems, autonomous vehicle controls, or even
+  infrastructure management systems, allowing them to manipulate operations or
+  cause accidents.
+  Ransomware Attacks: Malicious actors may deploy ransomware to encrypt
+  critical systems or data, and attackers demand payment to restore access. In smart
+  transportation, this might lead to service disruptions, rendering systems non-
+  operational until the ransom is paid.
+  Denial-of-Service (DoS) Attacks: Attackers might flood transportation systems
+  with excessive traffic and overwhelming networks and cause services to become
+  unavailable. This could affect traffic management systems, leading to congestion
+  or disruption of essential services.
+  Vulnerabilities in Connected Vehicles: With the increasing integration of IoT
+  devices in vehicles, software vulnerabilities or hardware can be taken into
+  account. Hackers may obtain entry to vehicle systems, compromising safety
+  features or stealing sensitive information.
+  Supply Chain Attacks: Weaknesses in third-party software or components used
+  in smart transportation systems can be used by adversaries to enter the
+  infrastructure uninvited or introduce malicious programs.
+
+To moderate these dangers, it is imperative to execute robust cybersecurity measures
+such as encryption, network segmentation, regular security audits, intrusion detection
+systems, access controls, and employee training. Additionally, adopting a proactive
+approach to identifying and patching vulnerabilities in both hardware and software
+components is essential to strengthen the resilience of smart transportation systems
+against cyber threats [25,26].
+
+1.3.2 Attacks on IoV Infrastructure and Communication
+
+The IoV holds immense potential for enhancing transportation safety, efficiency, and
+comfort. However, this interconnectedness also exposes the system to various security
+threats that can potentially put passengers, drivers, and infrastructure at risk [27]. Let’s
+dive into the main categories of these threats.
+1. Inter-Vehicle Attacks:
+
+  Spoofing: Attackers can imitate legitimate vehicles or infrastructure
+  elements to spread misinformation, manipulate traffic flow, or even cause
+  accidents. Examples include:
+  GPS Spoofing: Manipulating a vehicle’s GPS data to disrupt navigation or
+  trigger false warnings.
+  Identity Spoofing: Pretending to be another vehicle or trusted entity to gain
+  unauthorized access or control.
+  Denial-of-Service (DoS): Flooding the network with fake data to
+  overwhelm and disable communication channels, hindering emergency
+  services or traffic management.
+  Data Eavesdropping: Intercepting sensitive data traded among vehicles and
+  infrastructure, including location data, driving behavior, or sensor readings,
+  poses a threat. These data can be taken advantage of for different malignant
+  purposes, such as profiling drivers, blackmail, or targeted attacks [28].
+
+2. Intra-Vehicle Attacks:
+
+  Software Vulnerabilities: Exploiting weaknesses in vehicle software or
+  firmware to gain control over critical systems like brakes, steering, or engine
+  management. This can lead to catastrophic consequences like remote
+  hijacking or system malfunction.
+  Man-in-the-Middle Attacks: Intercepting and manipulating communication
+  between different internal components of a vehicle, potentially causing
+  malfunction or disrupting essential functions.
+  Physical Tampering: Gaining direct access to the vehicle’s hardware to
+  install malware or manipulate sensors, posing a serious threat to safety and
+  privacy [29].
+
+3. Other Threats:
+
+  Data Privacy Concerns: The extensive volume of data collected by IoV
+  systems prompts worries regarding potential misuse and unauthorized
+  access. Robust data privacy regulations and strong encryption are crucial to
+  protecting user information.
+
+  Infrastructure Vulnerabilities: Attacks on roadside infrastructure, like
+  traffic lights or communication towers, can disrupt traffic flow and
+  compromise overall safety.
+
+  Addressing these threats necessitates a multi-layered approach,
+  encompassing:
+
+  Robust Security Protocols and Encryption: Enforcing robust
+  authentication, authorization, and encryption methods to safeguard
+  communication channels and data integrity.
+  Software Updates and Vulnerability Patching: Regularly updating vehicle
+  software and firmware to address vulnerabilities and prevent exploitation.
+  Threat Intelligence and Intrusion Detection Systems: Employing
+  advanced security solutions to monitor IoV networks for suspicious activity
+  and proactively detect potential threats.
+
+Securing the IoV ecosystem is crucial for realizing its full potential and ensuring the
+safety, privacy, and trust of all participants. By tackling these challenges and
+implementing robust security measures, we can help lay the foundation for a
+transportation future that is safer and more efficient [30].
+
+1.3.2.1 Risks Associated with Connected Vehicles
+
+Connected vehicles, which are equipped with internet connectivity and communication
+technologies, offer various benefits such as improved safety, efficiency, and
+convenience. However, they also come with several risks and difficulties [31]. Here
+are some of the key risks associated with connected vehicles:
+
+  1. Cybersecurity Threats:
+  Hacking and Unauthorized Access: Connected vehicles are susceptible to
+  cyberattacks, including hacking attempts by malevolent parties attempting to
+  obtain unapproved access to vehicle systems. This could lead to theft,
+  privacy breaches, or even control over critical vehicle functions.
+  Data Breaches: The substantial volume of data produced by connected
+  vehicles, including location information, driving patterns, and personal
+  preferences, can be a target for cybercriminals. A data breach can have
+  severe consequences for user privacy.
+
+  2. Privacy Concerns:
+  Location Tracking: Connected vehicles collect and transmit location data,
+  raising concerns about constant tracking and surveillance. Unauthorized
+  access to this information can compromise user privacy.
+  Personal Data Exposure: As vehicles become more connected, there is an
+  increased risk of exposure of personal information. This may include driver
+  profiles, contact details, and usage patterns.
+
+  3. Safety Risks:
+  Malicious Control: If a connected vehicle’s systems are compromised,
+  malicious actors could gain control over critical functions, leading to unsafe
+  driving conditions and accidents.
+  System Failures: Connectivity introduces the risk of system failures or
+  glitches that could impact the vehicle’s performance, leading to accidents or
+  malfunctions.
+
+  4. Infrastructure Vulnerabilities:
+  Communication Network Risks: The reliability and security of the
+  communication networks that connected vehicles rely on can be
+  compromised. This may result in communication failures between vehicles
+  and with infrastructure elements, affecting safety and efficiency.
+  5. Regulatory and Legal Challenges:
+  Liability Issues: Determining responsibility in the case of a cyberattack or
+  malfunction can be challenging. It raises questions about liability and legal
+  consequences, both for manufacturers and users.
+  Regulatory Compliance: Adhering to evolving regulations and standards
+  related to connected vehicles can be challenging for manufacturers, and non-
+  compliance may lead to legal consequences.
+
+Mitigating these risks necessitates a comprehensive approach, involving collaboration
+among industry stakeholders, implementing robust cybersecurity measures, ensuring
+privacy safeguards, and continuous regulatory efforts to guarantee the secure and safe
+integration of connected vehicles into the transportation ecosystem.
+
+1.4 PRIVACY CONCERNS IN IOV
+
+  1. Personal Data Collection
+  The gathering and dissemination of individual information within the IoV
+
+  present substantial privacy issues [32]. As vehicles become more connected and
+  data-driven, various sensors and communication systems collect a wealth of
+  information.
+
+  Here are several facets associated with gathering and distributing individual
+  information within the IoV:
+
+  Location Data: IoV relies on location data to enable services such as
+  navigation and real-time traffic updates. However, the continuous tracking of
+  a vehicle’s location raises privacy concerns.
+  Driver Behavior: IoV systems can collect information about driving habits
+  such as speed, acceleration, braking patterns, and other variables. While this
+  information can be used for insurance purposes, it also raises concerns about
+  driver security.
+  Infotainment Systems: Infotainment systems in connected vehicles may
+  store user preferences, such as music choices, contact information, and
+  frequently visited locations.
+  Health and Well-Being: Some IoV systems may integrate biometric sensors
+  to monitor the driver’s health and well-being. This could include heart rate
+  monitoring or other health-related metrics.
+  Call and Messaging Data: Integrated communication systems may record
+  call logs and messages, potentially infringing on user privacy.
+  2. Sharing of Personal Data:
+  Vehicle-to-Cloud Communication:
+  Cloud Services: Data collected by vehicles may be transmitted to cloud
+  servers for storage, analysis, and retrieval. This highlights concerns about
+  data security, both during transmission and retention [33].
+  3. Vehicle-to-Vehicle Communication (V2V):
+  Safety Alerts: Vehicle-to-vehicle (V2V) communication entails exchanging
+  safety-critical details among vehicles, like abrupt stops or roadway dangers..
+  While this is critical for safety, it involves sharing real-time data that could
+  be privacy-sensitive.
+
+1.4.1 Privacy Challenges in Location Tracking and Vehicle Data
+
+Privacy challenges in location tracking and vehicle data arise from the increasing use
+of technologies that capture and store information about the movements and activities
+of individuals [34]. Here are some key privacy challenges in this context (Figure 1.4):
+
+  FIGURE 1.4 Privacy challenges in IoV. ⏎
+
+  Data Collection and Retention:
+  Excessive Data Collection: Gathering more data than necessary for a
+  specific purpose can lead to unnecessary privacy risks.
+  Extended Data Retention: Keeping location and vehicle data for extended
+  periods increases the potential for misuse and unauthorized access.
+
+  Inadequate Consent Mechanisms:
+  Lack of Informed Consent: Users may lack a complete understanding of
+  the implications associated with granting permission for location tracking,
+  especially if the information is used beyond its original purpose.
+  Difficulty in Opting Out: Users may find it challenging to disable location
+  tracking features or may not be aware of how to do so.
+
+  Security Concerns
+  Data Breaches: Keeping confidential location and vehicle information
+  heightens the possibility of data breaches, resulting in unauthorized entry
+  and possible exploitation.
+  Insecure Transmission: Data transmitted between devices and servers may
+  be susceptible to interception if proper encryption measures are not in place.
+
+  Profiling and Tracking
+  User Profiling: Continuous monitoring and analysis of location data can
+  lead to the creation of detailed user profiles, raising concerns about targeted
+  advertising, discrimination, or surveillance.
+  Stalking and Harassment:
+  Government Surveillance: Governments may use location and vehicle data
+  for mass surveillance, raising concerns about privacy violations and potential
+  abuse of power.
+  Lack of Legal Protections: In some jurisdictions, there may be insufficient
+  legal safeguards to protect individuals from unwarranted government
+  surveillance.
+  Third-Party Sharing:
+  Data Sharing with Third Parties: Companies may share location and
+  vehicle data with third-party entities, leading to privacy risks if the recipients
+  do not adequately protect the information.
+  Opaque Data Sharing Practices: Lack of transparency regarding data-
+  sharing agreements and practices can erode user trust.
+  Location Inference:
+  Legal and Ethical Concerns: In some regions, there may be a lack of clear
+  regulations governing the collection, use, and storage of location and vehicle
+  data.
+  Ethical Considerations: Companies must consider the ethical implications
+  of using location data, balancing business interests with user privacy rights.
+
+To tackle these privacy issues, it’s essential to integrate technological remedies, strong
+legal structures, and ethical reflections, ensuring accountable and clear approaches in
+overseeing location tracking and managing vehicle data.
+
+1.4.2 Implications of Privacy Breaches in Smart Transportation
+
+Privacy breaches in smart transportation can have far-reaching implications, affecting
+individuals, organizations, and society at large [35]. Here are some key implications of
+privacy breaches in the context of smart transportation:
+
+  Individual Privacy Concerns:
+  Location Tracking: Unauthorized access to location information can lead to
+  tracking of persons’ locations, raising concerns about stalking, harassment,
+  and breach of personal boundaries.
+  Personal Information Exposure: Breaches may expose personal details
+  such as home addresses, travel patterns, and frequently visited locations,
+  compromising individuals’ privacy.
+
+  Safety and Security Risks:
+  Physical Security: If malicious actors gain access to smart transportation
+  systems, they could exploit vulnerabilities to cause accidents or disruptions,
+  posing risks to public safety.
+  Vehicle Tampering: Unauthorized access to vehicle data might enable
+  attackers to tamper with critical systems, affecting the safety and
+  performance of vehicles.
+Identity Theft and Fraud:
+  Data Misuse: Stolen personal and financial information from smart
+  transportation systems can be used for identity theft, fraud, or other
+  malicious activities.
+  Payment and Transaction Security: Breaches in payment systems
+  integrated into smart transportation solutions may lead to unauthorized
+  transactions and financial losses.
+Public Trust Erosion:
+  Loss of Confidence: High-profile privacy breaches can erode public trust in
+  smart transportation technologies, making individuals reluctant to adopt or
+  use these systems.
+  Negative Perception: Privacy concerns can lead to a negative perception of
+  smart transportation initiatives, hindering their widespread acceptance and
+  adoption.
+Legal and Regulatory Consequences:
+  Legal Liability: Organizations responsible for privacy breaches may face
+  legal action, lawsuits, and regulatory penalties for failing to protect user
+  data.
+  Regulatory Scrutiny: Incidents of privacy breaches could prompt increased
+  regulatory scrutiny and the introduction of new, stricter regulations for smart
+  transportation systems.
+Business Reputational Damage:
+  Brand Image: Privacy breaches can tarnish the reputation of companies
+  involved in smart transportation, affecting their brand image and market
+  standing.
+  Customer Loyalty: Concerns about privacy may lead to a loss of customer
+  loyalty, as individuals may seek alternative transportation options that they
+  perceive as more secure.
+Data Manipulation and Misuse:
+  False Information: Breaches may lead to the manipulation of transportation
+  data, potentially causing misinformation about traffic conditions, vehicle
+  locations, or routes.
+  Operational Disruption: Data manipulation could disrupt the efficient
+  operation of smart transportation systems, leading to logistical challenges
+  and service interruptions.
+  Social and Economic Impact:
+  Productivity Losses: Disruptions caused by privacy breaches can result in
+  economic losses and impact the productivity of smart transportation systems.
+  Unequal Access: Privacy concerns may disproportionately affect vulnerable
+  populations, leading to disparities in access to and benefits from smart
+  transportation technologies.
+
+To address these concerns, it’s essential for entities and policymakers to emphasize
+strong cybersecurity protocols, incorporate privacy-centric design principles, and set
+forth explicit regulations ensuring user privacy within the intelligent transportation
+environment. Moreover, educating users and initiating awareness campaigns can assist
+individuals in comprehending the potential hazards and precautionary steps related to
+intelligent transportation technologies.
+
+1.4.3 The Role of Encryption in Protecting Personal Information in
+Connected Transportation
+
+Encryption is critical for protecting personal data across networked transportation
+systems, ensuring the confidentiality and accuracy of data while it is sent and stored
+within these platforms [36]. Here are some important details illustrating the
+significance of encryption in securing personal information in the field of connected
+transportation:
+
+  Secure Communication:
+  Data in Transit: Encryption ensures that data exchanged between connected
+  vehicles, infrastructure, and backend servers are secured during
+  transmission. This prevents unauthorized interception and eavesdropping by
+  malicious actors.
+
+  Data Integrity:
+  Tamper Resistance: Encryption aids in preserving the integrity of data by
+  rendering it challenging for unauthorized parties to alter or tamper with
+  information during transit. This ensures that the data received are the same
+  as the data sent.
+
+  Protecting User Identities:
+  User Authentication: Encryption is used in authentication processes to
+  verify the identities of users, vehicles, and devices, preventing unauthorized
+  access to sensitive information and systems.
+  Credentials Protection: Encrypted storage of user credentials, such as login
+  details and access tokens, helps prevent unauthorized access even if physical
+  or digital breaches occur.
+
+  Securing V2I and V2V Communication:
+  V2I Communication: Encryption ensures the integrity and confidentiality
+  of vehicle and infrastructure communication, including traffic lights, road
+  signs, and other connected components.
+  V2V Communication: Encrypting communications between vehicles helps
+  protect sensitive information exchanged for safety and coordination
+  purposes, such as collision warnings or traffic updates.
+  Protection Against Eavesdropping:
+  Man-in-the-Middle Attacks: Encryption guards against attacks known as
+  “man-in-the-middle,” in which an uninvited party intercepts and perhaps
+  modifies communication between connected devices or systems.
+  Securing Location Data:
+  Geolocation Privacy: Encryption helps safeguard people’s privacy by
+  securing location data and avoiding unapproved parties from tracking the
+  movements of connected vehicles and their occupants.
+  Data-at-Rest Protection:
+  Storage Encryption: Personal information stored in databases or onboard
+  systems is protected through encryption, reducing the risk of data breaches
+  in case of actual robbery or unapproved admittance to storage devices.
+  Compliance with Privacy Regulations:
+  Legal Requirements: Numerous security guidelines, including the General
+  Data Protection Regulation (GDPR) and the California Consumer Privacy
+  Act (CCPA), mandate the use of encryption as part of comprehensive data
+  protection measures. Adhering to these regulations is essential for legal
+  compliance.
+  Minimizing Insider Threats:
+  Internal Access Controls: Encryption, when combined with strong access
+  controls, helps mitigate risks posed by insider threats, limiting the ability of
+  authorized personnel to misuse or access sensitive personal information
+  without proper authorization.
+  Building User Trust:
+  User Confidence: The implementation of robust encryption measures
+  fosters user trust in connected transportation systems. Users are more likely
+  to adopt and utilize these systems if they are confident that their personal
+  information is securely handled.
+
+While encryption is a powerful tool for enhancing the security of connected
+transportation systems, it should be complemented by other cybersecurity measures,
+including regular security audits, software updates, and a privacy-by-design approach
+to ensure comprehensive protection against evolving threats [37].
+1.5 SECURITY MEASURES IN IOV
+
+1.5.1 Encryption and Authentication in IoV
+
+In the realm of the IoV, marked by the interconnectivity of vehicles, infrastructure, and
+other entities, the essential roles of encryption and authentication take center stage.
+They ensure the security and privacy of both data and communications [38,39]. Here’s
+an overview of how encryption and authentication are applied in IoV:
+
+  Encryption in IoV:
+
+  Data in Transit Protection:
+  V2V Communication: Communication between vehicles entails the
+  exchange of safety-critical information. Encryption ensures that this
+  communication is secure, preventing eavesdropping and tampering with the
+  transmitted data.
+  V2I Communication: Communication among vehicles and
+  infrastructure(e.g., traffic lights, road signs, and control centers) is secured
+  through encryption, protecting the integrity and confidentiality of the
+  exchanged data.
+
+  Secure Firmware and Software Updates:
+  Over-the-Air (OTA) Updates: Encryption is essential for securing firmware
+  and software updates sent to vehicles over the air, preventing unauthorized
+  access and tampering during the update process.
+
+  Protection of Location Data:
+  Geolocation Privacy: Encryption helps safeguard the privacy of location
+  data generated by vehicles, Ensuring that authorized entities are the sole
+  entities with access to this sensitive information.
+
+  Secure Mobile Applications:
+  Mobile App Communication: IoV often involves mobile applications that
+  interact with vehicles. Encryption secures the communication between the
+  mobile app and the vehicle, protecting user data and commands.
+
+  Securing Telematics Data:
+  Telematics Systems: Telematics systems, which collect and transmit
+  vehicle-related data, utilize encryption to uphold the secrecy and integrity of
+  this information.
+
+  Authentication Tokens:
+  Tokenization: Encryption is used to tokenize authentication tokens
+  exchanged between vehicles and backend servers, ensuring that sensitive
+  information, such as access tokens, remains secure.
+
+  Preventing Replay Attacks:
+  Nonce and Timestamps: Encryption, combined with nonces (random
+  numbers used only once) and timestamps, helps prevent replay attacks,
+  where intercepted messages are replayed to gain unauthorized access.
+  Secure Cloud Connectivity:
+  Cloud Services: Many IoV services involve cloud connectivity. Encryption
+  ensures the secure transmission of data between vehicles and cloud servers,
+  protecting against unauthorized access.
+
+Authentication in IoV:
+
+  Vehicle Identity Verification:
+  V2V and V2I Authentication: Vehicles need to authenticate themselves to
+  each other and to infrastructure components. Authentication ensures that
+  only trusted entities can participate in IoV communication.
+
+  User Identity Verification:
+  Driver Authentication: Authentication mechanisms verify the identity of
+  drivers interacting with in-vehicle systems or mobile applications, keeping
+  out unwanted access.
+
+  Secure Access Control:
+  Role-Based Access: Authentication links with access control systems,
+  guaranteeing that solely designated individuals or systems can reach particular
+  functions or information within the IoV environment.
+  Credential Protection:
+
+  Secure Storage: Authentication credentials, such as private keys and
+  passwords, are stored securely using encryption, minimizing the risk of
+  unauthorized access even if physical or digital breaches occur.
+  Multi-Factor Authentication (MFA):
+  Enhanced Security: Security is bolstered through multi-factor
+  authentication, which requires the verification of multiple elements, such as
+  a password and a biometric scan. This approach provides added protection
+  against unauthorized access.
+  Secure Communication Channels:
+  Secure Channels: Authentication is utilized to lay out secure
+  communication channels between vehicles, infrastructure, and backend
+  servers, ensuring that only authenticated entities can exchange sensitive
+  information.
+  Digital Signatures:
+  Message Integrity: Digital signatures, often used in conjunction with
+  authentication, authenticate the origin and integrity of messages exchanged
+  within the IoV ecosystem.
+By incorporating strong encryption and authentication protocols, IoV platforms can
+reduce the chances of illicit entry, data breaches, and manipulation, creating a reliable
+and secure environment for interconnected vehicles and associated services. As the
+IoV environment progresses, maintaining alertness and embracing updated security
+methodologies become essential to tackle new vulnerabilities.
+
+1.5.2 Intrusion Detection and Prevention Systems
+
+Intrusion detection systems (IDS) and intrusion prevention systems (IPS) stand as
+crucial elements within cybersecurity infrastructure, designed to detect and respond to
+security incidents and attacks [40]. These systems play a pivotal function in protecting
+networks, systems, and applications against unauthorized access, malicious activities,
+and potential threats.
+
+  Intrusion Detection Systems:
+  Functionality:
+  – IDS continuously observes activities within networks and systems in
+  real-time, searching for patterns or behaviors that could signal a
+  security incident or potential intrusion.
+  Detection Methods:
+  – Signature-Based Detection: It contrasts observed patterns with a
+  repository of recognized attack signatures.
+  – Anomaly-Based Detection: It creates a standard for typical activity
+  and triggers alerts upon detecting deviations from this established
+  baseline.
+  – Behavior-Based Detection: It scrutinizes user and system behavior to
+  identify suspicious activities.
+  Deployment:
+  – Network-Based IDS (NIDS): It oversees network traffic and
+  scrutinizes packets for indications of malicious activity.
+  – Host-Based IDS (HIDS): It observes activities on individual hosts or
+  devices, looking for signs of compromise.
+  Response:
+  – Alerts: It generates alerts or notifications when potential intrusions or
+  security incidents are detected.
+  – Logs: It records information about detected incidents for further
+  analysis and investigation.
+
+  Intrusion Prevention Systems:
+  Functionality: IPS builds upon IDS by not only detecting but also actively
+  preventing or blocking identified threats in real time.
+  Prevention Methods:
+  – Packet Filtering: Blocks or allows network packets based on
+  predefined rules.
+  – Signature-Based Prevention: Blocks known malicious signatures
+  before they can reach their targets.
+  – Behavior-Based Prevention: Takes proactive measures to stop
+  activities that exhibit malicious behavior.
+  Deployment:
+  – Network-Based IPS (NIPS): Sits on the network perimeter and can
+  block malicious traffic before it reaches its destination.
+  – Host-Based IPS (HIPS): Operates on individual devices and can
+  prevent malicious activities at the host level.
+  Response:
+  – Automated Blocking: Automatically blocks or mitigates malicious
+  activities based on predefined rules.
+  – Alerts and Logs: Like IDS, IPS generates alerts and logs for
+  monitoring and analysis.
+  Integration with Security Ecosystem:
+  SIEM Integration: IDS and IPS are often integrated with security
+  information and event management (SIEM) systems for centralized
+  monitoring and analysis.
+  Collaboration with Firewalls: Coordinated efforts with firewalls and other
+  security measures enhance overall network security.
+
+Deploying a combination of intrusion detection and prevention measures is crucial for
+maintaining a robust cybersecurity posture and safeguarding against a wide range of
+cyber threats. Regular updates, proper configuration, and a comprehensive
+understanding of the network environment are essential for the effectiveness of IDS
+and IPS solutions [41].
+
+1.5.3 Securing V2X Communication
+
+Securing V2X communication is crucial to protect the confidentiality, integrity, and
+reliability of the information swapped between vehicles and their surroundings. V2X
+communication includes V2V, V2I, V2P, as well as additional channels of
+communication that contribute to the connected and autonomous vehicle ecosystem
+[42,43]. Here are key considerations for securing V2X communication:
+
+  Encryption:
+  End-to-End Encryption: Utilize end-to-end encryption to safeguard the
+  secrecy of data exchanged among vehicles, infrastructure, and various
+  entities. This hinders illicit access to vital details like location specifics,
+  personal identification, and crucial safety messages.
+  Authentication:
+  Vehicle Authentication: Convey vigorous validation systems to ensure that
+  main approved and genuine vehicles can participate in V2X communication.
+  This may involve the use of digital certificates, secure key exchange
+  protocols, and multi-factor authentication.
+  Infrastructure Authentication: Authenticate communication with
+  infrastructure components to forestall unapproved access and malicious
+  manipulation of data. This includes verifying the legitimacy of traffic
+  signals, road signs, and other infrastructure elements.
+
+  Secure Key Management:
+  Key Distribution: Institute secure protocols for the distribution and
+  administration of cryptographic keys. Effective key management is vital for
+  upholding the security of encrypted communications.
+  Key Rotation: Periodically rotate encryption keys to reduce the risk
+  associated with long-term key compromises. Regularly updating keys helps
+  maintain the security of the communication infrastructure.
+
+  Secure Protocols:
+  Use Standardized Protocols: Implement standardized and widely accepted
+  communication protocols, such as DSRC or C-V2X. These protocols
+  typically incorporate inherent security features and have undergone rigorous
+  testing processes.
+  Transport Layer Security (TLS): When using wireless communication,
+  implement TLS to secure data in transit. TLS ensures the integrity and
+  confidentiality of communication channels.
+
+  Network Security:
+  Firewalls and Intrusion Detection/Prevention Systems: Deploy security
+  measures for networks, including firewalls and systems for intrusion
+  detection and prevention, to monitor and command incoming and outgoing
+  traffic. These systems can detect and mitigate potential security threats.
+
+  Privacy Protection:
+  Pseudonymization: Implement techniques like pseudonymization to protect
+  the privacy of individuals by using temporary identifiers instead of
+  permanent ones.
+  Minimal Data Collection: Limit the collection of personal or sensitive data
+  to the minimum required for V2X functionality. Incorporate privacy-by-
+  design principles into the development of V2X systems.
+
+Securing V2X communication requires a holistic and collaborative approach involving
+manufacturers, infrastructure providers, policymakers, and cybersecurity experts.
+Regular security assessments, updates, and collaboration within the automotive and
+transportation industries are necessary to keep up with new threats and vulnerabilities.
+1.6 PRIVACY PROTECTION STRATEGIES
+
+1.6.1 Anonymization and Pseudonymization Techniques
+
+Anonymization and pseudonymization are methods employed to preserve individuals’
+confidentiality by either obscuring or substituting personally identifiable information
+(PII) within data collections. These strategies find application in sectors like
+healthcare, finance, and research to adhere to privacy norms and minimize the
+potential exposure of confidential details [44].
+
+  Anonymization: This technique alters or eliminates PII to ensure individuals
+cannot be discerned from the dataset. The objective is to obscure individual identities
+entirely. Various anonymization methods encompass:
+
+  Data Aggregation: Merging data to eliminate specific individual elements.
+  Generalization: Simplifying data details while preserving its foundational
+  structure.
+  Randomization: Injecting variability into data, like distorting numerical values.
+  Data Masking/Tokenization: Substituting sensitive data with generic
+  placeholders or tokens.
+  Data Swapping: Shuffling data values across records to disconnect them from
+  specific individuals.
+
+However, it’s crucial to recognize that achieving full anonymization presents
+challenges, necessitating careful evaluation of potential re-identification risks.
+
+Pseudonymization:
+Pseudonymization revolves around substituting or encoding personally identifiable
+details with pseudonyms or codes. Unlike full anonymization, re-identifying
+individuals remains feasible using separate ancillary data, like a decryption key.
+Pseudonymized [45] data can often revert to its original form when coupled with the
+initial data. Key methods of pseudonymization include:
+
+  Tokenization: Exchanging confidential data with distinct tokens or identifiers.
+  Hashing: Employing irreversible processes to convert data into a consistent-
+  length string (hash).
+  Encryption: Converting data via an algorithm and specific key, rendering it
+  unreadable without its corresponding decryption mechanism.
+  Dynamic Masking: Revealing only segments of sensitive data, obscuring the
+  remainder using placeholders like asterisks.
+
+Pseudonymization is apt for situations requiring certain data connections while
+prioritizing individual privacy through complicating direct data-person associations.
+  Often, blending anonymization and pseudonymization strategies offers heightened
+privacy, facilitating beneficial data analysis and sharing. The contextual privacy
+demands and governing regulations of the pertinent sector should guide the choice and
+implementation of these methods.
+
+Techniques for protecting user identities
+Ensuring user identity protection is paramount for maintaining privacy and preventing
+unauthorized breaches into confidential data. To bolster this protection, a multifaceted
+approach is essential [44,43]. This includes advanced authentication methods like
+multi-factor and biometric authentication, alongside robust encryption techniques such
+as end-to-end encryption and tokenization. Access controls like role-based access and
+the least privilege principle further limit unauthorized access. Additionally, strategies
+like anonymization, pseudonymization, and strict password policies ensure data
+confidentiality and user anonymity. Continuous user education, monitoring, adherence
+to secure communication protocols, and a commitment to privacy-by-design
+principles, along with regulatory compliance, collectively form a comprehensive
+security framework. This integrated approach significantly fortifies defenses against
+identity threats while upholding user privacy.
+
+1.6.1.1 Challenges and Limitations of Anonymization
+
+Anonymization is vital for safeguarding privacy but presents inherent challenges. Even
+when data are anonymized, risks of re-identification persist when merged with external
+datasets or inadequately randomized, potentially revealing individuals. Additionally,
+anonymization can degrade data quality, strip contextual relevance, and become less
+effective over time due to evolving datasets or emerging re-identification techniques.
+Furthermore, highly anonymized data may not support advanced analytics or satisfy
+regulatory definitions across jurisdictions. Moreover, there’s a risk of users
+misinterpreting the security of anonymized data, and ethical concerns remain,
+especially with sensitive information. Given these complexities, organizations must
+holistically approach data privacy, combining anonymization methods [43] with
+stringent security protocols, consistent risk evaluations, and adherence to evolving
+privacy [46] regulations, all while balancing privacy and data utility.
+
+1.6.2 Consent Management in IoV
+
+Consent management regarding the IoV refers to the systematic approach of obtaining,
+maintaining, and managing user permissions for data collection, processing, and
+sharing within the vehicular network. With the extensive volumes of data generated
+and exchanged among vehicles, infrastructure, and other connected devices in IoV
+ecosystems, ensuring that participants have control over their data is paramount.
+
+  Here are some key aspects and considerations of consent management in IoV:
+  1. Explicit Consent: Before collecting or processing personal data from vehicles or
+  drivers, explicit consent should be obtained. This ensures that individuals are
+  provided with information about the collected data, its intended purpose, and the
+  entities with whom it may be shared.
+
+  2. Granular Consent Options: Individuals should have the choice to grant consent
+  flexibly for specific data types or purposes rather than giving broad, blanket
+  consent. For instance, a driver might consent to share location data for traffic
+  management but may opt out of sharing data related to personal habits or
+  preferences.
+
+  3. Revocable Consent: Users should possess the right to retract their consent at any
+  given moment and establish mechanisms that enable individuals to effortlessly
+  withdraw previously granted consent, halting further data processing or sharing.
+
+  4. Transparent Policies: Organizations operating IoV systems should maintain
+  transparent data usage policies that clearly outline how consent is obtained; how
+  data are used, processed, and stored; and the rights of individuals regarding their
+  data.
+
+  5. Consent Management Platforms: Utilizing advanced technologies and
+  platforms can help automate and streamline the consent management process.
+  These platforms can track user preferences, manage consent settings, and ensure
+  compliance with regulatory requirements.
+
+  6. Compliance with Regulations: Organizations are required to agree with material
+  information insurance and security guidelines, such as the General Data
+  Protection Regulation (GDPR) in Europe or other applicable regional data
+  protection laws. These regulations often have strict requirements concerning
+  consent management, data protection, and user rights.
+
+  7. Education and Awareness: Ongoing user education and awareness initiatives
+  can assist individuals in comprehending the significance of consent in IoV
+  systems. By empowering users with knowledge about their data rights and how
+  their information is used, organizations can foster trust and collaboration within
+  the IoV ecosystem.
+
+In summary, consent management in IoV is essential to respect user privacy, ensure
+data protection, and adhere to regulatory requirements. By implementing robust
+consent management practices, organizations can build trust with users, promote
+responsible data usage, and facilitate the secure and ethical development of IoV
+technologies.
+
+1.7 FUTURE VISION AND CHALLENGES
+
+The evolution of the IoV brings forth opportunities and challenges, with a particular
+focus on security and protection. Several emerging trends are shaping the future of IoV
+security and privacy:
+Zero Trust Architecture (ZTA): As IoV ecosystems grow more complex, the
+adoption of zero trust architecture is gaining momentum. This approach
+emphasizes strict identity verification and continuous authentication, making
+certain that only duly authorized and recognized entities can access resources
+within the IoV environment, thereby reducing potential vulnerabilities.
+Edge Computing: As connected vehicles proliferate, generating vast amounts of
+data, edge computing is emerging as a pivotal trend. Edge computing [47]
+minimizes latency and boosts real-time decision-making capabilities by handling
+data in proximity to its origin. At the same time, it reduces the risk linked to
+transmitting sensitive data across networks.
+AI and ML: Utilizing the capabilities of AI and ML algorithms [43,48] can
+bolster IoV security by identifying anomalous patterns, predicting potential cyber
+threats, and enabling autonomous responses. These technologies can also enhance
+privacy by implementing advanced encryption techniques and data
+anonymization strategies.
+Blockchain Technology: The decentralized and immutable nature of blockchain
+holds the potential for improving IoV security [38] and privacy. By creating
+tamper-proof records of transactions and interactions within the IoV ecosystem,
+blockchain can mitigate risks associated with data tampering, unauthorized
+access, and fraudulent activities [49,50,51].
+Enhanced Data Encryption: As the volume of data transmitted across IoV
+networks escalates, implementing robust encryption algorithms and protocols is
+imperative. Advanced encryption techniques, including homomorphic encryption
+and quantum-resistant cryptography, are emerging as essential tools to protect
+sensitive information and ensure data privacy [52].
+Structures for Regulation: Recognizing the criticality of security and privacy in
+IoV implementations, regulatory bodies worldwide are actively developing
+comprehensive frameworks and standards. These regulations aim to establish
+baseline security requirements, promote industry-wide compliance, and foster
+trust among stakeholders.
+Privacy-Preserving Technologies: To address growing concerns surrounding
+data privacy, innovative technologies that are becoming more popular integrate
+secure multi-party computation, federated learning, and differential privacy
+[45,53]. These privacy-preserving techniques enable data analysis while
+preserving individual user privacy and confidentiality.
+
+Threat Intelligence Sharing: Collaborative efforts among automotive
+manufacturers, cybersecurity firms, and government agencies are fostering the
+sharing of threat intelligence and best practices. This collaborative approach
+enables the timely identification of emerging threats, facilitates knowledge
+exchange, and enhances the IoV ecosystem’s overall security posture.
+
+  As IoV technologies continue to advance and proliferate, addressing evolving
+security and privacy challenges remains paramount. By embracing these
+  emerging trends and adopting a proactive strategy for cybersecurity and privacy,
+  stakeholders can navigate the complexities of the IoV landscape while
+  guaranteeing the security and privacy of connected vehicles and their occupants.
+
+1.7.1 Security and Privacy Measures
+
+Future research in the IoV should prioritize enhancing security and privacy measures
+[54], refining standardization for seamless interoperability, bolstering resilience
+against cyber threats, and harnessing edge computing for real-time data processing.
+Additionally, advancements in machine learning, AI techniques, and human-machine
+interaction are essential for optimizing traffic management, user experience, and
+autonomous vehicle functionality. Comprehensive regulatory frameworks,
+infrastructure optimization, and sustainability considerations are pivotal to address
+legal, environmental, and energy efficiency challenges. Collaborative strategies, user
+acceptance studies, robustness testing, and ethical evaluations further underscore the
+multifaceted approach required to ensure the responsible and efficient development of
+IoV technologies, emphasizing interdisciplinary collaboration and stakeholder
+engagement.
+
+1.7.2 Ethical Implications of IoV Technology
+
+The IoV introduces a myriad of ethical considerations encompassing privacy [46,55],
+security, autonomous decision-making, equity, user autonomy, transparency, economic
+impact, environmental sustainability, social trust, and long-term consequences. Key
+concerns include safeguarding user privacy amid extensive data collection, addressing
+cybersecurity vulnerabilities and ensuring data integrity, grappling with ethical
+dilemmas in autonomous decision-making and liability attribution, mitigating potential
+digital divides and affordability challenges, preserving user control over automated
+systems, ensuring system transparency and accountability, addressing job displacement
+concerns, balancing technological advancements with environmental stewardship,
+fostering public trust, and anticipating unintended societal impacts. Tackling these
+diverse ethical considerations requires interdisciplinary collaboration among
+technologists, ethicists, policymakers, and the public. Together, they can formulate
+ethical frameworks prioritizing individual and societal well-being, guiding the
+responsible development and deployment of innovations in the IoV.
+
+1.7.3 Balancing Security and Privacy with Societal Concerns
+
+Balancing security and privacy concerns with societal implications in the IoV smart
+transportation system is a difficult task that needs careful consideration of many
+different aspects. On the one hand, ensuring strong security protocols [46] is
+paramount to protect against cyber threats, unauthorized entry, and data breaches,
+thereby safeguarding the integrity, reliability, and safety of the transportation
+ecosystem. Implementing advanced encryption protocols, secure communication
+channels, and robust authentication mechanisms can bolster security while preserving
+data confidentiality and system integrity.
+
+  Concurrently, addressing privacy concerns is essential to protect individuals’ rights,
+autonomy, and personal information. Establishing stringent data protection protocols,
+anonymization techniques, user consent frameworks, and transparency measures can
+mitigate privacy risks and foster user trust. However, finding the ideal balance
+between privacy and security necessitates navigating potential trade-offs, ethical
+dilemmas, and societal implications.
+
+  Moreover, considering societal concerns [55,56] involves addressing broader issues
+such as equity, accessibility, economic impact, public trust, ethical considerations, and
+regulatory compliance. Ensuring equitable access to IoV technologies, promoting
+affordability, addressing digital divides, preserving user autonomy, fostering public
+acceptance, and adhering to regulatory frameworks are essential to align IoV
+developments with societal values and norms.
+
+  Therefore, achieving a harmonious balance requires a holistic approach that
+integrates technological innovations, ethical considerations, policy frameworks,
+stakeholder engagement, and public participation. Cooperative actions between
+industrial participants, policymakers, ethicists, technologists, and the public are vital to
+navigate these complexities effectively, prioritize societal well-being, and foster a
+responsible and sustainable IoV smart transportation system that harmoniously
+integrates security, privacy, and societal concerns.
+
+1.8 THE FRAMEWORK FOR BLOCKCHAIN-INTEGRATED
+INTERNET OF VEHICLE SYSTEM
+
+1.8.1 Decentralized Ledger Technology: Blockchain
+
+Blockchain technology [57] is a network of peers that stores transaction data in a
+secure ledger using consensus and cryptography techniques. Every block in the chain
+carries the transaction data, a timestamp, and the encryption key of the previous block.
+The use of the Merkle tree algorithm ensures tamper-resistant content within the block.
+This decentralized ledger, associated with blockchain, allows transparent and
+permanent recording of transactions. Its prominent application lies in digital currencies
+like Bitcoin, where it serves as a public ledger for tracking transactions and account
+balances (Figure 1.5).
+  FIGURE 1.5 (a and b) Blockchain data layer. ⏎
+
+1.8.1.1 Integration of Blockchain in Autonomous Vehicles (AVs)
+
+  1. Self-driving Technology: Blockchain stores information gathered via vehicle
+  sensors enhancing transparency and reducing data theft risks. It enables
+  monitoring and sharing of vehicle safety information and usage patterns among
+  relevant parties.
+  2. Telematics: It utilizes blockchain for secure data sharing and communication
+  between various self-driving cars and organizations, such as local governments. It
+  enhances transparency, efficiency, and security in data sharing across AVs.
+
+1.8.1.1.1 Considerations in Blockchain Application for AVs
+
+Vehicle Safety: Sensors identify instances of speeding, alert the driver, or assume
+control of the vehicle to prevent negligence, serving as the foundation for determining
+insurance premiums. Driving behaviors are evaluated using sensor data that are kept
+on the blockchain, improving security [58].
+
+  Accident Management: Blockchain aids [39] in automatic positioning and
+emergency assistance by providing relevant information to rescue organizations. It
+helps determine the exact location and severity of accidents, expediting rescue efforts.
+
+  It combines wireless communication technologies and global satellite positioning
+for all-encompassing vehicle tracking. Monitors emergency alerts, overloading,
+driving when fatigued, and routes.
+
+1.8.2 Challenges in Blockchain Applications for AVs
+
+  Anonymity Challenges: Challenges arise in verifying the accuracy of data
+  sources due to the anonymity inherent in blockchain data. Lack of identification
+  for vehicles poses challenges in managing a comprehensive system.
+  Security, Scale, and Execution Efficiency: Struggling to strike a balance
+  between security, scalability, and operational efficiency, the popularity and
+  technical significance of blockchain technology in AV applications present
+  challenges.
+  Decentralized Identifier (DID) and Smart Contract Issues: DID technology
+  for vehicle identification is not widely used. Blockchain networks’s performance
+  in the extremely mobility atmosphere of autonomous vehicle networks is a source
+  of concern. Smart contract specifications lack widespread availability, posing
+  challenges in regulating sensor data and vehicular networking technologies.
+  Big Data Challenges: The challenges include managing the huge volume of data
+  produced by multiple apps in the big data era and addressing the high computing
+  requirements of blockchain technology in the AV infrastructure.
+
+As blockchain technology [54,59] continues to evolve, addressing these challenges is
+crucial for realizing its full potential in improving the safety, transparency, and
+efficiency of autonomous vehicles. Continuous research and development are essential
+to conquer these hurdles and optimize the integration of blockchain in the AV
+ecosystem.
+
+1.8.3 BC-Based Application for IoV
+Decentralization stands out as a pivotal feature of blockchain technology [45], offering
+advantages such as transparency, affordability, immutability, and enhanced
+confidentiality. This makes blockchain a viable and cost-efficient solution for
+fortifying the IoV system, ensuring its reliability and privacy. Specifically, four
+significant applications have emerged for blockchain-integrated IoV: security,
+credibility, credit-based incentives, and privacy preservation. In the realm of safety,
+trustworthiness, and confidentiality, applications are clearly delineated, based on credit
+incentives that motivate. Entities within the IoV [54,60] collaborate by sharing their
+computational and networking resources, earning credits for their valuable
+contributions. IoV connects numerous vehicles for data sharing on collisions, traffic
+updates, weather conditions, and infotainment, presenting challenges in managing vast
+data volumes without compromising scalability or security. In this context, blockchain
+addresses essential IoV security requirements like data provenance, transparency, and
+resilience without central authority intervention. By doing so, blockchain fosters trust
+among vehicles in intricate environments, ensuring data integrity, resilience against
+cyberattacks, and user anonymity. Additionally, the research underscores blockchain’s
+efficacy in safeguarding IoV security and privacy, employing techniques like k-
+anonymity to protect vehicle privacy by making individual vehicles indistinguishable
+within groups (Figure 1.6).
+  FIGURE 1.6 BC-based IoV. ⏎
+
+1.9 CONCLUSION
+
+1.9.1 Summary Key Findings
+
+The integration of AI into IoV security presents transformative possibilities for
+vehicular communication and the automotive sector, although it introduces notable
+challenges such as privacy risks, infrastructure complexities, standardization needs,
+

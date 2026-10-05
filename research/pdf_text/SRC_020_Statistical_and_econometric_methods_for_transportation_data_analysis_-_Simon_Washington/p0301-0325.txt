@@ -1,0 +1,1429 @@
+indicated by a “+” represent the data of observed freeway users, and com-
+muter data indicated by a “–” represent the unobserved speeds of nonfree-
+way users had they chosen to drive on the freeway. Because freeway users
+are a self-selected group (for whatever reasons) of faster drivers (with faster
+drivers being more likely to choose the freeway), they are underrepresented
+at lower values of Ff Xn and overrepresented at higher values of Ff Xn. If
+Equation 12.1 is estimated on only observed data (observed freeway users
+only), the resulting estimates would be biased as indicated by “Line 1” in
+Figure 12.1. The true equation of freeway speed with all data (observed and
+unobserved) is given by “Line 2.”
+
+  From an average speed-forecasting perspective, the problem with “Line
+1” is that any policy causing a shift in route choice will result in biased
+forecasts of average speed because of the selectivity bias present in equation
+estimation. For example, if the arterial were closed for reconstruction, the
+arterial users moving to the freeway would have very different F determin-
+ing their speeds than the F of the originally observed freeway users. This
+problem would also exist if a single equation were estimated for the average
+speeds on all three routes because each route contains a self-selected sample
+of commuters that is based on their speed preferences.
+
+12.2 Econometric Corrections: Instrumental Variables
+  and Expected Value Method
+
+Perhaps the most simplistic method of addressing misspeciﬁcation induced
+by discrete/continuous processes is to use an instrumental variables
+approach. To do this, consider Example 11.1 with commuters selecting from
+three possible routes (freeway, four-lane arterial, and two-lane road) and a
+revision of Equation 12.1 such that the average travel speed to work on the
+chosen route of commuter n is
+
+  sn = ␤Xn  ␣Zn  \n ,  (12.2)
+
+where sn is the average speed of commuter n on commuter n’s chosen route,
+Xn is a vector of commuter n characteristics inﬂuencing average travel speed
+that are not a function of the route chosen (e.g., such as income, driver age),
+
+Zn is a vector of characteristics commuter n faces that inﬂuence average
+travel speed that are a function of the route chosen (such as number of
+
+trafﬁc signals and travel distance), F and E are corresponding vectors of
+estimable parameters and \n are unobserved characteristics inﬂuencing
+travel speed. Direct estimation of Equation 12.2 would result in biased and
+
+inefﬁcient parameter estimation because Zn is endogenous due to the dis-
+crete/continuous interrelation between travel speed and route choice. This
+
+© 2003 by CRC Press LLC
+is because, as a commuter chooses a higher speed, elements in the Zn vector
+will change since the likelihood of selecting a speciﬁc route is interrelated
+
+with speed preferences. As was the case in simultaneous equations models
+
+that involve all continuous variables (see Chapter 5), one could replace the
+
+elements of Zn with estimates derived from regressing Zn against all exog-
+enous variables. The procedure consists of estimating regression equations
+for all elements of Zn and to use regression predicted values, Zˆ n , to estimate
+Equation 12.2, such that
+
+  sn = ␤Xn  ␣Zˆ n  \n.  (12.3)
+
+  An alternative to the instrumental variables approach is to interact the
+endogenous variables directly with the corresponding discrete-outcome
+model (the route-choice model in this case). The most common approach is
+to replace the elements in the endogenous variable vector Zn with their
+expected values. Thus, each element of Zn, zjn, is replaced by (with subscript-
+ing j denoting elements of Zn)
+
+  § E zjn = Pni zjn ,  (12.4)
+  i
+
+where Pn(i) is the predicted probability of commuter n selecting discrete
+outcome i, as determined by a discrete outcome model. Equation 12.2 then
+
+becomes
+
+  § § sn = ␤Xn  E  Pn i zjn  \n .  (12.5)
+  j
+  i
+
+Example 12.1
+
+  To demonstrate the expected value selectivity bias correction method,
+  consider the data used previously in Example 11.1. Recall that these data
+  are from a survey of 151 commuters departing from the same origin (a
+  large residential complex) and going to work in the same downtown
+  area. Distance is measured precisely from parking lot of origin to parking
+  lot of destination so there is a variance in distances among commuters
+  even though they depart and arrive in the same general areas. Commut-
+  ers are observed choosing one of three alternative routes; a four-lane
+  arterial, a two-lane highway, and a limited-access four-lane freeway. To
+  estimate a model of average commuting speed, the variables shown in
+  Table 12.1 are available.
+
+  For the equation correction, to estimate the expected value of endogenous
+  variables that result because of the discrete/continuous interaction, the
+
+© 2003 by CRC Press LLC
+TABLE 12.1
+
+Variables Available for Home to Work Average Speed Model Estimation
+
+Variable  Variable Description
+  No.
+
+1  Average commuting speed in km/h
+
+2  Route chosen: 1 if arterial, 2 if rural road, 3 if freeway
+
+3  Trafﬁc ﬂow rate at time of departure in vehicles per hour
+
+4  Number of trafﬁc signals on the selected route
+
+5  Distance along the selected route in kilometers
+
+6  Seat belts: 1 if wearing, 0 if not
+
+7  Number of passengers in vehicle
+
+8  Commuter age in years: 1 if younger than 23, 2 if 24 to 29, 3 if 30 to 39, 4 if 40
+
+  to 49, 5 if 50 and older
+
+9  Gender: 1 if male, 0 if female
+
+10  Marital status: 1 if single, 0 if married
+
+11  Number of children (aged 16 or younger)
+
+12  Annual household income (U.S. dollars): 1 if less than 20,000, 2 if 20,000 to
+
+  29,999, 3 if 30,000 to 39,999, 4 if 40,000 to 49,999, 5 if more than 50,000
+
+13  Age of vehicle driven in years
+
+14  Manufacturer origin of vehicle driven: 1 if domestic, 0 if foreign
+
+15  Operating cost of trip based on vehicle fuel efﬁciency (in U.S. dollars)
+
+  route-choice probabilities are determined from the logit model estimated
+  in Example 11.1. Recall those logit model parameter estimates gave the
+  following utility functions:
+
+  Va = –0.942(DISTA)
+
+  Vt = 1.65 – 1.135(DISTT) + 0.128(VEHAGE),  (12.6)
+
+  Vf = –3.20 – 0.694(DISTF) + 0.233(VEHAGE) + 0.764(MALE)
+
+  where DISTA, DISTT, and DISTF are the distances of individual travelers
+  on the arterial, two-lane highway, and freeway route, respectively, VEHAGE
+  is the age of the commuter’s vehicle in years, and male is an indicator
+  variable that is equal to 1 if the commuter is a male and 0 if female.
+
+  These give estimated route probabilities:
+
+  Pa ! V V Vf e , Va  Pt ! V V Vf eVt  , Pf  ! eVf  Vf .  (12.7)
+  Va  Vt
+  e a e t e  e a e t e  e e e
+
+  Table 12.2 gives estimation results for two models. The “uncorrected” model
+  is estimated ignoring discrete/continuous interactions. The “corrected”
+  model uses Equations 12.6 and 12.7 as input to estimate Equation 12.5.
+
+  Both models show that commuters tend to have higher average commute
+  speeds if they have longer trips, more children, and are males, and lower
+
+© 2003 by CRC Press LLC
+TABLE 12.2
+
+Corrected and Uncorrected Regression Models of Average Commute Speed
+(t statistics in parentheses)
+
+Independent Variable  Uncorrected  Corrected
+  Parameter  Parameter
+  Estimates  Estimates
+
+Constant  14.54 (2.97)  15.37 (2.14)
+Distance on chosen route in kilometers  4.08 (7.71)  4.09 (2.48)
+Number of signals on chosen route
+Number of children  –0.48 (–1.78)  –1.30 (–0.81)
+Single indicator (1 if commuter is not married,  3.10 (2.16)  2.85 (1.75)
+ 0 if married)  3.15 (1.52)  3.98 (1.70)
+Vehicle age in years
+Number of observations  –0.51 (–2.13)  –0.16 (–0.57)
+R2  151  151
+Corrected R2  0.32  0.13
+  0.30  0.10
+
+average commute speeds as the number of trafﬁc signals they encounter
+increases and the older their commute vehicle. Although the two models
+show consistency in the direction that the included variables have on
+average commute speeds, the magnitude of these variables and their
+statistical signiﬁcance vary widely in some cases. Speciﬁcally, in the
+corrected model, the number of trafﬁc signals and vehicle age become
+statistically insigniﬁcant. These shifting results underscore the need to
+consider the discrete/continuous nature of the problem and the role that
+commuter selectivity is playing in the model. For example, if the uncor-
+rected model was used, erroneous inferences could have been drawn
+concerning the number of trafﬁc signals and vehicle age.
+
+12.3 Econometric Corrections: Selectivity-Bias
+  Correction Term
+
+Another popular approach to resolve selectivity bias problems and arrive at
+unbiased parameter estimates is to develop an expression for a selectivity
+bias correction term (see Heckman, 1976, 1978, 1979). In the context of the
+example problem, this is done by noting that average travel speed, s, for
+commuter n from home to work is written as (refer to Equation 12.1)
+
+  Esn |i = ␤iXn  E\n |i ,  (12.8)
+
+where E(sn |i) is the average commute speed of commuter n conditional on
+the chosen route i, Xn is a vector of commuter n characteristics inﬂuencing
+average travel speed, Fi is a vector of estimable parameters, and E(\n |i) is
+
+© 2003 by CRC Press LLC
+the conditional unobserved characteristics. Note that variables speciﬁc to i
+
+(Zn in Equation 12.2) are omitted from the right-hand side of this equation.
+Application of this equation provides bias-corrected and consistent estimates
+of Fi. This is because the conditional expectation of \n, E(\n |i) , accounts for
+the nonrandom observed commute speeds that are selectively biased by
+
+commuters’ self-selected choice of route.
+
+  The problem then becomes one of deriving a closed-form representation
+of E(\n |i) that is used for equation estimation. Such a derivation was devel-
+oped by Hay (1980) and Dubin and McFadden (1984) based on the assump-
+
+tion that the discrete-outcome portion of the problem is represented by a
+
+multinomial logit model.
+  To see this (suppressing subscripting n), let K denote a vector of discrete-
+
+outcome disturbance terms (I1, I2, I3,… IJ), where J is the total number of
+discrete outcomes. The conditional expectation \ (conditioned on discrete
+outcome k) is written as
+
+  ¨ 1¸ J
+  E\|i = © ¹ ´ E\|K  fI j dK ,  (12.9)
+  ª Pi º K|i
+  j!1
+
+where Pi is the probability of discrete outcome i. If it is assumed that K is
+generalized extreme value distributed, W is the unconditional variance of
+\, and Vi is the correlation between \ and the resulting discrete-outcome
+logistic error terms (resulting from the differencing of II Ij), then Hay (1980)
+and Dubin and McFadden (1984) have shown that Equation 12.9 is
+
+   «  J  LNPj  1  Pj  »
+
+E\ n |i  = 1 J+1W6Vi T2  ¬1¬  J  «  ­  Pj  »  LNPi½ ¼  (12.10)
+  ¼
+  ­  §¬  ¼  ½
+  j{i
+
+  When using Equation 12.10, selectivity bias in discrete/continuous models
+is corrected by undertaking the following three steps:
+
+1. Estimate a multinomial logit model to predict the probabilities of
+  discrete outcomes i for each observation.
+
+2. Use the logit-predicted outcome probabilities to compute the portion
+  of Equation 12.10 in large brackets ([.]) for each observation.
+
+3. Use the values computed in step 2 to estimate Equation 12.8 using
+  standard least squares regression methods. The term (1)J+1 W6Vi/T
+  becomes a single estimable parameter.
+
+Thus, Equation 12.8 is estimated for each route k as
+
+  sin = ␤iXn  EiPn  Ln ,  (12.11)
+
+© 2003 by CRC Press LLC
+where Ei = (1)J+1 W6Vi/T2,
+
+   § «   J  1  Pj  »  LNPi  »
+  ¼  ,
+  Pn = ¬1 J  « Pj LN Pj  ½¼  ¼
+  ­¬  ½
+  ¬
+  ­  j{i
+
+and Ln is a disturbance term. It is common practice not to include Vi in the
+summation over discrete outcomes J. By doing this, an equality restriction of
+
+the correlations of across \n and the IiIj is imposed. This restriction is relaxed
+by moving Vi within the summation, making it necessary to estimate a total
+of J  1 selectivity bias parameters (E) for each continuous equation corre-
+sponding to discrete outcome i. However, it has been shown empirically by
+
+Hay (1980) and Mannering (1986a) that this restriction on Vi is reasonable.
+
+Example 12.2
+
+The selectivity bias correction term approach is demonstrated by esti-
+mating an average commute speed model for the two-lane highway users
+using the data used previously in Example 12.1 and the discrete model
+estimated in Example 11.1. Also, for comparison purposes, it is interesting
+to estimate a model that excludes the selectivity bias correction term.
+
+Model estimation results are presented in Table 12.3. The table shows
+that 103 of the 151 commuters chose the two-lane highway as their
+commute route. For both selectivity-corrected and uncorrected models,
+commuters who were men, had more passengers in their vehicle, wore
+
+TABLE 12.3
+
+Corrected and Uncorrected Regression Models of Average Commute Speed
+(t statistics in parentheses)
+
+Variable Description  Parameter  Uncorrected
+  Estimates with  Parameter
+  Estimates
+  Selectivity
+  Correction
+
+Constant  77.04 (5.25)  26.12 (5.03)
+Number of passengers in vehicle  4.31 (1.92)  5.07 (2.14)
+Seat belt indicator (1 if commuter wearing seat  3.72 (1.60)  4.29 (1.74)
+ belts, 0 if not)
+Gender indicator (1 if male, 0 if female)  3.52 (1.53)  3.19 (1.30)
+Driver age in years  0.23 (1.96)  0.12 (1.57)
+Annual household income (U.S. dollars)  –0.000175 (–2.01)  –0.00009 (–1.12)
+Single indicator (1 if commuter is not married,  4.18 (1.72)  6.03 (2.40)
+ 0 if married)
+Selectivity bias correction Ek  12.55 (3.60)  —
+Number of observations  103  103
+R2  0.22  0.11
+Corrected R2  0.16  0.05
+
+© 2003 by CRC Press LLC
+seat belts, were older, and were not married tended to have higher
+commute speeds, while those commuters with large annual incomes
+tended to drive at slower speeds.
+
+For the selectivity-corrected model, the selectivity bias parameter is signif-
+icantly different from zero. This is a strong indication that sample selec-
+tivity is playing a role because the null hypothesis of no selectivity bias is
+rejected with over 99% conﬁdence as indicated by the t statistic. The im-
+plication is that the model is seriously misspeciﬁed when the selectivity
+bias term is omitted. This is seen by inspecting the uncorrected parameter
+estimates. They show noticeable differences when compared with the pa-
+rameters in the selectivity-corrected model — particularly the constant
+parameter. These ﬁndings show that if selectivity bias is ignored, erroneous
+inferences and conclusions are drawn from the estimation results.
+
+12.4 Discrete/Continuous Model Structures
+
+In developing discrete/continuous equation systems, one can provide a
+construct to link the discrete and continuous components. The most obvious
+of these constructs is a reduced form approach. A common way to implement
+a reduced form is to start with the discrete model. Let Tin be a linear function
+that determines discrete outcome i for observation n and let yin be the cor-
+responding continuous variable in the discrete/continuous modeling sys-
+tem. Then write
+
+  Tin = Fi Xin + Ji yin + Iin  (12.12)
+
+where Fi is a vector of estimable parameters for discrete outcome i, Xin is a
+vector of the observable characteristics (covariates) that determines discrete
+
+outcomes for observation n, and Iin is a disturbance term, and Ji is an estimable
+parameter. Let the corresponding continuous equation be the linear function:
+
+  yin = Ui Win + Rin,  (12.13)
+
+where Ui is a vector of estimable parameters for the continuous variable
+observed for discrete outcome i, Win is a vector of the observable character-
+istics (covariates) that determine yin, and Rin is a disturbance term. Equation
+12.13 is estimated using ordinary least squares with appropriate selectivity
+
+bias correction (such as adding a selectivity bias correction term). For esti-
+
+mation of the discrete outcome portion of the discrete/continuous process,
+
+note that yin is endogenous in Equation 12.12 because yin changes with chang-
+ing Tin due to the interrelated discrete/continuous structure. To avoid esti-
+mation problems, a reduced form model is obtained by substituting Equation
+
+12.13 into Equation 12.12, giving
+
+© 2003 by CRC Press LLC
+  Tin = Fi Xin + JiUiWin + JiRin + Iin.  (12.14)
+
+  With Equation 12.14, a discrete outcome model is derived readily. For
+
+example, if the Iin are assumed to be generalized extreme value distributed,
+a multinomial logit model results with the probability of observation n
+
+having outcome i as (see Chapter 11)
+
+  Pni !  §EXP␤iXin  Ji␪iWin .  (12.15)
+
+  EXP␤I XIn  JI␪I WIn
+
+  I
+
+  Note that because the term JiRin does not vary across outcomes i, it
+cancels out and does not enter the logit model structure. Examples of
+applications of reduced form models are given in Hay (1980) and Man-
+nering (1986a).
+
+  Another common approach to link discrete/continuous model structures
+is based on utility theory and ensures economic consistency. If the discrete
+outcome model is based on utility maximization (see Chapter 11), one can
+derive a model structure by noting that indirect utility (used as the basis
+to arrive at outcome probabilities) is related to commodity demand by
+Roy’s identity, as discussed in Chapter 11),
+
+  x Vin  (12.16)
+  yin0 !  x pin x V , in
+
+  x Incn
+
+where Vin is the indirect utility of discrete alternative i to consumer n, pin is
+the consumer’s unit price of consuming i, Incn is the decision-maker’s
+income, and yin0 is the utility-maximizing demand for i. The discrete/con-
+tinuous link is made by either specifying the indirect utility function, Vin, or
+the commodity demand y.
+
+  As an example, consider consumers’ choice of vehicle make, model, and
+vintage, and the annual usage of the vehicle (kilometers driven per year).
+This is a classic discrete/continuous problem because consumers select a
+vehicle type, deﬁned by make (Ford), model (Mustang), and vintage (2001)
+with some expectation of how much it will be driven. Aggregate data support
+the relationship between vehicle type and usage. For example, it is well
+known that newer model vehicles are driven more, on average, than older
+vehicles. From a modeling perspective, consumers that own older vehicles
+are likely to be a self-selected group of people with lower levels of usage
+whereas those consumers owning newer vehicles may be people with higher
+levels of usage. Because older-vehicle owners are not observed driving newer
+vehicles and vice versa, a selectivity bias problem arises (see Mannering and
+
+© 2003 by CRC Press LLC
+Winston, 1985, and Mannering 1986a, b, for detailed work on discrete/
+continuous vehicle type and usage interactions).
+
+  To develop an economically consistent model structure, a vehicle utiliza-
+tion equation is speciﬁed as (alternatively an indirect utility function could
+be speciﬁed ﬁrst)
+
+yin = ␤iXin  ␣iZin + O(Incn  Trnpin) + Rin,  (12.17)
+
+where yin is the annual utilization (for example, kilometers per year) of
+vehicle i, Xin is a vector of consumer characteristics that determine vehicle
+utilization, Zin is a vector of vehicle characteristics that determine vehicle
+utilization, Incn is consumer n’s annual income, rn is the expected annual
+vehicle utilization for consumer n, pin is the consumer’s unit price of utili-
+zation (for example, dollars per kilometer driven), ␤i , ␣i , O, and T are
+estimable parameters, and Ri is a disturbance term. The expected utilization,
+rin, is needed to capture the income effect of consumption (Incn  Trnpin) but
+is determined exogenously by regressing it against exogenous variables and
+
+using predicted values in Equation 12.17 (see Mannering, 1986b, for a com-
+
+plete discussion of this).
+
+  With Equation 12.17, we can apply Roy’s identity as a partial differential
+
+equation (see Equation 12.16):
+
+  x Vin yin0   x Vin ! 0  (12.18)
+  x Incn  x pin
+
+and solve for Vin, giving
+
+  Vin ! ?␤iXin  ␣iZin  OIncn  Trnpin A  Rin eOpin + Iin, (12.19)
+
+where Iin is a disturbance term added for discrete outcome model estimation.
+If the Iin are assumed to be generalized extreme value distributed, a logit
+model for discrete outcomes results. In estimating Equation 12.17, corrections
+need to be applied to the vector of vehicle characteristics Zin such as instru-
+mental variables or expected value methods to account for the endogeneity
+of vehicle characteristics. The major drawback with the economically con-
+sistent approach is that a nonlinear form of either the indirect utility function
+or continuous equation results. For example, from the previous model, the
+linear utilization equation produced a nonlinear indirect utility function.
+This nonlinearity complicates estimation of the discrete outcome model. In
+choosing between a reduced form and the economically consistent
+approaches, many applications require a trade-off between ease of estimation
+and compromising theory.
+
+  For applications of discrete/continuous modeling to a variety of transpor-
+tation problems, the reader is referred to Damm and Lerman (1981),
+
+© 2003 by CRC Press LLC
+Mannering and Winston (1985), Train (1986), Hensher and Milthorpe (1987),
+Mannering and Hensher (1987), and Mannering et al. (1990).
+
+© 2003 by CRC Press LLC
+References
+
+Abbot, R. (1985). Logistic regression in survival analysis. American Journal of Epide-
+  miology 121, 465–471.
+
+Abraham, B. and T. Ledolter (1983). Statistical Methods for Forecasting. Wiley, New
+  York.
+
+Aczel, A.D. (1993). Complete Business Statistics. Erwin, Homewood, IL.
+Aigner, D., K. Lovell, and P. Schmidt (1977). Formulation and estimation of stochastic
+
+  frontier production models. Journal of Econometrics 6, 21–37.
+Akaike, H. (1987). Factor analysis and AIC. Psychometrika 52, 317–332.
+Amemiya, T. (1971). The estimation of the variances in a variance-components model.
+
+  International Economic Review 12, 1–13.
+Amemiya, T. (1985). Advanced Econometrics. Harvard University Press, Cambridge,
+
+  MA.
+Ansari, A.R. and R.A. Bradley (1960). Rank sum tests for dispersion. Annals of Math-
+
+  ematical Statistics 31, 1174–1189.
+Anselin, L. (1988). Spatial Econometrics: Methods and Models. Kluwer Academic Pub-
+
+  lishers, Boston, MA.
+Arbuckle, J.L. and W. Wothke (1995). AMOS Users’ Guide Version 4.0. SmallWaters
+
+  Corporation, Chicago, IL.
+Arbuthnott, I. (1910). An argument for Divine Providence taken from the constant
+
+  regularity observed in the births of both sexes. Philosophical Transactions 27,
+  186–190.
+Archilla, A.R. and S.M. Madanat (2000). Development of a pavement rutting model
+  from experimental data. ASCE Journal of Transportation Engineering 126, 291–299.
+Arellano, M. (1993). On the testing of correlated effects with panel data. Journal of
+  Econometrics 59, 87–97.
+Arminger, G., C. Clogg, and M. Sobel (1995). Handbook of Statistical Modeling for the
+  Social and Behavioral Sciences. Plenum Press, New York.
+Ash, C. (1993). The Probability Tutoring Book. IEEE Press, New York.
+Avery, R.B. (1977). Error components and seemingly unrelated regressions. Economet-
+  rica 45, 199–209.
+Ayyub, B. (1998). Uncertainty Modeling and Analysis in Civil Engineering. CRC Press,
+  Boca Raton, FL.
+Baltagi, B.H. (1985). Econometric Analysis of Panel Data. John Wiley & Sons, New York.
+Baltagi, B.H. (1998). Econometrics. Springer, New York.
+Baltagi, B.H. and J.M. Grifﬁn (1988). A generalized error component model with
+  heteroscedastic disturbances. International Economic Review 29, 745–753.
+Baltagi, B.H. and Q. Li (1991). A transformation that will circumvent the problem of
+  autocorrelation in an error component model. Journal of Econometrics 48,
+  385–393.
+
+© 2003 by CRC Press LLC
+Baltagi, B.H. and Q. Li (1992). A monotonic property for iterative GLS in the two-
+  way random effects model. Journal of Econometrics 53, 45–51.
+
+Bartels, R. (1982). The rank version of von Neumann’s ratio test for randomness.
+  Journal of the American Statistical Association 77, 40–46.
+
+Beach, C.M. and J.G. McKinnon (1978). A maximum likelihood procedure for regres-
+  sion with autocorrelated errors. Econometrics 46, 51–58.
+
+Ben-Akiva, M. and S.R. Lerman (1985). Discrete Choice Analysis. MIT Press, Cam-
+  bridge, MA.
+
+Bentler, P. (1990). Comparative ﬁt indexes in structural models. Psychological Bulletin
+  107, 238–246.
+
+Bentler, P. and D. Bonett (1980). Signiﬁcance tests and goodness of ﬁt in the analysis
+  of covariance structures. Psychological Bulletin 88, 588–606.
+
+Bentler, P. and D. Weeks (1980). Linear structural equations with latent variables.
+  Psychometrika 45, 289–307.
+
+Berkovec, J. (1985). New car sales and used car stocks: a model of the automobile
+  market. Rand Journal of Economics 16(2), 195–214.
+
+Bhat, C.R. (1996a). A hazard-based duration model of shopping activity with non-
+  parametric baseline speciﬁcation and non-parametric control for unobserved
+  heterogeneity. Transportation Research 30B, 189–207.
+
+Bhat, C.R. (1996b). A generalized multiple durations proportional hazard model with
+  an application to activity behavior during the evening work-to-home commute.
+  Transportation Research 30B, 465–480.
+
+Bhat, C.R. (2000). Accommodating variations in responsiveness to level-of-service
+  measures in travel mode choice modeling, Transportation Research 32A, 495–507.
+
+Birnbaum, Z.W. and R.A. Hall (1960). Small sample distributions for multi-sample
+  statistics of the Smirnov type, Annals of Mathematical Statistics 22, 592–596.
+
+Bishop, Ch.M. (1995). Neural Networks for Pattern Recognition. Oxford University Press,
+  New York.
+
+Bollen, K. (1986). Sample size and Bentler and Bonett’s nonnormed ﬁt index. Psy-
+  chometrika 51, 375–377.
+
+Bollen, K.A. and J.S. Long, Eds. (1993). Testing Structural Equation Models. Sage, New-
+  bury Park, CA.
+
+Bollen, K. and R. Stine (1992). Bootstrapping goodness-of-ﬁt measures in structural
+  equation models. Sociological Methods and Research 21, 205–229.
+
+Bollerslev, T. (1986). Generalized autoregressive conditional heteroscedasticity. Jour-
+  nal of Econometrics 31, 307–327.
+
+Box, G.E.P. and G.M. Jenkins (1976). Time Series Analysis: Forecasting and Control.
+  Holden–Day, San Francisco, CA.
+
+Bradley, J.V. (1968). Distribution-Free Statistical Tests. Prentice-Hall, Englewood Cliffs,
+  N.J.
+
+Breiman, L., J. Friedman, R. Olshen, and C. Stone (1984). Classiﬁcation and Regression
+  Trees. Wadsworth, Belmont, CA.
+
+Breusch, T.S. (1987). Maximum likelihood estimation of random effects models. Jour-
+  nal of Econometrics 36, 383–389.
+
+Breusch, T.S. and A.R. Pagan (1979). A simple test for heteroscedasticity and random
+  coefﬁcient variation. Econometrica 47, 1287–1294.
+
+Brockwell, P.J. and R.A. Davis (1991). Time Series: Theory and Methods, 2nd ed.
+  Springer-Verlag, New York.
+
+Brockwell, P.J. and R.A. Davis (1996). Introduction to Time Series and Forecasting. Springer-
+  Verlag, New York.
+
+© 2003 by CRC Press LLC
+Brown, G.W. and A.M. Mood (1951). On median tests for linear hypotheses. In Proc.
+  2nd Berkeley Symp. on Mathematical Statistics and Probability, J. Neyman, Ed.
+  University of California Press, Berkeley, 159–166.
+
+Browne, M. (1984). Asympotically distribution-free methods for the analysis of co-
+  variance structures. British Journal of Mathematics and Statistical Psychology 37,
+  62–83.
+
+Browne, M. and R. Cudeck (1989). Single sample cross-validation indices for covari-
+  ance structures. Multivariate Behavioral Research 24, 445–455.
+
+Browne, M. and R. Cudeck (1993). Alternative ways of assessing model ﬁt. In Testing
+  Structural Equation Models, K. Bollen and J. Long, Eds. Sage, Newbury Park,
+  CA, 136–162.
+
+Byrne, B. (1989). A Primer of LISREL: Basic Applications and Programming for Conﬁrma-
+  tory Factor Analytic Methods. Springer-Verlag, New York.
+
+Cameron, A. and P. Trevedi (1990). Regression based tests for overdispersion in the
+  Poisson model. Journal of Econometrics 46, 347–364.
+
+Cameron, C. and F. Windmeijer (1993). R-Squared Measures for Count Data Regres-
+  sion Models with Applications to Health Care Utilization. Working Paper
+  93–24, Department of Economics, University of California, Davis.
+
+Capon, J. (1961). Asymptotic efﬁciency of certain locally most powerful rank tests.
+  Annals of Mathematical Statistics 32, 88–100.
+
+Carlin, B. and T. Louis (1996). Bayes and Empirical Bayes Methods for Data Analysis.
+  Chapman & Hall/CRC, New York.
+
+Carmines, E. and J. McIver (1981). Analyzing models with unobserved variables. In
+  Social Measurement: Current Issues, G. Bohrnstedt and E. Borgatta, Eds. Sage,
+  Beverly Hills, CA.
+
+Carson, J. and F. Mannering (2001). The effects of ice warning signs on accident
+  frequencies and severities. Accident Analysis and Prevention 33, 99–109.
+
+Cattell, R. and C. Burdsal (1975). The radial parcel double factoring design: a solution
+  to the item-vs.-parcel controversy. Multivariate Behavioral Research 10, 165–179.
+
+Chamberlain, G. (1978). Omitted variable bias in panel data: estimating the returns
+  to schooling. Annales de l’INSEE 30(1), 49–82.
+
+Chamberlain, G. (1980). Analysis of covariance with qualitative data. Review of Eco-
+  nomic Studies 47, 225–238.
+
+Chang, L.-Y. and F. Mannering (1999). Analysis of injury severity and vehicle occu-
+  pancy in truck- and non-truck-involved accidents. Accident Analysis and Pre-
+  vention 31(5), 579–592.
+
+Chatﬁeld, C. (1992). A commentary on errors measures. International Journal of Fore-
+  casting 8, 100–102.
+
+Cheng, C. (1992). Optimal Sampling for Trafﬁc Volume Estimation. Ph.D. dissertation,
+  Carlson School of Management, University of Minnesota, Minneapolis.
+
+Chou, C., P. Bentler, and A. Satorra (1991). Scaled test statistics and robust standard
+  errors for non-normal data in covariance structure analysis: a Monte Carlo
+  study. British Journal of Mathematical and Statistical Psychology 44, 347–357.
+
+Chung, K.L. (1979). Probability Theory with Stochastic Processes. Springer-Verlag, New
+  York.
+
+Clemens, M.P. and D.F. Hendry (1993). On the limitations of the comparison mean
+  square forecast errors. Journal of Forecasting 12, 615–637.
+
+Cochran, W.G. (1950). The comparison of percentages in matched samples. Biometrika
+  37, 256–266.
+
+© 2003 by CRC Press LLC
+Cochrane, D. and G. Orcutt (1949). Application of least squares regression to rela-
+  tionships containing autocorrelated error terms. Journal of the American Statis-
+  tical Association 44, 32–61.
+
+Cohen, A.C. (1959). Simpliﬁed estimators for the normal distribution when samples
+  are singly censored or truncated. Technometrics 1, 217–237.
+
+Cohen, A.C. (1961). Tables for maximum likelihood estimates: singly truncated and
+  singly censored samples. Technometrics 3, 535–541.
+
+Conover, W.J. (1980). Practical Nonparametric Statistics, 2nd ed. John Wiley & Sons,
+  New York.
+
+Cosslett, S. (1981). Efﬁcient estimation of discrete-choice models. In Structural Analysis
+  of Discrete Data with Econometric Applications, C. Manski and D. McFadden, Eds.
+  MIT Press, Cambridge, MA.
+
+Cox, D. and D. Oakes (1984). Analysis of Survival Data. Chapman & Hall/CRC, Boca
+  Raton, FL.
+
+Cox, D.R. (1972). Regression models and life tables. Journal of the Royal Statistical
+  Society B34, 187–200.
+
+Cox, D.R. and D.V. Hinkley (1974). Theoretical Statistics. Chapman & Hall, London.
+Cox, D.R. and A. Stuart (1955). Some quick tests for trend in location and dispersion.
+
+  Biometrika 42, 80–95.
+Cryer, J.D. (1986). Time Series Analysis. Duxbury Press, Boston, MA.
+Daganzo, C. (1979). Multinomial Probit: The Theory and its Application to Demand Fore-
+
+  casting. Academic Press, New York.
+Damm, D. and S. Lerman (1981). A theory of activity scheduling behavior. Environ-
+
+  ment and Planning 13A, 703–718.
+Daniel, C. and F. Wood (1980). Fitting Equations to Data. Wiley, New York.
+Daniel, W. (1978). Applied Nonparametric Statistics. Houghton Mifﬂin, Boston, MA.
+Daniels, H.E. (1950). Rank correlation and population models. Journal of the Royal
+
+  Statistical Society B 12, 171–181.
+David, F.N. and D.E. Barton (1958). A test for birth-order effects. Annals of Human
+
+  Eugenics 22, 250–257.
+Dee, G.S. (1999). State alcohol policies, teen drinking, and trafﬁc fatalities. Journal of
+
+  Public Economics 72, 289–315.
+De Gooijer, J.G. and K. Kumar (1992). Some recent developments in non-linear time
+
+  series modeling, testing and forecasting. International Journal of Forecasting 8,
+  135–256.
+De Groot, C. and D. Wurtz (1991). Analysis of univariate time series with connec-
+  tionist nets: a cone study of two clonsical examples. Neurocomputing 3, 177–192.
+Deming, W. (1966). Some Theory of Sampling. Dover, New York.
+Derrig, R.A., M. Segui-Gomez, A. Abtahi, and L.L. Liu (2002). The effect of population
+  safety belt usage rates on motor vehicle-related fatalities. Accident Analysis and
+  Prevention 34(1), 101–110.
+de Veaux, R.D. (1990). Finding transformations for regression using the ACE algo-
+  rithm. In Modern Methods of Data Analysis, J. Fox and J.S. Long, Eds. Sage,
+  Newbury Park, CA, 177–208.
+Devore, J. and N. Farnum (1999). Applied Statistics for Engineers and Scientists. Duxbury
+  Press, New York.
+Dhrymes, P.J. (1986). Limited dependent variables. In Handbook of Econometrics, Z.
+  Griliches and M. Intriligator, Eds. North Holland Publishing Co., New York,
+  3, 1567–1631.
+
+© 2003 by CRC Press LLC
+Diamond, P. and J. Hausman (1984). The retirement and unemployment behavior of
+  older men. In Retirement and Economic Behavior, H. Aaron and G. Burtless, Eds.
+  Brookings Institute, Washington, D.C.
+
+Dougherty, M. (1995). A review of neural networks applied to transport. Transporta-
+  tion Research Part C 3(4), 247–260.
+
+Duran, B.J. (1976). A survey of nonparametric tests for scale, Communications in
+  Statistics, Part A: Theory and Methods 14, 1287–1312.
+
+Durbin, J. (1951). Incomplete blocks in ranking experiments, British Journal of Psy-
+  chology. (Stat. Sec.) 4, 85–90.
+
+Durbin, J. (1960). Estimation of parameters in time-series regression model. Journal
+  of the Royal Statistical Society Series B 22, 139–153.
+
+Durbin, J. (1970). Testing for serial correlation in least-squares regression when some
+  of the regressors are lagged dependent variables. Econometrics 38, 410–421.
+
+Durbin, J. (2000). The Foreman lecture: the state space approach to time series analysis
+  and its potential for ofﬁcial statistics. Australian and New Zealand Journal of
+  Statistics 42(1), 1–23.
+
+Durbin, J. and D. McFadden (1984). An econometric analysis of residential electric
+  appliance holdings and consumption. Econometrica 52, 345–362.
+
+Durbin, J. and G. Watson (1951). Testing for serial correlation in least squares regres-
+  sion–II. Biometrika 37, 159–178.
+
+Edgington, E.S. (1961). Probability table for number of runs of signs or ﬁrst differences
+  in ordered series. Journal of the American Statistical Association 56, 156–159.
+
+Efron, B. (1977). Efﬁciency of Cox’s likelihood function for censored data. Journal of
+  the American Statistical Association 72, 557–565.
+
+Efron, B. and R. Tibshirani (1986). Bootstrap methods for standard errors, conﬁdence
+  intervals and other measures of statistical accuracy. Statistical Science 1, 54–74.
+
+Emerson, J. and M. Stoto (1983). Transforming data. In Understanding Robust and
+  Exploratory Data Analysis, D.C. Hoaglin, F. Mosteller, and J. Tukey, Eds. Wiley.
+  New York, 97–127.
+
+Engle, R.F. (1982). Autoregressive conditional heteroscedasticity with estimates of
+  variance of UK inﬂation. Econometrica 50, 987–1008.
+
+Engle, R.F. and C.W. Granger (1987). Cointegration and error correction: representa-
+  tion, estimation and testing. Econometrica 55, 251–276.
+
+Eskelanda, G.S. and T.N. Feyziolub (1997). Is demand for polluting goods manage-
+  able? An econometric study of car ownership and use in Mexico. Journal of
+  Development Economics 53, 423–445.
+
+Ettema, D.F. and H. Timmermans (1997). Activity-Based Approaches to Travel Analysis.
+  Pergamon/Elsevier, Amsterdam.
+
+Eubank, R.L. (1988). Spline Smoothing and Nonparametric Regression. Marcel Dekker,
+  New York.
+
+FHWA (1997). Status of the Nation’s Surface Transportation System: Condition and
+  Performance. Federal Highway Administration, Washington, D.C.
+
+Fildes, R. (1984). Bayesian forecasting. In Forecasting Accuracy of Major Time Series,
+  S. Makridakis et al., Eds. Wiley, Chichester, U.K.
+
+Finch, J., P. Curran, and S. West (1994). The Effects of Model and Data Characteristics
+  on the Accuracy of Parameter Estimates and Standard Errors in Conﬁrmatory
+  Factor Analysis. Unpublished manuscript.
+
+Fleming, T. and D. Harrington (1991). Counting Processes and Survival Analysis. John
+  Wiley & Sons, New York.
+
+© 2003 by CRC Press LLC
+Fomby, T.B., R.C. Hill,, and S.R. Johnson (1984). Advanced Econometrics Methods.
+  Springer-Verlag, New York.
+
+Fomunung, I., S. Washington, R. Guensler, and W. Bachman (2000). Validation of the
+  MEASURE automobile emissions model: a statistical analysis. Journal of Trans-
+  portation Statistics 3(2), 65–84.
+
+Freund, J.E. and A.R. Ansari (1957). Two-Way Rank Sum Tests for Variance. Technical
+  Report to Ofﬁce of Ordnance Research and National Science Foundation 34.
+  Virginia Polytechnic Institute, Blacksburg, VA.
+
+Freund, R. and W. Wilson (1997). Statistical Methods. Academic Press, New York.
+Friedman, M. (1937). The use of ranks to avoid the assumption of normality implicit
+
+  in the analysis of variance. Journal of the American Statistical Association 32,
+  675–701.
+Garber, N.G. (1991). Impacts of Differential Speed Limits on Highway Speeds and
+  Accidents. AAA Foundation for Trafﬁc Safety, Washington, D.C..
+Gastwirth, J.L. (1965). Percentile modiﬁcations of two-sample rank tests. Journal of
+  the American Statistical Association 60, 1127–1141.
+Geary, R.C. (1966). A note on residual covariance and estimation efﬁciency in regres-
+  sion. American Statistician 20, 30–31.
+Gelman, A., J. Carlin, H. Stern, and D.B. Rubin (1995). Bayesian Data Analysis. Chap-
+  man & Hall, New York.
+Gibbons, J.D. (1985a). Nonparametric Methods for Quantitative Analysis, 2nd ed. Amer-
+  ican Sciences Press, Syracuse, NY.
+Gibbons, J.D. (1985b). Nonparametric Statistical Inference, 2nd ed. Marcel Dekker, New
+  York.
+Gibbons, J.D. and J.L. Gastwirth (1970). Properties of the percentile modiﬁed rank
+  tests. Annals of the Institute of Statistical Mathematics, Suppl. 6, 95–114.
+Gilbert, C. (1992). A duration model of automobile ownership. Transportation Research
+  26B, 97–114.
+Glasser, G.J. and R.F. Winter (1961). Critical values of the rank correlation coefﬁcient
+  for testing the hypothesis of independence. Biometrika 48, 444–448.
+Glenberg, A. (1996). Learning from Data: An Introduction to Statistical Reasoning, 2nd
+  ed. Lawrence Erlbaum Associates, Mahwah, NJ.
+Godfrey, L.G. (1988). Misspeciﬁcation Tests in Econometrics: The Lagrange Multiplier
+  Principle and Other Approaches. Cambridge University Press, New York.
+Goldfeld, S.M. and R.E. Quandt (1965). Some tests for homoscedasticity. Journal of
+  the American Statistical Association 60, 539–547.
+Goldfeld, S.M. and R.E. Quandt (1972). Nonlinear Methods in Econometrics. North-
+  Holland, Amsterdam.
+Gourieroux, C., A. Monfort, and A. Trogon (1984). Pseudo maximum likelihood
+  methods: theory. Econometrica 52, 681–700.
+Granger, C.W.J. (1969). Investigating causal relations by econometric models and
+  cross-spectral methods, Econometrica 37, 424–438.
+Granger, C.W. and P. Engle (1984). Dynamic model speciﬁcation with equilibrium
+  constraints: co-integration and error correction. Draft manuscript.
+Green, D. and P. Hu (1984). The inﬂuence of the price of gasoline on vehicle use in
+  multivehicle households. Transportation Research Record 988, 19–23.
+Green, M. and M. Symons (1983). A comparison of the logistic risk function and the
+  proportional hazards model in prospective epidemiologic studies. Journal of
+  Chronic Diseases 36, 715–724.
+Greene, W. (1990a). Econometric Analysis. Macmillan, New York.
+
+© 2003 by CRC Press LLC
+Greene, W. (1990b). A gamma distributed stochastic frontier model. Journal of Econo-
+  metrics 46, 141–163.
+
+Greene, W. (1992). LIMDEP Version 6.0. Econometric Software, Inc., Bellport, NY.
+Greene, W. (1995a). LIMDEP Version 7.0. Econometric Software, Inc., Plainview, NY.
+Greene, W. (1995b). Count Data. Manuscript, Department of Economics, Stern School
+
+  of Business, New York University, New York.
+Greene, W.H. (2000). Econometric Analysis, 4th ed. Prentice-Hall, Upper Saddle River,
+
+  NJ.
+Grifﬁths, W.E., R.C Hill, and G.G. Judge (1993). Learning and Practicing Econometrics.
+
+  John Wiley & Sons, New York.
+Gujarati, D. (1992). Essentials of Econometrics. McGraw-Hill, New York
+Gullikson, H. and J. Tukey (1958). Reliability for the law of comparative judgment.
+
+  Psychometrika 23, 95–110.
+Gumbel, E. (1958). Statistics of Extremes. Columbia University Press, New York.
+Gurmu, S. and P. Trivedi (1994). Recent Developments in Models of Event Counts:
+
+  A Survey. Manuscript, Department of Economics, University of Virginia, Char-
+  lottesville.
+Haldar, A. and S. Mahadevan (2000). Probability, Reliability, and Statistical Methods in
+  Engineering Design. John Wiley & Sons, New York.
+Hamed, M. and F. Mannering (1990). A note on commuters’ activity duration and
+  the efﬁciency of proportional hazards models. Unpublished manuscript. Uni-
+  versity of Washington, Seattle.
+Hamed, M. and F. Mannering (1993). Modeling travelers’ postwork activity involve-
+  ment: toward a new methodology. Transportation Science 17, 381–394.
+Han, A. and J. Hausman (1990). Flexible parametric estimation of duration and
+  competing risk models. Journal of Applied Econometrics 5, 1–28.
+Harley, H.O. and J.N.K. Rao (1967). Maximum likelihood estimation for the mixed
+  analysis of variance model. Biometrika 54, 93–108.
+Harvey, A.C. (1976). Estimating regression models with multiplicative heteroscedas-
+  ticity. Econometrica 44, 461–465.
+Harwood, D.W., F.M. Council, E. Hauer, W.E. Hughes, and A. Vogt (2000). Prediction
+  of the Expected Safety Performance of Rural Two-Lane Highways. Federal
+  Highway Administration Report, FHWA-RD-99–207, Washington, D.C.
+Hauer, E. (1997). Observational Before-After Studies in Road Safety. Pergamon, Tarry-
+  town, NY.
+Hauer, E. and J. Bamfo (1997). Two tools for ﬁnding what function links the dependent
+  variable to the explanatory variables. In Proceedings of the ICTCT 1997 Confer-
+  ence. Lund, Sweden.
+Hausman, J., B. Hall, and Z. Griliches (1984). Economic models for count data with
+  an application to the patents–R&D relationship. Econometrica 52, 909–938.
+Hausman, J.A. (1978). Speciﬁcation tests in econometrics. Econometrica 46, 1251–1271.
+Hausman, J.A. and W.E. Taylor (1981). Panel data and unobservable individual ef-
+  fects. Econometrica 49, 1377–1398.
+Hay, J. (1980). Occupational Choice and Occupational Earnings. Ph.D. dissertation.
+  Yale University, New Haven, CT.
+Heckman, J. (1976). The common structure of statistical models for truncation, sample
+  selection, and limited dependent variables and a simple estimator for such
+  models. Annals of Economic and Social Measurement 5, 475–492.
+Heckman, J. (1978). Dummy endogenous variables in a simultaneous equation sys-
+  tem. Econometrica 46, 931–960.
+
+© 2003 by CRC Press LLC
+Heckman, J. (1979). Sample selection bias as a speciﬁcation error. Econometrica, 47,
+  153–162.
+
+Heckman, J. (1981). Statistical models for discrete panel data. In Structural Analysis
+  of Discrete Data with Econometric Applications, C. Manski and D. McFadden, Eds.
+  MIT Press, Cambridge, MA.
+
+Heckman, J. and G. Borjas (1980). Does unemployment cause future unemployment?
+  Deﬁnitions, questions and answers from a continuous time model of hetero-
+  geneity and state dependence. Econometrica 47, 247–283.
+
+Heckman, J. and T.E. McCurdy (1980). A life-cycle model of female labor supply.
+  Review of Economic Studies 47, 47–74.
+
+Heckman, J. and B. Singer (1984). A method for minimizing the impact of distribu-
+  tional assumptions in econometric models for duration data. Econometrica 52,
+  271–320.
+
+Hensher, D.A. (2001). The sensitivity of the valuation of travel time savings to the
+  speciﬁcation of unobserved effects. Transportation Research Part E: Logistics and
+  Transportation Review 37E, 129–142.
+
+Hensher, D. and F. Mannering (1994). Hazard-based duration models and their ap-
+  plication to transport analysis. Transport Reviews 14, 63–82.
+
+Hensher, D. and F. Milthorpe (1987). Selectivity correction in discrete-continuous
+  choice analysis: with empirical evidence for vehicle choice and use. Regional
+  Science and Urban Economics 17, 123–150.
+
+Hildreth, C. and J. Lu (1960). Demand relations with autocorrelated disturbances.
+  Technical Bulletin 276. Michigan State University, Agriculture Experiment Sta-
+  tion.
+
+Hochberg, Y. and A.C. Tamhane (1987). Multiple Comparison Procedures. Wiley, New
+  York.
+
+Hoeffding, W. (1951). Optimum nonparametric tests. In Proceedings of the 2nd Berkeley
+  Symposium on Mathematical Statistics and Probability, J. Neuman, Ed. University
+  of California Press, Berkeley, CA, 83–92.
+
+Hogg, R.V. and A.T. Craig (1992). Introduction to Mathematical Statistics. Prentice-Hall,
+  Englewood Cliffs, NJ.
+
+Hollander, M. (1970). A distribution-free test for parallelism. Journal of the American
+  Statistical Association 65, 387–394.
+
+Hollander, M. and D.A. Wolfe (1973). Nonparametric Statistical Methods. John Wiley
+  & Sons, New York.
+
+Honore, B.E. (1992). Trimmed LAD and least squares estimation of truncated and
+  censored regression models with ﬁxed effects. Econometrica 60, 533–565.
+
+Hornik, K., M. Stinchkombe, and H. White (1989). Multilayer feedforward networks
+  are universal approximators. Neural Networks 2, 359–366.
+
+Hoyle, R.H., Ed. (1995). Structural Equation Modeling: Concepts, Issues, and Applications.
+  SAGE, Thousand Oaks, CA.
+
+Hsiao, C. (1975). Some estimation methods for a random coefﬁcients model. Econo-
+  metrica 43, 305–325.
+
+Hsiao, C. (1986). Analysis of Panel Data. Cambridge University Press, Cambridge, UK.
+Hu, L., P. Bentler, and Y. Kano (1992). Can test statistics in covariance structure
+
+  analysis be trusted? Psychological Bulletin 112, 351–362.
+Hui, W. (1990). Proportional hazard Weibull mixtures. Working paper, Department
+
+  of Economics, Australian National University, Canberra.
+
+© 2003 by CRC Press LLC
+Iman, R.L., D. Quade, and D.A. Alexander (1975). Exact probability levels for the
+  Kruskal-Wallis test. In Selected Tables in Mathematical Statistics, Vol. 3. Institute
+  of Mathematical Statistics, American Mathematical Society, Providence, RI,
+  329–384.
+
+Ingram, D. and J. Kleinman (1989). Empirical comparisons of proportional hazards
+  and logistic regression models. Statistics in Medicine 8, 525–538.
+
+Johansson, P. (1996). Speed limitation and motorway casualties: a time series count
+  data regression approach. Accident Analysis and Prevention 28, 73–87.
+
+Johnson, N. and S. Kotz. (1970). Distributions in Statistics: Continuous Univariate Dis-
+  tributions, Vol. 1. John Wiley & Sons, New York.
+
+Johnson, R.A. (1994). Miller & Freund’s Probability and Statistics for Engineers, 5th ed.
+  Prentice-Hall, Englewood Cliffs, NJ.
+
+Johnson, R. and D. Wichern (1992). Multivariate Statistical Analysis, 3rd ed. Prentice-
+  Hall, Englewood Cliffs, NJ.
+
+Joreskog, K. (1969). A general approach to conﬁrmatory maximum likelihood factor
+  analysis. Psychometrika 34, 183–202.
+
+Jorgenson, D.L. (1997). The Development of a Speed Monitoring Program for Indiana.
+  Master’s thesis, School of Civil Engineering, Purdue University, West Lafayette,
+  IN.
+
+Kaarsemaker, L. and A. van Wijngaarden (1953). Tables for use in rank correlation.
+  Statistica Neerlandica 7, 41–54.
+
+Kalbﬂeisch, J. and R. Prentice (1980). The Statistical Analysis of Failure Time Data. John
+  Wiley & Sons, New York.
+
+Kamat, A.R. (1956). A two-sample distribution-free test. Biometrika 43, 377–387.
+Kang, S. (1985). A note on the equivalence of speciﬁcation tests in the two-factor
+
+  multivariate variance components model. Journal of Econometrics, 28, 193–203.
+Kaplan, E. and P. Meier (1958). Nonparametric estimation from incomplete observa-
+
+  tions. Journal of the American Statistical Association 53, 457–481.
+Karlaftis, M., J. Golias, and S. Papadimitriou (2002). Transit quality as an integrated
+
+  trafﬁc management strategy: measuring perceived service quality. Journal of
+  Public Transportation 4(1), 13–26.
+Karlaftis, M.G. and P.S. McCarthy (1998). Operating subsidies and performance: an
+  empirical study. Transportation Research 32A, 389–375.
+Karlaftis, M.G. and K.C. Sinha (1997). Modeling approach for rolling stock deterior-
+  ization prediction. ASCE Journal of Transportation Engineering, 12(3), 227–228.
+Karlaftis, M.G. and A.P. Tarko (1998). Heterogeneity considerations in accident mod-
+  eling. Accident Analysis and Prevention 30, 425–433.
+Karlaftis, M.G., P.S. McCarthy, and K.C. Sinha (1999). System size and cost structure
+  of transit industry, ASCE Journal of Transportation Engineering 125(3), 208–215.
+Katz, L. (1986). Layoffs, recall and the duration of unemployment. Working paper
+  1825, National Bureau of Economic Research, Cambridge, MA.
+Keane, M. (1994). A computationally practical simulation estimator for panel data.
+  Econometrica 62, 95–116.
+Keller, G. and B. Warrack (1997). Statistics for Management and Economics, 4th ed.
+  Duxbury Press, Belmont, CA.
+Kendall, M.G. (1962). Rank Correlation Methods, 3rd ed. Hafner, New York.
+Kennedy, P. (1998). A Guide to Econometrics. MIT Press, Cambridge, MA.
+Kharoufeh, J.P. and K. Goulias (2002). Non-parametric identiﬁcation of daily activity
+  durations using kernel density estimators. Transportation Research 36B, 59–82.
+
+© 2003 by CRC Press LLC
+Kiefer, N. (1988). Economic duration data and hazard functions. Journal of Economic
+  Literature 26, 646–679.
+
+Kim, P.J. and R.J. Jennrich (1973). Tables of the exact sampling distribution of the
+  two-sample Kolmogorov-Smirnov criterion Dmn (m = n). In Selected Tables in
+  Mathematical Statistics, Vol. 1. Institute of Mathematical Statistics, American
+  Mathematics Society, Providence, RI, 79–170.
+
+Kim, S.G. and F. Mannering (1997). Panel data and activity duration models: econo-
+  metric alternatives and applications. In Panels for Transportation Planning: Meth-
+  ods and Applications, T. Golob, R. Kitamura, and L. Long, Eds. Kluwer, Norwell,
+  MA, 349–373.
+
+King, G., R. Keohane, and S. Verba (1994). Designing Social Inquiry. Princeton Univer-
+  sity Press, Princeton, NJ.
+
+Kitagawa, G. and W. Gerch (1984). A smoothness priors modeling of time series with
+  trend and seasonality. Journal of the American Statistical Association 79, 378–389.
+
+Kitagawa, G. and W. Gerch (1996). Smoothness Priors Analysis of Time Series. Springer-
+  Verlag, New York.
+
+Kline, R. (1998). Principles and Practice of Structural Equation Modeling. Guilford Press,
+  New York.
+
+Klotz, J.H. (1962). Nonparametric tests for scale. Annals of Mathematical Statistics 33,
+  495–512.
+
+Kmenta, J. (1971). Elements of Econometrics. Macmillan Press, New York.
+Koppelman, F. (1975). Travel Prediction with Models of Individualistic Choice Be-
+
+  havior. Ph.D. dissertation, Department of Civil Engineering, MIT, Cambridge,
+  MA.
+Kottegoda, N. and R. Rosso (1997). Probability, Statistics, and Reliability for Civil and
+  Environmental Engineers. McGraw-Hill, New York.
+Kruskal, W.H. and W.A. Wallis (1953). Use of ranks in the one-criterion analysis of
+  variance. Journal of the American Statistical Association 47, 583–621, 1952; errata,
+  48, 905–911.
+Lambert, D. (1992). Zero-inﬂated Poisson regression, with an application to defects
+  in manufacturing. Technometrics 34, 1–14.
+Lancaster, T. (1968). Grouping estimators on heteroscedastic data. Journal of the Amer-
+  ican Statistical Association 63, 182–191.
+Larson, R. and M. Marx (1986). An Introduction to Mathematical Statistics and Its
+  Applications, 2nd ed. Prentice-Hall, Englewood Cliffs, NJ.
+Laubscher, N.F. and R.E. Odeh (1976). A conﬁdence interval for the scale parameter
+  based on Sukhatme’s two-sample statistic. Communications in Statistics — Theory
+  and Methods 14, 1393–1407.
+Laubscher, N.F., R.E. Odeh, F.E. Steffens, and E.M. deLange (1968). Exact critical
+  values for Mood’s distribution-free test statistic for dispersion and its normal
+  approximation. Technometrics 10, 497–508.
+Lee, E. (1992). Statistical Methods for Survival Data Analysis, 2nd ed. John Wiley &
+  Sons, New York.
+Lee, J. and F. Mannering (2002). Impact of roadside features on the frequency and
+  severity of run-off-roadway accidents: an empirical analysis. Accident Analysis
+  and Prevention 34, 149–161.
+Lehmann, E.L. (1975). Nonparametrics: Statistical Methods Based on Ranks. Holden Day,
+  San Francisco, CA.
+
+© 2003 by CRC Press LLC
+Lempers, F.B. and T. Kloek (1973). On a simple transformation for second-order
+  autocorrelated disturbances in regression analysis. Statistica Neerlandica, 27,
+  69–75.
+
+Levy, P. and S. Lemeshow (1999). Sampling of Populations, Methods and Applications,
+  3rd ed. John Wiley & Sons, New York.
+
+Lillard, L.A. and R.J. Willis (1978). Dynamic aspects of earning mobility. Econometrica
+  46, 985–1012.
+
+Ljung, G.M and G.E.P. Box (1978). On a measure of lack of ﬁt in time series models.
+  Biometrika 65, 297–303.
+
+Loizides, J. and Tsionas, E.G., (2002). Productivity growth in European railways: a
+  new approach. Transportation Research 36, 633–644.
+
+MacCallum, R. (1990). The need for alternative measures of ﬁt in covariance structure
+  modeling. Multivariate Behavioral Research 25, 157–162.
+
+Madanat, S.M., M.G. Karlaftis, and P.S. McCarthy (1997). Probabilistic infrastructure
+  deterioration models with panel data. ASCE Journal of Infrastructure Systems
+  3(1), 4–9.
+
+Maddala, G.S. (1983). Limited Dependent and Qualitative Variables in Econometrics. Cam-
+  bridge University Press, Cambridge, U.K.
+
+Maddala, G.S. (1988). Introduction to Econometrics. Macmillan, New York.
+Maghsoodloo, S. (1975). Estimates of the quantiles of Kendall’s partial rank correla-
+
+  tion coefﬁcient and additional quantile estimates. Journal of Statistical Computing
+  and Simulation 4, 155–164.
+Maghsoodloo, S. and L.L. Pallos (1981). Asymptotic behavior of Kendall’s partial
+  rank correlation coefﬁcient and additional quantile estimates. Journal of Statis-
+  tical Computing and Simulation 13, 41–48.
+Magnus, J.R. (1982). Multivariate error components analysis of linear and nonlinear
+  regression models by maximum likelihood. Journal of Econometrics 19, 239–285.
+Makridakis, S., S.C. Wheelwright, and V.E. McGee (1989). Forecasting: Methods and
+  Applications, 3rd ed. Wiley, New York.
+Manly, B. (1986). Multivariate Statistical Methods, A Primer. Chapman & Hall, New
+  York.
+Mann, H.B. (1945). Nonparametric tests against trend. Econometrica 13, 245–259.
+Mann, H.B. and D.R. Whitney (1947). On a test whether one of two random variables
+  is stochastically larger than the other. Annals of Mathematical Statistics 18, 50–60.
+Mannering, F. (1983). An econometric analysis of vehicle use in multivehicle house-
+  holds. Transportation Research 17A, 183–189.
+Mannering, F. (1993). Male/female driver characteristics and accident risk: some new
+  evidence. Accident Analysis and Prevention 25, 77–84.
+Mannering, F. and M. Hamed (1990a). Occurrence, frequency, and duration of com-
+  muters’ work-to-home departure delay. Transportation Research 24B, 99–109.
+
+© 2003 by CRC Press LLC
+Mannering, F. and M. Hamed (1990b). Commuter welfare approach to high occupan-
+  cy vehicle lane evaluation: an exploratory analysis. Transportation Research 24A,
+  371–379.
+
+Mannering, F. and I. Harrington (1981). Use of density function and Monte Carlo
+  simulation techniques in the evaluation of policy impacts on travel demand.
+  Transportation Research Record 801, 8–15.
+
+Mannering, F. and D. Hensher (1987). Discrete/continuous econometric models and
+  their application to transport analysis. Transport Reviews 7(3), 227–244.
+
+Mannering, F. and C. Winston (1985). Dynamic empirical analysis of household
+  vehicle ownership and utilization. Rand Journal of Economics 16(2), 215–236.
+
+Mannering, F. and C. Winston (1987). U.S. automobile market demand. In Blind
+  Intersection: Policy and the Automobile Industry. Brookings Institution, Washing-
+  ton, D.C., 36–60.
+
+Mannering, F., S. Abu-Eisheh, and A. Arnadottir (1990). Dynamic trafﬁc equilibrium
+  with discrete/continuous econometric models. Transportation Science 24,
+  105–116.
+
+Manski, C. and S. Lerman (1977). The estimation of choice probabilities from choice-
+  based samples. Econometrica 45, 1977–1988.
+
+Manski, C. and D. McFadden (1981). Alternative estimators and sample designs for
+  discrete choice analysis. In Structural Analysis of Discrete Data with Econometric
+  Applications, C. Manski and D. McFadden, Eds. MIT Press, Cambridge, MA.
+
+Marsh, H. and D. Hocevar (1985). Application of conﬁrmatory factor analysis to the
+  study of self-concept: ﬁrst- and higher-order factor models and their invariance
+  across groups. Psychological Bulletin 97, 562–582.
+
+Mathsoft (1999). S-Plus 2000 Statistical Software. Mathsoft, Inc., Bellevue, WA.
+McCarthy, P.S. (2001). Transportation Economics Theory and Practice: A Case Study Ap-
+
+  proach. Blackwell, Boston, MA.
+McFadden, D. (1978). Modeling the choice of residential location. In Spatial Interaction
+
+  Theory and Residential Location. A. Karlqvist, L. Lundqvist, F. Snickars, and J.
+  Weibuill, Eds. North Holland, Amsterdam.
+McFadden, D. (1981). Econometric models of probabilistic choice. In Structural Anal-
+  ysis of Discrete Data with Econometric Applications. C. Manski and D. McFadden,
+  Eds. MIT Press, Cambridge, MA.
+McFadden, D. (1989). A method of simulated moments for estimation of discrete
+  response models without numerical integration. Econometrica 57, 995–1026.
+McFadden, D. and K. Train (2000). Mixed MNL models for discrete response. Journal
+  of Applied Econometrics 15, 447–470.
+McKelvey, R. and W. Zavoina (1975). A statistical model for the analysis of ordinal
+  level dependent variables. Journal of Mathematical Sociology 4, 103–120.
+McNemar, Q. (1962). Psychological Statistics. Wiley, New York.
+Mehta, C. and N. Patel (1983). A network algorithm for performing Fisher’s exact
+  test in r v c contingency tables. Journal of the American Statistical Association 78,
+  427–434.
+Meyer, B. (1990). Unemployment insurance and unemployment spells. Econometrica
+  58, 757–782.
+
+© 2003 by CRC Press LLC
+Miaou, S.P. (1994). The relationship between truck accidents and geometric design
+  of road sections: Poisson versus negative binomial regressions. Accident Anal-
+  ysis and Prevention 26, 471–482.
+
+Miaou, S.P. and H. Lum (1993). Modeling vehicle accidents and highway geometric
+  design relationships. Accident Analysis and Prevention 25, 689–709.
+
+Miller, R.G. (1981). Simultaneous Statistical Inference, 2nd ed. Springer, New York.
+Milton, J. and F. Mannering (1998). The relationship among highway geometrics,
+
+  trafﬁc-related elements and motor vehicle accident frequencies, Transportation
+  25, 395–413.
+Molenaar, K., S. Washington, and J. Diekmann (2000). A structural equation model
+  of contract dispute potential. ASCE Journal of Construction Engineering and Man-
+  agement 124(4), 268–277.
+Montgomery, D. (1991). Design and Analysis of Experiments, 3rd ed. John Wiley & Sons.
+  New York.
+Mood, A.M. (1954). On the asymptotic efﬁciency of certain nonparametric two-sam-
+  ple tests. Annals of Mathematical Statistics 25, 514–522.
+Moran, P.A. P. (1951). Partial and multiple rank correlation. Biometrika 38, 26–32.
+Moses, L.E. (1963). Rank tests for dispersion. Annals of Mathematical Statistics 34,
+  973–983.
+Moulton, B.R. (1986). Random group effects and the precision of regression estimates.
+  Journal of Econometrics 32, 385–397.
+Mulaik, S., L. James, J. Van Alstine, N. Bennett, S. Lind, and C. Stilwell (1989).
+  Evaluation of goodness of ﬁt indices for structural equation models. Psycholog-
+  ical Bulletin 105, 430–445.
+Mullahey, J. (1986). Speciﬁcation and testing of some modiﬁed count data models.
+  Journal of Econometrics 33, 341–365.
+Mundlak, Y. (1978). On the pooling of time series and cross-section data. Econometrica
+  46, 69–85.
+Muthen, B. (1978). Response to Freedman’s critique of path analysis: improve cred-
+  ibility by better methodological training. Journal of Educational Statistics 12,
+  178–184.
+Muthen, B. (1984). A general structural equation model with dichotomous, ordered
+  Categorical, and continuous latent variable indicators. Psychometrika 49,
+  115–132.
+Myers, R.H. (1990). Classical and Modern Regression with Applications, 2nd ed. Duxbury
+  Press, Belmont, CA.
+Nam, D. and F. Mannering (2000). Hazard-based analysis of highway incident dura-
+  tion. Transportation Research 34A, 85–102.
+National Technical University of Athens, Department of Transportation Planning and
+  Engineering (1996). http://www/transport.ntua.gr/map.
+Nerlove, M. (1971a). Further evidence on the estimation of dynamic economic rela-
+  tions from a time-series of cross-sections. Econometrica 39, 359–382.
+Nerlove, M. (1971b). A note on error components models. Econometrica 39, 383–396.
+Neter, J., M. Kutner, C. Nachtsheim, and W. Wasserman (1996). Applied Linear Statis-
+  tical Models, 4th ed. Irwin, Boston, MA.
+Nicholls, D.F. and B.G. Quinn (1982). Random coefﬁcient autoregressive models: an
+  introduction. Lecture Notes in Statistics, Vol. 11, Springer, New York.
+Nicholson, W. (1978). Microeconomic Theory. Dryden Press, Hinsdale, IL.
+Niemeier, D. (1997). Accessibility: an evaluation using consumer welfare. Transporta-
+  tion 24(4), 377–396.
+
+© 2003 by CRC Press LLC
+Noether, G.E. (1972). Distribution-free conﬁdence intervals. American Statistician 26,
+  39–41.
+
+Noland, R and M.G. Karlaftis (2002). Seat-belt usage and motor vehicle fatalities: are
+  the results methodology-sensitive? Working paper, Imperial College, London,
+  U.K.
+
+Oaks, D. (1977). The asymptotic information in censored survival data. Biometrika 64,
+  441–448.
+
+Okutani, I. and Y.J. Stephanedes (1984). Dynamic prediction of trafﬁc volume through
+  Kalman ﬁltering theory. Transportation Research 18B, 1–11.
+
+Olmstead, P.S. (1946). Distribution of sample arrangements for runs up and down.
+  Annals of Mathematical Statistics 17, 24–33.
+
+Park, R.E. (1966). Estimation with heteroscedastic error terms. Econometrica 34, 888.
+Pedhazur, E. and L. Pedhazur Schmelkin (1991). Measurement, Design, and Analysis:
+
+  An Integrated Approach. Lawrence Erlbaum Associates, Hillsdale, NJ.
+Peeta, S. and I. Anastassopoulos (2002). Automatic real-time detection and correction
+
+  of erroneous detector data with Fourier transforms for on-line trafﬁc control
+  architectures. Transportation Research Record 1811, 1–16.
+Peterson, A. (1976). Bounds for a joint distribution function with ﬁxed sub-distribu-
+  tion functions: applications to competing risks. Proceedings of the National Acad-
+  emy of Sciences U.S.A. 73, 11–13.
+Phlips, L. (1974). Applied Consumption Analysis. North-Holland, Amsterdam.
+Pindyck, R. and D. Rubinfeld (1990). Econometric Models and Economic Forecasts.
+  McGraw-Hill, New York.
+Pindyck, R.S. and D.L. Rubinfeld (1991). Econometric Models & Economic Forecasts, 3rd
+  ed. McGraw-Hill, New York.
+Poch, M. and F. Mannering (1996). Negative binomial analysis of intersection accident
+  frequencies. Journal of Transportation Engineering 122, 391–401.
+Pratt, J. W. and J. D. Gibbons (1981). Concepts of Nonparametric Theory. Springer, New
+  York.
+Rao, C.R. (1972). Estimation variance and covariance components in linear models.
+  Journal of the American Statistical Association 67, 112–115.
+Rao, C.R. (1973). Linear Statistical Inference and Its Applications, 2nd ed. John Wiley &
+  Sons, New York.
+Rhyne, A.L. and R.G.D. Steel (1965). Tables for a treatment versus control multiple
+  comparisons sign test. Technometrics 7, 293–306.
+Rigdon, E., R. Schumacker, and W. Wothke (1998). A comparative review of interac-
+  tion and nonlinear modeling. In Interaction and Nonlinear Effects in Structural
+  Equation Modeling, R. Schumacker and G. Marcoulides, Eds. Lawrence Erlbaum
+  Associates, Mahwah, NJ.
+Rosenbaum, S. (1953). Tables for a nonparametric test of dispersion. Annals of Math-
+  ematical Statistics 24, 663–668.
+Rosenkrantz, W. (1997). Introduction to Probability and Statistics for Scientists and Engi-
+  neers. McGraw-Hill, New York.
+Ross, S. M. (1988). A First Course in Probability, 3rd ed. Macmillan, New York.
+Satorra, A. (1990). Robustness issues in structural equation modeling: a review of
+  recent developments. Quality and Quantity 24, 367–386.
+Schumacker, R.E. and R.G. Lomax (1996). A Beginner’s Guide to Structural Equation
+  Modeling. Lawrence Erlbaum Associates, Mahwah, NJ.
+Schumacker, R.E. and G.A. Marcoulides, Eds. (1998). Interaction and Non-Linear Effects
+  in Structural Equation Modeling. Lawrence Erlbaum Associates, Mahwah, NJ.
+
+© 2003 by CRC Press LLC
+Sedlmeier, P. (1999). Improving Statistical Reasoning: Theoretical Models and Practical
+  Implications. Lawrence Erlbaum Associates, Mahwah, NJ.
+
+Shankar, V. and F. Mannering (1996). An exploratory multinomial logit analysis of
+  single-vehicle motorcycle accident severity. Journal of Safety Research 27(3),
+  183–194.
+
+Shankar, V. and F. Mannering (1998). Modeling the endogeneity of lane-mean speeds
+  and lane-speed deviations: a structural equations approach. Transportation Re-
+  search 32A, 311–322.
+
+Shankar, V., F. Mannering, and W. Barﬁeld (1995). Effect of roadway geometrics and
+  environmental factors on rural accident frequencies. Accident Analysis and Pre-
+  vention 27, 371–389.
+
+Shankar, V., J. Milton, and F. Mannering (1997). Modeling accident frequencies as
+  zero-altered probability processes: an empirical inquiry. Accident Analysis and
+  Prevention 29, 829–837.
+
+Shankar, V., R. Albin, J. Milton, and F. Mannering (1998). Evaluating median cross-over
+  likelihoods with clustered accident counts: an empirical inquiry using the ran-
+  dom effects negative binomial model. Transportation Research Record 1635, 44–48.
+
+Shumway, R.H. (1988). Applied Statistical Time Series Analysis. Prentice-Hall, Engle-
+  wood Cliffs, NJ.
+
+Shumway, R.H. and S.A. Stoffer (2000). Time Series Analysis and Its Applications.
+  Springer-Verlag, New York.
+
+Siegel, S. (1988). Nonparametric Statistics for the Behavioral Sciences, 2nd ed. McGraw-
+  Hill, New York.
+
+Siegel, S. and J.W. Tukey (1960). A nonparametric sum of ranks procedure for relative
+  spread in unpaired samples. Journal of the American Statistical Association 55,
+  429–445; correction, 56, 1005, 1961.
+
+Small, K. and C. Hsiao (1985). Multinomial logit speciﬁcation tests. International
+  Economic Review 26, 619–627.
+
+Small, K. and H. Rosen (1981). Applied welfare economics with discrete choice
+  models. Econometrica 49, 105–130.
+
+Smith, B.L. and M.J. Demetsky (1994). Short-term trafﬁc ﬂow prediction: neural
+  network approach. Transportation Research Record 1453, 98–104.
+
+Smith, B.L. and M.J. Demetsky (1997). Trafﬁc ﬂow forecasting: comparison of mod-
+  eling approaches. ASCE Journal of Transportation Engineering 123, 261–266.
+
+Smith, B.L., B.M. Williams, and K.R. Oswald (2002). Comparison of parametric and
+  nonparametric models for trafﬁc ﬂow forecasting. Transportation Research Part
+  C: Emerging Technologies 10(4), 303–321.
+
+Smith, L. (1998). Linear Algebra, 3rd ed. Springer, New York.
+Spearman, C. (1904). The proof and measurement of association between two things,
+
+  American Journal of Psychology 15, 73–101.
+Spiegel, M.R. and L.J. Stephens (1998). Schaum’s Outlines: Statistics, 3rd ed. McGraw-
+
+  Hill International, New York.
+Stathopoulos, A. and M.G. Karlaftis (2001a). Spectral and cross-spectral analysis of
+
+  urban trafﬁc ﬂows. In Proceedings of the 4th IEEE Conference on Intelligent Trans-
+  portation Systems, August 25–29, Oakland, CA.
+Stathopoulos, A. and M.G. Karlaftis (2001b). Temporal and spatial variations of real-
+  time trafﬁc data in urban areas. Transportation Research Record 1768, 135–140.
+Stathopoulos, A. and M.G. Karlaftis. A multivariate state-space approach for urban
+  trafﬁc ﬂow modeling and prediction. Transportation Research C: Policy and Prac-
+  tice, in press.
+
+© 2003 by CRC Press LLC
+

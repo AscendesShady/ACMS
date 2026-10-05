@@ -1,0 +1,747 @@
+132  Chapter 3.1
+
+  Intrusive Technologies
+
+  x Established technology  x Implementation causes traffic
+  interruption
+  x Lower cost compared to non-  Vehicle
+  x Detectors fail if poor road surfaces  classification,
+1 Inductive Loop  intrusive detectors  exist  count, occupancy,
+  presence, speed
+  Detection  x Operates in sub-optimal weather  x Multiple detectors are required
+  x System susceptible to stress of  Vehicle
+  conditions  classification,
+  traffic and temperature  count, speed
+  x Flexible design  x Decreases pavement lifetime
+  x Routine maintenance required  Vehicle
+2 Piezoelectric  x Works well in all-weather types  x Pavement must be cut for  classification,
+  Detection  x Coordinates with other detectors too  count, occupancy,
+  installation  presence, speed
+  x Less disruption to traffic flow than  x Cannot measure static objects
+
+3 Magnetic  induction loops  x Pavement must be cut, and lanes
+  Detection  x Less susceptible to traffic stress  closed for installation
+  x Can be used where loops are not
+  x Detection zones are small
+  feasible  x Cannot detect stopped vehicle
+
+  x Improved schedule adherence and  x Delays to non-priority traffic
+
+4 Signal Priority:  reliability
+
+  TSP and EVP  x Reduced travel time for buses
+
+  x Increased transit quality of service
+
+Source: Based on the data from Walton et al. 2009.
+  CHAPTER 3.2
+
+  BUILDING BLOCKS OF ITS
+
+  Introduction
+
+The most populous city in Canada is Toronto and it is also the provincial
+capital of Ontario. It is the fourth most populous city in North America. It
+is an international center for business, arts, and culture. Toronto is a central
+transportation hub for road, rail, and air networks in Southern Ontario.
+There are many modes of transport in the city of Toronto, including
+highways and public transit. The Toronto Transit Commission (TTC)
+operates the main public transportation system in Toronto. The backbone of
+its public transport network is the Toronto subway system. Toronto also has
+a wide network of bicycle lanes and multi-use tracks and paths. Major east-
+west arterial roads are almost parallel with the Lake Ontario shoreline, and
+major north-south arterial roads are almost perpendicular to the shoreline.
+Several municipal expressways and provincial highways serve Toronto and
+the Greater Toronto Area. Particularly, Highway 401 divides the city from
+west to east, bypassing the downtown core. It is the busiest road in North
+America, and one of the busiest highways in the world. The Greater Toronto
+Area suffers from severe traffic congestion problems, and Toronto has the
+second worst traffic congestion in Canada, after Vancouver.
+
+  Need for Congestion Management
+
+Travel demand grows with Toronto’s increasing urbanization. The situation
+is so dire that even the proposed road infrastructure cannot handle growing
+travel demands. Traffic congestion occurs when the travel demand exceeds
+the capacity of the transportation network. Some areas are affected by
+construction, parking, and stopping; others, due to the limited nature of
+infrastructure capacity; some other parts are affected by traffic signals,
+which are not coordinated based on the traffic flow; other parts are impacted
+by unpredictable conditions like bad weather or accidents. Estimates, from
+2006 for the Greater Toronto and Hamilton Area (GTHA), suggest that
+congestion costs as much as $3.3 billion, annually, to commuters in terms
+of delays, environmental harm, and vehicle operating costs; the cost to the
+134  Chapter 3.2
+
+Gross Domestic Product was an additional $2.7 billion, due to lost economic
+output and accompanying job loss (Costs of Road Congestion in the Greater
+Toronto and Hamilton Area; Impact and Cost-Benefit Analysis of the
+Metrolinx Draft Regional Transportation Plan 2008). On an average, a
+commuter experiences nearly eighty-one hours of delay, each year, during
+the peak period.
+
+  Benefits of Managing Traffic Congestion
+
+There are many benefits of managing traffic congestion, in terms of safety,
+mobility, efficiency, productivity, energy and environment, and customer
+satisfaction. Some safety benefits are improved personal safety and security,
+and lower collision rates and collision severity. Managing congestion
+lowers transit wait times and improves service frequency. In terms of
+productivity, congestion management leads to lower operating costs and,
+therefore, improved customer satisfaction.
+
+  Congestion Management Plan
+
+The city of Toronto started many initiatives to manage congestion in the
+city. Based on the successes of previous initiatives, the Toronto Congestion
+Plan was introduced for the period from 2014 to 2018. It was an objective-
+driven and performance-based approach to manage congestion. Some
+proposed initiatives were
+
+1. To manage traffic on arterial roads actively and complement traffic
+  management measures on city expressways
+
+2. Implementing the latest technology to manage traffic and congestion,
+  including shifting from wireless communication to advanced sensors
+  and social media
+
+3. Providing a “toolkit” of measures, which can be used as reference for
+  different situations
+
+4. Improving efficiency and coordination of the city’s transportation
+  network by strengthening partnerships and information sharing
+
+  Design and Planning Process
+
+The Toronto Congestion Management Plan for Toronto City was prepared
+over a six-month period, in 2013. It began with a review of existing
+activities and projects for congestion management, and by conducting
+research on trends and best practices in other areas of North America
+Building Blocks of ITS  135
+
+through literature reviews and telephone interviews. The next step was to
+develop a vision, a mission, and objectives for the plan, after which vendor
+selection and refinement of recommended initiatives was done. The staff
+from the City of Toronto’s Traffic Management Centre and regional traffic
+control centers were involved throughout the development of the plan,
+through regular meetings, workshops, and oneဨonဨone consultations.
+
+The plan was a component of the City of Toronto’s overall transportation
+planning process, which focused primarily on operational activities. Other
+strategies of managing traffic congestion in the city of Toronto, such as
+revision of plans and strategies, demand management, promotion of multi-
+modal transportation and active (non-motorized) transportation, and
+improvements in transportation network infrastructure.
+
+  The Vision of the Plan
+
+Through innovation and technology, maximize the efficiency, safety,
+reliability, and sustainability of the transportation network for all users
+while reducing the impact on the environment.
+
+This was the vision of The Toronto Congestion Management Plan. It
+addressed the needs of all travelers—pedestrians, cyclists, and public transit
+users—as well as freight carriers and emergency services. The focus is on
+promoting innovative technologies that improve the efficiency, safety,
+sustainability, and reliability of all transportation networks.
+
+  Goals and Objectives
+
+The vision statement is supported by a series of goals. Each goal is then
+further supported by a series of objectives, which help in measuring success
+(City of Toronto Congestion Management Plan 2014–2018 2013). It is
+presented in Table 3.2.1.
+136  Chapter 3.2
+
+S.No  Goals  Objectives
+1
+2  Maximize the transportation  Increase throughput
+3  system efficiency and reliability  Reduce delays
+4  Reduce travel time
+5  Improve the safety of the  variability
+  transportation network  Reduce vehicle operational
+  costs
+  Improve the City of Toronto’s  Reduce traffic collisions
+  ability to detect and respond to  Reduce collision severity
+  incidents, events and changing  Reduce duration of traffic
+  traffic conditions  incidents and events
+  through increasing
+  Improve the availability and  reductions in detection,
+  reliability of information for the  response and clearance
+  public  times
+  Reduce the impact of  Reduce traveler frustration
+  transportation on the environment  Increase use of all modes
+  of transportation
+  Reduce greenhouse gas
+  emissions (GHG)
+  Increased fuel savings
+
+Table 3.2.1: Goals and Objectives of the Proposed Congestion Management
+Plan
+Source: Author’s compilation
+
+  Recommended Projects and Activities
+
+There were some projects that were recommended for managing traffic
+congestion in the city of Toronto. These projects have been grouped under
+eight technical elements or strategies. The eight technical elements or
+strategies complement and intersect one another and, collectively, produce
+a comprehensive approach to manage the issue of traffic congestion. Each
+of the eight technical strategies is explained, below, along with their
+associated projects, in detail.
+
+1. Intelligent Transportation System: ITS use communication technologies
+  to monitor and manage transport networks. There are a few projects
+  under this category, which will help in strengthening the ITS system,
+  mentioned below:
+Building Blocks of ITS  137
+
+  x Replacement of Advanced Traffic Management Software (ATMS):
+  This project provides a new ATMS to improve the capability of the
+  software to monitor and manage the city’s arterial streets and
+  highways. It also improves information communication to the
+  traveler and manages road restrictions.
+
+  x Enhanced Signal Control Modes: In the existing systems, signal
+  changes are set beforehand. It was, then, proposed to use sensors to
+  collect real-time data to alter the traffic signal intervals adaptively.
+
+  x Arterial Closed-Circuit TV (CCTV) Cameras: This helps in
+  monitoring traffic operations, detecting incidents, illegal lane
+  occupancies, etc.
+
+  x Arterial Network Monitoring: In this project, unusual
+  conditions/incidents are identified to ramp up response speed, which
+  will reduce the overall incident durations.
+
+  x Update and Expand the City’s Communications Networks: This
+  project evaluates the performance of wireless communication
+  technology to ensure dependability in emergency situations.
+
+  x Hardware Replacement: It is to replace ageing equipment, like
+  CCTV cameras, to ensure that the system is up to date and efficient.
+
+  These projects help in managing traffic congestion by improving
+  monitoring capabilities, coordination of traffic signals, increasing the
+  quality of traffic information, ensuring equipment robustness, and
+  increasing efficiency of communication between traffic signals and the
+  city’s network of computers.
+2. Congestion and Engineering Studies: The primary focus is to maintain
+  Toronto’s signaling systems and traffic management strategies with the
+  latest modern tools available in the industry. The identified projects are
+
+  x Auxiliary Signal Timing Plans: These are to develop additional
+  signal timing plans for different scenarios that occur regularly, like
+  road closure, bad weather, etc.
+
+  x Update Corridor Coordination Studies: These are done to regularly
+  review corridor operations and related signal timing plans.
+
+  x Active Traffic Management Feasibility Study: This is to explore the
+  need and benefits of active management strategies.
+
+  x Integrated Corridor Management Feasibility Study: This is to review
+  the need and possible benefits of implementing integrated
+  management of transit and vehicle movements parallel to arterial and
+  highway corridors.
+
+  These projects will help in managing traffic congestion by improving
+  traffic operations, maintaining coordination among new traffic signals,
+138  Chapter 3.2
+
+  identifying technological and innovative solutions, and exploring
+  integrative approaches to optimize traffic flow across corridors.
+3. Incident and Event Response: The City of Toronto’s Traffic Operations
+  Center detects collisions and other incidents in highway corridors,
+  coordinates emergency responses, and informs travelers. The main aim
+  of this strategy is to reduce the disruption by incidents and minimize
+  congestion that can result, and complement increased monitoring
+  capabilities. The identified projects are
+  x Traffic Incident Management Team Procedures
+  x Service Patrols
+  x Steer It—Clear It Signage Program
+  x Universal Fire Station Pre-emption (Non-vehicle)
+  These projects will help in managing traffic congestion by strengthening
+  relationships among important agencies, so that coordination and safety
+  can be improved along with reduced response times. Congestion can
+  also be reduced by educating the travelers to move out of the traffic flow
+  immediately after a minor incident.
+4. Construction Coordination: Construction activities and lane occupancies
+  always have a significant impact on traffic. Construction activities can
+  be building a new road or developing a new building. The number of
+  new developments across the City of Toronto is an indication of positive
+  economic development, but also creates issues in traffic management.
+  The identified projects are
+
+  x Smart Work Zones
+  x Lane Occupancy Permit Management
+  x Lane Occupancy Permit Review
+  x Work Zone Performance Management and Monitoring
+  These projects will help reduce congestion by encouraging contractors
+  to participate in minimizing the impact of work zones on traffic and by
+  improving the information available to travelers. Increased coordination
+  and management of construction work zones will also reduce traffic
+  congestion.
+5. Curb-side Management: The downtown core area has large amounts of
+  on-street parking. It is filled with taxis, couriers, delivery trucks, and
+  private vehicles competing for available curb space. The streets in these
+  areas are narrow with limited road width and high-traffic demand, thus,
+  adding to the complexities.
+
+  x Parking Charge Review: It is the use of an increasing parking charge
+  scale, where rates increase based on the time period for which the
+  vehicle is parked.
+Building Blocks of ITS  139
+
+  x Develop Parking Strategies: The strategies include studying parking,
+  restricting business deliveries to certain times of the day, with
+  allowance for private vehicle parking in the remaining time periods,
+  or strict parking restrictions in some corridors during peak hours.
+
+  x Smart Park: It involves using technology such as smartphone apps,
+  electronic message signs, and other tools to monitor parking usage
+  and inform motorists regarding real-time parking information.
+
+  These projects will help in managing congestion by applying innovative
+  parking solutions and by reducing illegal parking that is affecting the
+  traffic flow. By reducing the parking search time and providing legal
+  parking, managing the issue of congestion will be a bit easier.
+6. Support for All Modes of Transportation: This is mainly to encourage
+  people to use modes other than private vehicles. The City of Toronto
+  actively promotes all modes of transport—walking, cycling, public
+  transport—through its official laws and initiatives. The identified
+  projects are
+
+  x Transit Signal Priority
+  x HOV-Bus Lane Review
+  x Bicycle Facilities Expansion
+  x Corridor Renewal for Sustainable Transportation
+  These projects will help in managing congestion by improving the
+  effectiveness and coordination of traffic management activities
+  involving public transit vehicles, and exploring creative street design
+  standards and engineering techniques to provide balanced use of the
+  road right-of-way.
+7. Traveler Information: This is to provide convenient access to traveler
+  information. Reliable traveler information allows them to decide trip
+  routes, mode, and timings. The identified projects are
+  x Traveler Information Strategy
+  x VMSs including Display of Travel Times
+  x Event Database
+  x City Website Improvements
+  x Social Media
+  x Mobile Apps
+  These projects help in managing congestion by strengthening data
+  sources and networks to give accurate information about the traffic
+  conditions and increasing the speed of communication. Improving the
+  amount of information available to travelers will allow them to make
+  best decisions regarding route and other factors.
+140  Chapter 3.2
+
+8. Traffic Operations Centre (TOC): The TOC is the City’s main center for
+  traffic and congestion management, monitoring traffic conditions and
+  coordinating traffic control field devices twenty-four hours a day, seven
+  days a week. This technical element focuses on coordination and
+  cooperation amongst the various agencies in order to maximize the
+  efficiency of transportation network operations.
+  x Traffic Operations Centre Improvements
+  x Coordination with Emergency Services
+  x Coordination with Transit
+  x Coordination with External Agencies
+  x TOC Operations Coordination
+  These projects will improve traffic congestion by improving incident
+  detection and transport network monitoring, allowing TOC operators to
+  respond to changes in traffic conditions, therefore, strengthening a
+  regional approach to traffic and congestion management. Exhibit 3.2.1
+  tabulates the projects and goals, if the goals are achieved, and if they are
+  primary or secondary goals.
+
+  Capital and Operating Costs
+
+The proposed Toronto Congestion Management Plan, for five years, is
+expected to have a capital cost of $57.25M. For effective traffic
+management on arterial roads and highways, there is a need for additional
+staffing to monitor and respond to changes in traffic conditions. The
+estimated cost for the additional staff is $1.1M. The marginal additional cost
+required to maintain the proposed additional ITS infrastructure is $8M for
+five years. Additional ITS infrastructure can be both software and hardware.
+To implement the capital projects outlined in this plan, the Capital Projects
+Delivery Group was formed. This group is dedicated to the planning,
+designing, and implementation of the capital projects. Exhibit 3.2.2 shows
+the capital cost and cash flow summary of the five-year (2014–2018)
+program cost estimates.
+
+  Monitoring and Evaluation
+
+First, a process is set to monitor and evaluate the performance of the various
+projects and to make sure that the goals are met. For performance
+evaluation, the performance criteria need to be identified. Common
+transportation network performance indicators include travel time, average
+speed, total delay, travel time index, and the buffer time index. However,
+these criteria do not represent performance variance over time and space.
+Building Blocks of ITS  141
+
+So, other methods should be explored for monitoring. The next step is to
+continuously review and upgrade the plan, along with Toronto’s
+transportation planning and environmental review processes, to ensure that
+it addresses the needs and priorities of Toronto’s transportation. Exhibit
+3.2.3 displays the implementation schedule of the Congestion Management
+Plan for each project over a five-year period.
+
+  References
+
+City of Toronto Congestion Management Plan 2014-2018. 2013.
+  Transportation Division, Toronto: Delcan and Lura Consulting.
+
+Costs of Road Congestion in the Greater Toronto and Hamilton Area;
+  Impact and Cost-Benefit Analysis of the Metrolinx Draft Regional
+  Transportation Plan. 2008. Final Report, Transportation, Greater
+  Transportation Auhority, Toronto: HDR Corporation Decision
+  Economics.
+142  Chapter 3.2
+
+Exhibit 3.2.1: Project Management Plan Goals
+
+Source: City of Toronto Congestion Management Plan 2014–2018 (2013)
+Building Blocks of ITS  143
+
+Exhibit 3.2.2: Capital Cost and Cash Flow Summary
+
+Source: City of Toronto Congestion Management Plan 2014–2018 (2013)
+144  Chapter 3.2
+
+Exhibit 3.2.3: Implementation schedule of the Congestion Management
+Plan Program
+
+Source: City of Toronto Congestion Management Plan 2014–2018 (2013)
+  CHAPTER 3.3
+
+  SYSTEM DESIGN
+
+The complexities of Intelligent Transportation Systems (ITS) increase with
+the number of interconnected subsystems through multiple telecommunication
+technologies. The increase in the number of subsystems affects the overall
+effectiveness, conformity, tenability, extendibility and refurbishment time,
+and cost of the deployed ITS. It is essential to have a defined system
+architecture to fully exploit the potential synergies of interoperable systems
+and prevent incompatibility between multiple subsystems. The concept of
+ITS architecture ranges from a relatively simple definition of a single
+telematics system to a “broad” definition of a complex telematics system
+described using several viewpoints of the system, together with its
+deployment plan, process and object-oriented procedures, cost benefit
+analysis, etc. (BČlinová, Bureš and Jesty 2010). An ITS architecture is the
+conceptual design that defines the structure and/or behavior of an integrated
+ITS.
+
+There are two basic concepts of ITS architecture that are used: high-level
+and low-level ITS architectures (Böhm and Frötscher 2010). A high-level
+architecture provides an overall description of the functionality of the ITS
+service and the communication components needed for a particular ITS
+implementation. A low-level ITS architecture describes the detailed design
+of the components and the communications that are needed for ITS
+implementation. It can, therefore, be concluded that high-level ITS
+architecture is a prerequisite to low-level ITS architecture. High-level
+architecture is technology independent and represents its functionality in the
+form of the “component specifications” required to deploy the ITS services,
+while the “communication specification” establishes the way different
+components link and communicate with each other. A low-level architecture
+is usually differentiated using a particular technology as the functionality
+described in the “component specifications”, and “communications
+specifications” may be achieved using either hardware, software, or a
+combination of the two. The relationships between framework and regional
+architectures, ITS standards, and ITS projects is illustrated in Figure 3.3.1.
+146  Chapter 3.3
+
+The European ITS Framework Architecture, also known as Framework
+Architecture Made for Europe (FRAME), and the National ITS Architecture
+of the US are the two widely referred to use cases for the development of a
+high-level ITS architecture. The fundamental differences of the approaches
+adopted by the two regions lies in the nature and flexibility of their use. The
+European Framework architecture allows the creation of regional or
+national architecture based on the requirement of individual member states
+and acts as a reference architecture. As the FRAME Architecture is intended
+to be used within the European Union, it conforms to the principle of
+subsidiarity, and, thus, does not mandate any physical or organizational
+structure on a member state. It provides a functional view and need not be
+used in entirety, thus, enabling the user to create a subset that aligns with
+their requirements. In contrast, the US has a fixed architecture, which needs
+to be followed by the states to receive federal support for ITS deployment.
+
+Figure 3.3.1: Relationships between Framework and Regional Architectures,
+ITS Standards, and ITS Projects
+Source: Robert S. Jaffe. ADB
+
+European ITS Framework Architecture
+
+The development of the European ITS framework architecture was initiated
+during the Fourth Framework Program (FP) of the European Commission,
+in 1998, with the KAREN project (Keystone Architecture Required for
+European Networks) and was first published in October 2000. The
+framework architecture was created to assist the national, regional, and
+project-specific architectures within Europe that are consistent for various
+ITS systems and services. It covers user needs and functional viewpoints of
+System Design  147
+
+the ITS services. Figure 3.3.2 represents how the FRAME architecture
+assists in the creation of ITS.
+
+Figure 3.3.2: Process of Creating ITS Architecture
+Source: FRAME FORUM
+
+Many nations across the EU have created their own national and regional
+ITS architecture, consulting the FRAME architecture. French National
+Architecture (ACTIF, Architecture Cadre pour le Transports Intelligents en
+France) and Italian ITS Architecture (ARTIST) were the first two national
+ITS architectures formulated in compliance with FRAME. The French ITS
+Architecture (ACTIF) has been used for the implementation of a national
+speed-limit enforcement system. The use of FRAME architecture reduced
+the development and deployment time of the service by up to six months.
+The Road Traffic Management Implementation Project (VIKING), in
+Northern Europe, SAFESPOT, CVIS and COOPERS (Cooperative Systems
+for Intelligent Road Safety) have also used the development of a high-level
+architecture for cooperative systems using the FRAME method. Austria
+(TTS-A), Czech Republic (TEAM), Hungary (HITS) and Romania
+(NARITS) are a few other nations that have developed ITS architecture
+based on FRAME. The UK has also undertaken certain regional and project
+ITS architecture in line with FRAME. There has been a fragmented
+approach in the creation and maintenance of the FRAME architecture. A
+148  Chapter 3.3
+
+number of ITS architecture projects are being undertaken to extend the
+FRAME architecture, within the priority areas of the ITS directive
+(Directive 2010/40/EU). The notable projects are KAREN, FRAME-S,
+FRAME-NET, E-FRAME and FRAME NEXT. After KAREN, the FP5 was
+provided by FRAME-NET and FRAME-S as support activities, followed
+by E-FRAME in FP7 that had FRAME version 4. The FRAME forum was
+set up at the end of FRAME-S and FRAME-NET for promoting the use of
+the European ITS Framework Architecture, and for leading its future
+development. The FRAME forum is co-financed by the European Union
+and funding from some member states. FRAME NEXT, having current
+FRAME version 4.1, is the latest project for extending the FRAME
+architecture and includes project partners from ten active EU member states
+and Norway that share best practices and recent development with relevant
+stakeholders.
+
+The FRAME architecture covers the following areas of ITS:
+
+  1. Electronic fare collection and management
+  2. Emergency notification and response—roadside and in-vehicle
+
+  notification
+  3. Traffic management—urban, inter-urban, parking, tunnels and
+
+  bridges, maintenance and simulation, together with the management
+  of incidents, road vehicle based pollution, and the demand for road
+  use
+  4. Public transport management—schedules, fares, on-demand services,
+  fleet and driver management
+  5. In-vehicle systems and support for host vehicle services—includes
+  some cooperative systems
+  6. Traveler assistance—pre-journey and on-trip planning, travel
+  information
+  7. Law enforcement support system
+  8. Freight and fleet management
+  9. Provide support for cooperative systems—specific services not
+  included elsewhere, e.g., bus lane use, freight vehicle parking
+  10. Multi-modal interfaces—links to other modes when required, e.g.,
+  travel information, multi-modal crossing management
+
+Two basic tools are used for the distribution of FRAME architecture. The
+first tool is “Browsing Tool,” which is used to browse the overall structure
+of the FRAME architecture and explore the details at different levels along
+with a description of each element. The second tool is “Selection Tool,”
+which assists users to select a uniform subset of FRAME architecture and
+System Design  149
+
+create physical views of this subset for regional, national or project ITS
+architecture.
+
+  US National ITS Architecture
+
+The development of national ITS architecture was initiated by the US
+Department of Transportation (US-DOT) on the recommendation of ITS
+America. The key concern that led to the development of the ITS
+architecture in the US was interoperability. There was a need to define key
+interfaces for standardization. If systems are developed without standardization
+across the nation, then vehicles might be unable to interact effectively with
+the infrastructure and other vehicles beyond their regional boundaries,
+leading to an ineffective ITS network. The initial edition of the US National
+ITS Architecture was provided to the US-DOT, in 1996, as a comprehensive
+and content-rich set of documents by a consortium under contract. The
+National ITS Architecture provides a definitive and consistent framework
+to guide the planning, definition, deployment, and integration of ITS. The
+program facilitates collaborative operations and learning best practices from
+various regional approaches to tackle transportation challenges. The US
+National ITS Architecture is now known as the Architecture Reference for
+Cooperative and Intelligent Transportation (ARC-IT), which is a unified
+framework that covers all ITS, including all connected vehicle (CV)
+applications, the scope and content from Connected Vehicle Reference ITS
+Architecture (CVRIA) Version 2.2 and the National ITS Architecture
+Version 7.1. The current version is 9.0 and was launched in June 2017.
+ARC-IT 9.0 comprises interconnected components that are structured in
+four views: enterprise, functional, physical, and communications. An
+illustration is presented in Figure 3.3.3.
+
+Enterprise View displays the relation between stakeholder organizations
+and their role within the ITS environment. User needs are defined in this
+context, as ITS is driven by the stakeholder organizations’ requirements,
+their constituents, and customers.
+
+Functional View displays ITS from a functional perspective and provides
+an analysis of abstract functional elements and their logical interactions.
+Processes and data flows offer functions and interactions in a logical order
+that supports the ITS users’ requirements.
+
+Physical View displays the physical elements (systems and devices) of the
+ITS. Within each physical object, functional objects execute the required
+actions of the ITS.
+150  Chapter 3.3
+
+Communications View displays how physical objects communicate. It
+specifies how information may be safely and securely transferred between
+physical objects by defining communications standards and profiles that are
+integrated into communication solutions.
+
+These four views focus on four different architectural perspectives.
+Furthermore, there are 150 service packages that showcase slices of the
+architecture to demonstrate how ITS could be used to solve real-world
+transportation problems. Service packages are the most popular way to get
+accustomed with ARC-IT, since most users are likely to subscribe to a single
+service; a vertical slice of ARC-IT that covers all four views for a given ITS
+service is easy to use.
+
+The reference architecture does not mandate any implementation but rather
+provides a common base for engineers and planners to conceive, design, and
+implement systems while accommodating their specific concerns. ITS
+standards developers can use the National ITS Reference Architecture to
+identify standards that will meet the requirements of the users. ITS planners
+can use these ITS standards to integrate regional ITS elements and achieve
+interoperability goals. ITS deployers can choose ITS standards to mitigate
+deployment risks and streamline overall costs and schedules.
+System Design  151
+
+Figure 3.3.3: Architecture Overview
+Source: https://www.arc-it.net/
+152  Chapter 3.3
+
+USDOT also developed a regional ITS architecture in order to ensure
+regional integration, and organized and coordinated planning and
+deployment of the ITS. Title 23 (Highways), Chapter I, Subchapter K, Part
+940 of the United States Code of Federal Regulations (CFR) (23 CFR 940)
+on Intelligent Transportation Systems Architecture and Standards first
+defined the concept of a regional ITS architecture.
+
+ARC-IT is used as a template and provides the fundamental building
+blocks—physical objects, interfaces, service packages, user needs, and
+functions—to create customized ITS architectures that reflect the
+envisioned regional transportation system. A region usually contains
+multiple transport authorities lying under different jurisdictions. Regional
+integration allows regional transportation networks to share information and
+coordinate actions in order to function efficiently and effectively. Over the
+last two decades, regional architecture is developed in all fifty US states and
+are updated and maintained by state Departments of Transportation (DOTs)
+or Metropolitan Planning Organizations (MPOs) or Council of
+Governments (COGs) for a region, district, or state, to ensure that the
+architecture is aligned with the current plan for development of ITS in a
+region. The ITS architecture relationship is illustrated in Figure 3.3.4.
+System Design  153
+
+Figure 3.3.4: Illustration: ITS Architecture Relationship
+Source:
+https://www.standards.its.dot.gov/LearnAboutStandards/NationalITSArchi
+tecture
+
+The Regional Architecture Development for Intelligent Transportation
+(RAD-IT) and Systems Engineering Tool for Intelligent Transportation
+(SET-IT) are two supporting tools to update ARC-IT content and create
+need-based regional ITS architectures. RAD-IT focuses on the regional-
+154  Chapter 3.3
+
+level development of ITS operations and provides high-level enterprise and
+physical views, whereas SET-IT is project-specific; the latter is applied to
+fulfil specific system requirements and high-level design to achieve the
+project scopes as defined in the regional architecture. SET-IT is a graphical
+tool that integrates drawing and database tools with the ARC-IT to provide
+visual feedback to the user. Users can create project architectures for pilot
+deployments by i) modifying service packages, ii) creating physical and
+enterprise diagrams, iii) developing communications stack templates, iv)
+specifying standards at all protocol layers, and v) exporting the information
+in a variety of forms and formats. RAD-IT relies heavily on stakeholder
+consensus. Hence, the deployed ITS services are mostly used by transport
+planners and system integrators, both in the public and private sectors. In
+contrast, SET-IT is more useful to systems engineers for developing pre-
+design documentations and defining subsystems’ functionality.
+
+  Systems Engineering for ITS
+
+Systems Engineering Process (SEP) follows a top-down approach to
+developing the functional and physical requirements as defined in the
+project objectives of the system. SEP can simplify complexities and
+attenuate severity of errors in ITS deployment. It focuses on risk-
+management during the design, deployment, and maintenance of complex
+interacting elements throughout their life cycles. SEP also ensures
+adherence to budget and time constraints while accomplishing the intended
+objectives of the project. Figure 3.3.5 represents the Vee diagram for a
+generic ITS project. It depicts the sequence of steps from a regional plan to
+a deployed system, from left to right. The left section of the Vee diagram is
+called the “decomposition” side as it starts with a broad overview of the ITS
+in the regional ITS architecture. With each step, there is a breakdown of the
+high-level objective into precise system requirements and technology
+specifications to create a detailed design for the ITS. The right section is
+called the “recomposition” side as the individual hardware and software
+components are integrated and tested together to form a unified ITS. The
+gap between the two subsequent processes represents traceability analysis.
+The traceability analysis step validates that the next level of analysis,
+design, or build fulfils all of the preceding step's objectives, criteria, or
+specifications. Traceability analysis and testing ensures that the defects are
+detected at the early stages, when repairing them is relatively less expensive.
+System Design  155
+
+Figure 3.3.5: Systems Engineering Vee Diagram for ITS Projects
+Source: US Department of Transportation et al. (2007). Systems
+Engineering for Intelligent Transportation Systems. Washington, DC.
+156  Chapter 3.3
+
+1. Regional Planning
+
+The first step in SEP for ITS projects is to identify the requirements and
+objectives of the region. A regional ITS architecture is, then, developed to
+specify the ITS services that accomplish the stated objectives. The regional
+ITS architecture facilitates the integration of services by various
+stakeholders and specifies the open standards of the ITS elements.
+
+2. ITS Analysis
+
+It includes feasibility studies and operations analysis while using the
+regional ITS architecture as a reference. Detailed cost and benefit estimates,
+and high-level technology choices are thoroughly evaluated.
+
+3. Specification Development
+
+It includes outlining the system requirement and developing high-level and
+detailed designs to fulfil those requirements. The former includes the
+functional, performance, and environmental requirement of each ITS
+service, validating the system expectations. Once the system requirements
+are validated, the high-level design is developed by choosing the right
+technologies. The next step is detailed design that specifies the full-scale
+deployment of the chosen technologies. The ITS modules (integrating the
+software and hardware) are then tested for compatibility and functional
+verification.
+
+4. Implementation and Testing
+
+It involves procurement of hardware and software for field deployment,
+verification of subsystems, and overall system validation. The installed
+components are commissioned, validated, and verified.
+
+5. Manage, Operate, Maintain
+
+Finally, the systems are managed, maintained, and upgraded as and when
+required.
+
+  New York City
+
+The New York State Department of Transportation (NYSDOT) region 11
+operates, monitors and controls many of the regions’ limited-access
+highways, along with the three transport stakeholders in the region: (i) New
+York City Department of Transportation (NYCDOT) is responsible for
+

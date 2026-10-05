@@ -1,0 +1,1304 @@
+  Exercises 1.1–1.36  49
+
+1.18 Age of Patients. Consider the set of all patients enrolled in  f. Number of fecal coliforms per 100 milliliters
+  your local diabetes centre during the past 30 days. Suppose  g. Free-chlorine residual (milligrams per liter)
+  you are interested in learning about the average age of this  h. Presence of hydrogen sulphide (yes or no)
+  group.
+  a. Define the population and the variable of interest.  Identify each variable as quantitative or qualitative.
+  b. Is the variable qualitative or quantitative?
+  c. Suppose you obtain the age of every patient who visited  Applying the Concepts–Intermediate
+  the centre. Would this data represent a census or a
+  sample?  1.22 Annual survey of computer crimes. The Computer Security
+  d. Suppose you obtain the age of the first patient visiting  Institute (CSI) conducts an annual survey of computer
+  the centre on each day for the last 30 days. Would this  crime at U.S. businesses. CSI sends survey questionnaires
+  data represent a census or a sample?  to computer security personnel at all U.S. corporations
+  e. If you obtain the ages of all the patients who visited  and government agencies. The latest CSI survey was sent
+  the centre in the last 30 days, how much reliabil-  by post or email to 5,412 firms, and 351 organizations re-
+  ity does your findings have as an “estimate” of the  sponded. Forty-one percent of the respondents admit-
+  average age?  ted unauthorized use of computer systems at their firms
+  f. How can you select a random sample of size 30 from the  during the year. (CSI Computer Crime and Security Survey,
+  population?  2010/2011.)
+  a. Identify the population of interest to CSI.
+1.19 Medicinal value of plants. Sea buckthorn (Hippophae), a  b. Identify the data collection method used by CSI. Are
+  plant that typically grows at high altitudes in Europe and  there any potential biases in the method used?
+  Asia, has been found to have medicinal value. The me-  c. Describe the variable measured in the CSI survey. Is it
+  dicinal properties of berries collected from sea buckthorn  quantitative or qualitative?
+  were investigated in Academia Journal of Medicinal Plants  d. What inference can be made from the study result?
+  (Aug. 2013). The following variables were measured for
+  each plant sampled. Identify each as producing quantita-  1.23 Treasury deficit prior to the Civil War. In Civil War History
+  tive or qualitative data.  (June 2009), historian Jane Flaherty researched the con-
+  a. Species of sea buckthorn (H. rhamnoides, H. gyantsensis,  dition of the U.S. Treasury on the eve of the Civil War in
+  H. neurocarpa, H. tibetana, or H. salicifolia)  1861. Between 1854 and 1857 (under President Franklin
+  b. Altitude of collection location (meters)  Pierce), the annual surplus/deficit was + 18.8, + 6.7, +5.3,
+  c. Total flavonoid content in berries (milligrams per gram)  and + 1.3 million dollars, respectively. In contrast, be-
+  tween 1858 and 1861 (under President James Buchanan),
+1.20 Extinct birds. Biologists at the University of California  the annual surplus/deficit was - 27.3, - 16.2, -7.2, and
+  (Riverside) are studying the patterns of extinction in the  - 25.2 million dollars, respectively. Flaherty used these
+  New Zealand bird population. (Evolutionary Ecology  data to aid in portraying the exhausted condition of the
+  Research, July 2003.) At the time of the Maori colonization  U.S. Treasury when Abraham Lincoln took office in
+  of New Zealand (prior to European contact), the following  1861. Does this study represent a descriptive or inferen-
+  variables were measured for each bird species:  tial statistical study? Explain.
+  a. Flight capability (volant or flightless)
+  b. Type of habitat (aquatic, ground terrestrial, or aerial  1.24 Library Database. Your college library maintains the re-
+  terrestrial)  cords of books borrowed. Some of the many variables
+  c. Nesting site (ground, cavity within ground, tree, cavity  stored in the database include the titles of the books, their
+  above ground)  subject categories (Mathematics, Statistics, Computer
+  d. Nest density (high or low)  Science), type classification of each (textbook, reference,
+  e. Diet (fish, vertebrates, vegetables, or invertebrates)  or manuals), number of times a book has been borrowed
+  f. Body mass (grams)  in the last 12 months, and the original prices of the books.
+  g. Egg length (millimeters)  Which of the variables measured are qualitative? Which
+  h. Extinct status (extinct, absent from island, present)  are quantitative?
+
+  Identify each variable as quantitative or qualitative.  1.25 National Airport Authority. The National Airport
+  Authority (NAA) of a country stores the relevant data
+1.21 Study of quality of drinking water. Disasters (Vol. 28, 2004)  for all the airports in a country to perform periodic checks
+  published a study of the effects of a tropical cyclone on the  on their maintenance. Data from each airport are com-
+  quality of drinking water on a remote Pacific island. Water  piled into the airport inventory. Some of the variables
+  samples (size 500 milliliters) were collected approximately  maintained by the NAA for each airport are listed below.
+  four weeks after Cyclone Ami hit the island. The following  Classify each variable as quantitative or qualitative.
+  variables were recorded for each water sample:  a. Category of airport (big, medium, small)
+  a. Town where sample was collected  b. Average daily traffic (number of flights)
+  b. Type of water supply (river intake, stream, or borehole)  c. Number of terminal buildings
+  c. Acidic level (pH scale, 1 to 14)  d. Number of runways
+  d. Turbidity level (nephalometric turbidity units = NTUs)  e. Length of a runway (meters)
+  e. Temperature (degrees centigrade)  f. Closed at night (yes or no)
+  g. Condition of access road (good, fair, poor)
+50  CHAPTER 1 ■ Statistics, Data, and Statistical Thinking
+
+1.26 Corporate sustainability. Corporate sustainability refers  1.29 Massage vs. rest in boxing. Does a massage enable the
+  to business practices designed around social and environ-  muscles of tired athletes to recover from exertion faster
+  mental considerations (e.g., “going green”). Business and  than usual? To answer this question, researchers re-
+  Society (Mar. 2011) published a paper on how firm size and  cruited eight amateur boxers to participate in an exper-
+  firm type affect sustainability behaviors. A survey was sent  iment. (British Journal of Sports Medicine, Apr. 2000.)
+  to approximately 23,500 senior managers at CPA firms, of  After a 10-minute workout in which each boxer threw 400
+  which 1,293 senior managers responded. (Note: It is not  punches, half the boxers were given a 20-minute massage
+  clear how the 23,500 senior managers were selected.) Due  and half just rested for 20 minutes. Before they returned
+  to missing data (incomplete survey answers), only 992 sur-  to the ring for a second workout, the heart rate (beats per
+  veys were analyzed. These data were used to infer whether  minute) and blood lactate level (micromoles) were re-
+  larger firms are more likely to report sustainability policies  corded for each boxer. The researchers found no differ-
+  than smaller firms and whether public firms are more likely  ence in the means of the two groups of boxers for either
+  to report sustainability policies than private firms.  variable.
+  a. Identify the population of interest to the researchers.  a. Identify the data collection method used by the
+  b. What method was used to collect the sample data?  researchers.
+  c. Comment on the representativeness of the sample.  b. Identify the experimental units of the study.
+  d. How will your answer to part c affect the validity of the  c. Identify the variables measured and their type (quanti-
+  inferences drawn from the study?  tative or qualitative).
+  d. What is the inference drawn from the analysis?
+1.27 CT scanning for lung cancer. A new type of screening for  e. Comment on whether this inference can be made about
+  lung cancer, computed tomography (CT), has been devel-  all athletes.
+  oped. Medical researchers believe that CT scans are more
+  sensitive than regular X-rays in pinpointing small tumors.  1.30 Insomnia and education. Is insomnia related to educa-
+  The H. Lee Moffitt Cancer Center at the University of  tion status? Researchers at the Universities of Memphis,
+  South Florida conducted a clinical trial of 50,000 smokers  Alabama at Birmingham, and Tennessee investigated
+  nationwide to compare the effectiveness of CT scans with  this question in the Journal of Abnormal Psychology
+  X-rays for detecting lung cancer. (Todays’ Tomorrows, Fall  (Feb. 2005). Adults living in Tennessee were selected to
+  2002.) Each participating smoker was randomly assigned to  participate in the study, which used a random-digit tele-
+  one of two screening methods, CT or chest X-ray, and his or  phone dialing procedure. Two of the many variables mea-
+  her progress tracked over time. The age at which the scan-  sured for each of the 575 study participants were number
+  ning method first detects a tumor is the variable of interest.  of years of education and insomnia status (normal sleeper
+  a. Identify the data collection method used by the cancer  or chronic insomniac). The researchers discovered that the
+  researchers.  fewer the years of education, the more likely the person
+  b. Identify the experimental units of the study.  was to have chronic insomnia.
+  c. Identify the type (quantitative or qualitative) of the  a. Identify the population and sample of interest to the
+  variable measured.  researchers.
+  d. Identify the population and sample.  b. Identify the data collection method. Are there any
+  e. What is the inference that will ultimately be drawn from  potential biases in the method used?
+  the clinical trial?  c. Describe the variables measured in the study as quanti-
+  tative or qualitative.
+1.28 Zillow.com estimates of home values. Zillow.com is a real  d. What inference did the researchers make?
+  estate Web site that provides free estimates of the mar-
+  ket value of homes. A trio of University of Texas at San  1.31 Guilt in decision making. The effect of the emotion of
+  Antonio professors compared Zillow estimates to actual  guilt on how a decision maker focuses on a problem was
+  sale prices of homes and published their results in The  investigated in the Journal of Behavioral Decision Making
+  Appraisal Journal (Winter 2010). The analysis was based  (January 2007). A total of 155 volunteer students partic-
+  on data collected for 2,045 single-family residential proper-  ipated in the experiement, where each was randomly as-
+  ties in Arlington, Texas, that sold during a recent year. Sale  signed to one of three emotional states (guilt, anger, or
+  price and Zillow estimated value (in dollars) were mea-  neutral) through a reading/writing task. Immediately after
+  sured for each property. Zillow claims that this market has  the task, the students were presented with a decision prob-
+  one of its highest accuracy ratings. However, the research  lem (e.g., whether or not to spend money on repairing a
+  revealed that Zillow overestimated the market value by  very old car). The researchers found that a higher propor-
+  more than 10% for nearly half of the properties.  tion of students in the guilty-state group chose not to re-
+  a. What is the experimental unit for this study?  pair the car than those in the neutral-state and anger-state
+  b. Describe the variables measured in the study. Do these  groups.
+  variables produce quantitative or qualitative data?  a. Identify the population, sample, and variables measured
+  c. Give a scenario where the 2,045 properties represent a  for this study.
+  population.  b. Identify the data collection method used.
+  d. If the 2,045 properties represent a representative sam-  c. What inference was made by the researcher?
+  ple from a population, describe the population.  d. In later chapters you will learn that the reliability
+  e. Suppose the relevant population is all single-family res-  of an inference is related to the size of the sample
+  idential properties in the United States. Do you believe  used. In addition to sample size, what factors might
+  the 2,045 properties are representative of this popula-  affect the reliability of the inference drawn in this
+  tion? Explain.  study?
+  Exercises 1.1–1.36  51
+
+Applying the Concepts—Advanced  random); the other half will not implement the program
+  (the “no treatment” group). In Method 2, the 56 hot spots
+1.32 Can money spent on gifts buy love? Is the gift you pur-  will be divided into four groups based on the level of drug
+  chased for that special someone really appreciated?  crimes—very high drug crime rate (10 hot spots), high rate
+  This was the question investigated in the Journal of  (8 hot spots), moderate rate (26 hot spots), and low rate
+  Experimental Social Psychology (Vol. 45, 2009). The re-  (12 hot spots). In each group, half the hot spots will be ran-
+  searchers examined the link between engagement ring  domly assigned the new crime prevention program and the
+  price (dollars) and level of appreciation of the recipient  other half no treatment. For both methods, after several
+  (measured on a 7-point scale where 1 = “not at all” and  weeks the crime rates in the hot spots where the program
+  7 = “to a great extent”). Participants for the study were  was implemented will be compared with those with no
+  those who used a popular Web site for engaged couples.  treatment.
+  The Web site’s directory was searched for those with  a. Identify the data collection method for Method 1.
+  “average” American names (e.g., “John Smith,” “Sara  b. Identify the data collection method for Method 2.
+  Jones”). These individuals were then invited to participate  c. Is this an application of descriptive or inferential statis-
+  in an online survey in exchange for a $10 gift certificate.
+  Of the respondents, those who paid really high or really  tics? Explain.
+  low prices for the ring were excluded, leaving a sample  d. Given that there is a great deal of variation in the drug
+  size of 33 respondents.
+  a. Identify the experimental units for this study.  crime rates at the 56 hot spots, which data collection
+  b. What are the variables of interest? Are they quantita-  method do you recommend? Explain.
+  tive or qualitative in nature?
+  c. Describe the population of interest.  Critical Thinking Challenges
+  d. Do you believe the sample of 33 respondents is repre-
+  sentative of the population? Explain.  1.35 Your choice for a mom. After running stories on current
+  e. In a second, designed study, the researchers investigated  First Lady Michelle Obama and former vice presiden-
+  whether the link between gift price and level of appre-  tial candidate Sarah Palin on consecutive weeks, USA
+  ciation was stronger for birthday gift givers than for  Weekend magazine asked its readers on Mother’s Day,
+  birthday gift receivers. The participants were randomly  “Who would you rather have as your mom, Sarah Palin or
+  assigned to play the role of gift-giver or gift-receiver.  Michelle Obama?” Readers were asked to vote online at
+  Assume that the sample consists of 50 individuals. Use  www.usaweekend.com. Based on over 34,000 votes cast,
+  a random number generator to randomly assign 25 indi-  the results were: Obama—71%, Palin—29%. (USA
+  viduals to play the gift-receiver role and 25 to play the  Weekend Magazine press release, May 11, 2010.)
+  gift-giver role.  a. What type of data collection method is used in this
+  study?
+1.33 Dating and disclosure. As an adolescent, did you volun-  b. Is the data collected quantitative or qualitative?
+  tarily disclose information about dating and romantic re-  Explain.
+  lationships to your parents? This was the research ques-  c. Discuss the validity of the study results. What are the
+  tion of interest in the Journal of Adolescence (Apr. 2010).  potential problems with running a poll where voting is
+  A sample of 222 high school students was recruited to  done online?
+  participate in the study. Some of the many variables mea-
+  sured on each student were age (years), gender, dating ex-  1.36 Survey exposés. Many surveys are conducted on differ-
+  perience (number of dates), and the extent to which the  ent social, political, and lifestyle issues in order to predict
+  student was willing to tell his/her parent (without being  events, identify choices, etc. However, the results obtained
+  asked) about a dating issue (e.g., how late the daters stayed  from these surveys are often incorrect. It may be that the
+  out). The responses for the last variable were categorized  surveys are conducted by special interest groups with spe-
+  as “never tell,” “rarely tell,” “sometimes tell,” “almost  cific objectives in mind, or it may be that the survey data
+  always tell,” and “always tell.”  were not collected properly. Here are a few such survey
+  a. Identify the data type for each variable.  results. (Actual facts are given in parentheses.)
+  b. The study was unclear on exactly how the sample of
+  students was selected, stating only that “participants  Delhi assembly poll 2015: An ABP Nielsen survey pre-
+  were recruited from health or government classes in  dicted about 39 seats for the Aam Aadmi Party, and 28
+  a primarily European American middle-class school  seats for the Bharatiya Janata Party. (Fact: The AAP got
+  district.” Based on this information, what are the po-  67 seats and the BJP, 3 seats.)
+  tential caveats to using the sample to make inferences
+  on dating and disclosure to parents for all high school  Colgate Recommendations by Dentists: Colgate claimed
+  students?  that 80% of all dentists recommended their brand, mak-
+  ing it seem that only 20% of dentists recommended
+1.34 Jersey City drug market study. An article in the Journal  some other brand. (Fact: The dentists were allowed to
+  of Quantitative Criminology (Mar. 2014) discussed several  recommend more than one brand. Hence other brands
+  data collection methods for testing the efficacy of a new  were also equally recommended.)
+  program designed to reduce drug-related crimes in Jersey
+  City (N.J.). The sample consisted of 56 “hot spots”—areas  New Seven Wonders of the World: The seven new won-
+  of Jersey City with a high crime rate but not necessarily a  ders were announced on July 7, 2007 based on more than
+  high drug crime rate. In Method 1, the new program will  100 million global votes that were submitted through
+  be implemented in half of the 56 hot spots (selected at  the internet and over the telephone over several years.
+  They were the Pyramids of Giza (honorary), Great Wall
+  of China (China), Petra (Jordan), Colosseum (Italy),
+52  CHAPTER 1 ■ Statistics, Data, and Statistical Thinking
+
+  Chichén Itzá (Mexico), Machu Picchu (Peru), Taj Mahal  a. Refer to the Delhi Assembly Poll study for the predic-
+  (India), and Christ the Redeemer (Brazil). (Fact: The  tion of election results in the 2015 elections. What data
+  survey did not include traditional wonders such as the  collection method would you recommend?
+  Leaning Tower of Pisa.)
+  b. Refer to the Colgate Recommendations by Dentists
+  Global Dietary Survey: A survey commissioned by The  claim. Discuss why it is unethical to report the results
+  Global Nutrition and Health Alliance suggests that 72%  as stated.
+  people in Germany and UK have good dietary habits.
+  (Fact: There remains a huge amount of confusion about  c. Refer to New Seven Wonders of the World study. What
+  what our food actually contains, which foods are good  do you think is wrong with the survey with such a huge
+  sources of specific nutrients, and why we need specific  set of respondents?
+  nutrients.)
+  d. Refer to the Global Dietary Survey. What do you think
+  is the cause behind such misinformation?
+
+Activity Data in the News  c. What is the source of the data?
+
+ Scan your daily newspaper or weekly news magazine, or search  d. If a sample has been observed, is it likely to be representa-
+ the Internet for articles that contain data. The data might be  tive of the population?
+ a summary of the results of a public opinion poll, the results
+ of a vote by the U.S. Senate, or a list of crime rates, birth or  e. If a sample has been observed, does the article present an
+ death rates, etc. For each article you find, answer the following  explicit (or implied) inference about the population of inter-
+ questions:  est? If so, state the inference made in the article.
+
+ a. Do the data constitute a sample or an entire population? If a  f. If an inference has been made, has a measure of reliability
+  sample has been taken, clearly identify both the sample and  been included? What is it?
+  the population; otherwise, identify the population.
+  g. Use your answers to questions d–f to critically evaluate the
+ b. What type of data (quantitative or qualitative) has been  article. Comment on the ethics of the study.
+  collected?
+
+References  Kirk, R. E., ed. Statistical Issues: A Reader for the Behavioral Sciences.
+  Monterey, CA: Brooks/Cole, 1972.
+Careers in Statistics, American Statistical Association, 2013.
+  (www.amstat.org)  Kish, L. Survey Sampling. New York: Wiley, 1965 (paperback: 1995).
+
+Cochran, W. G. Sampling Techniques, 3rd ed. New York: Wiley, 1977.  Peck, R., Casella, G., Cobb, G., Hoerl, R., Nolan, D., Starbuck, R., and
+  Stern, H. Statisics: A Guide to the Unknown, 4th ed. Monterey, CA:
+Deming, W. E. Sample Design in Business Research. New York: Wiley, 1963.  Brooks/Cole, 2006.
+
+Ethical Guidelines for Statistical Practice. American Statistical  Scheaffer, R., Mendenhall, W., and Ott, R. L. Elementary Survey
+  Association, 1999. (www.amstat.org)  Sampling, 6th ed. Boston: Duxbury, 2005.
+
+Hansen, M. H., Hurwitz, W. N., and Madow, W. G. Sample Survey  What Is a Survey? American Statistical Association (F. Scheuren, editor),
+  Methods and Theory, Vol. 1. New York: Wiley, 1953.  2nd. ed. 2005. (www.amstat.org)
+
+Hoerl, R., and Snee, R. Statistical Thinking: Improving Business
+  Performance. Boston: Duxbury, 2002.
+
+Huff, D. How to Lie with Statistics. New York: Norton, 1982
+  (paperback 1993).
+  Using Technology  53
+
+USING TECHNOLOGY MINITAB: Accessing and Listing Data
+
+When you start a MINITAB session, you will see a screen simi-  Opening a MINITAB Data File
+lar to Figure 1.M.1. The bottom portion of the screen is an empty
+spreadsheet—called a MINITAB worksheet—with columns  If the data have been previously saved as a MINITAB (.mtw or
+representing variables and rows representing observations (or  .mtp) file, access the data as follows.
+cases). The very top of the screen is the MINITAB main menu  Step 1 Click the “File” button on the menu bar, and then click
+bar, with buttons for the different functions and procedures  “Open Worksheet,” as shown in Figure 1.M.3. A dialog box simi-
+available in MINITAB. Once you have entered data into the  lar to Figure 1.M.4 will appear.
+spreadsheet, you can analyze the data by clicking the appropri-
+ate menu buttons. The results will appear in the Session window.
+
+  Figure 1.M.3 Options for opening a MINITAB data file
+
+Figure 1.M.1 Initial screen viewed by the MINITAB user
+
+Entering Data
+
+Create a MINITAB data file by entering data directly into the
+worksheet. Figure 1.M.2 shows data entered for a variable called
+“RATIO.” Name the variables (columns) by typing in the name
+of each variable in the box below the column number.
+
+Figure 1.M.2 Data entered into
+the MINITAB worksheet
+
+  Figure 1.M.4 Selecting the MINITAB data file to open
+54  CHAPTER 1 ■ Statistics, Data, and Statistical Thinking
+
+Step 2 Specify the location (folder) that contains the data, click  Step 2 Specify the disk drive and folder that contains the exter-
+on the MINITAB data file, then click “Open” (see Figure 1.M.4).  nal data file and the file type (e.g., .dat), and then click on the
+The data will appear in the MINITAB worksheet, as shown in  file name, as shown in Figure 1.M.6.
+Figure 1.M.5.
+  Step 3 If the data set contains qualitative data or data with
+  special characters, click on the “Options” button as shown in
+  Figure 1.M.6. The Options dialog box, shown in Figure 1.M.7,
+  will appear.
+
+Figure 1.M.5 The MINITAB worksheet showing the opened  Figure 1.M.7 Selecting the MINITAB data input options
+MINITAB data file
+  Step 4 Specify the appropriate options for the data set, and
+Accessing External Data from a File  then click “OK” to return to the “Open Worksheet” dialog box
+  (Figure 1.M.6).
+Step 1 Click the “File” button on the menu bar, and then click  Step 5 Click “Open” and the MINITAB worksheet will appear
+“Open Worksheet” as shown in Figure 1.M.3. A dialog box simi-  with the data from the external data file.
+lar to Figure 1.M.6 will appear.
+  Reminder: The variables (columns) can be named by
+  typing in the name of each variable in the box under the
+  column number.
+
+  Listing (Printing) Data
+
+  Step 1 Click on the “Data” button on the MINITAB main
+  menu bar, and then click on “Display Data.” (See Figure 1.M.8.)
+  The resulting menu, or dialog box, appears as in Figure 1.M.9.
+
+  Step 2 Enter the names of the variables you want to print in the
+  “Columns, constants, and matrices to display” box (you can do this
+  by simply double clicking on the variables), and then click “OK.”
+  The printout will show up on your MINITAB session screen.
+
+Figure 1.M.6 Selecting the external data file in MINITAB
+  Using Technology  55
+
+Figure 1.M.8 MINITAB options for displaying data
+
+  Figure 1.M.10 MINITAB menu options for sampling from a
+  data set
+
+Figure 1.M.9 MINITAB Display Data dialog box  Figure 1.M.11 MINITAB Menu Options for selecting a
+  random sample from worksheet columns
+
+MINITAB: Generating a Random Sample
+
+Step 1 Click on the “Calc” button on the MINITAB menu bar
+and then click on “Random Data,” and finally, click on “Sample
+From Columns,” as shown in Figure 1.M.10. The resulting dialog
+box appears as shown in Figure 1.M.11.
+56  CHAPTER 1 ■ Statistics, Data, and Statistical Thinking
+
+Step 2 Specify the sample size (i.e., number of rows), the vari-  Step 3 Click “OK” and the MINITAB worksheet will reappear
+able(s) to be sampled, and the column(s) where you want to  with the case numbers for the selected (sampled) cases in the
+save the sample.  column specified.
+
+Step 3 Click “OK” and the MINITAB worksheet will reappear  [Note: If you want the option of generating the same (identical)
+with the values of the variable for the selected (sampled) cases  sample multiple times from the data set, then first click on the
+in the column specified.  “Set Base” option shown in Figure 1.M.10. Specify an integer in
+  the resulting dialog box. If you always select the same integer,
+In MINITAB, you can also generate a sample of case numbers  MINITAB will select the same sample when you choose the
+(e.g., a sample of cases from a population of cases numbered  random sampling options.]
+from 1 to 500).
+
+Step 1 From the MINITAB menu, click on the “Calc” button
+and then click on “Random Data,” and finally, click on the
+“Uniform” option (see Figure 1.M.10).
+
+Step 2 In the resulting dialog box (shown in Figure 1.M.12),
+specify the number of cases (rows, i.e., the sample size), and the
+column where the case numbers selected will be stored.
+
+Figure 1.M.12 MINITAB options for selecting a random
+sample of case numbers
+2 Methods for Describing
+  Sets of Data
+
+contents  Where We’ve Been
+
+2.1 describing Qualitative data  • Examined the difference between inferential and
+2.2 Graphical Methods for describing  descriptive statistics
+
+  Quantitative data  • Described the key elements of a statistical problem
+2.3 numerical Measures of Central  • Learned about the two types of data: quantitative
+
+  Tendency  and qualitative
+2.4 numerical Measures of Variability  • Discussed the role of statistical thinking in
+
+  managerial decision making
+
+2.5 Using the Mean and Standard  Where We’re Going
+  deviation to describe data
+  • Describe qualitative data with graphs (2.1)
+2.6 numerical Measures of relative  • Describe quantitative data with graphs (2.2)
+  Standing  • Describe quantitative data with numerical
+
+2.7 Methods for detecting outliers:  measures (2.3–2.7)
+  Box Plots and z-Scores  • Describe the relationship between two quantitative
+
+2.8 Graphing Bivariate relationships  variables with a graph (2.8)
+  (optional)  • Detect descriptive methods that distort the
+
+2.9 distorting the Truth with descriptive  truth (2.9)
+  Statistics
+58  CHAPTER 2 ■ Methods for Describing Sets of Data
+
+Statistics IN Action Body image dissatisfaction: real or imagined?
+
+“Everything has beauty, but not everyone sees it” —ancient  health, fitness, and weight. In this
+Chinese sage Confucius  Statistics in Action, our focus is on the
+  appearance evaluations (e.g., “How
+  “Body dissatisfaction can produce extreme body-shaping  satisfied are you with your physical at-
+behaviors, such as eating disorders. Women and girls can’t  tractiveness and looks?”) of the BDD
+help being exposed to ultra-thin models in advertising whose  patients. The scores for each of seven
+body size is unrealistic and unhealthy. There is good evidence  appearance items (questions) were
+already that exposure to these unhealthy models leads a large  recorded on 5-point Likert scales, where the possible responses
+proportion of women to feel dissatisfied with their own bodies.”  are 1 = definitely dissatisfied, 2 = somewhat dissatisfied,
+—Helga Dittmar, University of Sussex researcher  3 = neutral, 4 = somewhat satisfied, and 5 = definitely
+  satisfied. These scores were summed and a total appear-
+  “Action figures (like G.I. Joe) present subtle messages  ance score (ranging from 7 to 35 points) was recorded for
+of unrealistic role models of well-sculpted, heavily mus-  each patient.
+cled, ‘perfect’ bodies that little boys see as their role models.”
+—Sondra Kronberg, director of Eating Disorder Associates  The data for the study (simulated on the basis of sum-
+Treatment & Referral Centers  mary statistics presented in the journal article) are provided
+  in the BDD file. For each of the 92 patients in the experiment,
+  “By age 13, 53% of American girls are unhappy with their  the following variables were measured:
+bodies; that figure grows to 78% by the time girls reach 17. In
+another study on fifth graders, 10-year-old girls and boys told re-  1. Total Appearance Score (points)
+searchers they were dissatisfied with their own bodies after watch-
+ing a music video by Britney Spears or a clip from the TV show  2. Gender (M or F)
+Friends. And adolescent girls who viewed commercials depicting
+unrealistically thin models felt ‘less confident, more angry, and  3. Comorbid Disorder (Major Depression, Social Phobia,
+more dissatisfied with their weight and appearance.’” —statistics  Obsessive Compulsive, or Anorexia/Bulimia Nervosa)
+posted by the National Institute on Media and the Family
+  4. Dissatisfied with Looks (Yes or No)
+  Are you dissatisfied with your physical appearance?
+Do you have a negative image of your own body? In today’s  For this application, we are interested in evaluating the data col-
+media-driven society, many of us would answer yes to these  lected on the BDD patients. Specifically, we want to know if (1)
+questions (as the statistics in the previous quote show). Much  BDD females tend to be more dissatisfied with their looks than
+research has been conducted on the body images of normal  BDD males, (2) certain comorbid disorders lead to a higher
+adolescents and adults. However, there is a lack of information  level of dissatisfaction with body appearance, and (3) BDD pa-
+on how patients with a body image disorder evaluate their own  tients have lower appearance scores than normal people. We
+appearance, health, and fitness. To fill this gap, researchers from  apply the graphical and numerical descriptive techniques of this
+the Department of Psychiatry and Human Behavior at Brown  chapter to the BDD data to answer these questions in the fol-
+University conducted and published a study in Body Image: An  lowing Statistics in Action Revisited sections:
+International Journal of Research, January 2010.
+  Statistics IN Action Revisited
+  Data were collected on 92 patients diagnosed with body
+dysmorphic disorder (BDD). This disorder “is characterized  • Interpreting Pie Charts for the Body Image Data (p. 63)
+by a distressing or impairing preoccupation with an imagined  • Interpreting Histograms for the Body Image Data (p. 76)
+or slight defect in appearance that causes clinically signifi-  • Interpreting Descriptive Statistics for the Body Image
+cant distress or functional impairment.” (Patients were also
+diagnosed with additional mental disorders, such as major  Data (p. 103)
+depression or social phobia, called a comorbid disorder.) Each  • Detecting Outliers in the Body Image Data (p. 118)
+patient completed the Multidimensional Body-Self Relations
+Questionnaire (MBSRQ). The questionnaire elicits responses  Data Set: BDD
+that assess how satisfied one is with his/her appearance,
+
+  Suppose you wish to evaluate the mathematical capabilities of a class of 1,000 first-year
+  college students, based on their quantitative Scholastic Aptitude Test (SAT) scores. How
+  would you describe these 1,000 measurements? Characteristics of interest include the
+  typical, or most frequent, SAT score; the variability in the scores; the highest and lowest
+  scores; the “shape” of the data; and whether the data set contains any unusual scores.
+  Extracting this information isn’t easy. The 1,000 scores provide too many bits of infor-
+  mation for our minds to comprehend. Clearly, we need some method for summarizing
+  and characterizing the information in such a data set. Methods for describing data sets
+  SECTION 2.1 ■ Describing Qualitative Data  59
+
+are also essential for statistical inference. Most populations make for large data sets.
+Consequently, we need methods for describing a data set that let us make inferences
+about a population on the basis of information contained in a sample.
+
+  Two methods for describing data are presented in this chapter, one graphical and
+the other numerical. Both play an important role in statistics. Section 2.1 presents both
+graphical and numerical methods for describing qualitative data. Graphical methods for
+describing quantitative data are illustrated in Sections 2.2, 2.8, and 2.9; numerical de-
+scriptive methods for quantitative data are presented in Sections 2.3–2.7. We end the
+chapter with a section on the misuse of descriptive techniques.
+
+2.1 Describing Qualitative Data
+
+  Consider a study of aphasia published in the Journal of Communication Disorders.
+  Aphasia is the “impairment or loss of the faculty of using or understanding spoken or
+  written language.” Three types of aphasia have been identified by researchers: Broca’s,
+  conduction, and anomic. The researchers wanted to determine whether one type of
+  aphasia occurs more often than any other and, if so, how often. Consequently, they
+  measured the type of aphasia for a sample of 22 adult aphasics. Table 2.1 gives the type
+  of aphasia diagnosed for each aphasic in the sample.
+
+  For this study, the variable of interest, type of aphasia, is qualitative in nature.
+  Qualitative data are nonnumerical in nature; thus, the value of a qualitative variable can
+  only be classified into categories called classes. The possible types of aphasia—Broca’s, con-
+  duction, and anomic—represent the classes for this qualitative variable. We can summarize
+  such data numerically in two ways: (1) by computing the class frequency—the number of
+  observations in the data set that fall into each class—or (2) by computing the class relative
+  frequency—the proportion of the total number of observations falling into each class.
+
+  A class is one of the categories into which qualitative data can be classified.
+
+The class frequency is the number of observations in the data set that fall into a
+particular class.
+
+The class relative frequency is the class frequency divided by the total number of
+observations in the data set; that is,
+
+  class frequency
+  class relative frequency = n
+
+Table 2.1  Data on 22 Adult Aphasics  Type of Aphasia
+Subject  Type of Aphasia Subject
+
+1  Broca’s  12  Broca’s
+
+2  Anomic  13  Anomic
+
+3  Anomic  14  Broca’s
+
+4  Conduction  15  Anomic
+
+5  Broca’s  16  Anomic
+
+6  Conduction  17  Anomic
+
+7  Conduction  18  Conduction
+
+8  Anomic  19  Broca’s
+
+9  Conduction  20  Anomic
+
+10  Anomic  21  Conduction
+
+11  Conduction  22  Anomic
+
+Based on Li, E. C., Williams, S. E., and Volpe, R. D. “The effects of topic and listener
+familiarity of discourse variables in procedural and narrative discourse tasks.” The Journal
+of Communication Disorders, Vol. 28, No. 1, Mar. 1995, p. 44 (Table 1).
+
+  Data Set: APHASIA
+60  CHAPTER 2 ■ Methods for Describing Sets of Data
+
+  The class percentage is the class relative frequency multiplied by 100; that is,
+  class percentage = 1class relative frequency2 * 100
+
+  Examining Table 2.1, we observe that 10 aphasics in the study were diagnosed as
+  suffering from anomic aphasia, 5 from Broca’s aphasia, and 7 from conduction aphasia.
+  These numbers—10, 5, and 7—represent the class frequencies for the three classes and
+  are shown in the summary table, Figure 2.1, produced with SPSS.
+
+Figure 2.1
+
+SPSS summary table for types
+of aphasia
+
+  Figure 2.1 also gives the relative frequency of each of the three aphasia classes.
+  From the class relative frequency definition, we calculate the relative frequency by di-
+  viding the class frequency by the total number of observations in the data set. Thus, the
+  relative frequencies for the three types of aphasia are
+
+  Anomic: = 10 .455
+  22
+
+  Broca’s: = 5 .227
+  22
+
+  Conduction: = 7 .318
+  22
+
+  These values, expressed as a percent, are shown in the SPSS summary table of Figure 2.1.
+  From these relative frequencies, we observe that nearly half (45.5%) of the 22 subjects in
+  the study are suffering from anomic aphasia.
+
+  Although the summary table of Figure 2.1 adequately describes the data of
+  Table 2.1, we often want a graphical presentation as well. Figures 2.2 and 2.3 show two
+  of the most widely used graphical methods for describing qualitative data: bar graphs
+  and pie charts. Figure 2.2 shows the frequencies of the three types of aphasia in a bar
+  graph produced with SAS. Note that the height of the rectangle, or “bar,” over each class
+  is equal to the class frequency. (Optionally, the bar heights can be proportional to class
+  relative frequencies.)
+
+  Figure 2.2  Figure 2.3
+  MINITAB pie chart for type of aphasia
+  SAS bar graph for type of
+  aphasia
+  SECTION 2.1 ■ Describing Qualitative Data  61
+
+  BIOGRAPHY  In contrast, Figure 2.3 shows the relative frequencies of the three types of aphasia
+  in a pie chart generated with MINITAB. Note that the pie is a circle (spanning 360°)
+VILFREDO PARETO (1843–1923)  and the size (angle) of the “pie slice” assigned to each class is proportional to the class
+  relative frequency. For example, the slice assigned to anomic aphasia is 45.5% of 360°, or
+The Pareto Principle  1.45521360°2 = 163.8°.
+
+Born in Paris to an Italian  Before leaving the data set in Table 2.1, consider the bar graph shown in Figure 2.4,
+aristocratic family, Vilfredo Pareto  produced with SPSS. Note that the bars for the types of aphasia are arranged in descend-
+was educated at the University  ing order of height, from left to right across the horizontal axis. That is, the tallest bar
+of Turin, where he studied  (Anomic) is positioned at the far left and the shortest bar (Broca’s) is at the far right.
+engineering and mathematics.  This rearrangement of the bars in a bar graph is called a Pareto diagram. One goal of a
+After the death of his parents,  Pareto diagram (named for the Italian economist Vilfredo Pareto) is to make it easy to
+Pareto quit his job as an engineer  locate the “most important” categories—those with the largest frequencies.
+and began writing and lecturing on
+the evils of the economic policies  Figure 2.4
+of the Italian government. While  SPSS Pareto diagram for
+at the University of Lausanne  type of aphasia
+in Switzerland in 1896, he
+published his first paper, Cours  Summary of Graphical Descriptive Methods for Qualitative Data
+d’économie politique. In the paper,  Bar Graph: The categories (classes) of the qualitative variable are represented by
+Pareto derived a complicated  bars, where the height of each bar is either the class frequency, class relative fre-
+mathematical formula to prove  quency, or class percentage.
+that the distribution of income and  Pie Chart: The categories (classes) of the qualitative variable are represented by
+wealth in society is not random,  slices of a pie (circle). The size of each slice is proportional to the class relative
+but that a consistent pattern  frequency.
+appears throughout history in  Pareto Diagram: A bar graph with the categories (classes) of the qualitative variable
+all societies. Essentially, Pareto  (i.e., the bars) arranged by height in descending order from left to right.
+showed that approximately 80%
+of the total wealth in a society  Now Work Exercise 2.6
+lies with only 20% of the families.
+This famous law about the “vital
+few and the trivial many” is widely
+known as the Pareto principle in
+economics. ■
+
+  Let’s look at a practical example that requires interpretation of the graphical results.
+
+ Example 2.1  Problem A group of cardiac physicians in southwest Florida has been studying a
+  new drug designed to reduce blood loss in coronary bypass operations. Blood loss
+Graphing and Summarizing  data for 114 coronary bypass patients (some who received a dosage of the drug and
+Qualitative Data—Drug  others who did not) are saved in the BLOOD file. Although the drug shows promise
+Designed to Reduce  in reducing blood loss, the physicians are concerned about possible side effects and
+Blood Loss  complications. So their data set includes not only the qualitative variable DRUG,
+  which indicates whether or not the patient received the drug, but also the qualitative
+  variable COMP, which specifies the type (if any) of complication experienced by the
+  patient. The four values of COMP are (1) redo surgery, (2) post-op infection, (3) both,
+  or (4) none.
+62  CHAPTER 2 ■ Methods for Describing Sets of Data
+
+  a. Figure 2.5, generated by SAS, shows summary tables for the two qualitative variables,
+  DRUG and COMP. Interpret the results.
+
+  b. Interpret the MINITAB and SPSS printouts shown in Figures 2.6 and 2.7, respectively.
+
+Figure 2.5
+
+SAS summary tables for DRUG
+and COMP
+
+Figure 2.6
+
+MINITAB side-by-side bar
+graphs for COMP by value of
+DRUG
+
+Figure 2.7
+
+SPSS summary tables for
+COMP by value of drug
+
+  Solution
+
+  a. The top table in Figure 2.5 is a summary frequency table for DRUG. Note that ex-
+  actly half (57) of the 114 coronary bypass patients received the drug and half did
+  not. The bottom table in Figure 2.5 is a summary frequency table for COMP. The
+  class percentages are given in the Percent column. We see that about 69% of the 114
+  patients had no complications, leaving about 31% who experienced either a redo
+  surgery, a post-op infection, or both.
+  SECTION 2.1 ■ Describing Qualitative Data  63
+
+b. Figure 2.6 is a MINITAB side-by-side bar graph of the data. The four bars in the
+  left-side graph represent the frequencies of COMP for the 57 patients who did not
+  receive the drug; the four bars in the right-side graph represent the frequencies of
+  COMP for the 57 patients who did receive a dosage of the drug. The graph clearly
+  shows that patients who did not receive the drug suffered fewer complications. The
+  exact percentages are displayed in the SPSS summary tables of Figure 2.7. Over 56%
+  of the patients who got the drug had no complications, compared with about 83% for
+  the patients who got no drug.
+
+Look Back Although these results show that the drug may be effective in reducing
+blood loss, Figures 2.6 and 2.7 imply that patients on the drug may have a higher risk of
+incurring complications. But before using this information to make a decision about the
+drug, the physicians will need to provide a measure of reliability for the inference. That
+is, the physicians will want to know whether the difference between the percentages of
+patients with complications observed in this sample of 114 patients is generalizable to
+the population of all coronary bypass patients.
+
+  ■ Now Work Exercise 2.17
+
+Statistics IN Action Revisited Interpreting Pie Charts for the Body Image Data
+
+In the Body Image: An International Journal of Research (Jan.  the BDD file. We used MINITAB to
+2010) study, Brown University researchers measured several  create pie charts for these variables.
+qualitative (categorical) variables for each of 92 body dysmor-
+phic disorder (BDD) patients: Gender (M or F), Comorbid  Figure SIA2.1 shows individual
+Disorder (Major Depression, Social Phobia, Obsessive  pie charts for each of the three qual-
+Compulsive Disorder—OCD, or Anorexia/Bulimia Nervosa),  itative variables, Gender, Disorder,
+and Dissatisfied with Looks (Yes or No). [Note: “Yes” values  and Dissatisfied with Looks. First,
+for Dissatisfied with Looks correspond to total appearance  notice that of the 92 BDD patients,
+evaluation responses of 20 points (out of 35) or less. “No”  65% are females and 35% are males. Of these patients, the
+values correspond to totals of 21 points or more.] Pie charts  most common comorbid disorder is major depression (42%),
+and bar graphs can be used to summarize and describe the  followed by social phobia (35%) and OCD (20%). The third
+responses for these variables. Recall that the data are saved in  pie chart shows that 77% of the BDD patients are dissatisfied
+  in some way with their body.
+
+Figure SIA2.1
+MINITAB pie charts for Gender, Disorder, and Dissatisfied with Looks
+
+  (Continued)
+64  CHAPTER 2 ■ Methods for Describing Sets of Data
+
+Statistics IN Action
+
+  (continued)
+
+Figure SIA2.1
+(continued)
+
+Figure SIA2.2
+MINITAB side-by-side pie
+charts for Dissatisfied with
+Looks by Gender
+
+Figure SIA2.3
+
+MINITAB side-by-side pie
+charts for Dissatisfied with
+Looks by Comorbid Disorder
+  SECTION 2.1 ■ Describing Qualitative Data  65
+
+Statistics IN Action  Of interest in the study is  Also of interest is whether certain comorbid disorders
+  whether BDD females tend to be  lead to a higher level of dissatisfaction with body appear-
+  (continued)  more dissatisfied with their looks  ance. Figure SIA2.3 is a set of side-by-side pie charts for
+  Dissatisfied with Looks, one chart for each of four co-
+  than BDD males. We can gain in-  morbid disorders. The graphs show that the percentage of
+  BDD patients who are dissatisfied in some way with their
+sight into this question by forming side-by-side pie charts of the  body image range from about 67% for those with a nervosa
+  disorder to about 81% for those diagnosed with a social
+Dissatisfied with Looks variable, one chart for females and one  phobia.
+
+for males. These pie charts are shown in Figure SIA2.2. You can  Data Set: BDD
+
+see that about 82% of the females are dissatisfied in some way
+
+with their body as compared to about 69% of the males. Thus,
+
+it does appear that BDD females tend to be more dissatisfied
+
+with their looks than males, at least for this sample of patients.
+
+  ! CAuTIoN The information produced in these pie charts should be limited to describ-
+  ing the sample of 92 BDD patients. If one is interested in making inferences about the
+  population of all BDD patients (as were the Brown University researchers), inferential
+  statistical methods need to be applied to the data. These methods are the topics of later
+  chapters.
+
+Exercises 2.1–2.24  Applying the Concepts—Basic
+
+Understanding the Principles  2.6 Study of importance of libraries. In The Canadian Journal
+  of Information and Library Science (Vol. 33, 2009),
+ 2.1 Explain the difference between class frequency, class rel-  researchers from the University of Western Ontario re-
+  ative frequency, and class percentage for a qualitative  ported on mall shoppers’ opinions about libraries and their
+  variable.  importance to today’s society. Each in a sample of over
+  200 mall shoppers was asked the following question: “In
+ 2.2 Explain the difference between a bar graph and a pie chart.  today’s world, with Internet access and online and large
+ 2.3 What is the advantage of a Pareto diagram over a bar  book sellers like Amazon, do you think libraries have
+  become more, less, or the same in importance to their com-
+  graph?  munity?” The accompanying graphic summarizes the mall
+  shoppers’ responses.
+Learning the Mechanics  a. What type of graph is shown?
+  b. Identify the qualitative variable described in the
+ 2.4 Complete the following table:  graph.
+  c. From the graph, identify the most common re-
+  Grades in  Frequency  Relative  sponse.
+  Statistics  Frequency  d. Convert the graph into a Pareto diagram. Interpret the
+  75  results.
+A: 90–100  120  .2
+B: 80–89
+C: 65–79  15  .05
+D: 50–64  1.00
+F: Below 50
+
+Total
+
+2.5 A qualitative variable with three classes (X, Y, and Z) is
+  measured for each of 20 units randomly sampled from a
+
+LO2005 target population. The data (observed class for each unit)
+  are as follows:
+
+  YXXZXYYYXXZX
+  YYXZYYYX
+
+  a. Compute the frequency for each of the three classes.
+  b. Compute the relative frequency for each of the three
+
+  classes.
+  c. Display the results from part a in a frequency bar graph.
+  d. Display the results from part b in a pie chart.
+66  CHAPTER 2 ■ Methods for Describing Sets of Data
+
+2.7 Do social robots walk or roll? According to the United
+  Nations, social robots now outnumber industrial ro-
+  bots worldwide. A social (or service) robot is designed
+  to entertain, educate, and care for human users. In a
+  paper published by the International Conference on
+  Social Robotics (Vol. 6414, 2010), design engineers
+  investigated the trend in the design of social robots.
+  Using a random sample of 106 social robots obtained
+  through a Web search, the engineers found that 63 were
+  built with legs only, 20 with wheels only, 8 with both
+  legs and wheels, and 15 with neither legs nor wheels.
+  This information is portrayed in the accompanying
+  graphic.
+  a. What type of graph is used to describe the data?
+  b. Identify the variable measured for each of the 106 robot
+  designs.
+  c. Use the graph to identify the social robot design that is
+  currently used the most.
+  d. Compute class relative frequencies for the different
+  categories shown in the graph.
+  e. Use the results from part d to construct a Pareto diagram
+  for the data.
+
+  70  63  2.9  Cheek teeth of extinct primates. The characteristics of
+  cheek teeth (e.g., molars) can provide anthropologists with
+  MOLARS  information on the dietary habits of extinct mammals. The
+  cheek teeth of an extinct primate species were the subject
+  60  of research reported in the American Journal of Physical
+  Anthropology (Vol. 142, 2010). A total of 18 cheek teeth
+Number of Robots  50  extracted from skulls discovered in western Wyoming
+  were analyzed. Each tooth was classified according to
+  40  degree of wear (unworn, slight, light-moderate, moderate,
+  moderate-heavy, or heavy). The 18 measurements are
+  30  listed here.
+
+  20  15  20
+  8
+  10
+
+  0  Both  Legs Only  Wheels Only  Data on Degree of Wear  Slight
+  None  Slight
+  Unknown  Heavy
+  Type of Robotic Limbs  Unknown  Unworn
+  Unknown  Light-moderate
+2.8 Paying for music downloads. If you use the Internet, have  Moderate  Light-moderate
+  you ever paid to access or download music? This was one  Slight  Moderate
+  Unknown  Unworn
+MUSIC of the questions of interest in a recent Pew Internet &  Moderate-heavy  Unknown
+  American Life Project Survey (October 2010). Telephone  Moderate
+  interviews were conducted on a representative sample of  Slight
+  1,003 adults living in the United States. For this sample,
+  248 adults stated that they do not use the Internet, 249  a. Identify the variable measured in the study and its type
+  revealed that they use the Internet but have never paid  (quantitative or qualitative).
+  to download music, and the remainder (506 adults) stated
+  that they use the Internet and have paid to download  b. Count the number of cheek teeth in each wear
+  music. The results are summarized in the MINITAB pie  category.
+  chart shown.
+  a. According to the pie chart, what proportion of the  c. Calculate the relative frequency for each wear
+  sample use the Internet and pay to download music?  category.
+  Verify the accuracy of this proportion using the sur-
+  vey results.  d. Construct a relative frequency bar graph for the data.
+  b. Now consider only the 755 adults in the sample that use  e. Construct a Pareto diagram for the data.
+  the Internet. Create a graph that compares the propor-  f. Identify the degree of wear category that occurred most
+  tion of these adults that pay to download music with the
+  proportion that do not pay.  often in the sample of 18 cheek teeth.
+
+  2.10 Humane education and classroom pets. In grade school,
+  did your teacher have a pet in the classroom? Many
+  teachers do so in order to promote humane education.
+  SECTION 2.1 ■ Describing Qualitative Data  67
+
+The Journal of Moral Education (Mar. 2010) published  2.12 STEM experiences for girls. The National Science
+a study designed to examine elementary school teachers’  Foundation (NSF) sponsored a study on girls’ participation
+experiences with humane education and animals in the  in informal science, technology, engineering, and mathe-
+classroom. Based on a survey of 75 elementary school  matics (STEM) programs (see Exercise 1.13). The results
+teachers, the following results were reported:  of the study were published in Cascading Influences: Long-
+  Term Impacts of Informal STEM Experiences for Girls
+Survey Question  Response  Number  (Mar. 2013). The researchers questioned 174 young women
+  of Teachers  who recently participated in a STEM program. They used
+  a pie chart to describe the geographic location (urban,
+Q1: Do you keep  Yes  61  suburban, or rural) of the STEM programs attended. Of
+  the 174 STEM participants, 107 were in urban areas, 57 in
+classroom pets?  No  14  suburban areas, and 10 in rural areas. Use this information
+  to construct the pie chart. Interpret the results.
+Q2: Do you allow visits Yes  35
+  Applying the Concepts—Intermediate
+by pets?  No  40
+  2.13 Microsoft program security issues. The dominance of
+Q3: What formal humane Character counts  21  Microsoft in the computer software market has led to
+  numerous malicious attacks (e.g., worms, viruses) on
+education program Roots of empathy  9  its programs. To help its users combat these problems,
+  Microsoft periodically issues a security bulletin that
+does your school  Teacher designed  3  reports the software affected by the vulnerability. In
+  Computers & Security (July 2013), researchers focused
+employ?  Other  14  on reported security issues with three Microsoft prod-
+  ucts: Office, Windows, and Explorer. In a sample of 50
+  None  28  security bulletins issued in 2012, 32 reported a security
+  issue with Windows, 6 with Explorer, and 12 with Office.
+  Based on Journal of Moral Education, Mar. 2010.  The researchers also categorized the security bulletins
+  according to the expected repercussion of the vulnerabil-
+  a. Explain why the data collected are qualitative.  ity. Categories were Denial of service, Information dis-
+  b. For each survey question, summarize the results with a  closure, Remote code execution, Spoofing, and Privilege
+  elevation. Suppose that of the 50 bulletins sampled, the
+  graph.  following numbers of bulletins were classified into each
+  c. For this sample of 75 teachers, write two or three  respective category: 6, 8, 22, 3, 11.
+  a. Construct a pie chart to describe the Microsoft prod-
+  sentences describing their experience with humane  ucts with security issues. Which product had the lowest
+  education and classroom pets.  proportion of security issues in 2012?
+  b. Construct a Pareto diagram to describe the expected
+2.11 Estimating the rhino population. The International Rhino  repercussions from security issues. Based on the
+  Foundation estimates that there are 28,933 rhinoceroses living  graph, what repercussion would you advise Microsoft
+  in the wild in Africa and Asia. A breakdown of the number of  to focus on?
+  rhinos of each species is reported in the accompanying table:
+  2.14 Genealogy research. The Journal of Family History (Jan.
+Rhino Species  Population Estimate  2010) investigated the genealogy of a certain Korean clan.
+  Of interest was whether or not a family name continued
+African Black  5,055  into the next generation in the clan genealogy (called a
+African White  20,405
+(Asian) Sumatran
+(Asian) Javan  100
+(Asian) Greater One-Horned  40
+
+  3,333
+
+Total  28,933
+
+  Source: International Rhino Foundation, 2014.
+
+a. Construct a relative frequency table for the data.
+b. Display the relative frequencies in a bar graph.
+c. What proportion of the 28,933 rhinos are African rhinos?
+
+  Asian?
+
+  MINITAB Output for Exercise 2.14
+68  CHAPTER 2 ■ Methods for Describing Sets of Data
+
+  continued line) or dropped out (called a dropout line). Side-  if the allocation of tracks to trains is evenly distributed and,
+  by-side pie charts were used to describe the rate at which  if not, which tracks are underutilized and overutilized.
+  certain occupational titles of clan individuals occurred
+  within each line type. Similarly constructed MINITAB bar  Track Assigned  Number of Trains
+  charts are shown on p. 67.
+  a. Identify the two qualitative variables graphed in the  Track #1  3
+
+  side-by-side pie charts.  Track #2  4
+  b. Give a full interpretation of the charts. Identify the
+  Track #3  4
+  major differences (if any) between the two line groups.
+  Track #4  4
+  Based on Sangkuk Lee, Journal of Family History (Jan 2010).
+  Track #5  7
+
+  Track #6  5
+
+2.15  Characteristics of ice melt ponds. The National Snow and  Track #7  5
+  Ice Data Center (NSIDC) collects data on the albedo,
+PONDICE  depth, and physical characteristics of ice melt ponds in  Track #8  7
+  the Canadian Arctic. Environmental engineers at the
+  University of Colorado are using these data to study how  Track #9  4
+  climate affects the sea ice. Data on 504 ice melt ponds lo-
+  cated in the Barrow Strait in the Canadian Arctic are saved  Track #10  5
+  in the PONDICE file. One variable of interest is the type
+  of ice observed for each pond, classified as first-year ice,  Track #11  5
+  multiyear ice, or landfast ice. An SAS summary table and
+  a horizontal bar graph that describe the types of ice of the  Total  53
+  504 melt ponds are shown below.
+  a. Of the 504 melt ponds, what proportion had landfast  Source: Wu, J., et al. “Track allocation optimization at a
+  railway station: Mean-variance model and case study.”
+  ice?  Journal of Transportation Engineering, Vol. 139, No. 5,
+  b. The University of Colorado researchers estimated that  May 2013 (extracted from Table 4).
+
+  about 17% of melt ponds in the Canadian Arctic have  2.17 Satellites in orbit. According to the Union of Concerned
+  first-year ice. Do you agree?  Scientists (www.ucsusa.org), there are 502 low earth orbit
+  c. Convert the horizontal bar graph into a Pareto diagram.  (LEO) and 432 geosynchronous orbit (GEO) satellites
+  Interpret the graph.  in space. Each satellite is owned by an entity in either
+  the government, military, commercial, or civil sector. A
+2.16 Railway track allocation. One of the problems faced by  breakdown of the number of satellites in orbit for each
+  transportation engineers is the assignment of tracks to trains  sector is displayed in the accompanying table. Use this in-
+  at a busy railroad station. Overused and/or underused tracks  formation to construct a pair of graphs that compare the
+  cause increases in maintenance costs and inefficient alloca-  ownership sectors of LEO and GEO satellites in orbit.
+  tion of resources. The Journal of Transportation Engineering  What observations do you have about the data?
+  (May 2013) investigated the optimization of track allocation
+  at a Chinese railway station with 11 tracks. Using a new al-  LEO Satellites  GEO Satellites
+  gorithm designed to minimize waiting time and bottlenecks,
+  engineers assigned tracks to 53 trains in a single day as shown  Government  229  59
+  in the accompanying table. Construct a Pareto diagram for
+  the data. Use the diagram to help the engineers determine  Military  109  91
+
+  Commercial  118  281
+
+  Civil  46  1
+
+  Total  502  432
+
+  Source: Union of Concerned Scientists, Nov. 2012.
+
+  SAS output for Exercise 2.15
+  SECTION 2.1 ■ Describing Qualitative Data  69
+
+2.18 Curbing street gang gun violence. Operation Ceasefire is a  2.20 Motivation and right-oriented bias. Evolutionary theory
+  program implemented to reduce street gang gun violence  suggests that motivated decision makers tend to exhibit
+  in the city of Boston. The effectiveness of the program  a right-oriented bias. (For example, if presented with
+  was examined in the Journal of Quantitative Criminology  two equally valued brands of detergent on a supermar-
+  (Mar. 2014). Over a 5-year period (2006–2010), there were  ket shelf, consumers are more likely to choose the brand
+  80 shootings involving a particular Boston street gang  on the right.) In Psychological Science (November
+  (called the Lucerne Street Doggz). The information in the  2011), researchers tested this theory using data on all
+  table breaks down these shootings by year and by who was  penalty shots attempted in World Cup soccer matches (a
+  shot (gang members or non-gang members). Note: The  total of 204 penalty shots). The researchers believe that
+  Ceasefire program was implemented at the end of 2007.  goalkeepers, motivated to make a penalty shot save but
+  with little time to make a decision, will tend to dive to
+  Shootings of  Shootings of  the right. The results of the study (percentages of dives
+  to the left, middle, or right) are provided in the table.
+  Total  Gang  Non-Gang  Note that the percentages in each row, corresponding
+  to a certain match situation, add to 100%. Construct
+Year  Shootings  Members  Members  side-by-side bar graphs showing the distribution of dives
+  for the three match situations. What inferences can you
+2006  37  30  7  draw from the graphs?
+
+2007  30  22  8
+
+2008  4  3  1
+
+2009  5  4  1
+
+2010  4  3  1  Match Situation Dive Left Stay Middle Dive Right
+
+Totals  80  62  18  Team behind  29%  0%  71%
+  49%
+  Source: Braga, A. A, Hureau, D. M., and Papachristos, A. V. “Deterring gang-  Tied  48%  3%  48%
+  involved gun violence: Measuring the impact of Boston’s Operation Ceasefire
+  on street gang behavior.” Journal of Quantitative Criminology, Vol. 30, No. 1,  Team ahead  51%  1%
+  Mar. 2014 (adapted from Figure 3).
+  Source: Roskes, M., et al. “The right side? Under time pressure, approach
+  a. Construct a Pareto diagram for the total annual shoot-  motivation leads to right-oriented bias.” Psychological Science, Vol. 22, No. 11,
+  ings involving the Boston street gang.  Nov. 2011 (adapted from Figure 2).
+
+  b. Construct a Pareto diagram for the annual shootings of  2.21 Do you believe in the Bible? Each year the National Opinion
+  the Boston street gang members.  Research Center conducts the General Social Survey
+  (GSS), eliciting opinions of Americans on a wide variety
+  c. Based on the Pareto diagrams, comment on the effec-  of social topics. One question in the survey asked about
+  tiveness of Operation Ceasefire.  a person’s belief in the Bible. A sample of 4,826 respon-
+  dents selected from one of the following answers: (1) The
+2.19 Interactions in a children’s museum. The nature of child-led  Bible is the actual word of God, to be taken literally—1,527
+  and adult-led interactions in a children’s museum was inves-  respondents; (2) the Bible is the inspired word of God, but
+  tigated in Early Childhood Education Journal (Mar. 2014).  not everything is to be taken literally—2,231 respondents;
+  Interactions by visitors to the museum were classified as  (3) the Bible is an ancient book of fables legends, history,
+  (1) show-and-tell, (2) learning, (3) teaching, (4) refocusing,  and moral precepts—996 respondents; and (4) the Bible
+  (5) participatory play, (6) advocating, or (7) disciplining.  has some other origin—72 respondents.
+  Over a 3-month period, the researchers observed 170 mean-  a. Summarize the responses to the Bible question in the
+  ingful interactions, of which 81 were led by children and 89  form of a relative frequency table.
+  were led by adult caregivers. The number of interactions  b. Summarize the responses to the Bible question in a pie
+  observed in each category is provided in the accompanying  chart.
+  table. Use side-by-side bar graphs to compare the interac-  c. Write a few sentences that give a practical interpretation
+  tions led by children and adults. Do you observe any trends?  of the results shown in the summary table and graph.
+
+  Type of Interaction  Child-Led  Adult-Led  Applying the Concepts—Advanced
+
+  Show-and-tell  26  0  2.22 Museum management. What criteria do museums use
+  to evaluate their performance? In a worldwide sur-
+  Learning  21  0
+  MMC vey reported in Museum Management and Curatorship
+  Teaching  0  64  (June 2010), managers of 30 leading museums of con-
+  temporary art were asked to provide the performance
+  Refocusing  21  10  measure used most often. The data are provided in the
+  table on p. 70. The researcher concluded that “there is
+  Participatory Play  12  9  a large amount of variation within the museum commu-
+  nity with regard to… performance measurement and
+  Advocating  0  4  evaluation.” Do you agree? Use a graph to support your
+  conclusion.
+  Disciplining  1  2
+
+  Totals  81  89
+
+  Source: McMunn-Dooley, C., and Welch, M. M. “Nature of interactions
+  among young children and adult caregivers in a children’s museum.”
+  Early Childhood Education Journal, Vol. 42, No. 2, Mar. 2014 (adapted
+  from Figure 2).
+70  CHAPTER 2 ■ Methods for Describing Sets of Data
+
+Museum  Performance  Museum  Performance  (11 selected observations from 223)
+Number  Measure  Number  Measure
+  Well Class  Aquifer  Detect MTBE?
+  1  Total visitors  16  Paying visitors
+  2  Paying visitors  17  Total visitors  Private  Bedrock  Below Limit
+  3  Funds raised  18  Big shows  Private  Bedrock  Below Limit
+  4  Big shows  19  Big shows  Public  Unconsolidated  Detect
+  5  Funds raised  20  Total visitors  Public  Unconsolidated  Below Limit
+  6  Total visitors  21  Funds raised  Public  Unconsolidated  Below Limit
+  7  Total visitors  22  Total visitors  Public  Unconsolidated  Below Limit
+  8  Big shows  23  Members  Public  Unconsolidated  Detect
+  9  Members  24  Paying visitors  Public  Unconsolidated  Below Limit
+  10  Funds raised  25  Big shows  Public  Unconsolidated  Below Limit
+  11  Funds raised  26  Funds raised  Public  Bedrock  Detect
+  12  Members  27  Members  Public  Bedrock  Detect
+  13  Big shows  28  Total visitors
+  14  Paying visitors  29  Funds raised  Based on Ayotte, J. D., Argue, D. M., and McGarry, F. J. “Methyl tert-Butyl ether
+  15  Paying visitors  30  Total visitors  occurrence and related factors in public and private wells in southeast New
+  Hampshire.” Environmental Science & Technology, Vol. 39, No. 1, Jan. 2005,
+  pp. 9–16.
+
+2.23 Groundwater contamination in wells. In New Hampshire,  c. Use side-by-side bar charts to compare the proportions
+  about half the counties mandate the use of reformulated  of contaminated wells for bedrock and unconsolidated
+  aquifiers.
+MTBE gasoline. This has led to an increase in the contamination
+  of groundwater with methyl tert-butyl ether (MTBE).  d. What inferences can be made from the bar charts of
+  Environmental Science & Technology (Jan. 2005) re-  parts a–c?
+  ported on the factors related to MTBE contamination
+  in public and private New Hamsphire wells. Data were  2.24  Extinct New Zealand birds. Refer to the Evolutionary
+  collected on a sample of 223 wells. These data are saved  Ecology Research (July 2003) study of the patterns of ex-
+  in the MTBE file. Three of the variables are qualitative  NZBIRDS  tinction in the New Zealand bird population, Exercise 1.20
+  in nature: well class (public or private), aquifer (bedrock  (p. 49). Data on flight capability (volant or flightless),
+  or unconsolidated), and detectable level of MTBE (below  habitat (aquatic, ground terrestrial, or aerial terrestrial),
+  limit or detect). [Note: A detectable level of MTBE oc-  nesting site (ground, cavity within ground, tree, or cavity
+  curs if the MTBE value exceeds .2 microgram per liter.]  above ground), nest density (high or low), diet (fish, ver-
+  The data on 11 selected wells are shown in the accompa-  tebrates, vegetables, or invertebrates), body mass (grams),
+  nying table.  egg length (millimeters), and extinct status (extinct, absent
+  a. Use graphical methods to describe each of the three  from island, or present) for 132 bird species that existed
+  qualitative variables for all 223 wells.  at the time of the Maori colonization of New Zealand are
+  b. Use side-by-side bar charts to compare the propor-  saved in the NZBIRDS file. Use a graphical method to in-
+  tions of contaminated wells for private and public well  vestigate the theory that extinct status is related to flight
+  classes.  capability, habitat, and nest density.
+
+2.2 Graphical Methods for Describing Quantitative Data
+
+  Recall from Section 1.4 that quantitative data sets consist of data that are recorded on a
+  meaningful numerical scale. To describe, summarize, and detect patterns in such data, we
+  can use three graphical methods: dot plots, stem-and-leaf displays, and histograms. Since
+  most statistical software packages can be used to construct these displays, we’ll focus
+  here on their interpretation rather than their construction.
+
+  For example, the Environmental Protection Agency (EPA) performs extensive
+  tests on all new car models to determine their mileage ratings. Suppose that the 100
+  measurements in Table 2.2 represent the results of such tests on a certain new car model.
+  How can we summarize the information in this rather large sample?
+
+  A visual inspection of the data indicates some obvious facts. For example, most of
+  the mileages are in the 30s, with a smaller fraction in the 40s. But it is difficult to pro-
+  vide much additional information on the 100 mileage ratings without resorting to some
+  method of summarizing the data. One such method is a dot plot.
+
+  Dot Plots
+
+  A MINITAB dot plot for the 100 EPA mileage ratings is shown in Figure 2.8. The
+  horizontal axis of the figure is a scale for the quantitative variable in miles per gallon (mpg).
+  SECTION 2.2 ■ Graphical Methods for Describing Quantitative Data  71
+
+  Table 2.2  EPA Mileage Ratings on 100 Cars
+
+  36.3  41.0  36.9  37.1  44.9
+  32.7
+  40.5  37.3  41.2  36.6  32.9
+  36.2
+  38.5  36.5  37.6  33.9  40.2
+  36.3
+  41.0  37.9  36.0  37.9  35.9
+  37.0
+  37.1  39.0  35.5  34.8  38.6
+  39.9
+  36.8  36.8  32.5  36.4  40.5
+  36.5
+  36.4  31.8  37.3  33.1  37.0
+  38.2
+  39.4  37.2  40.7  37.4  37.1
+  36.6
+  37.6  40.3  36.7  37.0  33.9
+  37.8
+  40.1  36.9  32.9  33.8  39.8
+  34.0
+  30.0  37.2  42.1  36.7
+
+  33.2  37.4  37.5  33.6
+
+  37.7  37.7  40.0  34.2
+
+  38.3  35.7  35.6  35.1
+
+  35.3  34.4  38.8  39.7
+
+  36.1  38.2  38.4  39.3
+
+  37.0  38.7  39.0  35.8
+
+  35.9  35.6  36.7  34.5
+
+  38.0  35.2  34.8  39.5
+
+  36.8  35.0  38.1  36.9
+
+  Data Set: EPAGAS
+
+Figure 2.8
+
+MINITAB dot plot for 100 EPA
+mileage ratings
+
+  The rounded (to the nearest half gallon) numerical value of each measurement in the
+  data set is located on the horizontal scale by a dot. When data values repeat, the dots are
+  placed above one another, forming a pile at that particular numerical location. As you
+  can see, this dot plot verifies that almost all of the mileage ratings are in the 30s, with
+  most falling between 35 and 40 miles per gallon.
+
+  Stem-and-Leaf Display
+
+  Another graphical representation of these same data, a MINITAB stem-and-leaf display,
+  is shown in Figure 2.9. In this display, the stem is the portion of the measurement (mpg)
+  to the left of the decimal point, while the remaining portion, to the right of the decimal
+  point, is the leaf.
+
+  In Figure 2.9, the stems for the data set are listed in the second column, from the
+  smallest (30) to the largest (44). Then the leaf for each observation is listed to the right,
+  in the row of the display corresponding to the observation’s stem.* For example, the
+  leaf 3 of the first observation (36.3) in Table 2.2 appears in the row corresponding to
+  the stem 36. Similarly, the leaf 7 for the second observation (32.7) in Table 2.2 appears
+  in the row corresponding to the stem 32, while the leaf 5 for the third observation
+  (40.5) appears in the row corresponding to the stem 40. (The stems and leaves for
+  these first three observations are highlighted in Figure 2.9.) Typically, the leaves in
+  each row are ordered as shown in the MINITAB stem-and-leaf display.
+
+  *The first column of the MINITAB stem-and-leaf display represents the cumulative number of measurements
+  from the class interval to the nearest extreme class interval.
+72  CHAPTER 2 ■ Methods for Describing Sets of Data
+
+Figure 2.9  The stem-and-leaf display presents another compact picture of the data set. You
+MINITAB stem-and-leaf  can see at a glance that the 100 mileage readings were distributed between 30.0 and 44.9,
+display for 100 mileage ratings  with most of them falling in stem rows 35 to 39. The 6 leaves in stem row 34 indicate that
+  6 of the 100 readings were at least 34.0, but less than 35.0. Similarly, the 11 leaves in stem
+  BIOGRAPHY  row 35 indicate that 11 of the 100 readings were at least 35.0, but less than 36.0. Only five
+JOHN TUKEY (1915–2000)  cars had readings equal to 41 or larger, and only one was as low as 30.
+
+The Picasso of Statistics  The definitions of the stem and leaf for a data set can be modified to alter the
+  graphical description. For example, suppose we had defined the stem as the tens digit
+Like the legendary artist Pablo  for the gas mileage data, rather than the ones and tens digits. With this definition, the
+Picasso, who mastered and  stems and leaves corresponding to the measurements 36.3 and 32.7 would be as follows:
+revolutionized a variety of art forms
+during his lifetime, John Tukey is  Stem Leaf  Stem Leaf
+recognized for his contributions
+to many subfields of statistics.  3  6  3  2
+Born in Massachusetts, Tukey
+was home schooled, graduated  Note that the decimal portion of the numbers has been dropped. Generally, only one
+with his bachelor’s and master’s  digit is displayed in the leaf.
+degrees in chemistry from Brown
+University, and received his Ph.D.  If you look at the data, you’ll see why we didn’t define the stem this way. All the mile-
+in mathematics from Princeton  age measurements fall into the 30s and 40s, so all the leaves would fall into just two stem
+University. While at Bell Telephone  rows in this display. The resulting picture would not be nearly as informative as Figure 2.9.
+Laboratories in the 1960s and
+early 1970s, Tukey developed  Now Work Exercise 2.31
+exploratory data analysis, a set of
+graphical descriptive methods for  Histograms
+summarizing and presenting huge
+amounts of data. Many of these  An SPSS histogram for the 100 EPA mileage readings given in Table 2.2 is shown in
+tools, including the stem-and-  Figure 2.10. The horizontal axis of the figure, which gives the miles per gallon for a given
+leaf display and the box plot, are  automobile, is divided into class intervals, commencing with the interval from 30–31 and
+now standard features of modern  proceeding in intervals of equal size to 44–45 mpg. The vertical axis gives the number
+statistical software packages. (In  (or frequency) of the 100 readings that fall into each interval. It appears that about 21 of
+fact, it was Tukey himself who  the 100 cars, or 21%, attained a mileage between 37 and 38 mpg. This class interval
+coined the term software for  contains the highest frequency, and the intervals tend to contain a smaller number of the
+computer programs.) ■  measurements as the mileages get smaller or larger.
+
+  Histograms can be used to display either the frequency or relative frequency of the
+  measurements falling into the class intervals. The class intervals, frequencies, and relative
+  frequencies for the EPA car mileage data are shown in the summary table, Table 2.3.*
+
+  *SPSS, like many software packages, will classify an observation that falls on the borderline of a class interval
+  into the next-highest interval. For example, the gas mileage of 37.0, which falls on the border between the class
+  intervals 36–37 and 37–38, is classified into the 37–38 class. The frequencies in Table 2.3 reflect this convention.
+  SECTION 2.2 ■ Graphical Methods for Describing Quantitative Data  73
+
+Figure 2.10
+
+SPSS histogram for 100 EPA
+gas mileage ratings
+
+  By summing the relative frequencies in the intervals 35–36, 36–37, 37–38, and 38–39,
+  you find that 65% of the mileages are between 35 and 39. Similarly, only 2% of the cars
+  obtained a mileage rating over 42.0. Many other summary statements can be made by
+  further examining the histogram and accompanying summary table. Note that the sum
+  of all class frequencies will always equal the sample size n.
+
+  In interpreting a histogram, consider two important facts. First, the proportion of
+  the total area under the histogram that falls above a particular interval on the x-axis is
+  equal to the relative frequency of measurements falling into that interval. For example,
+  the relative frequency for the class interval 37–38 in Figure 2.10 is .20. Consequently, the
+  rectangle above the interval contains .20 of the total area under the histogram.
+
+  Second, imagine the appearance of the relative frequency histogram for a very large
+  set of data (representing, say, a population). As the number of measurements in a data set
+  is increased, you can obtain a better description of the data by decreasing the width of the
+
+  Table 2.3  Class Intervals, Frequencies, and Relative
+  Frequencies for the Gas Mileage Data
+
+  Class Interval  Frequency  Relative Frequency
+
+  30–31  1  0.01
+
+  31–32  1  0.01
+
+  32–33  4  0.04
+
+  33–34  6  0.06
+
+  34–35  6  0.06
+
+  35–36  11  0.11
+
+  36–37  20  0.20
+
+  37–38  21  0.21
+
+  38–39  10  0.10
+
+  39–40  8  0.08
+
+  40–41  7  0.07
+
+  41–42  3  0.03
+
+  42–43  1  0.01
+
+  43–44  0  0.00
+
+  44–45  1  0.01
+
+  Totals  100  1.00
+

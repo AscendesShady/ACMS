@@ -1,0 +1,1221 @@
+96 PART | II Contracting
+
+  increase operating costs.17 Non-timetabled school services should be included (if they are part of a contract), since in
+  many jurisdictions, operators have a high incidence of such activity.
+l Average bus utilisation. A higher number of annual service kilometres per peak bus, because of higher timetabled route
+  frequencies, will typically lower unit costs through diluting ﬁxed costs.18 Although only a small proportion of cost
+  might be considered to be actually ﬁxed (e.g., bus registration and third party insurance), other overhead costs will
+  increase with activity (even if not in direct proportion), especially where there is a signiﬁcant increase in kilometres.
+  This suggests bus utilisation on route buses is less likely to be under the operator’s control. However, in some juris-
+  dictions the peak includes the school peak. Efﬁcient planning and scheduling by the operator can then have a major
+  impact on the peak vehicle requirements (PVR) and therefore bus utilisation. In these situations there is a risk that
+  a higher PVR will provide a higher cost per km simply because more buses have to be provided to handle the needs
+  in this short peak. To account for this latter issue, we should include the PVR as a further adjustment of the operating
+  environment. If there are mixed ﬂeets, then a further adjustment may be required, whether due to maintenance and/or
+  different ages of the ﬂeet.
+
+  Formula (8.5) would need to be calibrated on existing operator data to obtain estimates of unknown parameters that
+deﬁne the role of context-speciﬁc inﬂuences so that we can subsequently use the model to adjust for these inﬂuences that
+are not under the control of the operator, essentially by replacing operator-speciﬁc levels of speed, spread of service hours,
+bus utilisation and peak vehicle requirements in the model with a median or best practice level that is used to contrast each
+operator gross cost per km with a benchmark reference level of performance. Such a calibration is presented in Table 8.1.
+
+  Data for calibration should desirably come from the local context (such as all operators in a particular city or region),
+and be collected through a benchmarking program, although this is somewhat rare in most jurisdictions. If multi-operator
+data are used, then calibration will need to include the possibility of operator-speciﬁc effects. On the other hand, if multi-
+operator data are not available, then some independent advice will be required on what variations in cost per bus km (and
+passengers per bus kilometre) are associated with each of the factors in formula (8.5). Alternatively, the use of extra-
+jurisdiction values could be used to open negotiations, particularly with incumbent operators. It is most unlikely that
+operators would remain silent if they felt the formula, based on data from outside their environment, is ‘out of range’ for
+their operations. For this reason the opening bid from the Authority, where no data exist in the operating environment,
+should be within the range of what the Authority believes the relevant costs should be.
+
+  As an example of how the adjustment may work, let us assume we have two alternative calibrated models,19 in terms of
+the formulation of $/bus above which is expected to cover all expenses, i.e., variable expenses, overheads, depot rent, margin
+etc., and all annualised capital costs would be calculated using a depreciation formula (e.g., economic life assumptions) used
+by the Authority (and not a commercial rule based on how an operator wishes to ﬁnance and depreciate assets).
+
+TABLE 8.1 Calibration of gross cost per service km ($/bus-km).a  Calibration coefﬁcient
+Variable  4.908
+Constant  À0.228
+Average peak speed  À0.000055
+Bus kilometres (bus utilisation)  7.359
+Spread of service hours  0065
+Peak vehicle requirement  À0.0114
+Operator speciﬁc dummy variable
+
+aAll parameters are statistically signiﬁcant at 95% level of conﬁdence.
+
+17. A greater spread of operating hours, along with increased midday off peak services, can allow the operator to build more straight, rather than broken
+shifts. This could lower wage costs per hour given wage agreements.
+18. We acknowledge that average vehicle utilisation could vary substantially over a contract period, especially in situations where for example government
+pumps extra buses into the network, but then restricting kilometres to those buses. For example, the 300 growth bus strategy in Sydney targeted kilometres
+at the peak, and kilometres attached to the growth buses was often half the km/bus of the existing ﬂeet.
+19. The parameter estimates used are not exact for any speciﬁc operating context, but are indicative of what we believe are reasonable estimates in
+metropolitan Australia.
+  A simpliﬁed performance-linked value for money model for bus contract payments Chapter | 8 97
+
+  The ﬁrst calibration of gross cost per service km ($/bus km) of formula (8.5) is given in Table 8.1, where the
+parameters are illustrative20.
+
+À0.228 indicates that every increase in the average speed of one km/hour in the peak reduces gross cost per bus km by
+
+$0.0228; À0.000055 indicates that every extra bus kilometre reduces gross cost per bus km by $0.000055 (or 5.5 cents/
+
+1000 additional km); 7.359 suggests that a ten unit increase in the proportion of service hours during weekdays after 7 p.m.
+
+and weekends (e.g., from 0.2 to 0.3) increases gross cost per bus km by $0.736; and 0.0065 indicates that one additional
+
+peak vehicle adds $0.0065 to gross cost per bus km, 4.908 is a constant reﬂecting, on average across all operators, the role
+
+of other factors, and À0.0114 is a constant speciﬁc to an operator that accounts for other inﬂuences that are variations
+
+around the average for all operators in the set, that are speciﬁc to the operator.
+
+To assess the realism of this simpliﬁed formula, we applied the parameter estimates of Table 8.1 to data from a
+
+number of operators in Australia. In comparing the $/passenger outcome using the parameter estimates with data from
+
+actual operators we found the calibration of formula (8.5) (shown in Table 8.1) was able to reproduce the actual amount
+of money received by operators from the Authority to within Æ ﬁve percentage points.21 Such a variation might
+reasonably be built into the margin of the ‘offer’.22 We therefore deem this adequate as a starting position for negotiation
+
+or bid assessment.
+
+From the calibration shown in Table 8.1, the next task is to identify a benchmark reference estimate of gross cost per
+
+km from a sample of operators in a pre-deﬁned jurisdiction to show how the SPLP would operate. Let us assume that for all
+
+operators that the average peak speed is 20 kph, average vehicle utilisation is 40,000 km per annum per bus, the spread of
+
+service vehicle hours is 0.2 (i.e., 20% are after 7 p.m. on weekdays plus all of Saturday and Sunday), the PVR is 80
+
+buses, and the cost index adjustment is 1.02. Then the application of the ﬁgures in Table 8.1 results in a gross cost/bus km
+
+of (À0.01140 À 0.0228 * 20 À 0.000055 * 40,000 þ 7.359 * 0.2 þ 0.0065 * 80 þ 4.908) * 1.02 ¼ $4.32 per bus km.
+
+Assuming average passengers/bus km ¼ 10 (which might satisfy the minimum X level in Eq. 8.2), the $/passenger
+
+estimate applicable in Eqs (8.1) and (8.3) is $0.432. If the average is less, such as close to 1 in Sydney, then the $/passenger
+
+estimate is $4.32.
+  We also considered, but rejected as inferior,23 another way of establishing the cost efﬁciency component of the formula
+
+as a calibrated model, in which variations around the average performance of all operators in the predeﬁned geographical
+
+context (Eq. 8.6) were identiﬁed. This second speciﬁcation of gross cost per service km ($/bus km) is given as formula
+
+(8.6), with the actual calibrated model given in Table 8.2, excluding the peak vehicle requirement.24
+
+  0  1
+
+  ðAverage operator peak speed À all operators averaged peak speedÞ;
+  BBB  km km CCC
+Gross cost per bus km ¼ fB Operator À average all operator ;  C
+  B  bus  bus  C
+  @  A
+
+  ðOperator spread of service hours À average of all operators spread of service hoursÞ
+
+  (8.6)
+
+  This model produces estimates of gross cost per bus km that are close to current values with the values for each operator
+being calculated by the inclusion of an operator speciﬁc constant. Most of the estimates vary by no more than $0.5/km,
+(which might deemed substantial in a typical range of $3/km to $7/km) but whilst simpler than using Eq. (8.4), this is less
+accurate.
+
+20. The importance of noting the illustrative nature of the example is crucial. To emphasise this, we might have also selected a situation where the
+passenger/bus km ratio is 1.4 (as in Adelaide). We have used 10 in our example, which may be too high in many situations.
+21. The data used is conﬁdential; however we thank the speciﬁc operators who wish to remain anonymous for providing data to enable the calculations.
+22. We received a comment that “5% error in reproducing actual payments would represent a substantial part of the operator margin of a third or more”
+(John Stanley, personal communication). We recognise there is a risk in this approach, and would prefer a mechanism where the onus is put on the
+operator to show why this approach should not be used. This could be done in negotiation. In principle, if the operator cannot show this, how do they
+know their margin is affected?.
+23. We suspect this is the case because it is in most cases almost impossible to get the data from all operators (there are always some bids missing, as is
+evidenced in the UK and even more so in Germany).
+24. The peak vehicle requirement is only excluded because we have not identiﬁed a parameter estimate, but would otherwise be included in a real
+application.
+98 PART | II Contracting
+
+TABLE 8.2 Calibration of gross cost per bus km ($/bus km).a  Calibration coefﬁcient
+  6.11187
+Variable  À0.16843
+Constant  À0.00015
+Average operator peak speed e all operators averaged peak speed  1.17412
+Operator km/bus e average all operators km/bus
+Operator spread of service hours e average of all operators spread of service
+hours
+
+aGross cost per bus km. All parameters are statistically signiﬁcant at 95% level of conﬁdence.
+
+8.4 Using the benchmark value for money outcomes
+
+Putting the SPLP into operation requires that each operator will be assessed against a benchmark identiﬁed in the previous
+section to ascertain if the operator satisﬁes the conditions for cost efﬁciency. If the operator does satisfy cost efﬁciency, this
+can be then linked to an agreement on network effectiveness and hence to an agreement on passengers per $ of subsidy
+outlay. Given the total forecast patronage, the budget can be calculated. Adding to this the Authority’s approved growth
+rate target (Eq. 8.3), the maximum available budget can also be calculated for the Authority taking account of the contract
+for each and every operator.
+
+  In identifying a benchmark, either an individual operator calibration can be used if available. Alternatively, an operator
+can be assessed as if they were operating at best practice, with an ‘average for all operators $/bus km’ being replaced with
+best practice or median level.25 This estimate is then multiplied by passengers/bus km to obtain $/passenger, which
+together with forecast patronage, provides an estimated budget as a starting position for negotiation or bid evaluation.
+
+8.5 Conclusions
+
+This chapter promotes the idea that it is possible to develop a simpliﬁed formula for identifying the amount that a local bus
+operator should be paid under a gross or net contract to deliver a given level of service. The essential ingredients are few,
+but crucial: these are the gross cost per bus km (or an equivalent measure based on bus kms, bus hours and peak bus
+requirements), the patronage per bus km, and the consequent (subsidy) cost per passenger. Given patronage forecasts, a
+contract budget can be determined. The gross cost per bus km can be established using local data on operators who provide
+similar services, adjusting for differences in the operating environment as a way of ensuring that the agreed gross cost per
+bus km is an efﬁcient cost.
+
+  It should be emphasised that a contract between an operator and Authority can still be couched in terms of a $/km
+amount, but the delivery model is in terms of an expected $/passenger (or $/passenger km if such data were available)
+given budget and budget caps. We are proposing a model that can monitor performance in terms of value for money
+associated with each $ of subsidy, and we are arguing that a practical way of achieving this is by linking the subsidy to
+patronage. Value for money in the contractual regime is achieved by the cost efﬁciency as an input, working with a
+measure of network effectiveness.
+
+  Despite the appeal of the SPLP model, with such simpliﬁcation comes a potential risk that other factors not explicitly
+considered might also play a role in the cost/bus km.26 All other factors are currently embedded in the overall constant in
+
+25. We recognise that benchmarking involves comparing not just operators but their operational area, and differences could and do derive from both.
+However, where multiple operators bid for an identical contract area, the price differences can be extraordinarily close - less than one percent between the
+incumbents, but with some real divergence (both ways) from new entrants. This is why incumbents have survived in most of the re-tenders in Perth and
+Adelaide, for example. In these situations the costs and risks of changing operators are greater than any beneﬁt derived from the differentials in the tender
+price.
+26. There are always variations between jurisdictions. Operators often use this argument as self-justiﬁcation. Once controls are used to measure variations
+in key inputs (e.g., the cost of fuel and wage levels) then we cannot see why there are any differences other than average operating speeds. The ﬁrst two
+can be signiﬁcant e often as high a differential as 15% between Australian cities, and movements in speed can have dramatic impacts on contracts.
+However if these are allowed for there is likely to be little difference between operating a bus in the different Australian capital cities, for example. We
+believe that the focus by some operators on their unique environment is a self-serving mythology to protect their proﬁts, their inefﬁciencies and their
+security. If an operator can bid in a jurisdiction accounting appropriately for the cost of fuel, wages and average speed, then benchmarking best practice
+would be identiﬁed, which may be better than benchmarks existing with all incumbent operator’s in protected domains. Vested interests do not like this.
+  A simpliﬁed performance-linked value for money model for bus contract payments Chapter | 8 99
+
+formulae 8.5 and 8.6. To resolve this, operator-speciﬁc constants27 (as shown in Table 8.1) can be used if data of sufﬁcient
+quality exists to allow for unique constants for each operator. The use of operator-speciﬁc constants by the Authority is
+certainly feasible, but the results could not be made available to all operators, incumbent or otherwise, given the conﬁ-
+dential nature of data that would be required. It would also require some careful consideration of the transferability of such
+constants to situations which vary in the presence of another service provider.
+
+  The payment model proposed in this chapter fundamentally alters the whole net vs. gross contract discussion. The only
+real value of a net contract, from an operator’s perspective, appears to be the incentives it might provide; in all other areas
+it is a negative (e.g., co-ordinated planning, integrated ticketing, transparent tendering), although such negatives are
+positives for the Authority. Given that the proposed model has a built-in incentive for both operator and Authority, it can
+replace both net and gross contract models. If payment (in terms of $/bus km) is based on the cost/passenger approach, this
+will not shift the revenue risk to the operator since the negotiating framework is premised on agreed cost outcomes and
+agreed forecasts of network patronage (with initial estimates of patronage per operator), On the other hand, operators are
+incentivised to build patronage through the agreement of targets. Importantly too there could be possibilities to modify the
+ﬁnal contract to give asymmetric incentives with shortfalls in patronage from the starting base having a different marginal
+impact as compared to increases in patronage. Fundamentally this is an important issue in an environment where it is
+difﬁcult for operators to adjust their frequency and/or network in response to declining patronage or in an environment
+where overall patronage is falling.
+
+  We have shown that a SPLP model is a transparent, simpliﬁed, formula which has value as a reference point in
+negotiation of contracts, as ﬁrst time or upon renewal. Bus Associations can beneﬁt by using this approach to advise
+potential operators entering into negotiations with the Authority.28 The approach is also valuable in suggesting an objective
+way of assessing the costs of delivering bus services. This is critically important in critiquing existing systems and
+determining whether there is a justiﬁcation for change of operator which can be disruptive.29 It is also useful for the
+evaluation of competitive tender ‘offers’ and for developing policy if these do not meet the cost and network efﬁciency
+benchmarks of the Authority.
+
+  A hope is that the ideas in this chapter might move the debate away from the controversial debate on tenders vs.
+“trusted partnerships” towards how to use the way the private sector works to maximise the beneﬁts to government and the
+community (in terms of investing subsidy to delivery patronage). In addition, given what we believe are the key drivers of
+cost efﬁciency (or cost per vehicle km or hour), we must express caution about the existence of factors that drive costs that
+cannot be simply and objectively measured (recognising the dominant role of fuel, wages, and average speed). This may
+minimise the need for benchmarking in order to make assessments. Time will tell.
+
+27. One consultant stated: “I quite like the idea of operator-speciﬁc constants as putting the blow torch on the tails of the distribution”.
+28. We acknowledge the advice of John Stanley.
+29. As an example of a not uncommon situation, in a recent contract we are aware of, a bidder came in 10% under the incumbent on a contract and the
+tendering Authority rejected it, using evidence on best practice.
+Chapter 9
+
+Bus contract costs, user perceived
+service quality and performance
+assessment*
+
+9.1 Introduction
+
+Over the last 20 years we have seen an increasing focus on reforms in public passenger transport in many countries,
+centered on increasing cost efﬁciency through cost reduction strategies, including opening up service delivery to
+competition through economic deregulation or competitive tendering. While the gains in cost efﬁciency have been dra-
+matic from initial market reforms, typically as high as 30% cost improvement, this has not been sustained over time and
+has often been accompanied by a diminution of service quality, in part as a response to cost containment. There is always
+the risk that any cost cutting response that is not set within a framework of an agreed level of service quality preservation,
+runs the very high risk over time of patronage loss and hence market share decline. This concern has been recognized for
+some time now; yet the intimate link between costs and service quality has not been built into a framework in which we can
+establish the implications of service quality decline on costs of service delivery. Indeed it is far from clear if the rela-
+tionship between the cost of service delivery and service quality moves in the same direction or inversely. Furthermore,
+service quality as perceived by bus users, has in most instances been ignored in the deﬁnition of performance standards that
+are explicitly linked to cost efﬁciency e indeed there has been a very notable disconnect between the two elements of bus
+operations.1 Consequently we have been hindered by any understanding on what cost levels might mean in terms of
+resulting gains or losses in perceived service quality by users, and hence a response in terms of performance standards that
+will ensure service quality is maintained and even improved over time.
+
+  The focus of this chapter is quantifying service quality from a users’ perspective, in a way that weights the relevance of
+each source of service quality, and to use this information to obtain a single measure of service quality, that we call the
+service quality index (SQI). Hensher developed this approach in previous research (Prioni and Hensher, 2000; Hensher and
+Prioni, 2002; Hensher et al., 2003),2 but it has not yet been linked to the cost of service provision and implications for
+performance standards. Given the SQI metric, we need to build a cost model (typically a cost per kilometre model) that can
+explain variations in unit costs associated with SQI and other inﬂuences on costs, and then determine the role that SQI
+overall plays in explaining systematic variation in costs across a sample of bus operators. Given the parameterized rela-
+tionship between cost and SQI, we can then establish the inﬂuence of the constituent elements of SQI that are under the
+control of the operator that can be changed to inﬂuence unit costs. Through a comparison of a sample of operators, we can
+establish service quality performance standards and identify the potential gains in cost associated with meeting such
+standards (if an operator is non-compliant on the standard) and the associated cost “bonus” when the standards are
+exceeded by a pre-deﬁned level.
+
+  We use data from metropolitan and non-metropolitan bus operators in New South Wales (NSW) to demonstrate the
+way the method can be used in contract negotiation and ex-post monitoring of performance leading up to contract
+renegotiation or tendering. The bus contracts in NSW are based on a cost per km payment to operators, and hence after we
+identify what in SQI is under the control of an operator, this information can be used in contract speciﬁcation to deﬁne
+
+* This is an adapted version from the original publication: Hensher, D.A. (2014). The Relationship between bus contract costs, user perceived service
+quality and performance assessment. International Journal of Sustainable Transportation, 8(1), 5e27. DOI: 10.1080/15,568,318.2012.758,454. Taylor &
+Francis Ltd - www.tandfonline.com.
+1. A popular measure of performance has been on-time running as measured independently of its role in deﬁning users perception of service quality.
+2. Singapore and Chile have supported the SQI measure developed by Hensher, and are involved in active research designed to establish SQI as part of the
+performance assessment regime.
+
+Bus Transport. https://doi.org/10.1016/B978-0-12-820132-9.00009-1  101
+Copyright © 2020 Elsevier Inc. All rights reserved.
+102 PART | II Contracting
+
+minimum levels of performance, and to establish the implications on cost, and also a possible bonus plan when an operator
+delivers service levels, given costs, that exceed minimum performance standards of pre-deﬁned service attributes.
+
+  The chapter is organised as follows. We begin with a synthesis of the method developed to quantify service quality and
+derive a service quality index (SQI), drawing on ideas from Hensher and Prioni (2002). This is followed by a discussion of
+how service quality is linked to costs. We then develop a unit cost model and identify sources of variation across a sample
+of 23 operators, with a particular emphasis on the relationship of cost to SQI. We then use the empirical model to establish
+variations around pre-deﬁned performance standards to illustrate how the model can be used in practice in contract (re-)
+negotiation and monitoring.
+
+9.2 Developing a service quality index
+
+The concept of service quality includes aspects of transport service which are not always well-deﬁned and easily measured.
+Herein we deﬁne service quality in terms of a set of attributes which each user perceives to be the sources of utility (or
+satisfaction) in bus use. The dimensions of quality, viewed from a bus user’s perspective, are complex. Passengers might,
+for example, consider the comfort at the bus stop and the time to get a seat, or only the comfort of the seats. Modal choice
+surveys have identiﬁed a large number of inﬂuences on the use of buses in contrast to other private and public modes.
+Service quality can be divided into six broad classes of effects, summarised in Table 9.1, each containing different quality
+dimensions (as identiﬁed by Hensher, 1991; Swanson et al., 1997 and other studies). Recent contributions by Cirillo et al.
+(2011), dell’Olio et al. (2010a,b), Eboli and Mazzulla (2010,3 2008a,b), and Marcucci and Gatta (2007)have also
+reinforced the relevance of the attribute set identiﬁed in earlier research. Some of these contributions also use a stated
+preference method, acknowledging the original contributions by Hensher (estimated as multinomial logits and mixed
+logit e see Hensher, 2001; Hensher and Prioni, 2002), while other studies use a different, more traditional method, in
+which a satisfaction scale is multiplied by an importance scale (in various forms) to obtain an overall customer satisfaction
+index. The importance weights are used as proxies for the weights obtained from model estimation herein.
+
+  Some demand side measures can be translated (or mapped) into a set of supply side equivalences (resources that the
+operator has partial or total control of) such as the timetable, ﬂeet age, and/or the buses that are air conditioned; the number
+of vehicles that are wheelchair accessible, the number of cleaning hours of the vehicles, and the money spent on driver
+training.
+
+TABLE 9.1 Demand side effects and their equivalence on the supply side.
+
+Getting to the bus stop quality  Dimensions of user perceptions  Operator speciﬁed measures
+Wait quality
+Trip quality  Ease, safe, time (distance),  Frequency,
+  Knowing where the bus stop is  Availability of bus shelter and seats
+Vehicle quality
+  Wait time at stop, punctuality of bus  Frequency,
+Driver quality  Wait comfort, wait safety  Availability of bus shelter and seats
+
+  Time to board a bus  Frequency, percentage of low ﬂoor buses
+  Time to get a seat  Number of seats available
+  Moving to your seat  Average speed, network shape
+  Travel time  Travel time
+  Trip cost  Fare
+
+  Cleanliness  hours of vehicle cleaning/vehicle
+  Comfort of seats (types), spaciousness  Percent of buses with cloth seats
+  Temperature control (ventilation)  Percent of buses with air conditioning
+  Noise  Visual surveillance
+  Safety  Average age of the ﬂeet
+  Modernity  Wheelchair access (yes/no)
+  Ease of use for those with disabilities
+  years of driving experience
+  Appearance-helpfulness  Money spent on driver training
+
+Information quality  Pre-trip information  Availability of timetable/destination signs
+
+3. Eboli and Mazzulla (2010)is a very useful review of the literature on methods used to study public transport service quality.
+  Bus contract costs, user perceived service quality and performance assessment Chapter | 9 103
+
+  The attributes on the supply side are, in contrast to the quality attributes in column two in Table 9.1, to varying degrees,
+observable and under the direct control of the bus operator. For example, a change in the average ﬂeet size will, ceteris
+paribus, have a direct inﬂuence on the time to get a seat. On the other side we expect the supplied level of service quality to
+be a function of consumer preferences. If the supplied quality level is a response to customer preferences, and not only
+to some regulatory restrictions, quality exogeneity cannot be assumed. In this circumstance we need to develop a capability
+to represent the quality of service as determined by users. The discrete choice approach is an appealing framework
+(see 1below). Given these considerations about service quality, we are able to introduce an improved version of the
+traditional cost model in its reduced form to capture the full dimensionality and service quality.
+
+  The proposed and preferred service quality measure is constructed by analysing bus user preferences for different levels
+of bus service quality, and using the resulting weights attached to each underlying dimension of service quality as
+perceived by users to derive the level of satisfaction associated with the supplied level of service quality. To this extent we
+need to identify and quantify the preferences for service levels from bus travellers. We restrict our analysis to actual bus
+users but recognise that non-users also provide useful information on the levels of service offered by bus operators. Within
+a performance regime based on the acceptability of service levels to actual users, and with a focus on the service quality
+that inﬂuences operator costs, the emphasis on users is appropriate.
+
+  To reveal user preferences for service quality, we need to obtain data of sufﬁcient richness to capture the behavioural
+responses to a wide range of levels of service quality deﬁned on an extended set of attributes such as those given in
+Table 9.1. Revealed preference (RP) data is typically restrictive in its variance properties, but is an important input into the
+assessment. The preferred approach is a stated preference (SP) experiment combined with perceptions of existing levels of
+service. A sampled passenger would evaluate a number of alternative service levels (known as scenarios) together with the
+level experienced, and choose the most preferred alternative. Systematically varying the levels of the attributes in repeated
+scenarios enables us to obtain a proﬁle of each passengers preferences for bus services. The data is analysed as a discrete
+choice model in which we combine the SP and RP data to obtain estimated parameters for each attribute. We estimate the
+simple multinomial logit model (MNL) in which all random components are independently and identically distributed
+(IID) (see Hensher et al., 2005, 2015).4
+
+  A service quality index (SQI) for each bus operator (or contract region) can be derived from the application of the
+parameter estimates to the current RP levels which each operator-speciﬁc passenger sample currently experiences. This
+index is not a probability (of choice) weighted indicator that is typically derived from a choice model; rather we seek to
+establish an indicator based solely on the levels of service currently on offer. The SP-RP model’s role is to provide a rich
+set of parameter estimates to weight each attribute of service quality.
+
+  Such a measure is useful as a stand alone index of passenger satisfaction for a performance assessment regime (PAR). It
+also provides the user-based service quality index for the reduced form unit cost model (see below). The role of service
+quality is not only as an input, which inﬂuences operational costs, but it also represents an important determinant of
+passengers’ travel demand. One of the principal difﬁculties in passenger travel demand studies is the speciﬁcation of the
+relevant set of service attributes. Previous empirical studies on passenger demand restricted service quality speciﬁcation to
+some measurable characteristics of the supplied service, which are normally selected from a limited set of observable
+variables. The service quality index we have derived is based on users’ perception for different quality levels and not on
+some set of ad hoc plausible quality attributes. It is the passengers’ perception of quality changes which has an impact on
+ﬁnal demand, and not the physical changes in some output characteristics.
+
+  To assist in the selection of attributes for the SQI, we undertook an extensive review of the literature as well as a survey
+of bus operators who have a wealth of experience on what customers look for in a good service (see Prioni and Hensher,
+2000). We found that thirteen attributes describe the major dimensions of service quality from a user’s perspective. The
+range of levels of each attribute in Table 9.2 provided us with a mechanism for establishing the weights that signal the
+contribution of each attribute to the overall SQI.
+
+  Through a formal statistical design, the attribute levels are combined into bus packages before being translated into a
+survey form. The full factorial design (i.e., all possible bus packages) consists of 313 combinations of the 13 attributes each
+of three levels. To produce a practicable and understandable design for the respondents, we restricted the number of
+combinations to 81 (i.e., 81 choice sets) using a fractional design. Fractional designs permit the reduction in the number of
+combinations (i.e., the number of bus packages) without losing important statistical information (see Louviere et al., 2000).
+
+  A pre-test of the survey showed that respondents were able to evaluate consistently three choice sets (i.e., different
+scenarios of bus packages), resulting in 27 different survey forms. To allow for a rich variation in the combinations of
+
+4. The MNL and more advanced methods are discussed in detail in Hensher et al. (2005, 2015), and Hensher et al. (2010).
+104 PART | II Contracting
+
+TABLE 9.2 Set of attributes and attributes levels in the SP experiment.
+
+Attribute  Interpretation of levels  Attribute  Interpretation of levels
+Reliability  Info at the bus
+  On time  On time
+Frequency  5 min late  stop  5 min late
+  10 min late  Travel time  10 min late
+Walking distance to the
+bus stop  Every 15 min  Bus stop  25% quicker than the current travel time
+Waiting safety  Every 30 min  facilities  same as now
+  Every 60 min
+Access to the bus  Fare  25% longer than the current travel time
+  -Same as -now
+Air conditioning  5 min more  Driver attitude  Bus shelter with seats
+  10 min more  Seats only
+  Safety on
+  Very safe  board  No shelter or seats at all
+  Reasonably safe
+  Reasonably unsafe  25% more than the current one-way fare
+  same as now
+  Wide entry with no steps
+  Wide entry with 2 steps  25% less than the current one-way fare
+  Narrow entry with 4 steps
+  Very friendly
+  Available with no surcharge  Friendly enough
+  Available with a surcharge of 20% on  Very unfriendly
+
+  existing one-way fare  The ride is very smooth with no
+  Not available  Sudden braking
+
+Cleanliness of seats  Very clean  The ride is generally smooth with rare
+  Clean enough  Sudden braking
+  Not clean enough
+  The ride is jerky; sudden braking
+  Occurs often
+
+attribute levels to be evaluated as service packages in the SP experiment, each bus operator received 8 sets of 27 different
+survey forms (i.e., 216 forms) and instructions on how to organise the survey. An example of an SP question is shown in
+Table 9.3.
+
+9.3 Results of the user preference model
+
+Scheduled5 bus users of 25 private bus operators in NSW participated. Survey forms were distributed and collected during
+April and May 1999. A total of 3849 useable observations (out of 4334 returns) were incorporated in the estimation of the
+discrete choice model. A multinomial logit (MNL) speciﬁcation was selected. This is appropriate for a model form in
+which the utility expressions associated with the current trip and two attribute packages are unlabelled (or unranked)
+alternatives. Consequently, all design attributes were generic across the three alternatives. In addition, in the current trip
+alternative we considered alternative-speciﬁc characteristics of the passenger (income, gender, age and car availability) and
+of the operator together with a number of other potential inﬂuences on relative utility such as treatment effect, trip purpose
+and access mode.
+
+  The user attribute choice model is summarised in Table 9.4. The model includes the attributes of the SP experiment,
+operator-speciﬁc dummy variables and three user characteristics. The nine sets of two dummy variables per service
+attribute are deﬁned relative to a third level which is set to zero (given the three levels in the design). The overall goodness
+of ﬁt (adjusted pseudo-R2) of the model is 0.324. The great majority of the design attributes are statistically signiﬁcant.
+Service reliability (i.e., the extent to which buses arrive on time), fares, access time and travel time are all highly signiﬁcant
+with the expected negative sign. Relative to ‘reasonably unsafe’, we ﬁnd a positive (almost) signiﬁcant parameter estimate
+for ‘reasonably safe’ (0.1510) and for ‘very safe’ (0.1889). The higher estimate for ‘very safe’ in contrast to ‘reasonably
+safe’ is plausible. The infrastructure at the bus stop appears not to be a major inﬂuence on service quality with both ‘seats
+only’ and ‘bus shelter with seats’ not being statistically signiﬁcant relative to ‘no shelter or seats’. If reproducible in further
+studies this has important policy implications as to priorities in service improvement. The availability of air conditioning is
+
+5. School children were excluded from the sample, as they are captive users and might have a biased perception towards the attributes.
+  Bus contract costs, user perceived service quality and performance assessment Chapter | 9 105
+
+TABLE 9.3 A typical stated preference exercise
+
+Service feature  Bus package of the BUS  Bus package of the BUS  Bus package of the current Bus
+Reliability  company A  company B  7 min late
+One-way fare  10 min late  On time  2 dollars
+Walking distance to the  Same as now  Same as now  5 min
+bus stop  5 min more than now  5 min more than now
+Personal safety at the  Very safe
+bus stop  Reasonably unsafe  Reasonably safe
+Travel time  30 min
+  25% longer than the current  25% quicker than the current
+Bus stop facilities  travel time  travel time  Seats only
+Air conditioning  No shelter or seats at all  Seats only  Not available
+Information at the bus  Not available  Available with no surcharge  Timetable and a map
+stop  Timetable but no map  Timetable but no map
+Frequency  Every 60 min
+Safety on board  Every 15 min  Every 30 min  The ride is jerky; sudden braking
+  The ride is jerky; sudden  The ride is jerky; sudden  occurs often
+Cleanliness of seats  braking  braking
+Ease of access to the bus  Occurs often  Occurs often  Very clean
+  Clean enough  Clean enough  Wide entry with 2 steps inside the
+Driver behaviour  Wide entry with no steps in-  Wide entry with 2 steps inside  bus
+  side the bus  the bus  Very friendly
+  Friendly enough  Very friendly
+
+If BUS A and BUS B were available today, which bus service would you choose?.
+  BUS A BUS B The bus you are travelling on.
+
+TABLE 9.4 Final user preference model.
+
+Variable  Units  Acronym  Parameter  t-value
+Reliability (all levels)  mins  RELI  À0.05821  e8.411
+Bus one-way fare (all levels)  $  TARIF  À0.4780  e6.406
+Access walk time (all levels)  mins  ACCESST  À0.04317  e5.311
+Bus time (all levels)  mins  TRATIM  À0.03200  e5.435
+Personal safety at bus stop:
+Very safe  1,0  VSAFE  .18895  2.255
+Reasonably safe  1,0  RSAFE  .15108  1.820
+Bus stop facilities:
+Seats only at bus stop  1,0  SEATS  À0.03411  .510
+Seat plus shelter  1,0  SEATSHEL  .09040  1.503
+Air conditioning on bus:
+Air conditioning free  1,0  AVALFREE  .07131  1.112
+AC at 20% extra fare  1,0  AVALPAY  À0.17432  e2.207
+Safety on board bus:
+Ride-generally smooth  1,0  GSBRAKE  .20788  2.963
+
+  Continued
+106 PART | II Contracting
+
+TABLE 9.4 Final user preference model.dcont’d
+
+Variable  Units  Acronym  Parameter  t-value
+Ride-very smooth  1,0  VSNBRAKE  .35232  4.904
+Cleanliness of seats:
+Clean enough  1,0  CENOUGH  .13867  1.830
+Very clean  1,0  VCLEAN  .20446  2.713
+Ease of access to the bus:
+Wide entry/2 steps  1,0  WIDE2STP  .09589  1.499
+Wide entry/no steps  1,0  WIDENSTP  À0.10319  e1.372
+Driver behavior:
+Driver friendly enough  1,0  FRIENDEN  .19798  2.572
+Driver very friendly  1,0  VFRIEND  .42287  5.564
+Information at the bus stop:
+Timetable only  1,0  TIMNOMAP  .29609  4.745
+Timetable and map  1,0  TIMWMAP  .19720  3.021
+Frequency of bus service:
+Frequency/every 60 min  1,0  FREQ60  À0.58595  e6.902
+Frequency/every 30 min  1,0  FREQ30  À0.12221  e1.640
+Socioeconomic characteristics:
+Female  1,0  FEMALE  .09986  1.198
+Personal income  $’000s  PINCO  .00905  3.817
+Age of passenger  years  AGES  .01379  5.787
+Bus operator-speciﬁc dummy variables:
+Operator 1  1,0  Op1  .37358  1.671
+Operator 2  1,0  Op2  .19642  .654
+Operator 3  1,0  Op3  À0.94098  À5.497
+Operator 4  1,0  Op4  À0.17726  e1.080
+Operator 5  1,0  Op5  À0.12964  e0.653
+Operator 6  1,0  Op6  .97267  1.937
+Operator 7  1,0  Op7  À0.18127  e0.982
+Operator 8  1,0  Op8  .35723  1.294
+Operator 9  1,0  Op9  À0.26210  e1.215
+Operator 10  1,0  Op10  À0.56626  e1.845
+Operator 11  1,0  Op11  À1.2555  e4.850
+Operator 12  1,0  Op12  À0.22189  e0.842
+Operator 13  1,0  Op13  À0.47366  e1.210
+Operator 14  1,0  Op14  .01784  .072
+Operator 15  1,0  Op15  .06911  .084
+Operator 16  1,0  Op16  À0.37973  e1.685
+Operator 17  1,0  Op17  .06878  .292
+Operator 18  1,0  Op18  À0.36574  e0.825
+
+  Continued
+  Bus contract costs, user perceived service quality and performance assessment Chapter | 9 107
+
+TABLE 9.4 Final user preference model.dcont’d
+
+Variable  Units  Acronym  Parameter  t-value
+Operator 19  1,0  Op19  1.1207  4.218
+Operator 20  1,0  Op20  .10014  .488
+Operator 21  1,0  Op21  .11275  .546
+Operator 22  1,0  Op22  .32239  .781
+Operator 23  1,0  Op23  -0.53292  e1.845
+Operator 24  1,0  Op24  .08878  .161
+Log-likelihood  e2839.25
+Pseudo R2 (adjusted)  0.324
+
+another interesting result. We ﬁnd that ‘air conditioning without a fare surcharge’ is not statistically signiﬁcant relative to
+no air conditioning. In contrast the provision of air conditioning with a 20% surcharge on existing fares is statistically
+signiﬁcant with a negative sign suggesting that users would sooner not have air conditioning if it means paying higher
+fares.
+
+  On-board safety, deﬁned by the smoothness of the ride is a statistically strong attribute. Relative to ‘the ride is jerky
+with sudden braking occurring often’, we ﬁnd that ‘the ride is generally smooth with rare sudden braking’ and ‘the ride is
+smooth with no sudden braking’ are both very important positive attributes of service quality. This suggests both policy
+initiatives in driver skill as well as vehicle quality. Cleanliness of the bus is statistically signiﬁcant when ‘very clean’
+relative to ‘not clean enough’. The non-statistical (1.830) signiﬁcance of ‘clean enough’ suggests that we really have a
+dichotomy between very clean and not very clean. Ease of access to a bus, closely linked to the issue of accessible transport
+turns out to be not so important overall, presumably because the majority of users (including many aging users) are
+sufﬁciently healthy to not be concerned with the conﬁguration of steps and entry widths. The attitude of the driver is a
+statistically strong inﬂuence on a user’s perception of service quality. Indeed, relative to ‘very unfriendly’ we might expect
+a signiﬁcant increase in the mean parameter estimate when we go from ‘friendly enough’ to ‘very friendly’. This is the
+most non-linear effect on utility of all the attributes of service quality. The availability of information at the bus stop
+(timetable and map) is statistically important compared to ‘no information’, although surprisingly the key information item
+is a timetable, with a map being a liability (possibly because of experience with vandalism?).
+
+  Finally, bus frequency deﬁned as 15, 30 and 60 min, was found to be signiﬁcant when treated as a dummy variable
+distinguishing 60 min from 15 to 30 min. There is a strong negative sign for the 60 min dummy variable, suggesting that a
+60 min service reduces relative utility signiﬁcantly compared with a service frequency of every 15 or 30 min. Not sta-
+tistically signiﬁcant is the 30 min dummy variable, deﬁned equal to one for frequencies equal to 30 min.
+
+  The socioeconomic characteristics sought from bus users were limited to personal income, age, gender and car
+availability. We found that individuals on higher incomes and of more years, were more likely to prefer the levels of
+service offered by the existing trip than by the alternative packages. What this suggests is that as individuals age and
+increase their income, they see existing service quality as increasingly satisfying their requirements for service quality.
+Alternatively, it is the younger users and those on lower incomes that see a greater need for improved service quality. Car
+availability was not statistically signiﬁcant. Further details are given in Prioni and Hensher (1999).
+
+9.4 The service quality index (SQI)
+
+The Service Quality Index (SQI) for each operator is calculated by the application of the utility expression in Table 9.4 and
+the levels of each of the attributes associated with the current trip experience of each sampled passenger. In this study we
+have estimated a single set of utility weights across the sample of 3849 passengers using the services of 25 operators. We
+investigated possibilities of differences in weights between segments of operators (e.g., Sydney metropolitan vs. regional
+vs. country towns) and found no statistically signiﬁcant differences. This is most encouraging, suggesting a similar pattern
+of preferences of passengers across all operating environments. This does not mean however that the levels of service
+offered on each service attribute are the same (indeed there is substantial variation in the mean and standard deviation of
+108 PART | II Contracting
+
+TABLE 9.5 Summary statistics of service quality index.
+
+Operator  Mean  Standard Deviation  Minimum  Maximum  Sample Size
+1  0.5311  0.788  e2.39  2.28  249
+2  0.3900  0.894  e1.87  2.00  96
+3  e0.8178  1.248  e4.88  1.92  508
+4  e1.098  0.927  e5.58  0.58  374
+5  e1.2840  1.406  e5.46  0.84  196
+6  e0.8377  0.383  e0.525  0.80  24
+7  e0.9263  1.297  e6.74  1.82  412
+8  e0.7113  0.566  e2.12  0.44  150
+9  e0.4597  0.685  e2.55  1.06  173
+10  e0.5805  0.904  e3.06  0.67  64
+11  e1.628  0.979  e4.55  0.55  90
+12  e0.3923  1.000  e3.80  1.40  100
+13  0.5435  0.483  e0.434  1.28  41
+14  0.7636  0.940  e2.28  2.61  180
+15  0.2079  0.637  e0.638  0.692  9
+16  e0.6345  0.958  e4.00  1.03  159
+17  e0.0649  1.089  e2.86  2.09  190
+18  e0.5687  1.206  e3.24  1.04  27
+19  1.0174  0.947  e0.990  2.70  203
+20  e0.0444  0.639  e1.43  1.55  224
+21  e0.4212  0.852  e3.45  1.17  227
+22  0.6466  0.643  e0.600  2.01  46
+23  e0.3076  1.034  e4.28  .808  65
+24  .1051  1.156  e2.17  1.42  22
+25  e1.7579  .875  e3.01  e0.096  20
+All  e0.4067  1.224  e6.74  2.70  3849
+
+Note: the ‘All’ values are based on summing across the entire data set of 3849 bus users and not based on a simple average of the 25 values reported for
+each operator.
+
+each attribute for each operator). Rather, what we are noting is that the marginal utility of each attribute (i.e., the mean
+parameter estimate of part-worth weight) is well represented by a single mean estimate across all operators.
+
+  The SQI developed for each operator is summarised in Table 9.5 and graphed in Fig. 9.1 at its mean for each operator.
+We have normalised SQI in Fig. 9.1 to a base of zero for the operator with the lowest relative SQI. The range is from 0 to
+2.70.
+
+  In developing the SQI indicator, we have taken into account the differences in the socio-economic composition of the
+travelling public (e.g., age, income, car availability), the method of data collection (e.g., on board vs. hand out and mail
+back) and location of operator. The contribution of each service quality attribute across all 25 operators in summarised in
+Fig. 9.2. The challenge for an operator is to compare themselves against best practice and to establish how best to improve
+overall service quality through implementing changes that reduce the magnitude of the attributes below the zero axis in
+Fig. 9.2 and increase the magnitude of attributes above the zero axis. The parameters’ estimates allow us to derive other
+  Bus contract costs, user perceived service quality and performance assessment Chapter | 9 109
+
+  FIG. 9.1 The service quality index.
+
+  FIG. 9.2 The composition of the service quality index (all operators in the sample).
+
+interesting results. Fig. 9.2 shows the contribution (in terms of utility) of each single quality attribute over the entire
+sample.6 Tarif (UTARIF), travel time (UTRATIM) and access time (UACCESST) have the highest impact on service
+quality On the positive side of SQI, the major inﬂuence is given by the friendliness of the driver (UVFRIEND) and the
+smoothness of the ride (UVSNBRAK).
+
+6. See Table 9.4 for a complete list of the attribute deﬁnitions.
+110 PART | II Contracting
+
+9.5 Linking service quality to cost and demand
+
+In traditional microeconomic theory, a cost function is speciﬁed as a function of physical output y and factor prices !w .
+
+Eq. (9.1) illustrates this relation.
+
+  C ¼ cðy; !w Þ  (9.1)
+
+The cost function describes the minimum cost of producing a given level of output y at given factor prices !w . Output is
+
+best described as multi-product and multi-dimensional. Bus operators provide seat-kilometres in regular passenger ser-
+
+vices, school transport and charter-tour activity. Depending on the composition of patronage we can distinguish output
+
+between regular passenger-kilometres, student-kilometres or charter-tour kilometres. In general we can treat output as
+
+produced or consumed, alternatively referred to as intermediate and ﬁnal output. For example, vehicle (or seat)-kilometres
+
+are produced by the public transport business and used as inputs by passengers (together with fares and frequency, and
+
+other attributes of competing modes) in the production of ﬁnal outputs such as passenger-kilometres (or trips). The service
+
+quality accounts for the multi-dimensional character of output. The output heterogeneity can be represented as Eq. (9.2).
+
+  C ¼ cðy; !w ; !q Þ  (9.2)
+
+Output, deﬁned by the vector y, is speciﬁed as ﬁnal output (i.e., total passengers or passengers-km). The vector !q
+
+captures observable output quality dimensions, such as the availability of bus shelters, adherence to on-time running, the
+number of cleaning hours of the ﬂeet, the length of the network, and the amount of money spent on drivers’ training.
+
+  Model (9.2), given an appropriate functional form, could be estimated consistently if one assumes that the arguments y,
+!w and !q are exogenous. Input prices can be considered as exogenous, based on the assumption that bus operators do not
+
+have monopoly power in factor markets. The ﬁnal output cannot be assumed exogenous a priori, as the number of
+passengers is determined by passengers’ travel behaviour. For this same reason we introduce the link between the cost
+
+function in (9.2) and a continuous passenger travel demand function (9.4) which includes a representation of service
+
+quality, obtained from (9.5).
+
+Operator Cost Function
+
+! !  C ¼ cðy; !w ; !q Þ  (9.3)
+
+where. q ¼ q SQI
+
+Passenger Demand Function
+
+  À  !Á
+  y ¼ d ys; SQI; c; m; r  (9.4)
+
+Quality of Service Preference Model
+
+  SQI ¼ f ðx1; .xkÞ k ¼ 1; .; K service quality attributes  (9.5)
+
+  Function (9.5) in a linear additive form is where bk is the weight (or marginal utility) attached to each kth attribute Xk
+describing the elements of the service quality index for each operator. SQI feeds ﬁrst into a bus passenger demand model
+(9.4), together with the relative cost of competing transport modes, etc. and is used to determine the demand for bus
+services. The demand function is speciﬁed as a continuous function of the supplied level of output (ys), the service quality
+index (SQI), the cost of competing modes (c), an income variable (m) and other socioeconomic characteristics (!r ). Only
+the quality attributes affecting directly operating cost enter in the cost function (9.3) as part of the vector !q . Quality
+attributes such as time spent walking to the bus stop directly affect y, and through y they impact on operator costs.
+
+  The interest herein is in the relationship between cost and SQI using what is effectively a reduced form model (in
+contrast to the structural system of equations in (9.3)-(9.5)). However, we deﬁne SQI in terms of user perceptions of service
+quality in contrast to operator-measured service quality, in recognition that service quality as perceived by users should be
+the primary basis of contract compliance.7 Hence we substitute Eqs. (9.4) and (9.5) into (9.3). This reduced form has also
+been adjusted from total cost to cost per kilometre given that bus contracts used in the empirical application are based on a
+cost per kilometre payment. The ﬁnal model of interest is Cost per km as a function of output, SQI, and other inﬂuences:
+
+  C ¼ cfðys; SQI; c; m; rÞ; wg  (9.6)
+
+7. There is always a risk when service quality is measured by the operator, in terms of supply-side deﬁnitions, that a few easy-to-measure items are
+included to the detriment of what really matters to users.
+  Bus contract costs, user perceived service quality and performance assessment Chapter | 9 111
+
+  Other inﬂuences can include input prices as well as other contextual effects that might be proxies for inputs, as well as
+inﬂuences in their own right (e.g., average on-road peak speed, ﬂeet size, and age of bus ﬂeet). Importantly, all inﬂuences
+on SQI enter the unit cost equation; however only those elements under the control of the operator are of interest in
+assessing operator capability in complying with performance standards. To exclude the other service quality elements not
+under the control of the operator, however, would lead to bias in the ability to separate out the dimensions of service quality
+that the operator can inﬂuence (or be responsible for).
+
+9.6 The relationship between average cost per km and SQI
+
+A linear regression model that accounts for multiplicative heteroscedasticity is used to obtain the parameter estimates for
+sources of systematic variation in the average cost per kilometre. The standard linear regression model with constant
+variance (set to 1.0) is modiﬁed to the form Var(εi) ¼ exp (g0zi), where zi is a covariate that captures systematic sources of
+unobserved error variance across a sample. The ﬁnal model is summarised in Table 9.6, obtained after estimation of
+numerous models, with the contributing inﬂuence (i.e., the product of the estimated parameter and the level of the
+explanatory variable) of each explanatory variable summarised in Figure 4 for each operator. A summary of the levels of
+each explanatory variable for each operator are given in Fig. 9.5 and 9.6. We had to delete three operators given the
+missing data on key explanatory variables. All parameter estimates are statistically signiﬁcant and well above the one
+percent level of signiﬁcance. The overall ﬁt is excellent for a non-linear form, with Fig. 9.3 displaying the relationship
+between the actual cost per km (CPERKM) and the model ﬁt (GFITC), with some observations such as 4,10 and 11 not
+being replicated as well as other observations such as 1,2,3 and 6.
+
+  The evidence suggests that SQI transformed to be positive and as a natural logarithm, has a negative mean estimate of
+-0.35,962, which indicates that, on average, improvements in perceived service quality will contribute to reducing average
+cost per kilometre, after controlling for ﬂeet size, ﬂeet age, passengers per kilometre and average peak speed. This is an
+important ﬁnding since it suggests that investment in service improvements that translate into greater perceived satisfaction
+by users does not have to be accompanied by an increase in cost per kilometre of bus service provision. To provide some
+plausible explanation for this signed impact, consider driver behaviour which is one of the most important factors under
+operator inﬂuence. If drivers are behaving well, in terms of attitude and quality of driving re smoothness of the ride,
+customers will be more satisﬁed. It is also very likely that well behaved drivers will have lower absenteeism rates (which
+cuts labour costs), and will perform their duties with higher productivity, such as driving less aggressively, which will
+lower fuel consumption.
+
+TABLE 9.6 Summary of cost model.  Units  Parameter estimate  T-ratio  Mean
+Explanatory variables  2.20086  9.79
+Constant  Number  e0.00382  e5.18  54.36
+Fleet size  years  0.06685  3.67  10.58
+Average bus age  Ln of passenger per km  0.95327  7.88  0.3601
+Natural log of passenger per vehicle kilometre  Ln of index  e0.35962  e4.47  0.2028
+Natural log of zero-based service quality index  Km per hour  e0.02429  e8.28  28.74
+Average peak speed
+Variance function (log-linear):  1,0  0.71845  5.48  0.3182
+Sigma  e5.03577  e7.78
+Non metropolitan dummy
+Overall Fit:  e17.1441
+Restricted log-likelihood  e6.3170
+Log-likelihood at convergence  0.632
+McFadden pseudo-R2  1.6983
+Bayes information criterion (BIC)
+
+Multiplicative Heteroscedastic Regression Model.
+Dependent variable: Average cost per kilometre (mean ¼ $2.371, stddev ¼ $0.891, 22 operators).)
+112 PART | II Contracting
+
+  4.73
+
+  3.92
+
+  3.11
+
+Variable
+
+  2.30
+
+  1.49
+
+  .67
+
+  0  4  8  12  16  20  24
+
+  Observ.#
+
+  CPERKM  GFITC
+
+  FIG. 9.3 Model ﬁt for Cost per kilometre.
+
+  The implied elasticity of cost per kilometre with respect to SQI is -0.16. Thus, a 10% increase in SQI will, on average,
+lead to a 1.6% reduction in cost per km., or 4 cents per km on average. It is quite inelastic and small. As a mean estimate,
+there will be some operators who have higher costs per kilometre than other operators for a given level of service quality,
+after controlling for the other inﬂuences in the model. We will investigate this in more detail below as a way of identifying
+differences in service quality, and how they relate to differences in cost per kilometre.
+
+  In terms of the other inﬂuences on cost per kilometre, as expected, lower (higher) average peak speed contributes to a
+higher (lower) cost per kilometre (an implied mean elasticity of cost with respect to speed of -0.295), as does an aging bus
+ﬂeet, and higher patronage per kilometre. The natural logarithm of patronage per kilometre parameter estimate of 0.95,327
+indicates that higher levels of patronage increase mean costs per kilometre, in part attributable to delays in boarding and
+alighting and the possibility of ‘cost creep’ in the current gross cost contract setting when operators negotiate a contract
+with government, knowing that patronage revenue will not be enough to compensate for a lower negotiated cost per
+kilometre. We see cost economies of scale for larger operations when ﬂeet size is the proxy for size. Finally, the non-
+metropolitan dummy variable (taking the value 1 for non-metro operators) with a negative sign, suggests lower error
+variance for non-metro operators, or alternatively that there are more inﬂuences on metropolitan operation that impact on
+cost per kilometre compared to non-metro operators that have not been captured by the explanatory variables, and which
+hence reside in the error variance (Figs. 9.4e9.6).
+
+9.7 Determination of service performance standards and operator compliance
+
+The main objective of the development of the relationship between operator cost per kilometre and service quality is to
+establish a benchmark performance standard for cost per kilometre associated with service quality, after controlling for
+those features of service quality than cannot reasonably be the responsibility of the operator, as well as other inﬂuences on
+costs that are external to the operator’s capabilities to deliver efﬁcient cost outcomes. To be able to determine a net measure
+of service quality impact on costs, we have to apply the gross cost model in Table 9.6 (including the SQI model in
+Table 9.4) by initially netting out differences in the operating environment that are not under the control of each operator.
+The way we do this is to normalise (or neutralise) these external inﬂuences through replacing operator-speciﬁc levels of the
+relevant variables with a median or mean for the full set of operators. We then identify the residual inﬂuence of
+  Bus contract costs, user perceived service quality and performance assessment Chapter | 9 113
+
+  FIG. 9.4 Contribution to Cost per Km of each Explanatory Variable.
+
+  FIG. 9.5 Proﬁle of Explanatory Variables: ﬂeet size, average age of buses, average peak speed.
+
+operator-controlled variables and calculate the revised cost per kilometre for each operator. Finally, we compare this
+against both best practice and mean levels of each variable, to establish performance standards and the relationship of each
+operator with these standards as expressed through an SQI contribution to cost per kilometre.
+
+  The variables in SQI extracted from Tables 9.4 and 9.6, that are reasonably assumed to not be under the inﬂuence of an
+operator are the bus fare, access time, bus travel time and facilities at the bus stop8 (i.e., seat only at bus and seat only at the
+bus stop). An average (and median) of 14.6 (23.5) cents per km is associated with delivered service quality attributes as
+perceived by users that are reasonably under the control of the operator, after removing the six attributes deemed outside of
+the control of the operator, with a range from 51.5 cents per km to -63.7 cents per km. The cost per km varies across
+
+8. In the Australian context the bus stop facilities are the responsibility of Local Government.
+114 PART | II Contracting
+
+  FIG. 9.6 Proﬁle of Explanatory Variables: SQI normalized and average passengers per vehicle km.
+
+operators as shown below in Fig. 9.7. This evidence suggests that the SQI components under the control of an operator
+make a small but noticeable contribution to the average cost per km.
+
+  The contribution to SQI of the attributes that are under the control of the operator (SQIUCN), in contrast to those
+reasonably deemed not under the control of the operator (SQINUCN), are summarised in Figure 8 for each operator.
+
+  FIG. 9.7 Contribution to Cost per km of service quality under control of operator.
+  Bus contract costs, user perceived service quality and performance assessment Chapter | 9 115
+
+  FIG. 9.8 The SQI index decomposed.
+
+SQIALLN is the sum of SQIUCN and SQINUCN. The incidence of SQI under operator control varies a great deal between
+operators. This can be translated into its impact on the cost per kilometre, summarised in Fig. 9.9, which varies from a high
+of 14.43% to a low of -1.35%, and a mean (median) of 4.07 (3.91) percent. 4.07% of average of cost per km across the
+sample is attributable to levels of service quality delivered as perceived by bus users that is under the control of the
+operator. However, as the model suggests, although SQI contributes to cost per km, on average higher levels of user
+
+  FIG. 9.9 Residual SQI under the control of the operator as percent of Cost per km.
+116 PART | II Contracting
+
+  FIG. 9.10 Compliance with service quality performance standard.
+
+perceived service quality are associated with lower costs per km. The negative percentage indicates that the level of user
+perceived service quality under the control of the operator does not have a positive impact on cost per km, and hence
+contributes to reducing cost per km.
+
+  What is of particular interest is how each operator compares after controlling for inﬂuences not under their control. We
+have calculated the net cost per km based on average industry performance of $2.269 per km. We then adjust each op-
+erator’s cost to normalise costs (producing a net cost) as if they were operating at average industry levels. This results in
+variations in costs between gross and net cost per km varying from $1.62 per km to -41.45 cents per km, an average of
+34.62 cents per km and a median of 36.67 cents per km. (See ‘adjustment gross-net (negative good) c/km’ in Fig. 9.10). We
+then identify how much of the variation around net industry cost can be attributable to the service quality delivered as
+perceived by users, that is under the control of the operator. On average we have 1.57 cents per km and a median of just
+under one cent per km, with a range from 9.72 cents per km to -1.48 cents per km. (SQIUCop adj c/km in Fig. 9.10). On
+the basis of this evidence, eight out of 22 operators comply with the service quality standard, and 14 are below the industry
+standard; however of the 14 below the standard, six are above 3 cents per km and seven above 2 cents per km. If we were
+to impose an acceptable variation up to 3 cents per km, we would have six non-compliant operators on the service quality
+performance standard on attributes under the control of the operator. Although 3 to 9 cents per km may appear a small
+amount, given average kilometres per annum of 2,068,470, this amounts to between $62,054 and $186,162 per annum,
+which is a sizeable sum from an operator’s perspective. This translates into an industry wide cost in NSW of up to $1 m per
+annum which could be saved through efﬁciency gains.9
+
+9.8 Conclusions
+
+This chapter has outlined a method designed to identify the relationship between cost per kilometre and the dimensions of
+service quality as perceived by users as contributors to their satisfaction with the services on offer. Of particular interest is
+identiﬁcation of those elements of perceived service quality that are reasonably under the control of the operator, and hence
+any inﬂuence on cost per kilometre can be attributed to the efforts of the operator.
+
+9. We suspect that this might be deemed ‘negligible’ by some industry associations and even the regulator, but $1 m per annum could be more pro-
+ductively spent on undertaking SQI surveys and undertaking the benchmarking exercise developed in this paper.
+  Bus contract costs, user perceived service quality and performance assessment Chapter | 9 117
+
+  As far as we are aware, this mapping has not been undertaken to date, and hence this chapter is a signiﬁcant contri-
+bution to ﬁlling the gap on what has become an important feature of contract speciﬁcation and compliance with bench-
+marked performance standards. We build on the earlier research by Hensher that developed an index of service quality,
+SQI, and show how this very appealing index of user satisfaction with services can be used, together with other factors, to
+establish key sources of systematic variation in total cost per kilometre. By establishing the contribution of variations in
+SQI to variations in cost per kilometer, and then separating out the elements of SQI that are under the control of the
+operator, we have been able to isolate the contribution of the latter elements of SQI to variations in cost per kilometre.
+
+  Given the industry average cost per kilometre, we have also adjusted (or normalised) cost per kilometre for those
+features of bus services that are not under the control of the operator, producing a net cost that can be used to compare
+operators as if they were operating in an environment where all aspects not under the control of the operator are the same
+for each operator. The residual cost per kilometre represents operator-controlled cost contributions, which are then
+decomposed into service quality impacts under the control of the operator, and other effects.
+
+  We ﬁnd a small impact on cost per kilometre of service quality impacts under the operator’s control; however when
+expanded up to annual kilometres of service activity, this amounts to a non-marginal sum that matters to the operator. It is
+in this context that we have proposed a service quality performance standard and identiﬁed operators who have not met the
+standard within a sensible amount of non-compliant variation, beyond which failure to comply is deemed evident.
+
+  The method is, unfortunately, reliant on rich and reliable data on bus user satisfaction and requires regular survey data
+to establish the SQI index used in the cost model to establish the role of SQI and then subsequent decomposition of SQI to
+determine the contribution of SQI to cost performance under the control of the operator. Given the data, the procedure is
+straightforward, and can be easily automated by the regulator. Clearly if a regulator is interested in benchmarking cost and
+service performance, then it is obvious that quality data is required. Without such data we would not recommend any form
+of benchmarking.
+
+  With the richness of the evidence presented herein, the regulator has appropriate evidence to commence contract (re)
+negotiation with operators. In addition, we should recognise the value of this information in ongoing monitoring of
+operator performance, regardless of whether an operator wins the right to deliver services through negotiation or
+competitive tendering.
+Chapter 10
+
+Customer service quality and
+benchmarking in bus contracts
+
+10.1 Introduction
+
+As contracting of public transport services grows in sophistication, there is a growing focus on an increasing number of key
+performance indicators that emphasis service quality. Although contracts won under competitive tendering or by nego-
+tiation are often assessed on a number of evaluation criteria, cost efﬁciency still remains the main basis for selecting a
+preferred operator. The reasons are in part linked to the need to reduce costs through competition for the market (in
+tendering), in contrast to other models of contract awarding. In both tendered and negotiated contracts, the ideals of
+performance improvement are promoted, yet it is often the case that this is poorly understood, and where it is taken as a
+precise measure of output it is limited to a few measurable criteria that often are deﬁned by supply side measures
+(e.g., on-time running and accidents per 100,000 operating hours).
+
+  There has been a limited effort to identify the inﬂuences that really matter to users of public transport; however the
+efforts have been based on simplistic measures of satisfaction measured of a Likert scale (typically from very unsatisﬁed to
+very satisﬁed), where the contributing inﬂuences are treated as independent and hence additive in their impact. In reality,
+users of public transport purchase a package of attributes that deﬁne perceptually what matters to them. Ways of incor-
+porating such packaging of service quality offer an improved and behaviourally richer way of representing the role of
+underlying dimensions of quality in establishing how well an operator is delivering services to satisfy customers and also
+their contract obligations. Studies, for example, by Cirillo et al. (2011), dell’Olio et al. (2010a,b), Eboli and Mazzulla
+(2010) have been critical of methods that treat each underlying service dimension as if it can stand alone in the way it is
+assessed as an inﬂuence on public transport performance (or indeed for any performance of any market delivered service).
+Bolton and Drew (1991) and Boulding et al. (1993) are typical examples of customer satisfaction studies that promote
+attribute packaging in determining the value of service.
+
+  In this chapter we present a novel way of doing this using a construct developed by Hensher some years ago called a
+Service Quality Index (SQI) (see Hensher and Prioni, 2002), in which a stated preference survey together with actual
+experience in using public transport is used to obtain preference weights for each signiﬁcant attribute deﬁning service
+quality, and which is used then to establish an SQI for each sampled user and by aggregation the performance on service
+quality of each operator. Such a measure should be considered by regulators when assessing the merits of each operator’s
+bid in order to avoid the real risk that cost efﬁciency dominates at the expense of gains in service performance.
+
+  The focus of this chapter is quantifying service quality from a users’ perspective, in a way that weights the relevance of
+each source of service quality, and to use this information to obtain a single measure of service quality, that we call the
+customer service quality index. We use data from metropolitan and non-metropolitan bus operators in New South Wales
+(NSW) to demonstrate the way the method can be used in contract negotiation and ex-post monitoring of performance
+leading up to contract renegotiation or tendering.
+
+10.2 Concerns about traditional likert scale metrics of customer satisfaction
+
+Service quality in the context of customer experience is typically identiﬁed using a Likert scale in which consumers are
+asked to indicate on a scale (such as from very satisﬁed to very unsatisﬁed), how satisﬁed they are with a speciﬁc attribute
+deﬁning a class of service. Sometimes these satisfaction measures are weighted by a reported importance attached to an
+attribute, often referred to as the Fishbein-Ajzan importance-satisfaction scale. This approach falls short in two major ways
+of creating a robust customer service quality index. First, there are interpretations of scale issues with surveys which rely
+on respondents marking off the different aspects of service quality. We do know that ‘very satisﬁed’ to one user might be
+rated as ‘very dissatisﬁed’ from another user on exactly the same service. Second, there are independent issues with the
+
+Bus Transport. https://doi.org/10.1016/B978-0-12-820132-9.00010-8  119
+Copyright © 2020 Elsevier Inc. All rights reserved.
+120 PART | II Contracting
+
+way in which respondents are asked to consider the different aspects of service quality. The literature (for example Hensher
+et al., 2003a) is clear that users do not ﬁnd all aspects of service quality equally important and, indeed, may be extremely
+satisﬁed with an element which is of low importance.
+
+  Within the broader context of SERVQUAL that has had a dominating inﬂuence in consumer and marketing research,
+Buttle (1996) provides an extensive review and critique of the SERVQUAL method ﬁrst introduced by Parasuraman et al.
+(1985). The approach using ordinal scaled (Likert) metrics performs analyses with methods suited to interval-level data
+(factor analysis) (Andersson, 1992). It has been criticised on many grounds including that interdependencies among the
+dimensions of quality are difﬁcult to describe. Importantly it has been criticised for focusing on the process of service
+delivery rather than outcomes of the service encounter (Richard and Allaway, 1993).
+
+  For this reason, the best approach to the customer service index would be adopt a customer service quality index
+(CSQI) approach in which an methods such as a stated preference (SP) experiment investigates with users their response to
+variations around the current level of service attributes, presented in packages (as illustrated in the case study in a later
+section), which are created using formal statistical design principles (see Hensher et al., 2005, 2015a). The data would be
+modelled by combining the SP data from the experiment and the revealed preference (RP) data on currently perceived
+levels of experience in respect of the attributes of interest from a survey, to obtain estimated parameters for each service
+quality attribute, which can then be combined to create a customer service quality index.
+
+  These weights would not be subject to the interpretation of scale issues identiﬁed above and a CSQI thus designed
+would meet the requirements of being robust, capable of benchmarking customer satisfaction over time to inform policy
+and planning of services, and to inform how the separate elements of service quality contribute to service performance with
+a view to informing contract management.
+
+  The CSQI created is critically dependent on the questions asked of users. In turn, this requires clarity in the potential
+use of the customer service quality index. For example, in the context of a bus contract, the interest herein, a CSQI which is
+to be used for monitoring consumer sentiment and for evaluating policy and planning through the impact of such policies
+and planning on the service quality attributes, can be less speciﬁc than a CSQI which is also to be used for identifying
+which elements of service quality contribute to performance for the purposes of operator contract development, bench-
+marking and compliance. In the latter case, the level of service quality attributes need to be carefully constructed to create,
+so far as possible, attributes where the responsibility for changes to the level of service can be attributed to a single
+stakeholder (operator or government). Moreover, if the CSQI is to be used for operator contract development, bench-
+marking and compliance, a larger sample of bus users in particular will be required as it will be important to capture data
+effectively for each contract area.
+
+  In developing a CSQI for use in benchmarking of operator performance, it is critical to recognise that operator’s may
+have little control over many of the attributes that deﬁne a consumer service quality index (or any customer satisfaction
+metric). Hensher (2014) has shown this in a study of private bus operators in Sydney (Australia) and concluded that many
+of the service quality dimensions that matter to users of public transport are often deﬁned in a contract by the regulator
+(e.g., service coverage by time of day and day of the week and weekend, service frequency, while some attributes are
+heavily inﬂuenced by market forces (e.g., travel times at the peril of trafﬁc congestion and weather).
+
+  This chapter focuses on the role that customer satisfaction expressed as a CSQI can play in the benchmarking of
+operator performance as part of monitoring bus contract outcomes by the funder. Whilst this chapter provides evidence for
+the bus industry, there is no reason to believe that the conclusions would differ for other public transport modes. In Hensher
+(2014) we investigated the relationship between cost efﬁciency and CSQI elements under the control of the operator, and
+concluded that operators who provide services levels that result is a higher CSQI in general are also the more cost efﬁcient,
+and that investing in higher levels of customer service does not have to necessarily require a great cost outlay. In the current
+chapter we are focussing only on the development of a CSQI, providing details of how this can be obtained and used in a
+benchmarking context for regulators interested in both annual reviews of incumbent operators as well as for competitive
+tendering or negotiation (and re-negotiation) on contracts. The inclusion of CSQI in the performance review means that
+benchmarking becomes are much more valued process than simply one based on cost efﬁciency which is commonly
+mistaken as the same as cost reduction or no cost escalation (beyond inﬂation and other agreed variations).
+
+10.3 Developing a customer service quality index
+
+The concept of customer service quality includes aspects of transport service which are not always well-deﬁned and easily
+measured. Herein we deﬁne service quality in terms of a set of attributes which each user perceives to be the sources of
+utility (or satisfaction) in bus use. The dimensions of quality, viewed from a bus user’s perspective, are complex.
+  Customer service quality and benchmarking in bus contracts Chapter | 10 121
+
+Passengers might, for example, consider the comfort at the bus stop and the time to get a seat, or only the comfort of the
+seats. Modal choice surveys have identiﬁed a large number of inﬂuences on the use of buses in contrast to other private and
+public modes.
+
+  Service quality can be divided into six broad classes of effects, summarised in Table 10.1, each containing different
+quality dimensions (as identiﬁed by Hensher, 1992; Fielding et al., 1985; Kittleson and Associates, 1996; Swanson et al.,
+1997; Cunningham et al., 1997; and other studies). Recent contributions by Cirillo et al. (2011), dell’Olio et al. (2010a,b),
+Eboli and Mazzulla (2010,1 2008a,b), and Marcucci and Gatta (2007) have also reinforced the relevance of the attribute set
+identiﬁed in earlier research. Some of these contributions also use a stated preference method, acknowledging the original
+contribution by Hensher (estimated as multinomial logit and mixed logit modelse see Hensher and Prioni, 2002), while
+other studies use a different, more traditional method, in which a satisfaction scale is multiplied by an importance scale (in
+various forms) to obtain an overall customer satisfaction index. The importance weights are used as proxies for the weights
+obtained from model estimation herein.
+
+  Some demand side measures can be translated (or mapped) into a set of supply side equivalences (resources that the
+operator has partial or total control of) such as the timetable, ﬂeet age, and/or the buses that are air conditioned; the number
+of vehicles that are wheelchair accessible, the number of cleaning hours of the vehicles, and the money spent on driver
+training.
+
+  The attributes on the supply side are, in contrast to the quality attributes in column two in Table 10.1, to varying
+degrees, observable and under the direct control of the bus operator. For example a change in the average ﬂeet size will,
+ceteris paribus, have a direct inﬂuence on the time to get a seat. On the other side we expect the supplied level of service
+quality to be a function of consumer preferences. If the supplied quality level is a response to customer preferences, and not
+only to some regulatory restrictions, quality exogeneity cannot be assumed. In this circumstance we need to develop a
+capability to represent the quality of service as determined by users. The discrete choice approach is an appealing
+framework (see below). Given these considerations about service quality, we are able to introduce an improved version of
+the traditional cost model in its reduced form to capture the full dimensionality and service quality.
+
+  The proposed and preferred service quality measure is constructed by analysing bus user preferences for different levels
+of bus service quality, and using the resulting weights attached to each underlying dimension of service quality as
+
+TABLE 10.1 Demand side effects and their equivalence on the supply side.
+
+Getting to the bus stop quality  Dimensions of user perceptions  Operator speciﬁed measures
+Wait quality  Frequency,
+Trip quality  Ease, safe, time (distance),  Availability of bus shelter and seats
+  Knowing where the bus stop is
+Vehicle quality  Frequency availability of bus shelter and seats
+  Wait time at stop, punctuality of bus
+Driver quality  Wait comfort, wait safety  Frequency, percentage of low ﬂoor buses
+  Number of seats available
+  Time to board a bus  Average speed, network shape
+  Time to get a seat  Travel time
+  Moving to your seat  Fare
+  Travel time
+  Trip cost  hours of vehicle cleaning/vehicle
+  Percent of buses with cloth seats
+  Cleanliness  Percent of buses with air conditioning
+  Comfort of seats (types), spaciousness  Visual surveillance
+  Temperature control (ventilation)  Average age of the ﬂeet
+  Noise  Wheelchair access (yes/no)
+  Safety
+  Modernity  years of driving experience
+  Ease of use for those with disabilities  Money spent on driver training
+
+  Appearance-helpfulness  Availability of timetable/destination signs
+
+Information quality  Pre-trip information
+
+1. Eboli and Mazzulla (2010) is a very useful review of the literature on methods used to study public transport service quality.
+122 PART | II Contracting
+
+perceived by users to derive the level of satisfaction associated with the supplied level of service quality. To this extent we
+need to identify and quantify the preferences for service levels from bus travellers. We restrict our analysis to actual bus
+users but recognise that non-users also provide useful information on the levels of service offered by bus operators. Within
+a performance regime based on the acceptability of service levels to actual users, and with a focus on the service quality
+that inﬂuences operator costs, the emphasis on users is appropriate.
+
+  To reveal user preferences for service quality, we need to obtain data of sufﬁcient richness to capture the behavioural
+responses to a wide range of levels of service quality deﬁned on an extended set of attributes such as those given in
+Table 10.1. Revealed preference (RP) data is typically restrictive in its variance properties, but is an important input into
+the assessment. The preferred approach is a stated preference (SP) experiment combined with perceptions of existing levels
+of service. A sampled passenger would evaluate a number of alternative service levels (known as scenarios) together with
+the level experienced, and choose the most preferred alternative. Systematically varying the levels of the attributes in
+repeated scenarios enables us to obtain a proﬁle of each passengers preferences for bus services. The data is analysed as a
+discrete choice model in which we combine the SP and RP data to obtain estimated parameters for each attribute.
+
+  We estimate the simple multinomial logit model (MNL) in which all random components are independently and
+identically distributed (IID) (see Hensher et al., 2005, 2015a).2 Let Unsj denote the utility of alternative j perceived by
+respondent n in choice situation s. We assume that Unsj may be partitioned into two separate components, an observable
+component of utility, Vnsj and a residual, unobservable component, εnsj;such that
+
+  Unsj ¼ Vnsj þ εnsj:  (10.1)
+
+  The observable component of utility is typically assumed to be a linear relationship of observed attribute levels, x, of
+each alternative j and their corresponding weights (parameters), b;with a positive scale factor, sn such that
+
+  XK  (10.2)
+  Unsj ¼ sn bnkxnsjk þ εnsj;
+
+  k¼1
+
+where bnk represents the marginal utility or parameter weight associated with attribute k for respondent n. The unobserved
+component, εnsj;is often assumed to be independently and identically (IID) extreme value type 1 (EV1) distribution. We
+
+will develop the implications of the distributional assumption in detail below. The individual scale factor in Eq. (10.2) is
+normalised to one in most applications (we refer to such models as constant variance models.) An alternative representa-
+
+tion that preserves the preference order in Eq. (10.2), as long as sn does not vary across alternatives, is
+
+  ÃUnsj ¼ XK  bnkxnsjk þ ðεnsj = snÞ:
+
+  (10.3)
+
+  k¼1
+
+  It can be seen that the variance of εnsj;is inversely related to the magnitude of sn k¼1 PK bnkxnsjk via sn: If εnsj has an EV1
+distribution with this scale parameter, then Var(εnsj/sn) ¼ p2/6. In order to make any progress at modelling choices, it is
+
+necessary to make a number of assumptions about the unobserved components of utility. The most common assumption is
+
+that for each alternative, j, εnsj;will be randomly distributed with some density,f ðεnsjÞ; over decision makers, n, and choice
+situations, s. Further assumptions about the speciﬁc density speciﬁcation adopted for the unobserved effects, εnsj (e.g., the
+
+unobserved effects are drawn from a multivariate normal distribution) lead to alternate econometric models.
+
+Assuming there exists some joint density such that εns ¼ hεns1; ε; εnsJi represents a vector of the J unobserved effects
+
+for the full choice set, it becomes possible to make probabilistic statements about the choices made by the decision makers.
+
+Speciﬁcally, the probability that respondent n in choice situation s will select alternative j is given as the probability that
+
+outcome j will have the maximum utility;
+
+  Pnsj ¼ ProbðUnsj > Unsi; cisjÞ  (10.4)
+  ¼ ProbðVnsj þ εnsj > Vnsi þ εnsi; cisjÞ
+
+which can also be written as
+
+  Pnsj ¼ Probðεnsj À εnsi > Vnsi À Vnsj; ci s jÞ:  (10.5)
+
+2. The MNL and more advanced methods are discussed in detail in Hensher et al. (2015a).
+

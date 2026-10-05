@@ -1,0 +1,13 @@
+source,part,how it was read,why re-read
+SRC_002_Intermodal_Freight_Transport_-_David_Lowe,most of the intermodal regulatory material,headings and keyword search,unlikely to hold simulator methods; confirm
+SRC_017_Private_Financing_of_Public_Transportation_Infrastructure_-_Wendell_C_Lawther,contract-economics chapters and P3 regulatory material,headings and keyword search; idea pages are sections only,unlikely to hold methods; confirm
+SRC_003_AIoT_for_Smart_Transportation_-_Meenu_Gupta,chapters without algorithms,keyword skim,survey chapters; confirm
+SRC_004_Applications_of_Computational_Learning_and_IoT_-_Saurav_Mallik,chapters without algorithms,keyword skim,survey chapters; confirm
+SRC_006_Computing_for_Transportation_-_G_R_Kanagachidambaresan,all but Ch 4,keyword skim,survey chapters; confirm
+SRC_020_Statistical_and_econometric_methods_for_transportation_data_analysis_-_Simon_Washington,Ch 5 (simultaneous equations) and the middle of Ch 4 (regression assumption violations),skimmed; ideas from section headings,method-rich book: worth a full read
+SRC_030_The_Geography_of_Transport_Systems_-_Jean-Paul_Rodrigue,"ports, air, containers, trade and logistics chapters",headings,unlikely for road simulation; confirm
+SRC_023_The_Urban_Transportation_Problem_-_J_R_Meyer,"1950s trend and housing chapters, cost tables, appendix",headings; cost tables not fully read,cost tables could feed benefit_cost
+SRC_022_THE_GREEN_BOOK_A_Policy_on_Geometric_Des,"p0001-0075 front matter; narrative parts of Ch 4-8; Ch 3 superelevation and escape ramps",skimmed,Ch 3 superelevation could refine curve speeds (SRC_022-015)
+SRC_023_The_Urban_Transportation_Problem_-_J_R_Meyer,SRC_023-009 lane capacity table,text extraction garbled,read the numbers from the page image
+SRC_024_Towards-Safer-Roads-in-Dev-Countries,Ch 4 surface-condition speed reductions (SRC_024-002) and PV^2 crossing warrant figure (SRC_024-010),values are in figures,read the numbers from the page image
+SRC_033_Statistics_13th_edition_-_McClave_and_Sincich,Ch 14 nonparametric statistics,not in the PDF (published online only),covered by Washington Ch 2.5 instead

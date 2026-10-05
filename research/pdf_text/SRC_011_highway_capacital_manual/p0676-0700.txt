@@ -1,0 +1,1579 @@
+Highway Capacity Manual 2000
+
+  EXAMPLE PROBLEM 5
+
+  The Sidewalk  A proposed 2.0-km pedestrian sidewalk on a new urban street with
+
+  three signalized intersections.
+
+  The Question What is the LOS with the projected pedestrian volume? What is the
+  minimum effective width required to achieve LOS B?
+
+  The Facts
+
+  √ Projected peak 15-min pedestrian volume across the urban street = 600 p/15-min;
+  and
+
+  √ L1 = 500 m, L2 = 200 m, L3 = 1000 m, L4 = 300 m.
+
+  Comments
+  √ Assume C = 90.0 s for all intersections;
+  √ Assume g = 0.5C – 4.0 = 0.5(90.0) – 4.0 = 41.0 s for all intersections; and
+  √ For planning, use default of 1.2 m/s for pedestrian walking speed.
+
+  Outline of Solution All inputs are known. Pedestrian delay at each intersection and
+  speed over the entire urban street are determined. LOS for the whole facility is
+  determined. The maximum unit flow rate to achieve LOS B will be used to estimate
+  effective sidewalk width.
+
+  Steps  (C – g)2
+  1. Compute average delay of  dp = 2C
+
+  pedestrians at intersections (use  (90.0 – 41.0)2
+  Equation 18-5).  dp = 2(90.0) = 13.3 s
+  2. Find SA (use Equation 18-22).
+  SA =  LT
+  3. Find LOS (use Exhibit 18-13).  Li
+  4. Find maximum unit flow rate for LOS  ∑ + ∑ di
+  Si
+  B (use Exhibit 18-3).
+  5. Compute WE (use Equation 18-2).  SA = 2000 = 1.17 m/s
+  2000 + 3(13.3)
+  1.2
+
+  LOS C
+
+  23 p/min/m
+
+  v15
+  vp = 15 * W
+
+  E
+
+  v15
+  WE = 15 * v
+
+  p
+
+  WE =  600  = 1.74 m
+
+  15 * 23
+
+  Results The proposed sidewalk will operate at LOS C. To achieve LOS B, the
+  sidewalk requires an effective width of 1.74 m.
+
+Chapter 18 - Pedestrians  18-30
+Example Problems
+  Highway Capacity Manual 2000
+
+  PEDESTRIANS WORKSHEET  Example Problem 5
+
+General Information  Site Information
+
+Analyst  ______J_M_Y_E_______  Facility  ___U_r_b_a_n_S__tr_e_e_t___
+Agency or Company  ______C_E_I ________  Jurisdiction  ________________
+Date Performed  ______5_/9__/9_9______  Analysis Year  ___1_9_9_9__________
+Analysis Time Period  ______Pe_a_k________
+
+" Operational (LOS)  " Design (WE)  " Planning (LOS)  "X Planning (WE)
+
+Walkways and Sidewalk Pedestrian Facilities
+
+  1  2
+
+Total width of crosswalks, WT (m)
+Sum of obstructions width and/or shy distances,1 Wo (m)
+
+Effective crosswalk width, WE (m), WE = WT – Wo  1.74
+
+Peak 15-min flow rate (both directions), v15 (p/15-min)  600
+  v15
+Pedestrian unit flow rate, vp (p/min/m), vp = 15 * W  23
+  E
+
+LOS (Exhibits 18-3, 18-4, 18-5, 18-6, or 18-7)  B
+
+Shared Pedestrian-Bicycle Facilities
+
+Mean pedestrian speed, Sp (m/s)
+
+Mean bicycle speed, Sb (m/s)
+Same-direction bicycle flow rate, Qsb (bicycles/h)
+Opposing-direction bicycle flow rate, Qob (bicycles/h)
+
+Passing events, Fp (events/h), Fp = Qsb(1– Sb Sp )
+Opposing events, Fm (events/h), Fm = Qob(1+ SSpb )
+
+Total events, F (events/h), F = Fp + 0.5Fm
+LOS (Exhibit 18-8)
+
+Crossings at Signalized Intersections, Unsignalized Intersections, and Urban Street Facilities
+
+  Pedestrian Delay at Signalized Intersections  1  2  3  4  5  6  7  8
+
+Cycle length, C (s)  90.0 90.0 90.0
+Effective green time for pedestrians, g (s)
+  41.0 41.0 41.0
+Average delay, dp (s), dp = 0.5(C – g)2 C
+LOS at signalized intersections (Exhibit 18-9)  13.3 13.3 13.3
+
+  Pedestrian Delay at TWSC Intersections
+Pedestrian walking speed, Sp (m/s)
+
+Pedestrian start-up time, ts (s)
+Length of crosswalk, L (m)
+
+Single pedestrian critical gap, tc (s), tc = LS + t p s
+Typical pedestrian number in crossing platoon, Nc
+Spatial pedestrian distribution,2 Np (p), Np = INT 0.75(NWc – 1) +1 E
+Group critical gap, tG (s), tG = tc + 2(Np – 1)
+
+Vehicular flow rate, v (veh/s)
+Average pedestrian delay, dp (s), dp = 1v (evtG – vtG – 1)
+LOS at unsignalized intersections (Exhibit 18-13)
+
+Average Pedestrian Travel Speeds Over Several Links
+
+Length of link,3 Li (m)  500 200 1000 300
+Average travel speed, SA (m/s), SA = ∑ LLTi + ∑dj
+  1.17 1.17 1.17 1.17
+  Si
+  C  C  C  C
+LOS urban street pedestrian facility (Exhibit 18-14)
+
+Notes
+
+1. Includes curb width, street furniture, window shops, building protrusions, inside clearance, and all other field-observed obstructions.
+2. If there is no platoon crossing, assume Np = 1.
+3. Link length includes segment length of sidewalk and upstream signal crosswalk length.
+
+  V. REFERENCES  Chapter 18 - Pedestrians
+1. Rouphail, N., J. Hummer, P. Allen, and J. Milazzo. Recommended Procedures for  Example Problems
+
+  Chapter 13, Pedestrians, of the Highway Capacity Manual. Report FHWA-RD-
+  98-107. FHWA, U.S. Department of Transportation, 1999.
+2. Pushkarev, B., and J. Zupan. Urban Space for Pedestrians. MIT Press,
+  Cambridge, Mass., 1975.
+
+  18-31
+Highway Capacity Manual 2000
+
+  3. Danaher, A., T. Parkinson, P. Ryus, and L. Nowlin. Appendix to Interim Report:
+  Literature Review. In TCRP A-15: Development of Transit Capacity and Quality
+  of Service Principles, Practices, and Procedures. Available from the Transit
+  Cooperative Research Program, TRB, National Research Council, Washington,
+  D.C., 1997.
+
+  4. Virkler, M. Quality of Flow Along Pedestrian Arterials. Combined 18th Annual
+  Australian Road Research Board Transport Research Conference/Transit New
+  Zealand Land Transport Symposium, Christchurch, New Zealand, September
+  1996.
+
+  5. Khisty, C. J. Pedestrian Cross Flows in Corridors. In Transportation Research
+  Record 847, TRB, National Research Council, Washington, D.C., 1982, pp. 54–57.
+
+  6. Botma, H. Method to Determine Level of Service for Bicycle Paths and Pedestrian
+  Bicycle Paths. In Transportation Research Record 1502, TRB, National Research
+  Council, Washington, D.C., 1995, pp. 38–44.
+
+  7. Dunn, R., and R. Pretty. Mid-Block Pedestrian Crossings - An Examination of
+  Delay. 12th Annual Australian Road Research Board Conference Proceedings,
+  Hobart, Tasmania, Australia, August 1984.
+
+  8. Special Report 209: Highway Capacity Manual. TRB, National Research Council,
+  Washington, D.C., 1994.
+
+  9. Virkler, M. R. Scramble and Crosswalk Signal Timing. In Transportation
+  Research Record 1636, TRB, National Research Council, Washington, D.C., 1998,
+  pp. 83–87.
+
+  10. Virkler, M. R. Pedestrian Compliance Effects on Signal Delay. In Transportation
+  Research Record 1636, TRB, National Research Council, Washington, D.C., 1998,
+  pp. 88–91.
+
+  11. Gerlough, D., and M. Huber. Special Report 165: Traffic Flow Theory: A
+  Monograph. TRB, National Research Council, Washington, D.C., 1975.
+
+  APPENDIX A. WORKSHEETS
+
+  PEDESTRIANS WORKSHEET
+
+  PEDESTRIANS AT SIGNALIZED INTERSECTIONS WORKSHEET
+
+Chapter 18 - Pedestrians  18-32
+References
+  Highway Capacity Manual 2000
+
+  PEDESTRIANS WORKSHEET
+
+General Information  Site Information
+
+Analyst  ________________  Facility  ________________
+Agency or Company  ________________  Jurisdiction  ________________
+Date Performed  ________________  Analysis Year  ________________
+Analysis Time Period  ________________
+
+" Operational (LOS)  " Design (WE)  " Planning (LOS)  " Planning (WE)
+  1  2
+Walkways and Sidewalk Pedestrian Facilities
+
+Total width of crosswalks, WT (m)
+Sum of obstructions width and/or shy distances,1 Wo (m)
+Effective crosswalk width, WE (m), WE = WT – Wo
+Peak 15-min flow rate (both directions), v15 (p/15-min)
+
+  v15
+Pedestrian unit flow rate, vp (p/min/m), vp = 15 * W
+
+  E
+
+LOS (Exhibits 18-3, 18-4, 18-5, 18-6, or 18-7)
+
+Shared Pedestrian-Bicycle Facilities
+
+Mean pedestrian speed, Sp (m/s)
+
+Mean bicycle speed, Sb (m/s)
+Same-direction bicycle flow rate, Qsb (bicycles/h)
+Opposing-direction bicycle flow rate, Qob (bicycles/h)
+
+Passing events, Fp (events/h), Fp = Qsb(1– Sb Sp )
+Opposing events, Fm (events/h), Fm = Qob(1+ SSpb )
+
+Total events, F (events/h), F = Fp + 0.5Fm
+LOS (Exhibit 18-8)
+
+Crossings at Signalized Intersections, Unsignalized Intersections, and Urban Street Facilities
+
+  Pedestrian Delay at Signalized Intersections  1  2  3  4  5  6  7  8
+
+Cycle length, C (s)
+Effective green time for pedestrians, g (s)
+
+Average delay, dp (s), dp = 0.5(C – g)2 C
+LOS at signalized intersections (Exhibit 18-9)
+
+  Pedestrian Delay at TWSC Intersections
+Pedestrian walking speed, Sp (m/s)
+
+Pedestrian start-up time, ts (s)
+Length of crosswalk, L (m)
+
+Single pedestrian critical gap, tc (s), tc = LSp + ts
+Typical pedestrian number in crossing platoon, Nc
+Spatial pedestrian distribution,2 Np (p), Np = INT 0.75(NWc – 1) +1 E
+Group critical gap, tG (s), tG = tc + 2(Np – 1)
+
+Vehicular flow rate, v (veh/s)
+Average pedestrian delay, dp (s), dp = 1v (evtG – vtG – 1)
+LOS at unsignalized intersections (Exhibit 18-13)
+
+Average Pedestrian Travel Speeds Over Several Links
+
+Length of link,3 Li (m)
+Average travel speed, SA (m/s), SA = ∑ LLTi + ∑dj
+
+  Si
+
+LOS urban street pedestrian facility (Exhibit 18-14)
+
+Notes
+
+1. Includes curb width, street furniture, window shops, building protrusions, inside clearance, and all other field-observed obstructions.
+2. If there is no platoon crossing, assume Np = 1.
+3. Link length includes segment length of sidewalk and upstream signal crosswalk length.
+
+  Chapter 18 - Pedestrians
+Highway Capacity Manual 2000
+
+  PEDESTRIANS AT SIGNALIZED INTERSECTIONS WORKSHEET
+
+General Information  Site Information
+
+Analyst  _______________  Intersection/Corner  __________________
+Agency or Company  _______________  Jurisdiction  __________________
+Date Performed  _______________  Analysis Year  __________________
+Analysis Period  _______________
+
+" Operational (LOS)  " Design (WE)  " Planning (LOS)  " Planning (WE)
+  Geometric Inputs
+Inputs
+  Building
+Cycle length, C  ______________ s  Line  Sidewalk
+  B
+Minor-street red phase, Rmi  ______________ s
+  Wb
+Major-street red phase, Rmj  ______________ s  m  Major Street
+
+Minor-street effective green, gi ______________ s  Ld  m
+
+Major-street effective green, gj ______________ s  vab
+  Flow, p/15-min Flow, 15min p * 601 = p/s
+  Flow, p/s * C  Sidewalk  vdi
+  vdo Wd
+vci  A Wa  m  Crosswalk
+  D
+vco  +
+  R  m
+  m
+
+vdi  vco  vci
+
+vdo  Minor Street Lc  m
+  m  Wc
+va, b
+  Crosswalk
+vtot  C
+
+Street Corner Time-Space Analysis
+
+Total time-space, TS (m2-s) TS = C(WaWb - 0.215R2)
+Time spent by pedestrians crossing major street, Qtdo (p-s),
+Q = vdo Rmi2
+
+ tdo 2C
+
+Time spent by pedestrians crossing minor street, Qtco (p-s),
+Q = vco Rmj2
+
+ tco 2C
+Total time-space available, TSc (m2-s),
+TSc = TS – [0.5(Qtdo + Qtco)]
+Circulation area per pedestrian, M (m2/p), M = TS 4v ctot
+LOS (Exhibit 18-3)
+
+Crosswalk Time-Space Analysis  Crosswalk D  Crosswalk C
+
+  Average Pedestrian Delay at Signalized Intersections
+Average delay, dp (s), dp = 0.5(C - g)2 C
+LOS at signalized intersection (Exhibit 18-9)
+
+Number of pedestrians arriving during Don't Walk or red indication,1
+Nped (p)
+Average pedestrian walking speed, Sp (m/s)
+Total crossing time,2 t (s)
+Total time-space, TS (m2-s), TS = LW(WALK + FDW - L )
+
+  2Sp
+
+Total crosswalk occupancy time, T (p-s)
+T = (vi + vo)t
+Number of conflicting right-turning vehicles, Ntv (veh)
+Time-space of right-turning vehicles, TStv (m2-s),
+TStv = 12NtvWE
+Effective time-space, TSE (m2-s), TSE = TS – TStv
+Circulation area per pedestrian, M (m2/p),
+M = TSTE
+LOS (Exhibit 18-3)
+
+Notes
+
+1. Number of people in the subject movement who arrive before the WALK or concurrent green indication and exit the curb during the WALK or concurrent green
+indication. N = vco or vdo (C – G)
+  ped  C
+
+  L  Nped  L
+2. If W > 3.0 m, t = 3.2 + S + 0.81 W ; but if W ≤ 3.0 m, t = 3.2 + S + (0.27Nped).
+  p  p
+
+Chapter 18 - Pedestrians
+  Highway Capacity Manual 2000
+
+CHAPTER 19
+
+BICYCLES
+
+  CONTENTS
+
+I. INTRODUCTION .....................................................................................................19-1
+  Scope of the Methodology ...............................................................................19-1
+  Limitations of the Methodology .........................................................................19-1
+
+II. METHODOLOGY ....................................................................................................19-1
+  Uninterrupted-Flow Bicycle Facilities ...............................................................19-1
+  Exclusive Off-Street Bicycle Paths ............................................................19-2
+  Shared Off-Street Paths ............................................................................19-3
+  On-Street Bicycle Lanes ...........................................................................19-4
+  Interrupted-Flow Bicycle Lanes ........................................................................19-5
+  Signalized Intersections ............................................................................19-5
+  Unsignalized Intersections ........................................................................19-6
+  Urban Streets ............................................................................................19-7
+
+III. APPLICATIONS ......................................................................................................19-8
+  Computational Steps ........................................................................................19-8
+  Planning Applications .......................................................................................19-8
+  Analysis Tools ..................................................................................................19-9
+
+IV. EXAMPLE PROBLEMS .........................................................................................19-11
+  Example Problem 1 ........................................................................................19-12
+  Example Problem 2 ........................................................................................19-14
+  Example Problem 3 ........................................................................................19-16
+  Example Problem 4 ........................................................................................19-18
+  Example Problem 5 ........................................................................................19-20
+  Example Problem 6 ........................................................................................19-22
+
+V. REFERENCES ......................................................................................................19-24
+APPENDIX A. WORKSHEET .....................................................................................19-24
+
+  Bicycle Worksheet
+
+  EXHIBITS
+
+Exhibit 19-1.  LOS Criteria for Exclusive Bicycle Paths ...............................................19-3
+Exhibit 19-2.  LOS Criteria for Shared Off-Street Paths .............................................. 19-4
+Exhibit 19-3.  Effect of Bicycle Mean and Standard Deviation of Speeds on
+  Events for One-Way On-Street Bicycle Facilities .................................. 19-5
+Exhibit 19-4.  LOS for Bicycles at Signalized Intersections .........................................19-6
+Exhibit 19-5.  LOS Criteria for Bicycle Lanes on Urban Streets .................................. 19-8
+Exhibit 19-6.  Bicycle Worksheet .................................................................................19-9
+
+  19-i  Chapter 19 - Bicycles
+Highway Capacity Manual 2000
+
+  I. INTRODUCTION  For background and concepts,
+  see Chapter 11
+SCOPE OF THE METHODOLOGY
+
+  This chapter addresses the capacity and level-of-service (LOS) analysis of facilities
+serving bicycles. Specifically, procedures are provided for the following types of
+facilities:
+
+  • Exclusive off-street bicycle paths: paths physically separated from highway traffic
+for the exclusive use of bicycles;
+
+  • Shared off-street paths: paths physically separated from highway traffic for the use
+of bicycles, pedestrians, skateboards, roller skaters, in-line skaters, and other
+nonmotorized traffic;
+
+  • Bicycle lanes on streets: designated bicycle lanes on streets, usually directly
+adjacent to highway traffic lanes, operating under uninterrupted flow;
+
+  • Interrupted-flow bicycle facilities: designated bicycle lanes on streets, usually
+directly adjacent to highway traffic lanes, operating through fixed interruptions such as
+traffic signals and stop signs; and
+
+  • Bicycle lanes on urban streets: designated bicycle lanes on urban streets, incurring
+the impact of both uninterrupted-flow sections and fixed interruptions.
+
+  The material for this chapter resulted from FHWA-sponsored research (1). Note that
+quality of flow of bicycle traffic on each of these facilities is evaluated from a bicyclist’s
+point of view. The discussion does not deal with the presence of wide outside roadway
+lanes, paved shoulders or bicycle lanes, volume of motorized vehicles, speed and
+presence of heavy vehicles, pavement condition, and other factors that bicyclists consider
+important quality-of-service measures. Research describes quality-of-service measures
+from a bicyclist’s perspective (2). The procedures for assessing the impact of bicycles on
+vehicle capacity and LOS are incorporated into other chapters as appropriate by type of
+facility.
+
+LIMITATIONS OF THE METHODOLOGY
+
+  The bicycle methodology does not account for bicycle paths or lane width reduction
+due to fixed objects adjacent to these facilities. No credible data were found on fixed
+objects and their effects on bicycles using these types of facilities. In addition, the
+methodology does not account for the effects of right-turning motor vehicles crossing
+bicycle lanes at intersections or midblock locations, and there is no consideration of
+grade. The methodology can be used for analysis of facilities with grades between –3 and
++3 percent. The effects created by more extreme grades are unknown.
+
+  II. METHODOLOGY  Chapter 19 - Bicycles
+  This methodology provides the framework for bicycle facility evaluation. The  Introduction
+analyst will be able to investigate the effects of pedestrians and traffic signals and the
+interaction between bicyclists on the LOS of a bicycle facility as measured in terms of
+meeting and passing events. A discussion of the concept of events is given in Chapter 11,
+“Pedestrian and Bicycle Concepts.”
+
+UNINTERRUPTED-FLOW BICYCLE FACILITIES
+  Uninterrupted-flow bicycle facilities include both exclusive and shared bicycle paths
+
+physically separated from vehicular roadways and without points of fixed interruption
+(except at terminal points).
+
+  These procedures should be used with the following cautions in mind:
+
+  19-1
+Highway Capacity Manual 2000
+
+  1. AASHTO recommends that the desirable width for separated bicycle paths be 3
+  m, with a minimum width of 2.4 m allowed under low-volume conditions (3). Only
+  where field observations clearly indicate that bicyclists have formed and are using three
+  lanes and greater than 2.4-m width should three-lane operation be assumed.
+
+  2. European studies (2) report frequencies of events (meetings and passings) only
+  for two-lane bicycle paths. These results have been extended to three-lane paths in this
+  chapter using similar procedures.
+
+  3. Procedures assume base conditions. Research is insufficient to identify the
+  impact of such features as lateral obstructions, extended grades, and other local factors.
+
+  For bicycle facilities, the flow rate during the most heavily traveled 15 min of the
+  peak hour is used for analysis. LOS for other periods can, of course, be analyzed, but
+  such analyses will not represent the critical periods of the day.
+
+  Exclusive Off-Street Bicycle Paths
+
+  Exclusive off-street bicycle paths are separated from motor vehicle traffic and do not
+
+  allow pedestrians or users other than bicyclists. These facilities are often constructed to
+
+  serve areas not served by city streets. They also provide recreational opportunities for the
+
+  public. They accommodate the highest volumes of bicycles of the three uninterrupted-
+
+  flow types of facility addressed in this manual and provide the best LOS, because
+
+  bicycles are not forced to share the facility with other modes traveling at much higher or
+
+  much lower speeds.
+
+  Research (4) has established Equations 19-1, 19-2, and 19-3 for predicting the
+
+  number of events encountered by bicyclists on two-way exclusive off-street bicycle paths.
+
+  Fp = 0.188vs  (19-1)
+
+  Fm = 2vo  (19-2)
+
+  F = 0.5Fm + Fp  (19-3)
+
+  where  = number of passing events (with bicyclists in same direction) (events/h);
+  Fp  = number of opposing events (with bicyclists in opposing direction)
+  Fm
+  (events/h);
+  F  = total number of events on path (events/h), with a weighting factor of 0.5
+
+  vs  for meeting events;
+  vo  = flow rate of bicycles in subject direction (bicycles/h); and
+  = flow rate of bicycles in opposing direction (bicycles/h).
+
+  These equations may also be applied to one-way bicycle facilities, with vo set to zero,
+
+  although such facilities are not common.
+
+  The equations for computing the number of events are based on an assumed normal
+
+  distribution of bicycle speeds with a mean speed of 18 km/h and a standard deviation of 3
+
+  km/h. These equations can be used to determine the flow rate that can be accommodated
+
+  for a designated LOS value of F and various directional distributions of bicycle flow.
+
+  Equation 19-4 is used to compute bicycle flow rate.
+
+  v = F 1 – 0.812 p  (19-4)
+
+  where
+
+  v = total bicycle flow rate, both directions (bicycles/h), and
+  p = proportion of total flow rate traveling in subject direction.
+
+Refer to Chapter 11 for  Exhibit 19-1 lists LOS criteria for exclusive off-street bicycle paths. The criteria
+detailed description of  were developed using the concepts of interference and events. Hindrance is the fraction
+hindrance  of users over 1.0 km of a path experiencing interference due to passing and meeting
+
+Chapter 19 - Bicycles  19-2
+Methodology
+  Highway Capacity Manual 2000
+
+maneuvers. Events is defined as the number of times a bicycle is involved in passing and
+meeting maneuvers, which is strongly related to hindrance.
+
+  EXHIBIT 19-1. LOS CRITERIA FOR EXCLUSIVE BICYCLE PATHS
+
+LOS  Frequency of Events, 2-Way, 2-Lane Pathsa Frequency of Events, 2-Way, 3-Lane Pathsb
+
+  (events/h)  (events/h)
+
+  A  ≤ 40  ≤ 90
+
+  B  > 40–60  > 90–140
+
+  C  > 60–100  > 140–210
+
+  D  > 100–150  > 210–300
+
+  E  > 150–195  > 300–375
+
+  F  > 195  > 375
+
+Notes:
+a. 2.4-m-wide paths. Also used for on-street bicycle lanes.
+b. 3.0-m-wide paths.
+
+  Note that by these criteria, the LOS afforded bicyclists in each direction is different
+unless the directional split is 50:50. Note also that three-lane bicycle paths will result in
+significantly higher service flow rates for any given LOS because many events on a three-
+lane bicycle path can occur without infringement on the lane of travel—that is, without
+hindrance of the bicyclist.
+
+Shared Off-Street Paths
+
+Shared off-street paths, like exclusive bicycle paths, are separated from motor
+
+vehicle traffic. However, shared-use paths are open to other nonmotorized modes,
+
+including pedestrians, skateboarders, wheelchairs, roller skaters, in-line skaters, and
+
+others. Shared-use paths are often constructed for the same reasons as exclusive paths.
+
+They serve areas without city streets and provide recreational opportunities for the public.
+
+Such paths are common on university campuses, where motor vehicle traffic and parking
+
+often are heavily restricted. In the United States, there are few paths limited exclusively
+
+to bicycles; therefore, most off-street paths in this country fall into this category.
+
+On shared facilities, the presence of pedestrians can be detrimental to bicycle
+
+capacity and LOS because pedestrians move at markedly lower speeds. However, it is
+
+very difficult to establish a pedestrian-bicycle equivalent because the relationship
+
+between the two differs depending on their respective flows, directional splits, and other
+
+factors.  The uninterrupted-flow bicycle
+  facility analysis is based on
+As mentioned earlier, bicycle LOS is based on a hindrance concept and its surrogate  the concept of hindrance
+
+measure, events. Equations for the prediction of total events have been developed (4) on
+
+the basis of an assumption that bicycle speeds are normally distributed with a mean of 18
+
+km/h and that pedestrian speeds are similarly distributed with a mean of 4.5 km/h.
+
+Equations 19-5, 19-6, and 19-7 are used to predict total events for shared bicycle and
+
+pedestrian situations.
+
+  Fp = 3vps + 0.188vbs  (19-5)
+
+  Fm = 5vpo + 2vbo  (19-6)
+
+  F = 0.5Fm + Fp  (19-7)
+
+where
+
+  F, Fp, Fm are as previously defined,
+  vps = flow rate of pedestrians in subject direction (p/h),
+  vbs = flow rate of bicycles in subject direction (bicycles/h),
+  vpo = flow rate of pedestrians in opposing direction (p/h), and
+  vbo = flow rate of bicycles in opposing direction (bicycles/h).
+
+  19-3  Chapter 19 - Bicycles
+  Methodology
+Highway Capacity Manual 2000
+
+  If the directional split of both bicycles and pedestrians is assumed to be the same, p
+  may be taken as the proportion of both in the subject direction. If vp is the total two-way
+  pedestrian traffic and vb is the total two-way bicycle traffic, the number of total events (p)
+
+  may be computed by Equation 19-8.
+
+  F = vp (2.5 + 0.5p) + vb (1 – 0.812p)  (19-8)
+
+  Exhibit 19-2 lists LOS criteria in terms of events for shared off-street paths.
+
+  EXHIBIT 19-2. LOS CRITERIA FOR SHARED OFF-STREET PATHS
+
+  LOS  Frequency of Events, 2-Way, 2-Lane Pathsa Frequency of Events, 2-Way, 3-Lane Pathsb
+
+  (events/h)  (events/h)
+
+  A  ≤ 40  ≤ 90
+
+  B  > 40–60  > 90–140
+
+  C  > 60–100  > 140–210
+
+  D  > 100–150  > 210–300
+
+  E  > 150–195  > 300–375
+
+  F  > 195  > 375
+
+  Notes:
+  a. 2.4-m-wide paths.
+  b. 3.0-m-wide paths.
+
+Few on-street facilities  On-Street Bicycle Lanes
+operate with fewer than
+two lanes  Designated bicycle lanes are lanes on a street that are assigned exclusively for the
+  use of bicycles. These lanes are separated from motor vehicle traffic by pavement
+Chapter 19 - Bicycles  markings. Bicycle lanes are normally placed on streets where bicycle use is moderate to
+Methodology  high and the separation of bicycles from motor vehicle traffic may be warranted. Bicycle
+  lanes are generally used for flow in one direction only, with a lane provided on each side
+  of the street.
+
+  Where paved shoulders are part of the cross section and not part of the designated
+  traveled way for vehicles, bicycles may make use of the shoulder in much the same way
+  as they do a designated bicycle lane. In such cases, bicycle traffic is separated from
+  motor vehicle traffic by a right-edge marking. Although such shoulders may also be
+  shared with pedestrians, they typically are only occasionally used by pedestrians. For this
+  reason, designated bicycle lanes and paved shoulders used by bicyclists will be treated in
+  a similar manner by the methodology of this chapter.
+
+  The widths of on-street bicycle facilities vary widely in the United States, ranging
+  from a 1.2-m designated bicycle lane to a 3.0-m paved shoulder. However, because
+  bicycles can borrow space from the adjacent lane when motor vehicle flow is light to
+  moderate, there are few facilities that operate with fewer than two effective bicycle lanes.
+
+  It is expected that on-street bicycle lanes and paved shoulders with widths up to 1.8
+  m will operate as two effective lanes. However, heavy motor vehicle volumes, high
+  speeds, roadway debris, or other local conditions may affect the actual width available to
+  the bicyclists. An observation of facility operation before analysis is recommended to
+  determine the actual number of effective lanes.
+
+  One important distinction between on-street facilities and exclusive off-street
+  facilities is the existence of a multitude of factors affecting the LOS for on-street
+  facilities, including adjacent motor vehicle traffic (which is often moving much faster
+  than the bicycles), heavy-vehicle traffic, commercial and residential driveways, and
+  adjacent on-street parking. These factors, in addition to lateral obstructions and extended
+  sections with appreciable grades, may reduce the quality of service for a bicycle lane (2).
+
+  One possible approach to determining LOS for on-street bicycle facilities is to
+  quantify the impact of prevailing geometric and traffic conditions on the average and
+  standard deviation of bicycle speeds on the facility. Under this framework, the
+  expectation is that friction with vehicular traffic, parked vehicles, and driveway density
+
+  19-4
+  Highway Capacity Manual 2000
+
+would result in a lower mean speed and higher standard deviation than on a comparable
+off-street path. To illustrate this effect, Exhibit 19-3 lists the number of events for a
+range of bicycle flow rates and standard deviations of bicycle speeds. As indicated in
+Exhibit 19-3, the number of events increases as speed decreases and standard deviation
+increases. The standard deviation of speeds describes the variation in speeds about the
+average or mean bicycle speed. The standard deviation will be relatively smaller for
+facilities used primarily by commuters and relatively larger for recreational facilities.
+Using the number of events from Exhibit 19-3, the analyst can find LOS from Exhibit
+19-1. If speed parameters are not available, use a mean bicycle speed of 18 km/h and a
+standard deviation as described in the footnote of Exhibit 19-3.
+
+EXHIBIT 19-3. EFFECT OF BICYCLE MEAN AND STANDARD DEVIATION OF SPEEDS ON EVENTS FOR
+  ONE-WAY ON-STREET BICYCLE FACILITIES
+
+  Number of Events = 2 * Bicycle Flow Rate * S tandard Deviation
+  Mean Bicycle Speed* π
+
+  Bicycle Mean Speed (km/h)
+
+Bicycle Standard 12  13  14  15  16  17  18  19  20
+Flow Rate Deviationa
+
+(bicycles/h) (km/h)
+
+  1.5  14  13  12  11  11  10  9  9  8
+
+100  3.0  28  26  24  23  21  20  19  18  17
+
+  4.5  42  39  36  34  32  30  28  27  25
+
+  1.5  28  26  24  23  21  20  19  18  17
+
+200  3.0  56  52  48  45  42  40  38  36  34
+
+  4.5  85  78  73  68  63  60  56  53  51
+
+  1.5  42  39  36  34  32  30  28  27  25
+
+300  3.0  85  78  73  68  63  60  56  53  51
+
+  4.5  127 117 109 102  95  90  85  80  76
+
+Notes:
+a. Standard deviation of bicycle speeds. If standard deviation data are unavailable, use the following default values:
+
+  1.5 km/h for facilities used primarily by commuters
+  3.0 km/h for facilities used by various user types
+  4.5 km/h for facilities used primarily for recreational purposes.
+
+INTERRUPTED-FLOW BICYCLE LANES  Chapter 19 - Bicycles
+  Methodology
+  Interrupted-flow bicycle facilities are on-street bicycle lanes that must pass through
+intersections (signalized and unsignalized). The procedures of this chapter focus on the
+LOS provided to bicyclists. To assess the impact of bicycles on motor vehicle traffic,
+methodologies in other chapters of this manual should be used.
+
+Signalized Intersections
+
+  A signalized intersection covered by these procedures is one in which there is a
+designated on-street bicycle lane on at least one approach. The typical width of an
+on-street bicycle lane ranges between 1.2 m and 1.8 m. A wide range of capacities and
+saturation flow rates have been reported by many countries for these types of facilities.
+The base saturation flow rate may be as high as 2,600 bicycles/h on the basis of research
+observations (5). However, few intersections provide base conditions for bicyclists, and
+current information is insufficient to calibrate a series of appropriate adjustment factors.
+Until such factors are developed, it is recommended that a saturation flow rate of 2,000
+bicycles/h be used as an average value achievable at most intersections. A saturation
+flow rate of 2,000 bicycles/h assumes that right-turning motor vehicles yield the right-of-
+way to through bicyclists. Where aggressive right-turning traffic exists, 2,000 bicycles/h
+may not be achievable. Local observations to determine a saturation flow rate are
+recommended in such cases. Using this default value for saturation flow rate, the
+
+  19-5
+Highway Capacity Manual 2000
+
+  capacity of the bicycle lane at a signalized intersection may be computed using Equation
+  19-9.
+
+  cb = sb g = 2000 g  (19-9)
+  C  C
+
+Effective green time is  where
+defined in Chapter 16  cb = capacity of bicycle lane (bicycles/h),
+  sb = saturation flow rate of bicycle lane (bicycles/h),
+Interaction with right-  g = effective green time for bicycle lane (s), and
+turning vehicles is not
+accounted for in the  C = signal cycle length (s).
+methodology
+  Control delay is estimated using the first term of the delay equation for signalized
+  intersections, the uniform delay term, which assumes that there is no overflow delay.
+  Bicyclists will normally not tolerate an overflow situation and will select other routes or
+  ignore traffic regulations to avoid the excessive delay that would occur in such situations.
+  Control delay is estimated by using Equation 19-10.
+
+   g 2  (19-10)
+  0.5C 1 − 
+
+   C
+  db =  g vb 
+
+  1 −  min ,1.0  
+  C  cb  
+
+  where
+  db = control delay (s/bicycle), and
+  vb = flow rate of bicycles in one-direction bicycle lane (bicycles/h).
+
+  Exhibit 19-4 gives LOS criteria for bicycles at signalized intersections, on the basis
+  of control delay. At most signalized intersections, the only delay to through bicycles is
+  caused by the signal itself because bicycles have the right-of-way over right-turning
+  vehicles during the green phase. Where bicycles are forced to weave with right-turning
+  traffic or where the bicycle right-of-way is disrupted because of high right-turning flows,
+  additional delay could occur.
+
+  EXHIBIT 19-4.  LOS FOR BICYCLES AT SIGNALIZED INTERSECTIONS
+
+  LOS  Control Delay (s/bicycle)
+  A  < 10
+  B  ≥ 10–20
+  C  > 20–30
+  D  > 30–40
+  E  > 40–60
+  F  > 60
+
+Chapter 19 - Bicycles  Unsignalized Intersections
+Methodology
+  An unsignalized intersection covered by these procedures is one in which there is a
+  designated on-street bicycle lane on at least one of the minor approaches, controlled by a
+  stop sign. Bicycles on the major street at an unsignalized location are not delayed at most
+  intersections because they have the right-of-way over turning vehicles. Where bicycles
+  are forced to weave against right-turning vehicles, additional delay may be incurred.
+
+  It is also assumed that bicycles on a minor approach turning right from one
+  designated bicycle lane to another are not delayed because they do not have to wait for
+  gaps in motor vehicle traffic. Experienced bicyclists making left turns from either the
+  minor or major approach often leave the bicycle lane and queue with motor vehicles.
+
+  19-6
+  Highway Capacity Manual 2000
+
+  Critical gap distributions have been identified in the research (5,6) for bicycles  The critical gap approach is
+crossing two-lane major streets. The methodology in this manual for motor vehicles at  applied to bicycles at
+unsignalized intersections (see Chapter 17) is also applicable to bicycles. Thus, once  unsignalized intersections
+critical gaps and follow-up times are determined for bicycles, the control delay for
+bicycles is computed using the delay equation from Chapter 17.
+
+  One caution is necessary. Bicycles differ from motor vehicles in that they normally
+do not queue linearly at a stop sign. As a result, multiple bicycles often use the same gap
+in the vehicular traffic stream. This fact will probably affect the determination of bicycle
+follow-up time. This phenomenon and others described in this section have not been
+researched and thus are not explicitly included in the methodology.
+
+  Once an average control delay is estimated, the LOS criteria of Exhibit 19-3 are
+applied directly. No procedures are specified for bicycles at all-way stop-controlled
+intersections.
+
+Urban Streets
+
+This section focuses on operational analysis of extended designated on-street bicycle
+
+lanes on urban streets with both uninterrupted- and interrupted-flow elements. Average
+
+bicycle travel speed, including stops, is used as the measure of effectiveness for such
+
+cases. The average travel speed is based on the distance between two points and the
+
+average amount of time required to traverse that distance, including stops.
+
+For these procedures, bicycle facilities on urban streets are found along streets made
+
+up of both segments and intersections with designated bicycle lanes. The first step in
+
+analyzing the urban street is to define its limits. Once the limits are defined, the street is
+
+segmented for analysis. Each segment consists of a signalized intersection and an
+
+upstream segment of bicycle facility, beginning immediately after the nearest upstream
+
+signal. The average travel speed over the entire section is computed by Equation 19-11.
+
+  Sats =   LT  (19-11)
+  Li Σd j 
+  ∑ +  
+   Si 3600 
+
+where  = bicycle travel speed (km/h),
+  Sats  = total length of urban street under analysis (km),
+  LT  = length of segment i (km),
+  Li  = bicycle running speed over segment i (km/h), and
+  Si  = average bicycle delay at intersection j (s).
+  dj
+
+  For the purposes of analyzing bicycle flows, it is recommended that the average
+running speed of bicycles on arterials (between signalized intersections) be taken as 25
+km/h. It is recognized that there are many factors that might affect bicycle speed,
+including adjacent motor vehicle traffic, adjacent on-street parking activity, commercial
+and residential driveways, lateral obstructions, and significant grades. To date, research
+has been insufficient to make any specific recommendations as to their individual and
+collective effects. Intersection delays are computed as described in previous sections of
+this chapter.
+
+  LOS criteria based on average travel speed of bicycles are listed in Exhibit 19-5.
+The criteria are generally based on arterial LOS criteria for motor vehicles, with
+thresholds set at similar percentages of base speed.
+
+  19-7  Chapter 19 - Bicycles
+  Methodology
+Highway Capacity Manual 2000
+
+  EXHIBIT 19-5.  LOS CRITERIA FOR BICYCLE LANES ON URBAN STREETS
+
+  LOS  Bicycle Travel Speed (km/h)
+  A  > 22
+  B  > 15–22
+  C  > 11–15
+  D  > 8–11
+  E  ≥ 7–8
+  F  < 7
+
+Guidelines on required  III. APPLICATIONS
+inputs and estimated
+values are in Chapter 11  The methodology in this chapter is for analyzing the capacity and LOS of bicycle
+  facilities. The analyst must address two fundamental questions. First, the primary output
+Operational (LOS)  must be identified. Primary outputs include LOS and achievable bicycle flow rate (vb).
+Design (vb)
+  Second, the analyst must identify the default values or estimated values for use in the
+Planning (LOS)  analysis. The analyst has three sources of input data: (a) default values found in this
+Planning (vb)  manual; (b) estimates or locally derived default values or both; and (c) values derived
+Chapter 19 - Bicycles  from field measurements and observation. For each of the input variables, a value must
+Methodology  be supplied to calculate the outputs, both primary and secondary.
+
+  A common application of the method is to compute the LOS of an existing facility or
+  of a changed facility in the near term or distant future. This type of application is termed
+  operational, and its primary output is LOS. Alternatively, the achievable bicycle flow
+  rate, vb, can be solved for as the primary output. This analysis requires that an LOS goal
+  be established, and it is typically used to estimate when a specified bicycle flow rate will
+  be exceeded.
+
+  Another general type of analysis can be defined by the term planning. This type uses
+  estimates, HCM default values, and local default values as inputs in the calculation. As
+  outputs, LOS or bicycle flow rate can be determined. The difference between planning
+  analysis and operational or design analysis is that most or all of the input values in
+  planning come from estimates or default values, whereas operational and design analyses
+  tend to utilize field measurements or known values for most or all of the input variables.
+
+  COMPUTATIONAL STEPS
+
+  The bicycle worksheet for computations is shown in Exhibit 19-6. For all
+  applications, the analyst provides general information and site information.
+
+  For operational (LOS) analysis, all flow data are entered as input. Depending on the
+  type of bicycle facility, different performance measures are computed, and LOS is
+  determined.
+
+  The objective of design (vb) analysis is to estimate the bicycle flow rate in bicycles
+  per hour given a desired LOS. For exclusive off-street bicycle paths and shared off-street
+  bicycle paths, a maximum number of events per hour allowed for the desired LOS is
+  determined. Then by solving the events equation backwards, bicycle and pedestrian flow
+  rates are computed. For interrupted-flow bicycle lanes, the key variable is the maximum
+  allowed control delay to achieve the desired LOS. By back-solving the delay equation,
+  Xb is determined. From Xb, bicycle flow rate is computed.
+
+  PLANNING APPLICATIONS
+
+  The two planning applications, planning for LOS and vb, correspond directly to
+  procedures described for operations and design. The primary criterion that categorizes
+  these as planning applications is the use of estimates, HCM default values, and local
+  default values. Chapter 11 contains more on the use of default values.
+
+  19-8
+  Highway Capacity Manual 2000
+
+ANALYSIS TOOLS
+
+  The worksheet shown in Exhibit 19-6 and provided in Appendix A can be used to
+perform all applications of the methodology.
+
+  EXHIBIT 19-6. BICYCLE WORKSHEET
+
+  BICYCLE WORKSHEET
+
+General Information  Site Information
+
+Analyst  ______________________  Path or Bicycle Lane  _______________________
+Agency or Company  ______________________  Jurisdiction  _______________________
+Date Performed  ______________________  Analysis Year  _______________________
+Analysis Time Period  ______________________
+
+Operational (LOS)  Design (vb)  Planning (LOS)  Planning (vb)
+
+Input  Planning Input
+
+Bicycle path and lane width  2.4 m  3.0 m  Other ______ m
+Bicycle peak-hour volume, Vb  ______________bicycles/h
+Pedestrian peak-hour volume, Vp  ______________p/h  Average annual daily traffic, AADT =  ___________bicycles/day
+Bicycle peak-hour factor, PHF  ______________
+Pedestrian peak-hour factor, PHF  ______________  Proportion of AADT during peak-hour, K = ___________
+Bicycle directional split, P  ______/ _____ (EB or NB/WB or SB)
+Pedestrian directional split, P  ______/ _____ (EB or NB/WB or SB)  Design hour volume, DHV =  ___________bicycles/h
+
+Directional Flow Rate  EB or NB  WB or SB
+  WB or SB
+Peak 15-min bicycle flow rate, vb (bicycles/h)
+vb = (Vb/PHF) x P
+Peak 15-min pedestrian flow rate, vp (p/h)
+vp = (Vb/PHF) x P
+
+Exclusive Off-Street Path and On-Street Lane (One-Way)
+
+  EB or NB
+
+Fp = 0.188vs (Equation 19-1)
+Fm = 2vo (Equation 19-2)
+F = 0.5Fm + Fp (Equation 19-3 or Exhibit 19-3)
+LOS (Exhibit 19-1 or 19-3)
+
+Shared Off-Street Paths  EB or NB  WB or SB
+
+Fp = 3vps + 0.188vbs (Equation 19-5)
+Fm = 5vpo + 2vbo (Equation 19-6)
+F = 0.5Fm + Fp (events/h) (Equation 19-7)
+LOS (Exhibit 19-2)
+
+Bicycle Lane at Signalized Intersections and Urban Streets (One-Way)
+
+  Intersection  1  2  3  4  5  6  7  8
+
+Bicycle flow rate, vb (bicycles/h)
+
+Capacity, cb (bicycles/h)
+cb = 2000(g/C) (Equation 19-9)
+
+vb/cb Ratio, Xb
+
+Cycle length, C (s)
+
+g/C Ratio
+
+Delay, db (Equation 19-10)
+  0.5C(1 - g/C)2
+db =  vb
+  1 – (g/C)min(cb , 1.0 )
+
+LOS for lanes at signals (Exhibit 19-4)
+
+Length of link, L (km)
+
+Average travel speed, Sats (km/h)
+
+  LT
+
+(Equation 19-11) Sats = ∑ Li + ∑dj
+
+  ( Si 3600)
+
+LOS urban street bicycle facility (Exhibit 19-5)
+
+  19-9  Chapter 19 - Bicycles
+  Applications
+  Highway Capacity Manual 2000
+
+  IV. EXAMPLE PROBLEMS
+
+Problem  Description  Application
+  No.
+  1  Find LOS of an exclusive off-street bicycle facility  Operational (LOS)
+  2  Find LOS of a shared off-street bicycle lane  Operational (LOS)
+  3  Find LOS of an interrupted-flow bicycle lane at a signalized intersection  Operational (LOS)
+  4  Find LOS of a bicycle lane on an urban street with three signalized  Operational (LOS)
+  intersections
+  5  Find LOS of an on-street lane with heavy side friction  Operational (LOS)
+  6  Find LOS of a shared off-street bicycle facility. If the procedure fails, assess  Operational (LOS)
+  separate pedestrian paths and bicycle paths.
+
+  19-11  Chapter 19 - Bicycles
+  Example Problems
+Highway Capacity Manual 2000
+
+  EXAMPLE PROBLEM 1
+
+  The Bicycle Facility A north-south uninterrupted-flow two-lane (2.4 m wide) exclusive
+  bicycle path carrying two-way bicycle traffic.
+
+  The Question What is the LOS of this facility during the peak hour?
+
+  The Facts
+  √ Two effective lanes,
+  √ PHF = 0.60,
+  √ Peak- hour volume = 90 bicycles/h, and
+  √ Directional Split = 70/30 (NB/SB).
+
+  Outline of Solution All input parameters are known. The peak-hour volume is
+  converted to a flow rate for the 15 min with the highest demand. Number of events in
+  each direction and LOS are then computed.
+
+  Steps  vb = Vb PHF x P
+  1. Find directional flows.
+  vb =  90  x 0.7 = 105 bicycles/h (NB)
+  2. Find Fp (use Equation 19-1).
+  3. Find Fm (use Equation 19-2).  0.60
+  4. Find F (use Equation 19-3).
+  5. Determine LOS (use Exhibit 19-1).  vb =  90  x 0.3 = 45 bicycles/h (SB)
+
+  0.60
+
+  Fp = 0.188vs
+
+  Fp = 0.188(105) = 20 events/h (NB)
+
+  Fp = 0.188(45) = 9 events/h (SB)
+
+  Fm = 2vo
+
+  Fm = 2(45) = 90 events/h (NB)
+
+  Fm = 2(105) = 210 events/h (SB)
+
+  F = 0.5Fm + Fp
+
+  F = 0.5(90) + 20 = 65 events/h (NB)
+
+  F = 0.5(210) + 9 = 114 events/h (SB)
+
+  LOS C (NB)
+
+  LOS D (SB)
+
+  Results The northbound direction operates at LOS C, whereas the southbound
+  direction operates at LOS D.
+
+Chapter 19 - Bicycles  19-12
+Example Problems
+  Highway Capacity Manual 2000
+
+  BICYCLE WORKSHEET  Example Problem 1
+
+General Information  Site Information
+
+Analyst  ___J_M__Y_E_______________  Path or Bicycle Lane  _____N_o_rt_h_-_S_o_u_t_h_________
+Agency or Company  ___C_E__I ________________  Jurisdiction  _______________________
+Date Performed  ___5__/1_9_/_9_9_____________  Analysis Year  _________1_9_9_9___________
+Analysis Time Period  ___P_e_a_k________________
+
+X Operational (LOS)  Design (vb)  Planning (LOS)  Planning (vb)
+
+Input  Planning Input
+
+Bicycle path and lane width  X 2.4 m  3.0 m  Other ______ m
+Bicycle peak-hour volume, Vb  __9__0__________bicycles/h
+Pedestrian peak-hour volume, Vp  ______________p/h  Average annual daily traffic, AADT =  ___________bicycles/day
+Bicycle peak-hour factor, PHF  __0__.6_0_________
+Pedestrian peak-hour factor, PHF  ______________  Proportion of AADT during peak-hour, K = ___________
+Bicycle directional split, P  ___7_0__/ __3__0_ (EB or NB/WB or SB)
+Pedestrian directional split, P  ______/ _____ (EB or NB/WB or SB)  Design hour volume, DHV =  ___________bicycles/h
+
+Directional Flow Rate  EB or NB  WB or SB
+  (90/0.60) x .7 = 105  (90/0.60) x .3 = 45
+Peak 15-min bicycle flow rate, vb (bicycles/h)
+vb = (Vb/PHF) x P  WB or SB
+Peak 15-min pedestrian flow rate, vp (p/h)  9
+vp = (Vb/PHF) x P  210
+  114
+Exclusive Off-Street Path and On-Street Lane (One-Way)  D
+
+Fp = 0.188vs (Equation 19-1)  EB or NB  WB or SB
+Fm = 2vo (Equation 19-2)  20
+F = 0.5Fm + Fp (Equation 19-3 or Exhibit 19-3)  90
+LOS (Exhibit 19-1 or 19-3)  65
+  C
+Shared Off-Street Paths
+  EB or NB
+Fp = 3vps + 0.188vbs (Equation 19-5)
+Fm = 5vpo + 2vbo (Equation 19-6)
+F = 0.5Fm + Fp (events/h) (Equation 19-7)
+LOS (Exhibit 19-2)
+
+Bicycle Lane at Signalized Intersections and Urban Streets (One-Way)
+
+  Intersection  1  2  3  4  5  6  7  8
+
+Bicycle flow rate, vb (bicycles/h)
+
+Capacity, cb (bicycles/h)
+cb = 2000(g/C) (Equation 19-9)
+
+vb/cb Ratio, Xb
+
+Cycle length, C (s)
+
+g/C Ratio
+
+Delay, db (Equation 19-10)
+  0.5C(1 - g/C)2
+db =  vb
+  1 – (g/C)min(cb , 1.0)
+
+LOS for lanes at signals (Exhibit 19-4)
+
+Length of link, L (km)
+
+Average travel speed, Sats (km/h)
+
+  LT
+
+(Equation 19-11) Sats = ∑ Li + ∑dj
+
+  ( Si 3600)
+
+LOS urban street bicycle facility (Exhibit 19-5)
+
+  19-13  Chapter 19 - Bicycles
+  Example Problems
+Highway Capacity Manual 2000
+
+  EXAMPLE PROBLEM 2
+
+  The Bicycle Facility An east-west uninterrupted-flow shared path (3.0 m wide)
+  carrying two-way pedestrian and bicycle traffic.
+
+  The Question What is the LOS of this facility for bicyclists in the peak hour?
+
+  The Facts
+  √ Three effective lanes (3 m wide),
+  √ Peak flow rate of bicycles = 150 bicycles/h,
+  √ Peak flow rate of pedestrians = 80 p/h,
+  √ Directional split of bicycles = 60/40 (EB/WB), and
+  √ Directional split of pedestrians = 50/50 (EB/WB).
+
+  Outline of Solution All input parameters are known. Number of events in each
+  direction and LOS for bicycles are computed. Note that the peak flow rates are given
+  rather than hourly volumes. Because the directional splits for bicycles and pedestrians are
+  not the same, Equations 19-5, 19-6, and 19-7 are used.
+
+  Steps  EB bicycles = 0.6(150) = 90 bicycles /h
+  1. Find directional flows.  WB bicycles = 0.4(150) = 60 bicycles/h
+  EB peds = 0.5(80) = 40 p/h
+  2. Find Fp (use Equation 19-5).  WB peds = 0.5(80) = 40 p/h
+  3. Find Fm (use Equation 19-6).  Fp = 3vps + 0.188vbs
+  Fp = 3(40) + 0.188(90) = 137 events/h (EB)
+  4. Find F (use Equation 19-7).  Fp = 3(40) + 0.188(60) = 131 events/h (WB)
+  Fm = 5vpo + 2vbo
+  5. Determine LOS (use Exhibit  Fm = 5(40) + 2(60) = 320 events/h (EB)
+  19-2).  Fm = 5(40) + 2(90) = 380 events/h (WB)
+  F = 0.5Fm + Fp
+  F = 0.5(320) + 137 = 297 events/h (EB)
+  F = 0.5(380) + 131 = 321 events/h (WB)
+
+  LOS D (EB)
+  LOS E (WB)
+
+  Results The shared facility operates at LOS D for the eastbound direction and LOS E
+  for the westbound direction.
+
+Chapter 19 - Bicycles  19-14
+Example Problems
+  Highway Capacity Manual 2000
+
+  BICYCLE WORKSHEET  Example Problem 2
+
+General Information  Site Information
+
+Analyst  ___J_M__Y_E______________  Path or Bicycle Lane  _____E_a_s_t_-_W_e_s_t__________
+Agency or Company  ___C_E_I________________  Jurisdiction  _______________________
+Date Performed  ___5_/_12_/_9_9_____________  Analysis Year  _____1_9_9_9_______________
+Analysis Time Period  ___P_e_a_k_______________
+
+X Operational (LOS)  Design (vb)  Planning (LOS)  Planning (vb)
+
+Input  Planning Input
+
+Bicycle path and lane width  2.4 m  X 3.0 m  Other ______ m
+Bicycle peak-hour volume, Vb  ______________bicycles/h
+Pedestrian peak-hour volume, Vp  ______________p/h  Average annual daily traffic, AADT =  ___________bicycles/day
+Bicycle peak-hour factor, PHF  __1._0___________
+Pedestrian peak-hour factor, PHF  ______________  Proportion of AADT during peak-hour, K = ___________
+Bicycle directional split, P  _6__0__/ __4_0__ (EB or NB/WB or SB)
+Pedestrian directional split, P  _5_0___/ __5_0__ (EB or NB/WB or SB)  Design hour volume, DHV =  ___________bicycles/h
+
+Directional Flow Rate  EB or NB  WB or SB
+  150 x 0.6 = 90  150 x 0.4 = 60
+Peak 15-min bicycle flow rate, vb (bicycles/h)  80 x 0.5 = 40  80 x 0.5 = 40
+vb = (Vb/PHF) x P
+Peak 15-min pedestrian flow rate, vp (p/h)  WB or SB
+vp = (Vb/PHF) x P
+
+Exclusive Off-Street Path and On-Street Lane (One-Way)
+
+  EB or NB
+
+Fp = 0.188vs (Equation 19-1)
+Fm = 2vo (Equation 19-2)
+F = 0.5Fm + Fp (Equation 19-3 or Exhibit 19-3)
+LOS (Exhibit 19-1 or 19-3)
+
+Shared Off-Street Paths
+
+Fp = 3vps + 0.188vbs (Equation 19-5)  EB or NB  WB or SB
+Fm = 5vpo + 2vbo (Equation 19-6)
+F = 0.5Fm + Fp (events/h) (Equation 19-7)  137  131
+LOS (Exhibit 19-2)  320  380
+  297  321
+  D  E
+
+Bicycle Lane at Signalized Intersections and Urban Streets (One-Way)
+
+  Intersection  1  2  3  4  5  6  7  8
+
+Bicycle flow rate, vb (bicycles/h)
+
+Capacity, cb (bicycles/h)
+cb = 2000(g/C) (Equation 19-9)
+
+vb/cb Ratio, Xb
+
+Cycle length, C (s)
+
+g/C Ratio
+
+Delay, db (Equation 19-10)
+  0.5C(1 - g/C)2
+db =  vb
+  1 – (g/C)min(cb , 1.0 )
+
+LOS for lanes at signals (Exhibit 19-4)
+
+Length of link, L (km)
+
+Average travel speed, Sats (km/h)
+
+  LT
+
+(Equation 19-11) Sats = ∑ Li + ∑dj
+
+  ( Si 3600)
+
+LOS urban street bicycle facility (Exhibit 19-5)
+
+  19-15  Chapter 19 - Bicycles
+  Example Problems
+Highway Capacity Manual 2000
+
+  The Bicycle Facility  EXAMPLE PROBLEM 3
+
+  A 1.2-m-wide bicycle lane at a signalized intersection.
+
+  The Question What is the LOS of this bicycle lane?
+
+  The Facts
+  √ Effective green time = 48 s,
+  √ Cycle length = 120 s, and
+  √ Peak bicycle flow rate = 120 bicycles/h.
+
+  Outline of Solution All input parameters are known. Capacity and control delay of the
+  bicycle lane will be computed. Then, using control delay, LOS is determined.
+
+  Steps  g = 48 = 0. 40
+  1. Find g/C and cb (use Equation  C 120
+  cb = 2000(g/C) = 800 bicycles/h
+  19-9).
+  2. Find d (use Equation 19-10).  d = 0. 5C(1− g C)2
+   vb 
+  3. Determine LOS (use Exhibit 19-4).
+  1− g C min ,1.0
+   cb 
+
+  d = 0. 5(120)(1− 0. 40)2 = 23.0 s/bicycle
+    120 
+  1−  0. 40 * 
+    800 
+
+  LOS C
+
+  Results The bicycle facility at the signalized intersection operates at LOS C.
+
+Chapter 19 - Bicycles  19-16
+Example Problems
+  Highway Capacity Manual 2000
+
+  BICYCLE WORKSHEET  Example Problem 3
+
+General Information  Site Information
+
+Analyst  _____J_M_Y__E_____________  Path or Bicycle Lane  _____N_o_r_t_h_-_S_o_u_t_h________
+Agency or Company  _____C_E_I_______________  Jurisdiction  _______________________
+Date Performed  _____5_/_19_/_9_9____________  Analysis Year  ______1_9_9_9______________
+Analysis Time Period  _____P_e_a_k______________
+  Planning (LOS)  Planning (vb)
+X Operational (LOS)  Design (vb)
+
+Input  Planning Input
+
+Bicycle path and lane width  2.4 m  3.0 m  X Other ___1._2__ m
+Bicycle peak-hour volume, Vb  ______________bicycles/h
+Pedestrian peak-hour volume, Vp  ______________p/h  Average annual daily traffic, AADT =  ___________bicycles/day
+Bicycle peak-hour factor, PHF  ______________
+Pedestrian peak-hour factor, PHF  ______________  Proportion of AADT during peak-hour, K = ___________
+Bicycle directional split, P  ______/ _____ (EB or NB/WB or SB)
+Pedestrian directional split, P  ______/ _____ (EB or NB/WB or SB)  Design hour volume, DHV =  ___________bicycles/h
+
+Directional Flow Rate  EB or NB  WB or SB
+  vb = 120 bicycles/h
+Peak 15-min bicycle flow rate, vb (bicycles/h)
+vb = (Vb/PHF) x P
+Peak 15-min pedestrian flow rate, vp (p/h)
+vp = (Vb/PHF) x P
+
+Exclusive Off-Street Path and On-Street Lane (One-Way)
+
+  EB or NB  WB or SB
+
+Fp = 0.188vs (Equation 19-1)
+Fm = 2vo (Equation 19-2)
+F = 0.5Fm + Fp (Equation 19-3 or Exhibit 19-3)
+LOS (Exhibit 19-1 or 19-3)
+
+Shared Off-Street Paths  EB or NB  WB or SB
+
+Fp = 3vps + 0.188vbs (Equation 19-5)
+Fm = 5vpo + 2vbo (Equation 19-6)
+F = 0.5Fm + Fp (events/h) (Equation 19-7)
+LOS (Exhibit 19-2)
+
+Bicycle Lane at Signalized Intersections and Urban Streets (One-Way)
+
+  Intersection  1  2  3  4  5  6  7  8
+
+Bicycle flow rate, vb (bicycles/h)  120
+
+Capacity, cb (bicycles/h)  800
+cb = 2000(g/C) (Equation 19-9)  0.15
+  120
+vb/cb Ratio, Xb  0.40
+  23.0
+Cycle length, C (s)
+
+g/C Ratio
+
+Delay, db (Equation 19-10)
+  0.5C(1 - g/C)2
+db =  vb
+  1 – (g/C)min (cb , 1.0)
+
+LOS for lanes at signals (Exhibit 19-4)  C
+
+Length of link, L (km)
+
+Average travel speed, Sats (km/h)
+
+  LT
+
+(Equation 19-11) Sats = ∑ Li + ∑dj
+
+  ( Si 3600)
+
+LOS urban street bicycle facility (Exhibit 19-5)
+
+  19-17  Chapter 19 - Bicycles
+  Example Problems
+Highway Capacity Manual 2000
+
+  EXAMPLE PROBLEM 4
+
+  The Bicycle Facility A 2.0-km bicycle lane on an urban street with three signalized
+  intersections and four segments (links).
+
+  The Question What is the eastbound peak-hour LOS of this bicycle facility?
+
+  The Facts
+
+  √ Cycle length = 100.0 s (for all intersections),
+  √ g/C = 0.30 (Intersection 1),
+  √ g/C = 0.50 (Intersection 2),
+  √ g/C = 0.40 (Intersection 3),
+  √ Peak flow rate = 250 bicycles/h,
+  √ L1 = 0.5 km, L2 = 0.2 km, L3 = 1.0 km, L4 = 0.3 km, and
+  √ One-way, 1.2-m-wide bicycle lane.
+
+  Outline of Solution All inputs are known. Capacity and v/c ratio of the bicycle lane are
+  computed for all intersections. Delay at the three intersections and average travel speed
+  of bicycles are then computed to determine LOS.
+
+  Steps  c = 2000(g/C)
+  1. Find c (use Equation
+  c1 = 2000(0.30) = 600 bicycles/h
+  19-9).
+  2. Find v/c.  c2 = 2000(0.50) = 1000 bicycles/h
+
+  3. Find d (use Equation  c3 = 2000(0.40) = 800 bicycles/h
+  19-10).
+  250
+  4. Find Sats (use Equation  (v/c)1 = = 0.42
+  19-11).
+  600
+  5. Determine LOS (use
+  Exhibit 19-4).  (v/c)2 =  250  = 0.25
+
+  1000
+
+  250
+  (v/c)3 = = 0.31
+
+  800
+
+  d = 0. 5C(1− g C)2
+   vb 
+
+  1− g C min ,1.0
+   cb 
+
+  d1 =  0. 5(100.0)(1− 0. 30)2  = 28.0 s/bicycle, LOS C
+
+  1− (0. 30)(0. 42)
+
+  d2 =  0. 5(100.0)(1− 0. 50)2  = 14.3 s/bicycle, LOS B
+
+  1− (0. 50)(0. 25)
+
+  d3 =  0. 5(100.0)(1− 0. 40)2  = 20.5 s/bicycle, LOS C
+
+  1− (0. 40)(0. 31)
+
+  Sats = LT
+   Li Σdi 
+  ∑ +  
+   Si 3600 
+
+  Sats = 2.0  (0.5 + 0.2 + 1.0 + 0.3) (28.0 + 14.3 + 20.5)   = 20.5 km/h
+
+    25  +  3600  
+
+  LOS B
+
+  Results The bicycle lane on the arterial operates at LOS B. Assuming a mean speed
+  of 18 km/h and a standard deviation of 3.0 km/h, the number of events is 47 events/h
+  using Exhibit 19-3. This results in LOS B for the eastbound direction using Exhibit 19-1.
+
+Chapter 19 - Bicycles  19-18
+Example Problems
+

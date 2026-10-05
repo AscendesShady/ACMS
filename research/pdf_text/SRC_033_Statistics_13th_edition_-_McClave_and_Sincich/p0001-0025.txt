@@ -1,0 +1,1151 @@
+APPLET CORRELATION
+
+Applet  Concept Illustrated  Description  Applet Activity
+  4.4, 240; 5.1, 355; 5.3, 279
+Sample from a  Assesses how well a sample represents the  Produces random sample from population
+population  population and the role that sample size  from specified sample size and population
+  plays in the process.  distribution shape. Reports mean, median,
+  and standard deviation; applet creates plot
+  of sample.
+
+Sampling  Compares means and standard deviations of  Simulates repeatedly choosing samples of a  6.1, 330; 6.2, 330
+distributions  distributions; assesses effect of sample size;  fixed size n from a population with specified
+  illustrates unbiasedness.  sample size, number of samples, and shape of
+  population distribution. Applet reports means,
+  medians, and standard deviations; creates plots
+  for both.
+
+Random numbers  Uses a random number generator to deter-  Generates random numbers from a range of  1.1, 47; 1.2, 48; 3.6, 203;
+  mine the experimental units to be included  integers specified by the user.  4.1, 221; 5.2, 265
+  in a sample.
+
+Long-run probability demonstrations illustrate the concept that theoretical probabilities are long-run experimental probabilities.
+
+Simulating probability  Investigates relationship between theoretical  Reports and creates frequency histogram for  3.1, 157; 3.2, 157; 3.3, 168;
+of rolling a 6  and experimental probabilities of rolling 6 as  each outcome of each simulated roll of a fair  3.4, 169; 3.5, 183
+  number of die rolls increases.  die. Students specify number of rolls; applet
+Simulating probability  calculates and plots proportion of 6s.
+of rolling a 3 or 4
+  Investigates relationship between theoretical  Reports outcome of each simulated roll  3.3, 168; 3.4, 169
+Simulating the  and experimental probabilities of rolling 3 or  of a fair die; creates frequency histogram for
+probability of heads:  4 as number of die rolls increases.  outcomes. Students specify number of rolls;
+fair coin  applet calculates and plots proportion of 3s
+  and 4s.
+Simulating probability
+of heads: unfair coin  Investigates relationship between theoretical  Reports outcome of each fair coin flip and cre-  4.2, 221
+(P(H) = .2)  and experimental probabilities of getting  ates a bar graph for outcomes. Students specify
+  heads as number of fair coin flips increases.  number of flips; applet calculates and plots
+Simulating probability  proportion of heads.
+of heads: unfair coin
+(P(H) = .8)  Investigates relationship between theoretical  Reports outcome of each flip for a coin where  4.3, 239
+  and experimental probabilities of getting  heads is less likely to occur than tails and cre-
+  heads as number of unfair coin flips  ates a bar graph for outcomes. Students specify
+  increases.  number of flips; applet calculates and plots the
+  proportion of heads.
+
+  Investigates relationship between theoretical  Reports outcome of each flip for a coin where  4.3, 239
+  and experimental probabilities of getting  heads is more likely to occur than tails and cre-
+  heads as number of unfair coin flips  ates a bar graph for outcomes. Students specify
+  increases.  number of flips; applet calculates and plots the
+  proportion of heads.
+
+Simulating the stock  Theoretical probabilities are long run  Simulates stock market fluctuation. Students  4.5, 240
+market  experimental probabilities.  specify number of days; applet reports whether
+  stock market goes up or down daily and cre-
+Mean versus median  Investigates how skewedness and outliers  ates a bar graph for outcomes. Calculates
+  affect measures of central tendency.  and plots proportion of simulated days stock
+  market goes up.
+
+  Students visualize relationship between mean  2.1, 89; 2.2, 89; 2.3, 89
+  and median by adding and deleting data
+  points; applet automatically updates mean and
+  median.
+Applet  Concept Illustrated  Description  Applet Activity
+Standard deviation
+  Investigates how distribution shape and  Students visualize relationship between mean  2.4, 96; 2.5, 97; 2.6, 97; 2.7, 119
+  spread affect standard deviation.  and standard deviation by adding and deleting
+  data points; applet updates mean and standard
+  deviation.
+
+Confidence intervals  Not all confidence intervals contain the  Simulates selecting 100 random samples from  7.5, 369; 7.6, 370
+for a proportion  population proportion. Investigates the  the population and finds the 95% and 99%
+  meaning of 95% and 99% confidence.  confidence intervals for each. Students specify
+  population proportion and sample size; applet
+  plots confidence intervals and reports number
+  and proportion containing true proportion.
+
+Confidence intervals  Not all confidence intervals contain the  Simulates selecting 100 random samples from  7.1, 351; 7.2, 351
+for a mean (the  population mean. Investigates the meaning  population; finds 95% and 99% confidence
+impact of confidence  of 95% and 99% confidence.  intervals for each. Students specify sample
+level)  size, distribution shape, and population
+  mean and standard deviation; applet plots
+  confidence intervals and reports number and
+  proportion containing true mean.
+
+Confidence intervals  Confidence intervals obtained using the  Simulates selecting 100 random samples from  7.3, 361; 7.4, 361
+for a mean (not  sample standard deviation are different  the population and finds the 95% z-interval
+knowing standard  from those obtained using the population  and 95% t-interval for each. Students specify
+deviation)  standard deviation. Investigates effect of not  sample size, distribution shape, and population
+  knowing the population standard deviation.  mean and standard deviation; applet plots
+  confidence intervals and reports number and
+  proportion containing true mean.
+
+Hypothesis tests for  Not all tests of hypotheses lead correctly to  Simulates selecting 100 random samples from  8.5, 433; 8.6, 434
+a proportion  either rejecting or failing to reject the null  population; calculates and plots z-statistic and
+  hypothesis. Investigates the relationship  P-value for each. Students specify population
+  between the level of confidence and the  proportion, sample size, and null and
+  probabilities of making Type I and Type II  alternative hypotheses; applet reports number
+  errors.  and proportion of times null hypothesis is
+  rejected at 0.05 and 0.01 levels.
+
+Hypothesis tests for  Not all tests of hypotheses lead correctly to  Simulates selecting 100 random samples from  8.1, 407; 8.2, 417; 8.3, 417;
+a mean  either rejecting or failing to reject the null  population; calculates and plots t statistic and  8.4, 417
+  hypothesis. Investigates the relationship  P-value for each. Students specify population
+  between the level of confidence and the  distribution shape, mean, and standard
+  probabilities of making Type I and Type II  deviation; sample size, and null and alternative
+  errors.  hypotheses; applet reports number and
+  proportion of times null hypothesis is rejected
+  at both 0.05 and 0.01 levels.
+
+Correlation by eye  Correlation coefficient measures strength  Computes correlation coefficient r for a set  11.2, 652
+  of linear relationship between two  of bivariate data plotted on a scattergram.
+  variables. Teaches user how to assess  Students add or delete points and guess value
+  strength of a linear relationship from a  of r; applet compares guess to calculated value.
+  scattergram.
+
+Regression by eye  The least squares regression line has a  Computes least squares regression line for a  11.1, 625
+  smaller SSE than any other line that might  set of bivariate data plotted on a scattergram.
+  approximate a set of bivariate data. Teaches  Students add or delete points and guess
+  students how to approximate the location of  location of regression line by manipulating a
+  a regression line on a scattergram.  line provided on the scattergram; applet plots
+  least squares line and displays the equations
+  and the SSEs for both lines.
+Get the Most Out of Pearson
+MyLab Statistics
+
+Pearson MyLab Statistics, Pearson’s online tutorial and assessment tool, creates
+personalized experiences for students and provides powerful tools for instructors.
+With a wealth of tested and proven resources, each course can be tailored to fit your
+specific needs. Talk to your Pearson Representative about ways to integrate Pearson
+MyLab Statistics into your course for the best results.
+
+Data-Driven Reporting for
+Instructors
+
+• Pearson MyLab Statistics’ comprehensive on-
+  line gradebook automatically tracks students’
+  results to tests, quizzes, homework, and work
+  in the study plan.
+
+• The Reporting Dashboard makes it easier
+  than ever to identify topics where students are
+  struggling, or specific students who may need
+  extra help.
+
+Learning in Any Environment
+
+• Because classroom formats and student needs
+  continually change and evolve, Pearson MyLab
+  Statistics has built-in flexibility to accommodate
+  various course designs and formats.
+
+• With a new, streamlined, mobile-friendly design,
+  students and instructors can access courses from
+  most mobile devices to work on exercises and
+  review completed assignments.
+
+  Visit www.mystatlab.com and click Get Trained to make sure
+  you’re getting the most out of Pearson MyLab Statistics.
+Available in Pearson MyLab Statistics
+for Your Introductory Statistics Courses
+
+Pearson MyLab Statistics is the market-leading online resource for learning
+and teaching statistics.
+
+  Leverage the Power of StatCrunch
+
+  Pearson MyLab Statistics leverages the
+  power of StatCrunch–powerful, web-based
+  statistics software. Integrated into Pearson MyLab
+  Statistics, students can easily analyze data from
+  their exercises and etext. In addition, access to
+  the full online community allows users to take
+  advantage of a wide variety of resources and
+
+  applications at www.statcrunch.com.
+
+  Bring Statistics to Life
+
+  Virtually flip coins, roll dice, draw cards, and interact
+  with animations on your mobile device with the
+  extensive menu of experiments and applets
+  in StatCrunch. Offering a number of ways to practice
+  resampling procedures, such as permutation tests
+  and bootstrap confidence intervals, StatCrunch
+  is a complete and modern solution.
+
+  Real-World Statistics
+
+  Pearson MyLab Statistics video resources help
+  foster conceptual understanding. StatTalk Videos,
+
+  hosted by fun-loving statistician Andrew Vickers,
+  demonstrate important statistical concepts through
+
+  interesting stories and real-life events. This series
+  of 24 videos includes assignable questions built in
+  Pearson MyLab Statistics and an instructor’s guide.
+
+  www.mystatlab.com
+This page intentionally left blank
+James T. McClave  ThirTeenTh ediTion
+  GLoBAL ediTion
+Info Tech, Inc.
+University of Florida  Terry Sincich
+
+  University of South Florida
+
+330 Hudson Street, NY NY 10013
+Editorial Director: Chris Hoag  TestGen Content Manager: John Flanagan
+Editor in Chief: Deirdre Lynch  MathXL Content Developer:
+Acquisitions Editor: Patrick Barbera
+Acquisitions Editor, Global Edition: Sourabh  Bob Carroll
+  Marketing Manager: Tiffany Bitzel
+  Maheshwari  Marketing Assistant: Jennifer Myers
+Editorial Assistant: Justin Billing  Senior Author Support/Technology
+Program Manager: Tatiana Anacki
+Project Manager: Christine O’Brien  Specialist: Joe Vetere
+Assistant Project Editor, Global Edition:  Rights and Permissions Project Manager:
+
+  Aurko Mitra  Gina Cheselka
+Program Management Team Lead: Karen Wernholm  Procurement Specialist: Carol Melville
+Project Management Team Lead: Peter Silvia  Associate Director of Design: Andrea Nix
+Senior Manufacturing Controller, Global Edition:  Program Design Lead:
+
+  Kay Holman  Barbara Atkinson
+Media Producer: Jean Choe  Text Design: Integra Software Services Pvt. Ltd.
+Media Production Manager, Global Edition:  Illustrations: Integra Software Services Pvt. Ltd.
+  Cover Design: Lumina Datamatics
+  Vikram Kumar  Cover Image: vesna cvorovic/Shutterstock
+
+Microsoft and/or its respective suppliers make no representations about the suitability of the information
+contained in the documents and related graphics published as part of the services for any purpose. All
+such documents and related graphics are provided “as is” without warranty of any kind. Microsoft and/
+or its respective suppliers hereby disclaim all warranties and conditions with regard to this information,
+including all warranties and conditions of merchantability, whether express, implied or statutory, fitness
+for a particular purpose, title and non-infringement. In no event shall microsoft and/or its respective
+suppliers be liable for any special, indirect or consequential damages or any damages whatsoever result-
+ing from loss of use, data or profits, whether in an action of contract, negligence or other tortious action,
+arising out of or in connection with the use or performance of information available from the services.
+
+  The documents and related graphics contained herein could include technical inaccuracies or typo-
+graphical errors. Changes are periodically added to the information herein. Microsoft and/or its respective
+suppliers may make improvements and/or changes in the product(s) and/or the program(s) described
+herein at any time. Partial screen shots may be viewed in full within the software version specified.
+
+Acknowledgments of third party content appear on page 884, which constitutes an extension of this
+copyright page.
+
+PEARSON, ALWAYS LEARNING, Pearson MyLab Statistics, Pearson MyLab Statistics Plus, Pearson -
+MathXL, LEARNING CATALYTICS, AND TESTGEN are exclusive trademarks owned by Pearson
+Education, Inc. or its affiliates in the U.S. and/or other countries.
+
+Pearson Education Limited
+KAO Two
+KAO Park
+Harlow
+CM17 9NA
+United Kingdom
+
+and Associated Companies throughout the world
+
+Visit us on the World Wide Web at: www.pearsonglobaleditions.com
+
+© Pearson Education Limited 2018
+
+The rights of James T. McClave and Terry T Sincich to be identified as the authors of this work have been
+asserted by them in accordance with the Copyright, Designs and Patents Act 1988.
+
+Authorized adaptation from the United States edition, entitled Statistics, 13th Edition, ISBN 978-0-13-408021-5
+by James T. McClave and Terry T Sincich, published by Pearson Education © 2017.
+
+All rights reserved. No part of this publication may be reproduced, stored in a retrieval system, or transmitted
+in any form or by any means, electronic, mechanical, photocopying, recording or otherwise, without either the
+prior written permission of the publisher or a license permitting restricted copying in the United Kingdom
+issued by the Copyright Licensing Agency Ltd, Saffron House, 6–10 Kirby Street, London EC1N 8TS.
+
+All trademarks used herein are the property of their respective owners. The use of any trademark in this
+text does not vest in the author or publisher any trademark ownership rights in such trademarks, nor
+does the use of such trademarks imply any affiliation with or endorsement of this book by such owners.
+
+ISBN 10: 1-292-16155-8
+ISBN 13: 978-1-292-16155-6
+
+British Library Cataloguing-in-Publication Data
+A catalogue record for this book is available from the British Library
+
+10 9 8 7 6 5 4 3 2 1
+
+Typeset by Integra
+Printed and bound by Vivar in Malaysia
+Chapter 1  Contents
+Chapter 2
+Chapter 3  Preface 13
+  Applications Index 21
+
+  Statistics, data, and Statistical Thinking 29
+
+  1.1 The Science of Statistics 30
+  1.2 Types of Statistical Applications 31
+  1.3 Fundamental Elements of Statistics 33
+  1.4 Types of Data 37
+  1.5 Collecting Data: Sampling and Related Issues 39
+  1.6 The Role of Statistics in Critical Thinking and Ethics 44
+  Statistics in Action: Social Media Network Usage—Are You Linked In? 30
+  Using Technology: MINITAB: Accessing and Listing Data 53
+
+  Methods for describing Sets of data 57
+
+  2.1 Describing Qualitative Data 59
+  2.2 Graphical Methods for Describing Quantitative Data 70
+  2.3 Numerical Measures of Central Tendency 82
+  2.4 Numerical Measures of Variability 93
+  2.5 Using the Mean and Standard Deviation to Describe Data 99
+  2.6 Numerical Measures of Relative Standing 107
+  2.7 Methods for Detecting Outliers: Box Plots and z-Scores 111
+  2.8 Graphing Bivariate Relationships (Optional) 121
+  2.9 Distorting the Truth with Descriptive Statistics 126
+  Statistics in Action: Body Image Dissatisfaction: Real or Imagined? 58
+  Using Technology: MINITAB: Describing Data 142
+  TI-83/TI–84 Plus Graphing Calculator: Describing Data 142
+
+  Probability 145
+
+  3.1 Events, Sample Spaces, and Probability 147
+  3.2 Unions and Intersections 160
+  3.3 Complementary Events 163
+  3.4 The Additive Rule and Mutually Exclusive Events 165
+  3.5 Conditional Probability 172
+  3.6 The Multiplicative Rule and Independent Events 175
+
+  7
+8  CONTENTS
+
+Chapter 4  3.7 Some Additional Counting Rules (Optional) 187
+  3.8 Bayes’s Rule (Optional) 197
+Chapter 5  Statistics in Action: Lotto Buster! Can You Improve Your Chance of Winning? 146
+  Using Technology: TI-83/TI-84 Plus Graphing Calculator: Combinations and Permutations 211
+Chapter 6
+  discrete random Variables 212
+
+  4.1 Two Types of Random Variables 214
+  4.2 Probability Distributions for Discrete Random Variables 217
+  4.3 Expected Values of Discrete Random Variables 224
+  4.4 The Binomial Random Variable 229
+  4.5 The Poisson Random Variable (Optional) 242
+  4.6 The Hypergeometric Random Variable (Optional) 247
+  Statistics in Action: Probability in a Reverse Cocaine Sting: Was Cocaine Really Sold? 213
+  Using Technology: MINITAB: Discrete Probabilities 257
+  TI-83/TI-84 Plus Graphing Calculator: Discrete Random Variables and Probabilities 257
+
+  Continuous random Variables 260
+
+  5.1 Continuous Probability Distributions 262
+  5.2 The Uniform Distribution 263
+  5.3 The Normal Distribution 267
+  5.4 Descriptive Methods for Assessing Normality 281
+  5.5 Approximating a Binomial Distribution with a Normal Distribution
+
+  (Optional) 290
+  5.6 The Exponential Distribution (Optional) 295
+  Statistics in Action: Super Weapons Development—Is the Hit Ratio Optimized? 261
+  Using Technology: MINITAB: Continuous Random Variable Probabilities and Normal
+
+  Probability Plots 307
+  TI-83/TI-84 Plus Graphing Calculator: Normal Random Variable and Normal
+  Probability Plots 308
+
+  Sampling distributions 310
+
+  6.1 The Concept of a Sampling Distribution 312
+  6.2 Properties of Sampling Distributions: Unbiasedness and Minimum
+
+  Variance 319
+  6.3 The Sampling Distribution of xQ and the Central Limit Theorem 323
+  6.4 The Sampling Distribution of the Sample Proportion 332
+  Statistics in Action: The Insomnia Pill: Is It Effective? 311
+  Using Technology: MINITAB: Simulating a Sampling Distribution 341
+  CONTENTS  9
+
+Chapter 7  inferences Based on a Single Sample:
+Chapter 8  estimation with Confidence intervals 342
+Chapter 9
+  7.1 Identifying and Estimating the Target Parameter 343
+  7.2 Confidence Interval for a Population Mean: Normal (z) Statistic 345
+  7.3 Confidence Interval for a Population Mean: Student’s t-Statistic 355
+  7.4 Large-Sample Confidence Interval for a Population Proportion 365
+  7.5 Determining the Sample Size 372
+  7.6 Confidence Interval for a Population Variance (Optional) 379
+  Statistics in Action: Medicare Fraud Investigations 343
+  Using Technology: MINITAB: Confidence Intervals 392
+  TI-83/TI-84 Plus Graphing Calculator: Confidence Intervals 394
+
+  inferences Based on a Single Sample:
+  Tests of hypothesis 396
+
+  8.1 The Elements of a Test of Hypothesis 397
+  8.2 Formulating Hypotheses and Setting Up the Rejection Region 403
+  8.3 Observed Significance Levels: p-Values 408
+  8.4 Test of Hypothesis about a Population Mean: Normal (z) Statistic 413
+  8.5 Test of Hypothesis about a Population Mean: Student’s t-Statistic 421
+  8.6 Large-Sample Test of Hypothesis about a Population Proportion 428
+  8.7 Calculating Type II Error Probabilities: More about b (Optional) 436
+  8.8 Test of Hypothesis about a Population Variance (Optional) 445
+  Statistics in Action: Diary of a KLEENEX® User—How Many Tissues in a Box? 397
+  Using Technology: MINITAB: Tests of Hypotheses 458
+  TI-83/TI-84 Plus Graphing Calculator: Tests of Hypotheses 459
+
+  inferences Based on Two Samples: Confidence
+  intervals and Tests of hypotheses 461
+
+  9.1 Identifying the Target Parameter 462
+  9.2 Comparing Two Population Means: Independent Sampling 463
+  9.3 Comparing Two Population Means: Paired Difference Experiments 481
+  9.4 Comparing Two Population Proportions: Independent Sampling 493
+  9.5 Determining the Sample Size 501
+  9.6 Comparing Two Population Variances: Independent Sampling (Optional) 506
+  Statistics in Action: ZixIt Corp. v. Visa USA Inc.—A Libel Case 462
+  Using Technology: MINITAB: Two-Sample Inferences 525
+  TI-83/TI-84 Plus Graphing Calculator: Two Sample Inferences 526
+10  CONTENTS
+
+Chapter 10  Analysis of Variance: Comparing More than Two Means  530
+
+  10.1 Elements of a Designed Study 532
+  10.2 The Completely Randomized Design: Single Factor 539
+  10.3 Multiple Comparisons of Means 556
+  10.4 The Randomized Block Design 564
+  10.5 Factorial Experiments: Two Factors 582
+  Statistics in Action: Voice versus Face Recognition—Does One Follow the Other? 531
+  Using Technology: MINITAB: Analysis of Variance 610
+  TI-83/TI-84 Plus Graphing Calculator: Analysis of Variance 611
+
+Chapter 11  Simple Linear regression 612
+
+  11.1 Probabilistic Models 614
+  11.2 Fitting the Model: The Least Squares Approach 618
+  11.3 Model Assumptions 631
+  11.4 Assessing the Utility of the Model: Making Inferences about the Slope b1 636
+  11.5 The Coefficients of Correlation and Determination 645
+  11.6 Using the Model for Estimation and Prediction 655
+  11.7 A Complete Example 664
+  Statistics in Action: Can “Dowsers” Really Detect Water? 613
+  Using Technology: MINITAB: Simple Linear Regression 678
+  TI-83/TI-84 Plus Graphing Calculator: Simple Linear Regression 679
+
+Chapter 12  Multiple regression and Model Building 681
+
+  12.1 Multiple-Regression Models 683
+  PART I: First-Order Models with Quantitative Independent Variables
+  12.2 Estimating and Making Inferences about the b Parameters 685
+  12.3 Evaluating Overall Model Utility 692
+  12.4 Using the Model for Estimation and Prediction 703
+  PART II: Model Building in Multiple Regression
+  12.5 Interaction Models 709
+  12.6 Quadratic and Other Higher Order Models 716
+  12.7 Qualitative (Dummy) Variable Models 726
+  12.8 Models with Both Quantitative and Qualitative Variables (Optional) 734
+  12.9 Comparing Nested Models (Optional) 744
+  12.10 Stepwise Regression (Optional) 754
+  PART III: Multiple Regression Diagnostics
+  12.11 Residual Analysis: Checking the Regression Assumptions 760
+  12.12 Some Pitfalls: Estimability, Multicollinearity, and Extrapolation 774
+  Statistics in Action: Modeling Condominium Sales: What Factors Affect Auction Price? 682
+  Using Technology: MINITAB: Multiple Regression 796
+  TI-83/TI-84 Plus Graphing Calculator: Multiple Regression 797
+  CONTENTS  11
+
+Chapter 13  Categorical data Analysis 799
+Chapter 14
+Appendices  13.1 Categorical Data and the Multinomial Experiment 801
+  13.2 Testing Categorical Probabilities: One-Way Table 802
+  13.3 Testing Categorical Probabilities: Two-Way (Contingency) Table 810
+  13.4 A Word of Caution about Chi-Square Tests 825
+  Statistics in Action: The Case of the Ghoulish Transplant Tissue 800
+  Using Technology: MINITAB: Chi-Square Analyses 835
+  TI-83/TI-84 Plus Graphing Calculator: Chi-Square Analyses 836
+
+  nonparametric Statistics (available online) 14-1
+
+  14.1 Introduction: Distribution-Free Tests 14-2  14-41
+  14.2 Single-Population Inferences 14-4
+  14.3 Comparing Two Populations: Independent Samples 14-10
+  14.4 Comparing Two Populations: Paired Difference Experiment 14-24
+  14.5 Comparing Three or More Populations: Completely Randomized
+
+  Design 14-33
+  14.6 Comparing Three or More Populations: Randomized Block Design
+  14.7 Rank Correlation 14-48
+  Statistics in Action: Pollutants at a Housing Development: A Case of Mishandling
+
+  Small Samples 14-2
+  Using Technology: MINITAB: Nonparametric Tests 14-65
+
+  Appendix A Summation Notation 837
+  Appendix B Tables 839
+
+  Table I Binomial Probabilities 840
+  Table II Normal Curve Areas 844
+  Table III Critical Values of t 845
+  Table IV Critical Values of x2 846
+  Table V Percentage Points of the F-Distribution, a = .10 848
+  Table VI Percentage Points of the F-Distribution, a = .05 850
+  Table VII Percentage Points of the F-Distribution, a = .025 852
+  Table VIII Percentage Points of the F-Distribution, a = .01 854
+  Table IX Critical Values of TL and TU for the Wilcoxon Rank Sum Test:
+
+  Independent Samples 856
+  Table X Critical Values of T0 in the Wilcoxon Paired Difference
+
+  Signed Rank Test 857
+12  CONTENTS
+
+  Table XI Critical Values of Spearman’s Rank Correlation Coefficient 858
+  Table XII Critical Values of the Studentized Range, a = .05 859
+  Table XIII Critical Values of the Studentized Range, a = .01 860
+
+  Appendix C Calculation Formulas for Analysis of Variance 861
+
+Short Answers to Selected Odd-Numbered Exercises 866
+Index 878
+Credits 884
+  Preface
+
+  This 13th edition of Statistics is an introductory text emphasizing inference, with
+  extensive coverage of data collection and analysis as needed to evaluate the reported
+  results of statistical studies and make good decisions. As in earlier editions, the text
+  stresses the development of statistical thinking, the assessment of credibility, and the
+  value of the inferences made from data, both by those who consume and those who pro-
+  duce them. It assumes a mathematical background of basic algebra.
+
+  The text incorporates the following features, developed from the American
+  Statistical Association’s (ASA) Guidelines for Assessment and Instruction in Statistics
+  Education (GAISE) Project:
+
+  • Emphasize statistical literacy and develop statistical thinking
+  • Use real data in applications
+  • Use technology for developing conceptual understanding and analyzing data
+  • Foster active learning in the classroom
+  • Stress conceptual understanding rather than mere knowledge of procedures
+  • Emphasize intuitive concepts of probability
+
+  A briefer version of the book, A First Course in Statistics, is available for single
+  semester courses that include minimal coverage of regression analysis, analysis of vari-
+  ance, and categorical data analysis.
+
+new in the 13th edition
+
+  • Over 2,000 exercises, with revisions and updates to 25%. Many new and
+  updated exercises, based on contemporary studies and real data, have been added.
+  Most of these exercises foster and promote critical thinking skills.
+
+  • Updated technology. All printouts from statistical software (SAS, SPSS,
+  MINITAB, and the TI-83/Tl-84 Plus Graphing Calculator) and corresponding in-
+  structions for use have been revised to reflect the latest versions of the software.
+
+  • New Statistics in Action Cases. Six of the 14 Statistics in Action cases are new or
+  updated, each based on real data from a recent study.
+
+  • Continued emphasis on Ethics. Where appropriate, boxes have been added
+  emphasizing the importance of ethical behavior when collecting, analyzing, and
+  interpreting data with statistics.
+
+  • Data Informed Development. The authors analyzed aggregated student usage
+  and performance data from Pearson MyLab Statistics for the previous edition of
+  this text. The results of this analysis helped improve the quality and quantity of ex-
+  ercises that matter most to instructors and students.
+
+Content-Specific Changes to This edition
+
+  • Chapter 1 (Statistics, Data, and Statistical Thinking). Material on all basic sam-
+  pling concepts (e.g., random sampling and sample survey designs) has been stream-
+  lined and moved to Section 1.5 (Collecting Data: Sampling and Related Issues).
+
+  • Chapter 2 (Methods for Describing Sets of Data). The section on summation
+  notation has been moved to the appendix (Appendix A). Also, recent examples
+  of misleading graphics have been added to Section 2.9 (Distorting the Truth with
+  Descriptive Statistics).
+
+  13
+14  PREFACE
+
+  • Chapter 4 (Discrete Random Variables) and Chapter 5 (Continuous Random
+  Variables). Use of technology for computing probabilities of random variables
+  with known probability distributions (e.g., binomial, Poisson, normal, and exponen-
+  tial distributions) has been incorporated into the relevant sections of these chapters.
+  This reduces the use of tables of probabilities for these distributions.
+
+  • Chapter 6 (Sampling Distributions). In addition to the sampling distribution of
+  the sample mean, we now cover (in new Section 6.4) the sampling distribution of a
+  sample proportion.
+
+  • Chapter 8 (Inferences Based on a Single Sample: Tests of Hypothesis). The
+  section on p-values in hypothesis testing (Section 8.3) has been moved up to
+  emphasize the importance of their use in real-life studies. Throughout the remain-
+  der of the text, conclusions from a test of hypothesis are based on p-values.
+
+hallmark Strengths
+
+  We have maintained the pedagogical features of Statistics that we believe make it
+  unique among introductory statistics texts. These features, which assist the student in
+  achieving an overview of statistics and an understanding of its relevance in both the
+  business world and everyday life, are as follows:
+
+  • Use of Examples as a Teaching Device—Almost all new ideas are introduced
+  and illustrated by data-based applications and examples. We believe that stu-
+  dents better understand definitions, generalizations, and theoretical concepts
+  after seeing an application. All examples have three components: (1) “Problem,”
+  (2) “Solution,” and (3) “Look Back” (or “Look Ahead”). This step-by-step process
+  provides students with a defined structure by which to approach problems and
+  enhances their problem-solving skills. The “Look Back” feature often gives helpful
+  hints to solving the problem and/or provides a further reflection or insight into the
+  concept or procedure that is covered.
+
+  • Now Work—A “Now Work” exercise suggestion follows each example. The Now
+  Work exercise (marked with the icon in the exercise sets) is similar in style and
+  concept to the text example. This provides the students with an opportunity to im-
+  mediately test and confirm their understanding.
+
+  • Statistics in Action—Each chapter begins with a case study based on an actual
+  contemporary, controversial, or high-profile issue. Relevant research questions and
+  data from the study are presented and the proper analysis demonstrated in short
+  “Statistics in Action Revisited” sections throughout the chapter. These motivate
+  students to critically evaluate the findings and think through the statistical issues
+  involved.
+
+  • Applet Exercises—The text is accompanied by applets (short computer programs)
+  available at www.pearsonglobaleditions.com/mcclave and within Pearson MyLab
+  Statistics. These point-and-click applets allow students to easily run simulations that
+  visually demonstrate some of the more difficult statistical concepts (e.g., sampling
+  distributions and confidence intervals). Each chapter contains several optional applet
+  exercises in the exercise sets. They are denoted with the following icon: .
+
+  • Real Data-Based Exercises—The text includes more than 2,000 exercises based
+  on applications in a variety of disciplines and research areas. All the applied exer-
+  cises employ the use of current real data extracted from current publications (e.g.,
+  newspapers, magazines, current journals, and the Internet). Some students have
+  difficulty learning the mechanics of statistical techniques when all problems are
+  couched in terms of realistic applications. For this reason, all exercise sections are
+  divided into four parts:
+
+  Learning the Mechanics. Designed as straightforward applications of new
+  concepts, these exercises allow students to test their abilities to comprehend a
+  mathematical concept or a definition.
+PREFACE  15
+
+  Applying the Concepts—Basic. Based on applications taken from a wide
+  variety of journals, newspapers, and other sources, these short exercises help
+  students to begin developing the skills necessary to diagnose and analyze
+  real-world problems.
+
+  Applying the Concepts—Intermediate. Based on more detailed real-world
+  applications, these exercises require students to apply their knowledge of the
+  technique presented in the section.
+
+  Applying the Concepts—Advanced. These more difficult real-data exercises
+  require students to use their critical thinking skills.
+
+• Critical Thinking Challenges—Placed at the end of the “Supplementary
+  Exercises” sections only, students are asked to apply their critical thinking skills to
+  solve one or two challenging real-life problems. These exercises expose students to
+  real-world problems with solutions that are derived from careful, logical thought
+  and selection of the appropriate statistical analysis tool.
+
+• Exploring Data with Statistical Computer Software and the Graphing
+  Calculator—Each statistical analysis method presented is demonstrated using
+  output from three leading Windows-based statistical software packages: SAS, SPSS,
+  and MINITAB. Students are exposed early and often to computer printouts they
+  will encounter in today’s high-tech world.
+
+• “Using Technology” Tutorials—MINITAB software tutorials appear at the end
+  of each chapter and include point-and-click instructions (with screen shots). These
+  tutorials are easily located and show students how to best use and maximize
+  MINITAB statistical software. In addition, output and keystroke instructions for
+  the TI-83/Tl-84 Plus Graphing Calculator are presented.
+
+• Profiles of Statisticians in History (Biography)—Brief descriptions of famous
+  statisticians and their achievements are presented in side boxes. With these profiles,
+  students will develop an appreciation of the statistician’s efforts and the discipline
+  of statistics as a whole.
+
+• Data and Applets—The Web site www.pearsonglobaleditions.com/mcclave has
+  files for all the data sets marked with the data set icon in the text. These in-
+  clude data sets for text examples, exercises, Statistics in Action, and Real-World
+  cases. This site also contains the applets that are used to illustrate statistical
+  concepts.
+
+Flexibility in Coverage
+
+  The text is written to allow the instructor flexibility in coverage of topics. Suggestions
+  for two topics, probability and regression, are given below.
+
+  • Probability and Counting Rules—One of the most troublesome aspects of an in-
+  troductory statistics course is the study of probability. Probability poses a challenge
+  for instructors because they must decide on the level of presentation, and students
+  find it a difficult subject to comprehend. We believe that one cause for these prob-
+  lems is the mixture of probability and counting rules that occurs in most introduc-
+  tory texts. Consequently, we have included the counting rules (with examples) in an
+  optional section (Section 3.7) of Chapter 3. Thus, the instructor can control the level
+  of probability coverage.
+
+  • Multiple Regression and Model Building—This topic represents one of the most
+  useful statistical tools for the solution of applied problems. Although an entire text
+  could be devoted to regression modeling, we feel that we have presented coverage
+  that is understandable, usable, and much more comprehensive than the presenta-
+  tions in other introductory statistics texts. We devote two full chapters to discuss-
+  ing the major types of inferences that can be derived from a regression analysis,
+  showing how these results appear in the output from statistical software, and, most
+  important, selecting multiple regression models to be used in an analysis. Thus,
+16  PREFACE
+
+  the instructor has the choice of one-chapter coverage of simple linear regression
+  (Chapter 11), a two-chapter treatment of simple and multiple regression (excluding
+  the sections on model building in Chapter 12), or complete coverage of regression
+  analysis, including model building and regression diagnostics. This extensive cover-
+  age of such useful statistical tools will provide added evidence to the student of the
+  relevance of statistics to real-world problems.
+
+  • Role of Calculus in Footnotes—Although the text is designed for students with
+  a non-calculus background, footnotes explain the role of calculus in various der-
+  ivations. Footnotes are also used to inform the student about some of the theory
+  underlying certain methods of analysis. These footnotes allow additional flexibility
+  in the mathematical and theoretical level at which the material is presented.
+Get the most out of
+
+Pearson MyLab
+Statistics
+
+Pearson MyLab Statistics is the world’s leading online resource for teaching and learning
+statistics. Pearson MyLab Statistics helps students and instructors improve results, and
+provides engaging experiences and personalized learning for each student so learning can
+happen in any environment. Plus, it offers flexible and time-saving course management
+features to allow instructors to easily manage their classes while remaining in complete
+control, regardless of course format.
+
+Personalized Support for Students
+
+• Pearson MyLab Statistics comes with many learning resources–eText, animations,
+  videos, and more–all designed to support your students as they progress through
+  their course.
+
+• The Adaptive Study Plan acts as a personal tutor, updating in real time based on
+  student performance to provide personalized recommendations on what to work
+  on next. With the new Companion Study Plan assignments, instructors can now
+  assign the Study Plan as a prerequisite to a test or quiz, helping to guide students
+  through concepts they need to master.
+
+• Personalized Homework allows instructors to create homework assignments
+  tailored to each student’s specific needs, focused on just the topics they have not
+  yet mastered.
+
+Used by nearly 4 million students each year, the Pearson MyLab Statistics and Pearson
+MyLab Statistics family of products delivers consistent, measurable gains in student
+learning outcomes, retention, and subsequent course success.
+
+  www.mystatlab.com
+Resources for Success
+
+Student Resources  TestGen® (www.pearsoned.com/testgen) enables instructors
+  to build, edit, print, and administer tests using a computerized
+Excel® Manual (download only), by Mark Dummeldinger  bank of questions developed to cover all the objectives of the
+(University of South Florida). Available for download from  text. TestGen is algorithmically based, allowing instructors to
+www.pearsonglobaleditions.com/mcclave.  create multiple but equivalent versions of the same question
+  or test with the click of a button. Instructors can also modify
+Study Cards for Statistics Software. This series of  test bank questions or add new questions. The software and
+study cards, available for Excel®, MINITAB, JMP®, SPSS, R,  test bank are available for download from Pearson Education’s
+StatCrunch®, and TI-83/84 Plus Graphing Calculators, provides  online catalog at www.pearsonglobaleditions.com/mcclave and
+students with easy step-by-step guides to the most common  in Pearson MyLab Statistics.
+statistics software.
+  OnlineTest Bank, a test bank derived from TestGen®, is available
+Instructor Resources  for download from Pearson’s online catalog at www.pearson
+  globaleditions.com/mcclave and in Pearson MyLab Statistics.
+Instructor’s Solutions Manual (download only), by Nancy
+Boudreau (Emeritus Associate Professor Bowling Green State  Technology Resources
+University), includes complete worked-out solutions to all
+even-numbered text exercises. Careful attention has been paid  A companion website www.pearsonglobaleditions.com/mcclave
+to ensure that all methods of solution and notation are consis-  holds a number of support materials, including:
+tent with those used in the core text.
+  • Data sets formatted as .csv, .txt, and TI files
+PowerPoint® Lecture Slides include figures and tables from  • Applets (short computer programs) that allow students to
+the textbook. Available for download from Pearson’s on-
+line catalog at www.pearsonglobaleditions.com/mcclave and in  run simulations that visually demonstrate statistical concepts
+Pearson MyLab Statistics.  • Chapter 14: Nonparametric Statistics
+
+www.mystatlab.com
+  PREFACE  19
+
+Acknowledgments
+
+  This book reflects the efforts of a great many people over a number of years. First, we
+  would like to thank the following professors, whose reviews and comments on this and
+  prior editions have contributed to the 13th edition:
+
+  Reviewers Involved with the 13th Edition of Statistics
+
+  Sarol Aryal, Montana State University—Billings
+  Maggie McBride, Montana State University—Billings
+  Mehdi Razzaghi, Bloomsburg University
+  Kamel Rekab, University of Missouri—Kansas City
+  Jim Schott, University of Central Florida
+  Susan Schott, University of Central Florida
+  Dong Zhang, Bloomsburg University
+
+  Reviewers of Previous Editions
+
+  Bill Adamson, South Dakota State; Ibrahim Ahmad, Northern Illinois University;
+  Roddy Akbari, Guilford Technical Community College; Ali Arab, Georgetown
+  University; David Atkinson, Olivet Nazarene University; Mary Sue Beersman,
+  Northeast Missouri State University; William H. Beyer, University of Akron;
+  Marvin Bishop, Manhattan College; Patricia M. Buchanan, Pennsylvania State
+  University; Dean S. Burbank, Gulf Coast Community College; Ann Cascarelle,
+  St. Petersburg College; Jen Case, Jacksonville State University; Kathryn Chaloner,
+  University of Minnesota; Hanfeng Chen, Bowling Green State University; Gerardo
+  Chin-Leo, The Evergreen State College; Linda Brant Collins, Iowa State University;
+  Brant Deppa, Winona State University; John Dirkse, California State University—
+  Bakersfield; N. B. Ebrahimi, Northern Illinois University; John Egenolf, University
+  of Alaska—Anchorage; Dale Everson, University of Idaho; Christine Franklin,
+  University of Georgia; Khadiga Gamgoum, Northern Virginia Community
+  College; Rudy Gideon, University of Montana; Victoria Marie Gribshaw, Seton
+  Hill College; Larry Griffey, Florida Community College; David Groggel, Miami
+  University at Oxford; John E. Groves, California Polytechnic State University—San
+  Luis Obispo; Sneh Gulati, Florida International University; Dale K. Hathaway,
+  Olivet Nazarene University; Shu-ping Hodgson, Central Michigan University; Jean
+  L. Holton, Virginia Commonwealth University; Soon Hong, Grand Valley State
+  University; Ina Parks S. Howell, Florida International University; Gary Itzkowitz,
+  Rowan College of New Jersey; John H. Kellermeier, State University College at
+  Plattsburgh; Golan Kibria, Florida International University; Timothy J. Killeen,
+  University of Connecticut; William G. Koellner, Montclair State University; James
+  R. Lackritz, San Diego State University; Diane Lambert, AT&T/Bell Laboratories;
+  Edwin G. Landauer, Clackamas Community College; James Lang, Valencia Junior
+  College; Glenn Larson, University of Regina; John J. Lefante, Jr., University of
+  South Alabama; Pi-Erh Lin, Florida State University; R. Bruce Lind, University
+  of Puget Sound; Rhonda Magel, North Dakota State University; Linda C. Malone,
+  University of Central Florida; Allen E. Martin, California State University—Los
+  Angeles; Rick Martinez, Foothill College; Brenda Masters, Oklahoma State
+  University; Leslie Matekaitis, Cal Genetics; Maggie McBride, Montana State
+  University—Billings; E. Donice McCune, Stephen F. Austin State University; Mark
+  M. Meerschaert, University of Nevada—Reno; Greg Miller, Stephen F. Austin
+  State University; Satya Narayan Mishra, University of South Alabama; Kazemi
+  Mohammed, University of North Carolina—Charlotte; Christopher Morrell,
+  Loyola College in Maryland; Mir Mortazavi, Eastern New Mexico University;
+  A. Mukherjea, University of South Florida; Steve Nimmo, Morningside College
+  (Iowa); Susan Nolan, Seton Hall University; Thomas O’Gorman, Northern Illinois
+  University; Bernard Ostle, University of Central Florida; William B. Owen, Central
+  Washington University; Won J. Park, Wright State University; John J. Peterson,
+  Smith Kline & French Laboratories; Ronald Pierce, Eastern Kentucky University;
+20  PREFACE
+
+  Surajit Ray, Boston University; Betty Rehfuss, North Dakota State University—
+  Bottineau; Andrew Rosalsky, University of Florida; C. Bradley Russell, Clemson
+  University; Rita Schillaber, University of Alberta; Jim Schott, University of
+  Central Florida; Susan C. Schott, University of Central Florida; George Schultz,
+  St. Petersburg Junior College; Carl James Schwarz, University of Manitoba; Mike
+  Seyfried, Shippensburg University; Arvind K. Shah, University of South Alabama;
+  Lewis Shoemaker, Millersville University; Sean Simpson, Westchester Community
+  College; Charles W. Sinclair, Portland State University; Robert K. Smidt, California
+  Polytechnic State University—San Luis Obispo; Vasanth B. Solomon, Drake
+  University; W. Robert Stephenson, Iowa State University; Engin Sungur, University
+  of Minnesota—Morris; Thaddeus Tarpey, Wright State University; Kathy Taylor,
+  Clackamas Community College; Sherwin Toribio, University of Wisconsin—La
+  Crosse; Barbara Treadwell, Western Michigan University; Dan Voss, Wright State
+  University; Augustin Vukov, University of Toronto; Dennis D. Wackerly, University
+  of Florida; Barbara Wainwright, Salisbury University; Matthew Wood, University
+  of Missouri—Columbia; Michael Zwilling, Mt. Union College
+
+other Contributors
+
+  Special thanks are due to our ancillary authors, Nancy Boudreau and Mark
+  Dummeldinger, both of whom have worked with us for many years. Accuracy checkers
+  Dave Bregenzer and Engin Sungur helped ensure a highly accurate, clean text. Finally,
+  the Pearson Education staff of Deirdre Lynch, Patrick Barbera, Christine O’Brien, Justin
+  Billing, Tatiana Anacki, Roxanne McCarley, Erin Kelly, Tiffany Bitzel, Jennie Myers
+  Jean Choe, and Barbara Atkinson, as well as lntegra-Chicago’s Alverne Ball, helped
+  greatly with all phases of the text development, production, and marketing effort.
+
+Acknowledgments for the Global edition
+
+  Pearson would like to thank and acknowledge the following people for their
+  contributions to the Global Edition.
+
+  Contributors
+
+  Vikas Arora
+  Rahul Bhattacharya, University of Calcutta
+  Niladri Chatterjee, Indian Institute of Technology Delhi
+
+  Reviewers
+
+  Ruben Garcia, Jakarta International College
+  Mohammad Kacim, Holy Spirit University of Kaslik
+  Aneesh Kumar, Mahatma Gandhi College—Iritty
+  Santhosh Kumar, Christ University—Bengaluru
+  Abhishek Umrawal, University of Delhi
+Applications Index
+
+Agricultural/gardening/farming  ammonia in car exhaust, 137  bullying, 498–499, 743, 751
+  automobiles stocked by dealers, 207  cell phone handoff behavior, 171, 251
+  applications:  bus interarrival times, 299  coupon usage, 833–834
+  chickens with fecal contamination, 255  bus rapid transit, 759  dating and disclosure, 51, 419, 698, 779
+  colored string preferred by chickens,  car battery guarantee, 102–103  Davy Crockett’s use of words, 246–247
+  car crash testing, 135, 204, 216, 221,  divorced couples, 153–154
+  354, 455  employee behavior problems, 171
+  crop damage by wild boars, 158, 183, 335  228, 302, 517  eye and head movement
+  crop yield comparisons, 501–502  car wash waiting time, 247
+  dehorning of dairy calves, 434  critical-part failures in NASCAR  relationship, 674
+  egg shell quality in laying hens,  fish feeding, 124, 673
+  vehicles, 299, 331  income and road rage, 604–605
+  594–595  driving routes, 189  interactions in children’s museum, 69,
+  eggs produced from different housing  emergency rescue vehicle use, 254
+  Florida license plates, 196  370, 809, 824
+  systems, 605  gas mileage, 273–274, 282–284, 444  Jersey City drug market, 51
+  endangered dwarf shrubs, 605  highway crash data, 702  last name effect, 222, 476, 505,
+  fungi in beech forest trees, 204  improving driving performance while
+  killing insects with low oxygen, 436, 520  512–513, 652
+  maize seeds, 207  fatigued, 553–554  laughter among deaf signers, 490, 505
+  pig castration, 521  income and road rage, 604–605  married women, 254
+  plants and stress reduction, 581  motorcycle detection while driving, 435  money spent on gifts (buying love),
+  plants that grow on Swiss cliffs, 125,  motorcyclists and helmets, 45
+  mowing effects on highway  51, 537
+  654–655  parents’ behavior at gym meet, 255
+  rat damage to sugarcane, 505  right-of-way, 597  personality and aggressive behavior,
+  RNA analysis of wheat genes, 791, 792  railway track allocation, 68, 159
+  subarctic plants, 833  red light cameras and car crashes,  353–354, 781
+  USDA chicken inspection, 158  planning-habits survey, 499
+  zinc phosphide in pest control, 140  492–493  retailer interest in shopping
+  safety of hybrid cars, 828
+Archaeological applications:  satellite radio in cars, 45–46  behavior, 714
+  ancient pottery, 134, 204, 387, 828  selecting new-car options, 207  rudeness in the workplace, 479–480
+  bone fossils, 419–420  speeding and fatal car crashes, 184  service without a smile, 480
+  defensibility of a landscape,  speeding and young drivers, 418  shock treatment to learners (Milgram
+  435–436, 832  testing tires for wear, 723
+  footprints in sand, 759  time delays at bus stop, 267  experiment), 176
+  radon exposure in Egyptian tombs,  traffic fatalities and sporting events, 246  shopping vehicle and judgment, 106,
+  362, 384, 426–427  traffic sign maintenance, 500, 809
+  ring diagrams, 138  unleaded fuel costs, 331  279, 478, 514
+  shaft graves in ancient Greece, 78, 97,  used-car warranties, 264–265  spanking, parents who condone, 254,
+  216, 363–364, 377, 450  variable speed limit control for
+  305, 456
+Astronomy/space science applications:  freeways, 222–223  teacher perceptions of child
+  astronomy students and the Big Bang
+  theory, 436  Aviation applications:  behavior, 454
+  galaxy velocities, 302–303, 305  aircraft bird strikes, 371, 378  temptation in consumer choice, 595
+  lunar soil, 456  airline fatalities, 246  time required to complete a task, 420
+  measuring the moon’s orbit, 617, 626,  airline shipping routes, 187–188  tipping behavior in restaurants, 713
+  634, 661  classifying air threats with heuristics, 823  violent behavior in children, 787
+  rare planet transits, 246  “cry wolf” effect in air traffic  violent song lyrics and aggression, 598
+  redshifts of quasi-stellar objects,  controlling, 822  walking in circles when lost, 428
+  627, 653  flight response of geese to helicopter  willingness to donate organs, 750–751
+  satellites in orbit, 68  traffic, 831–832  working on summer vacation, 240,
+  space shuttle disaster, 256  shared leadership in airplane crews,
+  speed of light from galaxies, 137, 139–140  476, 751  294, 335
+  tracking missiles with satellite  unoccupied seats per flight, 349
+  imagery, 254  Beverage applications:
+  urban population estimating by  Behavioral applications. See also  alcohol, threats, and electric shocks,
+  satellite images, 698, 724  280–281
+  Gender applications; Psychological  alcohol and marriage, 603
+Automotive/motor vehicle applications.  alcohol consumption by college
+  See also Aviation applications;  applications; Sociological applications  students, 354, 829–830
+  Travel applications  accountants and Machiavellian traits,  alcoholic fermentation in wine, 493
+  bacteria in bottled water, 378
+  air bag danger to children, 390–391  453, 602  Bordeaux wine sold at auction, 702
+  air-pollution standards for engines,  adolescents with ADHD, 699  bottled water analysis, 240, 294
+  attempted suicide methods, 170  bottled water comparisons, 539–540
+  422–424  blondes, hair color, and fundraising,  coffee, caffeine content of, 378
+  coffee, organic, 435
+  731–732, 741  coffee, overpriced Starbucks, 370
+  drinking water quality, 49
+
+  21
+22  APPLICATIONS INDEX
+
+Beverage applications: (continued)  giraffe vision, 362, 377, 643–644, 654  gender and salaries, 116–117, 486–487
+  lead in drinking water, 110  great white shark lengths, 428  global warming and foreign
+  “Pepsi challenge” marketing  grizzly bear habitats, 790–791
+  campaign, 453  habitats of endangered species, 288  investments, 785–786
+  Pepsi vs. Coca-Cola, 35–36  hippo grazing patterns in Kenya, 512  goal congruence in top management
+  restoring self-control when  identifying organisms using
+  intoxicated, 554, 564  teams, 723–724
+  soft-drink bottles, 339  computers, 435  goodness-of-fit test with monthly
+  soft-drink dispensing machine, 266–267  inbreeding of tropical wasps, 389, 455
+  spoiled wine testing, 255  Index of Biotic Integrity, 518–519  salaries, 834
+  temperature and ethanol  Japanese beetle growth, 788  hiring executives, 188
+  production, 554  killing insects with low oxygen, 436, 520  insurance decision-making, 246, 576–577
+  undergraduate problem drinking, 354  lead levels in mountain moss, 743  job satisfaction of women in
+  wine production technologies, 731  Mongolian desert ants, 91, 125, 216,
+  wine ratings, 214  construction, 823
+  520, 627, 635, 661  lawyer salaries, 128
+Biology/life science applications.  mortality of predatory birds, 674–675  modeling executive salary, 756–757
+  See also Dental applications;  mosquito repellents, 789  multilevel marketing schemes, 196
+  Forestry applications; Marine/marine  parrot fish weights, 455  museum management, 69–70, 130, 159,
+  life applications  pig castration, 521
+  radioactive lichen, 136, 388, 456  251, 807
+  African rhinos, 158  rainfall and desert ants, 362  nannies who worked for celebrities, 370
+  aircraft bird strikes, 371, 378  ranging behavior of Spanish cattle, 607  nice guys finish last, 625–626, 634, 654,
+  anthrax detection, 266  rat damage to sugarcane, 505
+  anthrax mail room contamination, 250  rat-in-maze experiment, 100–101  660–661
+  antigens for parasitic roundworm in  rhino population, 67  overpriced Starbucks coffee, 370
+  roaches and Raid fumigation, 354  “Pepsi challenge” marketing
+  birds, 364, 384  salmonella in food, 390, 499–500
+  armyworm pheromones, 500  snow geese feeding habits, 676, 788–789  campaign, 453
+  ascorbic acid and goat stress, 537, 732  spruce budworm infestation, 306  personality traits and job
+  bacteria in bottled water, 378  stress in cows prior to slaughter, 579
+  bacteria-infected spider mites,  supercooling temperature of frogs, 339  performance, 722, 742, 753, 780
+  swim maze study of rat pups, 521  predicting hours worked per week,
+  reproduction of, 364  tree frogs, 726
+  baiting traps to maximize beetle  USDA chicken inspection, 158  719–720
+  water hyacinth control, 221–222, 228  project team selection, 195
+  catch, 597  weight variation in mice, 508–509  retailer interest in shopping
+  beetles and slime molds, 807  yellowhammer birds, distribution
+  bird species abundance, 793–794  behavior, 714
+  blond hair types in the Southwest  of, 758  rotary oil rigs, 602–603
+  zoo animal training, 136, 390  rudeness in the workplace, 479–480
+  Pacific, 119, 290  salary linked to height, 653
+  body length of armadillos, 135  Business applications:  self-managed work teams and family
+  butterflies, high-arctic, 713  accountant salary survey, 390
+  carnation growth, 745–748  accountants and Machiavellian traits,  life, 523
+  chemical insect attractant, 205  453, 602  shopping on Black Friday, 353, 378, 725
+  chemical signals of mice, 171, 240, 295  agreeableness, gender, and wages, 742,  shopping vehicle and judgment, 106,
+  chickens with fecal contamination, 255  753, 780
+  cockroach random-walk theory, 608  assertiveness and leadership, 723  279, 478, 514
+  cocktails’ taste preferences, 538  assigning workers, 190  supervisor-targeted aggression, 752
+  colored string preferred by chickens, 354  auditor’s judgment, factors affecting, 715  trading skills of institutional
+  corn in duck diet, 760  blood diamonds, 183, 294
+  crab spiders hiding on flowers,  brokerage analyst forecasts, 169  investors, 449
+  brown-bag lunches at work, 389  usability professionals salary survey, 707
+  79–80, 426  child labor in diamond mines, 654  used-car warranties, 264–265
+  crop damage by wild boars,  college protests of labor  women in top management, 789
+  exploitation, 137  work-life balance, 667
+  158, 183, 335  consumer sentiment on state of  worker productivity data, 736–738
+  dehorning of dairy calves, 434  economy, 367–368  workers’ response to wage cuts, 552, 561
+  DNA-reading tool for quick  corporate sustainability, 50, 78, 89–90,  workplace bullying, 743, 751
+  105, 120, 330, 352, 383, 418  Zillow.com estimates of home values, 50
+  identification of species, 407  deferred tax allowance, 788
+  Dutch elm disease, 254  emotional intelligence and team  Chemicals/chemistry applications.
+  ecotoxicological survival, 295  performance, 708, 782
+  egg shell quality in laying hens, 594–595  employee behavior problems, 171  See also Medical/medical research/
+  eggs produced from different housing  employee performance ratings, 280
+  entry-level job preferences, 792–793  alternative medicine applications
+  systems, 605  executive coaching and meeting  arsenic in groundwater, 700, 708,
+  environmental vulnerability of  effectiveness, 281
+  executives who cheat at golf, 173  715–716, 781
+  amphibians, 222, 228  expected value of insurance, 225  arsenic in soil, 670
+  extinct birds, 49, 70, 106, 110, 185, 255,  facial structure of CEOs, 353, 384, 419  carbon monoxide content in
+  flavor name and consumer choice, 599
+  387, 602, 733  cigarettes, 777–778
+  fallow deer bucks’ probability of  chemical composition of rainwater,
+
+  fighting, 170–171, 185  732, 743
+  fish feeding, 124  chemical insect attractant, 205
+  fish feeding behavior, 673  chemical properties of whole wheat
+  flight response of geese to helicopter
+  breads, 562
+  traffic, 831–832  chemical signals of mice, 171, 240, 295
+  geese decoy effectiveness, 606  drug content assessment, 287–288,
+
+  450, 478–479
+  firefighters’ use of gas detection
+
+  devices, 184
+  mineral flotation in water, 92, 288, 481
+  mosquito repellents, 789
+  APPLICATIONS INDEX  23
+
+  oxygen bubbles in molten salt, 364  daylight duration in western  Japanese reading levels, 134–135, 454
+  pesticide levels, 214–215  Pennsylvania, 363, 378  job satisfaction of STEM faculty, 595
+  roaches and Raid fumigation, 354  late-emerging reading disabilities, 829
+  rubber additive made from cashew  deep mixing of soil, 279  matching medical students with
+  dissolved organic compound in lakes,
+  nut shells, 700, 781  residencies, 207–208
+  Teflon-coated cookware hazards, 332  427–428  maximum time to take a test, 306
+  toxic chemical incidents, 205  dowsers for water detection, 613,  online courses performance, 676
+  zinc phosphide in pest control, 140  paper color and exam scores, 602
+  623–624, 640, 651, 659–660  passing grade scores, 242
+Computer applications. See Electronics/  earthquake aftershocks, 87–88  preparing for exam questions, 196
+  computer applications  earthquake ground motion, 48  ranking Ph.D. programs in economics,
+  earthquake recurrence in Iran, 299
+Construction/home improvement/home  estimating well scale deposits, 491  111, 290
+  purchases and sales applications:  glacial drifts, 135, 607–608  RateMyProfessors.com, 652
+  glacier elevations, 287  reading comprehension of Texas
+  aluminum siding flaws, 339  ice melt ponds, 68, 371, 793, 808
+  assigning workers, 190  identifying urban land cover, 454  students, 824
+  bending strength of wooden roof, 388  lead levels in mountain moss, 743  SAT scores, 58, 80–81, 108, 120, 123,
+  condominium sales, 682–683, 704–706,  melting point of a mercury
+  136–137, 303, 533, 534, 540–543,
+  748–750, 773–774  compound, 408  564–565, 787
+  errors in estimating job costs, 206  mining for dolomite, 200–201  school attendance, 266
+  land purchase decision, 107  permeability of sandstone during  selecting teaching assistants, 248–249
+  levelness of concrete slabs, 339  sensitivity of teachers toward racial
+  load on frame structures, 281  weathering, 91–92, 98, 106, 120–121,  intolerance, 492
+  load on timber beams, 266  290, 733–734  sentence complexity, 138
+  predicting sale prices of homes, 671–672  properties of cemented soils, 552  standardized test “average,” 140
+  processed straw as thermal  quantum tunneling, 675  STEM experiences for girls, 48, 67, 158
+  rockfall rebound length, 89, 97–98,  student gambling on sports, 255
+  insulation, 793  120, 383, 449  student GPAs, 48–49, 111
+  road construction bidding collusion, 795  shear strength of rock fractures, 287  students’ ability in science, 786
+  sale prices of apartments, 791, 792  soil scouring and overturned trees, 553  students’ performance, 110
+  spall damage in bricks, 677  uranium in Earth’s crust, 266, 331  teacher perceptions of child
+  strand bond performance of  water retention of soil cores, 306  behavior, 454
+  teaching method comparisons, 463–473
+  pre-stressed concrete, 450  Education/school applications. See also  teaching software effectiveness, 476
+  Library/book applications  teenagers’ use of emoticons in writing,
+Crime applications. See also Legal/  371, 434
+  blue vs. red exam, 110, 304  untutored second language
+  legislative applications  bullying behavior, 498–499  acquisition, 121
+  burglary risk in cul-de-sacs, 377  calories in school lunches, 407  using game simulation to teach a
+  casino employment and crime, 647–648  children’s attitude toward reading, 338  course, 159–160, 195
+  community responses to violent  college application, 48  visually impaired students, 304
+  college entrance exam scores, 276
+  crime, 734  college protests of labor exploitation,  Elderly/older-person applications:
+  computer, 49  Alzheimer’s detection, 808–809, 823
+  Crime Watch neighborhood, 255  137, 672–673  Alzheimer’s treatment, 389–390
+  domestic abuse victims, 241, 305  compensatory advantage in education,  dementia and leisure activities, 492
+  gangs and homemade weapons, 832  personal networks of older adults, 387
+  Jersey City drug market, 51  184–185  wheelchair users, 206
+  masculinity and crime, 480, 831  delinquent children, 129
+  Medicare fraud investigations, 343,  detection of rigged school milk  Electronics/computer applications:
+  automated checking software, 408
+  360–361, 369, 376, 391  prices, 523  accuracy of software effort estimates,
+  motivation of drug dealers, 105, 110,  ESL reading ability, 673  758–759, 781
+  ESL students and plagiarism, 159,  CD-ROM reliability, 306
+  216, 331, 352, 383–384, 451  cell phone charges, 272
+  post office violence, 204  250–251  cell phone defects, 375–376
+  sex offenders, 758  establishing boundaries in academic  cell phone handoff behavior, 171, 251
+  stress and violence, 338  cell phone use, 340
+  victims of violent crime, 368–369  engineering, 251  college tennis recruiting with Web
+  exam performance, 608–609  site, 603
+Dental applications:  FCAT math test, 303  computer crimes, 49
+  acidity of mouthwash, 491–492  FCAT scores and poverty, 628–629,  cyberchondria, 204
+  anesthetics, dentists’ use of, 105, 119  downloading apps to cell phone, 221,
+  cheek teeth of extinct primates, 66, 78,  635, 643  228, 336
+  90, 98, 158–159, 194–195, 384, 426  gambling in high schools, 522  encoding variability in software, 172
+  dental bonding agent, 455, 603–604  grades in statistics courses, 140  encryption systems with erroneous
+  dental visit anxiety, 279, 426  homework assistance for college  ciphertexts, 187
+  laughing gas usage, 254, 338  flicker in an electrical power system,
+  teeth defects and stress in prehistoric  students, 733  279–280
+  Japan, 501  humane education and classroom  forecasting movie revenues with
+  Twitter, 618, 663, 699, 714
+Earth science applications. See also  pets, 66–67
+  immediate feedback to incorrect
+  Agricultural/gardening/farming
+  exam answers, 241
+  applications; Environmental  insomnia and education status, 50,
+
+  applications; Forestry applications  595–596
+  albedo of ice melt ponds, 352  instructing English-as-a-first-language
+  alkalinity of river water, 303, 454
+  learners, 420–421
+  interactions in children’s museum, 69,
+
+  370, 809, 824
+  IQ and The Bell Curve, 306–307, 794–795
+

@@ -1,0 +1,683 @@
+4.2.5  Linear regression
+
+To find the linear relationship between independent and continuous
+dependent variables, we can use linear regression. The purpose of linear
+regression is to best fit the data and to find the parameters by minimizing the
+error in prediction. Mathematically, linear regression is expressed as
+
+  y = β0 + β1x + ε
+
+Here, y is the dependent variable; x is the independent variable; β0 is the
+intercept of the regression line; β1 is the slope of the regression line; and ε is
+the error term.
+
+  Once the model is built, there are different performance metrics used to
+evaluate the model prediction. These metrics provide insights into the
+relationship between the explanatory variables and how accurate the model is.
+R-squared, adjusted R-squared, and RMSE are a few metrics to measure the
+performance of the model.
+
+  R-squared: R-squared represents the proportion of the variance for a
+dependent variable explained by the independent variable(s).
+
+  Adjusted R-squared: The adjusted R-squared is a modified version of the R-
+squared that depends on the number of predictors. When a new variable is
+added, the adjusted R-squared increases if that variable is significant and
+decreases if it is not.
+
+  RMSE: It is calculated as the square root of the mean of the squared
+differences between actual outcomes and predictions.
+
+  Assumptions:
+  There are several assumptions in regression modeling (Poole et al., 1971,
+Weisberg, 2005). Before interpreting the results, these assumptions are to be
+checked.
+  Linearity: This is one of the assumptions in regression modeling. The
+relationship between independent variables and dependent variables should
+be linear.
+  Multicollinearity: There should not be any high correlation between the
+independent variables in a regression model. The occurrence of a high
+correlation between two or more independent variables or multicollinearity
+can cause problems with the estimation of coefficients and the interpretation
+of the model.
+  Homoscedasticity: Homoscedasticity means same variance.
+Homoscedasticity implies that the variability of the error term remains
+constant across all levels of the independent variables. This assumption is of
+significance because linear models are sensitive to outliers within the dataset,
+potentially altering the regression line and consequently impacting the results.
+
+  Normal distribution of error terms: In cases where the error terms deviate
+from a normal distribution, the confidence intervals associated with regression
+estimates may either widen or narrow excessively. When these intervals
+become unstable, the process of estimating coefficients through least squares
+minimization becomes challenging. The presence of non-normally distributed
+errors implies the existence of outliers or unusual data points that warrant
+closer examination to refine the model.
+
+  →Figures 4.13 and →4.14 show examples of the applications of linear
+regression and outputs, respectively.
+  % Simple Linear Regression with Example Data and Plot
+  % Load data from Excel file
+
+  filename = 'RegressionChapter4data.xlsx'; % Change this to
+  your file name
+
+  dataTable = readtable(filename);
+
+  % Extract features and labels from specific columns
+  X = table2array(dataTable(:, 1)); % Independent variable from the
+
+  first column
+  Y = table2array(dataTable(:, 2)); % Dependent variable from the
+
+  second column
+  % Perform linear regression
+
+  coefficients = polyfit(X, Y, 1);
+  slope = coefficients(1);
+
+  intercept = coefficients(2);
+
+  % Predict Y values based on the linear regression model
+
+  Y_pred = polyval(coefficients, X);
+
+  % Plot the original data and the linear regression line
+
+  figure;
+  scatter(X, Y, 'o', 'DisplayName', 'Original Data');
+
+  hold on;
+  plot(X, Y_pred, 'r-', 'DisplayName', 'Linear Regression
+
+  Line');
+  hold off;
+  title('Simple Linear Regression');
+  xlabel('Air Voids, AASHTO T331');
+  ylabel('Ratio of Effective Air Voids to Air Voids');
+  legend('show');
+
+  % Calculate R-squared value
+
+ rsquared = 1 - sum((Y - Y_pred).^2) / sum((Y - mean(Y)).^2);
+
+  % Calculate Mean Squared Error (MSE)
+
+  mse = mean((Y - Y_pred).^2);
+
+  % Display the linear regression equation, R-squared value, and MSE on the plot
+
+annotation_text = sprintf('Regression Equation:\nY = %.2f ✶ X
++ %.2f\nR^2 = %.4f\nMSE = %.4f', slope, intercept, rsquared,
+
+  mse);
+
+  % Get axis limits
+
+  xLimits = xlim;
+  yLimits = ylim;
+
+  % Position the text in the bottom left corner
+
+  text(xLimits(1) + 0.05 ✶ (xLimits(2) - xLimits(1)),
+  yLimits(1) + 0.05 ✶ (yLimits(2) - yLimits(1)),
+  annotation_text, ...
+
+  'FontSize', 12, 'Color', 'b', 'FontWeight', 'bold',
+  'VerticalAlignment', 'bottom', 'HorizontalAlignment',
+
+  'left');
+
+Figure 4.13: MATLAB code for simple linear regression.
+
+Figure 4.14: Results of linear regression.
+4.2.6  Neural network
+
+Artificial Neural Network (ANN) as the name suggests is a network of neurons
+and gained its name from their biological counterparts. It consists of a series
+of connected neurons that extract patterns from the given data. Neurons are
+the basic building blocks in ANN and receive weighted information from the
+neurons connected to them and produce the output by passing a weighted
+sum of inputs to an activation function.
+
+  There are three types of layers in the ANN network. First is the input layer,
+then a hidden layer, and then an output layer. The input layer represents the
+dimensions of the input features and the nodes in this layer will pass the
+inputs (features) to the hidden layer.
+
+  Hidden layers show the relationship between input and output through
+the activation function which assigns a set of weights to the inputs. Complex
+computations are performed on the features that enter through the input
+layer. The output layer represents the information learned by the network and
+gives the output of the ANN model.
+
+4.2.7  Gradient descent algorithm
+
+In an ANN modeling process, there are three main parts: training, testing, and
+validation. During the training process, the loss function is minimized so that
+the best accuracy is achieved. Each node in the ANN will have an activation
+function that can be treated like a switch for that neuron. The output of the
+node is calculated based on the input and its weights. The validation and
+testing are done to quantify the accuracy on another set of data that is not
+being used to build the model.
+
+  The main purpose of the optimization function is to identify the weights
+that can minimize the loss function. These functions calculate the gradients
+that are partial derivatives of the loss function with respect to the weights,
+which get modified as the gradient is calculated. This method of continuously
+evaluating the gradient and then updating the weights and bias is called
+“gradient descent.”
+
+  →Figures 4.15–→4.16 show the application, structure, and outputs for
+ANN.
+  % Numerical Prediction using Neural Network with Example Data and Plot
+  % Generate example data
+
+  rng(42); % Setting seed for reproducibility
+  X = randn(50, 1) % Independent variable
+Y = 2✶X.^2 + 1 + 0.1✶randn(50, 1) % Non-linear relationship with noise
+
+  % Create a feedforward neural network
+  net = feedforwardnet(10); % 10 hidden neurons (you can adjust this)
+
+  % Train the neural network
+
+  net = train(net, X', Y');
+
+  % Make predictions using the trained neural network
+
+  Y_pred = net(X');
+
+  % Plot the original data and the predicted values
+
+  figure;
+  scatter(X, Y, 'o', 'DisplayName', 'Original Data');
+
+  hold on;
+  plot(X, Y_pred, 'r-', 'DisplayName', 'Predicted Values');
+
+  hold off;
+  title('Numerical Prediction using Neural Network');
+
+  xlabel('Independent Variable (X)');
+  ylabel('Dependent Variable (Y)');
+  legend('show');
+
+  % Display the neural network architecture (optional)
+
+  view(net);
+
+  % Evaluate the performance of the model (optional)
+
+  mse = mean((Y - Y_pred').^2);
+  disp(['Mean Squared Error (MSE): ' num2str(mse)]);
+
+Figure 4.15: Example of MATLAB code for prediction with ANN.
+Figure 4.16: Outputs from ANN analysis: top to bottom: data and prediction,
+performance, error histogram.
+
+OceanofPDF.com
+Chapter 5  Unsupervised learning
+model
+
+In this chapter, two unsupervised learning techniques are
+discussed: principal component analysis and cluster analysis.
+
+5.1  Dimension reduction using principal
+component analysis (PCA)
+
+In problems that involve many variables, PCA is used to find the
+structure within the dataset that can identify the more important
+variables (dimensions). The application of PCA transforms the
+variables to a lower dimensional space without losing a significant
+amount of information. The application of PCA results in developing
+a set of orthogonal coordinate systems (dimensions), where the
+coordinates are according to the relative proportion of variance that
+could be explained by the variables. One benefit is that the data
+could then be visualized by plotting them into two or three
+coordinate systems. The method involves standardizing the
+variables. The output can be viewed as the cumulative explained
+variance for the number of components. For example, how much of
+the total variance is shown by the variance of the 20 columns – if,
+say, 80% then they are important. This data could also be shown in
+a Pareto chart. Note that once the first Principal Component (PC1) is
+identified, the most important feature could be identified as the one
+with the highest absolute value in the eigenvector corresponding to
+PC1.
+
+  →Figures 5.1 and →5.2 show MATLAB code and outputs for PCA,
+with the Pareto chart from the results of the analysis. From the data
+file, it can be seen that Feature 1 (L_Mean) has the highest spread in
+the data compared to the other features. Hence it is the most
+important feature, as identified correctly by the analysis.
+
+  % Load data from Excel file
+
+  filename 'PCAChapter5data.xlsx';
+  dataTable = readtable(filename);
+
+  % Extract features
+
+  X = table2array(dataTable(:, 1:9)); % Features:
+  columns 1 to 9
+
+  featureNames = {'LMean', 'aMean', 'bMean', 'LStd',
+  'aStd', 'bStd', 'LSkew', 'aSkew', 'bSkew'};
+
+  % Step 1: Mean centering
+
+  mean_X = mean(X);
+  centered_X = X - mean_X;
+
+Figure 5.1: Example MATLAB code for PCA.
+  % Step 2: Calculate the covariance matrix
+
+  covariance_matrix = cov(centered_X);
+
+ % Step 3: Perform eigendecomposition of the covariance matrix
+
+  [eigen_vectors, eigen_values_matrix] =
+  eig(covariance_matrix);
+
+  % Step 4: Sort eigenvalues and corresponding eigenvectors
+
+  [eigen_values, indices] =
+  sort(diag(eigen_values_matrix), 'descend');
+  eigen_vectors = eigen_vectors(:, indices);
+
+  % Step 5: Project the data onto the principal components
+
+  projected_data = centered_X * eigen_vectors;
+
+  % Calculate the correlation matrix
+
+  correlation_matrix = corr(centered_X);
+
+  % Plot the results
+
+  figure;
+
+  % Plot the covariance matrix
+
+  subplot(2, 2, 1);
+  imagesc(covariance_matrix);
+
+  colorbar;
+  title('Covariance Matrix);
+
+  xlabel('Feature Index);
+  ylabel('Feature Index');
+
+% Display the percentage of variance explained by each principal
+  component
+
+  explained_variance = eigen_values /
+  sum(eigen_values);
+
+  cumulative_explained_variance =
+  cumsum(explained_variance);
+
+  % Plot Pareto chart for explained variance
+
+  subplot(2, 2, 2);
+  bar(explained_variance);
+
+  hold on;
+  plot(cumulative_explained_variance, 'r-o');
+
+  xlabel('Principal Component');
+  ylabel('Explained Variance');
+  title('Pareto Chart of Explained Variance');
+  legend('Explained Variance', 'Cumulative Explained
+
+  Variance', 'Location', 'Best');
+  hold off;
+
+  % Plot the correlation matrix
+
+  subplot(2, 2, 3);
+  imagesc(correlation_matrix);
+
+  colorbar;
+  title('Correlation Matrix');
+
+Figure 5.1: (continued).
+  xlabel('Feature Index);
+  ylabel('Feature Index');
+
+ % Plot data in the principal component space (first two components)
+
+  subplot(2, 2, 4);
+scatter(projected_data(:, 1), projected_data(:, 2),
+
+  20, 'filled');
+  title('Data in Principal Component Space');
+
+  xlabel('Principal Component 1');
+  ylabel('Principal Component 2');
+
+  % Display the percentage of variance explained
+
+  disp('Explained Variance:');
+  disp(explained_variance);
+
+  disp('Cumulative Explained Variance:');
+  disp(cumulative_explained_variance);
+
+  % % Get the linear combination of PC1
+
+  PC1 = eigen_vectors(:, 1);
+  disp('Linear combination for PC1:');
+
+  disp(PC1);
+
+  % Get the linear combination for the first principal component
+  % PC1 = coeff(:, 1);
+
+  [~, mostImportantFeatureIdx] = max(abs(PC1));
+  mostImportantFeature =
+
+  featureNames{mostImportantFeatureIdx};
+
+  % Identify the most important feature for PC1
+
+  [~, most_important_feature_index] = max(abs(PC1));
+disp(['The most important feature for PC1 is Feature
+
+  ', num2str(most_important_feature_index)]);
+
+  % Display the most important feature at the bottom of the plot
+
+  annotation('textbox', [0.3, 0.02, 0.4, 0.05],
+  'String', ['Most Important Feature: ',
+
+  mostImportantFeature], 'FitBoxToText', 'on',
+  'FontSize', 12, 'BackgroundColor', 'white',
+  'EdgeColor', 'none', 'HorizontalAlignment',
+
+  'center');
+Figure 5.1: (continued).
+
+Figure 5.2: Output from PCA showing the Pareto chart and the
+most important feature.
+
+5.2  Cluster analysis
+
+Cluster analysis is a data mining technique that partitions a large
+number of observations into a small number of groups. Cluster
+analysis partitions the dataset into groups called clusters such that
+observations within a cluster are similar to each other and
+dissimilar to other clusters. The clustering algorithm creates the
+clusters by identifying the patterns in the data. The algorithm uses
+a distance metric to find the similarity and dissimilarity in the
+observations.
+
+  Cluster analysis can be used in scenarios where grouping is the
+main task at hand. Cluster analysis can be used to group real-world
+entities such as projects, individuals, countries, states, vehicles, etc.
+to create homogeneous groups. It can be used prior to performing
+predictive analytics to identify subsets of records that display
+different patterns or can be used standalone to just identify the
+homogeneous segments in a dataset. After creating the clusters,
+the cluster characteristics describe the different types of groups
+that exist in the data.
+
+  Two popular cluster analysis techniques are the K-means and
+the hierarchical cluster analysis. We discuss the two techniques in
+detail in the following sections.
+
+5.2.1  K-means cluster analysis
+
+K-means cluster analysis partitions the observations (rows) in a
+dataset into a predefined number of “k” clusters. The observations
+within a cluster have similar characteristics and are homogeneous
+in nature. In k-means clustering, the number of clusters “k” must
+be specified prior to performing the analysis. We can experiment
+with different values of “k” until we get an anticipated result. A
+desired result may be the one that creates clusters with
+characteristics that are in accordance with theory, practice, or prior
+knowledge. One downside of the K-means cluster analysis method
+is that it does not work with categorical data. Instead, we can use
+the k-medoids clustering method when we have categorical data.
+
+  The K-means algorithm uses an iterative process to assign
+observations to the clusters. It initially starts with assigning random
+k observations as initial cluster centroids. It uses a distance
+measure (Euclidean distance) to find similarity in the observations.
+It assigns the remaining observations to the clusters by calculating
+the distance metric between the cluster centroid and the
+observations. The observations are clustered by identifying the
+closest cluster center. The algorithm recalculates the cluster
+centroid (mean of the cluster) from the newly formed clusters and
+uses it as the new cluster centroid and the observations are
+reassigned. This process repeats until the overall deviation (average
+sum of square distance of the observations from the centroid)
+within a cluster is minimum. The clustering results will depend on
+the initial cluster centers that are randomly chosen. Variables of
+different scales will also have an impact on the result. Hence, it is a
+good practice to standardize the variables to make the variables
+comparable.
+
+5.2.2  K-Means clustering on numerical data with R
+
+We will apply k-means clustering on the State Transportation
+infrastructure in 2021.xlsx data for the year 2021 (→BTS, State
+transportation Data 2021) to group the states in the United States
+into three groups based on three variables: miles of public road
+infrastructure, miles of freight railroad infrastructure, and miles of
+bridges. The View() function displays the data in spreadsheet viewer
+as shown in Output for R Code Snippet 1.
+
+  library(openxlsx)
+
+  myData<-read.xlsx("State Transportation infrastructure in
+  2021.xlsx",1)
+
+  View(myData)
+
+R Code Snippet 1
+  Output for R Code Snippet 1
+  Since k-means initializes the initial cluster centroids on a
+random basis, we can reproduce the results using the set.seed()
+function. We run the K-means algorithm on the dataset as shown in
+R Code Snippet 2. The number in the set.seed() function will
+determine the randomness in the kmeans() function, which is run
+after executing this statement. The scale() function standardizes the
+variables used in the analysis. In the kmeans() function, the first
+argument is the data frame, and the second argument is the
+number of clusters. The plot.kmeans() function creates a graphical
+view of the clusters formed.
+
+  myData_std<-scale(myData[, 2:4])
+
+  set.seed(12)
+
+  infra<-kmeans(x=myData_std, centers=3)
+
+  infra
+
+  library(useful)
+  plot.kmeans(infra, data=myData_std) #uses principal
+  component analysis
+
+R Code Snippet 2
+  The cluster analysis results for the State Transportation
+
+infrastructure in the 2021 dataset are shown in Output for R Code
+Snippet 2a. The results show the size of the clusters, the cluster
+centroid for each cluster, the cluster membership for each
+observation in the dataset, and the within cluster sum of square
+distance for each cluster. The within cluster sum of squares
+indicates a compactness of the cluster formation, with observations
+close to the cluster centroid. A smaller number for the total within
+sum of squares indicates the goodness of the clustering. The ratio
+of between sum of squares and total sum of
+squares(between_ss/total_ss) close to 100% indicates better
+clustering and a smaller value close to 0% indicates weak clustering.
+In general, a greater number of clusters will result in a large ratio;
+however, there is a tradeoff with an increasing number of clusters.
+
+  Plotting the k-means result on a two-dimensional graph is
+complicated when the data has more than two variables. Hence, the
+plot.kmeans() function plots the clustering results on a two-
+dimensional graph by identifying the first two principal
+components, which explain the maximum variability in the data.
+The two principal components are projected on the x- and y-axis.
+The cluster membership for the observations is projected on the
+graph as data points with different color coding, as shown in
+Output for R Code Snippet 2b.
+  Output for R Code Snippet 2a
+
+  Output for R Code Snippet 2b
+  Choosing the right number of clusters is important for getting a
+good partitioning result. The elbow method and silhouette method
+are popular methods for determining the optimal number of
+clusters. These methods aid the analyst in getting a good start with
+choosing the initial k value. However, the best way to determine the
+number of clusters is to try different k values and observe the
+descriptive statistics of each cluster, such as the mean, median,
+mode, min, and max of the variables to match the anticipated
+cluster characteristics.
+
+5.2.2.1  The elbow method
+
+The k-means clustering creates clusters such that the within cluster
+deviation is minimum for the clusters formed. The elbow method
+applies the k-means algorithm on the dataset for different values of
+k and calculates the total within cluster deviation for each k. A curve
+is plotted between different k values and the total within cluster
+deviation for the k values. The optimal k value is where a bend in
+the elbow is observed in the curve. We apply the elbow method on
+the standardized dataset as shown in R Code Snippet 3. The curve in
+Output for R Code Snippet 3 indicates four as the optimal k value.
+
+  install.packages("factoextra")
+
+  library(factoextra)
+
+  set.seed(12)
+
+  fviz_nbclust(myData_std, kmeans, method = "wss")
+
+R Code Snippet 3
+  Output for R Code Snippet 3
+
+5.2.2.2  The Silhouette method
+
+The silhouette method calculates a measure called the silhouette
+width, indicating the goodness of clustering. The silhouette width
+for each cluster indicates the extent of similarity of the observations
+within a cluster and dissimilarity from other clusters. A large value
+for the average silhouette width for a k number of clusters indicates
+good clustering. The silhouette method applies k-means clustering
+on a dataset for different k values and computes the average
+silhouette width for the k values. A curve is plotted between
+different k values and the average silhouette width for each k value.
+The optimal k value is the one that gives the maximum average
+silhouette width. We apply the silhouette method on the
+standardized dataset as shown in R Code Snippet 4. The curve in
+Output for R Code Snippet 4 indicates two as the optimal k value.
+
+  install.packages("factoextra")
+  library(factoextra)
+  set.seed(12)
+  fviz_nbclust(myData_std, kmeans, method = "silhouette")
+R Code Snippet 4
+
+  Output for R Code Snippet 4
+
+5.2.3  K-medoids method (Partitioning Around Medoids)
+on categorical data with R
+
+One major disadvantage of k-means clustering is that it does not
+work with categorical data. An alternative to incorporating
+categorical data is to use the k-medoids method. A commonly used
+k-medoids algorithm is Partitioning Around Medoids (PAM). The
+PAM method partitions the observations into a predefined k
+number of homogeneous clusters. It works on similar lines to the k-
+means algorithm, but the difference lies in the way the cluster
+centroids are calculated. Instead of the cluster center being the
+mean of a cluster, the center is one of the observations in the
+cluster. The cluster centers are called medoids. The K-medoid
+algorithm determines the cluster configuration such that the overall
+deviation of the observations in a cluster from the medoid is
+minimum. A medoid of a cluster is an observation whose distance
+to the other observations in a cluster is the smallest.
+
+  We will apply the k-medoids clustering on the Traffic facts.xlsx
+dataset (→NHTSA, Traffic Safety Facts 2021). Firstly, we will read the
+data as shown in R Code Snippet 5. This dataset contains mixed
+data with both numerical and categorical data. The View() function
+displays the data in a spreadsheet viewer as shown in Output for R
+Code Snippet 5.
+
+  myData <- read.xlsx ("Traffic facts.xlsx",1)
+  View(myData)
+
+R Code Snippet 5
+
+  Output for R Code Snippet 5
+  We will partition the states into four clusters using the pam()
+function from the “cluster” package in R, as shown in R Code
+Snippet 6.
+  install.packages("cluster")
+
+  library("cluster")
+
+  #standardizing the numerical variables
+
+  myData_std<-data.frame(scale(myData[, 3:7]))
+
+  # Appending the categorical column to the standardized
+  dataset
+
+  myData_std$Region<-factor(myData$Region)
+
+  set.seed(12)
+
+  wbPam<-pam(myData_std[1:6],k=4)
+
+  summary(wbPam)
+
+  plot(wbPam)
+
+R Code Snippet 6
+  The results from the PAM method are shown in Output for R
+
+Code Snippets 6a, 6b, 6c, 6d, and 6e. The summary () function
+displays the results which include medoids for the specified k
+number of clusters, cluster configuration, cluster size,
+dissimilarity(distance) information for each cluster, as shown in
+Output for R Code Snippet 6a. The silhouette width for each data
+point, shown in Output for R Code Snippet 6b, indicates how well a
+data point fits into its cluster and does not fit into other clusters.
+The average silhouette width for each cluster and the average
+silhouette width for the total dataset are shown in shown in Output
+for R Code Snippet 6c. The silhouette width ranges from −1 to + 1. A
+high average silhouette width indicates well-formed clusters.
+Output for R Code Snippet 6a
+Output for R Code Snippet 6b
+  Output for R Code Snippet 6c
+  The plot() function creates two plots, one after the other. The
+first cluster plot shown in Output for R Code Snippet 6d visualizes
+the cluster configuration on a two-dimensional graph using
+principal component analysis (PCA). The PCA identifies the two
+dimensions from the variables used in the analysis, which explain
+the maximum variability of 98.01% in the data. The ovals in the plot
+are the clusters. The figure below displays four clusters, with the
+data points in each cluster indicated by a different symbol.
+
+  Output for R Code Snippet 6d
+  The second plot in Output for R Code Snippet 6e displays the
+silhouette information with silhouette widths ranging from −1 to + 1.
+Each horizontal line in the plot represents an observation. The
+length of the horizontal line depends on the positive or negative
+values of the silhouette width. The silhouette plot shows how well
+an observation matches its own cluster. If most observations have
+high positives, the average silhouette width will be higher. A high
+value for the average silhouette width for each cluster indicates a
+well-formed cluster with observations close to each other. The
+overall average silhouette width close to + 1 indicates a good
+clustering configuration. The overall average silhouette width of
+0.47 for the analysis suggests a moderate to weak clustering
+

@@ -1,0 +1,1210 @@
+Chapter 5. Model Calibration
+
+~2 Sigma Band Maximum Value: 𝐼̂𝐼~2(𝑡𝑡) = 𝑐𝑐𝑟𝑟(𝑡𝑡) + 𝑍𝑍95%(𝜎𝜎(𝑡𝑡))  (8)
+
+~2 Sigma Band Minimum Value: 𝐼̌𝐼~2(𝑡𝑡) = 𝑐𝑐𝑟𝑟(𝑡𝑡) − 𝑍𝑍95%(𝜎𝜎(𝑡𝑡))  (9)
+
+A narrower band is also constructed to describe roughly 2/3 of the observed variation based on a
+single standard deviation.
+
+1 Sigma Band Maximum Value: 𝐼̂𝐼1(𝑡𝑡) = 𝑐𝑐𝑟𝑟(𝑡𝑡) + 𝜎𝜎(𝑡𝑡)  (10)
+
+1 Sigma Band Minimum Value: 𝐼̌𝐼1(𝑡𝑡) = 𝑐𝑐𝑟𝑟(𝑡𝑡) − 𝜎𝜎(𝑡𝑡)  (11)
+
+These bands will play a crucial role in determining the acceptability of the model variants in our
+next step.
+
+CALIBRATE MODEL VARIANT TO MEET ACCEPTABILITY CRITERIA
+
+In this step, the analyst creates variants of the initial working model that has travel demand
+characteristics, incident patterns, and other features consistent with the each of the representative
+days. The analyst then conducts individual runs of each model variant and makes adjustments to
+the model variant input parameters until performance measures based on simulation outputs are
+acceptably consistent with observed data. Acceptably consistent is defined as meeting all four
+separate acceptability criteria defined in this chapter.
+
+This step may be both time consuming and highly iterative. However, if quality data has been
+assembled for calibration, and the working model is free of major coding errors, this process can
+be straightforward. Self-calibration features or automated routines assisting calibration can be
+helpful in reducing analyst time in calibration. However, applying these routines does not replace
+this step; they merely support the completion of tasks leading up to testing for calibration
+acceptability.
+
+The modern microsimulation analyst has several capable tools available to conduct effective
+analyses. Each of these tools has a specific set of parameters which influence simulated driver
+behavior. Therefore, we can provide no guidance on specific parameters (by tool) to select for
+calibration. However, example parameters are indicated in each step. Some helpful references
+are available regarding parameter sensitivities and calibration (For example, Volume XI:
+Weather and Traffic Analysis, Modeling and Simulation).
+
+Calibration involves the review and adjustment of potentially hundreds of model parameters,
+each of which impacts the simulation results in a manner that is often highly correlated with that
+of the others. The analyst can easily get trapped in a never-ending circular process, fixing one
+problem only to find that a new one occurs somewhere else. Therefore, it is essential to break the
+calibration process into a series of logical, sequential steps—a strategy for calibration.
+
+To make calibration practical, the parameters should be divided into categories and each
+category should be dealt with separately. The analyst should divide the available calibration
+parameters into the following two basic categories:
+
+  61
+Chapter 5. Model Calibration
+
+  • Parameters that the analyst is certain about and does not wish to adjust.
+  [e.g., incident location and number of lanes closed].
+
+  • Parameters that the analyst is less certain about and willing to adjust.
+  [e.g., mean vehicle headway under low visibility conditions].
+
+The analyst should attempt to keep the set of adjustable parameters as small as possible to
+minimize the effort required to calibrate the model to reflect local conditions characterized by
+observed data. However, the tradeoff is that more parameters allow the analyst more degrees of
+freedom to better fit the calibrated model to the specific representative day.
+
+The set of adjustable parameters is then further subdivided into those that directly impact
+bottleneck throughput (such as mean headway) and those that directly impact the timing and
+location of travel demand (such as time-variant origin-destination demand profiles). Although
+the process will nearly always be iterative, one successful strategy is to calibrate bottleneck
+throughput parameters first, and then to make adjustments to travel demand inputs and other
+behavioral parameters related to trip timing and mode/route selection.
+
+Each set of adjustable parameters can be further subdivided into those that affect the simulation
+on a global basis and those that affect the simulation on a more localized basis. The global
+parameters are initially adjusted first. Then local link-specific parameters are modified. This
+process, like all calibration processes, may be iterative in nature.
+
+Adjust Parameters Influencing Bottleneck Throughput
+
+Each representative day will have a bottleneck pattern comprising locations of recurrent demand
+in excess of localized capacity, as well as bottlenecks associated with incidents. The goal of this
+step is to adjust the model variant to produce bottleneck dynamics consistent with field data.
+Focus on the bottlenecks is critical because overall system performance will be largely defined
+based on these critical sections of the transportation network.
+
+Some typical parameters influencing bottleneck throughput include:
+
+  • Freeway Facilities: Mean following headway, driver reaction time, and critical gap for
+  lane changing, minimum separation under stop-and-go conditions.
+
+  • Signalized Intersections: Startup lost time, queue discharge headway, and gap acceptance
+  for unprotected left turns.
+
+An effective preliminary step in bottleneck throughput calibration is to ensure that maximum
+throughput rates obtained from the model variant are close to observed rates. For each bottleneck
+location, recover the maximum bottleneck throughput (over all of time-variant intervals) data
+from one representative day where the bottleneck appears. Also recover the same maximum
+throughput data for all of the days in the travel condition. The maximum time-variant bottleneck
+throughput from the simulation should be within the range of observed maximum bottleneck
+throughput rates for all days under this travel condition. This can be conducted as a visual test
+plotting the simulated data against the range of observed data. First adjust global parameters to
+bring simulated maximum throughput rates as close as possible to the observed range. Then
+
+  62
+Chapter 5. Model Calibration
+
+adjust localized parameters so each bottleneck has a simulated maximum throughput rate as
+close as possible to the observed maximum throughput rate.
+
+Modifying global parameters related to bottleneck throughput are often required to adjust for
+specific attributes of the representative day prevailing over the entire network, e.g., low visibility
+or wet pavement. Modifications of local parameters are often related to impacts or conditions
+near the bottleneck, e.g., shoulder activity, glare, or rubbernecking.
+
+Adjust Parameters Affecting Dynamic Travel Demand and Assignment
+
+Each representative day has an underlying travel demand pattern that is different from other
+days. Attributes of this travel demand pattern include the overall origin-destination demand, the
+timing of travel demand within the period studied, and how this travel demand is assigned to
+various alternative modes and routes. The goal of this step is to adjust the model variant to
+produce network volume data consistent with observed data. Representative travel demand,
+when combined with accurate bottleneck dynamics, is often the key to calibrating efficiently and
+effectively.
+
+Some typical parameters influencing travel demand and assignment include:
+
+  • Travel Demand Rates: Overall origin-destination flow rates, the number of time steps
+  introduced into a dynamic origin-destination flow rate profile, the number of trips in each
+  time step for each origin-destination pair.
+
+  • Mode/Route Assignment: Mode choice parameter reflecting traveler preference (e.g.,
+  transfer penalties and time/cost valuations), parameters adjusting the method of
+  assignment of travel demand (e.g., indifference thresholds or driver familiarity models).
+
+An effective preliminary check in the adjustment of dynamic travel demand and assignment is to
+conduct an average screenline count check. First, identify average bi-directional link flows at
+two screen lines, one in a general upstream position relative to recurrent congestion and one
+generally downstream of recurrent congestion. This implies that the queues extending from
+recurrent bottlenecks do not cross these screenlines. A single screen line bisects the study area,
+and all links that traverse this screen line should have average flow estimates.
+
+Run the simulation using the representative day to generate average flow rates to compare
+against the observed screenline counts. Adjust global travel demand parameters until simulated
+average flow rates should fall within the range of all observed days associated with expected
+conditions, close to the actual flow rate observed in this travel condition’s representative day.
+Some adjustment may be required to the simulated origin-destination demand pattern rates in
+order to bring the simulated model flow rates within the range of the observed data. Depending
+on the nature of the network and the number of alternative routes and modes, mode/route
+assignment parameter modifications may be required to bring screenline counts into the observed
+range.
+
+  63
+Chapter 5. Model Calibration
+
+In the Alligator City example problem, two useful screenlines might include a western screenline
+just east of the West Hills city limits intersecting the Marine Causeway and an eastern screenline
+at the eastern shore of the Chattacola River.
+
+Perform Test Against Acceptability Criteria
+
+The exact process and parameter adjustments required to calibrate a model variant is highly
+dependent on the simulation tool and the attributes of the representative day. Whatever the
+strategy used to calibrate the model variant, the model variant should meet four separate
+acceptability criteria related to the time-dynamic profiles developed for each measure and travel
+condition.
+
+These criteria should all be satisfied individually for each key measure and travel condition in a
+single model run.
+
+Criterion I: Control for Time-Variant Outliers
+
+This criterion constrains the number of outliers in simulated results.
+
+CRITERION I: 95% of simulated outputs fall within the ~2 Sigma Band, 𝑐𝑐𝑟𝑟(𝑡𝑡) ± 1.96 × 𝜎𝜎(𝑡𝑡).
+Note that if fewer than 20 time intervals are used to characterize time-dynamics, Criterion I is
+relaxed to allow for one simulated result outside the ~2 Sigma Band.
+
+Criterion II: Control for Time-Variant “Inliers”
+
+This criterion ensures the majority of time-variant simulated results fall close to the
+representative day, and that during the most congested time periods the simulated results are
+close to the observed data.
+
+Two critical time periods are identified that reflect the ability of the model variant to reflect the
+most congested time periods in the dynamic range. These time periods are determined by
+examining the observed data profile for the representative day.
+
+For travel time or speed profiles, the first-time period is the time interval with the highest
+observed travel time or lowest observed speed. The second critical time interval is the time
+period with the second highest observed travel time or lowest speed in a non-adjacent time
+interval. Non-adjacent means that the second-time interval should be more than one time interval
+earlier or later than the first critical time interval.
+
+For bottleneck throughput, the critical time intervals are defined by the time of congestion onset
+(speed falls below the congestion threshold) and dissipation (when speed rises above the
+congestion threshold). Note that when congestion thresholds are not met, this location cannot be
+considered a bottleneck for this representative day. In the cases where a bottleneck dissipation
+threshold is not identified (speeds remain low) the best resolution is to extend the simulation
+horizon so that the congestion dissipation can be observed (and modeled).
+
+  64
+Chapter 5. Model Calibration
+
+CRITERION II: Two-thirds of the simulated results (and both critical time intervals) fall within
+the 1 Sigma Band for this travel condition.
+
+Criterion III: Bounded Dynamic Absolute Error (BDAE)
+
+This criterion ensures that, on average, simulated results are close to the observed representative
+day. The criterion involves a test to ensure that the average simulated absolute error from the
+representative day over all time intervals is less than or equal to differences from the
+representative day seen across all days in the travel condition. Let:
+
+𝑐𝑐𝑟𝑟(𝑡𝑡)  Observed value of representative day during time interval t
+𝑐𝑐𝑖𝑖(𝑡𝑡)  Observed value of non-representative day within the cluster during time interval t
+𝑐𝑐̃𝑟𝑟(𝑡𝑡)  Simulated performance measure during time interval t
+  Number of time intervals
+𝑁𝑁𝑇𝑇  Number of days in the cluster representing this travel condition
+𝑁𝑁𝑐𝑐𝑐𝑐𝑐𝑐𝑐𝑐𝑐𝑐𝑐𝑐𝑐𝑐
+
+Next, calculate the BDAE Threshold:
+
+  ∑𝑖𝑖≠𝑟𝑟 ∑𝑡𝑡 𝑁𝑁 �𝑐𝑐𝑟𝑟(𝑡𝑡)−𝑐𝑐𝑖𝑖(𝑡𝑡)� 𝑇𝑇
+
+BDAE Threshold = 𝑁𝑁𝑐𝑐𝑐𝑐𝑐𝑐𝑐𝑐𝑐𝑐𝑐𝑐𝑐𝑐−1 (12)
+
+CRITERION III is met when:
+
+∑𝑡𝑡|𝑐𝑐𝑟𝑟(𝑡𝑡)−𝑐𝑐̃𝑖𝑖(𝑡𝑡)| ≤ BDAE Threshold (13)
+
+  𝑁𝑁𝑇𝑇
+
+Criterion IV: Bounded Dynamic Systematic Error
+
+This criterion ensures that the simulated data are not excessive over- or under-estimators. In this
+case, the criterion utilizes a similar test to Criterion III but with respect to average simulated
+error (not absolute).
+
+CRITERION IV is met when:
+
+�∑𝑡𝑡 𝑐𝑐𝑟𝑟(𝑡𝑡)−𝑐𝑐̃𝑖𝑖(𝑡𝑡)� ≤ 1 × BDAE Threshold (14)
+𝑁𝑁𝑇𝑇  3
+
+EXAMPLE PROBLEM: MODEL CALIBRATION
+
+In the Alligator City example problem, travel time was identified as the key performance
+measure (Chapter 1), with emphasis on two routes: West Hills to the Alligator City via the
+Komodo Tunnel (General Purpose Lanes), and West Hills to Alligator City via the Victory
+Island Bridge. Further, we select two bottleneck locations: the Komodo Tunnel eastern exit at
+Osceola Avenue and the Victory Island Bridge where it crosses Moseley Street.
+
+  65
+Chapter 5. Model Calibration
+
+Identify Representative Days
+
+In Table 9, consider observed time-variant travel times between West Hills and the Alligator
+City CBD using the Komodo Tunnel general purpose lanes observed in an travel condition
+composed of 12 AM peak periods. Note that our travel times represent the measured time to
+complete the trip to Alligator City based on time of departure from West Hills. Each peak period
+is shown in one column of the table, with the calculated average travel time over all periods in
+the last column.
+
+We seek a representative day that minimizes the difference between the time-variant travel times
+from associated with the average of all peak periods in the travel condition. Table 10 shows the
+distance (difference) between each individual day time-variant travel time and the time-variant
+average travel time (last column of Table 9), expressed as a percentage of the time-variant
+average travel time.
+
+  Table 9. Time-Variant Travel Times, West Hills Eastbound to Alligator City
+
+  Observed Travel Times, West Hills to CBD (Komodo GP), 12 Days
+
+  Average
+
+Time of  Travel
+
+Trip Start  1  2  3  4  5  6  7  8  9  10  11  12 Time
+
+6:00 AM 15.3 14.7 15.6 15.0 15.8 16.3 15.8 16.5 15.5 15.4 14.9 16.1 15.6
+
+6:15 AM 15.4 15.2 15.8 15.6 17.5 17.0 16.5 18.9 16.0 16.2 15.5 16.8 16.4
+
+6:30 AM 20.5 18.5 25.5 19.8 28.6 28.1 25.5 23.6 22.5 20.7 21.6 22.8 23.1
+
+6:45 AM 22.8 25.6 29.8 23.5 30.9 31.8 28.6 29.6 27.4 21.8 25.3 26.9 27.0
+
+7:00 AM 27.6 30.5 36.5 28.3 33.5 36.1 34.5 32.1 30.6 25.3 29.8 31.2 31.3
+
+7:15 AM 29.9 33.6 35.2 30.8 34.5 35.2 34.8 33.5 32.6 28.5 30.5 32.1 32.6
+
+7:30 AM 30.8 30.4 34.2 31.2 31.5 33.6 33.8 32.2 30.6 28.5 31.5 31.4 31.6
+
+7:45 AM 30.4 27.6 33.9 31.5 30.8 32.8 32.1 32.1 29.5 28.6 30.9 31.9 31.0
+
+8:00 AM 30.1 28.5 30.8 31.6 29.3 30.6 31.5 31.8 29.1 28.3 29.9 30.6 30.2
+
+8:15 AM 29.9 28.3 29.6 30.2 28.6 29.8 30.4 30.5 28.8 28.3 29.2 29.9 29.5
+
+8:30 AM 27.6 27.3 28.5 29.1 27.9 28.6 30.3 30.5 28.5 25.3 26.6 28.3 28.2
+
+8:45 AM 24.6 26.9 27.5 26.3 23.6 28.0 27.1 28.6 26.6 22.1 23.9 25.5 25.9
+
+9:00 AM 23.6 22.9 27.4 25.5 21.6 27.6 26.6 24.5 22.7 18.9 22.5 23.4 23.9
+
+9:15 AM 22.4 22.5 24.3 23.3 21.8 28.5 25.1 23.6 21.8 18.5 20.6 22.1 22.9
+
+9:30 AM 21.1 20.8 21.6 22.6 22.8 25.3 24.3 21.3 21.5 20.1 19.2 19.9 21.7
+
+9:45 AM 20.1 16.5 19.5 20.0 24.6 23.8 22.6 20.9 20.8 19.8 17.5 17.7 20.3
+
+10:00 AM 18.8 16.8 17.6 18.0 23.6 22.8 21.6 19.3 20.5 17.5 17.2 17.1 19.2
+
+PEAK AVG 24.2 23.9 26.7 24.8 26.3 28.0 27.1 26.4 25.0 22.6 23.9 24.9 25.3
+
+For these travel time data, as highlighted in Table 10, Day 9 has the smallest absolute average
+difference from the average across all days in the travel condition, 2.8%. A similar analysis is
+conducted for an additional measure and potentially additional routes. For the Alligator City
+example problem, Day 9 has the smallest absolute average difference from the average when
+both the Komodo Tunnel and Victory Island Bridge routes are considered (although the VIB
+times are not shown here). Although Day 9 may be a good choice for travel times, the analyst
+should also take into consideration how well all the days in the travel condition reflect our other
+key measure relating to bottleneck dynamics, bottleneck duration.
+
+  66
+Chapter 5. Model Calibration
+
+  Table 10. Differences Comparing Individual Days and the Average for the Travel Condition,
+  Expressed as a Percentage of the Time Variant Averages
+
+  Euclidean Distance Expressed as a Percentage of Average Travel Time, 12 Days
+
+Time of  Rep
+
+Trip Start  1  2  3  4  5  6  7  8 Day (9) 10 11 12
+
+6:00 AM 1.8% 5.6% 0.2% 3.7% 1.4% 4.7% 1.4% 5.9% 0.5% 1.1% 4.3% 3.4%
+
+6:15 AM 5.9% 7.1% 3.5% 4.7% 6.9% 3.9% 0.8% 15.5% 2.2% 1.0% 5.3% 2.6%
+
+6:30 AM 11.4% 20.1% 10.2% 14.4% 23.6% 21.4% 10.2% 2.0% 2.8% 10.6% 6.7% 1.5%
+
+6:45 AM 15.6% 5.2% 10.4% 13.0% 14.4% 17.8% 5.9% 9.6% 1.5% 19.3% 6.3% 0.4%
+
+7:00 AM 11.9% 2.7% 16.5% 9.7% 6.9% 15.2% 10.1% 2.4% 2.3% 19.3% 4.9% 0.4%
+
+7:15 AM 8.3% 3.1% 8.0% 5.5% 5.8% 8.0% 6.7% 2.8% 0.0% 12.6% 6.4% 1.5%
+
+7:30 AM 2.7% 3.9% 8.1% 1.4% 0.4% 6.2% 6.8% 1.8% 3.3% 9.9% 0.4% 0.8%
+
+7:45 AM 2.0% 11.0% 9.3% 1.6% 0.7% 5.8% 3.5% 3.5% 4.9% 7.8% 0.3% 2.9%
+
+8:00 AM 0.2% 5.6% 2.1% 4.7% 2.9% 1.4% 4.4% 5.4% 3.6% 6.2% 0.9% 1.4%
+
+8:15 AM 1.5% 3.9% 0.5% 2.5% 2.9% 1.2% 3.2% 3.5% 2.2% 3.9% 0.9% 1.5%
+
+8:30 AM 2.2% 3.2% 1.0% 3.2% 1.1% 1.4% 7.4% 8.1% 1.0% 10.3% 5.7% 0.3%
+
+8:45 AM 5.0% 3.9% 6.2% 1.6% 8.9% 8.1% 4.7% 10.5% 2.7% 14.6% 7.7% 1.5%
+
+9:00 AM 1.4% 4.3% 14.5% 6.5% 9.7% 15.3% 11.1% 2.4% 5.2% 21.0% 6.0% 2.2%
+
+9:15 AM 2.1% 1.6% 6.2% 1.9% 4.7% 24.6% 9.7% 3.2% 4.7% 19.1% 9.9% 3.4%
+
+9:30 AM 2.8% 4.2% 0.5% 4.1% 5.0% 16.5% 11.9% 1.9% 1.0% 7.4% 11.6% 8.3%
+
+9:45 AM 1.1% 18.8% 4.0% 1.6% 21.1% 17.1% 11.2% 2.9% 2.4% 2.5% 13.9% 12.9%
+
+10:00 AM 2.3% 12.7% 8.5% 6.4% 22.7% 18.5% 12.3% 0.3% 6.6% 9.0% 10.6% 11.1%
+
+AVG 4.6% 6.9% 6.4% 5.1% 8.2% 11.0% 7.2% 4.8% 2.8% 10.3% 6.0% 3.3%
+
+Note: Day 9 has the smallest absolute average difference from the average across all days in the travel condition,
+2.8%.
+
+Preparing Variation Envelopes
+
+In the example of Alligator City, travel times from the West Hills to the CBD over the AM peak
+are shown below in Table 11, and plotted in Figure 10.
+
+  67
+Chapter 5. Model Calibration
+
+Table 11. Travel Time Variation Envelope Band Calculation, Alligator City
+
+ Time of  Rep Day  Standard  ~2 Sigma  ~2 Sigma  1 Sigma  1 Sigma
+Trip Start  Travel  Deviation  Band  Band  Band  Band
+  Time  (max)  (min)  (max)  (min)
+  6:00 AM  (Sigma)
+  6:15 AM  15.5  16.5  14.5  16.0  15.0
+  6:30 AM  16.0  0.53  18.0  14.0  17.0  15.0
+  6:45 AM  22.5  1.02  28.5  16.5  25.6  19.4
+  7:00 AM  27.4  3.09  33.5  21.3  30.5  24.3
+  7:15 AM  30.6  3.13  37.0  24.2  33.9  27.3
+  7:30 AM  32.6  3.26  36.8  28.4  34.8  30.4
+  7:45 AM  30.6  2.16  33.6  27.6  32.2  29.0
+  8:00 AM  29.5  1.55  32.9  26.1  31.2  27.8
+  8:15 AM  29.1  1.71  31.3  26.9  30.2  28.0
+  8:30 AM  28.8  1.14  30.3  27.3  29.6  28.0
+  8:45 AM  28.5  0.76  31.2  25.8  29.9  27.1
+  9:00 AM  26.6  1.39  30.3  22.9  28.5  24.7
+  9:15 AM  22.7  1.89  27.5  17.9  25.1  20.3
+  9:30 AM  21.8  2.44  26.4  17.2  24.2  19.4
+  9:45 AM  21.5  2.36  24.9  18.1  23.2  19.8
+10:00 AM  20.8  1.71  25.4  16.2  23.2  18.4
+  20.5  2.36  24.9  16.1  22.8  18.2
+  2.25
+
+Figure 10. Chart. Plot of Variation Envelope for Eastbound AM Travel Times, West Hills to
+  Alligator City (Source: FHWA)
+
+  68
+Chapter 5. Model Calibration
+
+Calibrate Model Variants within Acceptability Criteria
+In the Alligator City example, consider the situation where an analyst is in the midst of
+calibrating the eastbound travel times from West Hills to Alligator City via the Komodo Tunnel.
+After a series of adjustments to the input parameters, the analyst calculates the simulated travel
+times for each of the 17 time intervals in the AM peak.
+First, the analyst considers Criterion I to control for outliers (Figure 11). All of the points fall
+within the ~2 Sigma Band except for one point (8 AM). Given that there are 17 time intervals, at
+most one-time period can be outside the band. The model variant passes Criterion I.
+
+  Figure 11. Chart. Assessing Criterion I, Alligator City (Source: FHWA)
+Second, the analyst considers Criterion II to control for inliers (Figure 12). All of the points fall
+within the 1 Sigma Band except for three points (6:00 AM, 8:00 AM, 8:15 AM). The percentage
+of time periods within the 1 Sigma Band is 82% (14 of 17), higher than the 66.7% requirement.
+Critical time periods should also be considered. For this particular measure and representative
+day, the peak travel time occurs at 7:15 AM. The second highest non-adjacent travel time occurs
+at 7:45 AM. Both the 7:15 AM and 7:45 AM simulated travel times fall within the 1 Sigma
+Band. Therefore, the model variant passes Criterion II.
+
+  69
+Chapter 5. Model Calibration
+
+  Figure 12. Chart. Assessing Criterion II, Alligator City (Source: FHWA)
+Third, the analyst computes Bounded Dynamic Absolute Error threshold for this data set using
+the observed travel time data from each of the other days in the cluster and the representative
+day. These travel times were shown previously in Figure 11, above. The BDAE threshold for
+these data is 1.84 minutes. Differences between the simulated travel time and observed travel
+time are shown in Table 12. The average absolute difference between the simulated travel times
+and the representative day is 1.1 minutes, less than the BDAE Threshold of 1.84. Criterion III is
+met.
+Fourth, the analyst considers the final criteria to determine if the simulation is an unacceptably
+large over or under estimator of the representative day. In this case, the threshold is set to one-
+third of the BDAE or 0.61 minutes. If the simulation does not, on average, overestimate travel
+times in excess of this threshold then the criterion is met. However, the simulation does indeed
+provide travel times that are on average 1.0 minutes longer than the representative day. Criterion
+IV is not met, because the current model is an unacceptably large over-estimator of travel time.
+The analyst will have to continue to alter model variant parameters to meet this criterion. For
+some simulation models, this may mean considering a slight reduction in target vehicle speeds,
+either globally or along the links of this specific route. This may influence other measures and
+locations, however. Note that the calibration criteria are only met when a single run meets all the
+calibration criteria for all measures and locations. Thus, the analyst should re-examine each
+criterion (I, II, and III) after making an adjustment to satisfy Criterion IV.
+
+  70
+Chapter 5. Model Calibration
+
+  Table 12. Assessing Criteria III and IV, Alligator City
+
+  Time of Trip  Absolute
+
+  Start Simulation Rep. Day Diff.  Diff.
+
+  6:00 AM 16.1  15.5  0.6  -0.6
+
+  6:15 AM 16.6  16.0  0.55  -0.5
+
+  6:30 AM 23.8  22.5  1.27  -1.3
+
+  6:45 AM 28.0  27.4  0.63  -0.6
+
+  7:00 AM 31.7  30.6  1.12  -1.1
+
+  7:15 AM 32.7  32.6  0.14  -0.1
+
+  7:30 AM 32.0  30.6  1.4  -1.4
+
+  7:45 AM 31.2  29.5  1.7  -1.7
+
+  8:00 AM 32.8  29.1  3.7  -3.7
+
+  8:15 AM 30.2  28.8  1.4  -1.4
+
+  8:30 AM 28.9  28.5  0.37  -0.4
+
+  8:45 AM 26.9  26.6  0.27  -0.3
+
+  9:00 AM 24.9  22.7  2.21  -2.2
+
+  9:15 AM 23.1  21.8  1.31  -1.3
+
+  9:30 AM 22.5  21.5  0.96  -1.0
+
+  9:45 AM 20.4  20.8  0.42  0.4
+
+  10:00 AM 19.7  20.5  0.84  0.8
+
+  AVERAGE 1.1  -1.0
+
+KEY POINTS
+
+In summary, when calibrating a microsimulation study:
+
+• Calibrate selectively, only for key performance measures.
+• Performance measures for calibration should have good observed data.
+• Calibrate a model variant for each travel condition.
+• Use a representative day approach for calibration rather than a synthetic day combining
+
+  multiple days.
+• Calibration should be focused on bottleneck dynamics as well as time-variant
+
+  performance measures.
+
+  71
+CHAPTER 6. ALTERNATIVES ANALYSIS
+
+Project alternatives analysis is Step 6 in the  Chapter 1
+Microsimulation Analytical Process (Figure 13). It
+is the reason for developing and calibrating the  1 Microsimulation Analysis Planning
+microsimulation model. The lengthy model
+development process has been completed and now  • Define Project Purpose
+it is time to put the model to work. If the  • Identify Influence Areas
+alternatives are to be evaluated in target future year,  • Select Approach
+a future travel demand forecast will have to be  • Select Tool
+incorporated to create future year model variant for  • Estimate Staff Time
+each travel condition. The analyst should also create
+model sub-variants for each competing alternative  Chapter 2
+for each travel condition. Alternatives analysis
+requires comparison between simulation runs that  2 Data Collection and Analysis
+may have similar results. In these cases, there
+should be consideration of the impact of model  • Identify Data Sources
+variation. Even small variation resulting from  • Assemble Contemporaneous Data
+simulation model stochasticity may impact the  • Verify Data Quality
+statistical validity observed in simulation outputs,  • Identify Travel Conditions Using
+which will in turn impact investment decisions.
+Hence, the analyst should consider multiple runs by  Cluster Analysis
+varying random number seeds for alternatives
+analysis. As a first step, the analyst should run each  Chapter 3
+model sub-variant four times under different
+random number seeds to assess variability in  3 Base Model Development
+tactical driver behavior in the model sub-variant.
+Randomness in simulation outputs are analyzed to  • Specify Model Input Data
+determine the required number of runs to
+satisfactorily assess statistical validity when  4  Chapter 4
+comparing the impacts of competing alternatives.
+The analyst then runs each model sub-variant the  Error Checking
+required number of replication for each alternative
+to generate the necessary output to generate the key  • Review Software Errors
+performance measures. A statistical test is then
+conducted to determine whether any differences  • Review Input Coding Errors
+between two alternatives are statistically significant,
+that is, these differences meet the minimum criteria  • View Animation
+that bounds the risk that differences are only related
+to randomness in model outputs.  5  Chapter 5
+
+  Model Calibration
+
+  • Identify Representative Days
+
+  • Prepare Variation Envelopes
+
+  (for each Travel Condition)
+
+  • Calibrate Model Within
+
+  Acceptability Criteria
+
+  6  Chapter 6
+
+  Alternatives Analysis
+
+  • Represent Alternatives in Model
+
+  • Conduct Statistical Tests on Outputs
+
+  7  Chapter 7
+
+  Final Report
+
+  • Summarize Key Results
+
+  • Prepare Technical Documentation
+
+  Figure 13. Diagram. Step 6: Alternative
+  Analysis (Source: FHWA)
+
+72
+Chapter 6. Alternative Analysis
+
+FORECAST FUTURE DEMANDS
+
+Some analyses require the explicit consideration of system performance in future years. In these
+cases, the analyst should make a forecast of future year travel demand. Forecasts of future travel
+demand significantly different from current conditions are best obtained from a travel demand
+model, or from a multi-resolution modeling approach where the full range of dynamic travel
+demand attributes (including trip generation, distribution, mode choice, and trip start timing) can
+be considered collectively from the perspective of the complete transportation system.
+
+These models require a great deal of effort and time to develop and calibrate. If one does not
+already exist, then the analyst (in conjunction with the simulation project management) may opt
+to develop demand forecasts based on historic growth rates. A trend-line forecast might be made,
+assuming that the recent percentage of growth in traffic will continue in the future. These trend-
+line forecasts are most reliable for relatively short periods of time (5 years or less). They do not
+take into account the potential of future capacity constraints to restrict the growth of future
+demand. Additional information and background regarding the development of traffic data for
+use in highway planning and design may be found in other resources (For example, the National
+Cooperative Highway Research Program (NCHRP) Report 765). Whatever the method selected,
+a description of the approach (and the rationale for the approach) should be captured within the
+Methods and Assumptions document.
+
+Regardless of which method is used to estimate future demand (explicit travel demand modeling
+or simple trend line), care should be taken to ensure that the forecasts are a reasonable estimate of
+the actual amount of traffic that can arrive within the analytical period at the study area. Regional
+model forecasts are usually not well constrained to system capacity and trend-line forecasts are
+totally unconstrained. MRM approaches are generally more appropriate for future year demand
+estimation when travel demand is significantly larger than current travel demand.
+
+All forecasts are subject to uncertainty. It is risky to assess competing alternatives to a precise
+future condition given the uncertainties in the forecasts. There are uncertainties in both the
+probable growth in demand and the available capacity that might be present in the future. Slight
+changes in the timing or design of planned or proposed capacity improvements outside of the
+study area can significantly change the amount of traffic delivered to the study area during the
+analytical period. Changes in future vehicle mix and the timing of travel demand can have a
+significant impact. Similarly, changes in economic development and public agency approvals of
+new development can significantly change the amount of future demand. Thus, it is good
+practice to plan for a certain amount of uncertainty explicitly in the analysis. This level of
+uncertainty is the purpose of sensitivity testing (explained in a separate section below).
+
+REPRESENT ALTERNATIVES
+
+In Step 1, competing alternatives are identified and detailed. Often times, however, the
+specificity required by the microsimulation to represent these alternatives is not evident until the
+travel conditions are defined. In this regard, the analyst can play a key role in working with
+stakeholders to further develop the concept in each alternative. For example, when considering a
+specific representative day with an incident, stakeholders may have to collectively make a
+
+  73
+Chapter 6. Alternative Analysis
+
+decision as to whether this particular incident would trigger a response from the incident
+management system.
+
+Detailed guidance on the accurate representation of elements of alternatives is highly dependent
+on the tool selected and is not in scope for this guidebook. However, several federal reports may
+be useful resources for specific types of alternatives. For example, TAT Volume XII is used for
+work zone alternatives, and TAT Volume XIII is used for integrated corridor alternatives. Both
+guides can be obtained from http://ops.fhwa.dot.gov/trafficanalysistools/.
+
+DETERMINE REQUIRED NUMBER OF REPLICATIONS
+
+Microsimulation models rely on random numbers to provide non-uniform elements of tactical
+driver behavior. These elements may include the type and sequencing of vehicles generated at
+origins, tactical decisions made regarding route and gap acceptance, and aggressiveness in lane
+changing behavior. The cluster analysis and calibration to specific travel conditions performed in
+the previous steps isolate the first order determinates of system variation (changes in travel
+demand patterns, incident patterns, and weather conditions). The inherent randomness in
+microsimulation models related to tactical driver behavior is second order compared to travel
+conditions. However, randomness from these stochastic processes within a microsimulation
+should still be accounted for within the alternatives analysis.
+
+To generate an initial assessment of the impact of this randomness in support of alternatives
+
+analysis, run the model sub-variant associated with each alternative and travel condition four
+
+times using different random seeds. How random seeds are implemented in each simulation tool
+
+varies, but randomness is generally included in a default set of tactical driver behavioral models
+
+and vehicle generation processes. The minimum number of replications is calculated using the
+
+following equation:
+
+𝑁𝑁𝑚𝑚𝑚𝑚𝑚𝑚 = �𝑡𝑡𝑛𝑛−1,95%𝑠𝑠�2  (15)
+
+  𝑒𝑒𝑥𝑥̅
+
+where:
+
+  𝑁𝑁𝑚𝑚𝑚𝑚𝑚𝑚  :  Required number of model runs
+  n
+  :  Number of initial model runs (i.e., 4)
+
+  𝑥𝑥̅, 𝑠𝑠  :  Mean and standard deviation of the initial runs
+
+  𝑡𝑡𝑛𝑛−1,95%  :  t statistic for n-1 degrees of freedom and 95% confidence level
+
+  e  :  Tolerance error
+
+A confidence level of 95% is a traditional default to use. However, it may not always be the best
+value for every analysis. We need to identify an appropriate confidence level (a measure of
+accuracy when differentiating samples) and tolerance error (a measure of observed data
+precision).
+
+Confidence Level should be determined by the decision-maker and not the analyst, prior to
+alternatives analysis. The choice of confidence level is typically associated with the required
+certainty for the decision-maker. In a broad sense, a higher confidence level is chosen when the
+consequences of being wrong are significant. For example, when analyzing safety critical
+
+  74
+Chapter 6. Alternative Analysis
+
+systems, like airplane engine failures, the required confidence level might be 99.99%. However,
+the assessment of transportation alternatives may not be in the same category of down-side risk.
+Typical values are set between 80-95%, with 95% representing the highest confidence. A 95%
+confidence level is assumed unless otherwise set by project management (e.g., local agency
+policy) and logged in the Methods and Assumptions document.
+
+Tolerance error, e, is calculated individually for each observed time-variant measure based on
+
+the two critical time periods, 𝑡𝑡1 and 𝑡𝑡2, identified for that measure. The expectation is that the
+most within-cluster variation is reflected at the critical time periods, when the dynamics of the
+
+system are in flux, transitioning from rise-to-fall (for travel time) or fall-to-rise (for throughput).
+
+First, construct the confidence interval as follows:
+
+  𝑠𝑠  (16)
+
+𝑥𝑥̅ ± �𝑡𝑡𝑛𝑛−1,95% � 𝑛𝑛��  Mean and standard deviation
+  Number of observations
+  √  t statistic for n-1 degrees of freedom and 95% confidence level
+
+where:
+
+  𝑥𝑥̅, 𝑠𝑠  :
+
+  n  :
+
+  𝑡𝑡𝑛𝑛−1,95%  :
+
+Tolerance error is computed as follows:
+
+  𝑡𝑡𝑛𝑛−1,95%� 𝑠𝑠√𝑛𝑛�  (17)
+
+𝑒𝑒 = 𝑥𝑥̅
+
+The numerator is also known as the margin of error.
+
+Let 𝑥𝑥̅1, 𝑠𝑠1and 𝑥𝑥̅2, 𝑠𝑠2 be the mean and standard deviation of the measure at the two critical time
+periods for a given cluster, with 𝑛𝑛 observations (or days). Calculate the tolerance error for the
+
+measure at the two critical time periods using the equations:
+
+𝑒𝑒 𝑡𝑡𝑛𝑛−1,95%� 1 = √𝑛𝑛 𝑠𝑠1 �  (18)
+
+  𝑥𝑥̅1
+
+𝑒𝑒 𝑡𝑡𝑛𝑛−1,95%� 2 = √𝑛𝑛 𝑠𝑠2 �  (19)
+
+  𝑥𝑥̅2
+
+Set the tolerance error as the maximum of the two calculated tolerance errors at the two critical
+time intervals.
+
+Run the model 4 times and compute the simulated average 𝑥𝑥̅ and standard deviation 𝑠𝑠 of the
+critical time-variant measures. Let 𝑡𝑡3,95% be the t-statistic associated with a 95% confidence level
+and three degrees of freedom (3.182).
+
+The required number of runs is calculated using the following formula, rounded up to the nearest
+whole number:
+
+  75
+Chapter 6. Alternative Analysis
+
+𝑁𝑁𝑚𝑚𝑚𝑚𝑚𝑚 = �𝑡𝑡3,95%𝑠𝑠�2  (20)
+
+  𝑒𝑒𝑥𝑥̅
+
+The steps should be repeated for all key measures of interest and all clusters, and corresponding
+
+minimum number of runs should be calculated. The minimum number of model replications is
+
+then taken as the maximum of the minimum number of runs (𝑁𝑁𝑚𝑚𝑚𝑚𝑚𝑚) computed for all key
+measures and all clusters.
+
+In less congested conditions, there may be very little day to day variation resulting in very small
+
+tolerance errors. This can be problematic from a computational perspective since a small
+
+tolerance error will result in a large 𝑁𝑁𝑚𝑚𝑚𝑚𝑚𝑚 with no gain in analytical insight as the result is many
+repetitions of essentially fixed near free-flow conditions. To guard against unreasonable 𝑁𝑁𝑚𝑚𝑚𝑚𝑚𝑚
+driven by small observed variation, we enforce a minimum floor for tolerance error of 5% as a
+
+practical guideline.
+
+TEST DIFFERENCES IN ALTERNATIVES PERFORMANCE
+
+When the microsimulation model is run several times for each alternative, the analyst may find
+that the variance in the results for each alternative is close to the difference in the mean results
+for each alternative. How is the analyst to determine if the alternatives are significantly different?
+To what degree of confidence can the analyst claim that the observed differences in the
+simulation results are caused by the differences in the alternatives and not just the result of using
+different random number seeds? This is the purpose of statistical hypothesis testing.
+
+Perform Hypothesis Testing
+
+In this step, we compare the results obtained examining two alternatives to see if the differences
+are statistically significant.
+
+First, calculate the average performance measures for the two alternatives, 𝑥𝑥1 and 𝑥𝑥2, reflecting
+the frequency of each travel condition. For simpler measures like delay, this is a simple weighted
+
+sum using the frequency of each travel condition, as shown below:
+
+𝑥𝑥 ∑𝐶̅ 𝑗𝑗 = 𝑖𝑖𝐶=1(𝑥𝑥𝑖𝑖×𝑛𝑛𝑖𝑖)  (21)
+
+  ∑ 𝑛𝑛𝑖𝑖
+
+where:  : Weighted average of measure for alternative j
+  𝑥𝑥̅𝑗𝑗
+  i  : Cluster ID
+  C  : Total number of clusters
+  𝑥𝑥𝑖𝑖  : Average performance measure estimate across all random number runs (i.e.,
+
+  ni  𝑁𝑁𝑚𝑚𝑚𝑚𝑚𝑚) for Cluster i
+  : Number of days in Cluster i
+
+  76
+Chapter 6. Alternative Analysis
+
+For other measures, like reliability, the individual results are combined in order to identify
+percentile-based statistics, such as 95th percentile planning time index.
+
+Next, calculate the sample variance for the two alternatives as follows:
+
+2 ∑𝑖𝑖=1�𝑥𝑥𝑖𝑖−𝑥𝑥̅𝑗𝑗�𝐶𝐶  2
+
+𝑠𝑠𝑗𝑗 =  𝐶𝐶  (22)
+
+where:
+
+  𝑠𝑠𝑗2𝑗 : Variance of measure for alternative j
+
+We assume population variances are unknown and equal. If variances are not equal, then
+Welch’s t-test should be used. 𝑛𝑛1 and 𝑛𝑛2 are the number of simulation runs for the two
+alternatives. The pooled variance 𝑠𝑠𝑝2𝑝 is the weighted average of the two sample variances, 𝑠𝑠12 and
+𝑠𝑠22:
+
+  2 (𝑛𝑛1−1)𝑠𝑠12+(𝑛𝑛2−1)𝑠𝑠22  (23)
+
+𝑠𝑠𝑝𝑝 =
+
+  (𝑛𝑛1+𝑛𝑛2−2)
+
+Set up the hypotheses based on the evidence from the sample:
+
+  • Null Hypothesis, H0:  𝜇𝜇1 ≥ 𝜇𝜇2 OR 𝜇𝜇1 ≤ 𝜇𝜇2
+  • Alternate Hypothesis, HA:  𝜇𝜇1 < 𝜇𝜇2 OR 𝜇𝜇1 > 𝜇𝜇2
+
+Calculate the test statistic:
+
+𝑡𝑡𝑐𝑐𝑐𝑐𝑐𝑐𝑐𝑐𝑐𝑐𝑐𝑐𝑐𝑐𝑐𝑐𝑐𝑐𝑐𝑐 =  (𝑥𝑥̅1−𝑥𝑥̅2)  (24)
+
+  21 1
+
+  �𝑠𝑠𝑝𝑝� + �
+
+  𝑛𝑛1 𝑛𝑛2
+
+Perform the hypothesis test:
+
+  • For H0: 𝜇𝜇1 ≥ 𝜇𝜇2, if 𝑡𝑡𝑐𝑐𝑐𝑐𝑐𝑐𝑐𝑐𝑐𝑐𝑐𝑐𝑐𝑐𝑐𝑐𝑐𝑐𝑐𝑐 ≤ 𝑡𝑡𝑛𝑛1+𝑛𝑛2−2, 95%, reject H0 and accept HA. Otherwise, we
+  do not have enough evidence to reject H0.
+
+• For H0: 𝜇𝜇1 ≤ 𝜇𝜇2, if 𝑡𝑡𝑐𝑐𝑐𝑐𝑐𝑐𝑐𝑐𝑐𝑐𝑐𝑐𝑐𝑐𝑐𝑐𝑐𝑐𝑐𝑐 ≥ 𝑡𝑡𝑛𝑛1+𝑛𝑛2−2, 95%, reject H0 and accept HA. Otherwise, we
+  do not have enough evidence to reject H0.
+
+Perform Sensitivity Testing
+
+A sensitivity analysis is a targeted assessment of the reliability of the microsimulation results,
+given the uncertainty in the input or assumptions. The analyst identifies certain input or
+assumptions about which there is some uncertainty and varies them to see what their impact
+might be on the microsimulation results.
+
+Additional model runs are made with changes in demand levels and key parameters to determine
+the robustness of the conclusions from the alternatives analysis. A sensitivity analysis of
+different demand levels is particularly valuable when evaluating future conditions. Demand
+
+  77
+Chapter 6. Alternative Analysis
+
+forecasts are generally less precise than the ability of the microsimulation model to predict their
+impact on traffic operations. Additional runs may also be needed to address sensitivity to
+assumptions made in the analysis where the analyst may have little information, such as the
+percent of drivers listening to specific traveler information services.
+
+EXAMPLE PROBLEM: ALTERNATIVE ANALYSIS
+
+For the Alligator City travel time example, we examine the average and standard deviation of
+travel times at our two critical time periods, 7:15 AM and 7:45 AM. At 7:15 AM, the average
+travel time is 32.6 minutes, and the standard deviation is 2.2 minutes. At 7:45 AM, the average
+travel time is 31.0 minutes, and the standard deviation is 1.7 minutes. Raw tolerance error
+(excluding the 5% floor) at 7:15 AM is 0.97% and 0.81% at 7:45 AM. Since this falls below the
+5% floor on tolerance error, a tolerance error of 5% is used.
+
+Running the model variant 4 times for this condition produces an average travel time of 32.7
+minutes with a standard deviation of 1.46 minutes. In this case the minimum number of runs is
+(3.182×1.46)2 = 8.07 runs. For this particular measure, alternative, and travel condition, 9 runs are
+
+  0.05×32.7
+
+required (8.07 rounded up to the nearest whole number).
+
+A note regarding large N. In some cases where a model is not stable, a very large value of N
+(>20) may result. In these cases, it is not recommended to replicate 20 or more runs of the model
+sub-variant, but rather to investigate the reasons why a particular model sub-variant produces
+such a large variation in outputs. Sometimes it is an indicator that unrealistic gridlock conditions
+are being generated within the model, the results of which can skew model outputs. Model
+instability can also be symptomatic of model coding errors.
+
+Table 13 provides a summary of aggregate statistics for the two competing Alligator City
+alternatives and a Do-Nothing case after a uniform number of random number seeds has been
+conducted (in this case, 5). Travel time is an aggregated value over the two major routes
+considering all time periods in the morning peak and weighted by each of the travel conditions.
+Throughput is a measure of average vehicles per hour exiting of all bridge and tunnel exits into
+Alligator City, considering all time periods in the morning peak period and weighted by travel
+condition. Planning time index is calculated as an origin-destination level measure from West
+Hills to Alligator City considering both potential routes and the variation in travel time over all
+time periods it the morning peak. The planning time index represents the ratio of the 95th
+percentile travel time to free-flow (uncongested) travel time from West Hills to Alligator City
+considering all travel conditions.
+
+  78
+Chapter 6. Alternative Analysis
+
+  Table 13. Aggregate Results from Alligator City Alternative Analysis
+
+  Performance Measures
+
+  Travel Time  Throughput  Plan Time Index
+
+  Alternative  Average Std. Dev. Average Std. Dev. Average Std. Dev.
+Current Baseline
+Do Nothing  17.1  0.3  7463  189  2.02  0.25
+Better Bridge and Tunnel
+Adapt and Redirect  19.5  0.6  7209  369  2.15  0.35
+
+  16.4  0.6  8337  450  2.65  0.36
+
+  16.6  0.8  8199  210  1.85  0.25
+
+Examine a hypothesis considering the planning time index value for Adapt and Redirect
+(Alternative 1) compared to Better Bridge and Tunnel (Alternative 2). In this case, we seek to
+test whether the lower value for Adapt and Redirect when compared to that for Better Bridge and
+Tunnel is statistically significant. The hypotheses are set as follows: H0: 𝜇𝜇1 ≥ 𝜇𝜇2, HA: 𝜇𝜇1 < 𝜇𝜇2.
+
+The estimate for the pooled variance is:
+
+2 8 × 0.362 + 8 × 0.252  = 0.096
+𝑠𝑠𝑝𝑝 =
+  9+9−2
+
+𝑡𝑡𝑐𝑐𝑐𝑐𝑐𝑐𝑐𝑐𝑐𝑐𝑐𝑐𝑐𝑐𝑐𝑐𝑐𝑐𝑐𝑐 =  1.85 − 2.65  = −5.48
+
+  �0.096 × (19 + 19)
+
+𝑡𝑡𝑐𝑐𝑐𝑐𝑐𝑐𝑐𝑐𝑐𝑐𝑐𝑐𝑐𝑐𝑐𝑐𝑐𝑐𝑐𝑐 < 𝑡𝑡16,95% (-5.48 < 1.746), so we reject the null hypothesis that the planning time
+index for Alternative 1 is greater than or equal to that for Alternative 2, and conclude that the
+planning time index for Alternative 1 is statistically smaller. Similar comparisons of travel time
+and throughput can also be made. The overall result is that while the Adapt and Redirect
+(Alternative 1) generates a lower planning time index (i.e., higher reliability), for other measures
+the alternative is not clearly better (and for throughput worse). Similar comparisons should be
+made for the remaining alternatives.
+
+KEY POINTS
+
+In summary, when conducting alternatives analysis:
+
+• Forecasting major shifts in future travel demand should be analyzed separately from the
+  microsimulation.
+
+• Every alternatives analysis requires multiple runs with different random seeds.
+• Randomness in simulation outputs are related to variations in driver behavior models.
+• Variation in results from different random seeds are not indicative of first order system
+
+  variation, which are determined by travel conditions.
+• Ensure models are stable and do not create unrealistic gridlock conditions, as this will
+
+  create artificial (and dramatic) variation in outputs.
+
+  79
+CHAPTER 7. FINAL REPORT
+
+This chapter provides some guidance on preparing a  Chapter 1
+short informative briefing on the analysis for
+stakeholders (Figure 14). In addition, this chapter  1 Microsimulation Analysis Planning
+discusses the documentation of the microsimulation
+analysis results in a final report and a technical  • Define Project Purpose
+appendix supporting the final report.  • Identify Influence Areas
+  • Select Approach
+PREPARING THE RESULTS BRIEFING  • Select Tool
+  • Estimate Staff Time
+Making a clear and concise presentation of
+analytical findings is a critical element of a  Chapter 2
+successful microsimulation analysis. For some
+stakeholders, the presentation will be the most  2 Data Collection and Analysis
+critical path to allowing the findings of the analysis
+to inform their decisionmaking. However, careful  • Identify Data Sources
+and thoughtful preparation for this vital presentation  • Assemble Contemporaneous Data
+is often overlooked. In the whirl of activity when an  • Verify Data Quality
+analytical project is close to completion, there is a  • Identify Travel Conditions Using
+general tendency to focus on the most recent
+technical details, on difficulties with models, or  Cluster Analysis
+with conflicting or unclear results obtained from the
+models. However, while technical issues may be  Chapter 3
+fresh in mind, the presentation should not lose
+focus.  3 Base Model Development
+
+Remember your audience. Your stakeholders did  • Specify Model Input Data
+not conduct the analysis. In fact, they may not have
+a clear recollection of what the study is and why it  4  Chapter 4
+was performed. Therefore, the presentation should
+begin with the analytical objective and the context  Error Checking
+for the study. That is why the analytical effort was
+commissioned, so make sure there is a clear tie in  • Review Software Errors
+all parts of the presentation to the motivations,
+objectives, and goals of the analysis.  • Review Input Coding Errors
+
+  • View Animation
+
+  5  Chapter 5
+
+  Model Calibration
+
+  • Identify Representative Days
+
+  • Prepare Variation Envelopes
+
+  (for each Travel Condition)
+
+  • Calibrate Model Within
+
+  Acceptability Criteria
+
+  6  Chapter 6
+
+  Alternatives Analysis
+
+  • Represent Alternatives in Model
+
+  • Conduct Statistical Tests on Outputs
+
+  7  Chapter 7
+
+  Final Report
+
+  • Summarize Key Results
+
+  • Prepare Technical Documentation
+
+  Figure 14. Diagram. Step 7: Final Report
+  (Source: FHWA)
+
+80
+Chapter 7. Final Report
+
+Clarify what was analyzed and not analyzed. Clearly describe the analysis plan and the travel
+conditions identified through the analysis of data. Clearly show how alternatives differ in both
+intent and in what specific model parameters or methods were used to capture those differences.
+Highlight insights gained regarding the performance of alternatives under various travel
+conditions and how this may influence how the underlying problem can be understood and
+resolved.
+
+Inform stakeholders, but do not make their decisions for them. The presentation does not
+have to provide a simple yes/no answer for decision-makers, it provides insight that informs a
+broader decision. Don’t forget to provide results, but keep them connected to supporting the
+decision. The story that you as the analyst can tell rapidly and effectively will be the most
+valuable part of any successful analysis to your stakeholders. In the case of a final presentation,
+graphics that capture a particularly important point, or an animation clip can be used to
+demonstrate certain aspects of system dynamics, for example, showing how coordinated
+diversion around an incident can reduce delay.
+
+PREPARING THE FINAL REPORT
+
+The final report presents the assumptions, analytical steps, and the results of the analysis in
+sufficient detail for decision makers to understand the basis for and implications of choosing
+among the project alternatives. The final report, however, will not usually contain sufficiently
+detailed information to enable other analysts to reproduce the results. That is the purpose of the
+technical report/appendix. The effort involved in summarization of the results should not be
+underestimated since microsimulation models produce a wealth of numerical output that should
+be tabulated and summarized. The final report should include the following:
+
+  • Study Objectives and Scope.
+  • Overview of Study Approach.
+  • Including Methods and Assumptions document entries.
+  • Data Collection.
+  • Travel Conditions.
+  • Calibration Tests and Results.
+  • Forecast Assumptions.
+  • Description of Alternatives.
+  • Results.
+  • Conclusions.
+
+The technical report/appendix documents the microsimulation analysis in sufficient detail to
+enable an analyst to reproduce the results (the version or release of the software used is
+included). It may be an appendix to the final report or a separate document.
+
+The technical report/appendix is a vital step in preserving the rationale for the various decisions
+that were made in the process of developing, calibrating, and operating a microsimulation model.
+The documentation should be sufficient so that given the same input files, another analyst can
+understand the calibration process and repeat the alternatives analysis.
+
+  81
+Chapter 7. Final Report
+
+KEY POINTS
+In summary, when documenting and presenting analytic results:
+
+  • Step back and remember your stakeholders may require revisiting the objectives,
+  alternatives, and assumptions to understand the implication of your results.
+
+  • Remember to inform decision makers, not try to make decisions for them.
+  • Present your “story” not all the details.
+  • Document in more detail and preserve analytical artifacts.
+
+  82
+APPENDIX A. WORK ZONE CASE STUDY IN THE SEATTLE I-405 CORRIDOR
+
+Appendix A presents a hypothetical
+case study in a large and realistic
+urban corridor to illustrate the updated
+2019 guidelines of traffic
+microsimulation. In this case, the
+analytical project regards the
+application of a microsimulation
+analysis to support cost-effective
+planning for a significant work zone
+project. This case study was
+conducted using Washington State
+Department of Transportation
+(WSDOT) and University of
+Washington data archives and an
+existing WSDOT microsimulation
+model. However, the hypothetical
+situation described in this study (work
+zone repair in response to sinkhole
+damage from seismic activity) is
+neither based on actual events, nor do
+the alternatives analyzed here reflect
+WSDOT policies or contingency
+planning.
+
+The Seattle I-405 Corridor
+
+I-405 Corridor is a major commuter  Figure 15. Map. I-405 Geographical Coverage (Source:
+corridor in the Seattle area subject to  Google Map/FHWA)
+periods of high travel demand and
+resultant congestion. In addition, the
+corridor experiences significant travel
+time variability as a result of dynamic
+incident patterns and frequent rain and
+fog. Figure 15 depicts the
+geographical coverage of the I-405
+corridor in this case study, extending
+from a junction north of Lake
+Washington with I-5 to a junction
+rejoining I-5 south of Lake
+Washington. The length of the I-405
+corridor is 29.5 miles.
+
+  83
+Appendix A
+
+Purpose, Approach and Tool
+
+In this hypothetical case study, the product of unanticipated seismic activity in the region has
+resulted in significant damage to the I-405 freeway facility. Two sinkholes have damaged
+segments of the I-405 roadway. The road is still passable and usable in all segments. However,
+significant rehabilitation is required within six months to the damaged sections. If these issues
+are not addressed within six months, there are risks of more substantial structural damage and the
+need for more expensive and complicated reconstruction. Repair work can and will be done on
+all available nights, weekends, and weekday midday periods. As a general policy, no work is
+planned for AM (6-10 AM) or PM peak (3-7 PM) periods because of expected congestion.
+However, completing the needed repair in six months with no peak period work will require
+expensive, expedited night and weekend work. Because of these high costs, there is interest in
+determining if some targeted peak period lane closures might be considered in this case to
+complete the work in the six-month window without incurring the additional expense of
+expedited off-peak work.
+
+In order to inform this decision, alternatives analysis using microsimulation is selected for the
+project given a need for lane-level assessment of the precise alternative timing of potential lane
+closures. Total additional delays caused by a work zone is used as the primary measure
+differentiating alternatives, and travel time reliability is used as a supplemental measure of
+effectiveness. Two alternatives are proposed regarding the work zone schedule:
+
+  • Alternative 1: Fixed Work Zone Schedule – Work zone is inactive during both AM (6-10
+  AM) and PM (3-7 PM) peaks each weekday, i.e., work zone night work remains active
+  from 7 PM until 6 AM and mid-day work begins from 10 AM to 3 PM each weekday.
+  Work zone will always follow this simple schedule each weekday. This fixed schedule is
+  consistent, direct and simple to explain. However, significant additional costs will be
+  needed to expedite night and midday work to complete project within target period, or,
+  alternatively, there are significant structural risks if project completion is delayed.
+
+  • Alternative 2: Dynamic Work Zone Schedule with Supporting Traffic Management
+  Strategies – Road work continues from night session until the mid-day session under Low
+  Demand travel conditions (20% of days), i.e., work zone remains active during AM peak
+  on a set of anticipated low demand days. That allows four extra work hours to be logged
+  for every low demand day. For other weekdays, work zone remains inactive during AM
+  peak. To further reduce congestion, traffic management strategies with extra cost are
+  added to this alternative:
+
+  • Incident management: Dedicated incident response vehicles to reduce incident
+  duration by 50%.
+
+  • Detour/work zone warning: Additional buses and temporary parking lots combine to
+  increase use of the alternate modes and routes during repair period, with an expected
+  impact of reducing demand on selected north-south routes by 2%.
+
+  84
+

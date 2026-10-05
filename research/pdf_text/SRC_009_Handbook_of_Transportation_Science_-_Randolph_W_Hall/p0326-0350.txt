@@ -1,0 +1,937 @@
+324  Handbook of Transportation Science
+
+are infeasible (e.g., locating a distribution center in the middle of a large lake).
+While a number of authors (e.g., Aneja and Parlar, 1994; Batta, Ghose and Palekar,
+1989; Larson and Sadiq, 1983; Hansen, Peeters and Thisse, 1982; and Hurter,
+Schaefer and Wendell, 1975) have developed continuous models with forbidden
+regions or barriers to travel, such models pose even greater computational burdens.
+
+  In contrast to continuous location models, network location models assume that
+facilities and demands are located on the nodes or links of a network. In most cases,
+demands are assumed to be located on the nodes of the network. A key question that
+often arises is whether or not the objective function is degraded if one limits the
+search for facility locations to the network nodes. Hakimi (1964) was the first to
+show that for one common network location problem – the P-median problem
+discussed below – locating facilities only on the nodes does not degrade the solution.
+Limiting the search for facility sites to the network nodes is so computationally
+advantageous that we often do so even when this will degrade the solution. Often
+this limitation is further justified by the presence of a finite set of sites at which the
+decision-maker is willing to consider locating facilities.
+
+  Discrete location problems assume that demands are located at discrete points in
+a space and that facilities are also to be located at discrete points. A distance metric
+(e.g., the Euclidean metric) is used to compute the distances between these facility
+sites and demand nodes. Many of the models and algorithms developed for network
+location problems can be applied to discrete location problems as well.
+
+  This chapter will concentrate on discrete and network location problems.
+
+Network vs. tree location problems
+
+Within the class of network problems, problems on trees are often considered as a
+special case. There are several reasons for this. First, and perhaps most importantly,
+many location problems that are NP-hard on a general network can be solved in
+polynomial time when posed on a tree. Second, the polynomial tree algorithms can
+sometimes be used as the building blocks for (heuristic) algorithms for problems on
+more general graphs. Third, some transportation networks, particularly those in
+developing countries, and a significant number of telecommunication networks have
+a tree structure. Finally, a number of problems that are seemingly unrelated to
+facility location can be modeled as location problems on trees or other specially
+structured graphs. For example, Watson (1996) modeled the benefits of rationalizing
+the number of different steel coils an auto manufacturer purchases as a location
+problem on a line.
+
+  To retain generality, the focus of this chapter is on location problems on general
+networks and not on the specialized algorithms that arise in locating on trees.
+Location Models in Transportation  325
+
+Static vs. dynamic problems
+
+All of the classical location models discussed in section 10.3 below are static models,
+assuming that decisions are made at one time and that the cost, distance and demand
+data are independent of time. In reality, model inputs change over time and
+decisions are made over an extended horizon. Decisions made in one period often
+preclude future options. Thus, opening a facility in year X may mean that the facility
+must remain open throughout the remainder of the planning period.
+
+  While our focus will be on static models, we will briefly discuss issues related to
+dynamic location problems in section 10.5
+
+Deterministic vs. stochastic
+
+Not only are classical location models static, but they are also deterministic in that
+they assume that (1) all model inputs are known with certainty and (2) there is no
+randomness underlying the process by which demands arise and customers are
+served. A significant branch of the literature has focused on ways of relaxing these
+two assumptions. Section 10.3 summarizes the traditional deterministic models;
+section 10.5 outlines a number of extensions of these models that account for both
+uncertainty in problem inputs as well as randomness associated with the underlying
+demand or service processes.
+
+Single vs. multi-objective
+
+Finally, most models use a single objective. However, since facility location
+problems are strategic in nature, there are likely to be a number of different
+constituents interested in the location decisions. These constituents often have
+different and sometimes conflicting objectives. Sometimes conflicting objectives
+simply seem to be inherent to the problem at hand. Erkut and Neuman (1989) argue
+that the location of undesirable facilities is an inherently multi-objective problem.
+For example, in locating solid waste repositories, we would like to minimize the
+impact of these facilities on residential areas. We would also like to minimize the
+cost of hauling waste to the sites. These two objectives conflict since much of the
+solid waste in an urban area is generated at residential units.
+
+  In section 10.3 we summarize traditional single objective models while section
+10.5 outlines a number of the issues associated with multi-objective problems.
+
+10.3 Classical location models
+
+In this section we outline three classes of objectives that are typically used in facility
+location modeling. Within each class a number of different objective functions and
+models are identified. Key properties of these models are also discussed.
+326  Handbook of Transportation Science
+
+Covering models
+
+The simplest class of facility location problems arises from the notion of coverage.
+Covering models are appropriate when there is some critical service distance (or time
+or cost). Demands that can be served within this distance are said to be covered,
+while those that are not are uncovered. Typical covering problems include: finding
+the minimum number of facilities needed to cover all demand nodes (the set covering
+problem); finding the location of a fixed number of facilities to maximize the number
+of covered demands (the maximal covering problem); and finding the locations of a
+fixed number of facilities to minimize the maximum distance between a demand
+node and the facility assigned to cover its demands (the P-center problem).
+
+  Perhaps the earliest references to location problems are Biblical and relate to this
+class of models. In Numbers 35:9-15 as well as Exodus 21:13, Deuteronomy 4:41-
+43 and Deuteronomy 19:1-13, the Bible commands the Israelites to create cities of
+refuge to which an individual who inadvertently kills another person can flee from
+retribution from the family of the deceased. They are commanded (Numbers 35:9-
+15) to identify 6 such cities, three on the west side of the Jordan river and three on
+the east side. Later (Deuteronomy 4:41-43), the Bible identifies the three cities on
+the east side of the Jordan, but since “Their precise location is not known,” (Plaut,
+1981, p. 1344) we cannot infer much about the access that they provided to different
+populated areas. The commandments regarding the cities to the west of the Jordan
+are more explicit (Deuteronomy 19:1-13). The Israelites were to “survey the
+distances, and divide into three parts the territory of the country ... so that any
+manslayer may have a place to flee to ... Otherwise, when the distance is great, the
+blood-avenger, pursuing the manslayer in hot anger, may overtake him and kill
+him....” (Plaut, 1981, p. 1467). Clearly the cities were to be dispersed evenly
+throughout the countryside and were to be made accessible to the populace.
+
+  The placement of the cities of refuge is actually a dynamic location problem since
+Deuteronomy goes on to say “And when the Lord your God enlarges your territory
+... then you shall add three more towns to those three.” (Plaut, 1981, p. 1467). We
+note that there is some controversy about whether this suggests an additional three
+cities (for a total of nine) or whether it refers to the three cities east of the Jordan
+River. In either case, the cities of refuge were to be located so that the maximum
+distance someone would have to travel to reach one would be less than the distance a
+pursuer was likely to travel “in hot pursuit” after learning of the death of his/her
+relative. As indicated above, problems in which there is a distance (or time or cost)
+beyond which service is unacceptable and below which it is acceptable are covering
+problems. In the modern era, such problems typically arise in the location of
+emergency service facilities including ambulances, fire stations, and police units.
+
+  The simplest location covering problem is the set covering problem (Toregas et
+al., 1971). Here the objective is to find the locations of the minimum number of
+facilities so that all demands are covered within the acceptable distance. To
+formulate this problem we define the following inputs and sets:
+Location Models in Transportation  327
+
+I  =  the set of demand Points, indexed by i
+
+J  =  the set of candidate facility locations, indexed by j
+
+  =  distance between demand node i and candidate site j
+
+  =  coverage distance
+
+  =  the set of all candidate locations that can cover demand node i
+
+and the following decision variable
+
+  With this notation, the set covering problem can be formulated as follows:
+Minimize
+Subject to
+
+The objective function (10.1) minimizes the number of selected facilities. Constraint
+(10.2) ensures that each demand node is covered by at least one selected site.
+Constraint (10.3) is an integrality constraint. We note that the objective function can
+be generalized by including a site-specific cost as a coefficient of the decision
+variable. The problem would then be that of finding the minimum cost set of facility
+sites that cover all demand nodes at least once.
+
+  The set covering problem is NP-hard even when all facility costs are identical.
+Fortunately, the linear programming relaxation of the set covering problem as posed
+above often results in an all-integer solution. When the LP relaxation is fractional,
+typically only a few branches in a branch and bound algorithm are needed to obtain
+an optimal all-integer solution. Often a variety of row and column reduction rules
+(see Daskin (1995) for a discussion of such rules) can be used to reduce the size of
+the problem considerably. Two such rules warrant particular discussion. First, let
+
+  In other words,  is the set of demand nodes covered by a
+
+facility at candidate site j. If  then candidate site j dominates candidate
+
+site k and we can set  Second, if  then any facility that covers
+
+node i also covers node h. In this case, we can eliminate row h from the constraint
+matrix.
+328  Handbook of Transportation Science
+
+  Finally, we note that the optimal solution to the set covering problem when
+facilities can be located on the links as well as the nodes will often be better (i.e., it
+will require fewer facilities) than the solution to the problem when facilities are
+restricted to the nodes. This is illustrated by the simple network shown in Figure 10-
+1. If the coverage distance is 10 and facilities can only be located on the nodes, then
+two facilities are needed: one at A and one at either B or C. If we can locate on the
+links as well as the nodes, a facility located ten units from node A and two units to
+the left of node B would cover all three demand nodes. In this simple example, we
+can halve the number of facilities by locating on a network link. Church and
+Meadows (1979) show how the node set can be augmented by a finite set of network
+intersection points so that locating on the set of nodes or network intersection points
+will always be as good as locating anywhere on the links.
+
+  One problem with the set covering model is that it often dictates locating more
+facilities than can be afforded. Typically many of the facilities that are identified
+cover a small fraction of the total demand. For example, if we try to cover the 150
+largest cities in the United States (with a combined population of over 58 million
+people) within 250 miles, 18 facilities are needed. If we relax the requirement that
+all demands be covered and require only 98% of the demands to be covered, we can
+reduce the number of required facilities by 16.7% to 15 facilities. We can halve the
+number of required facilities and use only 9 sites if we could get by with covering
+only 86% of the total demand. Another problem with the set covering model is that
+it fails to discriminate between large and small demand nodes. Thus, covering New
+York City (with a population of 7.32 million people) is just as important in the set
+covering problem as is covering Pasadena, Texas (with a population under 120,000).
+
+  These two problems have led researchers to consider relaxing the requirements of
+the set covering model. As indicated above, one way to reduce the number of
+required facilities is to relax the constraint that all demands be covered. The
+maximal covering problem (Church and ReVelle, 1974) finds the locations of a
+specified number of facilities that maximize the number of covered demands. There
+is a subtle but important distinction between the problem statements for the set
+covering and maximal covering problems. The set covering problem requires that all
+demand nodes be covered while the maximal covering problem maximizes the
+number of covered demands. As such, the maximal covering problem distinguishes
+between large and small demand nodes.
+
+  To formulate the maximal covering problem we define the following two
+additional inputs and one decision variable:
+Location Models in Transportation  329
+
+  =  demand at node i
+
+P  =  the number of facilities to locate
+
+With this additional notation, the maximal covering problem may be formulated as
+follows:
+
+Maximize
+
+Subject to
+
+The objective function (10.4) maximizes the number of covered demands.
+Constraint (10.5) states that demands at node i cannot be counted as covered unless
+we locate at one of the candidate sites which covers node i. Constraint (10.6) states
+that we are to locate P facilities. Constraints (10.7) and (10.8) are standard
+integrality constraints. We note that constraints (10.8) can be relaxed to simple
+upper bounding constraints. Also, by solving the maximal covering problem for
+values of P from 1 up to the number needed for full coverage, we can trace out the
+tradeoff curve between coverage and the number of facilities used – a proxy for the
+cost of the system.
+
+  The maximal covering problem is also NP-hard (Megiddo, Zemel and Hakimi,
+1983), but it can generally be solved effectively using heuristics of the sort outlined
+in section 10.4 or using Lagrangian relaxation embedded within a branch and bound
+algorithm (Daskin, 1995; Daskin and Owen, 1998; Galvão and ReVelle, 1996). As
+in the case of the set covering problem, the objective function can be improved if we
+allow location on network links. For example, if the coverage distance is 6 in figure
+10-1, the objective function for the maximal covering problem with P=1 and
+facilities restricted to the nodes would be 100 (with the facility located at node A).
+However, if we can locate on the links as well as the nodes, the facility could be
+located between nodes A and B and the objective function would increase to 160.
+As before, if we restrict candidate sites to the node set augmented by the set of
+network intersection points defined by Church and Meadows (1979), the solution
+will be as good as that obtained by allowing sites to be anywhere on the links.
+
+  A second way to relax the requirements of the set covering problem is to increase
+the coverage distance. The P-center problem (Hakimi, 1964, 1965) locates a
+specified number of facilities (P) so that the maximum distance between a demand
+330  Handbook of Transportation Science
+
+node and the nearest facility is minimized. As in the case of the set covering model,
+this model considers demand nodes and not the demand levels at the nodes.
+
+  The P-center problem comes in a variety of flavors. If candidate sites are
+restricted to the set of nodes, we have the vertex P-center problem, while the
+problem in which facilities can be anywhere on the network is termed the absolute
+P-center problem. Both versions can be either weighted (if the demand nodes have
+different weights and the objective function is defined in terms of the maximum
+demand-weighted distance) or unweighted (if all demand nodes have identical
+weights).
+
+  To formulate the weighted vertex P-center problem we need to introduce two
+additional decision variables.
+
+W  =  the maximum distance between a demand node
+
+  and the facility to which it is assigned
+
+With these additional variables, the P-center problem can be formulated as follows:
+
+Minimize
+Subject to
+
+The objective function (10.9) minimizes the maximum demand-weighted distance
+between a demand node and the facility to which it is assigned. Constraint (10.10)
+stipulates that P facilities are to be located. Constraint (10.11) requires that each
+demand node be assigned to exactly one facility. Constraint (10.12) is a linkage
+constraint stating that demands can only be assigned to open facilities. Constraint
+(10.13) defines the maximum demand-weighted distance in terms of the assignment
+variables. Finally, (10.14) and (10.15) are integrality constraints. Constraints
+(10.15) can be relaxed to simple upper bounding constraints.
+
+  For fixed values of P, the vertex P-center problem can be solved in  time
+
+since we can enumerate each possible set of candidate locations in this time.
+Location Models in Transportation  331
+
+Clearly, even for moderate values of N and P, such enumeration is not realistic and
+more sophisticated approaches are required. For variable values of P, the problem is
+NP-hard.
+
+  Assuming integer distances, the unweighted vertex or absolute P-center problem
+is most often solved using a binary search over a range of coverage distances
+(Handler and Mirchandani, 1979; Handler, 1990). For each coverage distance, a set
+covering problem is solved.
+
+Comments on covering models
+
+The binary nature of coverage – either a candidate site covers a node within the
+coverage distance or it does not – is both an advantage and a liability for models
+within this class. On the positive side, this characteristic results in constraints that
+often have zeros or ones as coefficients, contributing to the relative ease with which
+such models can often be solved. On the other hand, the binary nature of coverage
+often means that there are multiple alternate optima for a problem. In the case of the
+P-center problem a single demand node/facility site pair defines the maximum
+distance and many sets of facility locations and demand assignments may result in
+the optimal objective function value. This can lead to excessive branching if branch
+and bound algorithms are not designed appropriately. Similar problems exist for the
+set covering problem. Plane and Hendrick (1979), Daskin and Stern (1981),
+Benedict (1983), and Daskin, Hogan and ReVelle (1988) discuss a number of
+hierarchical extensions of covering models that select from among the alternate
+optima a solution that optimizes a secondary objective (e.g., maximizing the number
+of demand nodes that are covered more than once).
+
+  Most models within the class of covering models are very sensitive to network
+coding. For example, adding a demand node to a set covering problem (perhaps with
+a very small demand) may alter the locations selected and may dictate the need for
+an additional facility. In an effort to circumvent this sort of problem, Daskin and
+Owen (1998) recently introduced two new covering models. The partial set
+covering problem finds the locations of the minimum number of facilities needed to
+cover a specified fraction of the demand nodes or the total demand. The partial
+covering P-center problem finds the locations of a specified number of facilities so
+that the maximum distance between a demand node within the “service set” and the
+nearest facility is minimized. The total number of nodes or demands within the
+service set must equal or exceed some user-specified value.
+
+Average distance models
+
+Covering models are appropriate for cases in which adequate service is defined by
+the maximum time or distance between a demand and the facility serving it. In many
+cases, however, the total (or average) distance for all nodes is more important. For
+example, in shipping goods from plants to distribution centers, an activity that often
+uses truckload shipments, the total distance traveled between plants and distribution
+332  Handbook of Transportation Science
+
+centers is likely to be of greater concern than is the maximum distance. In this
+section, we discuss two classic problems within the class of average distance models.
+
+  The P-median model (Hakimi, 1964, 1965) finds the locations of P facilities to
+minimize the demand-weighted total distance between demand nodes and the
+facilities to which they are assigned. This model may be formulated as follows:
+
+Minimize
+Subject to
+
+The objective function (10.16) minimizes the demand-weighted total distance. Note
+that for a fixed total demand, this is equivalent to minimizing the demand-weighted
+average distance. Constraints (10.17) through (10.19) are identical to (10.10)
+through (10.12) of the P-center problem. Constraints (10.20) and (10.21) are
+integrality constraints. Again, constraints (10.21) can be relaxed to simple non-
+negativity constraints.
+
+  Like the P-center problem, the P-median problem can be solved in polynomial
+time for fixed values of P, but is NP-hard for variable values of P (Garey and
+Johnson, 1979). Unlike the covering problems outlined above, however, at least one
+optimal solution to the problem consists of locating only on the nodes of the network
+(Hakimi, 1964). This can readily be shown by assuming that a facility is located
+optimally between nodes A and B. Let be the demand served by the facility
+
+that enters the link via node A and define similarly in terms of node B. Assume
+
+without loss of generality that  Then, moving the facility closer to A will
+
+not increase the objective function. Thus, we can convert any solution in which a
+facility is located on a link to a nodal solution without degrading the objective value.
+
+  The P-median problem fails to account for the fixed costs associated with locating
+facilities. This is rectified by the fixed charge location problem. To formulate this
+problem we define the following three additional inputs:
+
+  =  fixed cost of locating a facility at candidate site j
+
+  =  capacity of a facility at candidate site j
+
+  =  cost per unit demand per unit distance
+Location Models in Transportation  333
+
+With this notation, the capacitated fixed charge location problem can be formulated
+as follows:
+
+Minimize
+
+Subject to
+
+The objective function (10.22) minimizes the sum of the fixed facility location costs
+and the total demand-weighted distance multiplied by the cost per demand per unit
+distance. Constraints (10.23) and (10.24) are assignment and linkage constraints.
+Constraint (10.25) states that the total demand assigned to a facility must not exceed
+the capacity of the facility. Constraints (10.26) and (10.27) are standard integrality
+constraints. If (10.27) is enforced as a binary constraint, the model assumes facilities
+are singly sourced. Relaxing this constraint allows demands to be assigned to
+multiple facilities. We also note that constraint (10.24) is not needed in this integer
+programming formulation as constraint (10.25) will force demands to be assigned
+only to open facilities. However, including constraint (10.24) in the formulation
+significantly strengthens the linear programming relaxation of the model. If
+constraint (10.25) is removed, we are left with the uncapacitated fixed charge
+location problem. In this case, demands can always be singly sourced, even if
+(10.27) is relaxed.
+
+Undesirable facility location models
+
+The covering and average distance models discussed above assume that locating
+facilities as close as possible to demands is desirable. For many facilities this is the
+case. However, for undesirable facilities (e.g., prisons, power plants, and solid waste
+repositories) at least one objective involves locating facilities far from demand
+nodes. In this section we summarize two such models.
+
+  The maxisum location problem seeks the locations of P facilities such that the
+total demand-weighted distance between demand nodes and the facilities to which
+they are assigned is maximized. This model may be formulated as follows:
+
+Maximize
+334  Handbook of Transportation Science
+Subject to
+
+  This formulation is identical to that of the P-median problem with two notable
+exceptions. First, the objective is to maximize the demand-weighted total distance
+and not to minimize it. Second, constraint (10.32) has been included. In the absence
+of constraint (10.32) demands will be assigned to the most remote facility to
+maximize the demand-weighted total distance. Constraint (10.32) ensures that
+demands are assigned to the nearest selected facility. In this constraint, is the
+
+index of the farthest candidate location from demand node i. Constraint (10.32)
+then states that if the closest facility to demand node i is opened then demand
+node i must be assigned to that facility or to a closer facility.
+
+  Finally, we outline the P-dispersion model. Whereas all of the models previously
+presented deal with the distance between demand nodes and candidate sites, the P-
+dispersion model is concerned only with the distance between sites. The objective is
+to maximize the minimum distance between any pair of sites. Such a model is useful
+in locating military bases (e.g., nuclear weapon silos) as well as franchise outlets. In
+the latter case, the objective is a proxy for minimizing the competition between
+outlets.
+
+  To formulate this model we require the following additional input ( M ) and
+decision variable ( D ):
+
+M  =  a large constant
+
+D  = the minimum separation distance between any pair of facilities
+
+With this notation, the P-dispersion model may be formulated as follows:
+
+Maximize
+Subject to
+Location Models in Transportation  335
+
+The objective function (10.35) maximizes the distance between the two closest
+facilities. Constraint (10.36) requires that P facilities are located. Constraint (10.37)
+defines the minimum separation between any pair of facilities in terms of the
+location choices. If either or is zero, the constraint will not be binding. If
+
+both are equal to 1, the constraint is equivalent to  Constraint (10.38) is a
+
+standard integrality constraint.
+
+10.4 Solution algorithms for traditional models
+
+In this section, we briefly outline three broad classes of algorithms that have been
+applied to location problems such as those formulated in section 10.3 above. Note
+that these approaches are not limited to location problems. The general ideas have
+been applied to a large number of combinatorial optimization problems. We
+illustrate the development of these algorithms using the P-median model.
+
+Greedy heuristics
+
+The simplest algorithm for solving many location problems is a greedy adding
+algorithm. In this approach, we find the best site at which to locate the first facility
+using total enumeration. This can clearly be done in an amount of time that is
+proportional to the number of candidate facility sites. The location of the second
+facility is then identified by enumerating all possible locations for that facility,
+holding the location of the first facility fixed. Each subsequent facility is located in
+an identical manner. Figure 10-2 is a flowchart of this approach.
+
+  Just as one can add facilities in a greedy manner (always doing what is best given
+the locations of the facilities that have already been included in the emerging
+solution), we can also drop facilities in a greedy manner. In other words, we can
+begin the algorithm with facilities tentatively located at all candidate sites. We then
+remove facilities one at a time. In each case, we remove the facility whose
+elimination from the current set will result in the smallest possible increase in the
+demand-weighted average distance, the P-median objective. We continue in this
+manner until exactly P facilities remain in the solution.
+
+Improvement heuristics
+
+While greedy algorithms can generate a feasible solution quite quickly, they often do
+not perform particularly well. A number of algorithms have been devised to improve
+upon a feasible solution generated from a greedy algorithm, randomly or by some
+other means.
+336  Handbook of Transportation Science
+
+  Teitz and Bart (1968) proposed the use of an exchange or substitution algorithm
+for the P-median problem. Their algorithm is similar in concept to the two-opt
+algorithm for the traveling salesman problem (Lin and Kernighan, 1973). The basic
+idea of an exchange algorithm is to replace a node in the current set of selected sites
+with a node not in that set. If the replacement results in an improved objective value,
+the change is accepted as the new incumbent solution; otherwise, the change is not
+made and the solution reverts to the original incumbent solution. Generally, the
+procedure continues until it is impossible to find an exchange that will improve the
+objective function.
+
+  In implementing an exchange algorithm, there are a number of options. For
+example, (1) one can accept the first exchange that improves the objective function,
+or (2) once we identify a node in the solution set whose removal will improve the
+solution, we can search for the best possible replacement for that node, or (3) we can
+search for the best possible exchange at each iteration of the algorithm. If option (1)
+or (2) is adopted, there are additional implementation choices related to initializing
+the indices over which we search for the next exchange. For example, should we
+search for the next removal and replacement nodes by returning to index 1 or should
+we continue from the current index values. In short, there are many ways to
+Location Models in Transportation  337
+
+implement an exchange algorithm and the details will affect the solution that is
+attained. In addition, the exchange algorithm can be executed after the greedy
+algorithm has terminated or after each new node is added during the execution of the
+greedy algorithm.
+
+  While the exchange (or substitution) algorithm is similar to many other
+improvement algorithms used as heuristics for combinatorial optimization problems,
+the neighborhood search algorithm (Maranzana, 1964) exploits the spatial-nature of
+location problems. In the neighborhood search algorithm, we again begin with an
+incumbent solution. Demand nodes are then assigned to the nearest facility. The set
+of nodes assigned to a facility constitutes a “neighborhood” around that facility.
+Within each neighborhood, we then solve a 1-median problem optimally. (This can
+readily be done by total enumeration, if necessary.) Facilities are then relocated to
+the optimal 1-median locations within each neighborhood. If any facility sites
+change as a result of this procedure, new neighborhoods can be defined and the
+algorithm is repeated. The procedure continues until no change in the facility sites or
+neighborhoods is possible. Figure 10-3 is a flowchart of this algorithm.
+
+  Note that the demand-weighted total distance can decrease as a result of either the
+reassignment of demands to facilities (the formation of neighborhoods) or the
+relocation of facility sites. Also note that while the exchange algorithm relocates one
+facility at a time, the neighborhood search algorithm may result in multiple facility
+relocations in each iteration. Finally, it is worth noting that the neighborhood search
+algorithm considers exchanges of facilities only within a neighborhood. As such, it
+is a more restricted search than the exchange algorithm outlined above.
+
+  Hansen and Mladenovic (1997) present a variable neighborhood search algorithm
+for solving the P-median problem. In their context, a neighborhood is not the set of
+nodes assigned to a facility; rather, the neighborhood at a distance of k from a current
+solution is the set of solutions that can be obtained from the current solution by
+substituting k nodes not in the solution for k nodes that are in the solution. The
+algorithm performs an intensive local search (similar to the exchange algorithm
+outlined above) on the current solution and then diversifies the search by randomly
+selecting a solution from a neighborhood at a distance of k from the current best
+solution. The process continues, incrementing k, until some exogenously specified
+maximum value of k is attained. The algorithm compares very well with
+conventional heuristics as well as tabu search. Finally, we note that Densham and
+Rushton (1981) propose a number of data structures designed to expedite the search
+for good exchanges for P-median problems.
+
+Lagrangian relaxation
+
+While greedy adding or dropping algorithms coupled with improvement heuristics
+can find feasible solutions to many location problems relatively quickly, these
+procedures do not provide bounds on the quality of the solutions found. Theoretical,
+338  Handbook of Transportation Science
+
+worst-case bounds exist for some algorithms, but in practice such bounds are often of
+only theoretical interest as the solutions obtained by the algorithms are often much
+better than the worst-case bounds would suggest. Thus, there is a need for a means
+of evaluating the quality of heuristic solutions. Lagrangian relaxation provides both
+upper and lower bounds on the objective function value. When embedded in a
+branch and bound procedure, Lagrangian relaxation can be used in place of linear
+programming to obtain optimal solutions to integer linear programming formulations
+of location problems.
+
+  The basic idea behind Lagrangian relaxation is to relax one or more of the
+constraints that make the problem difficult to solve by multiplying the constraint by a
+Lagrange multiplier and bringing the constraint into the objective function. We then
+alternate between solving the relaxed problem for the original decision variables with
+fixed values of the Lagrange multipliers and updating the Lagrange multipliers. In
+each iteration, the Lagrangian objective function provides a lower bound on the
+Location Models in Transportation  339
+
+optimal objective value for a minimization problem (an upper bound for a
+maximization problem). The solution to the Lagrangian problem is likely to be
+infeasible for the original problem since we have relaxed one or more constraints.
+However, if we can convert the infeasible Lagrangian solution into a feasible
+solution for the original problem, the objective function value corresponding to that
+solution will provide an upper bound on the problem’s objective function for a
+minimization problem (or a lower bound for a maximization problem).
+
+  We would like the relaxed problem to have two properties. First, for any fixed
+values of the Lagrange multipliers, we would like to be able to solve the relaxed
+problem very quickly. This property is essential since we will need to solve the
+relaxed problem hundreds (or thousands) of times for different multiplier values.
+Ideally, we should not have to resort to advanced optimization techniques to solve
+the relaxed problem. In the best of all worlds, the relaxed problem can be solved by
+inspection or by sorting the coefficients of different terms in the objective function.
+This will be illustrated in the Lagrangian relaxation for the P-median problem
+discussed below.
+
+  The second desirable property relates to integer linear programming problems. If
+the solution to the relaxed problem is guaranteed to be all-integer (even when the
+integrality constraints on the relaxed problem are themselves relaxed), then we can
+show that the bounds obtained from the Lagrangian procedure will be no tighter than
+those obtained from the linear programming (LP) relaxation of the original problem.
+However, if the solution to the relaxed problem is not guaranteed to be all-integer,
+but an all-integer solution can readily be found, then the bounds from the Lagrangian
+algorithm can be tighter than those found by solving the LP relaxation of the original
+problem. Thus, we would like it to be easy to find an integer solution to the
+Lagrangian relaxation, but we would like the relaxation to be such that its LP
+relaxation does not result in an all-integer solution. For the relaxation discussed
+below, this second property does not hold. Nevertheless, the relaxation proves to be
+very powerful and effective at solving the P-median problem.
+
+  The reader interested in additional background on Lagrangian relaxation is
+referred to the seminal paper on the topic by Fisher (1981) as well as the tutorial
+paper on the topic (Fisher, 1985).
+
+  To illustrate Lagrangian relaxation, we consider relaxing constraints (10.18) to
+obtain the following relaxation of the P-median problem:
+
+Subject to
+340  Handbook of Transportation Science
+
+  Note that the Lagrangian function L in (10.39) is minimized with respect to the
+location and assignment variables ( and ) and is maximized with respect to
+
+the Lagrange multipliers  The largest value of this function over all iterations
+
+is a lower bound on the objective function for the P-median problem.
+
+  To solve this problem for fixed values of the Lagrange multipliers, we note that if
+
+  is less than 0, we would like to set  otherwise we would like to
+
+set  Setting  is not a problem, as this will not violate any of the
+
+constraints in the problem. However, setting  will violate constraint (10.19)
+
+unless we have  . If  , we must set  no matter what the sign of
+
+the coefficient of is. Thus, we need to determine which locations to pick to
+minimize (10.39). We do this by computing the value (in the Lagrangian problem)
+
+associated with locating at node j. This is given by  for
+
+each candidate site j. We then sort the values from smallest (most negative) to
+
+largest. Then we set  for the locations with the P smallest values and
+
+  for all other candidate sites. Finally, we set  if  and  if
+
+  and  is less than 0.
+
+  The solution to the Lagrangian problem is likely to violate one or more of the
+
+relaxed assignment constraints (10.18). However, the Lagrangian solution can be
+
+converted into a feasible solution to the P-median problem by locating at those P
+
+sites for which  and then assigning demands to the nearest selected facility.
+
+The objective function value for this solution is an upper bound on the P-median
+problem. Clearly, the smallest such value over all iterations is the best upper bound.
+We also note that the bound may be improved by applying one or both of the
+improvement heuristics described above to the solution. This can be done at each
+iteration or at selected points in the algorithm. For example, we might elect to use an
+improvement algorithm only when the objective function corresponding to the
+feasible solution (constructed as outlined above) represents an improvement over the
+best upper bound known so far.
+
+  At each iteration, the Lagrange multipliers are updated using subgradient
+optimization. Readers interested in the details of this approach are referred to the
+general papers by Fisher (1981, 1985) and the text by Daskin (1995).
+Location Models in Transportation  341
+
+Comparison of approaches
+
+In this section, we summarize the results of applying the different algorithms
+outlined above to a problem with 150 demand nodes representing the 150 most
+populous cities in the United States. The demand at each city is assigned to be the
+city’s population. Great circle distances are used in this example.
+
+  Table 10.1 summarizes the objective function values for this problem for 8 values
+of P, the number of facilities to locate, and six different algorithms. In addition, the
+table shows the number of Lagrangian iterations used, the number of branch and
+bound nodes explored and the solution time in seconds using a Pentium computer
+running at 133 MHz. The problems were solved using the SITATION software
+(Daskin, 1995) modified to run under Windows 95 (© Microsoft Corporation). All
+default Lagrangian parameters were used except that we required a provably optimal
+solution in all cases. Table 10.2 gives the percent error for each of the different
+algorithms and the different number of facilities sited. The greedy algorithm
+averaged 7 percent above the optimal values for these test runs. The exchange
+algorithm solutions averaged within 1 percent of the optimal values. Solutions from
+the neighborhood search algorithm averaged 1.6 percent and 3.9 percent above the
+optimal values, depending on whether the neighborhood search procedure was
+performed after each facility was added to the solution or only after all facilities had
+been added to the solution.
+
+  Note that the Lagrangian algorithm required an average of 10 seconds, 4.5 branch
+and bound nodes and 556 iterations to find the optimal solutions. The longest
+execution time was just over half a minute, requiring 15 branch and bound nodes and
+1,934 Lagrangian iterations. Thus, while the relaxation outlined above will result in
+bounds that are no better than those that can be obtained by solving the LP relaxation
+of the P-median problem, the instances discussed here can be solved quite quickly on
+a relatively slow personal computer. This has generally been our experience for
+small to moderate problem sizes for the P-median problem as well as for the other
+classical problems outlined in section 10.3.
+342  Handbook of Transportation Science
+Location Models in Transportation  343
+
+10.5 New directions and models
+Limitations of traditional models
+
+The classical models outlined in section 10.3 represent the building blocks of many
+location models used in practice. However, they are simply that: building blocks.
+Real-world problems are significantly more complex than are the simple models
+formulated above. In this section we outline a number of the deficiencies associated
+with traditional models and then summarize recent attempts to address these
+limitations.
+
+Multiple objectives. Facility location decisions have long-term strategic impacts.
+As such, they are likely to affect many facets of an organization’s operations and will
+impact many players and interest groups. Thus, in determining “optimal” facility
+siting plans, it is essential that the multitude of operational impacts and interest
+groups be represented. In doing so, we will invariably have to consider multiple
+objectives and not simply a single decision criterion.
+
+  The need to consider multiple objectives is most apparent in locating obnoxious
+or undesirable facilities such as waste disposal sites, prisons, and power plants
+(Ratick and White, 1988; Erkut and Neuman, 1989, 1992; Erkut and Verter, 1995;
+Verter and Erkut, 1995). In these cases, as indicated above, efficiency related
+objectives will tend to push the facility sites toward population centers, while the
+undesirable nature of the facilities will tend to result in a more remote and dispersed
+set of sites. In addition, economies of scale may dictate using relatively few
+facilities, while equity issues and the need to ensure that a few communities do not
+bear an undue burden will drive the solution toward using many smaller facilities
+(Ratick and White, 1988).
+
+Stochastic inputs. The future is never known with certainty. This is particularly
+true of the long-term future. Thus, while traditional models assume that input
+parameters are known with certainty, most of these inputs should be treated as being
+subject to uncertainty. Future demands can only be predicted using forecasting
+methods and should therefore be considered uncertain. Similarly, the costs of
+constructing and operating facilities will change in unpredictable ways over time.
+Transport costs may not be known with certainty. Travel times will change with the
+unknown levels of future congestion and even distances may change as the network
+is improved or modified with time.
+
+Dynamic decisions. Just as the inputs to location problems should be treated as
+stochastic or uncertain, so too should location decisions be treated as dynamic. In
+the real world, decisions made one day are re-evaluated and altered as the operating
+environment evolves. Facilities that are initially opened with limited capacity may
+be expanded over time. Alternatively, facilities that are opened near the beginning of
+a planning period may be closed as the location of demand changes or as transport
+and operating costs change. New facilities may be opened. Demands that are
+344  Handbook of Transportation Science
+
+initially assigned to one facility may, in future time periods, be reassigned to another
+facility as demands increase and facilities reach their capacity or as transport costs
+change.
+
+  Location models need to account for these dynamic changes in the siting plan.
+Also, recognizing the uncertain nature of future demands and costs, location models
+should be designed to help planners identify good initial solutions that preclude as
+few future options as possible. In that way, good solutions for the present will be
+identified and, as new information is obtained, the models can be exercised again to
+indicate desirable changes in the configuration of facilities.
+
+Vehicle routing considerations. All of the classical facility location problems
+outlined above assume either that service is delivered from a facility by a vehicle
+traveling to a single customer and then returning to the facility location or that
+customers travel individually to the facility for service. For example, the demand-
+weighted distance in the P-median and fixed charge location models is calculated as
+the distance from a facility to a demand node multiplied by the demand at the node.
+No consideration is given to routes that visit multiple customers. In fact, however,
+such routes are common in less-than-truckload (LTL) shipping. The presence of
+multi-customer service routes can significantly alter the transport cost component of
+location models. Therefore, they can also impact the number and location of
+facilities to be sited.
+
+Interaction of the network with facility locations. Finally, all of the facility
+location models outlined above attempt to find optimal facility locations given the
+configuration of the network. In many cases, it is important to determine the
+network configuration and facility locations simultaneously. For example, in
+studying airline hub and spoke networks, we must simultaneously determine the
+location of the hubs, the assignment of non-hub airports to the hubs (i.e., the links to
+be used in the spoke part of the network), and the connectivity of the hubs. Similar
+problems arise in telecommunication, power transmission, and computer networks.
+
+  In developing countries, funds spent on facilities are often fungible with funds for
+other development purposes. For example, we may have a choice between using
+funds to build a school, expand a hospital, or add a new road. The ability to move
+funds from one activity to another suggests that facility location models must
+account for alternative uses of these limited resources. It is particularly important
+that such models account for the possibility of improving the network since network
+modifications may do more to reduce the average demand-weighted distance than
+will additional facilities.
+
+  In the sections below, we outline a number of models that have been used to
+address some of the complications discussed above.
+Location Models in Transportation  345
+
+Multi-objective models
+
+As indicated above, most real-world facility location problems entail multiple
+conflicting objectives. Thus, the goal of a facility location analysis should not be to
+determine a single “optimal” siting plan. Rather, the goal should be to determine a
+set of non-inferior or non-dominated location plans. A plan k will consist of a set of
+facility locations and demand-to-facility assignments. Plan k is non-inferior or non-
+dominated if there is no other plan that does at least as well as plan k for all
+objectives and better than plan k for at least one objective.
+
+  An analyst examining a real-world location problem often develops an
+approximation to the non-inferior set. There are three reasons for doing so. First,
+the complete non-inferior set may be very large. Second, it may be time consuming
+or difficult to identify all solutions in the non-inferior set. Third, an approximation
+of the non-inferior set may be all that is required for the decision-maker to
+distinguish those areas of the objective space – the space indicating the possible
+levels of attainment of different objectives – in which she wants to concentrate future
+analyses from those areas which she is willing to exclude from future consideration.
+
+  Once the set of non-inferior plans has been identified either completely or
+approximately, the analyst must determine an appropriate means of conveying the
+information to the decision-maker. The information to be related includes both the
+tradeoffs between possible levels of attainment for the different objectives (the
+objective space) and the actual siting plans themselves (the decision space). Once
+this information is conveyed, the decision-maker may ask for additional analyses to
+be done or he/she may be in a position to choose between the siting plans.
+Additional analyses may include: (1) further exploration of the available alternatives
+in some portion of the objective space if only an approximation to the non-inferior
+set has been provided, (2) evaluation of non-modeled objectives for some or all of
+the solutions in the non-inferior set, and (3) inclusion of additional constraints.
+Additional constraints may restrict the facility sites to locations at which the agency
+or firm already owns property, or may exclude or include specific sites from/in the
+solution.
+
+  Flynn and Ratick (1988) use a multi-objective approach in designing essential air
+services for rural areas after airline deregulation. Belardo et al. (1984) use a multi-
+objective approach to locate multiple types of emergency equipment to be used in the
+event of an offshore oil spill. Finally, Current, ReVelle, and Cohon (1988) suggest a
+multi-objective approach to identifying the tradeoff between the distance of a path
+and the number of people impacted by travel on the path. The objectives are to
+minimize the path length and to minimize the number of people located within a
+covering distance of nodes on the path. This can be used in finding paths for
+hazardous material transport. In a related paper (Current, ReVelle and Cohon, 1985)
+they examine the problem in which the covered demand is to be maximized.
+Current, Min, and Schilling (1990) review multi-objective facility location models.
+346  Handbook of Transportation Science
+
+  To illustrate the issues involved in multi-objective analysis, consider the problem
+of trading off coverage and demand-weighted distance. Such a problem may arise if
+it is important to both minimize the total cost of providing service (as measured by
+the demand-weighted distance) and maximize the number of customers that receive
+service within a specified standard (as measured by the number of covered
+demands). Increasing the number of covered demands may be possible only at the
+expense of increasing the average cost or average distance.
+
+  For problems in which the total demand is fixed and is independent of the level of
+service, maximizing the number of covered demands is equivalent to minimizing the
+number of uncovered demands. Thus, using the notation defined above, the multi-
+objective problem can be defined as follows:
+
+Minimize
+
+Subject to
+
+Note that the objective function (10.44) is no longer a scalar quantity, but has been
+replaced by a vector quantity. The first objective, is to minimize the demand-
+weighted total distance, or the objective from the P-median problem. The second
+objective, is to minimize the total uncovered demand. The constraints, as written
+above, are identical to those of the P-median problem. (For the complete derivation
+of the second objective in this form, the reader is referred to section 8.2 of Daskin
+(1995).)
+
+The second term of the objective function can be rewritten as
+
+where is 1 if a facility located at candidate site j cannot cover demands at node i
+
+and is 0 otherwise. In this form, the two objectives are mathematically equivalent
+with the only difference being that replaces in the objective function. This
+
+observation suggests that the problem can be solved (approximately) by weighting
+the two objectives (Cohon, 1978). The resulting single objective is
+
+  where is the relative weight placed on the P-
+
+median objective and  . By varying , we can trace out the approximate
+
+tradeoff curve between the demand-weighted average distance and the number of
+uncovered demands.
+Location Models in Transportation  347
+
+  Using this approach for the 150 node data set described in section 10.4 above and
+locating 8 facilities with a coverage distance of 300 miles, we obtain the tradeoff
+curve shown in Figure 10-4. Note that the solution to the P-median problem (point
+A) results in an average distance of 152.9 miles, but 17 percent of the demands are
+not covered within 300 miles. At the other extreme, the maximal covering model
+(solution F) leaves only 8.7 percent of the demand uncovered, but does so at the
+expense of increasing the average distance by over 18 percent to 181.1 miles.
+Solutions B, C, D, and E represent compromise solutions that result in a greater
+average distance than that attainable through the P-median solution but with better
+coverage.
+
+  Note that the weighting method outlined above will not find all non-inferior
+solutions. In fact, it will be unable to find many of the non-inferior solutions. For
+example, solutions within a triangle defined by solutions D, E and the hypothetical
+solution G in Figure 10-4 will not be found since the weighting method essentially
+minimizes a linear objective function that is parallel to the line segment DE. Similar
+triangles in which the weighting method cannot find solutions can be defined for
+each pair of adjacent solutions in Figure 10-4. Solutions within these triangles are
+known as duality gap solutions.
+
+  To find some of these other solutions, we can exclude one or more of the sites
+found in the solutions represented by the tradeoff curve shown in Figure 10-4 and
+resolve the problem. (This will not guarantee that new solutions will be found, but
+tends to work well in practice.) Houston, Texas is found in all of the solutions
+shown in Figure 10-4 except solution F. Excluding Houston from the set of
+candidate solutions and resolving the problem results in four additional non-inferior
+solutions (as well as one inferior solution). The new tradeoff curve is shown in
+Figure 10-5. The four new non-inferior solutions are shown with an (*) symbol.
+
+  Finally, we may be interested in the number of solutions in which a particular city
+is found. Figure 10-6 shows that only 22 cities are used in the 10 solutions shown in
+Figure 10-5. Note that with 8 cities per solution, there could have been as many as
+80 different cities represented by the 10 solutions. New York is in 9 of the 10
+solutions, while Los Angeles, Fort Wayne and Topeka are in 7 of the 10 solutions.
+This sort of information can be quite useful to decision-makers.
+348  Handbook of Transportation Science
+

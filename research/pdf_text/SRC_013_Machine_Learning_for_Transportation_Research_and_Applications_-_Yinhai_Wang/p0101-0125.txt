@@ -1,0 +1,1101 @@
+88 Machine Learning for Transportation Research and Applications
+
+data input Xt to the future trafﬁc states Yt = Xt+1. Basically, the trafﬁc fore-
+casting problem can be categorized into two types, single-step forecasting and
+multistep forecasting, with respect to the number of steps of the future state the
+model attempts to predict. In this section, we take the single-step prediction as
+an example. Thus, the trafﬁc state prediction problem aims to learn a function
+F (·) to map T steps of historical time series to the next subsequent time step of
+trafﬁc state.
+
+  F ([x1, x2, ..., xt ]) = [xt+1].  (6.13)
+
+  Please note that models with the sequence-to-sequence structure or other
+advanced architectures will be more suitable for multistep prediction due to its
+more complicated output with higher dimensions.
+
+Trafﬁc prediction algorithms
+
+The training procedure of RNN-based trafﬁc-prediction algorithm is almost
+identical to a normal ML training procedure. One potential difference is the
+training–testing split for algorithm evaluation. The normal model training and
+evaluation procedure requires shufﬂing all the data samples and splitting the
+dataset into three portions, including a training set, a validation set, and a test-
+ing set, to ensure all sets follow the identical distribution. However, since the
+trafﬁc prediction task tends to learn from historical time series and predict fu-
+ture trafﬁc, another data splitting strategy is needed to split the dataset according
+to the chronological order of the dataset samples where the early portion will be
+categorized as training set and the latest portion will be the testing set.
+
+  In this section, we take the LSTM network as a prediction model to
+brieﬂy demonstrate procedures for predicting network-wide trafﬁc. Algorithm 1
+describes the basic training procedure of the prediction model without showing
+the details of the LSTM model. To further help you understand the details of the
+
+Algorithm 1: Short-term trafﬁc forecasting.
+
+  Data: Training set Dtrain, Validation set Dvalid , Testing set Dtest
+  Result: Trained Model LST Mω
+1 Initialize parameters ω0 in LSTM;
+2 while Not Converge do
+
+3 sample (xt , yt ) from Dtrain ;
+4 yˆt ← LST M(xt );
+5 Loss = error(yˆt , yt ) ;
+6 ωt+1 ← ωt − r ∂Loss ∂ω ;
+7 if Loss < Threshold then
+
+8  Return LST Mω
+  Recurrent neural networks Chapter | 6 89
+
+algorithm, please refer to Exercises 1 and 2 to practice implementing the LSTM
+model and the network-wide trafﬁc-prediction algorithm.
+
+  It also should be noted that the input of a trafﬁc prediction model could be
+far more than just a combination of the trafﬁc state matrix XT and the mask-
+ing matrix MT . A trafﬁc prediction model can also take many other inﬂuential
+factors into consideration, such as road network structure, temporal information
+(time of day, day of the week, etc.), weather information, and event informa-
+tion. Thus, the deﬁnition of trafﬁc prediction problem explicitly depends on the
+design of the prediction model.
+
+6.3.2 Trafﬁc prediction with missing values
+
+Problem deﬁnition
+In reality, trafﬁc sensors, like inductive-loop detectors, may fail due to the break-
+down of wire insulation or damage caused by construction activities or electron-
+ics unit failure. The sensor failure further causes missing values in collected time
+series data, as shown by the black boxes in Fig. 6.6. For the RNN-based predic-
+tion problem, if the input time series contains missing/null values, the model
+may fail due to null values that cannot be computed during the training process.
+If the missing values are set as some predeﬁned values, like zeroes, the means
+of historical observations, or last observed values, these biased model inputs
+will result in biased parameter estimation in the training processing (Che et al.,
+2018). Thus, how to deal with missing values in input sequences needs to be
+take into consideration in the model design process.
+
+FIGURE 6.6 Short-term network-wide trafﬁc forecasting with missing values in input data.
+
+  To formulate this problem, a masking vector mt ∈ {0, 1}D is adopted to
+denote whether trafﬁc states are missing at time step t. The masking vector for
+xt is deﬁned as
+
+mtd = 1, if xtd is observed  (6.14)
+  0, otherwise.
+
+Thus, the masking matrix for a data sample is M = {m1, m2, ..., mT }T ∈ RT ×D.
+90 Machine Learning for Transportation Research and Applications
+
+FIGURE 6.7 (a) Structure of LSTM. (b) Structure of LSTM-I.
+
+  With the marking deﬁnition, the trafﬁc state prediction problem becomes
+learning a function F (·) to map T time steps of historical time series to the next
+
+subsequent time steps of trafﬁc speed information:
+
+F ([x1, x2, ..., xT ]; [m1, m2, ..., mT ]) = [xT +1].  (6.15)
+
+LSTM-based trafﬁc prediction with missing values
+
+In this subsection, the application of trafﬁc prediction with missing values is
+employed as an example still based on the LSTM method. To ﬁll missing val-
+ues and fulﬁll trafﬁc prediction, Che et al. (2018) proposed a GRU-D method
+targeting on inferring missing values based on the historical mean and the last
+observation with a learnable decay rate. In this example, an LSTM-based model,
+LSTM-I, with an imputation unit for inferring missing values is introduced (Cui
+et al., 2020). Fig. 6.7 (a) and (b) illustrate the difference in the model structures
+between the LSTM and LSTM-I.
+
+  Speciﬁcally, the imputation unit σp is fed with the preceding cell state Ct−1
+and the preceding output ht−1 to infer the values of the subsequent observation,
+as shown in Fig. 6.7 (b). The inferred observation x˜t ∈ RD is denoted as
+
+x˜t = σp(WI · Ct−1 + UI · ht−1 + bI ),  (6.16)
+
+where WI and UI are the weights and bI is the bias in the imputation unit. The
+values inferred from the imputation values can contribute to the training pro-
+cess. In this way, the LSTM-I can complete the data imputation and prediction
+tasks at the same time. Thus, it is particularly suitable for online trafﬁc predic-
+tion problems, which may commonly encounter missing values issues. Please
+note that the inferred values may not be the “actual” missing values since the
+proposed imputation unit is only designed for generating appropriate values to
+help the calculation process in the LSTM structure work properly and generate
+accurate predictions.
+
+  Then, each missing element of the input vector is updated by the imputed
+element
+
+xdt ← mdt xdt + 1 − mdt x˜td ,  (6.17)
+  Recurrent neural networks Chapter | 6 91
+
+where  x˜td  is  the  d -th  element  of  x˜t .  According  to  Eq.  (6.17),  if  xd  is  missing,  md
+
+  xd  x˜td .  t  t
+
+is  zero  and  t  is  imputed  by
+
+  Additionally, because each masking vector mt contains the position infor-
+
+mation of missing values at time step t, the masking vector is also fed into the
+
+model and the LSTM-I structure can be characterized as
+
+  xt = mt xt + (1 − mt ) x˜t .  (6.18)
+
+  In this way, the input xt of the LSTM-I with all missing values ﬁlled can gen-
+erate prediction output such as the vanilla LSTM model. For more information
+about the LSTM-I model, please refer to (Cui et al., 2020).
+
+6.4 Exercises
+
+6.4.1 Questions
+
+1. Are there any dimension limitations on the input of RNN models? Why?
+2. What are the main reasons to add the gate units in LSTM models?
+3. Why is GRU faster as compared to LSTM?
+4. Explain the difference between the attention mechanism in Seq2Seq models
+
+  and transformer.
+5. How is the transformer architecture better than RNN?
+
+6.4.2 Project: predicting network-wide trafﬁc using LSTM
+
+In this exercise, you need to complete the provided code to train a LSTM model
+to predict the network-wide trafﬁc state in Seattle area. Speciﬁcally, you need
+to implement the algorithm, ﬁne-tune the model parameters, and evaluate the
+model performance.
+
+Problem deﬁnition
+As introduced in Sect. 6.3.1, the network-wide trafﬁc prediction problem can
+be characterized as learning a function F (·) to mapping the input historical spa-
+tiotemporal trafﬁc data and future trafﬁc state.
+
+Dataset preparation
+In this study, a loop detector dataset,1 collected by inductive loop detectors
+deployed on roadway surface, is utilized to carry out experiments to test the
+proposed model. Multiple loop detectors are connected to a detector station
+deployed around every half a mile. The collected data from each station are
+grouped and aggregated as station-based trafﬁc-state data according to direc-
+tions. This aggregated and quality controlled dataset contains trafﬁc speed,
+volume, and occupancy information. In the experiments, the loop detector data
+
+1 https://github.com/zhiyongc/Seattle-Loop-Data.
+92 Machine Learning for Transportation Research and Applications
+
+FIGURE 6.8 Loop detector dataset covering the freeway network in Seattle, WA.
+
+cover four connected freeways, which are I-5, I-405, I-90 and SR-520 in the
+Seattle area, and are extracted from the Digital Roadway Interactive Visualiza-
+tion and Evaluation Network (DRIVE Net) system. The trafﬁc sensor stations,
+represented by small blue icons, are shown in Fig. 6.8. This dataset contains
+trafﬁc state data from 323 sensor stations in 2015, and the time-step interval of
+this dataset is 5 min.
+
+  The data will be split into three datasets, i.e., the training set, validation set,
+and testing set, normally with a splitting ratio of 7:2:1.
+Implement and ﬁne-tune model
+Exercise 1 shows the details of implementing an LSTM algorithm. Since RNN
+and its variants are widely used, general deep learning packages, like PyTorch
+and TensorFlow, provide algorithm packages to enable the user to call for
+the RNN models using simple API. Thus, in this exercise, you will be re-
+quired to use a LSTM model provided by PyTorch and implement the all the
+training, validation, and testing procedures. Similar to Exercise 1, the basic
+coding structure is provided in this exercise. You will need to ﬁll your own
+code and ﬁne-tune several hyperparameters, including but not limited to the
+dimension of the LSTM hidden state, batch size, and learning rate. The exer-
+cise coding script is provided in the book’s coding repository as well at https://
+github.com/Deep-Learning-for-Transportation/DL_Transportation.
+  Recurrent neural networks Chapter | 6 93
+
+Model evaluation
+After implementing the training and validation procedures of the LSTM-based
+trafﬁc performance, you need to evaluate the prediction performance on the test-
+ing dataset. There are several common prediction performance-measurement
+metrics, including mean squared error (MSE) and mean absolute percentage
+error (MAPE). To complete this exercise, please use the well-trained model to
+evaluate the performance to ensure prediction MAPE ≤ 5%. Please note that
+those deep learning packages all provide the RNN model and many other RNN
+variants, and you are welcome to select and test other RNN-based models.
+This page intentionally left blank
+Chapter 7
+
+Reinforcement learning
+
+Reinforcement learning (RL) is the area of machine learning that deals with
+sequential decision-making. In this chapter, we describe how the RL problem
+can be formalized as an agent that has to make decisions in an environment to
+optimize a given notion of cumulative rewards. This chapter also introduces the
+various approaches to learning sequential decision-making tasks and how deep
+RL can solve a series of decision-making problems in the transportation ﬁeld.
+
+  A key aspect of RL is that an agent learns good behavior. This means that
+it modiﬁes or acquires new behaviors and skills incrementally. Another impor-
+tant aspect of RL is that it uses trial-and-error experience (as opposed to, e.g.,
+dynamic programming, that assumes full knowledge of the environment a pri-
+ori). Thus, the RL agent does not require complete knowledge or control of the
+environment; it only needs to be able to interact with the environment and col-
+lect information. Thus, when controlling transportation-related agents, such as
+vehicles and trafﬁc signal lights, RL-based control strategy can be learned from
+simulated trafﬁc environments. This chapter shows examples of how the deci-
+sions of vehicles and trafﬁc signals are made with the help of the RL algorithms.
+
+7.1 Reinforcement learning setting
+
+The general RL problem is formalized as a discrete-time stochastic-control pro-
+cess where an agent interacts with its environment in the following way: The
+agent starts, in a given state within its environment s0 ∈ S, by gathering an ini-
+tial observation ω0 ∈ . At each time step t, the agent has to take an action
+at ∈ A. As illustrated in Fig. 7.1, it follows three consequences: (i) The agent
+obtains a reward rt ∈ R, (ii) the state transitions to st+1 ∈ S, and (iii) the agent
+obtains an observation ωt+1 ∈ . Here, we review the main elements of RL
+before delving into deep RL in the following sections.
+
+FIGURE 7.1 Agent-environment interaction in RL.
+
+Machine Learning for Transportation Research and Applications  95
+
+https://doi.org/10.1016/B978-0-32-396126-4.00012-6
+
+Copyright © 2023 Elsevier Inc. All rights reserved.
+96 Machine Learning for Transportation Research and Applications
+
+7.1.1 Markov property
+
+The Markov property means that the future of the process only depends on the
+current observation, and the agent has no interest in looking at the full history.
+A Markov Decision Process (MDP) is a discrete-time stochastic control process
+that is deﬁned in the following paragraph.
+
+  An MDP is a 5-tuple (S, A, P , R, γ ) where:
+• S is the state space and st ∈ S represents the state of the agent at time t;
+• A is the action space, in which at ∈ A is the action of the agent following a
+
+  policy at ∼ π(st , ·);
+• P : S × A × S → [0, 1] is the transition probability function (set of condi-
+
+  tional transition probabilities between states), which is normally represented
+  by P (st+1 | st , at ) = T (st , at , st+1);
+• R : S × A × S → R is the reward function, where R is a continuous set of
+  possible rewards in a range Rmax ∈ R+ (e.g., [0, Rmax]);
+• γ ∈ [0, 1) is the discount factor.
+
+  If the system is fully observable in an MDP, the observation is the same as
+the state of the environment: ωt = st . At each time step t, the probability of
+moving to st+1 is given by the state transition function P (st+1|st , at ), and the
+reward is given by a bounded reward function R (st , at , st+1) ∈ R.
+
+7.1.2 Goal of reinforcement learning
+
+The goal of an RL agent is to ﬁnd a policy π(s, a) ∈ , so as to optimize an
+expected return V π (s) : S → R (also called V-value function) such that
+
+  ∞  (7.1)
+
+  V π (s) = E γ krt+k | st = s, π ,
+
+  k=0
+
+where the reward can be described as rt = Ea∼π(st ,·)R (st , a, st+1). From the
+
+deﬁnition of the expected return, the optimal expected return can be deﬁned as
+ﬁnding a policy π ∈ to achieve the maximum expected return:
+
+  V ∗(s) = max V π (s).  (7.2)
+
+  π∈
+
+  In addition, RL also introduces a few other functions of interest to achieve
+its goal. The state-action (Q-value) function Qπ (s, a) : S × A → R is deﬁned
+
+as follows:
+
+  ∞
+
+  Qπ (s, a) = E γ krt+k | st = s, at = a, π .  (7.3)
+
+  k=0
+
+Based on Bellman’s equation, Eq. (7.3) can be rewritten recursively as
+
+Qπ (s, a) = P (s |a, s) R s, a, s + γ Qπ s , a = π s . (7.4)
+
+  s ∈S
+Reinforcement learning Chapter | 7 97
+
+  Similar to the value function V , the optimal Q function Q∗(s, a) can also be
+deﬁned as
+
+Q∗(s, a) = max Qπ (s, a).  (7.5)
+π∈
+
+  The difference between the V-value function and the Q-value function is that
+the optimal V-value function V ∗(s) is the expected discounted reward given a
+state s when the agent follows the optimal policy π∗, while the optimal Q-value
+Q∗(s, a) is the expected discounted return given a state s with a given action
+a when agent also follows the optimal policy π∗ thereafter. Particularly, the
+optimal policy can be obtained directly from the Q-value function Q∗(s, a):
+
+π ∗(s) = argmaxQ∗(s, a).  (7.6)
+
+a∈A
+
+  Sometimes, RL will use another form of the expected return, which is the
+advantage function deﬁned
+
+Aπ (s, a) = Qπ (s, a) − V π (s).  (7.7)
+
+This quantity of Aπ (s, a) describes how good the action a is, compared to the
+expected return when directly following the policy π.
+
+7.1.3 Categories and terms in reinforcement learning
+
+Before presenting the details of RL algorithms, we will introduce a pair of terms
+that are usually mentioned in RL.
+• Episode: Each subsequence of agent–environment interactions between ini-
+
+  tial and terminal states is called an episode. Taking a simulated environment
+  as an example, an episode is a simulation event that ends in a terminal state.
+  Consider a video game, the time your player is alive is an episode. Episodic
+  tasks in RL mean that the game ends at a terminal stage or after some amount
+  of time. Whenever an episode ends, the game reverts to the initial state (not
+  necessarily the same all the time).
+• Horizon: A horizon in reinforcement learning is a future point relative to
+  a time step, beyond which you do not care about reward (so you sum the
+  rewards from time t to t + H ). The ﬁnite horizon is the agent’s time to live.
+
+  In the following subsections, several categories of RL settings, policies,
+training strategies, etc., are introduced to help you understand how RL is try-
+ing to solve what kind of problems.
+
+Model-free vs. model-based
+
+The goal of RL is to ﬁnd a policy to maximize the reward that the agent attain.
+There are several necessary components to learn a policy for an agent: (1) a
+representation of a value function that provides a prediction of how good each
+98 Machine Learning for Transportation Research and Applications
+
+state or each state/action pair is; (2) a direct representation of the policy π(s),
+or π(s, a), or (3) a model of the environment (the estimated transition function
+and the estimated reward function) in conjunction with a planning algorithm.
+The ﬁrst two components are related to what is called model-free RL. When the
+latter component is used, the algorithm is referred to as model-based RL.
+• Model-free learning is a simple RL process in which a value is associated
+
+  with actions. The agent does not need to build a model to describe the internal
+  operation mechanism of the surrounding environment.
+• Model-based learning, as it sounds, tries to understand the agent’s envi-
+  ronment and creates a model for it based on its interactions with this envi-
+  ronment. Model-based RL relies on the formation of internal models of the
+  environment to maximize the reward.
+
+  Thus, model-free and model-based are two categories of RL based on
+whether the agent needs to understand the environment or not. Most deep
+learning-based RL algorithms are model-free algorithms since deep learning
+methods are inherently black-box methods. These methods mostly build end-
+to-end neural networks to generate the actions of the agents without modeling
+the environment. It is also worth noting that, in most real-world RL problems,
+the state space is high-dimensional (and possibly continuous), and neural net-
+works have advantages for RL algorithms since they are well suited to deal with
+high-dimensional inputs (such as times series, frames, etc.).
+
+Stationary vs. nonstationary
+
+In RL, a policy deﬁnes how an agent determines actions based on states. The
+policy is learned based on the interaction between the agents and the envi-
+ronment. Stationary and nonstationary refer to whether the environment keeps
+changing or not. A stationary (time) series is one whose statistical properties,
+such as the mean, variance, and auto-correlation, are all constant over time. On
+the other hand, a nonstationary series is one whose statistical properties change
+over time.
+
+  Thus, policies can be categorized under the criterion of being either station-
+ary or nonstationary as follows.
+• A nonstationary policy depends on the time-step and is useful for the ﬁnite
+
+  horizon context where the cumulative rewards that the agent seeks to optimize
+  are limited to a ﬁnite number of future time steps. Here, you can regard the
+  ﬁnite horizon as the agent’s time to live.
+• A stationary policy is a policy that does not change. It generally means that
+  the policy is not being updated by a learning algorithm. If the inﬁnite horizons
+  are considered, then the policies are considered stationary.
+  Reinforcement learning Chapter | 7 99
+
+Deterministic policy vs. stochastic policy
+In terms of the manner for an agent to determine the action based on its state,
+policies can be categorized under another criterion of being either deterministic
+or stochastic:
+• In the deterministic case, the policy is described by π(s) : S → A.
+• In the stochastic case, the policy is described by π(s, a) : S × A → [0, 1],
+
+  where π(s, a) denotes the probability that action a may be chosen in state s.
+
+  The formalism can be directly extended to the ﬁnite horizon context. In that
+case, the policy and the cumulative expected returns should be time-dependent.
+
+Ofﬂine learning vs. online learning
+In terms of the different settings to learn a policy from data, the RL settings can
+be categorized as ofﬂine learning and online learning. Learning a sequential
+decision-making task, like MDP, appears in two cases: (i) in the ofﬂine learning
+case where only limited data on a given environment is available and (ii) in an
+online learning case where, in parallel to learning, the agent gradually gathers
+experience in the environment.
+• In an ofﬂine setting, the experience is acquired a priori, and then it is used as
+
+  a batch for learning; hence the ofﬂine setting is also called batch RL. Strictly
+  ofﬂine learning algorithms need to be rerun from scratch in order to learn
+  from the changed data.
+• In contrast, in the online setting, data becomes available in sequential order
+  and is used to progressively update the behavior of the agent. Strictly online
+  algorithms improve incrementally as each piece of new data arrives, then
+  discard that data and do not use it again. It is not a requirement, but it is
+  commonly desirable for an online algorithm to forget older examples over
+  time, so that it can adapt to nonstationary populations.
+
+  The main difference between online and ofﬂine is that, in an online setting,
+the agent can inﬂuence how it gathers experience so that it can be more useful
+for learning. However, it is also an additional challenge for the agent since it has
+to deal with the exploration/exploitation dilemma while learning.
+
+Exploration vs. exploitation
+The more episodes are collected the better because this improves the estimates
+of the function. However, there’s a problem. If the algorithm for policy improve-
+ment always updates the policy greedily, meaning it takes only actions leading to
+immediate reward, actions and states not on the greedy path will not be sampled
+sufﬁciently, and potentially better rewards would stay hidden from the learning
+process.
+
+  Essentially, we’re forced to make a choice between making the best decision
+given the current information or starting to explore and ﬁnd more information.
+This is also known as the exploration vs. exploitation dilemma.
+100 Machine Learning for Transportation Research and Applications
+
+  In fact, we’re looking for something like a middle ground between those.
+Full-on exploration would mean that we would need a lot of time to collect the
+needed information, and full-on exploitation would cause the agent to get stuck
+in a local reward maximum. There are two approaches to ensure all actions are
+sampled sufﬁciently called on-policy and off-policy methods.
+
+Off-policy learning vs. on-policy learning
+
+In terms of how to learn experience from the environment, RL learning strategies
+can be categorized as off-policy and on-policy. In RL, there could be two terms
+that are related to off-policy and on-policy learning:
+• Target Policy π(s, a): It is the policy that an agent is trying to learn, i.e., the
+
+  agent is learning the value function for this policy.
+• Behavior Policy β(s, a): It is the policy that is being used by an agent for ac-
+
+  tion select, i.e., the agent follows this policy to interact with the environment.
+
+  The difference between off-policy and on-policy can be described as follows:
+• On-policy learning algorithms are the algorithms that evaluate and improve
+
+  the same policy that is being used to select actions. That means we will try
+  to evaluate and improve the same policy that the agent is already using for
+  action selection. In short, target policy == behavior policy. On-policy based
+  methods usually introduce a bias when used with a replay buffer because the
+  trajectories are usually not obtained solely under the current policy π. Some
+  examples of on-policy algorithms are policy iteration, value iteration, Monte
+  Carlo for on-policy, SARSA, etc.
+• Off-policy learning algorithms evaluate and improve a policy that is different
+  from the policy that is being used for action selection. In off-policy based
+  methods, learning is straightforward when using trajectories that are not nec-
+  essarily obtained under the current policy, but from a different behavior policy
+  β(s, a). In short, target policy = behavior policy. In those cases, experience
+  replay allows reusing samples from a different behavior policy. Some exam-
+  ples of off-policy learning algorithms are Q learning, expected SARSA (can
+  act in both ways), etc.
+
+  More speciﬁcally, this difference in learning strategy makes off-policy meth-
+ods sample efﬁcient as they are able to make use of any experience. The beneﬁts
+of off-policy methods are as follows:
+• Continuous exploration: As an agent is learning an other policy, it can then
+
+  be used for continuing exploration, while learning optimal policy, whereas
+  on-policy learns suboptimal policy.
+• Learning from demonstration: an agent can learn from the demonstration.
+• Parallel learning: This speeds up the convergence, i.e., learning can be fast.
+Reinforcement learning Chapter | 7 101
+
+7.2 Value-based methods
+
+Value-based algorithms aim to build a value function that can subsequently
+deﬁne a policy for the agent. The Q-learning related algorithms (Watkins and
+Dayan, 1992) are the most popular value-based algorithms. In this section, we
+will also speciﬁcally discuss the main elements of the deep Q-network (DQN)
+algorithm (Mnih et al., 2015), which uses neural networks as function approxi-
+mators and has achieved super-human-level control performance when playing
+video games and controlling other simulated agents. We will also brieﬂy intro-
+duce improvements of the DQN algorithm.
+
+7.2.1 Q-learning
+
+The basic version of Q-learning maintains a lookup table of values Q(s, a)
+with one entry for every state–action pair. In order to learn the optimal Q-value
+function, the Q-learning algorithm makes use of the Bellman equation for the Q-
+value function (Dreyfus and Bellman, 1962) whose unique solution is Q∗(s, a):
+
+Q∗(s, a) = BQ∗ (s, a),  (7.8)
+
+where B is the Bellman operator mapping any function K : S × A → R into
+another function S × A → R and is deﬁned as follows:
+
+(BK)(s, a) = T s, a, s R s, a, s + γ max K s , a . (7.9)
+
+  s ∈S a ∈A
+
+Here, the K function can be any function. Taking the Q function as an exam-
+ple, this function is similar to Eq. (7.4) with the same structure. In practice, one
+general proof of convergence to the optimal value function is available under
+the conditions that: (1) the state–action pairs are represented discretely, and (2)
+all actions are repeatedly sampled in all states (which ensures sufﬁcient explo-
+ration, hence not requiring access to the transition model). This simple setting
+is often inapplicable due to the high-dimensional (possibly continuous) state–
+action space.
+
+  Q-Learning algorithms learn from experiences a given dataset D in the form
+of tuples < s, a, r, s > where the state at the next time-step s is drawn from
+T (s, a, ·) and the reward r is given by R s, a, s . In ﬁtted Q-learning, the algo-
+rithm starts with some random initialization of the Q-values Q (s, a; θ0), where
+θ0 refers to the initial parameters. Then, an approximation of the Q-values at the
+kth iteration Q (s, a; θk) is updated towards the target value
+
+YkQ = r + γ max Q s , a ; θk ,  (7.10)
+
+  a ∈A
+
+where θk refers to some parameters that deﬁne the Q-values at the kth iteration.
+102 Machine Learning for Transportation Research and Applications
+
+  In neural ﬁtted Q-learning (NFQ), the Q function is a ﬁtted neural network
+
+where its state can be provided as an input to the Q-network and a different out-
+
+put is given for each of the possible actions. This provides an efﬁcient structure
+that has the advantage of obtaining the computation of maxa ∈A Q s , a ; θk in
+a single forward pass in the neural network for a given s . The Q values are pa-
+rameterized Q (s, a; θk), where the parameters θk can be updated by stochastic
+gradient descent by minimizing the square loss:
+
+LDQN = Q (s, a; θk) − YkQ .2  (7.11)
+
+Thus, the Q-learning update amounts in updating the parameters
+
+θk+1 = θk + α YkQ − Q (s, a; θk) ∇θk Q (s, a; θk) ,  (7.12)
+
+where α is the learning rate. Calculating the square loss in Eq. (7.11) ensures
+that Q (s, a; θk) should tend without bias to the expected value of the random
+variable YkQ. Hence, it ensures that Q (s, a; θk) should tend to Q∗(s, a) after
+many iterations. Neural networks are well-suited for this kind of end-to-end
+function-ﬁtting task with sufﬁcient experience/samples gathered in the dataset
+D.
+
+  Early Q-learning methods only use linear functions to ﬁt the Q functions,
+which will lead to large errors at multiple places in high-dimensional state–
+action spaces. Although kernel and other methods can add nonlinear properties
+to the function, this approach is not enough to guarantee convergence. Neural
+networks have certain generalization and extrapolation abilities, but speciﬁc care
+still has to be taken to ensure proper learning because of the instabilities and the
+risk of overestimation.
+
+7.2.2 Deep Q-networks
+
+Deep Q-network (DQN) introduced by (Mnih et al., 2015) is probably the
+most famous reinforcement learning method because it achieves superior per-
+formance in a variety of games. It uses two heuristics to improve the algorithm’s
+stability:
+• The target Q-network described by Eq. (7.10) is replaced by Q s , a ; θk− ,
+
+  where its parameters θk− are updated only every C ∈ N iterations with the
+  following assignment: θk− = θk. This prevents the instabilities to propagate
+  quickly, and it reduces the risk of divergence as the target values YkQ are
+  kept ﬁxed for C iterations. The idea of target networks can be seen as an
+  instantiation of ﬁtted Q-learning, where each period between target network
+  updates corresponds to a single-ﬁtted Q-iteration.
+• In an online setting, the replay memory keeps all information for the last
+  Nreplay ∈ N time steps, where the experience is collected by following an -
+  greedy policy. The updates are then made on a set of tuples s, a, r, s (called
+  Reinforcement learning Chapter | 7 103
+
+  mini-batch) selected randomly within the replay memory. This technique al-
+  lows for updates that cover a wide range of the state–action space. In addition,
+  one mini-batch update has less variance compared to a single tuple update.
+  Consequently, it provides the possibility to make a larger update of the pa-
+  rameters, while having an efﬁcient parallelization of the algorithm.
+
+  In addition to the target Q-network and the replay memory, DQN uses other
+important heuristics. To keep the target values in a reasonable scale and to ensure
+proper learning in practice, rewards are clipped between −1 and +1. Clipping
+the rewards limits the scale of the error derivatives and makes it easier to use
+the same learning rate across multiple games (however, it introduces a bias).
+In games where the player has multiple lives, one trick is also to associate a
+terminal state to the loss of a life, such that the agent avoids these terminal
+states (in a terminal state the discount factor is set to 0).
+
+  In DQN, many deep learning speciﬁc techniques are also used. In particular,
+a preprocessing step of the inputs is used to reduce the input dimensionality,
+to normalize inputs (it scales pixels value into [−1, 1]), and to deal with some
+speciﬁcities of the task. In addition, convolutional layers are used for the ﬁrst
+layers of the neural network function approximator, and the optimization is per-
+formed using a variant of stochastic gradient descent called RMSprop (Tieleman
+et al., 2012).
+
+7.3 Policy gradient methods for deep RL
+
+This section focuses on a particular family of reinforcement learning algorithms
+that use policy gradient methods. These methods optimize a performance objec-
+tive (typically the expected cumulative reward) by ﬁnding a good policy (e.g.,
+a neural network parameterized policy) thanks to variants of stochastic gradient
+ascent with respect to the policy parameters. Note that policy gradient methods
+belong to a broader class of policy-based methods that includes, among others,
+evolution strategies. These methods use a learning signal derived from sampling
+instantiations of policy parameters and the set of policies is developed towards
+policies that achieve better returns.
+
+  In this chapter, we introduce the stochastic and deterministic gradient the-
+orems that provide gradients on the policy parameters in order to optimize the
+performance objective. Then, we present different RL algorithms that make use
+of these theorems.
+
+7.3.1 Stochastic policy gradient
+
+The expected return of a stochastic policy π starting from a given state s0 from
+Eq. (7.1) can be written as:
+
+V π (s0) = ρπ (s) π(s, a)R (s, a)dads,  (7.13)
+
+S  A
+104 Machine Learning for Transportation Research and Applications
+
+where R (s, a) = s ∈S T s, a, s R s, a, s and ρπ (s) is the discounted state
+distribution deﬁned as
+
+  ∞  (7.14)
+
+ρπ (s) = γ t Pr {st = s | s0, π } .
+
+  t =0
+
+  For a differentiable policy πw, the fundamental result underlying these algo-
+rithms is the policy gradient theorem (Sutton et al., 2000):
+
+∇wV πw (s0) = ρπw (s) ∇wπw(s, a)Qπw (s, a)dads.  (7.15)
+
+S  A
+
+  This result enables us to adapt the policy parameters w : w ∝ ∇wV πw (s0)
+from experience. This result is particularly interesting since the policy gradient
+does not depend on the gradient of the state distribution (even though one might
+have expected it to). The simplest way to derive the policy gradient estimator
+(i.e., estimating ∇wV πw (s0) from experience) is to use a score function gradient
+estimator, commonly known as the REINFORCE algorithm (Williams, 1992).
+The likelihood ratio trick can be exploited as follows to derive a general method
+of estimating gradients from expectations:
+
+∇wπw(s, a) = πw(s, a) ∇wπw(s, a)  (7.16)
+  πw(s, a)
+
+  = πw(s, a)∇w log (πw(s, a)) .
+
+Considering Eq. (7.16), it follows that
+
+∇wV πw (s0) = Es∼ρπw,a∼πw ∇w (log πw(s, a)) Qπw (s, a) .  (7.17)
+
+  Note that, in practice, most policy gradient methods effectively use undis-
+counted state distributions, without hurting their performance.
+
+  So far, we have shown that policy gradient methods should include a pol-
+icy evaluation followed by a policy improvement. On the one hand, the policy
+evaluation estimates Qπw . On the other hand, the policy improvement takes a
+gradient step to optimize the policy πw(s, a) with respect to the value function
+estimation. Intuitively, the policy improvement step increases the probability of
+the actions proportionally to their expected return.
+
+  The question that remains is how the agent can perform the policy evalua-
+tion step, i.e., how to obtain an estimate of Qπw (s, a). The simplest approach to
+estimating gradients is to replace the Q function estimator with a cumulative re-
+turn from entire trajectories. In the Monte Carlo policy gradient, we estimate
+the Qπw (s, a) from rollouts on the environment while following policy πw.
+The Monte Carlo estimator is an unbiased well-behaved estimate when used
+in conjunction with the back-propagation of a neural network policy because it
+estimates returns until the end of the trajectories (without instabilities induced
+Reinforcement learning Chapter | 7 105
+
+by bootstrapping). However, the main drawback is that the estimate requires
+
+on-policy rollouts and can exhibit high variance. Several rollouts are typically
+
+needed to obtain a good estimate of the return. A more efﬁcient approach is
+
+to instead use an estimate of the return given by a value-based approach, as in
+
+actor–critic methods discussed in § 7.4.1.
+
+  We make two additional remarks. 1) To prevent the policy from becoming
+
+deterministic, it is common to add an entropy regularizer to the gradient. With
+
+this regularizer, the learned policy can remain stochastic. This ensures that the
+policy keeps exploring. 2) Instead of using the value function Qπw in Eq. (7.17),
+an advantage value function Aπw can also be used. While Qπw (s, a) summarizes
+
+the performance of each action for a given state under policy πw, the advantage
+function Aπw (s, a) provides a measure of comparison for each action to the
+expected return at the state s, given by V πw (s). Using Aπw (s, a) = Qπw (s, a) −
+V πw (s) usually produces lower magnitudes than Qπw (s, a). This helps reduce
+the variance of the gradient estimator ∇wV πw (s0) in the policy improvement
+step, while not modifying the expectation 1. In other words, the value function
+V πw (s) can be seen as a baseline or control variate for the gradient estimator.
+
+When updating the neural network that ﬁts the policy, using such a baseline
+
+allows for improved numerical efﬁciency, i.e., reaching a given performance
+
+with fewer updates, because the learning rate can be higher.
+
+7.3.2 Deterministic policy gradient
+
+The policy gradient methods may be extended to deterministic policies. The
+Deep Deterministic Policy Gradient (DDPG) algorithm introduces the direct
+representation of a policy in such a way that it can extend the DQN algorithm to
+overcome the restriction of discrete actions.
+
+  Let us denote by π(s) the deterministic policy: π(s) : S → A. In discrete
+action spaces, a direct approach is to build the policy iteratively with
+
+πk+1(s) = argmaxQπk (s, a),  (7.18)
+
+  a∈A
+
+where πk is the policy at the kth iteration. In continuous action spaces, a greedy
+policy improvement becomes problematic, requiring a global maximization at
+every step. Instead, let us denote by πw(s) a differentiable deterministic policy.
+In that case, a simple and computationally attractive alternative is to move the
+policy in the direction of the gradient of Q, which leads to the Deep Determin-
+istic Policy Gradient (DDPG) (Lillicrap et al., 2015) algorithm:
+
+∇wV πw (s0) = Es∼ρπw ∇w (πw) ∇a Qπw (s, a) a=πw(s) .  (7.19)
+
+  This equation implies relying on ∇a (Qπw (s, a)) (in addition to ∇wπw),
+which usually requires using actor–critic methods (see § 7.4.1).
+106 Machine Learning for Transportation Research and Applications
+
+  Indeed, subtracting a baseline that only depends on s to Qπw (s, a) in
+Eq. (7.15) does not change the gradient estimator because ∀s, A ∇wπw(s, a)da =
+0.
+
+7.4 Combining policy gradient and Q-learning
+
+Policy gradient is an efﬁcient technique for improving a policy in a reinforce-
+ment learning setting. As we have seen, this typically requires an estimate of a
+value function for the current policy, and a sample efﬁcient approach is to use
+an actor–critic architecture that can work with off-policy data.
+
+  These algorithms have the following properties unlike the DQN-based meth-
+ods:
+1. They are able to work with continuous action spaces. This is particularly
+
+  interesting in applications such as robotics, where forces and torques can
+  assume a continuum of values.
+2. They can represent stochastic policies, which is useful for building policies
+  that can explicitly explore. This is also useful in settings where the optimal
+  policy is a stochastic policy (e.g., in a multiagent setting where the Nash
+  equilibrium is a stochastic policy).
+
+  However, another approach is to combine policy gradient methods directly
+with off-policy Q-learning. In some speciﬁc settings, depending on the loss
+function and the entropy regularization used, value-based methods and policy-
+based methods are equivalent. For instance, when adding an entropy regulariza-
+tion, Eq. (7.17) can be written as
+
+  ∇wV πw (s0) = Es,a ∇w (log πw(s, a)) Qπw (s, a) + αEs ∇wH πw (s), (7.20)
+
+where H π (s) = − a π(s, a) log π(s, a). From this, one can observe that an
+optimum is satisﬁed by the following policy: πw(s, a) = exp(Aπw (s, a)/α −
+H πw (s)). Therefore, we can use the policy to derive an estimate of the advan-
+tage function: A˜πw (s, a) = α (log πw(s, a) + H π (s)). We can thus think of all
+model-free methods as different facets of the same approach.
+
+  One remaining limitation is that both value-based and policy-based methods
+are model-free, and they do not make use of any model of the environment. The
+next chapter describes algorithms with a model-based approach.
+
+7.4.1 Actor–critic methods
+
+A policy represented by a neural network can be updated by gradient ascent
+for both the deterministic and the stochastic case. In both cases, the policy gra-
+dient typically requires an estimate of a value function for the current policy.
+One common approach is to use an actor–critic architecture that consists of two
+parts: an actor and a critic. The actor refers to the policy and the critic to the
+estimate of a value function (e.g., the Q-value function). In deep RL, both the
+Reinforcement learning Chapter | 7 107
+
+actor and the critic can be represented by nonlinear neural-network function ap-
+
+proximators. The actor uses gradients derived from the policy gradient theorem
+
+and adjusts the policy parameters w. The critic, parameterized by θ , estimates
+the approximate value function for the current policy π: Q(s, a; θ ) ≈ Qπ (s, a).
+
+  Critic: From a (set of) tuples s, a, r, s , possibly taken from a replay mem-
+
+ory, the simplest off-policy approach to estimating the critic is to use a pure
+
+bootstrapping algorithm T D(0) where, at every iteration, the current value
+Q(s, a; θ ) is updated towards the target value
+
+YkQ = r + γ Q s , a = π s ; θ .  (7.21)
+
+  The ideal is to have an architecture that is:
+
+• sample-efﬁcient such that it should be able to make use of both off-policy and
+  on-policy trajectories (i.e., it should be able to use a replay memory), and
+
+• computationally efﬁcient: it should be able to proﬁt from the stability and
+  the fast reward propagation of on-policy methods for samples collected from
+  near on-policy behavior policies. There are many methods that combine on-
+  and off-policy data for policy evaluation.
+
+  Actor: From Eq. (7.17), the off-policy gradient in the policy improvement
+phase for the stochastic case is given as
+
+∇wV πw (s0) = Es∼ρπβ ,a∼πβ ∇θ (log πw(s, a)) Qπw (s, a) ,  (7.22)
+
+where β is a behavior policy generally different than π, which makes the gradi-
+ent generally biased.
+
+7.5 Case study 1: trafﬁc signal control
+
+The typical approach that transportation researchers take is to cast trafﬁc signal
+control as an optimization problem under certain assumptions about the trafﬁc
+model, e.g., vehicles come at a uniform and constant rate. Various assumptions
+have to be made in order to make the optimization problem tractable. These
+assumptions, however, usually deviate from the real world, where the trafﬁc
+condition is affected by many factors such as driver’s preference, interactions
+with vulnerable road users (e.g., pedestrians, cyclists, etc.), weather, and road
+conditions. These factors can hardly be fully described in a trafﬁc model. Thus,
+researchers may solve the trafﬁc signal control problem in a simpliﬁed scenario,
+as depicted in Fig. 7.2. The left subﬁgure shows a simpliﬁed trafﬁc network with
+grid-based trafﬁc intersections, and the right subﬁgure demonstrates a simpliﬁed
+intersection.
+
+  On the other hand, reinforcement learning methods can directly learn from
+the observed data without making unrealistic assumptions about the trafﬁc
+model, by ﬁrst taking actions to change the signal plans and then learning from
+the outcomes. In essence, an RL-based trafﬁc signal control system observes the
+108 Machine Learning for Transportation Research and Applications
+
+FIGURE 7.2 Trafﬁc signal control.
+
+trafﬁc condition ﬁrst, then generates and executes different actions (i.e., trafﬁc
+signal plans). It will then learn and adjust the strategies based on the feedback
+from the environment. However, in traditional RL-based methods, the states in
+an environment are required to be discretized and low-dimensional, which is
+one of the major limitations of the traditional approaches.
+
+  Recent advances in RL, especially deep RL, offer the opportunity to efﬁ-
+ciently work with high-dimensional input data (like images), where the agent
+can learn a state abstraction and a policy approximation directly from its input
+states. A series of related studies using deep RL for trafﬁc signal control have
+appeared in the past few years.
+
+7.5.1 Agent formulation
+A key question for RL is how to formulate the RL agent, i.e., the reward,
+state, and action deﬁnition. In this subsection, we introduce the advances in
+the reward, state, and action design in recently developed deep RL-based meth-
+ods.
+• Reward: The choice of reward reﬂects the learning objective of an RL agent.
+
+  In the trafﬁc signal control problem, although the ultimate objective is to
+  minimize the travel time of all vehicles, travel time is hard to serve as a valid
+  reward in RL. Because the travel time of a vehicle is affected by multiple ac-
+  tions from trafﬁc signals and vehicle movements, the travel time as a reward
+  would be delayed and ineffective in indicating the goodness of the signals’
+  action. Therefore, the existing literature often uses a surrogate reward that
+  can be effectively measured after an action, considering factors like aver-
+  age queue length, average waiting time, and average speed or throughput.
+  Researchers also take the frequency of signal changing and the number of
+  emergency stops into consideration for the reward. With various reward func-
+  tions being proposed, according to (Wei et al., 2021) researchers ﬁnd out that
+  Reinforcement learning Chapter | 7 109
+
+  the weight of each factor in the reward is tricky to set, and a minor differ-
+  ence in weight setting could lead to dramatically different results. Thus, they
+  set out to ﬁnd a minimal set of factors, proving that using queue length as
+  the reward for a single intersection scenario and using pressure, a variant of
+  queue length in the multi-intersection scenario, are equivalent to optimizing
+  the global travel time.
+• State: At each time step, the agent receives some quantitative descriptions of
+  the environment as the state to decide its action. Various kinds of elements
+  have been proposed to describe the environment’s state, such as queue length,
+  waiting time, speed, phase, etc. These elements can be deﬁned on the lane
+  level or road segment level, and then concatenated as a vector. In earlier work
+  using RL for trafﬁc signal control, people need to discretize the state space
+  and use a simple tabular or linear model to approximate the state functions
+  for efﬁciency. However, the real-world state space is usually huge, which con-
+  ﬁnes the traditional RL methods in terms of memory or performance. With
+  advances in deep learning, deep RL methods are proposed to handle large
+  state space as an effective function approximator. Recent studies propose to
+  use images to represent the state, where the position of vehicles are extracted
+  as an image representation. With variant information used in state represen-
+  tation in various studies, Wei et al. (2021) also mentioned that complex state
+  deﬁnition and large state space do not necessarily lead to signiﬁcant perfor-
+  mance gain and proposes to use simple state like lane-level queue length and
+  phase to represent the environment state.
+• Action: Now there are different types of action deﬁnitions for an RL agent
+  in trafﬁc signal control: (1) set current phase duration; (2) set the ratio of the
+  phase duration over predeﬁned total cycle duration; (3) change to the next
+  phase in predeﬁned cyclic phase sequence; (4) choose the phase to change
+  to among a set of phases. The choice of action scheme is closely related
+  to speciﬁc settings of trafﬁc signals. For example, if the phase sequence is
+  required to be cyclic, then the ﬁrst three action schemes should be considered,
+  while “choosing the phase to change to among a set of phases” can generate
+  ﬂexible phase sequences.
+
+7.6 Case study 2: car following control
+
+Autonomous driving technology is capable of providing convenient and safe
+driving by avoiding crashes caused by driver errors. Considering, however, that
+we will likely be confronting a several-decade-long transition period when au-
+tonomous vehicles share the roadway with human-driven vehicles, it is critical
+to ensure that autonomous vehicles interact with human-driven vehicles safely.
+Because driving uniformity is a large factor in safety, a signiﬁcant challenge
+of autonomous driving is to imitate, while staying within safety bounds, hu-
+man driving styles, i.e., to achieve human-like driving. Human-like driving will:
+1) provide passengers with comfortable riding, and conﬁdence that the car can
+110 Machine Learning for Transportation Research and Applications
+
+drive independently; and 2) enable surrounding drivers to better understand and
+predict autonomous vehicles’ behavior so that they can interact with it natu-
+rally. To achieve human-like driving, it is useful to introduce a driver model that
+reproduces individual drivers’ behaviors and trajectories. Replicating driving
+trajectories is one of the primary objectives of modeling vehicles’ longitudinal
+motion in trafﬁc ﬂow. Known as car-following models, these models are es-
+sential components of microscopic trafﬁc simulation, and serve as theoretical
+references for autonomous car-following systems.
+
+  To address these limitations, a model is proposed for the planning of human-
+like autonomous car following that applies deep reinforcement learning (deep
+RL). Deep RL, which combines reinforcement learning algorithms with deep
+neural networks to create agents that can act intelligently in complex situations,
+has witnessed exciting breakthroughs such as deep Q-network. Deep RL has
+the promise to address traditional car-following models’ limitations in that: 1)
+deep neural networks are adept at general purpose function approximators that
+can achieve higher accuracy in approximating the complicated relationship be-
+tween stimulus and reaction during car following; 2) reinforcement learning
+can achieve better generalization capability because the agent learns decision-
+making mechanisms from training data rather than parameter estimation through
+ﬁtting the data; and 3) by continuously learning from historical driving data,
+deep RL can enable a car to move appropriately in accordance with the behav-
+ioral features of its regular drivers.
+
+  Fig. 7.3 shows a schematic diagram of a human-like car-following frame-
+work based on deep RL. During the manual driving phase, data are collected
+and stored in the database as historical driving data. These data are then fed
+into a simulation environment where an RL agent learns from trial and error
+interactions by the environment including a reward function that signals how
+much the agent deviates from the empirical data. Through these interactions, an
+optimal policy, or car-following model is developed that maps in human-like
+behavior from speed, relative speed between a lead and following vehicle, and
+inter-vehicle spacing to the acceleration of a following vehicle. The model, or
+policy, can be continuously updated when more data are fed in. This optimal
+policy will act as the executing policy in the autonomous driving phase.
+
+7.6.1 Agent formulation
+
+Reinforcement learning (RL) aims to address problems related to sequential
+decision- making by setting up simulations in which an agent interacts with
+an environment over time. At time step t, an RL agent observes a state st and
+chooses an action at from an action space A, according to a policy π (at | St ) that
+maps from states to actions. The agent gets a reward rt for the action choice and
+moves to the next state st+1, following the environmental dynamic, or model.
+When the agent reaches a terminal state, this process stops and then restarts.
+The task is to maximize the expectation of a discounted, accumulated reward
+  Reinforcement learning Chapter | 7 111
+
+FIGURE 7.3 Car following control.
+
+Rt = k∞=0 γ krt+k from each state, where γ ∈ (0, 1] represents the discount
+factor.
+
+  Speciﬁcally, in the modeling of car-following behavior, the state at a certain
+time step t is described by the following key parameters: the speed of a follow-
+ing vehicle Vn(t), inter-vehicle spacing Sn−1,n(t), and relative speed between
+a lead and following vehicle Vn−1,n(t). The action is the longitudinal accel-
+eration of the following vehicle an(t), conﬁned between −3 m/s2 and 3 m/s2
+based on the acceleration of all observed car-following events. The reward value
+is given based on deviations between predicted and observed car-following tra-
+jectories. With state and action at time step t, a kinematic point-mass model was
+used for state updating:
+
+Vn(t + 1) = Vn(t) + an(t) · T  (7.23)
+  Vn−1,n(t + 1) = Vn−1(t + 1) − Vn(t + 1)
+
+Sn−1,n(t + 1) = Sn−1,n(t ) + Vn−1,n(t ) + Vn−1,n(t + 1) · T ,
+  2
+
+where T is the simulation time interval, set as 0.1 s in this study, and Vn−1 is
+the velocity of lead vehicle, which was externally inputted.
+
+  This case study used the reward function r(s, a) to facilitate human-like
+driving by minimizing the disparity between the values of simulated and ob-
+112 Machine Learning for Transportation Research and Applications
+
+served behavior. Based on these special car-following scenarios, both spacing
+and speed (velocity) were tested to investigate the difference depending on the
+type of reward function:
+
+  rt = log  Sn−1,n  (t  )  −  Sobs  (t  )
+  rt = log
+  n−1,n
+
+  Sobs (t )  (7.24)
+
+  n−1,n
+
+  Vn  (t  )  −  V ob  s  (t  )
+
+  n  ,
+
+  V obs (t )n
+
+where Sn−1,n(t) and Vn(t) are the simulated spacing and speed, respectively,
+  S obs  and Vnobs (t) are the observed
+in  the  RL  environment  at  time  step  t,  and
+  t
+
+spacing and speed in the empirical data set at time step t.
+
+7.6.2 Model and simulation settings
+
+In this case study, the DDPG approach to modeling the car-following behavior
+is introduced as shown in Fig. 7.3. Two separate neural networks were used to
+represent the actor and critic. At time step t, the actor network takes a state
+st = vn(t), vn−1,n(t), Sn−1,n(t) as input, and outputs a continuous action:
+the following vehicle’s acceleration an(t). The critic network takes a state st
+and an action at as input, and outputs a scalar Q-value Q (st , at ). In this case
+study, the actor and critic networks each have three layers. The ﬁnal output layer
+of the actor network used a tanh activation function, which maps a real-valued
+number to the range [−1, 1], and thus can be used to bound the output actions.
+
+  Simulation Settings: Driving data collected in the Shanghai Naturalistic
+Driving Study (SH-NDS). A simple car-following simulation environment was
+implemented to enable the RL agent to interact with the environment through a
+sequence of states, actions, and rewards. Data from the lead vehicle served as
+externally controlled input. The following vehicle’s speed, spacing, and velocity
+differences were initialized with the empirical SH-NDS data. After the acceler-
+ation was computed by the agent, future states of the following vehicle were
+generated iteratively, based on the state-updating rules deﬁned in Eq. (7.23).
+The simulated spacings, or gaps, were compared to the empirical spacing from
+the SH-NDS data to calculate reward values and simulation errors. The state
+was re-initialized with the empirical dataset when the simulated car-following
+event terminated at its maximum time step.
+
+7.7 Case study 3: bus bunching control
+
+In public transport systems, bus bunching refers to the phenomenon where a
+group of two or more buses arrives at the same bus stop at the same time. Bus
+bunching has been a long-standing operational problem in urban public transport
+systems, and it is a primary issue that concerns transit users and affects our per-
+ception of service reliability and service efﬁciency. As ﬁrst reported by Newell
+

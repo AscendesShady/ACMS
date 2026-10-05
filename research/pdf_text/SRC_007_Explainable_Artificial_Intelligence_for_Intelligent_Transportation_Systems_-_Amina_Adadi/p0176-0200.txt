@@ -1,0 +1,1284 @@
+  Intelligent Techniques and Explainable AI for Vessel Traffic Service: A Survey ■ 165
+
+[12] Ashim Kumar Debnath and Hoong Chor Chin. Navigational traffic conflict
+  technique: a proactive approach to quantitative measurement of collision risks
+  in port waters. The Journal of Navigation, 63(1):137–152, 2010.
+
+[13] Lili Dong, Bin Wang, Ming Zhao, and Wenhai Xu. Robust infrared maritime
+  target detection based on visual attention and spatiotemporal filtering. IEEE
+  Transactions on Geoscience and Remote Sensing, 55(5):3037–3050, 2017.
+
+[14] Eleftheria Eliopoulou, Apostolos Papanikolaou, and Markos Voulgarellis. Sta-
+  tistical analysis of ship accidents and review of safety level. Safety Science,
+  85:282–292, 2016.
+
+[15] Radwa ElShawi, Youssef Sherif, Mouaz Al-Mallah, and Sherif Sakr. ILIME:
+  local and global interpretable model-agnostic explainer of black-box decision. In
+  Proceedings of European Conference on Advances in Databases and Information
+  Systems, pages 53–68. Springer, 2019.
+
+[16] Qingbo Fan, Fusai Jiang, Quandang Ma, and Yong Ma. PSO-based BP neu-
+  ral network-markov prediction model of ship traffic flow. Journal of Shanghai
+  Maritime University, 39(2):22–27, 2018.
+
+[17] Shaojun Gan, Shan Liang, Kang Li, Jing Deng, and Tingli Cheng. Ship trajec-
+  tory prediction for intelligent traffic management using clustering and ANN. In
+  Proceedings of 2016 UKACC 11th International Conference on Control (CON-
+  TROL), pages 1–6. IEEE, 2016.
+
+[18] Floris Goerlandt and Jakub Montewka. Maritime transportation risk analysis:
+  Review and analysis in light of some foundational issues. Reliability Engineering
+  & System Safety, 138:115–134, 2015.
+
+[19] Xiaoning Han, Youyu Zhang, and Jun Wang. Development and application of
+  smart vessel traffic management system. Command Information System and
+  Technology, 10(4):8–13, 2019.
+
+[20] Fengshu He, Lifeng Miao, Fei Tao, and Cun Zhang. A method of multi-target
+  fusion and tracking for sea surveillance radar based on AIS. Radar Science and
+  Technology, 15(2):153–158, 2017.
+
+[21] Wei He, Cheng Zhong, Miguel Angel Sotelo, Xiumin Chu, Xinglong Liu, and
+  Zhixiong Li. Short-term vessel traffic flow forecasting by using an improved
+  kalman model. Cluster Computing, 22(4):7907–7916, 2019.
+
+[22] Zishuo Huang, Qinyou Hu, Qiang Mei, Chun Yang, and Zheng Wu. Identity
+  recognition on waterways: a novel ship information tracking method based on
+  multimodal data. The Journal of Navigation, 74(6):1336–1352, 2021.
+
+[23] Terry Hughes. Vessel traffic services (VTS): Are we ready for the new millenium?
+  The Journal of Navigation, 51(3):404–420, 1998.
+166 ■ Explainable AI for Intelligent Transportation Systems
+
+[24] Fatima Hussain, Rasheed Hussain, and Ekram Hossain. Explainable artificial
+  intelligence (XAI): An engineering perspective. arXiv preprint arXiv:2101.03613,
+  2021.
+
+[25] Fatima Hussain, Rasheed Hussain, and Ekram Hossain. Explainable artificial
+  intelligence (XAI): An engineering perspective. arXiv preprint arXiv:2101.03613,
+  2021.
+
+[26] Mark Ibrahim, Melissa Louie, Ceena Modarres, and John Paisley. Global expla-
+  nations of neural networks: Mapping the landscape of predictions. In Proceedings
+  of the 2019 AAAI/ACM Conference on AI, Ethics, and Society, pages 279–287.
+  Association for Computing Machinery, 2019.
+
+[27] Sheng-Long Kao, Kuo-Tien Lee, Ki-Yin Chang, and Min-Der Ko. A fuzzy logic
+  method for collision avoidance in vessel traffic service. The Journal of Navigation,
+  60(1):17–31, 2007.
+
+[28] Izhar Ahmed Khan, Nour Moustafa, Imran Razzak, Muhammad Tanveer,
+  Dechang Pi, Yue Pan, and Bakht Sher Ali. XSRU-IoMT: Explainable simple
+  recurrent units for threat detection in internet of medical things networks. Fu-
+  ture Generation Computer Systems, 127:181–193, 2022.
+
+[29] Kwang-il Kim and Keon Myung Lee. Adaptive information visualization for
+  maritime traffic stream sensor data with parallel context acquisition and machine
+  learning. Sensors, 19(23), 2019. Art. no. 5273.
+
+[30] Yun Jip Kim, Yun Koo Chung, and Byung Gil Lee. Vessel tracking vision
+  system using a combination of kaiman filter, Bayesian classification, and adaptive
+  tracking algorithm. In Proceedings of 16th International Conference on Advanced
+  Communication Technology, pages 196–201. IEEE, 2014.
+
+[31] Gunwoo Lee, Soo-Yeob Kim, and Min-Kyu Lee. Economic evaluation of vessel
+  traffic service (VTS): A contingent valuation study. Marine Policy, 61:149–154,
+  2015.
+
+[32] Ming-Wei Li, Duan-Feng Han, and Wen-long Wang. Vessel traffic flow forecasting
+  by RSVR with chaotic cloud simulated annealing genetic algorithm and KPCA.
+  Neurocomputing, 157:243–255, 2015.
+
+[33] Wei Li, Jing Wang, Xiao Feng Zhao, Zhiyuan Wang, and Qi Jiang Zhang. Target
+  detection in color sonar image based on YOLOV5 network. In Proceedings of
+  2021 IEEE International Conference on Signal Processing, Communications and
+  Computing (ICSPCC), pages 1–5. IEEE, 2021.
+
+[34] Maohan Liang, Ryan Wen Liu, Yang Zhan, Huanhuan Li, Fenghua Zhu, and
+  Fei-Yue Wang. Fine-grained vessel traffic flow prediction with a spatio-temporal
+  multigraph convolutional network. IEEE Transactions on Intelligent Transporta-
+  tion Systems, early access, 2022. doi: 10.1109/TITS.2022.3199160.
+  Intelligent Techniques and Explainable AI for Vessel Traffic Service: A Survey ■ 167
+
+[35] Igor Linkov, Stephanie Galaitsi, Benjamin D Trump, Jeffrey M Keisler, and
+  Alexander Kott. Cybertrust: From explainable to actionable and interpretable
+  artificial intelligence. Computer, 53(9):91–96, 2020.
+
+[36] Ryan Wen Liu, Maohan Liang, Jiangtian Nie, Yanli Yuan, Zehui Xiong, Han
+  Yu, and Nadra Guizani. STMGCN: Mobile edge computing-empowered vessel
+  trajectory prediction using spatio-temporal multigraph convolutional network.
+  IEEE Transactions on Industrial Informatics, 18(11):7977–7987, 2022.
+
+[37] Ryan Wen Liu, Jiangtian Nie, Sahil Garg, Zehui Xiong, Yang Zhang, and
+  M Shamim Hossain. Data-driven trajectory quality improvement for promot-
+  ing intelligent vessel traffic services in 6G-enabled maritime IoT systems. IEEE
+  Internet of Things Journal, 8(7):5374–5385, 2020.
+
+[38] Scott M Lundberg and Su-In Lee. A unified approach to interpreting model
+  predictions. Advances in Neural Information Processing Systems, 30, 2017.
+
+[39] Szymon Maksymiuk, Alicja Gosiewska, and Przemyslaw Biecek. Landscape of R
+  packages for explainable artificial intelligence. arXiv preprint arXiv:2009.13248,
+  2020.
+
+[40] Joakim Trygg Mansson, Margareta Lutzhoft, and Ben Brooks. Joint activity
+  in the maritime traffic system: perceptions of ship masters, maritime pilots,
+  tug masters, and vessel traffic service operators. The Journal of Navigation,
+  70(3):547–560, 2017.
+
+[41] Fabio Mazzarella, Virginia Fernandez Arguedas, and Michele Vespe. Knowledge-
+  based vessel position prediction using historical AIS data. In Proceedings of 2015
+  Sensor Data Fusion: Trends, Solutions, Applications (SDF), pages 1–6. IEEE,
+  2015.
+
+[42] Volodymyr Mnih, Nicolas Heess, Alex Graves, and koray kavukcuoglu. Recurrent
+  models of visual attention. In Proceedings of Advances in Neural Information
+  Processing Systems, volume 27, pages 2204–2212. Curran Associates, Inc., 2014.
+
+[43] Sina Mohseni, Niloofar Zarei, and Eric D Ragan. A multidisciplinary survey and
+  framework for design and evaluation of explainable AI systems. ACM Transac-
+  tions on Interactive Intelligent Systems, 11(3–4):1–45, 2021.
+
+[44] Lokukaluge P Perera, Paulo Oliveira, and C Guedes Soares. Maritime traf-
+  fic monitoring based on vessel detection, tracking, state estimation, and tra-
+  jectory prediction. IEEE Transactions on Intelligent Transportation Systems,
+  13(3):1188–1200, 2012.
+
+[45] Gesa Praetorius, Erik Hollnagel, and Joakim Dahlman. Modelling vessel traffic
+  service to understand resilience in everyday operations. Reliability Engineering
+  & System Safety, 141:10–21, 2015.
+168 ■ Explainable AI for Intelligent Transportation Systems
+
+[46] Liang Qi, Bangyu Li, Liankai Chen, Wei Wang, Liang Dong, Xuan Jia, Jing
+  Huang, Chengwei Ge, Ganmin Xue, and Dong Wang. Ship target detection
+  algorithm based on improved faster R-CNN. Electronics, 8(9):959, 2019.
+
+[47] Sohanur Rahman. Introduction of Bayesian network in risk analysis of maritime
+  accidents in bangladesh. In Proceedings of AIP Conference Proceedings, volume
+  1919, page 20–24. AIP Publishing, 2017.
+
+[48] Atul Rawal, James Mccoy, Danda B Rawat, Brian Sadler, and Robert Amant.
+  Recent advances in trustworthy explainable artificial intelligence: Status, chal-
+  lenges and perspectives. IEEE Transactions on Artificial Intelligence, 1(01):1–1,
+  2021.
+
+[49] AG Rekha, Loganathan Ponnambalam, and Mohammed Shahid Abdulla. Pre-
+  dicting maritime groundings using support vector data description model. In
+  Proceedings of International Symposium on Computational Intelligence and In-
+  telligent Systems, pages 329–334. Springer, 2015.
+
+[50] Marco Tulio Ribeiro, Sameer Singh, and Carlos Guestrin. ”why should i trust
+  you?” explaining the predictions of any classifier. In Proceedings of the 22nd
+  ACM SIGKDD International Conference on Knowledge Discovery and Data
+  Mining, pages 1135–1144. Association for Computing Machinery, 2016.
+
+[51] Wenhao Shi and Bowen An. Port ship detection method based on multi-structure
+  morphology. Computer Systems & Applications, 25(10):283–287, 2016.
+
+[52] Karen Simonyan, Andrea Vedaldi, and Andrew Zisserman. Deep inside con-
+  volutional networks: Visualising image classification models and saliency maps.
+  arXiv preprint arXiv:1312.6034, 2013.
+
+[53] Binbing Song, Hiroko Itoh, and Yasumi Kawamura. Development of training
+  method for vessel traffic service based on cognitive process. Cognition, Technol-
+  ogy & Work, 24(2):351–369, 2022.
+
+[54] Chien-Min Su, Ki-Yin Chang, and Chih-Yung Cheng. Fuzzy decision on optimal
+  collision avoidance measures for ships in vessel traffic service. Journal of Marine
+  Science and Technology, 20(1):5, 2012.
+
+[55] Yongfeng Suo, Wenke Chen, Christophe Claramunt, and Shenhua Yang. A ship
+  trajectory prediction framework based on a recurrent neural network. Sensors,
+  20(18):5133, 2020.
+
+[56] Yanhua Tian and Jinbiao Chen. Vessel traffic flow prediction based on BP neural
+  network. Ship & Ocean Engineering, 39(1):122–125, 2010.
+
+[57] Erico Tjoa and Cuntai Guan. A survey on explainable artificial intelligence
+  (XAI): Toward medical XAI. IEEE Transactions on Neural Networks and Learn-
+  ing Systems, 32(11):4793–4813, 2020.
+  Intelligent Techniques and Explainable AI for Vessel Traffic Service: A Survey ■ 169
+
+[58] Manjunatha Veerappa, Mathias Anneken, Nadia Burkart, and Marco F Huber.
+  Validation of XAI explanations for multivariate time series classification in the
+  maritime domain. Journal of Computational Science, 58:101539, 2022.
+
+[59] Erik Veitch and Ole Andreas Alsos. Human-centered explainable artificial intel-
+  ligence for marine autonomous surface vehicles. Journal of Marine Science and
+  Engineering, 9(11):1227, 2021.
+
+[60] Dangli Wang, Yangran Meng, Shuzhe Chen, Cheng Xie, and Zhao Liu. A hybrid
+  model for vessel traffic flow prediction based on wavelet and prophet. Journal
+  of Marine Science and Engineering, 9(11):1231, 2021.
+
+[61] Jingyao Wang and Naigong Yu. UTD-Yolov5: A real-time underwater tar-
+  gets detection method based on attention improved YOLOv5. arXiv preprint
+  arXiv:2207.00837, 2022.
+
+[62] Senjie Wang and Zhengwei He. A prediction model of vessel trajectory based
+  on generative adversarial network. The Journal of Navigation, 74(5):1161–1171,
+  2021.
+
+[63] Natalia Wawrzyniak, Tomasz Hyla, and Izabela Bodus-Olkowska. Vessel
+  identification based on automatic hull inscriptions recognition. Plos One,
+  17(7):e0270575, 2022.
+
+[64] Natalia Wawrzyniak and Andrzej Stateczny. Automatic watercraft recognition
+  and identification on water areas covered by video monitoring as extension for
+  sea and river traffic supervision systems. Polish Maritime Research, S 1:5–13,
+  2018.
+
+[65] Zhe Xiao, Xiuju Fu, Liye Zhang, and Rick Siow Mong Goh. Traffic pattern
+  mining and forecasting technologies in maritime traffic service networks: A com-
+  prehensive survey. IEEE Transactions on Intelligent Transportation Systems,
+  21(5):1796–1825, 2019.
+
+[66] Zhe Xiao, Xiuju Fu, Liye Zhang, and Rick Siow Mong Goh. Traffic pattern
+  mining and forecasting technologies in maritime traffic service networks: A com-
+  prehensive survey. IEEE Transactions on Intelligent Transportation Systems,
+  21(5):1796–1825, 2020.
+
+[67] Zhe Xiao, Xiuju Fu, Liye Zhang, Wanbing Zhang, Ryan Wen Liu, Zhao Liu, and
+  Rick Siow Mong Goh. Big data driven vessel trajectory and navigating state
+  prediction with adaptive learning, motion modeling and particle filtering tech-
+  niques. IEEE Transactions on Intelligent Transportation Systems, 23(4):3696–
+  3709, 2022.
+
+[68] Zhe Xiao, Xiuju Fu, Liangbin Zhao, Liye Zhang, Tze Kern Teo, Ning Li, Wanbing
+  Zhang, and Zheng Qin. Next-generation vessel traffic services systems-from” pas-
+  sive” to” proactive”. IEEE Intelligent Transportation Systems Magazine, early
+  access, 2022. doi: 10.1109/MITS.2022.3144411.
+170 ■ Explainable AI for Intelligent Transportation Systems
+
+[69] Zhe Xiao, Liye Zhang, Xiuju Fu, Wanbing Zhang, Joey Tianyi Zhou, and Rick
+  Siow Mong Goh. Concurrent processing cluster design to empower simultaneous
+  prediction for hundreds of vessels’ trajectories in near real-time. IEEE Transac-
+  tions on Systems, Man, and Cybernetics: Systems, 51(3):1830–1843, 2019.
+
+[70] Yibing Xie, Nichakorn Pongsakornsathien, Alessandro Gardi, and Roberto Saba-
+  tini. Explanation of machine-learning solutions in air-traffic management.
+  Aerospace, 8(8):224, 2021.
+
+[71] Zhaoqing Xie and Qing Liu. LSTM networks for vessel traffic flow prediction in
+  inland waterway. In Proceedings of 2018 IEEE International Conference on Big
+  Data and Smart Computing (BigComp), pages 418–425. IEEE, 2018.
+
+[72] Ran Yan and Shuaian Wang. Ship detention prediction using anomaly detec-
+  tion in port state control: model and explanation. Electronic Research Archive,
+  30(10):3679–3691, 2022.
+
+[73] Ying Yang and Xianqiao Chen. Research on the statistical method of ship
+  flow based on deep learning and virtual detection line. In Proceedings of 2019
+  IEEE 8th Joint International Information Technology and Artificial Intelligence
+  Conference (ITAIC), pages 280–285. IEEE, 2019.
+
+[74] Yanan You, Zezhong Li, Bohao Ran, Jingyi Cao, Sudi Lv, and Fang Liu. Broad
+  area target search system for ship detection via deep convolutional neural net-
+  work. Remote Sensing, 11(17):1965, 2019.
+
+[75] Chunyu Zhang, Bingjie Liu, and Jianlan Ren. Automatic recognition method
+  of moving target in ship transportation intelligent transportation system. Ship
+  Science and Technology, 43(14):58–60, 2021.
+
+[76] Xiaolong Zhang, Jiachun Zheng, Changchuan Lin, Xiaorui Hu, Qiaoping Chen,
+  and Shuangshuang Zhu. Target association algorithm and simulation for radar
+  and AIS based on BP network. Journal of System Simulation, 27(3):506, 2015.
+
+[77] Ze-guo Zhang, Jian-chuan Yin, Ni-ni Wang, and Zi-gang Hui. Vessel traffic flow
+  analysis and prediction by an improved PSO-BP mechanism based on AIS data.
+  Evolving Systems, 10(3):397–407, 2019.
+
+[78] Zhong-Xing ZHANG, Hong-Long LI, Guang-Qian ZHANG, Wen-Ping ZHU, Li-
+  Yuan LIU, Jian LIU, and Nan-Jian WU. CCNet: a high-speed cascaded convo-
+  lutional neural network for ship detection with multispectral images. Journal of
+  Infrared and Millimeter Waves, 38(3), 2019.
+
+[79] Yang Zhou, Winnie Daamen, Tiedo Vellinga, and Serge Hoogendoorn. Review
+  of maritime traffic models from vessel behavior modeling perspective. Trans-
+  portation Research Part C: Emerging Technologies, 105:323–345, 2019.
+
+[80] Maede Zolanvari, Zebo Yang, Khaled Khan, Raj Jain, and Nader Meskin. Trust
+  xai: Model-agnostic explanations for ai with a case study on iiot security. IEEE
+  Internet of Things Journal, early access, 2021. doi: 10.1109/JIOT.2021.3122019.
+  CHAPTER 9
+
+An Explainable Model for
+
+Detection and Recognition
+
+of Traffic Road Signs
+
+Anass Barodi, Abdelkarim Zemmouri, Abderrahim Bajit, and
+Mohammed Benbrahim
+
+Laboratory of Advanced Systems Engineering (ISA), National School of Applied Sciences,
+Ibn Tofail University, Kenitra, 14000, Morocco
+
+Ahmed Tamtaoui
+
+National Institute of Posts and Telecommunications (INPT-Rabat), SC Department,
+Mohammed V University, Rabat, 10000, Morocco
+
+CONTENTS
+
+9.1 Introduction . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 172
+9.2 The Proposed Approach Overview . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 173
+9.3 Methodology . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 175
+
+  9.3.1 ERSDRA Algorithm . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 175
+  9.3.2 Detection Phase . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 175
+
+  9.3.2.1 Color Extraction . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 175
+  9.3.2.2 Contour Tracking . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 176
+  9.3.2.3 Area Calculation . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 177
+  9.3.2.4 Contour Perimeter and Approximation of Vertices 178
+  9.3.2.5 Increase Detection Accuracy . . . . . . . . . . . . . . . . . . . . . . . . 179
+  9.3.3 Recognition Phase . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 180
+  9.3.3.1 Convolutional Neural Networks Description . . . . . . . . 180
+  9.3.3.2 Interpretability of Classification Models . . . . . . . . . . . . 181
+  9.3.3.3 The Adapted LeNet-5 Network Architecture . . . . . . . . 182
+  9.3.3.4 The Adapted AlexNet Network Architecture . . . . . . . 183
+  9.3.3.5 Proposed CNN Architecture . . . . . . . . . . . . . . . . . . . . . . . . 184
+  9.3.3.6 Datasets Used . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 186
+9.4 Experimentation and Discussion Results . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 186
+  9.4.1 Work Environment . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 186
+  9.4.2 Detection Phase for Traffic Road Signs . . . . . . . . . . . . . . . . . . . . . . . . . . 187
+  9.4.2.1 Test in a Real Environment . . . . . . . . . . . . . . . . . . . . . . . . 188
+  9.4.3 Recognition Phase . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 190
+  9.4.3.1 Preparation of the CNN Recognition Model . . . . . . . . 190
+
+DOI: 10.1201/9781003324140-9  171
+172 ■ Explainable Artificial Intelligence for Intelligent Transportation Systems
+
+  9.4.3.2 Results of the Proposed CNN Architecture on
+  Different Datasets . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 193
+
+9.5 Evaluations . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 195
+  9.5.1 Compare the Performance of the Proposed CNN Model in the
+  Literature . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 195
+  9.5.2 Classification Report for Recognition Traffic Road Signs . . . . . . . 195
+  9.5.3 Interpretability of Cropped Images . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 196
+  9.5.3.1 XAI Technique . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 196
+  9.5.3.2 Saliency Map . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 197
+  9.5.4 Recognition of Cropped Images . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 198
+
+9.6 Conclusion . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 198
+  Bibliography . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 199
+
+T he main objective of this work is to propose an efficient approach applica-
+  ble to Intelligent Transportation Systems (ITS), particularly embedded vision
+systems, capable of detecting and tracking objects in a dynamic environment. Many
+previous works have been conducted in this field to design a powerful and robust
+ITS system taking into account the notion of optimization. However, in this work, we
+aim to develop an intelligent system based on Computer Vision (CV) and Artificial
+Intelligence (AI) that combines two distinct phases respectively; namely detection
+and recognition. To achieve this objective, the paper focuses on the detection and
+recognition of traffic road signs. The proposed approach is based on an algorithm
+named Easy Road Sign Detection and Recognition Algorithm (ERSDRA). To de-
+tect traffic signs, we relied on colors (red, blue) and shapes (circle, square, triangle,
+and rectangle), and for traffic sign recognition, we proposed a CNN architecture
+(Convolution Neural network). The design of this architecture was inspired by two
+fundamental architectures, namely LeNet-5 and AlexNet, in order to have an opti-
+mistic CNN model after Deep Learning (DL). This CNN model is employed for the
+recognition of each cropped traffic sign, while Grad-CAM is used as explainable AI
+techniques to interpret visually the results of the CNN model. Finally, after several
+tests carried out on our improved approach, for the detection module, the error rate
+range is between 0,001% and 0,025% for triangular and square shapes respectively,
+while the recognition module reached the best score of 98,47% in accuracy. Given the
+performance and interpretability offered by the proposed model, we can say that our
+model can be useful in the automotive field for road safety, especially in Advanced
+Driving Assistance Systems (ADAS).
+
+9.1 INTRODUCTION
+
+Road transport generates significant traffic [1], particularly in emerging countries.
+Unfortunately, this increase has consequences on roads. However, according to acci-
+dental experts, the human factor represents the first cause in 80% of accidents [2],
+because drivers can be unconcentrated which leads to a lack of vigilance on traffic
+roads. For example, not paying attention to a speed limit or not considering traffic
+  An Explainable Model for Detection and Recognition of Traffic Road Signs ■ 173
+
+signs creates risky situations that can expose drivers to penalties. This is why car
+manufacturers are increasingly integrating driver assistance systems into new vehi-
+cles [3], to assist the behavior of the driver in real traffic [4]. ITS systems have a great
+interest in road safety, by assisting and keeping the driver informed of potentially
+dangerous situations, or changing his behavior to avoid the consequences of an acci-
+dent [5]. The types of these systems are called the Traffic Sign Recognition system
+(TSR) [6, 7] one part of ADAS systems [8, 9].
+
+  The TSR system assists the driver by informing him of the signs that exist on
+the road traveled [10, 11]. It is usually based on an embedded camera ahead of the
+vehicle [12] whose objective is analyzing the video stream provided for recognizing
+the signs to reduce the risk of accidents. For this purpose, a TSR system can be
+represented in three stages: detection, recognition, and temporal tracking, specifically
+the traffic road signs [7]. This paper focuses on two important steps, the detection,
+and recognition of traffic signs, to identify their visual characteristics based on CV
+and AI. Using AI, requires two essential elements, the first one is the choice of an
+image dataset containing all types of road signs; for obtaining an efficient trained
+model in recognition [13]. The second one is the choice of a CNN architecture [14],
+which has the same philosophy as the human being for its robustness while extracting
+the characteristics of the object [15]. Finally, this architecture will be exploited in
+supervised DL to create a CNN model [16–18].
+
+  The proposal ERSDRA algorithm in the phase of detection exploits characteristics
+such: as shape, color, and pictograms, to locate the traffic signs in the images provided
+by the camera. This task can be done with some descriptors used during the detection
+as Canny edge, Green’s theorem [19, 20], arc length [21–23], Hough Transformation
+(HT) [24–26]. In the phase of recognition also called classification, the ERSDRA
+extracts the traffic signs features, these features can then be classified using proposal
+CNN architecture.
+
+  The paper is methodical according to the following schedule, Section 9.1 is the
+introduction, then Section 9.2 explains the general architecture of the proposed ap-
+proach. Section 9.3 presents the methodology uses in our approach for the detection
+and recognition of traffic signs. Section 9.4, and Section 9.5 are devoted to the dis-
+cussion of the results of traffic sign detection and recognition. Finally, Section 9.6
+contains the conclusion.
+
+9.2 THE PROPOSED APPROACH OVERVIEW
+
+The heart of the ITS system is the detection and recognition of traffic signs, which are
+designed to meet the needs of driver safety and comfort [27], it can also be classified
+as an embedded vision system. This offers a relevant perception of the environment
+to develop a mode of driving, by recognizing the road signs present in the scene as
+shown in Figure 9.1. The first step locates the signs in the images based on visual
+characteristics, such as the color, shape, and center of the sign, to have a high accuracy
+in identifying the sign in real time. Indeed, the signs appear in several images, before
+disappearing from the camera’s field of view, which allows tracking. The second step
+is to crop the images in real time, exactly the road signs, according to the dimensions
+174 ■ Explainable Artificial Intelligence for Intelligent Transportation Systems
+
+Figure 9.1 Diagram of proposed ITS system for traffic sign detection and recogni-
+tion.
+
+acceptable by the next phase. The final stage contains the main objective, which is
+the recognition intelligently based on the DL of the CNN architecture, the type of
+each sign detected according to its pictogram, and the recognized signs are signaled
+to the driver or can be transmitted [28, 29] to another ITS system by using V2X
+communication.
+
+  The objective of the paper is to allow a vehicle to recognize the road signs in a
+field of view (embedded cameras), knowing that it evolves in an urban environment,
+with very varied backgrounds and in the presence of several fixed and mobile objects:
+car, pedestrians, bicycle, trees, etc. In addition to these objects, there is a difference
+in luminance between places due to the shade, for example, climate change, and the
+time of recognition. To discern road signs in still images or video sequences acquired
+in real conditions, almost all CV algorithms focus on two steps [30]:
+
+  • Sign detection in the road scene.
+  • Recognition of the sign types that were detected in the detection step.
+  However, in real-life situations, detection is never perfect [31]. Indeed, the road
+scene can be quite cluttered and the signs can be obscured or very close to other
+objects, which does not facilitate the detection task. Detection must take into account
+different factors such as the diversity of sign categories (prohibition signs, danger
+signs, mandatory signs) [32]; the change in lighting, and the low contrast which make
+it difficult to distinguish between signs and background. Some authors based on the
+colors of signs [33], or others based only on the shape [34] process only a part of the
+sign contours. The most suitable detector is to combine the color, and shapes for such
+a case is the optimal corner detector.
+  An Explainable Model for Detection and Recognition of Traffic Road Signs ■ 175
+
+  This paper demonstrates the supervisory performance of DL for traffic sign recog-
+nition. When AI systems are trained on aspects of human visualization (HVS) [35–37]
+avoid many environmental dangers to reach road safety, such as cloudy or rainy
+weather that results in obscured view of panels. For DL, we exploit two different
+architectures of CNN, namely LeNet-5 [36, 38], and AlexNet [39, 40]. We improve the
+performance of the DL by creating a CNN model with several CV techniques (his-
+togram equalization and normalization of image datasets) and AI techniques (batch
+size function and augmentation dataset), to have a robust model and effective [37,38].
+This CNN pattern will be subject to traffic sign recognition. Then the evaluation of
+the effectiveness of all these models according to several criteria, using the confusion
+matrix, the classification report, and the Grad-CAM technique, with an in-depth
+analysis of the results obtained by the images taken in the urban world.
+
+  More recently, model interpretability has been one biggest trend in the transporta-
+tion field, this topic has begun to accelerate. One of the reasons for this development:
+is the growing number of machine learning models in production. On the one hand,
+this translates into a growing number of end users who need to understand how
+models make their decisions, as shown in Figure 9.1. On the other hand, a growing
+number of machine learning developers need to understand why (or why not) a model
+works in a particular way. For example, it can be used to explainable AI to improve
+confidence in intelligent modules of autonomous vehicles [41], and can also be used
+to explain visually Interpretable Machine Learning [42].
+
+9.3 METHODOLOGY
+
+9.3.1 ERSDRA Algorithm
+
+This approach consists of designing an efficacy algorithm for traffic road sign shapes.
+It thus offers a good gain in robustness against low contrast and poorly illuminated
+scenes, which is in line with our objective outlined in algorithm 1 called Easy Road
+Sign Detection and Recognition Algorithm (ERSDRA).
+
+  The circular shape (CS) was successfully treated in the detection phase [26] and
+also in the recognition phase [7]. This approach consists of designing an efficient
+algorithm for the shapes of road signs. It thus offers a good gain in robustness against
+low contrast and poorly lit scenes, which our work in this paper focuses on the
+detection and recognition of RSTS (Rectangle Square Triangle Shape) shapes [43].
+
+9.3.2 Detection Phase
+
+9.3.2.1 Color Extraction
+
+The algorithm requires a fast detector of traffic sign shapes, as shown in Figure 9.2.
+First of all, in the image, we only need the color of the red or blue panel, which the
+best solution is to convert the color space from RGB to HSV. To let only the range
+of the red color or the blue one by a simple condition, that is defining a low filter
+and a high filter, for each color desired to identify it as indicated in Table 9.2 of
+176 ■ Explainable Artificial Intelligence for Intelligent Transportation Systems
+
+  Algorithm 1: Easy Road Sign Detection and Recognition Algorithm
+  (ERSDRA)
+
+  Begin
+  Input: RIp: Road Images
+
+  Detection
+
+  Input (RIp);
+  new frame ← conversion color space (RIp);
+  edge ← Canny edges (new frame);
+
+  CS:
+  circles ← Hough circles (edge);
+  For circles to circles then
+
+  new 1 ← CS draw contour (frame);
+  CS sign detected ← CS crop (new 1);
+  end;
+
+  RSTS:
+  contours ← find contours (edge);
+  For contours do
+
+  area ← contour area(contours);
+  shape ← a * contour perimeter (contours);
+  if shape = N then
+
+  if area > area Min then
+  new 2 ← RSTS draw contour (frame);
+  RSTS sign detected ← RSTS crop (new 2);
+
+  end
+  end
+  end
+
+  Recognition
+
+  predict traffic road sign ← recognition (sign detected);
+  end
+
+this paper [26]. This conversion had the advantages of reducing execution time and
+facilitate handling. After that, we apply the binarization by thresholding the gray
+level images, and the pixels that have a higher value will have the max value equal
+to 255 and those that have a lower value will have the min value equal to 0 or the
+opposite [44].
+
+9.3.2.2 Contour Tracking
+
+To begin with, most computer vision algorithms use the edge images obtained by
+a filter such as Sobel, prewet, Canny. Moreover, the Canny filter shows very good
+performance in traffic scenes [26,43], this one has the result to produce the sharpness
+of the contours, which will speed up the extraction of the contours. This is why we
+prefer to opt for the Canny filter. This function returns an image twice as big as
+the original one, since an outline is not on a pixel but between two pixels, and each
+  An Explainable Model for Detection and Recognition of Traffic Road Signs ■ 177
+
+Figure 9.2 Detection steps traffic road signs.
+
+pixel has a value that corresponds to the intensity of the outline. It can therefore be
+used to eliminate uninteresting contours much more effectively than with a simple
+Canny detector, this method is very fast which it requires few calculations at each
+step [7]. It has the advantage of detecting edge pixels in all directions; all pixels will
+be processed only once.
+
+  The contour function thus produced, makes it possible to detect the contours of
+an object from binary images, these contours can be classified into two categories:
+
+  • Those that encompass an object. it is called external; it is a silhouette of the
+  object.
+
+  • Those that are integrated into an object are the inner contours.
+After the detection of the first contour pixel, the nature of the transition determines
+its type:
+
+  • If this transition is of a background type (0-1), it is an external type contour.
+  • Otherwise (1-0), the contour is of internal type.
+
+9.3.2.3 Area Calculation
+
+Many algorithms have been developed to accelerate the computation of closed contour
+surfaces. Some of them work for grayscale images, some for binary images, and some
+for parallel or optical computation. In algorithm 1, we use a discrete version of Green’s
+theorem that applies to binary images [45–48]. This theorem is a simple version of
+Stokes’ theorem [49]. Suppose that R is a region of the XY-plane bounded by a closed
+curve (sign contour), piecewise smooth C and that the functions K(x, y) and H(x, y)
+are continuous and also have continuous partial derivatives of the first order in R.
+178 ■ Explainable Artificial Intelligence for Intelligent Transportation Systems
+
+Green’s theorem relates a linear integral around a simple closed plane curve C to an
+ordinary double integral.
+
+  →−  →−  →−
+  C = K(x, y) a + H(x, y) b  (9.1)
+
+If K and H have continuous partial derivatives over an open region including R, then:
+
+  ( ∂H + ∂K )dxdy = Kdx + Hdy  (9.2)
+  ∂x ∂y
+  c
+
+ c indicate line the integral along C oriented counterclockwise. Using Green’s theorem
+allows us to calculate the area A bounded by a closed parametric curve.
+
+  A=  dA  (9.3)
+  (9.4)
+  R
+
+With condition  ∂H − ∂K = 1
+Then the area can be calculated  ∂x ∂y
+
+  A = (Kdx + Hdy)  (9.5)
+
+  C
+
+For discrete region can be computed the following way:
+
+  m
+
+  (K∆x + H∆y) ≈  f ∆x∆y  (9.6)
+
+  c  R
+
+Denote  f = ∂H − ∂K
+  ∂x ∂y
+
+Green’s theorem is applied to calculate the area of road signs in images that have
+regular shapes. These include triangular, square, and rectangular signs.
+
+9.3.2.4 Contour Perimeter and Approximation of Vertices
+
+After the detection of Canny edges in the image to avoid any noise. Then we use the
+arc length function to calculate the contour perimeter or the length of a curve. This
+method has many applications in computer vision in digital images. This function is
+applied to road sign shapes (triangle, rectangle, and square) [50–52]. After that, the
+objective is to determine the vertices of the shape detected. Many methods founded
+the Teh-Chin algorithm, Ramer [29,53], Rosenfeld-Johnson’s algorithm, and Douglas-
+Peucker (DP) approximation [54, 55].
+
+  The main idea of DP is to move the point with the largest error to the simplified.
+This operation is repeated until no point has an error that exceeds the given threshold.
+Another proposed heuristic algorithm maintains both the skeleton of the shape and
+the semantic meanings of a trajectory [56]. This algorithm outperforms DP under
+different compression rates, but is not open source and difficult to reproduce [57],
+and DP is much faster in the identification of shapes like triangles, rectangles in
+Figure 9.3 from this paper [58].
+An Explainable Model for Detection and Recognition of Traffic Road Signs ■ 179
+
+Figure 9.3 Detection steps traffic road signs.
+
+9.3.2.5 Increase Detection Accuracy
+
+Hough Transformation: The technique applied to verify the detected traffic signs
+is the Hough transformation (HT) [59]. The principle of HT is very simple, it is used
+for the detection of lines which would possibly be present in an analyzed image pro-
+vided that they are part of the contours. So, the first thing HT does identify all
+the edge points that construct the geometric shape, using local gradients measured
+between the pixel values around each point in the image by the Canny filter. These
+points have the highest gradients in their vicinity, either globally for fixed threshold-
+ing, or around the point for dynamic thresholding. In order to leave only the points
+most likely to belong to the contours. Each point of the identified contours (x, y)
+will then allow a projection in the HT plane of polar coordinates (ρ, θ) (ρ: radial
+coordinates, θ: angular coordinates) for all the lines passing through this point [7].
+
+Traffic Sign Center: However, all the methods applied in the previous sections
+were found to be effective. Assuming that the edges of the signs are well detected,
+it was now necessary to increase the degree of accuracy, for the second time, before
+moving to the main step of traffic sign recognition. This step is based on the road
+sign’s center of gravity which makes signs be detected in any environment. The ob-
+ject’s gravity center corresponds to a point that would physically hold the object in
+equilibrium. For this aim, we use the “moments” class that allows the calculation of
+the order type 3 polygon moments. The moments are essentially based on the ob-
+ject contour vector points, using a function that returns the moment descriptors in
+a structure that contains the elements sought which are based on the equations 9.7,
+9.8, 9.9, and 9.10.
+
+• Spatial Moments
+
+  Mij =  xiyjI(x, y)  (9.7)
+
+  xy
+
+• Central Moments
+
+  µpq =  (x − x¯)p(y − y¯)qI(x, y)  (9.8)
+
+  xy
+
+  x¯ = M10  y¯ = M01  (9.9)
+  M00  M00
+180 ■ Explainable Artificial Intelligence for Intelligent Transportation Systems
+
+• Normalized Central Moments
+
+  nij =  µij  (9.10)
+
+  i+j
+  µ00 1+ 2
+
+Thus, the value m00 represents the area of an object and the gravity center is calcu-
+
+lated  as  follows:  x  =  m10  and  y  =  m01 m00 ,  where  the  values  of  each  parameter  x  and  y
+  m00
+represent the object’s midpoint.
+
+9.3.3 Recognition Phase
+
+The central point of a convolution neural network is to build an AI system. This
+one is composed of a set of distributed neurons that are connected each to the other
+through several layers, to generally solve various statistical and especially classifica-
+tion problems.
+
+9.3.3.1 Convolutional Neural Networks Description
+
+CNNs are the standard form of neural network architecture applied in many fields
+[60, 61], most layers we can find in CNN ’s architecture are convolution layers, pool-
+ing layers, fully connected layers, and classification layers. The convolution is very
+important in CNNs for feature extraction that all neurons detect exactly the same
+feature [62, 63], and by multiplying the receptive fields, it becomes possible to de-
+tect features independently of their position in the visual field. Weight sharing also
+significantly reduces the number of parameters to be learned, and thus the memory
+requirements for network operation, which plays a very important role in the speed
+of the training [64]. The mathematical formula 9.11 describes these operations [65].
+
+  XiL = AF ( XjL−1.WiL + bias,j )  (9.11)
+
+  j∈Ij
+
+where  AF ()  is  the  activation  function,  XL  is  the  output  of  the  L  layer,  XjL−1is  the
+
+  i
+
+feature map of layer L − 1 multiped by weight matrix WiL, bias,j represent bias value,
+
+Ii is the input feature set.
+
+A CNN architecture is formed by a stack of independent processing layers, among
+
+these layers, we have the pooling layer that reduces the spatial size of an intermediate
+
+image, thereby reducing the number of parameters and computation in the network.
+
+It is therefore common practice to periodically insert a pooling layer between two
+
+successive convoluted layers of a CNN architecture to control overfitting, it can be
+
+represented by a mathematical formula 9.12. The pooling layer works independently
+
+on each depth slice of the entry and only resizes it on the surface.
+
+  poljk = M ax{Cjk:j+r−1}  (9.12)
+
+poljk corresponds to the maximum value in the pool region, r represents the size and
+ck is the input. It is possible to improve the CNN efficiency of the processing, by
+An Explainable Model for Detection and Recognition of Traffic Road Signs ■ 181
+
+interposing between the processing layers a layer which will operate, a mathematical
+function called activation function 9.13 on the output signals.
+
+F (x) = max(0, x)  (9.13)
+
+  After several layers of convolutions and max-pooling, the high-level reasoning in
+the neural network is done via fully connected layers, the neurons of a fully connected
+layer are connected to all outputs of the previous layer. Their activation functions
+can therefore be computed by matrix multiplication followed by a polarization shift.
+The mathematical formula 9.14 describes these operations.
+
+F CL = α(W L.F CL−1 + bL)  (9.14)
+
+  α() is the non-linear activation function, bL represent the bias and W L is the
+weight non-linear activation function, F CLis the output characteristics of L-the fully
+connected layer. Moreover, the F C concept creates an exponential problem of mem-
+ory, called overfitting, slowing down the processing of information, to prevent this,
+the dropout layer is used to randomly turn neurons as well as peripheral neurons.
+
+  Normally the last layer of the CNN network, various functions adapted to different
+tasks can be used, the Softmax function is a mathematical function, an N-dimensional
+vector z of arbitrary real values to an N-dimensional vector γ(z) of real values in the
+range (0, 1) of which the sum is 1, which describe mathematically 9.15.
+
+p(z)i =  ezi  i ∈ {1, ..., N }  (9.15)
+  Nc i=1 ezi
+
+  The Softmax used in the last layer computes the final probabilities for multi-class
+classification [66]. A loss function is also associated with the final layer to calculate the
+classification error, this is usually the cross-entropy accuracy [67]. We calculate the
+weights of each layer by the gradient backpropagation, which progressively computes
+the parameters to minimize the regularized loss function. Starting from the first layer
+to the last layer, the optimization is done with an Adam optimizer [27, 28].
+
+9.3.3.2 Interpretability of Classification Models
+
+Explainable AI visualization techniques help create explainable models by highlight-
+ing image pixels that impact models’ decisions, helping to verify whether the model
+made the prediction based on the correct models of the image. We use the Grad-CAM
+(Gradient-weighted Class Activation Mapping), one of the most used XAI techniques
+(Explainable Artificial Intelligence) [70], which applied to an already trained model
+generates heatmaps for visual interpretation. To obtain the class discriminative lo-
+calization map Grad-CAM [71] as shown in equation 9.16.
+
+LGrad−CAM k ∈ Ru×v  (9.16)
+
+u is width and v is the height of any class k, the gradient computes the score for class
+k, yL (before the Softmax), with respect to feature maps M c of a convolutional layer,
+182 ■ Explainable Artificial Intelligence for Intelligent Transportation Systems
+
+TABLE 9.1 LeNet-5 Architecture Suitable for Traffic Sign Recognition
+
+Layer  Output Shape  Param
+  780
+Input  32 × 32 × 1  0
+  4065
+Convolution  (None, 28, 28, 30)
+  0
+Max Pooling  (None, 14, 14, 30)  0
+
+Activation(ReLU)  0
+  270,500
+Convolution  (None, 12, 12, 15)
+  0
+Max Pooling  (None, 6, 6, 15)  21,543
+
+Activation(ReLU)
+
+Flatten  (None, 540)
+
+Dense  (None, 500)
+
+Dropout  (None, 500)
+
+Activation(Softmax)  43
+
+Total params: 296,888
+
+Trainable params: 296,888
+
+Non-trainable params: 0
+
+i.e. ∂Mc ∂yL . These gradients flowing back are global average-pooled to obtain the neuron
+importance weights αcL. it performs a weighted combination of forwarding activation
+maps and follow by a ReLU as shown in equation 9.17, in generally the Grad-CAM
+
+show fine-grained importance like pixel-space gradient visualization methods.
+
+  LGrad−CAM k = ReLU  αcLM c  (9.17)
+
+  c
+
+9.3.3.3 The Adapted LeNet-5 Network Architecture
+
+For our study we have used the LeNet-5 architecture is among the first CNN, devel-
+oped by LeCun researchers [72]. It has been used for the classification and recognition
+of handwritten characters in banks and post offices. Table 9.1 illustrates the LeNet-5
+architecture description, it includes convolution layers and subsampling layers. These
+layers are fully connected subsequently from the input layer to output one, and the
+role of each layer and constituent parameters are explained in detail below.
+
+  • The first layer: This first layer is applied to a gray level image of size 32 × 32,
+  with six convolution filters of size 5 × 5 and a step (stride) equal to 1. The
+  dimension of the image varies from 32 × 32 × 1 to 28 × 28 × 30.
+
+  • The second layer: The LeNet-5 applies a subsampling layer with a filter of
+  size 2 × 2 and a step of two. The resulting image dimensions will be reduced to
+  14 × 14 × 30.
+
+  • The third layer: is a second convolution layer with 15 feature maps (filters)
+  of size 5 × 5 and a step of 1, the dimensions of the image become 12 × 12 × 15.
+  An Explainable Model for Detection and Recognition of Traffic Road Signs ■ 183
+
+• The fourth layer: The fourth layer is again a subsampling layer with a filter of
+  size 2×2 and a step of 2. This layer is identical to the second one, the difference
+  is that it has 15 feature maps so that the output is reduced to 6 × 6 × 15.
+
+• The fifth layer: The fifth layer is a fully connected convolutional layer with
+  120 feature maps of size 1 × 1. Each of the 120 units is connected to all 540
+  nodes (6 × 6 × 15) in the fourth layer.
+
+• The sixth layer: The sixth layer is applied to connect the outputs of the
+  previous layer having 540 units to obtain 500 units.
+
+• The last layer: Finally, the last layer is using the Softmax probability function
+  that output layer 43 possible values which correspond to the classes numbered
+  from 0 to 42.
+
+9.3.3.4 The Adapted AlexNet Network Architecture
+
+AlexNet is a popularized convolutional neural network in computer vision, developed
+by Geoff Hinton, Ilya Sutskever, and Alex Krizhevsky researchers [73]. This CNN was
+submitted to the ImageNet base challenge in 2012 and outperformed its competitors
+[74,75]. This network has a similar concept called the LeNet, it was larger and deeper,
+it consists of additional convolutional layers previously stacked in LeNet architecture,
+and each convolutional layer is always followed by a pooling layer.
+
+  One of the most commonly used approaches is called Batch Normalization (BN)
+layer. In CNN, the optimal solution is based on the manipulation of batches (or mini-
+batches), because the parallelism of the calculations allows for saving time. This layer
+computes the mean and variance over a batch using the distribution of the sum of the
+neurons at the input and then repeats it for each training batch. The mathematical
+operation of BN is described as follows.
+
+y˜(l) = y(l) − E[y(l)]  (9.18)
+  V ar[y(l)]
+
+A(l) = α(l)y(l) + γ(l)  (9.19)
+
+α(l) and γ(l) represent the parameters to be learned, y(l) and γ(l) are the l-th activation
+of input and output, respectively, V ar[x] and E[x] variance and expectation.
+
+  The structure of the AlexNet model is shown in Table 9.2, BN layers are added
+based on the AlexNet model. The input image for the AlexNet architecture is
+(32,32,3). This CNN consists of different convolution layers used to extract the im-
+age features. The first layer contains 96 filters of size 8 × 8 × 3 and a step of two,
+and the second one contains 256 filters of size 4 × 4 and a step of two. These first
+convolution layers are followed by a similar subsampling window layer of size 2 × 2
+and a step of two. However, the next three convolution layers (3rd, 4th, and 5th lay-
+ers) are directly connected followed by an under-sampling layer. The output contains
+two types of fully connected layers and a Softmax probability function layer with 43
+classification elements.
+184 ■ Explainable Artificial Intelligence for Intelligent Transportation Systems
+
+TABLE 9.2 AlexNet Architecture Suitable for Traffic Sign Recognition
+
+Layer  Output Shape  Param
+
+Input  32 × 32 × 3  34,944
+  384
+Convolution  (None, 8, 8, 96)  0
+  0
+Batch normalization (None, 8, 8, 96)
+  614,656
+Activation (ReLU) (None, 8, 8, 96)  1024
+  0
+Max Pooling  (None, 4, 4, 96)  0
+
+Convolution  (None, 4, 4, 256)  885,120
+  1536
+Batch normalization (None, 4, 4, 256)  0
+
+Activation (ReLU) (None, 2, 2, 256)  1,327,488
+  1536
+Max Pooling  (None, 4, 4, 256)  0
+
+Convolution  (None, 2, 2, 384)  884,992
+  1024
+Batch normalization (None, 2, 2, 384)  0
+  0
+Activation (ReLU) (None, 2, 2, 384)  0
+
+Convolution  (None, 2, 2, 384)  1,052,672
+  16,384
+Batch normalization (None, 2, 2, 384)  0
+  0
+Activation (ReLU) (None, 2, 2, 384)
+  16,781,312
+Convolution  (None, 2, 2, 256)  16,384
+  0
+Batch normalization (None, 2, 2, 256)  0
+
+Activation (ReLU) (None, 2, 2, 256)  4,097,000
+  4000
+Max Pooling  (None, 1, 1, 256)  0
+  0
+Flatten  (None, 256)  43,043
+  172
+Dense  (None, 4096)  0
+
+Batch normalization (None, 4096)
+
+Activation  (None, 4096)
+
+Dropout  (None, 4096)
+
+Dense  (None, 4096)
+
+Batch normalization (None, 4096)
+
+Activation  (None, 4096)
+
+Dropout  (None, 4096)
+
+Dense  (None, 1000)
+
+Batch normalization (None, 1000)
+
+Activation  (None, 1000)
+
+Dropout  (None, 1000)
+
+Dense  (None, 43)
+
+Batch normalization  (None, 43)
+
+Activation  (None, 43)
+
+Total params: 25,763,671
+
+Trainable params:25,742,449
+
+Non-trainable params: 21,222
+
+9.3.3.5 Proposed CNN Architecture
+
+The paper has a great challenge in ITS systems, it is the implementation of the
+ERSDRA algorithm to effectively recognize the detected traffic signs. For this aim,
+An Explainable Model for Detection and Recognition of Traffic Road Signs ■ 185
+
+TABLE 9.3 The Proposed CNN Architecture for Traffic Sign Recognition
+
+  Layer  Output Shape  Param
+
+  Conv2D  (None, 32, 32, 8)  608
+BLOCK 1 ReLU Activation  (None, 32, 32, 8)  0
+  (None, 32, 32, 8)  32
+  Batch normalization  (None, 16, 16, 8)  0
+  Max pooling  (None, 16, 16, 16)  1168
+  Conv2D  (None, 16, 16, 16)  0
+  ReLU Activation  (None, 16, 16, 16)  64
+  Batch normalization  (None, 16, 16, 16)  2320
+BLOCK 2 Conv2D  (None, 16, 16, 16)  0
+  ReLU Activation  (None, 16, 16, 16)  64
+  Batch normalization  (None, 8, 8, 16)  0
+  Max Pooling  (None, 8, 8, 32)  4640
+  Conv2D  (None, 8, 8, 32)  0
+  ReLU Activation  (None, 8, 8, 32)  128
+  Batch normalization  (None, 8, 8, 32)  9248
+BLOCK 3 Conv2D  (None, 8, 8, 32)  0
+  ReLU Activation  (None, 8, 8, 32)  128
+  Batch normalization  (None, 4, 4, 32)  0
+  Max Pooling  0
+  Flatten  (None, 512)  256,500
+  Dense  (None, 500)  0
+  Activation  (None, 500)  2000
+  Batch normalization  (None, 500)  0
+  Dropout  (None, 500)  64,128
+BLOCK 4 Dense  (None, 128)  0
+  Activation  (None, 128)  512
+  Batch normalization  (None, 128)  0
+  Dropout  (None, 128)  5547
+  Dense  (None, 43)  0
+  Softmax Activation  (None, 43)
+
+Total params: 347,087
+
+Trainable params: 345,623
+
+Non-trainable params: 1,464
+
+we focus our interest on the CNN architectures, we relied on two different CNN
+architectures, namely LeNet-5 and AlexNet architecture, both of which will be trained
+based on the GTSRB dataset. For the DL results to make sense, we combine the best
+performances of the two architectures detailed before. Aiming to obtain an optimized
+CNN model to be submitted for road sign recognition in automotive systems, the
+input images for the proposed CNN architecture is (32,32,3). In Table 9.3, we detail
+the feature map extraction operation experienced in our CNN version. Feature maps
+186 ■ Explainable Artificial Intelligence for Intelligent Transportation Systems
+
+TABLE 9.4 Popular Traffic Road Signs Datasets
+
+Dataset  Train  Test  Validation
+
+GTSRB [76]  34799  12630  4410
+DITS [77]  7144  1159  1214
+BTSC [78, 79]  4575  2520  —-
+Rmastif [80]  4044  1784  —-
+ETS [32]  60546  20442  —-
+
+refer to a set of entities created, by applying the same feature extractor to different
+locations of the input map in a sliding window fixture.
+
+  First, we start with the first block that contains a convolution layer, a ReLU
+activation function, a normalization layer, and finally the MaxPooling layer of the
+size (2 × 2) to reduce the dimensionality of the volume. In this block, we implement
+the convolution layer filter of size (5 × 5) to distinguish the color and shape of each
+road sign. Then we continue with the second block which uses the same layers as the
+first block except for the size of the convolution filter is changed to (3 × 3) which the
+third block contains all layers and values of the second block. For the number of filters
+used in each layer was different from one block to another respectively. For the first
+we have 8 filters, the second one contains 16 filters, and the third one comprises 32
+filters. We increase the number of filters to improve object extraction characteristics
+and filter precision. The last block of the network is essentially consisted of two fully
+connected flatten layers and a Softmax classifier. Dropout layers are applied as a form
+of regularization that aims to prevent overfitting.
+
+9.3.3.6 Datasets Used
+
+We used existing public datasets that would allow us to compare our approach to the
+literature. Therefore, we evaluated the ERSDRA algorithm in the recognition phase,
+on four new datasets, that have been acquired in the countries concerned: Germany,
+Belgium, and French. The GTSRB dataset is the primary source of traffic signs and
+most researchers are limited by this German data. Road sign images vary in height,
+width, and ratio which is very important, it should be noted that the minimum size
+of an image in these different datasets corresponds to the dimension (32 × 32). In
+addition, some images were acquired under degraded weather conditions, which makes
+it more accurate to train the CNN architectures in different situations, so Table 9.4
+represents a summary of the most popular datasets.
+
+9.4 EXPERIMENTATION AND DISCUSSION RESULTS
+
+9.4.1 Work Environment
+
+The hardware used for the experiments of this approach is composed of a laptop
+ASUSTek computer core i7-7500 CPU@2.70GHz CPU, 8 Go RAM, 64-bit operating
+An Explainable Model for Detection and Recognition of Traffic Road Signs ■ 187
+
+TABLE 9.5 Road Sign Detection Process
+
+Image Contour Shapes  Perimeter  Identification  Perimeter  Vertices  Lines Detection  Final Image
+  Precision (a)  Precision (a)  Number (N)  using (HT)
+
+Triangle  0.02  0.1  3
+  Shapes
+
+Square  4
+  Shapes
+
+systems, and a digital camera. All deep learning is implemented in GPU processors
+920M Nvidia. We employ OpenCV, TensorFlow, and Keras Libraries, for software,
+that experiments were performed on well-known datasets and on a real environment.
+
+9.4.2 Detection Phase for Traffic Road Signs
+
+Table 9.5 represents the main detection results of the ERSDRA algorithm by ex-
+ploiting the visual features. The detector applies the corresponding components to
+traffic signs in red or blue, to search for triangular, square, and rectangular edges.
+The ERSDRA uses of the OpenCV library is oriented to real-time applications, in
+the research world as well as in industry, and also optimistic to the identification of
+objects in images. In a column (1), to distinguish these road signs from other ob-
+jects in the scene, the HSV space is used because of its low sensitivity to changes in
+brightness. Relying on the properties related to each color as by defining lower and
+upper filters of [H, S, V] respectively, for red color [136, 87, 111] and [180, 255, 255],
+finally for blue color [99, 115, 150] and [110, 255, 255]. After that, we convert the
+result images from HSV space to gray level so that the following operation applies
+the Canny edge detection. In this sense, we have opted for a method based on the
+contours, to detect regions of interest in the image, which involves the elimination
+of that which requires too much processing. This detector consists of a convolution
+kernel that provides a maximum response, at the corner in the existence of Gaussian
+noise smooth it out, the results of this operation, as shown in the column (2).
+
+  The contours of these road signs’ edges are then highlighted. By calculating the
+perimeter of the signs that will be multiplied by the accuracy (a), as indicated in the
+ERSDRA algorithm. The accuracy value of 2% in the column (5), did not exactly
+identify the triangular shape in the image in a column (6), but the change to 10%,
+identified the three corners of the object exactly in their relative positions, as shown
+in the column (9). In contrast, for rectangular or square, no change for square shapes
+in the identification in columns (5) and (9) of Table 9.5. This calculation of the
+signs perimeters is done, to have the vertices numbers (N) of each shape detected,
+precisely the triangle shape which will have 3 vertices and 4 vertices for the square or
+rectangular shape, as indicated in the column (7). To check the first condition of the
+ERSDRA algorithm before checking the areas of the shapes. For the verification of
+the area values, we wanted to verify it to tests in real time shown in the next section.
+188 ■ Explainable Artificial Intelligence for Intelligent Transportation Systems
+
+TABLE 9.6 Detection Shapes Road Signs
+
+Shapes Shapes Vertices  Shapes Center
+
+Triangle  Precicion
+  Detected
+
+Square
+  Detected
+
+  The ERSDRA algorithm, in the detection phase, relies on the edges of triangular
+and square or rectangular signs. The color condition was well validated to identify the
+road signs, but the related components are not verified sometimes for rectangular or
+square shapes. Unlike triangular shapes, rectangular shapes do not have well-marked
+edges. As shown in the column (2) of Table 9.5, the edge of the parking sign is not
+very sharp. Therefore, the detection of segments is less effective.
+
+  Hence, the detection ERSDRA algorithm requires a verification step before draw-
+ing the contour of the detected sign, several techniques excite, but must respect the
+following conditions:
+
+  • Find the parallel segments and create the quadrilateral.
+
+  • Find the perpendicular segments and create the quadrilateral.
+
+The HT plays on a narrow range of angles around 0◦ and 60◦ for the triangular shape
+and for square or rectangular shapes around 0◦ and 90◦. HT regions are applied to
+the image segmented by Canny; to work separately on each line detected by the
+segmentation. Then we will group all the lines found, in order not to complicate the
+calculation of the vertices for the triangular and rectangular panels which are already
+discriminating, as shown in the column (8) in Table 9.5. Due to their relative locations
+in the region of interest. Finally, if the triangle or the square respects the geometric
+constraints, the corners of the panel are detected around the points of intersection. A
+tolerance for the effects of the rotation of the signs is introduced at this stage. Table
+9.6 shows the high accuracy of detecting the centers of the traffic signs on the images,
+according to the contour moment equations 9.7, 9.8, 9.9, and 9.10, the center of the
+sign either triangle or square, it is determined successfully.
+
+9.4.2.1 Test in a Real Environment
+
+Table 9.7 illustrates some cases of traffic sign detection. The contours of the signs
+are well detected as shown in the column (1), also the vertices of the detected signs
+are successfully counted, which is three for the triangular shape and four for the
+rectangular one. The shape identification center, for all signs away from the camera.
+The example is demonstrated by the triangular shape column (3). It can be concluded
+An Explainable Model for Detection and Recognition of Traffic Road Signs ■ 189
+
+TABLE 9.7 Detection of Traffic Signs in a Real Environment
+
+  Contour  Shapes  Detection Precision
+
+  Triangle Square
+  Detected Detected
+
+TABLE 9.8 Area Calculation of Traffic Road Signs Shape
+
+  Type of Noise  Shapes  The Reference Area of  ACGT [81] SAGT [81] ERSDRA
+Without any noise  Shapes (in pixels2) [81]
+  Triangle  5373.65  5379.77  5379.90
+  Square  5380  5772.00  5810.79  5844.50
+  5846  0.118%  0.004%  0.001%
+The Percentage Error (PE)  1,260%  0,600%  0,025%
+  Triangle
+  Square
+
+that the approach is robust and aims to make it much more effective with higher real-
+
+time accuracy, one can determine the intersection of the coordinates of the vertices
+
+points, as shown in the column(4).
+
+To show the effectiveness of using Green’s theorem in the area calculation of road
+
+signs. We have tried to make comparisons with these methods ACGT and SAGT
+
+applied to images in this paper [81]. The idea is to determine if the ERSDRA algo-
+
+rithm can work properly to calculate the area of shapes. The reference or theoretical
+
+values were requested for the regular shapes (square and triangle) according to this
+
+paper [81].
+
+In order to evaluate the performance of the proposed detection method by the
+
+percentage error (PE) formula 9.20, where Acal is calculated area and Aref The
+
+theoretical area.  P E = Aref − Acal
+  Aref
+  (9.20)
+
+Table 9.8 shows the area calculation of the noise-free shapes. The percentage error
+range for ERSDRA after several tests, it is between 0.001% and 0.025% for triangular
+and square shapes respectively. SAGT and ACGT are applied on images [81], but
+our ERSDRA algorithm is applied in real time, using images in front of a digital
+camera. The experimental results show that ERSDRA is able to compute the area
+accurately, as shown in Table 9.7, and that the vertices of the segmented shapes are
+well profiled.
+
+  In the last step, we first limit the candidate panel area from the received video
+frames that basically are centered and well aligned if their stand is facing the camera
+and then we crop the detected panels as shown in Table 9.9. These operations are
+

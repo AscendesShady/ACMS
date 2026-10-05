@@ -1,0 +1,1710 @@
+Highway Capacity Manual 2000
+
+  eight-phase dual-ring control scheme that was illustrated in Exhibit B16-2. This scheme
+  is more or less universally applied in the United States.
+
+  For purposes of this discussion, the scheme for assignment of movements to phases
+  presented in Exhibit B16-2 will be adopted. This procedure will greatly simplify the
+  illustration of all modeling procedures without affecting the generality of the results.
+
+  The process is highly iterative, and the productive application of the manual
+  worksheets is not practical. Only the input data worksheet will be discussed in detail in
+  this appendix. This worksheet, presented in Exhibit B16-4, gathers together all data
+  required by the analytical model.
+
+  Approach-Specific Data
+
+  The top portion of the worksheet summarizes the approach-specific information. A
+  separate column is used for each of the four approaches. The logic of the model requires
+  that the left-turn treatment be identified explicitly. The codes used here are consistent
+  with the definitions presented in the body of this chapter.
+
+  The term simple left-turn protection refers to left turns moving only on the protected
+  phase. The term compound left-turn protection will be used to denote either protected-
+  plus-permitted or permitted-plus-protected treatments.
+
+  Position Codes
+
+  Position codes are required to distinguish between leading and lagging left-turn
+  protection. The terms leading and lagging apply equally to the cases of simple and
+  compound left-turn protection. These codes do not apply if the left turn is not protected.
+  The worksheet offers a simple choice of leading, lagging, or N/A. The definition is very
+  simple: leading left turns precede the movement of the opposing through traffic and
+  lagging left turns follow it.
+
+  Sneakers
+
+  The term sneaker describes the number of left turns per cycle that may be discharged
+  at the end of a permitted phase. An implicit default of two per cycle is built into the
+  supplemental permitted left-turn worksheets for purposes of determining the minimum
+  saturation flow rate. Since any vehicles that rest in the detection zone will extend their
+  respective phases (assuming that the phase has not already extended to a preset
+  maximum), a more detailed treatment of sneakers will be required for traffic-actuated
+  control.
+
+  Free Queue
+
+  The pretimed model assumes that the first permitted left turn at the stop line will
+  block a shared lane. However, through vehicles in the shared lane are often able to
+  squeeze around one or more left-turning vehicles, which define the free queue. The lack
+  of a free-queue parameter is a deficiency of the pretimed model, but it is especially
+  critical with traffic-actuated control because vehicles in the free queue do not occupy the
+  detector and therefore do not extend the green phase. A permitted left turn stopped on the
+  detector must be treated entirely differently in the modeling process than one that has
+  stopped beyond the detector.
+
+  Approach Speed, SA
+
+  The speed of vehicles on a signalized intersection approach is required in the analysis
+  of traffic-actuated operation. It determines the passage time between the detector and the
+  stop line as well as the portion of intervehicle headways during which a presence detector
+  is occupied. In modeling the operation of vehicles at a traffic signal, it is typical to
+  assume a single value for speed that applies throughout the cycle.
+
+Chapter 16 - Signalized Intersections  16-102
+Appendix B
+  Highway Capacity Manual 2000
+
+EXHIBIT B16-4. TRAFFIC-ACTUATED CONTROL INPUT DATA WORKSHEET
+
+  TRAFFIC-ACTUATED CONTROL INPUT DATA WORKSHEET
+
+General Information  Site Information
+
+Analyst  _______________________________  Intersection  _____________________________
+Agency or Company  _______________________________  Area Type
+Date Performed  _______________________________  Jurisdiction  " CBD  " Other
+Analysis Time Period  _______________________________  Analysis Year
+  _____________________________
+
+  _____________________________
+
+Approach-Specific Data  WB  NB  SB
+  EB
+
+Left-turn treatment code1
+
+Left-turn position (leading, lagging, or N/A)
+
+Left-turn max sneakers, vLS (veh)  Ring 1  4. SBTH  Ring 2  8. NBTH
+Left-turn free queue, Qf (veh)  1. WBLT 2. EBTH 3. NBLT  5. EBLT 6. WBTH 7. SBLT
+Approach speed, SA (km/h)
+Ring 1 and 2 termination (simultaneous,
+independent, or N/A)
+Phase-Specific Data
+
+Phase type2 (L, T, G, N, X)
+
+Phase reversal (Yes or No)
+
+Detector length, DL (m)
+
+Detector setback, DS (m)
+
+Max initial interval, MxI (s)
+
+Added initial per actuation, AI (s)
+
+Min allowable gap, MnA (s)
+
+Gap reduction rate, GR
+
+Ped Walk + Don't Walk, WDW (s)
+
+Maximum green, MxG (s)
+
+Intergreen time, Y (s)
+
+Recall mode (min, max, ped, none)
+
+Min veh phase time, MnV (s)
+Notes
+
+1. (0) Does not exist (1) Permitted (2) Protected (3) Protected + Permitted  (4) Not opposed
+2. (L) Protected left turn on a green arrow
+
+  (T) Through and right-turning traffic only
+  (G) Permitted left turns and compound left-turn protection
+  (N) In addition to other movements, left turns are not opposed
+  (X) Inactive phases
+
+Terminating of Rings 1 and 2
+
+  The nature of dual-ring control requires that the second phases of Rings 1 and 2
+terminate simultaneously because they yield control to approaches with conflicting
+traffic. However, control may pass from the first phase to the second phase of either ring
+without causing conflict. Independent termination of the first phases improves efficiency
+in the allocation of time among competing movements and is generally exploited for this
+
+  16-103  Chapter 16 - Signalized Intersections
+  Appendix B
+Highway Capacity Manual 2000
+
+Convention for  reason. The type of operation created by independent termination is sometimes referred
+designating movements  to as phase overlap.
+accommodated on a
+phase  It is, however, not essential that the phases terminate independently. Older
+  single-ring controller operation may be approximated by requiring that the first phases of
+  each ring (i.e., Phases 1 and 5, or 3 and 7) terminate simultaneously. In some situations
+  involving coordination of controllers on major routes, it is common to force both rings
+  out of their first phase simultaneously. The model considers simultaneous or independent
+  termination as legitimate alternatives.
+
+  It is possible that one or more of the first phases will not be used, because their
+  associated left turn is not protected. In this case, the question of simultaneous or
+  independent termination will not apply. This is another multiple-choice entry on the
+  worksheet. The alternatives are simultaneous, independent, and N/A.
+
+  Phasing and Detector Design Parameters
+
+  The bottom portion of the worksheet includes all of the data items that are specific to
+  each of the eight phases represented in Exhibit B16-2. A separate column is provided on
+  the worksheet for each phase. The first group includes the design parameters relating to
+  phasing and detector placement that will affect the operation. The following data items
+  are included.
+
+  Phase Type
+
+  Phase type is the first of several phase-specific inputs that are required. A phase that
+  is not active will not be recognized in any of the subsequent computations. Inactive
+  phases are indicated by an X in the appropriate column of the worksheet. A left-turn
+  phase will be considered active only if it accommodates a protected left turn. A through
+  phase will be considered active if it accommodates any traffic at all—through, left, or
+  right. Active phases will be designated as follows:
+
+  • L if the phase accommodates a protected left turn on a green arrow.
+  • T if the phase accommodates through and right-turning traffic only. In this case,
+  all left turns are accommodated entirely on another phase (i.e., simple left-turn
+  protection).
+  • G if any left turns are accommodated on this phase and opposed by oncoming
+  traffic. This case will occur on phases with permitted left turns and those with compound
+  left-turn protection.
+  • N if the phase accommodates, in addition to other movements, left turns that are
+  not opposed at any time in the phase sequence. This case will happen at T-intersections,
+  on one-way streets, and in cases in which the phasing completely separates all
+  movements on opposing approaches.
+  Note that right turns are not referenced specifically in these designations. Right turns
+  are assumed to proceed concurrently with the through traffic.
+
+  Phase Reversal
+
+  Normally the first phase in each ring on each side of the barrier (odd-numbered
+  phase) handles protected left turns and the second (even-numbered) phase handles the
+  remaining traffic. This operation creates a condition of leading left-turn protection.
+  When lagging left-turn protection is desired, the movements in the first and second
+  phases are interchanged. Most controllers provide an internal function to specify phase
+  reversal. For purposes of this methodology, two phases may only be interchanged if both
+  phases are active.
+
+  Detector Length, DL
+
+  Detector length is the effective distance, measured parallel to the direction of travel,
+  through which a vehicle will occupy the detector. This design parameter is user-specified
+
+Chapter 16 - Signalized Intersections  16-104
+Appendix B
+  Highway Capacity Manual 2000
+
+and influenced by local practice. The detector length influences the choice of other  Difference between time
+parameters, such as the allowable gap in traffic that will terminate the phase.  headway and time gap
+
+Detector Setback, DS
+
+  Detector setback is the distance between the downstream edge of the detector and the
+stop line.
+
+Controller Settings
+
+  The controller itself has several operating parameters that must be specified for each
+phase. Collectively, these will be referred to as the controller settings because they must
+be physically set in the controller with switches, keypads, or some other electrical means.
+The following settings will exert a significant influence on the operation of the
+intersection and must therefore be recognized by the analysis methodology.
+
+Maximum Initial Interval, MxI
+
+  Maximum initial interval is used only when the initial interval is extended under
+volume-density control. It must be long enough to ensure that a queue of vehicles
+released at the beginning of the green will be in motion at the detector before the green
+phase terminates.
+
+Added Initial per Actuation, AI
+
+  When the initial interval is extended under volume-density control, the added initial
+interval per actuation will depend on the number of approach lanes. It should be long
+enough to ensure that each vehicle crossing the approach detector on the red will add an
+appropriate increment of time to the initial interval.
+
+Minimum Allowable Gap, MnA
+
+  MnA is a user-specified controller parameter, the effect of which will be illustrated
+later as the analytical model is exercised. It is typically set in the range of 2 to 3 s. It
+establishes the threshold for the length of the gap in traffic that will cause the phase to
+terminate.
+
+  It is important to distinguish between the time gap and the time headway between
+vehicles. The time headway indicates the elapsed time between the successive arrival of
+two consecutive vehicles at a detector. The time gap indicates the elapsed time between
+the departure of the first vehicle from the detector and the arrival of the second. The time
+gap is what is left of the headway after the detector occupancy time has been subtracted.
+A traffic-actuated controller using presence detectors views the passage of traffic in terms
+of gaps, not headways.
+
+Gap Reduction Rate, GR
+
+  The gap reduction rate determines the speed at which the allowable gap is reduced in
+volume-density controllers as the green display continues. There are subtle differences in
+the definition of the gap reduction rate among controllers. For purposes of this project, a
+linear reduction rate (seconds reduction of gap per second of elapsed green time) will be
+assumed.
+
+Pedestrian Walk + Don’t Walk, WDW
+
+  WDW is the minimum time given to each phase when pedestrian demand is
+registered or the pedestrian recall is active. It includes both the pedestrian Walk and
+flashing Don’t Walk intervals. These intervals are actually entered into the controller as
+two separate parameters but will be combined for purposes of this analysis. If the
+pedestrian timing function is not implemented in a particular phase, the WDW value
+should be entered as zero.
+
+16-105  Chapter 16 - Signalized Intersections
+  Appendix B
+Highway Capacity Manual 2000
+
+Queue accumulation  Maximum Green, MxG
+polygon is a basic tool for
+analysis of signalized  MxG is a user-specified parameter, the effect of which will be discussed later. Local
+intersections  practice often plays an important part in the determination of maximum green times.
+
+  Intergreen Time, Y
+
+  The intergreen interval consists of a yellow change interval followed by an all-red
+  clearance interval. These two intervals are entered separately into the controller but will
+  be combined here to simplify the analysis.
+
+  Recall Mode
+
+  Recall mode determines how a phase will be treated in the absence of demand on the
+  previous red phase. The options are as follows:
+
+  • None: the phase will not be displayed.
+  • Max: the phase will be displayed to its specified maximum length.
+  • Min: the phase will always be displayed to its specified minimum length but may
+  be extended up to its specified maximum length by vehicle actuations.
+  • Ped: the phase will be given the full Walk plus flashing Don’t Walk intervals and
+  may be extended further, up to its specified maximum by vehicle actuations.
+  • Coord: a coordinated phase on the major street; this phase will always be displayed
+  for its nominal design time, which may be increased by reassigning unused green time
+  from actuated phases.
+  The recall function will have a significant effect on the operation of the controller.
+  For example, the maximum recall option will have the effect of creating a nonactuated
+  phase.
+
+  Minimum Vehicle Phase Time, MnV
+
+  MnV is actually a traffic engineering input that specifies the minimum time for
+  which a phase must be displayed unless it is skipped because of lack of demand. It is
+  implemented in a conventional traffic-actuated controller as the sum of three intervals:
+  the initial interval, the minimum allowable gap (MnA), and the intergreen time (Y). As a
+  matter of design, it is important that the controller settings be compatible with the
+  minimum phase times determined by traffic engineering considerations.
+
+  This parameter did not appear earlier in this chapter because the chapter
+  methodology procedure does not offer the ability to compute timing plans. Nevertheless,
+  it is not possible to deal realistically with traffic-actuated control without recognizing the
+  existence of a minimum phase time. For compatibility with other signal timing programs,
+  the phase times include all intervals, including green, yellow, and all-red. For the
+  purposes of the worksheet, the minimum phase time must be replaced by the maximum
+  phase time (MxG + Y) if the recall-to-maximum mode is in effect.
+
+  Green-Time Estimation Model
+
+  The discussion of pretimed operation presented in this appendix indicates that the
+  determination of required green time is a relatively straightforward process when the
+  cycle length is given. However, traffic-actuated controllers do not recognize specified
+  cycle lengths. Instead they determine, by a mechanical analogy, the required green time
+  given the length of the previous red period and the arrival rate. They accomplish this by
+  holding the right-of-way until the accumulated queue has been served.
+
+  The basic principle underlying all signal timing analysis is the queue accumulation
+  polygon (QAP), which plots the number of vehicles queued at the stop line over the
+  duration of the cycle. The QAP for a simple protected movement is illustrated in Exhibit
+  B16-5. The queue accumulation takes place on the left side of the triangle (i.e., effective
+  red) and the discharge takes place on the right side of the triangle (i.e., effective green).
+  More complex polygons are generated when permitted movements occur when a
+
+Chapter 16 - Signalized Intersections  16-106
+Appendix B
+  Highway Capacity Manual 2000Number of Vehicles in Queue
+
+movement proceeds on more than one phase. The body of this chapter and Appendix E
+include a discussion on this subject.
+
+  EXHIBIT B16-5. QUEUE ACCUMULATION POLYGON ILLUSTRATING TWO METHODS OF GREEN-TIME
+  COMPUTATION
+
+  Green time based on
+  phase extension time
+  8
+  Green time based on
+  target v/c ratio
+  6
+
+  4
+
+  2  et v/c
+  .90 Targ
+  1.0 Tar 0 get v/c
+
+  Red  Green
+
+  Time (s)
+
+  Green Extension Time
+
+  Two methods of determining the required green time given the length of the previous
+red are depicted in Exhibit B16-5. The first employs a target v/c approach. This method
+is the basis for the planning procedure described in Chapter 10 and for the discussion on
+timing plan design for pretimed control presented earlier in this appendix. Under this
+approach, the green-time requirement is determined by the slope of the line representing
+the target v/c of 0.9. If the phase ends when the queue has dissipated under these
+conditions, the target v/c will be achieved.
+
+  The second method recognizes the way a traffic-actuated controller really works. It
+does not deal explicitly with v/c ratios; in fact, it has no way of determining the v/c ratio.
+Instead it terminates each phase when a gap of a particular length is encountered at the
+detector. Good practice dictates that the gap threshold must be longer than the gap that
+would be encountered when the queue is being served. Assuming that gaps large enough
+to terminate the phase can only occur after the queue service interval (based on v/c = 1.0),
+the average green time may be estimated as the sum of the queue service time and the
+phase extension time as shown in Exhibit B16-5.
+
+Queue Service Time
+
+The queue service time, gs, can be estimated using Equation B16-8.
+
+  gs = fq qrr  (B16-8)
+
+  (s − qg )
+
+where  = queue service time (s);
+  gs  = red arrival rate (veh/s) and green arrival rate (veh/s), respectively;
+
+  qr , qg  = effective red time (s);
+  r  = saturation flow rate (veh/s); and
+  = 1.08 – 0.1 (actual green time/maximum green time)2.
+  s
+  fq
+
+The queue calibration factor, fq, accounts for randomness in arrivals (1).
+
+  16-107  Chapter 16 - Signalized Intersections
+  Appendix B
+Highway Capacity Manual 2000
+
+  Green Extension Time
+
+Assumptions regarding  To estimate the extension time analytically for a particular phase, it is necessary to
+headway distribution  determine the expected waiting time for a gap of a specific length, given the average
+  intervehicular headways and some assumptions about the headway distribution. An
+An iterative process is  analytical model for this purpose was developed (1, 2) on the basis of earlier work (3, 4).
+required to arrive at  The average green extension time, ge, is estimated from Equation B16-9, which is based
+average times  on the use of a bunched exponential distribution of arrival headways. Equations B16-10,
+  B16-11, and B16-12 are used to compute specific factors used in Equation B16-9.
+
+  ge =  eλ (e0 +t0 − ∆ ) 1
+  −  (B16-9)
+  ϕq  λ
+
+  where
+  ge = green extension time (s),
+  q = vehicle arrival rate throughout cycle (veh/s),
+  e0 = unit extension time setting (s), and
+  t0 = time during which detector is occupied by a passing vehicle (s).
+
+  t0 = 3.6(Ld + Lv )  (B16-10)
+  SA
+
+  where  = vehicle length, assumed to be 5.5 m,
+  Lv  = detector length, DL (m),
+  Ld  = vehicle approach speed (km/h),
+  SA  = minimum arrival (intra-bunch) headway (s),
+  ∆  = proportion of free (unbunched) vehicles, and
+  ϕ
+  = parameter calculated as
+  λ
+  λ = ϕq
+  1 − ∆q  (B16-11)
+
+  where λ is in vehicles per second for all lane groups that actuate the phase under
+  consideration.
+
+  A detailed discussion of the bunched exponential model and the results of its
+
+  calibration are given elsewhere (5, 6). The following relationship can be used for
+  estimating the proportion of free (unbunched) vehicles in the traffic stream ( ϕ ):
+
+  ϕ = e −b∆q  (B16-12)
+
+  Note that b is a bunching factor. The recommended parameter values based on the
+  calibration of the bunched exponential model using real-life and simulation data are
+  summarized in Exhibit B16-6.
+
+  Computational Structure for Green-Time Estimation
+
+  This green-time estimation model is not difficult to implement, but it does not lead
+  directly to the determination of an average cycle length or green time because the green
+  time required for each phase is dependent on the green time required by the other phases.
+  Thus, a circular dependency is established that requires an iterative process to solve.
+  With each iteration, the green time required by each phase, given the green times required
+  by the other phases, can be determined.
+
+  The logical starting point for the iterative process involves the minimum times
+  specified for each phase. If these times turn out to be adequate for all phases, the cycle
+  length will simply be the sum of the minimum phase times for the critical phases. If a
+  particular phase demands more than its minimum time, more time should be given to that
+  phase. Thus, a longer red time must be imposed on all of the other phases. This, in turn,
+  will increase the green time required for the subject phase.
+
+Chapter 16 - Signalized Intersections  16-108
+Appendix B
+  Highway Capacity Manual 2000
+
+  EXHIBIT B16-6. RECOMMENDED PARAMETER VALUES
+
+  Case  ∆ (s)  b
+
+Single-lane  1.5  0.6
+
+Multilane
+
+2 lanes  0.5  0.5
+
+3 or more lanes  0.5  0.8
+
+Simple Two-Phase Example
+
+The circular dependency mentioned earlier will converge quite reliably through a
+
+series of repeated iterations. The convergence may be demonstrated by using a simple
+
+example. More complex examples will be introduced later to examine the effects of
+
+controller settings and traffic volumes in a practical situation.
+
+Consider an intersection of two streets with a single lane in each direction. Each
+
+approach has identical characteristics and carries 675 veh/h with no left or right turns.
+
+The average headway is 2.0 s per vehicle and the lost time per phase is 3.0 s. Detectors
+
+are 9.1 m long with no setback from the stop line. The actuated controller settings are as
+
+follows:
+
+  Setting  Time (s)
+
+  Initial interval  10
+
+  Unit extension  3
+
+  Maximum green  46
+
+  Intergreen  4
+
+The maximum phase time for each phase will be (46 + 4) = 50 s. The minimum
+
+phase time will be 10 + 3 + 4 = 17 s, which will be the starting point for the timing
+
+computations. The first iteration will be used with a 34-s cycle with 17 s of green time on
+
+each approach. Allowing for lost time, the effective red time will be 20 s, and the
+
+effective green time will be 14 s for each phase.
+
+The total lost time is the sum of two components, including the start-up lost time and
+
+the clearance lost time. In the methodology of this chapter, all of the lost time is assumed
+
+to be concentrated at the beginning of the green. This approximation is valid for delay
+
+estimation because the lost time is only used in the computation of effective green time,
+
+and its position in the phase is irrelevant.
+
+However, for purposes of traffic-actuated timing estimation, the distribution of lost  Guidelines on lost-time
+  assumptions
+time throughout the phase will have a definite influence on the results. The lost time at
+
+the beginning of the phase will influence the length of the phase. The lost time at the end
+
+of the phase will influence the delay, but it will have no effect on the phase duration. It is
+
+recommended (7) that, for a specified lost time of n seconds, 1 s be assigned to the end of
+
+the phase and n – 1 s be assigned to the beginning. Thus, for this example, the start-up
+lost time (l1) will be 2.0 s.
+
+The computational process may be described as follows:
+
+1. Compute the arrival rate throughout the cycle, q:
+
+  q = 675/3600 = 0.188 veh/s
+
+2. Compute the net departure rate (saturation flow rate – arrival rate):
+  (s – q) = 1800 – 0.188 = 0.312 veh/s
+  3600
+
+3. Compute the queue at the end of 20 s of effective red time:
+  qrr = 20 * (0.188) = 3.760 veh
+
+4. Compute the queue calibration factor, fq:
+  fq = 1.08 – 0.1 (13/46)2 = 1.072
+
+5. Compute the time required to serve the queue, gs:
+  gs = 1.072 (3.760/0.312) = 12.919 s
+
+  16-109  Chapter 16 - Signalized Intersections
+  Appendix B
+Highway Capacity Manual 2000
+
+  After 12.919 s of effective green time, the queue will have been served and gaps will
+  start to be observed at the detector. The start-up lost time (l1 = 2) must be added to the
+  queue service time for purposes of determining the total phase time requirements. The
+  question now is how long one would expect to wait for a gap of 3.0 s.
+
+  6. Determine the parameters of Equation B16-12 as follows:
+
+  ∆ = 1.5 and b = 0.6, from Exhibit B16-6
+  ϕ = e−b∆q
+
+  = e–(0.6 * 1.5 * 0.188) = 0.844
+  λ = ϕq = (0.844)(0.188) = 0. 221
+
+  1 − ∆q 1 − (1.5)(0.188)
+
+  7. Determine the occupancy time of the detector for a vehicle length of 5.5 m, a
+  detector length of 9.1 m, and an approach speed of 50 km/h:
+
+  t0 = 3.6(9.1 + 5. 5) = 1. 051 s
+  50
+
+  This is assuming that the detector sensor is operating in the presence mode.
+  8. Apply Equation B16-9 to determine the expected green extension time, ge:
+
+  eλ(eo +to −∆) 1
+  ge =  −
+  ϕq  λ
+
+  = e0.221(3.0 + 1.051 − 1.5) − 1
+  (0.844)(0.188) 0. 221
+
+Guideline for termination  = 6.550 s
+of iterations  9. Compute the total phase time:
+
+  G = l1 + gs + ge + Y
+  G = 2.0 + 12.919 + 6.550 + 4.0 = 25.469 s
+  10. Compute the phase time deficiency as the difference between the trial phase time
+  and the computed phase time, or 25.469 – 17.0 = 8.469 s.
+  This computation indicates that the trial phase time was not adequate to satisfy the
+  rules under which the controller operates. It also suggests a new trial green time of
+  25.469 s and a cycle length of 50.938 s for the next iteration.
+  The next iteration will still produce a green-time deficiency because the red time has
+  been increased. However, this deficiency will be smaller. Successive iterations will
+  produce successively smaller green time deficiencies until eventually the solution will
+  converge. This process is illustrated in Exhibit B16-7. The solution converged (i.e., the
+  green-time deficiency became negligible) at a phase time of 37.710 s, producing a cycle
+  length of 75.420 s. This convergence was based on a threshold of 0.1 s difference in the
+  computed cycle length between iterations. In other words, the process terminated when
+  the cycle lengths on two successive iterations fell within 0.1 s of each other.
+  As a matter of interest, consider the effect of reducing the unit extension time, e0,
+  from 3.0 s to 2.0 s. This reduction would be expected to reduce the green extension time,
+  ge, for both phases and to shorten the resulting cycle length. The extent of the reduction
+  may be estimated by repeating all of the steps described above with the new value for ge.
+  In the first iteration, the queue service time will remain the same, but the green extension
+  time will be reduced from the value of 6.550 s computed above to 4.354 s. Repeated
+  iterations with this lower unit extension time would converge to a cycle length of
+  65.618 s.
+  In this example, the green time for both phases was determined by the sum of the
+  queue service time and the extension time. Phase times will also be constrained by their
+  specified maximum and minimum times.
+
+Chapter 16 - Signalized Intersections  16-110
+Appendix B
+  Highway Capacity Manual 2000
+
+  EXHIBIT B16-7. CONVERGENCE OF GREEN-TIME COMPUTATION BY ELIMINATION OF GREEN-TIME
+  DEFICIENCY
+
+  Phase time deficiency
+
+  Computed phase time
+
+  40  0.992 0.547 0.289 0.157 0.059 0.012 0.007
+
+  3.089  1.771
+
+Phase Time (s)  30 5.230
+
+  8.469
+
+  20
+
+  Minimum = 17 s
+
+  10
+
+  0 1 2 3 4 5 6 7 8 9 10 11
+  Iteration Number
+
+Minimum Phase Times
+
+  The specified minimum green-time constraints are valid only for pretimed phases
+
+and phases that are set to recall to the minimum time regardless of demand. The
+
+significance of the minimum time for an actuated phase is that the phase must be
+
+displayed for its specified minimum unless it is skipped because of lack of demand. This
+
+situation may be addressed analytically by determining the probability of zero arrivals on
+
+the previous cycle. Assuming a Poisson arrival distribution, Equation B16-13 may be
+
+used.
+
+  P0v = e–qC  (B16-13)
+
+where  = minimum phase time (s),
+  P0v  = vehicle arrival rate (veh/s), and
+  q  = cycle length for the current iteration (s).
+
+  C
+
+  Assuming that the phase will be displayed for the minimum time, except when no
+vehicles have arrived, the adjusted minimum phase time is computed using Equation
+B16-14:
+
+  AVM = MnV (1 – P0v)  (B16-14)
+
+where  = adjusted vehicle minimum time (s), and
+  AVM  = specified minimum green time from worksheet in Exhibit B16-4 (s).
+  MnV
+
+  This relationship also has circular dependencies because as the adjusted minimums
+become shorter, the probability of zero arrivals also becomes higher, which further
+reduces the adjusted minimums. Fortunately, the solution fits well into the iterative
+scheme that was just described.
+
+  The use of adjusted minimum green times offers a practical method for dealing with
+phases that are not displayed on each cycle but may have their minimum durations
+determined by agency policy. The concept applies equally well to pedestrian minimum
+times.
+
+  16-111  Chapter 16 - Signalized Intersections
+  Appendix B
+Highway Capacity Manual 2000
+
+Extension of the  Multiphase Operation
+methodology to
+  Three important tools have been introduced for estimating the timing plan at traffic-
+• Account for different  actuated signals: a model for predicting the green time for any phase given the length of
+arrival and departure  the previous red period, an iterative computational structure that converges to a stable
+times at points in cycle  value for the average cycle length and green times, and a procedure to account for
+  minimum green times with low volumes. These concepts were illustrated in a simple
+• Synthesize dual-ring  example, but fortunately they are robust enough to deal with the practical complexities of
+into equivalent single-  traffic-actuated control. These complexities include multiphase operation (both single-
+ring sequence  and dual-ring), permitted left turns (both exclusive and shared lanes), and compound left-
+  turn protection (both leading and lagging).
+
+  Two extensions to the methodology presented to this point are required to deal with
+  more complex situations. The first is the extension of the QAP from its simple triangular
+  shape to a more complex shape that represents different arrival and departure times at
+  different points in the cycle. The second is a procedure to synthesize a complete
+  single-ring equivalent sequence by combining critical phases in the dual-ring operation.
+  The QAP extensions will be considered first.
+
+  Exhibit B16-5 presented the triangular QAP for a protected movement from an
+  exclusive lane. There are four other cases to be considered, including permitted left turns
+  from an exclusive lane, permitted left turns from a shared lane, protected-plus-permitted
+  left turns, and permitted-plus-protected left turns. The QAP shapes for these cases are
+  shown in Exhibits B16-8 through B16-11. Each of the exhibits conforms to a common
+  terminology with respect to its labeling. Intervals are illustrated along the horizontal axis
+  as follows:
+
+  r = effective red time,
+  gq = portion of permitted green time blocked by a queue of opposing
+
+  vehicles,
+  gu = portion of permitted green time not blocked by a queue of opposing
+
+  vehicles,
+  gs = portion of protected green time required to serve queue of vehicles that
+
+  accumulated on previous phases,
+  ge = extension to protected green time that occurs while controller waits for
+
+  a gap in arriving traffic long enough to terminate the phase, and
+  gf = portion of green time in which a through vehicle in a shared lane would
+
+  not be blocked by a left-turn vehicle waiting for opposed movement to
+  clear. (This condition occurs only at the beginning of the permitted
+  green when one or more through vehicles are at the front of the queue.)
+  Note that, in each case, the phases are arranged so that the protected phase is the last
+  to occur. The length of this phase will be determined by its detector actuations. The
+  actual length will be the sum of the time required to serve the queue that exists at the
+  beginning of the phase plus the extension time.
+  Points in the cycle at which the queue size is important to the computations are also
+  identified as follows:
+  Qr = queue size at end of effective red;
+  Qq = queue size at end of interval gq;
+  Qp = queue size at end of permitted green period;
+  Qp′ = queue size at end of permitted green period, adjusted for sneakers;
+  Qga = queue size at beginning of protected green (green arrow) period; and
+  Qf = queue size at end of interval gf.
+
+Chapter 16 - Signalized Intersections  16-112
+Appendix B
+  Highway Capacity Manual 2000
+EXHIBIT B16-8. QUEUE ACCUMULATION POLYGON FOR PERMITTED LEFT TURNS FROM EXCLUSIVE LANE
+
+Number of Vehicles in the Queue  Qq  1
+  1  sp - qg
+
+  qg
+  Qr
+
+  1  gs  ge
+  qr
+
+  r
+  gq
+
+  Time (s)
+
+Note:
+sp is saturation flow under permitted operation.
+
+EXHIBIT B16-9. QUEUE ACCUMULATION POLYGON FOR PERMITTED LEFT TURNS FROM SHARED LANE
+
+Number of Vehicles in the Queue  1  Qr  Qq
+  qr  1  1
+  s - qg  sp - qg
+  qg 1
+
+  Qf
+
+  r  gf
+
+  gq  gs  ge
+
+  Time (s)
+
+  16-113  Chapter 16 - Signalized Intersections
+  Appendix B
+Highway Capacity Manual 2000
+
+  EXHIBIT B16-10. QUEUE ACCUMULATION POLYGON FOR PROTECTED-PLUS-PERMITTED LEFT-TURN
+  PHASING WITH EXCLUSIVE LEFT-TURN LANE
+
+  Number of Vehicles in the Queue  Qq  1  1  Qr = Qga
+  1  sp - qr  qr  1
+  qr  s - qg
+  gq  Sa  Qp
+  Qp'
+
+  r  gs  ge
+  gu
+
+  Time (s)
+
+  EXHIBIT B16-11. QUEUE ACCUMULATION POLYGON FOR PERMITTED-PLUS-PROTECTED LEFT-TURN
+  PHASING WITH EXCLUSIVE LEFT-TURN LANE
+
+  Number of Vehicles in the Queue  Qq
+  1
+  sp - qr
+
+  Qr  Qp  Qp' = Qga
+  1  Sa
+  qr
+  r  1
+  s - qg
+
+  gq  gu  gs  ge
+
+  Time (s)
+
+  The shape of each QAP is based on termination by a gap that exceeds the unit
+extension, allowing the full extension time, ge, to be displayed. When a phase terminates
+on the maximum green time, the extension time may be reduced or eliminated. If a
+permitted left-turn phase terminates before the queue has been served, a maximum of two
+sneakers will be discharged from the queue at that point.
+
+  These extensions to the QAP analysis will accommodate all of the practical
+conditions covered by the methodology presented in the body of this chapter. The
+remaining issue to be dealt with is the synthesis of the complete cycle by combining
+critical phases in a dual-ring operation. This procedure may be carried out using the
+worksheet shown in Exhibit B16-12. The structure of this worksheet is compatible with
+the dual-ring concurrent phasing depicted in Exhibit B16-2.
+
+Chapter 16 - Signalized Intersections  16-114
+Appendix B
+  Highway Capacity Manual 2000
+
+EXHIBIT B16-12. TRAFFIC-ACTUATED TIMING COMPUTATIONS
+
+  East-West Movements  North-South Movements
+
+  A  B  Total  A  B  Total
+
+Ring 1: Phases reversed?  No Yes No Yes  No Yes No Yes
+  Movements  WBL EBT EBT WBL  SBL NBT NBT SBL
+  Phase times
+
+Ring 2: Phases reversed?  No Yes No Yes  No Yes No Yes
+  Movements  WBL EBT EBT WBL  SBL NBT NBT SBL
+  Phase times
+
+Difference:
+ABS (Ring 1 - Ring 2)
+
+Cycle time components:
+Independent termination
+
+Simultaneous termination
+
+  The east-west movements (left side of the barrier) are shown in the first three
+columns. The first column, labeled A, represents the first phase (1 or 5) in each ring.
+The second column represents the second phase (2 or 6). The third column will contain
+the total of the phase times. The same format is repeated in the next three columns for
+the north-south movements (right side of the barrier).
+
+  There are three rows for each of the two rings. The first row indicates whether the
+phase pair is reversed. This information was entered on the input data worksheet
+presented earlier in this appendix. The next two rows give the movements and phase
+times for their respective phases. If the phases are not reversed, the assignments will be
+shown in the dual-ring configuration of Exhibit B16-2. If they are reversed, the through
+movements will appear in Column A and the left turns in Column B. Note that the
+movements in a given phase pair cannot be interchanged if the left turn is not protected.
+The order of the phases in the pair does not affect the total phase time entered in the Total
+column.
+
+  The next row contains the absolute value of the phase time difference between the
+two rings. Values are entered for each of the six columns.
+
+  The components of the cycle time must now be determined and entered in the cycle
+time components row. The procedure will depend on whether the first phase termination
+is simultaneous or independent. For simultaneous termination, enter the maximum value
+of each phase in the A and B columns (Ring 1 or 2, whichever time is greater). For
+independent termination, enter the maximum value of the total time (A + B) from Ring 1
+or 2. So for each side of the barrier, either A and B columns or the Total column will
+have an entry, but not all three columns. This procedure should be carried out for both
+sides of the barrier. Remember that the termination treatment may be different on either
+side. The cycle length may now be determined as the sum of all the entries in the cycle
+time components row.
+
+  If the computed cycle length agrees with the cycle length determined on the previous
+iteration, no further action is necessary. If not, this timing plan will serve as the starting
+point for the next iteration.
+
+COORDINATED SEMIACTUATED OPERATION
+
+  It is possible that nonactuated phases under semiactuated control may be coordinated
+with neighboring intersections. In the most common coordination scheme, a background
+cycle length is imposed. The actuated phases receive their allotment of green time in the
+usual manner, except that their maximum green times are controlled externally to ensure
+conformance with the specified cycle length. If the actuated phases require all of their
+nominal green-time allotment, the intersection operates in a more or less pretimed
+manner. If they do not, the unused time is reassigned to the coordinated phase.
+
+  16-115  Chapter 16 - Signalized Intersections
+  Appendix B
+Highway Capacity Manual 2000
+
+Iterative procedure  The analysis of coordinated operation requires another iterative loop, which executes
+  the procedure described in this appendix, adding more green time incrementally to the
+  coordinated phases until the design cycle length has been reached. The result is a timing
+  plan that approximates the operation of the controller in the field.
+
+  The procedure for timing plan estimation in coordinated systems requires that a
+  design timing plan be established first, with phase splits that add up to the design cycle
+  length. This plan becomes the starting point for the iterative procedure that involves the
+  following steps.
+
+  1. Set up the controller timing parameters for the initial timing plan computations.
+  The coordinated major-street phases (usually 2 and 6) should be set for recall to
+  maximum. The maximum green times for all phases should be determined by their
+  respective splits in the pretimed timing plan. No recall modes should be specified for any
+  of the actuated phases.
+
+  2. Perform the timing computations to determine the resulting cycle length. If the
+  maximum green times have been specified correctly in Step 1, the computed cycle length
+  will not exceed the specified cycle length.
+
+  3. If the computed cycle length is equal to the specified cycle length, there is no
+  green time available for reassignment. In this case the procedure will be complete and
+  the final timing plan will be produced.
+
+  4. If the computed cycle length is lower than the specified cycle length, some time
+  should be reassigned to the major-street phases by increasing the maximum green times
+  for the coordinated phases. The recommended procedure is to assign one-half of the
+  difference between the computed cycle and the specified cycle to the coordinated phases.
+  This procedure provides a reasonable speed of convergence without overshooting the
+  specified cycle length.
+
+  5. Repeat Steps 2 through 4 iteratively until the computed and specified cycle
+  lengths converge.
+
+  MULTIPHASE EXAMPLE
+
+  The complete timing estimation procedure described in this appendix will now be
+
+  applied using a multiphase example. In the discussion of this example presented
+
+  previously in this appendix, an initial timing plan was developed using the planning
+
+  procedure. The green times were then modified by trial and error to arrive at a signal
+
+  timing plan for analyzing capacity, delay, and LOS.
+
+  The intersection layout for this example is shown in Exhibit B16-13. Note that all
+
+  left turns take place from exclusive lanes. The northbound and southbound left turns
+
+  have protected-plus-permitted phasing. The eastbound and westbound left turns are
+
+  permitted, with no protected phases.
+
+  The timing plan design is as follows:
+
+  Phase 1: NB and SB left turns  11 s
+
+  Phase 2: NB and SB green  54 s
+
+  Phase 3: EB and WB green  30 s
+
+  Cycle length  95 s
+
+  This timing plan was shown to accommodate all movements with no oversaturation.
+
+  The average delay per vehicle for all approaches combined was 23 s.
+
+  The timing estimation methodology will now be exercised for this example using
+
+  several different values for some of the actuated controller settings to observe the effect
+
+  on the results. The detector configuration will use loop detectors 9.1 m long and
+
+  positioned at the stop line with no setback. A 50-km/h speed will be assumed for all
+
+  approaches. Both isolated and coordinated operation will be explored. Different values
+
+  will be used for the unit extension and maximum green settings. Three unit extension
+
+  settings will be used:
+
+  • Short values of 1.5 s and 2.0 s for two-lane and one-lane approaches, respectively,
+
+  representing a condition sometimes referred to as snappy operation.
+
+Chapter 16 - Signalized Intersections  16-116
+Appendix B
+  Highway Capacity Manual 2000
+
+  • Medium values of 2.5 s and 3.5 s for two-lane approaches and one-lane
+approaches, respectively, the standard condition for most intersections.
+
+  • Long values of 3.5 s and 4.5 s for two-lane approaches and one-lane approaches,
+respectively, representing a condition sometimes referred to as sluggish operation.
+
+  EXHIBIT B16-13. INTERSECTION LAYOUT FOR MULTIPHASE EXAMPLE
+
+  Fifth Avenue SB
+
+90 - Lane Length (m)  North
+  90
+
+12th Street EB
+  12th Street WB
+  90
+90
+
+  90
+
+Fifth Avenue NB
+
+  These values represent the actual gap between vehicles that will cause a phase to
+terminate. With the assumed approach speed and detector configuration, each vehicle
+(assumed length is 5.5 m) passing over the loop will occupy the detector for an additional
+1.08 s.
+
+  Three different values for maximum green times will also be investigated. The first
+will use very long maximum times (120 s for each phase) to determine how the
+intersection would operate if most phases terminated on the unit extension. The second
+will use maximum times that are proportional to the design times for each phase. It has
+been proposed that the maximum extensions be set at 125 and 150 percent of the design
+green times. A more complex scheme has been proposed that results in maximum times
+in the range of 150 to 200 percent of the design times. For purposes of this exercise, the
+maximum times will be set at 150 percent of the design times, representing a value
+somewhere in the middle of the range suggested in the literature. The third value will use
+the actual design green times as maximums to constrain the operation to its original
+design.
+
+  16-117  Chapter 16 - Signalized Intersections
+  Appendix B
+Highway Capacity Manual 2000
+
+  Recognizing that much of the benefit of traffic-actuated control is derived from the
+
+ability of the controller to respond to fluctuations in traffic volumes throughout the day,
+
+the operation will also be examined by using volume levels of 70 percent of the
+
+peak-hour levels reflected in the original data. Coordinated operation will also be
+
+examined at the reduced volume levels to observe the reassignment of unused green time
+
+from the actuated phases to the nonactuated phases to reduce the delay to arterial traffic.
+
+  The first conditions to be analyzed involve 100 percent volume levels, 120-s
+
+maximum green time on each phase, and short unit extensions. The input data worksheet
+
+for this example is shown in Exhibit B16-14. The resulting cycle length is 258.2 s.
+
+Because of the dual-ring operation, an overlap phase for the north-south approaches
+
+appears in the results. The estimated average phase times are as follows:
+
+  NB and SB left  17.2 s
+
+  SB through and left  15.0 s
+
+  NB and SB green  144.0 s
+  EB and WB green  82.0 s
+
+  Cycle length  258.2 s
+
+  EXHIBIT B16-14. TRAFFIC-ACTUATED CONTROL DATA FOR MULTIPHASE EXAMPLE
+
+  Traffic-Actuated Control Input Data Worksheet
+  Example Problem 3: Fifth Avenue at 12th Street
+
+  Approach Data  Northbound  Southbound  Eastbound  Westbound
+
+LT treatment  3  3  1  1
+LT position
+Sneakers  Lead  Lead  N/A  N/A
+Free queue
+Speed  2.0  2.0  2.0  2.0
+Termination
+  0.00  0.00  0.00  0.00
+
+  50  50  50  50
+
+  --Independent--  --N/A--
+
+  Ring 1  Ring 2
+
+  Phase Data 1 (WBL) 2 (EBT) 3 (NBL) 4 (SBT) 5 (EBL) 6 (WBT) 7 (SBL) 8 (NBT)
+
+Phase type  X  G  L  G  X  G  L  G
+
+PH reversal?  No  No  No  No  No  No
+
+Det length  30  30  30  30  30  30
+
+Setback  0  0  0  0  0  0
+
+Max initial  16  4  16  16  4  16
+
+Min gap  1.5  2.0  1.5  1.5  2.0  1.5
+
+Walk + FDW  22  0  22  22  0  22
+
+Max green  120  120  120  120  120  120
+
+Change + clr  4.0  4.0  4.0  4.0  4.0  4.0
+
+Recall mode  N  N  N  N  N  N
+
+Veh min  22  10  22  22  10  22
+
+Min initial  16.5  4.0  16.5  16.5  4.0  16.5
+
+Max PH time  124  124  124  124  124  124
+
+  This timing plan, when analyzed by the procedure described in the body of this
+chapter, produces results shown on the LOS worksheet in Exhibit B16-15. Note that the
+average delay per vehicle is 47.4 s, which is considerably higher than the 23-s/veh delay
+associated with the timing plan developed in Example Problem 3. The logical conclusion
+here is that the peak-hour volumes cannot be handled in an optimal manner by a fully
+actuated controller without some influence being exerted on the timing plan through
+maximum green constraints.
+
+Chapter 16 - Signalized Intersections  16-118
+Appendix B
+  Highway Capacity Manual 2000
+
+  EXHIBIT B16-15. LOS RESULTS FOR MULTIPHASE EXAMPLE
+
+  LOS Worksheet
+
+Direct/  v/c g/C Delay Del Lane Calib Delay Lane Lane Delay  LOS
+Ln Grp  by App
+  Ratio Ratio d1  Adj Group d2  d2 Grp Grp by App
+NB  Fact Cap  Delay LOS  E
+  L
+  0.735 0.118 20.6 0.850 181 16  9.6 27.1 D 58.6  D
+  TR  1.026 0.508 44.5 0.850 1689 16  23.2 61.0 F
+SB  E
+  1.866 0.256 66.3 0.850 224 16  19.3 75.6 F 29.4
+  L  0.535 0.571 23.9 0.850 1890 16  0.2 20.6 C  E
+  TR
+EB  0.884 0.332 57.1 0.850  80 16  43.1 91.7 F 48.4
+  0.478 0.332 48.0 0.850  888 16  0.3 41.1 E
+  L
+  TR  0.773 0.332 54.3 0.850  153 16  14.1 60.3 F 47.7
+WB  0.666 0.332 51.8 0.850  937 16  1.3 45.3 E
+
+  L  Intersection Delay = 47.4 s/veh  Intersection LOS = D
+  TR
+
+  A total of 10 alternatives, similar in concept to the one just described, were analyzed  Ten alternatives were
+using combinations of these conditions. For each analysis, the average phase times and  analyzed (see Exhibit B16-16)
+cycle length were recorded along with the average delay per vehicle and any movements
+that were oversaturated. The results are summarized in Exhibit B16-16.
+
+  EXHIBIT B16-16. COMPARISON OF TRAFFIC-ACTUATED CONTROLLER SETTINGS FOR
+  MULTIPHASE EXAMPLE
+
+  Estimated Phase Times (s)
+
+Volume  Maximum Green  Gap NSL SBT + NSG EWG Cycle Average  Comments
+ Level  Time (s)
+  (s)  L  Delay
+
+  (s/veh)
+
+  Set to 120 s for all Short 17.2 15.0 124.0 82.0 238.2 47.4 NB v/c = 1.02
+
+  phases to eliminate Med 19.2 16.3 124.0 85.3 244.8 51.6 NB v/c = 1.04
+  maximum green
+  constraints  Long 20.8 17.4 124.0 88.7 250.9 56.6 NB v/c = 1.07
+
+  Set to 150% of the Med 13.4 1.6 79.0 43.0 137.0 28.9 EB v/c = 1.07
+100% design splits
+
+  indicated in Example
+  Problem 3
+
+  Set to 100% of the Med 10.2 0.8 54.0 30.0 95  22.9 Same as in
+  design splits  Example
+  indicated in Example  Problem 3
+  Problem 3  results
+
+  Set to 120 s for all Short 6.8 1.8 31.7 22.0 62.3 10.2
+
+  phases to eliminate Med 7.5 2.1 35.4 22.0 67.0 10.2
+  maximum green
+  constraints  Long 8.4 2.4 41.7 24.1 76.6 10.6
+
+70% Set to 150% of the Med 10.3  60.0 25.2 95.5  11.9 North-south
+  45.4 36.0 93.8  14.4 phases
+  design splits  Med 12.4
+  coordinated;
+  indicated in Example  east-west
+  phases
+  Problem 3 (no  coordinated
+
+  overlap phase)
+
+  16-119  Chapter 16 - Signalized Intersections
+  Appendix B
+Highway Capacity Manual 2000
+
+It is clearly essential that  In the first three alternatives, only the unit extensions (short, medium, and long) were
+some maximum green  changed. Note that the cycle length increased with the unit extensions from 238 s (short)
+times must be imposed  to 251 s (long). In all cases, the northbound green phase reached its maximum of 124 s
+to control the  (i.e., 120 s green plus 4 s intergreen). Because the northbound phase was already at its
+apportionment of time  maximum length, it lost time proportionally as the other phases increased and therefore
+between the competing  became more oversaturated. It is clearly essential that some maximum green times must
+phases  be imposed to control the apportionment of time between the competing phases.
+The interpretation is that
+when traffic volumes are  The next two analyses used the medium extension times and evaluated both of the
+close to capacity, as they  strategies for setting the maximum green intervals in proportion to their design values.
+are in this example, the  The average delay was reduced to 29 s/veh for the 150 percent strategy and to 23 s/veh
+maximum green times  for the 100 percent strategy. The 150 percent strategy produced slightly oversaturated
+must be used to  conditions for the eastbound approach. Note that the results of the 100 percent strategy
+apportion the time  were identical to the results reported in the discussion of the design timing plan for
+among the competing  Example Problem 3 in the body of this chapter. The interpretation is that when traffic
+phases  volumes are close to capacity, as they are in this example, the maximum green times must
+  be used to apportion the time among the competing phases. The gap termination tactic
+Appendix B provides a  does not ensure a satisfactory distribution of green times.
+reasonable
+approximation of traffic-  One of the major benefits of traffic-actuated control is its ability to respond to short-
+actuated operation  term and daily fluctuations in traffic volumes. To illustrate this principle, volumes are
+  reduced across the board to 70 percent of their peak values. The analysis using 120-s
+  maximum green times on all phases is repeated with the three levels of unit extension.
+  The results indicate that the cycle length varies from 62.3 to 76.6 s throughout the full
+  range of unit extension settings. The average delays are almost identical for these three
+  cases, varying from 10.2 to 10.6 s/veh. This result indicates that when the traffic volumes
+  drop below their saturation levels, it is no longer necessary to control the distribution of
+  green times using the maximum green settings. An important observation here is that the
+  same controller settings would be able to control both the full and reduced volume
+  settings effectively provided that the maximum greens are optimized for the high-volume
+  conditions.
+
+  The final two cases deal with coordinated operation. Each of the intersecting routes
+  is assumed to be coordinated in separate cases. The design timing plan, based on a 95-s
+  cycle, is used to establish nominal splits for the coordinated operation. The medium unit
+  extensions are used in combination with maximum green times that reflect 150 percent of
+  the design timing plan. Because the design timing plan includes no overlap, the input
+  data values were adjusted to require simultaneous termination of the first (i.e., left-turn)
+  phases that accommodate the northbound and southbound traffic as opposed to
+  independent termination.
+
+  The results indicate that the cycle length established by the iterative computations
+  falls within 1.0 s of the design cycle length. In the case involving east-west coordination,
+  the east-west phases receive more than their nominal allotment of time at the expense of
+  the north-south movements. The reverse is true when coordination is established for the
+  north-south approaches. The delay is also reduced on the approaches that are coordinated
+  and increased on those that are not.
+
+  LIMITATIONS OF TRAFFIC-ACTUATED TIMING ESTIMATION PROCEDURE
+
+  The traffic-actuated estimation procedure described in this appendix provides a
+  reasonable approximation of the operation of a traffic-actuated controller for nearly all of
+  the conditions encountered in practice. The results obtained from this procedure have
+  correlated well with extensive simulation data and with limited field studies (7).
+  However, the procedure involves a deterministic analytical representation of an extremely
+  complex stochastic process and therefore has some limitations that must be recognized.
+
+  Some of the limitations result from unique situations that cannot be modeled
+  analytically in a satisfactory manner. One example is the case of compound left-turn
+  protection with opposing shared lanes for left turns and through movements. The chapter
+
+Chapter 16 - Signalized Intersections  16-120
+Appendix B
+  Highway Capacity Manual 2000
+
+methodology deals with this as a separate case and applies an empirical treatment to
+determine the saturation flow adjustment factor for left turns. Simulation provides the
+only effective way to estimate the timing plan parameters for this case.
+
+  The sample problem presented in this appendix demonstrates the sensitivity of the
+procedure to the unit extension times set in the controller. As expected, longer unit
+extension times produce longer average green times except when constrained by the
+maximum green-time settings. Shorter extension times have the opposite effect. There
+is, however, a lower limit to the range of unit extension times that can be modeled
+realistically. It is well known in practice that when the unit extension times are too short,
+premature terminations of a phase may result because of anomalies in the departure
+headways created primarily by lapses in driver attention. The traffic-actuated control
+model described in this appendix assumes a constant departure headway and therefore
+does not reflect this phenomenon. Simulation models introduce a stochastic element into
+the departure headways based on a theoretical distribution. They are therefore able to
+invoke premature phase terminations to some extent, but they do not deal with anomalous
+driver behavior.
+
+  As a practical matter, unit extensions should reflect headways at least 50 percent
+longer than the expected departure headways. For example, assuming a 2-s average
+departure headway, unit extensions should accommodate up to a 3-s departure headway
+without terminating the phase. Assuming a detector occupancy time of 1 s, this implies a
+2-s gap. The minimum practical value for the unit extension is 2 s. Smaller values may
+be appropriate in multiple-lane cases in which the average departure headways are
+shorter.
+
+  The analysis of permitted left turns from shared lanes always poses special problems.
+The semi-empirical treatment prescribed for shared-lane permitted left turns in the body
+of the chapter does not lend itself to the iterative timing estimation procedure described in
+this appendix. An analytical approximation of the shared-lane model was therefore
+substituted to ensure stable convergence of the solution. This produces timing plans that
+agree well with simulation results; however, the analysis of delay resulting from the
+timing plan will not always agree with the results of the chapter method. It appears that
+an iterative method of achieving equilibrium between the shared lane and the adjacent
+through lanes in the chapter methodology is a prerequisite to the development of a
+satisfactory timing estimation procedure.
+
+  When traffic volumes are extremely low, the timing plan becomes somewhat of an
+obstruction unless the recall function is used for each phase. In the absence of demand,
+the green indication rests on the phase that received the latest demand and may do so for
+several minutes. This operation implies that very long red times will be displayed on
+some phases; however, no delay will be associated with these red times because no
+vehicles will be affected. The procedure described in this appendix will compute very
+short equivalent red times for these phases in an attempt to provide a signal timing plan
+that will produce realistic delays.
+
+  REFERENCES
+
+  1. Signalized Intersection Capacity Method. NCHRP Project 3-28(2). JHK &
+  Associates, Tucson, Ariz., Feb. 1983.
+
+  2. Signalized Intersection Capacity Study. Final Report, NCHRP Project 3-28(2).
+  JHK & Associates, Tucson, Ariz., Dec. 1982.
+
+  3. Berry, D. S. Other Methods for Computing Capacity of Signalized Intersections.
+  Presented at the 56th Annual Meeting of the Transportation Research Board,
+  Washington, D.C., Jan. 1977.
+
+  4. Berry, D. S., and P. K. Gandhi. Headway Approach to Intersection Capacity. In
+  Highway Research Record 453, HRB, National Research Council, Washington,
+  D.C., 1973.
+
+16-121  Chapter 16 - Signalized Intersections
+  Appendix B
+Highway Capacity Manual 2000
+
+  5. Miller, A. J. The Capacity of Signalized Intersection in Australia. Australian
+  Road Research Bulletin 3. Australian Road Research Board, Kew, Victoria,
+  Australia, 1968.
+
+  6. Webster, F. V., and B. M. Cobbe. Traffic Signals. Her Majesty’s Stationery
+  Office, London, England, 1966.
+
+  7. Messer, C. J., and D. B. Fambro. Critical Lane Analysis for Intersection Design.
+  In Transportation Research Record 644, TRB, National Research Council,
+  Washington, D.C., 1977.
+
+  APPENDIX C. LEFT-TURN ADJUSTMENT FACTORS FOR PERMITTED
+  PHASING
+
+  The left-turn adjustment factors in Exhibit C16-1 reflect different cases under which
+  turns may be made.
+
+  EXHIBIT C16-1. ADJUSTMENT FACTORS FOR LEFT TURNS (fLT)
+
+  Case  Type of Lane Group  Left-Turn Factor, fLT
+
+  1 Exclusive LT lane;  0.95
+
+  protected phasing
+
+  2 Exclusive LT lane;  Special procedure; see worksheet in Exhibit C16-9 or C16-10
+  permitted phasing
+
+  3 Exclusive LT lane;  Apply Case 1 to protected phase;
+
+  protected-plus-permitted phasing apply Case 2 to permitted phase
+
+  4 Shared LT lane;  fLT = 1.0/(1.0 + 0.05 PLT)
+  protected phasing
+
+  5 Shared LT lane;  Special procedure; see worksheet in Exhibit C16-9 or C16-10
+  permitted phasing
+
+  6 Shared LT lane;  Apply Case 4 to protected phase;
+
+  protected-plus-permitted phasing apply Case 5 to permitted phase
+
+The opposing queue  When permitted left turns exist, either from shared lanes or from exclusive lanes,
+must clear before left  their impact on intersection operations is complex. The procedure outlined in Appendix
+turns can begin filtering  C is applied to Cases 2, 3, 5, and 6 discussed earlier in this chapter. The basic case for
+through  which this model was developed is one in which there are simple permitted left turns
+  from either exclusive or shared lanes. This case does not consider the complications of
+  protected-plus-permitted phasing nor cases in which an opposing leading left phase may
+  exist.
+
+  Consider Exhibit C16-2, which shows a permitted left turn being made from a shared
+  lane group. When the green is initiated, the opposing queue begins to move. While the
+  opposing queue clears, left turns from the subject direction are effectively blocked. The
+  portion of effective green blocked by the clearance of an opposing queue of vehicles is
+  designated gq. During this time, the shared lane from which subject left turns are made is
+  blocked when the left-turning vehicle arrives. Until the first left-turning vehicle arrives,
+  however, the shared lane is unaffected by left turners. The portion of the effective green
+  until the arrival of the first left-turning vehicle is designated gf.
+
+  Once the opposing queue of vehicles clears, subject left-turning vehicles filter
+  through an unsaturated opposing flow at a rate affected by the magnitude of the opposing
+  flow. The portion of the effective green during which left turns filter through the
+  opposing flow is designated gu.
+
+Chapter 16 - Signalized Intersections  16-122
+Appendix B
+  Highway Capacity Manual 2000
+
+  EXHIBIT C16-2. PERMITTED LEFT TURN FROM SHARED LANE
+
+  fLT
+  Sop
+
+  Portions of the Green Phase
+  gq gu
+
+  gf
+
+  This division of the effective green phase for permitted left turns creates up to three
+
+distinct periods for which the impact of left turns on a shared or exclusive left-turn lane
+
+must be considered.
+  • gf: Until the arrival of the first left-turning vehicle, a shared lane is unaffected by
+
+left turns. During this period of time, the effective left-turn adjustment factor is logically
+1.0 because no left turns are present. By definition, gf = 0.0 for exclusive permitted left-
+turn lanes because it is assumed that a queue of left turners is present at the beginning of
+
+the phase.
+  • gq – gf: If the first left-turning vehicle arrives before the opposing queue clears, it
+
+waits until the opposing queue clears, blocking the shared lane, and then seeks a gap in
+
+the unsaturated opposing flow that follows. During this period of time, there is
+effectively no movement in the shared lane, and the left-turn adjustment factor (fLT)
+applied to the shared lane is logically 0.0.
+
+  When the first left-turning vehicle arrives after the opposing queue clears, this period
+of time does not exist; that is, gq – gf has a practical minimum value of zero. The value
+of gq has a practical range of 0.0 to g.
+
+  • gu: After the opposing queue clears, left-turning vehicles select gaps through the
+unsaturated opposing flow. These gaps occur at a reduced rate because of the
+
+interference of opposing vehicles and the effect of this interference on other vehicles in
+
+the shared lane from which left turns are made. For this period, Exhibit C16-3 is used to
+assign EL1 through-car equivalents for each left-turning vehicle. Then an adjustment
+factor can be computed for this period by using Equation C16-1:
+
+  1  (C16-1)
+
+  [1.0 + PL (EL1 −1)]
+
+where  = proportion of left-turning vehicles in shared lane, and
+  PL  = through-car equivalent for permitted left turns (veh/h/ln).
+  EL1
+
+  For exclusive permitted left-turn lanes, PL = 1.0. On the basis of this conception of
+permitted left-turn operations, the left-turn adjustment factor for the lane from which
+permitted left turns are made can be computed by Equation C16-2.
+
+   gf    gq − gf    gu    1  
+  f m =   (1.0 ) +   (0.0 ) +       (C16-2)
+  g  g    g  1 + PL (EL1 −1) 
+
+  16-123  Chapter 16 - Signalized Intersections
+  Appendix C
+Highway Capacity Manual 2000
+
+  EXHIBIT C16-3. THROUGH-CAR EQUIVALENTS, EL1, FOR PERMITTED LEFT TURNS
+
+  Effective Opposing Flow, voe = vo/fLUo
+
+  Type of Left-Turn Lane  1  200  400  600  800 1000 1200a
+
+  Shared  1.4  1.7  2.1  2.5  3.1  3.7  4.5
+  Exclusive
+  1.3  1.6  1.9  2.3  2.8  3.3  4.0
+
+  Notes:
+
+  a. Use formula for effective opposing flow more than 1200; voe must be > 0.
+  EL1 = sHT/sLT - 1 (shared)
+  EL1 = sHT/sLT (exclusive)
+
+   −voe t c 
+    
+  voee  3600 
+
+  sLT =   −voe t f 
+  where    
+  1− e   3600 
+
+  EL1 =  through-car equivalent for permitted left turns
+  sHT =  saturation flow of through traffic (veh/h/ln) = 1900 veh/h/ln
+  sLT =  filter saturation flow of permitted left turns (veh/h/ln)
+  tc =  critical gap = 4.5 s
+  tf =  follow-up headway = 4.5 s (shared), 2.5 s (exclusive)
+
+  A reduced form is given as Equation C16-3.
+
+   gf   gu    1  
+  fm =   +      (C16-3)
+   g   g  1 + PL (EL1 −1) 
+
+Sneakers are considered  Note that there is no term in this formulation to account for sneakers, that is, for
+to be part of the left-turn
+count for the  drivers completing left turns during the effective red portion of the clearance-and-change
+corresponding green
+interval, even though  interval. This term is missing because in saturation flow rate measurements, vehicles are
+they may enter and
+depart the intersection  counted when they enter the intersection, not when they leave it. However, there is a
+during the yellow or red
+intervals  practical minimum number of left turns that will be made on any phase, defined by
+
+Multilane approaches are  sneakers.
+legs of intersections with  To account for this situation, a practical minimum value must be imposed on fm.
+more than one approach
+lane  One sneaker per cycle may be assumed as a minimum. The probability that a second
+
+  sneaker will be in position at the end of the green phase will be equal to the proportion of
+  left turns in the shared lane, PL. The estimated number of sneakers per cycle may
+  therefore be computed as (1 + PL). Assuming an approximate average headway of 2 s per
+  vehicle in an exclusive lane on a protected phase, the practical minimum value of fm may
+  be estimated as 2(1 + PL)/g.
+
+  MULTILANE APPROACH WITH OPPOSING MULTILANE APPROACHES
+
+  For multilane approaches, the impact of left turns on a shared lane must be extended
+
+  to include their impact on the entire lane group. One might simply assume that the factor
+  for the shared lane is fm and that the factor for each other lane in the group is 1.0. In this
+  assumption, however, left turns affect only the lane from which they are made. This is
+
+  incorrect because vehicles typically maneuver from lane to lane to avoid left-turn
+  congestion. Equation C16-4 provides the relationship for computing realistic fLT values.
+
+  f LT = f m + 0.91(N −1)  (C16-4)
+  N
+
+  where  = left-turn adjustment factor applied to a total lane group from which left
+  fLT  turns are made, and
+
+  fm  = left-turn adjustment factor applied only to lane from which left turns are
+  made.
+
+Chapter 16 - Signalized Intersections  16-124
+Appendix C
+  Highway Capacity Manual 2000
+
+When a single (or double) exclusive-permitted left-turn lane is involved, fLT = fm .  Regression equations are
+  To implement this model, it is necessary to estimate the subportions of the effective  used to estimate how effective
+  green for a phase will be
+green phase, gf, gq, and gu. Regression relationships have been developed to permit this  divided into its three parts
+estimation, as follows:
+
+  1. Compute gf:
+
+  gf = Ge −0.882 LTC0.717 − tL (shared permitted left-turn lanes) 0 ≤ gf ≤ g (C16-5)
+
+where  gf = 0.0 (exclusive-permitted left-turn lanes)
+  G
+  = actual green time for permitted phase (s);
+  LTC  = left turns per cycle, computed as vLTC/3600;
+  = adjusted left-turn flow rate (veh/h);
+  vLT  = cycle length (s); and
+  C  = lost time for subject left-turn lane group (s).
+  tL
+
+2. Compute gq:
+
+  gq =  v olcqr o v − t olc (1 − qr o ) L  (C16-6)
+
+  0.5 −  go
+
+  v olc (1 − qr o ) ≤ 0.49
+  go
+
+where  0.0 ≤ gq ≤ g
+  volc
+  = adjusted opposing flow rate per lane per cycle, computed as
+  vo  voC/(3600No fLUo);
+  fLUo
+  = adjusted opposing flow rate (veh/h);
+  No  = lane utilization factor for opposing flow;
+  qro  = number of opposing lanes;
+  = opposing queue ratio, that is, proportion of opposing flow rate
+  Rpo
+  originating in opposing queues, computed as 1 – Rpo(go/C); qro ≥ 0;
+  go  = platoon ratio for opposing flow, obtained from Exhibit 16-12 based on
+  tL
+  opposing arrival type;
+  = effective green for opposing flow (s); and
+  = lost time for opposing lane group (s).
+
+3. Compute gu:
+
+  gu = g – gq when gq ≥ gf
+
+where  gu = g – gf when gq < gf
+  g = effective green time for subject permitted left turn (s).
+
+  Note that when gq < gf, that is, when the first left-turning vehicle does not arrive until
+
+after the opposing queue clears, an effective adjustment factor of 1.0 is applied
+
+throughout gf and a factor based on EL1 thereafter.
+  4. Select the appropriate value of EL1 from Exhibit C16-3 on the basis of the
+
+opposing flow rate, vo, and the lane utilization adjustment factor of the opposing flow,
+fLUo. For the purposes of determining vo, opposing right and left turns from exclusive
+lanes are not included in vo.
+
+  5. Compute PL (proportion of left turns in shared lane):
+
+  16-125  Chapter 16 - Signalized Intersections
+  Appendix C
+Highway Capacity Manual 2000
+
+    
+    (N −1)g 
+  PL = PLT 1 +  
+    gu    (C16-7)
+
+    gf + + 4. 24  
+    E L1  
+
+  where  = proportion of left turns in lane group, and
+  = number of lanes in lane group.
+  PLT
+  N
+
+  Note that when an exclusive-permitted left-turn lane is involved, PL = PLT = 1.0.
+  6. Compute fm using Equation C16-3.
+  7. Compute fLT using Equation C16-4.
+
+Single-lane approaches  SINGLE-LANE APPROACH OPPOSED BY SINGLE-LANE APPROACH
+are legs of intersections
+with only one approach  The case of a single-lane approach opposed by another single-lane approach has a
+lane  number of unique features that must be reflected in the model. The most critical of these
+  is the effect of opposing left turns. An opposing left-turning vehicle in effect creates a
+  gap in the opposing flow through which a subject left turn may be made. This gap can
+  occur during the clearance of the opposing queue as well as during the unsaturated
+  portion of the green phase.
+
+  Thus, the assumption in the multilane model that there is no flow during the period
+  gq – gf (where gq > gf) is not applicable to opposing single-lane approaches, on which
+  there is flow during this period at a reduced rate reflecting the blocking effect of left-
+  turning vehicles as they await an opposing left turn. Left-turning vehicles during the
+  period gq – gf are assigned a through-car equivalent value EL2 based on simple queuing
+  analysis, which can be converted to an adjustment factor for application during this
+  period of the green.
+
+  Since vehicles do not have the flexibility to choose lanes on a single-lane approach,
+  regression relationships for predicting gf and gq are also different from those for the
+  multilane case. Further, for a single-lane approach, fLT = fm, and PL = PLT. As in the
+  multilane case, the opposing single-lane model has no term to account for sneakers but
+  has a practical minimum value of fLT = 2(1 + PLT)/g.
+
+  The basic model of left-turn lanes with opposing single-lane approaches is defined
+  by Equations C16-8 and C16-9:
+
+   gf    gdiff    1    gu    1  
+  f LT = f m =   (1.0 ) +     +    (C16-8)
+  g   g  1 + PLT (EL2 −1)   g  1 + PLT (EL1 −1) 
+
+   gf   gdiff    1    gu    1  
+  f LT =   +     +     (C16-9)
+   g   g  1 + PLT (EL2 −1)   g  1 + PLT (EL1 −1) 
+
+  where  = max (gq – gf, 0). Note that when no opposing left turns are present, the
+  gdiff  value of gdiff is set to zero.
+
+  To implement this model, it is again necessary to estimate the subportions of the
+
+  effective green phase, gf, gq, and gu, using Equations C16-10 through C16-12.
+  1. Compute gf:
+
+  gf = Ge (−0.860LTC0.629 ) − tL  when 0 ≤ gf ≤ g  (C16-10)
+
+  where  = actual green time for permitted phase (s);
+  G  = left turns per cycle, computed as vLTC/3600;
+  = adjusted left-turn flow rate (veh/h);
+  LTC  = cycle length (s); and
+
+  vLT
+  C
+
+Chapter 16 - Signalized Intersections  16-126
+Appendix C
+

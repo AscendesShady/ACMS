@@ -1,0 +1,655 @@
+232  Chapter 3.9
+
+Figure 3.9.5: Timeline and Phases of Project Development
+Source: USDOT
+Connected Vehicles  233
+
+New York City (NYC) DOT Pilot
+
+The USDOT’s vision to improve the safety of travelers and pedestrians in
+the cities and motorways across the US is possibly being achieved by the
+NYDOT, through the deployment of V2V and V2I CV technologies. The
+pilot deployment of CV testing, by the NYCDOT, is one of the largest CV
+technology deployments to date to assess CV technology and applications
+in tightly spaced junctions typically present in a crowded urban
+transportation system.
+
+The NYCDOT CV Pilot Deployment Project area, illustrated in Figure
+3.9.6, encompasses three distinct areas in the district of Manhattan and
+Brooklyn:
+
+  1. A four-mile stretch of Franklin D. Roosevelt (FDR) Drive, in
+  Manhattan, in the regions of the Upper East Side and East Harlem.
+
+  2. Four one-way corridors in Manhattan.
+  3. A 1.6-mile stretch of Flatbush Avenue in Brooklyn.
+234  Chapter 3.9
+
+  1.  2.
+
+  3.
+
+Figure 3.9.6: NYCDOT Deployment
+Source: http://www.its.dot.gov/pilots/pdf/02_CVPilots_NYC.pdf
+
+The initial plan for the technology deployment of NYDOT is focused on the
+stability and resilience of the roadside unit (RSU) platform and robustness
+of the onboard unit (OBU) platform to enhance over-the-air (OTA) software
+updates and data gathering. The deployment of CV technology on many
+fleets that serve a particular area is planned. Six V2I/I2V safety measures,
+six V2V safety measures, two V2I/I2V pedestrian measures, and one
+  Connected Vehicles  235
+
+mobility application will be implemented. The size of the targeted fleet is
+approximately 8,000 vehicles, with five distinct vehicle types that include
+3,200 taxis, 700 Metropolitan Transportation Authority (MTA) buses, 700
+NYCDOT fleet vehicles, 170 New York City Department of Sanitation
+(DSNY) vehicles and 3,200 Department of Citywide Administrative
+Services (DCAS) vehicles. Table 3.9.3 shows details of the applications
+deployed on vehicles.
+
+SN Category Application  Remarks
+
+1 V2I/I2V Speed  Alerts the driver when exceeding
+Safety  Compliance  the posted regulatory speed limit.
+
+  Alerts the driver when
+
+  Curve Speed  approaching a curve and
+
+  Compliance  exceeding the posted regulatory
+
+  speed limit.
+
+  Speed  Alerts the driver when
+  Compliance /  approaching a designated work
+  Work Zone  or school zone and exceeding the
+  speed limit.
+
+  Red Light  Alerts the driver of impending
+  Violation  red-light violations.
+  Warning
+
+  Oversize  Alerts the driver of restricted
+  Vehicle  roadways and impending height-
+  Compliance  restricted infrastructure such as
+  bridge or tunnel clearance.
+
+  Alerts the driver of New York
+
+  City’s emergency
+
+  Emergency  and evacuation traveler
+  Communications  information obtained from the
+  and Evacuation  Traffic Management Center,
+  Information  Office of Emergency
+  Management, Office of
+
+  Emergency Response, and
+
+  National Weather Service.
+236  Chapter 3.9
+
+2 V2V  Forward  Alerts the driver in the event of
+  Safety  Collision  an imminent rear-end crash with
+  Warning (FCW)  a remote vehicle ahead.
+
+  Emergency  Alerts the driver of stopped or
+  Electronics  hard-braking vehicle(s) ahead in
+  Brake Lights  time to safely avoid a crash.
+  (EEBL)
+
+  Alerts the driver when a remote
+
+  Blind Spot  vehicle is in the adjacent lane in
+
+  Warning (BSW) the same direction of travel to
+
+  avoid a side-swipe crash.
+
+  Alerts the driver during a lane-
+
+  Lane Change  change attempt when a remote
+
+  Warning/Assist vehicle is in the adjacent lane in
+
+  (LCA)  the same direction of travel to
+
+  avoid a side-swipe crash.
+
+  Intersection  Alerts the driver attempting to
+
+  Movement  cross or turn when it is not safe
+
+  Assist (IMA)  to enter the intersection.
+
+  Vehicle Turning  Alerts the bus operator if a
+  Right in Front of  remote vehicle attempts to pull
+  Bus Warning  in front of the bus to make a
+  right turn.
+
+  V2I/I2V Pedestrian in  Alerts the bus operator if a
+3 Pedestrian Signalized  remote vehicle attempts to pull
+  in front of the bus to make a
+  Crosswalk  right turn.
+
+  Mobile  Informs the visually impaired
+
+  Accessible  pedestrian of the pedestrian
+
+  Pedestrian  signal status and provides
+
+  Signal System orientation to the crosswalk to
+
+  (PED-SIG)  assist in crossing the street.
+
+Table 3.9.3: Applications Deployed on the NYC Vehicles
+Source: USDOT
+Connected Vehicles  237
+
+Only IEEE 802.11p dedicated short-range communication (DSRC)
+technology is used in the New York City pilot, with six of the seven
+channels being used. This project will serve as a demonstration for the
+spectrum space’s usage to improve overall transportation safety. The
+implementation will comprise of roughly 310 signalized junctions for V2I
+technology using DSRC.
+
+Tampa-Hillsborough Expressway Authority Pilot
+
+The Tampa-Hillsborough Expressway Authority (THEA) owns the Selmon
+Reversible Express Lanes (REL) and is responsible for their operation. REL
+is a first-of-its-kind facility that uses concrete segmental bridges, reversible
+express lanes, and electronic tolling to address urban congestion. During
+rush-hours, commuters face considerable delays, which often result in rear-
+end accidents and collisions by flouting red lights. As the lanes are
+reversible, it is possible for drivers to enter from the opposite direction.
+Multiple V2V and V2I applications will be implemented by THEA during
+the pilot to ease traffic congestion, reduce accidents, and prevent wrong-
+way entrance at the REL exit. CV technologies will also be able to improve
+pedestrian safety measures, expedite bus operations, and decrease conflicts
+among public and private vehicles and pedestrians along the road, which
+caters to high volumes of mixed traffic. THEA has established a CV task
+force whose primary task will be to support the infrastructure deployment
+for CVs on a region-wide scale. The task force will ensure interoperability
+and coordination among the three governing institutions of the region,
+namely the City of Tampa (COT), the Florida Department of Transportation
+(FDOT) and the Hillsborough Area Regional Transit (HART). A task force
+helps to make use of the assets and capabilities of different institutions to
+undertake studies and, hence, constantly enhance the CV environment,
+undertake administrative activities, and provide necessary funding. The
+collaborative approach will ensure financial security, and good
+implementation and management of projects in the longer run. Exhibit 3.9.1
+illustrates the CV pilot deployment in Downtown Tampa.
+238  Chapter 3.9
+
+Table 3.9.4 shows the details of the application deployed on the vehicles.
+
+SN Category Application  Remarks
+
+1 V2I/I2V End of Ramp  Alerts the driver when reaching
+
+  Safety Deceleration  the end of the ramp way/curve
+
+  Warning (ERDW) with speed safety warning.
+
+  Wrong Way Entry Alerts the driver about potential
+
+  (WWE)  and actual wrong-way entry or
+
+  one-way entry.
+
+  Pedestrian  Alerts the driver when
+
+  Collision Warning approaching dangerously near a
+
+  (PCW)  pedestrian or with the
+
+  possibility of conflict at a
+
+  crowded junction of
+
+  pedestrians.
+
+2 V2V  Forward Collision Alerts the driver in the event of
+
+  Safety Warning (FCW) an imminent rear-end crash
+
+  with a remote vehicle ahead.
+
+  Emergency  Alerts the driver of stopped or
+
+  Electronic Brake hard-braking vehicle(s) ahead
+
+  Lights (EEBL)  in time to safely avoid a crash.
+
+  Intersection  Alerts the driver attempting to
+
+  Movement Assist cross or turn when it is not safe
+
+  (IMA)  to enter the intersection.
+
+  Vehicle Turning Alerts the bus operator if a
+
+  Right in Front of remote vehicle attempts to pull
+
+  Transit Vehicle in front of the bus to make a
+
+  (VTRFTV)  right turn.
+
+3 Mobility Intelligent Traffic Adjusts signal timing to ensure
+
+  Signal System (I- optimal flow in combination
+
+  SIG)  with PED-SIG and TSP.
+
+  Transit Signal  Allows transit vehicle to
+
+  Priority (TSP)  request and receive priority at a
+
+  traffic signal.
+
+Table 3.9.4: Applications Deployed on the Tampa, FL, Vehicles
+Source: USDOT
+
+The pilot run includes one thousand and one hundred private vehicles, ten
+Hillsborough Area Regional Transit (HART) buses, eight TECO line
+streetcar trolleys, and the deployment of forty-four roadside units. The
+Connected Vehicles  239
+
+overall performance of the pilot will be evaluated by the resulting decrease
+in congestion, rate of accidents, fuel consumption, emission, travel time,
+and reliability of predictions.
+
+The THEA has, now, collaborated with Honda R&D Americas, LLC,
+Hyundai America Technical Centre, Inc., and Toyota Motors North
+America to deploy vehicles with pre-installed CV technology. The THEA
+has undertaken a very creative approach to voluntary stakeholder
+participation by offering rebates to volunteers in the pilot. To undertake
+wide-scale public engagement and knowledge dissemination, the THEA
+encourages people to associate with them as a “fan” member and take civic
+pride in being at the forefront of the landscape of automotive testing and
+advancement.
+
+The map shows different application locations of the CV pilot deployment
+in Downtown Tampa.
+240  Chapter 3.9
+
+Exhibit 3.9.1: CV Pilot Deployment in Downtown Tampa
+
+(Source: Interactive Map – THEA Connected Vehicle Pilot
+(theacvpilot.com))
+Connected Vehicles  241
+
+Wyoming DOT Pilot
+
+The Wyoming corridor is a vital freight corridor that plays a crucial role in
+the transportation of products throughout the US as well as with the
+adjoining regions of Canada and Mexico. The corridor is highly affected by
+weather conditions. The interstate (I-80) in southern Wyoming is the
+selected stretch for the implementation of the pilot project. The stretch is
+most affected during the winter season when the winds blow over 35 mph,
+up to 65 mph, leading to truck blow-overs, resulting in road closure for
+hours. Thus, the pilot, here, focuses on reducing accident-related delays and
+improving safety along the corridor to address the needs of commercial
+vehicle operators.
+242  Chapter 3.9
+
+Exhibit 3.9.2: Accident on the I-80 Wyoming corridor
+
+Source: KOWB News and Pa News https://kowb1290.com/massive-
+pileup-on-i-80-caught-on-video-video/,
+https://www.pahomepage.com/top-stories/crews-working-on-clearing-
+scene-of-deadly-car-pile-up-on-i-80/
+Connected Vehicles  243
+
+V2I and V2V applications are used to assist dynamic route information and
+guidance, layover and parking notifications, roadside alerts, and various
+other advisories throughout the corridor. The Wyoming Department of
+Transportation (WYDOT) deployed seventy-five roadside units (RSU) and
+around four hundred test vehicles—including both fleet vehicles and
+commercial trucks—out of which, around one hundred and fifty are heavy
+trucks that frequently use the stretch. All the test vehicles are equipped with
+on-board units (OBUs). In addition to these vehicles, the WYDOT also
+deployed a fleet size of one hundred units, consisting of snow ploughs and
+highway patrol vehicles, each attached with on-board units and mobile
+weather sensors. The developed system will support the operation of CV
+technology along the entire stretch of 402 miles of the I-80. Exhibit 3.9.2
+illustrates an accident on the Wyoming I-80 corridor. Exhibit 3.9.3
+illustrates the Wyoming I-80 corridor CV map.
+244  Chapter 3.9
+
+Exhibit 3.9.3: Wyoming I-80 Corridor CV Map
+
+Source: USDOT
+  Connected Vehicles  245
+
+Table 3.9.5 shows the details of the application deployed on the vehicles.
+
+SN Category  Application  Remarks
+1 V2I/I2V  I2V  Alert the driver regarding
+  Situational  forthcoming road conditions,
+  Safety and  Awareness  weather situation, speed
+  Mobility  restrictions, accidents on the
+  Work Zone  route, parking availability, road
+2 V2V  Warnings  closures, and vehicle restrictions.
+  Safety  (WZW)  Extended version of I2V
+  situational awareness provides
+3 V2I and  Spot Weather  prior information regarding
+  V2V  Impact  obstructions in the vehicle’s travel
+  Safety  Warning  lane and lane closures due to snow
+  (SWIW)  or other conditions, lane shifts,
+  Forward  speed reductions, or vehicles
+  Collision  entering/exiting the work zone.
+  Warning  Provides localized information
+  (FCW)  about the probable dangerous road
+  Distress  situations like patches of icy road.
+  Notification
+  (DN)  Alerts the driver in the event of an
+  imminent rear-end crash with a
+  remote vehicle ahead.
+
+  A self-alert system that sends a
+  distress support alert whenever the
+  vehicle sensor detects a situation
+  that might require support.
+
+Table 3.9.5: Applications Deployed on the Wyoming Vehicles
+Source: USDOT
+
+The Wyoming 511 App (shown in Exhibit 3.9.4) and the Commercial
+Vehicle Operator Portal (CVOP) currently use the data generated by the test
+fleets and roadside units to provide drivers with dynamic travel information
+and updates along the stretch.
+246  Chapter 3.9
+
+Exhibit 3.9.4: Wyoming 511 App Interface
+
+Source: Connected Vehicle Monitor (wyoroad.info)
+Connected Vehicles  247
+
+  Europe
+
+The European Union has been a pioneer in the automobile industry and at
+the forefront of vehicle technology advancement, making continuous
+updates in its legislation and policies to support the development of ITS.
+The executive branch of the European Union, The European Commission,
+funds most of the projects in the region, which are coordinated through the
+European Road Transport Telematics Implementation Coordination
+Organization (ERTICO-ITS EUROPE). Though automated vehicles are not
+yet ready to be deployed without human supervision, the European Union
+has always adopted a holistic approach to connected and automated
+mobility. Today, deployment of ITS to support the large-scale
+implementation of connected and automated vehicles is one of the key
+agendas of the European transport policy. Most of the projects and pilots
+fall under the purview of establishing Cooperative ITS (C-ITS) across
+Europe. The C-ITS strategy's goal is to enable the convergence of
+investments and regulatory frameworks throughout the EU, so that mature
+C-ITS services may be deployed in 2019 and beyond. The services are
+identified as DAY 1 and DAY 1.5; DAY 1 services are mature and ready
+for deployment from 2019, while DAY 1.5 services are mature but not yet
+ready for a large-scale quick deployment due to lack of sufficient support
+infrastructure, and specifications or standards. These services will be
+deployed in Phase II from 2025 onwards. The EU funding for CVs was
+introduced in the Sixth Framework Program and has since been boosted.
+Under “Horizon 2020”—the EU program that focuses on research and
+innovation—, € 300M has been allocated for the research and development
+of connected and automated vehicles. The budget supports the large-scale
+deployment of pilot projects of CVs in urban areas across Europe. As
+projects are funded under various EU programs and cover multiple nations,
+most of the projects are trans-border initiatives, and are being implemented
+and tested under a collaborative approach of the involved member states of
+the EU.
+
+Europe largely focuses on the following:
+
+  භ Creating interoperable standards and standardization of services to
+  make them reliable and compliant for creating a coordinated and
+  secure CV environment.
+
+  භ Implementing a large-scale test project to assess the impacts and
+  challenges for wider deployment.
+
+  භ Follow a common methodology of pilot implementation, system
+  architecture implementation, and data sharing.
+248  Chapter 3.9
+
+  භ Sharing the learnings with other ongoing and upcoming projects
+  across Europe to increase efficiency.
+
+Cooperative ITS Corridor
+
+One of the most notable C-ITS initiatives in the deployment of V2X
+technology is the tri-nation cooperation among the German, Dutch, and
+Austrian transport ministries. The first route for deployment of the services
+is a highway corridor, extending from Rotterdam (Netherlands), via
+Frankfurt (Germany), to Vienna (Austria).
+
+The first two services to be provided on the stretch are
+
+1. Road Work Warnings (RWW)
+Connected Vehicles  249
+
+Exhibit 3.9.5: RTIS: Signages and Boards
+
+Source: www https://itscorridor.mett.nl/.its
+250  Chapter 3.9
+
+2. Improved Traffic Management through Vehicle Data / Probe Vehicle
+  Data Services
+
+Exhibit 3.9.6: RTIS: Probe Vehicle Data
+
+Source: www https://itscorridor.mett.nl/
+Connected Vehicles  251
+
+Both the services use short-range communication—DSRC (ITS-G5, Wifi
+802.11p, 5.9GHz) and the cellular network (3G, 4G) for interactions
+between the vehicles and infrastructure. Another supplementary service for
+collision risk-warnings is also being implemented in the Netherlands.
+
+Exhibit 3.9.5 illustrates the RTIS signages and boards and Exhibit 3.9.6
+illustrates the RTIS probe vehicle data.
+
+InterCor (Interoperable Corridors)
+
+The InterCor project can be viewed as an extension of the C-ITS corridor.
+The project aimed to connect i) the C-ITS corridor of Netherlands-
+Germany-Austria, ii) the C-ITS initiatives of Belgium and United Kingdom,
+and iii) the corridor in France (defined under the SCOOP project) to achieve
+a continuous and sustainable network of C-ITS corridors that served as a
+test bed for initial (Day 1) services and beyond. The project commenced in
+September 2016 and was completed in February 2020, with a total project
+cost of €30 M.
+
+Services defined under DAY 1 of C-ITS are
+
+  1. Hazardous Location Notifications
+  භ Emergency brake lights
+  භ Emergency vehicle approaching
+  භ Slow or stationary vehicle
+  භ Traffic congestion warning
+  භ Road work warning (RWW)
+  භ Weather conditions
+
+  2. Signage Applications
+  භ In-vehicle signage (IVS)
+  භ In-vehicle speed limits
+  භ Probe vehicle data
+  භ Shockwave damping
+  භ Signal violation / intersection safety
+  භ Priority signals for specific vehicles
+  භ Green light optimal speed advisory (GLOSA)
+
+Multiple tests and pilots provided insights on methods of technical
+evaluations to be adopted, impact assessment processes, and user
+acceptance of the services. The project served as a benchmark for pilot
+operations of C-ITS initiatives. It also provided insights on common
+252  Chapter 3.9
+
+upgraded specifications for ITS-G5, hybrid communications, PKI, and
+related security protocols.
+
+The following were evaluated and analyzed by InterCor:
+
+  1. Interoperability / cross-border interoperability
+  2. Communications performance
+  3. Applications and services:
+
+  x IVS: Speed advice and lane guidance
+  x Road work warning (RWW)
+  x Green light optimal speed advisory (GLOSA)
+  x Truck Parking; multi-modal cargo transport optimization
+
+  (MCTO); tunnel logistics
+  4. User acceptance and attitudes to the services
+  5. Objective impact of the services on driver behavior (speed
+
+  adaptation)
+  6. Consideration of the wider benefits including traffic efficiency and
+
+  safety
+
+Details of a few ITS projects under the C-ITS initiative, post 2015, in
+Europe, are listed in Table 3.9.6.
+  Connected Vehicles  253
+
+Details of a Few Relevant Projects under the C-ITS Initiative, Post 2015, in Europe
+
+Name  SCOPE  Location  Start date  More details
+5G-CARMEN  The project is focused on developing a 5G-  2018–  https://5gcarmen.eu/
+  supported corridor to undertake cross-border  Trials across  ongoing
+C-ROADS  pilots for connected V2X communication. It  a corridor  https://www.c-roads.eu/pilots.html
+  targets interoperability and explores the  spanning 600  2016–
+CONCORDA  potential of hybrid networks using LTE and  km of roads,  ongoing  https://ertico.com/concorda/
+  C-ITS technologies. The project also  connecting
+  investigates four applications—cooperative  three  2017–
+  maneuvering situation awareness, video  European  ongoing
+  streaming, green driving, targeting  countries
+  automation levels, ranging from SAE L0 to  (Italy,
+  L4.  Austria, and
+  A platform to undertake pilots and share the  Germany)
+  insights for a harmonized C-ITS deployment
+  in Europe. The project is a joint initiative of  Austria,
+  European Member States and road operators  Belgium,
+  for testing and implementing (vehicle-to-  Czech
+  vehicle or V2V) or between vehicles and  Republic,
+  infrastructure (vehicle-to-infrastructure or  France,
+  V2I) and C-ITS services to facilitate cross-  Germany,
+  border harmonization and interoperability.  Hungary,
+  Italy,
+  Focused on developing an interoperable and  Portugal,
+  connected corridor for operation of  Slovenia,
+  connected and automated vehicles.  Spain
+  CONCORDA will integrate 802.11p and
+  LTE-V2X connection without interfering  Austria,
+  with existing services in terms of  France,
+  disturbance and interoperability. This will  Germany,
+  Greece, Italy,
+  Netherlands,
+  Spain
+254  Chapter 3.9
+
+  ICT4CART  ensure a backwards approach to create  Austria,  2018–  https://www.ict4cart.eu/
+  interoperability of C-ITS service with C-  Germany,  ongoing  https://l3pilot.eu/
+  L3Pilot  ROADS services in real-world traffic  Italy and  https://www.nordicway.net/
+  scenarios.  cross-border  2017–
+  NordicWay NordicWay 2  Based on a hybrid communication  (A22  ongoing
+  NordicWay 3  approach, the project focuses on  Austria-
+  developing ICT infrastructure for  Italy)  2015–
+  connected and automated road transport  ongoing
+  to ensure a resilient and smooth transition  Belgium,
+  towards a higher level of automation.  Germany,
+  Standardization and interoperability are  France, Italy,
+  also the key agenda of the project.  Sweden,
+  One of the most unique large-scale pilots  U.K.
+  focused on enhancing connected
+  automation and SAE level 3 functions on  Denmark,
+  the European roads. The data from this  Finland,
+  pilot will be shared with other  Norway,
+  stakeholders and parties outside the  Sweden
+  consortium. The data will be evaluated in
+  terms of technical standards, user
+  acceptability, traffic and travel behavior,
+  and societal value enhancement.
+
+  NordicWay was the first large-scale pre-
+  deployment pilot to assess the technical
+  feasibility proof of concept for probe data
+  collation and other C-ITS services for
+  both passenger and freight traffic in four
+  countries (Finland, Sweden, Norway, and
+  Denmark). The pilot significantly bridged
+  the gap between C-ITS research and
+  wide-scale deployment. The project
+  ended in 2017 followed by the sister
+  Connected Vehicles  255
+
+AURORA  project NordicWay 2, in the same year,  Finland  2019–  https://www.snowbox.fi/
+  which focused on developing  ongoing
+Data for Road Safety  interoperability and assessing the  Belgium,
+5GCroCo  feasibility between Day 1 and Day 1,5 C-  Finland,  2019–2020 roundtable-dtf.eu
+  ITS services and mapping the readiness  Germany,
+  of the supporting infrastructure. The  Netherlands,  2018–  https://5gcroco.eu/homepage/overview.
+  project was further extended as  Spain  ongoing  html
+  NordicWay 3, in 2021, involving more  France,
+  cities of the region.  Germany,
+
+  Aurora, the Intelligent Transport Cluster
+  project, is a 10 km intelligent road
+  segment to test intelligent transportation
+  systems and related technologies for
+  CAV/CAD/CCAM in challenging
+  weather conditions, especially during
+  winters. The test area is open to use for
+  all interested stakeholders and is
+  equipped to even support the
+  development of road services and asset
+  management. The Finnish Transport
+  Agency has provided open access to all
+  the generated data.
+
+  The project was undertaken by the
+  members of the European Data Task
+  Force (DTF) as a twelve-month proof of
+  concept to improve road safety by
+  exchanging data generated by vehicles
+  and infrastructure across nations and
+  manufacturers.
+
+  The 5G cross-border initiative is testing
+  advanced 5G features to create innovative
+  use cases for cooperative, connected, and
+256  Chapter 3.9
+
+  C The Difference  automated mobility. It consists of a  Luxembourg,  2016–2018  http://c-thedifference.eu/
+  Sweden  consortium of European automotive and  Spain  2017–2019  https://platooningensemble.eu/project
+  4Platooning/ENSEMBLE  mobile communications industries
+  supported by their respective countries'  France,
+  transport authorities and governments. It is  Netherlands
+  currently conducting tests for three use  Sweden
+  cases, namely, tele-operated driving,
+  generation and distribution of high-
+  definition map, and anticipated cooperative
+  collision avoidance.
+  The C-ITS pilot project is a live traffic app
+  project under the C-ITS pilot project that
+  enables drivers to adopt and make
+  decisions based on the real-time traffic
+  conditions and infrastructure.
+  The pilot showcases the feasibility of
+  multi-brand CACC (cooperative adaptive
+  cruise control) on public roads, with trucks.
+  The V2V protocol is further developed
+  under the ENSEMBLE project. The
+  project is a consortium of an independent
+  research organization, TNO, six European
+  truck manufacturers (DAF, DAIMLER,
+  IVECO, MAN, SCANIA and VOLVO
+  Group and ERTICO), ITS Europe, along
+  with OEM suppliers and CELPA, to
+  implement and demonstrate multi-brand
+  truck platooning across Europe.
+
+Table 3.9.6: Details of a Few ITS Projects under the C-ITS Initiative, Post 2015, in Europe
+Source: Author’s compilation
+

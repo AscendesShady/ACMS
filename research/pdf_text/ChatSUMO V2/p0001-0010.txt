@@ -1,0 +1,539 @@
+  IEEE JOURNAL  1
+
+  ChatSUMO: Large Language Model for
+  Automating Traffic Scenario Generation in
+
+  Simulation of Urban MObility
+
+  Shuyang Li, Talha Azfar, and Ruimin Ke, Member, IEEE
+
+arXiv:2409.09040v1 [cs.HC] 29 Aug 2024  Abstract—Large Language Models (LLMs), capable of han-  Despite its effectiveness, creating traffic simulation sce-
+  dling multi-modal input and outputs such as text, voice, images,  narios is a time-consuming process that requires specialized
+  and video, are transforming the way we process information.  traffic-related knowledge [7]. Most mainstream simulation
+  Beyond just generating textual responses to prompts, they can  software demands that users define networks, vehicles, routes,
+  integrate with different software platforms to offer compre-  and other parameters, which poses a significant barrier to
+  hensive solutions across diverse applications. In this paper, we  entry for beginners who lack professional expertise or even for
+  present ChatSUMO, a LLM-based agent that integrates language  experts but without the experience in the certain software [8],
+  processing skills to generate abstract and real-world simulation  [9]. These users often seek quick access to modeling results
+  scenarios in the widely-used traffic simulator - Simulation of  without the need for extensive setup and configuration.
+  Urban MObility (SUMO). Our methodology begins by leveraging
+  the LLM for user input which converts to relevant keywords  The advent of Large Language Models (LLMs), trained
+  needed to run python scripts. These scripts are designed to  on vast datasets, offers a promising solution by facilitating a
+  convert specified regions into coordinates, fetch data from Open-  more intuitive human-machine interaction. LLMs can interpret
+  StreetMap, transform it into a road network, and subsequently  a wide range of inputs, including text, images, and videos,
+  run SUMO simulations with the designated traffic conditions.  and generate corresponding outputs [10]. SUMO, a popular
+  The outputs of the simulations are then interpreted by the LLM  open-source traffic simulation software, requires users to either
+  resulting in informative comparisons and summaries. Users can  code networks from scratch or convert them from other
+  continue the interaction and generate a variety of customized  platforms [11]. Additionally, users must manually define traffic
+  scenarios without prior traffic simulation expertise. For simula-  flows or run Python scripts with specific parameters, adding
+  tion generation, we created a real-world simulation for the city  to the software’s learning curve [12].
+  of Albany with an accuracy of 96%. ChatSUMO also realizes the
+  customizing of edge edit, traffic light optimization, and vehicle  To address these challenges, we present ChatSUMO, a
+  edit by users effectively.  cutting-edge LLM-based assistant designed to streamline
+  the use of SUMO simulations. Powered by the Llama 3.1
+  Index Terms—Traffic simulation, Large Language Model, Sim-  model [13], [14], ChatSUMO enables users to generate and
+  ulation scenario generation, Simulation automation, SUMO  modify traffic simulation scenarios through simple textual
+  inputs. This framework transforms user descriptions into ex-
+  I. INTRODUCTION  ecutable SUMO simulations using Python scripts, effectively
+  lowering the barrier for those without specialized knowledge.
+  T HE increasing complexity of modern transportation sys-  ChatSUMO operates by leveraging a multi-module architec-
+  tems, with diverse vehicle types and traffic patterns, poses  ture to facilitate user interaction and simulation generation.
+  significant challenges for traffic management and forecast-  The system begins with an Input Module, which processes user
+  ing [1], [2]. This complexity not only escalates transportation  inputs and converts them into relevant keywords. These key-
+  costs but also contributes to environmental pollution. The  words are then used by the Simulation Generation Module to
+  need for improved traffic planning and operation has led to a  create either abstract or real-world traffic scenarios in SUMO.
+  surge in studies focused on optimizing transportation systems,  Users can customize these scenarios using the Customization
+  e.g., the strategic reconstruction of road infrastructure [3], [4].  Module, which supports a range of modifications, including
+  Traffic simulation has emerged as a powerful tool for modeling  edge and lane edits, traffic light optimization, and vehicle route
+  current traffic scenarios, predicting future conditions, and miti-  adjustments. The Analysis Module interprets the simulation
+  gating negative impacts, all while reducing the costs associated  outputs, providing detailed reports on traffic density, travel
+  with real-world traffic planning implementations [5]. Among  time, emissions, and more. The contributions are summarized
+  these tools, SUMO (Simulation of Urban MObility) stands  as follows:
+  out as a versatile, open-source platform for traffic simulation,
+  used widely for urban mobility research, operations, and  • We propose a novel LLM-based agent capable of trans-
+  planning [6].  forming textual descriptions into SUMO simulation sce-
+  narios. This allows users to bypass the need for extensive
+  S. Li was with the Department of Civil and Environmental Engineering,  traffic simulation knowledge.
+  University of Michigan, Ann Arbor, MI, 48109.
+  • ChatSUMO streamlines the process of generating and
+  Talha Azfar and Ruimin Ke (e-mail: ker@rpi.edu) are with the Department  modifying simulations, making it accessible to users of
+  of Civil and Environmental Engineering, Rensselaer Polytechnic Institute,
+  Troy, NY, 12180.
+
+  Manuscript received xxx, 2024; revised xxx.
+IEEE JOURNAL  2
+
+  all expertise levels.  transformer-based approach for generating action narration and
+  • By leveraging advanced language processing capabilities,  reasoning in self-driving vehicles. ADAPT employs multi-
+  task joint training to bridge the gap between driving action
+  ChatSUMO provides an intuitive interface for traffic  captioning and control signal prediction. ChatGPT was used
+  simulation, offering real-time insights and dynamic ad-  as a co-pilot for assisted driving in [23] by converting vehicle
+  justments.  telemetry, road state, human intention, and descriptions of the
+  available controllers into a combined prompt. The response
+  The rest of the paper is structured as follows: we first review  from the LLM determines the course of action most appro-
+related literature on traffic simulation and the application  priate for those conditions. The system can switch between
+of LLMs in this domain. We then detail the methodology  aggressive and gentle controllers, and handle lane changes and
+behind ChatSUMO’s design and functionality, followed by  overtaking. The DiLu framework [24] incorporates GPT based
+an experimental evaluation of its performance in generating  reasoning and reflection modules to perform decision making
+and modifying traffic simulations. Finally, we discuss potential  for an autonomous vehicle and has the ability to learn continu-
+applications and conclude with future work directions aimed  ously. The system is able to use LLM common sense chain of
+at enhancing the system’s capabilities.  thought reasoning from prompts tailored to the scenario which
+  generates the final decision. Meanwhile the decision sequences
+  II. LITERATURE REVIEW  stored to memory can be reflected upon by the LLM to find
+  mistakes and correct them. Similarly, LanguageMPC [25] used
+  LLM research is focused on enhancing natural language  an LLM for high level autonomous driving decision making,
+processing objectives including text classification, language  converting text descriptions to mathematical representations
+inference, and semantic understanding. While they face chal-  to be used by the model predictive controller. It was able
+lenges in reasoning, ethics, and conflict resolution, they have  to handle multi-vehicle coordinated control by generating a
+proven to be excellent tools for summarization, contextual  convoy level decision that each vehicle interprets according to
+comprehension, and question answering [10]. Modern LLMs  its internal state. BEVGPT is a generative pre-trained model
+have undergone training on vast quantities of data and their  that integrates driving scenario prediction, decision-making,
+behavior has been fine tuned by human feedback, such that  and motion planning into a minimalist autonomous driving
+the most competitive models are very good at following  framework using only bird’s-eye-view images, outperforming
+instructions and remaining focused towards specified tasks  previous methods in key metrics and pioneering long-term
+[15]. LLMs show promise in the enhancement of education  BEV image generation for autonomous driving [26].
+where precise answers or subject matter experts may not be
+easily accessible [16].  Microscopic traffic simulations such as VISSIM, SUMO,
+  and MATSim are the basis of planning and optimization
+  In the transportation field some LLM related work has  studies for traffic networks [27] and a few recent works have
+emerged recently, focusing primarily on safety. TrafficSafe-  incorporated LLMs with microsimulation tools. PromptGAT
+tyGPT [17] finetuned Llama on a custom dataset curated from  [28] leverages LLM inference to understand how weather con-
+NSTHA Model Minimum Uniform Crash Criteria guidelines,  ditions, traffic states, and road types influence traffic dynamics,
+FHWA Highway Safety Manual, and ChatGPT generated data.  which is used to inform policy in reinforcement learning for
+The model learned domain specific concepts allowing it to  traffic signal control. This additional information about real-
+accurately answer challenging transportation safety questions  world conditions helps to reduce the simulation to reality gap.
+with concise answers. ChatScene [18] was developed to gen-  In a similar vein, language assisted traffic light control in
+erate safety-critical scenarios for autonomous vehicles as text  [23] employ LLM to understand the traffic observations and
+descriptions which are then broken down into sub-descriptions  recommended action from reinforcement learning, which then
+that can be used to instantiate the scenario in CARLA. A  generates a justification for the action using chain of thought
+database of scene components and descriptions was created  reasoning. Anomalous traffic conditions like blockages, and
+that enabled ChatScene to assemble scene scripts from LLM  the presence of emergency vehicles are some of the factors the
+output. AccidentGPT [19] combines scene perception and  LLM takes into consideration before selecting the appropriate
+trajectory prediction using computer vision on camera views  action. In [29], natural language queries are translated into
+from multiple vehicles and roadside units for environmental  differentiable loss functions for specified vehicle trajectories
+understanding and collision avoidance. GPT4 based reasoning  in order to facilitate scenario based traffic simulations. These
+module is then used to provide proactive cues for human  scenarios include car following and collision trajectories for a
+drivers and traffic management authorities. It also stores key  few vehicles and compare them to ground truth from nuScenes
+moments and uses it for later analysis to improve future  dataset. There have also been advances in using LLM for
+autonomous driving decisions. Traffic Performance GPT (TP-  microscopic traffic behavior modeling, such as in [30], Chen
+GPT) proposes an intelligent chatbot designed to aid in trans-  et al. proposes a LLM-based method for car following be-
+portation analytics. The TP-GPT utilizes LLMs to generate  havior modeling; however, they do not necessarily include
+accurate SQL queries and interpret traffic data, leveraging a  microscopic traffic simulations.
+real-time database of traffic information [20].
+
+  Language models have been used in combination with com-
+puter vision for scene understanding for autonomous driving
+in a variety of techniques [21]. ADAPT (Action-aware Driving
+cAPtion Transformer) [22] provides an innovative end-to-end
+IEEE JOURNAL  3
+
+  Fig. 1: ChatSUMO Framework
+
+  III. METHODOLOGY  positive impact on increasing the human-machine interaction
+  efficiency. In this work, we consistently use Llama 3.1 to
+A. Overview  decode the user input. In the reasoning module, it would first
+  analyze the user’s input which contains requirements (type
+  The overview of ChatSUMO, as Figure 1, presents a  of network, city for simulation, traffic volume) to generate
+structure of the proposed system. The framework is designed  the user’s ideal simulation scenario. After running the initial
+to assist traffic simulation generation. ChatSUMO integrates  simulation, the LLM would analysis the output, producing
+advanced chat model capabilities into the SUMO platform  a report for the simulation. Then ChatSUMO asks the user
+to enhance the efficiency and accuracy of traffic simulation  what modification they want to utilize for optimization, and
+and management. This integration leverages the power of the  the modification module will comprehend the user’s needs
+GPT model to simulate, modify, and analyze traffic scenarios,  and modify the simulation scenario based on the specific
+providing real-time insights and dynamic adjustments. Our  commands. Finally, the LLM in analysis module analyzes the
+methodology begins by leveraging the LLM for user input  results of each simulation and the user can choose to compare
+which converts to relevant keywords needed to run python  the output from each step of modification, which includes
+scripts. These scripts are designed to create an abstract network  information like traffic density, average travel time, emissions
+or convert specified regions into coordinates, fetch data from  and fuel consumption.
+OpenStreetMap, transform it into a road network, and subse-
+quently run in SUMO simulation with the designated traffic  Input Module. Input Module is header which deals with
+conditions. We use Llama 3 8B, an open-source model, to  all the input information from users. In order to reduce the
+parse the inputs and provide a summary of the output. The user  difficulty of creating traffic simulation scenarios, we have
+can then request another simulation with some modifications  simplified the user input as much as possible, so that the
+which create a different traffic condition. The LLM retains  user can create the desired simulation scenarios without en-
+context for continued interaction. The core component of this  tering traffic-professional descriptions using natural language.
+methodology is the gpt-reasoning module, which is respon-  Based on the Meta llama3.1 model, we create SUMOInput as
+sible for three critical modules: Input Module, Simulation  the traffic scenario identification model for analyzing users
+Generation Module, Simulation Customization Module, and  input. In this model, we customize it with specified some
+Simulation Analysis Module.  prompts as “You are taking input and generate keywords for
+  a transportation simulation. Analyze the user input and give
+B. GPT-reasoning  a python dictionary with these keywords ...”. To generate the
+  initial simulation scenario, an example of user input can be:
+  The GPT-reasoning framework serves as the core element  “Generate a simulation in city Albany with a radius of 3miles,
+of ChatSUMO’s functionality. The process of our reasoning  and the volume of traffic should be medium.” After parsed by
+module is illustrated in Figure 1, encompassing input, simula-  ChatSUMO, the natural language input would be transformed
+tion generation, modification, analysis modules. We will now
+elaborate on the design of these modules, emphasizing their
+IEEE JOURNAL  4
+
+  Fig. 2: Simulation Generation
+
+into a python dictionary. These python dictionaries usually  from the user’s text descriptions by utilizing multiple cus-
+conclude three parts: the input of decision, the input of types.  tomizing modules. After users enter their modification, the
+the input of specific requirement. Regarding the decision  input module would analyze and match the keywords with
+input, it requires users to make a yes or no decision for  some predefined customizing API. Through these apis, users
+the question. For the input of types, SUMOInput is expected  can remove edges, optimize traffic light, and add vehicles to
+obtain the type of the decision question (type of network, kind  the simulation. Here are the details of implementing these
+of modification). Specific requirement inputs are inputs that  APIs.
+contains users detailed information about the simulation or
+modification (number of grids, which street to be removed). As  Edge and Lane Edit: Users can make modifications to
+the example above, the dictionary transformed from user input  the roads in simulation by simply telling ChatSUMO which
+would be “{city: Albany, radius: 3 miles, traffic condition:  lanes to remove, e.g., ”I want to remove Madison Avenue”
+medium}”.  or ”I’d like to remove the first lane in Madison Avenue”,
+  thus validating some of the user’s conjectures about traffic.
+  Generation Module. To generate the initial scenario of  To realize this function, ChatSUMO would first check whether
+the Simulation, we build the simulation scenarios in SUMO  the modified road is in the generated simulation, if so, the edit
+by inputting the desired simulation scenarios from the user.  module obtains the modification type for the road. Then the
+Currently we can generate two types of simulation networks,  module would extract the name of road as ”Madison Avenue”,
+including abstract scenarios (e.g., spider, grid networks) and  and generate the terminal command for SUMO tool netconvert
+real-world networks. For real-world networks, users can enter  through python script to modify the network. As user only
+the name of the city, size of radius and the condition of traffic  input the general name of the removed street, multiple edges
+(e.g., light, medium, heavy). After the user inputs a simulation  might be found, then ChatSUMO would ask for the user’s
+scenario, the input would be analyzed and understood by  decision which edge to be removed.
+Llama, and then it would be extracted to keywords as python
+dictionary. These keywords won’t be directly transmitted to  Traffic Light Offset: Traffic light offsets are useful dealing
+python, as ChatSUMO will analyze the user input and provides  with multiple traffic lights to increase the crossing efficiency
+feedback on whether the input is sufficient to construct the  of traffic flow. Users can enter commands like ”I want to set
+simulation scenario.  offsets to all the traffic light in the simulation” to set all the
+  traffic light in the simulation with offsets. With the traffic light
+  After the simulation generate module gets sufficient in-  offsets, intersections are capable of green wave control. To
+formation, these keywords would be processed by python  implement this function, once ChatSUMO receives the key
+script which executes commands for generating simulation. To  word “traffic light offset”, it will generate terminal command
+download the OSM (OpenStreetMap) of the required region  to call tlsCoordinator.py python script to modify the traffic-
+of city, ChatSUMO would execute “osmGet.py” to obtain  light offsets to coordinate them for the current traffic demand,
+the osm map in predefined region. Then it would execute  and generate a tlsOffstes.add.xml which can be loaded into
+“netconvert” commands which would convert the OSM map  SUMO.
+to network file in SUMO. After converting, it would utilize
+“randomTrips.py” and generates random trips with converted  Traffic Light Adaptation: Users can enter command like ”I
+network and required traffic volume. Finally, it would create  want to set offsets to all the traffic light in the simulation”
+the configuration file which can be executed by SUMO.  to optimize the traffic-light cycle in the simulation with
+  traffic light adaptation api. To implement this function, once
+  Customization Module. Based on the generated simu-  ChatSUMO receives the command, it will call tlsCycleAdapta-
+lation, ChatSUMO supports the customization of simulation  tion.py python script generate an additional newTLS.add.xml
+IEEE JOURNAL  5
+
+file to sumo configuration, which modifies the signal cycle  different level of roads varies a lot, to obtain the average traffic
+length and the duration of green phases according to Websters  density, we summarize the top 10 congested roads’ density and
+formula to best accommodate a given traffic demand.  calculated the mean of summation.
+
+  Vehicle Generate: The vehicle generate API is used to  B. Simulation Generation
+generate a vehicle with a given depart and arrival edge-pair.
+After the user entered the origin and destination, ChatSUMO  As the foundation of whole process, the accuracy of
+would first whether these roads are contained in the network,  simulation generation plays an extremely important role in
+or it would tell the user ”Entered Roads are not in the current  ChatSUMO. To evaluate the accuracy and effectiveness of
+network”. To generate route for the vehicle, the module would  simulation generation, we generate two types of networks.
+call getOptimalPath to finds the optimal (shortest or fastest)  For the real-world network, we create a simulation of the
+path from depart edge to arrival edge by using Dijkstra’s  city of Albany, New York with the radius of 1 miles around
+algorithm. Then, a vehicle with the assigned route would be  downtown. In order to make these two simulations relatively of
+add into the cityname.rou.xml file, which would be loaded into  the same size and same density of streets, we generate a spider-
+SUMO simulation later.  like network with 20 arms, 10 circles and the distance between
+  circles is 150 meters. The setup for traffic condition for both
+  Vehicle Type Edit: In the initial traffic simulation settings,  simulations is “medium”, which is 2000 vehicles per hour. To
+both gas vehicles and electric vehicles are generated, and the  meet these requirements, the user input is “I want to see a traf-
+proportion of them is 0.5 and 0.5. To change the proportion of  fic simulation in Albany. There should be medium traffic and it
+vehicle types, users can utilize the vehicle type edit module.  should show me streets in a 1 mile radius.”. The generated real-
+To implement the customization, ChatSUMO creates a vehicle  world simulation is shown in Figure 3. To validate the accuracy
+type dictionary which stores the detail information for each  of real-world network, we calculate the number of edges in the
+vehicle type. After the user entered the modified proportion,  network created by ChatSUMO and the network downloaded
+ChatSUMO would utilize RandomTrips.py to generate the new  by OSM. The number of the former is 30570 and the that of the
+route file, including the customized vehicle proportion.  latter is 29325, indicating that the difference is 4.2%, which
+  shows a great performance of generation module. To create
+  Analysis Module. For analysis module, it will process data  such a simulation, it takes about one minute to complete the
+from the output xml file generated by simulation, and interpret  simulation, from entering user input, to generating the final
+them into analysis report, which involves density analysis,  summary. At the same time, we made a comparison with
+travel time analysis, emission analysis. Based on the output  the time needed to build such a simulation manually which
+of simulation, ChatSUMO would identify the top 10 con-  takes about 15 minutes. Considering the proficiency required
+gested roads, average travel time, the emission of pollutants,  for SUMO, beginners in traffic simulation may need to spend
+including CO2, CO, PMx, and the fuel consumption. Every  more time creating a complete traffic simulation, showing the
+time customization ends, the output of simulation would be  important contribution of ChatSUMO in time efficiency.
+stored into a database. Each time the user makes customization
+to the simulation, ChatSUMO would run another round of  To evaluate how well the system handles different scales of
+simulation. When the simulation finished, ChatSUMO asks  simulations, we conduct another experiment on recording the
+the user if they want to make a comparison with any previous  processing time for simulation generation in different scales,
+simulation, giving a more intuitive summary of how effective  from small-scale intersections to city-wide traffic networks. In
+the optimization works.  this experiment, we set the scale of network as three levels (0.5
+  mile, 1 mile, 3 miles) to simulate different traffic condition in
+  IV. EXPERIMENTAL RESULTS  city Albany. The experiment result is shown in Table I. It
+  can be observed that for small-scale intersections, the traffic
+  ChatSUMO with interactive web interface has been devel-  simulation can be generated by ChatSUMO in 10 seconds,
+oped using Streamlit framework in Python. An example for  regardless the traffic condition. Regarding a normal scale,
+simulation generation between user and Llama3.1 is visual-  which is 1 mile, traffic simulation can be created in 30 seconds.
+ized in Figure 5. Furthermore, experiment study has been  However, the processing time of simulation increase signifi-
+conducted leveraging the interface to evaluate the performance  cantly for a city-wide traffic simulation, considering the large
+of ChatSUMO.  scale network and large number of vehicles. In conclusion, the
+  processing time for simulation generation depends on both the
+A. Setup  scale of simulation and the traffic condition, as well as the cpu
+  performance of the conducted machine.
+  In the experiment section, we will conduct tests and ex-
+periments on the proposed ChatSUMO agent to demonstrate  C. Edge Modification
+its effectiveness on simulation generation and modification.
+For testing based on LLM, we utilized Meta’ s Llama3.1  Blocking some the of main streets has a significant impact
+for parsing text input by users. In the experimental part, we  in urban traffic, which would change the constriction of traffic
+will evaluate its performance in two different construction  flow. To assess the performance of edge editing, we implement
+of network, the abstract network and real-world network.  the edit prompt in real-world network. In this experiment,
+As for the metrics, we focus on the average traffic density,  we remove three levels of edges in simulation of Albany,
+average travel time (TT), CO2 emission and fuel consumption
+(Fuel Cons) as evaluation. As the distribution of vehicles in
+IEEE JOURNAL  6
+
+  Fig. 3: Edge Customization Experiment
+
+TABLE I: Simulation Generation Experiment  main streets. Unsurprisingly, the removal of roads also leads
+  to a longer travel time in heavy traffic condition. Compared
+Traffic condition  Range (mile)  Processing Time (s)  to average density and travel time, CO2 emission changed
+  Medium  0.1  8.64  significantly when vehicles increase from 2000 to 3000, with
+  1  19.68  an increase about 53.1%. In correlation with CO2 emissions,
+  Heavy  3  99.37  more vehicles lead to obviously higher fuel consumption. In
+  0.1  9.49  summary, removing lanes of different density levels affects
+  1  23.38  traffic, but the lower the original density of the removed lanes,
+  3  174.3  the smaller the impact on traffic.
+
+which are Washington Avenue, Lark Street and Orange Street,  D. Traffic Light Optimization
+to evaluate the impact of the edge removing function. At
+the same time, we utilize the customization in two different  To optimize urban traffic signals, we have integrated two
+traffic conditions, with a volume of 2000 and 3000 vehicles  signal optimization modules in ChatSUMO: one for setting
+per hour, to evaluate the modification impact differently. The  signal offsets and another for adjusting the duration of the
+visualization of modification is shown in Figure 3, which  green light phase, which are designed for both multiple and
+shows that our text commands successfully modified three type  single traffic light optimization. Traffic light offsets is a
+of streets in the simulated network.  powerful tools when dealing with multiple traffic light coor-
+  dination in urban traffic, creating green wave for the crossing
+  The results of this experiment are shown in Table II. For the  traffic flow and increasing the efficiency of transportation.
+medium traffic, the removal of streets increases the average  To evaluate the impact of traffic light offsets on the two
+density of main streets, e.g. removing Washington Avenue  different network, in this experiment, we equip the simulations
+lead to a increase of 3.32% on density. At the same time,  separately with traffic light offset with the command: “I want
+modification of streets changes the average travel time slightly.  to set traffic light offsets for the simulation”. To optimize
+Removal of streets also boosts the CO2 emission and fuel con-  individual traffic signals, the traffic light adaptation module
+sumption. However, as the level of removed streets descends,  in ChatSUMO can be utilized as shown in Figure 4. The
+the impact on different metrics gets smaller. For Heavy traffic,  traffic signal program shown in the figure is implemented at
+interestingly, the modification of streets, decreases the average  the intersection of Madison Avenue and South Pearl Street. As
+density of main streets. The possible cause of this result is  we can see from the figure, after user input the prompt, the
+that in heavy traffic conditions, the density of main streets is  Llama3.1 process the text information and generate command
+already at a high level, and deleting an edge may lead traffic  creating the newTLS.add.xml file to modify the signal phases
+flow to another direction, decreasing the transit pressure for  in SUMO simulation.
+
+  To verify the effectiveness of traffic light offsets and adap-
+  tation, we compare traffic flow density, travel times, CO2
+IEEE JOURNAL  7
+
+  TABLE II: Edge Edit
+
+  Traffic condition  Blocked Road  Density(veh/km)  TT(s)  CO2 Emission(t)  Fuel Cons(t)
+  Medium  Initial Network  195.90  287.62  1.60  0.51
+  Washington Avenue  202.48  291.44  1.63  0.52
+  Heavy  204.76  289.29  1.61  0.51
+  Lark Street  203.67  286.77  1.60  0.51
+  Orange Street  220.61  293.06  2.44  0.78
+  Initial Network  212.06  302.69  2.52  0.80
+  Washington Avenue  212.92  297.22  2.47  0.79
+  217.12  294.25  2.45  0.78
+  Lark Street
+  Orange Street
+
+  Fig. 4: Traffic Light Adaptation
+
+emission and fuel consumption (Fuel Cons) of the whole  E. Vehicle Edits
+simulation. The experiment results are shown in Table III.
+We conducted tests and validations by utilizing the traffic  To compare the effectiveness of vehicle type customization,
+light offset first and adapting traffic signals based on different  we prompt the proportion of electric vehicles from 0.3 to 0.5,
+traffic condition (medium and heavy traffic condition). In  aiming to observe the difference of pollutant emission and fuel
+medium traffic condition, it is evident that traffic light offsets  consumption. Using the text input “I want to set the proportion
+significantly decrease the average density of top 10 roads by  of electric vehicles as 0.5.”, we customize the vehicle type
+11.64%, and they also reduce the average travel time by around  proportion. The output of both simulations are shown in
+10 seconds. After utilizing traffic signal adaptation, however,  Figure 5. In these figures, we show the interactions with the
+the average density is even higher than the initial condition. On  ChatSUMO interface, and the output generated by Llama3.1
+the contrast, the average travel time is reduced by surprisingly  is also shown in three figures, which is very intuitive for users
+40 seconds, which is 15.68% shorter than the initial one.  to see the summary of simulations. After implementing the
+The probable explanation for the result is that the signal  vehicle type customization, the analysis module compares two
+adaptation is designed to optimize a single intersection without  simulations, and also generates a brief summary about general
+considering the coordination of intersections. At the same  traffic, traffic density, pollutant emission and fuel consumption.
+time, CO2 emission is decreased by 0.2t and fuel consumption  It is obvious that the emission of CO2 and fuel consumption
+is decreased by 0.06t.  has fallen by a very large amount with the increase of electric
+  vehicles. However, the traffic density does not vary a lot due
+  to the vehicle dynamic parameters are quite similar for both
+  vehicle types.
+IEEE JOURNAL  8
+
+  TABLE III: Traffic Light optimization performance
+
+  Traffic condition  Modification  Density(veh/km)  TT(s)  CO2Emission(t)  Fuel Cons(t)
+  Medium  Initial  195.90  287.62  1.60  0.51
+  Heavy  173.08  275.04  1.53  0.49
+  Traffic light offset  199.13  242.53  1.39  0.44
+  Traffic light adaptation  220.61  293.06  2.44  0.78
+  205.37  315.23  2.60  0.83
+  Initial  225.75  246.20  2.12  0.68
+  Traffic light offset
+  Traffic light adaptation
+
+  Fig. 5: Vehicle Type Proportion Edit with the ChatSUMO Interface.
+
+  To evaluate the effectiveness of vehicle type editing and  results of these experiments shows that ChatSUMO plays an
+CO2 and electricity trends with change of vehicle proportion  active role not only in simulation generation but also in human
+by ChatSUMO and traffic light adaptation, we conducted an  and machine interaction. When conducting these experiences,
+experiment with five different proportion of gasoline vehicle  thanks to ChatSUMO’s excellent human-computer interaction
+(0, 0.25, 0.5, 0.75, 1). All five simulation runs were automat-  experience, even though we made dozens of modifications to
+ically generated by ChatSUMO. The result of the experiment  the simulation, the experiment itself did not take too long.
+is shown in Figure 6. It can be seen from the figure that CO2  Additionally, due to the involvement of the LLM, the results
+emission increases and electricity descents with the rises of  of each simulation were very intuitive, saving us a lot of
+gasoline vehicles’ proportion. However, after utilizing the traf-  unnecessary effort in our experiments.
+fic light adaptation, although the emission of CO2 decreases
+compared to the previous one, the electricity consumption is  The ease of use and excellent interactive experience of
+not affected according to the curve in the figure. We assume  ChatSUMO provide it with great potential for application. For
+that the causing is the electricity consumption model is not  instance, ChatSUMO can be easily deployed as an online ap-
+sensitive to speed as travel distance.  plication, similar to ChatGPT, giving an approach for internet
+  users to generate their own traffic simulation without mastering
+F. Discussion and Potential Application  the conventional tools by SUMO. Users, especially beginning
+  users can make preliminary testing on ChatSUMO by easily
+  Through the experiments above, we have tested the ability  setting the simulation scenario by text massage, and then
+of ChatSUMO in multiple fundamental functions, and the  customize the scenario through some short words. Integration
+IEEE JOURNAL  9
+
+Fig. 6: Emission trend with different vehicle proportion and traffic light adaptation supported by ChatSUMO
+
+with real-world traffic, users can build the simulation with real-  REFERENCES
+time traffic data through database API, and also simulate traffic
+incident like climate change or real-world road construction.  [1] Z. Cui, K. Henrickson, R. Ke, and Y. Wang, “Traffic graph convolutional
+With customized simulation and predefined metrics, users can  recurrent neural network: A deep learning framework for network-
+do brainstorming for planning and estimating climate impacts  scale traffic learning and forecasting,” IEEE Transactions on Intelligent
+as well.  Transportation Systems, vol. 21, no. 11, pp. 4883–4894, 2019.
+
+  V. CONCLUSION AND FUTURE WORK  [2] R. Ke, Y. Zhuang, Z. Pu, and Y. Wang, “A smart, efficient, and
+  reliable parking surveillance system with edge artificial intelligence on
+  In this paper, we have presented a comprehensive approach  iot devices,” IEEE Transactions on Intelligent Transportation Systems,
+to generating SUMO simulations based on LLM. Our system,  vol. 22, no. 8, pp. 4962–4974, 2020.
+designed with the aim of democratizing access to traffic
+simulation tools, includes four key modules: user input, simu-  [3] Y. Wang, Z. Cui, and R. Ke, Machine learning for transportation
+lation generation, simulation modification, and output analysis.  research and applications. Elsevier, 2023.
+These modules work in concert to simplify the process of
+creating and refining traffic simulations, making it accessible  [4] S. Dorokhin, A. Artemov, D. Likhachev, A. Novikov, and E. Starkov,
+to users with little to no prior experience in traffic modeling.  “Traffic simulation: an analytical review,” IOP Conference Series: Ma-
+The user input module ensures that users can easily specify  terials Science and Engineering, vol. 918, no. 1, p. 012058, sep 2020.
+their requirements and parameters without needing to under-
+stand the complexities of traffic simulation syntax. Through  [5] S. Kim and W. Suh, “Modeling traffic congestion using simulation
+this integrated approach, we have demonstrated that complex  software,” in 2014 International Conference on Information Science &
+traffic simulations can be generated, modified, and analyzed  Applications (ICISA), 2014, pp. 1–3.
+with minimal user intervention and expertise. The Llama3.1-
+based system not only reduces the barrier to entry for traffic  [6] D. Krajzewicz, G. Hertkorn, C. Ro¨ssel, and P. Wagner, “Sumo (simula-
+simulation but also enhances the overall user experience by  tion of urban mobility)-an open-source traffic simulation,” in Proceed-
+providing a seamless and intuitive interface. Future work will  ings of the 4th middle East Symposium on Simulation and Modelling
+focus on further enhancing the system’s capabilities, including  (MESM20002), 2002, pp. 183–187.
+the incorporation of more advanced simulation features and
+improved user support tools, to continue expanding the acces-  [7] T. Azfar, J. Weidner, A. Raheem, R. Ke, and R. L. Cheu, “Efficient
+sibility and utility of traffic simulation technologies. To the  procedure of building university campus models for digital twin sim-
+best of our knowledge, we are the first to implement a large-  ulation,” IEEE Journal of Radio Frequency Identification, vol. 6, pp.
+language model with SUMO, integrating human understanding  769–773, 2022.
+into simulation generation and modification. For the future
+work, we aim to generate more compre  [8] P. M. Ejercito, K. G. E. Nebrija, R. P. Feria, and L. L. Lara-Figueroa,
+  “Traffic simulation software review,” in 2017 8th International Confer-
+  ence on Information, Intelligence, Systems & Applications (IISA). IEEE,
+  2017, pp. 1–4.
+
+  [9] J. Nguyen, S. T. Powers, N. Urquhart, T. Farrenkopf, and M. Guckert,
+  “An overview of agent-based traffic simulators,” Transportation research
+  interdisciplinary perspectives, vol. 12, p. 100486, 2021.
+
+  [10] Y. Chang, X. Wang, J. Wang, Y. Wu, L. Yang, K. Zhu, H. Chen, X. Yi,
+  C. Wang, Y. Wang et al., “A survey on evaluation of large language
+  models,” ACM Transactions on Intelligent Systems and Technology,
+  vol. 15, no. 3, pp. 1–45, 2024.
+
+  [11] P. A. Lopez, M. Behrisch, L. Bieker-Walz, J. Erdmann, Y.-P. Flo¨ttero¨d,
+  R. Hilbrich, L. Lu¨cken, J. Rummel, P. Wagner, and E. Wiessner,
+  “Microscopic traffic simulation using sumo,” in 2018 21st International
+  Conference on Intelligent Transportation Systems (ITSC), 2018, pp.
+  2575–2582.
+
+  [12] S. Wu, H. Fei, L. Qu, W. Ji, and T.-S. Chua, “Next-gpt: Any-to-any
+  multimodal llm,” 2024. [Online]. Available: https://arxiv.org/abs/2309.
+  05519
+IEEE JOURNAL  10
+
+[13] H. Touvron, T. Lavril, G. Izacard, X. Martinet, M.-A. Lachaux,
+  T. Lacroix, B. Rozie`re, N. Goyal, E. Hambro, F. Azhar et al.,
+  “Llama: Open and efficient foundation language models,” arXiv preprint
+  arXiv:2302.13971, 2023.
+
+[14] L. team, “The llama 3 herd of models.” Meta, 2024. [Online]. Available:
+  https://ai.meta.com/research/publications/the-llama-3-herd-of-models/
+
+[15] L. Ouyang, J. Wu, X. Jiang, D. Almeida, C. Wainwright, P. Mishkin,
+  C. Zhang, S. Agarwal, K. Slama, A. Ray et al., “Training language
+  models to follow instructions with human feedback,” Advances in neural
+  information processing systems, vol. 35, pp. 27 730–27 744, 2022.
+
+[16] E. Kasneci, K. Sessler, S. Ku¨chemann, M. Bannert, D. Dementieva,
+  F. Fischer, U. Gasser, G. Groh, S. Gu¨nnemann, E. Hu¨llermeier, S. Kr-
+  usche, G. Kutyniok, T. Michaeli, C. Nerdel, J. Pfeffer, O. Poquet,
+  M. Sailer, A. Schmidt, T. Seidel, M. Stadler, J. Weller, J. Kuhn, and
+  G. Kasneci, “Chatgpt for good? on opportunities and challenges of large
+  language models for education,” Learning and Individual Differences,
+  vol. 103, p. 102274, 2023.
+
+[17] O. Zheng, M. Abdel-Aty, D. Wang, C. Wang, and S. Ding, “Trafficsafe-
+  tygpt: Tuning a pre-trained large language model to a domain-specific
+  expert in transportation safety,” arXiv preprint arXiv:2307.15311, 2023.
+
+[18] J. Zhang, C. Xu, and B. Li, “Chatscene: Knowledge-enabled safety-
+  critical scenario generation for autonomous vehicles,” in Proceedings of
+  the IEEE/CVF Conference on Computer Vision and Pattern Recognition,
+  2024, pp. 15 459–15 469.
+
+[19] L. Wang, Y. Ren, H. Jiang, P. Cai, D. Fu, T. Wang, Z. Cui, H. Yu,
+  X. Wang, H. Zhou, H. Huang, and Y. Wang, “Accidentgpt: A v2x
+  environmental perception multi-modal large model for accident analysis
+  and prevention,” in 2024 IEEE Intelligent Vehicles Symposium (IV),
+  2024, pp. 472–477.
+
+[20] B. Wang, M. M. Karim, C. Liu, Y. Wang et al., “Traffic performance gpt
+  (tp-gpt): Real-time data informed intelligent chatbot for transportation
+  surveillance and management,” arXiv preprint arXiv:2405.03076, 2024.
+
+[21] X. Zhou, M. Liu, E. Yurtsever, B. L. Zagar, W. Zimmer, H. Cao, and
+  A. C. Knoll, “Vision language models in autonomous driving: A survey
+  and outlook,” IEEE Transactions on Intelligent Vehicles, pp. 1–20, 2024.
+
+[22] B. Jin, X. Liu, Y. Zheng, P. Li, H. Zhao, T. Zhang, Y. Zheng, G. Zhou,
+  and J. Liu, “Adapt: Action-aware driving caption transformer,” in 2023
+  IEEE International Conference on Robotics and Automation (ICRA),
+  2023, pp. 7554–7561.
+
+[23] S. Wang, Y. Zhu, Z. Li, Y. Wang, L. Li, and Z. He, “Chatgpt as your
+  vehicle co-pilot: An initial attempt,” IEEE Transactions on Intelligent
+  Vehicles, vol. 8, no. 12, pp. 4706–4721, 2023.
+
+[24] L. Wen, D. Fu, X. Li, X. Cai, T. Ma, P. Cai, M. Dou, B. Shi, L. He, and
+  Y. Qiao, “Dilu: A knowledge-driven approach to autonomous driving
+  with large language models,” arXiv preprint arXiv:2309.16292, 2023.
+
+[25] H. Sha, Y. Mu, Y. Jiang, L. Chen, C. Xu, P. Luo, S. E. Li, M. Tomizuka,
+  W. Zhan, and M. Ding, “Languagempc: Large language models as deci-
+  sion makers for autonomous driving,” arXiv preprint arXiv:2310.03026,
+  2023.
+
+[26] P. Wang, M. Zhu, H. Lu, H. Zhong, X. Chen, S. Shen, X. Wang,
+  and Y. Wang, “Bevgpt: Generative pre-trained large model for au-
+  tonomous driving prediction, decision-making, and planning,” arXiv
+  preprint arXiv:2310.10357, 2023.
+
+[27] A. O. Diallo, G. Lozenguez, A. Doniec, and R. Mandiau, “Comparative
+  evaluation of road traffic simulators based on modeler’s specifications:
+  An application to intermodal mobility behaviors,” in 13th International
+  Conference on Agents and Artificial Intelligence. SCITEPRESS-
+  Science and Technology Publications, 2021, pp. 265–272.
+
+[28] L. Da, M. Gao, H. Mei, and H. Wei, “Prompt to transfer: Sim-to-real
+  transfer for traffic signal control with prompt learning,” in Proceedings
+  of the AAAI Conference on Artificial Intelligence, vol. 38, no. 1, 2024,
+  pp. 82–90.
+
+[29] Z. Zhong, D. Rempe, Y. Chen, B. Ivanovic, Y. Cao, D. Xu, M. Pavone,
+  and B. Ray, “Language-guided traffic simulation via scene-level
+  diffusion,” in Proceedings of The 7th Conference on Robot Learning,
+  ser. Proceedings of Machine Learning Research, J. Tan, M. Toussaint,
+  and K. Darvish, Eds., vol. 229. PMLR, 06–09 Nov 2023, pp. 144–177.
+  [Online]. Available: https://proceedings.mlr.press/v229/zhong23a.html
+
+[30] X. Chen, M. Peng, P. Tiu, Y. Wu, J. Chen, M. Zhu, and X. Zheng,
+  “Genfollower: Enhancing car-following prediction with large language
+  models,” arXiv preprint arXiv:2407.05611, 2024.
+

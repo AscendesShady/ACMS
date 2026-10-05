@@ -1,0 +1,1594 @@
+424  CHAPTER 8 ■ Inferences Based on a Single Sample
+
+  Look Back Are you satisfied with the reliability associated with this inference? The
+  probability is only a = .01 that the test would support the research hypothesis if in fact
+  it were false.
+
+  ■ Now Work Exercise 8.57a–b
+
+ Example 8.9  Problem Find the observed significance level for the test described in Example 8.8.
+  Interpret the result.
+The p-Value for a
+Small-Sample Test  Solution The test of Example 8.8 was a lower-tailed test: H0: m = 20 versus Ha: m 6 20.
+of M  Since the value of t computed from the sample data was t = -2.60, the observed
+  significance level (or p-value) for the test is equal to the probability that t would assume
+  a value less than or equal to -2.60 if in fact H0 were true. This is equal to the area in the
+  lower tail of the t-distribution (highlighted in Figure 8.18).
+
+  t-distribution with 9 df
+
+Figure 8.18  p-value
+
+The observed significance level  t
+for the test of Example 8.8  0
+  –2.60
+
+  One way to find this area (i.e., the p-value for the test) is to consult the t-table
+  (Table III in Appendix B). Unlike the table of areas under the normal curve, Table
+  III gives only the t values corresponding to the areas .100, .050, .025, .010, .005, .001,
+  and .0005. Therefore, we can only approximate the p-value for the test. Since the ob-
+  served t value was based on nine degrees of freedom, we use the df = 9 row in Table
+  III and move across the row until we reach the t values that are closest to the observed
+  t = -2.60. [Note: We ignore the minus sign.] The t values corresponding to p-values
+  of .010 and .025 are 2.821 and 2.262, respectively. Since the observed t value falls be-
+  tween t.010 and t.025, the p-value for the test lies between .010 and .025. In other words,
+  .010 6 p@value 6 .025. Thus, we would reject the null hypothesis H0: m = 20 parts per
+  million for any value of a larger than .025 (the upper bound of the p-value).
+
+  A second, more accurate, way to obtain the p-value is to use a statistical software
+  package to conduct the test of hypothesis. Both the test statistic 1 -2.602 and the p-value
+  (.014) are highlighted on the MINITAB printout of Figure 8.17.
+
+  You can see that the actual p-value of the test falls within the bounds obtained
+  from Table III. Thus, the two methods agree and we will reject H0: m = 20 in favor of
+  Ha: m 6 20 for any a level larger than .025.
+
+  ■ Now Work Exercise 8.57c
+
+  Small-sample inferences typically require more assumptions and provide less infor-
+  mation about the population parameter than do large-sample inferences. Nevertheless,
+  the t-test is a method of testing a hypothesis about a population mean of a normal distri-
+  bution when only a small number of observations is available.
+
+  What Can Be Done If the Population Relative Frequency Distribution Departs
+  Greatly from Normal?
+
+  Answer: Use one of the nonparametric statistical methods of Chapter 14.
+SECTION 8.5 ■ Test of Hypothesis about a Population Mean: Student’s t-Statistic 425
+
+Exercises 8.51–8.72  Applying the Concepts—Basic
+
+Understanding the Principles  8.59 Lobster trap placement. Refer to the Bulletin of Marine
+  Science (Apr. 2010) observational study of lobster trap
+8.51 When do we use the t-test instead of the z-test in small
+  samples?  TRAPS placement by teams fishing for the red spiny lobster in
+  Baja California Sur, Mexico, Exercise 7.41 (p. 363). Trap
+8.52 What are the assumptions behind a t-test in testing a hy-  spacing measurements (in meters) for a sample of seven
+  pothesis about a population mean?  teams of red spiny lobster fishermen are reproduced in
+  the accompanying table. Let m represent the average
+Learning the Mechanics  of the trap spacing measurements for the population of
+  red spiny lobster fishermen fishing in Baja California
+8.53 For each of the following rejection regions, sketch the sam-  Sur, Mexico. In Exercise 7.41 you computed the mean
+  pling distribution of t and indicate the location of the rejec-  and standard deviation of the sample measurements to
+  tion region on your sketch:  be x = 89.9 meters and s = 11.6 meters, respectively.
+  a. t 7 1.64, where df = 6  Suppose you want to determine if the true value of m
+  b. t 6 - 1.872, where df = 12  differs from 95 meters.
+  c. t 6 - 2.161 or t 7 2.161, where df = 25
+  93  99  105  94  82  70  86
+8.54 For each of the rejection regions defined in Exercise 8.53,
+  what is the probability that a Type I error will be  Based on Shester, G. G. “Explaining catch variation among Baja California lobster
+  made?  fishers through spatial analysis of trap-placement decisions.” Bulletin of Marine
+  Science, Vol. 86, No. 2,April 2010 (Table 1), pp. 479–498.
+8.55 A random sample of n observations is selected from a
+  normal population to test the null hypothesis tha m = 15.  a. Specify the null and alternative hypotheses for this test.
+  Specify the rejection region for each of the following com-  b. Since x = 89.9 is less than 95, a fisherman wants to
+  binations of Ha, a, and n:
+  a. Ha: m ≠ 15; a = .05; n = 16  reject the null hypothesis. What are the problems with
+  b. Ha: m 7 15; a = .01; n = 26  using such a decision rule?
+  c. Ha: m 7 15; a = .10; n = 12  c. Compute the value of the test statistic.
+  d. Ha: m 6 15; a = .01; n = 15  d. Find the approximate p-value of the test.
+  e. Ha: m ≠ 15; a = .10; n = 22  e. Select a value of a, the probability of a Type I error.
+  f. Ha: m 6 15; a = .05; n = 6  Interpret this value in the words of the problem.
+  f. Give the appropriate conclusion, based on the results of
+8.56 The following sample of six measurements was ran-  parts d and e.
+  domly selected from a normally distributed population:  g. What conditions must be satisfied for the test results to
+  2, 5, - 2, 7, 2, 4.  be valid?
+  a. Test the null hypothesis that the mean of the popula-  h. In Exercise 7.41 you found a 95% confidence interval
+  tion is 2 against the alternative hypothesis, m 6 2. Use  for m. Does the interval support your conclusion in
+  a = .05.  part f?
+  b. Test the null hypothesis that the mean of the popula-
+  tion is 2 against the alternative hypothesis, m ≠ 2. Use  8.60 Music performance anxiety. Refer to the British Journal
+  a = .05.  of Music Education (Mar. 2014) study of performance
+  c. Find the observed significance level for each test.
+  PAI anxiety by music students, Exercise 7.37 (p. 362). Recall
+8.57 A sample of five measurements, randomly selected from a  that the Performance Anxiety Inventory (PAI) was used
+  normally distributed population, resulted in the following  to measure music performance anxiety on a scale from 20
+  summary statistics: x = 4.8, s = 1.3.  to 80 points. The table below gives PAI values for partic-
+  a. Test the null hypothesis that the mean of the popula-  ipants in eight different studies. A MINITAB printout of
+  tion is 6 against the alternative hypothesis, m 6 6. Use  the data analysis is shown.
+  a = .05.
+  b. Test the null hypothesis that the mean of the popula-  54  42  51  39  41  43  55  40
+  tion is 6 against the alternative hypothesis, m ≠ 6. Use
+  a = .05.  Source: Patston, T. “Teaching stage fright?—Implications for music educators.”
+  c. Find the observed significance level for each test.  British Journal of Music Education, Vol. 31, No. 1, Mar. 2014 (adapted from
+  Figure 1).
+8.58 Suppose you conduct a t-test for the null hypothe-
+  sis H0: m = 1,500 versus the alternative hypothesis
+  Ha: m 7 1,500, based on a sample of 17 observations. The
+  test results are t = 1.89, p@value = .038.
+  a. What assumptions are necessary for the validity of this
+  procedure?
+  b. Interpret the results of the test.
+  c. Suppose the alternative hypothesis had been the two-
+  tailed Ha: m ≠ 1,500. If the t-statistic were unchanged,
+  what would the p-value be for this test? Interpret the
+  p-value for the two-tailed test.
+426 CHAPTER 8 ■ Inferences Based on a Single Sample
+
+  a. Set up the null and alternative hypotheses for deter-  8.63  Cheek teeth of extinct primates. Refer to the American
+  mining whether the mean PAI value, m, for all similar  Journal of Physical Anthropology (Vol. 142, 2010) study
+  studies of music performance anxiety exceeds 40.  MOLARS  of the characteristics of cheek teeth (e.g., molars) in an
+  extinct primate species, Exercise 2.38 (p. 78). Recall that
+  b. Find the rejection region for the test, part a, using a = .05.  the researchers recorded the dentary depth of molars
+  c. Compute the test statistic.  (in millimeters) for a sample of 18 cheek teeth extracted
+  d. State the appropriate conclusion for the test.  from skulls. These depth measurements are listed in the
+  e. What conditions are required for the test results to be  accompanying table. Anthropologists know that the mean
+  dentary depth of molars in an extinct primate species—
+  valid?  called Species A—is 15 millimeters. Is there evidence to
+  f. Locate the p-value for the test on the MINITAB print-  indicate that the sample of 18 cheek teeth come from some
+  other extinct primate species (i.e., some species other than
+  out and use it to make a conclusion. (Your conclusion  Species A)? Use the SPSS printout at the bottom of the
+  should agree with your answer in part d.)  page to answer the question.
+  g. How would your conclusion change if you used a = .01?
+  18.12  16.55
+8.61 Dental anxiety study. Refer to the BMC Oral Health  19.48  15.70
+  (Vol. 9, 2009) study of adults who completed the Dental  19.36  17.83
+  Anxiety Scale, presented in Exercise 5.37 (p. 279). Recall  15.94  13.25
+  that scores range from 0 (no anxiety) to 25 (extreme anx-  15.83  16.12
+  iety). Summary statistics for the scores of 15 adults who  19.70  18.13
+  completed the questionnaire are x = 10.7 and s = 3.6.  15.76  14.02
+  Conduct a test of hypothesis to determine whether the  17.00  14.04
+  mean Dental Anxiety Scale score for the population of col-  13.96  16.20
+  lege students differs from m = 11. Use a = .05.
+  Based on Boyer, D. M., Evans, A. R., and Jernvall, J.
+8.62 Crab spiders hiding on flowers. Refer to the Behavioral  “Evidence of dietary differentiation among Late
+  Ecology (Jan. 2005) experiment on crab spiders’ use of cam-  Paleocene–Early Eocene Plesiadapids (Mammalia,
+  Primates).” American Journal of Physical
+SPIDER ouflage to hide from predators (e.g., birds) on flowers, pre-  Anthropology, Vol. 142, © 2010.
+  sented in Exercise 2.42 (p. 79). Researchers at the French
+  Museum of Natural History collected a sample of 10 adult  8.64 Radon exposure in Egyptian tombs. Refer to the
+  female crab spiders, each sitting on the yellow central part of
+  a daisy, and measured the chromatic contrast between each  Radiation Protection Dosimetry (Dec. 2010) study
+  spider and the flower. The data (for which higher values indi-
+  cate a greater contrast, and, presumably, an easier detection  TOMBS of radon exposure in Egyptian tombs, Exercise 7.39
+  by predators) are shown in the accompanying table. The re-
+  searchers discovered that a contrast of 70 or greater allows  (p. 362). The radon levels—measured in becquerels per
+  birds to see the spider. Of interest is whether the true mean  cubic meter (Bq/m3)—in the inner chambers of a sam-
+  chromatic contrast of crab spiders on daisies is less than 70.
+  ple of 12 tombs are listed in the table. For the safety of
+  57 75 116 37 96 61 56 2 43 32
+  the guards and visitors, the Egypt Tourism Authority
+  Based on Thery, M., et al. “Specific color sensitivities of prey and predator
+  explain camouflage in different visual systems.” Behavioral Ecology, Vol. 16,  (ETA) will temporarily close the tombs if the true mean
+  No. 1, Jan. 2005 (Table 1).  level of radon exposure in the tombs rises to 6,000 Bq/m3.
+
+  a. Define the parameter of interest, m.  Consequently, the ETA wants to conduct a test to deter-
+  b. Set up the null and alternative hypotheses of interest.
+  c. Find x and s for the sample data, and then use these val-  mine if the true mean level of radon exposure in the tombs
+  is less than 6,000 Bq/m3, using a Type I error probability
+  ues to compute the test statistic.
+  d. Give the rejection region for a = .10.  of .10. An SAS analysis of the data is shown on p. 427.
+  e. State the appropriate conclusion in the words of the
+  Specify all the elements of the test: H0, Ha, test statistic,
+  problem.  p-value, a, and your conclusion.
+
+  50  910  180  580  7800 4000
+
+  390 12100 3400 1300 11900 1100
+
+SPSS Output for Exercise 8.63
+  SECTION 8.5 ■ Test of Hypothesis about a Population Mean: Student’s t-Statistic 427
+
+SAS Output for Exercise 8.64  important. Researchers at Central Michigan University
+  developed an algorithm for computing measures of cat-
+  RECALL  egory clustering in Advances in Cognitive Psychology
+  (Oct. 2012). One measure, called ratio of repetition, was
+Applying the Concepts—Intermediate  recorded for a sample of 8 participants in a memory study.
+  These ratios are listed in the table. Test the theory that the
+8.65 Yield strength of steel connecting bars. To protect against  average ratio of repetition for all participants in a similar
+  earthquake damage, steel beams are typically fitted and  memory study differs from .5. Select an appropriate Type
+  connected with plastic hinges. However, these plastic  I error rate for your test.
+  hinges are prone to deformations and are difficult to in-
+  spect and repair. An alternative method of connecting  .25 .43 .57 .38 .38 .60 .47 .30
+  steel beams—one that uses high-strength steel bars with
+  clamps—was investigated in Engineering Structures (July  Source: Senkova, O., & Otani, H. “Category clustering calculator for free
+  2013). Mathematical models for predicting the performance  recall.” Advances in Cognitive Psychology, Vol. 8, No. 4, Oct. 2012 (Table 3).
+  of these steel connecting bars assume the bars have a mean
+  yield strength of 300 megapascals (MPa). To verify this  8.68 Increasing hardness of polyester composites. Polyester
+  assumption, the researchers conducted material property  resins reinforced with fiberglass are used to fabricate wall
+  tests on the steel connecting bars. In a sample of three tests,  panels of restaurants. It is theorized that adding cement
+  the yield strengths were 354, 370, and 359 MPa. Do the data  kiln dust (CKD) to the polyester composite will increase
+  indicate that the true mean yield strength of the steel bars  wall panel hardness. In a study published in Advances in
+  exceeds 300 MPa? Test using a = .01.  Applied Physics (Vol. 2, 2014), hardness (joules per squared
+  centimeters) was determined for three polyester composite
+8.66 Pitch memory of amusiacs. Amusia is a congenital disorder  mixtures that used a 40% CKD weight ratio. The hardness
+  that adversely impacts one’s perception of music. Refer to  values were reported as 83, 84, and 79 j/cm2. Research has
+  the Advances in Cognitive Psychology (Vol. 6, 2010) study  shown that the mean hardness value of polyester composite
+  of the pitch memory of individuals diagnosed with amusia,  mixtures that use a 20% CKD weight ratio is m = 76 j>cm2
+  Exercise 7.45 (p. 363). Recall that each in a sample of 17  . In your opinion, does using a 40% CKD weight ratio in-
+  amusiacs listened to a series of tone pairs and was asked  crease the mean hardness value of polyester composite
+  to determine if the tones were the same or different. In the  mixtures? Support your answer statistically.
+  first trial, the tones were separated by 1 second; in a second
+  trial, the tones were separated by 5 seconds. The difference  8.69 Minimizing tractor skidding distance. Refer to the
+  in accuracy scores for the two trials was determined for  Journal of Forest Engineering (July 1999) study of min-
+  each amusiac (where the difference is the score on the first
+  trial minus the score on the second trial). The mean score  SKID imizing tractor skidding distances along a new road in a
+  difference was .11 with a standard deviation of .19.  European forest, presented in Exercise 7.48 (p. 364). The
+  a. In theory, the longer the delay between tones, the less  skidding distances (in meters) were measured at 20 ran-
+  likely one is to detect a difference between the tones.  domly selected road sites. The data are repeated in the
+  Consequently, the true mean score difference should  accompanying table. Recall that a logger working on the
+  exceed 0. Set up the null and alternative hypotheses for  road claims that the mean skidding distance is at least 425
+  testing the theory.  meters. Is there sufficient evidence to refute this claim?
+  b. Carry out the test, part a, using a = .05. Is there evi-  Use a = .10.
+  dence to support the theory?
+  488 350 457 199 285 409 435 574 439 546
+8.67  Free recall memory strategy. Psychologists who study  385 295 184 261 273 400 311 312 141 425
+  memory often use a measure of “free recall” (e.g., the
+RECALL  number of correctly recalled items in a list of to-be-  Based on Tujek, J., and Pacola, E. “Algorithms for skidding distance modeling on
+  remembered items). The strategy used to memorize the  a raster Digital Terrain Model.” Journal of Forest Engineering, Vol. 10, No. 1,
+  list—for example, category clustering—is often just as  July 1999 (Table 1).
+
+  8.70 Dissolved organic compound in lakes. The level of dis-
+  solved oxygen in the surface water of a lake is vital to
+
+  LAKES maintaining the lake’s ecosystem. Environmentalists
+  from the University of Wisconsin monitored the dissolved
+  oxygen levels over time for a sample of 25 lakes in the
+  state (Aquatic Biology, May 2010). To ensure a represen-
+  tative sample, the environmentalists focused on several
+  lake characteristics, including dissolved organic compound
+  (DOC). The DOC data (measured in grams per cubic me-
+  ters) for the 25 lakes are listed in the table on p. 428. The
+  population of Wisconsin lakes has a mean DOC value of
+  15 grams>m3. Use a hypothesis test (at a = .10) to make
+  an inference about whether the sample is representative of
+  all Wisconsin lakes for the characteristic dissolved organic
+  compound.
+428 CHAPTER 8 ■ Inferences Based on a Single Sample
+
+  Data for Exercise 8.70  DOC  and the average directional bias (degrees per second)
+  Lake  recorded for each walker. The data are shown in the
+  table below. A strong tendency to veer consistently in
+  Allequash  9.6  the same direction will cause walking in circles. A mean
+  directional bias of 0 indicates that walking trajectories
+  Big Muskellunge  4.5  were random. Consequently, the researchers tested
+  whether the true mean bias differed significantly from 0.
+  Brown  13.2  A MINITAB printout of the analysis is shown below.
+  a. Interpret the results of the hypothesis test for the re-
+  Crampton  4.1
+  searchers. Use a = .10.
+  Cranberry Bog  22.6  b. Although most volunteers showed little overall bias, the
+
+  Crystal  2.7  researchers produced maps of the walking paths show-
+  ing that each occasionally made several small circles
+  EastLong  14.7  during the walk. Ultimately, the researchers supported
+  the “walking in circles” theory. Explain why the data in
+  Helmet  3.5  the table are insufficient for testing whether an individ-
+  ual walks in circles.
+  Hiawatha  13.6
+  - 4.50 -1.00 -0.50 - 0.15 0.00 0.01 0.02 0.05 0.15
+  Hummingbird  19.8  0.20 0.50 0.50 1.00 2.00 3.00
+
+  Kickapoo  14.3  Based on Souman, J. L., Frissen, I., Sreenivasa, M. N., and Ernst, M. O.
+  “Walking straight into circles.” Current Biology, Vol. 19, No. 18, Sept. 29,
+  Little Arbor Vitae  56.9  2009 (Figure 2).
+
+  Mary  25.1  Applying the Concepts—Advanced
+
+  Muskellunge  18.4  8.72 Lengths of great white sharks. One of the most feared
+  predators in the ocean is the great white shark. It is known
+  Northgate Bog  2.7
+  SHARK that the white shark grows to a mean length of 21 feet;
+  Paul  4.2  however, one marine biologist believes that great white
+  sharks off the Bermuda coast grow much longer owing to
+  Peter  30.2  unusual feeding habits. To test this claim, some full-grown
+  great white sharks were captured off the Bermuda coast,
+  Plum  10.3  measured, and then set free. However, because the capture
+  of sharks is difficult, costly, and very dangerous, only three
+  Reddington Bog  17.6  specimens were sampled. Their lengths were 24, 20, and 22
+  feet. Do these data support the marine biologist’s claim at
+  Sparkling  2.4  a = .10?
+
+  Tenderfoot  17.3
+
+  Trout Bog  38.8
+
+  Trout Lake  3.0
+
+  Ward  5.8
+
+  West Long  7.6
+
+  Based on Langman, O. C., et al. “Control of dissolved oxygen
+  in northern temperate lakes over scales ranging from minutes
+  to days.” Aquatic Biology, Vol. 9, May 2010 (Table 1).
+
+8.71  Walking straight into circles. When people get lost in un-
+  familiar terrain, do they really walk in circles, as is com-
+CIRCLES  monly believed? To answer this question, researchers
+  conducted a field experiment and reported the results in
+  Current Biology (Sept. 29, 2009). Fifteen volunteers were
+  blindfolded and asked to walk as straight as possible in
+  a certain direction in a large field. Walking trajectories
+  were monitored every second for 50 minutes using GPS
+
+  MINITAB Output for Exercise 8.71
+
+8.6 Large-Sample Test of Hypothesis about a Population Proportion
+
+  Inferences about population proportions (or percentages) are often made in the context
+  of the probability p of “success” for a binomial distribution. We saw how to use large
+  samples from binomial distributions to form confidence intervals for p in Section 7.4. We
+  now consider tests of hypotheses about p.
+
+  Consider, for example, a method currently used by doctors to screen women for
+  breast cancer. The method fails to detect cancer in 20% of the women who actually
+  have the disease. Suppose a new method has been developed that researchers hope will
+  detect cancer more accurately. This new method was used to screen a random sample
+  of 140 women known to have breast cancer. Of these, the new method failed to detect
+  cancer in 12 women. Does this sample provide evidence that the failure rate of the new
+  method differs from the one currently in use?
+  SECTION 8.6 ■ Large-Sample Test of Hypothesis about a Population Proportion 429
+
+  We first view this experiment as a binomial one with 140 screened women as the
+  trials and failure to detect breast cancer as “Success” (in binomial terminology). Let p
+  represent the probability that the new method fails to detect the breast cancer; on the
+  one hand, if the new method is no better than the current one, then the failure rate is
+  p = .2. On the other hand, if the new method is either better or worse than the current
+  method, then the failure rate is either smaller or larger than 20%; that is, p ≠ .2.
+
+  We can now place the problem in the context of a test of hypothesis:
+
+  H0: p = .2 1Cancer detection rate = .2.2
+  Ha: p ≠ .2 1Cancer detection rate differs from .2.2
+
+  Recall that the sample proportion pn is really just the sample mean of the outcomes of
+  the individual binomial trials and, as such, is approximately normally distributed (for
+  large samples) according to the Central Limit Theorem. Thus, for large samples we can
+  use the standard normal z as the test statistic:
+
+  Test statistic:  Sample proportion - Null hypothesized proportion
+  z = Standard deviation of sample proportion
+
+  pn - p0
+  =
+
+  spn
+
+  Note that we used the symbol p0 to represent the null hypothesized value of p.
+  Rejection region: We use the standard normal distribution to find the appropriate
+
+  rejection region for the specified value of a. Using a = .05, the two-tailed rejection
+
+  region is
+
+  z 6 - za>2 = - z.025 = - 1.96 or z 7 za>2 = z.025 = 1.96
+
+  (See Figure 8.19.)
+
+Figure 8.19  = .025  = .025
+  2  2
+Rejection region for breast
+cancer example  Rejection 0  z
+  region  Rejection
+  region
+  –1.96
+  Observed  1.96
+  z = –3.35
+
+  We are now prepared to calculate the value of the test statistic. Before doing so,
+  however, we want to be sure that the sample size is large enough to ensure that the
+  normal approximation for the sampling distribution of pn is reasonable. Recall from
+  Section 7.4 that we require both np and nq to be at least 15. Because the null hypoth-
+  esized value, p0, is assumed to be the true value of p until our test procedure indicates
+  otherwise, we require np0 Ú 15 and nq0 Ú 15 (where q0 = 1 - p0). Since p0 = .2 for
+  our test, we have
+
+  np0 = 11402 1.22 = 28
+
+  and
+
+  nq0 = 11402 1.82 = 112
+
+  Therefore, the normal distribution will provide a reasonable approximation for the sam-
+  pling distribution of pn.
+
+  Returning to the hypothesis test at hand, the proportion of the screenings that
+  failed to detect breast cancer is
+
+  pn = = 12 .086
+  140
+430  CHAPTER 8 ■ Inferences Based on a Single Sample
+
+  Finally, we calculate the number of standard deviations (the z value) between the sam-
+  pled and hypothesized values of the binomial proportion:
+
+  z pn - p = 0 pn - p = 0 = .086 - .2 = = - .114 - 3.35
+  spn  1p0q0>n 11.22 1.82 >140 .034
+
+  The implication is that the observed sample proportion is (approximately) 3.35 stan-
+  dard deviations below the null-hypothesized proportion, .2 (Figure 8.19). Therefore, we
+  reject the null hypothesis, concluding at the .05 level of significance that the true failure
+  rate of the new method for detecting breast cancer differs from .20. Since pn = .086, it
+  appears that the new method is better (i.e., has a smaller failure rate) than the method
+  currently in use. (To estimate the magnitude of the failure rate for the new method, a
+  confidence interval can be constructed.)
+
+  The test of hypothesis about a population proportion p is summarized in the next
+  box. Note that the procedure is entirely analogous to that used for conducting large-
+  sample tests about a population mean.
+
+  Large-Sample Test of Hypothesis about p: Normal (z) Statistic
+
+  1pn - p02  1pn - p02
+  Test statistic:  zc = spn  =
+  31p q >n2
+  00
+
+  One-Tailed Tests  Two-Tailed Test
+
+  Rejection region:  H0: p = p0  H0: p = p0  H0: p = p0
+  p-value:  Ha: p 6 p0  Ha: p 7 p0
+  zc 7 za  Ha: p ≠ p0
+  zc 6 - za
+  P1z 7 zc2  ͉ zc ͉ 7 za>2
+  P1z 6 zc2  2P1z 7 zc2 if zc is positive
+  2P1t 6 zc2 if zc is negative
+
+  Decision: Reject H0 if a 7 p@value or if test statistic (zc) falls in rejection region where
+  P1z 7 za2 = a, P1z 7 za>22 = a>2, and a = P1Type I error2 = P1Reject H0 ͉ H0 true2.
+
+  [Note: The symbol for the numerical value assigned to p under the null hypothesis is p0.]
+
+  Conditions Required for a Valid Large-Sample Hypothesis Test for p
+  1. A random sample is selected from a binomial population.
+  2. The sample size n is large. (This condition will be satisfied if both np0 Ú 15 and
+
+  nq0 Ú 15.)
+
+ Example 8.10  Problem The reputations (and hence sales) of many businesses can be severely damaged
+  by shipments of manufactured items that contain a large percentage of defectives. For
+A Hypothesis Test  example, a manufacturer of alkaline batteries may want to be reasonably certain that
+for p—Proportion  less than 5% of its batteries are defective. Suppose 300 batteries are randomly selected
+of Defective  from a very large shipment; each is tested and 10 defective batteries are found. Does this
+Batteries  outcome provide sufficient evidence for the manufacturer to conclude that the fraction
+  defective in the entire shipment is less than .05? Use a = .01.
+
+  Solution The objective of the sampling is to determine whether there is sufficient
+  evidence to indicate that the fraction defective, p, is less than .05. Consequently, we will
+  test the null hypothesis that p = .05 against the alternative hypothesis that p 6 .05. The
+  elements of the test are
+
+  H0: p = .05 1Fraction of defective batteries equals .05.2
+  Ha: p 6 .05 1Fraction of defective batteries is less than .05.2
+  Test statistic: z pn - p = 0
+
+  spn
+  Rejection region: z 6 - z.01 = - 2.33 (see Figure 8.20)
+  SECTION 8.6 ■ Large-Sample Test of Hypothesis about a Population Proportion 431
+
+Rejection  0  Before conducting the test, we check to determine whether the sample size is
+
+region  large enough to use the normal approximation to the sampling distribution of pn. Since
+
+  np0 = 13002 1.052 = 15 and nq0 = 13002 1.952 = 285 are both at least 15, the normal
+  z approximation will be adequate.
+
+  We now calculate the test statistic:
+
+  –2.33  z=  pn - .05 110>3002 - .05 .03333 - .05
+Computed z = –1.32
+  spn  =  =
+
+Figure 8.20  2p0 q0 > n  2p0 q0 > 300
+
+Rejection region for  Notice that we use p0 to calculate spn because, in contrast to calculating spn for a
+Example 8.10  confidence interval, the test statistic is computed on the assumption that the null
+
+  hypothesis is true—that is, p = p0. Therefore, substituting the values for pn and p0 into
+  the z statistic, we obtain
+
+  z ≈ = = -.01667 -.01667 -1.32
+  11.0521.952 >300 .0126
+
+  As shown in Figure 8.20, the calculated z-value does not fall into the rejection region.
+  Therefore, there is insufficient evidence at the .01 level of significance to indicate that
+  the shipment contains less than 5% defective batteries.
+
+  ■ Now Work Exercise 8.76a–b
+
+ Example 8.11  Problem In Example 8.10, we found that we did not have sufficient evidence at the
+  a = .01 level of significance to indicate that the fraction defective, p, of alkaline
+Finding the p-Value for a  batteries was less than p = .05. How strong was the weight of evidence favoring the
+Test about a Population  alternative hypothesis 1Ha: p 6 .052? Find the observed significance level (p-value)
+Proportion p  for the test.
+
+  p-value = .0934  Solution The computed value of the test statistic z was z = -1.32. Therefore, for this
+  lower-tailed test, the observed significance level is
+  z
+  –1.32 0  p@value = P1z … -1.322
+Figure 8.21
+The observed significance level  This lower-tail area is shown in Figure 8.21. The area between z = 0 and z = 1.32 is
+for Example 8.11  given in Table II in Appendix B as .4066. Therefore, the observed significance level is
+  .5 - .4066 = .0934.
+
+  Note: The p-value can also be obtained with statistical software. The MINITAB printout
+  shown in Figure 8.22 gives the p-value (highlighted).
+
+Figure 8.22
+
+MINITAB lower-tailed test
+of p, Example 8.11
+
+  Look Back Although we did not reject H0: p = .05 at a = .01, the probability of
+  observing a z-value as small as or smaller than -1.32 is only .093 if in fact H0 is true.
+  Therefore, we would reject H0 if we had selected a = .10 prior to sampling (since the
+  observed significance level is less than .10). This point reminds us of the importance of
+  our choice of a prior to collecting the sample data.
+
+  ■ Now Work Exercise 8.76c
+432  CHAPTER 8 ■ Inferences Based on a Single Sample
+
+  Small samples
+
+  Since most surveys and studies employ large samples, the large-sample testing proce-
+  dure based on the normal (z) statistic presented here will be appropriate for making
+  inferences about a population proportion. However, in the case of small samples (where
+  either np0 or nq0 is less than 15), tests for a population proportion based on the z-statistic
+  may not be valid—especially when conducting one-tailed tests. A test of proportions that
+  can be applied to small samples utilizes the binomial, rather than the normal, distribu-
+  tion. These are called exact binomial tests due to the fact that the exact (rather than ap-
+  proximate) p-value for the test is computed based on the binomial distribution.
+
+  For example, consider testing H0: p = .6 against Ha: p 6 .6, where p is the true
+  proportion of all voters in a large city that favor a certain mayoral candidate. Suppose
+  that in a poll of n = 20 voters (randomly selected from all registered voters in the city),
+  x = 10 favor the mayoral candidate. Is this sufficient evidence at a = .05 to reject the
+  null hypothesis?
+
+  First, note that p0 = .6 and np0 = 201.62 = .12 is less than 15; consequently, we
+  require a small-sample test of binomial proportions. Now, we observed x = 10 voters
+  in favor of the mayoral candidate. Then, by definition (see p. 409), the observed signifi-
+  cance level (p-value) of this lower-tailed test will be equal to the probability of observing
+  10 or fewer voters in favor of the candidate, given that the true population proportion in
+  favor of the candidate is p = .6. That is,
+
+  p@value = P1x … 10 ͉ p = .62
+
+  In Example 4.13 (p. 236), we found this binomial probability using MINITAB. The
+  MINITAB printout is reproduced in Figure 8.23. You can see that p@value = .245. Since
+  a = .05 6 p@value, we fail to reject the null hypothesis.
+
+  Figure 8.23
+  MINITAB Output with p-Value
+  for Exact Binomial Test
+
+  All three statistical software packages presented in this text—MINITAB, SAS,
+  and SPSS—have procedures for conducting exact binomial tests in the case of small
+  samples.
+
+Statistics IN Action Revisited Testing a Population Proportion in the KLEENEX® Survey
+
+In the previous “Statistics in Action Revisited” (p. 417), we  use more than 60 tissues (i.e., if p 7 .5). Is
+  there evidence to indicate that the popula-
+investigated Kimberly-Clark Corporation’s assertion that  tion proportion exceeds .5? To answer this
+  question, we set up the following null and
+the company should put more than 60 tissues in an anti-  alternative hypotheses:
+viral box of KLEENEX® tissues. We did this by testing the
+  H0: p = .5 Ha: p 7 .5
+claim that the mean number of tissues used by a person
+  Recall that the survey results for the 250 sampled
+with a cold is m = 60, using data collected from a survey  KLEENEX® users are stored in the TISSUES data file.
+of 250 KLEENEX® users. Another approach to the prob-  In addition to the number of tissues used by each person,
+lem is to consider the proportion of KLEENEX® users who  the file contains a qualitative variable—called USED60—
+  representing whether the person used fewer or more than
+use more than 60 tissues when they have a cold. Now the  60 tissues. (The values of USED60 in the data set are “LESS”
+  and “MORE.”) A MINITAB analysis of this variable yielded
+population parameter of interest is p, the proportion of all  the printout displayed in Figure SIA8.2 on p. 433.
+KLEENEX® users who use more than 60 tissues when they
+
+have a cold.
+
+  Kimberly-Clark Corporation’s belief that the company
+
+should put more than 60 tissues in an anti-viral box will be
+supported if over half of the KLEENEX® users surveyed
+  SECTION 8.6 ■ Large-Sample Test of Hypothesis about a Population Proportion 433
+
+Statistics IN Action  On the MINITAB print-
+  out, x represents the number of
+  (continued)  the 250 people with colds that
+
+  used more than 60 tissues. Note
+
+that x = 154. This value is used to compute the test statis-
+
+tic z = 3.67, highlighted on the printout. The p-value of the
+
+test, also highlighted on the printout, is p@value = .000. Since
+
+this value is less than a = .05, there is sufficient evidence (at
+
+a = .05) to reject H0; we conclude that the proportion of all
+KLEENEX® users who use more than 60 tissues when they
+
+have a cold exceeds .5. This conclusion again supports, the  Figure SIA8.2
+  MINITAB test of p = .5 for KLEENEX survey
+company’s decision to put more than 60 tissues in an anti-viral
+
+box of KLEENEX.
+
+  Data Set: TISSUES
+
+Exercises 8.73–8.93  a. Calculate the value of the z statistic for this test.
+  b. Note that the numerator of the z statistic 1pn - p0 =
+Understanding the Principles
+  .74 - .80 = -.062 is the same as for Exercise 8.76.
+8.73 Which statistical distribution is typically associated  Considering this, why is the absolute value of z for this
+  with making inferences about a population proportion  exercise larger than that calculated in Exercise 8.76?
+  p?  c. Complete the test, using a = .05, and interpret the
+  result.
+8.74 What are the assumptions for a valid large-sample test  d. Find the observed significance level for the test and in-
+  for p?  terpret its value.
+
+Learning the Mechanics  8.78 A random sample of 100 observations is selected from a bi-
+  nomial population with unknown probability of success p.
+8.75 For the binomial sample sizes and null-hypothesized val-  The computed value of pn is equal to .70.
+  ues of p in each part, determine whether the sample size  a. Test H0: p = .61 against Ha: p 7 .61. Use a = .01.
+  is large enough to use the normal approximation method-  b. Test H0: p = .61 against Ha: p 7 .61. Use a = .10.
+  ology presented in this section to conduct a test of the null  c. Test H0: p = .86 against Ha: p ≠ .86. Use a = .05.
+  hypothesis H0: p = p0.  d. Form a 95% confidence interval for p.
+  a. n = 600, p0 = .06  e. Form a 99% confidence interval for p.
+  b. n = 200, p0 = .99
+  c. n = 40, p0 = .3  8.79 Refer to Exercise 7.58 (p. 370), in which 50 consumers
+  d. n = 30, p0 = .2  taste-tested a new snack food.
+  e. n = 20, p0 = .4
+  SNACK a. Test H0: p = .5 against Ha: p 7 .5, where p is the pro-
+8.76 Suppose a random sample of 100 observations from a bino-  portion of customers who do not like the snack food.
+  mial population gives a value of pn = .69 and you wish to  Use a = .10.
+  test the null hypothesis that the population parameter p is
+  equal to .75 against the alternative hypothesis that p is less  b. Report the observed significance level of your test.
+  than .75.
+  a. Noting that pn = .69, what does your intuition tell  Applet Exercise 8.5
+  you? Does the value of pn appear to contradict the null
+  hypothesis?  Use the applet entitled Hypotheses Test for a Proportion to inves-
+  b. Use the large-sample z-test to test H0: p = .75 against  tigate the relationships between the probabilities of Type I and
+  the alternative hypothesis Ha: p 6 .75. Use a = .05.  Type II errors occurring at levels .05 and .01. For this exercise, use
+  How do the test results compare with your intuitive de-  n = 100, true p = 0.5, and alternative not equal.
+  cision from part a?
+  c. Find and interpret the observed significance level of the  a. Set null p = .5. What happens to the proportion of
+  test you conducted in part b.  times the null hypothesis is rejected at the .05 level
+  and at the .01 level as the applet is run more and more
+8.77 Suppose the sample in Exercise 8.76 has produced pn = .74  times? What type of error has occurred when the null
+  and we wish to test H0: p = .8 against the alternative  hypothesis is rejected in this situation? Based on your
+  Ha: p 6 .8.  results, is this type of error more likely to occur at level
+  .05 or at level .01? Explain.
+434 CHAPTER 8 ■ Inferences Based on a Single Sample
+
+  b. Set null p = .6. What happens to the proportion of  b. In a sample of n = 50 alligators, assume that 42 moved
+  times the null hypothesis is not rejected at the .05 level  toward the underwater sound. Use this information to
+  and at the .01 level as the applet is run more and more  compute an estimate of the true proportion of alligators
+  times? What type of error has occurred when the null  that move toward the underwater sound.
+  hypothesis is not rejected in this situation? Based on
+  your results, is this type of error more likely to occur at  c. Compute the test statistic for this study.
+  level .05 or at level .01? Explain.  d. Compute the observed significance level (p-value) of
+
+  c. Use your results from parts a and b to make a general  the test.
+  statement about the probabilities of Type I and Type II  e. Make the appropriate conclusion in the words of the
+  errors at levels .05 and .01.
+  problem.
+  Applet Exercise 8.6
+  8.82 Gummy bears: red or yellow? Chance (Winter 2010) pre-
+Use the applet entitled Hypotheses Test for a Proportion to inves-  sented a lesson in hypothesis testing carried out by medical
+tigate the effect of the true population proportion p on the prob-  students in a biostatistics class. Students were blind-folded
+ability of a Type I error occurring. For this exercise, use n = 100  and then given a red-colored or yellow-colored gummy
+and alternative not equal.  bear to chew. (Half the students were randomly assigned
+  to receive the red gummy bear and half to receive the yel-
+  a. Set true p = .5 and null p = .5. Run the applet several  low bear. The students could not see what color gummy
+  times, and record the proportion of times the null hy-  bear they were given.) After chewing, the students were
+  pothesis is rejected at the .01 level.  asked to guess the color of the candy based on the flavor.
+  Of the 121 students who participated in the study, 97 cor-
+  b. Clear the applet and repeat part a for true p = .1 and  rectly identified the color of the gummy bear.
+  null p = .1. Then repeat one more time for true p = .01  a. If there is no relationship between color and gummy
+  and null p = .01.  bear flavor, what proportion of the population of stu-
+  dents will correctly identify the color?
+  c. Based on your results from parts a and b, what can you  b. Specify the null and alternative hypotheses for testing
+  conclude about the probability of a Type I error occur-  whether color and flavor are related.
+  ring as the true population proportion gets closer to 0?  c. Carry out the test and give the appropriate conclusion
+  at a = .01. Use the p-value of the test to make your
+Applying the Concepts—Basic  decision.
+
+8.80 Paying for music downloads. If you use the Internet, have  8.83 Dehorning of dairy calves. For safety reasons, calf de-
+  you ever paid to access or download music? This was one  horning has become a routine practice at dairy farms.
+  A report by Europe’s Standing Committee on the Food
+MUSIC of the questions of interest in a recent Pew Internet and  Chain and Animal Health (SANKO) stated that 80% of
+  American Life Project Survey (Oct. 2010). In a representa-  European dairy farms carry out calf dehorning. A later
+  tive sample of 755 adults who use the Internet, 506 stated  study, published in the Journal of Dairy Science (Vol. 94,
+  that they have paid to download music. Let p represent the  2011), found that in a sample of 639 Italian dairy farms,
+  true proportion of all Internet-using adults who have paid  515 dehorn calves. Does the Journal of Dairy Science
+  to download music.  study support or refute the figure reported by SANKO?
+  a. Compute a point estimate of p.  Explain.
+  b. Set up the null and alternative hypotheses for testing
+  whether the true proportion of all Internet-using adults  8.84 Teenagers’ use of emoticons in school writing. Refer to the
+  who have paid to download music exceeds .7.  Pew Internet and American Life Project (Apr. 2008) sur-
+  c. Compute the test statistic for part b.  vey of the writing habits of U.S. teenagers, Exercise 7.69
+  d. Find the rejection region for the test if a = .01.  (p. 371). Recall that in a random sample of 700 teenag-
+  e. Find the p-value for the test.  ers, 448 admitted to using at least one informal element
+  f. Make the appropriate conclusion using the rejection region.  in school writing assignments. [Note: Emoticons, such as
+  g. Make the appropriate conclusion using the p-value.  using the symbol “:)” to represent a smile, and abbrevia-
+  tions, such as writing “LOL” for “laughing out loud,” are
+8.81 Underwater sound-locating ability of alligators. Alligators  considered informal elements.] Is there evidence to indi-
+  have shown the ability to determine the direction of an air-  cate that less than 65% of all U.S. teenagers have used at
+  borne sound. But can they locate underwater sounds? This  least one informal element in school writing assignments?
+  was the subject of research published in the Journal of  Test the relevant hypotheses using a = .05.
+  Herpetology (Dec. 2014). Alligators inhabiting the flood
+  control canals in the Florida Everglades were monitored for  8.85 TV subscription streaming. “Streaming” of television pro-
+  movement toward a sound produced from a submerged div-  grams is trending upward. According to The Harris Poll
+  ing bell. Movements within a 180° arc of the direction toward  (Aug. 26, 2013), over one-third of Americans qualify as
+  the sound were scored as movements toward the sound; all  “subscription streamers,” i.e., those who watch streamed
+  movements in other directions were scored as movements  TV programs through a subscription service such as
+  away from the sound. Consequently, the researchers assumed  Netflix, Hulu Plus, or Amazon Prime. The poll included
+  that the proportion of movements toward the sound expected  2,242 adult TV viewers, of which 785 are subscription
+  by chance is 180°>360° = .5. In a sample of n = 50 alliga-  streamers. Based on this result, can you conclude that the
+  tors, 42 moved toward the underwater sound.  true fraction of adult TV viewers who are subscription
+  a. Give the null and alternative hypotheses for testing  streamers differs from one-third? Carry out the test using a
+  whether the true proportion of alligators that move to-  Type I error rate of .10.
+  ward the underwater sound is higher than expected by
+  chance.
+SECTION 8.6 ■ Large-Sample Test of Hypothesis about a Population Proportion 435
+
+Applying the Concepts—Intermediate  8.90  Defensibility of a landscape. Settlers often chose sites to live
+  and build communities in based on the landscape’s defensibil-
+8.86 Underwater acoustic communication. Refer to the IEEE  DINDEX  ity. The defensibility of archaeological sites in the Northwest
+  Journal of Oceanic Engineering (Apr. 2013) study of the char-  Pacific was investigated in the Journal of Anthropological
+  acteristics of subcarriers—telecommunication signals carried  Archaeology (Vol. 35, 2014). A defensibility index was
+  on top of another—for underwater acoustic communications,  calculated for each in a sample of 23 sites that included a
+  Exercise 4.80 (p. 241). Recall that a subcarrier can be classi-  trench embankment. These index values (on a scale of 1 to
+  fied as either a data subcarrier (used for data transmissions),  100) are listed in the accompanying table. The researcher
+  a pilot subcarrier (used for channel estimation and synchroni-  determined that the mean defensibility index of the entire
+  zation), or a null subcarrier (used for direct current and guard  Northwest Pacific landscape is 47. Of interest is whether the
+  banks transmitting no signal). In a sample of 1,024 subcarrier  defensibility index of a sampled site exceeds this mean.
+  signals transmitted off the coast of Martha’s Vineyard, 672
+  were determined to be data subcarriers, 256 pilot subcarriers,  70 70 68 67 67 66 65 63 63 59 57 57
+  and 96 null subcarriers. Suppose a communications engineer  57 55 55 54 52 52 51 46 46 44 37
+  who works near Martha’s Vineyard believes that fewer than
+  70% of all subcarrier signals transmitted in the area are data  Source: Bocinsky, R. K. “Extrinsic site defensibility and landscape-based archaeo-
+  subcarriers. Is there evidence to support this belief? Test  logical inference: An example from the Northwest Coast.” Journal of Anthropo-
+  using a = .05.  logical Archaeology, Vol. 35, 2014 (Table 3).
+
+8.87 Identifying organisms using a computer. National Science  a. Estimate p, the true proportion of all trench embankment
+  Education Standards recommend that all life science stu-  sites that have a defensibility index that exceeds the mean
+  dents be exposed to methods of identifying unknown bio-  of the entire Northwest Pacific landscape.
+  logical specimens. Due to certain limitations of traditional
+  identification methods, biology professors at Slippery Rock  SAS Output for Exercise 8.90
+  University (SRU) developed a computer-aided system
+  for identifying common conifers (deciduous trees) called
+  Confir ID (The American Biology Teacher, May 2010). A
+  sample of 171 life science students were exposed to both a
+  traditional method of identifying conifers and Confir ID
+  and then asked which method they preferred. As a result,
+  138 students indicated their preference for Confir ID. In
+  order to change the life sciences curriculum at SRU to
+  include Confir ID, the biology department requires that
+  more than 70% of the students prefer the new, computer-
+  ized method. Should Confir ID be added to the curriculum
+  at SRU? Explain your reasoning.
+
+8.88 Organic certified coffee. Coffee markets that conform to
+  organic standards focus on the environmental aspect of cof-
+  fee growing, such as the use of shade trees and a reduced
+  reliance on chemical pesticides. A study of organic coffee
+  growers was published in Food Policy (Vol. 36, 2010). In a
+  representative sample of 845 coffee growers from southern
+  Mexico, 417 growers were certified to sell to organic cof-
+  fee markets while 77 growers were transitioning to become
+  organic certified. In the United States, 60% of the coffee
+  growers are organic certified. Is there evidence to indicate
+  that fewer than 60% of the coffee growers in southern
+  Mexico are either organic certified or transitioning to be-
+  come certified? State your conclusion so that there is only
+  a 5% chance of making a Type I error.
+
+8.89 Detection of motorcycles while driving. The factors that
+  affect the visibility of powered two-wheelers (PTWs)—
+  motorcycles—on the road were investigated in Accident
+  Analysis and Prevention (Vol. 44, 2012). A visual search
+  study was conducted in which viewers were presented with
+  pictures of driving scenarios and asked to identify the pres-
+  ence or absence of a PTW. Of interest to the researchers is
+  the detection rate, i.e., the proportion of pictures showing
+  a PTW in which the viewer actually detected the presence
+  of the PTW. Suppose that, in theory, the true detection
+  rate for pictures of PTWs is .70. The study revealed that in
+  a sample of 2,376 pictures that included a PTW, only 1,554
+  were detected by the viewers. Use this result to test the
+  theory at a = .10.
+436 CHAPTER 8 ■ Inferences Based on a Single Sample
+
+  b. An archaeologist wants to conduct a statistical test of  of Agricultural, Biological, and Environmental Statistics,
+  hypothesis to determine if p is larger than .60. Give the  Sept. 2000). Thousands of adult rice weevils were placed
+  null and alternative hypotheses for this test.  in a chamber filled with wheat grain, and the chamber was
+  exposed to nitrogen gas for 4 days. Insects were assessed as
+  c. Demonstrate that the sample is not large enough to  dead or alive 24 hours after exposure. At the conclusion of
+  apply the large-sample test of a binomial proportion.  the experiment, 31,386 weevils were dead and 35 weevils
+  were found alive. Previous studies had shown a 99% mor-
+  d. The SAS printout shown on p. 435 gives the results of an  tality rate in adult rice weevils exposed to carbon dioxide
+  exact binomial proportion test of the hypotheses, part b.  for 4 days. What advice would you give to the entomolo-
+  Locate the p-value of the test (bottom of the printout)  gists regarding the use of nitrogen or carbon dioxide for
+  and interpret the results.  killing rice weevils?
+
+8.91 Astronomy students and the Big Bang Theory. Indiana  8.93 Male fetal deaths following 9/11/2001. According to re-
+  University professors investigated first-year college stu-  search published in BMC Public Health (May 25, 2010),
+  dents’ knowledge of astronomy (Astronomy Education  the terrorist attacks of September 11, 2001, may have led
+  Review, Vol. 2, 2003). One concept of interest was the Big  to a spike in miscarriages of male babies. Researchers from
+  Bang theory of the creation of the universe. In a sample  the University of California, using data from the National
+  of 148 freshman students, 37 believed that the Big Bang  Vital Statistics System, reported that the male fetal death
+  theory accurately described the creation of planetary sys-  rate in September of that year was significantly higher than
+  tems. Based on this information, would you be willing to  expected. Suppose it is known that the miscarriage rate for
+  state that more than 20% of all freshman college students  pregnant women expecting a boy in the United States is 3 in
+  believe in the Big Bang theory? How confident are you of  1,000. In a random sample of 2,000 pregnant women expect-
+  your decision?  ing a baby boy during September of 2001, how many would
+  need to have experienced a fetal death (miscarriage) in order
+Applying the Concepts—Advanced  to support the claim (at a = .05) that the male fetal death
+  rate in September 2001 was higher than expected?
+8.92 Killing insects with low oxygen. A group of Australian
+  entomological toxicologists investigated the impact of ex-
+  posure to low oxygen on the mortality of insects (Journal
+
+8.7 Calculating Type II Error Probabilities: More about B (Optional)
+
+  In our introduction to hypothesis testing in Section 8.1, we showed that the probability
+  of committing a Type I error, a, can be controlled by the selection of the rejection
+  region for the test. Thus, when the test statistic falls into the rejection region and we
+  make the decision to reject the null hypothesis, we do so knowing the error rate for
+  incorrect rejections of H0. The situation corresponding to accepting the null hypothesis,
+  and thereby risking a Type II error, is not generally as controllable. For that reason,
+  we adopted a policy of nonrejection of H0 when the test statistic does not fall into the
+  rejection region, rather than risking an error of unknown magnitude.
+
+  To see how b, the probability of a Type II error, can be calculated for a test of hy-
+  pothesis, recall the example in Section 8.1 in which a city tests a manufacturer’s pipe to
+  see whether it meets the requirement that the mean strength exceed 2,400 pounds per
+  linear foot. The setup for the test is as follows:
+
+  H0: m = 2,400
+  Ha: m 7 2,400
+  Test statistic: z = x - 2,400
+
+  s> 1n
+  Rejection region: z 7 1.645 for a = .05
+
+  Figure 8.24a shows the rejection region for the null distribution—that is, the dis-
+  tribution of the test statistic, assuming that the null hypothesis is true. The area in the
+  rejection region is .05, and this area represents a, the probability that the test statistic
+  leads to rejection of H0 when in fact H0 is true.
+
+  The Type II error probability b is calculated under the assumption that the null
+  hypothesis is false because it is defined as the probability of accepting H0 when it is false.
+  Since H0 is false for any value of m exceeding 2,400, one value of b exists for each pos-
+  sible value of m greater than 2,400 (an infinite number of possibilities). Figures 8.24b,
+  8.24c, and 8.24d show three of the possibilities, corresponding to alternative hypothesis
+  values of m equal to 2,425, 2,450, and 2,475, respectively. Note that b is the area in the
+  SECTION 8.7 ■ Calculating Type II Error Probabilities: More about b (Optional) 437
+
+  2,400  x
+  2,446.5 Rejection
+
+  region
+
+  x
+
+  Acceptance  2,425 2,446.5
+
+  region  (z = –.76)
+
+  x
+
+  Acceptance  2,450
+  region  2,446.5
+  (z = –.12)
+
+Figure 8.24  2,446.5 2,475  x
+
+Values of a and b for various  Acceptance
+values of m
+  region  (z = –1.01)
+
+  nonrejection (or acceptance) region in each of these distributions and that b decreases as
+  the true value of m moves farther from the null-hypothesized value of m = 2,400. This
+  behavior is sensible because the probability of incorrectly accepting the null hypothesis
+  should decrease as the distance between the null and alternative values of m increases.
+
+  In order to calculate the value of b for a specific value of m in Ha, we proceed as
+  follows:
+
+  1. We calculate the value of x that corresponds to the border between the accep-
+  tance and rejection regions. For the sewer pipe example, this is the value of x that
+  lies 1.645 standard deviations above m = 2,400 in the sampling distribution of x.
+438  CHAPTER 8 ■ Inferences Based on a Single Sample
+
+  Denoting this value by x0, corresponding to the largest value of x that supports
+  the null hypothesis, we find (recalling that s = 200 and n = 50) that
+
+  x0 = m0 + 1.645sx = 2,400 + 1.645 a s b
+  1n
+
+  ≈ 2,400 + 1.645a s b = 2,400 + 1.645a 200 b
+  1n  150
+
+  = 2,400 + 1.645128.282 = 2,446.5
+
+  2. For a particular alternative distribution corresponding to a value of m denoted
+  by ma, we calculate the z-value corresponding to x0, the border between the
+  rejection and acceptance regions. We then use this z-value and Table II of
+  Appendix B to determine the area in the acceptance region under the alter-
+  native distribution. This area is the value of b corresponding to the particular
+  alternative ma. For example, for the alternative ma = 2,425, we calculate
+
+  z = x0 - 2,425 ≈ = = x0 - 2,425 2,446.5 - 2,425 .76
+  sx  s> 1n  28.28
+
+  Note in Figure 8.24b that the area in the acceptance region is the area to the
+  left of z = .76. This area is
+
+  b = .5 + .2764 = .7764
+
+  Thus, the probability that the test procedure will lead to an incorrect acceptance
+  of the null hypothesis m = 2,400 when in fact m = 2,425 is about .78. As the average
+  strength of the pipe increases to 2,450, the value of b decreases to .4522 (Figure 8.24c).
+  If the mean strength is further increased to 2,475, the value of b is further decreased
+  to .1562 (Figure 8.24d). Thus, even if the true mean strength of the pipe exceeds the
+  minimum specification by 75 pounds per linear foot, the test procedure will lead to an
+  incorrect acceptance of the null hypothesis (rejection of the pipe) approximately 16%
+  of the time. The upshot is that the pipe must be manufactured so that the mean strength
+  well exceeds the minimum requirement if the manufacturer wants the probability of its
+  acceptance by the city to be large (i.e., b to be small).
+
+  The steps for calculating b for a large-sample test about a population mean and a
+  population proportion are summarized in the following boxes:
+
+  Steps for Calculating B for a Large-Sample Test about M
+
+  1. Calculate the value(s) of x corresponding to the border(s) of the rejection
+  region. There will be one border value for a one-tailed test and two for a two-
+  tailed test. The formula is one of the following, corresponding to a test with
+  level of significance a:
+
+  Upper@tailed test:  x0 = m0 + za sx ≈ m0 + za a s b
+  1Ha: m 7 m02  1n
+
+  Lower@tailed test:  x0 = m0 - za sx ≈ m0 - za a s b
+  1n
+
+  1Ha: m 6 m02
+
+  Two@tailed test:  x0, L = m0 - za>2 sx ≈ m0 - za>2 a s b
+  1n
+
+  1Ha: m ≠ m02
+
+  x0, U = m0 + za>2 sx ≈ m0 + za>2 a s b
+  1n
+SECTION 8.7 ■ Calculating Type II Error Probabilities: More about b (Optional) 439
+
+2. Specify the value of ma in the alternative hypothesis for which the value of
+  b is to be calculated. Then convert the border value(s) of x 0 to z-value(s),
+  using the alternative distribution with mean ma. The general formula for the
+  z value is
+
+  z = x0 - ma
+  sx
+
+3. Sketch the alternative distribution (centered at ma), and shade the area in
+  the acceptance (nonrejection) region. Use the z-statistic(s) and Table II of
+
+  Appendix A to find the shaded area, which is b.
+
+Lower@tailed test:  b = P a z 7 x0 - ma b
+  1Ha: m 6 m02  sx
+
+Upper@tailed test:  b = P a z 6 x0 - ma b
+  1Ha: m 7 m02  sx
+
+Two@tailed test:  b = P a x0,L - ma 6 z 6 x0,U - ma b
+  1Ha: m ≠ m02  sx  sx
+
+Steps for Calculating B for a Large-Sample Test about p
+
+1. Calculate the value(s) of pn corresponding to the border(s) of the rejection
+  region. There will be one border for a one-tailed test and two for a two-tailed
+  test. The formula is one of the following, corresponding to a test with level of
+  significance a.
+
+Upper@tailed test:  pn0 = p0 + za sp = p0 + za p0 q0 A n
+  1Ha: p 7 p02  pn0 = p0 - za sp = p0 - za p0 q0 A n
+  pn0, L = p0 - za>2 sp = p0 - za>2 p0 q0 A n
+Lower@tailed test:
+  1Ha: p 6 p02
+
+Two@tailed test:
+
+1Ha: p ≠ p02
+
+  pn0, U = p0 + za>2 sp = p0 + za>2 p0 q0 A n
+
+2. Specify the value of pa in the alternative hypothesis for which the value of b is
+  to be calculated. Then convert the border values of pn0 to z-value(s), using the
+  alternative distribution with mean pa. The general formula for the z value is:
+
+  z = 1pn0 - pa2 >sp = pn0 - pa
+  paqa
+
+  An
+
+3. Sketch the alternative distribution (centered at pa), and shade the area in the ac-
+  ceptance (nonrejection) region. Use the z-statistic(s) and Table II of Appendix B
+
+  to find the shaded area, which is b.
+
+  (continued)
+440 CHAPTER 8 ■ Inferences Based on a Single Sample
+
+  Upper@tailed test:  b = P z 6 pn0 - pa
+  °  paqa ¢
+
+  An
+
+  1Ha: p 7 p02  b = P z 7 pn0 - pa
+  Lower@tailed test:  °  paqa ¢
+
+  An
+
+  1Ha: p 6 p02  pn0, L - pa  6z6  p0, U - pa
+  Two@tailed test:  b = P ° paqa  paqa ¢
+
+  An  An
+
+  1Ha: p ≠ p02
+
+  Following the calculation of b for a particular value of the parameter in Ha, you
+  should interpret the value in the context of the hypothesis-testing application. It is often
+  useful to interpret the value of 1 - b, which is known as the power of the test correspond-
+
+  ing to a particular alternative, say, ma for a population mean. Since b is the probability of
+  accepting the null hypothesis when the alternative hypothesis is true with m = ma, 1 - b
+  is the probability of the complementary event, or the probability of rejecting the null
+  hypothesis when the alternative Ha: m = ma is true. That is, the power 11 - b2 measures
+  the likelihood that the test procedure will lead to the correct decision (reject H0) for a
+  particular value of the mean (or proportion) in the alternative hypothesis.
+
+  The power of the test is the probability that the test will correctly lead to the rejection
+
+  of the null hypothesis for a particular value of m or p in the alternative hypothesis.
+  The power is equal to 11 - b2 for the particular alternative considered.
+
+ Example 8.12  For example, in the sewer pipe example, we found that b = .7764 when
+  m = 2,425. This is the probability that the test leads to the (incorrect) acceptance
+Finding the Power  of the null hypothesis when m = 2,425. Or, equivalently, the power of the test is
+of the Test  1 - .7764 = .2236, which means that the test will lead to the (correct) rejection of
+  the null hypothesis only 22% of the time when the pipe exceeds specifications by
+  25 pounds per linear foot. When the manufacturer’s pipe has a mean strength of 2,475
+  (that is, 75 pounds per linear foot in excess of specifications), the power of the test
+  increases to 1 - .1562 = .8438. That is, the test will lead to the acceptance of the man-
+  ufacturer’s pipe 84% of the time if m = 2,475.
+
+  Problem Recall the drug experiment in Examples 8.3 and 8.5, in which we tested to
+  determine whether the mean response time for rats injected with a drug differs from the
+  control mean response time of m = 1.2 seconds. The test setup is repeated here:
+
+  H0: m = 1.2
+  Ha: m ≠ 1.2 1i.e., m 6 1.2 or m 7 1.22
+  Test statistic: z = x - 1.2
+
+  sx
+  Rejection region: z 6 -1.96 or z 7 1.96 for a = .05
+
+  z 6 -2.575 or z 7 2.575 for a = .01
+
+  Note that two rejection regions have been specified, corresponding to values of a = .05
+  and a = .01, respectively. Assume that n = 100 and s = .5.
+  SECTION 8.7 ■ Calculating Type II Error Probabilities: More about b (Optional) 441
+
+  a. Suppose drug-injected rats have a mean response time of 1.1 seconds; that is,
+  m = 1.1. Calculate the values of b corresponding to the two rejection regions.
+  Discuss the relationship between the values of a and b.
+
+  b. Calculate the power of the test for each of the rejection regions when m = 1.1.
+
+  Solution
+
+  a. We first consider the rejection region corresponding to a = .05. The first step is to
+
+  calculate the border values of x corresponding to the two-tailed rejection region,
+  z 6 -1.96 or z 7 1.96:
+
+  x0, L = m0 - 1.96sx ≈ m0 - 1.96 a s b = 1.2 - 1.96 a .5 b = 1.102
+  1n  10
+
+  x0, U = m0 + 1.96sx ≈ m0 + 1.96 a s b = 1.2 + 1.96 a .5 b = 1.298
+  1n  10
+
+  These border values are shown in Figure 8.25.
+
+  Next, we convert these values to z-values in the alternative distribution with
+
+  ma = 1.1:
+
+  zL = x0, L - ma ≈ = 1.102 - 1.1 .04
+  sx  .05
+
+  zU = x0, U - ma ≈ = 1.298 - 1.1 3.96
+  sx  .05
+
+  2 = .025  2 = .025
+  2 = .005
+  2 = .005
+
+  1.071 1.102  1.2  1.298 1.329  x
+  –2.575 –1.96
+  0  1.96 2.575  z
+
+  Two rejection regions
+
+  1.1 1.102  1.298 x
+  .04  3.96 z
+
+Figure 8.25  1.071 1.1  1.329 x
+  –.58  4.58 z
+Calculation of b for drug-
+injected rate (Example 8.12)
+442  CHAPTER 8 ■ Inferences Based on a Single Sample
+
+  These z-values are shown in Figure 8.25b. You can see that the acceptance (or non-
+  rejection) region is the area between them. Using Table II of Appendix B, we find
+  that the area between z = 0 and z = .04 is .0160 and the area between z = 0 and
+  z = 3.96 is (approximately) .5 (since z = 3.96 is off the scale of Table II). Then the
+  area between z = .04 and z = 3.96 is approximately
+
+  b = .5 - .0160 = .4840
+
+  Thus, the test with a = .05 will lead to a Type II error about 48% of the time when
+  the mean reaction time for drug-injected rats is .1 second less than the control mean
+  response time.
+
+  For the rejection region corresponding to a = .01, z 6 -2.575 or z 7 2.575,
+  we find that
+
+  x0, L = 1.2 - 2.575 a .5 b = 1.0712
+  10
+
+  x0, U = 1.2 + 2.575 a .5 b = 1.3288
+  10
+
+  These border values of the rejection region are shown in Figure 8.25c.
+  Converting these two border values to z-values in the alternative distribution
+
+  with ma = 1.1, we find that zL = - .58 and zU = 4.58. The area between these values
+  is approximately
+
+  b = P1 -.58 6 z 6 4.582 = .2190 + .5 = .7190
+
+  Thus, the chance that the test procedure with a = .01 will lead to an incorrect accept-
+  ance of H0 is about 72%.
+
+  Note that the value of b increases from .4840 to .7190 when we decrease the
+  value of a from .05 to .01. This is a general property of the relationship between a
+  and b: As a is decreased (increased), b is increased (decreased).
+
+  b. The power is defined to be the probability of (correctly) rejecting the null hypothesis
+  when the alternative is true. When m = 1.1 and a = .05, we find that
+
+  Power = 1 - b = 1 - .4840 = .5160
+
+  When m = 1.1 and a = .01, we get
+
+  Power = 1 - b = 1 - .7190 = .2810
+
+  You can see that the power of the test is decreased as the level of a is decreased.
+  This means that as the probability of incorrectly rejecting the null hypothesis is
+  decreased, the probability of correctly accepting the null hypothesis for a given
+  alternative is also decreased.
+
+  Look Back A key point in this example is that the value of a must be selected carefully,
+  with the realization that a test is made less capable of detecting departures from the null
+  hypothesis when the value of a is decreased.
+
+  ■ Now Work Exercise 8.102a
+
+  Note: Most statistical software packages now have options for computing the
+  power of standard tests of hypothesis. Usually, you will need to specify the type of test
+  (z-test or t-test), the form of Ha1 6 , 7 , or ≠ 2, the standard deviation, the sample size,
+  and the value of the parameter in Ha (or the difference between the value in H0 and the
+  value in Ha). The MINITAB power analysis for Example 8.12 when a = .05 is displayed
+  in Figure 8.26. The power of the test (.516) is highlighted on the printout.
+
+  We have shown that the probability of committing a Type II error, b, is inversely
+  related to a (Example 8.12), and that the value of b decreases as the value of ma 1or pa2
+  moves farther from the null-hypothesis value. Consider again the sewer pipe example.
+  The sample size n also affects b. Remember that the standard deviation of the sam-
+  pling distribution of x is inversely proportional to the square root of the sample size
+  1sx = s> 1n2.
+  SECTION 8.7 ■ Calculating Type II Error Probabilities: More about b (Optional) 443
+
+Figure 8.26
+
+MINITAB power analysis
+for Example 8.12
+
+  Thus, as illustrated in Figure 8.27, the variability of both the null and alternative sam-
+  pling distributions is decreased as n is increased. If the value of a is specified and re-
+  mains fixed, then the value of b decreases as n increases, as illustrated in Figure 8.27.
+  Conversely, the power of the test for a given alternative hypothesis is increased as the
+  sample size is increased.
+
+  x
+  a. Small n
+
+Figure 8.27
+
+Relationship between a, b,  x
+
+and n
+
+  The properties of b and power are summarized in the following box:
+
+  Properties of B and Power
+  1. For fixed n and a, the value of b decreases and the power increases as the dis-
+
+  tance between the specified null value m0 (or p0) and the specified alternative
+  value ma (or pa) increases. (See Figure 8.24.)
+  2. For fixed n, m0, and ma (or p0 and pa) the value of b increases and the power
+  decreases as the value of a is decreased. (See Figure 8.25.)
+  3. For fixed a, m0, and ma, (or p0 and pa) the value of b decreases and the power
+  increases as the sample size n is increased. (See Figure 8.27.)
+
+Exercises 8.94–8.107  is normally distributed with standard deviation 140. A ran-
+  dom sample of size n = 49 will be used.
+Understanding the Principles  a. Specify the role of x in this problem.
+  b. Find the value of x0, that value of x above which the null
+8.94 How is the power of the test related to the acceptance region?
+8.95 If the power of the test is .85, what can be said about the  hypothesis will be rejected.
+  c. What will be the value of z when m = 2,020?
+  probability of committing a Type II error?  d. Find b.
+8.96 If the power of the test tends to unity, then what will be the  e. Compute the power of this test for detecting the alter-
+
+  conclusion for the given testing problem?  native Ha: m = 2,020.
+
+Learning the Mechanics
+
+8.97 Suppose you want to test H0: m = 2,000 against
+  Ha: m 7 2,000, using a = .05. The population in question
+444 CHAPTER 8 ■ Inferences Based on a Single Sample
+
+8.98 Refer to Exercise 8.97.  used per week. The sample of n = 46 workers had a stan-
+  a. If m = 2,040 instead of 2,020, what is the probability  dard deviation of s = 11.9. Assume s is a good estimate of
+  that the hypothesis test will incorrectly fail to reject  the true standard deviation s.
+  H0? That is, what is b?  a. Find the power of the test if the true mean is m = 19.
+  b. If m = 2,040, what is the probability that the test will  b. Repeat part a for the true mean values 18, 16, 14,
+  correctly reject the null hypothesis? That is, what is the
+  power of the test?  and 12.
+  c. Compare b and the power of the test when m = 2,040  c. Plot the power of the test on the vertical axis against the
+  to the values you obtained in Exercise 8.97 for
+  m = 2,020. Explain the differences.  alternative mean on the horizontal axis. Draw a curve
+  through the points. What pattern do you observe?
+8.99 It is desired to test H0: m = 60 against Ha: m 6 60, using  d. Use the power curve, part c, to estimate the power for the
+  a = .10. The population in question is uniformly distrib-  mean value m = 15. Calculate the power for this value
+  uted with standard deviation 22.5. A random sample of  of m, and compare it with your approximation.
+  size 81 will be drawn from the population.  e. If the true value of the mean number of latex gloves
+  a. Describe the (approximate) sampling distribution of  used per week is really 15, what is the probability that
+  x under the assumption that H0 is true.  the test will fail to reject H0: m = 20?
+  b. Describe the (approximate) sampling distribution of
+  x under the assumption that the population mean is 55.  8.103 Increasing the sample size. Refer to Exercise 8.102. Show
+  c. If m were really equal to 55, what is the probability that  what happens to the power curve when the sample size is
+  the hypothesis test would lead the investigator to com-  increased from n = 46 to n = 100. Assume that the stan-
+  mit a Type II error?  dard deviation is s = 11.9.
+  d. What is the power of this test for detecting the alterna-
+  tive Ha: m = 55?  8.104  Gas mileage of the Honda Civic. According to the
+  Environmental Protection Agency (EPA) Fuel Economy
+8.100  Refer to Exercise 8.99.  Guide, the 2014 Honda Civic automobile obtains a mean of
+  a. Find b for each of the following values of the popula-  36 miles per gallon (mpg) on the highway. Suppose Honda
+  claims that the EPA has underestimated the Civic’s mile-
+  tion mean: 65.4, 63.4, 61.4, 59.4, and 57.4.  age. To support its assertion, the company selects n = 50
+  b. Plot each value of b you obtained in part a against its  model 2014 Civic cars and records the mileage obtained
+  for each car over a driving course similar to the one used
+  associated population mean. Show b on the vertical axis  by the EPA. The following data result: x = 38.3 mpg,
+  and m on the horizontal axis. Draw a curve through the  s = 6.4 mpg.
+  five points on your graph.  a. If Honda wishes to show that the mean mpg for 2014
+  c. Use your graph from part b to find the approximate
+  probability that the hypothesis test will lead to a Type II  Civic autos is greater than 36 mpg, what should the al-
+  error when m = 63.4.  ternative hypothesis be? the null hypothesis?
+  d. Convert each of the b values you calculated in part a to  b. Do the data provide sufficient evidence to support
+  the power of the test at the specified value of m. Plot the  the auto manufacturer’s claim? Test, using a = .05.
+  power on the vertical axis against m on the horizontal  List any assumptions you make in conducting the
+  axis. Compare the graph of part b with the power curve  test.
+  you plotted here.  c. Calculate the power of the test for the mean values of
+  e. Examine the graphs of parts b and d. Explain what they  36.5, 37.0, 37.5, 38.0, and 38.5, assuming that s = 6.4 is a
+  reveal about the relationships among the distance be-  good estimate of s.
+  tween the true mean m and the null-hypothesized mean  d. Plot the power of the test on the vertical axis against
+  m0, the value of b, and the power.  the mean on the horizontal axis. Draw a curve through
+  the points.
+8.101  Suppose you want to conduct the two-tailed test of  e. Use the power curve of part d to estimate the
+  H0: p = .8 against Ha: p ≠ .8 using a = .05. A random  power for the mean value m = 37.75. Calculate the
+  sample of size 100 will be drawn from the population in  power for this value of m, and compare it with your
+  question.  approximation.
+  a. Describe the sampling distribution of pn under the as-  f. Use the power curve to approximate the power of the
+  test when m = 41. If the true value of the mean mpg
+  sumption that H0 is true.  for this model is really 41, what (approximately) are the
+  b. Describe the sampling distribution of pn under the as-  chances that the test will fail to reject the null hypothe-
+  sis that the mean is 36?
+  sumption that p = .75.
+  c. If p were really equal to .75, find the value of b associ-  8.105  Cooling method for gas turbines. Refer to the Journal of
+  Engineering for Gas Turbines and Power (Jan. 2005) study
+  ated with the test.  TURBINE  of a new cooling method for gas turbine engines, pre-
+  d. Find the value of b for the alternative Ha: p = .69.  sented in Exercise 8.46 (p. 420). The heat rates (kilojoules
+  per kilowatt per hour) for 67 gas turbines cooled with the
+Applying the Concepts—Intermediate  new method are saved in the TURBINE file. Assume that
+  the standard deviation of the population of heat rates is
+8.102 Latex allergy in health care workers. Refer to the Current  s = 1,600. In Exercise 8.46, you tested whether the true
+  Allergy & Clinical Immunology (March 2004) study  mean heat rate m exceeded 10,000 kJ/kWh at a = .05. If
+  of health care workers diagnosed with a latex allergy,  the true mean is really m = 10,500, what is the chance that
+  Exercise 7.15 (p. 352). Consider testing the null hypothe-  you will make a Type II error?
+  sis of m = 20 against the alternative hypothesis of m 6 20
+  using a = .01, where m is the mean number of latex gloves
+  SECTION 8.8 ■ Test of Hypothesis about a Population Variance (Optional) 445
+
+8.106  Underwater sound-locating ability of alligators. Refer to  8.107  Gummy bears: red or yellow? Refer to the Chance (Winter
+  the Journal of Herpetology (Dec. 2014) study of whether  2010) experiment to determine if color of a gummy bear is
+  alligators can locate underwater sounds, Exercise 8.81  related to its flavor, Exercise 8.82 (p. 434). You tested the
+  (p. 434). Recall that the researchers assumed that the  null hypothesis of p = .5 against the two-tailed alternative
+  proportion of alligators moving toward the underwa-  hypothesis of p ≠ .5 using a = .01, where p represents
+  ter sound expected by chance is .5. Also, in a sample  the true proportion of blindfolded students who correctly
+  of n = 50 alligators, 42 moved toward the underwater  identify the color of the gummy bear. Recall that of the 121
+  sound. In Exercise 8.81, you used this information to test  students who participated in the study, 97 correctly identi-
+  whether p, the true proportion of alligators that move  fied the color. Find the power of the test if the true propor-
+  toward the underwater sound, is higher than expected  tion is p = .65.
+  by chance. Calculate the power of the test if p = .6.
+  Interpret this probability practically.
+
+8.8 Test of Hypothesis about a Population Variance (Optional)
+
+  Although many practical problems involve inferences about a population mean (or
+  proportion), it is sometimes of interest to make an inference about a population variance
+  s2. To illustrate, a quality control supervisor in a cannery knows that the exact amount each
+  can contains will vary, since there are certain uncontrollable factors that affect the amount of
+  fill. The mean fill per can is important, but equally important is the variance of the fill. If s2
+  is large, some cans will contain too little and others too much. Suppose regulatory agencies
+  specify that the standard deviation of the amount of fill in 16-ounce cans should be less
+  than .1 ounce. To determine whether the process is meeting this specification, the supervisor
+  randomly selects 10 cans and weighs the contents of each. The results are given in Table 8.6.
+
+  Table 8.6  Fill Weights (ounces) of 10 Cans
+
+  16.00  15.95  16.10  16.02  15.99
+  16.06  16.04  16.05  16.03  16.02
+
+  Data Set: FILLWT
+
+  Do these data provide sufficient evidence to indicate that the variability is as small as
+  desired? To answer this question, we need a procedure for testing a hypothesis about s2.
+
+  Intuitively, it seems that we should compare the sample variance s2 with the hy-
+  pothesized value of s2 (or s with s) in order to make a decision about the population’s
+  variability. The quantity
+
+  1n - 12s2
+  s2
+
+  is known to have a chi-square 1x22 distribution when the population from which the
+  sample is taken is normally distributed. (Chi-square distributions were introduced in op-
+  tional Section 7.6.)
+
+  1n - 12s2
+  Since the distribution of s2 is known, we can use this quantity as a test sta-
+  tistic in a test of hypothesis for a population variance, as illustrated in the next example.
+
+  BIOGRAPHY FRIEDRICH R. HELMERT (1843–1917)
+
+  Helmert Transformations
+
+  German Friedrich Helmert studied engineering sciences and mathematics at Dresden University, where
+  he earned his Ph.D. Then he accepted a position as a professor of geodesy—the scientific study of the
+  earth’s size and shape—at the technical school in Aachen. Helmert’s mathematical solutions to geodesy
+  problems led him to several statistics-related discoveries. His greatest statistical contribution occurred
+  in 1876, when he was the first to prove that the sampling distribution of the sample variance s2 is a chi-
+  square distribution. Helmert used a series of mathematical transformations to obtain the distribution of
+  s2—transformations that have since been named “Helmert transformations” in his honor. Later in life,
+  Helmert was appointed professor of advanced geodesy at the prestigious University of Berlin and director
+  of the Prussian Geodetic Institute. ■
+446 CHAPTER 8 ■ Inferences Based on a Single Sample
+
+ Example 8.13  Problem Refer to the fill weights for the sample of ten 16-ounce cans in Table 8.6. Is
+  there sufficient evidence to conclude that the true standard deviation s of the fill
+  FILLWT  measurements of 16-ounce cans is less than .1 ounce?
+
+A one-Tailed Test for
+S2—Fill Weight Variance
+
+  Solution Here, we want to test whether s 6 .1. Since the null and alternative hypotheses
+  must be stated in terms of s2 (rather than s), we want to test the null hypothesis that
+  s2 = 1.122 = .01 against the alternative that s2 6 .01. Therefore, the elements of the
+  test are
+
+  H0: s2 = .01 1Fill variance equals .01: i.e., process specifications are not met.2
+
+  Ha: s2 6 .01 1Fill variance is less than .01: i.e., process specifications are met.2
+
+  2 1n - 12s2
+  Test statistic: x =
+  s  2
+
+  Assumption: The distribution of the amounts of fill is approximately normal.
+  Rejection region: The smaller the value of s2 we observe, the stronger is the
+  evidence in favor of Ha. Thus, we reject H0 for “small values” of the test statistic.
+  Recall that the chi-square distribution depends on 1n - 12 degrees of freedom.
+  With a = .05 and 1n - 12 = 9 df, the critical x2 value for rejection is found in
+  Table IV of Appendix B. A partial reproduction of this table is shown in Table 8.7.
+
+Table 8.7  A Partial Reproduction of Table IV, Appendix B—Critical Values of X2
+  f(x2)
+
+  a2
+  0 xa2 x
+
+Degrees of  2  2  2  2  2  2  2  2  2  2
+ Freedom
+  x.995  x.990  x.975  x.950  x.900  x.100  x.050  x.025  x.010  x.005
+  1
+  2  .0000393  .0001571  .0009821  .0039321  .0157908  2.70554  3.84146  5.02389  6.63490  7.87944
+  3  .0100251  .0201007  .0506356  .102587  .210720  4.60517  5.99147  7.37776  9.21034  10.5966
+  4  .0717212  .114832  .215795  .351846  .584375  6.25139  7.81473  9.34840  11.3449  12.8381
+  5  .206990  .297110  .484419  .710721  1.063623  7.77944  9.48773  11.1433  13.2767  14.8602
+  6  .411740  .554300  .831211  1.145476  1.61031  9.23635  11.0705  12.8325  15.0863  16.7496
+  7  .675727  .872085  1.237347  1.63539  2.20413  10.6446  12.5916  14.4494  16.8119  18.5476
+  8  .989265  1.239043  1.68987  2.16735  2.83311  12.0170  14.0671  16.0128  18.4753  20.2777
+  9  1.344419  1.646482  2.17973  2.73264  3.48954  13.3616  15.5073  17.5346  20.0902  21.9550
+  10  1.734926  2.087912  2.70039  3.32511  4.16816  14.6837  16.9190  19.0228  21.6660  23.5893
+  2.15585  2.55821  3.24697  3.94030  4.86518  15.9871  18.3070  20.4831  23.2093  25.1882
+
+  The area given in this table is the area to the right of the numerical x2 value. That is, the
+  table gives the value x2a that cuts off a tail area to the right equal to a. For this lower-tailed
+  test, we need a = .05 as the area to the left of the critical value, as shown in Figure 8.28; con-
+  sequently, the area to the right is 11 - a2 = .95 and we will reject H0 if x2 6 x2.95. Looking
+  in the .95 column and 9 df row of Table 8.7, we find the critical value 3.32511. Therefore,
+
+  Reject H0 if x2 6 3.32511 1see Figure 8.282
+
+  A SAS printout of the analysis is displayed in Figure 8.29. The value of s (highlighted
+  on the printout) is s = .0412. Substituting into the formula for the test statistic, we have
+
+  2 1n - 12s2 91.041222  = 1.53
+  x=  2=
+  s  .01
+  SECTION 8.8 ■ Test of Hypothesis about a Population Variance (Optional) 447
+
+Figure 8.28  0 3 6 9 12 15 18
+  Rejection
+Rejection region for  region
+Example 8.13
+  3.325
+  1.53
+
+Figure 8.29
+
+SAS test of fill amount variance,
+Example 8.13
+
+  Conclusion: Since the value of the test statistic is less than 3.32511, the supervisor can con-
+  clude that the variance s2 of the population of all amounts of fill is less than .01 (i.e., s 6 .1),
+  with probability of a Type I error equal to a = .05. If this procedure is repeatedly used, it
+  will incorrectly reject H0 only 5% of the time. Thus, the quality control supervisor is confi-
+  dent in the decision that the cannery is operating within the desired limits of variability.
+
+  Look Back Note that both the test statistic and the one-tailed p-value of the test are
+  shown on the SAS printout. Note also that the p-value (.003) is less than a = .05, thus
+  confirming our conclusion to reject H0.
+
+  ■ Now Work Exercise 8.121
+
+  One-tailed and two-tailed tests of hypothesis for s2 are given in the following box.
+
+  Large-Sample Test of Hypothesis about S2: Chi-Square Statistic
+
+  Test statistic:  1n - 12s2
+  x2c =
+
+  s02
+
+  One-Tailed Tests  Two-Tailed Test
+
+  H0: s2 = s02  H0: s2 = s02  H0: s2 = s02
+  Ha: s2 6 s02  Ha: s2 7 s02  Ha: s2 ≠ s02
+
+  Rejection region: xc2  6  2  xc2 7 x2a  xc2  6  2  or xc2  7  2
+
+  x11 - a2  x11 - a>22  xa>2
+
+  p-value:  P1x2 6 x2c 2  P1x2 7 x2c 2  2 min{P1x2 6 x2c2, P1x2 7 x2c2}
+
+  Decision: Reject H0 if a 7 p@value or if test statistic 1x2c2 falls in rejection region where
+  P1x2 7 x2a2 = a, P1x2 6 x2(1 - a)2 = a, a = P1Type I error2 = P1Reject H0 ͉ H0 true2
+  and the chi-square distribution is based on 1n - 12 degrees of freedom.
+
+  [Note: The symbol for the numerical value assigned to s2 under the null hypothesis is s02.]
+448 CHAPTER 8 ■ Inferences Based on a Single Sample
+
+  Conditions Required for a Valid Large-Sample Hypothesis Test for S2
+  1. A random sample is selected from the target population.
+  2. The population from which the sample is selected has a distribution that is
+
+  approximately normal.
+
+ Example 8.14  Problem Refer to Example 8.13. Now conduct the two-tailed test of hypothesis,
+  H0: s2 = .01 against Ha: s2 ≠ .01, using a = .05.
+  FILLWT
+  Solution Since a = .05, a>2 = .025 and 11 - a>22 = .975. The rejection region for
+A Two-Tailed Test for
+S2—Fill Weight Variance
+
+  this two-tailed test, as outlined in the box, requires that we find the critical chi-square
+  2  2  2  x2.025. Looking
+  values  =  and  =  in  the  9  df  row  of Table  8.7, we  find
+  x11 - a>22  x.975  xa>2
+  2  2
+  =  2.70039  and  =  19.0228. Therefore, the rejection region is:
+  x.975  x.025
+
+  Reject H0 if x2 6 2.70039 or x2 7 19.0228
+
+  From Example 8.13, the test statistic is x2 = 1.53. Since this value falls into the rejection
+  region, there is sufficient evidence to reject H0 in favor of Ha. That is, there is evidence
+  to indicate that the variance in the fill weights, s2, differs from the hypothesized value
+  of .01.
+
+  Look Back Remember to divide the value of a in half to find the critical chi-square
+  values in the rejection region for a two-tailed test of a population variance. Of course,
+  you can always resort to statistical software to find the p-value of the test and derive
+  your conclusion by simply comparing a to the p-value.
+
+  ■
+
+  ! CAuTIoN The procedure for conducting a hypothesis test for s2 in the preceding ex-
+  amples requires an assumption regardless of whether the sample size n is large or small.
+  We must assume that the population from which the sample is selected has an approxi-
+  mate normal distribution. Unlike small-sample tests for m based on the t-statistic, slight
+  to moderate departures from normality will render the x2 test invalid.
+
+Exercises 8.108–8.128  8.113  A random sample of n observations is selected from a nor-
+  mal population to test the null hypothesis that s2 = 35.
+Understanding the Principles
+  Specify the rejection region for each of the following com-
+8.108 What test statistic is used to make inferences about s2?
+8.109 What assumption is required for a valid test for s2?  binations of Ha, a, and n:
+8.110 True or False. The null hypotheses H0: s2 = .36 and  a. Ha: s2 ≠ 35; a = .01; n = 16
+  b. Ha: s2 7 35; a = .01; n = 24
+  H0: s = .6 are equivalent.  c. Ha: s2 7 35; a = .05; n = 15
+8.111 True or False. Even when the sample size n is large, as-  d. Ha: s2 6 35; a = .05; n = 13
+  e. Ha: s2 7 35; a = .01; n = 10
+  sumptions about the population are necessary to test the  f. Ha: s2 6 25; a = .05; n = 25
+  population variance s2.
+  8.114 A random sample of six measurements gave x = 19.4 and
+Learning the Mechanics  s2 = 2.208.
+
+8.112 Let x02 be a particular value of x2. Find the value of x02  a. What assumptions must you make concerning the pop-
+  such that  ulation in order to test a hypothesis about s2?
+  a. P1x2 7 x022 = .05 for n = 12
+  b. P1x2 7 x022 = .10 for n = 9  b. Suppose the assumptions in part a are satisfied. Test the
+  c. P1x2 7 x022 = .05 for n = 5  null hypothesis s2 = 1 against the alternative hypothe-
+  d. P1x2 6 x022 = .025 for n = 7  sis s2 7 1. Use a = .01.
+  e. P1x2 6 x022 = .10 for n = 10
+  c. Refer to part b. Suppose the test statistic is x2 = 12.83.
+
+  Use Table IV of Appendix B or statistical software to
+
+  find the p-value of the test.
+

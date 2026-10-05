@@ -1,0 +1,1211 @@
+  Bias
+
+  –  E(X*) ≠ µx
+  E(X ) = µx  Biased
+  Unbiased
+  Estimator
+  Estimator
+
+FIGURE 1.5
+Biased and unbiased estimators of the mean value of a population Qx.
+
+meant to estimate. That is, an estimator, say, the sample average X , is an
+unbiased estimator of QX if
+
+  EX ! QX .  (1.15)
+
+  The principle of unbiasedness is illustrated in Figure 1.5. Any systematic
+deviation of the estimator away from the population parameter is called a
+bias, and the estimator is called a biased estimator. In general, unbiased
+estimators are preferred to biased estimators.
+
+1.6.2 Efﬁciency
+
+The property of unbiasedness is not, by itself, adequate, because there can
+be situations in which two or more parameter estimates are unbiased. In
+these situations, interest is focused on which of several unbiased estimators
+is superior. A second desirable property of estimators is efﬁciency. Efﬁciency
+is a relative property in that an estimator is efﬁcient relative to another, which
+means that an estimator has a smaller variance than an alternative estimator.
+An estimator with the smaller variance is more efﬁcient. As can be seen from
+Figure 1.6, both X1 and X are unbiased estimators of Q1 and Q2, respectively;
+
+however, VARQˆ 1 ! W2 while VARQˆ 2 ! W2 n , yielding a relative efﬁciency
+
+of Qˆ 2 relative to Qˆ 1 of 1/n, where n is the sample size.
+  In general, the unbiased estimator with minimum variance is preferred to
+
+alternative estimators. A lower bound for the variance of any unbiased
+estimator Uˆ of U is given by the Cramer–Rao lower bound that can be written
+as (Gujarati, 1992)
+
+  VARUˆ u 1 _nExLNfX; U xUa2 ! 1 _nEx2LNfX; U xU2a . (1.16)
+
+  The Cramer–Rao lower bound is only a sufﬁcient condition for efﬁciency.
+Failing to satisfy this condition does not necessarily imply that the estimator
+
+© 2003 by CRC Press LLC
+  –  ~  N(µ,  σ2/n)
+  X
+
+Probability Density  X1 ~ N(µ, σ2)
+
+  µx
+  –
+  E(X ) = µx
+
+FIGURE 1.6
+Comparing efﬁciencies.
+
+is not efﬁcient. Finally, unbiasedness and efﬁciency hold true for any ﬁnite
+sample n, and when n p g they become asymptotic properties.
+
+1.6.3 Consistency
+A third asymptotic property is that of consistency. An estimator Uˆ is said
+to be consistent if the probability of being closer to the true value of the
+parameter it estimates (U) increases with increasing sample size. Formally,
+this says that as n p g lim P[|Uˆ  U|" c] ! 0 , for any arbitrary constant c.
+For example, this property indicates that X will not differ from
+Q as n p g . Figure 1.7 graphically depicts the property of consistency,
+showing the behavior of an estimator X of the population mean Q with
+increasing sample size.
+
+  It is important to note that a statistical estimator may not be an unbiased
+estimator; however, it may be a consistent one. In addition, a sufﬁcient
+condition for an estimator to be consistent is that it is asymptotically unbi-
+ased and that its variance tends to zero as n p g (Hogg and Craig, 1994).
+
+  f (X*) for n1
+
+  f (X*) for n2 < n1
+  f (X*) for n3 < n2
+  f (X*) for n4 < n3
+
+  µx
+
+FIGURE 1.7
+The property of consistency.
+
+© 2003 by CRC Press LLC
+1.6.4 Sufﬁciency
+An estimator is said to be sufﬁcient if it contains all the information in the
+data about the parameter it estimates. In other words, X is sufﬁcient for Q
+if X contains all the information in the sample pertaining to Q.
+
+1.7 Methods of Displaying Data
+
+Although the different measures described in the previous sections often
+provide much of the information necessary to describe the nature of the data
+set being examined, it is often useful to utilize graphical techniques for
+examining data. These techniques provide ways of inspecting data to deter-
+mine relationships and trends, identify outliers and inﬂuential observations,
+and quickly describe or summarize data sets. Pioneering methods frequently
+used in graphical and exploratory data analysis stem from the work of Tukey
+(1977).
+
+1.7.1 Histograms
+Histograms are most frequently used when data are either naturally grouped
+(gender is a natural grouping, for example) or when small subgroups may
+be deﬁned to help uncover useful information contained in the data. A
+histogram is a chart consisting of bars of various heights. The height of each
+bar is proportional to the frequency of values in the class represented by the
+bar. As can be seen in Figure 1.8, a histogram is a convenient way of plotting
+the frequencies of grouped data. In the ﬁgure, frequencies on the ﬁrst (left)
+Y-axis are absolute frequencies, or counts of the number of city transit buses
+in the State of Indiana belonging to each age group (data were taken from
+Karlaftis and Sinha, 1997). Data on the second Y-axis are relative frequencies,
+which are simply the count of data points in the class (age group) divided
+by the total number of data points.
+
+  Histograms are useful for uncovering asymmetries in data and, as such,
+skewness and kurtosis are easily identiﬁed using histograms.
+
+1.7.2 Ogives
+A natural extension of histograms is ogives. Ogives are the cumulative
+relative frequency graphs. Once an ogive such as the one shown in Figure
+1.9 is constructed, the approximate proportion of observations that are less
+than any given value on the horizontal axis can be read directly from the
+graph. Thus, for example, it can be estimated from Figure 1.9 that the pro-
+portion of buses that are less than 6 years old is approximately 60%, and the
+proportion less than 12 years old is 85%.
+
+© 2003 by CRC Press LLC
+  35  0.18
+
+  30  0.15  Relative Frequency
+
+Frequency  25 0.12
+  20
+
+  0.09
+  15
+  10 0.06
+
+  5  0.03
+
+  0  0
+
+  1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16
+
+  Age
+
+FIGURE 1.8
+Histogram for bus ages in the State of Indiana (1996 data).
+
+  1,0
+
+Cumulative Relative Frequency  0,8
+
+  0,5
+
+  0,3
+
+  0,0
+  1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16
+  Age
+
+FIGURE 1.9
+Ogive for bus ages in the State of Indiana.
+
+1.7.3 Box Plots
+
+When faced with the problem of summarizing essential information of a
+data set, a box plot (or box-and-whisker plot) is a pictorial display that is
+extremely useful. A box plot illustrates how widely dispersed observations
+are and where the data are centered. This is accomplished by providing,
+graphically, ﬁve summary measures of the distribution of the data: the largest
+observation, the upper quartile, the median, the lower quartile, and the
+smallest observation (Figure 1.10).
+
+  Box plots can be very useful for identifying the central tendency of the
+data (through the median), identifying the spread of the data (through the
+interquartile range (IQR) and the length of the whiskers), identifying pos-
+sible skewness of the data (through the position of the median in the box),
+
+© 2003 by CRC Press LLC
+  Media
+
+  Whisker  Whisker
+
+ Smallest obs.  IQR  Upper  Largest obs.
+within 1.5(IQR)  Lower Quartile  within 1.5(IQR)
+
+FIGURE 1.10
+The box plot.
+
+identifying possible outliers (points beyond the 1.5(IQR) mark), and for
+comparing data sets.
+
+1.7.4 Scatter Diagrams
+
+Scatter diagrams are most useful for examining the relationship between two
+continuous variables. As examples, assume that transportation researchers
+are interested in the relationship between economic growth and enplane-
+ments, or the effect of a fare increase on travel demand. In some cases, when
+one variable depends (to some degree) on the value of the other variable,
+then the ﬁrst variable, the dependent, is plotted on the vertical axis. The
+pattern of the scatter diagram provides information about the relationship
+between two variables. A linear relationship is one that can be approximately
+graphed by a straight line (see Figure 1.4). A scatter plot can show a positive
+correlation, no correlation, and a negative correlation between two variables
+(Section 1.5 and Figure 1.4 analyzed this issue in greater depth). Nonlinear
+relationships between two variables can also be seen in a scatter diagram
+and typically will be revealed as curvilinear. Scatter diagrams are typically
+used to uncover underlying relationships between variables, which can then
+be explored in greater depth with more quantitative statistical methods.
+
+1.7.5 Bar and Line Charts
+
+A common graphical method for examining nominal data is a pie chart. The
+Bureau of Economic Analysis of the U.S. Department of Commerce in its
+1996 Survey of Current Business reported the percentages of the U.S. GDP
+accounted for by various social functions. As shown in Figure 1.11, trans-
+portation is a major component of the economy, accounting for nearly 11%
+of GDP in the United States. The data are nominal since the “values” of the
+variable, major social function, include six categories: transportation, housing,
+food, education, health care, and other. The pie graph illustrates the propor-
+tion of expenditures in each category of major social function.
+
+  The U.S. Federal Highway Administration (FHWA, 1997) completed a
+report for Congress that provided information on highway and transit assets,
+
+© 2003 by CRC Press LLC
+  Other
+  30%
+
+Food
+13%
+
+  Education
+  7%
+
+Housing  Transportation  Healthcare
+  24%  11%  15%
+
+FIGURE 1.11
+U.S. GDP by major social function (1995) (From U.S. DOT, 1997.)
+
+  Poor  Very Good
+  10%  12%
+
+Mediocre  Good
+  27%  27%
+
+  Fair
+  24%
+
+FIGURE 1.12
+Percent miles of urban interstate by pavement roughness category. (From FHWA, 1997.)
+
+trends in system condition, performance, and ﬁnance, and estimated invest-
+ment requirements from all sources to meet the anticipated demands in both
+highway travel and transit ridership. One of the interesting ﬁndings of the
+report was the pavement ride quality of the nation’s urban highways as
+measured by the International Roughness Index. The data are ordinal
+because the “values” of the variable, pavement roughness, include ﬁve cate-
+gories: very good, good, fair, mediocre, and poor. This scale, although it
+resembles the nominal categorization of the previous example, possesses the
+additional property of natural ordering between the categories (without
+uniform increments between the categories). A reasonable way to describe
+these data is to count the number of occurrences of each value and then to
+convert these counts into proportions.
+
+  Bar charts are a common alternative to pie charts. They graphically repre-
+sent the frequency (or relative frequency) of each category as a bar rising
+from the horizontal axis; the height of each bar is proportional to the fre-
+quency (or relative frequency) of the corresponding category. Figure 1.13,
+for example, presents the motor vehicle fatal accidents by posted speed limit
+
+© 2003 by CRC Press LLC
+  20000
+
+  18000
+
+Motor Vehicle Fatal Accidents  16000
+
+  14000
+
+  12000
+
+  10000
+
+  8000
+
+  6000
+
+  4000
+
+  2000
+
+  0
+
+  0–25  26–35  36–45  46–54  55  65
+
+  1985 1995  Posted Speed Limit
+
+FIGURE 1.13
+Motor vehicle fatal accidents by posted speed limit. (From U.S. DOT, 1997.)
+
+for 1985 and 1995, and Figure 1.14 presents the percent of on-time arrivals
+for some U.S. airlines for December 1997.
+
+  The ﬁnal graphical technique considered in this section is the line chart.
+A line chart is obtained by plotting the frequency of a category above the
+point on the horizontal axis representing that category and then joining the
+points with straight lines. A line chart is most often used when the categories
+are points in time (time-series data). Line charts are excellent for uncovering
+
+Airlines  TWA
+  America West
+
+  Northwest
+  Delta
+
+  United
+  Southwest
+  Continental
+  American
+  US Airways
+
+  60  65  70  75  80
+
+  Percentage of Arrivals on Time (December 1997)
+
+FIGURE 1.14
+Percent of on-time arrivals for December 1997. (From Bureau of Transportation Statistics,
+www.bts.gov.)
+
+© 2003 by CRC Press LLC
+700,000U.S. Revenue Passenger EnplanementsGulf War
+600,000(103)
+500,000  Deregulation
+400,000  1954
+300,000  1957
+200,000  1960
+100,000  1963
+  1966
+  0  1969
+  1972
+  1975
+  1978
+  1981
+  1984
+  1987
+  1990
+  1993
+  1996
+  1999
+
+  Year
+
+FIGURE 1.15
+U.S. revenue passenger enplanements 1954 through 1999. (From Bureau of Transportation
+Statistics, www.bts.gov.)
+
+trends of a variable over time. For example, consider Figure 1.15, which
+represents the evolution of the U.S. air-travel market. A line chart is useful
+for showing the growth in the market over time. Two points of particular
+interest to the air-travel market, the deregulation of the market and the Gulf
+War, are marked on the graph.
+
+© 2003 by CRC Press LLC
+2
+
+Statistical Inference II: Interval
+Estimation, Hypothesis Testing,
+and Population Comparisons
+
+Scientiﬁc decisions should be based on sound analysis and accurate infor-
+mation. This chapter provides the theory and interpretation of conﬁdence
+intervals, hypothesis tests, and population comparisons, which are statistical
+constructs (tools) used to ask and answer questions about the transportation
+phenomena under study. Despite their enormous utility, conﬁdence intervals
+are often ignored in transportation practice and hypothesis tests and popu-
+lation comparisons are frequently misused and misinterpreted. The tech-
+niques discussed in this chapter can be used to formulate, test, and make
+informed decisions regarding a large number of hypotheses. Such questions
+as the following serve as examples. Does crash occurrence at a particular
+intersection support the notion that it is a hazardous location? Do trafﬁc-
+calming measures reduce trafﬁc speeds? Does route guidance information
+implemented via a variable message sign system successfully divert motor-
+ists from congested areas? Did the deregulation of the air-transport market
+increase the market share for business travel? Does altering the levels of
+operating subsidies to transit systems change their operating performance?
+To address these and similar types of questions, transportation researchers
+and professionals can apply the techniques presented in this chapter.
+
+2.1 Conﬁdence Intervals
+In practice, the statistics calculated from samples such as the sample aver-
+age X , variance s2, standard deviation s, and others reviewed in the
+previous chapter are used to estimate population parameters. For example,
+the sample average X is used as an estimator for the population mean Qx,
+the sample variance s2 is an estimate of the population variance W2, and so
+on. Recall from Section 1.6 that desirable or “good” estimators satisfy four
+
+© 2003 by CRC Press LLC
+important properties: unbiasedness, efﬁciency, consistency, and sufﬁciency.
+However, regardless of the properties an estimator satisﬁes, estimates will
+vary across samples and there is at least some probability that it will be
+different from the population parameter it is meant to estimate. Unlike the
+point estimators reviewed in the previous chapter, the focus here is on
+interval estimates. Interval estimates allow inferences to be drawn about
+a population by providing an interval, a lower and upper boundary, within
+which an unknown parameter will lie with a prespeciﬁed level of conﬁ-
+dence. The logic behind an interval estimate is that an interval calculated
+using sample data contains the true population parameter with some level
+of conﬁdence (the long-run proportion of times that the true population
+parameter interval is contained in the interval). Intervals are called conﬁ-
+dence intervals (CIs) and can be constructed for an array of levels of
+conﬁdence. The lower value is called the lower conﬁdence limit (LCL) and
+the upper value the upper conﬁdence limit (UCL). The wider a conﬁdence
+interval, the more conﬁdent the researcher is that it contains the population
+parameter (overall conﬁdence is relatively high). In contrast, a relatively
+narrow conﬁdence interval is less likely to contain the population param-
+eter (overall conﬁdence is relatively low).
+
+  All the parametric methods presented in the ﬁrst four sections of this
+chapter make speciﬁc assumptions about the probability distributions of
+sample estimators, or make assumptions about the nature of the sampled
+populations. In particular, the assumption of an approximately normally
+distributed population (and sample) is usually made. As such, it is imper-
+ative that these assumptions, or requirements, be checked prior to apply-
+ing the methods. When the assumptions are not met, then the
+nonparametric statistical methods provided in Section 2.5 are more
+appropriate.
+
+2.1.1 Conﬁdence Interval for Q with Known W2
+
+The central limit theorem (CLT) suggests that whenever a sufﬁciently
+large random sample is drawn from any population with mean Q and
+standard deviation W, the sample mean X is approximately normally
+distributed with mean Q and standard deviation W / n . It can easily be
+veriﬁed that this standard normal random variable Z has a 0.95 proba-
+bility of being between the range of values [–1.96, 1.96] (see Table C.1 in
+Appendix C). A probability statement regarding Z is given as
+
+  ¨P© 1.96 X Q  ¸1.96¹ ! 0.95 . (2.1)
+
+  ª  W/ n  º
+
+  With some basic algebraic manipulation the probability statement of Equa-
+tion 2.1 can be written in a different, yet equivalent form:
+
+© 2003 by CRC Press LLC
+0.95 ! P©  ¨ 1.96W  X Q  1.96W ¸¹
+
+  ªn  nº  .  (2.2)
+
+  ¨! P© X  1.96 W  W¸
+  Q X  1.96 ¹
+  ª  n  nº
+
+  Equation 2.2 reveals that, with a large number of intervals computed from
+
+different random samples drawn from the population, the proportion of
+
+values of X for which the interval (X  1.96W n , X  1.96W n) captures Q
+is 0.95. This interval is called the 95% conﬁdence interval estimator of Q. A
+shortcut notation for this interval is
+
+  X s 1.96 W . (2.3)
+  n
+
+  Obviously, probabilities other than 95% can be used. For example, a 90%
+conﬁdence interval is
+
+  X s 1.645 W .
+  n
+
+  In general, any conﬁdence level can be used in estimating the conﬁdence
+
+intervals. The conﬁdence interval is 1  E , and ZE 2 is the value of Z such
+
+that the area in each of the tails under the standard normal curve is E 2 .
+
+Using this notation, the conﬁdence interval estimator of Q can be written as
+
+  X s ZE 2 W .  (2.4)
+  n
+
+  Because the conﬁdence level is inversely proportional to the risk that the
+
+conﬁdence interval fails to include the actual value of Q, it generally ranges
+between 0.90 and 0.99, reﬂecting 10% and 1% levels of risk of not including
+
+the true population parameter, respectively.
+
+Example 2.1
+
+  A 95% conﬁdence interval is desired for the mean vehicular speed on
+  Indiana roads (see Example 1.1 for more details). First, the assumption
+  of normality is checked; if this assumption is satisﬁed we can proceed
+  with the analysis. The sample size is n = 1296, and the sample mean is
+  X = 58.86. Suppose a long history of prior studies has shown the popu-
+  lation standard deviation as W = 5.5. Using Equation 2.4, the conﬁdence
+  interval can be obtained:
+
+© 2003 by CRC Press LLC
+  X s 1.96 Wn ! 58.86 s 1.96 5.5 1296 ! 58.86 s 0.30 ! ?58.56, 59.16A .
+
+The result indicates that the 95% conﬁdence interval for the unknown
+population parameter Q consists of lower and upper bounds of 58.56 and
+59.16. This suggests that the true and unknown population parameter
+would lie somewhere in this interval about 95 times out of 100, on average.
+The conﬁdence interval is rather “tight,” meaning that the range of possible
+values is relatively small. This is a result of the low assumed standard
+deviation (or variability in the data) of the population examined.
+
+The 90% conﬁdence interval, using the same standard deviation, is [58.60,
+59.11], and the 99% conﬁdence interval is [58.46, 59.25]. As the conﬁdence
+interval becomes wider, there is greater and greater conﬁdence that the
+interval contains the true unknown population parameter.
+
+2.1.2 Conﬁdence Interval for the Mean with Unknown Variance
+
+In the previous section, a procedure was discussed for constructing conﬁ-
+dence intervals around the mean of a normal population when the variance
+of the population is known. In the majority of practical sampling situations,
+however, the population variance is rarely known and is instead estimated
+from the data. When the population variance is unknown and the population
+is normally distributed, a (1 – E)100% conﬁdence interval for Q is given by
+
+  X s tE 2 sn ,  (2.5)
+
+where s is the square root of the estimated variance (s2), tE 2 is the value of
+the t distribution with n  1 degrees of freedom (for a discussion of the t
+distribution, see Appendix A).
+
+Example 2.2
+
+  Continuing with the previous example, a 95% conﬁdence interval for the
+  mean speed on Indiana roads is computed, assuming that the population
+  variance is not known, and instead an estimate is obtained from the data
+  with the same value as before. The sample size is n = 1296, and the sample
+  mean is X = 58.86. Using Equation 2.3, the conﬁdence interval can be
+  obtained as
+
+  X s tE 2 sn ! 58.86 s 1.96 4.41 1296 ! ?58.61, 59.10A .
+
+Interestingly, inspection of probabilities associated with the t distribution
+(see Table C.2 in Appendix C) shows that the t distribution converges to
+
+© 2003 by CRC Press LLC
+the standard normal distribution as n p g . Although the t distribution is
+the correct distribution to use whenever the population variance is un-
+
+known, when sample size is sufﬁciently large the standard normal distri-
+
+bution can be used as an adequate approximation to the t distribution.
+
+2.1.3 Conﬁdence Interval for a Population Proportion
+
+Sometimes, interest centers on a qualitative (nominal scale) variable, rather
+than a quantitative (interval or ratio scale) variable. There might be interest in
+the relative frequency of some characteristic in a population such as, for exam-
+ple, the proportion of people in a population who are transit users. In such
+cases, an estimate of the population proportion, p, whose estimator is pˆ has
+an approximate normal distribution provided that n is sufﬁciently large (np u 5
+and nq u 5 , where q ! 1  p ). The mean of the sampling distribution pˆ is the
+population proportion p and the standard deviation is pq n .
+
+  A large sample 1  E 100% conﬁdence interval for the population propor-
+
+tion, p is given by
+
+  pˆ s ZE 2 pˆqˆn ,  (2.6)
+
+where the estimated sample proportion, pˆ , is equal to the number of “suc-
+cesses” in the sample divided by the sample size, n, and qˆ ! 1  pˆ .
+
+Example 2.3
+
+A transit planning agency wants to estimate, at a 95% conﬁdence level,
+the share of transit users in the daily commute “market” (that is, the
+percentage of commuters using transit). A random sample of 100 commut-
+ers is obtained and it is found that 28 people in the sample are transit users.
+By using Equation 2.6, a 95% conﬁdence interval for p is calculated as
+
+  pˆ s Za 2 pˆqˆn ! 0.28 s 1.96 0.28 0.72 100 ! 0.28 s 0.088 ! ?0.192, 0.368A .
+
+Thus, the agency is 95% conﬁdent that transit users in the daily commute
+range from 19.2 to 36.8%.
+
+2.1.4 Conﬁdence Interval for the Population Variance
+
+In many situations, in trafﬁc safety research for example, interest centers
+on the population variance (or a related measure such as the population
+standard deviation). As a speciﬁc example, vehicle speeds contribute to
+crash probability, with an important factor the variability in speeds on the
+
+© 2003 by CRC Press LLC
+roadway. Speed variance, measured as differences in travel speeds on a
+roadway, relates to crash frequency in that a larger variance in speed
+between vehicles correlates with a larger frequency of crashes, especially
+for crashes involving two or more vehicles (Garber, 1991). Large differences
+in speeds results in an increase in the frequency with which motorists pass
+one another, increasing the number of opportunities for multivehicle
+crashes. Clearly, vehicles traveling the same speed in the same direction
+do not overtake one another; therefore, they cannot collide as long as the
+same speed is maintained (for additional literature on the topic of speeding
+and crash probabilities, covering both the United States and abroad, the
+interested reader should consult FHWA, 1995, 1998, and TRB, 1998).
+
+  A 1  E 100% conﬁdence interval for W2, assuming the population is nor-
+
+mally distributed, is given by
+
+  «n  1 s2 n  1 s2 »
+  ¬ 2 , 2 ¼,  (2.7)
+  ­¬ GE 2  G1E 2 ½¼
+
+where GE 2 2 is the value of the G2 distribution with n  1 degrees of freedom.
+The area in the right-hand tail of the distribution is GE2 2 , while the area in
+the left-hand tail of the distribution is G1E 2 2 . The chi-square distribution is
+described in Appendix A, and the table of probabilities associated with the
+chi-square distribution is provided in Table C.3 of Appendix C.
+
+Example 2.4
+
+A 95% conﬁdence interval for the variance of speeds on Indiana roads
+is desired. With a sample size of 100 and a variance of 19.51 mph2, and
+using the values from the G2 table (Appendix C, Table C.3), one obtains
+GE 2 2 = 129.56 and G1E 2 2 = 74.22. Thus, the 95% conﬁdence interval is
+given as
+
+  ¬« 9919.51 9919.51 »,¼ ! ?15.05, 26.02A .
+
+  ­ 129.56 74.22 ½
+
+The speed variance is, with 95% conﬁdence, between 15.05 and 26.02.
+Again, the units of the variance in speed are in mph2.
+
+2.2 Hypothesis Testing
+Hypothesis tests are used to assess the evidence on whether a difference in
+a population parameter (a mean, variance, proportion, etc.) between two or
+
+© 2003 by CRC Press LLC
+more groups is likely to have arisen by chance or whether some other factor
+is responsible for the difference. Statistical distributions are employed in
+hypothesis testing to estimate probabilities of observing the sample data,
+given an assumption about what “should have” occurred. When observed
+results are extremely unlikely to have occurred under assumed conditions,
+then the assumed conditions are considered unlikely. In statistical terms, the
+hypothesis test provides the following probability
+
+  Pdata|true null hypothesis ,  (2.8)
+
+which is the probability of obtaining or observing the sample data condi-
+tional upon a true null hypothesis. It is not, however, the probability of the
+null hypothesis being true, despite the number of times it is mistakenly
+interpreted this way. This and other common misinterpretations of hypoth-
+esis tests are described in Washington (2000a).
+
+  Consider an example. Suppose there is interest in quantifying the impact
+of the repeal of the National Maximum Speed Limit (NMSL) on average
+speeds on U.S. roads. Representative speed data are collected in time periods
+before and after the repeal. Using a simple before-after study design, the
+mean speeds before and after repeal of the NMSL are compared.
+
+  In statistical terms, the data are used to assess whether the observed
+difference in mean speeds between the periods can be explained by the
+natural sampling variability, or whether the observed difference is attrib-
+utable to the repeal of the NMSL. Using hypothesis testing, the researcher
+calculates the probability of observing the increase (or decrease) in mean
+speeds (as reﬂected in the sample data) from the period before to the
+period after repeal, under the assumption that the repeal of the NMSL
+had no effect. If an observed increase in speed is extremely unlikely to
+have been produced by random sampling variability, then the researcher
+concludes that the repeal was instrumental in bringing about the change.
+Conversely, if the observed speed differences are not all that unusual and
+can rather easily be explained by random sampling variability, then it is
+difﬁcult to attribute the observed differences to the effect of the repeal.
+At the conclusion of the hypothesis test the probability of observing the
+actual data is obtained, given that the repeal of the NMSL had no effect
+on speeds.
+
+  Because many trafﬁc investigations are observational types of studies, it
+is not easy to control the many other factors that could inﬂuence speeds in
+the after period (besides the repeal). Such factors include changes in vehicle
+miles traveled (VMT), driver population, roadside changes, adjacent land-
+use changes, weather, and so on. It is imperative to account for, or control,
+these other factors to the extent possible, because lack of control could result
+in attributing a change in speeds to the repeal of the NMSL, when in fact
+other factors were responsible for the change.
+
+© 2003 by CRC Press LLC
+2.2.1 Mechanics of Hypothesis Testing
+
+To formulate questions about transportation phenomena a researcher must
+pose two competing statistical hypotheses: a null hypothesis (the hypoth-
+esis to be nulliﬁed) and an alternative. The null hypothesis, typically
+denoted by H0, is an assertion about one or more population parameters
+that are assumed to be true until there is sufﬁcient statistical evidence to
+conclude otherwise. The alternative hypothesis, typically denoted by Ha,
+is the assertion of all situations not covered by the null hypothesis. Together
+the null and the alternative constitute a set of hypotheses that covers all
+possible values of the parameter or parameters in question. Considering
+the NMSL repeal previously discussed, the following pair of competing
+hypotheses could be formulated:
+
+  Null Hypothesis (H0): There has not been a change in mean speeds as
+  a result of the repeal of the NMSL
+
+  Alternative Hypothesis (Ha): There has been a change in mean speeds
+  as a result of the repeal of the NMSL.
+
+  The purpose of a hypothesis test is to determine whether it is appro-
+priate to reject or not to reject the null hypothesis. The test statistic is
+the sample statistic upon which the decision to reject, or fail to reject,
+the null hypothesis is based. The nature of the hypothesis test is deter-
+mined by the question being asked. For example, if an engineering inter-
+vention is expected to change the mean of a sample (the mean of vehicle
+speeds), then a null hypothesis of no difference in means is appropriate.
+If an intervention is expected to change the spread or variability of data,
+then a null hypothesis of no difference in variances should be used. There
+are many different types of hypothesis tests that can be conducted.
+Regardless of the type of hypothesis test, the process is the same: the
+empirical evidence is assessed and will either refute or fail to refute the
+null hypothesis based on a prespeciﬁed level of conﬁdence. Test statistics
+used in many parametric hypothesis testing applications rely upon the
+Z, t, F, and G2 distributions.
+
+  The decision to reject or fail to reject the null hypothesis may or may
+not be based on the rejection region, which is the range of values such
+that, if the test statistic falls into the range, the null hypothesis is rejected.
+Recall that, upon calculation of a test statistic, there is evidence either to
+reject or to fail to reject the null hypothesis. The phrases reject and fail to
+reject have been chosen carefully. When a null hypothesis is rejected, the
+information in the sample does not support the null hypothesis and it is
+concluded that it is unlikely to be true, a deﬁnitive statement. On the other
+hand, when a null hypothesis is not rejected, the sample evidence is
+consistent with the null hypothesis. This does not mean that the null
+hypothesis is true; it simply means that it cannot be ruled out using the
+observed data. It can never be proved that a statistical hypothesis is true
+
+© 2003 by CRC Press LLC
+TABLE 2.1
+
+Results of a Test of Hypothesis
+
+Test Result  H0 is true  Reality
+  H0 is false
+
+Reject  Type I error  Correct decision
+Do not reject
+  P(Type I error) = E  Type II error
+  Correct decision  P(Type II error) = F
+
+using the results of a statistical test. In the language of hypothesis testing,
+
+any particular result is evidence as to the degree of certainty, ranging from
+
+almost uncertain to almost certain. No matter how close to the two
+
+extremes a statistical result may be, there is always a non-zero probability
+
+to the contrary.
+
+  Whenever a decision is based on the result of a hypothesis test, there is a
+
+chance that it will be incorrect. Consider Table 2.1. In this classical Ney-
+
+man–Pearson methodology, the sample space is partitioned into two regions.
+
+If the observed data reﬂected through the test statistic falls into the rejection
+
+or critical region, the null hypothesis is rejected. If the test statistic falls into
+
+the acceptance region, the null hypothesis cannot be rejected. When the null
+hypothesis is true, there is E percent chance of rejecting it (Type I error).
+When the null hypothesis is false, there is still a F percent chance of accepting
+it (Type II error). The probability of Type I error is the size of the test. It is
+conventionally denoted by E and called the signiﬁcance level. The power of
+a test is the probability that it will correctly lead to rejection of a false null
+hypothesis, and is given as 1  F.
+
+  Because both probabilities E and F reﬂect probabilities of making errors,
+they should be kept as small as possible. There is, however, a trade-off
+
+between the two. For several reasons, the probability of making a Type II
+error is often ignored. Also, the smaller the E, the larger the F. Thus, if E is
+made to be really small, the “cost” is a higher probability for making a Type
+
+II error, all else being equal. The determination of which statistical error is
+
+least desirable depends on the research question asked and the subsequent
+
+consequences of making the respective errors. Both error types are undesir-
+
+able, so attention to proper experimental design prior to data collection and
+
+sufﬁciently large sample sizes will help to minimize the probability of mak-
+
+ing these two statistical errors. In practice, the probability of making a Type
+I error E is usually set in the range from 0.01 to 0.10 (1 and 10% error rates,
+respectively). The selection of an appropriate E level is based on the conse-
+quences of making a Type I error. For example, if human lives are at stake
+when an error is made (accident investigations, medical studies), then an E
+of 0.01 or 0.005 may be most appropriate. In contrast, if an error results in
+
+monies being spent for improvements (congestion relief, travel time, etc.)
+that might not bring about improvements, then perhaps a less stringent E
+is appropriate.
+
+© 2003 by CRC Press LLC
+2.2.2 Formulating One- and Two-Tailed Hypothesis Tests
+
+As discussed previously, the decision of whether the null hypothesis is
+rejected (or not) is based on the rejection region. To illustrate a two-tailed
+rejection region, suppose a hypothesis test is conducted to determine
+whether the mean speed on U.S. highways is 60 mph. The null and alterna-
+tive hypotheses are formulated as follows:
+
+  H0: Q ! 60
+  .
+
+  Ha: Q { 60
+
+  If the sample mean (the test statistic in this case) is signiﬁcantly different
+from 60, and X falls in the rejection region, the null hypothesis is rejected.
+On the other hand, if X is sufﬁciently close to 60, the null hypothesis cannot
+be rejected. The rejection region provides a range of values below or above
+which the null hypothesis is rejected. In practice, however, a standardized
+normal test statistic is employed. A standardized normal variable is con-
+structed (Equation 2.1) based on a true null hypothesis such that
+
+  Z* ! XW  Q . (2.9)
+  n
+
+  The random variable is approximately standard normally distributed (N(0,
+1)) under a true null hypothesis. Critical values of Z, or Zc, are deﬁned such
+
+that P?Z* u Zc A ! P?Z* e Zc A ! E 2 . The values of Zc that correspond to
+
+different values of E are provided in Table C.1 in Appendix C; some com-
+monly used values are shown in Table 2.2. For example, if E = 0.05 then Zc
+= 1.96. Using Equation 2.9 the test statistic Z* is calculated; for this statistic
+the following rules apply:
+
+  1. If Z* u Zc , then the probability of observing this value (or larger)
+  if the null hypothesis is true is E. In this case the null hypothesis is
+  rejected in favor of the alternative.
+
+  2. If Z* Zc , then the probability of observing this value (or smaller)
+  is 1  E. In this case the null hypothesis cannot be rejected.
+
+TABLE 2.2
+
+Critical Points of Z for Selected Levels of Signiﬁcance
+
+  Level of Signiﬁcance E
+
+  0.10  0.05  0.01
+
+One-tailed test  ±1.28  ±1.645  ±2.326
+Two-tailed test  ±1.645  ±1.96  ±2.576
+
+© 2003 by CRC Press LLC
+  The conclusions corresponding with the null and alternate hypotheses are
+“the population mean is equal to 60 mph” and “the population mean is not
+equal to 60 mph,” respectively. This example illustrates a two-sided hypoth-
+esis test.
+
+  There are many situations when, instead of testing whether a population
+parameter is equal to a speciﬁc value, interest may center on testing whether
+a parameter is greater than (or smaller than) a speciﬁc value. For example,
+consider a hypothesis test of whether a decrease in domestic airfare ticket
+prices for a certain airline have a positive impact on the market share p of
+the airline, currently at 7%. The null and alternative hypotheses are stated as
+
+  H0: p e 0.07
+  .
+
+  Ha: p " 0.07
+
+  In these hypotheses there is an a priori belief that the direction of the
+anticipated effect is an increase in market share (and the hypotheses are
+constructed to test this speciﬁc directional effect). There could have also been
+an a priori belief of a decrease in market share, which would yield the
+following hypotheses
+
+  H0: p u 0.07
+  .
+
+  Ha: p 0.07
+
+  Finally, nondirectional hypotheses, motivated by lack of a priori belief
+regarding the direction of the effect, would yield
+
+  H0: p ! 0.07
+  .
+
+  Ha: p { 0.07
+
+  One- and two-tailed tests have different critical points on the standard
+normal distribution since E is allocated to a single tail for directional tests,
+whereas it is divided between two tails for nondirectional tests. Table 2.2
+provides critical points for the Z distribution for one-tailed and two-tailed
+hypothesis tests for commonly used values of E. Critical values for other
+levels of E are found in Table C.1.
+
+Example 2.5
+
+  Using the data from Example 2.1, a test is conducted to assess whether
+  the mean speed on Indiana roads is 59.5 mph at the 5% signiﬁcance
+  level. The sample size is n = 1296, and the sample mean is Q = 58.86.
+  Suppose that numerous past studies have revealed the population
+
+© 2003 by CRC Press LLC
+standard deviation to be W = 5.5. The parameter of interest is the
+population mean, and the hypotheses to be tested are
+
+  H0: Q ! 59.5
+  .
+
+  Ha: Q { 59.5
+
+From Example 2.1, a 95% conﬁdence interval for mean speeds is [58.56,
+59.16]. Because the value 59.5 mph is not within the conﬁdence interval,
+the null hypothesis is rejected. Thus, there is sufﬁcient evidence to infer
+that mean speed is not equal to 59.5 mph.
+
+An alternative method for obtaining this result is to use the standardized
+test statistic presented in Equation 2.9 and follow the appropriate deci-
+sion rules. The test statistic is
+
+  Z* ! xW Q ! 58.86  59.5 5.5 ! 3.27 .
+  n  1296
+
+Since the test statistic |–3.27| = 3.27 is greater than 1.96, the critical value
+for a two-tailed test at the 5% level of signiﬁcance, the null hypothesis
+is rejected. As expected, a conﬁdence interval and the standardized test
+statistic lead to identical conclusions.
+
+2.2.3 The p-Value of a Hypothesis Test
+
+An increasingly common practice in reporting the outcome of a statistical test
+is to state the value of the test statistic along with its “probability-value” or
+“p-value.” The p-value is the smallest level of signiﬁcance E that leads to
+rejection of the null hypothesis. It is an important value because it quantiﬁes
+the amount of statistical evidence that supports the alternative hypothesis. In
+general, the more evidence that exists to reject the null hypothesis in favor of
+the alternative hypothesis, the larger the test statistic and the smaller is the p-
+value. The p-value provides a convenient way to determine the outcome of a
+statistical test based on any speciﬁed Type I error rate E; if the p-value is less
+than or equal to E, then the null hypothesis is rejected. For example, a p-value
+of 0.031 suggests that a null hypothesis will be rejected at E = 0.05, but will
+not be rejected at E = 0.01. Using p-values will always lead to the same
+conclusions as the usual test procedure given a level of signiﬁcance E.
+
+  The p-value of Z* ! 3.27 is calculated as follows:
+
+  p-value Z* ! 3.27 ! p?Z e 3.27 and Z u 3.27A
+  ! 2p?Z u 3.27A ! 2?1  p?Z e 3.27AA .
+
+  ! 2?1  .99946A ! .001
+
+© 2003 by CRC Press LLC
+  As a result, the null hypothesis H0: Q ! 59.5 is rejected at the 0.05 and 0.01
+levels, because the p-value of the test is 0.001.
+
+2.3 Inferences Regarding a Single Population
+
+The previous section discussed some of the essential concepts regarding
+statistical inference and hypothesis tests concerning the mean of a population
+when the variance is known. However, this test is seldom applied in practice
+because the population standard deviation is rarely known. The section was
+useful, however, because it provided the framework and mechanics that are
+universally applied to all types of hypothesis testing.
+
+  In this section, techniques for testing a single population are presented.
+The techniques introduced in this section are robust, meaning that if the
+samples are nonnormal the techniques are still valid provided that the
+samples are not extremely or signiﬁcantly nonnormal. Under extreme
+nonnormality, nonparametric methods should be used to conduct the
+equivalent hypothesis tests (see Section 2.5 for a discussion on nonpara-
+metric tests).
+
+2.3.1 Testing the Population Mean with Unknown Variance
+
+Applying the same logic used to develop the test statistic in Equation 2.9, a
+test statistic for testing hypotheses about Q given that W2 is not known and
+the population is normally distributed, is
+
+  t* ! X  Q s ,  (2.10)
+  n
+
+which has a t distribution with n – 1 degrees of freedom.
+
+Example 2.6
+
+  Similar to the previous example, a test of whether the mean speed on
+  Indiana roads is 60 mph is conducted at the 5% signiﬁcance level. The
+  sample size is n = 1296, and the sample mean is X = 58.86. As is most
+  often the case in practice, W2 is replaced with s = 4.41, the estimated
+  standard deviation. The statistical hypotheses to be tested are
+
+  H0:Q ! 60
+  .
+
+  Ha:Q { 60
+
+© 2003 by CRC Press LLC
+Using Equation 2.10, the value of the test statistic is
+
+  t* ! X  Q s ! 58.86  60 4.41 ! 335 .
+
+  n  1296
+
+The test statistic is very large, and much larger than any reasonable
+critical value of t (Table C.2), leading again to a rejection of the null
+hypothesis. That is, the evidence suggests that the probability of observ-
+ing these data, if in fact the mean speed is 60 mph, is extremely small
+and the null hypothesis is rejected.
+
+Why is the test statistic so large, providing strong objective evidence to
+reject the null hypothesis? If the sample size were 36 instead of 1296, the
+test statistic would yield 0.81, leading to the inability to reject the null
+hypothesis. It is the square root of n in Equation 2.10 that dominates this
+calculation, suggesting that larger samples yield more reliable results.
+This emphasizes an earlier point: lack of evidence to reject the null
+hypothesis does not mean that the null hypothesis is true; it may mean
+that the effect is too small to detect (X  Q) , the sample size is too small,
+or the variability in the data is too large relative to the effect.
+
+2.3.2 Testing the Population Variance
+
+With the same logic used to develop the conﬁdence intervals for W2 in Equa-
+tion 2.7, the test statistic used for testing hypotheses about W2 (with s2 the
+estimated variance) is
+
+  X 2 ! n  1 s2 2 ,  (2.11)
+
+  W
+
+which is G2 distributed with n  1 degrees of freedom when the population
+variance is approximately normally distributed with variance equal to W2.
+
+Example 2.7
+
+  A test of whether the variance of speeds on Indiana roads is larger than
+  20 is calculated at the 5% level of signiﬁcance, assuming a sample size
+  of 100. The parameter of interest is the population variance, and the
+  hypothesis to be tested is
+
+  H0 :W2 e 20
+  .
+
+  Ha:W2 " 20
+
+© 2003 by CRC Press LLC
+Using results from Example 2.4, the null hypothesis cannot be rejected.
+Nevertheless, using Equation 2.11 the test statistic is
+
+  X 2 ! n  1 s2 99 2 ! 19.51 ! 96.57 .
+  W  20
+
+From Table C.3 in Appendix C, the critical value for a chi-squared random
+variable with 99 degrees of freedom, W2 = 0.05 and a right-tailed test is
+129.561. As expected, the null hypothesis cannot be rejected at the 0.05
+
+level of signiﬁcance.
+
+2.3.3 Testing for a Population Proportion
+
+The null and alternative hypotheses for proportions tests are set up in the
+same manner as done previously, where the null is constructed so that p is
+equal to, greater than, or less than a speciﬁc value, while the alternative
+hypothesis covers all remaining possible outcomes. The test statistic is
+derived from the sampling distribution of pˆ and is given by
+
+  Z* ! pˆ  p ,  (2.12)
+  pq n
+
+where the estimated sample proportion pˆ is equal to the number of “suc-
+cesses” observed in the sample divided by the sample size, n, and q = 1 – p.
+
+Example 2.8
+
+  The transit planning agency mentioned in Example 2.3 tests whether the
+  transit market share in daily commute is over 20%, at the 5% signiﬁcance
+  level. The competing hypotheses are
+
+  H0: p = 0.20
+  .
+
+  Ha: p " 0.20
+
+The test statistic is:
+
+Z* ! pˆ  p !  0.20  0.28 0.28 0.72 100 ! 1.78 .
+  pq n
+
+The test statistic is not sufﬁciently large to warrant the rejection of the
+null hypothesis.
+
+© 2003 by CRC Press LLC
+2.4 Comparing Two Populations
+
+An extremely useful application of statistics is in comparing different samples
+or groups. Frequently in transportation research we seek to compare quantities
+such as speeds, accident rates, pavement performance, travel times, bridge
+paint life, and so on. This section presents methods for conducting compari-
+sons between groups; that is, testing for statistically signiﬁcant differences
+between two populations. As before, the methods presented here are for inter-
+val and ratio scale variables and are robust. For ordinal scale variables and
+for extreme nonnormality, nonparametric alternatives should be used.
+
+2.4.1 Testing Differences between Two Means: Independent Samples
+
+Random samples drawn from two populations are used to test the difference
+between two population means. This section presents the analysis of inde-
+pendent samples, and the following section presents the analysis of paired
+observations (or matched pairs experiments). It is assumed that large sam-
+ples are used to test for the difference between two population means
+because when sample sizes can be considered sufﬁciently large, then the
+distribution of their means can be considered as approximately normally
+distributed using the central limit theorem. A general rule of thumb suggests
+that sample sizes are large if both n1 u 25 and n2 u 25 .
+
+  There are several hypothesis testing options. The ﬁrst is a test of whether
+the mean of one population is greater than the mean of another population
+(a one-tailed test). A second is a test of whether two population means are
+equal, assuming lack of a prior intention to prove that one mean is greater
+than the other. The most common test for the difference between two pop-
+ulation means, Q1 and Q2, is the one presented below where the null hypoth-
+esis states that the two means are equal
+
+  H0:Q1  Q2 ! 0
+  .
+
+  Ha:Q1  Q2 { 0
+
+  The competing hypotheses for a directional test, that one population mean
+is larger than another, are
+
+  H0:Q1  Q2 e 0
+  .
+
+  Ha:Q1  Q2 " 0
+
+  The test statistic in both hypothesis testing situations is the same. As a
+result of the assumption about sample sizes and approximate normality of
+the populations, the test statistic is Z*, such that
+
+© 2003 by CRC Press LLC
+  Z* ! X1  X2  Q1  Q2 ,  (2.13)
+
+  s12  s22
+  n1 n2
+
+where (Q1 – Q2) is the difference between Q1 and Q2 under the null hypothesis.
+The expression in the denominator is the standard error of the difference
+
+between the two sample means and requires two independent samples.
+
+Recall that hypothesis tests and conﬁdence intervals are closely related. A
+large sample (1 – E)100% conﬁdence interval for the difference between two
+population means (Q1 – Q2), using independent random samples is
+
+  X1  X2 s ZE 2  s12  s22 .  (2.14)
+  n1 n2
+
+  When sample sizes are small (n1 e 25 and n2 e 25) and both populations
+are approximately normally distributed, the test statistic in Equation 2.13
+
+has approximately a t distribution with degrees of freedom given by
+
+  ¨ s12 s22 ¸ 2
+  © n  n¹
+  ª1  2º
+  df ! ¨ s21 ¸ 2 ¨ s22 ¸ 2 .  (2.15)
+
+  © n¹    © n¹
+  ª 1º  ª 2º
+
+  n1  1 n2  1
+
+  In Equations 2.13 and 2.14 it is assumed that W12 and W22 are not equal.
+When W12 and W22 are equal, there is an alternative test for the difference
+between two population means. This test is especially useful for small
+
+samples as it allows a test for the difference between two population
+
+means without having to use the complicated expression for the degrees
+
+of freedom of the approximate t distribution (Equation 2.15). When two
+population variances W12 and W22 are equal, then the variances are pooled
+together to obtain a common population variance. This pooled variance,
+sp2, is based on the sample variance s12 obtained from a sample of size
+n1, and a sample variance s22 obtained from a sample of size n2, and is
+given by
+
+  s2p ! n1  1 s12  n2  1 s22 .  (2.16)
+
+  n1  n2  2
+
+  A test statistic for a difference between two population means with equal
+population variances is given by
+
+© 2003 by CRC Press LLC
+

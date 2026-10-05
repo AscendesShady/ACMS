@@ -1,0 +1,1724 @@
+466 PART | X Mobility as a Service (MaaS)
+
+  Hollands (2015) points to a concern about smart cities being driven by corporate power and commercial interest at the
+expense of understanding the consequences for social and urban development ‘‘which is crucial to the liveability and
+sustainability of these cities” (Hollands, 2015, p.68). Lyons (2017) also echoes these same sentiments. Docherty et al.
+(2017) suggest that it is far from clear that these opportunities will be recognised or, even where they are, realised due to
+the complexities of steering any transition in the mobility system. Governing the smart mobility transition will be a key role
+of government in the presence of the growing network of actors and the new resource interdependencies (including who
+owns crucial big data e see later) that are almost certain to emerge.
+
+  Karlsson et al. (2017) suggest that overall, the assessments suggest that a broader introduction of MaaS could result in
+overall positive impacts, in terms a modal shift, a change in attitudes and an increase in perceived accessibility to the
+transport system. However, in their empirical research in Scandinavian countries, conﬂicts between impacts on different
+levels were identiﬁed where, for example, increased accessibility to the transport system e a desired impact on an indi-
+vidual and societal level e may result in an increase in the number of trips made e possibly a desired impact on an
+individual level but an undesired impact on a societal level with negative implications for emissions as well as congestion.
+When planning for a further introduction of MaaS from a societal perspective, such conﬂicts must be addressed in order to
+best determine how to potentially integrate overall societal goals into the MaaS offer and the business model.21
+
+  Whilst the numbers of vehicle kilometres generated under different smart mobility models can be debated, a key issue is
+the set of assumptions about how a system would have to be governed were it to achieve public value? Such tightly
+regulated approaches do not exist today in even the most progressive welfare societies (Docherty et al., 2017), and there
+has yet to be a commitment to the types of parking restriction and charging measures that would be necessary to make the
+transition from today’s mixed ﬂeet to a fully shared system beneﬁcial.
+
+  In reﬂecting on this matter, one might think that we have been there before. The smart transition, to date, has clear
+echoes of other transport markets through the decades, which have tended towards conditions of oligopoly or monopoly.
+Without effective regulation, preventing anti-competitive behaviour, such as a global-scale company providing mobility
+services from strangling new market entrants at birth through price attacks, could be impossible. A further issue to be
+considered is how these new systems handle allocated access to public space of different sorts. The recent lack of
+transparency in data sharing around the ﬁrst more highly automated driving system accidents in the US is also a concerning
+initial marker.
+
+  One possible way forward under a smart future might be for government to consider supporting mobility subscriptions
+rather than the transport services which underpin them, which could include a social contract as part of the right to operate,
+a new kind of ‘Public Service Obligation’ for Smart Mobility? For example, as suggested by Docherty et al. (2017), a kind
+of ‘Tobin’ per-transaction charge could be levied in areas with very high sharing densities which subsidises the areas which
+would otherwise be under served. The user-side subsidy funding model associated with speciﬁc modes such as buses, as
+discussed in the previous section, could also be part of this model, ensuring that the MaaS subscription plan not only offers
+a multi-model contract but also has inbuilt competitive processes in setting the prices to attract customers who will pay for
+a plan that is accompanied by a reimbursement claim equivalent to the level of subsidy provided to a customer. The
+customer then controls the market and MaaS providers compete for business. This does not guarantee that all MaaS
+providers would want to include public transport in the mix, but it does ensure that there is sufﬁcient public transport
+available that is an attractive alternative to the car based services where this is deemed by government to be a desirable
+feature in the jurisdiction of interest.
+
+  We may also need an independent ofﬁce22 of the smart mobility regulator? Much will depend on how brokers
+(aggregators) and orchestrators of the intelligent mobility model respond by designing multimodal subscription plans with
+public transport in the mix.
+
+34.4 Data access and sharing e necessary to manage network congestion
+
+  “A key enabler of the value chain for Smart Mobility services is a city’s upfront investment in ITS and other intelligent infra-
+  structure that generates key raw data . Public agencies, including city government, are seeing the economic value in making
+
+21. The author and colleagues at ITLS are undertaking a stated preference study to establish broker (aggregator) and orchestrator preferences for different
+subscription plans (allowing for equity, risk, modes and possible government subsidy). Current mode-speciﬁc operators and non-mobility providers are in
+the sample.
+22. Such an ofﬁce can set the network price with inputs like time of day, location and modal efﬁciency used to deﬁne the rate of mobility credit con-
+sumption under an economically deregulated broker market.
+  What might road congestion look like in the future Chapter | 34 467
+
+  their data available at no cost . for private data owners, this raw material may be a saleable asset in its own right. (Buscher
+  et al., 2014, p.30 cited in Docherty et al., 2017)
+
+  One of the very real challenges facing government is the ﬂow of information that can be used to optimise the efﬁcient
+use of the transport network in the new age of intelligent mobility. From a network control and management point of view,
+the current concept of operations in cities needs to be reviewed and assessed in conjunction with the current and emerging
+technologies. Once such assessment is completed, deﬁned strategic and tactical plans (targeting certain applications/ser-
+vices) will be required to close any gaps and deliver the opportunities identiﬁed. Funnelling the data available today is one
+of the main challenges for the transport operators, planners and providers to serve their respective business; it is kind of
+overwhelming.
+
+  Open, cloud-based Internet of Things operating systems exist today, and they allow infrastructure operators to easily
+connect their assets and perform data analyses without having to develop or invest in the requisite IT infrastructure. The
+traveller of the future may get in their car, check the potential routes, and drive in a smooth trafﬁc ﬂow to a nearby train
+station, where they walk onto a train that departs just 1 min later, getting them to work in half the time. The driving may be
+autonomous, guided by a smart infrastructure that tells the car where it can ﬁnd the fastest and safest route.
+
+  Whilst the ‘open data’ movement offers myriad opportunities for more user-led and intelligent planning decisions to be
+made as a result of thousands of individual developers and users creating new ways to harness and distribute mobility data,
+the critical risk is that this shift in the control of knowledge and associated power may make governing mobility much
+more difﬁcult in the longer term. The state is already losing its position as the principal source of knowledge about travel
+patterns on the network relative to mobile phone operators and other players such as Google; with this information
+asymmetry also set to grow further through, for example, better peer to peer sharing of location data.
+
+  While governments own important data sources as well (especially integrated trafﬁc control systems, public transport
+electronic ticketing data), they typically provide it free of charge to others who then process the data into a form where it
+can be usefully used to design travel planners, route guidance systems and even potential demand for new subscription
+plans that are multimodal. The positive externalities of open data outweigh the negative, but there are ways for the state to
+avoid the negative. For example, it is possible to license access to free 3D infrastructure maps and service data such that
+anyone making commercial gain from this open provision has to provide the state access to some aspects of the data they
+generate. Governments have been somewhat conservative in recognising the value of this asset, and just like physical
+networks such as roads and railways, they should start thinking about a charging regime along similar lines as user pays for
+roads. Encouragingly, in Australia, this is an issue that government is showing great interest in and will expect a payment
+from suppliers under their subscription pricing plans.
+
+34.5 Road pricing reform
+
+The smart mobility paradigm is almost silent on the role that road pricing reform will continue to play and the opportunity
+that it will open up to give such reform a whole new meaning as part of an integrated pricing strategy. Speciﬁcally, we have
+concluded for many years now that there are few non-blunt instruments available to ‘tame’ congestion over the longer term
+and to relate the fee for use of the road network to the beneﬁts that are obtained (allowing for internalisation of negative
+externalities). We have also known for many years that pricing reform is not an issue of economics and planning, but of
+politics and marketing. Buy in has become the raison d’etre as we continue to struggle to ﬁnd ways to satisfy the voting
+population in ways that will gain political support and action (see for example, Hensher and Mulley, 2014; Hensher and
+Bliemer, 2014). Digitally deﬁned mobility services, be they part of a subscription plan delivered by a broker (or integrator)
+under MaaS or even a standalone shared service such as Uber or Lyft, provide the opportunity to build in an appropriate
+pricing mechanism for the use of the road network23 which is provided by government. Such providers or plans are likely
+to use time varying pricing structures as well as relying on increasingly sophisticated digitally geo-referenced location
+
+23. The focus in on efﬁcient economic user charges for the entire network in contrast to tolling which is road speciﬁc and typically based on commercial
+pricing and distortionary impact in terms of overall social welfare beneﬁts for the entire network. The presence of toll roads under a PPP create a messy
+situation; however governments need to ﬁnd a way to gain back control of the network, which has been lost in cities such as Sydney where private
+companies have 30 year concessions to operate the key motorways. See Hensher (2018) for a discussion.
+468 PART | X Mobility as a Service (MaaS)
+
+platforms, and so may provide both the technology platform and the political cover to support a change in how we charge
+for use of the network.24 The road pricing reform becomes hidden and becomes nothing more than a non-declared (to user)
+component of the cost of using a transport mode on the road network.
+
+  Integrators (or mobility brokers) however, have argued for a relaxation of congestion charges for pooled vehicles in
+those Nordic cities that have implemented them. Further, and similar to integrators, point to point orchestrators (partic-
+ularly those involved in ride sharing) have argued that governments should implement exemptions from congestion
+charges and parking fees given the sustainable aspects of using their services. This creates a dilemma because, on the one
+hand we have in MaaS a real opportunity to reform economic road user charges, and yet we see the arguments for giving
+concessions25 on congestion related charges as a way of attracting switching away from the solo driving private vehicle
+towards the sharing car model (although the suggestions in a previous section suggest a real possibility of high vehicle
+kilometres around the clock, even with fewer vehicles). On balance, the arguments are weak on this matter given its small
+contribution to the ﬁnancial impost of individual car users, and one suspects this might be a ploy of the integrators and
+orchestrators to reduce their subscription of service charges to customers as a way of growing proﬁtability.
+
+  We should also learn from the experience in London, where having been captured by the environmentalists, the then
+mayor (Ken Livingstone) gave exemptions to environmentally friendly cars. London has had creeping upwards congestion,
+much of it fuelled by environmentally friendly cars (as people make longer term decisions for durable purchases). The
+moral of the story is that if it is a road user charge, road users should pay it. If something is deserving of a subsidy, make it
+direct because this way it can be varied.
+
+  We, amongst many others, have proposed ways of reforming the price associated with road use, moving away from
+ﬁxed charges (that are essentially administrative such as registration fees) to variable charges such as distance (and time of
+day) price per kilometre. For example, Hensher and Mulley (2014) set about to identify a reform that would both now
+make Treasuries not ﬁnancially worse off and the great majority of motorists, and which would ensure a high degree of buy
+in as the initial objectives. Any demonstrated gains in reduced congestion would ensure as the next stage evidence for
+adjusting the charging regime. The proposed charging regime involved a 50% reduction in annual registration fees and a
+peak period only distance based charge of 5c/km. Motorists had the option to opt out and travel in the off peak periods
+(which is feasible for a sufﬁcient number of motorists) reducing trafﬁc by 6%e10% in the Sydney Metropolitan Areas,
+returning peak periods in normal times of the year to those experienced in school holidays.
+
+34.6 Conclusions
+
+Whenever I attend a conference on future mobility and autonomous cars, we are told by experts in the technology space,
+especially those from telecommunications businesses, that congestion will be a thing of the past and all our roads will
+perform at totally safe free ﬂow levels with optimised spacing between vehicles, as well as intersection and lane merging
+controls to ensure free ﬂow performance at all locations along a road.26 Vehicle-to-infrastructure communication will make
+the city function like a giant computer, with a central operating system that everything ﬂows into. As appealing as this
+prediction is, one wonders how much faith can be placed on this speculation. What is likely to occur, however, is that the
+information obtained, after being compiled and analysed by a central platform, will help maintain the trafﬁc ﬂow and direct
+trafﬁc intelligently, but impact on levels of congestion in a directionally unclear manner, and adapt the infrastructure to
+meet acute requirements. These assertions appear to fail to recognise the implications of evolving car-based business
+models focussed on proﬁts. There is a hint here about the possible role of government and whether user or provider side
+subsidy may be required (maybe less than currently outlaid on conventional public transport) if it ensures a business model
+that respects the needs of the city over the needs of the commercial operator.
+
+  With a ﬁxed amount of road network capacity, if the popularity of the collaborative and connected economy actually
+takes hold, with or without vehicles being autonomous (and regardless of the fuel source, although this may impact
+favourably on the cost of car usage if electricity and hence attract even more ridership), we might expect congestion to
+
+24. Surge pricing, deﬁned both by time of day and location, is a step in the right directiondit is service-speciﬁc though, not network encompassing. The
+congestion issue is compounded by temporal imbalances between demand for road space occupancy and its (more or less) ﬁxed supply. In any discussion
+of ‘using smart transport to ‘resolve’ congestion’, a degree of temporal, and geographic granularity is desirable (as has always been promoted in road
+pricing reform e location and time of day) so as to focus the deployment or adoption of ‘vehicle sharing’ and ‘road user charging’ towards the domains of
+greatest challenge and opportunity.
+25. Maybe a discount if it is more spatially/temporally efﬁcient.
+26. The most recent conference I attended heard from the Chief Scientist of Telstra (Australia) who claimed that we will soon have 5G communications
+controlling autonomous vehicles that will be the basis of operating our road network with all communication built into the vehicles (no modiﬁcation
+required to roads), resulting in the complete elimination of trafﬁc congestion.
+  What might road congestion look like in the future Chapter | 34 469
+
+continue to exist, albeit as more predictable (i.e., less due to random circumstances; lower uncertain travel time variability),
+and hence the case for efﬁcient road user charging that accommodates congestion impacts will remain real. This will also
+be required as a mechanism to pay for the roads (as increased support for hypothecation mounts).
+
+  It is almost impossible to think of an argument that would result in fewer car kilometres on the roads under even a
+shared mobility model (which has the greatest prospects), especially if the claim is to also satisfy pent up latent mobility
+demand and round the clock commercial imperatives. What might be expected is that intelligent mobility opportunities will
+buy a number of years of growth in automobility in such a way that it will take pressure off the need to invest in currently
+planned future road investment (which will a good thing), but will require imposing meaningful road user charges.
+Encouragingly, such reformed road user charges will no longer be imposed on individuals (where the real sensitivity
+exists), but on mobility brokers who deliver the shared mobility services. Breaking the nexus between ownership and
+mobility should also break the resistance to supporting road pricing reform at the individual traveller and voter level.
+
+  In the debate on trafﬁc congestion, we need to stop looking just at cars. What if there was a smart infrastructure that
+connected road, rail, and other modes of transportation in such a way that all of them worked together to serve the mobility
+needs of the modern urban population? It is in this context that the congestion debate should be positioned. As McCabe
+(2017) suggests, MaaS may well be a fraud if it is car centric, and that if all of the arguments associated with car sharing are
+currently designed to get more people using cars without protecting the future of public transport, we are likely to see
+congestion getting worse, not better (after allowing for positive initiatives such as automated roads and reduced vehicle size
+in platoon settings).
+
+  What may well be the saviour is ensuring that a public transport contribution to the mix is preserved as a basis of
+moving large numbers of travellers who prefer it to a car-based offer, and we have efﬁcient road user charging and
+reformed public funding. If, as is suggested, car use will drop in price as we move to a sharing non ownership society with
+autonomous electric vehicles, the market will deliver higher levels of demand for such services (exactly what the tech-
+nology and app developers are hoping for), and thus simple economics without efﬁcient road user charging is likely to
+deliver congestion growth. So will we end back at a position where the savings associated with selling a car and moving to
+a non-ownership model with relatively low costs of usage actually discourage travel by a car mode? The central theme of
+this chapter is that even with signiﬁcant sharing of vehicles that are not privately owned, we are unlikely ever to fully tame
+congestion through the smart technology initiative (Cars are still carsdgeometrically unchanged by technology). Road
+pricing must come to the rescue as well as a new public transport funding model by government designed to switch control
+of subsidy to users and away from providers as a way of creating a competitive market for mobility contracts that support
+public transport. The greatest disruption may, in time, be created by pricing and funding reform.
+
+  Finally, there are many implied recommendations in this chapter, but the highlights should focus on ways to ensure that
+deregulated mobility contracts serve the relevant geographical jurisdiction in line with societal objectives; that mobility
+contract providers contribute ﬁnancially through a road user charge associated with the services that use government
+provides assets (hiding this charge in the subscription price); and that public transport remains part of the future mix of
+multimodal service provision (even where there is a closer deﬁnition of a car and a small bus as distinguished in a sharing
+model by only the carrying capacity).
+References
+
+AASHTO, 2010. User and Non-user Beneﬁt Analysis for Highways. American Association of State Highway and Transportation Ofﬁcials, Washington,
+  D.C.
+
+Abdelghany, K.F., Mahmassani, H.S., Abdelghany, A.F., 2007. A modeling framework for bus rapid transit operations evaluation and service planning.
+  Transportation Planning and Technology 30 (6), 571e591.
+
+Abelson, P., 2009. The Wider Economic Beneﬁts of Transport Infrastructure. Applied Economics Pty Ltd., Sydney.
+Abkowitz, M., Tozzi, J., 1987. Research contributions to managing transit service reliability. Journal of Advanced Transportation 21 (1), 47e65.
+ABS (Australian Bureau of Statistics), 2017. Regional Population Growth Australia 2015-16. Cat 3218.0. Released 30 March 2017.
+Ackerberg, D.A., Botticini, M., 2002. Endogenous matching and the empirical determinants of contract form. Journal of Political Economy 110, 564e591.
+Adler, T.R., Scherer, R.F., Barton, S.L., Katerberg, R., 1999. An empirical test of transaction cost theory validating contract typology. Journal of Applied
+
+  Management Studies 7, 185e190.
+Ahn, K., 2009. Road pricing and bus service policies. Journal of Transport Economics and Policy 43 (1), 25e53.
+Alexandersson, G., Pyddoke, R., 2003. Bus deregulation in Sweden revisited: experiences from 15 years of competitive tendering. In: Paper Presented at
+
+  the 8th International Conference on Competition and Ownership of Land Passenger Transport, Rio de Janeiro, Brazil, September 2003.
+Alexandersson, G., Nash, C., Preston, J., 2008. Risk and reward in rail contracting. In: Hensher, D.A. (Ed.), Reforms in Public Transport Research in
+
+  Transportation Economics 22 (1), 31e35. https://doi.org/10.1016/j.retrec.2008.05.008.
+Allais, M., 1953. Le comportement de l’homme rationnel devant le risque. Econometrica 21 (4), 503e546.
+Allen, D.W., Lueck, D., 1992a. The back-forty on a handshake speciﬁc assets, reputation and the structure of farmland contracts. Journal of Law,
+
+  Economics, and Organization 8, 366e376.
+Allen, D.W., Lueck, D., 1992b. Contract choice in modern agriculture cash rent versus cropshare. The Journal of Law and Economics 35, 397e426.
+Allen, D.W., Lueck, D., 1993. Transaction costs and the design of cropshare contracts. The RAND Journal of Economics 24, 78e100.
+Allen, D.W., Lueck, D., 1999. The role of risk in contract choice. Journal of Law, Economics, and Organization 15, 704e736.
+Alston, L., Dutta, S., Nugent, J., 1984. Tenancy choice in a competitive framework with transaction costs. Journal of Political Economy 92, 1121e1133.
+Andersson, T.D., 1992. Another model of service quality: a model of causes and effects of service quality tested on a case within the restaurant industry.
+
+  In: Kunst, P., Lemmink, J. (Eds.), Quality Management in Service, van Gorcum, The Netherlands, pp. 41e58.
+Andwari, A., Pesiridis, A., Rajoo, S., Martyinez-Botas, R., Esfahanian, V., 2017. A review of Battery Electric Vehicle technology and readiness levels.
+
+  Renewable and Sustainable Energy Reviews 78, 414e430.
+AQSIQ, 2004. Safety Speciﬁcations for Power Driving Vehicles Operating on Road. General Administration of Quality Supervision, Inspection and
+
+  Quarantine of the People’s Republic of China.
+Arcadis, G., Miller, I., 1998. TCRP Report 38: Guidebook for Evaluating, Selecting, and Implementing Fuel Choices for Transit Bus Operations. TRB,
+
+  National Research Council, Washington, D.C., pp. 5e9
+Arnott, R., Yan, A., 2000. The two-mode problem: second-best pricing and capacity. Review of Urban and Regional Development Studies 12 (3),
+
+  170e199.
+Arnott, R., Palma, A.D., Lindsey, R., 1993. A structural model of peak-period congestion: a trafﬁc bottleneck with elastic demand. The American
+
+  Economic Review 83 (1), 161e179.
+Ashenfelter, O., Card, D., 1999. Handbook of Labour Economics, vol. 3A. Elsevier.
+Atkins, 2016a. Research on the Impacts of Connected and Autonomous Vehicles on Trafﬁc Flow, Summary Report. Report prepared for the UK
+
+  Department of Transport. https://www.gov.uk/government/uploads/system/uploads/attachment_data/ﬁle/530091/impacts-of-connected-and-
+  autonomous-vehicles-on-trafﬁc-ﬂow-summary-report.pdf. (Accessed 20 February 2018).
+Atkins, 2016b. Journeys of the Future: Introducing Mobility as a Service (London, United Kingdom).
+Audit Ofﬁce of New South Wales, 2011. NSW Auditor-General’s Report, vol. 8. Rail Corporation New South Wales, NSW Government.
+Australian Bureau of Statistics (ABS), 2015. Survey of Motor Vehicle Use. Australia, 12 Months Ended 31 October 2014, Cat No. 9208.0. ABS,
+  Canberra.
+Australian Bureau of Statistics, 2013. Population Projections Australia: 2012 (Base) to 2101. Cat. 3222.0. Author, Canberra. http://www.abs.gov.au/
+  ausstats/abs@.nsf/mf/3222.0. (Accessed 5 February 2018).
+Australian Bureau of Statistics, 2017. Australian Demographic Statistics, Cat. 3101.0. http://www.abs.gov.au/AUSSTATS/abs@.nsf/DetailsPage/3101.
+  0Dec%202017?OpenDocument. (Accessed 24 February 2018).
+Australian Institute of Health and Welfare, April 21, 2017. Older Australia at a Glance: Web Report. https://www.aihw.gov.au/reports/older-people/older-
+  australia-at-a-glance/contents/summary. (Accessed 5 February 2018).
+Australian Treasury, 2007. Australian Labour Supply Elasticities: Comparison and Critical Review. Working Paper 2007-04. http://www.treasury.gov.au.
+Bajari, P., Tadelis, S., 2001. Incentives versus transaction costs: a theory of procurement contracts. The RAND Journal of Economics 32 (3), 387e407.
+Bajari, P., McMillan, R., Tadelis, S., October 2002a. Auctions versus Negotiations in Procurement: An Empirical Analysis. Department of Economics,
+  Stanford University, CA.
+Bajari, P., McMillan, S., Tadelis, S., 2002b. Auctions versus negotiations in procurement: an empirical analysis. The Journal of Law, Economics, and
+  Organization 25 (2), 372e399.
+Baker, G., 1992. Incentive contracts and performance measurement. Journal of Political Economy 100, 598e614.
+
+  471
+472 References
+
+Baker, G., 2002. Distortion and risk in optimal incentive contracts. The Journal of Human Resources 37, 728e751.
+Bakker, B., van de Velde, D., 2009. Superincentive public transport contracting in the Greater Amsterdam area. In: Paper Presented at Thredbo 11
+
+  Conference, Delft, Holland, September 2009 submitted to Research in Transportation Economics.
+Balbontin, C., Hensher, D.A., 2018. Firm-Speciﬁc and Location-Speciﬁc Drivers of Business Location and Relocation Decisions. Institute of Transport
+
+  and Logistics Studies (ITLS), Sydney, Australia. Working Paper.
+Balcombe, R., Mackett, R., Paully, N., Preston, J., Shires, J., Titheridge, H., Wardman, M., White, P., 2004. The Demand for Public Transport: A Practical
+
+  Guide. TRL report, TRL593. WWW.DemandForPublicTransport.co.uk.
+Banerjee, A., Duﬂo, E., 2000. Reputation effects and the limits of contracting: a case study of the Indian software industry. Quarterly Journal of
+
+  Economics 115, 989e1017.
+Banister, D., 2009. Sustainable transport and public policy, Vol II transport engineering and planning. In: Kim, J. (Ed.), Encyclopedia of Life Support
+
+  Systems, pp. 191e197.
+Basso, L.J., Silva, H.E., 2010. A microeconomic analysis of congestion management policies. In: 5th Kuhmo Nectar Conference in Transport Economics,
+
+  Valencia, Spain, July 8e9.
+Bates, J., Polak, J., Jones, P., Cook, A., 2001. The valuation of reliability for personal travel. Transportation Research Part E 37 (2e3), 191e229.
+Batley, R., Ibáñez, N., 2009. Randomness in preferences, outcomes and tastes, an application to journey time risk. In: Paper Presented at International
+
+  Choice Modelling Conference, Yorkshire, UK.
+Bech, M., Gyrd-Hansen, D., 2005. Effects coding in discrete choice experiments. Health Economics 14 (10), 1079e1083.
+Beesley, M.E., Hensher, D.A., Talvitie, A., 1991. A summing up: privatization and deregulation of passenger transport. In: Paper Presented at the
+
+  Privatization and Deregulation in Passenger Transportation (Thredbo 2), Tampere, Finland.
+Beesley, M.E., 1991a. Bus deregulation: lessons from the UK. In competition ownership of bus and coach services. Transportation Planning and
+
+  Technology 15 (2e4), 95e106. https://doi.org/10.1080/03081069108717444.
+Beesley, M.E., 1991b. The keynote paper: reform in passenger transport: the next step. In: Paper Presented at the Privatization and Deregulation in
+
+  Passenger Transportation (Thredbo 2), Tampere, Finland.
+Bell, P.A., Greene, T.C., Fisher, J.D., Baum, A., 2001. Environmental Psychology, ﬁfth ed. Harcourt Brace College Publishers, London.
+Bellotti, T., Matousek, R., Stewart, C., 2011. A note comparing support vector machines and ordered choice models’ predictions of international banks’
+
+  rating. Decision Support Systems 51 (3), 682e687.
+Ben-Akiva, M., Morrikawa, T., 2002. Comparing ridership attraction of rail and bus. Transport Policy 9 (2), 107e116.
+Ben-Elia, E., Erev, I., Shiftan, Y., 2008. The combined effect of information and experience on drivers’ route-choice behavior. Transportation 35,
+
+  165e177.
+Berglas, E., Fresko, D., Pines, D., 1984. Right of way and congestion toll. Journal of Transport Economics and Policy 18 (2), 165e187.
+Betts, J., 2007. Transport and social exclusion in Victoria: a government perspective. In: Currie, G., Stanley, J., Stanley, J. (Eds.), No Way to Go:
+
+  Transport and Social Disadvantage in Australian Communities. Monash University Publishing, Melbourne, pp. 12.1e12.18.
+Bhat, C.R., Sardesai, R., 2006. The impact of stop-making and travel time reliability on commute mode choice. Transportation Research Part B 40 (9),
+
+  709e730.
+Bierstadt, J., Gooze, A., Gray, C., Peterman, J., Raykon, L., Walters, J., 2014. Effects of Next Generation Vehicles on Travel Demand and Highway
+
+  Capacity. http://orfe.princeton.edu/walaink/Papers/FP_NextGenVehicleWhitePaper012414.pdf. (Accessed 20 February 2018).
+Bliemer, M.C.J., Rose, J.M., 2009. Designing stated choice experiments: the state of the art. In: Kitamura, R., Yoshi, T., Yamamoto, T. (Eds.), The
+
+  Expanding Sphere of Travel Behaviour Research, Selected Papers from the 11th International Conference on Travel Behaviour Research,
+  pp. 495e538. Ch 25.
+Blundell, R., 1992. Labour supply and taxation: a survey. Fiscal Studies 13 (3), 15e40.
+Bly, P.H., Webster, F.V., 1981. The demand for public transport Part I. The changing environment in which public transport operates. Transport Reviews
+  1 (4), 323e351.
+Bly, P.H., Webster, F.V., Pounds, S., 1980. Effects of subsidies on urban public transport. Transportation 9 (4), 311e331.
+Boerner, C., Macher, J., 2002. Transaction Cost Economics: An Assessment of Empirical Research in the Social Sciences. Georgetown University.
+  Working Paper.
+Bolton, R.N., Drew, J.H., 1991. A multistage model of customers’ assessment of service quality and value. Journal of Consumer Research 17, 375e384.
+Boone, S., Steinberger, S., Wafa, Z., 2018. Mobility as a service: examining transit agencyeride-hailing partnerships. In: 97th Transportation Research
+  Board (TRB) Annual Meeting. Washington, D.C., United States.
+Botsman, R., May 27, 2015. Deﬁning the Sharing Economy: What Is Collaborative Consumption e and What isn’t. Fast Company. https://www.
+  fastcompany.com/3046119/deﬁning-the-sharing-economy-what-is-collaborative-consumption-and-what-isnt. (Accessed 5 February 2018).
+Boulding, W., Kalra, A., Staelin, R., Zeithaml, V.A., 1993. A dynamic process model of service quality: from expectations to behavioral intentions.
+  Journal of Marketing Research 30, 7e27.
+Bräuning, C., Fendel, R., 2018. National information and euro area monetary policy: a generalized ordered choice approach. Empirical Economics 54 (2),
+  501e522.
+Bray, D., Wallis, I., 2008. Adelaide bus service reform: impacts, achievements and lessons. In: Hensher, D. A. (Ed.), Reforms in Public Transport
+  Research in Transportation Economics 22 (1), 126e136. https://doi.org/10.1016/j.retrec.2008.05.019.
+Bray, D., Hensher, D.A., Wong, Y.Z., 2018. Thredbo at thirty: review of papers and reﬂections. In: Alexandersson, G., Hensher, D.A., Steel, R. (Eds.),
+  Competition and Ownership in Land Passenger Transport (Selected papers from the Thredbo 15 conference). Research in Transportation Economics 69.
+  References 473
+
+Brendel, A.B., Mandrella, M., 2016. Information systems in the context of sustainable mobility services: a literature review and directions for future
+  research. In: Twenty-second Americas Conference on Information Systems (AMCIS). San Diego, United States.
+
+Brink, A.G., Rankin, F.W., 2013. The effects of risk preference and loss aversion on individual behavior under bonus, penalty, and combined contract
+  frames. Behavioral Research in Accounting 25 (2), 145e170. https://doi.org/10.2308/bria-50408.
+
+Browning, C.J., Sims, J., 2007. Ageing without driving: keeping older people connected. In: Currie, G., Stanley, J., Stanley, J. (Eds.), No Way to Go:
+  Transport and Social Disadvantage in Australian Communities. Monash University Publishing, Melbourne, pp. 6.1e6.10.
+
+Browning, E.K., 1976. The marginal cost of public funds. Journal of Political Economy 84 (2), 283e298.
+Bruijnes, R., 2009. Continental drift: connecting Great Britain and Scandinavia. In: Paper Presented at the 11th International Conference on Competition
+
+  and Ownership in Land Passenger Transport (Thredbo 11), Delft, The Netherlands.
+Buehler, R., 2011. Determinants of transport mode choice: a comparison of Germany and the USA. Journal of Transport Geography 19 (4), 644e657.
+Bureau of Infrastructure, Transport and Regional Economics [BITRE], 2009a. Urban Passenger Transport: How People Move about in Australian Cities.
+
+  Information sheet 31. BITRE, Canberra.
+Bureau of Infrastructure, Transport and Regional Economics [BITRE], 2009b. Urban Public Transport: Recent Bus Transport Statistics. Information sheet
+
+  33. BITRE, Canberra.
+Bureau of Infrastructure, Transport and Regional Economics [BITRE], 2009c. Greenhouse Gas Emissions from Australian Transport: Projections to 2020.
+
+  ACT, Canberra. Working paper 73.
+Bureau of Infrastructure, Transport and Regional Economics [BITRE], 2010. Long-Term Projections of Australian Transport Emissions: Base Case 2010,
+
+  Report for the Department of Climate Change and Energy Efﬁciency. BITRE, Canberra. http://webarchive.nla.gov.au/gov/20140801060611/http://www.
+  climatechange.gov.au/climate-change/greenhouse-gas-measurement-and-reporting/australias-emissions-projections/australias-emissions-projections-2010.
+Bureau of Infrastructure, Transport and Regional Economics [BITRE], 2014. Long-term Trends in Urban Public Transport, Information Sheet 60. BITRE,
+  Canberra.
+Bureau of Infrastructure, Transport and Regional Economics [BITRE], 2015. Australian Infrastructure StatisticsdYearbook 2015. BITRE, Canberra.
+Bureau of Transport and Communications Economics [BTCE], 1995. Greenhouse Gas Emissions from Australian Transport: Long-Term Projections.
+  Report 88. AGPS, Canberra.
+Bureau of Transport and Regional Economics [BTRE], 2002. Greenhouse Gas Emissions from Transport: Australian Trends to 2020. Report 107. BTRE,
+  Canberra.
+Bureau of Transport and Regional Economics [BTRE], 2006. Greenhouse Gas Emissions from Australian Transport: Base Case Projections to 2020,
+  Report for the Australian Greenhouse Ofﬁce. BTRE, Canberra.
+Bureau of Transport Statistics (BTS), 2011. Sydney Strategic Travel Model (STM) e Modelling Future Travel Patterns, Technical Documentation. Bureau
+  of Transport Statistics, Transport for NSW, Australia.
+Bureau of Transport Statistics (BTS), 2012. Population, Workforce and Employment Forecasts. Available from: http://www.bts.nsw.gov.au/Statistics/
+  Population-Forecasts/default.aspx.
+Buscher, V., Doody, L., Webb, M., Aoun, C., 2014. Urban Mobility in the Smart City Age. Schneider Electric, Arup and The Climate Group, London.
+Buttle, F., 1996. SERVQUAL: review, critique, research agenda. European Journal of Marketing 30 (1), 8e31.
+Calthrop, E., De Borger, B., Proost, S., 2010. Cost-beneﬁt analysis of transport investments in distorted economies. Transportation Research Part B 44 (7),
+  850e869.
+Cameron, T.A., DeShazo, J.R., 2014. A Comprehensive Assessment of Selection in a Major Internet Panel for the Case of Attitudes toward Government
+  Regulation (Working paper).
+Canadian Urban Transit Association, 2004. Bus Rapid Transit: A Canadian Perspective. CUTA, Toronto. Issues Paper #10.
+Canadian Urban Transit Association, 2004. Bus Rapid Transit: A Canadian Perspective. Issues Paper #10. CUTA, Toronto.
+Cantwell, M., Caulﬁeld, B., O’Mahony, M., 2009. Examining the factors that impact public transport commuting satisfaction. Journal of Public
+  Transportation 12 (2), 1e21.
+Carlquist, E., 2001. Incentive contracts in Norwegian local public transport: the Hordaland model. In: Paper Presented at the 7th International Conference
+  on Competition and Ownership of Land Passenger Transport, Molde, Norway, June 2001.
+Cavoli, C., Phillips, B., Cohen, T., Jones, P., January 2017. Social and Behavioural Questions Associated with Automated Vehicles: A Literature Review.
+  UCL Transport Institute, London: Department for Transport.
+Cebon, P., Samson, D., 2011. Using real time information for transport effectiveness in cities. City, Culture and Society 2, 201e210.
+Centre for Ageing Research and Development in Ireland, 2010. Research Brief, Transport and Rural Ageing (Ireland).
+Cepeda, M., Cominetti, R., Florian, M., 2006. A frequency-based assignment model for congested transit networks with strict capacity constraints:
+  characterization and computation of equilibria. Transportation Research Part B 40 (6), 437e459.
+Cervero, R., Guerra, E., Al, S., 2017. Beyond Mobility: Planning Cities for People and Places. Island Press, Washington DC.
+Cervero, R., 1984. Cost and performance impacts of transit subsidy programs. Transportation Research Part A 18 (5e6), 407e413.
+Cervero, R., 1990. Transit pricing research e a review and synthesis. Transportation 17, 117e139.
+Cervero, R., 2014. Land use transport integration: implications for infrastructure in North American and Australian cities. In: Stanley, J., Roux, A. (Eds.),
+  Infrastructure for 21st Century Australian Cities. ADC Forum, Melbourne.
+Chang, S.K., Schonfeld, P.M., 1991. Multiple period optimization of bus transit systems. Transportation Research Part B 25, 453e478.
+Chase, R., 2017. Shared Mobility Principles for Liveable Cities. Author. https://www.sharedmobilityprinciples.org. (Accessed 9 February 2018).
+Chatterjee, S., Price, B., 1991a. Regression Analysis by Example, second ed. John Wiley and Sons, New York.
+474 References
+
+Cheng, Y.-H., 2010. Exploring passenger anxiety associated with train travel. Transportation 37 (6), 875e896.
+Chester, M., Horvath, A., 2009. Life-cycle Energy and Emissions Inventories for Motorcycles, Diesel Automobiles, School Buses, Electric Buses,
+
+  Chicago Rail, and New York City Rail. University of California Berkeley Center for Future Urban Transport, Working Paper UCB-ITS-VWP-2009-2,
+  University of California. http://escholarship.org/uc/item/6z37f2jr.
+Chester, M., Pincetl, S., Elizabeth, Z., Eisenstein, W., Matute, J., 2013. Infrastructure and automobile shifts: positioning transit to reduce life-cycle
+  environmental impacts for urban sustainability goals. Environmental Research Letters 8 (1), 1 (IOP Publishing Ltd, UK).
+Cheung, S., 1969. Transaction costs, risk aversion, and the choice of contractual arrangements. The Journal of Law and Economics 12, 23e45.
+Chikaraishi, M., Stanley, J., Fujiwara, A., Zhang, J., 2018. In: Zhang, J., Feng, C. (Eds.), Social Exclusion in Developed Asian Countries, Routledge
+  Handbook of Transport in Asia. Routledge, U.K.
+Chorus, C., Arentze, T., Timmermans, H., 2008. A random regret minimization model of travel choice. Transportation Research Part B 42 (1), 1e18.
+Chorus, C.G., 2010. A new model of random regret minimization. European Journal of Transportation and Infrastructure Research 10 (2), 181e196.
+Chung, D., Hensher, D.A., 2015. Modelling risk perceptions of Stakeholders in public-private partnership toll road contracts. Abacus 51 (3), 437e483.
+Church, A., Frost, M., Sullivan, K., 2001. Transport and social exclusion in London. Transport Policy 7 (3), 195e205.
+Cirillo, C., Eboli, L., Mazzulla, G., 2011. On the asymmetric user perception of transit service quality. International Journal of Sustainable Transportation
+  5 (4), 216e232.
+CIVITAS, 2016. CIVITAS Insight 18 e Mobility-As-A-Service: A New Transport Model.
+Clemens, M.A., 2017. The meaning of failed replications: a review and proposal. Journal of Economic Surveys 31 (1), 326e342. https://doi.org/10.1111/
+  joes.12139.
+Clewlow, R.R., Mishra, G.S., October 2017. Disruptive Transportation: The Adoption, Utilization, and Impacts of Ride-Hailing in the United States,
+  Research Report e UCD-ITS-RR-17-07. Institute of Transportation Studies, University of California, Davis.
+Clifton, K., Lucas, K., 2004. Examining the empirical evidence of transport inequity in the US and UK. In: Lucas, K. (Ed.), Running on Empty: Transport,
+  Social Exclusion and Environmental Justice. Policy Press, Bristol, pp. 15e38.
+Climate Change Authority (CCA), 2014. Light Vehicle Emissions Standards for Australia. Research Report. http://www.climatechangeauthority.gov.au/
+  ﬁles/ﬁles/Light%20Vehicle%20Report/Lightvehiclesreport.pdf. (Accessed 1 December 2016).
+Coase, R., 1937. The nature of the ﬁrm. Economica 4, 386e405.
+Coffman, L.C., Niederle, M., Wilson, A.J., 2017. A proposal to organize and promote replications. The American Economic Review 107 (5), 41e45.
+  https://doi.org/10.1257/aer.p20171122.
+Cohen, T., Jones, P., Cavoli, C., 2017. Social and Behavioural Questions Associated with Automated Vehicles. Scoping study by UCL Transport Institute.
+  Final report. London: Department for Transport.
+Cominetti, R., Correa, J., 2001. Common-lines and passenger assignment in congested transit networks. Transportation Science 35 (3), 250e267.
+Commissioner for Environmental Sustainability, 2008. Public Transport’s Role in Reducing Greenhouse Emissions. Commissioner for Environmental
+  Sustainability (CES), Victoria.
+Commonwealth of Australia, Department of the Prime Minister and Cabinet, 2017. National Cities Performance Framework Report. Commonwealth of
+  Australia, Canberra. https://www.infrastructure.gov.au/cities/national-cities-performance-framework/ﬁles/National_Cities_Performance_Framework_
+  Final_Report.pdf.
+Cornwell, P., Cracknell, J., 1990. The case for busway transit. In: PTRC 18th Summer Annual Meeting (This Paper is a Summary of TRL Research Report
+  329 and Overseas Road Note 12 of the Transport Research Laboratory, Berkshire, UK).
+Corwin, S., Vitale, J., Kelly, E., Cathles, E., 2015. The Future of Mobility: How Transportation Technology and Social Trends are Creating a New
+  Business Ecosystem. Deloitte University Press.
+Cosgrove, D., 2008. Long-term emission trends for Australian transport. In: Proceedings of the 31st Australasian Transport Research Forum, ATRF.
+Cosgrove, D., 2011. Long-term patterns of Australian public transport use. In: Paper Presented to the 34th Australasian Transport Research Forum,
+  September 2011. University of South Australia, Adelaide. http://www.bitre.gov.au/publications/2011/sp_006.aspx.
+Accountability Counsel, February 2013. Environmental Concerns for São Paulo’s Ring Road: A Summary of Project Impacts and Policy Violations
+  Related to the Ring Road Project.
+Cowie, J., Preston, J., 2006. Key performance indicators and data for monitoring and auditing: theme C. In: Macário, R., Viegas, J.M., Hensher, D.A.
+  (Eds.), Competition and Ownership in Land Passenger Transport: Selected Papers from the 9th International Conference (Thredbo 9), Lisbon,
+  September 2005. Elsevier Science, pp. 549e560.
+Cox, T., Gotts, G., 1987. The General Well-Being Questionnaire (GWBQ) Manual. Department of Psychology, University of Nottingham, Stress
+  Research Unit, Nottingham.
+Cox, W., Love, J., 1991. Designing competitive tendering systems for the public good: a review of the US experience. In Competition Ownership of Bus
+  and Coach Services Transportation Planning and Technology 15 (2e4), 367e389. https://doi.org/10.1080/03081069108717464.
+Cox, W., Mannisenmäki, E., 1992. Report for workshop 1: experience with competitive tendering. In: Talvitie, A., Hensher, D.A., Beesley, M.E. (Eds.),
+  Privatization and Deregulation in Passenger Transportation: Selected Proceedings of the 2nd International Conference, Tampere, Finland, pp. 77e86.
+Cox, W., van de Velde, D., 1998. Franchising and tendering: workshop 3. In: Preston, J., Nash, C., Gwilliam, K., Toner, J., Beesley, M. E., Whelan, G.,
+  Cox, W., van de Velde, D., Nash, C., Jansson, K., Hensher, D.A., Potter, S. (Eds.), Competition and Ownership in Land Passenger Transport: The
+  Fifth International Conference Transport Reviews 18 (4), 334e336. https://doi.org/10.1080/01441649808717022.
+Cox, T., Houdmont, J., Grifﬁths, A., 2006. Rail passenger crowding, stress, health and safety in Britain. Transportation Research Part AePolicy and
+  Practice 40 (3), 244e258.
+  References 475
+
+Cox, W., 2004. Competitive tendering of public transport. In: Presentation to the Urban Road and Public Transit Symposium. Montreal.
+Crocker, K., Reynolds, K., 1993. The efﬁciency of incomplete contracts: an empirical analysis of air force engine procurement. The RAND Journal of
+
+  Economics 24, 126e146.
+CSIRO, June 2017. Low Emissions Technology Roadmap, Technical Report. https://www.csiro.au/w/media/EF/Files/LowEmissionsTechnologyRoadmap-
+
+  Technical-Report.pdf?la¼en&hash¼A3F9ADE7A34DA968572EA5C4BAE1FA553E910C90. (Accessed 5 June 2017).
+Cubic Transportation Systems, 2016. Mobility as a Service: Moving towards Demand-Based Travel (San Diego, United States).
+Cunningham, L.F., Young, C., Lee, M., 1997. Developing customer-based measures of overall transportation service quality in Colorado: quantitative and
+
+  qualitative approaches. Journal of Public Transportation 1 (4), 1e22.
+Currie, G., Delbosc, A., 2010. Bus rapid transit in Australasia: an update on progress. Built Environment 36, 328e343.
+Currie, G., Delbosc, A., 2011a. Understanding bus rapid transit route ridership drivers: an empirical study of Australian BRT systems. Transport Policy 18
+
+  (5), 755e764.
+Currie, G., Delbosc, A., 2011b. Transport disadvantage: a review. In: Currie, G. (Ed.), New Perspectives and Methods in Transport and Social Exclusion
+
+  Research. Emerald Group Publishing Limited, U.K, pp. 15e25.
+Currie, G., Delbrosc, A., 2013. Exploring comparative ridership drivers of bus rapid transit and light rail transit routes. Journal of Public Transportation 16
+
+  (2), 47e65.
+Currie, G., Merkert, R., 2016. Workshop 1 report: innovations in service delivery and performance management. In: Muñoz, J.C., Hensher, D.A., Steel, R.
+
+  (Eds.), Competition and Ownership in Land Passenger Transport (Selected papers from the Thredbo 14 conference). Research in Transportation
+  Economics 59, 7e10. https://doi.org/10.1016/j.retrec.2016.10.005.
+Currie, G., Sarvi, M., 2012. New model for secondary beneﬁts of transit priority. Transportation Research Record: Journal of the Transportation Research
+  Board 2276 (1), 63e71.
+Currie, G., Wallis, I., 2008. Effective ways to grow urban bus markets - a synthesis of evidence. Journal of Transport Geography 16, 419e429.
+Currie, G., 2007. Young Australians: no way to go. In: Currie, G., Stanley, J., Stanley, J. (Eds.), No Way to Go: Transport and Social Disadvantage in
+  Australian Communities. Monash University Publishing, Melbourne, pp. 8.1e8.14.
+Currie, G. (Ed.), 2011. New Perspectives and Methods in Transport and Social Exclusion Research. Emerald Group Publishing Limited, UK.
+Daganzo, C.F., 2009. A headway-based approach to eliminate bus bunching: systematic analysis and comparisons. Transportation Research Part B 43
+  (10), 913e921.
+Danielis, R., Marcucci, E., 2002. Bottleneck road congestion pricing with a competing railroad service. Transportation Research Part E 38 (5), 379e388.
+Dargay, J., Hanly, M., Bresson, G., Boulahbal, M., Madre, J.L., Pirotte, A., 2002. The Main Determinants of the Demand for Public Transit: A
+  Comparative Analysis of Great Britain and France. ESRC Transport Studies Unit, University College London.
+Davidson, B., Vovsha, P., Abedini, M., Chu, C., Garland, R., 2011. Impact of capacity, crowding, and vehicle arrival adherence on public transport
+  ridership: Los Angeles and Sydney experience and forecasting approach. In: Proceedings of the Australasian Transport Research Forum, Adelaide,
+  Australia, 28e30 September 2011.
+Davies, S., 1999. Review of the evidence on the incidence of imperfect competition in the UK. In: SACTRA (Ed.), The Welfare Implications of Transport
+  Improvements in the Presence of Market Failure and the Incidence of Imperfect Competition in UK Sectors and Regions. Department for the
+  Environment, Transport and the Regions, London, pp. 91e104.
+Day, A.T., Day, L.H., 1973. Cross-national comparison of population density. Science 181 (4104), 1016e1023.
+De Borger, B., Fosgerau, M., 2012. Information provision by regulated public transport companies. Transportation Research Record 46, 492e510.
+De Borger, B., Proost, S., 2011. A political economy model of road pricing. Journal of Urban Economics 71 (1), 79e92.
+De Borger, B., Mayeres, I., Proost, S., Wouters, S., 1996. Optimal pricing of urban passenger transport: a simulation exercise for Belgium. Journal of
+  Transport Economics and Policy 30 (1), 31e54.
+De Reuver, M., Bouwman, H., Haaker, T., 2013. Business model roadmapping: a practical approach to come from an existing to a desired business model.
+  International Journal of Innovation Management 17.
+De Vos, J., Schwanen, T., Van Acker, V., Witlox, F., 2013. Travel and subjective well-being: a focus on ﬁndings, methods and future research needs.
+  Transport Reviews: A Transnational Transdisciplinary Journal 33 (4), 421e442.
+Delbosc, A., Currie, G., 2013. Causes of youth licensing decline: a synthesis of evidence. Transport Reviews 33, 271e290.
+Delbosc, A., 2017. Delay or forgo? A closer look at youth driver licensing trends in the United States and Australia. Transportation 44 (5), 919e926.
+Delgado, F., Muñoz, J., Giesen, R., Cipriano, A., 2009. Real-Time control of buses in a transit corridor based on vehicle holding and boarding limits.
+  Transportation Research Record 2090, 59e67.
+dell’Olio, L., Ibeas, A., Cecìn, P., 2010a. The quality of service desired by public transport users. Transport Policy 18 (1), 217e227. https://doi.org/
+  10.1016/j.tranpol.2010.08.005.
+dell’Olio, L., Ibeas, A., Cecìn, P., 2010b. Modelling user perception of bus transit quality. Transport Policy 17 (6), 388e397.
+Deng, T., Nelson, J.D., 2011. Recent developments in bus rapid transit: a review of the literature. Transport Reviews 31 (1), 69e96.
+Deng, T., Nelson, J.D., 2012. The perception of bus rapid transit: a passenger survey from Beijing Southern Axis BRT line 1. Transportation Planning and
+  Technology 35 (2), 201e219.
+Department of Environment, Land Water and Planning (DELWP), 2017. Plan Melbourne 2017e2050. Author, Melbourne.
+Department of Infrastructure, Regional Development, 2015. State of Australian Cities 2014-15: Progress in Australian Regions. http://www.infrastructure.
+  gov.au/infrastructure/pab/soac/ﬁles/2015_SoAC_full_report.pdf. (Accessed 3 August 2015).
+Department of Infrastructure, 2008a. East West Rail Link, Analysis on Rail Capacity. Victorian Government, Australia.
+476 References
+
+Department of Infrastructure, 2008b. Investing in Transport, East West Link Needs Assessment: A Study by Sir Rod Eddington. Department of Infra-
+  structure, Victoria.
+
+Department of the Environment and Energy, December 2017. Quarterly Update of Australia’s National Greenhouse Gas. http://www.environment.gov.au/
+  system/ﬁles/resources/62506dca-2cb1-4613-82cd-fa46c7a0df42/ﬁles/nggi-quarterly-update-june-2017.pdf. (Accessed 14 February 2018).
+
+Department of the Environment, December 2015. Tracking to 2020, An Interim Update of Australia’s Greenhouse Gas Emissions Projections. Australian
+  Government, Canberra. http://www.environment.gov.au/system/ﬁles/resources/d46b4104-0a04-4efb-9e83-df97e58eb2ff/ﬁles/tracking-to-2020-
+  interim-update-emissions-projections.pdf. (Accessed 14 February 2018).
+
+Department of Transport, 1989. Central London Rail Study. A Joint Study by the Department of Transport, British Rail Network South East. London
+  Regional Transport and London Underground Ltd.
+
+Department of Transport, 2011. Metropolitan Train Peak Passenger Loads. Department of Transport, Victorian Government, Australia.
+Department of Treasury and Finance, 2016. Getting it Done: Victorian Budget 16/17, Service Delivery. Budget Paper No. 3. http://budgetﬁles201617.
+
+  budget.vic.gov.au/2016-17þStateþBudgetþ-þBP3þServiceþDelivery.pdf. (Accessed 19 February 2018).
+Dept. for Transport, UK (DfT), 2005. Transport, Wider Economic Beneﬁts, and Impacts on GDP. http://webarchive.nationalarchives.gov.uk/þ/http:/
+
+  www.dft.gov.uk/pgr/economics/rdg/webia/webmethodology/sportwidereconomicbeneﬁ3137.pdf.
+Dept. for Transport, UK (DfT), 2013. WebTAG: TAG Overview. https://www.gov.uk/government/publications/webtag-tag-overview.
+Dept. for Transport, UK (DfT), 2014. Wider Impacts, TAG Unit A2.1. https://www.gov.uk/government/uploads/system/uploads/attachment_data/ﬁle/
+
+  427091/webtag-tag-unit-a2-1-wider-impacts.pdf.
+Devney, J., 2011. Changing perceptions of the bus with branded services. In: 34th Australasian Transport Research Forum (ATRF), 28e30 September
+
+  2011, Adelaide, Australia.
+DfT (Department for Transport UK), 2005. Transport, Wider Economic Beneﬁts, and Impacts on GDP. Department of Transport, London.
+DfT, 2007. The Additionally of Wider Economic Beneﬁts in Transport Appraisal. www.dft.gov.uk/pgr/economics/rdg/webia/webtheor/additionalityweb.
+DfT, 2012. Transport Analysis Guidance, WebTAG, Unit 3.5.14.
+Diec, J., Coxon, S., de Bono, A., 2010. Designing a public train station shelter to minimise anti-social behaviour and crime in Melbourne’s metropolitan
+
+  rail environment. In: Paper Presented at the 33rd Australasian Transport Research Forum, Canberra, Australia.
+Dijkstra, W., Verheijdt, P., 2009. Relationship after tender: teamwork with incentives. In: Paper Presented at Thredbo 11 Conference, Delft, Holland,
+
+  September 2009 submitted to Research in Transportation Economics.
+Docherty, I., Marsden, G., Anable, J., 2017. The governance of smart mobility. Transportation Research Part A 115, 114e125. Available from: https://doi.
+
+  org/10.1016/j.tra.2017.09.012.
+Dodgson, J., Preston, J., 1991. The issues. In Competition Ownership of Bus and Coach Services Transportation Planning and Technology 15 (2e4),
+
+  135e143. https://doi.org/10.1080/03081069108717448.
+Dodgson, J.S., Topham, N., 1987. Beneﬁt-cost rules for urban transit subsidies: an integration of allocational, distributional and public ﬁnance issues.
+
+  Journal of Transport Economics and Policy 21 (1), 57e71.
+Dodgson, J.S., 1985. Beneﬁts of Urban Public Transport Subsidies in Australia. BTE Occasional Paper 71. AGPS, Canberra.
+Dodgson, J.S., 1986. Beneﬁts of changes in urban public transport subsidies in the major Australian cities. The Economic Record 62 (177), 224e235.
+Donoso, P., Martínez, F., Zegras, C., 2006. The Kyoto Protocol and sustainable cities: the potential use of the clean development mechanism in structuring
+
+  cities for “carbon-efﬁcient” transport. Transportation Research Record 1983, 158e166.
+Douglas, N., Karpouzis, G., 2005a. Estimating the cost to passengers of station crowding. In: Paper Presented at the 28th Australasian Transport Research
+
+  Forum, Sydney, September 2005.
+Douglas, N., Karpouzis, G., 2006. Estimating the passenger cost of train overcrowding. In: Presented at the 29th Australasian Transport Research Forum,
+
+  Gold Coast, September 2006.
+Douglas Economics, 2004. Value of Rail Travel Time. RailCorp Train Service, Rail Development, Sydney.
+Douglas, N.J., Franzmann, L.J., Frost, T.W., 2003. The estimation of demand parameters for primary public transport service in Brisbane attributes. In:
+
+  Paper Presented at the 26th Australasian Transport Research Forum, Wellington, NZ.
+Dowling, R., Reinke, D., Flannery, A., Ryus, P., Vandehey, M., Petritsch, T., Landis, B., Rouphail, N., Bonneson, J., 2008. Multimodal Level of Service
+
+  Analysis for Urban Streets - NCHRP Report 616. Transportation Research Board, Washington, D.C.
+Duarte, F., Ultramari, C., 2012. Making public transport and housing match: accomplishments and failures of Curitiba’s BRT. Journal of Urban Planning
+
+  and Development 138 (2), 183e194.
+Duncan, C., Landau, S., Cutler, D., Alstadt, B., Petraglia, L., 2013. Integrating Transportation and Economics Models to Assess Impact of Infrastructure
+
+  Investment. Transportation Research Record #2297, pp. 145e153. www.edrgroup.com/pdf/2303658-Integrating-National-Data-Sets-FINAL.pdf.
+Dye, R.A., Sridhar, S.S., 2005. Moral hazard severity and contract design. The RAND Journal of Economics 36, 78e93.
+Eboli, L., Mazzulla, G., 2008a. An SP experiment for measuring service quality in public transport. Transportation Planning and Technology 31 (5),
+
+  509e523.
+Eboli, L., Mazzulla, G., 2008b. Willingness-to-pay of public transport users for improvement in service quality. European Transport 38, 107e118.
+Eboli, L., Mazzulla, G., 2010. How to capture the passengers’ point of view on a transit service through rating and choice options. Transport Reviews 30
+
+  (4), 435e450.
+Ebrahimi, S., Sharmeen, F., Meurs, H., 2018. Innovative business architectures (BAs) for mobility as a service (MaaS) - exploration, assessment, and
+
+  categorization using operational MaaS cases. In: 97th Transportation Research Board (TRB) Annual Meeting. Washington, D.C., United States.
+Edwards, M., Mackett, R.L., 1996. Developing new urban public transport systems: an irrational decision-making process. Transport Policy 3, 225e239.
+  References 477
+
+Eerdmans, D., van Kooij, S., van de Velde, D., Westerink, H., 2009. Are we doing it wrong or do we expect too much? Forces that push authorities to
+  become public transport designers. In: Paper Presented at Thredbo 11 Conference, Delft, Holland, September 2009 submitted to Research in
+  Transportation Economics.
+
+Ellaway, A., Macintyre, S., Hiscock, R., Kearns, A., 2003. In the driving seat: psychosocial beneﬁts from private motor vehicle transport compared to
+  public transport. Transportation Research Part F 6, 217e321.
+
+Else, P.K., 1985. Optimal pricing and subsidies for scheduled transport services. Journal of Transport Economics and Policy 19 (3), 263e279.
+Eluru, N., Bhat, C.R., Hensher, D.A., 2008. A mixed generalized ordered response model for examining pedestrian and bicyclist injury severity level in
+
+  trafﬁc crashes. Accident Analysis and Prevention 40 (3), 1033e1054.
+Energy Networks Australia, CSIRO, 2017. Electricity network transformation road map. In: Future Grid Forum e 2015 Refresh Technical Report. http://
+
+  www.energynetworks.com.au/sites/default/ﬁles/151215_ntr-wp1-iwp2_fgf_refresh_technical_report.pdf. (Accessed 26 June 2017).
+Environment Protection Authority [EPA] Victoria, 2014. EPA Victoria’s Greenhouse Gas Inventory Management Plan: 2012e13 Update. EPA Victoria,
+
+  Melbourne.
+Ermagun, A., Levinson, D., 2015. Accessibility and transit performance. In: Paper Presented at the 14th International Conference on Competition and
+
+  Ownership of Land Passenger Transport (Thredbo 14), Chile, August 30 to September 3, 2015.
+Estache, A., Gomez-Lobo, A., 2005. Limits to competition in urban bus services in developing countries. Transport Reviews 25 (2), 139e158.
+Eswaren, M., Kotwal, A., 1985. A theory of contractual structure in agriculture. The American Economic Review 75, 352e367.
+European Commission, n.d. Electric vehicles. https://ec.europa.eu/transport/themes/urban/vehicles/road/electric_en. (Accessed 26 February 2018).
+European Environment Agency (EEA), 2016. Electric Vehicles in Europe, EEA Report No. 20/2016. https://www.google.com.au/search?sourceid¼navclient&
+
+  aq¼&oq¼lectricþvehiclesþinþeurope&ie¼UTF-8&rlz¼1T4GGHP_enAU541AU541&q¼lectricþvehiclesþinþeurope&gs_l¼hp....0.0.0.5250...........0.
+  RSxsdPPox7w. (Accessed 26 February 2018).
+European Investment Bank, 2012. Value for Money Analysis: The EPEC j PPP Guide. European Investment Bank.
+Evans, G.W., Wener, R.E., 2007. Crowding and personal space invasion on the train: please don’t make me sit in the middle. Journal of Environmental
+  Psychology 27 (1), 90e94.
+Evans, G.W., Lepore, S.J., Mata-Allen, K., 2000. Cross-cultural differences in tolerance for crowding: fact or ﬁction? Journal of Personality and Social
+  Psychology 79 (2), 204e210.
+Evans, G.W., 1979. Design implications of spatial research. In: Aiello, J.R., Baum, A. (Eds.), Residential Crowding and Design. Plenum, New York.
+Evans, A., 1991. Bus competition: economic theories and empirical evidence. In Competition Ownership of Bus and Coach Services Transportation
+  Planning and Technology 15 (4), 295e313. https://doi.org/10.1080/03081069108717460.
+Ewing, R., Cervero, R., 2010. Travel and the built environment. Journal of the American Planning Association 76 (3), 265e294.
+Fairhurst, M.H., Morris, I.J., 1975. Variations in the Demand for Bus and Rail Travel up to 1974. London Transport. London Transport Executive Report
+  R210.
+Fearnley, N., Bekken, J., Norheim, B., 2005. Optimal performance-based subsidies in Norwegian intercity rail transport. International Journal of Transport
+  Management 2, 29e38.
+Federal Transit Administration, 2004. Characteristics of Bus Rapid Transit for Decision Making. FTA-VA-26-7222-2004.1. US Department of
+  Transportation, Washington DC.
+Fernandes, P., Nunes, U., 2012. Platooning with IVC-enabled autonomous vehicles: strategies to mitigate communication delays, improve safety and
+  trafﬁc ﬂow. IEEE Transactions on Intelligent Transportation Systems 13 (1), 91e106.
+Fernández, R., Tyler, N., 2005. Effect of passenger-bus-trafﬁc interactions on bus stop operations. Transportation Planning and Technology 28 (4),
+  273e292.
+Fernández, J.E., de Cea, J., de Grange, L., 2005. Production costs, congestion, scope and scale economies in urban bus transportation corridors.
+  Transportation Research Part A 39 (5), 383e403.
+Fernández, R., 2010. Modelling public transport stops by microscopic simulation. Transportation Research Part C 18 (6), 856e868.
+Fickling, R., Gunn, H., Kirby, H., Bradley, M., Heywood, C., 2008. The productive use of rail travel time and value of travel time saving for travellers in
+  the course of work. In: European Transport Conference.
+Fiebig, D.G., Keane, M., Louviere, J.J., Wasi, N., 2010. The generalized multinomial logit: accounting for scale and coefﬁcient heterogeneity. Marketing
+  Science 29 (3), 393e421.
+Fielding, G.J., Babitsky, T.J., Brenner, M.E., 1985. Performance evaluation for bus transit. In: Hensher, D.A. (Ed.), Competition and Ownership of Public
+  Transit A Special Issue of Transportation Research 19 (1), 73e82.
+Finnveden, B., 1997. Improvement of the environment by purchasing bus transport services. In: Paper Presented at the 5th International Conference on
+  Competition and Ownership in Land Passenger Transport (Thredbo 5), Leeds, United Kingdom.
+Fishman, T.D., 2012. Digital Age Transportation: The Future of Urban Mobility. Deloitte University Press, Deloitte Development LLC.
+Fleetwood, J., 2017. Public health, ethics and autonomous vehicles. American Journal of Public Health 107 (4). https://doi.org/10.2105/
+  AJPH2016.303628. https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5343691/. (Accessed 20 February 2018).
+Florian, M., He, S., Constantin, I., 2005. An EMME/2 Macro for Transit Equilibrium Assignment Which Satisﬁes Capacity of Transit Services. EMME/2
+  Conference, Shanghai.
+Foss, N.J., Laursen, K., 2005. Performance-pay, delegation and multitasking under uncertainty and innovativeness: an empirical investigation. Journal of
+  Economic Behaviour and Organization 58, 246e276.
+Frankena, M.W., 1983. The efﬁciency of public transport objectives and subsidy formulas. Journal of Transport Economics and Policy 17 (1), 67e76.
+478 References
+
+Friedrich, B., 2016. The effect of autonomous vehicles on trafﬁc. In: Maurer, M., et al. (Eds.), Autonomous Driving. https://doi.org/10.1007/978-3-662-
+  48847-8_16. (Accessed 20 February 2018).
+
+Fröhlich, P., Axhausen, K.W., Vrtic, M., Weis, C., Erath, A., 2012. SP-Befragung 2010 zum Verkehrsverhalten im Personenverkehr. Swiss Federal Ofﬁce
+  for Spatial Development, Bern.
+
+Fujigaki, Y., Takami, K., Parady, G.T., Harata, N., 2018. The multicycle model: a modeling framework to evaluate MaaS contract schemes. In: 97th
+  Transportation Research Board (TRB) Annual Meeting. Washington, D.C., United States.
+
+Gagnon, L., 2006. Greenhouse Gas Emissions from Transportation Options. Hydro-Québec, Canada. http://www.climatechange.ca.gov/events/2007-06-
+  12_mac_meeting/public_comments/transport_en_2006.pdf.
+
+Garen, J.E., 1994. Executive compensation and the principal-agent theory. Journal of Political Economy 102, 1175e1199.
+Gargett, A., Wallis, I., 1995. Quasi-commercial bus service contracts in South Australia. In: Paper Presented at the 4th International Conference on
+
+  Competition and Ownership in Land Passenger Transport (Thredbo 4), Rotorua, New Zealand.
+Gatta, V., Marcucci, E., 2007. Quality and public transport service contracts. European Transport 36, 92e106.
+Gaynor, M., Gertler, P., 1995. Moral hazard and risk spreading in partnerships. The RAND Journal of Economics 26, 591e613.
+George Hazel Consultancy, 2017. Smart Mobility Network Integrator Phase 2: Final Report for Scottish Enterprise Contract Reference P15-0073
+
+  (Edinburgh, United Kingdom).
+Georges, B., Dargay, J., Madre, J.L., Pirotte, A., 2003. The main determinants of demand for public transport: a comparative analysis of England and
+
+  France using shrinkage estimators. Transportation Research Part A 37, 605e627.
+Gibbons, R., 1998. Incentives in organizations. The Journal of Economic Perspectives 12, 115e132.
+Gibbons, R., 2005a. Four formal(izable) theories of the ﬁrm? Journal of Economic Behaviour and Organization 58, 200e245.
+Gibbons, R., 2005b. Four formal(izable) theories of the ﬁrm? Journal of Economic Behaviour and Organization 58, 190-45.
+Gibson, J., Fernández, R., Albert, A., 1997. Operación de Paraderos Formales en Santiago. Proceedings of VIII Chilean Conference of Transport En-
+
+  gineering 397e408.
+Giesecke, R., Surakka, T., Hakonen, M., 2016. Conceptualising mobility as a service. In: Eleventh International Conference on Ecological Vehicles and
+
+  Renewable Energies (EVER). Monte Carlo, Monaco.
+Gillen, D., 1994. Peak pricing strategies in transportation, utilities, and telecommunications: lessons for road pricing. Curbing Gridlock: Commissioned
+
+  Papers 2, 115e151.
+Glaister, S., Beesley, M.E., 1991. Bidding for tendered bus routes in London. In competition ownership of bus and coach services. Transportation
+
+  Planning and Technology 15 (2e4), 349e366. https://doi.org/10.1080/03081069108717463.
+Glaister, S., Cox, W., 1991. The bidding process. In Competition Ownership of Bus and Coach Services Transportation Planning and Technology 15
+
+  (2e4), 145e152. https://doi.org/10.1080/03081069108717449.
+Glaister, S., Lewis, D., 1978. An integrated fares policy for transport in London. Journal of Public Economics 9 (3), 341e355.
+Glaister, S., 1974. Generalised consumer surplus and public transport pricing. The Economic Journal 84 (336), 849e867.
+Global Mass Transit Report, 2014. Smartphone applications in transit services: growing popularity. Available from: http://www.globalmasstransit.net/
+
+  archive.php?id¼16210.
+Godfrey, N., May 22, 2016. Will Millennials Just Uber Their Life. Forbes. https://www.forbes.com/sites/nealegodfrey/2016/05/22/will-millennials-just-
+
+  uber-their-life/#2febf6a940ec. (Accessed 5 February 2018).
+Gogas, P., Papadimitriou, T., Agrapetidou, A., 2014. Forecasting bank credit ratings. The Journal of Risk Finance 15 (2), 195e209.
+Goldberg, V.P., 1990. Aversion to risk aversion in the new institutional economics. Journal of Institutional and Theoretical Economics 146, 216e222.
+Golotta, K., Hensher, D.A., 2008. Why is the Brisbane bus rapid transit system a success, and what lessons can be learnt from it? Road and Transport
+
+  Research 17 (4), 3e16.
+Gomez-Ibanez, J.A., 2003. Regulating Infrastructure: Monopoly, Contracts, and Discretion. Harvard University Press, Cambridge, Massachusetts.
+Goodwin, P., Van Dender, K., 2013. ‘Peak car’- Themes and issues. Transport Reviews 33 (3), 243e254.
+Goodwin, P., 1992. A review of new demand elasticities with special reference to short and long run effects of price changes. Journal of Transport
+
+  Economics and Policy 26, 155e163.
+Goodwin, P., 1996. Empirical evidence on induced trafﬁc - a review and synthesis. Transportation 23, 35e54.
+Gopinath, D., Schoﬁeld, M., Walker, J., Ben-Akiva, M., 2005. Comparative analysis of discrete choice models with ﬂexible substitution patterns. In:
+
+  Presented at the 84th Annual Meeting of the Transportation Research Board, Washington D.C, USA.
+Gotts, G., Cox, T., 1988. Stress and Arousal Checklist: A Manual for its Administration, Scoring and Interpretation. Swinburne University Press,
+
+  Melbourne.
+Graham, D.J., 2005. Wider Economic Beneﬁts of Transport Improvement: Link between Agglomeration and Productivity, Stage 1 Report Prepared for
+
+  UK. Department for Transport.
+Graham, D.J., 2006a. Wider Economic Beneﬁts of Transport Improvement: Link between Agglomeration and Productivity, Stage 2 Report Prepared for
+
+  UK. Department for Transport.
+Graham, D., 2006b. Investigating the Link between Productivity and Agglomeration for UK Industries. Imperial College London. https://workspace.
+
+  imperial.ac.uk/ref/Public/UoA%2014%20-%20Civil%20and%20Construction%20Engineering/Wider%20economic%20Impacts/%5B2%5D%
+  20Reference.pdf.
+Greater Sydney Commission, 2017. Our Greater Sydney 2056: A Metropolis of Three Cities. Connecting People. https://gsc-public-1.s3.amazonaws.com/
+  s3fs-public/draft_greater_sydney_region_plan_web.pdf. (Accessed 21 February 2018).
+  References 479
+
+Greene, W.H., Hensher, D.A., 2010a. Does scale heterogeneity across individuals matter? An empirical assessment of alternative logit models.
+  Transportation 37 (3), 413e428.
+
+Greene, W., Hensher, D.A., 2010b. Modeling Ordered Choices: A Primer. Cambridge University Press, Cambridge.
+Greene, W.H., Hensher, D.A., 2010c. Ordered choices and heterogeneity in attribute processing. Journal of Transport Economics and Policy 44 (3),
+
+  331e364.
+Gripsrud, M., Hjorthol, R., 2012. Working on the train: from ‘dead time’ to productive and vital time. Transportation 39 (5), 941e956.
+Grossman, S.J., Hart, O.D., 1983. An analysis of the principal-agent problem. Econometrica 51, 7e45.
+Grossman, S., Hart, O., 1986. The costs and beneﬁts of ownership: a theory of vertical and lateral integration. Journal of Political Economy 94 (4),
+
+  691e719.
+Guiltinan, J.P., 1987. The price bundling of services: a normative framework. Journal of Marketing 51 (2), 74e85.
+Gwilliam, K., Toner, J., 1998. Ownership and organisation: workshop 1. In: Preston, J., Nash, C., Gwilliam, K., Toner, J., Beesley, M. E., Whelan, G.,
+
+  Cox, W., van de Velde, D., Nash, C., Jansson, K., Hensher, D.A., Potter, S. (Eds.), Competition and Ownership in Land Passenger Transport: The
+  Fifth International Conference Transport Reviews 18 (4), 327e329. https://doi.org/10.1080/01441649808717022.
+Gwilliam, K., 2008. Bus transport: is there a regulatory cycle? In: Hensher, D.A. (Ed.), Institutional Reform in Land Passenger Transport Transportation
+  Research Part A: Policy and Practice 42 (9), 1183e1194. https://doi.org/10.1016/j.tra.2008.05.001.
+Hall, J.D., Palsson, C., Price, J., 2017. Is Uber a Substitute or Complement for Public Transit? University of Toronto, Toronto, Canada. Working Paper.
+Hamdouch, Y., Ho, H.W., Sumalee, A., Wang, G., 2011. Schedule-based transit assignment model with vehicle capacity and seat availability.
+  Transportation Research Part B 45 (10), 1805e1830.
+Hamermesh, D.S., 2017. Replication in labor economics: evidence from data and what it suggests. The American Economic Review 107 (5), 37e40.
+  https://doi.org/10.1257/aer.p20171121.
+Hanly, M., Dargay, J., Goodwin, P., 2002. Review of Income and Price Elasticities in the Demand for Road Trafﬁc. ESRC Transport Studies Unit,
+  London.
+Hannon, E., McKerracher, C., Orlandi, I., Ramkumar, S., October 2016. An Integrated Perspective on the Future of Mobility. McKinsey Report. Available
+  from: https://www.mckinsey.com/business-functions/sustainability/our-insights/an-integrated-perspective-on-the-future-of-mobility.
+Harper, I., Anderson, P., McLusky, S., O’Brien, M., March 2015. Competition Policy Review Final Report. Commonwealth of Australia, Canberra. http://
+  competitionpolicyreview.gov.au/ﬁles/2015/03/Competition-policy-review-report_online.pdf. (Accessed 6 June 2017).
+Harris, P., 2015. The case for infrastructure pricing reform: what water can teach roads. In: Speech to the the Infrastructure Partners Australia Water
+  Symposium in Sydney on July 27. http://www.pc.gov.au/news-media/speeches/infrastructure-pricing-reform. (Accessed 6 June 2017).
+Harrison, G.W., Rutström, E.E., 2009. Expected utility theory and prospect theory: one wedding and a decent funeral. Experimental Economics 12 (2),
+  133e158.
+Hart, O., Holmstrom, B., 1987a. Theory of contracts. In: Bewley, T. (Ed.), Advances in Economic Theory. Econometric Society Monographs, Fifth World
+  Conference. Cambridge University Press, New York.
+Hart, O., Holmstrom, B., 1987b. The theory of contracts. In: Advances in Economic Theory. Academic Press, New York.
+Hart, O., Moore, J., 1990. Property rights and the nature of the ﬁrm. Journal of Political Economy 98 (6), 1119e1158.
+Hart, O., 1989. An economist’s perspective on the theory of the ﬁrm. Colombia Law Review 89, 7.
+Hass-Klau, C., Crampton, G., 2002. Future of Urban Transport: Learning from Success and Weaknesses: Light Rail. Environment and Transport Planning,
+  Brighton, UK.
+Hatton MacDonald, D., Morrison, M., Rose, J.M., Boyle, K., 2010. Untangling differences in values from internet and mail stated preference studies. In:
+  Paper Presenter at the Fourth World Congress of Environmental and Resource Economists, Montreal, Canada, June 28e July 2.
+HDR/iTrans and Economic Development Research Group, 2011. Durham Region Long Term Public Transport Strategy: Appendix P: Cost/beneﬁt and
+  Economic Analysis. Durham Region Public Transport. www.durham.ca/pdf/transit/DRTLTTS/Appendices/AppendixPCostBenEconAnalysis.pdf.
+Heikkilä, S., 2014. Mobility as a Service - A Proposal for Action for the Public Administration. Case Helsinki (Master’s thesis, Aalto University).
+  Helsinki, Finland.
+Hensher, D.A., Bliemer, M.C., 2014. What type of road pricing reform might appeal to politicians? Viewpoints on the challenge in gaining the citizen and
+  public servant vote by staging reform. Transportation Research Part A 61, 227e237.
+Hensher, D.A., Brewer, A.M., 2001. Transport - an Economics and Management Perspective. Oxford University Press, USA.
+Hensher, D.A., Bullock, R.G., 1979. Price elasticity of commuter mode choice. Transportation Research 13A, 193e202.
+Hensher, D.A., Golob, T.F., 2008. Bus Rapid Transit systems: a comparative assessment. Transportation 34 (4), 501e518.
+Hensher, D.A., Hauge, O., 2002. Competition and ownership in land passenger transport: the 7th international conference. In: Hensher, D.A., Hauge, O.
+  (Eds.), Competition and Ownership in Land Passenger Transport: The 7th International Conference Transport Reviews 22 (3), 335e370. https://
+  doi.org/10.1080/01441640110103662.
+Hensher, D.A., Ho, C., 2016a. Experience conditioning in mode choice modelling e does it make a difference? Transportation Research Part E 95,
+  164e176.
+Hensher, D.A., Ho, C.Q., 2016b. Experience conditioning in commuter modal choice modelling - does it make a difference? Transportation Research Part
+  E: Logistics and Transportation Review 95, 164e176.
+Hensher, D.A., Houghton, E., 2004. Performance-based quality contracts for the bus sector: delivering social and commercial value for money.
+  Transportation Research Part B 38 (2), 123e146.
+480 References
+
+Hensher, D.A., Houghton, E., 2005a. Performance based contracts: theme A. In: Hensher, D.A. (Ed.), Competition and Ownership in Land Passenger
+  Transport: Selected Refereed Papers from the 8th International Conference (Thredbo 8), Rio de Janeiro, September 2003. Elsevier Science,
+  pp. 29e53.
+
+Hensher, D.A., Houghton, E., 2005b. Performance-based contracts. In: Hensher, D.A. (Ed.), Workshop Report, the 8th International Conference on
+  Competition and Ownership of Land Passenger Transport, Rio de Janeiro, Brasil, September, Competition and Ownership of Land Passenger
+  Transport. Elsevier, Oxford, pp. 23e46 (Chapter 3).
+
+Hensher, D.A., King, J., 1998. Establishing a fare elasticity regime for urban passenger transport: time-based fares for concession and non-concession
+  markets segmented by trip length. Journal of Transportation and Statistics 1 (1), 44e57.
+
+Hensher, D.A., Knowles, L., 2006. Spatial alliances of public transit operators: establishing operator preferences for area management contracts with
+  government. In: Macário, R., Viegas, J.M., Hensher, D.A. (Eds.), Competition and Ownership in Land Passenger Transport: Selected Papers from the
+  9th International Conference (Thredbo 9), Lisbon, September 2005. Elsevier Science, pp. 517e546.
+
+Hensher, D.A., Li, Z., 2012a. Ridership drivers of bus rapid transit systems. Transportation 39 (6), 1209e1221.
+Hensher, D.A., Li, Z., 2012b. Valuing travel time variability within a Rank-Dependent Utility framework and an investigation of unobserved taste
+
+  heterogeneity. Journal of Transport Economics and Policy 46 (2), 293e312.
+Hensher, D.A., Li, Z., 2013. Referendum voting in road pricing reform: a review of the evidence. Transport Policy 25, 186e197.
+Hensher, D.A., Louviere, J., 1998. A comparison of elasticities derived from multinomial logit, nested logit and heteroscedastic extreme value SP-RP
+
+  discrete choice models. In: Prepared for the 8th World Conference on Transport Research. Institute of Transport Studies, The University of
+  Sydney, Sydney.
+Hensher, D.A., McLeod, P.B., 1977. Towards an integrated approach to the identiﬁcation and evaluation of the transport determinants of travel choices.
+  Transportation Research 11 (2), 77e93.
+Hensher, D.A., Mulley, C., 2014. Complementing distance based charges with discounted registration fees in the reform of road user charges: the impact
+  for motorists and government revenue. Transportation 41 (4), 697e715.
+Hensher, D.A., Mulley, C.M., 2015. Modal image: candidate drivers of preference differences for BRT and LRT. Transportation 42 (1), 7e23. https://
+  doi.org/10.1007/s11116-014-9516-7.
+Hensher, D.A., Potter, S., 1998. Competition, ownership and wider transport policy issues: workshop 5. In: Preston, J., Nash, C., Gwilliam, K., Toner, J.,
+  Beesley, M. E., Whelan, G., Cox, W., van de Velde, D., Nash, C., Jansson, K., Hensher, D.A., Potter, S. (Eds.), Competition and Ownership in Land
+  Passenger Transport: The Fifth International Conference Transport Reviews 18 (4), 342e347. https://doi.org/10.1080/01441649808717022.
+Hensher, D., Prioni, P., 2002. A service quality index for area-wide contract performance assessment. Journal of Transport Economics and Policy 36 (1),
+  93e113.
+Hensher, D.A., Rose, J., 2007. Development of commuter and non-commuter mode choice models for the assessment of new public transport
+  infrastructure projects: a case study. Transportation Research Part A 41 (5), 428e433.
+Hensher, D.A., Stanley, J., 2003. Performance-based quality contracts in bus service provision. Transportation Research Part A 37 (6), 519e538.
+Hensher, D.A., Stanley, J.K., 2008. Transacting under a performance-based contract: the role of negotiation and competitive tendering. Transportation
+  Research A Special Issue on Public Transport Reform (Thredbo 10) 42A (10), 1295e1301.
+Hensher, D.A., Stanley, J.K., 2010. Contracting regimes for bus services: what have we learnt after 20 years? Research in Transportation Economics 29,
+  140e144.
+Hensher, D.A., Ton, T.T., 1998. A Comparison of the Predictive Potential of Artiﬁcial Neural Networks and Nested Logit Models for Commuter Mode
+  Choice. Institute of Transport Studies, The University of Sydney, Sydney.
+Hensher, D.A., Ton, T., 2002. TRESIS: a transportation, land use and environmental strategy impact simulator for urban areas. Transportation 29 (4),
+  439e457.
+Hensher, D.A., Wallis, I., September 2005a. Competitive tendering as a contracting mechanism for subsidising transport: the bus experience. Journal of
+  Transport Economics and Policy 39 (3), 295e321.
+Hensher, D.A., Waters II, W.G., 1994a. Light rail and bus priority systems: choice or blind commitment? In: Macmullen, B.S. (Ed.), Research in
+  Transportation Economics 3, 139e162.
+Hensher, D.A., Waters II, W.G., 1994b. Light rail and bus priority systems: choice or blind commitment?. In: Starr Macmullen, B. (Ed.), Research in
+  Transportation Economics, vol. III. JAI Press, Greenwich, Connecticut, pp. 139e162.
+Hensher, D.A., Battellino, H.C., Beesley, M.E., 1991a. Competition and ownership of public transit services: introduction. In Competition Ownership of
+  Bus and Coach Services Transportation Planning and Technology 15 (2e4), 85e93. https://doi.org/10.1080/03081069108717443.
+Hensher, D.A., Beesley, M.E., Battellino, H., 1991b. Competition and ownership for bus and coach services: an overview. In: Hensher, D.A. (Ed.)
+  Competition and Ownership of Public Transit A Special Issue of Transportation Planning and Technology 15 (2/4), 85e93.
+Hensher, D.A., Stopher, P.R., Bullock, P., 2003a. Benchmarking and service quality at a market segment level. Presented at 2002 annual meeting of the
+  Transportation Research Board, Washington D.C. Transportation Research Part A 37, 499e517.
+Hensher, D.A., Stopher, P., Bullock, P., 2003b. Service quality-Developing a service quality index in the provision of commercial bus contracts.
+  Transportation Research Part A 37 (6), 499e517.
+Hensher, D.A., Stopher, P.R., Bullock, P., Ton, T., 2004. TRESIS (transport and environmental strategy impact simulator): application to a case study in
+  NE Sydney. Transportation Research Record 1898, 114e123.
+Hensher, D.A., Rose, J.M., Greene, W.H., 2005. Applied Choice Analysis: A Primer, second ed. Cambridge University Press, Cambridge, UK. published
+  in 2015.
+  References 481
+
+Hensher, D.A., Gwilliam, K., Burton, M., Smith, N., van de Velde, D., Fridstrom, L., 2008. The ideal contract roundtable. In: Hensher, D. A. (Ed.),
+  Reforms in Public Transport Research in Transportation Economics 22 (1), 188e194. https://doi.org/10.1016/j.retrec.2008.05.016.
+
+Hensher, D.A., Mulley, C., Yahya, N., 2010. Passenger experience with quality-enhanced bus service: the tyne and wear ‘superoute’ services.
+  Transportation 37 (2), 239e256.
+
+Hensher, D.A., Greene, W.H., Li, Z., 2011a. Embedding risk attitude and decisions weights in non-linear logit to accommodate time variability in the
+  value of expected travel time savings. Transportation Research Part B: Methodological 45 (7), 954e972.
+
+Hensher, D.A., Rose, J.M., Collins, A.T., 2011b. Identifying commuter preferences for existing modes and a proposed metro in Sydney, Australia with
+  special reference to crowding. Public Transport 3 (2), 109e147.
+
+Hensher, D.A., Mulley, C., Smith, N.A., 2012a. Towards a simpliﬁed performance-linked value for money model as a reference point for bus contract
+  payments. Research in Transportation Economics 39 (1), 232e238.
+
+Hensher, D.A., Truong, T.P., Mulley, C., Ellison, R., 2012b. Assessing the wider economy impacts of transport infrastructure investment with an
+  illustrative application to the North-West Rail Link project in Sydney, Australia. Journal of Transport Geography 24, 292e305.
+
+Hensher, D.A., Li, Z., Mulley, C., 2014a. Drivers of bus rapid transit systems e inﬂuences on patronage and service frequency. Research in Transportation
+  Economics 48, 159e165.
+
+Hensher, D.A., Mulley, C., Li, Z., 2014b. Drivers of bus rapid transit systems - inﬂuences on ridership and service research. Transportation Economics 48,
+  159e165. https://doi.org/10.1016/j.retrec.2014.09.025.
+
+Hensher, D.A., Ellison, R., Mulley, C., 2014c. Assessing the employment agglomeration and social accessibility impacts of high speed rail in Eastern
+  Australia. Transportation 41 (3), 463e493.
+
+Hensher, D.A., Mulley, C., Li, Z., 2014d. Drivers of bus rapid transit systems - inﬂuences on ridership and service frequency. In: Paper Presented at the
+  13th International Conference on Competition and Ownership of Land Passenger Transport (Thredbo 13), Oxford September 15e19 2013. Research
+  in Transportation Economics, vol. 48, pp. 159e165. https://doi.org/10.1016/j.retrec.2014.09.025.
+
+Hensher, D.A., Rose, J.M., Greene, W.H., 2015a. Applied Choice Analysis: A Primer, second ed. Cambridge University Press, Cambridge, UK. https://
+  doi.org/10.1017/CBO9780511610356.
+
+Hensher, D.A., Mulley, C., Rose, J.M., 2015b. Understanding the relationship between voting preferences for public transport and perceptions and
+  preferences for bus rapid transit versus light rail. Journal of Transport Economics and Policy 449 (2), 236e260.
+
+Hensher, D.A., Ho, C., Mulley, C.M., 2015c. Identifying resident preferences for bus-based and rail-based investments as a complementary buy in
+  perspective to inform project planning prioritisation. Journal of Transport Geography 46 (1), 1e9.
+
+Hensher, D.A., Ho, C., Mulley, C., 2016. Disruption costs in bus contract transitions. In: Muñoz, J.C., Hensher, D.A., Steel, R. (Eds.), Competition and
+  Ownership in Land Passenger Transport (Selected papers from the Thredbo 14 conference). Research in Transportation Economics 59, 75e85. https://
+  doi.org/10.1016/j.retrec.2016.04.002.
+
+Hensher, D.A., Mulley, C.M., Ho, C., 2017. What are the prospects for switching out of conventional transport services to mobility as a service bundles?
+  A stated choice investigation. In: Paper Prepared for Presentation at the 15th International Conference on Competition and Ownership of Land
+  Passenger Transport (Thredbo 15), Stockholm, Sweden, 13e17 August 2017.
+
+Hensher, D.A., Balbontin, C., Ho, C., Mulley, C., 2019a. Cross-cultural contrasts of preferences for bus rapid transit and light rail transit. Journal of
+  Transport Economics and Policy 53, 47e73.
+
+Hensher, D.A., Ellison, R., Ho, C., Weisbrod, G., 2019b. How well does BRT perform in contrast to LRT? An Australian case study using MetroScan_TI.
+  In: Ferbrache, F. (Ed.), Developing Bus Rapid Transit: The Value of BRT in Urban Spaces. Edward Elgar Publishing, Cheltenham, United Kingdom.
+
+Hensher, D.A., Wong, Y.Z., Ho, L., 2019c. From Workhorse to Thoroughbred: Review of Bus Rapid Transit and Branded Bus Service Performance in
+  Australia and Future Opportunities. Bus Industry Confederation, Canberra, Australia.
+
+Hensher, D.A., 1986. Simultaneous estimation of hierarchical logit mode choice models. In: Transport Research Group, Working Paper No. 24, School of
+  Economic and Financial Studies. Macquarie University.
+
+Hensher, D.A., 1991. Hierarchical stated response designs and estimation in the context of bus use preferences. Logistics and Transportation Reviews 26
+  (4), 299e323.
+
+Hensher, D.A., 1992. Performance evaluation and passenger transit: what are the relevant measures?. In: The Proceedings of the Second International
+  Conference on Privatisation and Deregulation of Passenger Transport, Finland, pp. 61e72.
+
+Hensher, D.A., 1998. Establishing a fare elasticity regime for urban passenger transport. Journal of Transport Economics and Policy 32 (2), 221e246.
+Hensher, D.A., 1999. Bus-based transitway or light rail? continuing the saga on choice versus blind commitment. Roads and Transport Research 8 (3),
+
+  3e21.
+Hensher, D.A., 2000. User needs and impacts on public transport: theme 3. In: Walter, J., Preston, J., Shaw, A., Mills, G., Hensher, D.A. (Eds.),
+
+  Competition and Ownership in Land Passenger Transport: The Sixth International Conference, Cape Town, South Africa, September 1999 - Part 1
+  Transport Reviews 20 (3), 339e346. https://doi.org/10.1080/014416400412832.
+Hensher, D.A., 2001. Service quality as a package: what does it mean to heterogeneous consumers?. In: Paper Presented at the 9th World Conference on
+  Transport Research, Seoul, Korea, July 22e27 2001.
+Hensher, D.A., 2007a. Delivering value for money to government through efﬁcient and effective public transit service continuity: some thoughts,
+  (including commentary of eight respondents). Transport Reviews 27 (4), 411-420,443-448.
+Hensher, D.A., 2007b. Sustainable public transport systems: moving towards a value for money and network-based approach and away from blind
+  commitment. Transport Policy 14 (1), 98e102.
+482 References
+
+Hensher, D.A., 2007c. Social exclusion: informed reality thinking on accessibility and mobility in an ageing population. In: Currie, G., Stanley, J.,
+  Stanley, J. (Eds.), No Way to Go: Transport and Social Disadvantage in Australian Communities. Monash University Publishing, Melbourne,
+  pp. 5.1e5.11.
+
+Hensher, D.A., 2008a. Editorial. In: Hensher, D.A. (Ed.), Reforms in Public Transport Research in Transportation Economics 22 (1), 2e4. https://doi.org/
+  10.1016/j.retrec.2008.05.002.
+
+Hensher, D.A., 2008b. Assessing systematic sources of variation in public transport elasticities: some comparative warnings. Transportation Research Part
+  A 42 (7), 1031e1042.
+
+Hensher, D.A., February 2008c. Hypothetical Bias, Stated Choice Studies and Willingness to Pay. Institute of Transport and Logistics Studies, The
+  University of Sydney.
+
+Hensher, D.A., 2010a. Incompleteness and clarity in bus contracts: identifying the nature of the ex ante and ex post perceptual divide. Research in
+  Transportation Economics 29 (1), 106e117.
+
+Hensher, D.A., 2010b. Attribute processing, heuristics and preference construction in choice analysis. In: Hess, S., Daly, A. (Eds.), State-of Art and
+  State-of Practice in Choice Modelling. Emerald Press, UK, pp. 35e70.
+
+Hensher, D.A., 2015a. Cost efﬁciency under negotiated performance-based contracts and benchmarking for urban bus contracts: are there any gains
+  through competitive tendering in the absence of an incumbent public monopolist? Paper presented at the 13th International Conference on
+  Competition and Ownership of Land Passenger Transport (Thredbo 13), Oxford, 15e19 September, 2013. Journal of Transport Economics and Policy
+  49 (1), 133e148.
+
+Hensher, D.A., 2015b. Customer service quality and benchmarking in public transport contracts. Invited paper for inaugural issue of International Journal
+  of Quality Innovation 1 (4). Available from: https://link.springer.com/article/10.1186/s40887-015-0003-9#citeas.
+
+Hensher, D.A., 2015c. Using contracted assets to undertake non-contracted services as a way to improve cost efﬁciency under negotiated or tendered bus
+  contracts. Journal of Strategic Contracting and Negotiation 1, 111e128.
+
+Hensher, D.A., 2017a. Future bus transport contracts under a mobility as a service (MaaS) regime in the digital age: are they likely to change?
+  Transportation Research Part A: Policy and Practice 98, 86e96. https://doi.org/10.1016/j.tra.2017.02.006.
+
+Hensher, D.A., 2017b. Public service contracts e the economics of reform with special reference to the bus sector. In: Ison, S., Cowie, J. (Eds.), Handbook
+  of the Principles of Transport Economics. Routledge, UK (Chapter 15).
+
+Hensher, D.A., 2018a. Tackling road congestion e what might it look like in the future under a collaborative and connected mobility model? Transport
+  Policy 66, A1eA8.
+
+Hensher, D.A., 2018b. Public service contracts: the economics of reform with special reference to the bus sector. In: Cowie, J., Ison, S. (Eds.), The
+  Routledge Handbook of Transport Economics. Routledge, London, United Kingdom, pp. 93e107.
+
+Hensher, D.A., 2018c. Toll roads e a view after 25 years. Transport Reviews 38 (1), 1e5. Available from: https://doi.org/10.1080/01441647.2017.
+  1330850.
+
+Hess, S., Stathopoulos, A., Campbell, D., O’Neill, V., Caussade, S., 2011. It’s not that I don’t care, I just don’t care very much: confounding between
+  attribute non-attendance and taste heterogeneity. In: Paper Presented at the European Transport Conference, Glasgow, October 2011.
+
+Hidalgo, D., Graftieaux, P., 2008. BRT systems in Latin America and Asia: results and difﬁculties in 11 Cities. Transportation Research Record: Journal
+  of the Transportation Research Board 2072, 77e88.
+
+Hietanen, S., 2014. ‘Mobility as a Service’ e the new transport model? Eurotransport 12 (2), 2e4. Available from: https://slidex.tips/download/sampo-
+  hietanen-ceo-its-ﬁnland.
+
+Hills, P.J., Talley, W., 1991. Experiences from different countries. In Competition Ownership of Bus and Coach Services Transportation Planning and
+  Technology 15 (2e4), 125e133. https://doi.org/10.1080/03081069108717447.
+
+Hine, J., 2007. Transport disadvantage and social exclusion in the UK. In: Currie, G., Stanley, J., Stanley, J. (Eds.), No Way to Go: Transport and Social
+  Disadvantage in Australian Communities. Monash University Publishing, Melbourne, pp. 4.1e4.10.
+
+Hirsch, L., Thompson, K., 2011. I can sit but I’d rather stand: commuters’ experience of crowdedness and fellow passenger behaviour in carriages on
+  Australian metropolitan trains. In: Paper Presented at the 34th Australasian Transport Research Forum, Adelaide, South Australia, Australia.
+
+Hirsch, L., Thompson, K., Mueller, S., 2011. A Socio-Economic Study of Carriage and Platform Crowding in the Australian Railway Industry: Brochure
+  of Findings. CRC for Rail Innovation, Brisbane, Australia.
+
+Ho, C., Mulley, C., 2014. Metrobuses in Sydney: how high capacity and high frequency services are beneﬁting the Metropolitan fringe. Research in
+  Transportation Economics 48, 339e348.
+
+Ho, C., Mulley, C., 2015. Intra-household interactions in tour-based mode choice: the role of social, temporal, spatial and resource constraints. Transport
+  Policy 38, 52e63.
+
+Ho, C., Mulley, C., Shiftan, Y., Hensher, D.A., 2016. Vehicle value of travel time savings: evidence from a group-based modelling approach.
+  Transportation Research Part A: Policy and Practice 88, 134e150.
+
+Ho, C., Hensher, D.A., Mulley, C., Wong, Y.Z., 2018a. Prospects for Switching Out of Conventional Transport Services to Mobility as a Service
+  Subscription Plans: A Stated Choice Study. To Appear in Transportation Research Part A: Policy and Practice.
+
+Ho, C., Hensher, D.A., Mulley, C., Wong, Y.Z., 2018b. Potential uptake and willingness-to-pay for mobility as a service (MaaS) - a stated choice study.
+  Transportation Research Part A: Policy and Practice 117, 302e318.
+
+Hoefﬂer, S., Ariely, D., 1999. Constructing stable preferences: a look into dimensions of experience and their impact on preference stability. Journal of
+  Consumer Psychology 8 (2), 113e139.
+  References 483
+
+Hoffman, A.O.I., Post, T., 2014. Self-attribution bias in consumer ﬁnancial decision-making: how investment returns affect individuals’ belief in skill.
+  Journal of Behavioral and Experimental Economics 52, 23e28.
+
+Hollands, R., 2015. Critical interventions into the corporate smart city. Cambridge Journal of Regions, Economy and Society 8 (1), 61e77. Available
+  from: http://refhub.elsevier.com/S0965-8564(16)31102-8/h0105.
+
+Holmgren, J., 2007. Meta-analysis of public transport demand. Transportation Research Part A 41 (10), 1021e1035.
+Holmstrom, B., Milgrom, P.R., 1991. Multitask principal-agent analyses incentive contracts, asset ownership and job design. Journal of Law, Economics,
+
+  and Organization 7, 24e52.
+Holmstrom, B., Milgrom, P.R., 1994. The ﬁrm as an incentive system. The American Economic Review 84, 972e991.
+Holmstrom, B., 1979. Moral hazard and observability. The Bell Journal of Economics 10, 74e91.
+Holt, C.A., Laury, S.K., 2002. Risk aversion and incentive effects. The American Economic Review 92 (5), 1644e1655.
+Holt-Lunstad, J., Smith, T., Layton, B., 2010. Social relationships and mortality risk: a meta-analytic review. PLoS Medicine 7 (7). http://journals.plos.
+
+  org/plosmedicine/article?id¼10.1371/journal.pmed.1000316.
+Hu, X., Giang, N.K., Shen, J., Leung, V.C., Li, X., 2015. Towards mobility-as-a-service to promote smart transportation. In: IEEE 82nd Vehicular
+
+  Technology Conference (VTC2015-Fall). Boston, United States.
+Huang, H.-J., 2002. Pricing and logit-based mode choice models of a transit and highway system with elastic demand. European Journal of Operational
+
+  Research 140 (3), 562e570.
+Ibrahim, M.F., 2003. Car ownership and attitudes towards transport modes of shopping purposes in Singapore. Transportation 30 (4), 435e457.
+Infrastructure Australia, 2008. Outline of Infrastructure Australia’s Prioritisation Methodology. www.planning.wa.gov.au/dop_pub_pdf/appendix_m.pdf.
+Infrastructure Australia, 2018a. Future Cities, Planning for Our Growing Population. Infrastructure Australia, Canberra. http://infrastructureaustralia.gov.
+
+  au/policy-publications/publications/ﬁles/future-cities/Future-Cities-Paper.pdf. (Accessed 5 March 2018).
+Infrastructure Australia, 2018b. Infrastructure Priority List: Australian Infrastructure Plan. Australian Government, Canberra, Australia.
+Infrastructure Victoria, December 2016. Victoria’s 30 Year Infrastructure Strategy. Infrastructure Victoria, Melbourne. http://www.infrastructurevictoria.
+
+  com.au/sites/default/ﬁles/images/IV%2030%20Year%20Strategy%20WEB%20V2.PDF. (Accessed 5 June 2017).
+Institute of Transport and Logistics Studies (University of Sydney) and Economic Development Research Group, 2012. The Wider Impacts and Transport
+
+  Planning: An Examination of the Bus Rapid Transit Options for the Northern Beaches Using TREDIS. Transport for NSW. Unpublished.
+International Transport Forum, 2016. Shared Mobility: Innovation for Liveable Cities. OECD, Paris. https://www.itf-oecd.org/sites/default/ﬁles/docs/
+
+  shared-mobility-liveable-cities.pdf. (Accessed 21 February 2018).
+IPART, 1996. Estimation of Public Transport Fare Elasticities in the Sydney Region (Independent Pricing and Regulatory Tribunal of New South Wales).
+Isaac, L., 2016. Driving Towards Driverless: A Guide for Government Agencies. WSP Parsons Brinckerhoff, New York. http://www.wsp-pb.com/
+
+  Globaln/USA/Transportation%20and%20Infrastructure/driving-towards-driverless-WBP-Fellow-monograph-lauren-isaac-feb-24-2016.pdf.
+  (Accessed 31 January 2018).
+ITDP, 2012. The BRT Standard: Version 1.0. Institute for Transportation and Development Policy, New York.
+ITDP, 2014. The BRT Standard. Institute for Transportation and Development Policy, New York, United States.
+ITDP, 2016. The BRT Standard, 2016 Edition. Institute for Transportation and Development Policy, New York.
+ITDP, 2017. Rapid Transit Trends Show Record Growth in 2016, with Huge Increases in China, Brazil. Institute for Transportation and Development
+  Policy. https://www.itdp.org/rapid-transit-trends/. (Accessed 26 November 2017).
+Ivanova-Stenzel, R., Kroger, S., 2005. Behavior in Combined Mechanisms: Auctions with a Pre-Negotiation Stage-An Experimental Investigation.
+  University of Arizona, Economic Science Laboratory, Tuscon.
+Jacobs Consultancy, 2010. South Fulham riverside planning framework. In: Trans- Port Study Report, Jacobs Consultancy.
+Jaiswal, S., Bunker, J., Ferreira, L., 2007. Operating characteristics and performance of a busway transit station. In: 30th Australasian Transport Research
+  Forum, Melbourne, 25e27 September.
+Jaiswal, S., Bunker, J., Ferreira, L., 2010. Inﬂuence of platform walking on BRT station bus dwell time estimation: Australian analysis. Journal of
+  Transportation Engineering 136 (12), 1173e1179.
+Jansson, J.O., Holmgren, J., Ljungberg, A., 2015. Pricing public transport services. In: Nash, C. (Ed.), Handbook of Research Methods and Applications
+  in Transport Economics and Policy. Edward Elgar, Cheltenham UK, pp. 260e308. https://doi.org/10.4337/9780857937933.00022.
+Jansson, J.O., 1979. Marginal cost pricing of scheduled transport services. Journal of Transport Economics and Policy 13 (3), 268e294.
+Jansson, J.O., 1980. A simple bus line model for optimization of service frequency and bus size. Journal of Transport Economics and Policy 14 (1),
+  53e80.
+Jansson, K., 1993. Optimal public transport price and service frequency. Journal of Transport Economics and Policy 27 (1), 33e50.
+Jansson, K., 2010. In: Public transport policy with and without road pricing 5th Kuhmo-Nectar Conference on Transport Economics. July 8e9, Valencia,
+  Spain.
+Jara-Díaz, S.R., Gschwender, A., 2003. Towards a general microeconomic model for the operation of public transport. Transport Reviews 23 (4),
+  453e469.
+Jara-Díaz, S.R., Gschwender, A., 2005. Making pricing work in public transport provision. In: Button, K.J., Hensher, D.A. (Eds.), Handbook of Transport
+  Strategy, Policy and Institutions. Elsevier Ltd, Amsterdam, pp. 447e459.
+Jara-Díaz, S.R., Tirachini, A., Cortés, C.E., 2008. Modeling public transport corridors with aggregate and disaggregate demand. Journal of Transport
+  Geography 16, 430e435.
+Jara-Díaz, S.R., 2007. Transport Economic Theory. Elsevier, Oxford.
+484 References
+
+Jenkins, M., March 28, 2017. Cars No More a Symbol of Freedom for the Young. http://www.news.com.au/ﬁnance/economy/australian-economy/cars-no-
+  more-a-symbol-of-freedom-for-young/news-story/0e122c69d7a175fbef1e14618606790e. (Accessed 5 February 2018).
+
+Jittrapirom, P., Caiati, V., Feneri, A.-M., Ebrahimigharehbaghi, S., González, M.J.A., Narayan, J., 2017a. Mobility as a service: a critical review of
+  deﬁnitions, assessments of schemes, and key challenges. Urban Planning 2 (2), 13e25.
+
+Jittrapirom, P., Marchau, V.A.W.J., Meurs, H., 2017b. Dynamic adaptive policymaking for implementing mobility as a service (MaaS). In: European
+  Transport Conference (Barcelona, Spain).
+
+Jittrapirom, P., Marchau, V., Van Der Heijden, R., Meurs, H., 2018. Future Implementation of Mobility as a Service (MaaS): Results of an International
+  Delphi Study. Radboud Repository. Working Paper.
+
+Johansen, K.W., Larsen, O., Norheim, B., 2001. Towards economic efﬁciency in public transport. Journal of Transport Economics and Policy 35 (3),
+  491e511.
+
+Johansson, O., Schipper, L., 1997. Measuring the long run fuel demand of cars: separate estimations of vehicle stock, mean fuel intensity, and mean
+  annual driving distance. Journal of Transport Economics and Policy 31 (3), 277e292.
+
+Joireman, J.A., Lange, P.A., Kuhlman, M., Vugt, M.V., Shelley, G.P., 1998. An interdependence analysis of commuting decisions. European Journal of
+  Social Psychology 27 (4), 441e463.
+
+Kahneman, D., Tversky, A., 1979. Prospect theory: an analysis of decision under risk. Econometrica 47 (2), 263e292.
+Kain, J.F., 1988. Choosing the wrong technology: or how to spend billions and reduce transit use. Journal of Advanced Transportation 21, 197e213.
+Kalb, L.S., Keating, J.P., 1981. The measurement of perceived crowding. Personality and Social Psychology Bulletin 7 (4), 650e665.
+Kaliski, J., Smith, S., Weisbrod, G., 1999. Major Corridor Investment Beneﬁt Management System. Transportation Research Record, p. 1732.
+Kamargianni, M., Matyas, M., 2017. The business ecosystem of mobility-as-a-service. In: 96th Transportation Research Board (TRB) Annual Meeting
+
+  (Washington, D.C., United States).
+Kamargianni, M., Matyas, M., Li, W., Schäfer, A., May 2015. Feasibility Study for “Mobility as a Service” Concept in London FS-MaaS Project. UCL
+
+  Energy Institute, London.
+Kamargianni, M., Li, W., Matyas, M., Schäfer, A., 2016. A critical review of new mobility services for urban transport. Transportation Research Procedia
+
+  14, 3294e3303.
+Kamruzzaman, M., Hine, J., 2011. Rural activity spaces and transport disadvantage: qualitative analysis of quantitative models integrating time and space.
+
+  In: Proceedings of the 43rd Annual Conference of the Universities’ Transport Study Group. Universities’ Transport Study Group, Open University,
+  Milton Keynes, pp. 1e12.
+Karlsson, I.C.M., Sochor, J., Strömberg, H., 2016. Developing the ‘service’ in mobility as a service: experiences from a ﬁeld trial of an innovative travel
+  brokerage. Transportation Research Procedia 14, 3265e3273.
+Karlsson, M., Sochor, J., Aapaoja, A., Eckhardt, J., 2017. Mobility-as-a-service: development of a tentative impact assessment framework. In: ICoMaaS
+  2017 Proceedings, Tampere, Finland.
+Katz, D., Rahman, M.M., 2010. Levels of overcrowding in bus system of Dhaka, Bangladesh. Transportation Research Record 2143, 85e91.
+Kawasaki, S., McMillan, J., 1987. The design of contracts - evidence from Japanese subcontracting. Journal of the Japanese and International Economies
+  1, 327e349.
+Kennedy, D., 1995. London bus tendering: the impact on costs. International Review of Applied Economics 9 (5), 305e318.
+Kerin, P.D., 1992. Efﬁcient bus fares. Transport Reviews: A Transnational Transdisciplinary Journal 12 (1), 33e47.
+Kernohan, D., Rognlien, L., 2011. Wider Economic Impacts of Transport Investments in New Zealand, September 2011. NZ Transport Agency research
+  report 448.
+Kerr, S., 1975. On the folly of rewarding A, while hoping for B. Academy of Management Journal 18, 769e783.
+Kim, S.K., Wang, S., 2004. Robustness of a ﬁxed-rent contract in a standard agency model. Economic Theory 24, 111e128.
+Kim, J.K., Lee, B., Oh, S., 2009. Passenger choice models for analysis of impacts of real-time bus information on crowdedness. Transportation Research
+  Record 2112, 119e126.
+Kittleson, Associates, 1996. Development of Transit Capacity and Quality of Service Principles, Practice and Procedures. Transit Cooperative Research
+  Program Project A-15. Transportation Research Board, Washington D.C.
+Klein, B., Crawford, R.A., Alchian, A.A., 1978. Vertical integration, appropriable rents, and the competitive contracting process. The Journal of Law and
+  Economics 21, 297e326.
+Kleven, H.J., Kreiner, C.T., 2006. The marginal cost of public funds: hours of work versus labor force participation. Journal of Public Economics 90
+  (10e11), 1955e1973.
+Knight, F.H., 1924. Some fallacies in the interpretation of social cost. Quarterly Journal of Economics 38 (4), 582e606.
+Kraus, M., Yoshida, Y., 2002. The commuter’s time-of-use decision and optimal pricing and service in urban mass transit. Journal of Urban Economics 51
+  (1), 170e195.
+Kraus, M., 1991. Discomfort externalities and marginal cost transit fares. Journal of Urban Economics 29 (2), 249e259.
+Kraus, M., 2003. A new look at the two-mode problem. Journal of Urban Economics 54 (3), 511e530.
+Kremers, H., Nijkamp, P., Rietveld, P., 2002. A meta-analysis of price elasticities of transport demand in a general equilibrium framework. Economic
+  Modelling 19, 463e485.
+Krugman, P., 1991. Increasing Returns and Economic Geography. Journal of Political Economy 99, 483e499.
+Krugman, P., Venables, A., 1995. Globalization and the Inequality of Nations. Quarterly Journal of Economics 110, 857e880.
+Kuah, G.K., Perl, J., 1988. Optimization of feeder bus routes and bus-stop spacing. Journal of Transportation Engineering 114 (3), 341e354.
+Kurauchi, F., Bell, M., Schmöcker, J.D., 2003. Capacity constrained transit assignment with common lines. Journal of Mathematical Modelling and
+  Algorithms 2 (4), 309e327.
+  References 485
+
+Lafontaine, F., Bhattacharyya, S., 1995. Double-sided moral hazard and the nature of share contracts. The RAND Journal of Economics 26, 761e781.
+Lafontaine, F., Slade, M., 2001a. Incentive contracting and the Franchise design. In: Chatterjee, K., Samuelson, W. (Eds.), Game Theory and Business
+
+  Applications. Kluwer, Boston, MA.
+Lafontaine, F., 1992. Agency theory and franchising some empirical results. The RAND Journal of Economics 23, 263e283.
+Lago, A.M., Mayworm, P., McEnroe, J.M., 1981. Transit service elasticities: evidence from demonstrations and demand models. Journal of Transport
+
+  Economics and Policy 15 (2), 99e119.
+Lam, W.H.K., Cheung, C.Y., Lam, C.F., 1999. A study of crowding effects at the Hong Kong light rail transit stations. Transportation Research Part A:
+
+  Policy and Practice 33 (5), 401e415.
+Lee, D., Faller, P., 1992. Report for workshop 4: management, institutional structures, the transportation planning process and the future of passenger
+
+  transport. In: Talvitie, A., Hensher, D.A., Beesley, M.E. (Eds.), Privatization and Deregulation in Passenger Transportation: Selected Proceedings of
+  the 2nd International Conference, Tampere, Finland, pp. 215e218.
+Lee, C.K., Lee, J.Y., Kim, Y.K., 2008. Comparison of environmental loads with rail track systems using simpliﬁed life cycle assessment (LCA). WIT
+  Transactions on the Built Environment 101, 367e372.
+Lee, J., Abdel-Aty, M., Cai, Q., Wang, L., 2018. Effects of emergency medical services times on trafﬁc injury severity: a random-effects ordered probit
+  approach. Trafﬁc Injury Prevention 19 (6), 577e581. https://doi.org/10.1080/15389588.2018.1468889.
+Lemp, J.D., Kockelman, K.M., Unnikrishnan, A., 2014. Analysis of large truck crash severity using heteroskedastic ordered probit models. Accident
+  Analysis and Prevention 43 (1), 370e380.
+Lenzen, M., 1999. Total energy and greenhouse gas requirements for Australian transport. Transportation Research Part D 4 (4), 265e290.
+Leurent, F., Liu, K., 2009. On seat congestion, passenger comfort and route choice in urban transit: a network equilibrium assignment model with
+  application to Paris. In: 88th Annual Transportation Research Board Meeting, Washington, DC, January 2009.
+Levinson, H., Zimmerman, S., Clinger, J., Rutherford, S., Smith, R.L., Cracknell, J., 2003. Bus Rapid Transit: Case Studies in Bus Rapid Transit.
+  Transportation Research Board of the National Academies, Washington, DC.
+Lévy-Lambert, H., 1968. Tariﬁcation des services a qualité variable- application aux péages de circulation. Econometrica 36 (3/4), 564e574.
+Li, Z., Hensher, D.A., 2011a. Prospect theoretic contributions in understanding traveller behaviour: a review and some comments. Transport Reviews 31
+  (1), 97e117.
+Li, Z., Hensher, D.A., 2011b. Crowding and public transport: a review of willingness to pay evidence and its relevance in project appraisal. Transport
+  Policy 18 (6), 880e887.
+Li, Z., Hensher, D.A., 2019. Performance contributors of bus rapid transit systems within the ITDP BRT standard: an ordered choice approach. In: 16th
+  International Conference on Competition and Ownership in Land Passenger Transport (Thredbo 16). Singapore.
+Li, Z., Hensher, D.A., Rose, J.M., 2010a. Willingness to pay for travel time reliability in passenger transport: a review and some new empirical evidence.
+  Transportation Research Part E 46 (3), 384e403.
+Li, Z., Tirachini, A., Hensher, D.A., 2010b. Embedding risk attitudes in a scheduling model: application to the study of commuting departure time. In:
+  Paper Presented at the 4th International Symposium on Transportation Network Reliability, Minneapolis, USA, July 22e23.
+Liimatainen, H.P., 2013. The impact of sectoral economic development on the energy efﬁciency and CO2 emissions of road freight transport. Transport
+  Policy 27, 150e157.
+Lin, T., Wilson, N., 1992. Dwell time relationships for light rail systems. Transportation Research Record 1361, 287e295.
+Lindhjem, H., Navrud, S., 2011. Using internet in stated preference surveys: a review and comparison of survey modes. International Review of
+  Environmental and Resource Economics 5, 309e351.
+Lindsey, R., 2006. Do economists reach a conclusion on road pricing? The intellectual history of an idea. Econ Journal Watch 3 (2), 292e379.
+Litman, T., 2002. Transit Price Elasticities and Cross-Elasticities - for Urban Transportation Demand Modeling. Victoria Transport Policy Institute.
+Litman, T., 2005. Transit price elasticities and cross-elasticities. Journal of Public Transportation 7 (2), 37e58.
+Litman, T., 2010. Valuing Transit Service Quality Improvements. Victoria Transport Policy Institute.
+Litman, T., February 9, 2018. Autonomous Vehicle Implementation Predictions. Victoria Transport Policy Institute. https://www.vtpi.org/avip.pdf.
+  (Accessed 20 February 2018).
+Liu, H., Xu, Y., Stockwell, N., Rodgers, M., Guensler, R., 2016. A comparative life-cycle energy and emissions analysis for intercity passenger
+  transportation in the US by aviation, intercity bus, and automobile. Transportation Research Part D: Transport and Environment 48, 267e283.
+London Assembly Transport Committee, 2009. The Big Squeeze: Rail Overcrowding in London. Greater London Authority, London, England.
+Loomes, G., Sugden, R., 1982. Regret theory: an alternative theory of rational choice under uncertainty. The Economic Journal 92 (368), 805e824.
+Louviere, J.J., Hensher, D.A., Swait, J., 2000a. Stated Choice Methods: Analysis and Applications in Marketing, Transportation and Environmental
+  Valuation. Cambridge University Press, Cambridge, UK.
+Lu, H., Fowkes, A.S., Wardman, M., 2008. Amending the Incentive for Strategic Bias in Stated Preference Studies: A Case Study in Users’ Valuation of
+  Rolling Stock, vol. 2049. Transportation Research Record, pp. 128e135.
+Luk, J., Hepburn, S., 1993. New review of Australian travel demand elasticities. In: ARRB Research Report 249. Australian Road Research Board,
+  Victoria.
+Lundberg, U., 1976. Urban commuting: crowdedness and catecholamine excretion. Journal of Human Stress 2 (3), 26e36.
+Lyons, B.R., 1996. Empirical relevance of efﬁcient contract theory inter-ﬁrm contracts. Oxford Review of Economic Policy 12, 27e52.
+Lyons, G., 2017. Getting smart about urban mobility e aligning the paradigms of smart and sustainable. Transportation Research Part A 115, 4e14.
+  Available from: https://doi.org/10.1016/j.tra.2016.12.001\.
+Maat, K., Timmermans, H., 2007. Household car ownership in relation to residential and work location. In: 86th Transportation Research Board (TRB)
+  Annual Meeting. Washington, D.C., United States.
+486 References
+
+Macário, R., Teixeira, P.F., Sánchez-Borrà, M., López-Pita, A., Casas Esplugas, C., 2007. Rail infrastructure pricing for intercity passenger services in
+  europe: possible impacts on the railways competitive framework. In: Paper Presented at the 10th International Conference on Competition and
+  Ownership in Land Passenger Transport (Thredbo 10), Hamilton Island, Australia.
+
+Maciejewski, M., Bischoff, J., 2017. Congestion effects on autonomous taxi ﬂeets. Transport 33 (4), 971e980. https://doi.org/10.3846/
+  16484142.2017.1347827.
+
+MacKay, D.J.C., 2008. Sustainable Energy e Without the Hot Air. UIT, Cambridge.
+MacKenzie, et al., 2016. Will robot cars drive trafﬁc congestion off a cliff? https://www.pbs.org/newshour/nation/will-robot-cars-drive-trafﬁc-congestion-
+
+  off-a-cliff.
+Mackett, R.L., Edwards, M., 1996a. Guidelines for planning a new urban public transport system. Proceedings of the Institution of Civil Engineers:
+
+  Transport 117, 193e201.
+Mackett, R.L., Edwards, M., 1996b. An expert system to advise on urban public transport technologies. Computers, Environment and Urban Systems 20,
+
+  261e273.
+Mackey, S., Hine, J., 2004. Rural Transport Experiences: Accessibility, Constraints and Barriers. Association for European Transport. https://www.
+
+  google.com.au/?client¼safari&channel¼mac_bm&gws_rd¼cr&ei¼l28RWbaaI4PS8QWw4aiwCw#channel¼mac_
+  bm&q¼MackeyþandþHineþ2004þRuralþtransportþexperiences.
+Mackie, P.J., 2005. The London congestion charge: a tentative economic appraisal. A comment on the paper by Prud’homme and Bocajero. Transport
+  Policy 12 (3), 288e290.
+Maier, H., 2011. CAPTRAS and CONGTRAS: alternative ways of modelling crowding in RAILPLAN. In: UK EMME Users’ Conference, London, 22
+  June 2011.
+Manelli, A.M., Daniel, R.V., 1995. Optimal procurement mechanisms. Econometrica 63 (3), 591e620.
+Manelli, A.M., Vincent, D.R., 1995. Optimal procurement mechanism. Econometrica 63 (3), 591e620.
+Maniadis, Z., Tufano, F., List, J.A., 2017. To replicate or not to replicate? Exploring reproducibility in economics through the lens of a model and a pilot
+  study. The Economic Journal 127 (605), F209eF235. https://doi.org/10.1111/ecoj.12527.
+Marchand, M., 1968. A note on optimal tolls in an imperfect environment. Econometrica 36 (3/4), 575e581.
+Marcucci, E., Marini, M., Ticchi, D., 2005. Road pricing as a citizen-candidate game. European Transport Conference 31, 28e45.
+Marcucci, E., 2001. Road pricing: old beliefs, present awareness and future research paths. International Journal of Transport Economics XXVIII (1),
+  49e80.
+Martin, E., Shaheen, S., 2011. The Impact of Carsharing on Household Vehicle Ownership. Spring. Access, 38. https://cloudfront.escholarship.org/dist/
+  prd/content/qt7w58646d/qt7w58646d.pdf?t¼mkp2df. (Accessed 21 February 2018).
+Martin, J., 2016. Mobility as a Service (MaaS) e a new way of using ITS in public transport. Eurotransport 14 (4), 2e5.
+Masten, S.E., Saussier, S., 2000. Econometrics of contracts: an assessment of developments in the empirical literature on contracting. Revue D Economie
+  Industrielle 0 (92), 215e236.
+Matyas, M., Kamargianni, M., 2017. Stated preference design for exploring demand for “mobility as a service” plans. In: 5th International Conference of
+  Choice Modelling. Cape Town, South Africa.
+Maunsell, F., Macdonald, M., 2007. Rail overcrowding, reliability and frequency. In: Report for Centro, the West Midlands Passenger Transport
+  Executive.
+May, A., Koh, A., Blackledge, D., Fioretto, M., 2010. Overcoming the barriers to implementing urban road user charging schemes. European Transport
+  Research Review 2 (1), 53e68.
+Mazzulla, G., Eboli, L., 2006. A service quality experimental measure for public transport. European Transport/Trasporti Europei 34, 42e53.
+McAfee, P., McMillan, J., 1986. Bidding for contracts: a principal-agent analysis. The RAND Journal of Economics 17, 326e338.
+McCabe, G., 2017. Is mobility as a service a fraud?. In: Presentation at the 2017 Bus Industry Confederation (BIC) National Conference, Hobart,
+  November 2017.
+McFadden, D., 1974. The measurement of urban travel demand. Journal of Public Economics 3, 303e328.
+McKinsey & Co Bloomberg New Energy Finance, October 2016. An Integrated Perspective on the Future of Mobility. Authors.
+McKinsey, Bloomberg, 2016. An Integrated Perspective on the Future of Mobility. McKinsey & Company/Bloomberg New Energy Finance, New York,
+  United States/London, United Kingdom.
+Meijers, E.J., Burger, M.J., Hoogerbrugge, M.M., 2016. Borrowing size in networks of cities: city size, network connectivity and metropolitan functions in
+  Europe. Papers in Regional Science 95 (1), 181e198.
+Mellish, D., Macdonald, I., 2009. A study of a trusting partnership between government and industry. In: Paper Presented at Thredbo 11 Conference,
+  Delft, Holland, September 2009 submitted to Research in Transportation Economics.
+Menckhoff, G., August 2005. Latin American experience with bus rapid transit. In: Paper Presented at the Annual Meeting. Institution of Transportation
+  Engineers, Melbourne.
+Merkert, R., 2010. Changes in transaction costs over time: the case of franchised train operating ﬁrms in Britain. In: van de Velde, D., Veeneman, W.,
+  Hensher, D.A., Steel, R. (Eds.), Reforming Public Transport throughout the World Research in Transportation Economics 29 (1), 52e59. https://
+  doi.org/10.1016/j.retrec.2010.07.008.
+Mervis, J., 2017. Not so fast. Science 358 (6369), 1370e1374. https://doi.org/10.1126/science.358.6369.1370.
+Choice Metrics, 2012. NGene. Choice Metrics, Sydney, Australia.
+Meyer, B., 2006. Future Sydney: City of Cities. University of Western Sydney. http://www.uws.edu.au/__data/assets/pdf_ﬁle/0003/7167/Meyer_
+  Final.pdf.
+  References 487
+
+Michael, E., 1996. Regulatory reform and transport policy development: workshop 4. In: Hensher, D.A., Knight, F., Nash, C., Dodgson, J., Michael, E.,
+  Turley, B., Talley, W. (Eds.), Competition and Ownership in Land Passenger Transport: The Fourth International Conference: Part 2 Transport
+  Reviews 16 (4), 277e299. https://doi.org/10.1080/01441649608716954.
+
+Milkovits, M.N., 2008. Modeling the factors affecting bus stop dwell time: use of automatic passenger counting, automatic fare counting, and automatic
+  vehicle location data. Transportation Research Record 2072, 125e130.
+
+Mohd Mahudin, N.D., Cox, T., Grifﬁths, A., 2011. Modelling the spillover effects of rail passenger crowding on individual well being and organisational
+  behaviour. In: Pratelli, A., Brebbia, C.A. (Eds.), Urban Transport XVII, Urban Transport and the Environment in the 21st Century. WIT Transactions
+  on The Built Environment, WIT Press, pp. 227e238.
+
+Mohd Mahudin, N.D., Cox, T., Grifﬁths, A., 2012. Measuring rail passenger crowding: scale development and psychometric properties. Transportation
+  Research Part F 15 (1), 38e51.
+
+Mohd Mahudin, N.D., 2012. Quality of Rail Passenger Experience: The Direct and Spillover Effects of Crowding on Individual Well-Being and
+  Organizational Behaviour. PhD thesis. University of Nottingham.
+
+Mohring, H., 1972. Optimization and scale economies in urban bus transportation. The American Economic Review 62 (4), 591e604.
+Mohring, H., 1983. Minibuses in urban transportation. Journal of Urban Economics 14 (3), 293e317.
+Enhancing mobility in later life: personal coping, environmental resources and technical support. In: Mollenkopf, H., Marcellini, F., Ruoppila, I.,
+
+  Szeman, Z., Tacken, M. (Eds.), 2005. The Out-of-Home Mobility of Older Adults in Urban and Rural Regions of Five European Countries. IOS
+  Press, Amsterdam.
+Morrison, S., Oum, T., Starkie, D., 2007. A quantitative history of JTEP. Journal of Transport Economics and Policy 41 (3), 311e316.
+MRCagney, 2015. ACTION Expenditure Review. ACT Government.
+Mukhtar-Landgren, D., Karlsson, M., Koglin, T., Kronsell, A., Lund, E., Sarasini, S., Sochor, J.L., Wendle, B., 2016. Institutional conditions for integrated
+  mobility services (IMS): towards a framework for analysis. K2-Sveriges nationella centrum för forskning och utbildning om kollektivtraﬁk 16.
+Mulley, C., Daniels, R., 2012. Quantifying the role of a ﬂexible transport service in reducing the accessibility gap in low density areas: A case-study in
+  north-west Sydney. Research in Transportation Business & Management 3, 12e23.
+Mulley, C., Kronsell, A., 2018a. Workshop 7 report: the “uberisation” of public transport and mobility as a service (MaaS): implications for future
+  mainstream public transport. In: Alexandersson, G., Hensher, D.A., Steel, R. (Eds.), Competition and Ownership in Land Passenger Transport
+  (Selected papers from the Thredbo 15 conference). Research in Transportation Economics 69, 568e572.
+Mulley, C., Tsai, C.-H., 2017. Impact of bus rapid transit on housing price and accessibility changes in Sydney: a repeat sales approach. International
+  Journal of Sustainable Transportation 11, 3e10.
+Mulley, C., Hensher, D.A., Rose, J.M., 2014. Do preferences for BRT and LRT vary across geographical jurisdictions? A comparative assessment of six
+  Australian capital cities. Case Studies on Transport Policy 2 (1), 1e9.
+Mulley, C., Nelson, J.D., Wright, S., 2017. Public transport meets mobility as a service: on the road to a new a ﬂexible future. In: 15th International
+  Conference on Competition and Ownership in Land Passenger Transport (Thredbo 15). Stockholm, Sweden.
+Mulley, C., 2017. Mobility as a services (MaaS) - does it have critical mass? Transport Reviews 37, 247e251.
+Muñoz, J.C., Paget-Seekins, L. (Eds.), 2016. Restructuring Public Transport through Bus Rapid Transit. Policy Press, Bristol, UK.
+Muoio, D., 2016. Here are All the Companies Racing to Put Driverless Cars on the Road by 2020. Business Insider. Available from: https://www.
+  businessinsider.com/google-apple-tesla-race-to-develop-self-driving-cars-by-2020-2016-4.
+Myers, J., Ashmore, D., 2007. When to tender, when to negotiate? Why are we ignoring the elephants in the room?. In: Paper Presented at the 10th
+  International Conference on Competition and Ownership in Land Passenger Transport (Thredbo 10), Hamilton Island, Australia.
+Nash, C., Alexandersson, G., 2006. Workshop E: institutional conﬁguration and framework as a driver for system performance. In: Macário, R.,
+  Viegas, J.M., Hensher, D.A. (Eds.), Competition and Ownership in Land Passenger Transport: Selected Papers from the 9th International Conference
+  (Thredbo 9), Lisbon, September 2005. Elsevier Science, pp. 751e758.
+Nash, C., Bray, D., 2014. Workshop 5 report: the roles and responsibilities of government and operators. In: Preston, J., Hensher, D.A., Steel, R. (Eds.),
+  Competition and Ownership in Land Passenger Transport (Selected papers from the Thredbo 13 conference). Research in Transportation Economics
+  48, 286e289. https://doi.org/10.1016/j.retrec.2014.09.054.
+Nash, C., Jansson, K., 2002. Competition and regulation of public transport: theme B. In: Hensher, D.A., Hauge, O. (Eds.), Competition and Ownership in
+  Land Passenger Transport: The 7th International Conference Transport Reviews 22 (3), 346e349. https://doi.org/10.1080/01441640110103662.
+Nash, C., Walters, J., 2005. Competition and regulation: theme B. In: Hensher, D.A. (Ed.), Competition and Ownership in Land Passenger Transport:
+  Selected Refereed Papers from the 8th International Conference (Thredbo 8), Rio de Janeiro, September 2003. Elsevier Science, pp. 54e64.
+Nash, C., Wolanski, M., 2010. Workshop report: benchmarking the outcome of competitive tendering. In: van de Velde, D., Veeneman, W., Hensher,
+  D.A., Steel, R. (Eds.), Reforming Public Transport throughout the World Research in Transportation Economics 29 (1), 6e10. https://doi.org/
+  10.1016/j.retrec.2010.07.003.
+Nash, C.A., 1978. Management objectives, fares and service levels in bus transport. Journal of Transport Economics and Policy 12 (1), 76e85.
+Nealer, R., Reichmuth, D., Anair, D., 2015. Cleaner Cars from Cradle to Grave: How Electric Cars Beat Gasoline Cars on Lifetime Global Warming
+  Emissions. Union of Concerned Scientists. http://www.ucsusa.org/clean-vehicles/electric-vehicles/life-cycle-ev-emissions#.VvCvef775aR.
+Nelson, J.D., Merkert, R., 2013. Workshop 1: performance measurement and compliance. In: Hensher, D.A., Walters, J., Steel, R. (Eds.), THREDBO 12:
+  Recent developments in the reform of land passenger transport Research in Transportation Economics 39 (1), 46e49. https://doi.org/10.1016/
+  j.retrec.2012.05.022.
+Nelson, J.D., Mulley, C., 2013. The impact of the application of new technology on public transport service provision and the passenger experience: a
+  focus on implementation in Australia. Research in Transportation Economics 39, 300e308.
+488 References
+
+Neuman, T., Neuman, E., Neuman, S., 2010. Explorations of the effect of experience on preferences for a health-care service. The Journal of
+  Socio-Economics 39, 407e419.
+
+Newberg, M., 2015. Uber May Be Encouraging Delay of Car Purchases: Survey. CNBC. Available from: https://www.cnbc.com/2015/10/03/uber-may-
+  be-encouraging-delay-of-car-purchases-survey.html.
+
+Newman, P.W., Kenworthy, J.R., 1989. Cities and Automobile Dependence: An International Sourcebook (Gower, United Kingdom).
+Newman, P., Kenworthy, J., 1999. Sustainability and Cities: Overcoming Automobile Dependence. Island Press, Washington DC.
+NGene, 2012. NGene Choice Experiment Software. Choice Metrics, Sydney.
+NIEIR (National Institute of Economic and Industry Research), 2009. The Accessibility of Essential Services in Urban and Regional Australia. author,
+
+  unpublished.
+Nielsen, G., Nelson, J., Mulley, C., Tegner, G., Lind, G., Lange, T., 2005. Public Transport -Planning the Networks. Best Practice Guide 2. HiTrans,
+
+  Stavanger, Norway.
+Nijkamp, P., Pepping, G., 1998. Meta-analysis for explaining the variance in public transport elasticities. Journal of Transportation and Statistics 1, 1e14.
+Nikitas, A., Karlsson, M., 2015. A worldwide state of the art analysis for bus rapid transit: looking for the success formula. Journal of Public
+
+  Transportation 18 (1), 1e33.
+Nilsson, J.E., 1995. Allocation of truck capacity: experimental evidence on the use of Vickrey auctioning in the railway industry. In: Paper Presented at the
+
+  4th International Conference on Competition and Ownership in Land Passenger Transport (Thredbo 4), Rotorua, New Zealand.
+Nolan, B., Rahbari, E., Richiardi, M., Rivera, L., Nabarro, B., September 2017. Inequality and Prosperity in the Industrialized World: Addressing a
+
+  Growing Challenge. Citi GPS, Oxford Martin School and Citi. https://www.oxfordmartin.ox.ac.uk/downloads/Citi_GPS_Inequality.pdf. (Accessed 26
+  February 2018).
+NSW Planning and Environment, 2015. Plan for Growing Sydney. www.strategy.planning.nsw.gov.au/sydney/wp-content/uploads/sites/2/2015/02/A-
+  Plan-For-Growing-Sydney_2015_updated_20Feb_.pdf.
+OECD, 2014. Focus on Inequality and Growth. OECD Directorate for Employment, Labour and Social Affairs. http://www.oecd.org/els/soc/Focus-
+  Inequality-and-Growth-2014.pdf. (Accessed 19 January 2015).
+OECD, 2017. OECD Economic Surveys: Australia, March 2017. Overview. Author, Paris. https://www.oecd.org/eco/surveys/Australia-2017-OECD-
+  economic-survey-overview.pdf. (Accessed 26 February 2018).
+Ofﬁce of Rail Regulation, 2011. Peak Crowding and Passenger Demand. UK Government.
+Oldﬁeld, R.H., Bly, P.H., 1988. An analytic investigation of optimal bus size. Transportation Research Part B 22 (5), 319e337.
+O’Toole, R., 2008. Does rail transit save energy or reduce greenhouse gas emissions? Cato Policy Analysis 615.
+Oum, T.H., Waters, W.G., Yong, J., 1992. Concepts of price elasticities of transport demand and recent empirical estimates - an interpretative survey.
+  Journal of Transport Economics and Policy 26 (2), 139e154.
+Parasuraman, A., Zeithaml, V., Berry, L.L., 1985. A conceptual model of service quality and its implications for future research. Journal of Marketing 49,
+  41e50.
+Parry, I.W.H., Bento, A., 2001. Revenue recycling and the welfare effects of road pricing. The Scandinavian Journal of Economics 103 (4), 645e671.
+Parry, I.W.H., Small, K.A., 2009. Should urban transit subsidies be reduced? The American Economic Review 99 (3), 700e724.
+Parsons Brinckerhoff & Curtin University Sustainability Policy Institute, 2010. ‘The Knowledge Arc Light Rail: A Concept for Delivering the Next Phase
+  of Public Transport in Perth’. prepared by Peter Newman, Jan Scheurer, Diana Ryan, Michael Kane, Jeff Kenworthy, Mark Bachels and Brian
+  McMahon. Curtin University Sustainability Policy (CUSP) Institute 2010.
+Paul, A., Gutierrez, G., 2005. Simple probability models for project contracting. European Journal of Operational Research 165, 329e338.
+Pedersen, P.A., 2003. On the optimal fare policies in urban transportation. Transportation Research Part B 37 (5), 423e435.
+Pels, E., Verhoef, E., 2007. Infrastructure pricing and competition between modes in urban transport. Environment and Planning A 39 (9), 2119e2138.
+Pepper, J., Spitz, G., Adler, T., 2003. Customer perspectives on multilevel coaches for increasing rail system capacity. Transportation Research Record
+  1838, 19e29.
+Pham, L., Linsalata, J., 1991. Effects of Fare Changes on Bus Ridership. American Public Transit Association.
+Picketty, T., 2014. Capital in the Twenty-First Century. Belknap Harvard University Press, Cambridge MASS.
+Pickrell, D., 1985. Rising deﬁcits and the uses of transit subsidies in the United States. Journal of Transport Economics and Policy 19 (3), 281e298.
+Pickrell, D.H., 1992. A desire named streetcar: fantasy and fact in rail transit planning. Journal of the American Planning Association 58, 158e176.
+Pietrovito, F., Pozzolo, A.F., Salvatici, L., 2016. Internationalization choices: an ordered probit analysis at industry level. Empirical Economics 50 (2),
+  561e594.
+Polak, J., Hess, S., Liu, X., 2008. Characterising heterogeneity in attitudes to risk in expected utility models of mode and departure time choice. In: The
+  Transportation Research Board (TRB) 87th Annual Meeting, Washington, D.C., United States.
+Polydoropoulou, A., Ben-Akiva, M.E., 2001. Combined revealed and stated preference nested logit access and mode choice model for multiple mass
+  transit technologies. Transportation Research Record 1771, 38e45.
+Prendergast, C., 2002. The Tenuous Trade-off between risk and incentives. Journal of Political Economy 110, 1071e1102.
+Preston, J., Nash, C., 1997. From down under to oop north: the past, present and the future of the international conferences on competition and ownership
+  in land passenger transport. In: Paper Presented at the 5th International Conference on Competition and Ownership in Land Passenger Transport
+  (Thredbo 5) (Leeds, United Kingdom).
+Preston, J., Rajé, F., 2006. Accessibility, mobility and transport-related social exclusion. Journal of Transport Geography 15 (3), 151e160.
+  References 489
+
+Preston, J., Roth, G., 1996. Competitive models and impacts: workshop 1. In: Hensher, D.A., Knight, F., Preston, J., Rother, G., Kilsby, D., Smith, N.
+  (Eds.), Competition and Ownership in Land Passenger Transport: The Fourth International Conference - Part 1 Transport Reviews 16 (3), 195e200.
+  https://doi.org/10.1080/01441649608716947.
+
+Preston, J., Shaw, A., 2000. Tendering and competition in public transport: theme 1. In: Walters, J., Preston, J., Shaw, A., Mills, G., Hensher, D.A. (Eds.),
+  Competition and Ownership in Land Passenger Transport: The Sixth International Conference, Cape Town, South Africa, September 1999 - Part 1,
+  pp. 323e328. https://doi.org/10.1080/014416400412832.
+
+Preston, J., van de Velde, D., 2002. Competitive tendering of public transport: theme A. In: Hensher, D.A., Hauge, O. (Eds.), Competition and Ownership
+  in Land Passenger Transport: The 7th International Conference Transport Reviews 22 (3), 336e345. https://doi.org/10.1080/01441640110103662.
+
+Preston, J., van de Velde, D., 2016. Workshop 7 report: market initiative: regulatory design, implementation and performance. In: Muñoz, J.C., Hensher,
+  D.A., Steel, R. (Eds.), Competition and Ownership in Land Passenger Transport (Selected papers from the Thredbo 14 conference). Research in
+  Transportation Economics 59, 343e348. https://doi.org/10.1016/j.retrec.2016.10.010.
+
+Preston, J., Whelan, W., Nash, C., Wardman, M., 2000. The franchising of passenger rail services in Britain. International Review of Applied Economics
+  14 (1), 99e112. https://doi.org/10.1080/026921700101506.
+
+Preston, J., 1991. Explaining competitive practices in the bus industry: the British experience. In Competition Ownership of Bus and Coach Services
+  Transportation Planning and Technology 15 (2e4), 277e294. https://doi.org/10.1080/03081069108717459.
+
+Preston, J., 1992. Report for workshop 2: understanding competition and anti-trust behaviour. In: Talvitie, A., Hensher, D.A., Beesley, M.E. (Eds.),
+  Privatization and Deregulation in Passenger Transportation: Selected Proceedings of the 2nd International Conference, Tampere, Finland,
+  pp. 133e140.
+
+Preston, J., 1997. Public transport elasticities: time for a re-think?. In: Presented to UTSG Conference. University of Oxford Transport Studies Unit,
+  Dublin.
+
+Preston, J., 2005. The road to Rio: a brief history of the international conferences on competition and ownership in land passenger transport. In:
+  Hensher, D.A. (Ed.), Competition and Ownership in Land Passenger Transport: Selected Refereed Papers from the 8th International Conference
+  (Thredbo 8), Rio de Janeiro, September 2003. Elsevier Science, pp. 11e26.
+
+Preston, J., 2007a. Comments on Hensher (2007). Transport Reviews 27 (4), 435e438.
+Preston, J., 2007b. Comments on Hensher (2007). Transport Reviews 27 (4), 427e431.
+Preston, J.M., 2008. Public transport subsidisation (Chapter 10). In: Ison, S., Rye, T. (Eds.), The Implementation and Effectiveness of Transport Demand
+
+  Management Measures: An International Perspective. Ashgate Publishing Limited, Hampshire, pp. 189e209.
+Preston, J., 2014. Editorial: Thredbo 13 workshops. In: Preston, J., Hensher, D.A., Steel, R. (Eds.), Competition and Ownership in Land Passenger
+
+  Transport (Selected papers from the Thredbo 13 conference). Research in Transportation Economics 48, 3e8. https://doi.org/10.1016/
+  j.retrec.2014.09.025.
+Prioni, P., Hensher, D.A., 2000. Measuring service quality in scheduled bus services. Journal of Public Transport 3 (2), 51e74.
+Proost, S., Van Dender, K., 2008. Optimal urban transport pricing in the presence of congestion, economies of density and costly public funds.
+  Transportation Research Part A 42 (9), 1220e1230.
+Proost, S., De Borger, B., Koskenoja, P., 2007. Public ﬁnance aspects of transport charging and investments. In: De Palma, A., Lindsey, R., Proost, S.
+  (Eds.), Investment and the Use of Tax and Toll Revenues in the Transport Sector, Research in Transportation Economics, vol. 19. Elsevier, Oxford,
+  pp. 59e80.
+Prud’homme, R., Bocarejo, J.P., 2005. The London congestion charge: a tentative economic appraisal. Transport Policy 12 (3), 279e287.
+Puchalsky, C.M., 2005. Comparison of emissions from light rail transit and bus rapid transit. Transportation Research Record: Journal of the
+  Transportation Research Board 31e37. No. 1927, Transportation Research Board of the National Academies, Washington, D.C.
+Puong, A., 2000. Dwell Time Model and Analysis for the MBTA Red Line. MIT’s Open Course Ware project.
+Queensland Rail, 2011. More Customers, Less Crowding as New Timetable Delivers. Ministerial Media Statement.
+Quiggin, J., 1982. A theory of anticipated utility. Journal of Economic Behaviour and Organization 3 (4), 323e343.
+Quinet, E., 2005. Alternative pricing doctrines. Research in Transportation Economics 14, 19e47.
+RAI (Regional Australia Institute), January 2015b. Insights for Competitive Regions: Demography. Regional Australia Institute, Canberra.
+RAI (Regional Australia Institute), January 2015a. Population Dynamics in Regional Australia. Regional Australia Institute, Canberra.
+Ramazzotti, D., Ambrosino, G., Nelson, J.D., Boero, M., 2016. From the concept of ﬂexible mobility services to the ‘Shared Mobility Services Agency’.
+  In: Mulley, C., Nelson, J.D. (Eds.), Paratransit: Shaping the Flexible Transport Future (Transport and Sustainability, vol. 8. Emerald Group Pub-
+  lishing, Bingley, United Kingdom, pp. 203e215.
+Rantasila, K., 2015. The Impact of Mobility as a Service Concept to Land Use (Master’s Thesis, Aalto University) (Helsinki, Finland).
+Rantasila, K., 2016. The impact of Mobility as a Service concept to land use in Finnish context. In: 2015 International Conference on Sustainable Mobility
+  Applications, Renewables and Technology (SMART).
+Rawnsley, T., Szafraneic, J., 2010. Agglomeration and Labour Productivity in Australian Cities, SGS. Economics and Planning, Knowledge Summit - A
+  Success for Melbourne.
+Redman, L., Friman, M., Garling, T., Hartig, T., 2013. Quality attributes of public transport that attract car users: a research review. Transport Policy 25,
+  119e127.
+RethinkX, 2017. Rethinking Transportation 2030-2030: The Disruption of Transportation and the Collapse of the Internal-Combustion Vehicle and Oil
+  Industries. https://static1.squarespace.com/static/585c3439be65942f022bbf9b/t/59f279b3652deaab9520fba6/1509063126843/RethinkXþReport_
+  102517.pdf. (Accessed 31 January 2018).
+Richard, M.D., Allaway, A.W., 1993. Service quality attributes and choice behavior. Journal of Service Marketing 7 (1), 59e68.
+490 References
+
+Richards, M.G., Wilson, N.H.M., 1991. Operator and organisational issues. In Competition Ownership of Bus and Coach Services Transportation
+  Planning and Technology 15, 153e160. https://doi.org/10.1080/03081069108717450.
+
+Richmond, J.E.D., 1998. New Rail Transit Investments e A Review, A. Alfred Taubman Center for State and Local Government. John F. Kennedy
+  School of Government, Harvard University.
+
+Romanyuk, J., 2018. Mobility as a Service - Hype or the Future of Transportation? Master of Science in Economics and Business Administration, Aalto
+  University.
+
+Rose, J., Bliemer, M., 2008. Stated preference experimental design strategies. In: Hensher, D.A., Button, K.J. (Eds.), Handbook of Transport Modelling.
+  Elsevier, Oxford, pp. 151e179.
+
+Rose, J.M., Bekker de-Grob, E., Bliemer, M.C.J., 2012. If Theoretical Framework Matters, Then Why are We Ignoring Their Tenants? an (Re)exami-
+  nation of Random Utility Theory and beyond. ITLS Working Paper.
+
+Rose, J.M., Beck, M.J., Hensher, D.A., 2015. The joint estimation of respondent-reported certainty and acceptability with choice. Transportation Research
+  Part A: Policy and Practice 71, 141e152.
+
+Rotaris, L., Danielis, R., Marcucci, E., Massiani, J., 2010. The urban road pricing scheme to curb pollution in Milan, Italy: description, impacts and
+  preliminary cost-beneﬁt analysis assessment. Transportation Research Part A: Policy and Practice 44 (5), 359e375.
+
+Rouwendal, J., Verhoef, E.T., 2006. Basic economic principles of road pricing: from theory to applications. Transport Policy 13 (2), 106e114.
+Ryan, R., Deci, E., 2001. On happiness and human potentials: a review of research on hedonic and eudaimonic well-being. Annual Review of Psychology
+
+  52, 141e166.
+Ryan, M., Ubach, C., 2003. Testing for an experience endowment effect in health care. Applied Economics Letters 10, 407e410.
+Sadowsky, N., Nelson, E., 2017. The Impact of Ride-Hailing Services on Public Transportation Use: A Discontinuity Regression Analysis. Bowdoin
+
+  College. Working Paper.
+Saeri, A., Cruwys, T., Barlow, F., Stronge, S., Sibley, C., 2018. Social connectedness improves public mental health: investigating bidirectional re-
+
+  lationships in the New Zealand attitudes and values survey. Australian and New Zealand Journal of Psychiatry 52 (4), 365e374. https://doi.org/
+  10.1177/0004867417723990. Epub 2017 Aug 12.
+Saeri, A., Sibley, C., Barlow, F., Stronge, S., Cruwys, T., September 6, 2017b. Are you part of a social group? Making sure you are will improve your
+  health. The Conversation. https://theconversation.com/are-you-part-of-a-social-group-making-sure-you-are-will-improve-your-health-81996.
+Sáez, D., Cortés, C.E., Milla, F., Núñez, A., Tirachini, A., Riquelme, M., 2012. Hybrid predictive control strategy for a public transport system with
+  uncertain demand. Transportmetrica 8 (1), 61e86.
+Saﬁrova, E., Houde, S., Lipman, D.A., Harrington, W., Baglino, A., 2006. Congestion Pricing, Long-Term Economic and Land-Use Effects. RFF
+  Discussion Paper 06-37. Washington, DC.
+Salisbury, L.C., Feinberg, F.M., 2010. Alleviating the constant stochastic variance assumption in decision research: theory, measurement, and
+  experimental test. Marketing Science 29 (1), 1e17.
+Santos, G., Shaffer, B., 2004. Preliminary result of the London congestion charging scheme. Public Works Management and Policy 9 (2), 164e181.
+Santos, G., 2005. Urban congestion charging: a comparison between London and Singapore. Transport Reviews 25 (5), 511e534.
+Saussier, S., 2000. Transaction costs and contractual incompleteness: the case of Électricité de France. Journal of Economic Behavior and Organization
+  42, 189e206.
+Schmöcker, J.D., Fonzone, A., Shimamoto, H., Kurauchi, F., Bell, M.G.H., 2011. Frequency-based transit assignment considering seat capacities.
+  Transportation Research Part B 45 (2), 392e408.
+Schwanen, T., Banister, D., Anable, J., 2012. Rethinking habits and their role in behaviour change: the case of low-carbon mobility. Journal of Transport
+  Geography 24, 522e532.
+Schwanen, T., Lucas, K., Akyelken, N., Solsona, D., Carrasco, J., Neutens, T., 2015. Rethinking the links between social exclusion and transport
+  disadvantage through the lens of social capital. Transportation Research Part A 74, 123e125.
+Schwartz, A., Watson, J., 2004. The law and economics of costly contracting. Journal of Law, Economics, and Organization 19, 2e31.
+Scott, D.M., Axhausen, K.W., 2006. Household mobility tool ownership: modeling interactions between cars and season tickets. Transportation 33,
+  311e328.
+Senate Standing Committee of Transport and Communications, January 2018. Driving Change: Technology and the Future of the Automated Vehicle.
+  Senate Canada. https://sencanada.ca/content/sen/committee/421/TRCM/Reports/COM_RPT_TRCM_AutomatedVehicles_e.pdf. (Accessed 9
+  February 2018).
+Senna, L.A.D.S., 1994. The inﬂuence of travel time variability on the value of time. Transportation 21 (2), 203e228.
+SEU (Social Exclusion Unit), 2003. Making the Connections: Final Report on Transport and Social Exclusion. Cabinet Ofﬁce, London UK. Available
+  from: http://www.socialexclusionunit.gov.uk.
+SGS Economics and Planning, 2012a. Productivity and Agglomeration Beneﬁts in Australian Capital Cities. prepared for the COAG Reform Council.
+  www.sgsep.com.au/insights/sgs-reports/productivity-and-agglomeration-beneﬁts-in-australian-capital-cities-report-to-coag.
+SGS Economics and Planning, 2012b. Beneﬁt-cost Analysis of Car Share within the City of Sydney (Sydney, Australia).
+Shelanski, H., Klein, P., 1995. Empirical research in transaction cost economics: a review and assessment. Journal of Law, Economics, and Organization
+  11, 335e361.
+Shen, S., Neyens, D.M., 2017. Assessing drivers’ response during automated driver support system failures with non-driving tasks. Journal of Safety
+  Research 61, 149e155. https://doi.org/10.1016/j.jsr.2017.02.009.
+Sherman, R., 1971. Congestion interdependence and urban transit fares. Econometrica 39 (3), 565e576.
+  References 491
+
+Shleifer, A., 1998. State vs. private ownership. The Journal of Economic Perspectives 12 (4), 133e150.
+Signiﬁcance, Vu University Amsterdam, John Bates Services, 2012. Values of Time and Reliability in Passenger and Freight Transport in The
+
+  Netherlands: Report for the Ministry of Infrastructure and the Environment (The Netherlands).
+Simon, H., 1951. A formal theory of the employment relationship. Econometrica 19, 293e305.
+Sislak, K.G., 2000. Bus rapid transport as a substitute for light rail: a tail of two cities. In: Paper Presented at 8th Joint Conference on Light Rail Transit,
+
+  Transportation Research Board and American Public Transportation Association. http://www.apta.com/research/info/brieﬁngs/documents/sislak.pdf.
+Small, K.A., Verhoef, E.T., 2007. The Economics of Urban Transportation. Taylor & Francis Group, Abingdon, Routledge.
+Small, K., Winston, C., 1999. The demand for transportation: models and applications. In: Essays in Transportation Economics and Policy. Brookings
+
+  Institute, Washington, D.C, pp. 11e55.
+Small, K.A., 2004. Road pricing and public transport. Research in Transportation Economics 9 (1), 133e158.
+Sochor, J., Strömberg, H., Karlsson, I.C.M., 2015. Implementing mobility as a service: challenges in integrating user, commercial, and societal per-
+
+  spectives. Transportation Research Record: Journal of the Transportation Research Board 2536, 1e9.
+Sochor, J., Karlsson, I.C.M., Strömberg, H., 2016. Trying out mobility as a service: experiences from a ﬁeld trial and implications for understanding
+
+  demand. Transportation Research Record: Journal of the Transportation Research Board 2542, 57e64.
+Spielmann, M., de Haan, P., Scholz, R.W., 2008. Environmental rebound effects of high-speed transport technologies: a case study of climate change
+
+  rebound effects of a future underground maglev train system. Journal of Cleaner Production 16 (13), 1388e1398.
+Spiess, H., Florian, M., 1989. Optimal strategies: a new assignment model for transit networks. Transportation Research Part B 23 (2), 83e102.
+Srinivasan, K.K., 2002. Injury severity analysis with variable and correlated thresholds ordered mixed logit formulation. Transportation Research Record
+
+  1784, 132e142.
+Stanley, J.R., Banks, M., June 2012. Transport Needs Analysis for Getting There and Back: Report for Transport Connections: Shires of Moyne and
+
+  Corangamite. Shires of Moyne and Corangamite, Victoria, Australia.
+Stanley, J., Brain, P., 2015. Urban land use transport integration and the vital role for Australia’s forgotten inner/middle suburbs. In: Bus and Coach
+
+  Industry Policy Paper 5. Bus Industry Confederation, Canberra.
+Stanley, J., Hensher, D.A., 2004a. Melbourne’s public transport franchising: lessons for PPPs. Australian Accounting Review 33 (14), 42e50.
+Stanley, J., Hensher, D.A., 2004b. Melbourne’s public transport franchising: lessons for PPPs. Australian Accounting Review 14 (33), 42e50.
+Stanley, J., Hensher, D., 2011a. Environmental and social taxes: reforming road pricing in Australia. Road and Transport Research 20 (4), 71e83.
+Stanley, J., Hensher, D., 2011b. Economic modelling. In: Currie, G. (Ed.), New Perspectives and Methods in Transport and Social Exclusion Research.
+
+  Emerald Group Publishing Limited, UK.
+Stanley, J., Hensher, D., 2017. Getting the prices right. Road and Transport Research 26 (3), 13e21.
+Stanley, J., Ljungberg, A., 2018. Bridging the beneﬁt/funding gap. Research in Transportation Economics 69, 438e444.
+Stanley, J., Longva, F., 2010. Workshop report: a successful contractual setting. In: van de Velde, D., Veeneman, W., Hensher, D.A., Steel, R. (Eds.),
+
+  Reforming Public Transport throughout the World Research in Transportation Economics 29 (1), 80e88. https://doi.org/10.1016/j.retrec.2010.07.011.
+Stanley, J., Smith, A., 2013. Governance, contracting, ownership and competition issues in public transport: looking up not down. Research in
+
+  Transportation Economics 39, 167e174.
+Stanley, J., Stanley, J., October 2004. Improving Public Transport to Meet Community Needs: A Warrnambool Case Study. Bus Association Victoria and
+
+  Warrnambool Bus Lines, Victoria, Australia.
+Stanley, J., Stanley, J., 2007. Social policy and public transport. In: Currie, G., Stanley, J., Stanley, J. (Eds.), No Way to Go: Transport and Social
+
+  Disadvantage in Australian Communities. Monash University Publishing, Melbourne, pp. 13.1e13.17.
+Stanley, J., Stanley, J., 2018. The value of getting there: mobility for stronger Australian regions. In: Bus and Coach Industry Policy Paper 10. Bus
+
+  Industry Confederation, Canberra.
+Stanley, J., van de Velde, D., 2008. Risk and reward in public transport contracting. In: Hensher, D.A. (Ed.), Reforms in Public Transport Research in
+
+  Transportation Economics 22 (1), 20e25. https://doi.org/10.1016/j.retrec.2008.05.006.
+Stanley, J.K., van de Velde, D., 2008. Risk and rewards in public transportation contracting. Research in Transportation Economics 22, 20e25
+
+  (Thredbo 10).
+Stanley, J., van de Velde, D., 2009. Risk and reward in public transport contracting. Research in Transportation Economics 22, 20e25.
+Stanley, J., Wong, Y.Z., 2016. Improving public transport service: Hobart - A corridors case study. In: Moving People > Solutions for Policy Thinkers.
+
+  Bus Industry Confederation, Canberra, Australia.
+Stanley, J., Betts, J., Lucas, S., 2007a. Tactical level partnerships: a context of trust for successful operation. In: Macario, R., Viegas, J., Hensher, D.A.
+
+  (Eds.), Competition and Ownership in Land Passenger Transport. Elsevier, Amsterdam, pp. 437e452.
+Stanley, J.K., Betts, J., Lucas, S., 2007b. Tactical level partnerships: a context of trust for successful operation. Chapter 12. In: Macario, R., Viegas, J.,
+
+  Hensher, D.A. (Eds.), (2007) Competition and Ownership in Land Passenger Transport. Elsevier, Oxford, pp. 189e212 (Thredbo 9).
+Stanley, J., Stanley, J., Vella-Brodrick, D., Currie, G., 2010. The place of transport in facilitating social inclusion via the mediating inﬂuence of social
+
+  capital. Research in Transportation Economics 29, 280e286.
+Stanley, J., Hensher, D., Stanley, J.R., Vella-Brodrick, D., 2011a. Mobility, social exclusion and well-being: exploring the links. Transportation Research
+
+  Part A 45 (8), 789e801.
+Stanley, J., Hensher, D., Stanley, J., Currie, G., Greene, W., 2011b. Social exclusion and the value of mobility. Journal of Transport Economics and Policy
+
+  45 (2), 197e222.
+

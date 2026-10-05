@@ -1,0 +1,1346 @@
+92  3 Marginal Problem
+
+since
+λ(1 − λ)||λ−1(Y − X)||22 = λ(−||X||22 + ||λ−1(Y − X) + X||22) + ||X||22 − ||Y ||22.
+From Proposition 3.3,
+
+  VS (P X, Q) − VS(P λ−1(Y −X)+X, Q) − 1 ||X||22 + 1 ||λ−1(Y − X) + X||22
+  2a  2a
+
+  ≤ 1 x,y  μ(P λ−1(Y −X)+X, Q)(dxdy) − P X(dx)Q(dy)
+  a Rd ×Rd
+
+  = 1 x − E[X], y μ(P λ−1(Y −X)+X, Q)(dxdy)
+  a Rd ×Rd
+
+  ≤ 1 (||X − Y ||2 + λV (X)1/2)||x||L2(Q),
+  aλ
+
+which completes the proof.
+
+Proof of Proposition 3.5 From Corollary 3.2, VS(P , Q) is ﬁnite since S (Q) is
+ﬁnite. There exists f ∈ L1(Rd , Q) such that ϕ(0, x; f ) ∈ L1(Rd , P ) and that
+
+  μ(dxdy; P , Q) = P (dx)p(0, x; 1, y) exp(f (y) − ϕ(0, x; f ))dy  (3.49)
+
+(see, e.g. [135] and also Corollary 2.3, Theorem 3.3 and Proposition 3.1). In
+particular,
+
+  −VS (P , Q)  (3.50)
+
+= − f (y)Q(dy) + ϕ(0, x; f )P (dx)
+
+  Rd  Rd
+
+=  Rd ×Rd  (−f (y) + ϕ(0, x; f ))P (dx)Q(dy)
+
+= P (dx)Q(dy) log P (dx)Q(dy) − log q(y) + log p(0, x; 1, y) ,
+  Rd ×Rd  μ(dxdy; P , Q)
+
+which completes the proof of (3.40). P × Q → H (P × Q|μ(P , Q)) is weakly
+lower semicontinuous since P × Q → μ(P , Q) is continuous from Theorem 3.6 in
+Sect. 3.1.5.2 given later and since (μ, ν) → H (μ|ν) is weakly lower semicontinu-
+
+ous (see [52, Lemma 1.4.3]). In particular, (3.41) is weakly lower semicontinuous.
+
+The weak lower semicontinuity of (3.41) implies the upper semicontinuity of (3.42)
+since L2( , P ; Rd ) X → P X ∈ P(Rd ) is continuous. (3.42) is also lower
+
+semicontinuous by Proposition 2.1 and Lemma 2.2, which completes the proof.
+3.1 Schrödinger’s Problem  93
+
+3.1.5 Regularity Result for Schrödinger’s Func. Eqn.
+
+In this section, we show that the solution of Schrödinger’s Func. Eqn. is measurable
+in space, kernel, and marginals. As an application, we show that the drift vector of
+the h-path process with given two endpoint marginals is a measurable function of
+space, time, and marginal at each time. In particular, we show that the coefﬁcients
+of mean ﬁeld PDE systems that the marginals satisfy are measurable functions of
+space, time, and marginal. This implies a possible development of the SOT in the
+framework of mean ﬁeld PDEs and distribution dependent SDEs (see [7] and [27],
+e.g. [132] and the references therein). Theorem 3.6 in Sect. 3.1.5.2 is used in the
+proof of Proposition 3.5 in Sect. 3.1.4.
+
+  Let S be a σ -compact metric space and q ∈ C(S × S; (0, ∞)). We recall
+Schrödinger’s Func. Eqn. in a general setting.
+
+Deﬁnition 3.3 (Schrödinger’s Func. Eqn.) For μ1, μ2 ∈ P(S), ﬁnd a product
+measure ν1(dx1)ν2(dx2) of nonnegative σ -ﬁnite Borel measures on S for which the
+following holds:
+
+⎧
+⎪⎪⎪⎪⎨μ1(dx1) = ν1(dx1) q(x1, x2)ν2(dx2), S
+
+⎪⎪⎪  (3.51)
+⎪⎩μ2(dx2) = ν2(dx2)
+  q(x1, x2)ν1(dx1).
+
+  S
+
+It is known that (3.51) has the unique solution (see [36, 79], and also [13, 63]).
+
+ui(xi) := log  q(x1, x2)νj (dxj ) , i, j = 1, 2, i = j.  (3.52)
+  (3.53)
+  S
+
+Then exp(u1(x)) and exp(u2(x)) are positive and
+
+  μi(dx) = exp(ui(x))νi(dx), i = 1, 2.
+
+Equation (3.51) can be rewritten as follows: for i, j = 1, 2, i = j ,
+
+exp(ui(xi)) = q(x1, x2) exp(−uj (xj ))μj (dxj ), μi(dxi)–a.s..  (3.54)
+
+  S
+
+In particular, Schrödinger’s Func. Eqn. (3.51) is equivalent to ﬁnding a func-
+tion u1(x1) + u2(x2) for which (3.54) holds (see Remarks 1.3 and 1.4). Since
+
+ν1(dx1)ν2(dx2) is the unique solution of (3.51), it is a functional of μ1, μ2, and
+
+q. This does not imply the uniqueness of ν1 and ν2. Indeed, for C > 0,
+
+  ν1 × ν2 = Cν1 × C−1ν2.
+94  3 Marginal Problem
+
+Let {Kn}n≥1 be a nondecreasing sequence of compact subsets of S such that S =
+∪n≥1Kn. K1 := S in the case where S is compact. We assume that the following
+holds so that νi , ui , i = 1, 2 are unique:
+
+  ν1(Kn0(μ1,μ2)) = ν2(Kn0(μ1,μ2)),  (3.55)
+
+where
+
+  n0(μ1, μ2) := min{n ≥ 1|μ1(Kn)μ2(Kn) > 0}.
+
+It is easy to see that νi and ui are functionals of μ1, μ2, and q:
+
+  νi (dx) = νi(dx; q, μ1, μ2), ui(x) = ui(x; q, μ1, μ2), i = 1, 2. (3.56)
+
+Remark 3.5 If (3.55) holds, then for i, j = 1, 2, i = j ,
+
+  νi (B) =  νi (B)νj (Kn0(μ1,μ2)) .  (3.57)
+
+  1/2
+  {ν1 (Kn0 (μ1 ,μ2 ) )ν2 (Kn0 (μ1 ,μ2 ) )}
+
+This implies that the measurability of (q, μ1, μ2) → νi (dx; q, μ1, μ2) can be
+reduced to that of (q, μ1, μ2) → ν1(dx; q, μ1, μ2)ν2(dx; q, μ1, μ2).
+
+  Let M (S) denote the space of all Radon measures on S. We denote by a Radon
+measure a locally ﬁnite and inner regular Borel measure. It is known that a locally
+ﬁnite and σ -ﬁnite Borel measure on a σ -compact metric space is a Radon measure
+in our sense (see, e.g. [68, p. 901, Prop. 32.3.4]).
+
+  We ﬁrst consider the case where P(S) is endowed with a strong topology.
+In Theorem 3.5, we show that if S is compact, then the following is strongly
+continuous:
+
+  νi(dx; ·, ·, ·) : C(S × S) × P(S) × P(S) −→ M (S),
+
+  ui : C(S × S) × P(S) × P(S) −→ C(S),
+
+and ui ∈ C(S × C(S × S) × P(S) × P(S)). In Corollary 3.4, we also show that if S
+is σ -compact, then the following is weakly Borel measurable and Borel measurable,
+respectively:
+
+  νi(dx; ·, ·, ·) : C(S × S) × P(S) × P(S) −→ M (S),
+
+  ui : S × C(S × S) × P(S) × P(S) −→ R ∪ {∞}.
+
+As an application of this measurability result, we show that the coefﬁcients of the
+mean ﬁeld PDE system which the marginal distributions of the h-path process with
+given two endpoint marginals satisfy are measurable functions of space, time, and
+3.1 Schrödinger’s Problem  95
+
+marginal. More precisely, in the setting of Theorem 3.3 in Sect. 3.1.1, the following
+holds (see (3.52) and (3.56) for notation): for x ∈ Rd ,
+
+  ⎧
+  ⎪⎪exp{u1(x; p(t, ·; 1, ·), P X(t), P1)},  t ∈ [0, 1),
+  ⎪⎪⎨ ν2(dx; p(0, ·; t, ·), P0, P X(t))
+h(t, x) =  t ∈ (0, 1].
+  ⎪⎪  dx  (3.58)
+  ⎪⎪⎩  X(t) P X(t)(dx)
+  = exp{−u2(x; p(0, ·; t, ·), P0, P )}  ,
+  dx
+
+As an application of Corollary 3.4, we show that
+
+  U (t, x, P ) := u1(x; p(t, ·; 1, ·), P , P1), (t, x, P ) ∈ [0, 1) × Rd × P(Rd )
+  (3.59)
+
+is a Borel measurable function from [0, 1) × Rd × P(Rd ) to R (see Corollary 3.5).
+
+Theorems 3.2 and 3.3, and (3.58)–(3.59) imply that if P1(dy)  dy, then
+
+P X(t)(dx) dx, t ∈ (0, 1] and P X(t)(dx) satisﬁes the following mean ﬁeld PDE
+
+system (see [10, 11, 27, 93], and the references therein for the mean ﬁeld games and
+the master equations). For any f ∈ Cb2(Rd ) and t ∈ [0, 1],
+
+  f (x)P X(t)(dx) − f (x)P0(dx)  (3.60)
+
+Rd  Rd
+
+  t
+
+= ds (Asf (x) + a(s, x)Dx U (s, x, P X(s)), Df (x) )P X(s)(dx),
+  Rd
+0
+
+0 = ∂t U (t, x, P X(t)) + At U (t, x, P X(t))  (3.61)
+  + 1 a(t, x)DxU (t, x, P X(t)), Dx U (t, x, P X(t)) ,  (t, x) ∈ (0, 1) × Rd
+  2
+  U (1, x, P1) = log ν2(dx; p(0, ·; 1, ·), P0, P1) ,  P1 (d x )–a.e.
+  dx
+
+(see (3.4) for notation). Here we consider U (t, x, P X(t)) a function of (t, x).
+  We also consider the case where S is also complete and P(S) is endowed with
+
+weak topology. We refer readers to our recent papers [116] and [117] for the proof
+of the case where P(S) is endowed with a strong topology and for an application
+of our result in the case where P(S) is endowed with weak topology, respectively.
+96  3 Marginal Problem
+
+3.1.5.1 Regularity of Schrödinger’s Func. Eqn. in the Strong Topology
+
+In this section, we only state our result [116] where P(S) is endowed with a strong
+topology. We refer readers to [116] for the proof.
+
+  We ﬁrst describe assumptions:
+
+(A.8). S is a compact metric space.
+(A.9). q ∈ C(S × S; (0, ∞)).
+(A.8)’. S is a σ -compact metric space.
+
+  For a metric space X and μ ∈ M (X),
+
+  ||μ|| := sup φ(x)μ(dx) φ ∈ C(X), ||φ||∞ ≤ 1 ∈ [0, ∞].  (3.62)
+
+  X
+
+  In the case where S is compact, we have the continuity results on νi, ui in (3.56)
+(recall (3.55)).
+
+Theorem 3.5 (See [116]) Suppose that (A.8) and (A.9) hold. Suppose also that
+μi,n, μi ∈ P(S), qn ∈ C(S × S; (0, ∞)), i = 1, 2, n ≥ 1 and
+
+  lim (||μ1,n × μ2,n − μ1 × μ2|| + ||qn − q||∞) = 0.  (3.63)
+
+  n→∞
+
+Then
+
+  lim ||ν1(·; qn, μ1,n, μ2,n) × ν2(·; qn, μ1,n, μ2,n)  (3.64)
+
+  n→∞
+
+  − ν1(·; q, μ1, μ2) × ν2(·; q, μ1, μ2)|| = 0,
+
+  2
+
+  lim  ||ui(·; qn, μ1,n, μ2,n) − ui(·; q, μ1, μ2)||∞ = 0.  (3.65)
+
+  n→∞  i=1
+
+Besides, for i = 1, 2, and {xn}n≥1 ⊂ S which converges, as n → ∞, to x ∈ S,
+
+  lim ui(xn; qn, μ1,n, μ2,n) = ui(x; q, μ1, μ2).  (3.66)
+
+  n→∞
+
+  In the case where S is σ -compact, we only have the Borel measurability results
+on νi, ui.
+
+Corollary 3.4 (See [116]) Suppose that (A.8)’ and (A.9) hold. Then the following
+is Borel measurable: for i = 1, 2,
+
+  f (x)νi(dx; ·, ·, ·) : C(S × S) × P(S) × P(S) −→ R, f ∈ C0(S),
+
+  S
+
+  ui : S × C(S × S) × P(S) × P(S) −→ R ∪ {∞}.
+3.1 Schrödinger’s Problem  97
+
+  As an application of Corollary 3.4, the following holds.
+
+Corollary 3.5 (See [116]) Suppose that (A.6) and (A.7) hold. Then U (t, x, P ) in
+(3.59) is a Borel measurable function from [0, 1) × Rd × P(Rd ) to R. In particular,
+(3.60)–(3.61) hold.
+
+3.1.5.2 Regularity of Schrödinger’s Func. Eqn. in the Weak Topology
+
+In this section, we state and prove our measurability result in [117] where P(S) is
+endowed with weak topology.
+
+  We ﬁrst describe another assumption:
+(A.8)”. S is a complete σ -compact metric space.
+
+  We recall that C(S × S) is endowed with the topology induced by the uniform
+convergence on every compact subset of S.
+
+  Under (A.8)”, let {ϕm}m≥1 be a nondecreasing sequence of functions in
+C0(S; [0, 1]) such that the following holds:
+
+  ϕm(x) = 1, x ∈ Km, m ≥ 1
+
+(see (3.55)). If S = Rd , then Km := Bm and we assume that ϕm ∈ C0(Bm+1; [0, 1]).
+For i = j , i, j = 1, 2, m ≥ 1, and xi ∈ S,
+
+ui|m(xi; q, μ1, μ2) := log  q(x1, x2)ϕm(xj )νj (dxj ; q, μ1, μ2) ,  (3.67)
+
+  S
+
+provided the right-hand side is well deﬁned (see (3.56) and also (3.52)).
+
+μ(dxdy; q, μ1, μ2) := ν1(dx; q, μ1, μ2)q(x, y)ν2(dx; q, μ1, μ2).  (3.68)
+
+The following is the continuity result on ν1 × ν2, μ, and ui|m.
+
+Theorem 3.6 (See [117]) Suppose that (A.8)” and (A.9) hold and that qn ∈ C(S ×
+S; (0, ∞)), μi, μi,n ∈ P(S), n ≥ 1, i = 1, 2, and
+
+  lim qn = q, locally uniformly,  (3.69)
+  (3.70)
+  n→∞
+
+  lim μ1,n × μ2,n = μ1 × μ2, weakly.
+
+  n→∞
+
+Then for any f ∈ C0(S × S),
+
+  lim  f (x, y)ν1(dx; qn, μ1,n, μ2,n)ν2(dy; qn, μ1,n, μ2,n) (3.71)
+  n→∞ S×S
+
+=  S×S  f (x, y)ν1(dx; q, μ1, μ2)ν2(dy; q, μ1, μ2).
+98  3 Marginal Problem
+
+In particular,
+
+  lim μ(dxdy; qn, μ1,n, μ2,n) = μ(dxdy; q, μ1, μ2), weakly.  (3.72)
+
+  n→∞
+
+For any {xi,n}n≥1 ⊂ S which converges, as n → ∞, to xi ∈ S, i = 1, 2 and for
+sufﬁciently large m ≥ 1,
+
+  2  2
+
+  lim  ui|m(xi,n; qn, μ1,n, μ2,n) =  ui|m(xi; q, μ1, μ2).  (3.73)
+
+  n→∞  i=1  i=1
+
+  n0(μ1, μ2) ≤ n if and only if μ1(Kn)μ2(Kn) > 0 (see (3.55) for notation).
+(μ1, μ2) → μ1(Kn)μ2(Kn) is upper semicontinuous in the weak topology since
+a compact set is closed. In particular, (μ1, μ2) → n0(μ1, μ2) is measurable and
+Theorem 3.6 implies the following (see [116, proof of Corollary 2.1]).
+
+Corollary 3.6 (See [117]) Suppose that (A.8)” and (A.9) hold. Then the following
+is Borel measurable: for i = 1, 2,
+
+  f (x)νi(dx; ·, ·, ·) : C(S × S) × P(S) × P(S) −→ R, f ∈ C0(S),
+
+  S
+
+  ui : S × C(S × S) × P(S) × P(S) −→ R ∪ {∞}.
+
+  If S is compact, then ν1(S) = ν2(S) (see (3.55)). This implies the following from
+Theorem 3.6.
+
+Corollary 3.7 (See [117]) Suppose that (A.8) and the assumptions of Theorem 3.6
+except (A.8)” hold. Then the following holds: for i = 1, 2,
+
+  lim f (x)νi(dx; qn, μ1,n, μ2,n) = f (x)νi(dx; q, μ1, μ2),  f ∈ C(S),
+  n→∞ S
+  S
+
+and for any {xn}n≥1 ⊂ S which converges, as n → ∞, to x ∈ S,
+
+  lim ui(xn; qn, μ1,n, μ2,n) = ui(x; q, μ1, μ2).
+
+  n→∞
+
+  A uniformly bounded sequence of convex functions on a convex neighborhood
+NA of a convex subset A of Rd is compact in C(A), provided dist (A, NcA) is
+positive (see, e.g. [8, section 3.3]). We describe an additional assumption and state
+a stronger result than above, provided S ⊂ Rd .
+
+(A.9.r)’. There exists Cr > 0 for which x → Cr |x|2 + log q(x, y) and y →
+  Cr |y|2 + log q(x, y) are convex on Br for any y ∈ Br and any x ∈ Br ,
+  respectively.
+3.1 Schrödinger’s Problem  99
+
+Remark 3.6 If log q(x, y) has bounded second-order partial derivatives on Br , then
+(A.9.r)’ holds (see Remark 3.2, (i) in Sect. 3.1.4).
+
+  ||f ||∞,r := sup |f (x)|, f ∈ C(Br ).  (3.74)
+
+  x ∈Br
+
+The following is a stronger convergence result than Corollary 3.7 (see Lemma 3.1
+below).
+
+Corollary 3.8 (See [117]) Let r > 0. Suppose that (A.9.r)’ and the assumptions of
+Corollary 3.7 with S = Br hold. Then for any r < r,
+
+  2
+
+ lim  ||ui(·; qn, μ1,n, μ2,n) − ui(·; q, μ1, μ2)||∞,r = 0.  (3.75)
+
+n→∞  i=1
+
+  We state a lemma and prove Theorem 3.6. The following can be proved easily.
+
+Lemma 3.1 Suppose that (A.8)” and (A.9) hold. Then for any μ1, μ2 ∈ P(S), μ
+deﬁned by (3.68),
+
+min q(x, y)−1μ(Km × Km) ≤ ϕm(x)ν1(dx) ϕm(y)ν2(dy)  (3.76)
+x ,y ∈Km
+  S  S
+
+  ≤ max q(x, y)−1.
+
+  x ,y ∈s upp(ϕm)
+
+Proof of Theorem 3.6 We ﬁrst prove (3.71). For the sake of simplicity,
+
+  νi,n(dx) := νi (dx; qn, μ1,n, μ2,n),  (3.77)
+  μn(dxdy) := ν1,n(dx)qn(x, y)ν2,n(dy).
+
+Since {μ1,n(dx) = μn(dx ×S), μ2,n(dy) = μn(S ×dy)}n≥1 is convergent, {μn}n≥1
+is tight. Indeed, for any Borel sets A, B ∈ Rd ,
+
+μn((A × B)c) ≤ μn(Ac × S) + μn(S × Bc) = μ1,n(Ac) + μ2,n(Bc),
+
+and a convergent sequence of probability measures on a complete separable metric
+
+space is tight by Prohorov’s Theorem (see, e.g. [14]). Here notice that a σ -compact
+
+metric space is separable. By Prohorov’s Theorem, take a weakly convergent
+subsequence {μnk }k≥1 and denote the limit by μ. Then it is easy to see that the
+following holds:
+
+  μ(dx × S) = μ1(dx), μ(S × dy) = μ2(dy).  (3.78)
+100  3 Marginal Problem
+
+From (A.9) and (3.69)–(3.70), the following holds: for any f ∈ C0(S × S),
+
+  lim  f (x, y)ν1,nk (dx)ν2,nk (dy) =  f (x, y)q(x, y)−1μ(dxdy).
+
+  k→∞  S×S  S×S
+
+  (3.79)
+
+Indeed,
+
+  ν1,n(dx)ν2,n(dy) =  1 − 1 μn(dxdy) + 1 μn(dxdy).
+  qn(x, y) q(x, y)  q(x, y)
+
+The rest of the proof of (3.71) is divided into (3.80)–(3.81) below, which will be
+
+proved later.
+  There exists a subsequence {nk} ⊂ {nk} and ﬁnite measures ν1,m, ν2,m ∈
+
+M (supp(ϕm)) such that for sufﬁciently large m ≥ 1 and any f ∈ C0(S × S),
+
+  lim  f (x, y)ϕm(x)ϕm(y)ν1,nk (dx)ν2,nk (dy)  (3.80)
+  k→∞ S×S
+
+  =  S×S  f (x, y)ν1,m(dx)ν2,m(dy).
+
+From (3.80), for sufﬁciently large m ≥ 1 and any Borel sets A1, A2 ⊂ S,
+
+  q(x, y)−1μ(dxdy)  (3.81)
+
+  A1 ×A2
+
+  = A1×Km q(x, y)−1μ(dxdy) Km×A2 q(x, y)−1μ(dxdy) .
+  ν1,m(Km)ν2,m(Km)
+
+Equations (3.78) and (3.81) imply that q(x, y)−1μ(dxdy) is a product measure
+which satisﬁes (3.51). Equation (3.79) and the uniqueness of the solution to (3.51)
+implies that (3.71) is true.
+
+  We prove (3.80)–(3.81) to complete the proof of (3.71). Equation (3.80) can be
+proved by the diagonal method, since {μn}n≥1 is tight and since for sufﬁciently large
+m ≥ 1,
+
+  ϕm(x1)ϕm(x2)ν1,nk (dx1)ν2,nk (dx2)  (3.82)
+
+= ϕm(x)ν1,nk (dx) ϕm(y)ν2,nk (dy) ϕm(x1)ν1,nk (dx1) ϕm(x2)ν2,nk (dx2)
+  S ϕm(x)ν1,nk (dx) S ϕm(x)ν2,nk (dx)
+  S  S
+3.2 Marginal Problem for Stochastic Processes  101
+
+has a convergent subsequence from (3.76) in Lemma 3.1 by Prohorov’s Theorem
+
+and since any weak limit is a product measure. We prove (3.81). From (3.79) and
+(3.80), for sufﬁciently large m˜ ≥ 1,
+
+  q(x, y)−1μ(dxdy)  (3.83)
+
+  (A1×A2)∩(Km˜ ×Km˜ )
+
+  =  (A1×A2)∩(Km˜ ×Km˜ )  ϕm˜ (x)ϕm˜ (y)q(x, y)−1μ(dxdy)
+
+  =  (A1×A2)∩(Km˜ ×Km˜ )  ν1,m˜ (dx)ν2,m˜ (dy)
+
+  = ν1,m˜ (A1 ∩ Km˜ )ν2,m˜ (A2 ∩ Km˜ ).
+
+From (3.83), for m˜ ≥ m, setting Ai = Km,
+
+ν1,m˜ (A1 ∩ Km˜ ) =  (A1×Km)∩(Km˜ ×Km˜ ) q(x, y)−1μ(dxdy)  (3.84)
+ν2,m˜ (A2 ∩ Km˜ ) =  ,
+
+  ν2,m˜ (Km)
+  (Km×A2)∩(Km˜ ×Km˜ ) q(x, y)−1μ(dxdy)
+
+  ,
+  ν1,m˜ (Km)
+
+ν1,m˜ (Km)ν2,m˜ (Km) = ν1,m(Km)ν2,m(Km) =  q(x, y)−1μ(dxdy).
+
+  Km ×Km
+
+Substitute (3.84) for (3.83) and let m˜ → ∞. Then we obtain (3.81). Equation (3.73)
+can be shown from (3.71) by the following: from (3.67),
+
+  2
+
+  exp  ui|m(xi,n; qn, μ1,n, μ2,n)  (3.85)
+
+  i=1
+
+=  S×S  qn(x1,n, y)qn(x, x2,n)ϕm(x)ϕm(y)ν1,n(dx)ν2,n(dy),
+
+provided the right-hand side is positive.
+
+3.2 Marginal Problem for Stochastic Processes
+
+The problem of the construction of a stochastic process with given marginal
+distributions is an important part of the so-called marginal problem (see [82, 86, 113,
+130, 142], and the references therein). This is not the only problem in the theory of
+probability. For instance, consider the construction of a graph of a function with a
+given Gauss curvature. For a smooth function u : Rd −→ R, consider the interior
+102  3 Marginal Problem
+
+of the epigraph epi (u) of u as the inside of the surface y = u(x):
+  epi (u) := {(x, y)|x ∈ Rd , y ≥ u(x)}.
+
+Then the Gauss curvature K (x, u(x)) at (x, u(x)) is given by the following:
+
+  K (x, u(x)) := (1 + |Du(x)|2)− d+2 2 det(D2u(x)), x ∈ Rd .  (3.86)
+
+As a problem of the PDE, the problem is reduced to the following Monge–Ampére
+equation: for a probability density function p : Rd −→ [0, ∞),
+
+  p(x) = p˜C(Du(x))det(D2u(x)), x ∈ Rd ,  (3.87)
+
+where
+
+  p˜C(x) :=  (1  +  |x  |2)−  1  pC  (x  )  x ∈ Rd .
+  2
+
+  |2)−  1  ,
+  2
+  (1  +  |y  pC  (y  )dy
+
+  Rd
+
+Here pC denotes the probability density function of a Cauchy distribution:
+
+  pC(x) := Γ  d +1  π − 2 d+1 (1 + |x|2)− 2 d+1 ,  x ∈ Rd .
+  2
+
+This research was originated by A. D. Alexandrov, A. V. Pogorerov, I. J. Bakleman
+et al., and is still actively continued by L. A. Caffarelli et al. (see, e.g. [8, 72, 108],
+and the references therein). It can be considered, from the probability theory point
+of view, as follows. Construct a random variable X deﬁned on the probability space
+(Rd , B(Rd ), p˜C (x)dx) such that there exists a function u for which the following
+holds:
+
+  (p˜C(x)dx)X = p(x)dx, X(x) = (Du)−1(x), pC(x)dx–a.e..
+
+  In the case where Pt ∈ P(Rd ) is given at each time t ∈ [0, 1], R. M. Blumenthal
+and H. H. Corson constructed a Borel probability measure on C([0, 1]; Rd) with a
+marginal distribution Pt at each time t ∈ [0, 1] (see [15]). But they did not study
+stochastic dynamics. In this section, given marginal distributions Pt at t = 0, 1 or
+at each time t ∈ [0, 1], we discuss the variational approach to the construction of
+a Borel probability measure on C([0, 1]; Rd) as the probability distribution of a
+
+solution to a SDE or an ODE. We also consider the Markov property of solutions
+
+to the SOTs with a nonconvex cost in the one-dimensional case as an application of
+
+the superposition principle and the one-dimensional OT with a concave cost.
+3.2 Marginal Problem for Stochastic Processes  103
+
+3.2.1 Marginal Problem for SDEs
+
+In this section, we discuss a variational approach to the construction of a solution to
+the SDE with given marginal distributions.
+
+  The square of the absolute value of a solution to Schrödinger’s equation is the
+probability density of a quantum particle by Born’s probabilistic interpretation
+of a solution to Schrödinger’s equation, provided it is normalized. E. Nelson
+proposed the problem of the construction of a Markov diffusion process of which
+the marginal distribution at each time is this probability density (see [125, 126]). As
+a mathematical problem, it is the problem of the construction of a Markov diffusion
+process from the Fokker–Planck equation.
+
+  We write (a, b) ∈ A0({Pt }0≤t≤1) if a, b ∈ L1loc([0, 1] × Rd , dtPt (dx)) and if
+(2.15) holds for all f ∈ C01,2([0, 1] × Rd). In the case where a is ﬁxed, we write b ∈
+A0({Pt }0≤t≤1) for simplicity. We state a generalized version of Nelson’s problem
+and call it Nelson’s problem from a probabilistic point of view (see [106, 107] for
+the related topics).
+
+Deﬁnition 3.4 (Nelson’s Problem) For {Pt }0≤t≤1 ⊂ P(Rd ) such that
+A0({Pt }0≤t≤1) is not empty and for (a, b) ∈ A0({Pt }0≤t≤1), construct a d × d
+matrix-valued function σ (t, x) on [0, 1] × Rd and a semimartingale {X(t)}0≤t≤1
+such that the following holds: for (t, x) ∈ [0, 1] × Rd ,
+
+a(t, x) = σ (t, x)σ (t, x)t , dtPt (dx)–a.e.,  (3.88)
+  (3.89)
+  t  t  (3.90)
+
+X(t) = X(0) + b(s, X(s))ds + σ (s, X(s))dWX(s),
+
+  0  0
+
+P X(t) = Pt
+
+(see Remark 2.3 for notation in (3.89)).
+
+  The ﬁrst result was given by E. Carlen in the case where a is an identity matrix
+(see [28, 29] and also [31, 123, 159] for different approaches). We generalized it
+to the case with a variable diffusion matrix (see [103]). P. Cattiaux and C. Léonard
+extensively generalized it to the case which also includes the construction of a jump-
+type Markov process (see [32–35]). In these papers they assumed the following:
+
+Deﬁnition 3.5 (Finite Energy Condition (FEC)) There exists b ∈ A({Pt }0≤t≤1)
+such that the following holds:
+
+  1  dt a(t, x)−1b(t, x), b(t, x) Pt (dx) < ∞.
+
+  (3.91)
+
+0  Rd
+
+Remark 3.7 For {Pt }0≤t≤1 in (2.15) and for a ﬁxed matrix a, b ∈ A({Pt }0≤t≤1) is
+not necessarily unique (see [103] or [32–35]).
+104  3 Marginal Problem
+
+  By the continuum limit of V (·, ·), we also considered Nelson’s problem in a more
+general setting as follows (see [111]).
+
+Deﬁnition 3.6 (Generalized Finite Energy Condition (GFEC)) There exists γ >
+1 and b ∈ A({Pt }0≤t≤1) such that
+
+  dt a(t, x) 1 −1b(t, x), b(t, x) 2 Pt (dx) < γ ∞.  (3.92)
+
+  0  Rd
+
+  As an application of the Duality Theorem for V in Sect. 2.2.2, we gave an
+approach to Nelson’s problem under the GFEC via the SOT (see [112]). We showed
+the Duality Theorems in Corollary 2.2 and Theorem 2.6, (i) in Sect. 2.2.1 ﬁrst and
+then showed Proposition 2.1 in Sect. 2.2 (see [112] and also [103, 111]). Besides,
+the Duality Theorem for V implies the functional equation for Nelson’s problem
+which is an analog of Schrödinger’s Func. Eqn. for Schrödinger’s problem (see
+Deﬁnition 3.8 given later).
+
+  D. Trevisan’s superposition principle almost completely solved Nelson’s problem
+(3.88)–(3.90) (see Theorem 2.3 in Sect. 2.2 and also [19, 133] for the recent
+development). We also improved our previous results on the SOTs using that.
+Besides, it also generalized our approaches to Nelson’s problem and to an h-path
+process via the SOTs though V({Pt }0≤t≤1) gives an optimal drift vector among
+A({Pt }0≤t≤1) for {Pt }0≤t≤1 ⊂ P(Rd ) and for a ﬁxed matrix a (see Sect. 2.2).
+
+  In his problem, E. Nelson considered the case where a = I dentity and b =
+Dx ψ(t, x) for some function ψ. It turned out that it is the minimizer of V in the case
+where (2.47) with a = I dentity, ξ = 0, and c = 0 and the FEC hold (see [103,
+Proposition 3.1], and also Theorem 2.6, (ii) in Sect. 2.2.1). Indeed, if (a, Dxψi ) ∈
+A({Pt }0≤t≤1), i = 1, 2, then Dx ψ1 = Dx ψ2, dtPt (dx)–a.e. In this sense, Nelson’s
+original problem can be considered the studies of the superposition principle and of
+the minimizer of V. More precisely, if the superposition principle holds, then the set
+over which the inﬁmum is taken in V is not empty and one can consider a minimizer
+of V, provided it is ﬁnite.
+
+  Theorems 3.1–3.3 imply an alternative description of Schrödinger’s Func. Eqn.
+as follows (see Remarks 1.3 and 1.4).
+
+Deﬁnition 3.7 (Schrödinger’s Func. Eqn.) Suppose that (A.6) and (A.7) hold.
+For given P0 ∈ P(Rd ) and P1 ∈ Pac(Rd ), ﬁnd f ∈ L1(Rd , P1) for which the
+following holds:
+
+  P1(dy) =  p(0, x; 1, y)  (3.93)
+  Rd P0(dx) E0,x[exp(f (X(1)))] exp(f (y))dy.
+
+  The following gives a variational meaning to Schrödinger’s Func. Eqn. from the
+SOT point of view.
+3.2 Marginal Problem for Stochastic Processes  105
+
+Proposition 3.6 (See [116]) Suppose that (A.6) and (A.7) hold. Then for any
+P0, P1 ∈ P(Rd ) for which V (P0, P1) is ﬁnite, Schrödinger’s Func. Eqn. (3.93)
+is equivalent to the following: ﬁnd a function f ∈ L1(Rd , P1) such that
+
+  δV P P∗ 1(dy) = 0 (f ) (dy).  (3.94)
+  δf
+
+Here  δVP0 ∗ (f ) ∗
+  denotes the Gâteaux derivative of VP0(f ) (see (2.102) for notation).
+  δf
+
+Proof of Theorem 3.6
+
+δVP∗0 (f ) (dy) =  P0(dx)p(0, x; 1, y) exp(f (y) − ϕ(0, x; f )) dy  (3.95)
+  δf
+  Rd
+
+(see (3.46) for notation). Indeed, for any ψ ∈ Cb(Rd ) and ε ∈ R, consider
+Schrödinger’s Func. Eqn. (3.2) with P1 replaced by μεψ , where for φ ∈ Cb(Rd ),
+
+ μφ(dy) := exp(f (y) + φ(y))dy P0(dx)p(0, x; 1, y) exp(−ϕ(0, x; f + φ)).
+
+  Rd
+
+Then, from Lemma 2.5 in Sect. 2.2.2,
+
+VP∗0(f + εψ) = log  p(0, x; 1, y) exp(f (y) + εψ(y))dy P0(dx).
+  Rd  Rd
+
+This implies (3.95). From (3.46),
+
+P0(dx) = P0(dx)  p(0, x; 1, y) exp(f (y) − ϕ(0, x; f ))dy .  (3.96)
+
+  Rd
+
+Equations (3.95) and (3.96) complete the proof.
+
+  Suppose that (A.6)–(A.7) hold and that (2.47) with c = 0 holds. If (2.57) has a
+maximizer f , then for the minimizer X of V({Pt }0≤t≤1),
+
+P (X ∈ B) = E exp  1  (3.97)
+
+  f (s, X(s))ds − φ(0, X(0); f ) ; X ∈ B ,
+
+  0
+
+B ∈ B(C([0, 1])). Equation (3.97) implies the following which we do not know
+how to solve. This is our future problem.
+106  3 Marginal Problem
+
+Deﬁnition 3.8 (Functional Equation for Nelson’s Problem (See [112])) For a
+given {Pt }0≤t≤1 ⊂ P(Rd ), ﬁnd f ∈ L1([0, 1] × Rd , dtPt (dx)) for which the
+following holds: for t ∈ (0, 1],
+
+Pt (dy) =  P0 (d x )  p(0, x; t, y)E0,x[exp( 01 f (s, X(s))ds)|(t, X(t) = y)]  .
+  dy
+  Rd  E0,x[exp( 0 f (s, X(s))ds)]1
+
+  (3.98)
+
+3.2.2 Marginal Problems for ODEs
+
+In this section, we consider the case where a = 0 in (2.15). We only state known
+results and refer readers to published papers for the proofs.
+
+  Stochastic processes under consideration are absolutely continuous in time as
+
+in the case of the OT. Our PDE is Liouville’s equation, i.e., instead of (2.15), we
+consider the following: for any f ∈ C1b ([0, 1] × Rd ) and t ∈ [0, 1],
+
+  f (t, x)Pt (dx) − f (0, x)P0(dx)  (3.99)
+
+  Rd  Rd
+
+  t
+
+  = ds  ∂sf (s, x) + b(s, x), Dx f (s, x)  Ps (d x ).
+
+  0  Rd
+
+In this section, for the sake of simplicity, we assume the following.
+
+(A.10). L = L(u), L : Rd −→ [0, ∞) is convex, and lim inf|u|→∞ L(u)/|u|2
+
+> 0.  √
+
+In the case where σ = ε × Id, for P := {Pt }0≤t≤1 ⊂ P(R ), we write  d
+
+Vε(P) := V(P) for ε > 0 and vε(P) := v(P) for ε ≥ 0 (see Deﬁnitions 2.2–2.3 for
+
+notation), and
+
+  V0(P) := inf E  1  (3.100)
+
+  L(X˙ (t))dt P X(t) = Pt , 0 ≤ t ≤ 1,
+
+  0
+
+  X ∈ AC([0, 1]; Rd), a.s. .
+
+Then the following holds.
+Theorem 3.7 (See [107]) Suppose that (A.10) holds. Then for √any P :=
+{p(t, x)dx}0≤t≤1 ⊂ P(Rd ) for which v0(P) is ﬁnite and Dx p(t, x) ∈
+L2([0, 1] × Rd , dtdx),
+
+  Vε(P) = vε(P) → V0(P) = v0(P), ε → 0.  (3.101)
+
+In particular, any weak limit point of a minimizer of Vε(P) is a minimizer of V0(P).
+3.2 Marginal Problem for Stochastic Processes  107
+
+Theorem 3.8 (See [107]) Suppose that (A.10) holds and that L is strictly convex.
+The√n for any P := {p(t, x)dx}0≤t≤1 ⊂ P(Rd ) for which v0(P) is ﬁnite and
+Dx p(t, x) ∈ L2([0, 1] × Rd , dtdx), v0(P) has the unique minimizer bo(t, x) and
+for any minimizer {X(t)}0≤t≤1 of V0(P),
+
+  t  (3.102)
+
+X(t) = X(0) + bo(s, X(s))ds, t ∈ [0, 1], a.s..
+
+  0
+
+Proposition 3.7 (See [107]) Suppose that L  =  |u|2. Then  for  any  P  :=
+  √
+{p(t, x)dx}0≤t≤1 ⊂ P(Rd ) such that v0(P) is ﬁnite, Dx p(t, x) ∈ L2([0, 1] ×
+
+Rd , dtdx) and for any M > 0,
+
+ess.inf {p(t, x) : t ∈ [0, 1], |x| ≤ M} > 0,  (3.103)
+
+the unique minimizer of v0(P) can be written as Dx u(t, x), where u(t, ·) ∈ H 1loc(Rd )
+dt–a.e..
+
+  We explain that V0(P) has a unique minimizer which is not random in the case
+where d = 1.
+
+Ft (x) :=  (−∞,x ]  p(t, y)dy, t ∈ [0, 1], x ∈ R,  (3.104)
+  (3.105)
+Ft−1(u) := inf{y ∈ R : Ft (y) ≥ u}, t ∈ [0, 1], 0 < u < 1
+
+(see, e.g. [124]). Then the following holds.
+
+Corollary 3.9 (See [107]) Suppose that L is strictly convex and that (A.10) holds.
+If (t, x) → Ft (x) is differentiable with locally bounded partial derivatives, then
+V0(P) has the unique minimizer lims∈Q∩[0,1],s→t Fs−1(F0(X(0))).
+
+  In the case where a solution of the ﬁrst-order ODE is not unique, it is not
+necessarily nonrandom. Indeed, the following is known.
+
+Remark 3.8 (Salisbury’s Problem) For a solution X(t) of the ﬁrst-order ODE, the
+problem of the nonrandomness of X(t) (more precisely, the time invariance of
+σ [X(s), 0 ≤ s ≤ t]) is called Salisbury’s problem. A counterexample was given
+by T. S. Salisbury (see [137]). In the case where d ≥ 2, we do not know if a solution
+to (3.102) is random.
+
+  In our approach, we show the existence of a minimizer of a variational problem,
+i.e., we ﬁnd a solution to the ODE with given marginals and also obtain optimal
+dynamics at the same time.
+
+  The superposition principle for (3.99) was generalized by L. Ambrosio (see also
+[5] and Theorem 2.3 in Sect. 2.2).
+108  3 Marginal Problem
+
+Theorem 3.9 (Ambrosio’s Superposition Principle (See [3])) Suppose that there
+exists b : [0, 1] × Rd −→ Rd and {Pt (dx)}0≤t≤1 ⊂ P(Rd ) such that (3.99) and
+
+the following hold:
+
+  1  |b(t, x)|
+
+  dt  Rd 1 + |x|  Pt (dx) < ∞.  (3.106)
+
+  0
+
+Then there exists a stochastic process {X(t)}0≤t≤1 for which the following holds:
+
+  t  (3.107)
+  (3.108)
+  X(t) = X(0) + b(s, X(s))ds,
+
+  0
+
+  P X(t) = Pt , 0 ≤ t ≤ 1.
+
+3.2.3 SOT with a Nonconvex Cost
+
+In this section, in the case where d = 1 and where a is not ﬁxed, we consider slightly
+relaxed versions of the SOTs for which cost functions are not supposed to be convex.
+
+In this case, we need a generalization of D. Trevisan’s result by V. I. Bogachev, M.
+
+Röckner, and S. V. Shaposhnikov [19]. As a fundamental problem of the stochastic
+
+optimal control theory, the test of the Markov property of a minimizer is known.
+
+We also discuss this problem for a ﬁnite horizon stochastic optimal control problem
+
+(see [61]).
+
+  Since a is not ﬁxed in this section, we consider a new class of semimartingales.
+Let u = {u(t)}0≤t≤1 and {W (t)}0≤t≤1 be a progressively measurable real-valued
+process and a one-dimensional Brownian motion on a complete ﬁltered probability
+
+space, respectively. In this section, the probability space under consideration is
+not ﬁxed. Let σ : [0, 1] × R −→ R be a Borel measurable function. Let
+Y u,σ = {Y u,σ (t)}0≤t≤1 be a continuous semimartingale such that the following
+holds weakly:
+
+  t  t
+  Y u,σ (t) = Y u,σ (0) + u(s)ds + σ (s, Y u,σ (s))dW (s),
+  0 ≤ t ≤ 1,
+  0  0  (3.109)
+
+provided it exists.
+3.2 Marginal Problem for Stochastic Processes  109
+
+  Then the following is known.  , L1, L2 ∈ Cb([0, 1] × R; [0, ∞)). Then
+
+Theorem 3.10 (See [105]) Suppose that
+for any r > 0 and P0 ∈ P(R),
+
+  inf  E  1  (Y u,σ (1))  (3.110)
+
+  (u,σ ),  (L1(t, Y u,σ (t)) + L2(t, u(t)))dt +
+  |σ |≥r,P Y u,σ (0)=P0
+  0
+
+=  inf  E  1  (Y u,σ (1)) ,
+  (u,σ ),|σ |≥r,P Y u,σ (0)=P0,
+  u(t)=bY u,σ (t,Y u,σ (t))  (L1(t, Y u,σ (t)) + L2(t, u(t)))dt +
+
+  0
+
+where bY u,σ (t, Y u,σ (t)) := E[u(t)|(t, Y u,σ (t))].
+  For r > 0,
+
+  Ur := (u, σ ) E  1 σ (t, Y u,σ (t))2 + |u(t)| dt < ∞, |σ | ≥ r ,
+  0 1 + |Y u,σ (t)|2
+
+  (3.111)
+
+  Ur,Mar := (u, σ ) ∈ Ur |u(t) = bY u,σ (t, Y u,σ (t)), 0 ≤ t ≤ 1 .  (3.112)
+
+  For (u, σ ) ∈ Ur ,  (t, x) ∈ [0, 1] × R  (3.113)
+  (3.114)
+  FtY u,σ (x) := P (Y u,σ (t) ≤ x),  (3.115)
+  Gut (x) := P (u(t) ≤ x),
+
+  b˜u,Y u,σ (t, x) := (Gut )−1(1 − FtY u,σ (x)),
+
+(see (3.105) for notation).
+
+Remark 3.9 For p ≥ 1, P Y u,σ (t)(dx)δb˜u,Yu,σ (t,x)(dy) is a (unique if p > 1)
+maximizer of the following:
+
+  sup |x − y|pμ(dxdy) μ ∈ A (P Y u,σ (t), P u(t)) ,
+
+  R2
+
+  Y u,σ
+
+provided x → Ft (x) is continuous and it is ﬁnite (see (2.1) for notation and
+[124, 142]).
+
+  For (u, σ ) ∈ Ur ,
+
+  pY u,σ (t, x) := P Y u,σ (t)(dx)  (3.116)
+  dx
+110  3 Marginal Problem
+
+exists dt–a.e. since r is positive and (σ 2, bY u,σ ) ∈ A0({P Y u,σ (t)}0≤t≤1) from
+Remark 2.5 (see [18, p. 1042, Corollary 2.2.2]). Indeed, by Jensen’s inequality,
+
+  |bY u,σ (t, y)|pY u,σ (t, y)dy = E[|E[u(t)|(t, Y u,σ (t))]|] ≤ E[|u(t)|].  (3.117)
+
+R
+
+From the idea of covariance kernels (see [23, 24, 104, 109]),
+
+  a˜u,Y u,σ (t, x)  (3.118)
+  := 1(0,∞)(pY u,σ (t, x)) 2  −x∞(b˜u,Y u,σ (t, y) − bY u,σ (t, y))pY u,σ (t, y)dy
+
+  pY u,σ (t, x) .
+
+The following will be proved later.
+
+Theorem 3.11 (See [118]) Let r > 0. For (u, σ ) ∈ Ur , there exists u˜ such that
+(u˜, σ˜ := (σ 2 + a˜u,Y u,σ )1/2) ∈ Ur,Mar and that the following holds:
+
+  P Y u˜,σ˜ (t) = P Y u,σ (t), t ∈ [0, 1],  (3.119)
+  bY u˜,σ˜ = b˜u,Y u,σ ,  (3.120)
+  (3.121)
+  P bY u˜,σ˜ (t,Y u˜,σ˜ (t)) = P u(t), dt –a.e..
+
+  The following plays a crucial role in the proof of Theorem 3.11.
+Theorem 3.12 (Superposition Principle (See [19])) Let {Pt }0≤t≤1 ⊂ P(Rd ).
+Suppose that there exists (a, b) ∈ A0({Pt }0≤t≤1) such that the following holds:
+
+  1  |a(t, x)| + | x, b(t, x) |
+
+  dt  1 + |x|  2  Pt (dx) < ∞.  (3.122)
+
+  0  Rd
+
+Then Nelson’s problem (3.88)–(3.90) has a solution.
+  For r > 0 and {Pt }0≤t≤1 ⊂ P(R),
+
+  A0,r ({Pt }0≤t≤1) := (a, b) ∈ A0({Pt }0≤t≤1) a ≥ r2,  (3.123)
+
+  1  1 + |x|2 a(t, x) + |b(t, x)| Pt (dx) < ∞ .
+
+  dt
+
+  0  Rd
+
+Let L1, L2 : [0, 1] × R −→ [0, ∞) be Borel measurable. For (u, σ ),
+
+  J (u, σ ) := E  1  (3.124)
+
+  (L1(t, Y u,σ (t)) + L2(t, u(t)))dt .
+
+  0
+3.2 Marginal Problem for Stochastic Processes  111
+
+For (a, b) ∈ A0({Pt }0≤t≤1),
+
+  1
+
+I ({Pt }0≤t≤1, a, b) := dt (L1(t, x) + L2(t, b(t, x)))Pt (dx).  (3.125)
+
+  0  Rd
+
+One easily obtains the following from Theorems 3.11 and 3.12.
+Corollary 3.10 (See [118]) Suppose that L1, L2 : [0, 1] × R −→ [0, ∞) are Borel
+measurable. Then for any r > 0, the following holds. (i) For any P0, P1 ∈ P(R),
+
+inf{J (u, σ )|(u, σ ) ∈ Ur , P Y u,σ (t) = Pt , t = 0, 1}  (3.126)
+
+= inf{J (u, σ )|(u, σ ) ∈ Ur,Mar , P Y u,σ (t) = Pt , t = 0, 1}
+
+= inf{I ({Qt }0≤t≤1, a, b)|(a, b) ∈ A0,r ({Qt }0≤t≤1), Qt = Pt , t = 0, 1}.
+
+In particular, if there exists a minimizer in (3.126), then there exists a minimizer
+(u, σ ) ∈ Ur,Mar . (ii) For any {Pt }0≤t≤1 ⊂ P(R),
+
+  inf{J (u, σ )|(u, σ ) ∈ Ur , P Y u,σ (t) = Pt , 0 ≤ t ≤ 1}  (3.127)
+= inf{J (u, σ )|(u, σ ) ∈ Ur,Mar , P Y u,σ (t) = Pt , 0 ≤ t ≤ 1}
+= inf{I ({Pt }0≤t≤1, a, b)|(a, b) ∈ A0,r ({Pt }0≤t≤1)}.
+
+In particular, if there exists a minimizer in (3.127), then there exists a minimizer
+(u, σ ) ∈ Ur,Mar .
+
+  Suppose that L : [0, 1] × R × R −→ [0, ∞),  : R −→ [0, ∞) are Borel
+measurable. Then for any P0 ∈ P(R),
+
+  inf E  1  (Y u,σ (1))  (3.128)
+
+ (u,σ )∈Ur ,  L(t, Y u,σ (t); u(t))dt +
+P Y u,σ (0)=P0
+  0
+
+= inf Vr (P0, P ) + (x)P (dx) ,
+P ∈P(R)
+  R
+
+where Vr denotes V with A replaced by {Y u,σ |(u, σ ) ∈ Ur }. In particular, we easily
+obtain the following from Corollary 3.10.
+
+Corollary 3.11 (See [118]) In addition to the assumption of Corollary 3.10,
+
+suppose that : R −→ [0, ∞) is Borel measurable. Then for any r > 0 and
+P0 ∈ P(R),
+
+  inf{J (u, σ ) + E[  (Y u,σ (1))]|(u, σ ) ∈ Ur , P Y u,σ (0) = P0} (3.129)
+= inf{J (u, σ ) + E[  (Y u,σ (1))]|(u, σ ) ∈ Ur,Mar , P Y u,σ (0) = P0}.
+
+In particular, if there exists a minimizer in (3.129), then there exists a minimizer
+(u, σ ) ∈ Ur,Mar .
+112  3 Marginal Problem
+
+  We prove Theorem 3.11 by Theorem 3.12.
+Proof of Theorem 3.11 For (u, σ ) ∈ Ur , the following holds (see [105]):
+
+  a˜u,Y u,σ (t , ·) ≥ 0, P b˜u,Y u,σ (t,Y u,σ (t)) = P u(t), dt –a.e..  (3.130)
+
+Indeed,
+
+x  u −1  Y u,σ u,σ  u,σ
+
+  ˜ Y u,σ
+  bu,Y u,σ (t, y)p (t, y)dy = E[(Gt ) (1 − Ft (Y (t))); Y (t) ≤ x],
+−∞
+
+  x bY u,σ (t, y)pY u,σ (t, y)dy = E[E[u(t)|(t, Y u,σ (t))]; Y u,σ (t) ≤ x]
+
+  −∞
+
+  = E[u(t); Y u,σ (t) ≤ x].
+
+For an R2-valued random variable Z = (X, Y ) on a probability space,
+
+  ∞  0
+
+  E[Y ; X ≤ x] = {FX(x) − FZ(x, y)}dy − FZ(x, y)dy,
+  −∞
+  0
+
+  FZ(x, y) ≥ max(FX(x) + FY (y) − 1, 0)
+
+  = P (F −1 X (U ) ≤ x, F −1 Y (1 − U ) ≤ y),
+
+where FX denotes the distribution function of X and U is a uniformly distributed
+random variable on [0, 1]. The distribution functions of F −1 X (U ) and F −1 Y (1 − U )
+  Y u,σ  (Y u,σ
+are  FX  and  FY  ,  respectively.  From  (3.116),  (t ))  is  uniformly  distributed
+  Y u,σ −1 Y u,σ u,σ  Ft
+on [0, 1] and (Ft ) (Ft (Y (t))) = Y (t), P –a.s., dt–a.e. (see [46] or,u,σ
+
+e.g. [124, 130]).
+
+It is easy to see that the following holds from (3.117) and (3.130):
+
+  (σ 2 + a˜u,Y u,σ , b˜u,Y u,σ ) ∈ A0({P Y u,σ (t)}0≤t≤1).
+
+Indeed, from (3.130), the following holds:
+
+  1  |b˜u,Y u,σ (t, Y u,σ (t))|dt = E  1
+
+  E  |u(t)|dt < ∞.  (3.131)
+
+  0  0
+
+The following will be proved below:
+
+  1 a˜u,Y u,σ (t, Y u,σ (t))
+  E  u,σ 2 dt < ∞.  (3.132)
+  0 1 + |Y (t)|
+
+Equations (3.131)–(3.132) and Theorem 3.12 complete the proof. We prove (3.132).
+3.2 Marginal Problem for Stochastic Processes  113
+
+  1 a˜u,Y u,σ (t, Y u,σ (t))  (3.133)
+0 E 2(1 + |Y u,σ (t)|2) dt
+
+= dt 0 R 1 + x2 dx (b 1 1 x ˜ −∞ u,Y u,σ (t, y) − bY u,σ (t, y))pY u,σ (t, y)dy.
+
+From (3.130),
+
+ ∞ ˜ Y u,σ u,σ  (3.134)
+  bu,Y u,σ (t, y)p (t, y)dy = E[u(t)] = E[E[u(t)|(t, Y (t))]]
+
+−∞
+
+  = bY u,σ (t, y)p (t, y)dy, ∞ Y u,σ  d t –a.e..
+
+  −∞
+
+In particular, the following holds dt–a.e.:
+
+  R 1 + x2 1 dx (b x ˜ −∞ u,Y u,σ (t, y) − bY u,σ (t, y))pY u,σ (t, y)dy (3.135)
+
+= −∞ 1 + x2 dx (b 0 1 x ˜ −∞ u,Y u,σ (t, y) − bY u,σ (t, y))pY u,σ (t, y)dy
+  − 0 1 + x2 dx (b ∞ 1 ∞ ˜u,Y u,σ (t, y) − bY u,σ (t, y))pY u,σ (t, y)dy x
+
+= (b 0 ˜ −∞ u,Y u,σ (t, y) − bY u,σ (t, y))pY u,σ (t, y)dy y 1 + x2 dx 0 1
+  − (b ∞ ˜u,Y u,σ (t, y) − bY u,σ (t, y))pY u,σ (t, y)dy 0 0 1 + x2 dx y 1
+
+  ˜ Y u,σ
+≤ | arctan y|(|bu,Y u,σ (t, y)| + |bY u,σ (t, y)|)p (t, y)dy.
+
+  R
+
+Since | arctan y| is bounded, (3.117) and (3.131) completes the proof of (3.132).
+References
+
+ 1. Adams, S., Dirr, N., Peletier, M.A., Zimmer, J.: From a large-deviations principle to the
+  Wasserstein gradient ﬂow: a new micro-macro passage. Commun. Math. Phys. 307(3), 791–
+  815 (2011)
+
+ 2. Albeverio, S., Yasue, K., Zambrini, J.C.: Euclidean quantum mechanics: analytical approach.
+  Ann. Inst. H. Poincaré Phys. Théor. 50(3), 259–308 (1989)
+
+ 3. Ambrosio, L.: Transport equation and Cauchy problem for BV vector ﬁelds. Invent. Math.
+  158(2), 227–260 (2004)
+
+ 4. Ambrosio, L., Pratelli, A: Existence and stability results in the L1 theory of optimal
+  transportation. In: Caffarelli, L.A., Salsa, S. (eds.) Optimal Transportation and Applications
+  (CIME Series, Martina Franca, 2001), Lecture Notes in Math., vol. 1813, pp. 123–160.
+  Springer, Heidelberg (2003)
+
+ 5. Ambrosio, L., Trevisan, D.: Well-posedness of Lagrangian ﬂows and continuity equations in
+  metric measure spaces. Anal. PDE 7(5), 1179–1234 (2014)
+
+ 6. Aronson, D.G.: Bounds for the fundamental solution of a parabolic equation. Bull. Am. Math.
+  Soc. 73, 890–896 (1967)
+
+ 7. Backhoff, J., Conforti, G., Gentil, I., Léonard, C.: The mean ﬁeld Schrödinger problem:
+  ergodic behavior, entropy estimates and functional inequalities. Probab. Theory Related
+  Fields (2020). https://doi.org/10.1007/s00440-020-00977-8
+
+ 8. Bakelman, I.J.: Convex Analysis and Nonlinear Geometric Elliptic Equations. Springer,
+  Heidelberg (1994)
+
+ 9. Benamou, J.D., Brenier, Y.: A numerical method for the optimal mass transport problem
+  and related problems. In: Caffarelli, L.A., Milman, M. (eds.) Monge Ampére Equation:
+  Applications to Geometry and Optimization, Proceedings of the NSF–CBMS Conference,
+  Deerﬁeld Beach, FL, 1997, Contemporary Mathematics, vol. 226, pp. 1–11. American
+  Mathematical Society, Providence, RI (1999)
+
+10. Bensoussan, A., Frehse, J., Yam, P.: Mean Field Games and Mean Field Type Control Theory.
+  Springer Briefs in Mathematics. Springer, Heidelberg (2013)
+
+11. Bensoussan, A., Frehse, J., Yam, P.: On the interpretation of the master equation. Stoch.
+  Process. Appl. 127(7), 2093–2137 (2017)
+
+12. Bernstein, S.: Sur les liaisons entre les grandeurs alétoires. Verh. des intern. Mathematik-
+  erkongr. Zurich 1932, Band 1, 288–309 (1932)
+
+13. Beurling, A.: An automorphism of product measures. Ann. Math. 72, 189–200 (1960)
+14. Billingsley, P.: Convergence of Probability Measures. Wiley–Interscience, New York (1999)
+15. Blumenthal, R.M., Corson, H.H.: On continuous collections of measures. In: Le Cam, L. et al.
+
+  (eds.) Proc. 6th Berkeley Sympos. Math. Statist. Probab. 2, Berkeley 1970/1971, pp. 33–40.
+  University of California Press, Berkeley (1972)
+
+© The Author(s), under exclusive license to Springer Nature Singapore Pte Ltd. 2021  115
+
+T. Mikami, Stochastic Optimal Transportation, SpringerBriefs in Mathematics,
+
+https://doi.org/10.1007/978-981-16-1754-6
+116  References
+
+16. Bogachev, V.I., Kolesnikov, A.V., Medvedev, K.V.: On triangular transformations of measures
+  (Russian). Dokl. Akad. Nauk 396(6), 727–732 (2004)
+
+17. Bogachev, V.I., Kolesnikov, A.V., Medvedev, K.V.: Triangular transformations of measures
+  (Russian). Sb. Math. 196(3–4), 309–335 (2005)
+
+18. Bogachev, V.I., Krylov, N.V., Röckner, M.: Elliptic and parabolic equations for measures.
+  Russian Math. Surv. 64(6), 973–1078 (2009)
+
+19. Bogachev, V.I., Röckner, M., Shaposhnikov, S.V.: On the Ambrosio–Figalli–Trevisan super-
+  position principle for probability solutions to Fokker–Planck–Kolmogorov equations. J.
+  Dynam. Differential Equations (2020). https://doi.org/10.1007/s10884-020-09828-5
+
+20. Bowles, M., Ghoussoub, N.: A theory of transfers: duality and convolution (2018).
+  arXiv:1804.08563
+
+21. Brenier, Y.: Décomposition polaire et réarrangement monotone des champs de vecteurs. C. R.
+  Acad. Sci. Paris Série I 305(19), 805–808 (1987)
+
+22. Brenier, Y.: Polar factorization and monotone rearrangement of vector-valued functions.
+  Commun. Pure Appl. Math. 44(4), 375–417 (1991)
+
+23. Cacoullos, T., Papathanasiou, V., Utev, S.A.: Another characterization of the normal distribu-
+  tion and a related proof of the central limit theorem. Theory Probab. Appl. 37(4), 581–588
+  (1992)
+
+24. Cacoullos, T., Papathanasiou, V., Utev, S.A.: Variational inequalities with examples and an
+  application to the central limit theorem. Ann. Probab. 22(3), 1607–1618 (1994)
+
+25. Caffarelli, L.A., Salsa, S. (eds.): Optimal Transportation and Applications (CIME Series,
+  Martina Franca, 2001), Lecture Notes in Math., vol. 1813. Springer, Heidelberg (2003)
+
+26. Caffarelli, L.A., Feldman, M., McCann, R.J.: Constructing optimal maps for Monge’s
+  transport problem as a limit of strictly convex costs. J. Am. Math. Soc. 15(1), 1–26 (2001)
+
+27. Cardaliaguet, P.: Notes on Mean Field Games (from P.- L. Lions’ lectures at College de
+  France). January 15, 2012
+
+28. Carlen, E.A.: Conservative diffusions. Commun. Math. Phys. 94(3), 293–315 (1984)
+29. Carlen, E.A.: Existence and sample path properties of the diffusions in Nelson’s stochas-
+
+  tic mechanics. In: Albeverio, S., Blanchard, Ph., Streit, L. (eds.) Stochastic Processes–
+  Mathematics and Physics, Bielefeld 1984, Lecture Notes in Math., vol. 1158, pp. 25–51.
+  Springer, Heidelberg (1986)
+30. Carlier, G., Galichon, F., Santambrogio, F.: From Knothe’s transport to Brenier’s map and a
+  continuation method for optimal transport. SIAM J. Math. Anal. 41(6), 2554–2576 (2010)
+31. Carmona, R.: Probabilistic construction of Nelson processes. In: Itô, K., Ikeda, N. (eds.) Proc.
+  Probabilistic Methods in Mathematical Physics, Katata 1985, pp. 55–81. Kinokuniya, Tokyo
+  (1987)
+32. Cattiaux, P., Léonard, C.: Minimization of the Kullback information of diffusion processes.
+  Ann. Inst. H. Poincaré Probab. Stat. 30(1), 83–132 (1994)
+33. Cattiaux, P., Léonard, C.: Correction to: “Minimization of the Kullback information of
+  diffusion processes” [Ann. Inst. H. Poincaré Probab. Stat. 30(1), 83–132 (1994)]. Ann. Inst.
+  H. Poincaré Probab. Stat. 31(4), 705–707 (1995)
+34. Cattiaux, P., Léonard, C.: Large deviations and Nelson processes. Forum Math. 7(1), 95–115
+  (1995)
+35. Cattiaux, P., Léonard, C.: Minimization of the Kullback information for some Markov
+  processes. In: Azema, J., et al. (eds.) Séminaire de Probabilités, XXX, Lecture Notes in Math.,
+  vol. 1626, pp. 288–311. Springer, Heidelberg (1996)
+36. Chen, Y., Georgiou, T., Pavon, M.: Entropic and displacement interpolation: a computational
+  approach using the Hilbert metric. SIAM J. Appl. Math. 76(6), 2375–2396 (2016)
+37. Chen, Y., Georgiou, T.T., Pavon, M.: Stochastic control liaisons: Richard Sinkhorn meets
+  Gaspard Monge on a Schrödinger bridge (2020). arXiv: 2005.10963
+38. Chung, K.L., Zambrini, J.C.: Introduction to Random Time and Quantum Randomness. World
+  Scientiﬁc Publishing Co. Inc., Singapore (2003)
+References  117
+
+39. Conforti, G.: A second order equation for Schrödinger bridges with applications to the hot gas
+  experiment and entropic transportation cost. Probab. Theory Related Fields 174(1–2), 1–47
+  (2019)
+
+40. Conforti, G., Ripani, L.: Around the entropic Talagrand inequality. Bernoulli 26(2), 1431–
+  1452 (2020)
+
+41. Cover, T.M., Thomas, J.A.: Elements of Information Theory, 2nd edn. Wiley-Interscience,
+  New York (2006)
+
+42. Crandall, M.G., Ishii, H., Lions, P.-L.: User’s guide to viscosity solutions of second order
+  partial differential equations. Bull. Amer. Math. Soc. 27(1), 1–67 (1992)
+
+43. Cruzeiros, A.B., Zambrini, J.C.: Euclidean quantum mechanics. An outline. In: Cardoso, A.I.,
+  de Faria, M., Potthoff, J., Sénéor, R., Streit, L. (eds.) Stochastic Analysis and Applications in
+  Physics. NATO ASI Series (Series C: Mathematical and Physical Sciences), vol. 449, pp.
+  59–97. Springer, Dordrecht (1994)
+
+44. Cuturi, M.: Sinkhorn distances: Lightspeed computation of optimal transportation. In: Burges,
+  C.J.C., Bottou, L., Welling, M., Ghahramani, Z., Weinberger, K.Q. (eds.) Neural Information
+  Processing Systems 2013. Advances in Neural Information Processing Systems, vol. 26, pp.
+  2292–2300 (2013)
+
+45. Dai Pra, P.: A stochastic control approach to reciprocal diffusion processes. Appl. Math.
+  Optim. 23(3), 313–329 (1991)
+
+46. Dall’Aglio, G.: Sugli estremi dei momenti delle funzioni di ripartizione doppia. Ann. Scuola
+  Norm. Sup. Pisa Cl. Sci. (3) 10, 35–74 (1956)
+
+47. Dall’Aglio, G., Kotz, S., Salinetti, G. (eds.): Advances in Probability Distributions with Given
+  Marginals. Mathematics and its Applications, vol. 67. Kluwer Academic Publishers, Boston
+  (1991)
+
+48. Deuschel, J.D., Stroock, D.W.: Large Deviations. Academic Press, Inc., Boston (1989)
+49. Doob, J.L.: Conditional Brownian motion and the boundary limits of harmonic functions.
+
+  Bull. Soc. Math. France 85, 431–458 (1957)
+50. Dudley, R.M.: Probabilities and Metrics. Convergence of Laws on Metric Spaces, with a View
+
+  to Statistical Testing, Lecture Notes Series, vol. 45. Matematisk Institut, Aarhus Universitet,
+  Aarhus (1976)
+51. Duong, M.H., Laschos, V., Renger, M.: Wasserstein gradient ﬂows from large deviations of
+  many-particle limits. ESAIM Control Optim. Calc. Var. 19(4), 1166–1188 (2013). Erratum at
+  www.wias-berlin.de/people/renger/Erratum/DLR2015ErratumFinal.pdf
+52. Dupuis, P., Ellis, R.S.: A Weak Convergence Approach to the Theory of Large Deviations.
+  John Wiley & Sons, New York (1997)
+53. Erbar, M., Maas, J., Renger, M.: From large deviations to Wasserstein gradient ﬂows in
+  multiple dimensions. Electron. Commun. Probab. 20(89), 12 pp. (2015)
+54. Evans, L.C.: Partial differential equations and Monge–Kantorovich mass transfer. In: Current
+  Developments in Mathematics, 1997 (Cambridge, MA), pp. 65–126. International Press,
+  Boston (1997)
+55. Evans, L.C.: Partial Differential Equations. AMS, Providence (1998)
+56. Evans, L.C., Gangbo, W.: Differential equations methods for the Monge–Kantorovich mass
+  transfer problem. Mem. Amer. Math. Soc. 137(653) (1999)
+57. Feng, J., Nguyen, T.: Hamilton-Jacobi equations in space of measures associated with a
+  system of conservation laws. J. Math. Pures Appl. (9) 97(4), 318–390 (2012)
+58. Feyel, D., Üstünel, A.S.: Monge–Kantorovitch measure transportation and Monge–Ampère
+  equation on Wiener space. Probab. Theory Related Fields 128(3), 347–385 (2004)
+59. Figalli, A.: Existence and uniqueness of martingale solutions for SDEs with rough or
+  degenerate coefﬁcients. J. Funct. Anal. 254(1), 109–153 (2008)
+60. Fleming, W.H., Rishel, R.W.: Deterministic and Stochastic Optimal Control. Springer,
+  New York (1975)
+61. Fleming, W.H., Soner, H.M.: Controlled Markov Processes and Viscosity Solutions. Springer,
+  New York (1993)
+

@@ -1,0 +1,730 @@
+Step 2.8: For any value of lying in its range, obtained in Step 2.6, the
+
+symmetric triangular intuitionistic fuzzy number
+
+  where and
+
+are any non-negative real numbers and  , represents the value of the
+
+  basic intuitionistic fuzzy variable in a more-for-less solution of the
+
+symmetric triangular intuitionistic fuzzy transportation problem with mixed
+
+constraints, represented by Table 4.1.
+
+4.10 Illustrative Example
+
+In this section, to illustrate the proposed Mehar method-III, all more-for-less
+solutions the symmetric triangular intuitionistic fuzzy transportation problem with
+mixed constraints, represented by Table 4.3, are obtained by the proposed Mehar
+method-III.
+
+Table 4.3 Symmetric triangular intuitionistic fuzzy transportation problem with mixed constraints
+
+  Availability
+
+ Demand
+
+where,
+(i)
+
+(ii)
+(iii)
+
+  Using the proposed Mehar method-III, all more-for-less solutions (if exists) of
+the symmetric triangular intuitionistic fuzzy transportation problem with mixed
+constraints, represented by Table 4.3, can be obtained as follows.
+
+  Step 1: According to Step 1 of the proposed Mehar method-III, there is a need
+  to use Step 1.1 to Step 1.4 to check that for the symmetric triangular
+  intuitionistic fuzzy transportation problem with mixed constraints, represented
+  by Table 4.3, at least one more-for-less solution will exist or not.
+
+  Step 1.1: According to Step 1.1 of the proposed Mehar method-III, the
+  symmetric triangular intuitionistic fuzzy transportation problem with mixed
+  constraints, represented by Table 4.3, can be transformed into its equivalent
+  crisp transportation problem with mixed constraints represented by Table 4.4.
+
+  Table 4.4 Transformed crisp transportation problem with mixed constraints
+  Availability
+
+  Demand
+
+  Step 1.2: According to Step 1.2 of the proposed Mehar method-III, there is a
+  need to find an optimal solution of the crisp linear programming problem
+  (P4.8).
+
+  Problem (P4.8)
+
+  Subject to
+are unrestricted in sign.
+
+It can be easily verified that on solving the problem (P4.8), the obtained
+
+optimal solution is  .
+
+Step 1.3: According to Step 1.3 of the proposed Mehar method-III, the
+following shadow price matrix is obtained.
+
+  Step 1.4: Since, some elements of the shadow price matrix, obtained in
+  Step 1.3, are negative. So, according to Case (ii) of Step 1.4 of the
+  proposed Mehar method-III, there will exist at least one more-for-less
+  solution of the symmetric triangular intuitionistic fuzzy transportation
+  problem with mixed constraints, represented by Table 4.3.
+Step 2: According to Step 2 of the proposed Mehar method-III, all more-for-
+less solutions of the crisp transportation problem with mixed constraints,
+represented by Table 4.4, can be obtained as follows.
+
+Step 2.1: It is obvious from Step 1.3 that
+
+  and  . Therefore,
+
+according to Step 2.1 of the proposed Mehar method-III,
+(i)
+
+(ii)
+
+(iii)
+
+(iv)
+
+  Step 2.2: According to Step 2.2 of the proposed Mehar method-III, there is a
+  need to identify the basic variables in an optimal solution of the crisp linear
+  programming problem (P4.9).
+  Problem (P4.9)
+  Subject to
+  It can be easily verified that the following optimal solution is obtained on
+solving the crisp linear programming problem (P4.9).
+
+Also, it can be easily verified that the basic variables in this obtained
+
+optimal solution are  and .
+
+Step 2.3: According to Step 2.3 of the proposed Mehar method-III, there is a
+
+need to construct the basis matrix with the help of the coefficients of
+
+optimal basic variables  in the constraints of the crisp
+
+linear programming problem (P4.9).
+
+Step 2.4: According to Step 2.4 of the proposed Mehar method-III, there is a
+need to find the multiplicative inverse of the basis matrix .
+Step 2.5: According to Step 2.5 of the proposed Mehar method-III, there is a
+
+need to find  and  .
+
+(i)
+
+(ii)
+
+(iii)
+
+(iv)
+
+Step 2.6: According to Step 2.6 of the proposed Mehar method-III, there is a
+
+need to find the range of  so that all the elements of the
+
+matrix, obtained in Step 2.5, are greater than or equal to zero.
+
+It is obvious from Step 2.5 that
+
+(i) The range of for which all the elements of the matrix  , obtained
+
+in Step 2.5, are greater than or equal to zero, i.e.,
+
+  is  .
+(ii) The range of for which all the elements of the matrix  , obtained
+
+in Step 2.5, are greater than or equal to zero, i.e.,
+
+  is  .
+
+(iii) The range of for which all the elements of the matrix  , obtained
+  in Step 2.5, are greater than or equal to zero, i.e.,  is
+  .
+
+(iv) The range of for which all the elements of the matrix  , obtained
+
+in Step 2.5, are greater than or equal to zero, i.e.,
+
+  is  .
+
+Step 2.7: According to Step 2.7 of the proposed Mehar method-III,
+
+(i) For any value such that  ,
+
+represents the value of the 1st basic variable i.e., ,
+
+represents the value of the 2nd basic variable i.e., ,
+
+represents the value of the 3rd variable i.e., ,
+
+represents the value of the 4th basic variable i.e., ,
+
+represents the value of the 5th basic variable i.e., and
+
+represents the value of the 6th variable i.e., in a more-for-
+
+less solution of crisp transportation problem with mixed constraints
+
+represented by Table 4.4.
+
+For example, substituting  , the obtained values of basic
+
+variables in a more-for-less solution are
+
+(ii) For any value such that  ,
+
+represents the value of the 1st basic variable i.e., ,
+
+represents the value of the 2nd basic variable i.e., ,
+
+represents the value of the 3rd variable i.e., ,
+represents the value of the 4th basic variable i.e., ,
+
+represents the value of the 5th basic variable i.e., and
+
+represents the value of the 6th variable i.e., in a more-for-
+
+less solution of crisp transportation problem with mixed constraints
+
+represented by Table 4.4.
+
+For example, substituting  , the obtained values of basic
+
+variables in a more-for-less solution are
+
+(iii) For any value such that  ,
+
+represents the value of the 1st basic variable i.e., ,
+
+represents the value of the 2nd basic variable i.e., ,
+
+represents the value of the 3rd variable i.e., ,
+
+represents the value of the 4th basic variable i.e., ,
+
+represents the value of the 5th basic variable i.e., and
+
+represents the value of the 6th variable i.e., in a more-for-
+
+less solution of crisp transportation problem with mixed constraints
+
+represented by Table 4.4.
+
+For example, substituting  , the obtained values of basic
+
+variables in a more-for-less solution are
+
+(iv) For any value such that  ,
+
+represents the value of the 1st basic variable i.e., ,
+represents the value of the 2nd basic variable i.e., ,
+
+represents the value of the 3rd variable i.e., ,
+
+represents the value of the 4th basic variable i.e., ,
+
+represents the value of the 5th basic variable i.e., and
+
+represents the value of the 6th variable i.e., in a more-for-
+
+less solution of crisp transportation problem with mixed constraints
+
+represented by Table 4.4.
+
+For example, substituting  , the obtained values of basic
+
+variables in a more-for-less solution are
+
+Step 2.8: According to Step 2.8 of the proposed Mehar method-III,
+
+(i) For any value such that  ,
+
+represents the value of the 1st basic variable i.e., ,
+
+represents the value of the 2nd basic variable i.e., ,
+
+represents the value of the 3rd variable i.e., ,
+
+represents the value of the 4th basic variable i.e., ,
+
+represents the value of the 5th basic variable i.e., and
+
+represents the value of the 6th variable i.e., in a more-for-less solution
+of the symmetric triangular intuitionistic fuzzy transportation problem with
+mixed constraints represented by Table 4.3.
+For example,
+
+(a) Substituting  ,  , the
+
+obtained values of basic variables in a more-for-less solution are
+
+  and the corresponding symmetric triangular intuitionistic fuzzy
+transportation cost is
+
+  .
+
+(b) Substituting  ,  , the
+
+obtained values of basic variables in a more-for-less solution are
+
+  and the corresponding symmetric triangular intuitionistic fuzzy
+transportation cost is
+
+  .
+
+(ii) For any value such that  ,
+
+represents the value of the 1st basic variable i.e., ,
+
+represents the value of the 2nd basic variable i.e., ,
+represents the value of the 3rd variable i.e., ,
+
+represents the value of the 4th basic variable i.e., ,
+
+represents the value of the 5th basic variable i.e., and
+
+represents the value of the 6th variable i.e., in a more-for-less solution of
+the symmetric triangular intuitionistic fuzzy transportation problem with
+mixed constraints represented by Table 4.3.
+
+  For example,
+
+(a) Substituting  ,  ,
+
+the obtained values of basic variables in a more-for-less solution are
+
+and the corresponding symmetric triangular intuitionistic fuzzy
+transportation cost is
+
+  .
+
+(b) Substituting  ,
+
+  , the obtained
+
+values of basic variables in a more-for-less solution are
+and the corresponding symmetric triangular intuitionistic fuzzy
+transportation cost is
+
+  .
+
+(iii) For any value such that  ,
+
+represents the value of the 1st basic variable i.e., ,
+
+represents the value of the 2nd basic variable i.e., ,
+
+represents the value of the 3rd variable i.e., ,
+
+represents the value of the 4th basic variable i.e., ,
+
+represents the value of the 5th basic variable i.e., and
+
+represents the value of the 6th variable i.e., in a more-for-less solution of
+the symmetric triangular intuitionistic fuzzy transportation problem with
+mixed constraints represented by Table 4.3.
+
+  For example,
+
+(a) Substituting  ,  ,
+
+the obtained values of basic variables in a more-for-less solution are
+
+and the corresponding symmetric triangular intuitionistic fuzzy
+transportation cost is
+  .
+
+(b) Substituting  ,  , the
+
+obtained values of basic variables in a more-for-less solution are
+
+and the corresponding symmetric triangular intuitionistic fuzzy
+transportation cost is
+
+  .
+
+(iv) For any value such that  ,
+
+represents the value of the 1st basic variable i.e., ,
+
+represents the value of the 2nd basic variable i.e., ,
+
+represents the value of the 3rd variable i.e., ,
+
+represents the value of the 4th basic variable i.e., ,
+
+represents the value of the 5th basic variable i.e., and
+
+represents the value of the 6th variable i.e., in a more-for-less solution of
+the symmetric triangular intuitionistic fuzzy transportation problem with
+mixed constraints represented by Table 4.3.
+
+  For example,
+(a) Substituting  ,  , the
+
+obtained values of basic variables in a more-for-less solution are
+
+  and the corresponding symmetric triangular intuitionistic fuzzy
+transportation cost is
+
+  .
+
+(b) Substituting  ,  ,
+
+the obtained values of basic variables in a more-for-less solution are
+
+  and the corresponding symmetric triangular intuitionistic fuzzy
+  transportation cost is
+
+  .
+
+4.11 Conclusions
+
+In this chapter, new arithmetic operations of triangular intuitionistic fuzzy
+numbers are proposed. Also, a new method for comparing two triangular
+intuitionistic fuzzy numbers is proposed. Finally, a new method (named as Mehar
+method-III) is proposed to find more-for-less solutions of symmetric intuitionistic
+fuzzy transportation problems with mixed constraints.
+
+References
+1. A. Mishra and A. Kumar, Aggregation operators for various extensions of fuzzy set and its applications in
+  transportation problems, Studies in Fuzziness and Soft Computing, Springer Nature, Singapore, (2021).
+
+2.
+  H. A. Taha, Operations research: An introduction, Pearson Prentice Hall Upper Saddle River, N.J. (2013).
+
+3.
+  V. Vidhya, P. Uma Maheswari and K. Ganesan, An alternate method for finding more for less solution to
+  fuzzy transportation problem with mixed constraints, Soft Computing 25 (2021) 11989–11996.
+
+  OceanofPDF.com
+© The Author(s), under exclusive license to Springer Nature Switzerland AG 2023
+T. K. Bhatia et al., More-for-Less Solutions in Fuzzy Transportation Problems, Studies in Fuzziness and Soft
+Computing 426
+https://doi.org/10.1007/978-3-031-30337-1_5
+
+5. Mehar Method-IV to Find All More-For-Less
+Solutions of Symmetric Intuitionistic Fuzzy
+Linear Fractional Transportation Problems with
+Mixed Constraints
+
+Tanveen Kaur Bhatia1 , Amit Kumar1 and Srimantoorao S. Appadoo2
+(1) School of Mathematics, Thapar Institute of Engineering and Technology, Patiala,
+
+  Punjab, India
+(2) Department of Supply Chain Management, Asper School of Business, University
+
+  of Manitoba, Manitoba, MB, Canada
+
+  Tanveen Kaur Bhatia
+  Email: tbhatia60_phd19@thapar.edu
+
+  Amit Kumar (Corresponding author)
+  Email: amitkumar@thapar.edu
+
+  Srimantoorao S. Appadoo
+  Email: ss.appadoo@umanitoba.ca
+
+In this chapter, a new method (named as Mehar method-IV) is proposed to check the
+existence of at least one more-for-less solution as well as to find all more-for-less
+solutions (if exists) of symmetric triangular intuitionistic fuzzy linear fractional
+transportation problems with mixed constraints (linear fractional transportation
+problems with mixed constraints in which each parameter and each variable is
+represented by a symmetric triangular intuitionistic fuzzy number). Also, to illustrate
+the proposed Mehar method-IV, an existing crisp linear fractional transportation
+problem with mixed constraints and a symmetric triangular intuitionistic fuzzy linear
+fractional transportation problem with mixed constraints are solved by the proposed
+Mehar method-IV. Furthermore, the superiority of the proposed Mehar method-IV over
+an existing method is discussed.
+5.1 Tabular Representation of Crisp Linear Fractional
+Transportation Problems with Mixed Constraints
+
+A crisp linear fractional transportation problem with mixed constraints can be
+represented into tabular form as shown by Table 5.1.
+
+Table 5.1 Tabular representation of a crisp linear fractional transportation problem with mixed constraints
+  Availability
+
+ Demand
+
+where,
+(i) represents the number of sources
+(ii) represents the number of destinations
+(iii) represents the source
+(iv) represents the destination
+(v) The positive real number represents the cost for transporting one unit quantity
+of the product from the source to the destination
+(vi) The positive real number represents the profit on transporting one unit quantity
+of the product from the source to the destination
+(vii) The positive real number represents the availability of the product at the
+source
+(viii) The positive real number represents the demand of the product at the
+destination
+
+5.2 Tabular Representation of Symmetric Triangular
+Intuitionistic Fuzzy Linear Fractional Transportation
+Problems with Mixed Constraints
+
+A symmetric triangular intuitionistic fuzzy linear fractional transportation problem
+with mixed constraints can be represented into tabular form as shown by Table 5.2.
+
+Table 5.2 Tabular representation of a symmetric triangular intuitionistic fuzzy linear fractional transportation
+problem with mixed constraints
+  Availability
+
+Demand
+
+where,
+(i) The symmetric triangular intuitionistic fuzzy number
+
+  represents the supply
+
+of product at the source
+(ii) The symmetric triangular intuitionistic fuzzy number
+
+  represents the
+
+demand of product at the destination
+(iii) The symmetric triangular intuitionistic fuzzy number
+
+  represents the
+
+cost for transporting one unit quantity of product from the  source to the
+destination
+(iv) The symmetric triangular intuitionistic fuzzy number
+
+  represents the
+
+profit on transporting one unit quantity of the product from the  source to the
+destination
+
+5.3 Crisp Linear Fractional Programming Problems
+
+Corresponding to Crisp Linear Fractional Transportation
+
+Problem with Mixed Constraints
+
+If it is assumed that the non-negative real number represents the quantity of the
+product to be supplied from the source to the destination and represents the
+total crisp transportation cost. Then, the crisp linear fractional transportation problem
+with mixed constraints, represented by Table 5.1, can be formulated into its equivalent
+crisp linear fractional programming problem (P5.1) or into its equivalent crisp linear
+programming problem (P5.2) (dual of the crisp linear fractional programming problem
+(P5.1)).
+Problem  Minimize
+  Subject to
+
+where,
+
+  represents the set of all feasible solutions of
+
+the problem (P5.1).
+
+Problem  Maximize
+  Subject to
+
+  is unrestricted dual variable,
+  where,
+
+(i)
+
+  where, is a very large positive real number tends to .
+  Problem
+
+  Subject to
+
+  Constraints of the problem  .
+(ii)
+
+(iii) will be if the sign of the source constraint of the crisp linear
+  fractional programming problem (P5.1) is .
+
+(iv) will be if the sign of the source constraint of the crisp linear
+  fractional programming problem (P5.1) is .
+
+(v) If the sign of the source constraint of the crisp linear fractional
+  programming problem (P5.1) is . Then, will be an unrestricted variable.
+
+(vi) will be if the sign of the destination constraint of the crisp linear
+  fractional programming problem (P5.1) is .
+
+(vii) will be if the sign of the destination constraint of the crisp linear
+  fractional programming problem (P5.1) is .
+
+(viii) If the sign of the destination constraint of the crisp linear fractional
+  programming problem (P5.1) . Then, will be an unrestricted variable.
+
+  The dual problem (P5.2) is obtained as follows.
+  Step 1: Transform the crisp linear fractional programming problem (P5.1) into its
+  equivalent crisp linear fractional programming problem (P5.1′).
+
+  Problem
+
+  Minimize
+  Subject to
+  Constraints of the problem (P5.1) with the additional constraints
+
+  for all those corresponding to which there exists an unbounded
+  optimal solution of the problem (P5.1pq1), where is a very large positive real
+  number tends to .
+
+  Problem
+  Maximize
+  Subject to
+  Constraints of the problem (P5.1).
+  Step 2: Using the existing Charnes and Cooper’s algorithm [2], transform the crisp
+  linear fractional programming problem (P5.1) into its equivalent crisp linear
+  programming problem (P5.3).
+Problem
+Minimize
+Subject to
+
+Step 3: Using the duality theory [5], the problem (P5.2) represents the dual of the
+crisp linear programming problem (P5.3).
+
+5.4 Intuitionistic Fuzzy Linear Fractional Programming
+
+Problems Corresponding to Symmetric Triangular
+
+Intuitionistic Fuzzy Linear Fractional Transportation
+
+Problem with Mixed Constraints
+
+If it is assumed that the symmetric triangular intuitionistic fuzzy number
+  represents the
+
+intuitionistic fuzzy quantity of the product to be supplied from the source to the
+  destination, the symmetric triangular intuitionistic fuzzy number represents the
+
+total intuitionistic fuzzy transportation cost and represents the zero triangular
+intuitionistic fuzzy number. Then, the symmetric triangular intuitionistic fuzzy linear
+fractional transportation problem with mixed constraints, represented by Table 5.2, can
+be formulated into its equivalent intuitionistic fuzzy linear fractional programming
+problem (P5.4) or into its equivalent crisp linear programming problem (P5.5) (dual
+problem of the intuitionistic fuzzy linear fractional programming problem (P5.4)).
+
+Problem  Minimize
+Subject to
+
+Problem  Maximize
+  Subject to
+
+  is unrestricted dual variable,
+  where,
+(i)
+
+  Problem
+  Maximize
+  Subject to
+
+(ii)
+(iii) will be if the sign of the source constraint of the intuitionistic fuzzy
+  linear fractional programming problem (P5.4) is .
+
+(iv) will be if the sign of the source constraint of the intuitionistic fuzzy
+  linear fractional programming problem (P5.4) is .
+
+(v) If the sign of the source constraint of the intuitionistic fuzzy linear
+  fractional programming problem (P5.4) is . Then, will be an unrestricted
+  variable.
+
+(vi) will be if the sign of the destination constraint of the intuitionistic
+  fuzzy linear fractional programming problem (P5.4) is .
+
+(vii) will be if the sign of the destination constraint of the intuitionistic
+  fuzzy linear fractional programming problem (P5.4) is .
+
+(viii) If the sign of the destination constraint of the intuitionistic fuzzy linear
+  fractional programming problem (P5.4) . Then, will be an unrestricted
+  variable.
+
+  The dual problem (P5.5) is obtained as follows.
+  Step 1: Using the comparing method, proposed in Sect. 4.3 of Chap. 4, the
+  intuitionistic fuzzy linear fractional programming problem (P5.4) can be
+  transformed into its equivalent crisp linear fractional programming problem (P5.6).
+
+  Problem
+
+  Minimize
+
+  Subject to
+
+Step 2: Using the expression  , discussed in Chap. 4, the
+
+crisp linear fractional programming problem (P5.6) can be transformed into its
+equivalent crisp linear fractional programming problem (P5.7).
+
+  Problem
+
+Minimize
+
+Subject to
+  Constraints of the problem (P5.6).  , discussed in Chap.
+Step 3: Using the expression
+
+4, the crisp linear fractional programming problem (P5.7) can be transformed into
+its equivalent crisp linear fractional programming problem (P5.8).
+
+  Problem
+
+Minimize
+
+Subject to
+
+Step 4: Using the expression  , discussed in Chap.
+
+4, the crisp linear fractional programming problem (P5.8) can be transformed into
+its equivalent crisp linear fractional programming problem (P5.9).
+
+  Problem
+
+Minimize
+
+Subject to
+Constraints of the problem (P5.8).
+
+Step 5: Using the expression  , discussed in Chap. 4, transform the
+
+crisp linear fractional programming problem (P5.9) into its equivalent crisp linear
+fractional programming problem (P5.10).
+
+  Problem
+
+Minimize
+
+Subject to
+  Step 6: As discussed in Sect. 5.3, the crisp linear programming problem (P5.5)
+  represents the dual of the crisp linear fractional programming problem (P5.10).
+  Hence, the crisp linear programming problem (P5.5) represents the dual of the
+  intuitionistic fuzzy linear fractional programming problem (P5.4).
+
+5.5 Crisp Linear Fractional Transportation Problem
+with Mixed Constraints Equivalent to Symmetric
+Triangular Intuitionistic Fuzzy Linear Fractional
+Transportation Problem with Mixed Constraints
+
+The following clearly indicates that the symmetric triangular intuitionistic fuzzy linear
+fractional transportation problem with mixed constraints, represented by Table 5.2, is
+equivalent to crisp linear fractional transportation problem with mixed constraints
+represented by Table 5.3.
+
+Table 5.3 Crisp linear fractional transportation problem with mixed constraints
+  Availability
+
+ Demand
+
+  It is obvious from Step 1 to Step 5 of Sect. 5.4 that the intuitionistic fuzzy linear
+fractional programming problem (P5.4) corresponding to the symmetric triangular
+intuitionistic fuzzy linear fractional transportation problem with mixed constraints,
+represented by Table 5.2, is equivalent to the crisp linear fractional programming
+problem (P5.10). Also, it is obvious from Sect. 5.3 that the crisp linear fractional
+programming problem (P5.10) is equivalent to crisp linear fractional transportation
+problem with mixed constraints represented by Table 5.3.
+
+5.6 Proposed Sufficient Condition-IV for the Existence of
+at Least One More-For-Less Solution
+

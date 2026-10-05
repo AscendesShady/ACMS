@@ -1,0 +1,1148 @@
+138 Machine Learning for Transportation Research and Applications
+
+  The semi-supervised manifold alignment (SMA) was proposed in Wang and
+Mahadevan (2011), which can reuse data (either labeled or not) collected from
+the source domain to improve classiﬁcation performances in the target domain.
+As aforementioned, manifold alignment can map multiple domains into one la-
+tent space. In this case study, the latent manifold M has the form:
+
+  M = Ms , Mr ,
+
+where Ms and Mr contain the data mapped from the original simulation and
+real domain respectively. Two mapping matrices Qs and Qr can be used to map
+the data from original source domains to Ms and Mr . Integrating Qs and Qr ,
+the following joint mapping matrix as follows is acquired:
+
+  Q = r Q . s
+  Q
+
+  The goal of SMA is to ﬁnd an optimal mapping matrix Q∗ that minimizes
+the following cost function:
+
+  J(Q) = μJJgeo(Q) + Jsim(Q) .
+  Jdis (Q)
+
+  The detailed mathematical derivation of the solution process can be found
+in the original paper. After obtaining the optimal mapping matrix Q∗, the data
+from the simulation and real domains can be mapped to the same latent manifold
+by:
+
+  M = Ms , Mr = Q∗ T D.
+
+8.10 Exercises
+• What is the advantage of transfer learning over traditional supervised learn-
+
+  ing?
+• Explain inductive transfer learning, transductive transfer learning, and unsu-
+
+  pervised transfer learning.
+• Explain self-taught learning, multitask learning, domain adaptation, and sam-
+
+  ple selection bias/covariance shift.
+• What is the difference between few-shot learning and zero-shot learning?
+
+  Give an example of trafﬁc video analytics.
+• Two techniques in transfer learning, freezing and ﬁne-tuning, have different
+
+  impacts. In what situations should you choose freezing over ﬁne-tuning?
+• Why is labeled data from trafﬁc surveillance images critical for the perfor-
+
+  mance of trafﬁc video analytics–since there are already a large number of
+  labeled vehicle datasets?
+  Transfer learning Chapter | 8 139
+
+• If you are a transfer learning engineer and asked to design a detector that takes
+  images from simulation for real-world trafﬁc video detection, how would you
+  design the transfer learning method?
+
+• What is the key knowledge needed for domain adaptation from daytime im-
+  ages to nighttime images?
+
+• Explain the usage of latent space in simulation to real-world domain adaption.
+This page intentionally left blank
+Chapter 9
+
+Graph neural networks
+
+Graph neural networks (GNNs) are neural network models that capture the
+dependence of graphs via messages passing between the nodes of graphs. In
+recent years, variants of GNNs, such as graph convolutional network (GCN)
+and graph attention network (GAT), have demonstrated ground-breaking perfor-
+mances on many deep learning tasks, including trafﬁc road-network modeling.
+In this chapter, we will introduce the basics of graph neural networks and sev-
+eral representative graph neural networks. Graph-related case studies will be
+introduced to show how GNNs can be applied to transportation tasks.
+
+9.1 Preliminaries
+
+In this section, we introduce models of GNNs in a designer view. We ﬁrst present
+the general design pipeline for designing a GNN model in this section.
+
+  In later sections, we denote a graph as G = (V , E), where |V | = N is the
+number of nodes in the graph and |E| = N e is the number of edges. A ∈ RN×N
+is the adjacency matrix. For graph representation learning, we use hv and ov as
+the hidden state and output vector of node v.
+
+9.2 Graph neural networks
+
+The convolution operators that we introduce in this section are the mostly used
+propagation operators for GNN models. The main idea of convolution operators
+is to generalize convolutions from other domain to the graph domain. Advances
+in this direction are often categorized as either spectral approaches or spatial
+approaches.
+
+9.2.1 Spectral GNN
+
+Spectral approaches work with a spectral representation of the graphs. These
+methods are theoretically based on graph signal processing (Shuman et al.,
+2013) and deﬁne the convolution operator in the spectral domain.
+
+  In spectral methods, a graph signal x is ﬁrst transformed to the spectral do-
+main by the graph Fourier transform F, and then the convolution operation is
+conducted. After the convolution, the resulted signal is transformed back using
+the inverse graph Fourier transform F −1. These transforms are deﬁned as
+
+  F (x) = UT x  (9.1)
+
+Machine Learning for Transportation Research and Applications  141
+https://doi.org/10.1016/B978-0-32-396126-4.00014-X
+Copyright © 2023 Elsevier Inc. All rights reserved.
+142 Machine Learning for Transportation Research and Applications
+
+  F −1(x) = Ux.  (9.2)
+
+Here, U is the matrix of eigenvectors of the normalized graph Laplacian L =
+IN − D− 21 AD− 21 (D is the degree matrix and, A is the adjacency matrix of the
+graph). The normalized graph Laplacian is real symmetric positive semideﬁnite,
+so it can be factorized as L = U UT (where is a diagonal matrix of the
+
+eigenvalues). Based on the convolution theorem (Mallat, 1999), the convolution
+
+operation is deﬁned as
+
+  g x = F −1(F (g) F (x))
+  = U UT g UT x , (9.3)
+
+where UT g is the ﬁlter in the spectral domain. If we simplify the ﬁlter by using
+a learnable diagonal matrix gw, then we have the basic function of the spectral
+methods:
+
+  gw x = UgwUT x.  (9.4)
+
+  Next, we will introduce several typical spectral methods which design vari-
+
+ous ﬁlters gw.
+  Spectral Network: Spectral network (Bruna et al., 2014) uses a learnable
+
+diagonal matrix as the ﬁlter, that is gw = diag(w), where w ∈ RN is the pa-
+rameter. However, this operation is computationally inefﬁcient and the ﬁlter is
+
+nonspatially localized. Henaff et al. (2015) attempt to make the spectral ﬁlters
+
+spatially localized by introducing a parameterization with smooth coefﬁcients.
+
+  ChebNet: Hammond et al. (2011) suggest that gw can be approximated by
+a truncated expansion in terms of Chebyshev polynomials Tk(x) up to the Kth
+order. Defferrard et al. (2016) propose the ChebNet based on this theory. The
+
+operation can be described as
+
+  K  (9.5)
+
+  gw x ≈ wkTk(L˜ )x,
+
+  k=0
+
+where  L˜  =  2  L  −  IN , λmax  represents  the  largest  eigenvalue  of  L.  The  range
+  λmax
+of the eigenvalues in L˜ is [−1, 1].w ∈ RK is now a vector of Chebyshev co-
+
+efﬁcients. The Chebyshev polynomials are deﬁned as Tk(x) = 2xTk−1(x) −
+Tk−2(x), with T0(x) = 1 and T1(x) = x. It can be observed that the operation is
+K-localized since it is a Kth-order polynomial in the Laplacian. Defferrard et
+
+al. (2016) use this K-localized convolution to deﬁne a convolutional neural net-
+
+work that could remove the need to compute the eigenvectors of the Laplacian.
+
+  GCN: Kipf and Welling (2017) propose graph convolution network (GCN)
+
+to simplify the convolution operation in Eq. (9.5) with K = 1. They assume
+λmax ≈ 2 and simplify the equation to
+
+  gw  x  ≈  w0  x  +  w1  (L  −  IN  )  x  =  w0  x  −  w1  D−  1  AD−  1  x,  (9.6)
+  2  2
+  Graph neural networks Chapter | 9 143
+
+with two free parameters w0 and w1. With parameter constraint w = w0 = −w1,
+we can obtain the following expression:
+
+  gw x ≈ w IN + D− 21 AD− 21 x.  (9.7)
+
+GCN further introduces a renormalization process in Eq. (9.7) which represent-
+
+ing  IN  + D− 21 AD− 21  as  D˜  −  1  A˜  D˜  −  1  ,  with  A˜  =  A + IN  and  D˜ ii  =  j A˜ ij . Finally,
+  2  2
+
+we can get the compact form of GCN as
+
+  H  =  D˜ −  1  A˜ D˜ −  1  XW,  (9.8)
+  2  2
+
+where X ∈ RN×F is the input matrix, W ∈ RF ×F is the parameter and H ∈
+RN×F is the convolved matrix. F and F are the dimensions of the input and the
+output, respectively. Note, you can ﬁnd a lot of GCN variants that are proposed
+to learn comprehensive features in the graph structure ﬂexibly and efﬁciently.
+
+9.2.2 Spatial GNN
+
+Spatial approaches deﬁne convolutions directly on the graph based on the graph
+topology. The idea of spatial GNN operation is similar to that of the CNN op-
+eration that targets to focus on the localized features of the input data as shown
+in Fig. 9.1. The major challenge of CNNs is to deﬁne the convolution operation
+with differently sized neighborhoods and maintain the local invariance. Speciﬁ-
+call, spatial GNN encounters the challenges.
+
+FIGURE 9.1 Similarity of the ideas of CNN and GNN.
+
+  DCNN. The diffusion convolutional neural network (DCNN) (Atwood and
+Towsley, 2016) uses transition matrices to deﬁne the neighborhood for nodes.
+The diffusion representations of each node in the graph can be expressed as
+
+  H = f (Wc PX) ∈ RN×K×F ,  (9.9)
+
+where the operator represents element-wise multiplication, X ∈ RN×F is the
+input matrix, and F is the dimension of features. P∗ is an N × K × N ten-
+sor, which contains the power series P, P2, . . . , PK of matrix P. And P is the
+144 Machine Learning for Transportation Research and Applications
+
+degree-normalized transition matrix derived from the graphs adjacency matrix
+
+A. Each entity is transformed to a diffusion convolutional representation, which
+is a K × F matrix deﬁned by K hops of graph diffusion over F features. It will
+be deﬁned by a K × F weight matrix Wc followed by the nonlinear activation
+
+function f .
+
+9.2.3 Attention-based GNNs
+
+The attention mechanism has been successfully used in many transportation-
+related tasks, such as trafﬁc forecasting (Park et al., 2020), travel time esti-
+mation (Fang et al., 2020), autonomous driving (Cai et al., 2022), and so on.
+There are also several models that try to generalize the attention operator on
+graphs (Velicˇkovic´ et al., 2018a). Compared with the operators introduced be-
+fore, attention-based operators assign different weights for neighbors, so that
+they can alleviate noises and achieve better results.
+
+  GAT. The graph attention network (GAT) (Velicˇkovic´ et al., 2018b) incorpo-
+rates the attention mechanism into the propagation step. It computes the hidden
+states of each node by attending to its neighbors, following a self-attention strat-
+egy. The hidden state of node v can be obtained by
+
+  htv+1 = ρ  αvuWhtu  (9.10)
+  (9.11)
+  u∈rv
+
+αvu =  exp LeakyReLU aT [Whv Whu]
+  ,
+
+  k∈rv exp LeakyReLU aT [Whv Whk]
+
+where W is the weight matrix associated with the linear transformation that is
+applied to each node and a is the weight vector of a single-layer MLP.
+
+  Moreover, GAT utilizes the multi-head attention used by (Vaswani et al.,
+2017) to stabilize the learning process. It applies K independent attention-head
+matrices to compute the hidden states and then concatenates their features, re-
+sulting in the following output representations:
+
+  mtv+1 = Mt htv, htu, evu  (9.12)
+
+  u∈Yv
+
+  htv+1 = Ut htv, mtv+1 .
+
+Here, evu represents features of undirected edge (v, u).
+
+  ⎛  ⎞
+
+  ht+1 = K σ ⎝  αvku Wk htu ⎠
+  v  k=1
+
+  ⎛  u∈Vv  ⎞  (9.13)
+
+  htv+1 = σ ⎝ 1  K
+
+  K  αvkuWkhtu⎠ .
+
+  k=1 u∈Iv
+  Graph neural networks Chapter | 9 145
+
+Here  is  the  concatenate  operation,  and  αk  is  the  normalized  attention  coefﬁ-
+
+  uv
+cient computed by the k-th attention mechanism ak. The attention architecture
+
+has several properties: (1) The attention mechanism can work in a parallel way
+
+that makes the computation of the graph attention network highly efﬁcient; (2)
+
+applying attention to any setting makes the capacity and accuracy of the model
+
+very high because the models need to learn only important data (less amount of
+
+data); and (3) the learned weights in GAT can make the process of the network
+
+more interpretable.
+
+9.3 Case study 1: trafﬁc graph convolutional network for
+  trafﬁc prediction
+
+9.3.1 Problem deﬁnition
+
+Trafﬁc forecasting refers to predicting future trafﬁc states, such as trafﬁc speed,
+travel time, or volume, given previously observed trafﬁc states from a road net-
+work, as introduced in the RNN chapter. The trafﬁc network can be converted
+into a topological graph consisting of all N nodes, representing N trafﬁc sensing
+locations, and a set of edges. The short-term trafﬁc forecasting problem aims
+to learn a function F (·) to map T time steps of historical graph signals, i.e.,
+XT = [x1, . . . , xt , . . . , xT ], to the graph signals in the subsequent one or multi-
+ple time steps. In this study, the function attempts to forecast the graph signals
+in the subsequent one step, i.e., xT +1, and the formulation of F (·) is deﬁned as
+
+  F [x1, . . . , xt , . . . , xT ] ; G V, E, A˜k = xT +1.  (9.14)
+
+  Notations in Roadway Graph: The trafﬁc network and the relationship be-
+tween roadway locations can be represented by an undirected graph G, where
+G = (V, E) with N nodes vi ∈ V and edges vi, vj ∈ E. Even though some
+roads are directed in the reality, due to the impact of trafﬁc congestion occurring
+
+on these roads will be bidirectionally propagated to upstream and downstream
+roads, we take the bidirectional impact into account, and thus let G be an undi-
+rected graph. The connectedness of nodes in G is represented by an adjacency
+matrix A ∈ RN×N , in which each element Ai,j = 1 if there is an edge connecting
+node i and node j and Ai,j = 0, otherwise Ai,i = 0 . Based on the adjacency
+matrix, the degree matrix of G, which measures the number of edges attached
+to each vertex, can be deﬁned as D ∈ RN×N in which Dii = j Aij .D is a
+diagonal matrix and all non-diagonal elements are zeros.
+
+  Based on the adjacency matrix, an edge counting function d vi, vj can be
+deﬁned as counting the minimum number of edges traversed from node i to node
+
+j . Then, the set of k-hop (k-th order) neighborhoods of each node i, including
+node i itself, can be deﬁned as vj ∈ V | d vi, vj ≤ k . However, since the traf-
+ﬁc states are time series data and the current trafﬁc state on a road will deﬁnitely
+
+inﬂuence the future state, we consider the all roads are self-inﬂuenced. Thus,
+146 Machine Learning for Transportation Research and Applications
+
+FIGURE 9.2 Basic structure of the trafﬁc graph convolutional LSTM network. The trafﬁc graph
+
+convolution (TGC) is shown on the left-hand side in detail by unfolding the trafﬁc graph convolution
+at time t, in which Ak s and F F R with respect to a red star node are demonstrated.
+
+we consider the neighborhood of a node contains the node itself and a neighbor-
+
+hood matrix to characterize the one-hop neighborhood relationship of the whole
+graph, denoted as A˜ = A + I , where I is the identity matrix. Then, the k-hop
+neighborhood relationship of the graph nodes can be characterized by (A + I )k.
+However, some elements in (A + I )k will inevitably exceed one. Owing to the
+
+k-hop neighborhood of a node is only used for describing the existence of all the
+
+k-hop neighbors, it is not necessary to make a node’s k-hop neighbors weighted
+by the number of hops. Thus, we clip the values of all elements in (A + I )k
+to be in {0, 1} and deﬁne a new k-hop neighborhood matrix A˜k, in which each
+element A˜ki,j satisﬁes
+
+A˜ki,j = min (A + I )i,j k , 1 ,  (9.15)
+
+where min refers to minimum. In this case, A˜1 = A1 = A. An intuitive example
+of k-hop neighborhood with respect to a node (a red star) is illustrated by the
+blue points (mid gray in print version) on the left-hand side of Fig. 9.2.
+
+  Free-Flow Reachable Matrix: Based on the length of each road in the traf-
+ﬁc network, we deﬁne a distance matrix Dist ∈ RN×N , where each element
+Dist i,j represents the real roadway distance from node i to j (i = j ). When
+taking the underlying physics of vehicle trafﬁc on a road network into consider-
+ation, we need to understand that the impact of a roadway segment on adjacent
+segments is transmitted in two primary ways: 1) slowdowns and/or blockages
+propagating upstream; and 2) driver behavior and vehicle characteristics associ-
+ated with a particular group of vehicles traveling downstream. Thus, for a trafﬁc
+network-based graph or other similar graphs, the trafﬁc impact transmission be-
+tween nonadjacent nodes cannot bypass the intermediate node/nodes, and, thus,
+we need to consider the reachability of the impact between adjacent and nearby
+node pairs. To ensure the trafﬁc impact transmission between k-hop adjacent
+nodes follow the established trafﬁc ﬂow theory (Daganzo, 1994), we deﬁne a
+free-ﬂow reachable matrix, F F R ∈ RN×N , that
+  Graph neural networks Chapter | 9 147
+
+F F Ri,j =  1, SiF,jF m t − Dist i,j ≥ 0 ,  ∀vi, vj ∈ V ,  (9.16)
+  0, otherwise
+
+where  SFF  is  the  free-ﬂow  speed  between  node  i  and  j  and  free-ﬂow  speed
+
+  i,j
+
+refers to the average speed that a motorist would travel if there were no con-
+
+gestion or other adverse conditions (such as severe weather). t is the duration
+
+of time quantum, and m is a number counting how many time intervals are
+
+considered to calculate the distance traveled under free-ﬂow speed. Thus, m de-
+
+termines the temporal inﬂuence of formulating the F FR. Each element F FRi,j
+equals one if vehicles can traverse from node i to j in m time-step, m · t, with
+
+free-ﬂow speed, and F F Ri,j = 0, otherwise. Intuitively, the F FRi,j measures
+
+whether a vehicle can travel from node i to node j with the free-ﬂow speed un-
+
+der a speciﬁc time interval. We consider each road is self-reachable, and thus,
+
+all diagonal values of FFR are set as one. An example, FFR with respect to a
+
+node (a red star), is shown by green lines (dark gray in print version) on the left
+
+side of Fig. 9.2.
+
+Trafﬁc Graph Convolution: As we introduced in the Spatial GNN section,
+
+GNN can extend the receptive ﬁeld of graph convolution by replacing the one-
+hop neighborhood matrix A˜ with the k-hop neighborhood matrix A˜k. However,
+
+previous studies either neglect the properties of the edges in a graph, such as the
+
+distances between various sensing locations (the lengths of the graph edges) and
+
+the free-ﬂow reachability or fail to consider high-order neighborhood of nodes
+
+in the graph. Hence, to comprehensively solve the network-wide forecasting
+
+problem, we consider both graph edge properties and high-order neighborhood
+
+in the trafﬁc network-based graph. Hence, we deﬁne the k-order (k-hop) Trafﬁc
+
+Graph Convolution (TGC) operation as
+
+  GCtk = Wgck A˜k F F R xt ,  (9.17)
+
+where is the Hadamard product operator, i.e., the element-wise matrix multi-
+plication operator, and xt ∈ RN is the vector of trafﬁc states (speed) of all nodes
+at time t. The Wgc−k ∈ RN×N is a trainable weight matrix for the k-order traf-
+ﬁc graph convolution and the GCk ∈ RN is the extracted k-order trafﬁc graph
+convolution feature. Due to the fact that A˜k and FFR are both sparse matrices
+containing only the elements 0 and 1, the result of Wgck A˜k F F R is also
+sparse. Further, the trained weight Wgc−k has the potential to measure the inter-
+active inﬂuence between graph nodes and, thus, enhance the interpretability of
+
+the model.
+  Let K ≤ Kmax denote the largest hop for trafﬁc graph convolution in this
+
+study, and the corresponding trafﬁc graph-convolution feature is GCtK with re-
+spect to input data xt . Different hops of neighborhood in TGC will result in
+
+different extracted features. To enrich the feature space, the features extracted
+
+from different orders (from 1 to K) of trafﬁc graph convolution with respect to
+148 Machine Learning for Transportation Research and Applications
+
+Xt are concatenated together as a vector deﬁned as follows
+
+GCt{K} = GCt1, GCt2, . . . , GCtK .  (9.18)
+
+The GCt{K} ∈ RN×K contains all the K orders of trafﬁc graph convolutional
+features, as intuitively shown on the left-hand side of Fig. 9.2. In this study,
+after operating the TGC on input data xt , the generated GCt{K} will be fed into
+the following layer in the proposed neural network structure described in the
+
+following section.
+
+9.3.2 Method: trafﬁc graph convolutional LSTM
+
+We propose a Trafﬁc Graph Convolutional LSTM (TGCLSTM) recurrent neural
+network, as shown on the right-hand side of Fig. 9.2, which learns both the com-
+plex spatial dependencies and the dynamic temporal dependencies presented in
+trafﬁc data. In this model, the gates structure in the vanilla LSTM and the hidden
+state are unchanged, but the input is replaced by the graph convolution features,
+which are reshaped into a vector GC{K} ∈ RKN . The forget gate ft , the input
+gate it , the output gate ot , and the input cell state C˜t in terms of time step t are
+deﬁned as follows:
+
+ ft = σg Wf · GCt{K} + Uf · ht−1 + bf  (9.19)
+ it = σg Wi · GCt{K} + Ui · ht−1 + bi
+ot = σg Wo · GCt{K} + Uo · ht−1 + bo
+C˜t = tanh WC · GCt{K} + UC · ht−1 + bC ,
+
+where · is the matrix multiplication operator. Wf , Wi, Wo, and WC ∈ RN×KN
+are the weight matrices, mapping the input to the three gates and the input cell
+state, while Uf , Ui, Uo, and UC ∈ RN×N are the weight matrices for the pre-
+ceding hidden state. bf , bi, bo, and bC ∈ RN are four bias vectors. The σg is
+the gate activation function, which typically is the sigmoid function, and tanh is
+the hyperbolic tangent function. A cell state gate is designed and added in the
+LSTM cell. The cell state gate is deﬁned as follows
+
+  ∗  =  WN  A˜K F F R · Ct−1,  (9.20)
+
+Ct −1
+
+where WN is a weight matrix to measure the contributions of neighboring cell
+states. To correctly reﬂect the trafﬁc network structure, the WN is constrained
+by multiplying a FFR based K-hop adjacency matrix, A˜K FFR. With this
+gate, the inﬂuence of neighboring cell states will be considered when the cell
+state is recurrently input to the subsequent time step. Then, the ﬁnal cell state
+  Graph neural networks Chapter | 9 149
+
+and the hidden state are calculated as follows
+
+Ct = ft  ∗  +  it  C˜ t  (9.21)
+
+  Ct −1
+
+ht = ot tanh (Ct ) .
+
+  At the ﬁnal time step T , the hidden state hT is the output of TGC-LSTM,
+namely, the predicted value yˆT = hT . Let yT ∈ RN denote the label of the input
+data XT ∈ RN×N . For the sequence prediction problem in this study, the label
+of time step T is the input of the next time step (T + 1) such that yT = xT +1.
+Then, the loss during the training process is deﬁned as
+
+Loss = L yT , yˆT = L (xT +1, hT ) ,  (9.22)
+
+where L(·) is a function to calculate the residual between the predicted value
+yˆT and the true value yT . Normally, the L(·) function is a Mean Squared Er-
+ror (MSE) function for predicting continuous values. Since the proposed model
+
+contains a trafﬁc graph-convolution operation, the generated set of TGC features
+GCt{K} and the learned TGC weights Wgc1 , . . . , WgcK provide an opportu-
+nity to make the proposed model interpretable via analyzing the learned TGC
+
+weights.
+
+9.3.3 Results
+
+Dataset: In this case study, two real-world network-scale trafﬁc-speed datasets
+are utilized. The ﬁrst contains data collected from inductive loop detectors
+deployed on four connected freeways in the Greater Seattle area, shown in
+Fig. 9.3(a). This dataset contains trafﬁc state data from 323 sensor stations over
+the entirety of 2015 at 5-minute intervals. The second contains road link-level
+trafﬁc speeds aggregated from GPS probe data collected by commercial vehi-
+cle ﬂeets and mobile apps provided by the company INRIX. The INRIX trafﬁc
+network covers the Seattle downtown area, shown in Fig. 9.3(b). This dataset de-
+scribes the trafﬁc state at 5-minute intervals for 1,014 road segments and covers
+the entire year of 2012.
+
+  Prediction Results and Visualization: Fig. 9.4 visualizes the predicted traf-
+ﬁc speed sequences and the ground truth of two locations selected from the
+LOOP and INRIX dataset. Though the trafﬁc networks of the two datasets are
+very different, the curves demonstrate that the trends of the trafﬁc speed are
+predicted well at both peak trafﬁc and off-peak hours.
+
+  Model Interpretation: To better understand the contribution of the graph
+convolution weight, the TGCLSTM model’s TGC weight in Fig. 9.5(a) and its
+corresponding physical locations on the actual map in Fig. 9.5(b), by highlight-
+ing them with Roman numerals and red boxes. The inﬂuence of these marked
+weights on neighboring nodes in the LOOP data are visualized by circles. The
+darkness of the green and pink colors and the sizes of the circles represent the
+magnitude of inﬂuence. We can ﬁnd in Fig. 9.5(b) that the area tagged with (IV)
+150 Machine Learning for Transportation Research and Applications
+
+FIGURE 9.3 Two datasets for testing the TGCLSTM.
+FIGURE 9.4 Prediction results of TGCLSTM at two sites from the two dataset.
+
+FIGURE 9.5 Visualization of TGC weight matrix.
+
+is quite representative because the two groups of circles are located at the inter-
+sections between freeways and two main corridors that represent the entrances
+to an island (Mercer Island). Areas (V) and (VI) are the intersections between I-
+90 and I-405 and between I-5 and SR-520, respectively. The VII area located on
+  Graph neural networks Chapter | 9 151
+
+SR-520 contains a frequent-congested ramp connecting to the city of Bellevue,
+the location of which is highlighted by the largest green circle.
+
+9.4 Case study 2: graph neural network for trafﬁc forecasting
+  with missing values
+
+9.4.1 Problem deﬁnition
+
+A trafﬁc network normally consists of multiple roadway links. The trafﬁc fore-
+casting task is to predict the future trafﬁc states of all (road) links or sensor
+stations in the trafﬁc network based on historical trafﬁc state data. The collected
+spatiotemporal trafﬁc state data of a trafﬁc network with S links/sensor-stations
+can be characterized as a T -step sequence [x1, x2, ..., xt , ..., xT ] ∈ RT ×S, in
+which xt ∈ RS demonstrates the trafﬁc states of all S links at the t-th step. The
+trafﬁc state of the s-th link at time t is represented by xts.
+
+  Since the trafﬁc network is composed of road links and intersections, it is
+intuitive to consider the trafﬁc network as an undirected graph consisting of
+vertices and edges. The graph can be denoted as G = (V, E, A, D) with a set of
+vertices V = {v1, ..., vS} and a set of edges E between vertices. A ∈ RS×S is a
+symmetric (typically sparse) adjacency matrix with binary elements, where Ai,j
+denotes the connectedness between nodes vi and vj . The existence of an edge is
+represented through Ai,j = Aj,i = 1, otherwise Ai,j = 0 (Ai,i = 0). Based on
+A, a diagonal graph degree matrix D ∈ RS×S describing the number of edges
+attached to each vertex can be obtained by Di,i = jS=1 Ai,j .
+
+  Trafﬁc state data can be collected by multi-types of trafﬁc sensors or probe
+vehicles. When trafﬁc sensors fail or no probe vehicles go through road links,
+the collected trafﬁc state data may have missing values. We use a sequence of
+masking vectors [m1, m2, ..., mT ] ∈ RT ×S, where mt ∈ RS, to indicate the posi-
+tion of the missing values in trafﬁc state sequence [x1, x2, ..., xT ]. The masking
+vector can be obtained by
+
+  mts = 1, if xts is observed 0, otherwise,  (9.23)
+
+where  xs  is  the  trafﬁc  state  of  s-th  link  at  step  t.
+
+  t
+
+Taking the missing values into consideration, we can formulate the trafﬁc
+
+forecasting as follows:
+
+  F (G, [x1, x2..., xT ], [m1, m2..., mT ]) = [xT +1].  (9.24)
+
+  A trafﬁc network is a dynamic system, and the states on all links keep vary-
+ing resulting from the movements of vehicles in the system. Thus, we assume
+the trafﬁc network’s dynamic process satisﬁes the Markov property that the fu-
+ture state of the trafﬁc network is conditional on the present state.
+
+  Markov property: The future state of the trafﬁc network xt+1 depends
+only upon the present state xt , not on the sequence of states that preceded it.
+.
+
+  152 Machine Learning for Transportation Research and Applications
+
+  Taking X1, X2, ..., Xt+1 as random variables with the Markov property and
+  x1, x2, ..., xt+1 as the observed trafﬁc states, the Markov process can be for-
+  mulated in a conditional probability form as
+
+  P r(Xt+1 = xt+1|X1 = x1, X2 = x2, ..., Xt = xt ) = P r(Xt+1 = xt+1|Xt = xt ),
+
+  (9.25)
+
+  where P r(·) demonstrates the probability.
+
+  However, the transition matrix is temporal dependent since, at different times
+
+  of the day, the trafﬁc state’s transition pattern should be different. Based on
+
+  Eq. (9.25), the transition process of trafﬁc states can be formulated in the vector
+
+  form as
+
+  xt+1 = Pt xt ,  (9.26)
+
+  where Pt ∈ RS×S is the transition matrix and (Pt )i,j measures how much inﬂu-
+
+  ence xtj has on forming the state xti+1.
+  The transition process deﬁned in Eq. (9.26) does not take the time interval
+
+  between xt+1 and xt into consideration. We denote the time interval between two
+  consecutive time steps of trafﬁc states by t. If t is small enough ( t → 0),
+
+  the trafﬁc network’s dynamic process can be measured as a continuous pro-
+
+  cess, and the differences between consecutive trafﬁc states are close to zero, i.e.,
+  |xt+ t − xt | → 0. However, a long time interval may result in more variations
+
+  between the present and future trafﬁc states, leading to a more complicated tran-
+
+  sition process. Since the trafﬁc state data are normally processed into discrete
+
+  data and the size of transition matrix Pt is ﬁxed, we consider that the longer
+  the t is, the lower capability of measuring the actual transition process Pt has.
+  Thus, we multiply a decay parameter γ ∈ (0, 1) in Eq. (9.26) to represent the
+
+  temporal impact on transition process as
+
+  xt+1 = γ Pt xt .  (9.27)
+
+  The transition matrix can measure the contributions made by all roadway
+  links on a speciﬁc link, which assumes that the state of a roadway link is inﬂu-
+  enced by all links in the trafﬁc network. However, since vehicles in the trafﬁc
+  network traverse connected road links one by one and trafﬁc states of connected
+  links are transmitted by those vehicles, the trafﬁc state of a link will be affected
+  only by its neighboring links during a short period of time.
+
+  Graph localization property: The trafﬁc state of a speciﬁc link s in a trafﬁc
+  network is mostly inﬂuenced by localized links, i.e., the link s itself and its
+  neighboring links, during a short period of time. The neighboring links refer to
+  the links in the graph within a speciﬁc order of hops with respect to the link
+  s. With the help of the graph’s topological structure, the localization property
+  in the graph can be measured based the adjacency matrix in two ways: (1) The
+  self-connection adjacency matrix A, describing the connectedness of vertices,
+  can inherently indicate the localization property of all vertices in the graph.
+  Graph neural networks Chapter | 9 153
+
+Then, the impacts of localized links can be easily measured by a weighted self-
+
+connection adjacency matrix. (2) The other way is to conduct the spectral graph
+
+convolution operation on the trafﬁc state xt to measure the localized impacts in
+the graph. The spectral graph convolution on xt can be deﬁned as U θ U T xt
+(Defferrard et al., 2016), where U is the eigenvector matrix of the Laplacian
+matrix L and θ is a learnable diagonal weight matrix.
+
+  Graph Markov Process: With the aforementioned two properties, we deﬁne
+
+the trafﬁc state transition process as a graph Markov process (GMP). The graph
+
+Markov process can be formulated in a conditional probability form as
+
+P r(Xt+1 = xtu+1|Xt = xt ) = P r(Xt+1 = xtu+1|Xt = xtv, v ∈ N (u)), (9.28)
+
+where the superscripts u and v are the indices of graph links (road links). The
+N (u) denotes a set of one-hop neighboring links of link u and link u itself.
+The properties of this graph Markov process is similar to the properties of the
+Markov random ﬁeld (Rue and Held, 2005) with temporal information. Since
+the inﬂuence of a road link on its neighbors is gradually spread by the vehi-
+cles traveling on this road link, a road link’s one-hop neighbors are the ones
+directly inﬂuence it. Thus, we assume that road links are only inﬂuenced by
+their one-hop neighbors in the graph. Based on Eq. (9.27), we can easily incor-
+porate the graph localization properties into the trafﬁc states’ transition process
+by element-wise multiplying the transition matrix Pt with the self-connection
+adjacency matrix A. Then, the GMP can be formulated in the vector form as
+
+xt+1 = γ (A Pt )xt ,  (9.29)
+
+where is the Hadamard (element-wise) product operator that (A  Pt )ij =
+Aij × (Pt )ij .
+
+As we assume the trafﬁc state transition process follows the graph Markov
+
+process, the future trafﬁc state can be inferred by the present state. If there are
+
+missing values in the present state, we can infer the missing values from previ-
+
+ous states. We consider xt is the observed trafﬁc state at time t, and a mask vector
+
+mt can be acquired according to Eq. (9.23). We denote the completed state by
+x˜t , in which all missing values are ﬁlled based on historical data. Hence, the
+
+completed state consists of two parts, including the observed state values and
+
+the inferred state values, as follows:
+
+x˜t = xt mt + x˜t (1 − mt ),  (9.30)
+
+where x˜t (1 − mt ) is the inferred part. Since xt  mt = xt , Eq. (9.30) can be
+written as
+
+x˜t = xt + x˜t (1 − mt ).  (9.31)
+
+  Since the transition of completed states follows the graph Markov pro-
+cess, the GMP with respect to the completed state can be described as x˜t+1 =
+154 Machine Learning for Transportation Research and Applications
+
+γ (A Pt )x˜t . For simplicity, we denote the graph Markov transition matrix by
+Ht , i.e., Ht = A Pt . Hence, the transition process of completed states can be
+
+represented as
+
+  x˜t+1 = γ Ht x˜t .  (9.32)
+
+Applying Eq. (9.31), the transition process becomes
+
+  x˜t+1 = γ Ht (xt + x˜t (1 − mt )).  (9.33)
+
+  If we iteratively apply the completed state x˜t , i.e., x˜t = γ Ht−1(xt−1 + x˜t−1
+(1 − mt−1)), into Eq. (9.33) itself, we have
+
+x˜t+1 = γ Ht (xt + γ Ht−1(xt−1 + x˜t−1 (1 − mt−1))  (1 − mt ))
+  = γ Ht xt + γ 2Ht Ht−1(xt−1 (1 − mt ))  (9.34)
+  + γ 2Ht Ht−1(x˜t−1 (1 − mt−1) (1 − mt )).
+
+After iteratively applying n steps of previous states from xt−(n−1) to xt , x˜t+1
+can be described as
+
+x˜t+1 = γ Ht xt
+
++ γ 2Ht Ht−1(xt−1 (1 − mt ))
+
++ γ 3Ht Ht−1Ht−2(xt−2 (1 − mt−1) (1 − mt )) + · · ·
++ γ nHt · · · Ht−(n−1)(xt−(n−1) (1 − mt−(n−2)) · · · (1 − mt ))
++ γ nHt · · · Ht−(n−1)(x˜t−(n−1) (1 − mt−(n−1)) · · · (1 − mt ))
+
+  (9.35)
+
+  n−1  i  (xt −i  i−1
+
+= γ i+1  Ht −j  (1 − mt−j ))
+
+  i=0  j =0  j =0
+
++ γ nHt · · · Ht−(n−1)(x˜t−(n−1) (1 − mt−(n−1)) · · · (1 − mt )),
+  (9.36)
+
+where , , and are the summation, matrix product, and Hadamard prod-
+uct operators, respectively. For simplicity, we denote the term with the x˜t−n in
+Eq. (9.35) as O(x˜t−n), and the GMP of the complected states can be represented
+
+by
+
+  n−1  i  (xt −i  i−1  (9.37)
+
+x˜t+1 = γ i+1  Ht −j  (1 − mt−j )) + O(x˜t−(n−1)).
+
+  i=0  j =0  j =0
+
+  In O(x˜t−(n−1)), when n → ∞, since γ ∈ (0, 1), γ n+1 → 0. In addition,
+the product of masking vectors in O(x˜t−(n−1)) will also approach to zero, i.e.,
+  Graph neural networks Chapter | 9 155
+
+FIGURE 9.6 Graph Markov process. The gray-colored nodes in the left-hand sub-ﬁgure demon-
+strate the nodes with missing values. Vectors on the right-hand side represent the trafﬁc states. The
+trafﬁc states at time t are numbered to match the graph and the vector. The future state (in red color)
+can be inferred from their neighbors in the previous steps.
+
+n−1  −  mt  −j  )  →  0.  Fig.  9.6  demonstrates  the  graph  Markov  process  for  in-
+
+j =0 (1
+
+ferring the future state. The trafﬁc network graphs with attribute-missed nodes
+
+(in  gray  color)  is  converted  into  trafﬁc  state  vectors.  The  inference  of  x˜ d  is
+
+  t +1
+based on historical trafﬁc states by back-propagating to the t − (n − 1) step.
+
+9.4.2 Method: graph Markov network
+
+In this section, we propose a Graph Markov Network (GMN) for trafﬁc pre-
+
+diction with the capability of handling missing values in historical data. Suppose
+the historical trafﬁc data consists of n steps of trafﬁc states {xt−(n−1), ..., xt }.
+Correspondingly, we can acquire n masking vectors {mt−(n−1), ..., mt }. The traf-
+
+ﬁc network’s topological structure can be represented by the adjacency matrix.
+
+  The GMN is designed based on the proposed GMP described in the previous
+section. Since we consider the term O(x˜t−(n−1)) described in Eq. (9.37) is small
+enough, the O(x˜t−(n−1)) is omitted in the proposed GMN for simplicity.
+
+  As described in Eq. (9.37), the graph Markov process contains n transi-
+tion weight matrices, and the product of the these matrices ( ji =0 Ht−j ) =
+
+( ji =0 Aj Pt−j ) measures the contribution of xt−i for generating the x˜t . To
+reduce matrix product operations and at the same time keep the learning ca-
+pability in the GMP, we simplify the ( ji =0 Aj Pt−j ) by (Ai+1 Wi+1),
+where Wi+1 ∈ RS×S is a weight matrix. In this way, (Ai+1 Wi+1) can directly
+measure the contribution of xt−i for generating the x˜t and skip the interme-
+
+diate state transition processes. Further, the GMP still has n weight matrices
+({A1 W1, ..., An Wn}), and thus, the learning capability in terms of the size
+
+of parameters does not change. The beneﬁts of the simpliﬁcation is that the GMP
+  n(n−1)
+can  reduce  2  times  of  multiplication  between  two  S  ×  S  matrices  in  total.
+
+  Based on the GMP and the aforementioned simpliﬁcation, we propose the
+
+graph Markov network for trafﬁc forecasting with the capability of handling
+156 Machine Learning for Transportation Research and Applications
+
+FIGURE 9.7 Structure of the proposed graph Markov network. Here, Ht−j = Aj  Wj . As for
+the spectral version of GMN, Ht−j = U Λj U T .
+
+missing values as
+
+  n−1  Wi +1 )(xt −i  i−1  (9.38)
+
+xˆt+1 = γ i+1(Ai+1  (1 − mt−j )),
+
+  i=0  j =0
+
+where xˆt+1 is the predicted trafﬁc state for the future time step t + 1 and
+{W1, ..., Wn} are the model’s weight matrices that can be learned and updated
+during the training process. The structure of GMN for predicting trafﬁc state
+xt+1 is demonstrated in Fig. 9.7. During the training process, the loss can be
+calculated by measuring the difference between the predicted value yˆ = xˆt+1,
+and the label y = xt+1.
+
+9.4.3 Results
+
+We compared the proposed approach with state-of-the-art trafﬁc forecasting
+models with the capability of handling missing values.
+
+  Datasets: In this study, we conduct experiments on a real-world network-
+wide trafﬁc speed dataset. The topological structure of the trafﬁc network is
+also used in the experiments. This dataset named as PEMS-BAY is collected
+by California Transportation Agencies (CalTrans) Performance Measurement
+System (PeMS). This dataset contains the speed information of 325 sensors in
+the Bay Area, spanning the six months from Jan 1, 2017 to Jun 30, 2017. The
+interval of time steps is 5-minutes. The total number of observed trafﬁc data
+points is 16,941,600. The dataset is published by Li et al. (2018) on the Github
+(https://github.com/liyaguang/DCRNN).
+
+  Missing Values and Data formatting: The dataset forms as a spatiotempo-
+ral matrix, whose spatial dimension size is the number of sensors and temporal
+dimension size is the number of time steps. In the experiments, the dataset is
+  Graph neural networks Chapter | 9 157
+
+split into a training set, a validation set, and a testing set, with a size ratio of 6 :
+
+2 : 2. In the training and testing process, the speed values of the dataset are nor-
+malized within a range of [0, 1]. There are no missing values in the PEMS-BAY
+datasets. To test the model’s capability of handling missing values with various
+
+missing rates, we randomly set a portion of speed values in the input sequences
+
+to zeros according to a speciﬁc missing rate and generate the masking vectors
+
+accordingly. In this study, three groups of experiments are conducted, whose
+
+missing rates are 0.2, 0.4, and 0.6, respectively.
+
+  Baseline Models:
+
+• GRU (Cho et al., 2014): GRU referring to gated recurrent units is a type of
+  RNN. GRU can be considered as a simpliﬁed LSTM.
+
+• GRU-I : GRU-I is designed based on GRU. Since GRU is a type of a RNN
+  with the recurrent structure, the predicted values from a previous step xˆt can
+  be used to infer the missing values in the next step. The complected state can
+  be represented by x˜t+1 = xt + xˆt (1 − mt ).
+
+• GRU-D (Che et al., 2018): GRU-D a neural network structure is designed
+  based on GRU for multivariate time series prediction. It can capture long-
+
+  term temporal dependencies in time series. GRU-D incorporates the masking
+
+  and time interval into the model’s architecture such that it can utilize the
+
+  missing patterns.
+• LSTM (Hochreiter and Schmidhuber, 1997): LSTM is a powerful variant of
+
+  RNN that can overcome the gradients exploding or vanishing problem. It is
+
+  suitable for being a model’s basic structure for trafﬁc forecasting.
+• LSTM-I : LSTM-I is designed based on LSTM. The missing value inferring
+
+  process of LSTM-I is similar to that of GRU-I.
+• LSTM-M (Tian et al., 2018): LSTM-M is a neural network structure whose
+
+  design is based on LSTM for trafﬁc prediction with missing data. It employs
+
+  multi-scale temporal smoothing to infer lost data.
+
+Model Parameters The batch size of the tested data is set as 64. The number
+
+of steps of historical data incorporated in the GMN will have an inﬂuence on the
+
+prediction performance. Hence,the GMNs with 6-steps, 8-steps, and 10-steps of
+
+historical data are tested in the experiments, i.e., the n in Eq. (9.29) is set as 6, 8,
+
+and 10, respectively. In this experiment’s section, we denoted these models by
+
+GMN-6, GMN-8, and GMN-10, respectively. The decay parameter γ in GMN
+
+is set as 0.9 in the experiments. For the RNN-based baseline models, including
+
+GRU-I, GRU-D, LSTM-I, and LSTM-M, the size of the input sequence is set as
+
+10. In the training process, the mean square error (MSE) between the label yt
+  iN=1(yi − yˆi)2 is used as the loss function,
+and  the  predicted  value  yˆt ,  i.e.,  1
+  n
+
+where N is the sample size. The Adam optimization method is adopted for both
+
+GMN models and baseline models.
+
+Evaluation Metric: The prediction accuracy of all tested models are eval-
+
+uated by three metrics, including mean absolute error (MAE), mean absolute
+158 Machine Learning for Transportation Research and Applications
+
+percentage error (MAPE), and root mean square error (RMSE):
+
+MAE =  1N  |yi − yˆi |  (9.39)
+  (9.40)
+  N i=1  (9.41)
+
+MAP E = 1 N | yi − yˆi |
+  N i=1 yi
+
+RMSE =  1N  1
+
+  22
+  |yi − yˆi | .
+  N i=1
+
+  The prediction results of the compared models with respect to various miss-
+ing rates are displayed in Table 9.1. When the missing rate is 0.1, GMN-10
+achieves the smallest MAE and MAPE. However, the RMSEs of GRU-I and
+LSTM-M are less than those of GMN models. For the case in which the missing
+rate is set as 0.2, GMN-6 achieves the best prediction performance in terms of
+MAE and MAPE. Similarly, GRU-I’s RMSE is smaller. When the missing rate
+is as large as 0.4, the MAE and MAPE results of the LSTM-M and GMN mod-
+els are close, but the RMSEs of GMN models are more signiﬁcant than that of
+LSTM-M. The overall prediction accuracy of GMN models in terms of MAE
+and MAPE is better than the baseline models. The RMSEs of GMN models is
+slightly larger than some of the compared models. Since the errors in RMSE
+are squared before they are averaged, the RMSE gives a relatively high weight
+to large errors. That means some of the predicted values generated by GMN
+models may have more signiﬁcant errors.
+
+9.5 Case study 3: graph neural network (GNN) for vehicle
+  keypoints’ correction
+
+9.5.1 Problem deﬁnition
+
+With the development of intelligent transportation system (ITS), surveillance
+cameras are becoming one of the most widely used trafﬁc sensors worldwide
+for trafﬁc data collection, monitoring, and management. Sensing 3-D structural
+information of vehicles via the monocular surveillance camera is very important
+for vehicle’s real-time high precision positioning and scene reconstruction. But
+it is a challenging task. This case study treats a 3-D structural information sens-
+ing system that is supported by a customized fully-automatic camera calibration,
+for real-time vehicle localization and scene reconstruction based on a single
+monocular surveillance camera. It basically has three steps: 1) pre-processing
+module for vehicle detection and segmentation; 2) detecting 2-D car keypoints;
+and 3) projecting 2-D keypoints into 3-D coordinates and fulﬁlling the fully au-
+tomatic camera calibration. We will demonstrate how the graph neural network
+can correct the detected keypoints.
+TABLE 9.1 Prediction performance.
+
+Model  Missing Rate = 0.1  Missing Rate = 0.2  Missing Rate = 0.4
+
+  MAE  MAPE  RMSE  MAE  MAPE  RMSE  MAE  MAPE  RMSE
+  2.589  2.93  3.651
+GRU  1.594  3.097%  1.833  1.802  3.545%  1.968  2.253  4.524%  2.412
+  9.052  9.042  9.063
+GRU-I  1.109  2.127%  3.839  1.185  2.29%  3.888  1.437  2.841%  4.234
+  11.372  6.638  5.64
+GRU-D  5.21  13.28%  1.942  5.326  13.4%  2.066  5.242  13.33%  2.297  Graph neural networks Chapter | 9 159
+  2.321  2.024  3.534
+LSTM  2.372  4.836%  2.356  2.318  4.781%  2.739  2.469  5.185%  2.694
+  2.365  2.83  2.458
+LSTM-I  3.129  5.418%  1.902  3.5%  1.965  3.793%
+
+LSTM-M  1.18  2.307%  1.24  2.443%  1.34  2.665%
+
+GMN-6  1.062  2.036%  1.092  2.122%  1.811  3.607%
+
+GMN-8  1.066  2.042%  1.188  2.275%  1.404  2.771%
+
+GMN-10  1.062  2.033%  1.201  2.296%  1.34  2.636%
+160 Machine Learning for Transportation Research and Applications
+
+FIGURE 9.8 3-D Structural Information Sensing System (3D-SISS) Architecture.
+
+  The entire architecture of the 3-D structural information sensing system (3D-
+SISS) is shown in Fig. 9.8. The system can be divided into three parts: data
+preprocessing, car keypoints detection (CKPD) model, and 3D structural infor-
+mation projection.
+
+  Since 3D-SISS needs more detailed and accurate vehicle classiﬁcation re-
+sults to match the average vehicle dimension for camera calibration, this case
+study retrained Mask-RCNN with MIO-TCD dataset (Luo et al., 2018), a dataset
+containing eleven particular categories of target transportation agents in surveil-
+lance camera view.
+
+  To realize highly precise car pose and orientation estimation, we use the
+extracted vehicle segmentation from Mask-RCNN model to generate 12 pre-
+deﬁned car keypoints in image coordinate, as shown at the right top corner in
+Fig. 9.8. The 3-D scene reconstruction through camera calibration method has
+two modules: 1) an encoder-decoder module for car keypoints detection; and 2)
+a GNN model for keypoints’ correction.
+
+  In the encoder–decoder module, the research team proposes an end-to-end
+architecture to connect eight fourth-order encoder–decoder networks for car
+keypoints’ estimation. In car keypoints detection, there are always some key-
+points are completely invisible in any point of view. This brings signiﬁcant
+challenges on both ground-truth data labeling and key features understanding.
+As a result, the encoder–decoder module can estimate only the position of the in-
+visible car keypoints based on the detected locations of visible keypoints, which
+results in accumulated errors. And the errors in car keypoints detection can be
+ampliﬁed in the following process of camera calibration and 3-D scene recon-
+struction. Therefore, the keypoints graph G = (υ, ε) based on the output car
+Graph neural networks Chapter | 9 161
+
+FIGURE 9.9 Structure of GNN for invisible car keypoints prediction.
+
+keypoints is generated, and a GNN module is designed to extract the inter-
+keypoints relationships and correct the keypoints.
+
+9.5.2 Method: graph neural network for keypoints correction
+
+The GNN model used in 3D-SISS contains only two hidden layers to predict
+and correct the keypoints graph G = (υ, ε) with 12 keypoints and 18 edges.
+One thing that is worth mentioning here is that, before inputting graph G to
+
+the GNN, we remove the invisible keypoints and edges from G to increase the
+
+accuracy of the model. Based on the high- accuracy visible keypoints and edges,
+
+GNN can predict the invisible keypoints and edges for G. The output of GNN
+
+module is accurate 2-D car keypoints in image coordinates. The whole process
+
+is shown in Fig. 9.9.
+  First, keypoints graph G = (V , E) with 12 keypoints are generated by the
+
+output of encoder–decoder network. In the process, we convert the heatmap
+
+into graph G by encoding the location and conﬁdence score. Each keypoint υi
+in G can be represented as υi = {xi, yi, wi}, where (xi, yi) indicates the loca-
+tion of the keypoint in image coordinate and wi is the weight of the keypoints in
+G, which can be represented as wi = ci/ i ci, an. Also, ci indicates the conﬁ-
+dence score of keypoint υi. Then, the relationship between all nodes is encoded
+in the edge ij = {υi, υj }, where
+
+ij = 1, ∀i, j ∈ V and i = j  (9.42)
+  0, otherwise.
+
+  After deﬁning the keypoint graph G, we will use the GNN model to predict
+the latent graph structure for keypoints’ correction. Fig. 9.9 shows the structure
+162 Machine Learning for Transportation Research and Applications
+
+of the GNN model. In the network, two hidden layers are used to predicted the
+invisible edges. The process is modeled as q( ij |V ) = sof tmax(f (V )), where
+
+f (V ) is a GNN acting on the fully connected graph produced from the heatmap.
+The process can be represented by the Eq. (9.43). In Eq. (9.43), ht indicates the
+tth layer of GNN; υ → indicates the convolutional operation from vertex to
+edge; → υ indicates the convolutional operation from edge to vertex; and f
+
+indicates the fully connected (FC) layer:
+
+⎧  υ : h1i = f (υi )
+⎪⎪⎪  : h1i,j = f 1([h1i , h1j ])
+⎪⎪⎪
+⎪⎪⎪  →
+⎨  υ
+
+⎪⎪⎪⎪⎪⎪ → υ : h2i = f ( i=j h1i,j ) ⎪  (9.43)
+υ ⎪⎪⎩ → : hi,j 2 = f 2([hi2, hj2]).
+
+In the model, our goal is to investigate the spatial relationship among keypoints,
+which is encoded as edges in graph G. Therefore, the edge loss is applied to
+the process to minimize the difference between predicted edges and the ground-
+truth edges.
+
+9.5.3 Results
+
+3D-SISS is a complex system which requires a comprehensive experiment to
+test its performance. Therefore, in the research, cooperating with the City of
+Bellevue and Connect Cities with Smart Transportation (C2SMART), we in-
+stalled our own surveillance camera in the City of Bellevue testbed to test the
+3D-SISS system. The location and the installation height is premeasured in the
+process for ﬁnal results validation. We also adjusted the focus length and the an-
+gle of the surveillance camera thorough control panel. Therefore, we can get the
+ground-truth information about the camera on both internal and external sides
+for camera parameter estimation performance test.
+
+  The 3-D structural information sensing system can provide a detailed traf-
+ﬁc status analysis without any human input or initialization. The car keypoints’
+detection model can achieve accurate (overall 95.1%) car keypoints’ detection
+with single image input. As we tested at the testbed, the 3D-SISS can be applied
+to any camera at various view angles for real-time comprehensive trafﬁc sens-
+ing, as shown in Fig. 9.10. By taking advantage of the most widely deployed
+surveillance camera without installing new sensors, 3D-SISS can expand the
+widely deployed cameras from the 2-D to 3-D view at a negligible cost.
+

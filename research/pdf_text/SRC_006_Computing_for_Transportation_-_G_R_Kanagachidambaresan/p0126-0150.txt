@@ -1,0 +1,866 @@
+the bowl and the center and into the squish regions for later combustion phasings.
+The iso-surface plots at CA10, CA50, and CA90 timings in Figure 3.40 for the most
+advanced and most retarded injection timings show the evolution of combustion with
+time for the advanced and retarded combustion phasing. Thus, the squish and the
+center peak heat fluxes are close for later combustion phasings, though the center
+exhibited significantly higher peak heat fluxes for advanced combustion phasings.
+The peak surface temperatures are consistently higher for the squish than the center,
+contrary to the peak heat flux trends. This effect is because the squish region’s
+cooling is limited compared to the bowl region’s cooling pathways due to the piston
+geometry.
+  FIGURE 3.39 Peak surface-averaged heat flux (top) and temperatures
+  (bottom) as a function of injection timing predicted for the piston center,
+  bowl, and squish regions. ⏎
+
+  FIGURE 3.40 Temperature iso-surfaces from the CFD simulations for the
+  advanced and retarded injection timings at CA10, CA50, and CA90
+  timings. ⏎
+
+3.4.4.2 Injection Pressure
+
+The injection pressure for the combustion phasing sweep was 2000 bar, and the peak
+thermal efficiency was predicted for the most advanced injection timing. The
+injection pressure was reduced to 1000 bar for the most advanced injection timing to
+study the sensitivity of injection pressure. Table 3.3 compares some key injection and
+performance parameters for the higher and lower injection pressure cases. Due to the
+reduced injection pressure, the combustion duration was elongated by 9.5°, which
+contributed to a thermal efficiency reduction of approximately one percentage point.
+On the other hand, the peak surface temperature is reduced by 17°C due to a
+significant reduction in heat transfer coefficients for the lower injection pressure case.
+The results suggest that the injection pressure can be reduced to reduce the piston
+thermal load with a thermal efficiency penalty but not as significant as the injection
+timing.
+
+TABLE 3.3
+Injection and Combustion Performance Parameters
+
+Compared for the High and Low Injection Pressures
+⏎
+
+Injection pressure (bar)  2000 1000
+
+Injection duration (ms)  1.9 2.7
+
+Peak cylinder pressure (bar)  208 198
+
+CA50 (deg. aTDC)  −0.5 0.8
+
+IMEPg (bar)  19.47 19.2
+
+CA 10–90 (deg.)  30  39.5
+
+Thermal efficiency (%)  46.4 45.5
+
+Combustion efficiency (%)  98.9 98.9
+
+Max piston surface temperature (°C) 592.3 565.2
+
+Figure 3.41 shows the surface-averaged transient heat fluxes of the piston center,
+bowl, and squish regions, along with the gross heat release rates for the lower and
+higher injection pressure cases. It should be noted that the injection timings are
+adjusted to obtain the same combustion phasing (CA50). The bowl heat flux rises
+significantly earlier than the squish and the center since the spray targets the bowl
+region. However, the peak heat flux is in phase for the bowl and the center since the
+combustion spreads gradually from the bowl to the center as combustion progresses
+and then to the squish. A reduction in the peak heat flux of approximately 8 and 2
+MW/m2 in the bowl and the center, respectively, were predicted for the lower
+injection pressure case. However, the squish heat flux showed no significant
+difference due to more combustion happening in the squish for an elongated
+combustion duration. A 17°C, 20°C, and 6°C peak temperature drop were predicted
+in the center, bowl, and squish regions by reducing the injection pressure by 1000 bar,
+which can be seen in Figure 3.42. Figure 3.43 shows the cumulative heat energy
+plotted on a 2-D representation of an 8th of the piston surface, which shows a
+narrower peak heat transfer area and a more spread-out heat transfer area for the
+lower injection pressure.
+FIGURE 3.41 Transient surface-averaged heat fluxes predicted for the
+piston center, bowl, and the squish regions along with the gross heat release
+rates for the two injection pressures. ⏎
+
+FIGURE 3.42 Transient surface-averaged temperatures predicted for the
+piston center, bowl, and the squish regions. ⏎
+  FIGURE 3.43 Cumulative heat energy on 8th of the piston surface for the
+  two injection pressures. ⏎
+
+3.5 COMPUTATIONAL EXPENSE
+
+The tradeoff between the computational expense and the fidelity/accuracy is the
+primary selection criteria for mathematical models. A one-to-one comparison between
+the reduced-order and high-fidelity models will not make sense since the high-fidelity
+simulations require high-performance computers with multiple processors, whereas
+reduced-order models can be solved with a single core in a local machine. The zero-
+dimensional and one-dimensional models used for the reduced-order piston thermal
+analysis discussed in the first section were solved in seconds in a single core of a
+local machine. Therefore, a discussion related to computational expense for the
+reduced-order models is ignored.
+
+  Even the GT-Suite simulations of the single-cylinder engine models for steady-
+state operating conditions can be solved in seconds in a local machine. Discussion
+about computational expense can be considered for the multi-cylinder engine cold-
+start simulations illustrated in the second section since transient thermal solvers are
+used along with flow solvers. The total volume of the multi-cylinder engine used for
+the analysis was 8.44 L discretized into 240 sub-volumes. The total heat transfer
+surface area subjected to the transient thermal solver was 3.8 m2. The total length of
+the simulated cold-start was 45 seconds (600 engine cycles) using a time step of
+approximately 0.1 crank angle degrees. Each case of the cold-start simulation used
+approximately 1 hour in a local machine. The computational time can be greatly
+reduced using the distributed computing capabilities of GT-Suite on multiple
+processors in a local machine or a high-performance computer.
+
+  A real discussion about computational expense would be necessary for high-
+fidelity simulations. The number of cells used in the CFD-RANS simulations of the
+single-cylinder heavy-duty diesel engine ranged from 150,000 up to 3 million
+throughout the cycle. Twelve hours of computational time were required to simulate
+one cycle of CFD-RANS using 112 cores. Since the first cycle of CFD-RANS
+heavily depends on the initial conditions, the convective boundary conditions were
+extracted from the second cycle. Thus, the total computational time of CFD-RANS
+simulation was 24 hours. The piston FE model contains approximately 2 million
+elements and requires 2.5 hours of computational time on 112 cores for one cycle. As
+previously stated, the predicted surface nodal temperatures converged within a
+tolerance of 0.2 K in 2 cycles. Thus, the total computational time for a transient FEA
+simulation was 5 hours. In total, 29 hours of computation time was required to solve
+one iteration of CFD and FEA on 112 cores.
+
+3.6 CALIBRATION OF REDUCED-ORDER MODEL WITH HIGH-
+FIDELITY SIMULATION DATA
+
+A mathematical model for any analysis should be selected based on a tradeoff
+between the accuracy and the computational expense. The higher-fidelity models,
+such as the 3-D CFD and 3-D FE models, are known for their accurate solutions
+involving spatial discretization. In contrast, the reduced-order models are known for
+their computational efficiency with a compromise in accuracy. Nonetheless, the
+accuracy of the reduced-order models can be improved through calibration using
+experimental data, but it could be cost-intensive to have detailed measurements from
+the experiment. An alternate technique is using high-fidelity simulation data to
+calibrate the reduced-order models.
+
+  To demonstrate this approach, the 0-D heat transfer model in GT-Suite is
+calibrated using CFD-RANS data. In the GT-Suite simulations, wall heat transfer in
+diesel engines exhibits strong spatial gradients that cannot be captured using 0-D heat
+transfer correlations. However, the spatial discretization of the CFD simulations can
+be leveraged to induce spatial variation in GT-Suite heat transfer predictions.
+Convective heat transfer predictions in the combustion chamber require the gas
+temperatures and the heat transfer coefficients. GT-Suite uses a two-zone method for
+gas temperatures where the burned and unburned zone gas temperatures are
+calculated separately from pressures using the ideal gas law. The heat transfer
+coefficients (h) are calculated using 0-D heat transfer correlations, and the heat flux
+from the burned and unburned zones are combined using equation (3.44) where α
+denotes the mass fraction burned. Instead of using 0-D heat transfer correlations, the
+CFD-precited heat transfer coefficients were prescribed. The combustion chamber-
+average heat transfer coefficients predicted by the CFD-RANS simulation of the
+diesel engine and h using density (ρ) and mean piston speed (vp) for the rated power
+condition at a start of injection timing of 29° bTDC are plotted in Figure 3.44. It
+should be noted that the heat transfer coefficients predicted by CFD cannot be
+directly applied in a 0-D simulation since the CFD simulation uses near-wall gas
+temperatures to calculate heat flux, whereas a 0-D heat transfer model requires bulk
+gas temperature.
+
+  FIGURE 3.44 Combustion chamber-average heat transfer coefficients
+  predicted by CFD and the normalized heat transfer coefficients prescribed
+  in GT-Suite. ⏎
+  Figure 3.45 shows the near-wall gas temperature of each combustion chamber
+surface of the heavy-duty diesel engine predicted by CFD-RANS compared to the
+burned and unburned bulk gas temperatures predicted by GT-Suite. Thus, the heat
+transfer coefficients of each surface need to be scaled considering differences
+between near-wall gas temperatures of each surface and the bulk gas temperature.
+The individual surface convection multipliers in GT-Suite were used to scale and
+induce the spatial variations predicted by the CFD. The individual combustion
+chamber surface heat fluxes predicted by the CFD-RANS and the calibrated GT-Suite
+predictions are plotted in Figure 3.46.
+FIGURE 3.45 Near-wall gas temperatures predicted by CFD, and bulk gas
+temperatures (unburned and burned) predicted by GT-Suite. ⏎
+
+FIGURE 3.46 Combustion chamber surface heat fluxes predicted by CFD
+and the calibrated GT-Suite model. ⏎
+
+Q = αAh (Tb − Tw ) + (1 − α)Ah (Tu − Tw )  (3.44)
+
+Q – heat flux; A – surface area; h – heat transfer coefficient; Tb – burned gas
+temperature; Tu – unburned gas temperature; Tw – wall temperature
+3.7 NUMERICAL TOOLS FOR ASSESSING FUTURE ICES
+
+The future of ICEs depends on emissions reductions and efficiency improvements
+that are feasible. This section provides an overview of the application of numerical
+tools to aid the research community in achieving its goals. The ICEs used for modern
+automotive applications are dominantly two types: compression ignition (CI) and
+spark-ignition (SI) four-stroke engines. The CI engines exhibit high thermal
+efficiency due to their high compression ratios with lean and unthrottled operation
+along with relatively low combustion temperatures. However, CI engines produce
+high soot emissions from locally rich fuel-air mixtures (high equivalence ratios).
+NOx emissions that are produced from a CI engine are difficult to treat due to the
+lean operation that contributed to the high efficiency. SI engines produce low soot
+emissions due to the premixed mixtures used but suffer from low efficiencies due to
+their relatively lower compression ratios with stoichiometric and throttled operation.
+Additionally, SI engines incur high thermal losses and NOx emissions due to high
+combustion temperatures.
+
+  A tradeoff between soot and NOx exists in CI engines, where varying one control
+parameter often results in one harmful pollutant emission being traded for the other.
+Analogously, a proverbial soot and NOx tradeoff exists between CI and SI engines
+due to the nature of the CI and SI combustion process, which can be better
+understood from the equivalence ratio-temperature plot in Figure 3.47. A favorable
+environment for soot emissions is a high equivalence ratio and modest temperature,
+whereas the NOx emissions are favored in near-stoichiometric equivalence ratio,
+high-temperature regions. Finally, a global efficiency-emissions tradeoff exists
+between SI and CI, where SI results in generally favorable tailpipe emissions but with
+lower efficiencies, and CI results in generally favorable efficiencies but with worst
+emissions characteristics.
+  FIGURE 3.47 (a) Local equivalence ratio-temperature maps showing NOx
+  and soot forming regions, (b) Typical diesel combustion flame showing
+  soot and NOx formation regions [43]. ⏎
+
+  Novel combustion processes are being developed to break these tradeoffs by
+navigating the soot and NOx production regions on the equivalence ratio-temperature
+plot in Figure 3.47. These strategies are commonly known as low-temperature
+combustion. The low-temperature combustion strategies operate at lower peak
+temperatures than SI or CI, and at generally lower equivalence ratio regions to avoid
+producing soot and NOx. Moreover, low combustion temperatures reduce heat losses
+to coolant through combustion chamber walls by maintaining lower peak
+temperatures which helps improve efficiency. Finally, the higher compression ratios
+that are possible with low-temperature combustion and the lean and unthrottled
+operation cause low-temperature combustion to have diesel-like or higher-than-diesel
+efficiencies.
+
+  Homogeneous charge compression ignition (HCCI) is one of the earliest low-
+temperature combustion strategies that broke the efficiency-emissions tradeoff and
+the soot-NOx tradeoff by operating in low equivalence ratio, low-temperature
+regions. This is achieved by auto-igniting a homogeneous lean mixture through
+compression heating alone, which is a blend between the favorable aspects of the SI
+and CI combustion processes (i.e., premixed operation paired with lean and
+unthrottled operation with high compression ratios). The challenge with HCCI is the
+narrow operating range due to rapid heat release rates. Moreover, the ignition in
+HCCI is driven purely by the chemical kinetics and the compression heating, and
+therefore, the ignition is difficult to control. Thermal stratification [44], reactivity
+stratification [45], equivalence ratio stratification [46], etc. are proposed as potential
+ways to stagger the heat release process in low-temperature combustion and broaden
+the operating range. GT-Suite has introduced some combustion models to analyze
+advanced combustion modes, such as HCCI, where a chemical kinetics solver is used.
+However, 0-D combustion models will not be helpful for stratified combustion
+studies where spatial resolution is required. There is a ‘stochastic reactor model’ in
+GT-Suite which is a multi-zone combustion model that could capture some level of
+stratification, but the accuracy is questionable. 3-D CFD is considered the optimal
+tool for stratified combustion studies.
+
+  To illustrate the potential use of 3-D CFD for stratification studies, an HCCI-style
+combustion process is simulated in a single-cylinder medium-duty engine with a
+compression ratio 15.5 using 3-D CFD. Wet ethanol 80 (i.e., 80% ethanol, 20%
+water) is injected during the intake stroke at 270° and 240° before combustion TDC
+[47]. Figure 3.48 shows the mass joint probability density function of equivalence
+ratio and temperature before ignition (10° bTDC), which is helpful to visualize the
+stratification differences due to the difference in injection timing. The later injection
+timing stratified the charge in the cylinder more than the earlier injection timing due
+to there being less time available for mixing. Figure 3.49 shows a staggered gross
+heat release rate for the later injection compared to the earlier injection due to the
+increased stratification. Wet ethanol 80 was preferred due to its high latent heat of
+vaporization that could promote a controlled level of temperature stratification using
+varying injection timing.
+
+  FIGURE 3.48 Mass joint probability density function of temperature and
+  equivalence ratio before ignition (10° bTDC) predicted by 3-D CFD for the
+  two intake stroke injections. ⏎
+  FIGURE 3.49 Gross heat release rates predicted by CFD for the two intake
+  stroke injections. ⏎
+
+  Moreover, other means of stratification, such as residual gas fraction, fuels, etc.
+can be studied using 3-D CFD. Renewable fuels such as alcohol fuels [48], hydrogen
+[49], natural gas [50], etc. have gained traction recently, and 3-D CFD is a widely
+used tool to aid research in these areas. Two-stroke engines were previously more
+popular than they are currently. The advantage of a two-stroke engine is its higher
+power density compared to four-stroke engines. But two-stroke engines lost
+popularity in certain sectors over the years due to their increased emissions. The main
+issue with two-stroke engines is their breathing (i.e., scavenging) inefficiencies. An
+optimized flow path for intake and exhaust could improve scavenging and,
+consequently, the emissions of a two-stroke engine. 3-D CFD can be used to optimize
+the flow path designs of two-stroke engines [51], reducing the burden on
+experimental studies.
+
+  Machine learning/artificial intelligence has been gaining popularity in the research
+community. Researchers are attempting to adopt data-driven machine learning
+techniques for accelerating ICE research. High-fidelity ICE simulations are data and
+time intensive. Machine learning techniques like neural networks are being explored
+to aid high-fidelity simulations and reduce computational expense [52]. However,
+since most machine learning techniques are data-driven, they require a large amount
+of input data for them to ‘learn’ the correlations and 3-D CFD is already
+computationally expensive. Additionally, researchers are skeptical about the data-
+driven model’s disconnect from physics. This concern can be addressed by the
+physics-guided machine learning approaches [53], which are currently explored for
+aiding high-fidelity ICE simulations. With that said, the machine learning approaches
+can help accelerate ICE research in the future.
+
+3.8 CONCLUSION
+
+The advancement of computing technologies has enabled the ICE research
+community to use mathematical models and reduce the reliance on experimental
+studies. Mathematical models used for ICE research vary from reduced-order to
+multi-dimensional higher fidelity models. The choice of model for analysis should be
+made by considering the objective of the study and each model’s ability to capture the
+physics, as well as the tradeoff between accuracy and computational expense. Various
+fidelities of mathematical models used in ICE research and their applications to ICEs
+were laid out by presenting case studies to understand the differences and aid in
+model selection. The reduced-order models are easily executable in local machines
+and can provide preliminary insights. However, they lack spatial resolution, which
+could be crucial for specific studies. Moreover, reduced-order models rely primarily
+on experimental data.
+
+  Multi-physics simulation tools such as GT-Suite reduce the need for experimental
+data by synthesizing various reduced-order models. The computational expense of
+multi-physics simulations is affordable to run on local machines, but distributed
+computing on multiple cores could accelerate the simulations. Coarse spatial
+resolution can be used in GT-Suite to capture spatial variations and stratification.
+Experimental data would be required for calibration of the sub-models in GT-Suite.
+Overall, multi-physics ICE simulations are valuable for system-level studies where
+high-fidelity models are expensive but suffer from the same drawbacks as the
+reduced-order models.
+
+  Multi-dimensional numerical tools, such as 3-D CFD and FEA, could accurately
+reproduce experimental results to the minutest details. High-fidelity models are now
+affordable for ICE simulations due to high-performance computing. Nonetheless,
+certain numerical techniques considering some assumptions (like turbulence sub-
+models) still need to be applied in high-fidelity models to run full ICE simulations.
+Thus, the model selection should depend on the tradeoff between the accuracy
+required for analysis and the computational power available. One way to improve the
+tradeoff is to calibrate the reduced-order models with high-fidelity simulations.
+Numerical tools are becoming more relevant due to stringent emission norms and
+accelerated vehicle development timelines. Additionally, numerical tools are
+impactful for research on novel combustion modes, alternate fuels, and alternate
+engine architectures that are the key to developing better ICEs.
+
+REFERENCES
+
+  1. Nusselt, W. (1923). Der Wameubergang in der Verbrennungs-krafimaschine.
+  Zeitschrift des Vereins deutscher Ingenieure, 67, p.708. ⏎
+
+  2. Elser, K. (1954). Der instationäre Wärmeübergang in Dieselmotoren:
+  theoretische und experimentelle Untersuchungen. Leemann, Zurich. ⏎
+
+  3. Woschni, G. (1968). A universally applicable equation for the instantaneous heat
+  transfer coefficient in the internal combustion engine. SAE Transactions, pp.
+  3065–3083. https://doi.org/10.4271/670931 ⏎
+
+  4. Hohenberg, G. F. (1979). Advanced approaches for heat transfer calculations.
+  SAE Transactions, pp. 2788–2806. https://doi.org/10.4271/790825 ⏎
+
+  5. Dao, K., O. A. Uyehara, and P. S. Myers. (1973). Heat transfer rates at gas-wall
+  interfaces in motored piston engine. SAE Transactions, pp. 2237–2258.
+  https://doi.org/10.4271/730632 ⏎
+ 6. Pillai, A. L., R. Kai, T. Murata, T. Ikedo, R. Masuda, and R. Kurose. (2022).
+  Numerical analysis of heat transfer characteristics of spray flames impinging on
+  a wall under CI engine-like conditions. Combustion and Flame, 239, p. 111615.
+  https://doi.org/10.1016/j.combustflame.2021.111615 ⏎
+
+ 7. Gohn, J., E. Gingrich, M. Tess, V. Korivi, Z. Yan, B. Gainey, Z. Filipi, and B.
+  Lawler. (2023). Thermodynamic Modeling of Military Relevant Diesel Engines
+  with 1-D Finite Element Piston Temperature Estimation. No. 2023-01-0103.
+  SAE Technical Paper. https://doi.org/10.4271/2023-01-0103 ⏎
+
+ 8. Gingrich, E. M. (2020). High-output Diesel Engine Heat Transfer. The
+  University of Wisconsin-Madison. https://apps.dtic.mil/sti/citations/AD1109699
+  ⏎
+
+ 9. GT-Suite Manual (2024). Engine Performance and Flow Theory Manual.
+  Gamma Technologies, Westmont, IL, USA. ⏎
+
+10. Colburn, A. P. (1964). A method of correlating forced convection heat-transfer
+  data and a comparison with fluid friction. International Journal of Heat and
+  Mass Transfer, 7(12), pp. 1359–1384. https://doi.org/10.1016/0017-
+  9310(64)90125-5 ⏎
+
+11. Gandolfo, J., B. Gainey, Z. Yan, C. Jiang, R. Kumar, E. H. Jordan, Z. Filipi, and
+  B. Lawler. (2023). Low thermal inertia thermal barrier coatings for spark
+  ignition engines: an experimental study. International Journal of Engine
+  Research, p. 14680874221149458. https://doi.org/10.1177/14680874221149458
+  ⏎
+
+12. Roberts, A., R. Brooks, and P. Shipway. (2014). Internal combustion engine
+  cold-start efficiency: a review of the problem, causes and potential solutions.
+  Energy Conversion and Management, 82, pp. 327–350.
+  https://doi.org/10.1016/j.enconman.2014.03.002 ⏎
+
+13. R. J. Farrauto and R. M. Heck. (1999). Catalytic converters: state of the art and
+  perspectives, Catalysis Today, 51(3–4), pp. 351–360, ISSN 0920-5861,
+  https://doi.org/10.1016/S0920-5861(99)00024-3. ⏎
+
+14. Ravikumar, A., A. Bhatt, B. Gainey, and B. Lawler. (2023). GT-Suite Modeling
+  of Thermal Barrier Coatings in a Multi-Cylinder Turbocharged DISI Engine for
+  Catalyst Light-Off Delay Improvement. No. 2023-01-1602. SAE Technical
+  Paper. https://doi.org/10.4271/2023-01-1602 ⏎
+
+15. Richards, K. J., P. K. Senecal, and E. Pomraning (2024). CONVERGE 3.1
+  Manual, Convergent Science, Madison, WI. ⏎
+
+16. Argyropoulos, C. D., and N. C. Markatos. (2015). Recent advances on the
+  numerical modelling of turbulent flows. Applied Mathematical Modelling, 39(2),
+  pp. 693–732. https://doi.org/10.1016/j.apm.2014.07.001 ⏎
+17. Pomraning, E., K. Richards, and P. K. Senecal. (2014). Modeling Turbulent
+
+  Combustion using a RANS Model, Detailed Chemistry, and Adaptive Mesh
+
+  Refinement. No. 2014-01-1116. SAE Technical Paper.
+  https://doi.org/10.4271/2014-01-1116 ⏎
+
+18. Reitz, R. D., and Rm. Diwakar. (1987). Structure of high-pressure fuel sprays.
+  SAE Transactions, pp. 492–509. https://doi.org/10.4271/870598 ⏎
+
+19. Amsden, A. A., P. J. O’Rourke, and T. D. Butler. (1989). KIVA-II: A Computer
+
+  Program for Chemically Reactive Flows with Sprays. No. LA-11560-MS. Los
+
+  Alamos National Lab (LANL), Los Alamos, NM (United States).
+  https://doi.org/10.2172/6228444 ⏎
+
+20. Schmidt, D. P., and C. J. Rutland. (2000). A new droplet collision algorithm.
+
+  Journal of Computational Physics, 164(1), pp. 62–80.
+  https://doi.org/10.1006/jcph.2000.6568 ⏎
+
+21. Liu, A. B., Mather, D., and Reitz, R. D. (1993). Modeling the effects of drop
+
+  drag and breakup on fuel sprays. SAE Transactions, 102, pp. 83–95.
+  https://www.jstor.org/stable/44611358. Accessed 6 Nov. 2023. ⏎
+
+22. O’Rourke, P. J., and A. A. Amsden. (2000). A spray/wall interaction submodel
+
+  for the KIVA-3 wall film model. SAE Transactions, 109, pp. 281–98.
+  https://www.jstor.org/stable/44634219. Accessed 6 Nov. 2023. ⏎
+
+23. Launder, B. E., and D. B. Spalding. (1983). The numerical computation of
+
+  turbulent flows. In Numerical Prediction of Flow, Heat Transfer, Turbulence and
+
+  Combustion (pp. 96–116). Pergamon. https://doi.org/10.1016/B978-0-08-
+  030937-8.50016-7 ⏎
+
+24. Smith, M. (2009). ABAQUS/Standard User’s Manual, Version 6.9. Dassault
+  SystèmesSimulia Corp. ⏎
+
+25. Gingrich, E., D.T. Pierce, G. Byrd, K. Sebeck, V. Korivi, G. Muralidharan, H.
+
+Wang, J. Torres, A. Trofimov, J.A. Haynes, and M. Tess. (2022). Evaluation of
+
+High-Temperature Martensitic Steels for Heavy-Duty Diesel Piston
+
+Applications.  SAE  Technical  Paper  Series  2022.01.
+
+https://doi.org/10.4271/2022-01-0599 ⏎
+
+26. Baldissera, P., and C. Delprete. (2019). Finite element thermo-structural
+
+  methodology for investigating diesel engine pistons with thermal barrier coating.
+
+  SAE International Journal of Engines, 12(1), pp. 69–78.
+  https://doi.org/10.4271/03-12-01-0006 ⏎
+
+27. Mitianiec, W. (2018). Study of influence of boundary conditions on deformation
+
+and stresses in a cooled piston of a diesel engine–part B-calculations. IOP
+
+Conference Series: Materials Science and  Engineering,  421(4).
+https://doi.org/10.1088/1757-899X/421/4/042057 ⏎
+28. Gehlot, R., and B. Tripathi. (2016). Thermal analysis of holes created on ceramic
+  coating for diesel engine piston. Case Studies in Thermal Engineering, 8, pp.
+  291–299. https://doi.org/10.1016/j.csite.2016.08.008 ⏎
+
+29. Lu, Y., X. Zhang, P. Xiang, and D. Dong. (2017). Analysis of thermal
+  temperature fields and thermal stress under steady temperature field of diesel
+  engine piston. Applied Thermal Engineering, 113, pp. 796–812.
+  https://doi.org/10.1016/j.applthermaleng.2016.11.070 ⏎
+
+30. Fontanesi, S., and M. Giacopini. (2013). Multiphase CFD–CHT optimization of
+  the cooling jacket and FEM analysis of the engine head of a V6 diesel engine.
+  Applied Thermal Engineering, 52(2), pp. 293–303. ⏎
+
+31. Esfahanian, V., A. Javaheri, and M. Ghaffarpour. (2006). Thermal analysis of an
+  SI engine piston using different combustion boundary condition treatments.
+  Applied Thermal Engineering, 26(2–3), pp. 277–287. ⏎
+
+32. Wu, M., Y. Pei, J. Qin, X. Li, J. Zhou, Z.S. Zhan, Q. Y. Guo, B. Liu, and T. G.
+  Hu. (2017). Study on Methods of Coupling Numerical Simulation of Conjugate
+  Heat Transfer and In-cylinder Combustion Process in GDI Engine. No. 2017-
+  01-0576. SAE Technical Paper. https://doi.org/10.4271/2017-01-0576 ⏎
+
+33. Sun, C., B. Deng, J. Yang, R. Feng, and C. Chen. (2023). A multi-time scales
+  semi-decoupled CHT (Coupled Heat Transfer) model and its application on
+  piston transient heat transfer simulation. Applied Thermal Engineering, 229, pp.
+  120548. https://doi.org/10.1016/j.applthermaleng.2023.120548 ⏎
+
+34. Moser, S., K. D. Edwards, T. Schoeffler, and Z. Filipi. (2021). CFD/FEA co-
+  simulation framework for analysis of the thermal barrier coating design and its
+  impact on the HD diesel engine performance. Energies, 14(8), p. 2044.
+  https://doi.org/10.3390/en14082044 ⏎
+
+35. Motwani, R., J. Gandolfo, B. Gainey, A. Levi, S. Moser, Z. Filipi, and B. Lawler.
+  (2022). Assessing the Impact of a Novel TBC Material on Heat Transfer in a
+  Spark Ignition Engine through 3D CFD-FEA Co-simulation Routine. No. 2022-
+  01-0402. SAE Technical Paper. https://doi.org/10.4271/2022-01-0402 ⏎
+
+36. Kundu, P., R. Scarcelli, S. Som, Y. Wang, J. Kiedaisch, and M. Rajkumar.
+  (2016). Modeling Heat Loss through Pistons and Effect of Thermal Boundary
+  Coatings in Diesel Engine Simulations using a Conjugate Heat Transfer Model.
+  SAE Technical Paper 2016-01-2235. https://doi.org/10.4271/2016-01-2235 ⏎
+
+37. Mizuno, H., K. Ashida, A. Teraji, K. Ushijima, and S. Takemura. (2009).
+  Transient analysis of the piston temperature with consideration of in-cylinder
+  phenomena using engine measurement and heat transfer simulation coupled with
+  three-dimensional combustion simulation. SAE International Journal of
+  Engines, 2(1), pp. 83–90. https://doi.org/10.4271/2009-01-0187 ⏎
+38. Jin-feng, P. A. N., R. Nigro, and E. Matsuo. (2005). 3-D Modeling of Heat
+
+  Transfer in Diesel Engine Piston Cooling Galleries [C]. SAE Paper: 01-1644.
+  https://doi.org/10.4271/2005-01-1644 ⏎
+
+39. Wright, S., A. Ravikumar, L. Redmond, B. Lawler, M. Castanier, E. Gingrich,
+
+  and M. Tess. (2023). Data Reduction Methods to Improve Computation Time for
+
+  Calibration of Piston Thermal Models. No. 2023-01-0112. SAE Technical Paper.
+  https://doi.org/10.4271/2023-01-0112 ⏎
+
+40. Gingrich, E., M. Tess, V. Korivi, and J. Ghandhi. (2022). High-output diesel
+
+  engine heat transfer: part 1 – comparison between piston heat flux and global
+
+  energy balance. International Journal of Engine Research, 23(8), pp.1417–1431.
+  https://doi.org/10.1177/14680874211017032 ⏎
+
+41. Tess, M. J., V. Korivi, E. Gingrich, and P. Schihl. (2023). Influence of spray and
+
+  combustion processes on piston temperatures and engine heat transfer in a high-
+
+  output diesel engine. International Journal of Engine Research, 24(5), pp. 2260–
+  2278. https://doi.org/10.1177/14680874221117889 ⏎
+
+42. Ravikumar, A., S. Wright, L. Redmond, E. Gingrich, V. Korivi, M. Tess, J. Piehl,
+
+  and B. Lawler. (2024). Numerical Evaluation of Injection Parameters on
+
+  Transient Heat Flux and Temperature Distribution of a Heavy-duty Diesel
+  Engine Piston. No. 2024-01-2688. SAE Technical Paper. ⏎
+
+43. Dempsey, A. B., S. J. Curran, and R. M. Wagner. (2016). A perspective on the
+
+  range of gasoline compression ignition combustion strategies for high engine
+
+  efficiency and low NOx and soot emissions: effects of in-cylinder fuel
+
+  stratification. International Journal of Engine Research, 17(8), pp. 897–917.
+  https://doi.org/10.1177/1468087415621805 ⏎
+
+44. Lawler, B., S. Mamalis, S. Joshi, J. Lacey, O. Guralp, P. Najt, and Z. Filipi.
+
+(2017). Understanding the effect of operating conditions on thermal stratification
+
+and heat release in a homogeneous charge compression ignition engine. Applied
+
+Thermal  Engineering,  112,  pp.  392–402.
+
+https://doi.org/10.1016/j.applthermaleng.2016.10.056 ⏎
+
+45. Kokjohn, S., R. Hanson, D. Splitter, J. Kaddatz, and R. Reitz. (2011). Fuel
+
+  reactivity controlled compression ignition (RCCI) combustion in light-and
+
+  heavy-duty engines. SAE International Journal of Engines, 4(1), pp. 360–374.
+  https://doi.org/10.4271/2011-01-0357 ⏎
+
+46. Tsolakis, A., and A. Megaritis. (2005). Partially premixed charge compression
+
+  ignition engine with on-board H2 production by exhaust gas fuel reforming of
+
+  diesel and biodiesel. International Journal of Hydrogen Energy, 30(7), pp. 731–
+  745. https://doi.org/10.1016/j.ijhydene.2004.06.013 ⏎
+
+47. O’Donnell, P. C., M. R. Boldaji, B. Gainey, and B. Lawler. (2020). Varying
+  Intake Stroke Injection Timing of Wet Ethanol in LTC. No. 2020–01–0237. SAE
+  Technical Paper. https://doi.org/10.4271/2020-01-0237 ⏎
+
+48. Gainey, B., Z. Yan, and B. Lawler. (2021). Autoignition characterization of
+  methanol, ethanol, propanol, and butanol over a wide range of operating
+  conditions in LTC/HCCI. Fuel, 287, p. 119495.
+  https://doi.org/10.1016/j.fuel.2020.119495 ⏎
+
+49. Verhelst, S., and T. Wallner. (2009). Hydrogen-fueled internal combustion
+  engines. Progress in Energy and Combustion Science, 35(6), pp. 490–527.
+  https://doi.org/10.1016/j.pecs.2009.08.001 ⏎
+
+50. Ran, Z., D. Hariharan, B. Lawler, and S. Mamalis. (2020). Exploring the
+  potential of ethanol, CNG, and syngas as fuels for lean spark-ignition
+  combustion-An experimental study. Energy, 191, p. 116520.
+  https://doi.org/10.1016/j.energy.2019.116520 ⏎
+
+51. O’Donnell, P. C., J. Gandolfo, B. Gainey, E. Vorwerk, R. Prucka, Z. Filipi, B.
+  Lawler, Hessel, R., Kokjohn, S., Huo, M. and Salvi, A. (2022). Effects of Port
+  Angle on Scavenging of an Opposed Piston Two-stroke Engine. No. 2022-01-
+  0590. SAE Technical Paper. https://doi.org/10.4271/2022-01-0590 ⏎
+
+52. Lin, Y. (2023). Prediction of temperature distribution on piston crown surface of
+  dual-fuel engines via a hybrid neural network. Applied Thermal Engineering,
+  218, p. 119269. https://doi.org/10.1016/j.applthermaleng.2022.119269 ⏎
+
+53. Jia, X., J. Willard, A. Karpatne, J. S. Read, J. A. Zwart, M. Steinbach, and V.
+  Kumar. (2021). Physics-guided machine learning for scientific discovery: an
+  application in simulating lake temperature profiles. ACM/IMS Transactions on
+  Data Science, 2(3), pp. 1–26. https://doi.org/10.1145/3447814 ⏎
+
+  OceanofPDF.com
+4 Fault Detection and Tolerance in
+Dynamic Control
+
+  Enhancing System Reliability and Performance
+  through Dynamic Fault Detection and Tolerance
+  Mechanisms
+
+  P. Shudhi Rishaa, C. Shri Raghavi, M. P. Anbarasi, and J. Niresh
+
+DOI: 10.1201/9781003392330-4
+
+4.1 INTRODUCTION
+
+The incorporation of both humans and robots in various dynamic control systems has
+increased in popularity in the last decade. These human–machine interactions, which
+range from industrial robotics to autonomous vehicles and medical gadgets, hold
+enormous promise for improving productivity, efficiency, and safety. However, as
+these systems become more sophisticated and complicated, they become more prone
+to errors and failures. To maintain the dependability, safety, and efficacy of human–
+machine interaction, understanding, recognizing, and mitigating these flaws is crucial.
+The imperative necessity to overcome the difficulties brought on by discrepancies in
+dynamic control systems during human-machine interaction serves as the driving
+force behind this study. Many different types of malfunctions can appear, from sensor
+issues to communication problems to actuator oddities [1]. These flaws, if ignored,
+might result in unpredictable behavior, endangering not only the functionality of the
+system but also the safety of the human operators.
+
+4.1.1 Importance of Fault Detection and Tolerance in Human-
+Machine Interaction
+
+No amount of emphasis can be placed enough on the need for anomaly identification
+and tolerance in human–machine interaction. It is crucial for a number of strong
+reasons, including:
+
+  1. Assurance of Safety: Defects in dynamic control systems may have serious
+  effects on safety. Critical applications like autonomous vehicles, surgical robots,
+  and industrial automation can be made safer by identifying these errors in real
+  time and putting tolerance measures in place to minimize accidents, injuries, and
+  even fatalities [2].
+  2. System Reliability: In businesses where accuracy and consistency are crucial,
+  reliable human–machine interactions are essential. Systems that are fault tolerant
+  can guarantee continuous operation, minimize downtime, and prevent expensive
+  disruptions.
+  3. Human-Centric Design: When humans interact with machines, they must have
+  faith in and rely on these systems. Providing fault tolerance promotes user trust
+  and automation acceptance [3], allowing for easier transitions in human-centric
+  businesses.
+  4. Optimized Performance: Fault tolerance and detection can also result in
+  increased system effectiveness. System uptime and operational effectiveness can
+  be increased by locating and fixing issues.
+  5. Economic Impact: Dynamic control system failures can have a considerable
+  negative economic impact in terms of maintenance and lost production. These
+  financial risks can be reduced by putting fault tolerance mechanisms in place.
+
+4.2 LITERATURE REVIEW
+
+4.2.1 Overview of Fault Detection and Tolerance Techniques in
+Dynamic Control
+
+The literature review portion of this research paper offers an in-depth analysis of fault
+detection and tolerance methods in the context of dynamic control [4]. This includes a
+look at several approaches and tactics used to find and fix problems in control
+systems. Important elements of this review include:
+
+  1. Model-Based Approaches: Analysis of model-based fault detection techniques
+  that use mathematical models of the system to find deviations from predicted
+  performance [5].
+
+  2. Data-Driven Techniques: An investigation of data-driven fault detection
+  techniques that use sensor data and machine learning techniques to spot
+  anomalies
+
+  3. Sensor Fusion: Discussion of methods for fusing data from various sensors to
+  more accurately detect faults [6], known as sensor fusion.
+
+  4. Fault Tolerance Strategies: An examination of fault tolerance mechanisms,
+  such as redundancy, fault isolation, and reconfiguration methods.
+
+  5. Real-time Implementation: Information on the difficulties and factors to take
+  into account when integrating fault tolerance and detection into dynamic control
+  systems.
+4.2.2 Previous Research in Human–Machine Interaction and Control
+
+It provides a solid foundation for comprehending the historical setting and cutting-
+edge research in this interdisciplinary field [7]. Important components include:
+
+  1. Human-Centered Approaches: An overview of studies emphasizing user
+  experience and human elements in human–machine interactions is provided by
+  the term “human-centered approaches.” [8]
+
+  2. Control Methods: A look at the several human–machine systems that employ
+  control methods like adaptive control, haptic feedback, and shared control.
+
+  3. Safety and Reliability: Exploration of earlier research on safety and
+  dependability issues in human-machine interaction, including case studies and
+  takeaways.
+
+  4. Applications: Showcasing a variety of HMI applications, from teleoperation and
+  industrial automation to robotic surgery and driverless cars.
+
+4.2.3 Relevant MATLAB® Tools and Libraries
+
+These tools are necessary for the conception, implementation, and assessment of fault
+tolerance, and detection techniques include the following:
+
+  1. MATLAB® Simulink: A description of the popular software program MATLAB
+  Simulink, which is used to model, simulate, and analyze dynamic control
+  systems [9].
+
+  2. Control System Toolbox: Discussion of the Control System Toolbox, a
+  collection of features and instruments for control system design and analysis.
+
+  3. Machine Learning and Signal Processing Libraries: Finding MATLAB
+  libraries for machine learning and signal processing is essential for strategies for
+  data-driven defect identification.
+
+  4. Human-in-the-Loop Simulations: Consideration of MATLAB’s human-in-the-
+  loop simulation capabilities, which allow the evaluation of fault detection and
+  tolerance tactics with user input.
+
+4.3 DYNAMIC CONTROL IN HUMAN–MACHINE INTERACTION
+
+In the context of human–machine interaction, dynamic control describes the intricate
+process by which machines and people interact in real time while adapting to shifting
+circumstances and user inputs [10]. Continuous modifications are required in this
+interaction in response to user, environmental, and system needs. In order to facilitate
+smooth communication and collaboration between humans and machines, dynamic
+control systems work to maintain stability, precision, and efficiency during these
+interactions.
+4.3.1 Challenges in Maintaining Control and Stability
+
+  1. Human Variability: People have a wide range of behavior, which makes it
+  difficult to effectively forecast and react to their inputs. Adaptive control
+  algorithms are needed because gestures, preferences, and decision-making are
+  variable.
+
+  2. Real-time Feedback: Dynamic interactions necessitate real-time feedback and
+  responses [11]. Particularly in applications like virtual reality or robotic systems,
+  delays or lags in communication can ruin the user experience and cause
+  instability.
+
+  3. Environmental Factors: Environmental elements can interfere with sensors and
+  lower the quality of input data. Examples include noise, poor lighting, and
+  physical obstacles. Dynamic control systems must eliminate background noise
+  and concentrate on pertinent data.
+
+  4. Safety Issues: It is crucial to ensure the safety of both users and machinery.
+  Dynamic control systems must foresee potential hazards, react quickly to
+  unanticipated events, and avert potentially hazardous circumstances.
+
+  5. Adaptability: Human intents and preferences can quickly alter due to human
+  adaptability. Dynamic control systems must be adaptable, taking user behavior
+  into account when making changes to their responses to suit changing
+  requirements and preferences.
+
+  6. Complexity of Interactions: Complex tasks requiring fine control might arise
+  during human-machine interactions, such as in surgical robotics or cutting-edge
+  gaming systems. It is quite difficult to manage the complexity of these
+  interactions and keep everything stable.
+
+  7. Integration of Multimodal Inputs: In contemporary human–machine
+  interfaces, various input modalities, including touch, voice, and gestures, are
+  frequently used [12]. The seamless integration and appropriate interpretation of
+  these inputs raise the bar for dynamic control’s complexity.
+
+In conclusion, dynamic control in human–machine interaction is a complex problem
+requiring real-time processing power, sophisticated algorithms, and a thorough
+knowledge of both human behavior and machine dynamics [13]. For intuitive,
+effective, and secure interactions between humans and machines in a variety of
+applications, these problems must be overcome.
+
+4.4 FAULT TYPES IN HUMAN–MACHINE INTERACTION
+
+4.4.1 Classification of Faults
+Faults in human–machine interaction can be broadly classified into several categories
+[15], including the following:
+
+  1. Sensor Faults: These happen when the sensors that the system uses to gather
+  data malfunction, giving incorrect or no data. Sensor errors may cause the
+  system’s replies to be misinterpreted as user intents.
+
+  2. Actuator Faults: Actuator faults are problems with the parts that execute
+  commands from a control system. A system’s reactions may be delayed,
+  executed incorrectly, or fail entirely due to malfunctioning actuators.
+
+  3. Communication Errors: Errors in data transfer between components result in
+  communication faults. This can affect the cooperation between people and
+  machines by causing delays, losing important information, or causing
+  miscommunication.
+
+  4. Faults in the Software: Defects or faults in the software that manages the
+  interaction process may result in unexpected behaviors, system crashes, or
+  inaccurate interpretations of user input.
+
+4.4.2 Impact on Control Performance and Safety
+
+  1. Control Performance Degradation: Errors can seriously reduce the
+  effectiveness of the control system, causing sluggish movements, delayed
+  reactions, or wrong actions. Applications needing real-time and precise control,
+  such as autonomous vehicles or surgical robots, can be particularly vulnerable to
+  this degradation [14].
+
+  2. Safety Risks: Defects in how humans and machines interact can be extremely
+  dangerous. For instance, a sensor flaw in a medical equipment could result in the
+  patient receiving the incorrect dosage, harming them. Similar issues with
+  actuators might impair an autonomous vehicle’s reaction time to obstacles,
+  increasing the risk of accidents.
+
+  3. Loss of User Confidence: Repeated errors can reduce user confidence in the
+  system. Users’ reluctance or unwillingness to use the technology could have an
+  effect on its acceptance and adoption.
+
+  4. Increased Workload: Users may be required to make up for system flaws when
+  they occur, adding to their mental and physical burden. The user experience and
+  general effectiveness may be impacted by this additional burden.
+
+Strong fault detection and tolerance methods are needed to address these flaws,
+guaranteeing that the system can recognize abnormalities, adjust to changes, and
+sustain secure and effective human–machine interactions even in the presence of
+flaws.
+4.5 FAULT DETECTION METHODS
+4.5.1 Model-Based Fault Detection
+
+Model-based defect detection uses mathematical representations of the behavior of
+the system. Departures can be recognized as errors by comparing actual system data
+with the expected behavior predicted by the model [16]. These models might be as
+intricate as complicated simulations or as simple as analytical formulae. For systems
+where a thorough grasp of the underlying physics is available, model-based
+techniques are effective. They require accurate modeling for efficient defect
+identification since they are sensitive to model mistakes.
+
+4.5.1.1 MATLAB Implementation
+
+When putting into practice a model-based fault detection system, deviations brought
+on by faults are first detected using a mathematical model of the system under normal
+operating conditions. Here is an illustration of a straightforward MATLAB model-
+based fault detection method. In this example, then demonstrate how to detect a
+sensor malfunction using a linear system as the model (Figure 4.1).
+
+  FIGURE 4.1 MATLAB® simulation of sensor fault detection. ⏎
+  Machine learning-based solutions for data-driven defect identification use
+algorithms like neural networks, support vector machines, and decision trees to
+identify trends in past or present data. These algorithms analyze data without using
+explicit models to identify abnormalities or departures from typical behavior. Data-
+driven approaches are especially useful for complicated systems when it is difficult to
+fully model the entire system [17]. They are flexible for a variety of applications
+because they can adjust to changing circumstances and learn from new information.
+
+4.5.2 Data-Driven Fault Detection
+
+Machine learning-based solutions for data-driven defect identification use algorithms
+like neural networks, support vector machines, and decision trees to identify trends in
+past or present data. These algorithms analyze data without using explicit models to
+identify abnormalities or departures from typical behavior. Data-driven approaches
+are especially useful for complicated systems when it is difficult to fully model the
+entire system [17]. They are flexible for a variety of applications because they can
+adjust to changing circumstances and learn from new information.
+
+4.5.2.1 MATLAB Implementation
+
+Here is a complete MATLAB implementation of an isolation forest-based data-driven
+fault detection system (Figure 4.2).
+

@@ -1,0 +1,1238 @@
+  t* ! X1  X2  Q1  Q2 ,  (2.17)
+
+  2¨ 1 1 ¸
+  sp ©  ¹
+
+  ª n1 n2 º
+
+where the term (Q1 – Q2) is the difference between Q1 and Q2 under the null
+hypothesis. The degrees of freedom of the test statistic in Equation 2.17 are
+
+n1  n2  2 , which are the degrees of freedom associated with the pooled
+estimate of the population variance sp2 . The conﬁdence interval for a difference
+in population means is based on the t distribution with n1  n2  2 degrees of
+freedom, or on the Z distribution when degrees of freedom are sufﬁciently
+
+large. A (1 – E)100% conﬁdence interval for the difference between two pop-
+ulation means (Q1 – Q2), assuming equal population variances is
+
+  2¨ 1 1 ¸  (2.18)
+
+  X1  X2 s tE 2 sp ©  ¹ .
+
+  ª n1 n2 º
+
+Example 2.9
+
+Interest is focused on whether the repeal of the NMSL had an effect on
+
+the mean speeds on Indiana roads. To test this hypothesis, 744 observa-
+
+tions in the before period and 552 observations in the after the repeal
+
+period are used. A 5% signiﬁcance level is used. Descriptive statistics
+
+show that average speeds in the before and after periods are Xb = 57.65
+and Xa = 60.48, respectively. Further, the variances for the before and
+after the repeal periods are sb2 = 16.4 and sa2 = 19.1, respectively. The
+competing hypotheses are
+
+  H0:Qa  Qb ! 0
+  .
+
+  Ha:Qa  Qb { 0
+Using Equation 2.13, the test statistic is
+
+  Z* ! Xa  Xb  Qa  Qb  ! 60.48  57.65  0 ! 11.89 .
+
+  sa2  sb2  19.1  16.4
+  na nb  552 744
+
+The test statistic is much larger than 1.96, the critical value for a two-
+tailed test at the 5% signiﬁcance level, and so the null hypothesis is
+rejected. This result indicates that the mean speed increased after the
+repeal of the NMSL and that this increase is not likely to have arisen by
+random chance. Using Equation 2.14, a conﬁdence interval is obtained
+
+© 2003 by CRC Press LLC
+  Xa  Xb s ZE 2 sa n  ! 2.83 s 1.96  ! a nb 552 744 ?2.36, 3.29A . 2 sb2 19.1 16.4
+
+  Thus, with 95% conﬁdence the increase in speeds from the before to the
+  after period is between 2.36 and 2.29 mph.
+
+2.4.2 Testing Differences between Two Means: Paired Observations
+
+Presented in this section are methods for conducting hypothesis tests and
+for constructing conﬁdence intervals for paired observations obtained
+from two populations. The advantage of pairing observations is perhaps
+best illustrated by example. Suppose that a tire manufacturer is interested
+in whether a new steel-belted tire lasts longer than the company’s current
+model. An experiment could be designed such that two new-design tires
+are installed on the rear wheels of 20 randomly selected cars and existing-
+design tires are installed on the rear wheels of another 20 cars. All drivers
+are asked to drive in their usual way until their tires wear out. The
+number of miles driven by each driver is recorded so a comparison of
+tire life can be tested. An improved experiment is possible. On 20 ran-
+domly selected cars, one of each type of tire is installed on the rear wheels
+and, as in the previous experiment, the cars are driven until the tires
+wear out.
+
+  The ﬁrst experiment results in independent samples, with no relationship
+between the observations in one sample and the observations in the second
+sample. The statistical tests designed previously are appropriate for these
+data. In the second experiment, an observation in one sample is paired with
+an observation in the other sample because each pair of “competing” tires
+shares the same vehicle and driver. This experiment is called a matched pairs
+design. From a statistical standpoint, two tires from the same vehicle are
+paired to remove the variation in the measurements due to driving styles,
+braking habits, driving surface, etc. The net effect of this design is that
+variability in tire wear caused by differences other than tire type is zero
+(between pairs), making it more efﬁcient with respect to detecting differences
+due to tire type.
+
+  The parameter of interest in this test is the difference in means between
+the two populations, denoted by Qd , and is deﬁned as Qd ! Q1  Q2 . The
+null and alternative hypotheses for a two-tailed test case are
+
+  H0:Qd ! 0
+  .
+
+  Ha:Qd { 0
+
+  The test statistic for paired observations is
+
+© 2003 by CRC Press LLC
+  t* ! Xd  Qd s , d  (2.19)
+  nd
+
+where Xd is the average sample difference between each pair of observa-
+tions, sd is the sample standard deviation of these differences, and the sam-
+ple size, nd, is the number of paired observations. When the null hypothesis
+
+is true and the population mean difference is nd, the statistic has a t distri-
+bution with n – 1 degrees of freedom. Finally, a (1 – E)100% conﬁdence
+interval for the mean difference Qd is
+
+  Xd s tE 2  sd .  (2.20)
+  nd
+
+2.4.3 Testing Differences between Two Population Proportions
+
+In this section a method for testing for differences between two population
+proportions and drawing inferences is described. The method pertains to
+data measured on a qualitative (nominal), rather than a quantitative, scale.
+When sample sizes are sufﬁciently large, the sampling distributions of the
+sample proportions pˆ1 and pˆ2 and their difference pˆ1  pˆ2 are approxi-
+mately normally distributed, giving rise to the test statistic and conﬁdence
+interval computations presented.
+
+  Assuming that sample sizes are sufﬁciently large and the two populations
+are randomly sampled, the competing hypotheses for the difference between
+population proportions are
+
+  H0: p1  p2 ! 0
+  .
+
+  Ha: p1  p2 { 0
+
+  As before, one-tailed tests for population proportions could be constructed.
+The test statistic for the difference between two population proportions when
+the null-hypothesized difference is 0 is
+
+  Z* ! pˆ1  pˆ2  0 ,  (2.21)
+
+  ¨ 1 1¸
+
+  pˆ1  pˆ ©  ¹
+
+  ª n1 n2 º
+
+where pˆ1 ! x1 n1 is the sample proportion for sample 1, pˆ2 ! x2 n2 is the
+sample proportion for sample 2, and pˆ symbolizes the combined proportion
+in both samples and is computed as follows
+
+© 2003 by CRC Press LLC
+  ˆ x1  x2
+  p!  n1  n2  .
+
+  When the hypothesized difference between the two proportions is some
+constant c, the competing hypotheses become
+
+  H0: p1  p2 e 0
+  .
+
+  Ha: p1  p2 " 0
+
+Equation 2.21 is revised such that the test statistic becomes
+
+  Z* ! pˆ1  pˆ2  c .  (2.22)
+  pˆ11  pˆ1  pˆ2 1  pˆ2
+  n1  n2
+
+  The two equations reﬂect a fundamental difference in the two null hypoth-
+eses. For the zero-difference null hypothesis it is assumed that pˆ1 and pˆ2
+are sample proportions drawn from one population. For the non-zero-dif-
+ference null hypothesis it is assumed that pˆ1 and pˆ2 are sample proportions
+drawn from two populations and a pooled standard error of the difference
+
+between the two sample proportions is estimated.
+
+  When constructing conﬁdence intervals for the difference between two
+
+population proportions, the pooled estimate is not used because the two
+
+proportions are not assumed to be equal. A large sample (1 – E)100% conﬁ-
+dence interval for the difference between two population proportions is
+
+pˆ1  pˆ2 s ZE 2 pˆ11  pˆ1 n  pˆ2 1  pˆ2 . 1 n2  (2.23)
+
+2.4.4 Testing the Equality of Two Population Variances
+Suppose there is interest in the competing hypotheses
+
+  Ho : W12 ! W22
+  Ha : W12 { W22
+or
+
+  Ho : W12 e W22
+  .
+
+  Ha : W12 " W22
+
+© 2003 by CRC Press LLC
+  Consider ﬁrst a test of whether W12 is greater than W22 . Two independent
+samples are collected from populations 1 and 2, and the following test
+
+statistic is computed:
+
+  F*  s12  (2.24)
+  ! 2,
+  n11,n2 1
+  s2
+
+where  F*  is an F-distributed random variable with n1 – 1 degrees of
+  n 1,n 1
+  12
+freedom in the numerator and n2 – 1 degrees of freedom in the denominator
+
+(for additional information on the F distribution, see Appendix A). It is
+
+important to remember to place s12 in the numerator because, in a one-tailed
+test, rejection may occur in the right tail of the distribution only. If s12 is
+smaller than s22 , the null hypothesis cannot be rejected because the statistic
+
+value will be less than 1.00.
+
+For a two-tailed test a practical approach is to insert the larger sample
+
+variance in the numerator. Then, if a test statistic is greater than a critical
+
+value associated with a speciﬁc E, the null hypothesis is rejected at the 2E
+signiﬁcance level (double the level of signiﬁcance obtained from Table C.4
+
+in Appendix C). Similarly, if the p-value corresponding with one tail of the
+
+F distribution is obtained, it is doubled to get the actual p-value. The equiv-
+
+alent F test that does not require insertion of the largest sample variance in
+
+the numerator can be found in Aczel (1993).
+
+Example 2.10
+
+  There is interest in testing whether the repeal of the NMSL had an effect
+  on the speed variances rather than mean speeds. The test is conducted
+  at the 10% signiﬁcance level. Descriptive statistics show that sb2 and sa2 ,
+  the standard deviations for the before and after the repeal periods, are
+  16.4 and 19.1, respectively. The parameter of interest is variance and the
+  competing hypotheses are
+
+  H0 :W a2  Wb2 ! 0
+  .
+
+  Ha :W a2  Wb2 { 0
+
+Using a two-tailed test, the larger sample variance is placed in the nu-
+merator. The test statistic value is obtained from Equation 2.24 as
+
+  * * s12 19.1  ! 1.16 .
+  Fn11,n2 1  !F  ! 2!
+   522 ,744  s2 16.4
+
+The critical value for E = 0.05 (2E = 0.1) for 522 degrees of freedom in
+the numerator and 744 degrees of freedom in the denominator is 1.0. As
+
+a result, the analyst rejects the null hypothesis of equality of variances
+
+© 2003 by CRC Press LLC
+  in the before and after periods of the repeal of the NMSL. A correct
+  interpretation is that random sampling alone would not likely have
+  produced the observed difference in sample variances if in fact the vari-
+  ances were equal.
+
+2.5 Nonparametric Methods
+
+Statistical procedures discussed previously in this chapter have focused on
+making inferences about speciﬁc population parameters and have relied
+upon speciﬁc assumptions about the data being satisﬁed. One assumption
+is that the samples examined are approximately normally distributed. For
+the means and variances tests discussed, data are required to be measured
+on a ratio or interval scale. Finally, sample sizes are required to be sufﬁciently
+large. The statistical procedures discussed in the remainder of this chapter
+make no assumptions regarding the underlying population parameters and
+are, thus, called nonparametric. Some tests do not even require assumptions
+to be made about the distributions of the population of interest (as such,
+nonparametric methods are often called distribution-free methods).
+
+  Nonparametric methods typically require fewer stringent assumptions
+than do their parametric alternatives, and they use less information con-
+tained in the data. If nonparametric techniques are applied to data that meet
+conditions suitable for parametric tests, then the likelihood of committing a
+Type II error increases. Thus, parametric methods are more powerful and
+will be more likely to lead correctly to rejection of a false null hypothesis.
+The explanation for this is straightforward. When observations measured on
+interval or ratio scales are ranked, that is, when they are converted to the
+ordinal scale, information about the relative distance between observations
+is lost. Because the probability of a Type I error is ﬁxed at some value E and
+because statistical tests are generally concerned with the size of an effect
+(difference in means, variances, etc.), using only ranked data requires more
+evidence to demonstrate a sufﬁciently large effect and so (1 – E), or statistical
+power, is reduced. Because a nonparametric test usually requires fewer
+assumptions and uses less information in the data, it is often said that a
+parametric procedure is an exact solution to an approximate problem, while
+a nonparametric procedure is an approximate solution to an exact problem
+(Conover, 1980).
+
+  Given the trade-offs between parametric and nonparametric methods, some
+guidance on when to use nonparametric methods is appropriate. A nonpara-
+metric technique should be considered under the following conditions:
+
+  1. The sample data are frequency counts and a parametric test is not
+  available.
+
+  2. The sample data are measured on the ordinal scale.
+
+© 2003 by CRC Press LLC
+  3. The research hypotheses are not concerned with speciﬁc population
+  parameters such as Q and W2.
+
+  4. Requirements of parametric tests such as approximate normality, large
+  sample sizes, and interval or ratio scale data, are grossly violated.
+
+  5. There is moderate violation of parametric test requirements, as well
+  as a test result of marginal statistical signiﬁcance.
+
+  The remainder of this section presents nonparametric techniques com-
+monly encountered in practice. There are many available nonparametric tests
+that are not discussed and a more comprehensive list of the available tech-
+niques is presented in Table 2.2. Readers interested in comprehensive text-
+books on the subject should consult Daniel (1978), Conover (1980), and
+Gibbons (1985a, b).
+
+2.5.1 The Sign Test
+
+The sign test can be used in a large number of situations, including cases
+that test for central location (mean, median) differences in ordinal data or
+for correlation in ratio data. But, its most common application is to identify
+the most preferred alternative, among a set of alternatives, when a sample
+of n individuals (questionnaires, for example) is used. In this case the data
+are nominal because the expressions of interest for the n individuals simply
+indicate a preference. In essence, the objective of this test is to determine
+whether a difference in preference exists between the alternatives compared.
+
+  Consider, for example, the case where drivers are asked to indicate their
+preference for receiving pre-trip travel time information via the Internet vs.
+receiving the information on their mobile phones. The purpose of the study
+is to determine whether drivers prefer one method over the other. Letting p
+indicate the proportion of the population of drivers favoring the Internet,
+the following hypotheses are to be tested
+
+  H0: p ! 0.50
+  .
+
+  Ha: p { 0.50
+
+  If H0 cannot be rejected, there is no evidence indicating a difference in
+preference for the two methods of delivering pre-trip information. How-
+ever, if H0 can be rejected, it can be concluded that driver preferences are
+different for the two methods. In that case, the method selected by the
+greater number of drivers can be considered the most preferred method.
+Interestingly, the logic of the sign test is quite simple. For each individual,
+a plus sign is used if a preference is expressed for the Internet and a minus
+sign if the individual expresses an interest for the mobile phone. Because
+the data are recorded in terms of plus or minus signs, this nonparametric
+test is called the sign test.
+
+© 2003 by CRC Press LLC
+TABLE 2.3
+
+A Survey of Nonparametric Testing Methodologies
+
+  Test  Ref.
+
+  Location Parameter Hypotheses
+
+Data on One Sample or Two Related Samples (Paired Samples)
+
+Sign test  Arbuthnott (1910)
+Wilcoxon signed rank test  Wilcoxon (1945, 1947, 1949); Wilcoxon, Katti,
+
+  and Wilcox (1972)
+
+Data on Two Mutually Independent Samples  Mann and Whitney (1947)
+Mann–Whitney U test  Wilcoxon (1945, 1947, 1949); Wilcoxon, Katti,
+Wilcoxon rank sum test
+  and Wilcox (1972)
+Median test  Brown and Mood (1951); Westenberg (1948)
+Tukey’s quick test  Tukey (1959)
+Normal scores tests  Terry (1952); Hoeffding (1951); van der
+
+Percentile modiﬁed rank tests  Waerden (1952, 1953); van der Waerden
+  and Nievergelt (1956)
+Wald–Wolfowitz runs tests  Gastwirth (1965); Gibbons and Gastwirth
+  (1970)
+  Wald and Wolfowitz (1940)
+
+Data on k Independent Samples (k u 3)  Kruskal and Wallis (1952); Iman, Quade, and
+Kruskal–Wallis One-Way Analysis of  Alexander (1975)
+ Variance Test  Steel (1959a,b, 1960, 1961); Rhyne and Steel
+Steel tests for comparison with a control  (1965)
+
+Data on k Related Samples (k u 3)  Friedman (1937)
+Friedman two-way analysis of variance test  Durbin (1951)
+Durbin test for balanced incomplete block
+ designs
+
+  Scale or Dispersion Parameter Hypotheses
+
+Data on Two Mutually Independent Samples  Siegel and Tukey (1960)
+Siegel–Tukey test  Mood (1954); Laubscher, Steffens, and
+Mood test
+  deLange (1968)
+Freund–Ansari test  Freund and Ansari (1957); Ansari and
+
+Barton–David test  Bradley (1960)
+Normal-scores test  David and Barton (1958)
+Sukhatme test  Klotz (1962); Capon (1961)
+Rosenbaum test  Sukhatme (1957); Laubcher and Odeh (1976)
+Kamat test  Rosenbaum (1953)
+Percentile modiﬁed rank tests  Kamat (1956)
+  Gastwirth (1965); Gibbons and Gastwirth
+Moses ranklike tests
+  (1970)
+  Moses (1963)
+
+© 2003 by CRC Press LLC
+TABLE 2.3 (CONTINUED)
+
+A Survey of Nonparametric Testing Methodologies
+
+Test  Ref.
+
+  Tests of Independence
+
+Data on Two Related Samples  Spearman (1904); Kendall (1962); Glasser
+Spearman rank correlation parameter  and Winter (1961)
+
+Kendall Xparameter  Kendall (1962); Kaarsemaker and van
+  Wijngaarden (1953)
+
+Data on k Related Samples (k u 3)  Kendall (1962)
+Kendall parameter of concordance for
+ complete rankings  Durbin (1951)
+Kendall parameter of concordance for
+ balanced incomplete rankings  Moran (1951); Maghsoodloo (1975);
+Partial correlation  Maghsoodloo and Pallos (1981)
+
+Contingency Table Data
+Chi square test of independence
+
+Tests of Randomness with General Alternatives
+
+Data on One Sample  Swed and Eisenhart (1943)
+
+Number of runs test  Olmstead (1946); Edgington (1961)
+Runs above and below the median  Bartels (1982)
+Runs up and down test
+Rank von Neumann runs test
+
+Tests of Randomness with Trend Alternatives
+
+Time Series Data  Daniels (1950)
+  Mann (1945)
+Daniels test based on rank correlation  Cox and Stuart (1955)
+Mann test based on Kendall X parameter
+Cox–Stuart test
+
+  Slope Tests in Linear Regression Models
+
+Data on Two Related Samples  Theil (1950)
+Theil test based on Kendall’s X
+
+Data on Two Independent Samples  Hollander (1970)
+Hollander test for parallelism
+
+  Tests of Equality of k Distributions (k u 2)
+
+Data on Two Independent Samples
+Chi square test
+
+© 2003 by CRC Press LLC
+TABLE 2.3 (CONTINUED)
+
+A Survey of Nonparametric Testing Methodologies
+
+  Test  Ref.
+
+Kolmogorov–Smirnov test  Kim and Jennrich (1973)
+Wald–Wolfowitz test  Wald and Wolfowitz (1940)
+
+Data on k Independent Samples (k u 3)  Birnbaum and Hall (1960)
+Chi square test
+Kolmogorov–Smirnov test
+
+  Tests of Equality of Proportions
+
+Data on One Sample
+Binomial test
+
+Data on Two Related Samples  McNemar (1962)
+McNemar test
+
+Data on Two Independent Samples
+
+Fisher’s exact test
+Chi square test
+
+Data on k Independent Samples
+Chi square test
+
+Data on k Related Samples (k u 3)  Cochran (1950)
+Cochran Q test
+
+  Tests of Goodness of Fit
+
+Chi square test
+
+  Under the assumption that H0 is true (p = 0.50), the number of signs
+follows a binomial distribution with p = 0.50, and one would have to refer
+to the binomial distribution tables to ﬁnd the critical values for this test. But,
+for large samples (n > 20), the number of plus signs (denoted by x) can be
+approximated by a normal probability distribution with mean and standard
+deviation given by
+
+  E ! 0.50n  (2.25)
+
+  ,
+  W ! 0.25n
+and the large sample test-statistic is given by
+
+  Z* ! x  E .  (2.26)
+
+  W
+
+© 2003 by CRC Press LLC
+Example 2.11
+
+Consider the example previously mentioned, in which 200 drivers are
+asked to indicate their preference for receiving pre-trip travel time infor-
+mation via the Internet or via their mobile phones. Results show that 72
+drivers preferred receiving the information via the Internet, 103 via their
+mobile phones, and 25 indicated no difference between the two methods.
+Do the responses to the questionnaire indicate a signiﬁcant difference
+between the two methods in terms of how pre-trip travel time informa-
+tion should be delivered?
+
+Using the sign test, we see that n = 200 – 25 = 175 individuals were
+able to indicate their preferred method. Using Equation 2.25, we ﬁnd
+that the sampling distribution of the number of plus signs has the
+following properties:
+
+  E ! 0.50n ! 0.50(175) ! 87.5
+
+  .
+  W ! 0.25n ! 0.25(175) ! 6.6
+
+In addition, with n = 175 it can be assumed that the sampling distribution
+is approximately normal. By using the number of times the Internet was
+selected as the preferred alternative (x = 72), the following value of the
+test statistic (Equation 2.25) is obtained:
+
+  Z* ! x  E ! 72  87.5 ! 2.35 .
+  W  6.6
+
+From the test result it is obvious that the null hypothesis of no difference
+
+in how pre-trip information is provided should be rejected at the 0.05
+level of signiﬁcance (since 2.35 " 1.96 ). It should be noted that although
+the number of plus signs was used to determine whether to reject the
+
+null hypothesis that p = 0.50, one could use the number of minus signs;
+
+the test results would be the same.
+
+2.5.2 The Median Test
+
+The median test can be used to conduct hypothesis tests about a population
+median. Recall that the median splits a population in such a way that 50% of
+the values are at the median or above and 50% are at the median or below. To
+test for the median, the sign test is applied by simply assigning a plus sign
+whenever the data in the sample are above the hypothesized value of the
+median and a minus sign whenever the data in the sample are below the
+hypothesized value of the median. Any data exactly equal to the hypothesized
+value of the median should be discarded. The computations for the sign test
+are done in exactly the same way as was described in the previous section.
+
+© 2003 by CRC Press LLC
+Example 2.12
+
+  The following hypotheses have been formulated regarding the median
+  price of new sport utility vehicles (SUVs):
+
+  H0:median ! $35, 000
+  .
+
+  Ha:median { $35, 000
+
+In a sample of 62 new SUVs, 34 have prices above $35,000, 26 have prices
+below $35,000, and 2 have prices of exactly $35,000. Using Equation 2.24
+for the n = 60 SUVs with prices different from $35,000, we obtain
+
+E ! 30, W ! 3.87 , and, with x = 34 as the number of plus signs, the
+
+test statistic becomes
+
+  Z* ! x  E ! 234  30 ! 1.03 .
+  W  3.87
+
+Using a two-tail test and a 0.05 level of signiﬁcance, H0 cannot be
+rejected. On the basis of these data, we cannot reject the null hypothesis
+
+that the median selling price of a new SUV is $35,000.
+
+2.5.3 The Mann–Whitney U Test
+
+The Mann–Whitney–Wilcoxon (MWW) test is a nonparametric test of the
+null hypothesis that probability distributions of two ordinal scale variables
+are the same for two independent populations. The test is sensitive to the
+differences in location (mean or median) between the two populations. This
+test was ﬁrst proposed for two samples of equal sizes by Wilcoxon in 1945.
+In 1947, Mann and Whitney introduced an equivalent statistic that could
+handle unequal sample sizes as well as small samples. The MWW test is
+most useful for testing the equality of two population means and is an
+alternative to the two independent samples t test when the assumption of
+normal population distributions is not satisﬁed. The null and alternative
+hypotheses for the Mann–Whitney U test are
+
+  H0: The two sample distributions are drawn from the same population.
+  Ha: The two sample distributions are drawn from two different popu-
+
+  lations.
+
+  The hypotheses can be formulated to conduct both one-tailed and two-tailed
+tests and can also be formulated so that differences in population medians are
+examined. The assumptions of the test are that the samples are randomly
+selected from two populations and are independent. To obtain the test statistic,
+the two samples are combined and all the observations are ranked from smallest
+
+© 2003 by CRC Press LLC
+to largest (ties are assigned the average rank of the tied observations). The
+
+smallest observation is denoted as 1 and the largest observation is n. R1 is
+deﬁned as the sum of the ranks from sample 1 and R2 as the sum of the ranks
+from sample 2. Further, if n1 is the sample size of population 1 and n2 is the
+sample size of population 2, the U statistic is deﬁned as follows:
+
+  U ! n1n2  n1n1  1  R1 .  (2.27)
+
+  2
+
+  The U statistic is a measure of the difference between the ranks of two
+samples. Based on the assumption that only location (mean or median)
+differences exist between two populations, a large or small value of the test
+statistic provides evidence of a difference in the location of the two popula-
+tions. For large samples the distribution of the U statistic is approximated
+by the normal distribution. The convergence to the normal distribution is
+rapid, such that for n1 u 10 and n2 u 10 there is a satisfactory normal
+approximation. The mean of U is given by
+
+  EU ! n1n2 2 ,  (2.28)
+
+the standard deviation of U is given by
+
+  WU !  n1n2 n1  n2  1 ,  (2.29)
+
+  12
+
+and the large sample test statistic is given by
+
+  Z* ! U  EU .  (2.30)
+
+  WU
+
+  For large samples the test is straightforward. For small samples, tables of
+the exact distribution of the test statistic should be used. Most software pack-
+ages have the option of choosing between a large and a small sample test.
+
+Example 2.13
+
+  Speed data were collected from two highway locations (Table 2.4). The
+  question is whether the speeds at the two locations are identical. The ﬁrst
+  step in the MWW test is to rank speed measurements from the lowest to
+  the highest values. Using the combined set of 22 observations in Table 2.4,
+  the lowest data value is 46.9 mph (6th observation of location 2) and is thus
+  assigned the rank of 1. Continuing the ranking yields the results of Table 2.5.
+
+© 2003 by CRC Press LLC
+TABLE 2.4
+
+Speed Measurements for Two Highway Locations
+
+ Location 1  Speed (mph)  Location 2  Speed (mph)
+Observation  Observation
+  55.3
+1  68.4  1  52.1
+  57.2
+2  59.7  2  59.4
+  50.0
+3  75.0  3  46.9
+  54.1
+4  74.7  4  62.5
+  65.6
+5  57.8  5  58.4
+
+6  59.4  6
+
+7  50.3  7
+
+8  59.1  8
+
+9  54.7  9
+
+10  65.9  10
+
+11  64.1
+
+12  60.9
+
+TABLE 2.5
+
+Ranking of Speed Measurements
+
+Speed (mph)  Item  Assigned Rank
+
+  46.9  6th observation of location 2  1
+  2
+  50.0  5th observation of location 2  3
+  ·
+  50.3  7th observation of location 1  ·
+  ·
+  ·  ·  21
+  22
+  ·  ·
+
+  ·  ·
+
+  74.7  4th observation of location 1
+
+  75.0  3rd observation of location 1
+
+In ranking the combined data, it may be that two or more data values
+are the same. In that case, the tied values are given the average ranking
+of their positions in the combined data set. The next step in the test is
+to sum the ranks for each sample. The sums are given in Table 2.6. The
+test procedure can be based on the ranks for either sample. For example,
+the sum of the ranks for sample 1 (location 1) is 169.5. Using R1 =
+169.5, n1 ! 12 , and n2 ! 10 , the U statistic from Equation 2.27 equals
+28.5. Further, the sampling distribution of the U statistic has the fol-
+lowing properties:
+
+  EU ! 60 .
+
+  WU ! 15.17
+
+As previously noted, with n1 ! 12 and n2 ! 10 , it can be assumed that
+the distribution of the U statistic is approximately normal; the value of
+the test statistic (Equation 2.30) is obtained as
+
+© 2003 by CRC Press LLC
+TABLE 2.6
+
+Combined Ranking of the Speed Data in the Two Samples
+
+ Location 1  Speed  Rank  Location 2  Speed  Rank
+Observation  (mph)  Observation  (mph)
+  7
+1  68.4  20  1  55.3  4
+  8
+2  59.7  14  2  52.1  12.5
+  2
+3  75.0  22  3  57.2  1
+  5
+4  74.7  21  4  59.4  16
+  18
+5  57.8  9  5  50.0  10
+  82.5
+6  59.4  12.5  6  46.9
+
+7  50.3  3  7  54.1
+
+8  59.1  11  8  62.5
+
+9  54.7  6  9  65.6
+
+10  65.9  19  10  58.4
+
+11  64.1  17  Sum of ranks
+
+12  60.9  15
+
+  Sum of ranks  169.5
+
+  Z* ! U  EU ! 28.5  60 ! 2.07 .
+  WU  15.17
+
+At the 0.05 level of signiﬁcance we reject the null hypothesis and conclude
+that the speeds at the two locations are not the same.
+
+2.5.4 The Wilcoxon Signed-Rank Test for Matched Pairs
+
+The MWW test described in the previous section deals with independent
+samples; the Wilcoxon signed-rank test, presented in this section, is useful
+for comparing two populations, say x and y, for which the observations are
+paired. As such, the test is a good alternative to the paired observations t
+test in cases where the difference between paired observations is not nor-
+mally distributed. The null hypothesis of the test is that the median difference
+between the two populations is zero. The test begins by computing the paired
+differences d1 ! x1  y1, d2 ! x2  y2 , ..., dn ! xn  yn , where n is the number of
+pairs of observations. Then, the absolute values of the differences,
+di , i ! 1, ..., n , are ranked from smallest to largest disregarding their sign.
+Following this, the sums of the ranks of the positive and of the negative
+differences are formed; that is, the smallest observation is denoted as 1 and
+the largest observation is n. 7() is deﬁned as the sum of the ranks for the
+positive differences and 7(–) the sum of the ranks for the negative differ-
+ences. The Wilcoxon T statistic is deﬁned as the smaller of the two sums of
+ranks as follows:
+
+  T ! MIN?§ , § A,  (2.31)
+
+© 2003 by CRC Press LLC
+  As the sample size increases, the distribution of the T statistic approximates
+the normal distribution; the convergence to the normal distribution is good
+for n u 25 . The mean of the T distribution is given by
+
+  ET ! nn  1 4 ,  (2.32)
+
+the standard deviation of T is given by
+
+  WT ! nn  1 2n  1 ,  (2.33)
+
+  24
+and the large sample test-statistic is given by
+
+  Z* ! T  ET .  (2.34)
+
+  WT
+
+2.5.5 The Kruskal–Wallis Test
+
+The Kruskal–Wallis test is the nonparametric equivalent to the independent
+samples single-factor analysis of variance. The test is applicable to problems
+where data are either ranked or quantitative, samples are independent, pop-
+ulations are not normally distributed, and the measurement scale is at least
+ordinal. The Kruskal–Wallis test is identical to the MWW test for comparing
+k populations where k is greater than 2. In all cases the competing hypotheses
+are as follows:
+
+  H0: All k populations have the same locations (median or mean).
+  Ha: At least two of the k population locations differ.
+
+  First, all observations are ranked from smallest to largest disregarding their
+sample of origin. The smallest observation is denoted as 1 and the largest
+observation is n. R1 is deﬁned as the sum of the ranks from sample 1, R2 the
+sum of the ranks from sample 2,…; Rk is the sum of the ranks from sample
+k. The Kruskal–Wallis test statistic is then deﬁned as follows:
+
+  § W ! 12 k Ri2  3(n  1) .  (2.35)
+
+  n(n  1) i!1 ni
+
+  For large samples (ni u 5), the distribution of the test statistic W under the
+null hypothesis is approximated by the chi-square distribution with k  1
+degrees of freedom. That is, the null hypothesis H0 is rejected for a given
+level of signiﬁcance E if W " Gk1;a 2 .
+
+© 2003 by CRC Press LLC
+  If the null hypothesis is rejected an important question arises: Which
+populations differ? To answer this question, suppose two populations i and
+j are compared. For each pair of data points from the populations the average
+rank of the sample is computed as
+
+  Ri ! Ri and R j ! Rj ,  (2.36)
+  ni  nj
+
+where Ri is the sum of the ranks for sample i, and Rj is the sum of the
+ranks for sample j. The test statistic D is deﬁned as the absolute difference
+
+between Ri and R j such that
+
+  D ! Ri  Rj .  (2.37)
+
+  The test is conducted by comparing the test statistic D with the critical
+value cKW , which is computed as
+
+  2 « n(n  1)»¨ 1 1 ¸
+  cKW !  G k1;a ¬  ¼©  ¹ ,  (2.38)
+  ­ 12 ½ª ni nj º
+
+where Gk1;a 2 is the critical value of the chi-squared distribution used in the
+original test. The comparisons of all paired values can be conducted jointly
+at the speciﬁed level of signiﬁcance E. The null hypothesis is rejected if and
+only if D " cKW .
+
+2.5.6 The Chi-Square Goodness-of-Fit Test
+
+The G2 test sees widespread use in a variety of transportation analyses. Its
+popularity stems from its versatility and its ability to help assess a large
+number of questions. The data used in G2 tests are either counts or frequencies
+measured across categories that may be measured on any scale. Examples
+include the number of accidents by accident type, number of people who
+fall into different age and gender categories, number of speeding tickets by
+roadway functional class, number of vehicles purchased per year by house-
+hold type, etc. The G2 distribution and associated statistical tests are very
+common and useful. All versions of the G2 test follow a common ﬁve-step
+process (Aczel, 1993):
+
+  1. Competing hypotheses for a population are stated (null and alter-
+  native).
+
+  2. Frequencies of occurrence of the events expected under the null are
+  computed. This provides expected counts or frequencies based on
+
+© 2003 by CRC Press LLC
+  some “statistical model,” which may be a theoretical distribution,
+  an empirical distribution, an independence model, etc.
+
+3. Observed counts of data falling in the different cells are noted.
+
+4. The difference between the observed and the expected counts are
+  computed and summed. The difference leads to a computed value
+  of the G2 test statistic.
+
+5. The test statistic is compared to the critical points of the G2 distribu-
+  tion and a decision on the null hypothesis is made.
+
+  In general, the G2 test statistic is equal to the squared difference between
+the observed count and the expected count in each cell divided by the
+
+expected count and summed over all cells. If the data are grouped into k
+
+cells, let the observed count in cell i be Oi and the expected count (expected
+under H0) be Ei. The summation is over all cells i = 1, 2,…, k. The test statistic is
+
+  § X 2 k ! Oi  Ei 2 .Ei(2.39)
+
+  i!1
+
+With increasing sample size and for a ﬁxed number of k cells, the distribution
+of the X2 test statistic approaches the G2 distribution with k  1 degrees of
+freedom provided that the expected frequencies are 5 or more for all cate-
+
+gories.
+
+  A goodness-of-ﬁt test assesses how well the sample distribution sup-
+
+ports an assumption about the population distribution. For example, in
+
+statistical analyses it is often assumed that samples follow the normal
+distribution; the G2 test can be used to assess the validity of such an
+assumption. Other assumed distributions and assumptions can also be
+
+tested with the chi-square goodness-of-ﬁt test (for an example in trans-
+
+portation see Washington et al., 1999). Most statistical software packages
+
+that compare actually observed data to hypothesized distributions use
+and report the X2 test statistic. Caution should be exercised, however,
+when applying the G2 test on small sample sizes or where cells are deﬁned
+such that small expected frequencies are obtained. In these instances the
+G2 test is inappropriate and exact methods should be applied (see Mehta
+and Patel, 1983, for details).
+
+  The G2 distribution is useful for other applications besides goodness-of-ﬁt
+tests. Contingency tables can be helpful in determining whether two classi-
+
+ﬁcation criteria, such as age and satisfaction with transit services, are inde-
+
+pendent of each other. The technique makes use of tables with cells
+
+corresponding to cross-classiﬁcation of attributes or events. The null hypoth-
+
+esis that factors are independent is used to obtain the expected distribution
+
+of frequencies in each of the contingency table cells. The competing hypoth-
+
+eses for a contingency table are as follows (the general form of a contingency
+
+table is shown in Table 2.7):
+
+© 2003 by CRC Press LLC
+TABLE 2.7
+
+General Layout of a Contingency Table
+
+  Second  First Classiﬁcation Category
+Classiﬁcation
+  1  .  j  Total
+  Category
+  R1
+  1  C11  .  .  Ri
+  i  n
+Total  .  .  Cij
+
+  C1  .  Cj
+
+  H0: The two classiﬁcation variables are statistically independent.
+  Ha: The two classiﬁcation variables are not statistically independent.
+
+  The test statistic X2 of Equation 2.39 for a two-way contingency table is
+rewritten as follows:
+
+  §§ 2
+  r c 2 Oij  Eij
+  X!  ,  (2.40)
+  Eij
+  i!1 j!1
+
+where the differences between observed and expected frequencies are
+
+summed over all rows and columns (r and c, respectively). The test statistic
+
+in Equation 2.40 is approximately G2 distributed with degrees of freedom,
+df = (r – 1)(c – 1). Finally, the expected count in cell (i, j), where Rj and Ci
+are the row and column totals, respectively, is
+
+  Eij ! RiCj .  (2.41)
+  n
+
+  The expected counts obtained from Equation 2.41 along with the observed
+cell counts are used to compute the value of the X2 statistic, which provides
+objective information needed to accept or reject the null hypothesis. The X2
+test statistic can easily be extended to three or more variables, where sum-
+mation is simply extended to cover all cells in the multiway contingency
+table. As stated previously, caution must be applied to contingency tables
+based on small sample sizes or when expected cell frequencies become small;
+in these instances the X2 test statistic is unreliable, and exact methods should
+be used.
+
+  Contingency tables and the X2 test statistic are also useful for assessing
+whether the proportion of some characteristic is equal in several populations.
+A transit agency, for example, may be interested in knowing whether the
+proportion of people who are satisﬁed with transit quality of service is about
+the same for three age groups: under 25, 25 to 44, and 45 and over. Whether
+the proportions are equal is of paramount importance in assessing whether
+the three age populations are homogeneous with respect to satisfaction with
+
+© 2003 by CRC Press LLC
+the quality of service. Therefore, tests of equality of proportions across sev-
+eral populations are called tests of homogeneity.
+
+  Homogeneity tests are conducted similarly to previously described tests,
+but with two important differences. First, the populations of interest are
+identiﬁed prior to the analysis and sampling is done directly from them,
+unlike contingency table analysis where a sample is drawn from one popu-
+lation and then cross-classiﬁed according to some criteria. Second, because
+the populations are identiﬁed and sampled from directly, the sample sizes
+representing the different populations of interest are ﬁxed. This experimental
+setup is called a ﬁxed marginal totals G2 analysis and does not affect the
+analysis procedure in any way.
+
+© 2003 by CRC Press LLC
+  Part II
+
+  Continuous Dependent
+  Variable Models
+
+© 2003 by CRC Press LLC
+3
+
+Linear Regression
+
+Linear regression is one of the most widely studied and applied statistical
+and econometric techniques. There are numerous reasons for this. First,
+linear regression is suitable for modeling a wide variety of relationships
+between variables. In addition, the assumptions of linear regression models
+are often suitably satisﬁed in many practical applications. Furthermore,
+regression model outputs are relatively easy to interpret and communicate
+to others, numerical estimation of regression models is relatively easy, and
+software for estimating models is readily available in numerous “non-spe-
+cialty” software packages. Linear regression can also be overused or mis-
+used. In some cases the assumptions are not strictly met, and the correct
+alternatives are not known, understood, or applied. In particular situations,
+suitable alternative modeling techniques are not known, or the specialized
+software and knowledge required to estimate such models are not obtained.
+
+  It should not be surprising that linear regression serves as a good starting
+point for illustrating statistical model estimating procedures. Applying
+linear regression when other methods are more suitable should be avoided
+at all costs.
+
+  This chapter illustrates the estimation of linear regression models, explains
+when linear regression models are inappropriate, describes how to interpret
+linear regression model outputs, and discusses how a linear regression model
+is selected among competing models. Matrix algebra is used throughout the
+chapter to illustrate the concepts, but only to the extent necessary to illustrate
+the most important analytical aspects.
+
+3.1 Assumptions of the Linear Regression Model
+Linear regression is used to model a linear relationship between a continuous
+dependent variable and one or more independent variables. Most applica-
+tions of regression seek to identify a set of independent variables that are
+thought to covary with the dependent variable. In general, explanatory or
+“causal” models are based on data obtained from well-controlled experiments
+
+© 2003 by CRC Press LLC
+(for example, those conducted in a laboratory), predictive models are based
+on data obtained from observational studies, and quality control models are
+based on data obtained from a process or system being controlled. Whether
+independent variables are causal or merely associative depends on many
+factors, only one of which is the result of statistical analysis.
+
+  There are numerous assumptions of the linear regression model, which
+should be thought of as requirements. When any of the requirements are not
+met, remedial actions should be taken, and in some cases, alternative mod-
+eling approaches should be adopted. The following are the assumptions of
+the linear regression model.
+
+3.1.1 Continuous Dependent Variable Y
+
+The assumption in regression is that the response is continuous; that is, it
+can take on any value within a range of values. A continuous variable is
+measured on the interval or ratio scale. Although it is often done, regression
+on ordinal scale response variables is incorrect. For example, count variables
+(nonnegative integers) should be modeled with Poisson and negative bino-
+mial regression (see Chapter 10). Modeling nominal scale dependent vari-
+ables (discrete variables that are not ordered) requires discrete outcome
+models, presented in Chapter 11.
+
+3.1.2 Linear-in-Parameters Relationship between Y and X
+
+This requirement can cause some confusion. The form of the regression
+model requires that the relationship between variables is inherently linear
+— a straight-line relationship between the dependent variable Y and the
+independent variables. The simple linear regression model is given by
+
+  Yi ! F0  F1X1i  Ii .  (3.1)
+
+  In this algebraic expression of the simple linear regression model, the
+dependent variable Y is a function of a constant term F (the point where
+the line crosses the Y axis) and a constant F times the value x of independent
+variable X for observation i, plus a disturbance term I. The subscript i
+corresponds to the individual or observation, where i = 1, 2, 3,…, n. In most
+
+applications the response variable Y is a function of many independent
+
+variables. In these cases it is more efﬁcient to express the linear regression
+
+model in matrix notation
+
+  Yn v 1 ! Xn v pFp v 1  In v 1 .  (3.2)
+
+Equation 3.2 is the regression model in matrix terms, where the subscripts
+depict the size of the matrices. For instance, the X matrix is an n v p matrix
+
+© 2003 by CRC Press LLC
+of observations, with n the number of observations and p the number of
+variables measured on each observation.
+
+  This linearity requirement is not as restrictive as it ﬁrst sounds. Because
+the scales of both the dependent and independent variables can be trans-
+formed, a suitable linear relationship can often be found. As is discussed
+later in the chapter and in Appendix D, there are cases when a transformation
+is inappropriate, requiring a different modeling framework such as logistic
+regression, Poisson regression, survival analysis, and so on.
+
+3.1.3 Observations Independently and Randomly Sampled
+
+Although this requirement can be relaxed if remedial actions are taken, an
+assumption necessary to make inferences about the population of interest is
+that the data are randomly sampled from the population. Independence
+requires that the probability that an observation is selected is unaffected by
+other observations selected into the sample. In some cases random assign-
+ment can be used in place of random sampling, and other sampling schemes
+such as stratiﬁed and cluster samples can be accommodated in the regression
+modeling framework with corrective measures.
+
+3.1.4 Uncertain Relationship between Variables
+
+The difference between the equation of a straight-line and a linear regression
+model is the addition of a stochastic, disturbance, or disturbance term, I.
+This disturbance term consists of several elements of the process being
+modeled. First, it can contain variables that were omitted from the model —
+assumed to be the sum of many small, individually unimportant effects,
+some positive and others negative. Second, it contains measurement errors
+in the dependent variable, or the imprecision in measuring Y, again assumed
+to be random. Finally, it contains random variation inherent in the underly-
+ing data-generating process.
+
+3.1.5 Disturbance Term Independent of X and Expected Value Zero
+The requirements of the disturbance term I can be written as follows:
+
+  E?Ii A ! 0 ,  (3.3)
+
+and
+
+  VAR?Ii A ! W2 .  (3.4)
+
+Equation 3.4 shows that the variance of the disturbance term, W, is independent
+across observations. This is referred to as the homoscedasticity assumption and
+
+© 2003 by CRC Press LLC
+implies that the net effect of model uncertainty, including unobserved effects,
+measurement errors, and true random variation, is not systematic across obser-
+vations; instead it is random across observations and across covariates. When
+disturbances are heteroscedastic (vary systematically across observations), then
+alternative modeling approaches such as weighted least squares or generalized
+least squares may be required.
+
+3.1.6 Disturbance Terms Not Autocorrelated
+This requirement is written as follows:
+
+  COV?Ii , I j A ! 0 if i { j .  (3.5)
+
+Equation 3.5 speciﬁes that disturbances are independent across observations.
+
+Common violations of this assumption occur when observations are
+
+repeated on individuals, so the unobserved heterogeneity portion of the
+disturbance term I is the same across repeated observations. Observations
+across time often possess autocorrelated disturbances as well. When distur-
+
+bances are correlated across observations, generalized least squares or other
+
+correction methods are required.
+
+3.1.7 Regressors and Disturbances Uncorrelated
+
+This property is known as exogeneity of the regressors. When the regres-
+sors are exogenous, they are not correlated with the disturbance term.
+Exogeneity implies that the values of the regressors are determined by
+inﬂuences “outside of the model.” So Y does not directly inﬂuence the
+value of an exogenous regressor. In mathematical terms, this requirement
+translates to
+
+  COV?Xi , I j A ! 0 for all i and j .  (3.6)
+
+When an important variable is endogenous (depends on Y), then alternative
+methods are required, such as instrumental variables, two and three stage
+least squares, or structural equations models.
+
+3.1.8 Disturbances Approximately Normally Distributed
+
+Although not a requirement for the estimation of linear regression models,
+the disturbance terms are required to be approximately normally distributed
+in order to make inferences about the parameters from the model. In this
+regard the central limit theorem enables exact inference about the properties
+of statistical parameters. Combined with the independence assumption, this
+
+© 2003 by CRC Press LLC
+

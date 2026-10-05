@@ -1,0 +1,547 @@
+TABLE C.3 (CONTINUED)
+
+Critical Values for the Chi-Square Distribution G2ER
+
+  E
+
+v  .10  .05  .025  .01  .005  .001  .0005 .0001
+
+7000 7152.06 7195.75 7233.79 7278.19 7308.53 7371.35 7395.90 7448.62
+7500 7657.38 7702.58 7741.93 7787.86 7819.23 7884.18 7909.57 7964.06
+8000 8162.53 8209.19 8249.81 8297.20 8329.58 8396.59 8422.78 8479.00
+8500 8667.52 8715.59 8757.44 8806.26 8839.60 8908.62 8935.59 8993.48
+9000 9172.36 9221.81 9264.85 9315.05 9349.34 9420.30 9448.03 9507.53
+
+9500  9677.07 9727.86 9772.05 9823.60 9858.81 9931.67 9960.13 10021.21
+10000  10181.66 10233.75 10279.07 10331.93 10368.03 10442.73 10471.91 10534.52
+
+© 2003 by CRC Press LLC
+© 2003 by CRC Press LLC  TABLE C.4
+
+  Critical Values for the F Distribution
+
+  For given values of R1 and R2, this table contains values of  F0.1,v1,v2; deﬁned by Prob[F u  F0.1,v1,v2] = E = 0.1.
+  R1
+
+  R2  1  2  3  4  5  6  7  8  9  10  50  100  g
+
+  1  39.86 49.50 53.59 55.83 57.24  58.20  58.91  59.44  59.86  60.19  62.69  63.01  63.33
+  9.33  9.35  9.37  9.38  9.39  9.47  9.48  9.49
+  2  28.53  9.00  9.16  9.24  9.29  5.28  5.27  5.25  5.24  5.23  5.15  5.14  5.13
+  4.01  3.98  3.95  3.94  3.92  3.80  3.78  3.76
+  3  5.54  5.46  5.39  5.34  5.31
+  3.15  3.13  3.10
+  4  4.54  4.32  4.19  4.11  4.05  2.77  2.75  2.72
+  2.52  2.50  2.47
+  5  4.06  3.78  3.62  3.52  3.45  3.40  3.37  3.34  3.32  3.30  2.35  2.32  2.29
+  2.22  2.19  2.16
+  6  3.78  3.46  3.29  3.18  3.11  3.05  3.01  2.98  2.96  2.94
+  2.12  2.09  2.06
+  7  3.59  3.26  3.07  2.96  2.88  2.83  2.78  2.75  2.72  2.70  2.04  2.01  1.97
+  1.87  1.94  1.90
+  8  3.46  3.11  2.92  2.81  2.73  2.67  2.62  2.59  2.56  2.54  1.92  1.88  1.85
+  1.87  1.83  1.80
+  9  3.36  3.01  2.81  2.69  2.61  2.55  2.51  2.47  2.44  2.42
+  1.83  1.79  1.76
+  10  3.29  2.92  2.73  2.61  2.52  2.46  2.41  2.38  2.35  2.32  1.79  1.76  1.72
+  1.76  1.73  1.69
+  11  3.23  2.86  2.66  2.54  2.45  2.39  2.34  2.30  2.27  2.25  1.74  1.70  1.66
+  1.71  1.67  1.63
+  12  3.18  2.81  2.61  2.48  2.39  2.33  2.28  2.24  2.21  2.19
+  1.69  1.65  1.61
+  13  3.14  2.76  2.56  2.43  2.35  2.28  2.23  2.20  2.16  2.14  1.61  1.56  1.52
+  1.44  1.39  1.34
+  14  3.10  2.73  2.52  2.39  2.31  2.24  2.19  2.15  2.12  2.10  1.35  1.29  1.20
+  1.24  1.17  1.00
+  15  3.07  2.70  2.49  2.36  2.27  2.21  2.16  2.12  2.09  2.06
+
+  16  3.05  2.67  2.46  2.33  2.24  2.18  2.13  2.09  2.06  2.03
+
+  17  3.03  2.64  2.44  2.31  2.22  2.5  2.10  2.06  2.03  2.00
+
+  18  3.01  2.62  2.42  2.29  2.20  2.13  2.08  2.04  2.00  1.98
+
+  19  2.99  2.61  2.40  2.27  2.18  2.11  2.06  2.02  1.98  1.96
+
+  20  2.97  2.59  2.38  2.25  2.16  2.09  2.04  2.00  1.96  1.94
+
+  25  2.92  2.53  2.32  2.18  2.09  2.02  1.97  1.93  1.89  1.87
+
+  50  2.81  2.41  2.20  2.06  1.97  1.90  1.84  1.80  1.76  1.73
+
+  100  2.76  2.36  2.14  2.00  1.91  1.83  1.78  1.73  1.69  1.66
+
+  g  2.71  2.30  2.08  1.94  1.85  1.77  1.72  1.67  1.63  1.60
+© 2003 by CRC Press LLC  For given values of R1 and R2, this table contains values of  F0.05,v1,v2; deﬁned by Prob[F   F0.05,v1,v2] = E = 0.05.
+  R1
+
+  R2  1  2  3  4  5  6  7  8  9  10  50  100  g
+
+  1  161.4 199.5 215.7 224.6 230.2  234.0  236.8  238.9  240.5  241.9  251.8  253.0  254.3
+  19.33  19.35  19.37  19.38  19.40  19.48  19.49  19.50
+  2  18.51 19.00 19.16 19.25 19.30
+  8.94  8.89  8.85  8.81  8.79  8.58  8.55  8.53
+  3  10.13  9.55  9.28  9.12  9.01  6.16  6.09  6.04  6.00  5.96  5.70  5.66  5.63
+
+  4  7.71  6.94  6.59  6.39  6.26  4.41  4.36
+  3.71  3.67
+  5  6.61  5.79  5.41  5.19  5.05  4.95  4.88  4.82  4.77  4.74  4.44  3.27  3.23
+  2.97  2.93
+  6  5.99  5.14  4.76  4.53  4.39  4.28  4.21  4.15  4.10  4.06  3.75  2.76  2.71
+
+  7  5.59  4.74  4.35  4.12  3.97  3.87  3.79  3.73  3.68  3.64  3.32  2.59  2.54
+  2.46  2.40
+  8  5.32  4.46  4.07  3.84  3.69  3.58  3.50  3.44  3.39  3.35  3.02  2.35  2.30
+  2.26  2.21
+  9  5.12  4.26  3.86  3.63  3.48  3.37  3.29  3.23  3.18  3.14  2.80  2.19  2.13
+
+  10  4.96  4.10  3.71  3.48  3.33  3.22  3.14  3.07  3.02  2.98  2.64  2.12  2.07
+  2.07  2.01
+  11  4.84  3.98  3.59  3.36  3.20  3.09  3.01  2.95  2.90  2.85  2.51  2.02  1.96
+  1.98  1.92
+  12  4.75  3.89  3.49  3.26  3.11  3.00  2.91  2.85  2.80  2.75  2.40  1.94  1.88
+
+  13  4.67  3.81  3.41  3.18  3.03  2.92  2.83  2.77  2.71  2.67  2.31  1.91  1.84
+  1.78  1.71
+  14  4.60  3.74  3.34  3.11  2.96  2.85  2.76  2.70  2.65  2.60  2.24  1.52  1.45
+  1.39  1.28
+  15  4.54  3.68  3.29  3.06  2.90  2.79  2.71  2.64  2.59  2.54  2.18  1.25  1.00
+
+  16  4.49  3.63  3.24  3.01  2.85  2.74  2.66  2.59  2.54  2.49  2.12
+
+  17  4.45  3.59  3.20  2.96  2.81  2.70  2.61  2.55  2.49  2.45  2.08
+
+  18  4.41  3.55  3.16  2.93  2.77  2.66  2.58  2.51  2.46  2.41  2.04
+
+  19  4.38  3.52  3.13  2.90  2.74  2.63  2.54  2.48  2.42  2.38  2.00
+
+  20  4.35  3.49  3.10  2.87  2.71  2.60  2.51  2.45  2.39  2.35  1.97
+
+  25  4.24  3.39  2.99  2.76  2.60  2.49  2.40  2.34  2.28  2.24  1.84
+
+  50  4.03  3.18  2.79  2.56  2.40  2.29  2.20  2.13  2.07  2.03  1.60
+
+  100  3.94  3.09  2.70  2.46  2.31  2.19  2.10  2.03  1.97  1.93  1.48
+
+  g  3.84  3.00  2.60  2.37  2.21  2.10  2.01  1.94  1.88  1.83  1.35
+© 2003 by CRC Press LLC  TABLE C.4 (CONTINUED)
+
+  Critical Values for the F Distribution
+
+  For given values of R1 and R2, this table contains values of F0.025,v1,v2; deﬁned by Prob[F u F0.025,v1,v2] = E = 0.025.
+  R1
+
+  R2  1  2  3  4  5  6  7  8  9  10  50  100  g
+
+  1  647.8  799.5  864.2  899.6  921.8  937.1  948.2  956.7  963.3  968.6  1008  1013  1018
+  39.48  39.49  39.50
+  2  38.51  39.00  39.17  39.25  39.30  39.33  39.36  39.37  39.39  39.40  14.01  13.96  13.90
+  8.38  8.32  8.26
+  3  17.44  16.04  15.44  15.10  14.88  14.73  14.62  14.54  14.47  14.42
+  6.14  6.08  6.02
+  4  12.22  10.65  9.98  9.60  9.36  9.20  9.07  8.98  8.90  8.84  4.98  4.92  4.85
+  4.28  4.21  4.14
+  5  10.01  8.43  7.76  7.39  7.15  6.98  6.85  6.76  6.68  6.62  3.81  3.74  3.67
+  3.47  3.40  3.33
+  6  8.81  7.26  6.60  6.23  5.99  5.82  5.70  5.60  5.52  5.46
+  3.22  3.15  3.08
+  7  8.07  6.54  5.89  5.52  5.29  5.12  4.99  4.90  4.82  4.76  3.03  2.96  2.88
+  2.87  2.80  2.72
+  8  7.57  6.06  5.42  5.05  4.82  4.65  4.53  4.43  4.36  4.30  2.74  2.67  2.60
+  2.64  2.56  2.49
+  9  7.21  5.71  5.08  4.72  4.48  4.32  4.20  4.10  4.03  3.96
+  2.55  2.47  2.40
+  10  6.94  5.46  4.83  4.47  4.24  4.07  3.95  3.85  3.78  3.72  2.47  2.40  2.32
+  2.41  2.33  2.25
+  11  6.72  5.26  4.63  4.28  4.04  3.88  3.76  3.66  3.59  3.53  2.35  2.27  2.19
+  2.30  2.22  2.13
+  12  6.55  5.10  4.47  4.12  3.89  3.73  3.61  3.51  3.44  3.37
+  2.25  2.17  2.09
+  13  6.41  4.97  4.35  4.00  3.77  3.60  3.48  3.39  3.31  3.25  2.08  2.00  1.91
+  1.75  1.66  1.54
+  14  6.30  4.86  4.24  3.89  3.66  3.50  3.38  3.29  3.21  3.15  1.59  1.48  1.37
+  1.43  1.27  1.00
+  15  6.20  4.77  4.15  3.80  3.58  3.41  3.29  3.20  3.12  3.06
+
+  16  6.12  4.69  4.08  3.73  3.50  3.34  3.22  3.12  3.05  2.99
+
+  17  6.04  4.62  4.01  3.66  3.44  3.28  3.16  3.06  2.98  2.92
+
+  18  5.98  4.56  3.95  3.61  3.38  3.22  3.10  3.01  2.93  2.87
+
+  19  5.92  4.51  3.90  3.56  3.33  3.17  3.05  2.96  2.88  2.82
+
+  20  5.87  4.46  3.86  3.51  3.29  3.13  3.01  2.91  2.84  2.77
+
+  25 5/69  4/29  3.69  3.35  3.13  2.97  2.85  2.75  2.68  2.61
+
+  50  5.34  3.97  3.39  3.05  2.83  2.67  2.55  2.46  2.38  2.32
+
+  100  5.18  3.83  3.25  2.92  2.70  2.54  2.42  2.32  2.24  2.18
+
+  g  5.02  3.69  3.12  2.79  2.57  2.41  2.29  2.19  2.11  2.05
+© 2003 by CRC Press LLC  For given values of R1 and R2, this table contains values of F0.01,v1,v2 ; deﬁned by Prob[F  F0.01,v1,v2 ] = E = 0.01.
+  R1
+
+  R2  1  2  3  4  5  6  7  8  9  10  50  100  g
+
+  1  4052  5000  5403  5625  5764  5859  5928  5981  6022  6056  6303  6334  6336
+  99.48  99.49  99.50
+  2  98.50  99.00  99.17  99.25  99.30  99.33  99.36  99.37  99.39  99.40  26.35  26.24  26.13
+  13.69  13.58  13.46
+  3  34.12  30.82  29.46  28.71  28.24  27.91  27.67  27.49  27.35  27.23
+  9.24  9.13  9.02
+  4  21.20  18.00  16.69  15.98  15.52  15.21  14.98  14.80  14.66  14.55  7.09  6.99  6.88
+  5.86  5.75  5.65
+  5  16.26  13.27  12.06  11.39  10.97  10.67  10.46  10.29  10.16  10.05  5.07  4.96  4.86
+  4.52  4.41  4.31
+  6  13.75  10.92  9.78  9.15  8.75  8.47  8.26  8.10  7.98  7.87
+  4.12  4.01  3.91
+  7  12.25  9.55  8.45  7.85  7.46  7.19  6.99  6.84  6.72  6.62  3.81  3.71  3.60
+  3.57  3.47  3.36
+  8  11.26  8.65  7.59  7.01  6.63  6.37  6.18  6.03  5.91  5.81  3.38  3.27  3.17
+  3.22  3.11  3.00
+  9  10.56  8.02  6.99  6.42  6.06  5.80  5.61  5.47  5.35  5.26
+  3.08  2.98  2.87
+  10  10.04  7.56  6.55  5.99  5.64  5.39  5.20  5.06  4.94  4.85  2.97  2.86  2.75
+  2.87  2.76  2.65
+  11  9.65  7.21  6.22  5.67  5.32  5.07  4.89  4.74  4.63  4.54  2.78  2.68  2.57
+  2.71  2.60  2.49
+  12  9.33  6.93  5.95  5.41  5.06  4.82  4.64  4.50  4.39  4.30
+  2.64  2.54  2.42
+  13  9.07  6.70  5.74  5.21  4.86  4.62  4.44  4.30  4.19  4.10  2.40  2.29  2.17
+  1.95  1.82  1.70
+  14  8.86  6.51  5.56  5.04  4.69  4.46  4.28  4.14  4.03  3.94  1.74  1.60  1.45
+  1.53  1.32  1.00
+  15  8.68  6.36  5.42  4.89  4.56  4.32  4.14  4.00  3.89  3.80
+
+  16  8.53  6.23  5.29  4.77  4.44  4.20  4.03  3.89  3.78  3.69
+
+  17  8.40  6.11  5.18  4.67  4.34  4.10  3.93  3.79  3.68  3.59
+
+  18  8.29  6.01  5.09  4.58  4.25  4.01  3.84  3.71  3.60  3.51
+
+  19  8.18  5.93  5.01  4.50  4.17  3.94  3.77  3.63  3.52  3.43
+
+  20  8.10  5.85  4.94  4.43  4.10  2.87  3.70  3.56  3.46  3.37
+
+  25  7.77  5.57  4.68  4.18  3.85  3.63  3.46  3.32  3.22  3.13
+
+  50  7.17  5.06  4.20  3.72  3.41  3.19  3.02  2.89  2.78  2.70
+
+  100  6.90  4.82  3.98  3.51  3.21  2.99  2.82  2.69  2.59  2.50
+
+  g  6.63  4.61  3.78  3.32  3.02  2.80  2.64  2.51  2.41  2.32
+© 2003 by CRC Press LLC  TABLE C.4 (CONTINUED)
+
+  Critical Values for the F Distribution
+
+  For given values of R1 and R2, this table contains values of F0.005,v1,v2; deﬁned by Prob[F u F0.005,v1,v2] = E = 0.005.
+  R1
+
+  R2  1  2  3  4  5  6  7  8  9  10  50  100  g
+
+  1  16211  20000  21615  22500  23056  23437  23715  23925  24091  24224  25211  25337  25465
+  199.5  199.5  199.5
+  2  198.5  199.0  199.2  199.2  199.3  199.3  199.4  199.4  199.4  199.4  42.21  42.02  41.83
+  19.67  19.50  19.32
+  3  55.55  49.80  47.47  46.19  45.39  44.84  44.43  44.13  43.88  43.69
+
+  4  31.33  26.28  24.26  23.15  22.46  21.97  21.62  21.35  21.14  20.97
+
+  5  22.78  18.31  16.53  15.56  14.94  14.51  14.20  13.96  13.77  13.62  12.45  12.30  12.14
+
+  6  18.63  14.54  12.92  12.03  11.46  11.07  10.79  10.57  10.39  10.25  9.17  9.03  8.88
+
+  7  16.24  12.40  10.88  10.05  9.52  9.16  8.89  8.68  8.51  8.38  7.35  7.22  7.08
+
+  8  14.69  11.04  9.60  8.81  8.30  7.95  7.69  7.50  7.34  7.21  6.22  6.09  5.95
+
+  9  13.61  10.11  8.72  7.96  7.47  7.13  6.88  6.69  6.54  6.42  5.45  5.32  5.19
+
+  10  12.83  9.43  8.08  7.34  6.97  6.54  6.30  6.12  5.97  5.85  4.90  4.77  4.64
+
+  11  12.23  8.91  7.60  6.88  6.42  6.10  5.86  5.68  5.54  5.42  4.49  4.36  4.23
+
+  12  11.75  8.51  7.23  6.52  6.07  5.76  5.52  5.35  5.20  5.09  4.17  4.04  3.90
+
+  13  11.37  8.19  6.93  6.23  5.79  5.48  5.25  5.08  4.94  4.82  3.91  3.78  3.65
+
+  14  11.06  7.92  6.68  6.00  5.56  5.26  5.03  4.86  4.72  4.60  3.70  3.57  3.44
+
+  15  10.80  7.70  6.48  5.80  5.37  5.07  4.85  4.67  4.54  4.42  3.52  3.39  3.26
+
+  16  10.58  7.51  6.30  5.64  5.21  4.91  4.69  4.52  4.38  4.27  3.37  3.25  3.11
+
+  17  10.38  7.35  6.16  5.50  5.07  4.78  4.56  4.39  4.25  4.14  3.25  3.12  2.98
+
+  18  10.22  7.21  6.03  5.37  4.96  4.66  4.44  4.28  4.14  4.03  3.14  3.01  2.87
+
+  19  10.07  7.09  5.92  5.27  4.85  4.56  4.34  4.18  4.04  3.93  3.04  2.91  2.78
+
+  20  9.94  6.99  5.82  5.17  4.76  4.47  4.26  4.09  3.96  3.85  2.96 283  2.69
+
+  25  9.48  6.60  5.46  4.84  4.43  4.15  3.94  3.78  3.64  3.54  2.65  2.52  2.38
+
+  50  8.63  5.90  4.83  4.23  3.85  3.58  3.38  3.22  3.09  2.99  2.10  1.95  1.81
+
+  100  8.24  5.59  4.54  3.96  3.59  3.33  3.13  2.97  2.85  2.74  1.84  1.68  1.51
+
+  g  7.88  5.30  4.28  3.762  3.35  3.09  2.90  2.74  2.62  2.52  1.60  1.36  1.00
+© 2003 by CRC Press LLC  For given values of R1 and R2, this table contains values of F0.001,v1,v2; deﬁned by Prob[F  F0.001,v1,v2] = E = 0.001.
+  R1
+
+  R2  1  2  3  4  5  6  7  8  9  10  50  100  g
+
+  2  998.5  999.0  999.2  999.2  999.3  999.3  999.4  999.4  999.4  999.4  999.5  999.5  999.5
+  124.7  124.1  123.5
+  3  167.0  148.5  141.1  137.1  134.6  132.8  131.6  130.6  129.9  129.2
+  44.88  44.47  44.05
+  4  74.14  61.25  45.18  53.44  51.71  50.53  49.66  49.00  48.47  48.05
+  24.44  24.12  23.79
+  5  47.18  37.12  33.20  31.09  29.75  28.83  28.16  27.65  27.24  26.92  16.31  16.03  15.75
+  12.20  11.95  11.70
+  6  35.51  27.00  23.70  21.92  20.80  20.03  19.46  19.03  18.69  18.41  9.80  9.57  9.33
+  8.26  8.04  7.81
+  7  29.25  21.69  18.77  17.20  16.21  15.52  15.02  14.63  14.33  14.08
+  7.19  6.98  6.76
+  8  25.41  18.49  15.83  14.39  13.48  12.86  12.40  12.05  11.77  11.54  6.42  6.21  6.00
+  5.83  5.63  5.42
+  9  22.86  16.39  13.90  12.56  11.71  11.13  10.70  10.37  10.11  9.89  5.37  5.17  4.97
+  5.00  4.81  4.60
+  10  21.04  14.91  12.55  11.28  10.48  9.93  9.52  9.20  8.96  8.75
+  4.70  4.51  4.31
+  11  19.69  13.81  11.56  10.35  9.58  9.05  8.66  8.35  8.12  7.92  4.45  4.26  4.06
+  4.24  4.05  3.85
+  12  18.64  12.97  10.80  9.63  8.89  8.38  8.00  7.71  7.48  7.29  4.06  3.87  3.67
+  3.90  3.71  3.51
+  13  17.82  12.31  10.21  9.07  8.35  7.86  7.49  7.21  6.98  6.80
+  3.77  3.58  3.38
+  14  17.14  11.78  9.73  8.62  7.92  7.44  7.08  6.80  6.58  6.40  3.28  3.09  2.89
+  2.44  2.25  2.06
+  15  16.59  11.34  9.34  8.25  7.57  7.09  6.74  6.47  6.26  6.08  2.08  1.87  1.65
+  1.75  1.45  1.00
+  16  16.12  10.97  9.01  7.94  7.27  6.80  6.46  6.19  5.98  5.81
+
+  17  15.72  10.66  8.73  7.68  7.02  6.56  6.22  5.96  5.75  5.58
+
+  18  15.38  10.39  8.49  7.46  6.81  6.35  6.02  5.76  5.56  5.39
+
+  19  15.08  10.16  8.28  7.27  6.62  6.18  5.85  5.59  5.39  5.22
+
+  20  14.82  9.95  8.10  7.10  6.46  6.02  5.69  5.44  5.24  5.08
+
+  25  13.88  9.22  7.45  6.49  5.89  5.46  5.15  4.91  4.71  4.56
+
+  50  12.22  7.96  6.34  5.46  4.90  4.51  4.22  4.00  3.82  3.67
+
+  100  11.50  7.41  5.86  5.02  4.48  4.11  3.83  3.61  3.44  3.30
+
+  g  10.83  6.91  5.42  4.62  4.10  3.74  3.47  3.27  3.10  2.96
+Appendix D: Variable Transformations
+
+D.1 Purpose of Variable Transformations
+
+Transformations are used to present or translate data to different scales. In
+modeling applications, transformations are often used to improve the com-
+patibility of data with assumptions underlying a modeling process, to lin-
+earize a relationship between two variables whose relationship is nonlinear,
+or to modify the range of values of a variable. Both dependent and indepen-
+dent variables can be transformed.
+
+  Although transformations may result in an improvement of speciﬁc mod-
+eling assumptions, such as linearity or homoscedasticity, they can result in
+the violation of other assumptions. Thus, transformations must be used in
+an iterative fashion, with close monitoring of other modeling assumptions
+as transformations are made.
+
+  A difﬁculty arises when transforming the dependent variable Y because
+the variable is expressed in a form that may not be of interest to the inves-
+tigation, such as the log of Y, the square root of Y, or the inverse of Y. When
+comparing statistical models, the comparisons should always be made on
+the original untransformed scale of Y. These comparisons extend to good-
+ness-of-ﬁt statistics and model validation exercises. An example in transpor-
+tation of the necessity to compare models in original units is described in
+Fomunung et al. (2000).
+
+  Transformations not only reﬂect assumptions about the underlying rela-
+tion between variables, but also the underlying disturbance structure of the
+model. For example, exponential transformations imply a multiplicative dis-
+turbance structure of the underlying model, and not an additive disturbance
+structure that is assumed in linear regression. For example, when the under-
+lying function Y = E EXP(FX) + I is suspected, a log transformation gives
+LN(Y) = ln(E EXP(FX) + I) = LN[(E EXP(FX))(1 + I/E EXP(FX))] = LN(E) +
+FX + LN(1 + I/E EXP(FX)). Although the model is linear, the disturbance
+term is not the one speciﬁed in ordinary least squares regression because it
+is a function of X, E, and F, and thus is multiplicative. It is important that
+disturbance terms always be checked after transformations to make sure
+they are still compatible with modeling assumptions. Guidelines for apply-
+ing transformations include:
+
+© 2003 by CRC Press LLC
+  1. Transformations on a dependent variable will change the distribu-
+  tion of disturbance terms in a model. Thus, incompatibility of model
+  disturbances with an assumed distribution can sometimes be rem-
+  edied with transformations of the dependent variable.
+
+  2. Nonlinearities between the dependent variable and an independent
+  variable are often linearized by transforming the independent vari-
+  able. Transformations of an independent variable do not change the
+  distribution of disturbance terms.
+
+  3. When a relationship between a dependent and independent variable
+  requires extensive transformations to meet linearity and disturbance
+  distribution requirements, often there are alternative methods for
+  estimating the parameters of the relation, such as nonlinear and
+  generalized least squares regression.
+
+  4. Conﬁdence intervals computed on transformed variables need to be
+  computed by transforming back to the original units of interest.
+
+D.2 Commonly Used Variable Transformations
+
+Taken in the context of modeling the relationship between a dependent
+variable Y and independent variable X, there are several motivations for
+transforming a variable or variables. It should be noted that most transfor-
+mations attempt to make the relation between Y and X linear because linear
+relationships are easier to model. Transformations done to Y and X in their
+originally measured units are merely done for convenience of the modeler,
+and not because of an underlying problem with the data.
+
+  The following ﬁgures show common transformations used to linearize a
+relationship between two random variables, X and Y. Provided are plots of
+the relationships between X and Y in their untransformed states, and then
+some examples of transformations on X, Y, or both that are used to linearize
+the relation.
+
+D.2.1 Parabolic Transformations
+
+Parabolic transformations are used to linearize a nonlinear or curvilinear
+relation. The parabolic transformation is used when the true relation between
+Y and X is given as Y = E + FX + KX2. The transformation is done by simply
+adding a squared or quadratic term to the right-hand side of the equation,
+which is really more than a mere transformation.
+
+  The nature of the relationship depends on the values of E, F and K. Figure
+D.1 shows an example of a relation between Y and X when all parameters
+are positive, and Figure D.2 shows an example of the relation between Y
+and X when E and F are positive and K is negative.
+
+© 2003 by CRC Press LLC
+  Y
+
+  X
+FIGURE D.1
+Parabolic relation (functional form: Y = E + FX + KX2, where E > 0, F > 0, K > 0).
+
+  Y
+
+  X
+FIGURE D.2
+Parabolic relation (functional form: Y = E + FX + KX2, where E > 0, F > 0, K < 0).
+
+D.2.2 Hyperbolic Transformations
+Hyperbolic transformations are used to linearize a variety of curvilinear
+shapes. A hyperbolic transformation is used when the true relation between
+Y and X is given as Y = X/(E + FX), as shown in Figures D.3 and D.4. By
+transforming both Y and X using the inverse transformation, one can gen-
+erate a linear relationship such that 1/Y = F0 + F1(1/X) + disturbance. In this
+transformation, E = F1 and F = F0. Figure D.3 shows an example of a relation
+between Y and X when E is positive, whereas Figure D.4 shows an example
+of the relation between Y and X when E is negative.
+
+  Y
+
+  X
+FIGURE D.3
+Hyperbolic relation (functional form: Y = X/(E + FX), where E > 0).
+
+© 2003 by CRC Press LLC
+  Y
+
+  X
+FIGURE D.4
+Hyperbolic relation (functional form: Y = X/(E + FX), where E < 0).
+
+D.2.3 Exponential Functions
+The natural log transformation is used to correct heterogeneous variance in
+some cases, and when the data exhibit curvature between Y and X of a certain
+type. Figures D.5 and D.6 show the nature of the relationship between Y and
+X for data that are linearized using the log transformation. The nature of the
+underlying relation is Y = E EXP(FX), where E and F are parameters of the
+relation. To get this relation in linear model form, one transforms both sides
+of the equation to obtain LN(Y) = LN(E EXP(FX)) = LN(E) + LN(EXP(FX)) =
+LN(E) + FX = F0 + F1X. In linearized form F0 = LN(E) and F1 = F. Figure D.5
+
+  Y
+
+  X
+FIGURE D.5
+Exponential relation (functional form: Y = EEXP(FX), where F> 0).
+
+  Y
+
+  X
+FIGURE D.6
+Exponential functions (functional form: Y = EEXP(FX), where F< 0).
+
+© 2003 by CRC Press LLC
+shows examples of the relation between Y and X for F > 0, and Figure D.6
+shows examples of the relation between Y and X for F < 0.
+
+D.2.4 Inverse Exponential Functions
+Sometimes the exponential portion of the mechanism is proportional to the
+inverse of X instead of untransformed X. The underlying relationship, which
+is fundamentally different from the exponential relations shown in Figures
+D.5 and D.6, is given by Y = E EXP(F/X). By taking the log of both sides of
+this relationship one obtains the linear model form of the relation, LN(Y) =
+LN(E) + F/X = F0 + 1/XF1. Figure D.7 shows examples of the inverse expo-
+nential relation when F is positive, and Figure D.8 shows examples when F
+is negative.
+
+D.2.5 Power Functions
+Power transformations are needed when the underlying structure is of the
+form Y = EXF and transformations on both variables are needed to linearize
+the function. The linear form of the power function is LN(Y) = LN(EXF) =
+LN(E) + F LN(X) = F0 + F1 LN(X). The shape of the power function depends
+
+  Y
+
+  X
+FIGURE D.7
+Inverse exponential functions (functional form: Y = EEXP(F/X), where F> 0).
+
+  Y
+
+  X
+FIGURE D.8
+Inverse exponential functions (functional form: Y = EEXP(F/X), where F< 0).
+
+© 2003 by CRC Press LLC
+  β > 1
+
+Y  β = 1
+
+  0 < β < 1
+
+  X
+FIGURE D.9
+Power functions (functional form: Y = EXF, where F > 0).
+
+  β < −1
+
+Y
+
+  β = 1  −1 > β > 0
+
+  X
+
+FIGURE D.10
+Power functions (functional form: Y = EXF, where F < 0).
+
+on the sign and magnitude of F. Figure D.9 depicts examples of power
+functions with F greater than zero, and Figure D.10 depicts examples of
+power functions with F less than zero.
+
+© 2003 by CRC Press LLC
+

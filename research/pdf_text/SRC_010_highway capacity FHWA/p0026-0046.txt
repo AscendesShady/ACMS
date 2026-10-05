@@ -1,0 +1,1214 @@
+Simplified Highway Capacity Calculation Method for the Highway Performance Monitoring System
+
+Table 8. Selected highway performance monitoring system rural two-lane sections with  level of service and service measures attached.
+
+  Level  Service
+
+Highway  State  Functional  Route  Route  Begin  End  County  of Service Measure Expanded
+  Type  Code  System  Signing  Number  Point  Point  Code
+  Rural  3  90.64  96.586  Service Measure Value Mileage
+  29  3  3  59  96.586  99.204  21
+two lane  29  3  3  59  99.204  101.211  21  A  ATS  66.0  28.53
+  Rural  29  3  3  59  3.078  9.02  21
+  29  3  4  53  88.448  93.976  23  A  ATS  66.0  12.56
+two lane  29  3  3  54  93.976  97.224  29
+  Rural  29  3  3  54  104.956  107.78  29  A  ATS  66.0  9.63
+  29  3  3  54  157.529  161.565  29
+two lane  29  3  4  72  85.633  87.797  31  A  ATS  59.0  18.99
+  Rural  29  3  3  24  147.476  148.761  33
+  29  3  4  21  40.983  43.001  35  A  ATS  66.0  17.67
+two lane  29  3  4  291  40.832  44.162  37
+  Rural  29  3  3  54  107.134  109.726  39  A  ATS  64.0  15.58
+  29  3  24  41
+two lane  A  ATS  67.0  9.84
+  Rural
+  A  ATS  61.0  12.90
+two lane
+  Rural  A  ATS  61.0  3.88
+
+two lane  A  ATS  61.0  2.31
+  Rural
+  B  ATS  54.0  9.68
+two lane
+  Rural  A  ATS  67.0  5.97
+
+two lane  A  ATS  67.0  8.28
+  Rural
+
+two lane
+  Rural
+
+two lane
+  Rural
+
+two lane
+  Rural
+
+two lane
+
+  16
+  Simplified Highway Capacity Calculation Method for the Highway Performance Monitoring System
+
+Table 8. Selected highway performance monitoring system rural two-lane sections with  level of service and  service measures attached
+  (continuation).
+
+Highway  State  Functional  Route  Route  Begin  End  County  Level  Service  Service  Expanded
+  Type  Code  System  Signing  Number  Point  Point  Code  of  Measure  Measure  Mileage
+  Rural  3  65.175  66.136
+  29  3  3  60  2.413  43  Service  ATS  Value  3.35
+two lane  29  3  3  61  0  26.498  45  A  63.0
+  Rural  29  3  4  92  22.623  14.947  47
+  29  3  4  8  4.782  22.989  55  A  ATS  62.0  7.71
+two lane  29  3  4  8  19.762  33.377  55
+  Rural  29  3  4  8  23.454  215.239  55  B  ATS  55.0  12.38
+  29  3  3  65  213.933  51.941  59
+two lane  29  4  6  47.655  61  A  ATS  61.0  18.24
+  Rural
+  A  ATS  59.0  10.31
+two lane
+  Rural  A  ATS  61.0  31.71
+
+two lane  A  ATS  66.0  4.17
+  Rural
+  A  ATS  66.0  13.70
+two lane
+  Rural
+
+two lane
+  Rural
+
+two lane
+
+  17
+Simplified Highway Capacity Calculation Method for the Highway Performance Monitoring System
+
+Table 9. Selected highway performance monitoring system signalized sections with level of service and service measures attached.
+
+  Level  Service
+
+Highway State Functional Route Route Begin End County of Service Measure Expanded
+
+Type Code System Signing Number Point Point Code Service Measure Value Mileage
+
+Signalized 5  3  4  22  2.56  3.2  131  C  ATS  25.6  4.88
+
+Signalized 5  3  4  22  3.2  3.58  131  A  ATS  35.7  2.90
+
+Signalized 5  3  4  22  8.91 10.64 131  A  ATS  45.9  10.63
+
+Signalized 5  3  3  71  3.91  4.92  131  A  ATS  41.2  7.70
+
+Signalized 5  3  6  0  1.88  131  A  ATS  36.7  11.55
+
+Signalized 5  3  6  0  1.88  131  A  ATS  36.7  11.55
+
+Signalized 5  3  6  0  1.88  131  A  ATS  36.7  11.55
+
+Signalized 5  3  6  0  1.88  131  A  ATS  36.7  11.55
+
+Signalized 5  3  3  71  12.47 13.34 133  A  ATS  44.3  3.62
+
+Signalized 8  3  10  1.009 1.989  1  B  ATS  39.0  7.14
+
+Signalized 8  3  10  0  0.48  1  D  ATS  18.0  3.50
+
+Signalized 8  3  10  1.06 2.08  1  A  ATS  43.6  7.43
+
+Signalized 8  3  10  2.08 4.19  1  B  ATS  39.2  6.30
+
+Signalized 8  3  4  2  3.039 4.401  1  B  ATS  43.5  9.92
+
+Signalized 8  3  10  2.32 3.38  1  A  ATS  42.5  16.90
+
+Signalized 8  3  4  44  0.435 1.807  1  F  ATS  13.8  10.00
+
+Signalized 8  3  4  44  0.435 1.807  1  F  ATS  13.8  10.00
+
+Signalized 8  3  3  160 229.351 230.428 3  C  ATS  36.7  7.62
+
+Signalized 8  3  10  7.82 8.83  5  B  ATS  32.9  16.11
+
+Signalized 8  3  10  0  1.11  5  D  ATS  22.5  17.70
+
+Signalized 8  3  10  2.1  3.1  5  B  ATS  32.2  15.95
+
+  18
+  Simplified Highway Capacity Calculation Method for the Highway Performance Monitoring System
+
+  Table 10.  Selected highway performance  monitoring  system stop-controlled sections with level of service  and service  measures
+  Service
+Highway  Route  attached.  Measure  Expanded
+  Type  Number  Value  Mileage
+  Stop  Level
+ Control  1046  16.0  1.22
+  Stop  State  Functional  Route  1386  Begin End County of  Service  16.0  1.41
+ Control  Code  System  Signing  30  10.2  75.01
+  Stop  5  85  Point Point Code Service Measure  10.3  211.63
+ Control  1  1  101  16.0  9.61
+  Stop  687  0.12 0.83 33  C  Delay  15.9  3.97
+ Control  19  16.1  9.42
+  Stop  1  5  1  36  0.294 1.12 33  C  Delay  17.3  15.85
+ Control  11  10.3  194.25
+  Stop  1  5  6  50  5.335 7.2  35  B  Delay  17.9  38.50
+ Control  375  16.3  0.96
+  Stop  1  5  6  377  1.368 6.63 37  B  Delay  15.7  0.51
+ Control  23  17.2  10.80
+  Stop  1  5  6  0 1.55 39  C  Delay  10.3  247.02
+ Control  1
+  Stop  1  5  6  0.07 0.71 39  C  Delay
+ Control
+  Stop  1  5  6  0 1.52 39  C  Delay
+ Control
+  Stop  1  5  6  7.41 8.17 43  C  Delay
+ Control
+  Stop  1  5  6  1.84 6.67 45  B  Delay
+ Control
+  Stop  1  5  6  1.534 3.38 45  C  Delay
+ Control
+  Stop  1  5  6  0.104 0.69 45  C  Delay
+ Control
+  1  5  6  0 0.31 45  C  Delay
+
+  1  5  6  4.5 7.24 51  C  Delay
+
+  1  5  6  10.858 17  53  B  Delay
+
+  19
+Simplified Highway Capacity Calculation Method for the Highway Performance Monitoring System
+
+  Table 10.  Selected highway performance  monitoring system stop-controlled sections with level of service  and service  measures
+
+Highway  attached (continuation).  Service  Expanded
+  Type  Measure  Mileage
+  Stop  Level
+ Control  Value  20.19
+  Stop  State  Functional  Route  Route Begin End County of  Service  25.8  12.51
+ Control  Code  System  Signing  9.01
+  Stop  5  Number Point Point Code Service Measure  20.1  11.72
+ Control  1  6  4.92
+  Stop  49  1.132 1.46 53  D  Delay  20.2  4.61
+ Control  1.20
+  Stop  1  5  6  5039  0.9 1.5  53  C  Delay  18.2
+ Control
+  Stop  1  5  6  15  0 1.43 55  C  Delay  18.6
+ Control
+  Stop  1  5  6  185  0 1.86 55  C  Delay  18.7
+ Control
+  1  5  6  185 1.869 2.65 55  C  Delay  16.3
+
+  1  5  1  419 4.238 4.97 55  C  Delay
+
+  1  5  1  810  0 0.88 55  C  Delay
+
+  20
+  Simplified Highway Capacity Calculation Method for the Highway Performance Monitoring System
+
+  Table 11. Level of service ranges by highway type.
+
+  Freeway  Multilane  Rural Two Lane  Stop
+  Average Travel  Controlled
+Service Measure  Density  Density
+  Speed (ATS)  Delay
+Level of Service A  <= 11  <= 11  > 55  <= 10
+  > 10-15
+Level of Service B  > 11-18  > 11-18  > 50-55  > 15-25
+  > 45-50  > 25-35
+Level of Service C  > 18-26  > 18-26  > 40-45  > 35-50
+  <= 40  > 50
+Level of Service D  > 26-35  > 26-35  Demand > capacity
+  as miles per
+Level of Service E  > 35-45  > 35-45  lane. ATS is measured
+  per vehicle.
+Level of Service F > 45 or where > 45 or where
+
+  demand >  demand >
+
+  capacity  capacity
+
+Notes: Density is measured as passenger cars per mile, per
+
+  hour. Delay is measured in seconds
+
+  Table 12. Level of service ranges for signalized highways.
+
+Base-Free  Average Travel Speed
+  Flow
+  Speed  Level of Level of Level of Level of Level of  Level of
+  >= 55  Service F
+  50  Service A Service B Service C Service D Service E
+  45  <= 17
+  40  > 44  > 37  > 28  > 22  > 17  <= 15
+  35  <= 14
+  30  > 40  > 34  > 25  > 20  > 15  <= 12
+  <= 25  <= 11
+  > 36  > 30  > 23  > 18  > 14  <= 9
+  <= 8
+  > 32  > 27  > 20  > 16  > 12
+
+  > 28  > 23  > 18  > 14  > 11
+
+  > 24  > 20  > 15  > 12  > 9
+
+  >20  > 17  > 13  > 10  > 8
+
+  21
+  Simplified Highway Capacity Calculation Method for the Highway Performance Monitoring System
+
+  APPENDIX A. GENERALIZED SERVICE VOLUME TABLES
+
+The service volumes in the tables are the maximum values that can be maintained and still be
+within the Level of Service (LOS) range. For example in the first row of the freeway table, if the
+actual volume is less than or equal to 46,100, then it is LOS B. Therefore, the service volumes in
+the tables are the maximum volumes that can be achieved for that LOS category.
+
+For roadways that are dual carriageways, AADT should be divided by two before entering the
+tables.
+
+  Table 13. Freeway generalized service volume table.
+
+  Level of Service
+
+  B  C  D  E
+  Service
+Area  Number  Truck  Service Service Service  Volume
+Type
+Rural  Lanes  Percent Volume Volume Volume  84,700
+  80,700
+  4  0  46,100  62,000  74,800  77,000
+  73,700
+  10  43,900  59,000  71,200  127,100
+  121,100
+  20  41,900  56,300  68,000  115,600
+  110,500
+  30  40,100  53,900  65,000  169,500
+  161,400
+  6  0  69,200  93,000  112,200  154,100
+  147,400
+  10  65,900  88,500  106,900  211,900
+  201,800
+  20  62,900  84,500  102,000  192,600
+  184,200
+  30  60,100  80,800  97,600  254,300
+  242,200
+  8  0  92,200  124,000 149,600  231,200
+  221,100
+  10  87,800  118,100 142,500
+
+  20  83,800  112,700 136,000
+
+  30  80,200  107,800 130,100
+
+  10  0  115,300 155,000 187,100
+
+  10  109,800 147,600 178,100
+
+  20  104,800 140,900 170,000
+
+  30  100,300 134,800 162,600
+
+  12  0  138,400 186,000 224,500
+
+  10  131,800 177,100 213,800
+
+  20  125,800 169,100 204,100
+
+  30  120,300 161,700 195,200
+
+  23
+Simplified Highway Capacity Calculation Method for the Highway Performance Monitoring System
+
+  Table 13. Freeway generalized service volume table (continuation).
+
+  Level of Service
+
+  B  C  D  E
+  Service
+ Area  Number  Truck  Service Service Service  Volume
+Type
+Urban  Lanes  Percent Volume Volume Volume  83,000
+  79,100
+  4  0  43,700  60,100  73,100  75,500
+  72,200
+  10  41,600  57,200  69,600  124,600
+  118,600
+  20  39,700  54,600  66,400  113,200
+  108,300
+  30  38,000  52,200  63,600  166,100
+  158,200
+  6  0  65,600  90,100  109,700  151,000
+  144,400
+  10  62,500  85,800  104,400  207,600
+  197,700
+  20  59,600  81,900  99,700  188,700
+  180,500
+  30  57,000  78,300  95,400  249,200
+  237,300
+  8  0  87,500  120,200 146,200  226,500
+  216,700
+  10  83,300  114,400 139,300
+
+  20  79,500  109,200 132,900
+
+  30  76,100  104,500 127,200
+
+  10  0  109,400 150,200 182,800
+
+  10  104,200 143,100 174,100
+
+  20  99,400  136,600 166,200
+
+  30  95,100  130,600 159,000
+
+  12  0  131,300 180,300 219,400
+
+  10  125,000 171,700 208,900
+
+  20  119,300 163,900 199,400
+
+  30  114,100 156,700 190,800
+  Simplified Highway Capacity Calculation Method for the Highway Performance Monitoring System
+
+  Table 14. Multilane highway generalized service volume table.
+
+  Level of Service
+
+  B  C  D  E
+  Service
+ Area  Number  Truck  Service  Service  Service  Volume
+Type
+Rural  Lanes  Percent Volume Volume Volume  80,000
+  76,100
+Urban  4  0  42,000  57,300  69,600  72,700
+  69,500
+  10  39,900  54,600  66,300  120,000
+  114,200
+  20  38,100  52,100  63,300  109,000
+  104,300
+  30  36,500  49,900  60,600  160,000
+  152,300
+  6  0  63,000  86,000  104,500  145,400
+  139,100
+  10  59,900  81,900  99,500  200,000
+  190,400
+  20  57,200  78,200  95,000  181,800
+  173,900
+  30  54,700  74,800  90,900
+
+  8  0  84,000  114,700 139,300
+
+  10  79,900  109,300 132,700
+
+  20  76,300  104,300 126,700
+
+  30  73,000  99,800  121,200
+
+  10  0  105,000 143,400 174,200
+
+  10  99,900  136,600 165,900
+
+  20  95,400  130,400 158,300
+
+  30  91,300  124,700 151,500
+
+  4  0  34,500  49,300  61,400  71,600
+
+  10  32,800  47,000  58,400  68,200
+
+  20  31,300  44,800  55,800  65,100
+
+  30  30,000  42,900  53,300  62,300
+
+  6  0  51,700  74,000  92,100  107,500
+
+  10  49,200  70,500  87,700  102,300
+
+  20  47,000  67,300  83,700  97,700
+
+  30  45,000  64,400  80,000  93,400
+
+  8  0  69,000  98,700  122,800 143,300
+
+  10  65,700  94,000  116,900 136,500
+
+  20  62,700  89,700  111,600 130,300
+
+  30  60,000  85,800  106,700 124,600
+
+  10  0  86,200  123,400 153,500 179,100
+
+  10  82,100  117,500 146,200 170,600
+
+  20  78,400  112,200 139,500 162,800
+
+  30  75,000  107,300 133,400 155,700
+
+  25
+Simplified Highway Capacity Calculation Method for the Highway Performance Monitoring System
+
+  Table 15.  Signalized  highway generalized service  volume table.
+  % Green  of Service
+  Speed  Level
+  Time  Limit  D
+  40  B  C  Service  E
+  35  Volume  Service
+Number  45  40  Service Service  16,400  Volume
+ Lanes  45  15,900  18,700
+  50  50  Volume Volume  15,500  17,700
+  2  55  15,200  17,400
+  55  60  12,800  14,900  15,400  16,700
+  35  15,500  16,900
+  60  40  12,600  14,400  18,500  17,100
+  45  18,000  21,100
+  50  12,000  14,200  17,600  20,000
+  55  17,200  19,700
+  60  11,800  13,800  17,400  18,900
+  35  17,600  19,100
+  40  12,300  14,100  20,700  19,300
+  45  20,100  23,600
+  50  12,700  14,300  19,600  22,300
+  55  19,200  22,000
+  60  14,600  16,900  19,500  21,100
+  35  19,600  21,400
+  40  14,400  16,300  22,900  21,500
+  45  22,200  26,000
+  50  13,900  16,100  21,700  24,700
+  55  21,300  24,300
+  60  13,600  15,700  21,500  23,400
+  35  21,700  23,600
+  40  14,200  16,000  25,100  23,800
+  45  24,400  28,500
+  50  14,600  16,200  23,800  27,000
+  55  23,300  26,600
+  60  16,500  18,900  23,600  25,600
+  23,800  25,800
+  16,300  18,300  26,100
+
+  15,700  18,100
+
+  15,500  17,700
+
+  16,100  17,900
+
+  16,400  18,100
+
+  18,400  20,900
+
+  18,100  20,300
+
+  17,600  20,000
+
+  17,400  19,600
+
+  17,900  19,900
+
+  18,300  20,100
+
+  20,300  22,900
+
+  20,000  22,200
+
+  19,500  22,000
+
+  19,300  21,500
+
+  19,800  21,800
+
+  20,200  22,100
+  Simplified Highway Capacity Calculation Method for the Highway Performance Monitoring System
+
+  Table 15. Signalized  highway  generalized service volume  table (continuation).
+
+  Speed  Level  of Service
+  Limit
+  B  C  D  E
+  35
+Number  % Green  40  Service Service  Service  Service
+ Lanes  Time  45
+  65  50  Volume Volume  Volume Volume
+  2  55
+  60  22,200  25,000  27,300  31,000
+  35
+  40  21,900  24,200  26,500  29,400
+  45
+  50  21,400  24,000  25,900  28,900
+  55
+  60  21,200  23,500  25,400  27,800
+  35
+  40  21,700  23,800  25,700  28,100
+  45
+  50  22,100  24,000  25,900  28,300
+  55
+  70  60  24,100  27,000  29,500  33,500
+  35
+  40  23,800  26,200  28,700  31,700
+  45
+  50  23,300  26,000  28,000  31,200
+  55
+  60  23,100  25,400  27,500  30,100
+  35
+  40  23,600  25,800  27,800  30,400
+  45
+  50  24,000  26,000  28,000  30,600
+  55
+  75  60  26,000  29,100  31,700  36,000
+
+  25,700  28,200  30,800  34,100
+
+  25,200  28,000  30,100  33,600
+
+  25,000  27,400  29,600  32,300
+
+  25,500  27,700  29,900  32,700
+
+  25,900  28,000  30,100  32,900
+
+  80  27,900  31,100  33,900  38,500
+
+  27,600  30,300  33,000  36,500
+
+  27,100  30,000  32,300  35,900
+
+  26,900  29,400  31,700  34,600
+
+  27,400  29,700  32,000  35,000
+
+  27,800  30,000  32,300  35,200
+
+4  40  27,400  30,600  33,300  37,800
+
+  27,100  29,700  32,400  35,900
+
+  26,500  29,400  31,700  35,300
+
+  26,200  28,800  31,100  34,000
+
+  26,800  29,200  31,400  34,300
+
+  27,300  29,500  31,700  34,600
+
+  27
+Simplified Highway Capacity Calculation Method for the Highway Performance Monitoring System
+
+Table 15. Signalized  highway  generalized service volume  table (continuation).
+
+  Speed  Level  of Service
+  Limit
+  B  C  D  E
+  35
+Number  % Green  40  Service Service  Service  Service
+ Lanes  Time  45
+  45  50  Volume Volume  Volume Volume
+  4  55
+  60  31,100  34,500  37,600  42,700
+  35
+  40  30,700  33,600  36,600  40,500
+  45
+  50  30,100  33,300  35,800  39,900
+  55
+  60  29,800  32,600  35,100  38,400
+  35
+  40  30,500  33,000  35,500  38,800
+  45
+  50  30,900  33,400  35,800  39,100
+  55
+  50  60  34,700  38,500  41,900  47,600
+  35
+  40  34,400  37,500  40,800  45,100
+  45
+  50  33,700  37,100  39,900  44,400
+  55
+  60  33,500  36,400  39,200  42,800
+  35
+  40  34,100  36,900  39,600  43,200
+  45
+  50  34,600  37,200  39,900  43,600
+  55
+  55  60  38,400  42,600  46,300  52,500
+
+  38,100  41,400  45,100  49,800
+
+  37,400  41,000  44,100  49,000
+
+  37,100  40,200  43,200  47,200
+
+  37,800  40,700  43,700  47,700
+
+  38,300  41,100  44,100  48,100
+
+  60  42,100  46,600  50,700  57,400
+
+  41,800  45,400  49,300  54,400
+
+  41,100  44,900  48,200  53,600
+
+  40,800  44,100  47,300  51,700
+
+  41,500  44,600  47,800  52,200
+
+  42,000  45,000  48,300  52,600
+
+  65  45,900  50,700  55,100  62,300
+
+  45,500  49,300  53,600  59,200
+
+  44,800  48,900  52,400  58,300
+
+  44,500  48,000  51,500  56,200
+
+  45,200  48,500  52,000  56,700
+
+  45,700  49,000  52,400  57,100
+  Simplified Highway Capacity Calculation Method for the Highway Performance Monitoring System
+
+  Table 15. Signalized  highway  generalized service volume  table (continuation).
+
+  Speed  Level  of Service
+  Limit
+  B  C  D  E
+  35
+Number  % Green  40  Service Service  Service  Service
+ Lanes  Time  45
+  70  50  Volume Volume  Volume Volume
+  4  55
+  60  49,600  54,700  59,500  67,300
+  35
+  40  49,200  53,300  57,900  63,900
+  45
+  50  48,500  52,800  56,600  62,900
+  55
+  60  48,200  51,900  55,600  60,700
+  35
+  40  48,900  52,400  56,200  61,200
+  45
+  50  49,500  52,900  56,700  61,700
+  55
+  75  60  53,400  58,800  63,900  72,300
+  35
+  40  53,000  57,300  62,200  68,600
+  45
+  50  52,200  56,800  60,900  67,600
+  55
+  60  51,900  55,800  59,800  65,200
+  35
+  40  52,700  56,400  60,400  65,800
+  45
+  50  53,200  56,900  60,900  66,300
+  55
+  80  60  57,200  63,000  68,400  77,300
+
+  56,800  61,300  66,600  73,400
+
+  56,000  60,800  65,100  72,300
+
+  55,700  59,700  64,000  69,700
+
+  56,400  60,400  64,600  70,400
+
+  57,000  60,900  65,200  70,900
+
+6  40  41,700  46,100  50,200  56,900
+
+  41,300  44,900  48,800  53,900
+
+  40,600  44,400  47,700  53,100
+
+  40,300  43,600  46,800  51,200
+
+  41,000  44,100  47,300  51,700
+
+  41,500  44,600  47,800  52,100
+
+  45  47,100  52,000  56,600  64,100
+
+  46,700  50,700  55,100  60,800
+
+  46,000  50,200  53,900  59,900
+
+  45,700  49,300  52,900  57,700
+
+  46,400  49,800  53,400  58,300
+
+  47,000  50,300  53,900  58,800
+
+  29
+Simplified Highway Capacity Calculation Method for the Highway Performance Monitoring System
+
+Table 15. Signalized  highway  generalized service volume  table (continuation).
+
+  Speed  Level  of Service
+  Limit
+  B  C  D  E
+  35
+Number  % Green  40  Service Service  Service  Service
+ Lanes  Time  45
+  50  50  Volume Volume  Volume Volume
+  6  55
+  60  52,600  58,000  63,100  71,500
+  35
+  40  52,200  56,500  61,400  67,800
+  45
+  50  51,400  56,000  60,100  66,800
+  55
+  60  51,100  55,000  59,000  64,400
+  35
+  40  51,800  55,600  59,600  65,000
+  45
+  50  52,400  56,100  60,100  65,500
+  55
+  55  60  58,100  64,100  69,600  78,800
+  35
+  40  57,700  62,400  67,800  74,800
+  45
+  50  56,800  61,800  66,300  73,700
+  55
+  60  56,500  60,700  65,100  71,000
+  35
+  40  57,300  61,400  65,700  71,700
+  45
+  50  57,900  62,000  66,300  72,200
+  55
+  60  60  63,700  70,100  76,200  86,200
+
+  63,200  68,300  74,100  81,800
+
+  62,300  67,700  72,500  80,600
+
+  62,000  66,500  71,200  77,700
+
+  62,800  67,200  71,900  78,400
+
+  63,500  67,800  72,600  79,000
+
+  65  69,300  76,200  82,700  93,600
+
+  68,800  74,200  80,600  88,900
+
+  67,800  73,600  78,800  87,500
+
+  67,400  72,200  77,400  84,400
+
+  68,300  73,100  78,200  85,200
+
+  69,000  73,700  78,900  85,900
+
+  70  74,900  82,300  89,400  101,100
+
+  74,300  80,200  87,000  95,900
+
+  73,300  79,500  85,100  94,500
+
+  72,900  78,100  83,600  91,100
+
+  73,900  78,900  84,500  92,000
+
+  74,700  79,700  85,200  92,700
+  Simplified Highway Capacity Calculation Method for the Highway Performance Monitoring System
+
+  Table 15. Signalized  highway  generalized service volume  table (continuation).
+
+  Speed  Level  of Service
+  Limit
+  B  C  D  E
+  35
+Number  % Green  40  Service Service  Service  Service
+ Lanes  Time  45
+  75  50  Volume Volume  Volume Volume
+  6  55
+  60  80,500  88,500  96,000  108,600
+  35
+  40  80,000  86,200  93,500  103,100
+  45
+  50  78,900  85,500  91,500  101,500
+  55
+  60  78,500  83,900  89,900  97,900
+  35
+  40  79,500  84,900  90,800  98,800
+  45
+  50  80,300  85,700  91,600  99,600
+  55
+  80  60  86,200  94,700  102,700 116,100
+  35
+  40  85,600  92,300  100,000 110,200
+  45
+  50  84,500  91,400  97,900  108,600
+  55
+  60  84,100  89,800  96,100  104,700
+  35
+  40  85,100  90,800  97,100  105,700
+  45
+  50  86,000  91,700  97,900  106,500
+  55
+8  40  60  55,800  61,600  67,000  75,900
+
+  55,400  60,000  65,200  72,000
+
+  54,500  59,400  63,700  70,900
+
+  54,200  58,300  62,600  68,300
+
+  55,000  59,000  63,200  69,000
+
+  55,700  59,600  63,800  69,500
+
+  45  63,100  69,500  75,600  85,600
+
+  62,600  67,700  73,500  81,200
+
+  61,700  67,100  71,900  80,000
+
+  61,300  65,900  70,600  77,100
+
+  62,200  66,600  71,300  77,800
+
+  62,900  67,200  72,000  78,400
+
+  50  70,400  77,500  84,200  95,300
+
+  69,900  75,500  82,000  90,500
+
+  68,900  74,800  80,200  89,100
+
+  68,500  73,500  78,700  85,900
+
+  69,400  74,300  79,500  86,700
+
+  70,200  75,000  80,200  87,400
+
+  31
+Simplified Highway Capacity Calculation Method for the Highway Performance Monitoring System
+
+Table 15. Signalized  highway  generalized service volume  table (continuation).
+
+  Speed  Level  of Service
+  Limit
+  B  C  D  E
+  35
+Number  % Green  40  Service Service  Service  Service
+ Lanes  Time  45
+  55  50  Volume Volume  Volume Volume
+  8  55
+  60  77,700  85,500  92,900  105,100
+  35
+  40  77,200  83,300  90,400  99,800
+  45
+  50  76,100  82,600  88,500  98,300
+  55
+  60  75,700  81,100  86,900  94,700
+  35
+  40  76,700  82,000  87,800  95,600
+  45
+  50  77,500  82,700  88,500  96,400
+  55
+  60  60  85,100  93,600  101,600 115,000
+  35
+  40  84,500  91,200  99,000  109,100
+  45
+  50  83,300  90,400  96,800  107,500
+  55
+  60  82,900  88,800  95,100  103,600
+  35
+  40  84,000  89,700  96,000  104,600
+  45
+  50  84,900  90,600  96,900  105,400
+  55
+  65  60  92,600  101,700  110,400 124,900
+  35
+  40  91,900  99,100  107,500 118,500
+  45
+  50  90,700  98,200  105,200 116,800
+  55
+  60  90,200  96,500  103,300 112,600
+
+  91,400  97,500  104,400 113,600
+
+  92,300  98,400  105,200 114,500
+
+  70  100,100 109,900  119,200 134,800
+
+  99,300  107,100  116,100 128,000
+
+  98,000  106,100  113,600 126,100
+
+  97,600  104,200  111,600 121,600
+
+  98,800  105,400  112,700 122,700
+
+  99,800  106,400  113,700 123,700
+
+  75  107,600 118,100  128,100 144,800
+
+  106,800 115,100  124,800 137,500
+
+  105,400 114,100  122,100 135,500
+
+  104,900 112,100  119,900 130,600
+
+  106,200 113,300  121,100 131,900
+
+  107,300 114,300  122,200 132,900
+
+  80  115,200 126,300  137,000  –
+
+  114,400 123,100  133,500 297,000
+
+  112,900 122,100  130,600 144,900
+
+  112,300 119,900  128,300 139,700
+
+  113,700 121,200  129,600 141,000
+
+  114,800 122,300  130,700 142,100
+  Simplified Highway Capacity Calculation Method for the Highway Performance Monitoring System
+
+  Table  16. Stop sign-controlled highways  generalized service volume  table.
+
+Land Use  Level of Service
+  Rural
+  B  C  D  E
+  Urban  Service  Service
+  Functional  Volume  Service  Service  Volume
+  System  7,600  13,600
+  6,800  Volume  Volume  12,600
+  Princ. Arterial
+  Minor  5,900  11,100  12,400  11,700
+  Arterial  5,200  10,900
+  1,900  10,200  11,500  7,400
+  Collector
+  Princ. Arterial  9,300  10,600  4,800
+  8,500  9,800
+  Minor  5,200  6,400
+  Arterial
+  Collector  2,800  4,000
+
+  Table 17. Rural two-lane highways generalized service volume table.
+
+  Level of Service
+
+  B  C  D
+  Service
+  Service  Service  Volume
+  13,900
+Speed Limit  Terrain  Truck Pct.  Volume  Volume  13,900
+  13,900
+45  Flat  0  3,600  8,700  13,900
+  13,900
+  2  3,500  8,700  13,900
+  13,900
+  4  3,500  8,700  13,900
+  13,900
+  6  3,500  8,700  13,900
+  13,900
+  8  3,400  8,600  13,900
+  13,900
+  10  3,400  8,600  12,300
+  11,100
+  Rolling  0  3,600  8,700  10,100
+  9,300
+  2  3,500  8,600  8,500
+  19,000
+  4  3,400  8,500  19,000
+  19,000
+  6  3,300  8,400
+
+  8  3,300  8,200
+
+  10  3,200  8,100
+
+  Mountainous  0  3,600  8,700
+
+  2  3,200  7,700
+
+  4  2,800  7,000
+
+  6  2,600  6,300
+
+  8  2,400  5,800
+
+  10  2,200  5,400
+
+50  Flat  0  8,700  13,900
+
+  2  8,700  13,900
+
+  4  8,700  13,900
+
+  33
+Simplified Highway Capacity Calculation Method for the Highway Performance Monitoring System
+
+  Table 17.  Rural two-lane highways generalized  service volume table (continuation).
+Speed Limit
+  Level of Service
+  50
+  B  C  D
+  55
+  Service  Service  Service
+
+  Terrain  Truck Pct.  Volume  Volume  Volume
+  Flat  6
+  8  8,700  13,900  19,000
+  Rolling  10
+  0  8,600  13,900  19,000
+  Mountainous  2
+  4  8,600  13,900  19,000
+  Flat  6
+  8  8,700  13,900  19,000
+  Rolling  10
+  0  8,600  13,900  19,000
+  Mountainous  2
+  4  8,500  13,900  19,000
+  6
+  8  8,400  13,900  19,000
+  10
+  0  8,200  13,900  19,000
+  2
+  4  8,100  13,900  19,000
+  6
+  8  8,700  13,900  19,000
+  10
+  0  7,700  12,300  16,900
+  2
+  4  7,000  11,100  15,200
+  6
+  8  6,300  10,100  13,900
+  10
+  0  5,800  9,300  12,700
+  2
+  4  5,400  8,500  11,700
+  6
+  8  13,900  19,000  24,200
+  10
+  13,900  19,000  24,200
+
+  13,900  19,000  24,200
+
+  13,900  19,000  24,200
+
+  13,900  19,000  24,200
+
+  13,900  19,000  24,200
+
+  13,900  19,000  24,200
+
+  13,900  19,000  24,200
+
+  13,900  19,000  24,200
+
+  13,900  19,000  24,200
+
+  13,900  19,000  24,200
+
+  13,900  19,000  24,200
+
+  13,900  19,000  24,200
+
+  12,300  16,900  21,500
+
+  11,100  15,200  19,400
+
+  10,100  13,900  17,600
+
+  9,300  12,700  16,100
+
+  8,500  11,700  14,900
+  Simplified Highway Capacity Calculation Method for the Highway Performance Monitoring System
+
+  Table 17.  Rural two-lane highways generalized  service volume table (continuation).
+Speed Limit
+  Level of Service
+  60
+  B  C  D
+  65
+  Service  Service  Service
+
+  Terrain  Truck Pct.  Volume  Volume  Volume
+  Flat  0
+  2  19,000  24,200  29,300
+  Rolling  4
+  Mountainous  6  19,000  24,200  29,300
+  8
+  Flat  10  19,000  24,200  29,300
+  Rolling  0
+  Mountainous  2  19,000  24,200  29,300
+  4
+  6  19,000  24,200  29,300
+  8
+  10  19,000  24,200  29,300
+  0
+  2  19,000  24,200  29,300
+  4
+  6  19,000  24,200  29,300
+  8
+  10  19,000  24,200  29,300
+  0
+  2  19,000  24,200  29,300
+  4
+  6  19,000  24,200  29,300
+  8
+  10  19,000  24,200  29,300
+  0
+  2  19,000  24,200  29,300
+  4
+  6  16,900  21,500  26,100
+  8
+  10  15,200  19,400  23,500
+  0
+  2  13,900  17,600  21,400
+  4
+  6  12,700  16,100  19,600
+  8
+  10  11,700  14,900  18,100
+
+  24,200  29,300  34,500
+
+  24,200  29,300  34,500
+
+  24,200  29,300  34,500
+
+  24,200  29,300  34,500
+
+  24,200  29,300  34,500
+
+  24,200  29,300  34,500
+
+  24,200  29,300  34,500
+
+  24,200  29,300  34,500
+
+  24,200  29,300  34,500
+
+  24,200  29,300  34,500
+
+  24,200  29,300  34,500
+
+  24,200  29,300  34,500
+
+  24,200  29,300  34,500
+
+  21,500  26,100  30,700
+
+  19,400  23,500  27,600
+
+  17,600  21,400  25,100
+
+  16,100  19,600  23,000
+
+  14,900  18,100  21,300
+
+  35
+  Federal Highway Administration
+  Office of Policy and Governmental Affairs
+
+  1200 New Jersey Avenue, SE
+  Washington, DC 20590
+
+  https://www.fhwa.dot.gov/policy/
+
+  October 2017
+  PL-18-003
+
+  This material is based upon work supported by the FHWA
+  under contract number DTFH61-13-D-00014.
+
+Any opinions, findings and conclusions or recommendations expressed in this publication are
+  those of the author(s) and do not necessarily reflect the views of the FHWA.
+

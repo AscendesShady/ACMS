@@ -1,0 +1,1250 @@
+  Transportation data and sensing Chapter | 2 13
+
+model detects anomalies based on trajectories and improves the accuracy by
+14%. Sultani et al. (2018) considered videos as bags and video segments as
+instances in multiple instance learning and automatically learned an anomaly
+ranking model with weakly labeled data. Recently, trafﬁc anomaly detection
+has been advanced not only by the design of new learning methods but also by
+object tracking methods. It is interesting to see that, in the 2021 AI City Chal-
+lenge, all top-ranking methods somewhat made contributions to the tracking part
+(Zhao et al., 2021; Wu et al., 2021; Chen et al., 2021).
+
+2.3.4 Parking detection
+
+In addition to roadway monitoring, parking facility monitoring, as another typ-
+ical element in urban areas, plays a crucial role in infrastructure-based sensing.
+Infrastructure-based parking-space detection can be divided into two categories
+from the sensor functionality perspective: the wireless sensor network (WSN)
+solution and camera-based solution. The WSN solution has one sensor for each
+parking space, and the sensors need to be low power, sturdy, and affordable (Lin
+et al., 2017; Lou et al., 2019; Park et al., 2008; Lee et al., 2008; Zhang et al.,
+2013, 2014; Jeon et al., 2018; Grodi et al., 2016; Sifuentes et al., 2011; Zhu and
+Yu, 2015). The WSN solution has some pros and cons: algorithm-wise, it is often
+straightforward; while a thresholding method would work in most cases, a rela-
+tively simple detection method may lead to a high false detection rate. A unique
+feature of the WSN is that it is robust to sensor failure due to the large number of
+sensors. This means that, even if a malfunction, the WSN still covers most of the
+spaces. However, a large number of sensors do require high costs for labor and
+maintenance in large-scale installation. Magnetic nodes, infrared sensors, ultra-
+sonic sensors, light sensors, and inductance loops are the most popular sensors.
+For example, Sifuentes et al. (2011) developed a cost-effective parking space-
+detection algorithm based on magnetic nodes that integrates a wake-up function
+with optical sensors. The camera-based solution has become increasingly popu-
+lar due to advances in video sensing, machine learning, and data communication
+technologies (Lin et al., 2017; Bulan et al., 2013; Cho et al., 2018; Amato et al.,
+2017; Nurullayev and Lee, 2019; Alam et al., 2018; Wu et al., 2007; Rianto et
+al., 2018; Barofﬁo et al., 2015; Amato et al., 2016; Vítek and Melnicˇuk, 2017;
+Ling et al., 2017; Nieto et al., 2018). Compared to the WSN, one camera covers
+multiple parking spaces; thus, the cost per space is reduced. It is also simpler
+to maintain since the installation of camera systems is nonintrusive. Addition-
+ally, as aforementioned, video contains more information than other sensors,
+so it has the potential for applications to more complicated parking tasks. Bu-
+lan et al. proposed to use background subtraction and SVM for street parking
+detection; it achieved a promising performance level and was not sensitive to oc-
+clusion (Bulan et al., 2013). Nurullayev et al. designed a pipeline with a unique
+design using a dilated convolutional neural-network (CNN) structure. The de-
+sign was validated to be robust and suitable for parking detection (Nurullayev
+and Lee, 2019).
+14 Machine Learning for Transportation Research and Applications
+
+2.4 Vehicle onboard data and sensing
+
+Vehicle onboard sensing is complementary to infrastructure-based sensing. It
+happens on the road user side. The sensors move with road users, and thereby
+are more ﬂexible and cover larger areas. Additionally, vehicle onboard sensors
+are the eyes of an intelligent vehicle, making the vehicle sense and understand
+the surroundings. These properties pose opportunities for urban sensing and
+autonomous driving technologies, but, at the same time, create challenges for
+implementation. A major technical challenge is the irregular movement of the
+sensors. Traditional ITS sensing on infrastructure-mounted sensors deal with
+stationary backgrounds and relatively stable environmental settings. For in-
+stance, radar sensors for speed measurement know where the trafﬁc is supposed
+to be. Camera sensors have a ﬁxed video background so that traditional back-
+ground modeling algorithms can be applied. Therefore, in order to beneﬁt from
+vehicle onboard sensing, it is necessary to address such challenges.
+
+2.4.1 Trafﬁc near-crash detection
+
+A trafﬁc near crash or near miss is the conﬂict between road users that has the
+potential to develop into a collision. Near-crash detection using onboard sen-
+sors is the ﬁrst step for multiple ITS applications: near-crash data serves as
+(1) surrogate safety data for a trafﬁc safety study, (2) corner-case data for au-
+tonomous vehicle testing, and (3) input to collision avoidance systems. There
+were some pioneer studies on automatic near-crash data extraction on the in-
+frastructure side using LiDAR and cameras (Ismail et al., 2009; Wu et al., 2018;
+Huang et al., 2020). In recent years, near-crash detection systems and algorithms
+using onboard sensors have developed at a rapid pace. Ke et al. (2017) and Ya-
+mamoto et al. (2020) each applied conventional machine learning models (SVM
+and random forest) in their near-crash detection frameworks and achieved fairly
+good detection accuracy and efﬁciency using regular computers. State-of-the-art
+methods tend to use deep learning for near-crash detection. The integration of
+CNN, LSTM, and attention mechanisms has been demonstrated to be superior
+in recent studies (Yamamoto et al., 2020; Ibrahim et al., 2021; Kataoka et al.,
+2018). Ibrahim et al. reported that a bi-directional LSTM with self-attention out-
+performed a single LSTM with a normal attention mechanism (Ibrahim et al.,
+2021). Another feature in recent studies has been the combination of onboard
+camera sensor input and onboard telematics input, such as vehicle speed, accel-
+eration, and location, to either improve the near-crash detection performance or
+increase the output data diversity (Yamamoto et al., 2020; Taccari et al., 2018;
+Ke et al., 2020a). Ke et al. mainly used onboard video for near-crash detection
+but also collected telematics and vehicle CAN data for post analysis (Ke et al.,
+2020a).
+  Transportation data and sensing Chapter | 2 15
+
+2.4.2 Road user behavior sensing
+
+Human drivers can recognize and predict other road users’ behaviors, e.g.,
+pedestrians crossing the street and vehicles changing lanes. For intelligent or
+autonomous vehicles, automating this kind of behavior recognition process is
+expected as part of the onboard sensing functions (Jayaraman et al., 2020;
+Brehar et al., 2021; Chen et al., 2020c; Liu et al., 2020a). Stanford Univer-
+sity’s (Liu et al., 2020a) published an article on pedestrian intent recognition
+using onboard videos. They built a graph CNN to exploit spatiotemporal rela-
+tionships in the videos, which was able to identify the relationships between
+different objects. While, for now, the intent prediction focused only on crossing
+the street or not, the research direction is clearly promising. They also pub-
+lished over 900 h of onboard videos online. Another study proposed by Brehar
+et al. (2021) on pedestrian action recognition used an infrared camera, which
+compensates for regular cameras at night and on foggy days or rainy days.
+They built a framework composed of a pedestrian detector, an original track-
+ing method, road segmentation, and LSTM-based action recognition. They also
+introduced a new dataset named CROSSIR. Moreover, vehicle behavior recog-
+nition is of equal importance for intelligent or autonomous vehicles (Lyu et al.,
+2020; Wang et al., 2021b; Fernando et al., 2020; Zhang et al., 2020b; Mozaf-
+fari et al., 2020). Wang et al. (2021b) recently developed a method using fuzzy
+inference and LSTM for the recognition of vehicles’ lane changing behavior.
+The recognition results were used for a new intelligent path-planning method
+to ensure the safety of autonomous driving. The method was trained and tested
+by NGSIM data. Another study on vehicle trajectory prediction using onboard
+sensors in a connected-vehicle environment was conducted. It improved the
+effectiveness of the Advanced Driver Assistant System (ADAS) in cut-in sce-
+narios by establishing a new collision warning model based on lane-changing
+intent recognition, LSTM for driving trajectory prediction, and oriented bound-
+ing box detection (Lyu et al., 2020). Another type of road user-related sensing is
+passenger sensing, while, for other purposes, e.g., transit ridership sensing uses
+wireless technologies (Pu et al., 2020) and car passenger occupancy detection
+uses thermal images for carpool enforcement (Erlik Nowruzi et al., 2019).
+
+2.4.3 Road and lane detection
+
+In addition to road user-related sensing tasks, road and lane detection are often
+performed for lane departure warning, adaptive cruise control, road condition
+monitoring, and autonomous driving. The state-of-the-art methods mostly apply
+deep learning models for onboard camera sensors, LiDAR, and depth sensors
+for road and lane detection (Chen et al., 2019d; Fan et al., 2020; Wang et al.,
+2020b; Luo et al., 2020; Farag, 2020; Almeida et al., 2020). Chen et al. (2019d)
+proposed a novel progressive LiDAR adaption approach-aided road detection
+method to adapt LiDAR point cloud to visual images. The adaption contains
+two modules, i.e., data space adaptation and feature space adaptation. This
+16 Machine Learning for Transportation Research and Applications
+
+camera-LiDAR fusion model currently maintains its position at the top of the
+KITTI road-detection leaderboard. Fan et al. (2020) designed a deep learning
+architecture that consists of a surface normal estimator, an RGB encoder, a sur-
+face normal encoder, and a decoder with connected skip connections. It applied
+road detection to the RGB image and depth image and achieved state-of-the-art
+accuracy. Alongside road region detection, an ego-lane detection model pro-
+posed by Wang et al. outperformed other state-of-the-art models in this subﬁeld
+by exploiting prior knowledge from digital maps. Speciﬁcally, they employed
+OpenStreetMap’s road shape ﬁle to assist lane detection (Wang et al., 2020b).
+Multilane detection has been more challenging and rarely addressed in exist-
+ing works. Still, Luo et al. (2020) were able to achieve pretty good multilane
+detection results by adding ﬁve constraints to the Hough transform: a length
+constraint, parallel constraint, distribution constraint, pair constraint, and uni-
+form width constraint. A dynamic programming approach was applied after the
+Hough transform to select the ﬁnal candidates.
+
+2.4.4 Semantic segmentation
+
+Detecting the road regions at the pixel level is a type of image segmentation
+focusing on the road instance. There has been a trend in onboard sensing to
+segment the entire video frame at pixel level into different object categories.
+This is called semantic segmentation and is considered a must for advanced
+robotics, especially autonomous driving (Siam et al., 2018; Tao et al., 2020;
+Erkent and Laugier, 2020; Treml et al., 2016; Hung et al., 2018; Ouali et al.,
+2020; Yuan et al., 2019; Mohan and Valada, 2021; Cheng et al., 2020a; Cordts
+et al., 2016). Compared to other tasks that can usually be fulﬁlled using various
+types of onboard sensors, semantic segmentation is realized strictly using visual
+data. Nvidia researchers Tao et al. (2020) proposed a hierarchical multi-scale
+attention mechanism for semantic segmentation based on the observation that
+certain failure modes in the segmentation can be resolved on a different scale.
+The design of their attention was hierarchical so that memory usage was four
+times more efﬁcient in the training process. The proposed method ranked best
+on two segmentation benchmark datasets. Semantic segmentation is relatively
+computationally expensive; thus, working towards the goal of real-time segmen-
+tation is a challenge (Siam et al., 2018; Treml et al., 2016). Siam et al. (2018)
+proposed a general framework for real-time segmentation and ran 15 fps on the
+Nvidia Jetson TX2. Labeling at the pixel level is time-consuming and is another
+challenge for semantic segmentation. There are some benchmark datasets avail-
+able for algorithm testing, such as Cityscapes (Cordts et al., 2016). Efﬁcient
+labeling for semantic segmentation and unsupervised/semi-supervised learning
+for semantics segmentation are interesting topics worth exploring (Erkent and
+Laugier, 2020; Hung et al., 2018; Ouali et al., 2020).
+  Transportation data and sensing Chapter | 2 17
+
+2.5 Aerial sensing for ground transportation data
+
+Aerial sensing using drones, i.e., unmanned aerial vehicles (UAVs), has been
+performed in the military for years and recently has become increasingly tested
+in civil applications, such as agriculture, transportation, goods delivery, and se-
+curity. Automation and the smartness of surface trafﬁc cannot be fulﬁlled using
+only groundbased sensors. UAV extends the functionality of existing ground
+transportation systems with its high mobility, top-view perspective, wide view
+range, and autonomous operation (Menouar et al., 2017). UAV’s role is envis-
+aged in many ITS scenarios, such as ﬂying accident-report agents (Ardestani
+et al., 2016), trafﬁc enforcement (Constantinescu and Nedelcut, 2011), trafﬁc
+monitoring (Huang et al., 2021), and vehicle navigation (Shao et al., 2019)
+and vehicle reidentiﬁcation (Liu et al., 2022). While there are regulations to
+be established and practical challenges to be addressed, such as safety con-
+cerns, privacy issues, and short battery life problem, UAV’s applications in ITS
+are envisioned to be another necessary step forward for transportation network
+automation (Menouar et al., 2017). On the road user side, UAV extends the
+functionality of ground transportation systems by detecting vehicles, pedestri-
+ans, and cyclists from the top view, which has a wider view range and better view
+angle (no occlusion) than surveillance cameras and onboard cameras. UAVs
+can also detects road users’ interactions and trafﬁc theory-based parameters,
+thereby supporting applications in trafﬁc management and user experience im-
+provement.
+
+2.5.1 Road user detection and tracking
+
+Road user detection and tracking are the initialization processes for trafﬁc inter-
+action detection, pattern recognition, and trafﬁc parameter estimation. Conven-
+tional UAV-based road user detection often uses background subtraction and
+handcrafted features, assuming the UAV is not moving, or stitching frames in
+the ﬁrst step (Teutsch and Krüger, 2012; Rodríguez-Canosa et al., 2012; Gomaa
+et al., 2018; Tsao et al., 2018; Cao et al., 2011; Breckon et al., 2009). Recent
+studies have tended to develop deep learning detectors for UAV surveillance
+(Khan et al., 2018; Carletti et al., 2018; Barmpounakis et al., 2019; Najiya and
+Archana, 2018; Zhu et al., 2018). Road user detection itself can acquire traf-
+ﬁc ﬂow parameters, such as density and counts, without any need for motion
+estimation or vehicle tracking. Zhu et al. (2018) proposed an enhanced Single
+Shot Multibox Detector (SSD) for vehicle detection with manually annotated
+data, resulting in high detection accuracy and a new dataset. Wang et al. (2020a)
+identiﬁed the challenge in UAV-based pedestrian detection, particularly at night,
+and proposed an image enhancement method and a CNN for pedestrian detec-
+tion after dark. In order to conduct more advanced tasks in UAV sensing on the
+road user side, road user tracking is a must because it merges individual detec-
+tion results. Efforts have been made regarding UAV-based vehicle tracking and
+motion analysis (Teutsch and Krüger, 2012; Rodríguez-Canosa et al., 2012; Go-
+18 Machine Learning for Transportation Research and Applications
+
+maa et al., 2018; Li et al., 2016; Cao et al., 2014; Khan et al., 2017). In many
+previous research, existing tracking methods, such as particle ﬁlter and SORT,
+were directly applied and produced fairly good tracking performances. Recently,
+Ke et al. (2020b) developed an innovative tracking algorithm that incorporated
+lane detection information and improved tracking accuracy.
+
+2.5.2 Advanced aerial sensing
+
+Road user detection and tracking support advanced aerial ITS sensing ap-
+plications. For example, in Khan et al. (2018); Kaufmann et al. (2018), the
+researchers developed new methods for trafﬁc shock-wave identiﬁcation and
+synchronized trafﬁc ﬂow pattern recognition under oversaturated trafﬁc condi-
+tions. Chen et al. (2020a) conducted a thorough study on trafﬁc conﬂict based
+on extracted road-user trajectories from UAVs. The Safety Space Boundary con-
+cept in the paper is an informative design for conﬂict analysis. One of the most
+useful applications using UAV is trafﬁc ﬂow-parameter estimation: Traditional
+research in this ﬁeld focused on using static UAV videos for macroscopic pa-
+rameters extraction. McCord et al. (2003) led a pioneering research work to
+extract a variety of critical macroscopic trafﬁc parameters, such as annual av-
+erage daily trafﬁc (AADT). Later on, a new method was proposed by Shastry
+and Schowengerdt (2005), in which they adopted image registration and motion
+information to stitch images and obtain fundamental trafﬁc-ﬂow parameters.
+Recently, Ke et al. developed a series of efﬁcient and robust frameworks to esti-
+mate aggregated trafﬁc-ﬂow parameters (speed, density, and volume) (Ke, 2016;
+Ke et al., 2016, 2018a). Because of the potential beneﬁts of higher-resolution
+data in ITS, microscopic trafﬁc parameter estimation has been conducted (Chen
+et al., 2020d). Barmpounakis et al. proposed a method to extract naturalistic
+trajectory data from UAV videos at relatively less congested intersections us-
+ing static UAV video (Barmpounakis et al., 2019). Ke et al. (2020b) developed
+an advanced framework composed of lane detection, vehicle detection, vehicle
+tracking, and trafﬁc parameter estimation that can estimate ten different macro-
+scopic and microscopic parameters from a moving UAV.
+
+2.5.3 UAV for infrastructure data collection
+
+On the infrastructure side, UAV has been utilized for some ITS sensing services,
+such as road detection, lane detection, and infrastructure inspection. UAVs are
+extremely helpful at locations that are hard for humans to reach. Road detec-
+tion is used to localize the regions where trafﬁc is detected from UAV sensing
+data. It is crucial to support applications such as navigation and task schedul-
+ing (Karaduman et al., 2019; Li et al., 2020b; Lin and Saripalli, 2012). For
+instance, Zhou et al. (2014, 2016) designed two of the popular methods for
+road detection in UAV imagery. While there were some studies before these
+two, the paper by Zhou et al. (2014) was the ﬁrst targeting speeding up the
+  Transportation data and sensing Chapter | 2 19
+
+road localization part using a proposed tracking method. Zhou et al. (2016) pre-
+sented a fully automatic approach that detects roads from a single UAV image
+with two major components: road/non-road seeds generation and seeded road
+segmentation. Their methods were tested on challenging scenes. UAV has been
+intensely used for infrastructure inspection, particularly bridge inspection (Chen
+et al., 2019b; Jung et al., 2019; Bolourian et al., 2017; Lei et al., 2018) and road
+surface inspection (Biçici and Zeybek, 2021; Leonardi et al., 2018; Fan et al.,
+2019). Manual inspection of bridges and road surfaces is costly in terms of both
+time and labor. Bolourian et al. (2017) proposed an aerial framework for bridge
+inspection using LiDAR-equipped UAVs. It included planning a collision-free
+optimized path and a data-analysis framework for point cloud processing. Biçici
+and Zeybek (2021) developed an approach with verticality features, DBSCAN
+clustering, and robust plane ﬁtting to process point clouds for automated extrac-
+tion of road surface distress.
+
+2.6 ITS data quality control and fusion
+
+Quality data is the foundation of ITS. One of the current challenges of ITS data
+processing and storage is that vast quantities of data are now available from a
+variety of data sources and with varying data quality. High-quality data is also
+a requirement for machine learning. Low-quality data can lead to misclassiﬁ-
+cation and inaccurate prediction/regression in a given task. Data quality control
+for single-source data and data fusion for multisource data are necessary as a
+procedure immediately after data collection in ITS applications.
+
+  Noisy data and missing data are two phenomena in ITS data-quality control.
+While data denoising can be done with satisfactory performance using tradi-
+tional methods, such as a wavelet ﬁlter, moving average model, and Butterworth
+ﬁlter (Chen et al., 2020e), missing data imputation is much harder since it needs
+to recover the original information precisely. Another commonly applied trafﬁc
+data-denoising task is trajectory data-map matching. The most popular models
+for this task that denoises the map matching errors are often based on the hid-
+den Markov model. Recently, there have been many attempts to develop deep
+learning-based, missing-data imputation. These methods often focus on learning
+spatiotemporal features using deep learning models so that they are able to infer
+the missing values using the existing values. Given the spatiotemporal property
+of trafﬁc data, the Convolutional Neural Network (CNN) is a natural choice due
+to its ability to learn image-like patches. We previously designed a CNN-based
+method for loop trafﬁc ﬂow-data imputation and demonstrated its improved per-
+formance over the state-of-the-art methods (Zhuang et al., 2019). Generative
+adversarial network (GAN) is another deep learning method that is appropriate
+for trafﬁc data imputation, given its recent advances in image-like data gen-
+eration. Chen et al. proposed a GAN algorithm to generate time-dependent
+trafﬁc ﬂow data. This method made two modiﬁcations to the standard GAN
+on using real data and introduced a representation loss (Chen et al., 2019c).
+20 Machine Learning for Transportation Research and Applications
+
+GAN has also been experimented with for travel-time imputation using probe
+vehicle-trajectory data. Zhang et al. developed a travel time-imputation GAN
+(TTI-GAN) considering network-wide spatiotemporal correlations (Zhang et
+al., 2021).
+
+  Multisource data fusion is critical in leveraging the power of data collected
+from different sources, e.g., loops, cameras, and radar. These data each come
+in their own formats and resolutions. From a machine learning perspective, a
+uniﬁed data space needs to be constructed for feature learning. In ITS, a nat-
+ural way to organize data into the same space is building a map-based data
+dashboard as an analytical and visualization platform. This kind of platform is
+capable of accepting, archiving, and quality-checking trafﬁc-sensor data from
+all deﬁned regions. It incorporates data from a range of sources, such as DOT
+data, vendor data, and public data. DRIVE Net (Wang et al., 2016) is an exam-
+ple of an online system for ITS data fusion, analytics, and visualization. It can
+be used to quickly and automatically produce statistics for Washington State
+DOT’s reporting needs, such as congestion evaluation, travel-time analysis, and
+throughput productivity evaluation. It integrates a wide range of data into this
+online platform through its database design, data-panel design, and functional
+design. Besides traditional highway and city trafﬁc data, this system integrates
+multi-model data including car sharing, ferry, public transit, park and ride, ele-
+vation, and pedestrian volume. Data fusion techniques in ITS can also achieve
+the merging of data from different individual sensors and systems at the place of
+data collection. Multisource data fusion in real-time enables advanced sensing
+applications, e.g., camera and LiDAR data fusion in support of automated driv-
+ing. The communication methods and fusion techniques need to be identiﬁed.
+In vehicles, the controller area network is an existing and promising communi-
+cation media for multisystem integration. Early fusion of the raw sensor signals
+and late fusion of the sensing results are possible approaches to system-and-
+sensor fusion.
+
+2.7 Transportation data and sensing challenges
+
+2.7.1 Heterogeneity
+
+Developing advanced ITS applications requires the adoption of different sensors
+and sensing methods. On a large scale, heterogeneity resides in many aspects,
+e.g., hardware, software, power supply, and data. Sensor hardware incorporates
+has a wide variety of different ITS tasks. Magnetic sensors, radar sensors, in-
+frared sensors, LiDAR, cameras, etc., are common sensor types that each poses
+unique advantage in particular scenarios. These sensors vary regarding cost,
+size, material, reliability, working environment, sensing capability, etc. Not only
+is there a large variety of sensors themselves, the hardware supporting the sens-
+ing functions for storage and protection is also diverse. Also, the associated
+hardware may limit the applicability of sensors. A sensor with local storage is
+able to store data onsite for later use; a sensor with a waterproof shell is able
+  Transportation data and sensing Chapter | 2 21
+
+to work outdoors, while those without one may solely be available for indoor
+monitoring.
+
+  Even within the same type of sensors, there can be a signiﬁcant variance
+with respect to detailed conﬁgurations that will inﬂuence the effectiveness and
+applicability of the sensors. Cameras with different resolution is an example:
+Those with high resolution are suitable for some tasks that are not possible for
+low-resolution cameras, such as small object detection, while low-resolution
+cameras may support less complicated tasks and be more efﬁcient and less
+expensive. The installation locations of the same sensors also vary. As afore-
+mentioned, sensors onboard a vehicle or carried by a pedestrian have different
+functions than those installed on infrastructures. Some sensors can only be in-
+stalled on the infrastructures, and some are appropriate for onboard sensing. For
+example, loop detectors and magnetic nodes are most often on or underneath
+the road surface, while sensors for collision avoidance need to be onboard cars,
+buses, or trucks.
+
+  Software is another aspect that poses heterogeneity in ITS sensing. There
+is open-source software and proprietary software. Open-source software is free
+and ﬂexible and can be customized for speciﬁc tasks; however, there is a rel-
+atively high risk that some open-source software is unreliable and may work
+only in speciﬁc settings. There are many open-source codes on platforms such
+as GitHub. A good open-source tool can have a massive inﬂuence on the re-
+search community, such as open codes for Mask R-CNN (He et al., 2017), which
+has been widely applied for trafﬁc object-instance segmentation. Proprietary
+software is generally more reliable, and some software comes with customer
+services from the company that developed the software. These software tools
+are usually not free and have less ﬂexibility for customization, and it is also dif-
+ﬁcult to know the internal sensing algorithms or design. When an ITS system is
+composed of multiple software tools, which is likely the case most of the time,
+and these tools lack transparency or ﬂexibility regarding communication, there
+will be hurdles in developing efﬁcient and advanced ITS applications.
+
+  Heterogeneous settings in ITS sensing inevitably collect a heterogeneous
+mix of data, such as vehicle dynamics, trafﬁc ﬂow, driver behavior, safety
+measurements, and environmental features. There are uncertainties, noises, and
+missing patches in ITS data. Modern ITS applications require data to be of
+high quality, integrated, and sometimes in real-time. Despite the improvement of
+sensing functionality for individual sensors at a single location, new challenges
+arise in the integration of heterogeneous data. New technologies also pose chal-
+lenges in data collection because some data under traditional settings will be
+redundant, and, at the same time, new data will be required for some tasks, e.g.,
+CAV safety and mixed autonomy.
+
+2.7.2 High probability of sensor failure
+
+Large-scale and real-time sensing requirements will have little tolerance for sen-
+sor failure because it may cause severe problems for the operation and safety of
+22 Machine Learning for Transportation Research and Applications
+
+ITS. A representative example is sensor failure in an autonomous vehicle, which
+could lead to property damage, injuries, and even fatalities. When ITS becomes
+more advanced, where one functional system will likely consist of multiple co-
+ordinated modules, the failure of one sensor could cause the malfunction of the
+entire system. For instance, a connected vehicle and infrastructure system may
+stop working because some infrastructure-mounted sensors produce no read-
+ings, resulting in interruption of the data ﬂow for the entire system.
+
+  Sensor failure may rarely occur for every individual sensor, but, according to
+probability theory, if the failure probability of one sensor is p during a speciﬁc
+period, the failure probability among N sensors will be 1 − (1 − p)N . When
+N is large enough, the probability of sensor failure will be very high. This phe-
+nomenon is similar to the fault tolerance in cloud computing, which necessitates
+designing a blueprint for continuing the cloud computing ongoing work when
+a few machines are down. However, in ITS sensing, sensor fault tolerance is
+more challenging due to: (1) the hardware, software, and data heterogeneity
+mentioned in the last subsection; (2) the fact that, unlike cloud computing set-
+tings, sensors may be connected to different networks or even not connected to
+any network; (3) the potential cost and loss from a sensor fault, which could be
+much more serious than one in cloud computing.
+
+  This problem naturally exists and is hard to eliminate because, even when the
+failure probability for a single sensor is extremely low, in city-scale ITS sensing
+applications, where there are hundreds and even thousands of heterogeneous
+sensors, the probability increases signiﬁcantly. Furthermore, it is not realistic
+to reduce the failure probability of a single sensor or device to zero in the real
+world.
+
+2.7.3 Sensing in extreme cases
+
+ITS sensing tasks that seem simple could become extraordinarily complicated or
+unreliable in extreme cases, such as during adverse weather, due to occlusion,
+and at night. A typical example is video sensing, which is sensitive to light-
+ing changes, shadows, reﬂection, and so forth. In smart parking surveillance,
+a recent study showed that video-based detectors performed more reliably in-
+doors than outdoors due to extreme lighting conditions and adverse weather (Ke
+et al., 2020d). Due to low-lighting conditions, even the cutting-edge video-
+based ADAS products on the market are not recommended for operation at
+night (Spears et al., 2017). The LiDAR sensor is one of the most reliable sensors
+for ITS, however, LiDAR sensing performance downgrades in rainy and snowy
+weather, and it is also sensitive to objects with reﬂective surfaces. GPS sen-
+sors experience signal obstruction due to surrounding buildings, trees, tunnels,
+mountains, and even human bodies. Therefore, GPS sensors work well in open
+areas but not in areas where obstructions are unavoidable, such as in central
+cities.
+
+  In ITS, especially in automated vehicle testing, extreme cases can also refer
+to corner cases that an automated and intelligent vehicle has not encountered
+  Transportation data and sensing Chapter | 2 23
+
+before. For example, a pedestrian crossing the freeway at night may not be a
+common case that is thoroughly covered in the database, so a vehicle might
+not understand the sensing results enough to proceed conﬁdently; therefore, it
+would cause uncertainty in the real-time decision-making. Some corner cases
+may be created by attackers. Adding noise that is unnoticeable to human eyes to
+a trafﬁc sign image could result in a missed detection of the sign (Wang et al.,
+2021a); these adversarial examples threaten the security and robustness of ITS
+sensing. Corner case detection appears to be one of the hurdles that slow down
+the pace to achieving L-5 autonomous driving. The ﬁrst question is: How does
+a vehicle know when it encounters a corner case? The second question is: How
+should it handle the unforeseen situation? We expect that corner case handling
+will not only be an issue for the automated vehicle but also faced for the broad
+range of ITS sensing components.
+
+2.7.4 Privacy protection
+
+Privacy protection is another major challenge. As ITS sensing becomes ad-
+vanced, more and more detailed information is available, and there have been
+increasing concerns regarding the use of the data and the possible invasion of
+privacy. Bluetooth sensing detects the MAC address of the devices such as cell
+phones and tracks the devices in some applications, which not only risk peo-
+ple’s identiﬁcation but also their location information. Camera images, when
+not properly protected, may contain private information, such as faces and li-
+cense plates. These data are often stored on the cloud and not owned by the
+people whose private information is there.
+
+2.8 Exercises
+
+• Name two ﬁxed trafﬁc sensors and two mobile trafﬁc sensors, and their pros
+  and cons.
+
+• List three impacts that urban data explosion has on transportation systems.
+• What are the three fundamental types of data for macroscopic trafﬁc ﬂow?
+• What is the major difference between infrastructure-based data collection and
+
+  vehicle-based data collection?
+• What are the advantages and challenges of collecting surface-trafﬁc data from
+
+  aerial vehicles?
+• How is travel time data collection done? Describe three methods and the core
+
+  differences from other trafﬁc data collection.
+• Trafﬁc anomaly is not well deﬁned. What is your deﬁnition of trafﬁc
+
+  anomaly? List ﬁve trafﬁc anomaly events. What are your recommendations
+  for sensors and methods to collect these anomaly data?
+• How could road user-behavior data help improve autonomous driving func-
+  tions?
+• List ﬁve trafﬁc operation tasks that could beneﬁt from road and lane detec-
+  tion.
+24 Machine Learning for Transportation Research and Applications
+
+• Brieﬂy state the three aspects of transportation data heterogeneity and how
+  they create a unique heterogeneous data problem in transportation.
+
+• What is your suggestion for handling privacy issues in transportation data
+  collection without losing the beneﬁts that the data bring to us?
+
+• From a probabilistic perspective, why is large-scale sensing challenging?
+  Which transportation applications are the most sensitive to sensor failure?
+Chapter 3
+
+Machine learning basics
+
+Machine learning has changed many industries and research domains, including
+urban science and transportation engineering. Machine learning methods and
+techniques can be categorized from different perspectives. The most common
+one is whether a machine learning method is supervised or not. The key differ-
+ence is the presence of labels in supervised learning and the absence of labels
+in unsupervised learning. A label is a gold standard for a target of interest, such
+as the location of a vehicle in an image for training a vehicle detection model.
+Supervised learning has been widely used for forecasting the state of trafﬁc
+network, detecting trafﬁc objects, classifying trafﬁc modes, etc. Unsupervised
+learning also has been widely applied to cluster trafﬁc data into different groups
+and identify the main characteristics of those groups. Another type of machine
+learning method, i.e. reinforcement learning, which cannot be classiﬁed into
+these two categories, will be introduced in later chapters.
+
+  In this chapter, we will introduce the basic machine learning concepts and
+methods. We will brieﬂy introduce several criteria for categorizing machine
+learning methods. Then, basic supervised learning methods, which are the basis
+of deep learning, and several representative unsupervised learning methods are
+introduced.
+
+3.1 Categories of machine learning
+
+There are various ways to classify machine learning problems. Before introduc-
+ing speciﬁc machine learning methods, we ﬁrst introduce the several categories
+of machine learning.
+
+3.1.1 Supervised vs. unsupervised learning
+
+Supervised learning is a machine learning approach that’s deﬁned by its use
+of labeled datasets. The datasets are designed to train or “supervise” algorithms
+into classifying data or predicting outcomes accurately. Using labeled inputs
+and outputs, the model can measure its own accuracy and learn over time. Su-
+pervised learning can be generally separated into two types of problems:
+• Classiﬁcation algorithms target accurately assigning test data into speciﬁc
+
+  categories, such as separating apples from oranges. In the real world, super-
+  vised learning algorithms can be used to classify ramp-metering trafﬁc lights
+  into two different states, i.e., red and green.
+
+Machine Learning for Transportation Research and Applications  25
+
+https://doi.org/10.1016/B978-0-32-396126-4.00008-4
+
+Copyright © 2023 Elsevier Inc. All rights reserved.
+26 Machine Learning for Transportation Research and Applications
+
+• Regression is another type of supervised learning method that uses an al-
+  gorithm to understand the relationship between dependent and independent
+  variables. Regression models are helpful for predicting numerical values
+  based on different data points, such as the trafﬁc speed on a speciﬁc road
+  segment. Some popular regression algorithms are linear regression and logis-
+  tic regression.
+
+  Unsupervised learning uses machine learning algorithms to analyze and
+cluster unlabeled data sets. These algorithms discover hidden patterns in data
+without the need for human intervention (hence, they are “unsupervised”). Un-
+supervised learning models are usually used for three main tasks, clustering,
+association and dimensionality reduction, which can be deﬁned as follows:
+• Clustering is a technique for grouping unlabeled data based on their sim-
+
+  ilarities or differences. For example, K-means clustering algorithms assign
+  similar data points into groups, where the K value represents the size of the
+  grouping and granularity. This technique is helpful for travel behavior cate-
+  gorization, etc.
+• Dimensionality reduction is a learning technique used when the number of
+  features (or dimensions) in a given dataset is too high. It reduces the number
+  of data inputs to a manageable size, while also preserving the data integrity.
+  Often, this technique is used in the preprocessing data stage, such as when
+  autoencoders remove noise from visual data to improve picture quality.
+
+  There is an obvious gap between supervised learning and unsupervised
+learning which can be ﬁlled by semi-supervised learning. Semi-supervised
+learning is similar to supervised learning, but instead uses both labeled and
+unlabeled data. Labeled data is essentially information that has meaningful tags
+so that the algorithm can understand the data, while unlabeled data lacks that
+information. By using this combination, machine learning algorithms can learn
+to label unlabeled data.
+
+3.1.2 Generative vs. discriminative algorithms
+
+Generative algorithms try to model “how to populate the dataset”. This re-
+duces to learning ‘everything’ about the distribution that is most likely to pro-
+duce what we have observed. In the probabilistic form, generative algorithms
+learn joint probability: P (X, Y ) that can be converted in Bayesian fashion:
+P (X|Y ) = P (Y |X)P (X). Some popular generative algorithms are: the naive
+Bayes classiﬁer, generative adversarial networks, Gaussian mixture model, hid-
+den Markov model, etc.
+
+  Discriminative algorithms focus on modeling a direct solution that learns
+the boundary instead of the distribution. For example, the logistic regression
+algorithm models a decision boundary. Discriminative algorithms estimate pos-
+terior probabilities. Unlike the generative algorithms, they don’t model the
+underlying probability distributions. In the probabilistic form, the conditional
+  Machine learning basics Chapter | 3 27
+
+probability of target Y is modeled given an observation x, P (Y |X = x). Some
+popular discriminative algorithms are: k-nearest neighbors (k-NN), logistic re-
+gression, Support Vector Machines (SVMs), decision trees, the random forest,
+etc.
+
+3.1.3 Parametric vs. nonparametric modeling
+
+A model parameter is a conﬁguration variable that is internal to the model and
+whose value can be estimated from the given data. Parameters are required by
+the model when making predictions. They are estimated or learned from his-
+torical training data instead of set manually by the practitioner. The learned
+parameters are often saved as part of the learned model.
+
+  A learning model summarizes the data with a set of ﬁxed-size parameters
+(independent on the number of instances of training). Parametric machine
+learning algorithms optimize the function to a known form, while nonparamet-
+ric machine learning algorithms are those that do not make speciﬁc assumptions
+about the type of the mapping function. Rather, they are prepared to choose any
+functional form from the training data by not making assumptions.
+
+  The word nonparametric does not mean that the value lacks existing param-
+eters, but rather that the parameters are adjustable and can change. A simple-to-
+understand nonparametric model is the k-nearest neighbors’ algorithm, which
+predicts a new data instance based on the most similar training patterns k. The
+only assumption it makes about the data set is that the training patterns that are
+the most similar are most likely to have a similar result.
+
+  A generative model is mostly parametric since it models the underlying dis-
+tribution, while a discriminative model is mostly nonparametric. Note that, by
+deﬁnition, a model with unﬁxed amount of parameters is deﬁned as nonpara-
+metric. Example models include:
+• Generative/nonparametric: Gaussian mixture models (GMM) which learn a
+
+  Gaussian distribution and have unﬁxed amount of parameters (latent param-
+  eters increases depending on the sample size);
+• Generative/parametric: various Bayes-based models;
+• Discriminative/parametric: Latent Dirichlet Allocation (LDA) and logistic re-
+  gression;
+• Discriminative/nonparametric: KNN, SVM, and K-Means.
+
+  Choosing the right approach for your situation depends on how we assess the
+structure and volume of the dataset, as well as the use case. To make the right
+decision, we need to carefully evaluate the input data with or without labels,
+deﬁne the goals, and review the options for algorithms. In the following sections,
+we will introduce several representative supervised learning and unsupervised
+learning algorithms.
+28 Machine Learning for Transportation Research and Applications
+
+3.2 Supervised learning
+
+3.2.1 Linear regression
+
+Linear regression is perhaps the most basic supervised learning algorithm. In
+regression, we are interested in predicting a scalar-valued target, such as the
+speed on a road segment. By linear, we mean that the target must be predicted
+as a linear function of the inputs.
+
+Problem setup
+
+In order to formulate a learning problem mathematically, we need to deﬁne two
+things: a model and a loss function.
+
+  The model, or architecture deﬁnes the set of allowable hypotheses, or func-
+tions that compute predictions from the inputs. The hypotheses contains all the
+possible functions F = {f |y = f (x)}, where x and y are the variables deﬁned
+in the input space X and Y. In the case of linear regression, the model simply
+consists of linear functions. Recall that a simplest linear function, where the
+input and output data are one-dimensional, can be mathematically written as:
+
+  y = wx + b,  (3.1)
+
+where we call the coefﬁcient w weight, and call the intercept term bias. If the
+input data is multidimensional with several variables, the model can be written
+as
+
+  y = wj xj + b.  (3.2)
+
+  j
+
+  In order to quantify how good the ﬁt/estimation/prediction is, we deﬁne a
+loss function, L(yˆ, y), which measures how far off the prediction is from the
+target. Given a dataset D = {(x(i), y(i))} with N samples (pairs of x and y), y(i)
+is the targeted label value, and we use yˆ(i) to demonstrate the predicted value of
+y(i). In linear regression, we use squared error in the loss function, deﬁned as
+
+  L(yˆ, y) = 1 (yˆ(i) − y(i))2.  (3.3)
+  2i
+
+The loss is small when yˆ and y are close together and large when they are far
+
+apart. In general, the value yˆ − y is called residual. If the residuals is close to
+
+zero,  it  shows  the  regression  model  has  a  good  ﬁt.  Note  that  the  factor  1  in  front
+  2
+
+just makes the calculations convenient when it needs to take the derivative of
+
+the loss function.
+
+Combining the model and the loss function, we can consider the regression
+
+needed to solve an optimization problem, where we are trying to minimize a
+
+cost function, i.e., the loss function, with respect to the model parameters (i.e.,
+
+the weights w and bias b).
+  Machine learning basics Chapter | 3 29
+
+  Note that there is a concept, cost function, that is close to the loss function.
+Taking the simplest linear regression as an example, the difference can be re-
+ﬂected by the following equation of the cost function:
+
+  J (w, b) = 1 (y(i) − wx(i) − b)2.  (3.4)
+  2i
+
+The loss is a function of the predictions and targets, while the cost is a function
+of the model parameters.
+
+Solving the optimization problem
+
+Whenever we want to solve an optimization problem, a good place to start is to
+
+compute the partial derivatives of the cost function. Just to quickly recap, given
+a dataset D = {(x(i), y(i))} where x(i) = {x1(i), . . . , xj(i), . . . , xM(i)}, suppose f is
+a function of x(i). The partial derivative ∂f/∂xj states in what way the value
+of f changes if you increase xj by a small amount, while holding the rest of
+the arguments ﬁxed. Let’s do that in the case of linear regression. Applying the
+
+chain rule, we can get the derivatives:
+
+  N  ⎛  ⎞  N
+
+∂L 1  (i) ⎝  (i)  (i)⎠ 1  (i) (i) (i)
+∂wj = N xj  wj xj + b − y = N xj yˆ − y
+  i=1  j  i=1
+  ⎛  ⎞  (3.5)
+
+∂L 1 N ⎝  (i)⎠ 1  N
+
+  =  (i)  (i) (i)
+∂b N  wj xj + b − t = N yˆ − y .
+  i=1 j  i=1
+
+The derivatives are simpliﬁed a bit. Basically, there are two ways to use these
+partial derivatives to solve this regression problem.
+1. Direct solution
+
+  One way to compute the minimum of a function is to set the partial deriva-
+tives to zero. Recall from single-variable calculus that (assuming a function is
+differentiable) the minimum x of a function f has the property that the deriva-
+tive df/dx is zero at x = x . Note that the converse is not true: if df/dx = 0,
+then x might be a maximum or an inﬂection point, rather than a minimum. But
+the minimum can only occur at points that have a zero derivative. An analogous
+result holds in the multivariate case: If f is differentiable, then all of the partial
+derivatives ∂f/∂xj are zero at the minimum. The intuition is simple: if ∂f/∂xj
+is positive, then one can decrease f slightly by decreasing xj slightly. Con-
+versely, if ∂f/∂xj is negative, then one can decrease f slightly by increasing xj
+slightly. In either case, this implies we’re not at the minimum. Therefore, if the
+minimum exists (i.e., f doesn’t keep growing as x goes to inﬁnity), it occurs at
+a critical point, i.e., a point where the partial derivatives are zero. This gives us
+a strategy for ﬁnding minima: Set the partial derivatives to zero, and solve for
+the parameters. This method is known as direct solution.
+30 Machine Learning for Transportation Research and Applications
+
+Let’s apply this to linear regression. For simplicity, let’s assume the model
+
+doesn’t have a bias term. (We actually don’t lose anything by getting rid of the
+
+bias. Just add a “dummy” input x0 that always takes the value 1; then, the weight
+
+w0 acts as a bias.) We simplify Eq. (3.5) to remove the bias, and set the partial
+
+derivatives to zero:
+
+  N  ⎛  M  ⎞
+
+∂L 1  (i) ⎝  (i) (i)⎠
+∂wj = N xj  wj xj − y = 0.  (3.6)
+
+  i=1  j =1
+
+In this linear equation, we have N data samples and M weights. As long as
+N ≥ M, this system of linear equations can be solved. Since we’re trying to
+
+solve for the weights, let’s pull these out:
+
+∂L = 1 M  N  1  N
+∂wj N j =1
+  xj(i)xj(i)  (i) (i)
+  wj − N xj y = 0.  (3.7)
+  i=1
+  i=1
+
+You can observe that this is a system of M linear equations in M variables that
+can be further simpliﬁed as
+
+  M  ∀j ∈ {1, . . . , M},  (3.8)
+
+  Ajj wj − cj = 0
+
+  j =1
+
+where Ajj = N i 1 N=1 xj(i)xj(i) and cj = N i 1 N=1 xj(i)t (i). Until now, we are able
+to solve the linear regression equations by computing all the values Ajj and cj .
+
+  Note that the solution we just derived is very particular to linear regression.
+In general, the system of equations will be nonlinear, and, except in rare cases,
+systems of nonlinear equations don’t have closed-form solutions. Linear regres-
+sion is very unusual in that it has a closed-form solution.
+2. Gradient descent
+
+  Now, let’s minimize the cost function in another way: gradient descent. This
+is an iterative algorithm, which means that we apply a certain update rule over
+and over again, and, if we’re lucky, our iterates will gradually improve according
+to our objective function. To do gradient descent, we initialize the weights to
+some value (e.g., all zeros), and repeatedly adjust them in the direction that
+most decreases the cost function. If we visualize the cost function as a surface,
+so that lower is better, this is the direction of steepest descent. We repeat this
+procedure until the iterates converge, or stop changing much. If we’re lucky, the
+ﬁnal iterate will be close to the optimum.
+
+  In order to make this mathematically precise, we must introduce the gra-
+dient, the direction of steepest ascent (i.e., fastest increase) of a function. The
+entries of the gradient vector are simply the partial derivatives with respect to
+  Machine learning basics Chapter | 3 31
+
+each of the variables as shown in the following example:
+
+  ⎛  ∂L  ⎞
+
+  ⎜ ∂w1 ⎟
+  ∂L ⎜ . ⎟
+  = ⎜ .. ⎟ .  (3.9)
+  ∂w ⎝  ⎠
+
+  ∂L
+
+  ∂ wM
+
+This formula gives the direction of steepest ascent. It also suggests that, to de-
+crease a function as quickly as possible, we should update the parameters in the
+direction opposite the gradient.
+
+  Thus, we can formalize the function-decreasing process using the following
+update rule, which is known as gradient descent:
+
+  w ← w − α∂L,  (3.10)
+  ∂w
+
+or in terms of coordinates,
+
+  wj ← wj − α ∂E .  (3.11)
+  ∂ wj
+
+The symbol ← means that the left-hand side is updated to take the value on the
+right-hand side; the constant α is known as a learning rate. The larger it is, the
+larger a step we take. But, in general, it’s good to choose a small value such as
+0.01 or 0.001. If we plug in the formula into Eq. (3.11) for the partial derivatives
+of the regression model, we get the update rule, which is also the core of neural
+network updating rules:
+
+  1N  (i) (i)
+wj ← wj − α  xj yˆ − y .  (3.12)
+  N i=1
+
+  We just need to repeat this update many times until the gradient goes close
+to zero. You might ask: By setting the partial derivatives to zero, do we actually
+compute the exact solution? With gradient descent, we never actually reach the
+optimum, but merely approach it gradually. Then, why would we ever prefer
+gradient descent? There are two reasons:
+
+• We can only solve the system of equations explicitly for a handful of mod-
+  els. By contrast, we can apply gradient descent to any model for which we
+  can compute the gradient. This is usually pretty easy to do efﬁciently. Im-
+  portantly, it can usually be done automatically, so software packages like
+  PyTorch and TensorFlow can save us from ever having to compute partial
+  derivatives by hand.
+
+• Solving a large system of linear equations can be expensive, possibly many
+  orders of magnitude more expensive than a single gradient-descent update.
+32 Machine Learning for Transportation Research and Applications
+
+Therefore, gradient descent can sometimes ﬁnd a reasonable solution much
+faster than solving the linear system. Therefore, gradient descent is often
+more practical than computing exact solutions, even for models where we
+are able to derive the latter. For these reasons, gradient descent will be our
+workhorse throughout the course. We will use it to train almost all our mod-
+els, with the exception of a handful for which we can derive exact solutions.
+
+Vectorization
+
+We can also introduce linear algebra to rewrite the linear regression model, as
+well as both solution methods, in terms of operations on matrices and vectors.
+This process is known as vectorization. Writing those equations using matrices
+and vectors has at least two advantages:
+
+• Vector-formed formulas can be much simpler, more compact, and more read-
+  able in this form.
+
+• Vectorized code can be much faster than explicit for-loops, for several rea-
+  sons:
+
+  – High-level programming languages like Python can introduce a lot of
+  interpreter overhead, and, if we explicitly write a for-loop, it might be
+  10 − 100 times slower than the C programming language equivalent. If we
+  instead write the algorithm in terms of a much smaller number of linear al-
+  gebra operations, then it can perform the same computations much faster
+  with minimal interpreter overhead.
+
+  – Since linear algebra is used all over the place, linear algebra libraries have
+  been extremely well optimized for various computer architectures. Hence,
+  they use much more efﬁcient memory access patterns than a naive for-
+  loop.
+
+  – Matrix multiplication is inherently highly parallelizable and involves little
+  control ﬂow. Hence, it’s ideal for graphics processing unit (GPU) archi-
+  tectures. If you run vectorized code on a GPU using a framework like
+  TensorFlow or PyTorch, it may run 50 times faster than the CPU version.
+  As it turns out, most of the computation in deep learning involves matrix
+  multiplication, which is why it’s been such an incredibly good match for
+  GPUs.
+
+  In general, matrices will be denoted with capital boldface, vectors with low-
+ercase boldface, and scalars with plain type. If we have N training examples,
+each M-dimensional, we will represent the inputs as an N × M matrix X, i.e.,
+X ∈ RN×M . Each row of X corresponds to a training example, and each column
+corresponds to a single input dimension. The weights are represented as a M-
+dimensional vector w, and the targets are represented as a N -dimensional vector
+t. The predictions are computed using a matrix-vector product
+
+yˆ = Xw + b1,  (3.13)
+  Machine learning basics Chapter | 3 33
+
+where 1 denotes a vector of all ones. We can express the cost function in vector-
+ized form:
+
+  L= 1  yˆ − y 2  (3.14)
+  2N  Xw + b1 − y 2.
+
+  =1
+  2N
+
+Note that this is considerably simpler than Eq. (3.3). Even more importantly, it
+
+saves us from having to explicitly sum over the indices i and j . As our models
+
+get more complicated, we would run out of convenient letters to use as indices
+
+if we didn’t vectorize those variables.
+
+  As shown in Eq. (3.8), we derived a system of linear equations, with coefﬁ-
+
+cients Ajj = N i 1 N=1 xj(i)xj(i) and cj = N i 1 N=1 xj(i)y(i). Using linear algebra,
+
+we  can  write  these  as  the  matrix  A  =  1  X  X  and  c  =  1  X  y. The solution to
+  N  N
+the linear system Aw = c is given by w = A−1c (assuming A is invertible), and,
+
+in this way, the optimal weights can be directly written in a vectorized form:
+
+  −1  (3.15)
+
+  w = X X X y.
+
+An exact solution that we can express with a formula is known as a closed-form
+solution.
+
+  Similarly, we can vectorize the gradient descent update process from
+Eq. (3.12)
+
+  w ← w − α X (yˆ − y),  (3.16)
+  N
+
+where yˆ is computed as in Eq. (3.13).
+
+3.2.2 Logistic regression
+
+Logistic regression is one popular binary classiﬁcation model. Logistic regres-
+sion is actually the simplest neural network model, which is also known as the
+perceptron. Next, let us explain logistic regression with a trafﬁc example.
+
+  Suppose we want to determine whether a road segment is congested or not
+based on the trafﬁc speed, volume, and other physical attributes of the road
+segment. In this example, the label y = 1 if the segment is congested and y = 0
+otherwise. Each road segment has a M dimensional feature vector x.
+
+  Mathematically logistic regression models the probability of congestion y =
+1 given input features x, denoted by P (y = 1 | x). Then, the classiﬁcation is
+performed by comparing P (y = 1 | x) with a threshold (e.g., 0.5). If P (y = 1 |
+x) is greater than the threshold, we predict the road segment will is congested;
+otherwise, the road segment is not.
+
+  One building block of logistic regression is the log-odds or logit function.
+The odds is the quantity that measures the relative probability of label presence
+34 Machine Learning for Transportation Research and Applications
+
+and label absence as
+
+  P (y = 1 | x)
+  1 − P (y = 1 | x).
+
+The lower the odds, the lower probability of the given label. Sometimes, we
+prefer to use log-odds (natural logarithm transformation of odds), also known
+as the logit function:
+
+  logit(x) = log P (y = 1 | x) .  (3.17)
+  1 − P (y = 1 | x)
+
+Now, instead of modeling the probability of road segment congestion label given
+input feature P (y = 1 | x) directly, it is easier to model its logit function as a
+
+linear regression over x:
+
+  log P (y = 1 | x) = wT x + b,  (3.18)
+  1 − P (y = 1 | x)
+
+where w is the weight vector and b is the offset variable. Eq. (3.18) is why
+logistic regression is named logistic regression.
+
+  After taking exponential to both sides and some simple transformation, we
+will have the following formula:
+
+  P (y = 1 | x) =  ewT x+b
+  T.  (3.19)
+  1 + ew x+b
+
+With the formulation in Eq. (3.19), the logistic regression will always output
+
+values between 0 and 1, which is desirable for probability estimation.
+  Let us denote P (y = 1 | x) as P (x) for simplicity. Now, learning the logistic
+
+regression model means estimating the parameters w and b on the training data.
+
+We often use maximum likelihood estimation (MLE) to ﬁnd the parameters.
+The idea is to estimate w and b so that the prediction Pˆ (xi) to data point i in
+the training data is as close as possible to the actual observed values (in this
+case, either 0 or 1). Let x+ be the set of indices for data points that belong
+to the positive class (i.e., with road congestion) and x− one be the set of data
+points that belong to the negative class (i.e., without road congestion). Then, the
+
+likelihood function used in the MLE is given by:
+
+L(w, b) =  P xa+  1 − P xa− .  (3.20)
+
+  a+ ∈x+  a− ∈x−
+
+  If we apply the logarithm to the MLE, we will get the following formula for
+log-likelihood:
+
+  N  (3.21)
+
+log(L(w, b)) = yi log P (xi) + (1 − yi) log (1 − P (xi)) .
+
+  i=1
+  Machine learning basics Chapter | 3 35
+
+Note that, since either yi or 1 − yi is zero, only one of two probability terms
+(either log P (xi) or log (1 − P (xi)) will be added.
+
+  Multiplying a negative sign to have a minimization problem, what we have
+now is the negative log-likelihood, also known as (binary) cross-entropy loss:
+
+  N  (3.22)
+
+J (w, b) = − yi log P (xi) + (1 − yi) log (1 − P (xi)) .
+
+  i=1
+
+Maximizing the log-likelihood is identical to minimizing the cross-entropy loss.
+In this setting, we can use the gradient descent to ﬁnd the optimal weights w
+and b.
+
+Softmax regression
+
+Logistic regression is designed for binary classiﬁcation problems. We some-
+
+times want to classify data points into more than two classes, e.g., given trafﬁc-
+sign image data, such as stop, right turn, and left turn. In that case, we will use
+multinomial logistic regression, also called softmax regression to model this
+
+problem.
+  Assuming we have K classes, the goal is to estimate the probability of the
+
+class label taking on each of the K possible categories P (y = k | x) for k =
+1, · · · , K. Thus, we will output a K-dimensional vector representing the esti-
+mated probabilities for all K classes. The probability that data point i is in class
+a can be modeled as:
+
+  ew  T  x  i  +ba
+  a
+P (yi = a | xi ) =
+  K wkT xi +bk ,  (3.23)
+
+  k=1 e
+
+where wa is the weight for a-th class, xi is the feature vector for data point i,
+and ba is the offset for class a, respectively. To learn parameters for softmax
+regression, we can optimize the following average cross-entropy loss over all N
+
+training data points:
+
+J (w) = −  1N K  I (yi = k) log (P (yi = k | xi)) ,  (3.24)
+
+  N i=1 k=1
+
+where K is the number of label classes (e.g., three classes in trafﬁc-sign image
+classiﬁcation), I (yi = k) is binary indicator (0 or 1) if k is the class for data
+point i, and P (yi = k | xi) is the predicted probability that data point i is of
+class k. In this way, softmax regression is just a multi-class extension of the
+
+logistic regression.
+
+3.3 Unsupervised learning
+
+In many travel behavior research problems, we can hardly predeﬁne the cat-
+egories of those behaviors. In such cases, we resort to unsupervised learning
+36 Machine Learning for Transportation Research and Applications
+
+models. Unsupervised learning models are not used for classifying (or predict-
+ing) towards a known label y. Rather, they discover patterns or clusters about
+the input data x. Next, we brieﬂy introduce some popular unsupervised learning
+methods.
+
+3.3.1 Principal component analysis
+
+Suppose we want to study N data points of M features represented by a matrix
+X ∈ RN×M . The number of features M can be large in many travel behavior or
+trajectory datasets. For example, the dimension of a passenger’s travel behavior
+data over a week can reach 24*7 if we simply sample the location from the
+passenger’s trajectory every hour. Principal component analysis (PCA) can be
+applied to reduce the data dimensionality from M to a much lower dimension
+R. More speciﬁcally, PCA is the linear transformation:
+
+Y = XW,  (3.25)
+
+where X is the original data matrix, Y ∈ RN×R is the low-dimensional repre-
+sentation after PCA, and W ∈ RM×R is the orthogonal projection matrix. The
+objective of PCA is to minimize the reconstruction error:
+
+  2  (3.26)
+
+min X − XW W ,
+
+ W
+
+where XW W = Y W is the reconstruction matrix. The solution of PCA
+relates to another matrix factorization named singular value decomposition
+(SVD):
+
+X≈U W ,  (3.27)
+
+where U ∈ RM×R and W ∈ RN×R are orthogonal matrices 2 that contain left
+and right singular vectors and ∈ RR×R. Connecting to PCA, if X is the
+high-dimensional data matrix, the low-dimensional representation is Y = U =
+XW .
+
+  In most cases, PCA are combined with other methods and used as a feature-
+extraction method for generating features from high-dimensional data such as
+image data. For example, in the transportation domain, image data such as ve-
+hicle or passengers includes many different appearances in pixel level, whose
+high dimensionality causes many challenges for trafﬁc object detection and
+classiﬁcation tasks. PCA can be used to extract the high-level feature to as-
+sist detection accuracy. To summarize, as an unsupervised learning method,
+PCA provides low-dimensional linear representation to approximate the orig-
+inal high-dimensional features. In fact, PCA can also be achieved by a neural
+network via autoencoders with linear activation if we have enough data to train
+the neural network.
+  Machine learning basics Chapter | 3 37
+
+3.3.2 Clustering
+
+Besides dimensionality reduction, clustering is another major topic in unsu-
+pervised learning. Clustering methods aim to ﬁnd homogeneous groups (or
+clusters) from a dataset, such that similar points are within the same cluster but
+dissimilar points are in different clusters. For example, researchers have applied
+clustering algorithms on transit passenger’s travel behavior data to ﬁnd abnor-
+mal travel behaviors and to categorize the transit passengers into various groups,
+such as early birds, night owls, tireless itinerants, and recurring itinerants (Cui
+and Long, 2019).
+
+  One popular clustering method is K-means, which tries to group data into
+K clusters where users specify the number K. The clustering assignments are
+achieved by minimizing the sum of distances (e.g., Euclidean distances) be-
+tween data points and the corresponding cluster centroid (or the mean vectors).
+The K-means method is described in the following section.
+
+3.4 Key concepts in machine learning
+
+3.4.1 Loss
+
+Loss functions are used to determine the error (aka “the loss”) between the out-
+put of our algorithms and the given target value. This expresses how far off the
+mark our computed output is.
+
+  There are multiple ways to determine loss. Two of the most popular loss
+functions in machine learning are the 0–1 loss function and the quadratic loss
+function. The 0–1 loss function is an indicator function that returns 1 when the
+target and output are not equal and zero otherwise.
+
+  The quadratic loss is a commonly used symmetric loss function. The
+quadratic losses’ symmetry comes from its output being identical in relation to
+targets that differ by some value x in any direction (i.e., if the output overshoots
+by 1, that is the same as undershooting by 1).
+
+  In summary, loss functions are used in optimization problems with the goal
+of minimizing the loss. In simple linear regression tasks, we can ﬁnd the line
+of best ﬁt by minimizing the overall loss of all the points with the prediction
+from the line. Loss functions are used to train neural networks by inﬂuencing
+how their weights are updated. The larger the loss is, the larger the update. By
+minimizing the loss and updating the model, the model’s accuracy is maximized.
+However, the tradeoff between the size of the update and the minimal loss must
+be evaluated in these machine learning applications.
+
+3.4.2 Regularization
+
+In regression analysis, the features are estimated using coefﬁcients/weights
+while modeling. If the weights of the features can be restricted, shrunk, or reg-
+ularized towards zero, the impact of insigniﬁcant features might be reduced in
+

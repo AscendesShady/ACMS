@@ -1,0 +1,1523 @@
+Highway Capacity Manual 2000
+
+  EXAMPLE PROBLEM 1
+
+The Intersection A TWSC T-intersection with an exclusive westbound left-turn lane.
+
+The Question What are the delay and level of service?
+
+The Facts  √ 10 percent HV,
+  √ Two-lane major street,  √ No special intersection geometry, and
+  √ Two-lane minor street,  √ No pedestrians.
+  √ Level grade,
+  √ Stop-controlled on minor street
+  approach,
+
+Outline to Solution The steps below show the northbound approach calculations only.
+Calculations for other approaches are shown on the worksheets.
+
+Steps  Worksheets 1 and 2
+1. Data input.
+2. Site characteristics.  Worksheet 3 - lane designation, grade, right-
+3. tc and tf (use Equations 17-1 and  turn channelization, and arrival type
+
+  17-2 and Exhibit 17-5 ).  tc,x = tc,base + tc,HV PHV + tc,G G – tc, T – t3,LT
+  tf,x = tf,base + tf,HV PHV
+4. Skip Worksheets 5a through 5e.  tc,4 = 4.1 + 1.0(0.10) + 0 – 0 – 0 = 4.200 s
+5. Movement capacity cm,x accounting  tf,x = 2.2 + 0.9(0.10) = 2.290 s
+  No upstream signals within 0.4 km
+  for impedance (use Equation 17-4 ).
+  v2
+6. Skip Worksheets 7a and 7b.  vc,9 = N + 0.5v3 + v14 + v15
+7. Shared-lane capacity (use Equation
+  vc,9 = 250 + 20 + 0 + 0 = 270 veh/h
+  17-15).
+  e− vc,xtc,x / 3,600
+8. Skip Worksheet 9.  cp,x = vc,x 1− e− vc,xtf,x / 3,600
+
+  cp,9 = 270 *  e−270*6.300/ 3,600
+  −270*3.390/ 3,600 = 750 veh/h
+  1− e
+
+  cm,9 = cp,9 * Pp,9 = 750 (1) = 750 veh/h
+
+  P0,i = 1− vi
+  cm,i
+
+  P0,9 = 1− 120 = 0. 840
+  750
+
+  No two-stage gap acceptance
+
+  Worksheet 8 - Movements 7 and 9 share the
+  same lane
+
+  ∑ vy
+  cSH = y vy
+
+  ∑
+  y cm,y
+
+  cSH(NB) = 40 + 120 40 120 = 523 veh/h
+  +
+
+  274 750
+
+  No flared minor-street approach
+
+Chapter 17 - Unsignalized Intersections  17-50
+Example Problems
+  Highway Capacity Manual 2000
+
+9. Control delay and LOS (use  Worksheet 10
+  Equation 17-38 and Exhibit 17-2).  d = 3,600 + 900T[... ] + 5
+
+10. Skip Worksheet 11.  cm,x
+
+  dNB = 3,600 + 900(0. 25)[... ] + 5 = 14. 9 s,
+
+  523
+  LOS B
+  No Rank 1 vehicle delay
+
+  Example Problem 1
+
+  TWSC - UNSIGNALIZED INTERSECTIONS WORKSHEET
+
+Worksheet 1  Site Information
+General Information
+
+Analyst  __K_M_N__________________  Intersection  __J_o_n_e_s_/M__a_rk_e_t____________
+Agency or Company  __C_E_I__________________  Jurisdiction  __L_a_t_a_h_C_o_u_n_t_y____________
+Date Performed  __5_/_17_/_9_9_______________  Analysis Year  __19__9_9___________________
+Analysis Time Period  __A_M__P_e_a_k______________
+
+Geometrics and Movements  grade = ______
+  v12 v11 v10
+  Jones
+  Street
+  Show North
+  STOP
+  grade = _0__%___
+S2  v16  v6  300
+  v1  v13  v5  150
+  v2  v4
+  v3  v15  v14  250
+  STOP  S5  40
+
+  grade =  __0_%___  40 120  Market
+  Street
+
+  v7 v8 v9 Length of study period = _0_._2_5_ h  grade = __0_%___
+
+Worksheet 2
+Vehicle Volumes and Adjustments
+
+  Vehicle Volumes and Adjustments
+
+  Movement  1  2  3  4  5  6  7  8  9 10  11 12
+
+Volume (veh/h)  250 40 150 300  40  120  16
+  0
+Peak-hour factor, PHF  1.00 1.00 1.00 1.00  1.00  1.00
+
+Hourly flow rate (veh/h)  250 40 150 300  40  120
+
+Proportion of heavy vehicles, PHV  0.10 0.10 0.10 0.10  0.10  0.10
+
+Pedestrian Volumes and Adjustments
+
+  Movement  13  14  15
+  0
+Flow, Vx (ped/h)  0  0
+
+Lane width, w (m)
+
+Walking speed,1 Sp (m/s)
+
+Percent blockage, fp (Equation 17-11)
+
+1. Default walking speed = 1.2 m/s
+
+  17-51  Chapter 17 - Unsignalized Intersections
+  Example Problems
+Highway Capacity Manual 2000
+
+Example Problem 1
+
+  TWSC - UNSIGNALIZED INTERSECTIONS WORKSHEET
+
+  Worksheet 3
+  General Information
+
+  Project Description ____E_x_a_m_p_le__P_r_ob_l_e_m__1 _______________________________________________________________
+
+  Lane Designation  Lane 1  Lane 2  Lane 3  Grade, G  Right Turn
+  Movements  2, 3  0  Channelized?
+
+  1, 2, 3  N
+
+  4, 5, 6  4  5  0  N
+
+  7, 8, 9  7, 9  0  N
+
+  10, 11, 12
+
+  Flared Minor-Street Approach
+
+  Movement 9  " Yes  "X No  Storage space, n  ________________
+  (number of vehicles)
+
+  Movement 12  " Yes  "X No  Storage space, n  ________________
+  Median Storage*  (number of vehicles)
+
+  * Includes raised or striped median (RM), or two-way left-turn lane (TWLTL)
+  Type
+
+  Movements 7 and 8  " Yes _____  "X No  Storage space, m  ________________
+  (number of vehicles)
+
+  Movements 10 and 11  " Yes _____  "X No  Storage space, m  ________________
+  (number of vehicles)
+
+  Upstream Signals  Distance to  Prog Speed,  Cycle  Green Time,  Arrival  Saturation Flow Progressed Flow,
+  Movements  Signal, D (m)  Sprog (km/h)  Length, C (s)  geff (s)  Type  Rate, s (veh/h) Vprog (veh/h)
+
+  S2 protected LT  3  S5 Approach
+  TH
+
+  S5 protected LT  3
+  TH
+  S2 Approach
+  Computing Delay to Major-Street Vehicles
+
+  Data for Computing Effect of Delay to Major-Street Vehicles
+  Shared-lane volume, major-street through vehicles, vi1, blocked by LT
+  Shared-lane volume, major-street right-turn vehicles, vi2, blocked by LT
+  Saturation flow rate, major-street through vehicles, si1
+  Saturation flow rate, major-street right-turn vehicles, si2
+  Number of major-street through lanes
+  Length of study period, T (h)
+
+Chapter 17 - Unsignalized Intersections  17-52
+Example Problems
+  Highway Capacity Manual 2000
+
+  Example Problem 1
+
+  TWSC - UNSIGNALIZED INTERSECTIONS WORKSHEET
+
+Worksheet 4
+General Information
+
+Project Description ____E__xa_m__p_le__P_ro_b_l_em__1_______________________________________________________________
+
+Critical Gap and Follow-Up Time
+
+  tc = tc,base + tc,HV PHV + tc,G G - tc,T - t3,LT
+
+  Major LT  Minor RT  Minor TH  Minor LT
+
+Movement  1  4  9  12  8  11  7  10
+
+tc,base (Exhibit 17-5)  4.1  6.2  7.1
+tc,HV
+PHV (from Worksheet 2)  1.0  1.0  1.0
+tc,G
+G (from Worksheet 3)  0.10  0.10  0.10
+t3,LT
+  -  -  0.1  0.1  0.2  0.2  0.2  0.2
+  single stage
+tc,T  0  0  0
+
+  two stage  0.0  0.0  0.7
+
+  single stage  0.0  0.0  0.0
+tc (Equation 17-1)
+  4.200  6.300  6.500
+  two stage
+
+  tf = tf,base + tf,HV PHV
+
+  Major LT  Minor RT  Minor TH  Minor LT
+
+Movement  1  4  9  12  8  11  7  10
+
+tf,base (Exhibit 17-5)  2.2  3.3  3.5
+tf,HV  0.9  0.9  0.9
+PHV (from Worksheet 2)  0.10  0.10  0.10
+tf (Equation 17-2)  2.290  3.390  3.590
+
+Worksheet 5a
+
+Time to Clear Standing Queue (Computation 1)
+
+  Movement 2  Movement 5
+
+  vT,prog  vL,prot  vT,prog  vL,prot
+
+Effective green, geff (s)  3  3
+Cycle length, C (s)  1.00  1.00
+
+Saturation flow rate, s (veh/h)
+Arrival type
+vprog (veh/h)
+Rp (from Chapter 16)
+Proportion of vehicles arriving
+on green, P (Equation 17-17)
+gq1 (Equation 17-18)
+gq2 (Equation 17-19)
+
+gq (Equation 17-20)
+
+  17-53  Chapter 17 - Unsignalized Intersections
+  Example Problems
+Highway Capacity Manual 2000
+
+Example Problem 1
+
+  TWSC - UNSIGNALIZED INTERSECTIONS WORKSHEET
+
+  Worksheet 6
+  General Information
+
+  Project Description ___E_x_a_m_p_l_e_P_r_o_b_le_m__1________________________________________________________________
+
+  Impedance and Capacity Calculation  v9  v12
+  vc,9 = 270  vc,12 =
+  Step 1: RT from Minor Street  cp,9 = 750  cp,12 =
+  Conflicting flows (Exhibit 17-4)  pp,9 = 1.000  pp,12 =
+  Potential capacity (Equation 17-3 or 17-29)  cm,9 = cp,9 pp,9 = 750  cm,12 = cp,12 pp,12 =
+  Ped impedance factor (Equation 17-12)  p0,9 = 0.840  p0,12 = 1.000
+  Movement capacity (Equation 17-4)
+  Prob of queue-free state (Equation 17-5)  v4  v1
+  Step 2: LT from Major Street  vc,4 = 290  vc,1 =
+  Conflicting flows (Exhibit 17-4)  cp,4 = 1227  cp,1 =
+  Potential capacity (Equation 17-3 or 17-29)  pp,4 = 1.000  pp,1 =
+  Ped impedance factor (Equation 17-12)  cm,4 = cp,4 pp,4 = 1227  cm,1 = cp,1 pp,1 =
+  Movement capacity (Equation (17-4)  p0,4 = 0.878  p0,1 = 1.000
+  Prob of queue-free state (Equation 17-5)  p* =  p* =
+  Major left shared lane prob of queue-free state (Equation 17-16)
+  Step 3: TH from Minor Street (4-leg intersections only)  0,4  0,1
+  Conflicting flows (Exhibit 17-4)
+  Potential capacity (Equation 17-3 or 17-29)  v8  v11
+  Ped impedance factor (Equation 17-12)  vc,8 =  vc,11 =
+  Capacity adjustment factor due to impeding movement  cp,8 =  cp,11 =
+  (shared lane use p*) (Equation 17-13)  pp,8 =  pp,11 =
+  Movement capacity (Equation 17-7)  f8 = p0,4 p0,1 pp,8 =  f11 = p0,4 p0,1 pp,11 =
+  Prob of queue-free state
+  Step 4: LT from Minor Street (4-leg intersections only)  cm,8 = cp,8 f8 =  cm,11 = cp,11 f11 =
+  Conflicting flows (Exhibit 17-4)
+  Potential capacity (Equation 17-3 or 17-29)  p0,8 =  p0,11 =
+  Ped impedance factor (Equation 17-12)
+  Major left, minor through impedance factor  v7  v10
+  Major left, minor through adjusted impedance factor
+  (Equation 17-8)  vc,7 =  vc,10 =
+  Capacity adjustment factor due to impeding movements
+  (Equation 17-14)  cp,7 =  cp,10 =
+  Movement capacity (Equation 17-10)
+  Step 5: LT from Minor Street (T-intersections only)  pp,7 =  pp,10 =
+  Conflicting flows (Exhibit 17-4)
+  Potential capacity (Equation 17-3 or 17-29)  p''  =  p0,11  f11  =  p''  =  p0,8  f8  =
+  Ped impedance factor (Equation 17-12)
+  Capacity adjustment factor due to impeding movement  7  10
+  (shared lane use p*) (Equation 17-13)
+  Movement capacity (Equation 17-7)  p' =  p1' 0 =
+
+  Notes  7
+
+  1. For 4-leg intersections use Steps 1, 2, 3, and 4.  f7  =  p'  p0,12  pp,7  =  f10  =  p'  p0,9  pp,10  =
+  2. For T-intersections use Steps 1, 2, and 5.
+  7  10
+
+  cm,7 = f7 cp,7 =  0.878  cm,10 = f10 cp,10 =
+  v7  v10
+
+  vc,7 = 870  vc,10 =
+  cp,7 = 312  cp,10 =
+  pp,7 = 1.000  pp,10 =
+  f7 = p0,4 p0,1 pp,7 =  f10 = p0,4 p0,1 pp,10 =
+
+  cm,7 = cp,7 f7 = 274  cm,10 = cp,10 f10 =
+
+Chapter 17 - Unsignalized Intersections  17-54
+Example Problems
+  Highway Capacity Manual 2000
+
+  Example Problem 1
+
+  TWSC - UNSIGNALIZED INTERSECTIONS WORKSHEET
+
+Worksheet 8
+General Information
+Project Description ___E_x_a_m_p_l_e_P_r_o_b_le_m__1________________________________________________________________
+
+Shared-Lane Capacity  ( ) cSH =  ∑vy  (Equation 17-15)
+  y
+  Movement  ∑ vy  cm (veh/h)
+  7  y cm,y  274
+  8
+  9  v (veh/h)  cSH (veh/h)
+  10  523
+  11  40
+  12
+  120  750
+
+Worksheet 9  Movement 9  Movement 10 Movement 11 Movement 12
+Effect of Flared Minor-Street Approaches
+
+  Movement 7 Movement 8
+csep (from Worksheet 6 or 7)
+Volume (from Worksheet 2)
+Delay (Equation 17-38)
+Qsep (Equation 17-34)
+Qsep + 1
+Round (Qsep + 1)
+nmax (Equation 17-35)
+cSH
+csep
+n
+cact (Equation 17-36)
+
+  17-55  Chapter 17 - Unsignalized Intersections
+  Example Problems
+Highway Capacity Manual 2000
+
+  Example Problem 1
+
+  TWSC - UNSIGNALIZED INTERSECTIONS WORKSHEET
+
+Worksheet 10
+General Information
+
+Project Description ___________E_x_a_m_p_l_e_P_r_o_b_le_m__1________________________________________________________
+
+Control Delay, Queue Length, Level of Service
+
+Lane  v (veh/h)  cm (veh/h)  v/c  Queue Length Control Delay  LOS  Delay and LOS
+  (Equation 17-37) (Equation 17-38)  (Exhibit 17-2)
+  14.9
+1 X7 X8 X9 160  523  0.306  < 2  14.9  B  B
+
+27 8 9
+37 8 9
+1 10 11 12
+2 10 11 12
+3 10 11 12
+
+Movement  v (veh/h)  cm (veh/h)  v/c  Queue Length  Control Delay  LOS
+  150  1227
+  1  (Equation 17-37) (Equation 17-38) (Exhibit 17-2)
+  4
+  0.12  < 1  8.3  A
+
+Worksheet 11  S2 Approach  S5 Approach
+  p0,1 =  p0,4 =
+  Delay to Rank 1 Vehicles
+  p*0, 1 =  p0*, 4 =
+  p0,j (Equation 17-5)
+  vi1, volume for Stream 2 or 5
+  vi2, volume for Stream 3 or 6
+  si1, saturation flow rate for Stream 2 or 5
+  si2, saturation flow rate for Stream 3 or 6
+  p0*,j (Equation 17-16)
+  dmajor left, delay for Stream 1 or 4
+  N, number of major-street through lanes
+  dRank 1, delay for Stream 2 or 5 (Equation 17-39)
+
+Chapter 17 - Unsignalized Intersections  17-56
+Example Problems
+  Highway Capacity Manual 2000
+
+  EXAMPLE PROBLEM 2
+
+The Intersection A TWSC intersection with upstream signals. The major street is
+Walnut St. (EB/WB) and the minor street is Elm St. (NB/SB).
+
+The Question What are the delay and level of service of the minor-street approaches?
+
+The Facts  √ 10 percent HV,
+  √ Four-lane major street,  √ Upstream signals in both major-street directions, and
+  √ Two-lane minor street,  √ No pedestrians.
+  √ Level grade,
+
+Outline to Solution The steps below show the northbound approach calculations only.
+Calculations for other approaches are shown on the worksheets.
+
+Steps  Worksheets 1 and 2
+1. Data input.
+2. Site characteristics.  Worksheet 3 - lane designation, grades, right-turn
+  channelization, and upstream signals
+3. tc and tf (s) (use
+  Equations 17-1 and 17-  tc,x = tc,base + tc,HV PHV + tc,G G – tc, T – t3,LT
+  2 and Exhibit 17-5).  tc,1 = 4.1 + 2.0(0.10) + 0 – 0 – 0 = 4.300 s
+  tf,x = tf,base + tf,HV PHV
+4. Effect of upstream  tf,x = 2.2 + 1.0(0.10) = 2.300 s
+  signals  Worksheets 5a through 5e
+  Proportion of vehicles
+  arriving during green, P  P = Rpgeff C
+  (use Equation 17-17).
+  P = 0.33 30 = 0.124
+  Discharge time (use  80
+  Equations 17-18, 17-
+  19, and 17-20 ).  For Movement 2
+
+  Maximum platoon flow  gq = gq1 + gq2
+  rate, vc,max (use
+  Equation 17-21).  gq1 = vprogC(1− P) = 250(80)(1− 0.124) = 4. 867
+  Minimum platoon flow  s  3, 600
+  rate, vc,min.
+  Duration of blocked  gq2 = vprogCPgq1 = 250(80)(0.124)(4. 867) = 0.114
+  period, tp,i (use  sgeff − vprogCP 3,600(30) − 250(80)(0.124)
+  Equation 17-22).
+  gq = 4.867 + 0.114 = 4.981
+  Proportion of time  vc,max = sf[1 – (1 – F)gq]
+  blocked (use Equation  vc,max = 3,600(0.751)[1 – (1 – 0.253)4.981] = 2,071 veh/h
+  17-23).
+  vc,min = 1,000(2) = 2,000
+
+   vc,min   vc,max − vprogRpf  
+  ln1−    
+    sf   vc,min − vprogRpf  
+  tp,i = gq − 
+  ln(1− F)
+
+    2,000   2,071− 250(0.33)(0.751)  
+  ln   1−    
+   3,600(0.751)   2,000 − 250(0.33)(0.751)  
+  tp,2 = 4.981− ln(1− 0.253) =
+
+  0.489
+
+  pi = tP,T + tP,L
+  C
+
+  p2 =  0.489  = 0.006
+
+  80
+
+  17-57  Chapter 17 - Unsignalized Intersections
+  Example Problems
+Highway Capacity Manual 2000
+
+4. (continued) Dominant  pdom = max(p2, p5)
+  and subordinate  psubo = min(p2, p5)
+  platoons (use  pdom = P2 = 0.006
+  Equations 17-24 and  psubo = P5 = 0.000
+  17-25).  vc,u,x = vc,x − s(1− px )
+  Conflicting flow during
+  unblocked period (use  px
+  Equation 17-28).  vc,u,1 = 400 − 3,600(1− 1.000) = 400 veh/h
+
+  Capacity during  1. 000
+  unblocked period, cr,x  e− vc,u,xtc,x / 3,600
+  (use Equation 17-3).  cr,x = vc,u,x 1− e− vc,u,xtf,x / 3,600
+  e−400(4.300)/ 3,600
+  Potential capacity,  cr,1 = 400 −400(2.300)/ 3,600 = 1,100 veh/h
+  cplat,x, accounting for  1− e
+  platooning (use  cplat,x = px cr,x
+  Equation 17-29).  cplat,1 = 1.000(1,100) = 1,100 veh/h
+5. Movement capacity,
+  cm,x, accounting for  cm,x = cplat,x fx
+  impedance (use  cm,1 = 1,100(1.000) = 1,100 veh/h
+  Equation 17-4, 17-7, or
+  17-10).  No two-stage gap acceptance
+6. Skip Worksheets 7a
+  and 7b.  ∑ vy
+7. Shared-lane capacity  cSH = y vy
+  Worksheet 8 (use
+  Equation 17-15).  ∑
+  y cm,y
+8. Skip Worksheet 9.  cSH(NB) = 44 + 132 + 55 44 132 55 = 288 veh/h
+9. Control delay and LOS
+  ++
+  (use Equation 17-38  202 254 867
+  and Exhibit 17-2).  No flared minor-street approaches
+  d = 3,600 + 900T[... ] + 5
+10. Skip Worksheet 11.  cm,x
+
+  dNB = 3,600 + 900(0. 25)[... ] + 5 = 53.5 s , LOS F
+
+  288
+  No Rank 1 vehicle delay
+
+Chapter 17 - Unsignalized Intersections  17-58
+Example Problems
+  Highway Capacity Manual 2000
+
+  Example Problem 2
+
+  TWSC - UNSIGNALIZED INTERSECTIONS WORKSHEET
+
+Worksheet 1  Site Information
+General Information
+
+Analyst  __J_M__E_________________  Intersection  __W_a_l_n_u_t_/E_l_m______________
+Agency or Company  __C_E_I__________________  Jurisdiction  __L_a_t_a_h_C_o_u_n_t_y____________
+Date Performed  __5_/_7_/9__9_______________  Analysis Year  __1_9_9_9___________________
+Analysis Time Period  __A_M__P_e_a_k______________
+
+Geometrics and Movements  grade = __0_%___
+  v12 v11 v10
+
+  Elm  Show North
+  Street
+
+  STOP  grade = __0_%___
+  100
+  v16  v6  28 110 11
+  v13  v5
+S2  v4  33  300
+  v1  v15
+  v2  v14  S5  250 66
+  v3  STOP
+  50
+  grade = __0_%___  44 132 55  Walnut
+  Street
+
+  v7 v8 v9 Length of study period = _0_.2__5_ h  grade = __0_%___
+
+Worksheet 2
+Vehicle Volumes and Adjustments
+
+  Vehicle Volumes and Adjustments
+
+  Movement  1  2  3  4  5  6  7  8  9 10  11 12
+  50  110 28
+Volume (veh/h)  33 250  1.000  66 300  100 44  132 55 11  1.000 1.000
+  50  110 28
+Peak-hour factor, PHF  1.000 1.000  0.10  1.000 1.000  1.000 1.000  1.000 1.000 1.000  0.10 0.10
+
+Hourly flow rate (veh/h)  33 250  66 300  100 44  132 55 11  16
+  0
+Proportion of heavy vehicles, PHV 0.10 0.10  0.10 0.10  0.10 0.10  0.10 0.10 0.10
+
+Pedestrian Volumes and Adjustments
+
+  Movement  13  14  15
+  0  0
+Flow, Vx (ped/h)  0
+
+Lane width, w (m)
+
+Walking speed,1 Sp (m/s)
+
+Percent blockage, fp (Equation 17-11)
+
+1. Default walking speed = 1.2 m/s
+
+  17-59  Chapter 17 - Unsignalized Intersections
+  Example Problems
+Highway Capacity Manual 2000
+
+Example Problem 2
+
+  TWSC - UNSIGNALIZED INTERSECTIONS WORKSHEET
+
+  Worksheet 3
+  General Information
+
+  Project Description __E__xa_m__p_le__P_ro_b_l_em__2_________________________________________________________________
+
+  Lane Designation  Lane 1  Lane 2  Lane 3  Grade, G  Right Turn
+  Movements  1  2  2, 3  0  Channelized?
+
+  1, 2, 3  N
+
+  4, 5, 6  4  5  5, 6  0  N
+
+  7, 8, 9  7, 8, 9  0  N
+
+  10, 11, 12  10, 11, 12  0  N
+
+  Flared Minor-Street Approach
+
+  Movement 9  " Yes  "X No  Storage space, n  ________________
+  (number of vehicles)
+
+  Movement 12  " Yes  "X No  Storage space, n  ________________
+  Median Storage*  (number of vehicles)
+
+  * Includes raised or striped median (RM), or two-way left-turn lane (TWLTL)
+  Type
+
+  Movements 7 and 8  " Yes _____  "X No  Storage space, m  ________________
+  (number of vehicles)
+
+  Movements 10 and 11  " Yes _____  "X No  Storage space, m  ________________
+  (number of vehicles)
+
+  Upstream Signals
+
+  Movements  Distance to  Prog Speed,  Cycle  Green Time,  Arrival  Saturation Flow Progressed Flow,
+  Signal, D (m)  Sprog (km/h)  Length, C (s)  geff (s)  Type  Rate, s (veh/h) Vprog (veh/h)
+
+  S2 protected LT  30.0  3
+
+  TH  135  55  80.0  20.0  1  3600  250
+  3
+  S5 protected LT  1
+
+  TH  200  50  70.0  3600  250
+
+  Computing Delay to Major-Street Vehicles
+
+  Data for Computing Effect of Delay to Major-Street Vehicles  S2 Approach  S5 Approach
+
+  Shared-lane volume, major-street through vehicles, vi1, blocked by LT
+  Shared-lane volume, major-street right-turn vehicles, vi2, blocked by LT
+  Saturation flow rate, major-street through vehicles, si1
+  Saturation flow rate, major-street right-turn vehicles, si2
+  Number of major-street through lanes
+
+  Length of study period, T (h)
+
+Chapter 17 - Unsignalized Intersections  17-60
+Example Problems
+  Highway Capacity Manual 2000
+
+  Example Problem 2
+
+  TWSC - UNSIGNALIZED INTERSECTIONS WORKSHEET
+
+Worksheet 4
+General Information
+
+  Example Problem 2
+Project Description _________________________________________________________________________________
+
+Critical Gap and Follow-Up Time
+
+  tc = tc,base + tc,HV PHV + tc,G G - tc,T - t3,LT
+
+  Major LT  Minor RT  Minor TH  Minor LT
+
+Movement  1  4  9  12  8  11  7  10
+
+tc,base (Exhibit 17-5)  4.1  4.1  6.9  6.9  6.5  6.5  7.5  7.5
+tc,HV
+PHV (from Worksheet 2)  2.0  2.0  2.0  2.0  2.0  2.0  2.0  2.0
+tc,G
+G (from Worksheet 3)  0.10  0.10  0.10  0.10  0.10  0.10  0.10  0.10
+t3,LT
+  -  -  0.1  0.1  0.2  0.2  0.2  0.2
+  single stage
+tc,T  0  0  0  0  0  0  0  0
+
+  two stage  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0
+
+  single stage  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0
+tc (Equation 17-1)
+  -  -  -  -  -  -  -  -
+  two stage
+  4.300 4.300  7.100  7.100  6.700  6.700  7.700  7.700
+
+  -  -  -  -  -  -  -  -
+
+  tf = tf,base + tf,HV PHV
+
+  Major LT  Minor RT  Minor TH  Minor LT
+
+Movement  1  4  9  12  8  11  7  10
+
+tf,base (Exhibit 17-5)  2.2  2.2  3.3  3.3  4.0  4.0  3.5  3.5
+tf,HV
+PHV (from Worksheet 2)  1.0  1.0  1.0  1.0  1.0  1.0  1.0  1.0
+tf (Equation 17-2)
+  0.10  0.10  0.10  0.10  0.10  0.10  0.10  0.10
+
+  2.300 2.300  3.400 3.400  4.100  4.100  3.600  3.600
+
+Worksheet 5a
+
+Time to Clear Standing Queue (Computation 1)
+
+  Movement 2  Movement 5
+
+Effective green, geff (s)  vT,prog  vL,prot  vT,prog  vL,prot
+Cycle length, C (s)  30.0  20.0
+  80.0  3  70.0  3
+Saturation flow rate, s (veh/h)  3600  1.00  3600  1.00
+Arrival type  1  1
+vprog (veh/h)
+Rp (from Chapter 16)  250  250
+Proportion of vehicles arriving  0.33  0.33
+on green, P (Equation 17-17)  0.124  0.094
+gq1 (Equation 17-18)
+gq2 (Equation 17-19)  4.867  4.404
+  0.114  0.103
+gq (Equation 17-20)  4.981  4.507
+
+  17-61  Chapter 17 - Unsignalized Intersections
+  Example Problems
+Highway Capacity Manual 2000
+
+Example Problem 2
+
+  TWSC - UNSIGNALIZED INTERSECTIONS WORKSHEET
+
+  Worksheet 5b
+  General Information
+
+  Project Description ____E_x_a_m_p_le__P_ro_b_l_e_m__2_______________________________________________________________
+
+  Proportion of Time TWSC Intersection Is Blocked (Computation 2)
+
+  Movement 2  Movement 5
+  vL,prot
+  vT,prog  vL,prot  vT,prog
+
+  α (Exhibit 17-13)  0.50  0.50
+  β = (1 + α)-1
+  ta = D/Sprog (s)  0.667  0.667
+  F = (1 + αβta)-1
+  f = vprog/Vc ≥ 0  8.836  14.400
+  vc,Max (Equation 17-21)
+  vc,Min = 1000N  0.253  0.172
+  tp (Equation 17-22)
+  p (Equation 17-23)  0.751  0.536
+
+  2071  1105
+
+  2000  2000
+
+  0.489  0.000
+
+  0.006  0.000
+
+  Worksheet 5c
+
+  Platoon Event Periods (Computation 3)
+
+  p2 (from Worksheet 5b)  0.006
+  p5 (from Worksheet 5b)  0.000
+  0.006
+  pdom (Equation 17-24)  0.000
+  psubo (Equation 17-25)  Unconstrained
+
+  Constrained or unconstrained (Equation 17-26, 17-27)
+
+  Proportion for Minor Movements, px  Two-Stage
+  Single-Stage
+
+  (Exhibit 17-16)  Stage I  Stage II
+
+  p1  1.000
+
+  p4  0.994
+
+  p7  0.994  1 - p2  1 - p5
+  1 - p5
+  p8  0.994  1 - p2
+  1 - p2
+  p9  0.994  1 - p2
+
+  p10  0.994  1 - p5
+
+  p11  0.994  1 - p5
+
+  p12  1.000
+
+Chapter 17 - Unsignalized Intersections  17-62
+Example Problems
+  Highway Capacity Manual 2000
+
+  Example Problem 2
+
+  TWSC - UNSIGNALIZED INTERSECTIONS WORKSHEET
+
+Worksheet 5d
+General Information
+
+Project Description ___E__xa_m__p_le__P_ro_b_le_m__2________________________________________________________________
+
+Conflicting Flows During Unblocked Period (Computation 4)
+ Single-Stage
+
+Movements  1  4  7  8  9  10  11  12
+  150  739  848  200
+vc,x (Exhibit 17-4)  400  300  678  873  3600  3600  3600  3600
+s (veh/h)  3600  3600  3600  3600  0.994  0.994  0.994  1.000
+px (from Worksheet 5c)  1.000  0.994  0.994  0.994  129  722  831  200
+vc,u,x (Equation 17-28)  400  280  660  857
+
+Two-Stage
+
+Movements  7  8  10  11
+
+  Stage I Stage II Stage I Stage II Stage I Stage II Stage I Stage II
+
+vc,x (Exhibit 17-4)
+s (veh/h)
+
+px (from Worksheet 5c)
+vc,u,x (Equation 17-28)
+
+Worksheet 5e
+Capacity During Unblocked Period (Computation 5)
+Single-Stage
+
+Movements  1  4  7  8  9  10  11  12
+  0.994  0.994  0.994  0.994  1.000
+px (from Worksheet 5c)  1.000 0.994 0.994  279  872  300  289  783
+  277  867  298  287  783
+cr,x (Equation 17-3)  1100 1223 333
+cplat,x (Equation 17-29)  1100 1216 331
+
+Two-Stage  7  8  10  11
+Movements  Stage I Stage II  Stage I Stage II  Stage I Stage II  Stage I Stage II
+
+px (from Worksheet 5c)
+cr,x (Equation 17-3)
+cplat,x (Equation 17-29)
+
+  17-63  Chapter 17 - Unsignalized Intersections
+  Example Problems
+Highway Capacity Manual 2000
+
+Example Problem 2
+
+  TWSC - UNSIGNALIZED INTERSECTIONS WORKSHEET
+
+  Worksheet 6
+  General Information
+
+  Project Description ___E_x_a_m_p_l_e_P_r_o_b_le_m__2________________________________________________________________
+
+  Impedance and Capacity Calculation  v9  v12
+  vc,9 = 150  vc,12 = 200
+  Step 1: RT from Minor Street  cp,9 = 867  cp,12 = 783
+  Conflicting flows (Exhibit 17-4)  pp,9 = 1.000  pp,12 = 1.000
+  Potential capacity (Equation 17-3 or 17-29)  cm,9 = cp,9 pp,9 = 867  cm,12 = cp,12 pp,12 = 783
+  Ped impedance factor (Equation 17-12)  p0,9 = 0.937  p0,12 = 0.964
+  Movement capacity (Equation 17-4)
+  Prob of queue-free state (Equation 17-5)  v4  v1
+  Step 2: LT from Major Street  vc,4 = 300  vc,1 = 400
+  Conflicting flows (Exhibit 17-4)  cp,4 = 1216  cp,1 = 1100
+  Potential capacity (Equation 17-3 or 17-29)  pp,4 = 1.000  pp,1 = 1.000
+  Ped impedance factor (Equation 17-12)  cm,4 = cp,4 pp,4 = 1216  cm,1 = cp,1 pp,1 = 1100
+  Movement capacity (Equation (17-4)  p0,4 = 0.946  p0,1 = 0.970
+  Prob of queue-free state (Equation 17-5)  p* =  p* =
+  Major left shared lane prob of queue-free state (Equation 17-16)
+  Step 3: TH from Minor Street (4-leg intersections only)  0,4  0,1
+  Conflicting flows (Exhibit 17-4)
+  Potential capacity (Equation 17-3 or 17-29)  v8  v11
+  Ped impedance factor (Equation 17-12)  vc,8 = 873  vc,11 = 848
+  Capacity adjustment factor due to impeding movement  cp,8 = 277  cp,11 = 287
+  (shared lane use p*) (Equation 17-13)  pp,8 = 1.000  pp,11 = 1.000
+  Movement capacity (Equation 17-7)  f8 = p0,4 p0,1 pp,8 = 0.917  f11 = p0,4 p0,1 pp,11 = 0.917
+  Prob of queue-free state
+  Step 4: LT from Minor Street (4-leg intersections only)  cm,8 = cp,8 f8 = 254  cm,11 = cp,11 f11 = 263
+  Conflicting flows (Exhibit 17-4)
+  Potential capacity (Equation 17-3 or 17-29)  p0,8 = 0.480  p0,11 = 0.582
+  Ped impedance factor (Equation 17-12)
+  Major left, minor through impedance factor  v7  v10
+  Major left, minor through adjusted impedance factor
+  (Equation 17-8)  vc,7 = 678  vc,10 = 739
+  Capacity adjustment factor due to impeding movements
+  (Equation 17-14)  cp,7 = 331  cp,10 = 298
+  Movement capacity (Equation 17-10)
+  Step 5: LT from Minor Street (T-intersections only)  pp,7 = 1.000  pp,10 = 1.000
+  Conflicting flows (Exhibit 17-4)
+  Potential capacity (Equation 17-3 or 17-29)  p''  =  p0,11  f11  =  0.534  p'' =  p0,8  f8  =  0.440
+  Ped impedance factor (Equation 17-12)
+  Capacity adjustment factor due to impeding movement  7  10
+  (shared lane use p*) (Equation 17-13)
+  Movement capacity (Equation 17-7)  p' =  0.634  p1' 0 = 0.556
+
+  Notes  7
+
+  1. For 4-leg intersections use Steps 1, 2, 3, and 4.  f7  =  p'  p0,12  pp,7  =  0.611  f10  =  p'  p0,9  pp,10  =  0.521
+  2. For T-intersections use Steps 1, 2, and 5.
+  7  10
+
+  cm,7 = f7 cp,7 = 202  cm,10 = f10 cp,10 = 155
+  v7  v10
+
+  vc,7 =  vc,10 =
+  cp,7 =  cp,10 =
+  pp,7 =  pp,10 =
+  f7 = p0,4 p0,1 pp,7 =  f10 = p0,4 p0,1 pp,10 =
+
+  cm,7 = cp,7 f7 =  cm,10 = cp,10 f10 =
+
+Chapter 17 - Unsignalized Intersections  17-64
+Example Problems
+  Highway Capacity Manual 2000
+
+  Example Problem 2
+
+  TWSC - UNSIGNALIZED INTERSECTIONS WORKSHEET
+
+Worksheet 8
+General Information
+
+Project Description ____E_x_a_m_p_l_e_P_r_o_b_le_m__2_______________________________________________________________
+
+Shared-Lane Capacity  ( ) ∑vy  (Equation 17-15)  cSH (veh/h)
+  288
+  Movement  y  cm (veh/h)  284
+  7  cSH = ∑ vy  202
+  8  254
+  9  y cm,y  867
+  10  v (veh/h)  155
+  11  263
+  12  44  783
+  132
+  55
+  11
+  110
+  28
+
+Worksheet 9  Movement 9  Movement 10 Movement 11 Movement 12
+Effect of Flared Minor-Street Approaches
+
+  Movement 7 Movement 8
+csep (from Worksheet 6 or 7)
+Volume (from Worksheet 2)
+Delay (Equation 17-38)
+Qsep (Equation 17-34)
+Qsep + 1
+Round (Qsep + 1)
+nmax (Equation 17-35)
+cSH
+csep
+n
+cact (Equation 17-36)
+
+  17-65  Chapter 17 - Unsignalized Intersections
+  Example Problems
+Highway Capacity Manual 2000
+
+  Example Problem 2
+
+  TWSC - UNSIGNALIZED INTERSECTIONS WORKSHEET
+
+Worksheet 10
+General Information
+
+Project Description ___________E_x_a_m_p_l_e_P_r_o_bl_e_m__2________________________________________________________
+
+Control Delay, Queue Length, Level of Service
+
+Lane  v (veh/h)  cm (veh/h)  v/c  Queue Length Control Delay  LOS  Delay and LOS
+  (Equation 17-37) (Equation 17-38)  (Exhibit 17-2)
+  53.5
+1 X7 X8 X9 231  288  0.802  6  53.5  F  F
+
+27 8 9  284  0.525  3  30.9  D  30.9
+37 8 9
+  D
+1 1X0 1X1 1X2 149
+
+2 10 11 12
+3 10 11 12
+
+Movement  v (veh/h)  cm (veh/h)  v/c  Queue Length  Control Delay  LOS
+  1100  (Equation 17-37)  (Equation 17-38)  (Exhibit 17-2)
+  1  33  1216  0.030
+  4  66  0.054  -  8.4  A
+
+  -  8.1  A
+
+Worksheet 11  S2 Approach  S5 Approach
+  p0,4 =
+  Delay to Rank 1 Vehicles  p0,1 =
+  p0*, 4 =
+  p0,j (Equation 17-5)  p*0, 1 =
+  vi1, volume for Stream 2 or 5
+  vi2, volume for Stream 3 or 6
+  si1, saturation flow rate for Stream 2 or 5
+  si2, saturation flow rate for Stream 3 or 6
+  p0*,j (Equation 17-16)
+  dmajor left, delay for Stream 1 or 4
+  N, number of major-street through lanes
+  dRank 1, delay for Stream 2 or 5 (Equation 17-39)
+
+Chapter 17 - Unsignalized Intersections  17-66
+Example Problems
+  Highway Capacity Manual 2000
+
+  EXAMPLE PROBLEM 3
+
+The Intersection A TWSC intersection with flared approaches and a median storage.
+The major street is Walnut St. (EB/WB), and the minor street is Elm St. (NB/SB).
+
+The Question What are the delay and level of service of the minor-street approaches?
+
+The Facts  √ 10 percent HV,
+  √ Four-lane major street,  √ Flared approach, storage for one vehicle, and
+  √ Two-lane minor street,  √ Median storage, storage for two vehicles.
+  √ Level grade,
+  √ No pedestrians,
+
+Outline to Solution The steps below show the northbound approach calculations only.
+Calculations for other approaches are shown on the worksheets.
+
+Steps  Worksheets 1 and 2
+1. Data input.
+2. Site characteristics.  Worksheet 3 - lane distribution, grades, right-turn
+  channelization, flared minor-street approach, and
+3. tc and tf (use Equations 17-1 and  median storage
+  17-2).
+  Worksheet 4 - Movement 1
+4. Skip Worksheets 5a through 5e.  tc = tc,base + tc,HV PHV +...
+5. Movement capacity, cm,x, for  tc = 4.1 + 2.0(0.10) + 0.0 – 0.0 – 0.0 = 4.300 s
+  tf = tf,base + tf,HV PHV
+  minor RT and major LT  tf = 2.2 + 1.0(0.10) = 2.300 s
+  movements accounting for  No upstream signals within 0.4 km
+  impedance (use Equations 17-3,
+  17-4, 17-5, and 17-12).  Worksheet 6 - Movement 9
+  v2
+6. Movement capacities, cm,x, for
+  minor TH and minor LT  vc,9 = N + 0.5v3 + v14 + v15
+  movements, accounting for  250
+  impedance and two-stage gap
+  process (use Equations 17-32,  vc,9 = + 0.5(50) + 0 + 0 = 150 veh/h
+  17-33, or 17-7 and Exhibit 17-4).  2
+
+  e− vc,9tc,9 / 3,600
+  cp,9 = vc,9 1− e− vc,9tf,9 / 3,600
+
+  cp,9 = 150  e−150(7.1)/ 3,600 = 845 veh/h
+
+  −150(3.4)/ 3,600
+  1− e
+
+  pp,9 = 1.0 – fp = 1.0 – 0.000 = 1.000
+
+  cm,9 = cp,9 pp,9 = (845)(1.000) = 845 veh/h
+
+  p0,9 = 1 – v9 c = 1 – 55 = 0.935 m,9 845
+
+  Worksheets 7a and 7b
+  vc,I,8 = 341 veh/h
+  vc,II,8 = 532 veh/h
+  vc,8 = 873 veh/h
+  Single Stage
+  cm,8 = cp,8 f8 = 273(0.917) = 250 veh/h
+  Two-Stage
+
+  cT = ym+1α − 1[y(ym − 1)...]
+
+  [ ] cT = 1.8082+1 0.949 − 1 1.808(1.8082 − 1)... = 390 veh/h
+
+  17-67  Chapter 17 - Unsignalized Intersections
+  Example Problems
+Highway Capacity Manual 2000
+
+7. Shared-lane capacity (use  Worksheet 8
+  Equation 17-15).  ∑ vy
+
+8. Flared approach capacity (use  cSH = y vy
+  Equations 17-36 and 17-38).  ∑
+  y cm
+9. Control delay and LOS (use
+  Equation 17-38 and Exhibit  cSH (NB) = 44 + 132 + 55 44 132 55 = 442 veh/h
+  17-2).  ++
+
+10. Skip Worksheet 11.  370 390 845
+  Worksheet 9 - Movement 7
+
+  d = 3,600 c + 900T m,x [...] + 5
+
+  d = 3,600 369 + 900(0.25)[...] + 5 = 16.070 s
+  Qsep = d7v7 = (16.0)(44) = 0.196
+
+  3,600 3,600
+
+  cact (NB) =  ∑ csep − cSH n  + cSH
+
+  i   nMax
+
+  1
+  cact = (1,605 – 442) + 442 = 1,024 veh/h
+
+  2
+
+  Worksheet 10
+
+  dNB = 3,600 + 900T[... ] + 5
+  cm,x
+
+  dNB = 3,600 + 900(0.05)[... ] + 5 = 9.5 s
+
+  1, 024
+  LOS A
+  No Rank 1 vehicle delay
+
+Chapter 17 - Unsignalized Intersections  17-68
+Example Problems
+  Highway Capacity Manual 2000
+
+  Example Problem 3
+
+  TWSC - UNSIGNALIZED INTERSECTIONS WORKSHEET
+
+Worksheet 1  Site Information
+General Information
+
+Analyst  __J_M__E_________________  Intersection  __W_a_l_n_u_t_/E_l_m______________
+Agency or Company  __C_E_I__________________  Jurisdiction  __L_a_t_a_h_C_o_u_n_t_y____________
+Date Performed  __5_/_7_/9__9_______________  Analysis Year  __1_9_9_9___________________
+Analysis Time Period  __A_M__P_e_a_k______________
+
+Geometrics and Movements  grade = __0_%___
+  v12 v11 v10
+
+  Elm  Show North
+  Street
+
+  STOP  grade =  __0_%___
+  100
+  v16  v6  28 110  300
+  v13  v5
+S2  v4  11
+  v1  v15
+  v2  S5  33  44  66
+  v3
+  v14  250
+  STOP  grade =  50  132 55  Walnut
+  __0__%__  Street
+
+  v7 v8 v9 Length of study period = _0_._2_5_ h  grade = __0_%___
+
+Worksheet 2
+Vehicle Volumes and Adjustments
+
+  Vehicle Volumes and Adjustments
+
+  Movement  1  2  3  4  5  6  7  8  9 10  11 12
+  110 28
+Volume (veh/h)  33 250 50  66 300 100 44 132 55 11  1.00 1.00
+  110 28
+Peak-hour factor, PHF  1.00 1.00 1.00  1.00 1.00 1.00 1.00 1.00 1.00 1.00  0.10 0.10
+
+Hourly flow rate (veh/h)  33 250 50  66 300 100 44 132 55 11  16
+  0
+Proportion of heavy vehicles, PHV 0.10 0.10 0.10  0.10 0.10 0.10 0.10 0.10 0.10 0.10
+
+Pedestrian Volumes and Adjustments
+
+  Movement  13  14  15
+
+Flow, Vx (ped/h)  0  0  0
+
+Lane width, w (m)
+
+Walking speed,1 Sp (m/s)
+
+Percent blockage, fp (Equation 17-11)
+
+1. Default walking speed = 1.2 m/s
+
+  17-69  Chapter 17 - Unsignalized Intersections
+  Example Problems
+Highway Capacity Manual 2000
+
+Example Problem 3
+
+  TWSC - UNSIGNALIZED INTERSECTIONS WORKSHEET
+
+  Worksheet 3
+  General Information
+
+  Project Description ___E_x_a_m__p_le_P_r_o_b_le_m__3________________________________________________________________
+
+  Lane Designation  Lane 1  Lane 2  Lane 3  Grade, G  Right Turn
+  Movements  2  2, 3  Channelized?
+  5  5, 6  0
+  1, 2, 3  1  0  N
+  " No  0  N
+  4, 5, 6  4  0  N
+  N
+  7, 8, 9  7, 8, 9
+
+  10, 11, 12  10, 11, 12
+
+  Flared Minor-Street Approach
+
+  Movement 9  "X Yes  Storage space, n  _______1_________
+  Storage space, n  (number of vehicles)
+  Movement 12  "X Yes  " No
+  _______1_________
+  (number of vehicles)
+
+  Median Storage*
+
+  * Includes raised or striped median (RM), or two-way left-turn lane (TWLTL)
+  Type
+
+  Movements 7 and 8  "X Yes _R_M___  " No  Storage space, m  _______2_________
+  Storage space, m  (number of vehicles)
+  Movements 10 and 11  "X Yes _R_M___  " No
+  _______2_________
+  (number of vehicles)
+
+  Upstream Signals  Distance to  Prog Speed,  Cycle  Green Time,  Arrival  Saturation Flow Progressed Flow,
+  Movements  Signal, D (m)  Sprog (km/h)  Length, C (s)  geff (s)  Type  Rate, s (veh/h) Vprog (veh/h)
+
+  S2 protected LT  3
+  TH
+
+  S5 protected LT  3
+  TH
+  S2 Approach  S5 Approach
+  Computing Delay to Major-Street Vehicles
+
+  Data for Computing Effect of Delay to Major-Street Vehicles
+  Shared-lane volume, major-street through vehicles, vi1, blocked by LT
+  Shared-lane volume, major-street right-turn vehicles, vi2, blocked by LT
+  Saturation flow rate, major-street through vehicles, si1
+  Saturation flow rate, major-street right-turn vehicles, si2
+  Number of major-street through lanes
+  Length of study period, T (h)
+
+Chapter 17 - Unsignalized Intersections  17-70
+Example Problems
+  Highway Capacity Manual 2000
+
+  Example Problem 3
+
+  TWSC - UNSIGNALIZED INTERSECTIONS WORKSHEET
+
+Worksheet 4
+General Information
+
+Project Description ____E_x_a_m_p_le__P_ro_b_l_e_m__3_______________________________________________________________
+
+Critical Gap and Follow-Up Time
+
+  tc = tc,base + tc,HV PHV + tc,G G - tc,T - t3,LT
+
+  Major LT  Minor RT  Minor TH  Minor LT
+
+Movement  1  4  9  12  8  11  7  10
+
+tc,base (Exhibit 17-5)  4.1  4.1  6.9  6.9  6.5  6.5  7.5  7.5
+tc,HV
+PHV (from Worksheet 2)  2.0  2.0  2.0  2.0  2.0  2.0  2.0  2.0
+tc,G
+G (from Worksheet 3)  0.10  0.10  0.10  0.10  0.10  0.10  0.10  0.10
+t3,LT
+  -  -  0.1  0.1  0.2  0.2  0.2  0.2
+  single stage
+tc,T  0  0  0  0  0  0  0  0
+
+  two stage  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0.0
+
+  single stage  0.0  0.0  0.0  0.0  0.0  0.0  0.0  0 .0
+tc (Equation 17-1)
+  -  -  -  -  1.0  1.0  1.0  1.0
+  two stage
+  4.300 4.300  7.100  7.100  6.700  6.700  7.700  7.700
+
+  -  -  -  -  5.700  5.700  6.700  6.700
+
+  tf = tf,base + tf,HV PHV
+
+  Major LT  Minor RT  Minor TH  Minor LT
+
+Movement  1  4  9  12  8  11  7  10
+
+tf,base (Exhibit 17-5)  2.2  2.2  3.3  3.3  4.0  4.0  3.5  3.5
+tf,HV  1.0  1.0  1.0  1.0  1.0  1.0  1.0  1.0
+PHV (from Worksheet 2)  0.10  0.10  0.10  0.10  0.10  0.10  0.10  0.10
+tf (Equation 17-2)  2.300  2.300  3.400  3.400  4.100  4.100  3.600  3.600
+
+Worksheet 5a
+
+Time to Clear Standing Queue (Computation 1)
+
+  Movement 2  Movement 5
+
+  vT,prog  vL,prot  vT,prog  vL,prot
+
+Effective green, geff (s)  3  3
+Cycle length, C (s)  1.00  1.00
+
+Saturation flow rate, s (veh/h)
+Arrival type
+vprog (veh/h)
+Rp (from Chapter 16)
+Proportion of vehicles arriving
+on green, P (Equation 17-17)
+gq1 (Equation 17-18)
+gq2 (Equation 17-19)
+
+gq (Equation 17-20)
+
+  17-71  Chapter 17 - Unsignalized Intersections
+  Example Problems
+Highway Capacity Manual 2000
+
+Example Problem 3
+
+  TWSC - UNSIGNALIZED INTERSECTIONS WORKSHEET
+
+  Worksheet 6
+  General Information
+
+  Project Description __E_x_a_m__p_le_P_r_o_b_le_m__3_________________________________________________________________
+
+  Impedance and Capacity Calculation  v9  v12
+  vc,9 = 150  vc,12 = 200
+  Step 1: RT from Minor Street  cp,9 = 845  cp,12 = 783
+  Conflicting flows (Exhibit 17-4)  pp,9 = 1.000  pp,12 = 1.000
+  Potential capacity (Equation 17-3 or 17-29)  cm,9 = cp,9 pp,9 = 845  cm,12 = cp,12 pp,12 = 783
+  Ped impedance factor (Equation 17-12)  p0,9 = 0.935  p0,12 = 0.964
+  Movement capacity (Equation 17-4)
+  Prob of queue-free state (Equation 17-5)  v4  v1
+  Step 2: LT from Major Street  vc,4 = 300  vc,1 = 400
+  Conflicting flows (Exhibit 17-4)  cp,4 = 1202  cp,1 = 1100
+  Potential capacity (Equation 17-3 or 17-29)  pp,4 = 1.000  pp,1 = 1.000
+  Ped impedance factor (Equation 17-12)  cm,4 = cp,4 pp,4 = 1202  cm,1 = cp,1 pp,1 = 1100
+  Movement capacity (Equation (17-4)  p0,4 = 0.945  p0,1 = 0.970
+  Prob of queue-free state (Equation 17-5)  p* =  p* =
+  Major left shared lane prob of queue-free state (Equation 17-16)
+  Step 3: TH from Minor Street (4-leg intersections only)  0,4  0,1
+  Conflicting flows (Exhibit 17-4)
+  Potential capacity (Equation 17-3 or 17-29)  v8  v11
+  Ped impedance factor (Equation 17-12)  vc,8 =  vc,11 =
+  Capacity adjustment factor due to impeding movement  cp,8 =  cp,11 =
+  (shared lane use p*) (Equation 17-13)  pp,8 =  pp,11 =
+  Movement capacity (Equation 17-7)  f8 = p0,4 p0,1 pp,8 =  f11 = p0,4 p0,1 pp,11 =
+  Prob of queue-free state
+  Step 4: LT from Minor Street (4-leg intersections only)  cm,8 = cp,8 f8 =  cm,11 = cp,11 f11 =
+  Conflicting flows (Exhibit 17-4)
+  Potential capacity (Equation 17-3 or 17-29)  p0,8 =  p0,11 =
+  Ped impedance factor (Equation 17-12)
+  Major left, minor through impedance factor  v7  v10
+  Major left, minor through adjusted impedance factor
+  (Equation 17-8)  vc,7 =  vc,10 =
+  Capacity adjustment factor due to impeding movements
+  (Equation 17-14)  cp,7 =  cp,10 =
+  Movement capacity (Equation 17-10)
+  Step 5: LT from Minor Street (T-intersections only)  pp,7 =  pp,10 =
+  Conflicting flows (Exhibit 17-4)
+  Potential capacity (Equation 17-3 or 17-29)  p''  =  p0,11  f11  =  p''  =  p0,8  f8  =
+  Ped impedance factor (Equation 17-12)
+  Capacity adjustment factor due to impeding movement  7  10
+  (shared lane use p*) (Equation 17-13)
+  Movement capacity (Equation 17-7)  p' =  p1' 0 =
+
+  Notes  7
+
+  1. For 4-leg intersections use Steps 1, 2, 3, and 4.  f7  =  p'  p0,12  pp,7  =  f10  =  p'  p0,9  pp,10  =
+  2. For T-intersections use Steps 1, 2, and 5.
+  7  10
+
+  cm,7 = f7 cp,7 =  cm,10 = f10 cp,10 =
+  v7  v10
+
+  vc,7 =  vc,10 =
+  cp,7 =  cp,10 =
+  pp,7 =  pp,10 =
+  f7 = p0,4 p0,1 pp,7 =  f10 = p0,4 p0,1 pp,10 =
+
+  cm,7 = cp,7 f7 =  cm,10 = cp,10 f10 =
+
+Chapter 17 - Unsignalized Intersections  17-72
+Example Problems
+  Highway Capacity Manual 2000
+
+  Example Problem 3
+
+  TWSC - UNSIGNALIZED INTERSECTIONS WORKSHEET
+
+Worksheet 7a
+General Information
+
+Project Description _____E_xa__m_p_le__P_ro_b_l_e_m_3_______________________________________________________________
+
+Effect of Two-Stage Gap Acceptance  v8  v11
+  Step 3: TH from Minor Street
+  vc,I,8 = 341  vc,I,11 = 482
+Part I - First Stage  cp,I,8 = 618  cp,I,11 = 532
+Conflicting flows (Exhibit 17-4)  pp,I,8 = 1.000  pp,I,11 = 1.000
+Potential capacity (Equation 17-3 or 17-29)  fI,8 = p0,1 pp,I,8 = 0.970  fI,11 = p0,4 pp,I,11 = 0.945
+Ped impedance factor (Equation 17-12)
+Capacity adjustment factor due to impeding movement  cm,I,8 = cp,I,8 fI,8 = 599  cm,I,11 = cp,I,11 fI,11 = 503
+(shared lane use p*) (Equation 17-6 or 17-13)  p0,I,8 = 0.780  p0,I,11 = 0.781
+Movement capacity (Equation 17-7)
+Prob of queue-free state (Equation 17-5)  vc,II,8 = 532  vc,II,11 = 366
+Part II - Second Stage  cp,II,8 = 504  cp,II,11 = 601
+Conflicting flows (Exhibit 17-4)  pp,II,8 = 1 .000  pp,II,11 = 1.000
+Potential capacity (Equation 17-3 or 17-29)  fII,8 = p0,4 pp,II,8 = 0.945  fII,11 = p0,1 pp,II,11 = 0.970
+Ped impedance factor (Equation 17-12)
+Capacity adjustment factor due to impeding movement  cm,II,8 = cp,II,8 fII,8 = 476  cm,II,11 = cp,II,11 fII,11 = 583
+(shared lane use p*) (Equation 17-6 or 17-13)  p0,II,8 =0.723  p0,II,11 = 0.811
+Movement capacity (Equation 17-7)
+Prob of queue-free state (Equation 17-5)  vc,8 = 873  vc,11 = 848
+Part III - Single Stage  cp,8 = 273  cp,11 = 283
+Conflicting flows (Exhibit 17-4)  pp,8 = 1.000  pp,11 = 1.000
+Potential capacity (Equation 17-3 or 17-29)  f8 = p0,4 p0,1 pp,8 = 0.917  f11 = p0,4 p0,1 pp,11 = 0.917
+Ped impedance factor (Equation 17-12)
+Capacity adjustment factor due to impeding movement  cm,8 = cp,8 f8 = 250  cm,11 = cp,11 f11 = 260
+(shared lane use p*) (Equation 17-13 or 17-16)
+Movement capacity (Equation 17-7)  a = 0.949  a = 0.949
+Result for Two-Stage Process  y = 1.808  y = 0.946
+a (Equation 17-30)  cT = 390  cT = 405
+y (Equation 17-31)  p0,8 = 0.662  p0,11 = 0.728
+cT (Equation 17-32 or 17-33)
+Prob of queue-free state (Equation 17-5)
+
+  17-73  Chapter 17 - Unsignalized Intersections
+  Example Problems
+Highway Capacity Manual 2000
+
+Example Problem 3
+
+  TWSC - UNSIGNALIZED INTERSECTIONS WORKSHEET
+
+  Worksheet 7b
+  General Information
+
+  Project Description ____E_x_a_m_p_l_e_P_r_o_b_le_m__3_______________________________________________________________
+
+  Effect of Two-Stage Gap Acceptance
+
+  Step 4: LT from Minor Street  v7  v10
+
+  Part I - First Stage
+
+  Conflicting flows (Exhibit 17-4)  vc,I,7 = 341  vc,I,10 = 482
+  Potential capacity (Equation 17-3 or 17-29)  cp,I,7 = 626  cp,I,10 = 514
+  Ped impedance factor (Equation 17-12)  pp,I,7 = 1.000  pp,I,10 = 1.000
+  Capacity adjustment factor due to impeding movements  fI,7 = p0,1 pp,I,7 = 0.970  fI,10 = p0,4 pp,I,10 = 0.945
+  Movement capacity (Equation 17-7)  cm,I,7 = fI,7 cp,I,7 = 607  cm,I,10 = fI,10 cp,I,10 = 486
+  Part II - Second Stage
+
+  Conflicting flows (Exhibit 17-4)  vc,II,7 = 337  vc,II,10 = 257
+  Potential capacity (Equation 17-3 or 17-29)  cp,II,7 = 629  cp,II,10 = 703
+  Ped impedance factor (Equation 17-12)  pp,II,7 = 1.000  pp,II,10 = 1.000
+  Capacity adjustment factor due to impeding movements  fII,7 = p0,4 p0,I,11 p0,12 pp,II,7 =0.711  fII,10 = p0,1 p0,I,8 p0,9 pp,II,10 =0.707
+  Movement capacity (Equation 17-7)  cm,II,7 = fII,7 cp,II,7 = 447  cm,II,10 = fII,10 cp,II,10 = 497
+  Part III - Single-Stage
+
+  Conflicting flows (Exhibit 17-4)  vc,7 = 678  vc,10 = 739
+  cp,10 = 291
+  Potential capacity (Equation 17-3 or 17-29)  cp,7 = 323  pp,10 = 1.000
+  p1"0 = p0,8 f8 = 0.607
+  Ped impedance factor (Equation 17-12)  pp,7 = 1.000  p1' 0 = 0.694
+
+  Major left, minor through impedance factor  p"7 = p0,11 f11 = 0.668  f10 = p1' 0 p0,9 pp,10 = 0.649
+
+  Major left, minor through adjusted impedance factor  p'  =  0.742
+  (Equation 17-8)
+  7
+  Capacity adjustment factor due to impeding movements
+  (Equation 17-9 or 17-14)  f7 = p7' p0,12 pp,7 = 0.715
+
+  Movement capacity (Equation 17-7)  cm,7 = f7 cp,7 = 231  cm,10 = f10 cp,10 = 189
+  Result for Two-Stage Process
+
+  a (Equation 17-30)  a = 0.949  a = 0.949
+
+  y (Equation 17-31)  y = 2.055  y = 1.227
+
+  cT (Equation 17-32 or 17-33)  cT = 369  cT = 347
+
+Chapter 17 - Unsignalized Intersections  17-74
+Example Problems
+

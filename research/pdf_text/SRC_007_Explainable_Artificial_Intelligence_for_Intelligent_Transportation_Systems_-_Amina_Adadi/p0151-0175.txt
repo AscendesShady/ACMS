@@ -1,0 +1,887 @@
+140 ■ Explainable Artificial Intelligence for Intelligent Transportation Systems
+
+  • |S|! - the number of ways of forming a coalition S that player i will join;
+
+  • (n − |S| − 1)! is the number of ways remaining players can be added to the
+  coalition;
+
+  • v(S ∪ {i}) − v(S) is the value that player i brings to the coalition S.
+
+  Shapley value can be interpreted as the average marginal value that the given
+player brings to the coalition of other players. The player is assigned zero Shapley
+value, when on average he/she does not bring any additional gain to the coalitions.
+The stand alone values-rich players or the ones who bring synergies to the coalition
+are assigned bigger scores and they are considered more important players.
+
+  In machine learning, this method can be used to assess the importance of input
+features in deriving the final prediction of the model. Single feature is treated as a
+player joining the coalition of the features and the Shapley value can be assigned to
+it.
+
+7.3.2 ZORRO Method
+
+ZORRO [6] is an instance-level model exploration algorithm that uses a perturbation-
+based approach. Given an input, ZORRO uses a hard mask to identify important
+features. The assumption ZORRO makes is that if a feature has low importance,
+changing its value with a random noise from input space should change the prediction
+less compared to a feature with high importance.
+
+  To achieve an explanation, ZORRO starts with an empty list of features and uses
+a greedy algorithm to include features. In each step, the feature with the highest
+fidelity score is selected by the greedy algorithm. Adding a new feature is repeated
+until a user-specified fidelity score has been achieved. Selected features are replaced by
+random noise, hence structure of the model is untouched and no training is necessary
+to generate explanations.
+
+  The fidelity score is a measure of how much the altered feature changed the
+output compared to the output from the unaltered feature. In our case, we used
+absolute percentage change from the original prediction. We also discarded the greedy
+algorithm and focused on the importance per individual feature (intersection).
+
+  Also, one of the ZORRO advantages is being able to check importance near local
+minima. In contrary, methods like SA [5] and Guided BP [5] are gradient-based
+methods that use gradients (but with respect to input instead of model parameters)
+to calculate importance, so they cannot give proper importance close to local minima
+where gradients are close to 0.
+
+7.4 EXPERIMENTS
+
+7.4.1 Setup of Experiments
+
+Experiments were carried out using 15 different graph neural network models trained
+to predict outcomes of traffic simulations (calculating the total time of waiting at red
+  Explainability of Surrogate Models for Traffic Signal Control ■ 141
+
+Figure 7.4 A plot of Shapley value estimates for 5 models for Centrum district.
+
+signals for all vehicles for a given traffic light setting) in a specific district in Warsaw.
+For the road network graph, we considered 3 districts in Warsaw: Centrum, Ochota,
+and Mokot´ow. Every district had 5 models and there were slight differences in terms
+of their structure, i.e., in terms of the number of layers and number of channels per
+layer. Models for Centrum had 11 input features, for Ochota – 21, and for Mokoto´w –
+42. Every feature in a model corresponds to an intersection in the considered district
+(for details, see Section 7.2 or [13]).
+
+  For these experiments, we used 2 datasets: 1) A dataset with 104 randomly gen-
+erated data points (traffic signal setting) for every district, 2) A dataset with 500
+data points (for each district) found using a genetic algorithm aiming to find good
+signal settings (these data points are considered as relatively good).
+7.4.2 Results of Experiments
+
+7.4.2.1 Shapley Value
+
+Shapley values were calculated using the Python SHAP library [9] for neural net-
+works (model agnostic approach). The number of all possible permutations for all
+the features and 104 simulations is huge, so in order to simplify computations, the
+SHAP library uses random sampling of permutations to calculate the Shapley values
+estimates. In our experiments, the size of the random sample was set to 10 * number
+of features. The permutation sampling was repeated for each of 104 model outputs.
+
+  Figures 7.4–7.6 present the kernel density estimate plots for calculated Shapley
+values for Centrum, Ochota and Mokot´ow, respectively, for the dataset with 104
+142 ■ Explainable Artificial Intelligence for Intelligent Transportation Systems
+
+Figure 7.5 A plot of Shapley value estimates for Ochota district.
+points (traffic signal settings) for each district. Kernel density estimate is a way to
+generate a distribution for a given dataset [1]. Given a finite dataset, kernel density
+estimate places a distribution over each data point and sums it up to create the
+underlying distribution. In our case, for each feature we have 104 values (one value
+for each point from the dataset).
+
+  To generate these plots we used one of the Python’s data visualization libraries,
+Seaborn, and its seaborn.kdeplot function [3] with default parameters. For each
+  Explainability of Surrogate Models for Traffic Signal Control ■ 143
+Figure 7.6 A plot of Shapley value estimates for Mokoto´w district.
+144 ■ Explainable Artificial Intelligence for Intelligent Transportation Systems
+
+Figure 7.7 A plot of features Shapley value estimates for Centrum district near local
+minima.
+
+feature, we have a separate plot (feature numerations correspond to indices of fea-
+tures) and same features from different models are plotted over each other with
+different colors. Legends on the plots show which color is for which model (the plots
+for all models for a given district are very similar, so these plots largely overlap).
+
+  For each plot, the X axis corresponds to the absolute value of the Shapley value,
+while Y axis corresponds to the likelihood. Beside the plot, we also calculated the
+average of absolute Shapley values for the whole dataset (denoted as µ). Intuitively,
+the greater the absolute Shapley value is, the more important is the feature.
+
+  We can observe that in the case of Centrum district, the most important features
+(intersections) seem to be 1 and 9, while the least important are 0, 2, 3, 8, and 10. In
+the case of Ochota district, the most important features are 1, 11, 12, and 13, while
+least important are 5, 7, and 8. In the case of Mokoto´w district, the most important
+features are 13, 16, 21, and 35, while the least important are features 8, 9, and 20.
+
+  Later, we did the same for the second dataset consisting of points (traffic signal
+settings) close to local minima, that were found using a genetic algorithm (as de-
+scribed in [13]). Plots with kernel density estimate plots and the average values of
+the absolute Shapley value are presented in Figures 7.7–7.9. It has turned out that
+in this case, the most important features for Centrum are 2, 5, 6, and 7, while the
+least important are 0, 3, and 10. For Ochota – the most important are 1, 3, 11, and
+13, while the least important are 5, 7, and 8. For Mokot´ow – the most important are
+12 and 26, while the least important are 2, 5, 9, 17, 22, and 25.
+
+7.4.2.2 ZORRO Method
+
+To visualize results of the ZORRO method we also used kernel density estimate plots
+for the dataset with 104 randomly selected points (Figures 7.10–7.12). On the X axis,
+  Explainability of Surrogate Models for Traffic Signal Control ■ 145
+
+Figure 7.8 A plot of features Shapley value estimates for Ochota district near local
+minima.
+we have fidelity scores for different points (traffic signal settings) from the dataset,
+and the Y axis is the likelihood. For each point, the fidelity score is calculated as
+the absolute percentage change of the output value of the considered graph neural
+network model, considering the original value and the value obtained by random noise
+introduced to the considered feature – the value (offset) of the considered feature
+(intersection) was randomly changed to another value from the set {0, 1, . . . , 119}.
+
+  Every feature in the plot has a µ value that shows the mean importance of each
+feature. The bigger this number, the larger importance that feature has. This value
+is calculated as the mean fidelity score for the considered feature, where the mean is
+calculated over fidelity scores for different traffic signal settings from the dataset.
+
+  We can observe that in the case of Centrum district, the most important features
+(intersections) seem to be 5, 6, and 9, while the least important are 0, 2, 3, 8, and
+10. In the case of Ochota district, the most important features are 1, 11, 12, and
+13, while least important are 5, 7, and 8. In the case of Mokot´ow district, the most
+important features are 16 and 35, while the least important are features 1, 2, 8, 9,
+10, 11, 17, 20, 22, 30, 34, and 38.
+146 ■ Explainable Artificial Intelligence for Intelligent Transportation Systems
+
+Figure 7.9 A plot of features Shapley value estimates for Mokoto´w district near local
+minima.
+  Explainability of Surrogate Models for Traffic Signal Control ■ 147
+
+Figure 7.10 A plot of feature effects for five models for Centrum district based on
+the ZORRO method.
+
+Figure 7.11 A plot of feature effects for five models for Ochota district based on the
+ZORRO method.
+
+  Later, we did the same for the second dataset consisting of traffic signal settings
+close to local minima found using a genetic algorithm (as described in [13]). In this
+case, kernel density estimate plots are presented in Figures 7.13–7.15. It has turned
+out that in this case, the most important features for Centrum are 5, 6, and 9, while
+the least important – 0 and 10. For Ochota – the most important are 1, 11, 12, and
+148 ■ Explainable Artificial Intelligence for Intelligent Transportation Systems
+
+Figure 7.12 A plot of feature effects for five models for Mokot´ow district based on
+the ZORRO method.
+13, while the least important are 5, 7, and 8. For Mokot´ow – the most important are
+13, 16, 21, 26, and 35, while the least important are 1, 2, 5, 8, 9, 11, 17, 20, 22, 30,
+and 38.
+
+7.4.2.3 Comparison of Results
+
+Even thought the investigated methods, calculating Shapley value and applying
+ZORRO method, are different measures of feature importance, their conclusions are
+similar. In the case of Centrum district, both methods identified the Feature (inter-
+section) 9 as the most important and intersections 0, 2, 3, 8, and 10 as the least
+important for the random dataset. For the set with local minima, features 5 and 6
+are considered as the most important, while 0 and 10 as the least important.
+
+  In the case of Ochota, for the randomly generated dataset both methods iden-
+tified features 1, 11, 12, and 13 as the most important, and features 5, 7, and 8 as
+the least important (both approaches are ideally consistent). For the set with local
+minima, features 1, 11, and 13 are considered as the most important according to
+both methods, while features 5, 7, and 8 as the least important.
+  Explainability of Surrogate Models for Traffic Signal Control ■ 149
+
+Figure 7.13 A plot of feature effects for five models for Centrum district near local
+minima based on the ZORRO method.
+
+Figure 7.14 A plot of feature effects for five models for Ochota district near local
+minima based on the ZORRO method.
+
+  In the case of Mokoto´w, for the randomly generated dataset both methods iden-
+tified features 16 and 35 as the most important and the features 8, 9, and 20 as the
+least important. For the set with local minima, the feature 16 is considered as the
+most important, while features 2, 5, 9, 17, and 22 as the least important.
+150 ■ Explainable Artificial Intelligence for Intelligent Transportation Systems
+
+Figure 7.15 A plot of feature effects for five models for Mokoto´w district near local
+minima based on the ZORRO method.
+
+  There are differences in perceiving importance of some features (for example,
+in the case of Mokot´ow, the ZORRO method perceives quite many features as less
+important), but there are no features considered as important by one method and
+not important by another method. Therefore, both methods seem to be consistent.
+7.5 CONCLUSIONS AND FUTURE RESEARCH
+In this chapter, we presented two techniques for measuring importance of features
+in machine learning models, namely: calculating the Shapley value and using the
+ZORRO method. We applied them to assess importance of 15 models based on graph
+neural network architecture in which neurons correspond to intersections with traffic
+signals or road segments, while connections between neurons in consecutive layers
+exist if and only if there are direct connections between corresponding intersections
+and road segments in the road network graph. The models were earlier trained to
+approximate the total times of waiting at red signals in three districts in Warsaw
+(Centrum, Ochota and Mokot´ow) during 10 minutes of a realistic, microscopic traffic
+simulation, depending on the traffic signal setting input representing offsets of sig-
+nals at considered intersections. Thanks to applying the Shapley value and ZORRO
+methods, it was possible to assess importance of intersections and their impact on
+the times of waiting at red signals in the considered areas on points from randomly
+generated datasets (with 103 points) and on datasets with 500 settings found using
+genetic algorithm (considered as close to local optima).
+  Explainability of Surrogate Models for Traffic Signal Control ■ 151
+
+  It turned out that both methods produce quite consistent results. Thanks to
+them, it was possible to identify the most critical intersections in the road network
+topology which might be important from the traffic engineering perspective in tasks
+related to traffic signal control.
+
+  As for the future research, we would like to investigate not only importance of
+a single feature / intersection, but also importance of subsets of features considered
+together, which may also give interesting results from the traffic engineering perspec-
+tive, i.e., it may happen that the emergence of complex patterns, like traffic jams
+formation, is caused not by a single, poorly set signalization, but by not optimal
+coordination of traffic signals at several intersections.
+
+  Also, we are going to work on traffic signal control algorithms able to optimize
+traffic taking into account the importance of various features.
+
+Bibliography
+
+ [1] Explanation of the kernel density distribution. https://mathisonian.github.io/
+  kde. Online, accessed: 30.09.2022.
+
+ [2] Openstreetmap service. http://openstreetmap.org. Online, accessed: 30.09.2022.
+
+ [3] Seaborn.kdeplot. https://seaborn.pydata.org/generated/seaborn.kdeplot.html.
+  Online, accessed: 30.09.2022.
+
+ [4] James Ault and Guni Sharon. Reinforcement learning benchmarks for traffic
+  signal control. In Proceedings of the 35th Neural Information Processing Systems
+  (NeurIPS 2021) Track on Datasets and Benchmarks, December 2021.
+
+ [5] Federico Baldassarre and Hossein Azizpour. Explainability techniques for graph
+  convolutional networks. CoRR, abs/1905.13686, 2019.
+
+ [6] Thorben Funke, Megha Khosla, and Avishek Anand. Hard masking for explain-
+  ing graph neural networks, 2021.
+
+ [7] Pawel Gora. A genetic algorithm approach to optimization of vehicular traffic
+  in cities by means of configuring traffic lights. In Emergent Intelligent Technolo-
+  gies in the Industry. Studies in Computational Intelligence, Vol. 369, pp. 1–10.
+  Springer, 2011.
+
+ [8] Jacques Lardoux, Raymundo Martinez, Chris White, N. Gross, Nick Patel, and
+  Robert Meyer. Adaptive traffic signal control for tarrytown road in white plains,
+  New York. 2014.
+
+ [9] Scott M Lundberg and Su-In Lee. A unified approach to interpreting model
+  predictions. In I. Guyon, U. V. Luxburg, S. Bengio, H. Wallach, R. Fergus,
+  S. Vishwanathan, and R. Garnett, editors, Advances in Neural Information Pro-
+  cessing Systems 30, pages 4765–4774. Curran Associates, Inc., 2017.
+152 ■ Explainable AI for Intelligent Transportation Systems
+
+[10] C. Osorio and M. Bierlaire. A surrogate model for traffic optimization of con-
+  gested networks: an analytic queueing network approach. In EPFL-REPORT-
+  152480, 2009.
+
+[11] Lloyd S. Shapley. Notes on the n-person game – ii: The value of an n-person
+  game, August 1951.
+
+[12] Nishant Shokeen, Vardhan Goyal, Vardaan Bhave, and Narad Muni Prasad.
+  Design of traffic signal using webster method. International Journal of Scientific
+  Engineering and Applied Science (IJSEAS), 7, 2021.
+
+[13] Lukasz Skowronek, Pawel Gora, Marcin Mozejko, and Arkadiusz Klemenko.
+  Graph-based sparse neural networks for traffic signal optimization. In Pro-
+  ceedings of the 29th International Workshop on Concurrency, Specification and
+  Programming (CS&P 2021), pages 145–155, 2021.
+
+[14] Elena Sofronova. Evolutionary computations for traffic signals optimization.
+  Procedia Computer Science, 186:802–811, 2021.
+
+[15] Ayad Turky, Mohd Ahmad, and Mohd Yusoff. The use of genetic algorithm for
+  traffic light and pedestrian crossing control. International Journal of Computer
+  Science and Network Security, 9(2):88–96, 2009.
+
+[16] Hua Wei, Nan Xu, Huichu Zhang, Guanjie Zheng, Xinshi Zang, Chacha Chen,
+  Weinan Zhang, Yanmin Zhu, Kai Xu, and Zhenhui Li. Colight: Learning
+  network-level cooperation for traffic signal control. In Proceedings of the 28th
+  ACM International Conference on Information and Knowledge Management,
+  CIKM’19, pages 1913–1922, New York, NY, USA, 2019. Association for Com-
+  puting Machinery.
+
+[17] Jie Zhang, Souma Chowdhury, Junqiang Zhang, Achille Messac, and Luciano
+  Castillo. Adaptive hybrid surrogate modeling for complex systems. AIAA J,
+  51(3):643–656, 2013.
+  CHAPTER 8
+
+Intelligent Techniques and
+
+Explainable Artificial
+
+Intelligence for Vessel
+
+Traffic Service: A Survey
+
+Meng Joo Er, Huibin Gong, Chuang Ma, and Wenxiao Gao
+
+Dalian Maritime University,China
+
+CONTENTS
+
+8.1 Introduction . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 154
+8.2 Intelligent Techniques in VTS . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 156
+
+  8.2.1 Intelligent Prediction of Water Traffic . . . . . . . . . . . . . . . . . . . . . . . . . . . 156
+  8.2.1.1 Prediction of Traffic Flow . . . . . . . . . . . . . . . . . . . . . . . . . . . 156
+  8.2.1.2 Prediction of Vessel Trajectory . . . . . . . . . . . . . . . . . . . . . . 157
+  8.2.1.3 Prediction of Traffic Safety . . . . . . . . . . . . . . . . . . . . . . . . . . 158
+
+  8.2.2 Intelligent Perception of Water Target . . . . . . . . . . . . . . . . . . . . . . . . . . 159
+  8.2.2.1 Target Detection and Recognition . . . . . . . . . . . . . . . . . . 159
+  8.2.2.2 Tracking of Vessel Target . . . . . . . . . . . . . . . . . . . . . . . . . . . . 159
+
+8.3 XAI and Its Applications in VTS . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 160
+  8.3.1 What Is XAI and Why Is XAI Needed? . . . . . . . . . . . . . . . . . . . . . . . . . 160
+  8.3.2 Classification of XAI Methods . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 161
+  8.3.3 Applications of XAI in VTS . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 161
+
+8.4 Conclusions . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 163
+  Bibliography . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 163
+
+W ith the rapid development of the economy, water transportation has been
+  increasingly busy, and there has been a strong demand for vessel traffic ser-
+vices (VTS) using artificial intelligence (AI) techniques. In order to make AI models
+more understandable and reliable, VTS based on explainable AI (XAI) techniques is
+one of the most important development directions in the recent times. In this con-
+text, this chapter summarizes intelligent techniques of VTS and applications of XAI
+techniques in VTS. Firstly, basic background of VTS is introduced. Next, on this
+
+DOI: 10.1201/9781003324140-8  153
+154 ■ Explainable Artificial Intelligence for Intelligent Transportation Systems
+
+basis, this chapter reviews AI techniques in VTS in intelligent prediction and intelli-
+gent perception. Finally, XAI techniques are introduced, and their applications and
+necessity in intelligent water transportation are discussed.
+
+8.1 INTRODUCTION
+
+Water transportation has advantages of large capacity, little investment and low
+energy consumption, and is the main mode of transport for world trade. With rapid
+development of the shipping industry, the number of vessels is also increasing [79]. At
+the same time, the development of vessels towards high speed and large size demands
+for space in navigation and berthing, result in very crowded water traffic. As a result,
+difficulty of vessel maneuvering has increased tremendously and there has been a
+great concern on safety guarantee [14, 18].
+
+  In order to meet the demand of development of water transportation and real-
+ize modernization of water traffic management, port management departments of
+many countries have established vessel traffic services (VTS) on the shore. VTS can
+monitor vessel movement in the water area and provide information, advice or in-
+structions to the vessels. VTS can effectively control traffic flow and reduce risks of
+vessel traffic accidents and environmental pollution while obtaining maximum port
+operation benefits. Therefore, establishment of VTS can bring about significant social
+and economic benefits [31, 45].
+
+  With the continuous progress of science and technology, and the demand of ship-
+ping, VTS has been constantly upgraded. Before 1990, the main aim of VTS was
+to improve efficiency and safety of water transportation. The coverage of water was
+limited to ports and canals, narrow channels of rivers and estuaries. And radar and
+high-frequency radio were the main technologies. Since 1990, VTS has been continu-
+ously upgraded. In terms of functions, water environment protection has been added,
+and in terms of area coverage, it has been extended to near port areas, coastal routes
+and straits with high density of vessels, and other accident-prone areas. Various
+information collection and processing technologies leveraging computers have been
+adopted. At present, VTS is usually composed of a radar system, closed circuit tele-
+vision (CCTV), very high frequency (VHF), automatic identification system (AIS),
+radar data processing system, hydro-meteorological system, traffic display system,
+multi-sensor integrated processing system and data management information sys-
+tem, etc. The main functions of VTS include collection and evaluation of vessel traf-
+fic data, providing information services and navigation assistance services to vessels
+participating in the VTS, implementing traffic organization for vessels in the VTS
+area, supervising vessels to comply with navigation rules, and providing joint opera-
+tion support to relevant activities in the VTS area [23, 40, 53]. Figure 8.1 shows the
+schematic diagram of the composition of VTS.
+
+  With the rapid development of technologies such as computer, AI and microwave
+communication, and in the context of busy water traffic management business needs
+and continuous growth of commercial demand, users have created more demand for
+VTS. Therefore, construction of informationized and intelligent VTS have become an
+urgent need for the construction of modern ports [68]. Under these factors, more and
+Intelligent Techniques and Explainable AI for Vessel Traffic Service: A Survey ■ 155
+
+Radar  Hydrography and
+  meteorology
+
+VHF  Remote  Main control
+AIS  transmission unit  unit
+
+  VTS center
+
+CCTV  VTS remote service
+
+Figure 8.1 Schematic diagram of the composition of VTS.
+
+more intelligent techniques for VTS have been proposed by researchers, such as water
+prediction of traffic flow, prediction of water traffic situation, vessel identification,
+capture of environmental information, decision-making in navigation safety, etc. [36,
+37, 65].
+
+  Applications of these AI techniques can generate some useful information, which
+can help VTS operators, captains, pilots and other staff members to make decisions.
+However, there are unexplainable black-box problems in current end-to-end AI tech-
+niques, which makes it difficult for users to trust and understand such AI systems,
+especially when autonomous decision-making may have uncontrollable risks. At the
+same time, AI systems may also have inherent biases, generate false alarms from time
+to time, and have uncertain security risks. These factors make it difficult for users
+to act on decisions that are not explained. In order to enable AI techniques better
+assist humans and be more widely used and popularized, it is necessary to transform
+the black-box problem in AI techniques into a transparent process, so as to establish
+trust and understanding between humans and machines. Therefore, explainable AI
+(XAI) came into being [35, 48, 58]. Similarly, XAI is needed in future VTS to make
+VTS more intelligent and more reliable, so as to realize intelligent management of
+water transportation.
+
+  For the survey of VTS, the development history, composition and structure of
+VTS, and key technologies of VTS are introduced in [19]. However, there is no survey
+of AI techniques in VTS. Moreover, vessel motion prediction techniques in VTS are
+reviewed in [66]. Although some XAI techniques in Air Traffic systems and road
+traffic systems have been reviewed [24, 70], there is no survey of XAI techniques in
+VTS so far.
+
+  Motivated by the aforementioned background, this chapter surveys intelligent
+techniques in VTS as well as XAI techniques, among other things. The main contri-
+butions of this chapter are as follows:
+
+  1. Intelligent techniques in VTS are summarized for the first time, which can
+  provide reference for researchers engaged in VTS.
+156 ■ Explainable Artificial Intelligence for Intelligent Transportation Systems
+
+  Intelligent  Intelligent prediction  Prediction of
+techniques in VTS  of water traffic  traffic flow
+
+  Intelligent perception  Prediction of
+  of water target  vessel trajectory
+
+  Prediction of
+  traffic safety
+
+  Target detection
+  and recognition
+
+  Target tracking
+
+Figure 8.2 Classification diagram of current research works.
+
+  2. Some VTS schemes based on XAI, which play a pivotal role in promoting the
+  development of VTS based on XAI, are reviewed and summarized for the first
+  time.
+
+  The remainder of this chapter is organized as follow: In Section 8.2, state-of-the-
+art research on intelligent techniques in VTS are presented. Section 8.3 introduces
+basic concepts of XAI and summarizes some implementation schemes of XAI in VTS.
+In Section 8.4, conclusions are drawn.
+
+8.2 INTELLIGENT TECHNIQUES IN VTS
+
+In this section, AI techniques in VTS are reviewed. The review includes intelligent
+prediction of water traffic and intelligent perception of water target. The classification
+diagram of current research works is shown in Figure 8.2.
+
+8.2.1 Intelligent Prediction of Water Traffic
+
+Intelligent prediction techniques of water traffic include prediction of traffic flow,
+prediction of vessel trajectory and prediction of traffic safety. These intelligent pre-
+diction techniques can show vessel traffic situations on water and provide support for
+decision-making.
+
+8.2.1.1 Prediction of Traffic Flow
+
+Research on prediction of vessel flow can provide some references for the management
+team to ensure safety of water traffic and formulate pertinent policies. Therefore,
+research on prediction of traffic flow is of great significance.
+
+  Existing methods for prediction of vessel traffic flow mainly include regression
+analysis, Kalman filter and neural networks. He et al. [21] used the improved Kalman
+  Intelligent Techniques and Explainable AI for Vessel Traffic Service: A Survey ■ 157
+
+model combined with regression analysis to make short-term prediction of vessel traf-
+fic flow, and their experimental results proved that the method had good performance.
+Wang et al. [60] designed a hybrid model based on discrete wavelet decomposition and
+the PROPHET framework for prediction of vessel traffic flow, where wavelet decom-
+position was mainly used to complete predictions through training and reconstruction
+of prediction results. Back propagation neural networks (BPNN) is the most widely
+used prediction method. Tian et al. [56] established a vessel traffic flow prediction
+model based on BPNN, in which traffic flow data of the deepwater channel of the
+Yangtze Estuary were used as training samples.
+
+  In addition, in order to improve the prediction accuracy, combinations of an in-
+telligent optimization algorithm and the prediction model are also widely used. Fan
+et al. [16] used particle swarm optimization algorithm to optimize the BPNN-Markov
+ship traffic flow prediction model, which overcame the problem of insufficient whiten-
+ing coefficient selection in Markov model. Zhang et al. [77] established an improved
+BPNN prediction model based on adaptive particle swarm optimization algorithm,
+which realized the prediction of total ship traffic volume in the designated port area.
+Li et al. [32] proposed a chaotic cloud simulated annealing method to optimize param-
+eters of the support vector regression model and applied this method to prediction
+of vessel traffic flow. Some researchers have adopted deep learning techniques to im-
+prove spatio-temporal correlation of prediction and accuracy of prediction results.
+Xie et al. [71] proposed a deep learning model based on long short-term memory net-
+works for predicting inland river vessel traffic flow, where the time window method
+was used to increase time correlation. Liang et al. [34] proposed a vessel traffic flow
+prediction scheme based on a spatiotemporal multigraph convolution network, which
+mainly included a spatial multigraph convolution layer and two time gated convo-
+lution layers. Accuracy and robustness of the scheme have been proved by real AIS
+data experiments.
+
+8.2.1.2 Prediction of Vessel Trajectory
+
+Trajectory prediction is the focus of many researchers. As an important part of data
+mining, track predictions can provide accurate location services and play an impor-
+tant role in analyzing vessel motion behavior, judging vessel traffic risk, and planning
+intelligent vessel collision avoidance path.
+
+  Vessel trajectory prediction techniques generally include the Kalman filter algo-
+rithm, particle filter algorithm, and Bayesian algorithm and neural network. Perera
+et al. [44] proposed a vessel state estimation method based on an extended Kalman
+filter for the prediction of vessel motion trajectory. Mazzarella et al. [41] proposed
+a Bayesian trajectory prediction algorithm based on a particle filter which used his-
+torical vessel trajectory data. Xiao et al. [67] adopted machine learning, physical
+motion modeling and particle filtering algorithms to design a new prediction method
+for vessel track and navigation state based on AIS data.
+
+  Most of the above studies need to build complex kinematics model, which requires
+large amount of data. The neural network algorithm can greatly solve this problem.
+Capobianco et al. [9] designed a vessel trajectory prediction model based on the codec
+158 ■ Explainable Artificial Intelligence for Intelligent Transportation Systems
+
+recurrent neural network, which combined the short-term memory recurrent neural
+network. Suo et al. [55] proposed a deep learning framework and Gate Recurrent Unit
+model for vessel trajectory, in which the DBSCAN algorithm, correction algorithm,
+and recurrent neural network were used.
+
+  Real-time prediction of multiple vessel tracks is very challenging. Gan et al. [17]
+adopted K-Means algorithm to classify historical track data, and then built a neural
+network model to realize prediction of multiple vessel tracks. Xiao et al. [69] pro-
+posed a vessel cluster trajectory prediction scheme based on AIS data, which relied
+on an open-source code framework. At the same time, in order to reduce the compu-
+tation time, a new task-based load balancing strategy is proposed. Wang et al. [62]
+proposed a generative countermeasure network with an attention module and inter-
+action module to predict the track of multiple vessels. Some indicators of the scheme
+were verified by using real historical data of AIS of Zhoushan Port, which proved the
+efficiency of the scheme.
+
+8.2.1.3 Prediction of Traffic Safety
+
+As early as the 1930s, the United States began to do relevant works on prediction
+of vessel safety traffic. With the continuous development of science and technology,
+people’s awareness of safety engineering is also enhanced, which drives people to
+gradually increase research on this issue.
+
+  Water traffic accidents are mainly caused by people, vessels, environment and
+other factors. At first, experts analyzed single factors, especially human factors [5].
+The analysis and research of single factor can reveal the main causes of the accident.
+However, the impact of other factors on the accident was ignored. Hence, researchers
+began to pay attention to the analysis of multiple factors. For accident analysis and
+prediction, it mainly includes fuzzy logic, neural networks, time-series analysis and
+support vector machine. Kao et al. [27] proposed a scheme based on fuzzy logic, which
+can accurately predict the time and location of vessel collision by using AIS data. Su
+et al. [54] proposed a fuzzy decision-making method based on the knowledge base of
+international rules for collision avoidance at sea, which improved operator’s decision-
+making ability for collision avoidance by providing a fuzzy monitoring system in VTS.
+Based on processing of the original data, Rekha et al. [49] used a support vector
+machine to predict grounding accidents, and this method achieved a good prediction
+effect. Rahman et al. [47] used a Bayesian network to analyze the relation vessel
+between influencing factors of water traffic accidents and accident probability, which
+effectively predicted the number of different types of accidents. Debnath et al. [12]
+quantitatively predicted collision accidents in the channel of Singapore Port based
+on the time series prediction method. Kim et al. [29] proposed system architecture
+for adaptive visualization of monitoring services, in which decision trees method and
+data transmitted by vessel sensors at sea were used to assess collision risks between
+vessels.
+  Intelligent Techniques and Explainable AI for Vessel Traffic Service: A Survey ■ 159
+
+8.2.2 Intelligent Perception of Water Target
+
+In recent years, with the application of radar, AIS, GPS and other auxiliary technolo-
+gies, the ability of VTS in vessel classification, vessel identification, vessel tracking,
+and other aspects has been greatly enhanced, providing more information for VTS
+in decision-making. However, these technologies also have their own limitations. It is
+possible to achieve intelligent perception of water target through video images and
+data fusion of various systems [6].
+
+8.2.2.1 Target Detection and Recognition
+
+Due to the limitations of both AIS and radar, target detection and recognition based
+on computer vision have become the main research trend. Wawrzyniak et al. [63]
+designed a vessel identification scheme, which mainly identified the type of vessel ac-
+cording to the visible inscription (name, registration number) on the hull. They also
+developed a vessel identification system using a neural network and rough set theory.
+This system can be used for systems with service-oriented architecture by identifying
+vessels from video data streams [64]. Zhang et al. [75] proposed an automatic recog-
+nition method for moving targets on water, where the motion displacement between
+images was obtained by calculating the relation vessel and correlation between back-
+ground images and factor points to achieve automatic recognition of moving targets.
+Shi et al. [51] used the morphological filtering method of multiple structural elements
+to quickly detect vessel targets in order to effectively suppress background noise such
+as sleeping wave clutter.
+
+  With the complexity of the target, traditional algorithms have been unable to
+meet the needs. The emergence of deep learning methods has greatly improved this
+phenomenon. You et al. [74] proposed the deep convolutional neural network frame-
+work of Saliency-Fater R-CNN, which has solved the problem of multi-scale vessel
+detection. Zhang et al. [78] proposed a multi-spectral image vessel detection method
+based on cascade convolutional neural network to improve the detection accuracy. Qi
+et al. [46] proposed an improved Faster R-CNN algorithm for vessel target detection,
+which reduced the search scale of target detection and improved the detection accu-
+racy while shortening the detection time. Liu et al. [7] proposed a vessel identification
+method based on Darknet network model and YOLOv3 algorithm, which can identify
+a variety of vessel types and important parts in monitoring of water.
+
+8.2.2.2 Tracking of Vessel Target
+
+For tracking of vessel target, classical methods include particle filter, mean shift, and
+Kalman filter. Kim et al. [30] designed an image-based vessel tracking system using
+a Bayesian classifier and Kalman filtering algorithm, which can effectively overcome
+marine environmental noise, bad weather and waves. Chen et al. [11] proposed an in-
+tegrated vessel tracking scheme based on a multi-view learning algorithm and wavelet
+filtering model. In this scheme, target tracking is mainly achieved by extracting vessel
+contour and correcting abnormal oscillation.
+160 ■ Explainable Artificial Intelligence for Intelligent Transportation Systems
+
+  However, classical tracking algorithms cannot solve more complex situation well.
+Hence, they have been combined with deep learning techniques. Yang et al. [73]
+proposed a single target tracking network model based on depth learning and a
+tracking and counting method of virtual detection line for inland waterway vessel
+flow statistics and conducted experiments in actual application scenarios.
+
+  The intelligent perception system has many sensors and complex sensing data,
+so data fusion techniques have been used to improve perception efficiency. Generally
+speaking, AIS is fused with radar. Zhang et al. [76] designed a reasonable network
+structure based on multi-sensor information fusion theory and the BPNN principle
+and proposed a BPNN-based radar and AIS target association algorithm. He et al. [20]
+proposed a radar track fusion method based on AIS to solve the problem of difficult
+data association and low accuracy when tracking dense targets on the sea. Huang
+et al. [22] proposed a multi-vessel-target tracking technique based on an improved
+single shot multi-box detector and the DeepSORT algorithm, where a data fusion
+algorithm was used to integrate AIS information into video display.
+
+8.3 XAI AND ITS APPLICATIONS IN VTS
+
+Considering current development of AI techniques and their popularity in VTS, ex-
+plainability of AI techniques in intelligent water transportation is now discussed.
+This section will review the following: (1)What is XAI ? (2)Why is XAI needed?
+(3)Classification of XAI methods. (4)Applications of XAI in VTS.
+
+8.3.1 What Is XAI and Why Is XAI Needed?
+
+Thanks to its powerful computing power, AI techniques have exhibited superior per-
+formance in massive data processing, analysis and decision-making. AI techniques
+have been widely used in various fields, such as aerospace [2, 70], industrial automa-
+tion systems [25, 80], medical [28, 57] and so on. With the continuous development
+of science and technology, the ability of AI techniques to learn and adapt has also
+been continuously strengthened [4]. In the process of increasing popularity at all lev-
+els of people’s production and life, complexity of the algorithm has also increased
+exponentially.
+
+  As the mainstream of modern AI techniques, deep neural network techniques
+often have tens of millions of parameters. Unfortunately, they belong to the black-box
+method [10]. As far as sensitive areas such as data privacy and autonomous driving are
+concerned, the black-box method has some accountability, ethical and judicial issues.
+On the other hand, when the audience is different, the XAI needs to focus on goals and
+priorities are also different. For visual analysis, the focus is on providing explanations
+through visual analysis of the model or displaying significance of different features.
+The foundations of human understanding and structure of explanations are also of
+great importance to specialists in psychological research [43].
+
+  In summary, to better popularize and apply AI techniques, it is crucial to under-
+stand how these algorithms work and how decisions are made. This results in XAI,
+a field dedicated to developing a set of theories and techniques to parse models and
+  Intelligent Techniques and Explainable AI for Vessel Traffic Service: A Survey ■ 161
+
+generating intuitive explanations to help people who need them to understand and
+predict AI’s behavioral decisions.
+
+8.3.2 Classification of XAI Methods
+
+At present, there is no universal classification and evaluation standard that can
+convince everyone in the XAI field. However, in most studies, explainability, inter-
+pretability, and model transparency are frequently mentioned [25]. Here, we review
+and discuss these concepts.
+
+  • Explainability: Explainability is an active feature that is used to describe the
+  working mechanism inside a model.
+
+  • Interpretability: It is a passive characteristic that describes the ability of the
+  model to be understood by people.
+
+  • Transparency: A model can be considered transparent if it can be understood
+  by people without any manipulation. In the field of XAI, it is generally believed
+  that the more transparent the model or algorithm, it is better.
+
+  According to different principles, XAI can be classified into different categories.
+Depending on the scope of the work, explanations can be global explanation, local
+explanation, or a combination of both. Local explanations focus on generating ex-
+planations for a single sample, and their essence is to explore how a specific sample
+affects a single output, such as LIME [50] and SHAP [38]. Global explanations act
+on groups of data to provide explanations for the operation of the entire model. This
+approach strives to simplify complex deep models into interpretable linear models
+through various methods such as class model visualization [52] and global attribu-
+tion mapping [26]. Maksymiuk et al. [39] divided XAI into model interpretable group,
+model specific group and model agnostic group. Model interpretable groups gener-
+ally represent traditional machine learning that are easy to explain, such as decision
+trees and generalized additive models. Model specific group refers to using a spe-
+cific method to explain a specific model, which has poor generalization and is not
+applicable to other models. The model agnostic group is also called post-model inter-
+pretable method, which usually mines model-independent explanations. For example,
+LIME is dedicated to mining importance of super pixels in the source image to the
+class output, ensuring that a single data can play an outstanding role in prediction.
+Furthermore, LIME is extended to a version that can be used for global interpre-
+tation [15]. This type of method can be carried out when the model is completely
+unknown, i.e., this type of method is suitable for most deep neural network mod-
+els and is currently the most active XAI technique, commonly used in land traffic
+management [1] and Air Traffic management [70].
+
+8.3.3 Applications of XAI in VTS
+
+Similar to land-based intelligent transportation and air-based intelligent transporta-
+tion, the field of water-based intelligent transportation will involve a large amount
+162 ■ Explainable Artificial Intelligence for Intelligent Transportation Systems
+
+  濠瀂濷濸濿澳濴濺瀁瀂瀆瀇濼濶澳
+  瀀濸瀇濻瀂濷瀆
+
+  濚濿瀂濵濴濿澳  濟瀂濶濴濿澳
+  濘瀋瀃濿濴瀁濴瀇濼瀂瀁  濘瀋瀃濿濴瀁濴瀇濼瀂瀁
+
+濦濛濔濣  濔濥濠  濟濜濠濘  濣濜濚
+
+Figure 8.3 Most popular model agnostic explainable methods [3].
+
+of data and traffic management operation. It is necessary to ensure that the infor-
+mation represented by massive data can be understood by the operators, and let
+them make reasonable decision based on the obtained information while trusting the
+model. Therefore, it is imperative to promote applications and popularization of XAI
+in the maritime field. At present, XAI has already had some applications in intelligent
+water transportation.
+
+  Considering that features such as tracks are often used to classify vessel types, to
+understand the meaning behind the decision, Burkart et al. [8] introduced existing
+methods for interpretation of vessel classification task and conducted experiments
+with an explanatory case for the first time with the participation of human experts.
+Anneken et al. [3] highlighted a data fusion technique that can help improve the
+efficiency of anomaly detection and discussed how to help people in the marine field
+understand and predict behavior and decisions of autonomous systems by introducing
+model agnostic XAI methods as shown in Figure 8.3. Veerappa et al. [3] confirmed
+that the XAI method applicable to images, text and tables can also be used for
+multivariate time series. Furthermore, the effect of different types of explanations on
+sequence classifiers is verified, which makes the popularization of XAI methods in
+sensitive fields such as water transportation strongly supported [58]. In the field of
+traffic safety, XAI also has some related applications. Veitch et al. [59] proposed a
+human-centric concept through a combination of analogy, visualization and mental
+simulation, which achieved good results in solving the problem of interactions between
+unmanned surface vehicles and different users. Furthermore, to ensure that vessels
+comply with important maritime policies, Yan et al. [72] developed an unsupervised
+anomaly detection model to help ports predict vessel detention. In this paper, SHAP
+was used to analyze and visualize the influence of different input characteristics on
+decision-making, and simulation experiments were carried out with real data of actual
+ports.
+
+  In addition, XAI also has some achievements in the field of marine target in-
+telligent perception, which is mainly reflected in the enhancement of marine target
+detection and recognition technique by the attention mechanism [42]. To solve the
+problem of marine infrared small target detection without prior knowledge, Dong et
+al. [13] improved the visual attention model combined with an anti-vibration pipeline
+  Intelligent Techniques and Explainable AI for Vessel Traffic Service: A Survey ■ 163
+
+filtering algorithm and achieved good results. Li et al. [33] added a channel atten-
+tion mechanism module to YOLOv5 to improve its recognition ability of effective
+features. Furthermore, Wang et al. [61] made multiple adjustments to the architec-
+ture of YOLOv5, where the channel attention mechanism module and the iterative
+refinement mechanism were combined to improve the network efficiency. However,
+these attention mechanisms are mainly used to help the model identify and acquire
+important features, and do not greatly enhance the interpretability of the model itself.
+
+  Finally, information acquisition techniques used by AIS occupy a vital part in VTS
+and is also widely used in vessels [20, 22, 76]. Some studies related to interpretability
+in the marine field [8, 58] are based on the AIS dataset. Although there is little work
+at present, it may be a very promising direction to conduct interpretable and relevant
+research on the data (such as AIS) obtained by intelligent sensing methods.
+
+8.4 CONCLUSIONS
+
+Based on the review of preliminaries of VTS and state of the arts of intelligent
+techniques, this chapter discusses applications of XAI in VTS. Currently, VTS with
+AI techniques is far more efficient and intelligent than before, but their huge amount of
+information and opaque decisions also create problems for real world operators. XAI
+techniques can provide interpretations in the form of visualisations, texts or rules
+to help users understand and process the information in the vast amount of data
+obtained more rationally as well as improve system’s decision-making. This greatly
+increases user’s trust and acceptance of the VTS and enables intelligent systems to
+provide better decision-making services to users and increase efficiency. On the other
+hand, maritime is a sensitive area, and given the risk of failure, the parsing of models
+and the transparency of decisions can be very helpful in clarifying the assumption of
+responsibility, as well as the development of relevant legislation.
+
+  Although XAI techniques are currently receiving little attention in the study of
+VTS, they have made their marks in both land and air intelligent transportation.
+Considering that intelligent traffic systems in different fields have relatively simi-
+lar problems, such as the processing of large amounts of information and human-
+computer interactions between vehicles and operators, we believe that in the future
+VTS will develop towards more interpretable, more trustworthy, safer, more efficient
+and more ethical intelligent traffic management. We sincerely hope that this chapter
+will serve as a good reference for researchers and developers working on VTS.
+
+Bibliography
+
+ [1] Ashraf Abdul, Jo Vermeulen, Danding Wang, Brian Y Lim, and Mohan Kankan-
+  halli. Trends and trajectories for explainable, accountable and intelligible sys-
+  tems: An hci research agenda. In Proceedings of the 2018 CHI Conference on
+  Human Factors in Computing Systems, pages 1–18. Association for Computing
+  Machinery, 2018.
+164 ■ Explainable AI for Intelligent Transportation Systems
+
+ [2] Natalia Alexandrov. Explainable AI decisions for human-autonomy interactions.
+  In Proceedings of 17th AIAA Aviation Technology, Integration, and Operations
+  Conference, page 3991. American Institute of Aeronautics and Astronautics, Inc.,
+  2017.
+
+ [3] Mathias Anneken, Manjunatha Veerappa, and Nadia Burkart. Anomaly detec-
+  tion and XAI concepts in swarm intelligence. 2021. https://www.sto.nato.int/
+  publications/STO%20Meeting%20Proceedings/STO-MP-SCI-341/MP-SCI-
+  341-05.pdf.
+
+ [4] Alejandro Barredo Arrieta, Natalia Diaz-Rodriguez, Javier Del Ser, Adrien Ben-
+  netot, Siham Tabik, Alberto Barbado, Salvador Garcia, Sergio Gil-Lopez, Daniel
+  Molina, Richard Benjamins, Raja Chatila, and Francisco Herrera. Explainable
+  artificial intelligence (XAI): Concepts, taxonomies, opportunities and challenges
+  toward responsible AI. Information Fusion, 58:82–115, 2020.
+
+ [5] HP Berg. Human factors and safety culture in maritime safety. Marine Naviga-
+  tion and Safety of Sea Transportation: STCW, Maritime Education and Training
+  (MET), Human Resources and Crew Manning, Maritime Policy, Logistics and
+  Economic Matters, 107:107–115, 2013.
+
+ [6] Domenico D Bloisi, Fabio Previtali, Andrea Pennisi, Daniele Nardi, and Michele
+  Fiorini. Enhancing automatic maritime surveillance systems with visual informa-
+  tion. IEEE Transactions on Intelligent Transportation Systems, 18(4):824–833,
+  2016.
+
+ [7] Liu Bo, Shengzheng Wang, Zhao Jiansen, and Mingfeng Li. Ship tracking and
+  recognition based on darknet network and YOLOv3 algorithm. Journal of Com-
+  puter Applications, 39(6):1663–1668, 2019.
+
+ [8] Nadia Burkart, Marco F Huber, and Mathias Anneken. Supported decision-
+  making by explainable predictions of ship trajectories. In Proceedings of Inter-
+  national Workshop on Soft Computing Models in Industrial and Environmental
+  Applications, pages 44–54. Springer, 2020.
+
+ [9] Samuele Capobianco, Leonardo M Millefiori, Nicola Forti, Paolo Braca, and Pe-
+  ter Willett. Deep learning methods for vessel trajectory prediction based on
+  recurrent neural networks. IEEE Transactions on Aerospace and Electronic Sys-
+  tems, 57(6):4329–4346, 2021.
+
+[10] Davide Castelvecchi. Can we open the black box of AI? Nature News,
+  538(7623):20, 2016.
+
+[11] Xinqiang Chen, Huixing Chen, Huafeng Wu, Yanguo Huang, Yongsheng Yang,
+  Wenhui Zhang, and Pengwen Xiong. Robust visual ship tracking with an en-
+  semble framework via multi-view learning and wavelet filter. Sensors, 20(3):932,
+  2020.
+

@@ -1,0 +1,1019 @@
+  Reinforcement learning Chapter | 7 113
+
+and Potts (1964), bus services are born unstable and they are by nature suscep-
+tible to bus bunching due to the inherent uncertainties in service operation. On
+the one hand, the uncertainty in the number of boarding/alighting passengers
+increases the variability of bus dwell time. On the other hand, the time-varying
+urban trafﬁc conditions (e.g., congestion and signal control) and the differences
+in bus driving behavior also introduce considerable uncertainty in travel time. In
+real-world operations, a tiny disruption could result in multiple buses falling be-
+hind schedule. When this happens, the delayed buses in general will encounter
+more waiting passengers accumulated during the waiting period, which in turn
+will result in longer dwell times and further delays. Bus bunching has several
+adverse effects on public transport operation. As bus bunching comes into being,
+ﬁrst, it results in increased headway variability, and thus for transit users, both
+waiting time and travel time become longer; second, as the system operates, the
+buses tend to have imbalanced occupancy rates because most passengers prefer
+to board the ﬁrst arriving bus, in particular when passengers do not have any
+information about the arrival of the next bus. Therefore, bus bunching eventu-
+ally causes ineffective use of the supply of public transport services. In the long
+term, bus bunching will also affect users’ perception of service reliability and in
+turn discourage the use of public transport which is a key solution to sustainable
+transportation.
+
+FIGURE 7.4 Bus bunching control. The vehicle control framework on a bus route. A circle indi-
+cates the event of a bus arriving at a bus stop. For bus bi at time ti , we denote by hi+1 the backward
+headway (time for the following bus bi+1 to reach the current location of bi ) and hi the forward
+headway (time for bi to reach the current location of bi−1). (Image source: Wang and Sun, 2021)
+
+  Fig. 7.4 shows the vehicle holding control framework on a bus route, in
+which we take all the buses running in the system/environment as agents. Note
+that we label all buses in a sequential order, where bus bi+1 follows bus bi. Bus
+holding control for a ﬂeet {bi} is a typical application of asynchronous multi-
+114 Machine Learning for Transportation Research and Applications
+
+agent control, as holding control is applied only when a bus arrives at a bus
+stop.
+
+7.7.1 Agent formulation
+
+We deﬁne the basic elements in this framework as follows:
+
+• State: Each agent has a local observation of the system. For bus bi arriving at
+  stop kj at time t, we denote the state of bi by si,t , which includes the number
+  of passengers onboard, the forward headway hi, and the backward headway
+  hi+1.
+
+• Action: Following (Wang and Sun, 2021), we model holding time as di,t =
+  ai,t T , where T is the maximum holding duration and ai,t ∈ [0, 1] is a
+  strength parameter. We consider ai,t the action of bus bi when arriving at a
+  bus stop at time t. Here, T is used to limit the maximum holding duration
+
+  and avoid over-intervention. We model ai,t as a continuous variable in order
+  to explore the near-optimal policy in an adequate action space. Note that no
+  holding control is implemented when ai,t = 0.
+• Reward: Despite that holding control can reduce the variance of bus head-
+  way and promote system stability, the slack/holding time will also impose
+
+  additional penalties on both passengers (i.e., increasing travel time) and op-
+
+  erators (i.e., increasing service operation hours). To balance system stability
+
+  and operation efﬁciency, we design the reward function associated with bus
+
+  bi at time t as
+
+rti = −(1 − w) × CV 2 − w × ai,t ,  (7.25)
+
+where CV 2 = VaE2r[h] [h] quantiﬁes headway variability and w ∈ [0, 1] is a
+weight parameter. Essentially, E[h] is almost a constant given the sched-
+ule/timetable, and thus CV is mainly determined by Var[h]: a small CV
+
+indicates consistent headway values on the bus route, and a large CV sug-
+
+gests heavy bus bunching. The second term in Eq. (7.25) penalizes holding
+
+duration and prevents the learning algorithm from making excessive control
+
+decisions. This term is introduced because any holding decisions will intro-
+
+duce additional slack time and reduce operation efﬁciency. Overall, the goal
+
+of this reward function is to effectively achieve system stability with as few
+
+interventions as possible, with w serving as a balancing parameter.
+
+  The agent implements an action (i.e., determining holding time) when it ar-
+
+rives at a stop, and then it will receive feedback upon arriving at the next stop.
+
+This dynamic process is considered a multi-agent extension of Markov decision
+processes (MDPs) and referred to as a Markov game G = (N, S, A, P, R, γ ),
+where N denotes the number of agents, γ denotes the discount factor, S and
+A = {A1, . . . , AN } denote the state space and the joint action space, respec-
+tively, and P : S × A → S represents the state transition function. However,
+
+this deﬁnition becomes inaccurate in the bus control problem, since agents rarely
+  Reinforcement learning Chapter | 7 115
+
+implement actions at the same time. To address this asynchronous issue, we in-
+troduce a modiﬁed formulation in which each agent maintains its own transition:
+Pˆi : Si × Aˆ → Si, Aˆ ⊆ A, where Si is the observation of agent i. In this way,
+state transition observed by agent i does not necessarily depend on actions from
+all the other agents at any particular time. The policy to choose an action is given
+by the conditional probability πθi = p (Ai | Si). Finally, the reward function for
+each agent can also be deﬁned independently: R = {R1, . . . , RN }.
+
+  These examples show RL can be applied to many control problems in the
+transportation domain.
+
+7.8 Exercises
+
+7.8.1 Questions
+
+1. What’s the difference between Q-learning and policy gradients methods?
+2. What’s the difference between a deterministic and stochastic policy?
+3. Why would you use a policy-based method instead of a value-based method?
+4. What is the difference between off-policy and on-policy learning?
+5. What is the difference between the discount factor γ = 0 and γ = 1 in rein-
+
+  forcement learning?
+6. When applying RL to the single-intersection trafﬁc signal-control applica-
+
+  tion, which of the following cannot be the state S?
+  a. Queue length on each lane of the road;
+  b. Number of vehicle on each lane of the road;
+  c. Trafﬁc signal phase;
+  d. Average trafﬁc speed of each lane.
+7. What is the speciﬁc advantage of DQN?
+8. List three methods to incorporate the communication between the agents
+  when you use multi-agent reinforcement learning to solve the multi-
+  intersection trafﬁc signal control problem.
+9. What are the parameters that you can tune when training neural network-
+  based RL models?
+This page intentionally left blank
+Chapter 8
+
+Transfer learning
+
+8.1 What is transfer learning
+
+In the classic supervised learning scenario of machine learning, if we intend to
+train a model for some task and domain A, we assume that we are provided
+with labeled data for the same task and domain. For the moment, let us assume
+that a task is the objective our model aims to perform, e.g. recognize objects in
+images, and a domain is where our data is coming from, e.g., images taken in
+Seattle coffee shops. We can now train a model A on this dataset and expect it to
+perform well on unseen data of the same task and domain. On another occasion,
+when given data for some other task or domain B, we require again labeled data
+of the same task or domain that we can use to train a new model B so that we
+can expect it to perform well on this data. The traditional supervised learning
+paradigm breaks down when we do not have sufﬁcient labeled data for the task
+or domain we care about to train a reliable model.
+
+  If we want to train a model to detect pedestrians on night-time images, we
+could apply a model that has been trained on a similar domain, e.g. on day-time
+images. In practice, however, we often experience deterioration or collapse in
+performance as the model has inherited the bias of its training data and does
+not know how to generalize to the new domain. If we want to train a model
+to perform a new task, such as detecting bicyclists, we cannot even reuse an
+existing model because the labels between the tasks differ. Transfer learning
+allows us to deal with these scenarios by leveraging the already existing labeled
+data of some related task or domain. We try to store this knowledge gained in
+solving the source task in the source domain and apply it to our problem of
+interest. In practice, we seek to transfer as much knowledge as we can from the
+source setting to our target task or domain. This knowledge can take on various
+forms depending on the data: It can pertain to how objects are composed to allow
+us to more easily identify novel objects; it can be with regard to the general
+words people use to express their opinions; etc.
+
+8.2 Why transfer learning
+
+It is indisputable that ML use and success in industry has so far been mostly
+driven by supervised learning. Fueled by advances in deep learning, more capa-
+ble computing utilities, and large labeled datasets, supervised learning has been
+largely responsible for the wave of renewed interest in AI, funding rounds and
+
+Machine Learning for Transportation Research and Applications  117
+https://doi.org/10.1016/B978-0-32-396126-4.00013-8
+Copyright © 2023 Elsevier Inc. All rights reserved.
+118 Machine Learning for Transportation Research and Applications
+
+acquisitions, and, in particular, the applications of machine learning that we have
+seen in recent years and that have become part of our daily lives. Over recent
+years, we have been able to train more and more accurate ML models using su-
+pervised learning. We are now at the stage that the state-of-the-art models have
+achieved super-human ability in many ML tasks, such as object recognition,
+speech generation, and disease identiﬁcation, among many others.
+
+  However, these successes rely heavily on labeled data to reach the current
+level of performance. These data may have been collected over years. In a few
+cases, it is public, e.g., ImageNet, but large amounts of labeled data are often
+proprietary or expensive to acquire. At the same time, when applying a machine
+learning model in the real-world, we are faced with a myriad of conditions that
+the model has never seen before and does not know how to deal with; each client
+and every user has their own preferences and possesses or generates data that is
+different than the data used for training; a model is asked to perform many tasks
+that are related to, but not the same as, the task it was trained for. In all of these
+situations, our current state-of-the-art models, despite exhibiting human-level
+or even super-human performance on the task and domain they were trained on,
+suffer a signiﬁcant loss in performance or even break down completely.
+
+  Transfer learning can help us deal with these novel scenarios and is neces-
+sary for production-scale use of machine learning that goes beyond tasks and
+domains where labeled data is plentiful. So far, we have applied our models
+to the tasks and domains that—while impactful—are the low-hanging fruits in
+terms of data availability. To also serve the long tail of the distribution, we must
+learn to transfer the knowledge we have acquired to new tasks and domains.
+
+8.3 Deﬁnition
+
+The deﬁnition closely follows the popular survey paper Pan and Yang (2009), in
+which binary document classiﬁcation is a running example. Transfer learning in-
+cludes a domain and a task in the concept. A domain D contains a feature space
+F and a marginal probability distribution P(X) over the feature space, where
+X = x1, ..., xn ∈ F. For document classiﬁcation with a bag-of-words represen-
+tation, F is the space of all document representations, xi is the i-th term vector
+corresponding to some document, and X is the sample of documents used for
+training.
+
+  Given a domain, D = F, P (X), a task T consists of a label space y and
+a conditional probability distribution P (Y |X) that is typically learned from the
+training data consisting of pairs xi ∈ X and yi ∈ y. In the document classiﬁcation
+example, y is the set of all labels, and yi =0 or 1.
+
+  Given a source domain DS, a corresponding source task TS, as well as a
+target domain DT and a target task TT , the objective of transfer learning is to en-
+able the learning of the target conditional probability distribution P (YT |XT ) in
+DT with the information gained from DS and TS, where DS = DT or TS = TT .
+In most cases, a limited number of labeled target examples, which is exponen-
+  Transfer learning Chapter | 8 119
+
+tially smaller than the number of labeled source examples, are assumed to be
+available.
+
+  Given source and target domains DS and DT , where D = F, P (X), and
+source and target tasks TS and TT , where T = y, P (Y |X) source and target con-
+ditions can be divided into four types. The ﬁrst type is FS = FT . The feature
+spaces of the source and target domain are different. The second type is that
+P (XS) = P (XT ), i.e., the marginal probability distributions of source and tar-
+get domain are different, which is normally called domain adaptation. The third
+type is yS = yT , where the label spaces between the two tasks are different.
+The fourth type of transfer learning is P (YS|XS) = P (YT |XT ), where the con-
+ditional probability distributions of the source and target tasks are different.
+
+8.4 Transfer learning steps
+
+In a general setting of adopting deep neural networks, transfer learning generally
+works in four steps:
+• Pretrained model acquisition;
+• Freezing the layers;
+• Processing new layers;
+• Model ﬁne-tuning.
+
+  First and foremost, depending on the tasks, a pretrained model is acquired.
+This model is usually pretrained on a more generalized task. There should be
+strong correlations between the knowledge of the source domain and that of the
+target domain to make them compatible. The pretrained model usually has an
+architecture of well-known neural networks, such as VGG, ResNet, and Incep-
+tion. Pretrained neural network weights can often be downloaded. Conditions
+like training datasets, parameter settings, and downstream tasks have impact on
+the pretrained model performances. In the transfer learning process, it is crit-
+ical to freeze the initial layers in order to save training time by avoiding the
+learning of simple features. Without layer freezing, there would be no differ-
+ence from training a neural network from scratch. There are two cases in the
+structure of the following layers: with our without adding new trainable layers.
+In either case, we reuse the knowledge from the basic features and update the
+high-level features in the neural network. The case of adding new layers is for
+the specialized tasks of the new network. For example, it is for the same task of
+road users classiﬁcation. However, the original network is trained to have three
+output classes: light vehicles, heavy vehicles, and nonmotorized users. The up-
+dated task is more speciﬁc and needs to classify the road users into more classes,
+e.g., single-unit truck, van, motorcycle, pedestrian, sedan. The unfrozen layers
+will be retrained, and any new layers will be trained with the new data. Lastly,
+as in normal deep learning model training, the models are usually ﬁne-tuned
+to further improve the performance. An example of a ﬁne-tuning method is to
+unfreeze some part of the neural network again (could include the ﬁrst few lay-
+120 Machine Learning for Transportation Research and Applications
+
+ers) and then retrain at a minimal learning rate or with a speciﬁc focus on some
+subclasses.
+
+8.5 Transfer learning types
+
+8.5.1 Domain adaptation
+
+In domain adaptation, the source and target domains have different feature
+spaces and distributions. It is the process of adapting one or more source do-
+mains to transfer information to improve the performance of a target learner.
+This process attempts to alter a source domain to bring the distribution of the
+source closer to that of the target. The mechanism of domain adaptation is to
+uncover the common latent factors across the source and target domains, and
+then use the latent factors to minimize the mismatch regarding feature spaces
+between the two domains. Another two key terms in domain adaptation are do-
+main translation and domain shift, where domain translation is a technique that
+essentially ﬁnds the correspondence between the source domain and target do-
+main, and domain shift is a change in the data distribution between different
+domains.
+
+8.5.2 Multi-task learning
+
+In the case of multitask learning, several tasks from the same domain are co-
+learned simultaneously without distinction between the source and targets. We
+have a set of learning tasks and we co-learn all tasks simultaneously. This helps
+to transfer knowledge from each scenario and develop a rich combined feature
+vector from all the varied scenarios of the same domain. The learner optimizes
+the learning/performance across all of the n tasks through some shared knowl-
+edge. When it comes to learning a large number of tasks with a meta-learner,
+it is called meta-learning. The primary goal of meta-learning is not to learn a
+single classiﬁer using supervised learning but a model that adapts to new tasks
+efﬁciently. The deep neural network model normally embeds data in a common
+representation feature space. The process is repeated over a distribution of tasks,
+where each given task is a subtask of the target problem.
+
+8.5.3 Zero-shot learning
+
+Data labeling is a labor-intensive job: Obtaining annotations needs time and
+sometimes domain expertise, where specialized experts are needed; moreover,
+data imbalance in the real world could be a problem, since it is impossible to
+enumerate all the cases to be “seen” in a training dataset. Classifying objects into
+unseen classes, without relying on labeled data samples, is a critical requirement
+in current and future autonomous systems.
+
+  Zero-shot learning is a strategy where the pretrained learning model is gener-
+alized to a novel category. The training and testing distributions are disjoint, but
+  Transfer learning Chapter | 8 121
+
+at the same time, zero-shot learning needs additional data during the training
+phase to better understand the unseen data distribution. For instance, a model
+is trained using a trafﬁc surveillance image dataset for road user recognition,
+and no emergency vehicles (e.g., ambulances, ﬁre trucks) are included in the
+data samples, but this model is now made to recognize emergency vehicles in
+surveillance images. The road user classes covered in the training samples are
+the “seen” classes, while the emergency vehicles unlabeled in the test samples
+are referred to as the “unseen” classes.
+
+  Zero-shot learning is a subﬁeld of transfer learning in a way that it transfers
+the knowledge already contained in the training samples to the testing tasks. A
+straightforward example is that of road user recognition: Features for trucks are
+learned and, if combined with the color information and features of stairs from
+another object recognition model, it already knows the individual features to
+identify a ﬁre truck, which is a red truck in with stairs. When a transfer learning
+problem is with the same feature and label spaces, it is called homogeneous
+transfer learning. Zero-shot learning belongs to the category of heterogeneous
+transfer learning where the feature and label spaces are disparate.
+
+  In zero-shot learning, the data contains seen classes, unseen classes, and
+auxiliary information. Seen classes are the data that usually have clear and
+handcrafted labels, which are used to train the machine learning model; unseen
+classes are the data without explicit labels that the existing learning model will
+generalize to cover; auxiliary information is the bridge between the seen classes
+and the unseen classes, which is necessary for the generalization step since no
+explicit labels are available for the unseen categories. The auxiliary informa-
+tion needs to cover all the unseen classes, and can be in various formats, e.g.,
+text descriptions or semantic information, depending on the zero-shot learning
+scheme.
+
+  Just like traditional machine learning, zero-shot learning has a training stage
+and an inference stage. We use image classiﬁcation as an example since it is still
+the most common zero-shot learning task. In the training stage of the method, it
+learns about images and their corresponding auxiliary information. If the image
+is a cat, and you can design a semantic encoding attribute vector as the auxiliary
+information, which contains “tail, beak, feather, whiskers, and furry.” For a cat,
+the tail, whiskers, and furry elements are labeled as 1 and the beak and feather
+are 0. Therefore, the collection of seen data classes, seen labels, and the attribute
+vector form the seen set. There is also a set of data classes as unseen classes,
+which can also be described using the same representation, with unseen images,
+unseen labels, and attribute vectors. In the animal example, zebra could be an
+unseen class in the inference stage, where all the attributes needed to identify a
+zebra have been seen (e.g., stripes from tigers, the shape of horses, color from
+pandas). Another representative way of doing zero-shot learning could be that
+the model learns about images by “reading” auxiliary text descriptions (e.g.,
+sentences) associated with each image. It could be “there are two cute dogs on
+the sofa.” A human can easily interpret and decipher this sentence that the two
+122 Machine Learning for Transportation Research and Applications
+
+similar things in the image are called dogs. By seeing millions of image–text
+pairs of different kinds of animals in this case, the learning model accumulates
+knowledge to extrapolate to other image classiﬁcation tasks. A text encoder and
+an image encoder for each pair are generated and will be used for the zero-shot
+prediction of unseen images.
+
+8.5.4 Few-shot learning
+
+Humans can identify the characteristics of a class of objects after seeing a few
+examples. However, computers normally need a large amount of data to learn
+the features and identify what they see. Few-shot learning trains computers to
+learn from a few samples like humans. Few-shot learning is expected to beneﬁt
+rare cases and unbalanced data training. For instance, corner cases in automated
+driving are rare cases that are not commonly seen but could cause unexpected
+consequences. Few-shot learning has the potential to address this issue by cor-
+rectly detecting these corner case events by exposing them to only a few. Similar
+to zero-shot learning, few-shot learning can also reduce labor costs and compu-
+tation power. Few-shot learning is different from zero-shot learning in a way that
+few-shot learning predicts the classes where a small number of data samples are
+available, while zero-shot learning assumes the class is completely unseen.
+
+  The primary goal of few-shot learning is to learn a similarity function that
+maps the similarities between the classes in the support set and query set. The
+support set contains a few labeled samples for the new data class. The query
+set contains the samples from both novel and old data classes on which the
+model needs to generalize using prior knowledge learned from the support set. A
+common learning scheme used in few-shot learning is called the N-way K-shot
+learning scheme. It basically describes the few-shot problem statement that a
+model handles. N-way means that there are N numbers of new classes on which
+a learning model needs to generalize. K-shot indicates the number of labeled
+data samples that are available in the support set for each of the new classes. The
+larger the N value and the smaller the K value, the task becomes more difﬁcult.
+K is typically in the range 1–5, where K=1 has the name “one-shot learning”
+and, if K=0, it becomes “zero-shot learning,” which we previously discussed,
+and the solution approaches are very different from few-shot learning.
+
+8.6 Case study: vehicle detection enhancement through
+  transfer learning
+
+In a practical application, the authors apply Transfer Learning (TL) to enhance
+the vehicle detection performance in the real-world on an IoT device, i.e., Rasp-
+berry Pi, for the purpose of parking occupancy detection (Ke et al., 2020d). An
+SSD-Mobilenet detector is implemented using TensorFlow Lite on the IoT de-
+vices with TL on the MIO-TCD trafﬁc surveillance dataset.
+
+  SSD with a Mobilenet backbone network is the primary detector. There are
+multiple backbones for SSD, while Mobilenet has the lightest structure which
+  Transfer learning Chapter | 8 123
+
+makes the detection faster than other backbones. This is appropriate for an IoT
+device with limited computational power. We recommend using TensorFlow
+Lite for the SSD implementation since it is designed for deep learning on mobile
+and IoT devices. A normal state-of-the-art object detector like YOLO with the
+TensorFlow platform still runs slowly with a speed lower than 0.05 frames-per-
+second (FPS) on a Raspberry Pi 3B, and has a slightly lower detection accuracy
+as well. However, SSD-Mobilenet with TensorFlow Lite runs over 1 FPS on
+the same device according to our test. The detection results including bounding
+boxes, object type, and detection probabilities (how likely the result is true) are
+transmitted back to the server. Compared to sending videos, it reduces the data
+volume by thousands of times (the exact number depends on the number of
+detections in the video).
+
+  TensorFlow models can be converted to TensorFlow Lite models. We recom-
+mend training a TensorFlow model and then converting it into the TensorFlow
+Lite model. In order to improve the detection performance to make it more ap-
+propriate for practical applications, we enhance a pretrained SSD on the Pascal
+VOC dataset (Everingham et al., 2010) with a new trafﬁc surveillance dataset
+called MIO-TCD (Luo et al., 2018), which contains 110,000 surveillance cam-
+era frames for trafﬁc object-detection training. This dataset includes a variety of
+challenging scenarios for trafﬁc detection such as nighttime, truncated vehicle,
+low resolution, shadow, etc. To our knowledge, this is the ﬁrst time MIO-TCD
+been adopted for parking detection, and we ﬁnd it works well.
+
+  Some key parameters for the training are listed as follows: the learning rate
+is 0.00001, the weight decay is 0.0005, the optimizer is Adam, the batch size
+is 32, and the training-validation split ratio is 10:1. All layers are trainable. The
+training and validation loss curves, as well as some sample images at certain
+training steps, are displayed in Fig. 8.1.
+
+  The enhanced SSD-Mobilenet model demonstrates great performances on
+trafﬁc detection, especially in challenging surveillance image data. Fig. 8.2
+shows three examples comparing detection results between SSD trained on Pas-
+cal VOC and Pascal VOC + MIO-TCD. In the ﬁrst column, the pretrained SSD
+detects all big targets but misses two small targets in the back; in the second col-
+umn, the pretrained SSD misses two vehicles partially blocked by a tree; in the
+third column where there is snow in the nighttime, the pretrained SSD misses
+most of the vehicles. Overall, the enhanced SSD produces much better detection
+results with few missed detections and no false detections.
+
+8.7 Case study: parking information management and
+  prediction system by attribute representation learning
+
+8.7.1 Background
+
+The case study from the authors (Yang et al., 2022) is introduced in detail with
+a focus on attribute representation learning. Representation learning, also called
+124 Machine Learning for Transportation Research and Applications
+
+FIGURE 8.1 The sample images from MIO-TCD dataset and the transfer learning curves.
+
+FIGURE 8.2 Example vehicle detection improvements before and after transfer learning.
+
+feature learning, is the learning task in which neural networks try to determine
+which feature to use.
+
+  Parking shortages and challenges are not only very serious for cars in the
+city region, but also for trucks. Although not reﬂected by parking research, the
+imbalance of supply and demand for truck parking has become a common con-
+cern (Association et al., 2017). Truck-borne freight is a key component of the
+modern supply chain system all over the world. Taking the USA as an exam-
+ple, in 2015, the total tonnage of trucks was 10.49 billion tons, accounting for
+70.1% of the total tonnage of the domestic freight industry (Association et al.,
+2017; Wrenn, 2017). Among the transport, 30%–40% are long-distance ship-
+ments (more than 750 miles) with over 50% (Sprung et al., 2018) cargo values.
+In order to complete such long-distance driving tasks safely and efﬁciently, truck
+  Transfer learning Chapter | 8 125
+
+drivers need adequate and high-quality rest. No doubt, timely truck parking in-
+formation would be necessary and valuable for them.
+
+  To solve the ubiquitous parking challenges for cars and trucks, the ﬁrst and
+foremost approach is to make full use of existing parking resources instead of
+building new ones. In this case, disseminating real-time and future parking avail-
+ability information to drivers would signiﬁcantly help them schedule their stops
+at parking facilities. Therefore, the Parking Information Management System
+(PIMS) has been gradually used to improve the parking efﬁciency and utility
+(Yan et al., 2011; Wang and He, 2011; Geng and Cassandras, 2013; Cheng et al.,
+2020b; Bayraktar et al., 2015; Sun et al., 2018). PIMS involves typically three
+major components: parking detection, data processing, and information dissem-
+ination (Geng and Cassandras, 2013; Lin et al., 2017; Sun et al., 2018). First,
+real-time parking data is collected by parking sensor technologies. Then, the
+sensor data is processed to calculate the current parking availability. Finally, the
+real-time parking utility information is disseminated to drivers via approaches
+such as dynamic message signs, websites, mobile apps, etc.
+
+  With the deployment of PIMS, high-quality parking data can be collected.
+Then, data-driven methodologies for solving parking issues are being devel-
+oped and investigated by researchers.However, in real life, there are so many
+factors showing impacts on the parking utility. The complex features sets can
+be summarized into three categories, the spatiotemporal set (Sadek et al., 2020),
+the attributes information set (i.e., weather impact, hour of a day, and day of a
+week) (Haque et al., 2017), and the driver’s behavior set (i.e., parking duration
+information, parking habits, etc.) (Vital et al., 2020). The integration of these
+factors with heterogeneous formats into traditional prediction methods becomes
+a challenging issue.
+
+  The cutting-edge learning-based models perform well in certain scenarios.
+However, their limitations are also obvious, so several key challenges need to
+be overcome. The ﬁrst and foremost one is the attributes information integra-
+tion. Previous studies indicated that the attribute information has a signiﬁcant
+impact on the parking pattern (Yang et al., 2019; Liu et al., 2014; Zhang et
+al., 2020a; Sun et al., 2018). However, in contrast to the spatiotemporal record,
+the attributes information always has heterogeneous values with different for-
+mats, including category values, clusters, and even text information. If using
+these features directly as the network input, these characteristics’ impacts will
+be greatly limited and even trigger negative impacts (Frank et al., 2001; Hoi
+et al., 2006, 2010). Besides successfully integrated the attributes features into
+training process, balancing attributes and historical impacts and fusing features
+to a reliable prediction result need to be investigated. An attributes-aware at-
+tention mechanism is necessary to be integrated. The second challenge is the
+limited scalability issues. Usually, neural networks are designed with a par-
+ticular motivation, especially in parking problems. It is difﬁcult for different
+sensor systems to share the same predictive model, which is especially obvi-
+ous in deep learning approaches. Therefore, a systematic prediction scheme that
+126 Machine Learning for Transportation Research and Applications
+
+shares common input and output and can serve all sensor systems (centralized
+and decentralized) on the market is a necessity. The third hurdle is the limited
+transferability of the current spatiotemporal neural networks. As is known, the
+neural network prediction result is trained based on the ground truth data. If a
+new parking lot with limited parking data needs to be integrated into the predict-
+ing framework, the whole model needs to be retrained or even rebuilt, which is
+very time-consuming and inconvenient. These limitations seriously restrict the
+ﬁeld deployment of the neural network-based parking prediction algorithms.
+
+8.7.2 Methods
+
+In this research, the team sought to solve the three main challenges from both
+the theoretical and practical aspects. Representation learning is introduced and
+integrated into the model to better capture the attributes features and increase
+the ﬂexibility of prediction framework. Instead of using original information
+as input, the goal of representation learning is to learn a representative fea-
+tures and measure the correlations among objects feature sets by transferring
+the raw data into a high-dimensional vector space (Li et al., 2019b; Chen et
+al., 2019a). The success of the method is tested and implemented by many
+computer science topics such as natural language processing (NLP) (Li et al.,
+2017; Kulis et al., 2012), Computer Vision (CV) (Cakir et al., 2019; Geng et al.,
+2011; Huang et al., 2019) and Recommendation Systems (RS) (Avazpour et al.,
+2014; Da’u and Salim, 2019). Thus, with the heterogeneous feature embedding
+and representation learning, the research team can better capture and combine
+the spatiotemporal features, attribute features, and the customized information
+provided by the users (i.e., the arriving time) into back-propagation training
+process. Such a modeling structure can make the results more universal and ac-
+curate for truck parking and urban parking. Instead of using raw sensor data as
+the neural network input, a general preprocessing workﬂow is designed using
+the summarized parking lot-occupancy sequences as the prediction input. With
+the feature learning process, the transferability of the prediction framework is
+greatly improved. Also, inspired by the broad learning architecture (Zhang and
+Philip, 2019; Liu et al., 2020b), the proposed prediction framework takes the
+future ﬂexibility and applicability into account, which can easily integrate the
+attributes features with different formats and predict the target based on various
+external condition inputs, instead of using only spatiotemporal information.
+
+  The PIMPS system includes four subcomponents: sensing component, data
+processing component, attributes information collection component, and predic-
+tion component. Detailed ﬂowcarts illustrating the procedures can be found in
+Fig. 8.3.
+
+  The sensing component plays a role as the eyes and ears in the intelligent
+parking system, which is used to detect the status of the target parking region
+and then summarize into occupied/unoccupied status. In general, the current
+parking sensor system can be divided into two types of approaches: decen-
+tralized (space-by-space) sensing and centralized (entrance/exit-based) sensing
+  Transfer learning Chapter | 8 127
+
+FIGURE 8.3 The proposed representation learning system PIMPS.
+
+architecture. Examples can be found in Fig. 8.2. The decentralized sensing al-
+ways consists of multiple sensors installed on parking slots to monitor the slot
+status, each sensor is in charge of one or more slots. The slot-based sensor sens-
+ing, i.e., radar senor, magnetic detector, laser detector, and video sensor. Under
+the circumstance, the decentralized system is more accurate and reliable, but
+usually has a high cost with a complex installation process since the parking
+sensors need to be mounted at each parking slot. Another centralized sensing
+system is more straightforward. The sensors are always installed at the parking
+lot entry/exit way, and the numbers of driving in and out of the lot can be di-
+rectly obtained. Compared with the slot-based approach, the entry/exit system
+is cheap and easy to deploy but may lead to trafﬁc congestion. However, slot
+level-occupancy information is not feasible. The one-by-one pass of the parking
+lots sometimes becomes a bottleneck. Also, if the sensing result is not very reli-
+able, the error accumulation may be a big problem when using the entrance/exit
+count approach.
+
+  After the sensing component sends the occupancy status to the local server,
+the post-processing procedure is started to prepare the input sequences. In gen-
+eral, the decentralized sensing status, as well as the centralized sensing results,
+are summarized within the overall parking lots occupancy. Then, two sequences,
+128 Machine Learning for Transportation Research and Applications
+
+one short-term real-time parking sequence (Rni ) and long-term historical parking
+occupancy sequence (Hmi ), are calculated and ready to use.
+
+  Parking activity is highly impacted by the status of the attributes includ-
+ing, time of day, day of week, weather conditions, the parking lot location, etc.
+Collecting such information in a real-time manner and fully integrating the in-
+formation into the prediction system is necessary. Here, the research team sets
+up an attributes information collection component served for capturing the nec-
+essary external factor, including parking lot type (business, working, shopping,
+rest area, etc.), weather condition (fair, cloudy, light rain, rain, etc.), time of day,
+day of week, and type of road (freeway, arterial streets, local streets, etc.), then
+processed as the input for the prediction component.
+
+  For the prediction component, four parts are summarized into the system,
+including the short-term feature learning component, long-term learning com-
+ponent, the attributes embedding component, and the feature fusion component.
+The detailed architecture will be discussed in the next section. Then, after the
+target output sequence is obtained, the error monitoring component is used to
+watch the predicted result and compare it with the ground truth, and report the
+comparison result to the parking lot manager. If the error is larger than expected,
+auto retraining will be activated, and the model will be retrained with the data
+in the recent eight weeks.
+
+  As shown in Fig. 8.4, the PAP neural network is consists of four parts:
+Input Embed Component (IEC), Attributes Tensor Embedding Component
+(ATEC), Temporal Learning Component(TLC), and the Feature Fusion Com-
+ponent (FFC).
+
+  In order to better enable the network to fully extract the long-term and short-
+term temporal dependency of parking patterns, in the data input component,
+the authors use two sets of sequence data as input for the prediction task. The
+two sets of sequences are real-time sequence (Ri) and history sequence (H i).
+The real-time sequence represents the most current parking situation, consisting
+of n occupancy data records. Meanwhile, the history sequence means at the
+prediction target time ﬂag, the past parking occupancy record at the same time of
+a day and day of a week (i.e., if the prediction target of time is next Wednesday,
+8:00 AM, for parking lot i, the H i will be consists of m historical occupancy
+records captured on the past several Wednesdays, 8:00 AM).
+
+  Then, to better extract the hidden pattern of the two sequence for each pre-
+diction target, the research team designed a input embedding process for the
+input sequences. To obtain each prediction target input sequences (I nTi ), a ma-
+trix embedding
+
+I nH i = t anh(WH i · him)  (8.1)
+I nRi = t anh(WRi · rni )  (8.2)
+
+is used to map the mth records of historical and nth real-time occupancy se-
+quence into a high-dimensional vector space I nTi ∈ R16. And in Eq. (8.1) and
+Transfer learning Chapter | 8 129
+
+FIGURE 8.4 Overall framework of the parking availability prediction design.
+
+(8.2), the WH i and WRi are the learnable embedding weight matrix. Speciﬁcally,
+in this research, the team choose the m equal to n as the same length. So, the
+output of Eqs. (8.1) and (8.2) I nTi and I nRi are used as the input for occupancy
+prediction, whose size are R16∗|m|.
+
+  From the previous research, the attributes information, including the time
+of day, day of the week, and weather conditions heavily impact the parking
+occupancy and pattern (Yang et al., 2019; Sun et al., 2018). For example, for
+some parking lots, the daily packing lot occupancy status of the workday is
+much higher than that of the weekend. Also, the frequency of short-term park-
+ing (less than 20 min) in the midafternoon are much higher than evening and
+night. Obvious to note, these attributes clusters information have connections
+and interrelationships with each other. Only vector mapping cannot sufﬁciently
+capture the hidden pattern inside of the sets. Furthermore, since the attributes
+information is always collected as discrete bracket values, directly using them
+as neural network input is not feasible (Wang et al., 2018; Gal and Ghahramani,
+2016). To fully utilize this information, in this research, we design a particu-
+lar embedding approach, called the Attributes Tensor Embedding Component
+(ATEC), to extract and integrate the features into the neural network at the
+utmost level. The ATEC includes two steps, value embedding, and tensor em-
+bedding:
+
+At tai = W aji · aji .  (8.3)
+
+  j
+130 Machine Learning for Transportation Research and Applications
+
+  In the equation, the ai is the attribute information that belongs to each oc-
+cupancy data record. W ai is the learnable matrix, whose dimension is RA∗E, is
+used to transform the input attributes category values ai (ai ∈ A) from a origi-
+nal space A to the embedding space E. Each attribute information has its own
+corresponding mapping matrix to ensure the feature can be map into a suitable
+space.
+
+  The second step aims to capture the combination and correlations inside
+of the attributes vectors. Here, the research team designs a tensor embedding
+procedure to extract the latent features. The ﬁrst substep is to build an attribute
+tensor by using the vector outer product
+
+Tai = At ta1 ⊗ At ta2 · · · ⊗At tai .jjj  (8.4)
+
+  The output of Eq. (8.4) is a tensor Tai ∈ RE1×E2...×Ej . Then, we use a mul-
+tidimensional convolution operation to extract the attributes tensor features and
+map into a one-dimensional vector. This substep serves mainly to capture and
+emphasize the inside correlations of attributes.
+
+At tT Ei = σcnn(Wconv ∗ Tai + b).  (8.5)
+
+  Then, we obtain the output of the attribute set embedding vector AttT Ei ,
+which includes j different factors. Speciﬁcally, j is the number of different at-
+tributes included inside of the attributes set. We will use the AttT Ei to represent
+the attributes features in the following components.
+
+  After both attribute information and sequence records are transformed into a
+vector features set, then, the temporal learning component is used to capture the
+time dependency features. Here, we design two separate stacked LSTM modules
+to capture both the historical sequence and the real-time occupancy sequences
+together. The input of the TLC for a prediction target is
+
+I nT LCRi = I nRi ◦ At tT ERi  (8.6)
+I nT LCHi = I nTi ◦ At tT EHi .  (8.7)
+
+  From these two equations, the input of TLC can be divided into two se-
+quences, and each of them includes the occupancy sequence features and the
+attributes features. Both features vector is linked by the concatenate operation
+(◦) and then sent to the temporal learning network. Here, to further capture the
+dependencies of the input sequence, the team introduced the recurrent neural
+network (RNN) into our model. RNN is a widely used artiﬁcial neural network
+for learning the temporal features in sequences, especially the transportation
+data sequence. Generally, RNN includes the following three characteristics:
+
+• RNN can produce an output at each time node, and the connection between
+  hidden units is cyclic;
+Transfer learning Chapter | 8 131
+
+• RNN can produce an output at each time node, and the output at that time
+  node is only cyclically connected to the hidden unit of the next time node;
+
+• RNN contains hidden units with cyclic connections and can process sequence
+  data and output a single prediction.
+
+In our model, a well-known special RNN–LSTM is designed to capture the truck
+parking sequence dependency features. The main contribution of the RNN is
+that it can transfer and learn the features from the previous input to future mo-
+ments. However, in scenarios that require long-range information dependence, it
+is very difﬁcult to train a well-performing RNN since the gradient vanishing/ex-
+ploding problem often appears. The LSTM solves this problem by using special
+architecture to forget some unimportant information during the training process
+(Hochreiter and Schmidhuber, 1997).
+
+  To capture the temporal features, PAP uses two stacked LSTM to capture the
+temporal dependencies for the input sequences. The mathematical formulations
+of weights update for the stacked LSTM layers are shown below:
+
+hiH i = σlstm(Wx · I nT LCHi + Wh · hiH−1i + Wa · At tT EHi )  (8.8)
+hiRi = σlstm(Wx · I nT LCRi + Wh · hiR−1i + Wa · At tT ERi )  (8.9)
+
+where I nT LCRi , I nT LChi are the two input data sequences; AttT ERi and
+AttT EHi are the attributes features vector after the tensor embedding of each
+occupancy record; and the Wx, Wh and Wa are learnable parameter matrices
+used in the LSTM.
+
+  Since the research team prefers to use the PAP neural network to inte-
+grate heterogeneous latent features, a feature fusion and attention component
+are necessary. From previous research, the parking utility prediction features
+can be roughly divided into two parts: short-term features and collective fea-
+tures. Formally, the short-term features mainly serve to predict close-target
+time-availability information. This information always can be investigated and
+summarized from the real-time continuous input sequence (i.e., the occupancy
+sequences or parking status sequences). Meanwhile, when the traveler wants to
+predict the long-term availability of parking information (much longer than the
+time gap of the input sequence), the long-term features play a role. Generally,
+the collective features include the long-term parking pattern features and the
+attributes conditions. Hence, the model not only needs to refer to the current
+occupancy sequence, but also the historical occupancy records with similar at-
+tribute conditions. Meanwhile, sufﬁciently integrating the attributes information
+at the target prediction time is quite necessary since the long-term parking pat-
+tern is closely related to the attributes conditions, i.e., day of the week, time of
+the day, etc.
+
+  In PAP, to better fuse and use the two types of features, the FAC is de-
+signed and implemented. The ﬁrst step is the attention mechanism. Here, the
+research team designs an attention mechanism considering the attributes factors
+132 Machine Learning for Transportation Research and Applications
+
+instead of mean pooling. The attention includes three procedures. The ﬁrst part
+is the attributes vector similarity calculation. In each prediction target, attributes
+information includes two parts: the input occupancy sequence (Oi) attributes
+(AttT ERi , AttT EHi ) and the target prediction attributes AttT ET . The cosine sim-
+ilarity is used here:
+
+Sim(T , Oi ) = At tT ET · At tT EOi .  (8.10)
+  |At tT ET ||At tT EOi |
+
+Then, the attention value αi can be calculated by the following equation:
+
+hi = hH Att ◦ hRAtt  (8.11)
+  (8.12)
+βi =< σAtt (AttT EOi · Sim(T , Oi )), hi >
+
+αi =  eβi
+  j eβj .
+
+  The ◦ is the concatenate operation, and σAtt is the nonlinear mapping that
+maps the attention into the same dimension with hi. With the attributes attention,
+the researchers summarized the two sequence features into an attention-based
+vectors: hi. Then, the ﬁnal features vector (FT ) for the prediction target T is
+
+  2m  (8.13)
+
+FT = αi · hi .
+
+  i=1
+
+  Finally, the researchers use four fully connected layers to downsample the
+FT from 64 to only one single neuron, which represents the predicted parking
+occupancy result (OTi ).
+
+8.7.3 Results
+
+Urban Parking Data: In the research, the team collected 19 parking lots data
+including 1,534 urban parking slots in Zhengzhou, a midsize city in the central
+area of China. The parking lots are all in the busy urban area of Zhengzhou
+(inside the third ring road), and whose locations can be divided into four types:
+nine of them are shopping mall parking lots, ﬁve are in working and business
+area, and two of them are located in the residential area. Then, three of the park-
+ing lots are in the comprehensive service areas, including shopping, business,
+working region, and even areas for transit sharing. All of the parking lots are
+open to the public. The formats of the original data records are vehicle parking
+information, including parking start time, end time, parking duration, parking
+price, and vehicle information. Then, the authors processed the parking records
+into parking lot occupancy-based data, 24/7. The records are from March 1 to
+Aug 31t of 2018. The time gap between the occupancy records is ﬁve min. In
+addition, the team collected real-time weather information for the same time
+  Transfer learning Chapter | 8 133
+
+period with a time interval of ﬁve min. Eight categories of weather conditions
+were summarized for future analysis: fair, cloudy, light rain, rain, heavy rain,
+light snow, snow, and fog.
+
+  Truck Parking Data: In the research, 49 truck parking slots data in 2 rest
+areas near the Interstate 5 freeway from January 01 to March 31 of 2020, and of
+2021, was collected. The data are summarized into two formats, parking event
+data, and occupancy data. The event data is used to record each parking slot
+status, which includes the status change, the starting time of parking, and the
+time duration. For the occupancy data, the team processed the event data and
+obtained the occupancy rate of each parking lot based on the per minute inter-
+val. Moreover, the team also collected real-time weather information from the
+closest weather station during the same period and recorded every min. Eight
+categories of weather conditions were summarized for future analysis: cloudy,
+light rain, light snow, rain, heavy rain, snow, fair, and fog.
+
+  In the experiment, several ﬁndings are worth mentioning. First, the sequen-
+tial-based prediction algorithms (RNN, LSTM, PewLSTM) work better for
+short-term feature extraction and prediction (5 and 10 min) rather than long-
+term prediction (1 and 2 h). Second, except PAP, the Google PDE has the best
+performance for long-term feature capturing and prediction results. Sometimes,
+the result is even better than the PAP with no ATEC. So, instead of sending
+the records directly into the sequential model, the Google PDE transforms the
+original input into multiple difﬁculty levels. This approach could balance the
+temporal features and general parking pattern features that make the network
+capture more long-term patterns for forecasting. However, such a method also
+reduces some of the accuracy for short-term prediction. Third, the ATEC shows
+a signiﬁcant impact on the performance improvement of both datasets. With
+ATEC, attributes information is sufﬁciently integrated into the short-term and
+long-term parking prediction tasks. As Fig. 8.5 shows, even the weekday and
+weekend patterns are very different in some cases, and the PAP can also capture
+the pattern for both 10 min and 1 h. Then, the residential area always is the most
+predictable parking lot for every method.
+
+8.8 Case study: transfer learning for nighttime trafﬁc
+  detection
+
+Transfer learning can be adopted for dealing with challenging trafﬁc scenarios
+such as adverse weather and occlusion. Challenging scenarios are rare com-
+pared to normal cases and often with a small number of labeled datasets, which
+further increases the challenge in trafﬁc operation tasks. A typical example is
+vehicle detection at nighttime. The benchmark vehicle detection datasets are
+based mostly on detection in daytime (Luo et al., 2018); the nighttime images
+also pose greater challenges in vehicle detection with low lighting conditions
+and degraded feature representations for learning.
+134 Machine Learning for Transportation Research and Applications
+
+FIGURE 8.5 The PAP prediction result visualization for parking lot 08, 13, 17, 21.
+
+  Li et al. (2021a) developed a transfer learning based pipeline for vehicle
+detection in daytime and nighttime, using only labeled daytime images. Faster
+R-CNN was chosen as their vehicle detector, and they applied domain adap-
+tation (DA) with Faster R-CNN for nighttime vehicle detection. Style transfer
+technique was used in the DA process, transferring the knowledge of labeled
+daytime images (source domain) to unlabeled nighttime images (target domain).
+This work also showcased that DA can be used for trafﬁc ﬂow parameter estima-
+tion at nighttime with a framework that compared daytime and nighttime trafﬁc
+ﬂow at the same location.
+
+  Faster R-CNN has been a widely used object detection since 2015 (Ren et
+al., 2015). It is a two-stage algorithm with stage one region proposal network
+and stage two classiﬁcation. Faster R-CNN detectors were trained using daytime
+images to conduct two vehicle-detection tasks, one for daytime vehicle detection
+and another for nighttime detection. Daytime detection is a standard supervised
+learning task for training and testing both in the same domain. The second task
+is about training a Faster R-CNN model for nighttime vehicle detection without
+prelabeled data in nighttime training images. Style transfer was adopted as the
+ﬁrst component to translate the daytime images to synthetic nighttime images
+with the consideration of daytime and nighttime image styles. The style transfer
+method basically learned the unpaired image-to-image translation between two
+different domains using CycleGAN proposed in 2017 (Zhu et al., 2017).
+
+  In Fig. 8.6, the domain for generated synthetic images is highlighted with
+a hat. T is the domain for generated synthetic nighttime images from actual
+daytime images and S the domain for generated synthetic daytime images from
+actual nighttime images.
+
+  Ideally, for one image iS ∈ Is, it can be translated to a synthetic image in
+T by the generator GS→T . The adversarial discriminator DT will encourage
+  Transfer learning Chapter | 8 135
+
+FIGURE 8.6 Faster R-CNN with DA (from Li et al., 2021a).
+
+the translated image indistinguishable from the domain T. After translating the
+synthetic image back to the domain S by GT →S, it produced a reconstructed
+image GT →S (GS→T (iS)) that should be similar to the original image iS. In
+other words, the reconstruction error for iS should be minimized when training
+the GAN, so is that for the image iT . This reconstruction error is called cycle
+consistency loss, and this algorithm can be applied to unpaired image-to-image
+style transfer. The total loss function in the style transfer architecture is denoted
+as
+
+  LCycleGAN (GS→T , GT →S , DS , DT , S, T ) = LGAN (GS→T , DT , S, T ) +
+  LGAN (GT →S , DS , T , S) + λLCycle (GS→T , GT →S , S, T ) ,
+
+where λ is the balance weight, LCycle is the cycle consistency loss in the cycle
+architecture, and LGAN is the adversarial training loss. The cycle consistency
+loss is used to regularize the GAN training. The cycle consistent loss is an L1
+penalty in the cycle architecture, which is deﬁned as
+
+  LCyde (GS→T , GT →S , S, T ) = EiS ∼IS GT →S (GS→T (iS )) − iS 1
+  +EiT ∼IT GS→T (GT →S (iT )) − iT 1 .
+
+  The adversarial training loss is deﬁned as:
+  LGAN (GS→T , DT , S, T ) = EiT ∼IT log (DT (iT )) +
+  EiS ∼IS log (1 − DT (GS→T (iS )) .
+
+  The synthetic nighttime images generated from daytime images are very
+similar to actual nighttime images, sharing the same vehicle locations so that
+the labeled vehicle bounding boxes in the source domain S work for the syn-
+thetic nighttime images as the training set for the Faster R-CNN.
+136 Machine Learning for Transportation Research and Applications
+
+8.9 Case study: simulation to real-world knowledge transfer
+  for driving behavior recognition
+
+Collecting sufﬁcient data in the real world is sometimes challenging, due either
+to the raw data collection itself (e.g.,crash data) or the lack of data labels (e.g.,
+labeling data in dash cam). Generating data from simulation software is an alter-
+native. Driving simulators are used in many studies as surrogate data sources for
+different transportation applications. Macroscopic and microscopic trafﬁc sim-
+ulators (e.g., SUMO, VISSIM) are also commonly used in generating various
+types of trafﬁc data for real-world scenario analysis and modeling. However,
+the machine learning model trained in a simulation environment cannot gener-
+alize well to the real-world problem due to domain gaps. A knowledge transfer
+framework is often required.
+
+  In this case study, we selected the paper “Virtual-to-real knowledge transfer
+for driving behavior recognition: framework and a case study” (Lu et al., 2019)
+as a representative example to introduce knowledge transfer from simulation
+to physical world. This paper uses driving simulator data for driver behavior
+recognition, speciﬁcally, lane changing- behavior classiﬁcation. Two transfer
+learning methods, i.e., semi-supervised manifold alignment (SMA) and kernel
+manifold alignment (KEMA) are adopted to map simulation data to the real
+world.
+
+  The framework proposed by Lu et al. is shown in Fig. 8.7. The behavior
+recognition problem can be deﬁned as a pattern classiﬁcation problem. In this
+case, there are two classes, i.e., lane keeping and lane changing. The classiﬁer
+trained using driving simulator data is expected to do the classiﬁcation task in
+the real world. The key step in virtual-to-real knowledge transfer is to align the
+source domain and target domain to the same latent space. In other words, the
+simulation data with sufﬁcient labels and the real data with few labels will be
+transferred to the same latent space using proposed techniques, e.g., manifold
+alignment.
+
+  In the lane-changing scenario considered in this paper, two kinds of labels,
+namely lane keeping (LK) and lane changing (LC) are given to distinguish the
+different behaviors of drivers. The data collected from the simulator and real
+driving scene have the same structure and can be presented by the following
+column vector:
+
+dt = [xh,t yh,t vh,t θh,t xo,t yo,t vo,t θ o,t ]T ,
+
+host vehicle  other vehicles
+
+where dt is the data instance collected at time step t, xh,t and yh,t is the longi-
+tudinal and lateral position of the host vehicle, respectively; θh,t is the heading
+angle of the host vehicle; and vh,t is the speed of the host vehicle. xo,t , yo,t , vo,t
+and θ o,t are row vectors containing the longitudinal position, lateral position,
+speed, and heading information for other vehicles.
+  Transfer learning Chapter | 8 137
+
+FIGURE 8.7 The framework for knowledge transfer (Lu et al., 2019).
+
+  Two datasets Ds = di i s =1 Ns and Dr = djr j=1 containing the data collected Nr
+from simulator dsi and real-driving scene drj can be obtained. Abundant
+data in Ds are assigned with data labels lane keeping or lane changing, yet only
+few data in Dr have the label information. The target of the transfer learning
+framework is to train a good classiﬁer using Ds and Dr , and adopt this classiﬁer
+for lane-changing behavior recognition in Dr . The combined dataset D with the
+dimensionality Nd,s + Nd,r × (Ns + Nr ) can be produced with:
+
+  D = r D . s 0
+  0D
+

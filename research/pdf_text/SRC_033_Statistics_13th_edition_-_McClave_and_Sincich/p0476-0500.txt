@@ -1,0 +1,1655 @@
+474 CHAPTER 9 ■ Inferences Based on Two Samples
+
+ Statistics IN Action
+
+  (continued)
+
+Figure SIA9.1
+MINITAB comparison of two price
+change means
+
+Figure SIA9.2
+
+MINITAB comparison of two trading
+volume means
+
+  Because both sample size (n1 = 40 and n2 = 43) are  following posting days is small and similar to the average
+large, we can apply the large-sample z-test or large-sample  price change following nonposting days’ and “the difference
+confidence interval procedure for independent samples. A  in the means is not statistically significant.”
+MINITAB printout for this analysis is shown in Figure SIA9.1.
+Both the 95% confidence interval and p-value for a two-tailed  Note: The statistician also compared the mean ZixIt trad-
+test of hypothesis are highlighted on the printout. Note that the  ing volume (number of ZixIt stock shares traded) after
+95% confidence interval, ( - $1.47, $1.09), includes the value  posting days to the mean trading volume after nonposting
+$0, and the p-value for the two-tailed hypothesis test (.770)  days. These results are shown in Figure SIA9.2. You can
+implies that the two population means are not significantly dif-  see that the 95% confidence interval for the difference
+ferent. Also, interestingly, the sample mean price change after  in mean trading volume (highlighted) includes 0, and the
+posting days (x1 = $.06) is small and positive, while the sam-  p-value for a two-tailed test of hypothesis for a difference
+ple mean price change after nonposting days (x2 = - $.13) is  in means (also highlighted) is not statistically significant.
+small and negative, totally contradicting ZixIt’s claim.  These results were also presented to the jury in defense
+  of Visa.
+  The statistical expert for the defense presented these
+results to the jury, arguing that the “average price change  Data Set: ZIXITVISA
+
+Exercises 9.1–9.30  a. Population 1: Normal distribution with variance s12
+
+Understanding the Principles  Population 2: Skewed to the left with variance
+  s22 = s12
+ 9.1 What is the standard error of 1x1 - x22 when the samples  b. Population 1: Normal distribution with variance s12
+  are large?
+  Population 2: Symmetric distribution with variance
+ 9.2 To use the z-statistic to test for a difference between the  s22 ≠ s12
+  means of two populations, what assumptions must be  c. Population 1: Skewed to the right with variance s12
+  made about the two samples?
+  Population 2: Skewed to the left with variance s22 = s12
+ 9.3 Two populations are described in each of the cases that fol-
+  low. In which cases would it be appropriate to apply the  d. Population 1: Normal distribution with variance s12
+  small-sample t-test to investigate the difference between
+  the population means?  Population 2: Normal distribution with variance s22 = s12
+  SECTION 9.2 ■ Comparing Two Population Means: Independent Sampling 475
+
+  e. Population 1: Uniform distribution with variance s12;  d. Will the statistic 1x1 - x22 be normally distributed?
+  Population 2: Uniform distribution with variance  Explain.
+  s22 = s12
+  9.8  Assume  that  s  2  =  s22  =  s2. Calculate the pooled estimator
+ 9.4 A confidence interval for 1m1 - m22 is 1 - 8, 62. Which of  1
+  the following inferences is correct?  of s2 for each of the following cases:
+  a. m1 7 m2
+  b. m1 6 m2  a. s12 = 180, s22 = 200, n1 = n2 = 25
+  c. m1 = m2  b. s12 = 25, s22 = 40, n1 = 10, n2 = 20
+  d. no significant difference between means  c. s12 = .25, s22 = .32, n1 = 8, n2 = 12
+  d. s12 = 2300, s22 = 2000, n1 = 15, n2 = 18
+ 9.5 A confidence interval for 1m1 - m22 is 1 - 12, - 62. Which
+  of the following inferences is correct?  e. Note that the pooled estimate is a weighted average of
+  a. m1 7 m2
+  b. m1 6 m2  the sample variances. To which of the variances does the
+  c. m1 = m2
+  d. no significant difference between means  pooled estimate fall nearer in each of cases a–d?
+
+Learning the Mechanics  9.9 Independent random samples from normal populations
+  produced the following results:
+ 9.6 In order to compare the means of two populations, inde-
+  pendent random samples of 400 observations are selected  L09009  Sample 1  Sample 2
+  from each population, with the following results:
+  1.2  4.2
+
+  3.1  2.7
+
+  1.7  3.6
+
+  2.8  3.9
+
+  3.0
+
+Sample 1  Sample 2  a. Calculate the pooled estimate of s2.
+x1 = 5,275  x2 = 5,240
+s1 = 150  s2 = 200  b. Do the data provide sufficient evidence to indicate that
+  m2 7 m1? Test, using a = .10.
+  a. Use a 95% confidence interval to estimate the dif-
+  ference between the population means 1m1 - m22.  c. Find a 90% confidence interval for 1m1 - m22.
+  Interpret the confidence interval.  d. Which of the two inferential procedures, the test of
+
+  b. Test the null hypothesis H0: 1m1 - m22 = 0 versus the  hypothesis in part b or the confidence interval in part c,
+  alternative hypothesis Ha: 1m1 - m22 ≠ 0. Give the  provides more information about 1m1 - m22?
+  p-value of the test, and interpret the result.
+  9.10 Two independent random samples have been selected, 100
+  c. Suppose the test in part b were conducted with the
+  alternative hypothesis Ha: 1m1 - m22 7 0. How would  observations from population 1 and 100 from population 2.
+  your answer to part b change?
+  Sample means x1 = 60 and x2 = 40 were obtained. From
+  d. Test the null hypothesis H0: 1m1 - m22 = 25 versus the  previous experience with these populations, it is known
+  alternative Ha: 1m1 - m22 ≠ 25. Give the p-value, and  that the variances are s12 = 64 and s22 = 100.
+  interpret the result. Compare your answer with that  a. Find s1x1 - x22.
+  b. Sketch the approximate sampling distribution 1x1 - x22,
+  obtained from the test conducted in part b.
+  assuming that 1m1 - m22 = 5.
+  e. What assumptions are necessary to ensure the validity  c. Locate the observed value of 1x1 - x22 on the graph
+
+  of the inferential procedures applied in parts a–d?  you drew in part b. Does it appear that this value con-
+  tradicts the null hypothesis H0: 1m1 - m22 = 5?
+9.7 Independent random samples of 100 observations each are  d. Use the z-table to determine the rejection region for the
+  test of H0: 1m1 - m22 = 5 against Ha: 1m1 - m22 ≠ 5.
+  chosen from two normal populations with the following  Use a = .05.
+
+  means and standard deviations:  e. Conduct the hypothesis test of part d and interpret your
+
+Population 1  Population 2  result.
+  m1 = 16  m2 = 12  f. Construct a 95% confidence interval for 1m1 - m22.
+  s1 = 5  s2 = 4
+  Interpret the interval.
+a. Give the mean and standard deviation of the sampling
+  g. Which inference provides more information about the
+  distribution of x1.  value of 1m1 - m22, the test of hypothesis in part e or
+b. Give the mean and standard deviation of the sampling  the confidence interval in part f?
+
+  distribution of x2.  9.11 Independent random samples are selected from two popula-
+c. Suppose you were to calculate the difference 1x1 - x22  tions and are used to test the hypothesis H0: 1m1 - m22 = 0
+  against the alternative Ha: 1m1 - m22 ≠ 0. An analysis of
+  between the sample means. Find the mean and standard  243 observations from population 1 and 323 from population
+  deviation of the sampling distribution of 1x1 - x22.
+  2 yielded a p-value of .125.
+
+  a. Interpret the results of the test.
+  b. If the alternative hypothesis had been Ha: 1m1 - m22 6 0,
+
+  how would the p-value change? Interpret the p-value for
+
+  this one-tailed test.
+476 CHAPTER 9 ■ Inferences Based on Two Samples
+
+9.12 Independent random samples selected from two normal  response time (measured in minutes). The researchers
+  populations produced the following sample means and  compared the response times for two groups of MBA
+  standard deviations:  students: (1) those with last names beginning with one
+  of the first 9 letters of the alphabet and (2) those with
+Sample 1  Sample 2  last names beginning with one of the last 9 letters of the
+n1 = 12  n2 = 17  alphabet. Summary statistics for the two groups are pro-
+x1 = 3.4  x2 = 5.9  vided in the table.
+s1 = 4.8  s2 = 3.4
+
+  a. Assuming equal variances, conduct the test  First 9  Last 9
+  H0: 1m1 - m22 = 0 against Ha: 1m1 - m22 ≠ 0 using  Letters: A–I  Letters: R–Z
+  a = .05.
+  Sample size  25  25
+  b. Find and interpret the 95% confidence interval for  Mean response time (minutes)  25.08  19.38
+  1m1 - m22.  Standard deviation (minutes)  10.41  7.12
+
+Applying the Concepts—Basic  Source: Carlson, K. A., & Conrad, J. M. “The last name effect: How last name
+  influences acquisition timing.” Journal of Consumer Research, Vol. 38, No. 2,
+9.13 Shared leadership in airplane crews. Human Factors  Aug. 2011.
+  (Mar. 2014) published a study that examined the effect
+  of shared leadership by the cockpit and cabin crews of a  a. Construct a 95% confidence interval for the difference
+  commercial airplane. Simulated flights were taken by  between the true mean response times for MBA stu-
+  84 six-person crews, where each crew consisted of a two-  dents in the two groups.
+  person cockpit (captain and first officer) and a four-person
+  cabin team (three flight attendants and a purser). During  b. Based on the interval, part a, which group has the short-
+  the simulation, smoke appeared in the cabin and the reac-  est mean response time? Does this result support the
+  tions of the crew were monitored for teamwork. Each crew  researchers’ last name effect theory? Explain.
+  was rated as working either successfully or unsuccessfully
+  as a team. Also, each individual member was evaluated for  9.15 Effectiveness of teaching software. The U.S. Department
+  leadership (measured as number of leadership functions  of Education (DOE) conducted a national study of the
+  exhibited per minute). The mean leadership values for suc-  effectiveness of educational software. In one phase
+  cessful and unsuccessful teams were compared. A summary  of the study, a sample of 1,516 first-grade students in
+  of the test results for both captains and lead flight atten-  classrooms that used educational software was com-
+  dants is displayed in the table at the bottom of the page.  pared to a sample of 1,103 first-grade students in class-
+  a. Consider the data for captains. Interpret the p-value for  rooms that did not use the technology. In its Report to
+  testing (at a = .05) whether the mean leadership val-  Congress (Mar. 2007), the DOE concluded that “[mean]
+  ues for captains from successful and unsuccessful teams  test scores [of students on the SAT reading test] were
+  differ.  not significantly higher in classrooms using reading …
+  b. Consider the data for flight attendants. Interpret the  software products” than in classrooms that did not use
+  p-value for testing (at a = .05) whether the mean lead-  educational software.
+  ership values for flight attendants from successful and  a. Identify the parameter of interest to the DOE.
+  unsuccessful teams differ.  b. Specify the null and alternative hypotheses for the test
+  conducted by the DOE.
+9.14 Last name and acquisition timing. The speed with which  c. The p-value for the test was reported as .62. Based
+  consumers decide to purchase a product was investigated  on this value, do you agree with the conclusion of the
+  in the Journal of Consumer Research (Aug. 2011). The  DOE? Explain.
+  researchers theorized that consumers with last names
+  that begin with letters later in the alphabet will tend to  9.16 Cognitive impairment of schizophrenics. A study of the
+  acquire items faster than those whose last names are ear-  differences in cognitive function between normal individ-
+  lier in the alphabet—called the last name effect. MBA  uals and patients diagnosed with schizophrenia was pub-
+  students were offered up to four free tickets to attend a  lished in the American Journal of Psychiatry (Apr. 2010).
+  top-ranked women’s college basketball game for which  The total time (in minutes) a subject spent on the Trail
+  there were a limited supply of tickets. The first letter of  Making Test (a standard psychological test) was used as
+  the last name of those who responded to an e-mail offer  a measure of cognitive function. The researchers theorize
+  in time to receive the tickets was noted as well as the  that the mean time on the Trail Making Test for schizo-
+  phrenics will be larger than the corresponding mean
+  for normal subjects. The data for independent random
+
+Table for Exercise 9.13
+
+  Successful Teams 1n = 602  Unsuccessful Teams 1n = 242
+
+  Mean  Std. Dev.  Mean  Std. Dev.  t-value  p-value
+
+Captain  .66  .10  .50  .20  3.72  .000
+Flight Att.  0.12  .907
+  .40  .24  .39  .13
+
+Source: Bienefeld, N., & Grote, G. “Shared leadership in multiteam systems: How cockpit and cabin crews lead each other to safety.”
+Human Factors, Vol. 65, No. 2, Mar. 2014 (Table 2).
+  SECTION 9.2 ■ Comparing Two Population Means: Independent Sampling 477
+
+samples of 41 schizophrenics and 49 normal individuals  rating (RR) method presented the samples to the taster all
+yielded the following results:  at once side by side. In one experiment, 108 consumers of
+  peach jam were asked to taste-test five different varieties.
+Sample size  Schizophrenia  Normal  Half the testers used the SM protocol, and half used the
+Mean time  RR protocol during testing. In a second experiment, 108
+Standard deviation  41  49  consumers of cheese were asked to taste-test four different
+  104.23  62.24  varieties. Again, half the testers used the SM protocol, and
+  16.34  half used the RR protocol during testing. For each product
+  45.45  (peach jam and cheese), the mean taste scores of the two
+  protocols (SM and RR) were compared. The results are
+Based on Perez-Iglesias, R., et al. “White matter integrity and cognitive  shown in the accompanying tables.
+impairment in first-episode psychosis.” American Journal of Psychiatry,
+Vol. 167, No. 4, Apr. 2010 (Table 1).
+
+  a. Define the parameter of interest to the researchers.  Peach jam (taste means)
+  b. Set up the null and alternative hypothesis for testing the
+  Variety  RR  SM  p-value
+  researchers’ theory.
+  c. The researchers conducted the test, part b, and reported  A  5.8  5.5  0.503
+  0.665
+  a p-value of .001. What conclusions can you draw from  B  5.9  5.7  0.962
+  this result? (Use a = .01.)  0.414
+  d. Find a 99% confidence interval for the target param-  C  4.4  4.4  0.535
+  eter. Interpret the result. Does your conclusion agree
+  with that of part c?  D  5.9  5.6
+
+9.17 Children’s recall of TV ads. Children’s recall and rec-  E  5.4  5.1
+  ognition of television advertisements was studied in the
+  Journal of Advertising (Spring 2006). Two groups of chil-  Cheese (taste means)
+  dren were shown a 60-second commercial for Sunkist
+  FunFruit Rock-n-Roll Shapes. One group (the A/V  Variety  RR  SM  p-value
+  group) was shown the ad with both audio and video; the
+  second group (the video-only group) was shown only the  A  6.3  5.5  0.017
+  video portion of the commercial. Following the viewing,
+  the children were asked to recall 10 specific items from  B  6.8  6.2  0.076
+  the ad. The number of items recalled correctly by each
+  child is summarized in the accompanying table. The re-  C  6.6  5.7  0.001
+  searchers theorized that “children who receive an audio-
+  visual presentation will have the same level of mean re-  D  6.5  5.7  0.034
+  call of ad information as those who receive only the visual
+  aspects of the ad.”  Source: Gutierrez-Salomon, A. L., Gambaro, A., and Angulo, O. “Influence
+  of sample presentation protocol on the results of consumer tests.” Journal
+  of Sensory Studies,Vol. 29, No. 3, June 2014 (Tables 1 and 4).
+
+Video-Only Group  A/V Group  a. Consider the five varieties of peach jam. Identify the
+  n1 = 20  n2 = 20  varieties for which you can conclude that “the mean
+  x1 = 3.70  x2 = 3.30  taste scores of the two protocols (SM and RR) differ
+  s1 = 1.98  s2 = 2.13  significantly at a = .05.”
+
+Based on Maher, J. K., Hu, M. Y., and Kolbe, R. H. “Children’s recall  b. Consider the four varieties of cheese. Identify the
+of television ad elements.” Journal of Advertising, Vol. 35, No. 1, Spring  varieties for which you can conclude that “the mean
+2006 (Table 1).  taste scores of the two protocols (SM and RR) differ
+  significantly at a = .05.”
+
+  c. Explain why the taste test scores do not need to be
+  normally distributed in order for the inferences, parts a
+  and b, to be valid.
+
+  a. Set up the appropriate null and alternative hypotheses  9.19  Bulimia study. The “fear of negative evaluation” (FNE)
+  to test the researchers’ theory.  scores for 11 female students known to suffer from the eating
+  BULIMIA  disorder bulimia and 14 female students with normal eating
+  b. Find the value of the test statistic.  habits, first presented in Exercise 2.44 (p. 80), are repro-
+  c. Give the rejection region for a = .10.  duced in the next table. (Recall that the higher the score, the
+  d. Make the appropriate inference. What can you say  greater is the fear of a negative evaluation.)
+
+  about the researchers’ theory?  Bulimic  21 13 10 20 25 19 16 21 24 13 14
+  e. The researchers reported the p-value of the test as  students:  13 6 16 13 8 19 23 18 11 19 7 10 15 20
+
+  p@value = .62. Interpret this result.  Normal
+  f. What conditions are required for the inference to be  students:
+
+  valid?  Based on Randles, R. H. “On neutral responses (zeros) in the sign test and ties
+  in the Wilcoxon-Mann-Whitney test.” The American Statistician, Vol. 55, No. 2,
+9.18 Comparing taste test rating protocols. Taste testers of new  May 2001 (Figure 3).
+  food products are presented with several competing food
+  samples and asked to rate the taste of each on a 9-point scale  a. Locate a 95% confidence interval for the differ-
+  (where 1 = “dislike extremely” and 9 = “like extremely”).  ence between the population means of the FNE
+  In the Journal of Sensory Studies (June 2014), food scien-  scores for bulimic and normal female students on the
+  tists compared two different taste testing protocols. The  MINITAB printout shown on page 478. Interpret the
+  sequential monadic (SM) method presented the samples  result.
+  one at a time to the taster in a random order, while the rank
+478  CHAPTER 9 ■ Inferences Based on Two Samples
+  MINITAB Output for Exercise 9.19
+
+  b. What assumptions are required for the interval of part a  basket), and the other half were told to put their arm in an
+  to be statistically valid? Are these assumptions reason-  extended position (similar to a shopping cart). Participants
+  ably satisfied? Explain.  were offered several choices between a vice and a virtue
+  (e.g., a movie ticket vs. a shopping coupon, pay later with a
+9.20 Lobster trap placement. Refer to the Bulletin of Marine  larger amount vs. pay now) and a choice score (on a scale of
+  Science (Apr. 2010) study of lobster trap placement,  0 to 100) was determined for each. (Higher scores indicate
+  a greater preference for vice options.) The average choice
+TRAPS Exercise 7.41 (p. 363). Recall that the variable of inter-  score for consumers with a flexed arm was 59, while the
+  est was the average distance separating traps—called trap  average for consumers with an extended arm was 43.
+  spacing—deployed by teams of fishermen fishing for the  a. Suppose the standard deviations of the choice scores for
+  red spiny lobster in Baja California Sur, Mexico. The trap
+  spacing measurements (in meters) for a sample of 7 teams  the flexed arm and extended arm conditions are 4 and 2,
+  from the Bahia Tortugas (BT) fishing cooperative are  respectively. In Exercise 2.43a, you were asked whether
+  repeated in the table. In addition, trap spacing measure-  this information supports the researchers’ theory. Now
+  ments for 8 teams from the Punta Abreojos (PA) fishing  answer the question by conducting a hypothesis test.
+  cooperative are listed. For this problem, we are interested  Use a = .05.
+  in comparing the mean trap spacing measurements of the  b. Suppose the standard deviations of the choice scores
+  two fishing cooperatives.  for the flexed arm and extended arm conditions are
+  10 and 15, respectively. In Exercise 2.43b, you were
+  BT cooperative: 93 99 105 94 82 70 86  asked whether this information supports the research-
+  PA cooperative: 118 94 106 72 90 66 153 98  ers’ theory. Now answer the question by conducting a
+  hypothesis test. Use a = .05.
+  Based on Shester, G. G. “Explaining catch variation among Baja California
+  lobster fishers through spatial analysis of trap-placement decisions.” Bulletin  9.22 Do video game players have superior visual attention
+  of Marine Science, Vol. 86, No. 2, Apr. 2010 (Table 1), pp. 479–498.  skills? Researchers at Griffin University (Australia) con-
+  ducted a study to determine whether video game players
+  a. Identify the target parameter for this study.  have superior visual attention skills compared to non-video
+  b. Compute a point estimate of the target parameter.  game players (Journal of Articles in Support of the Null
+  c. What is the problem with using the normal (z)  Hypothesis, Vol. 6, 2009). Two groups of male psychol-
+  ogy students—32 video game players (VGP group) and
+  statistic to find a confidence interval for the target  28 nonplayers (NVGP group)—were subjected to a series
+  parameter?  of visual attention tasks that included the attentional blink
+  d. Find a 90% confidence interval for the target  test. A test for the difference between two means yielded
+  parameter.  t = -.93 and p@value = .358. Consequently, the research-
+  e. Use the interval, part d, to make a statement about the  ers reported that “no statistically significant differences in
+  difference in mean trap spacing measurements of the  the mean test performances of the two groups were found.”
+  two fishing cooperatives.  Summary statistics for the comparison are provided in the
+  f. What conditions must be satisfied for the inference, part e,  table. Do you agree with the researchers conclusion?
+  to be valid?
+  Sample size  VGP  NVGP
+Applying the Concepts—Intermediate  Mean score
+  Standard deviation  32  28
+9.21 Shopping vehicle and judgment. Refer to the Journal of  84.81  82.64
+  Marketing Research (Dec. 2011) study of shopping cart  9.56  8.43
+  design, Exercise 2.111 (p. 106). Design engineers want to
+  know whether you may be more likely to purchase a vice  Based on Murphy, K., and Spencer, A. “Playing video games does
+  product (e.g., a candy bar) when your arm is flexed (as  not make for better visual attention skills.” Journal of Articles in
+  when carrying a shopping basket) than when your arm is  Support of the Null Hypothesis, Vol. 6, No. 1, 2009.
+  extended (as when pushing a shopping cart). To test this
+  theory, the researchers recruited 22 consumers and had  9.23 Drug content assessment. Refer to Exercise 5.68 (p. 287)
+  each push their hand against a table while they were asked  and the Analytical Chemistry (Dec. 15, 2009) study in which
+  a series of shopping questions. Half of the consumers were
+  told to put their arm in a flex position (similar to a shopping  TABLET scientists used high-performance liquid chromatography to
+  SECTION 9.2 ■ Comparing Two Population Means: Independent Sampling  479
+  MINITAB Output for Exercise 9.23
+
+determine the amount of drug in a tablet. Twenty-five tab-  b. The researchers also reported that “the fist bump …
+lets were produced at each of two different, independent  gave [a lower] transmission of bacteria” than the high
+sites. Drug concentrations (measured as a percentage) for  five. Use a 95% confidence interval to support this
+the tablets produced at the two sites are listed in the ac-  statement statistically.
+companying table. The scientists want to know whether
+there is any difference between the mean drug concentra-  c. Based on the results, parts a and b, which greeting
+tion in tablets produced at Site 1 and the corresponding  method would you recommend as having the most hy-
+mean at Site 2. Use the MINITAB printout above to help  giene?
+the scientists draw a conclusion.
+  9.25 How do you choose to argue? In Thinking and Reasoning
+Site 1  (Apr. 2007), researchers at Columbia University con-
+  ducted a series of studies to assess the cognitive skills
+91.28  92.83 89.35 91.90 82.85 94.83 89.83 89.00 84.62  required for successful arguments. One study focused
+86.96  88.32 91.17 83.86 89.74 92.24 92.59 84.21 89.36  on whether one would choose to argue by weakening
+90.96  92.85 89.39 89.82 89.91 92.16 88.67  the opposing position or by strengthening the favored
+  position. A sample of 52 graduate students in psychol-
+Site 2  ogy was equally divided into two groups. Group 1 was
+  presented with 10 items such that the argument always
+89.35  86.51 89.04 91.82 93.02 88.32 88.76 89.26 90.36  attempts to strengthens the favored position. Group 2
+87.16  91.74 86.12 92.10 83.33 87.61 88.20 92.78 86.35  was presented with the same 10 items, but in this case
+93.84  91.20 93.44 86.77 83.77 93.19 81.79  the argument always attempts to weaken the nonfa-
+  vored position. Each student then rated the 10 argu-
+  Based on Borman, P. J., Marion, J. C., Damjanov, I., and Jackson, P. “Design and  ments on a five-point scale from very weak (1) to very
+  analysis of method equivalence studies.” Analytical Chemistry, Vol. 81, No. 24,  strong (5). The variable of interest was the sum of the
+  Dec. 15, 2009 (Table 3).  10 item scores, called the total rating. Summary statis-
+  tics for the data are shown in the accompanying table.
+9.24 Hygiene of handshakes, high five and fist bumps. Health  Use the methodology of this chapter to compare the
+  professionals warn that transmission of infectious diseases  mean total ratings for the two groups at a = .05. Give a
+  practical interpretation of the results in the words of the
+HANDSHK may occur during the traditional handshake greeting. Two  problem.
+  alternative methods of greeting (popularized in sports) are
+  the “high five” and the “fist bump.” Researchers compared  Sample size  Group 1 (support  Group 2 (weaken
+  the hygiene of these alternative greetings in a designed study  Mean  favored position)  opposing position)
+  and reported the results in the American Journal of Infection  Standard
+  Control (Aug. 2014). A sterile-gloved hand was dipped into  26  26
+  a culture of bacteria, then made contact for three seconds  deviation  28.6  24.9
+  with another sterile-gloved hand via either a handshake, high  12.5  12.2
+  five, or fist bump. The researchers then counted the num-
+  ber of bacteria present on the second, recipient, gloved hand.  Based on Kuhn, D., and Udell, W. “Coordinating own and other perspectives in
+  This experiment was replicated five times for each contact  argument.” Thinking and Reasoning, Oct. 2006.
+  method. Simulated data (recorded as a percentage relative to
+  the mean of the handshake), based on information provided  9.26 Does rudeness really matter in the workplace? A study in
+  by the journal article, are provided in the table.  the Academy of Management Journal (Oct. 2007) investi-
+
+  Handshake: 131 74 129 96 92  RUDE gated how rude behaviors influence a victim’s task perfor-
+  mance. College students enrolled in a management course
+  High five:  44 70 69 43 53  were randomly assigned to one of two experimental condi-
+  tions: rudeness condition (45 students) and control group
+  Fist bump: 15 14 21 29 21  (53 students). Each student was asked to write down as
+  many uses for a brick as possible in five minutes; this value
+a. The researchers reported that “[more] bacteria were  (total number of uses) was used as a performance measure
+  transferred during a handshake compared with a high  for each student. For those students in the rudeness con-
+  five.” Use a 95% confidence interval to support this  dition, the facilitator displayed rudeness by berating the
+  statement statistically.
+480 CHAPTER 9 ■ Inferences Based on Two Samples
+
+Control Group:  escalate into a violent event.) Each of the sampled men
+  1 24 5 16 21 7 20 1 9 20 19 10 23 16 0 4 9 13  took the Masculinity-Femininity Scale (MFS) test to
+17 13 0 2 12 11 7 1 19 9 12 18 5 21 30 15 4 2  determine his level of masculinity, based on common
+12 11 10 13 11 3 6 10 13 16 12 28 19 12 20 3 11  male stereotyped traits. MFS scores ranged from 0 to
+  56 points, with lower scores indicating a more mascu-
+Rudeness Condition:  line orientation. One goal of the research was to com-
+  4 11 18 11 9 6 5 11 9 12 7 5 7 3 11 1 9 11  pare the mean MFS scores for two groups of men:
+10 7 8 9 10 7 11 4 13 5 4 7 8 3 8 15 9 16  those involved in violent events and those who avoided
+10 0 7 15 13 9 2 13 10  violent events.
+  a. Identify the target parameter for this study.
+  students in general for being irresponsible and unprofes-  b. The sample mean MFS score for the violent-event
+  sional (due to a late-arriving confederate). No comments
+  were made about the late-arriving confederate for stu-  group was 44.50, while the sample mean MFS score for
+  dents in the control group. The number of different uses  the avoided-violent-event group was 45.06. Is this suf-
+  of a brick for each of the 98 students is shown in the table.  ficient information to make the comparison desired by
+  Conduct a statistical analysis (at a = .01) to determine if  the researcher? Explain.
+  the true mean performance level for students in the rude-  c. In a large-sample test of hypothesis to compare the two
+  ness condition is lower than the true mean performance  means, the test statistic was computed to be z = 1.21.
+  level for students in the control group. Use the results  Compute the two-tailed p-value of the test.
+  shown on the accompanying SAS printout to draw your  d. Make the appropriate conclusion, using a = .10.
+  conclusion
+  9.28 Service without a smile. Although “service with a smile”
+9.27 Masculinity and crime. The Journal of Sociology (July  is a slogan that many businesses adhere to, there are some
+  2003) published a study on the link between the level
+  of masculinity and criminal behavior in men. Using a  SMILE jobs (e.g., judges, law enforcement officers, pollsters) that
+  sample of newly incarcerated men in Nebraska, the re-  require neutrality. An organization will typically provide
+  searcher identified 1,171 violent events and 532 events  “display rules” to guide employees on what emotions they
+  in which violence was avoided that the men were in-  should use when interacting with the public. A Journal of
+  volved in. (A violent event involved the use of a weapon,  Applied Psychology (Vol. 96, 2011) study compared the re-
+  throwing of objects, punching, choking, or kicking. An  sults of surveys conducted using two different types of dis-
+  event in which violence was avoided included pushing,  play rules: positive (requiring a strong display of positive
+  shoving, grabbing, or threats of violence that did not  emotions) and neutral (maintaining neutral emotions at all
+  times). In this designed experiment, 145 undergraduate stu-
+  dents were randomly assigned to either a positive display
+  rule condition 1n1 = 782 or a neutral display rule condition
+  1n2 = 672. Each participant was trained on how to con-
+  duct the survey using the display rules. As a manipulation
+  check, the researchers asked each participant to rate, on a
+  scale of 1 = “strongly agree” to 5 = “strongly disagree”
+  the statement “This task requires me to be neutral in my
+  expressions.”
+  a. If the manipulation of the participants was successful,
+  which group should have the larger mean response?
+  Explain.
+  b. The data for the study (simulated based on information
+  provided in the journal article) are listed in the accom-
+  panying table. Access the data and run an analysis to
+  determine if the manipulation was successful. Conduct
+  a test of hypothesis using a = .05.
+  c. What assumptions, if any, are required for the inference
+  from the test to be valid?
+
+Data for Exercise 9.28
+
+  Positive Display Rule
+  24333344444444444445
+  44444444444444455555
+  55555555555555555555
+  555555555555555555
+
+  Neutral Display Rule
+  3321211122122232212
+  2222122222212222222
+  3212221212232222222
+  2222122222
+  SECTION 9.3 ■ Comparing Two Population Means: Paired Difference Experiments 481
+
+Applying the Concepts—Advanced  b. Give values of the missing sample standard deviations
+  that would lead you to conclude (at a = .05) that blacks,
+9.29 Ethnicity and pain perception. An investigation of ethnic  on average, have a higher pain intensity rating than whites.
+  differences in reports of pain perception was presented
+  at the annual meeting of the American Psychosomatic  c. Give values of the missing sample standard deviations
+  Society (Mar. 2001). A sample of 55 blacks and 159 whites  that would lead you to an inconclusive decision (at
+  participated in the study. Subjects rated (on a 13-point  a = .05) regarding whether blacks or whites have a
+  scale) the intensity and unpleasantness of pain felt when a  higher mean intensity rating.
+  bag of ice was placed on their foreheads for two minutes.
+  (Higher ratings correspond to higher pain intensity.)  9.30 Mineral flotation in water study. Refer to the Minerals
+  A summary of the results is provided in the following table.  Engineering (Vol. 46–47, 2013) study of the impact of
+
+Sample size  Blacks  Whites  SILICA calcium and gypsum on the flotation properties of silica
+Mean pain intensity  in water, Exercise 2.48 (p. 81). Fifty solutions of deion-
+  55  159  ized water were prepared both with and without calcium/
+  8.2  6.9  gypsum, and the level of flotation of silica in the solution
+  was measured using a variable called zeta potential (mea-
+a. Why is it dangerous to draw a statistical inference from  sured in millivolts, mV). The data (simulated, based on in-
+  the summarized data? Explain.  formation provided in the journal article) are reproduced
+  in the table. Can you conclude that the addition of calcium/
+  gypsum to the solution affects silica flotation level?
+
+Data for Exercise 9.30
+
+Without calcium/gypsum
+
+- 47.1  - 53.0  - 50.8  - 54.4  - 57.4  - 49.2  - 51.5  - 50.2  - 46.4  - 49.7
+- 53.8  - 53.8  - 53.5  - 52.2  - 49.9  - 51.8  - 53.7  - 54.8  - 54.5  - 53.3
+- 50.6  - 52.9  - 51.2  - 54.5  - 49.7  - 50.2  - 53.2  - 52.9  - 52.8  - 52.1
+- 50.2  - 50.8  - 56.1  - 51.0  - 55.6  - 50.3  - 57.6  - 50.1  - 54.2  - 50.7
+- 55.7  - 55.0  - 47.4  - 47.5  - 52.8  - 50.6  - 55.6  - 53.2  - 52.3  - 45.7
+
+With calcium/gypsum
+
+ - 9.2  - 11.6  - 10.6  - 8.0  - 10.9  - 10.0  - 11.0  - 10.7  - 13.1  - 11.5
+- 11.3  - 9.9  - 11.8  - 12.6  - 8.9  - 13.1  - 10.7  - 12.1  - 11.2  - 10.9
+ - 9.1  - 12.1  - 6.8  - 11.5  - 10.4  - 11.5  - 12.1  - 11.3  - 10.7  - 12.4
+- 11.5  - 11.0  - 7.1  - 12.4  - 11.4  - 9.9  - 8.6  - 13.6  - 10.1  - 11.3
+- 13.0  - 11.9  - 8.6  - 11.3  - 13.0  - 12.2  - 11.3  - 10.5  - 8.8  - 13.4
+
+9.3 Comparing Two Population Means: Paired Difference Experiments
+
+  In Example 9.4, we compared two methods of teaching reading to “slow learners” by
+  means of a 95% confidence interval. Suppose it is possible to measure the “reading IQs”
+  of the “slow learners” before they are subjected to a teaching method. Eight pairs of
+  “slow learners” with similar reading IQs are found, and one member of each pair is
+  randomly assigned to the standard teaching method while the other is assigned to the
+  new method. The data are given in Table 9.3. Do the data support the hypothesis that
+  the population mean reading test score for “slow learners” taught by the new method is
+  greater than the mean reading test score for those taught by the standard method?
+
+  Table 9.3  Reading Test Scores for Eight Pairs of “Slow Learners”
+  Pair
+  New Method (1)  Standard Method (2)
+
+  1  77  72
+  68
+  2  74  76
+  68
+  3  82  84
+  68
+  4  73  61
+  76
+  5  87
+  Data Set: PAIREDSCORES
+  6  69
+
+  7  66
+
+  8  80
+482  CHAPTER 9 ■ Inferences Based on Two Samples
+
+  We want to test
+
+  H0: 1m1 - m22 = 0
+  Ha: 1m1 - m22 7 0
+
+  Many researchers mistakenly use the t statistic for two independent samples (Section 9.2)
+  to conduct this test. This invalid analysis is shown on the MINITAB printout of Figure 9.10.
+  The test statistic, t = 1.26, and the p-value of the test, p = .115., are highlighted on the
+  printout. At a = .10, the p-value exceeds a. Thus, from this analysis, we might conclude
+  that we do not have sufficient evidence to infer a difference in the mean test scores for
+  the two methods.
+
+Figure 9.10
+
+MINITAB printout of an
+invalid analysis of reading test
+scores in Table 9.3
+
+  If you examine the data in Table 9.3 carefully, however, you will find this result
+  difficult to accept. The test score of the new method is larger than the corresponding test
+  score for the standard method for every one of the eight pairs of “slow learners.” This, in
+  itself, seems to provide strong evidence to indicate that m1 exceeds m2. Why, then, did the
+  t-test fail to detect the difference? The answer is, the independent samples t-test is not a
+  valid procedure to use with this set of data.
+
+  The t-test is inappropriate because the assumption of independent samples is in-
+  valid. We have randomly chosen pairs of test scores; thus, once we have chosen the sam-
+  ple for the new method, we have not independently chosen the sample for the standard
+  method. The dependence between observations within pairs can be seen by examining
+  the pairs of test scores, which tend to rise and fall together as we go from pair to pair.
+  This pattern provides strong visual evidence of a violation of the assumption of indepen-
+  dence required for the two-sample t-test of Section 9.2. Note also that
+
+  2 1n1 - 12s12 + 1n2 - 12s22 18 - 12 16.9322 + 18 - 12 17.0122  = 48.58
+  sp =  n1 + n2 - 2  =  8+8-2
+
+  Hence, there is a large variation within samples (reflected by the large value of sp2) in
+  comparison to the relatively small difference between the sample means. Because sp2 is so
+  large, the t-test of Section 9.2 is unable to detect a difference between m1 and m2.
+
+  We now consider a valid method of analyzing the data of Table 9.3. In Table 9.4,
+
+  we add the column of differences between the test scores of the pairs of “slow learners.”
+
+  Table 9.4 Differences in Reading Test Scores
+
+  Pair  New Method  Standard Method  Difference
+  (New Method - Standard Method)
+  1  77  72
+  5
+  2  74  68  6
+  6
+  3  82  76  5
+  3
+  4  73  68  1
+  5
+  5  87  84  4
+
+  6  69  68
+
+  7  66  61
+
+  8  80  76
+  SECTION 9.3 ■ Comparing Two Population Means: Paired Difference Experiments 483
+
+  We can regard these differences in test scores as a random sample of differences for all
+  pairs (matched on reading IQ) of “slow learners,” past and present. Then we can use this
+  sample to make inferences about the mean of the population of differences, md, which is
+  equal to the difference 1m1 - m22. That is, the mean of the population (and sample) of
+  differences equals the difference between the population (and sample) means. Thus, our
+  test becomes
+
+  H0: md = 0  1m1 - m2 = 02
+  Ha: md 7 0  1m1 - m2 7 02
+
+  The test statistic is a one-sample t (Section 8.4), since we are now analyzing a single
+  sample of differences for small n. Thus,
+
+  Test statistic: t = xd - 0
+  sd> 1nd
+
+  t-distribution  where
+  with 7 df
+  xd = Sample mean difference
+  t  sd = Sample standard deviation of differences
+  0 Rejection  nd = Number of differences = Number of pairs
+  Assumptions: The population of differences in test scores is approximately nor-
+  region  mally distributed. The sample differences are randomly selected from the popu-
+  t = 1.895  lation differences. [Note: We do not need to make the assumption that s12 = s22.]
+  Rejection region: At significance level a = .05, we will reject H0 if t 7 t.05, where
+Figure 9.11  t.05 is based on 1nd - 12 degrees of freedom.
+Rejection region for Example 9.4
+  Referring to Table II in Appendix B, we find the t-value corresponding to a = .05
+  and nd - 1 = 8 - 1 = 7 df to be t.05 = 1.895. Then we will reject the null hypothesis
+  if t 7 1.895. (See Figure 9.11.) Note that the number of degrees of freedom decreases
+  from n1 + n2 - 2 = 14 to 7 when we use the paired difference experiment rather than
+  the two independent random samples design.
+
+  Summary statistics for the nd = 8 differences are shown in the MINITAB printout
+  of Figure 9.12. Note that xd = 4.375 and sd = 1.685. Substituting these values into the
+  formula for the test statistic, we have
+
+  t = = xd - 0 4.375 = 7.34
+  sd> 2nd 1.685> 28
+
+  Because this value of t falls into the rejection region, we conclude (at a = .05) that the
+  population mean test score for “slow learners” taught by the new method exceeds the
+  population mean score for those taught by the standard method. We can reach the same
+  conclusion by noting that the p-value of the test, highlighted in Figure 9.12, is much
+  smaller than a = .05.
+
+Figure 9.12
+
+MINITAB paired difference
+analysis of reading test scores
+
+  Now Work Exercises 9.37a and b
+484  CHAPTER 9 ■ Inferences Based on Two Samples
+
+  This kind of experiment, in which observations are paired and the differences
+  are analyzed, is called a paired difference experiment. In many cases, a paired differ-
+  ence experiment can provide more information about the difference between popu-
+  lation means than an independent samples experiment can. The idea is to compare
+  population means by comparing the differences between pairs of experimental units
+  (objects, people, etc.) that were similar prior to the experiment. The differencing
+  removes sources of variation that tend to inflate s2. For example, when two children
+  are taught to read by two different methods, the observed difference in achievement
+  may be due to a difference in the effectiveness of the two teaching methods, or it may
+  be due to differences in the initial reading levels and IQs of the two children (random
+  error). To reduce the effect of differences in the children on the observed differences
+  in reading achievement, the two methods of reading are imposed on two children
+  who are more likely to possess similar intellectual capacity, namely, children with
+  nearly equal IQs. The effect of this pairing is to remove the larger source of variation
+  that would be present if children with different abilities were randomly assigned to
+  the two samples. Making comparisons within groups of similar experimental units
+  is called blocking, and the paired difference experiment is a simple example of a
+  randomized block experiment. In our example, pairs of children with matching IQ
+  scores represent the blocks.
+
+  Some other examples for which the paired difference experiment might be appro-
+  priate are the following:
+
+  1. Suppose you want to estimate the difference 1m1 - m22 in mean price per
+  gallon between two major brands of premium gasoline. If you choose two
+  independent random samples of stations for each brand, the variability in
+  price due to geographic location may be large. To eliminate this source of
+  variability, you could choose pairs of stations of similar size, one station for
+  each brand, in close geographic proximity and use the sample of differences
+  between the prices of the brands to make an inference about 1m1 - m22.
+
+  2. Suppose a college placement center wants to estimate the difference
+  1m1 - m22 in mean starting salaries for men and women graduates who
+  seek jobs through the center. If it independently samples men and women,
+  the starting salaries may vary because of their different college majors and
+  differences in grade point averages. To eliminate these sources of variability,
+  the placement center could match male and female job seekers according
+  to their majors and grade point averages. Then the differences between the
+  starting salaries of each pair in the sample could be used to make an infer-
+  ence about 1m1 - m22.
+
+  3. Suppose you wish to estimate the difference 1m1 - m22 in mean absorp-
+  tion rate into the bloodstream for two drugs that relieve pain. If you inde-
+  pendently sample people, the absorption rates might vary because of age,
+  weight, sex, blood pressure, etc. In fact, there are many possible sources of
+  nuisance variability, and pairing individuals who are similar in all the possible
+  sources would be quite difficult. However, it may be possible to obtain two
+  measurements on the same person. First, we administer one of the two drugs
+  and record the time until absorption. After a sufficient amount of time, the
+  other drug is administered and a second measurement on absorption time is
+  obtained. The differences between the measurements for each person in the
+  sample could then be used to estimate 1m1 - m22. This procedure would be
+  advisable only if the amount of time allotted between drugs is sufficient to
+  guarantee little or no carry-over effect. Otherwise, it would be better to use
+  different people matched as closely as possible on the factors thought to be
+  most important.
+
+  Now Work Exercise 9.35
+SECTION 9.3 ■ Comparing Two Population Means: Paired Difference Experiments 485
+
+  The hypothesis-testing procedures and the method of forming confidence intervals
+  for the difference between two means in a paired difference experiment are summarized
+  in the following boxes for both large and small n:
+
+Paired Difference Confidence Interval for Md = M1 − M2
+Large Sample, Normal (z) Statistic
+
+  xd { za>2 sd ≈ xd { za>2 sd
+  1nd  1nd
+
+Small Sample, Student’s t-Statistic
+
+  xd { ta>2 sd
+  1nd
+
+where ta>2 is based on 1nd - 12 degrees of freedom
+
+Paired Difference Test of Hypothesis for Md = (M1 − M2)
+
+  One-Tailed Tests  Two-Tailed Test
+
+  H0: md = D0  H0: md = D0  H0: md = D0
+  Ha: md 6 D0  Ha: md 7 D0  Ha: md ≠ D0
+
+Large Sample, Normal (z) Test Statistic: zc = 1xd - D02 ≈ 1xd - D02
+
+  1sd> 2nd 2 1sd> 2nd 2
+
+Rejection region:  zc 6 - za  zc 7 za  ͉ zc ͉ 7 za>2
+p-value:  P1z 6 zc2  P1z 7 zc2
+  2P1z 7 zc2 if zc is positive
+  2P1z 6 zc2 if zc is negative
+
+Small Sample, Student’s t-Test Statistic: tc = 1xd - D02
+
+  1sd> 2nd 2
+
+Rejection region:  tc 6 - ta  tc 7 ta  ͉ tc ͉ 7 ta>2
+p-value:  P1t 6 tc2  P1t 7 tc2
+  2P1t 7 tc2 if tc is positive
+  2P1t 6 tc2 if tc is negative
+
+Decision: Reject H0 if a 7 p@value or if test statistic falls in rejection region where
+P1z 7 za2 = a, P1z 7 za>22 = a>2, P1t 7 ta2 = a, P1t 7 ta>22 = a>2, the distribution
+of t is based on 1nd - 12df, and a = P1Type I error2 = P1Reject H0 ͉ H0 true2.
+
+[Note: The symbol for the numerical value assigned to the difference md under the null
+hypothesis is D0. For testing equal population means, D0 = 0.]
+
+Conditions Required for Valid Large-Sample Inferences about Md
+
+ 1. A random sample of differences is selected from the target population of
+  differences.
+
+ 2. The sample size nd is large (i.e., nd Ú 30). (By the Central Limit Theorem, this
+  condition guarantees that the test statistic will be approximately normal, regard-
+  less of the shape of the underlying probability distribution of the population.)
+
+Conditions Required for Valid Small-Sample Inferences about Md
+ 1. A random sample of differences is selected from the target population of
+
+  differences.
+
+ 2. The population of differences has a distribution that is approximately normal.
+486 CHAPTER 9 ■ Inferences Based on Two Samples
+
+ Example 9.5  Problem An experiment is conducted to compare the starting salaries of male and female
+
+  GRADS  college graduates who find jobs. Pairs are formed by choosing a male and a female with
+
+Confidence Interval  the same major and similar grade point averages (GPAs). Suppose a random sample
+
+For Md—Comparing Mean  of 10 pairs is formed in this manner and the starting annual salary of each person is
+Salaries of Males
+  recorded. The results are shown in Table 9.5. Compare the mean starting salary m1 for
+and Females  males with the mean starting salary m2 for females, using a 95% confidence interval.
+  Interpret the results.
+
+  Table 9.5  Data on Annual Salaries for Matched Pairs of College
+  Pair  Graduates
+
+  Male  Female  Difference Male - Female
+
+  1  $29,300  $28,800  $ 500
+  - 100
+  2  41,500  41,600
+  600
+  3  40,400  39,800  0
+
+  4  38,500  38,500  900
+  - 200
+  5  43,500  42,600
+  300
+  6  37,800  38,000  1,100
+
+  7  69,500  69,200  200
+  700
+  8  41,200  40,100
+
+  9  38,400  38,200
+
+  10  59,200  58,500
+
+  Data Set: GRADS
+
+  Solution Since the data on annual salary are collected in pairs of males and females
+  matched on GPA and major, a paired difference experiment is performed. To conduct
+  the analysis, we first compute the differences between the salaries, as shown in Table 9.5.
+  Summary statistics for these n = 10 differences are displayed at the top of the SAS
+  printout shown in Figure 9.13.
+
+Figure 9.13
+
+SAS analysis of salary
+differences
+SECTION 9.3 ■ Comparing Two Population Means: Paired Difference Experiments 487
+
+The 95% confidence interval for md = 1m1 - m22 for this small sample is
+  xd { ta>2 sd
+  1nd
+
+where ta>2 = t.025 = 2.262 (obtained from Table II, Appendix B) is based on nd - 1 = 9
+degrees of freedom. Substituting the values of xd and sd shown on the printout, we obtain
+
+  xd { 2.262 = sd 400 { 2.262 a 434.613 b
+  1nd  110
+
+  = 400 { 310.88 ≈ 400 { 311 = 1$89, $7112
+
+[Note: This interval is also shown highlighted at the bottom of the SAS printout of
+
+Figure 9.13.] Our interpretation is that the true mean difference between the starting
+
+salaries of males and females falls between $89 and $711, with 95% confidence. Since
+the interval falls above 0, we infer that m1 - m2 7 0; that is, the mean salary for males
+exceeds the mean salary for females.
+
+Look Back Remember that md = m1 - m2. So if md 7 0, then m1 7 m2. Alternatively, if
+md 6 0, then m1 6 m2.
+
+  ■ Now Work Exercise 9.43
+
+  To measure the amount of information about 1m1 - m22 gained by using a
+paired difference experiment in Example 9.5 rather than an independent samples
+
+experiment, we can compare the relative widths of the confidence intervals obtained
+by the two methods. A 95% confidence interval for 1m1 - m22 obtained from a paired
+difference experiment is, from Example 9.5, ($89, $711). If we mistakenly analyzed
+
+the same data as though this were an independent samples experiment,* we would
+
+first obtain the descriptive statistics shown in the SAS printout of Figure 9.14. Then
+
+we substitute the sample means and standard deviations shown on the printout into
+the formula for a 95% confidence interval for 1m1 - m22 using independent samples.
+The result is
+
+where  21 1
+  1x1 - x22 { t.025 sp a + b
+
+  B n1 n2
+
+  2 1n1 - 12s12 + 1n2 - 12s22
+  sp =
+
+  n1 + n2 - 2
+
+Figure 9.14
+SPSS analysis of salaries,
+assuming independent samples
+
+  *This is done only to provide a measure of the increase in the amount of information obtained by a paired
+  design in comparison to an unpaired design. Actually, if an experiment were designed that used pairing, an
+  unpaired analysis would be invalid because the assumption of independent samples would not be satisfied.
+488 CHAPTER 9 ■ Inferences Based on Two Samples
+
+Ethics IN Statistics  SPSS performed these calculations and obtained the interval 1$ -10,537.50, $11,337.502,
+  highlighted in Figure 9.14.
+in a two-group analysis,
+intentionally pairing observations  Notice that the independent samples interval includes 0. Consequently, if we were
+after the data have been  to use this interval to make an inference about 1m1 - m22, we would incorrectly con-
+collected in order to produce  clude that the mean starting salaries of males and females do not differ! You can see
+a desired result is considered
+unethical statistical practice.  that the confidence interval for the independent sampling experiment is about 35 times
+
+  wider than for the corresponding paired difference confidence interval. Blocking out the
+
+  variability due to differences in majors and grade point averages significantly increases
+
+  the information about the difference in males’ and females’ mean starting salaries by
+
+  providing a much more accurate (a smaller confidence interval for the same confidence
+  coefficient) estimate of 1m1 - m22.
+
+  You may wonder whether a paired difference experiment is always superior to an
+
+  independent samples experiment. The answer is, most of the time, but not always. We sacri-
+
+  fice half the degrees of freedom in the t-statistic when a paired difference design is used in-
+
+  stead of an independent samples design. This is a loss of information, and unless that loss is
+
+  more than compensated for by the reduction in variability obtained by blocking (pairing),
+  the paired difference experiment will result in a net loss of information about 1m1 - m22.
+  Thus, we should be convinced that the pairing will significantly reduce variability before
+
+  performing a paired difference experiment. Most of the time, this will happen.
+
+  One final note: The pairing of the observations is determined before the experiment
+
+  is performed (i.e., by the design of the experiment). A paired difference experiment is never
+
+  obtained by pairing the sample observations after the measurements have been acquired.
+
+  What Do You Do When the Assumption of a Normal Distribution
+  for the Population of Differences Is Not Satisfied?
+
+  Answer: Use the Wilcoxon signed rank test for the paired difference design
+  (Chapter 14).
+
+Exercises 9.31–9.54  c. What assumptions are necessary so that the paired dif-
+  ference test will be valid?
+Understanding the Principles
+  d. Find a 90% confidence interval for the mean differ-
+9.31 In a paired difference experiment, when should the obser-  ence md.
+  vations be paired, before or after the data are collected?
+  e. Which of the two inferential procedures, the confidence
+9.32 What are the advantages of using a paired difference  interval of part d or the test of hypothesis of part b, pro-
+  experiment over an independent samples design?  vides more information about the difference between
+  the population means?
+9.33 True or False. In a paired difference experiment, an inde-
+  pendent sample t-test is appropriate.  9.37 The data for a random sample of six paired observations
+  are shown in the following table.
+9.34 Is a paired difference experiment always superior to an in-
+  dependent samples experiment?  L09037  Sample from  Sample from
+
+Learning the Mechanics  Pair  Population 1  Population 2
+
+9.35 A paired difference experiment yielded nd pairs of obser-  1  7  4
+  vations. In each case, what is the rejection region for test-
+  ing H0: md = 2 against Ha: md 7 2?  2  3  1
+  a. nd = 10, a = .05
+  b. nd = 20, a = .10  3  9  7
+  c. nd = 5, a = .025
+  d. nd = 9, a = .01  4  6  2
+
+9.36 A paired difference experiment produced the following data:  5  4  4
+
+  nd = 9 x1 = 150 x2 = 157 xd = - 7 sd2 = 36  6  8  7
+
+  a. Determine the values of t for which the null hypothesis  a. Calculate the difference between each pair of observa-
+  m1 - m2 = 0 would be rejected in favor of the alterna-
+  tive hypothesis m1 - m2 6 0. Use a = .10.  tions by subtracting observation 2 from observation 1.
+  Use the differences to calculate xd and sd2.
+  b. Conduct the paired difference test described in part a.  b. If m1 and m2 are the means of populations 1 and 2, respec-
+  Draw the appropriate conclusions.  tively, express md in terms of m1 and m2.
+  c. Form a 95% confidence interval for md.
+  SECTION 9.3 ■ Comparing Two Population Means: Paired Difference Experiments 489
+
+  d. Test the null hypothesis H0: md = 0 against the alterna-  c. Calculate the test statistic using the formula for an
+  tive hypothesis Ha: md ≠ 0. Use a = .05.  independent-samples t-test. (Note: This is not how the
+  test should be conducted.)
+9.38 The data for a random sample of 10 paired observations
+  are shown in the following table.  d. Calculate the test statistic using the formula for a
+  paired-difference t-test.
+L09038
+  e. Compare the test statistics, parts c and d. Which test
+  Pair Population 1 Population 2  statistic provides more evidence in support of the alter-
+  native hypothesis?
+1  19  24
+  f. The p-value of the test, part d, was reported as p 6 .0001.
+2  25  27  Interpret this result assuming a = .01.
+
+3  31  36  g. Do the differences in BMI values need to be normally
+  distributed in order for the inference, part f, to be valid?
+4  52  53  Explain.
+
+5  49  55  h. Find a 99% confidence interval for the true mean
+  change in BMI for Camp Jump Start campers. Interpret
+6  34  34  the result.
+
+7  59  66  Packaging of a children’s health food. Refer to the
+  Journal of Consumer Behaviour (Vol. 10, 2011) study of
+8  47  51  packaging of a children’s health food product, Exercise
+  8.42 (p. 419). Recall that a fictitious brand of a healthy
+9  17  20  food product—sliced apples—was packaged to appeal
+  to children (a smiling cartoon apple on the front of the
+10  51  55  package). The researchers compared the appeal of this
+  fictitious brand to a commercially available brand of
+  a. If you wish to test whether these data are sufficient to  9.41  sliced apples that was not packaged for children. Each
+  indicate that the mean for population 2 is larger than  of 408 schoolchildren rated both brands on a 5-point
+  that for population 1, what are the appropriate null  9.42  “willingness to eat” scale, with 1 = “not willing at all”
+  and alternative hypotheses? Define any symbols you  and 5 = “very willing.” The fictitious brand had a sam-
+  use.  DRILL2  ple mean score of 3.69, while the commercially available
+  brand had a sample mean score of 3.00. The researchers
+  b. Conduct the test from part a, using a = .10. What is  wanted to compare the population mean score for the
+  your decision?  fictitious brand, mF, to the population mean score for the
+  commercially available brand, mC. They theorized that
+  c. Find a 90% confidence interval for md. Interpret this  mF will be greater than mC.
+  interval.  a. Specify the null and alternative hypothesis for the test.
+  b. Explain how the researchers should analyze the data
+  d. What assumptions are necessary to ensure the validity
+  of the preceding analysis?  and why.
+  c. The researchers reported a test statistic value of
+9.39 A paired difference experiment yielded the following results:
+  5.71. Interpret this result. Use a = .05 to draw your
+  nd = 49, xd = 13, sd = 6.  conclusion.
+  d. Find the approximate p-value of the test.
+a. Test H0: md = 10 against Ha: md ≠ 10,  where  e. Could the researchers have tested at a = .01 and ar-
+  md = 1m1 - m22. Use a = .05.  rived at the same conclusion?
+
+b. Report the p-value for the test you conducted in part a.  Twinned drill holes. A traditional method of verifying
+  mineralization grades in mining is to drill twinned holes,
+Interpret the p-value.  i.e., the drilling of a new hole, or “twin,” next to an ear-
+  lier drillhole. The use of twinned drill holes was investi-
+Applying the Concepts—Basic  gated in Exploration and Mining Geology (Vol. 18, 2009).
+  Geologists use data collected at both holes to estimate the
+9.40 Summer weight-loss camp. Camp Jump Start is an  total amount of heavy minerals (THM) present at the drill-
+  8-week summer camp for overweight and obese adoles-  ing site. The data in the next table (based on information
+  cents. Counselors develop a weight-management pro-  provided in the journal article) represent THM percent-
+  gram for each camper that centers on nutrition education  ages for a sample of 15 twinned holes drilled at a diamond
+  and physical activity. In a study published in Pediatrics  mine in Africa. The geologists want to know if there is any
+  (Apr. 2010), the body mass index (BMI) was measured  evidence of a difference in the true THM means of all orig-
+  for each of 76 campers both at the start and end of camp.  inal holes and their twin holes drilled at the mine.
+  Summary statistics on BMI measurements are shown in  a. Explain why the data should be analyzed as paired
+  the table.
+  differences.
+Starting BMI  Mean  Standard Deviation  b. Compute the difference between the “1st hole” and
+Ending BMI
+Paired Differences  34.9  6.9  “2nd hole” measurements for each drilling location.
+  31.6  6.2  c. Find the mean and standard deviation of the differ-
+  3.3  1.5
+  ences, part b.
+Based on Huelsing, J., Kanafani, N., Mao, J., and White, N. H. “Camp
+Jump Start: Effects of a residential summer weight-loss camp for older
+children and adolescents.” Pediatrics, Vol. 125, No. 4, Apr. 2010 (Table 3).
+
+a. Give the null and alternative hypothesis for determining
+  whether the mean BMI at the end of camp is less than the
+  mean BMI at the start of camp.
+
+b. How should the data be analyzed, as an independent-
+  samples t-test or as a paired-difference t-test? Explain.
+490 CHAPTER 9 ■ Inferences Based on Two Samples
+
+  d. Use the summary statistics, part c, to find a 90% confi-  e. Interpret the interval, part d. Does handling a mu-
+  dence interval for the true mean difference (“1st hole”  seum object have a positive impact on a sick patient’s
+  minus “2nd hole”) in THM measurements.  well-being?
+
+  e. Interpret the interval, part d. Can the geologists con-  9.44 Laughter among deaf signers. The Journal of Deaf Studies
+  clude that there is no evidence of a difference in the  and Deaf Education (Fall 2006) published an article on
+  true THM means of all original holes and their twin  vocalized laughter among deaf users of American Sign
+  holes drilled at the mine?  Language (ASL). In videotaped ASL conversations
+  among deaf participants, 28 laughed at least once. The re-
+  Location  1st Hole  2nd Hole  searchers wanted to know if they laughed more as speakers
+  (while signing) or as audience members (while listening).
+  1  5.5  5.7  For each of the 28 deaf participants, the number of laugh
+  2  11.0  11.2  episodes as a speaker and the number of laugh episodes
+  3  5.9  6.0  as an audience member were determined. One goal of the
+  4  8.2  5.6  research was to compare the mean numbers of laugh epi-
+  5  10.0  9.3  sodes of speakers and audience members.
+  6  7.9  7.0  a. Explain why the data should be analyzed as a paired
+  7  10.1  8.4  difference experiment.
+  8  7.4  9.0  b. Identify the study’s target parameter.
+  9  7.0  6.0  c. The study yielded a sample mean of 3.4 laughter epi-
+  10  9.2  8.1  sodes for speakers and a sample mean of 1.3 laughter
+  11  8.3  10.0  episodes for audience members. Is this sufficient evi-
+  12  8.6  8.1  dence to conclude that the population means are differ-
+  13  10.5  10.4  ent? Explain.
+  14  5.5  7.0  d. A paired difference t-test resulted in t = 3.14 and
+  15  10.0  11.2  p@value 6 .01. Interpret the results in the words of the
+  problem.
+9.43  Healing potential of handling museum objects. Does han-
+  dling a museum object have a positive impact on a sick  9.45 The placebo effect and pain. According to research pub-
+MUSEUM  patient’s well-being? To answer this question, researchers  lished in Science (Feb. 20, 2004), the mere belief that you
+  at the University College London collected data from 32  are receiving an effective treatment for pain can reduce
+  sessions with hospital patients (Museum & Society, Nov.  the pain you actually feel. Researchers tested this pla-
+  2009). Each patient’s health status (measured on a 100-  cebo effect on 24 volunteers as follows: Each volunteer
+  point scale) was recorded both before and after handling  was put inside a magnetic resonance imaging (MRI) ma-
+  museum objects such as archaeological artifacts and brass  chine for two consecutive sessions. During the first session,
+  etchings. The data (simulated) are listed in the accompany-  electric shocks were applied to their arms and the blood
+  ing table.  oxygen level–dependent (BOLD) signal (a measure re-
+  lated to neural activity in the brain) was recorded during
+  Session  Before  After  Session  Before  After  pain. The second session was identical to the first, except
+  that, prior to applying the electric shocks, the researchers
+  1  52  59  17  65  65  smeared a cream on the volunteer’s arms. The volunteers
+  2  42  54  18  52  63  were informed that the cream would block the pain when,
+  3  46  55  19  39  50  in fact, it was just a regular skin lotion (i.e., a placebo). If
+  4  42  51  20  59  69  the placebo is effective in reducing the pain experience, the
+  5  43  42  21  49  61  BOLD measurements should be higher, on average, in the
+  6  30  43  22  59  66  first MRI session than in the second.
+  7  63  79  23  57  61  a. Identify the target parameter for this study.
+  8  56  59  24  56  58  b. What type of design was used to collect the
+  9  46  53  25  47  55  data?
+  10  55  57  26  61  62  c. Give the null and alternative hypotheses for testing the
+  11  43  49  27  65  61  placebo effect theory.
+  12  73  83  28  36  53  d. The differences between the BOLD measurements in the
+  13  63  72  29  50  61  first and second sessions were computed and summarized
+  14  40  49  30  40  52  in the study as follows: nd = 24, xd = .21, sd = .47. Use
+  15  50  49  31  65  70  this information to calculate the test statistic.
+  16  50  64  32  59  72  e. The p-value of the test was reported as p@value = .02.
+  Make the appropriate conclusion at a = .05.
+  a. Explain why the data should be analyzed as paired
+  differences.  Applying the Concepts—Intermediate
+
+  b. Compute the difference between the “before” and  9.46 Settlement of shallow foundations. Structures built on a
+  “after” measurements for each session.  shallow foundation (e.g., a concrete slab-on-grade foun-
+
+  c. Find the mean and standard deviation of the differ-  SHALLOWdation) are susceptible to settlement. Consequently, accu-
+  ences, part b.  rate settlement prediction is essential in the design of the
+  foundation. Several methods for predicting settlement of
+  d. Use the summary statistics, part c, to find a 90% confi-
+  dence interval for the true mean difference (“before”
+  minus “after”) in health status scale measurements.
+  SECTION 9.3 ■ Comparing Two Population Means: Paired Difference Experiments 491
+
+shallow foundations on cohesive soil were compared in  the north-south oriented highways as compared to east-west
+Environmental & Engineering Geoscience (Nov. 2012).  oriented roadways.” Do you agree?
+Settlement data for a sample of 13 structures built on a
+shallow foundation were collected. The actual settlement  Month  East-West  North-South
+values (measured in millimeters) for each structure were
+compared to settlement predictions made using a formula  February  8658  8921
+that accounts for dimension, rigidity, and embedment  April  7930  8317
+depth of the foundation. The data are listed in the table.  July  5120  5274
+  September  6862  7148
+Structure  Actual  Predicted  October  8608  8936
+
+1  11  11  Source: Sharma, P., and Harinarayana, T. “Solar energy generation
+  potential along national highways.” International Journal of Energy
+2  11  11  and Environmental Engineering, Vol. 49, No. 1, Dec. 2013 (Table 3).
+
+3  10  12  9.48 Estimating well scale deposits. Scale deposits can cause
+  a serious reduction in the flow performance of a well.
+4  8  6
+  SKIN A study published in the Journal of Petroleum and Gas
+5  11  9  Engineering (Apr. 2013) compared two methods of esti-
+  mating the damage from scale deposits (called skin factor).
+6  9  10  One method of estimating the well skin factor uses a series
+  of Excel spreadsheets, while the second method employs
+7  9  9  EPS computer software. Skin factor data was obtained
+  from applying both methods to 10 randomly selected oil
+8  39  51  wells: 5 vertical wells and 5 horizontal wells. The results
+  are supplied in the accompanying table.
+9  23  24  a. Compare the mean skin factor values for the two es-
+  timation methods using all 10 sampled wells. Test at
+10  269  252  a = .05. What do you conclude?
+  b. Repeat part a, but analyze the data for the 5 horizontal
+11  4  3  wells only.
+  c. Repeat part a, but analyze the data for the 5 vertical
+12  82  68  wells only.
+
+13  250  264
+
+Source: Ozur, M. “Comparing methods for predicting immediate
+settlement of shallow foundations on cohesive soils based on hypothetical
+and real cases.” Environmental & Engineering Geoscience, Vol. 18, No. 4,
+Nov. 2012 (from Table 4).
+
+a. What type of design was employed to collect the data?  Skin Factor Values
+b. Use the information in the accompanying SAS print-
+  Well (Type)  Excel Spreadsheet EPS Software
+  out to construct a 99% confidence interval for the
+  mean difference between actual and predicted settle-
+  ment value. Give a practical interpretation of the in-
+  terval.
+c. Explain the meaning of “99% confidence” for this
+  application.
+
+  1 (Horizontal)  44.48  37.77
+  2 (Horizontal)  18.34  13.31
+  3 (Horizontal)  19.21  7.02
+  4 (Horizontal)  11.70
+  5 (Horizontal)  9.25  4.77
+  6 (Vertical)  317.40  1.96
+  7 (Vertical)  181.44  281.74
+  8 (Vertical)  154.65  192.16
+  9 (Vertical)  77.43  140.84
+  10 (Vertical)  49.37  56.86
+  45.01
+
+  Source: Rahuma, K. M., et al. “Comparison between spreadsheet and
+  specialized programs in calculating the effect of scale deposition on the
+  well flow performance.” Journal of Petroleum and Gas Engineering,
+  Vol. 4, No. 4, Apr. 2013 (Table 2).
+
+9.47 Solar energy generation along highways. The potential of  9.49 Acidity of mouthwash. Acid has been found to be a
+  using solar panels constructed above national highways to  primary cause of dental caries (cavities). It is theorized
+
+SOLAR generate energy was explored in the International Journal  MOWASH that oral mouthwashes contribute to the development
+  of Energy and Environmental Engineering (Dec. 2013).  of caries due to the antiseptic agent oxidizing into acid
+  Two-layer solar panels (with 1 meter separating the panels)  over time. This theory was tested in the Journal of
+  were constructed above sections of both east-west and  Dentistry, Oral Medicine and Dental Education (Vol. 3,
+  north-south highways in India. The amount of energy (kilo-  2009). Three bottles of mouthwash, each of a different
+  watt hours) supplied to the country’s grid by the solar pan-  brand, were randomly selected from a drugstore. The
+  els above the two types of highways was determined each  pH level (where lower pH levels indicate higher acidity)
+  month. The data for several randomly selected months are  of each bottle was measured on the date of purchase
+  provided in the table. The researchers concluded that the  and after 30 days. The data are shown in the next table.
+  “two-layer solar panel energy generation is more viable for
+492 CHAPTER 9 ■ Inferences Based on Two Samples
+
+  Conduct an analysis to determine if the mean initial pH  Pair  Control  Demented
+  level of mouthwash differs significantly from the mean
+  pH level after 30 days. Use a = .05 as your level of  1  27  13
+  significance.
+  2  57  57
+
+  3  23  31
+
+  Mouthwash Brand  Initial pH  Final pH  4  39  46
+
+  5  37  37
+
+  LMW  4.56  4.27  f  f  f
+  SMW
+  RMW  6.71  6.51  103  22  14
+
+  5.65  5.58  104  32  23
+
+  Based on Chunhye, K. L., and Schmitz, B. C., “Determination  105  33  29
+  of pH, total acid, and total ethanol in oral health products:
+  Oxidation of ethanol and recommendations to mitigate its  106  36  37
+  association with dental caries.” Journal of Dentistry, Oral
+  Medicine and Dental Education, Vol. 3, No. 1, 2009 (Table 1).  107  24  1
+
+9.50 Visual search and memory study. In searching for an item  a. Explain why the data should be analyzed as a paired
+  (e.g., a roadside traffic sign, a lost earring, or a tumor in  difference experiment.
+  a mammogram), common sense dictates that you will not
+  reexamine items previously rejected. However, research-  b. Conduct the appropriate analysis, using a = .05. Make
+  ers at Harvard Medical School found that a visual search  an inference about which member of the pair, the de-
+  has no memory (Nature, Aug. 6, 1998). In their exper-  mented or control (nondemented) twin, had the largest
+  iment, nine subjects searched for the letter “T” mixed  average level of leisure activity.
+  among several letters “L.” Each subject conducted
+  the search under two conditions: random and static. In  9.52 Ethical sensitivity of teachers toward racial intolerance.
+  the random condition, the locations of the letters were  Many high schools have education programs that en-
+  changed every 111 milliseconds; in the static condition,  courage teachers to embrace racial tolerance. To gauge
+  the locations of the letters remained unchanged. In each  the effectiveness of one such program that utilizes two
+  trial, the reaction time in milliseconds (i.e., the amount  videos of teachers engaging in racial stereotypes of their
+  of time it took the subject to locate the target letter) was  students, researchers recruited 238 high school profession-
+  recorded.  als (including teachers and counselors) to participate in a
+  a. One goal of the research was to compare the mean re-  study (Journal of Moral Education, Mar. 2010). Teachers
+  action times of subjects in the two experimental con-  watched the first video, then were given a pretest—the
+  ditions. Explain why the data should be analyzed as a  Quick-REST Survey—designed to measure ethical sensi-
+  paired difference experiment.  tivity toward racial intolerance. The teachers next partici-
+  b. If a visual search has no memory, then the main re-  pated in an all-day workshop on cultural competence. At
+  action times in the two conditions will not differ.  the end of the workshop, the teachers watched the second
+  Specify H0 and Ha for testing the “no-memory”  video and again were given the Quick-REST Survey (the
+  theory.  posttest). To determine whether the program was effective,
+  c. The test statistic was calculated as t = 1.52 with  the researchers compared the mean scores on the Quick-
+  p@value = .15. Draw the appropriate conclusion.  REST Survey using a paired-difference t-test. (Note: The
+  higher the score on the Quick-REST Survey, the greater
+9.51  Linking dementia and leisure activities. Does participa-  the level of racial tolerance.)
+  tion in leisure activities in your youth reduce the risk of  a. The researchers reported the sample means for the pre-
+DEMENT  Alzheimer’s disease and other forms of dementia? To  test and posttest as 75.85 and 80.35, respectively. Why is
+  answer this question, a group of university researchers  it dangerous to gauge the effectiveness of the program
+  studied a sample of 107 same-sex Swedish pairs of twins  based only on these summary statistics?
+  (Journal of Gerontology: Psychological Sciences and  b. The paired-difference t-test (posttest minus pretest)
+  Social Sciences, Sept. 2003). Each pair of twins was dis-  was reported as t = 4.50 with an associated observed
+  cordant for dementia; that is, one member of each pair  significance level of p-value 6 .001. Interpret this
+  was diagnosed with Alzheimer’s disease while the other  result.
+  member (the control) was nondemented for at least five  c. What assumptions, if any, are necessary for the validity
+  years after the sibling’s onset of dementia. The level of  of the inference, part b?
+  overall leisure activity (measured on an 80-point scale,
+  where higher values indicate higher levels of leisure  9.53 Impact of red light cameras on car crashes. To combat red-
+  activity) of each twin of each pair 20 years prior to the  light-running crashes, many states are adopting photo-red
+  onset of dementia was obtained from the Swedish Twin
+  Registry database. The leisure activity scores (simulated  REDLIT enforcement programs. In these programs, red light cam-
+  on the basis of summary information presented in  eras installed at dangerous intersections photograph the
+  the journal article) are saved in the DEMENT file. The  license plates of vehicles that run the red light. How effec-
+  first five and last five observations are shown in the  tive are photo-red enforcement programs in reducing red-
+  following table.  light-running crash incidents at intersections? The Virginia
+  Department of Transportation (VDOT) conducted a com-
+  prehensive study of its newly adopted photo-red enforce-
+  ment program and published the results in a June 2007
+  report. In one portion of the study, the VDOT provided
+  SECTION 9.4 ■ Comparing Two Population Proportions: Independent Sampling 493
+
+  crash data both before and after installation of red light  is very time consuming. Consequently, large wineries are
+  cameras at several intersections. The data (measured as  searching for more rapid measures of density measure-
+  the number of crashes caused by red light running per in-  ment. An alternative method utilizes the hydrostatic bal-
+  tersection per year) for 13 intersections in Fairfax County,  ance instrument (similar to the hydrometer, but digital).
+  Virginia, are given in the table. Analyze the data for the  A winery in Portugal collected must/wine density measure-
+  VDOT. What do you conclude?  ments on white wine samples randomly selected from the
+  fermentation process for a recent harvest. For each sample,
+  Intersection  Before Camera  After Camera  the density of the wine at 20°C was measured with both the
+  hydrometer and the hydrostatic balance. The densities for
+  1  3.60  1.36  40 wine samples are saved in the WINE40 file. The first
+  2  0.27  0  five and last five observations are shown in the accompa-
+  3  0.29  0  nying table. The winery will use the alternative method of
+  4  4.55  mea-suring wine density only if it can be demonstrated that
+  5  2.60  1.79  the mean difference between the density measurements of
+  6  2.29  2.04  the two methods does not exceed .002. Perform the analy-
+  7  2.40  3.14  sis for the winery. Provide the winery with a written report
+  8  0.73  2.72  of your conclusions.
+  9  3.15  0.24
+  10  3.21  1.57  Sample  Hydrometer  Hydrostatic
+  11  0.88  0.43
+  12  1.35  0.28  1  1.08655  1.09103
+  13  7.35  1.09  2  1.00270  1.00272
+  4.92  3  1.01393  1.01274
+  4  1.09467  1.09634
+  Based on Virginia Transportation Research Council, “Research  5  1.10263  1.10518
+  report: The impact of red light cameras (photo-red enforcement)
+  on crashes in Virginia.” June 2007.  f  f  f
+
+Applying the Concepts—Advanced  36  1.08084  1.08097
+  37  1.09452  1.09431
+9.54  Alcoholic fermentation in wines. Determining alcoholic  38  0.99479  0.99498
+  fermentation in wine is critical to the wine-making process.  39  1.00968  1.01063
+WINE40  Must/wine density is a good indicator of the fermentation  40  1.00684  1.00526
+  point, since the density value decreases as sugars are con-
+  verted into alcohol. For decades, winemakers have mea-  Based on Cooperative Cellar of Borba (Adega Cooperativ
+  sured must/wine density with a hydrometer. Although  a de Borba), Portugal.
+  accurate, the hydrometer employs a manual process that
+
+9.4 Comparing Two Population Proportions: Independent Sampling
+
+Table 9.6  Results of Poll  Suppose a presidential candidate wants to compare the preferences of registered voters
+  in the northeastern United States with those in the southeastern United States. Such a
+Northeast  Southeast  comparison would help determine where to concentrate campaign efforts. The candidate
+  hires a professional pollster to randomly choose 1,000 registered voters in the northeast and
+n1 = 1,000  n2 = 1,000  1,000 in the southeast and interview each to learn her or his voting preference.The objective
+x1 = 546  x2 = 475  is to use this sample information to make an inference about the difference 1p1 - p22
+  between the proportion p1 of all registered voters in the northeast and the proportion p2 of
+  all registered voters in the southeast who plan to vote for the presidential candidate.
+
+  The two samples represent independent binomial experiments. (See Section 4.4
+  for the characteristics of binomial experiments.) The binomial random variables are the
+  numbers x1 and x2 of the 1,000 sampled voters in each area who indicate that they will
+  vote for the candidate. The results are summarized in Table 9.6
+
+  We can now calculate the sample proportions pn1 and pn2 of the voters in favor of
+  the candidate in the northeast and southeast, respectively:
+
+  pn = n = = x1 546 .546 pn 1 1,000 2 = n = = x2 475 .475 2 1,000
+
+  The difference between the sample proportions 1pn1 - pn22 makes an intuitively
+  appealing point estimator of the difference between the population 1p1 - p22. For this
+  example, the estimate is
+
+  1 pn 1 - pn22 = .546 - .475 = .071
+494  CHAPTER 9 ■ Inferences Based on Two Samples
+
+  To judge the reliability of the estimator 1pn1 - pn22, we must observe its perfor-
+  mance in repeated sampling from the two populations. That is, we need to know the sam-
+  pling distribution of 1pn1 - pn22. The properties of the sampling distribution are given
+  in the next box. Remember that pn1 and pn2 can be viewed as means of the number of
+  successes per trial in the respective samples, so the Central Limit Theorem applies when
+  the sample sizes are large.
+
+  Properties of the Sampling Distribution of 1 pn1 − pn2 2
+  1. The mean of the sampling distribution of 1pn1 - pn22 is 1p1 - p22; that is,
+
+  E1pn1 - pn22 = p1 - p2
+  Thus, 1pn1 - pn22 is an unbiased estimator of 1p1 - p22.
+  2. The standard deviation of the sampling distribution of 1pn1 - pn22 is
+
+  s1pn1 - pn22 = p1q1 B n + p2q2 1 n2
+
+  3. If the sample sizes n1 and n2 are large (see Section 7.4 for a guideline), the sam-
+  pling distribution of 1pn1 - pn22 is approximately normal.
+
+  Since the distribution of 1pn1 - pn22 in repeated sampling is approximately normal,
+  we can use the z-statistic to derive confidence intervals for 1p1 - p22 or to test a
+  hypothesis about 1p1 - p22.
+
+  For the voter example, a 95% confidence interval for the difference 1p1 - p22 is
+
+  1pn1 - pn22 { 1.96s1pn1 - pn 22, or 1pn1 - pn22 { 1.96 p1q1 A n + p2q2 1 n2
+
+  The quantities p1 q1 and p2 q2 must be estimated in order to complete the calcu-
+  lation of the standard deviation s1pn1 - pn22 and, hence, the calculation of the confidence
+  interval. In Section 7.4, we showed that the value of pq is relatively insensitive to the
+  value chosen to approximate p. Therefore, pn1qn1 and pn2qn2 will provide satisfactory
+  approximations of p1 q1 and p2 q2, respectively. Then
+
+  p1q1 + p2q2 ≈ pn1qn1 + pn2qn2
+  B n1  n2 B n1  n2
+
+  and we will approximate the 95% confidence interval by
+
+  1pn1 - pn22 { 1.96 pn1qn1 B n + pn2qn2 1 n2
+
+  Substituting the sample quantities yields
+
+  1.546 - .4752 { 1.96 1.54621.4542 B 1,000 + 1.47521.5252 1,000
+
+  or .071 { .044. Thus, we are 95% confident that the interval from .027 to .115 contains
+  1p1 - p22.
+
+  We infer that there are between 2.7% and 11.5% more registered voters in the
+  northeast than in the southeast who plan to vote for the presidential candidate. It seems
+  that the candidate should direct a greater campaign effort in the southeast than in the
+  northeast.
+
+  Now Work Exercise 9.63
+SECTION 9.4 ■ Comparing Two Population Proportions: Independent Sampling 495
+
+  The general form of a confidence interval for the difference 1p1 - p22 between
+ population proportions is given in the following box:
+
+Large-Sample 1001 1 − A 2 % Confidence Interval for 1 p1 − p2 2 : Normal (z) Statistic
+
+  1pn1 - pn22 { za>2s1pn1 - pn22 = 1pn1 - pn22 { za>2 p1 q1 B n + p2 q2 1 n2
+  ≈ 1pn1 - pn22 { za>2 pn1qn1 B n + pn2qn2 1 n2
+
+The z-statistic,
+
+  z 1pn = 1 - pn22 - 1p1 - p22
+  s1pn1 - pn22
+
+is used to test the null hypothesis that 1p1 - p22 equals some specified difference,
+say, D0. For the special case where D0 = 0—that is, where we want to test the null
+hypothesis H0: 1p1 - p22 = 0 (or, equivalently, H0: p1 = p2)—the best estimate of
+p1 = p2 = p is obtained by dividing the total number of successes 1x1 + x22 for the
+two samples by the total number of observations 1n1 + n22, that is,
+
+  pn x = 1 + x2 , or pn n = 1pn1 + n2pn2
+  n1 + n2  n1 + n2
+
+The second equation shows that pn is a weighted average of pn1 and pn2, with the larger
+sample receiving more weight. If the sample sizes are equal, then pn is a simple average of
+
+the two sample proportions of successes.
+
+  We now substitute the weighted average pn for both p1 and p2 in the formula for
+the standard deviation of 1pn1 - pn22:
+
+  s1pn - pn22 = p1q1 B n + p2q2 ≈ pnqn + = p pnqn ¢ nqn 1 + 1 ≤ 1 n2 B n1 n2 B n1 n2
+
+The test is summarized in the following box:
+
+Large-Sample Test of Hypothesis about 1 p1 − p2 2 : Normal (z) Statistic
+
+Test statistic:  zc =  1pn1 - pn22  ≈ 1pn1 - pn22
+  pnqn a 1 + 1 b
+  p1q1 + p2q2
+  C n1  n2  C n1 n2
+
+  where pn = 1x1 + x22 > 1n1 + n22
+
+  One-Tailed Tests  Two-Tailed Test
+
+  H0: p1 - p2 = 0*  H0: p1 - p2 = 0  H0: p1 - p2 = 0
+  Ha: p1 - p2 6 0  Ha: p1 - p2 7 0  Ha: p1 - p2 ≠ 0
+
+Rejection region:  zc 6 - za  zc 7 za  ͉ zc ͉ 7 za>2
+
+p-value:  P1z 6 zc2 P1z 7 zc2  2P1z 7 zc2 if zc is positive
+
+  2P1t 6 zc2 if zc is negative
+Decision: Reject H0 if a 7 p@value or if test statistic 1zc2 falls in rejection region where
+P1z 7 za2 = a, P1z 7 za>22 = a>2, and a = P1Type I error2 = P1Reject H0 ͉ H0 true2
+
+*The test can be adapted to test for a difference in proportions D0 ≠ 0. Because most applications require a
+test of equal proportions, p1 = p2 (i.e., p1 - p2 = D0 = 0), we confine our attention to this case.
+496 CHAPTER 9 ■ Inferences Based on Two Samples
+
+  Conditions Required for Valid Large-Sample Inferences about 1 p1 − p2 2
+  1. The two samples are randomly selected in an independent manner from the two
+
+  target populations.
+  2. The sample sizes, n1 and n2, are both large, so the sampling distribution of
+
+  1pn1 - pn22 will be approximately normal. (This condition will be satisfied if both
+  n1pn1 Ú 15, n1qn1 Ú 15, and n2pn2 Ú 15, n2qn2 Ú 15.)
+
+ Example 9.6  Problem In the past decade, intensive antismoking campaigns have been sponsored by
+  both federal and private agencies. Suppose the American Cancer Society randomly
+A Large-Sample Test  sampled 1,500 adults in 2000 and then sampled 1,750 adults in 2010 to determine
+about 1 p1 − p2 2 —  whether there was evidence that the percentage of smokers had decreased. The results
+Comparing Fractions of  of the two sample surveys are shown in Table 9.7, where x1 and x2 represent the numbers
+Smokers for Two Years  of smokers in the 2000 and 2010 samples, respectively. Do these data indicate that the
+  fraction of smokers decreased over this 10-year period? Use a = .05.
+
+Table 9.7 Results of  Solution If we define p1 and p2 as the true proportions of adult smokers in 2000 and
+Smoking Survey  2010, respectively, then the elements of our test are
+
+2000  2010  H0: 1p1 - p22 = 0
+  Ha: 1p1 - p22 7 0
+n1 = 1,500  n2 = 1,750
+x1 = 555  x2 = 578  (The test is one tailed, since we are interested only in determining whether the proportion
+  of smokers decreased.)
+
+  Test statistic: z 1pn = 1 - pn22 - 0
+  s1pn1 - pn 22
+
+  Rejection region using a = .05: z 7 za = z.05 = 1.645  (see Figure 9.15)
+  We now calculate the sample proportions of smokers:
+
+  pn1 = = 555 .37  pn2 = = 578 .33
+  1,500  1,750
+
+  Then
+
+  z 1pn = 1 - pn22 - 0 ≈ 1pn1 - pn22
+  z  s1pn1 - pn 22
+  0  pnqn a 1 + 1 b
+  B n1 n2
+  1.645 z = 2.38
+  Rejection  where
+  region
+  pn = = = x1 + x2 555 + 578 .349
+Figure 9.15  n1 + n2 1,500 + 1,750
+Rejection region for Example 9.6
+
+  Note that pn is a weighted average of pn1 and pn2, with more weight given to the larger
+  (2010) sample. Thus, the computed value of the test statistic is
+
+  z = = = .37 - .33 .040 2.38
+  1.34921.6512 a 1 + 1 b .0168
+  B  1,500 1,750
+
+  There is sufficient evidence at the a = .05 level to conclude that the proportion of
+  adults who smoke has decreased over the 10-year period.
+
+  Look Back We could place a confidence interval on 1p1 - p22 if we were interested in
+  estimating the extent of the decrease.
+
+  ■ Now Work Exercise 9.68
+ Example 9.7  SECTION 9.4 ■ Comparing Two Population Proportions: Independent Sampling 497
+
+Finding The observed  Problem Use a statistical software package to conduct the test presented in Example 9.6.
+Significance Level  Find and interpret the p-value of the test.
+of a Test for 1 p1 − p2 2
+  Solution We entered the sample sizes 1n1 and n22 and numbers of successes 1x1 and x22
+  into MINITAB and obtained the printout shown in Figure 9.16. The test statistic for
+  this one-tailed test, z = 2.37, as well as the p-value of the test, are highlighted on the
+  printout. Note that p@value = .009 is smaller than a = .05. Consequently, we have
+  strong evidence to reject H0 and conclude that p1 exceeds p2.
+
+Figure 9.16
+
+MINITAB output for test
+of two proportions
+
+  ■
+
+  As with a single population proportion, most studies designed to compare two
+  population proportions employ large samples; consequently, the large-sample testing
+  procedure based on the normal (z) statistic presented here will be appropriate for mak-
+  ing inferences about p1 - p2. However, in the case of small samples, tests for p1 - p2
+  based on the z-statistic may not be valid. A test to compare proportions that can be ap-
+  plied to small samples utilizes Fisher’s exact test. We discuss this method in an optional
+  section in Chapter 13.
+
+  What Do You Do in the Small-Sample Case When Comparing Two Population
+  Proportions?
+  Answer: Use Fisher’s exact test (Chapter 13).
+
+Statistics IN Action Revisited Comparing Proportions
+
+In the first Statistics in Action Revisited in this chapter  ZixIt stock price increased
+(p. 473), we demonstrated how the expert statistician used a  following posting days. Then,
+comparison of two means to defend Visa in a libel case. Recall  if the charges made by ZixIt
+that ZixIt claims that a Visa executive’s e-mail postings had a  are true (i.e., that postings
+negative impact on ZixIt’s attempt to develop a new online  will have a negative impact
+credit card processing system. Here, we demonstrate another  on ZixIt stock), p1 will ex-
+way to analyze the data, one successfully presented in court  ceed p2. Thus, a comparison
+by the statistician.  of two population propor-
+  tions is appropriate. Recall that during the 83-day period of
+  In addition to daily closing price and trading volume of  interest, the executive posted e-mails on 43 days and had no
+ZixIt stock, the ZIXITVISA file also contains a qualitative  postings on 40 days. Again, both sample sizes (n1 = 40 and
+variable that indicates whether the stock price increased or  n2 = 43) are large, so we can apply the large-sample z-test or
+not (decreased or stayed the same) on the following day.  large-sample confidence interval procedure for independent
+This variable was created by the statistician to compare the  samples. (Can you demonstrate this?) A MINITAB printout
+proportion of days on which ZixIt stock went up for posting  for this analysis is shown in Figure SIA9.3.
+and nonposting days. Let p1 represent the proportion of days
+where the ZixIt stock price increased following all nonpost-  From the printout you can see that following the 40
+ing days and p2 represent the proportion of days where the  nonposting days, the price increased on 20 days; following
+
+  (Continued)
+498 CHAPTER 9 ■ Inferences Based on Two Samples
+
+ Statistics IN Action
+
+  (continued)
+
+Figure SIA9.3  exceeds, say, a = .05. Both imply that the two population pro-
+MINITAB comparison of two  portions are not significantly different. Also, neither sample
+proportions analysis  proportion is significantly different from .5. (Can you demon-
+  strate this?) Consequently, in courtroom testimony, the statis-
+the 43 posting days, the stock price increased on 18 days.  tical expert used these results to conclude that “the direction
+Thus, the sample proportions are p1 = 20>40 = .5 and  of ZixIt’s stock price movement following days with postings
+p2 = 18>43 = .42. Are these sample proportions different  is random, just like days with no postings.”
+enough for us to conclude that the population proportions are
+different and that ZixIt’s claim is true? Not according to the  Data Set: ZIXITVISA
+statistical analysis. Note that the 95% confidence interval for
+1p1 - p22,1 - .133, .2952, includes the value 0, and the p-value
+for the two-tailed test of H0:1p1 - p22 = 0, p@value = .456,
+
+Exercises 9.55–9.77  b. Test H0: 1p1 - p22 = 0 against Ha: 1p1 - p22 ≠ 0.
+  Use a = .01.
+Understanding the Principles
+  c. Test H0: 1p1 - p22 = 0 against Ha: 1p1 - p22 6 0.
+9.55 What conditions are required for valid large-sample infer-  Use a = .01.
+  ences about p1 - p2?
+  d. Form a 90% confidence interval for 1p1 - p22.
+9.56 What is the problem with using the z-statistic to make infer-
+  ences about p1 - p2 when the sample sizes are both small?  9.61 Random samples of size n1 = 60 and n2 = 50 were drawn
+  from populations 1 and 2, respectively. The samples
+9.57 Consider making an inference about p1 - p2, where there  yielded pn1 = .8 and pn2 = .6. Test H0: 1p1 - p22 = .1
+  are x1 successes in n1 binomial trials and x2 successes in n2  against Ha: 1p1 - p22 7 .1, using a = .05.
+  binomial trials.
+  a. Describe the distributions of x1 and x2.  9.62 Sketch the sampling distribution of 1pn1 - pn22 based on
+  b. For large samples, describe the sampling distribution of  independent random samples of n1 = 200 and n2 = 100
+  1pn1 - pn22.  observations from two binomial populations with probabil-
+  ities of success p1 = .5 and p2 = .9, respectively.
+Learning the Mechanics
+  Applying the Concepts—Basic
+9.58 In each case, determine whether the sample sizes are
+  large enough to conclude that the sampling distribution of  9.63 Bullying behavior study. School bullying is a form of
+  1pn1 - pn22 is approximately normal.  aggressive behavior that occurs when a student is exposed
+  a. n1 = 12, n2 = 10, pn1 = .50, pn2 = .50  repeatedly to negative actions (e.g., name-calling, hit-
+  b. n1 = 12, n2 = 10, pn1 = .90, pn2 = .02  ting, kicking, spreading slander) from another student. In
+  c. n1 = n2 = 40, pn1 = .80, pn2 = .70  order to study the effectiveness of an antibullying policy
+  d. n1 = 200, n2 = 100, pn1 = .50, pn2 = .01  at Dutch elementary schools, a survey of over 2,000 ele-
+  e. n1 = 200, n2 = 200, pn1 = .05, pn2 = .09  mentary school children was conducted (Health Education
+  Research, Feb. 2005). Each student was asked if he or she
+9.59 Construct a 95% confidence interval for 1p1 - p22 in each  ever bullied another student. In a sample of 1,358 boys,
+  of the following situations:  746 claimed they had never bullied another student. In a
+  a. n1 = 300, pn1 = .35; n2 = 400, pn2 = .42  sample of 1,379 girls, 967 claimed they had never bullied
+  b. n1 = 200, pn1 = .69; n2 = 230, pn2 = .75  another student.
+  c. n1 = 120, pn1 = .54; n2 = 120, pn2 = .39  a. Estimate the true proportion of Dutch boys who have
+  never bullied another student.
+9.60 Independent random samples, each containing 800 obser-  b. Estimate the true proportion of Dutch girls who have
+  vations, were selected from two binomial populations. The  never bullied another student.
+  samples from populations 1 and 2 produced 400 and 480  c. Estimate the difference in the proportions with a 90%
+  successes, respectively.  confidence interval.
+  a. Test H0: 1p1 - p22 = 0 against Ha: 1p1 - p22 ≠ 0.
+  Use a = .05.
+

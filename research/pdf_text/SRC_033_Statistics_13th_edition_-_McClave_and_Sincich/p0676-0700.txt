@@ -1,0 +1,1559 @@
+674 CHAPTER 11 ■ Simple Linear Regression
+
+11.141  Removing metal from water. In the Electronic Journal  11.143  Extending the life of an aluminum smelter pot. An
+  of Biotechnology (Apr. 15, 2004), Egyptian scientists  investigation of the properties of bricks used to line
+  studied a new method for removing heavy metals from  SMELT  aluminum smelter pots was published in The American
+  water. Metal solutions were prepared in glass vessels, and  Ceramic Society Bulletin (Feb. 2005). Six different com-
+  then biosorption was used to remove the metal ions. Two  mercial bricks were evaluated. The life span of a smelter
+  variables were measured for each test vessel: y = metal  pot depends on the porosity of the brick lining (the less
+  uptake (milligrams of metal per gram of biosorbent) and  porosity, the longer is the life); consequently, the re-
+  x = final concentration of metal in the solution (milli-  searchers measured the apparent porosity of each brick
+  grams per liter).  specimen, as well as the mean pore diameter of each
+  a. Write a simple linear regression model relating y to x.  brick. The data are given in the next table.
+  b. For one metal, a simple linear regression analysis
+  Apparent  Mean Pore Diameter
+  yielded r2 = .92. Interpret this result.  Porosity (%)  (micrometers)
+
+Applying the Concepts—Intermediate  Brick  18.8  12.0
+  18.3  9.7
+11.142  New method of estimating rainfall. Accurate measure-  A  16.3  7.3
+  ments of rainfall are critical for many hydrological and  B  6.9  5.3
+RAIN  meteorological projects. Two standard methods of mon-  C  17.1  10.9
+  itoring rainfall use rain gauges and weather radar. Both,  D  20.4  16.8
+  however, can be contaminated by human and environ-  E
+  mental interference. In the Journal of Data Science (Apr.  F
+  2004), researchers employed artificial neural networks
+  (i.e., computer-based mathematical models) to estimate  Based on Bonadia, P., et al. “Aluminosilicate refractories for aluminum
+  rainfall at a meteorological station in Montreal. Rainfall  cell linings.” The American Ceramic Society Bulletin, Vol. 84, No. 2, Feb.
+  estimates were made every 5 minutes over a 70-minute  2005 (Table II).
+  period by each of the three methods. The data (in milli-
+  meters) are listed in the table.  a. Find the least squares line relating porosity (y) to
+  mean pore diameter (x).
+Time  Radar  Rain Gauge  Neural Network
+  b. Interpret the y-intercept of the line.
+8:00 a.m.  3.6  0  1.8  c. Interpret the slope of the line.
+8:05  2.0  1.2  1.8  d. Conduct a test of model adequacy. Use a = .10.
+8:10  1.1  1.2  1.4  e. Find r and r2 and interpret these values.
+8:15  1.3  1.3  1.9  f. Predict the apparent percentage of porosity for a brick
+8:20  1.8  1.4  1.7
+8:25  2.1  1.4  1.5  with a mean pore diameter of 10 micrometers. Use a
+8:30  3.2  2.0  2.1  90% prediction interval.
+8:35  2.7  2.1  1.0
+8:40  2.5  2.5  2.6  11.144  Relation of eye and head movements. How do eye and head
+8:45  3.5  2.9  2.6  movements relate to body movements when a person reacts
+8:50  3.9  4.0  4.0  to a visual stimulus? Scientists at the California Institute of
+8:55  3.5  4.9  3.4  Technology designed an experiment to answer this ques-
+9:00 a.m.  6.5  6.2  6.2  tion and reported their results in Nature (Aug. 1998). Adult
+9:05  7.3  6.6  7.5  male rhesus monkeys were exposed to a visual stimulus (i.e.,
+9:10  6.4  7.8  7.2  a panel of light-emitting diodes), and their eye, head, and
+  body movements were electronically recorded. In one varia-
+Based on Hessami, M., et al. “Selection of an artificial neural network model  tion of the experiment, two variables were measured: active
+for the post-calibration of weather radar rainfall estimation.” Journal of Data  head movement (x, percent per degree) and body-plus-head
+Science, Vol. 2, No. 2, Apr. 2004. (Adapted from Figures 2 and 4.)  rotation (y, percent per degree). The data for n = 39 trials
+  were subjected to a simple linear regression analysis, with
+  a. Propose a straight-line model relating rain gauge  the following results: bn1 = .88, sbn1 = .14
+  amount (y) to weather radar rain estimate (x).  a. Conduct a test to determine whether the two variables,
+
+  b. Use the method of least squares to fit the  active head movement x and body-plus-head rotation y,
+  model.  are positively linearly related. Use a = .05.
+  b. Construct and interpret a 90% confidence interval for
+  c. Graph the least squares line on a scatterplot of the data.  b1.
+  Is there visual evidence of a relationship between the  c. The scientists want to know whether the true slope
+  two variables? Is the relationship positive or negative?  of the line differs significantly from 1. On the basis of
+  your answer to part b, make the appropriate inference.
+  d. Interpret the estimates of the y-intercept and slope in
+  the words of the problem.  11.145  Mortality of predatory birds. Two species of predatory
+  birds—collard flycatchers and tits—compete for nest
+  e. Find and interpret the value of s for this regression.  CONDOR  holes during breeding season on the island of Gotland,
+  f. Test whether y is linearly related to x. Use a = .01.  Sweden. Frequently, dead flycatchers are found in nest
+  g. Construct a 99% confidence interval for b1. Interpret  boxes occupied by tits. A field study examined whether
+  the risk of mortality to flycatchers is related to the degree
+  the result practically.  of competition between the two bird species for nest sites
+  h. Now consider a model relating rain gauge amount  (The Condor, May 1995). The table (p. 675) gives data on
+  the number y of flycatchers killed at each of 14 discrete
+  (y) to the artificial neural network rain estimate (x).  locations (plots) on the island, as well as on the nest box
+  Repeat parts a–g for this model.
+  Supplementary Exercises 11.126–11.153 675
+
+  tit occupancy x (i.e., the percentage of nest boxes occu-  a. Consider only the winning times for men. Is there ev-
+  idence of a linear trend? If so, propose a straight-line
+  pied by tits) at each plot. Consider the simple linear re-  model for predicting winning time (y) based on year
+  gression model E1y2 = b0 + b1x.  (x). Would you expect the slope of this line to be posi-
+  tive or negative?
+  Number of  Nest Box Tit
+  b. Repeat part b for women’s times.
+  Plot  Flycatchers Killed y Occupancy x (%)  c. Which slope, the men’s or the women’s, will be greater
+
+  1  0  24  in absolute value?
+  d. Would you recommend using the straight-line mod-
+  2  0  33
+  els to predict the winning time in the 2020 Boston
+  3  0  34  Marathon? Why or why not?
+  e. Which model, the men’s or the women’s, is likely to
+  4  0  43  have the smallest estimate of s?
+
+  5  0  50
+
+  6  1  35
+
+  7  1  35
+
+  8  1  38  11.147  Quantum tunneling. At temperatures approaching abso-
+  lute zero 1 -273°C2, helium exhibits traits that seem to
+  9  1  40  HELIUM  defy many laws of Newtonian physics. An experiment
+  has been conducted with helium in solid form at vari-
+  10  2  31  ous temperatures near absolute zero. The solid helium
+  is placed in a dilution refrigerator along with a solid im-
+  11  2  43  pure substance, and the fraction (in weight) of the impu-
+  rity passing through the solid helium is recorded. (This
+  12  3  55  phenomenon of solids passing directly through solids is
+  known as quantum tunneling.) The data are given in the
+  13  4  57  next table.
+
+  14  5  64
+
+  Based on Merila, J., and Wiggins, D. A. “Interspecific competition for nest
+  holes causes adult mortality in the collard flycatcher.” The Condor, Vol.
+  97, No. 2, May 1995, p. 449 (Figure 2), Cooper Ornithological Society.
+
+  a. Plot the data in a scatterplot. Does the frequency of  Temperature x (°C)  Proportion of Impurity
+  flycatcher casualties per plot appear to increase linearly  - 262.0
+  with increasing proportion of nest boxes occupied  - 265.0  .315
+  by tits?  - 256.0  .202
+  - 267.0  .204
+  b. Use the method of least squares to find the estimates  - 270.0  .620
+  of b0 and b1. Interpret their values.  - 272.0  .715
+  - 272.4  .935
+  c. Test the utility of the model, using a = .05.  - 272.7  .957
+  d. Find r and r2 and interpret their values.  - 272.8  .906
+  e. Find s and interpret the result.  - 272.9  .985
+  f. Do you recommend using the model to predict the  .987
+
+  number of flycatchers killed? Explain.
+
+11.146  Winning marathon times. In Chance (Winter 2000),
+  statistician Howard Wainer and two students com-
+  pared men’s and women’s winning times in the Boston  a. Find the least squares estimates of the intercept and
+  Marathon. One of the graphs used to illustrate gender  slope. Interpret them.
+  differences is reproduced below. The scatterplot graphs
+  the winning times (in minutes) against the year in which  b. Use a 95% confidence interval to estimate the slope
+  the race was run. Men’s times are represented by purple  b1. Interpret the interval in terms of this application.
+  dots and women’s times by red dots.  Does the interval support the hypothesis that tem-
+  perature contributes information about the proportion
+  Winning Times in the Boston Marathon  of impurity passing through helium?
+  for Men and Women
+  c. Interpret the coefficient of determination for this
+  200  model.
+
+  190  d. Find a 95% prediction interval for the percentage
+  of impurity passing through solid helium at - 273°C.
+  180  Women  Interpret the result.
+
+Winning Time  170  e. Note that the value of x in part d is outside the exper-
+  (minutes)  imental region. Why might this lead to an unreliable
+  prediction?
+
+  160 Men  11.148  Dance/movement therapy. In cotherapy, two or more
+  150  therapists lead a group. An article in the American Journal
+  of Dance Therapy (Spring/Summer 1995) examined the
+  140  use of cotherapy in dance/movement therapy. Two of sev-
+  eral variables measured on each of a sample of 136 profes-
+  130  sional dance/movement therapists were years x of formal
+  training and reported success rate y (measured as a per-
+  120  centage) of coleading dance/movement therapy groups.
+  1880 1900 1920 1940 1960 1980 2000  a. Propose a linear model relating y to x.
+  b. The researcher hypothesized that dance/movement
+  Year
+  therapists with more years in formal dance training will
+676 CHAPTER 11 ■ Simple Linear Regression
+
+  report higher perceived success rates in cotherapy rela-  c. Conduct a test to determine whether weight change y
+  tionships. State the hypothesis in terms of the param-  is correlated with digestion efficiency x. Use a = .01.
+  eter of the model you proposed in part a.
+  c. The correlation coefficient for the sample data was re-  d. Repeat parts b and c, but exclude the data for trials that
+  ported as r = -.26. Interpret this result.  used duck chow. What do you conclude?
+  d. Does the value of r in part c support the hypothesis in
+  part b? Test, using a = .05.  e. The botanists were also interested in the correlation
+  between digestion efficiency y and acid-detergent
+11.149  Performance in online courses. Florida State University  fiber x. Repeat parts a–d for these two variables.
+  information scientists assessed the impact of online
+  courses on student performance (Educational Technology  f. Fit the simple linear regression model to the data
+  & Society, Jan. 2005). Each in a sample of 24 graduate  using x = digestion efficiency.
+  students enrolled in an online advanced Web application
+  course was asked, “How many courses per semester (on  g. Do you recommend using the model to predict weight
+  average) do you take online?” Each student’s perfor-  change y? Explain.
+  mance on weekly quizzes was also recorded. The infor-
+  mation scientists found that the number of online courses  h. Use the model to form a 95% confidence interval
+  and the weekly quiz grade were negatively correlated at  for the mean weight change of all baby snow geese
+  r = - .726.  with a digestion efficiency of x = 15%. Interpret the
+  a. Give a practical interpretation of r.  interval.
+  b. The researchers concluded that there was a “signifi-
+  Applying the Concepts—Advanced
+  cant negative correlation” between the number of on-
+  line courses and the weekly quiz grade. Do you agree?  11.151  Regression through the origin. Sometimes it is known from
+  theoretical considerations that the straight-line relationship
+  FLOUR  between two variables x and y passes through the origin of
+  the xy-plane. Consider the relationship between the total
+11.150  Snow geese feeding trial. Botanists at the University of  weight y of a shipment of 50-pound bags of flour and the
+  Toronto conducted a series of experiments to investigate  number x of bags in the shipment. Since a shipment contain-
+SNOW  the feeding habits of baby snow geese (Journal of Applied  ing x = 0 bags (i.e., no shipment at all) has a total weight of
+  Ecology, Vol. 32, 1995). Goslings were deprived of food  y = 0, a straight-line model of the relationship between x
+  until their guts were empty and then were allowed to feed  and y should pass through the point x = 0, y = 0. In such
+  for 6 hours on a diet of plants or Purina® Duck Chow®.  a case, you could assume that b0 = 0 and characterize the
+  For each feeding trial, the change in the weight of the  relationship between x and y with the following model:
+  gosling after 2.5 hours was recorded as a percentage of
+  the bird’s initial weight. Two other variables recorded  y = b1x + e
+  were digestion efficiency (measured as a percentage) and
+  amount of acid-detergent fiber in the digestive tract (also  The least squares estimate of b1 for this model is
+  measured as a percentage). Data on 42 feeding trials are  Σxiyi
+  saved in the SNOW file. The first and last 5 observations
+  are listed in the table below.  bn1 = 2
+  Σxi
+
+  From the records of past flour shipments, 15 shipments
+  were randomly chosen and the data shown in the follow-
+  ing table were recorded.
+
+Feeding  Diet  Weight  Digestion  Acid-  Weight of Shipment  Number of 50-Pound
+  Trial  Change  Efficiency  Detergent  Bags in Shipment
+  Plants  Fiber (%)  5,050
+  1  Plants  (%)  (%)  10,249  100
+  2  Plants  28.5  20,000  205
+  3  Plants  -6  0  27.5  7,420  450
+  4  Plants  -5  2.5  27.5  24,685  150
+  5  f  - 4.5  5  32.5  10,206  500
+  f  0  0  32  7,325  200
+  Duck Chow  2  0  4,958  150
+  38  Duck Chow  f  100
+  39  Duck Chow  f  f  7,162  150
+  40  Duck Chow  8.5  24,000  500
+  41  Duck Chow  9  59  8  100
+  42  12  52.5  6  4,900  300
+  8.5  75  6.5  14,501  600
+  10.5  72.5  7  28,000  400
+  14  69  17,002  400
+  16,100
+Based on Gadallah, F. L., and Jefferies, R. L. “Forage quality in brood rearing
+areas of the lesser snow goose and the growth of captive goslings.” Journal of  a. Find the least squares line for the given data under the
+Applied Biology, Vol. 32, No. 2, 1995, pp. 281–282 (adapted from Figures 2 and 3).  assumption that b0 = 0. Plot the least squares line on
+  a scatterplot of the data.
+  a. The botanists were interested in the correlation be-
+  tween weight change (y) and digestion efficiency (x).  b. Find the least squares line for the given data, using the
+  Plot the data for these two variables in a scatterplot.  model
+  Do you observe a trend?
+  y = b0 + b1x + e
+  b. Find the coefficient of correlation relating weight
+  change y to digestion efficiency x. Interpret this  (i.e., do not restrict b0 to equal 0). Plot this line on the
+  value.  same scatterplot you constructed in part a.
+  Supplementary Exercises 11.126–11.153 677
+
+  c. Refer to part b. Why might bn0 be different from 0 even  Critical Thinking Challenge
+  though the true value of b0 is known to be 0?
+  11.153  Spall damage in bricks. A recent civil suit revolved around
+  d. The estimated standard error of bn0 is equal to  a five-building brick apartment complex located in the
+  BRICKS  Bronx, New York, which began to suffer spalling damage
+  s 1 + x2  (i.e., a separation of some portion of the face of a brick
+  B n SSxx  from its body). The owner of the complex alleged that the
+  bricks were manufactured defectively. The brick manu-
+  Use the t-statistic  facturer countered that poor design and shoddy manage-
+  t bn = 0 - 0  ment led to the damage. To settle the suit, an estimate
+  s 211>n2 + 1x2>SSxx2  of the rate of damage per 1,000 bricks, called the spall
+  rate, was required (Chance, Summer 1994). The owner
+  to test the null hypothesis H0: b0 = 0 against the alter-  estimated the spall rate by using several scaffold-drop
+  native Ha: b0 ≠ 0. Take a = .10. Should you include  surveys. (With this method, an engineer lowers a scaf-
+  fold down at selected places on building walls and counts
+  b0 in your model?  the number of visible spalls for every 1,000 bricks in the
+  observation area.) The brick manufacturer conducted its
+11.152  Long-jump “takeoff error.” The long jump is a track-  own survey by dividing the walls of the complex into 83
+  and-field event in which a competitor attempts to  wall segments and taking a photograph of each one. (The
+JUMP  jump a maximum distance into a sandpit after a run-  number of spalled bricks that could be made out from
+  ning start. At the edge of the pit is a takeoff board.  each photo was recorded, and the sum over all 83 wall
+  Jumpers usually try to plant their toes at the front  segments was used as an estimate of total spall damage.)
+  edge of this board to maximize their jumping dis-  In this court case, the jury was faced with the following
+  tance. The absolute distance between the front edge  dilemma: On the one hand, the scaffold-drop survey pro-
+  of the takeoff board and the spot where the toe ac-  vided the most accurate estimate of spall rates in a given
+  tually lands on the board prior to jumping is called  wall segment. Unfortunately, however, the drop areas
+  “takeoff error.” Is takeoff error in the long jump lin-  were not selected at random from the entire complex;
+  early related to best jumping distance? To answer this  rather, drops were made at areas with high spall concen-
+  question, kinesiology researchers videotaped the per-  trations, leading to an overestimate of the total damage.
+  formances of 18 novice long jumpers at a high school  On the other hand, the photo survey was complete in
+  track meet (Journal of Applied Biomechanics, May  that all 83 wall segments in the complex were checked
+  1995). The average takeoff error x and the best jump-  for spall damage. But the spall rate estimated by the pho-
+  ing distance y (out of three jumps) for each jumper are  tos, at least in areas of high spall concentration, was bi-
+  recorded in the accompanying table. If a jumper can  ased low (spalling damage cannot always be seen from a
+  reduce his/her average takeoff error by .1 meter, how  photo), leading to an underestimate of the total damage.
+  much would you estimate the jumper’s best jumping
+  distance to change? On the basis of your answer, com-  The data in the table are the spall rates obtained
+  ment on the usefulness of the model for predicting  from the two methods at 11 drop locations. Use the data,
+  best jumping distance.  as did expert statisticians who testified in the case, to help
+  the jury estimate the true spall rate at a given wall seg-
+Jumper  Best Jumping  Average Takeoff  ment. Then explain how this information, coupled with
+  Distance y (meters)  Error x (meters)  the data (not given here) on all 83 wall segments, can pro-
+  1  vide a reasonable estimate of the total spall damage (i.e.,
+  2  5.30  .09  total number of damaged bricks).
+  3  5.55  .17
+  4  5.47  .19  Drop Location  Drop Spall Rate  Photo Spall Rate
+  5  5.45  .24  (per 1,000 bricks)  (per 1,000 bricks)
+  6  5.07  .16  1
+  7  5.32  .22  2  0  0
+  8  6.15  .09  3  5.1  0
+  9  4.70  .12  4  6.6  0
+  10  5.22  .09  5  1.1  .8
+  11  5.77  .09  6  1.8  1.0
+  12  5.12  .13  7  3.9  1.0
+  13  5.77  .16  8  11.5  1.9
+  14  6.22  .03  9  22.1  7.7
+  15  5.82  .50  10  39.3  14.9
+  16  5.15  .13  11  39.9  13.9
+  17  4.92  .04  43.0  11.8
+  18  5.20  .07
+  5.42  .04
+
+Based on Berg, W. P., and Greer, N. L. “A kinematic profile of the approach run  Based on Fairley, W. B., et al. “Bricks, buildings, and the Bronx: Estimating
+of novice long jumpers.” Journal of Applied Biomechanics, Vol. 11, No. 2, May  masonry deterioration.” Chance, Vol. 7. No. 3, Summer 1994, p. 36 (Figure 3).
+1995, p. 147 (Table 1).
+  [Note: The data points are estimated from the points shown on a scatterplot.]
+678 CHAPTER 11 ■ Simple Linear Regression
+
+Activity Applying Simple Linear Regression to Your Favorite Data
+
+Many dependent variables in all areas of research serve as the  able. Next, obtain 10 data values, each of which consists of a
+subjects of regression-modeling efforts. We list five such vari-  measure of your dependent variable y and the corresponding
+ables here:  values of x1, x2, and x3.
+
+1. Crime rate in various communities  a. Use the least squares formulas given in this chapter to fit
+  three straight-line models—one for each independent vari-
+2. Daily maximum temperature in your town  able—for predicting y.
+
+3. Grade point average of students who have completed one  b. Interpret the sign of the estimated slope coefficient bn1 in each
+  academic year at your college  case, and test the utility of each model by testing H0: b1 = 0
+  against Ha: b1 ≠ 0. What assumptions must be satisfied to
+4. Gross domestic product of the United States  ensure the validity of these tests?
+
+5. Points scored by your favorite football team in a single game  c. Calculate the coefficient of determination, r 2, for each
+  model. Which of the independent variables predicts y best
+  Choose one of these dependent variables, or choose  for the 10 sampled sets of data? Is this variable necessarily
+some other dependent variable, for which you want to construct  best in general (i.e., for the entire population)? Explain.
+a prediction model. There may be a large number of independ-
+ent variables that should be included in a prediction equation  Be sure to keep the data and the results of your calculations,
+for the dependent variable you choose. List three potentially  since you will need them for the Activity section in Chapter 12.
+important independent variables, x1, x2, and x3, that you think
+might be (individually) strongly related to your dependent vari-
+
+References  Mendenhall, W. Introduction to Linear Models and the Design and
+  Analysis of Experiments. Belmont, CA: Wadsworth, 1968.
+Chatterjee, S., and Price, B. Regression Analysis by Example, 2nd ed. New
+  York: Wiley, 1991.  Mendenhall, W., and Sincich, T. A Second Course in Statistics: Regression
+  Analysis, 7th ed. Upper Saddle River, NJ: Prentice Hall, 2011.
+Draper, N., and Smith, H. Applied Regression Analysis, 3rd ed. New
+  York: Wiley, 1987.  Montgomery, D., Peck, E., and Vining, G. Introduction to Linear
+  Regression Analysis, 3rd ed. New York: Wiley, 2001.
+Graybill, F. Theory and Application of the Linear Model. North Scituate,
+  MA: Duxbury, 1976.  Mosteller, F., and Tukey, J. W. Data Analysis and Regression: A Second
+  Course in Statistics. Reading, MA: Addison-Wesley, 1977.
+Kleinbaum, D., and Kupper, L. Applied Regression Analysis and
+  Other Multivariable Methods, 2nd ed. North Scituate, MA:  Rousseeuw, P. J., and Leroy, A. M. Robust Regression and Outlier
+  Duxbury, 1997.  Detection. New York: Wiley, 1987.
+
+Kutner, M., Nachtsheim, C., Neter, J., and Li, W. Applied Linear Statistical  Weisburg, S. Applied Linear Regression, 2nd ed. New York: Wiley, 1985.
+  Models, 5th ed. New York: McGraw-Hill/Irwin, 2006.
+
+USING TECHNOLOGY MINITAB: Simple Linear Regression
+
+Regression Analysis  Step 3 On the resulting dialog box (see Figure 11.M.2), specify
+  the dependent variable in the “Response” box and the independ-
+Step 1 Access the MINITAB worksheet file that contains  ent variable in the “Predictors” box.
+the two quantitative variables (dependent and independent
+variables).
+
+Step 2 Click on the “Stat” button on the MINITAB menu bar,
+and then click on “Regression” and “Regression” again, as shown
+in Figure 11.M.1.
+
+Figure 11.M.1 MINITAB menu options for regression  Figure 11.M.2 MINITAB regression dialog box
+Step 4 To produce prediction intervals for y and confidence in-  Using Technology 679
+tervals for E(y), click the “Options” button. The resulting dialog
+box is shown in Figure 11.M.3.  Step 2 On the resulting dialog box (see Figure 11.M.5), enter
+  the two variables of interest in the “Variables” box.
+
+Figure 11.M.3 MINITAB regression options  Figure 11.M.5 MINITAB correlation dialog box
+Step 5 Check “Confidence limits” and/or “Prediction limits,”
+specify the “Confidence level,” and enter the value of x in the  Step 3 Click “OK” to obtain a printout of the correlation.
+“Prediction intervals for new observations” box.
+Step 6 Click “OK” to return to the main Regression dialog box  TI-83/TI-84 Plus Graphing Calculator:
+and then click “OK” again to produce the MINITAB simple  Simple Linear Regression
+linear regression printout.
+  Finding the Least Squares Regression
+Correlation Analysis  Equation
+
+Step 1 Click on the “Stat” button on the MINITAB main menu  Step 1 Enter the data
+bar, then click on “Basic Statistics,” and then click on “Correla-  • Press STAT and select 1:Edit
+tion,” as shown in Figure 11.M.4.
+  Note: If a list already contains
+Figure 11.M.4 MINITAB menu options for correlation  data, clear the old data.
+  • Use the up arrow to
+
+  highlight the list name,
+  “L1” or “L2”
+  • Press CLEAR ENTER
+  • Enter your x-data in L1 and your y-data in L2
+
+  Step 2 Find the equation
+  • Press STAT and highlight
+
+  CALC
+  • Press 4 for LinReg1ax + b2
+  • Press ENTER
+  • The screen will show the
+
+  values for a and b in the
+  equation y = ax + b
+
+  Finding r and r2
+
+  Use this procedure if r and r2
+  do not already appear on the
+  LinReg screen from part I:
+
+  Step 1 Turn the diagnostics
+  feature on
+  • Press 2nd 0 for CATALOG
+  • Press the ALPHA key and
+
+  x-1 for D
+680 CHAPTER 11 ■ Simple Linear Regression  • For Xlist, choose the column containing the x-data
+  • For Ylist, choose the column containing the y-data
+• Press the down ARROW until DiagnosticsOn is highlighted
+• Press ENTER twice  Step 3 Find the regression equation and store the
+  equation in Y1
+Step 2 Find the regression equation as shown in part I on p. 679  • Press STAT and highlight
+The values for r and r2 will appear on the screen as well.
+  CALC
+Graphing the Least Squares Line with  • Press 4 for LinReg1ax + b2
+the Scatterplot
+  (Note: Don’t press ENTER
+Step 1 Enter the data as shown  here because you want to
+in part I on p. 651  store the regression equation
+  in Y1.)
+Step 2 Set up the data plot  • Press VARS
+• Press Y = and CLEAR  • Use the right arrow to highlight Y-VARS
+  • Press ENTER to select 1:Function
+  all functions from the Y  • Press ENTER to select 1:Y1
+  register  • Press ENTER
+• Press 2ndY = for STAT PLOT
+• Press 1 for Plot1  Step 4 View the scatterplot and regression line
+• Set the cursor so that ON is flashing and press ENTER  • Press ZOOM and then press 9 to select 9:ZoomStat
+• For Type, use the ARROW and ENTER keys to highlight
+  and select the scatterplot (first icon in the first row)  You should see the data graphed along with the regression line.
+12 Multiple Regression
+  and Model Building
+
+contents  Where We’ve Been
+
+12.1 Multiple-regression Models  • Introduced the straight-line model relating a dependent
+PART I: First-order Models with Quantitative  variable y to a single independent variable x
+
+  independent Variables  • Demonstrated how to estimate the parameters of the
+12.2 estimating and Making inferences  straight-line model by the method of least squares
+
+  about the b Parameters  • Showed how to statistically assess the adequacy of the
+12.3 evaluating overall Model Utility  model
+12.4 Using the Model for estimation and Prediction
+  • Showed how to use the model to estimate E(y) and
+  predict y for a given value of x
+
+PART II: Model Building in Multiple regression  Where We’re Going
+12.5 interaction Models
+12.6 Quadratic and other higher order Models  • Introduce a multiple-regression model as a means
+12.7 Qualitative (dummy) Variable Models  of relating a dependent variable y to two or more
+12.8 Models with Both Quantitative and Qualitative  independent variables. (12.1)
+
+  Variables (optional)  • Present several different multiple-regression models
+12.9 Comparing nested Models (optional)  involving both quantitative and qualitative independent
+12.10 Stepwise regression (optional)  variables. (12.2, 12.5–12.8)
+PART III: Multiple regression diagnostics
+12.11 residual Analysis: Checking the regression  • Assess how well the multiple-regression model fits the
+  sample data. (12.3)
+  Assumptions
+12.12 Some Pitfalls: estimability, Multicollinearity,  • Demonstrate how to use the model for prediction (12.4)
+
+  and extrapolation  • Present some model building techniques (12.9–12.10)
+
+  • Show how an analysis of a model’s residuals can aid in
+  detecting violations of the model’s assumptions and in
+  identifying modifications required by the model. (12.11)
+
+  • Alert the analyst to some regression pitfalls (12.12)
+682 CHAPTER 12 ■ Multiple Regression and Model Building
+
+Statistics IN Action Modeling Condominium Sales:
+
+  What Factors Affect Auction Price?
+
+This application involves an investigation of the factors  groceries, etc., and would be
+that affect the sale price of oceanside condominium units. It  farther away from the game
+represents an extension of an analysis of data collected by  room, the office, and the swim-
+Herman Kelting. Although condo sale prices have increased  ming pool. These units also
+dramatically since the time of the study, the relationship be-  possess an advantage: Because
+tween these factors and sale prices remains about the same.  traffic through the hallways
+Consequently, the data provide valuable insight into today’s  in the area would be minimal,
+condominium sales market.  these units would be the most
+  private.
+  Sales data were obtained for a newly built oceanside
+condominium complex consisting of two adjacent, connected  3. Because lower-floor oceans-
+eight-floor buildings. The complex contains 209 units of equal  ide units open onto the beach,
+size (approximately 500 square feet each). The locations of  ocean, and pool, they are
+the buildings relative to the ocean, the swimming pool, the  most suited to active people.
+parking lot, etc., are shown in Figure SIA12.1.  They are within easy reach of
+  the game room, and they are also easily reached from the
+  Among the features of the complex that you should note  parking area.
+are the following:
+  4. Checking Figure SIA12.1, you will see that the views in
+1. The units facing south, called oceanview, face the beach  some of the units at the center of the complex—units end-
+  and ocean. In addition, units in building 1 have a good  ing in numbers 11 and 14—are partially blocked.
+  view of the pool. Units to the rear of the building, called
+  bayview, face the parking lot and an area of land that,  5. The condominium complex was completed at the time of the
+  ultimately, borders a bay. The view from the upper floors of  1975 recession; sales were slow, and the developer was forced
+  these units is primarily of wooded, sandy terrain. The bay is  to sell about half of the units at auction approximately 18
+  very distant and barely visible.  months after the complex opened. Many unsold units were
+  furnished by the developer and rented prior to the auction.
+2. The only elevator in the complex is located at the east end of
+  building 1, next to the office and the game room. People mov-  This condominium complex is particularly suited to our
+  ing to or from the higher floor units in building 2 would prob-  study. Because the single elevator is located at one end of the
+  ably use the elevator, then move through the passages to their  complex, it is the source of a remarkably high level of both in-
+  units. Thus, units on the higher floors and at a greater distance  convenience and privacy for the people occupying units on
+  from the elevator would be less convenient for their occu-  the top floors in building 2. Consequently, the data provide a
+  pants, who would expend greater effort in moving baggage,
+
+  Ocean S
+
+  E  W
+
+  Pool
+
+  N
+  9 10 11 12 13 14 15
+
+  Ground Floor
+  Distance from
+
+  elevator  123456  113 115 117 119 121 123 125
+
+  Office
+  101 103 105 107 109 111
+  Game room
+  Elevator  114 116 118 120 122 124  Three-story
+  motel
+  Building 2
+
+  102 104 106 108 110 112
+
+  Building 1  Traffic flow
+
+Figure SIA12.1  Parking
+
+Layout of condominium
+complex
+  SECTION 12.1 ■ Multiple-Regression Models 683
+
+Statistics IN Action  good opportunity to investigate  listed in Table SIA12.1. We want to build a model for the auc-
+  the relationship that might exist  tion price and, ultimately, to use the model to predict the sale
+  (continued)  between sale price, height of the  prices of future units.
+
+  unit (floor number), distance of  In several Statistics in Action Revisited sections, we show
+  how to analyze the data by means of a multiple-regression
+the unit from the elevator, and presence or absence of an ocean  analysis.
+
+view. In addition, the presence or absence of furniture in each of  Statistics IN Action Revisited
+
+the units permits an investigation of the effect of the availability  • A First-Order Model for Condominium Sale Price (p. 704)
+  • Building a Model for Condominium Sale Price (p. 748)
+of furniture on the sale price. Finally, the units sold at auction  • A Residual Analysis for the Condominium Sale Price
+
+are completely specified by the buyer and hence are consumer  Model (p. 773)
+
+oriented, in contrast to most other real estate units, which are, to
+
+a high degree, seller oriented and specified by the broker.
+
+The CONDO file contains data on each of the 209 units
+
+sold—106 at public auction and 103 at the developer’s fixed
+
+price. The variables measured for each condominium unit are
+
+Table SIA12.1 Variables in the CoNDo Data File
+
+Variable Name Type  Description
+
+PRICE100  Quantitative  Sales price (hundreds of dollars)
+FLOOR  Quantitative
+DIST  Quantitative  Floor height 11, 2, 3, c, 82
+VIEW  Qualitative  Distance, in units, from the elevator 11, 2, 3, c, 152
+END  Qualitative  View 11 = ocean view, 0 = non9ocean view2
+FURNISH  Qualitative
+AUCTION  Qualitative  Location of unit 11 = end of complex, 0 = not an end unit2
+
+  Furniture status 11 = furnished, 0 = nonfurnished2
+
+  Method of sale 11 = public auction, 0 = fixed price2
+
+  Data Set: CONDO
+
+12.1 Multiple-Regression Models
+
+  Most practical applications of regression analysis utilize models that are more complex
+  than the simple straight-line model. For example, a realistic probabilistic model for
+  reaction time would include more than just the amount of a particular drug in the
+  bloodstream. Factors such as age, a measure of visual perception, and sex of the subject
+  are a few of the many variables that might be related to reaction time. Thus, we would
+  want to incorporate these and other potentially important independent variables into
+  the model in order to make accurate predictions.
+
+  Probabilistic models that include more than one independent variable are called
+  multiple-regression models. The general form of these models is
+
+  y = b0 + b1x1 + b2x2 + g + bkxk + e
+  The dependent variable y is now written as a function of k independent variables
+  x1, x2, c, xk. The random-error term is added to make the model probabilistic rather
+  than deterministic. The value of the coefficient bi determines the contribution of the
+  independent variable xi, and b0 is the y-intercept. The coefficients b0, b1, c, bk are
+  usually unknown because they represent population parameters.
+
+  At first glance, it might appear that the regression model just described would not
+  allow for anything other than straight-line relationships between y and the independent
+  variables, but this is not true. Actually, x1, x2, c, xk can be functions of variables, as long
+  as the functions do not contain unknown parameters. For example, the reaction time y of
+  a subject to a visual stimulus could be a function of the independent variables
+
+  x1 = Age of the subject
+  x2 = 1Age22 = x12
+  x3 = 1 if male subject, 0 if female subject
+684  CHAPTER 12 ■ Multiple Regression and Model Building
+
+  The x2@term is called a higher order term, since it is the value of a quantitative vari-
+  able 1x12 squared (i.e., raised to the second power). The x3@term is a (qualitative) coded
+  variable representing a quality (gender). The multiple-regression model is quite versatile
+  and can be made to model many different types of response variables.
+
+  The Multiple-Regression Model*
+
+  y = b0 + b1x1 + b2x2 + g + bkxk + e
+
+  where
+  y is the dependent variable
+  x1, x2, c, xk are the independent variables
+  E1y2 = b0 + b1x1 + b2x2 + g + bkxk is the deterministic portion
+  of the model
+  bi determines the contribution of the independent variable xi
+
+  Note: The symbols x1, x2, c, xk may represent higher order terms for quantitative
+  predictors or terms that represent qualitative predictors.
+
+  As shown in the following box, the steps used to develop the multiple-regression
+  model are similar to those used for the simple regression model:
+
+  Analyzing a Multiple-Regression Model
+
+  Step 1 Hypothesize the deterministic component of the model. This component
+  relates the mean E(y) to the independent variables x1, x2,c, xk.
+  Involved here is the choice of the independent variables to be included in
+  the model (Sections 12.2, 12.5–12.10).
+
+  Step 2 Use the sample data to estimate the unknown parameters
+  b0, b1, b2, c, bk in the model (Section 12.2).
+
+  Step 3 Specify the probability distribution of the random-error term e, and
+  estimate the standard deviation s of this distribution (Section 12.3).
+
+  Step 4 Check that the assumptions about e are satisfied, and make modifications
+  to the model if necessary (Section 12.11).
+
+  Step 5 Statistically evaluate the usefulness of the model (Section 12.3).
+
+  Step 6 When you are satisfied that the model is useful, use it for prediction,
+  estimation, and other purposes (Section 12.4).
+
+  The assumptions we make about the random error e of the multiple-regression model
+  are similar to those we make about the random error in a simple linear regression and
+  are summarized as follows:
+
+  Assumptions about Random Error E
+  For any given set of values of x1, x2, c, xk, the random error e has a probability
+  distribution with the following properties:
+  1. The mean is equal to 0.
+  2. The variance is equal to s2.
+  3. The probability distribution is a normal distribution.
+  4. Random errors are independent (in a probabilistic sense).
+
+  *Technically, this model is referred to as a multiple linear regression model, since the equation is a linear
+  function of the b’s.
+  SECTION 12.2 ■ Estimating and Making Inferences about the b Parameters 685
+
+  This chapter is divided into three parts. In Part I, we consider the most basic
+multiple regression model involving only quantitative independent variables, called
+a first-order model. In Part II, we introduce several other different types of models
+that form the foundation of model building (i.e., useful model construction). Finally, in
+Part III, we discuss how to check the validity of the model assumptions on the random
+error term—called a residual analysis.
+
+PART I: FIRST-ORDER MODELS WITH QUANTITATIVE INDEPENDENT
+  VARIABLES
+
+12.2 Estimating and Making Inferences about the B Parameters
+
+A model that includes only terms denoting quantitative independent variables, called a
+first-order model, is described in the next box. Note that the first-order model does not
+include any higher order terms (such as x12).
+
+A First-Order Model in Five Quantitative Independent Variables*
+
+  E1y2 = b0 + b1x1 + b2x2 + b3x3 + b4x4 + b5x5
+
+where x1, x2, c, x5 are all quantitative variables that are not functions of other
+independent variables.
+Note: bi represents the slope of the line relating y to xi when all the other x’s are held
+fixed.
+
+  The method of fitting first-order models—and multiple-regression models in
+general—is identical to that of fitting the simple straight-line model: the method of least
+squares. That is, we choose the estimated model
+
+  yn = bn0 + bn1x1 + g + bnkxk
+
+that (1) has an average error of prediction of 0, i.e., Σ1y - yn2 = 0, and (2) minimizes
+SSE = a 1y - yn 22. As in the case of the simple linear model, the sample estimates
+bn0, bn1, c, bnk are obtained as a solution of a set of simultaneous linear equations.†
+
+  The primary difference between fitting the simple- and multiple-regression mod-
+els is computational difficulty. The 1k + 12 simultaneous linear equations that must be
+solved to find the 1k + 12 estimated coefficients bn0, bn1, c, bnk are difficult (sometimes
+nearly impossible) to solve with a calculator. Consequently, we resort to the use of com-
+puters. Instead of presenting the tedious hand calculations required to fit the models, we
+present output from SAS, SPSS, and MINITAB.
+
+  BIOGRAPHY  GEORGE U. YULE (1871–1951)
+Yule Processes
+
+Born on a small farm in Scotland, George Yule received an extensive childhood education. After
+graduating from University College (London), where he studied civil engineering, Yule spent a year
+employed in engineering workshops. However, he made a career change in 1893, accepting a teaching
+position back at University College under the guidance of statistician Karl Pearson (see p. 803). Inspired
+by Pearson’s work, Yule produced a series of important articles on the statistics of regression and
+correlation. Yule is considered the first to have applied the method of least squares in regression analysis
+and he developed the theory of multiple regression. He eventually was appointed a lecturer in statistics
+at Cambridge University and later became the president of the prestigious Royal Statistical Society.
+Yule made many other contributions to the field, including the invention of time-series analysis and the
+development of “Yule” processes and the “Yule” distribution. ■
+
+*The terminology “first-order” is derived from the fact that each x in the model is raised to the first power.
+†Students who are familiar with calculus should note that bn0, bn1, c, bnk are the solutions of the set of equa-
+tions 0SSE>0bn0 = 0, 0SSE>0bn1 = 0, c, 0SSE>0bnk = 0. The solution is usually given in matrix form, but we
+do not present the details here. (See the references for details.)
+686 CHAPTER 12 ■ Multiple Regression and Model Building
+
+ Example 12.1  GFCLOCK  Problem A collector of antique grandfather clocks sold at auction believes that the price
+  received for the clocks depends on both the age of the clocks and the number of bidders
+Fitting a First–order  at the auction. Thus, he hypothesizes the first-order model
+Model—Price of an
+Antique Clock  y = b0 + b1x1 + b2x2 + e
+
+  where
+
+  y = Auction price 1dollars2
+  x1 = Age of clock 1years2
+  x2 = Number of bidders
+
+  A sample of 32 auction prices of grandfather clocks, along with their age and the number
+  of bidders, is given in Table 12.1.
+
+  a. Use scatterplots to plot the sample data. Interpret the plots.
+  b. Use the method of least squares to estimate the unknown parameters b0, b1, and b2
+
+  of the model.
+  c. Find the value of SSE that is minimized by the least squares method.
+  d. Estimate s, the standard deviation of the model, and interpret the result.
+
+  Table 12.1  Auction Price Data
+
+  Age x1  Number of  Auction  Age x1  Number of  Auction
+  Bidders x2  Price y  Bidders x2  Price y
+  127  170
+  115  13  $1,235  182  14  $2,131
+  127  162
+  150  12  1,080  184  8  1,550
+  156  143
+  182  7  845  159  11  1,884
+  156  108
+  132  9  1,522  175  10  2,041
+  137  108
+  113  6  1,047  179  6  845
+  137  111
+  117  11  1,979  187  9  1,483
+  137  111
+  153  12  1,822  115  14  1,055
+  117  194
+  126  10  1,253  168  8  1,545
+
+  9  1,297  6  729
+
+  9  946  9  1,792
+
+  15  1,713  15  1,175
+
+  11  1,024  8  1,593
+
+  8  1,147  7  785
+
+  6  1,092  7  744
+
+  13  1,152  5  1,356
+
+  10  1,336  7  1,262
+
+  Data Set: GFCLOCK
+
+  Solution
+
+  a. MINITAB side-by-side scatterplots for examining the bivariate relationships between
+  y and x1 and between y and x2 are shown in Figure 12.1. Of the two variables, age 1x12
+  appears to have the strongest linear relationship with auction price (y).
+
+  b. The model hypothesized is fit to the data of Table 12.1 with MINITAB. A portion
+  of the printout is reproduced in Figure 12.2. The least squares estimates of the b
+  parameters (highlighted) are bn0 = - 1,339, bn1 = 12.74, and bn2 = 85.95. Therefore,
+  the equation that minimizes SSE for this data set (i.e., the least squares prediction
+  equation) is
+
+  yn = - 1,339 + 12.74x1 + 85.95x2
+
+  c. The minimum value of the sum of the squared errors, also highlighted in Figure 12.2,
+  is SSE = 516,727.
+  SECTION 12.2 ■ Estimating and Making Inferences about the b Parameters 687
+
+Figure 12.1
+
+MINITAB side-by-side
+scatterplots for the data of
+Table 12.1
+
+Figure 12.2
+
+MINITAB analysis of the
+auction price model
+
+  d. Recall that the estimator of s2 for the straight-line model is s2 = SSE> 1n - 22,
+  and note that the denominator is (n - Number of estimated b parameters), which
+  is 1n - 22 in the straight-line model. Since we must estimate the three parameters
+  b0, b1, and b2, for the first-order model, the estimator of s2 is
+  s2 = n - 3 = 32 - 3 = 29 = SSE SSE 516,727 17,818
+
+  This value, often called the mean square for error (MSE), is also highlighted at the
+  bottom of the MINITAB printout in Figure 12.2. The estimate of s, then, is
+
+  s = 217,818 = 133.5
+
+  which is highlighted in the middle of the printout in Figure 12.2. One useful interpretation
+  of the estimated standard deviation s is that the interval {2s will provide a rough
+  approximation to the accuracy with which the model will predict future values of y for
+  given values of x. Thus, we expect the model to provide predictions of auction price to
+  within about {2s = {21133.52 = {267 dollars.*
+
+  *The {2s approximation improves as the sample size is increased. We will provide a more precise methodology
+  for the construction of prediction intervals in Section 12.4.
+688  CHAPTER 12 ■ Multiple Regression and Model Building
+
+  Look Back As with simple linear regression, we will use the estimator of s2 both to check
+  the utility of the model (Section 12.3) and to provide a measure of the reliability of
+  predictions and estimates when the model is used for those purposes (Section 12.4).
+  Thus, you can see that the estimation of s2 plays an important part in the development
+  of a regression model.
+
+  ■ Now Work Exercise 12.6a–c
+
+  Estimator of S2 for a Multiple-Regression Model with k Independent Variables
+  s2 = n - Number of estimated = SSE SSE b parameters n - 1k + 12
+
+  After obtaining the least squares prediction equation, the analyst will usually want
+  to make meaningful interpretations of the b estimates. Recall that in the straight-line
+  model (Chapter 11)
+
+  y = b0 + b1x + e
+
+  b0 represents the y-intercept of the line and b1 represents the slope of the line. From
+  our discussion in Chapter 11, b1 has a practical interpretation: the mean change in y
+  for every 1-unit increase in x. When the independent variables are quantitative, the
+  b parameters in the first-order model specified in Example 12.1 have similar inter-
+  pretations. The difference is that when we interpret the b that multiplies one of the
+  variables (e.g., x1), we must be certain to hold the values of the remaining independent
+  variables (e.g., x2, x3) fixed.
+
+  To see this, suppose that the mean E(y) of a response y is related to two quantita-
+  tive independent variables x1 and x2 by the first-order model
+
+  E1y2 = 1 + 2x1 + x2
+
+  In other words, b0 = 1, b1 = 2, and b2 = 1.
+  Now, when x2 = 0, the relationship between E(y) and x1 is given by
+
+  E1y2 = 1 + 2x1 + 102 = 1 + 2x1
+
+  A MINITAB graph of this relationship (a straight line) is shown in Figure 12.3. Similar
+  graphs of the relationship between E(y) and x1 for x2 = 1, namely,
+
+  E1y2 = 1 + 2x1 + 112 = 2 + 2x1
+
+Figure 12.3
+MINITAB graph of
+E1y2 = 1 + 2x1 + x2 for
+x2 = 0, 1, 2
+  SECTION 12.2 ■ Estimating and Making Inferences about the b Parameters 689
+
+  and for x2 = 2, that is,
+
+  E1y2 = 1 + 2x1 + 122 = 3 + 2x1
+
+  also are shown in Figure 12.3. Note that the slopes of the three lines are all equal to
+  b1 = 2, the coefficient that multiplies x1.
+
+  Figure 12.3 exhibits a characteristic of all first-order models: If you graph E(y) versus
+  any one variable—say, x1—for fixed values of the other variables, the result will always be
+  a straight line with slope equal to b1. If you repeat the process for other values of the fixed
+  independent variables, you will obtain a set of parallel straight lines. This indicates that the
+  effect of the independent variable xi on E(y) is independent of all the other independent
+  variables in the model, and this effect is measured by the slope bi (see note in box on p. 684).
+
+  A MINITAB three-dimensional graph of the model E1y2 = 1 + 2x1 + x2 is shown
+  in Figure 12.4. Note that the graph is a plane. If you slice the plane at a particular value
+  of x2 (say, x2 = 0), you obtain a straight line relating E(y) to x1 (e.g., E1y2 = 1 + 2x1).
+  Similarly, if you slice the plane at a particular value of x2 (say, x2 = 0), you obtain a straight
+  line relating E(y) to x1 (e.g., E1y2 = 1 + 2x1). Similarly, if you slice the plane at a partic-
+  ular value of x1, you obtain a straight line relating E(y) to x2. Since it is more difficult to
+  visualize three-dimensional and, in general, k-dimensional surfaces, we will graph all the
+  models presented in this chapter in two dimensions. The key to obtaining these graphs is to
+  hold fixed all but one of the independent variables in the model.
+
+Figure 12.4
+MINITAB 3-dimensional graph
+of E1y2 = 1 + 2x1 + x2
+
+Example 12.2  Problem Refer to the first-order model for auction price y considered in Example 12.1.
+  Interpret the estimates of the b parameters in the model.
+  GFCLOCK
+  Solution The least squares prediction equation, as given in Example 12.1, is
+Interpreting the B  yn = - 1,339 + 12.74x1 + 85.95x2. We know that with first-order models, b1 represents
+  the slope of the line relating y to x1 for fixed x2. That is, b1 measures the change in E(y)
+Estimates—Clock Auction  for every one-unit increase in x1 when the other independent variable in the model is
+  held fixed. A similar statement can be made about b2: b2 measures the change in E(y) for
+Price Model  every one-unit increase in x2 when the other x in the model is held fixed. Consequently,
+  we obtain the following interpretations:
+
+  bn1 = 12.74: We estimate the mean auction price E1y2 of an antique clock
+  to increase $12.74 for every 1-year increase in age 1x12 when the number of
+  bidders 1x22 is held fixed.
+
+  bn2 = 85.95: We estimate the mean auction price E1y2 of an antique clock
+  to increase $85.95 for every 1-bidder increase in the number of bidders 1x22
+  when age 1x12 is held fixed.
+
+  The value bn0 = -1,339 does not have a meaningful interpretation in this example.To see
+  this, note that yn = bn0 when x1 = x2 = 0. Thus, bn0 = - 1,339 represents the estimated
+  mean auction price when the values of all the independent variables are set equal to 0.
+  Since an antique clock with these characteristics—an age of 0 years and 0 bidders on
+690  CHAPTER 12 ■ Multiple Regression and Model Building
+
+  the clock—is not practical, the value of bn0 has no meaningful interpretation. In general,
+  bn0 will not have a practical interpretation unless it makes sense to set the values of the
+  x’s simultaneously equal to 0.
+
+  Look Back In general, bn0 will not have a practical interpretation unless it makes sense to
+  set the values of the x’s simultaneously equal to 0.
+
+  ■ Now Work Exercise 12.17a–b
+
+  ! CAuTIoN The interpretation of the b parameters in a multiple-regression model will
+  depend on the terms specified in the model. The interpretations in Example 12.2 are for
+  a first-order linear model only. In practice, you should be sure that a first-order model
+  is the correct model for E(y) before making b interpretations. [We discuss alternative
+  models for E(y) in Sections 12.5–12.8.]
+
+  Inferences about the individual b parameters in a model are obtained with the
+  use of either a confidence interval or a test of hypothesis, as outlined in the following
+  boxes:*
+
+  A 10011 − A2% Confidence Interval for a B Parameter
+  bni { 1ta>22sbni
+
+  where ta>2 is based on n - 1k + 12 degrees of freedom and
+  n = Number of observations
+
+  k + 1 = Number of b parameters in the model
+
+  Test of an Individual Parameter Coefficient in the Multiple-Regression Model
+  bni
+
+  Test statistic: tc =
+  sbni
+
+  Lower-Tailed Test  Upper-Tailed Test  Two-Tailed Test
+
+  H0: bi = 0  H0: bi = 0  H0: bi = 0
+  Ha: bi 6 0  Ha: bi 7 0  Ha: bi ≠ 0
+  Rejection region: tc 6 - ta  ͉ tc ͉ 7 ta>2
+  tc 7 ta
+  p@value: P1t 6 tc2  2 # P1t 7 ͉ tc ͉ 2
+  P1t 7 tc2
+
+  where the t distribution is based on n - 1k + 12 degrees of freedom and
+  n = Number of observations
+
+  k + 1 = Number of b parameters in the model
+
+  Conditions Required for Valid Inferences about Individual B Parameters
+  The four assumptions about the probability distribution for the random error e (p. 684).
+
+  We illustrate these methods with another example.
+
+  *The formulas for computing bni and its standard error are so complicated that the only reasonable way to
+  present them is by using matrix algebra. We do not assume a prerequisite of matrix algebra for this text, and
+  in any case, we think that the formulas can be omitted in an introductory course without serious loss. They are
+  programmed into almost all statistical software packages with multiple-regression routines and are presented
+  in some of the texts listed in the references.
+  SECTION 12.2 ■ Estimating and Making Inferences about the b Parameters 691
+
+ Example 12.3  Problem Refer to Examples 12.1 and 12.2. The collector of antique grandfather clocks
+  knows that the price (y) received for the clocks increases linearly with the age 1x12 of
+  GFCLOCK  the clocks. Moreover, the collector hypothesizes that the auction price (y) of the clocks
+  will increase linearly as the number of bidders 1x22 increases. Use the information on
+Inferences about the B  the MINITAB printout shown in Figure 12.2 (p. 687) to
+
+Parameters—Auction  a. Test the hypothesis that the mean auction price of a clock increases as the number of
+  bidders increases when age is held constant (i.e., when b2 7 0). (Use a = .05.)
+Price Model
+  b. Find a 90% confidence interval for b1 and interpret the result.
+
+  Solution
+
+  a. The hypotheses of interest concern the parameter b2. Specifically,
+
+  H0: b2 = 0
+  Ha: b2 7 0
+
+  The test statistic is a t-statistic formed by dividing the sample estimate bn2 of the
+  parameter b2 by the estimated standard error of bn2 (denoted sbn 2). These estimates,
+  bn2 = 85.953 and sbn = 2 8.729, as well as the calculated t-value,
+
+  Test statistic: t bn = 2 85.953 = = 9.85
+  sbn 2 8.729
+
+  are highlighted on the MINITAB printout in Figure 12.2.
+
+  The rejection region for the test is found in exactly the same way as the rejection
+  regions for the t-tests in previous chapters. That is, we consult Table III in Appendix B to
+  obtain an upper-tail value of t. This is a value ta such that P1t 7 ta2 = a. We can then
+  use this value to construct rejection regions for either one-tailed or two-tailed tests.
+
+  For a = .05 and n - 1k + 12 = 32 - 12 + 12 = 29 df, the critical t-value
+  obtained from Table III is t.05 = 1.699. Therefore,
+
+  Rejection region: t 7 1.699 1see Figure 12.52
+
+  t
+
+Figure 12.5  0  Rejection
+Rejection region for
+H0: b2 = 0 vs. Ha: b2 7 0  region
+
+  1.699
+
+  Since the test statistic value, t = 9.85, falls into the rejection region, we have suffi-
+  cient evidence to reject H0. Thus, the collector can conclude that the mean auction price
+  of a clock increases as the number of bidders increases when age is held constant. Note
+  that the two-tailed observed significance level of the test (highlighted on the printout) is
+  approximately .000. Since the one-tailed p-value (half this value) is also .000, any non-
+  zero a will lead us to reject H0.
+  b. From the box, a 90% confidence interval for b1 is
+
+  bn1 { ta>2 sbn 1 = bn 1 { t.05sbn1
+
+  Substituting bn1 = 12.74, sbni = .905 (both obtained from the MINITAB printout in
+  Figure 12.2), and t.05 = 1.699 (from part a) into the equation, we obtain
+
+  12.74 { 1.6991.9052 = 12.74 { 1.54
+
+  or (11.20, 14.28). Thus, we are 90% confident that b1 falls between 11.20 and 14.28.
+  Since b1 is the slope of the line relating the auction price (y) to the age of the clock
+692  CHAPTER 12 ■ Multiple Regression and Model Building
+
+  1x12, we conclude that the price increases between $11.20 and $14.28 for every 1-year
+  increase in age, holding number of bidders 1x22 constant.
+
+  Look Back When interpreting the b multiplied by one x, be sure to hold fixed the values
+  of the other x’s in the model.
+
+  ■ Now Work Exercise 12.19c–d
+
+12.3 Evaluating Overall Model Utility
+
+  In Section 12.2, we demonstrated the use of t-tests in making inferences about b
+  parameters in a multiple-regression model. There are caveats, however, to conducting
+  these t-tests for the purposes of determining which x’s are useful for predicting y. Several
+  such caveats are listed in the following box:
+
+  Use Caution When Conducting t-Tests on the B Parameters
+
+  It is dangerous to conduct t-tests on the individual b parameters in a first-order
+  linear model for the purpose of determining which independent variables are useful
+  for predicting y and which are not. If you fail to reject H0: bi = 0, several conclu-
+  sions are possible:
+
+  1. There is no relationship between y and xi.
+
+  2. A straight-line relationship between y and xi exists (holding the other x’s in the
+  model fixed), but a Type II error occurred.
+
+  3. A relationship between y and xi (holding the other x’s in the model fixed) ex-
+  ists, but is more complex than a straight-line relationship (e.g., a curvilinear
+  relationship may be appropriate). The most you can say about a b parameter
+  test is that there is either sufficient (if you reject H0: bi = 0) or insufficient (if
+  you do not reject H0: bi = 0) evidence of a linear (straight-line) relationship
+  between y and xi.
+
+  In addition, conducting t-tests on each b parameter in a model is not the best way to
+  determine whether the overall model is contributing information relevant to the predic-
+  tion of y. If we were to conduct a series of t-tests to determine whether the independent
+  variables are contributing to the predictive relationship, we would be very likely to make
+  one or more errors in deciding which terms to retain in the model and which to exclude.
+
+  For example, suppose you fit a first-order model in 10 quantitative x variables and
+  decide to conduct t-tests on all 10 of the individual b’s in the model, each at a = .05.
+  Even if all the b parameters (except b0) are equal to 0, approximately 40% of the time
+  you will incorrectly reject the null hypothesis at least once and conclude that some b
+  parameter differs from 0.* Thus, in multiple-regression models for which a large number
+  of independent variables are being considered, conducting a series of t-tests may include
+  a large number of insignificant variables and exclude some useful ones. If we want to
+  test the utility of a multiple-regression model, we will need a global test (one that en-
+  compasses all the b parameters). We would also like to find some statistical quantity that
+  measures how well the model fits the data.
+
+  *The proof of this result (assuming independence of tests) proceeds as follows:
+  P1Reject H0 at least once ͉ b1 = b2 = g = b10 = 02
+  = 1 - P1Reject H0 no times ͉ b1 = b2 = g = b10 = 02
+
+  … 1 - [P1Accept H0: b1 = 0 ͉ b1 = 02 # P1Accept H0: b2 = 0 ͉ b2 = 02 ͉ # g# P1Accept H0: b10 = 0 ͉ b10 = 02]
+
+  = 1 - [11 - a210] = 1 - 1.95210 = .401.
+
+  For dependent tests, the Bonferroni inequality states that
+
+  P1Reject H0 at least once ͉ b1 = b2 = g = b10 = 02 … 101a2 = 101.052 = .50
+  SECTION 12.3 ■ Evaluating Overall Model Utility 693
+
+  We commence with the easier problem: finding a measure of how well a linear
+  model fits a set of data. For this, we use the multiple-regression equivalent of r2, the
+  coefficient of determination for the straight-line model (Chapter 11), as given in the
+  next definition.
+
+  The multiple coefficient of determination, R2, is defined as
+
+  R2 = 1 - = = SSE SSyy - SSE Explained variability
+  SSyy  SSyy  Total variability
+
+  and represents the proportion of the total sample variation in y that can be “ex-
+  plained” by the multiple-regression model.
+
+  Just like r2 in the simple linear model, R2 represents the fraction of the sample varia-
+  tion of the y-values (measured by SSyy) that is explained by the least squares predic-
+  tion equation. Thus, R2 = 0 implies a complete lack of fit of the model to the data, and
+  R2 = 1 implies a perfect fit, with the model passing through every data point. In general,
+  the larger the value of R2, the better the model fits the data.
+
+  To illustrate, consider the first-order model for the grandfather clock auction price,
+  presented in Examples 12.1–12.3. A SAS printout of the analysis is shown in Figure 12.6.
+  The value R2 = .8923 is highlighted in Figure 12.6. This high value of R2 implies that
+  using the independent variables age and number of bidders in a first-order model ex-
+  plains 89.2% of the total sample variation (measured by SSyy) in auction price y. Thus,
+  R2 is a sample statistic that tells how well the model fits the data and thereby represents
+  a measure of the usefulness of the entire model.
+
+Figure 12.6
+
+SAS analysis of the auction
+price model
+
+  A large value of R2 computed from the sample data does not necessarily mean
+  that the model provides a good fit to all of the data points in the population. For exam-
+  ple, a first-order linear model that contains three parameters will provide a perfect fit
+  to a sample of three data points, and R2 will equal 1. Likewise, you will always obtain a
+  perfect fit 1R2 = 12 to a set of n data points if the model contains exactly n parameters.
+  Consequently, if you want to use the value of R2 as a measure of how useful the model
+  will be in predicting y, it should be based on a sample that contains substantially more
+  data points than the number of parameters in the model.
+
+  ! CAuTIoN In a multiple-regression analysis, use the value of R2 as a measure of how
+  useful a linear model will be in predicting y only if the sample contains substantially
+  more data points than the number of b parameters in the model.
+694  CHAPTER 12 ■ Multiple Regression and Model Building
+
+  As an alternative to using R2 as a measure of model adequacy, the adjusted mul-
+  tiple coefficient of determination, denoted Ra2, is often reported. The formula for Ra2 is
+  given in the next definition.
+
+  The adjusted multiple coefficient of determination is given by
+
+  Ra = 1 - c2 1n - 12 SSE
+  da b
+  n - 1k + 12 SSyy
+
+  = 1 - c 1n - 12 d 11 - R22
+  n - 1k + 12
+
+  Note: Ra2 … R2.
+
+  R2 and Ra2 have similar interpretations. However, unlike R2, Ra2 takes into account
+  (“adjusts” for) both the sample size n and the number of b parameters in the model.
+  Ra2 will always be smaller than R2 and, more importantly, cannot be “forced” to
+  1 simply by adding more and more independent variables to the model. Consequently,
+  analysts prefer the more conservative Ra2 in choosing a measure of model adequacy.
+  The value of Ra2 is also highlighted in Figure 12.6. Note that Ra2 = .8849, a value only
+  slightly smaller than R2.
+
+  Despite their utility, R2 and Ra2 are only sample statistics. Therefore, it is
+  dangerous to judge the global usefulness of a model solely on the basis of these val-
+  ues. A better method is to conduct a test of hypothesis involving all the b param-
+  eters (except b0) in a model. In particular, for the general multiple-regression model
+  E1y2 = b0 + b1x1 + b2x2 + g + bkxk, we would test
+
+  H0: b1 = b2 = g = bk = 0
+  Ha: At least one of the coefficients is nonzero
+
+  The test statistic used to test this hypothesis is an F-statistic, and several equivalent
+  versions of the formula can be used (although we will usually rely on the computer to
+  calculate the F-statistic):
+
+  1SSyy - SSE2 >k Mean square 1Model2
+  Test statistic: F = SSE>[n - 1k + 12] = Mean square 1Error2
+
+  R2 > k
+  11 = - R22 >[n - 1k + 12]
+
+  Both formulas indicate that the F-statistic is the ratio of the explained variability
+  divided by the number of degrees of freedom in the model to the unexplained vari-
+  ability divided by the number of degrees of freedom associated with the error. (For
+  this reason, the test is often called the “analysis-of-variance” F-test.) Thus, the larger
+  the proportion of the total variability accounted for by the model, the larger is the
+  F-statistic.
+
+  To determine when the ratio becomes large enough that we can confidently re-
+  ject the null hypothesis and conclude that the model is more useful than no model at
+  all in predicting y, we compare the calculated F-statistic with a tabulated F-value with
+  k df in the numerator and [n - 1k + 12] df in the denominator. Recall that tabulations
+  of the F-distribution for various values of a are given in Tables V, VI, VII, and VIII of
+  Appendix B. We thus have
+
+  Rejection region: F 7 Fa, where F is based on k numerator and
+  n - 1k + 12 denominator degrees of freedom
+  SECTION 12.3 ■ Evaluating Overall Model Utility 695
+
+  The analysis-of-variance F-test for testing the overall utility of the multiple-
+  regression model is summarized in the following box:
+
+  Testing the Global Usefulness of the Model: The Analysis-of-Variance F-Test
+
+  H0: b1 = b2 = g = bk = 0  (All model terms are unimportant in predicting y.)
+  Ha: At least one bi ≠ 0  (At least one model term is useful in predicting y.)
+
+  1SSyy - SSE2 >k  R2 > k
+  Test statistic: Fc = SSE>[n - 1k + 12] 11 = - R22 >[n - 1k + 12]
+
+  Mean square 1Model2
+  =
+
+  Mean square 1Error2
+
+  where n is the sample size and k is the number of terms in the model.
+
+  Rejection region: Fc 7 Fa
+  p-value: P1F 7 Fc2
+  where the F-distribution has k numerator degrees of freedom and [n - 1k + 12]
+  denominator degrees of freedom.
+
+  Conditions Required for the Global F-Test to Be Valid
+  The standard regression assumptions about the random error component (Section 12.1).
+
+  ! CAuTIoN A rejection of the null hypothesis H0: b1 = b2 = g = bk = 0 in the
+  global F-test leads to the conclusion [with 10011 - a2% confidence] that the model is
+  statistically useful. However, “useful” does not necessarily mean “best.” Another model
+  may prove even more useful in terms of providing more reliable estimates and predic-
+  tions. This global F-test is usually regarded as a test that the model must pass to merit
+  further consideration.
+
+ Example 12.4  Problem Refer to Example 12.3, in which an antique collector modeled the auction price
+  y of grandfather clocks as a function of the age x1 of the clock and the number x2 of
+  GFCLOCK  bidders. Recall that the hypothesized first-order model is
+
+Assessing overall Model  y = b0 + b1x1 + b2x2 + e
+
+Adequacy—Antique Clock  a. Find and interpret the adjusted coefficient of determination, Ra2, for this example.
+  b. Conduct the global F-test of model usefulness at the a = .05 level of significance.
+Auction Price Model
+
+  Solution
+
+  a. The Ra2 value (highlighted in the SAS printout shown in Figure 12.6) is .8849. This
+  implies that the least squares model has explained about 88.5% of the total sample
+  variation in y values (auction prices), after adjusting for sample size and number of
+  independent variables in the model.
+
+  b. The elements of the global test of the model are as follows:
+
+  H0: b1 = b2 = 0 [Note: k = 2]
+
+  Ha: At least one of the two model coefficients is nonzero
+
+  Test statistic: F = = = MS1Model2 2,141,531 120.19  (see Figure 12.6)
+  MSE  17,818
+
+  p@value: less than .0001
+
+  Conclusion: Since a = .05 exceeds the observed significance level, p 6 .0001,
+  the data provide strong evidence that at least one of the model coefficients
+  is nonzero. The overall model appears to be statistically useful in predicting
+  auction prices.
+696  CHAPTER 12 ■ Multiple Regression and Model Building
+
+  Look Back Can we be sure that the best model for prediction has been found if the
+  global F-test indicates that a model is useful? Unfortunately, we cannot. The addition of
+  other independent variables may improve the usefulness of the model (see Caution on
+  page 667). We consider more complex multiple regression models in Sections 12.5–12.8.
+
+  ■ Now Work Exercise 12.18
+
+  In this section, we discussed several different statistics for assessing the utility of a
+  multiple-regression model: t-tests on the individual b parameters, R2, Ra2, and the global
+  F-test. Both R2 and Ra2 are indicators of how well the prediction equation fits the data.
+  Intuitive evaluations of the contribution of the model based on R2 must be examined
+  with care. Unlike Ra2, the value of R2 increases as more and more variables are added to
+  the model. Consequently, you could force R2 to take a value very close to 1 even though
+  the model contributes no information relevant to the prediction of y. In fact, R2 equals 1
+  when the number of terms in the model (including b0) equals the number of data points.
+  Therefore, you should not rely solely on the value of R2 (or even Ra2) to tell you whether
+  a model is useful in predicting y.
+
+  Conducting t-tests on all the b parameters is also not the best method of testing the
+  global utility of a model, since these multiple tests result in a high probability of making
+  at least one Type I error. Use the F-test for testing the global utility of the model.
+
+  After we have used the F-test and determined that the overall model is useful in
+  predicting y, we may elect to conduct one or more t-tests on the individual b parameters.
+  However, the test (or tests) to be conducted should be decided a priori—that is, prior
+  to fitting the model. Also, we should limit the number of t-tests conducted, to avoid the
+  potential problem of making too many Type I errors. Generally, the regression analyst
+  will conduct t-tests only on the “most important” b’s. We provide insight into identifying
+  the most important b’s in a linear model in Sections 12.5–12.8.
+
+  Recommendation for Checking the Utility of a Multiple-Regression Model
+
+  1. First, use the F-test to conduct a test of the adequacy of the overall model; that
+  is, test H0: b1 = b2 = g = bk = 0. If the model is deemed adequate (i.e., if
+  you reject H0), then proceed to step 2. Otherwise, you should hypothesize and
+  fit another model. The new model may include more independent variables or
+  higher order terms.
+
+  2. Conduct t-tests on those b parameters in which you are particularly interested
+  (i.e., the “most important” b’s). These usually involve only the b’s associated
+  with higher order terms (x2, x1x2, etc.). However, it is a safe practice to limit
+  the number of b’s that are tested. Conducting a series of t-tests leads to a high
+  overall Type I error rate a.
+
+  3. Examine the values of Ra2 and 2s to evaluate how well, numerically, the model
+  fits the data.
+
+Exercises 12.1–12.30  Learning the Mechanics
+
+Understanding the Principles  12.6 MINITAB was used to fit the model y = b0 +
+  b1x1 + b2x2 + e to n = 20 data points, and the printout
+12.1 Write a first-order model relating E(y) to  on p. 697 was obtained.
+  a. two quantitative independent variables
+  b. four quantitative independent variables  a. What are the sample estimates of b0, b1, and b2?
+  c. five quantitative independent variables  b. What is the least squares prediction equation?
+
+12.2 List the four assumptions about the random error e  c. Find SSE, MSE, and s. Interpret the standard deviation
+  required for a multiple-regression analysis.
+  in the context of the problem.
+12.3 Outline the six steps in a multiple-regression analysis.  d. Test H0: b1 = 0 against Ha: b1 ≠ 0. Use a = .05.
+  e. Use a 95% confidence interval to estimate b2.
+12.4 What are the caveats to conducting t-tests on all of the  f. Find R2 and Ra2 and interpret these values.
+  individual b parameters in a multiple-regression model?  g. Use the two formulas given in this section to calculate
+
+12.5 How should you test the overall adequacy of a multiple-  the test statistic for the null hypothesis H0: b1 = b2 = 0.
+  regression model?
+  SECTION 12.3 ■ Evaluating Overall Model Utility 697
+
+  MINITAB output for Exercise 12.6  c. How do the graphed lines in parts a and b relate to each
+  other? What is the slope of each line?
+  Compare your results with the test statistic shown on
+  the printout.  d. If a linear model is first order in three independent
+  h. Find the observed significance level of the test you con-  variables, what type of geometric relationship will you
+  ducted in part g. Interpret the value.  obtain when you graph E(y) as a function of one of the
+12.7 Suppose you fit the model  independent variables for various combinations of val-
+  ues of the other independent variables?
+  y = b0 + b1x1 + b2x2 + b3x3 + e
+  to n = 30 data points and obtain the following result:  12.11 Suppose you fit the first-order model
+
+  yn = 2.2 - 2.8x1 + 1.9x2 + .97x3  y = b0 + b1x1 + b2x2 + b3x3 + b4x4 + b5x5 + e
+  The estimated standard errors of bn2 and bn3 are 1.06 and .27,
+  respectively.  to n = 27 data points and obtain
+  a. Test the null hypothesis H0: b2 = 0 against the alterna-
+  SSE = .33 R2 = .92
+  tive hypothesis Ha: b2 ≠ 0. Use a = .05.
+  b. Test the null hypothesis H0: b3 = 0 against the alterna-  12.12  a. Do the values of SSE and R2 suggest that the model
+  provides a good fit to the data? Explain.
+  tive hypothesis Ha: b3 ≠ 0. Use a = .05.
+  c. The null hypothesis H0: b2 = 0 is not rejected. In con-  b. Is the model of any use in predicting y? Test the null
+  hypothesis H0: b1 = b2 = g = b5 = 0 against the
+  trast, the null hypothesis H0: b3 = 0 is rejected. Explain  alternative hypothesis: At least one of the parameters
+  how this can happen even though bn2 7 bn3?  b1, b2, g, b5 is nonzero. Use a = .10.
+12.8 Suppose you fit the first-order multiple-regression model
+  If the analysis-of-variance F-test leads to the conclusion
+  y = b0 + b1x1 + b2x2 + e  that at least one of the model parameters is nonzero, can
+  to n = 25 data points and obtain the prediction equation  you conclude that the model is the best predictor for the
+  dependent variable y? Can you conclude that all of the
+  yn = 6.4 + 3.1x1 + .92x2  terms in the model are important in predicting y? What is
+  The estimated standard deviations of the sampling distri-  the appropriate conclusion?
+  butions of bn1 and bn2 are 2.3 and .27, respectively.
+  a. Test H0: b1 = 0 against Ha: b1 7 0. Use a = .05.  Applying the Concepts—Basic
+  b. Test H0: b2 = 0 against Ha: b2 ≠ 0. Use a = .05.
+  c. Find a 90% confidence interval for b1. Interpret the  12.13  Tilting in online poker. In poker, making bad decisions
+
+  interval.  due to negative emotions is known as tilting. A study in the
+  d. Find a 99% confidence interval for b2. Interpret the
+  Journal of Gambling Studies (Mar. 2014) investigated the
+  interval.
+12.9 How is the number of degrees of freedom available for esti-  factors that affect the severity of tilting for online poker
+
+  mating s2 (the variance of e) related to the number of inde-  players. A survey of 214 online poker players produced
+  pendent variables in a regression model?
+12.10 Consider the following first-order model equation in three  data on the dependent variable, severity of tilting (y), mea-
+  quantitative independent variables:
+  sured on a 30-point scale (where higher values indicate a
+  E1y2 = 2 + 4x1 - 2x2 - 5x3
+  a. Graph the relationship between y and x1 for x2 = - 2  higher severity of tilting). Two independent variables mea-
+
+  and x3 = 2.  sured were poker experience (x1, measured on a 30-point
+  b. Repeat part a for x2 = 3 and x3 = 3.  scale) and perceived effect of experience on tilting (x2,
+  measured on a 28-point scale). The researchers fit the in-
+  teraction model, E1y2 = b0 + b1x1 + b2x2 + b3x1x2. The
+  results are shown below (p-values in parentheses).
+
+  bn1 = .22  bn2 = - .25  bn3 = - .11  R2 = .18  F = 31.98
+  t = 5.75  t = -5.44  t = -5.61  16 .0012
+  16 .0012  16 .0012  16 .0012
+
+  a. Evaluate the overall adequacy of the model. Use
+  a = .01 to test statistical significance.
+
+  b. The researchers hypothesize that the rate of change of
+  severity of tilting (y) with perceived effect of experience
+  on tilting (x2) depends on poker experience (x1). Do
+  you agree? Test using a = .01.
+
+  12.14  Predicting elements in aluminum alloys. Aluminum scraps that
+  are recycled into alloys are classified into three categories: soft-
+  drink cans, pots and pans, and automobile crank chambers. A
+  study of how these three materials affect the metal elements
+  present in aluminum alloys was published in Advances in
+  Applied Physics (Vol. 1, 2013). Data on 126 production runs
+  at an aluminum plant were used to model the percentage (y)
+  of various elements (e.g., silver, boron, iron) that make up the
+  aluminum alloy. Three independent variables were used in
+  the model: x1 = proportion of aluminum scraps from cans,
+698 CHAPTER 12 ■ Multiple Regression and Model Building
+
+  Table for Exercise 12.14
+
+  Element (y)  b0  b1  b2  b3  F p-value R2
+  Silver
+  .0020  - .0000141  - .0000123  - .0000357  .049  .075
+  Iron  (.001)  (.015)  (.035)  (.009)
+  - 5.958  .079  .084  .054  6 .001 .783
+  16 .0012  16 .0012  16 .0012  16 .0012
+
+  x2 = proportion of aluminum scraps from pots/pans, and  a. Give the equation of a first-order model for y as a func-
+  x3 = proportion of aluminum scraps from crank chambers.  tion of the four independent variables.
+  The first-order model, E1y2 = b0 + b1x1 + b2x2 + b3x3,
+  was fit to the data for several elements. The estimates of the  b. The coefficient of determination for the model, part a,
+  was reported as R2 = .24. Give a practical interpreta-
+  model parameters (p-values in parentheses) for silver and iron
+  tion of this value.
+  are shown in the table above.
+  c. Give the null hypothesis for testing the overall ade-
+  a. Is the overall model statistically useful (at a = .05) for  quacy of the model, part a.
+
+  predicting the percentage of silver in the alloy? If so,  d. The test,part c,resulted in F = 56.60 with p@value 6 .001.
+  give a practical interpretation of R2.  Interpret this result using a = .05.
+
+  b. Is the overall model statistically useful (at a = .05) for  e. The estimate of the beta coefficient for age (x2) was re-
+  ported as -.09. Give a practical interpretation of this value.
+  predicting the percentage of iron in the alloy? If so, give
+  a practical interpretation of R2.  12.17  Whales entangled in fishing gear. Refer to the Marine
+  Mammal Science (April 2010) study of whales entangled
+  c. Based on the parameter estimates, sketch the relationship  in fishing gear, Exercise 10.32 (p. 552). Data collected for
+  a sample of 207 entanglements in the East Sea of Korea
+  between percentage of silver (y) and proportion of alumi-  were used to model the length (y) of an entangled whale (in
+  meters). Two independent variables used to predict whale
+  num scraps from cans (x1). Conduct a test to determine if  length were water depth of the entanglement (x1, in meters)
+  this relationship is statistically significant at a = .05.  and distance of the entanglement from land (x2, in miles).
+  a. Give the equation of a first-order model for length (y)
+  d. Based on the parameter estimates, sketch the relationship
+  as a function of the two independent variables.
+  between percentage of iron (y) and proportion of alumi-  b. The researchers theorize that the length of an entan-
+
+  num scraps from cans (x1). Conduct a test to determine if  gled whale will increase linearly as the water depth
+  this relationship is statistically significant at a = .05.  increases, for entanglements that are a fixed distance
+  from land. Explain how to use the model, part a, to test
+12.15  Characteristics of lead users. Creativity and Innovation  this theory.
+  Management (Feb. 2008) published an article on identify-  c. The p-value for testing H0: b2 = 0 in the model, part a,
+  ing the social network characteristics of lead users of chil-  was reported as .013. Interpret this result using a = .05.
+  dren’s computer games. Data were collected for n = 326
+  children and the following variables measured: lead-user  12.18  Estimation of urban population by means of satellite
+  rating (y, measured on a 5-point scale), gender (x1 = 1 if  images. Can the population of an urban area be esti-
+  female, 0 if male), age (x2, years), degree of centrality (x3,  mated without taking a census? Geographical Analysis
+  measured as the number of direct ties to other peers in the  (Jan. 2007) demonstrated the use of satellite image maps
+  network), and betweenness centrality (x4, measured as the  in estimating urban population. A portion of Columbus,
+  number of shortest paths between peers). A first-order  Ohio, was partitioned into n = 125 census block groups,
+  model for y was fit to the data, yielding the following least  and satellite imagery was obtained. For each census
+  squares prediction equation:  block, the following variables were measured: population
+  density (y), proportion of block with low-density residen-
+  yn = 3.58 + .01x1 - .06x2 - .01x3 + .42x4  tial areas 1x12, and proportion of block with high-density
+  residential areas 1x22. A first-order model for y was fitted
+  a. Give two properties of the errors of prediction that re-  to the data and produced the following results:
+
+  sult from using the method of least squares to obtain  yn = - .0304 + 2.006x1 + 5.006x2, R2 = .686
+
+  the parameter estimates.
+
+  b. Give a practical interpretation of the estimate of b4 in
+  the model.
+
+  c. A test of H0: b4 = 0 resulted in a p-value of .002. Make
+  the appropriate conclusion at a = .05.
+
+12.16  Dating and disclosure. Refer to the Journal of Adolescence  a. Give a practical interpretation of each b-estimate in
+  (Apr. 2010) study of adolescents’ disclosure of their dat-  the model.
+  ing and romantic relationships, Exercise 8.43 (p. 419).
+  Data collected for a sample of 222 high school students  b. Give a practical interpretation of the coefficient of
+  were used to determine the level of disclosure of the  determination, R2.
+  date’s identity to an adolescent’s mother (measured on a
+  5-point scale, where 1 = “never tell,” 2 = “rarely tell,”  c. State H0 and Ha for a test of the overall adequacy of the
+  3 = “sometimes tell,” 4 = “almost always tell,” and  model.
+  5 = “always tell”). Multiple regression was used to model
+  level of disclosure (y) to several independent variables, in-  d. Refer to part c. Compute the value of the test statistic.
+  cluding gender (x1 = 1 if female, 0 if male), age (x2, years),  e. Refer to parts c and d. Make the appropriate conclusion
+  dating experience (x3, years), and level of trust in parents
+  (x4, 5-point scale).  at a = .01.
+
+  12.19 Predicting runs scored in baseball. Consider a multiple-
+  regression model for predicting the total number of runs
+  scored by a Major League Baseball (MLB) team during a
+

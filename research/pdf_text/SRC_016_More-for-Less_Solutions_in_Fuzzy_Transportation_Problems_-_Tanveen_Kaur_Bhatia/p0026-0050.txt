@@ -1,0 +1,823 @@
+(iii) (2.4)
+
+2.2 Tabular Representation of Crisp Balanced
+Transportation Problems
+
+A crisp balanced transportation problem can be represented into tabular form as shown
+by Table 2.1.
+
+Table 2.1 Tabular representation of a crisp transportation problem
+  Availability
+
+Demand
+
+where,
+(i) m represents the number of sources.
+
+(ii) n represents the number of destinations.
+
+(iii) Si represents the ith source.
+
+(iv) Dj represents the jth destination.
+
+(v) The positive real number represents the cost for transporting one unit
+  quantity of the product from the ith source to the jth destination.
+
+(vi) The positive real number  represents the availability of the product at the ith
+  source.
+
+(vii) The positive real number  represents the demand of the product at the jth
+  destination.
+
+2.3 Tabular Representation of Symmetric Triangular
+Fuzzy Balanced Transportation Problems
+A symmetric triangular fuzzy balanced transportation problem can be represented into
+tabular form as shown by Table 2.2.
+
+Table 2.2 Tabular representation of a symmetric fuzzy balanced transportation problem
+  Availability
+
+ Demand
+
+  where,
+(i) The symmetric triangular fuzzy number
+
+  represents the fuzzy cost for transporting one unit quantity of product from the ith
+  source to the jth destination.
+(ii) The symmetric triangular fuzzy number
+  represents the fuzzy supply of product at the ith source.
+(iii) The symmetric triangular fuzzy number
+  represents the fuzzy demand of product at the jth destination.
+
+2.4 Crisp Linear Programming Problems Corresponding
+to Crisp Balanced Transportation Problems
+
+If it is assumed that the non-negative real number represents the quantity of the
+product to be supplied from the source to the jth destination and represents the
+total crisp transportation cost. Then, the crisp balanced transportation problem,
+represented by Table 2.1, can be formulated into its equivalent crisp linear programming
+problem (P2.1) or into its equivalent crisp linear programming problem (P2.2) (dual
+problem of the crisp linear programming problem (P2.1)).
+
+Problem
+  Subject to
+Problem
+  Subject to
+
+It is a well-known fact that the number of linearly independent constraints in the
+
+crisp linear programming problem (P2.1) will always be  . If it is assumed
+
+that the first constraint of the crisp linear programming problem (P2.1) is depending
+
+upon the remaining  constraints. Then, the total optimal transportation cost
+
+of the crisp balanced transportation problem, represented by Table 2.1, can be either
+
+obtained by solving the crisp linear programming problem  or by solving the
+
+crisp linear programming problem (P2.4) (dual of the crisp linear programming problem
+
+(P2.3)).
+
+Problem
+  Subject to
+
+Problem
+  Subject to
+
+,
+
+  are unrestricted variables  .
+
+2.5 Fuzzy Linear Programming Problems Corresponding
+to Symmetric Triangular Fuzzy Balanced Transportation
+Problems
+
+If it is assumed that the symmetric triangular fuzzy number
+  represents the fuzzy quantity of the product to
+
+be supplied from the ith source to the jth destination, the symmetric triangular fuzzy
+number represents the total fuzzy transportation cost and represents the zero
+triangular fuzzy number. Then, the symmetric triangular fuzzy balanced transportation
+problem, represented by Table 2.2, can be formulated into its equivalent fuzzy linear
+programming problem (P2.5) or into its equivalent crisp linear programming problem
+(P2.6) (dual problem of the fuzzy linear programming problem (P2.5)).
+
+Problem
+  Subject to
+
+Problem
+  Subject to
+
+It is pertinent to mention that the coefficient matrix corresponding to the constraints
+
+of the fuzzy linear programming problem (P2.5) is same as the coefficient matrix
+
+corresponding to the constraints of the crisp linear programming problem (P2.1).
+
+Therefore, the number of linearly independent constraints in the fuzzy linear
+
+programming problem (P2.5) will also be  . If it is assumed that the first
+
+constraint of the fuzzy linear programming problem (P2.5) is depending upon the
+
+remaining  constraints. Then, the total optimal fuzzy transportation cost of
+
+the symmetric triangular fuzzy balanced transportation problem, represented by Table
+
+2.2, can be either obtained by solving the fuzzy linear programming problem (P2.7) or
+
+by solving the crisp linear programming problem (P2.8) (dual of the fuzzy linear
+
+programming problem (P2.7)).
+
+Problem
+  Subject to
+Problem
+  Subject to
+
+The dual problem (P2.8) is obtained as follows.
+
+Step 1: Using Definition 2.1.10, the fuzzy linear programming problem (P2.7) can be
+transformed into its equivalent crisp linear programming problem (P2.9).
+
+Problem (P 2.9  )
+
+Subject to
+
+Step 2: Using the expression (2.2), the crisp linear programming problem (P2.9) can
+be transformed into its equivalent crisp linear programming problem (P2.10).
+
+Problem (P2.10  )
+
+Subject to
+  ;
+
+  ;
+
+  .
+
+Step 3: Using the expression (2.3), the crisp linear programming problem (P2.10) can
+be transformed into its equivalent crisp linear programming problem (P2.11).
+
+  Problem (P2.11)
+
+  Subject to
+  Constraints of the problem (P2.10).
+Step 4: Using the expression (2.4), the crisp linear programming problem (P2.11) can
+be transformed into its equivalent crisp linear programming problem (P2.12).
+
+  Problem (P2.12)
+
+  Subject to
+  Step 5: Using the duality theory [5], the crisp linear programming problem (P2.8)
+  represents the dual of the crisp linear programming problem (P2.12). Hence, the crisp
+  linear programming problem (P2.8) represents the dual of the fuzzy linear
+  programming problem (P2.7).
+
+2.6 Crisp Balanced Transportation Problems Equivalent
+to Symmetric Triangular Fuzzy Balanced Transportation
+Problems
+
+The following clearly indicates that the symmetric triangular fuzzy balanced
+transportation problem, represented by Table 2.2, is equivalent to crisp balanced
+transportation problem represented by Table 2.3.
+
+Table 2.3 Tabular representation of a crisp balanced transportation problem
+  Availability
+
+ Demand
+
+  It is obvious from Step 1 to Step 4 of Sect. 2.5 that the fuzzy linear programming
+problem (P2.3) corresponding to the symmetric triangular balanced fuzzy transportation
+problem, represented by Table 2.2, is equivalent to the crisp linear programming
+problem (P2.8). Also, it is obvious from Sect. 2.4 that the crisp linear programming
+problem (P2.8) is equivalent to crisp balanced transportation problem represented by
+Table 2.3.
+
+2.7 Proposed Sufficient Condition-I for the Existence of at
+Least One More-For-Less Solution
+
+It is obvious from Sect. 2.6 that the symmetric triangular fuzzy balanced transportation
+problem, represented by Table 2.2, is equivalent to the crisp balanced transportation
+problem represented by Table 2.3. Hence, to propose a sufficient condition-I for the
+existence of at least one more-less-solution for the symmetric triangular fuzzy balanced
+transportation problem, represented by Table 2.2, is equivalent to propose a sufficient
+condition-I for the existence of at least one more-less-solution for the crisp balanced
+transportation problem represented by Table 2.3. Keeping the same in mind, in this
+section, the following existing sufficient condition [4] can be used to check the
+existence of at least one more-for-less solution of crisp balanced transportation problem
+represented by Table 2.3.
+
+If in an optimal solution of the crisp linear programming problem (P2.8), there
+
+exist variables and such that  . Then, at least one more-for-
+
+less solution of crisp balanced transportation problem, represented by Table 2.3,
+
+will exist. Hence, at least one more-for-less solution of symmetric triangular
+
+fuzzy balanced transportation problem, represented by Table 2.2, will exist.
+
+This sufficient condition-I is obtained as follows.
+
+According to the duality theory, to find the total minimum transportation cost for the
+
+crisp balanced transportation problem, represented by Table 2.3, is equivalent to find the
+
+optimal value of the objective function i.e.,  of the crisp linear
+
+programming problem (P2.12) or the optimal value of the objective function i.e.,
+
+  of the dual problem (P2.8) of the crisp linear
+
+programming problem (P2.12).
+  Increasing the availability of the pth source and the demand of the qth destination by
+
+the positive quantity , the total crisp transportation cost of the modified problem is
+
+Substituting  (2.5)
+  in (2.5),
+
+Since, is a positive real number. So, the total crisp transportation cost i.e.,
+  of the modified problem will be less than the total crisp
+
+transportation cost i.e., only if  .
+2.8 Proposed Mehar Method-I
+
+In this section, a new method (named as Mehar method-I) is proposed to check the
+existence of at least one more-for-less solution as well as to find all more-for-less
+solutions (if exists) of symmetric triangular fuzzy balanced transportation problems.
+
+  The steps of the proposed Mehar method-I are as follows.
+
+Step 1: Use Step 1.1 to Step 1.4 to check that for the symmetric triangular fuzzy
+balanced transportation problem, represented by Table 2.2, at least one more-for-less
+solution will exist or not.
+
+Step 1.1: Transform the symmetric triangular fuzzy balanced transportation
+problem, represented by Table 2.2, into its equivalent crisp balanced transportation
+problem represented by Table 2.3.
+Step 1.2: Find an optimal solution
+
+of the problem (P2.8) by substituting the values of  and from Table 2.3.
+
+Step 1.3: Using the optimal values of  ,
+
+obtained in Step 1.2, construct a shadow price matrix  , where
+
+.
+
+Step 1.4: Check that all the elements of the shadow price matrix, obtained in
+
+Step 1.3, are non-negative or not.
+
+Case (i): If all the elements of the shadow price matrix, obtained in Step 1.3, are
+non-negative. Then, there does not exist a more-for-less solution.
+Case (ii): If at least one element of the shadow price matrix, obtained in Step
+1.3, is negative. Then, at least one more-for-less solution will exist.
+
+Step 2: If the element corresponding to the pth row and the qth column of the shadow
+
+price matrix, obtained in Step 1.3, is negative i.e., if  . Then, a more-for-
+
+less solution can be obtained by increasing the availability of the pth source and the
+demand of the qth destination with the help of Step 2.1 to Step 2.8 of the post-
+optimality analysis [5].
+
+Step 2.1: Construct the matrix
+  where,
+(i) is a positive real number.
+
+(ii) is the availability of the product at the source.
+
+(iii) is the demand of the product at the destination.
+
+Step 2.2: Identify the basic variables in an optimal solution of the crisp linear
+
+programming problem (P2.12).
+
+Step 2.3: Construct the basis matrix with the help of the coefficients of the
+
+identified optimal basic variables in the constraints of the crisp linear programming
+
+problem (P2.12).
+
+Step 2.4: Find the multiplicative inverse of the basis matrix i.e., find .
+
+Step 2.5: Find the matrix  .
+
+Step 2.6: Find the range of  for which all the elements of the
+
+matrix  , obtained in Step 2.5, are greater than or equal to zero.
+
+Step 2.7: For any value of lying in its range, obtained in Step 2.6, the ith
+
+element (say, ) of the matrix  represents the value of the ith basic
+
+variable in a more-for-less solution of crisp balanced transportation problem
+
+represented by Table 2.3.
+
+Step 2.8: For any value of lying in its range, obtained in Step 2.6, the symmetric
+
+triangular fuzzy number  where is any non-
+
+negative real number and  , represents the value of the ith basic fuzzy
+
+variable in a more-for-less solution of the symmetric triangular fuzzy balanced
+
+transportation problem represented by Table 2.2.
+2.9 Illustrative Examples
+
+In this section, to illustrate the proposed Mehar method-I, all more-for-less solutions of
+an existing crisp balanced transportation problem [1, 2, 4] as well as a symmetric
+triangular fuzzy balanced transportation problem are obtained by the proposed Mehar
+method-I.
+
+2.9.1 All More-For-Less Solutions of an Existing Problem
+
+Using the proposed Mehar method-I, all more-for-less solutions (if exists) of the
+existing crisp balanced transportation problem [1, 2, 4], represented by Table 2.4, can be
+obtained as follows.
+
+Table 2.4 Crisp balanced transportation problem [1, 2, 4]
+
+  Availability
+  14 15 6 13 14 7
+  16 9 22 13 16 18
+  8 5 11 4 5 6
+  12 4 18 9 10 15
+ Demand 4 11 12 8 11
+
+  Step 1: According to Step 1 of the proposed Mehar method-I, there is a need to use
+  Step 1.1 to Step 1.4 to check that for the crisp balanced transportation problem,
+  represented by Table 2.4, at least one more-for-less solution will exist or not.
+
+  Step 1.1: According to Step 1.1 of the proposed Mehar method-I, there is a need to
+  transform the symmetric triangular fuzzy balanced transportation problem into its
+  equivalent crisp balanced transportation problem. Since, the balanced
+  transportation problem, represented by Table 2.4, is a crisp balanced transportation
+  problem. So, there is no need to apply this step.
+  Step 1.2: According to Step 1.2 of the proposed Mehar method-I, there is a need to
+  find an optimal solution of the crisp linear programming problem (P2.13).
+
+  Problem (P2.13) Maximize
+
+  Subject to
+It can be easily verified that on solving the problem  , the obtained
+
+optimal solution is
+
+  .
+
+Step 1.3: According to Step 1.3 of the proposed Mehar method-I, the following
+
+shadow price matrix is obtained.
+
+Step 1.4: Since, some elements of the shadow price matrix, obtained in Step 1.3,
+are negative. So, according to Case (ii) of Step 1.4 of the proposed Mehar method-
+  I, there will exist at least one more-for-less solution of the crisp balanced
+  transportation problem represented by Table 2.4
+Step 2: According to Step 2 of the proposed Mehar method-I, all more-for-less
+solutions of the crisp balanced transportation problem, represented by Table 2.4, can
+be obtained as follows.
+
+Step 2.1: It is obvious from Step 1.3 that  and
+
+  . Therefore, according to Step 2.1 of the proposed Mehar method-I,
+
+(i)
+
+(ii)
+
+(iii)
+
+Step 2.2: According to Step 2.2 of the proposed Mehar method-I, there is a need to
+identify the basic variables in an optimal solution of the crisp linear programming
+problem (P2.14).
+Problem (P2.14) Minimize
+Subject to
+
+It can be easily verified that the following optimal solution is obtained on
+
+solving the crisp linear programming problem (P2.14).
+
+  .
+
+Also, it can be easily verified that the basic variables in this obtained optimal
+
+solution are  and .
+
+Step 2.3: According to Step 2.3 of the proposed Mehar method-I, there is a need to
+
+construct the basis matrix with the help of the coefficients of optimal basic
+
+variables  in the constraints of the crisp linear
+
+programming problem (P2.14).
+Step 2.4: According to Step 2.4 of the proposed Mehar method-I, there is a need to
+find the multiplicative inverse of the basis matrix .
+
+Step 2.5: According to Step 2.5 of the proposed Mehar method-I, there is a need to
+
+find  and
+
+  .
+
+(i)
+
+(ii)
+(iii)
+
+Step 2.6: According to Step 2.6 of the proposed Mehar method-I, there is a need to
+
+find the range of  so that all the elements of the matrix, obtained
+
+in Step 2.5, are greater than or equal to zero.
+
+  It is obvious from Step 2.5 that
+
+(i) The range of for which all the elements of the matrix  , obtained in
+
+  Step 2.5, are greater than or equal to zero, i.e.,
+
+  is  .
+
+(ii) The range of for which all the elements of the matrix  , obtained in
+  Step 2.5, are greater than or equal to zero, i.e.,
+
+  is  .
+
+(iii) The range of for which all the elements of the matrix  , obtained in
+
+  Step 2.5, are greater than or equal to zero, i.e.,
+
+  is  .
+
+Step 2.7: According to Step 2.7 of the proposed Mehar method-I,
+
+(i) For any value such that  ,
+
+  represents the value of the 1st basic variable i.e., ,
+
+  represents the value of the 2nd basic variable i.e., ,
+
+  represents the value of the 3rd variable i.e., ,
+
+  represents the value of the 4th basic variable i.e., ,
+
+  represents the value of the 5th basic variable i.e., ,
+
+  represents the value of the 5th basic variable i.e., ,
+
+  represents the value of the 5th basic variable i.e., , and.
+
+  represents the value of the 6th variable i.e., in a more-for-
+
+  less solution of crisp balanced transportation problem represented by Table
+
+  2.4.
+
+  For example, substituting  , the obtained values of basic variables
+
+  in a more-for-less solution are
+(ii) For any value such that  ,
+
+  represents the value of the 1st basic variable i.e., ,
+
+  represents the value of the 2nd basic variable i.e., ,
+
+  represents the value of the 3rd variable i.e., ,
+
+  represents the value of the 4th basic variable i.e., ,
+
+  represents the value of the 5th basic variable i.e., ,
+
+  represents the value of the 5th basic variable i.e., ,
+
+  represents the value of the 5th basic variable i.e., , and.
+
+  represents the value of the 6th variable i.e., in a more-for-
+
+less solution of crisp balanced transportation problem represented by Table
+
+2.4.
+
+For example, substituting  , the obtained values of basic variables
+
+in a more-for-less solution are
+
+(iii) For any value such that  ,
+
+  represents the value of the 1st basic variable i.e., ,
+  represents the value of the 2nd basic variable i.e., ,
+
+  represents the value of the 3rd variable i.e., ,
+
+  represents the value of the 4th basic variable i.e., ,
+
+  represents the value of the 5th basic variable i.e., ,
+
+  represents the value of the 5th basic variable i.e., ,
+
+  represents the value of the 5th basic variable i.e., , and.
+
+  represents the value of the 6th variable i.e., in a more-for-
+
+less solution of crisp balanced transportation problem represented by Table
+
+2.4.
+
+For example, substituting  , the obtained values of basic variables
+
+in a more-for-less solution are
+
+2.9.2 All More-For-Less Solutions of Considered Problem
+
+Using the proposed Mehar method-I, all more-for-less solutions (if exists) of the
+symmetric triangular fuzzy balanced transportation problem, represented by Table 2.5,
+can be obtained as follows.
+
+Table 2.5 Symmetric triangular fuzzy balanced transportation problem
+  Availability
+
+ Demand
+
+  where,
+(i)
+(ii)
+
+(iii)
+
+Table 2.6 Crisp balanced transportation problem
+  Availability
+
+ Demand
+
+  Step 1: According to Step 1 of the proposed Mehar method-I, there is a need to use
+  Step 1.1 to Step 1.4 to check that for the symmetric triangular fuzzy balanced
+  transportation problem, represented by Table 2.5, at least one more-for-less solution
+  will exist or not.
+
+  Step 1.1: According to Step 1.1 of the proposed Mehar method-I, the symmetric
+  triangular fuzzy balanced transportation problem, represented by Table 2.5, can be
+  transformed into its equivalent crisp balanced transportation problem represented
+  by Table 2.6.
+  Step 1.2: According to Step 1.2 of the proposed Mehar method-I, there is a need to
+  find an optimal solution of the crisp linear programming problem (P2.15).
+
+  Problem (P 2.15)
+
+  Subject to
+It can be easily verified that on solving the problem (P2.15), the obtained
+
+optimal solution is  .
+
+Step 1.3: According to Step 1.3 of the proposed Mehar method-I, the following
+
+shadow price matrix is obtained.
+
+  Step 1.4: Since, one element of the shadow price matrix, obtained in Step 1.3, is
+  negative. So, according to Case (ii) of Step 1.4 of the proposed Mehar method-I,
+  there will exist at least one more-for-less solution of symmetric triangular fuzzy
+  balanced transportation problem represented by Table 2.5.
+Step 2: According to Step 2 of the proposed Mehar method-I, all more-for-less
+solutions of the symmetric triangular fuzzy balanced transportation problem,
+represented by Table 2.5, can be obtained as follows.
+
+Step 2.1: It is obvious from Step 1.3 that  . Therefore, according to
+Step 2.1 of the proposed Mehar method-I,
+
+Step 2.2: According to Step 2.2 of the proposed Mehar method-I, there is a need to
+identify the basic variables in an optimal solution of the crisp linear programming
+problem (P2.16).
+
+  Problem (P2.16) Minimize
+
+  Subject to
+It can be easily verified that the following optimal solution is obtained on
+
+solving the crisp linear programming problem (P2.16).
+
+  .
+
+Also, it can be easily verified that the basic variables in this obtained optimal
+
+solution are  and .
+
+Step 2.3: According to Step 2.3 of the proposed Mehar method-I, there is a need to
+
+construct the basis matrix with the help of the coefficients of optimal basic
+
+variables  in the constraints of the crisp linear
+
+programming problem (P2.16).
+
+Step 2.4: According to Step 2.4 of the proposed Mehar method-I, there is a need to
+find the multiplicative inverse of the basis matrix .
+
+Step 2.5: According to Step 2.5 of the proposed Mehar method-I, there is need to
+
+find  .
+Step 2.6: According to Step 2.6 of the proposed Mehar method-I, there is a need to
+
+find the range of  so that all the elements of the matrix, obtained
+
+in Step 2.5, are greater than or equal to zero.
+
+It is obvious from Step 2.5 that the range of for which all the elements of the
+
+matrix  , obtained in Step 2.5, are greater than or equal to zero, i.e.,
+
+  is  .
+
+Step 2.7: According to Step 2.7 of the proposed Mehar method-I, for any value
+
+such that  ,
+
+  represents the value of the 1st basic variable i.e., ,
+
+  represents the value of the 2nd basic variable i.e., ,
+
+  represents the value of the 3rd variable i.e., ,
+
+  represents the value of the 4th basic variable i.e., ,
+
+  represents the value of the 5th basic variable i.e., and.
+
+  represents the value of the 6th variable i.e., in a more-for-less
+
+solution of crisp balanced transportation problem represented by Table 2.6.
+
+For example, substituting  , the obtained values of basic variables in a
+
+more-for-less solution are
+
+Step 2.8: According to Step 2.8 of the proposed Mehar method-I, for any value
+
+such that  ,
+
+  represents the value of the 1st basic
+
+variable i.e., ,
+
+  represents the value of the 2nd basic
+
+variable i.e., ,
+  represents the value of the 3rd variable
+i.e., ,
+
+  represents the value of the 4th basic
+variable i.e., ,
+
+  represents the value of the 4th basic
+
+variable i.e., and.
+  represents the value of the 4th basic
+
+variable i.e., in a more-for-less solution of the symmetric triangular fuzzy
+balanced transportation problem represented by Table 2.5.
+
+  For example,
+
+(a) Substituting  ,  , the obtained values of basic variables in a
+
+more-for-less solution are
+
+triangular fuzzy transportation cost is  and the corresponding symmetric
+  .
+
+(b) Substituting  ,  , the obtained values of basic variables in a
+
+more-for-less solution are
+
+triangular fuzzy transportation cost is  and the corresponding symmetric
+  .
+
+2.10 Results and Discussion
+
+The results of the existing crisp balanced transportation problem [1, 2, 4], represented
+by Table 2.4 and the symmetric triangular fuzzy balanced transportation problem,
+represented by Table 2.5, obtained by the existing methods [1, 2, 4] and the proposed
+Mehar method-I, are shown in Table 2.7.
+
+Table 2.7 Results of existing problem and considered problem
+
+Existing  More-for-less solutions  Considered problem
+methods  Existing problem [1, 2, 4]  Not applicable
+[1, 2, 4]  (i) For any value such that
+
+  ,
+
+  (ii) For any value of such that
+  ,
+
+  (iii) For any value such that
+  ,
+
+Proposed (i) For any value such that  For any value such that  ,
+
+Mehar  ,
+
+method-I
+
+  (ii) For any value of such that
+  ,
+
+  (iii) For any value such that
+  ,
+
+  It is obvious from Table 2.7 that.
+
+(i) On solving the existing problem, represented by Table 2.4, same more-for-less
+  solutions are obtained by the existing methods [1, 2, 4] as well as by the proposed
+  Mehar method-I.
+
+(ii) The existing methods [1, 2, 4] cannot be used to solve the considered problem,
+
+represented by Table 2.5, as the existing methods [1, 2, 4] are proposed by
+
+considering the assumption that each parameter is a positive real number. While,
+
+each parameter of the considered problem, represented by Table 2.5, is a
+
+symmetric triangular fuzzy number. However, for the same problem, infinite
+
+number of more-for-less solutions (on substituting different values of  in
+
+the mentioned more-for-less solution) are obtained by the proposed Mehar
+
+method-I.
+
+2.11 Conclusions
+
+In this chapter, the sufficient condition-I is proposed to check the existence of at least
+one more-for-less solution of symmetric triangular fuzzy balanced transportation
+problems. Also, a method is proposed to find all more-for-less solutions (if exist) of
+symmetric triangular fuzzy balanced transportation problems.
+References
+
+1. V. Adlakha, K. Kowalski, A note on the procedure MFL for a more-for-less solution in transportation problems.
+  Omega 28, 481–483 (2000)
+  [Crossref]
+
+2.
+  H. Arsham, Postoptimality analyses of the transportation problem. J. Operat. Res. Soc. 43, 121–139 (1992)
+  [Crossref][zbMATH]
+
+3.
+  C.R. Bector, S. Chandra, Fuzzy mathematical programming and fuzzy matrix games (Springer, Berlin, Heidelberg,
+  New York, 2005)
+  [zbMATH]
+
+4.
+  W. Szwarc, The transportation paradox. Naval Res. Log. Quart. 18, 185–202 (1971)
+  [MathSciNet][Crossref][zbMATH]
+
+5.
+  H.A. Taha, Operations Research: An Introduction. Pearson, Prentice Hall, Upper Saddle River, NJ (2013)
+
+6.
+  V. Vidhya, P. Uma Maheswari, K. Ganesan, An alternate method for finding more for less solution to fuzzy
+  transportation problem with mixed constraints. Soft Comp. 25, 11989–11996 (2021)
+
+  OceanofPDF.com
+© The Author(s), under exclusive license to Springer Nature Switzerland AG 2023
+T. K. Bhatia et al., More-for-Less Solutions in Fuzzy Transportation Problems, Studies in Fuzziness and Soft
+Computing 426
+https://doi.org/10.1007/978-3-031-30337-1_3
+
+3. Mehar Method-II to Find All More-For-Less
+Solutions of Symmetric Fuzzy Transportation
+Problems with Mixed Constraints
+
+Tanveen Kaur Bhatia1 , Amit Kumar1 and Srimantoorao S. Appadoo2
+(1) School of Mathematics, Thapar Institute of Engineering and Technology, Patiala,
+
+  Punjab, India
+(2) Department of Supply Chain Management, Asper School of Business,
+
+  University of Manitoba, Manitoba, MB, Canada
+
+  Tanveen Kaur Bhatia
+  Email: tbhatia60_phd19@thapar.edu
+
+  Amit Kumar (Corresponding author)
+  Email: amitkumar@thapar.edu
+
+  Srimantoorao S. Appadoo
+  Email: ss.appadoo@umanitoba.ca
+
+In this chapter, a new method (named as Mehar method-II) is proposed to check the
+existence of at least one more-for-less solution as well as to find all more-for-less
+solutions (if exists) of symmetric triangular fuzzy transportation problems with mixed
+constraints (transportation problems with mixed constraints in which each parameter
+and each variable is represented by a symmetric triangular fuzzy number). Also, to
+illustrate the proposed Mehar method-II, an existing crisp transportation problem
+with mixed constraints and an existing symmetric triangular fuzzy transportation
+problem with mixed constraints are solved by the proposed Mehar method-II.
+Furthermore, the superiority of the proposed Mehar method-II over some existing
+methods is discussed.
+

@@ -1,0 +1,473 @@
+OceanofPDF.com
+Niharika Dayyala, Nivedya Madankara Kottayi, Rajib Basu Mallick
+Machine Learning in Transportation
+
+OceanofPDF.com
+De Gruyter Textbook
+
+OceanofPDF.com
+Niharika Dayyala, Nivedya Madankara Kottayi, Rajib Basu Mallick
+
+Machine Learning in
+Transportation
+
+Applications with Examples and Codes
+
+OceanofPDF.com
+ISBN 9783110788662
+e-ISBN (PDF) 9783110788693
+e-ISBN (EPUB) 9783110788778
+
+Bibliographic information published by the Deutsche
+Nationalbibliothek
+The Deutsche Nationalbibliothek lists this publication in the
+Deutsche Nationalbibliografie; detailed bibliographic data are
+available on the Internet at http://dnb.dnb.de.
+
+© 2025 Walter de Gruyter GmbH, Berlin/Boston
+
+OceanofPDF.com
+Contents
+
+Chapter 1 Introduction to machine learning
+
+  1.1 What is machine learning
+
+  1.2 Types of machine learning algorithms
+
+  1.3 Core concepts in machine learning
+  1.3.1 Classification
+  1.3.2 Numerical prediction
+  1.3.3 Dimension reduction
+
+  1.4 Fundamentals of probability, statistics, and linear
+  algebra
+
+  1.4.1 Statistical concepts
+
+  1.5 Linear algebra: matrices
+
+Chapter 2 Preliminary steps for machine learning
+
+  2.1 Introduction
+  2.1.1 Getting the software tools: MATLAB and R
+
+  2.2 Data exploration
+  2.2.1 Data Exploration with R
+  2.2.2 Filtering and counting with R
+  2.2.3 Sorting with R
+
+  2.3 Data cleaning
+  2.3.1 Working with missing values in R
+  2.3.2 Dealing with outliers in R
+  2.3.3 Creating subsets in R
+
+  2.4 Data transformations
+  2.4.1 Assigning numerical values to categorical data using
+  R
+  2.4.2 Assigning bins to numeric data with R
+  2.4.3 Data standardization with R
+
+  2.5 Data visualization with R
+
+  2.6 Basic statistical analysis with MATLAB
+
+Chapter 3 Predictive performance evaluation
+
+  3.1 Accuracy for the prediction of numerical values
+  3.1.1 Mean squared error (MSE)
+  3.1.2 R2 (coefficient of determination)
+
+  3.2 Accuracy for classification
+  3.2.1 Confusion matrix
+  3.2.2 Accuracy
+  3.2.3 Precision
+  3.2.4 Recall (sensitivity or true positive rate)
+  3.2.5 F1 score
+
+Chapter 4 Supervised learning models
+
+  4.1 K-nearest neighbors
+  4.1.1 Classification with KNN in R
+  4.1.2 Numerical prediction with KNN in R
+
+  4.2 Analysis with MATLAB
+  4.2.1 KNN model
+  4.2.2 Naïve Bayes’ model
+  4.2.3 Support vector machine (SVM)
+  4.2.4 Decision tree
+  4.2.5 Linear regression
+  4.2.6 Neural network
+  4.2.7 Gradient descent algorithm
+
+Chapter 5 Unsupervised learning model
+
+  5.1 Dimension reduction using principal component
+  analysis (PCA)
+
+  5.2 Cluster analysis
+  5.2.1 K-means cluster analysis
+  5.2.2 K-Means clustering on numerical data with R
+  5.2.3 K-medoids method (Partitioning Around Medoids)
+  on categorical data with R
+  5.2.4 Hierarchical Clustering
+  5.2.5 Hierarchical clustering on numerical data with R
+  5.2.6 Hierarchical clustering on categorical data with R
+
+  5.3 Clustering with MATLAB
+
+Chapter 6 Deep learning
+
+  6.1 Transfer learning
+
+  6.2 Long short-term memory (LSTM)
+
+Chapter 7 Text mining
+
+  7.1 Introduction
+  7.2 Text extraction
+  7.2.1 Extracting data from a pdf file
+  7.2.2 Creating bag of words, term document matrix, and
+  word frequencies
+  7.2.3 Creating word cloud
+  7.2.4 Sentiment analysis
+  7.2.5 Topic modeling and clustering
+
+References
+
+Index
+
+OceanofPDF.com
+Chapter 1  Introduction to machine
+learning
+
+1.1  What is machine learning
+
+There are many definitions of machine learning or machine learning
+algorithms. A widely used definition is as follows (→Mitchell, 1997): “A
+computer program is said to learn from experience E with respect to
+some class of tasks T and performance measure P, if its performance at
+tasks in T, as measured by P, improves with experience E.” The task is
+generally one that cannot be performed or is difficult to perform with a
+program with a specific and fixed set of instructions. For example, in
+transportation engineering, it could be the task of identifying traffic
+zones that are more prone to accidents, given the fact that the zones
+represent widely varying conditions of climate, pavement, design,
+vehicles, and speed.
+
+  Traditionally, solutions to many transportation-related problems have
+been attempted with the use of statistics. However, machine learning
+enables us to tackle complex problems, especially nonlinear problems
+and those with many variables, without having to meet many of the
+criteria/assumptions for the validity of the statistical models. One of the
+key differences between the traditional statistical and machine learning
+approaches is that the former tries to achieve an explanation of the
+problem using established rules and assumptions, whereas the latter
+tries to perform the task of prediction more accurately, for the specific
+problem at hand. This approach of machine learning is more similar to
+the application of human intelligence for solving any problem.
+
+  One alternative way to define machine learning is the field of
+developing and applying algorithms that are applied to datasets from
+different fields, with different numbers of variables (features) and
+observations, learning from the data, and then performing the required
+task on the test data (→Figure 1.1).
+Figure 1.1: Concept of the application of machine learning (ML).
+
+The performance P is generally measured in terms of accuracy, which has
+different forms of mathematical representation, depending on the
+specific addressed problem. For example, in a case where the objective is
+to classify objects into different groups, the accuracy could be the
+proportion of correct or incorrect (error) classification, whereas for a
+numerical prediction problem, it could be the coefficient of
+determination. However, the design of the performance measure (and,
+specifically, what to measure) must be made with a consideration of the
+problem and the seriousness or consequence of making an error.
+
+  The experience, E, refers to learning from the data, which comes from
+a dataset. The dataset can be presented in different formats; a common
+way is to represent features in columns and observations in rows. The
+features are the properties of the observed data, which are measured in
+some quantitative or qualitative scale. The properties may or may not be
+linked to a specific label or target – which can help formulate the
+problem as “supervised” or “unsupervised,” respectively. If the dataset Z
+is represented by 100 observations with 3 features, Z can be represented
+as Z ∈ R100X3 .
+
+1.2  Types of machine learning algorithms
+
+Machine learning can be broadly classified into supervised and
+unsupervised learning.
+
+  Supervised learning: In supervised learning, the features or
+attributes are associated with a target or label. For example, the widths
+of different types of cracks are associated with the level of cracking in
+pavements. In this type of learning, predictive models are built that relate
+a set of input variables to a response variable, which could be discrete
+(classification model) or continuous (numerical prediction model). In this
+process, the models are trained to either classify or predict numerical
+values. Methods include Naïve Bayes algorithm, support vector machines
+(SVMs) and artificial neural networks (ANN).
+
+  Unsupervised learning: In this type of learning, models are built to
+cluster a group of observations on the basis of the structure of the
+dataset. The K-means unsupervised algorithm is used to group or
+“cluster” data points around their centroids. The objective is to group or
+cluster them in such a way that the total variance within the clusters is
+minimized (objective function). The process is started by assigning
+random centroids, assigning the data to these centroids, and forming the
+clusters. The algorithm determines the new centroids for these clusters
+and then iterates the above process until cluster assignments of the data
+do not change.
+
+  In the case of unsupervised learning, the objective is to understand
+the structure of the dataset and/or to separate the data into different
+groups based on the similarity of the features. Supervised learning has
+two primary applications such as regression and classification, whereas
+unsupervised learning is used for clustering the data.
+
+1.3  Core concepts in machine learning
+
+1.3.1  Classification
+
+k-Nearest neighbor (KNN): This method utilizes the concept of “similarity”
+or “closeness” in the classification of samples. It does not require the
+assumption of any specific type of underlying distribution of the samples.
+The principle of this method is that when we have a new observation or
+sample, we look for the majority class of the NN of this new sample, and
+then label it as part of that class (→Figure 1.2). The nearest neighbor is
+found based on distance metrics such as Euclidean distance. The
+
+Euclidean  distance  between  two  points  √ (x 2  −  2  +  (  y2  −  2
+
+  x1)  y1) .
+
+  2  2
+√(x2 − x1 ) + ( y2 − y1 ) .
+Figure 1.2: Concept of the KNN approach.
+
+Naïve Bayes: This is a classification method (→Figure 1.3) in which the
+predictors within each class are assumed to be independent of each
+other. This simplifies the estimation of the probability. In this case,
+separate distributions can be considered for each class, and the
+observations from each class are considered to be samples from the
+probability distribution of that class. Bayes’ theorem of conditional
+probability helps us to estimate the probability of an observation coming
+from a given class, given its location. Then based on the highest
+probability (of co-occurring in a specific group or cluster), the new
+observation is classified in that group. One advantage of using the
+distributions rather than the individual observations (as in KNN) in
+making the classification is that the process is relatively less sensitive to
+noise in the training data.
+
+  In the Bayes’ classifier approach, the probability of a specific output
+(or target) is calculated from the input data with several features, and
+then for a test case with the given features, the target label is assigned to
+that, which shows the highest probability in the input data. This approach
+becomes problematic when there is a relatively large number of features,
+and the probability for a specific test case that matches a certain
+combination of all features (i.e., present within the input data) may end
+up being zero, and hence the test case cannot be assigned to any specific
+group. To overcome this, the Naïve Bayes classifier is used, where the
+probabilities for classes of each individual feature are calculated and then
+combined (product of the probabilities) to determine the class for the
+test case. The assumption is that input variables (features) are
+independent of each other.
+Figure 1.3: Concept of the naïve Bayes approach.
+
+Support Vector Machine (SVM): In this method (→Figure 1.4), the
+classification of observations (in general, binary classification) is made by
+identifying the best hyperplane that separates the different samples in a
+relatively better way, and hence makes a better classification of the
+samples. In this approach, the margin, that is, the gap between the
+boundary of the classification and the nearest observation, is maximized,
+with a possible “penalty or loss function” for observations that are not
+classified properly. It is referred to as the SVM since the observations
+(referred to as support vectors) that are closest to the boundary dictate
+the determination of the best solution. This method can be used for
+nonlinear classification problems by transforming the variables to a
+linearly separable space. The kernel function that is applied to solve this
+type of problem could be expressed as the dot product of the features
+(vectors) in an expanded feature space.
+
+Figure 1.4: Concept of the SVM approach.
+
+1.3.2  Numerical prediction
+
+This is a supervised learning method in which numerical values (target
+values) are predicted based on an algorithm that trains on a dataset with
+input and output (target values). The model that is developed with the
+help of the algorithm can be used to predict target or output values from
+new (unseen) input values. The techniques used in this method include
+linear regression, decision trees, and Artificial Neural Networks (ANNs).
+
+  In linear regression, the best fit equation is derived to obtain a
+relation between dependent and independent variables by minimizing
+the errors of prediction (→Figure 1.5).
+
+Figure 1.5: Concept of linear regression.
+In the decision tree method (→Figure 1.6), the prediction is made step by
+step as if going through a tree from its roots (node) to the leaf (node)
+through its branches. This prediction is controlled by the number of
+branches and the values of the training weights that are assigned to the
+branches. In general, the decision tree approach is used for cases where
+high accuracy is not a criterion and relatively low memory usage is
+desired.
+Figure 1.6: Concept of the decision tree approach.
+
+In the case of ANNs, layers of “neurons” (circles in →Figure 1.7) are used
+to input the data, process them, and then obtain the output, similar to a
+structure that is utilized by the brain. The connections between the
+neurons are created with randomly assigned weights of the linkages,
+which are continuously updated until the error between the actual data
+and model prediction is minimized. Weights and biases are utilized to
+transmit the data through the layers in an optimized manner to minimize
+the difference between the predicted and the given target value during
+the training process, for which different algorithms are available.
+Figure 1.7: Structure of an artificial neural network.
+
+Convolutional neural network (CNN): This is the algorithm that is
+utilized for deep learning involving images and video. It consists of the
+following main layers that perform different tasks of feature detection
+and classification:
+
+  1. CNN is the convolutional layer that identifies different features.
+  2. Rectified linear unit maps negative and positive values.
+  3. Pooling reduces the number of parameters required for the
+
+  network by performing nonlinear downsampling.
+  4. Fully connected layer provides the probabilities of classification in
+
+  each of the different classes.
+  5. Softmax function outputs the predicted probability of each class.
+
+There are three modes of computation for deep learning: CPU, GPU, and
+cloud-based computation. CPU-based computation is simple but takes
+time and is applicable for small deep learning datasets, whereas GPU is
+more efficient. The cloud-based approach uses cloud resources to
+conduct the computation without the need to rely on local computational
+resources.
+  Hyperparameters: The ANN structure is defined by a set of variables
+that are collectively known as hyperparameters. These variables include
+the learning rate, weight utilization, loss function, and layer size.
+Learning rate is the step size that is used to refine the model to reduce
+the error/loss, as the model weights are updated. At each increment of
+the learning rate (linear or exponential), the error is measured, and a
+low/high learning rate causes slow/fast progress. Therefore, it is
+desirable to have an optimal learning rate, which is dictated by the
+algorithm and the data. The concept is illustrated with respect to
+reaching a minimum in →Figure 1.8. For low learning rates, the
+improvement in accuracy (decrease in loss) will be insignificant, whereas
+for a high learning rate, the loss function will tend to increase, without
+reaching a minimum.
+
+Figure 1.8: High, low, and optimal learning rates in reaching a minima
+(adapted from Dulani, 2024).
+
+1.3.3  Dimension reduction
+
+Principal component analysis (PCA): In this technique, the data is
+transformed to capture the variance in a few components, of which the
+first one captures the most variance (→Figure 1.9). The principal
+components are those along which most of the variations of the
+observations can be explained. The first principal component vector
+represents the one that is closest to the observations; that is, if the data
+are plotted along this component, the sum of the squared distances
+between the line and the observations is the minimum. Generally, many
+features are minimized to three or less number of components (principal
+components) so that the data can be plotted with respect to those
+components in a two-dimensional or three-dimensional plot. The basic
+purpose of PCA is to obtain a low-dimensional representation of the data,
+ensuring that most of the variation in the data or information about the
+data is captured.
+
+Figure 1.9: Concept of the PCA.
+
+1.3.3.1  Data modeling process
+Generally, the data is presented in a CSV or an Excel file with labels for
+supervised learning or without labels for unsupervised learning. The first
+two steps consist of checking the data for outliers and missing values.
+Missing values can be substituted with interpolate values, if appropriate.
+Part of the data could be considered for developing the model (termed
+as training data), and the remaining part could be further subdivided
+into validation and test data. However, as we will see, in most cases the
+splitting of the data into different groups is often performed by the
+specific machine learning algorithm that is used for the analysis of the
+data. The next important step is the identification of the features of the
+data that could be used by the algorithm to classify or model the data.
+The important features are those that can be used effectively as
+predictors of the responses – using a model with a minimum number of
+features makes it more useful and robust. Techniques such as correlation
+matrix or PCA could be utilized to select the more important features.
+
+  Cross-validation is used to evaluate the accuracy of a model by using
+an unknown dataset, which is different from the training dataset. This
+unknown dataset can be separated from the training dataset by hold-out
+cross-validation or by resampling from a specific (k) number of subsets of
+the data, training against all but one (k–1) and validating with the
+remaining subset. The method is then repeated k number of times.
+
+  To determine the minimum value of the function, one common
+method that is used in machine learning is the gradient descent
+approach. Similar to finding the bottom of a valley by walking (without
+seeing, such as at night), this approach utilizes an iterative process with
+partial derivatives by which each step is supposed to bring you closer to
+the desired lowest point. With the objective of minimizing the error or
+difference between the actual and the predicted value, the learning rate
+and direction are iteratively updated to calculate the slope.
+
+  The weights and biases used for the prediction could be adjusted
+with the gradient descent approach. The slope at any point of a curve
+could be visualized to obtain progressively smaller gradients as the
+lowest point of a curve is approached. In the batch gradient descent
+approach, the error from the entire training dataset is considered,
+whereas in the stochastic gradient descent approach, the updates are
+done for each training data. Finally, in the minibatch gradient descent
+approach, small batches of the training data are used for updating the
+parameters.
+
+  The goal of the gradient descent approach is to minimize the cost
+function or the error between the actual and the predicted values. The
+learning rate and the cost function are utilized to achieve this objective.
+The cost or the loss function is the difference between the actual and the
+predicted values at any position, for the entire dataset and for one data,
+respectively. It is minimized to find the minima. The algorithm
+continuously iterates along the steepest descent direction to reach the
+minima.
+
+1.4  Fundamentals of probability, statistics, and
+linear algebra
+
+1.4.1  Statistical concepts
+
+Statistics is needed for processing and analyzing data, understanding
+patterns in the data, and interpreting and presenting the results of
+analysis. Statistics can be descriptive and inferential; descriptive statistics
+consider entire datasets and give outputs to characterize the data.
+Examples are maximum, minimum, and average.
+
+  Population refers to the entire data, whereas a sample refers to a
+subset of the data. The subset can be selected from the population
+according to a defined procedure in statistics. Inferential statistics enable
+us to make predictions based on subsets of the data, especially when the
+total population of the data is huge. The use of appropriate inferential
+statistics conducted on a subset of the data should provide outputs that
+would be very close to what would be obtained by considering the entire
+population of the data.
+
+  The data can be primarily of two types: numerical and categorical.
+Examples of numerical data are temperature data: recorded
+temperature values such as daily high temperatures in a city (e.g., 70 °F,
+85 °F, and 62 °F). Examples of categorical data are vehicle types:
+categories include “Sedan,” “SUV,” “Truck,” “Motorcycle,” and “Bicycle.”
+
+  Aggregation helps us in grouping the data. In the case of numerical
+data, aggregation is possible, such as obtaining the sum, minimum,
+maximum, and standard deviation. Such aggregation is not possible in
+the case of categorical data, such as ID, name, and rank. Numerical data
+could be discrete or continuous. Discrete data is countable in a finite
+amount of time (e.g., money), whereas continuous data is measurable,
+but it takes forever to count (e.g., age). In the case of categorical data,
+there are two types: nominal and ordinal. Nominal data are labels
+without any quantitative value, such as ID and gender, and there is no
+

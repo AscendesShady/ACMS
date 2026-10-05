@@ -1,0 +1,1184 @@
+452  Handbook of Transportation Science
+
+firms are no longer under obligation to maintain a major distribution center in each
+country. In consequence, distribution systems are reorganized around fewer but
+bigger warehouses and transportation services are operated over longer distances.
+A significant increase in road traffic is a normal consequence of this process, as
+may be observed in Europe.
+
+  Changes to the regulatory environment have an equally powerful impact on the
+operation and competitive environment of transportation firms. The deregulation
+drive of the 1980s has seen governments remove numerous rules and restrictions,
+especially with regard to the entry of new firms in the market and the fixing of tar-
+iffs and routes. This resulted in a more competitive industry and in changes to the
+number and characteristics of transportation firms. At the same time, a number of
+new policies and regulations resulting from quality-of-life concerns start to signif-
+icantly impact the operations of the freight transportation-related firms. Two major
+examples: (i) more stringent safety regulations; (ii) policies aimed towards increas-
+ing the volume of inter (and multi) modal freight movements while decreasing the
+utilization of trucks. The latter result from environmental and energy efficiency
+concerns and are particularly important in Europe. The evolution of technology
+is another major factor that modifies how freight transportation is organized and
+operated. This is not a new trend. Indeed, transportation has followed the indus-
+trial innovations and adapted, for example, to advances in traction technologies
+and fuels. What is new is that, arguably the major technological factor inflecting
+the evolution of transportation has to do with information and software rather than
+the traditional hardware. The tremendous expansion of Internet and the electronic-
+society, eloquently illustrated by the growing importance of electronic market
+places and business-to-business exchanges, dramatically alters the interactions of
+carriers and shippers. Intelligent Transportation Systems, on the other hand, both
+offer means to efficiently operate and raise new challenges, as illustrated by the
+evolution towards real-time modification to planned routes to account for changes
+in traffic conditions or new demands. More complex planning and operating pro-
+cedures are a direct result of these new policies, requirements, technologies, and
+challenges.
+
+  Freight transportation must adapt to and perform within these rapidly chang-
+ing political, social, and economic conditions and trends. In addition, freight
+transportation is in itself a complex domain: many different firms, organizations,
+and institutions, each with their own set of objectives and means, make up the
+industry; infrastructure and even service modifications are capital-intensive and
+usually require long implementation delays; important decision processes are often
+strongly interrelated. It is thus a domain where accurate and efficient methods and
+tools are required to assist and enhance the analysis, planning, operation, and
+control processes.
+Long-Haul Freight Transportation  453
+
+  The focus of the chapter is on long-haul (intercity) transportation, that is,
+on transportation operations that are mainly concerned with the movement of
+goods over relatively long distances, between terminals or cities. Goods may be
+moved by rail, truck, ship, etc., or any combination of modes. The objective of
+the chapter is to present the main freight transportation planning and management
+issues, to briefly review the associated literature, to describe a number of major
+developments, and to identify trends and challenges. In order to keep the length
+of the chapter within reasonable limits, optimization-based operations research
+methodologies are privileged.
+
+  The chapter is organized as follows. Section 13.2 presents an overview of
+freight transportation systems and planning issues. Section 13.3 is dedicated to
+models which attempt to analyze multi-modal, multicommodity transportation
+systems at the regional, national or global level. Section 13.4 reviews network
+design formulations which are often associated with the long-term evolution of
+transportation infrastructures and services. These formulations also appear promi-
+nently when service design issues are considered as described in Section 13.5.
+Of the many operational issues related to the movement of freight, we focus
+on one of the most important in Section 13.6: the allocation and repositioning
+of resources, particularly empty vehicles. To conclude, Section 13.7 attempts to
+identify a number of interesting problems and methodological challenges.
+
+13.2 Freight Transportation Systems
+
+Demand for freight transportation derives from the interplay between producers
+and consumers and the significant distances that usually separate them. Producers
+of goods require transportation services to move raw materials and intermediate
+products, and to distribute final goods in order to meet demands. Carriers sup-
+ply transportation services. Railways, shipping lines, trucking companies, and
+intermodal container and postal services are examples of carriers. Considering the
+type of service they provide, ports, intermodal platforms, and other such facilities
+may be described as carriers as well. Shippers, which may be producers of goods
+or some intermediary firm (brokers), attribute demand to supply. Governments
+contribute the infrastructure: roads and highways, as well as a significant portion
+of ports, internal navigation, and rail facilities. Governments also regulate (e.g.,
+dangerous and toxic goods transportation) and tax the industry.
+
+  When examining freight transportation, one often distinguishes between pro-
+ducers that own or operate their own transportation fleet (which then become
+carriers for their own freight), and “for hire” carriers, which perform transporta-
+tion services for various shippers. From a planning and operations point of view,
+a more interesting and practical classification differentiates between: (1) Long-haul
+454  Handbook of Transportation Science
+
+transportation (this chapter) and vehicle routing and distribution, VRP, problems
+(Golden and Assad 1988, Ball et al. 1995, Dror 2000, Toth and Vigo 2002,
+Chapter 12, etc.); (2) The multi-modal transportation system of a region, irre-
+spective of its dimensions (Section 13.3), and the transportation services of a
+particular carrier (Sections 13.5 and 13.6); (3) Consolidation transportation where
+one vehicle or convoy may serve to move freight for different customers with possi-
+bly different initial origins and final destinations, and door-to-door transportation
+operations customized for a particular customer.
+
+  Most freight transportation planning issues exhibit a multicommodity nature.
+In most cases, several distinct commodities must be moved. Even when the trans-
+portation system or study is dedicated to one commodity only, the traffic between
+different origin and destination points must be individually accounted for. Most of
+the time, both conditions must be satisfied simultaneously.
+
+Customized Transportation
+
+Truckload trucking offers a typical example of door-to-door long distance trans-
+portation. In this mode, a vehicle – truck – is usually dedicated to each customer.
+When the customer calls, a truck with a driver or driving team is assigned to it.
+The truck is moved to the customer-designated location, and it is loaded. It then
+moves to the specified destination; this is the long-haul transportation operation.
+At destination, the truck is unloaded, and the driver calls the dispatcher to give its
+position and request a new assignment. The dispatcher may indicate a new load,
+ask the driver to move empty to a new location where demand should appear in
+the near future, or have the driver wait and call later.
+
+  The truckload carrier thus evolves in a highly dynamic environment, where
+little is known with certainty regarding future demands, travel times, waiting delays
+at customer locations, precise positions of loaded and empty vehicles at later
+moments in time, and so on. Service is tailored for each customer and the timely
+assignment of vehicles to profitable demands is of the outmost importance.
+
+  The development of efficient resource management and allocation strategies
+are therefore at the heart of the management process. These strategies attempt
+to maximize the volume of demand satisfied (loads moved) and the associated
+profits, while making the best use of the available resources: drivers, tractor and
+trailer fleets, etc. Navigation services ensured by for-hire ships share some of these
+dynamic and stochastic characteristics.
+
+Consolidation Transportation
+
+When demands of several customers are served simultaneously by using the same
+vehicle or convoy, one cannot tailor services individually for each customer.
+Long-Haul Freight Transportation  455
+
+Carriers must establish regular services (e.g., a container ship from Seattle to
+Singapore) and adjust their characteristics (route, intermediary stops, frequency,
+vehicle and convoy type, capacity, speed, etc.) to satisfy the expectations of
+the largest number of customers possible. Externally, the carrier then proposes
+a series of routes, or services, each with its operational characteristics. Ser-
+vices are often grouped in a schedule that indicates departure and arrival times
+at the stops of the route. Internally, the carrier builds a series of rules and poli-
+cies that affect the whole system and are often collected in an operational plan
+(also referred to as load or transportation plan). The aim is to ensure that the
+proposed services are performed as stated (or as closely as possible), while
+operating in a rational, efficient, and profitable way. The presence of terminals
+where cargo and vehicles are consolidated, grouped, or simply moved from one
+service to another characterizes this type of transportation performed by Less-
+Than-Truckload (LTL) motor carriers, railways, shipping lines, postal and express
+shipment services, etc. Freight transportation in some countries where a central
+authority more or less controls a large part of the transportation system also belongs
+to this category. We include all these systems under service or consolidation
+transportation.
+
+  The underlying structure of a large consolidation transportation system con-
+sists of a rather complex network of terminals connected by physical or conceptual
+links. Air and sea lines correspond to the latter, while road, highways, and rail
+tracks are typical examples of the former. The network may belong entirely or par-
+tially to the carrier. Rail transportation belongs traditionally to the first category,
+while LTL motor carriers exemplify the second: LTL carriers generally own the
+terminals but operate on public roads. It is noteworthy that the current policy of the
+European Union to separate the infrastructure ownership and the service provider
+(the carrier) operations is moving rail transportation in Europe towards a more
+LTL-like mode of operations. Some carriers prefer not to own any infrastructure,
+however, and only rent space as needed. Intermodal container carriers generally
+belong to this category, their terminal operations being often organized in ports
+and railway yards.
+
+  Freight demand is defined between given points of this network. Other than
+its specific origin, destination, and commodity-related physical characteristics,
+such as weight and volume, each individual shipment may present any number of
+particular service requirements in terms of delivery conditions, type of vehicle,
+and so on. A profit or cost also usually accompanies a specific demand. The
+consolidation carrier moves the freight by services performed by a large number
+of vehicles: rail cars, trailers, containers, ships, etc. Vehicles move, usually on
+specified routes and sometimes following a given schedule, either individually or
+grouped in convoys such as rail or barge trains, or multi-trailer assemblies. Convoys
+are formed and dismantled in terminals. Other major terminal operations include
+456  Handbook of Transportation Science
+
+freight sorting and consolidation, its loading into or unloading from vehicles, as
+well as vehicle sorting, grouping, and transferring from one convoy to another.
+Terminals come in several designs and sizes and may be specialized in certain
+operations or the handling of particular products, or offer a complete set of services.
+In all cases, terminal operations are vital to the performance of a consolidation
+transportation system.
+
+  Figure 13.1 illustrates the network of a consolidation transportation system.
+Nodes A, B, and C represent major consolidation centers, also referred to as hubs,
+linked by high frequency and capacity services. Nodes 1–9 stand for the origin and
+destination terminals where freight and vehicles are consolidated at the beginning
+and end of the journey, and which are linked to hubs by feeder services. The figure
+also emphasizes the possibility for a terminal to be linked to more than one hub and
+illustrates the local pickup and delivery operations usually associated to terminals.
+Such an organization allows a much higher frequency and quality of service among
+hubs and a more efficient utilization of resources. The drawback is the increased
+delays – longer routes and more time spent in terminals – experienced by passengers
+or goods. This explains partly why there is hardly any “pure” hub-and-spoke
+Long-Haul Freight Transportation  457
+
+systems in operation, direct transportation being organized for high demand or
+high priority origin-destination pairs. The links between terminals 4 and 5, and
+from hub A to terminal 9 in Figure 13.1 illustrate this option. Note that smaller
+firms may take advantage of consolidation systems and identify profitable niches
+by offering direct services to markets that large firms serve through hubs.
+
+  To further clarify these notions, consider the case of railway transportation
+that operates networks made up of single or double track lines that link many
+large and small classification yards, in which rail cars are grouped and trains are
+formed, pickup and delivery stations, junction points, etc. (Assad 1980, Cordeau,
+Toth, and Vigo 1998). Here, everything begins when a customer issues an order for
+a number of empty cars or, alternatively, when freight is brought into the loading
+facility following a pickup operation. At the appropriate yard, rail cars are selected,
+inspected, and then delivered to the loading point. Once loaded, cars are moved
+to the origin yard (possibly the same) where they are sorted, or classified, and
+assembled into blocks. A block is a group of cars, with possibly different final
+destinations, arbitrarily considered as a single unit for handling purposes from
+the yard where it is made up to its destination yard where its component cars are
+separated. Rail companies use blocks to take advantage of some of the economies
+of scale related to full train loads and the handling of longer car strings in yards.
+The block is eventually put on a train and this signals the beginning of the journey.
+During the long-haul part of this journey, the train may overtake other trains or be
+overtaken by trains with different speeds and priorities. When the train travels on
+single-track lines, it may also meet trains traveling in the opposite direction. Then,
+the train with the lowest priority has to give way and wait on a side track for the
+train with the higher priority to pass by. At yards where the train stops, cars and
+engines are regularly inspected. Also, blocks of cars may be transferred, i.e., taken
+off one train and put on another. When a block finally arrives at destination, it is
+separated from the train, its cars are sorted, and those having reached their final
+destination are directed to the unloading station. Once empty, the cars are prepared
+for a new assignment, which may be either a loaded trip or an empty repositioning
+movement.
+
+  One source of complication in rail freight transportation is the complex nature
+of the main yard activities: the classification of cars and the composition of trains.
+The modeling of yard operations as well as that of their interactions with the
+rest of the system are critical components of any comprehensive rail model. It
+is interesting to note that, traditionally, in most rail systems cars spend most of
+their lifetime in yards: being loaded and unloaded, being classified, waiting for
+an operation to be performed or for a train to come, or simply sitting idle on a
+side track. Also of interest is the fact that most rail companies have separated the
+operations and yards dedicated to intermodal services from those used for their
+458  Handbook of Transportation Science
+
+regular services in an attempt to cut delays, especially those associated with yard
+operations, and improve the quality of this time-sensitive and highly competitive
+service.
+
+  Similarly to rail transportation, LTL networks may encompass different types
+of terminals. Local traffic is picked up by “small” trucks and is delivered to end-
+of-line terminals where it is consolidated into larger shipments before long-haul
+movements. Symmetrically, loads from other parts of the network arrive at end-of-
+lines to be unloaded and moved into delivery trucks for final delivery. Breakbulks
+are terminals where traffic from many end-of-line terminals is unloaded, sorted,
+and consolidated for the next portion of the journey. Breakbulks are the hubs of
+LTL networks, as major yards are the hubs of rail transportation systems In Figure
+13.1, nodes 1–9 represent end-of-lines, while nodes A, B, and C stand for breakbulk
+terminals.
+
+  LTL motor carrier transportation follows the same basic operational structure
+described for rail but on a simpler scale and with significantly more flexibility
+due to the fundamental difference in infrastructure: While rail transportation is
+“captive”, trucks may use any of the existing links of the road and highway network
+as long as they comply with the weight regulations. Furthermore, a truck is only
+formed of a tractor and one or several trailers (when more than one trailer is
+used, these are smaller and are called “pups”). Consequently, terminal operations
+are generally simpler; freight is handled to consolidate outbound movements but
+there are no significant convoy-related operations. LTL transportation may become
+rather complex, however, as soon as one considers the option to use rail (the
+trailer-on-flat-car – TOFC – option) for long distances.
+
+  It is interesting to note that intermodal container transportation may be viewed
+as either door-to-door or consolidation transportation. For the customer, it is
+door-to-door transportation. On request, containers are delivered, loaded, moved
+through a series of terminals and vehicles (of which the customer has little knowl-
+edge even when the exact position of the shipment is available), and are delivered
+to the final destination where the goods are unloaded. For the shipping company, it
+is a consolidation transportation system. Containers from many customers must be
+moved to a port by truck, barge, or rail, or a combination thereof. There, containers
+are grouped and loaded on a ship that navigates a well-established route, according
+to a tight schedule, and delivers the containers at the destination port. From there, a
+land transportation system delivers the containers to the final destination by using
+a variety of modes and terminals. Container transportation systems that operate
+exclusively on land may also be encountered. In this case, rail trains and inland
+terminals usually play the role of ships and ports. The continuous increase in the
+size of container ships operated on international lines exacerbates the consolidation
+characteristics of intermodal container transportation systems. Indeed, the huge
+Long-Haul Freight Transportation  459
+
+size of the newest generation of container ships forbids them from entering many
+ports and makes routes with many stops uneconomical. Consequently, long-course
+ships stop only at a selected number of important ports – the hubs –, while smaller
+vessels and land transportation modes ensure delivery of containers to the other
+ports and final destinations.
+
+  A similar argument may be made for express letter and small package services.
+For customers, it is obviously a door-to-door, high quality and reliable service. For
+the company, it is a consolidation transportation system that usually makes use
+of various air, truck, and rail services. The company implements a VRP-type of
+service to interact with its customers and collect and distribute letters and packages.
+The collection and distribution centers where mail is sorted and consolidated play
+a role similar to that of end-of-line terminals in LTL transportation. To reach its
+destination, a letter or package usually passes through at least one major hub.
+These terminals do for express mail services what breakbulks do for LTL motor
+carriers. To link its national hubs and major collection and distribution centers, the
+company may operate its own planes, as well as use scheduled passenger flights
+or train services. When distances are moderate, trucks may be used as well.
+
+Empty Flows
+
+A constant characteristic of any freight transportation system is the need to move
+empty vehicles. This follows from the imbalances that exist in trade flows and that
+result in discrepancies between vehicle supply and demand in various zones or
+terminals of the system.
+
+  To correct these differences, vehicles must be moved, repositioned, in order to
+have them available to satisfy the demand of the next period. Some repositioning
+decisions are straightforward. When, for example, unit trains are used to move coal
+or iron ore from mining fields to the port on the only rail line linking the two, cars,
+once unloaded, are simply formed into a return train. In most cases, however, the
+decision of how many and where to send vehicles appears much more complicated.
+The alternatives are many, due to the numerous possibilities for movement and the
+uncertainty of future supply and demand. The search for the most economic empty
+repositioning or empty balancing strategy is thus a significant problem in itself,
+and we will find the preoccupation with these issues in many of the problems and
+models addressed in the following sections.
+
+Service Schedules
+
+Another notion often encountered in transportation planning has to do with
+schedules and scheduled services.
+460  Handbook of Transportation Science
+
+  In the general sense, a schedule specifies timing information for each possible
+occurrence of a service during a given time period: departure time at the origin,
+arrival/departure time information at intermediary stops, and arrival time at the
+final destination. The schedule may also include indications on the cut-off time:
+the latest moment freight may be given to the carrier and still meet the scheduled
+departure of the service. Schedules are omnipresent in passenger transportation
+by air, rail, bus or ship and are strictly enforced (most of the time). The case is
+less clear for freight transportation. On the one hand, there are no schedules in
+door-to-door transportation, except for cut-off times. At the other end of the spec-
+trum, regular navigation lines usually operate according to strict schedules (high
+port utilization fees constitute an important incentive to follow the schedules).
+Much air cargo is moved on passenger planes and therefore follows strict sched-
+ules. All-cargo air services are also usually operated according to well-established
+schedules.
+
+  LTL trucking follows much less stringent rules. Many carriers operate on a
+“go when full” policy. Alternatively, earliest and latest departures may be planned,
+as well as the distribution of departures during the evening, which usually is the
+busiest period. The goal of this process is to offer customers late cut-off times
+and to ensure that trucks arrive at destination terminals within certain limits –
+at the opening of business in the morning, for example. The focus on increased
+customer service and tighter operations (including crew schedules) is increasing
+the utilization of scheduled services, however. Actually, schedules are build for
+part of the traffic only, representing the regular part of operations. Departures may
+then be added or cancelled to adjust for each day’s particular conditions. In all
+cases, the dispatcher is responsible for orchestrating the operations, as well as for
+avoiding empty movements.
+
+  The tradition in most rail systems around the world was to follow some variant
+of the “go when full” rule. Even when schedules were prepared, they were mostly
+indicative of the ideal departure times and served as a basis for various dispatching
+rules for yard masters (e.g., “a train may leave one hour before planned departure
+if full and conditions down the line are appropriate”). The high volume of pas-
+senger trains already in the system, as well as the desire to decrease total transit
+time and improve connections, has pushed European rail companies toward more
+stringent schedules for their freight trains. Some companies operate according to
+fixed schedules and bookings similar to the ones used for passenger transportation.
+In recent years, North American companies have also migrated toward scheduled
+service operations (at least for part of their traffic) with various degrees of rapidity
+and success. The issues are different for overloaded systems, such as the Indian and
+Chinese railways, where the demand for passenger and freight transportation sig-
+nificantly exceeds the capacity of the system. In such environments, the emphasis
+Long-Haul Freight Transportation  461
+
+is less on “scheduling” and more on managing the train and line operations to
+operate freight trains in between the passenger traffic.
+
+Planning Levels
+
+Transportation systems thus appear as rather complex organizations that involve a
+great deal of human and material resources and that exhibit intricate relationships
+and tradeoffs among the various decisions and management policies affecting their
+different components. It is convenient to classify these policies according to the
+following three planning levels:
+
+1. Strategic (long-term) planning at the firm level typically involves the highest
+  level of management and requires large capital investments over long-term
+  horizons. Strategic decisions determine general development policies and
+  broadly shape the operating strategies of the system. These include the design
+  of the physical network and its evolution, the location of major facilities (e.g.,
+  terminals), the acquisition of major resources such as motive power units, and
+  the definition of broad service and tariff policies.
+  Strategic planning also takes place at the international, national and
+  regional levels, where the transportation networks or services of several
+  carriers are simultaneously considered. National or regional transportation
+  departments, consultants, international shippers and forwarders, for example,
+  engage in this type of activity. Sections 13.3 and 13.4 present models aimed
+  at strategic issues at the system and firm levels, respectively.
+
+2. Tactical (medium-term) planning aims to determine, over a medium-term
+  horizon, an efficient allocation and utilization of resources to achieve the
+  best possible performance of the whole system. Typical tactical decisions
+  concern the design of the service network and may include issues related
+  to the determination of the routes and types of service to operate, ser-
+  vice schedules, vehicle and traffic routing, repositioning of the fleet for
+  use in the next planning period. Tactical planning models are the object of
+  Section 13.5.
+
+3. Operational (short-term) planning is performed by local management, yard
+  masters and dispatchers, for example, in a highly dynamic environment where
+  the time factor plays an important role and detailed representations of vehi-
+  cles, facilities and activities are essential. Important operational decisions
+  concern: the implementation and adjustment of schedules for services, crews,
+  and maintenance activities; the routing and dispatching of vehicles and crews;
+  the dynamic allocation of scarce resources. Section 13.6 addresses operational
+  planning issues.
+462  Handbook of Transportation Science
+
+  This classification highlights how data flows among decision-making levels
+and how policy guidelines are set. The strategic level sets the general policies
+and guidelines for decisions taken at the tactical level, which determines goals,
+rules and limits for operational and real-time decisions. The data flow follows the
+reverse route, each level of planning supplying information essential for the deci-
+sion making process at a higher level. This hierarchical relationship emphasizes the
+differences in scope, data, and complexity among the various planning issues, pre-
+vents the formulation of a unique model for the planning of freight transportation
+systems, and calls for different model formulations that address specific problems
+at particular levels of decision making.
+
+13.3 Strategic System Analysis and Planning
+
+The focus of the models and methods presented in this section is broad: strategic
+planning issues at the international, national and regional level, where the move-
+ments of several commodities through the transportation networks and services
+of several carriers are considered simultaneously. The main questions address the
+evolution of a given transportation system and its response to various modifica-
+tions in its environment: changes to existing infrastructure, construction of new
+facilities, evolution of the “local” or international socio-economic environment
+resulting in modifications to the patterns and volumes of production, consump-
+tion, and trade, variations in energy prices, changes to labor conditions, new
+environment-motivated policies and legislation, carrier mergers, introduction of
+new technologies, and so on and so forth. These questions are often part of cost-
+benefit analyses and comparative studies of investment alternatives – especially
+when the available monetary resources are limited – and are asked by regional
+or national planning agencies and regulatory authorities, as well as international
+financial institutions such as the World Bank. Private firms are also interested in
+these questions, particularly companies involved in the financing of transporta-
+tion infrastructures, or firms that plan and operate the distribution of goods using
+several transportation modes.
+
+  The prediction of multicommodity freight flows over a multi-modal network
+is an important component of transportation science and has attracted significant
+interest in recent years. One notes, however, that, perhaps due to the inherent
+difficulties and complexities of such problems, the study of freight flows at the
+national or regional level has not yet achieved full maturity, in contrast to passen-
+ger transportation where the prediction of car and transit flows over multi-modal
+networks has been studied extensively and several of the research results have
+been transferred to practice (Florian and Hearn 1995, Cascetta 2001; see also
+Chapter 11).
+Long-Haul Freight Transportation  463
+
+  A “complete” strategic planning tool identifies and represents the fundamental
+components of a transportation system – demand, supply, performance measures
+and decision criteria – and their interactions. It yields product flow volumes and
+associated performance measures defined on a network representation of the trans-
+portation system. It aims to achieve a sufficiently good simulation of the global
+behaviour of the system to both offer a correct representation of the current situ-
+ation and serve as an adequate analysis tool for planned or forecast scenarios and
+policies. It has to be tractable and produce results that are easily accessible. This
+constitutes an extremely broad scope and it is thus unrealistic to believe that a single
+formulation, mathematical or otherwise, or a single procedure may encompass all
+relevant elements, address all important issues, and fulfill all goals. Consequently,
+a strategic planning tool appears as a set of models and procedures. Other than
+data manipulation (e.g., collection, fusion, updating, validation, etc.) and result
+analysis (e.g., cost-benefit, environmental impacts, energy consumption policies,
+etc.) tools, the main components are: (i) Supply modeling representing the trans-
+portation modes, infrastructure, carriers, services, and lines; vehicles and convoys;
+terminals and inter-modal facilities; capacities and congestion; economic, service,
+and performance measures and criteria, (ii) Demand modeling that captures the
+product definitions, identifies producers, shippers, and intermediaries and repre-
+sents production, consumption, and zone-to-zone (region-to-region) distribution
+volumes, as well as mode choices; Relations of demand and mode choice to the
+performance of economic policies and transportation system performance are also
+addressed here, (iii) Assignment of multi-product flows (from the demand model)
+to the multi-mode network (the supply representation). This procedure simulates
+the behaviour of the transportation system and its output forms the basis for the
+analyses that conduct to the specification of the strategic plan. Therefore, it has
+to be both precise in reproducing current situation and general to produce robust
+analyses of future scenarios based on forecast data.
+
+  A complete survey of demand and mode choice estimation methodologies is
+beyond the scope of this chapter. In the following, we only cite some of the most
+frequently used methodologies and associated references.
+
+  The modeling of demand corresponds to an image of the economic activities
+of a country, production, consumption, import and export of goods. For planning
+purposes, its output is a series of product (or commodity group) specific demand
+matrices indicating the volumes to be moved from one region or zone to another.
+It is often completed by the modeling of mode choice, which specifies for each
+product and origin-destination combination on what transportation infrastructure
+or services the demand may be moved.
+
+  A number of countries have developed input/output models of their economy
+that serve to determine the basic production and attraction of goods (Isard 1951;
+464  Handbook of Transportation Science
+
+Casceta 2001 and references within). In order to use an input/output model, it
+is necessary to disaggregate the model inputs and outputs by region and then
+further disaggregate them by the zonal subdivision of the national planning
+model. This process is complex and is usually done in an analysis and comput-
+ing environment which is not necessarily integrated with that used for the supply
+representation and the computation of flows by product. When an input/output
+model is not available, the initial determination of origin-destination matrices
+is carried out by using national statistics on production, consumption, imports
+and exports combined with sectorial surveys designed to complete missing or
+unreliable information. This process may be tedious since one has to reconcile
+data from several sources that may be collected by using different geographical
+subdivisions or inconsistent product definitions. The results of the disaggregated
+input/output model or the ad-hoc estimation procedures serve for the initial com-
+putation of origin-destination matrices for each product but without a subdivision
+by mode.
+
+  A second class of models that is well studied for the prediction of interregional
+commodity flows is the spatial price equilibrium model and its variants (Friesz,
+Tobin, and Harker 1983, Harker and Friesz 1986a,b, and Harker 1987; see also
+Florian and Hearn 1995, or Nagurney 1993). This class of models determines
+simultaneously the flows between producing and consuming regions, as well as
+the selling and buying prices that satisfy the spatial equilibrium conditions. Simply
+stated, a spatial equilibrium is reached provided that for all pairs of supply and
+demand regions with a positive commodity flow, the unit supply price plus the unit
+transportation cost is equal to the unit demand price; the sum is larger than this
+price for all pairs of regions with no exchanges. The transportation network used in
+these models is usually represented in a simplistic way (bipartite networks). These
+models rely to a large extent on the supply and demand functions of producers and
+consumers, respectively, which are rarely available and quite difficult to calibrate.
+There are relatively few applications of this class of models for the determination
+of demand by product. The few applications reported in the literature deal with
+specific products which have a particular importance, such as crude oil, coal or
+milk products.
+
+  The mode choice definition may be rather general, e.g., petroleum moves
+by ship and pipeline or, alternatively, extremely specific indicating the particu-
+lar multi-modal path for a given product, shipper, and origin-destination pair, or
+anywhere in between. The level of detail of modal specification needs not to be
+the same for all products or inter-zonal trade flows. The specification of the mode
+choice for a given product may be inferred from historical data and shipper surveys
+or it may result from a formal description and modeling effort (Winston 1983).
+Random utility models, developed and largely used for the analysis and planning
+Long-Haul Freight Transportation  465
+
+of person transportation systems, have been proposed for freight transportation
+as well (Cascetta 2001) but their use in actual applications is scarce. The huge
+number of paths that have to be explicitly generated and stored, coupled to the
+challenge to perform this task for forecast data, may explain this phenomenon.
+At aggregated levels, mode choices have been specified for particularly important
+product flows by explicitly surveying the major logistic chains used between pairs
+of macro regions.
+
+  Once modal origin-destination matrices have been developed by some means,
+the next step is to assign them to the network (supply) model by using some
+route choice mechanism. The results of such an assignment model – product
+flows and performance measures – form part of the input to demand and cost-
+benefice modeling and analysis. The actual assignment mechanism may be based
+on further application of random utility models to the choice of pre-defined paths
+over a multi-modal network or on network optimization models. It is notewor-
+thy that the attributes of pre-defined paths are determined by the state of the
+network at generation time and are not responsive to assignment results. Thus,
+for example, congestion conditions are very difficult to represent. Moreover, the
+utility and choice models have to be calibrated, and all paths have to be gener-
+ated, for each scenario, which is quite difficult to perform when forecast data
+is used.
+
+  Another class, network optimization models, is generally considered to be
+more appropriate for the type of planning issues considered here. These for-
+mulations enable the prediction of multicommodity flows over a multi-modal
+network that represents the transportation facilities at a level of detail appropri-
+ate for a nation or region but with relatively little abstraction. The demand for
+transportation services is exogenous and may originate from an input-output or
+spatial equilibrium model, if one is available, or from other sources, such as
+observed demand or scaling of past observed demand. The choice of mode or
+subsets of modes used are exogenous and intermodal shipments are permitted.
+Within the specified mode choice, the optimization (assignment) engine deter-
+mines the best (with respect to the specified network performance measures)
+multi-modal paths for each product and origin-destination pair. In this sense,
+these models may be integrated with econometric demand models as well. The
+emphasis is on the proper representation of the network and its several transporta-
+tion modes, the corresponding intermodal transfer operations, the various criteria
+used to determine the movement of freight, the interactions and competition for
+limited resources captured through the representation of congestion effects, and
+the associated estimation of the traffic distribution over the transportation system
+considered to be used for comparative studies or for discrete time multi-period
+analyses.
+466  Handbook of Transportation Science
+
+  Studies in the 1970’s used rather simple network representations. Guélat,
+Florian, and Crainic (1990) and Crainic et al. (1990) review and discuss these
+efforts. Several studies also attempted to extend spatial equilibrium models to
+include more refined network representations and to consider congestion effects
+and shipper-carrier interactions, Friesz, Gottfried, and Morlok (1986) present a
+sequential model which uses two network representations: detailed separate net-
+works for each carrier, and an aggregate, shipper-perceived network. On each
+carrier network commodities are transported at the least total cost. On the shipper-
+perceived network, traffic equilibrium principles are used to determine the carriers
+that shippers choose to move their traffic. This approach has proven quite success-
+ful in the study of logistics of products where a very limited number of shippers
+and carriers interact and strongly determine the behavior of the system. A typical
+example is the coal market between the electric utilities in the United States and
+their suppliers in exporting countries. Friesz and Harker (1985), Harker and Friesz
+(1986), Harker (1987, 1988), and Hurley and Petersen (1994) present more elab-
+orate formulations. This line of research has not, however, yet yielded practical
+planning models and tools, mainly because the formulations become too large and
+complex when applied to realistic situations.
+
+  The modeling framework we present is based on the work of Guélat, Florian,
+and Crainic (1990). The formulation does not consider shippers and carriers as
+distinct actors in the decisions made in shipping freight. The level of aggre-
+gation appropriate for strategic planning of freight flows results in origins and
+destinations that correspond to relatively large geographical areas and leads to
+the specification of supply and demand representing, for each of the products
+considered, the total volumes generated by all the individual shippers. Further-
+more, demand for strategic freight studies are often determined from data sources
+(national freight flow statistics, economic input/output models) which enable the
+identification of the mode used, but do not contain information on individual ship-
+pers. It is thus assumed that the shipper’s behavior is reflected in the origin to
+destination product matrices and in the specification of the corresponding mode
+choice.
+
+  The modeling framework is that of a multi-modal network, made up of modes,
+nodes, links, and intermodal transfers, on which multiple products are to be moved
+by specific vehicles and convoys between given origin and destination points. Here,
+a mode is a means of transportation having its own characteristics, such as vehicle
+type and capacity, as well as specific cost measures. Depending on the scope
+and level of detail of the strategic study, a mode may represent a carrier or part
+of its network representing a particular transportation service, an aggregation of
+several carrier networks, or specific transportation infrastructures such as highway
+networks or ports.
+Long-Haul Freight Transportation 467
+
+The network consists of nodes links modes and transfers that
+
+represent all possible physical movements on the available infrastructure. To cap-
+
+ture the modal characteristics of transportation, a link  is defined as a triplet
+
+(i,m,j), where  is the origin node,  is the destination node, and
+
+  is the mode allowed on the arc. Parallel links are used to represent situa-
+
+tions where more than one mode is available for transporting goods between two
+
+adjacent nodes. This network representation is compact and enables easy iden-
+
+tification of the flow of goods by mode, as well as various cost functions (e.g.,
+
+operating cost, time delay, energy consumption, emissions, noise, risk, etc.) by
+
+product and mode. Furthermore, the network model resembles the physical net-
+
+work, since, for example, the rail and road infrastructures are physically different.
+
+Also, when there are two different types of services on a physical link, such as
+
+diesel and electric train services on rail lines, a separate link may be assigned to
+
+each service to capture the fact that they have different cost and delay functions. To
+
+model intermodal shipments, one must allow for mode transfers at certain nodes
+
+of the network and compute the associated costs and delays. Intermodal transfers t
+
+at a node of the network are modeled as link to link, hence mode to mode, allowed
+
+movements. A path in this network then consists of a sequence of directed links
+
+of a mode, a possible transfer to another mode, a sequence of directed links of
+
+the second mode, and so on. A transfer thus belongs to path if the two arcs that
+
+define it belong to the path. This representation allows for the restriction of flows
+
+of certain commodities to subsets of modes (e.g., iron ore may be shipped only
+
+by rail and ship) to capture the restrictions that occur in the operation of freight
+
+networks and transshipment facilities.
+
+A product is any commodity (or collection of similar products) – goods or
+
+passengers – that generates a link flow. Each product  transported over the
+
+multi-modal network is shipped from certain origins  to certain destinations
+
+within the network. The demand for each product for all origin-destination
+
+pairs is exogenous and is specified by a set of O-D matrices. The mode choice
+
+for each product is also exogenous and is indicated by defining for each O-D
+
+matrix a subset of modes allowed for transporting the corresponding demand. For
+
+example, one may indicate that the traffic out of certain regions must use rail,
+
+while in other regions there is a choice between rail and barges. This allows to
+
+capture the mode restrictions that occur in the operation of freight networks and
+
+transshipment facilities. Let  be a demand matrix associated with product
+
+where  is the subset of modes that may be used to move this
+
+particular part of product p.
+
+The flows of product  on the multi-modal network are the decision
+
+variables of the model. Rows on links  are denoted by and flows on
+
+transfers  are denoted by v stands for the vector of all product flows. Cost
+468  Handbook of Transportation Science
+
+functions are associated with the links and transfers of the network. For product
+
+p, the respective average cost functions  and  depend on the transported
+
+volume of goods. Then, the total cost of product p on arc a is  and it is
+
+  on transfer t. The total cost over the multi-modal network is the function
+
+F, which is to be minimized over the set of flow volumes that satisfy the flow
+
+conservation and nonnegativity constraints:
+
+Let  denote the set of paths that for product p lead from origin o to destination d
+
+using only modes in m(p). The path formulation of the flow conservation equations
+
+are then:
+
+where is the flow on path  These constraints specify that the total flow
+
+moved over all the paths that may be used to transport product p must be equal to
+
+the demand for that product. The nonnegativity constraints are:
+
+  The relation between arc flows and path flows is
+
+  where is the set of all paths that may be used by product p,and  if
+
+  (and 0, otherwise) is the indicator function which identifies the arcs of a par-
+
+ticular path. Similarly, the flows on transfers are
+
+where  if  (and 0, otherwise). Then, the system optimal multi-
+
+product, multi-modal assignment model consists of minimizing (13.1), subject to
+
+constraints (13.2) and (13.3). The optimality principle ensures that in the final
+
+flow distribution, for each product, demand matrix, and origin-destination pair, all
+
+paths with positive flows will have the same marginal cost (lower than on the other
+
+paths). The algorithm developed for this problem exploits the natural decompo-
+
+sition by product and results in a Gauss-Seidel-like procedure which allows the
+
+solution of large size problems in reasonable computational times (Guélat, Florian,
+
+and Crainic 1990).
+
+  This network model allows for a detailed representation of the transportation
+
+infrastructure, facilities and services, as well as the simultaneous assignment of
+
+multiple products on multiple modes. Vehicle and convoy traffic on the links (and
+Long-Haul Freight Transportation  469
+
+transfers) of the network is deduced from the assigned product flows and is used
+to evaluate congestion conditions and to compute costs. Capacities are considered
+through congestion or penalty functions. Thus, the model captures the competition
+ofproducts for the service capacity available, a feature ofparticular relevance when
+alternative scenarios of network capacity expansion are considered. It allows for
+the specification and combination of a wide variety of performance measures and
+assignment criteria, including user-optimum type of functions when the nature of
+a particular product requires it. Furthermore, the model is sufficiently flexible to
+represent the transport infrastructure of one carrier only.
+
+  This model and algorithm are embedded in the STAN interactive-graphic
+system where they are complemented by a large number of tools to input, display,
+analyze, modify, and output data; specify the network and assignment models;
+analyze flows, costs, and commodity routings and paths. Matrix-based computing
+tools may be used to implement a whole gamut of mode choice and demand
+models. A network calculator can be used to combine network data to implement
+various performance and analysis models. A path analysis capability allows the
+visualisation and handling of paths used in assignment and the construction of
+demand and network performance models based on paths. The data required by the
+STAN system is organized into a strictly structured data bank. A macro language
+can be used to program complex operations and procedures. See Larin et al. (2000)
+for a detailed description of the STAN system, components, interfaces, and tools.
+The STAN system has been applied successfully in practice for scenario analysis
+and planning, and several agencies and organizations in a number of countries
+around the world use it. Crainic, Florian, and Léal (1990) present the application
+of this methodology to the study of freight rail transportation, while several other
+applications are discussed in Guélat, Florian, and Crainic (1990), Crainic et al.
+(1990), Crainic, Florian, and Larin (1994), Crainic et al. (1998, 2002).
+
+13.4 Logistics Network Design
+
+For freight carriers, strategic decisions determine general development policies
+and broadly shape the operating strategies of the system over relatively long-term
+horizons. Several such decisions affect the design of the physical infrastructure
+network: where to locate facilities such as loading and unloading terminals, con-
+solidation centers, rail yards, or intermodal platforms; what type of equipment
+to install in each facility; on which lines to add capacity; what type of lines or
+capacity to add; what lines or facilities to abandon; and so on. These issues, which
+may be collectively identified as logistics system design, are the subject of this
+section.
+470  Handbook of Transportation Science
+
+  Logistics system design issues are often addressed by evaluating alternatives
+using network models for the tactical (Section 13.5) or operational (Section 13.6)
+planning of transportation activities. When formal models are proposed, these
+generally appear either as location or network design formulations. An extensive
+literature exists on both subjects, addressing the analysis of formulations, the
+development of algorithms, and the performance of applications for a broad range
+of problems and issues. Location models are the object of Chapter 10, as well as
+of Mirchandani and Francis (1990), Daskin (1995), Drezner (1995), and Labbé,
+Peeters, and Thisse (1995). Labbé and Louveaux (1997) present an annotated
+bibliography concerning discrete location problems.
+
+  In the following, we focus on network design. We give a number of main ref-
+erences and present a general formulation together with a few extensions that may
+be used in freight transportation planning. For more details, the interested reader
+should consult the surveys by Magnanti and Wong (1984) and Minoux (1986), the
+discussions in Ahuja et al. (1995), Nemhauser and Wolsey (1988), and Salkin and
+Mathur (1989), and the annotated bibliography of Balakrishnan, Magnanti, and
+Mirchandani (1997). Survivability and connectivity issues are particularly impor-
+tant for telecommunication systems and the electronics industry, but may also
+appear prominently in the transportation industry when service must be ensured to
+certain regions or between particular zones. Grötschel, Monma, and Stoer (1995)
+survey the models and solution methods developed for this class of problems. An
+annotated bibliography may be found in Raghavan and Magnanti (1997).
+
+Network Design
+
+Network design models are extensively used to represent a wide range of planning
+
+and operation management issues in transportation, telecommunications, logistics,
+
+and production-distribution. These formulations play a particularly important role
+
+in decisions concerning the logistics structure, the service network (Section 13.5),
+
+and the operations (Section 13.6) of long distance freight transportation systems.
+
+  Network design models are defined in terms of a network  where
+
+  represents the set of nodes or vertices. Demand for transportation exists at some
+
+of these nodes. The set of arcs or links  includes all
+
+the possible ways to move directly (no intermediate nodes) between two nodes in
+
+  The set includes the products or commodities that may move on the network.
+
+Let i and j be node indices and p the product index.
+
+  Other than the usual characteristics – length, capacity, and cost – fixed costs
+
+may be associated with some or all links of the network. This indicates that as soon
+
+as one chooses to use that particular arc, one incurs the fixed cost in excess of the
+
+utilization cost, which is in most cases related to the volume of traffic on the link.
+Long-Haul Freight Transportation  471
+
+The objective of network design formulation thus is to choose links in a network,
+along with capacities, to enable the demand for transportation to be satisfied at
+the lowest possible system cost computed as the total fixed cost of the selected
+links plus the total variable cost of using the network. A fixed cost network design
+formulation may then take the following form:
+
+  Minimize
+
+  subject to
+
+where,
+
+integer variables modeling discrete choice design decisions. When
+
+  in relation (13.8),  only if link  is open, selected
+
+for inclusion in the final network or for capacity expansion;  other-
+
+wise, indicating that the link is closed. When  the variables are
+
+not restricted to {0, 1} values and usually represent the number of facilities or
+
+units of capacity installed, or the level of service offered (see Section 13.5 for
+
+examples in service network design);
+
+continuous flow decision variables indicating the amount of flow of commodity
+
+p using link (i,j);
+
+fixed cost of opening link (i,j); when  the hypothesis is that a
+
+cost is incurred for each unit of facility installed or service offered;
+
+transportation cost per unit of flow of product p on link (i,j);
+
+capacity of link (i, j);
+
+demand of product p at node i.
+
+  This is the linear cost, multicommodity, capacitated version of the network
+design formulation; we identify it as MCND. Most applications and methodological
+developments target the formulations where the design variables are restricted to
+0 or 1 values. A number of important applications require nonlinear formulations,
+however, such as the frequency service network design problems presented in
+472  Handbook of Transportation Science
+
+Section 13.5. Some applications also require that flow variables be restricted to
+integer values, thus increasing the difficulty of these problems. However, since
+very few methodological developments have been dedicated to such variants of
+the network design model, the rest of this section focuses on formulations with
+{0, 1} design variables, continuous flow variables, and linear costs.
+
+  The objective function (13.4) of the network design formulation (13.4)–(13.9)
+measures the total cost of the system. An interesting point of view is to consider
+this objective as also capturing the tradeoffs between the costs ofoffering the trans-
+portation infrastructure or services and those of operating the system to channel the
+flow of traffic. Equation (13.5) expresses the usual flow conservation and demand
+satisfaction restrictions. Several demand patterns may be defined, resulting in dif-
+ferent models. In some cases, a product may be shipped from (one or) several
+origins to satisfy the demand of (one or) several destinations. These are models
+where the supply from several origins may be substituted to satisfy a given demand
+and are often used in the study of the distribution of raw materials. Variants with
+single product origin (or destination) may also be encountered.
+
+  Demand is defined between pairs of origin-destination points in most applica-
+tions. In this case, and irrespective of the number of true commodities, a product
+may be associated with each origin-destination pair, by an appropriate modification
+of the graph that makes multiple copies of the nodes where several commodities
+originate or terminate their journeys. Let be the total demand of product p.
+Then,
+
+  Constraint (13.6), often identified as a bundle or forcing constraint, states that
+
+the total flow on link (i,j) cannot exceed its capacity if the link is chosen in the
+
+design of the network  and must be 0 if (i,j) is not part of the selected
+
+network  When the capacity is so large that it is never binding (i.e., is
+
+at least the largest possible flow on the link), the demand may be normalized to 1
+
+and may be set to This simplifies the formulation and corresponds to the
+
+uncapacitated model. Relations (13.8) and (13.9) specify the range of admissible
+
+values for each set of decision variables.
+
+  Relation (13.7) captures additional constraints related to the design of the
+
+network or relationships among the flow variables. Together, they may be used
+
+to model a wide variety of practical situations, and this is what makes network
+
+design problems so interesting. For example, the set may represent topological
+
+restrictions imposed on the design of the network, such as precedence constraints
+Long-Haul Freight Transportation  473
+
+(e.g., choose link (i,j) only if link (p,q) is chosen) or multiple choice constraints
+(e.g., select at most or exactly a given number of arcs from a specified subset).
+An important type of additional constraint reflects the usually limited nature of
+available resources:
+
+These budget constraints illustrate a relatively general class of restrictions imposed
+upon resources shared by several links. Note that, quite often, budget constraints
+replace the fixed cost term in the objective function (13.4). Partial capacity
+constraints also belong to this group:
+
+They reflect restrictions imposed on the use of some facilities by individual com-
+modities. Such conditions may be used to model, for example, the maximum
+quantity of some hazardous goods moved by one train or ship.
+
+  An equivalent model is the path-based multicommodity capacitated network
+design formulation PMCND:
+
+  Minimize
+
+  subject to
+
+where,
+
+  set of paths for commodity p;
+  flow of commodity p on path l;
+
+  1, if arc (i,j) belongs to path  for product p (0, otherwise);
+
+  transportation cost of commodity p on path l,
+
+with  Constraint (13.7) is usually addressed when paths are built.
+
+The same mechanisms may also handle some nonlinear route costs. Furthermore,
+474  Handbook of Transportation Science
+
+the explicit consideration of path flows may open interesting algorithmic perspec-
+tives as illustrated by the tabu search method proposed by Crainic, Gendreau, and
+Farvolden (2000).
+
+  Note that for any setting ofthe design variables, these models yield capacitated
+multicommodity minimum cost network flow (CMCNF) problems in arc and path
+formulations, respectively. For uncapacitated design formulations, the subproblem
+obtained by fixing the design variables becomes an uncapacitated multicommodity
+flow problem that decomposes into |P| shortest path problems (Pallottino and
+Scutellà 1998). Ahuja (1997) presents an annotated bibliography of these and
+other network flow problems.
+
+  Several problem classes may be derived from these general formulations by
+an appropriate definition of the network and, eventually, of constraints in
+(Magnanti and Wong 1984). Thus, when fixed costs are attributed to nodes, one
+obtains location formulations. Constraints that require the final design to be a
+Hamiltonian circuit yield the Traveling Salesman Problem (TSP). Different sets
+of constraints on the form of the optimal network design yield the Steiner and the
+Spanning Tree problems. The capacitated Vehicle Routing Problems may be viewed
+as a special case of the capacitated spanning tree formulation. This illustrates
+the richness of the network design models and explains the wide range of their
+applications.
+
+General Solution Methods
+
+Although relatively simple to state, network design formulations are generally very
+difficult to solve. From a theoretical point of view, most design formulations are
+
+  It has also been observed that for capacitated models, linear relaxations
+yield poor approximations of the mixed-integer polytope resulting in important
+optimality gaps. In particular, the interplay between link capacities and fixed costs
+is not adequately represented by these approaches. Moreover, the network flow
+subproblems are often highly degenerate, increasingly so when the number of
+commodities becomes larger. Additional algorithmic challenges follow from the
+very large scale of most applications. Important results have been obtained for
+some problem classes; for example, uncapacitated and tree-based formulations.
+However, much work is still needed for more general problem settings. In the
+following, we point to some of these results and research challenges. The articles
+mentioned at the beginning of the section and the references they contain offer a
+more in-depth treatment of the subject.
+
+  The previous models are mixed-integer formulations that may be approached
+by any of the methodologies available for this class of problems (e.g., Nemhauser
+and Wolsey 1988 or Salkin and Mathur 1989). A widely used methodology is to
+Long-Haul Freight Transportation  475
+
+relax one or several groups of constraints in a Lagrangian fashion to obtain a simpler
+problem (Geoffrion 1974). A sequence of multiplier adjustments and resolutions of
+the relaxation subproblem yields a lower bound on the optimal value of the original
+formulation. As for multipliers, they may be adjusted by using a nondifferentiable
+optimization technique, subgradient or bundle, for example (Lemaréchal 1989).
+Dual ascent is another often-used approach to obtain this lower bound. In this case,
+the dual formulation of the linear relaxation of the problem is the starting point.
+Dual variables are then iteratively and systematically increased, while conforming
+to the complementary slackness conditions. An upper bound on the optimal value
+of the design problem is obtained as the objective value of a feasible solution
+heuristically derived from the solution to the relaxed problem. The lower and
+upper bounds are then usually integrated into an implicit enumeration scheme
+such as the branch-and-bound algorithm.
+
+  The polyhedral structure of the mixed-integer network design formulation
+may be studied to derive valid inequalities (or cuts) to be added to the formu-
+lation. Briefly, the objective is to construct, or approximate, the convex hull of
+the mixed-integer programming formulation by adding valid inequalities. If one
+succeeds and the convex hull is found, the original problem may be solved by
+linear programming methods. The cutting plane method is based on this idea and
+proceeds via a succession of resolutions of the linear relaxation of the problem and
+cut generations. If the convex hull can only be approximated, the bounds may be
+strengthened, yielding more efficient branch-and-bound algorithms.
+
+  In many cases, the additional complexity introduced to account for the partic-
+ularities of the application at hand and the large size of the problem instance make
+the exact resolution of the problem impractical. Heuristics are then used to obtain
+solutions of, hopefully, good quality. A number of heuristics, e.g., greedly adding
+or dropping arcs, aim to avoid mathematical programming techniques altogether
+but are not very successful for capacitated models. The relaxations and dual-ascent
+methods presented above are also often used as heuristics with interesting results.
+Modern heuristics, principally Tabu Search (Glover and Laguna 1997), Simulated
+Annealing (Laarhoven and Aarts 1987), and Genetic Algorithms (Goldberg 1989),
+are also increasingly being applied.
+
+  Much effort has been dedicated to uncapacitated versions of the problem and
+significant results have been obtained. In particular, Balakrishnan, Magnanti, and
+Wong (1989) present a dual-ascent procedure that very quickly achieves lower
+bounds within 1–4 percent of optimality. Used in conjunction with an add-drop
+heuristic, the method is able to efficiently address realistically sized instances
+of LTL service network design problems. The attractive performance of the
+dual-ascent procedure has led to the development of extensions to other design
+formulations and applications, as illustrated by the work of Barnhart, Jin, and
+476  Handbook of Transportation Science
+
+Vance (2000) on railroad blocking. An exact solution method for the uncapaci-
+
+tated multicommodity fixed charge network design formulation has been recently
+
+proposed by Holmberg and Hellstrand (1998). The authors used a Lagrangian
+
+relaxation of the demand constraint (13.5) with subgradient optimization to derive
+
+lower bounds. Shortest path algorithms on networks derived from the Lagrangian
+
+relaxation solutions are used to yield feasible points. The bounds are then used in a
+
+branch-and-bound enumeration scheme and the authors discuss various branching
+
+and tree search strategies. Experiments were conducted on randomly generated
+
+problems and on a number of instances present in the literature (the largest prob-
+
+lems solved had 1000 design arcs and 600 commodities) and showed that the
+
+branch-and-bound outperformed a state-of-the-art mixed-integer code with respect
+
+to problem size and computation time.
+
+  Significant results have also been obtained for the Network Loading prob-
+
+lem. In this particular version of capacitated formulations, the objective is to
+
+install, or load, on each design arc a number of capacitated facilities, such as
+
+different transportation services. The total cost is made up of fixed link costs to
+
+install each facility and commodity-specific transportation costs. Total cost must
+
+be minimized and the point-to-point transportation demand must be satisfied. Two
+
+restrictions characterize this class of models and make their analysis somewhat
+
+simpler. First, one may load an integral number of l different capacitated facilities
+
+on each arc. Second, the facility capacities are modular, that is, if the capacities
+
+are  then  is a multiple of Originating with the
+
+work of Magnanti, Mirchandani, and Vachani (1993, 1995), many efforts have
+
+been directed toward the polyhedral study of the problem in order to determine
+
+valid inequalities and facets to strengthen the formulation (e.g., Epstein 1998).
+
+Berger et al. (1998) present an efficient tabu search procedure for problems with
+
+multiple facilities where the modular restriction is relaxed and flows for each
+
+origin-destination pair must follow a single path.
+
+  Very few results have been obtained on capacitated problems defined on gen-
+
+eral networks that are more difficult to solve and pose considerable algorithmic
+
+challenges. The capability to compute efficiently good bounds on the optimal value
+
+of the design problem is a prerequisite to the development of solution methods
+
+that perform on large-scale problem instances with large numbers of commodi-
+
+ties. Lagrangian relaxation approaches have been shown appropriate to address
+
+this issue (Gendron and Crainic 1994, 1996, Holmberg and Yuan 1996, Gendron,
+
+Crainic, and Frangioni 1998). Several Lagrangian relaxations are possible, how-
+
+ever, and many offer the same theoretical bound, which is also the bound one
+
+obtains from the strong linear relaxation of the formulation (Gendron and Crainic
+
+1994). From an experimental point of view, the computing efficiency and conver-
+
+gence properties of the bounding procedures, as well as the quality of the solution
+

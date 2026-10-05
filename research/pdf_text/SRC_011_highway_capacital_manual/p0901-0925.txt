@@ -1,0 +1,1724 @@
+Highway Capacity Manual 2000
+
+  If unconstrainedEXHIBIT 24-1. FREEWAY WEAVING METHODOLOGY
+  Input
+
+  - Geometric data
+  - Weaving and nonweaving volumes
+  - Free-flow speed of freeway segment
+
+  before and after the weaving segment
+  Volume Adjustment
+
+  - Peak-hour factor
+  - Heavy vehicles
+  - Driver population
+
+  Compute flow rates
+
+  Establish weaving segment
+  configuration type
+
+  Compute unconstrained weaving and
+  nonweaving speeds
+
+  Check for constrained-flow
+  operation
+  If constrained
+  Compute constrained weaving and
+  nonweaving speeds
+
+  Compute average space mean speed
+  within the weaving segment
+
+  Compute density within the
+  weaving segment
+
+  Determine LOS
+
+  LOS
+  The LOS of the weaving segment is determined by comparing the computed density
+
+  with the criteria of Exhibit 24-2. A single LOS is used to characterize total flow in the
+  weaving segment, although it is recognized that in some situations (particularly in cases
+  of constrained operations) nonweaving vehicles may achieve higher-quality operations
+  than weaving vehicles.
+
+Chapter 24 - Freeway Weaving  24-2
+Methodology
+  Highway Capacity Manual 2000
+
+  EXHIBIT 24-2. LOS CRITERIA FOR WEAVING SEGMENTS
+
+  Density (pc/km/ln)
+
+LOS  Freeway Weaving Segment  Multilane and Collector-Distributor
+
+  Weaving Segments
+
+  A  ≤ 6.0  ≤ 8.0
+
+  B  > 6.0–12.0  > 8.0–15.0
+
+  C  > 12.0–17.0  > 15.0–20.0
+
+  D  > 17.0–22.0  > 20.0–23.0
+
+  E  > 22.0–27.0  > 23.0–25.0
+
+  F  > 27.0  > 25.0
+
+  In general, these criteria allow for slightly higher densities at any given level-of-
+service threshold than on a comparable basic freeway segment or multilane highway
+segment. This follows the philosophy that drivers expect and will accept higher densities
+on weaving segments than on basic freeway or multilane highway segments. The LOS
+E/F boundary does not follow this approach. Rather, it reflects densities that are
+somewhat less than those identified for basic freeway or multilane highway segments.
+Because of the additional turbulence on weaving segments, it is believed that breakdown
+occurs at somewhat lower densities than on basic freeway and multilane highway
+segments.
+
+WEAVING SEGMENT PARAMETERS
+
+  Exhibit 24-3 illustrates and defines the variables that are used in the analysis of
+weaving segments. These variables are used in the algorithms that make up the
+methodology.
+
+  All existing or projected roadway and traffic conditions must be specified when
+applying the methodology. Roadway conditions include length of the segment, number
+of lanes, type of configuration under study, and type of terrain or grade conditions. If
+freeway free-flow speed (FFS) is not known, the characteristics of the basic freeway
+segment or multilane highway must be specified to allow its determination using the
+algorithms of Chapter 21 or 23.
+
+DETERMINING FLOW RATES
+
+  All of the models and equations in this chapter are based on peak 15-min flow rates  If 15-min flow rates are
+in equivalent passenger cars per hour. Thus, hourly volumes must be converted to this  specified initially, set the PHF
+basis using Equation 24-1.  to 1.00 before applying this
+  conversion
+  v= V  (24-1)
+  PHF * f HV * f p
+
+where  = peak 15-min flow rate in an hour (pc/h),
+  v  = hourly volume (veh/h),
+  V  = heavy-vehicle adjustment factor (from basic freeway segment or
+
+  fHV  multilane highway methodology), and
+  = driver population factor (from basic freeway segment or multilane
+  fp
+  highway methodology).
+
+WEAVING SEGMENT DIAGRAM  Chapter 24 - Freeway Weaving
+  After volumes have been converted to flow rates, it is useful to construct a weaving  Methodology
+
+diagram of the type shown in Exhibit 24-4. All flows are shown as flow rates in
+equivalent passenger cars per hour, and critical analysis variables are identified and
+placed on the diagram. The diagram may now be used as a reference for all input
+information required in applying the methodology.
+
+  24-3
+Highway Capacity Manual 2000
+
+  EXHIBIT 24-3. PARAMETERS AFFECTING WEAVING SEGMENT OPERATION
+  vo1 or vo2
+  vw1 or vw2
+
+  Symbol  vw1 or vw2
+  L  vo1 or vo2
+  N
+  Nw  Definition
+
+  Nw(max)  Length of weaving segment (m)
+  Total number of lanes in the weaving segment
+  Nnw  Number of lanes to be used by weaving vehicles if unconstrained operation is to be
+  v  achieved
+  vo1  Maximum number of lanes that can be used by weaving vehicles for a given
+  vo2  configuration
+  vw1  Number of lanes used by nonweaving vehicles
+  vw2
+  vw  Total flow rate in the weaving segment (pc/h)
+  vnw  Larger of the two outer, or nonweaving, flow rates in the weaving segment (pc/h)
+  VR
+  Smaller of the two outer, or nonweaving, flow rates in the weaving segment (pc/h)
+  R
+  Larger of the two weaving flow rates in the weaving segment (pc/h)
+  Sw
+  Snw  Smaller of the two weaving flow rates in the weaving segment (pc/h)
+  S
+  D  Total weaving flow rate in the weaving segment (pc/h) (vw = vw1 + vw2)
+  Ww  Total nonweaving flow rate in the weaving segment (pc/h) (vnw = vo1 + vo2)
+  Wnw  Volume ratio; the ratio of weaving flow rate to total flow rate in the weaving segment
+  (VR = vw/v)
+  Weaving ratio; the ratio of the smaller weaving flow rate to total weaving flow rate
+  (R = vw2/vw)
+  Speed of weaving vehicles in the weaving segment (km/h)
+
+  Speed of nonweaving vehicles in the weaving segment (km/h)
+
+  Speed of all vehicles in the weaving segment (km/h)
+  Density of all vehicles in the weaving segment (pc/km/ln)
+  Weaving intensity factor for prediction of weaving speed
+
+  Weaving intensity factor for prediction of nonweaving speed
+
+  EXHIBIT 24-4. CONSTRUCTION AND USE OF WEAVING DIAGRAMS
+
+  A 1500 500 C
+  300
+
+  400
+  D
+
+  B Segment and flows
+
+  A 1500 C
+
+  300  500
+
+  B  400  D
+
+  Weaving diagram
+
+Chapter 24 - Freeway Weaving  24-4
+Methodology
+  Highway Capacity Manual 2000
+
+WEAVING SEGMENT CONFIGURATION  See Chapter 13 for diagrams
+  and concepts of the three
+  Weaving segment configuration is based on the number of lane changes required of  weaving segment
+each weaving movement. A complete discussion of this concept is found in Chapter 13.  configurations
+Exhibit 24-5 may be used to establish configuration type.
+
+  EXHIBIT 24-5. DETERMINING CONFIGURATION TYPE
+
+  Number of Lane Changes Required by Movement vw2
+
+ Number of Lane Changes  0  1  ≥ 2
+Required by Movement vw1
+  Type B  Type B  Type C
+  0  Type B  Type A  N/A
+  Type C  N/A
+  1  N/A
+
+  ≥ 2
+
+Note:
+N/A = not applicable; configuration is not feasible.
+
+  The three types of geometric configurations are defined as follows:
+  • Type A—Weaving vehicles in both directions must make one lane change to
+successfully complete a weaving maneuver.
+  • Type B—Weaving vehicles in one direction may complete a weaving maneuver
+without making a lane change, whereas other vehicles in the weaving segment must make
+one lane change to successfully complete a weaving maneuver.
+  • Type C—Weaving vehicles in one direction may complete a weaving maneuver
+without making a lane change, whereas other vehicles in the weaving segment must make
+two or more lane changes to successfully complete a weaving maneuver.
+
+DETERMINING WEAVING AND NONWEAVING SPEEDS
+
+  The heart of the weaving segment analysis procedure is the prediction of space mean
+speeds of weaving and nonweaving flows within the weaving segment. They are
+predicted separately because under some conditions they can be quite dissimilar, and the
+analyst must be aware of this.
+
+  The algorithm for prediction of average weaving and nonweaving speeds may be
+generally stated by Equation 24-2.
+
+  Si = Smin + Smax − Smin  (24-2)
+  1 +Wi
+
+where  = average speed of weaving (i = w) or nonweaving (i = nw) vehicles
+  Si
+  (km/h),
+  Smin  = minimum speed expected in a weaving segment (km/h),
+  Smax  = maximum speed expected in a weaving segment (km/h), and
+  = weaving intensity factor for weaving (i = w) and nonweaving (i = nw)
+  Wi
+  flows.
+
+  For the purposes of these procedures, the minimum speed, Smin, is set at 24 km/h.
+The maximum speed, Smax, is taken to be the average free-flow speed of the freeway
+segments entering and leaving the weaving segment plus 8 km/h. The addition of 8 km/h
+to the free-flow speed adjusts for the tendency of the algorithm to underpredict high
+speeds. Setting the minimum and maximum speeds in this way constrains the algorithm
+to a reasonable prediction range. With these assumptions incorporated, the speed
+prediction is given by Equation 24-3.
+
+  Si = 24 + SFF −16  (24-3)
+  1 +Wi
+
+  24-5  Chapter 24 - Freeway Weaving
+  Methodology
+Highway Capacity Manual 2000
+
+Attributes of weaving  where SFF is the average free-flow speed of the freeway segments entering and leaving
+segments captured by  the weaving segment (km/h).
+the model
+  Initial estimates of speed are always based on the assumption of unconstrained
+  operation. This assumption is later tested, and speeds are recomputed if operations turn
+  out to be constrained.
+
+  The combination of Equations 24-2 and 24-3 yields sensitivities that are consistent
+  with observed operations of weaving segments.
+
+  • As the length of the weaving segment increases, speeds also increase, and the
+  intensity of lane changing declines.
+
+  • As the proportion of weaving vehicles in total flow (VR) increases, speeds
+  decrease, reflecting the increased turbulence caused by higher proportions of weaving
+  vehicles in the traffic stream.
+
+  • As average total flow per lane (v/N) increases, speeds decrease, reflecting more
+  intense demand.
+
+  • Constrained operations yield lower weaving speeds and higher nonweaving speeds
+  than unconstrained operations. This reflects the fact that weaving vehicles are
+  constrained to less space than equilibrium would require, whereas nonweaving vehicles
+  have correspondingly more than their equilibrium share of space. In Exhibit 24-6, this is
+  reflected by differences in the constant a.
+
+  EXHIBIT 24-6. CONSTANTS FOR COMPUTATION OF WEAVING INTENSITY FACTORS
+
+  General Form
+
+  b vc
+  a(1+ VR)  
+
+   N
+  W = (3.28L)d
+
+  Constants for Weaving Speed, Sw  Constants for Nonweaving Speed, Snw
+
+  a  b  c  d  a  b  c  d
+
+  Type A Configuration
+
+  Unconstrained  0.15  2.2  0.97  0.80 0.0035 4.0  1.3  0.75
+  Constrained
+  0.35  2.2  0.97  0.80 0.0020 4.0  1.3  0.75
+  Unconstrained
+  Constrained  Type B Configuration
+
+  Unconstrained  0.08  2.2  0.70  0.50 0.0020 6.0  1.0  0.50
+  Constrained
+  0.15  2.2  0.70  0.50 0.0010 6.0  1.0  0.50
+
+  Type C Configuration
+
+  0.08  2.3  0.80  0.60 0.0020 6.0  1.1  0.60
+
+  0.14  2.3  0.80  0.60 0.0010 6.0  1.1  0.60
+
+  • Type B configurations are the most efficient for handling large weaving flows.
+  Weaving speeds of such flows are higher than for Type A and C configurations of equal
+  length and width.
+
+  • The sensitivity of speeds to length is greatest for Type A configurations, because
+  weaving vehicles are often accelerating or decelerating as they traverse the weaving
+  segment.
+
+  • The sensitivity of nonweaving speeds to the volume ratio (VR) is greatest for Type
+  B and C configurations. Because these configurations can accommodate higher
+  proportions of weaving vehicles and because each has a through lane for one weaving
+  movement, nonweaving vehicles are more likely to share lanes with weaving vehicles
+  than in Type A configurations, where the opportunity to segregate is greater.
+
+  The last point is important and serves to highlight the essential difference between
+  Type A configurations (particularly ramp-weaves) and others (Types B and C). Because
+  all weaving vehicles must cross a crown line in Type A segments, weaving vehicles tend
+
+Chapter 24 - Freeway Weaving  24-6
+Methodology
+  Highway Capacity Manual 2000
+
+to concentrate in the two lanes adjacent to the crown line, whereas nonweaving vehicles
+gravitate to outer lanes. Thus there is substantially more segregation of weaving and
+nonweaving flows in Type A configurations.
+
+  This difference makes Type A segments behave somewhat differently from other
+configurations. Speeds tend to be higher in Type A segments than in Types B or C given
+the same length, width, and demand flows. However, this does not suggest that Type A
+segments always operate better than Types B or C for similar lengths, widths, and flows.
+Type A segments have more severe restrictions on the amount of weaving traffic that can
+be accommodated than do other configurations.
+
+Determining Weaving Intensity
+
+  The weaving intensity factors (Ww and Wnw) are a measure of the influence of
+weaving activity on the average speeds of both weaving and nonweaving vehicles. These
+factors are computed by Equation 24-4.
+
+  b v c  (24-4)
+  a(1 +VR )  
+
+  N
+  W i = (3. 28L)d
+
+where  = weaving intensity factors for weaving (i = w) and nonweaving (i = nw)
+  Wi
+  flows;
+  VR  = volume ratio;
+  v  = total flow rate in the weaving segment (pc/h);
+  N  = total number of lanes in the weaving segment;
+  L  = length of the weaving segment (m); and
+  = constants of calibration.
+  a, b, c, d
+
+Constants for Computing Weaving Intensity Factors
+
+  Constants for computation of weaving intensity factors (a, b, c, d) are given in
+Exhibit 24-6. Values for these constants vary on the basis of three factors:
+
+  • Whether the average speed prediction is for weaving or nonweaving vehicles,
+  • Configuration type (A, B, or C), and
+  • Whether the operation is unconstrained or constrained.
+
+DETERMINING TYPE OF OPERATION
+
+The determination of whether a particular weaving segment is operating in an
+
+unconstrained or constrained state is based on the comparison of two variables that are
+
+defined in Chapter 13:
+  Nw = number of lanes that must be used by weaving vehicles to achieve
+
+Nw(max)  equilibrium or unconstrained operation, and
+  = maximum number of lanes that can be used by weaving vehicles for a
+
+  given configuration.  Definition of constrained
+  weaving segment
+Fractional values for lane use requirements of weaving vehicles may occur because
+
+weaving and nonweaving vehicles share some lanes. Cases for which Nw < Nw(max) are
+
+unconstrained because there are no impediments to weaving vehicles using the number of
+
+lanes required for equilibrium. If Nw ≥ Nw(max), weaving vehicles are constrained to
+
+using Nw(max) lanes and therefore cannot occupy as much of the roadway as would be
+
+needed to establish equilibrium operations. Exhibit 24-7 provides algorithms for the
+
+computation of Nw and shows the values of Nw(max), which are discussed more fully in
+
+Chapter 13.
+
+  24-7  Chapter 24 - Freeway Weaving
+  Methodology
+Highway Capacity Manual 2000
+
+  EXHIBIT 24-7. CRITERIA FOR UNCONSTRAINED VERSUS CONSTRAINED OPERATION OF
+  WEAVING SEGMENTS
+
+  Configuration  Number of Lanes Required for Unconstrained Operation, Nw  Nw(max)
+  Type A  1.21(N) VR0.571L0.234/S 0.438  1.4
+  Type B
+  Type C  w  3.5
+  3.0a
+  N[0.085 + 0.703VR + (71.57/L) – 0.0112(Snw – Sw)]
+  N[0.761 + 0.047VR – 0.00036L – 0.0031(Snw – Sw)]
+
+  Note:
+  a. For two-sided weaving segments, all freeway lanes may be used by weaving vehicles.
+
+  The equations of Exhibit 24-7 rely on the prediction of unconstrained weaving and
+  nonweaving speeds. The equations take these results and predict the number of lanes
+  weaving vehicles would have to occupy to achieve unconstrained speeds. If the result
+  indicates that constrained operations exist, speeds must be recomputed using constrained
+  equations.
+
+  The limit on maximum number of weaving lanes, Nw(max), is most restrictive for
+  Type A segments and reflects the need for weaving vehicles to cluster in the two lanes
+  adjacent to the crown line. The through weaving lane in Type B and C configurations
+  provides for greater occupancy of lanes by weaving vehicles.
+
+  Type A segments have another unusual, but understandable, characteristic. As the
+  length of a Type A segment increases, constrained operation is more likely to result. As
+  the length increases, the speed of weaving vehicles is also able to increase. Thus,
+  weaving vehicles use more space as length increases, and the likelihood of requiring more
+  than the maximum of 1.4 lanes to achieve equilibrium also increases.
+
+  Types B and C show the opposite trend. Increasing length has less effect on weaving
+  speed than in Type A configurations. First, acceleration and deceleration from low-speed
+  ramps are less of an issue for Types B and C, which are, by definition, major weaving
+  segments. Second, the substantial mixing of weaving and nonweaving vehicles in the
+  same lanes makes the resulting speeds less sensitive to length. In Type B and C
+  segments, the proportion of lanes needed by weaving vehicles to achieve unconstrained
+  operation decreases as length increases.
+
+  The analyst should note that under extreme conditions (high VR, short length), the
+  equation for Type B segments can predict values of Nw > N. While this is not practical
+  and reflects portions of the research database with sparse field data, it may always be
+  taken to indicate constrained operations.
+
+  DETERMINING WEAVING SEGMENT SPEED
+
+  Once speeds have been estimated and the type of operation determined (which may
+  cause a recomputation of estimated speeds), the average space mean speed of all vehicles
+  in the segment is computed according to Equation 24-5.
+
+  S= v  (24-5)
+   vw   v nw 
+    + 
+   Sw   Snw 
+
+  where  = space mean speed of all vehicles in the weaving segment (km/h),
+  S  = space mean speed of weaving vehicles in the weaving segment (km/h),
+  Sw  = space mean speed of nonweaving vehicles in the weaving segment
+
+  Snw  (km/h),
+  = total flow rate in the weaving segment (pc/h),
+  v  = weaving flow rate in the weaving segment (pc/h), and
+  vw  = nonweaving flow rate in the weaving segment (pc/h).
+  vnw
+
+Chapter 24 - Freeway Weaving  24-8
+Methodology
+  Highway Capacity Manual 2000
+
+DETERMINING DENSITY
+
+  The average speed for all vehicles may be used to compute density for all vehicles in
+the weaving segment as shown in Equation 24-6.
+
+  v   (24-6)
+  
+  N
+  D=
+
+  S
+
+where D is the average density for all vehicles in the weaving segment (pc/km/ln).
+
+DETERMINING WEAVING SEGMENT CAPACITY  Capacity of a weaving
+  segment defined
+  The capacity of a weaving segment is any combination of flows that causes the
+density to reach the LOS E/F boundary condition of 27.0 pc/km/ln for freeways or 25.0  Capacity attributes of weaving
+pc/km/ln for multilane highways. Thus, capacity varies with a number of variables:  segments
+configuration, number of lanes, free-flow speed of the freeway or multilane highway,
+length, and volume ratio. Because of the form of predictive algorithms, generation of a
+simple closed-form solution for capacity given the specification of the other variables is
+not possible. Rather, a trial-and-error process must be used.
+
+  Exhibit 24-8 shows tabulated values of weaving segment capacity for a number of
+situations. As a rough estimate, straight-line interpolation may be used for intermediate
+values. The tabulated capacities reflect some other limitations on weaving segment
+operations that reflect field observations:
+
+  • The capacity of a weaving segment may never exceed the capacity of a similar
+basic freeway or multilane highway segment.
+
+  • Field studies suggest that weaving flow rates should not exceed the following
+values: 2,800 pc/h for Type A, 4,000 pc/h for Type B, and 3,500 pc/h for Type C
+configurations. Even though higher weaving flows have been observed, they are likely to
+cause failure regardless of the results of analysis using the procedures in this manual.
+
+  • Field studies indicate that there are also limitations on the proportion of weaving
+flow (VR) that can be accommodated by various configurations: 1.00, 0.45, 0.35, or 0.20
+for Type A with two, three, four, or five lanes, respectively; 0.80 for Type B; and 0.50 for
+Type C. At higher volume ratios, stable operations may still occur, but operations will be
+worse than those anticipated by the methodology, and failure could occur.
+
+  • For Type C segments, the weaving ratio, R, should not exceed 0.40, with the larger
+weaving flow being in the direction of the through weaving lane. At higher weaving
+ratios or where the dominant weaving flow is not in the direction of the through weaving
+lane, stable operations may still occur, but operations will be worse than those estimated
+by the methodology. Breakdown may occur in some cases.
+
+  • The maximum length for which weaving analysis is conducted is 750 m for all
+configuration types. Beyond these lengths, merge and diverge areas are considered
+separately using the methodology of Chapter 25, “Ramps and Ramp Junctions.”
+
+  As noted previously, the capacity of a weaving segment is represented by any set of
+conditions that results in an average density of 27 pc/km/ln (for freeways) or 25 pc/km/ln
+(for multilane highways). Thus, capacity varies with the configuration, the length and
+width of the weaving segment, the proportion of total flow that weaves (VR), and the
+free-flow speed of the freeway. For any given set of conditions, the algorithms described
+herein must be solved iteratively to find capacity.
+
+  24-9  Chapter 24 - Freeway Weaving
+  Methodology
+Highway Capacity Manual 2000
+
+  EXHIBIT 24-8. CAPACITY FOR VARIOUS WEAVING SEGMENTS
+
+  (A) Type A Weaving Segments—120-km/h Free-Flow Speed
+
+  Length of Weaving Segment (m)
+
+  Volume Ratio,  150  300  450  600  750a
+  VR
+  Three-Lane Segments  7200b
+  0.10  7200b
+  0.20  6050  6820  7200b  7200b  6830
+  0.30  6050c
+  0.40  5490  6260  6720  7050  5800c
+  0.45d
+  5040  5780  6240  6570  9600b
+  0.10  9600b
+  0.20  4660  5380  5530  5800c  8840
+  0.30  8000f
+  0.35e  4430  5000c  5270c  5550c
+  12,000b
+  0.10  Four-Lane Segments  12,000b
+  0.20g
+  8060  9010  9600b  9600b  750a
+  Volume Ratio,
+  VR  7320  8340  8960  9400  7050b
+  6900
+  0.10  6710  7520c  8090c  8510c  6480
+  0.20  5760c
+  0.30  6370c  7160c  7700c  8000f  5530c
+  0.40
+  0.45d  Five-Lane Segments  9400b
+  9200
+  0.10  10,080  11,380  12,000b  12,000b  8390c
+  0.20  8030c
+  0.30  9150  10,540c  11,270c  11,790c
+  0.35e  11,750b
+  (B) Type A Weaving Segments—110-km/h Free-Flow Speed  11,520c
+  0.10
+  0.20g  Length of Weaving Segment (m)
+
+  150  300  450  600
+
+  Three-Lane Segments
+
+  5770  6470  6880  7050b
+  5250  6680
+  4830  5960  6280  6240
+  4480  5530c
+  4190  5520  5940  5310c
+
+  7690  5150  5250c  9400b
+  7000  8900
+  6440  4790c  5020c  8090c
+  6080c  7730c
+  Four-Lane Segments
+  9610  11,750b
+  8750  8630  9180  11,160c
+
+  7940  8500
+
+  7180c  7710c
+
+  6830c  7360c
+
+  Five-Lane Segments
+
+  10,790  11,470
+
+  10,030c  10,690c
+
+  Notes:
+  Refer to the last page of Exhibit 24-8.
+
+Chapter 24 - Freeway Weaving  24-10
+Methodology
+  Highway Capacity Manual 2000
+
+  EXHIBIT 24-8 (CONTINUED). CAPACITY FOR VARIOUS WEAVING SEGMENTS
+
+  (C) Type A Weaving Segments—100-km/h Free-Flow Speed
+
+  Length of Weaving Segment (m)
+
+Volume Ratio,  150  300  450  600  750a
+  VR
+  Three-Lane Segments  6910
+  0.10  6490
+  0.20  5470  6110  6480  6730  6110
+  0.30  5460c
+  0.40  5000  5640  6020  6290  5200c
+  0.45d
+  4610  5240  5620  5900  9220
+  0.10  8650
+  0.20  4290  4900  4990c  5250c  7920c
+  0.30  7600c
+  0.35e  4000  4520c  4790c  5040c
+  11,500b
+  0.10  Four-Lane Segments  10,830c
+  0.20g
+  7300  8150  8630  8970  750a
+Volume Ratio,
+  VR  6660  7520  8030  8380  6430
+  6060
+  0.10  6080c  6830c  7310c  7650c  5720
+  0.20  5140c
+  0.30  5780c  6520c  6990c  7330c  4950c
+  0.40
+  0.45d  Five-Lane Segments  8570
+  8080
+  0.10  9120  10,180  10,790  11,210  7430c
+  0.20  7140c
+  0.30  8330  9500c  10,080c  10,510c
+  0.35e  10,710
+  (D) Type A Weaving Segments—90-km/h Free-Flow Speed  10,100c
+  0.10
+  0.20g  Length of Weaving Segment (m)
+
+  150  300  450  600
+
+  Three-Lane Segments
+
+  5160  5730  6050  6270
+  4730  5880
+  4380  5310  5650  5540
+  4090  4960c
+  3850  4850  5290  4780c
+
+  6880  4420c  4730c  8350
+  6310  7840
+  5790c  4240c  4470c  7190c
+  5520c  6910c
+  Four-Lane Segments
+  8600  10,440
+  8060c  7460  8070  9820c
+
+  7080  7530
+
+  6360c  6890c
+
+  6180c  6590c
+
+  Five-Lane Segments
+
+  9550  10,080
+
+  8930c  9460c
+
+Notes:
+Refer to the last page of Exhibit 24-8.
+
+  24-11  Chapter 24 - Freeway Weaving
+  Methodology
+Highway Capacity Manual 2000
+
+  EXHIBIT 24-8 (CONTINUED). CAPACITY FOR VARIOUS WEAVING SEGMENTS
+
+  (E) Type B Weaving Segments—120-km/h Free-Flow Speed
+
+  Length of Weaving Segment (m)
+
+  Volume Ratio,  150  300  450  600  750a
+  VR
+  Three-Lane Segments  7200b
+  0.10  7200b
+  0.20  7200b  7200b  7200b  7200b  7200b
+  0.30  6830  7200b  6850
+  0.40  6120  7200b  7200b  7200b  6370
+  0.50  5550  6670  5980
+  0.60  5100  6690  7010  6180  5690
+  0.70  4750  5800  5000f
+  0.80h  4180  6100  6430  5520
+  3900  5000f  9600b
+  0.10  5630  5950  9600b
+  0.20  9600b  9600b  9600b
+  0.30  9110  5260  5570  9600b  9130
+  0.40  8170  9600b  8000f
+  0.50  7400  4990  5290  8890  6670f
+  0.60  6670c  8000f  5760f
+  0.70  6070c  4820  5000f  6670f  5000f
+  0.80h  5580c  5760f
+  5000f  Four-Lane Segments  5000f  12,000b
+  0.10  12,000b
+  0.20  12,000b  9600b  9600b  12,000b  12,000b
+  0.30  11,390  12,000b  10,000f
+  0.40  10,210  9600b  9600b  12,000b
+  0.50  10,000f  8000f
+  0.60  9270c  8910  9350  6670f
+  0.70  8000f  8000f  5760f
+  0.80h  6670f  8140  8570  6670f  5000f
+  5760f  5760f
+  5000f  7500  7930  5000f
+
+  6670f  6670f
+
+  5760f  5760f
+
+  5000f  5000f
+
+  Five-Lane Segments
+
+  12,000b  12,000b
+
+  12,000b  12,000b
+
+  11,140  11,690
+
+  10,000f  10,000f
+
+  8000f  8000f
+
+  6670f  6670f
+
+  5760f  5760f
+
+  5000f  5000f
+
+  Notes:
+  Refer to the last page of Exhibit 24-8.
+
+Chapter 24 - Freeway Weaving  24-12
+Methodology
+  Highway Capacity Manual 2000
+
+  EXHIBIT 24-8 (CONTINUED). CAPACITY FOR VARIOUS WEAVING SEGMENTS
+
+  (F) Type B Weaving Segments—110-km/h Free-Flow Speed
+
+  Length of Weaving Segment (m)
+
+Volume Ratio,  150  300  450  600  750a
+  VR
+  Three-Lane Segments  7050b
+  0.10  7050b
+  0.20  7050b  7050b  7050b  7050b  6980
+  0.30  6460  7050b  6470
+  0.40  5810  6950  7050b  6830  6030
+  0.50  5280  6300  5680
+  0.60  4860  6320  6620  5860  5410
+  0.70  4550  5510  5000f
+  0.80h  4320  5790  6090  5250
+  3650  5000f  9400b
+  0.10  5350  5650  9400b
+  0.20  9400b  9400b  9310
+  0.30  8610  5010  5300  9400b  8620
+  0.40  7750  9100  8000f
+  0.50  7040  4770  5050  8400  6670f
+  0.60  6370c  7820  5760f
+  0.70  5810c  4600  4880  6670f  5000f
+  0.80h  5350c  5760f
+  5000f  Four-Lane Segments  5000f  11,750b
+  0.10  11,750b
+  0.20  11,750b  9400b  9400b  11,750b  11,640
+  0.30  10,760  11,750b  10,000f
+  0.40  9270  9400b  11,370
+  0.50  9690  10,000f  8000f
+  0.60  8830c  8430  8820  6670f
+  0.70  7960c  8000f  5760f
+  0.80h  6670f  7720  8120  6670f  5000f
+  5760f  5760f
+  5000f  7140  7530  5000f
+
+  6670f  6670f
+
+  5760f  5760f
+
+  5000f  5000f
+
+  Five-Lane Segments
+
+  11,750b  11,750b
+
+  11,590  11,750b
+
+  10,540  11,030
+
+  9650  10,000f
+
+  8000f  8000f
+
+  6670f  6670f
+
+  5760f  5760f
+
+  5000f  5000f
+
+Notes:
+Refer to the last page of Exhibit 24-8.
+
+  24-13  Chapter 24 - Freeway Weaving
+  Methodology
+Highway Capacity Manual 2000
+
+  EXHIBIT 24-8 (CONTINUED). CAPACITY FOR VARIOUS WEAVING SEGMENTS
+
+  (G) Type B Weaving Segments—100-km/h Free-Flow Speed
+
+  Length of Weaving Segment (m)
+
+  Volume Ratio,  150  300  450  600  750a
+  VR
+  Three-Lane Segments  6900b
+  0.10  6900b
+  0.20  6750  6900b  6900b  6900b  6540
+  0.30  6070  6900b  6070
+  0.40  5490  6510  6750  6400  5680
+  0.50  5010  5930  5360
+  0.60  4620  5950  6210  5530  5120
+  0.70  4330  5220  4960
+  0.80h  4120  5470  5740  4970
+  3600  4820  9200b
+  0.10  5070  5340  9200b
+  0.20  9000  9200b  8710
+  0.30  8100  4760  5020  9200b  8100
+  0.40  7320  8530  7580
+  0.50  6680  4530  4790  7900  6670f
+  0.60  6060c  7370  5760f
+  0.70  5540c  4380  4630  6670f  5000f
+  0.80h  5130c  5760f
+  4800c  Four-Lane Segments  5000f  11,500b
+  0.10  11,500b
+  0.20  11,250  9200b  9200b  11,500b  10,890
+  0.30  10,120  11,500b  10,000f
+  0.40  8680  9010  10,660
+  0.50  9150  8000f
+  0.60  8370c  7930  8280  9880  6670f
+  0.70  7570c  8000f  5760f
+  0.80h  6670f  7290  7650  6670f  5000f
+  5760f  5760f
+  5000f  6760  7120  5000f
+
+  6340  6670f
+
+  5640b  5760f
+
+  5000f  5000f
+
+  Five-Lane Segments
+
+  11,500b  11,500b
+
+  10,850  11,260
+
+  9910  10,350
+
+  9110  9560
+
+  8000f  8000f
+
+  6670f  6670f
+
+  5760f  5760f
+
+  5000f  5000f
+
+  Notes:
+  Refer to the last page of Exhibit 24-8.
+
+Chapter 24 - Freeway Weaving  24-14
+Methodology
+  Highway Capacity Manual 2000
+
+  EXHIBIT 24-8 (CONTINUED). CAPACITY FOR VARIOUS WEAVING SEGMENTS
+
+  (H) Type B Weaving Segments—90-km/h Free-Flow Speed
+
+  Length of Weaving Segment (m)
+
+Volume Ratio,  150  300  450  600  750a
+  VR
+  Three-Lane Segments  6750b
+  0.10  6520
+  0.20  6270  6600  6750b  6750b  6070
+  0.30  5670  6410  5670
+  0.40  5150  6050  6270  5950  5320
+  0.50  4720  5540  5030
+  0.60  4370  5560  5790  5190  4820
+  0.70  4110  4900  4670
+  0.80h  3910  5130  5370  4690
+  3440  4540  9000b
+  0.10  4770  5010  8690
+  0.20  8350  9000b  8100
+  0.30  7560  4500  4730  8550  7560
+  0.40  6870  7940  7090
+  0.50  6290  4290  4520  7390  6670f
+  0.60  5740c  6920  5760f
+  0.70  5270c  4150  4380  6530  5000f
+  0.80h  4890c  5760f
+  4590c  Four-Lane Segments  5000f  11,250b
+  0.10  10,860
+  0.20  10,440  8800  9000b  11,250b  10,120
+  0.30  9450  10,680
+  0.40  8580  8070  8360  9450
+  0.50  7890c  9920  8000f
+  0.60  7170c  7410  7720  9230  6670f
+  0.70  6580c  8000f  5760f
+  0.80h  5760f  6840  7160  6670f  5000f
+  5000f  5760f
+  6360  6680  5000f
+
+  5990  6310
+
+  5350c  5760f
+
+  5000f  5000f
+
+  Five-Lane Segments
+
+  10,990  11,250b
+
+  10,090  10,440
+
+  9260  9650
+
+  8550  8950
+
+  7960  8000f
+
+  6670f  6670f
+
+  5760f  5760f
+
+  5000f  5000f
+
+Notes:
+Refer to the last page of Exhibit 24-8.
+
+  24-15  Chapter 24 - Freeway Weaving
+  Methodology
+Highway Capacity Manual 2000
+
+  EXHIBIT 24-8 (CONTINUED). CAPACITY FOR VARIOUS WEAVING SEGMENTS
+
+  (I) Type C Weaving Segments—120-km/h Free-Flow Speed
+
+  Length of Weaving Segment (m)
+
+  Volume Ratio,  150  300  450  600  750a
+  VR
+  Three-Lane Segments  7200b
+  0.10  7200b
+  0.20  7200b  7200b  7200b  7200b  7200b
+  0.30  6840
+  0.40  6590  7200b  7200b  7200b  6360
+  0.50i
+  5890  6540  6930  7200  9600b
+  0.10  9600b
+  0.20  5530  5960  6350  6620  9600b
+  0.30  8750f
+  0.40  4890  5500  5870  6140  7000f
+  0.50i
+  Four-Lane Segments  12,000b
+  0.10  12,000b
+  0.20  9600b  9600b  9600b  9600b  11,670f
+  0.30
+  0.40  8780  9600b  9600b  9600b  8750f
+  0.50i  7000f
+  7850  8720  9230  9590
+  Volume Ratio,  750a
+  VR  7110  7950  8470  8750f
+  7050b
+  0.10  6520  7000f  7000f  7000f  7050b
+  0.20  6980
+  0.30  Five-Lane Segments  6470
+  0.40  6030
+  0.50i  12,000b  12,000b  12,000b  12,000b
+  9400b
+  0.10  11,520c  12,000b  12,000b  12,000b  9400b
+  0.20  9300
+  0.30  10,140c  11,170c  11,670f  11,670f  8620
+  0.40  7000f
+  0.50i  8750f  8750f  8750f  8750f
+  11,750b
+  0.10  7000f  7000f  7000f  7000f  11,750b
+  0.20  11,630
+  0.30  (J) Type C Weaving Segments—110-km/h Free-Flow Speed
+  0.40  8750f
+  0.50i  Length of Weaving Segment (m)  7000f
+
+  150  300  450  600
+
+  Three-Lane Segments
+
+  7010  7050b  7050b  7050b
+  6240  7050b
+  5610  6830  7050b  6790
+  5090  6270
+  4680  6200  6550  5840
+
+  9350  5670  6020  9400b
+  8320  9400b
+  7470  5240  5590  9060
+  6240  8360
+  5830  Four-Lane Segments  7000f
+
+  11,750b  9400b  9400b  11,750b
+  10,900c  11,750b
+  9100  9400b  11,320
+  9630c
+  8590c  8270  8730  8750f
+  7000f  7000f
+  7560  8030
+
+  6990  7000f
+
+  Five-Lane Segments
+
+  11,750b  11,750b
+
+  11,750b  11,750b
+
+  10,570c  10,910
+
+  8750f  8750f
+
+  7000f  7000f
+
+  Notes:
+  Refer to the last page of Exhibit 24-8.
+
+Chapter 24 - Freeway Weaving  24-16
+Methodology
+  Highway Capacity Manual 2000
+
+  EXHIBIT 24-8 (CONTINUED). CAPACITY FOR VARIOUS WEAVING SEGMENTS
+
+  (K) Type C Weaving Segments—100-km/h Free-Flow Speed
+
+  Length of Weaving Segment (m)
+
+Volume Ratio,  150  300  450  600  750a
+  VR
+  Three-Lane Segments  6900b
+  0.10  6900b
+  0.20  6570  6900b  6900b  6900b  6540
+  0.30  5890  6900  6080
+  0.40  5310  6410  6700  6370  5690
+  0.50i  4840  5910
+  4460  5850  6160  5510  9200b
+  0.10  9200b
+  0.20  8760  5370  5680  9200b  8720
+  0.30  7850  9200  8110
+  0.40  7080  4970  5290  8500  7000f
+  0.50i  6450  7880
+  5950  Four-Lane Segments  7000f  11,500b
+  0.10  11,500b
+  0.20  11,500b  9200b  9200b  11,500b  10,900
+  0.30  10,250c  11,500
+  0.40  8540  8930  10,620  8750f
+  0.50i  9110c  7000f
+  8170c  7790  8210  8750f
+  7000f  7000f
+  7150  7580
+
+  6630  7000f
+
+  Five-Lane Segments
+
+  11,500b  11,500b
+
+  11,050c  11,170
+
+  9960c  10,260
+
+  8750f  8750f
+
+  7000f  7000f
+
+Notes:
+Refer to the last page of Exhibit 24-8.
+
+  24-17  Chapter 24 - Freeway Weaving
+  Methodology
+Highway Capacity Manual 2000
+
+  EXHIBIT 24-8 (CONTINUED). CAPACITY FOR VARIOUS WEAVING SEGMENTS
+
+  (L) Type C Weaving Segments—90-km/h Free-Flow Speed
+
+  Length of Weaving Segment (m)
+
+  Volume Ratio,  150  300  450  600  750a
+  VR
+  Three-Lane Segments  6750b
+  0.10  6520
+  0.20  6120  6520  6730  6750b  6090
+  0.30  5510  6400  5680
+  0.40  5000  5970  6230  5940  5330
+  0.50i  4570  5530
+  4230  5480  5750  5180  9000b
+  0.10  8700
+  0.20  8150  5050  5330  9000b  8110
+  0.30  7350  8530  7580
+  0.40  6660  4700  4980  7920  7000f
+  0.50i  5640  7370
+  5300  Four-Lane Segments  6900  11,250b
+  0.10  10,870
+  0.20  10,770c  8700  8980  11,250b  10,140
+  0.30  9580c  10,660
+  0.40  8570c  7960  8300  8750f
+  0.50i  7720c  9900  7000f
+  7000f  7300  7670  8750f
+  7000f
+  6730  7110
+
+  6260  6640
+
+  Five-Lane Segments
+
+  11,250b  11,230
+
+  10,270c  10,380
+
+  9310c  9580
+
+  8470c  8750f
+
+  7000f  7000f
+
+  Notes:
+  a. Weaving segments longer than 750 m are treated as isolated merge and diverge areas using the procedures of Chapter 25,
+  “Ramps and Ramp Junctions.”
+  b. Capacity constrained by basic freeway capacity.
+  c. Capacity occurs under constrained operating conditions.
+  d. Three-lane Type A segments do not operate well at volume ratios greater than 0.45. Poor operations and some local
+  queuing are expected in such cases.
+  e. Four-lane Type A segments do not operate well at volume ratios greater than 0.35. Poor operations and some local queuing
+  are expected in such cases.
+  f. Capacity constrained by maximum allowable weaving flow rate: 2,800 pc/h (Type A), 4,000 (Type B), 3,500 (Type C).
+  g. Five-lane Type A segments do not operate well at volume ratios greater than 0.20. Poor operations and some local queuing
+  are expected in such cases.
+  h. Type B weaving segments do not operate well at volume ratios greater than 0.80. Poor operations and some local queuing
+  are expected in such cases.
+  i. Type C weaving segments do not operate well at volume ratios greater than 0.50. Poor operations and some local queuing
+  are expected in such cases.
+
+  It is possible to do so using a spreadsheet properly programmed for such iteration.
+  Capacities have been determined for freeway facilities and are shown in Exhibit 24-8.
+  These capacities represent maximum 15-min flow rates under equivalent base conditions
+  and are rounded to the nearest 10 pc/h. To find the capacity under a given set of
+  prevailing conditions Equation 24-7 is used.
+
+  c = cb * fHV * fp  (24-7)
+
+  where  = capacity under prevailing conditions stated as a flow rate for the peak
+  c  15 min of the hour (veh/h),
+
+  cb  = capacity under base conditions stated as a flow rate for the peak 15 min
+  fHV
+  of the hour in Exhibit 24-8 (pc/h),
+  fp  = heavy-vehicle adjustment factor (basic freeway segments or multilane
+
+  highways), and
+  = driver population factor (basic freeway segments or multilane
+
+  highways).
+
+Chapter 24 - Freeway Weaving  24-18
+Methodology
+  Highway Capacity Manual 2000
+
+If a capacity in terms of an hourly volume is desired, it may be computed using Equation
+24-8.
+
+  ch = c * PHF  (24-8)
+
+where  = capacity under prevailing conditions expressed as an hourly volume
+  ch  (veh/h), and
+
+  PHF  = peak-hour factor.
+
+MULTIPLE WEAVING SEGMENTS
+
+  When a series of closely spaced merge and diverge areas creates several sets of
+weaving movements (between different merge-diverge pairs) that share the same segment
+of the roadway, a multiple weaving segment is created. In previous editions of this
+manual, a specific procedure for analysis of two-segment multiple weaving segments,
+involving two sets of overlapping weaving movements, was presented. Although it
+constituted a logical approach, it did not address cases where three or more sets of
+weaving movements overlapped, and it was not extensively supported by field data.
+
+  It is recommended that such cases be segregated into merge areas, diverge areas, and
+simple weaving segments, as appropriate, and that each segment be analyzed accordingly.
+Chapter 22 contains information on this procedure.
+
+COLLECTOR-DISTRIBUTOR ROADWAYS
+
+  A common design practice often results in weaving segments that occur on collector-
+distributor roadways that are part of a freeway or multilane highway interchange.
+Although the procedures of this chapter could be applied to such cases (using appropriate
+free-flow speeds), whether the LOS criteria specified herein should apply is unclear.
+Because many such segments operate at low speeds and correspondingly high densities,
+stable operations may exist beyond the maximum densities specified herein, which are
+intended for freeway or multilane highway weaving.
+
+  III. APPLICATIONS  Guidelines for required inputs
+  and estimated values are
+  The methodology of this chapter can be used to analyze the capacity and LOS of  given in Chapter 13
+freeway weaving segments. First, the analyst identifies the primary output. Primary
+outputs typically solved for in a variety of applications include LOS, number of lanes  Chapter 24 - Freeway Weaving
+required (N), weaving segment length required (L), and weaving segment configuration  Methodology
+type (Type). Performance measures related to density and speed are also achievable but
+are considered secondary outputs.
+
+  Second, the analyst must identify the default values or estimated values for use in the
+analysis. Basically, the analyst has three sources of input data:
+
+  1. Default values found in this manual,
+  2. Estimates and locally derived default values developed by the analyst, and
+  3. Values derived from field measurements and observation.
+For each of the input variables, a value must be supplied to calculate the outputs, both
+primary and secondary.
+  A common application of the method is to compute the LOS of an existing or a
+changed segment in the near term or distant future. This type of application is termed
+operational, and its primary output is LOS, with secondary outputs for density and speed.
+Another application is to check the adequacy of or to recommend the required number of
+lanes, weaving segment length, or weaving configuration given the volume or flow rate
+and LOS goal. This application is termed design since its primary outputs are geometric
+
+  24-19
+Highway Capacity Manual 2000
+
+Operational (LOS)  attributes of the weaving segment. Other outputs from this application include speed and
+  density.
+Design (N, L, Type)
+  Another general type of analysis is termed planning. These analyses use estimates,
+Planning (LOS)  HCM default values, and local default values as inputs in the calculation. LOS or
+Planning (N, L, Type)  weaving segment attributes can be determined as outputs, along with the secondary
+  outputs of density and speed. The difference between planning analysis and operational
+  or design analysis is that most or all of the input values in planning come from estimates
+  or default values, whereas the operational and design analyses use field measurements or
+  known values for inputs. Note that for each of the analyses, FFS of the weaving segment,
+  either measured or estimated, is required as an input for the computation.
+
+  COMPUTATIONAL STEPS
+
+  The worksheet for freeway weaving computations is shown in Exhibit 24-9. The
+  worksheet is also included in Appendix A. For all applications, the analyst provides
+  general information and site information.
+
+  For operational (LOS) analysis, all required input data are entered as input. After
+  converting volumes to flow rates, the unconstrained weaving intensity factor is used to
+  estimate weaving and nonweaving speeds. The number of lanes weaving vehicles must
+  occupy to achieve unconstrained operation is determined. If this value is less than the
+  maximum number of lanes, then unconstrained flow exists, and previously computed
+  speeds will apply to the analysis. If the number of lanes required for unconstrained
+  operation is greater than or equal to the maximum number of lanes, then weaving and
+  nonweaving speeds must be computed for constrained operation. Then the space mean
+  speed for all vehicles in the weaving segment is computed followed by density. Finally,
+  level of service is determined using the density value for the weaving segment.
+
+  The objective of design (N, L, Type) analysis is to estimate the length of a weaving
+  segment, the number of lanes, or weaving segment configuration type given volumes and
+  free-flow speed. A desired level of service is stated and entered in the worksheet. Then a
+  weaving segment length, number of lanes, and configuration type are assumed, and the
+  procedure for operational (LOS) analysis is performed. The level-of-service result with
+  the assumed parameters is then compared with the desired level of service. If the desired
+  level of service is not met, a new combination of parameter values is assumed. These
+  iterations are continued until the desired level of service is achieved.
+
+  PLANNING APPLICATIONS
+
+  The two planning applications, planning (LOS) and planning (N, L, Type), directly
+  correspond to procedures described for operational and design analysis.
+
+  The first criterion that categorizes these as planning applications is the use of
+  estimates, HCM default values, or local default values on the input side of the calculation.
+  Another factor that defines a given application as planning is the use of annual average
+  daily traffic (AADT) to estimate directional design-hour volume (DDHV). Guidelines
+  for calculating DDHV are given in Chapter 8. The analyst typically has few, if any, of
+  the input values required to perform planning applications. More information on the use
+  of default values is contained in Chapter 13.
+
+  ANALYSIS TOOLS
+
+  The worksheet shown in Exhibit 24-9 and provided in Appendix A can be used to
+  perform operational (LOS), design (N, L, Type), planning (LOS), and planning (N, L,
+  Type) analyses.
+
+Chapter 24 - Freeway Weaving  24-20
+Applications
+  Highway Capacity Manual 2000
+
+  EXHIBIT 24-9. FREEWAY WEAVING WORKSHEET
+
+  FREEWAY WEAVING WORKSHEET
+
+General Information  Site Information
+
+Analyst  _________________________  Freeway/Direction of Travel  _______________________
+Agency or Company  _________________________  Weaving Segment Location  _______________________
+Date Performed  _________________________  Jurisdiction  _______________________
+Analysis Time Period  _________________________  Analysis Year  _______________________
+
+ Operational (LOS)   Design (N, L, Type)   Planning (LOS)   Planning (N, L, Type)
+
+Inputs
+
+  Freeway free-flow speed, SFF =  _________ km/h
+  Weaving number of lanes, N =
+  _________
+
+  Weaving segment length, L  _________ m
+
+  Terrain   Level   Rolling
+
+  Weaving type  Type A   Type B    Type C
+
+  vw  _________
+  Volume ratio, VR = v  _________
+  Weaving ratio, R = vw2
+
+  vw
+
+  Sketch (show lanes, L, vo1, vo2, vw1, vw2)
+
+Conversion to pc/h Under Base Conditions
+
+(pc/h)  AADT  K  D  V  PHF  % HV  fHV  fp v = V
+  PHF * fHV *fp
+  (veh/day)  (veh/h)
+
+vo1
+vo2
+vw1
+vw2
+vw
+vnw
+v
+
+Weaving and Nonweaving Speeds
+
+  Unconstrained  Constrained
+  Weaving (i = w) Nonweaving (i = nw)
+  Weaving (i = w)  Nonweaving (i = nw)
+
+a (Exhibit 24-6)
+b (Exhibit 24-6)
+c (Exhibit 24-6)
+d (Exhibit 24-6)
+
+Weaving intensity factor, Wi
+
+  a(1 + VR)b (v/N)c
+  Wi = (3.28L)d
+
+Weaving and nonweaving speeds, Si (km/h)
+
+  Si = 24 + SFF – 16 1 + Wi
+
+Number of lanes required for unconstrained operation, Nw (Exhibit 24-7) __________
+
+Maximum number of lanes, Nw(max) (Exhibit 24-7)  __________
+
+ If Nw < Nw(max) unconstrained operation   If Nw ≥ Nw(max) constrained operation
+
+Weaving Segment Speed, Density, Level of Service, and Capacity
+
+Weaving segment speed, S (km/h)
+
+  S = v vw vnw
+  +
+
+  (Sw) (Snw)
+
+Weaving segment density, D (pc/km/ln)
+
+  D = v/NS
+
+Level of service, LOS (Exhibit 24-2)
+Capacity for base condition, cb (pc/h)
+(Exhibit 24-8)
+Capacity as a 15-min flow rate, c (veh/h)
+c = cb * fHV * fp
+Capacity as a full-hour volume, ch (veh/h)
+ch = c(PHF)
+
+  24-21  Chapter 24 - Freeway Weaving
+  Applications
+Highway Capacity Manual 2000
+
+  IV. EXAMPLE PROBLEMS
+
+  Problem No.  Description  Application
+  1  Operational (LOS)
+  2  Determine level of service of a major weaving segment  Operational (LOS)
+  3  Determine level of service of a ramp-weaving segment  Operational (LOS)
+  Determine level of service of a ramp-weaving segment with
+  4  constrained operation  Design (N, L, Type)
+  5  Design a major weaving segment for a desired level of service  Planning (N, L, Type)
+  Design a weaving segment using sensitivity analysis
+
+Chapter 24 - Freeway Weaving  24-22
+Example Problems
+  Highway Capacity Manual 2000
+
+  EXAMPLE PROBLEM 1
+
+The Weaving Segment  A major weaving segment on an urban freeway as shown on
+the worksheet.
+
+The Question What are the level of service and capacity of the weaving segment?
+
+The Facts  √ PHF = 0.91,
+  √ Volume (A-C) = 1,815 veh/h,  √ Level terrain,
+  √ Volume (A-D) = 692 veh/h,  √ Drivers are regular commuters,
+  √ Volume (B-C) = 1,037 veh/h,  √ FFS = 110 km/h for freeway, and
+  √ Volume (B-D) = 1,297 veh/h,  √ Weaving segment length = 450 m.
+  √ 10 percent trucks,
+
+Comments
+  √ Use Chapter 23, “Basic Freeway Segments,” to identify fHV and fp.
+
+Outline of Solution All input parameters are known, so no default values are required.
+Demand volumes are converted to flow rates, and weaving configuration type is
+determined. Weaving and nonweaving speeds are computed and used to determine
+weaving segment speed. The density in the weaving segment is calculated, and level of
+service is determined. Finally, capacity is determined.
+
+Steps  v= V
+1. Convert volume (veh/h) to flow  (PHF)(fHV )(fp )
+
+  rate (pc/h) (use Equation  v(A-C) =  1, 815  = 2,095 pc/h
+  24-1).
+  (0. 91)(0. 952)(1.000)
+1a. Determine fp (use Chapter
+  23).  v(A-D) = 799 pc/h
+  v(B-C) = 1,197 pc/h
+1b. Determine fHV (use Chapter  v(B-D) = 1,497 pc/h
+  23).
+  fp = 1.000
+2. Determine weaving segment
+  configuration type (use Exhibit  fHV = 1
+  24-5).  1+ PT (ET − 1) + PR (ER − 1)
+
+3. Compute critical variables.  fHV = 1 = 0. 952
+  1+ 0.10(1. 5 − 1) + 0
+
+  Type B (Movement A-D requires one lane change;
+  Movement B-C requires none)
+
+  vw = 1,197 + 799 = 1,996 pc/h
+  vnw = 2,095 + 1,497 = 3,592 pc/h
+  v = 1,996 + 3,592 = 5,588 pc/h
+  VR = 1, 996 = 0. 357
+
+  5, 588
+
+  R = 799 = 0. 400
+  1, 996
+
+  24-23  Chapter 24 - Freeway Weaving
+  Example Problems
+Highway Capacity Manual 2000
+
+  4. Compute weaving and  b vc
+
+  nonweaving speeds assuming  a(1+ VR)  
+  unconstrained operation (use Wi =  N d  Si = 24 + SFF − 16
+  Exhibit 24-6 and Equations  (3. 28L)  1+ Wi
+
+  24-3 and 24-4).  2.2  5, 588  0.70
+
+  0.08(1+ 0. 357)    4
+
+  Ww =  (3. 28 * 450)0.50  = 0.648
+
+  6.0  5, 588  1.0
+  0.0020(1+ 0. 357)   
+   4
+  Wnw =  = 0. 454
+  (3. 28 * 450)0.50
+
+  Sw = 24 + 110 − 16 = 81.0 km/h
+  1+ 0.648
+
+  Snw = 24 + 110 − 16 = 88.6 km/h
+  1+ 0. 454
+
+  5. Check type of operation (use  Nw = 4[0.085 + 0.703(0.357) + (71.57/450)
+  Exhibit 24-7).  – 0.0112(88.6 – 81.0)] = 1.64
+
+  Nw(max) = 3.5, therefore unconstrained operation
+
+  6. Compute weaving segment  S = v = 5, 588 = 85.7 km/h
+  speed (use Equation 24-5).   vw   vnw    1, 996   3, 592 
+    + 
+   Sw   Snw      +  
+   81.0   88.6 
+
+  7. Compute weaving segment   v   5, 588 
+  density (use Equation 24-6).     
+   N  4 
+  D=  =  = 16.3 pc/km/ln
+  S  85. 7
+
+  8. Determine level of service  LOS C
+  (use Exhibit 24-2).
+
+  9. Determine weaving segment cb = 8,421 pc/h [Exhibit 24-8(F)]
+  capacity (use Exhibit 24-8 and Equations 24-7 and 24-8). c = cb * fHV * fp = 8,421 * 0.952 * 1.000 = 8,017 veh/h
+  ch = c * PHF = 8,017 * 0.91 = 7,295 veh/h
+
+  The Results This weaving segment will operate at LOS C during the peak hour.
+  Weaving segment density is 16.3 pc/km/ln. The capacity of the weaving segment is
+  estimated as 8,020 veh/h (for the 15-min volume), or 7,290 veh/h (for the full-hour
+  volume).
+
+Chapter 24 - Freeway Weaving  24-24
+Example Problems
+  Highway Capacity Manual 2000
+
+  FREEWAY WEAVING WORKSHEET  Example Problem 1
+
+General Information  Site Information
+
+Analyst  ___M_._E_. ___________________  Freeway/Direction of Travel  ____-___________________
+Agency or Company  ___C_E_I____________________  Weaving Segment Location  ____-___________________
+Date Performed  ___8_/_3_/_9_9_________________  Jurisdiction  ____-___________________
+Analysis Time Period  ___A_M__-P_e_a_k________________  Analysis Year  ____1_9_9_9________________
+
+X Operational (LOS)   Design (N, L, Type)   Planning (LOS)   Planning (N, L, Type)
+
+Inputs
+
+  A  L = 450 m  Freeway free-flow speed, SFF =  ___1_10_____ km/h
+  Weaving number of lanes, N =
+  C  ___4______
+
+  Weaving segment length, L  ___4_5__0___ m
+
+  B  D  Terrain  X Level   Rolling
+
+  1815  Weaving type  Type A  X Type B    Type C
+  692
+  vw
+  1037  Volume ratio, VR = v  __0__.3_5_7___
+  Weaving ratio, R = vw2  __0__.4_0_0___
+  1297
+  Sketch (show lanes, L, vo1, vo2, vw1, vw2)  vw
+
+Conversion to pc/h Under Base Conditions
+
+(pc/h)  AADT  K  D  V  PHF  % HV  fHV  fp  v= V
+  PHF * fHV *fp
+  (veh/day)  (veh/h)  10  0.952  1.000  2,095
+  10  0.952  1.000  1,497
+vo1  1,815  0.91  10  0.952  1.000  1,197
+vo2  10  0.952  1.000  799
+vw1  1,297  0.91  10  0.952  1.000  1,996
+vw2  10  0.952  1.000  3,592
+vw  1,037  0.91  10  0.952  1.000  5,588
+vnw
+v  692  0.91
+
+  1,729  0.91
+
+  3,112  0.91
+
+  4,841  0.91
+
+Weaving and Nonweaving Speeds
+
+  Unconstrained  Constrained
+  Weaving (i = w) Nonweaving (i = nw)
+  Weaving (i = w)  Nonweaving (i = nw)
+
+a (Exhibit 24-6)  0.08  0.0020
+b (Exhibit 24-6)  2.2  6.0
+c (Exhibit 24-6)  0.70  1.0
+d (Exhibit 24-6)  0.50  0.50
+
+Weaving intensity factor, Wi  0.648  0.454
+
+  a(1 + VR)b (v/N)c
+  Wi = (3.28L)d
+
+Weaving and nonweaving speeds, Si (km/h)
+  Si = 24 + SFF – 16 1 + Wi  81.0  88.6
+
+Number of lanes required for unconstrained operation, Nw (Exhibit 24-7) ___1._6_4_____
+
+Maximum number of lanes, Nw(max) (Exhibit 24-7)  ___3_.5______
+X If Nw < Nw(max) unconstrained operation   If Nw ≥ Nw(max) constrained operation
+
+Weaving Segment Speed, Density, Level of Service, and Capacity
+
+Weaving segment speed, S (km/h)
+  S = v vw vnw
+  +
+  (Sw) (Snw)  85.7
+
+Weaving segment density, D (pc/km/ln)
+  D = v/NS  16.3
+
+Level of service, LOS (Exhibit 24-2)  C
+
+Capacity for base condition, cb (pc/h)  8,421
+(Exhibit 24-8)
+
+Capacity as a 15-min flow rate, c (veh/h)  8,017
+c = cb * fHV * fp  7,295
+Capacity as a full-hour volume, ch (veh/h)
+ch = c(PHF)
+
+  24-25  Chapter 24 - Freeway Weaving
+  Example Problems
+Highway Capacity Manual 2000
+
+  EXAMPLE PROBLEM 2
+
+  The Weaving Segment  A ramp-weaving segment on a rural freeway as shown on the
+  worksheet.
+
+  The Question What are the level of service and capacity of the weaving segment?
+
+  The Facts  √ Flow rate (A-D) = 300 pc/h,
+  √ Flow rate (A-C) = 4,000 pc/h,  √ Flow rate (B-D) = 100 pc/h, and
+  √ Flow rate (B-C) = 600 pc/h,  √ Weaving segment length = 300 m.
+  √ FFS = 120 km/h for freeway,
+
+  Outline of Solution All input parameters are known, so no default values are required.
+  Demand flows are given as equivalent passenger cars per hour under base conditions.
+  Thus, no conversion of flows is required. Weaving configuration type is determined.
+  Weaving and nonweaving speeds are computed, followed by weaving segment speed.
+  The density in the weaving segment is calculated, and level of service is determined.
+  Capacity is then determined.
+
+  Steps  Type A (Movements A-D and B-C require one lane
+  1. Determine weaving segment  change)
+
+  configuration type (use Exhibit  vw = 600 + 300 = 900 pc/h
+  24-5).  vnw = 4,000 + 100 = 4,100 pc/h
+  2. Compute critical variables.  v = 900 + 4,100 = 5,000 pc/h
+
+  3. Compute weaving and  VR = 900 = 0.180
+  nonweaving speeds assuming  5, 000
+  unconstrained operation (use
+  Exhibit 24-6 and Equations  R = 300 = 0. 333
+  24-3 and 24-4).  900
+
+  4. Check type of operation (use  b vc  Si = 24 + SFF − 16
+  Exhibit 24-7).  a(1+ VR)    1+ Wi
+
+  5. Compute weaving segment   N
+  speed (use Equation 24-5).  Wi = (3. 28L)d
+
+  2.2  5, 000  0.97
+  0.15(1+ 0.180)   
+   4
+  Ww =  = 0. 879
+  (3. 28 * 300)0.80
+
+  4.0  5, 000  1.3
+  0.0035(1+ 0.180)   
+   4
+  Wnw =  = 0. 410
+  (3. 28 * 300)0.75
+
+  Sw = 24 + 120 − 16 = 79.3 km/h
+  1+ 0. 879
+
+  Snw = 24 + 120 − 16 = 97.8 km/h
+  1+ 0. 410
+
+  Nw = 1.21(N)VR0.571L0.234/Sw0.438
+
+  Nw =  1. 21(4) (0.1800.571) (3000.234 )  = 1.02
+
+  79. 3  0.438
+
+  Nw(max) = 1.4, therefore unconstrained operation
+
+  S = v = 5,000 = 93.9 km/h
+   vw   vnw    900   4,100 
+    +     +  
+   Sw   Snw    79. 3   97. 8 
+
+Chapter 24 - Freeway Weaving  24-26
+Example Problems
+

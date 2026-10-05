@@ -1,0 +1,1408 @@
+524  CHAPTER 9 ■ Inferences Based on Two Samples
+  Minitab Printouts for Exercise 9.152
+
+Activity Paired vs. unpaired Experiments  conducting the experiment, state which method of sampling you
+
+ We have now discussed two methods of collecting data to  think will provide more information (and why). Compare the two
+ compare two population means. In many experimental situa-  methods, first performing the independent sampling procedure
+ tions, a decision must be made either to collect two indepen-  by collecting 10 observations from each population (a total of
+ dent samples or to conduct a paired difference experiment. The  20 measurements) and then performing the paired difference
+ importance of this decision cannot be overemphasized, since  experiment by collecting 10 pairs of observations.
+ the amount of information obtained and the cost of the experi-
+ ment are both directly related to the method of experimentation  Construct two 95% confidence intervals, one for each
+ that is chosen.  experiment you conduct. Which method provides the narrower
+  confidence interval and hence more information on this perfor-
+  Choose two populations (pertinent to your school major)  mance of the experiment? Does your result agree with your pre-
+ that have unknown means and for which you could both collect  liminary expectations?
+ two independent samples and collect paired observations. Before
+
+References  Satterthwaite, F. W. “An approximate distribution of estimates of vari-
+  ance components.” Biometrics Bulletin, Vol. 2, 1946, pp. 110–114.
+Freedman, D., Pisani, R., and Purves, R. Statistics. New York: W. W.
+  Norton and Co., 1978.  Snedecor, G. W., and Cochran, W. Statistical Methods, 7th ed. Ames, IA:
+  Iowa State University Press, 1980.
+Gibbons, J. D. Nonparametric Statistical Inference, 2nd ed. New York:
+  McGraw-Hill, 1985.  Steel, R. G. D., and Torrie, J. H. Principles and Procedures of Statistics,
+  2nd ed. New York: McGraw-Hill, 1980.
+Hollander, M., and Wolfe, D. A. Nonparametric Statistical Methods.
+  New York: Wiley, 1973.
+
+Mendenhall, W., Beaver, R. J., and Beaver, B. Introduction to Probability
+  and Statistics, 13th ed. Belmont, CA: Brooks/Cole, 2009.
+  Using Technology 525
+
+USING TECHNOLOGY MINITAB: Two-Sample Inferences
+
+MINITAB can be used to make two-sample inferences about  Step 3b If the worksheet contains the data for the first sample
+m1 - m2 or independent samples, md for paired samples, p1 - p2  in one column and the data for the second sample in another
+and s12>s22.  column, select “Samples in different columns” and then specify
+  the “First” and “Second” variables. Alternatively, if you have
+Comparing Means with Independent Samples  only summarized data (i.e., sample sizes, sample means, and
+  sample standard deviations), select “Summarized data” and
+Step 1 Access the MINITAB worksheet that contains the  enter these summarized values in the appropriate boxes.
+sample data.
+Step 2 Click on the “Stat” button on the MINITAB menu bar  Step 4 Click the “Options” button on the MINITAB “2-Sample T”
+and then click on “Basic Statistics” and “2-Sample t,” as shown  dialog box. Specify the confidence level for a confidence interval,
+in Figure 9.M.1. The resulting dialog box appears as shown in  the null-hypothesized value of the difference, m1 - m2, and the
+Figure 9.M.2.  form of the alternative hypothesis (lower tailed, two tailed, or upper
+  tailed) in the resulting dialog box, as shown in Figure 9.M.3.
+
+Figure 9.M.1 MINITAB menu options for comparing two means  Figure 9.M.3 MINITAB options dialog box
+Step 3a If the worksheet contains data for one quantitative
+variable (which the means will be computed on) and one quali-  Step 5 Click “OK” to return to the “2-Sample T” dialog box
+tative variable (which represents the two groups or populations),  and then click “OK” again to generate the MINITAB printout.
+select “Samples in one column” and then specify the quantitative  Important Note: The MINITAB two-sample t-procedure uses
+variable in the “Samples” area and the qualitative variable in the  the t-statistic to conduct the test of hypothesis. When the
+“Subscripts” area. (See Figure 9.M.2.)  sample sizes are small, check the “Assume equal variances”
+  box in Figure 9.M.2. When the sample sizes are large, leave
+Figure 9.M.2 MINITAB 2-sample t dialog box  the “Assume equal variances” box unchecked; the t-value will
+  be approximately equal to the large-sample z-value, and the
+  resulting test will still be valid.
+
+  Comparing Means with Paired Samples
+
+  Step 1 Access the MINITAB worksheet that contains the
+  sample data. The data file should contain two quantitative
+  variables—one with the data values for the first group (or
+  population) and one with the data values for the second group.
+  (Note: The sample size should be the same for each group.)
+  Step 2 Click on the “Stat” button on the MINITAB menu bar and
+  then click on “Basic Statistics” and “Paired t” (see Figure 9.M.1).
+  Step 3 On the resulting dialog box, select the “Samples in
+  columns” option and specify the two quantitative variables of
+  interest in the “First sample” and “Second sample” boxes, as
+  shown in Figure 9.M.4. [Alternatively, if you have only summa-
+  rized data of the paired differences, select the “Summarized data
+  (differences)” option and enter the sample size, sample mean,
+  and sample standard deviation in the appropriate boxes.]
+526  CHAPTER 9 ■ Inferences Based on Two Samples
+
+  Step 4 Click the “Options” button and specify the confidence
+  level for a confidence interval, the null-hypothesized value of
+  the difference, and the form of the alternative hypothesis (lower
+  tailed, two tailed, or upper tailed) in the resulting dialog box, as
+  shown in Figure 9.M.6. (If you desire a pooled estimate of p for
+  the test, be sure to check the appropriate box.)
+
+Figure 9.M.4 MINITAB paired-samples t dialog box  Figure 9.M.6 MINITAB 2 proportions options
+
+Step 4 Click the “Options” button and specify the confidence  Step 5 Click “OK” to return to the “2 Proportions” dialog box
+level for a confidence interval, the null-hypothesized value of the  and then click “OK” again to generate the MINITAB printout.
+difference md, and the form of the alternative hypothesis (lower
+tailed, two tailed, or upper tailed) in the resulting dialog box.  Comparing Variances with Independent
+(See Figure 9.M.3.)  Samples
+Step 5 Click “OK” to return to the “Paired t” dialog box and
+then click “OK” again to generate the MINITAB printout.  Step 1 Access the MINITAB worksheet that contains the
+  sample data.
+Comparing Proportions with Large  Step 2 Click on the “Stat” buton on the MINITAB menu bar and
+Independent Samples  then click on “Basic Statistics” and “2 Variances” (Figure 9.M.1).
+  Step 3 On the resulting dialog box (shown in Figure 9.M.7),
+Step 1 Access the MINITAB worksheet that contains the  the menu selections and options are similar to those for the
+sample data.  two-sample t-test.
+Step 2 Click on the “Stat” button on the MINITAB menu
+bar and then click on “Basic Statistics” and “2 Proportions,” as
+shown in Figure 9.M.1.
+Step 3 On the resulting dialog box (shown in Figure 9.M.5), select
+the data option (“Samples in different columns” or “Summarized
+data”) and make the appropriate menu choices. (Figure 9.M.5
+shows the menu options when you select “Summarized data.”)
+
+Figure 9.M.5 MINITAB 2 proportions dialog box  Figure 9.M.7 MINITAB 2 variances dialog box
+
+  Step 4 Click “OK” to produce the MINITAB F-test printout.
+
+  TI-83/TI-84 Plus Graphing Calculator:
+  Two Sample Inferences
+
+  The TI-83/ TI-84 plus graphing calculator can be used to conduct
+  tests and form confidence intervals for the difference between
+  two means with independent samples, the difference between two
+  means with matched pairs, the difference between two proportions
+  for large independent samples, and the ratio of two variances.
+  Using Technology  527
+
+Confidence Interval for M1 - M2  The confidence interval will be
+  displayed with the number of
+Step 1 Enter the data (Skip to Step 2 if you have summary statis-  degrees of freedom, the sam-
+tics, not raw data)  ple statistics, and the pooled
+• Press STAT and select 1:Edit  standard deviation (when
+  appropriate).
+Note: If the lists already contain data, clear the old data. Use the
+up ARROW to highlight “L1.”  Hypothesis Test for M1 - M2
+• Press CLEAR ENTER
+• Use the up ARROW to highlight “L2”  Step 1 Enter the data (Skip to Step 2 if you have summary
+• Press CLEAR ENTER  statistics, not raw data)
+• Use the ARROW and ENTER keys to enter the first data set  • Press STAT and select 1:Edit
+
+  into L1  Note: If the lists already contain data, clear the old data. Use the
+• Use the ARROW and ENTER keys to enter the second data  up ARROW to highlight “L1.”
+  • Press CLEAR ENTER
+  set into L2  • Use the up ARROW to highlight “L2”
+  • Press CLEAR ENTER
+Step 2 Access the statistical tests  • Use the ARROW and ENTER keys to enter the first data set
+menu
+• Press STAT  into L1
+• Arrow right to TESTS  • Use the ARROW and ENTER keys to enter the second data
+• Arrow down to 2-SampTInt
+• Press ENTER  set into L2
+
+Step 3 Choose “Data” or “Stats” (“Data” is selected when you  Step 2 Access the statistical tests menu
+have entered the raw data into the Lists. “Stats” is selected when  • Press STAT
+you are given only the means, standard deviations, and sample  • Arrow right to TESTS
+sizes)  • Arrow down to 2-SampTTest
+• Press ENTER  • Press ENTER
+• If you selected “Data,” set List1 to L1 and List2 to L2
+• Set Freq1 to 1 and set  Step 3 Choose “Data” or “Stats” (“Data” is selected when you
+  have entered the raw data into the Lists. “Stats” is selected when
+  Freq2 to 1  you are given only the means, standard deviations, and sample
+• Set C-Level to the  sizes)
+  • Press ENTER
+  confidence level  • If you selected “Data,” set List1 to L1 and List2 to L2
+• If you are assuming that the  • Set Freq1 to 1 and set Freq2 to 1
+  • Use the ARROW to highlight the appropriate alternative
+  two populations have equal
+  variances, select Yes for  hypothesis
+  Pooled  • Press ENTER
+• If you are not assuming equal variances, select No  • If you are assuming that the
+• Press ENTER
+• Arrow down to “Calculate”  two populations have equal
+• Press ENTER  variances, select Yes for
+• If you selected “Stats,” enter the means, standard deviations,  Pooled
+  and sample sizes  • If you are not assuming
+• Set C-Level to the confidence level  equal variances, select No
+• If you are assuming that the two populations have equal  • Press ENTER
+  variances, select Yes for Pooled  • Arrow down to “Calculate”
+• If you are not assuming equal variances, select No  • Press ENTER
+• Press ENTER  • If you selected “Stats,” enter the means, standard deviations,
+• Arrow down to “Calculate”  and sample sizes
+• Press ENTER  • Use the ARROW to highlight the appropriate alternative
+  hypothesis
+(The accompanying screen is set up for an example with a mean  • Press ENTER
+of 100, a standard deviation of 10, and a sample size of 15 for the  • If you are assuming that the two populations have equal
+first data set and a mean of 105, a standard deviation of 12, and a  variances, select Yes for Pooled
+sample size of 18 for the second data set.)
+528 CHAPTER 9 ■ Inferences Based on Two Samples
+
+• If you are not assuming equal variances, select No  Step 3 Choose “Data”
+• Press ENTER  • Press ENTER
+• Arrow down to “Calculate”  • Set List to L3
+• Press ENTER  • Set Freq to 1
+  • Set C-Level to the confi-
+(The screen that follows is set
+up for an example with a mean  dence level
+of 100, a standard deviation of  • Arrow down to “Calculate”
+10, and a sample size of 15 for  • Press ENTER
+the first data set and a mean of
+120, a standard deviation of 12,  The confidence interval will be displayed with the mean, stand-
+and a sample size of 18 for the  ard deviation, and sample size of the differences.
+second data set.)
+  Hypothesis Test for a Paired Difference Mean
+The results of the hypothesis test will be displayed with the
+p-value, the number of degrees of freedom, the sample statistics,  Note: There is no paired difference option on the calculator.
+and the pooled standard deviation (when appropriate).  These instructions demonstrate how to calculate the differences
+  and then use the 1-sample t-test.
+Confidence Interval for a Paired
+Difference Mean  Step 1 Enter the data and calculate the differences
+  • Press STAT and select 1:Edit
+Note: There is no paired difference option on the calculator.
+These instructions demonstrate how to calculate the differences  Note: If the lists already contain data, clear the old data. Use the
+and then use the 1-sample t-interval.  up ARROW to highlight “L1.”
+  • Press CLEAR ENTER
+Step 1 Enter the data and calculate the differences  • Use the up ARROW to highlight “L2”
+• Press STAT and select 1:Edit  • Press CLEAR ENTER
+  • Use the ARROW and ENTER keys to enter the first data set
+Note: If the lists already contain data, clear the old data. Use the
+up ARROW to highlight “L1.”  into L1
+• Press CLEAR ENTER  • Use the ARROW and ENTER keys to enter the second data
+• Use the up ARROW to highlight “L2”
+• Press CLEAR ENTER  set into L2
+• Use the ARROW and ENTER keys to enter the first data set  • The differences will be calculated in L3
+  • Use the up ARROW to highlight “L3”
+  into L1  • Press CLEAR—This will clear any old data, but L3 will
+• Use the ARROW and ENTER keys to enter the second data
+  remain highlighted
+  set into L2  • To enter the equation L3 = L1 - L2, use the following
+• The differences will be calculated in L3
+• Use the up ARROW to highlight “L3”  keystrokes:
+• Press CLEAR—This will clear any old data, but L3 will  • Press 2ND “1” (this will enter L1)
+  • Press the MINUS button
+  remain highlighted  • Press 2ND “2” (this will
+• To enter the equation L3 = L1 - L2, use the following
+  enter L2)
+  keystrokes:
+• Press 2ND “1” (this will enter L1)  (Notice the equation at the
+• Press the MINUS button  bottom of the screen.)
+• Press 2ND “2” (this will  • Press ENTER (the
+
+  enter L2)  differences should be
+  calculated in L3)
+(Notice the equation at the
+bottom of the screen.)  Step 2 Access the statistical
+• Press ENTER (the differ-  tests menu
+  • Press STAT
+  ences should be calculated  • Arrow right to TESTS
+  in L3)  • Arrow down to T-Test (even
+
+Step 2 Access the statistical  for a large-sample case)
+tests menu  • Press ENTER
+• Press STAT
+• Arrow right to TESTS  Step 3 Choose “Data”
+• Arrow down to TInterval  • Press ENTER
+  • Enter the values for the hypothesis test, where m0 = the
+  (even for large sample case)
+• Press ENTER  value for md in the null hypothesis
+• Set List to L3  Using Technology 529
+• Set Freq to 1
+• Use the ARROW to highlight the appropriate alternative  Hypothesis Test for 1S12>S222
+
+  hypothesis  Step 1 Enter the data (Skip to Step 2 if you have summary
+• Press ENTER  statistics, not raw data)
+• Arrow down to “Calculate”  • Press STAT and select 1:Edit
+• Press ENTER
+  Note: If the lists already contain data, clear the old data. Use the
+The test statistic and the p-value will be displayed, as will the  up ARROW to highlight “L1.”
+sample mean, standard deviation, and sample size of the  • Press CLEAR ENTER
+differences.  • Use the up ARROW to highlight “L2”
+  • Press CLEAR ENTER
+Confidence Interval for 1 p1 − p2 2  • Use the ARROW and ENTER keys to enter the first data set
+
+Step 1 Access the statistical tests  into L1
+menu  • Use the ARROW and ENTER keys to enter the second data
+• Press STAT
+• Arrow right to TESTS  set into L2
+• Arrow down to 2-PropZInt
+• Press ENTER  Step 2 Access the statistical tests menu
+  • Press STAT
+Step 2 Enter the values from  • Arrow right to TESTS
+the sample information and the  • Arrow down to 2-SampFTest
+confidence level  • Press ENTER
+
+where x1 = number of success-  Step 3 Choose “Data” or
+es in the first sample (e.g., 53)  “Stats” (“Data” is selected when
+  you have entered the raw data
+n1 = sample size for the first  into the Lists. “Stats” is selected
+sample (e.g., 400)  when you are given only the
+  means, standard deviations, and
+x2 = number of successes in the  sample sizes)
+second sample (e.g., 78)  • Press ENTER
+  • If you selected “Data”
+n2 = sample size for the second sample (e.g., 500)  • Set List1 to L1 and List2
+• Set C-Level to the confidence level
+• Arrow down to “Calculate”  to L2
+• Press ENTER  • Set Freq1 to 1 and set Freq2
+
+Hypothesis Test for 1 p1 − p2 2  to 1
+  • Use the ARROW to high-
+Step 1 Access the statistical tests
+menu  light the appropriate alterna-
+• Press STAT  tive hypothesis
+• Arrow right to TESTS  • Press ENTER
+• Arrow down to 2-PropZTest  • Arrow down to “Calculate”
+• Press ENTER  • Press ENTER
+  • If you selected “Stats,” enter
+Step 2 Enter the values from  the standard deviations and
+the sample information and select the alternative hypothesis  sample sizes
+  • Use the ARROW to high-
+where x1 = number of successes in the first sample (e.g., 53)  light the appropriate alterna-
+n1 = sample size for the first sample (e.g., 400)  tive hypothesis
+x2 = number of successes in the second sample (e.g., 78)  • Press ENTER
+n2 = sample size for the second  • Arrow down to “Calculate”
+sample (e.g., 500)  • Press ENTER
+• Use the ARROW to high-
+  The results of the hypothesis test will be displayed with the
+  light the appropriate alterna-  p-value and the input data used.
+  tive hypothesis
+• Press ENTER
+• Arrow down to “Calculate”
+• Press ENTER
+10  Analysis of Variance
+
+  Comparing More than Two Means
+
+contents  Where We’ve Been
+
+10.1 elements of a designed Study  • Presented methods for estimating and testing
+10.2 The Completely randomized design:  hypotheses about a single population mean
+
+  Single Factor  • Presented methods for comparing two population
+10.3 Multiple Comparisons of Means  means
+10.4 The randomized Block design
+10.5 Factorial experiments: Two Factors  Where We’re Going
+
+  • Discuss the critical elements in the design of a
+  sampling experiment (10.1)
+
+  • Learn how to set up three of the more popular
+  experimental designs for comparing more than two
+  population means: completely randomized, randomized
+  block, and factorial designs (10.2, 10.4–10.5)
+
+  • Show how to analyze data collected from a
+  designed experiment using a technique called an
+  analysis of variance (10.2, 10.4–10.5)
+
+  • Present a follow-up analysis to an ANOVA: ranking
+  means (10.3)
+  CHAPTER 10 ■ Analysis of Variance 531
+
+Statistics IN Action Voice versus Face recognition—does one
+
+  Follow the other?
+
+Do you identify a familiar person just as easily from his/her  (the target). In both condi-
+voice as from his/her face? Current behavioral theory suggests  tions, the most famous ce-
+that voice recognition runs in parallel to face recognition; that  lebrities were always used
+is, hearing a voice should lead to a mental image of the per-  as the prime.
+son’s face, just as seeing a face should predict a person’s voice.
+Behavior psychologists call this the theory of identity priming—a  Each subject observed
+person’s voice identifies, or primes, that same person’s face, and  40 celebrity pairs. After
+vice versa. This is in contrast to associative priming, which occurs  each face/face or voice/face
+when the presentation of one person’s voice or face predicts the  pair was presented, the sub-
+voice or face of another person to whom they are semantically  ject was asked to identify
+associated. For example, if hearing the voice of one member of a  the target celebrity. Two variables of interest to the researchers
+married couple triggers an image of the face of the other mem-  were recorded for each subject: (1) the accuracy rate, i.e., the
+ber of the couple, then associative priming has occurred.  percentage of target celebrities correctly identified, and (2) the
+  total response speed, i.e., the total time (in seconds) required to
+  Researchers from the School of Psychology at the  identify the targets.
+University of Southampton (UK) investigated the theory of
+associative priming and published their results in the British  A total of 40 subjects participated in Experiment 1. Half
+Journal of Psychology (Feb. 2014). The psychologists carried  (20) of the subjects were randomly assigned to the within-
+out two designed experiments, both of which involved people  modality condition (prime face and target face) and half to
+attempting to identify famous, paired celebrities from their  the cross-modality condition (prime voice and target face).
+voices or faces. Some celebrity pairs were related or had a  Within each condition, half (10) of the subjects were randomly
+working relationship (e.g., Victoria and David Beckham) and  assigned to related celebrity pairs only and half assigned to
+some were unrelated (e.g., Simon Cowell and Ozzie Osbourne).  unrelated celebrity pairs only.* A diagram of the experiment
+One focus of the research was on whether the theory holds in  is shown in Figure SIA10.1.
+both of two conditions: within-modality and cross-modality. In
+the within-modality condition, subjects were shown the face of  A total of 20 (different) subjects participated in
+one celebrity (the prime) for 3 seconds and then the face of the  Experiment 2. All of these subjects were assigned to the
+second celebrity (the target); in the cross-modality condition,  cross-modality condition (prime voice and target face), but
+subjects listened to the voice of one celebrity (the prime) for  each subject was exposed to both related and unrelated celeb-
+3 seconds and then were shown the face of the second celebrity  rity pairs. Also, in this experiment, the researchers increased
+  the length of time of the prime voice to 8 seconds. A diagram
+  of this second experiment is shown in Figure SIA10.2.
+
+  Within-modality (face/face)  Within-modality (face/face)
+  Related pairs  Unrelated pairs
+  n = 10  n = 10
+
+  Cross-modality (voice/face)  Cross-modality (voice/face)
+  Related pairs  Unrelated pairs
+  n = 10  n = 10
+
+Figure SIA10.1
+Layout of Experiment 1
+
+  *In the actual study, a mixed design was employed. All subjects within each modality condition
+  were presented with both related and unrelated celebrity pairs.
+
+  Cross-modality (voice/face)  Related Pairs  Unrelated Pairs
+  Subject 1
+Figure SIA10.2  Subject 2
+Layout of Experiment 2  Subject 3
+  ...
+  Subject 20
+
+  (Continued)
+532 CHAPTER 10 ■ Analysis of Variance
+
+Statistics IN Action  The data (accuracy rate and  Statistics IN Action Revisited
+  response speed) for these exper-
+  (continued)  iments, saved in the PRIME1  • A One-Way Analysis of the Voice/Face Recognition Data
+  in Experiment 1 (p. 549)
+  and PRIME2 files, were used to
+  • Ranking the Means of the Voice/Face Recognition Data in
+answer several key questions of interest to the researchers:  Experiment 1 (p. 560)
+
+1. Does associative priming occur more often in the within-  • A Matched-Pairs Analysis of the Voice/Face Recognition
+  modality (face/face) condition than in the cross-modality  Data in Experiment 2 (p. 573)
+  (voice/face) condition?
+  • A Two-Way Analysis of the Voice/Face Recognition Data
+2. Does associative priming occur more often with related  in Experiment 1 (p. 592)
+  pairs than with unrelated pairs?
+  Data Sets: PRIME1 and PRIME2
+3. Are the effects of modality condition and pair relation
+  independent?
+
+  We apply the statistical methodology presented in this
+chapter to these data in several Statistics in Action Revisited
+sections.
+
+  Most of the data analyzed in previous chapters were collected in observational sampling
+  experiments rather than designed sampling experiments. In observational experiments,
+  the analyst has little or no control over the variables under study and merely observes
+  their values. In contrast, in designed experiments the analyst attempts to control the
+  levels of one or more variables to determine their effect on a variable of interest. When
+  properly designed, such experiments allow the analyst to determine whether a change
+  in the controlled variable causes a change in the response variable; that is, they allow
+  the analyst to infer cause and effect. Although many practical situations do not present
+  the opportunity for such control, it is instructive, even with observational experiments,
+  to have a working knowledge of the analysis and interpretation of data that result from
+  designed experiments and to know the basics of how to design experiments when the
+  opportunity arises.
+
+  We first present the basic elements of an experimental design in Section 10.1. We
+  then discuss two of the simpler, and more popular, experimental designs in Sections 10.2
+  and 10.4. Slightly more complex experiments are discussed in Section 10.5. Methods for
+  ranking means from a designed experiment are presented in Section 10.3.
+
+10.1 Elements of a Designed Study
+
+  Certain elements are common to almost all designed experiments, regardless of the
+  specific area of application. For example, the response is the variable of interest in the
+  experiment. The response might be the SAT scores of a high school senior, the total
+  sales of a firm last year, or the total income of a particular household this year. We will
+  also refer to the response as the dependent variable. Typically, the response variable is
+  quantitative in nature since one of the objectives of a designed experiment is to compare
+  response means.
+
+  The response variable is the variable of interest to be measured in the experiment.
+  We also refer to the response as the dependent variable. Typically, the response
+  (dependent) variable is quantitative in nature.
+
+  The intent of most statistical experiments is to determine the effect of one or more
+  variables on the response. These variables are usually referred to as the factors in a de-
+  signed experiment. Factors are either quantitative or qualitative, depending on whether
+  SECTION 10.1 ■ Elements of a Designed Study 533
+
+the variable is measured on a numerical or a nonnumerical scale. For example, we might
+want to explore the effect of the qualitative factor Gender on the response SAT score. In
+other words, we might want to compare the SAT scores of male and female high school
+seniors. Or we might wish to determine the effect of the quantitative factor Number of
+salespeople on the response Total sales for retail firms. Often, two or more factors are of
+interest. For example, we might want to determine the effect of the quantitative factor
+Number of wage earners and the qualitative factor Location on the response Household
+income.
+
+  Factors are those variables whose effect on the response is of interest to the experi-
+  menter. Quantitative factors are measured on a numerical scale, whereas qualitative
+  factors are not (naturally) measured on a numerical scale. Factors are also referred
+  to as independent variables.
+
+  Levels are the values of the factors that are utilized in the experiment. The lev-
+els of qualitative factors are usually nonnumerical. For example, the levels of Gender
+are Male and Female, and the levels of Location might be North, East, South, and
+West.* The levels of quantitative factors are the numerical values of the variable
+utilized in the experiment. For example, the Number of wage earners in a household,
+may have levels 1, 2, 3, and 4. The factor Years of education may have levels 8, 12, 16,
+and 20.
+
+  Factor levels are the values of the factor utilized in the experiment.
+
+  When a single factor is employed in an experiment, the treatments of the experi-
+ment are the levels of the factor. For example, if the effect of the factor Gender on the
+response SAT score is being investigated, the treatments of the experiment are the two
+levels of Gender: Female and Male. Or if the effect of the Number of wage earners on
+Household income is the subject of the experiment, the numerical values assumed by
+the quantitative factor Number of wage earners are the treatments. If two or more fac-
+tors are utilized in an experiment, the treatments are the factor–level combinations used.
+For example, if the effects of the factors Gender and Socioeconomic status (SES) on the
+response SAT score are being investigated, the treatments are the combinations of the
+levels of Gender and SES used; thus, (Female, high SES), (Male, low SES), (Female, low
+SES) and (Male, high SES) could all be treatments.
+
+  The treatments of an experiment are the factor–level combinations utilized.
+
+  The objects on which the response variable and factors are observed are the
+experimental units. For example, SAT score, High school GPA, and Gender are all vari-
+ables that can be observed on the same experimental unit: a high school senior. Similarly,
+Total sales, Earnings per share, and Number of salespeople can be measured on a par-
+ticular firm in a particular year, and the firm-year combination is the experimental unit.
+Likewise, Total income, Number of female wage earners, and Location can be observed
+for a household at a particular point in time, and the household-time combination is
+the experimental unit. Every experiment, whether observational or designed, has ex-
+perimental units on which the variables are observed. However, the identification of the
+
+*The levels of a qualitative variable may bear numerical labels. For example, Locations could be numbered 1,
+2, 3, and 4. However, in such cases the numerical labels for a qualitative variable will usually be codes repre-
+senting nonnumerical levels.
+534  CHAPTER 10 ■ Analysis of Variance
+
+  experimental units is more important in designed experiments, when the experimenter
+  must actually sample the experimental units and measure the variables.
+
+  An experimental unit is the object on which the response and factors are observed
+  or measured.*
+
+  When the specification of the treatments and the method of assigning the experi-
+  mental units to each of the treatments are controlled by the analyst, the study is said to
+  be designed. In contrast, if the analyst is just an observer of the treatments on a sample
+  of experimental units, the study is observational. For example, if, on the one hand, you
+  specify the number of female and male high school students within each GPA range to
+  be randomly selected in order to evaluate the effect of gender and GPA on SAT scores,
+  you are designing the experiment. If, on the other hand, you simply observe the SAT
+  scores, gender, and GPA for all students who took the SAT test last month at a particular
+  high school, the study is observational.
+
+  A designed study is an experiment in which the analyst controls the specification
+  of the treatments and the method of assigning the experimental units to each treat-
+  ment. An observational study is an experiment in which the analyst simply observes
+  the treatments and the response on a sample of experimental units.
+
+  Figure 10.1 provides an overview of the experimental process and a summary of
+  the terminology introduced in this section. Note that the experimental unit is at the
+  core of the process. The method by which the sample of experimental units is selected
+  from the population determines the type of experiment. The level of every factor (the
+  treatment) and the response are all variables that are observed or measured on each
+  experimental unit.
+
+  Population
+  of
+
+  experimental units
+
+  Sampling
+  design
+
+  Sample
+  of
+
+  experimental units
+
+  Apply factor–level Apply factor–level Apply factor–level
+
+  combination 1  combination 2  combination k
+
+  Treatment 1  Treatment 2  ...  Treatment k
+
+  sample  sample  sample
+
+Figure 10.1  Responses for  Responses for  Responses for
+
+Sampling design: process and  ...
+terminology
+  treatment 1  treatment 2  treatment k
+
+  *Recall (Chapter 1) that the set of all experimental units is the population.
+  SECTION 10.1 ■ Elements of a Designed Study 535
+
+  BIOGRAPHY SIR RONALD A. FISHER (1890–1962)
+
+  The Founder of Modern Statistics
+
+  At a young age, Ronald Fisher demonstrated special abilities in mathematics, astronomy, and biology.
+  (Fisher’s biology teacher once divided all his students into two groups on the basis of their “sheer
+  brilliance”: Fisher and the rest.) Fisher graduated from prestigious Cambridge University in London
+  in 1912 with a B.A. degree in astronomy. After several years teaching mathematics, he found work
+  at the Rothamsted Agricultural Experiment station, where he began his extraordinary career as a
+  statistician. Many consider Fisher to be the leading founder of modern statistics. His contributions to
+  the field include the notion of unbiased statistics, the development of p-values for hypothesis tests,
+  the invention of analysis of variance for designed experiments, the maximum-likelihood estimation
+  theory, and the formulation of the mathematical distributions of several well-known statistics. Fisher’s
+  book, Statistical Methods for Research Workers (written in 1925), revolutionized applied statistics,
+  demonstrating with very readable and practical examples how to analyze data and interpret the results.
+  In 1935, Fisher wrote The Design of Experiments, in which he first described his famous experiment
+  on the “lady tasting tea.” (Fisher showed, through a designed experiment, that the lady really could
+  determine whether tea poured into milk tastes better than milk poured into tea.) Before his death,
+  Fisher was elected a Fellow of the Royal Statistical Society, was awarded numerous medals, and was
+  knighted by the Queen of England. ■
+
+ Example 10.1  Problem The United States Golf Association (USGA) regularly tests golf equipment
+  to ensure that it conforms to the association’s standards. Suppose the USGA wishes to
+The Key Elements  compare the mean distances traveled by four different brands of golf balls struck by a
+of a Designed  driver (the club used to maximize distance). The following experiment is conducted:
+Experiment—Testing  10 balls of each brand are randomly selected. Each ball is struck with a driver by “Iron
+Golf Ball Brands  Byron” (the USGA’s golf robot named for the famous golfer Byron Nelson), and the
+  distance traveled is recorded. A layout of the experimental design is displayed in
+  Figure 10.2. Identify each of the following elements in this study: response, factors,
+  types of factor, levels, treatments, and experimental units.
+
+  Brand A  Brand B  Brand C  Brand D
+
+  __  __  __  ___
+  __  __  __  __
+  __  __  __  __
+
+  __  __  __  __
+
+  Figure 10.2  Distances for 10 randomly
+  selected balls from Brand B lot
+  Layout of Designed Study
+  for Example 10.1
+
+  Solution The response is the variable of interest, Distance traveled. The only factor being
+  investigated is Brand of golf ball, and it is nonnumerical and therefore qualitative. The
+  four brands (say, A, B, C, and D) represent the levels of this factor. Since only one factor
+  is utilized, the treatments are the four levels of that factor—that is, the four brands. The
+  experimental unit is a golf ball; more specifically, it is a golf ball at a particular position
+  in the striking sequence, since the distance traveled can be recorded only when the ball
+  is struck, and we would expect the distance to be different (due to random factors such
+  as wind resistance, landing place, and so forth) if the same ball is struck a second time.
+  Note that 10 experimental units are sampled for each treatment, generating a total of
+  40 observations.
+
+  Look Back This study, like many real applications, is a blend of designed and observational:
+  The analyst cannot control the assignment of the brand to each golf ball (observational),
+  but he or she can control the assignment of each ball to the position in the striking
+  sequence (designed).
+
+  ■ Now Work Exercise 10.5
+536 CHAPTER 10 ■ Analysis of Variance
+
+ Example 10.2  Problem Suppose the USGA is also interested in comparing the mean distances the four
+  brands of golf balls travel when struck by a five-iron and by a driver. Ten balls of each
+A Two-Factor  brand are randomly selected, five to be struck by the driver and five by the five-iron.
+Experiment—Testing Golf  Identify the elements of this experiment, and construct a schematic diagram similar to
+Ball Brands  Figure 10.1 to provide an overview of the study.
+
+  Solution The response is the same as in Example 10.1, Distance traveled.The experiment
+  now has two factors: Brand of golf ball and Club utilized. There are four levels of
+  Brand (A, B, C, and D) and two of Club (driver and five-iron, or 1 and 5). Treatments
+  are factor–level combinations, so there are 4 * 2 = 8 treatments in this experiment:
+  (A, 1), (A, 5), (B, 1), (B, 5), (C, 1), (C, 5), (D, 1), and (D, 5). The experimental units are
+  still the combinations of golf ball and hitting position. Note that five experimental
+  units are sampled per treatment, generating 40 observations. The study is summarized
+  in Figure 10.3.
+
+  Population
+  of
+
+  golf ball–hitting
+  sequence combinations
+
+  Sample
+  of
+
+  40 golf ball–hitting
+  sequence combinations
+
+  Brand A Brand A ...  Brand D
+  driver  five iron  five iron
+
+  Treatment 1  Treatment 2  ...  Treatment 8
+
+Figure 10.3  5 distance  5 distance  ...  5 distance
+  measurements  measurements
+Two-factor golf study:  measurements
+Example 10.2
+
+  Look Back Whenever there are two or more factors in an experiment, remember to
+  combine the levels of the factors—one from each factor—to obtain the treatments.
+
+  ■ Now Work Exercise 10.14
+
+  Our objective in designing a study is usually to maximize the amount of infor-
+  mation obtained about the relationship between the treatments and the response. Of
+  course, we are almost always subject to constraints on budget, time, and even the avail-
+  ability of studies units. Nevertheless, designed studies are generally preferred to obser-
+  vational experiments: Not only do we have better control over the amount and quality
+  of the information collected, but we also avoid the biases that are inherent in observa-
+  tional studies in the selection of the experimental units representing each treatment.
+  Inferences based on observational studies always carry the implicit assumption that the
+  sample has no hidden bias which was not considered in the statistical analysis. A better
+  understanding of the potential problems with observational studies is a by-product of
+  our study of experimental design in the remainder of this chapter.
+  SECTION 10.1 ■ Elements of a Designed Study 537
+
+Exercises 10.1–10.16  10.7 Ascorbic acid reduces goat stress. Goats that are trans-
+  ported long distances for slaughter or market often lose
+Understanding the Principles  weight due to stress. The Animal Science Journal (May
+  2014) investigated the use of ascorbic acid (AA) to re-
+10.1 What are the treatments for a designed study that utilizes  duce the stress in goats during transportation. Twenty-four
+  one qualitative factor with three levels: A, B, and C?  healthy Boer goats were used in the experiment. The goats
+  were randomly divided into four groups (A, B, C, and D)
+10.2 What are the treatments for a designed study with three  of six animals each. Goats in group A were administered
+  factors, one qualitative with two levels (A and B) and one  a dosage of AA 30 minutes prior to transportation; goats
+  quantitative with three levels (5, 6, 7) and another quanti-  in group B were administered a dosage of AA 30 minutes
+  tative with two levels (8, 9)?  following transportation; group C goats were not given
+  any AA prior to or following transportation; and goats in
+10.3 What is the difference between an observational and a de-  group D were not given any AA and were not transported.
+  signed study?  Weight was measured before and after transportation and
+  the weight loss (in kilograms) determined for each goat.
+Applying the Concepts—Basic  The researchers discovered that mean weight loss is re-
+  duced in goats administered AA. For this study, identify
+10.4 What are the experimental units on which each of the fol-  each of the following:
+  lowing responses is observed?  a. Experimental unit
+  a. Smart phone usage of a college student  b. Response variable
+  b. Household medical expenditure  c. Factor
+  c. Your time in finishing a 500-word essay  d. Factor levels
+  d. A patient’s reaction to a new therapy
+  10.8 Health risks to beachgoers. According to a University of
+10.5 Identifying the type of study. Determine whether each of  Florida veterinary researcher, the longer a beachgoer sits
+  the following studies is observational or designed, and ex-  in wet sand or stays in the water, the higher the risk of
+  plain your reasoning:  gastroenteritis (University of Florida News, Jan. 29, 2008).
+  a. An economist obtains the unemployment rate and  The result is based on a study of more than 1,000 adults
+  gross state product for a sample of states over the past  conducted at three popular Florida beaches. The adults
+  10 years, with the objective of examining the relation-  were divided into three groups: (1) beachgoers who were
+  ship between the unemployment rate and the gross  recently exposed to wet sand and water for at least two
+  state product by census region.  consecutive hours, (2) beachgoers who were not recently
+  b. A psychologist tests the effects of three different feed-  exposed to wet sand and water, and (3) people who had
+  back programs by randomly assigning five rats to each  not recently visited a beach. Suppose the researcher
+  program and recording their response times at specified  wants to compare the mean levels of intestinal bacteria
+  intervals during the program.  for the three groups. For this study, identify each of the
+  c. A marketer of iPads runs ads in each of four national  following:
+  publications for one quarter and keeps track of the  a. experimental unit
+  number of sales that are attributable to each publica-  b. response variable
+  tion’s ad.  c. factor
+  d. An electric utility engages a consultant to monitor the  d. factor levels
+  discharge from its smokestack on a monthly basis over
+  a one-year period in order to relate the level of sulfur  10.9 Treating depression with a combination of drugs.
+  dioxide in the discharge to the load on the facility’s  Physicians are now experimenting with using a com-
+  generators.  bination of drugs, rather than a single drug, to treat
+  e. Intrastate trucking rates are compared before and after  major depression. In a study published in the American
+  governmental deregulation of prices charged, with the  Journal of Psychiatry (Mar. 2010), a sample of 105 pa-
+  comparison also taking into account distance of haul,  tients diagnosed with a major depressive disorder were
+  goods hauled, and the price of diesel fuel.  randomly assigned to one of four drug combination
+  f. An agriculture student compares the amount of rainfall  groups. Group 1 received daily doses of the antidepres-
+  in four different states over the past five years.  sant drug fluoxetine and a placebo; group 2 received
+  the antidepressant drug mirtazapine plus fluoxetine;
+10.6 Can money spent on gifts buy love? Refer to the Journal  group 3 received mirtazapine plus veniafaxine; and
+  of Experimental Social Psychology (Vol. 45, 2009) study of  group 4 received mirtazapine plus bupropion. After one
+  whether buying gifts truly buys love, Exercise 1.33 (p. 51).  month, the score on the Hamilton Depression Rating
+  Recall that study participants were randomly assigned to play  Scale (HAM-D) was determined for each patient. The
+  the role of gift giver or gift receiver. Gift receivers were asked  researchers compared the mean HAM-D scores of the
+  to provide the level of appreciation (measured on a 7-point  four groups of depressed patients. For this study, iden-
+  scale where 1 = “not at all” and 7 = “to a great extent”)  tify each of the following:
+  they had for the last birthday gift they received from a loved  a. experimental unit
+  one. Gift givers were asked to recall the last birthday gift  b. response variable
+  they gave to a loved one and to provide the level of apprecia-  c. factor
+  tion the loved one had for the gift. The researchers wanted to  d. factor levels
+  know if the average level of appreciation is higher for birth-
+  day gift givers than for birthday gift receivers.
+  a. Why is this study designed?
+  b. Specify the key elements of the study: experimental
+  unit, response variable, factor, and treatments.
+538 CHAPTER 10 ■ Analysis of Variance
+
+Applying the Concepts—Intermediate  University of California at Davis was randomly divided
+  into three experimental groups. Group 1 was fed purified
+10.10  Drafting NFL quarterbacks. The Journal of Productivity  water in bottles on both sides of the cage. Group 2 was
+  Analysis (Vol. 35, 2011) published a study of how success-  fed water on one side and a liquid sucrose (sweet) mixture
+  ful NFL teams are in drafting productive quarterbacks (see  on the opposite side of the cage. Group 3 was fed water on
+  Exercise 1.14, p. 48). The researchers measured two vari-  one side and a liquid sodium chloride (salty) mixture on
+  ables for each of the 331 quarterbacks drafted over the past  the opposite side of the cage. One variable of interest to
+  38 years: (1) draft position (top 10, between picks 11–50, or  the researchers was total consumption of liquid by each
+  after pick 50) and (2) QB production score (where higher  cockatiel.
+  scores indicate more productive QBs). Suppose we want to  a. What is the experimental unit of this study?
+  compare the mean production score of quarterbacks in the  b. Is the study a designed experiment? Why?
+  three draft position groups. Identify each of the following  c. What are the factors in the study?
+  elements for this study:  d. Give the levels of each factor.
+  a. Response variable  e. How many treatments are in the study? Identify them.
+  b. Factor(s)  f. What is the response variable?
+  c. Treatments
+  d. Experimental units  10.14  Study of gender composition of decision-making groups.
+  The American Journal of Political Science (Apr. 2014)
+10.11  Back/knee strength, gender, and lifting strategy. Human  published a study on a woman’s impact in mixed-gender
+  Factors (Dec. 2009) investigated whether back and knee  deliberating groups. The researchers randomly assigned
+  strength dictates the load-lifting strategies of males and  subjects to one of several 5-member decision-making
+  females. A sample of 32 healthy adults (16 men and  groups. The groups’ gender composition varied as follows:
+  16 women) participated in a series of strength tests on the  0 females, 1 female, 2 females, 3 females, 4 females, or 5
+  back and the knees. Following the tests, the participants  females. Each group was then randomly assigned to utilize
+  were randomly divided into two groups, where each group  one of two types of decision rules: unanimous or majority
+  consisted of 8 men and 8 women. One group was pro-  rule. Ten groups were created for each of the 6 * 2 = 12
+  vided with knowledge of their strength test results, while  combinations of gender composition and decision rule.
+  the other group was not provided with this knowledge.  One variable of interest, measured for each group, was the
+  The final phase of the study required the participants to  number of words spoken by women on a certain topic per
+  lift heavy cast iron plates out of a bin. Based on the differ-  1,000 total words spoken during the deliberations.
+  ent angles used to lift the plates, a quantitative measure of  a. Why is this experiment considered a designed study?
+  posture—called a postural index—was measured for each  b. Identify the experimental unit and dependent variable
+  participant. The goal of the research was to determine the
+  effect of gender and strength knowledge (provided or not  in this study.
+  provided) on the mean postural index. For this study, iden-  c. Identify the factors and treatments for this study.
+  tify each of the following:
+  a. experimental unit  10.15  Baker’s versus brewer’s yeast. The Electronic Journal of
+  b. response variable  Biotechnology (Dec. 15, 2003) published an article com-
+  c. factors  paring two yeast extracts: baker’s yeast and brewer’s yeast.
+  d. levels of each factor  Brewer’s yeast is a surplus by-product obtained from a
+  e. treatments  brewery; hence, it is less expensive than primary-grown
+  baker’s yeast. Samples of both yeast extracts were pre-
+10.12  Treatment for tendon pain. Chronic Achilles tendon  pared at four different temperatures (45, 48, 51, and 54°C),
+  pain (i.e., tendinosis) is common among middle-aged  and the autolysis yield (recorded as a percentage) was
+  recreational athletes. A group of Swedish physicians inves-  measured for each of the yeast–temperature combinations.
+  tigated the use of heavy-load eccentric calf muscle train-  The goal of the analysis is to investigate the impact of yeast
+  ing to treat Achilles tendinosis (British Journal of Sports  extract and temperature on mean autolysis yield.
+  Medicine, Feb. 1, 2004). A sample of 25 patients with  a. Identify the factors (and factor levels) in the
+  chronic Achilles tendinosis undertook the treatment. Data
+  on tendon thickness (measured in millimeters) were col-  experiment.
+  lected by ultrasonography both before and following treat-  b. Identify the response variable.
+  ment of each patient. The researchers want to compare the  c. How many treatments are included in the
+  mean tendon thickness before treatment with the mean
+  tendon thickness after treatment.  experiment?
+  a. Is this a designed experiment or an observational  d. What type of experimental design is employed?
+
+  study? Explain.  Applying the Concepts—Advanced
+  b. What is the experimental unit of the study?
+  c. What is the response variable of the study?  10.16  Testing a new pain-relief tablet. Paracetamol is the active
+  d. What are the treatments in this experiment?  ingredient in drugs designed to relieve mild to moderate
+  e. After reading Section 10.3, you will learn that patients  pain and fever. The properties of paracetamol tablets de-
+  rived from khaya gum were studied in the Tropical Journal
+  represent a blocking factor in this study. How many lev-  of Pharmaceutical Research (June 2003). Three factors be-
+  els are in the blocking factor?  lieved to affect the properties of parcetamol tablets are (1)
+  the nature of the binding agent, (2) the concentration of
+10.13 Taste preferences of cockatiels. Applied Animal Behaviour  the binding agent, and (3) the relative density of the tab-
+  Science (Oct. 2000) published a study of the taste prefer-  let. In the experiment, binding agent was set at two levels
+  ences of caged cockatiels. A sample of birds bred at the  (khaya gum and PVP), binding concentration at two levels
+  SECTION 10.2 ■ The Completely Randomized Design: Single Factor 539
+
+(.5% and 4.0%), and relative density at two levels (low  a. Identify the dependent (response) variable in the
+and high). One of the dependent variables investigated in  study.
+the study was tablet dissolution time (i.e., the amount of
+time, in minutes, for 50% of the tablet to dissolve). The  b. What are the factors investigated in the study? Give the
+goal of the study was to determine the effect of binding  levels of each.
+agent, binding concentration, and relative density on mean
+dissolution time.  c. How many treatments are possible in the study? List
+  them.
+
+10.2 The Completely Randomized Design: Single Factor
+
+  The simplest experimental design, the completely randomized design, consists of the
+  independent random selection of experimental units representing each treatment. For
+  example, in an experiment with Gender as the only factor, we could independently
+  select random samples of 20 female and 20 male high school seniors in order to compare
+  their mean SAT scores. Or, in an experiment with Experimental Cancer treatment as
+  the single factor at three levels, we could randomly assign cancer patients to receive one
+  of three treatments and then compare the mean pain levels of patients in the treatment
+  groups. In both examples, our objective is to compare treatment means by selecting
+  random, independent samples for each treatment.
+
+  Consider an experiment that involves a single factor with k treatments.The completely
+  randomized design is a design in which the k treatments are randomly assigned to the
+  experimental units or in which independent random samples of experimental units
+  are selected for each treatment.*
+
+ Example 10.3  Problem Suppose we want to compare the taste preferences of consumers for three
+  different brands of bottled water (say, Brands A, B, and C), using a random sample of
+Assigning Treatments  15 consumers of bottled water. Set up a completely randomized design for this purpose.
+in a Completely  That is, assign the treatments to the experimental units for this design.
+Randomized
+Design—Comparing  Solution In this study, the experimental
+Bottled Water  units are the 15 consumers, the factor
+Brands  is brand of bottled water, and the
+  treatments are Brands A, B, and C.
+  One way to set up the completely  Figure 10.4
+  randomized design is to randomly  MINITAB random assignments of consumers to brands
+  assign one of the three brands to each
+  consumer to taste. Then we could
+  measure (say, on a 1- to 10-point scale)
+  the taste preference of each consumer.
+  A good practice is to assign the same
+  number of consumers to each brand—
+  in this case, five consumers to each
+  of the three brands. (When an equal
+  number of experimental units is
+  assigned to each treatment, we call the
+  design a balanced design.)
+
+  A random-number generator
+  or computer software can be used
+  to make the random assignments.
+  Figure 10.4 is a MINITAB worksheet
+  showing the random assignments
+
+  *We use completely randomized design to refer to both designed and observational experiments. Thus, the
+  only requirement is that the experimental units to which treatments are applied (designed) or on which
+  treatments are observed (observational) be independently selected for each treatment.
+540  CHAPTER 10 ■ Analysis of Variance
+
+  made with the MINITAB “Random Data” function. You can see that MINITAB ran-
+  domly assigned consumers numbered 2, 11, 1, 13, and 3 to taste Brand A; consumers num-
+  bered 15, 14, 7, 10, and 8 to taste Brand B; and consumers numbered 6, 5, 12, 9, and 4 to
+  taste Brand C.
+
+  Look Back In some experiments, it will not be possible to randomly assign treatments to
+  the experimental units: The units will already be associated with one of the treatments.
+  (For example, if the treatments are “Male” and “Female,” you cannot change a person’s
+  gender.) In this case, a completely randomized design is a design in which you select
+  independent random samples of experimental units from each treatment.
+
+  ■
+
+Table 10.1 SAT Scores  The objective of a completely randomized design is usually to compare the
+for High School Students  treatment means. If we denote the true, or population, means of the k treatments as
+  m1, m2, c, mk, then we will test the null hypothesis that the treatment means are all
+Females  Males  equal against the alternative that at least two of the treatment means differ:
+
+530  490  H0: m1 = m2 = g = mk
+  Ha: At least two of the k treatment means differ
+560  520
+  The m’s might represent the means of all female and male high school seniors’ SAT
+590  550  scores or the means of all households’ income in each of four census regions.
+
+620  580  To conduct a statistical test of these hypotheses, we will use the means of the in-
+  dependent random samples selected from the treatment populations in a completely
+650  610  randomized design. That is, we compare the k sample means x1, x2, c, xk.
+
+  Data Set: TAB10_1  For example, suppose you select independent random samples of five female
+  and five male high school seniors and record their SAT scores. The data are shown in
+  Table 10.1. A MINITAB analysis of the data, shown in Figure 10.5, reveals that the
+  sample mean SAT scores (shaded) are 590 for females and 550 for males. Can we con-
+  clude that the population of female high school students scores 40 points higher, on
+  average, than the population of male students?
+
+Figure 10.5
+
+MINITAB descriptive statistics
+for data in Table 10.1
+
+  To answer this question, we must consider the amount of sampling variability among
+  the experimental units (students). The SAT scores in Table 10.1 are depicted in the dot
+  plot shown in Figure 10.6. Note that the difference between the sample means is small
+  relative to the sampling variability of the scores within the treatments, namely, Female
+  and Male. We would be inclined not to reject the null hypothesis of equal population
+  means in this case.
+
+  Male mean = 550  Female mean = 590
+
+Figure 10.6  450  475  500  525  550  575  600  625  650
+
+Dot plot of SAT scores:  SAT score
+difference between means
+dominated by sampling  Male score
+variability  Female score
+
+  In contrast, if the data are as depicted in the dot plot of Figure 10.7, then the sam-
+  pling variability is small relative to the difference between the two means. In this case, we
+  would be inclined to favor the alternative hypothesis that the population means differ.
+  SECTION 10.2 ■ The Completely Randomized Design: Single Factor 541
+
+  Male mean = 550  Female mean = 590
+
+Figure 10.7  450  475  500  525  550  575  600  625  650
+
+Dot plot of SAT scores:  SAT score
+difference between means large
+relative to sampling variability  Male score
+  Female score
+
+  Now Work Exercise 10.23a
+
+  You can see that the key is to compare the difference between the treatment
+  means with the amount of sampling variability. To conduct a formal statistical test of the
+  hypothesis requires numerical measures of the difference between the treatment means
+  and the sampling variability within each treatment. The variation between the treatment
+  means is measured by the sum of squares for treatments (SST), which is calculated by
+  squaring the distance between each treatment mean and the overall mean of all sample
+  measurements, then multiplying each squared distance by the number of sample mea-
+  surements for the treatment, and, finally, adding the results over all treatments. For the
+  data in Table 10.1, the overall mean is 570. Thus, we have:
+
+  k
+
+  SST = a ni1xi - x22 = 51550 - 57022 + 51590 - 57022 = 4,000
+
+  i=1
+
+  In this equation, we use x to represent the overall mean response of all sample measure-
+  ments—that is, the mean of the combined samples. The symbol ni is used to denote the
+  sample size for the ith treatment. You can see that the value of SST is 4,000 for the two
+  samples of five female and five male SAT scores depicted in Figures 10.5 and 10.6.
+
+  Next, we must measure the sampling variability within the treatments. We call this the
+  sum of squares for error (SSE) because it measures the variability around the treatment
+  means that is attributed to sampling error. The value of SSE is computed by summing the
+  squared distance between each response measurement and the corresponding treatment
+  mean and then adding the squared differences over all measurements in the entire sample:
+
+  n1  n2  nk
+  SSE = a 1x1j - x122 + a 1x2j - x222 + c a 1xkj - xk22
+  j=1  j=1  j=1
+
+  Here, the symbol x1j is the jth measurement in sample 1, x2j is the jth measurement in
+  sample 2, and so on. This rather complex-looking formula can be simplified by recalling
+  the formula for the sample variance s2 given in Chapter 2:
+
+  n s2 1x = i - x22
+  a  n-1
+
+  i=1
+
+  Note that each sum in SSE is simply the numerator of s2 for that particular treatment.
+  Consequently, we can rewrite SSE as
+
+  SSE = 1n1 - 12s21 + 1n2 - 12s22 + g + 1nk - 12s2k
+  where s21, s22, c, s2k are the sample variances for the k treatments. For the SAT scores in
+  Table 10.1, the MINITAB printout (Figure 10.4) shows that s21 = 2,250 (for females) and
+  s22 = 2,250 (for males); then we have
+
+  SSE = 15 - 1212,2502 + 15 - 1212,2502 = 18,000
+
+  To make the two measurements of variability comparable, we divide each by the
+  number of degrees of freedom in order to convert the sums of squares to mean squares.
+  First, the mean square for treatments (MST), which measures the variability among the
+  treatment means, is equal to
+
+  MST = k - 1 = 2 - 1 = SST 4,000 4,000
+542  CHAPTER 10 ■ Analysis of Variance
+
+  where the number of degrees of freedom for the k treatments is 1k - 12. Next, the mean
+  square for error (MSE), which measures the sampling variability within the treatments, is
+
+  MSE = n - k = 10 - 2 = SSE 18,000 2,250
+  Finally, we calculate the ratio of MST to MSE—an F-statistic:
+
+  F = = = MST 4,000 1.78
+  MSE 2,250
+
+  These quantities—MST, MSE, and F—are shown (highlighted) on the MINITAB print-
+  out displayed in Figure 10.8.
+
+  Figure 10.8
+  MINITAB printout with ANOVA
+  results for data in Table 10.1
+
+  Values of the F-statistic near 1 indicate that the two sources of variation, between
+  treatment means and within treatments, are approximately equal. In this case, the dif-
+  ference between the treatment means may well be attributable to sampling error, which
+  provides little support for the alternative hypothesis that the population treatment
+  means differ. Values of F well in excess of 1 indicate that the variation among treatment
+  means well exceeds that within means and therefore support the alternative hypothesis
+  that the population treatment means differ.
+
+  When does F exceed 1 by enough to reject the null hypothesis that the means
+  are equal? This depends on the degrees of freedom for treatments and for error and
+  on the value of a selected for the test. We compare the calculated F-value with an
+  F-value obtained using statistical software or taken from a table (see Tables V–VIII of
+  Appendix B) with v1 = 1k - 12 degrees of freedom in the numerator and v2 = 1n - k2
+  degrees of freedom in the denominator and corresponding to a Type I error probability
+  of a. For the example of the SAT scores, the F-statistic has v1 = 12 - 12 numerator
+  degrees of freedom and v2 = 110 - 22 = 8 denominator degrees of freedom. Thus, for
+  a = .05, we find (from Table VI of Appendix B) that
+
+  F.05 = 5.32
+
+  The implication is that MST would have to be 5.32 times greater than MSE before
+  we could conclude, at the .05 level of significance, that the two population treatment
+  means differ. Since the data yielded F = 1.78, our initial impressions of the dot plot in
+  Figure 10.6 are confirmed: There is insufficient information to conclude that the mean
+  SAT scores differ for the populations of female and male high school seniors. The
+  rejection region and the calculated F value are shown in Figure 10.9.
+
+  f(F)
+
+Figure 10.9  1  2  3  4  5  6  7  8  F
+
+Rejection region and calculated  1.78 (Fig. 10.5)  5.32  64.00 (Fig. 10.6)
+F-values for SAT score samples
+  Tabled value
+Table 10.2 SAT Scores  SECTION 10.2 ■ The Completely Randomized Design: Single Factor 543
+for High School Students
+Shown in Figure 10.7  In contrast, consider the dot plot in Figure 10.7. The SAT scores depicted in this dot
+  plot are listed in Table 10.2, followed by MINITAB descriptive statistics in Figure 10.10.
+Females  Males  Note that the sample means for females and males, 590 and 550, respectively, are the
+  same as in the previous example. Consequently, the variation between the means is the
+580  540  same, namely, MST = 4,000. However, the variation within the two treatments appears
+  to be considerably smaller. In fact, Figure 10.10 shows that s12 = 62.5 and s22 = 62.5.
+
+585  545
+
+590  550
+
+595  555
+
+600  560
+
+  Data Set: TAB10_2
+
+Figure 10.10
+
+MINITAB descriptive statistics
+and ANOVA results for data in
+Table 10.2
+
+  Thus, the variation within the treatments is measured by
+  SSE = 15 - 12162.52 + 15 - 12162.52 = 500
+
+  MSE = n - k = 8 = SSE 500 62.5 1shaded on Figure 10.102
+
+  Then the F-ratio is  1shaded on Figure 10.102
+  F = = = MST 4,000 64.0
+  MSE 62.5
+
+  Again, our visual analysis of the dot plot is confirmed statistically: F = 64.0 well exceeds
+  the table’s F value, 5.32, corresponding to the .05 level of significance. We would there-
+  fore reject the null hypothesis at that level and conclude that the SAT mean score of
+  males differs from that of females.
+
+  Now Work Exercise 10.23b–h
+
+  The analysis of variance F-test for comparing treatment means is summarized in
+  the following box. Note that the test is one-tailed (upper-tailed) even though we are
+  testing for differences in means in any direction. Only if the numerator of the F-statistic
+  (MST) is large relative to the denominator (MSE) will we conclude that treatment
+  means differ.
+
+  ANOVA F-Test to Compare k Treatment Means: Completely Randomized Design
+
+  H0: m1 = m2 = g = mk
+  Ha: At least two treatment means differ.
+
+  Test statistic: Fc = MST
+  MSE
+
+  Rejection region: Fc 7 Fa
+  p-value: P 1F 7 Fc2
+  where Fa is based on v1 = 1k - 12 numerator degrees of freedom (associated with
+  MST) and v2 = 1n - k2 denominator degrees of freedom (associated with MSE)
+  Decision: Reject H0 if a 7 p-value or if test statistic (Fc) falls into rejection region.
+544 CHAPTER 10 ■ Analysis of Variance
+
+  Conditions Required for a Valid ANOVA F-Test: Completely Randomized Design
+
+  1. The samples are randomly selected in an independent manner from the k
+  treatment populations. (This can be accomplished by randomly assigning the
+  experimental units to the treatments.)
+
+  2. All k sampled populations have distributions that are approximately normal.
+  3. The k population variances are equal (i.e., s12 = s22 = s32 = g = sk2).
+
+  Computational formulas for MST and MSE are given in Appendix B. We will rely
+  on statistical software to compute the F-statistic, concentrating on the interpretation of
+  the results rather than their calculation.
+
+Example 10.4  Problem Suppose the USGA wants to compare the mean distances reached of four
+  different brands of golf balls struck with a driver. A completely randomized design is
+  GOLFCRD  employed, with Iron Byron, the USGA’s robotic golfer, using a driver to hit a random
+  sample of 10 balls of each brand in a random sequence. The distance is recorded for each
+Conducting an  hit, and the results are shown in Table 10.3, organized by brand.
+
+Anova F-Test—Comparing
+
+Golf Ball Brands
+
+  Table 10.3 Results of Completely Randomized Design: Iron Byron Driver
+
+  Brand A  Brand B  Brand C  Brand D
+
+  251.2  263.2  269.7  251.6
+  245.1  262.9  263.2  248.6
+  248.0  265.0  277.5  249.4
+  251.1  254.5  267.4  242.0
+  260.5  264.3  270.5  246.5
+  250.0  257.0  265.5  251.3
+  253.9  262.8  270.7  261.8
+  244.6  264.4  272.9  249.0
+  254.6  260.6  275.6  247.1
+  248.8  255.9  266.5  245.9
+
+  Sample means  250.8  261.1  270.0  249.3
+
+  Data Set: GOLFCRD
+
+f(F)  a. Set up the test to compare the mean distances for the four brands. Use a = .10.
+  b. Use statistical software to obtain the test statistic and p-value. Give the appropriate
+0 12  F
+  2.25  Observed F:  conclusion.
+  43.99
+  Solution
+Figure 10.11
+  a. To compare the mean distances of the k = 4 brands, we first specify the hypotheses
+F-test for completely  to be tested. Denoting the population mean of the ith brand by mi, we test
+randomized design: golf ball  H0: m1 = m2 = m3 = m4
+experiment  Ha: The mean distances differ for at least two of the brands.
+  The test statistic compares the variation among the four treatment (Brand) means
+  with the sampling variability within each of the treatments:
+
+  Test statistic: F = MST
+  MSE
+
+  Rejection region: F 7 Fa = F.10 with v1 = 1k - 12 = 3 df
+  and v2 = 1n - k2 = 36 df
+
+  From Table V of Appendix B, we find that F.10 ≈ 2.25 for 3 and 36 df. Thus, we will
+  reject H0 if F 7 2.25. (See Figure 10.11.)
+  SECTION 10.2 ■ The Completely Randomized Design: Single Factor 545
+
+  The assumptions necessary to ensure the validity of the test are as follows:
+
+  1. The samples of 10 golf balls for each brand are selected randomly and independently.
+  2. The probability distributions of the distances for each brand are normal.
+  3. The variances of the distance probability distributions for each brand are equal.
+  b. The MINITAB printout for the data in Table 10.3 resulting from this com-
+  pletely randomized design is given in Figure 10.12. The values, MST = 931.5,
+  MSE = 21.2, and F = 43.99, are highlighted on the printout. Since F 7 2.25, we re-
+  ject H0. Also, the p-value of the test (.000) is highlighted on the printout. Since a = .10
+  exceeds the p-value, we draw the same conclusion: Reject H0. Therefore, at the .10
+  level of significance, we conclude that at least two of the brands differ with respect to
+  mean distance traveled when struck by the driver.
+
+Figure 10.12  Look Ahead Now that we know that mean distances differ, a logical follow-up question
+MINITAB ANOVA for  is: “Which ball brand travels farther, on average, when hit with a driver?” In Section 10.3
+completely randomized design  we present a method for ranking treatment means in an ANOVA.
+
+Figure 10.13  ■ Now Work Exercise 10.26
+Partitioning of the total sum
+of squares for the completely  The results of an analysis of variance (ANOVA) can be summarized in a simple tab-
+randomized design  ular format similar to that obtained from the MINITAB program in Example 10.4. The
+  general form of the table is shown in Table 10.4, where the symbols df, SS, and MS stand
+  for degrees of freedom, sum of squares, and mean square, respectively. Note that the two
+  sources of variation, Treatments and Error, add to the total sum of squares, SS(Total). The
+  ANOVA summary table for Example 10.4 is given in Table 10.5, and the partitioning of
+  the total sum of squares into its two components is illustrated in Figure 10.13.
+
+  Table 10.4 General ANoVA Summary Table for a Completely Randomized Design
+
+  Source  df  SS  MS  F
+
+  Treatments  k-1  SST MST = SST MST k - 1 MSE
+  Error  n-k  SSE MSE = SSE n - k
+
+  Total  n-1  SS(Total)
+
+  Table 10.5 ANoVA Summary Table for Example 10.4
+
+  Source  df  SS  MS  F  p-Value
+  43.99  .000
+  Brands  3  2,794.39  931.46
+  Error
+  36  762.30  21.18
+
+  Total  39  3,556.69
+
+  Total sum of squares  Sum of squares for treatments
+  SS(Total)  SST
+
+  Sum of squares for error
+  SSE
+546 CHAPTER 10 ■ Analysis of Variance
+
+Example 10.5  Problem Refer to the completely randomized ANOVA design conducted in Example 10.4.
+  Are the assumptions required for the test approximately satisfied?
+  GOLFCRD
+  Solution The assumptions for the test are repeated as follows:
+Checking the
+  1. The samples of golf balls for each brand are selected randomly and independently.
+ANoVA Assumptions  2. The probability distributions of the distances for each brand are normal.
+  3. The variances of the distance probability distributions for each brand are equal.
+
+  Since the sample consisted of 10 randomly selected balls of each brand and since
+  the robotic golfer Iron Byron was used to drive all the balls, the first assumption of inde-
+  pendent random samples is satisfied. To check the next two assumptions, we will employ
+  two graphical methods presented in Chapter 2: histograms and box plots. A MINITAB
+  histogram of driving distances for each brand of golf ball is shown in Figure 10.14, and
+  SAS box plots are shown in Figure 10.15.
+
+Figure 10.14
+
+MINITAB histograms for golf
+ball driving distances
+
+Figure 10.15
+
+SAS box plots for golf ball
+distances
+  SECTION 10.2 ■ The Completely Randomized Design: Single Factor 547
+
+  The normality assumption can be checked by examining the histograms
+in Figure 10.14. With only 10 sample measurements for each brand, however, the
+displays are not very informative. More data would need to be collected for each
+brand before we could assess whether the distances come from normal distributions.
+Fortunately, analysis of variance has been shown to be a very robust method when
+the assumption of normality is not satisfied exactly. That is, moderate departures
+from normality do not have much effect on the significance level of the ANOVA F-test
+or on confidence coefficients. Rather than spend the time, energy, or money to collect
+additional data for this experiment in order to verify the normality assumption, we
+will rely on the robustness of the ANOVA methodology.
+
+  Box plots are a convenient way to obtain a rough check on the assumption of
+equal variances. With the exception of a possible outlier for Brand D, the box plots
+in Figure 10.15 show that the spread of the distance measurements is about the same
+for each brand. Since the sample variances appear to be the same, the assumption
+of equal population variances for the brands is probably satisfied. Although robust
+with respect to the normality assumption, ANOVA is not robust with respect to the
+equal-variances assumption. Departures from the assumption of equal population
+variances can affect the associated measures of reliability (e.g., p-values and confi-
+dence levels). Fortunately, the effect is slight when the sample sizes are equal, as in
+this experiment.
+
+  ■ Now Work Exercise 10.36
+
+  Although graphs can be used to check the ANOVA assumptions as in Example 10.5,
+no measures of reliability can be attached to these graphs. When you have a plot that is
+unclear as to whether an assumption is satisfied, you can use formal statistical tests that are
+beyond the scope of this text. Consult the references at the end of the chapter for infor-
+mation on these tests. When the validity of the ANOVA assumptions is in doubt, nonpara-
+metric statistical methods are useful.
+
+  What Do You Do When the Assumptions Are Not Satisfied for the Analysis of
+  Variance for a Completely Randomized Design?
+  Answer: Use a nonparametric statistical method such as the Kruskal-Wallis H-Test
+  of Section 14.5.
+
+  The procedure for conducting an analysis of variance for a completely randomized
+design is summarized in the next box. Remember that the hallmark of this design is
+independent random samples of experimental units associated with each treatment. We
+discuss a design with dependent samples in Section 10.4.
+
+  Steps for Conducting an ANOVA for a Completely Randomized Design
+  1. Make sure that the design is truly completely randomized, with independent
+
+  random samples for each treatment.
+  2. Check the assumptions of normality and equal variances.
+  3. Create an ANOVA summary table that specifies the variabilities attributable to
+
+  treatments and error, making sure that those variabilities lead to the calculation of
+  the F-statistic for testing the null hypothesis that the treatment means are equal in
+  the population. Use a statistical software program to obtain the numerical results.
+  (If no such package is available, use the calculation formulas in Appendix C.)
+
+  (continued)
+548 CHAPTER 10 ■ Analysis of Variance
+
+ 4. If the F-test leads to the conclusion that the means differ,
+  a. Conduct a multiple-comparisons procedure for as many of the pairs of means
+  as you wish to compare. (See Section 10.3.) Use the results to summarize the
+  statistically significant differences among the treatment means.
+  b. If desired, form confidence intervals for one or more individual treatment
+  means.
+
+ 5. If the F-test leads to the nonrejection of the null hypothesis that the treatment
+  means are equal, consider the following possibilities:
+  a. The treatment means are equal; that is, the null hypothesis is true.
+  b. The treatment means really differ, but other important factors affecting
+  the response are not accounted for by the completely randomized design.
+  These factors inflate the sampling variability, as measured by MSE, resulting
+  in smaller values of the F-statistic. Either increase the sample size for each
+  treatment, or use a different experimental design (as in Section 10.4) that
+  accounts for the other factors affecting the response.
+
+  [Note: Be careful not to automatically conclude that the treatment means are
+equal since the possibility of a Type II error must be considered if you accept H0.]
+
+  We conclude this section by making two important points about an analysis of
+variance. First, recall that we performed a hypothesis test for the difference between two
+means in Section 9.2 using a two-sample t-statistic for two independent samples. When
+two independent samples are being compared, the t- and F-tests are equivalent. To see
+this, apply the formula for t to the two samples of SAT scores in Table 10.2:
+
+  t = = = = x1 - x2 590 - 550 40 8
+  162.52 a 1 + 1 b 5
+  21 1
+  spa + b
+  B n1 n2  B  55
+
+Here, we used the fact that s2p = MSE, which you can verify by comparing the formu-
+las. Recall that the calculated F for the two samples in Table 10.2 is F = 64. This value
+
+equals the square of the calculated t for the same samples 1t = 82. Likewise, the critical
+F-value (5.32) equals the square of the critical t-value at the two-sided .05 level of signif-
+
+icance (t.025 = 2.306 with 8 df). Since both the rejection region and the calculated values
+are related in the same way, the tests are equivalent. Moreover, the assumptions that
+
+must be met to ensure the validity of the t- and F-tests are the same:
+
+1. The probability distributions of the populations of responses associated with
+  each treatment must all be normal.
+
+2. The probability distributions of the populations of responses associated with
+  each treatment must have equal variances.
+
+3. The samples of experimental units selected for the treatments must be random
+  and independent.
+
+In fact, the only real difference between the tests is that the F-test can be used to compare
+more than two treatment means, whereas the t-test is applicable to two samples only.
+
+  For our second point, refer to Example 10.4. Our conclusion that at least two of
+the brands of golf balls have different mean distances traveled when struck with a driver
+leads naturally to the following questions: Which of the brands differ? and How are the
+brands ranked with respect to mean distance?
+
+  One way to obtain this information is to construct a confidence interval for the differ-
+ence between the means of any pair of treatments, using the method of Section 9.2. For ex-
+ample, if a 95% confidence interval for mA - mC in Example 10.4 is found to be 1 -24, -132,
+we are confident that the mean distance for Brand C exceeds the mean for Brand A (since
+all differences in the interval are negative). Constructing these confidence intervals for all
+possible pairs of brands allows you to rank the brand means. A method for conducting these
+multiple comparisons—one that controls for Type I errors—is presented in Section 10.3.
+

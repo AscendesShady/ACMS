@@ -1,0 +1,1626 @@
+  Highway Capacity Manual 2000
+
+  These transit analysis procedures are designed for estimating the performance
+measures for the transit subsystem, which is represented by links and nodes. Each link is
+a segment where transit service capacity is relatively constant. A segment may traverse
+several transit stops as long as all stops have the same transit service. Nodes are the
+beginning and end points of each link. Nodes may be major transit stops, points where
+there is a significant increase or decrease in service, transfer points, or intersections of
+more than two transit links.
+
+HIGHWAY FACILITIES  Computations for the analysis
+  of highway facilities
+  This procedure is performed for all highway subsystems in five steps. The necessary  • Input Data,
+input data are assembled and the FFS of each link is computed. The capacity of each link  • FFS,
+and the mean link speeds are computed. Finally, the travel time and other performance  • Capacity,
+measures are computed for all links and summed for each subsystem.  • Mean speed, and
+  • Performance measures
+  Tables with capacity and FFS default values can be used to reduce the effort required
+for two of the steps (Steps 2 and 3), but poor choices of capacity and FFS can
+significantly reduce the accuracy of the estimated speeds.
+
+Assembling Input
+
+  The first step involves assembling the required data, identifying the links and nodes
+for the highway subsystems, and identifying the facility type for each link. The required
+data vary by facility type but generally consist of demand data (daily traffic, peak-hour
+volume, turning movements), data for estimating FFS (facility type, speed limit, signal
+data), and data for estimating capacity (number of lanes, percent trucks, terrain). Each
+facility is divided into links within which demand and capacity do not vary by more than
+10 percent. Links are also terminated at all major intersections on an arterial or at ramp
+merge or diverge points on a freeway. Nodes are assigned to each endpoint of each link.
+
+  Since most agencies use a functional class system for identifying their facilities,
+Exhibit 30-1 provides a suggested correspondence between functional classes and the
+facility types used in this manual. Analysts are encouraged to develop their own
+correspondence table based on local conditions.
+
+EXHIBIT 30-1. EXAMPLE FUNCTIONAL CLASS–FACILITY TYPE CORRESPONDENCE
+
+  Functional Class  Subsystem  Facility Type
+
+Freeway  Freeway  Basic
+  Arterial  Class IIIc
+On-ramp  Arterial  Class III
+  Arterial  Class I
+Off-ramp  Arterial  Class I, II, III
+Expresswaya  Arterial  Class II, III
+Divided arteriala  Arterial  Class III
+Undivided arteriala  Arterial  Class IV
+Collectora  Noneb  Noneb
+Locala
+
+Centroid connector
+
+Notes:
+a. Analyze as rural highway subsystem (multilane or two-lane facility, as appropriate) if there are no signals or signals are
+spaced more than 3 km apart.
+b. Centroid connectors typically have near-infinite capacity and a fixed travel speed. They do not fit any HCM facility type.
+c. Treat on-ramp as arterial with 100-percent green time.
+
+Determining FFS
+
+  The FFS of a facility is defined as the mean speed of passenger cars under low to
+moderate flow rates and prevailing roadway and traffic conditions. The best technique
+for estimating FFS is to measure it in the field under light traffic conditions, but this is not
+a feasible option when a large number of links must be analyzed. The next best technique
+is to use the procedures defined in Part III of this manual.
+
+  30-3  Chapter 30 - Areawide Analysis
+  Methodology
+Highway Capacity Manual 2000
+
+  Freeway Subsystem
+
+  The FFS for freeway subsystem links (weaving, merge, diverge, and basic segments)
+  can be estimated using the procedures described in Chapter 23, “Basic Freeway
+  Segments.” The procedures require information on lane widths, lateral clearances,
+  number of lanes, and interchange spacing. Default values are given in Chapter 13,
+  “Freeway Concepts.”
+
+  Rural Highway Subsystem
+
+  The FFS for two-lane and multilane highway links can be estimated using the
+  procedures in Chapter 20, “Two-Lane Highways,” and Chapter 21, “Multilane
+  Highways.” The procedures require information on lane widths, lateral clearances,
+  number of lanes, median type, and access point density. Default values are given in
+  Chapter 12, “Highway Concepts.”
+
+  Arterial Subsystem
+
+  The FFS for arterials can be measured in the field or estimated on the basis of the
+  urban street (arterial) class as described in Chapter 15, “Urban Streets.” Default value
+  FFS are listed in Chapter 15. Note that the FFS excludes any control delay.
+
+An FFS table may be  Default FFS Table
+developed to reflect local
+conditions  The analyst may wish to develop an FFS table based on the functional class and the
+  area type in which a link is located in order to simplify the estimation of FFS. Depending
+Source: Equation 23-2,  on local conditions, the analyst may wish to classify links by area type (downtown,
+adapted to yield capacity  urban-suburban, rural), terrain type (level, rolling, mountainous), and frontage
+adjustment rather than  development type (commercial, residential, undeveloped).
+volume adjustment
+  The accuracy of the speed estimation procedure is highly dependent on the accuracy
+  of the FFS and capacity used in the computations. Care should be taken in creating local
+  tables so that they accurately reflect the FFS observed in the local area.
+
+  Determining Link Capacity
+
+  The best technique for estimating capacity is to use the methodologies in Part III of
+  this manual. The capacities, computed in terms of passenger cars per hour, however,
+  must be converted to mixed-vehicle capacities. This conversion is done to allow the use
+  of actual vehicular demand values in the queuing and delay calculation steps rather than
+  passenger-car equivalents (PCE). The conversion to vehicle capacity is accomplished by
+  applying the demand adjustment factors recommended in Part III to the capacity in PCE.
+  The following equations for freeways, multilane highways, two-lane highways, and
+  arterials illustrate the application of the demand adjustment factors to the PCE capacity.
+
+  Freeway Subsystem
+
+  Equation 30-1 is used to compute the mixed-vehicle capacity of a freeway link at its
+
+  critical point, the point on the link with the lowest capacity.
+
+  c = Q * N * fHV * fp * PHF  (30-1)
+
+  where  = capacity (veh/h),
+  c  = PCE capacity from Chapter 23 (pc/h/ln),
+  = number of through lanes (ignoring auxiliary and exit-only lanes),
+  Q  = heavy-vehicle adjustment factor,
+  = driver population adjustment factor, and
+  N
+  fHV  = peak-hour factor.
+
+  fp
+  PHF
+
+  For freeways, the PCE capacities are shown in Exhibit 30-2. If a significant amount
+  of weaving traffic is expected on a segment of the freeway (as might occur when a major
+
+Chapter 30 - Areawide Analysis  30-4
+Methodology
+  Highway Capacity Manual 2000
+
+on-ramp is closely followed within 600 m by a major off-ramp), the analyst might reduce
+the PCE capacity for that segment by 10 percent.
+
+  EXHIBIT 30-2. PCE CAPACITY FOR BASIC FREEWAY SEGMENTS
+
+  Free-Flow Speed (km/h)  PCE Capacity (pc/h/ln)
+
+  120  2400
+
+  110  2350
+
+  100  2300
+
+  90  2250
+
+  See Chapter 23, “Basic Freeway Segments,” for procedures for determining the
+adjustment factors. See Chapter 13, “Freeway Concepts,” for default values and
+approximation procedures for adjustment factors.
+
+Rural Highway Subsystem (Multilane Highways)
+
+  Equation 30-1 is also used to compute the mixed-vehicle capacity of a multilane
+highway. PCE capacities used for multilane highways are listed in Exhibit 30-3.
+
+  EXHIBIT 30-3.  PCE CAPACITY FOR MULTILANE HIGHWAYS
+
+  Free-Flow Speed (km/h)  PCE Capacity (pc/h/ln)
+  100  2200
+  90  2100
+  80  2000
+  70  1900
+
+  See Chapter 21, “Multilane Highways,” for the adjustment factor values. See Chapter
+12, “Highway Concepts,” for suggested default values and procedures for approximating
+adjustment factors.
+
+Rural Highway Subsystem (Two-Lane Highways)
+
+  Equation 30-2 is used to compute the mixed-vehicle capacity (in one direction) for a
+two-lane highway (one lane in each direction) with signals (if any) more than 3 km apart:
+
+  c = Q * fHV  (30-2)
+
+where  = capacity (veh/h),
+  c  = 1700 (pc/h/ln), and
+  = heavy-vehicle adjustment factor.
+  Q
+  fHV
+
+  See Chapter 20, “Two-Lane Highways,” for the adjustment factor values. See
+Chapter 12, “Highway Concepts,” for suggested default values and approximation
+procedures for the heavy-vehicle adjustment factor.
+
+Arterials
+
+The capacity of an arterial is determined by examining the through movement
+
+capacity at each signal-controlled intersection on the arterial link. The intersection with
+
+the lowest through capacity determines the overall capacity of the arterial link. Note that
+
+the number of lanes (N) is not counted midblock; it is counted at the approach.  Source: Equation 16-4,
+  adapted to include PHF and
+Equation 30-3 is used to compute the one-direction through capacity at each signal.  g/C
+
+c = so * N * fw * fHV * fg * fp * fbb * fa * fLU * fLT * fRT * fLpb * fRpb * PHF * g/C  (30-3)
+
+  30-5  Chapter 30 - Areawide Analysis
+  Methodology
+Highway Capacity Manual 2000
+
+  where
+  c = capacity (veh/h),
+
+  PHF = peak-hour factor, and
+  g/C = effective green time per cycle.
+
+  Refer to Equation 16-4 for definitions of all other factors.
+
+  See Chapter 16, “Signalized Intersections,” for the adjustment factor values. See
+  Chapter 10, “Urban Street Concepts,” for default values and approximation procedures
+  for adjustment factors.
+
+  For arterials with all-way stops controlling the link capacity, procedures in Chapter
+  17, “Unsignalized Intersections,” should be used to estimate the through movement
+  capacity at each intersection.
+
+  Capacity Tables
+
+  The accuracy of the speed estimates are highly dependent on the accuracy of the
+  estimated capacity for the facility. Consequently, it is recommended that each analyst use
+  capacities that are specific to each link whenever possible. However, it is recognized that
+  this procedure is not always feasible. The analyst may select sets of default values for the
+  various capacity adjustment factors that vary by functional class (freeway, highway,
+  arterial, collector, local), area type (downtown, urban, suburban, rural), terrain type
+  (level, rolling, mountainous), and other conditions. These default values may be
+  substituted into the above capacity equations to develop tables of link capacity values that
+  vary by functional class, area type, general terrain, and number of lanes.
+
+  Determining Link Speed
+
+Traversal time plus node  The vehicle speed for the link is computed using Equation 30-4.
+delay equals segment
+travel time  S= L  (30-4)
+  R+ D
+See Appendix A for  3600
+methods to estimate
+node delay  where
+
+  S = link speed (km/h),
+  L = link length (km),
+  R = link traversal time (h), and
+  D = node delay for link (s).
+
+  Node delay is computed only for signal- or stop-sign-controlled intersections at the
+  end of the link. All other intersection-related delays that occur in the middle of the link
+  are incorporated into the link traversal time calculation. The node delay estimation
+  procedure is described in Appendix A. The calculation requires information on all of the
+  intersection approaches at the node in order to compute the delay on each link feeding the
+  intersection.
+
+  If the available travel demand model software package is unable to compute node
+  delay, it can be approximated by using the node approach capacity rather than the link
+  capacity in the computation of traversal time. In this situation the node delay is set to
+  zero in Equation 30-4.
+
+  The link traversal time, R, is computed using Equation 30-5.
+
+    2 16 J * X * L2   (30-5)
+  R = Ro + Do + 0. 25T (X −1) +  (X −1) +  2
+  T  
+    
+  
+
+  where
+
+  R = link traversal time (h),
+  Ro = link traversal time at link FFS (h),
+  Do = zero-flow control delay at signalized intersection (h),
+
+Chapter 30 - Areawide Analysis  30-6
+Methodology
+  Highway Capacity Manual 2000
+
+T = expected duration of demand (typically 1 h) (h),
+X = link demand to capacity ratio,
+J = calibration parameter, and
+L = link length (km).
+
+  The link traversal time for free-flow conditions (Ro) is computed from the FFS,
+using Equation 30-6.
+
+  Ro = L  (30-6)
+  So
+
+where  = FFS link traversal time (h),
+  Ro
+  L  = link length (km), and
+  = link FFS (km/h).
+  So
+
+  The zero-flow control delay for signalized intersections (if any) on the link is
+computed using Equation 30-7.
+
+  N C  g 2  (30-7)
+  Do =  * DF * 1 − 
+  3600  2  C
+
+where  = zero-flow control delay at signal (h),
+  Do
+  N  = number of signals on link,
+  = conversion from seconds to hours,
+  3600  = average effective green time per cycle for signals on link (see Exhibit
+  g/C
+  10-12 for default values) (s),
+  C  = average cycle length for all signals on link (see Exhibit 10-12 for
+
+  DF  default values) (s), and
+  = adjustment factor to compute zero-flow control delay (0.9 for
+
+  uncoordinated traffic-actuated signals, 1.0 for uncoordinated fixed-time
+  signals, 1.2 for coordinated signals with unfavorable progression, 0.90
+  for coordinated signals with favorable progression, and 0.60 for
+  coordinated signals with highly favorable progression).
+
+  The calibration parameter J is selected so that the traversal time equation will predict  Calibration parameter J is
+the mean speed of traffic when demand is equal to capacity. Substituting x = 1.00 in the  used to arrive at a predicted
+traversal time equation and solving for J yields Equation 30-8:  mean speed when demand
+  equals capacity
+  (Rc − Ro )2  (30-8)
+  J = L2  See Appendix C for
+  alternative approach using
+where  = calibration parameter,  BPR curve
+  = link traversal time when demand equals capacity (h),
+  J  = FFS link traversal time (h), and
+  Rc
+  Ro  = link length (km).
+
+  L
+
+  Exhibit 30-4 shows values for J that were selected to reproduce the traversal times at
+capacity predicted by the analysis procedures in Part III of this manual. Some older
+software may not be able to implement Equation 30-8, so the formula and recommended
+parameters for the more traditional BPR curve are provided in Appendix C as an
+alternative method for estimating link traversal times.
+
+  30-7  Chapter 30 - Areawide Analysis
+  Methodology
+Highway Capacity Manual 2000
+
+  EXHIBIT 30-4. RECOMMENDED PARAMETERS FOR TRAVERSAL TIME J
+
+  Facility Type  Signals per km  Free-Flow Speed  Speed at Capacity  J
+  (km/h)  (km/h)  (h2/km2)
+  Freeway  N/A
+  Freeway  N/A  120  86  10.9 x 10-6
+  Freeway  N/A  110  84  7.9 x 10-6
+  Freeway  N/A  100  82  4.8 x 10-6
+  Multilane Highway  N/A  90  80  1.9 x 10-6
+  Multilane Highway  N/A
+  Multilane Highway  N/A  100  88  1.9 x 10-6
+  Multilane Highway  N/A  90  81  1.5 x 10-6
+  Two-Lane Highway  N/A  80  74  1.0 x 10-6
+  Two-Lane Highway  N/A  70  68  0.2 x 10-6
+  Two-Lane Highway  N/A
+  Two-Lane Highway  N/A  100  60  44.4 x 10-6
+  Arterial Class I  0.33  90  50  79 x 10-6
+  Arterial Class I  1.00  80  40  156 x 10-6
+  Arterial Class I  2.50  70  30  362 x 10-6
+  Arterial Class II  0.50
+  Arterial Class II  1.00  80  53  22 x 10-6
+  Arterial Class II  2.00  80  31  200 x 10-6
+  Arterial Class III  2.00  80  15  1248 x 10-6
+  Arterial Class III  3.00
+  Arterial Class III  4.00  65  40  50 x 10-6
+  Arterial Class IV  4.00  65  28  200 x 10-6
+  Arterial Class IV  5.00  65  18  799 x 10-6
+  Arterial Class IV  6.00
+  55  17  799 x 10-6
+  55  13  1797 x 10-6
+  55  10  3195 x 10-6
+
+  45  10  3195 x 10-6
+  45  8  4991 x 10-6
+  45  7  7188 x 10-6
+
+  Note:
+  N/A = not applicable.
+
+  Determining Performance Measures
+
+  Computation of performance measures for intensity, duration, extent, variability, and
+  accessibility is described.
+
+  Intensity
+
+  The possible performance measures for measuring the intensity of congestion on one
+  of the highway subsystems (freeway, rural highway, and arterial) are computed from one
+  or more of the following: person-hours of travel, person-hours of delay, mean trip speed,
+  and mean trip delay. If average vehicle occupancy (AVO) data are not available, the
+  performance measures are computed in terms of vehicle-hours rather than person-hours.
+  Equation 30-9 is used to compute person-hours of travel.
+
+  PHT = AVOi * v i * Li  (30-9)
+  Si
+
+  where  = total person-hours of travel,
+  PHT  = vehicle demand on Link i,
+  vi  = average vehicle occupancy on Link i,
+  AVOi  = length of Link i (km), and
+  Li  = mean speed of Link i (km/h).
+  Si
+
+  The total person-hours of delay caused by both traffic congestion and intersection
+  controls is computed using Equation 30-10.
+
+Chapter 30 - Areawide Analysis  30-8
+Methodology
+  Highway Capacity Manual 2000
+
+  PHD = PHT − AVOi * v i * Li  (30-10)
+  Soi
+where
+  PHD  = total person-hours of delay, and
+  Soi  = FFS on Link i (km/h).
+
+  The analyst should recognize that Equation 30-10 computes the total delay only for  The estimate of delay does
+demand occurring within the analysis period (T) selected by the analyst. The impact of  not account for the effect of
+congestion in one time period on the delays occurring in following time periods is not  one period on the next.
+considered. If the analyst suspects that the impacts on following time periods will be  Appendix B provides a
+significant, a procedure included in Appendix B for the analysis of multiperiod  procedure to overcome this
+congestion can be used.  deficiency.
+
+  The mean trip speed (S) is computed by Equation 30-11 from the total
+person-kilometers of travel (PkmT) divided by the total person-hours of travel (PHT):
+
+  S = PkmT = AVOi * v i * Li  (30-11)
+  PHT  PHT
+
+  The mean trip time (t) is computed using Equation 30-12 by dividing the total
+person-hours of travel by the total number of person trips:
+
+  t = PHT  (30-12)
+  Person trips
+
+Duration
+
+  Performance measurements of duration can be computed from the number of hours
+
+of congestion observed on any link.
+
+  For each link (i);
+  if vi/ci ≤ 1.00, the link is not congested;
+  if vi/ci > 1.00, the link is congested for the number of hours computed by
+
+Equation 30-13.
+
+  T * v i * (1 − r )
+  ci
+  Hi =  vi  (30-13)
+
+  1−r  ci
+
+where
+  Hi = duration of congestion for Link i (h),
+  r = ratio of off-peak demand to peak demand rate,
+  vi = vehicle demand on Link i (veh/h),
+  ci = capacity of Link i (veh/h), and
+  T = duration of analysis period (h).
+
+  Note that the duration of congestion has been defined to include the analysis period
+plus the time it takes to serve the queue. The assumption in Equation 30-13 is that the
+demand is constant over the analysis period (T) and that the demand drops to a lower
+level beyond the analysis period (see Exhibit 30-5).
+
+  Note that r must be less than 1.00 and that r times the peak v/c ratio must also be less
+than 1.00. These requirements mean that if the analyst assumes that the off-peak demand
+rate is the peak demand rate, none of the link v/c ratios for the peak period can equal or
+exceed 1.00.
+
+  Alternatively, the analyst may use the multiperiod congestion analysis procedure
+provided in Appendix B to get an even more realistic estimate of congestion duration, but
+this procedure requires more information (or assumptions) about the peaking of demand.
+
+  30-9  Chapter 30 - Areawide Analysis
+  Methodology
+Highway Capacity Manual 2000
+
+  EXHIBIT 30-5. ASSUMPTION FOR DURATION OF CONGESTION
+
+  Demand  r * v
+  (no. of vehicles)
+  capacity
+  v
+
+  T H Time
+
+  Once the duration of congestion (H) for each link is known, the issue is how to
+  aggregate the data into a meaningful statistic for an entire subsystem. The mean duration
+  per link could be computed or the maximum duration of congestion on any link could be
+  identified. The mean duration will usually be quite low because of the large numbers of
+  uncongested links typically present in any subsystem.
+
+  Extent
+
+  Performance measures of the extent of congestion can be computed from the sum of
+  the length of queuing on each link. One can also identify those links where the queue
+  overflows the storage capacity of the link (particularly useful for ramp metering
+  analyses). To estimate the queue length the analyst needs to make an assumption for the
+  average storage density of vehicles in a queue. Exhibit 30-6 lists appropriate default
+  values.
+
+  EXHIBIT 30-6.  DEFAULT VALUES FOR STORAGE DENSITY AND VEHICLE SPACING
+
+  Subsystem  Storage Density (veh/km/ln)  Vehicle Spacing (m)
+  Freeway
+  Rural highway  75  13.3
+  Arterial
+  130  7.5
+
+  130  7.5
+
+  QLi = T (v i − ci )  (30-14)
+  Ni *ds
+
+  where
+  QLi = queue length for Link i (km),
+  vi = vehicle demand on Link i (veh/h),
+  ci = capacity of Link i (veh/h),
+  Ni = number of lanes,
+  ds = storage density (veh/km/ln), and
+  T = duration of analysis period (h).
+
+  Note that QLi = 0 if vi < ci. If QLi > Li the queue overflows the link storage capacity.
+
+  The queue lengths for each link are summed to obtain the total extent of queuing in
+  the subsystem during the analysis period. The number of links where the queue exceeds
+  the storage capacity can also be reported.
+
+Chapter 30 - Areawide Analysis  30-10
+Methodology
+  Highway Capacity Manual 2000
+
+Variability
+
+  The first derivative (Equation 30-15) of the traversal time equation provides the
+sensitivity of the predicted travel time estimates to variances in the estimated v/c ratios.
+
+    8J 
+  0. 25T (X −1) + 2 
+  δt    T  (30-15)
+  δx = 0. 25T +
+  2  8J
+  (X −1) + 2 X * T 2
+
+where  = first derivative of travel time with respect to v/c ratio,
+  δt
+  = volume to capacity ratio,
+  δx  = duration of analysis period (h), and
+  X  = calibration parameter (from Equation 30-8).
+  T
+  J
+
+  Equation 30-15 shows that travel time sensitivity ranges from a value close to zero
+for low v/c ratios to a high of T/2 at very high v/c ratios. At v/c ratios equal to 1.00, the
+derivative is equal to about T/4.
+
+  A change in the v/c ratio from 1.0 to 1.1 will increase the estimated travel time by
+1.0 min for a typical 60-min analysis period (T). For a kilometer-long freeway link, this
+is equivalent to more than doubling the typical link travel time.
+
+Accessibility
+
+  Accessibility can be measured in terms of the number of trip destinations that can be
+reached within a selected travel time for a designated set of origin locations (such as a
+residential zone). The results for each origin zone are tabulated and reported in terms
+such as the following: X percent of the homes in the study area can reach Y percent of the
+jobs within Z minutes.
+
+  A mean access time (trip time) for 100 percent of the origins and destinations might
+also be reported. Accessibility is computed by finding the shortest travel time paths from
+the origin zone to all destination zones in the region. Destination zones that are
+accessible within the desired travel time are identified and the number of trip destinations
+represented by these destination zones is tallied to obtain the accessibility performance
+measure.
+
+TRANSIT FACILITIES
+
+  The system analysis procedure is performed for transit facilities in five steps. These
+steps are similar to the steps for highway facilities but are performed in a different order.
+First, the necessary input data are assembled. Next, for buses only, bus-stop capacity is
+computed for the critical bus stop on a link. Third, for all transit modes, the link capacity
+is calculated. Fourth, link transit travel speeds are computed. Finally, transit travel time
+and other performance measures are computed for all links and summed for each
+subsystem.
+
+Assembling Input Data
+
+  The first step involves assembling the required data, identifying the links on which
+transit operates, and (for buses only) identifying the bus lane type. The required input
+consists of demand data (peak-hour transit volumes, peak-hour vehicular volumes), data
+for estimating transit capacity (dwell times, signal data, bus-stop type, and link vehicle
+capacity), and data for estimating transit speeds (arterial class, stop spacing, bus lane
+type, rail line running speed, and freeway or expressway running speeds).
+
+  Where transit operates on-street, the analyst uses the same links and nodes that are
+used for the highway subsystems. Where transit operates off-street, the transit facility
+
+  30-11  Chapter 30 - Areawide Analysis
+  Methodology
+Highway Capacity Manual 2000
+
+  should be divided into links between transit stations. Nodes are assigned to the station
+  locations at the endpoints of each link.
+
+  Determining Bus-Stop Capacity
+
+  When the transit facility being analyzed serves buses, the capacities of the bus stops
+  along the facility must be determined. Equations from Chapter 27 should be used to
+  determine these capacities. In the absence of field data, the default values summarized in
+  Exhibit 30-7 may be used as inputs to the equation. No default values are given for the
+  number of loading areas provided at a bus stop since these values must be determined
+  directly by the analyst.
+
+  EXHIBIT 30-7. DEFAULT VALUES FOR ESTIMATING BUS-STOP CAPACITY
+
+  Urban Street Class
+
+  Factor  I  II  III  IV
+  0.45  0.45
+  g/C ratio  Off line  0.45  0.45  On line
+  On-line/off-line stops  15a  On line  10
+  Clearance time, tc (s)  Off line
+  Dwell time, td (s)  30–60  15a  10  30–60
+  Coefficient of variation, cv
+  Failure rate (Za)  0.60  15  30  0.60
+
+  2.5% (1.960)  0.60  0.60  10.0% (1.280)
+
+  2.5% (1.960)  7.5% (1.440)
+
+  Note:
+  a. Alternatively, use values from Chapter 27 to calculate bus reentry delay based on curb lane traffic volumes.
+
+  Determining Link Capacity
+
+  Link capacity is determined by multiplying the capacity of the critical bus stop in the
+  link by an adjustment for the interference of other traffic sharing the lane with buses.
+  Equations in Chapter 27 for mixed-traffic operations or exclusive bus lanes should be
+  used as appropriate to determine link capacity. These equations require knowing the
+  passenger-car volume and capacity of the curb lane, the bus lane type (1, 2, or 3), and the
+  bus-stop locations (nearside, farside, or midblock). If there are no stops in the link, the
+  link capacity is computed using a dwell time of 0 s and a clearance time of 4 s
+  (representing the time between the back of one bus and the front of the next bus).
+
+  Rail link capacity is dependent on the right-of-way type for the link: on-street, block
+  signaled, or single track. For on-street streetcar operations, bus procedures should be
+  used. For on-street light-rail operations, twice the maximum traffic signal cycle length in
+  the line’s on-street section should be used to determine the minimum headway, then
+  equations from Chapter 27 to calculate the link capacity. For block-signaled sections, the
+  minimum signaled headway and the link capacity equation from Chapter 27 should be
+  used. For two-way, single-track operations, refer to Chapter 27.
+
+  Determining Transit Speeds
+
+  Bus speeds for exclusive bus lanes can be estimated using the method in Chapter 27.
+  Bus speed is defined in Chapter 27 and requires knowing bus-stop spacing, dwell times,
+  delays due to traffic signals and right-turning traffic, skip-stop operations, and
+  interference caused by other buses.
+
+  Rail speeds may be estimated from equations given in Chapter 27. Required inputs
+  are the length of the link and the link running speed. For on-street streetcars, the link
+  running time is calculated in the procedure for highway facilities; for on-street light rail,
+  it is the posted speed limit of the street; and for off-street light rail and streetcars, link
+  running speed is the maximum section operating speed. Default values for factors are
+  given in Chapter 27.
+
+Chapter 30 - Areawide Analysis  30-12
+Methodology
+  Highway Capacity Manual 2000
+
+Determining Performance Measures
+
+Intensity  Transit Capacity and Quality
+  of Service Manual (TCQSM)
+  The transit automobile travel time difference measure requires calculations of both  provides level of service for
+automobile and transit in-vehicle travel times as well as any additional travel times  intensity
+required for a door-to-door trip. For transit, the out-of-vehicle travel time includes the
+walk time from one’s origin to transit (assumed to be 3 min to a bus stop or 8 min to a  TCQSM provides LOS for
+busway or rail station), wait time for transit (assumed to be 5 min), walk time from transit  accessibility
+to one’s destination (3 or 8 min, as applicable), and any required transfer time (variable
+depending on the system’s schedule coordination). For the automobile, out-of-vehicle  In lieu of other data, one can
+time consists of the time to park and walk to a destination (0 to 5 min, depending on the  assume a 0.4-km band on
+location).  either side of a route to be the
+  service area
+  Two methods may be used to compute the transit automobile travel time difference.
+One requires the use of a transportation planning model; the other is a manual method
+that samples 10 to 15 locations within the study area. These methods are discussed in
+detail in the Transit Capacity and Quality of Service Manual (8).
+
+Duration
+
+  Hours of service is calculated using the procedures in Chapter 27.
+
+Extent
+
+  Route kilometers of service is calculated by summing the lengths of all links on
+which transit service is provided.
+
+Variability
+
+  On-time performance is calculated using the procedures in Chapter 27.
+
+Accessibility
+
+  The calculation of service coverage can be simplified through the use of a geographic
+information system (GIS). However, this section also provides a calculation method that
+does not require a GIS.
+
+  The actual area covered by transit will be smaller than a transit system’s service area,
+depending on land use patterns and the financial resources to provide service. Transit
+routes do not run to areas where there are no passengers to serve, even though those areas
+might lie within the transit agency service area. However, routes might run through
+undeveloped areas to connect two developed areas.
+
+  The area covered by a particular route can be defined as that area within walking
+distance of a transit stop. The majority of transit riders arrive from a location within 0.4
+km of a bus stop or 0.8 km of a rail station. For the purposes of determining service
+coverage LOS, walking distance is defined as 0.4 km from a bus stop or 0.8 km from a
+busway or rail station. Any location within 0.4 km of the area served by deviated fixed-
+route bus service is also considered to be covered. Exhibit 30-8 compares one system’s
+service coverage area with its district boundary.
+
+  The calculation of the transit service coverage area can be performed relatively easily
+with a GIS. However, if a GIS or accurate bus stop data are not available, this area can
+be approximated by outlining on a map all of the area within 0.4 km of a bus route. This
+approximation assumes reasonable bus stop spacings (at least four stops per kilometer).
+Sections of a route where pedestrian access from the area adjacent to the route is not
+possible (because of a barrier such as a wall, waterway, roadway, or railroad) should not
+be included.
+
+  By itself, the service coverage area is not the best performance measure, since it does
+not lend itself easily to comparisons between systems and because it does not address
+how well the areas that can support transit service (by having sufficient population,
+employment density, or both) are served.
+
+  30-13  Chapter 30 - Areawide Analysis
+  Methodology
+Highway Capacity Manual 2000
+
+  EXHIBIT 30-8. EXAMPLE OF TRANSIT SYSTEM COVERAGE AREA
+
+Guidelines on service  Transit district boundary
+feasibility
+  Service coverage area
+
+  Research (9) suggests that a household density of 11 units per net hectare is the
+  minimum density for hourly transit service to be feasible. This density equates to
+  approximately 7.5 units per gross hectare when the land occupied by streets and parks is
+  accounted for. Hourly service corresponds to the minimum LOS E value for transit
+  service frequency as well as the minimum frequency used for determining hours-of-
+  service LOS for transit.
+
+  A Tri-Met long-range service planning study found that an employment density of
+  approximately 10 jobs per gross hectare produced the same level of ridership as a
+  household density of 7.5 units per gross hectare (10). These density values are used
+  below as the minimum densities that could support hourly transit service.
+
+  To equalize comparisons between systems and to assess how well a transit system
+  serves the areas most likely to produce transit trips, the concept of a transit-supportive
+  area is used. The transit-supportive area is the portion of a transit service area that
+  provides sufficient population or employment density (or an equivalent mix) to require
+  service at least once per hour. For policy reasons, or simply to provide a route connecting
+  two high-density areas, an agency may choose to cover a larger area.
+
+  Exhibit 30-9 compares one system’s transit-supportive area (shaded) with its early
+  1998 service coverage area. The transit-supportive area is considerably smaller than the
+  total area covered by transit, but most of the transit-supportive area is covered by transit.
+  Exhibit 30-10 presents comparative statistics for each of the area types discussed above.
+
+  TRANSIT ANALYSIS USING GIS
+
+  Step 1: Gather data. The following GIS themes or layers will be required:
+  • Bus stop locations (or, alternatively, bus routes).
+  • Areas served by paratransit or deviated fixed-route bus service available to the
+  general public.
+  • Residential unit and job data for relatively small areas. This information is often
+  available at the transportation analysis zone (TAZ) level from the transportation planning
+  model maintained by metropolitan planning organizations (MPOs) or planning
+  departments. Household data are also available from the Bureau of the Census at various
+
+Chapter 30 - Areawide Analysis  30-14
+Methodology
+  Highway Capacity Manual 2000
+
+levels of aggregation. Job data may be available from jurisdictions that administer
+business licenses or collect payroll taxes.
+
+  EXHIBIT 30-9. EXAMPLE OF TRANSIT-SUPPORTIVE AREA
+
+Service coverage area
+Transit-supportive area
+
+EXHIBIT 30-10. COMPARATIVE AREA AND POPULATION OF EXAMPLE ANALYSIS AREAS
+
+  Analysis Area Type  Area (km2)  Population
+
+District area  1563.1  1,066,118
+Coverage area  600.9  779,011
+Transit-supportive area  316.0  574,791
+Transit-supportive area covered  270.0  522,580
+
+Source: Tri-Met, Portland, OR.
+
+  The smaller the areas used to aggregate household and job data, the more accurate
+the results and the easier it will be to identify transit-supportive areas. For the purposes of
+this example, TAZ-level data are assumed to be available.
+
+  Step 2: Identify the coverage area. Outline, as buffers, the areas within 0.4 km of a
+bus stop (or bus route), within 0.4 km of the area served by paratransit or deviated fixed-
+route bus service available to the general public, and within 0.8 km of busway and rail
+stations. Merge all of the buffer areas together. Next, subtract from this combined area
+any areas that do not have transit access because of a barrier that blocks pedestrian
+access, such as a freeway, railroad track, waterway, or wall.
+
+  Step 3: Intersect the coverage theme with the TAZ theme. Each TAZ will be
+subdivided into one or more sub-TAZs that either entirely have or do not have transit
+coverage. For ease of analysis, the GIS software should be set to proportion data
+attributes (e.g., population) among the sub-TAZs on the basis of the size of each sub-TAZ
+relative to the original TAZ. However, if a more detailed analysis is desired, expert GIS
+users can use other data that may be available (for example, land use types or zoning) to
+more accurately distribute households and jobs among the sub-TAZs.
+
+  Step 4: Calculate household and job densities. Create new fields within the TAZ
+scheme for household and job densities. Calculate the values for these new fields by
+dividing the number of households and jobs in each sub-TAZ by the sub-TAZ area.
+
+  30-15  Chapter 30 - Areawide Analysis
+  Methodology
+Highway Capacity Manual 2000
+
+  Step 5: Query the TAZ theme’s database to select all sub-TAZs where either the
+  employment density is at least 10 jobs/gross hectare or the household density is at least
+  7.5 units/gross hectare. Calculate the total combined area of the selected sub-TAZs.
+
+  Step 6: Identify the portion of the transit-supportive area covered by transit. Query
+  the sub-TAZs selected in Step 5 to determine which ones lie within the transit coverage
+  area. Calculate the total combined area of the selected sub-TAZs.
+
+  Step 7: Calculate the performance measure. Divide the area calculated in Step 6 by
+  the area calculated in Step 5 to determine the percentage of the transit-supportive area
+  covered by transit.
+
+  TRANSIT ANALYSIS USING MANUAL TECHNIQUE
+
+  Step 1: Gather data. Again, it is assumed for this example that household and job
+  data are available at the TAZ level. The items listed below will be required.
+
+  • A printed map (to scale) of the TAZs (or other area type for which household and
+  job data are available) that covers the area being analyzed.
+
+  • Data on the number of households and jobs within each TAZ, in either printed or
+  spreadsheet form.
+
+  • A map showing transit routes, busways, and rail stations and any areas served by
+  paratransit or deviated fixed-route bus service.
+
+  Step 2: Estimate the area of each TAZ. A transparent overlay with a printed grid
+  assists with this task. Alternatively, if the TAZ map is available in electronic form, CAD
+  or other drawing software used to develop the map may be able to calculate the area of
+  each TAZ polygon.
+
+  Step 3: Calculate household and job densities. Using a computer spreadsheet, or by
+  hand, calculate household and job densities by dividing the number of households and
+  jobs in each TAZ by the TAZ areas estimated in Step 2.
+
+  Step 4: Identify the transit-supportive area. On the basis of the results of Step 3,
+  identify all TAZs where the household density is at least 7.5 units/gross hectare or the
+  employment density is at least 10 jobs/gross hectare. Mark these TAZs on the map.
+
+  Step 5: Identify the portion of the transit-supportive area covered by transit. On the
+  printed map, outline the areas within 0.4 km of bus routes that serve or pass near the
+  transit-supportive TAZs, the areas within 0.8 km of busway or rail stations within or near
+  the transit-supportive TAZs, and any portion of the transit-supportive TAZs within 0.4
+  km of paratransit or deviated fixed-route bus service available to the general public.
+  Estimate the percentage of each transit-supportive TAZ that is covered by transit. Do not
+  include any areas that do not have transit access because of a barrier that blocks
+  pedestrian access, such as a freeway, railroad track, waterway, or wall.
+
+  Step 6: Calculate areas. Add up the areas of the transit-supportive TAZs, using the
+  information developed in Step 2. This sum is the total area of the transit-supportive area.
+  Next, for each transit-supportive TAZ, multiply its area (from Step 2) by the percentage
+  of its area covered by transit (from Step 5). The product is the total transit-supportive
+  area covered by transit.
+
+  Step 7: Calculate the performance measure. Divide the areas calculated in Step 6 by
+  the area calculated in Step 5 to determine the percentage of the transit-supportive area
+  covered by transit.
+
+Chapter 30 - Areawide Analysis  30-16
+Methodology
+  Highway Capacity Manual 2000
+
+  III. EXAMPLE PROBLEMS
+
+EXAMPLE PROBLEM 1. TRI-VALLEY SUBAREA MODEL
+
+The Situation The purpose of this example is to illustrate the process of incorporating
+the procedures for highway analysis into a long-range travel demand model. The model
+used in this example was the Tri-Valley Subarea Model. The Tri-Valley is a subarea of the
+San Francisco Bay region, encompassing parts of two counties, Alameda and Contra
+Costa, with an area of about 380 km2 .
+
+Assembling Input Data There is a total of 734 zones, 5,761 nodes, and 16,643 links in
+the highway network. The highway links are divided into about 30 link types classified by
+functional class, such as freeways, expressways, major and minor arterials, and
+collectors. These links are further subclassified by area type [core, central business
+district (CBD), urban, suburban and rural].
+
+  The Tri-Valley highway links were matched to the HCM facility types on the basis of
+the area in which the link is located, the original facility type, the original FFS, and the
+original capacity per lane. Tables of values were developed for FFS and capacity, since
+study resources did not permit collection of link-specific data.
+
+  The following table shows the input data for six sample links.
+
+  LINK DATA FROM MODEL
+
+Link  Model Functional  Length (km)  Lanes  Demand (veh/h)
+
+  Class  6790
+  5170
+1  Suburban freeway  2.18  3  1490
+  970
+2  Suburban freeway  1.86  3  1330
+  2160
+3  Freeway on-ramp  0.45  1
+
+4  Freeway off-ramp  0.42  1
+
+5  Major arterial  0.30  2
+
+6  Major arterial  0.40  3
+
+  The first step is to determine the HCM facility type for each model functional class. In
+this example, the suburban freeway links are both classified as freeway facility types. The
+remaining four links are classified as HCM urban street facility types.
+
+  The specific arterial (urban street) class for each link is determined using Chapter 15,
+“Urban Streets.” The appropriate urban street class is selected on the basis of the original
+FFS and local knowledge of the model study area. The following table shows the resulting
+selections.
+
+  HCM FACILITY TYPE CORRESPONDENCE
+
+  Link  Model Functional Class  HCM Facility Type
+
+  1  Suburban freeway  Freeway (basic segment)
+
+  2  Suburban freeway  Freeway (basic segment)
+
+  3  Freeway on-ramp  Urban street Class III
+
+  4  Freeway off-ramp  Urban street Class III
+
+  5  Major arterial  Urban street Class II
+
+  6  Major arterial  Urban street Class II
+
+Estimating FFS for Freeway Links The FFS for the two freeway links are computed
+using Equation 23-1 from Chapter 23, “Basic Freeway Segments,” and the default values
+for some of the required input data are found in Chapter 13, “Freeway Concepts.”
+
+  30-17  Chapter 30 - Areawide Analysis
+  Example Problems
+Highway Capacity Manual 2000
+
+Example Problem 1  A base FFS of 110 km/h is selected as being appropriate for an urban area freeway.
+  The adjustments are shown in the following table, and the computed FFS is 102.7 km/h,
+  which is rounded to 103 km/h.
+
+  Datum  FREEWAY FFS ADJUSTMENTS  Adjustment
+  Lane width  0.0 km/h
+  Lateral clearance  Value  0.0 km/h
+  Number of lanes  3.6 m  -4.8 km/h
+  Interchange density  3.0 m  -2.5 km/h
+  Sum  -7.3 km/h
+  3
+  0.63 int/km
+
+  Estimating FFS for Ramp and Arterial Links There is no procedure to estimate FFS
+  for ramp and arterial links in this manual. Default values by street class, shown in Chapter
+  15, are used for the link FFS.
+
+  Estimating Capacities for Freeway Links The link capacities for the freeway links
+  (basic segments) are estimated using Equation 30-1. The adjustment factors are
+  computed according to the procedures described in Chapter 23, “Basic Freeway
+  Segments.” Default values for some of the required input data are obtained from Chapter
+  13, “Freeway Concepts.” The following table shows the values used to calculate capacity.
+
+  COMPUTATION OF FREEWAY LINK CAPACITY
+
+  Datum  Value  Capacity  Notes
+
+  PCE capacity  Adjustment
+
+  Lanes  2350 pc/h/ln  2350  From Exhibit 23-2, LOS Criteria for Basic
+  Heavy vehicles  Freeway Segments
+  Population  3  0.976  Input
+  Peak-hour factor  5%, level terrain  1.000  Equation 23-3, Exhibit 13-5
+  Capacity (veh/h)  Commuter  0.950  Exhibit 13-5
+  0.95  Input
+
+  6537 veh/h 2179 veh/h/ln
+
+  Estimating Capacity for Freeway On-Ramp Links The link capacity for the freeway
+  on-ramp is estimated using Equation 30-3. The adjustment factors are computed
+  according to the procedures described in Chapter 16, “Signalized Intersections.” Default
+  values for some of the required input data are obtained from Chapter 10, “Urban Street
+  Concepts.” The on-ramp link capacity table shows the values used.
+
+  Estimating Capacity for Freeway Off-Ramp Links The link capacity for the freeway
+  off-ramp links is estimated using Equation 30-3. The adjustment factors are computed
+  according to the procedures described in Chapter 16, “Signalized Intersections.” Default
+  values for some of the required input data are obtained from Chapter 10, “Urban Street
+  Concepts.” Note that the off-ramp will have a signal at the foot of the ramp, so g/C is
+  applied to the capacity of the off-ramp link. The off-ramp capacity table shows the values.
+
+  Estimating Capacities for Arterial Links The capacity for the arterial links is estimated
+  using Equation 30-3. The adjustment factors are computed according to the procedures
+  described in Chapter 16, “Signalized Intersections.” Default values for some of the
+  required input data are obtained from Chapter 10, “Urban Street Concepts.”
+
+Chapter 30 - Areawide Analysis  30-18
+Example Problems
+  Highway Capacity Manual 2000
+
+  COMPUTATION OF FREEWAY ON-RAMP LINK CAPACITY  Example Problem 1
+
+Data  Value  Capacity  Notes
+
+  Adjustment
+
+Base saturation flow rate  1900 pc/h/ln  1900  Chapter 16, ”Signalized  Intersections”
+Lanes  1  1  Input
+Lane width  Exhibit 10-12 default
+Heavy vehicles  3.6 m  1.000  Exhibit 10-12 default
+Grade  2%  0.980  Exhibit 10-12 default
+Parking  0%  1.000  Input
+Bus blockage  None  1.000  Input
+Area type  None  1.000  Input
+Lane utilization  Non-CBD  1.000  Single-lane ramp
+Left turns  100%  1.000  Input
+Right turns  None  1.000  Input
+Left pedestrian blockage  None  1.000  Input
+Right pedestrian blockage  None  1.000  Input
+g/C  None  1.000  Input
+Peak-hour factor  None  1.000  Input
+  0.95  0.950
+
+Capacity (veh/h)  1769 veh/h
+
+  COMPUTATION OF FREEWAY OFF-RAMP LINK CAPACITY
+
+Data  Value  Capacity  Notes
+
+  Adjustment
+
+Base saturation flow rate  1900 pc/h/ln  1900  Chapter 16, ”Signalized  Intersections”
+Lanes  1  1  Input
+Lane width  Exhibit 10-12 default
+Heavy vehicles  3.6 m  1.000  Exhibit 10-12 default
+Grade  2%  0.980  Exhibit 10-12 default
+Parking  0%  1.000  Input
+Bus blockage  None  1.000  Input
+Area type  None  1.000  Input
+Lane utilization  Non-CBD  1.000  Single-lane ramp
+Left turns  100%  1.000  Input
+Right turns  None  1.000  Input
+Left pedestrian blockage  None  1.000  Input
+Right pedestrian blockage  None  1.000  Input
+g/C  None  1.000  Exhibit 10-12 default
+Peak-hour factor  0.45  0.450  Input
+  0.95  0.950
+
+Capacity (veh/h)  796 veh/h
+
+  Note that some of the adjustment factors vary by number of lanes on the link, so the
+link capacities are computed twice, first for the two-lane link, then for the three-lane link.
+The two-lane and three-lane arterial capacity values are summarized in the following
+tables. Note that arterial capacity is independent of the arterial class in this example. The
+analyst may wish to adopt different default g/C values for each arterial class to better
+reflect local signal timing plans.
+
+  30-19  Chapter 30 - Areawide Analysis
+  Example Problems
+Highway Capacity Manual 2000
+
+Example Problem 1  COMPUTATION OF TWO-LANE ARTERIAL LINK CAPACITY
+
+  Datum  Value  Capacity  Notes
+  Adjustment
+  Base saturation flow rate  1900 pc/h/ln  Chapter 16, “Signalized Intersections”
+  Lanes  2  1900  Input
+  Lane width  2  Exhibit 10-12 default
+  Heavy vehicles  3.6 m  Exhibit 10-12 default
+  Grade  2%  1.000  Exhibit 10-12 default
+  Parking  0%  0.980  Exhibits 10-12 and 16-7
+  Bus blockage  8/h  1.000  Exhibits 10-12 and 16-7
+  Area type  2/h  0.950  Input
+  Lane utilization  Non-CBD  0.996  Exhibit 10-12
+  Left turns  N/A  1.000  Left-turn bays present
+  Right turns  None  0.950  Exhibit 16-7, shared lane
+  Left pedestrian blockage  None  1.000  Left-turn bays present, no left turns from through lanes
+  Right pedestrian blockage  None  0.985  Input
+  g/C  Negligible  1.000  Exhibit 10-12 default
+  Peak-hour factor  0.45  1.000  Input
+  Capacity (veh/h)  0.95  0.450  (705 veh/h/ln)
+  0.950
+
+  1409 veh/h
+
+  N/A = not available.
+
+  COMPUTATION OF THREE-LANE ARTERIAL LINK CAPACITY
+
+  Datum  Value  Capacity  Notes
+  Adjustment
+  Base saturation flow rate  1900 pc/h/ln  Chapter 16, “Signalized Intersections”
+  Lanes  3  1900  Input
+  Lane width  3  Exhibit 10-12 default
+  Heavy vehicles  3.6 m  Exhibit 10-12 default
+  Grade  2%  1.000  Exhibit 10-12 default
+  Parking  0%  0.980  Exhibits 10-12 and 16-7
+  Bus blockage  8/h  1.000  Exhibits 10-12 and 16-7
+  Area type  2/h  0.970  Input
+  Lane utilization  Non-CBD  0.997  Exhibit 10-12
+  Left turns  N/A  1.000  Left-turn bays present
+  Right turns  None  0.910  Exhibit 16-7, shared lane
+  Left pedestrian blockage  None  1.000  Left-turn bays present, no left turns from through lanes
+  Right pedestrian blockage  None  0.985  Input
+  g/C  Negligible  1.000  Exhibit 10-12 default
+  Peak-hour factor  0.45  1.000  Input
+  Capacity (veh/h)  0.95  0.450  (690 veh/h/ln)
+  0.950
+
+  2070 veh/h
+
+  N/A = not available.
+
+  Computing Link Speeds The mean speed for each link is computed using Equation
+
+  30-4. Node delay will not be computed, so the equation for link speed simplifies to the link
+
+  length (L) divided by the link traversal time (R); R is computed using Equation 30-5. The
+  needed input values for this equation (Ro and Do) are computed first. The free-flow link
+  traversal time (Ro) is computed using Equation 30-6, with computed values shown in the
+  following table.
+
+Chapter 30 - Areawide Analysis  30-20
+Example Problems
+  Highway Capacity Manual 2000
+
+  COMPUTATION OF LINK FREE-FLOW TIME (Ro)  Example Problem 1
+
+  Link  HCM Class  Length (L) (km) Free-Flow Speed, Free-Flow Time, Ro
+
+  So (km/h)  (h)
+
+  1  Freeway  2.18  103  0.0212
+
+  2  Freeway  1.86  103  0.0181
+
+  3  Class III  0.45  55  0.0082
+
+  4  Class III  0.42  55  0.0076
+
+  5  Class II  0.30  65  0.0046
+
+  6  Class II  0.40  65  0.0062
+
+  The zero-flow control delay (Do) is computed for the links with signals using Equation
+30-7 and the default values of g/C and C provided in Exhibit 10-12. The delay adjustment
+factor is estimated assuming fixed-time signals, no progression for the off-ramp, and
+modest progression for the arterial links. The number of signals present on each link is
+estimated on the basis of the link length and the local knowledge of typical signal density.
+The exception is the off-ramp, which has only one signal at its endpoint. The following
+table lists the computed values.
+
+  COMPUTATION OF ZERO-FLOW CONTROL DELAY (Do)
+
+Link  Signals (N)  Delay Adjust (DF)  g/C  Cycle (s)  Zero-Flow Delay,
+  Do (h)
+1  None  N/A  N/A  N/A  0
+  0
+2  None  N/A  N/A  N/A  0
+  0.0052
+3  None  N/A  N/A  N/A  0.0047
+  0.0047
+4  1  1.00  0.44  120
+
+5  1  0.90  0.44  120
+
+6  1  0.90  0.44  120
+
+Note:
+N/A = not applicable.
+
+  The volume to capacity ratio is computed for each link, with results listed in the
+following table.
+
+  LINK VOLUME TO CAPACITY RATIOS
+
+  Link  Model Functional Class Demand (veh/h) Capacity (veh/h) Volume/Capacity
+
+  1  Suburban freeway  6792  6537  1.04
+
+  2  Suburban freeway  5173  6537  0.79
+
+  3  Freeway on-ramp  1492  1769  0.84
+
+  4  Freeway off-ramp  966  796  1.21
+
+  5  Major arterial  1330  1409  0.94
+
+  6  Major arterial  2157  2070  1.04
+
+  The values of J are selected from Exhibit 30-4. The mean link speed is computed as
+shown in the Computation of Mean Link Speed table.
+
+Performance Measures The Computation of Performance Measures table illustrates
+the input data requirements, assumptions, and results for the computation of the
+performance measures for the six example links. The top part lists the input data (most of
+it computed in prior steps). The bottom part shows the results.
+
+  30-21  Chapter 30 - Areawide Analysis
+  Example Problems
+Highway Capacity Manual 2000
+
+Example Problem 1  COMPUTATION OF MEAN LINK SPEED
+
+  Link  Ro (h)  Do (h)  J  v/c  R (h)  L (km)  Speed
+  (km/h)
+  1  0.0212  0  0.000006  1.04  0.0425  2.18
+  1.86  51
+  2  0.0181  0  0.000006  0.79  0.0183  0.45  102
+  0.42  44
+  3  0.0082  0  0.000200  0.84  0.0102  0.30
+  0.40  3
+  4  0.0076  0.0052  0.000200  1.21  0.1201  21
+  10
+  5  0.0046  0.0047  0.000200  0.94  0.0146
+
+  6  0.0062  0.0047  0.000200  1.04  0.0384
+
+  Notes:
+  Ro = free-flow traversal time
+  Do = zero-flow control delay
+  J = calibration parameter
+  v/c = volume to capacity ratio
+  R = traversal time
+  L = length of link
+
+  COMPUTATION OF PERFORMANCE MEASURES
+
+  Link  1  2  3  4  5  6  Total
+  5.61
+  Type  Fwy  Fwy On-ramp Off-ramp Arterial  Arterial
+  32 121
+  Length (km)  2.18  1.86  0.45  0.42  0.30  0.40  740
+  Lanes  3  3  1  1  2  3  332
+  Average vehicle occ.  1.2  1.2  1.2  1.2  1.2  1.2  408
+  Demand (veh/h)  966  43
+  Capacity (veh/h)  6792  5173  1492  796  1330  2157
+  Demand/capacity  6537  6537  1769  1409  2070
+  Speed (km/h)  1.04  0.79  0.84  1.21  0.94  1.04
+  FFS (km/h)  51  102  44  3  21  10
+  T (analysis period) (h)  103  103  55  55  65  65
+  r (peak ratio)  1
+  J parameter  1  1  1  0.7  1  1
+  Storage (veh/km/ln)  0.7  0.7  0.7  0.7  0.7
+  0.000006  0.000006  0.000200  0.000200  0.000200  0.000200
+  PkmT (km)  75  75  130  130  130  130
+  PHT (h)
+  PHT free-flow (h)  17 768 11 546 806  487  479  1035
+  Delay (person-h)  100
+  Speed (km/h)  346  114  18  139  23  16
+  Duration (h)  84
+  Extent (km)  173  112  15  9  7  10
+  Extent (% of link)  1.16
+  Sensitivity  173  2  3  130  16  0.22
+  56%
+  51  102  44  3  21  40%
+
+  1.15  0.00  0.00  2.42  0.00
+
+  1.13  0.00  0.00  1.31  0.00
+
+  52%  0%  0%  311%  0%
+
+  49%  0%  2%  49%  8%
+
+  The mean speed over all six links is 43.4 km/h. Significant amounts of delay are
+  accumulated on those links with demand to capacity ratios greater than 1.00. The off-
+  ramp has the highest demand to capacity ratio, highest delay, and the longest duration of
+  delay (2.42 h). The queue will overflow the off-ramp and extend back onto the freeway.
+  The extent of queue is 311 percent of the storage capacity of the ramp. The sensitivity
+  results indicate that a 1 percent increase in the demand to capacity ratio on Links 1, 4, and
+  6 will cause a 40 to 49 percent increase in travel time on those links. All other links are
+  comparatively insensitive to demand changes.
+
+Chapter 30 - Areawide Analysis  30-22
+Example Problems
+  Highway Capacity Manual 2000
+
+EXAMPLE PROBLEM 2. DETERMINE TRANSIT-SUPPORTIVE AREA OF A
+TRANSIT SYSTEM
+
+The Situation As part of an overall review of its service, a transit operator wants to
+determine the accessibility of its system to its potential customers.
+
+The Question Where are the city’s transit-supportive areas and how well are they
+currently being served?
+
+The Facts
+  √ The transit operator provides fixed-route bus service to a population of 125,000.
+  Two universities, a community college, and numerous government offices are
+  scattered about the city.
+  √ The city’s transportation model contains population and employment figures at
+  the transportation analysis zone (TAZ) level.
+  √ The transit operator does not have access to GIS software, so the manual
+  calculation method will be used for this example.
+
+Comments
+  √ The TAZ map is available in an electronic form that allows the areas of each TAZ
+  to be calculated.
+  √ Census data for the area indicate an average household size of 2.5 persons.
+
+Outline of Solution Using the manual calculation method, the transit-supportive area is
+identified first. Next, the coverage area of the routes serving the transit-supportive TAZs is
+identified. Third, the approximate percentage of each transit-supportive TAZ served by
+transit is identified. Finally, the percentage of the total transit-supportive area served by
+transit is calculated to determine LOS.
+
+Steps
+  1. Develop a spreadsheet from the data used for the transportation model, listing
+
+population, jobs, and area for each TAZ. Convert population to households by dividing by
+2.5. Calculate household density for each TAZ by dividing the number of households by
+the TAZ area; calculate job density similarly. A TAZ is transit supportive if the household
+density is at least 7.5 households/gross hectare or the employment density is at least 10
+jobs/gross hectare. This process is illustrated for two TAZs.
+
+TAZ Pop. Jobs Area (m2) Households Area (hectares) HH Density Job Density
+
+255 1134 308  1 017 046 453.6  101.7  4.46  3.03
+
+399 345 852  497 767 138.0  49.8  2.77  17.1
+
+  In this example, TAZ 255 is not transit supportive, but TAZ 399 is. There are 174
+transit-supportive TAZs in the system area.
+
+  2. For the transit-supportive TAZs identified in Step 1, draw the location of the bus
+routes serving those TAZs and draw 0.4-km buffers around each route, excluding any
+areas known not to have pedestrian access.
+
+  3. Twenty-four of the 174 transit-supportive TAZs are only partially served by
+transit. Estimate the percentage of the area of each of these TAZs served by transit. For
+example, TAZ 432 is about 50 percent served by transit.
+
+  4. Divide the transit-supportive area served by transit by the total transit-supportive
+area to determine the percentage of the transit-supportive area served, or LOS.
+
+  30-23  Chapter 30 - Areawide Analysis
+  Example Problems
+Highway Capacity Manual 2000
+
+Example Problem 2  The Results The total transit-supportive area is 34 km2, and 29 km2 of it is covered by
+  transit. As a result, 85 percent of this system’s transit-supportive area is covered. Areas of
+  the city that can support at least hourly bus service for the most part receive at least some
+  service during the day. For policy reasons, or simply to connect two higher-density areas,
+  most operators will serve a considerably larger area than the transit-supportive area.
+
+  EXAMPLE PROBLEM 3. EXAMPLE PROBLEM 2 USING GIS SOFTWARE
+
+  The Situation The same as in Example Problem 2 except that GIS software is used.
+
+  The Question Where are the city’s transit-supportive areas and how well are they
+  currently being served?
+
+  The Facts
+  √ Same assumptions as in Example Problem 2.
+
+  Comments
+  √ The transit agency contacts the local MPO, which has GIS software in house.
+  Themes are obtained or created for streets (used as a base map), bus stops
+  (used to identify the area served by transit), and TAZs (containing population and
+  employment information).
+  √ Census data for the area indicate an average household size of 2.5 persons.
+
+  Outline of Solution The area served by transit is identified by creating 0.4-km walk-
+  distance buffers around each bus stop. This area is then intersected with the TAZ theme
+  to create a new sub-TAZ theme that contains sub-TAZs that are entirely with or without
+  transit service. Next, the GIS calculates the area of each sub-TAZ and the resulting
+  household and employment density. Next, all sub-TAZs meeting the transit-supportive
+  area criteria are identified and their areas summed. Finally, the sub-TAZs served by transit
+  are identified and their areas summed. LOS is calculated by dividing the second area into
+  the first.
+
+  Steps
+  1. Create 0.4-km buffers around each bus stop. Remove any areas where
+
+  pedestrian access is not possible.
+  2. Update map using bus stop buffers.
+  3. Create a new service coverage theme from this buffer area. Intersect this theme
+
+  with the TAZ theme, resulting in the new sub-TAZ theme.
+  4. Calculate the area, household, and employment density for each sub-TAZ.
+  5. Determine which sub-TAZs are transit-supportive and which are not.
+  6. Determine which transit-supportive TAZs are served by transit and which are not.
+  7. Sum the areas of the transit-supportive sub-TAZs served by transit and divide by
+
+  the sum of the areas of all the transit-supportive sub-TAZs to obtain the service coverage
+  LOS.
+
+  The Results The total transit-supportive area is 33.8 km2, and 29.1 km2 of it is covered
+  by transit. As a result, 86 percent of this system’s transit-supportive area is covered.
+
+Chapter 30 - Areawide Analysis  30-24
+Example Problems
+  Highway Capacity Manual 2000
+
+EXAMPLE PROBLEM 4. COMPARE EXISTING TRAVEL TIME OF TRANSIT
+AND AUTOMOBILES
+The Situation As part of a regional study of traffic congestion, the Anytown MPO
+wishes to compare existing travel times by transit and automobile to help determine where
+transit service improvements or transit priority measures may be needed to make transit
+service more competitive with the automobile.
+
+The Question What are comparative travel times by transit and automobile between
+city centers in the region during the a.m. peak hour, and what is the corresponding LOS?
+
+The Facts
+  √ Travel time data for key regional roadways indicate the following average peak-
+
+direction travel times (in minutes) by automobile between cities during the a.m. peak hour.
+
+  Fort Plains
+  #
+
+  5  18
+
+Juniper  13  Chipville  Anytown # 13  11  # Fish Valley
+#  #  17  10
+  20 15 5
+  #  17  15  #Mountain View
+  Nutria
+  14 2116 18
+  Hopland 5
+  Stripeton # 8  15 # 10
+  15 5 1410 #Bucksburg
+  Nottingham # 10 # Riverbank  14
+  10 8
+
+  10 # West Conestoga# Conestoga
+
+  √ Current scheduled peak-direction travel times (in minutes) by transit between
+cities and major transfer centers are shown on the map below. Bypasses shown on the
+map around transfer centers indicate trips where no transfer needs to be made.
+
+  Major Bus Stops  Fort Plains
+  # 33 #
+S Location
+# Transfer center
+
+  18  30
+
+S Juniper  Chipville  40 24 46 Anytown #  22  #  26  SFish Valley
+  17  #  24  22  17
+  #15  23
+  Nutria# 26  31  Hopland  #  28  #Mountain View
+  30 24  # 18
+  28
+  Stripeton # 26  27
+  16  Bucksburg
+  19  #  22
+  14
+  Nottingham # S
+  Riverbank
+
+  West ConestogaS 7 Conestoga
+
+  30-25  Chapter 30 - Areawide Analysis
+  Example Problems
+Highway Capacity Manual 2000
+
+Example Problem 4  Comments
+  √ Walk time to and from transit is assumed to average 3 min at each end of a trip.
+  √ Wait time for transit is assumed to be 5 min at the start of a trip.
+  √ Each transfer is assumed to add 10 min to a trip.
+  √ Automobile trips to Anytown add 5 min for parking in garages and 3 min average
+  walk time from parking garages to offices.
+  √ Plentiful free parking is available at all work locations outside Anytown.
+  √ Congestion in central Nutria adds 5 min to access the freeway system by car.
+
+  Outline of Solution  Calculate the travel time between each pair of locations by
+
+  automobile and by transit. Adjust these times by the criteria listed above to obtain door-to-
+
+  door travel times. Subtract the adjusted automobile time from the adjusted transit time to
+
+  obtain the travel time difference for each pair of locations and the resulting LOS.
+
+  Steps
+  1. Determine the automobile travel times (not including parking and off-highway
+
+  congestion mentioned in the comments) between each pair of locations. For example,
+  travel time between Juniper and Anytown is 48 min on the basis of the map.
+
+  2. Determine the transit travel times (including transfers but not including walk and
+  wait time) between each pair of locations. For example, transit travel time between Juniper
+  and Anytown is 63 min (from the map), plus a 10-min wait to transfer between routes in
+  Chipville, for a total transit travel time of 73 min.
+
+  3. Adjust the travel times on the basis of the comments to obtain door-to-door travel
+  times and calculate the travel time difference for each pair of locations. For example, the
+  door-to-door automobile time from Juniper to Anytown is 56 min, including the 8 min
+  required to park and walk. The door-to-door transit time is 84 min, including the 11 min
+  required to walk and wait. The difference between automobile and transit travel times is
+  28 min.
+
+  The Results The radial route pattern serving Anytown provides reasonable transit-
+  automobile travel time differences from everywhere within the metro area except Fish
+  Valley. Service between suburbs is generally poor, as is often the case with a radial
+  pattern, although some suburbs (e.g., Nutria) have relatively good service. Because of the
+  number of transfers involved, transit travel times from Fish Valley are very high compared
+  with those of the automobile, making transit an unattractive option for riders.
+
+  Possible improvements to service include the following:
+  1. Express service from distant suburbs to Anytown to reduce travel times.
+  2. Express crosstown routes between suburbs where demand warrants.
+  3. Decreasing the number of transfers required or improving timed transfers to
+  reduce the average wait time in transferring between routes.
+  4. Transit priority measures on high-volume routes serving Anytown to make travel
+  times even more competitive with those of the automobile.
+
+Chapter 30 - Areawide Analysis  IV. REFERENCES
+Example Problems  1. Dowling, R. G., R. Singh, and W. W. K. Cheng. The Accuracy and Performance
+
+  of Improved Speed-Flow Curves. Road and Transport Research, Vol. 7, No. 2,
+  June 1998, pp. 36–51.
+  2. Dowling, R. G., W. Kittelson, J. Zegeer, and A. Skabardonis. NCHRP Report
+  387: Planning Techniques to Estimate Speeds and Service Volumes for Planning
+  Applications. TRB, National Research Council, Washington, D.C., 1997.
+
+  30-26
+  Highway Capacity Manual 2000
+
+ 3. Danaher, A., T. Parkinson, P. Ryus, and L. Nowlin. TCRP A-15 Development of
+  Transit Capacity and Quality of Service Principles, Practices, and Procedures.
+  Interim Report. Available on loan from Transit Cooperative Research Program,
+  TRB, Washington, D.C., 1997.
+
+ 4. O’Sullivan, S., and J. Morrall. Walking Distances to and from Light-Rail Transit
+  Stations. In Transportation Research Record 1538, TRB, National Research
+  Council, Washington, D.C., 1996.
+
+ 5. Horowitz, A. J. Intersection Delay in Regionwide Traffic Assignment. In
+  Transportation Research Record 1572, TRB, National Research Council,
+  Washington, D.C., 1997.
+
+ 6. Horowitz, A. J. Delay Volume Relations for Travel Forecasting, Based on the
+  1985 Highway Capacity Manual. FHWA, U.S. Department of Transportation,
+  1991.
+
+ 7. Dowling, R. G. Travel Model Speed Estimation and Post Processing Methods for
+  Air Quality Analysis. Final Report, Travel Model Improvement Program. DOT-T-
+  98-5. U.S. Department of Transportation, 1997.
+
+ 8. Transit Capacity and Quality of Service Manual. Transit Cooperative Research
+  Program Web Document No. 6. TRB, National Research Council, Washington,
+  D.C., 1999. Available online.
+  http://www4.nationalacademies.org/trb/crp.nsf/all+projects/tcrp+a-15.
+
+ 9. Pushkarev, B., and J. M. Zupan. Public Transportation and Land Use Policy.
+  Indiana University Press, Bloomington, Ind., 1977.
+
+10. Nelson\Nygaard Consulting Associates. Tri-Met Primary Transit Network Phase
+  II Report. Portland, Oreg., 1997.
+
+  APPENDIX A. NODE DELAY ESTIMATION PROCEDURES  The procedures will produce
+  discontinuities in the delay
+  The following procedures describe how to estimate the most likely type of  estimate
+intersection control and the delay created by the intersection control under forecast traffic
+demands. These procedures require that the analyst have forecast demand and lane
+geometry for the subject approach, the opposing approach, and the cross-street
+approaches.
+
+  These node (i.e., intersection) delay procedures can be used either as a postprocessor
+to improve speed and delay estimates for air quality analysis or in a traffic assignment
+algorithm to improve the traffic forecasts themselves. The analyst should be warned that
+several steps in the procedure (identified below) will introduce discontinuities in the
+delay estimate, which can make it difficult, if not impossible, to reach closure in an
+equilibrium assignment process. It is also necessary to control for extreme inputs in the
+process.
+
+ADAPTIVE NODE CONTROL PROCEDURE
+
+Purpose, Input, Assumptions
+
+  This procedure determines if an intersection (node) that is currently unsignalized (or
+for which the current control is unknown) is likely to be an all-way stop and signalized in
+the future under forecast travel demand. Intersections failing to meet the criteria for
+signalization or all-way stop control (AWSC) are assumed to be two-way stop-controlled
+with stop signs on the minor-street approaches.
+
+  Analysts seeking to use this node control procedure in traffic assignment processes
+should recognize that changing control type might introduce discontinuities in the delay
+estimates. Analysts might wish to use the node control procedure to identify the node
+
+30-27  Chapter 30 - Areawide Analysis
+  References
+

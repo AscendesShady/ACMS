@@ -1,0 +1,815 @@
+Simplified Highway Capacity Calculation
+Method for the Highway Performance
+Monitoring System
+
+October 2017
+  Notice
+
+This document is disseminated under the sponsorship of the U.S.
+Department of Transportation in the interest of information exchange.
+The U.S. Government assumes no liability for the use of the information
+contained in this document.
+
+The U.S. Government does not endorse products or manufacturers.
+Trademarks or manufacturers’ names appear in this report only because
+they are considered essential to the objective of the document.
+
+  Quality Assurance Statement
+
+The Federal Highway Administration (FHWA) provides high-quality
+information to serve Government, industry, and the public in a manner
+that promotes public understanding. Standards and policies are used to
+ensure and maximize the quality, objectivity, utility, and integrity of its
+information. FHWA periodically reviews quality issues and adjusts its
+programs and processes to ensure continuous quality improvement.
+  Technical Report Documentation Page
+
+1. Report No.  2. Government Accession No.  3. Recipient’s Catalog No.
+
+PL-18-003
+
+4. Title and Subtitle  5. Report Date
+
+Simplified Highway Capacity Calculation Method for the Highway  October 15, 2017
+Performance Monitoring System
+  6. Performing Organization Code
+
+7. Author(s)  8. Performing Organization Report No.
+
+Richard Margiotta and Scott Washburn
+
+9. Performing Organization Name And Address  10. Work Unit No. (TRAIS)
+  11. Contract or Grant No.
+Cambridge Systematics, Inc.
+4800 Hampden Lane, Suite 800  DTFH61-13-D-00014
+Bethesda, MD 20814
+
+12. Sponsoring Agency Name and Address  13. Type of Report and Period Covered
+
+Federal Highway Administration  Final Report
+Office of Policy and Governmental Affairs
+1200 New Jersey Avenue, SE  14. Sponsoring Agency Code
+Washington, DC 20590
+
+15. Supplementary Notes
+
+16. Abstract
+
+The Federal Highway Administration’s Highway Performance Monitoring System (HPMS) provides information
+on the extent, condition, performance, use, and operating characteristics of the Nation’s highways. Each year
+State Transportation Agencies must submit HPMS data to the FHWA. The Sample Panel portion of HPMS
+provides detailed statistical data on a randomly selected sample of roadway sections on the State’s public road
+system. One data item submitted for sample panels is capacity (Sample Panel Data Item 69). The HPMS Field
+Manual guidance for capacity is as follows: “The capacity of a roadway facility is the maximum reasonable
+hourly rate at which vehicles can be expected to transverse a point or a uniform section of lane or roadway during
+a given time period under prevailing road-way, traffic, and control conditions.” Reasonable expectancy is that the
+stated capacity can be achieved repeatedly. The Highway Capacity Manual (HCM) provides procedures,
+formulas, graphics, and tables in assessing roadway capacity. This item should be estimated based on procedures
+consistent with the HCM.
+
+The results of the project are the development of:
+1. Capacity computation methods that use HPMS data items to the extent possible, and can be used to validate
+HPMS Sample Panel Item 69; and
+2. Simplified Methodologies to Create Generalized Level of Service (LOS) Lookup Tables. Both of these results
+use the most recent HCM methodologies. Specifically, it was found that the procedures in National Cooperative
+Research Program Report 825 (“Planning and Preliminary Engineering Applications Guide to the Highway
+Capacity Manual”) could be easily adapted to the types of data present in HPMS.
+
+17. Key Words  18. Distribution Statement
+
+Highway Capacity Manual; level of service;  No restrictions
+generalized service volumes; HPMS data
+
+19. Security Classif. (of this report)  20. Security Classif. (of this page)  21. No. of Pages  22. Price
+
+Unclassified  Unclassified  46  N/A
+
+  i
+  Simplified Highway Capacity Calculation Method for the Highway Performance Monitoring System
+
+  TABLE OF CONTENTS
+
+CHAPTER 1. INTRODUCTION .................................................................................................1
+CHAPTER 2. DEVELOPMENT OF CAPACITY COMPUTATION METHODS................3
+
+  REVIEW HIGHWAY ECONOMIC REQUIREMENTS SYSTEM CAPACITY
+  PROCEDURES FOR USE IN HIGHWAY PERFORMANCE MONITORING
+  SYSTEM ................................................................................................................................3
+
+  Freeways ........................................................................................................................4
+  Multilane Highways.......................................................................................................5
+  Signalized Highways .....................................................................................................5
+  Two-Lane Highways with No Traffic Control ..............................................................6
+  Stop-Controlled Highways.............................................................................................6
+  UPDATE CAPACITY PROCEDURES BASED ON NEW HIGHWAY CAPACITY
+  MANUAL EDITION .............................................................................................................7
+CHAPTER 3. BACKGROUND DEVELOP SIMPLIFIED METHODOLOGIES TO
+  CREATE GENERALIZED LEVEL OF SERVICE (LOS) LOOKUP TABLES ...........9
+  BACKGROUND ....................................................................................................................9
+  DEFAULT VALUES ...........................................................................................................10
+  RESULTS .............................................................................................................................10
+APPENDIX A. GENERALIZED SERVICE VOLUME TABLES .........................................23
+
+  iii
+  Simplified Highway Capacity Calculation Method for the Highway Performance Monitoring System
+
+  LIST OF FIGURES
+Figure 1. Flow chart. Overview of major task activities..................................................................2
+Figure 2. Equation. Capacity calculation for freeway capacity. ......................................................4
+Figure 3. Equation. Calculation or free flow speed for freeways. ...................................................5
+Figure 4. Equation. Calculation of capacity for multilane highways. .............................................5
+Figure 5. Equation. Calculation of capacity for signalized highways. ............................................6
+Figure 6. Equation. Calculation of capacity for stop-controlled highways. ....................................7
+
+  v
+  Simplified Highway Capacity Calculation Method for the Highway Performance Monitoring System
+
+  LIST OF TABLES
+Table 1. Highway performance monitoring system data items used in the highway
+economic requirements system capacity calculation procedures.....................................................3
+Table 2. Conflicting flow rates for two-way stop-controlled highways—vehicles per hour.........10
+Table 3. Default values for level of service calculation.................................................................11
+Table 4. Level of service for 2014 highway performance monitoring system sample
+panel— rural sections ....................................................................................................................12
+Table 5. Level of service for 2014 highway performance monitoring system sample
+panel—urban sections ....................................................................................................................13
+Table 6. Selected highway performance monitoring system freeway sections with level of
+service and service measures attached. ..........................................................................................14
+Table 7. Selected highway performance monitoring system multilane sections with level of
+service and service measures attached. ..........................................................................................15
+Table 8. Selected highway performance monitoring system rural two-lane sections with
+level of service and service measures attached..............................................................................16
+Table 9. Selected highway performance monitoring system signalized sections with level
+of service and service measures attached.......................................................................................18
+Table 10. Selected highway performance monitoring system stop-controlled sections with
+level of service and service measures attached..............................................................................19
+Table 11. Level of service ranges by highway type.......................................................................21
+Table 12. Level of service ranges for signalized highways. ..........................................................21
+Table 13. Freeway generalized service volume table. ...................................................................23
+Table 14. Multilane highway generalized service volume table....................................................25
+Table 15. Signalized highway generalized service volume table. .................................................26
+Table 16. Stop sign-controlled highways generalized service volume table. ................................33
+Table 17. Rural two-lane highways generalized service volume table..........................................33
+
+  vii
+  Simplified Highway Capacity Calculation Method for the Highway Performance Monitoring System
+
+  CHAPTER 1. INTRODUCTION
+
+The Federal Highway Administration’s (FHWA) Highway Performance Monitoring System
+(HPMS) provides information on the extent, condition, performance, use, and operating
+characteristics of the Nation’s highways. Each year State Transportation Agencies (STA) must
+submit HPMS data to the FHWA. Certain data items, including length, lane-miles, and travel are
+required for all public roads that are eligible for Federal-aid highway funds. The data items
+reported for all public roads are known as full extent data items. In addition to full extent data
+items, there are data items that are reported on a partial extent basis, which are known as sample
+panel data items. The sample panel provides more detailed statistical data on a randomly selected
+sample of roadway sections in the State’s public road system. One data item submitted for
+sample panels is capacity (Sample Panel Data Item 69). The HPMS Field Manual guidance for
+capacity is as follows: “The capacity of a roadway facility is the maximum reasonable hourly
+rate at which vehicles can be expected to transverse a point or a uniform section of lane or
+roadway during a given time period under prevailing roadway, traffic, and control conditions.
+Reasonable expectancy is that the stated capacity can be achieved repeatedly. The Highway
+Capacity Manual (HCM) provides procedures, formulas, graphics, and tables in assessing
+roadway capacity. This item should be estimated based on procedures consistent with the HCM.
+All urban and rural capacity for freeways and other multilane facilities is for the peak direction.
+If a rural facility has two or three lanes with one-way operation, it is considered to be a multilane
+facility for determining capacity. The capacity for rural facilities with two or three lanes and two-
+way operation is for both directions.”
+The objectives of the project are to develop:
+1. Capacity computation methods that: 1) use HPMS data items to the extent possible, and 2) can
+
+  be used to validate HPMS Sample Panel Item 69.
+2. Simplified methodologies to create generalized level of service (LOS) lookup tables.
+3. These two objectives were covered by tasks 2 and 3 and are presented as separate sections
+
+  below (figure 1).
+
+  1
+Simplified Highway Capacity Calculation Method for the Highway Performance Monitoring System
+
+  Task 2: HPMS Capacity Calculation Procedures
+  Review HERS Capacity Procedure for Use in HPMS
+  Update Capacity Procedures Based on New HCM Edition
+  Test: State Submitted Capacities versus Calculated
+
+  Task 3: Simplified Methods for Generalized LOS
+  Integrate Capacity Calculation with HCM LOS Procedures by Facility Type
+
+  Build Tool
+  Apply Tool Iteratively to Generate LOS Tables
+
+  Task 4: Final Report
+  Figure 1. Flow chart. Overview of major task activities.
+
+  2
+  Simplified Highway Capacity Calculation Method for the Highway Performance Monitoring System
+
+CHAPTER 2. DEVELOPMENT OF CAPACITY COMPUTATION METHODS
+
+REVIEW HIGHWAY ECONOMIC REQUIREMENTS SYSTEM CAPACITY
+PROCEDURES FOR USE IN HIGHWAY PERFORMANCE MONITORING SYSTEM
+
+The Highway Economic Requirements System (HERS) capacity procedures, completed in 2014,
+adapted the Highway Capacity Manual (HCM) 2010 capacity calculation methods.1 It utilized
+Highway Performance Monitoring System (HPMS) data items to the maximum extent but also
+
+had to make many assumptions about default values. The HPMS data items that were used are
+
+shown in table 1. HCM capacity input data that had to set to default values are as follows:
+
+• Freeways—ramp density, peak-hour factor, and driver population factor.
+• Multilane highways—driveway density, peak-hour factor, and driver population factor.
+• Signals—lane group assignments (based on presence of right- and left-turning lanes), grade,
+
+  number of parking maneuvers per hour, bus blockage, area type, lane utilization, left- and
+  right-turn lanes.
+• Rural two-lane highways—driveway density and peak-hour factor.
+• Stop signs—conflicting flow rates, base critical gap, follow-up times, and assignment of
+  turning movements to lanes.
+
+The project team compared the HERS procedures with National Cooperative Highway Research
+Program (NCHRP) Project 07-22, Planning and Preliminary Engineering Applications Guide to
+the HCM. The report has recently been published as NCHRP Report 825.2 Its midlevel analysis
+methods for capacity are very similar to the HERS procedures which preceded it. Where the two
+methods differ, we developed a test procedure using 2014 HPMS data to compare the capacity
+values obtained with each method. The results of the comparison are as follows.
+
+Table 1. Highway  performance monitoring system data items used in the highway  economic
+
+HPMS Data Item  requirements system capacity calculation procedures.  Stop Sign
+  Lane Width  –
+  Facility Type  –
+  Right Shoulder
+  Width  Rural Two  –
+  
+  Left Shoulder  Freeways Multilane Signals  Lane  
+  Width  
+        
+  Through Lanes
+  Peak Lanes      –  
+  % SU Trucks
+  –    –  –
+
+      –  –
+
+  –  –  –  –
+
+        
+
+1 Task 6 Technical Memo: Procedures for Estimating Highway Capacity, May 2014.
+2 Dowling, Richard et al., Planning and Preliminary Engineering Applications Guide to the Highway Capacity
+
+  Manual, NCHRP Report 825, 2016, http://www.trb.org/NCHRP/Blurbs/174958.aspx.
+
+  3
+Simplified Highway Capacity Calculation Method for the Highway Performance Monitoring System
+
+Table 1. Highway performance monitoring system data items used in the highway economic
+
+  requirements system capacity calculation procedures (continuation).
+
+  Facility Type
+
+  Rural Two
+
+HPMS Data Item Freeways Multilane Signals  Lane  Stop Sign
+
+% Comb. Trucks          
+
+Median Type  –  –  –  –  –
+
+No. Other  –    –    –
+
+Intersections
+
+Right-Turn Lanes  –  –    –  
+
+Left-Turn Lanes  –  –    –  
+
+K-factor  –  –      
+
+D-factor  –  –      
+
+Percent Green Lime  –  –    –  –
+
+  Terrain      –    –
+
+Functional Class  –  –  –  –  
+
+Speed Limita  –  –  –    –
+
+a Speed limit is generally used in the computation of service measures but except for rural two-lane highways is not
+
+  used in capacity calculation.
+
+Freeways
+
+The HERS capacity procedure is very similar to that of NCHRP 825. The HERS procedure
+follows the HCM procedure verbatim, with adjustments for lane width, lateral clearance,
+interchange density, heavy trucks, and the peak-hour factor. The NCHRP method excludes the
+peak-hour factor. However, their formulations for the final capacity value are slightly different.
+When applied to 2014 Sample Panel data (21,940 freeway sections), HERS-developed capacity
+values are five percent lower than those of NCHRP 825. We consider this difference negligible,
+so we recommend the NCHRP 825 method for capacity and (Level of Service) LOS
+calculations.
+
+Where:  FFS =  free flow speed
+  %HV =  percent of heavy vehicles (decimal), with heavy vehicles consisting of
+  trucks with more than four tires, buses, and recreational vehicles Multilane
+  Highways
+
+  Figure 2. Equation. Capacity calculation for freeway capacity.
+
+  4
+  Simplified Highway Capacity Calculation Method for the Highway Performance Monitoring System
+
+Where: fLW = adjustment for lane width (HPMS data item 34)
+  fRLC = adjustment for right side lateral clearance (HPMS data item 38)
+  Lanes = HPMS data item 10
+
+  Figure 3. Equation. Calculation or free flow speed for freeways.
+
+The HERS method follows the HCM faithfully. NCHRP 825 recommends using the HCM
+method, so the two methods are the same. Therefore, the HCM method (which also is the
+HERS method) is recommended for capacity and LOS calculations.
+
+Multilane Highways
+
+The HERS method follows the HCM faithfully. NCHRP 825 recommends using the HCM
+method, so the two methods are the same. Therefore, the HCM method (which is also the
+HERS method) is recommended for capacity and LOS calculations.
+
+Where:
+
+  fHV = adjustment for heavy vehicles
+
+  PT  = HPMS data item 23 + HPMS data item 25
+  ET  = 1.5 if HPMS data item 2 indicates a forma urban area; otherwise:
+  = 1.5 if HPMS data item 44 = 1
+  FFS  = 2.5 if HPMS data item 44 = 2
+  Lanes  = 4.5 if HPMS data item 44 = 3
+  = HPMS data item 14 + 5
+  = HPMS data item 10
+
+  Figure 4. Equation. Calculation of capacity for multilane highways.
+
+Signalized Highways
+
+Different philosophies are taken between the HERS method and NCHRP 825 method. In the
+HERS method, the capacity of the entire approach is calculated. This done because in HERS’
+speed estimation, turning movement volumes are not available in HPMS and the volume on the
+entire segment is used. In the NCHRP 825 method, only the through movement is used. (It offers
+a solution if only total volume is available: if exclusive left-turn and right lanes exist, deduct 10
+percent for each.) To be comparable, we used the HERS method to analyze just the through
+
+  5
+Simplified Highway Capacity Calculation Method for the Highway Performance Monitoring System
+
+movement. In the HERS method, saturation flow rate is adjusted downward for lane width,
+heavy vehicles, parking, and the peak-hour factor. In the NCHRP 825 method, saturation flow
+rate is unadjusted. As a result, when applied to the Sample Panel data (26,504 signalized
+sections), the HERS method produces capacities that are 14 percent lower than NCHRP 825. The
+main problem with the HERS method is that the turning lane and their volume assignments are
+based on many assumptions. Because of its simplicity in dealing with turning movements, we
+recommend the NCHRP 825 method for capacity and LOS calculations.
+
+Where: g/C = HPMS data item 30
+  Lanes = HPMS data item 10
+
+  Figure 5. Equation. Calculation of capacity for signalized highways.
+
+Two-Lane Highways with No Traffic Control
+
+Completely different approaches are taken by the two methods. The HERS method assumes that
+no traffic control is present while the NCHRP 825 method includes delay at intersections if they
+are present. The HERS procedure calculates two-way capacity while the NCHRP method uses
+one-way capacity and assigns a fixed value, either 1,450 or 1,490 vehicles per hour, but capacity
+is not used in the calculation of LOS—it is only used to create a v/c ratio for screening. Because
+of this difference, no tests were made. The HERS method is quite complex, accounting for
+grades, heavy vehicles, peak-hour factor, and percent no passing zones. The NCHRP 825
+approach is simpler for capacity, but the calculation of speed and associated LOS basically
+follows the same method as for the capacity calculation in HERS. This is because capacity is
+“backcalculated” in the HERS method so that the HERS speed equations, which are based on the
+AADT-to-capacity ratio, can be used. In the NCHRP 825 method, capacity is largely irrelevant
+for two-lane highway LOS as it is based on average travel speed or percent of time following.
+Because it is more closely tied to HCM methods for the calculation of average travel speed (the
+basis for LOS), we recommend the NCHRP 825 method for capacity (one-way) and LOS
+calculations. That is, the one-way capacity is set at 1,490 vehicles per hour.
+
+Stop-Controlled Highways
+
+Very different capacity calculations are used in the HCM 2010 depending on whether an
+intersection has two-way stop control or all-way stop control. Unfortunately, it is impossible to
+distinguish the two conditions with HPMS data. Both HERS and NCHRP 825 procedures are
+complex and highly dependent on turning movements on all the approaches. The HERS
+procedure is based on the HCM 2000 procedure for two-way stop-controlled intersections. It is
+data intensive and makes many assumptions about turning movements based on the presence of
+turning lanes. In contrast, the NCHRP 825 procedure uses the highly simplified adaptation of the
+HCM procedure for all-way stop control and a more complex procedure for two-way stop control
+which is based on the update to the HCM 2010. For this reason, we did not run any comparisons
+between the two methods. Because, the two-way stop control procedures in NCHRP 825 is
+
+  6
+  Simplified Highway Capacity Calculation Method for the Highway Performance Monitoring System
+
+based on the recently updated version of the HCM 2010, we recommend that the NCHRP 825
+procedure be used for capacity and LOS calculations. In doing so, it is assumed that all stop
+control is two-way.
+
+Capacity  = 1,200 vehicles/hour; where HPMS data item 10 = 1
+  = 1,500 vehicles/hour otherwise
+
+  Figure 6. Equation. Calculation of capacity for stop-controlled highways.
+
+UPDATE CAPACITY PROCEDURES BASED ON NEW HIGHWAY CAPACITY
+MANUAL EDITION
+
+The Major Update to the HCM 2010 has been released. We reviewed the new procedures against
+the HERS capacity procedures and found no changes in the way capacity is calculated except for
+two-way stop-controlled intersections. The NCHRP 825 method is consistent with the new HCM
+as the researchers had access to the draft chapters. Therefore, the recommendations made above
+are not changed.
+
+  7
+  Simplified Highway Capacity Calculation Method for the Highway Performance Monitoring System
+
+  CHAPTER 3. BACKGROUND DEVELOP SIMPLIFIED METHODOLOGIES
+  TO CREATE GENERALIZED LEVEL OF SERVICE (LOS) LOOKUP TABLES
+
+BACKGROUND
+
+This report documents the work performed on Task 3: Develop Simplified Methodologies to
+Create Generalized Level of Service (LOS) Lookup Tables. At the kickoff meeting it was
+decided that a stand-alone tool would be built that can interface directly with Highway
+Performance Monitoring System (HPMS) data. Based on the task 2 assessment, the National
+Cooperative Highway Research Program (NCHRP) Report 825 version of the Highway
+Capacity Manual (HCM) procedures for calculating LOS has been programmed into this tool.3
+The advantage is that all relevant HPMS data elements could be used. Also, updating would be
+much easier—all that is required is to change the procedure rather than regenerate the massive
+lookup table that otherwise would have been created. In addition to the LOS designation for an
+HPMS section, the actual value of the service measure on which LOS is based will also be
+reported. It also was decided that generalized service volume tables for each facility would be
+produced, accounting for all of the nondefault factors that are covered by the NCHRP 825
+methodology.
+
+The types of facilities that are included in the analysis are as follows. These follow the facility
+types covered by the HCM:
+
+• Freeways.
+• Multilane highways.
+• Rural two-lane highways.
+• Signalized highways.
+• Stop-controlled highways.
+
+HPMS sections can be grouped into these categories based on their data elements. A hierarchy is
+used to make these assignments:
+
+• If functional system is one or two, and full access control exists, then the section is a
+  freeway.
+
+• If stop signs exist, then the section is stop controlled.
+• If signals exist, then the section is signalized.
+• If through lanes are greater than or equal to four, the section is multilane.
+• If through lanes are equal to two or three and the urban code indicates rural, the section is
+
+  rural two lane.
+
+However, a significant number of HPMS Sample Panel sections (about 30,000) cannot be
+classified using the above scheme. These tend to be two-, three-lane urban highways with no
+traffic control device on the actual section. Level of Service was not calculated for these
+
+3 Dowling, Richard et al., Planning and Preliminary Engineering Applications Guide to the Highway Capacity
+  Manual, NCHRP Report 825, 2016, http://www.trb.org/NCHRP/Blurbs/174958.aspx.
+
+  9
+Simplified Highway Capacity Calculation Method for the Highway Performance Monitoring System
+
+sections. One option for these sections is to treat them as signalized highways with 100 percent
+green time, but this results in a vast majority in LOS A, which is most likely misleading.
+Therefore, Level of Service was not calculated for these sections.
+
+DEFAULT VALUES
+
+For freeways and multilane highways, the NCHRP 825 method is followed directly and all of the
+required data elements are present in the HPMS Sample Panel. For signalized highways, the only
+data element not present in HPMS is cycle length. The following cycle lengths are assumed:
+
+• Principal arterials—120 seconds.
+• Minor arterials—90 seconds.
+• Collectors—60 seconds.
+
+For rural two-lane highways, LOS is based on average travel speed (ATS). A greatly simplified
+method was used for stop-controlled highways because so much of the required data on turning
+movements and cross-street volumes do not exist in HPMS:
+
+• It is assumed that the section is two-way stop controlled.
+• Conflicting flow rates are based on the values in table 2.
+
+Table 2. Conflicting flow rates for two-way stop-controlled highways—vehicles per hour.
+
+  Functional System
+
+Land Use  Principal Arterial  Minor Arterial  Collector
+
+Rural  100  150  200
+
+Urban  250  500  750
+
+Preliminary analysis of the 2014 HPMS Sample Panel revealed that many data items used to
+undertake the LOS calculations were missing. As a result, the project team developed default
+values for the required data items. These were calculated as the median value for records where
+the data items were present (table 3).
+
+RESULTS
+
+Tables 4 and 5 present the results of applying the HCM-based LOS calculation procedures to the
+2014 HPMS Sample Panel data. Tables 6 through 10 show the individual HPMS sections with
+LOS and service measure attached for each highway type; a separate spreadsheet contains the
+entire dataset. Tables 11 and 12 provide the LOS ranges for each highway type from the HCM.
+
+Generalized service volume tables are provided in the appendix.
+
+  10
+  Simplified Highway Capacity Calculation Method for the Highway Performance Monitoring System
+
+  Table 3. Default values for level of service calculation.
+
+  Freeways  Multilane  Rural Two
+  Lane
+  HPMS Data Item  Urban  Rural  Urban  Rural  Signalized  12
+  LANE_WIDTH  11  5
+SHOULDER_WIDTH_R  12  12  12  12
+ AADT_SINGLE_UNIT  10  =AADT*0.051
+AADT_COMBINATION  10  10  10  10  57  =AADT*0.048
+
+  K_FACTOR  =AADT*0.034 =AADT*0.043 =AADT*0.038 =AADT*0.043  40  11
+  D_FACTOR  50  57
+  MEDIAN_TYPE  =AADT*0.060 =AADT*0.193 =AADT*0.035 =AADT*0.082  2
+  SPEED_LIMIT  55
+  PCT_GREEN_TIME  10  9  10  10
+  SIGNAL_TYPE  2
+  TERRAIN_TYPE  55  55  59  57
+
+  3  2
+
+  55  65
+
+  1  2  1  2
+
+  11
+Simplified Highway Capacity Calculation Method for the Highway Performance Monitoring System
+
+Table 4. Level of service for 2014 highway performance monitoring system sample panel—
+  rural sections.
+
+Area  Highway Type  Level of  No. Sections  Mileage  % of Mileage
+Type  Service
+
+Rural  Freeway  A  3,561  18,209  56.3%
+
+Rural  Freeway  B  2,148  8,711  26.9%
+
+Rural  Freeway  C  687  3,402  10.5%
+
+Rural  Freeway  D  270  1,407  4.4%
+
+Rural  Freeway  E  78  343  1.1%
+
+Rural  Freeway  F  88  265  0.8%
+
+Rural  Freeway  A-F Total  6,832  32,336  100.0%
+
+Rural  Multilane  A  2,624  30,015  89.7%
+
+Rural  Multilane  B  478  2,647  7.9%
+
+Rural  Multilane  C  131  616  1.8%
+
+Rural  Multilane  D  43  91  0.3%
+
+Rural  Multilane  E  13  42  0.1%
+
+Rural  Multilane  F  12  47  0.1%
+
+Rural  Multilane A-F Total  3,301  33,459  100.0%
+
+Rural Rural Two Lane  A  9,559  374,043  77.9%
+
+Rural Rural Two Lane  B  1,679  33,692  7.0%
+
+Rural Rural Two Lane  C  1,323  28,683  6.0%
+
+Rural Rural Two Lane  D  888  18,033  3.8%
+
+Rural Rural Two Lane  E  1,808  23,353  4.9%
+
+Rural Rural Two Lane  F  182  2,333  0.5%
+
+Rural Rural Two Lane A-F Total  15,439  480,137  100.0%
+
+Rural  Signalized  A  442  6,921  87.7%
+
+Rural  Signalized  B  101  566  7.2%
+
+Rural  Signalized  C  81  277  3.5%
+
+Rural  Signalized  D  23  30  0.4%
+
+Rural  Signalized  E  15  24  0.3%
+
+Rural  Signalized  F  40  76  1.0%
+
+Rural  Signalized A-F Total  702  7,894  100.0%
+
+Rural Stop Controlled  A  100  1,334  1.0%
+
+Rural Stop Controlled  B  2,022  127,671  97.6%
+
+Rural Stop Controlled  C  62  1,359  1.0%
+
+Rural Stop Controlled  D  10  138  0.1%
+
+Rural Stop Controlled  E  6  177  0.1%
+
+Rural Stop Controlled  F  15  74  0.1%
+
+Rural Stop Controlled A-F Total  2,215  130,754  100.0%
+
+Note: Mileage is the expanded mileage—section length times the HPMS expansion factor.
+
+  12
+  Simplified Highway Capacity Calculation Method for the Highway Performance Monitoring System
+
+Table 5. Level of service for 2014 highway performance monitoring system sample panel—
+  urban sections.
+
+Area  Highway Type  Level of  No. Sections  Mileage % of Mileage
+Type  Service
+
+Urban  Freeway  A  3,507  6,338  21.7%
+
+Urban  Freeway  B  3,631  6,465  22.2%
+
+Urban  Freeway  C  3,170  6,445  22.1%
+
+Urban  Freeway  D  2,130  4,397  15.1%
+
+Urban  Freeway  E  975  2,107  7.2%
+
+Urban  Freeway  F  1,695  3,414  11.7%
+
+Urban  Freeway  A-F Total  15,108  29,166  100.0%
+
+Urban  Multilane  A  5,774  18,605  56.9%
+
+Urban  Multilane  B  2,875  8,616  26.4%
+
+Urban  Multilane  C  1,393  3,632  11.1%
+
+Urban  Multilane  D  508  1,264  3.9%
+
+Urban  Multilane  E  195  304  0.9%
+
+Urban  Multilane  F  147  273  0.8%
+
+Urban  Multilane  A-F Total  10,892  32,695  100.0%
+
+Urban  Signalized  A  8,759  57,615  56.3%
+
+Urban  Signalized  B  5,495  20,887  20.4%
+
+Urban  Signalized  C  4,558  11,602  11.3%
+
+Urban  Signalized  D  2,061  4,083  4.0%
+
+Urban  Signalized  E  1,336  2,525  2.5%
+
+Urban  Signalized  F  2,918  5,571  5.4%
+
+Urban  Signalized A-F Total  25,127  102,284  100.0%
+
+Urban Stop Controlled  B  1,643  3,358  5.5%
+
+Urban Stop Controlled  C  7,525  34,253  55.6%
+
+Urban Stop Controlled  D  1,234  8,657  14.1%
+
+Urban Stop Controlled  E  559  3,682  6.0%
+
+Urban Stop Controlled  F  1,839  11,611  18.9%
+
+Urban Stop Controlled A-F Total  12,800  61,560  100.0%
+
+  13
+Simplified Highway Capacity Calculation Method for the Highway Performance Monitoring System
+
+Table 6. Selected highway performance monitoring system freeway sections with level of service and service measures attached.
+
+  Level  Service
+
+Highway State Functional Route Route Begin End County of  Service Measure Expanded
+
+Type Code System Signing Number Point Point Code Service Measure Value Mileage
+
+Freeway 1  1  2  65 182.47 183.53 1  C  Density  21.8  3.61
+
+Freeway 1  1  2  10  29.07 29.073  3  E  Density  44.4  0.00
+
+Freeway 1  1  2  10 29.073 30.258 3  F  Density  51.1  1.26
+
+Freeway 1  1  2  10 30.258 32.77  3  F  Density  58.1  2.68
+
+Freeway 1  1  2  10  32.77 34.5  3  F  Density  58.1  1.84
+
+Freeway 1  1  2  10  34.5 34.98  3  F  Density  58.1  0.51
+
+Freeway 1  1  2  10 34.984 35.181 3  F  Density  49.8  0.20
+
+Freeway 1  1  2  10 35.181 38.775 3  E  Density  38.6  3.60
+
+Freeway 1  1  2  10 38.775 41.3  3  C  Density  18.5  2.53
+
+Freeway 1  1  2  10  41.3 44.31  3  C  Density  18.5  3.01
+
+Freeway 1  1  2  10  44.32 44.89  3  B  Density  13.8  0.57
+
+Freeway 1  1  2  10  44.89 44.899  3  B  Density  13.8  0.01
+
+Freeway 1  1  2  10  58.56 66.29  3  C  Density  19.9  36.99
+
+Freeway 1  1  2  65  32.21 34.07  3  C  Density  21.4  8.90
+
+Freeway 1  1  2  65 34.092 37.77  3  A  Density  9.8  4.70
+
+Freeway 1  1  2  65  37.77 37.88  3  A  Density  7.8  0.14
+
+Freeway 1  1  2  65  107.5 111.81 13  B  Density  12.5  20.62
+
+Freeway 1  1  2  65 120.25 123.87 13  B  Density  13.6  17.32
+
+Freeway 1  1  2  65 126.09 126.44 13  B  Density  13.3  0.52
+
+Freeway 1  1  2  65 128.12 129.66 13  B  Density  12.7  2.29
+
+Freeway 1  1  2  65  130.2 131.11 13  B  Density  15.1  1.36
+
+Freeway 1  1  2  65 131.81 133.93 13  B  Density  15.5  10.14
+
+Freeway 1  1  2  65 135.21 139.6 13  B  Density  15.5  21.01
+
+  14
+  Simplified Highway Capacity Calculation Method for the Highway Performance Monitoring System
+
+Table 7. Selected highway performance monitoring system multilane sections with level of service and service measures attached.
+
+  Level  Service
+
+Highway State Functional Route Route Begin End County of Service Measure Expanded
+
+Type Code System Signing Number Point Point Code Service Measure Value Mileage
+
+Multilane 6  2  20  14.869 15.231  13  B  Density 17.1  4.34
+
+Multilane 6  2  20  14.869 15.231  13  B  Density 17.1  0.94
+
+Multilane 6  2  20 144.831 144.962 13  B  Density 17.1  0.18
+
+Multilane 6  2  20 144.831 144.962 13  B  Density 17.1  1.57
+
+Multilane 6  2  20 144.831 144.962 13  B  Density 17.1  0.34
+
+Multilane 6  2  20  14.958 15.14  13  B  Density 17.1  0.25
+
+Multilane 6  2  20  14.958 15.14  13  B  Density 17.1  2.18
+
+Multilane 6  2  20  14.958 15.14  13  B  Density 17.1  0.47
+
+Multilane 6  2  50  16.374 16.49  17  C  Density 24.0  0.31
+
+Multilane 6  2  50  16.374 16.49  17  C  Density 24.0  0.13
+
+Multilane 6  2  50  45.959 46.059  17  D Density 32.7  0.25
+
+Multilane 6  2  50  49.066 49.31  17  C  Density 24.0  0.65
+
+Multilane 6  2  50  49.066 49.31  17  C  Density 24.0  0.28
+
+Multilane 6  2  101 706.865 707.463 23  C  Density 21.9  1.51
+
+Multilane 6  2  111  1.04 1.048  25  B  Density 17.7  0.01
+
+Multilane 6  2  111  1.048 2.076  25  C  Density 19.5  1.03
+
+Multilane 6  2  111  2.076 2.56  25  C  Density 19.0  0.51
+
+Multilane 6  2  111  2.076 2.56  25  C  Density 19.0  0.48
+
+Multilane 6  2  111  11.7 11.708 25  C  Density 19.0  0.01
+
+Multilane 6  2  111  11.7 11.708 25  C  Density 19.0  0.01
+
+Multilane 6  2  33  89.04 89.491 29  A  Density  5.5  1.75
+
+  15
+

@@ -1,0 +1,1084 @@
+112  CHAPTER 6
+
+in this regard. A region that allows for increases in supplies of affordable housing
+in transit-rich areas will tend to demonstrate a better match than one that zones
+in a more exclusionary fashion.
+
+  To illustrate the variation among metropolitan areas in terms of the degree
+to which transit-dependent people live in transit-rich territory, figure 6.2 charts
+the share of transit-dependent households in a region according to their resi-
+dence by public-transport accessibility quartiles, with quartiles defined internally
+to each metropolitan area.42 Regions that perform best in the match between
+transit-dependent households and territory of high public-transport accessibility
+include Kansas City, New York, and San Francisco. By contrast, places like Houston,
+Los Angeles, and Cleveland perform less well because a substantially smaller share
+of transit-dependent households resides in zones of the highest transit-accessibility
+quartile. An indicator like this could focus policy-making attention on the location
+
+  Level of accessibility
+100
+
+Percentage of households with no vehicle  80
+
+  60
+
+  40
+
+  20
+
+  0
+
+  Kansas City
+  New York
+
+  San Francisco
+  Washington DC
+
+  Atlanta
+  Las Vegas
+
+  Boston
+  Minneapolis
+
+  Baltimore
+  Chicago
+  Seattle
+  Denver
+
+  Columbus
+  Philadelphia
+
+  Portland
+  Richmond
+  Cincinnati
+  Virginia Beach
+  Memphis
+
+  Tucson
+  Charlotte
+
+  Detroit
+  Dallas
+  Phoenix
+  Cleveland
+  Los Angeles
+  Houston
+
+  Metropoliatan Planning Organization region
+
+  1st Quartile (low)  2nd Quartile  3rd Quartile  4th Quartile (high)
+
+FIGURE 6.2. Share of transit-dependent households residing in four transit
+accessibility categories (sorted in increasing order on the highest transit-
+accessibility quartile)
+  ACCESSIBILITY IN SOCIAL-EQUITY EVALUATION  113
+
+of public-transport lines, on housing-stock constraints, or on other barriers
+impeding the location of transit-dependent households in transit-rich areas. One
+desirable attribute of this indicator is its automatic scaling to the public-transport
+accessibility of any given region. For example, while analysis of Kansas City’s overall
+public-transport accessibility in comparison to New York’s makes little sense, the
+indicator in figure 6.2 shows that the two have achieved a similar match between
+public-transport accessibility and transit-dependent populations.
+
+The Mode-Location Match Ratio
+
+The charts presented so far have shown the disparity in accessibility by mode and
+location alone. A quantitative indicator can be created to take the information in
+these charts one step further by accounting for the locations of car-owning and
+carless people. The “Mode-Location Match Ratio” (MLMR) is defined as the sum
+across all zones in a region of (a) public-transport accessibility weighted by the
+carless population divided by (b) auto accessibility weighted by the car-owning
+population. Equation 6.1 formally defines the indicator:
+
+∑iN (ait sit )
+MLMR = N  (6.1)
+∑i (aia sia )
+
+  Where MLMR is the Mode-Location Match Ratio for a metropolitan region;
+ati is the accessibility index for travel by public transport for zone i; aai is the
+accessibility index for travel by automobile for zone i; sti is the share of the region’s
+transit-dependent households located in zone i; sai is the share of the region’s
+automobile-owning households located in zone i. For a metropolitan region with
+N zones, i = 1, 2, . . . , N.
+
+  This weighted ratio is highest when locations of high public-transport accessi-
+bility coincide with high shares of the region’s transit-dependent population. The
+indicator would ordinarily range from 0 to 1, with the high values being produced
+by high levels of public-transport accessibility and high proportions of transit-
+dependent populations in the most accessible zones. Degradation of either vari-
+able would reduce the value of the indicator, and as a practical matter, in the U.S.
+context, the indicator would rarely exceed 0.4. The MLMR registers public-
+transport accessibility to the extent that transit serves the transit-dependent
+population. If a region chooses to improve public transport in the suburbs in a
+way that fails to benefit the accessibility of the transit-dependent population, the
+MLMR change would be slight, indicating a small impact for such a choice. By
+contrast, a small improvement aimed at the locations of the transit-dependent
+population could have a greater positive effect on the indicator.
+114  CHAPTER 6
+
+  The Mode-Location Match Ratio for a selected set of regions, in order of
+descending values of the MLMR, is shown in figure 6.3. Within this set, the
+regions with the best conditions for transit-dependent people include Washing-
+ton, DC, New York, and Atlanta. By contrast, places like Cincinnati, Detroit, and
+Houston offer the most unfavorable conditions for carless people.
+
+  A high MLMR value can be achieved by (1) improving public-transport
+accessibility overall relative to auto accessibility, (2) ensuring that transit acces-
+sibility is provided where transit-dependent people live, or (3) enabling transit-
+dependent people to relocate to transit-rich zones by ensuring that adequate
+affordable housing is available there. The second and third steps are important.
+To gain a sense of their magnitude of influence, consider the effect of step 1
+alone. In addition to the MLMR, figure 6.3 includes an unweighted ratio, a value
+that compares public-transport accessibility to auto accessibility by territory
+alone, with no weighting to account for where carless and car-owning people
+
+  0.40
+
+  0.30
+
+Ratio  0.20
+
+  0.10
+  0.00
+
+  Washington, DC
+  New York
+  Atlanta
+  Portland
+  Cleveland
+
+  Los Angeles
+  Memphis
+  Houston
+  Detroit
+  Cincinnati
+
+  Mode-location match ratio  Unweighted ratio
+
+FIGURE 6.3. Mode-location match ratio, compared to unweighted ratio,
+selected MPO regions
+ACCESSIBILITY IN SOCIAL-EQUITY EVALUATION  115
+
+live. For example, referring back to the charts reveals that the gap between auto
+and public-transport accessibility is much smaller in Washington, DC, than it
+is in Detroit (figure 6.1); thus, transit riders in Detroit are generally far more
+disadvantaged relative to their car-driving counterparts than are transit riders
+in Washington. The unweighted ratio in the chart offers a quantitative indicator
+to capture what the charts reveal visually: Detroit’s unweighted ratio of 0.01 is
+substantially below Washington, DC’s unweighted ratio of 0.12.
+
+  Comparing the MLMR with the unweighted ratio in figure 6.3 reveals the
+importance of accounting for the residential locations of transit-dependent
+people. First, Los Angeles is an example where transit in general appears to
+compete relatively well with the auto by territory alone (with an unweighted
+ratio of 0.11). But, consistent with figure 6.2, transit is not serving a high share
+of transit-dependent people in Los Angeles, as shown in the modest MLMR of
+0.15 and the small difference between the MLMR and the unweighted ratio.
+Second, New York is an example of just the opposite; public transport in general
+fares much worse than the auto (unweighted ratio of 0.09) but makes up for this
+disadvantage by providing a high share of the best public transport to locations
+that house a high share of the region’s transit-dependent population (MLMR
+of 0.34). Third, Washington, DC, appears to do well on both scores, offering
+strong public-transport accessibility relative to auto accessibility (unweighted
+ratio of 0.12), while also boosting the effectiveness of that transit by serving a
+high proportion of transit-dependent people (MLMR of 0.37). Finally, Detroit
+and Cincinnati appear to fall short on both conditions. Their public-transport
+accessibility is generally low relative to their auto accessibility (MLMR of 0.02
+for both), and they do not direct public-transport service in a way that covers
+a high proportion of the transit-dependent population (unweighted ratio of
+about 0.01 for both).
+
+  Dependence on public transport usually constitutes an accessibility disadvan-
+tage, but dependence on public transport while living where transit accessibility
+is low is a double burden. The approach presented here emphasizes two main fac-
+tors that contribute to the equity of accessibility among a metropolitan region’s
+residents. First, regions where public-transport accessibility is high relative to
+automobile accessibility are more equitable than others. Second, a region is more
+equitable if a larger share of transit-dependent people is capable of living in zones
+where public-transport accessibility is high. This second point has critical impli-
+cations for public policy aimed at advancing social equity in transportation. It
+underscores how land-use regulations and housing policies might contribute to
+improving transportation equity by relaxing restrictions on affordable-housing
+development in high-transit-accessibility locales and targeting the preservation
+and development of affordable housing in such locales.43 And it offers clearer
+116  CHAPTER 6
+
+direction for public officials who are deciding where to invest public-transport
+funds. If advancing social equity is a goal, then instead of minimizing the gap
+between auto and transit accessibility overall, decision makers should give pref-
+erential treatment to areas of metropolitan space where large shares of transit-
+dependent people live when deciding where to make investments in public
+transport. This is all the more necessary given highly constrained public trans-
+port budgets.
+
+Accessibility Metrics for
+Social-Group Comparison
+
+While the MLMR is sensitive to locations of transit-dependent people, as
+a single metric, it does not convey a distribution across a population and
+across metropolitan territory. By contrast, analysis of distributions can high-
+light areas of advantage and disadvantage of population segments, such as by
+ethnicity or income, sometimes revealing unexpected outcomes. Equity analy-
+sis pertains to these groupings in part because public agencies in the United
+States have been mandated to address the needs of travelers specifically by race
+and income.44
+
+  An effective analysis of social equity requires that accessibility indicators be
+comparable on a common scalar across social groups. But prevailing metrics
+of accessibility, such as the cumulative-opportunities approach or the gravity
+model, present a key obstacle to making such comparisons, because they are lim-
+ited to the analysis of a single mode at a time. These metrics fail to account for
+the differing use of travel modes among social groups, such as those defined by
+race and income. For example, racial minorities depend on public transport far
+more than whites; African Americans are about eight times as likely as whites to
+make a trip by bus.45 To compare social groups, it is necessary to control for the
+fact that some groups depend disproportionately on the public-transport mode.
+
+  Accessibility indicators are frequently created for a spatial zone rather than for
+individuals. As place-based measures, they attribute the same level of accessibil-
+ity to every person in a zone, regardless of personal preferences or capabilities
+regarding mode of travel. The typical approach to calculating accessibility indi-
+cators is to treat travel modes separately, using one indicator for travel by auto
+and another indicator for travel by transit. The primary reason for calculating
+separate indicators is that the travel-time difference between the modes impedes
+their meaningful combination into a composite metric.
+
+  The key to making measurable comparisons across social groups while con-
+trolling for modal differences is to conduct the analysis at the level of a household.
+ACCESSIBILITY IN SOCIAL-EQUITY EVALUATION  117
+
+For our measures, each household is assigned a place-based accessibility score
+from the zone of residence. A household is assigned one of two accessibility
+scores—auto or transit—depending on the household’s vehicle availability.46 Any
+household without a vehicle is assumed to be dependent on public transport, and
+such a household experiences only transit accessibility. Conversely, any house-
+hold with a vehicle available is assumed to experience auto accessibility, and
+every member of the household is assumed to experience auto accessibility. This
+assumption, which is driven primarily by data availability, suffers from certain
+shortcomings. How any one person among several in a household experiences
+accessibility is clearly more complicated than this assumption suggests. People in
+carless households are not necessarily dependent on transit; they may share rides
+with car owners or restrict their housing locations to be within walking distance
+of their destinations. Conversely, all people who live in a household with a car do
+not necessarily use that car. In a household where the number of workers exceeds
+the number of cars, some members may be forced to rely on transit.
+
+Accessibility Equity and Household Income
+
+The relationship between accessibility and income is complex. Although one
+might expect low income to consistently translate into an accessibility disad-
+vantage, this is not necessarily the case. Several dimensions of the accessibility
+concept vary systematically by income, including the availability of a car and
+residential location. People with low incomes may be unable or unwilling to
+pay the high costs of owning a private automobile. Such people are more highly
+dependent on other modes of travel for accessing opportunities and tend to be
+disproportionately affected by policies that favor mobility for cars and contrib-
+ute to the decentralization of land-use patterns. On the other hand, low-income
+people in the United States often live in more central parts of metropolitan areas,
+a location that can confer on them an accessibility advantage, particularly if they
+own a car.47
+
+  These factors combine to shape a household-level, mode-adjusted employ-
+ment accessibility by income group, as exemplified in the case of Baltimore (fig-
+ure 6.4). In Baltimore, about half of the households in the low-income group
+experience lower levels of accessibility to jobs than the other income groups.
+Low-income households at the low end of the accessibility range are mainly
+car-owning households located in zones at the periphery of the region and
+transit-dependent households located anywhere in the region. However, the
+low-income line crosses the high-income line around the median. Although
+low-income households are disadvantaged in the low range of accessibility, at
+the high end of accessibility it is just the reverse: low-income households are
+118  CHAPTER 6
+
+advantaged relative to their high-income counterparts in the high-accessibility
+range. Low-income households at the upper end of the accessibility range are
+mainly car-owning households that experience a locational advantage over
+their high-income counterparts because they reside near the center of the
+region.
+
+  Analysis of sectoral accessibility distributions as presented here can forestall
+misdiagnosis of problems. For example, with a significant share of the low-
+income population actually advantaged by their location, spatial mismatch may
+be less of a problem than the threat to accessibility posed by displacement from
+central locations stemming from reductions in housing affordability.48 Most
+U.S. metropolitan regions reveal patterns that are similar to the case of Balti-
+more, highlighting the disparate levels of accessibility disadvantage faced by low-
+income households.49
+
+  400,000
+
+  300,000
+
+  Accessibility index  200,000
+
+  100,000
+
+  0
+
+  0  25  50  75  100
+
+  Household accessibility percentile
+
+  Low-income  Mid-income  High-income
+
+FIGURE 6.4. Mode-adjusted accessibility to work by household accessibility
+percentile and household income, Baltimore
+  ACCESSIBILITY IN SOCIAL-EQUITY EVALUATION  119
+
+Accessibility Equity and Race
+
+The components of accessibility vary considerably by race. Racial minorities
+tend to own fewer cars and rely more heavily on public transport, which sug-
+gests that they experience an accessibility disadvantage.50 Racial minorities are
+also not evenly spread throughout metropolitan space; African Americans in
+particular tend to be disproportionately located at the urban core in many U.S.
+metropolitan regions due in part to exclusionary zoning practices and histori-
+cal racial discrimination in housing markets.51 Residing in a central position in
+metropolitan space may be an advantage in terms of accessibility. Whether this
+locational advantage is enough to offset the mobility disadvantages of carless-
+ness is an open question. For instance, while transit dependency is ordinarily a
+substantial disadvantage in accessibility, some metropolitan regions may provide
+transit service at a level that nearly compensates for this disadvantage. And some
+metropolitan regions may offer a larger share of people in need of good transit
+service the option of living in accessibility-rich places.
+
+  Analysis of accessibility by race can be carried out for any census-defined
+groupings; the following graph compares accessibility between Asian, black,
+and white populations in selected U.S. metropolitan areas. For example, the
+
+  1,600,000
+
+  1,200,000
+
+Accessibility index  800,000
+
+  400,000
+
+  0
+
+  0  25  50  75  100
+
+  Household accessibility percentile
+
+  Black  Asian  White
+
+FIGURE 6.5. Mode-adjusted accessibility to work by household accessibility
+percentile and race, New York
+120  CHAPTER 6
+
+mode-adjusted accessibility to jobs varies notably among the three racial groups
+in the New York region (figure 6.5). Asians as a group experience higher acces-
+sibility than the other two groups. Blacks and whites are similar through most of
+the distribution, except for a small segment where blacks are advantaged in the
+medium-to-high range of accessibility.
+
+  The case of Los Angeles offers a contrast to that of New York in the compari-
+son of blacks and whites (figure 6.6). In Los Angeles, blacks tend to experience
+higher accessibility than whites through most of the distribution, a pattern
+that is substantially different from New York’s. The difference may be due in
+part to a higher degree of centrality among blacks in Los Angeles as compared
+to New York, which may reflect differences in constrained residential location
+choices or other historic settlement patterns. The difference in car-ownership
+rates between blacks and whites also probably plays an important role in
+explaining the variation found in the figures for New York and Los Angeles.
+For example, a substantially larger share of African Americans in Los Angeles
+
+  700,000
+
+  600,000
+
+  500,000
+
+  Accessibility index  400,000
+
+  300,000
+
+  200,000
+
+  100,000
+
+  0
+
+  0  25  50  75  100
+
+  Household accessibility percentile
+
+  Black  Asian  White
+
+FIGURE 6.6. Mode-adjusted accessibility to work by household accessibility
+percentile and race, Los Angeles
+  ACCESSIBILITY IN SOCIAL-EQUITY EVALUATION  121
+
+live in households with vehicles available (figure 6.7). Furthermore, the gap in
+vehicle availability between blacks and whites is considerably smaller in Los
+Angeles than in New York. The advantage that black Los Angelinos experience
+is likely driven in large part by high black vehicle-availability rates, especially if
+a large share of blacks in the Los Angeles region are living in central locations
+(figure 6.6).
+
+  The accessibility advantage that blacks as a group experience in Los Angeles
+and New York may run counter to the expectations of some. Indeed, the conven-
+tional understanding in the social science literature is that racial minorities are
+disadvantaged in getting to opportunities in the United States because a growing
+share of metropolitan destinations are located in distant suburbs, while minori-
+ties live near the center.52 Yet, from an accessibility perspective, central locations
+position their residents nearer to a wider range of opportunities than anywhere
+else in a region.53
+
+Household car-ownership rate  100
+  90
+  80  New York
+  70  Philadelphia
+  60
+  50  Baltimore
+  Boston
+
+  Chicago
+  Minneapolis–St. Paul
+
+  Cincinnati
+  Cleveland
+  Portland
+  Washington, DC
+
+  Detroit
+  San Francisco
+
+  Kansas City
+  Memphis
+  Las Vegas
+  Richmond
+
+  Los Angeles
+  Virginia Beach
+
+  Seattle
+  Colombus
+
+  Denver
+  Houston
+  Charlotte
+
+  Atlanta
+  Tucson
+  Dallas
+
+  Metropolitan Planning Organization region
+
+  White  Asian  Black
+
+FIGURE 6.7. Intermetropolitan comparison of vehicle-availability rates, by race
+(sorted in increasing order of African American car ownership)
+122  CHAPTER 6
+
+  In this case, the equity dimension of accessibility may be more one of mean-
+ing than magnitude, because the accessibility that blacks experience varies for
+different reasons than for whites. The majority of variation in white accessibility
+is likely a product of freely chosen residential location, while the majority of the
+variation in black accessibility may be a product of car availability. Monitoring
+changes in such variables is important from a public-policy perspective. Whites
+tend to live disproportionately in low-density communities, and they may be
+paying a price in the form of low accessibility for doing so, consistent with land-
+market theories that suggest that some households willingly trade off higher
+transportation costs in exchange for larger homes and lots at distant locations.54
+Seen in this way, differences in the matter of choice between blacks and whites
+are important to recognize in evaluating accessibility outcomes.
+
+  The finding that blacks are advantaged in accessibility terms in Los Angeles
+and New York does not extend to all U.S. metropolitan areas. Several metropoli-
+tan regions reveal patterns of distinct accessibility disadvantage for blacks. For
+example, African Americans in Cleveland, Boston, and Philadelphia are severely
+disadvantaged throughout the entire accessibility distribution (charts not shown
+for brevity). All three of these regions are places with relatively low vehicle-
+availability rates among blacks (as shown in figure 6.7), yet other regions with
+comparably low vehicle-availability rates among blacks, such as Chicago and
+Minneapolis–St. Paul, do not reveal a similar accessibility disadvantage. These
+results underscore the importance of analyzing differences among social groups
+on a region-specific basis by considering the effect of mode simultaneously with
+the effect of residential location.
+
+Social Equity and Urban-Form Dimensions of
+Regional Accessibility
+
+Accessibility is inherently linked to places and the people who live in them, and
+accessibility analysis allows planners to identify which people are disadvantaged
+in their ability to reach destinations. Where mobility-based analysis leaves a great
+deal of uncertainty about whether a metric actually indicates disadvantage or
+not, the meaning of an accessibility metric is consistent and clear because an
+improvement in the ability to reach destinations is the ultimate goal of the trans-
+portation system.
+
+  The accessibility shift alone is not enough to advance social equity, but acces-
+sibility metrics are essential for informing sound policy choices. The analyses
+presented in this chapter acknowledge that multiple goals are in competition in
+decisions about transportation policy, but they show how accessibility metrics,
+ACCESSIBILITY IN SOCIAL-EQUITY EVALUATION  123
+
+when linked to the people experiencing that accessibility, offer important insights
+into questions of social equity in transportation. In the case of metropolitan
+regions of the United States, no other determinant is as important as the avail-
+ability of a car in achieving high accessibility. Lacking a car represents a severe
+disadvantage in accessibility nearly everywhere, and elevating social equity in
+transportation will require tools, such as those presented here, to direct resources
+to transit-dependent people.
+
+  Aside from the central importance of mode, accessibility-based analysis
+underscores the importance of residential location in determining people’s
+ability to access opportunities. Given a particular distribution of auto and tran-
+sit accessibility, the location of carless people still shapes the accessibility that
+people experience in a region. The match between transit-dependent house-
+holds and transit-rich zones varies substantially between regions. Improving
+that match opens up possibilities for advancing social equity with tools tradi-
+tionally outside of the transportation realm, such as land-use regulatory reform
+and housing policies that make it easier for people to choose to live where transit
+is plentiful.
+  7
+NONWORK ACCESSIBILITY
+
+Notwithstanding the attention that the commute receives in transportation-
+planning practice, the work trip accounts for only a minority of travel; trips to
+or from work count for only 16 percent of daily person trips and 19 percent of
+distance traveled in the United States.1 For this reason, job accessibility in isolation
+would only partially capture people’s ability to reach their destinations and thus be
+an incomplete accessibility assessment. In this chapter, we develop a comprehensive
+index of nonwork accessibility, apply it to large metropolitan regions in the United
+States, and compare the distribution of nonwork accessibility to work accessibility.
+
+  Nonwork differs from work accessibility in three important ways. First, peo-
+ple’s propensity to travel long distances is significantly greater for work trips than
+for nonwork trips. At 12.2 miles, the average work trip by car in the United States
+is nearly twice the distance of the average shopping, family, or personal trip.2
+The relative shortness of nonwork trips may result from the closeness of avail-
+able alternative destinations (which renders longer-distance travel unnecessary),
+a resistance to traveling longer distances for nonwork purposes, or some combi-
+nation of the two. In any case, metrics of nonwork accessibility need to take into
+account people’s greater resistance to long-distance travel to nonwork destina-
+tions than to workplaces.
+
+  Second, there are frequently good substitutes for nonwork destinations.
+One grocery store or restaurant may be readily patronized instead of another.
+Some nonwork destinations are not substitutable—there’s no good alternative
+to “Mom’s house” and no good short-term alternative to “my school”—but
+
+  124
+NONWORK ACCESSIBILITY  125
+
+for much nonwork travel, reasonably substitutable destinations are the norm.
+Indeed, for many nonwork destinations, such as a trip to a park, the trip is only
+worth making if it is convenient to do so. By contrast, for most workers, “my
+workplace” has a unique and fixed location as long as they remain in their jobs;
+even those who work at multiple sites rarely have complete discretion as to where
+they work on a given day. To be sure, work locations other than one’s own remain
+highly relevant to accessibility. Because U.S. workers change jobs more frequently
+than they change addresses—the median U.S. resident changes jobs every 4.1
+years and changes residences every 6.2 years3—locating one’s residence with
+accessibility to significant job concentrations can be an important adaptability
+strategy. But overall, the substitutability of work locations pales in comparison to
+people’s short-term ability to choose among nonwork locations.
+
+  Third, nonwork destinations are far more varied and less standardized than
+work destinations. While not all jobs are created equal—and not all jobs are rel-
+evant to any given individual—job locations may be combined with each other,
+such that the statement “zone X contains 10,000 jobs” is meaningful. By con-
+trast, a nonwork destination may be a park, a house of worship, the office of a
+notary public, a supermarket, a regional shopping mall, or the house of a friend.
+The differing meaning of each of these destinations and their differing capac-
+ity to attract trips impede quantification of the concept of nonwork accessibil-
+ity. Unlike jobs, which can be readily counted, nonwork destinations cannot be
+meaningfully combined with one another without additional sorting, weighting,
+or other processing to render them meaningful along a single scale. One con-
+sequence of this incommensurability is that nonwork accessibility is frequently
+defined sectorally as opposed to comprehensively, as when analysts investigate
+access to food stores or health-care providers.4
+
+The Importance of Nonwork Accessibility
+
+Despite the large proportion of nonwork travel in total trip making, work-related
+accessibility continues to hold an outsized importance to outcomes of interest
+to transportation and land-use planners, notably residential-location choice,
+and significant scientific and policy debates surround the relative importance of
+work and nonwork accessibility. The prevalence of nonwork travel has led some
+observers, such as Peter Gordon, Ajay Kumar, and Harry Richardson and Kang-
+Rae Ma and David Banister to argue that the work trip has been overemphasized
+in transportation and land-use policy and research:
+
+  Accessibility to the workplace is the primary determinant of residential
+  land rents and location patterns in the standard monocentric model
+126  CHAPTER 7
+
+  of urban land use that remains, much to our regret, the centerpiece of
+  urban economic theory. Both the models constructed by transporta-
+  tion analysts and the investment projects and policies implemented by
+  transportation planners are almost always based on the assumption that
+  the work trip is the only trip that counts.5
+
+  The recent growth of trips for other purposes may also result in longer
+  commuting because many households may consider trade-offs among
+  a number of possible activities (e.g. families with children may priori-
+  tize access to good schools). This means that a policy of jobs-housing
+  balance could cause greater daily travels if the spatial distribution of
+  non-work trips is not jointly considered. Therefore, minimizing the
+  commute should not be a policy target on its own, particularly when
+  non-work trips are increasingly important in the policies aimed at
+  enhancing local and regional accessibilities.6
+
+  Whether one’s concern is improving households’ accessibility, reducing
+vehicle-kilometers traveled, or coping with roadway congestion, the sheer
+volume of nonwork travel merits policy attention. Yet studies of the impact
+of work and nonwork accessibility on household residential location—a cen-
+tral outcome of policy concern due to its effects on all the outcomes we have
+mentioned—suggest that nonwork accessibility shapes people’s locational
+choices only weakly, while workplace access is one of the most influential vari-
+ables in multivariate models of residential location choice.7 For example, access
+to retail, food, and other services was found to have some influence on house-
+holds’ residential choice, but much less than job-accessibility variables.8 Simi-
+larly, a study of relocating residents in the Puget Sound, Washington area, found
+that workplace accessibility had a significant influence, but the retail-accessibility
+variable tested had none.9 Nonwork accessibility may affect residents’ everyday
+lives in important ways, but it does not seem to have a great influence on most
+people’s residential-location choice.
+
+Development of a Nonwork
+Accessibility Index
+
+The absolute importance of workplace accessibility to residential location choice
+may not be surprising, but its strong influence relative to the larger share of
+travel represented by nonwork destinations remains unexplained. In order to
+explore this issue, a comprehensive metric of nonwork accessibility is required,
+NONWORK ACCESSIBILITY  127
+
+in contrast to most indicators of nonwork accessibility, which have been specific
+to sectors such as retail or services.10 One approach to constructing a general
+index used people’s duration of nonwork activities as an indicator of the attrac-
+tiveness of nonwork destinations; the more time a person spent at a destination,
+the more valuable it was considered to be.11 Since this metric depends on trips
+actually taken to the specific destinations in question, it is incompatible with
+the notion of accessibility as potential for interaction. Another approach defined
+six types of destinations (cultural services, educational services, health services
+and facilities, sports and recreational facilities, bank branches, and other types
+of services and facilities) and used cluster and factor analyses to combine these
+into an accessibility metric.12 In an accessibility study at the intercity scale, the
+gross domestic product of each urban agglomeration was used as the indicator of
+destination attractiveness.13 Another study implemented Torsten Hägerstrand’s
+space-time accessibility concept using locations of actual activity participation
+from a household travel survey.14 But comprehensive, as opposed to sector-
+specific, assessments of household nonwork accessibility from the perspective of
+opportunity for interaction are rare.
+
+  A general metric of the attractive capacity of nonwork destinations should
+have the following attributes:
+
+  a. It should include the full range of nonwork destinations, rather than
+  limiting itself to a single sector.
+
+  b. It should weight nonwork destinations by their relative attractiveness.
+  c. It should be consistently implementable with available data for multiple
+
+  metropolitan areas.
+
+  Because of the broad range of nonwork destination types, their definition is
+somewhat more intricate than that of their workplace counterparts. The metric
+developed here identifies nonwork destinations from a comprehensive database
+of work destinations. The guiding concept is that job locations can provide an
+indicator for the location of nonwork destinations, since many nonwork des-
+tinations such as shopping or service locations, restaurants, and schools are
+also the sites of jobs. But whereas every job is relevant to employment acces-
+sibility by definition, only some jobs are indicators of nonwork destinations.
+For example, while both a job in a steel foundry and a job in a supermarket
+are relevant to the measurement of employment accessibility, only the latter is
+included as a nonwork destination. Conversely, the implicit assumption is that
+every significant nonwork destination can be located through the presence of
+some jobs (or residences) on site. This assumption does not hold universally;
+for example, most jobs associated with city parks, which are proper nonwork
+128  CHAPTER 7
+
+destinations, would be reported with locations at the municipal headquarters,
+rather than in the park itself.
+
+  The attractiveness of a nonwork destination type is gauged here through its
+nationwide capacity to attract trips. This attractive capacity is based on data from
+the U.S. National Household Travel Survey (NHTS), which categorizes nonwork
+travel into thirty-five purposes including shopping, errands, and purchasing
+goods; meals and other social events; visiting friends and relatives; exercise or
+sports; and purchasing services (appendix A, table 7a).15 The distribution of non-
+work trips in a given metropolitan area is assumed here to match the U.S. distri-
+bution of trips in the NHTS. This assumption is a limitation of the method, but
+the alternative of relying on household travel surveys from multiple metropoli-
+tan planning organizations (MPOs) would impede the consistent comparison of
+nonwork accessibility between metropolitan areas.
+
+  If trip-attraction capacity is the metric of the relative attractiveness of a non-
+work destination, then shares of nonwork travel should guide the development of
+a weighting scheme within the index. For example, if retail accounts for 29 percent
+of nonwork trips, it should account for 29 percent of the nonwork accessibility
+index. This method required a correspondence between NHTS destinations and
+North American Industry Classification System (NAICS) codes, a system used to
+characterize jobs by industrial sector in the United States. Developing this cor-
+respondence required certain modifications. For example, some classifications
+in NHTS such as “transport someone,” “pick up someone,” or “drop someone
+off ” are reasonably clear as trip purposes but cannot readily be linked to spe-
+cific destinations and hence were dropped from the analysis. Other trip-purpose
+classifications, such as “buy goods: groceries/clothing/hardware store,” “medical/
+dental services,” or “get/eat meal” were easily assigned relevant NAICS codes.
+Some trip purposes (e.g., “go to religious activity” and “attend funeral/wedding”)
+were merged because while the trip purposes were distinct, there was significant
+overlap in the destinations. Finally, one trip purpose, “visit friends/relatives,” had
+no potential indicator among the employment-based NAICS codes; population,
+rather than jobs, was used as the indicator for this trip purpose.
+
+  In some cases, the analysis excluded business types because they were not
+relevant to accessibility from one’s home zone. For example, hotels and other
+tourist destinations were excluded since they are usually most relevant when
+people are not making trips from home. Car dealerships, which account for a
+significant number of jobs, were excluded since the low frequency with which
+nonemployees visit these establishments renders them only marginally relevant
+to home-based accessibility. By contrast, hospitals were included despite their
+low frequency of visits since these were assumed to have a significant value inde-
+pendent of actual use: their presence provides an assurance that augments one’s
+  NONWORK ACCESSIBILITY  129
+
+accessibility even when they are not needed. Dropping and merging categories
+resulted in a set of twenty-four nonwork-trip categories that could be linked to
+relevant job or population types (appendix A, table 7a).
+
+  With a set of nonwork destination types defined, and the number of jobs
+or population associated with those destinations identified, the potential attrac-
+tiveness of a job or person in each category was assessed as the number of non-
+work trips that the average job or person from these categories attracted per day.
+This number was approximated in relation to the number of work trips based
+on the assumption that each job attracted one work trip per day; this assump-
+tion, together with the number of jobs in the region and the share of work trips
+throughout the United States, formed the basis for estimating the total number
+of regional nonwork trips.
+
+  Finally, nonwork accessibility indicators were calculated following the stan-
+dard gravity model formulation, with the impedance coefficient adjusted for
+nonwork travel according to the method described in Levine et al.16
+
+  The nonwork attractiveness index is calculated in four steps:
+
+1. Estimate total nonwork trips for a region. Using the total number of
+  jobs in a metropolitan region and the ratio of nonwork to work travel,
+  estimate nonwork trips as follows:
+
+⎛ 0.823 ⎞
+Nm Jm ⎜  ⎟  (7.1)
+⎝ 0.177 ⎠
+
+  where Nm is the estimated number of nonwork trips for metropolitan
+  region m, Jm is the number of jobs in metropolitan region m, and the
+  fraction in the right-hand term is the ratio of the national share of
+  nonwork to work trips.
+2. Distribute the total nonwork trips across the categories of trip purposes.
+  Assuming that the distribution of trip purposes is the same in a
+  metropolitan region as it is nationwide, express this as:
+
+Nr Nm (Er )  (7.2)
+
+  where Nr is the number of nonwork trips in a metropolitan region
+  for trip purpose r, and Er is the share of national nonwork trips for
+  purpose r.
+3. Express the nonwork trips by purpose on a per-job basis. The relevant
+  jobs are those in the subset of all jobs that correspond to specific
+  nonwork destination types.
+
+  Nr (7.3)
+  Jr
+130  CHAPTER 7
+
+  Jr is the number of jobs in the metropolitan region associated with
+  trip purpose r. For the trip purpose “visiting friends and relatives,” the
+  attractor is not jobs but population.
+4. Calculate the nonwork attractiveness of each zone.
+
+  k  (7.4)
+
+  Wi ∑(Nr ÷ Jr )Jir
+  i =1
+
+  where Wi is the nonwork attractiveness index at zone i, and Jir is the
+  number of jobs in zone i associated with trip purpose r.
+
+  This zone-based nonwork attractiveness index—which is generalized over the
+course of the day, rather than time-of-day specific—then becomes the measure
+of destination attractiveness used as an input to calculate nonwork accessibility
+metrics, whether by car, public transport, walking, or cycling. The metric cap-
+tures an overall average attractiveness level throughout the day. The following
+sections demonstrate its use in the case of auto accessibility across thirty-eight of
+the largest metropolitan regions in the United States.
+
+Nonwork Auto Accessibility in Selected U.S.
+Metropolitan Areas
+
+The index enables a comparison of nonwork accessibility across metropoli-
+tan regions based on a wide range of nonwork destinations. Like the metrics
+of workplace accessibility, these are associated with metropolitan area size, with
+the more populous metropolitan regions offering greater nonwork accessibility
+(figure 7.1). Within very large metropolitan areas, Los Angeles’s nonwork acces-
+sibility exceeds that of New York’s up to a point just beyond the median resident
+(in accessibility terms). That is, for residents at the low end of the accessibility
+spectrum (generally those living in the farther-out suburbs), Los Angeles resi-
+dents enjoy greater nonwork accessibility than their New York counterparts. By
+contrast, at the higher (more central) end of the accessibility spectrum, New York
+offers greater nonwork accessibility. The New York/Los Angeles gap becomes very
+large above the 75th percentile, presumably because New York has much larger
+concentrations of destinations in central locations. Chicago’s nonwork accessi-
+bility, by contrast, is considerably lower than either New York’s or Los Ange-
+les’s, in large part because Chicago has relatively slow traffic (as analyzed from
+the peak-period travel-time matrices supplied by the respective metropolitan
+planning organizations). Figure 7.1 demonstrates similar comparisons for large,
+medium, and small metropolitan regions.
+1,800,000  600,000
+1,600,000
+1,400,000Accessibility score  500,000
+1,200,000  Accessibility score  400,000
+1,000,000  300,000
+
+  800,000  200,000
+  600,000
+  400,000  100,000
+  200,000
+  25  50  75  100  0  0  25  50  75  100
+  0  Atlanta
+  0
+
+  Population percentile  Population percentile
+
+  New York  Los Angeles  Chicago  Dallas  Detroit  Houston
+
+300,000  400,000
+250,000  350,000
+200,000  300,000
+  250,000
+
+150,000Accessibility score  200,000
+100,000  Accessibility score  150,000
+ 50,000  100,000
+  50,000
+
+0  0  25  50  75  100  0  25  50  75  100
+  0  Kansas City
+  Population percentile  Orlando  Population Percentile
+
+  Hartford  Louisville  Richmond  Tucson  Portland  Charlotte
+
+FIGURE 7.1. Nonwork accessibility by automobile, selected very large (>9m),
+large (5–9m), medium (1.5–5m), and small (1–1.5m) metropolitan planning
+organization areas (clockwise from upper left)
+132  CHAPTER 7
+
+Nonwork Accessibility’s Weak Influence
+on Residential Location
+
+A comprehensive metric of nonwork accessibility by car can help investigate
+questions that sectoral models of nonwork accessibility (such as accessibility to
+retail or health care) are unable to answer. For example, with over 80 percent
+of travel being to destinations other than work, households might be expected
+to make their decisions about where to locate largely on the basis of nonwork,
+rather than work, accessibility. One possible explanation for the relatively weak
+influence of nonwork accessibility on residential location choice is that nonwork
+accessibility is more broadly distributed than workplace accessibility. If this were
+the case, then perhaps households would not need to consider nonwork acces-
+sibility much when deciding where to locate; virtually no matter where they live,
+they would find desirable nonwork destinations within reach. This section uses
+the comprehensive nonwork accessibility index to test this candidate explana-
+tion for the relatively weak influence of nonwork accessibility on where people
+choose to live.
+
+  An investigation into how broadly or narrowly nonwork accessibility is dis-
+tributed needs to start with an investigation of the distribution of nonwork
+destinations. The nonwork attractiveness index (Wi), an indicator of those des-
+tinations, was nearly 11 percent more dispersed than work destinations. In this,
+the dispersion of nonwork-destination attractiveness was closer to that of the
+population’s spread-out residential locations than of concentrated metropoli-
+tan work destinations, as measured by the standard deviational ellipse.17 With
+a greater dispersion of destinations, nonwork accessibility could potentially be
+more evenly spread than its workplace counterpart.
+
+  But while accessibility assessment starts with measures of destination attrac-
+tiveness (Wi), it also incorporates network travel time and people’s willingness
+to travel for work or nonwork purposes. The evenness of accessibility’s distribu-
+tion across a territory can be measured with the Gini Index, as demonstrated
+in chapter 6. Recall that a Gini Index value of zero indicates a perfectly even
+distribution (every zone experiences the same level of accessibility), and a value
+of one indicates maximum inequality (one zone experiences all the accessibility
+that a region offers, and all others have none). A larger Gini Index thus indicates
+that the distribution of nonwork accessibility is more unequal, with accessibility
+concentrated in a smaller share of the regional territory.
+
+  Surprisingly, for most regions, nonwork accessibility tends to be less evenly
+spread than its workplace counterpart; the median Gini Index across the regions
+is 0.31 for work and 0.36 for nonwork accessibility (figure 7.2). Since nonwork
+location attractiveness is more broadly spread than workplace locations, the
+  NONWORK ACCESSIBILITY  133
+
+explanation for this difference lies principally in people’s significantly lower
+willingness to travel long distances to nonwork destinations. The willingness of
+most people to travel greater distances to work than to nonwork destinations has
+the effect of distributing workplace accessibility relatively evenly despite the fact
+that workplaces are more concentrated than residences or nonwork locations.
+By contrast, the small search radii for nonwork destinations tend to concentrate
+nonwork accessibility into a more limited set of locations. When people expect
+grocery stores, restaurants, or houses of worship to be close by, their absence from
+the neighborhood can create a significant local deficit in nonwork accessibility.
+
+  For this reason, the relatively low influence of nonwork accessibility over
+people’s residential-location choices is apparently not explained by a broader
+distribution of nonwork accessibility across metropolitan regions. The explana-
+tion would need to be found elsewhere—for example, in the greater flexibility in
+choosing where and when to travel in meeting nonwork needs, or in the inability
+of some households to opt into high-nonwork-accessibility locations because
+of discrimination, lack of affordability, or other barriers. Land-use regulation
+that constrains housing supplies in areas of high nonwork accessibility could
+
+0.6
+0.5
+0.4
+0.3
+0.2
+0.1
+0.0
+
+  Las Vegas
+  Memphis
+  New Orleans
+
+  Tucson
+  Portland
+  Cincinnati
+  Louisville
+  Rochester
+  Oklahoma
+  Kansas City
+
+  Denver
+  Phoenix
+  Richmond
+  Philadelphia
+  Columbus
+  Hartford
+  Baltimore
+  Virginia Beach
+  Los Angeles
+
+  Dallas
+  San DIego
+  Indianapolis
+  Minneapolis–St.Paul
+
+  Detroit
+  Orlando
+  Nashville
+  San Francisco
+
+  Seattle
+  San Antonio
+
+  Cleveland
+  Boston
+  Chicago
+
+  Houston
+  Charlotte
+
+  Buffalo
+  New York
+
+  Atlanta
+  Washington, DC
+
+  Median
+
+  Work accessibility Gini coefficient Non-work accessibility Gini coefficient
+
+FIGURE 7.2. Work and nonwork auto accessibility Gini Index by metropolitan
+planning organization area, 2007 (rank order by work accessibility Gini
+coefﬁcient)
+134  CHAPTER 7
+
+constitute such a barrier, as could a paucity of high-nonwork-accessibility neigh-
+borhoods that satisfy potential residents’ other desired characteristics, such as
+safety, school quality, or high-quality municipal services.18
+
+  In general, larger and more centralized regions tend to have more spatially
+unequal distributions of nonwork accessibility overall: Washington, DC, New
+York, Chicago, and Boston are all at the high (spatially unequal) end of the
+Gini scale. The more even distribution of accessibility occurs in less centralized
+regions, such as Los Angeles or Phoenix, and smaller regions such as Las Vegas
+or Tucson. A broad spread of destinations throughout the region tends to reduce
+intraregional gaps in accessibility by avoiding concentrations that particularly
+benefit certain zones. Small regions frequently offer all households the ability
+to reach all other corners of the area in a relatively short time, thus reducing the
+inequality of accessibility between neighborhoods.
+
+The Continuing Significance of
+Nonwork Accessibility
+
+Accessibility to destinations other than work has been measured in a number
+of ways, generally in a sector-by-sector fashion. In this chapter, we describe a
+method for gauging nonwork accessibility that spans the range of nonwork
+destinations, as opposed to focusing on a preselected subset. Since the meaning
+and importance of nonwork destinations vary broadly, the nonwork accessibil-
+ity index developed here weights nonwork destinations by their average trip-
+drawing potential. The method complements the more established methods of
+gauging work accessibility in providing a comprehensive picture of people’s abil-
+ity to reach their destinations and the distribution of this capacity by location
+and population group.
+
+  The limited influence of nonwork accessibility over residential-location
+choice does not mean that nonwork accessibility is irrelevant to transportation
+and land-use planning. Quite the opposite: poor access to healthy food degrades
+nutrition, poor access to schools impedes education, and poor access to medical
+care hinders the treatment and prevention of disease. All these concerns stem
+from people’s inability to reach places and ought to be central to the professions
+of transportation and land-use planning.19 But nonwork accessibility seems to
+have less capacity than work accessibility to influence residential-location choice,
+a factor that shapes important outcomes at both the individual and metropolitan
+scales.
+
+  Nevertheless, nonwork accessibility is distributed more unequally than
+work accessibility in most metropolitan areas; people’s desire to have nonwork
+NONWORK ACCESSIBILITY  135
+
+destinations close at hand means they experience the deficiency of convenient
+nonwork destinations acutely even though nonwork destinations actually have a
+wider geographic distribution. The distribution of nonwork accessibility remains
+an important criterion for transportation and land-use planning success sim-
+ply because it constitutes the vast majority of trips and distances traveled, and
+because people’s ability to reach meaningful destinations for education, medical
+care, recreation, and the like is central to their well-being. Comprehensive and
+broadly applicable metrics, such as the one developed here, can help assess out-
+comes for both transportation and land-use planning.
+Conclusion
+
+ENVISIONING THE
+ACCESSIBILITY SHIFT
+
+Three logics contend for status as transportation planning’s conceptual core:
+mobility, vehicle-kilometers-traveled (VKT) reduction, and accessibility. The
+transportation-planning field began in the first half of the twentieth century
+with a mobility orientation. By the end of the century, many planners and
+researchers had shifted to VKT reductions as the implicit lodestone of progres-
+sive action in transportation and land use, a goal that, by the twenty-first cen-
+tury, made its way into some formal policies—though the mobility paradigm
+remained dominant overall. We have argued for a logic distinct from both of
+these: an accessibility shift to align transportation and land-use planning with
+transportation’s core purpose.
+
+  Of the three logics, only accessibility is invisible. Immobility is evident to all
+in the form of traffic jams or slow public transport. High VKT, the target of
+driving-reduction efforts, is observable from evidence including travel surveys
+or GPS-based data collection on vehicle movements. By contrast, accessibility is
+a potential for interaction, present even when that potential is not translated into
+observable travel behavior. Its very invisibility has impeded people’s comprehen-
+sion and hence their acceptance of accessibility as something real.
+
+  In addition to their visibility, mobility and VKT reduction share an important
+attribute that aligns them with the traditional inclinations of planners and plan-
+ning institutions. Following prescriptions emanating from welfare economics, a
+policy-analytic tradition common in the United States and elsewhere generally
+advises the policy maker to rely on the efficient functioning of the free market.
+
+  136
+

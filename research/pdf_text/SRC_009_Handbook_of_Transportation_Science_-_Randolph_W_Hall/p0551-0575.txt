@@ -1,0 +1,1010 @@
+552  Handbook of Transportation Science
+
+  The first set of constraints guarantees that all flight segments are either can-
+
+celed or covered at least once. The slack variable on these constraints, has an
+
+upper bound  defined as the maximum number of crews that can deadhead
+
+on flight segment l. The second set of constraints ensures that crew k is either
+
+assigned to a pairing or is deadheaded to its crewbase. The third set of constraints
+
+forces to be zero if flight l is canceled. Note that the integrality of the variables
+
+and are implied and hence need not be imposed.
+
+  When solving the crew recovery problem, it is important to find a good solu-
+
+tion quickly. Furthermore, it makes sense to take advantage of the fact that the
+
+original scheduled pairings were optimal in the undisrupted problem environment.
+
+Therefore, when solving the crew recovery problem, we do not want to re-assign
+
+all crews. Instead, we want to consider only those crews whose pairings were dis-
+
+rupted, as well as a small number of additional crews deemed likely to introduce
+
+good “swapping” opportunities. Limiting the scope of the problem in this way can
+
+significantly reduce the size of the model and thus improve its tractability. Heuris-
+
+tics for selecting the set of crews to be considered can be found in Lettovský et al.,
+
+2000 and Lettovský, 1997.
+
+Crew Recovery Solution Approaches
+
+Very little has been published in the open literature on solving the crew recov-
+ery problem. Teodorovic and Stojkovic, 1990 developed a sequential approach
+based on a dynamic programming algorithm, using the first-in-first-out principle
+to minimize the crews’ ground time. Wei and Yu, 1997 presented a heuristic-
+based framework for real-time crew re-scheduling. Song et al., 1998 presented a
+multicommodity integer network flow model and a heuristic search algorithm to
+solve it. Stojkovic et al., 1998 presented a column generation approach similar to
+that used for crew pairing problems. Solutions approaches to the crew recovery
+model presented in the previous section can be found in Lettovský et al., 2000 and
+Lettovský, 1997.
+Airline Crew Scheduling  553
+
+  Models such as (14.3) can be solved to obtain optimal solutions for small
+disruptions and good feasible solutions for medium sized disruptions. However,
+for major disruptions such as those caused by snowstorms, and particularly those
+disruptions that affect multiple airports, further refinement and perhaps even a new
+approach altogether is needed.
+
+Crew Rostering Recovery
+
+We conclude this section by noting that one potential for inefficiency in the crew
+recovery approach discussed above is that it limits changes to the pairings currently
+underway. By requiring the modified pairings to be feasible in conjunction with the
+remainder of the crew’s monthly schedule, opportunities may be missed. On the
+other hand, considering the entire schedule, rather than just the current pairings,
+yields an enormous problem. Stojkovic et al., 1998 present an initial approach to
+this challenging task.
+
+14.7 Robustness in Crew Pairing
+
+The crew pairing problem is solved well before the flight schedule becomes oper-
+ational. In this planning stage, all flights are assumed to have departure times that
+are both fixed and known. This assumption is often proven wrong when the crew
+schedule is actually implemented. For example, the U.S. Department of Trans-
+portation reported that the total number of delay minutes in the system (based on
+flight delays of 15 minutes or more) had increased by 11% from 1995 to 1999,
+Bond, 2000. In the summer of 2000, airline delays received national attention in
+the U.S., when the airline with the best performance record had 25% of its flights
+delayed by 15 minutes or more.
+
+  When crew members’ schedules are disrupted in operations, they are nonethe-
+less guaranteed to be paid for their original scheduled workload. In addition, if
+delays increase their flying or sit time, they may be entitled to added compensa-
+tion. Furthermore, disruptions may require the use of reserve crews to get back
+on schedule. Clearly, then, the cost associated with implementing a crew pair-
+ing solution may vary significantly from the planned cost. Typically, the planned
+ratio of pay-and-credit to flying time is below 1% for large fleets, but increases
+on average to 4% when the schedule is implemented. For smaller fleets, the ratio
+tends to increase from about 3% to 8%. Solutions of large fleets are much more
+sensitive to disruptions since they have many tight connections. A disrupted short
+connection can have a significant impact on the entire flight and crew schedule due
+to the snowball effects. Such increases in planned cost can translate to millions
+of dollars in unplanned crew costs. There are two ways that carriers can try to
+554  Handbook of Transportation Science
+
+minimize these unplanned costs. The first, discussed in Section 6, is to improve
+the quality of their recovery procedures. The second is to focus in the planning
+stage on developing more robust schedules – that is, to minimize the expected
+operational cost of a schedule rather than its planned cost.
+
+Evaluating Crew Schedules
+
+Robustness is not well-defined, in fact, comparing two different schedules to deter-
+mine which one is more robust can be quite difficult. In general, comparisons are
+done by using a simulation to approximate the operating cost of a given sched-
+ule for a particular time period (typically, one month). Clearly, such a simulation
+should reflect the airline operations as closely as possible.
+
+  Simulations of partial airline operations, for example, aircraft ground
+movement and passenger flow, have been developed, see Yu, 1998. Only
+recently have simulations of integrated airline operations been designed.
+Kornecki and Vargas, 2000, for example, developed a simulation designed for
+employee training. Rosenberger et al., 2000 created SimAir, a simulation that
+takes into account most airline operations and has built-in recovery modules. It
+keeps track of several types of resources, including aircraft, crews, and passengers,
+and produces a number of statistics such as crew costs and block times. Finally,
+Schaefer et al., 2000 use a simulation-based approach to design more robust crew
+schedules.
+
+Models for Robust Airline Crew Pairing
+
+Here we present three approaches for finding robust crew pairings.
+
+Expected Pairing Cost Approach Schaefer et al., 2000 solve a problem very
+similar to the crew pairing problem (14.1). However, they replace the objective
+coefficients in this model with which they define to be the expected cost of
+pairing p. They then solve this model with the same methodologies as presented
+in Section 14.4.
+
+  Of course, the difficult aspect of this problem is in computing the cost coef-
+ficients given that the expected cost of a pairing depends in part on the other
+pairings in the crew schedule. For every pairing they compute the expected cost
+by running Simair under the assumption that the expected cost is independent of
+the other pairings in a crew schedule. They show that this assumption holds under
+the push-back recovery procedure. Push-back recovery delays the flights until all
+of the resources are available.
+
+  Once they have computed cost coefficients they solve this modified version
+of the crew pairing problem and then use SimAir to evaluate the quality of their
+Airline Crew Scheduling  555
+
+solutions. They report some interesting findings. For example, they observe that
+it may be preferable to have some pairings in which costs are determined by
+TAFB or the minimum guarantee pay, rather than flying cost. In addition, they
+find crew schedules to be more robust when the pay-and-credit of the pairings has
+low variance and there are not many pairings with zero pay-and-credit. This is
+intuitive because zero pay-and-credit pairings have minimal connection time and
+are therefore vulnerable to disruptions.
+
+  Schaefer et al., 2000 compared this expected cost approach with a penalty
+approach that includes penalties in the cost function for such factors as tight connec-
+tions and elapsed times, and tight 8-in-24 constraints. Better results were obtained
+by the expected cost model.
+
+Maximizing the Connection Time Ehrgott and Ryan, 2001 and Yen and Birge,
+
+2000 measure robustness as the excess sit connection time above the minimum
+
+sit connection time. If k is a sit connection and t is the connection time, they
+
+define a penalty by  where is the penalty factor and minSit is
+
+the minimum required sit connection time. They define the robustness cost of a
+
+pairing as the sum of the penalties over all sit connections in the pairing, excluding
+
+the sit connections corresponding to the aircraft turns. Their models find a crew
+
+schedule that minimizes the robustness cost.
+
+Yen and Birge, 2000 solve the resulting model as a stochastic integer program-
+
+ming model by assuming that t is a random variable. Given a crew schedule, the
+
+recourse problem is a large-scale LP. They develop a heuristic based on follow-on
+
+branching for solving the model. They sample 100 disruption scenarios and they
+
+show the computational results on a problem with 3000 pairings and 50 legs. Their
+
+crew schedules tend to have more sit connections corresponding to the aircraft
+
+turns and longer connection times. Ehrgott and Ryan, 2001 assume that the con-
+
+nection time t is deterministic and it is taken with respect to the planned flight
+
+schedule. They give computational result on fleets from Air New Zealand.
+
+The Crew Pairing Model with Move-up Crews When a crew is delayed or has
+reached a limit on its flying time for a duty or pairing, it would be highly desirable
+to have an alternative crew available with which it could swap one or more flights.
+The crew pairing model with move-up crews, presented in Klabjan et al., 2001c
+and Chebalov and Klabjan, 2002, relies on a recovery procedure that uses crew
+swaps. In addition to the traditional objective of minimizing pairing costs, they
+introduce a new objective of maximizing the number of opportunities for crew
+swapping. Thus, their model is a bicriteria optimization model.
+
+  A move-up crew for a given flight i is a crew that is on the ground for at
+least the minimum required connection time, originates at the same crew base as
+556  Handbook of Transportation Science
+
+the crew covering i, and the two involved crews finish their respective pairings
+on the same day. If two crews can be swapped in operations, then one crew is a
+move-up crew. The crew pairing model with move-up crews maximizes the overall
+number of move-up crews and is solved by a Lagrangian decomposition approach.
+Computational results show that there are crew schedules with only a slightly
+higher crew cost but 5 to 10 times more move-up crews than the crew schedules
+obtained by solving (14.1). Moreover this approach, which attempts to provide
+protection against uncertainty rather than modeling uncertainty, can be combined
+with stochastic models that minimize expected cost and/or incorporate penalties.
+
+14.8 Future Directions
+
+Airline crew scheduling has been one of the great successes of operations research,
+with decision support software installed at all major airlines. Whereas a decade
+ago solutions to daily problems were typically 10–15% above the lower bound of
+flying cost, solutions are now typically within at most 1–2% of the lower bound.
+This improvement in solution quality translates to savings on the order of $50
+million annually for a large airline.
+
+  Nonetheless, airline crew scheduling is still an active research area with many
+unsolved problems. We have discussed some recent work on recovery and robust
+planning in Sections 14.6 and 14.7, but this is clearly just the ‘tip of the iceberg’.
+
+  Benefits can be gained by developing more efficient schedules for cabin
+crews. This problem has received less attention than cockpit crew scheduling,
+both because cabin crews are significantly less costly and also because it is a much
+larger problem.
+
+  Finally, and perhaps most challenging, is the integration of the crew pairing,
+fleet assignment, and schedule planning problems, especially since these problems
+are difficult to solve individually.
+
+References
+
+Alefragis, P., Goumopoulos, C., Housos, E., Sanders, P., Takkula, T., and Wedelin, D. (1998). Parallel
+  crew scheduling in PAROS. In Proceedings of 1998 Europar/8, pages 1104–1113.
+
+Alefragis, P., Sanders, P., Takkula, T., and Wedelin, D. (2000). Parallel integer optimization for crew
+  scheduling. Annals of Operations Research, 99:141–166.
+
+Anbil, R., Barnhart, C., Johnson, E., and Hatay, L. (1994). A column generation technique for the
+  long-haul crew assignment problem. In Ciriani, T. and Leachman, R., editors, Optimization in
+  Industry II, pages 7–24. John Wiley & Sons.
+
+Andersson, E., Housos, E., Kohl, N., and Wedelin, D. (1998). Crew pairing optimization. In Yu, G.,
+  editor, Operations Research in the Airline Industry, pages 228–258. Kluwer Academic Publishers.
+Airline Crew Scheduling  557
+
+Anbil, R., Forrest, J., and Pulleyblank, W. (1998). Column generation and the airline crew pairing
+  problem. In Extra Volume Proceedings ICM. Available from http://www.math.uiuc.edu/
+  documenta/xvol-icm/17/17.html.
+
+Anbil, R., Gelman, E., Patty, B., and Tanga, R. (1991). Recent advances in crew pairing optimization
+  at American Airlines. Interfaces, 21:62–74.
+
+Anbil, R., Johnson, E., and Tanga, R. (1992). A global approach to crew pairing optimization. IBM
+  Systems Journal, 31:71–78.
+
+Barahona, F. and Anbil, R. (1998). The volume algorithm: Producing primal solutions with a
+  subgradient method. Technical Report RC 21103, T. J. Watson Research Center.
+
+Barahona, F. and Anbil, R. (1999). On some difficult linear programs coming from set partitioning.
+  Technical Report RC 21410, T. J. Watson Research Center.
+
+Barnhart, C., Hatay, L., and Johnson, E. (1995). Deadhead selection for the long haul crew pairing
+  problem. Operations Research, 43:491–499.
+
+Barnhart, C., Johnson, E., Nemhauser, G., Savelsbergh, M., and Vance, P. (1998). Branch and price:
+  Column generation for solving huge integer programs. Operations Research, 46:316–329.
+
+Bixby, R., Cook, W., Cox, A., and Lee, E. (1995). Parallel mixed integer programming. Technical
+  Report CRPC TR95554, Rice University. Available from ftp://softlib.rice.edu/pub/
+  CRPC-TRs/reports.
+
+Bixby, R., Gregory, J., Lustig, I., Marsten, R., and Shanno, D. (1992). Very large scale linear pro
+  gramming: A case study in combining interior point and simplex methods. Operations Research,
+  40:885–897.
+
+Bond, D. (2000). Commercial aviation on the ropes. Aviation Week & Space Technology. September
+  issue.
+
+Brailsford, S., Potts, C., and Smith, B. (1999). Constraint satisfaction problems: Algorithms and
+  applications. European Journal of Operational Research, 119:557–581.
+
+Caprara, A., Toth, P., Vigo, D., and Fischetti, M. (1998). Modeling and solving the crew rostering
+  problem. Operations Research, 46:820–830.
+
+Chebalov, S. and Klabjan, D. (2002). Robust airline crew scheduling: Move up crews. In Proceedings
+  of the 2002 NSF Design, Service, and Manufacturing Grantees Research Conference.
+
+Conn, A. and Barnhart, C. (2002). Improving crew scheduling by incorporating key maintenance rout
+  ing decisions. Technical report, Massachusetts Institute of Technology. To appear in Operations
+  Research.
+
+Cordeau, J., Stojković, G., Soumis, F., and Desrosiers, J. (2001). Benders decomposition for
+  simultaneous aircraft routing and crew scheduling. Transportation Science, 35:375–388.
+
+Day, P. and Ryan, D. (1997). Flight attendant rostering for short haul airline operations. Operations
+  Research, 45:649–661.
+
+Desaulniers, G., Desrosiers, J., Ioachim, I., Solomon, M., and Soumis, F. (1998). A unified framework
+  for deterministic time constrained vehicle routing and crew scheduling problems. In Crainic,
+  T. and Laporte, G., editors, Fleet Management and Logistics, pages 57–93. Kluwer Publishing
+  Company.
+
+Desrochers, M. and Soumis, F. (1988). A generalized permanent labeling algorithm for the shortest
+  path problem with time windows. INFOR, 26:191–212.
+
+Desrochers, M. and Soumis, F. (1989). A column generation approach to the urban transit crew
+  scheduling problem. Transportation Science, 23:1–13.
+
+Desrosiers, J., Dumas, Y., Desrochers, M., Soumis, F., Sanso, B., and Trudeau, P. (1991). A
+  breakthrough in airline crew scheduling. Technical Report G 91 11, Cahiers du GERAD.
+558  Handbook of Transportation Science
+
+du Merle, O., Villeneuve, D., Desrosiers, J., and Hanses, P. (1999). Stabilized column generation.
+  Discrete Mathematics, 194:229–237.
+
+Ehrgott, M. and Ryan, D. (2001). Bicriteria robustness versus cost optimization in tour of duty planning
+  at Air New Zealand. Technical report, Univeristy of Auckland.
+
+Fahle, T., Junker, V., Karish, S., Kohl, N., and Vaaben, B. (1999). Constraint programming based
+  column generation for crew assignment. Journal of Heuristics. To appear.
+
+Forrest, J. and Goldfarb, D. (1992). Steepest-edge simplex algorithms for linear programming.
+  Mathematical Programming, 57:341–374.
+
+Gamache, M. and Soumis, F. (1998). A method for optimally solving the rostering problem. In Yu, G.,
+  editor, Operations Research in the Airline Industry, pages 124–157. Kluwer Academic Publishers.
+
+Gamache, M., Soumis, F., Marquis, G., and Desrosiers, J. (1999). A column generation approach for
+  large scale aircrew rostering problems. Operations Research, 47:247–262.
+
+Gamache, M., Soumis, F., Villeneuve, D., Desrosiers, J., and Gelinas, E. (1998). The preferential
+  bidding system at Air Canada. Transportation Science, 32:246–255.
+
+Gedron, B. and Crainic, T. (1994). Parallel branch-and-bound algorithms: Survey and synthesis.
+  Operations Research, 42:1042–1066.
+
+Gershkoff, I. (1989). Optimizing flight crew schedules. Interfaces, 19:29–43.
+Goumopoulos, C., Housos, E., and Liljenzin, O. (1997). Parallel crew scheduling on workstation
+
+  networks using PVM. In Proceedings of 1997 EuroPVM-MPI, volume 1332.
+Hoffman, K. and Padberg, M. (1993). Solving airline crew scheduling problems by branch-and-cut.
+
+  Management Science, 39:657–682.
+Hu, J. and Johnson, E. (1999). Computational results with a primal-dual subproblem simplex method.
+
+  Operations Research Letters, 25:149–158.
+Junker, U., Karisch, S., Kohl, N., Vaaben, B., Fahle, T., and Sellmann, M. (1999). A framework for
+
+  constraint programming based column generation. In Proceedings of CP 1999, pages 261–274.
+Klabjan, D. (2001). Next generation airline crew scheduling. Technical report, University of Illinois
+
+  at Urbana-Champaign. Available from http://www.staff.uiuc.edu/~klabjan/reports/
+  ngCS.pdf.
+
+Klabjan, D., Johnson, E., and Nemhauser, G. (2000). A parallel primal-dual algorithm. Operations
+  Research Letters, 27:47–55.
+
+Klabjan, D., Johnson, E., Nemhauser, G., Gelman, E., and Ramaswamy, S. (2002). Airline crew
+  scheduling with time windows and plane count constraints. Transportation Science, 36:337–348.
+
+Klabjan, D., Johnson, E., Nemhauser, G., Gelman, E., and Ramaswamy, S. (2001a). Airline crew
+  scheduling with regularity. Transportation Science, 35:359–374.
+
+Klabjan, D., Johnson, E., Nemhauser, G., Gelman, E., and Ramaswamy, S. (2001b). Solving large air-
+  line crew scheduling problems: Random pairing generation and strong branching. Computational
+  Optimization and Applications, 20:73–91.
+
+Klabjan, D., Schaefer, A., Johnson, E., Kleywegt, A., and Nemhauser, G. (2001c). Robust airline crew
+  scheduling. In Proceedings of TRISTAN IV, pages 275–280.
+
+Klabjan, D. and Schwan, K. (2000). Airline crew pairing generation in parallel. In Proceedings of the
+  Tenth SIAM Conference on Parallel Processing for Scientific Computing.
+
+Kornecki, A. and Vargas, D. (2000). Simulation-based training for airline controller operations.
+
+  In Proceedings of Society of Computer Simulation 2000 Advanced Simulation Technologies
+
+  Conference, pages 162–171.
+Kwok, L. and Wu, L. (1996). Development of an expert system in cabin crew pattern generation.
+
+  International Journal of Expert Systems, 9:445–464.
+Airline Crew Scheduling  559
+
+Lavoie, S., Minoux, M., and Odier, E. (1988). A new approach for crew pairing problems by column
+  generation with an application to air transportation. European Journal of Operational Research,
+  35:45–58.
+
+Lettovský, L. (1997). Airline Operations Recovery: An Optimization Approach. PhD thesis, Georgia
+  Institute of Technology.
+
+Lettovský, L., Johnson, E., and Nemhauser, G. (2000), Airline crew recovery. Transportation Science,
+  34:337–348.
+
+Linderoth, J. and Savelsbergh, M. (1999). A computational study of search strategies for mixed integer
+  programming. INFORMS Journal on Computing, 11:173–187.
+
+Lustig, I. and Puget, J. (2001). Program program: constraint programming and its relationship to
+  mathematical programming. Interfaces. To appear.
+
+Makri, A. and Klabjan, D. (2001). Efficient column generation techniques for airline crew scheduling.
+  Technical report, University of Illinois at Urbana-Champaign. Available from http://www.
+  staff.uiuc.edu/~klabjan/professional.html.
+
+Marsten, R. (1994). Crew planning at Delta Airlines. XV Mathematical Programming Symposium.
+  Presentation.
+
+Minoux, M. (1984). Column generation techniques in combinatorial optimization: a new application
+  to crew pairing problems. In Proceedings XXIVth AGIFORS Symposium.
+
+Rosenberger, J., Schaefer, A., Goldsman, D., Johnson, E., Kleywegt, A., and Nemhauser, G. (2000).
+  A stochastic model of airline operations. Transportation Science. To appear. Available from
+  http://tli.isye.gatech.edu.
+
+Ryan, D. (1992). The solution of massive generalized set partitioning problems in air crew rostering.
+  Journal of the Operational Research Society, 43:459–467.
+
+Ryan, D. and Foster, B. (1981). An integer programming approach to scheduling. In Wren, A., edi-
+  tor, Computer Scheduling of Public Transport Urban Passenger Vehicle and Crew Scheduling,
+  pages 269–280. Elsevier Science B.V.
+
+Sanders, P., Takkula, T., and Wedelin, D. (1999). High performance integer optimization for crew
+  scheduling. In Proceedings of the HPCS '99. Available from http://www.cs.Chalmers.se/
+  ~tuomo.
+
+Schaefer, A., Johnson, E., Kleywegt, A., and Nemhauser, G. (2000). Airline crew scheduling under
+  uncertainty. Technical Report TLI-01-01, Georgia Institute of Technology.
+
+Song, M., Wei, G., and Yu, G. (1998). A decision support framework for crew management dur-
+  ing airline irregular operations. In Yu, G., editor, Operations Research in the Airline Industry,
+  pages 260–286. Kluwer Academic Publishers.
+
+Stojkovic, G., Soumis, M., and Desrosiers, J. (1998). The operational airline crew scheduling problem.
+  Transportation Science, 32:232–245.
+
+Teodorovic, D. and Stojkovic, G. (1990). Model for operational daily airline scheduling. Transportation
+  Planning Technology, 14:273–285.
+
+Vance, P., Atamtürk, A., Barnhart, C., Gelman, E., Johnson, E., Krishna, A., Mahidhara, D.,
+  Nemhauser, G., and Rebello, R. (1997a). A heuristic branch-and-price approach for the airline
+  crew pairing problem. Technical Report LEC-97-06, Georgia Institute of Technology.
+
+Vance, P., Barnhart, C., Johnson, E., and Nemhauser, G. (1997b). Airline crew scheduling: A new
+  formulation and decomposition algorithm. Operations Research, 45:188–200.
+
+Wedelin, D. (1995). An algorithm for large scale 0-1 integer programming with applications to airline
+  crew scheduling. Annals of Operations Research, 57:283–301.
+
+Wei, G. and Yu, G. (1997). Optimization model and algorithm for crew management during airline
+  irregular operations. Journal of Combinatorial Optimization, 1:305–321.
+560  Handbook of Transportation Science
+
+Wilson, N., editor (1999). Computer-Aided Transit Scheduling. Springer Verlag.
+Yen, J. and Birge, J. (2000). A stochastic programming approach to the airline crew scheduling problem.
+
+  Technical report, University of Washington.
+Yu, G., editor (1998). Operations Research in the Airline Industry, Kluwer Academic Publishers.
+  15 SUPPLY CHAINS
+
+  Randolph W. Hall
+
+15.1 Introduction
+
+In modern economies, the production of goods entails the coordinated effort of
+manufacturers, transporters and distributors spread across the globe. This symphony
+of actions, which delivers products to consumers, is called the “supply chain”. For
+complex products, such as automobiles, the supply chain comprises a deep and
+intricate web, beginning with acquisition of raw materials, continuing with
+fabrication of parts and components, then assembly of these parts and components
+into finished vehicles, and finally distribution of vehicles through networks of
+dealers.
+
+  By contrast, supply chains in primitive societies are simple and local.
+Manufacturing is limited to production of simple tools and implements, relying on
+materials that are locally acquired or traded, and largely depending on the effort of
+individuals to fabricate an entire product from start to finish. In primitive societies,
+items are not transported over great distances, and there is far less inter-dependency
+among individuals or groups in the creation of goods.
+
+  The comparison of automobiles to primitive products (stone tools, baskets, clay
+pots, etc.) illustrates that supply chains have been a fundamental ingredient in the
+advancement of technology. It would be impossible to create modern automobiles,
+for instance, if we were unable to:
+
+  Acquire and transport raw materials from their natural sources, which are
+  spread across the globe.
+562  Handbook of Transportation Science
+
+  Create industries capable of designing and building specialized components,
+  such as braking systems, air bags, audio systems, upholstery, tires, glass, sheet
+  metal, etc.
+
+  Assemble and fabricate vehicles and components in large facilities, which
+  permit the division of labor into specialized tasks and the use of automation
+  technologies.
+
+  Efficiently transport vehicles and their parts over long distances.
+
+Because each of these steps also exhibits natural economies-of-scale, it has become
+increasingly common for entities in the supply chain to serve larger, and more global,
+markets. Hence, management and operation of supply chains has become more
+important and more challenging.
+
+  Though the differences between primitive and modern products are obvious, one
+need not look back more than 250 years to see huge contrasts in the formation of
+supply chains. Prior to the industrial revolution of the 1800s, mass production and
+mass distribution were virtually non-existent, due to the absence of four technological
+ingredients: (1) efficient ground transportation, (2) reliable sources for power
+generation, (3) ability to communicate instantaneously over long distances, and (4)
+ability to manufacture products with sufficient accuracy to permit interchangeable
+parts. Without these ingredients, production was more like the primitive clan than
+modern society. Products were manufactured by craftsmen, largely from start to
+finish, serving local markets. Though people did trade materials and some products,
+it would have been impossible to manage a large and distributed organization, and it
+would have been impossible to attain a high degree of specialization.
+
+  The industrial revolution brought the needed ingredients to construct true supply
+chains. Locomotives and steam-powered boats permitted inland transportation. Coal
+engines provided a more reliable source of power for manufacturing plants. The
+telegraph gave the power to coordinate activities among distributed sites. And
+machinery reached sufficient accuracy to permit the specialized fabrication of
+components, for later assembly into finished products.
+
+  Over the last 200 years supply chains have continued to evolve and expand.
+Transportation and communication have become much less expensive. The scale
+economies of production have become even greater. And specialized knowledge has
+grown more important in the design of products. Nevertheless, the fundamental
+questions in supply chain design and management have changed little in this time:
+
+  When and where should value be added to a product, through fabrication,
+  processing, assembly, etc.?
+Supply Chains  563
+
+  How should goods be transported among production and consumption
+  locations?
+
+  How should information be used to coordinate and enable supply chain
+  activities?
+
+These questions are addressed in this chapter, with emphasis on the transportation
+aspects of supply chains. The approach here is more conceptual, and less
+mathematical, than in other chapters. For further background on the topics, refer to
+Daganzo (1999) and Simchi-Levi et al (2000).
+
+15.2 Production and Distribution Over Time and Space
+
+The most fundamental question in supply chain management is: When and where to
+“add value” to a product? Value can be added through any of several processes:
+
+Extraction: separating substances from a composite material, as in mining or
+refining.
+
+Processing: exposing a material to a process that changes its composition, such as
+heating in a furnace.
+
+Fabrication: changing the shape or form of a material, such as stamping automobile
+parts from coils of steel.
+
+Assembly: combining materials or parts to create a new product, as in printed circuit
+board assembly.
+
+Transportation: movement of materials, parts or products from one place to
+another.
+
+Inventory: storage of materials, parts or products for future use.
+
+  The “supply chain” represents that entire sequence of steps that produce a
+finished product. Prior to the industrial revolution, most products required a small
+number of steps, with a large portion of these steps completed by individual skilled
+craftsmen. After the industrial revolution, production steps were increasingly divided
+among many individuals, each of whom specialized in a particular task. However, it
+was still relatively common for a single vertically integrated firm to oversee a large
+portion of these steps. Ford’s River Rouge plant, which was used to manufacture the
+Model T, fits this model. Modern production has continued the trend toward
+specialization, with greater specialization by firms and production plants. Thus, it
+has become more important to develop systems for coordinating production among
+different organizations, located far from each other, possibly on different continents.
+564  Handbook of Transportation Science
+
+Supply Chain Elements
+
+Depending on the complexity of the product, supply chains show substantial variation
+in depth and breadth. However, most supply chains contain the following elements
+(Figure 15.1):
+
+Raw Material Extraction and Refinement: Materials are extracted from places
+where there are known deposits. While some materials are widely available (e.g.,
+gravel or water), others can only be found in a few locations (e.g., diamonds).
+Refinement industries (e.g., oil refining in the Middle East) are frequently centered
+around sources, as processed materials are often more easily transported than the raw
+material. The availability of raw materials can also affect the positioning of
+manufacturing industries – the steel industry in Pennsylvania, for example.
+
+Parts Manufacture: Parts represent the most basic and decomposable unit of a
+product. A part could be a screw, wire, piece of plastic, or possibly a processed
+substance, such as paint. Parts manufacture is relatively generic, meaning that the
+same processes and possibly the same parts can be used in the production of many
+different finished products. Parts manufacturers also tend to serve many different
+industrial customers, and benefit from the scale economies of serving large markets.
+Parts manufacturers focus on the processing and fabrication steps of production.
+Supply Chains  565
+
+Component Manufacturer: A component represents a collection of parts that have
+been built to perform a particular function. Components can contain sub-
+components, which in turn contain their own sub-components. In automobile
+assembly, a radio is a vehicle component, a circuit board is a radio component, and
+an integrated circuit is a circuit board component. Thus, component manufacturing
+alone can entail a long supply chain. Assembly is the dominant process in
+component manufacture, though processing and fabrication steps may also occur.
+
+Finished Product Manufacture: This is an extension of component manufacture –
+representing the final step before a product is distributed and sold. Because a
+finished product may in turn be a component for something else, the distinction is
+somewhat arbitrary. Like component manufacture, the dominant process is assembly.
+
+Distribution: To complete the supply chain, materials must be transported to part
+manufacturers; parts must be transported to component manufacturers; components
+must be transported to finished product manufacturers; and finished products must be
+transported to consumers. Transportation also occurs – in the name of material
+handling – within each production facility. Transportation is an inevitable result of
+specialization in manufacture. So long as a single individual is not producing the
+entire product, parts and components must be moved from individual to individual, or
+firm to firm. Distribution also entails storage and warehousing of materials, parts,
+components and finished products, along with the use of independent retailers and
+distributors to reach the consumer. Distribution may also encompass some level of
+assembly tasks. An automobile dealer may customize a vehicle by installing audio
+systems or wheels, or a computer dealer may customize a PC by installing or
+swapping storage devices, memory or communication boards.
+
+  Though Figure 15.1 indicates that manufacturing is compartmentalized from
+distribution (the arrow in the figure), there are instances when they occur
+simultaneously. For instance, fish processing sometimes occur on boats, and railroad
+trains have been used at times as rolling production lines.
+
+Distribution Systems
+
+The discipline of supply chain management is highly centered on distribution, and
+not as much on product manufacture, though they are naturally inter-related. The
+economics of manufacturing strongly influence the scope and scale of distribution.
+For instance, products that demand a high labor content (e.g., circuit board assembly)
+may be assembled overseas because of lower wage rates; highly sophisticated
+products (e.g., integrated circuits) may only be produced in regions that offer highly
+skilled employees and highly skilled equipment providers. Moreover, schedules for
+production naturally influence schedules for transportation, as discussed in Chapter 5.
+
+  Distribution typically occurs in steps, as products move from point of
+manufacture to point of consumption. The number of steps depends on the degree to
+566  Handbook of Transportation Science
+
+which the manufacturers serve local, national or international markets. The size of
+the market depends on the technological sophistication of the product along with the
+costs of transportation. Concrete production is almost always local, because the
+product is both expensive to transport and relatively unsophisticated. Integrated
+circuit manufacture is global, because the product is both technologically
+sophisticated and inexpensive to transport. In between, there are products like
+automobiles, which are relatively sophisticated but also expensive to transport (partly
+due to tariffs). These may be manufactured on a national scale.
+
+  Global and national products are typically distributed through a multi-echelon
+(or multi-tier) system (Figure 15.2). Manufacturing plants constitute the top-echelon,
+which may feed into multiple warehouses, each of which serves a large region. These
+warehouses could then serve multiple distributors (each covering a sub-region),
+which in turn serve multiple dealers, serving end consumers. In some cases
+distributors and dealers are independent entities (sometimes called party logistics
+providers), who purchase the products from the manufacturer and sell them to their
+own customers, or work under contract to fulfill orders on behalf of the manufacturer.
+In other cases dealers and distributors are solely owned franchises of the
+manufacturer, operating under defined terms. And in other cases all levels in the
+supply chain fall under the same organization.
+
+Key issues in the design of the distribution system include:
+Supply Chains  567
+
+Echelon structure: number of echelons, regions served by each center
+specialization of warehouses in carrying particular products.
+
+Inventory transfers: number of products stocked in each center, methods and
+places for acquiring products in the event of an inventory shortage, stock replacement
+rules.
+
+Ownership: degree to which the manufacturing organization is involved in owning
+or managing the distribution entities; management of retailer relationships; ability of
+the manufacturer to bypass dealers and sell direct to consumers.
+
+Integration: degree to which the distribution of replacement parts and components
+(called the after-market) is integrated with the distribution of original equipment.
+
+Consolidation: methods for combining different types of product, coming from
+multiple sources and traveling to multiple destinations, into vehicle loads.
+
+  With respect to ownership, smaller manufacturers rely more on independent
+dealers and distributors than large manufacturers. Manufacturers also depend more
+on independent dealers and distributors when products are relatively inexpensive and
+simple to maintain. Vehicle and equipment manufacturers, on the other hand, are
+more involved in retailing, though often through franchises. This is because: the
+dealer must be capable of both selling and maintaining the product; because the sale
+frequently requires manufacturer financing; because dealers can more effectively
+market a single line of products than a wide variety; and because sales volumes are
+sufficient for a dealer to devote his or her entire effort to a single product line.
+
+  With respect to transportation in particular, sometimes the manufacturer, retailer
+or distributor operates its own private network, and sometimes they rely on an
+external for-hire network. Private networks are most common where large volumes
+of freight are sent between origin/destination pairs, which it makes it economical to
+bypass the terminals operated by for-hire networks. In some instances, private
+networks provide services that integrate terminal/warehouse operations with
+transportation. Whereas for-hire networks are designed to rapidly move products
+through each network node, an integrated private network may allow for the strategic
+management of inventories in the vicinity of consumer demand.
+
+  Private networks and for-hire networks differ in several important respects.
+First, private networks tend to be asymmetrical, typically with many more supply
+points than consumption points. Second, flows on private networks tend to be
+unidirectional. And third, network nodes tend to be multi-functional, providing both
+a transportation service and a production or inventory related service. For-hire
+networks share none of these characteristics, yet they still share many properties with
+respect to transportation operations, as will be discussed later.
+568  Handbook of Transportation Science
+
+  Another important factor in ownership is the ability to share and utilize
+information. Prior to the mid century, sales transactions typically accompanied
+the transport of goods between locations. During this period, the merchant industry
+thrived under a model of buying goods in one location, transporting them to another,
+and selling at a profit upon arrival. New means of communication (telegraph and
+telephone) enabled a new business model, in which different locations in the supply
+chain could be managed and coordinated, making it possible for manufacturers to
+manage the distribution system. More recently, the Internet is changing business
+models again, by offering a decentralized tool for pulling information from multiple
+sources, thus reducing the manufacturer advantage in controlling all steps in
+distribution. Information policies can sometimes produce counter-intuitive results, as
+in the bullwhip effect (Chen et al, 2000; Lee et al, 1997). Random perturbations in
+consumer demand can lead to larger distortions in demand further up the supply
+chain, as a consequence of ordering and production policies, conflicting objectives
+and incomplete information. Research in this area has focused on methods for
+stabilizing the supply chain in the presence of variability in consumer demand.
+
+  The issues mentioned so far are hardly new. In some sense, supply chain
+management has been the dominant ingredient in business strategy since the birth of
+civilization. Nevertheless, supply chain management is a new area for academic
+study. Though the field borrows heavily from prior research in inventory
+management, transportation and location theory, modeling supply chains as an
+integrated whole is a recent idea.
+
+Role of Technology in Supply Chain Research
+
+  The attention given to supply chains is in large part due to the economics of
+manufacturing computers and related “high-tech” products (Arntzen et al, 1995; Lee
+and Billington, 1995; Brown et al, 2000). Unlike traditional products, which have
+historically encountered inflationary price increases, the cost trends in computers
+have been predominantly deflationary. As a consequence, the cost of holding
+inventories – largely due to obsolescence – have become enormous. It is
+uneconomical for a high-tech company to produce large quantities of a product in
+anticipation of future demand, because the inventories could become obsolete before
+the demand is realized. The pressures of price deflation not only exist for the
+finished product, but also for each step of the supply chain along the way. Thus,
+manufacturers and distributors are motivated to postpone production as long as
+feasible – ideally until the customer places his or her order (Garg and Tang, 1997;
+Lee and Tang, 1997). Gateway and Dell have prospered in this environment by
+establishing a centralized build-to-order production system, minimizing distribution
+through retailers, and carefully managing the acquisition of each computer
+component.
+Supply Chains  569
+
+  Another factor motivating supply chain research has been the advent of
+electronic commerce, the Internet and on-line retailing (Bollo and Stumm, 1998;
+Brynjolfsson and Smith, 2000; Dewan et al, 2000; Huang, 2001; Morrison and Wise,
+2000; Partyka and Hall, 2000). These technologies have changed the economics of
+distribution, enabling consumers to bypass “middlemen” in some cases. In
+traditional shopping, a purchase follows from physical inspection of available
+products at stores. In electronic shopping, products are not physically inspected, but
+are instead electronically inspected, through acquisition of on-line product
+information. Furthermore, the product is transported to the consumer by commercial
+vehicles (possibly over long distances), rather than by the consumer in a personal
+vehicle. These steps eliminate the retailer tier from the supply chain, permitting
+direct purchase from the distributor.
+
+  On-line purchases have encountered varying success. Whereas completely
+transparent products – like airline tickets – are successfully sold on-line; and
+moderately transparent products – like books and CDs – have achieved some on-line
+success; other products have not. Various on-line grocers have failed, and highly
+personalized products, such as clothing, have not moved far beyond the traditional
+catalogue market.
+
+  A last motivator for supply-chain research has been product substitution.
+Technology already exists for on-line acquisition of music, video and reading
+material, though the medium has not fully matured. Though products like these are
+customarily delivered as physical items, there is nothing inherently physical about
+them. All are ultimately presented to the consumer through the senses of sight and
+sound, which can be created in virtual environments. Going a step further, one can
+imagine that future technology will enable localized production of a range of
+products through the electronic transmission and storage of designs, along with rapid
+prototyping equipment. Such technology is currently being researched.
+
+Customization and Variety
+
+The interplay between temporal and spatial decisions in supply chain management is
+illustrated through customization and variety (Boynton et al, 1993; Feitzinger and
+Lee, 1997; Van Hoek, 2000). Unlike the days of Ford’s Model T (available in any
+color, so long as it is black), modern supply chains offer consumers a tremendous
+range of options within any product line. As discovered by Ford’s competitor, Alfred
+Sloan, variety enables manufactures to create new markets and expand their sales,
+furthering their scale economies in production. The range of items (or “stock-
+keeping-units”, SKUs) sold in any major grocery or department store illustrates how
+variety is engrained in our markets.
+
+  Depending on cost structure and competitive pressures, different industries
+follow different strategies toward customization. Here are two basic options.
+570  Handbook of Transportation Science
+
+Customization in Manufacture: A range of product types is created at manufacture
+through any of these means: (1) establishing a unique production line for each type,
+(2) using “time-share” for a single line, periodically alternating between different
+product types, or (3) creating a flexible production line that allows different types to
+be randomly interspersed. It is also possible for production to take place in a non-
+linear fashion, as in cellular manufacturing, but we focus on lines here. Option one
+provides efficiency through specialization, but may demand a greater investment in
+equipment and labor. Option two provides more efficient utilization of resources, but
+requires periodic product change-overs, which may be costly. Option three also
+provides more efficient utilization of resources, but demands highly flexible
+employees and equipment, as well as a capability for storing a wide range of part and
+component types in the vicinity ofthe production line.
+
+  A challenge with manufacturer customization is that a great variety of products
+must be distributed through the supply chain to consumers. With more variety, each
+warehouse, distributor and retailer must stock more products, at greater cost. They
+will also encounter relatively more variability in sales, increasing the likelihood of
+shortages and unsold products. Because of this variability, some manufacturers
+choose to “build-to-order”, meaning that the product is only manufactured after an
+order is placed. While saving on inventory costs, build-to-order can add to
+manufacturing and transportation costs, and create lead-time delays in fulfilling
+demand.
+
+Customization in Retailing In some instances, most of the customization takes
+place at the point of sale. Instead of stocking finished products, the retailer stocks
+parts and components, which are assembled into consumer products. Fewer items
+need to be stocked in such a system, because a small number of components can
+provide a huge number of combinations for finished products. The disadvantage is
+that scale economies are lost in the assembly process. As a consequence, retailer
+customization is only truly viable in relatively simple assembly operations that pose
+minimal requirements in terms of equipment or labor skills.
+
+  Customization in retailing and customization in manufacturing are two ends of a
+spectrum. Automobile manufacture provides both, with things like body colors and
+styles determined at the factory, and easy to install options, such as luggage racks,
+determined at the dealer. Customization can also occur at distributors, either for
+direct sale to the customer, or to fulfill orders placed through dealers. Lastly,
+customization is an important factor in product design. When variety is added at
+point of sale, the product must be designed in a manner that permits easy substitution
+of parts (e.g., parts easily snap in to a basic chassis), whereas there are fewer
+restrictions when the product is customized at point of manufacture.
+Supply Chains  571
+
+15.3 Transportation Component of Supply Chains
+
+Supply chains could not exist without a capability for moving products over long
+distances. Though one can imagine a day when products are moved more
+electronically than physically, supply chains today depend on efficient transportation
+-- in the conventional sense.
+
+  The goods movement portion of the transportation industry can be segmented by
+mode of travel, commodity carried and scale of operation. Ocean shipping is the
+predominant mode for transportation over very long distances; rail is most efficient
+when water is not an option and distances are long; trucking is predominant for local
+distribution, up to medium distances. Pipelines are common for products like fuel
+and water. And aircraft are used for urgent shipments over long distances.
+
+  For raw materials, transportation is highly specialized by commodity. Special
+vehicles are needed to carry products like lumber, milk, gasoline, and vegetables, for
+instance. Finished products are more likely to be containerized or boxed, which
+allows them to be transported in standardized vehicles.
+
+  The scale of operation can be defined by geographic coverage, number of
+terminals, miles of infrastructure and number of vehicles. In trucking, the largest
+carriers concentrate on transporting small items over long distances, in great
+volumes. They require substantial investments in terminals and handling equipment,
+which creates a barrier to entry for smaller firms. Due to the nature of their
+equipment and their focus on long distances, ocean shipping and railroad companies
+are inherently large in scale.
+
+  Virtually all forms of transportation exhibit strong scale economies. By
+attracting larger volumes of freight, companies are better able to: fill their vehicles to
+capacity, or increase frequency and density; operate larger and more efficient
+vehicles, and more efficiently spread the costs of investments in terminals and
+infrastructure. To achieve these scale-economies, freight carriers utilize the process
+of consolidation: the act of combining shipments with different origins, destinations
+and times of travel into vehicle loads (Hall, 1987c). There are just three basic
+approaches to consolidation:
+
+  1. Temporal: accumulation of shipments over time until a desired load size is
+  attained.
+
+  2. Terminal: transshipping from incoming to outgoing vehicles at a terminal
+  to attain desired loads. (Figure 15.3)
+
+  3. Vehicular: routing a vehicle among multiple stops, picking up and
+  dropping off shipments, to attain a desired load size. (Figure 15.3)
+572  Handbook of Transportation Science
+
+  Whereas consolidation adds to transportation efficiency, it also imposes costs on
+the carrier and the customer. Temporal consolidation creates delays and inventory
+costs. Terminal consolidation demands additional investment in facilities, and causes
+shipments to travel by more circuitous routes. Vehicular consolidation causes both
+vehicles and shipments to travel by more circuitous routes. Taking all factors into
+consideration, the optimal design of a transportation/distribution system must balance
+numerous competing trade-offs between cost and service, usually blending all three
+consolidation approaches.
+
+  The value of consolidation can be illustrated with a simple example. Suppose
+that a distribution network serves 15 million pounds of freight per day – a rather
+large quantity -- along with 5000 origins and 5000 destinations. And suppose that
+the freight is evenly distributed among origin-destination pairs. Then the network
+serves a total of 25 million (5000 x 5000) origin-destination pairs, which results in
+just .6 pounds/day per pair. It would certainly be uneconomical to provide a daily
+direct route between each pair, when the freight is comparable to a large manila
+envelope. And even if the consolidation cycle were extended to an annual period, the
+total accumulation would be just 219 pounds per route, still likely not enough to
+justify direct routes.
+
+  As an alternative, suppose that shipments are transported through a system like
+the one shown in Figure 15.4. Suppose that one hub terminal is created, through
+which all shipments are processed, along with 50 regional terminals, each of which
+serves 50 origins and 50 destinations. And suppose that the origins and destinations
+are served by multi-stop routes, with 10 stops each. Then 500 local pickup and
+delivery routes would average 30,000 pounds per day in volume, and 50 terminal-to-
+Supply Chains  573
+
+terminal routes would average 300,000 pounds per day in volume. In this scenario, it
+becomes economical to provide daily service between all origin destination pairs.
+
+  The example illustrates the concept underlying the original Federal Express
+network (Hall, 1989a; Kuby and Gray, 1993). By focusing its traffic on a single
+national terminal, Federal Express amassed sufficient freight flows to make daily
+overnight service economical. Over time, the Federal Express network has grown
+and become more complex. Nevertheless, it still relies on a terminal network to
+consolidate its traffic and make transportation efficient.
+
+Terminal Consolidation Strategies
+
+Terminals present many consolidation options and decisions. Adding terminals to a
+network is desirable from the standpoint of reducing travel distances for local pickup
+and delivery routes (Hall, 1985b). However, with more terminals, more routes are
+needed to connect terminals with each other, reducing the advantage of consolidation
+because each route serves less volume. Adding terminals also increases the
+investment in terminal infrastructure. Beyond determining how many terminals to
+operate and where they are placed (Campbell, 1993; Klincewicz, 1998; O’Kelly,
+574  Handbook of Transportation Science
+
+1986; and O’Kelly and Bryan, 1998), various strategies exist for routing freight.
+Terminals can be classified as follows:
+
+One-One: Though not truly a consolidation strategy, terminals sometimes exist for
+the sole purpose of transferring vehicles, trailers or containers from one driver to
+another. These terminals permit drivers to travel part way to a destination, swap
+loads with another driver, then return to the origin, avoiding an overnight stay and
+saving on driver costs.
+
+One-Many/Many-One: Some terminals serve the rather simple function of
+consolidating many incoming shipments into a single longhaul load, or the opposite
+(de-consolidating from one longhaul to many outgoing; sometimes called a feeder
+terminal). This is not the predominant use of terminals. A single long route is
+shorter, and generally more cost efficient, than many local routes (Figure 15.5).
+Nevertheless, one-many/many-one terminals are useful when it is impossible to
+complete a long route within a reasonable time period (e.g., a one-day workshift), or
+when it is impossible for the longhaul vehicle to navigate the local infrastructure
+(e.g., an ocean ship, or even some large trucks, cannot travel along local streets;
+Daganzo, 1987a).
+
+Many/Many: A more common use of terminals is for transshipment from many
+incoming vehicles to many outgoing vehicles. Many-many consolidation is
+extremely difficult to achieve in vehicles alone, as it is difficult to organize and sort
+shipments with simultaneous pickup and delivery. Because of the multiplying effect
+of serving many origins and many destinations, many-many consolidation greatly
+increases the potential to achieve large loads, even when the flow of freight between
+origin/destination pairs is small.
+
+  The three basic terminal types are the building blocks for the construction of
+terminal networks, which further define the consolidation strategy in the following
+ways.
+
+Hierarchies: Some transportation networks utilize a multi-echelon structure, similar
+to those in inventory systems. An example is provided in Figure 15.6. A service
+region is broken into terminal areas, and local districts. Shipments traveling from
+one area to another are processed through the single national terminal. Shipments
+traveling from one district to another, within an area, are processed through a
+regional terminal. Shipments traveling within a single district are only processed at
+the local terminal. Hierarchical strategies, like these, balance the need for achieving
+large load sizes against the cost of long and circuitous routes.
+Supply Chains  575
+576  Handbook of Transportation Science
+
+Wide Area and Local Networks In most supply chains, origins and destinations
+tend to be clustered around major cities located in metropolitan areas. As a
+consequence, distribution networks tend to fall into either of two classes: wide-area,
+connecting metropolitan areas, and local area, connecting locations within a
+metropolitan area (Figure 15.7). A local area network (LAN) may contain multiple
+terminals, each serving a district on the order of 100 to 500 square miles, along with
+one or more gateway terminals, which provide the interface to the wide area network
+(WAN) (Hall, 1993). In some sense, an individual factory or building material
+handling system may be viewed as a sub-local network. Thus, a supply chain can be
+viewed as the composition of three network layers: the WAN, which connects
+metropolitan areas, the LAN, which connects sites within a metropolitan area, and the
+sub-LAN, which connects stations within a building or complex.
+
+  For example, companies like UPS and FedEx operate multiple stations (or local
+terminals) within each metropolitan area. These are the places where pickup and
+delivery trucks are based. The stations are connected to major terminals, frequently
+in the vicinity of airports, which provide gateways to the WAN. At the national
+scale, FedEx operates multiple regional hubs along with a single large national hub,
+

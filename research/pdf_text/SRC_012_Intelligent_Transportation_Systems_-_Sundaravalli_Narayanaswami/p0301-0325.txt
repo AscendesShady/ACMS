@@ -1,0 +1,886 @@
+282  Chapter 4.1
+
+Exhibit 4.1.6: The City’s Physical Architecture Subsystems, and
+Related Equipment Packages
+
+Source: Based on the Data from the Spokane Valley Strategic Plan (2011)
+Strategic Business Planning  283
+
+  References
+
+Spokane Valley ITS Strategic Plan. 2011. Washington: Transpo Group, Inc.
+  CHAPTER 4.2
+
+  PRICING AND REVENUE MANAGEMENT
+
+Pricing and revenue management in ITS is a key instrument for maximizing
+revenue by increasing usage and ridership. A huge amount of data is
+generated in ITS; this data helps operators to analyze, predict and
+understand traveler preferences and needs. It is also possible to generate
+probable distributions of future trips, and, thus, help transport planners to
+decide on optimal pricing strategies for commercially viable and sustainable
+management of ITS systems. Electronic toll collection systems, dynamic
+charging, road pricing, and congestion charging are examples of some
+applications of dynamic pricing and revenue management in ITS. While
+applications like electronic toll collection systems and dynamic charging
+have a reasonable acceptance, congestion charging often faces social
+reluctance. With the deployment of ITS, administrative revenue leakage in
+transport sector has significantly reduced over time. Revenue management
+is a critical process and is vulnerable to tampering and manipulation if not
+managed well; often, revenue-related complaints have a huge social and
+political implication. In a conventional transport system, common causes
+for revenue leakage are
+
+  1. Human error of the driver or conductor in public transport
+  operations, e.g., failure to issue the ticket, intentional discrepancy in
+  farebox collection, issuance of under-valued ticket, etc.
+
+  2. Fare avoidance by passengers/users, e.g., avoiding tolls, using
+  expired or invalid tickets while travelling, etc.
+
+  3. Third party manipulation: selling of tampered or forged tickets
+  4. Errors or malpractice at higher levels of transport authority
+
+The application of ITS tamper-proofs revenue collection and management
+by establishing automated fare collection techniques and using dynamic
+pricing techniques.
+Pricing and Revenue Management  285
+
+  Dynamic Pricing
+
+Transport resources, such as public vehicles, road infrastructure, and
+parking spaces, face the common issue of high demand and low supply
+caused by increasing population. ITS provides value added services and
+solutions to meet the demand and supply imbalance, necessitating the use
+of dynamic pricing, surge pricing, demand pricing, or time-based pricing.
+The user pays a fee for every service/infrastructure, including roads and
+highways, parking lots, public transportation, charging stations for EVs,
+congestion control, travel comfort and security, etc. It is essential that the
+pricing and revenue management of ITS is appealing to both the commuter
+and the administrators; the fare needs to be attractive and optimal so that
+ridership is not affected, but also commercially viable.
+
+Dynamic pricing is determined by various factors, such as present and past
+traffic volumes, and their respective pricing. These parameters vary with
+time, demand, weather conditions, and culture. As a result, assessing and
+developing suitable pricing policies is critical.
+
+Areas of dynamic pricing in ITS are
+
+  1. Congestion-pricing: Road-pricing is the automatic charging of users
+  for usage of a particular road or a road network in a specific region.
+  Congestion-pricing, toll-pricing, and crowd-pricing are
+  subcategories of road-pricing schemes. Road-pricing reduces traffic
+  on specific roads and restricts vehicles, ensures average flow of
+  traffic, promotes carpooling and public transportation, generates
+  revenue, and balances cost between payer and payee. Toll-pricing
+  helps in generating revenues for infrastructure construction and
+  maintenance, and managing congestion at toll gates. Congestion-
+  pricing, at present, is used only in a few cities and on a few major
+  highways. Electronic road pricing in Singapore, the London
+  congestion charge, the Stockholm congestion tax, Milan area C, and
+  high-occupancy toll lanes in the United States are noteworthy
+  examples.
+
+  2. Parking Pricing: It i) minimizes time-loss by giving easy access to
+  parking spaces, ii) ensures safe and secure parking spaces, iii)
+  prioritizes commercial usage, iv) reduces accidents, energy
+  consumption and pollution, and v) encourages the usage of public
+  transportation.
+
+  3. Electricity-charging Pricing for EV: It provides the convenience of
+  charging to EV owners at appropriate pricing. It addresses the
+286  Chapter 4.2
+
+  challenges of peak/non-peak loading, demand variability, power-
+  price fluctuations, and intermittency of renewable energy generation.
+
+Evaluation criteria of dynamic pricing for ITS are based on revenue
+generation, travel time, delay time, cost of travel, number of users in a
+specific time period, computational complexity, demand, operational cost,
+environmental factors, and traffic flow and ridership. Table 4.2.1 is a
+tabulation of different road pricing types and Table 4.2.2 illustrates the
+different fee collection methods.
+
+  TYPE  DESCRIPTION
+Road toll  A fixed fee for driving on a particular road.
+(fixed rates)
+Congestion  A fee that is higher under congested conditions than
+pricing  uncongested conditions. Intended to shift some vehicle
+(time-  traffic to other routes, times, and modes.
+variable)
+Cordon fees  Fees charged for driving in a particular area.
+
+High-  A high-occupant vehicle lane that accommodates a
+occupancy  limited number of low-occupant vehicles for a fee.
+toll lanes
+Distance-  A vehicle-use fee based on how many miles a vehicle
+based fees  is driven.
+Pay-as-you-  Prorate premium by mileage so vehicle insurance
+drive  becomes a variable cost.
+insurance
+Road space  Revenue-neutral credits used to ration peak period
+rationing  roadway capacity.
+
+Table 4.2.1: Different Road Pricing Types
+Source: Author’s compilation
+  Pricing and Revenue Management  287
+
+  Type  Description  Equipment  Operating  User  Price
+Toll  Costs  Costs  Inconvenience  Adjustability
+Booths  Motorists  High  Medium to
+Pass  stop and pay  High  High  Medium  high
+  at a booth  Low  Low  Poor to
+Electronic  Motorists  Low  medium
+Tolling  must  High  Medium
+  purchase a  Low  High
+GPS  pass to enter  High  Medium
+  a cordoned  High
+  area
+  An electronic
+  system bills
+  the user as
+  they pass a
+  point in the
+  road system
+  Track vehicle
+  location and
+  data is
+  automatically
+  transmitted to
+  a central
+  computer that
+  bills users
+
+Table 4.2.2: Fee Collection Methods
+Source: Pricing Methods—Four Road Pricing—Congestion Pricing, Value
+Pricing, Toll Roads and HOT Lanes, TDM Encyclopedia, Victoria
+Transport Policy Institute
+
+  Area Licensing Scheme (ALS) in Singapore
+
+Singapore, also known as the Garden City, the Lion City or the Little Red
+Dot, is an island city-state in Southeast Asia. It has an area of 640 km sq
+with a population of 5.75 million. It is a global commerce, finance, and
+transport hub. It is one of the four newly industrializing economies in Asia,
+the other three being Hong Kong, South Korea, and Taiwan. With a vibrant
+economy, a small land area, and a large population, there have been high
+demands on Singapore's roadways. Private cars became more prevalent with
+per-capita income rise. This led to increased traffic congestion, particularly
+in the city center. The government has since framed policies to control the
+number of private cars on the road to control pollution and congestion. Road
+pricing was introduced in Singapore, for the first time in the world, in 1975,
+in the form of an area license system (ALS). The system has been
+consistently upgraded, from a manual system to a high-tech digital system.
+The ALS was replaced by electronic road pricing (ERP), in 1998, which
+288  Chapter 4.2
+
+digitally manages traffic by way of road pricing. Road charging has been
+implemented in many cities (e.g., Oslo, San Francisco, Paris, Dubai, and
+Cambridge) around the world, either manually or electronically.
+
+The ALS in Singapore was first in the series of multiple stringent strategies
+adopted by the Singapore government to ease traffic congestion in the
+central business district (CBD) of Singapore. Park-and-ride schemes and
+carpooling are alternative schemes, implemented along with ALS. The
+Road Transport Action Committee (RTAC) was set up in January 1974,
+including members from the ministries of National Development,
+Communications, Home Affairs and Finance. RTAC created the ALS with
+the objective peak-hour traffic reduction in the city by 30 %. Under the
+scheme, the CBD was marked as a restricted zone during peak hours; all
+vehicles entering the CBD during these hours had to obtain a special area
+license costing S$3 per day or S$60 per month. The scheme was refined
+multiple times in terms of operations and pricing. ALS was replaced by the
+electronic road pricing (ERP) system, after being operational for twenty-
+three years. Though ALS was very useful in traffic management, operators
+found it cumbersome, labor-intensive, and inflexible; it was replaced by an
+automatic dedicated short-range communication (DSRC) system called the
+ERP scheme, in 1995. An ERP-controlled point uses two overhead gantries,
+15 m apart and 6 m above road level. Figure 4.2.1 shows an image of a
+Singapore ERP gantry. Each gantry has two microwave beacons per lane.
+The passage of vehicles is detected by the optical sensors on the second
+gantry. Two cameras cover each lane on the first gantry and photograph the
+rear license plates of vehicles without payment equipment (Walker May
+2011).
+
+  Working of ERP
+
+A cash card is inserted into the on-board unit (OBU) or in-vehicle unit (IU).
+The OBU is fixed permanently in the vehicle and is powered by the vehicle
+battery. Figure 4.2.2 shows an image of an OBU. When a vehicle passes an
+ERP gantry, a charge is deducted. After the charge is deducted, the
+remaining cash is shown on the OBU for ten seconds. If a vehicle owner
+does not have sufficient value in their cash card when passing through an
+ERP, the owner receives a fine by post within two weeks. The electronic
+systems can dynamically vary the prices, based on traffic conditions, vehicle
+type, time, and location. All vehicles are charged except emergency
+vehicles. In 2005, the coverage of ERP expanded the gantries around
+Singapore CBD, major arterials, and expressways. The system is upgraded
+Pricing and Revenue Management  289
+
+each quarter to keep them efficient. After ALS had been replaced with the
+ERP system, traffic congestion levels decreased by 15 %. About 65 % of
+the commuters now use public transport, which is an increase of nearly 20
+% (Sustainable Cities 2014).
+
+Figure 4.2 1: A Singapore ERP Gantry
+Source: images.allsingaporestuff.com
+
+Figure 4.2.2: Images Showing On-Board Unit (OBU) Fixed Inside a Car
+Source: http://ivyidaong4.blogspot.in
+290  Chapter 4.2
+
+  The Pricing Model
+
+The primary objective was to minimize vehicles on roads, and not profit
+generation. The initial cost of installation for the ERP, in 1998, was
+approximately S$115M. In 2003, the annual revenues from the ERP were
+about S$45M, which balanced out the annual operating costs of S$9M. In
+2010, annual revenues from the ERP rose to approximately S$90 million,
+with a daily collection of more than S$15,000 (CITY CLIMATE
+LEADERSHIP AWARDS Singapore Climate Close-Up 2013). The cost of
+managing and maintaining the ERP system has increased over the years,
+along with the increase in the number of gantries and IUs; however, the cost
+remains at 20 %–30 % of the total revenue collected.
+
+The ERP is an “active” system; the charges are deducted from a smart card
+in the IU, and the central computer system does not keep track of the
+vehicle’s movements as a record of all transactions are stored on the driver’s
+smart card. In addition to making the payments easier, the ERP enables
+consistent, reliable, and efficient data collection. Analysis of this data helps
+communicating information that is useful to the drivers.
+
+  Insights from Best Practices
+
+One major lesson from Singapore is to establish flexible, agile, and adaptive
+schemes that target specific groups contributing to traffic congestion. The
+speeds on road sections are always monitored and the charges are adjusted
+up to six times a year. The pricing is dynamic depending on traffic flow—
+higher with low congestion and vice versa. There was also the provision of
+quality public transport choices, including mass rapid transit and light rail.
+Most importantly, there was a wide-spread public acceptance of ERP. The
+authorities in Singapore also stress that congestion pricing is not the only
+solution to urban traffic congestion; travel demand could be better managed
+by land-use planning, the right policies on decentralization, parking, car
+ownership (vehicle quota system), and effective public transport. Effective
+crisis management, optimizing available road capacity, and prioritizing road
+network capacity can also manage traffic demand. Furthermore, the
+country's small size and island boundaries helped make implementation
+efficient. Their single-tiered governance and administration made decision-
+making easier and implementation faster. In summary, Singapore’s
+transport system is among the best, with efficient pricing policies and the
+development of a well-connected public transport system.
+Pricing and Revenue Management  291
+
+  London Congestion Charging Scheme
+
+Congestion charging is often resisted by the public. Cities like Hong Kong
+and New York could not expand their congestion pricing schemes beyond
+trial runs due to social rejection. London launched the London Congestion
+Charging Scheme (LCCS) in February 2003. With an initial investment of
+£162M, the LCCS was technically more advanced than Singapore’s ALS,
+despite a similar daily licensing charging scheme. LCCS initially covered
+an area of 22 km sq—which was doubled by 2007—and generated a net
+revenue of £122M in the 2005 to 2006 financial year. A clear communication
+strategy, and the well-defined roles and responsibilities of Transport for
+London (TfL) are the key factors for its success. The number of private
+vehicles entering the London urban area dropped by 39 % between 2002
+and 2014. More than 18,000 private rental vehicles, like taxis (Uber, etc.)
+and minicabs, are entering the congestion-charging zone daily. The TfL is
+faced with a financial challenge as these taxis and minibuses are exempt
+from paying the congestion charge price.
+
+Congestion charging schemes or area licensing schemes raise two primary
+concerns: i) it is not equitable, as fees maybe inconsistent with the usage,
+and ii) impaired usage, to ensure the value for money (for the users), which
+fails the basic purpose of reducing congestion.
+
+  Pricing Project in Stockholm and Milan
+
+From January 2006 to July 2006, Stockholm conducted a trial run of a
+congestion pricing scheme, where toll charges were levied at eighteen
+points that controlled the entry and exit to the inner zone of the city. The toll
+rate was based on a time-differentiated technique similar to ERP. The
+maximum toll charge for each vehicle in a day was fixed at 60 SEK. The
+highest toll rate occurred during the morning and evening peak hours; from
+6:30 AM to 6:30 PM, the toll charge varied from 10 SEK (around $1.3) to
+20 SEK.
+
+The eco-pass road pricing scheme in Milan was implemented in January
+2008, with the primary objective of improving the air quality of the city
+while managing congestion effectively. The pricing cordon operates from
+7:30 AM to 7:30 PM and covers an area of 8 sq km, located in central Milan.
+The toll pricing is not time-variable, unlike Stockholm and Singapore, as
+the primary focus is to reduce emission rather than congestion. The toll rates
+are based on the five different emission levels of the vehicles; the highest
+charge is €10 and the lowest is free of charge.
+292  Chapter 4.2
+
+  References
+
+CITY CLIMATE LEADERSHIP AWARDS Singapore Climate Close-Up.
+  2013. LONDON: C40 CITIES, SIEMENS.
+
+Sustainable Cities. 2014. Accessed June 24, 2017.
+  http://www.dac.dk/en/dac-cities/sustainable-cities/all-
+  cases/transport/singapore-the-worlds-first-digital-congestion-charging-
+  system/.
+
+Walker, John. 2011. The Acceptability of Road Pricing. London: RAC
+  Foundation.
+  CHAPTER 4.3
+
+  SUSTAINABILITY OF ITS OPERATIONS
+
+  Introduction
+
+In the modern economy, transport is fundamental to citizen mobility and
+socioeconomic development. Well-connected, sophisticated mobility
+choices are substantive to a sustainable environment and pollution control.
+Ninety-five percent of transport energy is derived from fossil fuels; this is
+the main contributor to most of the air pollution from the transportation
+sector around the world. According to the International Energy Agency
+(IEA), in 2012, transportation accounted for 22 % of energy-consumption-
+related CO2 emission, with 74 % of the total CO2 emissions in transportation
+coming from road traffic. Therefore, tackling air pollution and attempting
+to reduce non-renewable energy consumption will have an adverse impact
+on mobility. It is expected for the situation to exacerbate without sufficient
+governmental policy support and technological interventions. For improved
+social welfare and public good, government policies should encourage
+environmental friendliness and sustainable development; it will be
+productive to explore transportation options that are environmentally benign
+and use clean energy.
+
+Urban areas have little to no scope for establishing an eco-friendly
+transportation infrastructure network; this is due to high population density
+and the rigid space limitations of existing infrastructure. Characteristically,
+urban transport infrastructure development is a brown-field project;
+congestion levels are usually very severe, mobility demands continue to
+increase, and since real-estate is expensive, residential regions shift to
+peripheral locations, whereas commercial establishments are concentrated
+in the city center. Therefore, citizens’ daily commute for livelihood reasons
+is necessitated; all these burden the already constrained urban infrastructure,
+reducing the overall mobility service quality. Quality deterioration becomes
+evident in terms of reduced safety, increased accidents and casualties,
+increased pollution (noise, air, and emissions), increased congestion,
+reduced reliability, and so forth.
+294  Chapter 4.3
+
+Intelligent Transportation Systems (ITS) are hoped to improve roadway
+safety, reduce traffic congestion, and enhance mobility. In addition to that,
+ITS also help reduce energy consumption and mitigate environmental
+effects. In the recent years, several ITS programs have emerged that are
+specifically designed to minimize the environmental impacts of transportation,
+such as Milan’s road-pricing system. Such environmental ITS programs
+have been shown to curb emissions by up to 15 % (Barth, Wu and
+Boriboonsomsin 2015).
+
+  Traffic Problem in the US
+
+According to a recent study, it has been estimated that the cost of traffic
+congestion in US cities for 2005 was $78B, with 4.2 billion hours of delay
+and 2.9 billion gallons of fuel wasted (Shrank and Lomax 2007). During the
+same year, there were 5.4 million crashes and fatalities on US highways
+(FHWA Safety 2007). Population growth and the resulting increase in
+vehicles and vehicle miles travelled (VMT) are the leading causes of
+roadway congestion in the United States. According to the report by the
+Federal Highway Administration, in 2013, annual VMT increased 8 % after
+the 2008 financial crisis and reached 2.97 trillion miles in the US in 2011.
+These data points corroborate the poor condition of the US transportation
+system and stress the urgency of government and transport agency
+intervention. Consequentially, environmental impacts from the US
+transportation network are also colossal and detrimental.
+
+  ITS and Their Impact on Transportation Energy and
+  Emissions
+
+As described in the US National Intelligent Transportation System
+Architecture, ITS consist of a wide variety of technologies and applications.
+In general, ITS can be broadly categorized into three major areas, vehicle
+systems, traffic management systems, and travel information systems. The
+environmental benefits of these areas are briefly discussed below.
+
+1. Vehicle Systems
+
+By taking advantage of advanced technologies like modern control systems,
+faster processors, and wireless communications, vehicle performances have
+been enhanced to a great extent. This has many environmental benefits in
+terms of reduced energy consumption and GHG emissions. Examples of
+such emerging vehicle systems are discussed below.
+Sustainability of ITS Operations  295
+
+Longitudinal Assistance Systems
+
+Longitudinal Assistance Systems aim to prevent rear-end and front-end
+collisions. These systems constitute sensors and computer vision
+technology, which monitor headway between vehicles and reduce the
+chances of collisions. These sensors are also being used for adaptive cruise
+control (ACC) systems that allow a driver to travel at a consistent speed for
+a specific distance. ACC can evolve into cooperative adaptive cruise control
+(CACC) by integrating wireless communication systems; CACC vehicles
+communicate with each other to coordinate headway distance, speed,
+acceleration, and deceleration, etc.
+
+Lateral Assistance Systems
+
+Lateral assistance systems guide vehicles during lane changes, merges, or
+any turning movements. They provide lane departure warnings by using
+computer vision technology and other sensors to warn drivers of impending
+lateral collisions.
+
+Wireless Communications Systems
+
+These systems are incorporated in vehicles as cellular communication
+devices and dedicated short-range communication radios. These systems
+enable V2V, V2I, and I2V communications to ensure safety. They can
+minimize environmental impacts by reducing fuel consumption, improving
+efficiency and safety. Longitudinal and lateral control systems coupled with
+wireless communication systems establish a fully or partially automated
+vehicle.
+
+2. Traffic Management Systems
+
+Over the last several decades, road congestion in urban areas has risen
+severely. Since it may not be feasible to construct infrastructure to manage
+increasing travel demand, ITS-based traffic management systems can
+potentially mitigate the problem. Some of these systems are discussed
+below.
+
+Traffic Monitoring Systems
+
+Traffic monitoring systems comprise sensors, communication channels, and
+information processing technologies. They provide real-time information to
+manage traffic. Advanced data processing techniques are being developed
+to estimate traffic-flow, density, and speed, as well as other traffic parameters.
+296  Chapter 4.3
+
+This real-time data can be used by drivers for choosing alternative routes,
+helping to reduce congestion.
+
+Traffic Incident Management
+
+Traffic incident management can reduce congestion on roads by
+coordinating with traffic monitoring systems. This technique can be an
+important tool for early detection of incidents and rapid clearance from
+accident sites, so normal traffic can resume as quickly as possible.
+
+Integrated Corridor Management
+
+Integrated corridor management is a set of methods, which work together to
+help keep traffic flowing as smoothly as possible through the corridor. Some
+innovative solutions include ramp metering for freeway access, and
+advanced signal timing algorithms on arterial networks, which reduce idling
+time and, hence, reduces congestion.
+
+Travel Demand Management
+
+Travel demand management aims to reduce the number of vehicles on a
+congested road by diverting the traffic volume through demand-pricing and
+other initiatives. The main goal of traffic management is to utilize the
+existing road infrastructure to its full capacity and maintain a smooth traffic
+flow. It can reduce energy consumption and GHG emissions by large
+extents as it minimizes time stuck in congestion.
+
+Travel Information Systems
+
+Travel information systems aim to make things convenient for travelers by
+efficiently communicating relevant information. Recent developments in
+these systems are discussed below.
+
+Route Guidance Systems
+
+Route guidance systems generally include on-board, off-board, and
+smartphone-based systems. These navigation systems use geographic and
+real-time traffic information to find optimal routes with minimum travel-
+time, congestions, and even GHG emissions in a roadway network.
+
+Geo-Location Systems
+
+Geo-location systems are generally coupled with route guidance systems to
+allow users to find specific locations, hence, decreasing extra driving, such
+Sustainability of ITS Operations  297
+
+as searching for gas stations, parking spaces, etc., which, in turn, leads to
+reduced fuel consumption and, hence, reduced GHG emissions.
+
+Electronic Payment Systems
+
+Electronic payment systems are becoming extremely prevalent, especially
+since the onset of the COVID-19 Pandemic. They enable automatic toll and
+other payments without disrupting the vehicle, which helps in maintaining
+the smooth flow of traffic, leading to environmental benefits.
+
+The ITS implementations discussed above can directly or indirectly reduce
+GHG emissions through improvements in safety, mobility, energy
+consumption, and efficiency. Other than reducing GHG emissions and
+energy consumption, all these systems also enhance traveler convenience.
+However, actual GHG emission reductions will vary significantly, depending
+on factors such as vehicle fleet mix, traffic volume and dynamics, and the
+type of roadway network and infrastructure. In the US, a variety of these
+ITS applications have been designed, developed, piloted, and implemented
+in different locations.
+
+Recent Environmental ITS Programs in the United States
+
+The US Department of Transportation (USDOT) has initiated a variety of
+environmentally-focused ITS research programs. Many of these are part of
+the Federal Highway Administration Exploratory Advanced Research
+program. One of the research initiatives focuses on connected vehicles
+(CV), of which an environmental aspect is the Applications for the
+Environment: Real-time Information Synthesis (AERIS) program. Using
+V2V, V2I, and I2V communications, the AERIS program aims to design
+ITS applications that reduce energy consumption and GHG emissions.
+Several AERIS operational concepts have been developed, including: i)
+Eco-Signal Operations, ii) Eco-Lanes, iii) Dynamic Low Emissions Zones,
+iv) Support for Alternative Fuel Vehicle (AFV) Operations, v) Eco-Traveler
+Information, and vi) Eco-Integrated Corridor Management (ICM). The main
+AERIS applications are the Eco-Traffic Signal Operations, including the
+applications of Eco-Approach and Departure at Signalized Intersections,
+Eco-Traffic Signal Timing, and Eco-Traffic Signal Priority, as well as Eco-
+Lanes Operations, which includes the applications of Eco-Speed
+Harmonization and Eco-Cooperative Adaptive Cruise Control. These
+applications are described in further detail below.
+298  Chapter 4.3
+
+1. Eco-Traffic Signal Operations
+
+These operations use ITS technologies to decrease fuel consumption and
+GHG emissions on arterial roadways by reducing idling, number of stops,
+and unnecessary accelerations and decelerations at signalized intersections.
+There are a few other signalization strategies that use V2I/I2V communications,
+three of which are described below.
+
+  • Eco-Approach and Departure at Signalized Intersections: This
+  application uses wireless data communications sent from the traffic
+  signal controller to CVs to encourage “green” approaches to
+  signalized intersections. It is intended for the vehicle to change its
+  speed to stop at or cross a traffic signal energy-efficiently. The
+  systems include broadcasting signal phase and timing (SPaT) data
+  and geographic information description (GID) data. Vehicle status
+  messages, sent from nearby vehicles using V2V communications,
+  are also incorporated by the application. Upon receiving this
+  information, an on-board processor can calculate the optimal speed
+  to approach, pass through, and depart from a signalized intersection.
+  This speed information is communicated to the driver through a
+  human-machine interface, or directly to the vehicle’s longitudinal
+  controller (such as the ACC system). The AERIS program has found
+  2 % to 7 % energy savings for all vehicles and that the application is
+  less effective when the corridor is congested (AERIS Report 2014).
+
+  • Eco-Traffic Signal Timing: This is similar to the adaptive traffic
+  signal systems; however, eco-traffic signal timing’s objective is to
+  optimize traffic signals for the environment. The application collects
+  data from vehicles, such as vehicle location, speed, GHG and other
+  emissions using CV technologies. This data is then processed to
+  develop signal timing strategies that are aimed at reducing fuel
+  consumption and overall emissions at an intersection, along a
+  corridor, or for a region. This approach evaluates traffic and
+  environmental parameters at each signal in real-time and adapts to
+  serve traffic demands while minimizing the environmental impact.
+  The AERIS program has shown 1 % to 5.5 % energy savings, and
+  that the application is effective in most conditions other than full
+  saturation (AERIS Report 2014).
+
+  • Eco-Traffic Signal Priority: Eco-traffic signal priority allows
+  approaching transit and freight vehicles to request signal priority. It
+  considers the vehicle’s location, speed, vehicle type, and its
+  emissions to determine whether priority should be granted.
+  Information collected from vehicles approaching the intersection,
+Sustainability of ITS Operations  299
+
+  such as the transit vehicle’s schedule or passengers onboard may also
+  be considered in granting priority. If priority is granted, the traffic
+  signal attempts to facilitate the transit/freight vehicle to pass-through
+  the intersection without stopping. This application does not allow
+  signal pre-emption, which is reserved for emergency response
+  vehicles. The AERIS program has shown 1 % to 4 % energy savings
+  for all freight vehicles and 1 % to 2 % savings for transit vehicles
+  (AERIS Report 2014).
+
+2. Eco-Lanes Operations
+
+Eco-lanes use CV technologies to decrease vehicle fuel-consumption and
+emissions by reducing congestion, unnecessary accelerations/decelerations,
+and improving traffic flow. This could occur either on a single lane or across
+multiple lanes on a freeway. It can consist a few different applications that
+are specifically set up for a freeway:
+
+  • Eco-Lanes Management: This application supports the operation of
+  dynamic eco-lanes, including establishing qualifications for using
+  the lanes, defining activation periods, or geofencing the eco-lanes’
+  boundaries.
+
+  • Eco-Speed Harmonization: Eco-speed harmonization assists in
+  smoothing traffic flow, reducing unnecessary stops and starts, and
+  maintaining consistent speeds, thus, reducing fuel consumption,
+  GHGs, and other emissions on the roadway by implementing
+  variable speed limits.
+
+  • Eco-Cooperative Adaptive Cruise Control: Eco-cooperative
+  adaptive cruise control allows individual drivers to take advantage
+  of adaptive cruise control capabilities along with V2V communications
+  designed to minimize vehicle accelerations and decelerations for
+  reducing fuel consumption and vehicle emissions.
+
+  • Eco-Ramp Metering: The eco-ramp metering application determines
+  the most environmentally efficient operation of traffic signals on
+  ramps to manage the rate of vehicles entering a freeway.
+
+  • Connected Eco-Driving: Connected eco-driving provides
+  customized real-time driving suggestions to drivers to adjust their
+  driving characteristics (e.g., speed of travel, acceleration and
+  deceleration rates) to save fuel and reduce emissions.
+
+  • Multi-modal Traveler Information: The multi-modal traveler
+  information provides pre-trip and en-route multi-modal traveler
+  information to encourage environmentally friendly transportation
+  choices.
+300  Chapter 4.3
+
+In the US, the AERIS program’s eco-lanes modelling implemented the eco-
+speed harmonization and eco-cooperative adaptive cruise control
+application. Using a sophisticated set of simulation modelling tools, it was
+shown that under the assumption of 100 % penetration rate, eco-speed
+harmonization could result in up to 12 % in energy savings, but with an 8
+% reduction in mobility. However, after modifications to ensure that
+mobility was not affected, energy savings were around 5 %. On the other
+hand, eco-cooperative adaptive cruise control was shown to provide
+upwards of 30 % in energy savings for a generic freeway segment. When
+applied to a regular freeway with on and off ramps, the savings were around
+15 % (Barth, Wu and Boriboonsomin 2015).
+
+  Conclusion
+
+For the last several decades, many ITS applications, including vehicle
+systems, traffic management systems, and traveler information systems,
+have been utilized to improve safety and reduce congestion, with the
+secondary goal of reducing fuel consumption and GHG emissions. Based
+on the discussions, in this chapter, on the US, it is inferred that
+environmental benefits can be maximized through the implementation of a
+combination of environmentally-friendly ITS technologies. To date, the
+mobility and safety impacts of environmental-ITS programs are not very
+clear; as more of these ITS programs are deployed, comprehensive impact
+assessments of their environmental, mobility, and safety performance are
+needed. In conclusion, traffic management can be done in two ways: one is
+to augment capacity and the other is to control and manage changes in
+demand, such as with appropriate pricing policies.
+
+  References
+
+AERIS—Applications for the Environment:Real-Time Information
+  Synthesis Report. 2014. Washington, DC: US Department of
+  Transportation.
+
+Barth, M., G. Wu and K. Boriboonsomsin. 2015. Intelligent Transportation
+  Systems for Improving Traffic Energy Efficience and Reducing GHG
+  Emissions from Roadways. California: National Center for Sustainable
+  Transportation.
+
+FHWA Safety. 2007. US DOT Federal Highway Administration, Office of
+  Safety.
+
+Freight Facts and Figures 2006. 2006. US DOT Federal Highway
+  Administration, Freight Management and Operations.
+Sustainability of ITS Operations  301
+
+Grant-Muller, S., and M. Usher. 2013. “Intelligent Transport Systems: The
+  Propensity for Environmental and Economic Benefits. Technological
+  Forecasting & Social Change: 149–66.
+
+Public Transportation Ridership Statistics. n.d. American Public
+  Transportation Association.
+
+Schrank, David, and T. Lomax. 2007. Urban Mobility Report. Texas: Texas
+  A & M University, Texas Transportation Institute.
+  CHAPTER 4.4
+
+  ROLE OF STATE AND REGULATORY BODIES
+
+  Introduction
+
+Intelligent Transportation Systems (ITS) use information and communication
+technologies (ICT), that support and optimize all modes of transport by cost-
+effectively improving their individual and cooperative operations.
+Information, communication, data processing, and sensor technologies are
+used in synergy with the infrastructure, vehicles, and operations and
+management centers to make the transportation system efficient for all
+stakeholders. ITS are overarching, multi-disciplinary transport management
+systems that can make existing networks of all transport modes safer, and
+more efficient, reliable, resilient, sustainable, and flexible to address
+existing as well as future needs. To some extent, ITS technologies are
+already widely used across all modes of transport and are developing at a
+rapid pace.
+
+The government of New Zealand is keen to capitalize the several benefits
+that ITS technologies offer; it has formulated an action plan to utilize them
+safely, efficiently, and effectively in New Zealand’s transportation system
+to provide better transport services to its people.
+
+  Background
+
+New Zealand is an island nation in the southwestern Pacific Ocean.
+Geographically, it comprises two land masses, the North Island and the
+South Island, and around 600 smaller islands, and is mostly isolated from
+the rest of the world. The government of New Zealand is committed to boost
+its economy and improve the quality of life of citizens. The economy of
+New Zealand mainly depends on trade and services such as tourism. For
+delivering these goods and services to develop its economy, a safe and
+efficient transport network becomes critical. When compared to many other
+countries, the geographical isolation of New Zealand puts the nation at a
+competitive disadvantage in exporting. To compete in the global market, the
+country needs its transportation network to be as efficient as possible. ITS
+Role of State and Regulatory Bodies  303
+
+are already contributing, to some extent, to the improved efficiency of
+supply chains in New Zealand, but need to develop at a wider scale for an
+efficient and sustainable supply chain management.
+
+The integration of ITS can ensure road safety and help discard the need for
+excessive investment in new physical infrastructure. The government
+recognizes the transport sector as a priority area for socioeconomic
+development and growth. Through ITS implementation in New Zealand, the
+government also set a target for making vehicles more fuel efficient and
+reducing GHG emissions. The government’s vision is for an integrated,
+effective, safe, secure, responsible, efficient, accessible, and resilient
+transport system that supports the growth of the country’s economy,
+provides a better quality of life, and delivers greater prosperity, security,
+and opportunities to all citizens. To support these long-term objectives,
+transport agencies have adopted four long-term goals for transport in New
+Zealand and outlined how ITS can help achieve these goals (Exhibit 4.4.1
+shows the government’s long-term goal).
+
+  Key Participants in ITS Deployment
+
+The central, state, and local governments, and central and state-owned
+transport agencies and enterprises have a key role to play in development
+and deployment of ITS technologies in New Zealand. The Ministry of
+Transport, the NZ Transport Agency, the Civil Aviation Authority, Airways
+New Zealand, the Aviation Security Service, Kiwi Rail, Maritime New
+Zealand, Land Information New Zealand, and the Met Service are the
+involved agencies from the central government. Other government
+departments involved are the New Zealand Police and the New Zealand
+Customs Service. Some other participants involved are vehicle
+manufacturers, transport users, and technology providers. Establishing an
+effective and productive collaboration between these entities is one of the
+most important determiners of ITS New Zealand’s success.
+
+  The Role of the Government
+
+The government understands the potential of ITS technology and has made
+significant investments in ITS for all transportation modes. The government
+is determined to support the development and deployment of ITS to ensure
+a better transport network in New Zealand. Apart from the government, the
+New Zealand Transport Agency (NZ Transport Agency) plays a major role
+in the initiative (Exhibit 4.4.2 displays the role of the NZ Transport
+304  Chapter 4.4
+
+Agency). The main responsibilities of the government in development and
+deployment of ITS are listed below:
+
+1. Strategic Leadership, Aims, and Collaboration
+
+Strategic leadership, collaboration between multiple modes in an integrative
+ITS environment, coordination of central and local governments, funding
+agencies, developers, vendors, and operators are key to the development of
+ITS. The Ministry of Transport, with the government, ITS stakeholders, and
+multi-modal end user representatives, proposes to establish an ITS
+leadership forum to develop ITS-specific long-term plans, policies, and a
+strategic vision. It has also proposed to establish an ITS Technology
+Working Group to guarantee coordination of actions across all stakeholders.
+The Civil Aviation Authority (CAA) of New Zealand, in collaboration with
+Airways NZ and other stakeholders, shall finalize and implement the
+National Air Navigation Plan (NANP); the plan outlines ITS priorities in air
+navigation and airspace, including system investment and airspace
+management. The NZ Transport Agency proposes to draft an ITS
+framework that includes land transport, network operations, asset-
+management, and smart transport choices.
+
+2. Providing a Supportive Regulatory Environment
+
+A supportive regulatory environment, a meticulous enforcement policy, an
+open market approach (including for standards development), managing
+safety risks of new technology, and rapid development and deployment are
+mandatory ITS features for superior public benefit. The Ministry of
+Transport and the CAA proposed to draft aviation rules for implementing
+NANP, and for operating remotely piloted aircraft systems. It is intended to
+identify unnecessary barriers and redundancy and to eliminate them.
+Legislation pertaining to advanced driver assistance systems (ADAS) and
+semiautonomous vehicles is to be reviewed. In addition, to mandate
+electronic stability control, the Ministry of Transport, and the NZ Transport
+Agency, will develop a road vehicle standards map and land transport rules
+and regulations. The transport agencies of New Zealand will review the
+relevance of international standards to the local conditions to ensure
+compatibility and interoperability with existing systems. Radio spectrum
+allocation for ITS applications is also under the purview of the Ministry of
+Business, Innovation, and Employment. The Ministry of Transport
+endeavors to contribute to international ITS standard development
+processes.
+Role of State and Regulatory Bodies  305
+
+3. Funding and Procuring Infrastructure or Services
+
+Elements such as transport and navigation infrastructure, Global Navigation
+Satellite System (GNSS) coverage and three-dimensional digital mapping,
+facilitating, or piloting technologies are crucial for ITS deployment in New
+Zealand and should be provided by the government. The NZ Transport
+Agency and the Ministry of Transport and Police will formulate a
+comprehensive action plan to review ITS technologies and their operations.
+As the major investor in land-based ITS, the NZ Transport Agency proposes
+to publish planning and investment signals to inform suppliers about its
+vision for the delivery of ITS infrastructure and services. Land Information
+New Zealand (LINZ) will scout for investments in a national real-time
+positioning service to support ITS applications. In conjunction with the
+CAA, the LINZ and the Ministry of Transport will review and analyze the
+costs and benefits of providing a national real-time positioning service that
+could improve reliability, safety, and security. In consultation and
+coordination with the road controlling authorities, the NZ Transport Agency
+and LINZ will develop a business case for a coordinated and authenticated
+national land transport network dataset. This could include a centrally
+managed road speed limit map for New Zealand. Also, the LINZ, the
+Ministry of Transport, and Maritime New Zealand propose to amend the
+Maritime Rules, as per the International Maritime Organization
+requirements. Border Security agencies plan to introduce the next
+generation of Smart Gate technology to streamline commuter movements.
+The Ministry for Primary Industries will conduct trials of improved
+biosecurity systems for passengers and cargo.
+
+4. Efficient Communication about ITS
+
+The government plays the crucial role of information disseminator and
+influencer; the government can influence various agencies to assist in
+deploying ITS, and various other stakeholders to endorse the use of ITS.
+The transport agencies of New Zealand will facilitate the sharing of
+resources, management of information, and planning of investment. The
+working group, established by the Leadership Forum, will oversee the
+collection, communication, availability, and protection of information. The
+NZ Transport Agency, supported by Maritime New Zealand, will set up a
+Data Security Centre of Expertise.
+
+Given the role of the government in the establishment of ITS, developing a
+strategic vision for ITS in New Zealand becomes crucial to set clear
+priorities for policy-framing and investments. ITS technologies are planned
+306  Chapter 4.4
+
+for commercial viability, and driven by consumer demand. The government
+plays the role of regulator, owner, operator, enforcement agency, and is a
+beneficiary of the multi-modal system.
+
+  Summary
+
+The government plays a major role in creating a supportive regulatory
+environment, facilitating effective coordination between authorities, and
+establishing proper mechanisms for developing and deploying ITS. The
+government, transport agencies, and other stakeholders should work in
+collaboration, with the unified goal of implementing efficient ITS systems.
+New Zealand managed to successfully create such an environment, and the
+many benefits of the ITS systems are, hence, achieved.
+
+  References
+
+Intelligent Transport Systems Technology Action Plan 2014-18. 2014.
+  Ministry of Transport, Government of New Zealand. Retrieved from
+  newzealand.govt.nz
+
+NZ Transport Agency Position Statement on Intelligent Transport Systems.
+  2014. Wellington: NZ Transport Agency (NZTA).
+

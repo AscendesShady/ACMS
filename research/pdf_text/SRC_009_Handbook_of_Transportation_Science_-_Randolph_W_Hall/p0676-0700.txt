@@ -1,0 +1,971 @@
+Spatial Interaction Modeling  679
+
+where all factors except travel time are incorporated into note that b is negative.
+
+  Then, using the simple logit model (see Chapter 2) the probability that the public
+transport alternative (j=2) is chosen equals:
+
+An illustration is given in Figure 17.3. It shows that when travel time increases, the
+probability of a choice for public transport will tend to zero when the difference in
+travel times between the two modes will get very large.
+
+Note, however, that the observed choice probabilities for various combinations do
+not only depend on the trade-offs considered in (16), but also on the share of the
+population that has access to alternative 1. Therefore, it will not be possible to
+estimate directly the parameters of the utility function above on the basis of observed
+modal shares without information on the availability of modes. This obviously holds
+true for aggregate data, but also in the case of individual data this has to be taken into
+account. For example in research on the choice of carrier in aviation research it is
+usually taken for granted that the passenger has a choice between the available
+flights. However, when some planes are fully-booked this is not a realistic
+assumption. Along similar lines the observed choice for a transport mode may be
+governed by incidental factors having an impact on availability of modes. For
+example the car is not available for use (it happens to be used by another household
+member, or needs reparation), strikes occur from time to time in public transport, and
+adverse weather conditions (inland navigation may be impossible when rivers are
+frozen).
+680  Handbook of Transportation Science
+
+  We conclude that actual behaviour does not always provide a reliable indication
+of the preferences governing modal choice. Stated choice is therefore an attractive
+alternative. Note that stated choice experiments can also help to avoid the perception
+problems mentioned above. Another attractive property of stated choice approaches
+is that it may overcome problems of multicollinearity. It often happens that the
+features of alternatives are strongly correlated (for example travel time and price). In
+that case estimates of the relative importance of price versus travel time in modal
+choice would lead to unreliable results. It is no surprise therefore that stated choice
+has become a popular way to study modal choice (cf. Henscher, 1994).
+
+  The standard way to analyse stated preference data on modal choice is the use of
+limited dependent variable models such as the logit model, the probit model and
+extensions. These models entail the estimation of utility functions governing
+individual choice behaviour. They are surveyed by Ben Akiva and Bierlaire in
+Chapter 2. Once these models have been estimated they can be used to derive some
+parameters that have high policy relevance: the value of travel time and choice
+elasticities.
+
+Value of Travel Time.
+
+For the measurement of the value of travel time, consider the utility function
+
+Then the measurement dimensions of the parameters b and d are [utility per money]
+and [utility per time]. The absolute meaning of the parameters has little relevance, but
+the ratio d/b has the dimension [money per time] and can be interpreted as a value of
+travel time, accordingly. This is a very relevant input for policy studies because it
+provides a key for the monetarisation of time gains and time losses in cost benefit
+analysis (see also Small, 1992). It appears that in many infrastructure projects time
+gains of passengers play a decisive role in the balance between benefits and costs. In
+a review of value of time studies from the UK, Wardman (1998) finds that the value
+of time depends on several factors: individual characteristics, modal features and the
+choice context. Personal factors play a role: people with higher incomes have higher
+opportunity costs and may be expected to have higher values of time. This implies
+that in a context of increasing incomes, values of time may be expected to increase. It
+also means that as people get richer they pay more attention to the quality aspects of
+trips rather then to the direct monetary expenses.
+
+  Also the features of the modal alternatives are important: values of time depend
+on travel modes. This is no surprise since the levels of comfort are different. An
+obvious example is the comparison between a railway versus an airline trip between
+two destinations, both taking four hours. The difference in comfort will lead to a
+Spatial Interaction Modeling  681
+
+higher valuation of the time costs for the flight compared with the railway trip. In
+
+addition, the value of time will depend on trip purpose. Trips with a business purpose
+tend to have a higher value than commuting trips which in their turn have a higher
+
+value of time than trips made for social visits. An example for the Netherlands is
+given in Table 17.6.4
+
+Another finding from comparative analysis is that the values of time appear to
+depend on the specific choice context. For example, when the alternatives used in the
+Stated Preference research are phrased in terms of tolls to be paid the resulting trade-
+offs appear to be higher than when the costs relate to fuel (Wardman, 1998). The
+probable reason is that tolls are paid immediately, whereas fuel is bought from time
+to time.
+
+  Another aspect of value of time studies is that various components of travel time
+deserve attention. In addition to in vehicle time, total travel time relates to walking
+time, waiting time, search time, etc. For example, McCarthy (2001) finds that the
+value of walking time is about four times as high as the value of in vehicle time.
+Also travel time variability (uncertainty) is important. These findings have important
+implications for scheduling policies of public transport operators. For example,
+policies aiming solely at improving the speed of the services by reducing the number
+of bus stops may be counterproductive when these would imply higher access times.
+A broader review of these issues is given by Wardman (2001)
+
+Price Elasticity of Travel Demand.
+
+Elasticities are of equal relevance for policy purposes because they reveal how
+changes in features of modal alternatives lead to changes in choice probabilities. An
+elasticity is defined as the relative change in the use of a mode divided by the relative
+change in a feature of that mode (for example the price). The choice probability of
+682  Handbook of Transportation Science
+
+an alternative j directly depends on its price j, for example in the ordinary logit
+model:
+
+Thus, when the parameters of have been estimated it is possible to compute the
+elasticity of the choice probability with respect to price or any other feature. The
+literature has yielded a large number of estimates of price elasticities of travel
+demand in the mean time. Comparative analyses of these can be found among others
+in Oum et al. (1992), Goodwin (1992), Kremers et al. (2002) and Brons et al. (2002).
+It is important to pay attention to the exact definition of the dependent variable when
+comparing price elaticities of travel demand. In the context of modal choice the
+dependent variable is actually a choice probability, which is closely related to the
+number of trips made. However, in other models the elasticity relates to the number
+of kilometres travelled, so that also the other elements of travel decisions play a role,
+in particular trip generation and trip distribution. Therefore, one may expect that
+elasticities based on discrete choice analysis of modal choice are closer to zero than
+elasticities based on total number of kilometres travelled. This is indeed confirmed in
+the literature (Oum et al., 1992, Kremers et al., 2002).
+
+  Another important reason for differences between price elasticities is the
+difference between short and long-run estimates. Brons et al. (2002) find that long-
+run estimates are more elastic than short-run estimates. The background is that in the
+short-run there are fewer possibilities to adjust to price changes (for example, jobs
+and dwellings are fixed in the short run). Trip purposes are also important. A general
+finding is that business traffic is least elastic, whereas social visits are most price
+elastic. For commuting intermediate values are found. One of the reasons for this
+pattern is that the costs of business and commuting travel are not entirely borne by
+the traveller himself. In many countries institutional arrangements exist such that
+such that (part of) the travel costs are paid by the employer. Many employers face the
+problem that the transaction costs of dealing with these transport expenses are high so
+that simple arrangements are made implying that there are little incentives for
+employees to reduce travel.
+
+  Other factors that have an impact on price elasticities concern the number of
+alternatives and the specific way in which payment takes place. When the number of
+alternatives is small, one may expect travel demand to be relatively inelastic
+compared with the situation where the number of alternatives is large. Thus, demand
+for transport in an urban context (where often many alternatives exist) tends to be
+more elastic than in contexts where the choice set is small.
+
+  Another point that deserves attention is that price elasticity estimates can be
+based on both revealed and stated preference data. Kremers et al. (2002) find a
+Spatial Interaction Modeling  683
+
+tendency that according to stated preference estimates demand is more elastic
+compared with revealed preference estimates. This may be an indication that, in
+stated preference studies, people exaggerate their responsiveness to price changes.
+On the other hand, as has been indicated already above, the difference may also relate
+to estimation problems with revealed choice data.
+
+  The way of payment is also important. For example, public transport demand is
+often rather elastic in terms of ticket prices compared with demand for travel by car.
+The reason is that with public transport the ticket price is 100% of the total price,
+whereas with car use there are many other price components (car ownership, fuel
+costs, maintenance, parking, etc.). Consider the case that total monetary costs of a
+trip are and is the contribution of a certain cost component. Let be the
+elasticity of travel demand with respect to total costs. Then it is not difficult to
+demonstrate that the elasticity with respect to this cost component follows as:
+
+Thus, cost shares play an essential role in the link between total price elasticities and
+specific price elasticities.
+
+  The above results on values of time and prices elasticities indicate that there is a
+large variation in outcomes between the various studies. This raises the issue of
+transferability of estimation results. Meta analyses as reported above are useful tools
+for this purpose.
+
+  Transferability does not only relate to elasticities and values of travel time, but
+also to parameters of the utility functions underlying these. An important finding in
+transport modeling is that transferability of the model parameters is difficult. In
+particular it appears that mode-specific constants such as in equation (15) are
+needed to arrive at plausible modelling outcomes for modal choice. The implication
+is that although one may have the ambition to make all quality aspects of transport
+modes explicit in utility functions, in practice one will still need mode specific
+constants. These constants appear to absorb various situation specific circumstances
+that cannot be transferred from one situation to the other. Note that when these
+constants would be close to zero, the utility model can easily be used to predict the
+market potential for a new transport mode (for example the introduction of a metro
+system in a metropolitan area where only buses and cars are employed). This was the
+main idea behind the classic contribution of Quant and Baumol (1966) who
+introduced a model for travel demand in terms of abstract modes where mode
+specific coefficients did not play a role. It is a pity that this vision has not been
+realised thus far, because it limits the usefulness of the existing transport models for
+policy purposes. It implies that existing models cannot directly be used for the
+analysis of the introduction of a new transport modes, but that one should first carry
+684  Handbook of Transportation Science
+
+out stated preference type of interviews in order to get meaningful estimates of the
+market potential for the new mode.
+
+17.6 Transport – Land Use Linkages
+
+There has been a long debate in the transportation and land use literature on the
+relationship between transportation behavior and the geographical location of
+economic activities. Do land use and location determine transport flows or do
+transport networks determine the location of economic activity? Much of the debate
+has taken the form of a chicken and egg dilemma and has neglected the difference
+between slow and fast motion. A well-specified dynamic land-use transportation
+model would be able to encapsulate both phenomena simultaneously.
+
+  Nevertheless, in many urban and infrastructure planning debates we often
+observe a one-sided perspective. For example, in the new urbanism we witness much
+emphasis on the causality from land use to travel behavior, with the consequence that
+the policy handles are sought in land use planning. The problem here is that human
+behavior does not obediently follow the logic imposed by the land-use transportation
+causality, because of inertia in human behavior and limits to flexibility regarding
+spatial relocation. It ought to be recognized that – even though transportation is
+regarded by individuals and society at large as a problem in terms of congestion, air
+quality, quality of life or safety – the ultimate outcomes of individual and collective
+choices (in terms of trip generation, trip length, modal split or route choice) do not
+necessarily reflect an optimal result of the transport system in terms of long-term
+environmental sustainability.
+
+  There is a main point of difference between environmental aspects and land use
+aspects in transport systems. The environmental aspects can mainly be considered as
+an outcome of transport systems in combination with travel demand. On the other
+hand, land use aspects are a determinant of travel demand: as explained in the section
+on trip generation, the number of trips produced and attracted by zones depends
+strongly on land use in the zones. However, although this land use is assumed to be
+exogenous in many urban transport models, it is not necessarily so because changes
+in transport systems may lead to changes in land use. This calls for an integrated
+analysis of land-use and transport. Reviews of integrated transport – land use models
+can be found in Webster et al. (1988), Webster and Paulley (1990), Wegener (1991),
+Hayashi and Roy (1996) and Martinez (2000)
+
+  In the context of the present paper we will discuss a specific example of a
+transport-land use model that is closely linked to the transport models discussed in
+the section on distribution models. It can actually be formulated as a generalisation of
+this model (see Alonso, 1978 and De Vries et al., 2002). In this section we discussed
+Spatial Interaction Modeling  685
+
+the various cases of the double, single and non-constrained model. A general
+formulation that would cover all these models would be:
+
+In this information and denote exogenous features of origin and destination
+zones. It can easily be verified that the following special cases hold (see Table 17.7).
+
+The new element of the above model is obviously that the total number of trips
+produced and attracted by a zone is dependent on accessibility in a flexible way. This
+means that changes in transportation systems, leading to changes in accessibility
+indicators and will in their turn lead to changes in activities such as shopping,
+housing and hence to changes in the use of land in the pertaining zones. Note that the
+double constrained formulation is a special case where such feedbacks of transport
+costs on zonal activities are rules out. However, an implication of this formulation is
+that also single constrained models imply a transport land use interaction. An obvious
+example is shopping. The model shows that as shopping areas get better accessibility
+they will also attract more customers so that one may expect expansion of shops. The
+large advantage of the above model compared with the standard single and double
+constrained models is that there is no need to impose a priori the degree of the
+constraint. Between the extremes of a proportional response and a non-response with
+686  Handbook of Transportation Science
+
+respect to accessibility this formulation also allows intermediate elasticities, implying
+values for and between 0 and 1.
+
+17.7 New Perspectives
+
+The above described classes of transportation models are essentially members of the
+family of spatial interaction models. Such models map out the geography of
+movement and are a prominent approach to the analysis of spatial flows (see for an
+overview Nijkamp and Reggiani 1992). A popular set of spatial interaction models is
+based on gravity theory. The use of such physics-based models can be justified due to
+its link (or formal analogy) with utility theory, either at an aggregate (systemic) level
+or on individual (choice-maker’s) level. Parallel approaches can be found in entropy
+theory and in Alonso’s theory of movement as outlined in Section 17.6. It can be
+demonstrated that also these models have their roots in standard utility and cost
+principles, while also a parallel can be drawn to linear programming models. The
+family of spatial interaction models comprises at present indeed a wide variety of
+different but largely complementary models, such as micro-simulation models,
+random utility models, activity-based choice models and spatial search models. The
+close orientation of spatial interaction models to micro-utility models has several
+major advantages, such as a firm behavioural underpinning, the possibility of a multi-
+level aggregation, the opportunity to organize panel studies in a a longitudinal
+context, the possibility to include categorical measurement of response variables and
+the possible inclusion of multi-actor effects (e.g., congestion). For the study of
+dynamic spatial interaction models, in particular in the context of catastrophy and
+chaos models, the reader in referred to Nijkamp and Reggiani (1992).
+
+  A promising direction of research in the field of spatial interaction modeling is
+the integration of trip modeling and activity modeling. This will lead to a more
+explicit treatment of the duration element of activities in transport models. It will also
+provide a good basis for a further introduction of scheduling issues of trips and
+activities in transport models. Scheduling of trips and activities is an important way
+to avoid bottleneck congestion in metropolitan areas. To make the present spatial
+interaction models more relevant for the analysis of congestion problems the themes
+of scheduling and activity based modeling deserve more attention than they usually
+receive.
+
+References
+
+Aschauer, D.A. (1989) Is public expenditure productive?, Journal of Monetary Economics, 33, 177-200
+Bates, J (2000) The history of demand modelling, in: D.A. Henscher and K.J. Button (eds.), Handbook of
+
+  Transport Modelling, Pergamon, Amsterdam, pp. 11-33.
+Batten, D.F., J.Casti and R. Thord (eds.) (1995) Networks in Action, Springer-Verlag, Berlin.
+Spatial Interaction Modeling  687
+
+Bergh, J.C.J.M. van den, P. Nijkamp and P. Rietveld (eds.) (1996) Recent Advances in Spatial
+  Equilibrium Modelling Springer-Verlag, Berlin.
+
+Brons, M., E. Pels, P. Nijkamp, P. Rietveld (2002) Price elasticities of demand for passenger air travel,
+  Journal of Air Transport Management, forthcoming.
+
+Capello, R. (1994) Spatial Economic Analysis of Telecommunications Network Externalities, Averbury,
+  Aldershot, UK,
+
+CBS (Central Bureau of Statistics) (2000) De mobiliteit van de Nederlandse bevolking, The Hague.
+Cesario, F (1975) Linear and non-linear regression models of spatial interaction, Economic Geography,
+
+  51, 69-77.
+Choukroun, J-M (1975) A general framework for the development of gravity-type trip distribution
+
+  models, Regional Science and Urban Economics, 5, 177-202.
+Doren, Ch. van (1992) A History of Knowledge, Ballantine Press, New York.
+Este, G. d’ (2000) Urban freight movement modeling, in: D.A. Henscher and K.J. Button (eds.),
+
+  Handbook of Transport Modelling, Pergamon, Amsterdam, pp. 539-552.
+Exel, J. van, and P. Rietveld (2002) Could you also have made this trip by public transport? Determinants
+
+  of choice set formation, Vrije Universiteit, Amsterdam.
+Fik, T.J., and G.F.Mulligan (1998) Functional form and spatial interaction models, Environment and
+
+  Planning, A, 30, 1497-1507.
+Fotheringham, A.S. and M.E. O’Kelly (1989) Spatial Interaction models: formulations and applications,
+
+  Kluwer, Dordrecht.
+Goodwin, Ph. (1992), A review of new demand elasticities with special reference to short and long run
+
+  effect of price changes, Journal of Transport Economics and Policy, 36, 155-169.
+Hayashi, Y., Roy, J. (eds.) (1996) Transport, Land Use and the Environment. Dordrecht: Kluwer, pp.
+
+  103-124.
+HCG, (Hague Consulting Group), (1990) The Netherlands value of time study: final report, Hague
+
+  Consulting Group, Den Haag.
+Henscher, D.A. (1994) Stated preference analysis of travel choices: the state of practice, Transportation,
+
+  21 (2), 106-134.
+Himanen, V., P. Nijkamp, and A. Reggiani (eds.) (1998) Neural Networks in Transport Applications,
+
+  Ashgate, Aldershot, UK.
+Kim, T.J. (1979) Alternative transportation modes in a land-use model: a general equilibrium approach,
+
+  Journal of Urban Economics, 6(2), 197-215
+Kim, T.J., (1997) A combined land-use transportation model when zonal travel demand is endogenously
+
+  determined, Transportation Research B, 1983, 17B(6), 449-462
+Kremers, H., P. Nijkamp and P. Rietveld (2002) A meta-analysis of price elasticities of transport demand
+
+  in a general equilibrium framework, Economic Modeling, forthcoming.
+Lerman, S.R, Recent advances in disaggregate demand modelling, in: M. Florian (ed.), Transportation
+
+  Planning Models, North Holland, Amsterdam.
+Lundqvist, L. and L.-G. Mattsson (eds.) (2001) National Transport Models, Springer, Berlin.
+McCarthy, P.S. (2001) Transportation Economics, Blackwell Publishers, Oxford.
+McNally, M.G. (2000) The four step model, in: D.A. Henscher and K.J. Button (eds.), Handbook of
+
+  Transport Modelling, Pergamon, Amsterdam, pp. 35-52.
+Morikawa, T. (1996) A hybrid probabilistic choice model with compensatory and non-compensatory
+
+  choice rules, in: D. Henscher, J. King and T. Oum (eds.) World Transport Research, World
+  Conference for Transportation Research, Sydney.
+Nagurney, A., and S. Siokos (1997) Financial Networks, Statics and Dynamics, Springer, Berlin.
+Nijkamp, P., S. Rienstra and J. Vleugel (1999) Transportation Planning and the Future, John Wiley,
+  New York.
+Nijkamp, P., and A. Reggiani (1998) The Economics of Complex Spatial Systems, Elsevier, Amsterdam.
+Nijkamp, P., G. Pepping and D. Banister (1996) Telematics and Transport Behaviour, Springer-Verlag,
+
+  Berlin
+Nijkamp, P., and A. Reggiani (1992) Interaction, Evolution and Chaos in Space, Springer-Verlag,
+
+  Berlin.
+688  Handbook of Transportation Science
+
+Ortuzar, J. de D., and L.G. Willumsen, (2001) Modelling Transport, Wiley, New York.
+Oum, T.H., W.G, Waters and J.S. Jong (1992) Concepts of price elasticities of transport demand and
+
+  recent empirical estimates, Journal of Transport Economics and Policy, 26, 139-154.
+Punj, G. and R. Brookes (2001) Decision constraints and consideration-set formation in consumer
+
+  durables, Psychology and Marketing, 18, 843-863.
+Quant, R. and W.J. Baumol (1966) The demand for abstract transport modes: theory and measurement,
+
+  Journal of Regional Science, 6, 13-26.
+Reggiani, A. (1998) Accessibility, trade and locational behaviour, Ashgate, Aldershot.
+Rietveld, P. and F. Bruinsma (1998) Is Transport Infrastructure Effective?, Springer, Berlin.
+Rietveld, P. (2000) Non-motorised modes in transport systems: a multimodel chain perspective for The
+
+  Netherlands, Transportation Research D: Transport and Environment, 5, 31-36.
+Rho, J.H., T.J. Kim, and L. Lundqvist, (1993) Integrated land-use transportation model: application to
+
+  Chicago and outline for Stockholm, in T.R. Lakshmanan and P. Nijkamp (eds.), Structure and
+  Change in the Space Economy, Springer-Verlag, Berlin-Heidelberg.
+Salomon, I., P. Bovy and J.P. Orfeuil (1993) A Billion Trips a Day, Kluwer, Dordrecht.
+Sen, A., and S. Soot (1981) Selected procedures for calibrating the generalized gravity model, Papers of
+  the Regional Science Association, 48, 165-176.
+Verhoef, E., (1996) The Economics of Regulating Road Transport, Edward Elgar, Cheltenham.
+Vries, J.J., P. Nijkamp, and P. Rietveld, (2001) Alonso’s theory of movement, Journal of Geographical
+  Systems, 3 (3), 233-256
+Wardman, M. (1998) The value of travel time, a review of British evidence, Journal of Transport
+  Economics and Policy, 32, 285-316.
+Wardman, M. (2001) A review of British evidence on time and service quality valuations, Transportation
+  Research part E, 37, 107-128
+Webster, F.V., Bly, P.H., Paulley, NJ. (eds.) (1988): Urban Land-Use and Transport Interaction:
+  Policies and Models, Aldershot: Avebury.
+Webster, F.V., Paulley, N.J. (1990): An international study on land-use and transport interaction.
+  Transport Reviews 10, 287-322.
+Wegener, M., R.L. Mackett, and D.C. Simmonds, (1991): One city, three models: comparison of land-
+  use/transport policy simulation models for Dortmund. Transport Reviews 11, 107-29.
+Wegener, M. (1996): Reduction of CO2 emissions of transport by reorganisation of urban activities. In:
+  Hayashi, Y., Roy, J. (eds.): Transport, Land Use and the Environment. Dordrecht: Kluwer,
+  103-124.
+
+Endnotes
+
+1 The values of and may be assumed to be given here: they result from the trip generation model.
+2 A more general formulation of the model would allow for the inclusion of a factor in the model that
+reflects the attractiveness of zone j for shopping activities.
+3 Along similar lines as in the production constrained model a factor may be added to take into account
+origin specific factors spatial interaction patterns.
+4 Note that the differentiations mentioned here with respect to variations in value of time correspond
+closely with the dimensions mentioned at the beginning of this section on modal choice.
+ 18 PRINCIPLES OF TRANSPORT
+
+  ECONOMICS
+
+  Richard Arnott and Marvin Kraus
+
+18.1 Introduction
+
+Traditionally, courses in transport economics were divided into three sections:
+demand, supply, and regulation. The section on demand focused on empirical work
+estimating mode-specific demand elasticities and on short-term demand forecasting
+using discrete choice models. The section on supply concentrated on applied work
+estimating mode-specific cost functions, but also contained some discussion of the
+technology of congestion. And the section on regulation considered both the positive
+and normative aspects of regulation in different transport industries. The normative
+part applied textbook microeconomic theory to identify market failures and to derive
+optimal corrective policy, and the positive part applied the same body of theory to
+examine the effects of alternative regulatory policies.
+
+  This chapter will have a considerably narrower scope, focusing on the
+application of microeconomic theory to resource allocation in the transportation
+sector. There are two basic issues. How should transportation be priced? And how
+should capacity be determined? There are correspondingly two basic principles.
+First, economic agents make socially efficient decisions when they face the full
+social costs of their decisions and derive the full social benefit from them; typically,
+this entails pricing at short-run marginal social cost or, where this is not practicable,
+pricing as close to short-run marginal social cost as is practicable. Second, capacity
+should be expanded to the point where the social benefit from additional capacity
+equals the social cost. Of course, the application of these principles in different
+contexts entails a host of subtleties; otherwise, transport economics would be a short
+subject.
+690  Handbook of Transportation Science
+
+  Happily there is now more exchange of ideas between transport economists and
+transportation scientists than there was a generation ago. Transportation scientists
+are coming to appreciate the power of prices, and transport economists are beginning
+to realize that there is more to their job than deriving first-order optimality conditions
+in unrealistically simple models. While it is narrowing, there remains a gulf between
+the two fields. To some extent, this derives from the different roles transportation
+scientists and transport economists play in the policy/project evaluation process. But
+more important are methodological differences in training. Engineering training
+stresses the practical, producing something that does the job well, which requires
+paying attention to detail. Economics training stresses the theoretical — how to
+conceptualize problems — in the belief that practical knowledge will come through
+experience. Since different conceptualizations entail different models, economic
+reasoning tends to be model-based. Furthermore, economists tend to reason from the
+general to the specific, and from the simple to the complex. They start with simple
+models that illuminate general principles and then add complications that do not
+undermine the basic principles but affect how they are applied.
+
+  The central issue in most of economics is the appropriate role of government.
+Most mainstream economists believe that most economic activity should be
+organized through markets, with the government intervening only when the market,
+for clearly-identified reasons, fails. Microeconomists use as points of reference
+models in which markets perform perfectly so that no government intervention is
+required, then introduce realistic complications and constraints which induce market
+failures, and then derive the minimal government intervention needed to correct or at
+least alleviate those market failures, so that the market assisted by government policy
+achieves constrained efficiency in resource allocation.
+
+  This is the approach we shall follow in this chapter. Section 18.2 will present
+the traditional highway pricing and investment model. It will start by developing
+quite thoroughly the simplest variant of the model, and will then add realistic
+complications one by one. Section 18.3 will examine the highway bottleneck model,
+whose focus is on trip timing. Section 18.4 will investigate how the traditional
+model is adapted to deal with mass transit. Given the narrow scope of the essay,
+many other important topics in transportation on which the application of economics
+can throw light — such as regulation, transportation and land use, scrappage and
+maintenance, privatization, and logistics — shall be ignored.
+
+18.2 The Traditional Highway Pricing and Investment Model
+
+There are two broad classes of models in microeconomics — general equilibrium
+and partial equilibrium. A general equilibrium model provides an exhaustive
+description of a self-contained abstract economy, while a partial equilibrium model
+describes only a part of an economy — often a market — treating as implicit what is
+Principles of Transport Economics  691
+
+happening in the rest of the economy. General equilibrium models are conceptually
+preferable since they account explicitly for everything, but provide a distracting
+amount of detail, such as the effect of widening a road on the cost of producing a jar
+of peanut butter. Fortunately, economists have a good understanding of the
+circumstances under which partial equilibrium analysis is "valid" — gives the same
+results as would be obtained from a corresponding general equilibrium analysis —
+and so frequently adopt the short cut of employing a partial equilibrium model. The
+model to be presented in this section — of a single road link — is partial
+equilibrium. The main requirement for the conclusions derived from analyzing the
+model to be valid is that the rest of the economy be efficient — that throughout the
+rest of the economy, the marginal social benefit of every economic action equal its
+marginal social cost. Suppose, for example, that a driver who is deterred from taking
+a trip by a slight increase in congestion uses the time and money saved to eat a
+peanut butter sandwich. The fact that he consumes peanut butter sandwiches up to
+the point where the marginal social benefit equals the marginal social cost means that
+the social benefit from his eating that extra sandwich equals the social cost. The net
+social benefit therefore equals zero, and can be ignored in welfare analyses. By the
+same token, all of the millions of other incremental adjustments that economic agents
+make to that slight increase in congestion can be ignored.
+
+The Model
+
+Consider a one-way highway link from point A to point B. Individuals are identical,
+and conditions on the road are uniform over time (travel on the road is steady state)
+and space.
+
+  At any point in time, there will be a certain number of vehicles on any one-mile
+stretch of road — the traffic density. The hourly rate at which vehicles pass by any
+point on the road — the traffic flow — is denoted by N. Flow is the road's output
+variable, since it is the rate at which trips from A to B are produced. Travel time
+from A to B is T minutes per vehicle. As density increases, so does travel time. The
+relationship between the two is assumed to be technological and such that, for the
+relatively low densities to which the analysis is applied, flow increases with
+density.1,2 The maximum flow on the road is termed its capacity, and denoted by s.
+
+  Figure 18.1 displays the relationship between travel time and flow over the
+range of densities to which the analysis is applicable. Density is zero at point D and
+increases steadily for left-to-right movements along the curve. Most empirical
+analyses have found travel time to be a convex function of flow, and that is assumed
+in the analysis. An improvement of the road increases capacity, and lowers travel
+692  Handbook of Transportation Science
+
+time for each level of flow. The traditional analysis assumes a technological
+relationship between travel time, flow, and capacity in which travel time depends on
+flow and capacity only through their ratio, N/s, which is termed the volume-capacity
+ratio. Accordingly,
+
+  We assume a constant vehicle operating cost of c and a given value of travel
+time, v. The time plus operating cost of a trip will be referred to as the user cost, and
+written as
+
+where from (18.1),  and  Thus, the total user costs per hour
+
+corresponding to a flow N per hour are
+Principles of Transport Economics  693
+
+Note that  is homogenous of degree zero in N and s, and that  is
+
+homogenous of degree one.
+
+  The marginal social cost of N is the increase in total hourly user costs from
+increasing the flow rate by one unit:
+
+This has two components. The first, f, is the user cost of the extra vehicle per hour;
+
+the second,  is the congestion externality — the increase in the total hourly
+
+user costs of the existing or inframarginal trip takers from being slowed by the
+
+increase in traffic. Economists use the term externality to refer to an external cost, a
+
+cost that an economic agent's actions engender but which is external to that agent —
+
+that agent does not pay for.
+
+  The relationship between user cost and marginal social cost (msc) is displayed in
+Figure 18.2. The congestion externality at a given flow rate equals the vertical
+distance between marginal social cost and user cost at that flow rate. To illustrate
+traffic congestion, a user cost function of the form
+
+is frequently posited. Other functions fit the data better, but this function is used
+
+because has a nice interpretation as the congestibility of the road and because the
+
+ratio of the congestion externality to the congestion cost incurred by a traveller,
+
+f( N/s) – f(0), equals Thus, if  and if a traveller's trip cost increases from $1
+
+to $2 as a result of congestion, that traveller's presence on the road imposes a cost of
+
+$5 on other travellers.
+
+  Sadly, the microeconomist's assumption that economic agents are completely
+selfish performs remarkably well. In the traffic congestion context, this corresponds
+to the assumption that, in making her travel decisions, an individual considers only
+her user cost — the cost she herself bears directly — and not the cost she imposes on
+others, the congestion externality. In the absence of a toll, the individual will travel
+to the point where the marginal private benefit of the last trip equals the user cost.
+Since the marginal social cost exceeds the user cost (and under the additional
+assumptions that marginal social benefit equal marginal private benefit, and that
+marginal benefit is decreasing in the amount of travel), she will travel too much —
+beyond the socially optimal level of travel for her, for which marginal social benefit
+equals marginal social cost.
+
+  Economists have a number of standard policy remedies for dealing with
+externalities. The preferred remedy for traffic congestion is to charge the individual
+694  Handbook of Transportation Science
+
+for the congestion externality she imposes on others. This will result in her facing
+the social cost of a trip, and hence choosing the socially optimal amount of travel for
+her. The externality is thereby internalized. We shall examine this remedy in more
+detail shortly.
+
+  Above we have described the congestion technology. There are two other
+
+elements in the analysis, capacity costs and demand. The capacity cost function,
+
+K(s), indicates the hourly cost of building the road so that it has capacity s,
+
+employing the least-cost construction method and holding factor prices fixed. For
+
+the moment, we make only the natural assumption that  The capacity cost
+
+function and the user cost function together characterize the supply side of the
+
+model. Total hourly costs are given by C(N,s) + K(s).
+
+  The demand side of the model is characterized simply by a demand function,
+which relates the flow demand for trips to trip price, P:3
+Principles of Transport Economics  695
+
+it is natural to assume that  We shall also work with the inverse demand
+
+function P = P(N). An individual's trip price equals the user cost plus any fee she is
+
+charged for taking the trip, which we term the toll and denote by Thus,
+
+  The next step in the analysis is to bring together the supply and demand sides of
+the market to determine market equilibrium. Substituting (18.7) into (18.6),
+
+Equation (18.8) implicitly defines the equilibrium flow rate as a function of and s:
+
+Under our assumptions that  and  it is straightforward to show that
+
+  and  which accords with intuition. Substituting (18.9) back into
+
+(18.7) gives a corresponding expression for the equilibrium trip price:
+
+where  and
+
+  We now ask the questions: What is the socially optimal level of the toll? And
+what is the socially optimal level of capacity?
+
+First-best Analysis
+
+Recall our earlier discussion of the conditions under which partial equilibrium
+welfare analysis is valid — basically that the welfare effects from the spillovers into
+other markets due to changes in the "market for travel from A to B" net out, which
+occurs when the rest of the economy is efficient. We assume these conditions to
+hold. We also assume that there are no constraints on the operation of the market for
+travel from A to B other than those captured in the supply and demand functions.
+Under these circumstances, we conduct what is termed first-best partial equilibrium
+analysis.
+
+  We wish to choose road capacity and the level of the toll so as to maximize
+social welfare. For the conditions under which partial equilibrium is valid, we may
+ignore the repercussions of changes in s and on the rest of the economy. The
+maximization of social welfare then reduces to the maximization of hourly social
+surplus from the road, which equals the direct social benefits from the road minus
+696  Handbook of Transportation Science
+
+the direct social costs. The direct social costs are simply the total costs identified
+earlier, the sum of user costs and capacity costs. The direct social benefits are given
+by the area under the demand curve up to the equilibrium trip flow. To see this, note
+that a point on the demand curve indicates the marginal private benefit of a trip,
+since the individual who takes that trip is willing to pay the corresponding price but
+no more. The demand curve is therefore the marginal private benefit curve, and the
+area under the demand curve up to a specified level of flow the total private benefit
+associated with that level of flow (this is strictly correct only in the absence of
+income effects, which we have assumed). Two additional assumptions are required
+to interpret the area under the demand curve as the total social benefit. The first is
+that there be no consumption externalities — that only the person taking a trip derive
+utility or disutility from his doing so (smoking is an example of a consumption
+externality). The second, which is considerably more contentious, is that the social
+planner values a dollar's worth of benefits equally whether it goes to a rich person or
+a poor person. One rationale for this is that interpersonal utility comparisons are not
+scientific, so that the only defensible assumption is that different individuals' benefits
+be weighted equally; another is that the social planner has exercised her authority to
+redistribute income in lump-sum fashion to the point where everyone's marginal
+social benefit from income is equalized. We employ the assumption to simplify the
+exposition. The analysis can be extended straightforwardly to allow for the planner
+to attach different social valuation to a dollar going to different people, but the
+results include additional terms reflecting equity considerations.
+
+  The objective function is therefore
+
+The first-order condition with respect to is
+
+Since  this implies that
+
+the toll should be set so that each driver pay a trip price equal to its marginal social
+cost. Since this result holds regardless of whether capacity is optimized, it
+demonstrates the optimality of short-run marginal cost pricing. Substituting (18.4)
+and (18.7) into (18.11) yields
+Principles of Transport Economics  697
+
+Price equals user cost plus the toll, while marginal social cost equals user cost plus
+the congestion externality. Thus, price equals marginal social cost implies that the
+toll equal the congestion externality.
+
+This result is displayed in Figure 18.3. The socially optimal number of trips
+
+occurs where the marginal social benefit of a trip equals the marginal social cost, and
+
+is therefore characterized by the point of intersection of P(N) and  point E. In
+
+the absence of a toll, individuals take trips up to the point where marginal private
+
+benefit equals marginal private cost, which in the absence of a toll equals the user
+cost. Thus, the no-toll equilibrium is characterized by the point G.4 Because
+
+individuals do not pay for the congestion externality they impose on others, there is
+
+excessive travel. Now suppose that a toll is imposed equal to the congestion
+
+externality, evaluated at the socially optimal number of trips — the height EF in the
+
+figure. This causes the marginal private cost to shift up by EF, and hence to intersect
+
+the demand curve at E. Thus, imposition of a toll equal to the congestion externality
+
+evaluated at the socially optimal number of trips induces the socially optimal amount
+
+of travel.
+698  Handbook of Transportation Science
+
+  This result is robust. The model can be generalized to incorporate
+heterogeneous individuals, multiple modes, networks, etc., If tolls are applied to all
+links (and nodes, where there is nodal congestion) of a network equal to the
+corresponding congestion externalities, the socially optimal amount of travel will
+occur throughout the network. Individuals therefore make socially optimal choices
+with respect to not only the amount of travel but also route and mode. This accords
+with the general principle that when rational, self-interested individuals face the full
+social costs of their actions (no production externalities) and derive the full social
+benefit from them, they will make efficient decisions. The result also extends to the
+case where demand varies over time, so that congestion and hence the congestion
+externality and the optimal toll are higher in peak than in off-peak periods. This
+result is known as peak-load pricing.
+
+  One qualification is in order. Our analysis assumed that congestion is
+anonymous in the sense that all individuals impose the same congestion externality.
+But in fact the magnitude of the congestion externality a driver imposes depends on
+how he drives and the type of vehicle he drives. If the toll can be personalized so
+that each driver pays for the congestion externality he imposes, then all drivers
+continue to make socially efficient decisions.5 But if tolls cannot be fully
+personalized so that, for instance, bad drivers pay no more than good drivers, full
+efficiency is no longer achieved. In this case, we say that there is a constraint on the
+extent to which tolls can be differentiated, which precludes attainment of the full or
+first-best optimum. The planner will then choose the level of the toll to maximize
+social welfare subject to the constraint on the extent of toll differentiation, which is
+an exercise in the theory of the second best. Under the constrained efficient toll, bad
+drivers will drive too much and good drivers too little. We shall examine second-
+best optimality in some detail in the next subsection.
+
+  Return to the first-best problem, (18.10). The first-order condition with respect
+to capacity is
+
+where  denotes the partial derivative of  with respect to its second
+
+argument. If the toll is set so that (18.11) holds, (18.13) reduces to
+
+which is the first-order condition for producing the equilibrium number of trips at
+minimum cost, and is therefore a production efficiency condition. Equation (18.14)
+states that capacity should be expanded to the point where the reduction in total user
+costs, the marginal social benefit of capacity, equals the increase in capacity costs,
+the marginal social cost of capacity.
+Principles of Transport Economics  699
+
+  The highway authority incurs capacity costs of K(s) and receives toll revenues of
+  Under (first-best) optimal pricing and investment, what proportion of capacity
+costs is financed out of toll revenues? This is known as the self-financing question
+and owes its basic results to Mohring and Harwitz (1962) and Strotz (1965).
+
+Initially, we do not assume the user cost function to be homogenous of degree
+
+zero in N and s. Define TC(N,s) = C(N,s)+ K(s) and AC(N,s) = TC(N,s)/N.
+
+and  are the short-run total and average cost functions. The long-run
+
+total and average cost functions are
+
+and LRAC( N) = LRTC(N)/N, and are the lower envelopes of the short-run total and
+average cost functions, respectively. Long-run marginal cost is given by
+
+  With N and s as the choice variables, the planning
+problem is
+
+Maximizing (18.16) with respect to N gives
+
+— users should face a trip price equal to short-run marginal cost, whether or not
+capacity is optimal. Maximizing (18.16) with respect to s is equivalent to
+minimizing TC(N,s), which from (18.15) results in costs of LRTC(N). Following
+(18.17) then results in long-run marginal cost pricing, because N must now solve
+
+which yields the first-order condition
+Thus,
+
+where indicate values at the first-best optimum. Equation (18.20) indicates that,
+at the first-best optimum, toll revenues exceed/equal/fall short of capacity costs
+700  Handbook of Transportation Science
+
+according to whether long-run marginal cost exceeds/equals/falls short of long-run
+average cost, or equivalently whether long-run average cost is (locally) rising, flat, or
+falling. We state this as:
+
+  Proposition 1. At the first-best optimum, toll revenues exceed/equal/fall short
+of capacity costs according to whether long-run average cost is (locally) rising, flat,
+or falling.
+
+Proposition 1 is illustrated for the case of locally decreasing long-run average cost in
+
+Figure 18.4. From (18.19) the optimal number of trips occurs where the demand
+
+curve intersects the long-run marginal cost curve. The optimal level of capacity, ,
+
+is such that average cost is minimized for that number of trips, and the corresponding
+
+short-run average cost curve, drawn as  is tangent to the long-run
+
+average cost curve at . The corresponding short-run marginal cost curve intersects
+
+LRMC at and also goes through the minimum point of the short-run average cost
+
+curve. The user cost curve corresponding to optimal capacity is drawn as
+
+and the vertical distance between  and  at YX, gives the
+
+congestion externality at the optimum.
+
+  The optimal toll equals the congestion externality at the optimum, and so toll
+
+revenue equals the area ABYX. Total cost, meanwhile, can be calculated as average
+
+cost times the number of trips, area  and total user costs as individual user
+Principles of Transport Economics  701
+
+cost times the number of trips,  Total capacity cost equals the difference
+
+between these two areas, area ACZX. Thus, toll revenue is insufficient to finance
+
+optimal capacity, which accords with the stated result since at long-run average
+
+cost is locally decreasing.
+
+  Consider now the special case of constant long-run average cost.
+Since LRMC = LRAC in this case, with marginal cost pricing the value of output PN
+equals LRTC, implying that profits, defined as the value of output minus total costs,
+are zero. Thus,
+
+This line of argument indicates that the self-financing result stated in Proposition 1 is
+essentially the same as the well-known result in competitive equilibrium theory that
+with constant long-run average cost and competitive pricing (price equals marginal
+cost), a competitive firm's long-run profits equal zero.
+
+  When the user cost function is assumed to be homogenous of degree zero in N
+and s, one can say even more. Euler's Theorem states that for a function
+which is homogenous of degree
+
+Applying this theorem gives
+
+From (18.3),  combining this with (18.14) and (18.21) yields
+
+Finally, substituting (18.12) into the above equation gives
+
+The expression on the left-hand side is toll revenue and the expression on the right-
+hand side capacity costs times the elasticity of capacity costs with respect to
+capacity. Thus, we have
+702  Handbook of Transportation Science
+
+  Proposition 2. When the user cost function is homogenous of degree zero in N
+and s, the ratio of the revenue from the optimal toll to the cost of providing optimal
+capacity equals the (local) elasticity of capacity costs with respect to capacity.
+
+This result indicates that with homogeneous user costs, the degree to which the road
+is self financing is determined by returns to scale in capacity provision. With
+decreasing (increasing) costs in capacity provision, the revenue raised from the
+optimal toll falls short of (exceeds) the amount needed to pay for the optimal
+capacity. Also,
+
+  Corollary 1. When the user cost function is homogenous of degree zero in N
+and s and there are constant costs of capacity, with optimal tolling and capacity the
+road is self-financing.
+
+  These are central results in transportation economics, and merit scrutiny. An
+obvious implication is that, in the first best, the magnitude of the government subsidy
+a transport mode merits depends on the degree of returns to scale in capacity
+provision, which in turn points to the importance for policy purposes of obtaining
+accurate empirical estimates of the degree of returns to scale in capacity provision.
+The way in which our model is specified masks an important subtlety. Since we
+worked with cost functions defined with factor prices fixed, the elasticity of capacity
+costs with respect to capacity, a property of a cost function, is simply the reciprocal
+of the degree of returns to scale in capacity provision, a property of a production
+function. But when factor prices vary with the scale of capacity provision, this
+simple relationship no longer holds. Which is crucial to the degree of self financing
+in the first-best optimum, the scale properties of the cost function or of the
+production function? This is the subject of a recent paper by Berechman and Pines
+(1991), who demonstrated that the answer is the production function. In other
+words, the correct way to determine the degree of self financing in the first-best
+optimum is to hold factor prices fixed.
+
+  In our model, capacity is a one-dimensional variable. But in actual policy
+situations, the degree of scale economies will depend on how scale is expanded —
+increasing the capacities of existing links versus adding new links, or in the context
+of mass transit, providing more frequent versus denser service. It can be shown
+(Kraus (1981)) that production efficiency entails equalizing the degree of scale
+economies on all active margins on which scale can be expanded. Thus, when
+production efficiency is realized, which it is in the first best, there is no ambiguity in
+the measurement of scale economies. In real-world situations, production efficiency
+cannot be expected, so the relevant measure of scale economies depends on how
+scale is to be expanded.
+
+  The self-financing results are robust, just as the optimal tolling results were
+earlier. The reason we have treated the first best at such length is that it provides a
+Principles of Transport Economics  703
+
+very valuable point of reference in deriving second-best results, which are the
+essence of optimal policy in realistic situations.
+
+Second-best Analysis
+
+First-best policy analysis examines the policy choices of a benevolent planner who is
+constrained only by resources and technology; in the previous section, the planner
+took as given the congestion technology, the technology of capacity provision, and
+resource availability. Since the analysis was partial equilibrium, resource
+availability was captured by prices, which in a first-best analysis are assumed to
+accurately capture the corresponding social opportunity cost.
+
+  In second-best policy analysis, be it partial equilibrium or general equilibrium,
+the planner faces other constraints as well, and these affect policy choices. These
+additional constraints can take many forms. Transactions costs, broadly interpreted,
+may rule out certain policy options; for example, it is often argued that congestion
+tolling on city streets is infeasible because implementation costs are excessive. Since
+transactions costs are difficult to quantify, they are normally treated implicitly rather
+than explicitly by ruling out certain policy options. There may be political
+constraints on the planner's actions; for instance, if he is an elected official, he may
+consider only those policies consistent with his reelection. The planner may face
+informational constraints. The best-known example of this (which was highlighted
+in James Mirrlees' and William Vickrey's Nobel Prize citations) is the limits to
+redistribution. Recall that one defense of the assumption that a dollar's worth of
+benefits is valued the same by the planner to whomever it goes was that the planner
+is at liberty to redistribute in lump-sum fashion, taking from the rich and giving to
+the poor until the social value of a dollar given to each is equalized. Such lump-sum
+redistribution presupposes that the planner is able to identify who is needy. Typically
+the planner cannot do this directly but must infer an individual's need from some
+signal over which the individual has some control. The most frequently identified
+signal is income. But if the government redistributes via income taxation, it will
+distort individuals' labor-leisure choices, which should be accounted for in the policy
+analysis. The list could be extended virtually ad infinitum.
+
+  In partial equilibrium analysis, these additional constraints may impinge directly
+either on the market under analysis or in some other market. The former case is
+easier to deal with since the general equilibrium repercussions of policy intervention
+in the market under examination can be ignored, on the assumption that rest of the
+economy is undistorted. The latter case is trickier. Suppose that the policy
+intervention is in market A while the distortion occurs in market B, with the rest of
+the economy undistorted. Then in policy analysis it is necessary to examine markets
+A and B simultaneously; repercussions in the rest of the economy can be ignored.
+

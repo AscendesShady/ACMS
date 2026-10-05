@@ -1,0 +1,953 @@
+  Big Data Processing and Storage  57
+
+Mannering presented a method that uses zero-inflated count models and
+nested logit models to analyze run-off-roadway accident frequency and
+severity on a 96.6 km section of highway in Washington State. They
+highlighted certain measures that can be taken to decrease the frequency of
+run-off-roadway accidents (Zhu et al. 2018).
+
+Table 2.2.1 represents the big data sources and their characteristics in ITS.
+
+  Source  Medium  Data characteristics
+
+Smart cards  Smart cards used in  OD flow, travel time
+
+  metros, buses and parking
+
+  etc.
+
+GPS  Vehicle GPS, apps using Vehicle position,
+
+  GPS like google maps  travel time, vehicle
+
+  speed, vehicle density
+
+Video  Traffic surveillance  Vehicle position,
+
+  camera  travel time, vehicle
+
+  speed, vehicle
+
+  density, vehicle
+
+  classification
+
+Roadside sensor Induction loops,  Vehicle position,
+
+  equipment on toll plaza, travel time, vehicle
+
+  LIDAR, microwave radar, speed, vehicle
+
+  road tubes  density, vehicle
+
+  classification
+
+Floating car  On board units,  OD flow, travel time,
+
+reader  transponders, license plate vehicle position
+
+  readers
+
+Wide area  Airborne sensors, cellular OD flow, travel time
+
+sensors  device tracking
+
+Connected and Multiple sensors  Travel time,
+
+automated  supporting CAV  coordinate speed,
+
+vehicles  operations  vehicle speed, vehicle
+
+  acceleration, safety
+
+  data
+
+Passive  Social media, mobile  Travel time, OD flow
+
+applications  phone
+
+Other sources Smart grid, smart meters Vehicle location,
+
+  vehicle details
+
+Table 2.2.1: Big Data Source and ITS Characteristics
+
+Source: Author’s compilation
+58  Chapter 2.2
+
+Table 2.2.2 represents the big data approaches used for various applications
+in ITS.
+
+Category  Application  Year  Big data
+Driver  2012  approach
+assistance  Multi-sensor data fusion for  2015  Big data fusion
+and  instrumented vehicles  2016
+instrumented  Efficient vehicle design  2016  Big data
+vehicles  2016  analytics
+  Driving data fusion  2016  Big data fusion
+Traveler  techniques
+information  RDMP framework for  2017  Big data
+  ADAS  platform
+Roadway  Driving tendency  2016  Big data
+operation  recognition method  2016  analytics
+and  Behavior and vehicle  2016  Big data
+management  dynamics risk analysis  2016  framework and
+Traffic  2016  policies
+management  Mobile agents for data  2015  Vehicular
+  management in vehicular  networks
+Transit  network  2015
+management  Big Data schemes in social  2017  Big data social
+  transportation system  2016  Transportation
+  Guidelines to pioneer public  2016  Big data services
+  transport
+  Roadway control  Big data
+  environmental footprint  analytics
+  Traffic congestion on  Big data
+  limited access roadways  analytics
+  Road traffic operation  Big data
+  Traffic-flow prediction  Big data
+  based on deep learning  predictive
+  analysis
+  RC evolution patterns  Big data real-
+  time analysis
+  OD matrix generation  Big data
+  analytics
+  Route-planning services  Big data
+  optimization  analytics
+  Bus planning  Big data
+  analytics
+  Big Data Processing and Storage  59
+
+  General traffic planning  2016 Big data
+
+  using IoT  analytics
+
+  Safety analysis based on  2016 Big data
+
+  simulation
+
+  Pedestrian planning  2017 Big data
+
+  analytics
+
+  Measuring and monitoring 2017 Big data fusion
+
+  transit system performance  and analysis
+
+Emergency Detection of incidents into 2016 Big data social
+
+and incident public infrastructure  sensor data
+
+management Predict safety risks over rail 2016 Big data
+
+  incident data  analytics
+
+  Resilience of taxi and  2016 Big data
+
+  subway trips
+
+Transport Assessment of external  2013 Big data fusion
+
+modes  force acting on ship  and analytics
+
+  Condition-based  2015 Big data
+
+  maintenance railway system  streaming
+
+  analysis
+
+  Railway risk analysis  2015 Big data
+
+  visualization
+
+Table 2.2.2: Big Data Approaches and ITS Applications
+
+Source: Torre-Bastida et al. (2018)
+
+  Big Data Architecture for ITS
+
+Big data is collected from different sources as structured data, like JSON
+and XML, and as unstructured data in the form of images, sound, and
+videos. These varied kinds of data are distributed in different systems to
+make dynamic decisions. Due to the data’s characteristics, specific big data
+architecture for ITS is used to analyze and store the process. Collected data
+is converted into a homogenous format and subjected to a type of data
+integration process known as extract, transform, load (ETL).
+
+The architecture of big data analytics in ITS, as illustrated in Figure 2.2.3,
+can be divided into three layers:
+
+  1. Data collection layer: This forms the fundamental base of the big
+  data architecture for ITS. It consists of data from sources such as
+  induction loop detectors, video surveillance systems, remote sensing
+60  Chapter 2.2
+
+  applications, radio frequency and microwave radars, identification
+  data, and GPS, GPRS, etc.
+  2. Data analytics layer: This layer forms the core computing layer of
+  the architecture system. This layer is largely responsible for
+  acquiring data from the collection layer and then implementing
+  different big data analytics techniques and platforms to undertake
+  data storage, harvesting, mining, analysis, management, and
+  dissemination.
+  3. Application layer: This is the uppermost layer of the architecture
+  system. This layer categorizes and generates structured information
+  for different transport requirements, like traffic-flow prediction,
+  traffic guidance, signal control, and emergency rescue, etc., based on
+  the deduction from the data process results from the analytics layer.
+
+  DATA  DATA  APPLICATION
+  COLLECTION  ANALYTICS  LAYER
+
+  LAYER  LAYER  Traffic-flow
+  prediction
+  Roadside  Data storage
+  sensors  Public
+  Data  transport
+  Floating car  management  planning
+  sensors
+  Data mining  Asset
+  Smart card  maintenance
+  Data
+  Video  harvesting  Signal control
+  surveillance
+  Data analysis  Traffic
+  RFID  guidance
+  Data sharing
+  GPS  Traffic
+  anomaly
+  Social media  detection
+
+  Operation
+  management
+
+Figure 2.2.3: Big Data Architecture for Intelligent Transport Systems
+Source: Torre-Bastida et al. (2018)
+Big Data Processing and Storage  61
+
+The data collection layer transfers structured, unstructured, and mixed data
+to the data analytics layer. Once the data analytics layer receives the data, it
+categorizes the data, removes redundancies, clears the data, and distributes
+the useful data in a structured manner. Once this is done, various
+mathematical computation techniques, including descriptive analysis and
+predictive analysis, are used to extract underlying details and probable
+patterns. Using this analysis, the application layer then provides the final
+output, specific to user demands, like identifying high traffic congestion
+areas, predicting volume of traffic flow at different hours of the day,
+highlighting accident prone areas, implementing traffic control, etc., to
+assist in efficient traffic management.
+
+The collected data in ITS is usually stored in the NoSQL database. These
+databases are compatible with a distributed database system and ideal for
+big data architecture as they offer faster read-based query processing than
+SQL databases. To allow rapid data processing, the big data platform makes
+use of a distributed file system and parallel computing capabilities. NoSQL
+works on the fundamentals of CAP theorem, which states that a distributed
+database cannot provide certainty on more than two of the following:
+capability, availability, and partition tolerance. This means that the database
+needs to satisfy either i) CA capability and availability, ii) AP availability
+and partition tolerance, or iii) CP capability and partition tolerance.
+
+There are four distinct categories of the NoSQL database:
+
+  1. Key-value-based: It is a non-relational database that assigns simple
+  key values to the stored data. The data in the tables retrieved is based
+  on the unique identification key value pairs of each record. Examples
+  are Redis and Riak.
+
+  2. Document-based: This is usually used for data that is semi-structured
+  or unstructured. Xml or Json is used to store the data in the form of
+  documents. By employing the same document-model format as their
+  application code, document databases make it easier for developers
+  to store and query data. However, as the data is saved in document
+  form, reading of data is a time-consuming process. Examples are
+  MongoDB, CouchDB.
+
+  3. Columnar-based: These databases are ideal for aggregate functions,
+  online processing websites, and data collection based on timestamps.
+  This data is stored in columns and related columns are grouped under
+  one family. To refer data from any single column each row will have
+  a row ID. This database significantly reduces the amount of data to
+  be loaded from a fisk and reduces the overall I/O requirements of the
+62  Chapter 2.2
+
+  disk. This database is suitable for data warehousing and big data
+  processing. Examples are Cassandra and Hbase.
+  4. Graph-based: It addresses the limitations of the relational databases.
+  This database represents and stores data in the form of graphs with
+  nodes, edges, and attributes to undertake semantic searches. An
+  example is Neo4J.
+
+Big data architecture has two popular open-source software framework
+ecosystems: Hadoop and Spark.
+
+Hadoop Ecosystem: This ecosystem is ideal for analyzing data from
+sources like GPS, smart card, sensors, social media, etc., in ITS and it is
+illustrated in Figure 2.2.4. It is preferred where there is a requirement for
+batch processing and data lakes. It applies ETL (extract, transfer, load)
+methodology using tools such as HIVE, PIG and SQOOP. Transformation
+rules are applied to the extracted data depending on the technical and
+functional requirements of the user. This aggregated data is then hoarded in
+the Hadoop Distributed File System (HDFS).
+
+Spark Ecosystem: This ecosystem is effective for applications that have
+real-time data processing requirements like vehicle speed detection, vehicle
+identification, real-time warning, etc. Spark adapts well to machine-learning
+tasks as it allows data by the user to be loaded and queried repeatedly into
+a cluster memory. The Spark ecosystem works with stream processing and
+in-memory computing competence, along with resilient distributed dataset
+(RDD), for high-speed execution (Ranjani and Sridhar 2016).
+
+A) HADOOP ECOSYSEM B) SPARK ECOSYTEM
+
+Figure 2.2.4: Hadoop and Spark Ecosystem
+Source: Ranjani and Sridhar (2016)
+Big Data Processing and Storage  63
+
+Real-time data processing is a key requirement of ITS to be fulfilled by the
+big data processing platform. The Hadoop system proves to be inefficient
+in transport data management for applications like dynamic toll
+management where real-time decision making is required. Thus, a
+combination of both Hadoop and Spark will provide more efficiency in
+selection and analysis of data sets.
+
+Figure 2.2.5: Framework of Apache Spark Using Hadoop Database
+Source: Ranjani and Sridhar (2016)
+
+Figure 2.2.5 shows an example of a typical framework of Apache Spark
+using a Hadoop database. The real-time processing of data is executed by
+the Spark streaming process while the Hbase (Hadoop database) increases
+the efficiency of data retrieval by performing high-level feature extraction
+and creating indexes for massive data sets. Spark Core has distributed
+computational potential to carry out offline tasks. Apache SQOOP is a
+widely used data injection system that is used to transfer data between
+mainframes and big data process systems. A comparison of the Hadoop and
+Spark system is presented in Table 2.2.3.
+64  Chapter 2.2
+
+  Features  Hadoop  Spark
+Data  Supports batch processing  Supports batch processing
+processing  and stream processing
+Stream  Supports large data sets in  Supports micro batches
+engine  batches
+Data flow  Supports chain of stages,  Supports DAG (Direct
+  one output of a stage is  Acyclic Graph)
+Performance  input for the next stage
+  Performance is slow  Better performance
+Memory  because of batch  because of stream
+management  processing  processing
+line of code  Configurable memory  Automating memory
+  management  management
+  Higher number of lines of  90 % less lines of code
+  code.  than Hadoop
+
+Machine  Depends on external tools  It has own machine
+Learning  like Apache Mahout  learning library MLIB
+SQL support  Apache Hive helps to run  Spark SQL helps to run
+  SQL queries  SQL queries
+Easy to use  Hand code required for  Easy to program because
+  each operation  of high-level operators
+Compatibility  Compatible with Spark  Compatible with Hadoop
+  eco-system  ecosystem
+Cost  Less expensive hardware  Expensive because it
+  requires more RAM to
+Processing  Because of map reduce  run in-memory
+speed  processing is slow  In-memory processing is
+  fast
+
+Table 2.2.3: Comparison of Hadoop and Spark Features
+Source: Mounica and Lavanya (2019)
+
+  Challenges in Big Data for Transportation Systems
+
+1. Data collection: The accuracy of the big data process output is dependent
+  on the reliability of the gathered data. In ITS, the collected data may be
+  inaccurate or incomplete at certain times, for instance, not all vehicles
+  are equipped with GPS or other techniques to provide real-time location
+  data. Thus, big data in ITS tends to be less controllable in terms of
+  accuracy and quality. The requirement in terms of accuracy is also
+Big Data Processing and Storage  65
+
+  dependent on the service requirement. For example, an accident
+  management application requires more accurate data compared to
+  services like predictive rerouting. The solution to this issue is to invest
+  in new data collection technologies and increase data capturing
+  automation to reduce manual data entry errors.
+2. Data Privacy: Another challenging concern related to data is privacy.
+  There is a high potential that the data related to personal privacy might
+  be leaked during data storage, transfer, or usage. Security concerns
+  include identity theft, user location tracking, excess data trace collection,
+  etc. There is a need for the government to develop holistic data privacy
+  laws to prevent unauthorized access to user data, including standard
+  guidelines related to the type and scope of data that can be published,
+  principles of data distribution, extent of data availability, etc. To
+  enhance data security, transportation agencies should rigorously control
+  personal data definitions, improve data security certification management,
+  and integrate more advanced algorithms.
+3. Data Storage: The ability of existing infrastructure to store big data is
+  highly limited. Traditional methods are unable to cope with the large
+  volume of incoming complex data sets. There is a need to design a more
+  suitable and expandable data storage architecture. One such architecture
+  could be the usage of cloud big data services. Multi-cloud storage and
+  hybrid storage are developing as significant areas for big data storage as
+  the major public cloud storage providers, such as Google and Microsoft,
+  continue to expand their services with integrated big data capabilities.
+  Smart management systems that can give integrated analytics, along
+  with storage, are in high demand among businesses.
+4. Data processing: Real-time processing is a crucial aspect of ITS
+  applications, this includes services like pre-processing of traffic data,
+  traffic state identification, real-time traffic control, dynamic route
+  guiding, and real-time bus scheduling. Traffic data, which comes in a
+  variety of forms from many sources, must be compared to previous data
+  and processed quickly. Thus, to process real-time outputs with such a
+  large and diverse data set is a key challenge for the application of big
+  data in ITS.
+66  Chapter 2.2
+
+  References
+
+Liu, Y. 2018. “Big Data Technology and Its Analysis of Application in
+  Urban Intelligent Transportation System.” Proceedings—3rd International
+  Conference on Intelligent Transportation, Big Data and Smart City,
+  ICITBS 2018 (January): 17–19.
+  https://doi.org/10.1109/ICITBS.2018.00012.
+
+Mounica, B., and K. Lavanya. 2019. “Big Data Architecture for Intelligent
+  Transport Systems.” International Journal of Innovative Technology
+  and Exploring Engineering 8 (9): 1281–86.
+  https://doi.org/10.35940/ijitee.i8119.078919.
+
+Ranjani, A. C. Priya, and M. Sridhar. 2016. “Spark– An Efficient
+  Framework for Large Scale Data Analytics.” International Journal of
+  Scientific & Engineering Research 7, 2 (February): 401–05.
+
+Torre-Bastida, A. I., J. Del Ser, I. Laña, M. Ilardia, M. N. Bilbao and S.
+  Campos-Cordobés. 2018. “Big Data for Transportation and Mobility:
+  Recent Advances, Trends and Challenges.” IET Intelligent Transport
+  Systems 12 (8): 742–55. https://doi.org/10.1049/iet-its.2018.5188.
+
+Zhu, L., F. R. Yu, Y. Wang, B. Ning and T. Tang. 2018. “Big Data Analytics
+  in Action.” 266–94. https://doi.org/10.4018/978-1-5225-7609-9.ch009.
+  CHAPTER 2.3
+
+  ITS: OPERATIONAL FRAMEWORK
+
+  Introduction
+
+Poznan lies on the Warta River in west-central Poland, in the Greater Poland
+region. It is the capital and largest city of the Poznan province. See Exhibit
+2.3.1 for the location of Poznan. It covers an area of 261.3 sq km and has a
+population of about 550,000. Poznan is an important cultural, industrial, and
+business center, and one of Poland's most populous regions with many
+regional customs. It hosts a major international trade fair and has a strong
+position in the field of academic education. The city has an extensive public
+transport system, mostly consisting of trams. The city lies at the intersection
+of two busy highways, between Berlin and Warsaw, and Gdansk and
+Wroclaw, which run through the heart of the city. This has led to high levels
+of traffic with heavy goods vehicles. Suburbanization has caused significant
+changes in transport behavior. Like all the other larger cities in Central
+Europe, the traffic in Poznan has also been increasing rapidly since the city
+moved towards a market economy. Rising transport needs and growing
+motorization have caused congestion problems. The authorities, therefore,
+decided to introduce an intelligent transportation system and implement the
+best innovative solutions to further support transport-related developments
+and increase the efficiency of public transportation.
+
+  Previous Projects
+
+To reduce the issues of congestion and pollution in the center of the city,
+the CITYMAN Poznan project was introduced, in October 1996. With an
+aim to solve these problems, a consortium was formed, which included a
+leading Dutch supplier and the Polish consultancy firm PolTraffic. They
+gained €1 million of support for a traffic management project from the
+Dutch Government, through the international EUREKA program (a
+European funding and support program, which specifically dedicates funds
+to research-performing SMEs), in 1996. As a part of the project, a signal
+controller upgrade plan was developed by the consortium for a pilot area of
+Poznan. The pilot area also includes an arterial road. The signal controller
+68  Chapter 2.3
+
+upgrade plan included the development of a generic (single board computer)
+black box device. The black box device locks on to and takes over the
+control function of the existing controller, enabling traffic-responsive
+control, central control and network optimization. Exhibit 2.3.2a shows
+black box and Exhibit 2.3.2b shows the working of a black box. A high-
+level library of control functions was also adjusted to local conditions and
+regulations. This facilitated a fast creation of easily adaptable controller
+software with advanced dynamic functionality. The arterial road experienced
+a 30 % increase in capacity. The result of the project was the fulfilment of
+the identified objectives, satisfaction on all sides and commercial
+continuation of the project. Poznan has ordered over forty more black boxes.
+The project sets a good example of public-private co-operation. The
+challenges were met through a combination of professionally and commercially
+motivated commitment (Traffic Management and Control System for the
+City of Poznan).
+
+  Project: ITS Poznan
+
+The ITS Poznan project was developed for the Wielkopolskie Voivodeship
+within the area of the city of Poznan. The location of the ITS Poznan project
+implementation is given in Exhibit 2.3.3. The main aim of the project was
+to provide an integrated intelligent traffic management system. This
+included design, delivery, implementation, and start-up in the road traffic of
+Poznan on ITS-based solutions, particularly in the area of traffic control.
+The project was mainly implemented in the part of the city located between
+the following streets: Dąbrowskiego, Ğw. WawrzyĔca, ĩeromskiego,
+Dąbrowskiego, Roosevelta and Gáogowska—the border of the city of
+Poznan. The level of integration between the various components of the
+system reflects the project innovativeness. Each of the components
+exchanges data and information with the other components through a
+common IT platform. The main assumption of the system is its openness,
+i.e., the capability of working out program solutions that allows for building
+new modules. It is to facilitate achievable solutions and expansion of the
+system operation without the need to create new databases and tools to
+obtain information.
+
+The ITS Poznan provided a foundation for an innovative ICT system that
+supports not only transport management in the city but also the management
+of the other processes relating to key areas of city management. Firstly, all
+the users are provided with real-time traffic data obtained from the
+measuring stations. Then, the system helps in planning a journey through
+ITS: Operational Framework  69
+
+the city on public transport. It makes use of the actual location of a given
+public transport vehicle and estimated arrival or departure times. In
+addition, special software will make it possible to book a place at buffer car
+parks and automatically detect incidents that can have an adverse impact on
+traffic conditions. An important factor is that the users of the system (i.e.,
+residents of the city and users of transport infrastructure) experience both
+social and economic benefits. Another important advantage is the savings
+made due to lower costs and shorter travel times for the users. The openness
+of the applied solutions and system architecture contributed to system
+scalability. An agreement on the implementation of the “ITS for the City of
+Poznan” project was signed on May 27, 2013. The first implementation
+stage of the project was from May 27, 2013, to March 31, 2015. The ITS
+Poznan project cost a total of PLN 96,151,121.83.
+
+  Objectives of ITS Poznan
+
+To develop the traffic management system in Poznan, both the car transport
+and public transport were improved through the following (Republic of
+Poland 2014):
+
+  1. Monitoring of vehicle traffic on the road network and reducing road
+  network congestion.
+
+  2. More effective use of the existing road and transport infrastructure.
+  3. Improved travel conditions.
+  4. Speeding up the public transport, particularly trams.
+  5. Increased demand for public transport.
+  6. Making current information available to drivers and passengers
+
+  during their journeys.
+  7. Improved road user safety.
+  8. Monitoring and protection of the natural environment.
+
+These objectives were achieved through the fulfilment of several more
+detailed and interrelated tasks. These tasks included i) the development of
+existing infrastructure, ii) the design and implementation of the IT platform,
+iii) the development and implementation of a traffic model, and iv) the
+enabling of dynamic and tactical management.
+
+  Proposals of ITS Poznan
+
+The proposals of the ITS Poznan project are given below (Republic of
+Poland 2014):
+70  Chapter 2.3
+
+  1. Development of a traffic management system based on the existing
+  infrastructure.
+
+  2. Development of the existing MPLS (multiprotocol label switching is
+  a type of data-carrying technique for high-performance
+  telecommunications networks) backbone network, and design and
+  execution of optical fiber access network ETHERNET. It ensures the
+  transfer of all digital data between elements, including camera
+  images, data collected by traffic light control systems, passenger
+  information, location of means of public transport, etc.
+
+  3. Development of the urban broadband wireless communications
+  network by adding subsequent wireless nodes necessary for the
+  operation of the ITS in the full range of its functionality.
+
+  4. Design and implementation of an open IT platform integrating ITS
+  elements to ensure data exchange between the elements through
+  open communication protocols.
+
+  5. Construction of a server room and operations room together with
+  equipment for operator workstations, adaptation of premises in the
+  building that houses the traffic control center to the needs of system
+  use and operation.
+
+  6. Implementation of a traffic model in the transport network and a
+  technologically advanced traffic management system making short-
+  term predictions of traffic flow in the network and intelligent traffic
+  management possible.
+
+  7. Execution of a system of displays and variable message signs that
+  provide vehicle drivers with important information.
+
+  8. Development of priority systems for trams and buses in order to
+  speed up public transport.
+
+  9. Equipping vehicles with devices that enable communication with
+  road infrastructure and provision of in-vehicle passenger information.
+
+  10. Delivery and implementation of a public transport fleet management
+  system that monitors the transport service punctuality, on-line
+  presentation of location on a digital map, travel time prediction, and
+  provision of passenger information.
+
+  11. Design and implementation of a passenger information system,
+  including information displays at passenger stops and on the internet
+  portal.
+
+  12. Delivery and installation of elements of the road safety system: video
+  detection, including vehicle registration recognition, development of
+  the video surveillance system, and delivery and installation of sensor
+  stations.
+ITS: Operational Framework  71
+
+  13. Replacement of elements of traffic light control systems as well as
+  support structures and streetlamps.
+
+The total amounts earmarked for investments in the area of ITS are given in
+Exhibit 2.3.4.
+
+  Challenges in ITS Poznan
+
+Several challenges were identified during the implementation of the project.
+Firstly, there was a shortage of staff qualified in the area of information and
+communications. They had very little experience or skills to work in the
+municipal office to implement the project. This was overcome by
+cooperation with scientific and research institutions as well as the support
+of ICT entities from the private sector.
+
+Secondly, there was the issue of interoperability of the new systems and
+systems already in place, to gain synergy. This was important because there
+were several projects being implemented at the same time. It was necessary
+to avoid the use of different systems and on-board computers in each
+project. In order to prevent this risk in the future, it was crucial to ensure the
+openness of communications protocols.
+
+Finally, delays in the construction of hard infrastructure and key nodes also
+caused some difficulties. This needed proper and flexible managing, and
+good organization (Intersessional Panel of the United Nations 2016).
+
+  Conclusion
+
+The project aimed to improve and optimize the existing traffic system of the
+city. The ITS improved the existing network of streets and tramways by
+giving higher priority to public transport. The project increased the transport
+efficiency, traffic flow, and its efficiency in Poznan. It has reduced the
+number of individual car users by making better and more efficient public
+transport. This has, subsequently, lowered the traffic congestions. It gave
+necessary information to users of public transport as well as individual
+drivers, thereby, incising traffic safety. Additionally, it contributed to
+environmental protection by reducing fuel consumption and emission of car
+exhaust fumes. The project also created and provided many applications for
+mobile devices. It created applications, even, for differently abled persons.
+Without the development of the project, it is unlikely that Poznan could have
+72  Chapter 2.3
+
+made such quick progress in upgrading to a traffic-responsive, centrally
+connected network.
+
+Exhibit 2.3.1: The Location of Poznan, Poland
+
+Source: http://www.poznantours.com
+Exhibit 2.3.2 a: Black Box for an Automobile
+
+Source: Telematics.com
+ITS: Operational Framework  73
+
+Exhibit 2.3.2 b: Working of a Black Box
+
+Source: www.globaltruth.net
+74  Chapter 2.3
+
+Exhibit 2.3.3: ITS Poznan Project Implementation
+
+Source: Republic of Poland (2014).
+
+Exhibit 2.3.4: Total Funds Earmarked for Investments in ITS Projects
+
+Year  Expenditure on ITS  Total City Expenditure
+  in PLN  on Infrastructure
+  Investments in PLN
+
+2010  23,373,100  87,259,833,202
+
+2011  107,247,018  94,538,303,368
+
+2012  191,853,431  59,459,596,842
+
+2013  628,518,337  49,971,903,802
+
+2014 (until 20 May 679,667,305
+2014)
+
+Note: 1 PLN = 0.27 US Dollar; 1 PLN = 17.25 Indian Rupee
+
+Source: Data from Republic of Poland (2014).
+ITS: Operational Framework  75
+
+  References
+
+“INTERSESSIONAL PANEL OF THE UNITED NATIONS COMMISSION
+  ON SCIENCE AND TECHNOLOGY FOR DEVELOPMENT (CSTD).”
+  2016. Budapest, Hungary, 11-13 January 2016.
+
+Republic of Poland. 2014. Warsaw: Ministry of Infrastructure and
+  Development, 72.
+
+Traffic Management and Control System for the City of Poznan. n.d.
+  Accessed June 26, 2017.
+  http://www.transport-research.info/project/traffic-management-and-
+  control-system-city-poznan.
+  CHAPTER 2.4
+
+ITS: AUTOMATION AND PEOPLE FRAMEWORK
+
+  Overview: The Paris Subway
+
+The Paris Subway is a rapid transit system in the Paris Metropolitan Area.
+It is the second busiest subway system in Europe, after the Moscow Metro.
+It is mostly underground and is 214 km long. It has 303 stations and sixteen
+lines, numbered one to fourteen, with two further lines. It is among the
+world’s oldest subways because thirteen of its lines were developed between
+1900 and 1935. Line 1 was the first metro line ever run in Paris, in 1900. It
+goes from East to West and serves many business districts as well as most
+historical places and tourist spots within the city of Paris. The Metro is
+operated by the Regie Autonome des Transports Parisiens (RATP), founded
+in 1948 as a state-owned company. It is a public transport authority that also
+operates part of the RER (Reseau Express Regional) network, bus services,
+light rail lines and many bus routes. By 2001, RATP had expanded and
+modernized the subway, bus lines and developed a tramway line. All the
+Parisian subway lines were equipped with traffic lights and cameras during
+the same year.
+
+Most of the driving on all subway lines was done by the automatic pilot
+(Line 10 was an exception). It maintained a constant speed and helped the
+drivers to stick to the speed limits. If the automatic pilot was deactivated,
+the driver had to drive the train manually with a device that allows the
+person to accelerate, decelerate and stop the train. See Exhibit 2.4.1 for a
+picture showing a subway driving cabin. The train traffic was controlled by
+the chefs de regulation (heads of regulation) at a centralized command-and-
+control center. The other positions at RATP included chefs de manceuvre
+(heads of movement), chefs de depart (heads of departures), station agents,
+ticket controllers, security agents, cleaning staff, maintenance employees,
+salespeople, managers and drivers. Recently, in 2016, it had been ranked as
+the best public transport system in the world by ITDP (The Institute for
+Transportation and Development Policy) with 100 % of people in Paris
+having easy access to rapid transportation.
+ITS: Automation and People Framework  77
+
+  Metro Automation
+
+In metro systems, the term automation implies that the responsibility for
+operation and management of the trains is transferred from the driver to the
+train control system. There are various degrees of automation, depending on
+the basic functions of train operations. These are shown in Exhibit 2.4.2 in
+the form of a picture. The picture also shows the different types of train
+operations with respect to each grade. Technical progress has made train
+control systems capable of supervising, operating, and controlling the entire
+operational process. The key elements for this are automatic train protection
+(ATP), automatic train operation (ATO), and automatic train control (ATC).
+ATP has equipment which avoids i) collisions, ii) red-signal overrunning,
+and iii) exceeding speed limits by applying brakes automatically. ATO
+ensures partial or complete automatic train piloting and driverless
+functionalities. It also performs all the functions of the driver, except for
+door closing. ATC performs normal signaler operations, such as route
+setting and train regulation, automatically. The ATP, ATO, and ATC
+functions are performed by on-board and wayside equipment, which
+exchange data (UITP 2012).
+
+  Global Experience
+
+Unattended Train Operation (UTO) has many benefits and beneficiaries:
+customers, operators, funding authorities and staff. UTO means that there is
+no driver in the front cabin of the train, or no accompanying staff, assigned
+to a specific train. It is a widespread solution and thirty-two cities have
+already opted for automated metros in four continents. The highest usage is
+in Europe (32 %) and Asia (40 %). See Exhibit 2.4.3a for a map showing
+the cities with automated metro lines, as of 2013. Four new lines joined the
+UTO club: i) U Line (Uijeongbu) and EverLine (Yongin), both in South
+Korea, and ii) Line 5 (Milan) and Line 1 (Brescia), both in Italy. There are
+currently 674 km of automated metro in forty-eight lines that, together,
+serve 700 stations. Some of the longest metro lines in the world are
+automated. See Exhibit 2.4.3b for a graph showing the kilometers of
+automated metro in 2013, by city (World Atlas Report 2013).
+
+  Benefits of Automation
+
+There are many benefits associated with UTO. Some of the benefits are
+listed below (UITP 2012).
+78  Chapter 2.4
+
+  1. Increase in quality of service: Enhanced reliability of trains because
+  of better predictability of operations.
+
+  2. Greater flexibility in operation: Offers a more tailored service
+  coverage; frequency of trains can be modified accordingly, as per the
+  demands (peak and off-peak hours).
+
+  3. Impressive safety records: Reduces the human-risk factor and
+  dangers, such as over speeding, driver fatigue, etc., are minimized.
+  Platform screen doors prevent technical incidents and accidents.
+
+  4. Financial feasibility: Automation costs are relatively low for new
+  lines. The majority of the costs are for the rolling stock, the signaling
+  and control systems, and platform and track protection system.
+  However, metro is also affordable for smaller cities.
+
+  5. Operational cost factors: Staff and energy gains. Automated lines
+  halve the operational costs as staff costs are reduced. Even in the
+  cases of line conversion, staff are likely to be retained and deployed
+  to other functions. Acceleration and deceleration patterns can be
+  adjusted to reduce energy consumption and maximize energy
+  recovery, thus, reducing the energy costs.
+
+  6. Holistic efficiency and organization opportunities: The introduction
+  of a sophisticated computerized system and operation control center
+  (OCC) helps in reviewing most operation processes and assess their
+  improvement. Maximum benefits from installed data processors are
+  extracted for better performance at optimized costs.
+
+  Overview of RATP
+
+RATP manages the Paris Transportation System, made up of fourteen
+subway lines, two fast train lines (RER), three hundred buses, and two tram
+lines. When Bailly was RATP’s CEO, in 1994, he worked on the
+development of a new subway line, which was supposed to be Paris’ first
+driverless and automatic subway line (Line 14). Inaugurated in 1998, Line
+14 was 8.5 km long and had 242 employees, which was the most highly
+staffed line of the network. The line had no drivers but had several
+employees to manage the public and supervise the trains. Line 14 also
+became a marketing tool for RATP. During the same year, in order to
+expand its international presence, RATP also created a subsidiary, RATP
+International. It overlooks foreign transportation networks. RATP owns two
+other subsidiaries: i) RATP Engineering provides consultancy services, and
+ii) RATP France manages public transportation networks in other French
+cities.
+ITS: Automation and People Framework  79
+
+The organizational structure of RATP includes a CEO, an executive
+committee of seven members, and an administrative board. The administrative
+board comprises twenty-nine members, which include the executive
+committee members, as well as representatives from the French state, public
+figures, and nine representatives elected by the employees. The RATP
+Group’s activities were performed by several departments. RATP has a
+decentralized structure; each department has a director and is an
+independent company. There were eight trade unions at RATP, to organize
+elections and to take important decisions related to economic change,
+organization, and even dismissals.
+
+  Modernization of Line 1
+
+Line 1 has a rail length of 16.6 km, twenty-five stations, and fifty-two trains
+in circulation, in 2001. It serves sixteen of the fifty most heavily charged
+metro stations, as well as five major interchange nodes. It was the oldest and
+first line of the metro. It was also the first line to install the centralized
+command center, in 1967, and adopt the automatic plot, in 1972. Line 1 was
+the most used metro line of the network, with twelve million trips per month.
+The line served business districts of the city, along with many tourist places.
+This resulted in unpredictable traffic peaks and led to difficulties in
+managing the line. Trains were congested with travelers and this caused
+delays. Therefore, Line 1 was chosen for automation due to the difficulty of
+adapting supply to demand (Anteby, Corsi and Billaud 2013).
+
+Reasons for automation: Automatic lines increased passengers’ safety by
+ensuring control of the trains’ speed and eliminating accidents caused by
+human error. Besides safety improvements, the automatic lines allowed
+trains to run shorter intervals of time. This increased train circulation and
+reduced the passengers’ waiting times. Full automation also allowed the
+operator to anticipate variations in demand and adjust supply accordingly.
+Moreover, the rails and equipment of Line 1 were getting old and in need of
+maintenance. The last reason was that, if the project was to become
+successful, it could promote RATP’s image in France and abroad.
+
+Implementation: The automation project was a key element of the
+modernization plan as well as an important marketing tool for RATP’s
+expansion. The work of automation began in 2007, after convincing the
+employees and trade unions. The project ended in 2011 with a total cost of
+€629 million. The project timeline is given in Exhibit 2.4.4. Most of the
+costs were for acquisition of new trains, while nearly €150 million was spent
+on infrastructure. On November 2, 2011, the first eight automatic trains
+80  Chapter 2.4
+
+were circulated. See Exhibit 2.4.5 for pictures of the new Line 1 trains. Out
+of fifty-two old trains, forty-nine trains were replaced; the new ones could
+circulate faster and transport five times the passengers as the old ones, for a
+capacity of 722 passengers per train. The system chosen by RATP is based
+on CBTC (communication based train control) radio communication and a
+virtual block signaling system. This allows train headways to be cut to as
+little as 85 seconds; the earlier ones were 105 seconds. RATP has fitted half-
+height platform screen doors to all Line 1 platforms, which are vital for
+assuring that there are no passengers or staff on the tracks. By 2012, RATP
+had grown into an international group with revenues, in 2011, of €5 billion.
+It became the fifth largest operator of public transportation in the world.
+RATP had its presence in twelve countries and forty French cities through
+its subsidiary, RATP development (Anteby, Corsi and Billaud 2013).
+
+Improvements made: After the successful operation of Line 14 for seven
+years, the Automatic Train Operation System (ATOS) of Line 1, made the
+following improvements: i) a reduced adhesion function considering the
+environmental conditions (wet/dry track) in open air sections, ii) the
+possibility of parking and starting trains in fully automatic mode at any
+place on the line, and iii) treating audio-visual facilities, signaling
+equipment, and platforms’ screen doors separately. The command control
+of trains is developed in techniques of the common control command
+program used in the modernization of the Paris Metro Network.
+
+Stakes and Challenges: Transforming a subway that was built in 1900 into
+an automatic line was quite challenging. The main stakes and challenges of
+this project are shown (Systra 2013):
+
+  1. Modification and upgradation without disturbing the line operation,
+  while guaranteeing passenger and staff safety.
+
+  2. Renewal of Line 1 old equipment and systems.
+  3. Platform screen doors installation.
+  4. Interaction between the new and old systems, operating together and
+
+  in transition, with a progressive commissioning of the driverless
+  system.
+
+  Conclusion
+
+Line 1 is the oldest, fastest, and most crowded line of the Paris Metro
+Network. It is heavily loaded during rush hours, off-peak hours, weekends,
+and holidays. Paris has proved that conversion is feasible, even in complex
+and critical lines. Conversion projects are ever-increasing, mainly to
+ITS: Automation and People Framework  81
+
+modernize signaling systems and the rolling stock. The project for
+automating Line 1 comes within the range of RATP’s sustainable
+development policy with feasible expenditure. Higher operating speeds cut
+passengers’ travel times. Additionally, serious passenger accidents can be
+minimized, and energy consumption is optimized. Automation inevitably
+leads to high levels of complexity due to the required integration of multiple
+subsystems. However, the advantages of an automated transport system
+motivate the creation of new and sophisticated project management tools.
+The Line 1 Conversion Project is an illustration of people management
+skills and negotiations along with the deft use of technology to transition.
+The success of this endeavor has vouched for the viability of such complex
+upgradation projects, hence, encouraging them further.
+
+  References
+
+Anteby, Michel, Elena Corsi and Emilie Billaud. 2013. Automating the
+  Paris Subway (A). Boston: Harvard Business School Publishing.
+
+Anteby, Michel, Elena Corsi and Emilie Billaud. 2013. Automating the
+  Paris Subway (B). Boston: Harvard Business School Publishing.
+
+Systra. 2013. Paris Metro—Line 1 Automation, France. France: Systra.
+UITP. 2012. Metro Automation Facts, Figures And Trends. Belgium: The
+
+  International Association of Public Transport.
+World Atlas Report. 2013. Observatory of Automated Metros . London:
+
+  UITP.
+

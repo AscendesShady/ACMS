@@ -1,0 +1,689 @@
+Intelligent
+Transportation
+Systems
+Intelligent
+Transportation
+Systems:
+
+Concepts and Cases
+
+By
+
+Sundaravalli Narayanaswami
+Intelligent Transportation Systems: Concepts and Cases
+
+By Sundaravalli Narayanaswami
+
+This book first published 2023
+
+Cambridge Scholars Publishing
+
+Lady Stephenson Library, Newcastle upon Tyne, NE6 2PA, UK
+
+British Library Cataloguing in Publication Data
+A catalogue record for this book is available from the British Library
+
+Copyright © 2023 by Sundaravalli Narayanaswami
+
+All rights for this book reserved. No part of this book may be reproduced,
+stored in a retrieval system, or transmitted, in any form or by any means,
+electronic, mechanical, photocopying, recording or otherwise, without
+the prior permission of the copyright owner.
+
+ISBN (10): 1-5275-9124-7
+ISBN (13): 978-1-5275-9124-0
+  ýēɉĭúĭŊİɋÿĭċĭĮć
+
+One who moves, understands the path
+  TABLE OF CONTENTS
+
+List of Exhibits .......................................................................................... ix
+
+List of Figures............................................................................................ xi
+
+List of Tables ............................................................................................ xii
+
+Preface ..................................................................................................... xiv
+
+Module 1 Trends, Challenges and Opportunities
+
+1.1 Overview and Challenges ..................................................................... 2
+1.2 Purpose of ITS Deployment ............................................................... 16
+1.3 Determinants of ITS ........................................................................... 31
+
+Module 2 Anatomy and Framework of Development
+
+2.1 Role of Information and Communication Technology ....................... 44
+2.2 Big Data Processing and Storage........................................................ 51
+2.3 ITS: Operational Framework .............................................................. 67
+2.4 ITS: Automation and People Framework ........................................... 76
+2.5 ITS: Policy Framework ...................................................................... 88
+2.6 ITS: Business Framework .................................................................. 92
+2.7 ITS: Innovation Framework ............................................................. 104
+
+Module 3 Integrating Requirements Planning, Design
+and Development
+
+3.1 Technological Elements of ITS ........................................................ 122
+3.2 Building Blocks of ITS..................................................................... 133
+3.3 System Design .................................................................................. 145
+3.4 Capacity Planning............................................................................. 160
+3.5 Operations Planning and Control...................................................... 170
+3.6 Transit Signal Priority ...................................................................... 185
+3.7 ITS Project Management .................................................................. 193
+3.8 Fleet and Commercial Vehicle Operations ....................................... 209
+3.9 Connected Vehicles .......................................................................... 220
+3.10 Operational Safety Applications..................................................... 259
+viii  Table of Contents
+
+Module 4 ITS: Business and Policy Perspective
+
+4.1 Strategic Business Planning.............................................................. 270
+4.2 Pricing and Revenue Management ................................................... 284
+4.3 Sustainability of ITS Operations ...................................................... 293
+4.4 Role of State and Regulatory Bodies................................................ 302
+4.5 Public-private Partnerships in ITS.................................................... 309
+4.6 System Security and Privacy ............................................................ 319
+4.7 Prospects of Advanced Technology Infrastructure........................... 331
+4.8 Emerging Trends .............................................................................. 346
+  LIST OF EXHIBITS
+
+Exhibit 1.2.1 ITS User Services ............................................................... 26
+Exhibit 1.2.2 Dallas Area-Wide ITS Plan Area ........................................ 26
+Exhibit 1.2.3 Dallas Area Transportation Problems and User Service
+
+  Solutions ............................................................................................. 28
+Exhibit 1.3.1 Showing Agency ITS Funding, Budget Trends in the US
+
+  by Agency Type, 2010 ........................................................................ 39
+Exhibit 1.3.2 Showing Key Transportation Legislation Funding Bills..... 40
+Exhibit 1.3.3 Percentage of Metropolitan Areas in Which Incident,
+
+  Travel Time, and Travel Speed Information Were Disseminated
+  to the US Public in 2007 ..................................................................... 41
+Exhibit 2.1.1 Components and Mechanism in Service Innovation........... 49
+Exhibit 2.3.1 The Location of Poznan, Poland ......................................... 72
+Exhibit 2.3.2 a Black Box for an Automobile .......................................... 72
+Exhibit 2.3.2 b Working of a Black Box .................................................. 73
+Exhibit 2.3.3 ITS Poznan Project Implementation ................................... 74
+Exhibit 2.3.4 Total Funds Earmarked for Investments in ITS Projects .... 75
+Exhibit 2.4.1 Paris Subway Driving Cabin............................................... 82
+Exhibit 2.4.2 Various Grades of Automation ........................................... 83
+Exhibit 2.4.3a Map Showing the Cities with Automated Metro Lines,
+  as of 2013............................................................................................ 84
+Exhibit 2.4.3 b Graph Showing the Kilometers of Automated Metro
+  in 2013, by City .................................................................................. 85
+Exhibit 2.4.4 The Project Timeline........................................................... 86
+Exhibit 2.4.5 Pictures of the New Line 1 Trains ...................................... 87
+Exhibit 3.1.1 Arterial Road Selection Criteria........................................ 130
+Exhibit 3.1.2 Non-intrusive and Intrusive Technologies: Data Collection,
+  Advantages, and Disadvantages........................................................ 131
+Exhibit 3.2.1 Project Management Plan Goals ....................................... 142
+Exhibit 3.2.2 Capital Cost and Cash Flow Summary ............................. 143
+Exhibit 3.2.3 Implementation Schedule of the Congestion Management
+  Plan Program..................................................................................... 144
+Exhibit 3.4.1a Location of Tiger Brennan Drive and the Surrounding
+  Areas ................................................................................................. 166
+Exhibit 3.4.1b A Zoomed-in Image of the Location............................... 167
+Exhibit 3.4.2 Data Analysis .................................................................... 168
+x  List of Exhibits
+
+Exhibit 3.4.3 Images of Tiger Brennan Road ......................................... 169
+Exhibit 3.5.1 Goals Developed for Each Functional Area of ITS .......... 177
+Exhibit 3.5.2 Matrix of Strategic Plan Goals and Market Packages ....... 179
+Exhibit 3.5.3 Cost Summary for Projects by Fiscal Year ....................... 180
+Exhibit 3.5.4 Cost Summary for Projects by Highway District.............. 181
+Exhibit 3.5.5 Map Showing the Twelve Kentucky Highway Districts... 182
+Exhibit 3.5.6 ITS Organizational Structure in Kentucky, as of April
+
+  2000 .................................................................................................. 183
+Exhibit 3.7.1a Five Key Phases in a Project ........................................... 200
+Exhibit 3.7.1b Detailed Explanation of the Tasks under Each Phase ..... 201
+Exhibit 3.7.2 List of Key Stakeholders along with Their Descriptions .. 202
+Exhibit 3.7.3 A Flow Chart Showing the Implementation Strategy ....... 203
+Exhibit 3.7.4 A Flow Chart Showing the Components of Mysore ITS .. 204
+Exhibit 3.7.5a Images Showing KSRTC Online Portal in Two Languages,
+
+  i.e., English and Kannada ................................................................. 205
+Exhibit 3.7.5b Images Showing Various Technologies and Initiatives
+
+  Used in the Mysore ITS .................................................................... 206
+Exhibit 3.7.6 The Cycle Showing the Entire Mysore ITS ...................... 207
+Exhibit 3.7.7 Highlights of Mysore ITS ................................................. 208
+Exhibit 3.8.1 Freight Transportation Information................................... 219
+Exhibit 3.9.1 CV Pilot Deployment in Downtown Tampa ..................... 240
+Exhibit 3.9.2 Accident on Corridor I-80 Wyoming Corridor ................. 242
+Exhibit 3.9.3 Wyoming I-80 Corridor CV Map ..................................... 244
+Exhibit 3.9.4 Wyoming 511 App Interface............................................. 246
+Exhibit 3.9.5 RTIS: Signages and Boards .............................................. 249
+Exhibit 3.9.6 RTIS: Probe Vehicle Data ................................................ 250
+Exhibit 3.10.1 Different Categories of Responses for Security Violation
+
+  on Transportation Systems................................................................ 265
+Exhibit 4.1.1 Spokane Valley, Washington ............................................ 276
+Exhibit 4.1.2 Goals and Objectives ........................................................ 277
+Exhibit 4.1.3 Detailed Assessment of Needs .......................................... 278
+Exhibit 4.1.4 Recommended ITS System Components.......................... 279
+Exhibit 4.1.5 Detailed Cost Estimates for the Identified Projects........... 281
+Exhibit 4.1.6 The City’s Physical Architecture Subsystems, and Related
+
+  Equipment Packages ......................................................................... 282
+Exhibit 4.4.1 Government’s Long-term Goal and Contribution of ITS.... 307
+Exhibit 4.4.2 Role of New Zealand Transport Agency in ITS
+
+  Development ..................................................................................... 308
+Exhibit 4.5.1 BRTS Network in Ahmedabad ......................................... 316
+Exhibit 4.5.2 PPP Responsibility Matrix ................................................ 317
+Exhibit 4.5.3 Budget Details: Ahmedabad BRTS .................................. 318
+  LIST OF FIGURES
+
+Figure 2.2.1 Big Data, IoT and Cloud Computing ................................... 52
+Figure 2.2.2 ITS Traffic Flow Model ....................................................... 55
+Figure 2.2.3 Big Data Architecture for ITS .............................................. 60
+Figure 2.2.4 Hadoop and Spark Ecosystem .............................................. 62
+Figure 2.2.5 Framework of Apache Spark Using Hadoop Database ........ 63
+Figure 2.6.1 Value Proposition for ITS .................................................... 96
+Figure 3.3.1 Relationships between Framework, Regional Architecture,
+
+  ITS Standards, Projects ..................................................................... 146
+Figure 3.3.2 Process of Creating ITS Architecture................................. 147
+Figure 3.3.3 Architecture Overview ....................................................... 151
+Figure 3.3.4 Illustration: ITS Architecture Relationship ........................ 153
+Figure 3.3.5 Systems Engineering Vee Diagram for ITS Projects ......... 155
+Figure 3.3.6 Customized Service Package for New York City RTPIS
+
+  Program............................................................................................. 158
+Figure 3.9.1 Concept of Connected Vehicles ......................................... 221
+Figure 3.9.2 Illustration of V2X ............................................................. 226
+Figure 3.9.3 Illustration of a CV-technology-equipped Vehicle ............ 228
+Figure 3.9.4 Location of Three Pilot Test Sites across the United
+
+  States................................................................................................. 231
+Figure 3.9.5 Timeline and Phases of Project Development .................... 232
+Figure 3.9.6 NYCDOT Deployment ...................................................... 234
+Figure 4.2 1 A Singapore ERP Gantry ................................................... 289
+Figure 4.2.2 On-Board Unit (OBU) Fixed inside a Car.......................... 289
+Figure 4.7.1 EV Sales Penetration Trend (2020-2030)........................... 336
+Figure 4.7.2 The EV Value Chain and Ecosystem in India .................... 341
+Figure 4.8.1 A MaaS Schematic ............................................................. 350
+Figure 4.8.2 MaaS Topologies: With and Without Bundling ................. 352
+Figure 4.8.3 Sydney Trail Timeline........................................................ 362
+Figure 4.8.4 Plans Provided by CRC Consortium .................................. 363
+Figure 4.8.5 Interaction of Key Players within MaaS Ecosystem .......... 366
+Figure 4.8.6 MaaS Governance Models ................................................. 368
+Figure 4.8.7 MaaS Regulation Framework: A Schematic ...................... 374
+Figure 4.8.8 Key Contribution at Each Level of MaaS .......................... 376
+  LIST OF TABLES
+
+Table 1.1.1 Countries and ITS Implementation.......................................... 3
+Table 1.1.2 Inherent Challenges Present in the Indian Transportation
+
+  System................................................................................................. 12
+Table 1.1.3 Reasons for the Inapplicability of Various ITS Techniques
+
+  in the Indian Context........................................................................... 12
+Table 1.2.1 Key Requirements of a Sustainable Transport System .......... 18
+Table 2.2.1 Big Data Source and ITS Characteristics .............................. 57
+Table 2.2.2 Big Data Approaches and ITS Applications .......................... 58
+Table 2.2.3 Comparison of Hadoop and Spark Features .......................... 64
+Table 2.6.1 Projects and Funding Sources................................................ 94
+Table 2.6.2 Benefits of Traveler Information ........................................... 99
+Table 2.6.3 Benefits of Traffic Control and Management ...................... 100
+Table 2.6.4 Benefits of Public Traffic Management............................... 101
+Table 2.6.5 Benefits of Enforcement ...................................................... 102
+Table 3.2.1 Goals and Objectives of the Proposed Congestion
+
+  Management Plan ............................................................................. 136
+Table 3.5.1 Approved Market Packages................................................. 173
+Table 3.5.2 List of Projects Recommended for Implementation
+
+  in Kentucky....................................................................................... 174
+Table 3.9.1 SAE Levels and Connected Vehicles .................................. 222
+Table 3.9.2 Advanced Driver Assistance Systems (ADAS)
+
+  and Automated Driving Functions .................................................... 224
+Table 3.9.3 Applications Deployed on the NYC Vehicles ..................... 235
+Table 3.9.4 Applications Deployed on the Tampa, FL, Vehicles ........... 238
+Table 3.9.5 Applications Deployed on the Wyoming Vehicles.............. 245
+Table 3.9.6 Details of a Few ITS Projects under C-ITS Initiative Post
+
+  2015 in Europe.................................................................................. 253
+Table 4.2.1 Different Road Pricing Types .............................................. 286
+Table 4.2.2 Fee Collection Methods....................................................... 287
+Table 4.6.1 ITS Security and Privacy Issues .......................................... 320
+Table 4.6.2 Security Attacks, Classification, Countermeasures,
+
+  and Advantages................................................................................. 327
+Table 4.7.1 List of Cities in the EVI Global EV Pilot City Program...... 332
+Table 4.7.2 FAME II Incentives—Investment Rollout Plan
+
+  (FY20 to FY22) ................................................................................ 335
+Intelligent Transportation Systems: Concepts and Cases  xiii
+
+Table 4.7.3 Status of E-Vehicles’ Adoption in the Indian States ........... 337
+Table 4.7.4 Challenges in E-Vehicles’ Adoption in India ...................... 342
+Table 4.7.5 Smart Charging Systems ..................................................... 344
+Table 4.8.1 Information and Service Availability in the MaaS
+
+  Platform ............................................................................................ 354
+Table 4.8.2 Routing Data by Transport Services Integrated in a MaaS
+
+  Platform ............................................................................................ 355
+Table 4.8.3 Booking Processes and Data in the MaaS Platform............. 355
+Table 4.8.4 Worldwide MaaS Service Providers.................................... 357
+Table 4.8.5 Whim Subscription Packages .............................................. 359
+  PREFACE
+
+Intelligent transportation systems (ITS) are sometimes referred to as smart
+transportation. In recent times, this is one of the most intriguing topics, and
+is equally discussed by academics, practitioners, and policy makers.
+Academia finds it interesting because the field is emerging and there is good
+scope for advanced technology and research. Practitioners find it interesting
+because there is a strong belief that the field has enough potential to enhance
+productivity and, thereby, improve profitability. Policy makers find it
+interesting because most ITS are based on emerging technologies and
+innovative models that can help achieve national goals and priorities, if well
+utilized.
+
+However, it is worthwhile to realize that there is a huge gap between the
+technology-driven research, practice, and policy facets of ITS. Most of the
+available texts and literature on ITS focus on these facets in silos, neglecting
+the interdependencies of each other; understandably so, as each of these
+facets is held by stakeholders that may not have a comprehensive
+perspective and purview of ITS. An academic, or a research, organization
+works only on the prospects of advanced technologies, with little consideration
+of implementation challenges and policy directives. A corporation, or a
+practitioner, focuses more on productivity and commercial gains for the
+organization rather than the wholesome goals that the state may aim for.
+Governments, as stakeholders, are concerned about framing policies that
+address equity, sustainability, and national development; their reliance on
+the research and corporate world is high and, in turn, the policies framed by
+the governments impact what research and practice can deliver and
+contribute to the state goals.
+
+Through various chapters in this text, it is argued that ITS are demonstrations
+of Industry 4.0 standards in the transportation service sector. Management
+philosophers have popularly termed the industrial revolution as four phases
+of milestone development and growth. The current stage is Industry 4.0,
+where systems productivity is enhanced through information and
+communications technology (ICT) and the internet of things (IoT). In that
+context, there are discussions on scope and possibilities through advanced
+technologies in the transportation sector.
+Intelligent Transportation Systems: Concepts and Cases  xv
+
+ICT enables communication between three entities—vehicle, infrastructure,
+and systems—in any transportation domain. It helps in informed decision
+making for all the stakeholders. The socioeconomic development of a
+country is directly dependent on the transportation system. Typically, most
+discussions on ITS provide a systemic perspective that covers the following:
+
+1. Advanced Traffic Management Systems (ATMS)
+2. Advanced Traveler Information Systems (ATIS)
+3. Advanced Vehicle Control Systems (AVCS)
+4. Commercial Vehicle Operations (CVO)
+5. Advanced Public Transportation Systems (APTS)
+6. Advanced Rural Transportation Systems (ARTS)
+
+This book focuses on the synergies of all three facets of ITS, based on the
+managerial and business perspectives of ITS. The coverage is comprehensive
+and relevant to all types of stakeholders of ITS.
+
+1. Financial viability of the project
+2. Social aspect of the project (technically safe and secure systems)
+3. Policy making aspects
+
+The essence of the text deals with the application of technology in a local
+context. The focus will be on the feasibility of these technologies in different
+cities. For instance, a particular technology can be applicable in Mumbai
+but not in Patna.
+
+  Challenges of ITS
+
+ITS require people who are highly skilled in areas such as finance,
+engineering, securities, data science, etc. How people engage together
+makes it interesting. Another aspect to ponder is the need for a particular
+technology. Do we really need to have intelligent systems? Resoundingly,
+yes. Intelligent systems are safer and have fewer emissions. They also help
+in reducing congestion in the system.
+
+One of the main areas of study will be that of congestion; in this textbook,
+congestion is analyzed from a supply–demand perspective. Why are cities
+congested? Demands for better mobility choice have consistently increased
+around the globe but resources have not kept up the pace with the growing
+demand. Reasons vary from poor urban planning, poor infrastructure, and
+lack of pace in developing infrastructure to meet the current and future
+xvi  Preface
+
+demands. The bottom line is that the civil infrastructure is unable to meet
+and keep up with the pace in which mobility demands increase.
+
+What can the government do to reduce congestion? By and large, the onus
+of providing good mobility solutions lies with the state authorities. Despite
+the governance and administrative constructs in different nations,
+challenges on the ground are real and large; however, urban congestion and
+reasonable mobility service in sparsely populated regions are common
+across the globe. Approaches to tackle the situation might be different and
+should be relevant to the context. A long term and sustainable solution lies
+with better urban planning designs, such as a hyper-local model. Not every
+city has been able to develop such urban designs, as city growth in many
+developed cities is organic and driven by various forces. Shared mobility
+systems, inducing behavior changes, and e-commerce are driving the urban
+mobility systems in completely different trajectories. State-level policies
+attempt to regulate such developments and enforce laws that help enhance
+trust and security in systems. State-level decisions happen at multiple levels:
+policy, strategic, tactical, operational, and real-time.
+
+What kind of considerations go into decision making? The cost of
+congestion, time taken to build infrastructure, cost of building infrastructure,
+streamlined integration of existing infrastructure with newer developments
+(Greenfield Project vs Brownfield Project), safety and security of assets,
+and people are primary considerations in state decisions. There are other
+objectives, too, such as growth and planning of industries, and socioeconomic
+needs, that contribute to ITS development. Most decisions involve a long-
+term vision and national priorities dictated by governance structures. ITS
+are considered to address and resolve issues that arise in real time in a
+dynamic environment, which is very distinct from civil infrastructure-based
+transportation systems. Hence, ITS begin where civil infrastructure fails.
+
+  ITS: The Elephant in the Room
+
+While transportation-related challenges are prevalent across the globe,
+solutions are poorly planned and implemented—the elephant is in the room.
+However, since ITS are multidisciplinary, the scope and possibilities of
+what ITS can offer to alleviate transportation challenges are understood
+independently rather than holistically. This is metaphorically paralleled
+with blind men trying to identify an elephant by touching and feeling the
+animal. Professionals, based on their own expertise, perceive and classify
+ITS under their own domains: i) civil engineers understand ITS as
+construction, ii) computer science graduates ascertain ITS as a software-
+Intelligent Transportation Systems: Concepts and Cases  xvii
+
+based solution for transportation, iii) transportation engineers consider ITS
+as a vehicular technology, iv) legal professionals see ITS as a matter of the
+law, v) HR and OB professionals perceive ITS from a people–behavior
+perspective, vi) business management professionals look at the finance and
+management aspects of ITS, vii) operations research professionals handle
+ITS as model development, and viii) policy planners treat ITS as state
+intervention for transportation. None of these is complete and comprehensive,
+but only a partial and narrow view of the larger problem. This is one of the
+fundamental aspects of ITS. To develop meaningful solutions for real-world
+problems, it is necessary for decisionmakers from various backgrounds to
+work together to develop solutions that are contextually relevant and
+adoptable in a local ecosystem.
+
+Are developed nations better off? Unfortunately, no. In fact, developed
+countries are less enterprising in experimenting with novel solutions for
+various reasons. Risk-awareness and stake of safety and security are more
+significant in developed countries. Hence, developing countries are usually
+the proponents of innovative solutions. The usability of a novel system
+cannot be evaluated unless it is deployed in a real-life setting. Developing
+countries are more amenable to experimentation and trials. Therefore, no
+country leads or lags in terms of real ITS that totally resolve all their local
+problems.
+
+This textbook, Intelligent Transport Systems: Concepts and Cases, is
+organized into four modules; multiple chapters are included in each module,
+with each chapter focused on a specific theme with illustrated cases from
+across the globe. The first module is on ITS trends, challenges, and
+opportunities; an overview of ITS is presented, followed by the challenges
+in ITS development, the purpose of ITS deployment, and a final chapter on
+determinants of ITS. The second module covers the anatomy and
+framework of ITS development; the role of ICT, big data processing,
+storage, and analytics are discussed in this module. A framework for ITS
+development—comprising operations, technology, policy, business, and
+innovation—is also presented. Each topic is substantiated with brief real-
+life illustrations. The third module is on integrating requirements—
+planning, design, and development; here, most of the operational
+challenges, and scope for addressing these challenges using innovative
+technologies and models, are covered. The chapters in this module are ITS
+technology elements, building blocks, system design, capacity planning,
+operations planning, maintenance and control, signaling and priority,
+project management, fleet and commercial vehicle operations, safety, and
+security. The last module presents the business and policy perspectives of
+xviii  Preface
+
+ITS: strategic business planning, pricing and revenue management,
+sustainability of ITS operations, role of state and regulatory bodies, PPPs in
+ITS development, e-vehicles and their impacts, and emerging trends.
+
+This book is an outcome of my personal academic experience in understanding
+and teaching the topic to various cohorts of students. I have known and
+learnt a lot from my audience; much more than what I, personally, was able
+to teach my students. Several academic projects done by my students, over
+the years, have enriched my knowledge with newer aspects. Priyanshu Raj,
+Lavanya Chintagunta, Harsh Gupta, and Arpit Kanv supported me with
+background research. Harshad Parmar, IIM Ahmedabad handles all my
+administrative tasks and I count on his support, as ever. Meenakshi read the
+first draft and helped me with the first round of proof reading and several
+suggestions to improve the language flow. Ms Lorna Pierce did the
+cumbersome task of a final professional editing and proofreading the full
+text; my gratitude to both of them. Adam Rummens was an excellent
+support from the publishing team, and it was a pleasure to interact with him.
+The Research and Publications division of my employer, the Indian Institute
+of Management Ahmedabad, provided some funding support for this work.
+I am immensely thankful to all.
+
+I owe a lot to my family, my parents, two most beautiful daughters, husband,
+and my brother who have stood by me through thick and thin. They are very
+precious to me, and I am extremely grateful to have them in my life. My
+students are the constant source of my energy in my professional space. I
+am also thankful to them.
+  MODULE 1
+TRENDS, CHALLENGES AND OPPORTUNITIES
+  CHAPTER 1.1
+
+  ITS: AN OVERVIEW AND CHALLENGES
+
+  Introduction
+
+Efficiency and safety of transport systems in developed economies have
+long leveraged the potential of information and communication technology
+(ICT). Developing economies often lack a good quality transport
+infrastructure that can i) support the deployment of intelligent transportation
+systems (ITS), and ii) harness the full potential of advancements of ICT
+applications. Fast-paced deployment of ITS in developing countries is
+largely influenced by the socioeconomic and environmental safety
+requirements. Developed nations, like the United States, Japan, and regions
+like Europe, had created a well-established network of transport
+infrastructure by the 1990s and are, since, implementing ITS to further
+improve the network’s efficiency and safety. Today, such countries have
+reached the real-world trial and implementation of advanced ITS
+applications. Interestingly, traffic congestion continues to plague these
+countries, mainly due to ever-growing mobility demands and the inability
+of the civil traffic infrastructure to cater to the increasing demands; despite
+the availability of technologically advanced transport systems solutions,
+rigid government policies and norms reduce the implementation pace.
+Developing countries stand at an advantage of procuring advanced traffic
+and ITS technologies from them, in addition to gaining a better clarity of
+the pros and cons of such advanced technologies. However, the fundamental
+challenge is to create design transformations of the systems to suit the
+contextual relevance and functional requirements that are locally unique.
+There are fundamental geographical, technological, practical, and cultural
+factors that make the exact replication of western ITS standards and system
+architectural practice difficult for developing nations, including India and
+China.
+
+For instance,
+Overview and Challenges  3
+
+භ uncoordinated spatial and infrastructural development
+භ diversity in the types of vehicles and range of vehicular velocities
+
+  (pedestrian, bicycle, LMVs, HMVs, animal carts, etc.)
+
+භ lack of lane discipline, mostly due to contrast in cultural practices
+භ high population density
+භ insufficient legislations, weak enforcement of rules and regulations
+
+Table 1.1.1 represents an overview of a study that presents the number of
+countries that are grouped region-wise and the percentage implementation
+of ITS applications in those countries, based on the International Monetary
+Fund report of 2018.
+
+  Developing countries  Number of  Percentage of ITS
+  (regional groups)  countries  applications
+  35 %
+ Middle East (including  15
+  Egypt)  27 %
+  19
+Emerging and developing  19 %
+  Asia  10  12 %
+  17  8 %
+ Developing countries in  6  7.5 %
+  Europe  48
+
+  Latin America
+North Africa (excluding
+
+  Egypt)
+  Sub-Saharan Africa
+
+Table 1.1.1: Countries and ITS Implementation
+Source: El Mokaddem, Jawab and Saad (2019)
+
+  Types of Challenges
+
+ITS implementation in developing nations is very complex. Some
+challenges are consistent while others are unique to a country or region. The
+characteristics and prospects of ITS services and applications are distinct
+from those of conventional transport applications. These challenges are
+often based on the prerequisites for the deployment of the subsystem. Some
+challenges are technical in nature, due to the inherent characteristics of the
+ITS subsystem; some are contextual to a region and others may be
+application specific. For instance, whole ITS systems usually have high
+budget requirements while certain subsystems, like automatic vehicle
+identification (AVI) and automatic vehicle location (AVL), are not only
+capital intensive but also require public endorsement. Furthermore, it is also
+4  Chapter 1.1
+
+essential that each subsystem complements the other. A good example
+would be the use of CCTV. Despite the lack of legal regulations and
+discipline, CCTV-based video capturing can be deployed for data collection
+for motorized traffic on a road. In developing countries, there is a lot of
+unorganized traffic penetration, which is cumbersome to track and regulate.
+In other words, ITS development challenges are technical, managerial,
+financial, legal, social, and political; this makes ITS studies engaging and
+meaningful for researchers and practitioners to use to develop pragmatic
+systems and solutions. Technical barriers can be classified as inadequate
+knowledge about i) artificial intelligence (AI) operations, ii) capabilities of
+big data storage, analysis, and techniques, and iii) the absence of standards
+and protocols that support interoperability to complement effective and
+streamlined transport network operations. Non-technical barriers relate to
+the sociopolitical and legal aspects, such as poor enforcement of rules and
+regulations, and weak governance mechanisms.
+
+The overall challenges of ITS in developing nations can be broadly
+classified into the following categories:
+
+1. Lack of Legal Structures, Regulatory, and Governance Mechanisms
+
+One of the most fundamental requirements and characteristics of ITS is data
+collection, access, and analysis. Additionally, data collection and processing
+are required to be real-time and secure for all stakeholders. It is imperative
+to establish data regulation policy and governance structures that ensure
+transparency in user data collection and sharing. Most developing countries
+lack a regional-level framework, such as the General Data Protection
+Regulation (GDPR) in the European Union, or a state-level framework, like
+the City of Los Angeles Department of Transportation’s (LADOT’s)
+Mobility Data Specification (MDS), to create a favorable environment for
+ITS deployment.
+
+2. Lack of Institutional Will
+
+Public transport authorities play a crucial role in the deployment and
+maintenance of ITS. There is a need to create a synergy between the public
+and private sectors, which, in turn, requires the restructuring of the
+institutional framework and ensures the overall capacity building for the
+operation and management of ITS. Setting up of a unified transport
+authority at a state level and developing a national ITS data repository can
+help mitigate implementation delays and eliminate the multiplicity of
+decision-making agencies at various levels.
+Overview and Challenges  5
+
+3. Inadequate Infrastructure and High Implementation Cost
+
+ITS are considered technology-driven systems that can enhance transport
+network efficiency through informed decision making by various
+stakeholders for the optimal utilization of the existing infrastructure.
+Developing nations have a weakly coordinated spatial and infrastructural
+development, resulting in poor traffic services. Apart from transport
+network infrastructure, ICT infrastructure, like data storage units, enhanced
+wireless networks, etc., should also be well established to ensure efficient
+operations. Huge funds might be required to design, develop, deploy, and
+operate ITS.
+
+4. ITS Technology Readiness and Maturity
+
+It is very crucial to understand that regional context impacts the
+specifications of the deployed ITS. Any outsourced technology/component
+needs to be calibrated and customized to match the local setting.
+Homogeneity of the deployed components is also essential to avoid issues
+related to system nonconformity and interoperability with the existing
+systems. As ITS include multiple stakeholders and technologies from
+various sectors, like the automobile industry, transport agency, equipment
+manufacturers, etc., the interpretation of ITS differs for each stakeholder;
+interfacing among the many ITS subsystems can be a huge challenge.
+
+5. User Behavior and Transport Professionals’ Awareness
+
+User acceptance plays a crucial role to ensure proper trust and collaboration.
+It is essential to ensure knowledge sharing, with respect to new ITS
+technologies and initiatives, among different stakeholders. Most of the
+drivers in the public transport sector or logistics sector are not matured;
+there is a huge gap in education, training, and skill development for
+operating ITS equipment onboard and on transport practices. It is also
+essential for transport sector professionals to remain aware of regional
+characteristics—like the challenges faced due to the presence of informal
+transportation—before implementing best practices from other countries.
+
+  Indian Context and the Current State of ITS in India
+
+The growth rate is one of the highest in the world, when compared to other
+cities in the developing world. The high rate of urbanization results in high
+daily demands for citizen mobility for their occupational requirements,
+which results in a high number of private vehicles in urban areas throughout
+6  Chapter 1.1
+
+the country, owing to a subpar public transport system. With the increase in
+per capita GDP, there has been a significant rise in the income levels of
+people, which results in high vehicular traffic and demand for better
+transport infrastructure. Apart from all these, the high amount of rural to
+urban migration also plays a prominent role in vehicular demand increase
+and, thus, the transportation infrastructure. Indian urban areas are not
+equipped enough to sustain the escalating number of vehicles and, as a
+result, many cities face heavy traffic congestion. This has become a
+universal problem that needs to be addressed by policy makers and urban
+authorities.
+
+As per the Government of India data, the transportation sector is a major
+contributor to the GDP. Currently, its share is around 6.7 %, which is
+expected to reach around 12 % in 2026 (Rawal 2015). It would be one of
+the biggest employment-providing sectors. As per the World Bank data,
+currently, around 32 % of the population resides in urban areas, which is
+expected to grow to 40 % by 2030. There will also be a contribution of
+around 75 % of the GDP by the urban population. Over the past few
+decades, India has experienced an enormous growth in vehicular traffic, as
+the number of registered vehicles has surged from 0.3 million, in 1951, to
+142 million, in 2011, with a CAGR of 9.9 %, between 2001 and 2011
+(Rawal 2015). Monetary damages suffered due to congestion and poor roads
+are as high as $6 billion a year in India (World Bank).
+
+The main reason behind traffic congestion in India is the fact that road
+capacity and other transport infrastructure have not kept pace with
+increasing demands and vehicular traffic. Traffic-related challenges in a
+developing country, such as India, are mainly due to i) failure of civil
+infrastructure development, proportionate with growing demands, and ii)
+lack of regulation.
+
+Successful application of ITS can help achieve an efficient, effective,
+satisfactory, and sustainable multi-modal transport system that will
+integrate vehicles and management systems through well-established
+technologies. The purpose behind the deployment of ITS projects in India
+is to i) provide multiple choices for mobility, and ii) analyze and integrate
+new emerging technologies to achieve sustainable, reliable, affordable, and
+efficient transportation that provides public safety and conserves time and
+energy.
+
+The Indian government has invested about €1.6 million (§ $1.6 million) to
+implement ITS, which resulted in improved traffic regulations, a reduction
+

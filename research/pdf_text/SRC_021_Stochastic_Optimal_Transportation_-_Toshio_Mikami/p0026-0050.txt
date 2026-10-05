@@ -1,0 +1,1266 @@
+1.4 Schrödinger’s Problem  15
+
+  E. Schrödinger obtained the so-called Schrödinger’s Func. Eqn. by the contin-
+uum limit of Euler’s equation to (1.38). We state it in a more general setting.
+
+Deﬁnition 1.4 (Schrödinger’s Func. Eqn.) Let S be a topological space and q
+be a positive continuous function on S × S. For μ1, μ2 ∈ P(S), ﬁnd a product
+
+measure ν1(dx1)ν2(dx2) of nonnegative σ -ﬁnite Borel measures on S for which the
+
+following holds:
+
+  ⎧
+  ⎪⎪⎪⎪⎨μ1(dx1) = ν1(dx1) q(x1, x2)ν2(dx2), S
+
+  ⎪⎪⎪  (1.41)
+  ⎪⎩μ2(dx2) = ν2(dx2)
+  q(x1, x2)ν1(dx1).
+
+  S
+
+Remark 1.3 Equation (1.41) is equivalent to the following:
+
+⎧  −1
+⎪⎪⎪⎪⎪⎨μ1(dx1) = ν1(dx1) q(x1, x2) S
+  q(x, x2)ν1(dx)  μ2 (d x2 ),
+
+  S
+
+⎪⎪⎪  (1.42)
+⎪⎪⎩ν2(dx2) =
+  −1
+
+  q(x, x2)ν1(dx)  μ2 (d x2 ).
+
+  S
+
+If one ﬁnds a solution ν1 in the ﬁrst equation of (1.42) and deﬁnes ν2 by the
+second, then ν1(dx1)ν2(dx2) satisﬁes (1.41). In particular, one does not have to
+solve a system of equations, but only one (see Deﬁnition 3.7 and Proposition 3.6
+in Sect. 3.2.1). The ﬁrst equation of (1.42) can be also considered the SOT version
+of the Monge–Ampère equation (1.33) in the OT (see Remark 2.10 in Sect. 2.3).
+Schrödinger’s Func. Eqn. is also called the Schrödinger system, which also means
+a system of Schrödinger’s equations in the PDE context. To avoid confusion, we
+use the terminology “Schrödinger’s Func. Eqn.” which was introduced to us by a
+mathematical physicist more than 30 years ago.
+
+  S. Bernstein generalized Schrödinger’s idea and introduced the so-called Bern-
+stein process which is also called a reciprocal process (see, e.g. [12, 79]).
+
+Deﬁnition 1.5 (Bernstein Process) An Rd -valued stochastic process {X(t)}0≤t≤1
+deﬁned on a probability space ( , F , P ) is called a Bernstein process or a
+reciprocal process if the following holds: for s, t, u such that 0 ≤ s < t < u ≤ 1,
+
+P (X(t) ∈ dx|X(v), v ∈ [0, s] ∪ [u, 1]) = P (X(t) ∈ dx|X(s), X(u)). (1.43)
+
+B. Jamison gave a characterization of a reciprocal process (see [79]).
+16  1 Introduction
+
+Theorem 1.1 Let p(s, x; t, y) be a positive transition probability density of a
+
+Markov process, 0 ≤ s < t ≤ 1, x, y ∈ Rd . For any μ ∈ P(Rd × Rd ), the
+Bernstein process {X(t)}0≤t≤1 which satisﬁes the following exists and is unique:
+for s, t, u such that 0 ≤ s < t < u ≤ 1,
+
+  P (X(t) ∈ dx|X(s), X(u)) = p(s, X(s); t, x)p(t, x; u, X(u)) dx,  (1.44)
+  p(s, X(s); u, X(u))
+
+  P (X(0),X(1)) = μ.
+
+In particular, {X(t)}0≤t≤1is Markovian, i.e., for s, t such that 0 ≤ s < t ≤ 1,
+
+  P (X(t) ∈ dx|X(v), v ∈ [0, s]) = P (X(t) ∈ dx|X(s))  (1.45)
+
+if and only if there exist σ -ﬁnite measures ν0, ν1 such that the following holds:
+
+  μ(dxdy) = ν0(dx)p(0, x; 1, y)ν1(dy).  (1.46)
+
+  R. Fortet gave the ﬁrst result for Schrödinger’s Func. Eqn. (see [63]). A. Beurling
+solved Schrödinger’s Func. Eqn. on a compact topological space (see [13]). B.
+Jamison also solved it on a σ -compact metric space (see [79] and also [36]). The
+theory of the SDE for Schrödinger’s Func. Eqn. was given by B. Jamison (see [80]).
+The solution is Doob’s h-path process (see [49]) with given two endpoint marginals.
+
+  g(t, x) := √ d 1 exp |x| , t > 0, x 2 ∈ Rd .  (1.47)
+  2t
+  2π t
+
+We describe the construction, by Schrödinger’s Func. Eqn., of an h-path process
+for Brownian motion on the time interval [0, 1] with given initial and terminal
+distributions.
+
+Theorem 1.2 (See [80]) Let P0, P1 ∈ P(Rd ). If p(1, x) := P1(dx)/dx exists,
+then there uniquely exists the h-path process {Xh(t)}0≤t≤1 for Brownian motion
+on the time interval [0, 1] with initial and terminal distributions P0 and P1,
+respectively. That is, the following holds weakly:
+
+  dXh(t) = bh(t, Xh(t))dt + dW (t),  0 < t < 1,  (1.48)
+  P Xh(t) = Pt , t = 0, 1.
+
+In particular, the following holds:  (1.49)
+  P (Xh(0),Xh(1))(dxdy) = ν1(dx)g(1, x − y)ν2(dy).
+1.4 Schrödinger’s Problem  17
+
+Here W (·) denotes a d-dimensional Brownian motion (see, e.g. [75]) and
+
+  bh(t, x) := Dx log  g(1 − t, x − y)ν2(dy) ,  (1.50)
+
+  Rd
+
+where νi, i = 1, 2 is a solution to (1.41) with μi+1 = Pi , q = g(1, x − y) and
+Dx := (∂/∂xi )di=1.
+
+Remark 1.4 Equation (1.49) implies that Xh is a Markovian Bernstein process with
+p(s, x; t, y) = g(t − s, y − x). That is, Schrödinger’s Func. Eqn. can be solved
+
+by constructing the h-path process with a given transition probability density of a
+Markov process and with given initial and terminal distributions. P (Xh(0),Xh(1)) is
+absolutely continuous with respect to P0 × P1. Indeed, from (1.41) and (1.49),
+
+P ((Xh(0),Xh(1))(dxdy) = P0(dx)P1(dy)g(1, y − x) exp(−v(1, y) − u(0, x)),
+  (1.51)
+
+where
+
+  u(0, x) : = log  g(1, x − y)ν2(dy) ,  (1.52)
+
+  Rd
+
+  v(1, y) : = log  g(1, x − y)ν1(dx) .
+
+  Rd
+
+  Let {β(t)}0≤t≤1 and {W (t)}0≤t≤1 denote a progressively measurable Rd -valued
+stochastic process and a d-dimensional Wiener process deﬁned on the same com-
+plete ﬁltered probability space, respectively (see, e.g. [61]). Consider the following:
+
+  dXβ (t) = β(t)dt + dW (t),  0 < t < 1,  (1.53)
+  P Xβ (0) = P0.
+
+If q(x, dy) = g(1, y − x)dy in (1.40), then it is known that the following holds:
+
+  V (P0, P1) = inf{H (P Xβ )|P X0 )|P Xβ (t) = Pt , t = 0, 1},  (1.54)
+
+  H (P Xβ |P X0 ) = E  1 1 |β(t)|2dt  (1.55)
+  02
+
+(see [135]). In particular, the minimizer of (1.54) is the h-path process in Theo-
+rem 1.2, provided it is ﬁnite (see [156]). This implies that Schrödinger’s problem is a
+stochastic control problem with ﬁxed initial and terminal distributions in (1.54) and
+that the minimizer solves Schrödinger’s Func. Eqn. We consider a generalization
+of this problem and call it a stochastic optimal transportation problem (SOT for
+short).
+18  1 Introduction
+
+  Suppose that in (1.35), there exist ε > 0, c(i, j ) ≥ 0 such that
+
+gij = gijε =  n1  − c(i, )  −1  1 ≤ i ≤ n0, 1 ≤ j ≤ n1.
+  ε
+  exp  exp − c(i, j ) ,
+  ε
+  =1
+
+Then v(μ, ν) = vε(μ, ν) satisﬁes the following:
+
+  lim εvε(μ, ν)  (1.56)
+  ε→0  ≤ n1,
+  ⎧
+  ⎨ n0 n1
+= min ⎩  n1  n0  = νj , 1 ≤ i  ≤ n0, 1 ≤ j
+  pij c(i, j )
+  pij  = μi , pij
+  i=1 j =1
+  j =1  i=1
+
+  n0 n1  n0
+
+  pk = 1  − μi min{c(i, j )|1 ≤ j ≤ n1}.
+
+  k=1 =1  i=1
+
+This can be considered an example of discrete OTs (see [95, 108, 120]).
+  The discussion above implies that a class of the OTs is the zero-noise limit of
+
+Schrödinger’s problem and its generalizations.
+  In Chap. 2, ﬁrst, we brieﬂy describe the Duality Theorem for the OT. Then
+
+we introduce two classes of the SOTs, with a convex cost function, which are
+the stochastic control problems for semimartingales with given marginals at two
+endpoints and at all times, respectively. The ﬁrst case where two endpoint marginals
+are ﬁxed is a generalization of Schrödinger’s problem. The second case where
+marginals at all times are ﬁxed can be considered a continuum limit of the ﬁrst one
+and can be considered a generalization of Nelson’s problem. Indeed, in Nelson’s
+problem, the coefﬁcient of the ﬁrst-order differential operator in the Fokker–Planck
+equation can be written as Dx ψ(t, x) for some function ψ(t, x). It turned out that
+it is the minimizer of a stochastic control problem in the case where marginals at
+all times are ﬁxed (see [103, Proposition 3.1]). We also give the Duality Theorems
+for the SOTs. In the case where two endpoint marginals are ﬁxed, we show that
+the minimizer of the SOT satisﬁes the forward–backward SDE (FBSDE for short),
+give a sufﬁcient condition for the minimum in the SOT to be ﬁnite, and discuss the
+zero-noise limit of the SOT. In particular, we give the probabilistic proof of Monge’s
+problem with a quadratic cost and the Duality Theorem for the OT. Our proof of the
+Duality Theorems for the SOTs are revised from our originally published papers
+thanks to D. Trevisan’s recent result on the superposition principle (see [150]) and
+will appear in our recent paper [118].
+
+  In Chap. 3, we consider the ﬁniteness, the semiconcavity, and the continuity
+of the minimum in Schrödinger’s problem and the regularity of the solution of
+Schrödinger’s Func. Eqn. We also discuss the construction of stochastic processes
+with given marginal distributions and an application of the OT and the superposition
+principle in [19] to the SOT with a nonconvex cost function in the one-dimensional
+1.4 Schrödinger’s Problem  19
+
+case. Here [19] is a generalization of [150]. We point out that the superposition
+principle can be also considered a class of marginal problems.
+
+  In this monograph, we do not discuss the Knothe–Rosenblatt rearrangement and
+its stochastic analog (see Sect. 1.2).
+Chapter 2
+
+Stochastic Optimal Transportation
+Problem
+
+Abstract We brieﬂy describe the OT and then discuss two classes of the SOTs
+where two endpoint marginal distributions or marginal distributions at all times are
+ﬁxed. In particular, we give the Duality Theorems for the SOTs and a sufﬁcient
+condition for the ﬁniteness of the minimum in the SOT with given initial and
+terminal distributions. We also show that the zero-noise limit of Schrödinger’s
+problem exists and the limit solves Monge’s problem with a quadratic cost and that
+the zero-noise limit of the Duality Theorem for the SOT gives the Duality Theorem
+for the OT.
+
+2.1 Optimal Transportation Problem
+
+In this section, we brieﬂy discuss the OT by Kantorovich’s approach on the state
+space Rd (see, e.g. [130, 152, 153], and the references therein).
+
+  A (P0, P1) := {μ ∈ P(Rd × Rd )|μ1 = P0, μ2 = P1},  (2.1)
+where for μ ∈ P(Rd × Rd )  (2.2)
+
+  μ1(dx) := μ(dx × Rd ), μ2(dy) := μ(Rd × dy).
+
+We recall the OT from Chap. 1 (see (1.28)).
+
+Deﬁnition 2.1 (Optimal Transportation Problem) Let c(·, ·) : Rd × Rd −→
+[0, ∞) be Borel measurable. For P0, P1 ∈ P(Rd ),
+
+T (P0, P1) := inf  c(x, y)μ(dxdy) μ ∈ A (P0, P1) .  (2.3)
+
+  Rd ×Rd
+
+Study when the minimizer of T (P0, P1) exists uniquely and when the support of the
+minimizer is a subset of a graph of a mapping on Rd .
+
+© The Author(s), under exclusive license to Springer Nature Singapore Pte Ltd. 2021  21
+
+T. Mikami, Stochastic Optimal Transportation, SpringerBriefs in Mathematics,
+
+https://doi.org/10.1007/978-981-16-1754-6_2
+22  2 Stochastic Optimal Transportation Problem
+
+Remark 2.1 (i) Since P0 × P1 ∈ A (P0, P1), A (P0, P1) = ∅. (ii) Suppose that
+c(x, y) = |y − x|p for p ≥ 1. Then Wp(P0, P1) := T (P0, P1)1/p deﬁnes a
+metric, on P(Rd ), which is called the Lp-Wasserstein metric/distance. Besides,
+T (Pn, P ) → 0, n → ∞ if and only if Rd |x|pPn(dx) → Rd |x|pP (dx) and
+Pn → P weakly, n → ∞. (iii) In the case where c(x, y) = 1(0,∞)(|y − x|), by
+Strassen’s Theorem or by the Duality Theorem (see Theorem 2.1), T (P0, P1) is a
+total variation distance (see [152]).
+
+  The so-called Duality Theorem for T (·, ·) plays a crucial role in the study of the
+OT. Suppose that c(·, ·) ∈ C(Rd × Rd ; [0, ∞)). For f ∈ C(Rd ),
+
+  T ∗f (x) := sup{f (y) − c(x, y)|y ∈ Rd }.  (2.4)
+
+Since the mapping P → T (P0, P ) is convex and is lower semicontinuous in a weak
+topology, and since the dual space of the space of all ﬁnite signed Borel measures on
+Rd with a weak topology is Cb(Rd ) (see [48], Theorem 2.2.15 and Lemma 3.2.3),
+the following holds (see [67, 85, 130, 152]).
+
+Theorem 2.1 (Duality Theorem) Suppose that c(·, ·) ∈ C(Rd ×Rd ; [0, ∞)). Then
+for any P0 ∈ P(Rd ) for which T (P0, ·) is not identically equal to inﬁnity and for
+any P1 ∈ P(Rd ),
+
+  T (P0, P1) = sup  f (x)P1(dx) − T ∗f (x)P0(dx) f ∈ Cb(Rd )  (2.5)
+
+  Rd  Rd
+
+  = sup  ϕ(1, x)P1(dx) − ϕ(0, x)P0(dx)
+
+  Rd  Rd
+
+  ϕ(1, y) − ϕ(0, x) ≤ c(x, y), ϕ(t, ·) ∈ Cb(Rd ), t = 0, 1 .
+
+  We brieﬂy explain how Theorem 2.1 gives the solution of the OT. The set
+A (P0, P1) is compact in the weak topology since
+
+  μ(A × B) ≤ min(P0(A), P1(B)), μ ∈ A (P0, P1), A, B ∈ B(Rd ).
+
+Since μ → Rd×Rd c(x, y)μ(dxdy) is lower semicontinuous in the weak topology,
+one can easily prove the existence of a minimizer μo of T (P0, P1), provided that
+
+T (P0, P1) is ﬁnite. By the theory of C. Smith and M. Knott (see [145]) on the
+
+generalization of the notion of the subdifferential of a convex function, there exists
+a maximizer ϕ(t, ·) ∈ L1(Pt ), t = 0, 1 in Theorem 2.1. In particular,
+
+  ϕ(1, y) = ϕ(0, x) + c(x, y) = min (ϕ(0, z) + c(z, y)), μo–a.s.,  (2.6)
+  z∈Rd
+2.1 Optimal Transportation Problem  23
+
+since
+
+  ϕ(1, y) − ϕ(0, x) ≤ c(x, y),  x, y ∈ Rd ,
+  ϕ(1, y) − ϕ(0, x) = c(x, y),  μo–a.s..
+
+If c is partially differentiable in x, then for (x, y) ∈ supp(μo) and x˜ ∈ supp(P0),
+there exists θ ∈ (0, 1) such that
+
+ϕ(0, x) − ϕ(0, x˜) ≤ c(x˜, y) − c(x, y) = Dx c(x + θ (x˜ − x), y), x˜ − x ,
+
+by the mean value theorem, where ·, · denote the inner product in Rd . In particular,
+if Dx c is locally bounded, then ϕ(0, x) is locally Lipschitz continuous and is
+differentiable dx–a.e. in supp(P0). If c(x, y) and ϕ(0, x) are differentiable in x,
+then
+
+  Dx ϕ(0, x) + Dx c(x, y) = 0 μo–a.s..
+
+In addition, if y → Dx c(x, y) is invertible for x ∈ supp(P0), then
+  y = Dxc(x, ·)−1(−Dxϕ(0, x)), μo − a.s..
+
+We recall Monge’s problem from Chap. 1 (see (1.27)): for P0, P1 ∈ P(Rd ),
+
+  TM (P0, P1) := inf  c(x, ψ(x))P0(dx) P0ψ−1 = P1 .  (2.7)
+
+  Rd
+
+We refer readers to [67] for the following.
+
+Theorem 2.2 Suppose that c(x, y) = L(y − x) and that L : Rd −→ [0, ∞) is
+strictly convex, smooth, L(u) = L(v) if |u| = |v| and L(u) |u| → ∞, |u| → ∞. Then
+for any P0, P1 ∈ P(Rd ) for which P0(dx) dx and T (P0, P1) is ﬁnite, there
+exists a locally Lipschitz continuous function ϕ such that P0(dx)δx+DH (Dϕ(x))(dy)
+is the unique minimizer of T (P0, P1), where
+
+  H (z) := sup{ z, u − L(u)|u ∈ Rd }.  (2.8)
+
+In particular, x + DH (Dϕ(x)) is the unique minimizer of TM (P0, P1).
+
+Remark 2.2 (See [55]) Suppose that c(x, y) = L(y − x) and that L : Rd −→
+[0, ∞) is convex. For f ∈ C(Rd ),
+
+  ⎧  y−x
+  ⎪⎨
+ϕ(t, x; f ) := y∈Rd sup f (y) − (1 − t)L 1 − t ,  (t, x) ∈ [0, 1) × Rd ,
+  ⎪⎩ f (x),
+  (t, x) ∈ {1} × Rd .
+  (2.9)
+24  2 Stochastic Optimal Transportation Problem
+
+Then, for (t, x) ∈ [0, 1] × Rd ,
+
+  1  (2.10)
+
+ϕ(t, x; f ) = sup f (x(1)) − L(x˙(s))ds x(·) ∈ AC([t, 1]; Rd ), x(t) = x ,
+
+  t
+
+ϕ(0, x; f ) = T ∗f (x)
+
+(see (2.4) for notation). Suppose that f is uniformly Lipschitz continuous and that
+H (z) |z| → ∞, |z| → ∞. Then the following holds.
+
+(i) If H is smooth, then ϕ(t, x; f ) is uniformly Lipschitz continuous and is the
+  unique weak solution of the following Hamilton–Jacobi equation:
+
+  ∂t ϕ(t, x) + H (Dxϕ(t, x)) = 0, (t, x) ∈ [0, 1) × Rd ,  (2.11)
+  ϕ(1, x) = f (x), x ∈ Rd ,
+
+  where ∂t := ∂/∂t. (2.9) is called the Hopf–Lax formula for the solution of
+  (2.11).
+(ii) If f is bounded, then ϕ(t, x; f ) is bounded, uniformly Lipschitz continuous
+  and is the unique viscosity solution of (2.11) (see, e.g. [42, 55, 89] for viscosity
+  solutions).
+
+  Theorem 2.1 has the following version (see, e.g. [55, 152]).
+
+Corollary 2.1 Suppose that c(x, y) = L(y − x) and that L : Rd −→ [0, ∞) is
+convex. Then for any P0 and P1 ∈ P(Rd ),
+
+  T (P0, P1) = sup  ϕ(1, y)P1(dy) − ϕ(0, x)P0(dx) ,  (2.12)
+
+  Rd  Rd
+
+where the supremum is taken over all bounded continuous viscosity solutions of
+(2.11).
+
+Historical Remark Since there are so many references on the OT, this remark
+might be incomplete. We would like to ask readers to ﬁnd complete references by
+themselves. V. L. Levin proved the Duality Theorem in the case where the state
+space is compact (see [97]). It was generalized by H. G. Kellerer, using a functional
+analytic method, in a more general setting (see [85]). The proof by the minmax
+principle is given in [152] (see [20, 74] for the recent development). In the case
+where c(x, y) → ∞, |y − x| → ∞, the selection lemma that is useful in the
+stochastic optimal control theory gives a simple proof of the Duality Theorem (see
+[110]). In the case where L = |u|2, P0(dx) dx, Y. Brenier (see [21, 22])
+solved the OT (see [108] for a probabilistic alternative proof). W. Gangbo and R.
+J. McCann generalized Y. Brenier’s result, including the case where L = |u|p,
+p > 1 (see [67]). The discussion given below Theorem 2.1 is due to their paper. L.
+C. Evans and W. Gangbo solved the OT in the case where L = |u| and P0 and P1
+2.2 Stochastic Optimal Transportation Problems  25
+
+have mutually disjoint compact supports (see [56]). L. A. Caffarelli, M. Feldman,
+
+and R. J. McCann (see [26]) and N. S. Trudinger and Xu-Jia Wang (see [151])
+independently proved that the minimizer of the OT in the case where L = |u|p,
+p > 1 is convergent as p → 1 and that the limit is a minimizer of the OT in the case
+where L = |u|. A minimizer of the OT is not unique in the case where L = |u| (see
+[46]). If d = 1 and F0(x) := P0((−∞, x]), x ∈ R is continuous, then F1−1(F0(x))
+and F −1 1 (1 − F0(x)) are (unique if p > 1) minimizers of the Monge’s problem in
+the case where L = |u|p and L = −|u|p, p ≥ 1, respectively (see [47, 124, 130]).
+In particular, in the case where d = 1, one can easily show that minimizers obtained
+
+in [26, 56, 151] are P0(dx)δF −1 1 (F0(x))(dy).
+
+2.2 Stochastic Optimal Transportation Problems
+
+In this section, we ﬁrst state two kinds of the SOTs. One is with two ﬁxed endpoint
+marginal distributions, and the other is with a ﬁxed ﬂow of one-time marginals. We
+give the Duality Theorems for them. In particular, we give the characterization of
+the minimizer of the SOT with two endpoint marginals by the FBSDE and construct
+h-path processes with two endpoint marginals by the SOT. We also give, by the
+Duality Theorem, a sufﬁcient condition for the ﬁniteness of the minimum in the
+SOT with two endpoint marginals. Schrödinger’s problem is an important class
+of the SOT with two given endpoint marginals. We show that the zero-noise limit
+of Schrödinger’s problem exists and that the limit solves Monge’s problem with a
+quadratic cost. We also show that the zero-noise limit of the Duality Theorem for
+the SOT with two endpoint marginals gives the Duality Theorem for the OT. The
+result in this section includes our recent result [118].
+
+  We ﬁrst state two kinds of the SOTs.
+  Let σ (t, x) = (σij (t, x))di,j=1, (t, x) ∈ [0, 1] × Rd be a Borel measurable d × d-
+matrix function. Let A denote the set of all Rd -valued, continuous semimartingales
+{X(t)}0≤t≤1 on a (possibly different) complete ﬁltered probability space such that
+there exists a Borel measurable βX : [0, 1] × C([0, 1]; Rd) −→ Rd for which
+
+ (i) ω → βX(t, ω) is B(C([0, t]; Rd ))+-measurable for all t ∈ [0, 1],
+(ii) X(t) = X(0) + 0t βX(s, X)ds + 0t σ (s, X(s))dWX(s), 0 ≤ t ≤ 1,
+(iii)
+
+  1  |βX(t, X)| + |σ (t, X(t))|2 dt < ∞.
+
+E
+
+  0
+
+  Here B(C([0, t]; Rd )), B(C([0, t]; Rd ))+ and WX denote the Borel σ -ﬁeld
+of C([0, t]; Rd ), ∩s>t B(C([0, s]; Rd)), and a d-dimensional Brownian motion,
+respectively (see, e.g. [100]). | · | := ·, · 1/2.
+26  2 Stochastic Optimal Transportation Problem
+
+Remark 2.3 In the deﬁnition of A , in the case where σ (t, x) is nondegenerate, WX
+
+can  be  taken  to  be  an  (FtX )-Brownian  motion,  where  FX  denotes  σ [X(s)  :  0  ≤
+
+  t
+s ≤ t]. Otherwise (ii) means that X(t) − X(0) − 0t βX(s, X)ds is a local martingale
+with a quadratic variational process 0t a(s, X(s))ds, where
+
+  a(t, x) := σ (t, x)σ (t, x)t
+
+and σ (t, x)t denotes the transpose of σ (t, x) (see, e.g. [75] on a representation
+theorem for local martingales).
+
+  Let L : [0, 1] × Rd × Rd −→ [0, ∞) be continuous and Rd  u → L(t, x; u)
+be convex for (t, x) ∈ [0, 1] × Rd .
+
+  The ﬁrst problem of the following can be considered the stochastic optimal
+
+control version of the OT (see [112, 113, 119], and the references therein).
+
+Schrödinger’s problem (1.54)–(1.55) in Sect. 1.4 chooses an optimal X among A
+
+in the case where two endpoint marginals are ﬁxed. The second problem of the
+
+following determines an optimal X among A in the case where marginals at all
+
+times are ﬁxed. It is also the continuum limit of the ﬁrst one (see [113] and the
+
+references therein).
+
+Deﬁnition 2.2 (Stochastic Optimal Transportation Problems (See [113,
+119]))
+
+(1) For P0, P1 ∈ P(Rd ),
+
+  V (P0, P1) :=  inf  E  1  (2.13)
+  X∈A ,
+  P X(t)=Pt ,t =0,1  L(t, X(t); βX(t, X))dt .
+
+  0
+
+(2) For {Pt }0≤t≤1 ⊂ P(Rd ),
+
+  V({Pt }0≤t≤1) :=  inf  E  1  (2.14)
+  X∈A ,
+  P X(t)=Pt ,0≤t ≤1  L(t, X(t); βX(t, X))dt .
+
+  0
+
+Remark 2.4 The sets of stochastic processes over which the inﬁmums are taken
+
+in (2.13)–(2.14) can be empty. If P1 is absolutely continuous with respect to the
+Lebesgue measure and σ satisﬁes a nice condition, then it is not empty in (2.13)
+
+(see [80]). On (2.14), see [28, 29, 31–35, 103, 111, 112, 123, 159]. Indeed, it is
+
+related to Nelson’s problem which constructs a Markov process from the Fokker–
+
+Planck equation (see Sect. 3.2.1). See Lemma 2.1 in Sect. 2.2.2 for the reason why
+the set A is appropriate as the set over which the inﬁmum is taken in our SOTs
+(2.13)–(2.14). The minimizer of V({Pt }0≤t≤1) was considered in [103, 112] (see
+also [107]). If the set over which the inﬁmum is taken is empty, then we set the
+
+inﬁmum to inﬁnity in any inﬁmum of this monograph.
+2.2 Stochastic Optimal Transportation Problems  27
+
+  We introduce problems similar to the above for a ﬂow of marginal distributions
+
+which satisﬁes the Fokker–Planck equation.
+  Let b : [0, 1] × Rd −→ Rd be measurable and {Pt }0≤t≤1 ⊂ P(Rd ). By (a, b) ∈
+
+A({Pt }0≤t≤1), we mean that a, b ∈ L1([0, 1] × Rd , dtPt (dx)) and the following
+holds: for any f ∈ Cb1,2([0, 1] × Rd ) and t ∈ [0, 1],
+
+  Rd  f (t, x)Pt (dx) − f (0, x)P0(dx)  (2.15)
+  Rd  Ps (d x ).
+
+  t  ∂s f (s, x) + 1 a(s, x), Dx2f (s, x) + b(s, x), Dx f (s, x)
+  2
+  = ds
+
+  0  Rd
+
+Here  D2  :=  ∂2/∂xi∂xj i,j=1 d and A, B  :=  i,j d =1 Aij Bij for A =
+
+  x
+
+(  A  ij  )  d  j  =1  ,  B  =  (  Bij  )  d  j  =1  ∈  M(d, R). In the case where a  is ﬁxed, we write
+  i,  i,
+b ∈ A({Pt }0≤t≤1) for simplicity.
+
+Remark 2.5 For {X(t)}0≤t≤1 ∈ A ,
+
+  (bX(t, x) := E[βX(t, X)|(t, X(t) = x)])(t,x)∈[0,1]×Rd ∈ A({P X(t)}0≤t≤1).
+  (2.16)
+
+Indeed, by Itô’s formula (see, e.g. [75]), for any f ∈ Cb1,2([0, 1]×Rd) and t ∈ [0, 1],
+
+  E[f (t, X(t))] − E[f (0, X(0))]  (2.17)
+
+  t 12
+  = E ∂s f (s, X(s)) + a(s, X(s)), Dx f (s, X(s))
+  0  2
+
+  + βX(s, X), Dx f (s, X(s)) ds
+
+  t 12
+  = E ∂s f (s, X(s)) + a(s, X(s)), Dx f (s, X(s))
+  0  2
+
+  + E[βX(s, X)|(s, X(s))], Dx f (s, X(s)) ds.
+
+  1  1
+
+  E |E[βX(t, X)|(t, X(t))]|dt ≤ E |βX(t, X)|dt < ∞.  (2.18)
+
+  0  0
+
+  The following can be considered versions of the SOTs for a ﬂow of marginals
+that satisfy (2.15).
+28  2 Stochastic Optimal Transportation Problem
+
+Deﬁnition 2.3 (SOTs for Marginal Flows (See [113]))
+(1) For P0, P1 ∈ P(Rd ),
+
+  v(P0, P1) :=  inf  L(t, x; b(t, x))dtQt (dx).  (2.19)
+  b∈A({Qt }0≤t≤1), [0,1]×Rd
+  Qt =Pt ,t =0,1
+
+(2) For {Pt }0≤t≤1 ⊂ P(Rd ),
+
+  v({Pt }0≤t≤1) := inf  L(t, x; b(t, x))dtPt (dx).  (2.20)
+  b∈A({Pt }0≤t≤1) [0,1]×Rd
+
+  We introduce relaxed versions of the problems above for marginal measures (see
+[70, 71], and references therein for related topics).
+
+  We write ν(dtdxdu) ∈ A˜ if the following holds. (i) ν ∈ P([0, 1] × Rd × Rd )
+and
+
+  (|a(t, x)| + |u|)ν(dtdxdu) < ∞.  (2.21)
+
+  [0,1]×Rd ×Rd
+
+(ii) ν(dtdxdu) = dtν(t, dxdu), ν(t, dxdu) ∈ P(Rd × Rd ), ν1(t, dx), ν2(t, du) ∈
+P(Rd ), dt–a.e. (see (2.2) for notation) and t → ν1(t, dx) has a weakly continuous
+version ν1,t (dx) ∈ P(Rd ) for which the following holds: for any t ∈ [0, 1] and
+f ∈ Cb1,2([0, 1] × Rd ),
+
+  f (t, x)ν1,t (dx) − f (0, x)ν1,0(dx)  (2.22)
+
+  Rd  Rd
+
+  =  [0,t ]×Rd ×Rd  Ls,x,uf (s, x)ν(dsdxdu).
+
+Here
+
+Ls,x,uf (s, x) := ∂s f (s, x) + 1 a(s, x), Dx2f (s, x) + u, Dx f (s, x) .  (2.23)
+  2
+
+  The following can be considered versions of the SOTs for marginal measures
+which satisfy (2.22).
+
+Deﬁnition 2.4 (SOTs for Marginal Measures (See [113]))
+(1) For P0, P1 ∈ P(Rd ),
+
+  v˜(P0, P1) := inf  L(t, x; u)ν(dtdxdu).  (2.24)
+
+  ν∈A˜,  [0,1]×Rd ×Rd
+  ν1,t =Pt ,t =0,1
+2.2 Stochastic Optimal Transportation Problems  29
+
+(2) For {Pt }0≤t≤1 ⊂ P(Rd ),
+
+v˜({Pt }0≤t≤1) :=  inf  L(t, x; u)ν(dtdxdu).  (2.25)
+  ν∈A˜,
+  ν1,t =Pt ,0≤t ≤1  [0,1]×Rd ×Rd
+
+Remark 2.6 If b ∈ A({Pt }0≤t≤1) and X ∈ A , then dtPt (dx)δb(t,x)(du) ∈
+A˜ and dtP (X(t),βX(t,X))(dxdu) ∈ A˜, respectively (see (2.15) and (2.17)). In
+particular, dtP (X(t),βX(t,X))(dxdu) is the distribution of a [0, 1] × Rd × Rd -valued
+random variable (t, X(t), βX(t, X)). This is why we call (2.24)–(2.25) the SOTs
+for marginal measures (see also Lemma 2.2 given later). One can also identify
+{Pt }0≤t≤1 ⊂ P(Rd ) with dtPt (dx) ∈ P([0, 1] × Rd ) when V, v and v˜ are
+considered (see Theorem 2.6, Proposition 2.2, and also [112]).
+
+  We introduce assumptions and give the relations among and the properties of
+three classes of the optimization problems stated in Deﬁnitions 2.2–2.4 above:
+
+(A.0.0). (i) σij ∈ Cb([0, 1] × Rd ), i, j = 1, · · · , d. (ii) σ is nondegenerate.
+(A.1). (i) L ∈ C([0, 1] × Rd × Rd ; [0, ∞)). (ii) For (t, x) ∈ [0, 1] × Rd , u →
+
+  L(t, x; u) is convex.
+(A.2).
+
+lim inf{L(t, x; u)|(t, x) ∈ [0, 1] × Rd } = ∞.
+|u|→∞  |u|
+
+  The following implies that Deﬁnitions 2.2–2.4 are equivalent in our setting and
+why they are all called stochastic optimal transportation problems. It also plays
+a crucial role in the proof of the convexities and the lower semicontinuities of
+V (P0, P1) and V({Pt }0≤t≤1).
+
+Proposition 2.1 (See [118])
+
+ (i) Suppose that (A.1) holds. Then the following holds:
+
+  V (P0, P1) = v(P0, P1) = v˜(P0, P1), P0, P1 ∈ P(Rd ),  (2.26)
+V({Pt }0≤t≤1) = v({Pt }0≤t≤1) = v˜({Pt }0≤t≤1), {Pt }0≤t≤1 ⊂ P(Rd ).  (2.27)
+
+(ii) Suppose, in addition, that (A.0.0,i) and (A.2) hold. Then there exist minimizers
+  X of V (P0, P1) and Y of V({Pt }0≤t≤1) for which
+
+βX(t, X) = bX(t, X(t)), βY (t, Y ) = bY (t, Y (t)),  (2.28)
+
+provided V (P0, P1) and V({Pt }0≤t≤1) are ﬁnite, respectively.
+30  2 Stochastic Optimal Transportation Problem
+
+(iii) Suppose, in addition, that (A.0.0,ii) holds and that u → L(t, x; u) is strictly
+  convex for (t, x) ∈ [0, 1] × Rd . Then for any minimizers X of V (P0, P1)
+  and Y of V({Pt }0≤t≤1), (2.28) holds and bX and bY in (2.28) are unique
+  on the support of dtP X(t)(dx) and dtP Y (t)(dx), provided V (P0, P1) and
+  V({Pt }0≤t≤1) are ﬁnite, respectively.
+
+  The superposition principle is the construction of a semimartingale from the
+Fokker–Planck equation (2.15). It was originally proposed by E. Nelson in the case
+where the Fokker–Planck equation is satisﬁed by the square of the absolute value
+of the solution to Schrödinger’s equation and was ﬁrst proved by E. Carlen. We call
+the semimartingale the Nelson process (see [125, 126], and also [19, 28, 29, 31–
+35, 59, 103, 105, 111, 112, 123, 150, 159]). In the case where a ≡ 0, it was studied in
+[3, 106, 107]. In the case where the linear operator with the second-order differential
+operator and with the Lévy measure is considered, it was studied in [35, 133].
+
+  We describe Trevisan’s superposition principle and prove Proposition 2.1.
+
+Theorem 2.3 (Trevisan’s Superposition Principle (See [150])) Suppose that
+there exist b : [0, 1] × Rd −→ Rd and {Pt }0≤t≤1 ⊂ P(Rd ) such that
+b ∈ A({Pt }0≤t≤1). Then there exists a semimartingale {X(t)}0≤t≤1 for which
+the following holds:
+
+  t  t  (2.29)
+  (2.30)
+  X(t) = X(0) + b(s, X(s))ds +  σ (s, X(s))dWX(s),
+
+  0  0
+
+  P X(t) = Pt , 0 ≤ t ≤ 1.
+
+Proof of Proposition 2.1 We prove (i). For {X(t)}0≤t≤1 ∈ A , by Jensen’s inequal-
+ity,
+
+  1  1
+
+E L(t, X(t); βX(t, X))dt ≥ E L(t, X(t); bX(t, X(t)))dt .  (2.31)
+
+  0  0
+
+Theorem 2.3 implies the ﬁrst equalities of (2.26)–(2.27) (see Remark 2.5). For ν ∈
+A˜,
+
+  bν(t, x) := uν(t, x, du),  (2.32)
+
+  Rd
+
+where ν(t, x, du) denotes a regular conditional probability of ν given (t, x). Then
+by Jensen’s inequality,
+
+  L(t, x; u)ν(dtdxdu) ≥  1  L(t, x; bν(t, x))ν1,t (dx).
+
+  [0,1]×Rd ×Rd  dt  Rd
+
+  0  (2.33)
+2.2 Stochastic Optimal Transportation Problems  31
+
+bν ∈ A({ν1,t }0≤t≤1) from (2.22). Indeed, by Jensen’s inequality,
+
+[0,1]×Rd  |bν(t, x)|dtν1,t (dx) ≤  [0,1]×Rd ×Rd  |u|ν(dtdxdu) < ∞,
+
+and for any t ∈ [0, 1] and f ∈ Cb1,2([0, 1] × Rd ),
+
+  u, Dx f (s, x) ν(dsdxdu)  (2.34)
+
+  [0,t ]×Rd ×Rd
+
+  t
+
+  = ds bν (s, x), Dx f (s, x) ν1,s (dx).
+  Rd
+  0
+
+This implies the second equalities of (2.26)–(2.27).
+  We prove (ii). Minimizing sequences of v˜ and v˜ are tight from Lemma 2.2 given
+
+later in Sect. 2.2.2. In particular, the limits are minimizers of v˜ and v˜, respectively.
+
+(2.32)–(2.34) and Trevisan’s superposition principle imply (ii).
+
+  We prove (iii). Equation (2.31) implies the ﬁrst part. We prove the uniqueness
+of bX and bY . For b ∈ A({Pt }0≤t≤1), Pt (dx) dx, dt–a.e. from (A.0.0,ii),
+since a, b ∈ L1([0, 1] × Rd , dtPt (dx)) (see [18, p. 1042, Corollary 2.2.2]). For
+{pi(t, x)dx}0≤t≤1 ⊂ P(Rd ), bi ∈ A({pi(t, x)dx}0≤t≤1), i = 0, 1 and λ ∈ [0, 1],
+
+pλ := (1 − λ)p0 + λp1,  bλ := 1(0,∞)(pλ) (1 − λ)p0b0 + λp1b1 .  (2.35)
+  pλ
+
+Then bλ ∈ A({pλ(t, x)dx}0≤t≤1) and
+
+  1  dt L(t, x; bλ(t, x))pλ(t, x)dx
+
+  (2.36)
+
+  0  Rd
+
+  1
+
+≤ (1 − λ) dt L(t, x; b0(t, x))p0(t, x)dx
+  Rd
+  0
+
+  1
+
+  +λ dt L(t, x; b1(t, x))p1(t, x)dx,
+  Rd
+  0
+
+where the equality holds if and only if
+
+b0(t, x) = b1(t, x), dtdx–a.e. on {(t, x) ∈ [0, 1] × Rd |p0(t, x)p1(t, x) > 0},
+
+which completes the proof.
+32  2 Stochastic Optimal Transportation Problem
+
+2.2.1 Duality Theorem and Its Applications
+
+The Duality Theorems for V and V, respectively, imply that V and V are the
+dual problems of a class of ﬁnite horizon stochastic optimal control problems
+(see Theorems 2.4 and 2.6 below). In this section, we describe the results in
+[112, 118, 119], and some generalizations.
+
+  In [119], σ was an identity matrix and we only considered the Duality Theorem
+for V and its application. In [112], we generalized it to the case where σ is not
+an identity (see also [20, 147] and Remark 2.7) and also considered the Duality
+Theorem for V and other additional problems stated later. Our recent result [118]
+by Proposition 2.1 gives simpler proofs of the Duality Theorems under a weaker
+assumption than [112, 119]. Besides, it also gives the Duality Theorems for v and
+v, which was proved separately from V and V in [112].
+
+  We describe additional assumptions, recalling (A.1)–(A.2) given before Proposi-
+tion 2.1. (A.0) below is stronger than (A.0.0,i) given after Deﬁnition 2.4.
+
+(A.0).  σij ∈ C1b ([0, 1] × Rd ), i, j = 1, · · · , d.
+(A.1).  (i) L ∈ C([0, 1] × Rd × Rd ; [0, ∞)). (ii) For (t, x) ∈ [0, 1] × Rd , u →
+
+  L(t, x; u) is convex.
+
+(A.2).
+
+  lim inf{L(t, x; u)|(t, x) ∈ [0, 1] × Rd } = ∞.
+  |u|→∞  |u|
+
+(A.3). (i) ∂L(t, x; u)/∂t and Dx L(t, x; u) are bounded on [0, 1] × Rd × BR for
+  all R > 0, where BR := {x ∈ Rd ||x| ≤ R}. (ii) CL is ﬁnite, where
+
+  CL := sup L(t, x; u) 1 + L(t, y; u) 0 ≤ t ≤ 1, x, y, u ∈ Rd .
+
+  H (t, x; z) := sup{ z, u − L(t, x; u)|u ∈ Rd }.  (2.37)
+
+The following is a generalization of [112, 119] and can be proved by the modiﬁca-
+tion of the idea in [112] due to Proposition 2.1.
+
+Theorem 2.4 (Duality Theorem for V (See [118])) Suppose that (A.0)–(A.3) hold.
+Then, for any P0, P1 ∈ P(Rd ),
+
+  V (P0, P1) = v(P0, P1) = v˜(P0, P1)  (2.38)
+
+  = sup  ϕ(1, x)P1(dx) − ϕ(0, x)P0(dx) ,
+
+  Rd  Rd
+2.2 Stochastic Optimal Transportation Problems  33
+
+where the supremum is taken over all bounded continuous viscosity solutions ϕ to
+the following HJB Eqn.: on [0, 1) × Rd ,
+
+∂t ϕ(t, x) + 1 a(t, x), Dx2ϕ(t, x) + H (t, x; Dxϕ(t, x)) = 0,  (2.39)
+  2
+
+  ϕ(1, ·) ∈ Cb∞(Rd ).
+
+Remark 2.7 In our previous results [112, 119], we assumed the nondegeneracy of a
+and used the Cameron–Martin–Maruyama–Girsanov formula to prove the convexity
+of P → V (P0, P ). We also required the following assumption to prove the lower
+semicontinuity of P → V (P0, P ):
+
+  ΔL(ε1, ε2) := sup L(t, x; u) − L(s, y; u) 1 + L(s, y; u) → 0 as ε1, ε2 ↓ 0,
+
+where the supremum is taken over all (t, x) and (s, y) ∈ [0, 1] × Rd for which
+|t − s| ≤ ε1, |x − y| < ε2 and over all u ∈ Rd . Our recent approach [118] by
+the superposition principle does not require these two conditions. In [147, Lemma
+3.15] (see also section 3.2 in their paper), they used a property on the convex
+combination of probability measures on an enlarged space, which also allowed them
+not to assume the nondegeneracy of a. The approach to the lower-semicontinuity
+of P → V (P0, P ) was the same as our previous results and they used the above
+condition. Though their setting is not the same as ours, their approach is interesting
+and might be generalized to the path space version of our recent approach (see [94]
+for the recent development).
+
+  We deﬁne the viscosity solution to (2.39).
+
+Deﬁnition 2.5 (Viscosity Solution (See, e.g. [42, 89]))
+
+Viscosity Subsolution ϕ ∈ U SC([0, 1]×Rd ) is a viscosity subsolution of (2.39) if
+whenever h ∈ C1,2([0, 1)×Rd ) and ϕ −h takes its maximum at (s, y) ∈ [0, 1)×Rd ,
+
+∂sh(s, y) + 1 a(s, x), Dy2h(s, y) + H (s, y; Dxh(s, y)) ≥ 0.  (2.40)
+  2
+
+Viscosity Supersolution ϕ ∈ LSC([0, 1] × Rd ) is a viscosity supersolution of
+(2.39) if whenever h ∈ C1,2([0, 1) × Rd ) and ϕ − h takes its minimum at (s, y) ∈
+[0, 1) × Rd ,
+
+∂sh(s, y) + 1 a(s, x), Dy2h(s, y) + H (s, y; Dxh(s, y)) ≤ 0.  (2.41)
+  2
+
+Viscosity Solution ϕ ∈ C([0, 1] × Rd ) is a viscosity solution of (2.39) if it is both
+a viscosity sub- and a supersolution of (2.39).
+34  2 Stochastic Optimal Transportation Problem
+
+  We introduce the following to replace ϕ in (2.38) by classical solutions to the
+HJB Eqn. (2.39).
+
+(A.4). (i) “σ is an identity” or “σ is uniformly nondegenerate, σij ∈ Cb1,2([0, 1] ×
+  Rd ), i, j = 1, · · · , d and there exist functions L1 and L2 so that L = L1(t, x) +
+  L2(t, u)”. (ii) L(t, x; u) ∈ C1([0, 1] × Rd × Rd ; [0, ∞)) and is strictly convex
+  in u. (iii) L ∈ Cb1,2,0([0, 1] × Rd × BR) for any R > 0.
+
+  For any n ≥ 1, f ∈ U Cb(Rd ) and (t, x) ∈ [0, 1] × Rd ,
+
+  ϕn(t, x; f ) := sup E  f (X(1)) −  1
+
+  X(t )=x,X∈At,  L(s, X(s); βX(s, X))ds ,
+  |βX (s ,X)|≤n
+  t
+
+  (2.42)
+
+where we deﬁne At as A with [0, 1] replaced by [t, 1].
+
+  Hn(t, x; z) := sup { z, u − L(t, x; u)}.
+
+  |u|≤n
+
+Then (A.0), (A.1,i) and (A.3) imply that ϕn(t, x; f ) is the unique bounded continu-
+ous viscosity solution of the following HJB Eqn.: for (t, x) ∈ [0, 1) × Rd ,
+
+  ∂t ϕn(t, x) + 1 a(t, x), Dx2ϕn(t, x) + Hn(t, x; Dxϕn(t, x)) = 0,  (2.43)
+  2
+
+  ϕn(1, x) = f (x)
+
+(see [61, p. 188, Corollary 7.1, p. 223, Corollary 3.1 and p. 249, Theorem 9.1]). If
+(A.4) holds, then the HJB Eqn. (2.39) with ϕ(1, ·) = f (·) ∈ C3b (Rd ) has the unique
+classical solution ϕ(t, x; f ) in Cb1,2([0, 1] × Rd ). In particular,
+
+  ϕ(t, x; f ) = ϕn(t, x; f ), (t, x) ∈ [0, 1] × Rd ,
+
+provided
+
+  n ≥ sup{|DzH (t, x; Dxϕ(t, x; f ))||(t, x) ∈ [0, 1] × Rd } ∈ [0, ∞).
+
+This can be proved almost in the same way as in [61, p. 208, Lemma 11.3] (see
+
+Proposition 2.3 in Sect. 2.2.2 and also [61, pp. 169–170, Theorems 4.2 and 4.4]).
+
+Lemma 2.5 in Sect. 2.2.2 implies that the minimal bounded continuous viscosity
+solution of the HJB Eqn. (2.39) with ϕ(1, ·) = f (·) ∈ Cb3(Rd ) is also the unique
+classical solution of it under (A.4). Since (A.4,i), (A.4,ii) and (A.4,iii) imply (A.0),
+
+(A.1) and (A.3,i), respectively, we easily have the following from Lemma 2.6. We
+
+omit the proof.
+2.2 Stochastic Optimal Transportation Problems  35
+
+Corollary 2.2 (See [118]) Suppose that (A.2), (A.3,ii) and (A.4) hold. Then (2.38)
+holds even if the supremum is taken over all classical solutions ϕ ∈ Cb1,2([0, 1]×Rd)
+to the HJB Eqn. (2.39). Besides, for any P0, P1 ∈ P(Rd ) for which V (P0, P1) is
+ﬁnite, a minimizer {X(t)}0≤t≤1 of V (P0, P1) exists and the following holds: for any
+maximizing sequence {ϕn}n≥1 of (2.38),
+
+0 = lim E  1  (2.44)
+
+  n→∞  |L(t, X(t); βX(t, X))
+
+  0
+
+−{ βX(t, X), Dx ϕn(t, X(t)) − H (t, X(t); Dxϕn(t, X(t)))}|dt .
+
+In particular, there exists a subsequence {nk}k≥1 for which  dtdP –a.e..
+  βX(t, X) = bX(t, X(t)) = lim DzH (t, X(t); Dxϕnk (t, X(t))),  (2.45)
+
+  k→∞
+
+  We introduce an additional assumption:
+(A.5). L(t, x; ·) ∈ C2(Rd ) for (t, x) ∈ [0, 1] × Rd . Du2L(t, x; u) is bounded and
+
+  uniformly nondegenerate on [0, 1] × Rd × Rd .
+
+  From Corollary 2.2, in the same way as in [119, Theorem 2.2], we can show that
+a minimizer of V (P0, P1) satisﬁes a FBSDE.
+
+Theorem 2.5 (See [119]) Suppose that (A3,ii) and (A.4)–(A.5) hold. Then for any
+P0, P1 ∈ P(Rd ) for which V (P0, P1) is ﬁnite, there exists the unique mini-
+mizer {X(t)}0≤t≤1 of V (P0, P1). There also exist measurable functions ft on Rd ,
+t = 0, 1 and a (FtX)-continuous semimartingale {Y (t)}0≤t≤1 such that the follow-
+ing FBSDE is satisﬁed by {(X(t), Y (t), Z(t) := DuL(t, X(t); bX(t, X(t)))}0≤t≤1:
+for t ∈ [0, 1],
+
+  t  t
+
+X(t) = X(0) + DzH (s, X(s); Z(s))ds + σ (s, X(s))dWX(s),  (2.46)
+
+  0  0
+
+  1
+
+Y (t) = f1(X(1)) − L(s, X(s); DzH (s, X(s); Z(s)))ds
+
+  t
+
+  1
+
+  − Z(s), σ (s, X(s))dWX (s)
+
+  t
+
+and that Y (0) = f0(X(0)).
+36  2 Stochastic Optimal Transportation Problem
+
+  We consider h-path processes as an application of Corollary 2.2 and Theorem 2.5
+and generalize [119, Corollary 2.3]. We state the following assumption:
+
+(A.4)’.  σ (·)  =  (  σij  (  ·)  )  d  j  =1  is uniformly nondegenerate, σij  ∈  Cb1,2([0, 1] × Rd ),
+  i,
+
+  i, j = 1, · · · , d. There exist functions ξ ∈ Cb1,2([0, 1] × Rd ; Rd ) and c ∈
+  Cb1,2([0, 1] × Rd ) such that for (t, x, u) ∈ [0, 1] × Rd × Rd ,
+
+  L(t, x; u) = 1 a(t, x)−1(u − ξ(t, x)), u − ξ(t, x) + c(t, x).  (2.47)
+  2
+
+  Under (A.4)’,
+
+H (t, x; z) = 1 a(t, x)z, z + ξ(t, x), z − c(t, x),  (t, x, z) ∈ [0, 1] × Rd × Rd .
+  2  (2.48)
+
+Under (A.4)’, for f (x) ∈ C3b (Rd ), let u(t, x; f ) be the unique classical solution, in
+Cb1,2([0, 1] × Rd ), of the following linear second-order PDE:
+
+∂t u(t, x) + 1 a(t, x), Dx2u(t, x) + ξ(t, x), Dx u(t, x) + c(t, x)u(t, x) = 0, (2.49)
+  2
+  u(1, x) = exp(f (x)),
+
+(t, x) ∈ [0, 1) × Rd (see, e.g. [66]). Then ϕ(t, x; f ) := log u(t, x; f ) is the unique
+classical solution, in Cb1,2([0, 1] × Rd ), of the HJB Eqn. (2.39) with ϕ(1, ·) = f (·).
+It is also the minimal bounded continuous viscosity solution of the HJB Eqn. (2.39)
+with ϕ(1, ·) = f (·) since (A.4)’ implies (A.0)–(A.3) (see Lemma 2.5 in Sect. 2.2.2).
+Indeed, by Itô’s formula, ϕ(t, x; f ) has the same representation formula as that of
+
+the minimal bounded continuous viscosity solution of the HJB Eqn. (2.39).
+  Let {X(t)}0≤t≤1 be the unique strong solution to the following SDE (see [75]):
+
+  t  t
+
+X(t) = X(0) + ξ(s, X(s))ds + σ (s, X(s))dW (s),  t ∈ [0, 1].  (2.50)
+
+  0  0
+
+The following holds even though (A.4)’ does not imply (A.4).
+
+Corollary 2.3 (See [119]) Suppose that (A.4)’ holds. Then the assertions in Corol-
+lary 2.2 and Theorem 2.5 hold. Besides, for any P0, P1 ∈ P(Rd ) for which
+V (P0, P1) is ﬁnite and for the unique minimizer {X(t)}0≤t≤1 of V (P0, P1), the
+following holds: for any A ∈ B(C([0, 1]; Rd)),
+
+  1
+
+P (X(·) ∈ A) = E exp f1(X(1)) − f0(X(0)) − c(t, X(t))dt ; X(·) ∈ A .
+
+  0
+
+  (2.51)
+2.2 Stochastic Optimal Transportation Problems  37
+
+Remark 2.8 If (2.47) holds, then
+
+L(t, x; u)−{ u, z −H (t, x; z)} = 1 |σ (t, x)−1(a(t, x)z−u+ξ(t, x))|2.  (2.52)
+  2
+
+{X(t)}0≤t≤1 in Corollary 2.3 is called the h-path process for {X(t)}0≤t≤1 with initial
+and terminal distributions P0 and P1, respectively. Equation (2.51) is known (see,
+e.g. [45, 62, 135, 156]).
+
+  We extend V to a variational problem on P([0, 1] × Rd ). For λ ∈ P([0, 1] ×
+Rd ), we denote by λt (dx) a weakly continuous version of λ(t, dx) := λ(dtdx)/dt,
+
+provided it exists.
+  Fix P0 ∈ P(Rd ). For λ ∈ P([0, 1] × Rd ),
+
+  VP0 (λ) := V({λt }0≤t≤1) if {λt }0≤t≤1 exists and λ0 = P0, ∞, otherwise.  (2.53)
+
+Then it is easy to see that VP0(·) is convex, lower semi-continuous and not
+identically equal to inﬁnity on P([0, 1] × Rd ) under (A.0)–(A.2) and (A3,ii) (see
+Proposition 2.1 and Lemma 2.2 in Sect. 2.2.2). We only explain the convexity of
+λ → VP0 (λ). VP0 (λ) is inﬁnite if {λt }t∈[0,1] are not marginal distributions of
+X ∈ A . Suppose that VP0(λi ) is ﬁnite, i = 1, 2. For νi ∈ A˜, i = 1, 2,
+
+rν1+(1−r)ν2 ∈ A˜, (rν1+(1−r)ν2)1,t = rν11,t +(1−r)ν12,t , 0 ≤ t ≤ 1, r ∈ (0, 1)
+
+since  (2.22)  linear  in  ν.  If  ν i1,t  =  λi  ,  0  ≤  t  ≤  1, i  =  1, 2,  then
+
+  t
+
+  L(t, x; u)(rν1 + (1 − r)ν2)(dtdxdu) ≥ v˜({rλ1t + (1 − r)λ2t }0≤t≤1).
+
+[0,1]×Rd ×Rd
+
+Taking  the  inﬁmum  on  the  left-hand  side  over  all  νi  ∈  A˜ such  that  ν i1,t  =  λi  ,  0  ≤
+
+t ≤ 1, i = 1, 2,  t
+
+  rv˜({λ1t }0≤t≤1) + (1 − r)v˜({λ2t }0≤t≤1) ≥ v˜({rλ1t + (1 − r)λ2t }0≤t≤1).
+
+If λi0 = P0, i = 1, 2, then rλ10 + (1 − r)λ20 = P0. Proposition 2.1 implies the
+convexity of λ → VP0 (λ).
+
+  For any n ≥ 1, f ∈ C∞ b ([0, 1] × Rd ) and (t, x) ∈ [0, 1] × Rd ,
+
+  φn(t, x; f )  (2.54)
+  := sup E
+  1
+  X(t )=x,X∈At,
+  |βX (s ,X)|≤n  (f (s, X(s)) − L(s, X(s); βX(s, X)))ds .
+
+  t
+
+  φ(t, x; f ) := lim φn(t, x; f ).  (2.55)
+
+  n→∞
+38  2 Stochastic Optimal Transportation Problem
+
+Here, notice that n → φn is nondecreasing. Then under (A.0)–(A.3), from
+Lemma 2.5 in Sect. 2.2.2, φ(t, x; f ) is the minimal bounded continuous viscosity
+
+solution of the following HJB Eqn.: for (t, x) ∈ [0, 1] × Rd ,
+
+  ∂t φ(t, x) + 1 a(t, x), Dx2φ(t, x) + H (t, x; Dxφ(t, x)) + f (t, x) = 0,  (2.56)
+  2
+  φ(1, x) = 0.
+
+In the same way as in Theorem 2.4 and Corollary 2.3, we obtain the Duality
+Theorem for V(P), the proof of which we omit.
+
+Theorem 2.6 (Duality Theorem for V (See [118]))
+(i) Suppose that (A.0)–(A.3) hold. Then for any P := {Pt }0≤t≤1 ⊂ P(Rd ),
+
+  V(P) = v(P) = v˜(P)  (2.57)
+  φ(0, x; f )P0(dx) .
+  =  ∞  sup  1
+  b  Rd
+  f  ∈  C  (  [0  ,  1  ]×R  d  )  f (t, x)dtPt (dx) −
+
+  0 Rd
+
+  Suppose that (A.4) holds instead of (A.0), (A.1), and (A.3,i). Then (2.57) holds
+  even if the supremum is taken over all classical solutions φ ∈ Cb1,2([0, 1] × Rd)
+  to the HJB Eqn. (2.56). Besides, if V(P) is ﬁnite, then a minimizer {X(t)}0≤t≤1
+  of V(P) exists and the following holds: for any maximizing sequence {φn}n≥1
+
+  of (2.57),
+
+  0 = lim E  1  (2.58)
+
+  n→∞  |L(t, X(t); βX(t, X))
+
+  0
+
+  − { βX(t, X), Dx φn(t, X(t)) − H (t, X(t); Dxφn(t, X(t)))}|dt .
+
+  In particular, there exists a subsequence {nk}k≥1 for which
+
+  βX(t, X) = bX(t, X(t)) = lim DzH (t, X(t); Dx φnk (t, X(t))),  dtdP –a.e..
+  (2.59)
+  k→∞
+
+(ii) Suppose that (A.4)’ holds. Then the assertion above also holds.
+
+  We discuss the relation between the Duality Theorem for V (P0, P1) and that for
+V({Pt }0≤t≤1) for {Pt }0≤t≤1 ⊂ P(Rd ). Suppose that (A.0)–(A.2) hold. Then for
+P0, P1 ∈ P(Rd ) for which V (P0, P1) is ﬁnite and for a minimizer X ∈ A of
+V (P0, P1) (see Proposition 2.1), the following holds:
+
+  V (P0, P1) = V({P X(t)}0≤t≤1).  (2.60)
+2.2 Stochastic Optimal Transportation Problems  39
+
+Indeed, for any {Pt }0≤t≤1 ⊂ P(Rd ),
+  V (P0, P1) ≤ V({Pt }0≤t≤1),
+
+where the equality holds if {Pt }0≤t≤1 = {P X(t)}0≤t≤1. In particular, roughly
+speaking, the Duality Theorem for V (P0, P1) implies that for V({P X(t)}0≤t≤1). We
+explain it. Let {ρn}n≥1 ∈ C∞([0, 1]; [0, 1]) such that ρ˙n(t) ≤ 0 and that
+
+  ρ 1, 0 ≤ t ≤ 1 − n(t) = n1 ,
+  0, t = 1.
+
+If ϕ is smooth and satisﬁes (2.39), then {ρn(t)ϕ(t, x)}n≥1 satisﬁes (2.56) with
+
+f = fn(t, x) := −ρ˙n(t)ϕ(t, x)+ρn(t)H (t, x; Dxϕ(t, x))−H (t, x; ρn(t)Dx ϕ(t, x)).
+
+ρn(0)ϕ(0, x) = ϕ(0, x) and
+
+1  1
+
+  fn(t, X(t))dt =  fn(t, X(t))dt → ϕ(1, X(1)),  n → ∞.  (2.61)
+0 1− 1n
+
+  We extend v(·, ·) and v(·) to variational problems on P([0, 1] × Rd ). For λ ∈
+P([0, 1] × Rd ),
+
+v(λ) :=  v(λ0, λ1) if λ(dtdx) = 12 δ0(dt)λ0(dx) + 12 δ1(dt)λ1(dx),
+v(λ) :=  ∞
+  otherwise,
+
+  v({λt }0≤t≤1) if {λt }0≤t≤1 exists,  (2.62)
+
+  ∞  otherwise
+
+(compare with (2.53)). For f ∈ Cb([0, 1] × Rd ),
+
+  v∗(f ) := sup  f (t, x)λ(dtdx) − v(λ) ,  (2.63)
+
+  λ∈P ([0,1]×Rd )  [0,1]×Rd
+
+  v∗(f ) := sup  f (t, x)λ(dtdx) − v(λ) .
+
+  λ∈P ([0,1]×Rd )  [0,1]×Rd
+
+For {νn}n≥1 ⊂ A˜, if [0,1]×Rd×Rd L(t, x; u)νn(dtdxdu) n≥1 is bounded and if
+{νn(dtdx × Rd )}n≥1 is tight, then {(νn)1,0(dx)}n≥1 is tight under (A.2) and the
+boundedness of a (see (2.78), (2.79), (2.81)). The following is known (see [112] for
+the proof).
+40  2 Stochastic Optimal Transportation Problem
+
+Proposition 2.2 (See [112]) Suppose that (A.0)–(A.2) hold and that L(t, x; 0) is
+bounded. Then for any λ ∈ P([0, 1] × Rd ),
+
+  v(λ) = sup  f (t, x)λ(dtdx) − v∗(f ) ,  (2.64)
+
+  f ∈Cb([0,1]×Rd )  [0,1]×Rd
+
+  v(λ) = sup  f (t, x)λ(dtdx) − v∗(f ) .  (2.65)
+
+  f ∈Cb([0,1]×Rd)  [0,1]×Rd
+
+In particular, for any {Pt }0≤t≤1 ⊂ P(Rd ), V (P0, P1) and V({Pt }0≤t≤1) can
+be considered convex lower semicontinuous functionals of 12 δ0(dt)P0(dx) +
+1  ([0,  1]  ×  Rd
+2  δ1(d  t  )P1(d  x  )  and  d  t  Pt  (d  x  )  in  P  ),  respectively.
+
+  We discuss assumptions (A.0)–(A.5).
+  (A.0) implies the existence and the uniqueness of the solution to the following
+SDE:
+
+  dX(t) = σ (t, X(t))dW (t),
+
+where W is a standard Brownian motion deﬁned on a probability space.
+  (A.1,ii) implies that the inﬁmums in V (P0, P1) and V({Pt }0≤t≤1) can be taken
+
+for all X such that βX(t, X) = bX(t, X(t)) (see (2.31)).
+  (A.0), (A.1,i), and (A.2) imply the compactness result given in Lemma 2.2. In
+
+particular, (A.0)–(A.2) implies the duality (2.101). Indeed, we originally assumed
+
+that the diffusion matrix a is nondegenerate to prove the convexity of V and V by the
+
+change of measure. It can be proved by Proposition 2.1, without the nondegeneracy
+
+of a, in which the superposition principle plays a crucial role. This is a recent
+
+remarkable progress thanks to the superposition principle.
+
+  (A.3) is required to formulate Theorem 2.4 in the framework of viscosity
+solution. If A(t, x) ∈ Cb1([0, 1] × Rd ), inf{A(t, x)|(t, x) ∈ [0, 1] × Rd } is positive,
+and C(t, x) ∈ C1b ([0, 1] × Rd ; [0, ∞)), then L = A(t, x)|u|p + C(t, x) satisﬁes
+(A.1) and (A.3) if p ≥ 1 and (A.2) if p > 1, respectively.
+
+  (A.4) is more restrictive than (A.3) and is required to formulate the Duality
+
+Theorem in the framework of a classical solution. In particular, a is required to
+be uniformly nondegenerate. L = A(t, x)|u|p + C(t, x) satisﬁes (A.4, ii, iii) if
+A ∈ Cb1,2([0, 1] × Rd ; (0, ∞)), C ∈ Cb1,2([0, 1] × Rd ; [0, ∞)) and p > 1.
+
+  (A.3)–(A.4) might be weakened by the PDE experts.
+  If A˜ ∈ Cb([0, 1] × Rd; Md (R)) and is uniformly nondegenerate, B ∈ C([0, 1] ×
+Rd ; Rd ), and C ∈ C([0, 1] × Rd ), then L = A˜(t, x)u, u + B(t, x), u + C(t, x)
+
+satisﬁes (A.5).
+

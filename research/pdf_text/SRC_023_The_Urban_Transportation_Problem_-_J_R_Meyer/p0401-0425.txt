@@ -1,0 +1,1533 @@
+BUS LINE-HAUL SYSTEMS  381
+
+  With this design no elaborate line-haul station buildings are required since
+simple curb platforms would be ample, except for comfort, and since in most
+cases only two or three buses would be loading or unloading simultaneously at
+the line-haul stations. Furthermore, some protection from weather is auto-
+matically provided if the bus passengers load and unload underneath the line-haul
+roadway. However, to be conservative and to provide station comfort somewhat
+more directly comparable to that of the rail transit system, a station shelter cost
+of $100,000 per line-haul station is incorporated in subsequent cost estimates.
+
+C B D TERMINAL DESIGN
+
+  A suggested configuration for downtown bus terminals or stations is shown in
+Figure 61. It is designed for double-side passenger loading or unloading, with
+diagonal slots, and with circulation as shown in order to eliminate "crossing" or
+"weaving" conflicts, both between buses and passengers. The bus slots are long
+enough for only one bus. The number of slots will depend on the bus headway
+of incoming buses and the time required for bus deceleration, loading and un-
+loading, and acceleration. In general,
+
+Number of bus slots (for  Time required for deceleration/acceleration
+each incoming lane)  and loading/unloading
+
+  Bus headway per lane
+
+  It is important to note that the number of bus slots—and thus terminal length
+and cost—partially depends on the loading and unloading times. Since the buses
+in low volume cases are not fully loaded, this fact should be taken into account.
+Furthermore, if downtown distribution is provided, the passengers normally will
+be loaded or unloaded at more than one station; terminal length requirements
+are thereby reduced (since the loading and unloading time per station and thus
+the required number of slots will be reduced). In the line-haul cost analyses,
+however, it is assumed that all passengers unload at one point and that each
+bus slot can safely handle only 70 buses an hour.
+
+  The total lineal feet of terminal required for bus slots (for each incoming lane)
+depends on both the "angle" of the bus slots (relative to the general direction of
+travel) and the number of slots. The design shown in Figure 61 is for a 45-degree
+angle layout for which a 140-foot width is needed (to include a return lane) and
+28 feet of length are required for each bus slot. In addition, approximately 7
+extra lineal feet of terminal are needed to account for acceleration and deceleration
+lanes and for platforms at sides of outside bus slots. In general, a 30-degree or
+lesser-angle terminal would be more expensive than a 45-degree; however, in
+certain cases, because of utility relocation or underpinning problems, the reverse
+may be true. The 45-degree angle slots are used in the cost analyses.
+
+COST PARAMETERS AND FUNCTIONS
+
+(BC-1)  TBC = TBOC + SB.
+
+(BC-2)  SB = SBC + SBrow + SB-
+
+Operating Costs, Including Equipment
+
+(BC-3)  TBOC = aU + ßM + 7 L,
+  •υ
+  ci
+  c3
+
+  î?
+  £
+  Ό
+  ce
+  υ
+  Λ
+  (Λ
+  3
+  £>
+  Où
+  G
+  Β
+  o
+  υ
+  α
+o «
+
+  00
+  e
+
+  o
+  υ
+
+  ä
+
+o s  >ci
+
+Ό §
+
+  3
+  Λ
+
+  t>
+  Λ
+  3
+  Ζ
+  α
+  so
+  υ
+  •O
+
+  ci
+  e
+
+  3
+  Λ
+  C
+  £
+  O
+  c ^
+  !ì Λ
+  o -o
+  Q g
+
+  ve ω
+  so
+
+  ω c
+  tí ω
+  3 te
+  tu cαd
+BUS LINE-HAUL SYSTEMS  383
+
+where
+
+  a = $13,120 = annual costs per bus unit for rolling stock, yards and shops,
+  and operators; or, CRFi2,e% times purchase cost per bus (of
+  $31,200) plus CRF5o,6% times yards and shops investment per
+  bus (of $4500), both items plus an additional 5 per cent to allow
+  for downtime, plus annual bus operator costs per (peak-hour)
+  scheduled bus unit (of $8100)1 increased 10 per cent to allow
+  for breaks, vacations, and so forth = $3910 + $300 + $8910;
+
+  β = $0.30 = cost per bus-mile, to cover bus fuel and oil, maintenance,
+  administration, insurance and safety, and conducting trans-
+  portation items (other than for operators), plus 20 per cent
+  for contingencies2 = 1.20($0.025 + $0.107 + $0.059 +
+  $0.031 + $0.03);
+
+  7 = $9000 = annual highway maintenance and administration costs per
+  lane-mile.
+
+Construction and Right-of-Way Costs (Exclusive of CBD Terminal)
+
+  All construction and right-of-way costs for exclusive bus highways were based
+on the following capital construction costs per mile for mixed-traffic highways :
+
+(BC-4)  Yi,k = Wc. ($311,000 + $70,800*,) + $86,000A:,·,
+
+where
+
+  Yi,k = capital construction costs for the ith mile of mixed-traffic highway of k
+  lanes, and net residential density of (in thousands);
+
+  Wc. = ratio of nonpavement highway construction costs for k lane highway
+  to those for 8-lane highway [in this analysis it was assumed that they
+  were proportional to the traveled-way widths (as shown in Table 61)].
+
+Thus, for an 8-lane mixed-traffic highway,
+
+  Yi,s = ($311,000 + $70,800*,) + $688,000.
+
+(a) Bus Operation on Exclusive Bus Highways
+
+(BC-5)  SBC = ¿ SBCi,
+
+  i
+
+(BC-6)  SBCi = WCi($19,864 + $4522*,) + $5800/t„
+
+where
+
+  SBC. = the cost per mile on an annual basis of constructing the ith mile
+  of roadway;
+
+  Wc. = the ratio between the nonpavement construction costs of a facility
+  of ki lanes and those of an 8-lane highway [in this analysis it was
+  assumed that they were proportional to the traveled-way widths
+  (as shown in Table 61)];
+
+  Xi = net residential density at the ith mile from the CBD in thousands
+  per square mile and is assumed to be as in Chicago for high-
+  density and as in Pittsburgh for medium-density calculations
+  (see Fig. 33);
+
+  1 This unit cost includes allowances for operators required during all four morn-
+ing and evening rush hours, for swing shift rules, and so forth.
+
+  2 Taxes were excluded since all highway construction, maintenance, and interest
+items were fully costed.
+384  APPENDIX Β
+
+  ki = the number of lanes for the j'th mile of highway;
+  $19,864 = the annual construction costs, (exclusive of paving) for an 8-lane
+
+  "bus-only" highway which are not associated with population
+  density. These costs are assumed to be 93 per cent of the same
+  capital costs (of $311,000) for a conventional mixed-traffic high-
+  way times CRF35,6%;
+  $4522 = the annual construction costs for an 8-lane "bus-only" highway
+  associated with population density; again assumed to be 93 per
+  cent of the same capital costs (of $70,800) for a conventional
+  highway times CRF35,6%;
+  $5800 = the paving costs per lane-mile on an annual basis for a "bus-only"
+  highway, assumed to be 98 per cent of those capital costs (of
+  $86,000) for a conventional highway times CRF35,6%.
+
+  0
+
+(BC-7)  SBrow  =  SBtowì,
+
+  »=1
+
+(BC-8)  SZ?r0Wi =  MfVroWt)(CRFx,e%)(yii8)
+
+where
+  X = (0.005*¿), determined empirically;
+
+  Yi.s = ($999,000 + $70,800AU from Eq. BC-4;
+  fVI0W = ratio of k lane highway ROW costs to those of an 8-lane highway,
+
+  assumed to be proportional to total average right-of-way widths
+  (see Table 61);
+
+  CRFOO,6% = 0.06.
+
+Thus
+  SBtow. = IVro„. ($299.70*, + $21.27Λ^).
+
+(ό) Bus Operation on 8-lane Mixed-traffic  Highways
+
+  The portion of construction and right-of-way costs to be borne by bus passen-
+gers was determined in proportion to the amount of total 8-lane mixed-traffic
+highway capacity utilized by buses. In this analysis it was assumed that each
+highway lane can accommodate 1675 passenger cars an hour or 480 buses an hour
+(that is, each bus takes up the same amount of highway space as 3.49 automobiles).
+
+  Let
+
+  Ha = highway auto-lane capacity for a k lane highway (in automobiles per
+  lane per hour) ;
+
+  HAitk = capacity of rth route-mile of a k lane passenger car highway
+  = (Ha) X (k) (in automobiles per hour);
+
+  Hb = highway bus-lane capacity for a k lane highway (in buses per lane per
+  hour).
+
+Since
+
+  Ri = number of bus round trips originating at z'th line-haul station
+and
+
+2 Í R + Ri — Rx) = number of bus trips (in both directions) being
+
+  \  i = i / made on z'th route-mile of highway),
+  BUS LINE-HAUL  SYSTEMS  385
+therefore
+  R^
+  (Ha/Hb) 2  + Ri - ¿  = portion of total k lane
+  mixed-traffic highway
+(BC-9)  —  capacity utilized by buses
+
+  l,k
+
+  (1675/480)2 ( r + Ä.· - ¿  R^J
+  (1675 X 8)  for an 8-lane highway,
+
+  (R + Ri - ¿ R^J
+
+  1920
+  Both the construction and ROW costs of 8-lane mixed-traffic highways were
+allocated to buses by using Eq. (BC-9). Combining Eqs. (BC-9) and (BC-4),
+the latter of which provides construction costs for 8-lane mixed-traffic highways,
+and using a W„ value of 1.0 and a CRF3s,6% equal to 0.06897,
+
+(BC-10)
+
+  SBECi = $35.90 ^R + Ri - ¿ Rx"j + $2.54*,·^/* + Ri - ¿
+
+Using Eqs. (BC-9) and (BC-8), with lVIow. equal to 1.0:
+
+(BC-11)  SBETOWi = $ 0 . 1 5 6 * , (R + Rt - ¿ R^j
+
+  +  + Ri - ¿ R^j •
+
+(For some line-haul stations (or, /'s), the value of Ri may be zero; this would be
+the case where the number of bus loops, q, is less than g.)
+
+CBD Terminal Costs (Sp)
+
+(BC-12)  SBP = a(P) + ß(N) + 7(5),
+
+where
+
+Ρ = total number of bus platforms needed for all incoming bus lanes at CBD
+  terminal = (Λ/70)* ;
+
+Ν = number of incoming bus lanes = (Ä/480)* ;
+S = number of line-haul stations = g, for 1-mile station spacing;
+a = annual cost per bus platform; for a 45-degree angle, with each platform
+
+  requiring 28 lineal feet of 140-foot-wide terminal area, with a capital cost
+  of $7200 per lineal foot of 50-foot-wide terminal, and with a 50-year-life
+  and 6 per cent interest, the annual cost
+  = (28)(140/50)($7200)(CRF5o.6%) = $34,100;
+β — annual cost per incoming bus slot, to include a $1.5 million capital cost
+  for ventilation, and an allowance for acceleration and deceleration tapers
+386  APPENDIX Β
+
+  7 =  (figured as equivalent to 7 extra lineal feet of 140-foot-wide terminal area),
+Thus  both amortized over 50 years; annual cost = (CRF50 6%)($1,500,000 -f
+  7 X 140/50 X $7200) = $145,200;
+
+  annual cost per line-haul station; with a $100,000 capital cost, a 50-year
+
+  life and 6 per cent interest, annual cost = ($100,000) X ( C R F 5 0 e%) =
+  $6344.
+
+Functional Relationships
+
+  Functional relationships for determining equipment, operation, and roadway
+requirements depend, of course, on the nature of the operation and service.
+Generally, we will consider the following types of operations :
+nonstop, through express bus service between individual line-haul stations and
+downtown CBD terminal (that is, express service with no along-the-line service);
+through bus service between originating line-haul station and downtown CBD
+terminal, with multipickup (or discharge) line-haul stops but no along-the-line
+service (that is, multistop bus service with no along-the-line service); integrated
+through and along-the-line bus service between originating line-haul stations and
+downtown CBD terminal, with stops at all intermediate line-haul stations for
+pickup (or discharge) of downtown or along-the-line passengers (that is, inte-
+grated through and along-the-line bus service with no transfer); integrated through
+and along-the-line bus service whereby outer-loop buses provide along-the-line
+service only up to or out from the middle line-haul station, at which point along-
+the-line passengers moving to or from inner-loop line-haul stations must transfer
+(that is, integrated through and along-the-line bus service with transfer); and
+separate along-the-line bus service.
+
+  For all types of operations, the following relationships apply. (All cases assume
+1-mile station spacing and a uniform distribution of passenger originations or
+terminations.)
+
+(B-l)  ti =  total round trip time for a bus moving between the ith line-haul
+where  ti =  station and the CBD terminal ;
+  8 8 / + 60.5(d, - fi) + 1.166/7, + 120, in seconds,
+  di =
+  fi =  round trip distance (in miles) = 2/;  CBD
+  Pi =  number of bus stops made on the round trip (including
+  terminal stop);
+  total number of passengers carried on a bus round trip.
+
+(Equation (B-l) applies only for the particular bus performance specifications
+assumed and for 1-mile station spacing. Also, q is the number of separate bus
+runs or loops ; at a maximum, q is equal to g.)
+
+(B-3) Vi = hourly passenger volume to or from the /'th line-haul station
+BUS LINE-HAUL SYSTEMS  387
+
+(B-4)  * =Σ R
+  3=1
+
+(B-5)  -(f)'
+
+(B-6)  u = ¿ υ,.
+
+(B-7)  M = 1020 ¿ (/?>)(</,).
+(B-8)
+
+(B-9)  Λ + Ri - Σ
+
+  Hb
+
+where χ is the number of the line-haul station.
+
+(a) Express Nonstop Service with No Along-the-Line Service
+  For this type of operation, j = i,q = g, and / = 2.
+
+(B-lOa)  Ri  if  (h).
+
+(B-lOb)  Ri = h,  (?) < (A).
+
+(b) Multistop Bus Service with No Along-the-Line Service
+
+For this type of operation, there would be q bus loop operations.
+
+m, = number of line-haul stations served by y'th bus loop in major flow direction ;
+
+(B-lla)  (A) X (c)  for y = 1 , 2 , . . . , - 1);
+(B-llb)  (Vi)
+
+  mq = g — (q — \)(m}), for the q\h (or last) bus loop.
+
+(B-12)
+
+where q is the number of bus loops.
+(B-13a) f , = m j -f 1, for 1-directional service;
+(B-13b) f j = 2mj, for 2-directional service.
+
+(B-14)  R, =  or
+  R, = h,  whichever is greater.
+388  ; = (Mm,),  APPENDIX Β
+(Β-15a)  i = (g),  for j = 1, 2 , . . . , (q - 1);
+(B-15b)  for j = q.
+
+(c) Integrated Through and Along-the-Line Bus Service with No Transfer
+
+Case 1
+  When (Vi/c) > h,
+
+(B-16)  Ri = ^ .
+  c
+
+  j = i,
+  q = g-
+
+(B-17)  f i = (/ + 1), for 1-directional service,
+
+Case 2  fi = 2i,  for 2-directional service.
+  When (Vi/c)
+  < h, there would be q bus loops.
+
+(B-18)  rrtj = (h) X (c)  for j = 1,2,...,  (q - D;
+  (Vi)
+
+  g — (q — 1 )m,, for the çth bus loop.
+
+(B-19)  , = (jJ.
+
+(B-20)  f j = (J)nij + 1, and fq = g + 1, for 1-directional service;
+  fi = 2(j)m¡, and fq = 2g, for 2-directional service.
+
+(B-21)  =  or
+
+  Rj = h, whichever is greater.
+
+B-22)  i = (J)(mj),  for j = 1,2,...,(?-  1);
+
+  i = (g),  for j = q.
+
+(d) Integrated Through and Along-the-Line Service with Transfer
+
+  This type of service is an extension of that described in (c) above, though with
+more special circumstances and conditions. However, because of the lengthy
+details involved in setting up an analytical procedure, and the probability that
+with details such would be more complicated than revealing, the procedure will
+not be included.
+
+(e) Separate Along-the-Line Bus Service
+
+  This type of operation would serve as a supplement to either type (a) or type (b)
+through bus service.
+
+  Thus for computing L, the highway lane requirements (see Eq. B-9), the values
+of R, Ri, and Rx should represent the combined totals for both the through and
+separate along-the-line bus operations.
+BUS LINE-HAUL SYSTEMS  389
+
+(B-23)  / = g,  for 1-directional service;
+
+  / = 2(g — 1), for 2-directional service.
+
+(B-24) d = 2(g — 1), for either 1- or 2-directional service and for 1-mile
+  station spacing.
+
+(B-25)  R= ( ^ y ,  or
+
+  R = ha, whichever is greater,
+
+where
+
+ν ama = hourly along-the-line passenger volume in major flow direction ;
+
+  hA = minimum schedule frequency for along-the-line service.
+
+(In this operation, R bus trips an hour are made between the first and last line-
+haul station.)
+
+(B-26)
+
+(B-27)  t = 8 8 / + 60.5(rf - / ) + 1.166ρ + 120.
+
+(B-29)  M = 1020(rf)(Ä).
+Appendix C | Evaluation of Residential Service Costs
+
+  under Different Hypothesized Conditions
+
+NOTATION
+
+  Vi = volume of passengers originating at each line-haul station every
+  peak hour; Vi = V/g, where V is hourly passenger volume for
+  line-haul facility of g route-miles and 1-mile station spacing;
+
+  W = the hourly number of persons walking directly to a line-haul
+  system station ;
+
+  w — the maximum distance in blocks that any person must walk to reach
+  a transit service stop;
+
+  ρ = hourly trip originations per residential block destined for the line-
+  haul facility;
+
+  h = schedule frequency, or the number of buses per hour that pass each
+  feeder bus stop within the residential area;
+
+  d = the average distance (in blocks) that a vehicle must travel to com-
+  plete a trip in residential service; for transit and kiss-and-ride these
+  distances are on a roundtrip basis, and for park-and-ride and
+  integrated automobile they are the simple 1-way distances;
+
+  t = the vehicle time required (in seconds) to complete a trip of distance
+  d\
+
+  f = the number of stops made by each vehicle on each trip;
+  c = the number of passengers carried by each vehicle on each trip ;
+  AC/trip = average cost (in cents) per 1-way passenger trip for residential
+
+  service.
+
+BASIC RELATIONSHIPS FOR RESIDENTIAL COLLECTION MODES
+
+(a) Separate Feeder Bus
+  . Vj — W 2w2
+
+  t = 11.8d + 12 ( / + 1) + 1.166c + 120;
+
+  AC/ trip = 0.35/ + 2.7d
+RESIDENTIAL SERVICE COSTS
+
+(b) Integrated Bus
+
+  Vi - W . 2w2
+
+  / = 11.8d + 12 ( / + 1);
+
+  AC/trip = 0.36r + 2.7d
+  c
+
+(c) Park-and-ride Automobile
+
+  Vi - W ,2*?
+
+  48 ρ  48 + '
+
+  35.3 + 0.84¿
+  AC/ trip = c
+
+(d) Kiss-and-ride  Automobile
+
+  Vi — W 2 w2
+  — 2^4ρ τ ~2τ74~ + °>
+
+  0.34 d
+  AC/trip = c
+
+(e) Integrated Automobile
+
+  Vi-JV + ^
+  48ρ ^ 48 ^ '
+
+  .  0.67d
+  AC/trip
+
+SPECIFIC RESIDENTIAL COLLECTION CASES
+
+Case No. 1  Mode: Separate feeder bus
+
+Basic data: w = 2, ρ = 1, h = 6,f = 37, c = 49.
+
+  AC/ trip
+
+Vi  W  d  t  (cents)
+
+333  50  158  2498  26.6
+
+1000  200  179  2746  29.5
+
+3000  300  258  3678  40.5
+
+5000  500  334  4575  51.1
+
+  Vi — W  b 146.4,
+Basic equations:  d = '^
+
+  t = 11.8i/ + 634,
+
+  AC/trip =  0.35? + 2.7d
+
+  49
+392  APPENDIX C
+
+  Case No. 2  Mode: Separate feeder bus
+  Basic Data : w = 2, ρ = 2, Λ == 6 , / = 18, c =• 48.
+
+  Vi  W  rf  t  AC/ trip
+  (cents)
+
+  333  50  81  1370  10.4
+  1000  92
+  200  1500  16.1
+  3000
+  300  131  1960  21.7
+
+  5000  500  169  2409  27.1
+
+  Basic equations:  d Vi - W
+
+  48 + 7 4 · 4 '
+
+  t = 11.8¿ + 414,
+
+  AC/ trip — 0.35f 4- 2.7d
+  48
+
+  Case No. 3  Mode: Separate feeder bus
+  Basic data: w = 2, ρ = :5, A = 6 , / = 7, c = 47.
+
+  w  d  t  AC/ trip
+
+  Vi  (cents)
+
+  333  50  31  637  6.5
+
+  1000  200  37  708  7.4
+
+  3000  300  53  896  9.7
+
+  5000  500  68  1073  11.9
+
+  Vi — w  h 30.4,
+  Basic equations:  d= *
+  120
+
+  / = 11.8Í/ + 271,
+
+  AC/ trip = 0.35ί + 2Πά 47
+
+  Case No. 4  Mode: Separate feeder bus
+
+  Basic data: h> = 2, ρ = 10, h = 6 , / = 3, c = 40.
+
+  AC/ trip
+
+  Vi  W  d  t  (cents)
+
+  333  50  16  403.8  4.6
+  5.0
+  1000  200  18  427.4
+  6.3 -
+  3000  300  26  521.8  7.5
+  604.4
+  5000  500  33
+
+  Basic equations:  d = V1i — W 1- 14.4,
+
+  240
+
+  t = 11.8¿ + 215,
+
+  AC/ trip =  0.35f + 2.7d
+  40
+RESIDENTIAL SERVICE COSTS  393
+
+Case No. 5  Mode: Separate feeder bus
+Basic Data : w = 2, ρ = 12, h = 6 , / = 3, c = 48.
+
+  AC/ trip
+
+Vi  W  d  t  (cents)
+
+333  50  16.5  419  4.0
+
+1000  200  17  425  4.1
+
+3000  300  24  507  5.0
+
+5000  500  30  578  5.9
+
+Basic equations:  d Vi - W
+  288 + 1 4 · 4 '
+
+  t = \\M + 224,
+
+  AC/trip  0.35/ 4- 2.1d
+  — 48
+
+Case No. 6  Mode: Separate feeder bus
+
+Basic data : w = 2, ρ = 37.5, h = 6 , / = 1.0, c = 50.
+
+  d  AC/tríp
+
+Vi  W  î  (cents)
+
+333  50  6.7  281  2.3
+  200  2.4
+1000  7.3  288
+3000  313  2.7
+  300  9.4
+5000  500  11.4  336  3.0
+
+  Vi — W
+Basic equations:  d= *  1- 6.4,
+  895
+
+  t = 11.8rf + 202,
+
+  Λ C/trip = 0.35/ + lid
+  50
+
+Case No. 7  1, A =  Mode: Separate feeder bus
+Basic data: w = 3,/> =  6 , / = 16, c = 48.
+  d
+  t  /IC/trip
+Vi  W  109  (cents)
+  130
+333  50  210  1666  18.3
+  200  285
+1000  1914  21.3
+  300
+3000  2858  32.7
+
+5000  500  3743.0  43.3
+
+  Vi — W  h 97,
+Basic equations:  d = '^
+
+  t = 11.8rf + 380,
+
+  AC/ trip =  0.35/ + 2Hd
+  4g
+394  APPENDIX C
+
+  Case No. 8  Mode: Separate feeder bus
+
+  Basic data: w = 3, ρ = 2, h = 6, / = 8, c = 48.
+
+  AC/ trip
+
+  Vi  W  d  t  (cents)
+
+  333  50  55  933.0  9.9
+
+  1000  200  66  1062.8  11.5
+
+  3000  300  105  1523.0  17.0
+
+  5000  500  143  1971.4  22.4
+
+  Basic equations:  Vi — W  1- 48.4,
+  d= —:
+  4o
+
+  t = 11.8¿ + 284,
+
+  AC/ trip  0.35í + lid
+  48
+
+  Case No. 9  Mode: Separate feeder bus
+
+  Basic data: w = 4, ρ = 1, h = 6, / = 9, c = 48.
+
+  Λ C/trip
+
+  Vi  W  d  t  (cents)
+
+  333  50  83  1275  14.0
+
+  1000  200  105  1535  17.1
+
+  3000  300  184  2467  28.3
+
+  5000  500  259  3352  39.0
+
+  Basic equations:  Vi - W
+  d 24 + 7 L 4 :
+
+  t = 11.8d + 296;
+
+  AC/tùç  0.35/ + 2.1d
+  — 48
+
+  Case No. 10  Mode: Separate feeder bus
+
+  Basic data : w = 4, ρ = 1,h = 4 , / = 6, c = 48.
+
+  AC/ trip
+
+  Vi  W  d  t  (cents)
+
+  333  50  59  956  10.3
+
+  1000  200  81  1216  13.4
+
+  3000  300  160  2148  24.7
+
+  5000  500  235  3033  35.3
+
+  K¿ — W  h 47.4;
+  Basic equations:  d = '^
+
+  t = 11.8J + 260;
+
+  AC/ trip =  0.35i + 21d
+
+  48
+RESIDENTIAL SERVICE COSTS  395
+
+Case No. 11  Mode: Integrated bus
+
+Basic data: w = 2, ρ = 1 , h = 6, / = 37, c = 49.
+
+  /1C/trip
+
+Vi  W  d  t  (cents)
+
+333  50  162  2350  27
+
+1000  200  183  2614  30
+
+3000  300  262  3534  41
+
+5000  500  338  4430  52
+
+Basic equations:  Vi - W
+  d = — 2 4 + 150.3,
+
+  t = 11.8d + 444,
+
+  0.36/ -1- 2.7d
+  AC/ trip = — 49
+
+Case No. 12  Mode: Integrated bus
+
+Basic data : w = 2, ρ = 2, h = 6 , / = 18, c == 48.
+
+  AC/ trip
+
+Vi  W  d  t  (cents)
+
+333  50  81  1172  13
+
+1000  200  92  1302  15
+
+3000  300  131  1762  21
+
+5000  500  169  2210  26
+
+Basic equations:  Vi - W
+  d= —
+  + 74 4
+  48  ·'
+
+  t = 11.8</ + 216,
+
+  0.36/ 4- 21d
+  AC/ trip = — 48
+
+Case No. 13  Mode: Integrated bus
+
+Basic data : w = 2, ρ = 5, h = 6, / = 7 ,c = 47.
+
+  AC/trip
+
+Vi  W  d  /  (cents)
+
+333  50  34  485  6
+
+1000  200  39  544  6
+
+3000  300  54  721  9
+
+5000  500  68  886  11
+
+Basic equations:  d = Vi1 — w 1- 14.4,
+  240
+
+  t = 11.8rf + 84,
+
+  AC/ trip  0.36/ + 2.7d
+
+  47
+396  APPENDIX
+
+  Case No. 14  Mode: Integrated bus
+
+  Basic data: w = 2, ρ = 10, h = 6 , / = 3, c = 40.
+
+  AC/ trip
+
+  Vi  W  d  t  (cents)
+
+  333  50  16  225  3
+
+  1000  200  18  248  3
+
+  3000  300  26  343  5
+
+  5000  500  33  425  6
+
+  Basic equations:  Vi - W
+  d = — 120 + 3 0 · 4 '
+
+  t = 11.8d + 36,
+  0.36i 4- l.ld
+
+  AC/ trip = — 40
+
+  Case No. 15  1, h = 6 , /  Mode: Integrated bus
+  Basic data: w• = 3 ,p =  d  = 16, c = 48.
+
+  AC/ trip
+
+  Vi  W  t  (cents)
+
+  333  50  109  1478  17
+
+  1000  200  130  1726  20
+
+  3000  300  210  2670  32
+
+  5000  500  285  3555  43
+
+  Basic equations:  Vi - W
+  d = — 24 + 9 7 '
+
+  t = 11.8d + 192,
+  0.36i 4- 2.7d
+
+  AC/ trip = — 48
+
+  Case No. 16  Mode: Integrated bus
+
+  Basic data: w = 3 ,p = 2, A = 6 , / = 8, c = 48.
+
+  AC/ trip
+
+  Vi  W  d  t  (cents)
+
+  333  50  55  745  9
+
+  1000  200  66  875  10
+
+  3000  300  105  1335  16
+
+  5000  500  143  1783  21
+
+  Basic equations:  Vi — W
+  d = * AQ 1- 48.4,
+
+  t = 11.8rf + 96,
+
+  . 0.36f + l.ld
+  ^C/tnp =  ^
+RESIDENTIAL SERVICE COSTS  397
+
+Case No. 17 Mode: Park-and-ride automobile
+Basic data: w = 2 ,p = 1, c = 1.1.
+
+  AC/ trip
+
+Vi  W  d  (cents)
+
+333  50  9  38
+
+1000  200  20  47
+
+3000  300  59  76
+
+5000  500  97  105
+
+  Vi — W
+Basic equations:  d =  l·  2.2,
+  48
+
+  , . 35.3 + 0-84¿
+  AC/trip =  —
+
+Case No. 18 Mode: Park-and-ride automobile
+Basic data : w = 2, p = 2, c = 1.1.
+
+  AC/ trip
+
+Vi  W  d  (cents)
+
+333  50  6  36
+
+1000  200  11  40
+
+3000  300  31  55
+
+5000  500  50  69
+
+  y • — yy
+
+Basic equations:  d =  h 2.2,
+
+  . 35.3 + 0.84d
+  AC/ trip =  ^
+
+Case No. 19 Mode: Park-and-ride automobile
+Basic data: w = 2, ρ = 5, c = 1.1
+
+  AC/ trip
+
+Vi  W  d  (cents)
+
+333  50  4  35
+
+1000  200  66  36
+
+3000  300  15  42
+
+5000  500  22  48
+
+  Vi — W
+Basic equations:  d= '  h 2.2,
+
+  . . . . . 35.3 + 0.84d
+  AC/ trip =  —
+398  APPENDIX C
+
+  Case No. 20 Mode: Park-and-ride automobile.
+  Basic data : w' = 2, ρ = 10, c = 1.1.
+
+  AC/ trip
+
+  Vi  W  d  (cents)
+
+  333  50  4  34
+
+  1000  200  5  35
+
+  3000  300  9  38
+
+  5000  500  13  41
+
+  Vi — W
+  Basic equations:  d= '  h 2.2,
+
+  . 35.3 + QMd
+  AC/ trip =  —
+
+  Case No. 21 Mode: Kiss-and-ride automobile
+  Basic data: w = 2, ρ = 1, c = 1.0.
+
+  AC/ trip
+
+  Vi  W  d  (cents)
+
+  333  50  18  6
+
+  1000  200  40  14
+
+  3000  300  119  40
+
+  5000  500  194  66
+
+  Basic equations:  d = 1^  1- 6.4,
+
+  /4C/trip = 0.34d.
+
+  Case No. 22 Mode: Kiss-and-ride automobile
+  Basic data: w = 2 ,p = 2, c = 1.0.
+
+  AC/ trip
+
+  Vi  W  d  (cents)
+
+  333  50  12  4
+
+  1000  200  23  8
+
+  3000  300  63  21
+
+  5000  500  100  34
+
+  Basic equations:  νi — w  h 6.4,
+  d = ——
+  4o
+
+  AC/ trip = 0.34¿.
+RESIDENTIAL SERVICE COSTS  399
+
+Case No. 23 Mode: Kiss-and-ride automobile
+Basic data : w = 2, ρ = 5, c = 1.0.
+
+  AC/ trip
+
+Vi  W  d  (cents)
+
+333  50  9  3
+
+1000  200  13  4
+
+3000  300  29  10
+
+5000  500  44  15
+
+Basic equations:  y •  yy
+
+  d= '  1- 6.4,
+
+  AC/ trip = QMd.
+
+Case No. 24 Mode: Kiss-and-ride automobile
+Basic data: w = 2, ρ = 10, c = 1.0.
+
+  AC/ trip
+
+Vi  W  d  (cents)
+
+333  50  8  3
+
+1000  200  10  3
+
+3000  300  18  6
+
+5000  500  25  8
+
+Basic equations:  d Vi - W + 6.4,
+  240
+
+  AC/ trip = 0.3Ad.
+
+Case No. 25  Mode: Integrated automobile
+
+Basic data : w = 2, ρ = 1, c = 1.6.
+
+  AC/trip
+
+Vi  W  d  (cents)
+
+333  50  9  3.8
+
+1000  200  20  8.4
+
+3000  300  59  24.7
+
+5000  500  96  40.1
+
+Basic equations:  d = Vi — W h 2.2,
+
+  . 0.67d
+  AC/trip = - j - g - ·
+400  APPENDIX C
+
+  Case N o . 26  Mode: Integrated automobile
+
+  Basic data: w = 2, ρ = 2, c = 1.6.
+
+  AC/ trip
+
+  Vi  W  d  (cents)
+
+  333  50  5  2
+
+  1000  200  10  4
+
+  3000  300  30  13
+
+  5000  500  49  20
+
+  Basic equations:  d 96 + '
+
+  AC/ trip  0.67¿
+  1.6
+
+  Case N o . 27  Mode : Integrated automobile
+
+  Basic Data: Vf = 2, ρ = 5, c = 1.6.
+
+  AC/trip
+
+  Vi  W  d  (cents)
+
+  333  50  3  1
+
+  1000  200  5  2
+
+  3000  300  14  6
+
+  5000  500  21  9
+
+  Basic equations:  d- Vi~W+22
+  240 +  '
+
+  AC/ trip  0.67 d
+  1.6
+
+  Case N o . 28  Mode: Integrated automobile
+
+  Basic data: w = 2, ρ = 10, c = 1.6.
+
+  AC/ trip
+
+  Fi  W  d  (cents)
+
+  333  50  3  1
+
+  1000  200  4  2
+
+  3000  300  8  3
+
+  5000  500  12  5
+
+  Vi — W  Y 2.2
+  Basic equations:  d= '
+
+  .  0.67d
+  AC/trip = - j ^ - •
+Index
+
+Accident costs. See also Insurance costs  for bus line-hauls, 318
+  automobile, 219n  justification for, 317
+  proposals for, 316-317
+Air conditioning  Automation
+  automobiles, 33 In  of buses, 313, 318
+  of vehicles, 330  and decentralization, 14, 24
+  of fare collection, 330
+Air pollution, 318  of highways, 310, 316-317
+Air travel  of private automobiles, 327n
+  for rail transit, 313, 327
+  and decentralization, 14  of transit vehicles, 327n
+  intercity, 21  Automobile leasing, 313
+Airline transportation, and decentraliza-
+  and line-haul automation, 317
+  tion, 13  and urban transportation, 316-317
+Airports, and fashion industries, 16  Automobile subways. See also Subways
+Aitkin, P. W., article cited, 200n  cost analysis, 292, 294
+Akron (Ohio)  debt service costs, 295
+  lane capacity, 298
+  housing starts, tl 16  passenger volumes, 290, 294
+  population change, t33  travel time, 291
+  transit use, t45  Automobile transportation. See also Car
+Alabama, highway expenditures, t65
+Albuquerque (N. Méx.), interstate high-  pooling; Compact cars; Drivers;
+  Integrated automobile systems
+  way costs, t205  access to, 68
+Alexander, C., report cited, 332n  advantages of, 248-249
+Almendinger, V. V., book cited, 10η  automation of, 327n
+American Transit Association, 98  average occupancy, 194
+Anderson, George W., article cited, 98n  average rush-hour speed, 81
+Annexations  capital recovery factors, tl78
+  in Chicago, 95, 130, 133
+  correction formula, 27n  cost analysis, 182, 196-249 passim
+  and population increases, 28, 30, 3In  cost comparisons, 235-249
+  and urban development, 27  and decentralization, 12
+Annual capital costs, 177-179; defined,  efficiency of, 366
+  expressway capacities, t235
+  177  functional relationships, 233-235
+Arkansas, highway expenditures, t65  lane requirements, 235
+Arterials, traffic volume, 75, 78-79,  for line-haul, 1136
+  line-haul costs, 313, 315, 364
+  t78, t79  on local streets, 69
+Atlanta (Ga.)  and low-density workplaces, 130
+  mileage requirements formula, 234
+  CBD area, t86  noncommuter travel, 88
+  CBD traffic, 87
+  housing starts, tl 16
+  peak-hour travel volumes, t86
+  population change, t33
+  transit use, t45
+Automated highways, 310, 313. See also
+
+  Highways; Integrated highway-rail
+  systems
+402  INDEX
+
+  off-peak demands, 95  interstate highway costs, t205
+  off-peak travel, 186  multifamily housing, 115
+  operating costs, 218-219, 315  peak-hour travel volumes, t86
+  operating improvements, 310  population change, t33
+  ownership costs, 315  traffic volume, 8 In
+  parking charges, 198-199, 315  transit use, t45
+  passenger volumes, 295, 303, 305  work-trip length, 77n
+  peak-hour use, 39  Banking
+  possible innovations, 313-318
+  preference for, 361  and electronic data processing, 15
+  and priority merge, 323-324  location, 21
+  residential collection, 132, 133, tl34,  Barnes, Charles F., Jr., paper cited, 77n
+  Becker, Gary, book cited, 144n
+  1136, 364  Beesley, M. E., commentary cited, 332n
+  right-of-way costs formula, 211  Bello, Francis
+  rush-hour units formula, 234  article cited, 37n
+  seating space, 194  on automobile commutation, 81
+  as social travel mode, 311  quoted, 37, 99
+  and street capacity, 293  Belt highways, 85, 87, 362
+  trip costs, 236-239  construction costs, 292, 294, 298-299,
+  trip distance, 139
+  trip length, t247  299n
+  and trip purpose, 89-99 passim, t90
+  trip times, t247  cost analysis, 292, 294
+  and "urban sprawl," 109  debt service costs, 295
+  weekend use, 98  and downtown distribution, 365
+  from workplace rings, tl31  and freight transportation, 19
+  work-trips, 130  and industry location, 19-20
+Automobile travel  lane capacity, 294n, 298
+  and decentralization, 14  and net residential density, 292, 294
+  intercity, 21  passenger volumes, 294
+Automobiles. See also Compact cars;  rights-of-way, 292, 294
+  and transportation terminals, 21
+  Electric automobiles  Bergholz, Richard, article cited, 105n
+  air conditioning, 330, 331n  Berry, D. S., book cited, 31 In
+  Chicago ownership, tl41  Berryman, Russell G., paper cited, 90n
+  commuter's choice, 218-219  Bibija, Zarka, book cited, 10η
+  excise taxes on, 62  Birmingham (Ala.), transit use, 98-99n
+  exhaust inhibitors, 350  Boiteux, M., article cited, 342n
+  gas turbine engine, 318  Bone, Alexander J.
+  insurance costs, 219, 219n  book cited, 80n
+  for mechanized highways, 317  report cited, 18n
+  operating costs, 294, 313  Bookkeeping industries
+  ownership costs, 218-219, 283
+  passenger load, 319  and electronic data processing, 15
+  postwar ownership, 58  location, 20, 21
+  postwar production, 58  Boston (Mass.). See also Central Artery
+  registration, t59, 76, t76, 81
+  and suburban terminals, 21  (Boston); Route 128
+  taxes on, 68  average rush-hour speed, 81
+  technological improvements, 318  CBD area, t86
+  two-car families, 316  commuter subsidy, 100-101
+  and urban development, 3  government offices locations, 22
+  highway route length, 1187
+Bain, Henry M., and priority merge,  housing starts, t l 16
+  322n  interstate highway costs, t205
+  "mover firms," t41
+Baltimore (Md.)  peak-hour travel volumes, t86
+  CBD area, t86  population change, t33
+  highway route length, tl87  Sumner Tunnel, 313n
+  housing starts, tl 16  Systems Analysis and Research Cor-
+
+  poration, 52n
+  transit ridership trends, t96
+  INDEX  403
+
+  transit route length, ti87  off-peak demands, 95
+  transit use, t45  operating costs, 216-218, 217n, 280,
+  travel volumes, t95
+  weekend travel, t97  314, 381, 383
+Boston Metropolitan Transit Authority,  operator costs, 318, 383
+  ownership costs, 253
+  100  passenger volumes, 228-229, t278,
+Buchanan Report, 332
+Buffalo (N.Y.)  290, 295
+  passengers, t57
+  CBD traffic, 87  peak-hour speeds, 320
+  housing starts, t l 16  and population densities, 244-245
+  population change, t33  possible innovations, 318-324
+  transit use, t45  priority merge, 322-324
+Building codes, 17  required vehicles, t278
+Burch, Philip H.  for residential collection, tl34, tl36,
+  book cited, 62n
+  quoted, 63-64  tl42, 364
+Bureau of Public Roads, cost estimates,  ridership trends, t96, 97
+  right-of-way cost formulas, 210, 211
+  66-67  round-trip distance, 174, 231
+  round-trip formula, 230
+Bus transportation. See also Feeder bus  route lengths, tl87
+  systems; Integrated bus systems  route miles, 58
+  (subway); Integrated bus systems  rush-hour volumes, 186
+  (surface)  schedule frequency, 197, 198, 229
+  schedule units formula, 232
+  access to, 68  seating, 58n, 197
+  along-the-line service, 184  station construction costs, 286
+  annual bus-miles formula, 233  and street capacity, 293
+  automation of, 327n  stub terminals, 198
+  average speed, 135  terminal cost formula, 213
+  capital recovery factors, 1178  terminal costs, 180, 314, 385
+  CBD terminal, 212-213  terminal design, 381-382
+  Chicago work-trips, 130  terminals, 21, 87
+  cost analysis, 182, 196-249 passim  transfers, 236, 237, 240, 245, 248
+  cost comparisons, 235-249  and travel time, 104
+  cost and service tradeoffs, 229  travel volumes, t95, t98
+  cost per unit, 254  trip costs, 236-240, 242
+  costing data, 379-389  trip distance, 138
+  description of line-haul, 379-389  trip length, t247
+  double-side loading, 198  trip times, t247
+  efficiency of, 366  vehicle costs, 216
+  exclusive highways, 206n, 245, 383  vehicle mileage, 58
+  exclusive lanes, 320  from workplace ring, 1131
+  express schedules, 319  Buses. See also Express buses; Freeway
+  fare collection, 319
+  flow imbalance, 99  fliers
+Fortune survey, t l 0 3  average economic life, tl78
+  franchise limitations, 356  double-side loading, 319
+  franchised competition, 354, 355  operations of, 309
+  functional relationships, 228-233,  and suburban terminals, 21
+  taxes on, 68
+  386-389  turbine engines, 318
+  headway, 193, 245  vehicle specifications, 380
+  labor costs, 314  Business. See Census of Business
+  lane-mile formula, 233  Business trips
+  for line-haul, tl34, tl36, tl42, 380  in Philadelphia, t91
+  line-haul costs, 314  by public transit, t89
+  load factor, 232  travel mode, 88-99 passim, t90
+  loading standards, 194  Butte (Mont.), interstate highway costs,
+  on local streets, 69
+  minor-direction volume, 184  t205
+  mixed-traffic highways, 384
+404  INDEX
+
+Bypass highways. See Belt highways  retailing, 22, t42
+  and suburbs, 2
+Cambridge (Mass.), interstate highway  Central offices
+  costs, t205  CBD, t47
+  CBD employment, 54
+Capacity. See Design capacity  central cities, t47
+Capital recovery factors, 177-179  employment, 39
+  location, 11, 18, 21, 39-42
+  formula, 177  in metropolitan rings, t47
+  and terminal costs, 212  "mover firms," t40, 47
+  transportation investments, tl78  suburbanization, 54
+Car pooling, 195, 233-234, 244, 248,  Charlotte (N.C.), transit trip purposes,
+
+  248n, 257, 258, 260n, 261; Fortune  t89
+  survey, tl03  Cherniack, Nathan, article cited, 206n
+Carli, Richard R., article cited, 339n  Chicago (111.). See also Congress Street
+Carney, Mary F., article cited, tl 15
+CATS. See Chicago Area Transporta-  Expressway; Congress Street Rapid
+  tion Study  Transit Line
+CBD. See Central business districts  arterial traffic volumes, t78, t79
+Census of Business, 25, 29n  automobile transportation, 95
+Census of Manufactures, 25  average rush-hour speed, 81
+Census of Population, 27, 39n  average transit speed, tl92
+Census of Retailing, 43  CBD area, t86
+Central Artery (Boston), evaluation of,  CBD employment, 37, t38
+  80  CBD land use, 298
+Central business districts  CBD shoppers, t38
+  areas in selected cities, t86  central-city area, 30
+  and central offices, 39, 47, t47  commuter characteristics, tl41
+  cordon crossings, 85, 85n  commuter subsidy, 100-101
+  decline of, 10-11  commuting distance and time, 139
+  Denver, 39n, 43n  cross-hauling, 153, 155
+  distribution needs, 331-332  daily person-trips, 84
+  employment in, 13, 35, 54  housing, 157
+  lane capacities, 87  housing starts, tl 16
+  peak-hour travel volumes, t86  income and occupation levels, 159,
+  population trends, 54  160
+  retailing, 42-44, t42  "mover firms," t41
+  terminal costs, 211-213  multifamily housing, 117
+  through traffic, 85, 87  net residential density, 204, 207
+  traffic in, 13  nonwhite employment and residences,
+  work-trip distances, tl29  146
+Central cities  North Shore operation, 363
+  central offices, 47, 47t  origination and destination studies,
+  and decentralization, 13-14, 44  121-167 passim
+  decline of, 10-11  passenger volumes, tl85, 189
+  employment, 25-38, t26, t28, t30, t33,  peak-hour travel, 37
+  t34, t45, 46-47, t46, 49-50, t50,  population change, t33
+  t51, 54  racial discrimination in, 146-155
+  employment declines in, t31  passim
+  entertainment in, 22  rail rapid transit, 92
+  future of, 21-22  residence rings, 122, 127, 147, tl53,
+  growth rates, 26-27  tl54
+  housing starts, tl 15, tl 16-117  residence types, tl26
+  land use, 49  residential collection, 133
+  and multifamily housing, 114-115  -esidential distribution, 151, 160,
+  population, 2, t26, 27-38, t28, t30,  164-166
+  t33, t34, t45, 46-47, t46, t50, t51,  residential location patterns, 126-142
+  52n, 54  passim
+  and public transit, 44-47  residential space consumption, 159
+  railway tracks, 21
+INDEX  405
+
+rings and sectors, 125  146-  Closed circuit television, 18, 22; and
+SMSA population, 38  decentralization, 16
+transit ridership trends, t96
+transit route lengths, tl87  Colean, Miles L., article cited, 113n
+transit station spacing, 188  Coleman, Francis E., paper cited, 77n
+transit trip purposes, t89  Columbus (Ohio)
+transit use, t45
+transportation capacity, 84  housing starts, tl 16
+transportation services, 121  population change, t33
+travel distance, tl29  transit use, t45
+travel modes, 92, 94, tl36  Committee on Race and Housing, 144
+travel volumes, t86, t95, t98  Communication technology, 11
+weekend travel, 97, t97  and decentralization, 16-17, 23-24
+workplace locations, 130-138  and subsidies, 351
+workplace-residence patterns,  Commuters
+  attitudes toward service, 102-104
+  155  Fortune survey, t l 0 3
+  Commuting, 23. See also Car pooling;
+  workplace rings, 122, 127, 146, 149,
+  tl53, tl54, tl62  Cross-hauling; Reverse commuting
+  by automobile, 249
+  workplace travel modes, 1131  average speed, 104
+  work-trip and residential choices, 119-  Chicago, 139, tl41
+  choice of automobile, 218-219
+  129  nonwhite workers, 145
+  by rail, 100
+  work-trips, 91-92, tl31, 139, 140,tl42  residential collection, Ch. 10
+Chicago Area Transportation Study, 84,  rush-hour volumes, 186
+  and street capacity, 293
+  109n, 188, 257  subsidy of, 99-102, 107n
+Chicago and North Western Railway  travel mode, 88-99 passim
+  travel time, 104
+  Company  travel volumes, t98
+  annual deficit (1961), 100  trip pattern, 171
+  North Shore operation, 363  Compact cars, 218-219
+Chicago Transit Authority, 97  and cost reductions, 313-316
+Chinitz, Benjamin, book cited, 9n  and highway capacity, 313
+Cincinnati (Ohio)  and highway investments, 315
+  CBD area, t86  and line-haul automation, 317
+  housing starts, tl 16  parking concessions, 367
+  peak-hour travel volume, t86  and urban auto transport, 313-316
+  population change, t33  Congress Street Expressway (Chicago)
+  transit use, t45  peak-hour use, 70
+Circumferential highways. See Belt  traffic volume, 77-79, t95
+  Congress Street Rapid Transit Line
+  highways
+City growth, "ring" theory of, 20  (Chicago), 99
+Civil Aeronautics Board, approach to  previous travel modes, tlOO
+  station spacing, 188
+  regulation, 354  Connecticut, highway expenditures,
+Cleveland (Ohio)
+  t64
+  average rush-hour speed, 81  Construction. See also Residential con-
+  average transit speed, tl92
+  CBD area, t86  struction
+  housing starts, t l 16  highways, 56, 59, t59
+  interstate highway costs, t205  housing starts, t i l l , 113, t l 15, 118
+  "mover firms," t41  multifamily housing, 112, 113-115
+  passenger volumes, tl85, 191  office buildings, 39
+  population change, t33  rail systems, 56
+  public transit, 101  rental housing, 113-114
+  Shaker Heights Line, 363  single-family housing, 110
+  transit ridership trends, t96  Construction costs. See also Structure
+  transit route length, tl87
+  transit station spacing, 188  costs
+  transit use, t45
+  travel volumes, t86, t95, t98
+  weekend travel, t97
+

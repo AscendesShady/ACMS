@@ -1,0 +1,935 @@
+  Convolution neural networks Chapter | 5 63
+
+FIGURE 5.7 The training and testing accuracy curves.
+
+CNN is much longer than with haar cascades, even with the lightweight CNN
+structure design. Therefore, instead of directly applying CNN to a UAV image
+with a sliding-window detection manner, a combined detector Haar + CNN is
+a more optimal solution in this case. The Haar classiﬁer detects vehicles ﬁrst
+in the image, and then the CNN just examines the remaining candidates (the
+red bounding boxes in the top image of Fig. 5.8). This method results in high
+accuracy and efﬁciency.
+
+  The training of CNN was done on 18,000 samples and testing on 2,000 sam-
+ples. RMSprop (Root Mean Square Propagation) was selected as the optimizer
+because of its better performance than others like traditional SGD (Stochastic
+Gradient Descent) in similar cases based on experience and tests. The batch
+size for optimization was set to 30. Our CNN vehicle classiﬁer reached 99.55%
+classiﬁcation accuracy on the test data in 100 epochs of training, which was
+very encouraging. The model accuracy curves (training and testing) is shown in
+Fig. 5.7.
+
+5.3 Case study: spatiotemporal trafﬁc pattern learning
+In this subsection, we introduce how CNN can be applied to spatiotemporal
+trafﬁc pattern learning in trafﬁc speed prediction. We introduce a two-stream,
+multichannel convolution neural network (TM-CNN) for multilane trafﬁc speed
+prediction with the consideration of trafﬁc volume impact. More details of the
+example can be found in our paper Ke et al. (2020c). In the proposed model, we
+develop a data conversion method to convert both the multilane speed data and
+multilane volume data into multichannel spatiotemporal matrices. We design a
+CNN architecture with two streams, where one takes the multichannel speed ma-
+trix as input and another takes the multichannel volume matrix as input. A fusion
+method is further implemented for the two streams. Speciﬁcally, convolution
+64 Machine Learning for Transportation Research and Applications
+
+FIGURE 5.8 The vehicle detection results from a hand-crafted classiﬁer Haar cascade (top) and
+the proposed CNN (bottom).
+
+layers learn the two matrices to capture trafﬁc ﬂow features in three dimen-
+sions: the spatial dimension, the temporal dimension, and the lane dimension.
+Then, the output tensors of the two streams will be ﬂattened and concatenated
+into one speed–volume vector, and this vector will be learned by the FC layers.
+Accordingly, a new loss function is devised considering the volume impact in
+the speed prediction task.
+
+  The ﬁrst step of our methodology is modeling the multilane trafﬁc ﬂow as
+multichannel matrices. We propose a data conversion method to convert the raw
+data into spatiotemporal multichannel matrices, in which trafﬁc on every indi-
+vidual lane is added to the matrices as a separate channel. This modeling idea
+comes from CNN’s superiority to capture features in multichannel RGB im-
+ages. In RGB images, each color channel has correlations yet differences with
+the other two. This is similar to trafﬁc ﬂows on different lanes where corre-
+lations and differences both exist. Thus, averaging trafﬁc ﬂow parameters at a
+certain milepost and time stamp is like doing a weighted average of the RGB
+values to get the grayscale value. In this sense, previous methods for trafﬁc
+speed prediction are designed for “grayscale images” (spatiotemporal predic-
+tion for averaged speed) or even just a single image column (speed prediction
+for an individual location). In this study, the proposed model manages to handle
+lane-level trafﬁc information by formulating the data inputs as “RGB images.”
+
+  This data conversion method diagram is shown in Fig. 5.9. There are loop
+detectors installed at k different mileposts along this segment, and the past n
+time steps are considered in the prediction task. We denote the number of lanes
+as c. Without loss of generality, it is assumed that the number of lanes is three
+  Convolution neural networks Chapter | 5 65
+
+FIGURE 5.9 The data input modeling process of converting the multilane trafﬁc ﬂow raw data to
+the multichannel spatiotemporal matrix.
+
+in Fig. 5.9 for the sake of illustration. Single-lane trafﬁc would be represented
+by two k × n spatiotemporal 2-D matrices, where one is for speed and another
+
+for volume. We denote them as Iu for speed and Iq for volume. We deﬁne the
+speed value and volume value to be uilt and qilt respectively for a detector at
+milepost i (i = 1, 2, . . . , k) and lane l (l = 1, 2, . . . , c) at time t (t = 1, 2, . . . , n).
+
+Note that each uilt or qilt is normalized to between 0 and 1 using min-max
+normalization since the speed and volume have different value ranges. Hence,
+in the speed and volume matrices with the size k × n × c, we construct the 12
+
+matrices using Eqs. (5.5) and (5.6)
+
+  Iu(i, t) = (ui1t , ui2t , . . . , uict )  (5.5)
+  Iq (i, t) = (qi1t , qi2t , . . . , qict ) ,  (5.6)
+
+where i and t are the row index and column index of a spatiotemporal matrix,
+
+representing the milepost and the time stamp, respectively. Iu(i, t) and Iq (i, t)
+denote the multichannel pixel values of the speed and the volume. The number
+
+of channels corresponds to the number of lanes c. Each element in the 2-D multi-
+
+channel matrices is a c-unit vector representing c lanes’ trafﬁc speeds or volumes
+
+at a given milepost i and time t. In the three-lane example in Fig. 5.9, the spa-
+
+tiotemporal matrices have three channels. Mathematically, the spatiotemporal
+
+multichannel matrices for trafﬁc speed (Xu) and volume (Xq ) can be denoted
+as Eqs. (5.7) and (5.8):
+
+  ⎡  Iu(1, 1) Iu(1, 2) . . . Iu(1, n)  ⎤
+
+  ⎢  Iu(2, 1)  Iu(2, 2)  ...  Iu(2, n)  ⎥
+  ⎢  ⎥
+Xu  =  ⎢  ⎥  (5.7)
+  ⎢  .  .  .⎥
+  ⎣ ..  ..  .. ⎦
+
+  Iu(k, 1) Iu(k, 2) . . . Iu(k, n)
+66 Machine Learning for Transportation Research and Applications
+
+FIGURE 5.10 The convolution operation to extract features from the multichannel spatiotemporal
+trafﬁc ﬂow matrices.
+
+  ⎡  Iq (1, 1) Iq (1, 2) . . . Iq (1, n)  ⎤
+
+  ⎢  Iq (2, 1)  Iq (2, 2)  ...  Iq (2, n)  ⎥
+  ⎢  ⎥
+Xq  =  ⎢  . ⎥⎥ .  (5.8)
+  ⎢  .  .  .. ⎦
+  ⎣ ..  ..
+
+  Iq (k, 1) Iq (k, 2) . . . Iq (k, n)
+
+  With the reorganized input as a multichannel matrix X (X could be Xu or
+Xq ), the basic unit of a convolution operation is shown in Fig. 5.10. On the far
+left of the ﬁgure, it is the input spatiotemporal matrix or image X. Every channel
+of the input matrix is a 2-D spatiotemporal matrix representing the trafﬁc ﬂow
+pattern on the corresponding lane. On the top of the left-hand column, channel
+1 displays the trafﬁc pattern of lane 1; and on the bottom, the pattern of lane c is
+presented. The symbol “*” denotes the convolution operation in Fig. 5.10. Since
+our input is a multichannel image, the convolution ﬁlters are also multichannel.
+In the ﬁgure, a 3 × 3 × c ﬁlter is drawn, while the size of the ﬁlter can be
+chosen as needed. The values inside the cells of a ﬁlter are the weights of the
+CNN, which are automatically modiﬁed during the training process. The ﬁnal
+weights are able to extract the most salient features in the multichannel image.
+The convolution operation outputs a feature map for each channel, and they
+are summed up to be the extracted feature map of this convolution ﬁlter in the
+current convolution layer. With multiple ﬁlters applied to the same input image,
+a multichannel feature map will be constructed, which serves as the input to the
+next layer.
+
+  In order to learn the multilane trafﬁc ﬂow patterns and predict trafﬁc speeds,
+a CNN structure is designed (see Fig. 5.11). Compared to a standard CNN, the
+proposed CNN architecture is modiﬁed in the 11 following aspects: (1) The net-
+work inputs are different, that is, the input image is a spatiotemporal image built
+  Convolution neural networks Chapter | 5 67
+
+FIGURE 5.11 The proposed TM–CNN architecture.
+
+by trafﬁc sensor data, and it has multiple channels that represent the lanes of
+a corridor. Moreover, the pixels values’ range is different from a normal im-
+age. For a normal image, it is 0–255; however, here it ranges 0–15 to either the
+highest speed (often the speed limit) or the highest volume (often the capacity).
+(2) The neural network has two streams of convolution layers, which are for
+processing the speeds and volumes, but most CNNs have only one stream of
+convolution layers. The purpose of having two streams of convolution layers is
+to integrate both speed information and volume information into the model so
+that the network can learn the trafﬁc patterns better than only learning speed.
+To combine the two streams, a fusion operation that ﬂattens and concatenates
+the outputs of the two streams are implemented between the convolution layers
+and the FC layers. The fusion operation concatenation is chosen instead of ad-
+dition or multiplying because the concatenation operation is more ﬂexible for
+us to modify each stream’s structures. In other words, the concatenation fusion
+method allows the two streams of convolution layers to have different struc-
+tures. (3) The extracted features have unique meanings and are different from
+image classiﬁcations or most other tasks. The extracted features here are rela-
+tionships among road segments, time series, adjacent lanes, and between trafﬁc
+ﬂow speeds and volumes. (4) The output is different, i.e., our output is a vector
+of trafﬁc speeds of multiple locations at the future time rather than a single cate-
+gory label or some bounding-boxes’ coordinates. The output itself is part of the
+input for another prediction, while this is not the case for most other CNN’s. (5)
+Different from most CNN’s, the proposed CNN does not have a pooling layer.
+The main reason for not inserting pooling layers in between convolution layers
+is that our input images are much smaller than regular images for image classiﬁ-
+cation or object detection. Regular input images to a CNN usually have hundreds
+of columns and rows, while the spatiotemporal images for roadway trafﬁc are
+not that large. In this research and many existing trafﬁc prediction studies, the
+time resolution of the data is ﬁve minutes, which means that, even when using
+two-hour data for prediction, there are only 24 time steps. Thus, we do not risk
+68 Machine Learning for Transportation Research and Applications
+
+losing information by pooling. (6) The loss function is devised to contain both
+
+speed and volume information. For traditional image classiﬁcation CNN’s, the
+
+loss function is the cross-entropy loss. And for trafﬁc speed prediction tasks, the
+
+loss function is commonly the Mean Squared Error (MSE) function with only
+
+speed values. However, in this research, we add a new term in the loss function
+
+to incorporate the volume information. We denote the ground truth speed vector
+
+and volume vector as Yu and Yq , and the predicted speed vector and volume
+vector as Yˆu and Yˆq . Note that Yu, Yq , Yˆu, and Yˆq are all normalized between 0
+
+and 1. The loss function L is deﬁned in Eq. (5.9) by summing up the MSEs of
+  Yˆq − Yq
+speed and volume. The volume term λ  2  is  added  to  the  loss  function
+  2
+
+to reduce the probability of overﬁtting by helping the model better understand
+
+the essential trafﬁc patterns. This design improves the speed prediction accuracy
+
+on the test dataset with proper settings of λ. Our suggested value of λ is between
+
+0 and 1, considering that the volume term that deals with overﬁtting should still
+
+have a lower impact than the speed term on speed prediction problems.
+
+  L = Yˆu − Yu 2 + λ Yˆq − Yq .2  (5.9)
+  2  2
+
+  In the proposed TM–CNN, the inputs are our multichannel matrices Xu and
+Xq with the dimension of k × n × c. The ﬁlter size is all 2 × 2 × c in order
+to better capture the correlations between each pair of adjacent loops, as well
+as adjacent times. The number of ﬁlters for each convolution layer is chosen
+based on experience and consideration of balance efﬁciency and accuracy. The
+last convolution layer in each of the two streams is ﬂattened and connected
+to a FC layer. This FC layer is fully connected with the output layer as well.
+The length of the output vector Yˆu is 1 × (k × c) since the prediction is for
+one future step. All activations except the output layer use the ReLU function.
+The output layer has a linear activation function, which is adopted for regression
+tasks. Eqs. (5.10) and (5.11) describe the derivations mathematically from inputs
+to the outputs of the last convolution layers,
+
+Yˆ conv u = ϕ Wu3 ∗ ϕ Wu2 ∗ ϕ (Wu1 ∗ Xu + bu1) + bu2 + bu3  (5.10)
+Yˆ conv q = ϕ Wq3 ∗ ϕ Wq2 ∗ ϕ Wq1 ∗ Xq + bq1 + bq2 + bq3 ,  (5.11)
+
+where  Yˆ conv  and  Yˆ conv  are  the  intermediate  speed  and  volume  outputs  of  the
+
+  u  q
+
+CNN in between the last convolution layers and the ﬂatten layers, Wui and
+Wqi (i = 1, 2, 3) are the weights for the convolutions, bui and bqi (i = 1, 2, 3)
+are the biases, and ϕ(·) is the ReLU activation function. After obtaining these
+
+two intermediate outputs, we ﬂatten them and fuse them into one vector, and
+
+then further learn the relationships between the volume feature map and the
+
+speed feature map using FC layers.
+
+As aforementioned, we choose concatenation as the fusion function for the
+
+two ﬂattened intermediate outputs to allow the customization of variou neural
+  Convolution neural networks Chapter | 5 69
+
+network designs of the two streams. Customized streams could result in two
+intermediate outputs of different dimensions. While concatenation would still
+successfully fuse the two outputs together and support the learning of speed–
+volume relationships by the FC layers, most other fusion operations require the
+two vectors to have the same length. This fusion process is mathematically rep-
+resented in Eq. (5.12) as follows:
+
+  Yˆu, Yˆq = W5 × ϕ W4 × Conv F Yˆ conv u , F Yˆ conv q + b4 + b5, (5.12)
+
+where W4 and W5 are the weights for the two FC layers, b4 and b5 are the biases,
+F (·) is the ﬂatten function, and Conc(·) is the concatenation function.
+
+5.4 Case study: CNNs for data imputation
+
+This study puts forward an innovative method for missing trafﬁc data imputation
+that solves the imputation problem from the perspective of the spatiotemporal
+2D image using a deep learning-based image inpainting approach. Traditionally,
+the trafﬁc data imputation approach applied the pure mathematical methods,
+which cannot make full use of both spatial and temporal information. The basic
+idea of our approach is ﬁrst transforming raw data into a 2-D image and then
+applying a CNN based-image inpainting approach to impute the missing data.
+This study focuses on imputing trafﬁc volume data. Therefore, the raw data is
+trafﬁc volume data. This method has good scalability, which means it can apply
+to other types of data, such as trafﬁc velocity data, with little modiﬁcation.
+
+  The ﬁrst step of data imputation is transforming the raw trafﬁc volume data
+into 2-D images. The horizontal axis (or x-axis) denotes the loop detectors’ IDs
+which are selected continuously from one road or several intersecting roads.
+In this way, the selection of loop detectors ensures all loop data is spatially
+related because two adjacent columns are spatially neighboring. The vertical
+axis (or y-axis) denotes the detection time stamp. Thus, the image size is N ×M,
+where N represents the loop detector number and M represents the time-stamp
+number. The value of each pixel represents the trafﬁc volume obtained from
+loop detectors during a speciﬁc time period. When displaying the trafﬁc volume
+in an image, measurements are linearly mapped into the range 0–255 in grey
+scale. Thus, the trafﬁc volume can be intuitively observed in both the spatial
+and temporal dimensions. An example 2-D trafﬁc volume image is shown in
+Fig. 5.12(a).
+
+  When part of the data is missing, the corresponding pixel value is set to −1 in
+the spatiotemporal matrix, and the corresponding missing pixel is mapped into
+255 in the data volume image (pure white color). The dark parts in Fig. 5.12
+indicate the existence of trafﬁc volume data. The darker is the pixel is, the lower
+is the trafﬁc volume. As mentioned, white pixels indicate a lack of data at such a
+spatiotemporal location (i.e., a location where data imputation is needed). There
+are three types of missing data in an image: the central region case, the random
+70 Machine Learning for Transportation Research and Applications
+
+FIGURE 5.12 Trafﬁc volume image with different missing status: (a) complete data without any
+missing region, (b) cata with missing central regions, (c) cata with randomly missing blocks, (d) data
+with randomly missing regions.
+
+block case, and the random region case. Cases involving the central region indi-
+cate that the missing part is one entire rectangular region located in the center of
+the image. This means that several successive loop detectors lost data during the
+same long period. The central region case is shown in Fig. 5.12(b). The random
+block case occurs when there are several small missing rectangular regions ran-
+domly located in the image as shown in Fig. 5.12(c). The random region case,
+which is shown in Fig. 5.12(d), occurs when the shape and location of the miss-
+ing regions are both random. The last two situations represent cases for which
+there are several loop detectors losing data randomly over a short period. The
+difference between the last two cases is the length of the missing period.
+
+5.4.1 CNN-based imputation approach
+The CNN is widely used in the object classiﬁcation and recognition tasks. It
+can extract high-level features that can ﬁlter some disturbances such as light
+and position. Thus, applying a CNN to analyze trafﬁc volume image can obtain
+inner correlations among different loop detectors and time stamps.
+
+  The basic idea is combining features of the encoder–decoder pipeline and
+the loss function of the generative adversarial network (GAN). The main ar-
+chitecture is an encoder–decoder pipeline. The encoder at ﬁrst transforms the
+input image with missing parts into the feature map. Then, the decoder restores
+the feature map back to a complete image. The inpainting regions can thus be
+extracted by putting the mask of missing parts on the output image. The en-
+coder and decoder are connected by a fully connected layer. The structure of the
+CNN-based imputation approach is shown in Fig. 5.13.
+
+  The encoder adopts the AlexNet architecture (Krizhevsky et al., 2012) which
+was proposed in 2012 and became one of the most popular architectures. CNN
+comes from regular neural networks that receive input and transform it through
+a series of hidden layers. Each hidden layer is made up of a set of neurons,
+where each neuron is fully connected to all the neurons in the previous layer.
+The neurons in a single-layer function are completely independent and do not
+share any connections. The last fully connected layer is also called the ‘out-
+put layer’. When this network is used for classiﬁcations, it represents the class
+  Convolution neural networks Chapter | 5 71
+
+FIGURE 5.13 CNN architecture for data imputation.
+
+scores. Compared to regular neural network, a CNN takes advantage of the fact
+that the input is an image and arranges neurons in three dimensions: width,
+height, and depth. To be more speciﬁc, the hidden layers in CNN typically con-
+sist of convolution layers, pooling layers, and fully connected layers in order,
+instead of only fully connected layers in regular neural networks. In this case,
+the input image size is 200 × 200, and the output feature map is 6 × 6 × 180.
+
+  The convolution layer computes the output of neurons that are connected
+to local regions in the input volume. After the convolution layer, the pooling
+layer will perform a downsampling operation in the spatial dimensions. There
+are three convolution layers, and each one is followed by one pooling layer. To
+make the following explanation clear, one convolution layer and one pooling
+layer are referred to as a ConvoPooling layer. There are three ConvoPooling
+layers in total. Various layer sizes are tested, and the following combination is
+the optimized one. For the ﬁrst layer, there are 20 ﬁlters with size 9 × 9. The
+pooling size is 4 × 4. Thus, the output dimension is 48 × 48 × 20. The ﬁlter
+size for the second layer is 9 × 9, and there are 60 of them. The pooling size is
+2 × 2. The output dimension is 20 × 20 × 60. The last convolution layer has 180
+ﬁlters with size 9 × 9, and the pooling size is 2 × 2. The output dimension of
+6 × 6 × 180.
+
+  The fully connected layer intends to spread information with activations of
+each feature map. The input layer has 180 feature maps of size 6 × 6, and it will
+output 180 feature maps of dimension 6 × 6. In contrast to other fully connected
+layers, it has no parameter connecting different feature maps and only spreads
+information within feature maps. Thus, the number of parameters of this layer
+is 180 × 6 × 6 rather than 1802 × 6 × 6, which is the dimension in the other fully
+connected layers.
+
+  The rest of the pipeline is the decoder following the fully connected layer.
+The core of decoder has three up-convolution layers with the rectiﬁed linear
+unit (ReLU) activation function. The deﬁnition of ReLU is f (x) = max(0, x).
+72 Machine Learning for Transportation Research and Applications
+
+FIGURE 5.14 Principle/setup of decoder (a) 2 × 2 Unpooling, (b) 2 × 2 Unpooling and 5 × 5
+convolution.
+
+In contrast to traditional convolution operation, the up-convolution is still a con-
+volution but produces a higher resolution image, which can be learned as a
+convolution following the unpooling (i.e., increasing the spatial span). The un-
+pooling is just replacing each pixel of the feature map by a m × m block with the
+pixel value in the top left-hand corner. The rest is set to 0. The basic principle of
+the decoder is shown in Fig. 5.14. The different color means the different pixel
+values in the image. The orange part (mid gray in print version) in Fig. 5.14(b)
+is the weighted sum of red (dark gray in print version) and yellow (light gray in
+print version) parts in the convolution operation.
+
+  The context encoder–decoder pipeline is trained by regressing the content
+with missing regions to the originally complete content. The only difference be-
+tween these two kinds of contests is the missing region, while other areas are
+the same. Thus, the loss function is important for optimizing the pipeline. The
+loss function selected in this paper is jointly comprised of two functions: re-
+construction (L2) loss and adversarial loss. The reconstruction loss will capture
+the overall structure of the missing region and correlations about its context. It
+will average the inﬂuence of multiple modes in predictions. The adversarial loss
+tends to choose a particular mode from the distribution to make the prediction
+look realistic.
+
+  For the input image x0 with missing regions, the context encoder–decoder
+pipeline F produces an output F (x0). The actual input image without missing
+regions is deﬁned as x. The joint loss function computes only the loss of x and
+F (x0) in the missing regions. To explain the loss function clearly, the missing
+region mask Mˆ is deﬁned. The corresponding values of the missing region are
+set to 1, while others are set to 0. The reconstruction loss function is derived
+from the Euclidean distance which is shown in (1) as follows:
+
+Lrec (x) = Mˆ  x − F (x0) 22 ,  (5.13)
+
+  2
+
+where is a convolution operation for a speciﬁc when combining with mask
+Mˆ . After applying this operation, the loss function effect range is limited in the
+missing region. This loss function makes the pipeline tend to produce the rough
+outline of the inpainting image.
+Convolution neural networks Chapter | 5 73
+
+  The adversarial loss function comes from GAN. One important parameter
+of GAN, called D, is the adversarial discriminator that takes both the prediction
+result and originally complete object into consideration, and tries to distinguish
+between them. The adversarial loss function is shown in the following equation:
+
+Ladv(x) = max Ex∈χ log D(x) − log 1 − D F (x0) ,  (5.14)
+
+  D
+
+where both F and D are optimized by stochastic gradient descent. This loss
+function reduces the imputation errors and makes the output of the pipeline
+closer to the actual data. Therefore, the joint loss function is shown in (3) as
+follows. The joint loss is the weighted sum of both reconstruction loss and
+adversarial loss. The loss function is important for the ﬁnal accuracy. The opti-
+mized weights are λrec = 0.35 and λadv = 0.65
+
+L = λrec Lrec + λadvLadv.  (5.15)
+
+5.4.2 Experiment
+
+The dataset used in this study was collected from loop detectors on the Interstate
+5 (I-5) freeway in Washington State. In total, three months of data from January
+2016 to March 2016 were collected from 256 loop detectors and used for the
+experiment in our study. With records collected at a 5-min time interval, this
+generates more than 50,000 records, which is considered a sufﬁcient sample
+size for the case study.
+
+  Based on the literature review, the missing ratio is normally between 10 and
+15%, but the ratio could be as high as 90% in some extreme cases. This paper
+takes the whole trafﬁc volume dataset as the raw data with no missing informa-
+tion. Manual operations have been performed on the raw data to remove part
+of it with certain ratios ranging from 5 to 50% (5% gain). This is better than
+using raw data with originally missing parts because the comparison between
+estimated values and ground truth data can be performed. The dimension of one
+training data image is set as 200 × 200, which means there are 200 detectors in
+the spatial dimension and 200 records in the temporal dimension. It is possible
+to make the images with other dimensions, such as 100 × 100. To avoid a lack
+of features, the dimension should not be small. The training process and testing
+process may take a longer time when the dimension is too large.
+
+  The sample size of the training dataset is 14,000. There are ten groups of test
+data images, each of which has the same dimensions as the training images, but
+with different missing ratios. Each group has ten images with the same missing
+ratio, and the error of each group is calculated by averaging the estimated errors
+of all images in the group. Besides the proposed CNN-based approach, another
+two baseline approaches are implemented for comparative purposes: a DSAE-
+based approach and a BPCA approach. The comparison results highlight the
+strengths of our approach.
+74 Machine Learning for Transportation Research and Applications
+
+  The evaluations of the imputation approaches are measured by the error of
+the imputed data. Three widely used criteria are adopted in this paper that fo-
+cus on different perspectives of error. The ﬁrst criterion considered is the root
+mean square error (RMSE), which is shown in Eq. (5.16). It represents the sam-
+ple standard deviation of the differences between predicted values and observed
+values. Further, it just compares forecasting errors of different models for par-
+ticular data, but not the whole dataset because it is scale dependent:
+
+  1  n
+
+RMSE =  n xi − yi .  r  2  (5.16)
+
+  i=1
+
+  The second criterion used is the mean absolute error (MAE) shown in
+Eq. (5.17), and it is the sum of two components—quantity and allocation dis-
+agreement. The quantity disagreement is deﬁned as the absolute value of the
+mean error, and the allocation disagreement is the negative quantity disagree-
+ment. The MAE calculates the average absolute difference:
+
+  1  n
+
+MAE =  xi − yi .r  (5.17)
+  n
+  i=1
+
+  The last evaluation criterion used is the mean percentage error (MPE) shown
+in Eq. (5.18). It computes the average of absolute percentage errors by which
+predictions of a model differ from actual values of the quantity being predicted:
+
+MPE =  1 n xri − yi
+  r,  (5.18)
+  n i=1 xi
+
+where n is the total number of the missing data, yi is the ith imputed data, and
+xri is the yi’s corresponding raw data.
+
+  This model is built on TensorFlow via Python. Thus, the training and testing
+work are both done on the TensorFlow framework. The training data is divided
+into 200 batches with each batch containing 70 images before being put into the
+network for the training process.
+
+  The RMSE, MAE, and MPE curves of the three approaches are shown in
+Fig. 5.15. In order to reduce the inﬂuence of the various selections of miss-
+ing regions, the mean operation is based on ten evaluation results for the same
+method and the same missing ratio. However, the missing regions are randomly
+chosen for each evaluation. According to Fig. 5.15, the overall trends of the three
+curves are similar. When the missing ratio is < 30%, it is difﬁcult to tell which
+approach is the best since they have similar errors. Also, it appears that ran-
+dom disturbances can greatly inﬂuence the ﬁnal results. In our experiment, the
+BPCA has a better performance than the DSAE. This is because BPCA mainly
+focuses on previous information at the same detector and will not be affected by
+  Convolution neural networks Chapter | 5 75
+
+FIGURE 5.15 Error comparison with different criterion: (a) RMSE result, (b) MAE result,
+(c) MPE result.
+
+nearby detector data. Additionally, the Bayesian model can correct errors on a
+general level. When the missing ratio is low, the temporal information plays a
+major role in imputation. The spatial information plays a minor role and might
+even become a disturbance. Although the proposed approach also makes use
+of spatial information, it can also extract higher-level features than the DSAE,
+which means that it can ﬁlter out portions of useless information. As the miss-
+ing ratio increases, the error of the BPCA increases much faster than the other
+two approaches. The temporal information itself is not sufﬁcient for data impu-
+tation when there is a lot of data missing. Therefore, the DSAE and the CNN
+start to show the strength of their data imputation approaches due to the fact that
+they combine both temporal and spatial information. Ultimately, the CNN still
+performs better than the DSAE in almost all cases.
+76 Machine Learning for Transportation Research and Applications
+
+FIGURE 5.16 Imputation results with CNN-based approach: (a) Actual trafﬁc volume data,
+(b) Imputation trafﬁc volume data with 10% missing ratio, (c) Imputation trafﬁc volume data with
+40% missing ratio.
+
+  The imputation results using the CNN-based approach are shown in Fig. 5.16
+with three missing ratios of 0, 10, and 40%. To make these ﬁgures easy for con-
+ﬁguration, the loop detector number is from 0 to 49 and the time stamp number
+of 50 on 20 January 2016. The x-axis indicates the loop detector number cor-
+responding to the spatial information and the y-axis indicates the time stamp.
+These ﬁgures use different colors to show the trafﬁc volume, where the bright
+colour means that the trafﬁc volume is high, and the dark colour means that
+the trafﬁc volume is low. The three images in Fig. 5.16 are very similar in ap-
+pearance, which indicates that our approach imputes the data well on a general
+level.
+
+  To see the detail of the imputation results, the data of loop detector No. 50
+with time stamp number of 100 is extracted from one column of the preceding
+imputation results. Fig. 5.17 shows the imputation results when the missing ratio
+is 10 and 40%. The blue line (dark gray in print version) represents the imputed
+data points, and the orange line (mid gray in print version) represents the original
+data points. Similarly, the imputation results applying the DSAE and BPCA
+approaches are shown in Figs. 5.18 and 5.19. Hence, the x-axis shows the time
+stamp whose interval is 5 min. The y-axis shows the trafﬁc volume and its unit
+is vehicles (observed in a 5 min interval). The imputation results of the CNN
+based approach show that it can impute the missing portion of the data well and
+recover it in a manner such that values are close to the actual ones observed in
+the ground truth data. Further, the distribution of errors on each missing point is
+stable, and there are no outliers.
+
+  Similar to the CNN-based approach, the DSAE approach also shows good
+stability in error distribution (Fig. 5.18). However, the average and variance of
+the error are larger than those for our approach, partly because the DSAE ap-
+proach can only extract low-level features. The texture of the trafﬁc volume
+image has a strong pattern which means the texture will change regularly. There-
+fore, the DSAE is more likely to be inﬂuenced by noise, and its error will be
+greater than those for the CNN-based approach on average.
+
+  The BPCA shows greater error value earlier in the time series because the
+method mainly depends on previous data (Fig. 5.19). In the beginning, the
+  Convolution neural networks Chapter | 5 77
+
+FIGURE 5.17 Imputation results with CNN-based approach: (a) 10% Missing ratio, (b) 40%
+Missing ratio.
+
+amount of previous data is small, leading to a lack of information available
+from which to impute the next data point. As the time series moving forward,
+the amount of previous data increases and helps to improve the imputation accu-
+racy of the Bayesian model. However, when there is a large amount of missing
+data in the dataset, this approach still does not perform well. Also, its imputa-
+tion accuracy also depends on the Bayesian model. It is hard to decide whether
+this model is most suitable for one speciﬁc situation or can be generalized. Ul-
+timately, when the situation changes, the Bayesian model may change as well,
+and thus, it is not generally applicable.
+5.5 Exercises
+• If you are given 200 vehicle images, would you use CNN? If so, which ar-
+
+  chitecture would you try and why?
+78 Machine Learning for Transportation Research and Applications
+
+FIGURE 5.18 Imputation results of DSAE approach: (a) 10% Missing ratio, (b) 40% Missing
+ratio.
+
+• How about if you are given 20,000 images, which CNN models would you
+  try and why?
+
+• What is stride? What is the effect of high stride on the feature map?
+• Given input sequence [1, 3, 6, 4, 8, 9, 5] and a ﬁlter [1, 0, 1], what is the out-
+
+  put of the convolution operation with stride 2 with zero padding?
+• What is the size of the output feature map given 7 × 7 input and two ﬁlters of
+
+  3 × 3 with stride 1 and no padding?
+• What is the output of 1D max pooling over input [1, 2, 3, 4, 5, 6] with ﬁlter
+
+  size 2 and stride 2?
+• What are the different types of pooling? Explain their characteristics.
+• List down the hyperparameters of a pooling layer.
+• Explain the role of the convolutional layer in CNN.
+• Explain the role of the ﬂattening layer in CNN.
+• Explain the role of the fully connected (FC) layer in CNN.
+  Convolution neural networks Chapter | 5 79
+
+FIGURE 5.19 Imputation results of BPCA approach: (a) 10% Missing ratio, (b) 40% Missing
+ratio.
+
+• What are the problems associated with the Convolution operation and how
+  can one resolve them?
+
+• Explain the signiﬁcance of “parameter sharing” and “sparsity of connections”
+  in CNN.
+
+• Let us consider a CNN having three different convolutional layers in its ar-
+  chitecture as – Layer-1: Filter Size – 3 X 3, Number of Filters – 10, Stride –
+  1, Padding – 0 Layer-2: Filter Size – 5 X 5, Number of Filters – 20, Stride –
+  2, Padding – 0 Layer-3: Filter Size – 5 X5, Number of Filters – 40, Stride –
+  2, Padding – 0. If we give as input a 3-D image to the network of dimension
+  39 X 39, then determine the dimension of the vector after passing through a
+  fully connected layer in the architecture.
+This page intentionally left blank
+Chapter 6
+
+Recurrent neural networks
+
+In the previous chapter, we explored the convolutional neural network and a va-
+riety of CNN-based model architectures. CNNs mostly focuses on processing
+image data, and video data has been widely used in transportation applica-
+tions including trafﬁc object detection, recognition, and classiﬁcation. However,
+one of the key properties of transportation-related data, i.e., temporal informa-
+tion, cannot be easily encoded from time series data by feed-forward (fully
+connected) neural networks and CNNs to resolve the temporal dependency in
+various transportation tasks, such as trafﬁc ﬂow prediction. Characterizing the
+temporal dependency in time series is a long-standing but still popular topic
+since time series data with randomness and periodicity plays an important role
+in a lot of analytical and forecasting tasks, like weather forecasting and travel
+planning. Many classical methods and algorithms have been proposed to process
+time series, including Markov models, spectral analysis methods, autoregressive
+models, and its popular variant Auto-Regressive Integrated Moving Average
+(ARIMA). Although these classical models are relatively simple, to some ex-
+tent, they have similar model structures to the recently developed neural network
+structure that we will introduce next.
+
+  In this chapter, we will focus on another type of neural network structure,
+recurrent neural network (RNN), which is suitable for dealing with sequen-
+tial data. RNN and its variants have been widely used in the sequential data
+modeling, such as natural language processing (NLP) and other advanced neu-
+ral network architectures. We begin by introducing the basic structure of RNN
+and two of its variants, i.e., the well-known long short-term memory network
+(LSTM) and gated recurrent unit network (GRU). One important architecture for
+capturing the forward and backward temporal dependencies in time series, i.e.,
+the bidirectional structure, is introduced taking the bidirectional LSTM as an ex-
+ample. To learn a representation of time series data and better characterize the
+dependencies between input and output sequences, the widely used sequence-to-
+sequence structure, also called encoder–decoder, and a critical attention mech-
+anism are also detailed in this chapter. A more advanced architecture adopting
+the attention mechanism called transformer, which has nearly reformed the se-
+quential modeling in the deep learning ﬁeld, is introduced to shed more light
+on the importance of properly designing neural network models. Following the
+methodology introduction, two categories of RNN-related transportation tasks
+are presented to give the reader a sense of how to apply RNNs and related mod-
+els to the real transportation applications.
+
+Machine Learning for Transportation Research and Applications  81
+
+https://doi.org/10.1016/B978-0-32-396126-4.00011-4
+
+Copyright © 2023 Elsevier Inc. All rights reserved.
+82 Machine Learning for Transportation Research and Applications
+
+6.1 RNN fundamentals
+
+RNN is a class of powerful deep neural network that uses its internal memory
+with loops to deal with sequence data. Unlike CNNs, RNNs can scale to much
+longer sequences than would be practical for networks without sequence-based
+specialization. Most RNNs can also process sequences of variable length. The
+architecture of RNNs is illustrated in Fig. 6.1.
+
+  To process the sequence input, RNN takes advantage of one of the early
+ideas found in machine learning and statistical models of the 1980s: sharing
+parameters across different parts of a model (Goodfellow et al., 2016). Param-
+eter sharing makes it possible to adapt the model to different forms (different
+lengths) and generalize across them. If we had separate parameters for each
+value of the time index in the sequential input, we could not generalize to se-
+quence lengths. The shared parameters are hosted in the RNN cell, as shown in
+Fig. 6.1, to compute the hidden states ht . Unlike the introduced fully connected
+layers and CNNs, RNNs produce an output at each time step and have recurrent
+connections between the hidden units.
+
+FIGURE 6.1 Standard RNN architecture and an unfolded structure with T time steps.
+
+  The RNN cell receives the input vector, XT , and generates the output, which
+can be a vector Y T or the last element of yT . Here, besides being a value, the
+component xt in XT can also be a vector xt ∈ Rn with n elements. In this case,
+XT will be a 2-D matrix XT ∈ RT ×n.
+
+  The unfolded structure of RNNs, shown on the right in Fig. 6.1, presents the
+calculation process that, at each time iteration t, the hidden layer maintains a
+hidden state, ht , and updates it based on the layer input, xt , and the previous
+hidden state, ht−1, using the following equation:
+
+ht = σh(Wxhxt + Whhht−1 + bh),  (6.1)
+
+where Wxh is the weight matrix from the input layer to the hidden layer, Whh
+is the weight matrix between two consecutive hidden states (ht−1 and ht ), bh is
+the bias vector of the hidden layer, and σh is the activation function to generate
+the hidden state. The network output can be characterized as:
+
+yt = σy (Why ht + by ),  (6.2)
+  Recurrent neural networks Chapter | 6 83
+
+where Why is the weight matrix from the hidden layer to the output layer, by is
+the bias vector of the output layer, and σy is the activation function of the output
+layer. The parameters of the RNN is trained and updated iteratively via the back-
+propagation through time (BPTT) method. In each time step t, the hidden layer
+will generate a value, yt . In some tasks, like single-step trafﬁc prediction, only
+the last output, yT , is the desired result.
+
+  Although RNNs exhibit the superior capability of modeling nonlinear time
+series problems (Ma et al., 2015), regular RNNs suffer from the vanishing or
+blowing up of the gradient during the BPTT process. The reason is that RNN
+is trained by BPTT, and therefore unfolded into a structure like a feed-forward
+network with multiple layers. When the gradient is passed back through many
+time steps, it tends to grow or vanish. Thus, RNNs are incapable of learning from
+long time lags (Gers et al., 1999), or saying long-term dependencies (Bengio et
+al., 1994). This section introduces the basic structure of the RNN and describes
+the shortcomings of RNNs brieﬂy. If you are interested in knowing more about
+the basic theory underlying RNN and its variants, please refer to Sherstinsky
+(2020).
+
+6.2 RNN variants and related architectures
+
+6.2.1 Long short-term memory (LSTM) and gated recurrent units
+  (GRU)
+
+To overcome the gradient problem, gate units with nonlinear activation functions
+and separated cell states are added to the RNN cells to prevent the gradient from
+vanishing or exploding. A representative RNN variant with gate units is the
+Long Short-Term Memory (LSTM). It has been shown that LSTMs work well
+on sequence-based tasks with long-term dependencies (Duan et al., 2016; Chen
+et al., 2016). Although there are a variety of typical LSTM variants proposed in
+recent years, a comprehensive analysis of LSTM variants shows that few RNN
+variants can improve upon the standard LSTM architecture signiﬁcantly (Greff
+et al., 2017). Thus, we mainly introduce LSTM as the most representative RNN
+variant in this subsection.
+
+  The structure of LSTM cell, a variant of the RNN hidden unit, is shown in
+Fig. 6.2. At time step t ∈ {1, 2, ..., T }, the LSTM layer maintains a hidden mem-
+ory cell C˜t and three gate units, which are input gate it , forget gate ft , and output
+gate ot . The LSTM cell takes the current variable vector xt , the preceding out-
+put ht−1, and preceding cell state Ct−1 as inputs. With the memory cell and the
+gate units, LSTM can learn long-term dependencies to allow useful information
+to pass along the LSTM network. The gate structure, especially the forget gate,
+helps LSTM to be an effective and scalable model for several learning problems
+related to sequential data (Greff et al., 2017). The input gate, the forget gate, the
+output gate, and the memory cell are represented by colored boxes in the LSTM
+84 Machine Learning for Transportation Research and Applications
+
+FIGURE 6.2 Structure of the LSTM cell.
+
+cell in Fig. 6.2. Their calculation can be described as the following equations:
+
+ ft = σg(Wf · xt + Uf · ht−1 + bf )  (6.3)
+  it = σg(Wi · xt + Ui · ht−1 + bi )  (6.4)
+  ot = σg(Wo · xt + Uo · ht−1 + bo)  (6.5)
+  (6.6)
+C˜t = tanh(WC · xt + UC · ht−1 + bC ),
+
+where · is the matrix multiplication operator. Wf , Wi, Wo, and WC are the
+weight matrices mapping the hidden layer input to the three gate units and the
+memory cell, while the Uf , Ui, Uo, and UC are the weight matrices connecting
+the preceding output to the three gates and the memory cell. The bf , bi, bo,
+and bC are four bias vectors. The gate activation function σg(·) is the sigmoid
+function, and the tanh(·) is the hyperbolic tangent function. Then, the cell output
+state Ct and the layer output ht can be calculated as follows:
+
+Ct = ft Ct−1 + it C˜t  (6.7)
+  ht = ot tanh(Ct ),  (6.8)
+
+where is the element-wise matrix multiplication operator.
+
+  The ﬁnal output of an LSTM layer should be a sequence of the layer output
+at all time steps, represented by HT = [h1, h2, ..., hT ]. If only the last element
+of the output vector hT is the desired result, i.e., xˆT +1 = hT , in the training
+process, the model’s total loss L at each iteration can be calculated by
+
+L = Loss(xˆT +1 − xT +1) = Loss(hT − xT +1),  (6.9)
+
+where Loss(·) is the loss function, which is normally the mean square error
+function for trafﬁc prediction problems.
+  Recurrent neural networks Chapter | 6 85
+
+6.2.2 Bidirectional RNN
+
+In many applications, we want to produce a prediction of yt that may depend
+on the whole input sequence. The bidirectional RNNs were invented to address
+characterizing bidirectional dependencies, and they have been extremely suc-
+cessful in applications, such as handwriting recognition, speech recognition, and
+bioinformatics. Bidirectional RNNs are also useful in the transportation domain.
+For example, in trafﬁc forecasting, since trafﬁc patterns have apparent periodic-
+ity, trafﬁc state time series not only have chronologically forward dependencies,
+but also backward relationships.
+
+FIGURE 6.3 Bidirectional LSTM.
+
+  The idea of the BDLSTM comes from the bidirectional RNN (Schuster and
+Paliwal, 1997), which processes sequence data in both forward and backward
+directions with two separate LSTM hidden layers. The structure of an unfolded
+BDLSTM layer, containing a forward LSTM layer and a backward LSTM layer,
+
+  −→
+is introduced and illustrated in Fig. 6.3. The forward layer output, h t , is iter-
+atively calculated based on positive ordered inputs [x1, x2, ..., xT ] and masks
+
+  ←−
+[m1, m2, ..., mT ]. The backward layer output, h t , is iteratively calculated us-
+ing the reversed ordered inputs and masks from time step T to time step 1. Both
+forward and backward outputs are calculated based on the LSTM-I model equa-
+tions, Eqs. (6.3)–(6.8). The BDLSTM layer generates output element yt at each
+
+  −→ ←−
+step t based on h t and h t by using the following equation:
+
+  −→ ←−  (6.10)
+  yt = ⊕( h t , h t ),
+
+where ⊕ is an average function to combine the two output sequences in this
+study. Note that other functions, such as summation, multiply, or concatenate
+
+functions, can be used instead. Similar to the LSTM layer, the ﬁnal output of a
+BDLSTM layer can be represented by a vector Y = [y1, y2, ..., yT ].
+86 Machine Learning for Transportation Research and Applications
+
+6.2.3 Sequence to sequence
+The sequence-to-sequence (often abbreviated to seq2seq) model is a special
+class of RNNs that were typically used in complex language problems like
+machine translation, question answering, etc. Many seq2seq text understanding
+tasks rely on the RNN-based an encoder–decoder framework. In such a frame-
+work, the encoder ﬁrst maps an input x = (x1, x2, . . . , xT ) into a representation
+vector as the encoder output, and then the decoder RNN takes encoder output as
+its input and generates the output with multiple steps y = (y1, y2, . . . , yT ).
+
+  Both encoder and the decoder in a seq2seq model are normally LSTM mod-
+els (or sometimes GRU models). Take LSTM-based seq2seq model as an ex-
+ample: The encoder reads the input sequence and encodes it into the internal
+state vectors or context vector (in the case of LSTM, these are called the hidden
+state and cell state vectors). The outputs of the encoder are discarded, and only
+the internal states are preserved. These internal states, i.e., a context vector c as
+shown in Fig. 6.4, aims to encapsulate the information for all input elements in
+order to help the decoder make accurate predictions. There are several ways to
+incorporate the context vector into the decoder. The simplest way is to take the
+context vector as the starting input element of the decoder. Another ways is to
+adopt the attention mechanism, which will be introduced in the next subsection.
+The LSTM decoder’s initial states are initialized as the ﬁnal states of the encoder
+LSTM, i.e., the context vector of the encoder’s ﬁnal cell is the input to the ﬁrst
+cell of the decoder network. Using these initial states, the decoder starts gener-
+ating the output sequence, and these outputs are also taken into consideration
+for future outputs.
+
+FIGURE 6.4 Sequence-to-sequence (Seq2Seq) architecture.
+
+6.3 RNN as a building block for transportation applications
+6.3.1 RNN for road trafﬁc prediction
+Problem description
+Trafﬁc prediction algorithms can fulﬁll the prediction of many types of trafﬁc
+state variables, such as road ﬂow, speed, and travel time. In this section, we take
+the trafﬁc speed prediction as an example to show how to predict trafﬁc speed
+  Recurrent neural networks Chapter | 6 87
+
+using RNNs. Trafﬁc speed prediction at one location normally uses a sequence
+of speed values with n historical time steps as the input data, which can be
+represented by the vector:
+
+  XT = xT−n, xT−(n−1), . . . , xT−2, xT−1 .  (6.11)
+
+But the trafﬁc speed at one location may be inﬂuenced by the speeds of
+
+nearby locations or even locations faraway, especially when a trafﬁc jam prop-
+
+agates through the trafﬁc network. To take these network-wide inﬂuences into
+
+account, the proposed and compared models in this study take the network-wide
+
+trafﬁc speed data as the input. Supposing the trafﬁc network consists of P loca-
+
+tions and we need to predict the trafﬁc speeds at time T using n historical time
+
+frames (steps), the input can be characterized as a speed data matrix,
+
+  ⎡  ⎤  ⎡  ⎤
+  ⎢
+  ⎢  x1  ⎢  xT1 −n xT1 −n+1  · · · xT1−2 xT1−1 ⎥
+  P⎢  ⎥⎢  ⎥
+  XT = ⎢  ⎥  ⎢  x2 ⎥ T−1 ⎥⎥ ,
+  ⎢  x2  ⎥  ⎢  xT−n2 xT2 −n+1  . . . x2T−2
+  ⎣  ⎥  =  ⎢
+  ..  ⎥  ⎢  ⎥
+where each  ⎢  .  .  ..  ..  ⎥
+th location.  . ⎦ ⎢ ..  ..  .  .⎥
+  ⎣  ⎦
+  T−n T−n+1 T x xP xP · · · xP−2 xTP−1P
+
+  (6.12)
+  element xtp represents the speed of the t-th time frame at the p-
+
+  To reﬂect the temporal attributes of the speed data and simplify
+
+the expressions of the equations in the following subsections, the speed matrix
+is represented by a vector, XPT = xT −n, xT −(n−1), . . . , xT −2, xT −1 , in which
+each element is a vector of the P locations’ speed values.
+
+Network-wide trafﬁc prediction
+
+As shown in Fig. 6.5, the short-term network-wide trafﬁc forecasting prob-
+lem attempts to predict the future trafﬁc state at time T + 1, xt+1, based on
+a sequence of historical trafﬁc state [xt−n+1, ..., xt−1, xt ]. Thus, the trafﬁc pre-
+diction can be considered to design a function f (Xt ) and ﬁt it from historical
+
+FIGURE 6.5 Short-term network-wide trafﬁc forecasting.
+

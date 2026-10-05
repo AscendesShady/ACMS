@@ -1,0 +1,1720 @@
+774 CHAPTER 12 ■ Multiple Regression and Model Building
+
+ Statistics IN Action
+
+  (continued)
+
+Figure SIA12.9  a reduction of about four hundred dollars from the previous
+MINITAB list of outliers for the  value. Obviously, removing the outliers from the analysis yields
+second-order model of condo  a “better” prediction equation. If we can justify removing these
+sale price  four outliers (except for number 111, they were all undersold
+  units), then we can use the model shown in Figure SIA12.10 to
+value. (Research reveals that all of these units are located on the  obtain more accurate predictions of future condo sale prices.
+fifth floor.) If we delete these observations from the data set and
+refit the model, we obtain the results shown in the MINITAB
+printout in Figure SIA12.10. You can see that the adjusted-R2
+value is now .793, an increase of about 9% from the previous
+value.Also, the standard deviation of the model is now s = 15.1,
+
+Figure SIA12.10
+MINITAB printout of second-
+order model of condo sale price
+with outliers deleted
+
+12.12 Some Pitfalls: Estimability, Multicollinearity, and Extrapolation
+
+  You should be aware of several potential problems when you construct a prediction
+  model for some response y. A few of the most important ones are discussed in this final
+  section.
+
+  Problem 1: Parameter Estimability
+
+  Suppose you want to fit a model relating annual crop yield y to the total expenditure for
+  fertilizer, x. We propose the first-order model
+
+  E1y2 = b0 + b1x
+SECTION 12.12 ■ Some Pitfalls: Estimability, Multicollinearity, and Extrapolation 775
+
+Now suppose we have three years of data and  y
+$1,000 is spent on fertilizer each year. The data are
+shown in Figure 12.48. You can see the problem:  ?Yield
+The parameters of the model cannot be estimated
+when all the data are concentrated at a single x  x
+value. Recall that it takes two points (x-values)  1,000
+to fit a straight line. Thus, the parameters are not  Fertilizer expenditure (dollars)
+estimable when only one x is observed.  Figure 12.48
+  Yield and fertilizer expenditure data:
+  A similar problem would occur if we  three years
+attempted to fit the quadratic model
+  y
+  E1y2 = b0 + b1x + b2x2
+  ?
+to a set of data for which only one or two different
+x-values were observed. (See Figure 12.49.) At least  Yield
+three different x-values must be observed before a
+quadratic model can be fitted to a set of data (i.e.,  0  x
+before all three parameters are estimable).
+  1,000  2,000
+  In general, the number of levels of observed
+x-values must be one more than the order of the  Fertilizer expenditure (dollars)
+polynomial in x that you want to fit.
+  Figure 12.49
+  For controlled experiments, the researcher can
+select one of the experimental designs in Chapter 10  Only two x values observed:
+that will permit estimation of the model parameters.  quadratic model is not estimable
+Even when the values of the independent variables
+cannot be controlled by the researcher, the inde-
+pendent variables are almost always observed at a
+sufficient number of levels to permit estimation of
+the model parameters. When the statistical software
+you use suddenly refuses to fit a model, however,
+the problem is probably inestimable parameters.
+
+Problem 2: Multicollinearity
+
+Often, two or more of the independent variables used in a regression model contribute
+redundant information. That is, the independent variables are correlated with each other.
+For example, suppose we want to construct a model to predict the gas mileage rating of
+a truck as a function of its load x1 (in tons) and the horsepower x2 (in foot-pounds per
+second) of its engine. We would expect heavy loads to require greater horsepower and
+to result in lower mileage ratings. Thus, although both x1 and x2 contribute information
+for the prediction of mileage rating y, some of the information is overlapping because x1
+and x2 are correlated.
+
+  When the independent variables are correlated, we say multicollinearity exists. In
+practice, it is not uncommon to observe correlations among the independent variables.
+However, a few problems arise when serious multicollinearity is present in the regres-
+sion variables.
+
+Multicollinearity exists when two or more of the independent variables used in a
+regression are correlated.
+
+  First, high correlations among the independent variables increase the likelihood
+of rounding errors in the calculations of the b estimates, standard errors, and so forth.
+Second, and more important, the regression results may be confusing and misleading.
+Consider the model for gasoline mileage rating (y) of a truck
+
+  E1y2 = b0 + b1x1 + b2x2
+
+where x1 = load and x2 = horsepower. Fitting the model to a sample data set, we might
+find that the t-tests for testing b1 and b2 are both nonsignificant at the a = .05 level,
+776  CHAPTER 12 ■ Multiple Regression and Model Building
+
+  while the F-test for H0: b1 = b2 = 0 is highly significant 1p = .0012. The tests may
+  seem to be contradictory, but really they are not. On the one hand, the t-tests indicate
+  that the contribution of one variable, say, x1 = load, is not significant after the effect of
+  x2 = horsepower has been accounted for (because x2 is also in the model). On the other
+  hand, the significant F-test tells us that at least one of the two variables is making a con-
+  tribution to the prediction of y (i.e., either b1 or b2 or both differ from 0). In fact, both
+  are probably contributing, but the contribution of one overlaps with that of the other.
+
+  Multicollinearity can also have an effect on the signs of the parameter estimates.
+  More specifically, a value of bni may have the opposite sign from what is expected. In the
+  truck gasoline mileage example, we expect heavy loads to result in lower mileage ratings
+  and we expect higher horsepowers to result in lower mileage ratings; consequently, we
+  expect the signs of both the parameter estimates to be negative. Yet, we may actually see
+  a positive value of bn1 and be tempted to claim that heavy loads result in higher mileage
+  ratings. This is the danger of interpreting a b coefficient when the independent variables
+  are correlated. Because the variables contribute redundant information, the effect of
+  x1 = load on y = mileage rating is measured only partially by b1.
+
+  How can you avoid the problems of multicollinearity in regression analysis? One
+  way is to conduct a designed experiment (Chapter 10), so that the levels of the x vari-
+  ables are uncorrelated. Unfortunately, time and cost constraints may prevent you from
+  collecting data in this manner. Consequently, most data are collected observationally.
+  Since observational data frequently consist of correlated independent variables, you will
+  need to recognize when multicollinearity is present and, if necessary, make modifica-
+  tions in the regression analysis.
+
+  Several methods are available for detecting multicollinearity in regression. A
+  simple technique is to calculate the coefficient of correlation, r, between each pair of
+  independent variables in the model and use the procedure outlined in Section 11.5 to
+  test for significantly correlated variables. If one or more of the r values are statistically
+  different from 0, the variables in question are correlated and a multicollinearity problem
+  may exist.* The degree of multicollinearity will depend on the magnitude of the value
+  of r, as shown in the box.
+
+  Using the Correlation Coefficient r to Detect Multicollinearity
+  Extreme Multicollinearity: ͉ r ͉ Ú .8
+  Moderate Multicollinearity: .2 … ͉ r ͉ 6 .8
+  Low Multicollinearity: ͉ r ͉ 6 .2
+
+  Other indications of the presence of multicollinearity include those just men-
+  tioned, namely, nonsignificant t-tests for the individual parameter estimates when the
+  F-test for overall model adequacy is significant, and estimates with opposite signs from
+  what is expected.†
+
+  Detecting Multicollinearity in the Regression Model
+
+  Multicollinearity may exist if there are
+
+  1. Significant correlations between pairs of independent variables
+
+  2. Nonsignificant t-tests for all (or nearly all) of the individual b parameters when
+  the F-test for overall model adequacy is significant
+
+  3. Signs opposite from what is expected in the estimated b parameters
+
+  *Remember that r measures only the pairwise correlation between x values. Three variables, x1, x2, and x3,
+  may be highly correlated as a group, but may not exhibit large pairwise correlations. Thus, multicollinearity
+  may be present even when all pairwise correlations are not significantly different from 0.
+  †More formal methods for detecting multicollinearity, such as variance-inflation factors (VIFs), are available.
+  Independent variables with a VIF of 10 or above are usually considered to be highly correlated with one or
+  more of the other independent variables in the model. Calculation of VIFs is beyond the scope of this intro-
+  ductory text. (Consult the chapter references for a discussion of VIFs and other formal methods of detecting
+  multicollinearity.)
+  SECTION 12.12 ■ Some Pitfalls: Estimability, Multicollinearity, and Extrapolation 777
+
+ Example 12.18  Problem The Federal Trade Commission (FTC) annually ranks varieties of domestic
+  cigarettes according to their tar, nicotine, and carbon monoxide content. The U.S.
+  FTC  surgeon general considers each of these three substances hazardous to a smoker’s health.
+  Past studies have shown that increases in the tar and nicotine content of a cigarette are
+Detecting  accompanied by an increase in the carbon monoxide emitted from the cigarette smoke.
+  Table 12.10 presents data on tar, nicotine, and carbon monoxide content (in milligrams)
+Multicollinearity—  and weight (in grams) for a sample of 25 (filter) brands tested in a recent year. Suppose
+  we want to model carbon monoxide content y as a function of tar content x1, nicotine
+Modeling Carbon  content x2, and weight x3, using the model
+
+Monoxide Content  E1y2 = b0 + b1x1 + b2x2 + b3x3
+
+  The model is fitted to the 25 data points in Table 12.10, and a portion of the SAS printout is
+  shown in Figure 12.50. Examine the printout. Do you detect any signs of multicollinearity?
+
+  Table 12.10 FTC Cigarette Data for Example 12.18
+
+  Tar 1x12  Nicotine 1x22  Weight 1x32  Carbon Monoxide (y)
+
+  14.1  .86  .9853  13.6
+
+  16.0  1.06  1.0938  16.6
+
+  29.8  2.03  1.1650  23.5
+
+  8.0  .67  .9280  10.2
+
+  4.1  .40  .9462  5.4
+
+  15.0  1.04  .8885  15.0
+
+  8.8  .76  1.0267  9.0
+
+  12.4  .95  .9225  12.3
+
+  16.6  1.12  .9372  16.3
+
+  14.9  1.02  .8858  15.4
+
+  13.7  1.01  .9643  13.0
+
+  15.1  .90  .9316  14.4
+
+  7.8  .57  .9705  10.0
+
+  11.4  .78  1.1240  10.2
+
+  9.0  .74  .8517  9.5
+
+  1.0  .13  .7851  1.5
+
+  17.0  1.26  .9186  18.5
+
+  12.8  1.08  1.0395  12.6
+
+  15.8  .96  .9573  17.5
+
+  4.5  .42  .9106  4.9
+
+  14.5  1.01  1.0070  15.9
+
+  7.3  .61  .9806  8.5
+
+  8.6  .69  .9693  10.6
+
+  15.2  1.02  .9496  13.9
+
+  12.0  .82  1.1184  14.9
+
+  Source: Federal Trade Commission.  Data Set: FTC
+
+  Solution First, note that the F-test for overall model utility is highly significant. The
+  test statistic 1F = 78.982 and the observed significance level 1 p@value 6 .00012 are
+
+  highlighted on the SAS printout shown in Figure 12.50. Therefore, we can conclude at,
+
+  say, a = .01, that at least one of the parameters b1, b2, and b3 in the model is nonzero.
+  The t-tests for two of three individual b’s, however, are nonsignificant. (The p-values for
+
+  these tests are highlighted on the printout.) Unless tar 1x12 is the only one of the three
+  variables that is useful in predicting carbon monoxide content, these results are the first
+
+  indication of a potential multicollinearity problem.
+  The negative values for bn 2 and bn 3 (highlighted on the printout) are a second clue to the
+
+  presence of multicollinearity. From past studies, the FTC expects carbon monoxide content
+
+  (y) to increase when either nicotine content 1x22 or weight 1x32 increases; that is, the FTC
+  expects positive relationships between y and x2 and between y and x3, not negative ones.
+
+  All signs indicate that a serious multicollinearity problem exists.*
+
+  *Note also that the variance-inflation factors (VIFs) for both tar and nicotine, given on the SAS printout,
+  Figure 12.50, exceed 10.
+778 CHAPTER 12 ■ Multiple Regression and Model Building
+
+Figure 12.50
+
+SAS printout for model of CO
+content, Example 12.18
+
+  Look Back To confirm our suspicions, we had SAS produce the coefficient of correlation,
+  r, for each of the three pairs of independent variables in the model. The resulting
+  output is shown (highlighted) at the bottom of Figure 12.50. You can see that tar 1x12
+  and nicotine 1x22 are highly correlated 1r = .97662, while weight 1x32 is moderately
+  correlated with the other two x’s 1r ≈ .52. All three correlations have p-values less than
+  .05; consequently, all three are significantly different from 0 at a = .05.
+
+  ■ Now Work Exercise 12.157
+
+  Once you have detected multicollinearity, you can choose from among several alter-
+  native measures available for solving the problem. Several of these are outlined in the next
+  box. The appropriate measure to take depends on the severity of the multicollinearity and
+  the ultimate goal of the regression analysis. Some researchers, when confronted with highly
+  correlated independent variables, choose to include only one of the correlated variables in
+  the final model. If you are interested only in using the model for estimation and prediction
+  (step 6), you may decide not to drop any of the independent variables from the model.
+  We have seen that it is dangerous to interpret the individual b parameters in the presence
+  of multicollinearity. However, confidence intervals for E(y) and prediction intervals for y
+  generally remain unaffected as long as the values of the x’s used to predict y follow the same
+  pattern of multicollinearity exhibited in the sample data. That is, you must take strict care to
+  ensure that the values of the x-variables fall within the range of the sample data.
+
+  Solutions to Some Problems Created by Multicollinearity in Regression*
+
+  1. Drop one or more of the correlated independent variables from the model. One
+  way to decide which variables to keep in the model is to employ stepwise regres-
+  sion (Section 12.10).
+
+  *Several other solutions are available. For example, in the case where higher order regression models are
+  fitted, the analyst may want to code the independent variables so that higher order terms (e.g., x2) for a
+  particular x-variable are not highly correlated with x. One transformation that works is z = 1x - x2 >s.
+  Other, more sophisticated procedures for addressing multicollinearity (such as ridge regression) are beyond
+  the scope of this text. (Consult the references at the end of the chapter.)
+  SECTION 12.12 ■ Some Pitfalls: Estimability, Multicollinearity, and Extrapolation 779
+
+  2. If you decide to keep all the independent variables in the model,
+
+  a. Avoid making inferences about the individual b parameters on the basis of
+  the t-tests.
+
+  b. Restrict inferences about E(y) and future y values to values of the x’s that
+  fall within the range of the sample data.
+
+  y  Problem 3: Prediction outside the Experimental Region
+  ?
+  Many research economists have developed highly technical models to relate the state
+GDP  of the economy to various economic indexes and other independent variables. Many
+  of these models are multiple-regression models in which, for example, the dependent
+  0  x  variable y might be next year’s gross domestic product (GDP) and the independent
+  variables might include this year’s rate of inflation, this year’s Consumer Price Index
+  6  8  (CPI), etc. In other words, the model might be constructed to predict next year’s economy
+  using this year’s knowledge.
+  Inflation rate (%)
+  Unfortunately, models such as these were almost all unsuccessful in predicting the
+Figure 12.51  recessions of the early 1970s, the late 1990s, and the mid 2000s. What went wrong? One
+  of the problems was that many of the regression models were used to extrapolate (i.e.,
+Using a regression model  predict y for values of the independent variables that were outside the region in which
+outside the experimental region  the model was developed). For example, the inflation rate in the late 1960s, when many
+  of the models were developed, ranged from 6% to 8%. When the double-digit inflation
+  of the early 1970s became a reality, some researchers attempted to use the same models
+  to predict future growth in GDP. As you can see in Figure 12.51, the model may be highly
+  accurate in predicting y when x is in the range of experimentation, but the use of the
+  model outside that range is a dangerous practice.
+
+Exercises 12.146–12.168  12.154 Identify the problem(s) in each of the residual plots
+  shown on page 752.
+Understanding the Principles
+  Applying the Concepts—Basic
+12.146 Define a regression residual.
+12.147 Define an outlier.  12.155  Dating and disclosure. Refer to the Journal of
+12.148 Give two properties of the regression residuals from a  12.156  Adolescence (Apr. 2010) study of adolescents’ disclosure
+  of their dating and romantic relationships, Exercise 12.16
+  model.  (p. 698). Recall that multiple regression was used to model
+12.149 True or False. Regression models fit to time-series data  y = level of an adolescent’s disclosure of a date’s iden-
+  tity to his/her mother (measured on a 5-point scale). The
+  typically result in uncorrelated errors.  independent variables in the study were gender (x1 = 1
+12.150 Define multicollinearity in regression.  if female, 0 if male), age (x2, years), dating experience
+12.151 Give three indicators of a multicollinearity problem.  (x3, years), and level of trust in parents (x4, 5-point scale).
+12.152 Define extrapolation.  The highest correlation (in absolute value) for any pair of
+  independent variables was r = - .16 for gender and level
+Learning the Mechanics  of trust. Do you believe that the regression analysis will
+  exhibit multicollinearity problems? Explain.
+12.153 Consider fitting the multiple regression model  State casket sales restrictions. Some states permit only
+  E1y2 = b0 + b1x1 + b2x2 + b3x3 + b4x4 + b5x5  licensed firms to sell funeral goods (e.g., caskets, urns)
+  to the consumer, while other states have no restrictions.
+  A matrix of correlations for all pairs of independent var-  States with casket sales restrictions are being challenged in
+  iables is given on the right. Do you detect a multicolline-  court to lift these monopolistic restrictions. A paper in the
+  arity problem? Explain.  Journal of Law and Economics (Feb. 2008) used multiple
+  regression to investigate the impact of lifting casket sales
+  x1  x2  x3  x4  x5  restrictions on the cost of a funeral. Data collected for a
+  sample of 1,437 funerals were used to fit the model. A sim-
+  x1  —  .94  .87 - .24  .01  pler version of the model estimated by the researchers is
+  - .04  E1y2 = b0 + b1x1 + b2x2 + b3 x1x2, where y is the price
+  x2  —  .22  .46
+
+  x3  —  .16  .03
+
+  x4  —  .19
+
+  x5  —
+780  CHAPTER 12 ■ Multiple Regression and Model Building
+
+  Residual plots for Exercise 12.154
+
+  a.  b.
+
+  (y – ˆy)  0  (y – ˆy)  0
+
+  x  yˆ
+
+  c.  d.
+
+  3s
+
+  (y – ˆy)  0  Relative frequency
+
+  –3s
+
+  x
+  (y – yˆ )
+
+  (in dollars) of a direct burial, x1 = 51 if funeral home is in  x1  x2  x3  x4
+  a restricted state, 0 if not6, and x2 = 51 if price includes a
+  basic wooden casket, 0 if no casket6. The estimated equa-  Conscientiousness (x1)  .13
+  Job Complexity (x2)
+  tion (with standard errors in parentheses) is  Emotional Stability (x3)  .62 .14
+
+  yn = 1,432 + 793x1 - 252x2 + 261x1x2 , R2 = .78  Organizational Citizenship (x4) .24 .03 .24
+  1702 11342 11092  Counterproductive Work (x5) - .23 - .02 - .25 - .62
+
+  a. Calculate the predicted price of a direct burial with a  12.158  Agreeableness, gender, and wages. Refer to the Journal
+  basic wooden casket at a funeral home in a restricted
+  state.  WAGAP  of Personality and Social Psychology (Feb. 2012) study
+
+  b. The data include a direct burial funeral with a basic  of on-the-job agreeableness and wages, Exercise 12.132
+  wooden casket at a funeral home in a restricted
+  state that costs $2,200. Assuming the standard devi-  (p. 753). Recall that the researchers modeled mean
+  ation of the model is $50, is this data value an out-
+  lier?  income, E(y), as a function of both agreeableness
+
+  c. The data also include a direct burial funeral with a  score (x1) and a dummy variable for gender (x2 = 1
+  basic wooden casket at a funeral home in a restricted  if male, 0 if female). The data was used to fit the model
+  state that costs $2,500. Again, assume that the stan-  E1y2 = b0 + b1x1 + b21x122 + b3x2. A MINITAB nor-
+  dard deviation of the model is $50. Is this data value  mal probability plot of the residuals is displayed here.
+  an outlier?
+  Interpret the graph. Does the random error term in the
+
+  model appear to be normally distributed?
+
+12.157  Personality traits and job performance. Refer to the
+
+  Journal of Applied Psychology (Jan. 2011) study of
+
+  the determinants of task performance, Exercise 12.111
+
+  (p. 742). In addition to x1 = conscientiousness score
+  and x2 = 51 if highly complex job, 0 if not6, the re-
+  searchers also used x3 = emotional stability score,
+  x4 = organizational citizenship behavior score, and
+  x5 = counterproductive work behavior score to model
+  y = task performance score. One of their concerns is
+
+  the level of multicollinearity in the data. A matrix of cor-
+
+  relations for all possible pairs of independent variables
+
+  follows. Based on this information, do you detect a mod-
+
+  erate or high level of multicollinearity? If so, what are
+
+  your recommendations?
+  SECTION 12.12 ■ Some Pitfalls: Estimability, Multicollinearity, and Extrapolation 781
+
+12.159  Personality and aggressive behavior. Psychological  Temperature (°C)  Time to Failure (hours)
+  Bulletin (Vol. 132, 2006) reported on a study linking per-
+  sonality and aggressive behavior. Four of the variables  165  200
+  measured in the study were aggressive behavior, irritabil-  162  200
+  ity, trait anger, and narcissism. Pairwise correlations for  164  1,200
+  these four variables are given in the following table.  158  500
+  158  600
+  Aggressive behavior–irritability: .80  159  750
+  Aggressive behavior–trait anger: .48  156  1,200
+  Aggressive behavior–narcissism: .50  157  1,500
+  Irritability–trait anger: .57  152  500
+  Irritability–narcissism: .16  147  500
+  Trait anger–narcissism: .13  149  1,100
+  149  1,150
+  a. Suppose aggressive behavior is the dependent vari-  142  3,500
+  able in a regression model and the other variables are  142  3,600
+  independent variables. Is there evidence of extreme  143  3,650
+  multicollinearity? Explain.  133  4,200
+  132  4,800
+  b. Suppose narcissism is the dependent variable in a  132  5,000
+  regression model and the other variables are indepen-  134  5,200
+  dent variables. Is there evidence of extreme multicol-  134  5,400
+  linearity? Explain.  125  8,300
+  123  9,700
+
+12.160  Yield strength of steel alloy. Refer to Exercise 12.142
+  (p. 759) and the Modelling and Simulation in Materials
+  Science and Engineering (Vol. 13, 2005) study in which  Based on Gee, S., and Nguyen, L. “Mean time to failure in wafer
+  engineers built a regression model for the tensile yield  level–CSP packages with SnPb and SnAgCu solder bmps.”
+  strength (y) of a new steel alloy. The engineers discov-  International Wafer Level Packaging Conference, San Jose, CA,
+  ered that the independent variable nickel 1x42 was highly  Nov. 3–4, 2005 (adapted from Figure 7).
+  correlated with the other 10 potential independent vari-
+  ables. Consequently, nickel was dropped from the model.  12.163  Arsenic in groundwater. Refer to the Environmental Science
+  Do you agree with this decision? Explain.  & Technology (Jan. 2005) study of the reliability of a com-
+  ASWELLS  mercial kit to test for arsenic in groundwater, Exercise 12.23
+  (p. 700). Recall that you fit a first-order model for arsenic
+Applying the Concepts—Intermediate  level (y) as a function of latitude (x1), longitude (x2), and
+  depth (x3) to the data. Conduct a residual analysis of the data.
+12.161  Accuracy of software effort estimates. Refer to the  Based on the results, comment on each of the following:
+  a. assumption of mean error = 0
+  Journal of Empirical Software Engineering (Vol. 9, 2004)  b. assumption of constant error variance
+  c. outliers
+  study of the accuracy of new software effort estimates,  d. assumption of normally distributed errors
+  e. multicollinearity
+  Exercise 12.140 (p. 758). Recall that stepwise regression
+  12.164  A rubber additive made from cashew nut shells. Refer
+  was used to develop a model for the relative error in esti-  to the Industrial & Engineering Chemistry Research
+  GRAFT  (May 2013) study of the use of cardanol as an additive
+  mating effort (y) as a function of company role of estima-  for natural rubber, Exercise 12.24 (p. 700). You analyzed
+  a first-order model for y = grafting efficiency as a func-
+  tor (x1 = 1 if developer, 0 if project leader) and previous  tion of x1 = initiator concentration (parts per hundred
+  accuracy (x8 = 1 if more than 20% accurate, 0 if less than  resin), x2 = cardanol concentration (parts per hundred
+  20% accurate). The stepwise regression yielded the pre-  resin), x3 = reaction temperature (degrees Celsius) and
+  diction equation yn = .12 - .28x1 + .27x8. The researcher  x4 = reaction time (hours).
+  is concerned that the sign of the estimated b multiplied by  a. Suppose an engineer wants to predict the grafting
+
+  x1 is the opposite from what is expected. (The researcher  efficiency of chemical run with initiator concentration
+  expects a project leader to have a smaller relative error  set at 5 parts per hundred resin, cardanol concentra-
+  tion at 20 parts per hundred resin, reaction tempera-
+  of estimation than a developer.) Give at least one reason  ture at 30 degrees, and reaction time at 5 hours. Would
+  you recommend using the prediction equation from
+  why this phenomenon occurred.  Exercise 12.24 to obtain this prediction? Explain.
+  b. Examine the data in the GRAFT file and determine if
+12.162  Failure times of silicon wafer microchips. Refer to the  there is any evidence of multicollinearity. (Note: This
+  National Semiconductor study of manufactured silicon  result is due to the design of the experiment.)
+WAFER  wafer integrated circuit chips, Exercise 12.78 (p. 725). Recall  c. Conduct a complete residual analysis for the model.
+  that the failure times of the microchips (in hours) were de-  Do you recommend any model modifications?
+  termined at different solder temperatures (degrees Celsius).
+  The data are repeated in the table in the next column.  12.165 Reality TV and cosmetic surgery. Refer to the Body
+  a. Fit the straight-line model E1y2 = b0 + b1x to the data,  Image: An International Journal of Research (Mar.
+
+  where y = failure time and x = solder temperature.  IMAGE 2010) study of the influence of reality TV shows on
+  b. Compute the residual for a microchip manufactured
+
+  at a temperature of 152°C.
+  c. Plot the residuals against solder temperature (x). Do
+
+  you detect a trend?
+  d. In Exercise 12.78c, you determined that failure time (y)
+
+  and solder temperature (x) were curvilinearly related.
+  Does the residual plot, part c, support this conclusion?
+782 CHAPTER 12 ■ Multiple Regression and Model Building
+
+  one’s desire to undergo cosmetic surgery, Exercise 12.25  12.167  Emotional intelligence and team performance. Refer to the
+  Engineering Project Organizational Journal (Vol. 3, 2013)
+  (p. 700). In Exercise 12.25, you fit the first-order model,  EINTELL  study of the relationship between emotional intelligence
+  E1y2 = b0 + b1x1 + b2x2 + b3x3 + b4x4, where y =  of individual team members and their performance during
+12.166  desire to have cosmetic surgery, x1 is a dummy variable  an engineering project, Exercise 12.39 (p. 708). Using data
+  for gender, x2 = level of self-esteem, x3 = level of body  on n = 23 teams (saved in the EINTELL file), you fit a
+TURBINE  satisfaction, and x4 = impression of reality TV. Conduct  first-order model for mean project score (y) as a function
+  a complete residual analysis for the model. Do you detect  of range of interpersonal scores (x1), range of stress man-
+  agement scores (x2), and range of mood scores (x3). Do you
+  any violations of the assumptions?  detect any signs of multicollinearity in the data?
+
+  Cooling method for gas turbines. Refer to the Journal of  12.168  Bubble behavior in subcooled flow boiling. Refer to the
+  Heat Transfer Engineering (Vol. 34, 2013) study of bub-
+  Engineering for Gas Turbines and Power (Jan. 2005) study  BUBBLE2  ble behavior in subcooled flow boiling, Exercise 12.59
+  (p. 716). You fit an interaction model for bubble density
+  of a high-pressure inlet fogging method for a gas turbine en-  (y) as a function of x1 = mass flux and x2 = heat flux.
+  Conduct a complete residual analysis for the model. Do
+  gine, presented in Exercise 12.27 (p. 701). Now consider the  you recommend any model modifications?
+  interaction model E1y2 = b0 + b1x1 + b2x2 + b3x1x2
+  for heat rate (y) of a gas turbine as a function of cycle speed
+
+  1x12 and cycle pressure ratio 1x22. Use the data to conduct
+  a complete residual analysis of the model. Do you recom-
+
+  mend making modifications to the model?
+
+Guide to Multiple Regression
+
+  How many independent variables?
+
+  Numerous (e.g., 10 or more)  Few in number
+
+  Run stepwise regression to  Hypothesize model (or models) for E(y)
+  determine most important x’s  (consider interaction and higher-order terms)
+
+Check assumptions on random error, e  Determine “best” model for E(y)
+  Residual analysis for best model  1) Nested model F-tests
+  2) t-tests on important b’s
+1) zero mean:  Plot residuals vs. x-values  3) compare adjusted R2 values
+2) constant variance:  Plot residuals vs. y  4) compare 2s values
+3) normal distribution:  Histogram of residuals
+4) independence:  Plot residuals vs. time
+
+  If necessary, make model modifications  Assess adequacy of “best” model
+
+  1) Global F-test significant
+  2) adjusted R2 value high
+  3) 2s value small
+
+  l adequate  Mod
+  ode  el n
+  M  ot ad
+  equat
+  e
+
+  Use model for estimation/prediction  Consider other independent
+  variables and/or models
+  1) Confidence interval for E(y) given x-values
+  2) Prediction interval for y given x-values
+  Chapter Notes 783
+
+CHAPTER NOTES  Quadratic Model in 1 Quantitative x
+  E1y2 = b0 + b1x + b2x2
+Key Terms
+  b2 represents the rate of curvature of x.
+[Note: Starred (*) items are from the optional sections in this chapter.]  1b2 7 0 implies upward curvature.2
+  1b2 6 0 implies downward curvature.2
+Adjusted multiple coefficient of  *Nested model 744
+  determination 694  *Nested-model F-test 748  Complete Second-Order Model in 2 Quantitative x’s
+  Objective variable-screening  E1y2 = b0 + b1x1 + b2x2 + b3x1x2 + b4x21 + b5x22
+Base level 727
+Coded variable 684  procedure 756  b4 represents the rate of curvature of x1, holding x2 fixed.
+*Complete (nested) model 744  Paraboloid 720  b5 represents the rate of curvature of x2, holding x1 fixed.
+Complete second-order model 720  Parameter estimability 774
+Correlated errors 772  *Parsimonious model 748  Dummy Variable Model for 1 Qualitative x
+Dummy (or indicator)  Quadratic model 716  E1y2 = b0 + b1x1 + b2x2 + g + bk - 1xk - 1
+  Quadratic term (or second-order  x1 = 51 if level 1, 0 if not6
+  variables 726  x2 = 51 if level 2, 0 if not6
+Extrapolate 779  term) 716  f
+First-order model 685  Qualitative (or categorical)  xk - 1 = 51 if level k - 1, 0 if not6
+Global F-test 695
+Higher order term 684  independent variable 726  b0 = E1y2 for level k 1base level2 = mk
+Interact 709  *Reduced (nested) model 744  b1 = m1 - mk
+Interaction model 709  Regression outlier 768  b2 = m2 - mk
+Interaction term 709  Regression residual 761
+Least squares prediction  Residual 761  *Complete Second-Order Model in 1 Quantitative x
+  Residual analysis 761  and 1 Qualitative x (Two Levels, A and B)
+  equation 686  *Response surface 746
+Level of a variable 726  Robust 771  E1y2 = b0 + b1x1 + b2x21 + b3x2 + b4x1x2 + b5x21x2
+*Main-effect terms 735  Saddle-shaped surface 720  x2 = 51 if level A, 0 if level B6
+Mean square for error (MSE) 687  Second-order model 716
+Model building 685  *Stepwise regression 754  Interaction between x1 and x2
+Multicollinearity 775  Time-series data 771  Implies that the relationship between y and one x depends on
+Multiple coefficient of  Time-series model 772  the other x.
+  Variance-stabilizing
+  determination 693  Adjusted Coefficient of Determination, R2a
+Multiple-regression model 684  transformation 765  Cannot be “forced” to 1 by adding independent variables to the
+  model.
+Key Symbols
+  Parsimonious Model
+x2  Quadratic form for a quantitative x  A model with a small number of b parameters.
+
+x1 x2  Interaction term  *Nested Models
+MSE  Mean square for error (estimates s2)  Are models such that one model (the complete model) contains
+  all the terms of another model (the reduced model) plus at least
+ne  Estimated random error (residual)  one additional term.
+
+SSER  *Sum of squared errors, reduced model  Recommendation for Assessing Model Adequacy
+SSEC  *Sum of squared errors, complete model  1. Conduct global F-test; if significant, then
+MSEC  *Mean squared error, complete model  2. Conduct t-tests on only the “most important” b’s
+ln(y)  Natural logarithm of dependent variable  (interaction or squared terms).
+  3. Interpret value of 2s.
+Key Ideas  4. Interpret value of R2a.
+
+Multiple-Regression Variables  Recommendation for Testing Individual b’s
+  1. If curvature 1x22 is deemed important, do not conduct
+y = Dependent variable 1quantitative2  test for first-order (x) term in the model.
+x1, x2, c, xk are independent  2. If interaction 1x1x22 is deemed important, do not conduct
+variables 1quantitative or qualitative2  tests for first-order terms (x1 and x2) in the model.
+
+First-Order Model in k Quantitative x’s
+  E1y2 = b0 + b1x1 + b2x2 + g + bkxk
+
+Each b1 represents the change in y for every one-unit increase in
+x1, holding all other x’s fixed.
+
+Interaction Model in 2 Quantitative x’s
+  E1y2 = b0 + b1x1 + b2x2 + b3x1x2.
+
+1b1 + b3x22 represents the change in y for every one@unit
+  increase in x1, for a fixed value of x2.
+
+1b2 + b3x12 represents the change in y for every one@unit
+  increase in x2, for a fixed value of x1.
+784 CHAPTER 12 ■ Multiple Regression and Model Building
+
+*Problems with Using Stepwise Regression Model as  4. Identify outliers: residuals greater than 3s in absolute value
+the “Final” Model  (investigate outliers before deleting)
+
+  1. Extremely large number of t-tests inflates overall  Multicollinearity
+  probability of at least one Type I error.  Occurs when two or more x’s are correlated.
+  Indicators of multicollinearity:
+  2. No higher order terms (interactions or squared terms) are
+  included in the model.  1. Highly correlated x’s
+  2. Significant global F-test, but all t-tests nonsignificant
+Analysis of Residuals  3. Signs on b’s opposite from what is expected
+
+  1. Detect misspecified model: plot residuals vs. quantitative x  Extrapolation
+  [look for trends (e.g., curvilinear trend)]  Occurs when you predict y for values of x’s that are outside of
+  range of sample data.
+  2. Detect nonconstant error variance: plot residuals vs. yn
+  [look for patterns (e.g., cone shape)]
+
+  3. Detect nonnormal errors: histogram, stem–leaf, or normal
+  probability plot of residuals (look for strong departures
+  from normality)
+
+Key Formulas
+
+s2 = MSE = SSE n - 1k + 12  Estimator of s2 for a model with k independent variables
+  Test statistic for testing H0: bi
+t bn = i  10011 - a2% confidence interval for bi
+  sbni  Multiple coefficient of determination
+  Adjusted multiple coefficient of determination
+bni { 1ta>22 sbn i, where ta>2 depends on n - 1k + 12 df  Test statistic for testing H0: b1 = b2 = g = bk = 0
+R2 = SSyy - SSE  *Test statistic for comparing reduced and complete models
+  Regression residual
+  SSyy
+
+2Ra = 1 - c 1n - 12  d 11 - R 22
+
+  n - 1k + 12
+
+  MS1Model2  R2 > k
+F = MSE 11 = - R22 >[n - 1k + 12]
+
+F = 1SSER - SSEC2 >number of b’s tested
+  MSEC
+
+y - yn
+
+Supplementary Exercises 12.169–12.205
+
+Understanding the Principles  Learning the Mechanics
+
+12.169 Write a model relating E(y) to one qualitative indepen-  12.173 Suppose you fit the model
+  dent variable that is at four levels. Define all the terms in
+  your model.  y = b0 + b1x1 + b2x21 + b3x2 + b4x1x2 + e
+
+12.170 Explain why stepwise regression is used. What is its value  to n = 25 data points and find that
+  in the model-building process?  bn0 = 1.24 bn1 = - 2.43 bn2 = .03 bn3 = .65 bn4 = 1.75
+
+12.171  It is desired to relate E(y) to a quantitative variable x1  sbn 1 = 1.15, sbn 2 = .18,  sbn 3 = .30,  sbn 4 = 1.49
+  and a qualitative variable at three levels.  SSE = .47, R2 = .85
+  a. Write a first-order model.
+  b. Write a model that will graph as three different  a. Is there sufficient evidence to conclude that at least
+
+  second-order curves, one for each level of the qualitative  one of the parameters b1, b2, b3, and b4 is nonzero?
+  variable.  Test, using a = .05.
+  b. Test H0: b1 = 0 against Ha: b1 6 0. Use a = .05.
+12.172 a. Write a first-order model relating E(y) to two quanti-  c. Test H0: b2 = 0 against Ha: b2 7 0. Use a = .05.
+  d. Test H0: b3 = 0 against Ha: b3 ≠ 0. Use a = .05.
+  tative independent variables x1 and x2.
+  b. Write a complete second-order model.
+  Supplementary Exercises 12.169–12.205 785
+
+12.174 Suppose you used MINITAB to fit the model  x values. Drawing on his mathematical expertise, the
+  y = b0 + b1x1 + b2x2 + e  researcher realizes that he can fit the second-order
+  model
+  to n = 15 data points and you obtained the printout below.
+  E1y2 = b0 + b1x + b2x2
+  a. What is the least squares prediction equation?
+  b. Find R2 and interpret its value.  and it will pass exactly through all three points, yielding
+  SSE = 0. The researcher, delighted with the “excellent”
+  c. Is there sufficient evidence to indicate that the model  fit of the model, eagerly sets out to use it to make infer-
+  ences. What problems will he encounter in attempting to
+  is useful in predicting y? Conduct an F-test, using  make inferences?
+
+  a = .05.  12.178 Suppose you fit the regression model
+
+  d. Test the null hypothesis H0: b1 = 0 against the alter-  E1y2 = b0 + b1x1 + b2x2 + b3x22 + b4x1x2 + b5x1x22
+  native hypothesis Ha: b1 ≠ 0. Use a = .05. Draw the
+  appropriate conclusions.  to n = 30 data points and wish to test the null hypothesis
+  H0: b4 = b5 = 0.
+  e. Find the standard deviation of the regression model  a. State the alternative hypothesis.
+  b. Explain in detail how to compute the F-statistic
+  and interpret it.
+  needed to test the null hypothesis.
+  c. What are the numerator and denominator degrees of
+
+  freedom associated with the F-statistic in part b?
+  d. Give the rejection region for the test if a = .05.
+
+  Applying the Concepts—Basic
+
+  12.179  Global warming and foreign investments. Scientists
+  believe that a major cause of global warming is higher
+12.175  Suppose you have developed a regression model to  levels of carbon dioxide 1CO22 in the atmosphere.
+12.176  In the Journal of World-Systems Research (Summer
+  explain the relationship between y and x1, x2, and  2003), sociologists examined the impact of a depen-
+  x3. The ranges of the variables you observed were as  dence on foreign investment on CO2 emissions in
+  follows: 50 … y … 100, 10 … x1 … 75, .25 … x2 … .75,  n = 66 developing countries. In particular, the re-
+  and 2,000 … x3 … 2,500. Will the error of prediction be  searchers modeled the level of CO2 emissions in a par-
+  smaller when you use the least squares equation to pre-  ticular year on the basis of foreign investments made
+  16 years earlier and several other independent vari-
+  dict y when x1 = 40, x2 = .5, and x3 = 2,300, or when  ables. The variables and the model results are listed in
+  x1 = 80, x2 = .9, and x3 = 1,850? Why?  the following table.
+
+  The first-order model E1y2 = b0 + b1x1 was fit to n = 19  y = In(level of CO2  b  t-Value  p-Value
+  data points. A plot of the residuals of the model is shown.  emissions incurrent year)  Estimate  2.52  6 .05
+  .13  7 .10
+  Is the need for a quadratic term in the model evident from  x1 = ln(foreign investments)  .79  7 .10
+  x2 = gross domestic  - 1.66  7 .10
+  the plot? Explain.  .01  - .97  7 .10
+  investment  - .02  - .66  7 .10
+  1.5  x3 = trade exports  - .44  - 1.52  6 .001
+  1.0  x4 = ln(GNP)  - .03  3.35
+  0.5  x5 = agricultural production  - 1.19
+  0.0  x6 = 1 if African country,
+  –0.5  .56
+  –1.0  0 if not
+  –1.5Residual  x7 = ln(level of CO2
+
+  x  emissions)
+  0 2 4 6 8 10 12 14 16 18
+  R2 = .31
+12.177 To model the relationship between y (a dependent vari-
+  able) and x (an independent variable), a researcher has  Based on Grimes, P., and Kentor, J. “Exporting the greenhouse: Foreign capital
+  taken one measurement of y at each of three different
+  penetration and CO2 emissions 1980–1996.” Journal of World-Systems Research,
+  Vol. IX, No. 2, Summer 2003 (Table 1).
+
+  a. Interpret the value of R2.
+  b. Use the value of R2 to test the null hypothesis,
+
+  H0: b1 = b2 = g = b7 = 0 at a = .01. Give the
+  appropriate conclusion.
+
+  c. Do you advise conducting t-tests on each of the inde-
+  pendent variables to test the overall adequacy of the
+
+  model? Explain.
+786 CHAPTER 12 ■ Multiple Regression and Model Building
+
+  Correlations for Exercise 12.179
+
+  Independent Variable  x2  x3  x4  x5  x6  x7 = ln(level of
+  CO2 emissions)
+  x1 = ln(foreign investments)  .13  .57  .30  - .38  .14
+  - .47  - .14  - .14
+  x2 = gross domestic investment  .49  .36  - .47  - .06  .25
+
+  x3 = trade exports  .43  - .84  - .53  - .07
+  .42
+  x4 = ln(GNP)
+  x5 = agricultural production  - .50
+  x6 = 1 if African country, 0 if not  - .47
+
+  Based on Grimes, P., and Kentor, J. “Exporting the greenhouse: Foreign capital penetration and CO2 emissions 1980–1996.”
+  Journal of World-Systems Research, Vol. IX, No. 2, Summer 2003 (Appendix B).
+
+  d. What null hypothesis would you test to determine  g. The researchers determined that the interaction terms
+  whether the number of foreign investments made  in the model formulated in part b were not significant;
+  16 years earlier is a statistically useful predictor of  therefore, they used the model from part a to make in-
+  CO2 emissions the current year?  ferences. Explain the best way to conduct this test for
+  interaction. Give the null hypothesis of the test.
+  e. Conduct the test mentioned in part d at a = .05. Give
+  the appropriate conclusion.  Based on Jovanovic, J., and King, S. S. “Boys and girls in the
+  performance-based science classroom: Who’s doing the performing.”
+  f. A matrix giving the correlation (r) for each pair of  American Educational Research Journal, Vol. 35, No. 3, Fall 1998,
+  independent variables is shown in the table above.  p. 489 (Table 8).
+  Identify the independent variables that are highly
+  correlated. What problems may result from includ-  12.181  Distress in EMS workers. The Journal of Consulting and
+  ing these highly correlated variables in the regression  Clinical Psychology (June 1995) reported on a study of
+  model?  emergency service (EMS) rescue workers who responded
+  to the I-880 freeway collapse during a San Francisco
+12.180  Students’ ability in science. An article published in the  earthquake. The goal of the study was to identify the pre-
+  American Educational Research Journal (Fall 1998) used  dictors of symptomatic distress in the workers. One of the
+  multiple regression to model the students’ perceptions of  distress variables studied was the Global Symptom Index
+  their ability in science classes. The sample consisted of  (GSI). Several models for GSI (y) based on the following
+  165 Grade 5–8 students. The dependent variable of inter-  independent variables were considered:
+  est, the student’s perception of his or her ability (y), was
+  measured on a four-point scale (where 1 = little or no  x1 = Critical Incident Exposure scale 1CIE2
+  ability and 4 = high ability). Two types of independent  x2 = Hogan Personality Inventory@Adjustment
+  variables were included in the model, control variables
+  and performance behavior variables. The control vari-  scale 1HPI@A2
+  ables are: prior science attitude (measured on a 4-point
+  scale), score on standardized science test, gender, and  x3 = Years of experience 1EXP2
+  classroom (1, 3, 4, 5, or 6). The performance behavior  x4 = Locus of Control scale 1LOC2
+  variables (all measured on a numerical scale between  x5 = Social Support scale 1SS2
+  0 and 1) are: active-leading behavior, passive-assisting  x6 = Dissociative Experiences scale 1DES2
+  behavior, and active-manipulating behavior.  x7 = Peritraumatic Dissociation Experiences
+  a. Identify the independent variables as quantitative or
+  Questionnaire, self@report 1PDEQ@SR2
+  qualitative.
+  b. Individual b-tests on the independent variables all  a. Write a first-order model for E(y) as a function of the
+  first five independent variables, x19x5.
+  had p-values greater than .10 except for prior sci-
+  ence attitute, gender, and active-leading behavior.  b. The model from part a, fitted to data collected on
+  Which variables appear to contribute to the predic-  n = 147 EMS workers, yielded the following results:
+  tion of a student’s perception of his or her ability in  R2 = .469, F = 34.47, p@value 6.001. Interpret these
+  science?  results.
+  c. The estimated b-value for the active-leading behavior
+  variable is .88 with a standard error of .34. Use this in-  c. Write a first-order model for E(y) as a function of all
+  formation to construct a 95% confidence interval for  seven independent variables, x19x7.
+  this b. Interpret the interval.
+  d. The following statistics for evaluating the over-  d. The model from part c yielded R2 = .603. Interpret
+  all predictive power of the model were reported:  this result.
+  R2 = .48, F = 12.84, p 6 .001. Interpret the results.
+  e. Hypothesize the equation of the first-order main  e. The t-tests for testing the DES and PDEQ-SR vari-
+  effects model for E(y).  ables both yielded a p-value of .001. Interpret this
+  f. The researchers also considered a model that included  result.
+  all possible interactions between the control variables
+  and the performance behavior variables. Write the  12.182  Listen-and-look study. Where do you look when you
+  equation for this model for E(y).  are listening to someone speak? Researchers have dis-
+  covered that listeners tend to gaze at the eyes or mouth
+  of the speaker. In a study published in Perception &
+  Psychophysics (Aug. 1998), subjects watched a video-
+  tape of a speaker giving a series of short monologues at
+  Supplementary Exercises 12.169–12.205 787
+
+  a social gathering (e.g., a party). The level of background  results: yn = 1.926 + .097x - .003x2, standard error of
+  noise (multilingual voices and music) was varied during  bn2 = .001. Compute the test statistic for the test you
+  the listening sessions. Each subject wore a pair of clear  set up in part c.
+  plastic goggles on which an infrared corneal detection  e. Use the result you found in part d to make the appro-
+  system was mounted, enabling the researchers to monitor  priate conclusion. Take a = .05.
+  the subject’s eye movements. One response variable of
+  interest was the proportion y of times the subject’s eyes  12.185  Improving SAT scores. Refer to the Chance (Winter
+  fixated on the speaker’s mouth.
+  a. The researchers wanted to estimate E(y) for four different  2001) study of students who paid a private tutor (or
+
+  noise levels: none, low, medium, and high. Hypothesize  coach) to help them improve their SAT scores, presented
+  a model that will allow the researchers to obtain these
+  estimates.  in Exercise 2.197 (p. 136). Multiple regression was used
+  b. Interpret the b’s in the model you hypothesized in
+  part a.  to estimate the effect of coaching on SAT-Mathematics
+  c. Explain how to test the hypothesis of no differences in
+  the mean proportions of mouth fixations for the four  scores. Data on 3,492 students (573 of whom were coached)
+  background noise levels.  were used to fit the model E1y2 = b0 + b1x1 + b2x2,
+  where y = SAT@Math score, x1 = score on PSAT, and
+12.183  Defects in nuclear missile housing parts. The technique  x2 = 51 if student was coached, 0 if not6.
+  of multivariable testing was discussed in The Journal  a. The fitted model had an adjusted R2 value of .76.
+  of the Reliability Analysis Center (First Quarter, 2004).
+  Multivariable testing was shown to improve the quality  Interpret this result.
+  of carbon-foam rings used in nuclear missile housings.
+  The rings are produced via a casting process that involves  b. The estimate of b2 in the model was 19, with a standard
+  mixing ingredients, oven curing, and carving the finished  error of 3. Use this information to form a 95% confi-
+  part. One type of defect analyzed was the number y of
+  black streaks in the manufactured ring. Two variables  dence interval for b2. Interpret the interval.
+  found to affect the number of defects were turntable  c. On the basis of the interval you found in part b, what
+  speed (revolutions per minute) x1 and cutting blade posi-
+  tion (inches from center) x2.  can you say about the effect of coaching on SAT-Math
+  a. The researchers discovered “an interaction between
+  scores?
+  blade position and turntable speed.” Hypothesize
+  a regression model for E(y) that incorporates this  d. As an alternative model, the researcher added several
+  interaction.
+  b. Interpret what it means practically to say that “blade  “control” variables, including dummy variables for
+  position and turntable speed interact.”
+  c. The researchers reported a positive linear relationship  student ethnicity (x3, x4, and x5), a socioeconomic sta-
+  between number of defects (y) and turntable speed 1x12  tus index variable 1x62, two variables that measured
+  but found that the slope of the relationship was much  high school performance (x7 and x8), the number of
+  steeper for lower values of cutting blade position 1x22.  math courses taken in high school 1x92, and the over-
+  What does this imply about the interaction term in the  all GPA for the math courses 1x102. Write the hypoth-
+  model you hypothesized in part a? Explain.  esized equation for E(y) for the alternative model.
+
+12.184  Violent behavior in children. Refer to the Development  e. Give the null hypothesis for a nested-model F-test
+  Psychology (Mar. 2003) study of the behavior of elemen-
+  tary school children, presented in Exercise 8.149 (p. 454).  comparing the initial and alternative models.
+  The researchers used a quadratic equation to model the
+  level (y) of aggressive fantasies experienced by a child as  f. The nested-model F-test from part e was statistically
+  a function of the child’s age (x). [Note: Level y was mea-
+  sured as an average of responses to six questions (e.g.,  significant at a = .05. Interpret this result practically.
+  “Do you sometimes have daydreams about hitting or
+  hurting someone you don’t like?”). Responses were mea-  g. The alternative model from part d resulted in
+  sured on a scale ranging from 1 (never) to 5 (always).]  R2a = .79, bn2 = 14, and sbn2 = 3. Interpret the value
+  a. Write the equation of the hypothesized model for  of Ra2.
+
+  E(y).  h. Refer to part g. Find and interpret a 95% confidence
+  b. Research psychologists theorized that a child’s aggres-
+  interval for b2.
+  sive fantasies increase with age but at a slower rate of  i. The researcher concluded that “the estimated effect
+  acceleration in older children. Sketch the curve hy-
+  pothesized by the researchers.  of SAT coaching decreases from the baseline model
+  c. Set up H0 and Ha for testing the researchers’
+  theory.  when control variables are added to the model.” Do
+  d. The model was fitted to data collected for over
+  11,000 elementary school children, with the following  you agree? Justify your answer.
+
+  j. As a modification to the model of part d, the re-
+
+  searcher added all possible interactions between the
+
+  coaching variable 1x22 and the other independent
+  variables in the model. Write the equation for E(y) for
+
+  this modified model.
+
+  k. Give the null hypothesis for comparing the models
+
+  from parts d and j. How would you perform this test?
+
+  12.186  Factors identifying urban counties. The Professional
+
+  Geographer (Feb. 2000) published a study of urban and
+
+  rural counties in the western United States. The re-
+
+  searchers used six independent variables—total county
+
+  population 1x12, population density 1x22, population
+  concentration 1x32, population growth 1x42, propor-
+  tion of county land in farms 1x52, and five-year change
+  in agricultural land base 1x62—to model the urban/
+  rural rating (y) of a county on a scale of 1 (most rural) to
+
+  10 (most urban). Prior to running the multiple-regression
+
+  analysis, the researchers were concerned about possible
+788 CHAPTER 12 ■ Multiple Regression and Model Building
+
+  multicollinearity in the data. Following is a MINITAB  12.188  Deferred tax allowance study. A study was conducted
+  printout of correlations between all pairs of the indepen-  to identify accounting choice variables that influence a
+  dent variables:  manager’s decision to change the level of the deferred tax
+  asset allowance at a firm (The Engineering Economist,
+  Jan./Feb. 2004). Data were collected on a sample of 329
+  firms that reported deferred tax assets. The dependent
+  variable of interest (DTVA) is measured as the change
+  in the deferred tax asset valuation allowance divided by
+  the deferred tax asset. The independent variables used as
+  predictors of DTVA are as follows:
+
+  a. On the basis of the correlation printout, is there any  LEVERAGE: x1 = ratio of debt book value to shareholder’s
+  evidence of extreme multicollinearity?  equity
+
+  b. The first-order model with all six independent vari-  BONUS: x2 = 1 if firm maintains a management bonus plan,
+  ables was fit to the data. The multiple-regression  0 if not
+  results are shown in the accompanying MINITAB
+  printout. On the basis of the reported tests, is there  MVALUE: x3 = market value of common stock
+  any evidence of extreme multicollinearity?  BBATH: x4 = 1 if operating earnings are negative and lower
+
+  than last year, 0 if not
+  EARN: x5 = change in operating earnings divided by total
+
+  assets
+
+  A first-order model was fitted to the data, with the follow-
+  ing results (p-values are in parentheses):
+
+  yn = .044 + .006x1 - .035x2 - .001x3 + .296x4, + .010x5, Ra2 = .280
+  1.0702 1.2282 1.1572 1.6782 1.0012 1.8692
+
+  a. Interpret the estimate of the b-coefficient for x4.
+  b. The “Big Bath” theory proposed by the researchers
+
+  states that the mean DTVA for firms with negative
+  earnings and earnings lower than last year will exceed
+  the mean DTVA of other firms. Is there evidence to
+  support this theory? Test, using a = .05.
+  c. Interpret the value of Ra2.
+
+  Applying the Concepts—Intermediate
+
+  Based on Berry, K. A. et al., “Interpreting what is rural and urban for  12.189  Snow geese feeding trial. Refer to the Journal of Applied
+  western U. S. counties.” Professional Geographer, Vol. 52, No. 1, Feb. 2000
+  (Table 2).  SNOW  Ecology (Vol. 32, 1995) study of the feeding habits of
+
+12.187  Growth of Japanese beetles. In the Journal of Insect  baby snow geese, presented in Exercise 11.150 (p. 676).
+
+  Behavior (Nov. 2001), biologists at Eastern Illinois  Data on gosling weight change, digestion efficiency, ac-
+
+  University published the results of their study on  id-detergent fiber (all measured as percentages), and diet
+
+  Japanese beetles. The biologists collected beetles over  (plants or duck chow) for 42 feeding trials are saved in the
+
+  a period of n = 13 summer days in a soybean field. For  SNOW file. Selected observations are shown in the table
+
+  one portion of the study, the biologists modeled y, the av-  (p. 789). The botanists were interested in predicting weight
+
+  erage size (in millimeters) of female beetles as a function  change (y) as a function of the other variables. Consider
+  the first-order model E1y2 = b0 + b1x1 + B2x2, where
+  of the average daily temperature x1 (degrees) and Julian  x1 is digestion efficiency and x2 is acid-detergent fiber.
+  date x2.  a. Find the least squares prediction equation for weight
+  a. Write a first-order model for E(y) as a function of x1
+  change y.
+  and x2.
+  b. The model was fit to the data, with the results shown in  b. Interpret the b@estimates in the equation you found
+  in part a.
+  the accompanying table. Interpret the estimate of b1.
+  c. Conduct a test to determine whether digestion effi-
+Variable  Parameter  t-Value  p-Value
+  Estimate  26.0  ciency, x1, is a useful linear predictor of weight change.
+Intercept  - 0.72  6 .0001  Use a = .01.
+Temperature 1x12  6.51  - 3.30  .49
+Date 1x22  - .002  .008  d. Form a 99% confidence interval for b2. Interpret the
+  - .010  result.
+
+c. Conduct a test to determine whether the average size of  e. Find and interpret R2 and Ra2. Which statistic is the
+  female Japanese beetles decreases linearly as the tem-  preferred measure of model fit? Explain.
+  perature increases. Use a = .05.
+  f. Is the overall model statistically useful in predicting
+
+  weight change? Test, using a = .05.
+
+  g. Write a first-order model relating gosling weight
+
+  change (y) to digestion efficiency 1x12 and diet (plants
+  or duck chow) that allows for different slopes for each
+
+  diet.
+  Supplementary Exercises 12.169–12.205 789
+
+Data for Exercise 12.189  a. Graph the data in a scatterplot. What trend do you
+  observe?
+Feeding  Diet  Weight  Digestion  Acid-
+  Trial  Change (%)  Efficiency  Detergent  b. Fit a quadratic model to the data. Give the least
+  Plants  Fiber (%)  squares prediction equation.
+  1  Plants  -6  (%)
+  2  Plants  -5  28.5  c. Is there sufficient evidence of upward curvature in the
+  3  Plants  - 4.5  0  27.5  relationship between surface production rate and time
+  4  Plants  2.5  27.5  after turnoff? Use a = .05.
+  5  0  5  32.5
+  f  f  2  0  32  12.191  Women in top management. The Journal of
+  38  Duck Chow  f  0  Organizational Culture, Communications and Conflict
+  39  Duck Chow  9  f  f  (July 2007) published a study on women in upper man-
+  40  Duck Chow  12  59  8.5  agement positions at U.S. firms. Monthly data (n = 252
+  41  Duck Chow  8.5  52.5  8  months) were collected for several variables in an at-
+  42  Duck Chow  10.5  75  6  tempt to model the number of females in managerial
+  14  72.5  6.5  positions (y). The independent variables included the
+  69  7  number of females with a college degree (x1), the number
+  of female high school graduates with no college degree
+Based on Gadallah, F. L., and Jefferies, R. L. “Forage quality in brood rearing  (x2), the number of males in managerial positions (x3),
+areas of the lesser snow goose and the growth of captive goslings.” Journal of  the number of males with a college degree (x4), and the
+Applied Biology, Vol. 32, No. 2, 1995, pp. 281–282 (adapted from Figures 2 and 3).  number of male high school graduates with no college de-
+  gree (x5). Determine which of the correlations reported
+h. Fit the model you wrote in part g to the data saved in the  in parts a–d results in a potential multicollinearity prob-
+  SNOW file. Give the least squares prediction equation.  lem for the regression analysis.
+  a. The correlation relating number of females in mana-
+i. Refer to part g. Find the estimated slope of the line for
+  goslings fed a diet of plants. Interpret its value.  gerial positions and number of females with a college
+  degree: r = .983.
+j. Refer to part g. Find the estimated slope of the line  b. The correlation relating number of females in man-
+  for goslings fed a diet of duck chow. Interpret its  agerial positions and number of female high school
+  value.  graduates with no college degree: r = .074.
+  c. The correlation relating number of males in mana-
+k. Refer to part g. Conduct a test to determine whether  gerial positions and number of males with a college
+  the slopes associated with the two diets are significantly  degree: r = .722.
+  different. Use a = .05.  d. The correlation relating number of males in manage-
+  rial positions and number of male high school gradu-
+12.190  Optimizing semiconductor material processing. Fluoro-  ates with no college degree: r = .528.
+  carbon plasmas are used in the production of semicon-
+RADICALS  ductor materials. In the Journal of Applied Physics
+  (Dec. 1, 2000), electrical engineers at Nagoya University
+  (Japan) studied the kinetics of fluorocarbon plasmas in  12.192  Comparing mosquito repellents. Which insect repel-
+  order to optimize material processing. In one portion of  lents protect best against mosquitoes? Periodically, con-
+  the study, the surface production rate of fluorocarbon  REPELL  sumer groups conduct tests to compare insect repellents
+  radicals emitted from the production process was mea-  (e.g., Consumer Reports, June 2000). Consider a similar
+  sured at various points in time (in milliseconds) after the  study of 14 popular mosquito repellents. Each product
+  radio frequency power was turned off. The data are given  was classified as either an aerosol spray or as a lotion.
+  in the table below. Consider a model relating surface pro-  The cost of the product (in dollars) was divided by the
+  duction rate (y) to time (x).  amount of the repellent needed to cover exposed areas of
+  the skin (about 1/3 ounce) to obtain a cost-per-use value.
+  Rate  Time  Effectiveness was measured as the maximum number of
+  hours of protection (in half-hour increments) provided
+  1.00  0.1  when human testers exposed their arms to 200 mosqui-
+  0.80  0.3  toes. The simulated data are listed in the table on p. 790.
+  0.40  0.5  a. Suppose you want to use repellent type to model
+  0.20  0.7
+  0.05  0.9  the cost per use (y). Create the appropriate number
+  0.00  1.1  of dummy variables for repellent type, and write the
+  - 0.05  1.3  model.
+  - 0.02  1.5  b. Fit the model you wrote in part a to the
+  0.00  1.7  data.
+  - 0.10  1.9  c. Give the null hypothesis for testing whether repellent
+  - 0.15  2.1  type is a useful predictor of cost per use (y).
+  - 0.05  2.3  d. Conduct the test suggested in part c, and give the appro-
+  - 0.13  2.5  priate conclusion. Use a = .10.
+  - 0.08  2.7  e. Repeat parts a–d if the dependent variable is maxi-
+  0.00  2.9  mum number of hours of protection (y).
+
+  Based on Takizawa, K., et al. “Characteristics of C3  12.193 Rating funny cartoons. Newspaper cartoons, although
+  radicals in high-density C4 F8 plasmas studied by laser-in-  designed to be funny, often invoke hostility, pain, or
+  duced fluorescence spectroscopy.” Journal of Applied  aggression in readers, especially when those cartoons
+
+  Physics, Vol. 88, No. 11, Dec. 1, 2000 (Figure 7).
+790 CHAPTER 12 ■ Multiple Regression and Model Building
+
+Data for Exercise 12.192  knowledge, comprehension, and application of sun safety
+  at two points in time: prior to the sun safety curriculum
+Repellent  Type  Cost/Use ($)  Maximum  (pretest, x1) and seven weeks following the curriculum
+  Protection (hours)  (posttest, y).
+  1  Aerosol  0.61  a. Write a first-order model for mean posttest score E(y)
+  2  Aerosol  0.72  6.5
+  3  Aerosol  0.69  3.5  as a function of pretest score x1 and group. Assume
+  4  Aerosol  0.74  6.0  that no interaction exists between pretest score and
+  5  Aerosol  0.77  7.0  group.
+  6  Aerosol  2.27  1.5  b. For the model you wrote in part a, show that the slope
+  7  Lotion  1.17  14.5  of the line relating posttest score to pretest score is the
+  8  Lotion  0.86  3.5  same for both groups of children.
+  9  Aerosol  3.25  7.5  c. Repeat part a, but assume that pretest score and group
+  10  Lotion  2.58  24.5  interact.
+  11  Aerosol  1.17  14.0  d. For the model of part c, show that the slope of the line
+  12  Lotion  1.50  1.0  relating posttest score to pretest score differs for the
+  13  Lotion  1.25  2.5  two groups of children.
+  14  Lotion  0.96  7.5  e. Assuming that interaction exists, give the reduced
+  3.5  model for testing whether the mean posttest scores
+  differ for the intervention and control groups.
+Based on “Comparing mosquito repellents,” from “Buzz off: Insect repellents:  f. With sun safety knowledge as the dependent variable,
+Which keep bugs at bay?” Consumer Reports, June 2000.  the test presented in part e was carried out and resulted
+  in a p-value of .03. Interpret this result.
+  depict violence. A study was undertaken to determine  g. With sun safety comprehension as the dependent
+  how violence in cartoons is related to aggression or pain  variable, the test presented in part e was carried
+  (Motivation and Emotion, Vol. 10, 1986). A group of vol-  out and resulted in a p-value of .033. Interpret this
+  unteers (psychology students) rated each of 32 violent  result.
+  newspaper cartoons (16 “Herman” and 16 “Far Side”  h. With sun safety application as the dependent variable,
+  cartoons) on three dimensions:  the test presented in part e was carried out and re-
+  sulted in a p-value of .322. Interpret this result.
+  y = Funniness 10 = not funny, c, 9 = very funny2
+  12.195  Revenues of popular movies. The Internet Movie Database
+  x1 = Pain 10 = none, c, 9 = a very great deal2  (www.imdb.com) monitors the gross revenues of all
+  x2 = Aggression>hostility (0 = none, c, 9 = a very  IMDB  major motion pictures. The table on p. 791 gives both the
+  domestic (United States and Canada) and international
+  great deal)  gross revenues for a sample of 22 popular movies.
+  a. Write a first-order model for international gross reve-
+  The ratings of the students on each dimension were aver-
+  aged, and the resulting n = 32 observations were subjected  nues y as a function of domestic gross revenues x.
+  to a multiple-regression analysis. On the basis of the under-  b. Write a second-order model for international gross
+  lying theory (called the inverted-U theory) that the funni-
+  ness of a joke will increase at low levels of aggression or pain,  revenues y as a function of domestic gross revenues x.
+  level off, and then decrease at high levels of aggression or  c. Construct a scatterplot of these data. Which of the
+  pain, the following quadratic models were proposed:
+  models appears to be a better choice for explaining
+Model 1: E1y2 = b0 + b1x1 + b2x12, R2 = .099, F = 1.60  variation in international gross revenues?
+Model 2: E1y2 = b0 + b1x2 + b2x22, R2 = .100, F = 1.61  d. Fit the model of part b to the data and investigate its
+  usefulness. Is there evidence of a curvilinear relation-
+  a. According to the theory, what is the expected sign of  ship between international and domestic gross reve-
+  b2 in each model?  nues? Test, using a = .05.
+  e. On the basis of your analysis in part d, which of the
+  b. Is there sufficient evidence to indicate that the qua-  two models better explains the variation in interna-
+  dratic model relating pain to funniness rating is useful?  tional gross revenues?
+  Test at a = .05.
+  12.196  Habitats of grizzly bears. Do grizzly bears segregate on
+  c. Is there sufficient evidence to indicate that the qua-  the basis of sex? One hypothesis is that female grizzlies
+  dratic model relating aggression/hostility to funniness  avoid male-occupied habitats because of competition for
+  rating is useful? Test at a = .05.  food and cannibalism. A competing theory is that females
+  do not avoid males, but simply have different habitats
+12.194  “Sun safety” study. Excessive exposure to solar radiation  available to them. These hypotheses were investigated in
+  is known to increase the risk of developing skin cancer,  the Journal of Wildlife Management (July 1995). Grizzly
+  yet many people do not practice “sun safety.” A group  bears were trapped, fitted with a radio collar, and re-
+  of University of Arizona researchers examined the fea-  leased in the Highwood trapping zone (HTZ) in Alberta,
+  sibility of educating preschool (four- to five-year-old)  Canada. The percentage of time, y, each bear used the
+  children about sun safety (American Journal of Public  HTZ as a habitat over a four-year period was recorded.
+  Health, July 1995). A sample of 122 preschool children  The researchers modeled E(y) as a function of repro-
+  was divided into two groups: the control group and the  ductive class at five levels: estrous adult females, adult
+  intervention group. Children in the intervention group  females with offspring, independent subadult females,
+  received a Be Sun Safe curriculum in preschool, while the
+  control group did not. All children were tested for their
+  Supplementary Exercises 12.169–12.205 791
+
+  Data for Exercise 12.195  Domestic Gross ($ millions)  International Gross ($ millions)
+
+  Movie (Year)  760.5  2,021.0
+  600.8  1,234.6
+  Avatar (2009)  533.3
+  Titanic (1997)  423.0  464.0
+  The Dark Knight (2008)  434.9  642.9
+  Pirates of the Caribbean (2006)  403.7  321.8
+  E.T. (1982)  400.7  417.9
+  Spider Man (2002)  408.0  867.1
+  Frozen (2013)  356.8  283.2
+  The Hunger Games (2012)  328.4  563.0
+  Jurassic Park (1993)  317.6  455.0
+  Lion King (1994)  291.4  651.1
+  Harry Potter Sorcerer’s Stone (2001)  293.5  468.2
+  Inception (2010)  277.3  368.0
+  Sixth Sense (1999)  260.0  201.6
+  The Hangover (2009)  217.6  210.6
+  Jaws (1975)  216.1  300.0
+  Ghost (1990)  187.7  263.2
+  Saving Private Ryan (1998)  184.2  258.3
+  Gladiator (2000)  204.6  240.0
+  Dances with Wolves (1990)  241.4  153.0
+  The Exorcist (1973)  127.9  115.1
+  My Big Fat Greek Wedding (2002)  172.6
+  Rocky IV (1985)
+
+  Based on The Internet Movie Database (www.imdb.com)
+
+  adult males, and independent subadult males. One goal  a. Write a model that describes the relationship between
+  was to compare the mean percentage use of HTZ for the  sale price and number of apartment units as three
+  five classes of grizzly bears.  parallel lines, one for each level of physical condition.
+  a. Write a model for E(y) that will enable the researchers  Be sure to specify the dummy-variable coding scheme
+  you use.
+  to carry out the comparison.
+  b. The sample sizes and sample means for the five classes  b. Plot y against x1 (number of apartment units) for all
+  buildings in excellent condition. On the same graph,
+  are shown in the table below. Use this information to  plot y against x1 for all buildings in good condition.
+  find estimates of the b’s in the model you wrote in  Do this again for all buildings in fair condition. Does
+  part a.  it appear that the model you specified in part a is ap-
+  c. Give the null hypothesis for a test to determine whether  propriate? Explain.
+  the mean percentage of use of HTZ differs among the
+  grizzly bear classes.  c. Fit the model from part a to the data. Report the least
+  d. The p-value for the test mentioned in part c was re-  squares prediction equation for each of the three
+  ported as .15. Interpret this result.  building condition levels.
+
+  Mean Percentage  d. Plot the three prediction equations of part c on a scat-
+  terplot of the data.
+Grizzly Class  n  of Use
+  e. Do the data provide sufficient evidence to conclude
+Estrous adult females  5  38  that the relationship between sale price and number
+  of units varies with the physical condition of the apart-
+Adult females with offspring  7  16  ments? Test, using a = .05.
+
+Independent subadult females  2  89  f. Check the data set for multicollinearity. How does
+  your result affect your choice of independent vari-
+Adult males  7  43  ables to use in a model for sale price?
+
+Independent subadult males  8  58  g. Consider the first-order model E1y2 = b0 + b1x1
+  + g + b5x5. Conduct a complete residual analysis for
+Based on Wielgus, R. B., and Bunnell, F. L. “Tests of hypotheses for sexual  the model to check the assumptions on e.
+segregation in grizzly bears.” Journal of Wildlife Management, Vol. 59, No. 3,
+July 1995, p. 555 (Table 1).
+
+12.197  Sale prices of apartments. A Minneapolis, Minnesota,  12.198  RNA analysis of wheat genes. Engineers from the
+  real-estate appraiser used regression analysis to ex-  Department of Crop and Soil Sciences at Washington
+MNSALES  plore the relationship between the sale prices of  RNA  State University used regression to estimate the number
+  apartment buildings sold in Minneapolis and various  of copies of a gene transcript in an aliquot of ribonucleic
+  characteristics of the properties. Twenty-five apartment  acid (RNA) extracted from a wheat plant (Electronic
+  buildings were randomly sampled from all apartment  Journal of Biotechnology, Apr. 15, 2004). The proportion
+  buildings that were sold during a recent year. The table  1x12 of RNA extracted from a wheat plant exposed to
+  on p. 792 lists the data collected by the appraiser. [Note:  the cold was varied, and the transcript copy number (y, in
+  The physical condition of each apartment building is  thousands) was measured for each of two cloned genes:
+  coded E (excellent), G (good), or F (fair).]  Mn superoxide dismutase (MnSOD) and phospholipase
+  D (PLD). The data are listed in the table on p. 792.
+792 CHAPTER 12 ■ Multiple Regression and Model Building
+
+Data for Exercise 12.197
+
+Code No.  Sale Price  No. of  Age of  Lot Size  No. of On-Site  Gross Building  Condition of
+  y ($)  Apartments,  Structure,  x3 (sq. ft.)  Parking  Area x5 (sq. ft.)  Apartment
+  0229  x2 (years)
+  0094  90,300  x1  4,635  Spaces, x4  4,266  Building
+  0043  384,000  82  17,798  14,391
+  0079  157,500  4  13  5,913  0  6,615  F
+  0134  676,200  20  66  7,750  0  34,144  G
+  0179  165,000  5  64  5,150  0  6,120  G
+  0087  300,000  26  55  12,506  6  14,552  E
+  0120  108,750  5  65  7,160  0  3,040  G
+  0246  276,538  10  82  5,120  0  7,881  G
+  0025  420,000  4  23  11,745  0  12,600  G
+  0015  950,000  11  18  21,000  0  39,448  G
+  0131  560,000  20  71  11,221  20  30,000  G
+  0172  268,000  62  74  7,818  3  8,088  G
+  0095  290,000  26  56  4,900  0  11,315  G
+  0121  173,200  13  76  5,424  13  4,461  F
+  0077  323,650  9  21  11,834  0  9,000  E
+  0060  162,500  6  24  5,246  6  3,828  G
+  0174  353,500  11  19  11,223  8  13,680  G
+  0084  134,400  5  62  5,834  5  4,680  G
+  0031  187,000  20  70  9,075  2  7,392  F
+  0019  155,700  4  19  5,280  0  6,030  E
+  0074  8  57  6,864  0  3,840  G
+  0057  93,600  4  82  4,510  0  3,092  E
+  0104  110,000  4  50  11,192  0  23,704  F
+  0024  573,200  4  10  7,425  0  3,876  G
+  14  82  7,500  0  9,542  E
+  79,300  4  82  0  F
+  272,000  5  0  E
+
+a. Write a first-order model for number of copies (y) as  c. Conduct a test to determine whether, in fact, propor-
+  a function of proportion 1x12 of RNA extracted and  tion of RNA and gene type interact. Test using a = .01.
+  gene type (MnSOD or PLD). Assume that proportion
+  of RNA and gene type interact to affect y.  d. Use the results from part b to estimate the rate of in-
+  crease of number of copies (y) with proportion 1x12 of
+b. Fit the model you wrote in part a to the data. Give the  RNA extracted for the MnSOD gene type.
+  least squares prediction equation for y.
+  e. Repeat part d for the PLD gene type.
+
+  *12.199  Entry-level job preferences. Benefits Quarterly perio-
+  dical publishes a study of entry-level job preferences.
+Data for Exercise 12.198  A number of independent variables are used to
+  model the job preferences (measured on a 10-point
+RNA Proportion  Number of Copies ( y, thousands)  scale) of business school graduates. Suppose stepwise
+  1x12  regression is used to build a model for job preference
+  MnSOD  PLD  score (y) as a function of the following independent
+  0.00  variables:
+  0.00  401  80
+  0.00
+  0.33  336  83
+  0.33
+  0.33  337  75
+  0.50
+  0.50  711  132  x1 = e 1 if flextime position
+  0.50  0 if not
+  0.67  637  148
+  0.67  x2 = e 1 if day care support required
+  0.67  602  115  0 if not
+  0.80
+  0.80  985  147  x3 = e 1 if spousal transfer support required
+  0.80  0 if not
+  1.00  650  142
+  1.00  x4 = Number of sick days allowed
+  1.00  747  146  x5 = e 1 if applicant married
+
+  904  146  0 if not
+  x6 = Number of children of applicant
+  1,007  150  x7 = e 1 if male applicant
+
+  1,047  184  0 if female applicant
+
+  1,151  173
+
+  1,098  201
+
+  1,061  181
+
+  1,261  193
+
+  1,272  187
+
+  1,256  199
+
+Based on Baek K. H., and Skinner, D. Z. “Quantitative real-time PCR method
+to detect changes in specific transcript and total RNA amounts.” Electronic
+Journal of Biotechnology, Vol. 7, No. 1, April 15, 2004 (adapted from Figure 2).
+  Supplementary Exercises 12.169–12.205 793
+
+  a. How many models are fitted to the data in step 1?  b. Give the null hypothesis for testing the contribution
+  Give the general form of these models.  of x4, strength of client–therapist relationship, to the
+  model.
+  b. How many models are fitted to the data in step 2?
+  Give the general form of these models.  c. The test statistic for the test suggested in part b was
+  t = 4.408, with an associated p-value of .001. Interpret
+  c. How many models are fitted to the data in step 3?  this result.
+  Give the general form of these models.
+  d. The estimated b coefficient for the x1 x2 interaction
+  d. Explain how the procedure determines when to stop  term was positive and highly significant 1p 6 .0012.
+  adding independent variables to the model.  According to the researchers, “This interaction sug-
+  gests that c as the age of the therapist increased, c
+  e. Describe two major drawbacks to using the final step-  male therapists were less likely to get negative client
+  wise model as the “best” model for job preference  reactions than were female therapists.” Do you
+  score (y).  agree?
+
+12.200  Characteristics of sea-ice melt ponds. Surface albedo  e. For the model presented here, R2 = .2946. Interpret
+  is defined as the ratio of solar energy directed up-  this value.
+PONDICE  ward from a surface over energy incident upon the
+  surface. Surface albedo is a critical climatological pa-
+  rameter of sea ice. The National Snow and Ice Data  12.202  Processed straw as thermal insulation. An article pub-
+  Center (NSIDC) collects data on the albedo, depth,  lished in Engineering Structures and Technologies (Sept.
+  and physical characteristics of ice-melt ponds in the  STRAW  2012) presented the results of a study on the use of pro-
+  Canadian Arctic. Data on 504 ice-melt ponds located  cessed straw as thermal insulation for homes. Chopped
+  in the Barrow Strait in the Canadian Arctic are saved  straw specimens were prepared and tested for thermal
+  in the PONDICE file. Environmental engineers want  conductivity at a temperature of 10° Celsius. Two vari-
+  to examine the relationship between the broadband  ables were measured for each of 25 straw specimens:
+  surface albedo level y of the ice and the pond depth x  y = thermal conductivity (watts per meter-Kelvin) and
+  (in meters).  x = density (kilograms per cubic meter). The data are
+  a. Construct a scatterplot of the data. On the basis of the  provided in the accompanying table. Consider the qua-
+  dratic model E1y2 = b0 + b1x + b0x2. Conduct a com-
+  scatterplot, hypothesize a model for E(y) as a function  plete analysis (including a residual analysis) of this model.
+  of x.  Summarize your results in a report.
+  b. Fit the model you hypothesized in part a to
+  the data. Give the least squares prediction  Specimen  Thermal  Density (x)
+  equation.  Conductivity ( y)
+  c. Conduct a test of the overall adequacy of the model.  1  49
+  Use a = .01.  2  0.052  50
+  d. Conduct tests (at a = .01) on any important b param-  3  0.045  51
+  eters in the model.  4  0.055  56
+  e. Find and interpret the values of adjusted R2 and s.  5  0.042  57
+  f. Do you detect any outliers in the data? Explain.  6  0.048  62
+  7  0.049  64
+12.201  Child abuse report. Licensed therapists are mandated  8  0.046  65
+  by law to report child abuse by their clients. This law  9  0.047  66
+  requires the therapist to breach confidentiality and  10  0.051  68
+  possibly lose the client’s trust. A national survey of li-  11  0.047  78
+  censed psychotherapists was conducted to investigate  12  0.049  79
+  clients’ reactions to legally mandated child-abuse re-  13  0.048  82
+  ports (American Journal of Orthopsychiatry, Jan. 1997).  14  0.048  83
+  The sample consisted of 303 therapists who had filed a  15  0.052  84
+  child-abuse report against at least one of their clients.  16  0.051  98
+  The researchers were interested in finding the best pre-  17  0.053  100
+  dictors of a client’s reaction (y) to the report, where y is  18  0.054  100
+  measured on a 30-point scale. (The higher the value, the  19  0.055  101
+  more favorable was the client’s response to the report.)  20  0.057  103
+  The independent variables found to have the most pre-  21  0.055  115
+  dictive power are as follows:  22  0.074  116
+  23  0.075  118
+  x1: Therapist’s age 1years2  24  0.077  119
+  x2: Therapist’s gender 11 if male, 0 if female2  25  0.076  120
+  x3: Degree of therapist’s role strain 125@point scale2  0.074
+  x4: Strength of client@therapist relationship 140@point
+  Applying the Concepts—Advanced
+  scale
+  12.203 Abundance of bird species. Multiple-regression analysis
+  x5: Type of case 11 if family, 0 if not2  was used to model the abundance y of an individual bird
+  x1x2: Age * Gender interaction  species in transects in the United Kingdom (Journal of
+
+  a. Hypothesize a first-order model relating y to each of
+  the five independent variables and the interaction term.
+794 CHAPTER 12 ■ Multiple Regression and Model Building
+
+  Applied Ecology, Vol. 32, 1995). Three of the indepen-  of first-order models designed to predict dependent so-
+  dent variables used in the model, all field boundary attri-  cial outcome variables such as income and unemploy-
+  butes, are  ment. (Only on a single occasion are interaction terms
+  1. Transect location (small pasture field, small arable  incorporated.) Consider, for example, the model
+
+  field, or large arable field)  E1y2 = b0 + b1x1 + b2x2 + b3x3
+  2. Land use (pasture or arable) adjacent to the transect
+  3. Total number of trees in the transect  where y = income, x1 = IQ, x2 = socioeconomic status,
+  and x3 = age. H&M utilize t-tests on the individual b
+  a. Identify each of the independent variables as a  parameters to assess the importance of the independent
+  quantitative or qualitative variable.  variables. As with most of the models considered in The
+  Bell Curve, the estimate of b1 in the income model is
+  b. Write a first-order model for E(y) as a function of  positive and statistically significant at a = .05, and the
+  the total number of trees.  associated t-value is larger (in absolute value) than the
+  t-values associated with the other independent variables.
+  c. Add main-effect terms for transect location to the  Consequently, H&M claim that IQ is a better predictor
+  model you wrote in part b. Graph the hypothesized  of income than the other two independent variables. No
+  relationships of the new model.  attempt was made to determine whether the model was
+  properly specified or whether the model provides an ad-
+  d. Add main-effect terms for land use to the model  equate fit to the data.
+  you came up with in part c. In terms of the b’s of
+  the new model, what is the slope of the relation-  Problem 2 In an appendix, the authors describe multi-
+  ship between E(y) and number of trees for any  ple regression as a “mathematical procedure that yields
+  combination of transect location and land use?  coefficients for each of [the independent variables], in-
+  dicating how much of a change in [the dependent vari-
+  e. Add terms for interaction between transect loca-  able] can be anticipated for a given change in any par-
+  tion and land use to the model you arrived at in  ticular [independent] variable, with all the others held
+  part d. Do these interaction terms affect the slope  constant.” Armed with this information and the fact
+  of the relationship between E(y) and number of  that the estimate of b1 in the model just described is
+  trees? Explain.  positive, H&M infer that a high IQ necessarily implies
+  (or causes) a high income, and a low IQ inevitably leads
+  f. Add terms for interaction between number of trees  to a low income. (Cause-and-effect inferences like this
+  and all coded dummy variables to the model you  are made repeatedly throughout the book.)
+  formulated in part e. In terms of the b’s of the new
+  model, give the slope of the relationship between  Problem 3 The title of the book refers to the normal dis-
+  E(y) and number of trees for each combination of  tribution and its well-known “bell-shaped” curve. There
+  transect location and land use.  is a misconception among the general public that scores
+  on intelligence tests (IQS) are normally distributed. In
+Critical Thinking Challenges  fact, most IQ scores have distributions that are decided-
+  ly skewed. Traditionally, psychologists and psychometri-
+12.204  IQ and The Bell Curve. In Exercise 5.157 (p. 306), we  cians have transformed these scores so that the resulting
+  introduced The Bell Curve (New York: Free Press,  numbers have a precise normal distribution. H&M make
+  1994) by Richard Herrnstein and Charles Murray  a special point to do this. Consequently, the measure of
+  (H&M), a controversial book about race, genes, IQ,  IQ used in all the regression models is normalized (i.e.,
+  and economic mobility. The book heavily employs sta-  transformed so that the resulting distribution is normal),
+  tistics and statistical methodology in an attempt to sup-  despite the fact that regression methodology does not re-
+  port the authors’ positions on the relationships among  quire predictor (independent) variables to be normally
+  these variables and their social consequences. The main  distributed.
+  theme of The Bell Curve can be summarized as follows:
+  1. Measured intelligence (IQ) is largely genetically in-  Problem 4 A variable that is not used as a predictor of
+  social outcome in any of the models in The Bell Curve
+  herited.  is level of education. H&M purposely omit education
+  2. IQ is correlated positively with a variety of socioec-  from the models, arguing that IQ causes education,
+  not the other way around. Other researchers who have
+  onomic status success measures, such as a prestig-  examined H&M’s data report that when education is
+  ious job, a high annual income, and high educational  included as an independent variable in the model, the
+  attainment.  effect of IQ on the dependent variable (say, income) is
+  3. From 1 and 2, it follows that socioeconomic successes  diminished.
+  are largely genetically caused and therefore resistant  a. Comment on each of the problems identified. Why do
+  to educational and environmental interventions (such
+  as affirmative action).  these problems cast a shadow on the inferences made
+  The statistical methodology (regression) employed by  by the authors?
+  the authors and the inferences derived from the statis-
+  tics were critiqued in Chance (Summer 1995) and The
+  Journal of the American Statistical Association (Dec.
+  1995). The following are just a few of the problems with
+  H&M’s use of regression that have been identified:
+
+  Problem 1 H&M consistently use a trio of independent
+  variables—IQ, socioeconomic status, and age—in a series
+  b. Using the variables specified in the model presented,  References 795
+  describe how you would conduct the multiple-regres-
+  sion analysis. (Propose a more complicated model and  1. Price of contract ($) bid by lowest bidder
+  describe the appropriate model tests, including a resid-  2. Department of Transportation (DOT) engineer’s estimate
+  ual analysis.)
+  of fair contract price ($)
+12.205  FLAG study of bid collusion. Road construction con-  3. Ratio of low (winning) bid price to DOT engineer’s estimate
+  tracts in the state of Florida are awarded on the basis
+FLAG  of competitive, sealed bids; the contractor who bids  of fair price
+  the lowest price wins the contract. During the 1980s,  4. Status of contract (1 if fixed, 0 if competitive)
+  the Office of the Florida Attorney General (FLAG)  5. District (1, 2, 3, 4, or 5) in which construction project
+  suspected numerous contractors of practicing bid col-
+  lusion (i.e., setting the winning bid price above the fair,  is located
+  or competitive, price in order to increase their own  6. Number of bidders on contract
+  profit margin). By comparing the prices bid (and other  7. Estimated number of days required to complete work
+  important bid variables) of the fixed (i.e., rigged) con-  8. Length of road project (miles)
+  tracts with the competitively bid contracts, FLAG was  9. Percentage of costs allocated to liquid asphalt
+  able to establish invaluable benchmarks for detecting  10. Percentage of costs allocated to base material
+  future bid rigging. FLAG collected data on 279 road  11. Percentage of costs allocated to excavation
+  construction contracts. For each contract, the follow-  12. Percentage of costs allocated to mobilization
+  ing variables were measured (the data are saved in the  13. Percentage of costs allocated to structures
+  FLAG file):  14. Percentage of costs allocated to traffic control
+  15. Subcontractor utilization (1 if yes, 0 if no)
+
+  Use the methodology of this chapter to build a model for
+  low-bid contract price (y). Comment on how the status of
+  the bid affects the price.
+
+Activity Collecting Data and Fitting a Multiple-Regression Model
+
+Note: The use of statistical software is required for this project.  c. Check the data for multicollinearity. If multicollinearity exists,
+  how should you proceed?
+This is a continuation of the Activity section in Chapter 11, in
+which you selected three independent variables as predictors  d. Now increase your list of 3 variables to include approxi-
+of a dependent variable of your choice and obtained at least  mately 10 that you think would be useful in predicting the
+10 data values. Now, by means of an available software pack-  dependent variable. With the aid of statistical software, em-
+age, fit the multiple-regression model  ploy a stepwise regression program to choose the important
+  variables among those you have listed. To test your intuition,
+  y = b0 + b1x1 + b2x2 + b3x3 + e  list the variables in the order you think they will be selected
+  before you conduct the analysis. How does your list com-
+where  pare with the stepwise regression results?
+
+  y = Dependent variable you chose  e. After the group of 10 variables has been narrowed to a
+  smaller group of variables by the stepwise analysis, try to
+  x1 = First independent variable you chose  improve the model by including interactions and quadratic
+  x2 = Second independent variable you chose  terms. Be sure to consider the meaning of each interaction or
+  x3 = Third independent variable you chose  quadratic term before adding it to the model. (A quick sketch
+a. Compare the coefficients bn1, bn2, and bn3 with their corre-  can be very helpful.) See if you can systematically construct
+  sponding slope coefficients in the Activity of Chapter 11,  a useful model for prediction. If you have a large data set,
+  where you fit three separate straight-line models. How do  you might want to hold out the last observations to test the
+  you account for the differences?  predictive ability of your model after it is constructed. (As
+b. Calculate the coefficient of determination, R2, and conduct  noted in Section 12.10, using the same data to construct
+  the F-test of the null hypothesis H0: b1 = b2 = b3 = 0. What  and to evaluate predictive ability can lead to invalid statisti-
+  is your conclusion?  cal tests and a false sense of security.)
+
+References  Draper, N., and Smith, H. Applied Regression Analysis, 2nd ed.
+  New York: Wiley, 1981.
+Barnett, V., and Lewis, T. Outliers in Statistical Data. New York: Wiley, 1978.
+Belsley, D. A., Kuh, E., and Welsch, R. E. Regression Diagnostics:  Graybill, F. Theory and Application of the Linear Model. North Scituate,
+  MA: Duxbury, 1976.
+  Identifying Influential Data and Sources of Collinearity. New York:
+  Wiley, 1980.  Kelting, H. “Investigation of condominium sale prices in three market
+Chatterjee, S., and Price, B. Regression Analysis by Example, 2nd ed.  scenarios: Utility of stepwise, interactive, multiple regression
+  New York: Wiley, 1991.
+796 CHAPTER 12 ■ Multiple Regression and Model Building
+
+  analysis and implications for design and appraisal methodology.”  Mosteller, F., and Tukey, J. W. Data Analysis and Regression: A Second
+  Unpublished paper, University of Florida, Gainesville, FL, 1979.  Course in Statistics. Reading, MA: Addison-Wesley, 1977.
+
+Kutner, M., Nachtsheim, C., Neter, J., and Li, W. Applied Linear Statistical  Rousseeuw, P. J., and Leroy, A. M. Robust Regression and Outlier
+  Models, 5th ed. New York: McGraw-Hill/Irwin, 2005.  Detection. New York: Wiley, 1987.
+
+Mendenhall, W. Introduction to Linear Models and the Design and Analysis  Weisberg, S. Applied Linear Regression, 2nd ed. New York: Wiley, 1985.
+  of Experiments. Belmont, CA: Wadsworth, 1968.
+
+Mendenhall, W., and Sincich, T. A Second Course in Statistics: Regression
+  Analysis, 7th ed. Upper Saddle River, NJ: Prentice Hall, 2011.
+
+USING TECHNOLOGY MINITAB: Multiple Regression
+
+Multiple Regression  Step 4 To produce prediction intervals for y and confidence
+  intervals for E(y), click the “Options” button and select the
+Step 1 Access the MINITAB worksheet file that contains the  appropriate menu items in the resulting menu list. (See
+dependent and independent variables.  Figure 12.M.3.)
+
+Step 2 Click on the “Stat” button on the MINITAB menu bar,
+and then click on “Regression” and “Regression” again, as shown
+in Figure 12.M.1.
+
+Figure 12.M.1 MINITAB menu options for regression  Figure 12.M.3 MINITAB regression options
+
+Step 3 The resulting dialog box appears as shown in Figure 12.M.2  Step 5 Residual plots are obtained by clicking the “Graphs”
+Specify the dependent variable in the “Response” box and the  button and making the appropriate selections on the resulting
+independent variables in the “Predictors” box. [Note: If your model  menu. (See Figure 12.M.4.)
+includes interaction and/or squared terms, you must create and add
+these higher-order variables to the MINITAB worksheet prior to
+running a regression analysis. You can do this by clicking the
+“Calc” button on the MINITAB main menu and selecting the
+“Calculator” option.]
+
+Figure 12.M.2 MINITAB regression dialog box  Figure 12.M.4 MINITAB regression graphs options
+Step 6 To return to the main Regression dialog box from any of  Using Technology 797
+these optional screens, click “OK.”
+Step 7 When you have made all your selections, click “OK”  II. Graphing the Quadratic Curve
+on the main Regression dialog box to produce the MINITAB  with the Scatterplot
+multiple-regression printout.
+  Step 1 Enter the data as shown in part I in the first column
+Stepwise Regression  Step 2 Set up the data plot
+  • Press Y = and CLEAR all functions from the Y registers
+Step 1 Click on the “Stat” button on the main menu bar; then click  • Press 2nd Y = for STAT PLOT
+on “Regression,” and click on “Stepwise.” (See Figure 12.M.1.) The  • Press 1 for Plot
+resulting dialog box appears like the one in Figure 12.M.2  • Set the cursor so that ON is flashing, and press ENTER
+Step 2 Specify the dependent variable in the “Response” box  • For Type, use the ARROW and ENTER keys to highlight
+and the independent variables in the stepwise model in the
+“Predictors” box.  and select the scatterplot (first icon in the first row)
+Step 3 As an option, you can select the value of a to use in the  • For Xlist, choose the column containing the x-data
+analysis by clicking on the “Methods” button and specifying the  • For Ylist, choose the column containing the y-data
+value. (The default is a = .15.)
+Step 4 Click “OK” to view the stepwise regression results.  Step 3 Find the regression equation and store the equation in Y1
+  • Press STAT and highlight
+TI-83/TI-84 Plus Graphing Calculator:
+Multiple Regression  CALC
+  • Press 5 for QuadReg
+Note: Only simple linear and quadratic regression models can be
+fit using the TI-83/TI-84 Plus graphing calculator.  (Note: Don’t press ENTER
+  here because you want to
+Quadratic Regression  store the regression equa-
+I. Finding the Quadratic Regression Equation  tion in Y1.)
+
+Step 1 Enter the data  • Press VARS
+• Press STAT and select 1:Edit  • Use the right arrow to highlight Y-VARS
+  • Press ENTER to select 1:Function
+  [Note: If the list already contains data, clear the old data. Use  • Press ENTER to select 1:Y1
+  the up arrow to highlight “L1” or “L2.”]  • Press ENTER
+
+• Press CLEAR ENTER  Step 4 View the scatterplot and
+• Use the ARROW and ENTER keys to enter the data set into  regression line
+  • Press ZOOM and then press
+  L1 and L2
+  9 to select 9:ZoomStat
+Step 2 Find the quadratic regression equation
+• Press STAT and highlight CALC  III. Plotting Residuals
+• Press 5 for QuadReg
+• Press ENTER  When computing a regression equation on the graphing calcula-
+• The screen will show the values for a, b, and c in the equation  tor, the residuals are automatically computed and saved to a list
+• If the diagnostics are on, the screen will also give the value  called RESID. RESID can be found under the LIST menu (2nd
+  STAT).
+  for r2
+• To turn the diagnostics feature on:  Step 1 Enter the data
+• Press 2nd 0 for CATALOG  • Press STAT and select 1:Edit
+• Press the ALPHA key and
+  [Note: If the list already contains data, clear the old data. Use
+  x-1 for D  the up arrow to highlight “L1” or “L2.”]
+• Press the down ARROW
+  • Press CLEAR ENTER
+  until DiagnosticsOn is high-  • Use the ARROW and ENTER keys to enter the data set into
+  lighted
+• Press ENTER twice  L1 and L2
+
+  Step 2 Compute the regression equation
+  • Press STAT and highlight CALC
+  • Press 4 for LinReg1ax + b2
+  • Press ENTER
+798 CHAPTER 12 ■ Multiple Regression and Model Building
+
+Step 3 Set up the data plot  • Move the cursor to Xlist
+  and choose the column con-
+• Press Y = and CLEAR  taining the x-data
+  all functions from the Y
+  registers  • Move the cursor to Ylist
+  • Press 2nd STAT for LIST
+• Press 2nd Y = for  • Use the down arrow to
+  STATPLOT
+  highlight the listname
+• Press 1 for Plot1  RESID and press ENTER
+
+• Set the cursor so that ON is  Step 4 View the scatterplot of the residuals
+  flashing, and press ENTER  • Press ZOOM 9 for ZoomStat
+
+• For Type, use the
+  ARROW and ENTER keys
+  to highlight and select the
+  scatterplot (first icon in the
+  first row)
+

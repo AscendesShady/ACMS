@@ -1,0 +1,1332 @@
+Atomic weight of iodine  97
+
+Output 0 .1
+
+Analysis of variance based on models I, 11 1, 112 and 1112. BMDP2V
+
+SOURCE  Su.t OF DEGREES OF  MEAN  F  TAIL
+  SqUARES FREEDOM  SqUARE  PROB .
+MEAN  88.41
+  13555 .13396  1  13555 . 13396  3.67  0.0000
+silver  562 .26376  0.98  0.0435
+iodine  2249.05504  4  149.95504  0.3460
+  153 . 31783
+ERROR  149.95504  1
+
+  1533.17829 10
+
+In this table the sums of squares are for silver (adjusted for iodine) and iodine
+(adjusted for silver).
+
+Output 0.2
+
+Predicted values and residuals based on model 1112. BMDP2V
+
+CASE silver iodine  PREDICTD  RESIDUAL
+
+ 1 a  batch1  26 . 13953  -3 . 13953
+ 2 a  26.13953  -0.13953
+ 3 a  batch1  18 .90698  - 18.90698
+ 4 a  batch2  18.90698  22 .09302
+ 5 a  batch2  18 .90698  0.09302
+ 6 b  batch2  34.11628  7.88372
+ 7 b  batch1  34.11628  7 .88372
+ 8 b  batch1  26 .88372  -2.88372
+ 9 b  batch2  26.88372  -12 .88372
+10 c  batch2  29.66667  0.33333
+11 c  batch1  29.66667  -8 .66667
+12 c  batch1  29 .66667  8 .33333
+13 c  batch1  22 . 43411  -22 . 43411
+14 d  batch2  56.74419  -6.74419
+15 d  batch1  56 .74419  -5 .74419
+16 d  batch1  49 .51163  12 .48837
+17 e  batch2  56 .00000  0.00000
+18 e  batch1  48.76744  -48.76744
+  batch2
+
+Output 0.3
+
+Analysis of variance based on model III. BMDP2V
+
+SOURCE  Su.t OF DEGREES OF  MEAN  F  TAIL
+  SqUARES FREEDOM  SqUARE  PROB .
+MEAN  151 .76
+  19760 .02381  1  19760.02381  3 .53  0.0000
+cell  0.0491
+  3213.77083  7  459 . 11012
+ERROR
+  1041.66667  8  130 .20833
+Example P  Multifactor
+  experiment on a
+  nutritive medium
+
+Description of data
+
+Fedorov, Maximov and Bogorov (1968) obtained the data in Table P.1 from
+an experiment on the composition of a nutritive medium for green sulphur
+bacteria Chlorobrium thiosulphatophilum. The bacteria were grown under
+constant illumination at a temperature of 25-30 °C : the yield was determined
+during the stationary phase ofgrowth. Each factor was at two levels, with each
+level used 8 times. Subject to this, the factor levels were randomized.
+
+The analysis
+
+Although this problem raises some difficult statistical issues, computationally
+it is straightforward, involving a series of multiple regressions, readily fitted by
+BMDP1R. Alternatively, BMDP9R (all subsets regression) may be used.
+
+  The analysis in App. Stat. starts by fitting a main-effects model containing
+all 10 component variables x 1 , ... , x10. The residual mean square from this
+model is appreciably greater than the external estimate of variance (3.82) and
+so models containing cross-product terms are fitted but, with only 16
+observations, the choice of possible terms is restricted. A model is built up
+from a small number of main effects, choosing those found to be appreciable in
+the initial analysis, plus their interactions. This leads to a reasonably well
+fitting model with four main effects, x 6 , x7, x8, x 9 , and two cross-products,
+x 6 x 8 and x7x8 • There may be other models fitting equally well.
+
+  It should be noted that some orthogonality exists between the variables. We
+here use BMDP1R. Instructions for BMDP9R are given at the end as
+suggested further work for the reader.
+
+Program
+
+BMDP1R is used. This will fit a specified multiple regression or, by repeating
+the regress paragraph, it will fit a sequence of models. For example, the
+instructions below fit a regression on x8, followed by a regression on x 6 , x7 , x8 ,
+x 9 , x 6 x 8 and x 7x8. print and plot paragraphs are included; these operate after
+
+98
+Table P.l. Yields of bacteria
+
+  Factors
+
+  X!  x2  x3  x4  Xs  x6  X?  Xs  x9  X!o  y
+  NaHC03  Yield
+  NH4 Cl  KH2 P04  MgC12  NaCI  CaC/2  Na2S ·  Na2S 20 3  FeC/3  micro-
+  5000  elements
+Levels{~  1500 450  900  1500  350  9H20  5000  1000  125
+  50  1000  25  15
+  500  50  100  500  1500  5
+  500
+
+1  -  +  +  +  -  +  -  +  -  +  14.0
+  -
+2  -  +  +  -  +  +  -  -  +  4.0
+
+3  +  -  -  +  +  +  -  -  -  -  7.0
+
+4  -  -  +  -  +  +  -  +  +  +  24.5
+
+5  +  -  +  +  +  +  +  -  -  -  14.5
+
+6  +  -  +  -  +  +  +  +  +  +  71.0
+
+7  -  -  -  -  -  -  -  -  -  15.5
+
+8  +  +  -  +  +  -  -  +  +  -  18.0
+
+9  -  +  -  +  -  -  +  -  -  +  17.0
+
+10  +  +  +  +  +  -  -  -  +  -  13.5
+
+11  -  +  +  -  +  -  +  +  +  +  52.0
+
+12  +  +  +  -  -  -  +  +  -  48.0
+
+13  +  +  -  -  +  -  +  -  +  -  24.0
+
+14  -  +  -  -  -  +  -  -  +  -  12.0
+
+15  +  -  -  -  -  -  -  +  +  +  13.5
+
+16  -  -  -  +  -  +  +  +  -  +  63.0
+
+All the concentrations are given in mgfl, with the exception offactor 10, whose central level (10 ml of solution of micro-elements per litre of
+
+medium) corresponds to 10 times the amount of micro-element in Larsen's medium.
+
+The yield has a standard error of 3.8.  1,0
+
+  1,0
+100  Example P
+
+each regression and if a large number of regressions are to be calculated it
+might be better to omit these two paragraphs initially in order to reduce the
+amount of output and then rerun the program to obtain the full output for any
+promising models. The instructions are:
+
+/problem  title = 'example p.  input variables
+/input
+/variable  biochemical experiment. bmdp1r. '.  print data, predicted values, resi-
+  variables= 11. format= free.  duals
+/transform  names= nh4cl, kh2po4, mgcl2, nacl,
+/regress  cacl2, na2s, na2s2o3, nahco3, fecl3,  print correlations of coefficients
+/regress  micro, y. add = new .  normal probability plot
+  x68 = na2sonahco3.  16 lines of data
+/print  Code: plus= I, minus= -I
+  x78 = na2s2o3onahco3 .
+  dependent= y.
+  independent= nahco3.
+  dependent= y.
+
+  independent= na2s, na2s2o3, nahco3,
+  fecl3, x68, x78.
+
+  data. rreg.
+
+/plot  normal .
+
+fend
+
+-1 1 1 1 -1 1 -1 1 -1 1 14
+-1 -1 1 1 -1 1 1 -1 -1 1 4
+
+A sequence of models can be fitted by amending the regress, transform and
+variable paragraphs in the obvious way.
+
+  Output P.1 gives details of the final model selected in App. Stat., which is
+that of the second regress paragraph above; the given output shows the
+analysis of variance, the estimated regression coefficients and s.e.s (see
+Tables P.2 and P.3, App. Stat.). Output P.2 gives the correlation matrix of
+estimated coefficients; note the high degree of orthogonality. Output P.3
+shows the normal probability plot of residuals. Inspection of the predicted
+values (not shown here) suggests a tendency for the model to fit better at the
+higher predicted yields.
+
+Suggested further work
+
+ (i) Consider what other models might be fitted. In particular, examine
+  whether the regression of log yield on log concentrations gives a better
+  model. (Add y = ln(y). to the transform paragraph to obtain log yield.)
+
+(ii) Consider and implement graphical methods for choosing the interactions
+  for inclusion.
+
+(iii) Instead of repeatedly using BMDP1R, try using BMDP9R (all subsets
+  regression) to identify well fitting models. Care is needed over which
+  variables, such as interactions, to include in order to avoid too large a set,
+  given there are only 16 observations. Instructions for fitting subsets up to
+  size 6 from the 12 variables used previously (10 main effects, 2
+  interactions) are as follows:
+Multifactor experiment on a nutritive medium  101
+
+/problem  title : 'example p.  16 lines of data as before
+
+  biochemical experiment. . bmdp9r . '.
+
+/input.  variables = 11. format. = free .
+
+/variable names= nh4cl, kh2po4, mgcl2, nacl,
+
+  cac12, na2s, na2s2o3, nahco3, fecl3,
+
+  micro, y. add = new.
+
+/transform  x68 = na2s•nahco3.
+  x78 = na2s2o3•nahco3.
+
+/regress  dependent= y. method= rsq.
+
+/print  independent.= nh4cl to micro, x68, x78.
+  maxvar = 6.
+
+/end
+
+-1 1 1 1 -1 1 -1 1 -1 1 14
+
+-1 -1 1 1 -1 1 1 -1 -1 1 4
+
+  Detailed information on a particular model can be obtained by an
+  additional run on BMDP9R writing method= none. in the regress
+  paragraph. This gives a multiple regression on whatever independent
+  variables are specified in the regress paragraph.
+102  Example P
+
+Output P.l
+Multiple regression on x 6 , x7, x8, x 9 , x6x8 and x7x8. BMDPlR
+
+MULTIPLE R  0.9866  STD. ERROR OF EST .  4 .3704
+MULTIPLE R-SqUARE  0.9733
+
+ANALYSIS OF VARIANCE
+
+  SUM OF SqUARES OF  MEAN SqUARE  F RATIO  P(TAIL)
+  1045.3466  54.728  0 .0000
+REGRESSION  6272.0791  6  19.1006
+
+RESIDUAL  171.9056  9  STD. REG
+  COEFF T
+VARIABLE COEFFICIENT  STD.  P(2 TAIL) TOLERANCE
+  ERROR
+
+INTERCEPT  25.71875
+  1.3462
+na2s  6  11.7837  1.1339  0.07 1.19  0.27  0.9286
+  11.4663  1.1339  0.00  0.9286
+na2s2o3 7  1.1339  0.59 10.39  0.00  0.9286
+  3.2596  1.2121  0.57 10.11  0.02  0 .8125
+nahco3 8  1.0926  0.00  1.0000
+  4.5937  1.0926  0.16 2.69  0.00  1.0000
+fecl3  9  0.23 4.20
+  9.5312  0.47 8.72
+x68  12
+
+x78  13
+
+Output P.2
+
+Correlation matrix of regression coefficients for model m Output P.l.
+BMDPlR
+
+  na2s  na2s2o3 nahco3 fecl3  x68  x78
+
+na2s  6  6  7  8  9  12  13
+  1.0000  1.0000
+na2s2o3 7  0.0714  1.0000  1.0000  1.0000  1.0000
+  -0.0714  -0 .2673  -0.0000  -0.0000
+nahco3 8  -0.0714  0.2673  -0.0000  -0.0000
+  0.2673  -0.0000  0.0000
+fecl3  9  -0.0000  0.0000
+  0.0000
+x68  12
+
+x78  13
+Multifactor experiment on a nutritive medium  103
+
+Output P.3
+
+Normal probability plot of residuals for model in Output P.l. BMDPlR
+
+  NORMAL PROBABILITY PLOT OF RESIDUALS
+
+  0. 0 .+ ....... + .•••..• +. 0 0 •••• +. 0 ••••• + • • • 0 ••• +. 0 0 0. 0 0 •
+
+  I•
+
+  1.5  +  I +
+
+E  I•  I
+X 1.0
+p  I  I
+E
+  +  I•  +
+c
+  I
+T  I •
+E .50  II
+D  •I
+  +  I  +
+N
+0  I  I•
+R 0.0
+M  I•  I•
+A
+L  +  I  +
+
+v -.50  II•
+
+A  I •
+L  /
+
+u  II •
+  + II • +
+E  • III
+  -1.0  + • III +
+  I
+  -1.5  I
+  •II
+  I
+  +  I  +
+
+  •I  II
+
+  • • 0 .+ • ••• 0 0 • • •• • 0 ••• + ••••• 0 .+ ... . .• . + •••• • .. + •. 0 • • •••
+
+  -6  -2  2
+
+  -4  0  4
+Example Q  Strength
+  of cotton yarn
+
+Description of data
+
+An experiment was done with the objects of estimating: (i) the difference in
+mean strength of two worsted yarns produced by slightly different processes,
+and (ii) the variation of strength between and within bobbins for yarns of this
+type. For each yarn a considerable number of bobbins were produced and 6
+bobbins selected at random. From each of these, 4 short lengths were chosen at
+random for strength testing. The breaking loads are given in Table Q.l.
+
+Table Q. l. Breaking loads (oz)
+
+Bobbin  2  3  4  5  6
+
+Yarn A  15.0 15.7 14.8 14.9 13.0 15.9
+Yarn B  17.0 15.6 15.8 14.2 16.2 15.6
+  13.8 17.6 18.2 15.0 16.4 15.0
+  15.5 17.1 16.0 12.8 14.8 15.5
+
+  18.2 17.2 15.2 15.6 19.2 16.2
+  16.8 18.5 15.9 16.0 18.0 15.9
+  18.1 15.0 14.5 15.2 17.0 14.9
+  17.0 16.2 14.2 14.9 16.9 15.5
+
+The analysis
+
+Preliminary analysis involves inspection of means and standard deviations for
+each of the six bobbins within yarn A, and within yarn B. BMDP7D
+calculates these, plots a histogram for each bobbin and plots means against
+standard deviations. BMDP7D also computes one-way analysis of variance
+so, by separate runs for each yarn and then a combined run, the nested analysis
+of variance (Table Q.4, App. Stat.) can be constructed.
+
+  Alternatively, the nested analysis of variance can be obtained using
+BMDP8V. Yarn is specified as a fixed effect, lengths and bobbins as random
+effects. The program estimates the components of variance.
+
+  Instructions for both BMDP7D and BMDP8V are given.
+
+104
+Strength of cotton yarn  105
+
+Programs
+
+BMDP7D is first run separately for yarn A, then for yarn B. Instructions for
+yarn A are given below. For yarn B amend the sentence in the transform
+paragraph to use= yarn eq 2.
+
+/problem  title = 'example q . cotton yarn .
+
+/input  yarna. bmdp7d'.
+/variable  variables =3. format =free.
+/transform  names =yarn, bobbin, brk load.
+/group  use =yarn eq 1.  -  yarn A only
+  codes(yarn) =1, 2.  names for output
+/histogram  names(yarn) = yarna, yarnb.
+/print  grouping =bobbin . variable =brk  load .  48 lines of data
+fend  plot .  -  Code: yarn A= I, B = 2 (col. I)
+1 1 15 .0
+1 1 17 .0  bobbins I, ... , 6 (col. 2)
+
+Some of the output for yarn A is shown. Outputs Q.l, Q.2 and Q.3 show: Q.l,
+histogram, mean and standard deviation for each bobbin; Q.2, analysis of
+variance between and within bobbins; Q.3, diagnostic plots of mean against
+standard deviation. The slope of the regression of log s.d. on log mean is
+helpful in checking whether a power transformation is desirable (Box and Cox,
+1964). The slope for yarn A is 0.61898 but for yarn B (not shown) it is 3.3903;
+no transformation is considered necessary.
+
+  To complete the analysis we need the sum of square between yarns. This is
+obtained by amending the above instructions, deleting the transform
+paragraph and changing the histogram paragraph. The amended instructions
+are :
+
+/problem  title = 'example q. cotton yarn .
+  between yarns. bmdp7d'.
+/input  variables =3 . format =free.
+/variable  names =yarn, bobbin, brk load.
+/group  codes(yarn) = 1, 2.  -
+  names(yarn) = yarna, yarnb.
+/histogram  grouping =yarn. variable =brk load.
+/print  plot.  -
+fend
+1 1 15.0  48 lines of data as before
+1 1 17.0
+
+Output Q.4 shows the analysis of variance. All the required sums ofsquares (as
+in Table Q.4, App. Stat.) are thus obtained. The output includes also a
+histogram for each yarn (not shown).
+
+  Alternatively, the nested analysis of variance table can be obtained using
+BMDP8V. The data must be rearranged, only the values of breaking load
+being read. As before, we first analyse each yarn separately. The instructions
+for yarn A are:
+106  Example Q
+
+/problem  title = 'example q. cotton yarn.  4 lengths, 6 bobbins
+  lengths nested within bobbins
+/input  yarn s . bmdp8v' .  4 lines of data for yarn A
+/design  variables = 6. format = free .
+
+  Ieve Is = 4, 6 .
+  names= lengths, bobbins.
+  random = Iengths, bobbins.
+  model = 'b, I (b)'.
+
+/end
+15 .0 15.7 14.8 14.9 13.0 15.9
+17 .0 15.6 15.8 14 . 2 16 . 2 15.6
+
+Similarly for yarn B. Output Q.5 shows the analysis of variance and estimates
+of variance components for yarn A.
+
+  The nested analysis of variance for yarns, bobbins and lengths (between and
+within bobbins pooled over yarns) is given by :
+
+/problem  title = 'example q. cotton yarn .  2 yarns, 4 lengths, 6 bobbins
+/input  yarn s,b. bmdp8v'.
+/design  vsriables = 6. format = free .  bobbins nested within yarns and
+  levels = 2, 4, 6.  lengths within bobbins
+fend  names= yarn, lengths, bobbins .  8 lines of data
+15.0 15.7  rsndom = lengths, bobbins.
+17.0 15.6  fixed = yarn.
+  model='y,b(y), l(yb)'.
+
+  14.8 14.9 13.0 15 .9
+  15 .8 14.2 16.2 15.6
+
+Output Q.6 shows the analysis of variance and estimates of variance
+components.
+
+Other program
+
+BMDP3V is a general mixed model analysis of variance program which fits
+the model by maximum likelihood.
+
+Suggested further work
+
+Examine residuals and check on the assumption of normality. (BMDP2V
+prints residuals if print. is added to the design paragraph.)
+Output Q.l
+
+Histograms, means and standard deviations. Yarn A. BMDP7D
+
+  ••••••••••••  ••••••••••••
+HISTOCRAM OF • brk_load • ( 3) CROUPED BY • bobbin • ( 2}
+  ••••••••••••  ••••••••••••
+
+  ONE  TID  THREE  FOUR  FIVE  SIX
+
+MIDPOINTS ••• •• •• ••• • ••• • • + •••• •• •• •• • •• •• • + •••••••••• • •••• • + ••• ••• ••••••• • •• + ••••• • •••••• • ••• + • • ••••••••••• •• • +
+
+  18.600)
+
+  18.000}  •
+
+  17 . 600)
+
+  17 .000)•
+
+  16.600)  N
+
+  16. 000}  II•  •  •
+
+  16.600)11  ••  II•
+
+  16 . 000)•  •  ••  II
+
+  14 . 600}
+
+  14.000)•  II
+
+  13 . 600)
+
+  13.000}
+
+  12.600}
+
+  CROUP IIEANS ARE DENOTED BY II'S IF THEY COINCIDE WITH •'S, N'S OTHERWISE
+
+IIEAN  16.326  16.600  16.200  14.226  16.100  16.600
+STD.DEV.  1.326  1.003  1.433  1 . 014  1. 671  0.374
+
+Output Q.2
+Analysis of variance: between and within bobbins. Yarn A. BMDP7D
+
+I ANALYSIS OF VARIANCE TABLE FOR IIEANS  TAIL  I
+I SOURCE  IIEAN SII.UARE F VALUE PROBABILITY I
+  SUII OF SII.UARES DF
+
+I --------  -------------- ---- ----------- ------- ----------- I
+I bobbin  13.2100  6  2 . 6420 1 . 88 0 . 1488 I
+I  I  ......
+  ERROR  26.3660 18  1 . 4086  0
+
+1--------------------------------------------------------------------------l  -..l
+Output Q.3
+
+Diagnostic plots. Yarn A. BMDP7D
+
+  •••••••••••••••••• + 0 0 . 0 .+ ••. 0 .+ . • .•.•••••.••••. •+. 0 • •  ·····•·· ···•··· ··•·· ···•·· ·· ·•· ··· ·•··· ··•·····•·····  ......
+  E
+
+  .60 +  0
+  00
+E  L  E
+
+5  0
+
+T  G
+
+I 1.6 +  +
+II  c  -0  c
+A  - F .30 +
+T  -  A  +
+E
+  A  -T
+
+  8
+
+  8 y H  y
+
+0 1.2 +  + E
+F
+  y  D
+
+  E o.o y
+
+5  -D  5
+
+T  T
+
+A
+
+N .90 +  +
+
+D  0
+
+A  F -.30 +  +
+
+R  s
+
+D
+
+  T
+
+D .60 +  A
+
+E  N
+v
+  D -.60 +  +
+
+I
+
+A  F  -D
+T
+I .30 +  E
+  v
+0
+
+N  -.90 +
+
+  F
+
+  o.o +
+
+  0 0 0. 0 .+ • •••• +. 0 0 •• + •• • ••• 0 •• 0 . + ••.•.••.• 0 •• 0. 0 •• +. 0 0 0  0 0 0 ••• • 0 ••• +. 0 • •• +. 0 • • • + 0. 0 0 .+ 0 0 0 •••••••• + •• 0 •• +. 0 0. 0
+
+  14 . 7  16.3  16.9  16.6  2.66  2.70  2.74  2 . 78
+
+  14.4  16.0  16.6  16.2  N= 6  2.68  2 . 72  2.76  2.80
+
+Nc 6  R "' .058
+R = .082  p = .919
+  MEAN  LOG OF THE IIEAN
+
+p = .887
+
+--REGRESSION LINE-- -RES.IIS-  MEAN S.D .  IIEAN S.D.
+Y= . 46494 +.0471loX . 27176  X 16 . 476 . 81271
+  y 1.1!139 .46783  --REGRESSION LINE-- -RES.IIS-  X 2. 7381 . 06290
+  Y=-1.6196 +.61898oX . 39146  y .07629 .66066
+Output Q.4
+Analysis of variance: between and within yarns. BMDP7D
+
+I ANALYSIS OF VARIANCE TABLE FOR MEANS  TAIL I
+I SOURCE  SUM OF SQUARES OF MEAN SQUARE F VALUE PROBABILITY I
+
+I --------  -------------- ---- ----------- ------- ----------- I
+I yarn  8.9269 1  8.9269 5.06 0.0293 I
+I ERROR  81.1613 46  I
+  1.7644
+1--------------------------------------------------------------------------l
+
+Output Q.5
+
+Analysis of variance: between and within bobbins. Yarn A. BMDP8V
+
+ANALYSIS OF VARIANCE FOR DEPENDENT VARIABLE 1
+
+  SOURCE  ERROR TERM  SIAl OF D.F.  MEAN  F  PROS.  EXPECTED MEAN SQUARE
+  0.0000
+1 MEAN  bobbins  SllUARES  SllUARE  0 . 1488  24 (1) + 4 (2) + (3)
+2 bobbins  I (b)  6747 .4161 1  6747.416 2176.40  4(2) + (3)
+3 I (b)
+  13.2100 6  2.642 1.88  (3)
+  26.3660 18
+  1.409
+
+ESTIMATES OF VARIANCE COMPONENTS
+
+(1)  239.36664
+
+(2)  0.30836
+
+  1.40861
+- (3)
+  @
+  -0
+
+Output Q.6
+Analysis of variance: between yarns, between bobbins, within yarns and within bobbins. BMDP8V
+
+  ANALYSIS OF VARIANCE DESIGN
+
+INDEX  yarn  lengths bobbins
+
+IUIBER OF LEYB.S 2  4  8
+
+POPI.l.ATION SIZE 2  INF  INF
+
+IIODB.  y,b(y),l(yb)
+
+NUIIBER OF CASES READ •.  8
+
+ANALYSIS OF VARIANCE FOR DEPENDENT VARIABLE 1
+
+  SOURCE  ERROR TERII  SlAI OF  D.F. IIEAN  F  PROB.  EXPECTED IIEAN SqUARE
+  SqUARES  SqUARE
+1 IIEAN  b (y)  12144.4220  0.0000  48(1) + 4(3) + (4)
+2 yarn  b(y)  1 12144.4220 2978.12  0.1698  24(2) + 4(3) + (4)
+3 b(y)  I (yb)  8.9269  1  8.9269 2.19  0.0020  4(3) + (4)
+4 I (yb)  40.7788  10  4.0779 3.84  (4)
+  40.3826  38
+  1.1217
+
+ESTIMATES OF VARIANCE COMPONENTS
+
+(1)  262.92384
+  0.20204
+(2)  0.73903
+
+(3)  1.12174
+
+(4)
+Example R  Biochemical
+  experiment on the
+
+  blood of mice
+
+Description of data*
+
+In an experiment on the effect of treatments A and B on the amount of
+substance S in mice's blood, it was not practicable to use more than 4 mice on
+any one day. The treatments formed a 2 x 2 system:
+
+  A0 : A absent,  B0 : B absent,
+  A1: A present,  B1 : B present.
+
+The mice used on one day were all of the same sex. The data are given in
+Table R.l (Cox, 1958, §7.4).
+
+Table R.l. Amount of substance S
+
+Day 1  Male  A0 B1 4.8  A1 B1 6.8  A0 B0 4.4  A1B0 2.8
+  2  Male  A0 B0 5.3  A1B1 8.7
+  3  Female  A1B1 7.2  AIBO 3.3  A 0 B 1 1.9
+  4  Male  A0 B1 4.3  AIBO 7.0
+  5  Female  A 0 B0 1.8  A1B1 4.8  A0 B0 5.3  A0 B1 3.1
+  6  Female  A0 B0 3.7  A1B0 2.6  A0 B1 6.2
+  7  Male  A1B1 5.1  A0 B1 5.7  A1B0 5.9  A0 B0 6.5
+  8  Female  A1B1 9.3  A1B1 6.7  A1B0 6.9
+  AIBO 5.4  A0 B0 5.4  A0 B1 7.8
+  A0 B1 6.2  A 1B 1 7.9  A1B0 6.8
+  A0 B0 5.2
+
+The analysis
+
+We note that each treatment combination (A0 B0 , A1B0, A0 B1 and A1B1) is
+tested on each day, but male rats are used on days 1, 2, 4 and 7 and female rats
+on days 3, 5, 6 and 8. Thus comparisons between treatments within males or
+females are independent of systematic differences between days, but not so for
+any comparison of treatments across the sexes. Two different error variances
+are involved, demanding separate estimation.
+
+  It is helpful for initial inspection to rearrange the data grouping by sex and
+
+• Fictitious data based on a real investigation.
+
+  111
+112  Example R
+
+by treatment as in Table R.2, App. Stat., reproduced here. Days are nested
+within sex.
+
+  Table R.2. Data rearranged according to treatments
+
+  Sex  Da y  AoBo A 1B0 A 0 B 1 A 1B 1
+
+  Male 1  4.4  2.8  4.8  6.8
+
+  2  5.3  3.3  1.9  8.7
+
+  4  1.8  2.6  3.1  4.8
+
+  7  5.4  6.9  6.2  9.3
+
+  Mean 4.22 3.90 4.00 7.40
+
+  Female 3  5.3  7.0  4.3  7.2
+
+  5  3.7  5.9  6.2  5. 1
+
+  6  6.5  5.4  5.7  6.7
+
+  8  5.2  6.8  7.9  7.9
+
+  Mean 5.18 6.28 6.02 6.72
+
+  Overall mean  4.70 5.09 5.01 7.06
+
+Program
+
+BMDP8V is used. It is important to arrange the data in a systematic layout
+with respect to the design factors. We read the 32 observations in the order
+given in Table R.2, App. Stat., reading across the rows. Thus data for two
+levels of A are read, then two levels of B, four levels of day and lastly two levels
+of sex. The order is specified by the names and levels statements in the design
+paragraph. The instructions for BMDP8V are as follows:
+
+/problem  title= 'example r. biochemical  expt.
+  bmdp8v' .
+/input
+/variable  variables = 4. format = free .
+/design  names z aObO, albO, aObl, albl.
+  names= sex, day, b, a.
+  levels = 2, 4, 2, 2.  2 levels of A read first, then 2 of
+  B, ...
+  model = 's, a, b,  d(s) ' .
+  b, a .  sex A, B are crossed ; days nested
+  fixed =sex, day,  within sex
+
+  print= sab.  print marginal means
+/end
+4.4 2.8 4.8 6.8  8 lines of data
+  See: Table R.2, App. Stat.
+5 .3 3.3 .1.9 8.7
+
+Output includes all marginal means for sex x A x B; these are shown in
+Output R.l. The analysis of variance is shown in Output R.2. This agrees with
+the analysis of variance in Table R.3, App. Stat ., except that there the three
+interactions days x B (within sex), days x A (within sex) and days x B x A
+(within sex), each with 6 d.f., are pooled to give a residual mean square of 1.33
+with 18 d.f. ; this estimate of error is used for any comparisons which are
+Biochemical experiment on the blood of mice  113
+
+independent of differences between days. Comparisons across the days will
+require the use of days (within sex), with 6 d.f.
+
+Other program
+
+BMDP2V computes analysis of variance for a factorial arrangement. The use
+ofexclude in the design paragraph (see Example N) can specify a model having
+the above residual with 18 d.f. Days within sexes can be obtained by pooling
+days and days x sex.
+
+Suggested further work
+
+ (i) Examine the assumption of normality. (BMDP2V will list residuals.)
+(ii) See whether a transformation will reduce the sex x B x A interaction and
+
+  hence simplify the conclusions.
+(iii) Consider treating days as a random effect by specifying random= day.
+
+  fixed= sex, b, a. in the design paragraph. The analysis of variance table
+  (Output R.2) will then identify the different error to be used. What
+  justification, if any, is there for treating days as random?
+(iv) Estimate a standard error for the comparison of a particular treatment
+  combination (A 1B1, say) across the sexes.
+114  Example R
+
+Output R.l
+
+Marginal means. BMDP8V
+
+GRAND MEAN  5.46563
+
+CELL AND MARGINAL MEANS
+
+  s= 1  2
+  6 .05000
+  4.88125
+
+  b= 1  2
+  6.03750
+  4 .89375
+
+  a= 1  2
+  6.07500
+  4.85625
+
+  d =  1  2  3  4
+s = 1  4.70000  4.80000  3 .07500  6.95000
+  5.95000  5 . 22500  6 .07500  6.95000
+  2
+
+  b =  1  2
+s = 1  4 .06250  5 . 70000
+  5 .72500  6.37500
+  2
+
+  a =  1  2
+  4 . 11250  5.65000
+s= 1  5.60000  6.50000
+  2
+
+  a =  1  2
+  4 .70000  5.08750
+b= 1  5 .01250
+  2  7.06250
+
+  s = 1  2
+  a= 1  3.90000
+b = 1 4.22500  7.40000
+
+  2 4.00000
+
+  s = 2  2
+  a= 1  6.27500
+b = 1 5.17500  6.72500
+
+  2 6 .02500
+
+Output R.2
+
+Analysis of variance. BMDP8V
+
+  SOURCE ERROR TERM  SUM OF D.F.  MEAN
+EXPECTED MEAN SQUARE
+  SQUARES  SQUARE
+  1 MEAN
+  955.93782 1  955.93782
+  2 sex  10.92781
+  3 b  10.92781 1  10.46531
+  4 a  11.88281
+  5 d(s)  10.46531 1  6.05531
+  6 sb  1.95031
+  7 sa  11.88281 1  0.81281
+  8 ba  5.52781
+  9 db(s)  36.33188 6  0.60031
+ 10 da(s)  1.03198
+ 11 sba  1.95031 1  8.50781
+ 12 dba (s)  2.37198
+  0.81281  1
+
+  5 .52781 1
+
+  3.60188 6
+
+  6.19187 6
+
+  8.50781  1
+
+  14.23187 6
+ExampleS  Voltage
+  regulator performance
+
+Description of data
+
+Voltage regulators fitted to private motor cars were required to operate within
+the range of 15.8 to 16.4 volts, and the following investigation (Des-
+mond, 1954) was conducted to estimate the pattern of variability encountered
+in production. Normal procedure was for a regulator from the production line
+to be passed to one of a number of setting stations, where the regulator was
+adjusted on a test rig. These regulators then passed to one of four testing
+stations, where the regulator was tested, and if found to be unsatisfactory, it
+was passed down the production line to be reset. For the data of Table S.1, a
+random sample of four setting stations took part, and a number of regulators
+from each setting station were passed through each testing station. One special
+aspect of interest concerned the percentage of regulators that would be
+unsatisfactory were the mean kept constant at 16.1.
+
+The analysis
+
+Inspection across the readings for each regulator shows close consistency,
+except for regulator J 2 and to a lesser extent B2. We use BMDP2V to compute
+a separate two-way (testing stations x regulators) analysis of variance for each
+of the ten setting stations A, . . . , K. The program prints residuals and these
+confirm the anomalous behaviour of J2 . Subsequent analysis is therefore done
+both with and without J2•
+
+  The ten analyses are plotted, adding across setting stations the sums of
+squares and degrees of freedom for regulators (within setting stations) and for
+error. A further run with BMDP2V for setting stations x testing stations
+completes the analysis of variance (Table S.3, App. Stat.).
+
+  Estimates of the components of variance between setting stations and
+between regulators are obtained by equating observed and expected mean
+squares. Then assuming normality, approximate confidence limits for the
+percentage of regulators can be calculated as discussed in App. Stat.
+
+  115
+116  ExampleS
+
+Table S.l. Regulator voltages
+
+Setting Regulator Testing station  Setting Regulator Testing station
+
+station number  station number
+  23 4
+  2  3  4
+
+A  I  16.5 16.5 16.6 16.6  F  I  16. 1 16.0 16.0 16.2
+  15.8 16.7 16.2 16.3  16.5 16.1 16.5 16.7
+  2  16.2 16.5 15.8 16.1  2  16.2 17.0 16.4 16.7
+  16.3 16.5 16.3 16.6  15.8 16.1 16.2 16.2
+  3  16.2 16.1 16.3 16.5  3  16.2 16.1 16.4 16.2
+  16.9 17.0 17.0 17.0  16.0 16.2 16.2 16.1
+  4  16.0 16.2 16.0 16.0  4  16.0 16.0 16. 1 16.0
+  16.0 16.0 16.1 16.0
+  5  5
+
+  6  6
+
+  7  II
+
+  II
+
+  G  I  15.5 15.5 15.3 15.6
+  16.0 15.6 15.7 16.2
+  2  16.0 16.4 16.2 16.2
+  15.8 16.5 16.2 16.2
+B  I  16.0 16.1 16.0 16.1  3  15.9 16.1 15.9 16.0
+  15.4 16.4 16.8 16.7  15.9 16.1 15.8 15.7
+  2  16. 1 16.4 16.3 16.3  4  16.0 16.4 16.0 16.0
+  15.9 16.1 16.0 16.0  16.1 16.2 16.2 16.1
+  3  5
+  16.0 16.0 15.9 16.3
+  4  15.8 16.0 16.3 16.0  6
+  15.7 16.2 15.3 15.8
+  16.2 16.4 16.4 16.6  7
+  16.0 16.1 16.0 15.9
+c  16.1 16.1 16. 1 16. 1  12
+  16.1 16.0 16.1 16.0
+  I
+
+  2  H  I  15.5 15.6 15.4 15.8
+  15.8 16.2 16.0 16.2
+  3  2  16.2 15.4 16.1 16.3
+  16.1 16.2 16.0 16.1
+  4  3  16.1 16.2 16.3 16.2
+  16.1 16.1 16.0 16.1
+  5  4
+
+  6  5
+
+  10  10
+
+  J  I  16.2 16.1 15.8 16.0
+
+D  1  16. 1 16.0 16.0 16.1  2  16.2 15.3 17.8 16.3
+  16.0 15.9 16.2 16.0
+  2  15.7 15.8 15.7 15.7  3  16.4 16.7 16.5 16.5
+  15.6 16.4 16. 1 16.2
+  3  16.0 16.2 16. 1 16. 1  4  16.2 16.5 16.1 16.1
+  15.7 15.7 15.7 15.7
+  4  16. 1 16. 1 16. 1 16.0  5  16.1 16.4 16.1 16.3
+
+  5  10  16.4 16.3 16.4 16.4
+
+  6
+
+  II  K  1  15.9 16.0 15.8 16.1
+  15.8 15.7 16.7 16.0
+  2  16.2 16.2 16.2 16.3
+  16.2 16.3 15.9 16.3
+  3  16.0 16.0 16.0 16.0
+  16.0 16.4 16.2 16.2
+E  1  15.9 16.0 16.0 16.5  4  16.0 16.1 16.0 16.1
+
+  2  16. 1 16.3 16.0 16.0  5
+
+  3  16.0 16.2 16.0 16. 1  6
+
+  4  16.3 16.5 16.4 16.4  II
+
+Program
+
+BMDP2V is used to compute the analyses of variance and to list residuals.
+Since the variation in the data is small relative to the observed mean voltage,
+minor, although nontrivial, numerical rounding errors arise in the compu-
+tations if the raw data are used. We work therefore with voltage minus 16. This
+is calculated in the transform paragraph. Separate two-way analyses are
+required initially for each setting station. Instructions for setting station 1 are
+given below. For setting stations 2, . .. , 10 amend the sentence use=sstation
+eq 1. accordingly.
+Voltage regulator performance  117
+
+/problem  title = 'example s. voltage regulators.  voltage minus 16
+  separate setting stations. bmdp2v . ' .  two-way regs. x tstations
+/input  variables = 4. format = free.
+/variable  names = sstation, regulat, tstation, y.  print residuals
+/transform  use = sstation eq 1.
+
+/design  y =y - 16.
+
+/end  dependent= y. grouping= regulat,
+1 1 1 16.5
+1 1 2 16.5  tstation.
+
+  print.
+
+  256 lines of data
+  Code: A=l, B=2, .. . ,
+
+  K=lO(col. 1)
+
+Note: the for-% option may be used to make the program repeat
+automatically for all ten setting stations but to do so requires the data to be on
+a separate file; see note 9(ii) in the introductory section (p. 9).
+
+  The output gives an analysis of variance table and a list of residuals for each
+of the ten setting stations. Details for setting station J are shown in
+Output S.l(a) and (b). The other setting stations (not shown here) have smaller
+error mean square. The residuals in Output S. l(b) confirm the inconsistency in
+
+J2.
+  To repeat the above analysis for setting station J omitting J 2, we amend the
+
+instructions, changing the use statement of the transform paragraph, as
+
+follows:
+
+/problem  title= 'example s . voltage regulators .
+  sstation j, omitting j2. bmdp2v'.
+/input
+/variable  variables = 4. format = free.
+/transform  names = sstation, regulat, tstation, y.
+  use = sstation eq 9 and regulat ne 2.
+/design
+  y =y - 16.
+/end
+1 1 1 16.5  dependent= y .
+11216.5  grouping = regulat, tstation.
+
+  256 lines of data as before
+
+The analysis of variance is shown in Output S.2; the error mean square is
+reduced to 0.0160, comparable to the variation in the other nine setting
+stations (Table S.2, App. Stat.).
+
+  Instructions for computing the analysis of variance for setting stations x
+testing stations are as follows:
+
+/problem  title = 'example s. voltage regulators.
+  sstation x tstation . bmdp2v'.
+/input  vari abIes = 4. format = free. ,
+/variable  names = sstation, regulat, tstation, y.
+/transform
+/design  y =y - 16.
+
+/end  dependent= y.
+1 1 1 16.5  grouping = sstation, tstation .
+1 1 2 16.5
+  256 lines of data as before
+118  ExampleS
+
+Output S.3 shows the analysis of variance.
+  For the corresponding analysis of variance omitting regulator J 2, we add a
+
+sentence to the transform paragraph as follows :
+
+/problem  title = 'example s . voltage regulators.  omit regulator J2
+  256 lines of data as before
+/input  sstation x tstation, omitting j2 .
+/variable  bmdp2v ' .
+/transform
+  variables = 4. format = free.
+/design  names= sstation, regulat, tstation, y .
+
+/end  y .. y - 16.
+1 1 1 16.5  if (sstation eq 9 and regulat eq 2)
+1 1 2 16.5
+  then use = 0.
+  dependent= y.
+  grouping = sstation, tstation .
+
+Output S.4 shows the analysis of variance with J 2 omitted. (In early printings
+Table S.3, App. Stat. contains an error in the testing station s.s.)
+
+  The error sum of squares with 216 d.f. in Output S.3 is equal to the total of
+the two components:
+
+(i) regulators within setting stations, with 54 d.f.;
+(ii) residual, with 162 d.f.;
+
+where the sums of squares for (i) and (ii) are obtained by pooling those from the
+ten analyses within setting stations (as in Output S.l). That with 212 d.f. (in
+Output S.4) is the sum of corresponding terms when J2 is omitted.
+
+Suggested further work
+
+(i) Examine the assumption of normality.
+(ii) Check for any other outliers.
+Voltage regulator performance  119
+
+Output S.l  F TAIL
+  PROB.
+Setting station J, full data. BMDP2V
+(a) Analysis of variance  9.43 0 .0078
+  0.55 0 .7363
+SOURCE  SlAt OF DEGREES OF  MEAN  0.30 0 .8275
+  SQUARES FREEDOM
+MEAN  SQUARE
+  2.10042  1
+regulat  2 . 10042
+tstation  0.61208  5  0.12242
+  0 .06597
+ERROR  0 .19792  3  0.22264
+
+  3.33958 15
+
+(b) Predicted values and residuals
+
+CASE  regulat tstation  PREOICTO  RESIDUAL
+
+  1  •1  •1  -0 .02083  0.22083
+  2  -0.05417  0 . 15417
+  3  •1  •2  0.17917  -0.37917
+  4  -0.00417  0.00417
+  5  •1  •3  -0.15417
+  6  0 .35417  -1.02083
+  7  •1  •4  0.32083  1.24583
+  8  0 .55417  -0.07083
+  9  •2  •1  0 .37083  -0 .07917
+  10  0.47917  0.25417
+  11  •2  •2  0.44583  -0 . 17917
+  12  0 .67917  0.00417
+  13  •2  •3  0 . 49583  0 .02083
+  14  0.17917  0.35417
+  15  •2  •4  0.14583  -0.27917
+  16  0.37917  -0 .09583
+  17  •3  •1  0 . 19583  -0.07917
+  18  0.17917  0.25417
+  19  •3  •2  0.14583  -0.27917
+  20  0 .37917  0 . 10417
+  21  •3  •3  0 . 19583  0.07083
+  22  0.32917  0 .00417
+  23  •3  •4  0 .29583  -0 . 12917
+  24  0.52917  0 .05417
+  •4  •1  0.34583
+
+  •4  •2
+
+  •4  •3
+
+  •4  •4
+
+  •5  •1
+
+  •5  •2
+
+  •5  •3
+
+  •5  •4
+
+  •10  •1
+
+  •10  •2
+
+  •10  •3
+
+  •10  •4
+
+Similar tables are output for other setting stations.
+
+Output 8.2
+Setting station J, 12 omitted. Analysis of variance. BMDP2V
+
+SOURCE  SlAt OF DEGREES OF  MEAN  F  TAIL
+  SQUARES FREEDOM  SQUARE  PROB.
+MEAN  94 .53
+  1.51250  1  1.51250  8.75  0.0000
+regulat  0.14000  2.61  0 .0015
+tstation  0.56000  4  0.04183  0.0993
+  0.01600
+ERROR  0.12550  3
+
+  0.19200 12
+120  ExampleS
+
+Output S.3
+
+Setting station x testing station, full data. Analysis of variance. BMDP2V
+
+SOURCE  SIM OF DEGREES OF  MEAN  F  TAIL
+  SQUARES FREEDOM  SQUARE  PROB.
+MEAN  46.52
+sstation  3.92866  1  3 . 92866  5 . 81  0.0000
+tstation  0.49101  3.40  0 .0000
+st  4 .41905  9  0 .28689  0.40  0 .0187
+ERROR  0 .03348  0 . 9971
+  0 . 86067  3  0.08445
+
+  0.90406  27
+
+  18 . 24220 216
+
+Output S.4
+
+Setting station x testing station, J2 omitted. Analysis of variance. BMDP2V
+
+SOURCE  SIM OF DEGREES OF  MEAN  F  TAIL
+  SQUARES FREEDOM  SQUARE  PROB.
+MEAN  52 . 52
+sstation  3.72624  1  3.72624  6.52  0 .0000
+tstation  0.46245  4.43  0 .0000
+st  4.16209  9  0 . 31414  0.38  0 .0048
+ERROR  0 . 02670  0 . 9982
+  0 . 94241  3  0 . 07096
+
+  0 . 72077  27
+
+  15.04254 212
+Example T Intervals between the
+  failure of air-conditioning
+  equipment in aircraft
+
+Description of data
+
+The data in Table T.1, reported by Proschan (1963), are the intervals in
+service-hours between failures of the air-conditioning equipment in 10
+Boeing 720 jet aircraft. It is required to describe concisely the variation within
+and between aircraft, with emphasis on the forms of the frequency
+distributions involved.
+
+The analysis
+
+The data can be analysed in various ways to check consistency with an
+
+assumed theoretical model and to make comparisons between aircraft. Here
+we concentrate upon fitting by maximum likelihood a gamma distribution to
+
+the observed time intervals for each aircraft.
+
+  The gamma distribution of mean f.J. and index p,
+
+  (P/JJ.) (PY/JJ.)P -le- PYIIl  (T.2, App. Stat.)
+
+  r(p)
+
+reduces to the exponential distribution when p= 1, and comparisons between
+
+aircraft then become simply comparisons between means. Hence it is sensible
+
+not only to check on the consistency of the estimated P's but also to compare
+their common estimate with P= 1. Instructions are given for fitting:
+
+(i) separate gamma distributions to all aircraft, i.e. parameters /.J.i, pi for
+
+  i=1, ... ' 10;
+
+(ii) separate gamma distributions but with common p.
+
+  The maximum likelihood estimate of /.J.i is given by {li = jii• the sample mean,
+but it is necessary to iterate to obtain the estimates pi or p. It would be possible,
+but less efficient, to iterate simultaneously for {li and pi. We choose here to
+
+iterate only for the P/s (and p).
+
+  121
+

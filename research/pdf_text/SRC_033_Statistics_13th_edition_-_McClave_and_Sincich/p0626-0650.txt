@@ -1,0 +1,1652 @@
+624 CHAPTER 11 ■ Simple Linear Regression
+
+Statistics IN Action  Table SIA11.1 Dowsing Trial Results: Best Series for the Three Best Dowsers
+
+  (continued)  Trial  Dowser Number  Pipe Location  Dowser’s Guess
+
+  1  99  4  4
+
+  2  99  5  87
+
+  3  99  30  95
+
+  4  99  35  74
+
+  5  99  36  78
+
+  6  99  58  65
+
+  7  99  40  39
+
+  8  99  70  75
+
+  9  99  74  32
+
+  10  99  98  100
+
+  11  18  7  10
+
+  12  18  38  40
+
+  13  18  40  30
+
+  14  18  49  47
+
+  15  18  75  9
+
+  16  18  82  95
+
+  17  108  5  52
+
+  18  108  18  16
+
+  19  108  33  37
+
+  20  108  45  40
+
+  21  108  38  66
+
+  22  108  50  58
+
+  23  108  52  74
+
+  24  108  63  65
+
+  25  108  72  60
+
+  26  108  95  49
+
+  Based on Enright, J. T. “Testing dowsing: The failure of the Munich experiments.”  Data Set: DOWSING
+  Skeptical Inquirer, Jan./Feb. 1999, p. 45 (Figure 6a).
+
+Figure SIA11.1  Figure SIA11.2
+MINITAB scatterplot of dowsing data  MINITAB simple linear regression for dowsing data
+
+line, obtained from the MINITAB regression printout shown in  Figure SIA11.2) is bn1 = .31. Thus, for every 1-meter increase
+Figure SIA11.2, is also displayed on the scatterplot. Although  in a dowser’s guess, we estimate that the actual pipe location
+the least squares line has a slight upward trend, the variation of  will increase only .31 meter. In the Statistics in Action Revisited
+the data points around the line is large. It does not appear that  sections that follow, we will provide a measure of reliability
+a dowser’s guess (x) will be a very good predictor of the actual  for this inference and investigate the phenomenon of dowsing
+pipe location (y). In fact, the estimated slope (obtained from  further.
+  SECTION 11.2 ■ Fitting the Model: The Least Squares Approach 625
+
+Exercises 11.15–11.36
+
+Understanding the Principles  b. Which of these lines would you choose to characterize
+  the relationship between x and y? Explain.
+11.15 In regression, what is an error of prediction?
+  c. Show that the sum of errors for both of these lines
+11.16 Give two properties of the line estimated with the method  equals 0.
+  of least squares.
+  d. Which of these lines has the smaller SSE?
+11.17 True or False. The estimates of b0 and b1 should be inter-  e. Find the least squares line for the data, and compare it
+  preted only within the sampled range of the independent
+  variable, x.  with the two lines described in part a.
+
+  11.21 Consider the following pairs of measurements.
+
+Learning the Mechanics  L11021 x  5  3  -1  2  7  6  4
+  y
+11.18  The accompanying table is used to make the preliminary  4  3  0  1  8  5  3
+
+  computations for finding the least squares line for the
+
+  given pairs of x and y values.  a. Construct a scatterplot of these data.
+  b. What does the scatterplot suggest about the relation-
+  a. Complete the table.  b. Find SSxy.
+  d. Find bn1.  ship between x and y?
+  c. Find SSxx.  f. Find bn0.  c. Given that SSxx = 43.4286, SSxy = 39.8571, y = 3.4286,
+  e. Find x and y.
+  and x = 3.7143, calculate the least squares estimates of
+  g. Find the least squares line.  b0 and b1.
+  d. Plot the least squares line on your scatterplot. Does the
+  [Hint: Use the formulas in the box on p. 620.]  line appear to fit the data well? Explain.
+  e. Interpret the y-intercept and slope of the least squares
+  xi  yi  xi2  xi yi  line. Over what range of x are these interpretations
+  meaningful?
+  1  8  —  —
+  Totals  7  3  —  —  Applet Exercise 11.1
+  9  10  —  —
+  6  9  —  —  Use the applet entitled Regression by Eye to explore the relation-
+  9  10  —  —  ship between the pattern of data in a scatterplot and the corre-
+  10  10  —  —  sponding least squares model.
+  7  8  —  —
+  a. Run the applet several times. For each time, attempt to
+  a xi =  a yi =  a x2i =  a xiyi =  move the green line into a position that appears to min-
+  imize the vertical distances of the points from the line.
+11.19 Refer to Exercise 11.18. After the least square line has  Then click Show regression line to see the actual regres-
+  been obtained, the following table can be used (1) to com-  sion line. How close is your line to the actual line? Click
+  pare the observed and predicted values of y and (2) to  New data to reset the applet.
+  compute SSE.
+  b. Click the trash can to clear the graph. Use the mouse
+  x y yn  1y - yn2  1y - yn22  to place five points on the scatterplot that are approx-
+  imately in a straight line. Then move the green line to
+  1 8—  —  —  approximate the regression line. Click Show regression
+  7 3—  —  —  line to see the actual regression line. How close were
+  9 10 —  —  —  you this time?
+  6 9—  —  —
+  9 10 —  —  —  c. Continue to clear the graph, and plot sets of five points
+  10 10 —  —  —  with different patterns among the points. Use the green
+  7 8—  —  —  line to approximate the regression line. How close do
+  you come to the actual regression line each time?
+  a 1y - yn2 =  SSE = a 1y - yn22 =
+  d. On the basis of your experiences with the applet, ex-
+  a. Complete the table.  plain why we need to use more reliable methods of find-
+  b. Plot the least squares line on a scatterplot of the data.  ing the regression line than just “eyeing” it.
+
+  Plot the following line on the same graph:  Applying the Concepts—Basic
+  yn = 8.20 - .45x
+  11.22  Do nice guys really finish last? In baseball, there is an old
+  c. Show that SSE is larger for the line in part b than it is  saying that “nice guys finish last.” Is this true in the compet-
+  for the least squares line.  itive corporate world? Researchers at Harvard University
+  attempted to answer this question and reported their re-
+11.20 Construct a scatterplot of the following data.  sults in Nature (Mar. 20, 2008). In the study, Boston-area
+  college students repeatedly played a version of the game
+  x  .5  1  1.5  “prisoner’s dilemma,” where competitors choose coopera-
+  tion, defection, or costly punishment. (Cooperation meant
+  y  2  1  3  paying 1 unit for the opponent to receive 2 units; defection
+  meant gaining 1 unit at a cost of 1 unit for the opponent;
+  a. Plot the following two lines on your scatterplot:  and punishment meant paying 1 unit for the opponent to
+  y = 3 - x and y = 1 + x
+626 CHAPTER 11 ■ Simple Linear Regression
+
+  lose 4 units.) At the conclusion of the games, the research-  SAS Output for Exercise 11.23
+  ers recorded the average payoff and the number of times
+  punishment was used for each player. A graph of the data
+  is shown in the accompanying scatterplot.
+  a. Consider punishment use (x) as a predictor of average
+
+  payoff (y). Based on the scatterplot, is there evidence
+  of a linear trend?
+  b. Refer to part a. Is the slope of the line relating pun-
+  ishment use (x) to average payoff (y) positive or
+  negative?
+  c. The researchers concluded that “winners don’t punish.”
+  Do you agree? Explain.
+
+11.23  Measuring the moon’s orbit. A handheld digital camera  11.24  Game performance of water polo players. The journal
+  was used to photograph the moon’s orbit and the results  Biology of Sport (Vol. 31, 2014) published a study of the
+MOON  summarized in the American Journal of Physics (Apr.  POLO  physiological performance of top-level water polo play-
+  2014). The pictures were used to measure the angular size  ers. Eight Olympic male water polo players participated in
+  (in pixels) of the moon at various distances (heights) above  the study. Two variables were measured for each during
+  the horizon (measured in degrees). The data for 13 differ-  competition: y = mean heart rate over the four quarters
+  ent heights are illustrated in the graph below and saved in  of the game (expressed as a percentage of maximum heart
+  the MOON file.  rate) and x = maximal oxygen uptake (VO2max). The
+  a. Is there visual evidence of a linear trend between  data (simulated, based on information provided in the arti-
+  cle) are shown in the accompanying table. The researchers
+  angular size (y) and height above horizon (x)? If so, is  conducted a simple linear regression analysis of the data.
+  the trend positive or negative? Explain.  A MINITAB printout of the analysis follows.
+  b. Draw what you believe is the best-fitting line through
+  the data.  Player  HR%  VO2Max
+  c. Draw vertical lines from the actual data points to the
+  line, part b. Measure these deviations and then compute  1  55  148
+  the sum of squared deviations for the visually fitted line.  2  54  157
+  d. An SAS simple linear regression printout for the data is  3  70  160
+  shown in the next column. Compare the y-intercept and  4  67  179
+  slope of the regression line to the visually fitted line, part b.  5  74  179
+  e. Locate SSE on the printout. Compare this value to the  6  77  180
+  result in part c. Which value is smaller?  7  78  194
+  8  85  197
+  SECTION 11.2 ■ Fitting the Model: The Least Squares Approach 627
+
+  a. Give the equation of the least squares line.  a. Consider a straight-line model relating annual rainfall (y)
+  b. Give a practical interpretation (if possible) of the  and maximum daily temperature (x). A MINITAB print-
+  out of the simple linear regression is shown below. Give
+  y-intercept of the line.  the least squares prediction equation.
+  c. Give a practical interpretation (if possible) of the slope
+
+  of the line.
+
+11.25  New method for blood typing. Refer to the Analytical
+  Chemistry (May 2010) study in which medical research-
+BTYPE  ers tested a new method of typing blood using low-cost
+  paper, Exercise 2.163 (p. 124). The researchers applied
+  blood drops to the paper and recorded the rate of absorp-
+  tion (called blood wicking). The table gives the wicking
+  lengths (millimeters) for six blood drops, each at a differ-
+  ent antibody concentration. Let y = wicking length and
+  x = antibody concentration.
+
+  Droplet  Length (mm)  Concentration  b. Construct a scatterplot for the analysis you performed
+  in part a. Include the least squares line on the plot.
+  1  22.50  0.0  Does the line appear to be a good predictor of annual
+  2  16.00  0.2  rainfall?
+  3  13.50  0.4
+  4  14.00  0.6  c. Now consider a straight-line model relating number
+  5  13.75  0.8  of ant species (y) to annual rainfall (x). On the basis
+  6  12.50  1.0  of the MINITAB printout below. repeat parts a and b.
+
+  Based on Khan, M. S., et al. “Paper diagnostic for instant blood typing.”
+  Analytical Chemistry, Vol. 82, No. 10, May 2010 (Figure 4b).
+
+  a. Give the equation of the straight-line model relating y
+  to x.
+
+  b. An SPSS printout of the simple linear regression anal-
+  ysis is shown below. Give the equation of the least
+  squares line.
+
+  c. Give practical interpretations (if possible) of the esti-
+  mated y-intercept and slope of the line.
+
+11.26 Mongolian desert ants. Refer to the Journal of Biogeography  11.27  Redshifts of quasi-stellar objects. Astronomers call a
+  (Dec. 2003) study of ants in Mongolia, presented in Exercise  shift in the spectrum of galaxies a “redshift.” A correla-
+  tion between redshift level and apparent magnitude
+ANTS 2.167 (p. 125). Data on annual rainfall, maximum daily tem-  (i.e., brightness on a logarithmic scale) of a quasi-stel-
+  perature, and number of ant species recorded at each of 11  lar object was discovered and reported in the Journal of
+  study sites are listed in the table.  Astrophysics & Astronomy (Mar./Jun. 2003). Physicist D.
+  Basu (Carleton University, Ottawa) applied simple lin-
+  Annual Max. Daily Number of  ear regression to data collected for a sample of over 6,000
+Site Region Rainfall (mm) Temp. (°C) Ant Species  quasi-stellar objects with confirmed redshifts. The analysis
+  yielded the following results for a specific range of mag-
+1 Dry Steppe  196  5.7  3  nitudes: yn = 18.13 + 6.21x, where y = magnitude and
+  x = redshift level.
+2 Dry Steppe  196  5.7  3  a. Graph the least squares line. Is the slope of the line
+
+3 Dry Steppe  179  7.0  52  positive or negative?
+  b. Interpret the estimate of the y-intercept in the words of
+4 Dry Steppe  197  8.0  7
+  the problem.
+5 Dry Steppe  149  8.5  5  c. Interpret the estimate of the slope in the words of the
+
+6 Gobi Desert  112  10.7  49  problem.
+
+7 Gobi Desert  125  11.4  5
+
+8 Gobi Desert  99  10.9  4
+
+9 Gobi Desert  125  11.4  4
+
+10 Gobi Desert  84  11.4  5
+
+11 Gobi Desert  115  11.4  4
+
+Based on Pfeiffer, M., et al. “Community organization and species richness of
+ants in Mongolia along an ecological gradient from steppe to Gobi desert.”
+Journal of Biogeography, Vol. 30, No. 12, Dec. 2003 (Tables 1 and 2).
+628 CHAPTER 11 ■ Simple Linear Regression
+
+Applying the Concepts—Intermediate  computes a driving performance index based on a golf-
+  er’s average driving distance (yards) and driving accuracy
+11.28  Repair and replacement costs of water pipes. Pipes used in a  (percent of drives that land in the fairway). Data for the
+  water distribution network are susceptible to breakage due  top 40 PGA golfers (as ranked by the new method) are
+H2O  to a variety of factors. When pipes break, engineers must  saved in the PGA file. (The first five and last five observa-
+PIPE  decide whether to repair or replace the broken pipe. A team  tions are listed in the next table.)
+  of civil engineers used regression analysis to estimate  a. Write the equation of a straight-line model relating driv-
+  y = the ratio of repair to replacement cost of commercial
+  pipe in the IHS Journal of Hydraulic Engineering (Sept.  ing accuracy (y) to diving distance (x).
+  2012). The independent variable in the regression analysis
+  was x = the diameter (in millimeters) of the pipe. Data for  Rank  Player  Driving  Driving  Driving
+  a sample of 13 different pipe sizes are provided in the table,  Distance  Accuracy  Performance
+  followed by a MINITAB simple linear regression printout.  1  Woods  (yards)
+  2  Perry  (%)  Index
+  Diameter  Ratio  3  Gutschewski  316.1
+  4  Wetterich  304.7  54.6  3.58
+  80  6.58  5  Hearn  310.5  63.4  3.48
+  100  6.97  311.7  57.9  3.27
+  125  7.39  f  f  295.2  56.6  3.18
+  150  7.61  68.5  2.82
+  200  7.78  36  Senden  f
+  250  7.92  37  Mickelson  f  f
+  300  8.20  38  Watney  291
+  350  8.42  39  Trahan  300  66  1.31
+  400  8.60  40  Pappas  298.9  58.7  1.30
+  450  8.97  295.8  59.4  1.26
+  500  9.31  309.4  61.8  1.23
+  600  9.47  50.6  1.17
+  700  9.72
+  Based on Frederick Wiseman, Ph.D., Mohamed Habibullah, Ph.D., and Mustafa
+  Yilmaz, Ph.D, Sports Journal, Vol. 10, No. 1.
+
+  Source: Suribabu, C. R., and Neelakantan, T. R. “Sizing of  b. Use simple linear regression to fit the model you found
+  water distribution pipes based on performance measure and  in part a to the data. Give the least squares prediction
+  breakage-repair replacement economics.” IHS Journal of  equation.
+  Hydraulic Engineering, Vol. 18, No. 3, Sept. 2012 (Table 1).
+  c. Interpret the estimated y-intercept of the line.
+  a. Find the least squares line relating ratio of repair to re-  d. Interpret the estimated slope of the line.
+  placement cost (y) to pipe diameter (x) on the printout.  e. A professional golfer, practicing a new swing to in-
+
+  b. Locate the value of SSE on the printout. Is there an-  crease his average driving distance, is concerned
+  other line with an average error of 0 that has a smaller  that his driving accuracy will be lower. Which of the
+  SSE than the line, part a? Explain.  two estimates, y-intercept or slope, will help you de-
+  termine whether the golfer’s concern is a valid one?
+  c. Interpret practically the values bn0 and bn1.  Explain.
+
+  11.30  FCAT scores and poverty. In the state of Florida, elemen-
+  tary school performance is based on the average score
+  FCAT  obtained by students on a standardized exam called the
+  Florida Comprehensive Assessment Test (FCAT). An
+11.29 Ranking driving performance of professional golfers.  analysis of the link between FCAT scores and sociodemo-
+  Refer to The Sport Journal (Winter 2007) study of a new  graphic factors was published in the Journal of Educational
+  and Behavioral Statistics (Spring 2004). Data on average
+PGA method for ranking the total driving performance of golf-  math and reading FCAT scores of third graders, as well
+  ers on the Professional Golf Association (PGA) tour,  as the percentage of students below the poverty level, for
+  presented in Exercise 2.66 (p. 90). Recall that the method  a sample of 22 Florida elementary schools are listed in the
+  table on p. 629.
+  a. Propose a straight-line model relating math score
+
+  (y) to percentage (x) of students below the poverty
+  level.
+  b. Use the method of least squares to fit the model to the
+  data in the FCAT file.
+  c. Graph the least squares line on a scatterplot of the
+  data. Is there visual evidence of a relationship be-
+  tween the two variables? Is the relationship positive or
+  negative?
+  d. Interpret the estimates of the y-intercept and slope in
+  the words of the problem.
+  e. Now consider a model relating reading score (y) to per-
+  centage (x) of students below the poverty level. Repeat
+  parts a–d for this model.
+  SECTION 11.2 ■ Fitting the Model: The Least Squares Approach 629
+
+Data for Exercise 11.30  a. Hypothesize a model for frequency (y) as a function of
+  number of resonances (x) that proposes a linearly in-
+Elementary  FCAT—Math  FCAT—Reading  % Below  creasing relationship.
+  School  Poverty
+  165.0  b. According to the researcher’s theory, will the slope of
+  1  166.4  157.2  91.7  the line be positive or negative?
+  164.4  90.2
+  2  159.6  162.4  86.0  c. Estimate the beta parameters of the model and (if pos-
+  162.5  83.9  sible) give a practical interpretation of each.
+  3  159.1  164.9  80.4
+  162.0  76.5
+  4  155.5  165.0  76.0
+  173.7  75.8
+  5  164.3  171.0  75.6  11.32  Sweetness of orange juice The quality of the orange juice
+  169.4  75.0  produced by a manufacturer is constantly monitored.
+  6  169.8  172.9  74.7  OJUICE  There are numerous sensory and chemical components
+  172.7  63.2  that combine to make the best-tasting orange juice. For
+  7  155.7  174.9  52.9  example, one manufacturer has developed a quantitative
+  174.8  48.5  index of the “sweetness” of orange juice. (The higher the
+  8  165.2  170.1  39.1  index, the sweeter is the juice.) Is there a relationship be-
+  181.4  38.4  tween the sweetness index and a chemical measure such
+  9  175.4  180.6  34.3  as the amount of water-soluble pectin (parts per million)
+  178.0  30.3  in the orange juice? Data collected on these two variables
+  10  178.1  175.9  30.3  during 24 production runs at a juice-manufacturing plant
+  181.6  29.6  are shown in the table. Suppose a manufacturer wants to
+  11  167.1  183.8  26.5  use simple linear regression to predict the sweetness (y)
+  13.8  from the amount of pectin (x).
+  12  177.0  a. Find the least squares line for the data.
+  b. Interpret bn0 and bn1 in the words of the problem.
+  13  174.2  c. Predict the sweetness index if the amount of pectin in the
+
+  14  175.6  orange juice is 300 ppm. [Note: A measure of reliability of
+  such a prediction is discussed in Section 11.6.]
+  15  170.8
+
+  16  175.1
+
+  17  182.8
+
+  18  180.3
+
+  19  178.8
+
+  20  181.4
+
+  21  182.8
+
+  22  186.1
+
+Based on Tekwe, C. D., et al. “An empirical comparison of statistical models
+for value-added assessment of school performance.” Journal of Educational
+and Behavioral Statistics, Vol. 29, No. 1, Spring 2004 (Table 2).
+
+11.31  Sound waves from a basketball. Refer to the American  Run  Sweetness Index  Pectin (ppm)
+  Journal of Physics (June 2010) study of sound waves in a
+BBALL  spherical cavity, Exercise 2.43 (p. 80). The frequencies of  1  5.2  220
+  sound waves (estimated using a mathematical formula)
+  resulting from the first 24 resonances (echoes) after striking  2  5.5  227
+  a basketball with a metal rod are reproduced in the following
+  table. Recall that the researcher expects the sound wave fre-  3  6.0  259
+  quency to increase as the number of resonances increases.
+  4  5.9  210
+
+  5  5.8  224
+
+  6  6.0  215
+
+  7  5.8  231
+
+  8  5.6  268
+
+  Resonance  Frequency  9  5.6  239
+
+  1  979  10  5.9  212
+  2  1572
+  3  2113  11  5.4  410
+  4  2122
+  5  2659  12  5.6  256
+  6  2795
+  7  3181  13  5.8  306
+  8  3431
+  9  3638  14  5.5  259
+  10  3694
+  11  4038  15  5.3  284
+  12  4203
+  13  4334  16  5.3  383
+  14  4631
+  15  4711  17  5.7  271
+  16  4993
+  17  5130  18  5.5  264
+  18  5210
+  19  5214  19  5.7  227
+  20  5633
+  21  5779  20  5.3  263
+  22  5836
+  23  6259  21  5.9  232
+  24  6339
+  22  5.8  220
+
+  23  5.8  246
+
+  24  5.9  241
+
+  Note: The data in the table are authentic. For reasons of confidentiality,
+  the name of the manufacturer cannot be disclosed.
+
+  11.33  Ideal height of your mate. Anthropologists theorize that
+  humans tend to choose mates who are similar to them-
+  HEIGHT  selves. This includes choosing mates who are similar in
+  height. To test this theory, a study was conducted on 147
+  Based on Russell, D. A. “Basketballs as spherical acoustic cavities.”  Cornell University students (Chance, Summer 2008). Each
+  American Journal of Physics, Vol. 48, No. 6, June 2010 (Table I).  student was asked to select the height of his/her ideal
+  spouse or life partner. The researchers fit the simple lin-
+  ear regression model, E1y2 = b0 + b1x, where y = ideal
+630 CHAPTER 11 ■ Simple Linear Regression
+
+  partner’s height (in inches) and x = student’s height (in  actually must recall the names of all the other students,
+  inches). The data for the study (simulated from informa-
+  tion provided in a scatterplot) are saved in the HEIGHT  he or she is assigned position number 9 in the data set.]
+  file. The accompanying table lists selected observations
+  from the full data set.  Use the method of least squares to estimate the line
+  E1y2 = b0 + b1x. Interpret the b estimates in the words
+  of the problem.
+
+  Gender  Actual Height  Ideal Height  Position  Recall
+
+  F  59  66  2  0.04
+  F  60  70  2  0.37
+  F  60  72  2  1.00
+  F  61  65  2  0.99
+  F  61  67  2  0.79
+
+  f  f  f  f  f
+
+  M  73.5  66  9  0.72
+  M  74  67  9  0.88
+  M  74  68  9  0.46
+  M  74  69  9  0.54
+  M  74  70  9  0.99
+
+  Based on Lee, G., Velleman, P., and Wainer, H. “Giving the finger to dating  Based on Morris, P. E., and Fritz, C. O. “The name game: Using retrieval
+  services.” Chance,Vol. 21, No. 3, Summer 2008 (adapted from Figure 3).  practice to improve the learning of names.” Journal of Experimental
+  Psychology—Applied, Vol. 6, No. 2, June 2000 (data simulated from
+  a. The researchers found the estimated slope of the line  Figure 2).
+  to be negative. Fit the model to the data using statistical
+  Applying the Concepts—Advanced
+  software and verify this result.
+  b. The negative slope was interpreted as follows: “The  11.35  Spreading rate of spilled liquid. Refer to the Chemical
+  Engineering Progress (Jan. 2005) study of the rate at which
+  taller the respondent was, the shorter they felt their  SPILL  a spilled volatile liquid will spread across a surface, pre-
+  ideal partner ought to be.” Do you agree?  sented in Exercise 2.168 (p. 125). Recall that a DuPont
+  c. The result, part b, contradicts the theory developed by  Corp. engineer calculated the mass (in pounds) of a
+  anthropologists. To gain insight into this phenomenon,  50-gallon methanol spill after a period ranging from 0 to
+  use a scatterplot to graph the full data set. Use a dif-  60 minutes. Do the data shown in the accompanying table
+  ferent plotting symbol for male and female students.
+  Now focus on just the data for the female students.  Time (minutes)  Mass (pounds)
+  What trend do you observe? Repeat for male stu-
+  dents.  0  6.64
+  d. Fit the straight-line model to the data for the fe-  1  6.34
+  male students. Interpret the estimated slope of the  2  6.04
+  line.  4  5.47
+  e. Repeat part d for the male students.  6  4.94
+  f. Based on the results, parts d and e, comment on  8  4.44
+  whether the study data support the theory developed by  10  3.98
+  anthropologists.  12  3.55
+  14  3.15
+11.34  The “name game.” Refer to the Journal of Experimental  16  2.79
+  Psychology—Applied (June 2000) study in which the  18  2.45
+NAME2  “name game” was used to help groups of students learn  20  2.14
+  the names of other students in the group, Exercise 10.42  22  1.86
+  (p. 555). [In the “name game” student #1 states his/her  24  1.60
+  full name, student #2 his/her name and the name of the  26  1.37
+  first student, student #3 his/her name and the names of  28  1.17
+  the first two students, etc.] After a 30-minute seminar, all  30  0.98
+  students were asked to remember the full name of each  35  0.60
+  of the other students in their group, and the research-  40  0.34
+  ers measured the proportion of names recalled for each.  45  0.17
+  One goal of the study was to investigate the linear trend  50  0.06
+  between y = proportion of names recalled and x =  55  0.02
+  position (order) of the student during the game. The  60  0.00
+  data (simulated on the basis of summary statistics pro-
+  vided in the research article) for 144 students in the first  Based on Barry, J. “Estimating rates of spreading and evaporation
+  eight positions are saved in the NAME2 file. The first  of volatile liquids.” Chemical Engineering Progress, Vol. 101, No. 1,
+  five and last five observations in the data set are listed  Jan. 2005.
+  in the next table. [Note: Since the student in position 1
+  SECTION 11.3 ■ Model Assumptions 631
+
+  indicate that the mass of the spill tends to diminish as time  Tweet Rate  Revenue (millions)
+  increases? If so, how much will the mass diminish each
+  minute?  1365.8  142
+  1212.8  77
+11.36  Forecasting movie revenues with Twitter. Marketers are  61
+  keenly interested in how social media (e.g., Facebook,  581.5  32
+TWEETS  Twitter) may influence consumers who buy their prod-  310.1  31
+  ucts. Researchers at HP Labs (Palo Alto, CA) inves-  455  30
+  tigated whether the volume of chatter on Twitter.  290  21
+  com could be used to forecast the box office revenues  250  18
+  of movies (IEEE International Conference on Web  680.5  18
+  Intelligence and Intelligent Agent Technology, 2010).  150  17
+  Opening weekend box office revenue data (in millions  164.5  16
+  of dollars) were collected for a sample of 24 recent  113.9  15
+  movies. In addition, the researchers computed each  144.5  14
+  movie’s tweet rate, i.e., the average number of tweets (at  418  14
+  Twitter.com) referring to the movie per hour one week  12
+  prior to the movie’s release. The data (simulated based  98  11
+  on information provided in the study) are listed in the  100.8  10
+  table. Assuming that movie revenue and tweet rate are  115.4  9
+  linearly related, how much do you estimate a movie’s  9
+  opening weekend revenue to change as the tweet rate  74.4  9
+  for the movie increases by an average of 100 tweets  87.5  8
+  per hour?  127.6  2
+  52.2  0.3
+  144.1
+  41.3
+  2.75
+
+11.3 Model Assumptions
+
+  In Section 11.2, we assumed that the probabilistic model relating the drug reaction time
+  y to the percentage x of drug in the bloodstream is
+
+  y = b0 + b1x + e
+
+  We also recall that the least squares estimate of the deterministic component of the
+  model, b0 + b1x, is
+
+  yn = bn0 + bn1x = - .1 + .7x
+
+  Now we turn our attention to the random component e of the probabilistic model and
+  its relation to the errors in estimating b0 and b1. We will use a probability distribution to
+  characterize the behavior of e. We will see how the probability distribution of e deter-
+  mines how well the model describes the relationship between the dependent variable y
+  and the independent variable x.
+
+  Step 3 in a regression analysis requires us to specify the probability distribution of
+  the random error e. We will make four basic assumptions about the general form of this
+  probability distribution:
+
+  Assumption 1 The mean of the probability distribution of e is 0. That is, the av-
+  erage of the values of e over an infinitely long series of experiments is 0 for each
+  setting of the independent variable x. This assumption implies that the mean value
+  of y, for a given value of x, is E1y2 = b0 + b1x.
+  Assumption 2 The variance of the probability distribution of e is constant for all
+  settings of the independent variable x. For our straight-line model, this assumption
+  means that the variance of e is equal to a constant—say, s2—for all values of x.
+
+  Assumption 3 The probability distribution of e is normal.
+
+  Assumption 4 The values of e associated with any two observed values of y are
+  independent. That is, the value of e associated with one value of y has no effect on
+  any of the values of e associated with any other y values.
+632  CHAPTER 11 ■ Simple Linear Regression
+
+  The implications of the first three assumptions can be seen in Figure 11.9, which
+  shows distributions of errors for three values of x, namely, 5, 10, and 15. Note that the
+  relative frequency distributions of the errors are normal with a mean of 0 and a constant
+  variance s2. (All of the distributions shown have the same amount of spread or vari-
+  ability.) The straight line shown in Figure 11.9 is the line of means; it indicates the mean
+  value of y for a given value of x. We denote this mean value as E(y). Then the line of
+  means is given by the equation
+
+  E1y2 = b0 + b1x
+
+  y
+
+  E(y) when x = 15
+
+  E(y) when x = 5  E(y) when x = 10
+
+  Positive
+  errors
+
+  Error probability
+
+  Negative  distribution
+
+Figure 11.9  errors
+The probability distribution of e  x
+
+  5  10  15
+
+  These assumptions make it possible for us to develop measures of reliability for
+  the least squares estimators and to devise hypothesis tests for examining the usefulness
+  of the least squares line. We have various techniques for checking the validity of these
+  assumptions, and we have remedies to apply when they appear to be invalid. Several
+  remedies are discussed in Chapter 12. Fortunately, the assumptions need not hold ex-
+  actly in order for least squares estimators to be useful. The assumptions will be satisfied
+  adequately for many applications encountered in practice.
+
+  It seems reasonable to assume that the greater the variability of the random error e
+  (which is measured by its variance s2), the greater will be the errors in the estimation of
+  the model parameters b0 and b1 and in the error of prediction when yn is used to predict
+  y for some value of x. Consequently, you should not be surprised, as we proceed through
+  this chapter, to find that s2 appears in the formulas for all confidence intervals and test
+  statistics that we will be using.
+
+  Estimation of S2 for a (First-Order) Straight-Line Model
+
+  s2 = Degrees of freedom for error = SSE SSE n - 2
+
+  where SSE = a 1yi - yni22 = SSyy - bn1SSxy
+
+  in which
+
+  2 2 1 a yi22
+  SSyy = a 1yi - y2 = a yi -
+
+  n
+
+  To estimate the standard deviation s of e, we calculate
+
+  s = 2s2 = SSE B n - 2
+
+  We will refer to s as the estimated standard error of the regression model.
+ Example 11.3  STIMULUS  SECTION 11.3 ■ Model Assumptions 633
+
+Estimating S in  In most practical situations, s2 is unknown and we must use our data to estimate
+Regression—Drug  its value. The best estimate of s2, denoted by s2, is obtained by dividing the sum of the
+Reaction Data  squares of the deviations of the y values from the prediction line, or
+
+  SSE = a 1yi - yni22
+
+  by the number of degrees of freedom associated with this quantity. We use 2 df to esti-
+  mate the two parameters b0 and b1 in the straight-line model, leaving 1n - 22 df for the
+  estimation of the error variance.
+
+  ! CAuTIoN When performing these calculations, you may be tempted to round the
+  calculated values of SSyy, bn1, and SSxy. Be certain to carry at least six significant figures
+  for each of these quantities, to avoid substantial errors in calculating the SSE.
+
+  Problem Refer to Example 11.2 and the simple linear regression of the drug reaction
+  data in Table 11.1.
+
+  a. Compute an estimate of s.
+  b. Give a practical interpretation of the estimate.
+
+  Solution
+
+  a. We previously calculated SSE = 1.10 for the least squares line yn = -.1 + .7x.
+  Recalling that there were n = 5 data points, we have n - 2 = 5 - 2 = 3 df for es-
+  timating s2. Thus,
+
+  s2 = n - 2 = 3 = SSE 1.10 .367
+
+  is the estimated variance, and
+
+  s = 2.367 = .61
+
+  is the standard error of the regression model.
+  b. You may be able to grasp s intuitively by recalling the interpretation of a standard de-
+
+  viation given in Chapter 2 and remembering that the least squares line estimates the
+  mean value of y for a given value of x. Since s measures the spread of the distribution
+  of y values about the least squares line and these errors of prediction are assumed to
+  be normally distributed, we should not be surprised to find that most (about 95%)
+  of the observations lie within 2s, or 21.612 = 1.22, of the least squares line. For this
+  simple example (only five data points), all five data points fall within 2s of the least
+  squares line. In Section 11.6, we use s to evaluate the error of prediction when the
+  least squares line is used to predict a value of y to be observed for a given value of x.
+
+Figure 11.10
+
+SAS printout for the time–drug
+regression
+634  CHAPTER 11 ■ Simple Linear Regression
+
+  Look Back The values of s2 and s can also be obtained from a simple linear regression
+  printout. The SAS printout for the drug reaction example is reproduced in Figure 11.10.
+  The value of s2 is highlighted on the printout (in the Mean Square column in the row
+  labeled Error). The value s2 = .36667, rounded to three decimal places, agrees with the
+  one calculated by hand. The value of s is also highlighted in Figure 11.10 (next to the
+  heading Root MSE). This value, s = .60553, agrees (except for rounding) with our hand-
+  calculated value.
+
+  ■ Now Work Exercise 11.40a–b
+
+  Interpretation of s, the Estimated Standard Deviation of E
+
+  We expect most 1 ≈95%2 of the observed y values to lie within 2s of their respective
+  least squares predicted values, yn.
+
+Exercises 11.37–11.52
+
+Understanding the Principles  c. What is the largest deviation that you might expect be-
+  tween any one of the 12 points and the least squares
+11.37 What are the four assumptions made about the probability  line?
+  distribution of e in regression? Illustrate the assumptions
+  with a graph.  11.41 Refer to Exercises 11.18 and 11.21 (p. 625). Calculate SSE,
+  s2, and s for the least squares lines obtained in those exer-
+11.38 Visually compare the scatterplots shown below. If a least  cises. Interpret the standard errors of the regression model
+  squares line were determined for each data set, which do  for each.
+  you think would have the smallest variance s2? Explain.
+
+  a. y  b. y  Applying the Concepts—Basic
+
+  11.42  Do nice guys really finish last? Refer to the Nature (Mar.
+  20, 2008) study of whether “nice guys finish last,” Exercise
+  15  15  11.22 (p. 625). Recall that Boston-area college students re-
+  10  peatedly played a version of the game “prisoner’s dilemma,”
+  5  10  where competitors choose cooperation, defection, or costly
+  punishment. At the conclusion of the games, the research-
+  x  5  ers recorded the average payoff and the number of times
+  5 10 15  punishment was used for each player. Based on a scatter-
+  x  plot of the data, the simple linear regression relating average
+  c. y  5 10 15  payoff (y) to punishment use (x) resulted in SSE = 1.04.
+  a. Assuming a sample size of n = 28, compute the esti-
+  15
+  mated standard deviation of the error distribution, s.
+  10  b. Give a practical interpretation of s.
+
+  5  11.43  Measuring the moon’s orbit. Refer to the American
+  Journal of Physics (Apr. 2014) study of the moon’s orbit,
+  x  MOON  Exercise 11.23 (p. 626). Recall that the angular size (y) of
+  5 10 15  the moon was modeled as a straight-line function of height
+  above horizon (x). Find an estimate of s, the standard
+Learning the Mechanics  deviation of the error of prediction, on the SAS printout
+  (p. 626). Give a practical interpretation of this value.
+11.39 Calculate SSE and s2 for each of the following cases:
+  a. n = 25, SSyy = 110, SSxy = 60, bn1 = .80  11.44  Game performance of water polo players. Refer to the
+  b. n = 50, a y2 = 900, a y = 90,  Biology of Sport (Vol. 31, 2014) study of the physiologi-
+  SSxy = 2500, bn1 = .25  POLO  cal performance of top-level water polo players, Exercise
+  c. n = 25, a 1yi - y22 = 75,  11.24 (p. 626). Recall that data for eight Olympic male
+  SSxy = 100, SSxx = 200  water polo players were used to model y = mean heart
+  rate as a straight-line function of x = maximal oxygen up-
+11.40 Suppose you fit a least squares line to 12 data points and  take. Find an estimate of s, the standard deviation of the
+  the calculated value of SSE is .429.  error of prediction, on the MINITAB printout (p. 626).
+  a. Find s2, the estimator of s2 (the variance of the random  Give a practical interpretation of this value.
+  error term e).
+  b. Find s, the estimate of s.  11.45 New method for blood typing. Refer to the Analytical
+  Chemistry (May 2010) study in which medical research-
+
+  BTYPE ers tested a new method of typing blood using low-cost
+  SECTION 11.3 ■ Model Assumptions 635
+
+  paper, Exercise 11.25 (p. 627). The data were used to fit  reduce AB. Twenty subjects were presented a rapid vi-
+  the straight-line model relating y = wicking length to x =  sual stream of symbols and letters on a computer screen
+  antibody concentration. The SPSS printout follows.  and asked to identify the first and second letters (the
+  targets). After several trials, the subject’s AB magnitude
+  a. Give the values of SSE, s2, and s shown on the print-  was measured as the difference between the percentages
+  out.  of first target and second target letters correctly iden-
+  tified. Each subject performed the task under each of
+  b. Give a practical interpretation of s. Recall that wicking  three conditions. In the Simultaneous condition, a sound
+  length is measured in millimeters.  (tone) was presented simultaneously with the second tar-
+  get; in the Alert condition, a sound was presented prior
+  to the coming of the second target; and in the No-Tone
+  condition, no sound was presented with the second tar-
+  get. Scatterplots of AB magnitude for each possible pair
+  of conditions are shown below as well as the least squares
+  line for each.
+  a. Which pair of conditions produces the least squares
+
+  line with the steepest estimated slope?
+  b. Which pair of conditions produces the least squares line
+
+  with the largest SSE?
+  c. Which pair of conditions produces the least squares line
+
+  with the smallest estimate of s?
+
+11.46  Quantitative models of music. Chance (Fall 2004) pub-  11.49  FCAT scores and poverty. Refer to the Journal of
+  lished a study on modeling a certain pitch of a musical  Educational and Behavioral Statistics (Spring 2004) study
+  composition. Data on 147 famous compositions were used  FCAT  of scores on the Florida Comprehensive Assessment Test
+  to model the number of times (y) a certain pitch occurs—  (FCAT), presented in Exercise 11.30 (p. 628).
+  called entropy—as a straight-line function of year of birth  a. Consider the simple linear regression relating math
+  (x) of the composer. On the basis of the scatterplot of the
+  data, the standard deviation s of the model is estimated  score (y) to percentage (x) of students below the pov-
+  to be s = .1. For a given year (x), about 95% of the actual  erty level. Find and interpret the value of s for this
+  entropy values (y) will fall within d units of their predicted  regression.
+  values. Find the value of d.  b. Consider the simple linear regression relating read-
+  ing score (y) to percentage (x) of students below the
+11.47  Mongolian desert ants. Refer to the Journal of  poverty level. Find and interpret the value of s for this
+  Biogeography (Dec. 2003) study of ant sites in Mongolia,  regression.
+ANTS  presented in Exercise 11.26 (p. 627). The data were used to  c. Which dependent variable, math score or reading
+  estimate the straight-line model relating annual rainfall (y)  score, can be more accurately predicted by per-
+  to maximum daily temperature (x).  centage (x) of students below the poverty level?
+  a. Give the values of SSE, s2, and s, shown on the  Explain.
+
+  MINITAB printout (p. 627).  11.50  Sweetness of orange juice. Refer to the study of the quality
+  b. Give a practical interpretation of the value of s.  of orange juice produced at a juice manufacturing plant,
+  OJUICE  Exercise 11.32 (p. 629). Recall that simple linear regres-
+  sion was used to predict the sweetness index (y) from the
+Applying the Concepts—Intermediate  amount of pectin (x) in orange juice manufactured during
+  a production run.
+11.48 Detecting rapid visual targets. When two targets are  a. Give the values of SSE, s2, and s for this regression.
+  presented close together in a rapid visual stream, the  b. Explain why it is difficult to give a practical interpreta-
+  second target is often missed. Psychologists call this phe-
+  nomenon the attentional blink (AB). A study published  tion to s2.
+  in Advances in Cognitive Psychology (July 2013) investi-  c. Use the value of s to derive a range within which most
+  gated whether simultaneous or preceding sounds could
+  (about 95%) of the errors of prediction of sweetness
+  index fall.
+636 CHAPTER 11 ■ Simple Linear Regression
+
+11.51  Ideal height of your mate. Refer to the Chance (Summer  brands of cutting tools currently used in the production
+  2008) study of the height of the ideal mate, Exercise  process. For which brand would you feel more confident
+HEIGHT  11.33 (p. 629). The data were used to fit the simple linear  using the least squares line to predict useful life for a given
+  regression model, E1y2 = b0 + b1x, where y = ideal
+  partner’s height (in inches) and x = student’s height (in  cutting speed? Explain.
+  inches).
+  a. Fit the straight-line model to the data for the male stu-  Useful Life (hours)
+
+  dents. Find an estimate for s, the standard deviation of  Cutting Speed  Brand A  Brand B
+  the error term, and interpret its value practically.  (meters per minute)
+  b. Repeat part a for the female students.  4.5  6.0
+  c. For which group, males or females, is student’s  30  3.5  6.5
+  height the more accurate predictor of ideal partner’s  30  5.2  5.0
+  height?  30  5.2  6.0
+  40  4.0  4.5
+Applying the Concepts—Advanced  40  2.5  5.0
+  40  4.4  4.5
+11.52  Life tests of cutting tools. To improve the quality of the  50  2.8  4.0
+  output of any production process, it is necessary first to  50  1.0  3.7
+TOOL  understand the capabilities of the process. (For example,  50  4.0  3.8
+  see Gitlow, H., Quality Management Systems: A Practical  60  2.0  3.0
+  Guide, 2000.) In a particular manufacturing process, the  60  1.1  2.4
+  useful life of a cutting tool is linearly related to the speed  60  1.1  1.5
+  at which the tool is operated. The data in the accompany-  70  2.0
+  ing table were derived from life tests for the two different  70  .5  1.0
+  70  3.0
+
+11.4 Assessing the Utility of the Model: Making Inferences
+  about the Slope B1
+
+  Now that we have specified the probability distribution of e and found an estimate of the
+  variance s2, we are ready to make statistical inferences about the linear model’s usefulness
+  in predicting the response y. This is step 4 in our regression modeling procedure.
+
+  Refer again to the data of Table 11.1, and suppose the reaction times are com-
+  pletely unrelated to the percentage of drug in the bloodstream. What could then be said
+  about the values of b0 and b1 in the hypothesized probabilistic model
+
+  y = b0 + b1x + e
+
+  if x contributes no information for the prediction of y? The implication is that the mean
+  of y—that is, the deterministic part of the model E1y2 = b0 + b1x—does not change as
+  x changes. In the straight-line model, this means that the true slope, b1, is equal to 0. (See
+  Figure 11.11.) Therefore, to test the null hypothesis that the linear model contributes
+  no information for the prediction of y against the alternative hypothesis that the linear
+  model is useful in predicting y, we test
+
+  H0: b1 = 0
+  Ha: b1 ≠ 0
+
+  If the data support the alternative hypothesis, we will conclude that x does contribute
+  information for the prediction of y with the straight-line model [although the true
+
+  y
+
+Figure 11.11
+
+Graph of the straight-line
+
+model when the slope is zero,  x
+i.e., y = b0 + e
+  0
+  SECTION 11.4 ■ Assessing the Utility of the Model: Making Inferences about the Slope b1 637
+
+  relationship between E(y) and x could be more complicated than a straight line]. In
+  effect, then, this is a test of the usefulness of the hypothesized model.
+
+  The appropriate test statistic is found by considering the sampling distribution of
+  bn1, the least squares estimator of the slope b1, as shown in the following box:
+
+  Sampling Distribution of Bn 1
+
+  If we make the four assumptions about e (see Section 11.3), the sampling distribu-
+  tion of the least squares estimator bn1 of the slope will be normal with mean b1 (the
+  true slope) and standard deviation
+
+  s  1see Figure 11.122
+  sbn1 = 2SSxx
+
+  s
+  We estimate sbn1 by sbn = 1 2SS and refer to s xx bn1 as the estimated standard error of
+  the least squares slope Bn 1.
+
+  ^
+
+^  ^  Since s is usually unknown, the appropriate test statistic is a t-statistic, formed as:
+
+Figure 11.12  t bn = 1 - Hypothesized value of b1  where  s
+Sampling distribution of bn1  sbn1  sbn 1 =
+
+  2SSxx
+
+  Thus,
+
+  t bn = 1 - 0
+  s> 2SSxx
+
+  Note that we have substituted the estimator s for s and then formed the estimated stan-
+
+  dard error sbn 1 by dividing s by 1SSxx. The number of degrees of freedom associated
+  with this t statistic is the same as the number of degrees of freedom associated with s.
+  Recall that this number is 1n - 22 df when the hypothesized model is a straight line.
+  (See Section 11.3.) The setup of our test of the usefulness of the straight-line model is
+
+  summarized in the following two boxes.
+
+  A Test of Model Utility: Simple Linear Regression
+
+  bn1  bn1
+  Test statistic:  tc = =
+  sbn1 1 s> 2SSxx 2
+
+  One-Tailed Tests  Two-Tailed Test
+
+  Rejection region:  H0: b1 = 0  H0: b1 = 0  H0: b1 = 0
+  p-value:  Ha: b1 6 0  Ha: b1 7 0  Ha: b1 ≠ 0
+  tc 7 ta  ͉ tc ͉ 7 ta>2
+  tc 6 - ta  2P1t 7 tc2 if tc is positive
+  P1t 7 tc2  2P1t 6 tc2 if tc is negative
+  P1t 6 tc2
+
+  Decision: Reject H0 if a 7 p@value or if test statistic (tc) falls in rejection region
+  where P1t 7 ta2 = a, P1t 7 ta>22 = a>2, and t is based on 1n - 22 degrees of freedom
+
+  Conditions Required for a Valid Test: Simple Linear Regression
+  The four assumptions about e listed in Section 11.3.
+638 CHAPTER 11 ■ Simple Linear Regression
+
+ Example 11.4  Problem Refer to the simple linear regression analysis of the drug reaction data
+  performed in Examples 11.1–11.3. Conduct a test (at a = .05) to determine whether the
+  STIMULUS  reaction time (y) is linearly related to the amount of drug (x).
+
+Testing the Regression  Solution For the drug reaction example, n = 5. Thus, t will be based on n - 2 = 3 df,
+  and the rejection region t (at a = .05) will be
+Slope, B1—Drug
+Reaction Model  ͉ t ͉ 7 t.025 = 3.182
+  We previously calculated bn1 = .7, s = .61, and SSxx = 10. Thus,
+
+  t bn = 1 .7 .7 = = = 3.7
+  s> 1SSxx .61> 110 .19
+
+  Since this calculated t-value falls into the upper-tail rejection region (see Figure 11.13),
+  we reject the null hypothesis and conclude that the slope b1 is not 0. The sample evidence
+  indicates that the percentage x of drug in the bloodstream contributes information for
+  the prediction of the reaction time y when a linear model is used.
+
+  = .025  = .025
+
+Figure 11.13  0  t
+  Rejection
+Rejection region and calculated  region  3.7
+t value for testing H0: b1 = 0  Rejection
+versus Ha: b1 ≠ 0  –3.182  region
+
+  3.182
+
+  [Note: We can reach the same conclusion by using the observed significance level
+  (p-value) of the test from a computer printout. The MINITAB printout for the drug re-
+  action example is reproduced in Figure 11.14. The test statistic and the two-tailed p-value
+  are highlighted on the printout. Since the p@value = .035 is smaller than a = .05, we
+  will reject H0.]
+
+Figure 11.14
+
+MINITAB printout for the
+time–drug regression
+
+  Look Back What conclusion can be drawn if the calculated t-value does not fall into the
+  rejection region or if the observed significance level of the test exceeds a? We know
+  from previous discussions of the philosophy of hypothesis testing that such a t-value
+  does not lead us to accept the null hypothesis. That is, we do not conclude that b1 = 0.
+  Additional data might indicate that b1 differs from 0, or a more complicated relationship
+  may exist between x and y, requiring the fitting of a model other than the straight-line
+  model. We discuss several such models in Chapter 12.
+
+  ■ Now Work Exercise 11.62c
+SECTION 11.4 ■ Assessing the Utility of the Model: Making Inferences about the Slope b1 639
+
+  Interpreting p-Values for B Coefficients in Regression
+
+  Almost all statistical computer software packages report a two-tailed p-value for
+  each of the b parameters in the regression model. For example, in simple linear re-
+  gression, the p-value for the two-tailed test H0: b1 = 0 versus Ha: b1 ≠ 0 is given on
+  the printout. If you want to conduct a one-tailed test of hypothesis, you will need to
+  adjust the p-value reported on the printout as follows:
+
+  Upper@tailed test1Ha: b1 7 02:  p@value = e p>2 1 - p>2  if t 7 0
+  Lower@tailed test1Ha: b1 6 02:  p@value = e p>2 1 - p>2  if t 6 0
+
+  if t 6 0
+  if t 7 0
+
+  where p is the p-value reported on the printout and t is the value of the test statistic.
+
+  Another way to make inferences about the slope b1 is to estimate it with a confi-
+  dence interval, formed as shown in the following box:
+
+  A 1001 1 - A 2 % Confidence Interval for the Simple Linear Regression Slope B1
+
+  bn1 { 1ta>22 sbn 1
+  where the estimated standard error of bn1 is calculated by
+
+  sbn 1 =  s
+  1SSxx
+
+  and ta>2 is based on 1n - 22 degrees of freedom.
+
+  Conditions Required for a Valid Confidence Interval: Simple Linear Regression
+  The four assumptions about e listed in Section 11.3.
+
+  For the simple linear regression for the drug reaction (Examples 11.1–11.3), ta>2 is
+  based on 1n - 22 = 3 degrees of freedom. Therefore, a 95% confidence interval for the
+
+  slope b1, the expected change in reaction time for a 1% increase in the amount of drug
+  in the bloodstream, is
+
+  bn1 { t.025sbn1 = .7 { 3.182 a s b = .7 { 3.182 a .61 b = .7 { .61
+  2SSxx  110
+
+  Thus, the estimate of the interval for the slope parameter b1 is from .09 to 1.31. [Note:
+  This interval can also be obtained with statistical software and is highlighted on the
+  SPSS printout shown in Figure 11.15.] In terms of this example, the implication is that
+  we can be 95% confident that the true mean increase in reaction time per additional 1%
+  of the drug is between .09 and 1.31 seconds. This inference is meaningful only over the
+  sampled range of x—that is, from 1% to 5% of the drug in the bloodstream.
+
+Figure 11.15
+
+SPSS printout with 95%
+confidence intervals for the
+time–drug regression betas
+
+  Now Work Exercise 11.67
+640  CHAPTER 11 ■ Simple Linear Regression
+
+  Since all the values in this interval are positive, it appears that b1 is positive and
+  that the mean of y, E(y), increases as x increases. However, the rather large width of the
+  confidence interval reflects the small number of data points (and, consequently, a lack of
+  information) used in the experiment. We would expect a narrower interval if the sample
+  size were increased.
+
+  We conclude this section with a comment on the other b-parameter in the straight-
+  line model—the y-intercept, b0. Why not conduct a test of hypothesis on b0? For exam-
+  ple, we could conduct the test H0: b0 = 0 against Ha: b0 ≠ 0. The p-value for this test
+  appears on the printouts for SAS, SPSS, MINITAB, and most other statistical software
+  packages. The answer lies in the interpretation of b0. In the previous section, we learned
+  that the y-intercept represents the mean value of y when x = 0. Thus, the test H0: b0 = 0
+  is equivalent to testing whether E1y2 = 0 when x = 0. In the drug reaction simple lin-
+  ear regression, we would be testing whether the mean reaction time (y) is 0 seconds
+  when the amount of drug in the blood (x) is 0%. The value x = 0 is typically not a mean-
+  ingful value (as in the drug reaction example), or, x = 0 is typically outside the range
+  of the sample data. In either of these cases, the test H0: b0 = 0 is not meaningful and
+  should be avoided.
+
+  For those regression analyses where x = 0 is a meaningful value, one may desire to
+  predict the value of y when x = 0. We discuss a confidence interval for such a prediction
+  in Section 11.6.
+
+  ! CAuTIoN In simple linear regression, the test H0: b0 = 0 is only meaningful if the
+  value x = 0 makes sense and is within the range of the sample data.
+
+Statistics IN Action Revisited Assessing How Well the Straight-Line Model Fits
+  the Dowsing Data
+
+In the previous Statistics in Action Revisited, we fit the  dowsing data in Table SIA11.1 provide no sta-
+straight-line model E1y2 = b0 + b1x, where x = dowser’s  tistical support for the German researchers’
+guess (in meters) and y = pipe location (in meters) for  claim that the three best dowsers have an
+each trial. The MINITAB regression printout is reproduced  ability to find underground water with a
+in Figure SIA11.3. The two-tailed p-value for testing the  divining rod.
+null hypothesis H0: b1 = 0 (highlighted on the printout)
+is p@value = .118. Even for an a@level as high as a = .10,  This lack of support for the dows-
+there is insufficient evidence to reject H0. Consequently, the  ing theory is made clearer with a confi-
+  dence interval for the slope of the line.
+Figure SIA11.3  When n = 26, df = 1n - 22 = 24 and
+MINITAB simple linear regression for dowsing data  t.025 = 2.064. Substituting the latter value and
+  the relevant values shown on the MINITAB printout, we find
+  that a 95% confidence interval for b1 is
+
+  bn1 { t.025 1sbn12 = .31 { 12.0642 1.192
+  = .31 { .39, or 1 - .08, .702
+
+  Thus, for every 1-meter increase in a dowser’s guess, we es-
+  timate (with 95% confidence) that the change in the actual
+  pipe location will range anywhere from a decrease of .08
+  meter to an increase of .70 meter. In other words, we’re not
+  sure whether the pipe location will increase or decrease along
+  the 10-meter pipeline! Keep in mind also that the data in
+  Table SIA11.1 represent the “best” performances of the three
+  dowsers (i.e., the outcome of the dowsing experiment in its
+  most favorable light). When the data for all trials are consid-
+  ered and plotted, there is not even a hint of a trend.
+  SECTION 11.4 ■ Assessing the Utility of the Model: Making Inferences about the Slope b1 641
+
+Exercises 11.53–11.76
+
+Understanding the Principles  influence the legislator’s votes in Congress. Specifically,
+  the researcher investigated how having daughters
+11.53 In the equation E1y2 = b0 + b1x, what is the value of b1 if  influences voting on women’s issues. The American
+  x has no linear relationship to y?  Association of University Women (AAUW) uses vot-
+  ing records of each member of Congress to compute
+11.54 What conditions are required for valid inferences about  an AAUW score, where higher scores indicate more
+  the b’s in simple linear regression?  favorable voting for women’s rights. The researcher
+  modeled AAUW score (y) as a function of the number
+11.55 How do you adjust the p-value obtained from a computer  of daughters (x) a legislator has. Data collected for the
+  printout when you perform an upper-tailed test of b1 in  434 members of the 107th Congress were used to fit the
+  simple linear regression when t 7 0?  straight-line model, E1y2 = b0 + b1x.
+  a. If it is true that having daughters influences voting on
+11.56 For each of the following 99% confidence intervals for b1 in
+  women’s issues, will the sign of b1 be positive or nega-
+simple linear regression, decide whether there is evidence of  tive? Explain.
+  b. The following statistics were reported in the article:
+a positive or negative linear relationship between y and x:  bn 1 = .27 and sbn 1 = .74. Find a 95% confidence interval
+  for b1.
+a. (8, 80)  b. 1 -51, - 132  c. 1 -37, 1032  c. Use the result, part b, to make an inference about the
+  model.
+Learning the Mechanics
+  11.61  Estimating repair and replacement costs of water pipes.
+11.57 Construct both a 95% and a 90% confidence interval for b1  Refer to the IHS Journal of Hydraulic Engineering
+  for each of the following cases.  H2OPIPE  (Sept. 2012) study of water pipes susceptible to break-
+  a. bn1 = 32, s = 4, SSxx = 32, n = 10  age, Exercise 11.28 (p. 628). Recall that civil engineers
+  b. bn1 = 65, SSE = 1,860, SSxx = 20, n = 14  used simple linear regression to model y = the ratio
+  c. bn1 = - 8.4, SSE = 143, SSxx = 49, n = 18  of repair to replacement cost of commercial pipe as a
+  function of x = the diameter (in millimeters) of the pipe.
+11.58 Consider the following pairs of observations:  The MINITAB printout of the analysis is reproduced
+  below. Are the engineers able to conclude (at a = .05)
+L11058 x  1  5  3  2  6  6  0  that the cost ratio increases linearly with pipe diam-
+  eter? If so, provide a 95% confidence interval for the
+y  1  3  3  1  4  5  1  increase in cost ratio for every 1 millimeter increase in
+  pipe diameter.
+  a. Construct a scatterplot of the data.
+  b. Use the method of least squares to fit a straight line to
+
+  the seven data points in the table.
+  c. Plot the least squares line on your scatterplot of part a.
+  d. Specify the null and alternative hypotheses you would
+
+  use to test whether the data provide sufficient evidence
+  to indicate that x contributes information for the (lin-
+  ear) prediction of y.
+  e. What is the test statistic that should be used in con-
+  ducting the hypothesis test of part d? Specify the num-
+  ber of degrees of freedom associated with the test
+  statistic.
+  f. Conduct the hypothesis test of part d, using a = .05.
+  g. Construct a 95% confidence interval for b1.
+
+11.59 Consider the following pairs of observations:
+
+L11059 y  4  2  5  3  2  4
+
+x  1  4  5  3  2  4
+
+  a. Construct a scatterplot of the data.  11.62  Generation Y’s entitlement mentality. The current work-
+  b. Use the method of least squares to fit a straight line to  force is dominated by “Generation Y”—people born be-
+  tween 1982 and 1999. These workers have a reputation
+  the six data points.  as having an entitlement mentality (e.g., they believe
+  c. Graph the least squares line on the scatterplot of part a.  they have a right to a high-paying job without the work
+  d. Compute the test statistic for determining whether x  ethic). The reasons behind this phenomenon were inves-
+  tigated in Proceedings of the Academy of Educational
+  and y are linearly related.  Leadership (Vol. 16, 2011). A sample of 272 undergradu-
+  e. Carry out the test you set up in part d, using a = .01.  ate business students was administered a questionnaire de-
+  f. Find a 99% confidence interval for b1.  signed to capture the behaviors that lead to an entitlement
+
+Applying the Concepts—Basic
+
+11.60 Congress voting on women’s issues. The American
+  Economic Review (Mar. 2008) published research on
+  how the gender mix of a U.S. legislator’s children can
+642 CHAPTER 11 ■ Simple Linear Regression
+
+  mentality. The responses were used to measure the follow-  a. Graph the data in a scatterplot. What type of trend, if
+  ing two quantitative variables for each student: entitlement  any, do you observe?
+  score (y)—where higher scores indicate a greater level of
+  entitlement—and “helicopter parents” score (x)—where  b. A simple linear regression analysis was conducted using
+  higher scores indicate that the student’s parents had a  SAS. Find the least squares prediction equation on the
+  higher level of involvement in their everyday experiences  SAS printout at the bottom of the page. Interpret the
+  and problems.  slope of the least squares line.
+  a. Give the equation of a simple linear regression model
+  c. Give the null and alternative hypotheses for testing
+  relating y to x.  whether total catch (y) is negatively linearly related to
+  b. The researchers theorize that helicopter parents lead to  search frequency (x).
+
+  an entitlement mentality. Based on this theory, would  d. Find the p-value of the test, part c, on the SAS printout.
+  you expect b0 to be positive or negative (or are you un-  e. Give the appropriate conclusion of the test, part c, using
+  sure)? Would you expect b1 to be positive or negative
+  (or are you unsure)? Explain.  a = .05.
+  c. The p-value for testing H0: b1 = 0 versus H0: b1 7 0
+  was reported as .002. Use this result to test the research-  11.64  Beauty and electoral success. Are good looks an advan-
+  ers’ entitlement theory at a = .01.  tage when running for political office? This was the ques-
+  tion of interest in an article published in the Journal of
+11.63  Lobster fishing study. Refer to the Bulletin of Marine  Public Economics (Feb. 2010). The researchers focused
+  Science (April 2010) study of teams of fishermen fishing  on a sample of 641 non-incumbent candidates for politi-
+TRAPS  for the red spiny lobster in Baja California Sur, Mexico,  cal office in Finland. Photos of each candidate were eval-
+  Exercise 9.20 (p. 478). Two variables measured for each  uated by non-Finnish subjects; each evaluator assigned a
+  of 8 teams from the Punta Abreojos (PA) fishing coop-  beauty rating—measured on a scale of 1 (lowest rating)
+  erative were y = total catch of lobsters (in kilograms)  to 5 (highest rating)—to each candidate. The beauty rat-
+  during the season and x = average percentage of traps  ings for each candidate were averaged; then the average
+  allocated per day to exploring areas of unknown catch  was divided by the standard deviation for all candidates
+  (called search frequency). These data are listed in the  to yield a beauty index for each candidate. (Note: A 1-unit
+  table.  increase in the index represents a 1-standard-deviation
+  increase in the beauty rating.) The relative success (mea-
+  Total Catch  Search Frequency  sured as a percentage of votes obtained) of each candidate
+  was used as the dependent variable (y) in a regression
+  2,785  35  analysis. One of the independent variables in the model
+  6,535  21  was beauty index (x).
+  6,695  26  a. Write the equation of a simple linear regression relat-
+  4,891  29
+  4,937  23  ing y to x.
+  5,727  17  b. Does the y-intercept of the equation, part a, have a
+  7,019  21
+  5,735  20  practical interpretation? Explain.
+  c. The article reported the estimated slope of the equa-
+  Source: From Shester, G. G. “Explaining catch variation among Baja
+  California lobster fishers through spatial analysis of trap-placement  tion, part a, as 22.91. Give a practical interpretation of
+  decisions.” Bulletin of Marine Science, Vol. 86, No. 2,Apr. 2010 (Table 1).  this value.
+  Reprinted with permission from the University of Miami-Bulletin of  d. The standard error of the slope estimate was re-
+  Marine Science.  ported as 3.73. Use this information and the estimate
+  from part c to conduct a test for a positive slope at
+  a = .01. Give the appropriate conclusion in the words
+  of the problem.
+
+  SAS Output for Exercise 11.63
+  SECTION 11.4 ■ Assessing the Utility of the Model: Making Inferences about the Slope b1 643
+
+Applying the Concepts—Intermediate  a. Ecologists theorize that a linear relationship exists be-
+  tween the two fragmentation indexes. Write the model
+11.65  Ranking driving performance of professional golfers.  relating y to x.
+  Refer to The Sport Journal (Winter 2007) study of a new
+PGA  method for ranking the total driving performance of golf-  b. Fit the model to the data in the FRAG file, using the
+  ers on the Professional Golf Association (PGA) tour, pre-  method of least squares. Give the equation of the least
+  sented in Exercise 11.29 (p. 628). You fit a straight-line  squares prediction equation.
+  model relating driving accuracy (y) to driving distance (x)
+  to the data.  c. Interpret the estimates of b0 and b1 in the context of the
+  a. Give the null and alternative hypotheses for testing  problem.
+
+  whether driving accuracy (y) decreases linearly as driv-  d. Is there sufficient evidence to indicate that the natural
+  ing distance (x) increases.  origin index (x) and the anthropogenic index (y) are pos-
+  b. Find the test statistic and p-value of the test you set up  itively linearly related? Test, using a = .05.
+  in part a.
+  c. Make the appropriate conclusion at a = .01.  e. Find and interpret a 95% confidence interval for the
+  change in the anthropogenic index (y) for every 1-point
+  increase in the natural origin index (x).
+
+11.66  FCAT scores and poverty. Refer to the Journal of  11.70  Effect of massage on boxers. Refer to the British Journal
+  Educational and Behavioral Statistics (Spring 2004) study  of Sports Medicine (Apr. 2000) study of the effect of mas-
+FCAT  of scores on the Florida Comprehensive Assessment  BOXING2  sage on boxing performance, presented in Exercise 10.82
+  Test (FCAT), first presented in Exercise 11.30 (p. 628).  (p. 580). Two other variables measured on the boxers
+  Consider the simple linear regression relating math score  were blood lactate concentration (in mM) and the boxer’s
+  (y) to percentage (x) of students below the poverty level.  perceived recovery (on a 28-point scale). On the basis of
+  a. Test whether y is negatively related to x. Use  information provided in the article, the data shown in
+  the accompanying table were obtained for 16 five-round
+  a = .01.  boxing performances in which a massage was given to
+  b. Construct a 99% confidence interval for b1. Interpret  the boxer between rounds. Conduct a test to determine
+  whether blood lactate level (y) is linearly related to per-
+  the result practically.  ceived recovery (x). Use a = .10.
+
+11.67 Sweetness of orange juice. Refer to Exercise 11.32  Blood Lactate Level  Perceived Recovery
+  (p. 629) and the simple linear regression relating the
+  sweetness index (y) of an orange juice sample to the  3.8  7
+  4.2  7
+OJUICE amount of water-soluble pectin (x) in the juice. Find a  4.8  11
+  95% confidence interval for the true slope of the line.  4.1  12
+  Interpret the result.  5.0  12
+  5.3  12
+11.68  Ideal height of your mate. Refer to the Chance (Summer  4.2  13
+  2008) study of the height of the ideal mate, Exercise 11.33  2.4  17
+HEIGHT  (p. 629). You used the data to fit the simple linear regres-  3.7  17
+  sion model E1y2 = b0 + b1x, where y = ideal partner’s  5.3  17
+  height (in inches) and x = student’s height (in inches), for  5.8  18
+  both males and females.  6.0  18
+  a. Find a 90% confidence interval for b1 in the model for  5.9  21
+  6.3  21
+  the male students. Give a practical interpretation of the  5.5  20
+  result.  6.5  24
+  b. Repeat part a for the female students.
+  c. Which group, males or females, has the greater increase  Based on Hemmings, B., Smith, M., Graydon, J., and Dyson, R. “Effects
+  in ideal partner’s height for every 1 inch increase in stu-  of massage on physiological restoration, perceived recovery, and
+  dent’s height?  repeated sports performance.” British Journal of Sports Medicine,
+  Vol. 34, No. 2, Apr. 2000 (data adapted from Figure 3).
+11.69  Forest fragmentation study. Refer to the Conservation
+  Ecology (Dec. 2003) study on the causes of fragmentation
+FRAG  of 54 South American forests, presented in Exercise 2.166
+  (p. 125). Recall that researchers developed two fragmenta-
+  tion indexes for each forest—one index for anthropogenic  11.71  Eye anatomy of giraffes. Giraffes are believed to have
+  (human development activities) fragmentation and one for  excellent vision. The journal African Zoology (Oct.
+  fragmentation from natural causes. Data on 5 of the 54 for-  2013) published a study of giraffe eye characteristics.
+  ests saved in the FRAG file are listed in the following table.  Data were collected for a sample of 27 giraffes inhabiting
+  southeastern Zimbabwe. Of interest to the researchers
+Ecoregion (forest)  Anthropogenic  Natural Origin  was how these eye characteristics relate to a giraffe’s body
+  Index, y  Index, x  mass. They fit a simple linear regression equation of the
+Araucaria moist forests  form ln1y2 = b0 + b1 ln1x2 + e, where y represents an
+Atlantic Coast restingas  34.09  30.08  eye characteristic and x represents body mass (measured
+Bahia coastal forests  40.87  27.60  in kilograms). For this model, the slope b1 represents the
+Bahia interior forests  44.75  28.16  percentage change in y for every 1% increase in x.
+Bolivian Yungas  37.58  27.44  a. For the eye characteristic y = eye mass (grams),
+  12.40  16.75
+  the regression equation yielded the following 95%
+Based on Wade, T. G., et al. “Distribution and causes of global forest fragmentation.”  confidence interval for b1: 1.25, .302. Give a practical
+Conservation Ecology,Vol. 72, No. 2, Dec. 2003 (Table 6).  interpretation of this interval.
+644 CHAPTER 11 ■ Simple Linear Regression
+
+  b. For the eye characteristic y = orbit axis angle (degrees),  The experimental data are shown in the first column.
+  the regression equation yielded the following 95% con-  Consider the linear model E1y2 = b0 + b1x, where
+  fidence interval for b1: 1 - .14, - .052. Give a practical  y = Young’s Modulus and x = fractal dimension score.
+  interpretation of this interval.
+  Find an interval estimate of the increase (or decrease) in
+11.72 Pain empathy and brain activity. Empathy refers to being
+  able to understand and vicariously feel what others actually  Young’s Modulus for every 1-point increase in a bone tis-
+
+EMPATHY feel. Neuroscientists at University College of London investi-  sue’s fractal dimension score. Use a confidence coefficient
+  gated the relationship between brain activity and pain-related
+  empathy in persons who watch others in pain (Science, Feb.  of .90.
+  20, 2004). Sixteen couples participated in the experiment. The
+  female partner watched while painful stimulation was applied  11.74  The “name game.” Refer to the Journal of Experimental
+  to the finger of her male partner. Two variables were mea-  Psychology—Applied (June 2000) name-retrieval study, pre-
+  sured for each female: y = pain@related brain activity (mea-  NAME2  sented in Exercise 11.34 (p. 630). Recall that the goal of the
+  sured on a scale ranging from - 2 to 2) and x = score on the  study was to investigate the linear trend between proportion
+  Empathic Concern Scale (0 to 25 points). The data are listed  of names recalled (y) and position (order) of the student
+  in the accompanying table. The research question of inter-  (x) during the “name game.” Is there sufficient evidence (at
+  est was “Do people scoring higher in empathy show higher  a = .01) of a linear trend?
+  pain-related brain activity?” Use simple linear regression
+  analysis to answer this question.  Applying the Concepts—Advanced
+
+  11.75  Does elevation affect hitting performance in baseball?
+  Refer to the Chance (Winter 2006) investigation of the ef-
+  PARKS  fects of elevation on slugging percentage in Major League
+  Baseball, Exercise 2.160 (p. 124). Data were compiled on
+  Couple  Brain Activity (y)  Empathic Concern (x)  players’ composite slugging percentages at each of 29 cit-
+  ies for the 2003 season, as well as on each city’s elevation
+  1  .05  12  (feet above sea level). The data are saved in the PARKS
+  2  - .03  13  file. (Selected observations are shown in the table below.)
+  3  14  Consider a straight-line model relating slugging percent-
+  4  .12  16  age (y) to elevation (x).
+  5  .20  16  a. The model was fit to the data with the use of MINITAB,
+  6  .35  17
+  7  17  with the results shown in the printout below. Locate the
+  8  0  18  estimates of the model parameters on the printout.
+  9  .26  18
+  10  .50  18
+  11  .20  19
+  12  .21  20
+  13  .45  21
+  14  .30  22
+  15  .20  23
+  16  .22  24
+  .76
+  .35
+
+  Based on Singer, T. et al. “Empathy for pain involves the affective
+  but not sensory components of pain.” Science, Vol. 303, Feb. 20, 2004.
+  (Adapted from Figure 4.)
+
+11.73  Characterizing bone with fractal geometry. In Medical
+  Engineering & Physics (May 2013), researchers used
+RIBS  fractal geometry to characterize human cortical bone.
+  A measure of the variation in the volume of cortical bone
+  tissue—called fractal dimension—was determined for each  City  Slug Pct.  Elevation
+  in a sample of 10 human ribs. The researchers used frac-
+  tal dimension scores to predict the bone tissue’s stiffness  Anaheim  .480  160
+  index, called Young’s Modulus (measured in gigapascals).  Arlington  .605  616
+  Atlanta  .530  1,050
+  Young’s Modulus (GPa)  Fractal Dimension  Baltimore  .505  130
+  Boston  .505  20
+  18.3  2.48  f  f
+  11.6  2.48  f
+  32.2  2.39  Denver  5,277
+  30.9  2.44  f  .625  f
+  12.5  2.50  f
+  9.1  2.58  Seattle  350
+  11.8  2.59  San Francisco  .550  63
+  11.0  2.59  St. Louis  .510  465
+  19.7  2.51  Tampa  .570  10
+  12.0  2.49  Toronto  .500  566
+  .535
+
+  Source: Sanchez-Molina, D., et al. “Fractal dimension and mechanical  Based on Schaffer, J., and Heiny, E. L. “The effects of elevation on slugging
+  properties of human cortical bone.” Medical Engineering & Physics,  percentage in Major League Baseball.” Chance, Vol. 19, No. 1, Winter 2006
+  Vol. 35, No. 5, May 2013 (Table 1).  (adapted from Figure 2).
+SECTION 11.5 ■ The Coefficients of Correlation and Determination 645
+
+b. Is there sufficient evidence (at a = .01) of a positive  the data set and refit the straight-line model to the re-
+  linear relationship between elevation (x) and slugging  maining data. Repeat parts a and b. What conclusions can
+  percentage (y)? Use the p-value shown on the printout  you draw about the “thin air” theory from this analysis?
+  to make the inference.
+  11.76  Spreading rate of spilled liquid. Refer to the Chemical
+c. Construct a scatterplot of the data and draw the least  Engineering Progress (Jan. 2005) study of the rate at which
+  squares line on the graph. Locate the data point for  LSPILL  a spilled volatile liquid will spread across a surface, Exercise
+  Denver on the graph. What do you observe?  11.35 (p. 630). Is there sufficient evidence (at a = .05) to
+  indicate that the mass of the spill tends to diminish linearly
+d. Recall that the Colorado Rockies, who play their home  as elapsed time increases? If so, give an interval estimate
+  games in Denver, are annually among the league leaders  (with 95% confidence) of the decrease in spill mass for
+  in slugging percentage. Baseball experts attribute this to  each minute of elapsed time.
+  the “thin air” of Denver—called the Mile High city due
+  to its elevation. Remove the data point for Denver from
+
+11.5 The Coefficients of Correlation and Determination
+
+  In this section, we present two statistics that describe the adequacy of a model: the
+  coefficient of correlation and the coefficient of determination.
+
+  Coefficient of Correlation
+
+  Recall (from optional Section 2.8) that a bivariate relationship describes a relationship—
+  or correlation—between two variables x and y. Scatterplots are used to describe
+  a bivariate relationship graphically. In this section, we will discuss the concept of
+  correlation and how it can be used to measure the linear relationship between two
+  variables x and y. A numerical descriptive measure of correlation is provided by the
+  coefficient of correlation, r.
+
+  The coefficient of correlation,* r, is a measure of the strength of the linear relation-
+  ship between two variables x and y. It is computed (for a sample of n measurements
+  on x and y) as follows:
+
+  SSxy
+  r=
+
+  2SSxx SSyy
+  where
+
+  SSxy = a 1x - x2 1y - y2 = a xy - 1 g x2 1 g y2 n
+  1 gx22
+
+  SSxx = a 1x - x22 = a x2 -
+  n
+
+  1 gy22
+  SSyy = a 1y - y22 = a y2 -
+
+  n
+
+  Note that the computational formula for the correlation coefficient r given above
+  involves the same quantities that were used in computing the least squares prediction
+  equation. In fact, since the numerators of the expressions for bn1 and r are identical, it
+  is clear that r = 0 when bn1 = 0 (the case where x contributes no information for the
+  prediction of y) and that r is positive when the slope is positive and negative when the
+  slope is negative. Unlike bn1, the correlation coefficient r is scaleless and assumes a value
+  between -1 and +1, regardless of the units of x and y.
+
+  *The value of r is often called the Pearson correlation coefficient to honor its developer, Karl Pearson. (See
+  Biography, p. 775.)
+646  CHAPTER 11 ■ Simple Linear Regression
+
+  A value of r near or equal to 0 implies little or no linear relationship between y
+  and x. In contrast, the closer r comes to 1 or -1, the stronger is the linear relationship
+  between y and x. And if r = 1 or r = -1, all the sample points fall exactly on the least
+
+  squares line. Positive values of r imply a positive linear relationship between y and x;
+
+  that is, y increases as x increases. Negative values of r imply a negative linear relationship
+
+  between y and x; that is, y decreases as x increases. Each of these situations is portrayed
+
+  in Figure 11.16.
+
+  y  y  y
+
+  x  b. r near zero: little or  x  c. Negative r: y decreases  x
+  a. Positive r: y increases  no relationship
+  between y and x  as x increases
+  as x increases
+  y
+  y
+
+  d. r = 1: a perfect  x  x
+  e. r = –1: a perfect negative
+
+  positive relationship  relationship between y and x
+
+  between y and x
+
+  y
+
+Figure 11.16  x
+  f. r near 0: little or no
+Values of r and their
+implications  linear relationship
+  between y and x
+
+  Now Work Exercise 11.79
+
+  We use the data in Table 11.1 for the drug reaction example to demonstrate how
+  to calculate the coefficient of correlation, r. The quantities needed to calculate r are
+  SSxy, SSxx, and SSyy. The first two quantities have been calculated previously and are
+  SSxy = 7 and SSxx = 10. The calculation for SSyy = a 1y - y22 is shown in the last
+  column of the Excel spreadsheet, Figure 11.5 (p. 621). The result is SSyy = 6.
+
+  We now find the coefficient of correlation:
+
+  r = = = = SSxy 7 7 .904
+  2SSxx SSyy 21102 162 260
+
+  The fact that r is positive and near 1 indicates that the reaction time tends to in-
+  crease as the amount of drug in the bloodstream increases—for the given sample of five
+  subjects. This is the same conclusion we reached when we found the calculated value of
+  the least squares slope to be positive.
+  SECTION 11.5 ■ The Coefficients of Correlation and Determination 647
+
+ Example 11.5  Problem Legalized gambling is available on several riverboat casinos operated by a city
+  in Mississippi. The mayor of the city wants to know the correlation between the number
+using the Correlation  of casino employees and the yearly crime rate. The records for the past 10 years are
+Coefficient—Relating  examined, and the results listed in Table 11.3 are obtained. Calculate the coefficient of
+Crime Rate and Casino  correlation, r, for the data. Interpret the result.
+Employment
+
+  Table 11.3 Data on Casino Employees and Crime Rate, Example 11.5
+
+  Number x of Casino  Crime Rate y (number of crimes
+
+  Year  Employees (thousands)  per 1,000 population)
+
+  2006  15  1.35
+
+  2007  18  1.63
+
+  2008  24  2.33
+
+  2009  22  2.41
+
+  2010  25  2.63
+
+  2011  29  2.93
+
+  2012  30  3.41
+
+  2013  32  3.26
+
+  2014  35  3.63
+
+  2015  38  4.15
+
+  Data Set: CASINO
+
+  Solution Rather than use the computing formula given earlier, we resort to a statistical
+  software package. The data of Table 11.3 were entered into a computer and MINITAB
+  was used to compute r. The MINITAB printout is shown in Figure 11.17.
+
+Figure 11.17  The coefficient of correlation, highlighted at the top of the printout, is r = .987.
+MINITAB correlation  Thus, the size of the casino workforce and crime rate in this city are very highly cor-
+printout and scatterplot for  related—at least over the past 10 years. The implication is that a strong positive lin-
+Example 11.5  ear relationship exists between these variables. (See Figure 11.17.) We must be careful,
+  however, not to jump to any unwarranted conclusions. For instance, the mayor may be
+ Ethics IN Statistics  tempted to conclude that hiring more casino workers next year will increase the crime
+  rate—that is, that there is a causal relationship between the two variables. However, high
+  intentionally using the  correlation does not imply causality. The fact is, many things have probably contributed
+  correlation coefficient only  both to the increase in the casino workforce and to the increase in crime rate. The city’s
+  to make an inference about  tourist trade has undoubtedly grown since riverboat casinos were legalized, and it is
+  the relationship between two  likely that the casinos have expanded both in services offered and in number. We cannot
+  variables in situations where a
+  nonlinear relationship may exist
+  is considered unethical statistical
+  practice.
+648  CHAPTER 11 ■ Simple Linear Regression
+
+  infer a causal relationship on the basis of high sample correlation. When a high correla-
+  tion is observed in the sample data, the only safe conclusion is that a linear trend may exist
+  between x and y.
+
+  Look Back Another variable, such as the increase in tourism, may be the underlying
+  cause of the high correlation between x and y.
+
+  ■ Now Work Exercise 11.85a
+
+  ! CAuTIoN Two caveats apply in using the sample correlation coefficient r to infer the
+  nature of the relationship between x and y: (1) A high correlation does not necessarily
+  imply that a causal relationship exists between x and y—only that a linear trend may
+  exist; (2) a low correlation does not necessarily imply that x and y are unrelated—only
+  that x and y are not strongly linearly related.
+
+  Keep in mind that the correlation coefficient r measures the linear correlation be-
+  tween x values and y values in the sample, and a similar linear coefficient of correlation
+  exists for the population from which the data points were selected. The population cor-
+  relation coefficient is denoted by the symbol r (rho). As you might expect, r is estimated
+  by the corresponding sample statistic r. Or, instead of estimating r, we might want to
+  test the null hypothesis H0: r = 0 against Ha: r ≠ 0; that is, we can test the hypothesis
+  that x contributes no information for the prediction of y by using the straight-line model
+  against the alternative that the two variables are at least linearly related.
+
+  However, we already performed this identical test in Section 11.4 when we tested
+  H0: b1 = 0 against Ha: b1 ≠ 0. That is, the null hypothesis H0: r = 0 is equivalent to the
+  hypothesis H0: b1 = 0.* When we tested the null hypothesis H0: b1 = 0 in connection with
+  the drug reaction example, the data led to a rejection of the null hypothesis at the a = .05
+  level. This rejection implies that the null hypothesis of a 0 linear correlation between the two
+  variables (drug and reaction time) can also be rejected at the a = .05 level.The only real dif-
+  ference between the least squares slope bn1 and the coefficient of correlation, r, is the measure-
+  ment scale. Therefore, the information they provide about the usefulness of the least squares
+  model is to some extent redundant. For this reason, we will use the slope to make inferences
+  about the existence of a positive or negative linear relationship between two variables.
+
+  For the sake of completeness, a summary of the test for linear correlation is pro-
+  vided in the following boxes.
+
+  A Test for Linear Correlation
+
+  Test statistic: tc =  r 1n - 2 bn1
+  =
+  21 - r 2 sbn1
+
+  One-Tailed Tests
+
+  H0: r = 0  H0: r = 0
+  Ha: r 7 0  Ha: r 6 0
+
+  Two-Tailed Test
+
+  H0: r = 0  ͉ tc ͉ 7 ta>2
+
+  Ha: r ≠ 0  2 # P1t 7 tc2 if tc is positive
+  Rejection region: tc 7 ta tc 6 - ta  2 # P1t 6 tc2 if tc is negative
+  p-value: P1t 7 tc2 P1t 6 tc2
+
+  where the distribution of t depends on 1n - 22 df.
+
+  Condition Required for a Valid Test of Correlation
+  The sample of (x, y) values is randomly selected from a normal population.
+
+  *The two tests are equivalent in simple linear regression only.
+

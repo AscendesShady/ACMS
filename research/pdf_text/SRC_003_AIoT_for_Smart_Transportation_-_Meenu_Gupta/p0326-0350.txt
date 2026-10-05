@@ -1,0 +1,1201 @@
+  AI on the move 303
+
+  Additionally, providing precise position data and traffic intelligence to emer-
+gency response teams facilitates their route planning. Artificial intelligence (AI)
+has enabled these advancements in coordination, which might save lives. Instead of
+taking the “now or never” stance that has characterized some of humanity’s
+attempts to reduce the number of deaths associated with automobile travel, some AI
+work enables a much more nuanced understanding of when, when, and how these
+high-risk circumstances develop.
+
+  Moreover, when AI is merged with vehicle-to-infrastructure communication,
+drivers are offered up-to-the-moment alerts about forthcoming perils or changes to
+the traffic pattern. The end result of these developments is a safer and more
+dependable transportation environment for all roadway users.
+
+14.9 Public transportation optimization
+
+AI enhances the operation of public transport systems. This stems from their cap-
+ability to simplify complex tasks, in addition to the close composite relationship
+between public transport patronage and road traffic congestion. Most major public
+transport systems occupy the same rights-of-way as road traffic. When public
+transport vehicles are delayed or otherwise inefficient, unjustified road space is
+occupied. The converse is also true: When road traffic is congested, unjustified
+road space is occupied. AI, therefore, has a strong potential payoff in the public
+transport sector.
+
+14.9.1 Demand prediction and scheduling
+
+Public transit is one area where AI can have a huge positive influence on systems
+and the services they deliver. This is because they can be optimized with algorithms
+that infallibly predict the demand for transportation. These algorithms draw from a
+rich pool of data, use historical patterns, and, most importantly, leverage real-time
+information about all sorts of conditions. By using these techniques, they may make
+sure that during periods of high demand, buses, trains, and other public transpor-
+tation vehicles operate more often, and during periods of low demand, they run less
+frequently.
+
+  Moreover, AI can take vehicle upkeep to a new level. Foreseeing the kind of
+wear and tear that might lead to malfunctioning components and erratic system
+behaviours can help ensure that the fleet remains operational and that all vehicles
+keep up with their scheduled maintenance. This kind of reliability is crucial for the
+agencies that run fleets, not only to keep up with the demand but also to ensure that
+all the vehicles in the fleet are functioning and that all passengers are safe.
+
+  In a bid to up the ante on convenience, the real-time alert feature now available
+through the mobile app allows for instant communication about any transportation
+changes. If a train or bus is running behind schedule, the information will flow directly
+to the customer. If a route has been altered, that news will be conveyed, too. The
+improvements, in total, push for a public transit system that is as highly accom-
+modating as possible to the not-nearly-as-regularly-scheduled lives of its riders.
+304 AIoT for smart transportation
+
+14.9.2 Route optimization and efficiency
+
+Route optimization for public transit is a significant challenge. Different from the case
+of private vehicles, where drivers exercise a certain degree of freedom in choosing their
+routes, transit agencies can have limited success in regulating the paths their vehicles
+take. AI-powered route optimization attempts to overcome the great amounts of traffic.
+The main factors and limitations that these systems are made to manage include traffic,
+road construction, and events that may arise along the route. Of course, one other
+variable is time: transit passengers have to arrive at their destination close to the time
+they would likely have arrived had they driven their own vehicle.
+
+14.10 Adaptive traffic control systems
+
+Adaptive traffic control systems based on AI are constantly learning. They learn
+from real-time traffic data and from how traffic behaves over time. We give them
+the information they need to learn – like what happened to traffic when signal
+timings were set one way versus another. We also tell them what “delay” means
+and how it should be reduced. Then they go to work, reducing delays and
+improving the overall efficiency of traffic flow.
+
+14.10.1 Real-time traffic signal adjustment
+
+Adaptive traffic control systems powered by AI are now in vogue. They utilize
+real-time data gathered from various traffic monitoring devices. These devices
+include conventional traffic sensors and cameras mounted around intersections and
+connected vehicles. The modern traffic engineer’s data collection tool would now
+appear rather close to the eye of a vintage neighbourhood private investigator. AI-
+based adaptive traffic control systems use this data to “see” when an intersection is
+malfunctioning. Based on the intersection’s momentary volume, congestion, and
+flow condition, AI modifies refined “good enough” timing adjustments for the
+signals controlling traffic into, through, and out of the intersection. By using these
+devices to gather contemporary data, the engineer can make use of something akin
+to the traffic patterns gathered by the average motorist’s memory.
+
+14.10.2 Reduced congestion and improved fuel efficiency
+
+Intelligent adaptive traffic controls can ease traffic congestion. They do this by
+altering the flow of vehicles in real-time at busy intersections and along urban
+roadways. In doing so, they head off bottlenecks and shorten both the frequency
+and the length of traffic jams. These gadgets are the cornerstone of a more envir-
+onmentally friendly and sustainable transportation system when we take into
+account their impact on fuel efficiency, vehicle emissions, and trip effectiveness.
+Moreover, adaptive traffic management systems increase road safety by guaran-
+teeing improved traffic flow and lowering the likelihood of collisions brought on by
+unexpected halts or traffic jams. These technologies lower road maintenance costs
+and increase the life span of road infrastructure since they help optimize traffic
+itself: the number of vehicles successfully reaching their destinations will always
+  AI on the move 305
+
+be less than the number that would reach their destination if traffic were jammed.
+“Jam” is an unsustainable state, and AI can more effectively resolve this problem.
+
+14.11 Challenges and considerations
+
+The most recent studies have pointed out the possible benefits and drawbacks of
+combining AI with transport systems. According to Nikitas et al. [26], the risk of
+certain software and hardware failures – a risk whose main competitor in the
+engineering trade-off of risks and rewards is improved efficiency and better safety.
+Meanwhile, privacy remains a hard nut for AI in transport to crack because the data
+relations between individuals, machines, and all those corresponding databases are
+bound to be really intricate, and any breach in that relationship can shortcut its way
+to unavoidable privacy violations that all AI systems must contend with. Finally,
+one must not overlook the risk of integrating AI in transport, leading to an uptick in
+accidents during the early years of the transition to a fully AI-driven system.
+
+  These difficulties have not made it any less urgent to ensure the privacy and
+security of people’s data. People collect data from very big and important sources.
+A multitude of sensors, like traffic cameras and GPS units, provide data streams
+that are both essential to operations and alluring to would-be miscreants. The
+integrity and trustworthiness of the transportation network depend on implementing
+cutting-edge cybersecurity measures.
+
+  Ethics also has a vital role. For instance, if an AI-based algorithm is biased, it
+could unfairly impact a group of people that the system is serving. Take an AI-run
+ridesharing service, for instance. If the system uses biased historical data, it could
+unfairly affect people living in certain neighbourhoods by granting them fewer
+rides that are more accessible to other (non-biased) neighbourhoods. Whether one
+agrees or not, fairness is an ethical consideration that has to be taken into account.
+
+  One must also take on the challenging problems of governance and law. The
+accidents that do occur have to be compensated in a legally responsible manner.
+Everyone involved in the AV ecosystem has to be fully aware of their legal
+responsibilities if one is to have trust in them. This suggests that maintaining road
+safety is necessary even in the absence of human drivers. For these road-holding
+humans, the Federal Automated Vehicles Policy, issued by the National Highway
+Traffic Safety Administration [1], is nothing short of a way to ensure “regulatory
+calm,” making sure that AVs do not violate human rights in any way – the right to
+life and the right to privacy. This, in turn, means ensuring that road-holding humans
+are safe from AVs and that AVs are safe from road-holding humans.
+
+  At present, the AV START Act is a proposed law, but if it is enacted, it will set
+forth a national framework for the rollout of autonomous vehicles, moving them
+along towards safe, nationwide deployment. In the European Union, on the other
+hand, the national framework is actually a series of directives, such as the General
+Data Protection Regulation [7], that concerns privacy issues related to the vast
+amounts of data collected by vehicles. The Commission of the European Union has
+also proposed a set of regulations across the board for artificial intelligence,
+306 AIoT for smart transportation
+
+including the “Artificial Intelligence Act,” which sorts AI applications by risk level
+and applies more stringent requirements to the higher-risk systems. Autonomous
+vehicle technology is among those high-risk systems.
+
+  Moreover, member states of the European Union have their own sets of rules,
+like the Road Traffic Act of Germany [31], that make it possible to implement
+automated driving systems under certain conditions and contingent upon fulfilling
+an authoritative set of mandates. In addition to their own regulations, EU member
+states must also follow European directives. They can be quite detailed and cover
+aspects of automobile operation that are crucial to the aspect of “safety.” In Japan,
+the Road Transport Vehicle Act [20] is somewhat similar in that it has its own set of
+legal requirements that must be satisfied before anything remotely resembling
+automation can be put into practice and was revised to allow for the implementa-
+tion of Level 3 autonomous automobiles on public roadways.
+
+  China’s government [8] has introduced a variety of policies aimed at autono-
+mous vehicles. One of the most impactful has been the “Guidelines on the
+Establishment of the National Standards System for Autonomous Driving.” This
+document covers much ground, but its main thrust is to introduce uniformity and
+comparability into the national standard-setting process for AVs. Another key law
+that applies to AVs is the newly minted Cybersecurity Law of the People’s
+Republic of China. This law is quite important because it ensures that the large
+amounts of data collected by these vehicles are secure.
+
+  The costs and technological complexities of the infrastructure required for the
+complete integration of artificial intelligence provide additional challenges in
+addition to regulatory ones. For example, the impact and cost considerations of the
+intelligent traffic signals or the communication networks that constitute the infra-
+structure of AI in the transportation sector must be considered. Hence, the eva-
+luation of the economic viability and cost-effectiveness of AI solutions in
+transportation is essential. As necessary, it is facing the potential displacement of
+workers due to this automation and figuring out how to retrain those workers.
+
+  Technical challenges arise when using AI in diverse and complex environ-
+ments. It is imperative to verify the precision and reliability of AIs forecasts and
+assessments of security and effectiveness. Because data comes in all forms, from
+incomplete to downright noisy, solving these technical problems demands smart,
+sophisticated data management and processing.
+
+  Finally, user acceptance and public perception play a crucial part in successfully
+integrating AI into transportation. Ingraining AI into transportation involves technical
+aspects and human ones, especially building public trust in AI-driven transportation
+solutions. The push for the trust angle, which is very much part of the autonomous
+vehicle dialogue, naturally leads to the need for a great understanding of the technology.
+
+14.12 Conclusion
+
+AI in transport presents innovative and stimulating answers to the myriad issues
+facing modern mobility. Some of the fundamental ideas and many uses of AI in this
+  AI on the move 307
+
+field – including traffic control, route optimization, predictive maintenance, and
+autonomous vehicle navigation – were covered in this chapter.
+
+  Furthermore, AI-driven technologies hold promise for revolutionizing public
+transportation systems, improving freight logistics efficiency, and enabling the
+widespread adoption of autonomous vehicles. By harnessing the power of AI,
+transportation agencies, policymakers, and industry stakeholders can create smar-
+ter, more resilient, and inclusive mobility systems.
+
+  However, the widespread adoption of AI in transportation is not without its
+challenges. Problems must be carefully addressed to enable the proper deployment of
+AI technology, legislative frameworks, ethical issues, and data privacy. Additionally,
+efforts to bridge the digital divide and guarantee fair access to AI-powered trans-
+portation solutions are essential for creating inclusive mobility ecosystems.
+
+  Looking ahead, continued research, innovation, and collaboration will be
+crucial in unlocking the full potential of AI in transportation. By leveraging AI to
+optimize transportation systems, we can pave the way for a future where mobility is
+seamless, sustainable, and equitable for all.
+
+  In summary, the real-world use case of AI in transportation offers unprece-
+dented opportunities to enhance mobility, improve quality of life, and help influ-
+ence how transportation is developed for future generations.
+
+References
+
+ [1] NHTS Administration, 2020. Federal automated vehicles policy. https://
+  www.nhtsa.gov/technology-innovation/automated-vehicles-safety. Accessed:
+  2024-06-01.
+
+ [2] Aleksander, R., and Paweł, C., 2020. Recent advances in traffic optimisation:
+  systematic literature review of modern models, methods and algorithms. IET
+  Intelligent Transport Systems 14, 1740–1758.
+
+ [3] Bakiog˘lu, G., Silgu, M.A., O¨ zcanan, S., et al., 2015. Incident detection
+  algorithms: A literature review, in: Proceedings of the 1st IRF Europe and
+  Central Asia Regional Congress and Exhibition, Istanbul, Turkey, pp. 15–18.
+
+ [4] Baruah, A., Kumar, R., and Gupta, M., 2023. Analysis of traffic sign
+  recognition for automated transportation systems using neural networks, in:
+  2023 IEEE 8th International Conference for Convergence in Technology
+  (I2CT), Piscataway, NJ: IEEE. pp. 1–5.
+
+ [5] Blischke, F., and Hessing, B., 1998. Dynamic route guidance-different
+  approaches to the system concepts. SAE Transactions 107(6), 1107–1111.
+
+ [6] Cai, C., Wang, Y., and Geers, G., 2013. Vehicle-to-infrastructure
+  communication-based adaptive traffic signal control. IET Intelligent Trans-
+  port Systems 7, 351–360.
+
+ [7] European Commission, 2021. Proposal for a regulation laying down harmonized
+  rules on artificial intelligence (artificial intelligence act). https://ec.europa.eu/
+  newsroom/dae/document.cfm?doc_id=75788. Accessed: 2024-06-01.
+308 AIoT for smart transportation
+
+ [8] NP Congress, 2017. Cybersecurity law of the People’s Republic of China.
+  http://www.npc.gov.cn/englishnpc/c23934/202012/
+  09c9bb4b127f42b784d69e09b85b1cd9.shtml. Accessed: 2024-06-01.
+
+ [9] Deflorio, F.P., 2003. Evaluation of a reactive dynamic route guidance strat-
+  egy. Transportation Research Part C: Emerging Technologies 11, 375–388.
+
+[10] Dong, W., 2011. An overview of in-vehicle route guidance system, in: Aus-
+  tralasian Transport Research Forum.
+
+[11] ElSahly, O., and Abdelfatah, A., 2022. A systematic review of traffic inci-
+  dent detection algorithms. Sustainability 14, 14859.
+
+[12] Farradyne, P., 2000. Traffic Incident Management Handbook. Prepared for
+  Federal Highway Administration, Office of Travel Management.
+
+[13] Feng, Y., Head, K.L., Khoshmagham, S., and Zamanipour, M., 2015. A real-
+  time adaptive signal control in a connected vehicle environment. Transpor-
+  tation Research Part C: Emerging Technologies 55, 460–473.
+
+[14] Fu, K., Nune, R., and Tao, J., 2015. Social media data analysis for traffic
+  incident detection and management. Management 2, 4.
+
+[15] Hamdi, M.M., Audah, L., Rashid, S.A., and Al Shareeda, M., 2020. Tech-
+  niques of early incident detection and traffic monitoring centre in VANETs:
+  A review. Journal of Communications. 15, 896–904.
+
+[16] Ke, R., Liu, C., Yang, H., Sun, W., and Wang, Y., 2022. Real-time traffic
+  and road surveillance with parallel edge intelligence. IEEE Journal of Radio
+  Frequency Identification 6, 693–696.
+
+[17] Khamis, M.A., and Gomaa, W., 2014. Adaptive multi-objective reinforce-
+  ment learning with hybrid exploration for traffic signal control based on
+  cooperative multi-agent framework. Engineering Applications of Artificial
+  Intelligence 29, 134–151.
+
+[18] Khazukov, K., Shepelev, V., Karpeta, T., et al., 2020. Real-time monitoring
+  of traffic parameters. Journal of Big Data 7, 1–20.
+
+[19] Kim, K., Kwon, M., Park, J., and Eun, Y., 2016. Dynamic vehicular route
+  guidance using traffic prediction information. Mobile Information Systems
+  2016, 3727865.
+
+[20] Japan Ministry of Land, Infrastructure, Transport and Tourism, 2020. Road
+  Transport Vehicle Act. https://www.mlit.go.jp/en/. Accessed: 2024-06-01.
+
+[21] Lee, J., and Park, B., 2012. Development and evaluation of a cooperative
+  vehicle intersection control algorithm under the connected vehicles
+  environment. IEEE Transactions on Intelligent Transportation Systems 13,
+  81–90.
+
+[22] Li, L., Lv, Y., and Wang, F.Y., 2016. Traffic signal timing via deep rein-
+  forcement learning. IEEE/CAA Journal of Automatica Sinica 3, 247–254.
+
+[23] Li, W., and Ban, X., 2018. Connected vehicles based traffic signal timing
+  optimization. IEEE Transactions on Intelligent Transportation Systems 20,
+  4354–4366.
+
+[24] Liang, Z., and Wakahara, Y., 2014. Real-time urban traffic amount predic-
+  tion models for dynamic route guidance systems. EURASIP Journal on
+  Wireless Communications and Networking 2014, 1–13.
+  AI on the move 309
+
+[25] Margiotta, R.A., Dowling, R., and Paracha, J., 2012. Analysis, modeling, and
+  simulation for traffic incident management applications. Technical Report.
+  Washington, DC: Federal Highway Administration.
+
+[26] Nikitas, A., Michalakopoulou, K., Njoya, E.T., and Karampatzakis, D.,
+  2020. Artificial intelligence, transport and the smart city: Definitions and
+  dimensions of a new mobility era. Sustainability 12, 2789.
+
+[27] Ouallane, A.A., Bahnasse, A., Bakali, A., and Talea, M., 2022. Overview of
+  road traffic management solutions based on IoT and AI. Procedia Computer
+  Science 198, 518–523.
+
+[28] Pandit, K., Ghosal, D., Zhang, H.M., and Chuah, C.N., 2013. Adaptive traffic
+  signal control with vehicular ad hoc networks. IEEE Transactions on Vehi-
+  cular Technology 62, 1459–1471.
+
+[29] Priemer, C., and Friedrich, B., 2009. A decentralized adaptive traffic signal
+  control using v2i communication data, in: 2009 12th International IEEE
+  Conference on Intelligent Transportation Systems, Piscataway, NJ: IEEE.
+  pp. 1–6.
+
+[30] Qadri, S.S.S.M., Go¨kc¸e, M.A., and O¨ ner, E., 2020. State-of-art review of
+  traffic signal control methods: challenges and opportunities. European
+  Transport Research Review 12, 1–23.
+
+[31] Federal Ministry for Digital and Transport, 2021. Road traffic act
+  (straßenverkehrsgesetz - stvg). https://www.bmvi.de/EN/Home/home.html.
+  Accessed: 2024-06-01.
+
+[32] Van Der Pol, E., 2016. Deep reinforcement learning for coordination in
+  traffic light control. Master’s thesis, University of Amsterdam.
+
+[33] Wang, J., Jiang, S., Qiu, Y., Zhang, Y., Ying, J., and Du, Y., 2021. Traffic
+  signal optimization under connected-vehicle environment: An overview.
+  Journal of Advanced Transportation 2021, 3584569.
+
+[34] Wang, J., Lv, J., Wang, C., and Zhang, Z., 2017. Dynamic route choice
+  prediction model based on connected vehicle guidance characteristics.
+  Journal of Advanced Transportation 2017, 6905431.
+
+[35] Weil, R., Wootton, J., and Garcia-Ortiz, A., 1998. Traffic incident detection:
+  Sensors and algorithms. Mathematical and Computer Modelling 27, 257–291.
+
+[36] Yoo, K.s., Park, D., and Rhee, B., 2005. Development of a location-based
+  dynamic route guidance system of korea highway corporation, in: Proceed-
+  ings of the Eastern Asia Society for Transportation Studies, Citeseer.
+  pp. 1449–1463.
+
+[37] Yuan, H., and Li, G., 2021. A survey of traffic prediction: from spatio-
+  temporal data to intelligent transportation. Data Science and Engineering 6,
+  63–85.
+
+[38] Zhang, J., Hua, X.S., Huang, J., et al., 2019. City brain: practice of large-
+  scale artificial intelligence in the real world. IET Smart Cities 1, 28–37.
+This page intentionally left blank
+  Chapter 15
+
+  Future perspectives of AIoT for
+  smart transportation
+
+  Shakeel Ahmed1 and Parvathaneni Naga Srinivasu2
+
+Abstract
+
+The Artificial Intelligence of Things is a combination of Artificial Intelligence and
+the Internet of Things, which has a significant impact on various fields of science
+and technology. Smart transportation is the recent advancement in the vehicular
+technology, where artificial intelligence is being introduced to enables vehicles,
+infrastructure, and traffic management systems to communicate and make intelli-
+gent decisions in real time. With advancements in machine learning, big data
+analytics, and edge computing, transportation networks are becoming more effi-
+cient, reducing congestion and enhancing road safety. The current study has out-
+lined the key future perspectives, challenges of the technology. The current chapter
+outlines the summary of all the chapters in the book. The insights assists the readers
+to have a concise view of the book content and future research directions.
+
+  Keywords: Artificial Intelligence; Internet of Things; Smart transportation;
+  Artificial Intelligence of Things
+
+15.1 Introduction
+
+Artificial intelligence (AI) is advancing in almost all areas of our daily lives. Data gen-
+erated from various devices and sensors transfers information to servers, due to which
+connectivity and energy usage are greatly impacted. The first step towards the Artificial
+Intelligence of Things (AIoT) is to lessen the overall impact of AI processing. Sensor
+devices must first become intelligent and perform local data analysis or pre-processing as
+a first step. The convergence and combination of AI and IoT leading to AIoT has
+increased the intelligence of computing devices, making them far extra interactive,
+creative, and remarkable in their ability to analyze data, make predictions, make deci-
+sions, and expedite the process. AIoT is a platform that uses IoT infrastructure to collect
+and analyze intelligent data, which provides a vast array of services, from manufacturing,
+
+1School of Computer Science, Taylors University, Malaysia
+2School of Computing, Amrita Vishwa Vidyapeetham, India
+312 AIoT for smart transportation
+
+agriculture, transportation smart management, and large-scale monitoring systems for
+cities and industries, intelligent healthcare, and personalized recommendation models.
+
+  AIoT is a platform that uses IoT infrastructure to gather and analyze intelligent
+data. There are significant barriers to centralized design because of the enormous
+number of sensors used in various applications. The large amount of data also
+imposes a huge amount of processing and higher latency as the devices require cloud
+computing infrastructure to process and transmit them back to the end devices.
+Another challenge is that with the large number of sensors, including scalar, vector,
+and multimedia sensor systems, IoT apps must be able to recognize and comprehend
+the complex and changing environment using sensor data to offer customers relevant
+services. Numerous intelligent algorithms have been retrieved from information for
+further prediction, categorization, or judgment. There are several opportunities to
+optimize energy utilization in IoT devices thanks to AIoTs capacity to evaluate data
+and respond. Smart lighting and energy networks can analyze data to minimize
+energy waste without being noticeable to residents. Some smart cities have already
+used AIoT applications for healthcare, transportation, and e-commerce.
+
+  AI and IoT technologies are becoming more and more capable of managing a
+variety of issues across multiple industrial verticals by developing “thinking” sys-
+tems and architectures. In industrial verticals, AI enhances machine learning (ML)
+and decision-making, whereas IoT adds value to AI by using connectivity, signal-
+ling, and data sharing. These solutions will primarily enhance the overall perfor-
+mance of the system and network operations, which will enable the extraction of
+industrial data and lead to better decision-making. The application of AI in IoT and
+data analytics, particularly in real-time analytics connected to AIoT technologies,
+will be essential to make precise and efficient decision-making.
+
+  The ability to capture streaming data and identify valuable attributes would
+enable us to make real-time decisions and would elevate service logic to a new
+level. The deployment of billions of networked, intelligent, and adaptable devices
+in critical infrastructures including transportation, agriculture, health, education,
+and environmental monitoring has been accelerated by recent developments in
+computing intelligence and technology. Progressing AI computation from infra-
+structure to dispersed, networked peripherals, cloud-based AI systems can over-
+come the challenges of congestion, scalability, and data privacy.
+
+15.2 Potential challenges in AIoT technology in
+  transportation
+
+AIoT in transportation offers significant potential but also faces several challenges,
+including:
+
+ 1. Reliability, resilience, and real-time processing: Lack of advanced and
+  sophisticated infrastructure support as the devices operate in dynamic con-
+  ditions, such as harsh weather or high-density traffic. Transportation sys-
+  tems demand rapid decision-making in autonomous vehicles or traffic
+  management. Ensuring low latency in AIoT solutions is technically
+  Future perspectives of AIoT for smart transportation 313
+
+  demanding. For the AI algorithms to process and handle the data on the fly,
+  they require a great deal of computing power at the intermediate and sensor
+  devices. If this is not done, accidents may result. Because AI-driven devices
+  require a complete infrastructure transition and insufficient infrastructure is
+  difficult to manage, replacing current devices with AI-driven ones is rather
+  difficult.
+2. Energy efficiency: Energy efficiency is another interesting possibility for
+  infrastructure support. AIoT devices require significant power for sensors,
+  data processing, and communication. High energy utilization poses chal-
+  lenges in maintaining energy-efficient operations as nodes require more
+  energy to run AI algorithms via networking devices. It is better to have
+  hardware that can handle the power requirements of IoT devices. This opens
+  the door to longer battery life, which is believed to be essential for the next
+  generation of networks. The rapid growth of AIoT applications is similar to
+  that of cloud centres. Therefore, more should be done to lower the energy
+  consumption of sensor equipment and data stations.
+3. Integration and interoperability: Interoperability and standardization are
+  very important in transportation as it needs the Integrating of AIoT with
+  existing infrastructure, including the traffic systems, vehicles, and public
+  transport networks. In the context of transportation, IoT is a collection of
+  distinct systems that may intervene with one another due to varied network
+  speeds, firewalls, proxy servers, and cell towers operating at different rates.
+  Integration and interoperability problems arise when proprietary protocols
+  and technologies are used. It is a vital component of the AIoT since a
+  dependable connection is necessary for the seamless transfer of data.
+4. Adaptability of the transportation applications: In the framework of an
+  AIoT system, sensors and actuators frequently capture and transmit personal
+  information from our daily lives and identify critical parameters to manage
+  intelligent applications. Among other things, an attack on any of the devices
+  at any level of the design could lead to the loss of private information, failures
+  in the systems’ regulating procedures, and system outages. Therefore, it is
+  essential to make sure that AIoT devices are secure. To guard against threats,
+  these devices must learn self-adaptation techniques.
+5. Data privacy and security: AIoT systems collect large amounts of sensitive
+  data (e.g., vehicle locations, user identities) and process them. Ensuring data
+  security and preventing unauthorized access is critical. Ensuring data security
+  and preventing from unauthorized access in AIoT systems involve imple-
+  menting a combination of technical, organizational, and regulatory measures,
+  including encryption where the data in transit uses protocols like TLS/SSL to
+  encrypt data travelling between IoT devices, networks, and cloud servers and
+  to protect from unauthorized access. It is crucial to have multi-factor
+  authentication (MFA) and role-based access control, which allows only the
+  authorized personnel or system to have access to specific data. In addition,
+  privacy laws like the General Data Protection Regulation (GDPR) and
+  California Consumer Privacy Act (CCPA) may require redesigning data
+314 AIoT for smart transportation
+
+  collection, storage, and processing methods to ensure compliance, adding
+  time to deployment.
+ 6. Regulation and compliance: Transportation systems are heavily regulated, and
+  the lack of universal standards for AIoT in transportation often requires case-
+  by-case development of system protocols due to complex regulatory require-
+  ments (e.g., road safety, emissions, data privacy). AIoT solutions must meet
+  multiple overlapping standards across jurisdictions, requiring extensive adap-
+  tation. Ensuring AIoT compliance with safety, privacy, and industry standards
+  can delay deployment. Governments and regulatory agencies may need some
+  time to draft or amend legislation to take advantage of new capabilities because
+  regulations sometimes lag development in AIoT technologies.
+ 7. High implementation costs: Smaller businesses or areas cannot afford the
+  initial setup costs of AIoT systems, which include high hardware costs that
+  need significant investment, software development or customization of AI
+  algorithms, staff training to use and maintain AIoT systems, and upskilling
+  existing employees. The other costs include infrastructure upgrades, main-
+  tenance, operational costs, and an uncertain return on investment (ROI) for
+  smaller businesses.
+ 8. Dealing with accessible format raw data: Because the data formats are dif-
+  ferent in AIoT, the interoperability of all proprietary devices for data processing
+  is difficult for AIoT. To collaborate with heterogeneous devices of different
+  applications, there is a need for universally accepted standard formatting for
+  sensor data interchange. Such varied data would be difficult to handle. It would
+  be difficult to standardize and normalize the data communication process.
+ 9. Cybersecurity: In AIoT transportation architecture, sensors and actuator
+  devices frequently capture and transmit personal information from our daily
+  lives, identifying critical characteristics to manage intelligent applications.
+  An attack on any of the devices at any level of the design could lead to the
+  unavailability of the system, the loss of critical data, and disasters in the
+  processes that control it.
+10. Lack of professionals: To effectively integrate new technologies and main-
+  tain operations, a company requires staff members who are technologically
+  literate or conversant with the operational procedures and frameworks uti-
+  lized in those procedures. When staff members are not knowledgeable about
+  digital advancements, there is organizational opposition to using AIoT-based
+  frameworks, which slows down all forward progress.
+
+15.3 Key future perspectives of AIoT for smart
+  transportation
+
+The key futures here refer to the potential direction and advancement achieved by
+Integrating AI and IoT which can shape up the future of smart transportation sys-
+tems by which the people and products move. AIoT combines the power of AI with
+the data gathering capabilities of IoT devices to create intelligent, smart, connected,
+  Future perspectives of AIoT for smart transportation 315
+
+and automated transportation networks. AIoT improves safety, efficiency, sus-
+tainability, and user experience in transportation systems around the globe by
+employing real-time data, automation, and predictive analytics.
+
+  Here are some key future perspectives for AIoT in smart transportation:
+
+15.3.1 Autonomous vehicles
+
+AIoT is a fundamental enabler of autonomous vehicles (self-driving cars, buses,
+trucks, etc.), whereby integrating the AI algorithms with IoT sensors (such as
+cameras, radar, LiDAR, and GPS), will strengthen the power of the autonomous
+vehicle by enabling them to make real-time decisions based on data from sensors
+and connected infrastructure. The IoT sensors and surrounding infrastructure (e.g.,
+traffic lights, smart roads) will provide continuous data flow, which will be ana-
+lyzed by AI to optimize routing, improve safety, and prevent accidents.
+
+  AI evaluates the real-time data from sensors to recognize cars, pedestrians, and
+barriers and decides whether to accelerate, brake, or steer. It will increase safety by
+anticipating and responding to the possible threats, by which it reduces the number
+of fatalities and accidents that are brought on by human mistakes. It also optimizes
+the route and identifies the most effective routes by considering the environmental
+factors and traffic patterns and by reducing fuel usage and delays.
+
+15.3.2 Smart traffic management
+
+By gathering and evaluating data from IoT-enabled sensors, cameras, and traffic
+signals, AIoT will allow smart cities to optimize traffic flow. A few of the various
+possibilities include dynamic traffic signal control to reduce congestion and AI that
+instantly modifies traffic light timings. Sensor-equipped roads convey data for
+prompt analysis and response by tracking traffic and weather, and intelligently
+managing the road infrastructure. Predictive traffic modelling: AI forecasts traffic
+and modifies routes based on previous and current data, saving commuters from
+delays.
+
+15.3.3 Enhanced public transport systems
+
+AIoT will significantly transform and improve the efficiency and convenience of
+public transportation through key innovations, which include real-time tracking.
+IoT sensors provide live updates on vehicle locations and schedules, improving
+passenger experience. Smart ticketing in AIoT will enable contactless and auto-
+mated ticketing systems, such as mobile payments or biometric identification,
+reducing queues and enhancing customer satisfaction. Further, in demand-
+responsive transport, AI examines passenger demand patterns to optimize routes
+and schedules, creating a flexible public transportation system that adapts to urban
+needs and responds to fluctuating demand, particularly in cities.
+
+15.3.4 Vehicle-to-everything (V2X) communication
+
+V2X communication connects vehicles with their surroundings, which includes
+other vehicles (V2V), infrastructure (V2I), and pedestrians (V2P). Powered by
+316 AIoT for smart transportation
+
+AIoT, it enables real-time exchange of data, allowing vehicles to communicate and
+interact with traffic signals, road signs, and other vehicles to prevent accidents and
+increase situational awareness, which include, for example, warnings about
+hazards, blind spots, or sudden braking. Additionally, it also helps in improved
+traffic coordination; smart infrastructure such as traffic lights and road sensors will
+work in collaboration with vehicles to reduce congestion and optimize and improve
+the traffic flow.
+
+15.3.5 Predictive maintenance and fleet management
+
+AIoT will revolutionize fleet management (for delivery, public transportation, or
+logistics) with predictive maintenance that uses sensors to monitor vehicle com-
+ponents (engine, tires, brakes, etc.). AI predicts failures by analyzing the data to
+foresee issues before they happen, enabling proactive repairs and minimizing
+downtime. Also, AI will analyze operational data to optimize vehicle usage,
+scheduling, and fuel consumption, whereby reduces cost and improves efficiency.
+
+15.3.6 Sustainability and energy efficiency
+
+AIoT plays a crucial role in sustainable transportation by supporting electric
+vehicles, where it manages charging infrastructure, optimizes energy usage,
+extends battery life, and schedules accordingly. AIoT enhances efficiency by
+identifying routes that support and ways by which fuel consumption is efficient by
+identifying fuel-efficient routes and by optimizing driving strategies to reduce
+emissions. Additionally, by incorporating carbon footprint monitoring, the AIoT
+system keeps track of the environmental impact of vehicles and fleets, helping
+cities and organizations to achieve their sustainability goals.
+
+15.3.7 Personalized travel experience
+
+AIoT enhances the user experience in transportation through highly personalized
+smart apps that provide real-time travel updates to vehicles that adjust to indivi-
+dual’s preferences through personalized navigation, where AI suggests optimal
+routes based on habits, preferences, and real-time conditions by avoiding conges-
+tion or accidents. To ensure passenger comfort, the system adjusts climate, lighting,
+and seating to suit individual preferences, enhancing the overall travel experience.
+Additionally, AI provides personalized travel recommendations by analyzing user
+behaviour and preferences.
+
+15.3.8 Integrated mobility ecosystems
+
+The future of smart transportation with Mobility-as-a-Service will leverage AIoT
+by integrating various modes of transportation (e.g., buses, bikes, shared vehicles,
+and taxis) into a single service platform. AIoT will offer seamless connectivity
+where it integrates different transportation models, and by analyzing travel data, it
+reduces waiting times and the travel cost. It will also help in smart journey planning
+where the users will be able to plan by seamlessly switching between different
+modes of transport with real-time availability.
+  Future perspectives of AIoT for smart transportation 317
+
+15.3.9 Enhanced safety and security
+
+AIoT-driven safety measures play a crucial role in enhancing transportation safety
+by preventing accidents, theft, and improving emergency responses through colli-
+sion avoidance, where AI predicts and prevents accidents by analyzing the envir-
+onment based on the equipment fitted in the vehicles. Emergency response
+systems: AI can help detect accidents and provide real-time data to accelerate
+emergency services, enabling faster response times. Security of the vehicle will
+enable theft prevention by utilizing IoT sensors, GPS tracking, and surveillance
+cameras.
+
+15.3.10 AIoT for logistics and supply chain
+
+AIoT transforms logistics and supply chain management through smart inventory
+management where AI predicts demand and optimizes deliveries with IoT-
+connected vehicles and warehouses. AIoT powers drones and self-driving trucks
+for efficient and cost-effective deliveries. Monitoring of the shipments by real-time
+tracking can be carried out, whereby reduces delays and enhances transparency.
+
+15.4 Conclusion of the book
+
+This book, which features chapters written by international experts emphasizing its
+significance, is the result of the hard work of researchers. The book focuses on the
+revolutionary role of AIoT in transportation and includes theoretical and practical
+understanding of cutting-edge AIoT technology. The book explains the research
+obstacles and introduces the readers to the potential applications of AIoT in
+transportation.
+
+  Chapter 1 provides a comprehensive overview of smart transportation, pro-
+pelled by improvements in AI and the IoT. The key highlights include the tech-
+nological evolution, core components, and benefits, where it discusses improved
+safety, traffic flow, cost reduction, efficiency, and sustainability. It highlights how
+the AIoT enabling technologies facilitate smart transportation deployment, the
+challenges, and the obstacles that it faces in implementation.
+
+  Chapter 2 discusses the transformative impact of the AIoT in modern trans-
+portation. The key points include the AIoT overview, technological foundations,
+and applications in transportation. It shares real-world examples along with future
+potentials and explores the benefits and challenges of AIoT, emphasizing its role in
+creating smarter, more interconnected transportation systems.
+
+  Chapter 3 emphasizes AIoTs potential to enhance urban mobility and adapt
+Intelligent Transportation Systems (ITS) to meet the evolving demands of future
+cities. It presents an overview of ITS and explains how ITS uses computers, elec-
+tronics, and communication technologies to improve traffic efficiency through
+automated systems like traffic management, e-toll collection, and automated
+parking. The chapter also discusses the benefits of ITS and AIoT integration for
+driving safer and more sustainable mobility solutions.
+318 AIoT for smart transportation
+
+  Chapter 4 explores how AI and ML, combined with AIoT, are revolutionizing
+transportation systems. Route optimization and sustainability are improved by
+enhancing traffic management, public transportation, and road safety through
+vehicle-to-vehicle communication. It discusses the case studies of intelligent traffic
+systems in different cities. The challenges and the future trends are discussed.
+
+  Chapter 5 discusses the potential of AIoT to create more robust, efficient, and
+sustainable transportation systems and the role of AIoT in advancing Industry 4.0,
+leading to the emergence of AIoT. It discusses Mobility 5.0 which focuses on
+sustainability, efficiency, and accessibility. It emphasizes the integration of AI and
+IoT to improve the functionalities and provide innovative services in intelligent
+transportation systems (ITS). The challenges and opportunities in optimizing traf-
+fic, reducing congestion, and improving transportation efficiency through AIoT-
+based ITS frameworks are also discussed
+
+  Chapter 6 explores the potential of AIoT in addressing traffic management
+challenges posed by rapid urbanization and increased vehicular density. AIoT
+Integration to create predictive traffic management systems, real-time data, multi-
+layered AIoT architecture, and ML applications, along with use cases and emerging
+technologies, are discussed to create more resilient, scalable, and intelligent traffic
+management systems for future smart cities.
+
+  Chapter 7 discusses how the integration of AI with IoT is transforming the
+smart transportation industry. Topics like IoT and data acquisition, which focuses
+on the importance of IoT sensors and real-time data collection for ITS, are dis-
+cussed, as well as network topologies, communication, and data processing meth-
+ods are discussed. The challenges regarding data privacy and security, scaling
+blockchain, incorporating new technologies like 5G and blockchain, and ethical/
+governance issues are discussed.
+
+  Chapter 8 discusses the revolutionary effects of the AIoT on improving
+security, safety, and efficiency in ITS. Key points include predictive maintenance,
+AI-powered monitoring, traffic control optimization, driver assistance, impact on
+safety and sustainability. Case studies are presented to illustrate how AIoT is
+applied in areas like emergency response, traffic control, driver assistance, and
+predictive maintenance.
+
+  Chapter 9 explores how AIoT is reshaping tourism, providing smarter, more
+personalized travel solutions while addressing potential challenges. It discussed
+how the integration of AIoT is revolutionizing the tourism sector by offering per-
+sonalized, efficient, and responsive travel experiences for modern tourists. It dis-
+cussed personalized travel solutions, which are technologies used to provide
+tourists with tailored experiences. The chapter also discusses successful global
+examples to highlight how AIoT can facilitate smooth, sustainable, and enriching
+travel experiences, pointing to a promising future for smart tourism in Industry 5.0.
+
+  Chapter 10 emphasizes how AIoT is key to creating a greener, more efficient
+transportation system and transitioning to smarter, more sustainable urban environ-
+ments, emphasizing the crucial role of AIoT in promoting sustainability. Environmental
+impact issues like greenhouse gas emissions and resource depletion are discussed. The
+chapter discusses the challenges and limitations of existing infrastructure as well as the
+  Future perspectives of AIoT for smart transportation 319
+
+need for greater consumer acceptance of sustainable mobility solutions. The opportu-
+nities and the collaboration aspects among industrial stakeholders, policymakers, and
+researchers to fully unlock the potential of AIoT are presented.
+
+  Chapter 11 discusses the integration of blockchain and cybersecurity technol-
+ogies within ITS and emphasizes how blockchain and cybersecurity can be applied
+to ITS to enhance its overall effectiveness and security. The benefits of integration
+and how the merger makes the transportation system more secure, reliable, and
+resilient to both physical and cyber threats and the future of ITS are discussed.
+
+  Chapter 12 emphasizes the need for cooperation and ethical oversight in uti-
+lizing AIoT to enhance mobility systems. It discusses the future of mobility to
+reduce traffic congestion, emissions, and road accidents. Ethical challenges and
+concerns about bias in decision-making processes, and ethical issues surrounding
+data and system processes are addressed. The need for balancing innovation and
+governance is discussed to ensure AIoTs potential in creating sustainable and smart
+urban mobility systems.
+
+  Chapter 13 explores how AIoT can optimize emergency response times to
+detect emergency vehicles like ambulances in real-time and optimize traffic flow to
+improve response times. It addresses urban traffic congestion and its impact on
+ambulance response times. Theoretical and practical approaches are discussed, and
+it emphasizes the importance of real-time data Collection and Traffic Analysis for
+optimizing emergency responses. Case studies and ethical recommendations are
+also discussed.
+
+  Chapter 14 illustrates how AI is revolutionizing transportation, paving the way
+for efficient and sustainable mobility solutions. It explores how AI is transforming
+transportation systems, addressing critical challenges like increasing travel
+demands, CO2 emissions, safety concerns, and environmental harm. AI applica-
+tions in transportation, real-world use cases, and addressing challenges and future
+impacts are discussed. It also discusses the importance of explainable AI, reg-
+ulatory frameworks, and responsible innovation to ensure ethical and effective
+integration into transportation.
+
+15.5 Future perspectives and research directions
+
+In the AI era, data is a useful resource where new goods are developed and help us
+enhance the current ones. AIoT businesses use and gather vast amounts of data,
+initiating new possibilities for collecting and utilizing data. The future of AIoT in
+transportation is poised for transformative advancements, focusing on enhancing
+safety, efficiency, and sustainability. Additionally, creating autonomous car eco-
+systems, AIoT-enabled multimodal transportation systems with an aim to optimize
+urban mobility by connecting various modes of transport seamlessly. Also,
+addressing challenges like cybersecurity, data privacy, and energy efficiency will
+be critical in ensuring widespread adoption and scalability in this sector. Key
+research directions include developing autonomous vehicle ecosystems that lever-
+age edge AI for real-time decision-making, integrating AIoT into smart traffic
+320 AIoT for smart transportation
+
+management systems to reduce congestion, and improving predictive maintenance
+for vehicles and infrastructure.
+
+  The research directions include creating, developing, implementing, evaluat-
+ing, and analyzing the innovative frameworks for integrating AI and IoT technol-
+ogies into transportation and further integrating big data technologies to handle
+sensor data, which is extensively utilized across many industries, including trans-
+portation. Developing analytical platforms for advanced analysis and processing of
+enormous data volumes is an emerging and evolving use of AIoT technology in
+Industry 4.0.
+Index
+
+adoption trends of AIoT in  real-time traffic analysis algorithms
+  transportation sector 26  262
+
+  autonomous and connected vehicles  ambulance response times, impact of
+  28–31  traffic congestion on 258–60
+
+  fleet management and optimisation  Amsterdam Smart Mobility Living Lab
+  31–2  144
+
+  predictive maintenance for  ant colony-based transportation 282
+  vehicles 33  application of AIoT for smart trans-
+
+  smart traffic management systems 27  portation 75
+  application and actuation layer 28  Arduino IDE 265
+  data acquisition and collection  Arduino Uno microcontroller 269
+  layer 28  Arduino Uno R3 265
+  data processing and decision-  area-based traffic flow calculations
+  making layer 28
+  284
+advanced driving assistance systems  ARIMA 281
+  (ADAS) 48  artificial intelligence (AI) 44, 74–5,
+
+Advanced Public Transportation  311
+  Services (APTS) 6  in advancing sustainable
+
+Advanced Traffic Management  transportation 22–3
+  Services (ATMS) 6  algorithms 165–6
+  -based models 289–90
+Advanced Traveller Information  classification 19
+  Services (ATIS) 6, 291  classifier 283
+  difficulties in using 74–5
+All-In-One payment solution 51
+All Purpose Incident Detection (APID)  to facilitate strategic development of
+  cities 11
+  algorithms 300
+ambulance detection, AIoT model for  in Internet of Things 9
+  issues with, in Intelligent
+  260
+  convolutional neural network (CNN)  Transportation Systems 75–6
+
+  261  -powered monitoring systems 160
+  fine-tuning the AI model with  challenges and considerations in
+  AI integration 161–2
+  transfer learning 261–2
+  pre-processing of traffic camera
+
+  footage 261
+322 AIoT for smart transportation  obstacles to sustainable mobility 208
+  opportunities of AIoT in autonomous
+  key benefits of integrating AI into
+  public transit 161  vehicles 208
+  sustainable autonomous vehicles,
+  real-time traffic analysis, AI models
+  for 103  AIoT-driven solutions for 208
+  emission reduction with intelligent
+  computer vision in traffic analytics
+  106–7  control systems 210
+  energy-efficient route planning
+  incident detection and anomaly
+  detection 106  and optimisation 209
+  predictive maintenance and
+  predictive modelling for traffic
+  flow and congestion analysis  resource management 209–10
+  104–6
+  real-time traffic management and
+  in smart transit systems 8–9  decision making 209
+  in traffic control 11–12
+  understanding 18  technological overview of AIoT in
+Artificial Intelligence of Things (AIoT)  autonomous vehicles 199
+
+  198  AI, IoT, sensors, and connectivity
+Artificial Neural Networks (ANNs) 21  204–5
+augmented reality (AR) 58–9, 185–6
+Automatic Emergency Braking (AEB)  integration of AIoT into vehicle
+  systems 205–6
+  System 48
+automatic number-plate recognition  scope of AIoT 199–204
+
+  (ANPR) 122  autonomous vehicles (AVs) 53–4, 75,
+automatic vehicle locations (AVL) 298  138–9, 183, 238, 241, 315
+autonomous and connected vehicles 28
+  and AIoT 93, 168
+  requirements 31  integration with electric vehicles
+autonomous cars 76–7
+autonomous navigation 205  (EVs) 54
+autonomous vehicle, sustainable  technology 141
+  AV START Act 305
+  mobility for advancements
+  in 197  batch processing 134
+  background study 199  big data analytics 134
+  environmental impacts of conven-
+  tional mobility solutions 207  batch processing 134
+  future trends and innovations 210  distributed data processing 135
+  emerging technologies in AIoT  in-memory data processing 134–5
+  for autonomous vehicles
+  210–11  stream processing 134
+  future of sustainable mobility with  Blind Spot Monitoring (BSM) 48
+  AIoT 211  blockchain attacks 230–1
+  technological and market  blockchain technology 223, 259
+  development forecast 211–12
+  fundamental concepts of 225
+  block structure 228–9
+  consensus and smart contract 229
+  distributed ledger technology  Index 323
+  (DLT) 227–8
+  advanced driving assistance systems
+  peers, nodes, peer-to-peer network  (ADAS) 48
+  225–7
+  vehicle-to-vehicle (V2V)
+  transactions 228  communication 48–9
+  historical development 224–5
+block structure 228–9  Commercial Vehicle Operation
+Bluetooth and Bluetooth Low Energy  Services (CVOS) 6
+
+  (BLE) 130  commit short-range communications
+buses, fleet management of 32  (CSRC) 127
+
+California algorithm 300  communication networks 180
+California Consumer Privacy Act  advanced 90
+  and protocols 112–13
+  (CCPA) 313
+cameras 281  communication protocols 103, 128
+CATS system 288  Bluetooth and Bluetooth Low
+cellular devices 3  Energy (BLE) 130
+cellular vehicle-to-everything (C-V2X)  IoT communication protocols 129
+  LAN protocol, example of 128
+  communications 71, 129–30,  RFID and NFC protocols 130
+  220–1  vehicle Ad hoc networks 129–30
+centralised computing 7
+challenges and solutions in AIoT  communication technologies 220
+  implementation 35  cellular vehicle-to-everything
+  infrastructure and integration issues  communications 220–1
+  35–6  dedicated short-range
+  regulatory, ethical, and social  communications 220
+  implications 36
+  technical challenges 35  computerised maintenance manage-
+challenges in AIoT technology in  ment systems (CMMS) 159–60
+  transportation 312–14
+change interval 286  computer vision in traffic analytics
+cities, AI to facilitate strategic  106–7
+  development of 11
+cloud-based AI algorithms 167  congestion detection 46
+cloud-based architecture 130  Connected and Autonomous Vehicles
+cloud computing 7
+cloud integration 44–5  (CAVs), autonomous
+collection layer, data acquisition  decision-making in 89
+  and 28  connected infrastructure 58
+collision avoidance systems  connected vehicles 217–20
+  connected vehicle sensors 143
+  connected vehicle-to-vehicle commu-
+  nication for safe driving 71–2
+  consensus and smart contract 229
+  Constrained Application Protocol
+  (CoAP) 90, 129
+  convergence of AIoT 19–21
+324 AIoT for smart transportation  data and predictive modelling say 58
+  data collection 24
+convolutional neural network (CNN)  data management and analytics 91
+  260–1  data privacy
+
+cooperative vehicle intersection control  and data security 147, 231
+  (CVIC) method 289  and ethics
+
+core system components 103  challenges 55
+core technologies enabling AIoT in  opportunities 55
+  data processing 24–5
+  transportation 25–6  big data analytics 134
+crowdsourcing and participatory  batch processing 134
+  distributed data processing 135
+  sensing 128  in-memory data processing 134–5
+cyberattacks 230  stream processing 134
+Cyber-Physical System (CPS) 128  and decision-making layer 28
+cybersecurity 314  intelligent transportation systems
+
+  challenges 49  136
+  solutions 49–50  applications of deep learning in
+cycle length 286
+  transportation 136
+data acquisition and collection layer 28  power of ensemble and hybrid
+data acquisition techniques
+  models 136–7
+  crowdsourcing and participatory  reinforcement learning (RL) for
+  sensing 128
+  dynamic optimisation 136
+  edge computing 128–9  supervised learning in traffic
+  sensor networks 128
+  wired data acquisition 127  management 136
+  wireless data acquisition 127  unsupervised learning: identifying
+data and IoT sensors applications in
+  hiding patterns 136
+  smart transportation 137  data security and privacy concerns in
+  autonomous vehicle systems 138–9
+  multimodal transportation and  AIoT systems 91
+  Denial of Service (DoS) 91
+  Mobility-as-a-Service (MaaS)  Man-in-the-Middle (MitM) 91–2
+  139  Ransomware in transport systems 91
+  predictive maintenance and asset  data sources
+  management 138  external data sources 122–3
+  route optimisation and fleet  infrastructure-based data sources 122
+  management 138  mobile data sources 122
+  smart parking and electric vehicle  vehicle-based data sources 121–2
+  charging 139  data transmission 24
+  traffic monitoring and management  decision making 25
+  138
+  transportation planning and
+  modelling 139–40
+decision-making layer, data processing  Index 325
+  and 28
+  distributed ledger technology (DLT)
+Dedicated Short-Range  224, 227–8
+  Communications (DSRC) 3, 71,
+  129, 220  double exponential smoothing (DES)
+  algorithm 299–300
+deep learning techniques 136, 259, 261
+deep neural network (DNNs) technique  driver assistance systems (DAS) 164–5
+  driverless mobility 57
+  109
+deep Q-networks (DQNs) 108  AR & VR (Augmented Reality and
+deep reinforcement learning (DRL)  Virtual Reality) 58–9
+
+  methods 108  connected infrastructure 58
+definition and concept of AIoT 18  data and predictive modelling say 58
+  electrification and sustainability,
+  understanding AI 18
+  understanding IoT 18–19  evolution of 58
+demand prediction and scheduling 303  Mobility-as-a-Service 58
+Denial of Service (DoS) 91, 230  Driver Support Systems (DSSs) 168
+deployment and requirement  dynamic route guidance systems
+
+  specification 265  (DRGS) 290
+  algorithm and pseudocode 267–269  applying prediction models to RGS
+  data collection and methodology
+  293–4
+  documentation 265–8  dynamic routing 291
+  output and evaluation 270–2  link travel time forecasting under
+  preparation of reports and academic
+  incident condition 290
+  papers 269  route guiding system (RGS) 291–3
+  system design and monitoring during  dynamic routing 109, 291
+  dynamic tolling system in Stockholm 68
+  implementation phase 269  dynamic traffic management 181
+deregulation, defence of 156
+digital payment 47  eco-driving 53
+digital twins 114, 186–7  edge and cloud computing 176
+disabilities, technical solutions for  edge cloud computing 7–8
+  edge computing 44, 128–9, 133, 259
+  people with  electric bus service, Dehradun
+  better navigation and mobility 5
+  inclusive design 52  (case study) 12–13
+  self-driving cars and P2P  electric vehicles (EVs) 53
+
+  ride-sharing 52  charging infrastructure 141
+Distributed and Adaptive Intersections  integration with autonomous
+
+  Control Algorithm 281  vehicles 54
+distributed computing 7  predictive maintenance in
+distributed data processing 135
+distributed denial-of-service (DDoS) 230  (case study) 34
+  electrification and sustainability,
+
+  evolution of 58
+326 AIoT for smart transportation  environmental sustainability and
+  energy efficiency
+Electronic Payment Services (EPS) 6
+embracing automation 239  electric and autonomous vehicle
+Emergency Management Service  integration
+
+  (EMS) 6  autonomous vehicles (AVs) 53–4
+emergency response optimisation  EV infrastructure: electric
+
+  166–8, 255  vehicle 53
+  AIoT model development for  integration of EVs and AVs 54
+  emission reduction solutions 53
+  ambulance detection 260–2  improved public transportation 53
+  ambulance response times, impact of  optimising freight and
+
+  traffic congestion on 258–60  logistics 53
+  deployment and requirement  sustainable urban mobility
+
+  specification 265–72  planning 54
+  ethical implications of emergency  encourage walking and biking 54
+  policy and incentives 54–5
+  vehicle prioritization 263–4  ethical AIoT deployment, stakeholder
+  metrics for assessing AIoT model
+  engagement for 264
+  accuracy 262–3  ETL (Extract, Transform, Load) 26
+  traffic congestion challenges,  European Committee for
+
+  increased awareness of 272–6  Standardization (CEN) 5
+emergency service and incident  European Telecommunication
+
+  management  Standards Institute (ETSI) 5
+  emergency vehicle priority 49  event management 256
+  incident detection 49  evolution of AIoT 19–21
+emergency vehicle prioritization 256  extreme learning machine (ELM) 21
+  ethical implications of 263–4
+emission reduction solutions 53  feedback loop 25
+  5G networks 147
+  improved public transportation 53  5G-V2X communication 220
+  optimising freight and logistics 53  fleet management 316
+emission reduction with intelligent
+  of buses 32
+  control systems 210  optimisation 31–2
+energy efficiency 313
+energy-efficient route planning and  case study 34–5
+  Fleet Management System (FMS) 85
+  optimisation 209  fog computing architecture 133
+energy integration 77  Ford’s creative way of using AI in
+enhanced public transport systems 315
+  transportation systems
+enhanced safety and security 317  (case study) 12
+ensemble and hybrid models, power of  fuzzy logic 289
+
+  136–7
+environmental-friendly travel services
+
+  182
+environmental sensors 124, 142–3
+General Data Protection Regulation  Index 327
+  (GDPR) 55, 305, 313
+  public transport enhancement with
+genetic algorithms (GAs) 108  AIoT 93
+Geographic Information System (GIS)
+  smart traffic management systems
+  data 123  (STMS) 92–3
+Global Navigation Satellite Systems
+  sustainability in transportation 93
+  (GNSS) 222  infrastructure development and invest-
+Global Positioning System (GPS) 22,
+  ment needs 90
+  139  advanced communication networks
+Graph Convolutional Networks
+  90
+  (GCNs) 104  data management and analytics 91
+greenhouse gases (GHG) 198  smart infrastructure 91
+green time 286  interoperability 89
+  challenges of 89–90
+hybrid architecture 133  requirements for 90
+Hyperloop/Maglev technologies 77,  IoT and ML in smart transportation
+
+  238  85–8
+imaging sensors 124  regulatory frameworks for AIoT appli-
+implementation of AIoT, challenges
+  cations in transportation 92
+  and solutions in 35  Industry 5.0 in tourism 173–6
+  infrastructure and integration issues  inertial measurement units (IMUs) 139
+  information analytics 273
+  35–6  Information Management Service
+  regulatory, ethical, and social
+  (IMS) 6
+  implications 36  infrastructure-based data sources 122
+  technical challenges 35  infrastructure component monitoring
+incident detection and anomaly
+  160
+  detection 106  infrastructure development and
+Industry 5.0, AIoT in smart
+  investment needs 90
+  transportation in 83  communication networks,
+Connected and Autonomous Vehicles
+  advanced 90
+  (CAVs), autonomous decision-  data management and analytics 91
+  making in 89  smart infrastructure 91
+data security and privacy concerns in  infrastructure sensors 143–4
+  AIoT systems 91  in-memory data processing 134–5
+  Denial of Service (DoS) 91
+  Man-in-the-Middle (MitM) 91–2  Innovative Transportation Systems 27
+  Ransomware in transport  Institute of Electrical and Electronics
+  systems 91
+future trends in AIoT in transport  Engineers (IEEE) 5–6
+  sector 92
+  autonomous vehicles and AIoT 93  integrated mobility ecosystems 316
+  integration and interoperability
+
+  problems 313
+

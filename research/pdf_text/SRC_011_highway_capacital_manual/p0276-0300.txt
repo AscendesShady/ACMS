@@ -1,0 +1,1491 @@
+Highway Capacity Manual 2000
+
+  VI. REFERENCES
+
+  1. Schoen, J., A. May, W. Reilly, and T. Urbanik. Speed-Flow Relationships for
+  Basic Freeway Sections. Final Report, NCHRP Project 3-45. JHK & Associates,
+  Tucson, Ariz., May 1995.
+
+  2. Hall, F. L., V. F. Hurdle, and J. H. Banks. Synthesis of Recent Work on the
+  Nature of Speed-Flow and Flow-Occupancy (or Density) Relationships on
+  Freeways. In Transportation Research Record 1365, TRB, National Research
+  Council, Washington, D.C., 1992, pp. 12–18.
+
+  3. A Policy on Geometric Design of Highways and Streets. American Association of
+  State Highway and Transportation Officials, Washington, D.C., 1990.
+
+  4. Roess, R., and J. Ulerio. Capacity of Ramp-Freeway Junctions. Final Report,
+  NCHRP Project 3-37. Polytechnic University, Brooklyn, N.Y., Nov. 1993.
+
+  5. May, A. D., et al. Capacity and Level of Service Analysis for Freeway Facilities,
+  Fourth Interim Report. SAIC Corp., March 1999.
+
+Chapter 13 - Freeway Concepts  13-30
+References
+  Highway Capacity Manual 2000
+
+CHAPTER 14
+
+TRANSIT CONCEPTS
+
+  CONTENTS  Chapter 14 - Transit Concepts
+
+I. INTRODUCTION .....................................................................................................14-1
+  Role of Transit ..................................................................................................14-1
+  Transit Characteristics......................................................................................14-1
+  General Transit Capacity Concepts .................................................................14-3
+  Definitions .................................................................................................14-3
+  Vehicle Capacity .......................................................................................14-3
+  Person Capacity ........................................................................................14-4
+  Operator Policy ..................................................................................14-4
+  Passenger Demand Characteristics .................................................. 14-4
+  Vehicle Capacity ................................................................................14-5
+  Dwell Time.................................................................................................14-5
+
+II. BUS CONCEPTS ....................................................................................................14-7
+  Types of Service ...............................................................................................14-7
+  Bus Capacity Concepts ....................................................................................14-7
+  Loading Areas ...........................................................................................14-7
+  Bus Stops ..................................................................................................14-9
+  Bus Terminals ....................................................................................14-9
+  On-Street Bus Stops ..........................................................................14-9
+  Bus Stop Loading-Area Requirements ............................................ 14-10
+  Bus Lanes ...............................................................................................14-11
+  General Capacity Ranges ..............................................................................14-11
+  Loading Areas .........................................................................................14-13
+  Bus Stops ................................................................................................14-13
+  Busways ..................................................................................................14-13
+  Exclusive Arterial-Street Bus Lanes ........................................................ 14-14
+  Mixed-Traffic Lanes .................................................................................14-15
+  Bus Priority Treatments ..................................................................................14-15
+  Bus Preferential Treatments at Intersections .......................................... 14-15
+  Signal Priority ...................................................................................14-17
+  Queue Bypass .................................................................................14-17
+  Queue Jump ....................................................................................14-17
+  Curb Extensions ...............................................................................14-18
+  Boarding Islands ..............................................................................14-18
+  Other Measures ...............................................................................14-18
+  Person-Delay Considerations .................................................................14-18
+
+III. LIGHT-RAIL AND STREETCAR CONCEPTS.......................................................14-19
+  General Capacity Ranges ..............................................................................14-20
+  Rail Priority Treatments ..................................................................................14-22
+
+IV. QUALITY-OF-SERVICE CONCEPTS ...................................................................14-23
+  Definitions .......................................................................................................14-23
+  Transit Performance Measures ......................................................................14-23
+  Quality-of-Service Framework ........................................................................14-24
+  Transit Trip Decision Making ...................................................................14-24
+  Quality-of-Service Factors .......................................................................14-26
+  Service Coverage ............................................................................14-26
+  Pedestrian Environment ...................................................................14-27
+  Scheduling .......................................................................................14-27
+
+  14-i
+Highway Capacity Manual 2000
+
+  Amenities ......................................................................................... 14-27
+  Transit Information ........................................................................... 14-28
+  Transfers ..........................................................................................14-28
+  Total Trip Time................................................................................. 14-28
+  Cost ................................................................................................. 14-28
+  Safety and Security ..........................................................................14-28
+  Passenger Loads ............................................................................. 14-29
+  Appearance and Comfort ................................................................14-29
+  Reliability .......................................................................................... 14-29
+  Framework ..............................................................................................14-29
+  Availability ........................................................................................14-30
+
+  Transit Stops ............................................................................14-30
+  Route Segments ....................................................................... 14-30
+  System ......................................................................................14-30
+  Comfort and Convenience ............................................................... 14-31
+  Transit Stops ............................................................................14-31
+  Route Segments ....................................................................... 14-31
+  System ......................................................................................14-31
+  V. REFERENCES ......................................................................................................14-32
+
+  EXHIBITS
+
+  Exhibit 14-1.  Peak-Hour North American CBD Transit Trips ...................................... 14-2
+  Exhibit 14-2.  Relationship Between Person and Vehicle Capacity ............................ 14-4
+  Exhibit 14-3.  Influences on Transit Person Capacity .................................................. 14-5
+  Exhibit 14-4.  Calculating Transit Person Capacity ..................................................... 14-6
+  Exhibit 14-5.  On-Line and Off-Line Bus Loading Areas ............................................. 14-7
+  Exhibit 14-6.  Bus Loading Area (Berth) Designs ........................................................ 14-8
+  Exhibit 14-7.  On-Street Bus Stop Locations ............................................................. 14-10
+  Exhibit 14-8.  Influences on Bus Vehicle Capacity .................................................... 14-12
+  Exhibit 14-9.  Estimated Vehicle Capacity of On-Street Loading Areas .................... 14-13
+  Exhibit 14-10.  Estimated Capacity of On-Line Linear Bus Stops ............................... 14-13
+  Exhibit 14-11.  Examples of CBD Busway Capacities ................................................ 14-14
+  Exhibit 14-12.  Exclusive Bus-Lane Vehicle Capacity: Non–Skip-Stop Operation ...... 14-15
+  Exhibit 14-13.  Exclusive Bus-Lane Vehicle Capacity: Skip-Stop Operation .............. 14-16
+  Exhibit 14-14.  Mixed-Traffic-Lane Bus Vehicle Capacity ........................................... 14-16
+  Exhibit 14-15.  Bus-Signal Priority Systems ................................................................14-17
+  Exhibit 14-16.  Comparison of Bus Preferential Treatments ....................................... 14-19
+  Exhibit 14-17.  Influences on Rail Vehicle Capacity .................................................... 14-21
+  Exhibit 14-18.  Typical Light-Rail Transit Person Capacities: 30 Trains/Track/h,
+  28- to 30-m Articulated Cars ............................................................... 14-22
+  Exhibit 14-19.  Default Values for Single-Track Light-Rail and Streetcar
+  Travel Time..........................................................................................14-22
+  Exhibit 14-20.  Transit Performance Measure Categories and Examples .................. 14-24
+  Exhibit 14-21.  Transit Trip Decision Making: Transit Availability ................................ 14-25
+  Exhibit 14-22.  Transit Trip Decision Making: Transit Convenience ............................ 14-26
+  Exhibit 14-23.  Transit Quality-of-Service Framework ................................................. 14-30
+
+Chapter 14 - Transit Concepts  14-ii
+  Highway Capacity Manual 2000
+
+  I. INTRODUCTION  For more information on
+  transit, see the TRB Transit
+  This chapter introduces capacity and level-of-service (LOS) concepts for transit  Capacity and Quality of
+modes—bus, streetcar, and light rail—that operate on public streets and interact with  Service Manual
+other users of streets and highways. Transit modes that operate only on exclusive rights-
+of-way—such as rapid transit, commuter rail, and automated guideway transit—are not  Rail service offers higher
+discussed here. All transit modes are addressed in more detail in the Transit Capacity  capacities than buses
+and Quality of Service Manual (1).
+  Unlike the auto mode, transit
+  This chapter may be used in conjunction with Chapter 27 and Part IV of the HCM.  availability is an important
+Chapter 27 provides analytical procedures and applications for determining transit  consideration
+capacity and LOS for transit stops and route segments. Part IV of this manual integrates
+the application of transit system capacity and quality-of-service concepts into multimodal
+corridor and areawide analyses.
+
+ROLE OF TRANSIT
+
+  Transit plays two major roles in North America. First, it accommodates choice
+riders—those who choose transit for their trip-making even though they have other means
+of travel, such as a motor vehicle. Many commuters choose transit because they are
+unwilling to deal with traffic congestion during peak periods. Choice riders dominate
+transit during the peak periods for work trips. In this way, transit increases the number of
+people who can be carried by urban transportation systems and reduces—or at least
+constrains—the growth of more than 4.36 billion person-hours (2) lost to urban traffic
+congestion annually in the United States. Transit is essential for mobility in the central
+business districts (CBD) of some major cities, which could not survive without it.
+Accommodating choice riders is especially critical in cities with high CBD densities and
+costly and limited parking.
+
+  The other major role of transit is providing basic mobility for segments of the
+population that are too young, too old, or otherwise unable to drive due to physical,
+mental, or financial situations. About 35 percent of the adult population in the United
+States and Canada do not have a driver’s license (2) and must depend on others to
+transport them in autos, on transit, or on other modes, including walking, cycling, and
+taxis. This is the principal role of transit services provided specifically for people with
+disabilities and it is the dominant role of many smaller transit systems. These transit
+users have been called captive riders.
+
+  Rail service offers higher capacities than buses for heavily traveled corridors, and its
+use of fixed routes makes it more visible and attractive in densely populated areas. Light
+rail is characterized by a versatility of operation—it can operate separated from other
+traffic below grade, at grade, or on an elevated structure, as well as at grade in mixed
+traffic.
+
+  Exhibit 14-1 provides examples of peak-hour trips to the CBD by transit in selected
+North American cities. The variations in transit use reflect differences in population,
+CBD employment, extent of bus and rail transit services, and geographic characteristics.
+
+TRANSIT CHARACTERISTICS
+
+  Several characteristics differentiate transit from the automobile in terms of
+availability and capacity. Although the automobile has widespread access to roadway
+facilities, transit service is available only in certain locations during certain times.
+Roadway capacity is available 24 h/day once constructed, but transit capacity is limited
+by the number of transit vehicles operated at a given time.
+
+14-1  Chapter 14 - Transit Concepts
+  Introduction
+Highway Capacity Manual 2000
+
+  EXHIBIT 14-1. PEAK-HOUR NORTH AMERICAN CBD TRANSIT TRIPS
+
+  City  Year  Percent of Peak-Hour Trips by Transit
+
+  New York City  1988  87
+  Chicago
+  Toronto  1983  77
+  Ottawa
+  Montreal  1994  64
+  Philadelphia
+  Vancouver  1997  60
+  Seattle
+  Los Angeles  1994  49
+  Calgary
+  Edmonton  1997  42
+  San Diego
+  1997  40
+
+  1997  40
+
+  1980  39
+
+  1997  39
+
+  1994  32
+
+  1997  15
+
+  Sources: Transit Capacity and Quality of Service Manual (1), Levinson and St. Jacques (3), and Morrall and Bolger (4).
+
+Transit passengers are  Transit passengers frequently rely on other modes to gain access to transit. Transit
+typically pedestrians,  use is greatest where population densities are highest and pedestrian access is good. A
+bicyclists, or motorists for  typical transit user does not have transit service available at the door and must walk, bike,
+parts of their trips  or drive to a transit stop and then must walk or bike from the transit discharge point to the
+  destination. In contrast, suburban areas are mainly automobile-oriented, with
+Transit goals are to move  employment and residents dispersed, often without sidewalks, and without direct access
+large numbers of people,  to many transit lines. If potential passengers cannot have access to transit from both their
+rather than large  trip origin and destination, transit is not an option.
+numbers of vehicles
+  Finally, transit is about moving people rather than vehicles. Transit operations at
+All transit modes are  their most efficient involve relatively few vehicles, each potentially carrying a relatively
+addressed in the Transit  large number of passengers. In contrast, roadway analysis traditionally involves
+Capacity and Quality of  relatively large numbers of vehicles, each usually carrying only one occupant. When
+Service Manual  evaluating transit priority measures for transit and automobile users, it is the number of
+  people affected that should be compared, rather than the number of vehicles.
+
+  This manual addresses only those major transit modes (in terms of passengers
+  carried) that operate on streets and interact with other users of streets and highways.
+  These modes include buses, streetcars, and light rail (see Illustration 14-1).
+
+  Bus (Los Angeles)  Light Rail (Baltimore)  Streetcar (San Francisco)
+
+  ILLUSTRATION 14-1. Transit modes covered in the Highway Capacity Manual.
+
+  Bus services can be provided by several vehicle types, ranging from minibuses to
+  articulated and double-deck buses. Standard 12-m buses with more than 35 seats are the
+  dominant type of bus in U.S. transit systems and comprise more than 80 percent of the
+  national bus fleet. Articulated buses 18 m in length have been adopted by a few agencies,
+  but their use is increasing as agencies seek to improve capacity and comfort with only
+  small increases in operating costs. Double-deck buses have had tryouts but have not
+  found widespread use in either Canada or the United States. A few transit agencies
+  operate trolleybuses (both standard and articulated), powered from overhead electrical
+  lines.
+
+Chapter 14 - Transit Concepts  14-2
+Introduction
+  Highway Capacity Manual 2000
+
+  During the first half of the 20th century, streetcars were common in most larger  Streetcars can share a lane
+North American cities but nearly disappeared in the 1950s as automobile use increased  with other traffic; light rail
+and the spreading suburbs could not be served efficiently by rail. The modern  trains are almost always
+equivalents of the streetcar are the light-rail systems that have started up since 1978. The  separated from other traffic,
+two modes are similar; however, light rail provides higher speeds and somewhat higher  even when running on-street
+capacity than streetcars. Also, in North America, light-rail tracks usually are separated
+from general traffic, even when operating on the same street as other traffic, but streetcars  Capacity, vehicle capacity,
+sometimes share a lane with other traffic.  and person capacity
+
+GENERAL TRANSIT CAPACITY CONCEPTS  Dwell times and g/C ratios
+  have the greatest influence on
+  Transit capacity is different from highway capacity. It deals with the movement of  loading area vehicle capacity
+both people and vehicles; it depends on the size of the transit vehicles and how often they
+operate; and it reflects the interaction of passenger traffic and vehicle flow. Transit
+capacity depends on the operating policy of the transit agency, which specifies service
+frequencies and allowable passenger loadings. Accordingly, the traditional concepts
+applied to highway capacity must be adapted and broadened.
+
+Definitions
+
+  Throughout this chapter and Chapter 27, a distinction is made between vehicle and
+person capacity. Vehicle capacity reflects the number of transit units (buses or trains)
+that can be served by a loading area, transit stop, guideway, or route during a specified
+period of time. Person capacity reflects the number of people that can be carried past a
+given location during a given time period under specified operating conditions, without
+unreasonable delay, hazard, or restriction, and with reasonable certainty. In this chapter
+and Chapter 27, the term capacity applies both to persons and vehicles.
+
+  Exhibit 14-2 illustrates the two-dimensional nature of on-street urban transit
+capacity, using buses. It is possible to operate many buses, each carrying only a few
+passengers. Whether the buses are full or empty, a larger number of buses can have a
+negative impact on LOS in terms of highway capacity. Alternatively, a few vehicles
+could operate, each overcrowded. This represents a poor quality of service from the
+passenger perspective, and long waiting times would detract from user convenience.
+
+Vehicle Capacity
+
+  Transit vehicle capacity is commonly determined for three locations: loading areas or
+berths; transit stops and stations; and bus lanes and transit routes. Each location directly
+influences the next. The vehicle capacity of a bus stop or rail station is controlled by the
+vehicle capacities of the loading areas, and the vehicle capacity of a bus lane or transit
+route is controlled by the vehicle capacity of the critical stops along the lane or route.
+
+  The two greatest influences on loading area vehicle capacity are the dwell time and
+the ratio of the green time to the cycle length (g/C ratio) for the street on which the transit
+operates. Dwell time and the g/C ratio also have major influences on the vehicle capacity
+of transit stops and routes. However, dwell time—the time required to serve passengers
+at the busiest door plus the time required to open and close the doors—has the greater
+influence on loading-area vehicle capacity.
+
+  The amount of green time provided to a street controls the number of transit vehicles
+that theoretically can arrive at a loading area during an hour. In addition, the length of
+red in relation to a vehicle’s dwell time also affects vehicle capacity: if passenger
+movements have finished, but the vehicle must wait for a traffic signal to turn green,
+vehicle capacity will be less than if the vehicle can leave immediately, so that another
+vehicle can use the loading area.
+
+14-3  Chapter 14 - Transit Concepts
+  Introduction
+Highway Capacity Manual 2000
+
+  EXHIBIT 14-2. RELATIONSHIP BETWEEN PERSON AND VEHICLE CAPACITY
+
+  Level of Service - Passenger (area/passenger)  F Crush Load (maximum persons/veh)  Domain of Peak Period  Maximum Vehicles per Channel per Hour
+  Crowded Vehicles  Operations
+  Few Vehicles  Many Vehicles
+  Few Passengers
+  E Maximum Design Load (peak)
+  D
+
+  C
+
+  B
+
+  A
+
+  A  B  C  D  E  F
+
+  Level of Service - Bus (veh/h)
+
+Increasing the maximum  Person Capacity
+allowed passenger load
+increases person  Person capacity typically is calculated for transit stops and stations and for the
+capacity but decreases  maximum load point of a transit route or bus lane; it is calculated for three locations:
+quality of service
+  • Transit stops and stations,
+Person capacity is  • Transit routes at their maximum load points, and
+typically stated for the  • Bus lanes at their maximum load points.
+maximum load point  Exhibit 14-3 shows the factors that control person capacity.
+
+Peak-hour factors reflect  Operator Policy
+fluctuations in passenger
+demand  A transit operator directly controls the maximum passenger loads allowed on transit
+  vehicles and the service frequency. An operator with a policy requiring all passengers to
+  be seated will have a lower potential person capacity for a given number of vehicles than
+  an operator with a policy allowing standees. However, passengers experience a higher
+  quality of service with the first operator. The service frequency determines how many
+  passengers actually can be carried, even though a transit stop, transit route, or bus lane
+  can serve more vehicles than actually are scheduled.
+
+  Passenger Demand Characteristics
+
+  How passenger demand is distributed spatially along a route and how it is distributed
+  over time during the analysis period affects the number of boarding passengers that can
+  be carried. Because of the spatial aspect of passenger demand, person capacity must be
+  stated for a location (typically the maximum load point), not for a route or a street as a
+  whole.
+
+  Passenger demand fluctuates during the peak hour. The peak-hour factor (PHF)
+  reflects peak demand volumes typically over a 15-min period during the hour. A transit
+  system should provide sufficient capacity to accommodate peak passenger demand.
+  However, since peak demand is not sustained over the entire hour, and since every transit
+  vehicle will not experience the same peak loadings, actual person capacity during the
+  hour will be less than the peak 15-min demand volumes.
+
+Chapter 14 - Transit Concepts  14-4
+Introduction
+  Highway Capacity Manual 2000
+
+  EXHIBIT 14-3. INFLUENCES ON TRANSIT PERSON CAPACITY
+
+Allowed Passenger  Operator
+  Loading  Policy
+  Transit
+  Frequency
+
+Peak-Hour
+  Factor
+
+  Passenger Trip  Passenger Demand  Person
+  Lengths  Characteristics  Capacity
+
+Boarding Volume
+Distribution Among
+
+  Stops
+  Loading-Area
+ Vehicle Capacity
+
+Transit-Stop Vehicle  Vehicle
+  Capacity  Capacity
+
+Transit-Lane Vehicle
+  Capacity
+
+  The average passenger trip length affects how many passengers can board a transit  Passenger trip length
+vehicle as it travels its route. If trips tend to be long with passengers boarding near the  Passenger distribution among
+start of the route and alighting near the end, vehicles will not board as many passengers  transit stops
+as when passengers board and alight at many locations. However, the total number of
+passengers onboard at the maximum load points may be similar for each route.  Person capacity is
+  constrained by vehicle
+  The distribution of boarding passengers among transit stops affects the dwell time of  capacity
+vehicles at each stop. If passenger boardings are concentrated at one stop, the vehicle
+capacity of a transit route or bus lane will be lower, since the dwell time at that stop will  Chapter 14 - Transit Concepts
+control the vehicle capacity (and, in turn, the person capacity) of the entire route or lane.  Introduction
+Vehicle capacity (and person capacity at the maximum load point) is greater when
+passenger boarding volumes (and dwell times) are evenly distributed among stops.
+
+Vehicle Capacity
+
+  The vehicle capacity of various transit facilities—loading areas, stops and stations,
+and bus lanes—sets an upper limit to the number of passengers that may use a transit stop
+or that may be carried past the maximum load point. The relationship between the
+vehicle capacity of transit facilities and the elements of person capacity is illustrated in
+Exhibit 14-4.
+
+Dwell Time
+
+  Just as dwell times are key to determining capacity, passenger demand volumes and
+passenger service times are key to determining dwell times. Dwell times may be
+governed by boarding demand, alighting demand, or total interchanging passenger
+demand (i.e., at a major transfer point). In all cases, dwell time is proportionate to the
+boarding and alighting volumes times the service time per passenger. Dwell time also
+can influence a transit operator’s service costs: if average vehicle speeds can increase by
+reducing dwell time, and if the cumulative change exceeds the route headway, then fewer
+vehicles may be required to provide the same service frequency.
+
+  14-5
+Highway Capacity Manual 2000
+
+  EXHIBIT 14-4. CALCULATING TRANSIT PERSON CAPACITY
+
+  Transit-Lane x  Allowed Passenger  x Peak-Hour = Transit-Lane Person Capacity
+  Vehicle Capacity  Loading  Factor  at Maximum Load Point
+
+  Route  Allowed Passenger  Peak-Hour  Transit-Route Person Capacity
+  Frequency x  Loading  x  Factor  = at Maximum Load Point
+
+  Stop/Station  Peak 15-min Passenger  Peak-Hour  Transit-Stop
+  Vehicle Capacity x Interchange Volume per Vehicle x  Factor  =  Person Capacity
+
+Influences on dwell time  There are six main influences on dwell time. Two relate to passenger demand; the
+  others relate to passenger service time:
+Wheelchair and bicycle
+boarding times need to  • Passenger demand and loading. The number of people boarding and alighting
+be considered when  through the highest-volume door determines how long it will take to serve all passengers.
+calculating dwell time  If standees are present on a transit vehicle as it arrives at a stop, or if all seats are filled as
+  passengers board, service times will be higher than normal because of congestion in the
+  vehicle.
+
+  • Stop and station spacing. The fewer the stops along a route, the greater the number
+  of passengers boarding at each stop. A balance must be found between too few stops and
+  too many. Too few stops increase both the distance riders must walk to gain access to
+  transit and the amount of time a vehicle occupies a loading area. Too many stops reduce
+  overall travel speeds due to the time lost in accelerating and decelerating as well as
+  waiting at traffic signals because stops were made.
+
+  • Fare payment procedures. The amount of time passengers spend paying fares is a
+  major factor in the total time for passenger boarding. This time can be reduced by
+  minimizing the number of bills and coins required to pay a fare; encouraging the use of
+  prepaid tickets, tokens, passes, or smart cards; using a proof-of-payment fare collection
+  system; or collecting fares before boarding. Besides eliminating the time required for
+  each passenger to pay a fare onboard, proof-of-payment and paid-fare waiting-area
+  collection systems allow an even distribution of boarding passengers among the vehicle
+  doors, rather than concentrating them at a single door.
+
+  • Vehicle types. Low-floor buses decrease passenger service time by eliminating the
+  need to ascend and descend steps. This particularly applies to routes frequently used by
+  the elderly, persons with disabilities, or persons with strollers or bulky carry-on items.
+  Wide doors also allow more passengers to board and alight simultaneously.
+
+  • On-board circulation. Encouraging people to exit via the rear doors of buses with
+  more than one door decreases passenger congestion at the front door and reduces
+  passenger service times.
+
+  • Wheelchair and bicycle boarding. Dwell time also can be affected by the time to
+  board and disembark passengers in wheelchairs and for bicyclists to load and unload
+  bicycles onto a bus-mounted bicycle rack.
+
+Chapter 14 - Transit Concepts  14-6
+Introduction
+  Highway Capacity Manual 2000
+
+  II. BUS CONCEPTS  Fixed-route, demand-
+  responsive, and route- and
+TYPES OF SERVICE  point-deviation service
+
+  Bus transit service can be either fixed route or demand responsive. Fixed-route  On-line and off-line loading
+service is ideal for large, densely populated urban areas. In less dense areas, which  areas defined
+cannot support fixed-route service, demand-responsive transit can be an essential part of
+transportation for the nondriving population. With this type of service, the passenger
+calls a dispatcher, who then radios the caller’s location to a driver. Generally taxicabs or
+vans provide this type of door-to-door service.
+
+  Demand-responsive service accounts for less than 0.1 percent of U.S. transit
+passengers. It is used primarily for custom services for senior citizens and persons with
+disabilities. A variant is route-deviation service. In selected low-density areas, buses
+operate on fixed routes according to a set schedule. Passengers may ask the driver for a
+deviation from the fixed route. These deviations usually are limited in distance and
+number per run. Passengers must telephone or prebook a route deviation beforehand.
+
+  Public transportation service in which the transit vehicle arrives at designated transit
+stops on a prearranged schedule but does not follow a specific route between stops is
+referred to as point-deviation service. This allows the vehicle to provide curbside service
+on request.
+
+BUS CAPACITY CONCEPTS
+
+Loading Areas
+
+  A loading area, or bus berth, is a space for buses to stop to pick up and discharge
+passengers. Bus stops, discussed below, contain one or more loading areas. The most
+common form of loading area is a linear bus stop along a street curb. In this case, loading
+areas either can be provided in the travel lane (i.e., on-line), so that following buses
+cannot pass the stopped bus; or they can be pullouts out of the travel lane (i.e., off-line),
+so that following buses may pass. Exhibit 14-5 depicts these two types of loading areas.
+
+  EXHIBIT 14-5. ON-LINE AND OFF-LINE BUS LOADING AREAS
+  On-Line
+
+  Bus
+
+Off-Line
+
+  Bus  Sawtooth, drive-through, and
+  angle loading-area designs
+  Source: Fitzpatrick et al. (5).  should provide positive
+  protection (such as bollards)
+  Loading areas in bus terminals may be linear or may take other forms. Angle berths  to shield pedestrians from
+are limited to one bus per berth and require the buses to back out. Drive-through berths  errant buses
+are also feasible and may accommodate multiple vehicles. Shallow sawtooth berths are
+popular in urban transit centers, because they permit independent movements into and out
+of each berth. Exhibit 14-6 and Illustration 14-2 show common bus loading-area
+configurations. The National Transportation Safety Board recommends that transit
+facility designs incorporating sawtooth berths or other similar types of berths provide a
+
+  14-7  Chapter 14 - Transit Concepts
+  Bus Concepts
+Highway Capacity Manual 2000
+  positive separation (such as bollards) along the roadway, to stop an errant bus at parking-
+  area speed from intruding into the pedestrian area (6).
+  EXHIBIT 14-6. BUS LOADING AREA (BERTH) DESIGNS
+  Linear Berths
+
+  Sawtooth Berths
+
+  Angle Berths
+
+  Drive-Through Berths
+
+  Linear (Miami)  Sawtooth (San Diego)
+
+  Drive-through (Copenhagen)  Angle (Newark Airport)
+
+  ILLUSTRATION 14-2. Bus loading area (berth) examples.
+
+Chapter 14 - Transit Concepts  Linear berths are not as efficient as the other types and typically are used when buses
+Bus Concepts  occupy a berth for only a short time (for example, at an on-street bus stop).
+  Sawtooth berths allow independent movements by buses into and out of berths and are
+  commonly used at bus transfer centers. Angle berths, which require buses to back out,
+
+  14-8
+  Highway Capacity Manual 2000
+
+typically are used when a bus occupies a berth for a long time (for example, at an  Dwell-time variability
+intercity bus terminal). Drive-through berths allow bus stops to be located in a compact
+area, and also can allow all buses to wait with their front destination signs facing the  The time required for a bus to
+direction from which passengers arrive (e.g., from a rail station exit).  start up and travel its own
+  length is fixed; re-entry delay
+  The main elements that determine loading area capacity are dwell time, dwell-time  for off-line stops depends on
+variability, and clearance time. Dwell time was discussed earlier. Dwell-time variability  traffic volumes in the curb lane
+recognizes that buses do not stop for the same amount of time at a stop because of
+fluctuations in passenger demand for buses and routes. The effect of variability in bus  Bus stop design for bus
+dwell times on bus capacity is reflected by the coefficient of variation of dwell times,  terminals must consider
+which is the standard deviation of dwell-time observations divided by the mean dwell  passengers and take into
+time. Dwell-time variability is influenced by the same factors that influence dwell time.  account longer loading area
+  occupancies by buses
+  Once a bus closes its doors and prepares to depart from a stop, there is a period,
+known as the clearance time, during which the loading area is not available for use by the  The three typical on-street bus
+following bus. Part of this time is fixed, consisting of the time for a bus to start up and  stop locations are nearside,
+travel its own length, clearing the stop. For on-line stops, this is the only component of  farside, and midblock
+clearance time. For off-line stops, however, there is another component of clearance
+time: the time required for a suitable gap in traffic to allow the bus to reenter the traffic
+stream and accelerate. This reentry delay varies depending on the traffic volume in the
+curb lane—it increases as the traffic volumes increase. The delay also depends on the
+platooning effect due to upstream traffic signals. Some states have laws requiring
+motorists to yield to buses reentering a roadway; motorist compliance can reduce or even
+eliminate the reentry delay. Many bus operators forgo using off-line stops on busy streets
+to avoid reentry delay.
+
+Bus Stops
+
+  A bus stop is an area where one or more buses load and unload passengers. It
+consists of one or more loading areas. Bus stop capacity is related to the capacity of the
+individual loading areas at the stop, loading area design (linear or nonlinear), and the
+number of loading areas. Off-line bus stops provide greater capacity than on-line stops
+for loading areas, but in mixed traffic, bus speeds may be reduced if heavy volumes delay
+the buses exiting a stop. On the other hand, skip-stop operations are possible with off-
+line stops, but not with on-line stops.
+
+Bus Terminals
+
+  The design of off-street bus terminals and transfer centers involves additional
+considerations—not only estimates of passenger service times of buses, but also a clear
+understanding of how each bus route will operate. Therefore, schedule recovery times,
+driver relief times, and layovers to meet scheduled departure times become key in
+establishing loading area requirements and in sizing the facility. In addition, good
+operating practice suggests that each bus route, or geographically compatible groups of
+routes, should have a separate loading position clearly distinguished for passengers.
+
+  Loading-area space requirements should recognize the specific type of transit
+operations, fare collection practices, bus door configurations, passenger arrival patterns,
+amount of baggage, driver layover-recovery times, terminal design, and loading area
+configuration. They should reflect both scheduled and actual peak-period bus arrivals
+and departures, since intercity bus services regularly run extra vehicles during the busiest
+travel periods. Bus routes and service patterns also influence loading area requirements.
+Under good operating practices a maximum of two distinct routes (i.e., services) share a
+loading position.
+
+On-Street Bus Stops
+
+  On-street bus stops typically are located curbside in one of three locations: (a)
+nearside, when the bus stops immediately before an intersection; (b) farside, when the bus
+stops immediately after an intersection; and (c) midblock, when the bus stops in the
+
+14-9  Chapter 14 - Transit Concepts
+  Bus Concepts
+Highway Capacity Manual 2000
+
+  middle of a block, between intersections. Under certain circumstances, such as when
+  buses share a stop with streetcars running in the center of the street, or when exclusive
+  bus lanes are located in the center of the street, a bus stop may be located on a boarding
+  island within the street rather than curbside. When boarding islands are used, pedestrian
+  safety and Americans with Disabilities Act (ADA) accessibility issues should be carefully
+  considered. Exhibit 14-7 depicts typical on-street bus stop locations.
+
+  EXHIBIT 14-7. ON-STREET BUS STOP LOCATIONS
+  Nearside
+
+  Bus
+
+  Farside
+
+  Bus
+
+  Midblock
+
+  Bus
+
+Failure rate  Source: Morrall and Bolger (4).
+Linear loading areas are
+less efficient than other  The bus stop location influences capacity, particularly when passenger vehicles are
+loading area designs  allowed to make right turns from the curb lane (as is the case in most situations, except
+  for certain kinds of exclusive bus lanes). Farside stops have the least effect on capacity
+Chapter 14 - Transit Concepts  (when buses are able to use an adjacent lane to avoid right-turn queues), followed by
+Bus Concepts  midblock stops, and nearside stops.
+
+  Bus Stop Loading-Area Requirements
+
+  The key factors influencing the number of loading areas required at a bus stop are the
+  following:
+
+  • Bus volumes. The number of buses scheduled to use a bus stop during an hour
+  directly affects the number of buses that may need to use the stop. If loading areas are
+  insufficient, buses will queue behind the stop, decreasing its vehicle capacity. This
+  increases passenger travel times and decreases on-time reliability, negatively affecting
+  quality of service.
+
+  • Probability of queue formation. The failure rate—the probability that queues of
+  buses will form at a bus stop—is a design factor that should be considered when sizing a
+  bus stop.
+
+  • Loading area design. With the exception of the linear model, loading area
+  designs—such as sawtooth and drive through—are 100 percent effective: the bus-stop
+  vehicle capacity equals the number of loading areas times the vehicle capacity of each
+  loading area, since buses are able to maneuver in and out of the loading areas
+  independently of other buses. Linear loading areas, on the other hand, decrease in
+  effectiveness as the number of loading areas increases, because it is not likely that the
+  loading areas will be used equally. Buses entering or leaving a linear loading area also
+  may be blocked and delayed by buses stopped in adjacent loading areas.
+
+  14-10
+  Highway Capacity Manual 2000
+
+  • Traffic signal timing. The amount of green signal time provided to a street that  Suggested peak-hour factors
+buses operate on affects the maximum number of buses that potentially can arrive at a bus  for use in calculating person
+stop during an hour. The amount of red signal time influences how much additional time  capacity
+a bus occupies a stop after passenger movements are completed.
+
+Bus Lanes
+
+  For the purpose of determining capacity, a bus lane is any lane on a roadway in
+which buses operate. It may be used exclusively by buses, or it may be shared with other
+traffic. The vehicle capacity of a bus lane is influenced by the capacity of the critical bus
+stop located along the lane, typically the stop with the highest volume of passengers.
+However, the critical stop also might have an insufficient number of loading areas. Bus
+lane capacity also is influenced by the following:
+
+  • Bus lane type. The vehicle capacity procedures identify three types of bus lanes
+(7). Type 1 bus lanes have no use of the adjacent lane; Type 2 bus lanes have partial use
+of the adjacent lane, which is shared with other traffic; and Type 3 bus lanes provide for
+exclusive use of two lanes by buses. The curb lane of Type 1 and 2 lanes may or may not
+be shared with other traffic. When the lane is primarily for mixed traffic, typically there
+is no formal designation of a bus lane either with signing or with pavement markings.
+The greater the degree of exclusivity of the bus lane and the greater the number of lanes
+available for buses to maneuver, the greater the bus lane capacity. Bus lane types are
+illustrated and discussed in more detail in Chapter 27.
+
+  • Skip-stop operation. Bus lane capacity can be increased by dispersing bus stops,
+so that only a portion of the buses use the bus lane stop at a particular set of stops. This
+block-skipping pattern allows for a faster trip and reduces the number of buses stopping
+at each stop, although it also increases the complexity of the bus system for new riders
+and may increase passenger walking distances to bus stops. Skip-stop operation is
+discussed further in Chapter 27.
+
+  • Platooning. When skip stops are used, gathering buses into platoons at the
+beginning of the skip-stop section maximizes the efficiency of the operation. Each
+platoon is assigned a group of stops, and the platooned buses travel as trains past the skip-
+stop section. The number of buses in each group ideally should equal the number of
+loading areas at each stop.
+
+  • Bus stop location. Farside stops provide the highest bus lane capacity, but other
+factors, such as conflicts with other vehicles, transfer opportunities, and traffic signal
+timing, also must be considered when siting bus stops.
+
+  Exhibit 14-8 summarizes the main elements that determine the bus vehicle capacity
+of loading areas, stops, and lanes.
+
+GENERAL CAPACITY RANGES
+
+  This section provides estimates of vehicle capacity for loading areas, bus stops, and
+bus lanes, based on defaults applied to the capacity estimation procedures given in
+Chapter 27. Vehicle capacities shown are generally maximums based on a 25 percent
+failure rate (i.e., one in four buses will have to wait for a loading area when arriving at a
+stop). Schedule reliability concerns may dictate scheduling fewer buses than the
+maximums shown below. Person capacities may be obtained by multiplying the values
+given in the exhibits by the maximum allowed passenger load per vehicle (set by policy)
+times a PHF. The typical PHF for bus routes ranges from 0.60 to 0.95 (8,9). In general,
+capacities are governed by the busiest stop and by the distribution of passengers among
+stops.
+
+14-11  Chapter 14 - Transit Concepts
+  Bus Concepts
+Highway Capacity Manual 2000
+
+Bus vehicle capacity is  EXHIBIT 14-8. INFLUENCES ON BUS VEHICLE CAPACITY
+commonly calculated at  Passenger Demand
+three locations: loading
+areas (bus berths), bus  and Loading
+stops, and bus lanes.
+  Bus Stop  Dwell
+The capacity of each of  Spacing  Time
+these locations is  Fare Payment  Dwell Time
+influenced by one or  Method  Variability
+more elements (middle  Vehicle Type
+column), each of which in  and Size
+turn is influenced by a  Onboard
+number of factors (left  Circulation
+column).
+
+  Loading-Area
+  Vehicle Capacity
+
+  On- or Off-Line
+  Stops
+
+  Traffic  Clearance
+  Volumes  Time
+
+  Traffic
+  Laws
+
+  Bus Queueing
+  (Failure Rate)
+
+  Bus  Number of Loading  Bus-Stop
+  Volumes  Areas  Vehicle Capacity
+  Traffic Signal
+  Timing
+
+  Loading Area
+  Design
+
+  Bus Lane
+  Type
+
+  Skip-Stop  Bus Operational  Bus-Lane
+  Operations  Issues  Vehicle Capacity
+  Platooning
+
+  Bus Stop
+  Location
+
+Chapter 14 - Transit Concepts  14-12
+Bus Concepts
+  Highway Capacity Manual 2000
+
+Loading Areas
+
+  Exhibit 14-9 identifies the estimated bus vehicle capacity at loading areas, based on
+various values of dwell time and the ratio of green traffic signal time to total cycle length
+(g/C ratio). Other values not provided in the exhibit may be interpolated.
+
+EXHIBIT 14-9. ESTIMATED VEHICLE CAPACITY OF ON-STREET LOADING AREAS
+  (SEE FOOTNOTE FOR ASSUMED VALUES)
+
+  Capacity (buses/h)  Maximum vehicle capacity of
+  loading areas. Multiply by the
+Dwell Time (s)  g/C = 0.50  g/C = 1.00  peak 15-min passenger
+  boardings and alightings per
+  15  63  100  vehicle and a PHF to obtain
+  30  43  63  person capacity.
+  45  32  46
+  60  26  36
+  75  22  30
+  90  19  25
+  105  16  22
+  120  15  20
+
+Note:
+Assumes 15-s clearance time, 25 percent queue probability, and 60 percent coefficient of variation of dwell times.
+
+Bus Stops
+
+  Exhibit 14-10 lists estimated vehicle capacities of on-line linear bus stops. Note that
+increasing the number of loading areas at a linear bus stop has an ever-decreasing effect
+on capacity as the number of loading areas increases (i.e., doubling the number of loading
+areas at a linear bus stop does not double capacity). Nonlinear designs are 100 percent
+efficient, since doubling the number of loading areas also doubles the capacity of the
+stop.
+
+  EXHIBIT 14-10. ESTIMATED CAPACITY OF ON-LINE LINEAR BUS STOPS  Vehicle capacity of on-line
+  (SEE FOOTNOTE FOR ASSUMED VALUES)  linear bus stops. Multiply by
+  the maximum allowed
+  Capacity (buses/h)  passenger load per vehicle
+  and a peak-hour factor to
+  g/C g/C  g/C g/C g/C g/C g/C g/C  g/C g/C  obtain maximum person
+  0.50 1.00  0.50 1.00 0.50 1.00 0.50 1.00  0.50 1.00  capacity.
+
+  Number of On-Line Linear Loading Areas
+
+Dwell Time (s)  1  2  3  4  5
+
+  30  43  63  79 117 105 154 113 167  115 170
+  60
+  90  26  36  48  67  64  89  69  96  70  98
+  120
+  19  25  35  47  46  62  49  67  50  69
+
+  15  20  27  36  36  48  39  52  39  53
+
+Note:
+Assumes 15-s clearance time, 25 percent queue probability, and 60 percent coefficient of variation of dwell times. To obtain the
+vehicle capacity of nonlinear on-line bus stops, multiply the single loading area values by the number of loading areas provided.
+
+Busways  Exclusive busways with a
+  limited number of CBD stops
+  If a busway extends into the CBD and has a limited number of stations in the  have passenger distribution
+downtown area, the passenger distribution characteristics will be similar to those of a  characteristics similar to those
+subway or other rail line. A reasonable design assumption is that 50 percent of the  of subways
+maximum load-point volume is served at the heaviest CBD busway station, assuming a
+minimum of three stops in the downtown area.  Chapter 14 - Transit Concepts
+  Bus Concepts
+  Busway vehicle and person capacities for central areas are given in Exhibit 14-11 for
+a variety of bus types and service conditions. Data on passenger service times and the
+effectiveness of linear loading areas are given in Chapter 27. The key assumptions used
+in the exhibit are:
+
+  14-13
+Highway Capacity Manual 2000
+
+  • Fares are prepaid at busway stations. This allows all doors to be used for loading,
+  which greatly decreases the service time per passenger, since several passengers may
+  board at the same time.
+
+  • Fifty percent of the maximum load-point passengers board at the heaviest stop. A
+  PHF of 0.67 is assumed.
+
+  • No delays are due to signals (i.e., it is a grade-separated busway).
+  • The clearance time is 10 s. The design failure rate is 7.5 percent and a 60 percent
+  coefficient of variation is assumed.
+  • Three linear loading areas are provided at each station.
+  • The maximum load-point passenger volume is limited to 40 passengers per bus for
+  standard buses and 60 passengers per bus for articulated buses; this provides a seat for all
+  passengers.
+
+This exhibit presents  EXHIBIT 14-11. EXAMPLES OF CBD BUSWAY CAPACITIES
+vehicle and person  (SEE FOOTNOTE FOR ASSUMED VALUES)
+capacities for busways
+under typical conditions,  Loading Condition
+rather than maximum
+capacities
+
+  A  B  C  D
+
+  Stations: On-Line/Off-Line  On Off  On Off On Off  On  Off
+
+  Boarding passengers per bus  Passengers Boarding at Heaviest Station
+  Boarding time per passenger (s)
+  Dwell time (s)  20 20  20 20 20 20  30  30
+
+  Loading area capacity (bus/h)  2.0 2.0 1.2 1.2 0.7 0.7 0.5 0.5
+  Effective loading areas
+  Station capacity (bus/h)  40.0 40.0 24.0 24.0 14.0 14.0 15.0 15.0
+
+  Peak-flow rate (15 min * 4)  Vehicle Capacity
+  Average peak hour (with PHF)
+  42 42  65 65 100 100 95  95
+
+  2.45 2.60 2.45 2.60 2.45 2.60 2.45 2.60
+
+  103 109 159 169 245 260 233 247
+
+  Passengers/Hour - Maximum Load Point
+
+  4120 4360 6360 6760 9800 10,400 13,980 14,820
+
+  2760 2920 4260 4530 6570 6970 9370 9930
+
+  Notes:
+  Loading Condition A: single-door conventional bus, simultaneously loading and unloading.
+  Loading Condition B: two-door conventional bus, both doors loading or double-stream doors simultaneously loading and
+  unloading.
+  Loading Condition C: four-door conventional bus, all double-stream doors loading.
+  Loading Condition D: six-door articulated bus, all doors loading.
+  Assumes 10-s clearance time, 7.5 percent failure rate, 60 percent coefficient of variation of dwell times, 3 linear loading areas,
+  g/C = 1.0, PHF = 0.67, 50 percent of passengers board at heaviest CBD station, 40 seats per conventional bus, 60 seats per
+  articulated bus, no standees allowed.
+
+  Exclusive Arterial-Street Bus Lanes
+
+  Exhibit 14-12 illustrates the effects of dwell time, right-turning volume from the bus
+  lane, and conflicting pedestrian volumes on bus-lane vehicle capacity. It assumes
+  conflicting pedestrian volumes ranging from 100 to 800/h, dwell times of 30 or 60 s, and
+  right-turning volumes of 0 to 400 vehicles, as well as other assumptions, held constant,
+  that are listed in the exhibit. Buses are assumed to stop at every bus stop in the CBD.
+
+  It can be seen that as dwell time decreases, bus vehicle capacity increases.
+  Conflicting pedestrian volumes under 200/h have little effect on bus vehicle capacity, but
+  have substantial effects at higher conflicting volumes, especially as right-turning volumes
+  increase. However, when there are no right-turn conflicts, pedestrian volumes have no
+  impact on vehicle capacity, and the lines for a given dwell time converge to a single
+  point. It also can be seen that the lines for a given pedestrian volume converge toward a
+  point at which the right-turn capacity is exceeded and the bus-lane vehicle capacity drops
+  to zero. Between these two extremes, bus vehicle capacity steadily declines as right-
+  turning volumes increase.
+
+Chapter 14 - Transit Concepts  14-14
+Bus Concepts
+  Highway Capacity Manual 2000
+
+  EXHIBIT 14-12. EXCLUSIVE BUS-LANE VEHICLE CAPACITY: NON–SKIP-STOP OPERATION  To compute person capacity,
+  (SEE FOOTNOTE FOR ASSUMED VALUES)  multiply the values shown in
+  the exhibits by the allowed
+  100  passenger load per bus and a
+  peak-hour factor
+Bus-Lane Vehicle Capacity (buses/h)  90
+  In mixed traffic, on-line stops
+  80  may provide greater capacity
+  than off-line stops, depending
+  70  on traffic volumes and the
+  number of loading areas
+  60
+  Bus priority treatments provide
+  50  faster, more reliable bus
+  operations, improving
+  40  passenger quality of service
+
+  30
+
+  20
+
+  10
+
+  0
+
+  0  50  100  150  200  250  300  350  400
+
+  Right-Turning Volume (veh/h)
+
+  100 peds, 60 s dwell  400 peds, 60 s dwell  800 peds, 60 s dwell
+  100 peds, 30 s dwell  400 peds, 30 s dwell  800 peds, 30 s dwell
+
+Note:
+Assumes 15-s clearance time, 25 percent queue probability, 60 percent coefficient of variation of dwell times, permitted
+right-turn signal phasing, shared right-turn lane, g/C = 0.5, nearside stops, 2 linear berths, and bus volumes minimal in relation
+to right-turn volumes (PRT = 1.0).
+
+  Exhibit 14-13 illustrates the same situations with the buses in a two-stop skip-stop
+operation and the adjacent lane assumed to have a v/c ratio of 0.5. For a given right-
+turning volume, the corresponding bus-lane vehicle capacity is about 67 percent higher
+than if skip stops were not used.
+
+Mixed-Traffic Lanes
+
+  Exhibit 14-14 depicts the decline in bus vehicle capacity in mixed traffic when curb-
+lane volumes increase, as well as the variation in bus vehicle capacity by bus stop
+location. In mixed traffic, off-line linear stops may provide less bus vehicle capacity than
+on-line stops with identical dwell times, since the benefits of additional loading areas at
+off-line stops can be outweighed by the additional delay as buses reenter traffic.
+
+BUS PRIORITY TREATMENTS
+
+Bus Preferential Treatments at Intersections
+
+  When buses operate in mixed traffic, the interference decreases bus speeds and
+lowers overall bus-vehicle and person capacity. The bus preferential treatments described
+in this section compensate by removing or reducing sources of delay, increasing bus
+speeds. When considering bus preferential treatments, the total change in person delay
+(both for passengers in buses and for motorists) should be taken into account.
+
+  14-15  Chapter 14 - Transit Concepts
+  Bus Concepts
+Highway Capacity Manual 2000
+
+  EXHIBIT 14-13. EXCLUSIVE BUS-LANE VEHICLE CAPACITY: SKIP-STOP OPERATION
+  (SEE FOOTNOTE FOR ASSUMED VALUES)
+
+  140
+
+  Bus-Lane Vehicle Capacity (buses/h)  120
+
+  100
+
+  80
+
+  60
+
+  40
+
+  20
+
+  0
+
+  0  50  100  150  200  250  300  350  400
+
+  Right-Turning Volume (veh/h)
+
+  100 peds, 60 s dwell  400 peds, 60 s dwell  800 peds, 60 s dwell
+  100 peds, 30 s dwell  400 peds, 30 s dwell  800 peds, 30 s dwell
+
+  Note:
+  Assumes 15-s clearance time, 25 percent queue probability, 60 percent coefficient of variation of dwell times, permitted right-
+  turn signal phasing, shared right-turn lane, g/C = 0.5, nearside stops, 2 linear berths, v/c = 0.5, and bus volumes minimal in
+  relation to right-turn volumes (PRT = 1.0).
+
+To compute maximum  EXHIBIT 14-14. MIXED-TRAFFIC-LANE BUS VEHICLE CAPACITY
+person capacity, multiply  (SEE FOOTNOTE FOR ASSUMED VALUES)
+the values shown by the
+allowed passenger load  60
+per bus and a PHF
+  50
+The mixed-traffic bus-
+capacity procedures are  Curb Lane Bus Vehicle Capacity (bus/h)  40
+an extension of the
+exclusive bus-lane  30
+capacity procedures
+developed by the Transit  20
+Cooperative Research
+Program A-7 project.
+The theoretical basis for
+mixed-traffic procedures
+has not been validated in
+the field.
+
+  10
+
+  0
+
+  0  100 200 300 400 500 600 700 800 900
+
+  Curb Lane Traffic Volume (pv/h)
+
+  100 peds, 60 s dwell  400 peds, 60 s dwell  800 peds, 60 s dwell
+  100 peds, 30 s dwell  400 peds, 30 s dwell  800 peds, 30 s dwell
+
+  Note:
+  Assumes a Type 1 mixed bus lane, one linear loading area per stop, g/C = 0.5, 30-s dwell time, 25 percent failure rate, and a 60
+  percent coefficient of variation of dwell times.
+
+Chapter 14 - Transit Concepts  14-16
+Bus Concepts
+  Highway Capacity Manual 2000
+
+Signal Priority  Bus-signal priority measures
+  can be passive (pretimed) or
+  Bus-signal priority measures at signalized intersections include passive systems,  active (operated when a bus
+which are pretimed treatments adjusted manually to determine the best transit benefit  is detected)
+while minimizing the effect on other vehicles, and active systems, which adjust the signal
+timing after sensing the arrival of a bus. Exhibit 14-15 lists the most common bus-signal  Queue bypasses at freeway
+priority systems at intersections.  ramp meters allow buses to
+  avoid delay
+  EXHIBIT 14-15. BUS-SIGNAL PRIORITY SYSTEMS  Queue jumps allow buses to
+  bypass long queues of
+Treatment  Description  vehicles at signalized
+  intersections
+Adjust cycle length  Passive Priority
+Split phases
+Areawide timing plans  Reduce cycle lengths at isolated intersections
+Bypass metered signals  Apply multiple phases while maintaining original cycle length
+  Preferential progression for buses through signal offsets
+Phase extension  Buses use special reserved lanes, special signal phases, or are rerouted
+Early start  to nonmetered signals
+Special phase
+Phase suppression  Active Prioritya
+Preemption (unconditional)
+Preemption (conditional)  Increase phase time
+  Reduce other phase times
+  Addition of a bus phase
+  Skipped nonpriority phases
+  Bus phase begins when all other intervals are satisfied
+  Same as above except certain conditions are used to determine when
+  the bus phase should begin
+
+Note:
+a. Occurs after bus detection.
+Source: Bullard and Nungesser (10).
+
+  Active priority should be implemented only at intersections operating at less than
+capacity, so that the changes to signal timing whenever a bus passes through the
+intersection do not worsen the intersection LOS. Automated systems that do not require
+bus driver intervention are preferable, since drivers might not always remember to
+activate the system. When coupled with two-way data communication and automatic
+vehicle location (AVL) equipment, on-bus signal priority systems can be set to activate
+signal priority only when a bus is behind schedule (11).
+
+Queue Bypass
+
+  Queue bypasses allow buses to avoid queues of vehicles (such as those that develop
+at signalized intersections or freeway ramp meters) by providing a special lane. Queue
+bypass lanes can be shared with carpools and van pools.
+
+Queue Jump
+
+  Queue jumps allow buses to move past long queues of vehicles at signalized
+intersections by using right-turn lanes or long off-line bus stops. Buses are exempted
+from any right-turn requirements at the intersection.
+
+  A special right-lane signal provides a green indication for a brief time before the
+green for the adjacent general traffic lanes. The bus then exits the right lane and merges
+into the lane to the left, ahead of the other traffic still stopped for the signal.
+Alternatively, the bus can pull into the right-turn lane on a red signal and proceed to a
+farside off-line bus stop on green, avoiding the delay behind the queue in the regular
+lanes of the intersection.
+
+  14-17  Chapter 14 - Transit Concepts
+  Bus Concepts
+Highway Capacity Manual 2000
+
+Curb extensions allow  Curb Extensions
+the bus to stop in the
+travel lane and provide  Where streets have curbside parking and high traffic volumes, it may not be desirable
+more room for transit  for a bus to pull to the curb to stop, because it must then wait for a gap in traffic to pull
+amenities at the bus stop  back into the travel lane. In these situations, the curb can be extended into the parking
+  lane so that buses can stop in the travel lane to pick up and discharge passengers. The
+Boarding islands allow  additional area curbside can provide a clear area to load and unload wheelchair
+buses to avoid  passengers in compliance with the ADA, to provide a bus shelter where otherwise there
+congestion in the right  would not have been enough space, and to provide more room for passengers waiting for
+lane but require careful  the bus. Curb extensions also can create more on-street parking, as the area before the
+consideration of  bus stop, previously used for buses to pull to the curb, now can be used for additional
+pedestrian safety  parking. If there are bicycle lanes, they can be routed around the curb extension; but this
+  can introduce potential bicycle-pedestrian conflicts. At intersections, curb extensions
+The net change in  benefit pedestrians by reducing the width of street to cross.
+person delay is an
+important consideration  Boarding Islands
+before implementing
+transit priority measures  Significant parking activity, stopped delivery vehicles, heavy right-turning traffic
+  volumes, and other interferences often slow traffic in the right lane of a street with
+Chapter 14 - Transit Concepts  multiple lanes in the same direction. In these situations, buses might be able to travel
+Bus Concepts  faster in the lane to the left. Boarding islands allow bus stops between travel lanes; buses
+  then can remain in a faster lane without merging to the right before every stop. However,
+  pedestrian safety must be addressed in conjunction with boarding islands.
+
+  Other Measures
+
+  Other preferential treatments for transit at intersections include the following (11):
+  • Parking restrictions. When high parking turnover interferes with the flow of traffic
+  on a street, restricting parking will improve transit and traffic flow. However, the
+  impacts on adjacent land uses from the loss of on-street parking also must be considered.
+  Parking restrictions sometimes are applied during peak hours, often in conjunction with
+  bus lane operations.
+  • Bus stop relocation. On streets with good traffic signal progression for passenger
+  vehicles, moving a bus stop from the nearside to the farside of an intersection may allow
+  buses to use the signal timing to their advantage, passing through intersections on a green
+  signal and dwelling on a red signal.
+  • Turn restriction exemptions. The most direct route for a bus might not be possible
+  because of left-turn restrictions at intersections, particularly if there is no room to develop
+  left-turn lanes. If this restriction is due to traffic congestion, rather than safety, it might
+  be feasible to exempt buses from the restriction without a negative impact on the
+  intersection’s operation.
+  • Bus lanes, busways, and high-occupancy vehicle (HOV) lanes. Where there is a
+  relatively high volume of buses operating on a roadway, coupled with a high degree of
+  bus and general traffic congestion, exclusive bus lanes might be considered, to provide
+  more attractive and reliable bus service. Most bus lanes take the form of reserved lanes
+  on city streets, usually in the same direction as the general traffic flow. In North
+  America, busways and reserved lanes on freeways are mainly in larger cities, usually with
+  a large downtown employment and a heavy peak-hour bus ridership. HOV lanes either
+  on freeways or on urban streets also can provide higher bus speeds.
+
+  Person-Delay Considerations
+
+  In many cases, providing transit priority involves tradeoffs among the various users
+  of a roadway. A bus queue jump at a traffic signal, for example, provides a time-saving
+  benefit for bus passengers but causes additional delay for motorists, their passengers,
+  bicyclists, and some pedestrians. Any consideration of transit priority measures should
+  include the net change in person delay to all roadway users as a result of the priority
+  treatment. Of course, other factors, such as cost, change in transit quality of service, and
+
+  14-18
+  Highway Capacity Manual 2000
+
+local policies encouraging transit use, also should be considered. Exhibit 14-16
+summarizes the advantages and disadvantages of the bus preferential treatments presented
+in this section.
+
+  EXHIBIT 14-16. COMPARISON OF BUS PREFERENTIAL TREATMENTS
+
+  Treatment  Advantages  Disadvantages
+  Risks interrupting coordinated traffic signal
+Signal Priority •  Reduces delay  •  operation
+  •  Risks lowering intersection LOS, if intersection
+  Improves reliability  is close to capacity
+  Requires ongoing interjurisdiction coordination
+  •  Buses on cross streets may incur added delay
+  greater than the time saved by the favored route
+  •  Bus lane must be available and longer than the
+  •  back of queue
+  Right lane must be available and longer than
+Queue Bypass •  Reduces delay from queues at ramp •  the back of queue
+  Right-turn or special transit signal required
+Queue Jump •  meters or other locations  Reduces green time available to other
+  •  intersection traffic
+  Reduces delay to queues at signals  •  Bus drivers must be alert for the short period of
+  priority green time
+  Buses can leapfrog stopped traffic  Requires at least two travel lanes in bus
+  direction of travel to avoid blocking traffic while
+  •  passengers board and alight
+  Bicycle lanes require special consideration
+  •
+  Requires at least two travel lanes in bus
+  •  direction of travel and a significant speed
+  difference between the two lanes
+Curb  •  Reduces delay due to merging back into •  Requires more right-of-way than other
+  traffic  treatments
+Extensions  Increases riding comfort because buses  Pedestrian and ADA accessibility, comfort, and
+  don’t need to pull in and out of stops •  safety issues must be carefully considered
+  •  Increases on-street parking by eliminating  May significantly impact adjacent land uses
+  need for taper associated with bus  (both business and residential)
+  •  pullouts  Requires ongoing enforcement
+  Increases space for bus stop amenities  May increase walking distance for passengers
+  •  Reduces pedestrian street crossing  transferring to a cross-street bus
+  •  distances  Potentially lowers intersection LOS
+  Safety issues must be carefully considered
+Boarding  •  Increases bus speed by allowing buses to •  Traffic and parking effects of eliminating a
+  use faster-moving left lane  travel or parking lane must be carefully
+Islands  considered
+  Requires ongoing enforcement
+  •
+
+  •
+
+Parking  •  Increases bus and auto speeds by  •
+
+Restrictions  removing delays caused by automobile
+
+  parking maneuvers  •
+
+Bus-Stop  •  Uses existing signal progression to bus’ •
+
+Relocation  advantage
+
+Turn Restriction •  Increases bus speed by eliminating need •
+
+Exemption  for detours to avoid turn restrictions •
+
+Exclusive Bus •  Increases bus speed by reducing sources •
+
+Lanes  of delay
+
+  •  Improves reliability
+
+  •  Increases transit visibility  •
+
+Source: Portland Office of Transportation (11).
+
+  III. LIGHT-RAIL AND STREETCAR CONCEPTS  Chapter 14 - Transit Concepts
+  This section provides a brief overview of peak-hour light-rail and streetcar transit  Bus Concepts
+ridership in the United States and Canada and its implications for passenger capacity.
+Streetcars operate exclusively on city streets. Light-rail transit (LRT) started as a
+modification, separating streetcar operation from street traffic to allow higher speeds.
+
+  14-19
+Highway Capacity Manual 2000
+
+Train length is  LRT is characterized by versatility of operation—it can operate separated from other
+constrained by the length  traffic below grade, at grade, on an elevated structure, or together with road vehicles on
+of a city block  the surface (12). More detailed information on rail transit ridership and capacity is
+  available in a variety of other resources (9,12–19).
+
+  LRT operations differ in station spacing and design, fare structure and collection
+  methods, train length and propulsion, degree of access control, and markets served.
+  Unlike streetcars, travel times between light-rail stations are relatively unaffected by
+  increased passenger volumes or service.
+
+  GENERAL CAPACITY RANGES
+
+  The capacity of a rail line is determined by station (or stop) capacity or way capacity,
+  whichever is smaller; in most cases, it is station capacity. Capacity depends on car size
+  and station length, allowable standees, and the minimum spacing (or headway) between
+  trains. This minimum headway is a function not only of dwell times at major stations, but
+  also of train length, acceleration and deceleration rates, and train control systems. Exhibit
+  14-17 illustrates the main factors affecting rail vehicle capacity.
+
+  Time-space diagrams can be used to estimate the safe separation or minimum
+  headway between trains. Sometimes theoretical approaches are used. A more common
+  practice is to obtain the minimum spacing between trains based on actual experience,
+  station dwell times, and signal control systems.
+
+  The passenger capacity of LRT depends on vehicle size, train length, and headway.
+  However, the achievable LRT capacities also depend on design and policy considerations
+  that reflect specific local constraints of station design, at-grade operations, and type of
+  right-of-way.
+
+  If trains operate on-street, capacity estimates can be derived by adapting the
+  equations for bus transit to the differing vehicle sizes, train lengths, and clearance.
+  Capacity estimates for off-street operations may be derived from the approaches for rail
+  transit, described in Chapter 27.
+
+  LRT trains usually are limited to a maximum of three cars for on-street operation.
+  Longer trains usually cannot operate on city streets without simultaneously occupying
+  more than the space between adjacent cross streets on short blocks, cannot clear at-grade
+  intersections rapidly, and require long platform lengths at stations.
+
+  Minimum headways for light-rail systems depend on train length, platform and car
+  design (high floor versus low floor), fare collection methods (prepayment versus pay on
+  train), wheelchair accessibility, and headway controls (manual versus block signals).
+  Manual operations can accommodate 80 to 100 single-unit cars per track per hour. When
+  trains run under block signal controls, as is common with rapid-transit systems, 120-s
+  headways are possible. Shorter headways can be realized with moving-block signals.
+  Most North American light-rail systems are signaled for a minimum headway of 3 min.
+
+  At 120-s headways, a light-rail system operating on mainly reserved right-of-way
+  with three-car trains would have a line capacity of up to 7,500 seated and 15,000 total
+  passengers/h (30 three-car trains at 170 persons/car). Under single-vehicle manual
+  operation at lower speeds, closer headways are feasible. At 60-s headways, single LRT
+  units have a capacity of 4,000 seated and 10,000 total passengers/h (schedule load) (20).
+  However, in practice these capacities are not realized because of lower ridership
+  demands. Typical ranges in person capacities are listed in Exhibit 14-18.
+
+  Current operating experience in the United States and Canada suggests maximum
+  realizable capacities of 12,000 to 15,000 persons/track/h. However, European experience
+  shows up to 20,000 persons/h.
+
+  One of the variables determining capacity is light-rail and streetcar travel time when
+  operating in two directions using a single track. Chapter 27 provides equations to
+  calculate travel time on a single-track section. Exhibit 14-19 lists values for these
+  variables, where local data are not available. The value of the maximum single-track
+  section speed should be the most appropriate speed limit for that section. A 60-km/h
+
+Chapter 14 - Transit Concepts  14-20
+Light-Rail and Streetcar Concepts
+  Highway Capacity Manual 2000
+
+speed limit is a suitable value for most protected, grade-separated lines. If the single-
+track section is on-street, then a speed at or below the vehicle speed limit should be used.
+If there are signalized intersections, an allowance of half the signal cycle should be added
+to the travel time for each such intersection, adjusted for any improvements possible from
+preemption.
+
+  EXHIBIT 14-17. INFLUENCES ON RAIL VEHICLE CAPACITY
+
+  Passenger Demand
+  and Loading
+
+Station
+Spacing
+
+Fare Payment  Dwell  Loading-Area
+  Method  Time  Vehicle Capacity
+
+Vehicle Type
+  and Size
+
+ Onboard
+Circulation
+
+Vehicle Spacing
+  Policy
+
+Streetcar  Number of Loading  Station Vehicle
+Volumes  Areas  Capacity
+
+Traffic Signal
+  Timing
+
+Right-of-Way
+  Type
+
+Operating
+ Margin
+
+Vehicle Performance  Operating  Minimum
+  Characteristics  Issues  Headway
+
+Train Control  Rail-Line
+  Systems  Vehicle Capacity
+  Block
+  Length
+
+  14-21  Chapter 14 - Transit Concepts
+  Light-Rail and Streetcar Concepts
+Highway Capacity Manual 2000
+
+  EXHIBIT 14-18. TYPICAL LIGHT-RAIL TRANSIT PERSON CAPACITIES: 30 TRAINS/TRACK/h, 28- TO 30-m
+  ARTICULATED CARS
+
+  Cars/  Passengers/Car
+
+  Train  75a  100  125  150  175
+
+  1  2250  3000  3750  4500  5250
+
+  2  4500  6000  7500  9000  10,500
+
+  3  6750  9000  11,250  13,500  15,750
+
+  4  9000  12,000  15,000  18,000  21,000
+
+  Note:
+  a. All passengers seated.
+
+  EXHIBIT 14-19. DEFAULT VALUES FOR SINGLE-TRACK LIGHT-RAIL AND STREETCAR TRAVEL TIME
+
+  Term  Default Value
+
+  Jerk limiting time  0.5 s
+  Brake system reaction time  1.5 s
+  Dwell time  15–25 s
+  Service braking rate  1.3 m/s2
+  Speed margin  1.1–1.2
+  Operating margin  10–30 s
+
+  Source: Parkinson and Fisher (12).
+
+  RAIL PRIORITY TREATMENTS
+
+  Operating variability caused by traffic congestion has been reduced for the recently
+  built on-street light-rail lines that operate in reserved lanes. Some older systems still
+  operate extensively in mixed traffic and are subject to the variability in train throughput
+  caused by a reduced effective green time for trains. Traffic queuing, left turns, and
+  parallel parking can reduce LRT capacity.
+
+  Traffic signals can be a major impediment to LRT operation if they are not designed
+  for the needs of LRT. Poor traffic signaling can make train operation slow, unreliable,
+  and unattractive to potential passengers. These problems can be addressed through the
+  use of signal priority or preemption and signal progression. Signal priority allows the
+  light-rail train to extend a green phase or to speed the arrival of the next one. Depending
+  on the frequency of intersections and traffic congestion, this can have a substantial impact
+  on the flow of general traffic. As a result, LRT signal priority in congested areas is often
+  limited in scope to avoid negative effects on other traffic.
+
+  Signal progression has supplanted priority or preemption for light-rail trains in many
+  congested downtown areas. This technique gives trains a green window during which
+  they can depart and travel to the next station on successive green signals. The benefits of
+  progression increase with greater station spacing as less accumulated time is spent
+  waiting for the progression to start at each station. The progression frequently is part of
+  the normal traffic-signal phasing and is fully integrated with signaling for automobiles on
+  cross streets. This reduces delays for transit and motorists alike. Station stops are
+  accommodated by the train missing one traffic-signal cycle and then proceeding on the
+  next. Ideally, the cycle length will be slightly longer than a long average dwell, allowing
+  the majority of trains to leave shortly after passenger activity has ended.
+
+Chapter 14 - Transit Concepts  14-22
+Light-Rail and Streetcar Concepts
+

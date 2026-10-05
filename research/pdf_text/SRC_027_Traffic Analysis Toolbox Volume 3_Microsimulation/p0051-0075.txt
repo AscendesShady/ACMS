@@ -1,0 +1,1129 @@
+Chapter 2. Data Collection and Analysis
+
+Step 5: Perform Clustering
+
+Step 5.1: Sort data by bottleneck throughput at any one critical location. In the example, the
+tunnel to the Osceola Ave. exit is used as the critical location. If desired, data may be sorted
+again over travel time for a critical trip. Sorting is done to reach convergence quickly in Step 5.6.
+
+Step 5.2: Specify the initial number of clusters, k as 3.
+
+Step 5.3: Divide the days systematically into k clusters with nearly equal number of days. In our
+example, the 17 days can be divided into three clusters, with two clusters having 6 days and one
+cluster having 5 days. Table 5 presents the data that have been sorted and partitioned into 3
+clusters.
+
+Step 5.4: Calculate the centroid or the mean of each cluster. Means are calculated for each
+attribute. In the example, we make the assumption that each attribute has the same weight. But
+this can be changed so that one attribute has a higher weight implying that it contributes to the
+grouping or clustering more than the others. Table 6 presents the centroids or means of each
+cluster for each attribute.
+
+Step 5.5: Calculate the Euclidean distance of each data to the centroids of the k clusters. This is
+done using the following equation:
+
+𝑥𝑥𝑥𝑥𝑥𝑥𝑥𝑥𝑦𝑦 = �(𝑥𝑥1 − 𝑦𝑦𝑦𝑦𝑦𝑦𝑦𝑦𝑦𝑦1)2 + (𝑥𝑥2 − 𝑦𝑦𝑦𝑦𝑦𝑦𝑦𝑦𝑦𝑦2)2 + (𝑥𝑥3 − 𝑦𝑦𝑦𝑦𝑦𝑦𝑦𝑦𝑦𝑦3)2 + ⋯  (4)
+
+where:
+
+  𝑥𝑥𝑥𝑥𝑥𝑥𝑥𝑥𝑦𝑦 :  distance of data x to mean of cluster y
+  value corresponding to attribute 1 for data x
+  𝑥𝑥1 :  mean value for attribute a for cluster y
+  𝑦𝑦𝑦𝑦𝑦𝑦𝑦𝑦𝑦𝑦𝑎𝑎:
+
+Step 5.6: Assign each day to the cluster which has the closest centroid. Table 7 shows the
+
+distances of each data to the cluster centroids and assigns them to a new cluster, which is the
+nearest cluster. As highlighted in Table 7, in Iteration 1, January 3rd and 26th were re-assigned
+from cluster 1 to cluster 2 and January 18th was re-assigned from cluster 3 to cluster 2 since they
+
+were closest to the cluster 2 centroid. All other days remained in their previous clusters.
+
+Step 5.7: If there is no change in the cluster, stop and proceed to Step 6. Otherwise, repeat steps
+5.4-5.7. In the example, since there was a change, we go back to Step 5.4 and continue the
+process.
+
+Step 6: Identify Stopping Criterion: In the example, we apply option 1 (see Eq. 2).
+
+1. Set the maximum cluster size as 2 × �𝑛𝑛/2. In our example, we only used 17 days. So, the
+  maximum size is 6.
+
+2. Set k= 3 (initial cluster size).
+3. Perform clustering using k clusters (which was done in Step 5).
+
+  37
+Chapter 2. Data Collection and Analysis
+
+  4. The key measure of interest may be chosen as the bottleneck throughput at the Komodo
+  tunnel to Osceola Ave exit. Calculate the function given in Eq. 2.
+
+  5. Repeat steps 6.3 and 6.4 by systematically incrementing k by 1 until the maximum cluster
+  size (6 in the example) is reached.
+
+  6. Select the cluster size that minimizes the function calculated in step 6.5 across all cluster
+  sizes.
+
+KEY POINTS
+The guidance leverages use of concurrent data for supporting the analysis. In areas, where these
+data are not available, it is recommended that either the necessary concurrent data be collected or
+an alternate analytical technique in lieu of microsimulation analysis be considered. In summary,
+when collecting data:
+
+  • Measure flows and estimate or forecast demand.
+  • Temporal and geographic scope will impact estimation of demand; so broaden scope to
+
+  account for onset and dissipation of congestion.
+  • Ensure flow conservation since it influences analysis.
+  • Use up-to-date GIS files, maps and drawings.
+  • Collect contemporaneous data.
+  • Errors in data will make calibration challenging; so ensure data are accurate and verify
+
+  with field inspection.
+
+  38
+Chapter 2. Data Collection and Analysis
+
+  Table 5. Iteration 0 - Preliminary Assignment of Data into Clusters (Step 5.3)
+
+  DAY  Day of  AM Peak (6-9  AM Peak (6-9 AM)  AM Peak  AM Peak (6-9 AM) Normalized  AM Peak (6-9 AM) Normalized  Cluster
+  Week  AM) Demand  Weather  (6-9 AM)  Travel Time  Bottleneck Throughput
+27-Jan-12  Normalize  1
+23-Jan-12  6  (vph)  Normalized Normalize  d Incident  WH to  WH to  WH to  Marine  V. I.  Komodo  1
+17-Jan-12  2  Precipitation d Wind  Severity  CBD (VIB)  CBD  CBD  Causeway-  Bridge  Tunnel  1
+16-Jan-12  3  Normalized  (Tunnel-  (Tunnel-  V.I.Bridge  Exit at  Exit at  1
+ 3-Jan-12  2  Detector #2  Speed  1.00  GP)  HOV)  Moseley  Osceola  1
+26-Jan-12  3  Avg. Count  1.00  Link  Street  1
+19-Jan-12  5  0.00  0.02  0.82  0.88  0.97  0.95  Ave  2
+ 6-Jan-12  5  0.00  0.73  0.97  0.00  0.00  2
+ 4-Jan-12  6  0.23  1.00  1.00  0.64  1.00  1.00  1.00  0.67  0.00  0.01  2
+30-Jan-12  4  0.13  0.64  0.53  0.19  0.13  2
+24-Jan-12  2  0.06  0.00  0.18  0.55  0.74  0.71  0.81  0.00  0.23  0.28  2
+31-Jan-12  3  0.76  0.55  0.40  0.35  0.33  2
+ 2-Jan-12  3  0.85  0.19  0.00  0.55  0.68  0.58  0.71  0.35  0.40  0.35  3
+18-Jan-12  2  0.78  0.55  0.35  0.44  0.39  3
+20-Jan-12  4  0.33  0.52  0.47  0.45  0.59  0.55  0.57  0.40  0.48  0.41  3
+ 5-Jan-12  6  0.63  0.36  0.77  0.46  0.42  3
+25-Jan-12  5  0.32  0.00  0.10  0.36  0.59  0.55  0.52  0.97  0.50  0.45  3
+  4  0.73  0.36  0.19  0.60  0.58
+  0.69  0.81  0.53  0.18  0.53  0.45  0.52  0.14  0.63  0.66
+  0.80  0.09  0.81  0.62  0.66
+  0.12  0.11  0.53  0.00  0.50  0.45  0.52  0.17  0.66  0.67
+  0.84  0.81  0.87  0.85
+  1.00  0.02  0.32  0.53  0.42  0.43  1.00  0.90  0.92
+  0.37  0.05  1.00  1.00
+  0.04  0.08  0.50  0.39  0.48
+
+  0.21  0.02  0.41  0.39  0.57
+
+  0.00  0.28  0.26  0.32  0.33
+
+  0.09  0.34  0.29  0.32  0.29
+
+  0.09  0.35  0.26  0.32  0.33
+
+  0.00  0.21  0.12  0.16  0.05
+
+  0.04  0.37  0.00  0.06  0.00
+
+  0.00  0.37  0.00  0.00  0.00
+
+  39
+Chapter 2. Data Collection and Analysis
+
+  Table 6. Calculating Cluster Means (Step 5.4)
+
+  Centroid Demand Precipitation  Wind  Incident  Travel Time  Travel Time Travel Time  Throughput  Throughput  Throughput
+  Speed  Type  from WH to  at Marine  at V. I.  at Komodo
+  CBD (VIB)  from WH to from WH to  Causeway-  Tunnel Exit
+  0.29  0.80  V.I.Bridge  Bridge Exit at  at Osceola
+  0.29  0.50  CBD (Tunnel- CBD (Tunnel-  Link  Moseley
+  0.33  0.20  Street  Ave
+  GP)  HOV)
+  0.18
+  Cluster 1  0.34  0.28  0.75  0.73  0.76  0.49  0.19  0.48
+  0.82
+  Cluster 2  0.58  0.20  0.46  0.40  0.48  0.47  0.52
+
+  Cluster 3  0.63  0.05  0.14  0.17  0.13  0.57  0.81
+
+  Table 7. Calculating Distance to Cluster Centroids and Assigning to Nearest Cluster (Steps 5.5-5.6)
+
+DAY Day of AM Peak (6- AM Peak (6-9 AM) AM Peak (6- AM Peak (6-9 AM) Normalized AM Peak (6-9 AM) Normalized Current Distance to Distance to Distance to New
+
+Week  9 AM)  Weather  9 AM)  Travel Time  Bottleneck Throughput  Cluster Cluster 1 Cluster 2 Cluster 3 Cluster
+
+  Demand  Normalized  Centroid Centroid Centroid
+  (vph)  Incident
+
+  Normalized Normalized Normalized Severity WH to WH to WH to Marine  V. I. Komodo
+
+  Detector #2 Precipitation Wind Speed  CBD (VIB) CBD  CBD Causeway- Bridge Tunnel
+
+  Avg. Count  (Tunnel- (Tunnel- V.I.Bridge Exit at Exit at
+
+  GP)  HOV)  Link Moseley Osceola
+
+  Street  Ave
+
+27-Jan-12 6  0.00  0.00  0.02  1.00  0.88  0.97  0.95  0.97  0.00  0.00 1  0.85  1.48  2.12  1
+
+23-Jan-12 2  0.23  1.00  1.00  1.00  1.00  1.00  1.00  0.67  0.00  0.01 1  1.17  1.73  2.38  1
+
+17-Jan-12 3  0.13  0.00  0.18  0.82  0.74  0.71  0.81  0.53  0.19  0.13 1  0.38  0.94  1.62  1
+
+16-Jan-12 2  0.06  0.19  0.00  0.73  0.68  0.58  0.71  0.00  0.23  0.28 1  0.68  0.95  1.58  1
+
+3-Jan-12 3  0.76  0.52  0.47  0.64  0.59  0.55  0.57  0.40  0.35  0.33 1  0.66  0.54  1.21  2
+
+26-Jan-12 5  0.85  0.00  0.10  0.64  0.59  0.55  0.52  0.35  0.40  0.35 1  0.78  0.50  1.11  2
+
+19-Jan-12 5  0.78  0.81  0.53  0.55  0.53  0.45  0.52  0.35  0.44  0.39 2  0.94  0.71  1.23  2
+
+6-Jan-12 6  0.33  0.11  0.53  0.55  0.50  0.45  0.52  0.40  0.48  0.41 2  0.70  0.39  0.96  2
+
+4-Jan-12 4  0.63  0.02  0.32  0.55  0.53  0.42  0.43  0.77  0.46  0.42 2  0.83  0.38  0.86  2
+
+30-Jan-12 2  0.32  0.04  0.08  0.55  0.50  0.39  0.48  0.97  0.50  0.45 2  0.91  0.63  0.99  2
+
+24-Jan-12 3  0.73  0.21  0.02  0.45  0.41  0.39  0.57  0.19  0.60  0.58 2  1.02  0.46  0.87  2
+
+31-Jan-12 3  0.69  0.00  0.28  0.36  0.26  0.32  0.33  0.14  0.63  0.66 2  1.23  0.54  0.60  2
+
+2-Jan-12 2  0.80  0.09  0.34  0.36  0.29  0.32  0.29  0.81  0.62  0.66 3  1.25  0.56  0.50  3
+
+18-Jan-12 4  0.12  0.09  0.35  0.36  0.26  0.32  0.33  0.17  0.66  0.67 3  1.19  0.67  0.75  2
+
+20-Jan-12 6  0.84  0.00  0.21  0.18  0.12  0.16  0.05  0.81  0.87  0.85 3  1.72  0.97  0.36  3
+
+5-Jan-12 5  1.00  0.04  0.37  0.09  0.00  0.06  0.00  1.00  0.90  0.92 3  1.97  1.24  0.64  3
+
+25-Jan-12 4  0.37  0.00  0.37  0.00  0.00  0.00  0.00  0.05  1.00  1.00 3  1.98  1.27  0.72  3
+
+Note: In this iteration, January 3rd and 26th were re-assigned from cluster 1 to cluster 2 and January 18th was re-assigned from cluster 3 to cluster 2 since they
+
+were closest to the cluster 2 centroid.
+
+  40
+CHAPTER 3. BASE MODEL DEVELOPMENT
+
+This chapter provides general guidance on the  Chapter 1
+procedures for developing a microsimulation model.
+This is Step 3 in the Microsimulation Analytical  1 Microsimulation Analysis Planning
+Process (Figure 5). In this step, the analyst should
+develop base models for all travel conditions or  • Define Project Purpose
+clusters identified in Chapter 2. A complete  • Identify Influence Areas
+operational analysis using a full year of data is a  • Select Approach
+useful step to making effective investment  • Select Tool
+decisions. However, when resources are  • Estimate Staff Time
+constrained, it may not be cost effective to model
+every condition. The analyst may want to model  Chapter 2
+only those travel conditions where alternatives are
+likely to have significant impacts. In fact, these  2 Data Collection and Analysis
+subset of travel conditions may be further clustered
+to distinguish the nuances between the alternatives.  • Identify Data Sources
+For example, when assessing two weather-related  • Assemble Contemporaneous Data
+alternatives, the analyst may want to further cluster  • Verify Data Quality
+the weather-related data and model only those  • Identify Travel Conditions Using
+clusters. There are many software tools for
+performing this task and each has its own unique  Cluster Analysis
+method to build the model. The guidance provided
+here is intended to give general advice on model  Chapter 3
+development; however, the analyst should consult
+the specific microsimulation software  3 Base Model Development
+documentation for information on available data
+input tools and techniques.  • Specify Model Input Data
+
+SPECIFY MODEL INPUT DATA  4  Chapter 4
+
+Building a model is analogous to building a house.  Error Checking
+You begin with a blueprint and then you build each
+element in sequence—the foundation, the frame, the  • Review Software Errors
+roof, the utilities and drywall, and finally the interior
+details. The development of a successful simulation  • Review Input Coding Errors
+model is similar in that you should begin with a
+blueprint (the link- node diagram) and then you  • View Animation
+proceed to build the model in sequence—coding
+links and nodes, filling in the link geometries,  5  Chapter 5
+adding traffic control data at appropriate nodes,
+coding travel demand data, adding traveler behavior  Model Calibration
+data, and finally selecting the model run control
+parameters.  • Identify Representative Days
+
+  • Prepare Variation Envelopes
+
+  (for each Travel Condition)
+
+  • Calibrate Model Within
+
+  Acceptability Criteria
+
+  6  Chapter 6
+
+  Alternatives Analysis
+
+  • Represent Alternatives in Model
+
+  • Conduct Statistical Tests on Outputs
+
+  7  Chapter 7
+
+  Final Report
+
+  • Summarize Key Results
+
+  • Prepare Technical Documentation
+
+  Figure 5. Diagram. Step 3: Base Model
+  Development (Source: FHWA)
+
+41
+Chapter 3. Base Model Development
+
+Any assumptions, default values or deviations from defaults values should be discussed and
+incorporated into the Methods and Assumptions document of the project for examination and
+cross-validation.
+
+Link-Node Diagram: Model Blueprint
+
+The link-node diagram is the blueprint for constructing the microsimulation model. The diagram
+identifies which streets and highways will be included in the model and how they will be
+represented. An example link-node diagram is shown in Figure 6. This step is especially useful
+when the network being modeled is complex.
+
+The link-node diagram can be created directly in the microsimulation software or offline using
+GIS or other types of computer-aided design (CAD) software. If the diagram is created in the
+microsimulation software, then it is helpful to import a map, such as from Google Maps, into the
+software over which the link-node diagram can be overlaid. If the diagram is created offline using
+GID or CAD software, then it is helpful to import the map into the GIS or CAD software.
+
+Nodes are the intersection of two or more links. Nodes are usually placed in the model using x-y
+coordinates and they can be at a place that represents an intersection or a location where there is a
+change in the link geometry. Some simulation software may also warrant consideration of a z
+coordinate. The node locations can be obtained from GIS or physical measurements.
+
+Links represent the length of the roadway segment between the nodes and usually contain data
+about the geometric characteristics of the roadway segment. Ideally, a link represents a roadway
+segment with uniform geometry. Some software programs do not use a link-node scheme, while
+others allow the analyst to code both directions of travel with a single link. The two-way links
+coded by the user are then represented internally (inside the software) as two one-way links.
+
+The analyst should consider establishing a node-numbering scheme to facilitate error checking
+and the aggregation of performance statistics for groups of links related to a specific facility or
+facility type (see Table 8 for an example of a node-numbering scheme designed to enable the
+rapid determination of the facility type in text output). Much of the output produced by
+microsimulation software is text, with the results identified by the node numbers at the beginning
+and end points of each link. A node-numbering convention can greatly facilitate the search for
+results in the massive text files commonly produced by simulation software. Some software
+programs provide analytical modules that assist the analyst in displaying and aggregating the
+results for specific groups of links. This feature reduces the necessity of adopting a node-
+numbering convention; however, a numbering convention can still result in a significant labor
+savings when reviewing text output or when importing text results into other software programs
+for analytical purposes.
+
+If the link-node diagram was created offline (using some other software besides the
+microsimulation software), then the information in the diagram needs to be entered (or imported)
+into the microsimulation software. The x-y coordinates and identification numbers of the nodes
+(plus any feature points needed to represent link curvature) are entered. The nodes are then
+connected together to develop the link-node framework for the model.
+
+  42
+Chapter 3. Base Model Development
+
+  Figure 6. Diagram. Example of link node diagram (Source: FHWA)
+  43
+Chapter 3. Base Model Development
+
+  Table 8. Example node numbering convention
+
+  Segment  From Range  To Range  Description
+0’s  1  99  Miscellaneous
+100’s  100  199  Northbound Freeway Mainline
+200’s  200  299  Northbound Freeway Ramps
+300’s  300  399  Southbound Freeway Mainline
+400’s  400  499  Southbound Freeway Ramps
+500’s  500  599  Eastbound Freeway Mainline
+600’s  600  699  Eastbound Freeway Ramps
+700’s  700  799  Westbound Freeway Mainline
+800’s  800  899  Westbound Freeway Ramps
+900’s  900  999  Arterials
+
+Link Geometry Data
+
+The analyst should input the physical and operational characteristics of the links or the roadway
+segments into the model.
+
+The analyst should model a study area that is of sufficient geographic scope to capture the
+impacts of the alternatives. The network modeled should not only include the area of interest but
+also facilities that feed demand into the study area and facilities that might potentially be the real
+cause of the bottleneck or congestion in the study area.
+
+Some key geometric data that the analyst might need to input include:
+
+• Number of lanes.
+• Lane width.
+• Link length.
+• Grade.
+• Curvature.
+• Pavement conditions (dry, wet, etc.).
+• Sight distance.
+• Bus stop locations.
+• Crosswalks and other pedestrian facilities.
+• Bicycle lanes/paths.
+• Others.
+
+The specific data to be coded for the links will vary according to the microsimulation software.
+Use defaults if values are unknown for specific inputs (e.g., sight distance).
+
+Traffic Control Data
+
+Most microsimulation uses a time-step simulation to describe traffic operations (which is usually
+1 s or less). Vehicles are moved according to car-following logic in response to traffic control
+
+  44
+Chapter 3. Base Model Development
+
+devices and in response to other demands. Traffic control devices for microsimulation models
+will vary. Listed below are some examples:
+
+  • No control.
+  • Yield signs.
+  • Stop signs.
+  • Signals (fixed timed, actuated, adaptive).
+  • Ramp metering.
+  • Roundabouts.
+
+Traffic Operations and Management Data
+
+Traffic operations and management data for links consist of the following:
+
+  • Warning data (incidents, work zones, lane drops, exits, etc.).
+  • Regulatory data (speed limits, variable speed limits, high-occupancy vehicles (HOVs),
+
+  high-occupancy toll (HOT), detours, lane channelization, lane use, truck restrictions,
+  weight restrictions, etc.).
+  • Information (guidance) data (VMS).
+  • Surveillance detectors (type and location).
+
+Traffic Demand Data
+
+Traffic demand is defined as the number of vehicles and the percentage of vehicles of each type
+that wish to traverse the study area during the simulation time period.
+
+Furthermore, it may be necessary to reflect the variation in demand throughout the simulation
+time period. In most software programs, the traffic entering into the network is usually defined by
+some parameter, and traffic leaving the network is usually computed based on parameters internal
+to the network (turning movements, etc.). The analyst should code the traffic volume by first
+starting from the external nodes (this is where the traffic is put into the model). Once all of the
+entering traffic volumes at the external nodes are coded, the analyst will then go into the model
+and define the turning movements and any other parameter related to route choice. The key traffic
+demand data are:
+
+  • Entry volumes by vehicle type and turning fractions at all intersections or junctions
+  (random walk simulators).
+
+  • O-D/path-specific and vehicle data (path-specific simulators).
+  • Bus operations (routes and headways/schedules).
+  • Bicycle and pedestrian demand data.
+
+Driver Behavior Data
+
+Driver behavior is typically difficult to observe and collect. In addition, these data may change in
+response to non-normal conditions. At the base model development step, it is not critical to
+
+  45
+Chapter 3. Base Model Development
+
+specify these inputs. Default values for driver behavior data are usually provided with the
+microsimulation software. Defaults will suffice if driver behavior data that reflects the local
+conditions do not exist. However, it is during the calibration step that these parameters will have
+to be adjusted carefully so that model represents the observed traffic conditions. For example, if
+the study area sees significant truck flow, distribution of driver types may be adjusted to capture
+the interactions between trucks and passenger cars. During alternatives analysis, if the driver
+behavior parameters have not been chosen carefully, you might get erroneous results that
+underestimate or overestimate the benefits and impacts.
+
+Users may override the default values of any driver behavior parameters if valid observed data are
+available (e.g., desired free-flow speed, discharge headway, startup lost time at intersections, etc.).
+These deviations should be included in the Methods and Assumptions document. Some examples
+of driver behavior data that analyst can specify include:
+
+  • Driver’s aggressiveness (for minimum headway in car-following, gap acceptance for lane
+  changing, response to yellow interval).
+
+  • Availability of (real-time) information for the driver.
+  • Driver’s compliance or response to information, such as traveler information, route
+
+  guidance, advisory/regulatory speeds posted on VMS, HOV/HOT lane restrictions, etc.
+
+Not all driver behavior data are observable in the field. When data are not observable, defaults
+may be used in the base model development stage. If a specific driver behavior is observable in
+the field, the analyst should collect them if resources permit before resorting to use of defaults.
+Examples of observable driver behavior data include:
+
+  • Queue discharge and car-following headways.
+  • Gap acceptance.
+  • Start-up lost time.
+
+Examples of unobservable driver behavior data include:
+
+  • Maximum speed and acceleration/deceleration rates.
+  • Lane change courtesy factor.
+  • Distribution of driver types (impacts aggressiveness).
+
+Event Data
+
+Event data are optional and will vary according to the specific application being developed by the
+analyst. Examples of event data inputs include:
+
+  • Blockages and incidents.
+  • Work zones.
+  • Parking activity in curb lane.
+
+  46
+Chapter 3. Base Model Development
+
+Some software allows the analyst to specify the location, time, and duration of the incident, the
+amount of rubbernecking, etc., while in others, incidents are not specified explicitly; rather these
+are modeled by specifying speed reduction zones. The analyst should refer the software’s user
+guide for approaches to model events.
+
+Simulation Run Control Data
+
+All simulation software contains run control parameters to enable the analyst to customize the
+software operation for their specific modeling needs. These parameters will vary between
+software programs. They generally include:
+
+  • Length of simulation time.
+  • Selected MOEs or output (e.g., reports, animation files, or both).
+  • Resolution of simulation results (e.g., temporal and special resolution).
+  • Other system parameters to run the model.
+
+The analyst should specify the length of the simulation time as the sum of the analysis period and
+the time needed for network loading, congestion build up, and congestion dissipation to capture
+demand and queuing accurately. If the analysis period is the AM peak period from 6 to 9 AM,
+we might have to specify a simulation period from 5 to 10 AM allowing for one hour for loading
+the network and congestion to build up, and one hour for congestion to dissipate. The additional
+time should be determined by examining the data.
+
+Coding Techniques for Complex Situations
+
+Microsimulation software allows the analyst to develop a model that represents the real-world
+situation. However, not all possible real-world situations were necessarily contemplated when the
+software was originally written. This is when the analyst, with a good understanding of the
+operation of the software, can “extend” the software to simulate conditions not originally
+incorporated into the microsimulation software. However, this should only be attempted after the
+tools, resources, and skills available are fully appreciated. This is because new tools continue to
+become available that account for selected real-world situations. These approaches should be
+discussed and agreed upon in the Methods and Assumptions document.
+
+  • A curb lane is heavily used for parking, loading, and unloading activities. As a result, this
+  lane may be blocked virtually all the time. If the simulation software cannot correctly
+  replicate the real situation, the analyst may consider removing this lane from the link.
+  Alternately, the analyst may specify a speed reduction zone that extends the length of the
+  loading zone, if the software has that capability, forcing vehicles to change lanes.
+
+  • Traffic regularly backs up on a freeway off-ramp, causing queuing on the freeway.
+  However, instead of stopping on the freeway mainline lanes and blocking a lane, the
+  queue forms on the shoulder of the freeway, keeping the right-hand lane open. If this is
+  the case in the study area, the analyst may artificially extend the off-ramp length to
+  realistically model the traffic in the field.
+
+  47
+Chapter 3. Base Model Development
+
+EXAMPLE PROBLEM: BASE MODEL DEVELOPMENT
+Continuing with the Alligator City example problem from the previous chapters, the task is now to
+code the base model.
+The first step is to code the link-node diagram. How this is best done can be determined from the
+software user’s guide. Figure 7 shows the link-node diagram for the example problem. The next
+steps are to input:
+
+  • Link geometry data.
+  • Traffic control data for the Alligator City CBD (fixed-time control).
+  • Traffic operations and management data.
+  • Traffic demand data.
+  • Simulation run control data.
+No driver behavior data have been collected for Alligator City and so, defaults are used.
+KEY POINTS
+In summary, when developing the base model, the analyst should be aware that:
+  • Geographic scope of study area will impact the alternatives; so, broaden scope to look at
+
+  roadway segments that feed the demand and roadway segments that may be the real
+  bottleneck.
+  • Temporal scope of the simulation will impact the alternatives; so, broaden the scope to
+  allow congestion to build up and dissipate.
+  • Base model should reflect the observed field geometry; so, overlay the model on a map of
+  the area.
+  • Assumptions made should be documented so that results can be justified, and sensitivity
+  analyses can be conducted, where applicable.
+
+  48
+Chapter 3. Base Model Development
+
+  Figure 7. Diagram. Link-Node Diagram for Alligator City (Source: FHWA)
+  49
+CHAPTER 4. ERROR CHECKING
+
+The error correction step is essential in developing a  Chapter 1
+working model so that the calibration process does
+not result in parameters that are distorted to  1 Microsimulation Analysis Planning
+compensate for overlooked coding errors. This is
+Step 4 in the Microsimulation Analytical Process  • Define Project Purpose
+(Figure 8). The calibration process relies on the  • Identify Influence Areas
+elimination of all major errors in demand and  • Select Approach
+network coding before calibration.  • Select Tool
+  • Estimate Staff Time
+Error checking involves various reviews of the
+coded network, coded demand, and default  Chapter 2
+parameters. Error checking involves the following
+three stages:  2 Data Collection and Analysis
+
+  1. Review software errors.  • Identify Data Sources
+  2. Review input coding errors.  • Assemble Contemporaneous Data
+  3. View animation to spot less obvious errors.  • Verify Data Quality
+  • Identify Travel Conditions Using
+REVIEW SOFTWARE ERRORS
+  Cluster Analysis
+The analyst should review the software and user
+group web sites to ensure that he or she is aware of  Chapter 3
+the latest known “bugs” and user workarounds for
+the software. The analyst should ensure that he or  3 Base Model Development
+she is using the latest version and “patch” of the
+software, if any.  • Specify Model Input Data
+
+REVIEW INPUT ERRORS  4  Chapter 4
+
+A checklist for verifying the accuracy of the coded  Error Checking
+input data is provided below:
+  • Review Software Errors
+Geometry:
+  • Check basic network connectivity (are all  • Review Input Coding Errors
+  connections present?).
+  • Check link geometry (lengths, number of  • View Animation
+  lanes, free-flow speed, facility type, etc.).
+  5  Chapter 5
+Control:
+  • Check intersection controls (control type,  Model Calibration
+  control data).
+  • Check for prohibited turns, lane closures,  • Identify Representative Days
+  and lane restrictions at the intersections and
+  on the links.  • Prepare Variation Envelopes
+
+  (for each Travel Condition)
+
+  • Calibrate Model Within
+
+  Acceptability Criteria
+
+  6  Chapter 6
+
+  Alternatives Analysis
+
+  • Represent Alternatives in Model
+
+  • Conduct Statistical Tests on Outputs
+
+  7  Chapter 7
+
+  Final Report
+
+  • Summarize Key Results
+
+  • Prepare Technical Documentation
+
+  Figure 8. Diagram. Step 4: Error
+  Checking (Source: FHWA)
+
+50
+Chapter 4. Error Checking
+
+Demand:
+  • Check vehicle mix proportions at each entry node/gate/zone.
+  • Check identified sources and sinks (zones) for traffic.
+  • Verify zone volumes against traffic counts.
+  • Check vehicle occupancy distribution (if modeling HOVs).
+  • Check turn percentages (if appropriate).
+  • Check O-Ds of trips on the network.
+
+Driver behavior and vehicle characteristics:
+  • Check and revise, as necessary, the default vehicle types and dimensions.
+  • Check and revise the default vehicle performance specifications.
+
+The following techniques may be useful to increase the efficiency and effectiveness of the error-
+checking process:
+
+  • Overlay the coded network over a map of the study area to quickly verify the accuracy of
+  the coded network geometry.
+
+  • If working with software that supports three-dimensional modeling, turn on the node
+  numbers and look for superimposed numbers. They are an indication of unintentionally
+  superimposed links and nodes. Two or more nodes placed in the same location will look
+  like a single node when viewed in two dimensions. The links may connect to one of the
+  nodes, but not to the other.
+
+  • For a large network, a report summarizing the link attributes should be created so that
+  their values can be easily reviewed.
+
+  • Use color codes to identify links by the specific attribute being checked (e.g., links might
+  be color-coded by free-flow speed range). Out-of-range attributes can be identified
+  quickly if given a particular color. Breaks in continuity can also be spotted quickly (e.g.,
+  a series of 56-km/h (35-mi/h) links with one link coded as 40 km/h (25 mi/h)).
+
+VIEW ANIMATION
+
+Animation output enables the analyst to see the vehicle behavior that is being modeled and
+assess the reasonableness of the microsimulation model itself. Running the simulation model and
+reviewing the animation, even with artificial demands, can be useful to identify input coding
+errors. The analyst inputs a very low level of demand and then follows individual vehicles
+through the network. Aberrant vehicle behavior (such as unexpected braking or stops) is a quick
+indicator of possible coding errors. At this stage, the analyst is not required to perform multiple
+runs of the model by changing the random number seeds; a single random-number-seed run will
+suffice.
+
+A two-stage process can be followed in reviewing the animation output. Run the animation at an
+extremely low demand level (so low that there is no congestion). The analyst should then trace
+single vehicles through the network and see where they unexpectedly slow down. These will
+usually be locations of minor network coding errors that disturb the movement of vehicles over
+the link or through the node. This test should be repeated for several different O-D zone pairs.
+
+  51
+Chapter 4. Error Checking
+
+Once the extremely low demand level tests have been completed, then run the simulation at 50
+percent of the existing demand level. At this level, demand is usually not yet high enough to
+cause congestion. If congestion appears, it may be the result of some more subtle coding errors
+that affect the distribution of vehicles across lanes or their headways. Check entry and exit link
+flows to verify that all demands are being correctly loaded and moved through the network.
+
+The animation should be observed in close detail at key bottleneck areas to determine if the
+animated vehicle behavior is realistic. If the observed vehicle behavior appears to be unrealistic,
+the analyst should explore the following potential causes of the unrealistic animation in the order
+shown below:
+
+  • Error in Analyst’s Expectations: The analyst should first verify in the field the correct
+  vehicle behavior for the location and time period being simulated before deciding that the
+  animation is showing unrealistic vehicle behavior. Many times, the analyst’s expectations
+  of realistic vehicle behavior are not matched by actual behavior in the field. Analysts
+  should not expect classic macroscopic traffic-flow concepts to apply at the microscopic
+  individual-vehicle level. Macroscopic flow concepts (e.g., no variance in mean speed at
+  low flow rates) do not apply to the behavior of an individual vehicle over the length of
+  the highway. An individual vehicle’s speed may vary over the length of the highway and
+  between vehicles, even at low flow rates. Macroscopic flow theory refers to the average
+  speed of all vehicles being relatively constant at low flow rates, not individual vehicles.
+  Field inspection may also reveal the causes of vehicle behavior that are not apparent
+  when coding the network from plans and maps. These causes need to be coded into the
+  model if the model is expected to produce realistic behavior. Transportation Management
+  Centers (TMC) with high-density camera spacing will be very helpful in reviewing the
+  working model. Many TMCs are now providing workstations for traffic
+  analysis/simulation staff.
+
+  • Error in Analyst’s Data Coding: The analyst should check for data coding errors that may
+  be causing the simulation model to represent travel behavior incorrectly. Subtle data
+  coding errors are the most frequent cause of unrealistic vehicle behavior in commercial
+  microsimulation models that have already been subjected to extensive validation. Subtle
+  coding errors include apparently correctly coded input that is incorrect because of how it
+  is used in the model to determine vehicle behavior. For example, it could be that the
+  warning sign for an upcoming off-ramp is posted in the real world 0.40 km (0.25 mi)
+  before the off-ramp; however, because the model uses warning signs to identify where
+  people start positioning themselves for the exit ramps, the analyst may have to code the
+  warning sign at a different location (the location where field observations indicate that
+  the majority of the drivers start positioning themselves for the off-ramp).
+
+A comparison of model animation to field design and operations is highly essential. Some of the
+things to look for include:
+
+  • Overlooked data values that require refinement.
+  • Aberrant vehicle operations (e.g., drivers using shoulders as turning or travel lanes, etc.).
+  • Previously unidentified points of major ingress or egress (these might be modeled as an
+
+  intersecting street).
+
+  52
+Chapter 4. Error Checking
+
+  • Operations that the model cannot explicitly replicate (certain operations in certain
+  tools/models), such as a two-way center turn lane (this might be modeled as an
+  alternating short turn bay).
+
+  • Unusual parking configurations, such as median parking (this might be modeled
+  operationally by reducing the free-flow speed to account for this friction).
+
+  • Average travel speeds that exceed posted or legal speeds (use the observed average speed
+  in the calibration process).
+
+  • Turn bays that cannot be fully utilized because of being blocked by through traffic.
+  • In general, localized problems that can result in a system wide impact.
+
+RESIDUAL ERRORS
+
+If the analyst has field-verified his or her expectations of traffic performance and has exhausted
+all possible input errors, and the simulation still does not perform to the analyst’s satisfaction,
+there are still a few possibilities. The desired performance may be beyond the capabilities of the
+software, or there may be a software error.
+
+Software limitations can be identified through careful review of the software documentation. If
+software limitations are a problem, the analyst might seek an alternate software program without
+the limitations. Advanced analysts can also write their own software interface with the
+microsimulation software (called an “application program interface” (API)) to overcome the
+limitations and produce the desired performance. Any changes made to override the simulation
+software’s capabilities should be documented in the Methods and Assumptions document.
+
+Software errors can be tested by coding simple test problems (such as a single link or
+intersection) where the result (such as capacity or mean speed) can be computed manually and
+compared to the model. Software errors can only be resolved by working with the tool developer.
+
+KEY DECISION POINT
+
+The completion of error checking is a key decision point. The next task—model calibration—can
+be very time-consuming. Before embarking upon this task, the analyst should confirm that error
+checking has been completed, specifically:
+
+  • All input data are correct.
+  • Values of all initial parameters and default parameters are reasonable.
+  • Animated results look fine based on judgment or field inspection.
+
+Once the error checking has been completed, the analyst has a working model (though it is still
+not calibrated).
+
+EXAMPLE PROBLEM: ERROR CHECKING
+
+Continuing with the Alligator City problem from the previous chapters, the task is now to error
+check the coded base model.
+
+  53
+Chapter 4. Error Checking
+
+Software: The latest version of the software was used. Review of the model documentation and
+other material in the software and user groups’ web sites indicated that that there were no known
+problems or bugs related to the network under study and the scenarios to be simulated.
+
+Review of Input Data and Parameters: The coded input data were verified using the input files,
+the input data portion of the output files, static displays, and animation.
+
+First, the basic network connectivity was checked, including its consistency with coded geometry
+and turning restrictions. All identified errors were corrected. For example, there was a fatal error
+that one of the SB Riverside Parkway links didn’t exist. It was found that the link number had a
+typographical error.
+
+Static network displays were used extensively to verify the number of lanes, lane use, lane
+alignment (i.e., lane number that feeds the downstream through link), and the location of lane
+drops. At this step, the consistency of link attributes was checked. For example, is the free-flow
+speed of ~90 km/h (55 mi/h) coded for all freeway links?
+
+Next, the traffic demand data were checked. Input volumes at the network entrances were
+specified in four time slices. The input values were checked against the collected data.
+
+Traffic signals coded at each intersection were reviewed. For fixed-time signals, the phasing and
+signal settings were checked. There was a fatal error that indicated Phase 1 at one of the
+intersections in Downtown Alligator City was incorrect. Phase 1 was defined as left-turns from
+the E-W street. But the cross street (N-S street) was coded as one-way. So, left turns are not
+allowed from the eastbound street. This was fixed.
+
+Special attention was given to the traffic patterns at the interchange ramp terminals to avoid
+unrealistic movement. The software provisions (and options) were exercised to force the model
+not to assign movements to travel paths that were not feasible.
+
+Vehicle characteristics were reviewed.
+
+Review Animation: Following the checking of the input data, the model was run using very low
+demand volumes to verify that all of the vehicles travel the network without slowdowns. This
+step uncovered minor errors in the link alignments that needed adjusting.
+
+Next, the traffic demands were specified to about 50 percent of the actual volumes and the
+simulation model was rerun. Animation was used to verify that all demands were properly
+loaded in the network links and the traffic signals were properly operating. The link and system
+performance measures (travel time, delay) were also checked for reasonableness (i.e., they
+should reflect free-flow conditions).
+
+Careful checking of the animation revealed subtle coding problems. For example, the coded
+distance of a warning sign for exiting vehicles from the Victory Island Bridge affected the proper
+simulation of driver behavior. These problems were corrected.
+
+  54
+Chapter 4. Error Checking
+
+Key Decision Point: The model, as revised throughout the error-checking process, was run with
+all the input data (actual demands) and the default model parameters. The output and animation
+were also reviewed and discussed with the Alligator City agency staff who were familiar with
+the study area. The conclusion was that the model is working properly.
+KEY POINTS
+In summary, when checking errors, the analyst should:
+
+  • Use structured/consistent processes.
+  • Check for “known” bugs and follow recommendations of the developer.
+  • Use graphical display and animation in the debugging process.
+  • Conduct an independent review to improve model quality.
+
+  55
+CHAPTER 5. MODEL CALIBRATION
+
+Upon completion of the error-checking task, the  Chapter 1
+analyst has a working model of the transportation
+system. However, without calibration, the analyst  1 Microsimulation Analysis Planning
+has no assurance that the model will function as an
+accurate predictor of transportation system  • Define Project Purpose
+performance in alternatives analysis.  • Identify Influence Areas
+  • Select Approach
+This is Step 5 in the Microsimulation Analytical  • Select Tool
+Process (Figure 9). Calibration is the adjustment of  • Estimate Staff Time
+model parameters to improve the model’s ability to
+reproduce time-dynamic system performance  Chapter 2
+observed under specific travel conditions. Note that
+variation in transportation system performance is  2 Data Collection and Analysis
+primarily determined by external variations in travel
+conditions (e.g., variations in day-to-day travel  • Identify Data Sources
+demand, incident patterns, and weather conditions).  • Assemble Contemporaneous Data
+Driver behavior (e.g., following distance, gap  • Verify Data Quality
+acceptance, and target maximum speed) and other  • Identify Travel Conditions Using
+model parameters are calibrated in each travel
+condition to create time-dynamic congestion  Cluster Analysis
+patterns consistent with observed data.
+  Chapter 3
+Calibration is necessary because no single model
+can be expected to be equally accurate for all  3 Base Model Development
+possible traffic conditions. Even the most detailed
+microsimulation model still contains only a portion  • Specify Model Input Data
+of all of the variables that affect real-world traffic
+conditions. Since no single model can include the  4  Chapter 4
+whole universe of variables, every model should be
+adapted to local conditions.  Error Checking
+
+Every microsimulation software program comes  • Review Software Errors
+with a set of user-adjustable parameters for the
+purpose of calibrating the model to local conditions.  • Review Input Coding Errors
+Therefore, the objective of calibration is to find the
+set of parameter values for the model that best  • View Animation
+reproduces observed measures of system
+performance.  5  Chapter 5
+
+  Model Calibration
+
+  • Identify Representative Days
+
+  • Prepare Variation Envelopes
+
+  (for each Travel Condition)
+
+  • Calibrate Model Within
+
+  Acceptability Criteria
+
+  6  Chapter 6
+
+  Alternatives Analysis
+
+  • Represent Alternatives in Model
+
+  • Conduct Statistical Tests on Outputs
+
+  7  Chapter 7
+
+  Final Report
+
+  • Summarize Key Results
+
+  • Prepare Technical Documentation
+
+  Figure 9. Diagram. Step 5: Model
+  Calibration (Source: FHWA)
+
+56
+Chapter 5. Model Calibration
+
+For the convenience of the analyst, the software developers provide suggested default values for
+the model parameters. These default parameters do not represent a calibrated model. The analyst
+should always perform model calibration and review the calibration criteria to ensure that the
+model accurately reproduces system performance by travel condition.
+
+OVERVIEW OF THE CALIBRATION PROCESS
+
+As shown in Figure 9, the calibration process has three steps:
+
+  1. Identify representative days. In this step, the analyst takes the data from the travel
+  conditions identified using cluster analysis or other statistical methods (Chapter 2) and
+  prepares them to support calibration. A key element of this preparation is the
+  identification of one representative day for each travel condition.
+
+  2. Prepare variation envelopes. In this step, the analyst prepares the simulation inputs to
+  model each representative day. For each representative day, the analyst creates a time-
+  dynamic envelope consistent with variation in observed field data for all days in the
+  cluster representing the travel condition. This envelope creates a data-driven calibration
+  target for the calibration of an individual model variant consistent with each travel
+  condition.
+
+  3. Calibrate model variants within acceptability criteria. The analyst then iteratively adjusts
+  specific software parameters within a model variant until key performances measures
+  derived from simulation outputs are acceptably close to the target variation envelope.
+  Calibration of each model variant is complete when the simulation outputs meet four
+  acceptability criteria.
+
+The calibration process is applied to a single model run for each travel condition or cluster
+identified in Chapter 2. The analyst does not need to calibrate multiple model runs generated by
+varying the random number seeds. Variation demonstrated by varying random number seeds in
+microsimulation tools show differences in driver behaviors (e.g., gap acceptance, lane changing),
+and vehicles entering the system. These variations are markedly low compared to variation due
+to changes in travel condition attributes (e.g., demand, weather), which are not represented
+stochastically in microsimulation tools. If significant variations are seen between runs by
+changing the random number seeds, a possible reason might be errors in coding or gridlock
+conditions resulting from vehicles entering into unresolved contention in simulation (e.g.,
+vehicles attempting conflicting parallel lane changes). An analyst should investigate if the
+network has been coded correctly and is operating realistically or if the model is unstable. The
+results from an unstable model run should not be used for calibration or alternatives analysis.
+
+In the remainder of this section, we describe in detail each of the three steps, using the Alligator
+City hypothetical simulation study as an example.
+
+IDENTIFY REPRESENTATIVE DAYS
+
+In this step, we prepare and assemble observed data related to our key performance measures and
+network bottlenecks. Observed data are organized around the travel conditions identified in
+Chapter 2. Travel conditions and performance measures should be identified in the Analysis
+
+  57
+Chapter 5. Model Calibration
+
+Plan. Depending on an assessment of quality of data, there may be a need to adjust the selection
+of specific measures prior to calibration. Critical locations (bottlenecks) are identified for each
+travel condition, plus a super set of all bottlenecks maintained comprising all travel conditions.
+
+It is important to focus calibration on a single observed day, since that day can be characterized
+in a microsimulation model with specific incident locations, travel times, and other performance
+data. Attempting to calibrate a model to a synthetic day created by the averaging together of
+multiple days is not recommended. Synthetic days based on averages create unrealistically
+smooth time dynamic performance measures like travel time and bottleneck throughput, creating
+targets that may be difficult for any model variant to replicate. For example, if one day has a
+major incident in one location and is then averaged with a day with no incident, then the result is
+the merging of two broadly dissimilar days. The analyst should now attempt to somehow induce
+a more minor incident in that location to produce a moderated congestion pattern. In fact, the
+resulting synthetic measures of system performance may not even be consistent with logically
+consistent traffic flow, and may be exceptionally difficult to reproduce in a valid modern
+microsimulation. In this case, the analyst wastes resources calibrating to a condition that never
+existed and will likely never exist.
+
+For each travel condition, the analyst seeks to identify a single representative day. The
+representative day is used to typify system performance dynamics associated with the collection
+of days encompassing a single travel condition. More precisely, the representative day and has
+observed time-variant performance measures closest to mean time-dependent observed measures
+considering all days in the travel condition.
+
+In order to identify the representative day, time-variant data related to the key performance
+measures are analyzed. For every day used in the analysis across all travel conditions, the analyst
+prepares a time-variant (15-minute profile) of the key measure. Multiple locations and routes
+may be required to characterize system performance. For example, in corridor networks with
+alternatives, travel time and speed measures may be needed on multiple routes. Likewise, there
+may be multiple bottleneck locations within the system. To identify a representative day:
+
+  1. For a particular key measure, establish necessary routes and locations.
+
+  Let 𝑀𝑀 be the set of measures, considered over J the set of routes and locations.
+  Let 𝑁𝑁𝑐𝑐𝑐𝑐𝑐𝑐𝑐𝑐𝑐𝑐𝑐𝑐𝑐𝑐 be the number of days in cluster.
+  Let 𝑚𝑚𝑖𝑖,𝑗𝑗(𝑡𝑡) be the value of the measure on day i in time interval t at location or route j
+
+  2. For each measure, calculate the average time-variant value for each 15-minute time
+  interval across all days in the travel condition for each location/route:
+
+  𝑚�𝑚𝑡𝑡,𝑗𝑗 = ∑𝑖𝑖 𝑚𝑚𝑖𝑖,𝑗𝑗(𝑡𝑡) 𝑁𝑁𝑐𝑐𝑐𝑐𝑐𝑐𝑐𝑐𝑐𝑐𝑐𝑐𝑐𝑐 ∀𝑚𝑚, 𝑡𝑡, 𝑗𝑗 (5)
+
+  3. Calculate the difference between the average value and the value observed on a particular
+  day, expressed as a percentage of the mean value:
+
+  58
+Chapter 5. Model Calibration
+
+  �(𝑚�𝑚𝑡𝑡,𝑗𝑗−𝑚�𝑚𝑖𝑖,𝑗𝑗(𝑡𝑡))2
+
+𝑚̇𝑚𝑖𝑖,𝑗𝑗(𝑡𝑡) = 𝑚�𝑚𝑡𝑡,𝑗𝑗 (6)
+
+4. Find the individual day that minimizes the difference between the individual day and the
+  average values considering all routes, locations, and measures:
+
+𝑖𝑖∗ = 𝑚𝑚𝑚𝑚𝑚𝑚𝑖𝑖�∑𝑚𝑚 ∑𝑖𝑖 ∑𝑡𝑡 𝑚̇𝑚𝑖𝑖,𝑗𝑗(𝑡𝑡)�  (7)
+
+PREPARE VARIATION ENVELOPES
+
+Select Calibration Performance Measures
+
+An effective calibration requires at least two key performance measures. At least one measure
+should be related to travel time or speed profiles along one or more key paths in the roadway
+network. At least one other measure should be related to bottleneck dynamics, e.g., bottleneck
+throughput or duration. Other calibration measures can also be included that are critical to the
+purpose and needs of the project or in differentiating alternatives evaluated in the analysis.
+However, whatever measures are selected, the data required to calculate each measure for the
+purposes of calibration are required for every day included in the analysis of travel conditions.
+The ability to meet these data preparation guidelines for calibration should be documented in the
+accompanying project Methods and Assumptions document.
+
+Travel time or speed measures. Travel times or speed profiles should be associated with paths
+that traverse the study area and intersect at least one bottleneck location on the representative
+day. Observed data should be available for these measures and paths at 15-minute (or more
+frequent) intervals. More than one path may be required to capture the system dynamic, or in
+corridor analyses, the mainline and one alternative path. An interchange analysis might require
+only one path.
+
+Bottleneck measures. For every day across all travel conditions, identify the set of bottleneck
+locations. Bottleneck locations are defined as the set of network locations where transient
+demand exceeds facility capacity and resultant approach speeds drop below the bottleneck
+congestion speed threshold.
+
+Data for the calculation of bottleneck measures are best derived from data obtained from at least
+one near upstream (within 0.5 miles and prior to any major intersection or interchange) or near
+downstream location for at least one bottleneck associated with the travel condition. Near
+downstream locations are preferred, prior to the next major intersection or interchange.
+
+  Congestion speed threshold: For this threshold, the analyst requires a value lower than
+  approximate speed-at-capacity and closer to speed-at-congestion, that is, a speed that
+  indicates that the bottleneck has reached or exceeded its capacity. As a rule of thumb, a
+  threshold of one third of observed free-flow speed can be used with visual inspection of
+  time-variant speed and flow rates at the bottleneck for the representative day. However,
+
+  59
+Chapter 5. Model Calibration
+
+  speed at capacity can be more precisely calculated using other data-driven approaches
+  (For example, http://www.academia.edu/11327450/An_automated_statistically-
+  principled_bottleneck_identification_algorithm_ASBIA). The goal of the analyst is
+  selecting a threshold that is lower than speed-at-capacity and can be applied uniformly
+  across all days in the travel condition.
+
+For each bottleneck location, calculate bottleneck onset and duration. Onset and duration are
+identified at least within a 15-minute time intervals.
+
+  Congestion onset: Onset is defined as the 15-minute time period when a location
+  immediately upstream of the bottleneck experiences observed speeds below the
+  congestion speed threshold.
+
+  Congestion duration: Total time observed between congestion onset at the bottleneck
+  location and the 15-minute period where average observed speeds exceed the congestion
+  speed threshold.
+
+For bottleneck attributes, it is imperative to focus on a specific observed representative day when
+conducting calibration. Aggregating bottleneck measures blurs distinctions among bottlenecks
+and often results in multiple “weak” bottlenecks with inconsistent time-dependent flow rates.
+These artificial conditions are never observed in a single day, and are difficult for a
+microsimulation to reproduce.
+
+Onset and duration speed measurements should, if possible, be collected at a near upstream
+location. If not possible, document these as a deviation in the Methods and Assumptions
+document. Average mean space speed or mean point speed may be utilized whichever best
+characterizes the bottleneck performance. For example, a mean space speed may be preferable
+for a bottleneck upstream from a signalized intersection.
+
+Creating Variation Envelopes
+
+Our goal in calibration is to have the variation of results generated by the simulation fall within
+the range of variation seen in the observed data. In Chapter 2, we defined travel conditions. From
+the limited variation resulting from our travel condition analysis, in this step we create a practical
+range derived from the observed variation to act as a target for model variant calibration.
+
+To create the time-variant Variation Envelope for our simulation results to fall within, we create
+a statistical region based on the standard deviation and an acceptable range of variation around
+both the time variant averages and the observed representative day value.
+
+Let cr (t) be the observed travel times from the representative day. Let the standard deviation in
+travel time for each time interval beσ (t ).
+
+First, we construct an envelope which describes 95% of the observed variation (the Z-statistic in
+this case is 1.96). In each time interval, this is expressed as:
+
+  60
+

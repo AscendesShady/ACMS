@@ -1,0 +1,1336 @@
+  Elements of Design 3-153
+
+Table 3-33.  Recommended Lengths of Turnouts Including Taper
+
+  U.S. Customary  Metric
+
+  Approach Speed  Minimum Length  Approach Speed  Minimum Length
+  (mph)  (ft)a  (km/h)  (m)a
+
+  20  200  30  60
+
+  30  200  40  60
+
+  40  300  50  65
+
+  45  350  60  85
+
+  50  450  70  105
+
+  55  550  80  135
+
+  60  600  90  170
+
+  100  185
+
+a  Maximum length should be 185 m (600 ft) to avoid use of the turnout as a passing lane.
+
+The minimum width of the turnout is 12 ft [3.6 m] with widths of 16 ft [5 m] considered desir-
+able. Turnouts wider than 16 ft [5 m] are not recommended.
+
+A turnout should not be located on or adjacent to a horizontal or vertical curve that limits sight
+distance in either direction. The available sight distance should be at least 1,000 ft [300 m] on
+the approach to the turnout.
+
+Proper signing and pavement marking are also needed both to maximize turnout usage and re-
+duce crashes. An edge line marking on the right side of the turnout is desirable to guide drivers,
+especially in wider turnouts.
+
+3.4.4.4  Shoulder Driving
+
+In parts of the United States, a long-standing custom has been established for slow-moving ve-
+hicles to move to the shoulder when another vehicle approaches from the rear, and then return
+to the traveled way after that following vehicle has passed. The practice generally occurs where
+adequate paved shoulders exist and, in effect, these shoulders function as continuous turnouts.
+This custom is regarded as a courtesy to other drivers needing little or no sacrifice in speed by ei-
+ther driver. While highway agencies may want to permit such use as a means of improving pass-
+ing opportunities without a major capital investment, they should recognize that in many states
+shoulder driving is currently prohibited by law. Thus, a highway agency considering shoulder
+driving as a passing aid may need to propose legislation to authorize such use as well as develop
+a public education campaign to familiarize drivers with the new law.
+
+Highway agencies should evaluate the mileage of two-lane highways with paved shoulders as
+well as their structural quality before deciding whether to allow their use as a passing aid. It
+should be recognized that, where shoulder driving becomes common, it will not be limited to
+selected sites but rather will occur anywhere on the system where paved shoulders are provided.
+
+--`,```,``,`,`,`,``````,,,,``-`-`,,`,,`,`,,`---
+
+Copyright American Association of State Highway and Transportation Officials
+  © 2018 by the American Association of StLaicteenHseeig=AhrkwanasyasaSntadteTHrigahnwsayp&orTtraantisoponrtaOtiofnfiDceipat/l5s9.88317001, User=Sichmelle
+Provided by IHS Markit under license with AASHTO
+
+No reproduction or networking permitted without license from IHS  All rights reserved. DuplicationNiost aforvRieoslaalet,i1o0n/09o/2f0a18pp09l:i1c7a:1b8lMeDlTaw.
+3-154 A Policy on Geometric Design of Highways and Streets
+
+  Another consideration is that shoulder widths of at least 10 ft [3.0 m], and preferably 12 ft [3.6
+  m], are needed. The effect that shoulder driving may have on the use of the highway by bicyclists
+  should also be considered. Because the practice of shoulder driving has evolved through local
+  custom, no special signing to promote such use has been created.
+
+  3.4.4.5  Shoulder Use Sections
+
+  Another approach to providing additional passing opportunities is to permit slow-moving vehi-
+  cles to use paved shoulders at selected sites designated by specific signing. This is a more limited
+  application of shoulder use by slow-moving vehicles than shoulder driving described in the
+  previous section. Typically, drivers move to the shoulder only long enough for following vehicles
+  to pass and then return to the through lane. Thus, the shoulder-use section functions as an ex-
+  tended turnout. This approach enables a highway agency to promote shoulder use only where the
+  shoulder is adequate to handle anticipated traffic loads and the need for more frequent passing
+  opportunities has been established by the large amount of vehicle platooning.
+
+  Shoulder-use sections generally range in length from 0.2 to 3 mi [0.3 to 5 km]. Shoulder use
+  should be allowed only where shoulders are at least 10 ft [3.0 m] and preferably 12 ft [3.6 m]
+  wide. Adequate structural strength to support the anticipated loads along with good surface
+  conditions are needed. Particular attention needs to be placed on the condition of the shoulder
+  because drivers are unlikely to use a shoulder if it is rough, broken, or covered with debris. Signs
+  should be erected at both the beginning and end of the section where shoulder use is allowed.
+  However, since signing of shoulder-use sections is not addressed in the MUTCD (24), special
+  signing should be used.
+
+  3.4.5  Emergency Escape Ramps
+  3.4.5.1  General
+
+  Where long, descending grades exist or where topographic and location controls indicate a need
+  for such grades on new alignment, the design and construction of an emergency escape ramp at
+  an appropriate location is desirable to provide a location for out-of-control vehicles, particularly
+  trucks, to slow and stop away from the main traffic stream. Out-of-control vehicles are gener-
+  ally the result of a driver losing braking ability either through overheating of the brakes due to
+  mechanical failure or failure to downshift at the appropriate time. Considerable experience with
+  ramps constructed on existing highways has led to the design and installation of effective ramps
+  that save lives and reduce property damage. Reports and evaluations of existing ramps indicate
+  that they provide acceptable deceleration rates and afford good driver control of the vehicle on
+  the ramp (78).
+
+  Forces that act on every vehicle to affect the vehicle’s speed include engine-, braking-, and
+  tractive-resistance forces. Engine- and braking-resistance forces can be ignored in the design of
+  escape ramps because the ramp should be designed for the worst case, in which the vehicle is out
+
+  --`,```,``,`,`,`,``````,,,,``-`-`,,`,,`,`,,`---
+
+Copyright American Association of State Highway and Transportation Officials
+  © 2018 by the American Association of StLaicteenHseeig=AhrkwanasyasaSntadteTHrigahnwsayp&orTtraantisoponrtaOtiofnfiDceipat/l5s9.88317001, User=Sichmelle
+Provided by IHS Markit under license with AASHTO
+
+No reproduction or networking permitted without license from IHS  All rights reserved. DuplicationNiost aforvRieoslaalet,i1o0n/09o/2f0a18pp09l:i1c7a:1b8lMeDlTaw.
+  Elements of Design 3-155
+
+of gear and the brake system has failed. The tractive-resistance force contains four subclasses:
+inertial, aerodynamic, rolling, and gradient. Inertial and negative gradient forces act to maintain
+motion of the vehicle, while rolling-, positive gradient-, and air-resistance forces act to retard its
+motion. Figure 3-31 illustrates the action of the various resistance forces on a vehicle.
+
+  Fg  Fr
+  Fi  H
+
+  Fa
+
+  W
+  α
+
+  L
+
+  Fa = Air resistance  W = Gross vehicle mass [weight]
+  Fi = Inertial resistance
+  Fg = Gradient resistance  H = Height
+  Fr = Rolling resistance  L = Length
+  α = Slope Angle
+
+Figure 3-31. Forces Acting on a Vehicle in Motion  --`,```,``,`,`,`,``````,,,,``-`-`,,`,,`,`,,`---
+
+Inertial resistance can be described as a force that resists movement of a vehicle at rest or main-
+tains a vehicle in motion, unless the vehicle is acted on by some external force. Inertial resistance
+must be overcome to either increase or decrease the speed of a vehicle. Rolling- and positive
+gradient-resistance forces are available to overcome the inertial resistance. Rolling resistance is a
+general term used to describe the resistance to motion at the area of contact between a vehicle’s
+tires and the roadway surface and is only applicable when a vehicle is in motion. It is influenced
+by the type and displacement characteristics of the surfacing material of the roadway. Each sur-
+facing material has a coefficient, expressed in lb/1,000 lb [kg/1 000 kg] of gross vehicle weight
+(GVM [GVW]), which determines the amount of rolling resistance of a vehicle. The values
+shown in Table 3-34 for rolling resistance have been obtained from various sources throughout
+the country and are a best available estimate.
+
+Gradient resistance results from gravity and is expressed as the force needed to move the vehicle
+through a given vertical distance. For gradient resistance to provide a beneficial force on an es-
+cape ramp, the vehicle must be moving upgrade, against gravity. In the case where the vehicle is
+descending a grade, gradient resistance is negative, thereby reducing the forces available to slow
+and stop the vehicle. The amount of gradient resistance is influenced by the total weight of the
+vehicle and the magnitude of the grade. For each percent of grade, the gradient resistance is 10
+lb/1,000 lb [10 kg/1 000 kg] whether the grade is positive or negative.
+
+Copyright American Association of State Highway and Transportation Officials
+  © 2018 by the American Association of StLaicteenHseeig=AhrkwanasyasaSntadteTHrigahnwsayp&orTtraantisoponrtaOtiofnfiDceipat/l5s9.88317001, User=Sichmelle
+Provided by IHS Markit under license with AASHTO
+
+No reproduction or networking permitted without license from IHS  All rights reserved. DuplicationNiost aforvRieoslaalet,i1o0n/09o/2f0a18pp09l:i1c7a:1b8lMeDlTaw.
+3-156 A Policy on Geometric Design of Highways and Streets
+
+The remaining component of tractive resistance is aerodynamic resistance, the force resulting
+from the retarding effect of air on the various surfaces of the vehicle. Air causes a significant
+resistance at speeds above 50 mph [80 km/h], but is negligible under 20 mph [30 km/h]. The
+effect of aerodynamic resistance has been neglected in determining the length of the arrester
+bed, thus providing a small additional margin of safety.
+
+Table 3-34. Rolling Resistance of Roadway Surfacing Materials
+
+  U.S. Customary  Metric
+
+  Surfacing  Rolling Resistance Equivalent  Rolling Resistance  Equivalent
+  Material  (lb/1,000 lb GVW) Grade (%)a  (kg/1,000 kg GVM)  Grade (%)a
+Portland cement
+concrete  10  1.0  10  1.0
+
+Asphalt concrete  12  1.2  12  1.2
+
+Gravel, compacted  15  1.5  15  1.5
+
+Earth, sandy, loose  37  3.7  37  3.7
+
+Crushed aggregate,  50  5.0  50  5.0
+loose
+  100  10.0  100  10.0
+Gravel, loose
+  150  15.0  150  15.0
+Sand
+  250  25.0  250  25.0
+Pea gravel
+
+a  Rolling resistance expressed as equivalent gradient.  --`,```,``,`,`,`,``````,,,,``-`-`,,`,,`,`,,`---
+
+3.4.5.2  Need and Location for Emergency Escape Ramps
+
+Each grade has its own unique characteristics. Highway alignment, gradient, length, and de-
+scent speed contribute to the potential for out-of-control vehicles. For existing highways, op-
+erational concerns on a downgrade will often be reported by law enforcement officials, truck
+drivers, or the general public. A field review of a specific grade may reveal damaged guardrail,
+gouged pavement surfaces, or spilled oil indicating locations where drivers of heavy vehicles had
+difficulty negotiating a downgrade. For existing facilities, an escape ramp should be provided as
+soon as a need is established. Crash experience (or, for new facilities, crash experience on similar
+facilities) and truck operations on the grade combined with engineering judgment are frequently
+used to determine the need for a truck escape ramp. Often the impact of a potential runaway
+truck on adjacent activities or population centers will provide sufficient reason to construct an
+escape ramp.
+
+Unnecessary escape ramps should be avoided. For example, a second escape ramp should not be
+needed just beyond the curve that created the need for the initial ramp.
+
+While there are no universal guidelines available for new and existing facilities, a variety of fac-
+tors should be considered in selecting the specific site for an escape ramp. Each location presents
+a different array of design needs; factors that should be considered include topography, length
+and percent of grade, potential speed, economics, environmental impact, and crash experience.
+
+Copyright American Association of State Highway and Transportation Officials
+  © 2018 by the American Association of StLaicteenHseeig=AhrkwanasyasaSntadteTHrigahnwsayp&orTtraantisoponrtaOtiofnfiDceipat/l5s9.88317001, User=Sichmelle
+Provided by IHS Markit under license with AASHTO
+
+No reproduction or networking permitted without license from IHS  All rights reserved. DuplicationNiost aforvRieoslaalet,i1o0n/09o/2f0a18pp09l:i1c7a:1b8lMeDlTaw.
+--`,```,``,`,`,`,``````,,,,``-`-`,,`,,`,`,,`---  Elements of Design 3-157
+
+  Ramps should be located to intercept the greatest number of runaway vehicles, such as at the
+  bottom of the grade and at intermediate points along the grade where an out-of-control vehicle
+  could cause a catastrophic crash.
+
+  A technique for new and existing facilities available for use in analyzing operations on a grade,
+  in addition to crash analysis, is the Grade Severity Rating System (21). The system uses a predeter-
+  mined brake temperature limit (500°F [260°C]) to establish a safe descent speed for the grade.
+  It also can be used to determine expected brake temperatures at 0.5-mi [0.8-km] intervals along
+  the downgrade. The location where brake temperatures exceed the limit indicates the point that
+  brake failures can occur, leading to potential runaways.
+
+  Escape ramps generally may be built at any practical location where the main road alignment is
+  tangent. They should be built in advance of horizontal curves that cannot be negotiated safely by
+  an out-of-control vehicle without rolling over and in advance of populated areas. Escape ramps
+  should exit to the right of the roadway. On divided multilane highways, where a left exit may
+  appear to be the only practical location, difficulties may be expected by the refusal of vehicles in
+  the left lane to yield to out-of-control vehicles attempting to change lanes.
+
+  Although crashes involving runaway trucks can occur at various sites along a grade, locations
+  having multiple crashes should be analyzed in detail. Analysis of crash data pertinent to a pro-
+  spective escape ramp site should include evaluation of the section of highway immediately uphill,
+  including the amount of curvature traversed and distance to and radius of the adjacent curve.
+
+  An integral part of the evaluation should be the determination of the maximum speed that an
+  out-of-control vehicle could attain at the proposed site. This highest obtainable speed can then
+  be used as the minimum design speed for the ramp. The 80- to 90-mph [130- to 140-km/h]
+  entering speed, recommended for design, is intended to represent an extreme condition and
+  therefore should not be used as the basis for selecting locations of escape ramps. Although the
+  variables involved make it impractical to establish a maximum truck speed warrant for location
+  of escape ramps, it is evident that anticipated speeds should be below the range used for design.
+  The principal factor in determining the need for an emergency escape ramp should be the safety
+  of the other traffic on the roadway, the driver of the out-of-control vehicle, and the residents
+  along and at the bottom of the grade. An escape ramp, or ramps if the conditions indicate the
+  need for more than one, should be located wherever grades are of a steepness and length that
+  present a substantial risk of runaway trucks and topographic conditions will permit construction.
+
+  3.4.5.3  Types of Emergency Escape Ramps
+
+  Emergency escape ramps have been classified in a variety of ways. Three broad categories used to
+  classify ramps are gravity, sandpile, and arrester bed. Within these broad categories, four basic
+  emergency escape ramp designs predominate. These designs are the sandpile and three types of
+  arrester beds, classified by grade of the arrester bed: descending grade, horizontal grade, and
+  ascending grade. These four types are illustrated in Figure 3-32.
+
+Copyright American Association of State Highway and Transportation Officials
+  © 2018 by the American Association of StLaicteenHseeig=AhrkwanasyasaSntadteTHrigahnwsayp&orTtraantisoponrtaOtiofnfiDceipat/l5s9.88317001, User=Sichmelle
+Provided by IHS Markit under license with AASHTO
+
+No reproduction or networking permitted without license from IHS  All rights reserved. DuplicationNiost aforvRieoslaalet,i1o0n/09o/2f0a18pp09l:i1c7a:1b8lMeDlTaw.
+3-158 A Policy on Geometric Design of Highways and Streets
+
+  The gravity ramp has a paved or densely compacted aggregate surface, relying primarily on
+  gravitational forces to slow and stop the runaway. Rolling-resistance forces contribute little to
+  assist in stopping the vehicle. Gravity ramps are usually long, steep, and are constrained by topo-
+  graphic controls and costs. While a gravity ramp stops forward motion, the paved surface cannot
+  prevent the vehicle from rolling back down the ramp grade and jackknifing without a positive
+  capture mechanism. Therefore, the gravity ramp is the least desirable of the escape ramp types.
+
+ – %  Ramp
+  Highway  + %
+
+– %  A. Ascending Grade
+  Highway
+  0.0 % Ramp
+– %
+Highway  B. Horizontal Grade
+
+  – % Ramp  --`,```,``,`,`,`,``````,,,,``-`-`,,`,,`,`,,`---
+
+  C. Descending Grade
+
+  – %  + %
+  Highway
+  D. Sandpile
+Note: Profile is along the baseline of the ramp.
+
+Figure 3-32. Basic Types of Emergency Escape Ramps
+
+Copyright American Association of State Highway and Transportation Officials
+  © 2018 by the American Association of StLaicteenHseeig=AhrkwanasyasaSntadteTHrigahnwsayp&orTtraantisoponrtaOtiofnfiDceipat/l5s9.88317001, User=Sichmelle
+Provided by IHS Markit under license with AASHTO
+
+No reproduction or networking permitted without license from IHS  All rights reserved. DuplicationNiost aforvRieoslaalet,i1o0n/09o/2f0a18pp09l:i1c7a:1b8lMeDlTaw.
+--`,```,``,`,`,`,``````,,,,``-`-`,,`,,`,`,,`---  Elements of Design 3-159
+
+  Sandpiles, composed of loose, dry sand dumped at the ramp site, are usually no more than 400
+  ft [120 m] in length. The influence of gravity is dependent on the slope of the surface. The in-
+  crease in rolling resistance is supplied by loose sand. Deceleration characteristics of sandpiles are
+  usually severe and the sand can be affected by weather. Because of the deceleration characteris-
+  tics, the sandpile is less desirable than the arrester bed. However, at locations where inadequate
+  space exists for another type of ramp, the sandpile may be appropriate because of its compact
+  dimensions.
+
+  Descending-grade arrester-bed escape ramps are constructed parallel and adjacent to the through
+  lanes of the highway. These ramps use loose aggregate in an arrester bed to increase rolling re-
+  sistance to slow the vehicle. The gradient resistance acts in the direction of vehicle movement.
+  As a result, the descending-grade ramps can be rather lengthy because the gravitational effect is
+  not acting to help reduce the speed of the vehicle. The ramp should have a clear, obvious return
+  path to the highway so drivers who doubt the effectiveness of the ramp will feel they will be able
+  to return to the highway at a reduced speed.
+
+  Where the topography can accommodate, a horizontal-grade arrester-bed escape ramp is an-
+  other option. Constructed on an essentially flat gradient, the horizontal-grade ramp relies on
+  the increased rolling resistance from the loose aggregate in an arrester bed to slow and stop the
+  out-of-control vehicle, since the effect of gravity is minimal. This type of ramp is longer than
+  the ascending-grade arrester bed.
+
+  The most commonly used escape ramp is the ascending-grade arrester bed. Ramp installations
+  of this type use gradient resistance to advantage, supplementing the effects of the aggregate
+  in the arrester bed, and generally, reducing the length of ramp needed to stop the vehicle. The
+  loose material in the arresting bed increases the rolling resistance, as in the other types of ramps,
+  while the gradient resistance acts in a downgrade direction, opposite to the direction of vehicle
+  movement. The loose bedding material also serves to hold the vehicle in place on the ramp grade
+  after it has come to a safe stop.
+
+  Each of the ramp types is applicable to a particular situation where an emergency escape ramp is
+  desirable and should be compatible with established location and topographic controls at possi-
+  ble sites. The procedures used for analysis of truck escape ramps are essentially the same for each
+  of the categories or types identified. The rolling-resistance factor for the surfacing material used
+  in determining the length needed to slow and stop the runaway truck safely is the difference in
+  the procedures.
+
+  3.4.5.4  Design Considerations
+
+  The combination of the above external resistance and numerous internal resistance forces not
+  discussed acts to limit the maximum speed of an out-of-control vehicle. Speeds in excess of 80
+  to 90 mph [130 to 140 km/h] will rarely, if ever, be attained. Therefore, an escape ramp should
+  be designed for a minimum entering speed of 80 mph [130 km/h], with a 90-mph [140-km/h]
+
+Copyright American Association of State Highway and Transportation Officials
+  © 2018 by the American Association of StLaicteenHseeig=AhrkwanasyasaSntadteTHrigahnwsayp&orTtraantisoponrtaOtiofnfiDceipat/l5s9.88317001, User=Sichmelle
+Provided by IHS Markit under license with AASHTO
+
+No reproduction or networking permitted without license from IHS  All rights reserved. DuplicationNiost aforvRieoslaalet,i1o0n/09o/2f0a18pp09l:i1c7a:1b8lMeDlTaw.
+3-160 A Policy on Geometric Design of Highways and Streets  --`,```,``,`,`,`,``````,,,,``-`-`,,`,,`,`,,`---
+
+  design speed being preferred. Several formulas and software programs have been developed to
+  determine the runaway speed at any point on the grade. These methods can be used to establish
+  a design speed for specific grades and horizontal alignments (21, 40, 78).
+
+  The design and construction of effective escape ramps involve a number of considerations as
+  follows:
+
+  yy To safely stop an out-of-control vehicle, the length of the ramp should be sufficient to dissi-
+  pate the kinetic energy of the moving vehicle.
+
+  yy The alignment of the escape ramp should be tangent or on very flat curvature to minimize the
+  driver’s difficulty in controlling the vehicle.
+
+  yy The width of the ramp should be adequate to accommodate more than one vehicle because
+  it is not uncommon for two or more vehicles to have need of the escape ramp within a short
+  time. A minimum width of 26 ft [8 m] may be all that is practical in some areas, though
+  greater widths are preferred. Desirably, a width of 30 to 40 ft [9 to 12 m] would more ade-
+  quately accommodate two or more out-of-control vehicles. Ramp widths less than indicated
+  above have been used successfully in some locations where it was determined that a wider
+  width was unreasonably costly or not needed. Widths of ramps in use range from 12 to 40 ft
+  [3.6 to 12 m].
+
+  yy The surfacing material used in the arrester bed should be clean, not easily compacted, and
+  have a high coefficient of rolling resistance. When aggregate is used, it should be rounded,
+  uncrushed, predominantly a single size, and as free from fine-size material as practical. Such
+  material will maximize the percentage of voids, thereby providing optimum drainage and
+  minimizing interlocking and compaction. A material with a low shear strength is desirable
+  to permit penetration of the tires. The durability of the aggregate should be evaluated using
+  an appropriate crush test. Pea gravel is representative of the material used most frequently,
+  although loose gravel and sand are also used. A gradation with a top size of 1.5 in. [40 mm]
+  has been used with success in several states. Material conforming to the AASHTO gradation
+  No. 57 is effective if the fine-sized material is removed.
+
+  yy Arrester beds should be constructed with a minimum aggregate depth of 3 ft [1 m].
+  Contamination of the bed material can reduce the effectiveness of the arrester bed by creating
+  a hard surface layer up to 12 in. [300 mm] thick at the bottom of the bed. Therefore, an aggre-
+  gate depth up to 42 in. [100 mm] is recommended. As the vehicle enters the arrester bed, the
+  wheels of the vehicle displace the surface, sinking into the bed material, thus increasing the
+  rolling resistance. To assist in decelerating the vehicle smoothly, the depth of the bed should
+  be tapered from a minimum of 3 in. [75 mm] at the entry point to the full depth of aggregate
+  in the initial 100 to 200 ft [30 to 60 m] of the bed.
+
+  yy A positive means of draining the arrester bed should be provided to help protect the bed from
+  freezing and avoid contamination of the arrester bed material. This can be accomplished by
+  grading the base to drain, intercepting water prior to entering the bed, underdrain systems
+  with transverse outlets, or edge drains. Geotextiles or paving can be used between the sub-
+
+Copyright American Association of State Highway and Transportation Officials
+  © 2018 by the American Association of StLaicteenHseeig=AhrkwanasyasaSntadteTHrigahnwsayp&orTtraantisoponrtaOtiofnfiDceipat/l5s9.88317001, User=Sichmelle
+Provided by IHS Markit under license with AASHTO
+
+No reproduction or networking permitted without license from IHS  All rights reserved. DuplicationNiost aforvRieoslaalet,i1o0n/09o/2f0a18pp09l:i1c7a:1b8lMeDlTaw.
+--`,```,``,`,`,`,``````,,,,``-`-`,,`,,`,`,,`---  Elements of Design 3-161
+
+  base and the bed materials to prevent infiltration of fine materials that may trap water. Where
+  toxic contamination from diesel fuel or other material spillage is a concern, the base of the
+  arrester bed may be paved with concrete and holding tanks to retain the spilled contaminants
+  may be provided.
+
+  yy The entrance to the ramp should be designed so that a vehicle traveling at a high rate of speed
+  can enter safely. As much sight distance as practical should be provided preceding the ramp so
+  that a driver can enter safely. The full length of the ramp should be visible to the driver. The
+  angle of departure for the ramp should be small, usually 5 degrees or less. An auxiliary lane
+  may be appropriate to assist the driver to prepare to enter the escape ramp. The main roadway
+  surface should be extended to a point at or beyond the exit gore so that both front wheels of
+  the out-of-control vehicle will enter the arrester bed simultaneously; this also provides prepa-
+  ration time for the driver before actual deceleration begins. The arrester bed should be offset
+  laterally from the through lanes by an amount sufficient to preclude loose material being
+  thrown onto the through lanes.
+
+  yy Access to the ramp should be clearly indicated by exit signing to allow the driver of an out-
+  of-control vehicle time to react, to minimize the possibility of missing the ramp. Advance
+  signing is needed to inform drivers of the existence of an escape ramp and to prepare drivers
+  well in advance of the decision point so that they will have enough time to decide whether or
+  not to use the escape ramp. Regulatory signs near the entrance should be used to discourage
+  other motorists from entering, stopping, or parking at or on the ramp. The path of the ramp
+  should be delineated to define ramp edges and provide nighttime direction; for more infor-
+  mation, see the MUTCD (24). Illumination of the approach and ramp is desirable.
+
+  yy The characteristic that makes a truck escape ramp effective also makes it difficult to retrieve
+  a vehicle captured by the ramp. A service road located adjacent to the arrester bed is needed
+  so tow trucks and maintenance vehicles can use it without becoming trapped in the bedding
+  material. The width of this service road should be at least 10 ft [3 m]. Preferably this service
+  road should be paved but may be surfaced with gravel. The road should be designed in such
+  a way that the driver of an out-of-control vehicle will not mistake the service road for the
+  arrester bed.
+
+  yy Anchors, usually located adjacent to the arrester bed at 150- to 300-ft [50- to 100-m] inter-
+  vals, are needed to secure a tow truck when removing a vehicle from the arrester bed. One
+  anchor should be located about 100 ft [30 m] in advance of the bed to assist the wrecker in
+  returning a captured vehicle to a surfaced roadway. The local tow-truck operators can be very
+  helpful in properly locating the anchors.
+
+  As a vehicle rolls upgrade, it loses momentum and will eventually stop because of the effect of
+  gravity. To determine the distance needed to bring the vehicle to a stop with consideration of the
+  rolling resistance and gradient resistance, the following simplified equation may be used (64):
+
+Copyright American Association of State Highway and Transportation Officials
+  © 2018 by the American Association of StLaicteenHseeig=AhrkwanasyasaSntadteTHrigahnwsayp&orTtraantisoponrtaOtiofnfiDceipat/l5s9.88317001, User=Sichmelle
+Provided by IHS Markit under license with AASHTO
+
+No reproduction or networking permitted without license from IHS  All rights reserved. DuplicationNiost aforvRieoslaalet,i1o0n/09o/2f0a18pp09l:i1c7a:1b8lMeDlTaw.
+3-162 A Policy on Geometric Design of Highways and Streets
+
+  U.S. Customary  Metric
+
+  (3-40)
+
+  where:  where:
+  L  =  length of arrester bed, ft  L  =  length of arrester bed, m
+  V  =  entering velocity, mph  V  =  entering velocity, km/h
+  R  = rolling resistance, expressed as equiv-  R  = rolling resistance, expressed as equiv-
+
+  alent percent gradient divided by 100  alent percent gradient divided by 100
+  (see Table 3-34)  (see Table 3-34)
+  G  =  percent grade divided by 100  G  =  percent grade divided by 100
+
+  For example, assume that topographic conditions at a site selected for an emergency escape ramp
+  limit the ramp to an upgrade of 10 percent (G = +0.10). The arrester bed is to be constructed with
+  loose gravel for an entering speed of 90 mph [140 km/h]. Using Table 3-34, R is determined
+  to be 0.10. The length of the arrester bed should be determined using Equation 3-40. For this
+  example, the length of the arrester bed is about 1,350 ft [400 m].
+
+  When an arrester bed is constructed using more than one grade along its length, as shown in
+  Figure 3-33, the speed loss occurring on each of the grades as the vehicle traverses the bed
+  should be determined using the following equation:
+
+  U.S. Customary  Metric  (3-41)
+
+--`,```,``,`,`,`,``````,,,,``-`-`,,`,,`,`,,`---  where:  where:
+  Vf  =  speed at end of grade, mph  Vf  =  speed at end of grade, km/h
+  Vi  = entering speed at beginning of grade,  Vi  = entering speed at beginning of grade,
+
+  mph  km/h
+  L  =  length of grade, ft  L  =  length of grade, m
+  R  = rolling resistance, expressed as equiv-  R  = rolling resistance, expressed as equiv-
+
+  alent percent gradient divided by 100  alent percent gradient divided by 100
+  (see Table 3-34)  (see Table 3-34)
+  G  =  percent grade divided by 100  G  =  percent grade divided by 100
+
+  The final speed for one section of the ramp is subtracted from the entering speed to determine a
+  new entering speed for the next section of the ramp and the calculation repeated at each change
+  in grade on the ramp until sufficient length is provided to reduce the speed of the out-of-control
+  vehicle to zero.
+
+Copyright American Association of State Highway and Transportation Officials
+  © 2018 by the American Association of StLaicteenHseeig=AhrkwanasyasaSntadteTHrigahnwsayp&orTtraantisoponrtaOtiofnfiDceipat/l5s9.88317001, User=Sichmelle
+Provided by IHS Markit under license with AASHTO
+
+No reproduction or networking permitted without license from IHS  All rights reserved. DuplicationNiost aforvRieoslaalet,i1o0n/09o/2f0a18pp09l:i1c7a:1b8lMeDlTaw.
+  Elements of Design 3-163
+
+Figure 3-33 shows a plan and profile of an emergency escape ramp with typical appurtenances.
+
+  Arrester Bed  Service Road
+  Pavement
+
+  Arrester Bed Length  Escape Ramp Grade
+
+  G2
+  G1
+
+  Arrester Bed
+
+  Lighting
+  Wrecker Anchors
+
+  Main Line Grade
+
+Figure 3-33. Typical Emergency Escape Ramp
+
+Where the only practical location for an escape ramp will not provide sufficient length and  --`,```,``,`,`,`,``````,,,,``-`-`,,`,,`,`,,`---
+grade to completely stop an out-of-control vehicle, it should be supplemented with an acceptable
+positive attenuation device.
+
+Where a full-length ramp is to be provided with full deceleration capability for the design speed,
+a “last-chance” device should be considered when the consequences of leaving the end of the
+ramp are serious.
+
+Any ramp-end treatment should be designed with care so that its advantages outweigh its dis-
+advantages. The risk to others as the result of an out-of-control truck overrunning the end of
+an escape ramp may be more important than the harm to the driver or cargo of the truck. The
+abrupt deceleration of an out-of-control truck may cause shifting of the load, shearing of the
+fifth wheel, or jackknifing, all with potentially harmful occurrences to the driver and cargo.
+
+Mounds of bedding material between 2 and 5 ft [0.6 and 1.5 m] high with 1V:1.5H slopes (i.e.,
+slopes that change in elevation by one unit of length for each 1 to 1.5 units of horizontal distance)
+have been used at the end of ramps in several instances as the “last-chance” device. At least one
+escape ramp has been constructed with an array of crash cushions installed to prevent an out-
+of-control vehicle from leaving the end of the ramp. Furthermore, at the end of a hard-surfaced
+gravity ramp, a gravel bed or an attenuator array may sufficiently immobilize a brakeless runaway
+vehicle to keep it from rolling backward and jackknifing. Where barrels are used, the barrels
+should be filled with the same material as used in the arrester bed, so that any finer material does
+not result in contamination of the bed and reduction of the expected rolling resistance.
+
+Copyright American Association of State Highway and Transportation Officials
+  © 2018 by the American Association of StLaicteenHseeig=AhrkwanasyasaSntadteTHrigahnwsayp&orTtraantisoponrtaOtiofnfiDceipat/l5s9.88317001, User=Sichmelle
+Provided by IHS Markit under license with AASHTO
+
+No reproduction or networking permitted without license from IHS  All rights reserved. DuplicationNiost aforvRieoslaalet,i1o0n/09o/2f0a18pp09l:i1c7a:1b8lMeDlTaw.
+--`,```,``,`,`,`,``````,,,,``-`-`,,`,,`,`,,`---3-164 A Policy on Geometric Design of Highways and Streets
+
+  3.4.5.5  Brake-Check Areas
+
+  Turnouts or pulloff areas at the summit of a grade can be used for brake-check areas or manda-
+  tory-stop areas to provide an opportunity for a driver to inspect equipment on the vehicle and
+  check that the brakes are not overheated at the beginning of the descent. In addition, informa-
+  tion about the grade ahead and the location of escape ramps can be provided by diagrammatic
+  signing or self-service pamphlets. An elaborate design is not needed for these areas. A brake-
+  check area can be a paved lane behind and separated from the shoulder or a widened shoulder
+  where a truck can stop. Appropriate signing should be used to discourage casual stopping by the
+  public.
+
+  3.4.5.6  Maintenance
+
+  After each use, aggregate arrester beds should be reshaped using power equipment to the extent
+  practical and the aggregate scarified as appropriate. Since aggregate tends to compact over time,
+  the bedding material should be cleaned of contaminants and scarified periodically to retain
+  the retarding characteristics of the bedding material and maintain free drainage. Using power
+  equipment for work in the arrester bed reduces the exposure time for the maintenance workers
+  to the potential that a runaway truck may need to use the facility. Maintenance of the appurte-
+  nances should be accomplished as appropriate.
+
+  3.4.6  Vertical Curves
+  3.4.6.1  General Considerations
+
+  Vertical curves to effect gradual changes between tangent grades may be any one of the crest or
+  sag types depicted in Figure 3-34. Vertical curves should be simple in application and should re-
+  sult in a design that enables the driver to see the road ahead, enhances vehicle control, is pleasing
+  in appearance, and is adequate for drainage. The major design control for crest vertical curves is
+  the provision of ample sight distances for the design speed; while research (19) has shown that
+  vertical curves with limited sight distance do not necessarily experience frequent crashes, it is
+  recommended that all vertical curves be designed to provide at least the stopping sight distances
+  shown in Table 3-1.
+
+  For driver comfort, the rate of change of grade should be kept within tolerable limits. This con-
+  sideration is most important in sag vertical curves where gravitational and vertical centripetal
+  forces act in opposite directions. Appearance also should be considered in designing vertical
+  curves. A long curve has a more pleasing appearance than a short one; short vertical curves may
+  give the appearance of a sudden break in the profile due to the effect of foreshortening.
+
+Copyright American Association of State Highway and Transportation Officials
+  © 2018 by the American Association of StLaicteenHseeig=AhrkwanasyasaSntadteTHrigahnwsayp&orTtraantisoponrtaOtiofnfiDceipat/l5s9.88317001, User=Sichmelle
+Provided by IHS Markit under license with AASHTO
+
+No reproduction or networking permitted without license from IHS  All rights reserved. DuplicationNiost aforvRieoslaalet,i1o0n/09o/2f0a18pp09l:i1c7a:1b8lMeDlTaw.
+  Elements of Design 3-165
+
+  VPI  A  +G2
+
+  E  VPT
+  –G
+VPC  –G1
++G 1  2
+  Type II
+  –G  +G 1  L
+
+  1  L/2  L/2  –G
+  L
+  +G1  2
+  Type I  –G
+  2  +G 2
+  Crest Vertical Curves
+  Type IV
+  +G 2  –G
+  1
+
+  Type III
+
+  Sag Vertical Curves
+
+  G1 and G2 = Tangent Grades in Percent
+  A = Algebraic Difference in Grade
+  L = Length of Vertical Curve
+  E = Vertical Offset at the VPI
+
+Figure 3-34. Types of Vertical Curves
+
+Drainage of curbed roadways on sag vertical curves (Type III in Figure 3-34) needs careful
+profile design to retain a grade of not less than 0.5 percent or, in some cases, 0.30 percent for the
+outer edges of the roadway. Refer to the AASHTO Drainage Manual (8) for more information
+on drainage considerations.
+
+For simplicity, a parabolic curve with an equivalent vertical axis centered on the Vertical Point
+of Intersection (VPI) is usually used in roadway profile design. The vertical offsets from the tan-
+gent vary as the square of the horizontal distance from the curve end (Point of Tangency). The
+vertical offset from the tangent grade at any point along the curve is calculated as a proportion
+of the vertical offset at the VPI, which is AL/800, where the symbols are as shown in Figure
+3-34. The rate of change of grade at successive points on the curve is a constant amount for equal
+increments of horizontal distance, and is equal to the algebraic difference between intersecting
+tangent grades divided by the length of curve in feet [meters], or A/L in percent per foot [percent
+per meter]. The reciprocal L/A is the horizontal distance in feet [meters] needed to make a 1 per-
+cent change in gradient and is, therefore, a measure of curvature. The quantity L/A, termed “K,”
+is useful in determining the horizontal distance from the Vertical Point of Curvature (VPC) to
+the high point of Type I curves or to the low point of Type III curves. This point where the slope
+
+  --`,```,``,`,`,`,``````,,,,``-`-`,,`,,`,`,,`---
+
+Copyright American Association of State Highway and Transportation Officials
+  © 2018 by the American Association of StLaicteenHseeig=AhrkwanasyasaSntadteTHrigahnwsayp&orTtraantisoponrtaOtiofnfiDceipat/l5s9.88317001, User=Sichmelle
+Provided by IHS Markit under license with AASHTO
+
+No reproduction or networking permitted without license from IHS  All rights reserved. DuplicationNiost aforvRieoslaalet,i1o0n/09o/2f0a18pp09l:i1c7a:1b8lMeDlTaw.
+3-166 A Policy on Geometric Design of Highways and Streets
+
+is zero occurs at a distance from the VPC equal to K times the approach gradient. The value of
+K is also useful in determining minimum lengths of vertical curves for various design speeds.
+Other details on parabolic vertical curves are found in textbooks on highway engineering.
+
+In certain situations, because of critical clearance or other controls, the use of asymmetrical
+vertical curves may be appropriate. Because the conditions under which such curves are appro-
+priate are infrequent, the derivation and use of the relevant equations have not been included
+herein. For use in such limited instances, refer to asymmetrical curve data found in a number of
+highway engineering texts.
+
+3.4.6.2  Crest Vertical Curves
+
+Minimum lengths of crest vertical curves based on sight distance criteria generally are satisfac-
+tory from the standpoint of safety, comfort, and appearance. An exception may be at decision
+areas, such as ramp exit gores, where longer sight distances and, therefore, longer vertical curves
+should be provided; for further information, refer to Section 3.2.3, “Decision Sight Distance.”
+
+Figure 3-35 illustrates the parameters used in determining the length of a parabolic crest verti-
+cal curve needed to provide any specified value of sight distance. The basic equations for length
+of a crest vertical curve in terms of algebraic difference in grade and sight distance follow:
+
+  U.S. Customary  Metric
+When S is less than L,  When S is less than L,
+
+  (3-42)
+
+When S is greater than L,  When S is greater than L,
+
+  (3-43)
+
+where:  where:  --`,```,``,`,`,`,``````,,,,``-`-`,,`,,`,`,,`---
+L  =  length of vertical curve, ft  L  =  length of vertical curve, m
+A  =  algebraic difference in grades, percent  A  =  algebraic difference in grades, percent
+S  =  sight distance, ft  S  =  sight distance, m
+h1  =  height of eye above roadway surface, ft  h1  =  height of eye above roadway surface, m
+h2  = height of object above roadway surface,  h2  = height of object above roadway surface,
+
+  ft  m
+
+Copyright American Association of State Highway and Transportation Officials
+  © 2018 by the American Association of StLaicteenHseeig=AhrkwanasyasaSntadteTHrigahnwsayp&orTtraantisoponrtaOtiofnfiDceipat/l5s9.88317001, User=Sichmelle
+Provided by IHS Markit under license with AASHTO
+
+No reproduction or networking permitted without license from IHS  All rights reserved. DuplicationNiost aforvRieoslaalet,i1o0n/09o/2f0a18pp09l:i1c7a:1b8lMeDlTaw.
+  Elements of Design 3-167
+
+  Stopping Sight Distance
+
+  G1  VPI G  2
+
+h1  h2
+  VPC  VPT
+
+  Length of Crest Vertical Curve (L)
+
+  Passing Sight Distance
+
+  VPI
+
+  G1  G
+
+  2
+
+h1  h2
+  VPC  VPT
+
+  Length of Crest Vertical Curve (L)
+
+Figure 3-35. Parameters Considered in Determining the Length of a Crest Vertical Curve to
+Provide Sight Distance
+
+When the height of eye and the height of object are 3.50 ft and 2.00 ft [1.08 and 0.60 m], re-
+spectively, as used for stopping sight distance, the equations become:
+
+  U.S. Customary  Metric
+When S is less than L,  When S is less than L,
+
+  (3-44)
+
+When S is greater than L,  When S is greater than L,
+
+  (3-45)
+
+3.4.6.2.1  Design Controls: Stopping Sight Distance
+
+The minimum lengths of crest vertical curves for different values of A to provide the minimum
+stopping sight distances for each design speed are shown in Figure 3-36. The solid lines give
+the minimum vertical curve lengths, on the basis of rounded values of K as determined from
+Equations 3-44 and 3-45.
+
+  --`,```,``,`,`,`,``````,,,,``-`-`,,`,,`,`,,`---
+
+Copyright American Association of State Highway and Transportation Officials
+  © 2018 by the American Association of StLaicteenHseeig=AhrkwanasyasaSntadteTHrigahnwsayp&orTtraantisoponrtaOtiofnfiDceipat/l5s9.88317001, User=Sichmelle
+Provided by IHS Markit under license with AASHTO
+
+No reproduction or networking permitted without license from IHS  All rights reserved. DuplicationNiost aforvRieoslaalet,i1o0n/09o/2f0a18pp09l:i1c7a:1b8lMeDlTaw.
+3-168 A Policy on Geometric Design of Highways and Streets
+
+  The short dashed curve at the lower left, crossing these lines, indicates where S = L. Note that
+  to the right of the S = L line, the value of K, or length of vertical curve per percent change in A,
+  is a simple and convenient expression of the design control. For each design speed, this single
+  value is a positive whole number that is indicative of the rate of vertical curvature. The design
+  control in terms of K covers all combinations of A and L for any one design speed; thus, A and
+  L need not be indicated separately in a tabulation of design value. The selection of design curves
+  is facilitated because the minimum length of curve in feet [meters] is equal to K times the alge-
+  braic difference in grades in percent, L = KA. Conversely, the checking of plans is simplified by
+  comparing all curves with the design value for K.
+
+  Table 3-35 shows the computed K values for lengths of vertical curves corresponding to the
+  stopping sight distances shown in Table 3-1 for each design speed. For direct use in design,
+  values of K are rounded as shown in the right column. The rounded values of K are plotted as
+  the solid lines in Figure 3-36. These rounded values of K are higher than computed values, but
+  the differences are not significant.
+
+  Where S is greater than L (lower left in Figure 3-36), the computed values plot as a curve (as
+  shown by the dashed line for 45 mph [70 km/h]) that bends to the left, and for small values
+  of A, the vertical curve lengths are zero because the sight line passes over the high point. This
+  relationship does not represent desirable design practice. Most states use a minimum length of
+  vertical curve, expressed as a single value, a range for different design speeds, or a function of A.
+  Values now in use range from about 100 to 325 ft [30 to 100 m]. To recognize the distinction
+  in design speed and to approximate the range of current practice, minimum lengths of vertical
+  curves are expressed as about 0.6 times the design speed in km/h, Lmin = 0.6V, where V is in ki-
+  lometers per hour and L is in meters, or about three times the design speed in mph, [Lmin = 3V],
+  where V is in miles per hour and L is in feet. These terminal adjustments show as the vertical
+  lines at the lower left of Figure 3-36.
+
+  --`,```,``,`,`,`,``````,,,,``-`-`,,`,,`,`,,`---
+
+Copyright American Association of State Highway and Transportation Officials
+  © 2018 by the American Association of StLaicteenHseeig=AhrkwanasyasaSntadteTHrigahnwsayp&orTtraantisoponrtaOtiofnfiDceipat/l5s9.88317001, User=Sichmelle
+Provided by IHS Markit under license with AASHTO
+
+No reproduction or networking permitted without license from IHS  All rights reserved. DuplicationNiost aforvRieoslaalet,i1o0n/09o/2f0a18pp09l:i1c7a:1b8lMeDlTaw.
+  Elements of Design 3-169
+
+  U.S. CUSTOMARY
+
+  16  V = 45  V = 50  V = 55
+  K = 61  K = 84  K = 114
+  V = 15 V = 25 V = 30 V = 35 V = 40
+  K = 3 K = 12 K = 19 K =29 K =44
+
+  V = 20
+  14 K = 7
+
+Algebraic Difference in Grade, A (%)  V = 60
+  K = 151
+
+  12
+
+  10  V = 65
+  S < L  K = 193
+
+  8  V = 70
+  K = 247
+  6  --`,```,``,`,`,`,``````,,,,``-`-`,,`,,`,`,,`---
+  V = 75
+  K = 312
+  V = 80 mph
+  K = 384
+
+  4  S > L
+
+  2
+
+  S = L
+  Drainage Maximum K = 167
+  Computer S > L
+
+  0
+
+  0  200  400  600  800  1000  1200  1400  1600  1800  2000
+
+  Length of Crest Vertical Curve, L (ft)
+
+  16  METRIC
+
+  V = 20 V = 40 V = 50  V = 60  V = 70  V = 80
+  K = 11  K = 17  K = 26
+  K = 1  K=4 K=7  V = 90
+  K = 39
+Algebraic Difference in Grade, A (%)  V = 30
+  14 K = 2  V = 100
+  K = 52
+  12
+
+  10
+
+  8  V = 110
+  K = 74
+  6  V = 110
+  S < L  K = 95
+  V = 130 km/h
+  S > L  K = 124
+  4
+
+  2  S = L
+
+  Drainage Maximum K = 51
+
+  Computer S > L
+
+  0  100  200  300  400  500  600
+  0
+
+  Length of Crest Vertical Curve, L (m)
+
+Figure 3-36. Design Controls for Crest Vertical Curves—Open Road Conditions
+
+Copyright American Association of State Highway and Transportation Officials
+  © 2018 by the American Association of StLaicteenHseeig=AhrkwanasyasaSntadteTHrigahnwsayp&orTtraantisoponrtaOtiofnfiDceipat/l5s9.88317001, User=Sichmelle
+Provided by IHS Markit under license with AASHTO
+
+No reproduction or networking permitted without license from IHS  All rights reserved. DuplicationNiost aforvRieoslaalet,i1o0n/09o/2f0a18pp09l:i1c7a:1b8lMeDlTaw.
+3-170 A Policy on Geometric Design of Highways and Streets
+
+Table 3-35. Design Controls for Crest Vertical Curves Based on Stopping Sight Distance
+
+  U.S. Customary  Metric
+
+Design  Stopping  Rate of Vertical  Design  Stopping  Rate of Vertical
+Speed  Sight  Curvature, Ka  Speed  Sight  Curvature, Ka
+(mph)  (km/h)
+  Distance (ft)  Calculated Design  Distance (m)  Calculated Design
+  15  20
+  20  80  3.0  3  30  20  0.6  1
+  25  40
+  30  115  6.1  7  50  35  1.9  2
+  35  60
+  40  155  11.1  12  70  50  3.8  4
+  45  80
+  50  200  18.5  19  90  65  6.4  7
+  55  100
+  60  250  29.0  29  110  85  11.0  11
+  65  120
+  70  305  43.1  44  130  105  16.8  17
+  75
+  80  360  60.1  61  130  25.7  26
+
+  425  83.7  84  160  38.9  39
+
+  495  113.5  114  185  52.0  52
+
+  570  150.6  151  220  73.6  74
+
+  645  192.8  193  250  95.0  95
+
+  730  246.9  247  285  123.4  124
+
+  820  311.6  312
+
+  910  383.7  384
+
+a Rate of vertical curvature, K, is the length of curve per percent algebraic difference in intersecting grades (A), K =
+  L/A.
+
+The values of K derived above when S is less than L also can be used without significant error
+where S is greater than L. As shown in Figure 3-35, extension of the diagonal lines to meet the
+vertical lines for minimum lengths of vertical curves results in appreciable differences from the
+theoretical only where A is small and little or no additional cost is involved in obtaining longer
+vertical curves.
+
+For night driving on highways without lighting, the length of visible roadway is that roadway  --`,```,``,`,`,`,``````,,,,``-`-`,,`,,`,`,,`---
+that is directly illuminated by the headlights of the vehicle. For certain conditions, the mini-
+mum stopping sight distance values used for design exceed the length of visible roadway. First,
+vehicle headlights have limitations on the distance over which they can project the light intensi-
+ty levels that are needed for visibility. When headlights are operated on low beams, the reduced
+candlepower at the source plus the downward projection angle significantly restrict the length
+of visible roadway surface. Thus, particularly for high-speed conditions, stopping sight distance
+values exceed road-surface visibility distances afforded by the low-beam headlights regardless of
+whether the roadway profile is level or curving vertically. Second, for crest vertical curves, the
+area forward of the headlight beam’s point of tangency with the roadway surface is shadowed
+and receives only indirect illumination.
+
+Since the headlight mounting height (typically about 2.00 ft [0.60 m]) is lower than the driver
+eye height used for design (3.50 ft [1.08 m]), the sight distance to an illuminated object is con-
+
+Copyright American Association of State Highway and Transportation Officials
+  © 2018 by the American Association of StLaicteenHseeig=AhrkwanasyasaSntadteTHrigahnwsayp&orTtraantisoponrtaOtiofnfiDceipat/l5s9.88317001, User=Sichmelle
+Provided by IHS Markit under license with AASHTO
+
+No reproduction or networking permitted without license from IHS  All rights reserved. DuplicationNiost aforvRieoslaalet,i1o0n/09o/2f0a18pp09l:i1c7a:1b8lMeDlTaw.
+  Elements of Design 3-171
+
+trolled by the height of the vehicle headlights rather than by the direct line of sight. Any object
+within the shadow zone must be high enough to extend into the headlight beam to be directly
+illuminated. On the basis of Equation 3-41, the bottom of the headlight beam is about 1.30 ft
+[0.40 m] above the roadway at a distance ahead of the vehicle equal to the stopping sight dis-
+tance. Although the vehicle headlight system does limit roadway visibility length as previously
+mentioned, there is some mitigating effect in that other vehicles, whose taillight height typically
+varies from 1.50 to 2.00 ft [0.45 to 0.60 m], and other sizable objects receive direct lighting from
+headlights at stopping sight distance values used for design. Furthermore, drivers are aware that
+visibility at night is less than during the day, regardless of road and street design features, and
+they may therefore be more attentive and alert.
+
+There is a level point on a crest vertical curve of Type I (see Figure 3-34), but no difficulty with
+drainage on highways with curbs is typically experienced if the curve is sharp enough so that a
+minimum grade of 0.30 percent is reached at a point about 50 ft [15 m] from the crest. This cor-
+responds to K of 167 ft [51 m] per percent change in grade, which is plotted in Figure 3-36 as the
+drainage maximum. All combinations above or to the left of this line satisfy the drainage crite-
+rion. The combinations below and to the right of this line involve flatter vertical curves. Special
+attention is needed in these cases to provide proper pavement drainage near the high point of
+crest vertical curves. It is not intended that K of 167 ft [51 m] per percent grade be considered a
+design maximum, but merely a value beyond which drainage should be more carefully designed.
+
+3.4.6.2.2  Design Controls: Passing Sight Distance
+
+Design values of crest vertical curves for passing sight distance differ from those for stopping
+sight distance because of the different sight distance and object height criteria. The general
+Equations 3-42 and 3-43 apply. Using the 3.50-ft [1.08-m] height of object results in the fol-
+lowing specific formulas with the same terms as shown above:
+
+  U.S. Customary  Metric  (3-46)
+When S is less than L,  When S is less than L,  (3-47)
+
+When S is greater than L,  When S is greater than L,
+
+For the minimum passing sight distances shown in Table 3-4, the minimum lengths of crest
+vertical curves are substantially longer than those for stopping sight distances. The extent of
+difference is evident by the values of K, or length of vertical curve per percent change in A, for
+passing sight distances shown in Table 3-36.
+
+  --`,```,``,`,`,`,``````,,,,``-`-`,,`,,`,`,,`---
+
+Copyright American Association of State Highway and Transportation Officials
+  © 2018 by the American Association of StLaicteenHseeig=AhrkwanasyasaSntadteTHrigahnwsayp&orTtraantisoponrtaOtiofnfiDceipat/l5s9.88317001, User=Sichmelle
+Provided by IHS Markit under license with AASHTO
+
+No reproduction or networking permitted without license from IHS  All rights reserved. DuplicationNiost aforvRieoslaalet,i1o0n/09o/2f0a18pp09l:i1c7a:1b8lMeDlTaw.
+3-172 A Policy on Geometric Design of Highways and Streets
+
+Table 3-36. Design Controls for Crest Vertical Curves Based on Passing Sight Distance
+
+  U.S. Customary  Metric
+
+Design  Passing Sight  Rate of Vertical  Design  Passing Sight  Rate of Vertical
+Speed  Distance (ft)  Curvature, Ka  Speed  Distance (m)  Curvature, Ka
+(mph)  (km/h)
+  Design  120  Design
+  20  30  140  17
+  25  400  57  40  160  23
+  30  50  180  30
+  35  450  72  60  210  38
+  40  70  245  51
+  45  500  89  80  280  69
+  50  90  320  91
+  55  550  108  100  355  119
+  60  110  395  146
+  65  600  129  120  440  181
+  70  130  224
+  75  700  175
+  80
+  800  229
+
+  900  289
+
+  1000  357
+
+  1100  432
+
+  1200  514
+
+  1300  604
+
+  1400  700
+
+a Rate of vertical curvature, K, is the length of curve per percent algebraic difference in intersecting grades (A), K =
+  L/A.
+
+Generally, it is impractical to design crest vertical curves that provide passing sight distance
+because of high cost where crest cuts are involved and the difficulty of fitting the resulting long
+vertical curves to the terrain, particularly for high-speed roads. Passing sight distance on crest
+vertical curves may be practical on roads with unusual combinations of low design speeds and
+gentle grades or higher design speeds with very small algebraic differences in grades. Ordinarily,
+passing sight distance is provided only at locations where combinations of alignment and profile
+do not need significant grading. Table 3-36 shows computed K values for determining lengths
+of vertical curves corresponding to passing sight distance values shown in Table 3-4.
+
+3.4.6.3  Sag Vertical Curves
+
+At least four different criteria for establishing lengths of sag vertical curves are recognized to
+some extent. These are (1) headlight sight distance, (2) passenger comfort, (3) drainage control,
+and (4) general appearance.
+
+Headlight sight distance has been used directly by some agencies and for the most part is the
+basis for determining the desirable length of sag vertical curves. When a vehicle traverses a sag
+vertical curve at night, the portion of highway lighted ahead is dependent on the position of the
+headlights and the direction of the light beam. A headlight height of 2 ft [0.60 m] and a 1-de-
+gree upward divergence of the light beam from the longitudinal axis of the vehicle is commonly
+assumed. The upward spread of the light beam above the 1-degree divergence angle provides
+some additional visible length of roadway. For sag vertical curves without an overhead vertical
+
+  --`,```,``,`,`,`,``````,,,,``-`-`,,`,,`,`,,`---
+
+Copyright American Association of State Highway and Transportation Officials
+  © 2018 by the American Association of StLaicteenHseeig=AhrkwanasyasaSntadteTHrigahnwsayp&orTtraantisoponrtaOtiofnfiDceipat/l5s9.88317001, User=Sichmelle
+Provided by IHS Markit under license with AASHTO
+
+No reproduction or networking permitted without license from IHS  All rights reserved. DuplicationNiost aforvRieoslaalet,i1o0n/09o/2f0a18pp09l:i1c7a:1b8lMeDlTaw.
+  Elements of Design 3-173
+
+restriction, drivers can utilize high beams, highway lighting, or the lights from other vehicles.
+The following equations show the relationships between S, L, and A, using S as the distance
+between the vehicle and point where the 1-degree upward angle of the light beam intersects the
+surface of the roadway:
+
+  U.S. Customary  Metric
+When S is less than L,  When S is less than L,
+
+  (3-48)
+
+or,  or,  (3-49)
+When S is greater than L,  When S is greater than L,  (3-50)
+
+or,  or,
+
+  (3-51)
+
+where:  where:
+L  =  length of sag vertical curve, ft  L  =  length of sag vertical curve, m
+A  =  algebraic difference in grades, percent  A  =  algebraic difference in grades, percent
+S  =  light beam distance, ft  S  =  light beam distance, m
+
+It is desirable that a sag vertical curve be long enough that the light beam distance is approx-
+imately the same as the stopping sight distance. Accordingly, it is appropriate to use stopping
+sight distances for different design speeds as the value of S in the above equations. The resulting
+lengths of sag vertical curves for the desirable stopping sight distances for each design speed are
+shown in Figure 3-37 with solid lines using rounded values of K as was done for crest vertical
+curves.
+
+  --`,```,``,`,`,`,``````,,,,``-`-`,,`,,`,`,,`---
+
+Copyright American Association of State Highway and Transportation Officials
+  © 2018 by the American Association of StLaicteenHseeig=AhrkwanasyasaSntadteTHrigahnwsayp&orTtraantisoponrtaOtiofnfiDceipat/l5s9.88317001, User=Sichmelle
+Provided by IHS Markit under license with AASHTO
+
+No reproduction or networking permitted without license from IHS  All rights reserved. DuplicationNiost aforvRieoslaalet,i1o0n/09o/2f0a18pp09l:i1c7a:1b8lMeDlTaw.
+3-174 A Policy on Geometric Design of Highways and Streets
+
+  U.S. CUSTOMARY
+
+  16  V = 50  V = 55  V = 60
+  K = 96  K = 115  K = 136
+  V = 15 V = 20 V = 25 V = 30 V = 35 V = 40 V = 45
+  K = 10 K = 17 K = 26 K = 37 K = 49 K = 64 K = 79  V = 65
+  14  K = 157
+
+Algebraic Difference in Grade, A (%)  12
+
+  10  V = 70
+  K = 181
+  8  V = 75
+  K = 206
+  S < L  V = 80 mph
+  K = 231
+  6
+
+  4 S>L  S = L
+
+  2  Drainage Maximum K = 167
+  Computed Values S > L
+
+  0  200  400  600  800  1000  1200  1400  1600  1800  2000
+  0
+
+  Length of Sag Vertical Curve, L (ft)
+
+  METRIC
+
+  16
+
+  V = 20  V = 30 V = 40  V = 50  V = 60  V = 70  V = 80  V = 90
+  K = 3  K=6 K=9  K = 13  K = 18  K = 23  K = 30  K = 38
+
+  14  V = 100
+  K = 45
+Algebraic Difference in Grade, A (%)  12
+
+  10  S < L  V = 110
+  8  K = 55
+  6  V = 120
+  4  K = 63
+  2
+  0  V = 130 km/h
+  K = 73
+  0
+  S > L  S = L
+
+  100  Drainage Maximum K = 51
+  Computed Values S > L
+
+  200  300  400  500  600
+
+  Length of Sag Vertical Curve, L (m)
+
+Figure 3-37. Design Controls for Sag Vertical Curves—Open Road Conditions
+
+  --`,```,``,`,`,`,``````,,,,``-`-`,,`,,`,`,,`---
+
+Copyright American Association of State Highway and Transportation Officials
+  © 2018 by the American Association of StLaicteenHseeig=AhrkwanasyasaSntadteTHrigahnwsayp&orTtraantisoponrtaOtiofnfiDceipat/l5s9.88317001, User=Sichmelle
+Provided by IHS Markit under license with AASHTO
+
+No reproduction or networking permitted without license from IHS  All rights reserved. DuplicationNiost aforvRieoslaalet,i1o0n/09o/2f0a18pp09l:i1c7a:1b8lMeDlTaw.
+  Elements of Design 3-175
+
+  The effect on passenger comfort of the change in vertical direction is greater on sag than on crest
+  vertical curves because gravitational and centripetal forces are combining rather than opposing
+  forces. Comfort due to change in vertical direction is not easily measured because it is affected
+  appreciably by vehicle body suspension, vehicle body weight, tire flexibility, and other factors.
+  Limited attempts at such measurements have led to the broad conclusion that riding is comfort-
+  able on sag vertical curves when the centripetal acceleration does not exceed 1 ft/s2 [0.3 m/s2].
+  The general expression for such a criterion is:
+
+  U.S. Customary  Metric
+
+  (3-52)
+
+  where:  where:
+  L  =  length of sag vertical curve, ft  L  =  length of sag vertical curve, m
+  A  =  algebraic difference in grades, percent  A  =  algebraic difference in grades, percent
+  V  =  design speed, mph  V  =  design speed, km/h
+
+  The length of vertical curve needed to satisfy this comfort factor at the various design speeds
+  is only about 50 percent of that needed to satisfy the headlight sight distance criterion for the
+  normal range of design conditions.
+
+  Drainage affects design of vertical curves of Type III (see Figure 3-35) where curbed sections
+  are used. An approximate criterion for sag vertical curves is the same as that expressed for the
+  crest conditions (i.e., a minimum grade of 0.30 percent should be provided within 50 ft [15 m]
+  of the level point). This criterion corresponds to K of 167 ft [51 m] per percent change in grade,
+  which is plotted in Figure 3-37 as the drainage maximum. The drainage criterion differs from
+  other criteria in that the length of sag vertical curve determined for it is a maximum, whereas
+  the length for any other criterion is a minimum. The maximum length of the drainage criterion
+  is greater than the minimum length for other criteria up to 65 mph [100 km/h].
+
+  For improved appearance of sag vertical curves, previous guidance used a rule-of-thumb for
+  minimum curve length of 30A [100A] or, in Figure 3-37, K = 100 ft [K = 30 m] per percent
+  change in grade. This approximation is a generalized control for small or intermediate values of
+  A. Compared with headlight sight distance, it corresponds to a design speed of approximately 50
+  mph [80 km/h]. On high-type highways, longer curves are appropriate to improve appearance.
+
+  From the preceding discussion, it is evident that design controls for sag vertical curves differ
+  from those for crests, and separate design values are needed. The headlight sight distance ap-
+  pears to be the most logical criterion for general use, and the values determined for stopping
+  sight distances are within the limits recognized in current practice. The use of this criterion to
+  establish design values for a range of lengths of sag vertical curves is recommended. As in the
+  case of crest vertical curves, it is convenient to express the design control in terms of the K rate
+
+--`,```,``,`,`,`,``````,,,,``-`-`,Copyright American Association of State Highway and Transportation Officials
+  © 2018 by the American Association of StLaicteenHseeig=AhrkwanasyasaSntadteTHrigahnwsayp&orTtraantisoponrtaOtiofnfiDceipat/l5s9.88317001, User=Sichmelle
+Provided by IHS Markit under license with AASHTO
+
+No reproduction or networking permitted without license from IHS  All rights reserved. DuplicationNiost aforvRieoslaalet,i1o0n/09o/2f0a18pp09l:i1c7a:1b8lMeDlTaw.
+3-176 A Policy on Geometric Design of Highways and Streets
+
+for all values of A. This entails some deviation from the computed values of K for small values of
+A, but the differences are not significant. Table 3-37 shows the range of computed values and the
+rounded values of K selected as design controls. The lengths of sag vertical curves on the basis of
+the design speed values of K are shown by the solid lines in Figure 3-37. It is to be emphasized
+that these lengths are minimum values based on design speed; longer curves are desired wher-
+ever practical, but special attention to drainage should be exercised where values of K in excess
+of 167 ft [51 m] per percent change in grade are used.
+
+Minimum lengths of vertical curves for flat gradients also are recognized for sag conditions. The
+values determined for crest conditions appear to be generally suitable for sags. Lengths of sag
+vertical curves, shown as vertical lines in Figure 3-37, are equal to three times the design speed
+in mph [0.6 times the design speed in km/h].
+
+Sag vertical curves shorter than the lengths computed from Table 3-37 may be justified for eco-
+nomic reasons in cases where an existing feature, such as a structure not ready for replacement,
+controls the vertical profile. In certain cases, ramps may also be designed with shorter sag ver-
+tical curves. Fixed-source lighting is desirable in such cases. For street design, some engineers
+accept design of a sag or crest where A is about 1 percent or less without a length of calculated
+vertical curve. However, field modifications during construction usually result in constructing
+the equivalent to a vertical curve, even if short.
+
+Table 3-37. Design Controls for Sag Vertical Curves
+
+  U.S. Customary  Metric
+
+Design  Stopping  Rate of Vertical  Design  Stopping  Rate of Vertical
+Speed  Sight Dis-  Curvature, Ka  Speed  Sight Dis-  Curvature, Ka
+(mph)  tance (ft)  (km/h)  tance (m)
+  Calculated Design  Calculated Design
+  15  20
+  20  80  9.4  10  30  20  2.1  3
+  25  40
+  30  115  16.5  17  50  35  5.1  6
+  35  60
+  40  155  25.5  26  70  50  8.5  9
+  45  80
+  50  200  36.4  37  90  65  12.2  13
+  55  100
+  60  250  49.0  49  110  85  17.3  18
+  65  120
+  70  305  63.4  64  130  105  22.6  23
+  75
+  80  360  78.1  79  130  29.4  30
+
+  425  95.7  96  160  37.6  38
+
+  495  114.9  115  185  44.6  45  --`,```,``,`,`,`,``````,,,,``-`-`,,`,,`,`,,`---
+
+  570  135.7  136  220  54.4  55
+
+  645  156.5  157  250  62.8  63
+
+  730  180.3  181  285  72.7  73
+
+  820  205.6  206
+
+  910  231.0  231
+
+a Rate of vertical curvature, K, is the length of curve (m) per percent algebraic difference intersecting grades (A), K =
+  L/A.
+
+Copyright American Association of State Highway and Transportation Officials
+  © 2018 by the American Association of StLaicteenHseeig=AhrkwanasyasaSntadteTHrigahnwsayp&orTtraantisoponrtaOtiofnfiDceipat/l5s9.88317001, User=Sichmelle
+Provided by IHS Markit under license with AASHTO
+
+No reproduction or networking permitted without license from IHS  All rights reserved. DuplicationNiost aforvRieoslaalet,i1o0n/09o/2f0a18pp09l:i1c7a:1b8lMeDlTaw.
+  Elements of Design 3-177
+
+3.4.6.4  Sight Distance at Undercrossings
+
+Sight distance on the highway through a grade separation should be at least as long as the mini-
+mum stopping sight distance and preferably longer. Design of the vertical alignment is the same
+as at any other point on the highway except in some cases of sag vertical curves underpassing a
+structure as illustrated in Figure 3-38. While not a frequent concern, the structure fascia may
+cut the line of sight and limit the sight distance to less than otherwise is attainable. It is generally
+practical to provide the minimum length of sag vertical curve at grade separation structures,
+and even where the recommended grades are exceeded, the sight distance should not need to be
+reduced below the minimum recommended values for stopping sight distance.
+
+For some conditions, the designer may wish to check the available sight distance at an under-
+crossing, such as at a two-lane undercrossing without ramps where it would be desirable to
+provide passing sight distance. Such checks are best made graphically on the profile, but may be
+performed through computations.
+
+  Sight Distance (S)
+
+  Line of Sight
+
+  h1  h2
+  C  VPT
+
+  VPC  G  G2
+
+  1
+
+  L/2  L/2
+
+  L
+
+Figure 3-38. Sight Distance at Undercrossings
+
+  --`,```,``,`,`,`,``````,,,,``-`-`,,`,,`,`,,`---
+
+Copyright American Association of State Highway and Transportation Officials
+  © 2018 by the American Association of StLaicteenHseeig=AhrkwanasyasaSntadteTHrigahnwsayp&orTtraantisoponrtaOtiofnfiDceipat/l5s9.88317001, User=Sichmelle
+Provided by IHS Markit under license with AASHTO
+
+No reproduction or networking permitted without license from IHS  All rights reserved. DuplicationNiost aforvRieoslaalet,i1o0n/09o/2f0a18pp09l:i1c7a:1b8lMeDlTaw.
+

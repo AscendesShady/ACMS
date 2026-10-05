@@ -1,0 +1,817 @@
+ii. Minimizing Packet Loss: Employing error-correction algorithms and
+  redundant communique pathways facilitates save you the lack of
+  essential site visitors information, consisting of twist of fate reviews or
+  congestion notifications, throughout transmission [35].
+
+Applications in Smart Transportation: Network optimization is crucial
+for preserving the reliability and responsiveness of a clever avenue system,
+making sure that site visitors information is correct and well timed for
+powerful real-time site visitors management [36, 37].
+
+4.1.3 Resource Allocation
+
+Definition Resource allocation involves efficiently managing limited
+resources, such as bandwidth, power, and memory, among multiple devices
+in a smart road transportation system. This is essential to assuring all the
+devices runs efficiently without exhausting the network.
+
+Example
+i. Bandwidth Allocation: It is the method of allocating different data
+
+  transmission capacity to various sensor nodes or applications in the
+  IoT network.
+
+ii. Power Management: Controlling power consumption in roadside
+  sensors to improve battery life, particularly in remote locations where
+  battery replacement is difficult.
+
+iii. Memory Management: Optimizing memory consumption in edge
+  devices to guarantee they can store and process critical data without
+  requiring frequent data transfers to central servers.
+
+Application in Smart Transportation: Proper resource allocation ensures
+that all parts of the smart road system function smoothly, with critical data
+given priority and devices operating within their limits [38, 39].
+
+4.1.4 Energy Optimization
+
+Definition Energy optimisation refers to measures for extending the
+battery life of IoT devices in a smart road transportation system.
+Example
+i. Duty cycling: Duty cycling occurs when devices turn off or reduce
+
+  activity during low-demand times to preserve energy [40].
+
+ii. Energy Harvesting: Devices generate electricity from natural sources,
+  such as solar energy, to meet their energy requirements.
+
+Application in Smart Transportation: By optimising energy use, smart
+road systems can reduce maintenance costs and ensure that devices,
+especially those in remote or difficult-to-access locations, remain
+operational for longer periods.
+
+Example Scenario
+
+Assume you oversee a smart road transportation system for a large city.
+
+Data Optimisation: Data optimisation would involve your system
+combining sensor data and compressing high-definition video from traffic
+cameras to send only pertinent information to central servers, reducing the
+amount of data needed and enabling quicker analysis.
+
+Network Optimization: By establishing a 5G network, you can reduce
+latency and ensure that alerts for emergencies and changes in traffic signals
+are received almost instantaneously. Procedures for correcting errors lessen
+the chance of losing important data [41, 42].
+
+Resource Allocation: To keep roadside sensors running at maximum
+efficiency during rush hour, give emergency vehicle communications more
+bandwidth and give power usage a higher priority.
+
+Energy optimisation: Use duty-cycling solar-powered sensors, which only
+activate when necessary. By applying this method, we can enhance the
+lifespan of sensing devices and reduce energy consumption.
+
+4.2 Applications in IoT
+4.2.1 Industrial IoT (IIoT)
+Optimising Predictive Maintenance and Efficiency: The Industrial
+Internet of Things (IIoT) generates large amounts of data by using
+networked sensor devices to monitor the systems continuously. This data is
+used by optimisation techniques to predict potential breakdown, enabling
+maintenance just in time, unlike frequent intervals. Predictive maintenance
+enhances the industrial equipment's lifetime, reduces maintenance costs,
+and minimises downtime.
+
+Key Techniques
+
+Data analytics: All the sensor data are analysed by the ML algorithms to
+detect the patterns and anomalies that indicate the possibilities of failure.
+Optimisation techniques ensure that ML algorithms work smoothly and
+provide on-time and accurate forecasts [43].
+
+  Resource Allocation: All the optimisation models are used to help in
+  allocating the resources to improve the efficiency in critical areas.
+  Energy Sector: IIoT systems can increase the overall output by
+  continuously observing and enhancing industrial processes, which
+  reduces waste and energy consumption [44].
+
+Importance: IIoT optimisation enhances industrial operations and
+efficiency while reducing costs and increasing productivity; all these factors
+are essential to the industrial sector for competitiveness.
+
+4.2.2 Smart Cities
+
+Optimising Public Safety, Energy Consumption, and Traffic
+Management: Smart cities utilise IoT networks to enhance the efficiency of
+urban infrastructure and services. Optimisation is essential in several key
+areas of smart city management, including:
+
+i. Public Safety: Optimization improves the effectiveness of surveillance
+  systems, emergency response coordination, and incident detection,
+  leading to quicker and more accurate responses to public safety
+  concerns.
+
+ii. Energy Consumption: By using real-time data for adjusting heating,
+  lighting, and cooling systems, the optimization technique helps reduce
+  energy consumption, which results in sustainability and cost savings.
+iii. Traffic Management: By evaluating data from sensor devices,
+  cameras, and traffic lights to modify signal timings and control
+  congestion, optimization techniques improve traffic flow reduce trip
+  times and increase overall efficiency.
+
+Applications
+
+  Traffic Optimization: IoT is being used by many big cities in Singapore
+  to optimise traffic lights and minimise peak time congestion, which
+  improves traffic flow and lowers pollution
+  Smart Grids: IoT-enabled smart grids improve energy utilisation in
+  cities like Amsterdam, lowering energy consumption and successfully
+  integrating renewable energy sources [45].
+
+Importance: In smart cities, Optimization enhances the living standards by
+reducing costs, increasing the sustainability of city services, and
+streamlining urban infrastructure.
+
+4.2.3 Healthcare
+
+Optimising Healthcare Monitoring System: IoT devices are used in
+healthcare to continuously capture, monitor, and transmit critical health
+data. The optimization technique guarantees that this data will be sent
+consistently and quickly for proper monitoring and appropriate response.
+
+Key Techniques
+
+  Data Transmission Optimization: A real-time fitness tracking system
+  requires dependable facts switching and minimal latency. Techniques for
+  optimisation that, by partially computing information toward the source,
+  reduce the transmission times and improve reliability.
+  Battery Life Optimization: Wearable gadgets should not require
+  frequent charging and have a very long working life. By reducing power
+  consumption, optimisation approaches increase the battery life without
+  compromising tool functioning.
+  Data Compression: Optimization algorithms efficiently handle large
+  volumes of fitness facts by compressing data before transmitting.
+Applications
+
+  Chronic Disease Management: Healthcare-related data and information
+  can be upgraded by wearable technology that monitors vital indicators
+  like glucose levels, heart rate, and blood pressure. Patients with serious
+  health conditions can now benefit from continuous monitoring and
+  trigger-based therapy.
+  Remote Patient Monitoring: IoT sensing devices enable Continuous
+  fitness tracking in remote areas.
+
+5 Future Works
+
+5.1 Advancing Optimization Techniques
+
+Future studies in optimisation inside AI, device studying, and IoT are
+expected to awareness of the improvement of superior algorithms able to
+handle the developing complexity and scale of records and models. This
+consists of exploring progressive processes together with quantum
+optimization that could probably resolve complicated troubles more
+correctly than conventional strategies. Additionally, integrating device
+studying with optimisation strategies, together with reinforcement studying-
+primarily based totally optimisation, can result in extra adaptive and clever
+structures which can self-optimize in real-time primarily based totally on
+evolving conditions.
+
+5.2 Cross-disciplinary Approaches
+
+As AI, ML, and IoT continue to converge, there is a growing need for cross-
+disciplinary research that combines techniques from different fields. For
+example, integrating concepts from control theory, economics, and network
+science with traditional optimisation methods can lead to more robust and
+scalable solutions for complex systems like smart cities and industrial IoT.
+Research in this direction could lead to more holistic optimisation strategies
+considering broader system dynamics and interactions between different
+components. As AI, device studying, and IoT intersect, there may be a
+growing call for interdisciplinary studies that merge strategies from
+numerous fields. For instance, combining insights from management theory,
+economics, and community technology with traditional optimisation
+strategies may yield extra sturdy and scalable answers for elaborate
+structures like clever towns and commercial IoT. Such studies should bring
+about extra complete optimisation techniques that cope with broader gadget
+dynamics and the interactions among exceptional components.
+
+5.3 Scalability and Real-Time Optimization
+
+Scalability is still a prime mission, given the proliferation of IoT gadgets
+and the developing complexity of AI models. Future studies need to
+develop optimisation strategies that can scale correctly with big datasets
+and complicated models. This consists of investigating allotted and parallel
+optimisation strategies and using side computing and federated studying to
+behaviour optimisation toward records sources. Furthermore, real-time
+optimisation is increasingly essential for packages like self-reliant
+automobiles and clever grids, in which selections have to be made rapidly.
+Research in this area must be aware of growing optimisation algorithms that
+meet stringent time constraints without sacrificing accuracy or reliability.
+
+5.4 Ethical and Sustainable Optimization
+
+As optimisation strategies end up extra pervasive in crucial programs like
+healthcare, finance, and self-sufficient structures, it's vital not to forget the
+moral implications of those technologies. Future studies must pay attention
+to growing optimisation strategies that aren't the most effective green but
+are fair, transparent, and aligned with societal values. Additionally, there's a
+developing need for sustainable optimisation strategies that reduce the
+environmental effect of large-scale AI and IoT structures, mainly in terms
+of strength intake and aid use.
+
+5.5 Human-in-the-Loop Optimization
+
+Incorporating human know-how into the optimisation system can produce
+extra powerful and interpretable solutions, mainly in complicated or unsure
+environments. Future paintings must discover strategies for integrating
+human comments and area know-how into optimisation algorithms,
+growing structures that could collaborate with human beings to obtain
+higher outcomes. This may want to contain growing new interfaces and
+gear that permit human beings to manually the optimisation system or offer
+real-time comments to AI and IoT structures.
+6 Conclusion
+
+Optimisation is central to advancing AI, machine learning, and IoT
+technologies, driving efficiency, scalability, and capability improvements
+across various applications. Optimisation is essential to AI to improve
+model performance for tasks like hyperparameter tuning, reinforcement
+learning, and neural network training. To enhance prediction accuracy,
+machine learning depends on supervised and unsupervised learning
+optimisation to select the best models and avoid overfitting. Optimisation is
+crucial in the IoT for the management of complex systems in smart cities,
+industries, and healthcare. It makes efficient resource allocation, real-time
+data transfer, and predictive maintenance possible, which are important for
+the efficient deployment of IoT applications. However, scalability, security,
+and interoperability pose challenges requiring constant innovation and
+research. The optimisation technique will grow when AI, ML, and IoT will
+continue to progress. It is predicted that future developments will focus on
+improving the scalability, real-time functionality, and ethical coherence of
+optimisation techniques to fill the requirements of complex and
+interconnected systems. Optimisation will continue to be a major driving
+force behind technological advancement in the upcoming years by
+addressing these issues and exploring new directions.
+
+  Optimisation techniques are expected to facilitate the improvement of
+new applications previously considered unattainable, with the enhancement
+of AI, ML, and IoT systems performance through research and innovation.
+Optimisation has great promise ahead of it, and it is full of opportunities to
+revolutionise industries, enhance quality of life, and address some of the
+most important issues facing society.
+
+References
+
+1. Patra SS, Jena S, Mund GB, Gourisaria MK, Gupta JK (2021) Meta‐heuristic algorithms for best
+  IoT cloud service platform selection. In: Integration of cloud computing with internet of things:
+  foundations, analytics, and applications, pp 299–318
+
+2.
+  Sardar TH, Das S, Pandey BK. Explainable AI (XAI): concepts and theory. In: Medical data
+  analysis and processing using explainable artificial intelligence. CRC Press, pp 1–18
+
+3.
+  LeCun Y, Bottou L, Bengio Y, Haffner P (1998) Gradient-based learning applied to document
+  recognition. Proc IEEE 86(11):2278–2324. https://​doi.o​ rg/​10.​1109/5​ .​726791
+  [Crossref]
+4.
+
+  Younis M, Akkaya K (2008) Strategies and techniques for node placement in wireless sensor
+  networks: a survey. Ad Hoc Netw 6(4):621–655. https://​doi.o​ rg/​10.​1016/j​.​adhoc.​2007.​09.​006
+  [Crossref]
+5.
+  Bottou L (2010) Large-scale machine learning with stochastic gradient descent. In: Proceedings
+  of COMPSTAT'2010. Physica-Verlag HD, pp 177–186
+6.
+  Ghahramani Z (2015) Probabilistic machine learning and artificial intelligence. Nature
+  521(7553):452–459
+  [Crossref]
+7.
+  Chen J, Ran X, Xu K (2020) Deep learning with edge computing: a review. Proc IEEE
+  108(8):1655–1674
+  [Crossref]
+8.
+  Gubbi J, Buyya R, Marusic S, Palaniswami M (2013) Internet of things (IoT): a vision,
+  architectural elements, and future directions. Futur Gener Comput Syst 29(7):1645–1660
+  [Crossref]
+9.
+  Jin X, Wah BW, Cheng X, Wang Y (2015) Significance and challenges of big data research. Big
+  Data Res 2(2):59–64
+  [Crossref]
+10.
+  Krause A, Ong CS (2011) Contextual Gaussian process bandit optimization. Adv Neural Inf
+  Process Syst 24:2447–2455
+11.
+  Shukla A, Tiwari MK (2020) Quantum optimization: a review and new insights. J Comput Sci
+  40:101090
+12.
+  Van de Kaa G, Kamp L, Rezaei J (2019) Selection of standards for complex systems: a decision-
+  making approach. Technovation 86–87:102084
+13.
+  Bengio Y, Lodi A, Prouvost A (2021) Machine learning for combinatorial optimization: a
+  methodological tour d’horizon. Eur J Oper Res 290(2):405–421
+  [MathSciNet][Crossref]
+14.
+  Bellary MZ, Deepthi THS, Aziz Musthafa B, Ahmed SJ, Sarkar R (2023) Medical image
+  analysis of knee osteoarthritis using modified deep CNN. J Surv Fish Sci 10(2S):133–144
+15.
+  Hassan MAM, Sardar TH, Fahim MFH, Mohamed MS, Suleyman RM, Usman MM (2024)
+  Artificial intelligence and deep learning applications on big data computing frameworks. In: Big
+  data computing. CRC Press, pp 196–211
+16.
+  Das S, Sardar TH, Sahana DS (2025) An ensemble technique using genetic algorithm and deep
+  learning for the prediction of rice diseases. In: Machine learning hybridization and optimization
+  for intelligent applications. CRC Press, pp 289–303
+17.
+  Theerthagiri P, Usha Ruby A, Chandran JGC, Sardar TH, Ahamed Shafeeq BM (2024) Deep
+  SqueezeNet learning model for diagnosis and prediction of maize leaf diseases. J Big Data
+  11(1):112
+18.
+  Sardar TH, Muttineni A, Ranjan R (2024) The future of big data in customer experience and
+  inventory management. In: Big data computing. CRC Press, pp 233–248
+
+19.
+  Chakraborty P, Bandyopadhyay A, Misra M, Gupta P, Sardar TH, Pandey B (2024) Automated
+  detection of intracranial hemorrhage using convolutional neural networks. In: 2024 IEEE AITU:
+  digital generation. IEEE, pp 20–26
+
+20.
+  Singh R, Sarkar P, Bandyopadhyay A, Swain S, Sardar TH, Pandey B (2024) Combinatorial
+  kinetic dualistic auction model for metaverse service allocation. In: 2024 IEEE AITU: digital
+  generation. IEEE, pp 27–32
+
+21.
+  Kumar C, Arun Kumar K, Gupta S, Sardar TH (2024) Cyberbullying detection based on the
+  fusion of DistilBERT and SIMHASH technique. In: 2024 2nd international conference on
+  artificial intelligence and machine learning applications theme: healthcare and internet of things
+  (AIMLA). IEEE, pp 1–4
+
+22.
+  Sardar TH, Hazarika RA, Pandey B, Prasad G, Hassan SM, Dodmane R, Gohel H (2024) Video
+  key concept extraction using convolution neural network. In: 2024 IEEE 3rd international
+  conference on AI in cybersecurity (ICAIC). IEEE, pp 1–6
+
+23.
+  Gupta S, Singh U, Rawat M, Kurian A, Mandal L, Gupta P, Sardar TH (2023) Best image
+  processing for higher face detection rate using Haar cascades. In: International conference on
+  robotics and networks. Springer Nature Switzerland, Cham, pp 113–128
+
+24.
+  Sardar TH (2024) Reflecting on a decade of evolution: MapReduce-based advances in
+  partitioning-based, hierarchical-based, and density-based clustering (2013–2023). WIREs Data
+  Mining Knowl Discov e1566. https://​doi.o​ rg/​10.​1002/w​ idm.1​ 566
+
+25.
+  Hassan MAM, Mansur UM, Jha R, Fahim MFH (2024) Interpretable machine learning models
+  for credit risk assessment. In: 2024 11th international conference on computing for sustainable
+  global development (INDIACom), New Delhi, India, pp 361–365. https://​doi.o​ rg/​10.​23919/​
+  INDIACom61295.2​ 024.​10498183
+
+26.
+  Hassan MAM, Fahim MFH, Jha R, Vanitha K, Abrar NM (2024) Optimizing deep learning based
+  approach for brain tumor segmentation in magnetic resonance imaging (MRI) scans. In: 2024
+  IEEE AITU: digital generation, Astana, Kazakhstan, pp 38–44. https://​doi.o​ rg/​10.​1109/​
+  IEEECONF61558.​2024.​10585458
+
+27.
+  Fahim MFH, Hassan MAM, Karpagavalli SM, Jansi S, Jha R, Mahesh TR (2024) Advancing
+  cardiovascular health prediction: machine learning algorithm analysis. In: 2024 IEEE 13th
+  international conference on communication systems and network technologies (CSNT), Jabalpur,
+  India, pp 588–593. https://​doi.o​ rg/​10.​1109/C​ SNT60213.2​ 024.​10546094
+
+28.
+  Mohamed MS, Hassan MAM, Fahim MFH, Suleyman RM, Mansur UM, Singh AK (2024)
+  Crafting insights from facial feedback for enhanced understanding. In: 2024 IEEE international
+  conference on computing, power and communication technologies (IC2PCT), Greater Noida,
+  India, pp 316–321. https://​doi.o​ rg/​10.​1109/I​C2PCT60090.​2024.​10486281
+
+29.
+  Jha KK, Jha R, Jha AK, Hassan MAM, Yadav SK, Mahesh T (2021) A brief comparison on
+  machine learning algorithms based on various applications: a comprehensive survey. In: 2021
+  IEEE international conference on computation system and information technology for
+  sustainable solutions (CSITSS), Bangalore, India, pp 1–5, https://​doi.o​ rg/​10.​1109/C​ SITSS54238.​
+  2021.​9683524
+30.
+  Gourisaria MK, Agrawal R, Singh V, Rautaray SS, Pandey M (2022) AI and IoT enabled smart
+  hospital management systems. In: Data science in societal applications: concepts and
+  implications. Springer Nature Singapore, Singapore, pp 77–106
+31.
+  Mondal MA, Ahmed N, Hussain MI (2023) IoT-MAC: a channel access mechanism for IoT
+  smart environment. Array 18:100285, ISSN 2590-0056. https://​doi.o​ rg/​10.​1016/j​.​array.​2023.​
+  100285
+32.
+  Mondal MA, Hussain MI (2023) Station grouping mechanism using machine learning approach
+  for IEEE 802.11ah. Ad Hoc Netw 149:103238, ISSN 1570-8705. https://​doi.o​ rg/​10.​1016/j​.​adhoc.​
+  2023.​103238
+33.
+  Mondal MA, Khongjoh S, Hussain MI (2023) RAW optimization of IEEE 802.11ah Networks.
+  In: 2023 4th international conference on computing and communication systems (I3CS).
+  Shillong, India, pp 1–5. https://​doi.o​ rg/​10.​1109/I​3CS58314.2​ 023.​10127498
+34.
+  Ghosh S, Gourisaria MK, Routaray SS, Pandey M (2020) IIoT: a survey and review of
+  theoretical concepts. In: Interoperability in IoT for smart systems. CRC Press, pp 223–236
+35.
+  Li J, Wu Z, Zhou Y, Zhang Y (2018) Resource allocation in vehicular networks based on multi-
+  agent reinforcement learning. IEEE Access 6:60412–60421
+36.
+  Liu L, Zhang J, Song H, Du X (2016) A decentralized and optimal resource allocation approach
+  for fog computing in smart cities. IEEE Internet Things J 3(6):1154–1165
+37.
+  He Y, Guan Y, Yuen C, Liu H (2017) Smart energy-efficient resource allocation in vehicular
+  networks: the case of roadside unit deployment. IEEE Trans Intell Transp Syst 18(7):1722–1734
+38.
+  Yu Y, Wang H, Ni Y (2016) Energy-efficient design and optimization in wireless powered IoT
+  networks. IEEE Trans Wirel Commun 15(3):1839–1852
+39.
+  Zhou X, Jia Y, Shi H (2015) Duty cycle and energy harvesting aware MAC protocol with
+  retransmission for wireless sensor networks. Wirel Netw 21(2):523–539
+40.
+  Bottou L (2012) Stochastic gradient descent tricks. In: Neural networks: tricks of the trade.
+  Springer, Berlin, Heidelberg, pp 421–436
+41.
+  Gu Y, Lo A, Niemegeers I (2009) A survey of indoor positioning systems for wireless personal
+  networks. IEEE Commun Surv Tutor 11(1):13–32. https://​doi.o​ rg/​10.​1109/S​ URV.​2008.​070108
+  [Crossref]
+42.
+  Ruder S (2016) An overview of gradient descent optimization algorithms. arXiv:​1609.0​ 4747
+43.
+  Aitzhan NZ, Svetinovic D, Huldtgren A (2018) Internet of things: vision, applications and
+  research challenges. IEEE Internet Things J 5(5):3450–3462. https://​doi.o​ rg/​10.​1109/J​ IOT.​2018.​
+  2877627
+  [Crossref]
+44.
+  Patra SS, Misra C, Singh KN, Gourisaria MK, Choudhury S, Sahu S (2021) QIoTAgriChain: IoT
+  blockchain traceability using queueing model in smart agriculture. Blockchain applications in
+  IoT ecosystem. Springer International Publishing, Cham, pp 203–223
+  [Crossref]
+
+45.
+  Sardar TH, Khatun A, Khan S (2017) Design of energy aware collection tree protocol in wireless
+  sensor network. In: 2017 IEEE international conference on circuits and systems (ICCS). IEEE,
+  pp 12–17
+
+46.
+  Sardar TH, Sarkar R, Ahmed SJ, Bandyopadhyay A (2023) A novel ensemble methodology to
+  validate fuzzy clusters of big data. In: Proceedings of the fourth international conference on
+  trends in computational and cognitive engineering: TCCE 2022. Springer Nature Singapore,
+  Singapore, pp 267–278
+
+  OceanofPDF.com
+© The Author(s), under exclusive license to Springer Nature Switzerland AG 2025
+S. Mallik et al. (eds.), Applications of Computational Learning and IoT in Smart Road
+Transportation System, Springer Tracts on Transportation and Traffic 22
+https://doi.org/10.1007/978-3-031-87627-1_11
+
+Smart Traffic Systems: Revolutionizing
+Road Transport with AI and Image
+Processing
+
+K. P. Bindu Madavi1 , K. Krishna Sowjanya2 , Tanvir H. Sardar3,
+Manoj Seetharama Reddy4 and Sri Ram Nimmalapudi5
+(1) Christ University, Bengaluru, India
+(2) CMR Institute of Technology, Bengaluru, India
+(3) Dayananda Sagar University, Bengaluru, India
+(4) Rutgers University, New Brunswick, NJ, USA
+(5) University of Central Missouri, Warrensburg, MO, USA
+
+  K. P. Bindu Madavi
+  Email: bindu.madavi@christuniversity.in
+
+  K. Krishna Sowjanya (Corresponding author)
+  Email: sowjanya.k@cmrit.ac.in
+
+  Manoj Seetharama Reddy
+  Email: Manoj.seetharamareddy@rutgers.edu
+
+  Sri Ram Nimmalapudi
+  Email: sxn02390@ucmo.edu
+
+Abstract
+In the past few years, Big data, machine learning, and artificial intelligence
+(AI) inclusion have changed the dynamics in various industries, including
+road transport. This research explores machine learning and artificial
+intelligence in road transportation, accentuating the advanced image
+processing methods. We apply these technologies to enhance how traffic is
+managed, how safe vehicles are operated, and how the most efficient routes
+are planned. This study also expands to various techniques and methods for
+analysis, such as image processing, object recognition, and recognition
+systems, and is effective in implementation. Through extensive experiments
+and several case studies, we have shown substantial improvements in
+accuracy and efficiency achieved when image processing in road transport,
+including machine learning and artificial intelligence. This study points out
+the tremendous prospects posed by these technologies in shaping the future
+of transport and suggests further developments and applications.
+
+Keywords Machine learning – Artificial intelligence – Image processing –
+Road transport – Traffic management – Vehicle safety
+
+1 Introduction
+
+Road transport systems’ most common image processing techniques present
+problems, such as the need for extensive data collection, suitable feature
+laser capture, and continuous attention surveillance devices [1]. The usage
+of these methods is limited in multi-layered pavement designs and also
+discourages moving traffic when decisions have to be made [2]. Likewise,
+the rapid development of a heavy machine called machine learning and
+artificial intelligence has emerged, offering new opportunities for various
+business lines with these road transport mending technologies. The latest
+advancements in technology have made it possible to implement such
+systems for image processing of road transport that greatly enhance safety,
+effectiveness, and eco-friendliness. With the introduction of deep learning
+to feature extraction and pattern recognition, the efficiency in detection and
+tracking has gone a notch higher without sacrificing the speed component
+[2]. Using machine learning models in automatic traffic monitoring systems
+has shown effective results in performing real-time object detection and
+traffic scene analysis to improve prediction performance using pre-
+processing image size reduction and image filtering techniques [3].
+Cutbacks on the physical and operational constraints of conventional image
+processing techniques, machine learning, and AI technologies are set to the
+functionalities and efficacy of road transport systems [4, 5].
+  Computer vision is one of the components of AI and ML technologies
+used to scrutinise a significant amount of visual content acquired from
+stationary and mobile cameras. To focus more on application, these
+technologies facilitate the automatic identification of road faults like
+potholes and cracks. These may also enhance the detection of incidents in
+real-time to improve the safety of roads and operational capacities. In
+addition, more accurate and timely predictions may be obtained when deep
+learning algorithms are applied to complicated datasets.
+
+  The increased use and implementation of artificial intelligence (AI) is
+changing the mobility of cities and the efficiency of transport systems.
+However, with increased city development comes an increase in traffic
+congestion, which is a significant issue in many places today and requires
+improvement in current traffic management approaches. With AI, problems
+can be solved from a different perspective, utilising data from traffic,
+cameras, sensors, GPS, and past data on traffic to manage the traffic flow
+on the roads in the most efficient way possible. Intelligent control of traffic
+signal systems, vehicle adaptive routing, and effective incident management
+of highways using machine learning models and AI predictive and
+prescriptive analysis has dramatically reduced travel time and overall fuel
+wastage while increasing road safety. Traffic Management Systems
+powered by AI are a massive step towards better, connected cities that are
+feasible to enhance construct design complexities and promise tolerance
+against disturbances such as congestion and traffic. Traffic stakeholders are
+individuals, organisations, and entities somehow affected, involved, or
+attracted to managing and optimising traffic systems.
+
+  Figure 1 illustrates the various stakeholders involved in traffic
+management and optimisation. It shows a central node labelled Traffic
+Stakeholder connected to different categories of stakeholders.
+Fig. 1 Key stakeholders in traffic management
+
+  Government Authorities: These are regulatory bodies like city
+  governments, transportation departments, and law enforcement agencies
+  responsible for traffic regulations, infrastructure development, and road
+  safety.
+  Commuters and Road Users: This group includes all individuals who
+  use the road, including drivers, pedestrians, cyclists, and public transport
+  passengers. They are directly affected by traffic conditions and the
+  effectiveness of traffic management strategies.
+  Transport Service Providers: Companies and organisations that offer
+  transport services, including public transportation operators, ride-sharing
+  companies, and taxi services, which rely on efficient traffic flow for their
+  operations.
+  Logistics and Freight Companies: Businesses involved in transporting
+  goods, such as trucking companies and delivery services, depend on
+  optimised routes to minimise delays and costs.
+  Businesses and Employer: All these depend on the fact that proper
+  working traffic systems exist because these influence the movement of
+  workers to and from the offices, the management of the supply chain, and
+  all the business operations.
+  Citizens and Community Groups: Residents and other peripheral
+  organisations intent on creating healthier, low-traffic, and
+  environmentally friendly traffic patterns who, therefore, advocate for
+  policy and traffic management changes.
+  Emergency Services: Essential services (i.e., police, fire, and
+  ambulances) that require unrestricted traffic flow for timely emergency
+  responses.
+  Infrastructure and Technology Providers: Such organisations are
+  tasked with the creation and upkeep of road infrastructure, as well as
+  technology enterprises that offer solutions in AI, sensors, and traffic
+  management.
+
+Benefits of Traffic Prediction
+  The benefits of traffic prediction is given in Fig. 2.
+Fig. 2 Benefits of traffic prediction
+
+  Reduced Congestion: Accurate traffic forecasts allow for proactive
+  traffic management, such as adjusting signal timings or rerouting traffic,
+  helping to reduce congestion and minimise delays. Accurate traffic
+  predictions are a basis for proactive traffic management and allow signal
+  timing adjustments or revenue speed of goods to minimise congestion
+  and delays.
+  Improved Commuter Experience: Being able to predict the state of
+  traffic also allows these navigational apps to offer suggestions for
+  alternate routes and reduce travel time, lessening the stress on drivers and
+  passengers.
+  Efficient Use of Infrastructure: By understanding traffic patterns, city
+  planners and transportation departments can make better decisions on
+  infrastructure investments, such as where to add new lanes, roads, or
+  public transit routes.
+  Optimized Public Transportation: Traffic forecasting aids public
+  transport operators in adjusting schedules and routes based on expected
+  traffic conditions, leading to more reliable services and better resource
+  allocation.
+  Reduced Environmental Impact: Smoother traffic flow results in lower
+  fuel consumption and reduced vehicle emissions, contributing to
+  environmental sustainability and improved air quality.
+  Enhanced Emergency Response: Accurate forecasts can help
+  emergency services predict and avoid congested routes, improving
+  response times during accidents or natural disasters.
+  Cost Savings: Reducing congestion and optimising traffic flow can lead
+  to significant cost savings for commuters (e.g., fuel costs), businesses
+  (e.g., logistics and delivery times), and city governments (e.g.,
+  maintenance costs). The potential for these cost savings, facilitated by AI,
+  offers an optimistic outlook on the economic benefits of AI in
+  transportation, making the audience feel confident about the potential
+  return on investment.
+  Data-driven decision-making: Traffic flow forecasting provides
+  valuable insights and data to inform a wide range of decisions, from
+  traffic management policies to urban planning and infrastructure
+  development.
+
+2 Literature Survey
+
+Artificial Traffic Management System based on artificial intelligence (AI)
+minimises the problems associated with urban transportation systems by
+being responsive and anticipating congestion through real-time data
+analysis. Using AI with the Internet of Things and computer vision enables
+dynamic control of traffic systems, considerably improving urban
+transportation networks. Urban traffic congestion is a problem in most
+cities, causing detrimental effects on the economy, society, and the
+environment [6].
+
+  The paper proposes intelligent intersection control systems integrating
+computer vision, AI, and IoT. The system promptly determines the volume
+of traffic in the area by real-time video analysis and sophisticated
+algorithms such as the YOLO V7. The system incorporates an intelligent
+approach to switch signals in response to traffic conditions in a manner that
+reduces the level and extent of traffic and pollution. The system aims to
+improve the urban transport infrastructure by promoting the development of
+innovative and sustainable urban environments, increasing urban livability.
+
+  Zhenhua et al. [7] proposes an AI-based approach to the network’s
+service quality that results in notable improvements. The efficiency of the
+approach is verified with real-world data, which indicated enhancements in
+better bandwidth utilisation, packet loss, and average latency. Deep
+Deterministic Policy Gradient (DDPG) has shown the most advancement.
+The study further verifies its robustness and scalability across different
+network conditions and how well it can manage large-scale VM migrations
+without much ado. It outperforms state-of-the-art methods with gains of up
+to 8% in throughput and a 2 ms decrease in latency.
+
+  Kadkhodayi et al. [8] examines ant colony optimisation in a networked
+multi-agent system for improving urban traffic management. To reduce
+traffic congestion, it criticises traditional traffic solutions and introduces
+neural networks and evolutionary algorithms as their advanced AI
+techniques. The paper emphasises that proper traffic analysis, using multi-
+agent systems that can handle complex urban traffic scenes by collecting
+and analysing large amounts of data, is critical.
+
+  Alekseeva et al. [9] investigates ML techniques for traffic optimisation
+in mobile networks. It considers 4G mobile traffic data observed for
+12 months and further identifies a variety of machine learning algorithms in
+use for traffic prediction through Random Forest, Boosting, and Gradient
+Boosting besides AdaBoost. Regarding performance parameters like RMSE
+and MAE, Gradient Boosting provides the best accurate predictions
+compared to other approaches, as per this case. These results show that
+applying such an ML model can significantly enhance network
+performance.
+
+  Junfei et al. [10] applies graph neural networks (GNNs) to research
+traffic modelling and optimization within data centres. It highlights the
+challenges of effectively controlling network traffic across large data
+centres. The authors introduce a GNN-based approach for bettering
+resource allocation and traffic forecasting by capturing rich relationships
+between network components. They report that it performs better than
+traditional methods in getting control over data flow, reducing latency, and
+managing resource utilisation.
+
+  Gayathri et al. [11] presents an AI-based approach to decreasing traffic
+jams through detection and signal control. It applies machine and deep
+learning to detect where areas are found in real-time by analysing traffic
+flow plus the degree of congestion, speed, vehicle density, and other sensor
+data. It responds by initiating adaptive signal timings to effectively manage
+traffic flows into congested areas. The technique is beneficial because it
+uses historical information and improves prediction accuracy. Experimental
+results indicate that the system has reduced congestion and enhanced
+overall traffic performance; thus, it can be a viable alternative for urban
+traffic management.
+
+  Aniket et al. [6] addresses urban transport congestion, a vital global
+issue influencing efficiency and sustainability. It presents a novel traffic
+management system at the junction using computer vision, artificial
+intelligence, and Internet of Things technologies in areas. The system
+undertakes dynamic density of traffic analysis by employing real-time
+CCTV feeds and state-of-the-art algorithms like YOLO V7. The adaptive
+signal-switching system changes the timing of the traffic light based on the
+situation at hand to alleviate congestion and pollution. Ultimately, it is
+hoped that this system will completely transform urban transport networks
+by promoting more innovative and more sustainable environments that
+enhance the quality of city life.
+
+  Aniket et al. [12] addressing the increased traffic congestion caused by
+many automobiles advocates for automated switching of traffic lights by a
+Machine Learning (ML) system, suggesting it is a beneficial strategy to
+design adaptive traffic control systems in response to the changing
+dynamics of urban traffic. Taking advantage of the fast processing and more
+brilliant computation capabilities of ML, their work tries to tackle the traffic
+problem by training the system on actual traffic data to achieve an efficient
+weight optimisation for traffic light control.
+
+  Kanchana et al. [13] describes an advanced traffic light control system
+that employs machine learning and computer vision to reduce the
+occurrence of urban traffic jams. The technology identifies and follows
+vehicles in real time by running them through a traffic camera and detecting
+them with a YOLO algorithm the same algorithm used to detect and track
+vehicles. It calculates the traffic densities, such as the number of vehicles
+and vehicular speed, and modifies traffic lights accordingly by making the
+turning lights green at a geometric intersection. The results are significant
+reductions in time wasted due to traffic jams and reduced fuel consumption
+with a consequential decrease in pollution. The system’s features are its low
+cost, high accuracy, and ability to adapt to changing traffic situations more
+than the standard traffic control system.
+
+  Heltin et al. [14] discusses the challenges of managing city traffic,
+focusing on reducing emissions and improving air quality. Traditional
+traffic control methods often struggle to adapt to changing conditions,
+leading to congestion and pollution. The authors propose Deep Flow
+(DQF), a new AI-based solution combining Deep Q-learning and flow-
+based traffic modelling to optimise real-time traffic signal timings. Through
+extensive simulations, they demonstrate that DQF outperforms existing
+techniques by reducing emissions while maintaining smooth traffic flow.
+This study contributes to developing sustainable urban traffic management
+solutions utilising advanced artificial intelligence.
+
+3 Proposed Methodology
+
+The proposed method emphasises implementing AI (Artificial Intelligence)
+techniques in managing traffic signals to provide an efficient and reliable
+urban traffic management system.
+
+  Traffic management system has become a difficult challenge due to the
+increased number of vehicles, especially in urban areas. The Smart Traffic
+Management System (STMS) focuses on providing an intelligent traffic
+management solution using computer vision and AI. The proposed model of
+STMS is provided in Fig. 3.
+Fig. 3 Proposed model of smart traffic management system (SMTS)
+
+  The proposed system will use CCTV cameras fixed at the traffic signals
+to capture the incoming traffic in all lanes. By capturing the vehicles, either
+audio or video, the input is subjected to the AI technique YOLO7, which
+detects vehicles such as cars, buses, trucks, and ambulances. Once it
+identifies the vehicles, the count of the cars is also calculated dynamically,
+and it is passed to the AI-enabled Signal System that takes the count as
+input and changes the signal times dynamically to reduce traffic congestion.
+
+  All STMS provides a reliable traffic management decision in the
+following three phases:
+
+  Detecting the Vehicle: This phase uses YOLO-Version 7 to detect the
+  vehicle/object. The model is trained with some test images to detect
+  vehicles on the road, such as cars, buses, bikes, and trucks. The model
+  will be able to detect the vehicle by preprocessing the images and
+  running the YOLO model, as shown in Fig. 4. For efficient
+  preprocessing, the YOLO model normalises and resizes the image. This
+  phase detects different types of vehicles on the road/lane based on the
+  Algorithm1 as follows:
+Fig. 4 Vehicle detection using YOLO7
+
+Adaptive Signal Switching Algorithm: The SMTS dynamically adjusts
+the signal timings based on the number of vehicles detected in the lane.
+The proposed system optimises traffic flow and reduces delay by
+changing the duration of red, green, and yellow signals based on the
+traffic condition. The dynamic signal timings based on the number of
+vehicles are given elaborately in Table 1 as follows.
+
+Table 1 Signal timings for different no. of vehicles
+
+S. No No. of vehicles Green signal Red signal Yellow signal
+
+  time (s)  time (s) time (s)
+
+1 10  30  15  4
+
+2 30  30  20  5
+
+3 50  30  25  6
+
+4 70  35  25  6
+
+  From Table 1, based on the no. of vehicles on the lane, the timings are
+dynamically adjusted to accommodate the traffic flow without congestion.
+The proposed signal-switching algorithm plays a crucial role in managing
+traffic lights dynamically, optimising the flow of vehicles, and reducing
+congestion. The primary goal is to intelligently control traffic signals by
+analysing real-time data and making decisions to improve traffic flow. The
+algorithm for adaptive signal-switching is in Algorithm 2.
+  Cameras, IoT devices, and road sensors collect data on vehicle counts,
+speeds, and pedestrian movements. AI algorithms are trained on traffic
+patterns to forecast congestion, traffic signal timings, and the best routes.
+The AI system uses real-time data to determine when to alter traffic signals.
+It can prioritise lanes with higher vehicle density or allow more time for
+buses and emergency vehicles. If a specific road is congested, the algorithm
+may extend the green light so more vehicles can pass.
+
+  The waiting time of each lane is based on the vehicle count represented
+in Table 2. The waiting time of each lane is dynamically calculated by
+taking the cumulative time (red + yellow + green signals) of each lane
+(Table 3). The calculation of the cumulative time is given in the Eq. (1).
+

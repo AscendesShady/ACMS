@@ -1,0 +1,1033 @@
+SPRINGER BRIEFS IN MATHEMATICS
+
+Toshio Mikami
+
+Stochastic Optimal Transportation
+
+Stochastic Control
+with Fixed Marginals
+SpringerBriefs in Mathematics
+
+Series Editors
+Nicola Bellomo, Torino, Italy
+Michele Benzi, Pisa, Italy
+Palle Jorgensen, Iowa, USA
+Tatsien Li, Shanghai, China
+Roderick Melnik, Waterloo, Canada
+Otmar Scherzer, Linz, Austria
+Benjamin Steinberg, New York, USA
+Lothar Reichel, Kent, USA
+Yuri Tschinkel, New York, USA
+George Yin, Detroit, USA
+Ping Zhang, Kalamazoo, USA
+SpringerBriefs present concise summaries of cutting-edge research and practical
+applications across a wide spectrum of ﬁelds. Featuring compact volumes of 50
+to 125 pages, the series covers a range of content from professional to academic.
+Briefs are characterized by fast, global electronic dissemination, standard publishing
+contracts, standardized manuscript preparation and formatting guidelines, and
+expedited production schedules.
+
+Typical topics might include:
+
+A timely report of state-of-the art techniques A bridge between new research results,
+as published in journal articles, and a contextual literature review A snapshot of a
+hot or emerging topic An in-depth case study A presentation of core concepts that
+students must understand in order to make independent contributions
+
+  SpringerBriefs in Mathematics showcases expositions in all areas of mathematics
+and applied mathematics. Manuscripts presenting new results or a single new result
+in a classical ﬁeld, new ﬁeld, or an emerging topic, applications, or bridges between
+new results and already published works, are encouraged. The series is intended for
+mathematicians and applied mathematicians. All works are peer-reviewed to meet
+the highest standards of scientiﬁc literature.
+
+Titles from this series are indexed by Scopus, Web of Science, Mathematical
+Reviews, and zbMATH.
+
+More information about this series at http://www.springer.com/series/10030
+Toshio Mikami
+
+Stochastic Optimal
+Transportation
+
+Stochastic Control with Fixed Marginals
+Toshio Mikami
+Department of Mathematics
+Tsuda University
+Tokyo, Japan
+
+ISSN 2191-8198  ISSN 2191-8201 (electronic)
+
+SpringerBriefs in Mathematics
+
+ISBN 978-981-16-1753-9  ISBN 978-981-16-1754-6 (eBook)
+
+https://doi.org/10.1007/978-981-16-1754-6
+
+© The Author(s), under exclusive license to Springer Nature Singapore Pte Ltd. 2021
+This work is subject to copyright. All rights are solely and exclusively licensed by the Publisher, whether
+the whole or part of the material is concerned, speciﬁcally the rights of translation, reprinting, reuse
+of illustrations, recitation, broadcasting, reproduction on microﬁlms or in any other physical way, and
+transmission or information storage and retrieval, electronic adaptation, computer software, or by similar
+or dissimilar methodology now known or hereafter developed.
+The use of general descriptive names, registered names, trademarks, service marks, etc. in this publication
+does not imply, even in the absence of a speciﬁc statement, that such names are exempt from the relevant
+protective laws and regulations and therefore free for general use.
+The publisher, the authors, and the editors are safe to assume that the advice and information in this book
+are believed to be true and accurate at the date of publication. Neither the publisher nor the authors or
+the editors give a warranty, expressed or implied, with respect to the material contained herein or for any
+errors or omissions that may have been made. The publisher remains neutral with regard to jurisdictional
+claims in published maps and institutional afﬁliations.
+
+This Springer imprint is published by the registered company Springer Nature Singapore Pte Ltd.
+The registered company address is: 152 Beach Road, #21-01/04 Gateway East, Singapore 189721,
+Singapore
+Preface
+
+The construction of a stochastic process from given marginal distributions is an
+important part of the so-called marginal problem. A Markovian Bernstein process
+on [0, 1] constructed from two endpoint marginals at times t = 0, 1 and from the
+Bernstein transition density solves Schrödinger’s functional equation. It is the so-
+called h-path process, provided the Markov process solves a stochastic differential
+equation. The Markov diffusion process and its construction from a solution of
+the Fokker–Planck equation are called the Nelson process and Nelson’s problem,
+respectively. (In E. Nelson’s original problem, he considered the Fokker–Planck
+equation which is satisﬁed by the square of the absolute value of a solution to
+Schrödinger’s equation.) In the second part of our dissertation under the supervision
+of Professor Wendell H. Fleming, Brown University, we gave an approach to
+Nelson’s problem via the continuum limit of a class of stochastic controls with
+given two endpoint marginals. It is closely related to the optimal transportation
+problem, in that we ﬁnd optimal dynamics, in the minimization problem, among
+those who have the same partial information on marginal distributions. Nearly
+15 years later, we gave a probabilistic proof to Monge’s problem with a quadratic
+cost by the zero-noise limit of h-path processes, which encouraged us to consider
+optimal transportation for semimartingales which we call the stochastic optimal
+transportation. It can be considered a class of marginal problems.
+
+  In Chap. 1, we introduce Monge’s problem and Schrödinger’s to compare them
+so that one can see the relation between the nonstochastic and stochastic optimal
+transportations.
+
+  The Duality Theorems for stochastic optimal transportation problems are useful
+for considering marginal problems, including Nelson’s. Indeed, we used them
+to construct a semimartingale from the Fokker–Planck equation under a general
+integrability condition. The construction of a semimartingale from the Fokker–
+Planck equation is also called the superposition principle and has been remarkably
+developed in the last several years.
+
+  In Chap. 2, we give two classes of stochastic optimal transportation problems.
+As an application, by the superposition principle, we give our recent progress on
+the Duality Theorems for stochastic optimal transportation problems with a convex
+
+  v
+vi  Preface
+
+cost function. We also give a sufﬁcient condition for the ﬁniteness of the minimum
+in stochastic optimal transportation problem and discuss the relation between the
+nonstochastic and stochastic optimal transportations by the zero-noise limit.
+
+  In Chap. 3, we consider the ﬁniteness, the semiconcavity, and the continuity
+of the minimum in Schrödinger’s problem. We also consider the regularity of the
+solution to Schrödinger’s functional equation, marginal problems for stochastic
+processes, and stochastic optimal transportation with a nonconvex cost function in
+the one-dimensional case.
+
+  The generalizations of the results in Chap. 3 are our future projects.
+  Besides the page limit, since it is beyond our ability to introduce all topics in this
+rapidly developing ﬁeld, we ask readers to ﬁnd papers on missing topics such as
+stochastic mechanics, large deviations, entropic functional inequalities, martingale
+optimal transports, etc.
+  We would like to thank anonymous referees for constructive suggestions and
+for informing us about missing references, and thank Mr. Masayuki Nakamura,
+Springer for his support. We would also like to acknowledge the ﬁnancial support
+by JSPS KAKENHI Grant Numbers JP16H03948 and 19K03548.
+  I would like to thank Professors Wendell H. Fleming, Hitoshi Ishii, and
+Masayoshi Takeda for their academic inﬂuences and constant encouragement since
+I was a graduate student.
+  Lastly, I would like to thank my wife Mari for her unconditional support in my
+lifetime.
+
+Tokyo, Japan  Toshio Mikami
+February 2021
+Contents
+
+1 Introduction . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .. . . . . . . . . . . . . . . . . . . . 1
+  1.1 Background.. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .. . . . . . . . . . . . . . . . . . . . 1
+  1.2 Motivation .. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .. . . . . . . . . . . . . . . . . . . . 8
+  1.3 Optimal Transportation Problem . . . . . . . . . . . . . . . . . . .. . . . . . . . . . . . . . . . . . . . 9
+  1.4 Schrödinger’s Problem .. . . . . . . . . . . . . . . . . . . . . . . . . . . . .. . . . . . . . . . . . . . . . . . . . 13
+
+2 Stochastic Optimal Transportation Problem . . . . . . . . .. . . . . . . . . . . . . . . . . . . . 21
+  2.1 Optimal Transportation Problem . . . . . . . . . . . . . . . . . . .. . . . . . . . . . . . . . . . . . . . 21
+  2.2 Stochastic Optimal Transportation Problems .. . . . .. . . . . . . . . . . . . . . . . . . . 25
+  2.2.1 Duality Theorem and Its Applications .. . . .. . . . . . . . . . . . . . . . . . . . 32
+  2.2.2 Proof of Duality Theorem and Its Application . . . . . . . . . . . . . . . . 41
+  2.2.3 Finiteness of SOT .. . . . . . . . . . . . . . . . . . . . . . . . . .. . . . . . . . . . . . . . . . . . . . 55
+  2.3 Zero-Noise Limit of SOT . . . . . . . . . . . . . . . . . . . . . . . . . . .. . . . . . . . . . . . . . . . . . . . 62
+  2.3.1 Monge’s Problem by the Zero-Noise Limit of SOT.. . . . . . . . . . 62
+  2.3.2 Duality Theorem for OT by the Zero-Noise Limit of SOT . . . 74
+
+3 Marginal Problem.. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .. . . . . . . . . . . . . . . . . . . . 77
+  3.1 Schrödinger’s Problem .. . . . . . . . . . . . . . . . . . . . . . . . . . . . .. . . . . . . . . . . . . . . . . . . . 77
+  3.1.1 Schrödinger’s Problem on P(Rd ) as SOT .. . . . . . . . . . . . . . . . . . . 78
+  3.1.2 Bounds of Schrödinger’s Problem . . . . . . . . .. . . . . . . . . . . . . . . . . . . . 80
+  3.1.3 Time-Reversal of Schrödinger’s Problem .. . . . . . . . . . . . . . . . . . . . 83
+  3.1.4 Semiconcavity and Continuity of Schrödinger’s Problem . . . . 86
+  3.1.5 Regularity Result for Schrödinger’s Func. Eqn. .. . . . . . . . . . . . . . 93
+  3.2 Marginal Problem for Stochastic Processes . . . . . . .. . . . . . . . . . . . . . . . . . . . 101
+  3.2.1 Marginal Problem for SDEs . . . . . . . . . . . . . . . .. . . . . . . . . . . . . . . . . . . . 103
+  3.2.2 Marginal Problems for ODEs . . . . . . . . . . . . . .. . . . . . . . . . . . . . . . . . . . 106
+  3.2.3 SOT with a Nonconvex Cost . . . . . . . . . . . . . . .. . . . . . . . . . . . . . . . . . . . 108
+
+References .. .. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .. . . . . . . . . . . . . . . . . . . . 115
+
+  vii
+Notation
+
+OT  Optimal transportation problem
+SOT
+FBSDE  Stochastic optimal transportation problem
+HJB
+B(S)  Forward–backward stochastic differential equation
+P (S )
+Pac(Rd )  Hamilton–Jacobi–Bellman
+Pr (Rd )
+Pr,ac(Rd )  Set of all Borel measurable subsets of a topological space S
+A (P0, P1)
+AC(S)  Set of all Borel probability measures on a topological space S
+U SC(S)  {P ∈ P(Rd )|P (dx) dx}
+LSC(S)  {P ∈ P(Rd )| Rd |x|r P (dx) < ∞} for r ≥ 1
+U Cb(S)  Pac(Rd ) ∩ Pr (Rd ) for r ≥ 1
+Ci,j (S)  {μ ∈ P(R2d )|μ(dx × Rd ) = P0(dx), μ(Rd × dx) = P1(dx)}
+
+Cbi,j (S)  Set of all absolutely continuous functions on S
+
+PX  Set of all upper semicontinuous functions on S
+x˙ (t )
+ x, y  Set of all lower semicontinuous functions on S
+
+ A, B  Set of all uniformly continuous bounded functions on S
+
+Dx  Set of all functions on S, which are ith and jth continuously
+D2
+  differentiable in the ﬁrst and the second variables, respectively
+  x
+  Set of all functions on S, which have bounded continuous deriva-
+||f ||∞
+Br  tives up to the ith and jth orders in the ﬁrst and the second variables,
+
+  respectively
+
+  Probability distribution of a random variable X
+
+  d x (t )/d t
+
+  d  xi yi  for  x  =  (  x  i  )  d  ,  y  =  (yi )di=1  ∈  Rd
+  i=1  i=1
+  d
+  i,j =1  aij bij  for  A  =  (  a  ij  )  d  j  =1  ,  B  =  (bij )di,j =1  ∈  M(d, R)
+  i,
+
+  (∂/∂xi )di=1
+  (∂2/∂xi ∂xj )di,j=1
+  supx∈S |f (x)|, f ∈ C(S)
+  {x ∈ Rd : |x| ≤ r}
+
+  ix
+x  Notation
+
+H (P |Q)  = S{log(P (dx)/Q(dx))}P (dx) if P Q; = ∞, otherwise.
+S (P )  = Rd {log p(x)}p(x)dx if P (dx) = p(x)dx; = ∞, otherwise.
+||x||L2(P )
+(A.0.0)  Rd |x|2P (dx), P ∈ P2(Rd )
+(A.0)
+(A.1)  (i) σij ∈ Cb([0, 1] × Rd ), i, j = 1, · · · , d. (ii) σ is nondegenerate.
+(A.2)  σij ∈ C1b ([0, 1] × Rd ), i, j = 1, · · · , d.
+(A.3)  (i) L ∈ C([0, 1] × Rd × Rd ; [0, ∞)). (ii) For (t, x) ∈ [0, 1] × Rd ,
+
+(A.4)  u → L(t, x; u) is convex.
+
+(A.4)’  lim|u|→∞ inf{L(t, x; u)|(t, x) ∈ [0, 1] × Rd }/|u| = ∞.
+  (i) ∂L(t, x; u)/∂t and Dx L(t, x; u) are bounded on [0, 1] × Rd ×
+(A.5)  BR for all R > 0, where BR := {x ∈ Rd ||x| ≤ R}. (ii) CL is
+(A.6)  ﬁnite, where CL := sup L(t, x; u)/(1 + L(t, y; u))|0 ≤ t ≤ 1,
+
+(A.7)  x, y, u ∈ Rd .
+(A.8)
+(A.8)’  (i) “σ is an identity” or “σ is uniformly nondegenerate, σij ∈ Cb1,2(
+(A.8)”  [0, 1]×Rd), i, j = 1, · · · , d and there exist functions L1 and L2 so
+(A.9)  that L = L1(t, x) + L2(t, u)”. (ii) L(t, x; u) ∈ C1([0, 1] × Rd ×
+(A.9.r)’  Rd ; [0, ∞)) and is strictly convex in u. (iii) L ∈ Cb1,2,0([0, 1] ×
+  Rd × BR) for any R > 0.
+(A.10)
+V (P0, P1)  σ is uniformly nondegenerate, σij ∈ Cb1,2([0, 1] × Rd ), i, j =
+v(P0, P1)  1, · · · , d. ξ ∈ Cb1,2([0, 1] × Rd ; Rd ), c ∈ Cb1,2([0, 1] × Rd ), and
+v˜(P0, P1)  for (t, x, u) ∈ [0, 1]  ×Rd × Rd , L(t, x; u) =  1  a(t, x)−1(u  −
+  2
+  ξ(t, x)), u − ξ(t, x) + c(t, x).
+
+  L(t, x; ·)  ∈  C2(Rd )  for (t, x)  ∈  [0, 1] × Rd .  D2  L(t  ,  x  ;  u  )  is
+
+  u
+  bounded and uniformly nondegenerate on [0, 1] × Rd × Rd .
+
+  σ (t, x)  =  (  σ  ij  (  t  ,  x  )  )  d  =1  ,  (t, x)  ∈  [0, 1] × Rd , is a d × d-
+  i,
+  j
+  matrix. a := σ σ t is uniformly positive deﬁnite, bounded, once
+
+  continuously differentiable and uniformly Hölder continuous. Dx a
+
+  is bounded and the ﬁrst derivatives of a are uniformly Hölder
+
+  continuous in x uniformly in t ∈ [0, 1].
+  ξ ∈ Cb([0, 1] × Rd ; Rd ) and is uniformly Hölder continuous in x
+  uniformly in t ∈ [0, 1].
+
+  S is a compact metric space.
+
+  S is a σ -compact metric space.
+
+  S is a complete σ -compact metric space.
+
+  q ∈ C(S × S; (0, ∞)).
+  There exists Cr > 0 for which x → Cr |x|2 + log q(x, y) and
+  y → Cr |y|2 + log q(x, y) are convex on Br for any y and x ∈ Br ,
+
+  respectively.
+  L : Rd −→ [0, ∞) is convex and lim inf|u|→∞ L(u)/|u|2 > 0.
+  inf{E[ 01 L(t, X(t); βX(t, X))dt]|X ∈ A , P X(t) = Pt , t = 0, 1}
+  inf{ [0,1]×R L(t, x; b(t, x))dtQt (dx)|b ∈ A({Qt }0≤t≤1), Qt =
+  Pt , t = 0, 1}
+  inf{ [0,1]×Rd×Rd L(t, x; u)ν(dtdxdu)|ν ∈ A˜, ν1,t = Pt , t = 0, 1}
+Notation  xi
+
+V({Pt }0≤t≤1)  inf{E[ 01 L(t, X(t); βX(t, X))dt]|X ∈ A , P X(t) = Pt , 0 ≤ t ≤
+  1}
+v({Pt }0≤t≤1)  inf{ [0,1]×R L(t, x; b(t, x))dtPt (dx)|b ∈ A({Pt }0≤t≤1)}
+v˜({Pt }0≤t≤1)  inf{ [0,1]×Rd×Rd L(t, x; u)ν(dtdxdu)|ν ∈ A˜, ν1,t = Pt , 0 ≤ t ≤
+  1}
+Chapter 1
+
+Introduction
+
+Abstract Starting from Monge’s problem in 1781, the theory of optimal mass
+transportation (OT for short) has been studied by many authors in many ﬁelds of
+research. Partly as a stochastic analog of the OT, we have been studying the so-
+called stochastic optimal transportation problem (SOT for short). It is a stochastic
+optimal control problem with ﬁxed marginal distributions. One of the important
+purposes is to study the OT in the framework of the SOT. It is also a generalization
+of Schrödinger’s problem and is related to Nelson’s stochastic mechanics. We brieﬂy
+describe the OT and Schrödinger’s problems in such a way that one can compare the
+similarities between them.
+
+1.1 Background
+
+We are interested in the mathematical analysis of phenomena. First, we would like
+to ﬁnd a variational problem in which a minimizer describes a phenomenon and
+then study the phenomenon itself via the variational problem from a mathematical
+point of view.
+
+  To consider a variational problem, we ﬁrst construct a function S and a set A
+over which we minimize S. Then we ﬁnd a condition under which A is not empty.
+Indeed, the sets under consideration in this monograph can be empty. Our problem
+can be described as in the following manner:
+
+  inf{S(x)|x ∈ A}.  (1.1)
+
+  As a typical example, we consider the distance between two points x0, x1 ∈ Rd
+via a variational problem. Let C([0, 1]; Rd) and AC([0, 1]; Rd) denote the set of all
+continuous and absolutely continuous functions from [0, 1] to Rd , respectively.
+
+S0,1(x) :=  1  |x˙ (t )|2 d t ,  x  ∈  AC([0,  1];  Rd ),  (1.2)
+  0
+  ∞,  x ∈ C([0, 1]; Rd) ∩ AC([0, 1]; Rd)c,
+
+© The Author(s), under exclusive license to Springer Nature Singapore Pte Ltd. 2021  1
+
+T. Mikami, Stochastic Optimal Transportation, SpringerBriefs in Mathematics,
+
+https://doi.org/10.1007/978-981-16-1754-6_1
+2  1 Introduction
+
+where x˙(t) := dx(t)/dt. S0,1(x) can be considered a cost to move from x(0) to x(1)
+along x = (x(t))0≤t≤1. (1.2) means that we do not move along x ∈ AC([0, 1]; Rd)
+which is too zigzag!
+
+  It seems that we move from one point to another along the line segment which
+connects the two points since we know that the following holds:
+
+  |x1 − x0|2 = inf S0,1(x)|x(0) = x0, x(1) = x1, x ∈ C([0, 1]; Rd) , (1.3)
+
+where the minimizer is
+
+  x0 + t (x1 − x0), 0 ≤ t ≤ 1.  (1.4)
+
+S0,1(x) and {x ∈ C([0, 1]; Rd)|x(0) = x0, x(1) = x1} play roles of S(x) and
+A(= ∅) in (1.1), respectively.
+
+  We show that (1.3)–(1.4) hold. By Schwartz’s inequality,
+
+  1  2  1
+
+  |x(1) − x(0)|2 =  x˙(t)dt ≤ |x˙(t)|2dt,  x ∈ AC([0, 1]; Rd),
+
+  0  0
+
+where the equality holds if and only if x˙(t) is a constant, which implies (1.3)–(1.4).
+  We consider Euler’s equation for the right-hand side of (1.3), that is, the
+
+following:
+
+  the ﬁrst variation of the right-hand side of (1.3) = 0.
+
+Let x ∈ AC([0, 1]; Rd) be a minimizer of (1.3). Then for any y ∈ AC([0, 1]; Rd)
+for which y(0) = y(1) = 0 and δ ∈ R,
+
+  x(0) + δy(0) = x0, x(1) + δy(1) = x1, S0,1(x + δy) ≥ S0,1(x),
+
+which implies that the Gâteaux derivative vanishes:
+
+  lim S0,1(x + δy) − S0,1(x) = 0,  (1.5)
+  δ→0  δ
+
+provided it exists. That is,
+
+  d 1 |x˙(t) + δy˙(t)|2 dt  1  (1.6)
+  dδ 0
+  = 2 x¨(t), y(t) dt = 0,
+
+  δ=0  0
+
+since y(0) = y(1) = 0. Equation (1.6) implies that the following holds:
+
+  x¨(t) = 0,  (1.7)
+
+which implies (1.3)–(1.4).
+1.1 Background  3
+
+  The above implies that there are at least two approaches to ﬁnd and characterize a
+
+minimizer of (1.3). One is by inequalities on integrals. Another is by solving Euler’s
+
+equation to ﬁnd a critical point of (1.3).
+  Let f ∈ Cb(Rd ), where Cb(Rd ) = Cb(Rd ; R) denotes the set of all bounded
+
+continuous functions from Rd to R. The following is an example of the so-called
+ﬁxed ﬁnite-time horizon optimal control problem (see, e.g. [60, 61]): for x0 ∈ Rd ,
+
+inf S0,1(x) + f (x(1))|x(0) = x0, x ∈ C([0, 1]; Rd)  (1.8)
+
+= inf inf S0,1(x)|x(0) = x0, x(1) = x1, x ∈ C([0, 1]; Rd) + f (x1)|x1 ∈ Rd
+
+= inf |x1 − x0|2 + f (x1)|x1 ∈ Rd .
+
+The theory of the Hamilton–Jacobi equation is useful to study (1.8). Indeed, the last
+inﬁmum in (1.8) is called the Hopf–Lax formula for the Hamilton–Jacobi equation
+(see Remark 2.2 in Sect. 2.1).
+
+  Equation (1.3) can be rewritten as follows:
+
+  |x1 − x0|2 = inf{S0,1(x) + χ{x1}(x(1))|x(0) = x0, x ∈ C([0, 1]; Rd)}, (1.9)
+
+where χA(x) := 0, x ∈ A, := ∞, x ∈ A. In particular, (1.3) can be considered
+an example of ﬁxed ﬁnite-time horizon optimal control problems though χ{x1} ∈
+Cb(Rd ).
+
+  S0,1(x) is an action integral and (1.7) is the Newtonian Equation of motion with
+no external force in classical mechanics. S0,1(x) also plays a crucial role in R. P.
+Feynman’s path integral formulation of quantum mechanics (see, e.g. [136]).
+
+  An action integral also plays a crucial role in the theory of small random
+perturbations of dynamical systems (see [64] and also [61] for a variational
+approach). Let {B(t) = B(t, ω)}t≥0 denote a d-dimensional Brownian motion
+on a probability space ( , F , P ). Roughly speaking, the following is known: for
+x0 ∈ Rd and a Borel set A ⊂ C([0, 1]; Rd),
+
+P (x0 + εB(·) ∈ A) ∼ exp − 2ε2 1 inf{S0,1(x)|x ∈ A, x(0) = x0} ,  ε → 0.
+  (1.10)
+
+One intuitive interpretation of (1.10) is the following: as ε → 0,
+
+P (x0 + εB(·) ∈ dx) ∼ exp − 2ε2 1 S0,1(x) dx on C([0, 1]; Rd). (1.11)
+4  1 Introduction
+
+The inﬁmum in (1.10) can be rewritten as follows:  (1.12)
+  inf S0,1(x) + χA(x)|x(0) = x0, x ∈ C([0, 1]; Rd) .
+
+If A = {x ∈ C([0, 1]; Rd)|x(1) = x1}, then (1.12) is equal to (1.9).
+  Suppose that the set Ao of minimizers in the inﬁmum in (1.10) exists and that the
+
+following holds: for δ > 0
+
+  inf S0,1(x)|x ∈ A, x(0) = x0  (1.13)
+  < inf S0,1(x)|x ∈ A ∩ Uδ(Ao)c, x(0) = x0 .
+
+Here
+
+  Uδ(Ao) := {x ∈ C([0, 1]; Rd)|d(x, Ao) < δ},
+  d(x, Ao) := inf{sup{|x(t) − y(t)| : 0 ≤ t ≤ 1}|y ∈ Ao}.
+
+Then by the Laplace method,
+
+  P (x0 + εB(·) ∈ Uδ(Ao)|x0 + εB(·) ∈ A) → 1, ε → 0.  (1.14)
+
+In particular, the analysis of a subset Ao of minimizers of S0,1 on a set A is also
+crucial in the case where we only consider a rare event A. In this sense, an action
+
+integral even controls a rare event. This kind of problem also appears in the study of
+
+phase transition (see, e.g. [77]).
+  As a generalization of (1.3), instead of two points, we consider two sets D0 :=
+
+{x0,1, x0,2} and D1 := {x1,1, x1,2} of distinct two points in Rd and study the
+following:
+
+  min(|x1,1 − x0,1| + |x1,2 − x0,2|, |x1,2 − x0,1| + |x1,1 − x0,2|)  (1.15)
+  ⎧  ⎫
+  ⎨  S0,1(x) 21 {x(1)|x(0) ∈ D0} = D1, x ∈ C([0, 1]; Rd) . ⎬
+  = min
+  ⎩x(0)∈D0 ⎭
+
+If |x1,i1 − x0,1| + |x1,i2 − x0,2|, i1 = i2 is a minimizer, then the line segments
+
+  {x0,1 + t (x1,i1 − x0,1)|0 ≤ t ≤ 1} and {x0,2 + t (x1,i2 − x0,2)|0 ≤ t ≤ 1}
+
+do not intersect since the length of one side of a triangle is less than the sum of those
+of the other sides.
+
+  More generally, if the sets D0 and D1 contain more than two points and if the
+cardinality of D0 and D1 are the same, then a minimizer of the right-hand side of
+(1.15) gives non-intersecting line segments that connect all points of the sets D0 and
+D1. It also shows the most convenient way to move a pile of pebbles from one place
+to another, which gives an answer to the so-called Monge’s problem (see [121]).
+1.1 Background  5
+
+  As a generalization of such problems, instead of considering general sets D0 and
+D1, assuming that x(0) and x(1) are random but obey given probability distributions
+P0 and P1, respectively, the optimal transportation problem is known. It is also
+called the Monge–Kantorovich problem, the optimal mass transportation problem,
+
+the optimal transport, the optimal transfer problem, etc. (see Sects. 1.3 and 2.1).
+
+  We consider a randomized version of (1.15). We ﬁrst describe Monge’s problem
+
+where x(1) is assumed to be a function of x(0) and the function is nonrandom. Let
+P(S) denote the set of all Borel probability measures on a topological space S.
+For P0 ∈ P(Rd ), take an Rd -valued random variable X0(ω) on a probability space
+( , F , P ) such that P X0 = P0, where P X0 denotes the probability distribution of
+X0. The following is a typical example of Monge’s problem: for P1 ∈ P(Rd ),
+
+  inf{E [|ψ(X0) − X0|] |P ψ(X0) = P1}  (1.16)
+
+  = inf  |ψ(x) − x|P0(dx) P0ψ−1 = P1 .
+
+  Rd
+
+On the left-hand side of (1.16), the roles of S(x) and A in (1.1) are, respectively,
+played by E [|ψ(X0) − X0|] and the set {ψ : Rd → Rd |P ψ(X0) = P1}. It is not
+
+trivial if this set is not empty.
+  L. V. Kantorovich considered a relaxed problem (see [83, 84]). For P0, P1 ∈
+
+P(Rd ),
+
+inf{E [|X(1) − X(0)|] |P X(0) = P0, P X(1) = P1}  (1.17)
+
+= inf E  1  P X(0) = P0, P X(1) = P1, X ∈ AC([0, 1]; Rd), a.s.
+
+  |X˙ (t)|dt
+
+  0
+
+= inf{E[S0,1(X) 21 ]|P X(0) = P0, P X(1) = P1, X ∈ AC([0, 1]; Rd), a.s.}
+
+= inf{E[S0,1(X) 21 ] + χ{P1}(P X(1))|P X(0) = P0, X ∈ AC([0, 1]; Rd), a.s.}.
+
+Here X = {X(t)}0≤t≤1 denotes a stochastic process deﬁned on a possibly different
+probability space. When it is not confusing, we use the same notation P for different
+probability measures. In a sense, (1.17) can be considered a ﬁxed ﬁnite-time horizon
+stochastic optimal control problem (see, e.g. [60, 61, 92]). Indeed,
+
+  χ{P1}(P X(1)) = sup E[f (X(1))] − f (x)P1(dx) f ∈ Cb(Rd ) .
+
+  Rd
+
+  If P X(t) = δ{xt }, t = 0, 1, then (1.17) implies (1.3), where δ{x} denotes the delta
+measure on {x}.
+
+  On the left-hand side of (1.17), the roles of S(x) and A in (1.1) are, respectively,
+played by E[|X(1) − X(0)|] and the set of all Rd × Rd -valued random variables
+(X(0), X(1)) deﬁned on a probability space with P X(i) = Pi, i = 0, 1.
+6  1 Introduction
+
+  In the third inﬁmum of (1.17), the roles of S(x) and A in (1.1) are, respectively,
+played by E[S0,1(X) 21 ] and the set of all absolutely continuous stochastic processes
+deﬁned on a possibly different probability space with probability distributions at
+time t are Pt , t = 0, 1. This set is not empty since for random variables X(0), X(1),
+the following function is absolutely continuous, a.s.:
+
+  [0, 1] t → X(0) + t (X(1) − X(0)) ∈ Rd .
+
+  The existence of an absolutely continuous stochastic process with given probabil-
+ity distributions at all times t ∈ [0, 1] is not trivial (see [3, 107] and also Sect. 3.2.2).
+The existence of a continuous stochastic process with given probability distributions
+at all times t ∈ [0, 1] is also given in [15].
+
+  On the right-hand side of (1.17), (1.7) holds for a minimizer {X(t, ω)}0≤t≤1
+deﬁned on a probability space ( , F , P ). It is also known that under an appropriate
+condition, there exists a nonrandom function ψ such that
+
+  X(t) = X(0) + t (ψ(X(0)) − X(0)), 0 ≤ t ≤ 1, a.s..
+
+That is, (1.17) coincides with (1.16) and ψ connects almost all points of
+{X(0, ω)|ω ∈ } and {X(1, ω)|ω ∈ } (see Sect. 1.3 for more discussion).
+
+  It is also known that there exist different kinds of useful functions which connect
+almost all points of {X(0, ω)|ω ∈ } and {X(1, ω)|ω ∈ } (see, e.g. [46, 87, 130,
+142, 152]).
+
+  An absolutely continuous stochastic process {X0 + t (ψ(X0) − X0)}0≤t≤1 is
+deterministic, in that
+
+  σ [X0 + s(ψ(X0) − X0); 0 ≤ s ≤ t] = σ [X0], 0 ≤ t ≤ 1,
+
+where σ [X0] denotes the σ -ﬁeld generated by X0. In (1.17), it is not necessarily true
+for all X, though we expect it is for an optimal X in the case where (1.17) coincides
+with (1.16).
+
+  In (1.17), we did not consider a random external force. Our interest is to consider
+its generalizations for semimartingales.
+
+  We describe an example. Let {U (t) = U (t, ω)}t≥0 and X0 = X0(ω) be an Rd -
+valued absolutely continuous stochastic process such that U (0) = 0 and random
+variable on ( , F , P ), respectively. For ε ≥ 0,
+
+  Xε,U (t) = Xε,U (t, ω) := X0(ω) + U (t, ω) + εB(t, ω), 0 ≤ t ≤ 1. (1.18)
+
+Here B(t) plays a role of random external force which is uncontrollable and we
+would like to ﬁnd a nice U (t). We also cheat the measurability of U (t, ω) to a
+ﬁltration. Notice that X0,U is absolutely continuous, a.s.
+1.1 Background  7
+
+  Let f ∈ Cb(Rd ). The following is a typical example of the so-called ﬁnite-time
+horizon stochastic optimal control problem (see, e.g. [60, 61, 92]):
+
+  inf E S0,1(U ) + f (Xε,U (1)) |U ∈ AC([0, 1]; Rd), a.s.  (1.19)
+
+  = inf inf E S0,1(U ) P Xε,U (1) = P , U ∈ AC([0, 1]; Rd), a.s.
+
+  + f (x)P (dx) P ∈ P(Rd ) .
+
+  Rd
+
+We recall that P Xε,U (0) = P X0 is ﬁxed. The theory of the Hamilton–Jacobi–Bellman
+
+equation is useful to study (1.19).
+  As an analogy of (1.17), we consider the following: for P1 ∈ P(Rd ),
+
+  inf E S0,1(U ) P Xε,U (1) = P1, U ∈ AC([0, 1]; Rd), a.s.  (1.20)
+
+  = inf E S0,1(U ) + χ{P1} P Xε,U (1) U ∈ AC([0, 1]; Rd), a.s. .
+
+E S0,1(U ) and {U |P Xε,U (1) = P1} play roles of S(x) and A in (1.1), respectively.
+We expect that by the theory of semimartingales, letting ε → 0, the study of (1.20)
+  |U˙ (t)|dt
+with S0,1(U ) replaced by  1  gives  more  information  on  (1.17).
+  0
+More generally, we consider the following: for A ⊂ P(C([0, 1]; Rd)),
+
+  inf E S0,1(U ) P Xε,U ∈ A, U ∈ AC([0, 1]; Rd), a.s.  (1.21)
+  = inf E S0,1(U ) + χA(P Xε,U ) U ∈ AC([0, 1]; Rd), a.s. .
+
+It is not trivial if the set {U |P Xε,U ∈ A} is not empty and if E S0,1(U ) is ﬁnite
+at least in one point of the set {U |P Xε,U ∈ A} (see Sects. 2.2.3 and 3.1.2 for more
+discussion).
+
+  Equation (1.21) is equal to (1.20) if
+
+  A = {P ∈ P(C([0, 1]; Rd))|P π(1)−1 = P1},  (1.22)
+
+where
+
+  π(t)(ω) := ω(t), 0 ≤ t ≤ 1, ω ∈ C([0, 1]; Rd).
+
+  An optimal control problem for stochastic processes is called a stochastic optimal
+control problem. By the stochastic optimal transportation problem, we denote
+an optimal transportation problem for stochastic processes. The problem discussed
+8  1 Introduction
+
+above is a typical example. In particular, (1.20) is an example of the so-called
+Schrödinger’s problem. Euler’s equation for Schrödinger’s problem is the so-
+called Schrödinger’s functional equation (see [140, 141], also [96] for a nice
+survey, and Deﬁnition 1.4 and Proposition 3.6 for more discussion). The continuum
+limit of Schrödinger’s problem is the so-called Nelson’s problem that is also a class
+of the SOTs, where in (1.21), for {Pt }0≤t≤1 ⊂ P(Rd ),
+
+  A = {P ∈ P(C([0, 1]; Rd))|P π(t)−1 = Pt , 0 ≤ t ≤ 1}.  (1.23)
+
+If the set A in (1.23) is not empty, then we say that the superposition principle
+for {Pt }0≤t≤1 holds (see [125, 126] and also Sects. 1.4, 3.1, and 3.2 for more
+discussion).
+
+Remark 1.1 The terminologies in the SOT are not necessarily unique since it is a
+rapidly developing research ﬁeld. The stochastic optimal transportation problem is
+also called the semimartingale optimal transportation problem. Since the SOT is
+different from the so-called martingale optimal transportation problem, we prefer to
+use the terminology “stochastic optimal transportation problem” to avoid confusion.
+Schrödinger’s problem is also called the Schrödinger bridge problem these days.
+Schrödinger’s functional equation is also called the Schrödinger system. Since the
+Schrödinger system also means a system of Schrödinger’s PDEs, we prefer to use
+the terminology “Schrödinger’s functional equation” to avoid confusion.
+
+1.2 Motivation
+
+Suppose that we investigate the statistical and dynamical properties of a random
+particle on the time interval [0, 1] from the probability distributions of the particle
+at times t = 0 and t = 1.
+
+  One question is if the random particle is described by a stochastic process. If
+it is, then the candidate can be a Bernstein process (see Deﬁnition 1.5 in Sect. 1.4
+and also [12, 79]). We would also like to ﬁnd a random differential equation that is
+satisﬁed by the stochastic process (see [39, 90, 91, 149] and the references therein).
+Here we point out that the differential equation does not necessarily determine the
+statistical property of the solution (see, e.g. [137]).
+
+  The following question is if the stochastic process is also a Markov process that
+satisﬁes a stochastic differential equation (SDE for short). Here we point out that a
+Markov process is a Bernstein process, but not vice versa (see, e.g. [79]).
+
+  One possible approach to these questions is a stochastic optimal control for
+stochastic processes (see, e.g. [60, 61, 92]). Indeed, if we know an action integral for
+each sample path and if we can ﬁnd a random optimal path by the principle of least
+action applied to the mean value of an action integral, then the optimal path might
+explain some aspects of the random particle. Since the probability distributions at
+times t = 0 and t = 1 are ﬁxed, the problem is not a standard stochastic optimal
+1.3 Optimal Transportation Problem  9
+
+control. This kind of mathematical problem is SOT. Schrödinger’s problem is a
+typical example (see Sect. 1.4). If the particle does not move randomly, then the
+SOT can be considered the OT (see Sect. 1.3).
+
+  Our interest is the construction of the Markov process which describes some
+aspect of the random phenomenon, from given partial information, including
+marginal distributions. The SOT is one approach to this and is a class of marginal
+problems, in that it constructs a semimartingale as a minimizer of a variational
+problem with given marginal distributions.
+
+  The Brunn–Minkowski inequality plays a crucial role in geometric analysis and
+implies an isoperimetric inequality (see [87] and also [30, 139]). It can be proved
+by the so-called Knothe–Rosenblatt rearrangement (see [87]) which was also used
+to study the transportation cost inequality (see [146]) and to study the log-Sobolev
+inequality (see [16, 17]).
+
+  The Knothe–Rosenblatt rearrangement can be deﬁned inductively by the min-
+imizer of the one-dimensional OT with a strictly convex cost for conditional
+distributions (see [30, 87] and also [114] for the SOT analog). The minimizer of the
+one-dimensional OT with a strictly convex cost can be also found in [46, 99, 134]
+(see also [124, 130, 142, 152, 153]).
+
+  In information theory, an inequality on the Renyi entropy power implies the
+entropy power inequality. It is interesting to see that the inequality also implies the
+Brunn–Minkowski inequality (see, e.g. [41, section 17.8]). We also refer readers to
+[37, 44, 129] on Sinkhorn’s algorithm as a related topic of Schrödinger’s problem
+(see also [127]).
+
+  It seems that the OT, the SOT, geometric inequalities, functional inequalities, and
+information theory are strongly related.
+
+  We would also like to refer to the Euclidean quantum mechanics as a possible
+application of the SOT (see [2, 38, 43, 157, 158] and the references therein).
+
+  We would like to develop the OT in the framework of the SOT and ﬁnd
+applications of the SOT in many ﬁelds in the future.
+
+1.3 Optimal Transportation Problem
+
+In this section, we describe the optimal mass transportation problem from the
+viewpoint of stochastic mechanics.
+
+  In 1781, G. Monge proposed the following problem at the Paris Royal Academy
+of Sciences (see [121]):
+
+  What is the most convenient way to move a pile of pebbles from one place to
+another?
+
+  In the twentieth century, this problem was generalized by L. V. Kantorovich (see
+[83, 84]) so that one can consider it in a mathematically easier framework and is
+called the optimal mass transportation problem or the Monge–Kantorovich problem
+nowadays (see, e.g. [54, 130, 152, 153]). Many kinds of studies on the OT have been
+done rapidly, e.g. the applications of the OT to partial differential equations, limit
+10  1 Introduction
+
+theorems and the log-Sobolev inequality for probability measures, the geometry of
+the inﬁnite dimensional space, economics and image processing and the OT over
+the Riemannian manifold and Wiener space (see, e.g. [25, 47, 50, 58, 81, 98, 148]
+and the references therein).
+
+  We explain the mathematical idea of the OT as the problem of stochastic
+mechanics determined by the principle of least action. Take two sets S0 and S1
+which consist of ﬁnite distinct n0 and n1 points in Rd , respectively:
+
+  S0 := {x1, · · · , xn0 }, S1 := {y1, · · · , yn1 } ⊂ Rd .
+
+Let N0(i) and N1(j ) denote the number of pebbles at xi ∈ S0 and the number of
+pebbles one would like to move from S0 to yj ∈ S1, respectively. Then
+
+  n0  n1
+
+  N := N0(i) = N1(j ).  (1.24)
+
+  i=1  j =1
+
+Here we suppose that N0(i), N1(j ) ≥ 1. We also suppose that we move pebbles
+from the same place in S0 to the same place in S1. Then n0 ≥ n1 and for any
+j ∈ {1, · · · , n1}, there exists k(j ) ≥ 1 and ij,1 < · · · < ij,k(j) such that
+
+  k(j )  (1.25)
+
+  N1(j ) = N0(ij,k).
+
+  k=1
+
+Suppose that the cost to move a pebble from x to y is proportional to |y − x|. Let
+ψ : S0 −→ S1 be a function which explains how to move N pebbles from S0 to S1.
+
+Then the total cost to move pebbles from S0 to S1 by ψ is proportional to
+
+  n0
+
+  |ψ(xi ) − xi|N0(i).
+
+  i=1
+
+To minimize the cost, we consider the following problem under (1.24):
+
+  ⎫
+  ⎬
+  n0
+
+  inf  |ψ(xi ) − xi|N0(i)  N0(i) = N1(j ), j ∈ {1, · · · , n1}⎭  (1.26)
+
+  i=1  i:xi ∈ψ−1(yj )
+
+= N inf  |ψ(x) − x|  n0 N0(i)  δxi (dx)
+
+  Rd i=1 N  ⎫
+
+  n0 N0(i)  −1 n1 N1(j ) ⎬
+  δxi (dx) ψ =  δyj (dy) .
+  i=1 N  j=1 N ⎭
+1.3 Optimal Transportation Problem  11
+
+Here δxi and P ψ−1 denote a delta measure on {xi} and an image measure or a push
+forward of a probability measure P by ψ, respectively.
+
+  From the example above, we obtain the following.
+
+Deﬁnition 1.1 (Monge’s Problem) Let P0, P1 ∈ P(Rd ) and c : Rd × Rd −→ R
+be Borel measurable. Find a sufﬁcient condition under which there exists a unique
+minimizer ψ of the following:
+
+TM (P0, P1) := inf  c(x, ψ(x))P0(dx) P0ψ−1 = P1 .  (1.27)
+
+  Rd
+
+  In Monge’s problem, the integral in the inﬁmum is not linear in ψ. We describe
+Kantorovich’s approach to simplify the problem.
+
+TM (P0, P1) ≥ T (P0, P1)  (1.28)
+
+:= inf  c(x, y)μ(dxdy) μ1 = P0, μ2 = P1 ,
+
+  Rd ×Rd
+
+where for μ ∈ P(Rd × Rd ), μ1(dx) := μ(dx × Rd ), μ2(dy) := μ(Rd × dy).
+  This leads us to Kantorovich’s idea.
+
+Deﬁnition 1.2 (Optimal Transportation Problem/Monge–Kantorovich Prob-
+lem) Let P0, P1 ∈ P(Rd ) and c : Rd × Rd −→ R be Borel measurable. Find
+a sufﬁcient condition under which there exists a unique minimizer μ of T (P0, P1)
+and a Borel measurable function ψ : Rd −→ Rd such that the following holds:
+
+μ(dxdy) = P0(I d, ψ)−1(dxdy)(= P0(dx)δψ(x)(dy)),  (1.29)
+
+where I d denotes an identity mapping, i.e. I d(x) = x.
+
+  If (1.29) is true, then TM (P0, P1) = T (P0, P1) and ψ in (1.29) is the unique
+minimizer of TM (P0, P1).
+Remark 1.2 If P0 and P1 ∈ P(Rd ) are compactly supported, and if P0 does not
+have a point mass, then TM (P0, P1) = T (P0, P1) (see [139, section 1.5, Theorem
+1.33]).
+
+  In classical mechanics, dynamics are characterized by a given Lagrangian
+function
+
+L(·, ·; ·) : [0, 1] × Rd × Rd −→ R.
+12  1 Introduction
+
+The motion of the system is determined by the principle of least action. More
+precisely, consider the following minimization problem: for any points x0, x1 ∈ Rd ,
+
+  I (x0, x1) := inf  1  (1.30)
+
+  L(t, x(t); x˙(t))dt x(·) ∈ AC([0, 1]; Rd),
+
+  0
+
+  x(t) = xt , t = 0, 1 ,
+
+A graph of a function x(t) which minimizes I (x0, x1) determines the path of a
+
+classical mechanical motion which connects x0 and x1. Here a path of x(t) is not
+
+necessarily unique.
+  In the case where c = I ,
+
+  I (x0, x1) = T (δx0, δx1 )
+
+(see (1.28)). Besides, in the case where L = L(u) and L is convex, the following
+holds:
+
+T (P0, P1) = inf{E[L(X(1) − X(0))]|P X(t) = Pt , t = 0, 1}  (1.31)
+
+  = inf E  1
+
+  L(X˙ (t))dt X ∈ AC([0, 1]; Rd ), a.s., P X(t) = Pt , t = 0, 1 .
+
+  0
+
+Equation (1.31) implies that the OT is a generalization of (1.30). Equation (1.31) is
+true since, by Jensen’s inequality,
+
+  I (x0, x1) = L(x1 − x0),  (1.32)
+
+and x0 + t (x1 − x0) is a (unique if L is strictly convex) minimizer of (1.30). If
+L(u) = |u|2, P0 has a density function p0(x) := P0(dx)/dx and P0, P1 have ﬁnite
+
+second moments, then there exists a convex function ϕ such that the minimizer of
+T (P0, P1) is P0(dx)δDϕ(x)(dy) (see [21, 22]). In addition, if p1(x) := P1(dx)/dx
+
+exists, then we have the following Monge–Ampère equation:
+
+  p0(x) = p1(Dϕ(x))det (D2ϕ(x)), x ∈ Rd .  (1.33)
+
+More precisely, for any f ∈ C2(Rd ),
+
+  f (Dϕ(x))p0(x)dx = f (x)p1(x)dx.  (1.34)
+
+  Rd  Rd
+
+In application, we also have to consider the case where u → L(u) is concave.
+Even in this case, T (P0, P1) can be ﬁnite if we suppose an appropriate integrability
+condition on P0 and P1 (see, e.g. [124, 130, 142]).
+1.4 Schrödinger’s Problem  13
+
+1.4 Schrödinger’s Problem
+
+In this section, we describe Schrödinger’s problem from the viewpoint of stochastic
+optimal control theory (see [140, 141]). As a nice survey on Schrödinger’s problem
+and the OT, we refer readers to [96]. We also refer them to [155] on Schrödinger’s
+problem.
+
+  E. Schrödinger obtained the so-called Schrödinger’s Functional Equation (Func.
+Eqn. for short) or the Schrödinger system as Euler’s equation for his variational
+problem (see [13, 36, 63, 119, 135] and the references therein). Schrödinger’s
+problem was mathematically formulated by S. Bernstein who deﬁned a Bernstein
+process which is also called a reciprocal process nowadays (see [12, 79] and the
+references therein). The theory of the SDE for reciprocal processes was given by B.
+Jamison (see [80]). Schrödinger’s idea also brought about J. C. Zambrini’s stochastic
+control approach to the SOT and E. Nelson’s stochastic mechanics (see [45, 62, 125,
+126, 156] and the references therein). Nelson’s stochastic mechanics proposed the
+mathematical problem of the construction of a Markov diffusion process from the
+Fokker–Planck equation (see [19, 28, 29, 31–35, 59, 103, 111, 112, 123, 150, 159]).
+In this sense both the OT and Schrödinger’s problem can be considered important
+classes of the so-called marginal problems. Schrödinger’s problem is also related to
+the theory of large deviations, entropic estimates, and functional inequalities (see,
+e.g. [1, 7, 39, 40, 51, 53, 57, 69, 101, 128, 131, 154] and the references therein).
+
+  We describe Schrödinger’s problem, which is similar to Monge’s. Suppose that
+there are N particles, in S0, which move independently (in the probability sense),
+with a given transition probability, to S1. Here we use the same notation as in (1.24)
+for the numbers of particles in S0 and S1 and assume that (1.24) holds, but not (1.25).
+We would like to know the maximal probability of such events. Let gij > 0 and Nij
+denote the given transition probability that a particle at xi ∈ S0 moves to yj ∈ S1
+and the number of particles which move from xi ∈ S0 to yj ∈ S1, respectively.
+Since each particle is independent, the probability of such an event is given by the
+following:
+
+  n0 N0(i)! Ni1 Nin1  (1.35)
+  gi1 × · · · × gin1 ,
+
+  i=1 Ni1! × · · · × Nin1 !
+under the following constraints: for i ∈ {1, · · · , n0}, j ∈ {1, · · · , n1},
+
+n1  = N0(i),  n0  n0 n1  = N.  (1.36)
+
+  Ni  Nkj = N1(j ),  Nk
+
+=1  k=1  k=1 =1
+
+Recall that N0(i) and N1(j ) are ﬁxed numbers. Suppose that each Nij is sufﬁciently
+large so that by Stirling’s formula,
+
+log(Nij !) ∼ Nij (log Nij − 1) + O(log Nij ) ∼ Nij (log Nij − 1 + o(1)).
+14  1 Introduction
+
+Then, to maximize the probability, considering the logarithm of the probability in
+(1.35), we consider the following problem:
+
+  n0 n1
+
+  max  (Nij log gij − Nij log Nij ) :  (1.37)
+
+  i=1 j =1
+
+  n1  n0
+
+  Ni = N0(i), Nkj = N1(j ), 1 ≤ i ≤ n0, 1 ≤ j ≤ n1 .
+
+  =1  k=1
+
+We  deﬁne  discrete  probabilities  μ  :=  n0  ν  :=  n1  and  (pij )1≤i≤n0,1≤j ≤n1
+
+  (μi )i=1,  (νj )j=1
+
+by the following:
+
+  μi := N0(i) ,  νj := N1(j ) ,  pij := Nij .
+  N  N  N
+
+Then the maximizer of (1.37) is the minimizer of the following:
+
+  v(μ, ν) := min  n0 n1 pij  :  (1.38)
+  pij log  .
+  μi gij
+  i=1 j =1
+
+  n1  n0
+
+  pi  = μi, pkj = νj , 1 ≤ i ≤ n0, 1 ≤ j ≤ n1
+
+  =1  k=1
+
+For a topological space S and P , Q ∈ P(S), let H (P |Q) denote the relative entropy
+of P with respect to Q:
+
+  ⎧  P (dx)
+  ⎨
+  H (P |Q) := S log Q(dx) P (dx),  P Q,
+  ⎩∞,  otherwise.  (1.39)
+
+Equation (1.38) leads us to consider Schrödinger’s problem the minimization
+problem of a relative entropy with constraints on marginal distributions.
+
+Deﬁnition 1.3 (Schrödinger’s Problem) Let S be a topological space, P(S) be
+endowed with a weak topology and S x → q(x, dy) ∈ P(S) be measurable.
+Study the minimizer of the following: for P0, P1 ∈ P(S),
+
+  V (P0, P1) := inf{H (μ(dxdy)|P0(dx)q(x, dy)) : μ1 = P0, μ2 = P1} (1.40)
+
+(see (1.28) for notation). In this monograph, we also call the inﬁmum itself in (1.40)
+Schrödinger’s problem for simplicity when it is not confusing.
+

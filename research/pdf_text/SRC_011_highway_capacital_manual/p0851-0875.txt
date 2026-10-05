@@ -1,0 +1,1492 @@
+  Highway Capacity Manual 2000
+
+compensated for in the next time step, and the procedure continues to accurately track
+queues and store vehicles after this correction.
+
+  The second situation in which small time steps are important is when two queues
+interact. There is a temporary inaccuracy due to the maximum output of a segment
+changing, thus causing the estimation of available storage to be slightly in error. This
+results in the storage of too many vehicles on a particular segment. This supersaturation
+is temporary and is compensated for in the next time step. Inadequate time step size will
+result in erroneous estimation of queue lengths and may affect other performance
+measures as well. Regardless, if interacting queues occur, the results should be viewed
+with extreme caution.
+
+  Analysis of freeway segments depends on the relationships between segment speed,
+flow, and density. Chapter 23 of this manual defines a relationship between these
+variables and the calculation of performance measures in the undersaturated regime. The
+methodology presented here uses the same relationships for undersaturated segments.
+Calculations for oversaturated segments use a simplified linear flow-density diagram in
+the congested region. Exhibit A22-5 shows this flow-density diagram for a segment
+having a free-flow speed of 120 km/h. For other free-flow speeds, the corresponding
+capacities in Chapters 23 through 25 should be used.
+
+  EXHIBIT A22-5. SEGMENT FLOW-DENSITY FUNCTION
+  (SEE FOOTNOTE FOR ASSUMED VALUE)
+
+  2500
+  Capacity = 2400 pc/h/ln
+
+  2000
+
+Flow (pc/h/ln)  1500
+
+  Undersaturated  Oversaturated
+  1000 Regime  Regime
+
+  500  Density at capacity = 28 pc/km/ln  90 100 110 120
+
+  0  30 40 50 60 70 80
+  0 10 20  Density (pc/km/ln)
+
+Note:
+Assumption: FFS = 120 km/h.
+
+A.4.2 Flow Estimation
+
+  The oversaturated portion of the methodology is detailed in a flowchart as Exhibit
+A22-6. The flowchart is divided into nine parts, which are discussed in this section.
+Within each subsection, computations are detailed and labeled according to each step of
+the flowchart.
+
+  The procedure first calculates a number of flow variables starting at the first node
+during the first time step of oversaturation, followed by each downstream node and
+segment in that same time step. After all computations in the first time step are
+completed, calculations are performed at each node and segment during subsequent time
+steps for all remaining time intervals until the analysis is completed.
+
+  22-51  Chapter 22 - Freeway Facilities
+  Appendix A
+Highway Capacity Manual 2000
+
+  EXHIBIT A22-6. OVERSATURATED ANALYSIS PROCEDURE
+  1. Calculate background density for
+  each segment in this travel time interval
+
+  H  2. Initialize the freeway facility
+  3. Move to first node
+  Segment Initialization
+  G
+
+  F  4. For this node and time step
+
+  5. Off-ramp  No
+
+  at node?
+
+  Yes
+
+  Off-Ramp Flow
+
+  6. Deficit from
+  previous time
+  Yes interval? No
+
+  7. Calculate off-ramp flow  8. Calculate off-ramp flow
+  using deficit method  without using deficit method
+
+  Mainline Input  9. Calculate mainline input
+  A
+Exhibit A22-6 is
+continued on next page
+
+Chapter 22 - Freeway Facilities  22-52
+Appendix A
+  Highway Capacity Manual 2000
+
+  EXHIBIT A22-6 (CONTINUED). OVERSATURATED ANALYSIS PROCEDURE
+  A
+
+  10. On-ramp  No
+  at node?
+
+  Yes
+  11. Calculate on-ramp
+
+  input
+
+On-Ramp Flow  12. Calculate on-ramp
+  max output
+
+  13. ONR output <
+  ONR input?
+
+  Yes  No
+
+  14. On-ramp flow = on-ramp output,  15. On-ramp = on-ramp input
+  transfer unmet ramp demand
+
+  16. Calculate Mainline
+  Output (1), MO1
+
+Mainline Output  17. Queue present
+  on segment?
+
+  Yes  No
+
+  B  C
+
+  Exhibit A22-6 is continued on
+  next page
+
+  22-53  Chapter 22 - Freeway Facilities
+  Appendix A
+Highway Capacity Manual 2000
+
+  EXHIBIT A22-6 (CONTINUED). OVERSATURATED ANALYSIS PROCEDURE
+  B
+
+  Mainline Output  18. Is there a front-
+  clearing queue in
+  this time interval?
+
+  Yes  No
+
+  19. Calculate Mainline  20. Calculate density of
+  Output (3), MO3  queue on segment
+
+  21. Calculate Mainline
+  Output (2), MO2
+
+  C  22. Calculate mainline flow
+
+  Mainline Flow  Yes D
+
+  23. First node?
+
+  No
+  24. Calculate segment flow
+
+  Segment Flow  25. Update number of
+  vehicles on segment
+
+  E
+
+Exhibit A22-6 is
+continued on next page
+
+Chapter 22 - Freeway Facilities  22-54
+Appendix A
+  Highway Capacity Manual 2000
+
+  EXHIBIT A22-6 (CONTINUED). OVERSATURATED ANALYSIS PROCEDURE
+
+  E  D
+
+  26. Last node?  No  27. Move to the next  F
+  downstream node
+
+  Yes
+
+Segment and Facility Performance Measures  28. Last time step No  29. Move to next time step  G
+  in current time
+  inter val?
+
+  Yes
+  30. Calculate segment
+  performance measures
+
+  31. Last time No  32. Move to the first time step
+  interval in  in the next time interval
+  analysis?  33. Calculate background
+
+  Yes  density for this time interval
+
+  36. Calculate facilitywide
+  performance measures
+
+  37. END  34. Is there a
+  front-clearing
+  queue in this time
+
+  inter val?
+
+  Yes  No
+
+  H
+  35. Calculate wave speed
+
+A.4.2.1 Segment Initialization (Exhibit A22-6, Steps 1 Through 4)
+
+  Steps 1 through 4 of the oversaturated procedure prepare the flow calculations for the
+first time step and specify return points for subsequent time steps. To calculate the
+number of vehicles on each segment at the various time steps, the segments must contain
+
+  22-55  Chapter 22 - Freeway Facilities
+  Appendix A
+Highway Capacity Manual 2000
+
+  the proper number of vehicles before the queuing analysis places unserved vehicles on
+  segments. The initialization of each segment is described below.
+
+  A simplified queuing analysis is initially performed to account for the effects of
+  upstream bottlenecks. These bottlenecks meter traffic downstream of their location. The
+  storage of unserved vehicles (those unable to enter the bottleneck) on upstream segments
+  is performed in a later module. To obtain the proper number of vehicles on each
+  segment, the expected demand (ED) is calculated. ED is based on demands for and
+  capacities of the segment and includes the effects of all upstream segments. The
+  expected demand is the flow of traffic expected to arrive at each segment if all queues
+  were stacked vertically (i.e., no upstream effects of queues). In other words, all segments
+  upstream of a bottleneck have expected demands equal to their actual demand. The
+  expected demand of the bottleneck segment and all further downstream segments are
+  calculated assuming a capacity constraint at the bottleneck, which meters traffic to
+  downstream segments. The expected demand is calculated for each segment using
+  Equation A22-3.
+
+  ED(i, p) = min[SC(i, p), ED(i – 1, p) + ONRD(i, p) – OFRD(i, p)]  (A22-3)
+
+  Note that the segment capacity (SC) applies to the entire length of the segment. With
+  the expected demand calculated, the background density (KB) can be obtained for each
+  segment using the appropriate segment density estimation procedures in Chapters 23
+  through 25. The background density is used to calculate the number of vehicles on each
+  segment (NV) using Equation A22-4. If there are unserved vehicles at the end of the
+  preceding time interval, the unserved vehicles (UV) are transferred to the current time
+  interval. Here, S refers to the last time step in the preceding time interval. The (0) term
+  in NV represents the start of the first time step in Time Interval (p). The corresponding
+  term at the end of the time step is NV(i, 1, p).
+
+  NV(i, 0, p) = KB(i, p) * L(i) + UV(i, S, p – 1)  (A22-4)
+
+  The number of vehicles calculated from the background density is the minimum
+  number of vehicles that can be on the segment at any time. This is a powerful check on
+  the methodology because the existence of queues downstream cannot reduce this
+  minimum. Rather, the segment can only store additional vehicles. The storage of
+  unserved vehicles will be determined in the segment flow calculation module later in this
+  appendix.
+
+  A.4.2.2 Mainline Flow Calculations (Exhibit A22-6, Steps 9 and 16 Through 23)
+
+  The description of ramp flows will follow the description of mainline flows. Thus,
+  Steps 5 through 8 and 10 through 15 are skipped at this time to focus first on mainline
+  flow computations. Because of the skipping of steps in the descriptions, some
+  computations may include variables that have not been described but that have been
+  previously calculated within the flowchart.
+
+  Flows analyzed in oversaturated conditions are calculated every time step and are
+  expressed in terms of vehicles per time step. The procedure separately analyzes the flow
+  across a node on the basis of the origin and destination of the flow across the node. The
+  mainline flow is defined as the flow passing from upstream Segment (i – 1) to
+  downstream Segment (i). It does not include the on-ramp flow. The flow to an off-ramp
+  is the off-ramp flow. The flow from an on-ramp is the on-ramp flow. Each of these
+  flows is shown in Exhibit A22-7 with their origin, destination, and relationship to
+  Segment (i) and Node (i).
+
+  The segment flow is the total output of a segment, as shown in Exhibit A22-7.
+  Segment flows are calculated by determining the mainline and ramp flows. The mainline
+  flow is calculated as the minimum of six constraints: the mainline input, Mainline Output
+  1 (MO1), Mainline Output 2 (MO2), Mainline Output 3 (MO3), the upstream Segment
+  (i – 1) capacity, and the downstream Segment (i) capacity, as explained next.
+
+Chapter 22 - Freeway Facilities  22-56
+Appendix A
+  Highway Capacity Manual 2000
+
+  EXHIBIT A22-7. DEFINITIONS OF MAINLINE AND SEGMENT FLOWS
+
+Seg (i - 1)  Node (i)  Seg (i)  Seg (i - 1) Node (i)  Seg (i)
+
+  MF  MF
+  ONRF  OFRF
+
+SF(i - 1) = MF(i)  SF(i - 1) = MF(i) + OFRF(i)
+SF(i) = MF(i) + ONRF(i)  SF(i) = MF(i)
+
+  A.4.2.2.1 Mainline Input (Exhibit A22-6, Step 9)
+
+  The mainline input (MI) is the number of vehicles that wish to travel through a node
+during the time step. The calculation includes (a) the effects of bottlenecks upstream of
+the analysis node, (b) the metering of traffic during queue accumulation, and (c) the
+presence of additional traffic during upstream queue discharge.
+
+  The mainline input is calculated by taking the number of vehicles entering the node
+upstream of the analysis node, adding on-ramp flows or subtracting off-ramp flows, and
+adding the number of unserved vehicles on the upstream segment. This is the maximum
+number of vehicles that wish to enter a node during a time step. The mainline input is
+calculated using Equation A22-5, where all values have units of vehicles per time step.
+
+  MI(i, t, p) = MF(i – 1, t, p) + ONRF(i – 1, t, p) – OFRF(i, t, p)
+
+  + UV(i – 1, t – 1, p)  (A22-5)
+
+  A.4.2.2.2 Mainline Output (Exhibit A22-6, Steps 16 Through 21)
+
+  The mainline output is the maximum number of vehicles that can exit a node,
+constrained by downstream bottlenecks or by merging on-ramp traffic. Different
+constraints on the output of a node result in three separate types of mainline outputs
+(MO1, MO2, and MO3).
+
+A.4.2.2.2.1 Mainline Output 1—Ramp Flows (Exhibit A22-6, Step 16)
+
+  MO1 is the constraint caused by the flow of vehicles from an on-ramp. The capacity
+of an on-ramp segment is shared by two competing flows. This on-ramp flow limits the
+flow from the mainline through this node. The total flow that can pass the node is
+estimated as the minimum of the Segment (i) capacity and the mainline outputs from the
+preceding time step. The sharing of Lane 1 (shoulder lane) capacity is determined in the
+calculation of the on-ramp flow and is described in Section A.4.2.4. MO1 is calculated
+using Equation A22-6.
+
+MO1(i, t, p) = min[SC(i, t, p) – ONRF(i, t, p), MO2(i, t – 1, p), MO3(i, t – 1, p)]  (A22-6)
+
+  A.4.2.2.2.2 Mainline Output 2—Segment Storage (Exhibit A22-6, Steps 20
+  and 21)
+
+  The second constraint on the output of mainline flow through a node is caused by the
+growth of queues on a downstream segment. As a queue grows on a segment, it may
+eventually limit the flow into the current segment once the boundary of the queue reaches
+the upstream end of the segment. The boundary of the queue is treated as a shock wave.
+MO2 is a limit on the flow exiting a node due to the presence of a queue on the
+downstream segment.
+
+  The MO2 limitation is determined first by calculating the maximum number of
+vehicles allowed on a segment at a given queue density. The maximum flow that can
+enter a queued segment is the number of vehicles that leave the segment plus the
+
+  22-57  Chapter 22 - Freeway Facilities
+  Appendix A
+Highway Capacity Manual 2000
+
+  difference between the maximum number of vehicles allowed on the segment and the
+  number of vehicles already on the segment. The density of the queue is calculated using
+  Equation A22-7 for the linear density-flow relationship shown in Exhibit A22-5 earlier.
+
+  KQ(i , t , p ) = KJ − (KJ − KC ) * SF (i , t −1, p )  (A22-7)
+  SC(i , p )
+
+  Once the queue density is computed, MO2 can be computed using Equation A22-8.
+  MO2(i, t, p) = SF(i, t – 1, p) – ONRF(i, t, p) + [KQ(i, t, p) * L(i)] – NV(i, t – 1, p) (A22-8)
+
+  The performance of the downstream node is estimated by taking the performance
+  during the preceding time step. This estimation remains valid when there are no
+  interacting queues. When queues do interact and the time steps are small enough, the
+  error in the estimations are corrected in the next time step.
+
+  A.4.2.2.2.3 Mainline Output 3—Front-Clearing Queues (Exhibit A22-6, Steps
+  17 Through 19)
+
+  The final constraint on exiting mainline flows at a node is caused by downstream
+  queues clearing from their downstream end. These front-clearing queues are typically
+  caused by incidents where there is a temporary reduction in capacity. A queue will clear
+  from the front if two conditions are satisfied. First, the segment capacity (minus the on-
+  ramp demand if present) for this time interval must be greater than the segment capacity
+  (minus the ramp demand if present) in the preceding time interval. The second condition
+  is that the segment capacity minus the ramp demand for this time interval be greater than
+  the segment demand for this time interval. A queue will clear from the front if both
+  conditions in the following inequality (Equation A22-9) are met.
+
+  If [SC(i, p) – ONRD(i, p)] > [SC(i, p – 1) – ONRD(i, p – 1)]
+
+  and [SC(i, p) – ONRD(i, p)] > SD(i, p)  (A22-9)
+
+  A segment with a front-clearing queue will have the number of vehicles stored
+  decrease during recovery, while the back of queue position is unaffected. Thus, the
+  clearing does not affect the segment throughput until the recovery wave has reached the
+  upstream end of the segment. In the flow-density graph shown in Exhibit A22-8, the
+  wave speed is estimated by the slope of the dotted line connecting the bottleneck
+  throughput and the segment capacity points.
+
+  The assumption of a linear flow-density function greatly simplifies the calculated
+  wave speed. The bottleneck throughput value is not required to estimate the speed of the
+  shock wave that travels along a known line. All that is required is the slope of the line,
+  which is calculated using Equation A22-10.
+
+  WS(i , p ) =  SC(i , p )  (A22-10)
+
+  N (i , p ) * (KJ − KC )
+
+  The wave speed is used to calculate the time it takes the front queue-clearing shock wave
+  to traverse this segment, called the wave travel time (WTT). Dividing the wave speed
+  (WS) by the segment length in kilometers gives the wave travel time.
+
+  The recovery wave travel time is the time required for the conditions at the
+  downstream end of the current segment to reach the upstream end of the current segment.
+  To place a limit on the current node, the conditions at the downstream node are observed
+  at a time in the past. This time is the wave travel time. This constraint on the current
+  node is called the Mainline Output 3, or MO3. The calculation of MO3 is performed by
+  using Equations A22-11 and A22-12 . If the wave travel time is not an integer number of
+  time steps, then the weighted average performance of each variable is taken for the time
+  steps nearest to the wave travel time. This method is based on the process described in
+  References 2–4.
+
+  WTT = T * L(i )  (A22-11)
+  WS(i , p )
+
+Chapter 22 - Freeway Facilities  22-58
+Appendix A
+  Highway Capacity Manual 2000
+
+  MO3(i, t, p) = min[MO1(i + 1, t – WTT, p),
+
+  MO2(i + 1, t – WTT, p) + OFRF(i + 1, t – WTT, p), MO3(i + 1, t – WTT, p)
+
+  + OFRF(i + 1, t – WTT, p), SC(i, t – WTT, p), SC(i + 1, t – WTT, p)
+
+  + OFRF(i + 1, t – WTT, p)] – ONRF(i, t, p)  (A22-12)
+
+  EXHIBIT A22-8. FLOW-DENSITY FUNCTION WITH A SHOCK WAVE
+  (SEE FOOTNOTE FOR ASSUMED VALUE)
+
+  2500 Capacity = 2400 pc/h/ln
+
+  2000
+  Shock wave
+
+Flow (pc/h/ln)  1500
+
+  Undersaturated  Oversaturated  Bottleneck throughput
+
+  1000
+
+  500
+
+  Density at capacity = 28 pc/km/ln
+
+  0
+  0 10 20 30 40 50 60 70 80 90 100 110 120
+
+  Density (pc/km/ln)
+
+Note:
+Assumption: FFS = 120 km/h.
+
+  A.4.2.2.3 Mainline Flow (Exhibit A22-6, Steps 22 and 23)
+
+  The flow across a node is called the mainline flow and is the minimum of the
+following variables: mainline input, MO1, MO2, MO3, upstream Segment (i – 1)
+capacity, and downstream Segment (i) capacity.
+
+  MF(i, t, p) = min [MI(i, t, p), MO1(i, t, p), MO2(i, t, p), MO3(i, t, p),
+
+  SC(i, t, p), SC(i – 1, t, p)]  (A22-13)
+
+  In addition to mainline flows, ramp flows must be analyzed. The presence of
+mainline queues also affects ramp flows.
+
+A.4.2.3 On-Ramp Calculations (Exhibit A22-6, Steps 10 Through 15)
+
+  A.4.2.3.1 On-Ramp Input (Exhibit A22-6, Steps 10 and 11)
+
+  The maximum on-ramp input is calculated by adding the on-ramp demand and the
+number of vehicles queued on the ramp. The queued vehicles are treated as unmet ramp
+demand that was not served in previous time steps. The on-ramp input is calculated using
+Equation A22-14.
+
+  ONRI(i, t, p) = ONRD(i, t, p) + ONRQ(i, t – 1, p)  (A22-14)
+
+  A.4.2.3.2 On-Ramp Output (Exhibit A22-6, Step 12)
+
+  The maximum on-ramp output is calculated on the basis of the mainline traffic
+through the node where the on-ramp is located. The on-ramp output is the minimum of
+
+  22-59  Chapter 22 - Freeway Facilities
+  Appendix A
+Highway Capacity Manual 2000
+
+  two values. The first is Segment (i) capacity minus the mainline input, in the absence of
+  downstream queues. Otherwise, the segment capacity is replaced by the throughput of
+  the queue. This estimation implies that vehicles entering an on-ramp segment will fill
+  lanes 2 to N (where N is the number of lanes on the current segment) to capacity before
+  entering Lane 1. This assumption appears to be consistent with the estimation of V12
+  from Chapter 25 of this manual.
+
+  The second case is when the Lane 1 flow on Segment (i) is greater than one-half of
+  the Lane 1 capacity. At this point the on-ramp maximum output is set to one-half of
+  Lane 1 capacity. This implies that when the demands from the freeway and the on-ramp
+  are very high, there will be forced merging in a one-to-one fashion on the freeway from
+  the freeway mainline and the on-ramp in Lane 1. An important characteristic of traffic
+  behavior is that in a forced merging situation, ramp and right-lane freeway vehicles will
+  generally merge one on one, sharing the capacity of the rightmost freeway lane (5). In all
+  cases, the on-ramp maximum output is also limited to the physical ramp road capacity
+  and the ramp-metering rate, if present. The maximum on-ramp output is an important
+  limitation on the ramp flow. Queuing occurs when the combined demand from the
+  upstream segment and the demand on the on-ramp exceed the throughput of the ramp
+  segment. The queue can be located on the upstream segment, on the ramp, or on both and
+  is dependent on the on-ramp maximum output. Equation A22-15 determines the value of
+  the maximum on-ramp output.
+
+  ONRO(i, t, p) = min{RM(i, p), ONRC(i, p), max[min[SC(i, p),
+
+  MO2(i, t – 1, p)+ ONRF(i, t – 1, p), MO3(i, t – 1, p) + ONRF(i, t – 1, p)] – MI(i, t, p),
+
+  min[SC(i, p), MO2(i, t – p) + ONRF(i, t – 1, p), MO3(i, t – 1, p)
+
+  + ONRF(i, t – 1, p)]/2N(i, p)]}  (A22-15)
+
+  Note that this model incorporates the maximum mainline output constraints from
+  downstream queues, not just the segment capacity. This is significant because as a queue
+  spills over an on-ramp segment, the flow through Lane 1 is constrained. This, in turn,
+  limits the flow that can enter Lane 1 from the on-ramp. The values of MO2 and MO3 for
+  this time step are not yet known, so they are estimated from the preceding time step. This
+  estimation is one rationale for using small time steps. If there is forced merging during
+  the time step where the queue spills back over the current node, the on-ramp will
+  discharge more than its share of vehicles (i.e., more than 50 percent of the Lane 1 flow).
+  This will cause the mainline flow past Node i to be underestimated. But during the next
+  time step, the on-ramp flow will be at its correct flow rate, and a one-to-one sharing of
+  Lane 1 will occur.
+
+  A.4.2.3.3 On-Ramp Flows, Queues, and Delays (Exhibit A22-6, Steps 13
+  Through 15)
+
+  Finally, the on-ramp flow is calculated on the basis of the on-ramp input and output
+  values computed above. If the on-ramp input is less than the on-ramp output, then the on-
+  ramp demand can be fully served in this time step and Equation A22-16 is used.
+
+  ONRF(i, t, p) = ONRI(i, t, p)  (A22-16)
+
+  Otherwise, the ramp flow is constrained by the maximum on-ramp output, and Equation
+  A22-17 is used.
+
+  ONRF(i, t, p) = ONRO(i, t, p)  (A22-17)
+
+  In the latter case, the number of vehicles in the ramp queue is updated using Equation
+  A22-18.
+
+  ONRQ(i, t, p) = ONRQ(i, t – 1, p) + ONRI(i, t, p) – ONRO(i, t, p) (A22-18)
+
+Chapter 22 - Freeway Facilities  22-60
+Appendix A
+  Highway Capacity Manual 2000
+
+The total delay for on-ramp vehicles can be estimated by integrating the value of on-ramp
+queues over time. The methodology uses the discrete queue lengths estimated at the end
+of each interval, ONRQ(i, S, p), to produce overall ramp delays by time interval.
+
+A.4.2.4 Off-Ramp Flow Calculation (Exhibit A22-6, Steps 5 Through 8)
+
+  The off-ramp flow is determined by calculating a diverge percentage on the basis of
+the segment and off-ramp demands. The diverge percentage varies only by time interval
+and remains constant for vehicles that are associated with a particular time interval. If
+there is an upstream queue, traffic may be metered to this off-ramp. This will cause a
+decrease in the off-ramp flow. When the vehicles that were metered arrive in the next
+time interval, they use the diverge percentage associated with the preceding time interval.
+
+  A deficit in flow, caused by traffic from an upstream queue meter, creates delays for
+vehicles destined to this off-ramp and other downstream destinations. The upstream
+segment flow is used because the procedure assumes that a vehicle destined for an off-
+ramp is able to exit at the off-ramp once it enters the off-ramp segment. The calculation
+of this deficit is performed using Equation A22-19.
+
+ p −1   p −1 T
+DEF (i, t , p) = Max 0, ∑ SD(i −1, X ) −  ∑ ∑ [MF (i −1, t , X ) + ONRF (i −1, t , X )]
+ X =1  X =1 t =1
+
+  t −1   
++ ∑ [MF (i −1, t , p ) + ONRF (i −1, t , p )]  (A22-19)
+   
+  t =1
+
+  If there is a deficit, then the off-ramp flow is calculated using the deficit method.
+The deficit method is used differently in two different situations. If the upstream
+mainline flow plus the flow from an on-ramp at the upstream node (if present) is less than
+the deficit for this time step, then the off-ramp flow is equal to the mainline and on-ramp
+flows times the off-ramp turning percentage in the preceding time interval, as indicated
+below.
+
+OFRF(i, t, p) = [MF(i – 1, t, p) + ONRF(i – 1, t, p)]
+
+  * [OFRD(i, p – 1)/SD(i – 1, p – 1)]  (A22-20)
+
+  If the deficit is less than the upstream mainline flow plus the on-ramp flow from an
+on-ramp at the upstream node (if present), then Equation A22-21 is used. This equation
+separates the flow into the remaining deficit flow and the balance of the arriving flow.
+
+OFRF(i, t, p) = DEF(i, t, p) * [OFRD(i, p – 1)/SD(i – 1,p – 1)] + [MF(i – 1, t, p)
+
++ ONRF(i – 1, t, p) – DEF(i, t, p)] * [OFRD(i, p)/SD(i – 1, p)]  (A22-21)
+
+  If there is no deficit, then the off-ramp flow is equal to the sum of upstream mainline
+flow plus the on-ramp flow from an on-ramp at the upstream node (if present), multiplied
+by the off-ramp turning percentage for this time interval according to Equation A22-22.
+
+  OFRF(i, t, p) = [MF(i – 1, t, p) + ONRF(i – 1, t, p)] * [OFRD(i, p)/SD(i – 1, p)] (A22-22)
+
+Note that the procedure does not currently incorporate any delay or queue length
+computations for off-ramps.
+
+A.4.2.5 Segment Flow Calculation (Exhibit A22-6, Steps 24 and 25)
+
+  The segment flow is the number of vehicles that flow out of a segment during the
+current time step. These vehicles enter the current segment either to the mainline or to an
+off-ramp at the current node. The vehicles that entered the upstream segment may or may
+not have become queued within the segment. The segment flow is calculated using
+Equation A22-23.
+
+SF(i – 1, t, p) = MF(i, t, p) + OFRF(i, t, p)  (A22-23)
+
+  22-61  Chapter 22 - Freeway Facilities
+  Appendix A
+Highway Capacity Manual 2000
+
+  The number of vehicles on each segment is calculated on the basis of the number of
+  vehicles that were on the segment in the preceding time step, the number of vehicles that
+  entered the segment in this time step, and the number of vehicles that leave the segment
+  in this time step. Because the number of vehicles that leave a segment must be known,
+  the number of vehicles on the current segment cannot be determined until the upstream
+  segment is analyzed. The number of vehicles on each segment is calculated using
+  Equation A22-24.
+
+  NV(i – 1, t, p) = NV(i – 1, t – 1, p) + MF(i – 1, t, p) + ONRF(i – 1, t, p)
+
+  – MF(i, t, p) – OFRF(i, t, p)  (A22-24)
+
+  The number of unserved vehicles stored on a segment is calculated as the difference
+  between the number of vehicles on the segment and the number of vehicles that would be
+  on the segment at the background density. The number of unserved vehicles stored on a
+  segment is calculated using Equation A22-25.
+
+  UV(i – 1, t, p) = NV(i – 1, t, p) – [KB(i – 1, p) * L(i – 1)]  (A22-25)
+
+  A.4.3 Segment and Ramp Performance Measures (Exhibit A22-6, Steps 26
+  Through 30)
+
+  In the last time step of a time interval, the segment flows are averaged over the time
+  interval and the measures of effectiveness for each segment are calculated. If there was
+  no queue on a particular segment during the entire time interval, then the performance
+  measures are calculated from the corresponding HCM 2000 method for that segment in
+  Chapters 23 through 25. Since there are T time steps in an hour, the average segment flow
+  rate in vehicles per hour in Time Interval (p) is calculated using Equation A22-26.
+
+  TS  (A22-26)
+  SF (i , p ) = ∑t =1SF (i , t , p )
+
+  S
+
+  Note that if T = 60 (1-min time step) and S = 15 (interval = 15 min), then T/S = 4. If
+  there was a queue on the current segment in any time step during the time interval, then
+  the segment performance measures are calculated in three steps. First, the average
+  number of vehicles over a time interval is calculated for each segment using Equation
+  A22-27.
+
+  lS  (A22-27)
+  NV (i , p ) = ∑t =1 NV (i , t , p )
+
+  S
+
+  Next, the average segment density is calculated by taking the average number of
+  vehicles (NV) for all time steps in the time interval and dividing it by the segment length
+  using Equation A22-28.
+
+  K (i, p) = NV (i, p )  (A22-28)
+  L(i )
+
+  Next, the average speed on the current segment (i) during the current time interval
+  (p) is calculated using Equation A22-29.
+
+  U (i, p) = SF (i, p )  (A22-29)
+  K (i, p)
+
+  Additional segment performance measures can be derived from the basic measures
+  shown in Equations A22-26 through A22-28. Most prominent is segment delay, which
+  can be computed as the difference in segment travel time at speed U(i, p) and at the
+  segment free-flow speed.
+
+  The final segment performance measure is the length of the queue at the end of the
+  time interval (i.e., Step S in Time Interval p). The length of a queue in meters on the
+  segment is calculated using Equation A22-30.
+
+Chapter 22 - Freeway Facilities  22-62
+Appendix A
+  Highway Capacity Manual 2000
+
+Q (i, S, p ) = UV (i,S, p ) KQ(i, S, p ) − KB(i, p ) *1000  (A22-30)
+
+  Queue length on on-ramps can also be calculated. A queue will form on the on-ramp
+roadway only if the flow is limited by a metering rate or by the merge area capacity. If
+the flow is limited by the ramp capacity, then unserved vehicles will be stored upstream
+of the ramp roadway, most likely a surface street. The methodology does not account for
+this delay, since vehicles cannot enter the ramp roadway. However, the unserved
+vehicles in this case are transferred as added demand in subsequent time intervals. If the
+queue is on the ramp roadway, the queue length is calculated by using the difference in
+background density and queue density. For an on-ramp, the background density is
+assumed to be the density at capacity and the queue density is calculated within Equation
+A22-31. For on-ramp queue length, Equation A22-31 is used.
+
+ONRQL( i , S , p ) =  ONRQ( i , S , p )  (A22-31)
+  min [ RM( i , p ),ONRO( i , S , p ) * ( KJ − KC ) ]
+  KJ −
+  ONRC( i , p )
+
+A.5 DIRECTIONAL FACILITY MODULE (EXHIBIT A22-6, STEP 36)
+
+  The previously discussed traffic performance measures can be aggregated over the
+length of the directional freeway facility, over the time duration of the study interval, or
+over the entire time-space domain. Each will be discussed in the following paragraphs.
+
+  Aggregating the estimated traffic performance measures over the entire length of the
+freeway facility provides facilitywide estimates for each time interval. Facilitywide
+travel times, vehicle (and person) distance of travel, and vehicle (and person) hours of
+travel and delay can be computed, and patterns of their variation over the connected time
+intervals can be assessed. The current computer implementation of the methodology is
+limited to 15-min time intervals and 1-min time steps.
+
+  Aggregating the estimated traffic performance measures over the time duration of the
+study interval provides an assessment of the performance of each segment along the
+freeway facility. Average and cumulative distributions of speed and density for each
+segment can be determined, and patterns of the variation over connected freeway
+segments can be compared. Average trip times, vehicle (and person) distance of travel,
+and vehicle (and person) hours of travel are easily assessed for each segment and
+compared.
+
+  Aggregating the estimated traffic performance measures over the entire time-space
+domain provides an overall assessment over the study interval time duration. Overall
+average speeds, average trip times, total vehicle (and person) distance traveled, and total
+vehicle (and person) hours of travel and delay are the most obvious overall traffic
+performance measures. Equations A22-32 through A22-35 show how some of the
+facilitywide MOEs are calculated.
+
+  Facility space-mean speed in Time Interval (p):
+
+SMS(NS, p ) = ∑Ni =S1SF (i , p ) * L(i )  (A22-32)
+  L(i )
+  NS
+  ∑i =1SF (i , p ) *
+  U (i , p )
+
+Average facility density in Time Interval (p):
+
+  NS  K  (i  ,  p  )  *  L(i  )  (A22-33)
+  (A22-34)
+  ∑i =1
+  K (NS, p ) = NS
+  ∑i =1 L(i )N (i , p )
+
+Overall space-mean speed across all intervals:
+
+SMS(NS, P ) = ∑Pp =1 ∑Ni =S1SF (i , p )L(i )
+  P NS  L(i )
+  ∑p =1 ∑i =1SF (i , p )
+  U (i , p )
+
+  22-63  Chapter 22 - Freeway Facilities
+  Appendix A
+Highway Capacity Manual 2000
+
+  Overall average density across all intervals:
+
+  P  =1  NS  K  (i  ,  p  )  *  L(i  )  (A22-35)
+
+  ∑p  ∑i =1
+  K (NS, P ) = P NS
+  ∑p =1 ∑i =1 L(i )N (i , p )
+
+  REFERENCES
+
+  1. A Policy on Geometric Design of Highways and Streets. American Association of
+  State Highway and Transportation Officials, Washington, D.C., 1994.
+
+  2. Newell, G. F. A Simplified Theory of Kinematic Waves in Highway Traffic, Part
+  I: General Theory. Transportation Research, Vol. 27B, No. 4, 1993, pp. 281–287.
+
+  3. Newell, G. F. A Simplified Theory of Kinematic Waves in Highway Traffic, Part
+  II: Queuing at Freeway Bottlenecks. Transportation Research, Vol. 27B, No. 4,
+  1993, pp. 289–303.
+
+  4. Newell, G. F. A Simplified Theory of Kinematic Waves in Highway Traffic, Part
+  III: Multidestination Flows. Transportation Research, Vol. 27B, No. 4, 1993, pp.
+  305–313.
+
+  5. Newman, L. Freeway Operations Analysis. University of California Institute of
+  Transportation Studies University Extension Course Notes, 1986.
+
+Chapter 22 - Freeway Facilities  22-64
+Appendix A
+  Highway Capacity Manual 2000
+
+CHAPTER 23
+
+BASIC FREEWAY SEGMENTS
+
+  CONTENTS
+
+I. INTRODUCTION .....................................................................................................23-1
+  Base Conditions for Basic Freeway Segments ................................................23-1
+  Limitations of the Methodology .........................................................................23-1
+
+II. METHODOLOGY ....................................................................................................23-2
+  LOS ..................................................................................................................23-2
+  Determining FFS ..............................................................................................23-4
+  BFFS .........................................................................................................23-5
+  Adjustment for Lane Width ........................................................................23-5
+  Adjustment for Lateral Clearance .............................................................23-5
+  Adjustment for Number of Lanes ..............................................................23-6
+  Adjustment for Interchange Density ..........................................................23-6
+  Determining Flow Rate .....................................................................................23-7
+  Peak-Hour Factor ......................................................................................23-7
+  Heavy-Vehicle Adjustments ......................................................................23-7
+  Extended Freeway Segments ............................................................23-8
+  Specific Grades .................................................................................23-8
+  Equivalents for Extended Freeway Segments ..........................................23-8
+  Level Terrain ......................................................................................23-8
+  Rolling Terrain....................................................................................23-8
+  Mountainous Terrain ..........................................................................23-9
+  Equivalents for Specific Grades ................................................................23-9
+  Equivalents for Specific Upgrades .....................................................23-9
+  Equivalents for Specific Downgrades .............................................. 23-11
+  Equivalents for Composite Grades .................................................. 23-11
+  Driver Population Factor .........................................................................23-11
+  Determining LOS ............................................................................................23-12
+  Sensitivity of Results to Input Variables .........................................................23-12
+
+III. APPLICATIONS ....................................................................................................23-14
+  Segmenting the Freeway ...............................................................................23-15
+  Computational Steps ......................................................................................23-15
+  Planning Applications .....................................................................................23-16
+  Analysis Tools ................................................................................................23-17
+
+IV. EXAMPLE PROBLEMS .........................................................................................23-17
+  Example Problem 1 ........................................................................................23-18
+  Example Problem 2 ........................................................................................23-20
+  Example Problem 3 ........................................................................................23-22
+  Example Problem 4 ........................................................................................23-24
+  Example Problem 5 ........................................................................................23-26
+
+V. REFERENCES ......................................................................................................23-27
+APPENDIX A. COMPOSITE GRADE .........................................................................23-28
+APPENDIX B. WORKSHEET .....................................................................................23-30
+
+  Basic Freeway Segments Worksheet
+
+  23-i  Chapter 23 - Basic Freeway Segments
+Highway Capacity Manual 2000
+
+  EXHIBITS
+
+Exhibit 23-1.  Basic Freeway Segment Methodology .................................................. 23-2
+Exhibit 23-2.  LOS Criteria for Basic Freeway Segments ............................................ 23-3
+Exhibit 23-3.  Speed-Flow Curves and LOS for Basic Freeway Segments ................ 23-4
+Exhibit 23-4.  Adjustments for Lane Width ..................................................................23-5
+Exhibit 23-5.  Adjustments for Right-Shoulder Lateral Clearance ............................... 23-6
+Exhibit 23-6.  Adjustments for Number of Lanes ......................................................... 23-6
+Exhibit 23-7.  Adjustments for Interchange Density .................................................... 23-7
+Exhibit 23-8.  Passenger-Car Equivalents on Extended Freeway Segments ............. 23-9
+Exhibit 23-9.  Passenger-Car Equivalents for Trucks and Buses on Upgrades ........ 23-10
+Exhibit 23-10.  Passenger-Car Equivalents for RVs on Upgrades .............................. 23-10
+Exhibit 23-11.  Passenger-Car Equivalents for Trucks and Buses
+  on Downgrades ................................................................................... 23-11
+Exhibit 23-12.  Urban Freeway FFS and Interchange Spacing ................................... 23-12
+Exhibit 23-13.  Rural Freeway FFS ............................................................................. 23-13
+Exhibit 23-14.  Freeway Speed-Flow and v/c Ratio .................................................... 23-13
+Exhibit 23-15.  Urban Freeway Capacity and Interchange Spacing ............................ 23-14
+Exhibit 23-16.  Basic Freeway Segments Worksheet ................................................. 23-16
+Exhibit A23-1.  Sample Solution for Composite Grade ................................................ 23-29
+Exhibit A23-2.  Performance Curves for Trucks (120 kg/kW) ...................................... 23-30
+
+Chapter 23 - Basic Freeway Segments  23-ii
+  Highway Capacity Manual 2000
+
+  I. INTRODUCTION  Background and concepts for
+  this chapter are given in
+  The methodology in this chapter can be used to analyze the capacity, level of service  Chapter 13
+(LOS), lane requirements, and effects of traffic and design features of basic freeway
+segments.  Base conditions for freeway
+  flow
+  The methodology in this chapter is based on the results of an NCHRP study (1). The
+study used additional references to develop the methodology (2–11). Updates to the
+original methodology were subsequently developed (12).
+
+BASE CONDITIONS FOR BASIC FREEWAY SEGMENTS
+
+  The base conditions under which the full capacity of a basic freeway segment is
+achieved are good weather, good visibility, and no incidents or accidents. For the
+analysis procedures in this chapter, these base conditions are assumed to exist. If any of
+these conditions fails to exist, the speed, LOS, and capacity of the freeway segment all
+tend to be reduced.
+
+  The specific speed-flow-density relationship of a basic freeway segment depends on
+prevailing traffic and roadway conditions. A set of base conditions for basic freeway
+segments has been established. These conditions serve as a starting point for the
+methodology in this chapter.
+
+  • Minimum lane widths of 3.6 m;
+  • Minimum right-shoulder lateral clearance between the edge of the travel lane and
+the nearest obstacle or object that influences traffic behavior of 1.8 m;
+  • Minimum median lateral clearance of 0.6 m;
+  • Traffic stream composed entirely of passenger cars;
+  • Five or more lanes for one direction (in urban areas only);
+  • Interchange spacing at 3 km or greater;
+  • Level terrain, with grades no greater than 2 percent; and
+  • A driver population composed principally of regular users of the facility.
+These base conditions represent a high operating level, with a free-flow speed (FFS) of
+110 km/h or greater.
+
+LIMITATIONS OF THE METHODOLOGY
+
+  The methodology does not apply to or take into account (without modification by the
+analyst) the following:
+
+  • Special lanes reserved for a single vehicle type, such as high-occupancy vehicle
+(HOV) lanes, truck lanes, and climbing lanes;
+
+  • Extended bridge and tunnel segments;
+  • Segments near a toll plaza;
+  • Facilities with free-flow speeds below 90 km/h or in excess of 120 km/h;
+  • Demand conditions in excess of capacity (refer to Chapter 22 for further
+discussion);
+  • The influence of downstream blockages or queuing on a segment;
+  • Posted speed limit, the extent of police enforcement, or the presence of intelligent
+transportation systems features related to vehicle or driver guidance; or
+  • Capacity-enhancing effects of ramp metering.
+  The analyst would have to draw on other research information and develop special-
+purpose modifications of this methodology to incorporate the effects of the above
+conditions.
+
+23-1  Chapter 23 - Basic Freeway Segments
+  Introduction
+Highway Capacity Manual 2000
+
+  II. METHODOLOGY
+  The methodology described in this chapter is for the analysis of basic freeway
+  segments. A method for analysis of extended lengths of freeway that comprise a
+  combination of basic segments, weaving segments, and ramp junctions is found in
+  Chapter 22. Exhibit 23-1 illustrates input to and the basic computation order of the
+  method for basic freeway segments. The primary output of the method is LOS.
+
+  EXHIBIT 23-1. BASIC FREEWAY SEGMENT METHODOLOGY
+  Input
+  - Geometric data
+  - Field-measured FFS or
+  base free-flow speed (BFFS)
+  - Volume
+
+  If BFFS is input  If field-measured FFS is input  Volume adjustment
+BFFS adjustment  - Peak-hour factor
+  - Number of lanes
+  - Lane width  - Driver population
+  - Number of lanes  - Heavy vehicles
+  - Interchange density
+  - Lateral clearance  Compute flow rate
+
+  Compute FFS
+
+  Define speed-flow curve
+
+  Determine speed using speed-flow curve
+
+  Compute density using flow rate and speed
+
+  Determine LOS
+
+LOS
+  A basic freeway segment can be characterized by three performance measures:
+
+density in terms of passenger cars per kilometer per lane, speed in terms of mean
+passenger-car speed, and volume-to-capacity (v/c) ratio. Each of these measures is an
+indication of how well traffic flow is being accommodated by the freeway.
+
+Chapter 23 - Basic Freeway Segments  23-2
+Methodology
+  Highway Capacity Manual 2000
+
+  The measure used to provide an estimate of level of service is density. The three
+measures of speed, density, and flow or volume are interrelated. If values for two of
+these measures are known, the third can be computed.
+
+  Level-of-service thresholds for a basic freeway segment are summarized below.
+
+  LOS  Density Range (pc/km/ln)  Density is used to define LOS
+
+  A  0–7  Density greater than 28
+  pc/km/ln (LOS F) indicates a
+  B  > 7–11  queue that extends into the
+  segment
+  C  > 11–16
+
+  D  > 16–22
+
+  E  > 22–28
+
+  F  > 28
+
+  For any given level of service, the maximum allowable density is somewhat lower
+than that for the corresponding level of service on multilane highways. This reflects the
+higher quality of service drivers expect when using freeways as compared with surface
+multilane facilities. This does not imply that an at-grade multilane highway will perform
+better than a freeway with the same number of lanes under similar conditions. For any
+given density, a freeway will carry higher flow rates at higher speeds than will a
+comparable multilane highway.
+
+  The specification of maximum densities for LOS A through D is based on the
+collective professional judgment of the members of the Committee on Highway Capacity
+and Quality of Service of the Transportation Research Board. The upper value shown for
+LOS E (28 pc/km/ln) is the maximum density at which sustained flows at capacity are
+expected to occur.
+
+  LOS criteria for basic freeway segments are given in Exhibit 23-2 for free-flow
+speeds of 120 km/h or greater, 110 km/h, 100 km/h, and 90 km/h. To be within a given
+LOS, the density criterion must be met. In effect, under base conditions, these are the
+speeds and flow rates expected to occur at the density shown for each LOS.
+
+  EXHIBIT 23-2. LOS CRITERIA FOR BASIC FREEWAY SEGMENTS
+
+  LOS
+
+  Criteria  A  B  C  D  E
+
+  FFS = 120 km/h
+
+Maximum density (pc/km/ln)  7  11  16  22  28
+
+Minimum speed (km/h)  120.0  120.0  114.6  99.6  85.7
+
+Maximum v/c  0.35  0.55  0.77  0.92  1.00
+
+Maximum service flow rate (pc/h/ln)  840  1320  1840  2200  2400
+
+  FFS = 110 km/h
+
+Maximum density (pc/km/ln)  7  11  16  22  28
+
+Minimum speed (km/h)  110.0  110.0  108.5  97.2  83.9
+
+Maximum v/c  0.33  0.51  0.74  0.91  1.00
+
+Maximum service flow rate (pc/h/ln)  770  1210  1740  2135  2350
+
+  FFS = 100 km/h
+
+Maximum density (pc/km/ln)  7  11  16  22  28
+
+Minimum speed (km/h)  100.0  100.0  100.0  93.8  82.1
+
+Maximum v/c  0.30  0.48  0.70  0.90  1.00
+
+Maximum service flow rate (pc/h/ln)  700  1100  1600  2065  2300
+
+  FFS = 90 km/h
+
+Maximum density (pc/km/ln)  7  11  16  22  28
+
+Minimum speed (km/h)  90.0  90.0  90.0  89.1  80.4
+
+Maximum v/c  0.28  0.44  0.64  0.87  1.00
+
+Maximum service flow rate (pc/h/ln)  630  990  1440  1955  2250
+
+Note:
+The exact mathematical relationship between density and v/c has not always been maintained at LOS boundaries because of the
+use of rounded values. Density is the primary determinant of LOS. The speed criterion is the speed at maximum density for a
+given LOS.
+
+  23-3  Chapter 23 - Basic Freeway Segments
+  Methodology
+Highway Capacity Manual 2000
+
+  Failure, breakdown, congestion, and LOS F occur when queues begin to form on the
+  freeway. Density tends to increase sharply within the queue and may be considerably
+  higher than the maximum value of 28 pc/km/ln for LOS E. Further guidance on analysis
+  of basic freeway segments with densities greater than 28 pc/km/ln is provided in Chapter
+  22.
+
+  Exhibit 23-3 shows the relationship between speed, flow, and density for basic
+  freeway segments. It also shows the definition of the various LOS on the basis of density
+  boundary values.
+
+  EXHIBIT 23-3. SPEED-FLOW CURVES AND LOS FOR BASIC FREEWAY SEGMENTS
+
+  130  1300
+  Free-Flow Speed, FFS = 120 km/h  1450
+  1600
+  120  1750
+  110 110 km/h
+  100 100 km/h
+
+  90 90 km/h
+  Average Passenger-Car Speed, S (km/h)
+  Density = 780  LOS A  B  C  D  E
+  pc/km/ln
+  70
+
+  60 /ln
+  50  pc/km /ln
+  40 11 16 pc/kmpc/km/ln
+  30 22 82 pc/km/ln
+  20
+
+  10
+
+  00  400  800  1200  1600  2000  2400
+
+  Flow Rate, vp (pc/h/ln)
+  Note:
+  Capacity varies by free-flow speed. Capacity is 2400, 2350, 2300, and 2250 pc/h/ln at free-flow speeds of 120, 110, 100, and
+  90 km/h, respectively.
+  For 90 ≤ FFS ≤ 120 and for flow rate (vp )
+
+  (3100 - 15FFS) < vp ≤ (1800 + 5FFS),
+
+    2.6 
+  1   vp + 15FFS − 3100  
+  S = FFS − (23FFS − 1800)  
+   28   20FFS − 1300  
+    
+  For 90 ≤ FFS ≤ 120 and
+  vp ≤ (3100 - 15FFS),
+  S = FFS
+
+Measure or estimate the  DETERMINING FFS
+FFS
+  FFS is the mean speed of passenger cars measured during low to moderate flows (up
+Measurement of free-  to 1,300 pc/h/ln). For a specific segment of freeway, speeds are virtually constant in this
+flow speed  range of flow rates. Two methods can be used to determine the FFS of a basic freeway
+  segment: field measurement and estimation with guidelines provided in this chapter. The
+  field-measurement procedure is provided for users who prefer to gather these data
+  directly. However, field measurements are not required for application of the method. If
+  field-measured data are used, no adjustments are made to the free-flow speed.
+
+  The speed study should be conducted at a location that is representative of the
+  segment when flows and densities are low (flow rates may be up to 1,300 pc/h/ln).
+  Weekday off-peak hours are generally good times to observe low to moderate flow rates.
+  The speed study should measure the speeds of all passenger cars or use a systematic
+  sample (e.g., every 10th passenger car). The speed study should measure passenger-car
+  speeds across all lanes. A sample of at least 100 passenger-car speeds should be
+  obtained. Any speed measurement technique that has been found acceptable for other
+  types of traffic engineering speed studies may be used. Further guidance on the conduct
+
+Chapter 23 - Basic Freeway Segments  23-4
+Methodology
+  Highway Capacity Manual 2000
+
+of speed studies is found in standard traffic engineering publications, such as the Manual  Estimate free-flow speed if
+of Traffic Engineering Studies published by the Institute of Transportation Engineers.  measurement is not possible
+
+  The average of all passenger-car speeds measured in the field under low- to
+moderate-volume conditions can be used directly as the FFS of the freeway segment.
+This speed reflects the net effect of all conditions at the study site that influence speed,
+including those considered in this method (lane width, lateral clearance, interchange
+density, and number of lanes) as well as others such as speed limit and vertical and
+horizontal alignment. Speed data that include both passenger cars and heavy vehicles can
+be used for level terrain or moderate downgrades but should not be used for rolling or
+mountainous terrain.
+
+  If field measurement of FFS is not possible, FFS can be estimated indirectly on the
+basis of the physical characteristics of the freeway segment being studied. The physical
+characteristics include lane width, number of lanes, right-shoulder lateral clearance, and
+interchange density. Equation 23-1 is used to estimate the free-flow speed of a basic
+freeway segment:
+
+  FFS = BFFS – fLW – fLC – fN – fID  (23-1)
+
+where  = free-flow speed (km/h);
+  FFS  = base free-flow speed, 110 km/h (urban) or 120 km/h (rural);
+  = adjustment for lane width from Exhibit 23-4 (km/h);
+  BFFS  = adjustment for right-shoulder lateral clearance from Exhibit 23-5
+  fLW
+  fLC  (km/h);
+  = adjustment for number of lanes from Exhibit 23-6 (km/h); and
+  fN  = adjustment for interchange density from Exhibit 23-7 (km/h).
+  fID
+
+BFFS
+
+  Estimation of FFS for an existing or future freeway segment is accomplished by
+adjusting a base free-flow speed downward to reflect the influence of four factors: lane
+width, lateral clearance, number of lanes, and interchange density. Thus, the analyst is
+required to select an appropriate BFFS as a starting point.
+
+Adjustment for Lane Width
+
+  The base condition for lane width is 3.6 m or greater. When the average lane width
+across all lanes is less than 3.6 m, the base free-flow speed (e.g., 120 km/h) is reduced.
+Adjustments to reflect the effect of narrower average lane width are given in Exhibit
+23-4.
+
+  EXHIBIT 23-4.  ADJUSTMENTS FOR LANE WIDTH
+
+  Lane Width (m)  Reduction in Free-Flow Speed, fLW (km/h)
+  0.0
+  3.6  1.0
+  3.5  2.1
+  3.4  3.1
+  3.3  5.6
+  3.2  8.1
+  3.1  10.6
+  3.0
+
+Adjustment for Lateral Clearance
+
+  Base lateral clearance is 1.8 m or greater on the right side and 0.6 m or greater on the
+median or left side, measured from the edge of the paved shoulder to the nearest edge of
+
+  23-5  Chapter 23 - Basic Freeway Segments
+  Methodology
+Highway Capacity Manual 2000
+
+Adjustment for lateral  the traveled lane. When the right-shoulder lateral clearance is less than 1.8 m, the BFFS
+clearance reflects only  is reduced. Adjustments to reflect the effect of narrower right-shoulder lateral clearance
+the right-shoulder width  are given in Exhibit 23-5. No adjustments are available to reflect the effect of median
+  lateral clearance less than 0.6 m. Lateral clearance less than 0.6 m on either the right or
+  left side of a freeway is considered rare. Considerable judgment must be used in
+  determining whether objects or barriers along the right side of a freeway present a true
+  obstruction. Such obstructions may be continuous, such as retaining walls, concrete
+  barriers, or guardrails, or may be noncontinuous, such as light supports or bridge
+  abutments. In some cases, drivers may become accustomed to certain types of
+  obstructions, in which case their influence on traffic flow may be negligible.
+
+  EXHIBIT 23-5. ADJUSTMENTS FOR RIGHT-SHOULDER LATERAL CLEARANCE
+
+  Reduction in Free-Flow Speed, fLC (km/h)
+  Lanes in One Direction
+
+  Right-Shoulder  2  3  4  ≥ 5
+
+  Lateral Clearance (m)
+
+  ≥ 1.8  0.0  0.0  0.0  0.0
+
+  1.5  1.0  0.7  0.3  0.2
+
+  1.2  1.9  1.3  0.7  0.4
+
+  0.9  2.9  1.9  1.0  0.6
+
+  0.6  3.9  2.6  1.3  0.8
+
+  0.3  4.8  3.2  1.6  1.1
+
+  0.0  5.8  3.9  1.9  1.3
+
+Adjustment for number of  Adjustment for Number of Lanes
+lanes (not applicable to
+rural freeway segments)  Freeway segments with five or more lanes (in one direction) are considered as having
+  base conditions with respect to number of lanes. When fewer lanes are present, the BFFS
+A 10-km segment is used  is reduced. Exhibit 23-6 provides adjustments to reflect the effect of number of lanes on
+to determine interchange  BFFS. In determining number of lanes, only mainline lanes, both basic and auxiliary,
+density  should be considered. HOV lanes should not be included.
+
+  EXHIBIT 23-6. ADJUSTMENTS FOR NUMBER OF LANES
+
+  Number of Lanes (One Direction)  Reduction in Free-Flow Speed, fN (km/h)
+  0.0
+  ≥ 5  2.4
+  4  4.8
+  3  7.3
+  2
+
+  Note: For all rural freeway segments, fN is 0.0.
+
+  The adjustments in Exhibit 23-6 are based exclusively on data collected on urban and
+  suburban freeways and do not reflect conditions on rural freeways, which typically carry
+  two lanes in each direction. In using Equation 23-1 to estimate the FFS of a rural freeway
+  segment, the value of the adjustment for number of lanes, fN, should be 0.0.
+
+  Adjustment for Interchange Density
+
+  The base interchange density is 0.3 interchanges per kilometer, or 3.3-km
+  interchange spacing. Base free-flow speed is reduced when interchange density becomes
+  greater. Adjustments to reflect the effect of interchange density are provided in Exhibit
+  23-7. Interchange density is determined over a 10-km segment of freeway (5 km
+  upstream and 5 km downstream) in which the freeway segment is located. An
+  interchange is defined as having at least one on-ramp. Therefore, interchanges that have
+  only off-ramps would not be considered in determining interchange density. Interchanges
+
+Chapter 23 - Basic Freeway Segments  23-6
+Methodology
+  Highway Capacity Manual 2000
+
+considered should include typical interchanges with arterials or highways and major
+freeway-to-freeway interchanges.
+
+EXHIBIT 23-7. ADJUSTMENTS FOR INTERCHANGE DENSITY
+
+Interchanges per Kilometer  Reduction in Free-Flow Speed, fID (km/h)
+  0.0
+  ≤ 0.3  1.1
+  0.4  2.1
+  0.5  3.9
+  0.6  5.0
+  0.7  6.0
+  0.8  8.1
+  0.9  9.2
+  1.0  10.2
+  1.1  12.1
+  1.2
+
+DETERMINING FLOW RATE
+
+The hourly flow rate must reflect the influence of heavy vehicles, the temporal
+
+variation of traffic flow over an hour, and the characteristics of the driver population.
+
+These effects are reflected by adjusting hourly volumes or estimates, typically reported in
+
+vehicles per hour (veh/h), to arrive at an equivalent passenger-car flow rate in passenger
+
+cars per hour (pc/h). The equivalent passenger-car flow rate is calculated using the
+
+heavy-vehicle and peak-hour adjustment factors and is reported on a per lane basis
+
+(pc/h/ln). Equation 23-2 is used to calculate the equivalent passenger-car flow rate.
+
+  V  (23-2)
+  vp = PHF * N * fHV * fp
+
+where  Convert veh/h to pc/h using
+  vp = 15-min passenger-car equivalent flow rate (pc/h/ln),  heavy-vehicle, peak-hour, and
+  V = hourly volume (veh/h),  driver population factors
+
+  PHF = peak-hour factor,
+
+  N = number of lanes,
+  fHV = heavy-vehicle adjustment factor, and
+
+  fp = driver population factor.
+
+Peak-Hour Factor
+
+  The peak-hour factor (PHF) represents the variation in traffic flow within an hour.
+Observations of traffic flow consistently indicate that the flow rates found in the peak
+15-min period within an hour are not sustained throughout the entire hour. The
+application of the peak-hour factor in Equation 23-2 accounts for this phenomenon.
+
+  On freeways, typical PHFs range from 0.80 to 0.95. Lower PHFs are characteristic
+of rural freeways or off-peak conditions. Higher factors are typical of urban and
+suburban peak-hour conditions. Field data should be used, if possible, to develop PHFs
+representative of local conditions.
+
+Heavy-Vehicle Adjustments
+
+  Freeway traffic volumes that include a mix of vehicle types must be adjusted to an
+equivalent flow rate expressed in passenger cars per hour per lane. This adjustment is
+made using the factor fHV. Once the values of ET and ER are found, the adjustment
+factor, fHV, is determined by using Equation 23-3.
+
+  23-7  Chapter 23 - Basic Freeway Segments
+  Methodology
+Highway Capacity Manual 2000
+
+  1  (23-3)
+  fHV = 1 + PT (ET – 1) + PR (ER – 1)
+
+  where  = passenger-car equivalents for trucks/buses and recreational vehicles
+  ET, ER
+  (RVs) in the traffic stream, respectively;
+  PT, PR  = proportion of trucks/buses and RVs in the traffic stream, respectively;
+
+  fHV  and
+  = heavy-vehicle adjustment factor.
+
+  Adjustments for heavy vehicles in the traffic stream apply for three vehicle types:
+  trucks, buses, and RVs. There is no evidence to indicate distinct differences in
+  performance between trucks and buses on freeways, and therefore trucks and buses are
+  treated identically.
+
+  In many cases, trucks will be the only heavy-vehicle type present in the traffic stream
+  to a significant degree. Where the percentage of RVs is small compared with the
+  percentage of trucks, it is sometimes convenient to consider all heavy vehicles to be
+  trucks. It is generally acceptable to do this where the percentage of trucks and buses is at
+  least five times the percentage of RVs.
+
+  The factor fHV is found using a two-step process. First, the passenger-car equivalent
+  for each truck/bus and RV is found for the traffic and roadway conditions under study.
+  These equivalency values, ET and ER, represent the number of passenger cars that would
+  use the same amount of freeway capacity as one truck/bus or RV, respectively, under
+  prevailing roadway and traffic conditions. Second, using the values of ET and ER and the
+  proportion of each type of vehicle in the traffic stream (PT and PR), the adjustment factor
+  fHV is computed.
+
+  The effect of heavy vehicles on traffic flow depends on grade conditions as well as
+  traffic composition. Passenger-car equivalents can be selected for one of three
+  conditions: extended freeway segments, upgrades, and downgrades.
+
+Extended segment—use  Extended Freeway Segments
+when no one grade (3
+percent or greater) is  It is often appropriate to consider an extended length of freeway containing a number
+longer than 0.5 km. Use  of upgrades, downgrades, and level segments as a single uniform segment. This is
+when no one grade (less  possible where no one grade is long enough or steep enough to have a significant effect
+than 3 percent) is longer  on the operation of the overall segment. As a guideline, extended segment analysis can
+than 1 km.  be used where no one grade of 3 percent or greater is longer than 0.5 km or where no one
+  grade of less than 3 percent is longer than 1.0 km.
+
+  Specific Grades
+
+  Any grade less than 3 percent that is longer than 1.0 km or any grade of 3 percent or
+  more that is longer than 0.5 km must be analyzed as a separate segment because of its
+  significant effect on traffic flow.
+
+  Equivalents for Extended Freeway Segments
+
+  Whenever extended segment analysis is used, the terrain of the freeway must be
+  classified as level, rolling, or mountainous.
+
+  Level Terrain
+
+  Level terrain is any combination of grades and horizontal or vertical alignment that
+  permits heavy vehicles to maintain the same speed as passenger cars. This type of terrain
+  includes short grades of no more than 2 percent.
+
+  Rolling Terrain
+
+  Rolling terrain is any combination of grades and horizontal or vertical alignment that
+  causes heavy vehicles to reduce their speeds substantially below those of passenger cars
+
+Chapter 23 - Basic Freeway Segments  23-8
+Methodology
+  Highway Capacity Manual 2000
+
+but that does not cause heavy vehicles to operate at crawl speeds for any significant  Appendix A shows truck
+length of time or at frequent intervals.  performance curves
+
+  Crawl speed is the maximum sustained speed that trucks can maintain on an
+extended upgrade of a given percent. If any grade is long enough, trucks will be forced to
+decelerate to the crawl speed, which they will then be able to maintain for extended
+distances. Appendix A contains truck performance curves illustrating crawl speed and
+length of grade.
+
+Mountainous Terrain
+
+  Mountainous terrain is any combination of grades and horizontal or vertical
+alignment that causes heavy vehicles to operate at crawl speeds for significant distances
+or at frequent intervals.
+
+  Exhibit 23-8 gives passenger-car equivalents for extended freeway segments. Note
+that it is extremely difficult to have mountainous terrain as defined herein without
+violating the guidelines for using the general terrain methodology (i.e., having no grade
+greater than 3 percent longer than 0.5 km). To a lesser extent, the same statement may be
+made with respect to rolling terrain. The equivalence values shown in Exhibit 23-8 are
+most useful in the planning stage of analysis, when specific alignments are not known but
+approximate capacity computations are still needed.
+
+  EXHIBIT 23-8.  PASSENGER-CAR EQUIVALENTS ON EXTENDED FREEWAY SEGMENTS
+
+  Factor  Type of Terrain
+ET (trucks and buses)
+ER (RVs)  Level  Rolling  Mountainous
+
+  1.5  2.5  4.5
+
+  1.2  2.0  4.0
+
+Equivalents for Specific Grades  Establishing length of grade
+
+  Any freeway grade of more than 1.0 km for grades less than 3 percent or 0.5 km for
+grades of 3 percent or more should be considered as a separate segment. Analysis of such
+segments must consider the upgrade and downgrade conditions and whether the grade is a
+single and isolated grade of constant percentage or part of a series forming a composite
+grade.
+
+  Several studies have indicated that freeway truck populations have an average
+weight-to-power ratio of between 75 and 90 kg/kW. These procedures adopt passenger-
+car equivalents calibrated for a mix of trucks/buses in this range. RVs vary considerably
+in both type and characteristics. These vehicles include everything from cars with trailers
+to self-contained mobile campers. In addition to the variability of the vehicles, the
+drivers are not professionals, and their degree of skill in handling such vehicles varies.
+Typical weight-to-power ratios of RVs range from 20 to 40 kg/kW.
+
+Equivalents for Specific Upgrades
+
+  Exhibits 23-9 and 23-10 give values of ET and ER for upgrade segments. These
+factors vary with the percent of grade, length of grade, and the proportion of heavy
+vehicles in the traffic stream. The maximum values of ET and ER occur when there are
+only a few heavy vehicles. The equivalents decrease as the number of heavy vehicles
+increases, because these vehicles tend to form platoons and have operating characteristics
+that are more uniform as a group than those of passenger cars.
+
+  The length of grade is generally taken from a profile of the highway in question and
+typically includes the straight portion of the grade plus some portion of the vertical curves
+at the beginning and end of the grade. It is recommended that 25 percent of the length of
+the vertical curves at the beginning and end of the grade be included in the length of the
+grade. Where two consecutive upgrades are present, 50 percent of the length of the
+vertical curve between them is assigned to the length of each upgrade.
+
+  23-9  Chapter 23 - Basic Freeway Segments
+  Methodology
+

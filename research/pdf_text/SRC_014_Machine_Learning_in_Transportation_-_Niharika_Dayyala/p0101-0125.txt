@@ -1,0 +1,722 @@
+  P_Young_given_Mode(ageIndex) * 100);
+  fprintf('Posterior Probability of using Car given
+ Young (P(Car|Young)): %.2f%%\n', P_Mode_given_Age *
+
+  100);
+
+Output
+
+Prior Probability of using Car (P(Car)): 40.00%
+
+Conditional Probability of being Young given Car (P(Young|Car)):
+60.00%
+
+Posterior Probability of using Car given Young (P(Car|Young)):
+40.00%
+
+Figure 2.14: Example of application of Bayes’ theorem.
+
+→Figure 2.15 shows an example of a code to calculate the
+probability of a random sample lying above or between two specific
+values, when a set of random data is provided, using the z-score
+value (see the output at the bottom of the figure).
+  % Given data points
+
+  data = [6.3, 6.8, 6.5, 6.0, 6.9, 6.1, 7.1, 6.5];
+
+  % Calculate the mean and standard deviation of the data
+  mu = mean(data);
+
+  sigma = std(data);
+
+  % Calculate the Z-score for 6.6
+
+  z_score = (6.6 - mu) / sigma;
+
+  % Probability of a random sample lying above 6.6
+
+  probability_above = 1 - normcdf(z_score);
+ fprintf('Probability of a random sample lying above
+
+  6.6: %.4f\n', probability_above);
+
+  %% Calculate the Z-scores for 6.2 and 6.4
+
+  z_score_6_2 = (6.2 - mu) / sigma;
+  z_score_6_4 = (6.4 - mu) / sigma;
+
+  % Probability of a random sample falling between 6.2 and 6.4
+
+  probability_between = normcdf(z_score_6_4) -
+  normcdf(z_score_6_2);
+
+  fprintf('Probability of a random sample falling
+  between 6.2 and 6.4: %.4f\n', probability_between);
+
+  %% Calculate the Z-score for 6.6
+  z_score_6_6 = (6.6 - mu) / (sigma / sqrt(3)); %
+
+  Standard error of the mean (SEM) for three samples
+  % Probability that the average of three samples will fall above 6.6
+
+  probability_above_means = 1 - normcdf(z_score_6_6);
+  fprintf('Probability that the average of three
+  samples will fall above 6.6: %.4f\n',
+  probability_above_means);
+
+Output
+
+Probability of a random sample lying above 6.6: 0.4234
+
+Probability of a random sample falling between 6.2 and 6.4: 0.1725
+Probability that the average of three samples will fall above 6.6:
+0.3690
+
+Figure 2.15: Example MATLAB code for the use of z-score.
+
+→Figures 2.16 and →2.17 show an example of generating boxplots
+and detecting outliers from a set of data and the output.
+  % Given data points
+
+  data = [2.54, 12.7, 1.27, 5.08, 5.33, 6.35, 7.62,
+  3.81, 2.54, 5.59, 4.83, 11.43, 2.79, 5.08];
+
+  % Plot a boxplot to visualize the data and identify outliers
+
+  figure;
+  boxplot(data);
+  title('Boxplot of Data');
+
+  % Find outliers using the interquartile range (IQR) method
+  Q1 = prctile(data, 25); % 1st quartile (25th percentile)
+  Q3 = prctile(data, 75); % 3rd quartile (75th percentile)
+
+  IQR = Q3 - Q1; % Interquartile range
+  % Define outlier boundaries
+
+  lower_bound = Q1 - 1.5 * IQR;
+  upper_bound = Q3 + 1.5 * IQR;
+
+  % Identify outliers
+
+  outliers = data(data < lower_bound | data >
+  upper_bound);
+
+  % Display outliers
+
+  fprintf('Outliers: ');
+  disp(outliers);
+
+  % Highlight outliers on the boxplot
+
+  hold on;
+ plot(find(data < lower_bound | data > upper_bound),
+data(data < lower_bound | data > upper_bound), 'ro',
+
+  'MarkerSize', 10);
+  hold off;
+
+Figure 2.16: MATLAB code for the detection and plotting of
+outliers.
+→Figures 2.18 and →2.19 show an example of conducting analysis
+of variance (ANOVA) and Tukey’s honestly significant difference
+(HSD) test from a set of data and the output.
+
+Figure 2.17: Boxplot and outlier.
+% Draindown values of asphalt for various Stone Matrix % asphalt with
+
+different types of additives
+
+y = [1.78, 0.75, 1.3, ... % Case1
+
+1.39, 0.47, 0.82, ... % Case2
+
+0.29, 0.3, 0.3, ...  % Case3
+
+0.29, 0.23, 0.24, ... % Case4
+
+0.05, 0.04, 0.08];  % Case5
+
+% Grouping variable
+
+group = repelem({'No Additive', 'Fiber A 0.1%',
+
+'Fiber A 0.3%', 'Fiber B 0.1%', 'Fiber B 0.3%'}, 3);
+
+%%
+
+% Perform one-way ANOVA
+
+[p_anova, tbl, stats] = anova1(y, group, 'off');
+
+%%
+
+disp('ANOVA Table:');
+
+disp(tbl);
+
+disp(['P-value for ANOVA: ', num2str(p_anova)]);
+
+%%
+
+if p_anova < 0.05
+
+comparison = multcompare(stats, 'CType',
+
+'tukey-kramer');
+
+disp('Tukey''s HSD (Honestly Significant
+
+Difference) Test:');
+
+disp(comparison);
+
+else
+
+disp('No significant differences between
+
+groups.');
+
+end
+
+Figure 2.18: MATLAB code for ANOVA and Tukey’s HSD test.
+Figure 2.19: ANOVA and Tukey’s HSD test output.
+
+→Figures 2.20 and →2.21 show an example to conduct regression
+analysis and plot the residuals and the output. Suppose that it is
+necessary to determine whether there is a relationship between the
+percentage of natural sand (for example, river sand with relatively
+rounded aggregates) in the total fine aggregates of the mix and rut
+depths observed from wheel tracking tests. An experiment
+involving four levels of sand percentage, 15%, 20%, 25%, and 30%,
+was conducted. For each percentage of sand, five mixes were
+prepared and tested with a wheel tracking test. The data is provided
+as sand content and rut depth data in the code.
+  #x0025; Define the x and y values
+
+sand_content = [15, 15, 15, 15, 20, 20, 20, 20, 25,
+  25, 25, 25, 30, 30, 30, 30];
+
+rut_depth = [7, 7, 15, 11, 12, 17, 12, 18, 14, 18,
+  18, 19, 19, 25, 22, 19];
+
+  % Create a table with x and y values
+
+  data_table = table(sand_content', rut_depth',
+  'VariableNames', {'sand_content', 'rut_depth'});
+
+  % Fit linear regression model (y = b0 + b1*x)
+
+  model = fitlm(data_table, 'rut_depth ~
+  sand_content');
+
+  % Extract R-squared (R2) value
+
+  R_squared = model.Rsquared.Ordinary;
+fprintf('R-squared (R^2) Value: %.4f\n', R_squared);
+
+  % Plot the data points and regression line
+
+  figure;
+  subplot(2,1,1);
+  scatter(sand_content, rut_depth, 'filled');
+
+  hold on;
+
+  % Plot the regression line
+
+  x_range = [min(sand_content), max(sand_content)];
+  y_range = model.Coefficients.Estimate(1) +
+  model.Coefficients.Estimate(2) * x_range;
+
+  plot(x_range, y_range, 'r--', 'LineWidth', 2);
+  xlabel('Natural Sand Content, %');
+  ylabel('Rut Depth, mm');
+
+  % title('Linear Regression: Effect of x on y');
+  % Add legend with custom entries
+
+  % legend('Data Points', 'Location', 'northwest');
+
+legend_str = sprintf('Regression Line (y = %.2fx +
+  %.2f)\nR^2 = %.4f', ...
+
+  model.Coefficients.Estimate(2),
+  model.Coefficients.Estimate(1), R_squared);
+  annotation('textbox', [0.2, 0.6, 0.6, 0.15],
+  'String', legend_str, ...
+  'EdgeColor', 'none', 'HorizontalAlignment',
+
+  'center', 'FontSize', 10);
+  grid on;
+  hold off;
+
+  % Calculate standardized residuals
+
+  standardized_residuals = model.Residuals.Raw /
+  std(model.Residuals.Raw);
+
+  % Plot standardized residuals versus sand content
+
+  subplot(2,1,2);
+  scatter(sand_content, standardized_residuals,
+
+  'filled');
+  xlabel('Natural Sand Content, %');
+  ylabel('Standardized Residuals');
+  title('Standardized Residuals vs. Sand Content');
+
+  grid on;
+
+Figure 2.20: MATLAB code for linear regression.
+Figure 2.21: Plots of data with regression line and residuals.
+OceanofPDF.com
+Chapter 3  Predictive performance
+evaluation
+
+3.1  Accuracy for the prediction of
+numerical values
+
+3.1.1  Mean squared error (MSE)
+
+Mean squared error (MSE) is a common metric used to measure
+the average squared difference between the predicted values and
+the actual values. It is calculated as follows:
+
+  n
+
+  1  2
+
+MSE =  n ∑ (yi − yˆi )
+
+  i=1
+
+where n is the number of data points, yi​is the actual (observed)
+value for the ith data point, and yˆi ​is the predicted value for the
+
+ith data point.
+  A lower MSE indicates better predictive performance:
+
+MATLAB CODE
+mse = mean((y_actual - y_predicted).^2);
+
+3.1.2  R2 (coefficient of determination)
+
+R2 is a statistical measure that represents the proportion of the
+variance in the dependent variable that is predictable from the
+independent variable(s). It is calculated as the ratio of the
+explained variance to the total variance. The formula for R2 is
+given by
+
+R2 = 1 −  n
+  2
+
+  mm ∑ (yi −yˆi )
+
+  i=1
+
+  n
+  2
+
+  mm ∑ (yi −y )
+
+  i=1
+
+where n is the number of data points, yi is the actual (observed)
+value for the ith data point, yˆi is the predicted value for the ith
+data point, and y is the mean of the actual values.
+
+  A higher R2 value (closer to 1) suggests a better fit of the
+
+model to the data:
+
+MATLAB code
+
+rsquared = 1 - sum((y_actual - y_predicted).^2) /
+sum((y_actual – mean(y_actual)).^2);
+
+Example: This example (→Figure 3.1), reads the data from the
+‘dataregression’ file splits it into training and testing sets, trains a
+linear regression model using the training set, predicts on the test
+set, and then evaluates the model using MSE and R2. Finally, it
+plots the actual versus predicted values to visualize the model’s
+performance:
+  % Load data from Excel file
+
+  filename = 'dataregression.xlsx';
+  dataTable = readtable(filename);
+
+  % Extract X and y data from the table
+X = dataTable{:, 1}; % Assuming X data is in the first column
+
+  y = dataTable{:, 2}; % Assuming y data is in the second
+  column
+
+  % Split data into training and testing sets
+
+  trainFraction = 0.8;
+  trainSize = round(trainFraction ✶ length(X));
+
+  X_train = X(1:trainSize);
+  y_train = y(1:trainSize);
+  X_test = X(trainSize+1:end);
+  y_test = y(trainSize+1:end);
+
+  % Train linear regression model
+
+  mdl = fitlm(X_train, y_train);
+
+  % Predict on the test set
+
+  y_pred = predict(mdl, X_test);
+
+  % Evaluate model accuracy using Mean Squared Error (MSE)
+
+  mse = mean((y_test - y_pred).^2);
+ fprintf('Mean Squared Error (MSE): %.4f\n', mse);
+
+  % Evaluate model accuracy using R-squared
+
+  rsquared = 1 - sum((y_test - y_pred).^2) /
+  sum((y_test - mean(y_test)).^2);
+
+  fprintf('R-squared: %.4f\n', rsquared);
+
+  % Plot the actual vs. predicted values
+
+  figure;
+  scatter(X_test, y_test, 'b', 'filled',
+
+  'DisplayName', 'Actual');
+  hold on;
+
+  plot(X_test, y_pred, 'r', 'LineWidth', 2,
+  'DisplayName', 'Predicted');
+  xlabel('X');
+  ylabel('y');
+  title('Actual vs. Predicted Values');
+
+  legend('show');
+  grid on;
+
+Figure 3.1: MATLAB code for linear regression with plots.
+
+  % Add R-squared value to the plot
+
+text(min(X_test), max(y_test), sprintf('R^2: %.4f',
+  rsquared), ...
+
+  'FontSize', 12, 'BackgroundColor', 'white',
+  'EdgeColor', 'black', 'Margin', 5);
+
+  hold off;
+
+Figure 3.1: (continued).
+Figure 3.2: Output plot showing X and Y values with the predicted
+linear regression line.
+
+3.2  Accuracy for classification
+
+3.2.1  Confusion matrix
+
+A confusion matrix is a table that summarizes the performance of
+a classification algorithm. It has four entries:
+
+  True positive (TP): Instances correctly predicted as positive.
+  True negative (TN): Instances correctly predicted as
+  negative.
+False positive (FP): Instances incorrectly predicted as positive
+(type I error).
+False negative (FN): Instances incorrectly predicted as
+negative (type II error).
+
+3.2.2  Accuracy
+
+Accuracy is a measure of the overall correctness of the model and
+is calculated as the ratio of correctly predicted instances to the
+total instances:
+
+Accuracy =  TP + TN
+  TP + TN + FP + FN
+
+3.2.3  Precision
+
+Precision is the ratio of correctly predicted positive observations to
+the total predicted positives. It measures the accuracy of the
+positive predictions:
+
+  Precision =  TP
+  TP + FP
+
+3.2.4  Recall (sensitivity or true positive rate)
+
+Recall is the ratio of correctly predicted positive observations to
+the total actual positives. It measures the ability of the model to
+capture all positive instances:
+
+  Precision =  TP
+  TP + FP
+
+3.2.5  F1 score
+
+The F1 score is the harmonic mean of precision and recall. It
+provides a balance between precision and recall and is particularly
+useful when the class distribution is imbalanced:
+F 1 score = 2 ×  Precision ×Recall
+  Precision+Recall
+
+Example: →Figure 3.3 is an example using a simple classification
+algorithm like a support vector machine (SVM). In this example, we
+will generate synthetic data, train a classification model, and then
+evaluate its accuracy using metrics such as accuracy, precision,
+recall, and the confusion matrix (→Figure 3.4). We generate
+synthetic data with two features and perform binary classification
+based on whether the data points are outside a circle with a radius
+of 2 from the origin. We then split the data into training and
+testing sets, train an SVM classifier, predict the test set, and
+evaluate the model using accuracy, precision, recall, F1 score, and
+the confusion matrix:
+  % Load data from Excel file
+
+  filename = 'datasvm.xlsx';
+
+  dataTable = readtable(filename);
+
+  % Extract data for each class from specific columns
+  % Class 1
+
+  class1X = dataTable{:, 1}; % Column 1
+  class1Y = dataTable{:, 2}; % Column 2
+
+  % Class 2
+  class2X = dataTable{:, 3}; % Column 3
+  class2Y = dataTable{:, 4}; % Column 4
+
+  % Combine the data into a single dataset
+
+  X = [class1X; class2X];
+  Y = [ones(length(class1X), 1); 2 ✶
+
+ones(length(class2X), 1)]; % Labels: 1 for Class 1, 2 for Class
+  2
+
+  % Split data into training and testing sets
+
+  trainFraction = 0.8;
+  trainSize = round(trainFraction ✶ length(X));
+
+  X_train = X(1:trainSize, :);
+
+  y_train = y(1:trainSize);
+
+  X_test = X(trainSize+1:end, :);
+
+  y_test = y(trainSize+1:end);
+
+  % Train a Support Vector Machine (SVM) classifier
+
+  svmModel = fitcsvm(X_train, y_train,
+
+  'KernelFunction', 'linear');
+
+  % Predict on the test set
+
+  y_pred = predict(svmModel, X_test);
+
+  % Evaluate model accuracy
+
+  accuracy = sum(y_pred == y_test) / length(y_test);
+
+  fprintf('Accuracy: %.4f\n', accuracy);
+
+  % Evaluate model precision, recall, and F1-score
+
+  confMat = confusionmat(y_test, y_pred);
+  precision = confMat(2, 2) / (confMat(2, 2) +
+  confMat(1, 2));
+
+recall = confMat(2, 2) / (confMat(2, 2) + confMat(2,
+  1));
+
+  f1Score = 2 ✶ (precision ✶ recall) / (precision +
+  recall);
+
+  fprintf('Precision: %.4f\n', precision);
+  fprintf('Recall: %.4f\n', recall);
+
+  fprintf('F1-Score: %.4f\n', f1Score);
+
+Figure 3.3: MATLAB code for an SVM classification model with
+confusion matrix.
+
+  % Display confusion matrix and metrics in a single plot
+
+  figure;
+
+  % Confusion matrix subplot
+
+  subplot(1, 2, 1);
+  confusionchart(y_test, y_pred, 'RowSummary', 'row-
+ normalized', 'ColumnSummary', 'column-normalized');
+
+  title('Confusion Matrix');
+  % Metrics subplot
+  subplot(1, 2, 2);
+
+  bar([accuracy, precision, recall, f1Score],
+  'FaceColor', [0.2 0.4 0.6]);
+  xticks(1:4);
+
+xticklabels({'Accuracy', 'Precision', 'Recall', 'F1-
+  Score'});
+
+  ylabel('Value');
+  title('Performance Metrics');
+  sgtitle('Model Evaluation');
+
+Figure 3.3: (continued).
+Figure 3.4: Confusion matrix and accuracy results of classification.
+
+The cross-entropy method is used to calculate the loss or error in
+classification problems, as follows:
+
+  1  output size
+
+Loss = −  output size  ∑  i=1  yi ⋅ log yˆi + (1 − yi ) ⋅ log(1 − yˆi )
+
+where y is the actual data and yˆi is the predicted data.
+OceanofPDF.com
+Chapter 4  Supervised learning models
+
+In this chapter, you will learn in detail about the supervised learning
+algorithms: K-nearest neighbors (KNN), Naïve Bayes model, support vector
+machine (SVM), decision tree, multiple linear regression, and neural network.
+You will also learn to apply the KNN method using R and MATLAB, and the
+remaining methods will be applied using MATLAB.
+
+4.1  K-nearest neighbors
+
+The KNN method is a popular supervised data mining technique used for both
+classification and numerical prediction, being more popular with classification.
+It is a data mining technique that predicts the outcome of a target variable by
+identifying the most similar K number of observations in the dataset. In a
+classification problem, the predominant class of the target variable among the
+KNN is assigned as the predicted value for a new record. In the case of
+numerical prediction, the average of the target variable of the most similar K
+observations is assigned as the predicted value for a new record. KNN method
+does not have any assumptions about the target variable or the relationship
+between the target and predictor variables. It is the simplest yet most
+frequently used data mining technique.
+
+  The major components of the KNN algorithm are the similarity measure
+between two observations and the number of KNN to be used for prediction
+purposes. The similarity measure is used to identify the nearest neighbors. It is
+the distance between the observations that is calculated using Euclidean
+distance. Since variables may be measured on different scales, it is good
+practice to standardize the variables to bring them to a comparable scale prior
+to the analysis. Standardizing the variables ensures that one variable does not
+dominate the other variables due to differences in scales. The KNN algorithm
+identifies the number K such that the predictive accuracy is the maximum. The
+K value can range between 1 and n, where n is the number of observations. A
+very low or very high value of K may lead to imperfect predictions. The value
+for K = 1 makes the predictions highly sensitive to one closest observation.
+Similarly, a very high value of K will simply assign the majority class of the
+dataset for all the new records. Hence, the analysis is repeated with different K
+values to identify the best K.
+4.1.1  Classification with KNN in R
+
+In a classification problem, the dataset is split into two partitions: the training
+and the testing datasets. The training dataset with the target variable (with
+classes more than or equal to 2) and the set of predictors will be used to
+identify the best K, which achieves maximum predictive accuracy. The testing
+dataset will give a more optimistic predictive accuracy of the selected K. The
+training dataset will then be used to predict the unknown classes of the new
+records using the majority outcome rule, where the majority class of the KNN
+is assigned as the predicted value of the new record.
+
+  The figure below (→Figure 4.1) explains the KNN with an example. Variable
+1 and Variable 2 are represented on the x- and y-axes, respectively, and the
+outcome variable is identified by the values in the bubbles. When K = 3, the
+closest three neighbors of a new record (identified by the black dot) that need
+to be predicted have a majority outcome as N with one Y and two N values.
+Based on the majority rule, the outcome of the new record is identified as N.
+Figure 4.1: Classification example with KNN.
+
+We will use the KNN method on the traffic safety dataset (→Table 4.1) for 51
+states in the United States (→NHTSA, Traffic Safety Facts 2021) to predict if the
+fatality rate is high (number of fatalities > average fatalities) or low (number of
+fatalities ≤ average fatalities). We first partition the dataset into training and
+testing datasets. To identify the best K used, we run the KNN algorithm on the
+training dataset with the binary outcome variable as “Fatalities,” indicating 1
+for high (Total Killed > 841) and 0 for low fatalities (Total Killed ≤ 841). The
+predictor variables are population, number of licensed drivers, number of
+registered vehicles, and vehicle miles traveled.
+Table 4.1: Traffic safety dataset.
+
+State  Total  Fatalities  Population  Licenseddrivers  Registeredvehicles  Vehicle
+  killed  miles
+Alabama  1  5,039,877  4,061,837  5,463,966
+Alaska  983  0  732,673  519,288  686,142  71,892
+Arizona  67  1  7,276,316  5,795,216  6,064,542  5,752
+Arkansas  1,180  0  3,025,891  2,306,921  3,555,142  73,760
+California  693  1  39,237,836  27,112,595  31,349,073  38,427
+Colorado  4,285  0  5,812,069  4,411,587  5,096,394  310,823
+Connecticut  691  0  3,605,597  2,606,396  2,756,485  53,840
+  298  28,989
+
+Before applying the data mining techniques to the dataset, data preprocessing
+steps such as normalizing the numerical variables and converting the outcome
+variable to factors to treat the binary variable as categorical are done. The data
+is standardized using the scale() function. The as.factor() function converts the
+categorical variable “Fatalities” into a factor. Applying the preprocessing steps
+with R code is shown in R Code Snippet 1. Note that the statements in the R
+code snippets that start with # are comments to explain the R code.
+
+  library(openxlsx)
+
+  myData<-read.xlsx("Traffic Safety table.xlsx", 1)
+
+  #scaling the variables other than the outcome
+
+  myData1<- scale(myData[4:7])
+
+  #append outcome variable from original dataframe to scaled dataframe
+
+  myData1<- data.frame(myData1, myData$Fatalities)
+
+  # renaming the outcome variable
+
+  colnames(myData1)[5] <- 'Fatalities'
+
+  myData1$Fatalities<- as.factor(myData1$Fatalities)
+
+  View(myData1)
+R Code Snippet 1
+  The preprocessed data is shown in Output for R code Snippet 1
+
+  Output for R Code Snippet 1
+  After data preprocessing, the dataset is split into training and testing
+partitions with 80% of records in training and the remaining 20% of records in
+testing partitions as shown in R Code Snippet 2. Selecting the records for
+training and testing datasets is done on a random basis. The number used in
+the set.seed() function will determine the randomness in selecting the
+partitions. Using the same number will reproduce the partitions and hence the
+results. We use the createDataPartition() function from the “caret” package to
+create an index for selecting the training data and testing data.
+
+  #creating partitions training and testing
+  set.seed(1)
+  library(caret)
+  myIndex<- createDataPartition(myData1$Fatalities, p=0.8, list=FALSE)
+  trainSet <- myData1[myIndex,] #create training data
+  testSet <- myData1[-myIndex,] #Create testing data
+
+R Code Snippet 2
+  To identify the best K, the k-fold cross-validation method is used on the
+
+training dataset. In k-fold cross validation, the training dataset is split into k
+subsets and the hold out method is performed k number of times, also called
+“iterations.” In each iteration, one subset is left out as the testing set, and the
+remaining k−1 subsets are combined to form the training dataset. The KNN
+algorithm is run for the k iterations with different values of KNN in each
+

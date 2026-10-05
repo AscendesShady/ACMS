@@ -1,0 +1,1477 @@
+  Highway Capacity Manual 2000
+
+  I. INTRODUCTION  Background and concepts for
+  this chapter are in Chapter 13
+  Freeway facilities are composed of connected segments consisting of basic freeway
+segments, ramp segments, and weaving segments. When several of these segments occur
+in sequence, they form a freeway facility. A freeway facility is the fundamental unit of
+analysis in this chapter. A freeway facility is analyzed by direction, and the independent
+analysis of both directions constitutes the analysis of a two-direction freeway facility.
+The reader is referred to Chapter 13 for discussion of freeway concepts.
+
+SCOPE OF METHODOLOGY
+
+  In Chapters 23, 24, and 25, freeway components are addressed as isolated segments
+that are assumed to have no significant interaction. A procedure that integrates the
+methodologies of Chapters 23, 24, and 25 is provided in this chapter, subject to several
+limitations. The freeway facility has spatial and time dimensions subject to defined
+limits. The spatial dimension consists of continuous connected segments of defined
+length, type, and width. The segments could include basic freeway segments, on-ramp
+junction segments, off-ramp junction segments, or weaving area segments. Free-flow
+conditions must exist at the upstream and downstream ends of the freeway facility. The
+maximum length of a freeway facility that should be considered is on the order of 15 to
+20 km, so that traffic enters and leaves the freeway in the same time interval.
+
+  The temporal dimension consists of connected time intervals. Undersaturated
+conditions must occur in the first and last time interval. The analysis period to be
+considered is divided into 15-min time intervals. The material developed for this chapter
+resulted from research sponsored by the Federal Highway Administration (1).
+
+LIMITATIONS TO METHODOLOGY
+
+  A complete discussion of freeway control systems or even the analysis of the
+performance alternatives is beyond the scope of this chapter. The reader should consult
+references identified in a later section of this chapter. The methodology does not account
+for delays caused by vehicles using alternate routes or vehicles leaving before or after the
+study time duration.
+
+  Certain freeway traffic conditions cannot easily be analyzed by the methodology.
+Multiple overlapping bottlenecks are an example. Therefore, other tools may be more
+appropriate for specific applications beyond the capabilities of the methodology. Refer to
+Part V of this manual for a discussion of simulation and other models.
+
+  User demand responses such as spatial, temporal, modal, or total demand responses
+caused by traffic management strategies are not automatically incorporated within the
+methodology. On viewing the facility traffic performance results, the analyst can modify
+the demand input manually to analyze the effect of user demand responses or traffic
+growth. The accuracy of the results depends on the accuracy of the estimation of the user
+demand responses.
+
+  The freeway facility methodology is limited to the extent that it can accommodate
+demand in excess of capacity. The procedures address only local oversaturated flow
+situations, not systemwide oversaturated flow conditions.
+
+  The completeness of the analysis will be limited if freeway segments in the first time
+interval, the last time interval, and the first freeway segment do not all have demand-to-
+capacity ratios less than 1.00. The rationale for these limitations is discussed in the
+section labeled demand-capacity ratio.
+
+  The analyst can, given enough time, analyze a completely undersaturated time-space
+domain manually, although this is difficult. It is not expected that analysts will ever
+manually analyze a time-space domain that includes oversaturation. For heavily
+congested freeway facilities with interacting bottleneck queues, the analyst may wish to
+review Part V of this manual before undertaking this methodology.
+
+22-1  Chapter 22 - Freeway Facilities
+  Introduction
+Highway Capacity Manual 2000
+
+  II. METHODOLOGY
+  Exhibit 22-1 summarizes the methodology for analyzing freeway facilities. The
+  methodology integrates the basic freeway segment, ramp segment, and weaving segment
+  procedures into a freeway facility analysis. The methodology adjusts vehicle speeds
+  appropriately to account for effects in adjacent segments. The methodology can analyze
+  freeway traffic management strategies only in cases for which 15-min time intervals are
+  appropriate and for which reliable data for capacity and demand estimates exist.
+
+  EXHIBIT 22-1. FREEWAY FACILITY METHODOLOGY
+  Input Data
+  - Demand
+  - Geometric data
+  - Time-space domain
+
+  Adjust demand according to spatial
+  and time units established
+
+  Compute segment capacities
+  according to Chapters 23, 24,
+
+  and 25 methodologies
+
+  Adjust segment capacities
+
+  Compute demand-capacity ratios
+
+  Undersaturated  Oversaturated
+
+  Compute segment service  Compute oversaturated
+  measures and measures  segment service measures and
+
+  of effectiveness  measures of effectiveness
+
+Chapter 22 - Freeway Facilities  Compute freeway facility
+Methodology  measures of effectiveness by
+
+  time interval
+  22-2
+  Highway Capacity Manual 2000
+
+  The effect of various demand management techniques can be assessed by varying the  Single-lane HOV facilities can
+demand associated with the technique. The methodology is limited to applications for  be analyzed only when flow
+which data are available to quantify the effects of demand management and whose  rates are less than 1,600
+complexity does not exceed the capabilities of the methodology. This is especially true  veh/h/ln
+when periods of oversaturation occur. The analysis should begin and end with no portion
+of the freeway having oversaturation.  Systemwide measures can be
+  generated, but no LOS
+  Freeway control is frequently motivated by operational problems such as one or  guidelines are given
+more bottlenecks with significant mainline congestion. Ramp metering is a strategy to
+reduce the amount of congestion by limiting demand. The effectiveness of a particular
+ramp-metering strategy in improving freeway performance can be analyzed by the
+methodology. The ability of the methodology to assess the total effects of the strategy
+depends on assumptions related to where excess demand would relocate. If the demand
+is diverted to another time or location within the analysis period, effects can be accounted
+for.
+
+  The use of high-occupancy vehicle (HOV) lanes on freeways raises the issues of the
+operating characteristics of such lanes and the effects on the remainder of the freeway.
+The issues are complex because HOV lanes come in many forms including separated
+facilities, reserved freeway lanes (concurrent flow and contraflow lanes), and priority
+access (ramp meter bypass lanes). The methodology addresses separated facilities but not
+the interactions between the HOV lane and the mixed-flow lanes.
+
+  There are a number of data requirements for conducting an analysis, and some
+applications are beyond the capabilities of the methodology. The issue of capacity must
+be addressed first. This is a difficult issue because data are limited and by design most
+HOV freeway facilities operate below capacity to maintain a high level of service.
+Single-lane HOV facilities generally have different speed characteristics because of the
+lack of passing opportunities. Therefore, it is recommended that single-lane analyses be
+conducted only when HOV lane demand is less than 1,600 veh/h/ln.
+
+  The methodology for analyzing freeway facilities is comprehensive in that it interacts
+with three other chapters of this manual and incorporates both undersaturated and
+oversaturated flow analysis capabilities. In this portion of the chapter an overview of the
+methodology is given. The time-space domain of a freeway facility is described with
+particular attention to facility geometrics, facility traffic demands, demand-capacity
+analysis, and optional traffic management strategies. Service measures, levels of service
+(LOS), and performance measures are also discussed.
+
+  The purpose of this section is to describe the computational modules of the
+methodology. To simplify the presentation, the focus is on the function of and rationale
+for each module. An expanded version of this section containing all the supporting
+analytical models and equations is presented in Appendix A.
+
+PERFORMANCE MEASURES
+
+  Facilitywide service measures and LOS designations are not incorporated in this
+chapter, as they are in other chapters in Part III of this manual. This is due to the
+complexity of assessing freeway facilities when oversaturated flow conditions are
+encountered. A freeway facility may contain both uncongested and heavily congested
+segments, and any average service measure for the entire length is likely to be misleading
+and difficult to classify by LOS.
+
+  The methodology provides estimates of speed, travel time, density, flow rate (vehicle
+and person), volume-to-capacity ratio, and congestion status for each cell in the time-
+space domain. From these estimates, vehicle hours (person-hours) of travel as well as
+vehicle kilometers (person kilometers) of travel for each cell can be determined.
+
+  The previously discussed traffic performance measures can be aggregated by the
+analyst over the length of the freeway facility, over the study time duration, and over the
+entire time-space domain.
+
+22-3  Chapter 22 - Freeway Facilities
+  Methodology
+Highway Capacity Manual 2000
+
+  SEGMENTING FREEWAY FACILITIES
+  The time-space domain of a freeway facility is used to provide an overview of the
+
+  methodology. A typical time-space domain is shown in Exhibit 22-2.
+  EXHIBIT 22-2. TIME-SPACE DOMAIN OF A FREEWAY FACILITY
+
+  Sec 01  Sec 02  Sec 03 Sec 04 Sec 05 Sec 06 Sec 07 Sec 08
+  1  Direction of Travel
+  Time Interval  2
+  3
+  4
+  5
+  6
+  7
+  8
+
+Freeway facilities up to  The horizontal scale indicates the distance along the freeway facility. Traffic moves
+20 km long can be  from left to right, and the scale is divided into freeway sections. A freeway section
+analyzed with the  boundary occurs wherever there is a change in traffic demand (i.e., on-ramp or off-ramp)
+methodology  or a change in segment capacity (i.e., lane drop or lane addition). Freeway facilities up to
+  15 to 20 km long can be analyzed by this methodology. Estimates of traffic demand on
+  longer freeway facilities cannot be reliably developed with the methodology, because the
+  travel time between some origins and destinations will exceed the standard time interval
+  (15 min).
+
+  The vertical scale indicates the study time duration. Time extends down the time-
+  space domain, and the scale is divided into 15-min intervals. The study time duration can
+  include any number of contiguous 15-min intervals. The number of section-based cells in
+  the time-space domain is the product of the number of sections and the number of 15-min
+  intervals. In Exhibit 22-2 there are 64 section-based cells.
+
+  The boundary conditions of the time-space domain are extremely important since the
+  time-space domain will be analyzed as an independent freeway facility having no
+  interactions with the upstream or downstream portions of any connecting facilities
+  (including freeways and surface streets) or with time periods before or after the study
+  time duration. This means that no congestion should occur along the four boundaries of
+  the time-space domain. The cells located along the four boundaries should all have
+  demands less than capacities and should contain undersaturated flow conditions.
+
+  Exhibit 22-2 shows the division of the freeway facility into connected freeway
+  sections. However, to use the predictions of capacity and performance measures from the
+  basic freeway, ramp, and weaving segment chapters, the sections must be further divided
+  into segments. Each section contains one or more segments depending on the freeway
+  geometrics.
+
+  First, any weaving segment, as defined in Chapter 24, Freeway Weaving, is labeled
+  as a weaving segment. Next, any on-ramp or off-ramp segment, as defined in Chapter 25,
+  Ramps and Ramp Junctions, is labeled as an on-ramp or off-ramp segment. The
+  remaining portions of the freeway facility are labeled as basic freeway segments (Chapter
+  23).
+
+Chapter 22 - Freeway Facilities  22-4
+Methodology
+  Highway Capacity Manual 2000
+
+  Special labeling of segments may be required under certain circumstances. For  Guidelines for handling long
+example, a long freeway section between an on-ramp and an off-ramp can be subdivided  and short sections
+into three segments: on-ramp, basic freeway, and off-ramp. A complication may occur
+when a short freeway section contains an on-ramp followed by an off-ramp without an
+auxiliary lane between the two ramps. The problem arises if the length of the freeway
+section is insufficient to meet the requirements of the sum of the lengths of the on-ramp
+segment and the off-ramp segment as stated in Chapter 25. In that case, the overlapping
+freeway segment is analyzed both as an on-ramp segment and an off-ramp segment, and
+the more restrictive option is selected. Similarly, weaving sections with lengths
+exceeding 750 m can be analyzed as basic segments with the added auxiliary lane and
+ramp demands. Other special types of freeway sections requiring special attention may
+be encountered. In those cases, Chapters 23, 24, and 25 should be consulted. The
+transformation of freeway sections into freeway segments for the freeway facility of
+Exhibit 22-2 is shown in Exhibit 22-3. The estimated segment capacities and traffic
+performance algorithms filter down through the time-space domain so that each cell has
+an estimated capacity and an algorithm for predicting traffic performance measures.
+
+  EXHIBIT 22-3. CONVERSION OF FREEWAY SECTIONS INTO FREEWAY SEGMENTS
+  Freeway Facility
+
+  Freeway Sections along Freeway Facility
+
+  Freeway Segments along Freeway Facility
+
+BO  B  W  B  OB  BO  B  OB
+AF  A  E  A  NA  AF  A NA
+SF  S  A  S  S  SF  S  S
+I  I  V  I  I  I  I  I
+C  C  E  C  C  C  C  C
+
+FREEWAY FACILITY DEMANDS AND ESTIMATION OF TRAFFIC DEMAND  Chapter 22 - Freeway Facilities
+  Traffic counts at each entrance to and exit from the freeway facility (including the  Methodology
+
+mainline entrance and the mainline exit) for each time interval serve as input to the
+methodology. Whereas entrance counts are considered to represent the current entrance
+demands for the freeway facility (provided that there is not a queue on the freeway
+entrance), the exit counts may not represent the current exit demands for the freeway
+facility because of freeway congestion.
+
+  22-5
+Highway Capacity Manual 2000
+
+Estimation of traffic  For planning applications, estimated traffic demands at each entrance to and exit
+demand requires careful  from the freeway facility for each time interval serve as input to the methodology. The
+differentiation of volume,  sum of the input demands must be equal to the sum of the output demands in every time
+as counted, and demand  interval.
+
+Time interval scale factor  Once the entrance and exit demands are calculated, the demands for each cell in
+defined  every time interval can be estimated. The segment demands can be thought of as filtering
+  across the time-space domain and filling each cell in the time-space matrix.
+In this chapter, capacity
+computations are on a  Demand estimation is required if the methodology uses actual freeway counts. If
+veh/h basis  demand flows are known or can be projected, they are used directly. The demand
+Capacities can be  estimation module converts the input set of freeway exit 15-min traffic counts into a set
+selected to reflect a  of freeway exit 15-min traffic demands. Freeway exit demand is defined as the number
+variety of controls or  of vehicles that desire to exit the freeway in a given 15-min time interval. This demand
+conditions  may not be represented by the 15-min exit count because of upstream freeway congestion
+  within the facility.
+
+  The procedure followed is to sum the freeway entrance demands along the entire
+  freeway facility (including the freeway mainline entrance) and to compare it with the sum
+  of the freeway exit counts along the entire directional freeway facility (including the
+  freeway mainline exit) for each time interval. The ratio of the total freeway entrance
+  demands to the freeway exit counts in each time interval is called the time interval scale
+  factor. Theoretically, the scale factor should approach 1.00 when the freeway exit counts
+  are, in fact, freeway exit demands.
+
+  Scale factors greater than 1.00 indicate increasing levels of congestion within the
+  freeway facility, with exit traffic counts underestimating actual freeway exit demands.
+  Scale factors less than 1.00 indicate decreasing levels of congestion, with exit traffic
+  counts exceeding actual freeway exit demands. To provide an estimate of freeway exit
+  demand, each freeway exit count is multiplied by the time interval scale factor.
+
+  Once the entrance and exit demands are determined, the traffic demands for each
+  freeway section in each time interval can be calculated. On the time-space domain
+  diagram, the section demands can be viewed as projecting horizontally across the
+  diagram with each cell containing an estimate of its 15-min demand.
+
+  ADJUSTMENTS OF SEGMENT CAPACITY
+
+  Segment capacity estimates are determined directly from Chapters 23, 24, and 25 for
+  basic, weaving, and ramp segments, respectively. All estimates of segment capacity
+  should be carefully reviewed and compared with local knowledge and available traffic
+  information for the study site, particularly for known bottleneck segments.
+
+  On-ramp and off-ramp roadway capacities are also determined in this module.
+  On-ramp demands may exceed on-ramp capacities and limit the traffic demand entering
+  the facility. Off-ramp demands may exceed off-ramp capacities and cause congestion on
+  the freeway, although that effect is not accounted for in the methodology. Unlike the
+  computations performed in the basic freeway, weaving, and ramp chapters, all capacity
+  computations performed in this chapter are on the basis of vehicles per hour and not
+  passenger cars.
+
+  The effect of a predetermined ramp-metering plan can be evaluated in this
+  methodology by overriding the computed ramp roadway capacities. The capacity of each
+  entrance ramp in each time interval is changed to the specified metering rate. This
+  feature not only permits the evaluation of a prespecified ramp-metering plan, but also
+  permits the user to improve the ramp-metering plan by experimentation.
+
+  Freeway design improvements can be evaluated within this methodology by
+  modifying the design features of any portion or portions of the freeway facility. For
+  example, the effect of adding auxiliary lanes at critical locations and full lanes over
+  multiple segments can be assessed.
+
+  Reduced-capacity situations can also be investigated. The capacity in any cell of the
+  time-space domain can be reduced to represent incident situations such as construction
+
+Chapter 22 - Freeway Facilities  22-6
+Methodology
+  Highway Capacity Manual 2000
+
+and maintenance activities, adverse weather, and traffic accidents/vehicular breakdowns.
+Conversely, capacity can be increased to match field measurements. In analyzing
+adjusted capacity, use of an alternative speed-flow relationship is important. The
+computational details for this case are provided later in this chapter.
+
+Permanent Capacity Reduction
+
+  A lane drop is in many ways the simplest capacity-reducing situation to deal with.
+Capacity in both segments, that with the smaller number of lanes and that with the larger
+number, can be calculated using Chapter 23, 24, or 25 methodologies. So long as the
+arriving demand is less than the lower capacity, no queue will form upstream of the lane
+drop. If the arriving demand begins to exceed the reduced capacity, a queue will begin to
+form immediately upstream of the reduced-capacity section, which will have become a
+bottleneck. Some results suggest that a poorly designed merge at the lane drop can
+negatively affect the capacity of the segment with the smaller number of lanes because of
+the increase in friction and turbulence, but this effect has not yet been quantified.
+
+Construction Activities Capacity Reduction
+
+  Capacity reductions due to construction activities can be divided into short-term
+maintenance work zone lane closures and long-term construction zone closures. One of
+the primary distinctions between short-term work zones and long-term construction zones
+is the nature of the barriers used to demarcate the work area. Long-term construction
+zones generally have portable concrete barriers; short-term work zones use standard
+channeling devices (traffic cones, drums) in accordance with the Manual on Uniform
+Traffic Control Devices (2). Generally, reduction of capacity brought about by
+reconstruction or major maintenance activities will last for several weeks or even months,
+although some short-term maintenance activities last only a few hours.
+
+Short-Term Work Zones
+
+  Research (3) suggests that a capacity of 1,600 pc/h/ln be used for short-term freeway  Intensity of work will affect
+work zones, regardless of the lane closure configurations. For some types of closures,  capacity
+capacity may be higher (3).
+  Heavy vehicles should be
+  The base value should be adjusted for other conditions, as follows.  accounted for
+  • Intensity of work activity: The intensity of work activity refers to the number of
+workers on site, the number and size of work vehicles in use, and the proximity of work
+to the travel lanes in use. Unusual types of work also contribute to the apparent intensity,
+simply in terms of the rubbernecking factor. Research data did not result in explicit
+quantification of these effects, but it is suggested that the capacity of 1,600 pc/h/ln be
+adjusted by up to ±10 percent for work activity that is more or less intense than normal
+(3). The research did not define what constitutes normal intensity. Hence, this factor
+should be applied on the basis of professional judgment, recognizing that 1,600 pc/h/ln is
+an average over a variety of conditions.
+  • Effects of heavy vehicles: It is recommended that the heavy-vehicle adjustment
+factor, fHV, found elsewhere in the manual be used to account for the effect of heavy
+vehicles in the traffic stream moving through the work zone, as shown in Equation 22-1.
+
+  f HV = 1  (22-1)
+  1 + PT (ET −1)
+
+where  = heavy-vehicle adjustment factor,
+  fHV  = proportion of heavy vehicles, and
+  PT  = passenger-car equivalent for heavy vehicles.
+  ET
+
+The value of ET can be taken from Chapter 23, Basic Freeway Segments.
+
+  22-7  Chapter 22 - Freeway Facilities
+  Methodology
+Highway Capacity Manual 2000
+
+Entrance ramps within  • Presence of ramps: If there is an entrance ramp within the taper area approaching
+150 m of a lane closure  the lane closure or within 150 m downstream of the beginning of the full lane closure, the
+will affect capacity  ramp will have a noticeable effect on the capacity of the work zone for handling mainline
+  traffic. This arises in two ways. First, the ramp traffic will generally force its way in, so
+  it will directly reduce the amount of mainline traffic that can be handled. Second, the
+  added turbulence in the merging area due to the entrance ramp may itself reduce the
+  capacity slightly. If at all possible, ramps should be located at least 450 m upstream from
+  the beginning of the full closure to maximize the total work zone throughput. If that
+  cannot be done, then either the ramp volume should be added to the mainline volume to
+  be served or the capacity of the work zone should be decreased by the ramp volume (up
+  to a maximum of half of the capacity of one lane, on the assumption that at very high
+  volumes mainline and ramp vehicles will alternate). Equation 22-2 is used to compute
+  the resulting reduced capacity.
+
+  ca = (1,600 + I – R) * fHV * N  (22-2)
+
+  where  = adjusted mainline capacity (veh/h);
+  ca  = adjustment for heavy vehicles as defined in Equation 22-1;
+  fHV
+  I  = adjustment factor for type, intensity, and location of the work activity,
+  as discussed above (ranges from –160 to +160 pc/h/ln);
+  R
+  N  = adjustment for ramps, as described in the preceding paragraph; and
+  = number of lanes open through the short-term work zone.
+
+  Long-Term Construction Zones
+
+  For long-term construction zones, capacity values are given in Exhibit 22-4. If
+  traffic crosses over to lanes that are normally used by the opposite direction of travel, the
+  capacity is close to the 1,550 veh/h/ln value in Exhibit 22-4 (5). If no crossover is
+  needed, but only a merge down to a single lane, the value is typically higher and may
+  average about 1,750 veh/h/ln (6).
+
+  EXHIBIT 22-4.  SUMMARY OF CAPACITY VALUES FOR LONG-TERM CONSTRUCTION ZONES
+
+  No. of Normal  Lanes Open  Number of Studies  Range of Values  Average per Lane
+  Lanes  (veh/h/ln)  (veh/h/ln)
+  3
+  2  2  7  1780–2060  1860
+
+  Source: Dudek (4).  1  3  –  1550
+
+  Lane Width Consideration
+
+  An additional adjustment factor can be added to the long-term and short-term
+  reduction model for the effect of lane width (7). For traffic with passenger cars only,
+  headways increase by about 10 percent in going from 3.5-m widths to 3.25- or 3.0-m
+  widths and by an additional 6 percent in going to 2.75-m widths. These increases in
+  headways translate to 9 and 14 percent drops in capacity for the narrower lane widths
+  within construction zones.
+
+  Adverse Weather Capacity Reduction
+
+  There have been several research studies on the effect of rain, snow, and fog. It has
+  become clear that adverse weather can significantly reduce not only capacity but also
+  operating speeds. The following sections discuss the effects of each of these weather
+  conditions and address the issue of when and how to take these effects into account in
+  applying the methodology.
+
+Chapter 22 - Freeway Facilities  22-8
+Methodology
+  Highway Capacity Manual 2000
+
+Rain
+
+  Research found that speeds are not particularly affected by wet pavement until
+visibility is also affected (8). This result suggests that light rain will not have much effect
+on speeds (and presumably not on capacities) unless it is of such extended duration that
+there is considerable water on the pavement. Heavy rain, on the other hand, affects
+visibility immediately and can be expected to have a noticeable effect on traffic flow.
+
+  This expectation is borne out by studies of freeway traffic. Research found minimal
+reductions in maximum observed flows for light rain but significant reductions for heavy
+rain (9). Likewise, the research found a small effect on operating speeds for light rain
+and larger effects for heavy rain. These changes in operating speeds are important
+because they directly affect traffic performance.
+
+  For light rain, a reduction in free-flow speeds of 2.0 km/h was observed (9). At a
+flow rate of 2,400 veh/h, the effect of light rain was to reduce speeds to about 82 km/h,
+compared with speeds of 89 to 95 km/h under clear and dry conditions. Under light rain
+conditions, little if any effect was observed on flow or capacity.
+
+  For heavy rain, the drop in free-flow speeds was 5 and 7 km/h. The result of heavy
+rain is to reduce speeds at 2,400 veh/h to 76 and 79 km/h from, respectively, 89 and 95
+km/h. These are reductions of 13 and 16 km/h. Maximum flow rates can also be affected
+and might be 14 to 15 percent lower than those observed under clear and dry conditions.
+
+Snow
+
+  For snow, major differences were found depending on the quantity or rate of
+snowfall, with light snow having minimal effects and heavy snow having potentially very
+large effects (9). If snow-clearing operations cannot keep the road relatively clear during
+a heavy snowfall, the snow accumulation on the highway obscures the lane markings.
+Observation suggests that under these circumstances, drivers often seek not only longer
+headways, but also greater lateral clearance. As a result, a three-lane freeway segment is
+used as if it had only two widely separated lanes. This alone has a considerable effect on
+capacity.
+
+  Light snow was associated with a statistically significant drop of 1 km/h in free-flow
+speeds. The effect on maximum observed flows was midway between the effects of light
+and heavy rain or between a 5 and 10 percent reduction.
+
+  Heavy snow significantly influences the speed-flow curve. Free-flow speeds were
+reduced by 37 and 42 km/h at the two stations from what they were under clear and dry
+conditions (102 and 106 km/h, respectively). Maximum observed flows dropped from
+2,160 to 1,200 veh/h/ln at the station upstream of the queue. At the station that might be
+a bottleneck itself for part of the peak period, the maximum observed flows dropped from
+2,400 to 1,680 veh/h/ln. This suggests a 30 percent drop in capacity due to heavy snow in
+an urban area where traffic will generally keep moving to some extent.
+
+Fog
+
+  Although no studies have quantified the effects of fog on capacity, work has been
+done in Europe on fog warning systems, which use variable speed limit signs to reduce
+speeds during foggy conditions. Those studies tend to report on the effectiveness of the
+speed warning signs in reducing mean speeds, not on what speeds (or capacities) are due
+to the fog alone. For example, they report effectiveness of fog warning devices of 8 to 10
+km/h in reducing speed but provide no information on capacity effects (10, 11).
+
+Environmental Capacity Reduction
+
+  Research in Germany used speed-flow-density relationships to fit speed-flow curves
+to the field observations (12). The capacity of each study site under a variety of
+conditions was estimated from these curves. The results are useful not only in extending
+the research results cited on rain and wet pavement but also in identifying some other
+
+22-9  Chapter 22 - Freeway Facilities
+  Methodology
+Highway Capacity Manual 2000
+
+  causes of temporary capacity reduction that have not generally been discussed (e.g., the
+  difference between daylight and darkness and between weekdays and weekends).
+
+  A set of relationships for 10 to 15 percent heavy vehicles has been used for
+  comparison in Exhibit 22-5. Although this exhibit shows the per lane capacities found in
+  Germany, the numbers clearly do not translate directly to North American conditions.
+  The most obvious difference is that capacity per lane is lower than would be found in
+  North America. In addition, the capacity per lane for a six-lane freeway is lower than that
+  of a four-lane freeway for all but one of the conditions. These results are no doubt a
+  consequence of the function the researchers were fitting, together with the fact that there
+  were few data near capacity because hourly data were analyzed. What is important in the
+  exhibit is the percentage reduction in capacity under each of the sets of conditions, which
+  is shown on the second line for each type of freeway and type of day (weekday or
+  weekend).
+
+  EXHIBIT 22-5. CAPACITIES ON GERMAN AUTOBAHNS UNDER VARYING CONDITIONS (veh/h/ln)
+
+  Freeway Type  Weekday or  Daylight and Dry  Dark and Dry  Daylight and Wet  Dark and Wet
+  Weekend  1489
+  Six-lane freeway  1380  1299  1310  923
+  Weekday  1739  13  12  38
+  Six-lane freeway  Changea (%)  1551  1084  1014  -
+  21  27  -
+  Four-lane  Weekend  1415  1421  913
+  freeway  Changea (%)  19  18  47
+  Four-lane  1158  1104  -
+  freeway  Weekday  25  29  -
+  Changea (%)
+
+  Weekend
+  Changea (%)
+
+  Note:
+  a. The percentage reduction from daylight and dry conditions for the same day of the week.
+  Source: Brilon and Ponzlet (12).
+
+Mean duration of an  The estimates for weekdays and daylight for the reduction due to wet pavement, 12
+incident was 37 min but  and 18 percent, are consistent with the estimates discussed above for the effects of rain.
+was highly variable  The reductions in capacity due to darkness are of the same order as those due to rain: 13
+  and 19 percent for six- and four-lane facilities, respectively. Since winter peak-period
+  commuter traffic occurs in darkness in many locations, these capacity reductions are
+  important to recognize.
+
+  The capacity of a freeway on weekends or holidays can be substantially less than
+  when it carries commuter traffic. Although the percentage change is not shown in the
+  exhibit, it amounts to a 7 to 10 percent reduction during dry daylight conditions.
+
+  Capacity Reductions due to Traffic Accidents or Vehicular Breakdowns
+
+  Capacity reductions due to traffic accidents or vehicular breakdowns are generally
+  short-lived, ranging from less than 1 h before they can be cleared (for a minor fender-
+  bender involving only passenger vehicles) to as long as 12 h (for a major accident
+  involving fully loaded tractor-trailer rigs). For example, on the basis of research, the
+  mean duration of a traffic incident was 37 min, with just over half of the incidents lasting
+  30 min or less and 82 percent of the incidents lasting 1 h or less (13). When trucks were
+  involved, however, the duration was longer; accidents involving trucks lasted 63 min on
+  the average.
+
+  The effect of an incident on capacity depends on the proportion of the traveled
+  roadway that is blocked by the stopped vehicles, as well as on the number of lanes on the
+  roadway at that point. Exhibit 22-6 gives information on these effects (14, 15).
+
+Chapter 22 - Freeway Facilities  22-10
+Methodology
+  Highway Capacity Manual 2000
+
+EXHIBIT 22-6. PROPORTION OF FREEWAY SEGMENT CAPACITY AVAILABLE UNDER
+  INCIDENT CONDITIONS
+
+Number of Freeway  Shoulder  Shoulder  One Lane  Two Lanes  Three Lanes
+Lanes by Direction  Disablement  Accident  Blocked  Blocked  Blocked
+
+  2  0.95  0.81  0.35  0.00  N/A
+  3  0.99  0.83  0.49  0.17  0.00
+  4  0.99  0.85  0.58  0.25  0.13
+  5  0.99  0.87  0.65  0.40  0.20
+  6  0.99  0.89  0.71  0.50  0.26
+  7  0.99  0.91  0.75  0.57  0.36
+  8  0.99  0.93  0.78  0.63  0.41
+
+N/A - not applicable.
+Source: Reiss and Dunn (14) and Gordon et al. (15).
+
+  Note that in the case of a blocked lane, the loss of capacity is likely to be greater than  Assumptions regarding effects
+simply the proportion of original capacity that is physically blocked. For example, a  on speeds
+four-lane (in one direction) freeway with two lanes blocked retains only 25 percent of its
+original capacity (Exhibit 22-6). The added loss of capacity arises because drivers slow
+to look at the incident while they are abreast of it and are slow to react to the possibility
+of speeding up to move through the incident area.
+
+  The rubbernecking factor is also responsible for a reduction in capacity in the
+direction of travel opposite to that in which the accident occurred. No quantitative
+studies of this effect have been published, but experience suggests that it depends on the
+magnitude of the incident (including the number of emergency vehicles present). The
+reduction may range from 5 percent for a single-car accident and one emergency vehicle
+to 25 percent for a multivehicle accident with several emergency vehicles.
+
+Applying Capacity Reductions
+
+  There are several ways to use the information on reduced capacities contained in the
+preceding material, ranging from quick approximations, through the application of the
+methodology described in this chapter, to other quantitative approaches involving
+queuing analysis or shock wave analysis. The quick approximations simply require
+reviewing the expected traffic demands and comparing them with the applicable capacity
+reduction. If the demands do not exceed the reduced capacity, there will not be any major
+difficulties in handling the traffic. A more detailed analysis may be desired to estimate
+the expected traffic performance, in which case use of the methodology would be
+appropriate.
+
+  The methodology works with the full speed-flow curve (for the undersaturated part
+of the relationship), but in many of the cases described above, only the effect on capacity
+has been identified by research reported to date. The literature does not describe the
+effect of the factor (incident, construction) on speeds and hence on the speed-flow curve.
+Without a full speed-flow curve, the analyst is forced to use other methods or to work
+around this limitation of the model. Consider each of the capacity reductions in turn,
+from the simplest to the most difficult to deal with.
+
+  Adverse weather is the easiest to deal with, because the results cited above indicate
+effects on both speeds and capacity. Consequently, the analyst can simply use a speed-
+flow curve for a lower free-flow speed (FFS) to model the effects of inclement weather.
+Neither of the research studies reported a method that would equate to a reduction in FFS,
+but their results can be reasonably well approximated that way (9, 12). For light rain or
+snow, for example, speeds at capacity drop by 7 to 13 km/h, which can be approximated
+by a reduction in FFS of 10 km/h. For heavy rain, the approximation would be a
+reduction in FFS of 20 km/h. For heavy snow, the reduction would be 50 km/h. Exhibit
+22-7 shows the approximate curves for these conditions, using a constant density to
+determine the capacity for each curve.
+
+  22-11  Chapter 22 - Freeway Facilities
+  Methodology
+Highway Capacity Manual 2000
+
+  Average Passenger-Car Speed (km/h)  EXHIBIT 22-7. SPEED-FLOW CURVES FOR DIFFERENT WEATHER CONDITIONS
+  140
+
+  120 Clear and Dry
+  Light Rain or Snow
+
+  100 Heavy Rain
+
+  80 Heavy Snow
+  60
+
+  at capacit 40 y ( 28 pc/km/ln)
+  20 Density
+
+  0
+
+  0  400  800  1200  1600  2000  2400
+
+  Flow Rate (pc/h/ln)
+
+  Note:
+  FFS = 120 km/h (base conditions).
+
+  For the other temporary capacity reductions, the research findings deal only with the
+  change in capacity. In most of these cases, reasonable estimates of speed conditions can
+  be made. For example, in construction zones, a reduced speed is usually posted, and
+  lower speeds usually do occur, particularly where actual construction operations are
+  taking place. Likewise, for incidents, traffic naturally slows as drivers pass the incidents
+  and try to get a look at what happened. Thus, one can attempt to model these situations
+  on the basis of a downward-shifted speed-flow curve, like those shown in Exhibit 22-8.
+
+  If the analyst were not interested in the speeds, the capacity reduction could be
+  modeled by using a fractional number of lanes that would reflect the new capacity of the
+  roadway, rather than the real number of lanes. For example, in the case of a four-lane (in
+  one direction) freeway facility with two lanes blocked, Exhibit 22-6 shows that only 25
+  percent of the original capacity is available. To reflect this, the analyst could show only a
+  single lane through the area of the incident, even though it is in fact a four-lane segment.
+  However, since most of the performance measures rely on or are based on speed, this
+  simplified approach will not permit a complete analysis. Consequently, use of a speed-
+  flow curve from the family shown in Exhibit 22-7 or 22-8 is recommended.
+
+  The methodology and other methods have a role in analyzing the effect of incidents,
+  even when they are of short duration, by assisting in the planning of responses to various
+  types and locations of incidents before they occur. The advantage of planning is that it
+  can minimize the need for improvising decisions about diversion plans and other methods
+  of responding to incidents.
+
+  DEMAND-CAPACITY RATIO
+
+  Each cell in the time-space domain now contains an estimate of demand and capacity
+  as well as an algorithm for calculating traffic performance measures. A demand-to-
+  capacity ratio can be calculated for each cell, and the cell values should be reviewed to
+  see whether in fact the time-space domain is free of congestion on its boundary and
+  whether oversaturated flow conditions will occur anywhere in the time-space domain.
+
+Chapter 22 - Freeway Facilities  22-12
+Methodology
+  Highway Capacity Manual 2000
+
+  EXHIBIT 22-8.  ADJUSTED SPEED-FLOW CURVES FOR INDICATED CAPACITY ADJUSTMENTS
+  (SEE FOOTNOTE FOR ASSUMED VALUES)
+  140
+  120  CAF = 1.00
+  CAF = 0.95
+  CAF = 0.90
+  CAF = 0.85
+
+  100
+
+Speed (km/h)  80
+  60 ensity = 28 pc/km/ln
+
+  Fixed d
+  40
+
+  20
+
+  0
+
+  0  500  1000  1500  2000  2500
+
+  Flow Rate (pc/h/ln)
+
+Note:
+Assumptions: FFS = 120 km/h, capacity adjustment factor (CAF) of 1.0, 0.95, 0.90, and 0.85.
+
+  The demand-to-capacity ratio values should be less than 1.0 for all cells along the  Demand/capacity should be
+four boundaries of the time-space domain. If they are not, further analysis may be flawed  less than 1.0 for all cells along
+and in some cases should not be undertaken. For example, if any cell in the first time  the four boundaries of the
+interval has a demand-to-capacity ratio value greater than 1.0, there may have been  time-space domain
+oversaturated conditions in earlier time intervals without transfer of unsatisfied demand
+into the time-space domain. If any cell in the last time interval has a demand-to-capacity
+ratio greater than 1.0, the analysis will not be complete, since the unsatisfied demand
+within the time-space domain cannot be transferred to later time intervals. If any cell in
+the last downstream segment has a demand-to-capacity ratio greater than 1.0, there may
+be downstream bottlenecks that should be checked before proceeding with the analysis.
+Finally, if any cell in the first upstream segment has a demand-to-capacity ratio greater
+than 1.0, then oversaturation will be extended upstream of the freeway facility, but its
+effect will not be analyzed within the time-space domain.
+
+  These checks do not assure the analyst that the boundaries may not be violated later
+as the result of the more detailed analysis. If the initial checks indicate that demands
+exceed capacities at the boundary segments, the problem analysis domain should be
+adjusted. As the analysis is undertaken, the problem of demand exceeding capacity may
+occur again at the time-space domain boundaries, requiring that the problem be
+reformulated or that other techniques as described in Part V of this manual be considered.
+For example, oversaturated conditions at a downstream bottleneck may be so severe as to
+extend upstream into or beyond the first freeway segment or beyond the last time interval.
+
+  Another important check is to observe whether any cell in the entire time-space
+domain has a demand-to-capacity ratio value greater than 1.0. If all cells have demand-
+to-capacity ratio values less than 1.0, then the entire time-space domain contains
+undersaturated flow conditions, and the analysis is greatly simplified.
+
+  If any cell in the time-space domain has a demand-to-capacity ratio value greater
+than 1.0, then the time-space domain will contain both undersaturated and oversaturated
+flow conditions. Analysis of oversaturated flow conditions is much more complex
+because of the interactions between freeway segments.
+
+  The analysis begins in the first cell in the upper left-hand corner of the time-space
+domain (first segment in first time interval) and continues downstream along the freeway
+
+  22-13  Chapter 22 - Freeway Facilities
+  Methodology
+Highway Capacity Manual 2000
+
+Four-step process to  facility for each segment in the first time interval. The analysis then returns to the first
+analyze bottlenecks:  upstream segment in the second time interval and continues downstream along the
+1. Bottleneck cell  freeway for each segment in the second time interval. This process is continued until all
+analysis  cells in the time-space domain have been analyzed.
+2. Downstream demand
+modifications  As each cell is analyzed, the question is asked, Is the cell demand-capacity ratio less
+3. Upstream flow  than or equal to 1.0? If the answer is yes, then the cell is not a bottleneck and is assumed
+modifications  to be able to handle all traffic that wants to enter. This process is continued in the
+4. Demand transfer to  sequence order described in the preceding paragraph until an answer of no is
+next time interval  encountered, indicating that the demand-capacity ratio in this cell is greater than 1.0.
+  This cell is identified as a bottleneck, and the traffic that wishes to enter cannot do so.
+Shock wave analysis is  The following four-step process is required to analyze each cell identified as a bottleneck:
+used to analyze queue  bottleneck cell analysis, downstream demand modifications, upstream flow
+backup  modifications, and demand transfer to next time interval.
+
+  Since the demand in the bottleneck cell exceeds the bottleneck cell capacity, the flow
+  in the cell will be equal to capacity, not demand. Each bottleneck cell will have a
+  volume-capacity ratio of exactly 1.0. On the basis of this volume-capacity ratio, traffic
+  performance measures can be estimated.
+
+  Since the bottleneck cell can only pass a flow equal to capacity (not demand) to the
+  downstream segments in this time interval, the demands for all downstream cells must be
+  modified in accordance with the destinations of the unsatisfied demand at the bottleneck.
+
+  The unsatisfied demand at the bottleneck cell must be stored in the upstream
+  segment(s), and flow conditions and traffic performance measures in the upstream
+  segments must be modified. This is accomplished through shock wave analysis.
+
+  The unsatisfied demand stored upstream of the bottleneck cell must be transferred to
+  the next time interval. This is accomplished by adding the unsatisfied demand by desired
+  destination to the origin-destination table of the next time interval.
+
+  This four-step process is implemented for each bottleneck encountered following the
+  specified sequence of analyzing cells. If no bottleneck cells are encountered, then the
+  entire time-space domain will have undersaturated conditions, and the sequence of
+  analysis for oversaturation is not used. If major bottlenecks are encountered, the storage
+  of unsatisfied demand may extend beyond the upstream boundary of the freeway facility
+  or beyond the last time interval of the time-space domain. In such cases, the analysis will
+  be flawed, and the time-space domain should be reformulated.
+
+  Once traffic performance measures have been estimated for each cell in the time-
+  space domain, they can be aggregated for the entire freeway facility for each time interval
+  and for the entire study time duration. The methodology for calculating these freeway
+  traffic performance measures is described in the following section.
+
+  UNDERSATURATED CONDITIONS
+
+  The analysis begins by examining the demand-to-capacity ratios for all segments
+  during the first time interval. If all segments have a demand-to-capacity ratio less than
+  1.0, then this time interval is completely undersaturated. The flow (or volume) is equal to
+  demand for each cell, and undersaturated flow conditions occur. Performance measures
+  for the first segment during the first time interval are calculated by using the methodology
+  for the corresponding segment type in Chapters 23, 24, and 25.
+
+  The analysis continues to the next downstream freeway segment in the same time
+  interval, and the performance measures are calculated for all subsequent downstream
+  segments. The analysis then resumes in the second time interval from the furthest
+  upstream segment and moves downstream until all freeway segments in that time interval
+  have been analyzed. This pattern continues until the methodology encounters a time
+  interval having one or more segments with a demand-to-capacity ratio greater than 1.0. If
+  this occurs, the oversaturated analysis module is executed.
+
+Chapter 22 - Freeway Facilities  22-14
+Methodology
+  Highway Capacity Manual 2000
+
+  When the analysis moves from isolated segments to a system, an additional  Additional system
+constraint may be necessary. A maximum achievable speed constraint is imposed to limit  considerations:
+the predicted speed downstream of a segment experiencing low speeds. This process
+prevents large speed fluctuations that can be predicted when applying the segment-based  • Speed on a segment may
+methods in Chapters 23, 24, and 25.  be constrained by a slower
+  speed on an upstream
+OVERSATURATED CONDITIONS  segment
+
+  Once oversaturation is encountered, the methodology changes its temporal and  • Speed estimate is made for
+spatial units of analysis. The spatial units become nodes and segments, and the temporal  the full roadway width in a
+unit moves from a time interval of 15 min to smaller time steps as recommended in  ramp influence area
+Appendix A. A node is defined as the junction of two segments. There is always one
+more node than segment, with a node analyzed at the beginning and end of the freeway  Node defined
+facility as shown in Exhibit 22-9. The numbering of nodes and segments begins at the
+upstream end and moves to the downstream end, with the segment upstream of Node (i)
+numbered (i – 1) and the downstream segment numbered (i), as shown in Exhibit 22-10.
+The oversaturated analysis moves from the first node to each downstream node for a time
+step. After the completion of a time step, the same nodal analysis is performed for the
+following time steps. Many flow variables are computed in this analysis, with the most
+prominent described in the next section.
+
+  EXHIBIT 22-9. NODE-SEGMENT REPRESENTATION OF A FREEWAY FACILITY
+
+  Seg 1  Seg 2  Seg 3  Seg 4  Seg 5  Seg 6
+
+N1  N2  N3  N4  N5  N6  N7
+
+  Ramp 1  Ramp 2
+
+  EXHIBIT 22-10. MAINLINE AND SEGMENT FLOW AT ON- AND OFF-RAMPS
+
+Seg (i - 1)  Node (i)  Seg (i)  Seg (i - 1) Node (i)  Seg (i)
+
+  MF  MF
+
+  ONRF  OFRF
+
+SF (i - 1) = MF (i)  SF (i - 1) = MF (i) + OFRF (i)
+
+Flow Fundamentals  Time steps of less than 15 min
+  are used
+  Segment flow rates are calculated in each time step and are used to calculate the
+number of vehicles on each segment at the end of every time step. The number of
+vehicles on each segment is used to track queue accumulation and discharge and to
+calculate the average segment density.
+
+  The conversion from time intervals to time steps occurs during the first oversaturated
+time interval, and time steps continue in use until the end of the analysis. The transition
+to time steps is essential because at certain points in the methodology future performance
+is estimated from past performance of an individual variable. Use of time steps also
+allows more accurate tracking of queues.
+
+  Freeway analysis depends on the relationships between speed, flow, and density.
+Chapters 23, 24, and 25 define a relationship between these variables and the calculation
+of performance measures in the undersaturated regime. The methodology uses this
+relationship in the calculations for undersaturated segments. Calculations for segments
+
+  22-15  Chapter 22 - Freeway Facilities
+  Methodology
+Highway Capacity Manual 2000
+
+  performing in the oversaturated regime use a simplified linear flow-density relationship
+  in the congested region, as detailed in Appendix A.
+
+  Segment Initialization
+
+  For the number of vehicles on each segment at the various time steps to be
+  calculated, the segments must contain the proper number of vehicles before the queuing
+  analysis places unserved vehicles on segments. The initialization of each segment is
+  described below.
+
+  A simplified queuing analysis is initially performed to account for the effects of
+  upstream bottlenecks. These bottlenecks meter traffic downstream. To obtain the proper
+  number of vehicles on each segment, the segment’s expected demand is calculated. The
+  expected demand is based on demands for and capacities of the segment including the
+  effects of all upstream segments. Expected demand represents the flow of traffic that
+  would be expected to arrive at each segment if all queues were stacked vertically (i.e., if
+  queues had no upstream effects). Thus, all segments upstream of a bottleneck have
+  expected demands equal to actual demands. For the bottleneck and all further
+  downstream segments, a capacity constraint at the bottleneck (which meters traffic to
+  downstream segments) is applied in the computation of expected demand. From the
+  expected segment demand, the background density can be obtained for each segment
+  using the appropriate segment density estimation procedures from Chapters 23, 24, and
+  25.
+
+  Mainline Flow Calculation
+
+  Flows analyzed in oversaturated conditions are calculated for every time step and are
+  expressed in vehicles per time step. They are analyzed separately on the basis of the
+  origin and destination of the flow across the node. The flow from the mainline upstream
+  Segment (i – 1) to mainline downstream Segment (i) is the mainline flow (MF). The flow
+  from the mainline to an off-ramp is the off-ramp flow (OFRF). The flow from an on-
+  ramp to the mainline is the on-ramp flow (ONRF). Each of these flows is shown in
+  Exhibit 22-10 with its origin and destination and relationship to Segment (i) and Node (i).
+
+  The segment flow is the total output of a segment, as shown in Exhibit 22-10. The
+  mainline flow is calculated as the minimum of six values. These constraints are the
+  mainline input, Mainline Output 1, Mainline Output 2, Mainline Output 3, the upstream
+  Segment (i – 1) capacity, and the downstream Segment (i) capacity.
+
+  Mainline Input
+
+  The mainline input is the number of vehicles that wish to travel through a node
+  during the time step. The calculation includes the effects of bottlenecks upstream of the
+  subject node. The effects include the metering of traffic during queue accumulation and
+  the presence of additional traffic during queue discharge.
+
+  The mainline input is calculated by taking the number of vehicles entering the node
+  upstream of the analysis node, adding on-ramp flows or subtracting off-ramp flows, if
+  needed, and adding to it the number of unserved vehicles on the upstream segment. This
+  is the maximum number of vehicles that desire to enter a node during a time step.
+
+  Mainline Output
+
+  The mainline output is the maximum number of vehicles that can exit a node,
+  constrained by downstream bottlenecks or by merging traffic. Different constraints on
+  the output of a node result in three separate types of mainline outputs (MO1, MO2, and
+  MO3).
+
+  Mainline Output from Ramps
+
+  Mainline Output 1 (MO1) is the constraint caused by the flow of vehicles from an
+  on-ramp. The capacity of an on-ramp segment is shared by two competing flows. This
+
+Chapter 22 - Freeway Facilities  22-16
+Methodology
+  Highway Capacity Manual 2000
+
+on-ramp flow limits the flow from the mainline at this node. The total flow that can pass  Ramp diverge percentages
+the node is estimated as the minimum of the Segment (i) capacity and the mainline  may vary by time interval, and
+outputs (MO2 and MO3 below) calculated in the preceding time step.  this will be affected by
+  queuing at bottlenecks
+Mainline Output from Segment Storage
+
+  The output of mainline flow through a node is also constrained by the growth of
+queues on the downstream segment. The presence of a queue limits the flow into the
+segment once the queue reaches its upstream end. The queue position is calculated from
+shock wave analysis.
+
+  The MO2 limitation is determined first by calculating the maximum number of
+vehicles allowed on a segment at a given queue density. The maximum flow that can
+enter a queued segment is the number of vehicles leaving the segment plus the difference
+between the maximum number of vehicles allowed on a segment and the number of
+vehicles already on the segment. The queue density is determined from the linear,
+congested portion of the density-flow relationship shown in Appendix A.
+
+Mainline Output from Front-Clearing Queue
+
+  The final limitation on exiting mainline flows at a node is caused by front-clearing
+downstream queues or MO3. These queues typically occur when temporary incidents
+clear. Two conditions must be satisfied. First, the segment capacity (minus the on-ramp
+demand if present) for the current time interval must be greater than the segment capacity
+(minus on-ramp demand) in the preceding time interval. The second condition is that the
+segment capacity minus the ramp demand for the current time interval be greater than the
+segment demand in the same interval.
+
+  Front-clearing queues do not affect the segment throughput (which is limited by the
+queue throughput) until the recovery wave has reached the upstream end of the segment.
+The shock wave speed is estimated from the slope of the line connecting the bottleneck
+throughput and the segment capacity points.
+
+Mainline Flow
+
+  The mainline flow across Node (i) is the minimum of the following variables: Node
+(i) mainline input, Node (i) Mainline Output 1, Node (i) Mainline Output 2, Node (i)
+Mainline Output 3, Segment (i – 1) capacity, and downstream Segment (i) capacity.
+
+Determining On-Ramp Flow
+
+  The on-ramp flow is the minimum of the on-ramp input and output. Ramp input in a
+time interval is the ramp demand plus any unserviced ramp vehicles from a previous time
+interval.
+
+  On-ramp output is limited by the ramp roadway capacity and the ramp-metering rate.
+It is also affected by the volumes on the mainline segments. The latter is a very complex
+process that depends on the various flow combinations on the segment, the segment
+capacity, and the ramp roadway volumes. Details of the calculations are presented in
+Appendix A.
+
+Determining Off-Ramp Flow
+
+  The off-ramp flow is determined by calculating a diverge percentage based on the
+segment and off-ramp demands. The diverge percentage varies only by time interval and
+remains constant for vehicles that are associated with a particular time interval. If there is
+an upstream queue, then there may be metering of traffic to this off-ramp. This will cause
+a decrease in the off-ramp flow. When the vehicles that were metered arrive in the next
+time interval, they use the diverge percentage associated with the preceding time interval.
+The methodology ensures that all off-ramp vehicles prevented from exiting during the
+presence of a bottleneck are appropriately discharged in later time intervals.
+
+22-17  Chapter 22 - Freeway Facilities
+  Methodology
+Highway Capacity Manual 2000
+
+Three-step procedure  Determining Segment Flow
+
+Queues on ramps  The segment flow is the number of vehicles that flow out of a segment during the
+  current time step. These vehicles enter the current segment either to the mainline or to an
+Facilitywide measures:  off-ramp at the current node as shown in Exhibit 22-9. The number of vehicles on each
+• Trip time  segment is calculated on the basis of the following: the number of vehicles that were on
+• Vehicle and person  the segment in the previous time step, the number of vehicles that have entered the
+distance of travel  segment in the current time step, and the number of vehicles that can leave the segment in
+• Vehicle and person-  the current time step. Because the number of vehicles that leave a segment must be
+hours of travel  known, the number of vehicles on the current segment cannot be determined until the
+  upstream segment is analyzed.
+
+  The number of unserved vehicles stored on a segment is calculated as the difference
+  between the number of vehicles on the segment and the number of vehicles that would be
+  on the segment at the background density.
+
+  Determining Segment Service Measures
+
+  In the last time step of a time interval, the segment flows in each time step are
+  averaged over the time interval, and the measures of effectiveness for each segment are
+  calculated. If there were no queues on a particular segment during the entire time
+  interval, then the performance measures are calculated from Chapters 23, 24, and 25 as
+  appropriate.
+
+  If there was a queue on the current segment during the time interval, then the
+  performance measures are calculated in three steps. First, the average number of vehicles
+  over a time interval is calculated for each segment. Next, the average segment density is
+  calculated by taking the average number of vehicles in all time steps in the time interval
+  and dividing it by the segment length. Finally, the average speed on the current segment
+  during the current time interval is calculated as the ratio of segment flow to density. The
+  final segment performance measure is the length of the queue at the end of the time
+  interval (if it exists), which is calculated from shock wave theory.
+
+  Queue length on on-ramps can also be calculated. A queue will form on the on-ramp
+  roadway only if the flow is limited by a meter or by freeway traffic in the gore area. If
+  the flow is limited by the ramp roadway capacity, unserved vehicles will be stored on a
+  facility upstream of the ramp roadway, most likely a surface street. The methodology
+  does not account for this delay. If the queue is on the ramp roadway, the queue length is
+  calculated by using the difference in background and queue densities.
+
+  DETERMINING FREEWAY FACILITY PERFORMANCE MEASURES
+
+  The previously discussed traffic performance measures can be aggregated over the
+  length of the freeway facility, over the time duration of the study interval, or over the
+  entire time-space domain.
+
+  Aggregating the estimated traffic performance measures over the entire length of the
+  freeway facility provides facilitywide estimates for each time interval. Averages and
+  cumulative distributions of speed and density for each time interval can be determined,
+  and patterns of their variation over the connected time intervals can be assessed. Trip
+  times, vehicle (and person) distance of travel, and vehicle (and person) hours of travel can
+  be computed and patterns of their variation over the connected time intervals can be
+  assessed.
+
+  Aggregating the estimated traffic performance measures over the time duration of the
+  study interval provides an assessment of the performance of each segment along the
+  freeway facility. Average and cumulative distributions of speed and density for each
+  segment can be determined, and patterns of the variation over connected freeway
+  segments can be compared. Average trip times, vehicle (and person) distance of travel,
+  and vehicle (and person) hours of travel are easily assessed for each segment and
+  compared.
+
+Chapter 22 - Freeway Facilities  22-18
+Methodology
+  Highway Capacity Manual 2000
+
+  III. APPLICATIONS  Guidelines on required inputs
+  and estimated values are
+  The methodology is applied in the sequence indicated in Exhibit 22-11. The process  given in Chapter 13
+consists of nine steps and is based on the methodology described in the preceding section.
+A detailed flowchart that processes the oversaturation portion of the analysis is provided
+in Appendix A.
+
+  EXHIBIT 22-11. IMPLEMENTATION OF FREEWAY FACILITY METHODOLOGY
+
+  1. Collect input data
+  (Exhibit 22-12)
+
+Convert counts  Y 2. Demand estimation needed?
+  to demand  N
+
+  3. Establish spatial and time units
+
+Adjust demands Y 4. Demand adjustments?
+  N
+
+  5. HCM segment capacity
+  estimation (Ch. 23, 24, or 25)
+
+Adjust capacities Y  5. Adjust HCM
+  capacities?
+  N
+
+  6. Adjusted d/c matrix
+
+7. Undersaturated segment SM  All segment  N 8. Oversaturated segment SM
+  and MOEs  d/c's ≤ 1.0?  and MOEs
+
+  Y  Y Feasible?
+  N
+9. Directional facility MOE
+estimation by time interval  End
+
+Notes:
+d/c = demand-to-capacity ratio.
+SM = service measure.
+MOE = measure of effectiveness.
+
+COMPUTATIONAL STEPS  Chapter 22 - Freeway Facilities
+  1. Collect input data for the directional facility. Provide guidance on limits of  Applications
+
+congestion in time and space. Document any demand and capacity adjustments that
+should be considered in the analysis. The input data define the time-space domain of the
+
+  22-19
+Highway Capacity Manual 2000
+
+Time steps can range  freeway facility. The data include the specification of the facility in terms of length,
+from 15 to 60 s  number of sections, and geometric attributes. Exhibit 22-12 summarizes the inputs
+  required to perform an analysis.
+
+  EXHIBIT 22-12. REQUIRED INPUT DATA FOR FREEWAY FACILITY ANALYSIS
+
+  Geometric Data for Each Section
+  • Section length (m)
+  • Mainline number of lanes
+  • Mainline average lane width (m)
+  • Mainline lateral clearance (m)
+  • Terrain (level, rolling, or mountainous)
+  • Ramp number of lanes
+  • Ramp acceleration or deceleration lane length (m)
+
+  Traffic Characteristics Data
+  • Mainline free-flow speed (km/h) (optional)
+  • Vehicle occupancy (passengers/veh)
+  • Percent trucks and buses (%)
+  • Percent recreational vehicles (%)
+  • Driver population (commuter or recreational)
+  • Ramp free-flow speeds (km/h)
+
+  Demand Data
+  • Mainline entry demand for each time interval
+  • On-ramp demands for each time interval
+  • Off-ramp demands for each time interval
+  • Weaving demand on weaving segments
+
+  2. Check whether adjustments from counts to estimate demands are needed. If the
+  demands represent actual counts from a freeway facility (for example, from a freeway
+  management system) and the system is experiencing oversaturation, an adjustment from
+  counts to demands may be carried out in this step.
+
+  3. Establish spatial and time analysis units. Convert sections to segments as
+  described, calculate time step for oversaturation, and establish other time units such as
+  time intervals and analysis duration.
+
+  Spatially, the HCM analysis unit is a segment. On the basis of the definitions of ramp
+  influence areas (450 m upstream of off-ramps and downstream of on-ramps as indicated
+  in Chapter 25), sections are subdivided into segments. Similarly, weaving sections are
+  defined as having a maximum length of 750 m. The analysis duration can vary from one
+  to twelve 15-min intervals. Demand and capacity rates are fixed during an interval. The
+  time step for oversaturation analysis depends on the length of the shortest segment on the
+  facility and can vary from 15 to 60 s.
+
+  4. The procedure permits manual adjustments of segment demands. This may
+  encompass the application of overall growth factors to test the adequacy of the facility to
+  meet projected demands or simulate the effect of demand diversion onto adjacent
+  facilities. The factors can be applied to individual origin and destination points.
+
+  5. Calculate segment capacity using HCM methods and adjust capacity as needed.
+  Using the segment analysis methodologies of Chapters 23 through 25, segmentwide
+  capacities in vehicles per hour are computed. These values are assumed to reflect normal
+  capacity conditions. If the user is interested in adjusting capacities to reflect field
+  measurements or to simulate a capacity reduction occurrence such as an incident or a
+  work zone, a capacity adjustment factor is introduced. This factor changes both the
+  capacity value and the speed-flow relationship for the affected segment during the
+  affected time intervals.
+
+Chapter 22 - Freeway Facilities  22-20
+Applications
+  Highway Capacity Manual 2000
+
+  6. Generate an adjusted demand-to-capacity (d/c) matrix by segment and time
+interval. Identify whether this facility is completely undersaturated or has some
+oversaturated time intervals.
+
+  Each segment demand is divided by its corresponding capacity in each time interval.
+The resulting d/c matrix is then used to evaluate the feasibility of the analysis and to
+identify which intervals have oversaturated segments.
+
+  The segment procedures are applied to undersaturated time intervals. The analyst is
+referred to the speed, density, and LOS estimation methods for basic, weaving, and ramp
+segments in Chapters 23, 24, and 25, respectively.
+
+  7. For the first time interval with d/c > 1.0 for some segment, begin using the
+reduced time step to carry out all computations. Calculate the position of bottlenecks and
+queues in each time step. Use appropriate flow regimes (undersaturated for segments with
+no queues and oversaturated for segments with queues) to estimate speeds and densities
+on each segment. Aggregate measures of effectiveness (MOEs) for each segment by time
+interval. Proceed to the next time interval until all time intervals in the period are
+analyzed.
+
+  The purpose of the oversaturated analysis is to calculate the actual flows on and the
+number of vehicles occupying each segment. By comparing the current number of
+vehicles on a segment with the number of vehicles that would be expected on it at the
+background density, segment queues can be identified and tracked each minute. The
+smaller time step is necessary to ensure that fast-growing queues do not jump over a short
+segment if not updated frequently.
+
+  8. The bottleneck analysis begins by setting the flow-to-capacity ratio on that
+segment to 1.0. The unmet demand is transferred to the next time interval, and the
+reduced flow rate through the bottleneck is propagated upstream in the form of a queue
+whose density depends on the severity of the bottleneck. When an upstream on-ramp is
+encountered, its flow rate is calculated on the basis of the level of congestion on the
+segment immediately downstream of the on-ramp and the magnitude of mainline and on-
+ramp flows at that node. Downstream of the bottleneck, flows are metered at the
+bottleneck capacity rate, which may result in starving subsequent mainline segments and
+off-ramp flows. Only when the bottleneck effects clear (when demands drop or capacity
+increases) do the flows on downstream segments increase to serve the unmet demand
+from the preceding time interval. Given adequate time, the flows will catch up with
+demand, and undersaturated operations will resume.
+
+  9. Aggregate individual segment MOEs into a directional facility MOE for each
+time interval. Examples include average speed, density, vehicle kilometers of travel
+(VkmT), vehicle hours of travel (VHT), vehicle hours of delay (VHD), and travel time.
+Facilitywide performance measure calculations by time interval are detailed in
+Appendix A.
+
+TRAFFIC MANAGEMENT STRATEGIES
+
+  The methodology for freeway facilities has incorporated procedures for the
+assessment of a variety of traffic management strategies. The methodology permits the
+modification of previously calculated cell demands or capacities (or both) within the
+time-space domain to assess a traffic management strategy or a combination of strategies,
+as described below.
+
+  1. A growth factor parameter has been incorporated to evaluate traffic performance
+when traffic demands are higher or lower than the demand calculated from the traffic
+counts. This parameter would be used to undertake a sensitivity analysis of the effect of
+demand on freeway performance and to evaluate future scenarios. In these cases, all cell
+demand estimates are multiplied by the growth factor parameter.
+
+  2. The effect of a predetermined ramp-metering plan can be evaluated by modifying
+the ramp roadway capacities. The capacity of each entrance ramp in each time interval is
+changed to the desired metering rate. This feature permits both evaluation of a
+
+22-21  Chapter 22 - Freeway Facilities
+  Applications
+Highway Capacity Manual 2000
+
+  predetermined ramp-metering plan and experimentation to obtain an improved ramp-
+  metering plan.
+
+  3. Freeway design improvements can be evaluated within this methodology by
+  modifying the design features of any portion or portions of the freeway facility. For
+  example, the effect of adding an auxiliary lane at a critical location can be assessed. The
+  effect of adding merging or diverging lanes can also be assessed.
+
+  4. Reduced-capacity situations can be investigated. The capacity in any cell or cells
+  of the time-space domain can be reduced to represent situations such as construction and
+  maintenance activities, adverse weather, and traffic accidents and vehicle breakdowns.
+
+  5. An independent HOV facility can be evaluated with this methodology. The
+  analysis is similar to that of a freeway facility without an HOV lane. The methodology
+  does not permit the analysis of concurrent HOV lanes.
+
+  User demand responses such as spatial, temporal, modal, or total demand responses
+  caused by a traffic management strategy are not automatically incorporated into the
+  methodology. On viewing the new freeway traffic performance results, the user can
+  modify the demand input manually to evaluate the effect of anticipated demand
+  responses.
+
+  As stated earlier, these traffic management strategies can be evaluated individually or
+  in combinations. For more complex traffic management strategies for which the chapter
+  methodology is not appropriate (such as concurrent HOV-lane freeways or significant
+  demand responses), refer to Part V of this manual.
+
+Chapter 22 - Freeway Facilities  22-22
+Applications
+  Highway Capacity Manual 2000
+
+Problem No.  IV. EXAMPLE PROBLEMS
+
+  1  Description
+  2  Fully undersaturated directional freeway facility with 6 sections and 11 segments
+  3  Application of demand growth factors resulting in recurring oversaturation
+  4  Treatment of oversaturation by means of geometric improvements of the facility
+  5  Effect of temporary capacity reduction due to incident
+  6  Effect of reduced incident response time on freeway facility operation
+  Effect of ramp metering on freeway facility operation
+
+  22-23  Chapter 22 - Freeway Facilities
+  Example Problems
+Highway Capacity Manual 2000
+
+  EXAMPLE PROBLEM 1
+
+  The Facility The freeway facility is operating under capacity, and traffic is expected
+  to grow in the near future.
+
+  The Question What is the capacity and level-of-service profile for the given directional
+  freeway facility under existing conditions?
+
+  The Facts
+  √ The facts known about this freeway facility are shown in the exhibits below.
+  √ Acceleration and deceleration lanes are 100 m long.
+  √ Each time interval is 15 min, and all demands are expressed as hourly flow rates during
+  each time interval.
+
+  SYSTEMWIDE INPUT DATA REQUIREMENTS
+
+  1  2  3  4  5  6
+
+  O  FFS = 110 km/h  D
+
+  70 km/h  FFS 60  FFS 70 km/h  FFS 60 km/h  6
+  FFS  km/h  FFS 70 km/h  1150
+
+  Section Characteristics  1  Freeway Section  3
+  Length (m)  300  110
+  Number of lanes  3  2  3  4  5  1.20
+  Mainline FFS (km/h)  110  N/A
+  Vehicle occupancy (pass/veh)  1.20  2200  800  700  350  N/A
+  Lane width (m)  N/A  3  3  3
+  Lateral clearance (m)  N/A  110  3  3  110  0
+  Trucks (%)  3  1.20  Level
+  RVs (%)  0  1.20  110  110  N/A  Commuter
+  Terrain  Level  N/A  N/A
+  Driver population  Commuter  N/A  1.20  1.20  3
+  3  0
+  Note:  0  N/A  N/A  Level
+  Each ramp has one lane.  Level  Commuter
+  N/A - not available.  Commuter  N/A  N/A
+
+  3  3
+
+  0  0
+
+  Level  Level
+
+  Commuter Commuter
+
+  INPUT DEMANDS
+
+  On-Ramp  Off-Ramp
+
+  Time Entry Mainline O1  O2  O3  D1  D2  Exit Mainline
+  (D)
+  Interval  (O)
+  6440
+  1  4796  756  1456  648  656  560  6480
+  6572
+  2  4772  973  1164  636  588  477  5719
+  4796
+  3  4700  1002  1712  596  636  802
+
+  4  4164  555  1548  580  520  608
+
+  5  3727  485  1180  484  632  448
+
+  Outline of Solution  The facility is analyzed assuming undersaturated conditions.
+
+  First, the facility is divided into segments to enable the application of the segment analysis
+
+  methods in Chapters 23 through 25. The performance results are summarized by each
+
+Chapter 22 - Freeway Facilities  22-24
+Example Problems
+  Highway Capacity Manual 2000
+
+time interval and across time intervals using appropriate tables and charts. The steps
+below follow Exhibit 22-11.
+
+Steps
+  1. Collection of input data: The input data are summarized in the tables. Note the
+
+heavy ramp demand volumes for On-Ramp O2, which exceed 1,700 veh/h in Time Interval
+3. These demands are still below the ramp roadway capacity, estimated at about 2,000
+veh/h for the ramp FFS of 70 km/h. Thus, whereas there may be no capacity problem on
+the ramp roadway proper, these demands may cause a merge problem on the segment
+immediately downstream of that ramp.
+
+  2. Demand estimation: No adjustments are necessary at this stage since the facility
+has been observed to operate under capacity.
+
+  3. Establishment of spatial and time units: Using the definition of ramp influence area,
+the original 6 sections are further subdivided into 11 analysis segments. The conversion
+is shown graphically in the exhibit below. Section 4, with no auxiliary lanes and less than
+900 m long, contains an overlap segment (7) that is labeled R. This segment’s
+performance is calculated as the worse of Segments 6 and 8. The time intervals have
+been set at 15 min. Furthermore, since the shortest segment length is 250 m, a time step
+of 1 min is sufficient to carry out the oversaturated analysis.
+
+  4. Demand adjustments: The values in the Input Demands table are used directly to
+calculate segment demands by adding or subtracting ramp demands at each section.
+
+  CONVERSION OF FACILITY SECTIONS INTO SEGMENTS
+
+Section 1  2  3  4  5  6
+
+Length 300 m  2200 m  5.5 km  700 m  350 m  1150 m
+  800 m
+
+Segment #  1  2  3  4  5  6  78  9  10  11
+Type  B  OFR  B  B  ONR  B
+Length  300 m  ONR B  450 m  800 m  ONR R OFR  350 m  450 m  700 m
+
+  450 m 1300 m  250 m 200 m 250 m
+
+  5. HCM segment capacity estimation and adjustment: The facility has five basic
+freeway segments (numbered 1, 3, 5, 9, and 11), three on-ramp segments (2, 6, and 10),
+two off-ramp segments (4 and 8), and the overlap segment (7). For each segment type,
+the appropriate HCM chapter (23 or 25) is consulted and the segment capacity computed.
+The major difference in this chapter is that all segment capacities are expressed in units of
+vehicles per hour. No adjustments of the estimated capacities are needed.
+
+  6. Adjusted d/c matrix: After capacities are computed, the d/c matrix is generated for
+each segment and time interval. Both segment capacity and d/c ratios are shown in the
+exhibit below. As suspected, all segments have d/c ratios less than 1.0, and therefore a
+complete undersaturated analysis can be carried out. A review of the matrix indicates that
+Time Intervals 1 through 3 are critical and that Segments 6 through 8, 10, and 11 have d/c
+ratios above 0.90 during those three intervals. Traffic demands subside considerably in
+Time Intervals 4 and 5, with a maximum d/c ratio of 0.83 on Segment 8 in Time Interval 4.
+
+  22-25  Chapter 22 - Freeway Facilities
+  Example Problems
+

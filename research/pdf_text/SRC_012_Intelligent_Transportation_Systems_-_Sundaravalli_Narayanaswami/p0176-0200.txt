@@ -1,0 +1,766 @@
+System Design  157
+
+managing ITS equipment at the non-limited access roadways and the East
+River bridges; (ii) MTA Bridges and Tunnels is responsible for all major
+toll bridges and tunnels in New York City; and (iii) MTA Transit operates
+the bus systems and subway in New York City. The New York City regional
+ITS architecture covers all modes of surface transport and is called the New
+York City sub-regional ITS architecture (NYCSRA). It was formed and
+administered by the New York State Department of Transportation
+(NYSDOT). All ITS initiatives in New York City are based on the
+NYCSRA project's conceptual design. One such project is the Real-Time
+Passenger Information (RTPI) program, wherein the NYCDOT undertakes
+replacement of the standard bus stop poles with Real-Time Passenger
+Information (RTPI) poles to display real-time location and arrival
+information of the buses along with their routes. These poles are also linked
+to the “NYC Link NYC'' kiosk to facilitate such real-time information
+access to even those who are not present at the bus stops. The bus
+information is also available in audible format to assist visually impaired
+passengers. The RTPI program acquires real-time transit schedule
+information from the servers located at the Transit Management Centre,
+operated by MTA NYC Bus, through the MTA-INFO website. The
+customized service package for the New York City RTPI program is
+illustrated in Figure 3.3.6.
+158  Chapter 3.3
+
+Figure 3.3.6: Customized Service Package for the New York City Real-
+Time Passenger Information Program
+Source: NYC Subregional ITS Architecture.
+http://www.consystec.com/nycsra2018/web/spinstance.htm?id=TI01-02
+System Design  159
+
+  References
+
+http://www.arc-it.net/
+https://frame-next.eu/about-page-builder/
+List of service packages under ARC-IT 9.0
+Source: https://www.arc-it.net/html/servicepackages/servicepackages-
+
+  areaspsort.html
+  CHAPTER 3.4
+
+  CAPACITY PLANNING
+
+  Overview
+
+Tiger Brennan Drive is a major arterial road in the western suburbs of
+Darwin, Northern Territory, Australia. The road travels southeast to the east,
+starting from Darwin CBD toward Darwin's eastern suburb of Berrimah,
+then continues to a connection with the Stuart Highway at Palmerston.
+Exhibit 3.4.1a shows the location of Tiger Brennan Drive and the
+surrounding areas. Major roads intersecting Tiger Brennan Drive include
+Amy Johnson Avenue, Woolner Road, Berrimah Road, and Tivendale
+Road. Most of the major operations on Tiger Brennan Drive (TBD) are
+controlled by traffic lights. As the Stuart Highway is busy, the Tiger
+Brennan Drive provides the most direct route for freight coming to and from
+the East Arm Port. The East Arm Port Access Route was a three-stage
+project. The single carriageway underwent a major extension, in 2010, and
+was upgraded to dual carriageway standard. The aim of the project was to
+ease traffic congestion, improve safety, and reduce travel times between
+Darwin and Palmerston. In late 2012, work commenced on further upgrades
+to widen the 12 km section between McMinn Street, in the Darwin CBD,
+and Berrimah Road to four-lane-dual-carriageway standard.
+
+The Project
+
+The project was one of the single largest projects in the Northern Territory
+and the territory’s largest ever road and bridge project. The project was built
+in three stages. Stage one of the project included the improvement of
+Berrimah Road (between TBD and Wishart Road, as seen in Exhibit 3.4.1),
+along with the creation of dual turning lanes to ease congestion. It was
+valued at $10 million and was completed in February 2009. The second
+stage of the project involved the extension of TBD from Berrimah Road to
+the Stuart Highway (Exhibit 3.4.1b shows a zoomed-in image of the
+location. The red line shows the extended TBD) and was valued at $89
+million. It includes 7.5 km of four-lane freeway and a grade-separated
+interchange at the junction of the Stuart Highway, Roystone Avenue, and
+Capacity Planning  161
+
+TBD extension. Stage three of the project was to construct the Berrimah
+Road Railway Overpass and was valued at $11 million. The case study
+focuses on stage two of the project, which is the TBD extension. The
+government of the Northern Territory (NT) has chosen the early contractor
+involvement (ECI) procurement method to deliver the project. ECI
+contracting is a process where the designer and constructor work together
+from the beginning, in a contractual relationship with the client, to scope
+and price a project in the first stage and, then, to design and construct a
+project in the second stage. Part one of the project was to plan and design
+the project, which included service relocations and ordering of long-lead
+items. Part two was the construction stage. The reasons for selecting this
+method according to the Infrastructure Planning and Delivery: Best Practice
+Case Studies (2010) are given below:
+
+  1. The opportunity for the contractor to bring their own experiences to
+  the project during the detailed design stage of the contract.
+
+  2. Synergies arising from the participation of a high-performance
+  design and construction team working in cooperation with the
+  principal.
+
+  3. Better integration of specific construction methodologies into design
+  aspects.
+
+  4. It provides greater flexibility and time allocation for planning the
+  project.
+
+  5. Possibility of early allocation and acquisition of critical construction
+  materials.
+
+  6. Negotiated apportionment of risk.
+
+  Objectives
+
+The largest and the most significant section of the East Arm Port Access
+Route was the extension of the TBD. The main aim of the project was to
+improve the traffic flow to East Arm Port from rural areas and Palmerston.
+It aimed to improve road safety, reduce travel time, and ease traffic
+congestion. It was predicted that there will be 92,500 vehicles travelling
+along the same route in 2031. This extension will help in meeting this
+predicted demand efficiently. The project objectives were
+
+  1. To enhance freight capacity
+  2. To improve corridor capacity between Darwin and Palmerston and
+
+  rural areas
+162  Chapter 3.4
+
+The port is the only important port on Australia’s north coast, which exports
+live cattle and is also significant for offshore and onshore oil and gas
+projects. The rapid growth in exploration, mining, oil, and iron ore, as well
+as gas projects, have increased the demand for the port. As the demand
+grows, the bottlenecks to and from the port should be addressed, including
+the issues concerning the safety of road trains mixed with commuter traffic.
+The extension of the TBD has been designed to allow for road train access
+to the port.
+
+  Benefits from the Project
+
+As there was continuous development in the East Arm Port Route, there was
+a need for increased capacity on the TBD. Therefore, the project was
+designed to cater for long-term growth. The benefits attained from the TBD
+extension are listed below:
+
+  1. Capacity: It provided an efficient two-lane, dual carriageway road
+  for the freight traffic, extending Tiger Brennan Drive to the Stuart
+  Highway, including a grade-separated interchange. It increased the
+  capacity to cater for future growth, reduced the travel time, and
+  improved the reliability and efficiency of the road.
+
+  2. Safety: It provided a high-level of operational safety as well as safety
+  for construction workers, and vehicular and pedestrian traffic during
+  construction, operation, and maintenance. It also improved the
+  functionality of existing intersections and access. Exhibit 3.4.2
+  shows the data analysis of the TBD extension.
+
+  3. Cultural Heritage and Environmental Impact: It safeguarded cultural
+  heritage and environmental values by minimizing community and
+  environmental impacts, and by building safeguards into the design.
+
+  4. Targeted Community Consultation: It engaged the community to
+  make sure that relevant local issues were understood and addressed
+  in design and construction projects, particularly the issues relating to
+  traffic management.
+
+  5. Job Creation: It created jobs during construction. Since an ECI
+  procurement method was implemented on the project, it tendered
+  several small contracts and provided an opportunity for local
+  business to get involved.
+Capacity Planning  163
+
+  Policy and Planning
+
+The East Arm Port Access Route had been in the pipeline for over twenty
+years. In the 1970s, strategic planning for the Darwin to Palmerston corridor
+identified the need for continual development of the arterial network linking
+the Stuart Highway and TBD to the northern suburbs, and to provide direct
+access to the new East Arm Port for freight entering and exiting Darwin. In
+September 1987, the Department of Transport and Works Road division
+released the Darwin Arterial Roads—Tiger Brennan Drive Planning
+Statement. The Statement was, “to provide an arterial network to effectively
+connect Palmerston and the Darwin Central Business District as well as
+providing satisfactory levels of access along the corridor for freight and
+commuter traffic.” The East Arm Port Access project responded to this need
+outlined in the statement. The bilateral agreement between the NT and the
+Australian Government relating to the National Land Transport Plan
+(AusLink Investment Program) outlined upgrade works to Tiger Brennan
+Drive/Berrimah Road-East Arm access. Auslink is a former Australian
+Government land transport funding program that operated between 2004
+and 2009. The TBD project is a part of that agreement (Infrastructure
+Planning and Delivery: Best Practice Case Studies 2010).
+
+  Reasons for Initiating the Project
+
+The development of an alternate access route to the port had many reasons.
+Increased traffic on the corridor into the city and the port was one of the
+reasons to develop the project. The investment in the port, and the growing
+demand from the mining sector for the port supported the business case to
+construct the TBD extension. The growing demand from commercial and
+passenger vehicles supported the need for the project to go ahead. A project
+proposal report (PPR) for scoping and developing the two stages was
+prepared in September 2007. The PPR outlined the status of planning the
+project and detailed the proposed expenditure for preconstruction, planning,
+investigations, preliminary design, and contract documentation. It also
+outlined the strategic fit, risks, governance and contractual arrangements,
+scoping, environmental, cultural and social issues, timing, design and
+construction features, demand forecasts, and safety, and referred to a cost-
+benefit analysis. The analysis in the PPR suggested that the project would
+result in net economic benefits.
+
+The aim of the TBD extension was to minimize the blockages and ensure
+value for money. The final design of the TBD extension included bridges,
+164  Chapter 3.4
+
+interchanges, and traffic lights that allowed for traffic to continuously flow.
+Exhibit 3.4.3 shows images of the TBD.
+
+  Environmental Approvals
+
+The DPI (Department of Planning and Infrastructure) was responsible for
+the delivery of the project. It submitted the project to the Department of
+Natural Resources, Environment, the Arts and Sports (NREATS). A joint
+environmental management plan (EMP) was developed, where one was
+done by government proponents and the other by the contractor, to set out
+the responsibilities of all parties. The Project Environmental Management
+Plan was completed in September 2009. According to the Infrastructure
+Planning and Delivery: Best Practice Case Studies (2010), the aims of the
+EMP were to
+
+  1. Capture all environmental issues associated with the TBD extension
+  project
+
+  2. Develop environmental mitigation measures to minimize the
+  potential impacts associated with the construction phase of the
+  project
+
+  3. Incorporate the environmental mitigation measures identified, into a
+  comprehensive framework to facilitate and ensure their proper
+  management through the construction stage of the project
+
+  Project Management
+
+There was a collaborative approach during the design stage of the project,
+between the client (the Department of Planning and Infrastructure), the
+project manager (the Department of Construction and Infrastructure), the
+contractor (Macmahon) and the contractor’s designers (SKM). By
+establishing detailed planning, preliminary design, risks and pricing of the
+works, each party worked together to deliver the outcome. Several
+workshops facilitated the collaborative approach. The two groups that were
+responsible for the delivery of the construction of the TBD extension were
+the Project Management Group and Project Leadership Group. The Project
+Management Group investigated the day-to-day management of the project
+delivery, and it reported to the Project Leadership group, which has senior
+representatives. The Northern Territory Government aimed at achieving
+better outcomes in the delivery of the TBD extension through early
+engagement with the contractor and constant collaboration between the
+departments and the contractors.
+Capacity Planning  165
+
+  Conclusion
+
+The strategic plans of Darwin city considered the need for a link between
+two major transport nodes. It also focused on the retail and commercial
+employment activities of Palmerston and Darwin. The project was executed
+to address increasing traffic flows, capacity issues, and delays between these
+two areas and to the East Arm Port. Now, the Tiger Brennan Drive provides
+an alternative primary route between Palmerston and the Darwin CBD,
+running to the south and roughly parallel to Stuart Highway. The project
+also, in turn, supported the business case that would help to relieve these
+capacity constraints and improve the efficiency and connectivity to the East
+Arm Port. One significant feature of this project is that there was good
+coordination among different departments, which is necessary for any
+project to be successful. The interaction between the delivery agency, the
+Department of Construction and Infrastructure, and the client (the
+Department of Lands and Planning) were well coordinated. They ensured
+well-informed decision making and day-to-day management. Finally,
+having all relevant parties involved in regular project meetings reduced the
+time required to make decisions.
+
+  References
+
+Bennett, John. 2015. Traffic Impact Assessment: 2015 Workforce and
+  Construction Activity Update. Australia: Jacobs Group (Australia) Pty
+  Limited.
+
+Infrastructure Planning and Delivery: Best Practice Case Studies. 2010.
+  Australia: Department of Infrastructure and Transport.
+166  Chapter 3.4
+
+Exhibit 3.4.1a: The location of Tiger Brennan Drive and the
+Surrounding Areas
+  Capacity Planning  167
+
+Exhibit 3.4.1b: A Zoomed-in Image of the Location
+
+Source: Google Maps
+168  Chapter 3.4
+
+Exhibit 3.4.2: Data Analysis
+
+Tiger Brennan Drive to Stuart Highway
+
+  2005 to 2010 2009 to 2014  Difference
+  -9
+Total Number of 25 16
+crashes  changed
+
+Most common crash  Rear End  Angle  -2
+type  (36%)  Collision  -7
+  (44%)  changed
+  -1
+Crashes at minor  13 (52%)  11 (69%)
+intersections
+
+Crashes at mid-block 12 (48%)  5 (31%)
+
+Most common time  12pm – 3pm 6am – 9am
+
+interval day  (32%)  (38%)
+
+Crashes with alcohol  1 (4%)  0 (0%)
+present
+
+Source: Based on the data from Bennett (2015)
+Capacity Planning  169
+
+Exhibit 3.4.3: Images of Tiger Brennan Road
+
+Source: Infrastructure Planning and Delivery: Best Practice Case Studies
+(2010).
+  CHAPTER 3.5
+
+  OPERATIONS PLANNING AND CONTROL
+
+  Introduction
+
+The application of advanced electronic and communication technologies,
+along with management strategies, in an integrated manner to provide a
+traveler with all the necessary information and ensure the safe, reliable, and
+efficient use of transportation systems are known as Intelligent Transport
+Systems (ITS). These systems mainly consist of drivers, passengers,
+managers, vehicles, and operators, which interact with each other and the
+environment. These elements are linked to complex infrastructure systems,
+which will help in sensing, communication, computation, and control, and
+this improves the safety and capacity of transport systems. The transmitted
+information indicating actual road conditions is precise and timely with
+minimal human errors. Dynamic control systems will be continually
+responding to the interaction of vehicles and the roadway. The future
+mobility of Kentucky can be enhanced by ITS because of the rapidly
+developing electronic technologies and control systems. A significant role
+is performed by these systems in efficiently accommodating and managing
+increasing travel demands.
+
+  Benefits of ITS Program
+
+Application of ITS has many benefits, where it can improve safety, reduce
+congestion, and improve mobility, while minimizing environmental effects.
+Various measures of effectiveness can be used to quantify ITS benefits. ITS
+programs improve the safety and mobility of the traveler, the efficiency of
+the system, productivity of transportation providers, and conservation of
+energy and the environment. Current problems can be addressed using ITS
+tools to meet the future demands through proper planning and management
+of transportation systems. By the effective integration of advanced
+technologies for the communication and processing of information into
+transportation systems, direct benefits can be recognized. Preparation of an
+inclusive and well-developed plan by including ITS concepts and technologies
+Operations Planning and Control  171
+
+into Kentucky’s transportation planning process will offer significant
+benefits to the whole transportation system.
+
+  Purpose of ITS Business Plan
+
+This paper presents a business plan for the state of Kentucky, located in the
+east-central region of the United States. The ITS business plan is prepared
+by referring to the goals outlined in the strategic plan; it will mention the
+estimated costs and optimal implementation schedule. The business plan
+addresses infrastructure requirements to enable state-wide ITS deployment.
+It has been verified that the business plan prepared is compatible with the
+Kentucky Transportation Cabinet’s Six-Year Plan of proposed projects. The
+purpose of the prepared plan is to identify projects for deployment that will
+accomplish the goals given in the strategic plan over the next six years. It
+sets an objective, briefly describes the project, calculates the cost, identifies
+the location, and prepares a schedule for each identified project. The
+business plans will be re-evaluated and updated every two years.
+
+  Current ITS Deployment in Kentucky
+
+Kentucky started using ITS in 1982 with the implementation of a
+computerized traffic signal system, a closed-circuit cameras system in
+Lexington, and vehicle detection loops. The state-wide fiber-optic network
+helps with communication between the state’s ITS systems; it is a shared
+resource project with one or more telecommunication providers, where the
+fiber is installed along the right of way of major roadways throughout the
+state. Substantial infrastructure for commercial vehicle operations (CVO)
+has also been implemented by Kentucky for the Commercial Vehicle
+Information Systems and Networks (CVISN) program. Road Weather
+Information Systems (RWIS) are implemented in eight different areas
+around the state for providing information to a centralized location.
+Automatic vehicle identification (AVI) readers are equipped for six
+different weigh stations, which allow electronic identification and mainline
+screening of transponder-equipped commercial vehicles. All of Kentucky’s
+weigh stations have been connected to a wide area network (WAN), which
+allows high-speed data communication and internet access. To covertly
+monitor commercial vehicle traffic from a remote location by the
+enforcement personnel, a remote monitoring system (RMS) has been
+installed in Northern Kentucky. Presently, there are many ITS-related
+projects that are in operation or development throughout the state, involving
+public transportation, CVO, traffic management, and traveler information.
+172  Chapter 3.5
+
+For the system to function as intended, most of the ITS technologies require
+infrastructure like electric power and a communications connection. Electric
+power is needed to power the equipment, whereas the communications
+connection helps on-site equipment to send/receive information from other
+systems. Solar power can be a valid option for some technologies with low
+power requirements. Based on cost-benefit analysis, the best communication
+option is selected for each project, since there are many options for
+communications infrastructure. The internet has been identified as an
+attractive option for communications, especially in rural areas. For this
+option, each area will need a phone line and an account with an internet
+service provider. The infrastructure components placement depends on a
+project-by-project or site-by-site basis.
+
+  Development of ITS Business Plan
+
+The process of developing the ITS business plan began with the ITS
+strategic plan, which was completed and published in 2000. A twenty-year
+vision for Kentucky was given, along with the identification of key goals
+for each of the six functional areas of ITS. The six functional areas are
+advanced public transportation systems (APTS), advanced rural transportation
+systems (ARTS), advanced traffic management systems (ATMS), advanced
+traveler information systems (ATIS), advanced vehicle safety systems
+(AVSS), and CVO. The goals were specifically prioritized and established
+for each functional area (Exhibit 3.5.1 shows the goals developed for each
+functional area of ITS).
+
+  National ITS Architecture
+
+The National ITS Architecture was used in the development of the business
+plan. It is a blueprint that guides ITS implementation in the United States.
+A framework for ITS deployment is provided, which specifies how the
+various systems will interface and exchange data, and how the necessary
+functionality will be allotted to various system elements. This helps in
+ensuring that there is interoperability among systems, a continuous flow of
+information, regulation of equipment, multiple vendors for technology, and
+maximum benefits from early lessons learned. ITS is described by the
+national architecture in terms of thirty-one user services, which are broken
+down into sixty-three market packages (market packages help solving real-
+world transportation problems to meet specific needs). The first step is to
+develop a list of projects for the business plans. For this, a matrix was
+prepared where the goals defined in Kentucky’s ITS Strategic Plan were
+  Operations Planning and Control  173
+
+“mapped against” the market packages in the national architecture to decide
+which market packages were appropriate for meeting Kentucky’s goals.
+Exhibit 3.5.2 shows the matrix of strategic plan goals and market packages.
+
+Through this process, it was found that fifty market packages were required
+to implement all the goals within the strategic plan. The Kentucky
+Transportation Center (KTC) project staff simplified the list by eliminating
+the market packages that are to be implemented by the private sector or
+different divisions of the state government, and those that could not
+reasonably be implemented within a six-year time frame. After the
+shortlisting, the remaining market packages were prioritized based on
+factors like stakeholder input, engineering judgment, and the number of
+goals met by each market package. A list of thirteen primary market
+packages, three secondary market packages, and three additional user
+service areas for consideration were presented to the Study Advisory
+Committee (SAC) by the KTC project staff. The SAC, then, discussed and
+finalized a list for the business plan. The three user service areas were not
+included in the proposed market packages.
+
+Market Packages Approved for Inclusion in the Business Plan
+
+ATIS 1  Broadcast Traveler Information
+
+ATIS 2  Interactive Traveler Information
+
+ATMS 1 Network Surveillance
+
+ATMS 2 Probe Surveillance
+
+ATMS 3 Surface Street Control
+
+ATMS 6 Traffic Information Dissemination
+
+ATMS 8 Incident Management System
+
+ATMS 13 Standard Railroad Grade Crossing
+
+ATMS 18 Road Weather Information System
+
+EM 1  Emergency Response
+
+CVO 3  Electronic Clearance
+
+CVO 4  Commercial Vehicle Administrative Process
+
+CVO 7  Roadside CVO Safety
+
+CVO 10 Hazardous Material Management
+
+APTS 1  Transit Vehicle Tracking
+
+AD 1  ITS Data Mart
+
+Table 3.5.1: Approved Market Packages
+Source: Author’s compilation
+Note: Highlighted market packages will be included as a part of the business
+plan
+174  Chapter 3.5
+
+The approved list of market packages (as given in Table 3.5.1) and the
+inputs from the SAC were used by the KTC project staff to develop a list of
+projects for the business plan. That list was revised after consulting the staff
+from the KTC’s ITS Branch. The list of projects recommended for
+implementation in Kentucky over the next six years is given in Table 3.5.2.
+
+S.N Project Title
+
+o
+
+1  511 Deployment
+
+2  ARTIMIS
+
+3  Commercial Vehicle Electronic Credentials
+
+4  Commercial Vehicle Electronic Screening
+
+5  Detailed Reference Market Expansion
+
+6  Detour Route Development
+
+7  I-75 Incident Detection and Probe Surveillance
+
+8  Informational Course on ITS for Law Enforcement Agencies
+
+9  Informational Kiosks
+
+10 Lexington Traffic Management and Traveler Information
+  Systems
+
+11 Road Weather Information System Expansion
+
+12 Rural Incident Management Systems
+
+13 Signal Coordination
+
+14 Statewide Road Reporting System
+
+15 Strategic Planning and Implementation in Rural Kentucky
+
+16 Transit System Improvement
+
+17 TRIMARC
+
+18 Virtual Weigh Station
+
+19 Work Zone Safety
+
+Table 3.5.2: List of Projects Recommended for Implementation in
+Kentucky
+Source: Author’s compilation
+
+The total estimated cost was nearly $80M. Cost estimates, by fiscal year,
+for these projects are given in Exhibit 3.5.3. The spent money and on-going
+maintenance costs have not been included as part of the estimates. The
+Operations Planning and Control  175
+
+source of funding for these projects is anticipated to be local agencies. The
+state is divided into twelve highway districts, by the KTC, to optimize
+building, accountability, and maintenance of transportation systems present
+within the state. Exhibit 3.5.4 shows a summary of costs for the twelve
+highway districts. The highway district map is given in Exhibit 3.5.5.
+Kentucky’s ITS Business Plan is updated every two years to reflect
+variations in needs and priorities that may occur.
+
+  ITS Marketing
+
+There are many factors that oppose the successful implementation of ITS.
+These include inherent human resistance to change, a natural dislike
+towards risk-taking, a high level of comfort with traditional methods, and
+the fear of unknown approaches. While implementing ITS technologies,
+both technical and marketing aspects are taken care of. Broadly, three types
+of stakeholders are involved in ITS, each with different motivations and
+objectives. The first stakeholder group are the “decision makers,” who
+establish organizational goals and priorities, and allocate funds based on the
+capabilities and benefits of ITS. The second set are the “commuters” or end
+users. Their endorsement is pertinent for a successful and sustainable ITS
+implementation and, therefore, their requirements drive and influence
+systems developed by the decision makers. There is also a need to educate
+users on the types of technologies, the effectiveness of the system, and their
+benefits, as the users need to have some knowledge of these technologies to
+properly utilize them. The final target group is the “implementers and
+operators.” They are the people within the public/private sector agencies,
+who implement, operate, and maintain the systems. It is important to gain
+the acceptance and buy-in of all the stakeholders for a successful
+implementation of ITS. Therefore, ITS technologies and systems should be
+appropriately marketed to all stakeholders. Awareness must be created of
+the innovative ITS applications among the stakeholders. ITS marketing
+should help complete information dissemination to all stakeholders and
+assist in framing stakeholder-centric plans and strategies. Stakeholder
+consultation sessions should be held to help clarify their concerns, address
+their queries, and plan the systems, as per their requirements. Kentucky’s
+ITS program was considered very effective in marketing the state ITS
+initiatives to all stakeholders.
+176  Chapter 3.5
+
+  Operation and Maintenance (O&M) Challenges
+
+Challenges in the O&M of systems must be meticulously addressed. Some
+of the significant O&M challenges related to ITS technologies are discussed
+below:
+
+  1. Existing systems and agencies must be well integrated in
+  sophisticated and advanced ITS operations.
+
+  2. The O&M personnel are burdened with the responsibilities of
+  deploying the new systems; roles, responsibilities, and accountability of
+  tasks should be established.
+
+  3. Since the O&M of advanced systems require new skills and
+  capabilities, there will be a need to train existing personnel or engage
+  new personnel.
+
+Therefore, new ITS projects should completely plan the O&M of the
+system, to optimally allocate roles and responsibilities, outline capacity
+building, plan training requirements, select suitable maintenance
+approaches, and enforce standardization requirements. All the activities
+should involve all groups of stakeholders and their buy-in must be ensured.
+
+  ITS Organizational Structure
+
+Understanding the organizational mission, administrative contexts,
+managerial challenges, and planning resources impact the ITS organizational
+structure, in 1999, the Transportation Cabinet formed a separate section for
+ITS, within the Department of Highways’ Division of Operations,
+constituted exclusively of ITS staff. Within the KTC, two departments
+(Highways and Vehicle Regulation) have been regularly and actively
+engaged in ITS developments. In addition, the Division of Information
+Technology (part of the Department of Administration within the
+Transportation Cabinet) provides constant support for most of the CVO
+projects. The unprecedented amount of interdepartmental coordination and
+multidisciplinary characteristics of ITS projects imposes a huge challenge
+in system development. The organizational structure can be seen in Exhibit
+3.5.6. The various ITS projects developed through partnerships and diverse
+teams illustrate the complexity levels of Kentucky’s transportation projects.
+  Operations Planning and Control  177
+
+Exhibit 3.5.1 Goals Developed for Each Functional Area of ITS
+
+Sl ITS Functional Area  Goals
+No
+
+1  Enhance state-wide emergency response capability
+
+  Improve connectivity between rural public transportation systems
+
+  Advanced Rural  Implement efficient traffic management practices for incidents and construction
+
+  Transportation Systems  activity
+
+  (ARTS)  Promote communication and information sharing among agencies
+
+  Improve signing and traveler information resources
+
+  Develop advanced vehicle safety systems
+
+2  Reduce congestion resulting from roadway hazards and adverse weather conditions by
+
+  improving traveler awareness
+
+  Improve the response time and increase the availability of emergency services
+
+  Advanced Traveler  Enhance traffic information and management services by integrating them on a
+
+  Information Systems (ATIS) regional basis
+
+  Increase the attractiveness of public transit by using better transit information systems
+
+  Increase tourism travel through better dissemination of information
+
+  Improve driver performance by using traveler information systems
+
+3  Improve and streamline CVO
+
+  Continuation of Kentucky’s leadership role in CVO
+
+  Conduct paperless CVO operations with timely, current, accurate and verifiable
+
+  Commercial Vehicle  electronic information, while maintaining security and privacy
+
+  Operations (CVO)  Enhance CVO productivity, safety, and efficiency by eliminating unsafe and illegal
+
+  operations and providing incentives for improved performance
+
+  Integrate and coordinate ITS operations and empower Kentucky
+
+  Create a CVO system that is self-sufficient, uses multiple vendors, and is user-friendly
+178  Chapter 3.5
+
+4  Develop a statewide ITS plan and an ITS architecture that identifies the needs, goals,
+
+  and plans for Kentucky
+
+  Identify and allocate available funding for ITS projects
+
+  Advanced Traffic  Resolve issues regarding public policies and laws
+
+  Management Systems  Develop a state-wide traffic operations center for collection and dissemination of
+
+  (ATMS)  traffic information
+
+  Integrate and coordinate incident management response
+
+  Provide ITS training and education
+
+  Improve safety at highway-rail crossings
+
+5  Increase funding opportunities for public transit systems
+
+  Increase the efficiency and convenience of transit services by developing statewide
+
+  Advanced Public  coordinated transit system
+  Transportation Systems  Improve the level and quality of service of transit systems to make them convenient
+  (APTS)  and attractive
+  Improve safety for transit operators and passengers while onboard transit vehicles
+
+  and at boarding and transfer stations
+
+  Increase public awareness and improve customer service
+
+6  Establish proper standards and specifications to ensure compatibility,
+
+  interoperability, and conformance to minimum requirements for all systems
+
+  Educate drivers on proper use of AVSS
+
+  Advanced Vehicle Safety  Determine the appropriate cost responsibility for deployment of AVSS
+  Systems (AVSS)  Provide adequate funding for research
+  Reduce crashes
+
+  Regulate use of potentially distracting technologies while driving
+
+  Determine how best to resolve the older driver issue
+
+  Start early planning at the state level
+
+Source: Based on the data from Walton et al. 2000.
+Operations Planning and Control  179
+
+Exhibit 3.5.2 Matrix of Strategic Plan Goals and Market Packages
+180  Chapter 3.5
+
+Exhibit 3.5.3: Cost Summary for Projects by Fiscal Year
+Operations Planning and Control  181
+
+Exhibit 3.5.4: Cost Summary for Projects by Highway Districts
+
+Source for Exhibits 2, 3 and 4:
+J.R. Walton, J.D. Crabtree, M.L. Barrett, J.G. Pigman. INTELLIGENT
+
+TRANSPORTATION SYSTEMS BUSINESS PLAN FOR KENTUCKY
+(FINAL REPORT). Research Report, Kentucky: KENTUCKY
+TRANSPORTATION CENTER, September 2001.
+

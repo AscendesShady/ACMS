@@ -1,0 +1,405 @@
+  Highway Capacity Manual 2000
+
+service-volume tables (continued)  simulation and modeling (continued)
+  TWSC intersections 17-12–13, 17-26, 17-31  performance measures in 31-18
+  unsignalized intersections 10-34–35  problems 31-15–31
+  urban streets 10-9, 10-10  project scope 31-18
+  examples 31-26, 31-28, 31-30
+shoulders*  randomness elements 31-4
+  bicycle lanes 19-4  real-time models* 31-6
+  two-lane highway use 20-45  resource requirements 31-21–22
+  turnouts 20-44–45  selection of model 31-19–22
+  widths on highways  examples 31-26, 31-28, 31-30
+  multilane  state variables 31-3
+  two-lane 12-13, 12-18, 20-5–6  stochastic models* 31-4
+  exercises 31-7–10, 31-12–16
+side streets see minor-street approaches  time-based models* 31-4
+sidewalks and walkways  exercise 31-14–16
+  traffic inputs to models 31-5
+  pedestrians 18-1  traffic simulation models 31-2–3
+  analysis 18-3–4  types of models 31-4–5
+  lengths 11-12  utility models 28-4
+  LOS criteria 11-9E, 18-4E  vehicle simulation models 31-3
+  urban 18-15  exercise 31-14–16
+  walkways 11-6, 11-12
+  skip-stop bus service* 14-11, 27-13
+  transit facilities 14-24E, 14-26, 14-27  example 14-15, 14-16E
+signals see traffic signals  problems 27-41, 27-43
+signs 2-5, 7-8–9  speed adjustment 27-22–23
+  urban bus lanes 27-18–19
+  see also intersections, AWSC; intersections, TWSC
+simulation* and modeling 31-1–3  space mean speed* 7-3
+  spacing between vehicles see gaps; headway
+  alternatives analysis 31-24  speed* 7-2–4, 7-9, 8-21–23
+  examples 31-27, 31-29, 31-31
+  bicycles 11-18, 19-3E, 19-5, 19-7E
+  applications 31-16–24  buses 27-8
+  calibration* and validation* 31-22
+  busways 27-14, 27-16
+  examples 31-27, 31-29, 31-31  HOV lanes 27-15E, 27-16
+  data assembly and input 31-22, 31-23  mixed-traffic 27-26
+  problem 27-43
+  examples 31-27, 31-29, 31-31  skip-stop 27-22–23
+  data availability 31-20–21  urban bus lanes 27-20–24
+  descriptive models* 31-5–6  density-speed relations 7-5–6
+  descriptors 31-3  freeway segments 13-3–4
+  deterministic models* 31-4  multilane highways 12-3, 12-4E
+  flow-speed relations 7-5–6
+  exercises 31-10–14  bicycles 19-5
+  ease of use 31-21  freeway segments 13-3–4, 23-4E
+  event-based models* 31-4  multilane highways 12-3, 12-4E
+  signalized intersections 15-9–12
+  exercise 31-7  two-lane highways 12-14
+  events 31-3  urban streets 15-9–12
+  HCM assessment 31-9  free-flow speed (FFS) 7-3
+  freeway segments 23-4–7
+  examples 31-26, 31-28, 31-30  freeways 13-2, 13-5–6, 13-12
+  input parameters 31-3E  multilane highways 12-2–7, 12-10
+  logic types 31-3–4  ramps and ramp junctions 13-22, 13-23
+  normative models* 31-5–6  two-lane highways 12-14, 12-18
+  numerical exercises 31-6–16  urban streets 10-3, 10-7–8
+
+  car following 31-14–16  25  Index
+  gap acceptance 31-7–10
+  pretimed signal 31-10–12  “E” after a page number indicates an exhibit.
+  toll booth 31-12–14
+  off-line models* 31-6
+  output analysis 31-23–24
+  examples 31-27, 31-29, 31-31
+  output parameters 31-3E
+
+* Defined in Chapter 5, “Glossary.”
+Highway Capacity Manual 2000
+
+speed (continued)  time-spent-following (continued)
+  freeway weaving segments 24-5–8  directional segments 20-22, 20-23–24
+  freeways 13-6, 22-15  two-way segments 20-9–10
+  interrupted flow 7-9
+  as LOS measure 2-2  toll booth (modeling example) 31-12–14
+  multilane highways 12-3, 12-6–7  toll roads 13-1
+  parameters 7-3  topography see grades and terrain
+  pedestrians 11-1, 11-2, 11-6E  traffic-actuated signal controls see traffic signals
+  determining 18-1  traffic characteristics
+  factors 11-4–5
+  ramps and ramp junctions 25-18–19  demand and volume 8-2–13
+  running speed* 10-3  values (measured and observed) 8-13–29
+  space-speed relations 11-4  vehicle and human factors 8-1–2
+  speed limits (highways) 12-6–7  traffic conditions* 2-4–5
+  travel speed* 7-2, 7-3  see also directional distribution and split
+  urban 10-4  signalized intersections 16-3–5
+  trends 8-21–23  traffic control systems see traffic signal phasing; traffic
+  two-lane highways 12-12, 20-9–10  signals
+  directional 20-20–21  traffic signal phasing 10-14–15, 10-22
+  grade adjustment 20-7  see also traffic signals
+  no-passing 20-9, 20-10E  critical lanes 16-16E, 16-7E
+  two-way 20-5, 20-10E  interchanges 26-7, 26-12–14
+  types 7-3  leading/lagging 16-95E, 16-96–97, 16-128–131
+  uninterrupted flow 7-2–4  multiphase 16-18E, 16-96–98, 16-112–120
+  urban streets 10-3–4  overlapping phases 16-15
+  FFS 10-7–8  parameters 6-104–105
+  sensitivities 15-9–12  permitted 16-23, 16-122–134
+  value conventions for 9-7  phase plans 10-43–44, 16-95
+  variations per volume 8-21, 8-23, 8-24E, 8-25E  pretimed signal controls 10-14, 16-94
+
+speed limits  k-values 16-22E
+  multilane highways 12-6–7  timing plan 16-98–100
+  urban streets 10-6  protected 10-22, 16-16E
+  protected-plus-permitted 16-23–24, 16-128
+start-up lost time* 8-26, 8-28, 10-12–13  procedure 16-140–143
+  see also lost time  two-phase 16-96E, 16-100, 16-109–110
+  types 16-13
+stop signs 2-5, 7-8–9  traffic signals
+  see also intersections, AWSC; intersections, TWSC  see also traffic signal phasing
+  actuated signal controls 10-14, 16-94–95
+streetcars* 14-19–20, 27-26  control delay see control delay
+  capacities 27-31–32  controllers 16-94–95
+  dwell time 27-26–28  settings 16-105–106
+  minimum headways 27-28–30  cycle failure 10-16
+  travel times 14-20, 14-22E  cycle length 10-12E, 10-19, 10-21–22
+  volumes 8-29  estimation 10-45
+  peak 27-27  effective green 10-11–13
+  ratios 10-19, 10-23
+streets see sidewalks and walkways; urban streets  effective red 10-11, 10-12E
+suburban streets* 10-6E, 10-7  freeways 13-28
+symbols see Chapter 6  fully actuated 10-14
+system analysis 3-2–4  green extension time 16-108
+  green phasing 16-95E, 16-96–97
+T  green time 10-11–13
+terrain see grades and terrain  allocation 16-98
+time mean speed* 7-3  estimation 10-45–46
+time-spent-following 12-13, 12-14E, 12-15E  computation 16-108
+
+  determining 20-9–10  26
+  directional distribution 20-9, 20-11E  * Defined in Chapter 5, “Glossary.”
+
+Index
+“E” after a page number indicates an exhibit.
+  Highway Capacity Manual 2000
+
+traffic signals (continued)  traffic signals (continued)
+  green time  signal timing
+  model 16-106–107  semiactuated 16-115–116
+  signal timing 16-100  timing plans 16-98–112
+  ratio (g/C) 10-12E, 10-19, 10-23, 16-25  traffic-actuated 16-101–115
+  interrupted-flow facilities 2-5  signalization conditions 16-3E, 16-5–6
+  lagging/leading green phasing 16-95E, 16-96–97,  timing plans
+  16-128–131  minimum phase time 16-111
+  light-rail trains 14-22  pretimed 16-98–100
+  multilane highways 12-1  problem 31-26–27
+  multiphase control 16-96–98, 16-112–120  traffic-actuated 16-102–115
+  critical lanes 16-18E  traffic-actuated controls 16-94–95
+  pedestrians 11-1  control settings 16-105–106
+  delay 11-13  estimation limits 16-120–121
+  permitted phasing 16-23  model 16-101–104
+  left turns 16-122–134  multiphase example 16-116–120
+  phase control plans 10-43–44, 16-95–98  timing computations 16-115E
+  dual-ring 16-96E, 16-97, 16-103–104  timing plan 16-101–115
+  multiphase 16-96–98, 16-112–120  worksheet 16-103
+  two-phase 16-96E, 16-100, 16-109–110  two-phase control 16-96, 16-100, 16-109–110
+  pretimed signal controls 10-14, 16-94  types 10-14
+  k-values 16-22E  upstream signal effects (TWSC) 17-13–19
+  modeling example 31-10–12  computing 17-30
+  timing plan 16-98–100
+  protected phasing 10-15, 10-22, 16-16E  traffic signs 2-5, 7-8–9
+  protected-plus-permitted phasing 16-23–24, 16-128  see also intersections, AWSC; intersections, TWSC
+  procedure 16-140–143
+  rail transit priorities 14-22  transit facilities 14-1–3, 27-1–2
+  red time 10-11, 10-12E  see also areawide analysis; buses and bus facilities;
+  semiactuated signals 10-14  corridor analysis; light rail transit; street cars
+  signal controls 16-94–95  accessibility* to stops 14-10, 27-4–5
+  flow rate and 7-7–8  amenities 14-27, 27-6–7
+  fully actuated 10-14  areawide analysis 30-11–16
+  semiactuated 10-14  problems 30-23–26
+  traffic-actuated 16-101–120  availability see below transit availability
+  signal controllers 16-94–95  automobiles
+  k-values 15-8E, 16-22E  accessibility 27-4–5
+  settings 16-105–106  travel time 14-31, 27-3
+  signal coordination 15-9  bicycles 14-6, 14-27
+  signal delay see control delay  accessibility 27-4–5
+  signal density (urban) 10-8  bus facilities 14-3, 14-7–18
+  speed and 15-9–12  bus priorities 14-15–19
+  signal phasing 10-14–15  parameters 27-9–26
+  signal progression 15-6–7, 16-19–20  signal timing 14-11
+  signal timing  capacity 14-3–6
+  design method 16-93–120  estimation 27-1
+  estimation 10-43–46, 16-99–101  comfort and convenience 14-24E, 14-26, 14-31
+  estimation limits 16-120–121  measures 27-6–8
+  example 16-116–120  perceptions 14-29
+  interchanges 26-7  corridor analysis 29-10–12
+  left-turn flows 10-37, 10-42  problem 29-12–26
+  lost time 16-101  costs to passengers 14-28
+  phase plans 16-95–98  delays see below dwell time
+  pretimed 16-98–101  dwell time 14-3, 14-5–6
+  variability 14-8
+* Defined in Chapter 5, “Glossary.”  fare payment 14-6
+
+  27  Index
+
+  “E” after a page number indicates an exhibit.
+Highway Capacity Manual 2000  transit facilities (continued)
+  routes and route segments
+transit facilities (continued)  comfort and convenience 14-31
+  GIS analysis 30-14–16  hours of service 27-5
+  headway adherence 27-3, 27-7, 27-8  reliability 27-7–8
+  hours of service 14-24E  safety and security 14-28
+  determining 27-5–6  scheduling 14-27
+  intercity scheduled service 27-3, 27-4  seating availability 14-29
+  level of service (LOS) 14-23  service coverage 14-25E, 14-26–27
+  hours of service 27-6E  areawide analysis 30-13–16
+  intercity transit 27-4E  availability 14-30–31
+  paratransit 27-4E  service frequency 14-24E, 14-30
+  passenger load 27-6E  determining 27-2–4
+  reliability 27-8E  LOS 27-3E
+  service frequency 27-2  service information 14-25E, 14-28
+  light rail 14-3, 14-19–22  service measures 14-23
+  parameters 27-26–31  quality-of-service 14-30E
+  priority treatments 14-22  threshold levels 14-31
+  loading areas 14-3  sidewalk conditions 14-24E, 14-26, 14-27
+  modeling application 31-16E  speed 14-24E, 27-8
+  operator point of view 14-23, 14-24E  areawide 30-12
+  paratransit 27-3–4  corridor 29-11
+  park-and-ride lots 14-24E, 14-27  streetcars 14-3, 14-20, 14-22E
+  passenger demand 14-4  parameters 27-26–31
+  dwell time 14-6  transit availability* 14-25E, 14-26
+  passenger loads 14-24E, 14-29, 14-31  measures 27-2–5
+  determining 27-5  transit reliability* 14-24E, 14-29, 14-31
+  passenger perceptions  determining 27-7–8
+  appearance and comfort 14-29  transit stations 14-3
+  point of view 14-23, 14-24E  amenities 14-27
+  safety and security 14-28  spacing 14-6
+  peak-hour factor (PHF) 14-4  transit stops* 14-3
+  peak-hour trips 14-2E  accessibility 27-4
+  pedestrians 14-26, 14-27  amenities 14-6, 27-6–7
+  accessibility 27-4–5  availability 14-30
+  performance measures 14-23, 14-24E  comfort and convenience 14-31
+  areawide 30-13–14  passenger loads 27-6
+  corridor 29-10–12  service frequency 27-2
+  person capacity 14-3, 14-4–5  spacing 14-6
+  calculating 14-6E  travel time 14-31, 29-11–12
+  priority treatments  trip decision making 14-23–24, 14-25E, 14-26E
+  buses 14-15–19  trip times 14-28
+  rail 14-22  trolleybuses 14-2
+  quality of service 14-23, 14-24E  unscheduled service 27-3–4
+  availability 14-30–31  urban scheduled service 27-3
+  comfort and convenience 14-31  vehicle capacity 14-3, 14-24E
+  factors 14-26–29  calculating 14-5E
+  framework 14-29–31  vehicle operation 14-23, 14-24E
+  measures 27-2  waiting areas see above transit stations; transit stops
+  trip decision making 14-23, 14-25  wheelchair accessibility 14-6
+  rail transit 14-3, 14-19–22
+  parameters 27-26–31  28
+  priority treatments 14-22  * Defined in Chapter 5, “Glossary.”
+  reliability see below transit reliability
+  routes and route segments
+  availability 14-30
+
+Index
+“E” after a page number indicates an exhibit.
+  Highway Capacity Manual 2000
+
+transportation facilities 3-1E, 3-3E, 9-1–2  upgrades (continued)
+  see also bicycles; freeways; highways; interrupted-  two-lane highways 20-14, 20-15–19
+  flow facilities; intersections; multiple facility
+  assessment; pedestrians; transit facilities;  urban streets 10-1–2, 15-1
+  uninterrupted-flow facilities; urban streets  see also interchange ramp terminals; intersections;
+  pedestrians; urban bus facilities
+travel speed* 7-2, 7-3, 10-4  analysis period 10-8–9
+  see also speed  analytical example 3-3E, 3-4E
+  arrival types 10-23, 15-5–6
+traveler satisfaction* and utility 28-1, 28-4–5  arterials 10-1, 10-6–7
+trolleybuses* 14-2  AWSC intersections 10-30–31
+trucks*  back of queue 10-16
+  bicycles 10-25, 19-1, 19-7
+  freeways 13-12  buses (local) 10-25
+  freeway segments 23-7–8  bus facilities 27-16
+  multilane highways 12-7  adjacent lanes 27-19E, 27-20
+  lane speed 27-20–24
+  adjustments 21-7–8  person capacity 27-20
+  grades 21-10–12  vehicle capacity 27-17–19
+  registered (1986–1996) 8-14E  busways (CBD) 14-13–14
+  values 12-10  capacity 27-14–16
+  rural interstate travel by 8-15E  reserved 14-18
+  traffic condition impacts 2-4–5  volumes 8-28
+  two-lane highways 12-7, 12-19  capacity 15-9
+  directional segments 20-13–14, 20-17–20  estimation 10-36–47
+  two-way segments 20-7–9  classification system 10-5–7, 10-8E
+  volume variations (daily) 8-5E  classifications 10-1–3
+  weight/power ratios 8-1E  collector streets 10-1
+turning movements 10-1, 10-15  control delay 10-15–16, 15-2
+  estimation 10-19–20  computation 10-46–47
+  values 10-19, 10-33  determination 15-3–8
+  interchanges 26-1, 26-3–4  corridor analysis 29-3–9
+turnouts* 20-44–45  cycle length 10-19, 10-21–22, 15-9
+two-lane highways see highways, two-lane  estimation 10-45
+two-way left-turn lanes* (TWLTL) 12-1  design categories 10-6E, 10-7
+  gap acceptance 10-29  effective green 10-11–13
+  two-lane highways 20-47–48  ratios 10-19, 10-23
+TWSC (two-way stop-controlled) intersections see  exclusive turn lanes 10-17–18
+intersections, TWSC  free-flow speeds (FFS) 10-3
+  speed-flow curves 15-9–12
+U  values 10-7–8, 15-3E
+undersaturated conditions (freeways) 13-3, 22-14–15  functional classes 10-1
+  green time estimation 10-45–46
+  MOE computation 22-49–50  green time ratio (g/C) 10-19, 10-23
+  problem 22-23  heavy vehicle factors 10-25
+uninterrupted-flow facilities 2-1,  highways compared 10-11
+  see also freeways; highways  incremental delay 15-4, 15-5, 15-7–8
+  density 7-4  input data and values 10-7–9
+  flow rate 7-1–2  signalized intersections 10-17–27
+  headway and spacing 7-4–5  unsignalized intersections 10-32–34
+  parameter relationships 7-5–6  lengths 10-7, 15-13
+  parameters for 7-1–6  level of service (LOS) 10-4–5
+  spacing and headway 7-4–5  applications 15-5
+  speed 7-2–4  computations 15-13
+upgrades  control delay 10-15–16
+  see also grades and terrain
+  climbing lanes 20-28–29  29  Index
+  freeway segments 23-9–11
+  multilane highways 21-9, 21-10E  “E” after a page number indicates an exhibit.
+
+* Defined in Chapter 5, “Glossary.”
+Highway Capacity Manual 2000  urban streets (continued)
+  travel time 15-27–28
+urban streets (continued)  TWSC intersections 10-27–29
+  level of service (LOS)  uniform delay 15-4, 15-5
+  determining 15-2–3, 15-9, 15-27–28  unsignalized intersections 10-27–35
+  methodology 15-1–3  values 10-32–35
+  pedestrians 18-16E  upstream signals 15-8
+  problems 15-15–24  variables 10-12E
+  local streets 10-1  volumes 8-21, 8-22E
+  methodology 15-1–12  weaving 13-14
+  applications 15-12–15  worksheets 10-47, 15-28
+  flow chart 15-2E
+  input parameters 10-7–9  utility* and traveler perception 28-1, 28-4–5
+  problems 15-15–24
+  worksheets 10-47, 15-28  V
+  peak-hour factor (PHF) 10-8  variability* of congestion 28-3
+  pedestrians 11-1, 18-1
+  default flows 10-26  highway facilities 29-9, 30-11
+  street corners 11-10–13, 18-8, 18-9–10  transit facilities 30-13
+  planning applications 15-15  v/c see volume-to-capacity ratios
+  computations 15-25–26  vehicle capacity*
+  platoon ratio 15-6  buses 14-3, 14-4E, 14-5
+  progression adjustment factor (PF) 15-6–7
+  queue delay (initial) 15-5  bus stops 14-13
+  determining 16-22, 16-142–148  busways 14-14E
+  roundabouts 10-31  dwell time 14-14–15
+  running time 10-3  influences 14-12E
+  determining 15-3, 15-4E  loading areas 14-7–11
+  segments 15-13  mixed-traffic 27-25
+  service volume table 10-9, 10-10  urban bus lanes 27-17–19
+  signal coordination 15-9  transit facilities 14-3, 14-24E
+  signal density 10-8  calculating 14-5E
+  speed and 15-9–12  vehicle types 8-1
+  signal progression 15-6–7  see also automobiles; buses; recreational vehicles;
+  signalized intersections 10-9–27  trucks
+  estimation method 10-36–46  lane distribution by 8-13E
+  flow 10-9, 10-11  rural interstate travel by 8-15E
+  LOS 10-15–17  vertical alignments of roadways see grades and terrain
+  values 10-17–27  volume* 8-13–16, 8-17E
+  variables 10-12E  see also service-volume tables
+  speed-flow curves 15-9–12  analysis hour and peak hour 8-7
+  speed profiles 10-4  average values 9-8
+  speeds 10-3–4  buses 8-28–29, 14-10
+  street classes 10-5–7, 10-8E  daily–hourly equivalencies 9-8–9
+  determining 15-3, 15-4E  demand and volume 2-2, 8-2
+  speed and 15-9–12  directional distribution 8-11, 8-12E
+  street corners  equivalency factors 9-8–9
+  areas 18-8, 18-9–10  flow rate and volume 7-1–2, 8-16
+  radius 11-12  forecasts 8-9
+  time-space 11-10–13  freeways 8-3, 8-17, 8-18–20
+  transit facilities  lane distribution 8-12–13
+  busways 14-13–14, 27-14–16  multilane highways 8-17, 8-20E
+  scheduled service 27-3  peak-hour volume 8-6–9
+  travel speed 10-4  rail transit 8-29, 27-7
+  sensitivities 15-9–12  signalized intersections 10-33, 16-3–5
+  adjustment 16-30, 16-31E
+Index  spatial distributions 8-10–13
+“E” after a page number indicates an exhibit.
+  30
+  * Defined in Chapter 5, “Glossary.”
+volume (continued)  Highway Capacity Manual 2000
+  speed relationships 8-21, 8-23, 8-24E, 8-25E
+  temporal distributions 8-9–10  W
+  two-lane highways 8-20–21  walkways see pedestrians; sidewalks
+  variations  weaving* and weaving segments* see freeway weaving
+  daily 8-4, 8-5E  wheelchair accessibility
+  hourly 8-4, 8-6, 8-7E
+  seasonal and monthly 8-3–4  buses 27-10
+  subhourly 8-9, 8-10E  rail transit 27-28
+  transit facilities 14-6
+volume-to-capacity (v/c) ratios*
+  freeways 13-29  Y
+  pedestrians 18-4  yield signs 2-5, 7-8–9
+  signalized intersections 10-16, 16-14
+  application 15-9–12  see also intersections, AWSC; intersections, TWSC
+  computation 10-46
+  critical lanes 16-14–15
+  equalizing 16-98
+  two-lane highways 20-11–12
+  value conventions for 9-7
+
+  31  Index
+
+* Defined in Chapter 5, “Glossary.”  “E” after a page number indicates an exhibit.
+

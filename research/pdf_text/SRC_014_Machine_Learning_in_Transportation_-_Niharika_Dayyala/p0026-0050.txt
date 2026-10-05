@@ -1,0 +1,1049 @@
+hierarchy or ordering in the data. In the case of ordinal data, the data can
+be ordered, such as ranking and rating.
+
+  Range is the difference between the smallest and the largest
+observation in the dataset. Quartiles divide the data into equal parts,
+typically four – first, second, third, and fourth, corresponding to 25th,
+50th, 75th, and 100th percentiles, respectively. Quartiles and interquartile
+ranges help us to understand the dispersion of the data. For example,
+the distance between the third and the first quartile gives us one
+interquartile range. A percentile is a value below which a given
+percentage of observations in a group falls. The central tendencies are
+measured with mean, median, and mode. The mean or average is the
+summation of all the values of the observations divided by the number of
+observations. It is influenced by the skewness of the data:
+
+  1  n
+
+Mean, μ = n ∑i=1 xi
+
+More number of observations on the left represent left skew.
+  Standard deviation is a measure of the dispersion or spread of data.
+
+A higher standard deviation indicates a higher variability of the data. It is
+determined by taking the square root of the average of the square of the
+deviations of the individual observations from the mean value:
+
+  n  2
+
+Standard deviation,  σ=  √ ∑i=1 (xi −μ)
+
+  n
+
+Variance is also used as an indicator of the dispersion of the data. It is
+the average of the square of the deviations of individual observations in
+the data from the mean value:
+
+Variance,  σ2 =  n
+  2
+
+  ∑ (xi −x)
+
+  i=1
+
+  n
+
+where n is the number of samples averaged to give each test result and xi
+is the individual test result.
+
+  Generally, the terms μ and σ are used for population statistics
+parameters, whereas x and s are used for sample parameters. For
+sample standard deviation, the denominator used is (n–1) instead of n.
+The coefficient of variation (CV) is a value of the standard deviation that
+is normalized with respect to the mean value:
+
+  σ
+
+Coef f icient of variation, CV = 100%
+
+  x
+
+Standard error of mean,  σ=  σ
+  √n
+
+Kurtosis indicates whether the distribution is pointed or flat: for a
+normal distribution, a high number (>3) indicates a clustering around the
+mean (and hence has a peak or point), whereas a lower number (<3) is an
+indicator of a flatter distribution:
+
+  m4
+
+g2 = γ2 − 3 = ( 2 ) − 3
+
+  m
+
+  2
+
+  n  2
+
+  ∑i=1 (xi −X )
+
+m2 =  n
+
+  n  4
+
+m4 =  ∑i=1 (xi −X )
+
+  n
+
+where g2 is the kurtosis parameter (usually reported by software) and γ2
+
+is the kurtosis.
+  Probability is the chance of occurrence of an event, and it can
+
+happen in several ways: union (or), joint (and), conditional probability.
+Conditional probability is the probability of happening, given a particular
+condition.
+
+  Correlation is the dependence or relationship between two random
+variables or bivariate data. Correlation values range from –1 to + 1. The
+strength of the relationship is indicated by Pearson’s correlation
+coefficient, which is defined as follows:
+
+  2  2
+r = Σ((Xi − μx ) × (Yi − μγ ))/[√(Σ(Xi − μx ) ) × √(Σ(Yi − μγ ) )]
+
+where r is the Pearson correlation coefficient, Xᵢ and Yᵢ are individual data
+points in X and Y, μₓ is the mean (average) of X, and μᵧ is the mean
+(average) of Y.
+
+  The summation (Σ) symbol denotes the sum of all data points in X
+and Y.
+  Covariance means joint variability of two random variables; unlike
+correlation (−1, +1), there is no range. If the greater value of one
+variable corresponds to the greater value of the other variable, (same
+holds for lesser value), covariance is +ve. Covariance is better than
+correlation for finding relations:
+
+  Cov(X, Y ) = Σ [(Xi − μx ) × (Yi − μγ )]/(n − 1)
+
+where Cov(X, Y ) is the covariance between X and Y, Xᵢ and Yᵢ are individual
+data points in X and Y, μₓ is the mean (average) of X, μᵧ is the mean
+(average) of Y, and n is the number of data points in X and Y.
+
+  Data distribution: Data collected from a population may exhibit
+different types of distribution, such as normal, negatively skewed,
+positively skewed, bimodal, s-shaped, inverted u shape, and rectangular
+(→Figure 1.10).
+Figure 1.10: Example of data with different types of distributions.
+
+Understanding the type of distribution helps us in calculating the
+probability of any particular observation in the sample space, or
+likelihood that an observation has a value of < or > a specific value. A
+normal distribution is a balanced distribution, where the mean, median,
+and mode coincide with each other. The 3 sigma rule states that: 68% of
+the data are within 1 sigma, 95% of the data are within 2 sigma, and
+99.7% of the data are within 3 sigma of the mean value.
+
+  The binomial distribution (→Figure 1.11) of discrete data involves
+the problem of a success/failure outcome in an experiment repeated
+multiple times. In this case of fixed trial and independent trial, the
+probability of success stays the same for all trials. The Poisson
+distribution (→Figure 1.11) is used to describe how many times an event
+is likely to occur within a specified period of time. For discrete functions,
+the conditions are that the event can occur any number of times, the rate
+of occurrence is constant, the probability of an event occurring is
+proportional to the length of the time period, and the events occur
+independently.
+
+Figure 1.11: Examples of binomial and Poisson distributions.
+
+Bayes’ theorem gives us the probability of an event based on conditions
+that might be related to the event
+
+P (A/B) =  P (B/A)P (A)
+  P (B)
+where P(B/A) is the probability of occurrence of B given the occurrence of
+A, P (B) > 0.
+
+  Z score or the standard normal deviate is how far a given data
+point is from the mean, in terms of the standard deviation. This
+parameter can be utilized for answering a number of questions that are
+typically asked as part of the quality control process. These include the
+following:
+
+  1. What is the probability that a test result will fall below (or above) a
+  specific value?
+
+  2. What is the probability that a random sample will fall within a
+  specific range?
+
+  3. How are the probability results affected if a number of samples are
+  tested consecutively, and the mean value from those tests is
+  reported as one test result?
+
+  4. What is the percent within limit (PWL)?
+
+Example of the application of the standard normal deviate: Given the
+following data for asphalt content (in %) determined from field hot mix
+asphalt samples during paving, what is the probability that a random sample
+test result will be above 6.6%?
+
+Sample no.  12345678
+
+Asphalt content (%) 6.3 6.8 6.5 6.0 6.9 6.1 7.1 6.5
+
+  x=  (6.3+6.8+6.5+6.0+6.9+6.1+7.1+6.5)  = 6.525
+  8
+
+  n  2
+
+Standard deviation,  σ = √ ∑i=1 (xi−6.525)  = 0.388
+
+  n−1
+
+  ( y−x)  (6.6−6.525)
+
+Standard normal deviate,  Kα = s =  0.388  = 0.193
+
+From the table of the probability distribution function for a normal
+distribution, the probability of a sample falling above 6.6% is 42.5% (see
+→Figure 1.12).
+Figure 1.12: Example of the application of the standard normal deviate.
+
+In the above example, what is the probability that a sample test result will fall
+between 6.2% and 6.4%?
+
+  ( y−x)  (6.4−6.525)
+
+Standard normal deviate,  Kα = s =  0.388  = −0.32
+
+For a Kα of 0.32, the probability of exceeding that value is 37.4%. By
+virtue of the symmetry of the normal distribution curve, it can be
+surmised that the probability of falling below a Kα of −0.32 is 37.4%:
+
+  ( y−x)  (6.2−6.525)
+
+Standard normal deviate,  Kα = s =  0.388  = −0.84
+
+For a Kα of 0.84, the probability of exceeding that value is 20%. By virtue
+of the symmetry of the normal distribution curve, it can be surmised that
+the probability of falling below a Kα of −0.84 is 20%. Hence, the
+probability of a sample test result falling in between 6.2 and 6.4 is (37.4%
+– 20%) = 17.4%.
+  If three samples are taken consecutively and the average of these
+three test results is reported as a single value, then what is the
+probability that the result will fall above 6.6%?
+
+  In this case, the standard error of the mean is used instead of the
+standard deviation to calculate the standard normal deviate, Kα:
+
+Standard error of mean,  s=  s  =  0.388  = 0.224
+
+  √n  √3
+
+  ( y−x)  (6.6−6.525)
+
+Standard normal deviate,  Kα = s =  0.224  = 0.33
+
+From the table of the probability distribution function for a normal
+distribution, the probability of a sample falling above 6.6% is 37.1%.
+
+  The quality of a construction can also be evaluated through the use
+of PWL. In such a case, the standard normal deviate is replaced by a
+quality index value (Q) that is calculated as follows:
+
+QL =  x−LSL
+  s
+
+QU =  USL−x
+  s
+
+where QL is the quality index for lower specification limit, used when
+there is a one-sided lower specification limit; QU is the quality index for
+upper specification limit, used when there is a one-sided upper
+specification limit; LSL is the lower specification limit; USL is the upper
+specification limit; x is the sample mean; and s is the sample standard
+deviation.
+
+  Instead of Kα − probability table, a Q-PWL table is used to obtain
+PWLs, and often these values are utilized for the calculation of pay
+factors, which may impose a penalty for poor quality or provide a bonus
+for superior quality jobs.
+
+  Outliers are observations that lie at an abnormal distance from other
+values in a random sample from a population. They are defined as those
+points that lie beyond 1.5 times the interquartile range below the first
+and the third quartile. Sometimes there are bad/unrealistic data points
+resulting from poor experimental methods or practices. These data do
+not follow the trend of the other data and deviate markedly from the rest
+of the observations. Such data needs to be identified and deleted from
+the rest of the data before the set of data is analyzed. There are various
+standard methods of detecting outliers, and different statistical methods
+employ different procedures.
+
+  One simple procedure is using box plots. The method consists of the
+following steps:
+
+  1. Find the lowest (LO), highest (HI), and 25th, 50th, and 75th
+  percentile data. Mark these either on a horizontal or a vertical
+  scale.
+
+  2. Draw a box so that the 25th and the 75th percentiles represent the
+  ends of the box. Also, draw a line parallel to these ends at the 50th
+  percentile.
+
+  3. Calculate the value c = 2 3(x.75−x.25)
+  4. If HI ≤ x.75 +c, draw a line from x.75 to HI:
+
+  a. Otherwise, draw a line from x.75 to x.75 +c and mark HI with
+  an asterisk (to detect outliers)
+
+  5. If x.25 , draw a line from x.25 to LO:
+  Otherwise, draw a line from x.25 to x.25 −c and mark LO with an
+  asterisk (to detect outliers)
+
+Consider the following example. In 2004, several rut depth data (mm)
+were obtained from an asphalt paving project constructed in 1998, as
+given in →Table 1.1. Are there outliers in the data?
+Table 1.1: Rut depth data.
+
+Project no.  Rut depth (mm)
+1  2.54
+2  12.7
+3  1.27
+4  5.08
+5  5.33
+6  6.35
+7  7.62
+8  3.81
+9  2.54
+10  5.59
+11  4.83
+12  11.43
+13  2.79
+14  5.08
+
+  LO = 1.27; HI = 12.7; x.25 = 3.048; x0.5 = 5.08; x.75 = 6.159
+
+With the data, 12.7 is identified as the outlier.
+  The central limit theorem states that the distribution of sample
+
+means approximates a normal distribution as the sample size gets larger
+(n > 30); the average and standard deviation are approximately the same
+as the average and standard deviation of the population.
+
+  Hypothesis testing: A hypothesis is a predictive statement capable
+of being tested by scientific methods and approaches. It tries to relate an
+independent variable with a dependent one. The hypothesis statements
+are tested on the basis of a probability or p-value, as discussed in the
+following sections.
+
+  There are two types of hypotheses: null hypothesis (H0) and
+alternative hypothesis (HA). If the statistical analysis of the data proves
+that the null hypothesis can be rejected, then the alternative hypothesis
+is accepted.
+
+  For example,
+  Ho : μ = μ0
+
+  HA : μ ≠ μ0
+
+The level of significance (LOS) and confidence interval (CI) are
+relevant in hypothesis testing. Out of 100 times, if we prove something 95
+times, the LOS (denoted by α) is 0.05 or 5%, and the CI is (1 – α) = (1 –
+0.05) = 95%. For two-tailed tests with 5% significance, α = LOS/2 = 0.05/2 = 
+0.0025.
+
+  The p-value is the probability of obtaining results as significant as the
+observed results of a statistical hypothesis test, believing that the null
+hypothesis is precise. For α = 0.05, the p-value should be <0.05, to accept
+the hypothesis.
+
+  In making conclusions from hypothesis testing, there can be two
+types of errors: Type I and Type II errors, as explained in →Figure 1.13.
+
+Figure 1.13: Definitions of type I and type II errors.
+
+The procedure for hypothesis test: for a selected LOS, hypotheses are
+tested on the basis of a selected statistic, such as t, z, or F. If p is greater
+than the calculated test statistic value, accept Ho, if p is less than the 
+calculated test statistic value, reject Ho and accept HA (e.g., if p = 2.66, the
+test statistic is 5.66).
+
+  The z-test and t-test are used for comparing the means for two
+groups; if the sample size is <30, use t-test, and if it is >30, use z-test.
+These tests indicate whether mean values are different or not.
+
+  H0: both groups are the same; HA: groups are not the same.
+  Statistic value is greater than the p-value: HA ✓, otherwise H0 ✓
+
+z=  x−μ H
+
+  0
+
+  σp√n
+  t=  x−μ H 0
+  σs
+
+  df = n − 1
+
+σp  =  2
+
+  (xi −μ)
+
+  √
+
+  (n)
+
+σs  =  2
+
+  √ (xi−x)
+
+  (n−1)
+
+The chi-square test is used for categorical variables; for example, is
+there any difference in performance between pavements with or without
+the use of a prime coat?
+
+  In this case, the relationship between two categorical variables is
+calculated:
+
+  2  =∑  2
+
+λc  (Oi −Ei )
+
+  Ei
+
+where Oi  represents observed values and Ei the expected values.
+  The analysis of variance (ANOVA) is the implementation of the F
+
+test, and it is applicable when the number of groups for comparison
+exceeds 2. To detect whether the groups are statistically different from
+each other, one can conduct one-way ANOVA or two-way ANOVA,
+depending on the number of independent variables (one or two). Two-
+way ANOVA has two sets of hypotheses and can indicate whether the
+interaction between the two independent variables is significant.
+
+  If p < Fstatistic, then H0 is rejected. The post hoc tests are used to test
+which group is significantly different from the other.
+
+  One-way ANOVA helps to determine what proportion of variance is
+accounted for by the systematic effect and what proportion is not
+accounted for. This helps us to determine whether there is a significant
+effect of x (independent variable) values on the y (dependent) values. An
+example is as follows.
+
+  Example: Suppose researchers use four different treatments of fiber
+to reduce the draindown of asphalt binder in stone matrix asphalt mixes.
+Draindown tests were carried out using wire baskets, and the total
+draindown at 120 min was recorded for three replicates for each
+treatment plus one case (termed control) in which no fiber was used
+(→Table 1.2).
+
+Table 1.2: Example data for ANOVA.
+
+Draindown at 120 min
+
+Sample No additives  Fiber A-0.1%  Fiber A-0.3%  Fiber B-0.1%  Fiber B-0.3%
+  1.39  0.29  0.29  0.05
+1  1.78  0.47  0.3  0.23  0.04
+  0.82  0.3  0.24  0.08
+2  0.75
+
+3  1.3
+
+To make convincing conclusions regarding the effect of the fibers, the
+first question that needs to be answered is the following: Is there at least
+one treatment mean that is different from the others? ANOVA can be
+conducted to answer this question, as given in →Table 1.3.
+
+Table 1.3: Example of ANOVA.
+
+Source  SS DF MS F
+
+Treatments 3.124 4 0.781 8.089 > 3.48
+
+Error  0.966 10 0.097
+
+Total  4.090 14
+
+At 95% (probability, p = 0.05) confidence level, Fcritical = 3.48 (in fact, the F-
+value matches Fcritical at a p-value of 0.004).
+
+  The different statistics are described as follows:
+
+  SS treatments, SST = (∑i=1 r − N ) k Ti2 T 2
+  i
+
+  Ti = ith treatment total
+
+  T = ∑i=1 Ti k is the grand total
+
+  ri = number of replicates f or ith treatment
+
+  k = number of treatments
+  SS Error (SSError ) = TSS − SST
+
+  2
+
+  TSS = Sall ∗ df all
+
+  k
+
+  2  2
+
+  Sall = ∑ (Xi − MeanTotal ) /N − 1
+
+  i=1
+
+  k
+
+  N = ∑ ri
+
+  i=1
+
+  T
+
+  MeanTotal = N
+
+  MSTreatment =  SS T
+  K −1
+
+  MSError =  SS Error
+  N −K
+
+  F=  MS Treatment
+  MS Error
+
+Since the F-value exceeds the Fcritical value at 95% confidence level, it can
+be concluded that there is at least one treatment that differs from the
+others. In other words, it is confirmed that there is a significant effect
+from at least one treatment of fibers.
+
+  Post hoc tests for separation of means (ranking): The next question that
+arises is: which treatment(s) are significantly different, and how can they
+be ranked? This answer can be obtained by conducting a multiple
+comparison technique, such as Tukey’s honestly significant difference
+(HSD) test, which compares the difference between two means against a
+standard error.
+
+  Let us utilize the last example (effect of fiber on draindown) to
+conduct Tukey’s HSD test. Recall that in our example, from the ANOVA
+table, MSerror = 0.097; DFerror = 10; n (or r, number of replicates) = 3.
+
+  The decision rule is as follows:
+
+If (X1−X2)  ≥ qCritical
+  SE
+
+  then the difference between the means X1 and X2 will be declared
+significant, where
+  Standard error (SE) = n √ MSError
+  Here critical is obtained from Tukey’s probability table for the specific
+DFTreatment and DFError.
+  In the given example,
+
+  SE = 0.179; DFTreatment = 4; DFError = 10
+
+→Table 1.4 shows the results of Tukey’s HSD analysis, and →Table 1.5
+shows the groupings. Note that means with the same groups do not
+differ significantly. From this analysis, it can be concluded that the
+addition of fiber A at 0.3% or B at 0.1% and 0.3% reduces draindown, as
+compared to the no-additive mix.
+
+Table 1.4: Tukey’s HSD analysis.
+
+Comparisons  Tukey’s parameter  qcritical Significantly
+  different?
+  (X1 −X2 )
+No  Fiber A-  SE  4.33  No
+additives  0.1%
+  2.137  Yes
+No  Fiber A-  5.463
+additives  0.3%  5.704  Yes
+  6.800
+No  Fiber B-  3.326  Yes
+additives  0.1%  3.567
+  4.664  No
+No  Fiber B-  0.242
+additives  0.3%  1.338  No
+  1.096
+Fiber A-  Fiber A-  Yes
+0.1%  0.3%
+  No
+Fiber A-  Fiber B-
+0.1%  0.1%  No
+
+Fiber A-  Fiber B-  No
+0.1%  0.3%
+
+Fiber A-  Fiber B-
+0.3%  0.1%
+
+Fiber A-  Fiber B-
+0.3%  0.3%
+
+Fiber B-  Fiber B-
+0.1%  0.3%
+Table 1.5: Grouping of the treatments on the basis of Tukey’s HSD
+analysis.
+
+Type of treatment  Group
+No additives  A✶
+  A B
+Fiber A-0.1%  BC
+Fiber A-0.3%  BC
+Fiber B-0.1%  C
+Fiber B-0.3%
+
+Note: ✶Draindown decreases from A- > B- > C; results show that the draindown of the no-additive
+mix > draindown of Fiber A and B at 0.3%.
+
+Simple linear regression: Regression is a statistical technique that
+allows us to explore the relationship between variables, in terms of an
+equation, which expresses the dependent variable y, in terms of one or
+more independent variables such as x1, x2, …, xp:
+
+  y = b0 + b1x1 + b2x2 + ⋯ + bpxp
+
+where b0, b1, b2, …, bp are regression coefficients
+  The equation is of multiple regression type if there is more than one
+
+independent variable. Otherwise, it is called a simple regression.
+  Data: The data from which the regression equation is derived
+
+consists of a set of observations of the dependent (response) variable y,
+against values of the independent variables. For a simple regression, the
+data could be in the following format:
+
+Observation number y x1
+
+1  y1 x11
+
+2  y2 x12
+
+–  ––
+
+–  ––
+
+N  yn x1n
+Linear model: For a simple linear regression model, the equation relating
+
+y to x1 can be expressed as follows:
+  yi = β0 + β1x1i + ui, where i = 1, 2, …, n;
+
+  β0 and β1 are regression constants and ui is a random error, with a
+normal distribution that has a mean value of 0.
+
+  Estimation of β0 and β1: The regression constants are estimated as b0
+and b1 by the least squares method, which minimizes the sum of the
+squares of the errors or residuals, as follows:
+
+n  2  n  2
+
+∑i=1 ui = ∑i=1 ( yi − β0 − β1 x1i )
+
+  b1 =  ∑( yi −y )(x1i −x)
+
+  2
+
+  ∑ (x1i −x1 )
+
+  b0 = y − b1x1
+
+  y=  yi
+
+  ∑
+  n
+
+  x1 =  x1i
+
+  ∑
+  n
+
+b1 is normally distributed with a mean value of β1 and a variance of
+Var(b1):
+
+  Var(b1 ) =  2
+
+  σ
+
+  2
+
+  ∑ (x1i −x1 )
+
+b0 is normally distributed with a mean value of β0 and a variance of
+Var(b0):
+
+Var(b0 ) =  21  +  2
+
+  σ[  x
+
+  n  1
+
+  2]
+
+  ∑ (x1i −x1 )
+
+Unbiased estimate of σ2 is given by s2
+
+  s2 =  2
+
+  ∑ ( yi −b0 − b1 x1i )
+
+  n−2
+
+The tested null hypotheses regarding β0 and β1 are as follows:
+  0  ′
+
+  H0 (β1 = β1 );  H0 (β0 = β1)
+
+where  0  and  ′  are  constants  (e.g.,  0).
+
+  β  β1
+
+  1
+
+  The t-statistic for testing the hypothesis regarding β1 is
+
+  t=  0
+
+  (b1 −β1 )
+  s.e.(b1 )
+
+With (n–2) degrees of freedom (test against the critical value from the t-
+statistic table)
+
+  s. e. (b1 ) =  s
+
+  1
+
+  2  2
+
+  {∑ (x1i −x1 ) }
+
+Confidence limits for β1:
+
+  α
+
+  b1 ± t(n − 2, )[s. e. (b1 )]
+
+  2
+
+t(n  −  2,  α  )  percentile  of  t-distribution  with  (n  –  2)  degrees  of  freedom.
+  2
+
+  The t-statistic for testing the hypothesis regarding β0 is
+
+  t=  ′
+
+  (b0 −β0)
+  s.e.(b0 )
+
+  1  +  2  1
+  2
+  s. e. (b0 ) = s[ n  x
+  ]
+  1
+
+  2
+
+  ∑ (x1i −x1 )
+
+Confidence limits of β0 with confidence coefficient (1 – α) are:
+
+  α
+
+  b0 ± t(n − 2, 2 )[s. e. (b0 )]
+
+The goodness of fit of the model is measured by the correlation
+coefficient, R, or its square, R2:
+
+  Correlation coefficient, R =  ∑(yi −y )(yˆi −yˆ)
+
+  1
+  22
+  2
+
+  [∑ (yi −y ) ∑ (yˆi −yˆ) ]
+
+  where yˆi is the predicted response, yˆ  is the average of the predicted
+responses
+  R2 = 1 −  2
+
+  ∑ ( yi −yˆi )
+
+  2
+
+  ∑ ( yi −y )
+
+R2 indicates to what extent the x1 values explain the variation in y values.
+To test whether x1 can significantly explain the variation in y values, the
+hypothesis that is tested regarding the population correlation coefficient
+
+(ρ) is: H0: ρ = 0; HA: ρ ≠ 0, using a t-statistic as follows, and comparing it
+against tabulated t-values with (n – 2) degrees of freedom:
+
+  t=  |R|√n−2
+  √1−R2
+
+Predicted  value  ˆ y 0  for  any  selected  value  of  0  is  given  by
+
+  x
+
+  1
+
+  :0
+
+ˆ y0 = b0 + b1 x1
+
+  02
+
+Variance of ˆ y0, Var(ˆ y0) = σ2[1 + 1 + 2 ] (x1−x1)
+  n ∑ (x1i −x1 )
+
+(replace  2  with  s2  to  obtain  an  estimate  of  the  above  variance)
+
+  σ
+
+Confidence limits for the predicted value with confidence coefficient
+
+(1 – α):
+
+  α
+
+  ˆ y0 ± t(n − 2, 2 ). s. e. (ˆ y0 )
+
+  0  2
+
+  1 (x1 −x1 )
+  s. e. (ˆ y0 ) = s[1 + n +
+  2]
+
+  ∑ (x1i −x1 )
+
+The predicted response is with a normal distribution with the following
+features:
+
+  0
+
+  Mean, μ0 = β0 + β1 x1
+
+  0
+
+  Estimated mean, μ ˆ0 = b0 + b1 x1
+
+  21  +  02
+
+  Var(μ ˆ0 ) = σ [ n  (x1 −x1 )
+
+  2]
+
+  ∑ (x1i −x1 )
+
+Use of residuals to evaluate the fit:
+  For the ith observation, yˆi = b0 + b1x1i
+  Residual, ei = yi − yˆi
+
+  ei
+
+  Standardized residual, eis = s
+
+The standardized residuals are distributed with a zero mean and a unit
+standard deviation.
+
+  In order to evaluate the validity of the model (the assumptions of the
+least squares method are correct), the standardized residuals can be
+plotted (on the y-axis) against the fitted value, yˆ (on the x-axis), or the
+independent variable, x1, or the time order in which the observation
+occurs. For correct models, the standardized residuals have a random
+distribution of about 0, ranging from −2 to +2.
+
+  The following assumptions are made:
+
+  1. The dependent variable is continuous.
+  2. The parameters in the equation relating the independent and
+
+  dependent variables are linear in nature.
+  3. The samples are taken in a random manner and they are
+
+  independent of each other.
+  4. The error is independent of the independent variable with an
+
+  expected value of 0.
+  5. The errors have an approximately normal distribution with zero
+
+  mean.
+
+1.5  Linear algebra: matrices
+
+A scalar is a one-dimensional entity such as a single number, denoted by
+n. A vector is an array, denoted by n, indicating both direction and
+magnitude. A one-dimensional vector can be represented as a row or
+column, for example, the rank of students:
+
+  A1
+  []
+
+  B2
+
+A matrix is a two-dimensional (rows or columns) entity (N), denoting
+magnitude and direction, for example:
+  History  Chemistry
+
+  student 1 80  67
+  [  ]
+
+  student 2 75  90
+
+Matrix operations: Not commutable
+
+AB ≠ BA; A(B + C) = AB + AC; A(BC) = (AB)C
+  x1
+
+  Transpose: If X = x2 , then the transpose of X is
+
+  x3
+
+  T  x2  x3 ].
+
+X = [x1
+
+  Addition and subtraction: The shape of the matrix should be the
+same to allow addition or subtraction.
+
+  Matrix multiplication: To multiply, the number of columns in the
+first matrix should match the number of rows in the second matrix, and
+the resulting matrix will have the same number of rows as the first and
+the same number of columns as the second matrix; for example:
+
+  [2 rows 3 columns] × [3 rows 3 columns] – > [2 by 3] matrix.
+  An identity matrix (I) is one that has 1 in all of its main diagonals. Its
+multiplication with a vector results in the same unchanged vector:
+  Ix = x
+
+  3  100
+
+For example, if x = 4 and I = 0 1 0
+
+  5  001
+  3
+
+Then, Ix = 4
+
+  5
+
+Orthogonal matrix: An orthogonal matrix is a square matrix whose
+
+transpose is the same as its inverse. For such a matrix,  T  =  I.
+
+  AA
+
+Column and row space: The column (Col) space or range or image
+
+of a matrix is the set of all possible combinations of the column vectors
+
+(span). For a matrix A that has m rows and n columns, and x as the vector
+
+of coefficients for the columns, then Col(A) or C(A) = set of all vectors b,
+
+where b = Ax. b needs to be in the column space of A to solve the system.
+
+The row space (C(AT)) is the set of all vectors b (b = ATx)and
+represents all possible linear combinations of the rows of a matrix A; AT is
+the transpose of the matrix A, and x is the column vector of coefficients.
+The row space has the same dimension as the column space.
+
+  For example:
+
+49
+
+A= 5  45  6
+  ]
+  8 ; AT = [
+
+  9 8 13
+
+6 13
+
+  The column space spans the two columns of A and the row space
+spans the three rows of A or the three columns of AT.
+
+Eigenvectors and eigenvalues are used in linear differential
+
+equations where you want to find a rate of change or when you want to
+
+maintain relationships between two variables. A vector that does not
+
+change the direction when multiplied by A is known as an eigenvector.
+
+Rather, the result is another vector, λx, where the λ is an eigenvalue of A.
+
+If I is the identity matrix, then det (A − λI) = 0.
+
+OceanofPDF.com
+Chapter 2  Preliminary steps for
+machine learning
+
+2.1  Introduction
+
+In this chapter, we focus on the preliminary steps for machine
+learning including getting the software, loading the data, exploring
+the data, cleaning the data, transformation, and data visualization.
+
+  The process of exploring, cleansing, and transforming data is
+called “data wrangling.” It is one of the essential steps a
+transportation data analyst needs to perform prior to performing
+data analysis. The data wrangling process enriches transportation
+data to support further data analysis. It improves the quality of
+data, which in turn helps extract true insights from the data.
+Although data wrangling is a time-consuming activity, it can bring
+forth the true power of data.
+
+  Data visualization is a great technique that reveals hidden
+insights in the data through visual diagrams. In this chapter, we
+explore different data visualizations that can be created using
+transportation datasets.
+
+2.1.1  Getting the software tools: MATLAB and R
+
+MATLAB is commercial software that can be licensed from
+MathWorks at →https://www.mathworks.com/. Most universities
+have academic licenses for students and faculty.
+
+  R is free software for statistical computing and creating
+visualizations. R can be installed from →https://cran.r-project.org/.
+One needs to install the R software first and then the interface to
+use it, RStudio. RStudio is a free integrated development
+environment (IDE) that has tools to help us be more productive with
+R. The R code in the chapters is written in RStudio. RStudio can be
+installed from →https://posit.co/download/rstudio-desktop/.
+
+2.1.1.1  Loading data from CSV or Excel to MATLAB
+
+To open a CSV file (cvs_file.csv) from the current directory, use the
+following MATLAB code:
+
+csvFileName = 'csv_file.csv';
+csvData = readtable(csvFileName);
+
+To open an Excel file (excel_file.xlsx) from the current directory, use
+the following MATLAB code:
+
+excelFileName = 'excel_file.xlsx';
+excelData = readtable(excelFileName);
+
+Below is an example where the data begins from a specific row (19)
+and the data corresponding to two specific columns (2, 3) need to
+be called as y and x data (See →Figure 2.1).
+
+% Specify the path to the Excel file
+
+filename = 'HYE_6d_1_1_1_7_3_example.xlsx';
+
+% Define the range of data to read (e.g., 'A19:C1000' to read until row
+1000)
+
+data_range = 'A19:C1000';
+
+% Read data from Excel file
+
+[num, ~, ~] = xlsread(filename, '', data_range);
+
+% Extract data from selected columns
+x_data = num(:, 3); % Third column for x-axis
+y_data = num(:, 2); % Second column for y-axis
+Figure 2.1: Example datasheet (Excerpt from file:
+‘HYE_6d_1_1_1_7_3_example.xlsx’).
+

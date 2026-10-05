@@ -1,0 +1,1620 @@
+  Chapter Notes 599
+
+  Recall that binding agent was set at two levels (khaya  Ambiguous  Common
+
+  gum and PVP), binding concentration at two levels (.5%  Mean Std. Dev. Mean Std. Dev.
+
+  and 4.0%), and relative density at two levels (low and  Low Load 18.0  15.0  7.8  9.5
+  high); thus, a 2 * 2 * 2 factorial design was employed.
+  High Load 6.1  9.5  6.3  10.0
+  The sample mean dissolution times for the treatments
+  Based on Miller, E. G., and Kahn, B. E. “Shades of meaning:
+  associated with the factors binding agent and relative  The effect of color and flavor names on consumer choice.” Journal
+  of Consumer Research, Vol. 32, June 2005 (Table 1).
+  density when the other factor (binding concentration) is
+  a. Calculate the total of the n = 25 measurements for
+  held fixed at .5% are xGum>Low = 4.70, xGum>High = 7.95,  each of the four categories in the 2 * 2 factorial
+  xPVP>Low = 3.00, and xPVP>High = 4.10. Do the results  experiment.
+  suggest that there is an interaction between binding agent
+  b. Calculate the correction for mean, CM. (See Appendix
+  and relative density? Explain.  B for computational formulas.)
+
+10.109  Impact of flavor name on consumer choice. Do consum-  c. Use the results of parts a and b to calculate the sums of
+  ers react favorably to products with ambiguous colors or  squares for Load, Name, and Load * Name interac-
+  names? Marketing professors investigated this phenom-  tion.
+  enon in the Journal of Consumer Research (June 2005).
+  As a “reward” for participating in an unrelated exper-  d. Calculate the sample variance for each treatment.
+  iment, 100 consumers were told that they could have  Then calculate the sum of squares of deviations within
+  some jelly beans available in several cups on a table.  each sample for the four treatments.
+  Half the consumers were assigned to take jelly beans
+  with common descriptive flavor names (e.g., water-  e. Calculate SSE. (Hint: SSE is the pooled sum of squares
+  melon green), while the other half were assigned to take  for the deviations calculated in part d.)
+  jelly beans with ambiguous flavor names (e.g., monster
+  green). Within each group, half of the consumers took  f. Now that you know SS(Load), SS(Name),
+  the jelly beans and left (low cognitive load condition),  SS1Load * Name2, and SSE, find SS(Total).
+  while the other half were asked questions designed to
+  distract them while they were taking their jelly beans  g. Summarize the calculations in an ANOVA table.
+  (high cognitive load condition). Consequently, a 2 * 2  h. The researchers reported the F-value for Load *
+  factorial experiment was employed—with Flavor name
+  (common or ambiguous) and Cognitive load (low or  Name interaction as F = 5.34. Do you agree?
+  high) as the two factors—with 25 consumers assigned to  i. Conduct a complete analysis of these data. Use a = .05
+  each of four treatments. The dependent variable of in-
+  terest was the number of jelly beans taken by each con-  for any inferential techniques you employ. Illustrate
+  sumer. The means and standard deviations of the four  your conclusions graphically.
+  treatments are shown in the following table.  j. What assumptions are necessary to ensure the validity
+  of the inferential techniques you utilized? State them
+  in terms of this experiment.
+
+CHAPTER NOTES
+
+Key Terms  Completely randomized  F-statistic 542  Robust method 547
+  design 539  F-test 543  Scheffé multiple-comparison
+Analysis of variance F-test 543  Mean square for error 542
+Analysis of variance  Dependent variable 532  Mean square for treatments 541  procedure 557
+  Designed study 534  Multiple comparisons of a set of  Single-factor experiments 582
+  (ANOVA) 545  Experimental unit 534  Sum of squares for blocks
+Balanced design 539  Experimentwise error rate  treatment means 556
+Blocks 564  Observational study 534  (SSB) 565
+Bonferroni multiple-comparison  (EER) 556  Qualitative factors 533  Sum of squares for error 541
+  Factor interaction 583  Quantitative factors 533  Sum of squares for treatments 541
+  procedure 557  Factor levels 533  Randomized block design 564  Treatments 533
+Comparisonwise error rate  Factor main effect 583  Replicates of the factorial  Tukey multiple-comparison
+  Factors 533
+  (CER) 556  experiment 585  procedure 557
+Complete factorial  Response variable 532  Two-way classification 582
+
+  experiment 582
+600 CHAPTER 10 ■ Analysis of Variance
+
+Guide to Selecting an Experimental Design
+
+  Number of
+  Factors
+
+  1 Factor  1 Factor  2 Factors
+(Levels = Treatments)  (Levels = Treatments)  (Combinations of
+  factor levels =Treatments)
+  +
+  1 Blocking Factor
+  (Levels = Blocks)
+
+  Completely Randomized Design  Randomized Block Design  Complete Factorial Design
+  Independent random samples  Matched experimental units (blocks)
+  selected for each treatment  All possible treatments selected
+  or  One experimental unit from each block
+  Experimental units randomly  randomly assigned to each treatment  Independent random samples
+  assigned to each treatment  selected for each treatment
+  Trtmt 1 Trtmt 2 Trtmt 3
+Treatment 1 Treatment 2 Treatment 3  Block 1  or
+  Block 2
+  Block 3  Experimental units randomly
+  Block 4  assigned to each treatment
+
+  Factor B
+
+  B1  B2
+
+  A1
+  Factor A A2
+
+  A3
+
+Guide to Conducting ANOVA F–Tests
+
+  Design
+
+  Completely  Randomized  Complete
+Randomized Design  Block Design  Factorial Design
+
+  Test Factor Interaction
+
+  Test Treatment Means  Test Treatment Means  Rank All  Reject H0  H0 No A * B interaction
+H0 m1 = m2 = m3 =Á= mk  H0 m1 = m2 = m3 =Á= mk  Treatment Means  F = MS(A * B) MSE
+
+  F = MST MSE  F = MST MSE  (Multiple
+
+Reject H0  comparisons  Rank
+  Reject H0  of means  Factor A
+  procedure)  Means
+  FailtoR
+  eject  No
+  H  difference in
+
+  0  A means
+  t H0  Test Factor A Means  eject H 0
+  Rejec  H0 mA1 = mA2 = mA3  R  Rank
+  Fail to  R F e a j i e lt c o  Factor B
+  F = MSA MSE  Means
+  t H0  tH
+  Rejec  Test Factor B Means  No
+Fail to  H0 mB1 = mB2  0  difference in
+  F = MSB MSE
+Rank Treatment  No difference  Rank Treatment  No difference  eject H 0  B means
+  Means  in treatment  Means  in treatment  R
+  RejeFailc to t H
+  (Multiple-  means  (Multiple-  means
+  comparison-  comparison-  0
+
+  of-means  of-means
+  procedure)  procedure)
+Key Symbols/Notation  Supplementary Exercises 10.110–10.141 601
+
+ANOVA  Analysis of variance  Conditions Required for Valid F-Test in a Completely
+SST  Sum of squares for treatments  Randomized Design
+MST  Mean square for treatments
+SSB  Sum of squares for blocks  1. All k treatment populations are approximately normal.
+MSB  Mean square for blocks  2. s21 = s22 = g = s2k
+SSE  Sum of squares for error  Conditions Required for Valid F-Tests in a Randomized
+MSE  Mean square for error  Block Design
+a * b factorial  Factorial design with one factor at a levels  1. All treatment-block populations are approximately normal.
+  2. All treatment-block populations have the same variance.
+SS(A)  and the other factor at b levels
+MS(A)  Sum of squares for main-effect factor A  Conditions Required for Valid F-Tests in a Complete
+SS(B)  Mean square for main-effect factor A  Factorial Design
+MS(B)  Sum of squares for main-effect factor B
+SS(AB)  Mean square for main-effect factor B  1. All treatment populations are approximately normal.
+  Sum of squares for factor A * B  2. All treatment populations have the same variance.
+MS(AB)
+  interaction  Robust Method
+  Mean square for factor A * B interaction  Slight to moderate departures from normality have no impact on
+  the validity on the ANOVA results.
+Key Ideas
+  Experimentwise Error Rate
+Key Elements of a Designed Experiment  Risk of making at least one Type I error when making multiple
+  1. Response (dependent) variable—quantitative  comparisons of means in ANOVA
+  2. Factors (independent variables)—quantitative or
+  qualitative  Number of Pairwise Comparisons with k Treatment Means
+  3. Factor levels (values of factors)—selected by the
+  experimenter  c = k1k - 12>2
+  4. Treatments—combinations of factor levels
+  5. Experimental units—assign treatments to experimental  Multiple-Comparison-of-Means Methods
+  units and measure response for each  Tukey
+
+Balanced Design  1. Balanced design
+Sample sizes for each treatment are equal.  2. Pairwise comparisons of means
+
+Tests for Main Effects in a Factorial Design  Bonferroni
+appropriate only if the test for factor interaction is  1. Either balanced or unbalanced design
+nonsignificant  2. Pairwise comparisons of means
+
+  Scheffé
+  1. Either balanced or unbalanced design
+  2. General contrasts of means
+
+Supplementary Exercises 10.110–10.141
+
+Understanding the Principles  a. Given that SST = 36.95 and SS1Total2 = 62.55, com-
+  plete an ANOVA table for this experiment.
+10.110 How do you determine the nature of the treatment effect
+  on the response in factorial experiment?  b. Is there evidence that the treatment means differ? Use
+  a = .10.
+10.111 Determine the number of pairwise comparisons of treat-
+  ment means.  Treatment 1  Treatment 2  Treatment 3  Treatment 4
+
+10.112 What are the treatments in a two-factor experiment with  8  6  9  12
+  factor A at two levels and factor B at three levels?  10  9  10  13
+  9  8  8  10
+10.113 What is the difference between a design study and an ob-  10  8  11  11
+  servational study?  11  7  12  11
+
+Learning the Mechanics  10.115 An experiment utilizing a randomized block design was
+  conducted to compare the mean responses for four treat-
+10.114 A completely randomized design is utilized to compare
+  four treatment means. The data are shown in the accom-  L10115 ments, A, B, C, and D. The treatments were randomly
+  assigned to the four experimental units in each of five
+L10114 panying table.  blocks. The data are shown in the next table.
+602 CHAPTER 10 ■ Analysis of Variance
+
+  Data for Exercise 10.115  10.118  Extinct New Zealand birds. Refer to the Evolutionary
+  Ecology Research (July 2003) study of extinction in the
+  Block  New Zealand bird population, presented in Exercise 1.20
+  (p. 49). Recall that biologists measured the body mass (in
+  Treatment  1  2  3  4  5  grams) and type of habitat (aquatic, ground terrestrial, or
+  aerial terrestrial) for each bird species. One objective is
+  A  8.6 7.5 8.7  9.8 7.4  to compare the body mass means of birds with the three
+  different types of habitat.
+  B  7.3 6.3 7.3  8.4 6.3  a. Identify the response variable of the study.
+
+  C  9.1 8.3 9.0  9.9 8.2
+
+  D  9.3 8.2 9.2 10.0 8.4
+
+  a. Given that SS1Total2 = 22.31, SS1Block2 = 10.688,  b. Identify the experimental units of the study.
+  and SSE = .288, complete an ANOVA table for the  c. Identify the factor(s) in the study.
+  experiment.  d. Identify the treatments.
+
+  b. Do the data provide sufficient evidence to indicate  10.119  Impact of paper color on exam scores. A study pub-
+  a difference among treatment means? Test, using  lished in Teaching Psychology (May 1998) examined
+  a = .05  how external clues influence student performance.
+  Introductory psychology students were randomly as-
+  c. Does the result of the test in part b warrant further  signed to one of four different midterm examinations.
+  comparison of the treatment means? If so, how many  Form 1 was printed on blue paper and contained dif-
+  pairwise comparisons need to be made?  ficult questions, while form 2 was also printed on blue
+  paper, but contained simple questions. Form 3 was
+  d. Is there evidence that the block means differ? Use  printed on red paper with difficult questions; form 4
+  a = .05.  was printed on red paper with simple questions. The re-
+  searchers were interested in the impact that Color (red
+10.116 The following table shows a partially completed ANOVA  or blue) and Question (simple or difficult) had on mean
+  table for a two-factor factorial experiment.  exam score.
+  a. What experimental design was employed in this study?
+  Source  df  SS  MS  F
+  Identify the factors and treatments.
+  A  5  3.6  b. The researchers conducted an ANOVA and found a
+  B
+  A*B  3  10.2  significant interaction between Color and Question
+  Error  1p@value 6 .032. Interpret this result.
+  4.1  c. The sample mean scores (percentage correct) for
+  Total  the four exam forms are listed in the accompanying
+  19.7  table. Plot the four means on a graph to illustrate the
+  Color * Question interaction.
+  47
+
+  a. Complete the ANOVA table.  Form  Color  Question  Mean Score
+  b. How many levels were used for each factor? How
+  1  Blue  Difficult  53.3
+  many treatments were used? How many replications  2  Blue  Simple  80.0
+  were performed?  3  Red  Difficult  39.3
+  c. Find the value of the sum of squares for treatments. Test  4  Red  Simple  73.6
+  to determine whether the data provide evidence that
+  the treatment means differ. Use a = .05.
+  d. Is further testing of the nature of factor effects war-
+  ranted? If so, test to determine whether the factors
+  interact. Use a = .05. Interpret the result.
+
+Applying the Concepts—Basic
+
+10.117  Accounting and Machiavellianism. A study of  10.120  Rotary oil rigs. An economist wants to compare the
+  Machiavellian traits in accountants was published  average monthly number of rotary oil rigs running in
+  in Behavioral Research in Accounting (Jan. 2008).  OILRIGS  three states: California, Utah, and Alaska. In order to
+  Machiavellian describes negative character traits such  account for month-to-month variation, three months
+  as manipulation, cunning, duplicity, deception, and bad  were randomly selected over a two-year period and the
+  faith. A Machiavellian (“Mach”) rating score was de-  number of oil rigs running in each state in each month
+  termined for each in a sample of accounting alumni of a  was obtained from data provided from World Oil
+  large southwestern university. The accountants were then  (Jan. 2002) magazine. The data, shown in the accompa-
+  classified as having high, moderate, or low Mach rating  nying table, were analyzed by means of a randomized
+  scores. For one portion of the study, the researcher inves-  block design. The MINITAB printout is provided on
+  tigated the impact of both Mach score classification and  the next page.
+  gender on the average income of an accountant. For this
+  experiment, identify each of the following:  Month  California  Utah  Alaska
+  a. experimental unit
+  b. response variable  1  27  17  11
+  c. factors  2  34  20  14
+  d. levels of each factor  3  36  15  14
+  e. treatments
+  Supplementary Exercises 10.110–10.141 603
+
+MINITAB Output for Exercise 10.120  1 = strongly disagree and 7 = strongly agree). In order
+  to compare the mean responses of tennis coaches from
+  the three NCAA divisions, the data were analyzed with a
+  completely randomized ANOVA design.
+  a. Identify the experimental unit, the dependent (response)
+
+  variable, the factor, and the treatments in this study.
+  b. Give the null and alternative hypothesis for the
+
+  ANOVA F-test.
+  c. The observed significance level of the test was found
+
+  to be p@value 6 .003. What conclusion can you draw if
+  you want to test at a = .05?
+  d. The following results were obtained with the use
+  of a multiple-comparison procedure with an ex-
+  perimentwise error rate of .05. Interpret the results
+  practically.
+
+  Mean:  4.51 3.60 3.21
+
+  a. Why is a randomized block design preferred over  Division:  I  II  III
+  a completely randomized design for comparing the
+  mean number of oil rigs running monthly in California,  10.122  Alcohol-and-marriage study. An experiment was con-
+  Utah, and Alaska?  ducted to examine the effects of alcohol on the mari-
+  tal interactions of husbands and wives (Journal of
+  b. Identify the treatments for the experiment.  Abnormal Psychology, Nov. 1998). A total of 135 cou-
+  c. Identify the blocks for the experiment.  ples participated in the experiment. The husband in
+  d. State the null hypothesis for the ANOVA F-test.  each couple was classified as aggressive (60 husbands)
+  e. Locate the test statistic and p-value on the MINITAB  or nonaggressive (75 husbands), on the basis of an in-
+  terview and his response to a questionnaire. Before
+  printout above. Interpret the results.  the marital interactions of the couples were observed,
+  f. A Tukey multiple comparison of means (at a = .05)  each husband was randomly assigned to one of three
+  groups: receive no alcohol, receive several alcoholic
+  is summarized in the SPSS printout below. Which  mixed drinks, or receive placebos (nonalcoholic drinks
+  state(s) have the significantly largest mean number of  disguised as mixed drinks). Consequently, a 2 * 3 fac-
+  oil rigs running monthly?  torial design was employed, with husband’s aggressive-
+  ness at two levels (aggressive or nonaggressive) and
+  husband’s alcohol condition at three levels (no alcohol,
+  alcohol, and placebo). The response variable observed
+  during the marital interaction was severity of conflict
+  (measured on a 100-point scale).
+  a. A partial ANOVA table is shown. Fill in the missing
+
+  degrees of freedom.
+
+  Source  df  F
+
+  Aggressiveness (A)  –  16.43 1p 6 .0012
+
+  Alcohol Condition (C)  –  6.00 1p 6 .012
+  A*C
+10.121  College tennis recruiting with a team Web site. Most  –  –
+  university athletic programs have a Web site with infor-
+  mation on individual sports and a Prospective Student  Error  129
+  Athlete Form that allows high school athletes to submit
+  information about their academic and sports achieve-  Total  –
+  ments directly to the college coach. The Sport Journal
+  (Winter 2004) published a study of how important team  b. Interpret the p-value of the F-test for Aggressiveness.
+  Web sites are to the recruitment of college tennis play-  c. Interpret the p-value of the F-test for Alcohol
+  ers. A survey was conducted of National Collegiate
+  Athletic Association (NCAA) tennis coaches, of which 53  Condition.
+  were from Division I schools, 20 were from Division II  d. The F-test for interaction was omitted from the article.
+  schools, and 53 were from Division III schools. Coaches
+  were asked to respond to a series of statements, includ-  Discuss the dangers of making inferences based on the
+  ing “The Prospective Student Athlete Form on the Web  tests in parts b and c without knowing the result of the
+  site contributes very little to the recruiting process.”  interaction test.
+  Responses were measured on a seven-point scale (where
+  10.123 A new dental bonding agent. Refer to the Trends in
+  Biomaterials & Artificial Organs (Jan. 2003) study of a
+  bonding adhesive for teeth, presented in Exercise 8.154
+  (p. 455). Recall that the adhesive (called “Smartbond”)
+604 CHAPTER 10 ■ Analysis of Variance
+
+  has been developed to eliminate the necessity of a dry  a. Is there sufficient evidence (at a = .01) to conclude
+  field. In one portion of the study, 30 extracted teeth were
+  bonded with Smartbond and each was randomly assigned  that the mean lengths differ among the three fish
+  one of three different bonding times: 1 hour, 24 hours, or
+  48 hours. At the end of the bonding period, the breaking  species?
+  strength (in Mpa) of each tooth was determined. The data
+  were analyzed with the use of analysis of variance in order  b. What is the experimentwise error rate for the Tukey
+  to determine whether the true mean breaking strength of
+  the new adhesive varies with the bonding time.  multiple comparisons?
+  a. Identify the experimental units, treatments, and re-
+  c. Locate the confidence interval for the difference
+  sponse variable for this completely randomized design.  1mbass - mcatfish2. Are the two means significantly dif-
+  b. Set up the null and alternative hypotheses for the  ferent? If so, which mean is significantly larger?
+
+  ANOVA.  d. Locate the confidence interval for the difference
+  c. Find the rejection region using a = .01.  1mbuffalo - mcatfish2. Are the two means significantly
+  d. The test results were F = 61.62 and p@value ≈ 0. Give  different? If so, which mean is significantly larger?
+
+  the appropriate conclusion for the test.  e. Locate the confidence interval for the difference
+  e. What conditions are required for the test results to be  1mbuffalo - mbass2. Are the two means significantly dif-
+  ferent? If so, which mean is significantly larger?
+  valid?
+  f. The sample mean breaking strengths for the 3 bonding  10.125  Are you lucky? Parapsychologists define “lucky” people
+  as individuals who report that seemingly chance events
+  times were x1 hour = 3.32 Mpa, x24 hours = 5.07 Mpa,  consistently tend to work out in their favor. A team of
+  and x48 hours = 5.03 Mpa. Using an experimentwise  British psychologists designed a study to examine the
+  error rate of .05, Tukey’s method detected no signifi-  effects of luckiness and competition on performance in
+  cant difference between the means at 24 and 48 hours;  a guessing task (The Journal of Parapsychology, Mar.
+  however, the mean at 1 hour was found to be signifi-  1997). Each in a sample of 56 college students was clas-
+  cantly smaller than the other two means. Illustrate the  sified as lucky, unlucky, or uncertain on the basis of their
+  results of the multiple comparisons of means by order-  responses to a Luckiness Questionnaire. In addition, the
+  ing the sample means and connecting means that are  participants were randomly assigned to either a compet-
+  not significantly different. What practical conclusions  itive or a noncompetitive condition. All students were
+  can you draw from the analysis?  then asked to guess the outcomes of 50 flips of a coin. The
+  response variable measured was percentage of coin flips
+10.124  Contaminated fish in the Tennessee River. Refer to the  correctly guessed.
+  U.S. Army Corps of Engineers data on contaminated fish,  a. A 2 * 3 factorial ANOVA design was conducted on
+DDT  saved in the DDT file. The results of an ANOVA and
+  Tukey multiple-comparison analysis to compare the three  the data. Identify the factors and their levels for this
+  fish species (channel catfish, largemouth bass, and small-  design.
+  mouth buffalo) on the dependent variable length (in cen-  b. The results of the ANOVA are summarized in the
+  timeters) are shown in the following MINITAB printout.  accompanying table. Interpret the results fully.
+
+  Source  df  F  p-Value
+
+  Luckiness (L)  2 1.39  .26
+
+  Competition (C) 1 2.84  .10
+  L*C
+  2 0.72  .72
+
+  Error  50
+
+  Total  55
+
+  Applying the Concepts—Intermediate
+
+  10.126  Income and road rage. The phenomenon of road rage
+  has received much media attention in recent years.
+  Is a driver’s propensity to engage in road rage re-
+  lated to his/her income? Researchers at Mississippi
+  State University attempted to answer this question
+  by conducting a survey of a representative sample of
+  over 1,000 U.S. adult drivers (Accident Analysis and
+  Prevention, Vol. 34, 2002). Based on how often each
+  driver engaged in certain road rage behaviors (e.g.,
+  making obscene gestures at, tailgating, and thinking
+  about physically hurting another driver), a road rage
+  score was assigned. (Higher scores indicate a greater
+  pattern of road rage behavior.) The drivers were also
+  grouped by annual income: under $30,000, between
+  $30,000 and $60,000, and over $60,000. The data were
+  subjected to an analysis of variance, with the results
+  summarized in the next table.
+  Supplementary Exercises 10.110–10.141 605
+
+Results for Exercise 10.126  of five students (Group B) was exposed to infrasound
+  at 2 hertz and 110 decibels, also for 1 hour. The heart
+Income Group  Sample Size Mean Road Rage Score  rate (beats/minute) of each student was measured both
+  before and after exposure. The experimental data are
+Under $30,000  379  4.60  provided in the accompanying table. To determine the
+  impact of infrasound, the researchers compared the
+$30,000 to $60,000  392  5.08  mean heart rate before exposure to the mean heart rate
+  after exposure.
+Over $60,000  267  5.15
+
+ANOVA results: F@value = 3.90  p@value 6 .01
+
+  a. Is a driver’s propensity to engage in road rage related  Group A Before After Group B Before After
+  to his/her income?  Students Exposure Exposure Students Exposure Exposure
+
+  b. An experimentwise error rate of .01 was used to rank  A1  70  70  B1  73  79
+  the three means. Give a practical interpretation of this
+  error rate.  A2  69  80  B2  68  60
+
+  c. How many pairwise comparisons are necessary to  A3  76  84  B3  61  69
+  compare the three means? List them.
+  A4  77  86  B4  72  77
+  d. A multiple-comparisons procedure revealed that the
+  means for the two income groups Between $30 and  A5  64  76  B5  61  66
+  $60 thousand and Over $60 thousand were not signifi-
+  cantly different. All other pairs of means were found  Based on Qibai, C. Y. H., and Shi, H. “An investigation on the physiological
+  to be significantly different. Summarize these results  and psychological effects of infrasound on persons.” Journal of Low Frequency
+  in tabular form.  Noise, Vibration and Active Control, Vol. 23, No. 1, March 2004 (Tables I–IV).
+
+  e. Which of the comparisons of part c will yield a confi-  a. Analyze the data on Group A students with an
+  dence interval that does not contain 0?  ANOVA for a randomized block design. Conduct the
+  ANOVA test of interest with a = .05.
+10.127  Endangered dwarf shrubs. Rugel’s pawpaw (yellow squir-
+  rel banana) is an endangered species of a dwarf shrub.  b. Repeat part a for Group B students.
+  Biologists conducted an experiment to determine the  c. Now analyze the data via a paired difference t-test.
+  effects of fire on the shrub’s growth (Florida Scientist,
+  Spring 1997). Twelve experimental plots of land were se-  Show that, for both groups of students, the results are
+  lected in a pasture where the shrub is abundant. Within  equivalent to the randomized block ANOVA.
+  each plot, three pawpaws were randomly selected and
+  treated as follows: One shrub was subjected to fire, an-  10.129  Commercial eggs produced from different housing
+  other to clipping, and the third left unmanipulated (a con-  systems. In the production of commercial eggs, four
+  trol). After five months, the number of flowers produced  EGGS2  different types of housing systems for the chickens are
+  by each of the 36 shrubs was determined. The objective  used: cage, barn, free range, and organic. The charac-
+  of the study was to compare the mean number of flowers  teristics of eggs produced from the four housing sys-
+  produced by pawpaws for the three treatments (fire, clip-  tems were investigated in Food Chemistry (Vol. 106,
+  ping, and control).  2008). Twenty-eight commercial grade A eggs were
+  a. Identify the type of experimental design employed, in-  randomly selected from supermarkets—10 of which
+  were produced in cages, 6 in barns, 6 with free range,
+  cluding the treatments, response variable, and experi-  and 6 organically. A number of quantitative charac-
+  mental units.  teristics were measured for each egg, including shell
+  b. Illustrate the layout of the design, using a graphic sim-  thickness (millimeters), whipping capacity (percent
+  ilar to Figure 10.21.  overrun), and penetration strength (Newtons). The
+  c. The ANOVA of the data resulted in a test statis-  data (simulated from summary statistics provided
+  tic of F = 5.42 for treatments with p@value = .009.  in the journal article) are saved in the EGGS2 file.
+  Interpret this result.  For each characteristic, the researchers compared
+  d. The three treatment means were compared by Tukey’s  the means of the four housing systems. Conduct the
+  method at a = .05. Interpret the results, shown as  ANOVA for each characteristic. Fully interpret the
+  follows:  results. Identify the characteristics for which housing
+  systems differ.
+
+  10.130  Mussel settlement patterns on algae. Mussel larvae are
+  in great abundance in the drift material that washes
+Mean number of flowers:  1.17  10.58  17.08  up on Ninety Mile Beach in New Zealand. These lar-
+Treatment:  Control  Clipping  Burning  vae tend to settle on algae. Environmentalists at the
+  University of Auckland investigated the impact of the
+10.128  Exposure to low-frequency sound. Infrasound refers  type of algae on the abundance of mussel larvae in drift
+  to sound frequencies below the audibility range of  material (Malacologia, Feb. 8, 2002). Drift material from
+INFRA  the human ear. A study of the physiological effects  three different wash-up events on Ninety Mile Beach
+  of infrasound was published in the Journal of Low  was collected; for each washup, the algae was separated
+  Frequency Noise, Vibration and Active Control (Mar.  into four strata: coarse-branching, medium-branching,
+  2004). In the experiment, one group of five univer-  fine-branching, and hydroid algae. Two samples were
+  sity students (Group A) was exposed to infrasound at  randomly selected for each of the 3 * 4 = 12 event–
+  4 hertz and 120 decibels for 1 hour, and a second group  strata combinations, and the mussel density (percent
+  per square centimeter) was measured for each. The data
+606 CHAPTER 10 ■ Analysis of Variance
+
+  were analyzed as a complete 3 * 4 factorial design. The  three treatments (types of decoy) and three blocks (pit
+  ANOVA summary table is as follows:
+  blinds) was employed. The response variable was the per-
+  Source  df  F  p-Value
+  centage of a goose flock to approach within 46 meters of
+  7 .05
+  6 .05  the pit blind on a given day. The data are given in the
+  7 .05  following table.†
+
+  Event  2  .35
+
+  Strata  3  217.33  Blind Shell Full Bodied Taxidermy Mounted
+
+  Interaction  6  1.91
+
+  Error  12  1  7.3  13.6  17.8
+
+  Total  23  2  12.6  10.4  17.0
+
+  3  16.4  23.4  13.6
+
+  a. Conduct the appropriate ANOVA F-tests (at a = .05)  Based on Harrey, W. F., Hindman, L. J., and Rhodes, W. E. “Vulner-
+  and interpret the results.  ability of Canada geese to taxidermy-mounted decoys.” Journal of
+  Wildlife Management, Vol. 59, No. 3, July 1995, p. 475 (Table 1).
+  b. Tukey multiple comparisons of the four algae strata
+  means (at a = .05) are summarized in the accompa-  a. Use statistical software (or the formulas in Appendix
+  nying table. Which means are significantly different?  C) to construct an ANOVA table.
+
+Mean 1%>cm22:  9  10  27  55  b. Interpret the F-statistic for comparing the response
+  means of the three types of decoy.
+Algae stratum:  Coarse Medium Fine Hydroid
+  c. What assumptions are necessary for the validity of the
+10.131  Facial expression study. What do people infer from fa-  inference made in part a?
+  cial expressions of emotion? This was the research ques-
+FACES  tion of interest in an article published in the Journal of  d. Why is it not necessary to conduct multiple compar-
+  Nonverbal Behavior (Fall 1996). A sample of 36 intro-  isons of the response means for the three types of
+  ductory psychology students was randomly divided into  decoy?
+  six groups. Each group was assigned to view one of six
+  slides showing a person making a facial expression.* The  10.133  Impact of vitamin-B supplement. In the Journal of Nutrition
+  six expressions were (1) angry, (2) disgusted, (3) fearful,  (July 1995), University of Georgia researchers examined
+  (4) happy, (5) sad, and (6) neutral. After viewing the  VITAB  the impact of a vitamin-B supplement (nicotinamide) on
+  slides, the students rated the degree of dominance they  the kidney. The experimental “subjects” were 28 Zucker
+  inferred from the facial expression (on a scale ranging  rats—a species that tends to develop kidney problems.
+  from -15 to +15). The data (simulated from summary  Half of the rats were classified as obese and half as lean.
+  information provided in the article) are listed in the ac-  Within each group, half were randomly assigned to re-
+  companying table.  ceive a vitamin-B-supplemented diet and half were not.
+  a. Conduct an analysis of variance to determine whether  Thus, a 2 * 2 factorial experiment was conducted, with
+  seven rats assigned to each of the four combinations of
+  the mean dominance ratings differ among the six facial  size (lean or obese) and diet (supplemental or not). One
+  expressions. Use a = .10.  of the response variables measured was weight (in grams)
+  b. Use Tukey’s method to rank the six dominance rating  of the kidney at the end of a 20-week feeding period. The
+  means. 1Use a = .05.2  data (simulated from summary information provided in
+  the journal article) are shown in the accompanying table.
+
+Angry  Disgusted  Fearful  Happy  Sad  Neutral  Diet
+  .74
+ 2.10  .40  .82  1.71  1.69  Regular  Vitamin-B
+  .64  .73  - 2.93  - .04  - 1.26  - .60  Supplement
+  .47  - .07  - .74  1.04  - 2.27  - .55
+  .37  - .25  1.44  - .39  1.62  1.47  1.51  1.63
+ 1.62  .89  .79  1.37  - 2.65  .27
+  1.93  - .77  - .44  - .57  Lean  1.80  1.37  1.65  1.35
+- .08  - 1.60  .59  - 2.16  Obese
+  1.71  1.71  1.45  1.66
+
+  1.81  1.44
+
+10.132  Effectiveness of geese decoys. Using decoys is a com-  Rat Size  2.35  2.84  2.93  2.63
+  mon method of hunting waterfowl. A study in the
+DECOY  Journal of Wildlife Management (July 1995) compared  2.97  2.05  2.72  2.61
+  the effectiveness of three different types of decoy—
+  taxidermy-mounted decoys, plastic shell decoys, and  2.54  2.82  2.99  2.64
+  full-bodied plastic decoys—in attracting Canada geese to
+  sunken pit blinds. In order to account for an extraneous  2.93  2.19
+  source of variation, three pit blinds were used as blocks
+  in the experiment. Thus, a randomized block design with  a. Conduct an analysis of variance on the data.
+  Summarize the results in an ANOVA table.
+
+  b. Conduct the appropriate ANOVA F-tests at a = .01.
+  Interpret the results.
+
+*In the actual experiment, each group viewed all six facial expression  †The actual design employed in the study was more complex than the
+slides and the design employed was a Latin Square (beyond the scope  randomized block design shown here. In the actual study, each number
+of this text).  in the table represented the mean daily percentage of goose flocks
+  attracted to the blind, averaged over 13–17 days.
+  Supplementary Exercises 10.110–10.141 607
+
+10.134  Light-to-dark transition of genes. Refer to the Journal of  Gender
+  Bacteriology (July 2002) study of the sensitivity of bac-
+GENES  teria genes to light, presented in Exercise 9.142 (p. 520).  Suspense  Male  Female
+  Recall that scientists isolated 103 genes of the bacterium
+  responsible for photosynthesis and respiration. Each gene  Minimal  1.77  2.73
+  was grown to midexponential phase in a growth incubator
+  in “full light” and then was exposed to three alternative  Moderate  5.38  4.34
+  light/dark conditions: “full dark” (lights extinguished for
+  24 hours), “transient light” (lights kept on for another  Substantial  7.16  7.52
+  minutes), and “transient dark” (lights turned off for
+  90 minutes). At the end of each light/dark condition, the  Extreme  7.59  4.92
+  standardized growth measurement was determined for
+  each of the 103 genes. The complete data set is saved in  Based on Gan, Su-lin, et al. “The thrill of a close game: Who enjoys
+  the GENES file. (Data for the first 10 genes are shown  it and who doesn’t?” Journal of Sport & Social Issues, Vol. 21, No. 1,
+  in the accompanying table.) Assume that the goal of the  Feb. 1997, pp. 59–60.
+  experiment is to compare the mean standardized growth
+  measurements for the three light/dark conditions.  a. Plot the treatment means in a graph similar to Figure
+  10.29. Does the pattern of means suggest interaction
+Gene ID  FULL-DARK  TR-LIGHT  TR-DARK  between suspense and gender? Explain.
+
+SLR2067  - 0.00562  1.40989  - 1.28569  b. The ANOVA F-test for interaction yielded the follow-
+SLR1986  - 0.68372  1.83097  - 0.68723  ing results: numerator df = 3, denominator df = 68,
+SSR3383  - 0.25468  - 0.79794  - 0.39719  F = 4.42, p@value = .007. What can you infer from
+SLL0928  - 0.18712  - 1.20901  - 0.18618  these results?
+SLR0335  - 0.20620  1.71404  - 0.73029
+SLR1459  - 0.53477  2.14156  - 0.33174  c. On the basis of the test carried out in part b, is the dif-
+SLL1326  - 0.06291  1.03623  - 0.30392  ference between the mean enjoyment levels of males
+SLR1329  - 0.85178  - 0.21490  and females the same, regardless of the suspense level
+SLL1327  1.42608  0.44545  of the game?
+SLL1325  0.63588  1.93104  - 0.13664
+  - 0.69866  - 0.24820  10.136  Ranging behavior of Spanish cattle. The cattle inhabit-
+  ing the Biological Reserve of Doñana (Spain), live under
+Based on Gill, R. T., et al. “Genome-wide dynamic transcriptional profiling of the  free-range conditions, with virtually no human interfer-
+light to dark transition in Synechocystis Sp. PCC6803.” Journal of Bacteriology,  ence. The cattle population is organized into four herds
+Vol. 184, No. 13, July 2002.  (LGN, MTZ, PLC, and QMD). The Journal of Zoology
+  (July 1995) investigated the ranging behavior of the four
+  a. Explain why the data should be analyzed as a random-  herds across the four seasons. Thus, a 4 * 4 factorial
+  ized block design.  experiment was employed, with Herd and Season rep-
+  resenting the two factors. Three animals from each herd
+  b. Specify the null and alternative hypotheses for compar-  during each season were sampled and the home range
+  ing the light/dark condition means.  of each individual was measured (in square kilometers).
+  The data were subjected to an ANOVA, with the results
+  c. Using a statistical software package, conduct the test  shown in the following table.
+  you set up in part b. Interpret the results at a = .05.
+  Source  df  F  p-Value
+  d. If necessary, employ a multiple-comparison procedure
+  to rank the light/dark condition means. Use an experi-  Herd (H)  3  17.2  p 6 .001
+  mentwise error rate of .05.  Season (S)  p 6 .05
+  H*S  3  3.0  p 7 .05
+
+  9  1.2
+
+  Error  32
+
+10.135  The thrill of a close game. Do women enjoy the thrill of  Total  47
+  a close basketball game as much as men do? To answer
+  this question, male and female undergraduate students  a. Conduct the appropriate ANOVA F-tests and inter-
+  were recruited to participate in an experiment (Journal  pret the results.
+  of Sport & Social Issues, Feb. 1997). The students
+  watched one of eight live televised games of an NCAA  b. The researcher conducting the experiment ranked
+  basketball tournament. (None of the games involved a  the four herd means independently of season. Do you
+  home team to which the students could be considered  agree with this strategy? Explain.
+  emotionally committed.) The “suspense” of each game
+  was classified into one of four categories according to the  c. Refer to part b The Bonferroni rankings of the four
+  closeness of scores at the game’s conclusions: minimal  herd means (at a = .05) are shown in the next table.
+  (15-point or greater differential), moderate (10–14-point  Interpret the results.
+  differential), substantial (5–9-point differential), and
+  extreme (1–4-point differential). After the game, each  Mean 1km22:  .75  1.0  2.7  3.8
+  student rated his/her enjoyment on an 11-point scale  Herd:  PLC  LGN  QMD  MTZ
+  ranging from 0 (not at all) to 10 (extremely). The en-
+  joyment rating data were analyzed as a 4 * 2 factorial  10.137 Estimating the age of glacial drifts. Refer to the American
+  design, with suspense (four levels) and gender (two  Journal of Science (Jan. 2005) study of the chemical
+  levels) as the two factors. The 4 * 2 = 8 treatment
+  means are shown in the following table.  TILL makeup of buried tills (glacial drifts) in Wisconsin, pre-
+  sented in Exercise 2.192 (p. 135). The ratio of the elements
+  aluminum (AI) and beryllium (Be) in sediment is related
+608 CHAPTER 10 ■ Analysis of Variance
+
+  to the duration of burial. Recall that the AI/Be ratios for  10.139  On the trail of the cockroach. Knowledge of how cock-
+  a sample of 26 buried till specimens were determined. The  roaches forage for food is valuable for companies that
+  till specimens were obtained from five different boreholes  ROACH  develop and manufacture roach bait and traps. Many
+  (labeled UMRB-1, UMRB-2, UMRB-3, SWRA, and SD).  entomologists believe, however, that the navigational
+  The data are shown here. Conduct an analysis of variance  behavior of cockroaches scavenging for food is ran-
+  of the data. Is there sufficient evidence to indicate dif-  dom. D. Miller of Virginia Tech University challenged
+  ferences among the mean AI/Be ratios for the five bore-  the “random-walk” theory by designing an experiment
+  holes? If so, which borehole has the highest mean ratio?  to test a cockroach’s ability to follow a trail of their
+  Test, using a = .10.  fecal material (Explore, Research at the University of
+  Florida, Fall 1998).
+UMRB-1: 3.75 4.05 3.81 3.23 3.13 3.30 3.21
+  A methanol extract from roach feces—called a
+UMRB-2: 3.32 4.09 3.90 5.06 3.85 3.88  pheromane—was used to create a chemical trail. German
+  cockroaches were released at the beginning of the trail,
+UMRB-3: 4.06 4.56 3.60 3.27 4.09 3.38 3.37  one at a time, and a video surveillance camera was used
+  to monitor the roach’s movements. In addition to the trail
+SWRA: 2.73 2.95 2.25  containing the fecal extract (the treatment), a trail using
+  methanol only (the control) was created. To determine
+SD:  2.73 2.55 3.06  if trail-following ability differed among cockroaches of
+  different age, sex, and reproductive status, four roach
+Source: Adapted from American Journal of Science, Vol. 305, No. 1, Jan. 2005,  groups were used in the experiment: adult males, adult
+p. 16 (Table 2).  females, gravid (pregnant) females, and nymphs (imma-
+  tures). Twenty roaches of each type were randomly as-
+Applying the Concepts—Advanced  signed to the treatment trail, and 10 of each type were
+  randomly assigned to the control trail. Thus, a total of
+10.138  Therapy for binge eaters. Do you experience episodes  120 roaches were used in the experiment. The move-
+  of excessive eating accompanied by being overweight? If  ment pattern of each cockroach was measured (in “pix-
+  so, you may suffer from binge eating disorder. Cognitive-  els”) as the average trail deviation. The data for the 120
+  behavioral therapy (CBT), in which patients are taught  cockroaches in the study are stored in the accompanying
+  how to make changes in specific behavior patterns (e.g.,  file. (The first 5 and last 5 observations in the data set
+  exercise, eat only low-fat foods), can be effective in  are listed here.) Conduct a complete analysis of the data.
+  treating the disorder. A group of Stanford University re-  Determine whether roaches can distinguish between the
+  searchers investigated the effectiveness of interpersonal  fecal extract and control trail and whether trail-follow-
+  therapy (IPT) as a second level of treatment for binge eat-  ing ability differs according to age, sex, and reproductive
+  ers (Journal of Consulting and Clinical Psychology, June  status.
+  1995). The researchers employed a design that randomly
+  assigned a sample of 41 overweight individuals diagnosed  Trail Deviation  Roach Group  Trail
+  with binge eating disorder to either a treatment group (30
+  subjects) or a control group (11 subjects). Subjects in the  3.1  Adult Male  Extract
+  treatment group received 12 weeks of CBT and then were  42.0  Adult Male  Control
+  subdivided into two groups. Those who responded suc-  6.2  Adult Male  Extract
+  cessfully to CBT (17 subjects) were assigned to a weight-  22.7  Adult Male  Control
+  loss therapy (WLT) program for the next 12 weeks.  34.0  Adult Male  Extract
+  Those CBT subjects who did not respond to treatment
+  (13 subjects) received 12 weeks of IPT. The subjects in  f  f  f
+  the control group received no therapy of any type. Thus,
+  the study ultimately consisted of three groups of over-  23.8  Nymph  Extract
+  weight binge eaters: the CBT-WLT group, the CBT-IPT  5.1  Nymph  Extract
+  group, and the control group. One outcome (response)  3.8  Nymph  Extract
+  variable measured for each subject was the number x of  3.1  Nymph  Extract
+  binge eating episodes per week. Summary statistics for  2.8  Nymph  Extract
+  each of the three groups at the end of the 24-week period
+  are shown in the accompanying table. The data were ana-  Critical Thinking Challenges
+  lyzed as a completely randomized design with three treat-
+  ments (CBT-WLT, CBT-IPT, and Control). Although  10.140  Exam performance study. Teaching of Psychology
+  the ANOVA tables were not provided in the article, suffi-  (Aug. 1998) published a study of whether a practice
+  cient information is given in the table to reconstruct them.  EXPREP  test helps students prepare for a final exam. Students in
+  [See Exercise 10.43 (p. 555).] Is CBT effective in reducing  an introductory psychology class were grouped accord-
+  the mean number of binges experienced per week?  ing to their class standing and whether they attended a
+  review session or took a practice test prior to the final
+  CBT-WLT  CBT-IPT  Control  exam. The experimental design was a 3 * 2 factorial
+  design, with Class Standing at 3 levels (low, medium,
+Sample size  17  13  11  high) and Exam Preparation at 2 levels (practice exam,
+  review session). There were 22 students in each of the
+Mean number of  0.2  1.9  2.9  3 * 2 = 6 treatment groups. After completing the final
+  exam, each student rated her or his exam preparation
+binges per week  on an 11-point scale ranging from 0 (not helpful at all)
+
+Standard deviation  0.4  1.7  2.0
+
+Based on Agras, W. S., et al. “Does interpersonal therapy help patients with binge
+eating disorder who fail to respond to cognitive-behavioral therapy?” Journal of
+Consulting and Clinical Psychology, Vol. 63, No. 3, June 1995, p. 358 (Table 1).
+  Supplementary Exercises 10.110–10.141 609
+
+  to 10 (extremely helpful). The data for this experiment  Coating System  First Layer  Second Layer
+  (simulated from summary statistics provided in the ar-  S1
+  ticle) are saved in the EXPREP file. The first five and  S2  Zinc dust  Epoxy paint, 100
+  last five observations in the data set are listed in the  S2  micrometers thick
+  accompanying table. Conduct a complete analysis of  S4  Zinc phosphate  Epoxy paint, 100
+  variance of the helpfulness ratings data, including (if  micrometers thick
+  warranted) multiple comparisons of means. Do your  Zinc phosphate with  Finish layer, 100
+  findings support the article’s conclusion that “Students  mica  micrometers thick
+  at all levels of academic ability benefit from a … prac-  Zinc phosphate with  Finish layer, 200
+  tice exam”?  mica  micrometers thick
+
+Exam Preparation Class Standing Helpfulness Rating  Each coated panel was immersed in deionized and deaerat-
+  ed water and then tested for corrosion. Since exposure time
+PRACTICE  LOW  6  is likely to have a strong influence on anticorrosive behavior,
+  the researchers attempted to remove this extraneous source
+PRACTICE  LOW  7  of variation through the experimental design. Exposure
+  times were fixed at 24 hours, 60 days, and 120 days. For each
+PRACTICE  LOW  7  of the coating systems, one panel was exposed to water for 24
+  hours, one for 60 days, and one for 120 days, in random order.
+PRACTICE  LOW  5  The design is illustrated in the following diagram.
+
+PRACTICE  LOW  3
+
+f  f  f
+
+REVIEW  HI  5
+
+REVIEW  HI  2  Exposure Time  Coating System/Panel Exposed
+
+REVIEW  HI  5  24 Hours  S1-A, S2-C, S3-C, S4-B
+  60 Days  S1-C, S2-A, S3-B, S4-A
+REVIEW  HI  4  120 Days  S1-B, S2-B, S3-A, S4-C
+
+REVIEW  HI  3
+
+Based on Balch, W. R. “Practice versus review exams and final exam perfor-  Following exposure, the corrosion rate (in nanoamperes
+mance.” Teaching of Psychology, Vol. 25, No. 3, Aug. 1998 (Table 1).  per square centimeter) was determined for each panel.
+  The lower the corrosion rate, the greater the anticorro-
+10.141  Anticorrosive behavior of steel coated with epoxy.  sion performance of the coating system. The data are
+  Organic coatings that use epoxy resins are widely used to  shown in the next table. Are there differences among the
+EPOXY  protect steel and metal against weathering and corrosion.  epoxy treatment means? If so, which of the epoxy coating
+  Researchers at National Technical University in Athens,  systems yields the lowest corrosion rate?
+  Greece, examined the steel anticorrosive behavior of
+  different epoxy coatings formulated with zinc pigments  Exposure
+  in an attempt to find the epoxy coating with the best re-
+  sistance to corrosion (Pigment & Resin Technology, Vol.  Time  System S1 System S2 System S3 System S4
+  32, 2003). The experimental units were flat, rectangular
+  panels cut from steel sheets. Each panel was coated with  24 Hours  6.7  7.5  8.2  6.1
+  one of four different coating systems: S1, S2, S3, and S4.
+  Three panels, labeled, S1-A, S1-B, S1-C, S2-A, S2-B, …,  60 Days  8.7  9.1  10.5  8.3
+  S4-C, were prepared for each coating system. The char-
+  acteristics of the four coating systems are listed in the fol-  120 Days  11.8  12.6  14.5  11.8
+  lowing table.
+  Source: Kouloumbi, N., et al. “Anticorrosion performance of epoxy coatings
+  on steel surface exposed to de-ionized water,” Pigment & Resin Technology,
+  Vol. 32, No. 2, 2003 (Table II).
+
+Activity Comparing Supermarket Food Prices
+
+  Due to ever-increasing food costs, consumers are becoming  Food Item 1 Food Item 2 P Food Item 10
+  more discerning in their choice of supermarkets. It is usu-
+  ally more convenient to shop at just one market as opposed  Price store 1 Price store 1 g Price store 1
+  to buying different items at different markets. Thus, it would  Price store 2 Price store 2 g Price store 2
+  be useful to compare the mean food expenditure for a mar-  Price store 3 Price store 3 g Price store 3
+  ket basket of food items from store to store. Since there is a
+  great deal of variability in the prices of products sold at any  Use the data you obtain to test
+  supermarket, we will consider an experiment that blocks on
+  products.  H0: Mean expenditures at the stores are the same.
+  Ha: Mean expenditures for at least two of the stores are different.
+  Choose three (or more) supermarkets in your area that
+  you want to compare. Then choose approximately 10 (or more)  Also, test to determine whether blocking on food items is
+  food products you typically purchase. For each food item, re-  advisable in this kind of experiment. Interpret the results of your
+  cord the price each store charges in the following manner:  analysis fully.
+610 CHAPTER 10 ■ Analysis of Variance  Rekab, K. & Shaikh, M. Statistical Design of Experiments with
+  Engineering Applications, CRC publication, 2005.
+References
+  Scheffé, H. “A method for judging all contrasts in the Analysis of
+Cochran, W. G., and Cox, G. M. Experimental Designs, 2nd ed. New York:  Variance,” Biometrica, Vol. 40, 1953, pp. 87–104.
+  Wiley, 1957.
+  Scheffé, H. The Analysis of Variance. New York: Wiley, 1959.
+Hsu, J. C. Multiple Comparisons: Theory and Methods. London:
+  Chapman & Hall, 1996.  Snedecor, G. W., and Cochran, W. G. Statistical Methods, 7th ed. Ames,
+  IA: Iowa State University Press, 1980.
+Kramer, C. Y. “Extension of multiple range tests to group means with un-
+  equal number of replications.” Biometrics, Vol. 12, 1956, pp. 307–310.  Steele, R. G. D., and Torrie, J. H. Principles and Procedures of Statistics:
+  A Biometrical Approach, 2nd ed. New York: McGraw-Hill, 1980.
+Kutner, M., Nachtsheim, C., Neter, J., and Li, W. Applied Linear Statistical
+  Models, 5th ed. New York: McGraw-Hill/Irwin, 2005.  Tukey, J. “Comparing individual means in the Analysis of Variance,”
+  Biometrics, Vol. 5, 1949, pp. 99–114.
+Mason, R. L., Gunst, R. F., and Hess, J. L. Statistical Design and Analysis
+  of Experiments. New York: Wiley, 1989.  Winer, B. J. Statistical Principles in Experimental Design, 2nd ed. New York:
+  McGraw-Hill, 1971.
+Mendenhall, W. Introduction to Linear Models and the Design and
+  Analysis of Experiments. Belmont, CA: Wadsworth, 1968.
+
+Miller, R. G., Jr. Simultaneous Statistical Inference. New York: Springer-
+  Verlag, 1981.
+
+ USING TECHNOLOGY MINITAB: Analysis of Variance
+
+MINITAB can conduct ANOVAs for all three types of experi-
+mental designs discussed in this chapter: completely randomized,
+randomized block, and factorial designs.
+
+Completely Randomized Design
+
+Step 1 Access the MINITAB worksheet file that contains
+the sample data. The data file should contain one quantitative
+variable (the response, or dependent, variable) and one factor
+variable with at least two levels.
+Step 2 Click on the “Stat” button on the MINITAB menu
+bar and then click on “ANOVA” and “One-Way,” as shown in
+Figure 10.M.1.
+
+  Figure 10.M.2 MINITAB one-way ANOVA dialog box
+
+Figure 10.M.1 MINITAB menu options for one-way ANOVA  Figure 10.M.3 MINITAB multiple comparisons dialog box
+
+Step 3 On the resulting dialog screen Figure 10.M.2, specify the
+response variable in the “Response” box and the factor variable
+in the “Factor” box.
+Step 4 Click the “Comparisons” button and select a multiple
+comparisons method and experimentwise error rate in the
+resulting dialog box (see Figure 10.M.3).
+Step 5 Click “OK” to return to the “One-Way ANOVA”
+dialog screen and then click “OK” to generate the MINITAB
+printout.
+Randomized Block and Factorial Designs  Using Technology 611
+
+Step 1 Access the MINITAB worksheet file that contains  TI–83/TI–84 Plus Graphing Calculator:
+the sample data. The data file should contain one quantitative  Analysis of Variance
+variable (the response, or dependent, variable) and two other
+variables that represent the factors and/or blocks.  The TI-83/TI-84 plus graphing calculator can be used to com-
+Step 2 Click on the “Stat” button on the MINITAB menu bar,  pute a one-way ANOVA for a completely randomized design
+and then click on “ANOVA” and “Two-Way” (see Figure 10.M.1).  but not a two-way ANOVA for either a randomized block or
+The resulting dialog screen appears as shown in Figure 10.M.4.  factorial design.
+
+Figure 10.M.4 MINITAB two-way ANOVA dialog box  Completely Randomized Design
+Step 3 Specify the response variable in the “Response” box,
+the first factor variable in the “Row factor” box, and the second  Step 1 Enter each data set into its own list (i.e., sample 1 into L1,
+factor or block variable in the “Column factor” box. If the design  sample 2 into L2, sample 3 into L3, etc.)
+is a randomized block, select the “Fit additive model” option, as
+shown in Figure 10.M.4. If the design is factorial, leave the “Fit  Step 2 Access the statistical test menu
+additive model” option unselected.  • Press STAT
+Step 4 Click “OK” to generate the MINITAB printout.  • Arrow right to TESTS
+Note: Multiple comparisons of treatment means are obtained  • Arrow down to ANOVA
+by selecting “Stat,” then “ANOVA,” and then “General Linear  • Press ENTER
+Models.” Specify the factors in the “Model” box and then select  • Type in each List name,
+“Comparisons” and put the factor of interest in the “Terms” box.
+Press “OK” twice.  separated by commas
+  (e.g., L1, L2, L3, L4)
+  • Press ENTER
+
+  Step 3 View display
+  The calculator will display the F-test statistic, as well as the
+  p-value, the factor degrees of freedom, sum of squares, mean
+  square, and by arrowing down, the Error degrees of
+  freedom, sum of squares, mean square, and the pooled
+  standard deviation.
+11 Simple Linear Regression
+
+contents  Where We’ve Been
+
+11.1 Probabilistic Models  • Presented methods for estimating and testing
+  population parameters (e.g., the mean,
+11.2 Fitting the Model: The Least Squares  proportion, and variance) for a single sample
+  Approach
+  • Extended these methods to allow for a comparison
+11.3 Model Assumptions  of population parameters for multiple samples
+
+11.4 Assessing the Utility of the Model:  Where We’re Going
+  Making inferences about the Slope b1
+  • Introduce the straight-line (simple linear regression)
+11.5 The Coefficients of Correlation and  model as a means of relating one quantitative
+  determination  variable to another quantitative variable (11.1)
+
+11.6 Using the Model for estimation  • Assess how well the simple linear regression model
+  and Prediction  fits the sample data (11.2–11.4)
+
+11.7 A Complete example  • Introduce the correlation coefficient as a means
+  of relating one quantitative variable to another
+  quantitative variable (11.5)
+
+  • Utilize the simple linear regression model to predict
+  the value of one variable from a specified value of
+  another variable (11.6, 11.7)
+  CHAPTER 11 ■ Simple Linear Regression 613
+
+Statistics IN Action Can “dowsers” really detect Water?
+
+The act of searching for and finding underground supplies of  (researcher) on the top floor nor the dowser
+water with the use of nothing more than a divining rod is com-  knew the pipe’s location, even after a guess
+monly known as “dowsing.” Although widely regarded among  was made. [Note: Before the experiment
+scientists as no more than a superstitious relic from medieval  began, a professional magician inspected
+times, dowsing remains popular in folklore, and to this day,  the entire arrangement for potential de-
+there are individuals who claim to have this mysterious skill.  ception or cheating by the dowsers.]
+In fact, as recently as March 2014, a group of California farm-
+ers hired dowsers to find water during a drought.  For each trial, two variables were
+  recorded: the actual location of the
+  Many dowsers claim that they respond to “earthrays”  pipe (in decimeters from the begin-
+that emanate from the water source. Earthrays, say the dows-  ning of the line) and the dowser’s
+ers, are a subtle form of radiation that is potentially hazardous  guess (also measured in decimeters).
+to human health. As a result of these claims, in the mid-1980s  On the basis of an examination of
+the German government conducted a two-year experiment to  these data, the German physicists con-
+investigate the possibility that dowsing is a genuine skill. If  cluded in their final report that although most dows-
+such a skill could be demonstrated, reasoned government offi-  ers did not do particularly well in the experiments, “some few
+cials, then dangerous levels of radiation in Germany could be  dowsers, in particular tests, showed an extraordinarily high
+detected, avoided, and disposed of.  rate of success, which can scarcely if at all be explained as due
+  to chance…a real core of dowser-phenomena can be regarded
+  A group of university physicists in Munich, Germany, was  as empirically proven ...” (Wagner, Betz, and König, 1990.
+provided a grant of 400,000 marks (about $250,000) to con-  Final Report 01 KB8602, Federal Ministry for Research and
+duct the study. Approximately 500 candidate dowsers were  Technology).
+recruited to participate in preliminary tests of their skill. To
+avoid fraudulent claims, the 43 individuals who seemed to be  This conclusion was critically assessed by Professor
+the most successful in the preliminary tests were selected for  J. T. Enright of the University of California at San Diego
+the final, carefully controlled, experiment.  (Skeptical Inquirer, Jan./Feb. 1999). In the Statistics in Action
+  Revisited sections of this chapter, we demonstrate how
+  The researchers set up a 10-meter-long line on the ground  Enright concluded the exact opposite of the German physi-
+floor of a vacant barn, along which a small wagon could be moved.  cists. [Note: Enright’s assessment of the German study led
+Attached to the wagon was a short length of pipe, perpendicular  other researchers, notably Vogtand Hyman (2000), Carroll
+to the test line, that was connected by hoses to a pump with run-  (2003), and Whitaker (2006), to conduct their own scientific
+ning water. The location of the pipe along the line for each trial  studies debanking water dowsing.]
+of the experiment was assigned by a computer-generated ran-
+dom number. On the upper floor of the barn, directly above the  Statistics IN Action Revisited
+experimental line, a 10-meter test line was painted. In each trial,
+a dowser was admitted to this upper level and required, with his/  • Estimating a Straight-Line Regression Model for the
+her rod, stick, or other tool of choice, to ascertain where the pipe  Dowsing Data (p. 623)
+with running water on the ground floor was located.
+  • Assessing How Well the Straight-Line Model Fits the
+  Each dowser participated in at least one test series consti-  Dowsing Data (p. 640)
+tuting a sequence of from 5 to 15 trials (typically, 10), with the
+pipe randomly repositioned after each trial. (Some dowsers  • Using the Coefficients of Correlation and Determination
+undertook only 1 test series, whereas selected others under-  to Assess the Dowsing Data (p. 651)
+went more than 10 test series.) Over the two-year experimental
+period, the 43 dowsers participated in a total of 843 tests. The  • Using the Straight-Line Model to Predict Pipe Location
+experiment was “double blind” in that neither the observer  for the Dowsing Data (p. 659)
+
+In Chapters 7–10, we described methods for making inferences about population
+means. The mean of a population has been treated as a constant, and we have shown
+how to use sample data to estimate or to test hypotheses about this constant mean. In
+many applications, the mean of a population is not viewed as a constant, but rather as a
+variable. For example, the mean sale price of residences in a large city might be treated
+as a variable that depends on the number of square feet of living space in the residence.
+The relationship might be
+
+  Mean sale price = $30,000 + $60 1Square feet2
+614 CHAPTER 11 ■ Simple Linear Regression
+
+  This formula implies that the mean sale price of 1,000-square-foot homes is
+  $90,000, the mean sale price of 2,000-square-foot homes is $150,000, and the mean sale
+  price of 3,000-square-foot homes is $210,000.
+
+  In this chapter, we discuss situations in which the mean of the population is treated
+  as a variable, dependent on the value of another variable. The dependence of the resi-
+  dential sale price on the number of square feet of living space is one illustration. Other
+  examples include the dependence of the mean reaction time on the amount of a drug in
+  the bloodstream, the dependence of the mean starting salary of a college graduate on
+  the student’s GPA, and the dependence of the mean number of years to which a criminal
+  is sentenced on the number of previous convictions.
+
+  Here, we present the simplest of all models relating a populating mean to another
+  variable: the straight-line model. We show how to use the sample data to estimate the
+  straight-line relationship between the mean value of one quantitative variable, y, as it
+  relates to a second quantitative variable, x. The methodology of estimating and using a
+  straight-line relationship is referred to as simple linear regression analysis.
+
+11.1 Probabilistic Models
+
+  An important consideration in taking a drug is how it may affect one’s perception or
+  general awareness. Suppose you want to model the length of time it takes to respond to
+  a stimulus (a measure of awareness) as a function of the percentage of a certain drug in
+  the bloodstream. The first question to be answered is this: “Do you think that an exact
+  relationship exists between these two variables?” That is, do you think that it is possible
+  to state the exact length of time it takes an individual (subject) to respond if the amount
+  of the drug in the bloodstream is known? We think that you will agree with us that this is
+  not possible, for several reasons: The reaction time depends on many variables other than
+  the percentage of the drug in the bloodstream—for example, the time of day, the amount
+  of sleep the subject had the night before, the subject’s visual acuity, the subject’s general
+  reaction time without the drug, and the subject’s age. Even if many variables are included
+  in a model (the topic of Chapter 12), it is still unlikely that we would be able to predict the
+  subject’s reaction time exactly. There will almost certainly be some variation in response
+  times due strictly to random phenomena that cannot be modeled or explained.
+
+  If we were to construct a model that hypothesized an exact relationship between
+  variables, it would be called a deterministic model. For example, if we believe that y, the
+  reaction time (in seconds), will be exactly one-and-one-half times x, the amount of drug
+  in the blood, we write
+
+  y = 1.5x
+
+  This represents a deterministic relationship between the variables y and x. It implies that
+  y can always be determined exactly when the value of x is known. There is no allowance
+  for error in this prediction.
+
+  If, however, we believe that there will be unexplained variation in reaction times—
+  perhaps caused by important, but unincluded, variables or by random phenomena—we
+  discard the deterministic model and use a model that accounts for this random error.
+  Our probabilistic model will include both a deterministic component and a random-
+  error component. For example, if we hypothesize that the response time y is related to
+  the percentage x of drug by
+
+  y = 1.5x + Random error
+
+  we are hypothesizing a probabilistic relationship between y and x. Note that the deter-
+  ministic component of this probabilistic model is 1.5x.
+
+  Figure 11.1a shows the possible responses for five different values of x, the percent-
+  age of drug in the blood, when the model is deterministic. All the responses must fall
+  exactly on the line because a deterministic model leaves no room for error.
+
+  Figure 11.1b shows a possible set of responses for the same values of x when we are using
+  a probabilistic model. Note that the deterministic part of the model (the straight line itself)
+  is the same. Now, however, the inclusion of a random-error component allows the response
+  SECTION 11.1 ■ Probabilistic Models 615
+
+  y
+  y
+
+  Deterministic component
+
+  4  4
+
+  3  3
+
+  2  2  Random error
+
+  1  1
+
+Figure 11.1  0  1  2  3  x  0  x
+
+Possible reaction times y for  1  2  3
+five different drug percentages x
+  a. Deterministic relationship:  b. Probabilistic relationship:
+
+  y = 1.5x  y = 1.5x + Random error
+
+  times to vary from this line. Since we know that the response time does vary randomly for a
+  given value of x, the probabilistic model for y is more realistic than the deterministic model.
+
+  General Form of Probabilistic Models
+  y = Deterministic component + Random error
+
+  where y is the variable of interest. We always assume that the mean value of the
+  random error equals 0. This is equivalent to assuming that the mean value of y, E(y),
+  equals the deterministic component of the model; that is,
+
+  E1y2 = Deterministic component
+
+  BIOGRAPHY FRANCIS GALTON (1822–1911)
+
+  The Law of Universal Regression
+
+  Francis Galton was the youngest of seven children born to a middle-class English family of Quaker faith.
+  A cousin of Charles Darwin, Galton attended Trinity College (Cambridge, England) to study medicine.
+  Due to the death of his father, Galton was unable to obtain his degree. His competence in both medicine
+  and mathematics, however, led Galton to pursue a career as a scientist. He made major contributions to
+  the fields of genetics, psychology, meteorology, and anthropology. Some consider Galton to be the first
+  social scientist for his applications of the novel statistical concepts of the time—in particular, regression
+  and correlation. While studying natural inheritance in 1886, Galton collected data on heights of parents
+  and adult children. He noticed the tendency for tall (or short) parents to have tall (or short) children, but
+  that the children were not as tall (or short), on average as their parents. Galton called this phenomenon
+  the “law of universal regression,” for the average heights of adult children tended to “regress” to the mean
+  of the population. With the help of his friend and disciple, Karl Pearson, Galton applied the straight-line
+  model to the height data, and the term regression model was coined. ■
+
+  In this chapter, we present the simplest of probabilistic models—the straight-line
+  model—which gets its name from the fact that the deterministic portion of the model
+  graphs as a straight line. Fitting this model to a set of data is an example of regression
+  analysis, or regression modeling. The elements of the straight-line model are summa-
+  rized in the following box:
+
+  A First-Order (Straight-Line) Probabilistic Model
+
+  y = b0 + b1x + e
+
+  where
+
+  y = Dependent or response variable (quantitative variable to be modeled or predicted)
+
+  x = Independent or predictor variable (quantitative variable used as a predictor of y)*
+
+  b0 + b1x = E1y2 = Deterministic component
+
+  (continued)
+
+  *The word independent should not be interpreted in a probabilistic sense as defined in Chapter 3. The phrase
+  independent variable is used in regression analysis to refer to a predictor variable for the response y.
+616 CHAPTER 11 ■ Simple Linear Regression
+
+  e 1epsilon2 = Random error component
+  b0 1beta zero2 = y-intercept of the line—that is, the point at which the line intersects,
+
+  or cuts through, the y-axis (see Figure 11.2)
+  b1 1beta one2 = Slope of the line—that is, the change (amount of increase or
+
+  decrease) in the deterministic component of y for every one-unit
+  increase in x.
+  [Note: A positive slope implies that E(y) increases by the amount b1. (See Figure 11.2.)
+  A negative slope implies that E(y) decreases by the amount b1.]
+
+  y
+
+  3
+
+  2
+
+  1
+
+Figure 11.2  x
+The straight-line model
+  0  1  2  3  4
+ Example 11.1
+  In the probabilistic model, the deterministic component is referred to as the line
+Modeling the Reaction  of means because the mean of y, E(y), is equal to the straight-line component of the
+Time to a Drug  model. That is,
+
+  E1y2 = b0 + b1x
+
+  Note that the Greek symbols b0 and b1 respectively represent the y-intercept and slope
+  of the model. They are population parameters that will be known only if we have access
+  to the entire population of (x, y) measurements. Together with a specific value of the
+  independent variable x, they determine the mean value of y, which is just a specific point
+  on the line of means (Figure 11.2).
+
+  Problem Consider an experiment designed to estimate the linear relationship between
+  the percentage of a certain drug in the bloodstream of a subject and the length of time
+  it takes the subject to react to a stimulus. In particular, the researchers want to predict
+  reaction time based on the amount of drug in the bloodstream.
+
+  a. In this study, identify the dependent and independent variables.
+
+  b. Explain why a probabilistic model is more appropriate than a deterministic model.
+
+  c. Write the equation of the straight-line, probabilistic model.
+
+  Solution
+
+  a. Since the researchers want to predict (or model) reaction time, then y = reaction
+  is the dependent variable. And since the researchers want to use amount of drug
+  in the bloodstream to make the prediction, x = amount of drug is the independent
+  variable.
+
+  b. It would be unrealistic to expect all subjects with the same amount of drug in the
+  bloodstream (x) to have the same reaction time (y). That is, we don’t expect amount
+  of drug to determine, exactly, a subject’s reaction time due to subject-to-subject vari-
+  ation. Consequently, a probabilistic model is more appropriate than a deterministic
+  model.
+
+  c. The probabilistic model takes the form y = b0 + b1x + e, where b0 is the y-intercept
+  of the line, b1 is the slope of the line, and e represents random error.
+  SECTION 11.1 ■ Probabilistic Models 617
+
+Look Ahead In the next section, we show how to estimate the y-intercept and slope of the
+line from the sample data.
+
+  ■ Now Work Exercise 11.12
+
+  The values of b0 and b1 will be unknown in almost all practical applications of
+regression analysis. The process of developing a model, estimating the unknown parameters,
+and using the model can be viewed as the five-step procedure shown in the following box:
+
+  Conducting a Simple Linear Regression:
+  Step 1 Hypothesize the deterministic component of the model that relates the mean
+
+  E(y) to the independent variable x (Section 11.2).
+  Step 2 Use the sample data to estimate unknown parameters in the model
+
+  (Section 11.2).
+  Step 3 Specify the probability distribution of the random-error term and estimate
+
+  the standard deviation of this distribution (Section 11.3).
+  Step 4 Statistically evaluate the usefulness of the model (Sections 11.4 and 11.5).
+  Step 5 When satisfied that the model is useful, use it for prediction, estimation, and
+
+  other purposes (Section 11.6).
+
+Exercises 11.1–11.14  11.8 Refer to Exercise 11.7. Find the equations of the lines that
+  pass through the points listed in Exercise 11.5.
+Understanding the Principles
+  11.9 Plot the following lines:
+11.1 Why do we generally prefer a probabilistic model to a de-  a. y = 2 + x
+  terministic model? Give examples for which the two types  b. y = 3 - 4x
+  of models might be appropriate.  c. y = -3 + 4x
+  d. y = -2x
+11.2 What is the difference between a dependent variable and  e. y = x
+  an independent variable in a probabilistic model?  f. y = .55 + 2.5x
+
+11.3 What is the line of means?  11.10 Give the slope and y-intercept for each of the lines defined
+  in Exercise 11.9.
+11.4 If a straight-line probabilistic relationship relates the mean
+  E(y) to an independent variable x, does it imply that every  Applying the Concepts—Basic
+  value of the variable y will always fall exactly on the line of
+  means? Why or why not?  11.11  Measuring the moon’s orbit. A handheld digital camera
+  was used to photograph the moon’s orbit and the pictures
+Learning the Mechanics  used to measure the angular size (in pixels) of the moon at
+  various distances (heights) above the horizon (American
+11.5 In each case, graph the line that passes through the given  Journal of Physics, April 2014). The photographer wanted
+  points.  to predict the moon’s size based on the moon’s distance
+  a. (2, 2) and (7, 7)  above the horizon using simple linear regression.
+  b. (0, 7) and (7, 0)  a. In this study, identify the dependent and independent
+  c. 1 -2, 32 and (6, 4)
+  d. 1 -5, - 32 and (3, 4)  variables.
+  b. Explain why a probabilistic model is more appropriate
+11.6 Give the slope and y-intercept for each of the lines graphed
+  in Exercise 11.5.  than a deterministic model.
+  c. Write the equation of the straight-line, probabilistic
+11.7 The equation for a straight line (deterministic model) is
+  model.
+  y = b0 + b1x
+  If the line passes through the point 1 - 5, 12, then  11.12  Game performance of water polo players. The journal
+  x = -5, y = 1 must satisfy the equation; that is,  Biology of Sport (Vol. 31, 2014) published a study of the
+  physiological performance of top-level water polo play-
+  1 = b0 + b11 - 52  ers. Eight Olympic male water polo players participated in
+  the study. Two variables were measured for each during
+  Similarly, if the line passes through the point (8, 12), then  competition: mean heart rate over the four quarters of the
+  x = 8, y = 12 must satisfy the equation; that is,  game (expressed as a percentage of maximum heart rate)
+  and maximal oxygen uptake (a measure of fitness). One
+  12 = b0 + b1182  objective of the study was to predict a player’s heart rate
+  based on the player’s maximal oxygen uptake.
+  Use these two equations to solve for b0 and b1; then find
+  the equation of the line that passes through the points
+  1 - 5, 12 and (8, 12).
+618 CHAPTER 11 ■ Simple Linear Regression
+
+  a. In this study, identify the dependent and independent  11.14  Forecasting movie revenues with Twitter. A study pre-
+  variables.  sented at the 2010 IEEE International Conference on Web
+  Intelligence and Intelligent Agent Technology investigated
+  b. Explain why a probabilistic model is more appropriate  whether the volume of chatter on Twitter.com could be
+  than a deterministic model.  used to forecast the box office revenues of movies. For
+  each in a sample of 24 recent movies, opening weekend
+  c. Write the equation of the straight-line, probabilistic  box office revenue (in millions of dollars) was measured
+  model.  as well as the movie’s tweet rate (the average number of
+  tweets referring to the movie one week prior to the movie’s
+11.13  Estimating repair and replacement costs of water pipes.  release).
+  A team of civil engineers used simple linear regression  a. In this study, identify the dependent and independent
+  analysis to model the ratio of repair to replacement cost of
+  commercial pipe as a function of the pipe’s diameter (IHS  variables.
+  Journal of Hydraulic Engineering, Sept. 2012).  b. Explain why a probabilistic model is more appropriate
+  a. In this study, identify the dependent and independent
+  than a deterministic model.
+  variables.  c. Write the equation of the straight-line, probabilistic
+  b. Explain why a probabilistic model is more appropriate
+  model.
+  than a deterministic model.
+  c. Write the equation of the straight-line, probabilistic
+
+  model.
+
+11.2 Fitting the Model: The Least Squares Approach
+
+  After the straight-line model has been hypothesized to relate the mean E(y) to the
+  independent variable x, the next step is to collect data and to estimate the (unknown)
+  population parameters, the y-intercept b0 and the slope b1.
+
+  Consider the experiment described in Example 11.1 (p. 616), where we want to
+  determine the relationship between the percentage (x) of a certain drug in the blood-
+  stream and the length of time (y) it takes to react to a stimulus. Data were collected for
+  five subjects, and the results are shown in Table 11.1. (The number of measurements
+  and the measurements themselves are unrealistically simple in order to avoid arithmetic
+  confusion in this introductory example.) This set of data will be used to demonstrate
+  the five-step procedure of regression modeling given in the previous section. In the cur-
+  rent section, we hypothesize the deterministic component of the model and estimate its
+  unknown parameters (steps 1 and 2). The model’s assumptions and the random-error
+  component (step 3) are the subjects of Section 11.3, whereas Sections 11.4 and 11.5 assess
+  the utility of the model (step 4). Finally, we use the model for prediction and estimation
+  (step 5) in Section 11.6.
+
+  Table 11.1 Reaction Time versus Drug Percentage
+
+  Subject  Percent x of Drug  Reaction Time y (seconds)
+
+  1  1  1
+
+  2  2  1
+
+  3  3  2
+
+  4  4  2
+
+  5  5  4
+
+  Data Set: STIMULUS
+
+  Step 1 Hypothesize the deterministic component of the probabilistic model. As stated
+  before, we will consider only straight-line models in this chapter. Thus, the
+  complete model relating mean response time E(y) to drug percentage x is
+  given by
+
+  E1y2 = b0 + b1x
+
+  Step 2 Use sample data to estimate unknown parameters in the model. This step is the
+  subject of this section—namely, how can we best use the information in the
+  sample of five observations in Table 11.1 to estimate the unknown y-intercept
+  b0 and slope b1?
+  SECTION 11.2 ■ Fitting the Model: The Least Squares Approach 619
+
+  y  To determine whether a linear relationship between y and x is plausible, it is help-
+  ful to plot the sample data in a scatterplot (or scattergram). Recall (Section 2.8) that
+4  a scatterplot locates each data point on a graph, as shown in Figure 11.3 for the five
+  data points of Table 11.1. Note that the scatterplot suggests a general tendency for y to
+3  increase as x increases. If you place a ruler on the scatterplot, you will see that a line
+  may be drawn through three of the five points, as shown in Figure 11.4. To obtain the
+2  equation of this visually fitted line, note that the line intersects the y-axis at y = -1, so
+  the y-intercept is -1. Also, y increases exactly one unit for every one-unit increase in x,
+1  indicating that the slope is + 1. Therefore, the equation is
+
+  x  ~y = -1 + 11x2 = -1 + x
+
+0  12345  where ~y is used to denote the y that is predicted from the visual model.
+  One way to decide quantitatively how well a straight line fits a set of data is to
+Figure 11.3
+Scatterplot for data in Table 11.1  note the extent to which the data points deviate from the line. For example, to eval-
+  uate the model in Figure 11.4, we calculate the magnitude of the deviations (i.e., the
+  y  differences between the observed and the predicted values of y). These deviations, or
+  errors of prediction, are the vertical distances between observed and predicted values
+5  (see Figure 11.4).* The observed and predicted values of y, their differences, and their
+  squared differences are shown in Table 11.2. Note that the sum of errors equals 0 and the
+– 4 1 + x  sum of squares of the errors (SSE), which places a greater emphasis on large deviations
+3  ≈y =  of the points from the line, is equal to 2.
+
+2
+
+1
+
+0  x
+
+–1 1 2 3 4 5
+
+–2
+
+Figure 11.4  Table 11.2  Comparing observed and Predicted Values for the Visual Model
+
+Visual straight line fitted to the  ~  1 y - ~y 2  1 y - ~y 22
+data in Figure 11.3
+  y = -1 + x
+  x  y
+
+  1  1  0  11 - 02 = 1  1
+
+  2  1  1  11 - 12 = 0  0
+
+  3  2  2  12 - 22 = 0  0
+
+  4  2  3  12 - 32 = -1  1
+
+  5  4  4  14 - 42 = 0  0
+
+  Sum of errors = 0  Sum of squared errors 1SSE2 = 2
+
+  You can see by shifting the ruler around the graph that it is possible to find many
+  lines for which the sum of errors is equal to 0, but it can be shown that there is one (and
+  only one) line for which the SSE is a minimum. This line is called the least squares line,
+  the regression line, or the least squares prediction equation. The methodology used to
+  obtain that line is called the method of least squares.
+
+  Now Work Exercise 11.16a–d
+
+  To find the least squares prediction equation for a set of data, assume
+  that we have a sample of n data points consisting of pairs of values of x and y, say,
+  1x1, y12, 1x2, y22, c, 1xn, yn2. For example, the n = 5 data points shown in Table 11.2
+  are (1, 1), (2, 1), (3, 2), (4, 2), and (5, 4). The fitted line, which we will calculate on the basis
+  of the five data points, is written as
+
+  yn = bn0 + bn1x
+
+  The “hats” indicate that the symbols below them are estimates: yn (y-hat) is an estimator
+  of the mean value of y, E(y), and is a predictor of some future value of y; and bn0 and bn1
+  are estimators of b0 and b1, respectively.
+
+  For a given data point—say, the point 1xi, yi2,—the observed value of y is yi and the
+  predicted value of y would be obtained by substituting xi into the prediction equation:
+
+  yni = bn0 + bn1xi
+
+  The deviation of the ith value of y from its predicted value is
+
+  1yi - yni2 = 3yi - 1bn0 + bn1xi2 4
+
+  *In Chapter 12, we refer to these errors of prediction as regression residuals. There, we learn that an analysis
+  of residuals is essential in establishing a useful regression model.
+620  CHAPTER 11 ■ Simple Linear Regression
+
+  Then the sum of the squares of the deviations of the y-values about their predicted
+  values for all the n data points is
+
+  SSE = a 3yi - 1bn0 + bn1xi2 42
+  The quantities bn0 and bn1 that make the SSE a minimum are called the least squares estimates
+  of the population parameters b0 and b1, and the prediction equation yn = bn0 + bn1x is
+  called the least squares line.
+
+  The least squares line yn = bn0 + bn1x is the line that has the following two properties:
+  1. The sum of the errors equals 0, i.e., mean error of prediction = 0.
+  2. The sum of squared errors (SSE) is smaller than that for any other straight-line model.
+
+  The values of bn0 and bn1 that minimize the SSE are given by the formulas in the
+  following box (proof omitted):*
+
+  Formulas for the Least Squares Estimates
+  Slope: bn1 = SSxy
+
+  SSxx
+  y-intercept: bn0 = y - bn1x
+  where
+
+  a a xi b a a yi b
+  SSxy = a 1xi - x2 1yi - y2 = a xiyi - n
+
+  2
+
+  a a xi b
+  SSxx = a 1xi - x22 = a x2i - n
+
+  n = Sample size
+
+ Example 11.2  Problem Refer to Example 11.1 and the reaction data presented in Table 11.1. Consider
+  the straight-line model E1y2 = b0 + b1x, where y = reaction time (in seconds) and
+  STIMULUS  x = percent of drug received.
+
+Applying the Method  a. Use the method of least squares to estimate the values of b0 and b1.
+  b. Predict the reaction time when x = 2%.
+of Least Squares—Drug  c. Find the SSE for the analysis.
+  d. Give practical interpretations of bn0 and bn1.
+Reaction Data
+  Solution
+  a. We used a spreadsheet program (e.g., Excel) to make the preliminary computations
+
+  for finding the least squares line. The Excel spreadsheet is shown in Figure 11.5.
+  Using the values in the spreadsheet, we find:
+
+  a x 15
+  x= 5 = 5 =3
+
+  a y 10
+  y= 5 = 5 =2
+
+  *Students who are familiar with calculus should note that the values of b0 and b1 that minimize
+  SSE = Σ1yi - yni22 are obtained by setting the two partial derivatives 0SSE>0b0 and 0SSE>0b1 equal to 0.
+  The solutions of these two equations yield the formulas shown in the box. Furthermore, we denote the sample
+  solutions of the equations by bn0 and bn1, where the “hat” denotes that these are sample estimates of the true
+  population intercept b0 and slope b1.
+  SECTION 11.2 ■ Fitting the Model: The Least Squares Approach 621
+
+Figure 11.5
+
+Excel Spreadsheet with
+Calculations
+
+y  SSxy = a 1x - x2 1y - y2 = a 1x - 32 1y - 22 = 7
+
+4  SSxx = a 1x - x22 = a 1x - 322 = 10
+3 ^ = –.1 + .7x
+  Then the slope of the least squares line is
+  y
+2  bn1 = = = SSxy 7 .7
+  SSxx 10
+1
+  and the y-intercept is
+0  x
+  bn0 = y - bn1x
+–1 1 2 3 4 5  = 2 - 1.72132 = 2 - 2.1 = -.1
+
+Figure 11.6  The least squares line is thus
+
+The line yn = -.1 + .7x fitted to  yn = bn0 + bn1x = - .1 + .7x
+the data
+  The graph of this line is shown in Figure 11.6.
+  b. The predicted value of y for a given value of x can be obtained by substituting into
+
+  the formula for the least squares line. Thus, when x = 2, we predict y to be
+
+  yn = -.1 + .7x = -.1 + .7122 = 1.3
+
+  We show how to find a prediction interval for y in Section 11.6.
+  c. The observed and predicted values of y, the deviations of the y values about their
+
+  predicted values, and the squares of these deviations are shown in the Excel spread-
+  sheet, Figure 11.7. Note that the sum of the squares of the deviations, SSE, is 1.10
+  and (as we would expect) this is less than the SSE = 2.0 obtained in Table 11.2 for
+  the visually fitted line.
+  d. The estimated y-intercept, bn0 = -.1, appears to imply that the estimated mean re-
+  action time is equal to -.1 second when the percent x of drug is equal to 0%. Since
+  negative reaction times are not possible, this seems to make the model nonsensical.
+  However, the model parameters should be interpreted only within the sampled range
+  of the independent variable—in this case, for amounts of drug in the bloodstream
+  between 1% and 5%. Thus, the y-intercept—which is, by definition, at x = 0 (0%
+  drug)—is not within the range of the sampled values of x and is not subject to mean-
+  ingful interpretation.
+
+Figure 11.7
+
+Excel Spreadsheet Comparing
+Observed and Predicted Values
+622  CHAPTER 11 ■ Simple Linear Regression
+
+  The slope of the least squares line, bn1 = .7, implies that for every unit increase
+  in x, the mean value of y is estimated to increase by .7 unit. In terms of this example,
+  for every 1% increase in the amount of drug in the bloodstream, the mean reaction
+  time is estimated to increase by .7 second over the sampled range of drug amounts
+  from 1% to 5%. Thus, the model does not imply that increasing the drug amount from
+  5% to 10% will result in an increase in mean reaction time of 3.5 seconds because
+  the range of x in the sample does not extend to 10% 1x = 102. In fact, 10% might be
+  such a high concentration that the drug would kill the subject! Be careful to interpret
+  the estimated parameters only within the sampled range of x.
+
+  Look Back The calculations required to obtain bn0, bn1, and SSE in simple linear regression,
+  although straightforward, can become rather tedious. Even with the use of a pocket
+  calculator, the process is laborious and susceptible to error, especially when the sample
+  size is large. Fortunately, the use of statistical computer software can significantly reduce
+  the labor involved in regression calculations. The SAS, SPSS, and MINITAB outputs
+  for the simple linear regression of the data in Table 11.1 are displayed in Figure 11.8a–c.
+
+Figure 11.8a
+
+SAS printout for the time–drug
+regression
+
+Figure 11.8b
+
+SPSS printout for the time–drug
+regression
+  SECTION 11.2 ■ Fitting the Model: The Least Squares Approach 623
+
+Figure 11.8c
+
+MINITAB printout for the
+time–drug regression
+
+  The values of bn0 and bn1 are highlighted on the printouts. These values, bn0 = - .1 and
+  bn1 = .7, agree exactly with our hand-calculated values. The value of SSE = 1.10 is also
+  highlighted on the printouts.
+
+  ■ Now Work Exercise 11.27
+
+  Interpreting the Estimates of B0 and B1 in Simple Linear Regression
+  y-intercept: bn0 represents the predicted value of y when x = 0. (Caution: This value
+  will not be meaningful if the value x = 0 is nonsensical or outside the range of the
+  sample data.)
+  slope: bn1 represents the increase (or decrease) in y for every 1-unit increase in x. (Caution:
+  This interpretation is valid only for x-values within the range of the sample data.)
+
+  Even when the interpretations of the estimated parameters in a simple linear re-
+  gression are meaningful, we need to remember that they are only estimates based on the
+  sample. As such, their values will typically change in repeated sampling. How much con-
+  fidence do we have that the estimated slope bn1 accurately approximates the true slope
+  b1? Determining this requires statistical inference, in the form of confidence intervals
+  and tests of hypotheses, which we address in Section 11.4.
+
+  To summarize, we defined the best-fitting straight line to be the line that minimizes
+  the sum of squared errors around it, and we called it the least squares line. We should in-
+  terpret the least squares line only within the sampled range of the independent variable.
+  In subsequent sections, we show how to make statistical inferences about the model.
+
+Statistics IN Action Revisited Estimating a Straight-Line Regression Model
+  for the Dowsing Data
+
+After conducting a series of experiments in a Munich barn, a  Recall (p. 613) that for various hidden pipe
+group of German physicists concluded that dowsing (i.e., the  locations, each dowser guessed where the pipe with
+ability to find underground water with a divining rod) “can  running water was located. Let x = dowser’s guess
+be regarded as empirically proven.” This observation was  (in meters) and y = pipe location (in meters)
+based on the data collected on 3 (of the participating 500)  for each trial. One way to determine whether
+dowsers who had particularly impressive results. All of these  the “best” dowsers are effective is to fit the
+“best” dowsers (numbered 99, 18, and 108) performed the ex-  straight-line model E1y2 = b0 + b1x to
+periment multiple times, and the best test series (sequence of  the data in Table SIA11.1.
+trials) for each of them was identified. These data, saved in
+the DOWSING file, are listed in Table SIA11.1.  A MINITAB scatterplot of the data is
+  shown in Figure SIA11.1. The least squares
+
+  (Continued)
+

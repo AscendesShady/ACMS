@@ -1,0 +1,907 @@
+Connected Vehicles  257
+
+  Challenges Concerning Public Value
+
+  Privacy
+
+A CV provides a wide range of services, as discussed above. It also provides
+users with the freedom to use their smartphone through the dashboard, while
+driving, to play music, and use apps and other features. Thus, the sharing of
+data among devices and surroundings is essential for a CV to function
+optimally. This raises concerns regarding the protection of the consumer's
+personal information.
+
+Critical data that can be leaked during a privacy breach:
+
+  1. Details of vehicle owner and passenger
+  2. User location and travel patterns
+  3. Data collected by sensors like camera, voice recognition, and control
+
+  system
+  4. Data collected by third parties
+
+CVs include systems and components from an ecosystem of diverse service
+providers, which includes part manufacturers, software providers, service
+integrators, and other entities, who collect a specified set of data, ranging
+from technical, diagnostic, or performance-based, to enhance user
+experience and the performance of CVs. Privacy is a top concern to both the
+public and private sectors. The public sector is concerned with the potential
+misuse of data, which could preclude deployment if they are considered as
+threats; once a system is deployed, misuse of data could undermine the
+system (Persad et al. 2007). It is essential to establish rules and regulations
+to ensure transparency and security in data collection and distribution.
+
+  Security
+
+Another important aspect that needs to be addressed is the ability of hackers
+to capture the collected data and alter it. The adversaries can collect
+sensitive information and even threaten human life by breaching the security
+of the network that facilitates communication between vehicle control
+systems like brakes, sensors, camera, odometer, etc. The automated vehicles
+work on complex software that uses machine learning and computer vision
+algorithms to learn and stay aware of the vehicle surroundings during
+operations. Machine-learning models are subject to possible adversarial
+threats, which are intended to deliberately mislead the model into giving an
+erroneous output, such as misclassifying an item (altering traffic signs, etc.);
+258  Chapter 3.9
+
+this could mislead the vehicle navigation system, and other systems, causing
+the vehicle to behave dangerously.
+
+  Governance and Ownership of Data
+
+The accountability of the collected data has been a significant point of
+discussion. When considering the advantages and drawbacks of involving
+the public and private sector in the collection and management of ITS data,
+perhaps the most important predictor of how the data will be treated is not
+whether the organization is public or private, but rather what its goals and
+operating characteristics are (Briggs and Walton 2000).
+
+  References
+
+Coppola, P., and F. Silvestri. 2019. “Autonomous Vehicles and Future
+  Mobility Solutions.” In Autonomous Vehicles and Future Mobility.
+  https://doi.org/10.1016/B978-0-12-817696-2.00001-9.
+
+Jadaan, K., S. Zeater and Y. Abukhalil. 2017. “Connected Vehicles: An
+  Innovative Transport Technology.” Procedia Engineering 187: 641–48.
+  https://doi.org/10.1016/j.proeng.2017.04.425.
+
+Mahmood, A., W. E. Zhang and Q. Z. Sheng. 2019. “Software-defined
+  Heterogeneous Vehicular Networking: The Architectural Design and
+  Open Challenges.” Future Internet 11 (3).
+  https://doi.org/10.3390/fi11030070.
+  CHAPTER 3.10
+
+  OPERATIONAL SAFETY APPLICATIONS
+
+  While all terrorist attacks cannot be prevented, the technologies of
+  Intelligent Transportation Systems can offer great promise for preventing
+  attacks.
+  (A statement taken from the National Intelligent Systems Program Plan: A
+  Ten-Year Vision: a report prepared on security in New York State in the
+  aftermath of the terrorist attacks of September 11, 2001.)
+
+An important aspect for the socioeconomic health of a nation is
+transportation. It binds communities, connects residents to work or schools,
+and enables commerce through a network of highways, railways, streets,
+and bus routes. One of the best road systems in the world can be found in
+the US, but the problem of safety remains a serious problem. Intelligent
+Transportation Systems (ITS) offer potential solutions for the growing
+challenges. Due to the presence of an integrated system in ITS, the surface
+transportation system can be managed as an intermodal, multijurisdictional
+body (National ITS Program Plan Five-Year Horizon August 2000). ITS
+can address the aggravating urban problems, along with anticipating and
+addressing future demands through a coordinated approach to transportation.
+
+  Background
+
+The United States Department of Transportation defines ITS as “well-
+established technologies in communications, control, electronics, and
+computer hardware and software to improve surface transportation system
+performance.” ITS have many benefits, like reducing congestion, improving
+personal safety, preventing the environmental effects of transportation
+systems, enhancing energy performance, and improving productivity. There
+are four categories of ITS technologies (Peyrebrune 2002):
+
+  1. Sensing: The ability to note the position and speed of vehicles using
+  infrastructure. It helps in monitoring systems and identifies the
+  potential threats.
+
+  2. Communicating: The ability to send and receive information
+  between vehicles, between vehicles and infrastructure, and between
+260  Chapter 3.10
+
+  infrastructure and centralized transportation operations and
+  management centers. It is a critical aspect of security in terms of
+  preventing incidents and effectively dealing with crises when they
+  occur.
+  3. Computing: The ability to process large amounts of security
+  information, which are collected and communicated, to draw
+  conclusions and make assessments.
+  4. Algorithms: The ability of computer programs to process
+  information gathered by ITS and develop operating strategies for
+  transportation facilities. In other words, algorithms help in detecting
+  patterns and optimizing solutions (Peyrebrune 2002).
+
+  Security Applications of ITS in New York
+
+Though the applications of ITS were being implemented extensively all
+over the country for over a decade, the security applications of ITS increased
+following the 9/11 attack. It was the day when nineteen hijackers took
+control of commercial passenger jets flying out of the east coast of the
+United States. Two of the planes were flown into the towers of the World
+Trade Center in New York City. The attacks resulted in extensive death and
+destruction, triggering major initiatives worldwide to combat terrorism. For
+a successful deployment of all ITS operations, it is critical to have
+communications between various information systems along with the users
+of the system. This led to the synergy between ITS and Homeland Security
+(which ensures that the nation’s safety is not compromised). Apart from the
+surveillance of commercial and passenger vehicles, there are many other
+transportation-safety technologies that were utilized by the transportation
+and security officials of New York state:
+
+  1. Smart card: This card, which resembles a credit card, has a
+  microprocessor and memory chip embedded in it, which allows
+  manipulation of data in the card. Sometimes, only a chip is
+  embedded in the card, which allows pre-defined operations to occur.
+  Smart cards make the use of public transportation solutions easier,
+  and are typically for making payments.
+
+  2. Biometrics: This helps in identifying individuals based on biological
+  characters. Retinal or iris scanning, fingerprints, and facial recognition
+  are some of the examples of biometric technologies.
+
+  3. Automatic vehicle identification: This technology identifies vehicles
+  as they pass specific points. This does not require any action by the
+  driver.
+Operational Safety Applications  261
+
+  4. Map databases: These databases can be used for many purposes, like
+  traffic and incident analyses.
+
+  5. Vehicle classification sensors: These sensors automatically detect
+  and classify the vehicles that move past them.
+
+  6. Technologies adopted in bus transit systems: These include two-way
+  radios with panic buttons, on-board video surveillance, cab
+  enclosures, police and security on-board, and destination signs with
+  messages activated by panic buttons.
+
+  7. Weigh-in-motion technology: When trucks are moving at regular
+  highway speeds, this technology allows them to be weighed. If trucks
+  are found to be crossing the weight limit, the authorities are
+  immediately notified.
+
+  8. Spatial geo-location: Specific locations of vehicles can be identified
+  using this technology.
+
+Additionally, there are also technologies that enable security personnel to
+detect the contents of vehicles without any disruptions. This will help in
+identifying hazardous substances, explosives, or drugs present in the
+vehicles. There are technologies to match a specific vehicle with a specific
+operator and cargo. If a mismatch is found, then the vehicle is prohibited to
+traverse further. Many personal vehicles have technologies to remotely
+control the ignition of the vehicle, which may be useful in preventing thefts
+and hijacking. Similarly, to enable the timely flow of information, increase
+the flexibility of systems to accommodate emergency traffic, and to
+decrease emergency response times, there are several technologies, like
+automated signal systems, signal priority systems, moveable lane barriers,
+variable message signs, automated incident detection systems, mayday
+systems, and public safety response systems. These technologies can aid in
+the aftermath of an attack (Peyrebrune 2002).
+
+  ITS Homeland Security
+
+ITS America formed the ITS Homeland Security Task Force. They mainly
+assess the current and future ITS technologies. The ITS Homeland Security
+has identified a few technologies that have security and disaster-response
+applications:
+
+  1. Automated vehicle location (AVL) systems, which locate vehicle or
+  freight movement and delivery. These vehicles can detect and
+  monitor the transportation of hazardous material. Many transit
+  agencies use AVL in combination with on-board cameras.
+262  Chapter 3.10
+
+  2. Advanced traffic management systems, which monitor, control, and
+  moderate the traffic flow.
+
+  3. Universal transponders on commercial vehicles, which track
+  vehicles as they pass through electronic weigh stations.
+
+  4. License plate-reading technologies are deployed at borders, parking
+  facilities, and certain domestic checkpoints.
+
+  5. Wireless enhanced 911 can provide automatic location information.
+  6. Real-time interoperable communications links between transportation
+
+  and public safety agencies (Peyrebrune 2002).
+
+  Some Caveats
+
+There were some important caveats, with respect to ITS deployment in the
+nation. First, the nation was more concerned over the security aspects of the
+aviation industry. However, there were ongoing efforts to improve security,
+using ITS, in all modes of transportation. Second, the exact amount of
+information that should be made available for public use, for national and
+state security, was unclear. By providing public access to the critical
+information from transportation systems, there remains a threat to safety;
+the information could be misused by criminals. Therefore, the sharing of
+data should be vigilantly controlled. Third, remote sensing technologies
+were only in their test phases. The actual implementation depended on
+feasibility and financing.
+
+According to Pearce (2002), the response actions to terrorist attacks on
+transportation are reviewed in six categories: i) advance preparations and
+planning, ii) institutional coordination, iii) communication, iv) use of
+advanced technologies, v) redundancy and resiliency, and vi) operating
+decisions (Transportation Security Against Terrorism 2009). Advance
+preparation is important to crisis management. The governor and his state
+personnel have to be prepared and practiced before a crisis. Coordination
+among different departments is necessary for successful security
+applications. No department can work in isolation with respect to these
+matters. The six categories are explained, along with their uses and
+functions, in Exhibit 3.10.1.
+
+  Potential Issues
+
+New York has a long history of planning and dealing with major incidents.
+Owing to that, and the experience in managing the 9/11 attacks, New York
+Operational Safety Applications  263
+
+leads state agencies in matters relating to security. However, there are issues
+related to ITS and security that should be addressed:
+
+  1. Improved communications or enhanced wireless 911: This is one of
+  the most important aspects in managing incidents. It was assumed
+  that the terrorist attacks were due to some failures in the
+  communication systems of New York. Insufficient wireless network
+  capacity, lack of information exchange, and use of different
+  technologies by wireless message carriers, which restricted the
+  transmission of information, were some of the issues. It is important
+  to establish the same level of emergency services that exist for wire
+  lines for wireless phones. The Federal Communications Commission
+  requires wireless providers to make enhanced wireless 911 available
+  everywhere. Enhanced 911 is completely dependent on longitudes
+  and latitudes to gauge position. However, there are obstacles, such
+  as funding, surcharge revenue, routing, technology, training, and
+  caller rights.
+
+  2. Privacy and the availability of public information: Providing too
+  much information publicly could possibly risk safety and lead to
+  privacy breach. A line has yet to be drawn in terms of public access
+  to information regarding transportation security systems.
+
+  3. Appropriate methods for monitoring and gathering information on
+  highway systems: One of the methods that is commonly used to
+  gather information on transportation systems and conditions is visual
+  reconnaissance, e.g., traffic helicopters. But after the attacks, only
+  specific helicopters were allowed to resume services. The use of
+  sensors and video surveillance fiber optics is effective but costly.
+  The feasibility of using remote sensing technologies was also to be
+  determined.
+
+  4. Taking advantage of key opportunities for funding: As a result of
+  decreased federal gasoline and other transportation user fees, up to
+  25 % of the federal funds for transportation are estimated to decline
+  significantly during the next round of reauthorization. However, it is
+  clear from reviewing the activities at the national level that
+  considerable sums of money will be used in developing and
+  deploying ITS technology for homeland security, which can present
+  several opportunities for New York (Peyrebrune 2002).
+264  Chapter 3.10
+
+  Conclusion
+
+Transport infrastructure is a key component of a nation’s critical
+infrastructure, and also includes physical assets like railway and mass transit
+networks, ports, and traffic control systems, which are also the frequent
+targets for terrorist attacks because of their importance in many aspects.
+Physical transportation networks provide services to a huge number of
+people, hence, carrying the risk of a high number of casualties. A unique
+feature is that transportation infrastructure can be both be the target and the
+preventor of an attack. Efficient and coordinated action, along with
+advanced planning and rehearsal, is required during a crisis. Emergency
+planning enables agencies to have pre-determined responses, clear and
+reasonable chains of command, accessibility of appropriate supplies, and
+better identification of weaknesses in the emergency response. Coordination
+between agencies and organizations is important for a successful emergency
+response, which allows many to contribute their strengths and skills. New
+York made several efforts at the federal, state, and the local levels to
+improve transportation security by using ITS. There were many initiatives
+taken by USDOT following the attack, including the creation of committees
+and administrations, which mainly focus on the security aspects of
+transportation and the free movement of people and goods. Many
+organizations and associations representing transportation interests have
+taken collaborative research efforts. As detailed crisis-response plans are
+developed, systems can be controlled at higher degrees, and, hence, better
+response operations can be run.
+  Operational Safety Applications  265
+
+SL. CATEGORIES  USES  FUNCTIONS
+NO
+1 Advanced  • It increases the effectiveness  • Have an emergency response plan.
+  of emergency response.  • Make plans that are specific and detail-oriented.
+  Preparations and  • Plan in concert with other agencies.
+  Planning  • Allows individuals and  • Rehearse emergency response plans.
+  agencies to work  • Review emergency plans after an event.
+2 Institutional  collaboratively and efficiently.  • Consider the emergency needs of both people and equipment.
+  Coordination  • Insulate emergency response capacities from disruption and
+  • Can coordinate with
+3 Operating  representatives of other  compromise.
+  Decisions  partner agencies to prepare,  • Plan for all types of emergencies.
+  handle, and evaluate  • Conduct a collaborative post-incident review.
+4 Role of Advanced  emergencies.  • Practice cooperation during normal times.
+  Technology  • Cooperate across agencies to share resources and equipment.
+  • During unusual operating  • Establish emergency procedures that will be easy and efficient to
+  decisions, during an event,
+  agencies make the quick and  implement.
+  accurate decisions required  • Be aware of the importance of individual relationships.
+  during the incident.  • Utilize technology to enhance institutional coordination.
+  • Allow for a multi-agency response to any type of emergency as a part
+  • Helps agency personnel to
+  obtain information on which  of an emergency response plan.
+  they can make better decisions  • Consider cross-border coordination.
+  as events unfold.  • Prepare for emergencies in advance to make impromptu decision-
+
+  making easier.
+  • Empower the relevant skilled staff to make decisions.
+
+  • Establish reliable backup power to maintain normal ITS functions.
+  • Consider ITS functionality that could be particularly useful during an
+
+  emergency.
+266  • Allows agencies to coordinate  Chapter 3.10
+  responses better with other
+5 Communications  agencies.  • Allocate ample resources for the restoration of traffic signals and
+  other communications devices.
+6 Redundancy and  • Allows agencies to collect and
+  Resiliency of  distribute real-time  • Maintain reliance on “old technology,” such as the “plain old
+  Systems  information so that they can  telephone system” (POTS) and portable radios.
+  make decisions.
+  • Communicating with the public should be easy.
+  • Gives accurate information to
+  agency officials and allows  • Have backup power.
+  them to make good decisions  • Test and maintain backup systems.
+  during allocation of resources  • Connect backup power to the right systems.
+  and setting of priorities in  • Maintain a variety of old and advanced communications options.
+  response to an emergency.  • Assess the needs of an extended loss of the primary system versus a
+
+  • Helps in having backup  temporary interruption.
+  systems in place in case of  • Be cautious when relying on neighboring agencies and contractors
+  primary system fail, which is
+  important in the everyday  for redundancy.
+  management and operations of  • Locate redundant facilities remotely.
+  a system.  • Consider the failure of even quadruple redundancy.
+  • Adopt a mindset of resiliency.
+
+Exhibit 3.10.1: Six Different Categories of Response Actions that Should Be Taken during the Impact of Terrorists on
+Transportation Systems
+
+Source: Author’s compilation from DeBlasio et al. (2004).
+Operational Safety Applications  267
+
+  References
+
+DeBlasio, Allan J., Terrance J. Regan, Margaret E. Zirker, Katherine S.
+  Fichter and Kristin Lovejoy. 2004. Effects of Catastrophic Events on
+  Transportation System Management and Operations. Final Report.
+  Cambridge, Massachusetts: US Department of Transportation, Research
+  and Special Programs Administration.
+
+National Intelligent Transportation Systems Program Plan. 2002.
+  Washington D.C.: Intelligent Transportation Society of America.
+
+National ITS Program Plan Five-Year Horizon. 2000. New York: US
+  DEPARTMENT OF TRANSPORTATION ITS JOINT PROGRAM
+  OFFICE.
+
+Peyrebrune, Henry P.E. 2002. Security Applications of Intelligent
+  Transportation Systems Management. New York: NYU Wagner Rudin
+  Center for Transportation Policy.
+
+Transportation Security Against Terrorism. 2009. Amsterdam: IOS Press.
+  MODULE 4
+
+  ITS:
+BUSINESS AND POLICY PERSPECTIVE
+  CHAPTER 4.1
+
+  STRATEGIC BUSINESS PLANNING
+
+  Introduction
+
+Spokane Valley is a city in Spokane County, Washington, United States. It
+is the seventh largest city in the state. Spokane Valley is named after the
+valley of the Spokane River, in which it is located. Spokane Valley’s
+population is 90,210. The Iဨ90 and Pines Road (SR 27) interchange is a
+critical junction of major regional roadways within the city’s boundaries.
+These routes are major arterials and are used as alternate routes during
+congestion or emergencies. The purpose of the Intelligent Transportation
+Systems (ITS) strategic plan, prepared for Spokane Valley, is to establish
+the need for ITS investments in the region, to identify relative priorities to
+direct ITS investment, to define the framework and specific technology, and
+to identify specific projects to be deployed to address the Spokane Valley’s
+precise needs. Advanced technology is incorporated into traffic management
+and operation facilities in an ITS strategic plan, by installing or upgrading
+signal control, vehicle detection, traffic monitoring, and computer equipment.
+Deploying ITS in a strategic manner will use advanced technologies and
+management techniques to improve mobility, efficiency, and safety on the
+roadways. ITS technologies provide additional information and services
+while enhancing the performance of the existing functions. The ITS
+strategic plan significantly impacts infrastructure and vendor development,
+and funding opportunities. Exhibit 4.1.1 shows the location of Spokane
+Valley, Washington.
+
+  ITS Vision of Spokane Valley
+
+To document the desired outcomes of the ITS implementation for Spokane
+Valley, an ITS vision was developed. The city’s mission is: “Our mission
+is to develop and maintain a safe and appropriate transportation
+system within our community…” Based on the ideas described in the
+mission, the ITS vision of the city was developed. The ITS strategic plan
+uses available ITS technologies and applies them to Spokane Valley’s
+vision to develop an appropriate program. Exhibit 4.1.2 shows the
+Strategic Business Planning  271
+
+respective goals and objectives in the form of a table. The strategic plan was
+developed based on the ITS deployment plan and objectives framed in the
+national and regional ITS architecture. Five fundamental components to the
+ITS vision were identified (Spokane Valley Strategic Plan 2011), which are
+given below:
+
+  1. Improve the safety and security of the transportation system
+  2. Improve the efficiency of the transportation system
+  3. Provide improved traveler information
+  4. Optimize the use of transportation infrastructure
+  5. Integrate ITS projects with local and regional partners
+
+  Connection with Other Agencies
+
+The Spokane Regional Transportation Management Center (SRTMC) is
+Spokane County’s interagency traffic management center, which is funded
+by the Cities of Spokane and Spokane Valley, Spokane Transit Authority,
+Spokane County, Washington State Department of Transportation
+(WSDOT), and the Spokane Regional Transportation Council. The SRTMC
+is active in controlling the devices that are used to monitor and control
+traffic including closedဨcircuit television (CCTV) cameras, dynamic
+message signs (DMS), traffic data stations, and traffic signals; the aim for
+the future is to reduce the city’s dependence on the county for these services.
+In the strategic plan developed, it is assured that Spokane Valley plays an
+integral role in the various ITS initiatives in the region.
+
+  Existing ITS Status
+
+The transportation system is the backbone of an economy and a key
+determinant of economic success. As the primary industries of Spokane
+Valley are retail and industrial manufacturing, it is important to recognize
+the importance of freight movement to the economy of Spokane Valley.
+Improving the mobility of trucks and rail will ensure the efficient flow of
+goods and services, helping strengthen Spokane Valley’s economy. Major
+transportation routes within Spokane Valley include the Iဨ90, Pines Road
+(SR 27) and Trent Avenue (SR 290), making Spokane Valley accessible to
+the region. The city’s roadway system consists of a good street network that
+provides access to residential and business areas, as well as through-
+movement of vehicle trips originating and ending outside the city’s
+boundaries. Their current ITS system consists mainly of traffic signals,
+limited video detection, CCTV cameras, and one DMS. The existing ITS
+272  Chapter 4.1
+
+infrastructure that is currently deployed in the city of Spokane Valley
+includes the traffic signal system, communication infrastructure, closed-
+circuit television (CCTV) cameras and traffic detection. An overview of the
+existing ITS infrastructure within the city limits is given below (Spokane
+Valley Strategic Plan 2011):
+
+  1. Traffic Signals: There are ninety-nine signalized intersections within
+  the city. WSDOT owns and operates fourteen of the signalized Iဨ90
+  ramp intersections within the city limits. It also maintains eleven
+  city-owned signals along the Pines Road (SR 27) and Trent Avenue
+  (SR 290) corridors. All WSDOT signals in the area are synchronized
+  using timeဨbased coordination. The remaining signal controllers are
+  maintained and operated by Spokane County. There are three
+  components needed for a coordinated corridor: signal controller,
+  communication between signalized intersections, and signal
+  management software.
+
+  2. Communications Infrastructure: This is one of the most critical
+  components in the deployment of ITS infrastructure because it is
+  essential for local agencies to monitor, control, and operate traffic
+  management devices from remote locations to efficiently manage the
+  movement of passengers and goods. Currently, Spokane Valley
+  consists of a variety of media such as fiber-optic cables and a
+  wireless ethernet network. There are twenty-eight traffic signals
+  within the city, which communicate through a combination of fiber-
+  optic and wireless ethernet radios where one end of the wireless
+  system is connected to the Iဨ90 fiber-optic backbone.
+
+  3. CCTV Cameras: CCTV cameras with pan tilt and zoom (PTZ)
+  capabilities are used to monitor traffic conditions. Realဨtime video
+  streams are transmitted by CCTV cameras using fiber-optic
+  transceivers in the field. The video stream is then connected to a
+  fiber-optic receiver at the SRTMC, where it is encoded for control
+  and viewing.
+
+  4. Traffic Detection: The most common way to detect traffic on the
+  roadway is loop detection. Traffic detection is used for stopping-bar
+  presence and advanced pulse detection for signal operations as well
+  as system data collection. Spokane Valley mainly uses loops with
+  video detection at a few selected intersections for stop-bar detection
+  purposes. The city also uses video detection as a temporary method
+  of stop-bar detection on approaches where loops require
+  maintenance.
+
+  5. DMS: The city owns a DMS that was installed as part of the
+  Appleway ITS Phase 2 project. The DMS provides travelers with
+Strategic Business Planning  273
+
+  advance warnings regarding traffic conditions and freeway incidents
+  prior to their commute. Currently, WSDOT provides for the
+  maintenance of the DMS device, and it is controlled at the SRTMC.
+  6. Traffic Management Center: The SRTMC facility is used to manage
+  and coordinate responses to incidents. Currently, the SRTMC
+  utilizes the i2TMS (Integrated Interagency Traffic Management
+  System) software, which enables communication to signal controllers,
+  CCTV cameras, and DMS signs. This central system software
+  facilitates traffic operators in monitoring congestion, adjusting
+  signal parameters, and displaying traveler information to
+  strategically manage traffic in the region. Dispatchers in the traffic
+  management center post messages on the dynamic message signs
+  and update the traveler information web page. The center also has
+  access to video streams and images from cameras deployed
+  throughout the region.
+
+  Assessment of Needs
+
+It is important to understand the needs and concerns of the stakeholders who
+use the city’s transportation services on a daily basis. Therefore, the inputs
+from the public works and signal maintenance groups were considered
+during the development of an ITS strategic plan. The assessment of current
+and future transportation user needs provides a backbone for the
+development and evaluation of potential ITS projects for the city of Spokane
+Valley. Exhibit 4.1.3 displays a detailed assessment of needs in the form of
+a table. A range of ITS applications were also identified based on
+consultations with representatives of the city. The following are the core
+ITS components and devices required (Spokane Valley ITS Strategic Plan
+May 2011):
+
+  1. Communication Systems: To allow remote monitoring of the traffic
+  signals and ITS devices, there is a need for infrastructure that allows
+  interconnection between field devices. With the amount of ITS
+  equipment that will be used by the communication system, enough
+  computational capacity and speed (bandwidth) to allow for
+  satisfactory monitoring and data collection are required.
+
+  2. Traffic Monitoring: CCTV cameras provide monitoring of the
+  roadway by allowing the city staff to move the camera, as needed, to
+  observe traffic flow, incidents, and conflicts. This monitoring will
+  allow real-time observation and adjustments.
+274  Chapter 4.1
+
+  3. Real-time Data/Traveler Information: With upgraded equipment and
+  software, traffic data can be collected continually for analysis and
+  for traveler information on real-time congestion. Any future ITS
+  device that helps in disseminating information should also be
+  accessible at the SRTMC or the regional i2TMS system, allowing
+  key operators to post relevant information about the roadway
+  network conditions.
+
+  4. Data Sharing: Data, like traffic volume, occupancy, speed, and flow,
+  can be shared between agencies to develop a network traffic map in
+  the region. This is to inform travelers about the traffic conditions.
+  Data sharing should also involve local emergency responders and
+  road maintenance crews to improve incident response times and help
+  in effectively communicating roadway disruptions.
+
+  5. Central System Workstation: With the current i2TMS workstation at
+  City Hall, the city staff can manage select signal controllers, perform
+  traffic surveillance via CCTV cameras, and provide insights to the
+  county on the quality of operational changes. Regular communication
+  with the surrounding agencies is needed to ensure that the central
+  system’s hardware and software implemented at the SRTMC is up
+  to date.
+
+The ITS system components presented in Exhibit 4.1.4 are potentially
+capable of generating feasible, extensible, and interoperable systemic
+solutions for urban regions.
+
+  Deployment Plan
+
+It is assumed that there is a ten-year implementation timeline for the
+installation of a fiber-optic communication network for the ITS strategic
+plan. It is a phased approach and separates the city into eleven ITS corridors
+for balancing the ITS device locations with the communication network.
+The plan was developed to identify the types and locations of ITS
+applications that are needed to be implemented in the city. The identified
+projects propose future ITS upgrades that are consistent with the Spokane
+Regional ITS Architecture Plan to fulfil the objectives below:
+
+  1. Provide access to transportation information
+  2. Provide access and control of ITS devices
+  3. Provide decision support to implement and coordinate incident
+
+  management strategies
+  4. Communicate information to the stakeholders, including commuters
+Strategic Business Planning  275
+
+The administration’s vision ensures that ITS expenditure is prioritized and
+falls entirely under their jurisdictions. Preliminary cost estimates were
+prepared for each project. Project costs fluctuate over time and the cost
+estimates presented in Exhibit 4.1.5 provided the city with planningဨlevel
+information to use for budgeting and grant application purposes. The
+specific components of each cost estimate, along with the identified projects
+(corridors), are detailed in Exhibit 4.1.5. Funding is more readily allocated
+to projects that encourage alternative modes of transportation, especially
+transit.
+
+  Implementation
+
+The ITS projects can be implemented in two ways, depending on funding:
+either on a corridor-by-corridor basis or as part of a system implementation
+process. The implementation plan presents projects planned along eleven
+corridors, which are the city’s main arterials, that incorporate the
+infrastructure necessary for ITS applications. Spokane can move ahead in a
+comprehensive manner by completely funding all projects identified or it
+may choose to isolate aspects of the identified projects at any time,
+depending on funding and timing. The city’s physical architectural
+subsystems, and related equipment packages, are described in detail in
+Exhibit 4.1.6.
+
+  Conclusion
+
+ITS are a combination of technical tools, concepts, software, hardware, and
+advanced communication technologies, which are implemented in an
+integrated manner with infrastructure, to achieve the desired improvements
+in the transportation network. It is a cost-effective method to improve the
+safety and efficiency of traffic flow. A strategic ITS plan is critical to solve
+various concerns and to implement future upgradations on an existing
+roadway. This plan will assist in coordinating with surrounding agencies to
+provide an integrated regional transportation improvement plan. The city of
+Spokane Valley efficiently used ITS technologies in their transportation
+network; the traffic departments leveraged those technologies to improve
+traffic mobility and enable quicker responses to varied traffic conditions that
+occur within the roadway network.
+276  Chapter 4.1
+
+Exhibit 4.1.1: Map Showing the Location of Spokane Valley,
+Washington
+
+Source: http://www.spokanevalley-realestate.com/map.gif
+  Strategic Business Planning  277
+
+Exhibit 4.1.2: Goals and Objectives
+
+Goal  Objectives
+
+Improve the  Reduce frequency, duration, and effects of
+safety and  incidents
+security of the  Reduce emergency response times
+transportation  Reduce recurrent congestion
+system  Coordinate incident/security response with other
+
+  local and regional agencies
+
+  Provide redundancy for operations
+
+Improve the  Improve travel time for vehicles
+efficiency of the  Reduce travel time variability
+transportation  Reduce fuel consumption and environmental
+system  impacts
+
+  Provide database for systems evaluation and future
+
+  improvements
+
+Provide  Provide information about construction activities
+improved  Provide incident information
+traveler  Provide realဨtime road condition information
+information  including closures, speed and/or delay, and weather
+
+  information
+
+  Provide one location where customers can access
+
+  all regional and local traveler information
+
+Optimize use of  Deploy systems that fit in with future
+transportation  improvements
+infrastructure  Deploy systems that maximize the use of existing
+
+  infrastructure
+
+  Deploy systems that minimize need for
+
+  maintenance and operational support
+
+  Integrate deployments with other local and regional
+
+  projects
+
+Integrate ITS  Share resources between local and regional
+projects with  agencies
+local and  Continue to coordinate and integrate projects with
+regional partners  other agencies
+
+Source: Based on the Data from the Spokane Valley Strategic Plan (2011)
+278  Chapter 4.1
+
+Exhibit 4.1.3: A Detailed Assessment of Needs
+
+  Needs Assessment
+
+Traffic  Upgrade the cityဨwide traffic signal system
+operations  Expand traffic monitoring and system detection
+and  Upgrade the central system workstation for active control of
+management  systems
+
+  Integrate systems between local transportation and emergency
+
+  agencies
+
+  Coordinate traffic signals to alleviate congested freeway offဨramps
+
+  Develop an incident response program
+
+  Monitor high accident locations for incidents
+
+  Develop an emergency/incident response plan including all
+
+  response agencies
+
+Traveler  Expand SRTMC map to include Spokane Valley arterial roadways
+
+information Provide travelers with information about incidents, congestion,
+
+  construction, or any other event that will increase travel times
+
+  Provide congestion information along major roadways
+
+  Provide realဨtime traveler information at freeway onဨramps
+
+  Keep “realဨtime” information current (i.e., DMS, 511, HAR)
+
+  Interface and share resources with the National Weather Service
+
+  Provide more camera images for visual verification of conditions
+
+  Post information in locations that will not be obstructed by truck
+
+  traffic
+
+  Standardize message sets for DMS
+
+  Disseminate emergency information (i.e., amber alert)
+
+  Disseminate evacuation route information
+
+Interagency Develop a city-wide fiber-optic communications infrastructure
+
+users  Implement a ringဨtype fiber network topology to create failure
+
+  redundancy
+
+  Link to surrounding agencies
+
+  Install citywide CCTV cameras, data stations and additional DMS
+
+General  Use common standards throughout the region to enhance
+
+needs  integration
+
+  Integrate the communications system between transport and
+
+  emergency management agencies to improve response times
+
+  Identify funding sources for safety improvements and interagency
+
+  coordination projects
+
+  Research and test communications systems prior to implementation
+
+  to ensure ease of use and regional functionality
+
+  Deploy ITS projects that improve a traveler’s available choices
+
+  Facilitate coordination between agencies
+
+Source: Based on the Data from the Spokane Valley Strategic Plan (2011)
+  Strategic Business Planning  279
+
+Exhibit 4.1.4: The Recommended ITS System Components
+
+  ITS  ITS Function  Minimum  Potential Benefits
+Equipment  Recommendation
+  Traffic  x Improve signal
+  and  management  Phased  management and
+ Materials  (flow and  replacement of all  operation efficiency
+Signal  control)  Peek 3000E
+controller  controller to Eagle  x Improve interagency
+  Video  M52 with ethernet  integration
+CCTV  surveillance  communications
+camera  and monitoring  IPဨbased camera,  x Reduce data transfer
+  highဨdefinition  rate
+DMS  Traveler  video, industry
+  information  standard video  x Reduce video storage
+Vehicle  compression  size
+detection  Intersection  MPEGဨ4 and
+  detection,  H.264  x Improve safety and
+Highway  system  security
+advisory  detection,  NTCIP
+radio  collection, and  communication  x Improve interagency
+(HAR)  incident  support (national  video sharing
+Fiber-optic  management  standard protocol)
+backbone  Traveler  x Improve city ITS
+  information  Induction loops  system integration,
+  for intersection  interagency
+  Communication  detection Initiate  integration and
+  infrastructure  softwareဨbased  traveler information
+  traffic data  dissemination
+  acquisition pilot
+  project  x Enables strategic
+  traffic management in
+  Hardened AM  the region
+  band transmission
+  devices and digital  x Allows traffic data
+  recorder modules  archiving for future
+  planning and signal
+  24ဨ72 strand  timing adjustment
+  SMFO in existing
+  2” conduits, new  x Improves intersection
+  operations and
+  traveler information
+  dissemination
+
+  x Improve traveler
+  information
+  dissemination and
+  roadway safety in the
+  region
+
+  x Ease of future
+  communication
+  expansion.
+280  Chapter 4.1
+
+  4” conduit, or two  x Provide cityဨowned
+  3” conduits  communication
+
+  system for improved
+
+  manageability
+
+Ethernet  Communication Managed and  x Ease of future
+switches
+  between field industrial switches communication
+
+  equipment and with gigabit  expansion
+
+  traffic  speeds for all field  x Improve
+  management  installed devices  manageability and
+  centers  At least six RJဨ45  operation for
+  ports and two  maintenance
+  fiber ports  personnel
+
+  x Improve data
+
+  transmission rates
+
+Central  Traffic  Maintain current  x Improve city ITS
+system  management  versions of all  system integration
+
+workstation  software on the  x Improve interagency
+  central system  cooperation and data
+  workstation to  sharing
+  ensure
+
+  consistency with
+
+  SRTMC
+
+Source: Based on the Data from the Spokane Valley Strategic Plan (2011)
+Strategic Business Planning  281
+
+Exhibit 4.1.5: Detailed Cost Estimates for the Identified Projects
+
+Source: Based on the Data from the Spokane Valley Strategic Plan (2011)
+

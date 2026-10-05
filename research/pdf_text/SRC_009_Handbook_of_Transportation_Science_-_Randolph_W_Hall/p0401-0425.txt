@@ -1,0 +1,900 @@
+400  Handbook of Transportation Science
+
+  Since the system optimal flows lead to a more efficient use of a transportation
+
+network, in the sense that the total cost of the trips taken is minimized, the issue
+
+of charging tolls that would render user optimal flows to coincide with the system
+
+optimal flows has been debated for years (see Arnott and Small, 1994). From a
+
+modeling viewpoint, if link tolls equal to  would be charged on
+
+each link, then a user optimal route choice results in system optimal flows. The
+
+tolls  are referred to as marginal social cost pricing (MSCP) tolls.
+
+The notion of marginal cost pricing may be found as early as 1844 with the work
+
+of Dupuit.
+
+  A difficulty with marginal social cost pricing (MSCP) tolls is that they can be
+expensive, both to implement and to the users of the network. By the formula, a
+toll would be imposed for every link with traffic flow. In the Braess example, for
+instance, the MSCP tolls form the vector
+
+  Thus there are tolls on four of the five arcs in the network and a collection
+mechanism (toll booth) would be required for each. Further, the total tolls collected
+would be 198, which is 40% of the total system travel cost of 498. Note however,
+that a sufficiently high toll on link (2,3) would prevent its presence in a user optimal
+flow distribution and no one would “pay” that toll.
+
+  The MSCP toll policy and the Braess example raise the question of what other
+toll vectors would ensure that the tolled user optimal solution is a solution of
+the untolled system optimal problem. Recently this question has been addressed by
+Bergendorff, Hearn and Ramana (1997) and Hearn and Ramana (1998) who have
+shown that the set of all such tolls is the part of the following linear system in
+variables
+
+where is the node-arc incidence matrix of the network, is a column incidence
+
+vector for (O-D) pair with +1 in position O and -1 in position D, and is the
+
+vector of system optimal flows. This result requires uniqueness of solutions in both
+
+the system and the user problems. Note that  would be appended to these
+
+equations to ensure nonnegative tolls. Otherwise, negative tolls, or subsidies, are
+
+possible.
+
+  Given this result, a procedure can be devised to obtain tolls which meet some
+secondary criteria as well as ensuring system optimal flows. The first step is to solve
+the system problem and obtain Since the problem has the same mathematical
+structure as the user problem, i.e., it is a convex multicommodity flow problem, it
+can be solved with the optimization algorithms described earlier in this chapter.
+Network Equilibrium and Pricing  401
+
+The second step is to define another optimization problem which has constraints
+
+defined by (11.91) and (11.92) plus any additional conditions desired. Examples
+
+would be requiring that tolls be nonnegative or requiring certain  to prevent
+
+tolls where they are impractical, such as on arcs that represent neighborhood streets.
+
+The objective function is a matter of choice for the traffic engineer. Hearn and
+
+Ramana (1998) have suggested several:
+
+MINSYS Minimize the total system tolling charges when the tolls are nonnegative,
+  so that users pay as little as possible.
+
+MINMAX Minimize the maximum toll on any individual arc. This can be extended
+  to minimizing the maximum toll relative to the uncongested arc travel time.
+
+MINREV Allow negative as well as positive tolls, thus charging users on some
+
+arcs and subsidizing the travel on others, and constrain the total tolls collected
+
+to be where  When the net collected is  these are
+
+known as ROBINHOOD (RH) tolls.
+
+MINTB Minimize the number of toll booths required, with tolls nonnegative.
+
+MINTB/RH Combine MINTB with RH tolls: minimize the number of toll booths
+  while requiring the total tolls and subsidies collected to be zero.
+
+  To provide a comparison of the formulations listed above as well as comparison
+with MSCP tolls, Hearn and Ramana (1998) have employed a nine node example
+which has data similar to large-scale traffic assignment problems. The network is
+shown in the Figure 11–3. It has 18 links and all of the links have cost functions
+with the same structure:
+402  Handbook of Transportation Science
+
+where and are constants. In the figure, the tuple near link is  There
+
+are four OD–pairs: (1–3), (1–4), (2–3) and (2–4), and the demands are 10, 20, 30,
+
+40, respectively.
+
+  The various tolls for this example are given in Table 11-1, and the observations
+below are adapted from the reference.
+
+  A comparison between MINSYS and MSCP shows that the tolling pattern and
+toll amounts are quite different. Further, the total toll system cost (total system cost +
+total toll cost) in the MSCP case is equal to 3747 (2254 + 1493) and in the MINSYS
+case equal to 3142 (2254 + 888). So with the MSCP principle the users of the
+nine-node network pay 68% more in tolls than with the MINSYS pricing principle.
+The MINSYS solution also happened to coincide with the MINTB solution, so it
+also gives the minimum number of toll booths, 5 versus the 14 of MSCP.
+
+  The maximum toll on any link is 16.88 for MSCP and 11.2 for MINSYS (link
+(5,7) in both cases). When this maximum is minimized (MINMAX) the largest toll
+reduces to 8.00. MINMAX also provides another set of nonnegative tolls which
+significantly reduce the total tolls when compared with MSCP; the total toll is 28%
+higher in the latter case.
+
+  ROBINHOOD and MINTB/RH introduce the idea of negative tolls, but it is
+
+clear that this concept requires further examination. For example, it can be shown
+
+that  provides a negative toll for every link, implying that the users are
+
+totally reimbursed for their time on the network. It is difficult to imagine that such
+
+a policy would ever be put in place. However, the selective use of negative tolls
+
+luring users to certain links might have some appeal.
+
+The Elastic Demand Case. In the elastic demand system problem, the objective is
+to maximize net user benefit, the difference between total user benefit and the system
+cost. From basic economic principles, the total network user benefit from travel is
+
+  and, as before, the system cost is defined by  Denoting the
+
+solution of this optimization problem as  and assuming that both it and the
+
+solution of the variational problem (11.14) are unique, Hearn and Yildirim (2002)
+
+have shown that the toll set for the elastic demand problem is the part of the
+
+following linear inequality system in and variables:
+Network Equilibrium and Pricing  403
+
+where and are defined as before.
+
+  One important difference with the fixed demand case is that all tolls in the elastic
+demand toll set have the same total toll revenue, since, as the last equation shows:
+
+In Hearn and Yildirim (2002) the framework for determining alternative tolls
+
+has been defined similar to the fixed demand case: first, solve the system problem
+
+for the flows and demands,  Then using these values, define and optimize a
+
+secondary objective with respect to the toll set (11.93)-(11.95). Even though total
+
+toll revenue is constant, it could be appropriate to solve for the minimum number
+
+of toll booths (MINTB) or to minimize the maximum toll (MINMAX), and even to
+
+look for alternative schemes that include subsidies as well as tolls (MINREV).
+
+  As an illustration, demand functions for the nine node network (Figure 11–3)
+are defined as follows:
+404  Handbook of Transportation Science
+
+  Table 11–2 demonstrates the differences in demands and costs for the system
+(SOPT–ED) and user solutions (UOPT-ED) of the elastic demand nine node problem.
+For example, the total demand in the system problem is 57.411, but it is 60.753 in
+the user problem, a 5.5% difference.
+
+  Table 11–3 provides optimal flows for the system and user problems. Although
+the UOPT-ED solution has higher user benefit than the SOPT-ED solution, it also
+has a higher system cost due to more traffic on the network. Thus the net user benefit
+in the system problem is greater. Examining the individual link flow values, notice
+that they are within 10% of each other on almost all links of the network but not on
+links (5,7), (5,9) and (9,7). The total flow between nodes 5 and 7 for both user and
+system problems is within 10%, but the link flows differ substantially. Relative to
+the system solution, in the user problem (5,7) is over utilized while (5,9) and (9,7)
+are under utilized. Therefore, systems efficiency is increased by diverting traffic
+on (5,7) to the route 5–9–7. This can be done by making (5,7) less attractive, i.e.,
+increasing the cost by tolling (5,7).
+
+  Table 11–4 contains alternative toll vectors for the nine node elastic demand
+problem and, for comparison, the MSCP tolls are also listed. As expected, tolls on
+the link (5,7) are high for the tolling schemes with positive tolls, namely, MSCP,
+MINMAX and MINTB. However, MINREV, which allows negative tolls, rewards
+travel on the 5–9–7 route with subsidies in order to achieve the SOPT-ED solution.
+For this example the toll revenue is 268.519 for all tolling schemes and this is 17.44%
+of net user benefit. MSCP and MINREV tolls require 10 toll booths. MINMAX has
+an objective value of 8.00 with eight toll booths. It happens that MINTB obtains
+the same result (i.e., the maximum toll is 8.00) with only five toll booths. Thus it
+could be argued that the MINTB solution is best in that it achieves the SOPT-ED
+solution and is cheapest to implement.
+
+  To illustrate how tolling affects route costs consider the routes 2–6–8–4 and
+2–5–7–4. The delay functions on the first route give a total cost of 21.505, while on
+the second this total is only 13.504. However, the tolls on the first route are 2.018
+and they are 10.018 on the second. Thus the total route cost is 23.523, in agreement
+with the total cost in Table 11–2. There is no incentive for additional (2–4) trip
+Network Equilibrium and Pricing  405
+
+demand. Any increase would result in lower user benefit and higher costs since the
+demand and cost functions are strictly monotone.
+406  Handbook of Transportation Science
+
+Second Best Toll Pricing. The examples above illustrate recent results in congestion
+pricing theory showing that traffic planners seeking optimal use of an urban traffic
+network can also meet secondary objectives such as minimizing the cost of installing
+tolling stations. It offers an alternative to the traditional theory that congestion tolls
+should be based on marginal social cost pricing. Any such tolls that obtain a system
+optimal solution are known as first best tolls. By contrast, there is the notion of
+second best toll pricing, where achieving the system optimal flows is not possible
+because tolling is disallowed on certain links of the network. Current research
+includes the analysis of small traffic assignment such as the work of McDonald
+(1995) and the derivation of toll formulas for larger problems as in Verhoef (1999).
+
+  Stated mathematically, the second best toll model is a mathematical program
+with equilibrium constraints, or an (MPEC). Letting V denote the set of all flows
+and demands that satisfy (11.2)-(11.3) and Y be the set of links that cannot be tolled,
+the elastic demand second best tolling problem MPEC is
+
+  max
+
+  s.t.
+
+where, as before, the objective is to maximize the net user benefit (NUB) function,
+which here depends not only on and but also on the tolls
+
+  It is recognized that MPECs can be very difficult to solve numerically. However,
+
+a heuristic variation of the toll pricing procedures described above for obtaining first
+
+best tolls, has been developed by Yildirim (2001). It can be summarized as follows:
+
+First determine whether adding constraints  to (11.93)-(11.95) renders
+
+the toll set empty. If not, then first best tolls can be found. If there are no first best
+
+tolls, then the problem above can be solved for a local stationary point by replacing
+
+the equilibrium constraints with the equivalent Karush-Kuhn-Tucker conditions and
+
+then employing a standard nonlinear programming code to obtain a local stationary
+
+point,  The quality of this solution can be determined by recognizing that
+
+where  and  are, respectively, the solutions of the untolled UOPT-ED
+
+and SOPT-ED problems, respectively. In some cases, restricting the tolls to only a
+
+part of the network may still provide a close to optimal  To illustrate,
+
+consider again the elastic demand nine node example above, with user and system
+Network Equilibrium and Pricing  407
+
+solutions given in Table 11–3, and assume that tolls are only allowed on the following
+arcs: (2,5), (5,7) and (8,7). Note that none of the first best tolls given in Table 11–4
+are feasible for this problem, since for example, all have a toll on link (1,6).
+
+A second best solution for this problem is given in Tables 11–5 and 11–6. For
+
+this special example, the objective value  is within 0.3% of
+
+the SOPT-ED value given in Table 11–3. Further, the total toll revenue,
+which is approximately one-half the first best toll revenue of 268.519, which is given
+in Table 11–3. Thus, the second best tolling solution has the interesting property that
+it provides not only tolls on the allowed links, but also provides a nearly optimal
+net user benefit at a significantly reduced toll cost to the users. As theoretical and
+empirical research in toll pricing continues, a goal will be determining whether this
+situation occurs often in practice.
+408  Handbook of Transportation Science
+
+11.9 Conclusion
+
+  The study of network equilibrium models, and related solution algorithms may
+be considered to have reached a mature stage. A variety of models may be formu-
+lated and solved efficiently on contemporary computing platforms. Applications of
+network equilibrium models are abundant and relatively common in the practice of
+transportation planning. However, some of the basic premises of the formulation of
+these models such as the additivity of link costs to form the cost of a path and the
+static analysis of “average flows” during a selected time period, open the way to the
+study of more complex models. The recent interest in temporal on dynamic network
+equilibrium models is already attracting the attention of many researchers and will
+probably result in interesting new developments.
+
+11.10 References
+
+We refer the interested reader to two references which contain more complete
+presentations of the topic of this Chapter. These are
+
+  Florian, M. and Hearn, D. (1995) Network Equilibrium Models and Algorithms. Chapter 6 in
+  Handbooks in OR & MS, Vol.8, M.O. Ball et al., Eds., 485–550.
+
+  Patriksson, P. (1983) The Traffic Assignment Problem: Models and Methods, VNU Science Press,
+  223 pp.
+
+The cited references in the text are the following:
+
+  Aashtiani, H,Z. and Magnanti, T.L. (1981) Equilibria on a congested transportation network. SIAM
+  Journal on Algebraic and Discrete Methods, 2, 213–226 .
+
+  Arezki, Y. and Van Vliet, D. (1990) A full analytical implementation of the PARTAN/Frank-Wolfe
+  algorithm for equilibrium assignment. Transportation Science, 24, 58–62.
+
+  Arnott, R. and Small, K. (1994) The economics of traffic congestion. American Scientist, 82,
+  446–455.
+
+  Barcelo, J., Ferrer, J.L. and Grau, R. (1996) AIMSUN2 and the GETRAM simulation environ-
+  ment. Technical Report, Departamento di Estadistica i Investigaciou Operativa, Universitat
+  Politecnica de Catalunya.
+
+  Beckmann, M.J., McGuire, C.B. and Winsten, C.B. (1956) Studies in the economics of transporta-
+  tion, Yale University Press, New Haven, CT.
+
+  Ben-Akiva, M. and Bierlaire, M. (1999) Discrete choice methods and their applications to short
+  term travel decisions. Handbook of Transportation Science, Chapter 2. Kluwer Academic
+  Publishers, Norwell, Massachusetts.
+
+  Ben-Akiva, M., Koutsopoulos, H.N. and Mukundan, A. (1994) A dynamic traffic model system
+  for ATMS-ATIS operations. IVHS Journal, 2, 9–24.
+
+  Bergendorff, P., Hearn, D.W. and Ramana, M.V. (1997) Congestion toll pricing of traffic networks.
+  Nework Optimization, (Edited by W.W. Hager, D.W. Hearn, and P.M. Pardalos) Springer–
+  Verlag series Lecture Notes in Economics and Mathematical Systems, 52–71.
+Network Equilibrium and Pricing  409
+
+Braess, D. (1968) Über ein Paradox der Verkehrsplannung. Unternehmenstorchung, 12, 258–268.
+
+Bruynooghe, M., Gibert, A. and Sakarovitch, M. (1969) Une médthode d’affectation du trafic in
+  Proceedings of the 4th International Symposium on the Theory of Road Traffic Flow, Karl-
+  sruhe,(1968), W. Leutzbach and P. Baron, eds., Beiträge zur Theorie des Verkehrsflusses
+  Strassenbau und Strassenverkehrstechnik, Heft 86, Herausgegeben von Bundesminister für
+  Verkehr, Abteilung Strassenbau, Bonn, 198–204.
+
+Cascetta, E. and Cantarella, G.E. (1991) A day-to-day and within-day dynamic stochastic assign-
+  ment model. Transportation Research, 25A, 277–291.
+
+Dafermos, S. (1980) Traffic equilibrium and variational inequalities. Transportation Science, 14,
+  42–54.
+
+Dafermos, S. (1972) The traffic assignment problem for multiclass-user transportation networks.
+  Transportation Science, 6, 73–87.
+
+Dafermos, S. and Nagurney, A. (1984) Sensitivity analysis for the asymmetric network equilibrium
+  problem. Mathematical Programming, 28, 174–184.
+
+Dow, P. and Van Vliet, D. (1979) Capacity restrained road assignment. Traffic Engineering and
+  Control, 261–273.
+
+Dupuit, Y. (1844) De la mesure de l’utilité des travaux publics. Annales des travaux publics,
+  Annales des ponts et chaussées, 8, 332–375 .
+
+Evans, S.P. (1976) Derivation and analysis of some models for combining trip distribution and
+  assignment. Transportation Research, 10, 37–57.
+
+Fisk, C. and Pallottino, S. (1981) Empirical evidence for equilibrium paradoxes with implications
+  for optimal planning strategies. Transportation Research A, 15A, 3, 245–248.
+
+Florian, M., Guélat, Y. and Spiess, H. (1987) An efficient implementation of the PARTAN variant
+  of the linear approximation for the network equilibrium problem. Networks, 17, 319–339.
+
+Florian, M., Mahut, M. and Tremblay, N. (2001) A hybrid optimization mesoscopic simulation
+  dynamic traffic assignment model. 2007 IEES Intelligent Transportation Systems Proceedings,
+  118–121.
+
+Florian, M. and Nguyen, S. (1976) An application and validation of equilibrium trip assignment
+  methods. Transportation Science, 10, 379–389.
+
+Florian, M. and Spiess, H. (1983) On binary mode choice/assignment models. Transportation
+  Science, 17, 32–47.
+
+Frank, M. and Wolfe, P. (1956) An algorithm for quadratic programming. Naval Res. Log.
+  Quart., 3, 95–110.
+
+Friesz, T.L., Bernstein, D., Smith, T.E., Tobin, M.L. and Wie, B.W. (1993) A variational inequality
+  formulation of the dynamic network user equilibrium problem. Operations Research, 4,
+  179–191.
+
+Hall, M. (1978) Properties of the equilibrium state in transportation networks. Transportation
+  Science, 12, 208–216.
+
+Hearn, D.W., Lawphongpanich, S. and Ventura, Y.A. (1985) Finiteness in restricted simplicial
+  decomposition. Operations Research Letters, 4, 125–130.
+410  Handbook of Transportation Science
+
+Hearn, D.W., Lawphongpanich, S. and Ventura, Y.A. (1987) Restricted simplicial decomposition:
+  computation and extensions. Mathematical Programming Study, 31, 99–118.
+
+Hearn, D.W. and Ramana, M.V. (1998) Solving congestion toll pricing models. Equilibrium and
+  Advanced Transportation Modeling, (Edited by P. Marcotte and S. Nguyen), Kluwer Academic
+  Publishers, 109–124.
+
+Hearn, D.W. and Yildirim, M.B. (2002) A toll pricing framework for traffic assignment problems
+  with elastic demand. To appear in the edited volume Current Trends in Transportation and
+  Network Analysis – papers in honour of Michael Florian, Kluwer Academic Publishers, 10pp.
+
+Jayakrishnan, R., Mahmassany, H.S. and Hu, T.Y. (1994) An evaluation tool for advanced traffic
+  information and management systems in urban networks. Transportation Research C, 3,
+  129–147.
+
+Knight, F.H. (1981) Some fallacies in the interpretation of social costs. Quarterly Journal of
+  Economics, 38, 306–312.
+
+LeBlanc, L.J., Helgason, R.V. and Boyce, D.E. (1985) Improved efficiency of the Frank-Wolfe
+  algorithm for convex network programs. Transportation Science, 19, 445-462.
+
+LeBlanc, L.J., Morlok E.K. and Pierskalla, W.P. (1975) An efficient approach to solving the road
+  network equilibrium traffic assignment problem. Transportation Research, 5, 309–318.
+
+Leutzbach, W. (1988) Introduction to the theory of traffic flow. Springer-Verlag, Berlin Heidelberg.
+
+Luenberger, D.G. (1965) Introduction to linear and nonlinear programming. Addison-Wesley.
+
+McDonald, J.F. (1995) Urban highway congestion: an analysis of second-best tolls. Transporta-
+  tion, 22, 353–369.
+
+Merchant, D.K. and Nemhauser, G.L. (1978a) A model and algorithm for the dynamic traffic
+  assignment problem. Transportation Science, 12, 183–199.
+
+Merchant, D.K. and Nemhauser, G.L. (1978b) Optimality conditions for a dynamic traffic assign-
+  ment model. Transportation Science, 12, 200–207.
+
+Messmer, A. and Papageorgiou, M. (1995) METANET: A macroscopic simulation program for
+  motorway networks. Traffic Engineering and Control, 31, 466–470.
+
+Nguyen, S. (1976) A unified approach to equilibrium methods for traffic assignment. In Traffic
+  Equilibrium Methods, Proceedings 1974, M. Florian, Ed., vol. 118. Lecture Notes in
+  Economics and Mathematical Systems, Springer-Verlag, 148–182 .
+
+Payne, H.J. (1979) FREEFLO: A macroscopic simulation models of freeway traffic. Transportation
+  Research Record, 772, 68–75.
+
+Powell, W.B. and Sheffi, Y. (1982) The convergence of equilibrium algorithms with predetermined
+  step sizes. Transportation Science, 16, 45–55.
+
+Royden, H.L. (1963) Real analysis. Collier MacMillan Ltd.
+
+Sheffi, Y. and Powell, W.B. (1982) An algorithm for the equilibrium assignment problem with
+  random link times. Networks, 12, 191–207.
+
+Smith, M.J. (1993) A new dynamic traffic model and the existence and calculation of dynamic
+  user equilibria on congested capacity constrained road network. Transportation Research B,
+  27B, 49–63.
+Network Equilibrium and Pricing  411
+
+Smith, M.J. (1979) Existence, uniqueness and stability of traffic equilibria. Transportation
+  Research B, 13B, 295–304.
+
+Verhoef, E.T. (1999) Second-best congestion pricing in general static transportation networks with
+  elastic demands. Research Report, Free University Amsterdam.
+
+von Hohenbalken, B. (1977) Simplicial decomposition in nonlinear programming algorithms.
+  Mathematical Programming, 13, 49–68.
+
+Wardrop, J.G. (1952) Some theoretical aspects of road traffic research. Proc. Inst. Civil Engineers,
+  Part II, 325–378.
+
+Wu, J.H., Chen, Y., and Florian, M. (1997) The continuous dynamic network loading problem: a
+  mathematical formulation and solution method. Transportation Research, 32B, 173–187.
+
+Xu, Y., Wu, J.H., Florian, M., Marcotte, P. and Zhu, D.L. (1999) Advances in the continuous
+  dynamic network loading problem. To appear in Transportation Science.
+
+Yang, Q. and Koutsopoulos, H.N. (1996) A microscopic traffic simulator for evaluation of dynamic
+  traffic management systems. Transportation Research C, 4, 113–129.
+
+Yildirim, M.B. (2001) Congestion toll pricing models for variable demand traffic assignment
+  problems. Ph.D. dissertation, University of Florida.
+  12 STREET ROUTING
+
+  AND SCHEDULING PROBLEMS
+
+  Lawrence Bodin, Vittorio Maniezzo and Aristide Mingozzi
+
+12.1 Introduction
+
+The chapter by Teodor Crainic in this book discusses the long haul truck routing
+problem. Some of the key differences between the long haul truck routing problem and
+the vehicle routing problems considered in this chapter are as follows:
+
+1. In the long haul truck routing problem, the routes can extend over several days
+  whereas, in the vehicle routing problem described herein, the routes are of one-day
+  duration.
+
+2. In the long haul truck routing problem, the locations can be scattered over a wide
+  region, even the entire United States, whereas in the vehicle routing problems
+  considered herein, the locations requiring service are packed in a small region.
+
+  Because of these differences (along with other considerations), the algorithms and
+data requirements for the vehicle routing problem considered in this paper can be
+considerably different from the algorithms and requirements of the long haul trucking
+problem.
+
+  Some of the major assumptions of most vehicle routing problems (VRP) discussed in
+the literature are the following:
+
+a. Routes can be no longer than a specified duration T (such as T= 8 hours).
+
+b. Each route represents a single day of work.
+
+c. Overtime may be permitted at a predefined cost.
+
+d. There is a single depot where all vehicles begin and end their route.
+
+e. The fleet of vehicles is homogeneous; that is to say, all vehicles are identical.
+414  Handbook of Transportation Science
+
+f. Vehicle capacity such as weight or volume is always satisfied.
+
+g. Time windows exist. A time window at a location to be serviced is defined as [L, U]
+  where L is the earliest possible time to begin the service at the location and U is the
+  latest possible time to begin the service at the location. It is normally assumed that
+  the time window is hard; that is to say, the service of the location must begin
+  between L and U. In a route, if the vehicle arrives at the location before L, the hard
+  time window forces the vehicle to wait until L to begin service at the location. The
+  time that the vehicle must wait before beginning the service at L is called the wait
+  time of the vehicle at the location. Vehicle wait time represents nonproductive time
+  and can be considered a cost to the organization. With hard time windows, it is
+  assumed that it is infeasible to begin to service a location after U.
+
+  Although the above assumptions occur in most VRP, these assumptions can be
+modified or extended when solving actual vehicle routing problems as follows:
+
+a. Start and End Times. Each vehicle has its own earliest start time and latest end
+  time. In this case, each vehicle can have a different duration. As above, each
+  route represents a single day of work.
+
+b. Multiple Depots. In cases where there are multiple depots and each depot is
+  autonomous with its own fleet of vehicles and geographical area to serve, then
+  the overall VRP can be decomposed in a number of single-depot VRP. In cases
+  where the geographic area that each depot services is not well defined, there may
+  be an interaction between the depots so that it is impossible to consider any depot
+  in isolation. In some problems, moreover, it may be possible that a vehicle route
+  visits more than one depot in a day. For example, the vehicle can originate at one
+  depot and service some locations. The vehicle then goes to a second depot to
+  reload (perhaps with a product not available at the first depot) and visit another
+  set of locations. The vehicle then goes to another depot, etc. The route concludes
+  with the vehicle returning to the original depot at the end of the day.
+
+c. Heterogeneous Fleet. In a heterogeneous fleet, each vehicle can have different
+  characteristics such as capacity, length of workday, etc. Generally, the vehicle
+  fleet is broken down into vehicle classes where each vehicle in a class is
+  homogeneous. With a heterogeneous fleet, moreover, there may be some
+  restrictions on the vehicle types that can service the stops. These restrictions are
+  called vehicle/stop dependencies. Vehicle/stop dependencies occur in such
+  applications as the scheduling of sanitation vehicles for either residential or
+  containerized pickup. A vehicle/stop dependency can occur at a stop because of
+  access restrictions, height of a bridge covering the road, width of a street segment
+  or the location of the containers needing service. For example, a side-loading
+  sanitation vehicle cannot service a container positioned at the end of a narrow
+  alley even if the side-loading vehicle can traverse the alley. Variants of this type
+  of dependency include vehicle-commodity incompatibilities (some vehicle types
+  may not be able to carry certain types of products) and commodity-commodity
+Street Routing and Scheduling Problems  415
+
+  incompatibilities (certain pairs of commodities cannot coexist on any vehicle
+  because of possible contamination).
+
+d. Multiple Trips. A trip corresponds to a set of stops which when serviced exhaust the
+  capacity of the vehicle. This situation occurs frequently in sanitation routing and the
+  routing of vehicles that service the collection boxes by a postal service. A sanitation
+  vehicle doing either residential pickup or container pickup may make 2-3 trips to a
+  disposal facility during its route while a postal truck collecting mail at the collection
+  boxes may make 2-3 trips to the sort facility during its route.
+
+e. Break Times and Lunch Times.
+
+f. Soft Time Windows. If the time window [L, U] at a location is soft, the time to begin
+  the service of the location can begin before L or after U. The algorithms designed to
+  form routes in the presence of soft time windows generally associate a penalty with a
+  location that is being assigned to a route if the service of this location causes a
+  violation of the time window of any location on the route. In this way, the
+  assignment of a location to a vehicle that violates a time window becomes less
+  desirable.
+
+g. Mixed Deliveries and Collections. In many situations the same vehicles that deliver
+  goods are also used to collect goods. A typical example is when trucks that deliver
+  goods from a warehouse to a set of stops must then collect raw materials from one or
+  more warehouses and deliver the raw materials to one or more plants. A special case
+  of mixed deliveries and collections is called backhauling. One very popular version
+  of backhauling is when the vehicles perform all the deliveries in the route first and
+  then perform all of the collections.
+
+h. Combined Pickup and Deliveries. In a combined pickup and delivery problem, the
+  service of a stop requires the transportation of goods from a specified pickup
+  location to a specified destination location. Thus, every entity to be serviced has both
+  a pickup location and a destination location specified. An example of a combined
+  pickup and delivery problem is a courier service. Combined pickup and delivery
+  problems can be broken down into full truckload pickup and delivery problems and
+  partial truckload pickup and delivery problems. In the full truckload pickup and
+  delivery problem, a vehicle moves a single dedicated load from the pickup location
+  to the delivery location. In the partial truckload pickup and delivery problem, the
+  vehicle can make several pickups before a delivery and several deliveries preceding
+  the pickup at another location.
+
+i. Multiple Commodities. If more than one commodity is to be delivered by the same
+  vehicle, then the vehicle might have to be broken down into separate vehicle
+  compartments. Examples of these problems include the delivery of gasoline to
+  service stations, delivery of refrigerated and non-refrigerated items to supermarkets,
+  etc.
+416  Handbook of Transportation Science
+
+  Two general classes of vehicle routing problems (VRP) are point-to-point routing
+problems (PTPRP) and neighborhood routing problems (NRP). In PTPRP (also called
+node routing problems), distinct locations with known demand are to be serviced by a
+fleet of vehicles with known capacity. Examples of PTPRP include the routing of
+vehicles that deliver goods from a warehouse to a specified set of locations, the routing
+of sanitation vehicles for containerized pickup (the large bins at shopping centers,
+industrial parks, hospitals and schools), the routing and scheduling of a utility's field
+service operations, and the routing of vehicles for the delivery of newspapers. Most
+papers in the literature are concerned with variants of PTPRP.
+
+  In a NRP, the requirements for service are the street segments in an area of interest
+(AOI). In a NRP, not all street segments in the AOI require service, A street segment is
+said to require service if there exists at least one location on the street segment that
+requires service. Applications of NRP include the scheduling of household refuse
+collection vehicles, meter readers, initial telephone book delivery and local postal
+delivery operations.
+
+  Street routing and scheduling problems (SRP) can be defined as 1) all PTPRP where
+the locations to be serviced are assigned to the street segments or intersections of a
+digital street network database and 2) all NRP. SRP occur primarily in local delivery
+operations. Examples of SRP include the routing of residential and containerized
+sanitation vehicles, the scheduling of vehicles for telephone book and newspaper
+deliveries, the scheduling of meter readers, the routing of field service operations for
+public utilities and the routing of vehicles for other traditional local pickup and delivery
+operations. The features and characteristics of SRP and how these problems differ from
+more traditional VRP are the focus of this paper.
+
+  In Section 12.2, special considerations that make SRP different from traditional VRP
+and the impact of these considerations on the algorithms for solving SRP are presented.
+In Section 12.3, the goals in developing good solutions to SRP are discussed. In Section
+12.4, exact algorithms for solving different types of vehicle routing problems and an
+outline of a heuristic algorithm for solving SRP and achieving the goals presented in
+Section 12.3 are presented. In Section 12.5, a discussion of the challenges that exist in
+solving SRP and some new technologies that may play a role in solving SRP in the
+future are presented.
+
+12.2 WHY STREET ROUTING AND SCHEDULING PROBLEMS DIFFER
+  FROM TRADITIONAL ROUTING AND SCHEDULING PROBLEMS
+
+  In this section, considerations that help to differentiate SRP from more traditional
+VRP are described. In the remainder of this paper, a stop will refer to either an
+individual location or a street segment that requires service.
+Street Routing and Scheduling Problems  417
+
+Service Times
+
+  In many SRP, the service time at a stop can be extremely small. Examples of
+service times in actual applications are as follows:
+
+1. In delivering newspapers, the service time at a stop can be a few seconds if the
+  paper is thrown from the automobile to the curb or 1-2 minutes if the paper is
+  delivered to the door.
+
+2. In residential sanitation collection, the service time at a stop is the time it takes to
+  service all of the locations on the street segment and traverse the street segment.
+  Generally, in residential sanitation collection problems, it only takes a few
+  seconds to collect the refuse at each location requiring service so that it only
+  takes a couple of minutes to service a street segment
+
+3. In containerized sanitation pickup problems, the service time at a stop is the time
+  it takes the truck to lift the container and dump the contents of the container into
+  the truck. Generally, this operation generally takes 1-3 minutes.
+
+  In many SRP, the number of stops (individual locations or street segments) on a
+route can be large (over 100) and the addition or deletion of a stop marginally affects
+the duration of the route. For example, we have found that in residential sanitation
+collection problems each route services 600 to 1500 individual locations. In these
+problems, if there are about 10 locations on each street segment, then there are 60
+to 150 street segments (or stops) on a route. Because of the density of the stops
+requiring service, residential sanitation collection is generally considered to be a
+NRP and the routing and scheduling procedures are carried out over the street
+segments rather than the individual locations requiring service.
+
+Euclidean Distance Computations and Shortest Paths
+
+  In a traditional PTPRP, the time between two stops is usually assumed to be based on
+the Euclidean distance (or some function of the Euclidean distance) between these stops.
+These times are used in the algorithm to break the stops down into routes and to
+sequence the stops on each route.
+418  Handbook of Transportation Science
+
+  Figures 12.1-12.3 illustrate the problem that can arise in using Euclidean distances in
+a SRP. In Figure 12.1, the solution, A-B-C-D-E-A, to a 5-stop traveling salesman
+problem is displayed. This solution used the Euclidean distance between each pair of
+stops in order to determine the order to service the stops. To solve the problem in this
+way, a digital street network data base is not needed. In some SRP, routes that are
+developed using Euclidean distances is adequate. For example, if the stop are spatially
+spread out over the underlying street network (for example, each stop located in a
+different 5 digit zip code), then the solution found using Euclidean distances may be
+accurate enough. In other cases, using Euclidean distances can lead to inferior routes.
+
+  In Figure 12.2, the stops in Figure 12.1 are superimposed on top of a street network,
+as would be the case if this problem were solved as an SRP. The solution displayed in
+Figure 12.2 is found as follows. The sequencing of the stops is found by computing the
+Euclidean distance between the stops. The travel path is found by determining the actual
+travel path between the stops knowing the sequence for servicing the stops. In Figure
+12.2 (and in Figure 12.3), the travel path is generated under the assumptions that all
+stops have to be serviced on the side of the street on which the stops are located and no
+U-turns are allowed.
+Street Routing and Scheduling Problems  419
+
+  In Figure 12.3, a route (and travel path) is generated under the same assumptions as
+the route displayed in Figure 12.2 except that, in determining the sequence, the shortest
+path between the stops is used as the travel time between the stops rather than the
+Euclidean distance. In this case, the order for servicing the stops in this solution is A-C-
+D-E-B-A. In terms of route duration, the solution shown in Figure 12.3 is clearly
+superior to the solution displayed in Figure 12.2.
+
+  Thus, in many SRP, using the underlying street network to compute the travel times
+between stops can lead to the generation of routes and travel paths which are more
+realistic and more acceptable to the user than the routes generated by using the
+Euclidean distance between the stops. Furthermore, options can be integrated into the
+algorithms for travel path generation to take into account issues such as street crossing
+difficulties and difficult turns (such as U-turns), natural barriers such as lakes and
+bridges, one-way streets and two-way streets, and ensuring that the stops are serviced on
+the correct side of the street. It is virtually impossible to take these considerations into
+account if Euclidean distances are used. In practice, these issues can play an important
+role in ensuring that the solution is implemented. However, to take these issues into
+account, the user is faced with an increase in 1) the computer time needed to get a
+solution, 2) the time and cost required to develop the system and 3) the accuracy of the
+underlying digital street network data base.
+420  Handbook of Transportation Science
+
+Locating the Stops to be Serviced in SRPs
+
+  Closely aligned with the discussion in 12.2.2 is whether the stops should be located
+at their nearest intersection or on the correct street segment and side of street. Geocoding
+is the process of determining the correct street segment in a digital street network data
+base to associate with a location that requires service. In some cases, geocoding stops at
+their nearest intersection can lead to travel paths that give misleading results. This
+situation is illustrated in Figures 12.4 and 12.5.
+
+  In Figure 12.4, stops A, B, C, and D have been geocoded to the same intersection.
+Assume that these stops are on the same route. The portion of the travel path for the
+route servicing these four stops is displayed in Figure 12.4. This travel path does not
+traverse the street segments where stops B and C are located. This inaccuracy can lead
+to obvious errors such as incorrect estimates in the duration of the routes, travel paths
+which need severe revision when actually being traversed and errors in deciding upon
+the stops that can be feasibly placed on a route. On the other hand, in Figure 12.5, stops
+A, B, C, and D are coded to their correct street segment and side of the street. The travel
+path for the route displayed in Figure 12.5 is different and longer than the travel path in
+Figure 12.4 but more realistically represents the actual vehicle travel path and gives a
+better estimate of the duration of the route.
+Street Routing and Scheduling Problems  421
+
+  In applications where the stops are not dense or the driver is allowed to determine
+the travel path, locating stops at their nearest intersection is adequate. In other
+applications, the stops must be located on the appropriate street segment and side of
+street in order to get reasonable and realistic results. If these issues are important to the
+user, then the algorithms for solving the SRP must be implemented to account for these
+factors. These considerations lead to increases in system development time, execution
+time of the algorithms and costs of preparing the data.
+
+Integration of Driving and Walking Components
+
+  In some neighborhood routing applications, it is important to generate a travel path
+where some of the streets are walked and other streets are driven. This situation occurs
+in the scheduling the postal carriers who deliver mail for the United States Postal
+Service and the scheduling of meter readers. In these situations, the travel path for a
+route can be an integration of walking loops and a driving path. Each walking loop
+begins and ends at the same location (the location where the vehicle is parked) and
+can contain streets that are traversed but not serviced (deadhead walking streets). The
+driving path contains streets that require service and streets that are deadheaded
+422  Handbook of Transportation Science
+
+(traversed but not serviced). Solving mixed driving and walking problems require
+details that are difficult to obtain when using standard approaches for solving these
+problem..
+
+Geographic Data Bases and Geographic Information Systems (GIS)
+
+  As noted above, a critical component in solving SRPs is to have an accurate digital
+street network data base or geographic data base. Existing digital street network data
+bases for the same area can substantially differ in quality. Navigational quality digital
+data bases contain virtually all streets in the area, are accurate with respect to address
+ranges, overpasses and underpasses, streets divided by a median, and one way streets. In
+these data bases, stops can be accurately geocoded to the correct street segment and
+reliable shortest paths over the network can be found.
+
+  Data bases that do not have this precision can be used for solving some SRPs but
+generally require considerable manual updating. To correct most of the errors in a digital
+street network data base that is not accurate can be expensive. If a less accurate digital
+street network data base, then the computation of shortest paths can be inaccurate and
+some of the desired reports cannot be generated accurately. An easy way for a system to
+lose credibility with the crews executing the routes is to give each crew a travel path that
+is not accurate.
+
+  Generally, computer systems for solving SRPs include a Geographic Information
+Systems (GIS). The routing algorithms are embedded in the GIS and the street and stop
+data are stored in the GIS. With a GIS, an accurate digital street data base and the
+correct set of algorithms, the user can 1) geocode most stops automatically, 2) compute
+the travel time between stops as the shortest time travel path over the street network, 3)
+edit the digital street data base, 4) execute the algorithms, 5) display the results and 6)
+manually alter the solution. In the past few years, accurate digital street data bases and
+highly functional commercial GIS have become more available so that realistic solutions
+to a wide class of SRP can be found. The discussion of the requirements for accurate
+geographic data bases and the appropriate functionality of a GIS for use in a SRP can
+become quite complex and we have just given a brief overview of these topics.
+
+User Intervention
+
+  In many street routing systems, the user can change the solution found by the
+algorithms. Such a solution is called a user generated solution and has a better chance of
+being implemented than a solution that is formed without manual intervention. The user
+generated solution is able to consider secondary constraints that the user is aware of but
+the algorithms are not able to capture. For example, in forming partitions for a SRP,
+there may be a major street that is difficult to cross. The user wants to form partitions
+where there are few crossings of this street from secondary streets. Partitioning
+procedures have great difficulty in capturing this constraint if the area over which the
+partitions are being formed lies on both sides of this street. The user can intervene in the
+solution process by splitting the service area into areas of interest where the borders of
+these areas of interest contain the troublesome streets. Then, the partitioning is carried
+Street Routing and Scheduling Problems  423
+
+out over each of these areas of interest, one area at a time. Then, the user can manually
+swap stops between partitions that lie in adjacent areas of interest without significantly
+compromising the quality of the partitioning.
+
+12.3 GOALS IN SOLVING STREET ROUTING AND SCHEDULING
+  PROBLEMS
+
+  The three most important goals (or criteria) in solving most SRP are the following:
+
+  1. Minimize the number of vehicles,
+
+  2. Minimize total travel time,
+
+  3. Ensure that every route in balanced in terms of time to carry out the routes (this
+  time is called the workload of the route).
+
+  The first two goals are the traditional objectives of VRP. The goal of balancing
+workload is more specific to SRP.
+
+  We have observed numerous applications where the workload of the routes range
+between 4 to 10 hours, the crew that works the 4 hour route was paid for a full 8 hour
+day and the crew that works the 10 hour day earns 2 hours of overtime. The benefits in
+eliminating imbalances in the workload are 1) savings can be achieved, 2) overtime can
+be reduced and 3) the crews believe that they are receiving an equitable and fair deal.
+
+  An example on the use of workload balance in a residential sanitation routing
+problem that we solved is now presented. The Within Route Mileage and Number of
+Stops for the existing routes are given in Table 12.1. The Within Route Mileage is the
+total mileage covered by the crew in servicing the route and does not consider the
+distance between the route and the disposal facility, the route and the depot and the
+depot and the disposal facility. The number of stops are the number of residences on the
+route.
+
+  Route imbalance is illustrated in Routes 14, 16 and 17 of the existing routes. The
+statistics for these routes are denoted in bold in Table 12.1. Route 14's Within Route
+Mileage is 23.38 miles and contains 1590 stops, route 17's Within Route Mileage is
+26.13 miles and contains 1088 stops whereas route 16's Within Route Mileage is 8.39
+miles and contains 837 stops. In practice, the crews servicing routes 14 and 17 required
+over twice the time to complete the route as the crew servicing route 16. Moreover, on
+heavy volume days, two crews had to be sent out to service routes 14 and 17 - costing
+additional revenues. These imbalances were so severe that they caused discontent
+among the crews. The crews requested a route readjustment be carried out in order to
+achieve better balance. This request and the implementation of a recycling program in
+the area were the bases of the study that we carried out.
+424  Handbook of Transportation Science
+
+  In Table 12.2, the Within Route Mileage, Number of Stops and Within Route Travel
+Time for the computer generated routes in this region are presented. Forming 20 routes
+was specified in advance and route balance was the primary goal. The Within Route
+Travel Time or workload was computed as the sum of 1) the total service time on all the
+streets on the route and 2) the total within route deadhead time for the route. The total
+service time on a street was determined by linear regression using historic data on the
+actual time to service a route. The independent variables in the regression were number
+of stops on an existing route, length of the streets requiring service on an existing route
+and housing density on an existing route. The total service time on each street was
+computed from the regression coefficients for the independent variables when each
+existing route was considered an entity by itself. Times between the route and the depot
+and disposal facility were not considered in the workload. As can be seen, reasonable
+workload balance was achieved. The maximum deviation in estimated workload on the
+20 routes is 26 minutes and the workload on most of the routes is 300 minutes ± 6
+minutes.
+Street Routing and Scheduling Problems  425
+
+  In conclusion, route balance is a powerful goal in solving many SRPs . Route
+balance is most effective when the network is reasonably dense (urban and suburban
+areas) and the service times at the stops are small. In this way, the number of stops on
+each route is large and the deadhead travel time between stops is small.
+
+12.4 ALGORITHMS FOR SOLVING VEHICLE ROUTING PROBLEMS
+
+  How to best solve vehicle routing problems has been an area of intense research for
+many years. There have been hundreds (if not thousands) of papers written on solving
+variants of vehicle routing problems. Euler in the early 1700s was one of the first to
+examine a vehicle routing problem. In honor of his analysis, this problem is called the
+Koenigsberg bridge problem (or one vehicle Chinese Postman problem or the
+fundamental problem in graph theory). Analysis of these problems has lead to the
+development of significant new theories in vehicle routing and other areas of
+combinatorial optimization. Practitioners have used these results to solve many
+applications, including the applications described in this paper and in other papers and
+books. The April, 1999 special issue of the Journal, Computers and Operations Research
+

@@ -1,0 +1,1034 @@
+12  INTRODUCTION
+
+  But the obstacle of analytic complexity is diminishing. With increasing
+sophistication and distribution of tools for spatial analysis, together with spa-
+tial datasets, planners’ technical capacity to evaluate accessibility can lower this
+barrier and potentially eliminate it altogether. Moreover, the needed inputs for
+accessibility metrics are regularly developed as part of travel-demand modeling
+at the regional level, a mainstay of transportation planning in many countries
+around the world. Thus, the technology, data, and methods for a significant shift
+to accessibility-based transportation planning are readily available.
+
+  On a broader level, the accessibility shift is impeded by institutional factors.
+For example, mobility models and metrics persist in their central role in trans-
+portation and land-use policy in part because they represent professional norms
+in the transportation fields. Highway level of service is a central metric of trans-
+portation engineering practice and is codified and updated regularly through
+the Transportation Research Board’s Highway Capacity Manual.26 Land-use
+decisions are constrained by adequate public facilities ordinances or statewide
+concurrency requirements mandating traffic-impact analysis, a technique whose
+methods are codified by the Institute of Transportation Engineers.27 Practitio-
+ners bound to uphold their professional norms by legal or ethical constraints, or
+simple convention, would find themselves hard-pressed to deviate from estab-
+lished standards such as these.
+
+  While acknowledging these obstacles, we focus on conceptual impediments
+that stem from beliefs about what accessibility is or ought to be, or what would
+count as evidence in favor of the accessibility shift. Since these barriers are largely
+internal to urban- and transportation-planning discourse, they are perhaps more
+readily overcome than the external obstacles.
+
+Travel-Cost Minimization Fallacy
+
+The validity of the derived-demand concept and the accessibility paradigm is
+sometimes presumed to require that people choose residential locations, routes,
+modes, or destinations so as to minimize transportation costs (see chapter 1).
+Yet nothing in derived demand or the accessibility concept requires that transpor-
+tation costs trump all other considerations related to travel or residential location
+choice. The fact that travelers may choose more travel than the bare minimum
+because of concerns about the quality of opportunities at their destinations, or
+the desired characteristics of their homes and neighborhoods, is evidence that
+they weigh the impulse to reduce travel costs against other attributes of the trip.
+It is neither evidence that travel is undertaken for its own sake nor evidence
+against the notion that access to destinations is the service that most travelers
+seek from their transportation systems.
+THE ACCESSIBILITY SHIFT  13
+
+Accessibility-as-Urbanism Fallacy
+
+“Accessibility” sometimes stands for a set of investments and policies that pro-
+mote pedestrianism, cycling, transit use, and compact development.28 Its coun-
+terpart, “mobility,” stands in this formulation for priority given to vehicular
+movement, highway investments, and auto-oriented development patterns. But
+an investment in automotive infrastructure can be accessibility increasing, and
+dense development can potentially degrade accessibility if it slows movement
+down too much. Moreover, even if one assumes that most urbanist policies are
+accessibility increasing, it does not follow that most accessibility-increasing poli-
+cies are urbanist. Ironically, an equation by definition between accessibility and
+urbanist policies has been promoted by some accessibility advocates themselves,
+and in doing so, they have unwittingly enabled a stereotype of accessibility as
+relevant to a niche market rather than the theoretically sound alternative to
+mobility-based transportation planning (see chapter 2). As a practical matter,
+denser regions in the United States tend in fact to offer more accessibility than
+their lower-density counterparts (see chapter 4), but this is a matter of empirical
+observation rather than definition.
+
+Positive vs. Normative Accessibility
+
+The view that accessibility promotion is inherently valuable as a normative goal—
+rather than just a predictive variable—has at times been controversial. Social sci-
+entists in general are more comfortable with analysis and prediction than with
+prescription, and scholars have been more inclined to use measured accessibil-
+ity as a predictive variable in complex models of land use, real-estate prices, or
+travel behavior than to transform planning practice (see chapter 2).29 Researchers
+develop increasingly sophisticated accessibility metrics based on ever more fine-
+grained spatial data, but their focus on modeling exercises implicitly assumes
+either that others will make the link from the laboratory to practice or that mea-
+sured accessibility has little to do with the professional practice of planning or
+transportation engineering. By contrast, we seek to model accessibility analyses
+that are designed to support planning and policy by explicitly framing policy-
+relevant variables in applied models where accessibility is the dependent variable
+or outcome of interest, rather than an independent variable (see chapters 3–8).
+
+Scenario- versus Project-Based Accessibility
+
+Embedding accessibility as a normative planning goal entails an additional ana-
+lytical shift. Formal accessibility analyses began to appear broadly in professional
+14  INTRODUCTION
+
+planning practice in the first two decades of the twenty-first century, commonly
+at the level of the region or metropolitan area as part of an informational, advi-
+sory, or visioning effort. While these efforts represent a step toward the acces-
+sibility shift, they leave a particular gap at the level of applied decision making
+about transportation investment and land-use regulation. At the operative level,
+as when a municipality evaluates a development proposal, or a transportation
+agency evaluates transportation-investment plans, decisions tend to be guided by
+mobility-based level-of-service or traffic-impact analysis. The accessibility shift
+depends on accessibility-based evaluation displacing its mobility counterparts
+at these operational levels as well as in the regional visioning processes. Yet project-
+level analysis differs in fundamental ways from regional-scenario analysis of
+accessibility, and it demands adaptation of the regionally scaled tools (see chapter 3).
+With accessibility tools scaled to the level of the individual transportation-
+investment or land-use-regulatory decision, accessibility analysis can be brought
+to the applied decision-making level.
+
+Comprehensive versus Partial Accessibility
+
+Metrics of accessibility are sometimes judged by their comprehensiveness, with
+richer description being treated as inherently superior or more accurate than
+sparser representations. For example, access to health care is not just a matter of
+people’s ability to reach the doorstep of the clinic, but is shaped by their aware-
+ness that they need to see a doctor, the kind of health insurance they have, and
+their ability to overcome any societal forces impeding their ability to get the care
+they need.30 Thinking about accessibility in this comprehensive way may make
+aggregate place-based measures appear to be woefully inadequate descriptors of
+people’s actual lived accessibility. To capture accessibility properly, perhaps only
+the comprehensive person-based measures, which take into account people’s
+attributes and destination types, will do.31 This view misconstrues the nature of
+accessibility, which is not an objectively existing quantity like length or weight to
+be measured with either greater or lesser accuracy. Accessibility metrics are more
+like eyeglass prescriptions: they enable users to see things that would otherwise
+be missed, but only where there is an appropriate fit between the tool and both
+the user and the user’s purpose. Transportation and land-use planners, for exam-
+ple, need guidance regarding transportation investment and land-use regulation
+to improve physical access to health-care facilities. Health-care obstacles rooted
+in knowledge, finance, or culture, while vital, are generally beyond their profes-
+sional purview. The metrics presented in this book (see chapters 3–7) are all
+geared toward the professional practice of transportation and land-use planning
+THE ACCESSIBILITY SHIFT  15
+
+and are hence aggregate and place-based. Other normative or positive uses of
+accessibility will lead to different methodological choices.
+
+Impact on Complementary System
+
+Accessibility is a function of the interaction of two systems, transportation
+and land use, that influence each other. A thorough accessibility analysis must
+therefore allow for the possibility of effects on the complementary system—
+transportation on land use, or vice versa—before accessibility impacts are
+gauged. For example, assessing the accessibility impact of land development
+without accounting for the development’s potential effect on roadway conges-
+tion would implicitly presume that roadway level of service would be unaf-
+fected by the land-use change; the analysis would thus amount to a proximity
+evaluation. By the same token, assessing the accessibility of a set of transpor-
+tation investments without first projecting their land-use impact amounts to
+assuming no land-use change. Incorporating impacts on the complementary
+system ensures that accessibility analyses properly address both the proximity
+and mobility dimensions.
+
+Modal Dimension
+
+The accessibility paradigm in transportation and land-use planning has become
+closely associated with both multimodalism and an equity-based view of trans-
+portation. We view the accessibility shift as a potential tool for furthering these
+goals, but as conceptually distinct from them. The accessibility shift implies
+planning-practice reform for all transportation modes, including the automo-
+bile. An analysis of auto versus transit accessibility, for example, might lead one
+to conclude that there is an unacceptable deficit in transit service; however, the
+accessibility shift constitutes reform in the kinds of outcomes that matter for the
+various modes, not in a fixed position on the priority to be accorded to each.
+For example, access to the public transit system is sometimes used as a metric of
+accessibility, an inadequate formulation on two grounds. First, it removes the
+automobile (and, for that matter, walking and bikes) from the realm of accessibility-
+relevant transportation modes. Second, it conflates access to the transit system
+with access to destinations. The bus may run through one’s neighborhood, but
+if job centers are two hours away, work accessibility remains poor. For all these
+issues, analysis of transit accessibility poses particular challenges, as the partial
+coverage and intermittent nature of public transit render it a tricky subject for
+accessibility analysis (see chapter 5).32
+16  INTRODUCTION
+
+Equity Dimension
+
+In this way, the accessibility shift does not imply preference of one mode over
+another, but is an approach to planning that is relevant to all modes. Neither is
+accessibility synonymous with transportation equity. Logically, accessibility must
+be a concept distinct from the equitable distribution of accessibility. One expres-
+sion of this equity fallacy is seen in a tendency to limit accessibility analysis to
+the transportation disadvantaged, as if accessibility is the service needed by these
+populations, in contrast to the more affluent car drivers, who need mobility.
+While car ownership enables higher accessibility than transit use nearly every-
+where, accessibility remains the service sought by transportation users across
+modes and incomes. Accessibility is a resource that is the desired benefit provided
+by transportation; that resource can be distributed equitably or inequitably. All
+populations benefit when their accessibility increases, though some populations
+start from a position of greater accessibility deficit. Under the accessibility shift,
+transportation analysis focuses on system performance with respect to popula-
+tions rather than with respect to pieces of infrastructure. The accessibility shift
+thereby supports analyses of equity issues, which can help direct resources to
+equity concerns (see chapter 6).
+
+In this book, the accessibility shift is thus quite circumscribed. Rather than asking
+the traditional question “How fast can people travel?,” accessibility planners ask
+“How many opportunities can people reach?” The shift does not imply that acces-
+sibility maximization is the criterion for a successful metropolitan area; accessi-
+bility goals necessarily compete for priority with those of other realms such as
+education, health, or economic development. The shift merely implies that, to
+the extent that a region seeks to improve its transportation, outcomes will be
+evaluated (prospectively and retrospectively) in terms of accessibility rather than
+mobility. Similarly, the accessibility shift does not automatically resolve conflicts
+among modes; for example, improvements in transit accessibility do not neces-
+sarily outweigh improvements in auto accessibility. Similar conflicts may arise
+between local and regional accessibility, or between the accessibility of various
+socioeconomically or geographically defined groups. Some areas may choose to
+ensure a minimum level of accessibility for all populations; other regions might
+prioritize the accessibility of highly skilled labor to their key industries.33 Appro-
+priate problem definitions do not automatically resolve planning problems, but
+logically incorrect definitions, such as those defining transportation’s goals in
+mobility terms, regularly lead to misdirection of planning and policy efforts.
+
+  Ultimately, advocacy of both the accessibility shift and its derived-demand
+logic is grounded in the notion that ideas matter and have the capacity to
+THE ACCESSIBILITY SHIFT  17
+
+transform even formidable interests and institutions. Political interests and
+power undeniably shape policy, and transportation and land-use planners will
+inevitably incorporate a “muddling through” as they cope with the constraints
+imposed by budgets, stakeholders’ conflicting interests and values, and the
+natural and social worlds.34 But the mobility paradigm which currently under-
+pins that messiness in turn shapes the arguments, analyses, and assumptions of
+planning practice. By altering the terms of debate, the accessibility shift can aid
+policy reform even in the face of established interests and constraints on deci-
+sion making. This is particularly so when the ideas are readily transformed into
+operational tools for on-the-ground decision making within a professional
+realm, such as transportation and land-use planning, that is well acquainted
+with the use of analytical methods.
+  1
+WHAT IS TRANSPORTATION FOR?
+
+The derived-demand concept, which underpins the logic of accessibility in trans-
+portation and land-use planning, originated in realms entirely removed from
+transportation. Understanding the framework in general can shed light on its
+use in transportation and can help eliminate misunderstandings of the mean-
+ing of derived demand in the transportation context. In this chapter, we trace
+the lineage of the concept, its application to the transportation context, and an
+important challenge to the derived view of transportation demand.
+
+  The original example of derived demand—though not the term itself—
+was the nineteenth-century mathematician Augustin Cournot’s analysis of the
+demand for zinc and copper as a function of the demand for brass, an alloy of
+the two metals.1 The derived-demand term was coined in 1895 by the economist
+Alfred Marshall, who used it to describe the demand curves for goods that were
+intermediate to the consumption or production of other goods.2 As an example,
+he showed how one could derive the demand for knife handles as the differ-
+ence between the demand for finished knives and the demand for knife blades
+(neglecting the cost of assembly). Understanding the demand for knives was a
+step toward estimating the demand for knife handles. The demand for knives was
+direct in that consumers viewed them as a final product; the demand for knife
+handles was derived because they were an input.
+
+  This is derived demand in its original form. It is important to note what
+the term does not imply. First, there is no implication that knife handles can
+never be used for other purposes; surely some will use them as handles for other
+
+  18
+WHAT IS TRANSPORTATION FOR?  19
+
+implements, as decorations, or as doorstops. But for most consumers and for
+most purposes, the utility of knife handles depends on their use in completed
+knives. Second, there is no suggestion that consumers always choose the lowest-
+cost handle that can do the job. Some knife consumers will prefer handles that
+excel in their level of ornament, ergonomics, or design. Third, some consumers
+may even be so enamored of fancy handles that they will accept smaller or less
+durable blades in order to afford their preferred handle. None of this contradicts
+the derived nature of demand for knife handles: ordinarily, they are not desired
+or useful on their own, but as an element of a complete cutting package. And
+assessments of a household’s cutting capability would surely be misleading if
+they were based on the availability of knife handles rather than knives.
+
+  In transportation, mobility is the knife handle and accessibility the knife. The
+first application of Marshall’s derived-demand concept to transportation may
+have come four decades later in Michael Bonavia’s 1936 book The Economics of
+Transport: “The ultimate demand for transport may thus be derived from that for
+the necessities of life, and be correspondingly inelastic. To some extent, therefore,
+transport is analogous to other services for which derived demand is very strong
+although direct demand is weak or non-existent; for example, justice, police or
+national defense.”3
+
+  Bonavia’s grouping of transportation with justice, police, or national defense
+appears to conflate derived demand with public goods—goods or services, such
+as clean air or national defense, that are freely available to everyone, and for
+which the use by one person does not reduce their availability to others.4 In
+Bonavia’s account, the problem with derived demand is that it does not fully
+reveal itself in a private market. This is not necessarily so. Derived demand,
+such as the demand for electricity (or knife handles for that matter), may be
+private and fully expressed in markets. Conversely, the demand for public
+goods, such as clean air—which markets underprovide—may be direct, rather
+than derived.
+
+  Nevertheless, Bonavia’s identification of the derived nature of transporta-
+tion demand was prescient. It subordinated transportation to “the necessities
+of life,” perhaps a broader formulation than “reaching destinations,” which
+later became central to the definition of derived transportation demand. It
+portrayed the direct demand for transportation as “weak or non-existent”; thus
+even the original importation of the derived-demand concept into transporta-
+tion allowed for a minority of travel that was not for the purpose of reaching
+destinations.5
+
+  The derived-demand concept in transportation was developed further by
+Robert Mitchell and Chester Rapkin, who were interested in forecasting demand
+for transportation on the basis of land-use patterns across a metropolitan area.
+20  CHAPTER 1
+
+If people travel in order to reach destinations, they reasoned, then the best way
+to forecast travel demand would be on the basis of observed land-use patterns,
+which define the origins and destinations of people’s trips.6 Mitchell and Rapkin,
+like Marshall or Bonavia, were interested in deriving demand for an intermedi-
+ate good or service—mobility in this case—from the final, or direct, demand for
+accessibility.7
+
+  Though Mitchell and Rapkin presumed that the demand for travel was primar-
+ily motivated by the desire to reach destinations, they, like Bonavia, did not think
+that destinations alone fully explained travel behavior. Rather, they argued that
+destinations can have a range of roles in trip-making decisions. One attribute of a
+trip was the “determinateness” of its goal, which Mitchell and Rapkin defined along
+two dimensions: the level of intention to accomplish a goal, and the specificity of
+the destination. Values for the former dimension ranged from the traveler intend-
+ing to accomplish “all of a definite number of known goal events” at one extreme
+to “purposeless existence or movement in a goal area” at the other. Notwithstand-
+ing the judgmental sound of “purposeless existence,” Mitchell and Rapkin were
+interested in descriptions of travel behavior rather than assigning inherent values
+to trips. Specificity of the destination ranged from “a known, intended destination
+which consists of one or more specific establishments at specific locations,” such as
+a mall or downtown, to a more loosely defined “indeterminate destination, which
+consists of an indefinitely bounded or centered area.”8
+
+  Similarly, though Mitchell and Rapkin viewed accessibility as a powerful force
+shaping locational decisions, they were explicit in their view that it would not
+inherently outweigh all other forces: “Although attention in this study is focused
+on the manner in which the necessity for movement among establishments influ-
+ences the local distribution of land uses, this should not convey the impression
+that the other factors are of little, or even of lesser importance.”9
+
+  Thus, while the purpose of most travel was to reach destinations, the trav-
+eler, in Mitchell and Rapkin’s view, was no destination-driven automaton. They
+understood the derived nature of a demand for travel, like other intermediate
+goods or services, to be a relative, not absolute concept. For Mitchell and Rapkin,
+it was useful to view most travel as derived because the perspective enabled them
+to model travel on the basis of the locations of origins and destinations.
+
+  The relative nature of derived demand can be understood on a broader level
+as well. Ultimately, the consumption of any good or service may be conceived
+as being in service of a higher purpose. For example, food can be viewed as
+sought not for its own sake but for the sake of nutrition, health, or satisfaction;
+the line delineating derived from direct demand may be fuzzy. The consensus
+view that transportation demand is mostly derived is not an absolute truth but,
+rather, is based on the view that transportation is most usefully viewed, in most
+WHAT IS TRANSPORTATION FOR?  21
+
+circumstances and for most trips, as one means to an end, rather than an end
+in itself. This proposition can be seen in the asymmetrical relationship between
+accessibility and mobility: most people would view reaching their destinations
+with less movement as preferable for most trips, all else being equal. The opposite
+would not be true: reaching fewer destinations for a given level of travel would
+usually be seen as a worse outcome.
+
+The Challenge to the Derived-Demand
+Hypothesis
+
+The derived-demand hypothesis remained the consensus view of the trans-
+portation fields in the decades following Mitchell and Rapkin’s work, but by
+the 1990s, some observers were questioning the ostensible absoluteness of the
+derived-demand framework in transportation.10 Research in this tradition seeks
+to demonstrate that, for many people, time or distance spent in travel repre-
+sents a positive utility in and of itself, rather than a cost (or disutility) that needs
+to be borne in order to reach a desired destination. This literature effectively
+explores the multiple dimensions of transportation and the many ways in which
+travelers adapt to, enjoy, and even derive meaning from the process of getting
+from point A to point B. It shows the strategies people employ to multitask and
+hence reclaim some of the value of time spent in travel. It also demonstrates
+that, for many trips, the destination may be a product of the desire for a trip,
+rather than the opposite. These challenges to the derived-demand concept have
+furthered earlier understandings of travelers and travel as multidimensional and
+layered. At the same time, their analyses help illustrate common misconceptions
+about derived demand and accessibility, including notions that for transporta-
+tion demand to be derived, it must be derived for all possible trips; or that the
+derived nature of travel demand rests on people minimizing transportation costs
+without regard to other objectives; or that the derived-demand view requires that
+people dislike travel.
+
+  Within this line of research, the derived-demand concept has sometimes been
+interpreted in an absolutist fashion. For example, Patricia Mokhtarian and Ilan
+Salomon argue that travel demand is not as derived as is commonly believed,
+stating that “the strict view of travel as a derived demand would hold that the
+destination is always 100% primary.”11 This characterization would be consis-
+tent neither with derived-demand theory in general nor with transportation
+analysis in particular. First, nothing in derived-demand theory would require
+that the directly demanded good is the only purpose to which the derived-
+demand good can be put; think of Marshall’s knife handles. This view does not
+22  CHAPTER 1
+
+comport with Mitchell and Rapkin’s nuanced view of travel. And researchers
+have long explicitly allowed for a minority of travel that is for the pleasure of
+movement, rather than for the purpose of reaching destinations. In general,
+asserting ironclad laws regarding human behavior would be a risky proposition,
+and scholars such as Martin Wachs, Gordon Kumagai, and Randall Crane have
+carefully avoided such claims:
+
+  The demand for movement is a “derived” demand. Movement is rarely
+  considered an end in itself but rather as a cost which is normally born
+  [sic] in order to achieve other objectives. Except for pleasure driving we
+  normally travel only in order to take advantage of a variety of activities
+  which happen to be separated in space.12
+
+  For most purposes, a trip is a derived demand, meaning that people
+  typically travel as a means to an end, not as an end in itself.13
+
+  Thus, the derived-demand view as articulated by Marshall, Bonavia, and
+transportation researchers following them has not insisted that 100 percent of
+travel demand is derived, merely a large majority. Going out for a drive, or pur-
+posely taking the long route home, have for decades been acknowledged as excep-
+tions to the derived-demand generalization.
+
+  The question remains, however: What would count as evidence of a direct
+demand for transportation, as if time or distance spent in travel were a ben-
+efit, rather than primarily a means to reach a destination? The observation that
+positive attitudes toward travel help explain people’s choices to travel greater
+distances would not, since such attitudes may simply explain their tolerance for
+travel to more remote destinations.14 While some people are surely more inclined
+to travel, Mokhtarian and Salomon’s division of the population into “accessi-
+bility inclined” and “mobility inclined” segments is not tenable; few ostensibly
+mobility-inclined people who find that their chosen destinations have moved yet
+farther away from their home would see themselves better off as a consequence of
+the change.15 Similarly, the observation that not all travel choices minimize travel
+costs does not provide evidence against derived travel demand. For example, the
+observation that an attribute of a route, such as scenic beauty, is sufficient to
+induce travelers to spend more time in travel is evidence that travel costs do not
+outweigh all other considerations when selecting a route.16 For that matter, travel
+costs would not be expected to dominate other considerations when choosing a
+place to live, a restaurant to frequent, or a transportation mode.
+
+  To see the fallacy of insisting that derived demand implies travel-cost mini-
+mization, consider what such an absolutist view of travel behavior would imply:
+travelers determined to take the shortest or lowest-cost route regardless of its
+shortcomings. Nothing, including lack of physical safety, deters them from
+WHAT IS TRANSPORTATION FOR?  23
+
+travel-cost minimization. One might say of such people that they are placing an
+irrationally high priority on travel costs. Imagining that anything short of that
+level of determination amounts to a positive utility for travel neglects the vast
+middle: people who would be willing to increase their travel time or costs in
+order to realize compensating benefits in other areas. Observations of commut-
+ing by choice, that is, travel to work by people who have the option to instead stay
+at home and telecommute, similarly fail to provide evidence for a broadly held
+positive utility of travel.17 Included in the group of commuters by choice may
+well be people who enjoy the drive to work—just as it may include people for
+whom the face-to-face interaction with colleagues more than justifies the effort.
+Thus, observations of this kind shed little light on the question of whether or not
+the time spent in travel holds a positive utility for large shares of trips.
+
+  Similarly unenlightening is the observation that few people value stay-at-
+home but well-connected immobility, as some authors have aptly explained, pre-
+sumably under the assumption that this state of affairs represents the epitome
+of accessibility.18 People indeed engage regularly in movement, such as the walk
+in the neighborhood after dinner, that is without a destination in mind.19 There
+is undoubtedly a human need to move and explore, as this literature asserts, but
+physical accessibility—the ability to reach destinations through some combina-
+tion of mobility and proximity—raises, rather than lowers, the value of those
+activities. Fulfilling the need to move and explore in an area in which destinations
+of interest are absent or hard to reach is in general less rewarding, and hence
+less attractive, than in an area that offers many destinations to be discovered.
+The notion that the human need to move counters the derived nature of travel
+demand or the accessibility paradigm is based on the misconception that acces-
+sibility’s essence is in the capacity to reduce travel rather than in the ability to
+reach destinations.
+
+  Somewhat more systematic evidence of a broadly perceived positive utility
+for travel comes from survey findings that the desired length of commute is not
+the shortest possible; for example, when asked about the most desirable length of
+their commute, median respondents to one survey replied “16 minutes,” which
+suggests that they desire some time separation between home and work.20 Per-
+haps a nonzero desired commute time indicates a positive utility for travel.
+
+  This interpretation fails, however, on practical as well as theoretical grounds.
+From a practical point of view, mean travel time to work in the San Francisco
+Bay Area, the site of the survey, was about twenty-nine minutes at the time of
+the study; the implication is that the commuter who is worried about too short a
+commute would be rare indeed.21 Thus, these survey data do not contradict the
+finding that, for a large majority of trips and travelers, a reduction in the time
+they spend in commuting would be a benefit, not a cost. Generally speaking,
+24  CHAPTER 1
+
+too-long, rather than too-short commutes remain the problem for individuals
+and for transportation and land-use planning. This is especially the case in met-
+ropolitan regions in which highly productive economies combine with exclu-
+sionary municipal land-use policies to constrain commute-reducing options for
+many people by reducing the affordability of close-in locations.22
+
+  There is a more fundamental reason to doubt the inference of a positive utility
+to travel time, even though people seem to desire some degree of home-work sepa-
+ration. Any evidence of such a positive utility would need to systematically net out
+the value that travelers find at the origin and destination of their trips, lest benefits
+found at either end be conflated with positive utility for travel. Asking respondents
+about their desired commute length fails at this task because a zero-minute com-
+mute would imply living in the environment of one’s workplace, rather than one’s
+own neighborhood. The job might be better accomplished with a question such
+as this: “Imagine that you live sixteen minutes from work, your desired commute
+time. A shortcut just opened up which enables you to cut your commute by five
+minutes. You can take the shortcut and have an eleven-minute commute, or
+continue how you had been traveling before, for a sixteen-minute commute.
+There’s no difference in attractiveness, interest, or safety between the new route and
+the old one. What is your preferred route to work after this change?”
+
+  A broad preference for the longer commute even in the presence of the new
+shortcut would constitute evidence against the derived-demand hypothesis. Such
+a preference might be expected among a minority of commuters who enjoy ancil-
+lary benefits, such as some active travelers who viewed their trip as exercise or
+relaxation as well as transportation. It would be surprising, however, if this were
+the majority view among drivers and public-transport users. The decisions of
+where and how to travel and where to live, work, shop, and recreate are a tightly
+connected bundle; only systematic controlling of the value found at the origin
+and destination, and along the routes, would be capable of isolating a positive
+value for the travel itself.
+
+  Models of mode choice, route choice, residential-location choice, and desti-
+nation choice—which are quasi-experimental designs structured to control for
+other attributes—all confirm that, for most people and trips, travel time repre-
+sents a cost rather than a benefit.23 This finding is observed through the negative
+utilities that are consistently estimated for travel time, and, in the mode-choice
+case, for the trip as a whole (including its time, cost, transport-mode characteris-
+tics, and other attributes) when the value of the destination is excluded. Travelers’
+motivation for incurring this cost is clear: the benefit they receive from being able
+to interact with their destinations.
+
+  The view that travel time is treated as a cost by most travelers and for most
+trips does not require people to dislike the process of travel, and research into the
+positive benefits of travel has revealed the many ways in which people in fact enjoy
+WHAT IS TRANSPORTATION FOR?  25
+
+their travel time. The burden of travel time may at times “translate into becom-
+ing a gift for the individual traveler,” in Juliet Jain and Glen Lyons’s phrase, when
+it becomes a respite, an opportunity to pursue desired activities, an adventure,
+or a time for mental transition.24 The question is the meaning of these benefits
+for travel behavior and for transportation policy. One possibility is that travelers
+experiencing such enjoyment would seek more travel over less even if the qualities
+of their origins, destinations, modes, and routes are held constant. This possibility
+is contradicted by the families of studies we have mentioned, which reveal that,
+all else being equal, people seek to reduce, not increase, travel time for most trips.
+People may enjoy the time they spend in their cars, but taking the long way home
+merely to have more commute time is the rare exception.
+
+  People’s capacity at times to enjoy travel appears to conflict with the rarity
+with which they seek more of it in the absence of compensating benefits in their
+choice of destinations (e.g., better retail choice), origins (e.g., a more-affordable
+house), routes (e.g., scenic quality), or modes (e.g., physical exercise). The appar-
+ent contradiction suggests a conditional or contextual nature of the benefit that
+people receive from time spent in travel. For example, busy working parents may
+enjoy the quiet transition time between work and home, but the legitimacy of—
+and hence potential for—that enjoyment rests on having to take the commute
+to begin with. Extending the commute merely in order to benefit from more
+transition time does not ordinarily work because the condition, having to spend
+the time, would not be met.
+
+  Ultimately, research into the benefits of time spent in travel uncovers much
+about the transportation (and perhaps human) experience but leaves intact the
+derived nature of the majority of travel demand that Bonavia found in 1936.
+People who have the choice will often prefer the remote restaurant that has tastier
+food or the remote neighborhood that is safer; these observations do not in any
+way contradict the accessibility-based idea that the more acceptable neighbor-
+hoods or restaurants that can be reached—through any combination of proxim-
+ity and mobility—the better off people are.
+
+From Individual Behavior to
+Evaluation of Policy
+
+Yet households in the United States and many countries that are able to choose
+frequently appear to attach little value to proximity when they opt for large homes
+in remote suburban or exurban locations. One might ask why policy should seek
+to achieve for people what they do not appear to want on their own. To illustrate
+the relevance of the accessibility shift even in the face of residential choices that
+in practice appear to increase, rather than minimize the need for travel, consider
+26  CHAPTER 1
+
+first a situation in which residential choices are fixed; that is, people do not have
+the ability to relocate in response to transportation-system changes. Some house-
+holders live in or near their travel-minimizing location; others choose spots
+requiring travel above the minimum, presumably because location-related ben-
+efits outweigh their transportation costs. Consider a transportation investment
+that would speed up their travel by 5 percent but cause their work and nonwork
+destinations to shift to places 10 percent more distant. This shift, while improv-
+ing their mobility, would degrade their accessibility and would leave them with
+less time and money with which to interact with their destinations. This principle
+would hold equally for people who had selected neighborhoods that minimized
+the travel required to reach their destinations and for people who had located
+farther away.
+
+  If the assumption of fixed residential locations is relaxed, the situation
+changes, affecting different people in different ways. Public investment to speed
+up travel—even if it reduces accessibility—would leave some people freer to
+choose larger houses and lots at residential locations farther from their work
+and nonwork destinations. People with preferences for, and the ability to afford,
+this kind of consumption—especially those with an appetite for long-distance
+driving—would benefit from this opportunity; others might be worse off
+because their destinations would have become harder to reach.
+
+  Such a policy would amount to a subsidy for private land consumption, rather
+than a transportation-improvement strategy.25 With greater mobility—even with
+reduced regional accessibility—some people are freer to choose from a greater
+range of potential residential locations, are able to consume more land for their
+residence, and in the process, are more able to travel when, where, and how
+they want.26 But these gains mask societal losses in terms of degraded ability
+to reach destinations overall. Moreover, a subsidy to land consumption at the
+urban fringe would rarely succeed as a political justification for the expense of
+such investment. Instead, the legitimacy of the infrastructure policy rests on the
+transportation-system improvement claim that is brought to support it. Under
+the accessibility shift, the transportation-improvement rationale for subsidies
+that fail to deliver accessibility gains disappears, and their justification in the face
+of the significant costs they impose must be sought elsewhere.
+
+The Varying Agendas of the Challenge
+to Derived Demand
+
+The derived-demand framework in transportation has been criticized from a
+contradictory set of motivations, one seeming to demote the role of proximity,
+WHAT IS TRANSPORTATION FOR?  27
+
+the other seeming to demote the role of mobility in transportation and land-
+use planning. Critics questioning the extent to which proximity (or connectiv-
+ity) can substitute for mobility are motivated by a desire to understand why
+some people seem to resist so strongly land-use policy aimed at reducing their
+travel.27 If significant sectors of the population derive enjoyment from travel,
+or have an implicit minimum daily travel-time budget which they are seeking
+to fill, they will not be motivated to choose travel-reducing locations even if
+these are available, these researchers reason.28 But if large numbers of people
+derive a positive utility from travel, rather than seeing it as means to an end,
+there would be little point in traditional transportation-planning policies such
+as roadway capacity expansion, whose purpose, after all, is to reduce the time
+and/or distance people need to travel. Some contend that while time spent in
+travel may not be a cost for significant numbers of travelers, they do not like
+spending their time in congestion and would value roadway capacity expan-
+sions.29 Moreover, in this version, without widespread individual motivation to
+reduce travel time, there is little point to policies such as job-housing balanc-
+ing, which seek to overcome obstacles to reducing commutes, such as exclu-
+sionary zoning.30 In both these cases, the primary implications of revising the
+travel-as-derived-demand view are to render proximity-based approaches less
+relevant to transportation planning.
+
+  By contrast, David Banister draws precisely the opposite conclusion from the
+same challenge to the derived nature of travel demand.31 His motivation lies in
+the promotion of sustainable urban forms, which he defines largely in proximity
+terms. Building on the argument that the demand for travel is not as derived as
+previously thought, he concludes that accelerating traffic is unimportant. After
+all, if travel demand is not strictly derived, then travel is a benefit in and of itself.
+Why focus on speeding up and hence reducing time spent in that beneficial activ-
+ity? Instead, the implications of the revised view on derived demand, for him,
+are to reduce the need for travel, encourage shifts away from the private car, and
+reduce trip lengths.32
+
+  Neither view logically follows from the challenge to the derived-demand
+framework. If—contrary to the consensus—most travelers viewed travel time
+or distance as a benefit rather than a cost, there would be little basis for either
+mobility or proximity in transportation and land-use planning, since both are
+approaches to overcoming the spatial separation of origins and destinations. If
+that separation were a pure benefit for significant shares of the population, they
+would find nothing in need of overcoming. And since the consensus of the field,
+including researchers cited here, remains that most travel demand is derived, the
+challenge to derived demand would provide scant basis for a wholesale demotion
+of either mobility or proximity in any case.33
+28  CHAPTER 1
+
+  In sum, the hypothesis that demand for travel is less derived than generally
+thought has three strikes against it. First, it remains unsupported empirically. In
+contrast to the derived-demand hypothesis, which draws support from decades of
+modeling of choices of modes, routes, destinations, and residential locations—and
+has long allowed for a minority of travel that was for movement—the challenge
+to derived demand has only speculative evidence. Most of the evidence conflates
+attributes of destinations, origins, and route-side attractions with a positive util-
+ity for time spent in travel. Second, even if the demand for transportation is less
+derived than previously thought, the finding would not be particularly conse-
+quential or transformative for transportation planning and policy. Since a major-
+ity of travel would still be derived from people’s desire to reach destinations, the
+derived-demand hypothesis would remain an accurate descriptor for most travel.
+Third, while the less-derived-than-thought claim has been used to criticize both
+mobility- and proximity-based policies in transportation and land-use planning,
+it cannot serve either goal with logical consistency.
+
+  Fundamental policy reform lies not in overturning the derived-demand cor-
+nerstone of transportation planning, but in building on it. Neither proximity nor
+mobility is an independently supportable outcome measure for transportation
+because neither measure, evaluated in isolation, inherently increases people’s
+ability to reach their destinations—which is the core purpose of the vast major-
+ity of their travel to begin with. Within this accessibility paradigm, increases in
+either proximity or mobility are valued as transportation gains only to the extent
+that they improve either accessibility overall, accessibility by a particular mode,
+or the distribution of accessibility across society.
+
+Accessibility vs. Travel Behavior in
+Transportation-Policy Evaluation
+
+Accessibility-based evaluation of transportation and land-use planning is dis-
+tinct not only from that based in mobility, but also from that based in travel-
+behavior modification—for example, when reductions in vehicle-kilometers
+traveled (VKT) are the test of desirable transportation policies. The direct
+observability of mobility and travel behavior, together with the clear harms with
+which they are associated, congestion and environmental impact, lend each of
+them a clarity and urgency as candidate lynchpins of transportation policy
+making. But because neither is grounded in the core purpose of transporta-
+tion, neither is adequate to the task of capturing—or even approximating—
+transportation’s benefits.
+WHAT IS TRANSPORTATION FOR?  29
+
+  The travel-behavior orientation implies that the test of transportation and
+land-use planning is its capacity to reduce (or reduce the growth in) car use.
+A broadly used evaluation approach in this realm seeks to link individuals’ travel
+patterns to the characteristics of the built environment.34 Scholars working under
+this approach hypothesize that areas that are developed in a fashion that is com-
+pact, mixed-use, and safe and amenable for pedestrians, cyclists, and public-
+transport users will influence people’s travel behavior toward less driving, with
+attendant benefits in the reduction of environmental harms (and other realms
+such as health from increased physical activity). If this causal link can be estab-
+lished, these scholars reason, then policy makers will have the scientific basis they
+need to advance policies promoting compact cities and regions.35 Planning for
+compact development would enjoy a legitimacy rooted in the proven mitigation
+of environmental and other harms.
+
+  Within this framework, accessibility’s purpose is to improve travel behavior,
+and consequently, its test is whether that behavioral modification is achieved.
+This is an example of accessibility being assessed according to its instrumental
+role. Under the travel-behavior rubric, absent such empirical proof, there would
+be little reason to adopt accessibility-promoting policies. This instrumental view
+of accessibility emerges explicitly in some transportation and land-use research.
+For example, Randal O’Toole writes:
+
+  Some goals, such as accessibility and walkability, are actually inputs, not
+  outputs. Just because planners judge a neighborhood to be walkable
+  doesn’t mean that anyone is actually walking. One plan defines acces-
+  sibility as “the number of opportunities (such as jobs, shopping, etc.)
+  that can be reached from a given location within a given amount of
+  travel time by auto, transit, or non-motorized modes.” This is an input,
+  not an output.36
+
+  Mokhtarian and Salomon similarly endorse the strictly instrumental view of
+accessibility:
+
+  The rationale behind accessibility-enhancing policies is that VMT
+  [Vehicle Miles Traveled] and consequently energy consumption and
+  emissions can be reduced by the expected shift of motorized trips to
+  non-motorized modes and to public transportation and by a shift in
+  destination to opportunities in greater proximity to residential areas.37
+
+  In other cases, the instrumental view is implicit, as with research structured
+to assess the impact of accessibility on driving, public-transport use, or pedes-
+trianism. Much research at the nexus of transportation and environmental
+30  CHAPTER 1
+
+quality since 1970 has in fact focused on the potential travel-behavior impacts
+of various urban forms.38
+
+  The focus on the reduction of VKT as the test of progressive transportation and
+land-use planning is easily understood. Automobile use remains a very large con-
+tributor to environmental problems from climate change to regional pollution to
+local concentrations of air toxics. Notwithstanding technological progress, which
+has reduced the car’s environmental impact per kilometer, rapid VKT growth
+remains a global threat. Efforts in land-use planning and improvements in public
+transport, cycling, and pedestrian infrastructure can contribute—alongside tech-
+nological shifts—to the mitigation of environmental harms associated with the
+automobile. But in framing the accessibility problem in VKT-reduction terms, the
+planning field encounters two problems.
+
+  First, when VKT is the relevant policy test, uncertainty regarding the pres-
+ence, magnitude, or statistical significance of VKT-reducing impacts is inevitably
+construed as an argument against the planning intervention.39 At the aggregate
+scale of the metropolitan region as a whole, VKT is fairly closely related to met-
+ropolitan compactness; this relationship weakens when the focus shifts to disag-
+gregate studies of individuals and their neighborhoods.40 Weaker effects at the
+level of an individual neighborhood are hardly surprising, since travel behavior
+depends on the characteristics of the metropolitan area at least as much as local
+neighborhood attributes. Large-scale metropolitan-wide transformations hold
+great potential for reducing VKT—as evidenced by aggregate studies that com-
+pare metropolitan regions with one another—yet any far-reaching transforma-
+tion will be the product of the aggregation of small-scale incremental change
+over many years.41 Though transportation and land-use reformers aspire to the
+more fundamental changes, their desired innovations are often tested at the local,
+disaggregate level with attendant controversy about their relevance to transpor-
+tation problems, a controversy that can stymie action.
+
+  The second problem is more fundamental, and more harmful for planning.
+The VKT generated by a land-use or transportation-system change is a rough
+metric of harms, or negative externalities of transportation, but it is quite irrel-
+evant to the question of transportation-related benefits. The transportation ben-
+efits of such a change would stem from improvements in people’s ability to reach
+destinations, that is, accessibility gains. A framework that seeks to reduce harms
+is not equivalent to one that seeks to provide (net) benefits, and focusing solely
+on the harm side of the equation can lead to perverse outcomes.
+
+  In particular, judging accessibility as a potential tool to reduce VKT, rather
+than an inherent benefit, privileges travel that was car-intensive to begin
+with; without the presence or threat of intense auto use, there are few vehicle-
+kilometers to be reduced. Suppose a planning agency must decide between routing
+WHAT IS TRANSPORTATION FOR?  31
+
+a new public-transport line to either a high-income, high-auto-use area or a
+low-income, low-auto-use area. Routing the transit line to the low-income area
+would have few VKT-reducing effects; even if the line serving the poor area were
+heavily used, travelers would tend to be diverted from other public-transport
+lines or nonmotorized travel rather than from the automobile. By contrast, an
+accessibility analysis would probably find the greatest gains in the poorer area
+because low car ownership would likely translate into low accessibility levels for
+these residents.
+
+  A focus on VKT reduction as the test of progressive transportation planning
+in absence of accessibility evaluation can undermine land-use decision making
+as well. For example, consider a planner seeking VKT reductions from a transit-
+oriented development strategy. If such a development were targeted to low-income
+populations with low baseline car ownership and use, any VKT reductions would
+likely be slight. By contrast, transit-oriented development targeted to an affluent,
+car-driving population would have a much greater chance of reducing car use
+significantly. Yet the accessibility gains would be greatest under the scenario in
+which low-income households were afforded the opportunity to live near pub-
+lic transport; their low levels of automobility imply greater accessibility benefits
+from the ability to walk to high-quality public transport. For these reasons, with-
+out knowledge of accessibility impacts, the VKT-reduction criterion, like mobil-
+ity enhancement, is inadequate as the central test of transportation and land-use
+planning.
+
+  Nevertheless, the relevance of VKT to environmental outcomes implies that
+the planner must be centrally concerned about the impacts of decisions and
+investments on car use, and ideas pertaining to the role of VKT reduction as a
+policy goal, long implicit in academic research, have seen some moves toward
+implementation. Beginning in 2013, the State of California initiated a process to
+reform methods of transportation evaluation used by public agencies statewide.
+Much of the planning process for municipalities and other authorities in Cali-
+fornia is governed by the California Environmental Quality Act (CEQA), which
+mandates reporting on environmental impacts of public decisions together with
+mitigation where feasible. Consistent with decades of transportation-planning
+tradition, CEQA had treated degradations of roadway level of service (LOS),
+a measure of automotive congestion, as an environmental impact to be mitigated.42
+This strictly mobility-based problem definition led to a number of anomalous
+situations—for example, when CEQA requirements were used to delay imple-
+mentation of a bicycle-improvement plan because of the threat of degraded auto
+LOS.43 To reform this situation, the California legislature passed SB743 man-
+dating an alternative to LOS for the evaluation of transportation’s environmen-
+tal impacts within CEQA.44 According to the law, the alternative metrics could
+32  CHAPTER 1
+
+include “vehicle miles traveled, vehicle miles traveled per capita, automobile trip
+generation rates, or automobile trips generated.” In the process, VKT was desig-
+nated to fundamentally replace LOS as the central indicator of transportation’s
+environmental impacts within the CEQA process, requiring significant changes
+to the procedures of municipal governments.45
+
+  As a metric of transportation’s environmental impact, VKT is surely superior
+to the old LOS metrics, and using it would avoid the problem of penalizing mea-
+sures to promote walking, cycling, public-transport use, or denser development
+if they threaten to slow the cars. But the overarching framework of CEQA—or
+any harm-avoidance approach—is inadequate as a guide to planning because it
+overlooks the benefits of transportation. A comprehensive system would need to
+incorporate benefits in the form of accessibility increases while weighing them
+against harms, which are in part captured by VKT.
+
+  In many circumstances, accessibility-increasing strategies would overlap
+with VKT-reducing approaches. This is because the accessibility shift entails the
+integration of proximity into transportation and land-use planning. This inte-
+gration offers the hope of VKT reductions based on the potential for shorter-
+distance travel and modal shifts—a hope that is backed up by empirical evidence
+in many cases.46
+
+  Yet accessibility-seeking and VKT-avoiding approaches are not synonymous.
+Where the two are congruous, no trade-offs are necessary. This is the case in
+cell A of table 1.1, which includes cases where an increased proximity from, for
+example, urbanist development, job-housing balancing, or relaxation of low-
+density regulations leads to greater origin-destination proximity, and travelers
+take advantage of that proximity to reduce their travel. By contrast, low-density,
+auto-oriented development (cell D) tends simultaneously to boost VKT and
+degrade accessibility, even by car (chapter 4). In both cases A and D, accessibility
+and VKT goals are aligned. The noncongruent cases include the issue of roadway
+congestion (cell B), which lowers accessibility by reducing travel speeds, but also
+constrains trip making and hence VKT. The circumstances that can produce both
+greater accessibility and greater VKT (cell C) include policies that seek to increase
+the accessibility of low-income households by providing access to affordable cars,
+or roadway infrastructure improvements that do not spur extensive low-density,
+decentralized development. These policies increase automobile accessibility by
+improving mobility while avoiding triggering a degradation of proximity that
+would erode or overwhelm these mobility gains.
+
+  Perhaps the most perplexing of the cases of increased accessibility together
+with increased VKT is when proximity gains translate into VKT increases
+because the reduced cost of travel to the destinations induces more such travel.47
+  WHAT IS TRANSPORTATION FOR?  33
+
+TABLE 1.1 Examples of transportation and land-use outcomes with varying
+accessibility and VKT impacts
+
+  INCREASE ACCESSIBILITY  DECREASE ACCESSIBILITY
+
+Decrease VKT  A.  B.
+Increase VKT  Reductions in car use based on  Congestion that suppresses
+
+  greater proximity of destinations  trip making
+  or availability of alternatives  Congestion pricinga
+  C.  D.
+  Proximity increases that induce  Low-density auto-oriented
+  car trips
+  Cars to low-income households  development
+  Roadway expansion without high
+  degree of decentralization
+
+a Notwithstanding its traffic-accelerating effects, congestion pricing raises the time-plus-money cost of travel
+overall in order to reduce roadway volumes. In absence of countervailing land-use impacts (which might arise) it
+would therefore be accessibility reducing. Timothy D. Hau, Economic Fundamentals of Road Pricing (Washington,
+DC: Infrastructure and Urban Development Department, World Bank, WPS 1070, 1992), 1–27.
+
+This occurs when more nearby destinations are reachable by car, and individu-
+als respond with an increased frequency of driving trips. The case of increased
+proximity leading to increased travel illustrates well the relationship between
+accessibility and VKT-reduction goals. As Bert van Wee shows, increases in prox-
+imity that do not translate into travel reductions would nonetheless materialize
+as accessibility gains.48 Consider, for example, a case where improved proximity
+(e.g., from increased density or land-use mixing) affords people the opportunity
+to reduce their travel by choosing more nearby destinations—and yet they do
+not. They could have maintained their previous participation in out-of-home
+activities while shrinking the time and money they spent in travel. By doing
+the opposite, that is, maintaining (or even increasing) their previous levels of
+travel, they are demonstrating that their ability to interact with a greater range
+of destinations (e.g., to shop at better supermarkets, or work at more challeng-
+ing jobs) is more valuable to them than the potential transportation cost savings
+that the improved proximity offers. In fact, the accessibility benefits—which are
+invisible to a planning model focused solely on VKT reduction—are likely to
+exceed benefits that materialize in travel-reduction terms; accessibility is thus
+a more robust transportation rationale for reformed land-use planning than
+VKT reduction is.49
+
+  The potential for conflict between accessibility and VKT-reduction goals (as
+embodied in the noncongruent cells B and C in table 1.1) presents a challenge for
+34  CHAPTER 1
+
+accessibility-based transportation and land-use planning. Given the importance
+of VKT as an indicator of the environmental harms of transportation—
+particularly as these relate to climate change—VKT effects must be a central
+concern of the field. But the harms associated with VKT effects are properly con-
+sidered in light of accessibility benefits. The nature of the trade-off relationship
+would differ according to the values and policy priorities of different decision
+makers. Nothing in the accessibility shift predetermines, for example, the proper
+weighting of accessibility concerns for low-income households against the threat
+of increased VKT, or in general, the relative importance to be accorded to envi-
+ronment, equity, and economic development in policy making. Yet the shift does
+imply that transportation benefits measured as accessibility are central to deci-
+sion making, and that these are not adequately captured by a sole focus on either
+mobility improvement or VKT reduction.
+
+Planning and the Derived Nature
+of Travel Demand
+
+Mobility, proximity, and VKT reduction have all, at various times, been treated
+as transportation and land-use planning’s central goal. Yet none, in isolation, is
+capable of gauging the benefits offered by transportation, which are principally
+in people’s ability to reach destinations; for that reason, none, used indepen-
+dently, can meaningfully guide planners’ efforts to maintain and improve trans-
+portation. And judging accessibility by its capacity to further these goals, rather
+than as an inherent benefit, neglects the consensus view that the demand for
+transportation is largely derived from the demand to reach destinations.
+
+  Viewing movement as a means to an end, the derived-demand view, does
+not imply that transportation-cost minimization will, or should, eclipse people’s
+other considerations regarding where to live, where to travel, and how to get
+there, but simply that the transportation which a choice demands would be one
+of the costs in the bundle of attributes that the choice represents. The derived-
+demand foundation on which transportation planning has built for the better
+part of a century can also support transformations to transportation and land-
+use planning practice, particularly when closely coupled with on-the-ground
+(and rubber-meets-the-road) decision making.
+  2
+EVOLUTION OF THE
+ACCESSIBILITY CONCEPT
+
+The idea of accessibility is not new, either to urban and regional planning or to the
+social sciences in general. The concept dates back at least to Richard Hurd’s 1903
+analysis of urban growth, Robert Haig’s 1926 “ease of contact,” and John Stew-
+art’s 1948 “demographic energy.”1 In this chapter, we describe major themes in
+the evolution of accessibility over the twentieth century, and argue for a ground-
+ing of the accessibility shift both in some of the older traditions of the concept
+and in the derived-demand framework described in the previous chapter.
+
+  In Stewart’s analysis, the first of the three to quantify the accessibility concept,
+it was a good predictor of outcomes including observed income at the state level.
+States with more demographic energy or potential for interaction, such as New
+York, had much higher income than states with less, such as North Dakota. In this
+original conception, the primary value of the accessibility concept was positive;
+here was an independent variable which was useful in descriptive social-science
+models of phenomena that varied across space.
+
+  But if accessibility could predict desirable outcomes, perhaps it could also be a
+useful indicator for planning. Governments could orient their activities in trans-
+portation investment or land-use regulation toward increasing the average level
+of this apparently valuable resource, or perhaps distributing it more equitably.
+This would be a normative or prescriptive use of the concept; accessibility could
+be a societal indicator which public planning consciously strives to improve.
+Stewart recognized the idea’s normative potential and concluded his seminal
+
+  35
+36  CHAPTER 2
+
+article with a string of rhetorical questions: “If the maximization of demographic
+energy or mass is set as a proper social goal, then what part must the freedom
+of the individual play? Can the sum of human relations represented by (N1µ1)
+(N2µ2)/d [Stewart’s accessibility metric] be increased if instead of being permit-
+ted to occur spontaneously between pairs of persons the relations are required to
+be channeled through a chain of social command? Can an individual by taking
+thought add a unit to his demographic stature? Can society do this for him?”
+Stewart’s answer to these philosophical questions was a final rhetorical flourish
+appealing to higher authority: “Were the prophets right in insisting that every
+increase comes as a gift of spiritual grace from a Power above mankind?”2
+
+  In other words, Stewart recognized the potential of accessibility as a norma-
+tive goal early on: if energy or accessibility can predict important outcomes such
+as income, then surely it could also be seen as a policy variable to be directly
+manipulated by central planners. The reference to the divine might not be pub-
+lishable in contemporary scientific journals, but it had the virtue of explicitness
+regarding its normative position: yes, promotion or redistribution of accessibility
+could be seen as a normative goal, but that would be an unacceptable tampering
+with the natural order. Accessibility was too valuable to be conferred according
+to conscious thought or analysis; it had to be accepted as emerging from a source
+beyond rational human influence. As guidance for policy, accessibility threatened
+too much governmental coordination. It smacked of a policy agenda extending
+beyond accepted small-government tasks of establishment of property rights and
+mitigation of harms to a search for societal benefits. It was simply too hot to
+handle.
+
+  After Stewart’s meditation on—and warning against—the potential of
+accessibility as a prescriptive goal for public policy, accessibility’s normative
+side remained dormant for decades, even as the concept flourished as a positive
+variable used for prediction and description. Echoing earlier authors, Walter
+Hansen applied the term “accessibility” to Stewart’s “demographic energy” and
+broadly introduced the concept into the urban and regional realm with three
+ideas central to the planning use of the tool.3 First, like Hurd’s and Haig’s anal-
+yses early in the century—and unlike Stewart’s nationally scaled research—
+Hansen’s analysis was metropolitan, not the continental. Second, the outcome
+variable for Hansen was residential development, a central concern of the
+urban-planning profession. And finally, where Stewart had implicitly treated
+peoples’ inclination to travel as a constant value, Hansen showed that it was
+a variable subject to empirical investigation. This empiricism allowed Han-
+sen to discover, for instance, that once destination locations and travel speeds
+were controlled for, people exhibited a willingness to travel greater distances
+for work than for nonwork purposes.
+

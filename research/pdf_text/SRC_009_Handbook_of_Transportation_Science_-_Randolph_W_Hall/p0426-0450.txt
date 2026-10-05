@@ -1,0 +1,1150 @@
+426  Handbook of Transportation Science
+
+(Volume 26, Number 4) and the book by Lawler, Lenstra, Rinnooy Kan and Shmoys
+eds. (1985) are devoted to the Traveling Salesman problem. Ball (1995), Bodin, Golden,
+Assad, and Ball (1983), Christofides (1985), Christofides and Mingozzi (1990) and
+Golden and Assad (1986, 1988) are survey articles or special issues of journals or books
+on vehicle routing. Laporte and Osman (1995) have a bibliography containing over 500
+articles on vehicle routing.
+
+  In spite of all of this research into vehicle routing, there is no algorithm that
+optimally solves every VRP. Algorithms and procedures have been developed for
+optimally solving certain classes of vehicle routing problems but these procedures do
+not operate very well or do not generate feasible solutions if conditions on the problem
+change. The procedures for optimally solving the traveling salesman problem may not
+generate a feasible solution to the multi-vehicle VRP without modification. An
+algorithm for optimally solving the multi-vehicle VRP can be used to solve a traveling
+salesman problem (TSP) but this algorithm most likely will be slow computationally.
+
+  In this chapter, it is impossible to survey all of the approaches (heuristic, exact and
+meta-heuristic) for solving vehicle routing problems. Instead, we have decided to
+highlight some of the new procedures that have been designed for solving certain classes
+of vehicle routing problems. In particular, we have chosen to describe exact procedures
+for solving certain classes of vehicle routing problems and a generic heuristic procedure
+for solving street routing and scheduling problems. Some of these procedures are new
+and have not been published in the open literature.
+
+  Some street routing and scheduling problems can be solved by using the exact
+procedures described in 12.4.1-12.4.4 if route balance is not a major criterion. In the
+statement of the problems, it is assumed that a non-negative cost is associated with
+
+every edge {i,j if the problem is symmetric or arc {i,j} if the problem is asymmetric. In
+most papers, the symmetric distances are assumed to be Euclidean. However, in any of
+these cases, these distances (or travel times or costs) can be computed as shortest path
+distances. Moreover, if one is willing to solve an asymmetric problem, then turn
+restrictions, one way streets, and other factors mentioned in Section 12.2 can be
+considered in the computation of these distances. Thus, the exact procedures can be used
+to solve SRPs if the data used in the problem is appropriately defined.
+
+Exact Algorithms for the Capacitated Vehicle Routing Problem
+
+  The Capacitated Vehicle Routing Problem (CVRP) is a special case of PTPRP.
+The CVRP is the problem of designing feasible routes for a set of homogeneous
+vehicles that make up a vehicle fleet. The objective in forming these routes is to
+minimize the total travel time of all of the routes. Each route begins and ends at the
+depot and contains a subset of the stops requiring service. A solution to this problem
+is feasible if the vehicle capacity on each route is not exceeded and all stops are
+assigned to a route. In the simplest statement of the CVRP, there are no lower and
+upper bounds on the duration of each route. As such, there are no route balance
+considerations.
+Street Routing and Scheduling Problems  427
+
+  The CVRP has been shown to be NP-hard. The fact that few algorithms have been
+produced to date which can solve the CVRP optimally reflects the difficulty of this
+problem. In view of the large number of practical constraints that appear in real-
+world CVRPs, all exact methods investigate a basic problem which is at the core of
+all vehicle routing problems. We call this core problem, the basic CVRP.
+
+  The basic CVRP ignores a large number and variety of constraints and
+complications that are often found in real-world problems. Some of these constraints
+that were discussed in the earlier sections of this chapter and can easily be
+incorporated in heuristic methods for solving the basic CVRP. However, these
+constraint and complications represent a small fraction of those found in practice.
+Also, some of these constraints can be inserted into exact branch and bound
+algorithms designed for the basic CVRP by rejecting, during the branching process,
+infeasible solutions. However, if it is not possible to change the lower bound
+computationally in order to take into account the new constraints, the performance of
+the resulting exact algorithm becomes very poor and only small CVRPs can be
+solved to optimality.
+
+The Basic CVRP and its Extensions
+
+  The basic CVRP considered in this chapter is as follows. A complete undirected
+network (or graph) G=(V,E) is given where V=(0, 1, ..., n) is the set of vertices and E
+is the set of undirected arcs (edges). A non-negative cost is associated with every
+
+edge  V'=V\{0} is a set of n vertices, each vertex corresponds to a stop and
+
+vertex 0 corresponds to the depot. Henceforth, will be used interchangeably to
+
+refer both to a stop and to its vertex location. Each stop i requires a supply of units
+
+from depot 0. A set of M identical vehicles of capacity Q is located at the depot and
+used to service the stops; these M vehicles comprise the homogeneous vehicle fleet.
+It is required that every vehicle route start and end at the depot and that the load
+carried by each vehicle is no greater than Q. The route cost corresponds to the
+distance traveled on a route and is computed as the sum of the costs of the edges
+forming the route. The exact algorithms described in this paper find an optimal
+solution to the CVRP. An optimal solution to the CVRP is a set of M feasible routes,
+one for each vehicle, in which all stops are visited, the capacity of each vehicle is not
+exceeded and the sum of the route costs is minimized.
+
+  CVRP can be divided into symmetric CVRP and asymmetric CVRP. In the
+symmetric CVRP, the underlying network G=(V,E) is assumed to be undirected. The
+network for the symmetric CVRP is the network for the basic CVRP. In the
+asymmetric CVRP, the underlying network G’=(V,A) is assumed to be directed; i.e.,
+every arc in A is assumed to be directed.
+
+  In the case of street routing and scheduling problems, the stops are located on a
+street network and the travel time between stops is computed as the shortest travel
+time path between stops. If the travel time matrix is symmetric, then we have the
+symmetric or basic CVRP. In the symmetric CVRP, it can be assumed that there are
+no one-way streets and turn and street crossing difficulties are not considered in
+428  Handbook of Transportation Science
+
+setting up the travel time matrix. The asymmetric CVRP consider one-way streets
+and turn and street crossing difficulties since the travel time matrix is not symmetric.
+In this paper, we consider procedures for solving the symmetrical CVRP since the
+symmetric CVRP appears to be more difficult to solve to optimality than the
+asymmetric CVRP..
+
+  Exact algorithms for the asymmetric CVRP have been proposed by Laporte,
+Mercure and Norbert (1986) and by Fischetti, Toth and Vigo (1994). The latter
+method can solve exactly problems with 300 stops and average vehicle utilization
+
+  where  represents the total volume of all of the stops, M
+
+represents the number of vehicles in the fleet and Q represents the capacity of any
+vehicle. However, the size of problems solved to optimality decreases to 70 stops if
+the average vehicle utilization is increased to about 0.90. Neither Laporte, Mercure
+and Norbert (1986) nor Fischetti, Toth and Vigo (1994) report any attempt to solve
+symmetric CVRP.
+
+  Average vehicle utilization is a very important concept. As the average vehicle
+utilization approaches 1, the vehicles become more tightly packed and finding a
+feasible solution becomes more difficult. In many CVRP encountered in practice, the
+average vehicle utilization is at least 0.95. From the results stated in the previous
+paragraph, it is quite apparent that the current best methods for the asymmetric
+CVRP cannot be used for solving the symmetric CVRP (or possibly asymmetric
+CVRP that are almost symmetric). In particular, these approaches cannot be used to
+solve the set of symmetric test problems proposed in the literature where the vehicle
+utilization is about 0.95. Thus, in order to solve the symmetric CVRP to optimality, a
+separate set of formulations and algorithms have to be considered. These
+formulations and algorithms are the thrust of this section.
+
+  We now review some of the more significant exact methods for solving the basic
+CVRP. These exact methods can be classified into the following categories:
+
+  (1)  Branch and cut
+
+  (2)  Branch and Bound
+
+  (3)  Dynamic programming
+
+  (4)  Set partitioning based methods
+
+  (5)  Commodity flow based methods
+
+  We then present the exact algorithms for the CVRP with Time Windows
+constraints (VRPTW) and the CVRP with Backhauls (VRPB) in order to show how
+exact CVRP methods can be extended to deal with the complexities of real-world
+routing problems.
+
+  This chapter is by no means exhaustive in describing all exact methods and results
+obtained on the CVRP. Additional results can be found in Christofides et al. (1979),
+Street Routing and Scheduling Problems  429
+
+Christofides (1985), Fisher (1995), Desrosiers et al. (1995), Laporte (1992, 1997)
+and Laporte and Osman (1995).
+
+Branch and Cut Algorithms
+
+  Branch and cut methods try to extend to the symmetric CVRP (the graph G is
+assumed to be undirected) the successful results of polyhedral combinatorics
+developed for the traveling salesman problem by Chvatal (1973), Grötschel and
+Padberg (1979), Grötschel and Padberg (1985). These methods are based on the
+following formulation of the CVRP. Let be an integer variable representing the
+
+number of vehicles traversing the undirected arc (edge) {i,j}, and let r(S) be the
+number of vehicles needed to satisfy the demand of stops in S.
+
+  The basic CVRP can be formulated as the following integer program.
+
+s.t.
+
+  Constraints (12.2) are the degree constraints for each stop. Constraints (12.3) are
+the capacity constraints which, for any subset S of stops, that does not include the
+depot, impose that r(S) vehicles enter and leave S, where r(S) is the minimum
+number of vehicles of capacity Q required for servicing the stops in S (i.e.,
+
+  Constraints (12.3) are also called generalized subtour elimination
+
+constraints. It is NP-hard to compute r(S), since it corresponds to solve a bin-packing
+
+problem where r(S) is the minimum number of bins of capacity Q that are needed for
+
+packing the quantities  However, inequalities (12.3) remain valid if r(S) is
+
+replaced by a lower bound to its value, such as  where denotes the
+430  Handbook of Transportation Science
+
+smallest integer not less than y. Constraint (12.4) states that M vehicles must leave
+
+and return to the depot while constraints (12.5) and (12.6) are the integrality
+
+constraints. Finally,  corresponds to a route containing only stop j.
+
+  This formulation cannot be solved directly by a general purpose integer
+programming algorithm because constraints (12.3) are too numerous to be
+enumerated a priori. The exact algorithms based on this formulation share the
+following structure. Constraints (12.3) are relaxed. Then, at each iteration, the LP
+relaxation of the resulting problem that includes only a subset of constraints (12.3) is
+solved. If the optimal LP solution to this problem is integer and all constraints (12.3)
+are satisfied, then it is an optimal CVRP solution. Otherwise, constraints of type
+(12.3) that are violated by the optimal LP solution are added into the LP relaxation
+and a new iteration is performed.
+
+  This cutting plane procedure can be integrated into a branch and cut scheme to
+solve the CVRP to optimality. Laporte, Norbert and Desrochers (1985), using a
+procedure similar to the one described above, were able to solve to optimality
+randomly generated problems with 50 to 60 stops and average vehicle utilization
+
+  The LP relaxation of this formulation can be strengthened by adding other valid
+inequalities that hold for every feasible CVRP solution but might be violated once
+the integrality constraints (12.5) and (12.6) are relaxed. Laporte and Norbert (1984)
+describe valid inequalities for the CVRP based on the comb inequalities developed
+by Chvatal (1973) and Grötschel and Padberg (1979) for the traveling salesman
+problem. Cornuejols and Harche (1993) used comb inequalities to improve the LP
+relaxation of formulation (12.1) – (12.6). With the resulting branch and cut method,
+they were able to solve the 50 stop test problem described in Christofides and Eilon
+(1969).
+
+  A more sophisticated branch and cut algorithm based on formulation (12.1) –
+(12.6) has been proposed by Augerat et al. (1995). In addition to capacity constraints,
+they used new classes of valid inequalities, such as comb and extended comb
+inequalities, generalized capacity constraints and hypotour inequalities. These new
+inequalities lead to significant improvements in the quality of the bound. The
+resulting branch and cut algorithm has been able to solve some large CVRP test
+problems. One of these problems involved 135 stops and represents the largest
+CVRP problem ever solved to date and reported on in the literature. However, this
+branch and cut has failed in solving to optimality a well known 75 stop problem
+described in Christofides and Eilon (1969).
+
+Branch and Bound Algorithms
+
+  The effectiveness of branch and bound algorithms is entirely dependent on the
+quality of the bounds used to limit the tree search. We will, therefore, discuss the
+derivation of such bounds.
+Street Routing and Scheduling Problems  431
+
+Christofides, Mingozzi and Toth (198la) and Fisher (1994) use different
+
+modifications of spanning trees to obtain valid lower bounds for the symmetric basic
+
+CVRP. Christofides, Mingozzi and Toth (1981a) observe that the removal from a
+
+CVRP solution with M routes of any set containing  edges adjacent to the
+
+depot and of any set containing M – y edges not adjacent to the depot – one edge
+
+from each route – produces a tree with degree K = 2M – y at the depot. This tree is
+called the Degree Center Tree (K-DCT). If it is known that the maximum number of
+single stop routes (i.e., the routes made up by the depot and only one stop) is
+
+then y can be fixed a priori to be an integer in the range
+
+Let v(y), for any given y, be the sum of following three cost terms – 1) the cost of
+
+the least-cost K-DCT, 2) the cost of the y edges of minimum cost incident to the
+
+depot and 3) the cost of the M – y minimum cost edges not incident to the depot. v(y)
+
+is a valid lower bound to the CVRP for any y,  Hence, a valid lower
+
+bound to the CVRP is given by  Details of a polynomial
+
+algorithm for computing this lower bound are provided in Christofides, Mingozzi
+and Toth (198la). The lower bound can be strengthened by introducing Lagrangean
+penalties on the violated degree constraints (12.2) in the formulation of the basic
+CVRP given by (12.1) - (12.6). Christofides, Mingozzi and Toth have embedded this
+lower bound into a branch and bound algorithm and have solved to optimality CVRP
+problems containing 10 to 25 stops.
+
+  Fisher (1994a) describes an exact branch and bound algorithm for the CVRP
+where the lower bound is computed using a generalization of spanning trees, called
+M-trees. A M-tree is defined to be a set of n + M edges that span the graph G where
+n is the number of stops in the problem and M is the number of routes. If routes with
+a single stop are not allowed, then any CVRP solution is a M-tree with the depot
+having degree equal to 2M. Fisher shows that the CVRP can be modeled as the
+problem of finding a minimum cost M-tree with the degree of the depot constrained
+to be 2M and some side constraints that impose 1) vehicle capacity constraints and 2)
+the requirement that each stop is visited exactly once. As single stop routes are not
+allowed, the CVRP can be formulated using (0-1) binary variables as follows.
+
+s.t.  (12.2), (12.3) and (12.5).
+
+  where X = {x : x defines a M-tree satisfying
+
+  The lower bound is computed by solving the Lagrangean problem obtained after
+dualizing the side constraints (12.2) and (12.3). The optimal solution of the
+Lagrangean problem is provided by the minimum cost M-tree with depot degree
+equal to 2M. A polynomial algorithm for computing the degree-constrained
+432  Handbook of Transportation Science
+
+maximum M-tree is given in Fisher (1994b). Since the number of constraints (12.3)
+can be enormous, Fisher (1994a) developed an heuristic procedure for choosing an
+initial subset of these constraints and for dynamically adding and deleting constraints
+during the subgradient iterations performed to find the best lower bound. This lower
+bound has been embedded into an exact branch and bound algorithm that has
+produced the optimal solution for a well-known problem with 100 stops and several
+real-world problems with 25-71 stops.
+
+Dynamic Programming Algorithms
+
+  Dynamic programming (DP) has been applied to solve several types of CVRP or
+to obtain tight lower bounds. Christofides, Mingozzi and Toth (1981b) present three
+formulations of the CVRP and introduce the state space relaxation method for
+relaxing the DP recursions in order to obtain valid lower bounds on the value of the
+optimal solutions. The computational results show that the ratio “lower
+bound/optimum” varies between 93.1% and 99.6% when these state space
+relaxations are used. Christofides (1985) reported that a CVRP involving 50 stops
+has been solved exactly by this approach. Problems involving up to 125 stops were
+solved within 2% of the optimum in less than 15 minutes on a CYBER 855.
+
+  A generalization of state space relaxation for dynamic programming is described
+in Mingozzi, Bianco and Ricciardelli (1997). This procedure is used to derive an
+exact algorithm for solving TSP with time windows and precedence constraints. The
+derived algorithm outperforms other methods presented in the literature for the same
+problem, and can be used also on asymmetric TSP. The authors report that TSP
+problems involving 120 cities and wide time windows can be solved exactly by the
+proposed method in less that 5 minutes on a Intel 486 (33Mhz) personal computer.
+Moreover, problems involving tight time windows are directly solved by the
+bounding procedure at the root node of the tree search.
+
+Algorithms Based on the Set Partitioning Formulation
+
+  The set partitioning formulation of the basic CVRP that was initially introduced
+
+by Balinski and Quandt (1964) is now described. Let  be the
+
+family of all feasible routes. Also, let the index set of the stops in route r be the
+
+optimal cost of route r be and the load of route r be  Let be the
+
+index set of routes visiting stop i and be a (0-1) binary variable whose value is
+
+equal to 1 if and only if route r is used in the optimal solution. The basic CVRP can
+be formulated as follows:
+Street Routing and Scheduling Problems  433
+
+s.t.
+
+  In practice, this formulation cannot be solved directly since the number of
+variables can run into the millions, even for small size problems, and the
+computation of the optimal cost for each route r requires solving a TSP on the
+
+subgraph defined by vertices  In this section, we describe three exact
+
+algorithms for the basic CVRP that are based on formulation (SP).
+
+  In Christofides, Mingozzi and Toth (198la), a lower bound to the SP is
+developed. This lower bound is obtained by finding a feasible solution of the dual of
+the linear programming relaxation of the SP. This dual problem to the linear
+programming relaxation of the SP is denoted by DSP.
+
+(DSP)
+
+s.t.
+
+  unrestricted
+
+where  are the dual variables of constraints (12.9) and is the dual variable
+
+of constraint (12.10). In Mingozzi, Christofides, Hadjiconstantinou (1994), it is
+
+shown that a feasible solution  to problem DSP is given by
+
+where  is a lower bound to the cost of the least cost route of load q passing
+
+thorough stop i; that is to say,
+
+  such that
+
+Therefore, a valid lower bound for the CVRP is given by:
+434  Handbook of Transportation Science
+
+  A dynamic procedure for computing  and  is described in
+
+Christofides, Mingozzi and Toth (1981a). The value of the lower bound is improved
+
+by placing penalties  on the vertices having degree different from 2 in the
+
+solution of the bound. Subgradient optimization is used to maximize the lower
+bound. This bound is then embedded in a branch and bound algorithm. The resulting
+algorithm optimally solved CVRP ranging from 10 to 25 stops.
+
+  Hadjiconstantinou, Christofides and Mingozzi (1995) describe a new method for
+
+computing the values  that is based on the computation of k-
+
+shortest paths and q-paths. The resulting CVRP lower bound is superior to
+described above and the branch and bound algorithm is able to optimally solve
+problems involving up to 50 stops.
+
+  Mingozzi, Christofides and Hadjiconstantinou (1994) describe a new method for
+
+solving the SP formulation of the CVRP. They propose to solve problem SP using a
+
+subset  (F is a set containing a limited number of routes) so that the resulting
+
+problem can be solved by a branch and bound algorithm. The optimal solution
+
+obtained for the resulting problem is not guaranteed to be an optimal CVRP solution.
+
+However, the method used to generate F permits an estimate of how far the cost of
+
+the solution obtained using their method is from the optimal solution (this estimate is
+
+called the distance of their solution from the optimal solution).
+
+  Let z(UB) be a valid upper bound for the CVRP and let be a “good” feasible
+solution of DSP of cost z'(DSP). The heuristic procedure used by Mingozzi,
+Christofides and Hadjiconstantinou (1994) for computing will be described later.
+
+Let  be the reduced cost of route corresponding to the
+
+dual solution and let  where is a subset of  F is
+
+a subset of R that satisfies the following three conditions:
+Street Routing and Scheduling Problems  435
+
+where  is defined a priori. An efficient dynamic programming procedure, called
+
+GENF, for computing the subsets  is described in Mingozzi, Christofides
+
+and Hadjiconstantinou (1994).
+
+  Let be the set partitioning problem that is obtained from SP by replacing the
+
+route set R with the subset F defined above. Let be an optimal integer solution of
+
+SP' of cost  where we assume that  if the set F does not contain
+
+any feasible CVRP solution. If  then the corresponding solution is a
+
+feasible and, possibly, an optimal CVRP solution. It is quite clear that the cost of any
+
+feasible CVRP solution containing a route (say ) having reduced cost is greater
+
+than or equal to  Therefore, if the reduced cost of every route
+
+  is greater than z(UB) - z'(DSP), then is an optimal CVRP solution. In fact,
+
+any CVRP solution containing a route  has a cost greater than z'(DSP) + ;
+
+but  and, therefore,
+
+  In order to verify the optimality of x*, the following two cases have to be
+considered.
+
+C1.  In this case,  represents an optimal CVRP solution since
+  either  or
+
+C2.  for some  In this case, might not be an optimal CVRP
+  solution.
+
+  Let  We have the following two subcases under C2:
+
+  C2.1:  In this subcase, is an optimal CVRP solution
+
+  since any CVRP solution involving some route of the set R\F will have a
+
+  cost greater than or equal to
+
+  C2.2:  In this subcase, may not be an optimal CVRP
+  solution and  is a valid lower bound for the CVRP.
+
+  The optimal SP' solution  can be obtained by means of an integer programming
+solver such as CPLEX.
+
+  The core of the method of Mingozzi, Christofides and Hadjiconstantinou is the
+heuristic procedure, called HDS, used to find a feasible solution u' of DSP without
+generating the entire set of routes R. HDS computes a solution u' of cost z'(DSP) to
+DSP as the sum of the dual solutions obtained by a sequence of three different
+relaxations of the CVRP where each relaxation exploits a different substructure of
+436  Handbook of Transportation Science
+
+the problem. The value of the lower bound z'(DSP) obtained is greater than the
+maximum of the values computed by each individual relaxation. The first two
+relaxations are based on graph theory considerations while the third relaxation
+requires the generation, by means of procedure GENF, of a limited subset of routes.
+Mingozzi, Christofides and Hadjiconstantinou report optimal solutions of problems
+up to 50 stops.
+
+  Algorithm GENF can be easily adapted to deal with real-world CVRPs (e.g.,
+involving time windows, delivery and collections, preferences, and so forth) simply
+by rejecting any infeasible route generated. Computational results concerning CVRP
+with time windows are reported in a following section. Moreover, this procedure can
+be easily adapted to deal with the asymmetric CVRP.
+
+A New Algorithm based on a Two-Commodity Network Flow Formulation
+
+  Most integer programming formulations of the CVRP use binary variables as
+vehicle flow variables to indicate if a vehicle travels between two stops in the
+optimal solution. Fisher and Jaikumar (1981) formulate the CVRP using three index
+binary variables as vehicle flow variables to indicate whether vehicle k travels
+
+directly from stop i to stop j (  if vehicle k travels directly from stop i to stop j
+
+and 0 if not). This formulation is used to derive an algorithm based on Benders
+decomposition. The master problem in the Bender’s decomposition is a generalized
+assignment problem and the Benders inequalities are derived by solving M
+independent TSPs, where a TSP is solved over the stops assigned to a vehicle.
+Street Routing and Scheduling Problems  437
+
+  The main complication in using this method concerns the derivation of the
+Benders inequalities. In fact, Benders constraints are derived from the optimal dual
+variables of the M subproblems. Since the TSP subproblems are integer programs,
+dual variables cannot be obtained directly. Thus, Fisher and Jaikumar (1981) used
+this Benders decomposition approach to derive an heuristic algorithm for the CVRP.
+
+  In this section, we discuss a new integer programming formulation for the
+symmetric CVRP, proposed by Baldacci, Mingozzi, Hadjiconstantinou (1998). This
+formulation, called 2CVRP, is interesting in many different ways. It can be shown
+that its LP-relaxation satisfies a weak form of the subtour elimination constraints.
+The formulation can also be modified to accommodate different constraints and,
+therefore, is capable of being extended to different routing problems. The two-
+commodity formulation has been used by Lucena (1986) to derive new lower bounds
+for the VRP and by Langevin et al. (1993) for solving the TSP and the Makespan
+Problem with time windows. Baldacci, Mingozzi, Hadjiconstantinou (1998) use the
+two-commodity approach to derive new integer programming formulations for the
+CVRP, the TSP with mixed deliveries and collections (TSPDC) and the TSP with
+Backhauls (TSPB).
+
+The idea behind this formulation is to use two flow variables, and to
+
+represent an edge {i,j} of a feasible CVRP solution. If a vehicle travels from i to j,
+then represents the load of the vehicle and represents the empty space on the
+
+vehicle  whereas, if the vehicle travels from j to i then and
+
+represent the empty space on the vehicle and the load respectively. Thus, the flow
+variables define two flow circuits for any feasible solution that represents a route.
+
+One circuit is defined by the flow variables representing the vehicle load while the
+second circuit is defined by the flow variables representing the empty space on the
+vehicle.
+
+  In Figure 12.6, a three stop route for a vehicle of capacity Q=15 is shown. Also,
+in Figure 12.6, the two circuits and represented by the flow variables
+
+defining the route are displayed. Circuit  is formed by the variables representing
+the vehicle load. Thus, the flow  indicates the total demand of the three
+
+stops,  represents the load of the vehicle in traveling from 8 to 2 after having
+
+unloaded 3 load units at stop 8,  represents the load of the vehicle in traveling
+
+from 2 to 9 after having unloaded 7 load units at stop 2, finally  represents the
+
+load of the vehicle in returning to the depot after having unloaded the remaining 4
+load units at stop 9.
+
+  Circuit  is formed by the variables representing the empty space on the vehicle.
+Thus,  indicates that the vehicle arrives empty at the depot,
+
+represents the empty space of the vehicle in traveling from 2 to 9,  represents
+438  Handbook of Transportation Science
+
+the empty space in traveling from 8 to 2, finally  represents the empty space
+
+of the vehicle leaving the depot. Every edge {i,j} of the route has
+
+  The new CVRP formulation is as follows. Let be a 0-1 binary variable equal to
+1 if edge {i,j} is in solution and 0 if edge (i,j) is not in the solution. Let be the
+flow value of arc
+
+  s.t.
+
+  Constraints (12.15), (12.16) and (12.20) define a feasible flow for variables
+
+Constraints (12.17)-( 12.19) force the degree of each stop to be 2 and the degree of
+the depot to be 2M, respectively. Constraints (12.21) are the integrality constraints.
+The supply-demand pattern involved ensures that there are paths from vertex 0 to
+
+any vertex in V' and back from any of the vertices in V’ to vertex 0. Since, from
+
+(12.17) and (12.20),  the capacity of the vehicle will never
+
+be exceeded in the route allocated to it.
+
+  Baldacci, Mingozzi and Hadjiconatatinou (1998) describe a valid lower bound for
+the CVRP that is obtained from the LP-relaxation of formulation 2CVRP by adding
+valid inequalities that are satisfied by any feasible integer solution but not necessarily
+Street Routing and Scheduling Problems  439
+
+verified by the LP-relaxation. They consider inequalities such as flow inequalities
+
+and generalized subtour elimination constraints as described by Augerat et al. (1995).
+
+The flow inequalities are derived from the observation that in any feasible integer
+
+solution, if  for some edge not incident to the depot, then  and
+
+Therefore,  and  are valid inequalities and are called
+
+flow inequalities. The value of the lower bound is obtained by iteratively adding the
+violated inequalities to the LP relaxation in the same way as adding cutting planes to
+the LP relaxation. A branch and cut algorithm based on this bound has been used by
+Baldacci, Mingozzi and Hadjiconatatinou (1998) to solve well known CVRP test
+problems with up to 100 stops.
+
+Formulation 2CVRP becomes a valid formulation for the symmetric TSP by
+
+setting  and Q = n – 1. Moreover, Baldacci, Mingozzi and
+
+Hadjiconatatinou (1998) use the two commodity approach to derive new integer
+programming formulations for the TSP with mixed deliveries and collections
+(TSPDC) and for the TSP with backhauls (TSPB). These formulations are used to
+derive new lower bounds and new branch and cut algorithms. The computational
+results show that for both TSPDC and TPB the lower bounds are very tight and the
+exact algorithms can solve problems with up to 150 stops.
+
+Exact Algorithms for the Vehicle Routing Problem with Time Windows
+
+  The basic CVRP does not consider several commonly encountered real-world
+constraints. One very common constraint in real-world problems is to have time
+windows at the stops. The resulting problem, denoted by VRPTW, inherits the
+structural definition of the basic CVRP described in Section 12.4.1 and requires the
+following additional characteristics.
+
+A travel time is associated with each edge  At each stop  is
+
+associated a service time required by a vehicle to visit the stop and to unload the
+
+quantity (we assume ). The start time of the service at stop i must be within a
+
+given time window  A vehicle is permitted to arrive at stop i before the
+
+beginning of the time window and wait at no cost until time Also vehicles are
+
+time-constrained at the depot in that each vehicle must leave the depot and return
+back within the time window
+
+  We now present a mixed-integer programming formulation of the VRPTW,
+adapted from the one proposed by Kohl and Madsen (1997). This formulation
+involves two types of decision variables. The 0-1 binary variable is 1 if and only
+if vehicle k visits stop j immediately after visiting stop i and 0 if not. The continuous
+variable denotes the time vehicle k begins service at stop i . It is assumed that
+denotes the departure time of vehicle k from the depot.
+
+  The VRPTW can be formulated as follows:
+440  Handbook of Transportation Science
+
+s.t.
+
+  Constraints (12.23) state that each stop must be visited exactly once. Constraints
+(12.24) are the capacity limitation on the vehicles. Constraints (12.25) force each
+vehicle to be used at most once and constraints (12.26) state that if a vehicle visits a
+stop, it must also depart from it. Constraints (12.27) impose that vehicle k cannot
+
+arrive at stop j before  if it travels from i to j. Constraints (12.28) force
+
+each vehicle k to return to the depot before time The scalar L can be any large
+
+number. Constraints (12.29) ensure that all time windows are respected and these
+time windows are assumed hard and constraints (12.30) are the integrality
+constraints.
+
+  Being a generalization of the CVRP, the VRPTW is NP-hard. Since the VRPTW
+occurs in many applications, several research efforts have been devoted to finding
+solutions to this problem by means of exact and heuristic methods. In this section, we
+concentrate on the exact approaches. A review of heuristic procedures can be found
+in Desrosiers et al. (1995).
+
+  The most successful exact algorithms to date follow one of three main approaches:
+column generation (set partitioning formulation), Lagrangean decomposition (variable
+splitting) or M-tree relaxation (M-trees are discussed in section 12.4.1). The M-tree
+Street Routing and Scheduling Problems  441
+
+relaxation approach proposed by Fisher et al. (1997) extends the approach presented by
+Fisher (1994) for the basic VRP to the VRPTW. The idea for the basic CVRP is to
+identify subsets S of stops which must be serviced by at least r(S) vehicles. Analogous
+considerations on the time windows lead to constraints specifying that not all arcs in a
+route which violates time window constraints can be simultaneously in the solution.
+These constraints are then relaxed in a Lagrangean fashion, obtaining a problem that is a
+degree constrained M-tree problem. Subgradient optimization can then be used to
+tighten the resulting bound. This method has solve to optimality clustered problems up
+to 100 stops under the assumption that each route contains at least two stops. This
+approach loses effectiveness when the stops are not clustered or when the time windows
+are tight. In these cases, the number of violated time-windows constraints increases and
+the interplay of subgradient optimization and violated constraint identification becomes
+more computationally demanding.
+
+  The other two approaches (column generation and Lagrangean decomposition)
+are both based on the observation that only assignment constraints, specifying that
+each stop must be assigned to exactly one vehicle, are formulated with summation
+over all vehicles. When these constraints are relaxed, or confined in a subproblem
+following a decomposition, the resulting problem is an Elementary Shortest Path
+problem with capacity and time window restrictions for each vehicle and is a NP-
+hard problem (Dror, 1995). However, effective dynamic programming strategies
+have been proposed for its relaxation. In these procedures, non-elementary paths are
+accepted. These non-elementary paths permit negative costs that induce cycles. The
+cycles cause stops to be serviced more than once in a single path.
+
+  Desrocher et al. (1992) make use of this possibility of decomposition of the
+VRPTW in a column generation framework. The problem is decomposed into a
+master problem and a subproblem. The master problem ensures that all stops are
+serviced by suitably choosing a subset of paths, where the paths are generated as
+solutions of the subproblem. The master problem is formulated as a set partitioning
+problem where each column represents a path. The solution of this problem specifies
+both how many vehicles are used to service all the stops and the path to be followed
+by each of the vehicles (all of the vehicles are assumed identical). For
+implementation reasons, since the paths represented by the columns are not
+elementary paths but can contain cycles, the master problem is actually formulated as
+a set covering problem. The set covering solution can be converted to a set
+partitioning solution by means of a branch and bound algorithm. The set covering
+matrix is initialized with paths starting from the depot, reaching one stop and
+returning to the depot.
+
+  The optimal solution of the LP relaxation of the set covering problem produces a
+set of associated dual optimal values. These dual optimal values are used in the
+subproblem to generate columns with negative reduced costs. Each subproblem is a
+shortest path problem with capacity and time window constraints. The arc costs in
+the subproblems are derived from the master dual optimal values. Several negative
+reduced cost paths can be found when solving each of the subproblems. These paths
+are included as new columns in the next iteration of the master problem. The master
+442  Handbook of Transportation Science
+
+and the subproblems are solved iteratively until either a predefined maximum
+number of columns has been generated or the reduced cost of the generated columns
+are strictly positive.
+
+  At this point, the value of the objective function of the optimal LP solution of the
+master problem is a lower bound to the VRPTW. A branch and bound strategy is
+then employed to find a feasible and possibly optimal solution to the VRPTW. The
+optimality of a solution is proved when either 1) the initial LP solution is integer, or
+2) at each node of the search tree, a sufficient number of additional columns is
+generated to rule out the possibility that a non-generated column may enter the
+optimal integer solution. This method has successful problems with up to 100 stops.
+This procedure performed best on problems where the stops are clustered, worse on
+problems where the stops are uniformly randomly located over the area, and
+experienced the most difficulty on random-clustered problems (i.e. problems where
+some stops are randomly located and the other stops are clustered).
+
+  A column generation method was also used by Kohl, Desrosiers, Madsen,
+Solomon and Soumis (1997), where the master problem is strengthened by means of
+valid inequalities that are added as extra rows of the set partitioning formulation. The
+inequalities added are k-path cuts with k = 2 (introduced by Laporte Nobert and
+Desrochers (1985)). Subsets of stops that require at least 2 vehicles to service but are
+serviced by less than two vehicles in the optimal (fractional) LP solution of the
+master are identified. The identification of these subsets cannot be done in
+polynomial time. However, efficient algorithms for identifying these subsets are
+proposed by Kohl, Desrosiers, Madsen, Solomon and Soumis (1997).
+
+  The cutting plane generation was inserted in the column generation as a means to
+strengthen the LP at the root node. In fact, columns are generated by means of the
+capacity and time window constrained shortest path subproblem until no more
+negative reduced costs paths exist or an a priori specified number of columns is
+generated (we use 20000 columns). Then, cutting planes (2-paths and subtour
+elimination constraints) are identified. If the solution proposed by the LP after the
+addition of these cuts is still fractional, a branching strategy is initiated. At each node
+of the search tree, new columns are generated (provided their total number is below
+the specified number (20000) but no new cuts are added. As shown in Table 12.3,
+this approach has proved very effective. It has solved all clustered problems and
+most random and random-clustered problems up to 100 stops.
+
+  A solution strategy based on Lagrangean decomposition has been proposed by
+Kohl and Madsen (1997). As with the previous algorithms, the problem is
+decomposed into a master problem requiring each stop to be assigned to a route and
+a subproblem for each vehicle consisting of an elementary shortest path problem
+with capacity and time window restrictions. This problem is NP-hard and cannot be
+solved exactly for reasonable size problems. For this reason, Kohl and Madsen
+consider a relaxed problem that allows a path servicing the same stop more than
+once. This relaxed problem is then solved by means of a dynamic programming
+algorithm based on the one proposed by Desrochers (1988).
+Street Routing and Scheduling Problems  443
+
+  When the assignment constraints are relaxed in a Lagrangean fashion, the purpose
+of the master problem is to find the optimal Lagrangean multipliers. Thus, the
+VRPTW decomposes into a number of shortest path subproblems where the costs of
+the shortest paths are affected by the values of the Lagrangean multipliers. The
+optimal Lagrangean multipliers are found using a method exploiting the benefits of
+subgradient methods as well as bundle methods proposed by Lemaréchal, Strodiot
+and Bihain(1981).
+
+  If the penalty optimization does not yield a feasible VRPTW solution, a branch
+and bound strategy is initiated. Mingozzi, Baldacci and Palumbo (1998) describe a
+new exact algorithm for the VRPTW that is an extension of the exact algorithm
+proposed by Mingozzi, Christofides and Hadjiconstantinou (1994) for the basic
+CVRP (see section 12.4.1). However, the computational performance of this
+algorithm for the VRPTW is greatly improved if the procedures used to compute the
+lower bound are customized to deal directly with time windows. Mingozzi, Baldacci
+and Palumbo (1998) propose a new heuristic procedure that takes into account the
+time window constraints for solving the dual of the LP-relaxation of the set
+partitioning formulation of the VRPTW. This method is based on the state space
+relaxation of the dynamic programming formulation of the TSP with time window
+introduced by Christofides, Mingozzi and Toth (1981b) described in section 12.4.1.
+This procedure is combined with other two heuristics to obtain a valid lower bound.
+Moreover, Mingozzi, Baldacci and Palumbo (1998) describe a new route generation
+method that use a lower bound to fathom the enumeration of states that cannot lead
+to feasible routes. The computational results show that the lower bound is tight and
+the resulting method can solve to optimality difficult VRPTW problems with 100
+stops that cannot be solved by other exact algorithms.
+
+  Table 12.3 shows the number of problems solved and the number of optimal solution
+found by different methods on three classes of test problems proposed by Solomon
+(1987). The approach described in Mingozzi, Baldacci and Palumbo (1998) appears to
+be the most successful approach for solving these VRPTW exactly. In Table 12.3, R
+means random problems, C means clustered problems and RC means random-clustered
+problems.
+
+Vehicle Routing Problem with Backhauls
+
+The Vehicle Routing Problem with Backhauls (VRPB) is an extension of the basic
+CVRP. In the VRPB, M identical vehicles stationed at a central depot are to be used
+to supply a set of stops. The stops are broken down into two sets called Linehaul
+customers and Backhaul customers. The Linehaul customers are stops that require
+deliveries by the vehicles from the depot. The Backhaul customers have products that
+the vehicles collect and these products are unloaded at the depot. In the VRPB, each
+of the M vehicles must be used (i.e. all M routes are used in the solution), each route
+is to begin and end at the depot and all Linehaul customers and Backhaul customers
+are to be serviced. In this version of the VRPB, the routes are constrained so that
+each Backhaul customer on a route is serviced after every Linehaul customer on the
+route is serviced. Moreover, it is required that both the total load supplied to the
+444  Handbook of Transportation Science
+
+to the Linehaul customers on a route and the total load collected from the Backhaul
+customers on the route must not exceed the vehicle capacity Q. The objective is to
+minimize the total distance travelled by the M vehicles.
+
+In order to ensure feasibility, it is assumed that  where is the
+
+minimum number of vehicles need to visit all the Linehaul customers and is the
+
+minimum number of vehicles need to visit all the Backhaul customers. In the literature,
+
+it is assumed that routes containing only Backhaul customers are not allowed. However,
+
+the exact methods for solving the VRPB described below can be easily extended to
+
+consider the more general case where this assumption is not present.
+
+  Two exact methods have been proposed for the VRPB. Toth and Vigo (1997)
+describe an exact branch and bound method based on the integer programming
+formulation. They describe a Lagrangean lower bound based on a relaxation that leads
+to the determination of Shortest Spanning Arborescences and min-cost flow problems.
+The lower bound is strengthened in a cutting plane fashion by adding violated capacity-
+cut constraints.
+
+  Mingozzi, Baldacci and Giorgi (1997) propose an exact algorithm for the VRPB.
+This algorithm is based on an integer formulation requiring the following two set of
+paths – 1) all feasible paths starting from the depot and visiting delivery stops only, 2)
+Street Routing and Scheduling Problems  445
+
+all feasible paths starting from a backhaul stop, visiting backhaul stops only and ending
+at the depot. The integer programming formulation combines M delivery paths with M
+backhaul paths in order to form M routes that visits all stops. The lower bound is
+computed by heuristically solving the dual of the LP-relaxation of the integer
+formulation. This heuristic method involves two different procedures that exploit two
+different relaxations and do not require the generation of the sets of all feasible paths.
+The dual solution obtained and a valid upper bound are used to drastically reduce the
+number of variables in the integer program so that the resulting problem can be solved
+to optimality by means of an integer programming code such as CPLEX 3.0.
+
+  Extensive computational tests on two classes of problems proposed in the literature
+show that the lower bound introduced by Mingozzi, Baldacci and Giorgi is greater than
+the lower bound of Toth and Vigo. Moreover, the Mingozzi, Baldacci and Giorgi
+approach can optimally solve larger problems than the Toth and Vigo procedure.
+However, the computational tests on these two procedures give ambiguous results since
+each approach solves test problems that the other approach fails to solve. Thus, at this
+point in time, we regard both approaches are competitive for solving the VRPB exactly.
+
+Algorithm For Street Routing And Scheduling Problems
+
+  In the previous parts of section 12.4, exact algorithms for solving various vehicle
+routing problems have been presented. In all of these problems, there is no length of
+path restriction so that the route balancing does not play a role. In this section, we
+present an outline of a generic algorithm for solving street routing and scheduling. This
+algorithm assumes that the service time on each of the stops is small (for example, no
+more than 3-5 minutes), the number of stops on each of the routes is large (say, greater
+than 50), there are no time windows and route balancing is an important criterion. This
+algorithm may not be as effective if the stops have time windows, the number of stops
+on some of the routes is small, the service time at some of the stops is large and route
+interlacing or overlap is acceptable.
+
+  This algorithm is a ‘cluster first, route second’ procedure (Bodin, Golden, Assad and
+Ball (1983)). The algorithm first partitions a region into routes. It then generates the
+travel paths and determines the amount of deadheading on a route. If the solution is not
+good enough, then the next iteration through the procedure is carried out with revised
+estimates of the number of vehicles needed to service the stops. If the routes look
+reasonable (balance has be attained a prespecified number of iterations has been carried
+out), then the solution is examined to ensure that there is not a significant amount of
+overlap or (interlacing) on the routes. If necessary, the systems that we have built that
+use this procedure then allow the user to manually exchange stops between routes in
+order to improve balance or remove interlacing. More details of this procedure are given
+below.
+
+  Each of the steps outlined below generally has to be specialized to account for
+specific applications. In other words, general procedures to solve all street routing and
+scheduling procedures have not been developed. However, we believe that the approach
+outlined presented below can serve as a general approach for solving SRP.
+446  Handbook of Transportation Science
+
+Step a: Estimating the Number of Routes to Form
+
+  The number of routes to service a region is estimated and this estimate need not be an
+integer. Suppose that the estimate of the number of routes to form in a region is 9.5.
+Then the user must decide whether to form i) 9 regular (or full) routes and pay overtime,
+ii) 9 regular routes and a remnant (or partial) route or iii) 10 regular routes. This initial
+estimate is derived without an accurate knowledge of the time to drive between the
+routes and the depot.
+
+  Knowing the number of routes to form over the area of interest, a target workload for
+a route is established. The user then declares the target lower and upper bounds on the
+workload in any route. In the above example, if 10 regular routes are to be formed, then
+the target workload can be 440 minutes and the acceptable workload interval is [440 –
+15 minutes, 440+15 minutes]. This goal on workload balance can be assumed to be soft
+so that the acceptable workload interval can be violated. If all routes when formed fall
+within the acceptable workload interval, then the solution is considered balanced.
+
+Step b: Form an Initial Set of Partitions
+
+  The region over which the routes are to be formed is broken down into the number of
+partitions established in Step a. This partitioning is carried out in two parts - an initial
+partitioning step and an automatic swapping of stops between partitions. The purpose of
+this step is to assign every stop to a partition and that the workload in each partition falls
+within the accepted workload interval.
+
+Step c: Form Travel Paths
+
+  Travel paths are then generated over each partition. With these travel paths, accurate
+estimates of the amount of nonproductive time (deadhead time) on each route and,
+therefore, accurate estimates of the workload in each partition can be determined. These
+estimates include the time between the depot and each partition. Moreover, in the case
+of the routing of vehicles for residential and containerized sanitation problems, further
+estimates include the time between the disposal facility and each partition and the
+number of trips to the disposal facility to make.
+
+Step d: Are the Partitions Balanced?
+
+  If this solution is better than the “best solution found so far,” then this solution
+becomes the new “best solution found so far.” If the workload on all of the partitions
+(including the deadhead travel times) fall within the accepted workload interval or if a
+specified number of iterations of the algorithm has been carried out, then the algorithm
+stops. Otherwise, the workload estimate is revised and the algorithm returns to Step c
+with a new estimate on the number of routes. The workload estimate on this step can
+differs from the workload estimate in Step a since estimates of deadhead time on each of
+the routes are now known.
+
+  Generally, this algorithm takes between 3-6 iterations to converge and can be used
+regardless of whether the stops are street segments or actual locations. We have found
+Street Routing and Scheduling Problems  447
+
+that this procedure generates partitions that are balanced and contain little overlap (or
+interlacing). This procedure works best if the stops do not have time windows. If the
+stops have time windows, then the routes may turn out balanced but have interlacing or
+be formed with little interlacing but may not be balanced. Also, if the route allows the
+possibility of making more than one trip to the depot during the route, then volume and
+weight do not play a role in the partitioning.
+
+  Manual intervention between steps b and c and between steps c and d can be very
+useful in this process by allowing the user to 1) remove interlacing or 2) perform a more
+complex set of stop exchanges than were considered with the automatic procedures in
+Step c. If stops are manually exchanged between steps c and d, then step c must be
+repeated to get travel paths as well as more accurate estimates of deadheading.
+
+  The above procedure works regardless of whether a remnant route is formed. In
+neighborhood routing problems, remnant routes are useful for the following reasons:
+
+i. They allow the above procedure to form partitions that are balanced and the
+  workload in all partitions except for the partition that represents the remnant route
+  are approximately the specified length of the workday.
+
+ii. The remnant route can be strategically located so that the remnant routes from two
+  or more adjacent areas of interest can be pieced together to form a complete route.
+
+12.5 Challenges in Solving SRPs
+
+  Street Routing and Scheduling Problems are becoming an important application area.
+There are some documented successes and sophisticated commercial software systems
+have been developed. Powerful desktop computers and effective and user-friendly
+interfaces and GIS software offer the prospect of continued development in this area.
+Situations are occurring where street routing and scheduling problems are becoming an
+integral part of the logistics and distribution systems of many organizations.
+
+  SRP have been hindered by the lack of accurate geographic data bases. SRP
+place a demand on the accuracy on the digital street data bases not required by other
+mapping based applications nor by other classes of vehicle routing problems. The
+developers of geographic data bases have not played enough attention to form
+navigational quality digital street data bases (because they are expensive to create).
+Moreover, some of the GIS do not have enough functionality to allow for the editing
+of these digital street data bases.
+
+  However, the situation is improving. More accurate (and, in some cases,
+navigational quality) geographic data bases that can support street routing
+applications being developed commercially in the United States, Canada, Europe and
+elsewhere. The Windows based GIS contain increased functionality, making them
+more amenable to building street routing and scheduling systems.
+448  Handbook of Transportation Science
+
+  New technologies in allied areas are also becoming commercially available. In
+particular, organizations are beginning to use Global Positioning Systems (GPS) and for
+real time vehicle location and tracking and enhanced paging systems for two way
+communication between the dispatcher and the crew. As such, we believe street routing
+and dispatch systems using on-board computing and GPS linked to a central processing
+unit for dispatching service stops to the vehicles will be implemented.
+
+12.6 REFERENCES
+
+Augerat, P., J. M. Belenguer, E. Benavent, A. Corber'an, D. Naddef, and G. Rinaldi. (1995).
+  Computational results with a Branch and Cut Code for the Capacitated Vehicle Routing
+  Problem. Rapport de recherche 1 RR949-M, ARTEMIS-IMAG, Grenoble France.
+
+Baldacci R., M.Boschetti and A.Mingozzi. (1998). Heuristic Procedures for the Multi-Depot
+  Vehicle Routing Problem with Pick-up and Delivery. Working paper. Department of
+  Mathematics, University of Bologna, Italy.
+
+Baldacci R., A.Mingozzi and E.Hadjiconstantinou (1998). Exact Algorithms for Routing
+  Problems based on the Two-Commodity Flow Formulation. Working paper. Department of
+  Mathematics, University of Bologna, Italy.
+
+Balinski, M and R. Quandt (1964). On an Integer Program for a Delivery Problem. Operations
+  Research, 12, 300-304.
+
+Ball, M. (1988). Allocation/routing: Models and Algorithms. In Vehicle Routing: Methods and
+  Studies, B.L. Golden and A. Assad (eds.), North-Holland, Amsterdam.
+
+Ball, M. O. (1995), Network Routing, Elsevier.
+Ball, M., T.L.Magnanti and G.L.Nemhauser (eds.) (1995). Network Routing. Volume 8 of
+
+  Handbooks in Operations Research and Management Science, North-Holland.
+Bodin, L.D., B. L. Golden, A. A. Assad, and M. O Ball (1983). Routing and Scheduling of
+
+  Vehicles and Crews. The State of the Art. Computers & Operations Research, 10, 69-211.
+Christofides, N. (1985). Vehicle Routing. In The Traveling Salesman Problem: A Guided Tour
+
+  of Combinatorial Optimization, E. L. Lawler, J. K. Lenstra, A. H. G. Rinnooy Kan, and D.
+  B. Shmoys, (eds), 431-448. John Wiley & Sons Ltd., Chichester.
+Christofides, N. and S. Eilon (1969). An Algorithm for the Vehicle Dispatching Problem.
+  Operations Research Quarterly, 20, 309-318.
+Christofides, N. and A. Mingozzi (1990). Vehicle Routing: Practical and Algorithm Aspects.
+  In Logistics: Where Ends Have to Meet, C.F.H. van Rijn (editor), Pergamon Press.
+Christofides, N., A. Mingozzi, and P. Toth (1979). The Vehicle Routing Problem. In
+  Combinatorial Optimization, N. Christofides, A. Mingozzi, P. Toth and C. Sandi, (eds), J.
+  Wiley, 315-338.
+Christofides, N., A. Mingozzi, and P. Toth (1981a). Exact Algorithms for the Vehicle Routing
+  Problem based on Spanning Tree and Shortest Path Relaxation. Mathematical
+  Programming, 10, 255-280.
+Christofides, N., A. Mingozzi, and P. Toth (1981b). State Space Relaxation Procedures for the
+  Computation of Bounds to Routing Problems. Networks, 11, 145-164.
+Christofides, N., A. Mingozzi, P. Toth, and C. Sandi (1979). Combinatorial Optimization.
+  John Wiley & Sons, Chichester.
+Chvatal, V. (1973). Edmons polytopes and weakly Hamiltonian graphs. Mathematical
+  Programming 5, 29-40.
+Cornuejols, G. and F. Harche. (1993). Polyhedral Study of the Capacitated Vehicle Routing.
+  Mathematical Programming, 60, 21-52.
+Street Routing and Scheduling Problems  449
+
+CPLEX Optimization Inc. 1993-1996. Using the CPLEX Callable Library and CPLEX Mixed
+  Integer Library. 930 Tahoe Blvd #802-297, Incline Village, NV 89451, U. S. A.
+
+Desrochers M. (1988). A Generalized Permanent Labelling Algorithm for the Shortest Path
+  Problem with Time Windows, INFOR, 26, 191-211.
+
+Desrochers M., J.Desrosiers and M.Solomon (1992). A New Optimization Algorithm for the
+  Vehicle Routing Problem with Time Windows, Operations Research, 40, 342-354.
+
+Desrosiers J., Y.Dumas, M.M.Solomon and F.Soumis (1995). Time Constrained Routing and
+  Scheduling In Handbooks in Operations Research and Management Science, Vol.8:
+  Network Routing, M.O.Ball, T.L.Magnanti, G.L.Nemhauser (eds.), North-Holland, 35-139.
+
+Dror M. (1995). Note on the complexity of the shortest path models for column generation in
+  VRPTW, Operations Research, 42, 977-978.
+
+Finke, G., A. Claus, and E. Gunn. (1984). A Two-commodity Network Flow Approach to the
+  Traveling Salesman Problem. Congress. Numerantium, 41, 167-178.
+
+Fischetti M., P.Toth and D.Vigo (1994). A Branch-and-Bound Algorithm for the Capacitated
+  Vehicle Routing Problem on Directed Graphs. Operations Research, 42, 846.
+
+Fisher, M. L. and R. Jaikumar. (1981). A generalized assignment heuristic for vehicle routing.
+  Networks, 11, 109-124.
+
+Fisher, M. L. (1994a). Optimal solution of vehicle routing problems using minimum K-Trees.
+  Operations Research, 42 , 626-642.
+
+Fisher, M. L. (1994b). A Polynomial Algorithm for the Degree-constrained Minimum K-Tree
+  Problem. Operations Research, 42 , 775-779.
+
+Fisher, M. L. (1995). Vehicle routing. In Handbooks in Operations Research and Management
+  Science, Vol 8: Network Routing M. O. Ball, T. L. Magnanti, C. L. Monma and G. L.
+  Nemhauser (eds.), North-Holland, Amsterdam, 1-33.
+
+Fisher M.L., K.O.Jörnsten, O.B.G.Madsen (1997), Vehicle Routing with Time Windows: Two
+  Optimization Algorithms, Operations Research, 45, 488-492.
+
+Golden, B. L. and A. Assad, eds. (1986). Special Issue on Time Windows. American Journal of
+  Mathematical and Management Analysis, 6 (3 and 4), 251-399.
+
+Golden, B. L. and A. Assad (1988). Vehicle Routing: Methods and Studies. North-Holland,
+  Amsterdam.
+
+Grötschel M. and M. W. Padberg (1979). On the Symmetric Traveling Salesman Problem: I
+  and II. Mathematical Programming, 16, 265-280.
+
+Grötschel, M. and M. W. Padberg (1985). Polyhedral theory, in: E. L. Lawler, J. K. Lenstra,
+  A. H. G. Rinnooy Kan and D. B. Shmoys, (eds.), The Traveling Salesman Problem, John
+  Wiley & Sons, Chichester, 251-305.
+
+Grötschel M. and M. W. Padberg (1985). Polyhedral Theory. In E. L. Lawler, J. K. Lenstra, A.
+  H. G. Rinnooy Kan, and D. B. Shmoys, editors, The Traveling Salesman Problem: A
+  Guided Tour of Combinatorial Optimization, 251-305. John Wiley & Sons Ltd.,
+  Chichester.
+
+Hadjiconstantinou, E., N. Christofides, and A. Mingozzi (1995). A new exact algorithm for the
+  vehicle routing problem based on q-paths and K-shortest paths relaxations. Annals of
+  Operations Research, 61, 21-43.
+
+Kohl N., J.Desrosiers, O.B.G.Madsen, M.M.Solomon and F.Soumis (1997) 2-paths cuts for
+  the vehicle routing problem with time windows, Les Cahiers du GERAD G-97-19.
+
+Kohl N. and O.B.G.Madsen (1997) An optimization algorithm for the vehicle routing problem
+  with time windows based on Lagrangean relaxation, Operations Research, 45, 395-406.
+
+Langevin, A., M. Descrochers, J.Desrosiers, E. Gelinas and F. Soumis (1993). A Two
+  commodity Flow Formulation for the Traveling Salesman and the Makespan Problems
+  with Time Windows. Networks, 23, 631-640.
+
+Laporte, G. (1992). The Vehicle Routing Problem: An overview of exact and approximate
+  algorithms. European Journal of Operational Research, 59, 345-358.
+  13 LONG-HAUL FREIGHT
+  TRANSPORTATION
+  Teodor Gabriel Crainic
+
+13.1 Introduction
+
+Freight transportation is a vital component of the economy. It supports production,
+trade, and consumption activities by ensuring the efficient movement and timely
+availability of raw materials and finished goods. Transportation accounts for a
+significant part of the final cost of products and represents an important component
+of the national expenditures of any country (Crainic and Laporte 1997).
+
+  The freight transportation industry must achieve high performance levels
+in terms of economic efficiency and quality of service. The former, because a
+transportation firm must make a profit while evolving in an increasingly open,
+competitive, and still mainly cost-driven market. The latter, because transportation
+services must conform to the high standards imposed by the current paradigms of
+production and management such as small or no inventory associated with just-in-
+time procurement, production and distribution, on-time personalized services, and
+customer-driven quality control of the entire logistics chain. For the transportation
+firm, these standards concern particularly total delivery time and service reliabil-
+ity, which are often translated into objectives such as “be there fast but within the
+specified limits” or “offer high quality service and consistent performance”.
+
+  The political evolution of the world impacts the transportation sector as well.
+The emergence of free trade zones together with the opening of new markets due to
+political changes and the resulting globalization of the economy have tremendous
+consequences for the evolution of transportation systems, not all of which are
+yet apparent or well understood. For example, open borders generally mean that
+

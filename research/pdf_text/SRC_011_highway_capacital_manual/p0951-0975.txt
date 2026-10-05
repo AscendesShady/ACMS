@@ -1,0 +1,1598 @@
+Highway Capacity Manual 2000
+
+  generally at or near freeway design standards and no clear ramp or acceleration lane is
+  involved in the merge.
+
+  Such major merge areas come in a variety of geometries, all of which fall into two
+  general categories, as illustrated in Exhibits 25-9 and 25-10. In Exhibit 25-9, the number
+  of lanes departing from the merge area is one fewer than the total number of approaching
+  lanes. This geometry is accomplished by having the right lane of the left merging leg and
+  the left lane of the right merging leg combine to form a single lane. In geometries of the
+  type illustrated in Exhibit 25-10, the number of lanes departing from the merge is the
+  same as the total number of lanes approaching it.
+
+  EXHIBIT 25-9. MAJOR MERGE AREA WITH ONE FEWER LANE LEAVING INFLUENCE AREA
+
+  EXHIBIT 25-10. MAJOR MERGE AREA WITH EQUAL NUMBER OF LANES LEAVING INFLUENCE AREA
+
+  There are no effective models of performance for a major merge area. Therefore, the
+analysis is limited to checking capacities on approaching legs and the departing freeway.
+The capacity of each entering leg and the departing freeway is computed using the
+general values of Exhibit 25-7. The capacity of each entering leg is compared with the
+peak demand flow on each (converted to pc/h), whereas the capacity of the departing
+freeway is compared with the sum of the two peak entering demands (also converted to
+pc/h). Problems in major merge areas generally result from insufficient capacity of the
+downstream freeway segment.
+
+On-Ramps on Ten-Lane Freeway (Five Lanes in Each Direction)
+
+  Although it is not common, there are freeway segments in North America where five
+lanes of traffic exist in each direction. A procedure is therefore needed to analyze a
+single-lane, right-hand on-ramp on such freeway segments. The flow rate in Lane 5 of
+the freeway is estimated and deducted from the approaching freeway flow. The
+remaining approaching freeway flow consists of flow that would be expected on a similar
+freeway of four lanes; thus standard procedures for analysis are used. The flow in Lane 5
+of the freeway for on-ramps is estimated as shown in Exhibit 25-11.
+
+Chapter 25 - Ramps and Ramp Junctions  25-10
+Methodology
+  Highway Capacity Manual 2000
+
+EXHIBIT 25-11. FLOW IN LANE 5 OF FREEWAY APPROACHING SINGLE-LANE, RIGHT-SIDE ON-RAMP
+
+Total Approaching Freeway Flow, vF (pc/h)  Approaching Freeway Flow In Lane 5, v5 (pc/h)
+  ≥ 8500
+  7500-8499  2500
+
+  6500-7499  0.285vF
+  0.270vF
+  5500-6499  0.240vF
+  0.220vF
+  < 5500
+
+Source: AASHTO (3).
+
+  Once the anticipated approaching flow in Lane 5 is determined, normal procedures
+are applied, assuming an eight-lane freeway (four lanes in one direction), with an
+effective approaching flow computed using Equation 25-7.
+
+  vF4eff = vF – v5  (25-7)
+
+where  = effective approaching freeway flow four-lane (one-direction) freeway
+  vF4eff
+  segment (pc/h),
+  vF  = total approaching freeway flow in five-lane (one-direction) freeway
+
+  v5  segment (pc/h), and
+  = anticipated approach flow in Lane 5 of freeway, computed as in Exhibit
+
+  25-11 (pc/h).
+
+Left-Hand On-Ramps
+
+  Although not normally recommended, left-hand ramps do exist on some freeways
+and occur quite frequently on collector-distributor roadways. The left-hand ramp
+influence area covers the same length as that for right-hand ramps but now encompasses
+the two left lanes plus an acceleration lane. For right-hand on-ramps, a critical
+computation is the estimation of v12. For left-hand ramps, the two left lanes are of
+interest. For a four-lane freeway, this flow rate remains v12 and there is no difficulty.
+For a six-lane freeway, the entering flow of interest is v23, and for eight-lane freeways, it
+is v34. Although there is no direct method for the analysis of left-hand on-ramps, some
+rational modifications can be applied to right-hand on-ramp methodologies to produce
+reasonable results (2).
+
+  It is suggested that the analyst first compute v12 using procedures for a right-hand
+on-ramp and then multiply the v12 value by 1.00, 1.12, or 1.20 to obtain v12, v23, or v34
+for a left-hand on-ramp on four-, six-, or eight-lane freeways, respectively.
+
+  Remaining computations for density, speed, or both may continue, replacing v12 with
+v23 or v34 as appropriate. All capacity values remain unchanged.
+
+Effects of Ramp Control at On-Ramps
+
+  For the purposes of this chapter, procedures are not modified in any way to account
+for the local effect of ramp control, except for the limitation the ramp meter may have on
+vR. Research (4) has found that breakdown of a merge area may be a probabilistic event
+based on the platoon characteristics of the arriving ramp vehicles. Ramp meters provide
+for uniform gaps between entering ramp vehicles and may therefore reduce the
+probability of a breakdown on the freeway mainline.
+
+DIVERGE INFLUENCE AREAS
+
+  Analysis procedures for diverge areas follow the same general approach as that for
+merge areas. Standard procedures have been calibrated from a research study (2) that
+apply to single-lane, right-hand off-ramps. The same three fundamental steps are
+followed: determine the approaching freeway flow in Lanes 1 and 2 of the freeway (v12),
+
+  25-11  Chapter 25 - Ramps and Ramp Junctions
+  Methodology
+Highway Capacity Manual 2000
+
+  determine the capacity for the segment (vF and v12), and determine the density of flow
+  within the ramp influence area (DR). These procedures are then modified and applied to
+
+  other diverge configurations and geometries.
+
+  Predicting Flow Entering Lanes 1 and 2 (v12)
+
+  Models for predicting freeway flow entering the diverge area in Lanes 1 and 2 of the
+  freeway are shown in Exhibit 25-12. The approach is similar to that for merge areas and
+  is affected by the same variables.
+
+  There are two major differences between merge-area analysis and diverge-area
+  analysis. First, approaching flow in Lanes 1 and 2 (v12) is predicted for a point
+  immediately upstream of the deceleration lane even if this point is upstream or
+  downstream of the beginning of the ramp influence area. Second, at a diverge area, v12
+  includes vR. Thus, the general model treats v12 as the sum of the off-ramp flow plus a
+  proportion of the through freeway flow.
+
+vF, vR, v12 , and vD are in  EXHIBIT 25-12. MODELS FOR PREDICTING V12 AT OFF-RAMPS  (Equation 5)
+pc/h; LD, Lup, and Ldown  (Equation 6)
+are in meters  v12 = vR + (vF – vR)PFD  (Equation 7)
+  For 4-lane freeways (2 lanes each direction) PFD = 1.00  (Equation 8)
+See Exhibit 25-2 for  For 6-lane freeways (3 lanes each direction) PFD = 0.760 – 0.000025vF – 0.000046vR
+definition of terms
+  PFD = 0.717 – 0.000039vF + 0.184vU/Lup
+  PFD = 0.616 – 0.000021vF + 0.038vD /Ldown
+  For 8-lane freeways (4 lanes each direction) PFD = 0.436
+
+  The variables used in Exhibit 25-12 are defined as follows:
+  v12 = flow rate in lanes 1 and 2 of freeway immediately upstream of diverge
+  (pc/h),
+  vF = freeway demand flow rate immediately upstream of diverge (pc/h),
+  vR = off-ramp demand flow rate (pc/h),
+  vU = demand flow rate on adjacent upstream ramp (pc/h),
+  vD = demand flow rate on adjacent downstream ramp (pc/h),
+  PFD = proportion of through freeway flow remaining in Lanes 1 and 2
+  immediately upstream of diverge,
+  Lup = distance to adjacent upstream ramp (m), and
+
+  Ldown = distance to adjacent downstream ramp (m).
+
+  The general model specifies that v12 consists of the off-ramp flow (vR) plus a
+  proportion of the approaching freeway flow (vF). For four-lane freeways, this is a trivial
+  relationship since all approaching flow is in Lanes 1 and 2. For eight-lane freeways, a
+  single value is used without regard to conditions on adjacent upstream or downstream
+  ramps, or both.
+
+  For six-lane freeways, the analysis is complicated by the fact that the effect of some
+  types of adjacent ramps can be accommodated. Exhibit 25-13 shows the various
+  sequences of ramps that may occur on six-lane freeways and the appropriate equations
+  from Exhibit 25-12 that should be applied in each case.
+
+  Equation 6 from Exhibit 25-13 addresses cases with an adjacent upstream on-ramp,
+  and Equation 7 addresses cases with an adjacent downstream off-ramp. Adjacent
+  upstream off-ramps and adjacent downstream on-ramps do not affect subject ramp
+  behavior, and analysis proceeds using Equation 5.
+
+Chapter 25 - Ramps and Ramp Junctions  25-12
+Methodology
+  Highway Capacity Manual 2000
+
+  EXHIBIT 25-13. SELECTING EQUATIONS FOR PFD FOR SIX-LANE FREEWAYS
+
+Adjacent Upstream Ramp  Subject Ramp  Adjacent Downstream Ramp  Equation(s) Used
+
+None  Off  None  Equation 5
+
+None  Off  On  Equation 5
+
+None  Off  Off  Equation 7 or 5
+
+On  Off  None  Equation 6 or 5
+
+Off  Off  None  Equation 5
+
+On  Off  On  Equation 6 or 5
+
+On  Off  Off  Equation 7, 6, or 5
+
+Off  Off  On  Equation 5
+
+Off  Off  Off  Equation 7 or 5
+
+  Where an adjacent upstream on-ramp or downstream off-ramp exists, or where both
+
+exist, the decision to use Equation 6 or 7 versus 5 is made by determining the equilibrium
+separation distance (LEQ) between ramps. If the distance between ramps is greater than
+or equal to LEQ, Equation 5 is always used. If the distance between ramps is less than
+LEQ, Equation 6 or 7 is used as appropriate.
+
+  LEQ is that distance for which Equation 5 and Equation 6 or 7, as appropriate, yields
+the same value for PFD. Thus, where an adjacent upstream on-ramp exists, Equation 6
+must be considered. If Equation 6 is set equal to Equation 5, the following relationship is
+
+derived as Equation 25-8.
+
+  LEQ = vU  (25-8)
+  0. 2337 + 0.000076vF − 0.00025vR
+
+where  = equilibrium distance when Equation 5 is set equal to Equation 6, from
+  LEQ  Exhibit 25-12 (m)
+
+and where all variables are as previously defined. If Lup ≥ LEQ, Equation 5 is used. If
+Lup < LEQ, Equation 6 is employed.
+
+  A similar analysis is conducted where an adjacent downstream off-ramp exists.
+
+Equation 25-9 is used for the analysis.
+
+  LEQ = v D  (25-9)
+  3.79 − 0.00011vF − 0.00121vR
+
+where  = equilibrium distance when Equation 5 is set equal to Equation 7, from
+  LEQ  Exhibit 25-12 (m).
+
+In this case, if the distance to the downstream off-ramp is greater than or equal to LEQ
+(Ldown ≥ LEQ), Equation 5 is used. If Ldown < LEQ, Equation 7 is used.
+
+  A special case exists when both a downstream adjacent off-ramp and an upstream
+adjacent on-ramp exist. In such cases, two solutions for PFD may arise, depending on
+whether the analysis considers the upstream or the downstream adjacent ramp since both
+
+cannot be considered simultaneously. In such cases, the analysis resulting in the largest
+value of PFD is applied.
+
+  25-13  Chapter 25 - Ramps and Ramp Junctions
+  Methodology
+Highway Capacity Manual 2000
+
+Three capacities are to  Determining Capacity
+be checked:
+  The three limiting values that should be checked in a diverge area are the total flow
+• Total flow that can  that can depart from the diverge, the capacities of the departing freeway leg or legs or
+depart,  ramp, or both, and the maximum flow that can enter on Lanes 1 and 2 just prior to the
+  deceleration lane.
+• Maximum flow in
+Lanes 1 and 2 just prior  In a diverge area, the total flow that can depart is generally limited by the capacity of
+to the deceleration lane,  freeway lanes approaching the diverge. In all appropriate diverge designs, the number of
+and  lanes leaving the diverge area is either equal to or one greater than the number entering.
+  This flow (vF) is as previously defined. Exhibit 25-14 lists capacity values for this flow.
+• Maximum flow on both
+downstream legs
+
+  EXHIBIT 25-14. CAPACITY VALUES FOR DIVERGE AREAS
+
+  Freeway Free-Flow  Maximum Upstream, vFI or Downstream Freeway Flow, v  Max Flow Entering
+  Speed (km/h)  (pc/h)  Influence Area, v12 (pc/h)
+
+  120  Number of Lanes in One Direction  4400
+  110  4400
+  100  2  3  4  > 4  4400
+  90  4400
+  4800  7200  9600  2400/ln
+
+  4700  7050  9400  2350/ln
+
+  4600  6900  9200  2300/ln
+
+  4500  6750  9000  2250/ln
+
+  Note:
+  For capacity of off-ramp roadways, see Exhibit 25-3.
+
+  The second limit is most important, since it is the primary reason that diverge areas
+  fail. Failure at a diverge is often related to the capacity of one of the exit legs, most often
+  the ramp. The capacity of each exit leg must be checked against the expected flow. For
+  a downstream freeway leg (at a major diverge area there may be two of these), capacity
+  values may be drawn from Exhibit 25-14 for the appropriate number of freeway lanes.
+  For off-ramp roadways, capacity values are provided in Exhibit 25-3.
+
+  The flow entering Lanes 1 and 2 just upstream of the deceleration lane is simply the
+  flow in Lanes 1 and 2 (v12), estimated as indicated in Exhibit 25-12. This flow includes
+  the off-ramp flow. Exhibit 25-14 lists maximum desirable values for v12.
+
+  Failure of the diverge segment (LOS F) is expected if any one of the following
+  conditions is found:
+
+  • Capacity of the upstream freeway segment is exceeded by total arriving demand
+  flow,
+
+  • Capacity of the downstream freeway segment is exceeded by the demand flow
+  proceeding on the downstream freeway, or
+
+  • Capacity of the off-ramp is exceeded by the off-ramp demand flow.
+  When the total flow approaching the diverge influence area (v12) exceeds its maximum
+  desirable level but total demand flows are within all other capacity values, some locally
+  high densities would be expected, but stable flow is still maintained. In such cases, it is
+  likely that more vehicles will use outer lanes than is indicated by this methodology. LOS
+  is determined by estimating the density in the ramp influence area, as indicated herein.
+
+  Determining LOS
+
+  LOS criteria for diverge areas are based on density in the diverge influence area.
+
+  The numeric criteria are the same as those for merge areas, as shown previously in
+
+  Exhibit 25-4.
+
+  Equation 25-10 is used to estimate density within the diverge influence area.
+
+  DR = 2.642 + 0.0053v12 – 0.0183LD  (25-10)
+
+  where  = density of diverge influence area (pc/km/ln),
+  DR
+
+Chapter 25 - Ramps and Ramp Junctions  25-14
+Methodology
+  Highway Capacity Manual 2000
+
+  v12 = flow rate entering ramp influence area (pc/h), and
+  LD = length of deceleration lane (m).
+
+  As was the case for merge areas, the equation predicting density in the segment
+(Equation 25-10) applies only to undersaturated flow conditions. Density is not
+computed when capacity is exceeded. Thus, when demand flows exceed the capacity of
+the approaching freeway segment or either the departing freeway segment or segments or
+the ramp, LOS F is automatically applied. For all other cases, including those in which
+the maximum flow is entering the ramp influence area (v12), the density is computed
+using Equation 25-10, and LOS is determined using the criteria of Exhibit 25-4.
+
+Special Cases
+
+  As was the case for merge areas, there are a number of other diverge configurations
+and geometries that do not conform to the single-lane, right-hand off-ramp case. These
+are handled as special cases, with modifications or additions to the basic analysis
+procedure to more accurately address these configurations.
+
+Two-Lane Off-Ramps
+
+  Two common types of diverge designs are in use with two-lane, right-hand off-
+ramps. These are shown in Exhibit 25-15. In the first, two successive deceleration lanes
+are introduced. In the second, a single deceleration lane is used. The left-hand ramp lane
+splits from Lane 1 of the freeway at the gore area, without a deceleration lane. The
+existence of a two-lane off-ramp affects the lane distribution of approaching vehicles and
+thus the computation of v12.
+
+  EXHIBIT 25-15. COMMON GEOMETRIES FOR TWO-LANE OFF-RAMPS
+
+  450 m
+
+  VF V12 V Influence Area FO
+
+LD2  LD1  VR
+
+  450 m
+VF V12 Influence Area VFO
+
+  LD  VR
+
+  The general equation for computing v12 in a diverge area remains the same as that
+shown in Exhibit 25-12:
+
+  v12 = vR + (vF – vR) PFD
+
+However, rather than using the standard equations of Exhibit 25-12, PFD for two-lane off-
+ramps is found as follows:
+
+  • Four-lane freeways, PFD = 1.000;
+  • Six-lane freeways, PFD = 0.450; and
+  • Eight-lane freeways, PFD = 0.260.
+
+  25-15  Chapter 25 - Ramps and Ramp Junctions
+  Methodology
+Highway Capacity Manual 2000
+
+To estimate the density in the diverge influence area, Equation 25-10 is used.
+
+However, when the geometry of the two-lane off-ramp is similar to that shown in the top
+
+part of Exhibit 25-15, the length of the deceleration lane is replaced in the equation by the
+effective length, LDeff (Equation 25-11).
+
+  LDeff = 2LD1 + LD2  (25-11)
+
+When the geometry is similar to that shown in the bottom part of Exhibit 25-15, the
+length of the deceleration lane is used without modification.
+
+  The capacity values associated with a two-lane off-ramp are the same as those
+associated with a one-lane off-ramp. That is, the capacity for total flow through the
+diverge is unchanged. However, its distribution is more flexible, since the two-lane off-
+ramp can accommodate more ramp traffic than a single-lane off-ramp.
+
+Lane Drops
+
+  When a single-lane off-ramp results in a lane drop, the capacity of the ramp is
+governed by its geometry, and it is analyzed as a ramp roadway. When a two-lane off-
+ramp results in a lane drop, it should be treated as a major diverge segment.
+
+  When a lane drop occurs 750 m or less from a merge point at which a lane was
+added, a weaving configuration is created and should be analyzed using the procedures of
+Chapter 24. In all other cases, the entering and departing freeway segments are analyzed
+as basic freeway segments having different numbers of lanes.
+
+Major Diverge Areas
+
+  The two common geometries for major diverge areas are illustrated in Exhibits 25-16
+and 25-17. In Exhibit 25-16, the number of lanes entering the diverge area is the same as
+the number of lanes leaving the diverge area. In Exhibit 25-17, the number of lanes
+leaving the diverge area is one more than the number entering the segment.
+
+EXHIBIT 25-16. MAJOR DIVERGE AREA WITH EQUAL NUMBER OF LANES ENTERING AND LEAVING
+  INFLUENCE AREA
+
+EXHIBIT 25-17. MAJOR DIVERGE AREA WITH MORE LANES LEAVING THAN ENTERING INFLUENCE AREA
+
+  The principal analysis of a major diverge area involves the capacity of entering and
+departing roadways, all of which are generally built to mainline standards. The entering
+demand and the departing demand on each exit leg must be checked against the capacity
+
+Chapter 25 - Ramps and Ramp Junctions  25-16
+Methodology
+  Highway Capacity Manual 2000
+
+of the appropriate entry or departure leg. Equation 25-12 allows the density across all
+freeway lanes to be estimated for a distance of 450 m upstream of the gore area.
+
+D = 0.0109 vF  (25-12)
+  N
+
+where
+  D = average density across all freeway lanes for a distance of 450 m
+
+  upstream of diverge (pc/km/ln),
+  vF = freeway flow rate approaching diverge area (pc/h/ln), and
+  N = number of lanes on freeway segment approaching diverge area.
+
+  This density can be compared with the LOS criteria in Exhibit 25-4 to determine the
+LOS in the diverge area.
+
+Off-Ramps on Ten-Lane Freeways (Five Lanes in One Direction)
+
+  Segments of freeway exist in some urban areas in which there are five lanes in each
+direction. For off-ramps that must be analyzed on such sections, a special approach,
+similar to that for on-ramps, is employed. The flow in the fifth lane, v5, is estimated
+using the criteria of Exhibit 25-18. The remaining four lanes then have a flow equal to
+
+  vF4eff = vF – v5
+
+as was the case for on-ramps (see Equation 25-7) on five-lane segments. The ramp is
+then analyzed as if it were on an eight-lane freeway (four lanes in one direction), using
+standard procedures and vF4eff as vF.
+
+  This special procedure applies only to single-lane, right-hand off-ramps on five-lane
+segments.
+
+EXHIBIT 25-18. FLOW IN LANE 5 OF FREEWAY APPROACHING SINGLE-LANE, RIGHT-HAND OFF-RAMP
+
+Total Approaching Freeway Flow, vF (pc/h)  Flow in Lane 5, v5 (pc/h)
+  ≥ 7,000
+  5,500–6,999  0.200vF
+  4,000–5,499  0.150vF
+  < 4,000  0.100vF
+  0
+
+Left-Hand Off-Ramps
+
+  Left-hand off-ramps do exist along some freeway segments. In this case, the ramp
+influence area involves the two leftmost lanes of the freeway, not Lanes 1 and 2, except
+in the case of a four-lane freeway, where Lanes 1 and 2 make up the rightmost and
+leftmost lanes of the freeway.
+
+  To analyze such situations, v12 is estimated using the standard procedures of Exhibit
+25-12. The flow in the two leftmost lanes entering the diverge influence area is then
+estimated by multiplying the v12 value by 1.00, 1.05, or 1.10 for left-hand ramps on four-,
+six-, or eight-lane freeways, respectively.
+
+  Remaining computations for density, speed, or both may continue, replacing v12 with
+v23 or v34 as appropriate. All capacity values remain unchanged.
+
+OVERLAPPING RAMP INFLUENCE AREAS
+
+  Whenever a series of ramps on a freeway is analyzed, it is possible that the 450-m
+ramp influence areas overlap. In such cases, the operation in the overlapping region is
+determined by the ramp having the highest density.
+
+  25-17  Chapter 25 - Ramps and Ramp Junctions
+  Methodology
+Highway Capacity Manual 2000
+
+Speeds of vehicles  DETERMINING SPEED AT RAMP INFLUENCE AREAS
+outside the ramp
+influence area are  To address freeway and multifacility LOS, it is necessary to predict average speeds
+affected by merge and  on long segments of a facility. Thus, it is useful to provide models for estimating average
+diverge operations  speeds within ramp influence areas and on lanes outside the influence area (Lanes 3 and
+  4, where they exist) within the length of the 450-m ramp influence area. From such
+The equations apply to  estimates, a space mean speed can be estimated for all vehicles traveling within the
+undersaturated  450-m length of the ramp influence area on all lanes of the freeway.
+conditions but with per-
+lane flows well above  Note that this procedure reflects field observations that the average speeds of
+accepted levels at merge  vehicles outside the ramp influence area are also affected by merge and diverge
+  operations. Thus, it is not appropriate to assume that the speeds of vehicles in those outer
+  lanes are the same as those on basic freeway segments for similar per-lane flow rates. In
+  general, speeds in outer lanes in the vicinity of ramps will be somewhat reduced
+  compared with speeds for similar flow levels on basic freeway segments, except when
+  flow rates in those lanes are very low.
+
+  Exhibit 25-19 provides equations for estimating these speeds. Note that speeds can
+  be estimated only for stable flow cases. Capacity analysis for freeway facilities operating
+  with oversaturated flow conditions relies on deterministic queuing approaches, as
+  presented in Chapter 22.
+
+  The equations for average speed in outer lanes reflect average per-lane flow rates of
+  up to 2,988 veh/h/ln for merge areas and 2,350 veh/h/ln for diverge areas. In the case of
+  merge lanes, this flow rate is well above the accepted average capacity of a freeway lane.
+  Note, however, that freeway capacity per lane is always stated as an average across all
+  lanes and that individual lanes will carry proportionally less or more flow. In merge and
+  diverge areas, through vehicles tend to move left to avoid turbulence, resulting in cases
+  where outer lanes are very heavily loaded compared with lanes within the ramp influence
+  area (i.e., Lanes 1 and 2). Thus, even such high flow rates represent stable flow cases that
+  have been observed in the field.
+
+  EXHIBIT 25-19. AVERAGE SPEEDS IN VICINITY OF FREEWAY-RAMP TERMINALS
+
+  Merge areas  Average Speed in Ramp Influence Area  Average Speed in Outer Lanes of
+  (on-ramps)  (km/h)  Ramp Influence Area (km/h)
+
+  Diverge areas  SR = SFF – (SFF – 67)Ms  SO = SFF
+  (off-ramps)  Ms = 0.321 + 0.0039 e( vR12/1000) – 0.004(LASFR/1000)  where vOA < 500 pc/h
+
+  SR = SFF – (SFF – 67)Ds  SO = SFF - 0.0058(vOA – 500)
+  Ds = 0.883 + 0.00009vR – 0.008SFR  where vOA = 500 to 2300 pc/h
+
+  SO = SFF – 10.52 – 0.01(vOA – 2300)
+  where vOA > 2300 pc/h
+
+  SO = 1.06SFF
+  where vOA < 1000 pc/h
+
+  SO = 1.06SFF – 0.0062(vOA – 1000)
+  where vOA ≥ 1000 pc/h
+
+  The variables used in Exhibit 25-19 are defined as follows:
+  SR = space mean speed of vehicles within ramp influence area (km/h); for
+  merge areas, this includes all vehicles in vR12; for diverge areas, this
+  includes all vehicles in v12;
+  SO = space mean speed of vehicles traveling in outer lanes (Lanes 3 and 4,
+
+  where they exist) within 450-m length range of ramp influence area
+
+  (km/h);
+  SFF = free-flow speed of freeway approaching merge or diverge area (km/h);
+  SFR = free-flow speed of ramp (km/h);
+  LA = length of acceleration lane (m);
+
+Chapter 25 - Ramps and Ramp Junctions  25-18
+Methodology
+  Highway Capacity Manual 2000
+
+  vR = flow rate on ramp (pc/h);
+vR12 = sum of flow rates for ramp (vR) and vehicles entering ramp influence
+
+  area in Lanes 1 and 2 (v12) at a merge area (pc/h);
+vOA = average per-lane flow rate in outer lanes (Lanes 3 and 4, where they
+
+  exist) at beginning of ramp influence area (pc/h/ln);
+ Ms = intermediate speed determination variable for merge area; and
+  Ds = intermediate speed determination variable for diverge area.
+
+  The average per-lane flow rate in outer lanes (vOA) is found according to Equation
+25-13.
+
+  vOA = vF − v12  (25-13)
+  NO
+
+where  = average per-lane demand flow in outer lanes (pc/h/ln),
+  vOA  = number of outside lanes in one direction (not including acceleration or
+  NO
+  deceleration lanes or Lanes 1 and 2),
+  vF  = total approaching freeway flow rate (pc/h), and
+  v12  = demand flow rate approaching ramp influence area (pc/h).
+
+  Once SR and SO are determined, the space mean speed for all vehicles within the
+450-m length range of the ramp influence area may be computed as the harmonic mean of
+the two according to Equation 25-14 for merge areas or Equation 25-15 for diverge areas.
+
+  S = vR12 + vOANO  (25-14)
+   vR12   vOANO 
+    +  
+   SR   SO 
+
+  S = v12 + vOANO  (25-15)
+   v12   vOANO 
+    +  
+   SR   SO 
+
+  Note that for merge areas, the average speed in outer lanes never exceeds the free-
+flow speed of the freeway. For diverge areas, at low flow rates in the outer lanes, average
+speeds may marginally exceed free-flow speed. Again, free-flow speed reflects the
+average speed of freeway vehicles under conditions of low flow, and average speeds in
+individual lanes may exceed the average or be less than the average. However, in all
+cases, the maximum prediction of the average speed, S, should be limited to the free-flow
+speed of the freeway. Thus, the average speed on the freeway in the vicinity of a ramp
+will never be predicted to be higher than the free-flow speed of the facility.
+
+  III. APPLICATIONS  Guidelines for required inputs
+  and estimated values are in
+  The methodology of this chapter can be used to analyze the capacity and LOS of  Chapter 13
+ramps and ramp junctions. First, the analyst identifies primary output. Primary outputs
+typically solved for in a variety of applications include LOS, length of acceleration and
+deceleration lanes (LA, LD), and number of ramp lanes (N). Performance measures
+related to density (D) and speed (S) are also achievable but are considered secondary
+outputs.
+
+  25-19  Chapter 25 - Ramps and Ramp Junctions
+  Methodology
+Highway Capacity Manual 2000
+
+Operational (LOS)  Second, the analyst must identify the default values or estimated values for use in the
+  analysis. The analyst has three basic sources of input data: (a) default values found in
+Design (LA, LD, or N)  this manual, (b) estimates and locally derived default values developed by the analyst,
+  and (c) values derived from field measurements and observation. For each of the input
+Planning (LOS)  variables, a value must be supplied to calculate the outputs, both primary and secondary.
+Planning (LA, LD, or N)
+  A common application of the method is to compute the LOS of an existing facility or
+  of a changed facility in the near term or distant future. This type of application is termed
+  operational, and its primary output is LOS, with secondary outputs for density and speed.
+  Another application is to check the adequacy or to recommend the required number of
+  ramp lanes or acceleration and deceleration lane length given the volume or flow rate and
+  LOS goal. This application is termed design since its primary output is a geometric
+  attribute. Other outputs from this application include speed and density.
+
+  Another general type of analysis is termed planning. These analyses use estimates,
+  HCM default values, and local default values as inputs in the calculation. As outputs,
+  LOS, number of lanes, and length of acceleration or deceleration lane can be determined,
+  along with the secondary outputs of density and speed. The difference between planning
+  analysis and operational or design analysis is that most or all of the input values in
+  planning come from estimates or default values, whereas operational and design analyses
+  tend to use field measurements or known values. Note that for each of the analyses, free-
+  flow speed of the mainline and ramp, either measured or estimated, is required as an input
+  for the computation.
+
+  COMPUTATIONAL STEPS
+
+  The worksheet for computations is shown in Exhibit 25-20. For all applications, the
+  analyst provides general information and site information.
+
+  For operational analysis (LOS), both the geometry and demand volumes must be
+  fully specified. A sketch of the geometry of the ramp is entered into the upper portion of
+  the worksheet. All demand volumes are specified in mixed vehicles per hour for the full
+  hour under consideration and must be converted to flow rates (for the peak 15 min of the
+  hour) in passenger cars per hour under equivalent base conditions. Then the flow rate of
+  freeway vehicles remaining in Lanes 1 and 2 immediately upstream of the merge point or
+  at the beginning of the deceleration lane is computed. Once v12 is estimated, this value
+  can be combined with known values of vF and vR to find the checkpoint flow rates
+  needed to compare with the capacity values. If the operations are undersaturated, the
+  expected density in the ramp influence area is computed and LOS is determined by
+  comparing the resultant density with LOS criteria of Exhibit 25-4. If speeds are desired
+  as a secondary output or required for other analyses, they may be estimated.
+
+  Design (LA, LD, or N) analysis is used to establish the required number of lanes or
+  acceleration or deceleration lane length in a design application. The key to this
+  application is the establishment of design hourly volumes and the desired LOS. All other
+  input parameters are entered on the worksheet (see Exhibit 25-20) and assumed geometric
+  features are noted. Then the analyst follows the same procedure described in the
+  operational (LOS) application to determine LOS. The estimated LOS is compared with
+  the desired LOS. This process is repeated by increasing or decreasing the attribute or
+  attributes of a geometric feature until the estimated LOS matches or is better than the
+  desired LOS.
+
+  PLANNING APPLICATIONS
+
+  For the two planning applications, planning (LOS) and planning (LA, LD, or N),
+  procedures correspond directly to procedures described for the operational (LOS) and
+  design (LA, LD, or N) analyses in the previous section, respectively.
+
+Chapter 25 - Ramps and Ramp Junctions  25-20
+Applications
+  Highway Capacity Manual 2000
+
+  EXHIBIT 25-20. RAMPS AND RAMP JUNCTIONS WORKSHEET
+
+  RAMPS AND RAMP JUNCTIONS WORKSHEET
+
+General Information  Site Information
+
+Analyst  _________________________  Freeway/Direction of Travel  ___________________________
+Agency or company  _________________________  Junction  ___________________________
+Date Performed  _________________________  Jurisdiction  ___________________________
+Analysis Time Period  _________________________  Analysis Year  ___________________________
+
+ Operational (LOS)   Design (LA, LD, or N)   Planning (LOS)   Planning (LA, LD, or N)
+
+Inputs
+
+  Terrain __________
+
+Upstream Adjacent Ramp  Downstream Adjacent Ramp
+
+ Yes   On   Yes   On
+
+ No   Off   No   Off
+
+Lup = ___________ m  Ldown = _________ m
+
+Vu = ___________veh/h  VD = __________veh/h
+
+  SFF = __________ km/h  SFR = __________ km/h
+
+  Sketch (show lanes, LA, LD, vR, vF)
+
+Conversion to pc/h Under Base Conditions
+
+(pc/h) AADT  K  D  V  PHF  % HV  fHV  fp v = V PHF fHV fp
+  (veh/day)  (veh/h)
+
+vF
+
+vR
+
+vU
+
+vD
+
+  Merge Areas  Diverge Areas
+
+Estimation of v12  Estimation of v12
+  v12 = vF * PFM  v12 = vR + (vF – vR)PFD
+
+LEQ =  _________(Equation 25-2 or 25-3)  LEQ = _________ (Equation 25-8 or 25-9)
+PFM =  _________ using Equation ________ (Exhibit 25-5)  PFD = _________ using Equation ________ (Exhibit 25-12)
+v12 =  _________ pc/h  v12 = _________ pc/h
+
+Capacity Checks  Maximum  LOS F?  Capacity Checks  Actual  Maximum  LOS F?
+  Actual  See Exhibit 25-7  See Exhibit 25-14
+  vFl = vF  4400: All
+vFO  v12  See Exhibit 25-14
+  vFO = vF – vR  See Exhibit 25-3
+vR12  4600: All  vR
+
+Level-of-Service Determination (if not F)  Level-of-Service Determination (if not F)
+
+  DR = 3.402 + 0.00456 vR + 0.0048 v12 – 0.01278 LA  DR = 2.642 + 0.0053 v12 – 0.0183 LD
+DR = _______________________ pc/km/ln  DR = ___________________________ pc/km/ln
+LOS = _______________________(Exhibit 25-4)  LOS = __________________________ (Exhibit 25-4)
+
+Speed Estimation  Speed Estimation
+Ms = ___________________ (Exhibit 25-19)  Ds = ______________________ (Exhibit 25-19)
+SR = ___________________ km/h (Exhibit 25-19)  SR = ______________________ km/h (Exhibit 25-19)
+SO = ___________________ km/h (Exhibit 25-19)  SO = ______________________ km/h (Exhibit 25-19)
+S = ___________________ km/h (Equation 25-14)  S = ______________________ km/h (Equation 25-15)
+
+  The first criterion that categorizes these as planning applications is the use of
+estimates, HCM default values, or local default values on the input side of the calculation.
+Another factor that defines a given application as planning is the use of annual average
+daily traffic (AADT) to estimate directional design-hour volume (DDHV). DDHV is
+calculated using a known or forecast value of K (proportion of AADT occurring during
+the peak hour) and D. Further guidelines for computing DDHV are given in Chapter 8.
+
+  In order to perform planning applications, the analyst typically has few, if any, of the
+required input values. Chapter 13 contains more on the use of default values.
+
+  25-21  Chapter 25 - Ramps and Ramp Junctions
+  Applications
+Highway Capacity Manual 2000
+
+  ANALYSIS TOOLS
+  The worksheet shown in Exhibit 25-20 and provided in Appendix A can be used to
+
+  perform operational (LOS), planning (LOS), design (LA, LD, or N,) and planning (LA,
+  LD, or N) analyses.
+
+Chapter 25 - Ramps and Ramp Junctions  25-22
+Applications
+  Highway Capacity Manual 2000
+
+Problem  IV. EXAMPLE PROBLEMS  Application
+  No.
+  Description  Operational (LOS)
+  1  Operational (LOS)
+  2  Determine LOS, density, and expected speed of an isolated on-ramp  Operational (LOS)
+  3  Determine LOS, density, and expected speed of two consecutive off-ramps  Operational (LOS)
+  4  Determine LOS, density, and expected speed of on-ramp, off-ramp pair  Operational (LOS)
+  5  Determine LOS, density, and expected speed of a two-lane on-ramp  Operational (LOS)
+  6  Determine LOS, density, and expected speed of an off-ramp
+  Determine LOS, density, and expected speed of a left-side on-ramp
+
+  25-23  Chapter 25 - Ramps and Ramp Junctions
+  Example Problems
+Highway Capacity Manual 2000
+
+  EXAMPLE PROBLEM 1
+
+The Ramp  An isolated on-ramp (single lane) to a four-lane freeway.
+
+The Question What is the LOS during the peak hour?
+
+The Facts  √ One-lane ramp,
+  √ Isolated location,  √ Level terrain,
+  √ Two-lane (in one direction) freeway  √ Adequate lateral clearances,
+  segment,  √ FFS = 100 km/h for freeway,
+  √ 3.6-m lane width on freeway,  √ 5 percent trucks on ramp,
+  √ 0 percent RVs,  √ Freeway volume = 2,500 veh/h,
+  √ Ramp volume = 550 veh/h,  √ PHF = 0.90, and
+  √ 10 percent trucks on freeway,  √ Drivers are regular commuters.
+  √ Acceleration lane length = 225 m,
+  √ FFS = 70 km/h for ramp,
+
+Comments
+  √ Use Chapter 23, “Basic Freeway Segments,” to identify fHV and fp.
+
+Outline of Solution  All input parameters are known; thus no default values are
+
+required. Demand volumes will be converted to flow rates. Capacity will then be checked.
+
+The density in the merge influence area will be calculated and LOS determined.
+
+Steps  v= V
+1. Convert volume (veh/h) to flow  (PHF)(fHV)(fp)
+
+  rate (pc/h) (use Equation 25-1).  vF = 2,500 = = 2,918 pc/h
+  (0.90)(0.952)(1.000)
+1a. Determine fp (use Chapter 23).  550
+1b. Determine fHV (use Chapter 23).
+  vR = (0.90)(0.976)(1.000) = 626 pc/h
+2. Compute v12 (use Exhibit 25-5,  For both ramp and freeway, fp = 1.000
+  PFM = 1.000).
+  1
+3. Check capacity of downstream  fHV = 1 + PT(ET – 1) + PR(ER – 1)
+  segment (Exhibit 25-7 shows
+  4,600 pc/h).  1
+  fHV (fwy) = 1 + 0.10(1.5 – 1) = 0.952
+4. Check maximum flow entering
+  influence area (Exhibit 25-7  1
+  shows 4,600 pc/h).  fHV (ramp) = 1 + 0.05(1.5 – 1) = 0.976
+  v12 = vF * PFM = 2,918 * 1.000 = 2,918 pc/h
+5. Compute density (use Equation
+  25-5).  vFO = vF + vR
+  vFO = 2,918 + 626 = 3,544 pc/h
+6. Compute merge area speed as  vR12 = 3,544 pc/h
+  supplemental information (use
+  Exhibit 25-19).  DR = 3.402 + 0.00456vR + 0.0048v12 – 0.01278LA
+  DR = 3.402 + 0.00456(626) + 0.0048(2918) – 0.01278(225)
+7. Determine LOS (use Exhibit  = 17.4 pc/km/ln
+  25-4).  SR = SFF – (SFF – 67)Ms
+  Ms = 0.321 + 0.0039e(3544/1000) – 0.004(225 * 70/1000) =
+  0.393
+  SR = 100 – (100 – 67)(0.393) = 87.0 km/h
+  S = SR = 87.0 km/h
+  LOS D
+
+Chapter 25 - Ramps and Ramp Junctions  25-24
+Example Problems
+  Highway Capacity Manual 2000
+
+The Results This on-ramp merge influence area will provide LOS D during the peak
+hour. The merge area density will be 17.4 pc/km/ln, and the speed in the merge area is
+estimated as 87 km/h.
+
+  Example Problem 1
+
+  RAMPS AND RAMP JUNCTIONS WORKSHEET
+
+General Information  Site Information
+
+Analyst  ________R_P_R_______________  Freeway/Direction of Travel  ________I-_1 __________________
+Agency or company  ________P_o_ly_______________  Junction  ________R_a_m_p__#_1_____________
+Date Performed  _________________________  Jurisdiction  ___________________________
+Analysis Time Period  ________P_M__P_e_a_k___________  Analysis Year  ________19_9__9________________
+
+X Operational (LOS)   Design (LA, LD, or N)   Planning (LOS)   Planning (LA, LD, or N)
+
+Inputs
+
+Upstream Adjacent Ramp  Terrain ___L_e_ve_l____  Downstream Adjacent Ramp
+
+ Yes   On  2500 veh/h  7.2 m   Yes   On
+  10% Trucks
+
+X No   Off  X No   Off
+
+Lup = ___________ m  550 veh/h  225 m  Ldown = _________ m
+Vu = ___________veh/h  5% Trucks  VD = __________veh/h
+
+  SFF = ____10_0_____ km/h  SFR = ____7_0_____ km/h
+
+  Sketch (show lanes, LA, LD, vR, vF)
+
+Conversion to pc/h Under Base Conditions
+
+(pc/h) AADT  K  D  V  PHF  % HV  fHV  fp  v= V
+  (veh/day)  (veh/h)  PHF fHV fp
+  1.000  2918
+vF  2500  0.90  10  0.952  1.000  626
+
+vR  550  0.90  5  0.976
+
+vU
+
+vD
+
+  Merge Areas  Diverge Areas
+
+Estimation of v12  Estimation of v12
+  v12 = vF * PFM  v12 = vR + (vF – vR)PFD
+
+LEQ =  _________(Equation 25-2 or 25-3)  LEQ = _________ (Equation 25-8 or 25-9)
+PFM =  ___1_.0_0__0__ using Equation ________ (Exhibit 25-5)  PFD = _________ using Equation ________ (Exhibit 25-12)
+v12 =  ___2_9_1_8___ pc/h  v12 = _________ pc/h
+
+Capacity Checks  Maximum  LOS F?  Capacity Checks  Actual  Maximum  LOS F?
+  Actual  See Exhibit 25-7  No  See Exhibit 25-14
+  vFl = vF  4400: All
+vFO  3544  v12  See Exhibit 25-14
+  vFO = vF – vR  See Exhibit 25-3
+vR12  3544  4600: All  No  vR
+
+Level-of-Service Determination (if not F)  Level-of-Service Determination (if not F)
+
+  DR = 3.402 + 0.00456 vR + 0.0048 v12 – 0.01278 LA  DR = 2.642 + 0.0053 v12 – 0.0183 LD
+DR = ___________1_7_.4__________ pc/km/ln  DR = ___________________________ pc/km/ln
+LOS = ___________D____________(Exhibit 25-4)  LOS = __________________________ (Exhibit 25-4)
+
+Speed Estimation  Speed Estimation
+Ms = _______0__.3_9_3________ (Exhibit 25-19)  Ds = ______________________ (Exhibit 25-19)
+SR = _______8__7._0_________ km/h (Exhibit 25-19)  SR = ______________________ km/h (Exhibit 25-19)
+SO = ___________________ km/h (Exhibit 25-19)  SO = ______________________ km/h (Exhibit 25-19)
+S = _______8__7._0_________ km/h (Equation 25-14)  S = ______________________ km/h (Equation 25-15)
+
+  25-25  Chapter 25 - Ramps and Ramp Junctions
+  Example Problems
+Highway Capacity Manual 2000
+
+  EXAMPLE PROBLEM 2 (PART I)
+
+The Ramp An off-ramp (single-lane) pair, 225 m apart, from a six-lane freeway. The
+length of the first deceleration lane is 150 m and that of the second deceleration lane is
+90 m.
+
+The Question What is the LOS during the peak hour for the first off-ramp?
+
+The Facts  √ Three-lane (in one direction)
+  √ One-lane off-ramps,  freeway segment,
+  √ FFS = 100 km/h for freeway,
+  √ Rolling terrain,  √ 5 percent trucks on freeway and
+  √ PHF = 0.95,  off-ramps,
+  √ 0 percent RVs,
+  √ Drivers are regular commuters,  √ Freeway volume = 4,500 veh/h, and
+  √ FFS = 60 km/h for first off-ramp,  √ First off-ramp volume = 300 veh/h.
+
+Comments
+  √ Use Chapter 23, “Basic Freeway Segments,” to identify fHV and fp.
+
+Outline of Solution All input parameters are known; thus no default values are
+required. Demand volumes will be converted to flow rates. Capacity will then be checked.
+The density in the diverge influence area will be calculated and LOS determined.
+Computations for the first ramp are shown below.
+
+Steps  v= V
+1. Convert volume (veh/h) to flow rate (pc/h)  (PHF)(fHV)(fp)
+
+  (use Equation 25-1).  vF = 4,500 = 5,093 pc/h
+  (0.95)(0.930)(1.000)
+1a. Determine fp (use Chapter 23).  300
+1b. Determine fHV (use Chapter 23).
+  vR1 = (0.95)(0.930)(1.000) = 340 pc/h
+2. Compute v12 (use Exhibit 25-12).  For ramps and freeway, fp = 1.000
+
+2a. Decide on which equation to use,  1
+  Equation 5 or 7 (use Equation 25-9).  fHV = 1 + PT(ET – 1) + PR(ER – 1)
+
+2b. Compute PFD (use Exhibit 25-12).  1
+  fHV (fwy and ramps) = 1 + 0.05(2.5 – 1) = 0.930
+3. Check capacity of upstream segment  v12 = vR + (vF – vR)PFD
+  (Exhibit 25-14 shows 6,900 pc/h).  v12 = 340 + (5,093 – 340)(0.617) = 3,273 pc/h
+  LEQ = 566 = 201m
+4. Check maximum flow entering diverge
+  influence area (Exhibit 25-14 shows 4,400  3.79 − 0.00011(5093) − 0.00121(340)
+  pc/h).  225 m > 201 m (Ldown > LEQ); use Equation 5
+  PFD = 0.760 – 0.000025vF – 0.000046vR
+5. Check capacity of downstream segment  PFD = 0.760 – 0.000025(5,093) – 0.000046(340) =
+  (Exhibit 25-14 shows 6,900 pc/h).  0.617
+  vF = 5,093 pc/h
+6. Check capacity of off-ramp (use Exhibit
+  25-3, 2,000 pc/h).  v12 = 3,273 pc/h
+
+7. Compute density (use Equation 25-10).  vFO = vF – vR
+  vFO = 5,093 – 340 = 4,753 pc/h
+8. Compute speeds as supplemental  vR = 340 pc/h
+  information (use Exhibit 25-19 and
+  Equations 25-13 and 25-15).  DR = 2.642 + 0.0053v12 – 0.0183LD
+  DR = 2.642 + 0.0053(3273) – 0.0183(150) =
+  17.2 pc/km/ln
+  SR = SFF – (SFF – 67)Ds
+  Ds = 0.883 + 0.00009(340) – 0.008(60) = 0.434
+  SR = 100 – (100 – 67)(0.434) = 85.7 km/h
+  vOA = (vF – v12)/NO = (5,093 – 3,273)/1 = 1,820 pc/h
+
+Chapter 25 - Ramps and Ramp Junctions  25-26
+Example Problems
+  Highway Capacity Manual 2000
+
+8. (continued)  SO = 1.06SFF – 0.0062(vOA – 1000)
+9. Determine LOS (use Exhibit 25-4).  SO = 1.06(100) – 0.0062(1820 – 1000) = 100.9 km/h
+
+  S = 3273 + (1820)(1) = 90.6 km/h
+   3273   1820(1) 
+     +  
+   85.7   100.9 
+
+  LOS D
+
+The Results The first off-ramp diverge influence area will provide LOS D with a
+diverge influence area speed of 86 km/h, system speed of 91 km/h, and density of 17.2
+pc/km/ln.
+
+  Example Problem 2 (Part I)
+
+  RAMPS AND RAMP JUNCTIONS WORKSHEET
+
+General Information  Site Information
+
+Analyst  _______J_M__U_______________  Freeway/Direction of Travel  _______I-_2___________________
+Agency or company  _______P_o_ly________________  Junction  _______R_a_m_p__#_1______________
+Date Performed  _________________________  Jurisdiction  ___________________________
+Analysis Time Period  _______A__M__Pe_a_k____________  Analysis Year  _______19__9_9_________________
+
+X Operational (LOS)   Design (LA, LD, or N)   Planning (LOS)   Planning (LA, LD, or N)
+
+Inputs
+
+Upstream Adjacent Ramp  Terrain __R__ol_li_n_g___  Downstream Adjacent Ramp
+  4500 veh/h
+ Yes   On  5% Trucks  10.8 m  X Yes   On
+
+X No   Off   No  X Off
+
+Lup = ___________ m  150 m  300 veh/h  Ldown = _2_2_5______ m
+Vu = ___________veh/h  5% Trucks  VD = _5_0_0_______veh/h
+
+  SFF = ___1_0_0_____ km/h  SFR = ____6_0_____ km/h
+
+  Sketch (show lanes, LA, LD, vR, vF)
+
+Conversion to pc/h Under Base Conditions
+
+(pc/h) AADT  K  D  V  PHF  % HV  fHV  fp  v= V
+  (veh/day)  (veh/h)  PHF fHV fp
+  1.000
+vF  4500  0.95  5  0.930  1.000  5093
+  -  340
+vR  300  0.95  5  0.930  1.000  -
+  566
+vU  -  -  -  -
+
+vD  500  0.95  5  0.930
+
+  Merge Areas  Diverge Areas
+
+Estimation of v12  Estimation of v12
+  v12 = vF * PFM  v12 = vR + (vF – vR)PFD
+
+LEQ =  _________(Equation 25-2 or 25-3)  LEQ = __2_0_1_____ (Equation 25-8 or 25-9)
+PFM =  _________ using Equation ________ (Exhibit 25-5)  PFD = __0_._6_17____ using Equation ____5____ (Exhibit 25-12)
+v12 =  _________ pc/h  v12 = __3_2_7_3____ pc/h
+
+Capacity Checks  Capacity Checks
+  Actual
+  Maximum  LOS F?  Actual  Maximum  LOS F?
+vFO  See Exhibit 25-7  See Exhibit 25-14
+  vFl = vF  5093  4400: All  No
+vR12  4600: All  v12  3273  See Exhibit 25-14  No
+  vFO = vF – vR  4753  See Exhibit 25-3  No
+  vR  340  No
+
+Level-of-Service Determination (if not F)  Level-of-Service Determination (if not F)
+
+  DR = 3.402 + 0.00456 vR + 0.0048 v12 – 0.01278 LA  DR = 2.642 + 0.0053 v12 – 0.0183 LD
+DR = _______________________ pc/km/ln  DR = ___________17_._2_____________pc/km/ln
+LOS = _______________________(Exhibit 25-4)  LOS = ___________D_______________ (Exhibit 25-4)
+
+Speed Estimation  Speed Estimation
+Ms = ___________________ (Exhibit 25-19)  Ds = ________0_.4__3_4__________ (Exhibit 25-19)
+SR = ___________________ km/h (Exhibit 25-19)  SR = ________8_5_._7___________ km/h (Exhibit 25-19)
+SO = ___________________ km/h (Exhibit 25-19)  SO = ________10__0_.9___________ km/h (Exhibit 25-19)
+S = ___________________ km/h (Equation 25-14)  S = ________9_0_._6___________ km/h (Equation 25-15)
+
+  25-27  Chapter 25 - Ramps and Ramp Junctions
+  Example Problems
+Highway Capacity Manual 2000
+
+  EXAMPLE PROBLEM 2 (PART II)
+
+The Ramp  An off-ramp (single-lane) pair, 225 m apart, from a six-lane freeway.
+
+The length of the first deceleration lane is 150 m and that of the second deceleration lane
+
+is 90 m.
+
+The Question What is the LOS during the peak hour for the second off-ramp?
+
+Additional Facts
+  √ Second off-ramp volume = 500 veh/h, and
+  √ FFS = 40 km/h for second off-ramp.
+
+Comments
+  √ Use Chapter 23, “Basic Freeway Segments,” to identify fHV and fp.
+
+Outline of Solution All input parameters are known; thus no default values are
+required. Demand volumes will be converted to flow rates. Capacity will then be checked.
+The density in the diverge area will be calculated and LOS determined. Computations for
+the second ramp are summarized below.
+
+Steps  v= V
+1. Convert volume (veh/h) to flow  (PHF)(fHV)(fp)
+
+  rate (pc/h) (use Equation 25-1).  vF = 5,093 – 340 = 4,753 pc/h
+  500
+2. Compute v12 (use Exhibit 25-12).
+  vR2 = (0.95)(0.930)(1.000) = 566 pc/h
+2a. Compute PFD (use Exhibit 25-12).
+  v12 = vR + (vF – vR)PFD
+3. Check capacity of upstream  v12 = 566 + (4,753 – 566)(0.615) = 3,141 pc/h
+  segment (Exhibit 25-14 shows  PFD = 0.760 – 0.000025vF – 0.000046vR
+  6,900 pc/h).  PFD = 0.760 – 0.000025(4,753) – 0.000046(566) = 0.615
+  vF = 4,753 pc/h
+4. Check maximum flow entering
+  diverge influence area (Exhibit  v12 = 3,141 pc/h
+  25-14 shows 4,400 pc/h).
+  vFO = vF – vR
+5. Check capacity of downstream  vFO = 4,753 – 566 = 4,187 pc/h
+  segment (Exhibit 25-14 shows
+  6,900 pc/h).  vR = 566 pc/h
+
+6. Check capacity of off-ramp (use  DR = 2.642 + 0.0053v12 – 0.0183LD
+  Exhibit 25-3, 1,900 pc/h).  DR = 2.642 + 0.0053(3141) – 0.0183(90) = 17.6 pc/km/ln
+
+7. Compute density (use Equation  SR = SFF – (SFF – 67)Ds
+  25-10).  Ds = 0.883 + 0.00009(566) – 0.008(40) = 0.614
+  SR = 100 – (100 – 67)(0.614) = 79.7 km/h
+8. Compute speeds as supplemental  vOA = (vF – v12)/NO = (4,753 – 3,141)/1 = 1,612 pc/h
+  information (use Exhibit 25-19 and  SO = 1.06SFF – 0.0062(vOA – 1000)
+  Equations 25-13 and 25-15).  SO = 1.06(100) – 0.0062(1612 – 1000) = 102.2 km/h
+
+9. Determine LOS (use Exhibit 25-4).  S = 3141+ 1612(1) = 86.1 km/h
+   3141  1612(1) 
+    +  
+   79.7   102.2 
+
+  LOS D
+
+Chapter 25 - Ramps and Ramp Junctions  25-28
+Example Problems
+  Highway Capacity Manual 2000
+
+The Results The second off-ramp diverge influence area will provide LOS D with a
+diverge influence area speed of 80 km/h, system speed of 86 km/h, and density of 17.6
+pc/km/ln.
+
+  Example Problem 2 (Part II)
+
+  RAMPS AND RAMP JUNCTIONS WORKSHEET
+
+General Information  Site Information
+
+Analyst  ________J_M_U_______________  Freeway/Direction of Travel  _______I-_2___________________
+Agency or company  ________P_o_ly_______________  Junction  _______R_a_m__p_#_2______________
+Date Performed  _________________________  Jurisdiction  ___________________________
+Analysis Time Period  ________A_M__P_e_a_k___________  Analysis Year  _______1_9_9_9_________________
+
+X Operational (LOS)   Design (LA, LD, or N)   Planning (LOS)   Planning (LA, LD, or N)
+
+Inputs
+
+Upstream Adjacent Ramp  Terrain __R_o_l_li_n_g___  Downstream Adjacent Ramp
+  4200 veh/h
+X Yes   On  5% Trucks  10.8 m   Yes   On
+
+ No  X Off  X No   Off
+
+Lup = ____2_2_5_____ m  90 m  500 veh/h  Ldown = _________ m
+Vu = ____3_0_0_____veh/h
+  5% Trucks  VD = __________veh/h
+
+  SFF = ___1_0_0_____ km/h  SFR = ___4_0______ km/h
+
+  Sketch (show lanes, LA, LD, vR, vF)
+
+Conversion to pc/h Under Base Conditions
+
+(pc/h) AADT  K  D  V  PHF  % HV  fHV  fp  v= V
+  (veh/day)  (veh/h)  PHF fHV fp
+  1.000
+vF  1.000  4753
+  -  566
+vR  500  0.95  5  0.930  340
+  -
+vU  300  0.95  5  0.930
+
+vD  -  -  -  -
+
+  Merge Areas  Diverge Areas
+
+Estimation of v12  Estimation of v12
+  v12 = vF * PFM  v12 = vR + (vF – vR)PFD
+
+LEQ =  _________(Equation 25-2 or 25-3)  LEQ = _________ (Equation 25-8 or 25-9)
+PFM =  _________ using Equation ________ (Exhibit 25-5)  PFD = __0_._6_1_5___ using Equation _____5___ (Exhibit 25-12)
+v12 =  _________ pc/h  v12 = __3_1_4_1____ pc/h
+
+Capacity Checks  Capacity Checks
+  Actual
+  Maximum  LOS F?  Actual  Maximum  LOS F?
+vFO  See Exhibit 25-7  See Exhibit 25-14
+  vFl = vF  4753  4400: All  No
+vR12  4600: All  v12  3141  See Exhibit 25-14  No
+  vFO = vF – vR  4187  See Exhibit 25-3  No
+  vR  566  No
+
+Level-of-Service Determination (if not F)  Level-of-Service Determination (if not F)
+
+  DR = 3.402 + 0.00456 vR + 0.0048 v12 – 0.01278 LA  DR = 2.642 + 0.0053 v12 – 0.0183 LD
+DR = _______________________ pc/km/ln  DR = __________1_7_.6_______________ pc/km/ln
+LOS = _______________________(Exhibit 25-4)  LOS = _________D_________________ (Exhibit 25-4)
+
+Speed Estimation  Speed Estimation
+Ms = ___________________ (Exhibit 25-19)  Ds = _______0__.6_1_4___________ (Exhibit 25-19)
+SR = ___________________ km/h (Exhibit 25-19)  SR = _______7_9__.7____________ km/h (Exhibit 25-19)
+SO = ___________________ km/h (Exhibit 25-19)  SO = _______1_0_2_._2___________ km/h (Exhibit 25-19)
+S = ___________________ km/h (Equation 25-14)  S = _______8__6_.1____________ km/h (Equation 25-15)
+
+  25-29  Chapter 25 - Ramps and Ramp Junctions
+  Example Problems
+Highway Capacity Manual 2000
+
+  EXAMPLE PROBLEM 3 (PART I)
+
+The Ramp  An on-ramp and off-ramp (single-lane) pair, 400 m apart, to an eight-
+
+lane freeway. The length of both the acceleration and deceleration lanes is 80 m.
+
+The Question  What is the LOS during the peak hour for the on-ramp merge influence
+area?
+
+The Facts  √ Four-lane (in one direction)
+  √ One-lane on- and off-ramps,  freeway segment,
+  √ Level terrain,
+  √ 3.6-m lane width on freeway,  √ 10 percent trucks on freeway,
+  √ PHF = 0.90,  √ 5 percent trucks on on-ramp,
+  √ Freeway volume = 5,500 veh/h,  √ 0 percent RVs,
+  √ FFS = 50 km/h for on-ramp,  √ On-ramp volume = 400 veh/h, and
+  √ FFS = 100 km/h for freeway,  √ Drivers are regular commuters.
+
+Comments
+  √ Use Chapter 23, “Basic Freeway Segments,” to identify fHV and fp.
+
+Outline of Solution All input parameters are known; thus no default values are
+required. Demand volumes will be converted to flow rates. Capacity will then be checked.
+The density in the merge influence area will be calculated and LOS determined.
+
+Steps  v= V
+1. Convert volume (veh/h) to flow  (PHF)(fHV)(fp)
+
+  rate (pc/h) (use Equation 25-1).  vF = 5,500 = 6,419 pc/h
+  (0.90)(0.952)(1.000)
+1a. Determine fHV (use Chapter 23).
+  400
+2. Compute v12 (use Exhibit 25-5).  vR1 = (0.90)(0.976)(1.000) = 455 pc/h
+2a. Compute PFM (use Exhibit 25-5).
+3. Check capacity of downstream  1
+  fHV = 1 + PT(ET – 1) + PR(ER – 1)
+  segment (Exhibit 25-7 shows
+  9,200 pc/h).  1
+4. Check maximum flow entering  fHV (fwy) = 1 + 0.10(1.5 – 1) = 0.952
+  merge influence area (Exhibit 25-7
+  shows 4,600 pc/h).  1
+5. Compute density (use Equation  fHV (on-ramp) = 1 + 0.05(1.5 – 1) = 0.976
+  25-5).
+6. Compute speeds as supplemental  v12 = vF * PFM = 6,419 * 0.255 = 1,637 pc/h
+  information (use Exhibit 25-19  PFM = 0.2178 – 0.000125vR + 0.05887 LA/SFR
+  and Equations 25-13 and 25-14).  PFM = 0.2178 – 0.000125(455) + 0.05887(80/50) = 0.255
+  vFO = 6,419 + 455 = 6,874 pc/h
+7. Determine LOS (use Exhibit 25-4).
+  vR12 = 1,637 + 455 = 2,092 pc/h
+
+  DR = 3.402 + 0.00456vR + 0.0048v12 – 0.01278LA
+  DR = 3.402 + 0.00456(455) + 0.0048(1637) – 0.01278(80) =
+  12.3 pc/km/ln
+
+  SR = SFF – (SFF – 67)Ms
+  Ms = 0.321 + 0.0039e(2092/1000) – 0.004(80 * 50/1000) = 0.337
+  SR = 100 – (100 – 67)(0.337) = 88.9 km/h
+  vOA = (vF – v12)/NO = (6,419 – 1,637)/2 = 2,391 pc/h
+  SO = SFF – 10.52 - 0.01(vOA – 2300)
+  SO = 100 – 10.52 – 0.01(2391 – 2300) = 88.6 km/h
+
+  S = 2092 + 2391(2) = 88.7 km/h
+   2092   2391* 2 
+     +  
+   88.9   88.6 
+
+  LOS C
+
+Chapter 25 - Ramps and Ramp Junctions  25-30
+Example Problems
+  Highway Capacity Manual 2000
+
+The Results This on-ramp merge influence area will provide LOS C with a merge
+influence area speed of 89 km/h, system speed of 89 km/h, and density of 12.3 pc/km/ln.
+
+  Example Problem 3 (Part I)
+
+  RAMPS AND RAMP JUNCTIONS WORKSHEET
+
+General Information  Site Information
+
+Analyst  _______M__M_U_______________  Freeway/Direction of Travel  ________I-_3__________________
+Agency or company  _______U_N_C________________  Junction  ________R_a_m__p_#_1_____________
+Date Performed  _________________________  Jurisdiction  ___________________________
+Analysis Time Period  _______P_M__P_e_a_k____________  Analysis Year  ________1_9_9_9________________
+
+X Operational (LOS)   Design (LA, LD, or N)   Planning (LOS)   Planning (LA, LD, or N)
+
+Inputs
+
+Upstream Adjacent Ramp  Terrain ___L_ev_e_l____  Downstream Adjacent Ramp
+  5500 veh/h
+ Yes   On  10% Trucks  14.4 m  X Yes   On
+
+X No   Off   No  X Off
+
+400 veh/h Lup = ___________ m 80 m  Ldown = __4_0_0_____ m
+Vu = ___________veh/h  5% Trucks  VD = _6__0_0______veh/h
+
+  SFF = ___1_0_0_____ km/h  SFR = ____5_0_____ km/h
+
+  Sketch (show lanes, LA, LD, vR, vF)
+
+Conversion to pc/h Under Base Conditions
+
+(pc/h) AADT  K  D  V  PHF  % HV  fHV  fp  v= V
+  (veh/day)  (veh/h)  PHF fHV fp
+  1.000
+vF  5500  0.90  10  0.952  1.000  6419
+  400  0.90  -  455
+vR  -  -  5  0.976  1.000  -
+  600  0.90  700
+vU  -  -
+
+vD  10  0.952
+
+  Merge Areas  Diverge Areas
+
+Estimation of v12  Estimation of v12
+  v12 = vF * PFM  v12 = vR + (vF – vR)PFD
+
+LEQ =  _________(Equation 25-2 or 25-3)  LEQ = _________ (Equation 25-8 or 25-9)
+PFM =  __0_._2_5_5___ using Equation ____4____ (Exhibit 25-5)  PFD = _________ using Equation ________ (Exhibit 25-12)
+v12 =  __1_6_3_7____ pc/h  v12 = _________ pc/h
+
+Capacity Checks  Maximum  LOS F?  Capacity Checks  Actual  Maximum  LOS F?
+  Actual  See Exhibit 25-14
+  vFl = vF  4400: All
+vFO 6874 See Exhibit 25-7 No  v12  See Exhibit 25-14
+  vFO = vF – vR  See Exhibit 25-3
+vR12  2092  4600: All  No  vR
+
+Level-of-Service Determination (if not F)  Level-of-Service Determination (if not F)
+
+  DR = 3.402 + 0.00456 vR + 0.0048 v12 – 0.01278 LA  DR = 2.642 + 0.0053 v12 – 0.0183 LD
+DR = ________12_._3_____________ pc/km/ln  DR = ___________________________ pc/km/ln
+LOS = ________C_______________(Exhibit 25-4)  LOS = __________________________ (Exhibit 25-4)
+
+Speed Estimation  Speed Estimation
+Ms = _______0_._3_3_7________ (Exhibit 25-19)  Ds = ______________________ (Exhibit 25-19)
+SR = _______8_8_._9_________ km/h (Exhibit 25-19)  SR = ______________________ km/h (Exhibit 25-19)
+SO = _______8_8_._6_________ km/h (Exhibit 25-19)  SO = ______________________ km/h (Exhibit 25-19)
+S = _______8_8_._7_________ km/h (Equation 25-14)  S = ______________________ km/h (Equation 25-15)
+
+  25-31  Chapter 25 - Ramps and Ramp Junctions
+  Example Problems
+Highway Capacity Manual 2000
+
+  EXAMPLE PROBLEM 3 (PART II)
+
+The Ramp  An on-ramp and off-ramp (single-lane) pair, 400 m apart, to an eight-
+
+lane freeway. The length of acceleration and deceleration lanes is 80 m.
+
+The Question  What is the LOS of the off-ramp diverge influence area during the peak
+hour?
+
+Additional Facts  √ Off-ramp volume = 600 veh/h.
+  √ 10 percent trucks on off-ramp,
+  √ FFS = 40 km/h for off-ramp, and
+
+Comments
+  √ Use Chapter 23, “Basic Freeway Segments,” to identify fHV and fp.
+
+  √ Volume for freeway = 5,500 + 400 = 5,900 veh/h
+  √ % trucks on freeway = 5, 500(10) + 400(5) = 9.7%
+
+  5, 900
+
+Outline of Solution  All input parameters are known; thus no default values are
+
+required. Demand volumes will be converted to flow rates. Capacity will then be checked.
+
+The density in the diverge influence area will be calculated and LOS determined.
+
+Steps  v= V
+1. Convert volume (veh/h) to flow rate (pc/h)  (PHF)(fHV)(fp)
+
+  (use Equation 25-1).  vF = 5,900 = 6,872 pc/h
+  (0.90)(0.954)(1.000)
+1a. Determine fHV (use Chapter 23).  600
+
+2. Compute v12 (use Exhibit 25-12, PFD =  vR2 = (0.90)(0.952)(1.000) = 700 pc/h
+  0.436).  1
+
+3. Check capacity of upstream segment  fHV (fwy) = 1 + 0.097(1.5 – 1) = 0.954
+  (Exhibit 25-14 shows 9,200 pc/h).  1
+
+4. Check maximum flow entering diverge  fHV (off-ramp) = 1 + 0.10(1.5 – 1) = 0.952
+  influence area (Exhibit 25-14 shows 4,400  v12 = vR + (vF – vR)PFD
+  pc/h).  v12 = 700 + (6,872 – 700)(0.436) = 3,391 pc/h
+  vF = 6,872 pc/h
+5. Check capacity of downstream segment
+  (Exhibit 25-14 shows 9,200 pc/h).  v12 = 3,391 pc/h
+
+6. Check capacity of off-ramp (use Exhibit  vFO = 6,872 – 700 = 6,172 pc/h
+  25-3, 1,900 pc/h).
+  vR2 = 700 pc/h
+7. Compute density (use Equation 25-10).
+  DR = 2.642 + 0.0053v12 – 0.0183LD
+8. Compute speeds as supplemental  DR = 2.642 + 0.0053(3391) – 0.0183(80)
+  information (use Exhibit 25-19 and  DR = 19.2 pc/km/ln
+  Equations 25-13 and 25-15).
+  SR = SFF – (SFF – 67)Ds
+9. Determine LOS (use Exhibit 25-4).  Ds = 0.883 + 0.00009(700) – 0.008(40) = 0.626
+  SR = 100 – (100 – 67)(0.626) = 79.3 km/h
+  vOA = (vF – v12)/NO = (6,872 – 3,391)/2 = 1,741 pc/h
+  SO = 1.06SFF – 0.0062(vOA – 1000)
+  SO = 1.06(100) – 0.0062(1741 – 1000) = 101.4 km/h
+
+  S = 3391+ 1741(2) = 89.1 km/h
+   3391  1741* 2 
+    +  
+   79.3   101.4 
+
+  LOS D
+
+Chapter 25 - Ramps and Ramp Junctions  25-32
+Example Problems
+  Highway Capacity Manual 2000
+
+The Results The off-ramp diverge influence area will provide LOS D with a diverge
+influence area speed of 79 km/h, system speed of 89 km/h, and density of 19.2 pc/km/ln.
+
+  Example Problem 3 (Part II)
+
+  RAMPS AND RAMP JUNCTIONS WORKSHEET
+
+General Information  Site Information
+
+Analyst  ________M__M_U______________  Freeway/Direction of Travel  _______I-_3___________________
+Agency or company  ________U_N__C______________  Junction  _______R_a_m_p__#_2______________
+Date Performed  _________________________  Jurisdiction  ___________________________
+Analysis Time Period  ________P_M__P_e_a_k___________  Analysis Year  _______19__9_9_________________
+
+X Operational (LOS)   Design (LA, LD, or N)   Planning (LOS)   Planning (LA, LD, or N)
+
+Inputs
+
+  Terrain  __L_e_v_e_l ___
+
+Upstream Adjacent Ramp  5900 veh/h  Downstream Adjacent Ramp
+  9.7% Trucks
+X Yes  X On  14.4 m   Yes   On
+
+ No   Off  X No   Off
+
+Lup = ____4_0_0_____ m  Ldown = _________ m
+Vu = ____4_0_0_____veh/h
+  80 m  600 veh/h  VD = __________veh/h
+
+  10% Trucks
+
+  SFF = __1_0_0_____ km/h  SFR = ___4__0_____ km/h
+
+  Sketch (show lanes, LA, LD, vR, vF)
+
+Conversion to pc/h Under Base Conditions
+
+(pc/h) AADT  K  D  V  PHF  % HV  fHV  fp  v= V
+  (veh/day)  (veh/h)  PHF fHV fp
+  1.000
+vF  5900  0.90  9.7  0.954  1.000  6872
+  1.000  700
+vR  600  0.90  10  0.952  -  455
+  -
+vU  400  0.90  5  0.976
+
+vD  -  -  -  -
+
+  Merge Areas  Diverge Areas
+
+Estimation of v12  Estimation of v12
+  v12 = vF * PFM  v12 = vR + (vF – vR)PFD
+
+LEQ =  _________(Equation 25-2 or 25-3)  LEQ = _________ (Equation 25-8 or 25-9)
+PFM =  _________ using Equation ________ (Exhibit 25-5)  PFD = _0__.4_3_6____ using Equation ___8_____ (Exhibit 25-12)
+v12 =  _________ pc/h  v12 = _3__3_9_1____ pc/h
+
+Capacity Checks  Capacity Checks
+  Actual
+  Maximum  LOS F?  Actual  Maximum  LOS F?
+vFO  See Exhibit 25-7  See Exhibit 25-14
+  vFl = vF  6872  4400: All  No
+vR12  4600: All  v12  3391  See Exhibit 25-14  No
+  vFO = vF – vR  6172  See Exhibit 25-3  No
+  vR  700  No
+
+Level-of-Service Determination (if not F)  Level-of-Service Determination (if not F)
+
+  DR = 3.402 + 0.00456 vR + 0.0048 v12 – 0.01278 LA  DR = 2.642 + 0.0053 v12 – 0.0183 LD
+DR = _______________________ pc/km/ln  DR = ___________1_9_.2______________ pc/km/ln
+LOS = _______________________(Exhibit 25-4)  LOS = __________D________________ (Exhibit 25-4)
+
+Speed Estimation  Speed Estimation
+Ms = ___________________ (Exhibit 25-19)  Ds = ________0_.6_2__6__________ (Exhibit 25-19)
+SR = ___________________ km/h (Exhibit 25-19)  SR = ________79__.3____________ km/h (Exhibit 25-19)
+SO = ___________________ km/h (Exhibit 25-19)  SO = ________10_1_.4____________ km/h (Exhibit 25-19)
+S = ___________________ km/h (Equation 25-14)  S = ________8_9_.1____________ km/h (Equation 25-15)
+
+  25-33  Chapter 25 - Ramps and Ramp Junctions
+  Example Problems
+Highway Capacity Manual 2000
+
+  EXAMPLE PROBLEM 4
+
+The Ramp  A two-lane on-ramp to a six-lane freeway. The length of the outer
+
+acceleration lane is 150 m and that of the inner acceleration lane is 270 m.
+
+The Question What is the LOS of this ramp during the peak hour?
+
+The Facts  √ Three-lane (in one direction)
+  √ Two-lane on-ramp,  freeway segment,
+  √ Level terrain,
+  √ 5 percent trucks on freeway and ramp,  √ Freeway volume = 3,000 veh/h,
+  √ 0 percent RVs,  √ On-ramp volume = 1,800 veh/h,
+  √ FFS = 80 km/h for ramp,  √ Drivers are regular commuters, and
+  √ PHF = 0.95,  √ FFS = 110 km/h for freeway.
+
+Comments
+  √ Use Chapter 23, “Basic Freeway Segments,” to identify fHV and fp.
+
+Outline of Solution All input parameters are known; thus no default values are
+required. Demand volumes will be converted to flow rates. Capacity will then be checked.
+The density in the merge influence area will be calculated and LOS determined.
+
+Steps  v= V
+1. Convert volume (veh/h) to flow rate (pc/h)  (PHF)(fHV)(fp)
+
+  (use Equation 25-1).  vF = 3,000 = 3,236 pc/h
+  (0.95)(0.976)(1.000)
+1a. Determine fHV (use Chapter 23).
+  vR = 1,800 = 1,941 pc/h
+2. Compute v12 (PFM = 0.555 for 2-lane ramp  (0.95)(0.976)(1.000)
+  on 6-lane fwy).  1
+
+3. Check capacity of downstream segment  fHV = 1 + PT(ET – 1) + PR(ER – 1)
+  (Exhibit 25-7 shows 7,050 pc/h).  1
+
+4. Check maximum flow entering merge  fHV (fwy and ramps) = 1 + 0.05(1.5 – 1)
+  influence area (Exhibit 25-7 shows 4,600  fHV (fwy and ramps) = 0.976
+  pc/h).  v12 = vF * PFM
+  v12 = 3,236 * 0.555 = 1,796 pc/h
+5. Compute density (use Equation 25-5).  vFO = 3,236 + 1,941 = 5,177 pc/h
+
+5a. Compute LAeff (use Equation 25-6).  vR12 = 1,796 + 1,941 = 3,737 pc/h
+
+6. Compute system speed as supplemental  DR = 3.402 + 0.00456vR + 0.0048v12 –
+  information (use Exhibit 25-19 and  0.01278LAeff
+  Equations 25-13 and 25-14).  DR = 3.402 + 0.00456 (1941) + 0.0048(1796) -
+  0.01278(420) = 15.5 pc/km/ln
+  LAeff = 2LA1 + LA2
+  LAeff = 2(150) + 120 = 420 m
+  SR = SFF – (SFF – 67)Ms
+  Ms = 0.321 + 0.0039e(3737/1000) – 0.004(420 *
+  80/1000) = 0.350
+  SR = 110 – (110 – 67)(0.350) = 95.0 km/h
+  vOA = (vF – v12)/NO = (3,236 – 1,796)/1 =
+  1,440 pc/h
+
+Chapter 25 - Ramps and Ramp Junctions  25-34
+Example Problems
+

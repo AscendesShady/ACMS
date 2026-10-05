@@ -1,0 +1,1605 @@
+  p(x)  SECTION 4.6 ■ The Hypergeometric Random Variable (Optional) 249
+
+.50  We verified this calculation using statistical software. The probability .166667, shaded
+  on the MINITAB printout, Figure 4.15, agrees with our answer.
+.40
+  Figure 4.15
+.30  MINITAB Output
+  for Example 4.15
+.20
+  Look Back The entire probability distribution for x is shown in Figure 4.16. The mean
+.10  m = 1.2 and the interval m { 2s = 1 -.3, 2.72 are indicated. You can see that if this
+  random variable were to be observed over and over again a large number of times, most
+  x  of the values of x would fall within the interval m { 2s.
+  0123
+  ■ Now Work Exercise 4.116d
+  µ
+  2σ 2σ
+Figure 4.16
+Probability distribution for x in
+Example 4.15
+
+Statistics IN Action Revisited Using the Hypergeometric Model to Solve the Cocaine
+  Sting Case
+
+The reverse cocaine sting case described on p. 213 and solved  x = 4 is the number of suc-
+in Section 4.4 can also be solved by applying the hypergeo-  cesses (cocaine pack-
+metric distribution. In fact, the probabilities obtained with the  ets) in the sample
+hypergeometric distribution are exact probabilities, compared
+with the approximate probabilities obtained with the bino-  Substituting into the for-
+mial distribution.  mula for p1x2 (on p. 248), we
+  obtain
+  Our objective, you will recall, is to find the probability that
+4 packets (randomly selected from 496 packets confiscated in  a 331b a 165b a 331! b a 165! b
+a drug bust) will contain cocaine and 2 packets (randomly se-  P1x = 42 = p142 = 4  0  4!327! 0!165!
+lected from the remaining 492) will not contain cocaine. We
+assumed that, of the 496 original packets, 331 contained co-  a 496 b  =  a 496! b
+caine and 165 contained an inert (legal) powder. Since we are
+sampling without replacement from the 496 packets, the prob-  4  4!492!
+ability of a success (i.e., the probability of a packet contain-
+ing cocaine) does not remain exactly the same from trial to  = .197
+trial. For example, for the first randomly selected packet, the
+probability of a success is 331>496 = .66734. If we find that  To find the probability that 2 packets randomly selected
+the first 3 packets selected contain cocaine, the probability of  from the remaining 492 will test negative for cocaine, assum-
+success for the 4th packet selected is now 328>493 = .66531.  ing that the first 4 packets tested positive, we identify the pa-
+You can see that these probabilities are not exactly the same.  rameters of the relevant hypergeometric distribution:
+Hence, the binomial distribution will only approximate the
+distribution of x, the number of packets that contain cocaine  N = 492 is the total number of packets in the population
+in a sample of size n.  S = 327 is the number of successes (cocaine packets)
+
+  To find the probability that 4 packets randomly selected  in the population
+from the original 496 will test positive for cocaine under the  n = 2 is the sample size
+hypergeometric distribution, we first identify the parameters  x = 0 is the number of successes (cocaine packets)
+of the distribution:
+  in the sample
+N = 496 is the total number of packets in the population
+S = 331 is the number of successes (cocaine packets)  Again, we substitute into the formula for p1x2 (p. 248)
+  to obtain
+  in the population
+n = 4 is the sample size  a 327b a 165b a 327! b a 165! b
+  P1x = 02 = p102 = 0  2  0!327! 2!163!
+
+  a 492 b  =  a 492! b
+
+  2  2!490!
+
+  = .112
+
+  (Continued)
+250 CHAPTER 4 ■ Discrete Random Variables
+
+Statistics IN Action  By the multiplicative law  P 1first 4 positive and next 2 negative2 = 1.1972 1.1122
+  of probability, the probability  = .0221
+  (continued)  that the first 4 packets test pos-
+  Note that this exact probability is almost identical to the approx-
+  itive for cocaine and the next  imate probability computed with the binomial distribution in
+  Section 4.4.
+2 packets test negative is the product of the two probabili-
+
+ties just given:
+
+Exercises 4.107–4.127  probability distribution should you use to compute this
+  probability under the conditions listed here? Justify your
+Understanding the Principles  answers.
+  a. The sample is drawn without replacement.
+4.107 Explain the difference between sampling with replacement  b. The sample is drawn with replacement.
+  and sampling without replacement.
+  Applying the Concepts—Basic
+4.108 Give the characteristics of a hypergeometric distribution.
+4.109 How do binomial and hypergeometric random variables
+
+  differ? In what respects are they similar?
+
+Learning the Mechanics  4.116  Do social robots walk or roll? Refer to the International
+  Conference on Social Robotics (Vol. 6414, 2010) study
+4.110 Given that x is a hypergeometric random variable with  of the trend in the design of social robots, Exercise 4.25
+  N = 7, n = 3, and r = 4, compute the following:  (p. 221). The study found that of 106 social robots, 63 were
+  a. P1x = 12  built with legs only, 20 with wheels only, 8 with both legs
+  b. P1x = 02  and wheels, and 15 with neither legs nor wheels. Suppose
+  c. P1x = 32  you randomly select 10 of the 106 social robots and count
+  d. P1x = 42  the number, x, with neither legs nor wheels.
+  a. Demonstrate why the probability distribution for x should
+4.111 Given that x is a hypergeometric random variable, com-
+  pute p1x2 for each of the following cases:  not be approximated by the binomial distribution.
+  a. N = 6, n = 4, r = 4, x = 2  b. Show that the properties of the hypergeometric proba-
+  b. N = 10, n = 6, r = 4, x = 4
+  c. N = 3, n = 3, r = 3, x = 3  bility distribution are satisfied for this experiment.
+  d. N = 5, n = 3, r = 3, x = 1  c. Find m and s for the probability distribution for x.
+  d. Calculate the probability that x = 2.
+
+4.112  Given that x is a hypergeometric random variable with  4.117  Mail rooms contaminated with anthrax. In Chance (Spring
+  N = 5, n = 3, and r = 2:  2002), research statisticians discussed the problem of
+  a. Display the probability distribution for x in tabular form.  sampling mail rooms for the presence of anthrax spores.
+  b. Compute m and s for x.  Let x equal the number of mail rooms contaminated with
+  c. Graph p1x2, and locate m and the interval m { 2s on  anthrax spores in a random sample of 3 mail rooms se-
+  lected from a population of 100 mail rooms. If 20 of the
+  the graph.  100 mail rooms are contaminated with anthrax, research-
+  d. What is the probability that x will fall within the interval  ers showed that the probability distribution for x is given
+  by the formula
+  m { 2s?
+
+4.113  Given that x  is a hyper-geometric random variable with
+  6, and r = 4, find the following probabilities:
+  N = 10, n =  a20x b a 80 3 - xb
+  p1x2 = 100
+  a. P1x = 12
+  a3b
+  b. P1x = 32
+  c. P1x … 32  a. What is the name given to this probability distribution?
+  d. P1x Ú 32  b. Specify r, N, and n for this distribution.
+  e. P1x 6 22  c. Find p102.
+  f. P1x Ú 52  d. Find p112.
+  e. Find p122.
+4.114  Given that x is a hypergeometric random variable with  f. Find p132.
+  N = 6, n = 3, and r = 2:
+  a. Display the probability distribution for x in tabular form.  4.118  ESL students and plagiarism. Refer to the Journal of
+  b. Compute the mean and variance of x.  Education and Human Development (Vol. 3, 2009) investi-
+  c. Graph p1x2, and locate m and the interval m { 2s on  gation of plagiarism among English-as-a-second-language
+  (ESL) students, Exercise 3.30 (p. 159). Recall that of six
+  the graph.  ESL students taking a master’s course in linguistics, three
+  d. What is the probability that x will fall within the interval  admitted to plagiarizing on an essay. Two of these six stu-
+  dents will be selected to write an original article for the
+  m { 2s?
+
+4.115 Suppose you plan to sample 10 items from a population
+  of 120 items and would like to determine the probabil-
+  ity of observing 4 defective items in the sample. Which
+  SECTION 4.6 ■ The Hypergeometric Random Variable (Optional) 251
+
+  college newspaper. If the two students are selected at ran-  4.124  Cell phone handoff behavior. Refer to the Journal of
+  dom, what is the probability that at least one plagiarized on  Engineering, Computing and Architecture (Vol. 3., 2009)
+  the essay?  study of cell phone handoff behavior, Exercise 3.62 (p. 171).
+  Recall that a “handoff” describes the process of a cell phone
+4.119  On-site treatment of hazardous waste. The Resource  moving from one base channel (identified by a color code)
+  Conservation and Recovery Act mandates the tracking  to another. During a particular driving trip a cell phone
+  and disposal of hazardous waste produced at U.S. facilities.  changed channels (color codes) 85 times. Color code “b”
+  Professional Geographer (Feb. 2000) reported the hazard-  was accessed 40 times on the trip. You randomly select 7 of
+  ous-waste generation and disposal characteristics of 209  the 85 handoffs. How likely is it that the cell phone accesses
+  facilities. Only 8 of these facilities treated hazardous waste  color code “b” only twice for these 7 handoffs?
+  on-site.
+  a. In a random sample of 10 of the 209 facilities, what is  4.125  Establishing boundaries in academic engineering. How
+  academic engineers establish boundaries (e.g., differen-
+  the expected number in the sample that treat hazard-  tiating between engineers and other scientists, defining
+  ous waste on-site? Interpret this result.  the different disciplines within engineering, determining
+  b. Find the probability that 4 of the 10 selected facilities  the quality of journal publications) was investigated in
+  treat hazardous waste on-site.  Engineering Studies (Aug. 2012). Participants were 10 ten-
+  ured or tenure-earning engineering faculty members in a
+4.120  Guilt in decision making. Refer to the Journal of Behavioral  School of Engineering at a large research-oriented univer-
+  Decision Making (Jan. 2007) study of how guilty feelings  sity. The table gives a breakdown of the department affili-
+  impact decisions, Exercise 3.59 (p. 170). Recall that 57  ation of the engineers. Each participant was interviewed at
+  students were assigned to a guilty state through a reading/  length, and responses were used to establish boundaries.
+  writing task. Immediately after the task, the students were  Suppose we randomly select 3 participants from the orig-
+  presented with a decision problem where the stated option  inal 10 to form a university committee charged with de-
+  has predominantly negative features (e.g., spending money  veloping boundary guidelines. Let x represent the number
+  on repairing a very old car). Of these 57 students, 45 chose  of committee members who are from the Department of
+  the stated option. Suppose 10 of the 57 guilty-state stu-  Engineering Physics. Identify the probability distribution
+  dents are selected at random. Define x as the number in  for x, and give a formula for the distribution.
+  the sample of 10 who chose the stated option.
+  a. Find P1x = 52.  Department  Number of Participants
+  b. Find P1x = 82.
+  c. What is the expected value (mean) of x?  Chemical Engineering  1
+  Civil Engineering  2
+4.121  Contaminated gun cartridges. Refer to the investigation of  Engineering Physics  4
+  contaminated gun cartridges at a weapons manufacturer  Mechanical Engineering  2
+  presented in Exercise 4.33 (p. 222). In a sample of 160  Industrial Engineering  1
+  cartridges from a certain lot, 36 were found to be contam-
+  inated and 124 were “clean.” If you randomly select 7 of  Applying the Concepts—Advanced
+  these 160 cartridges, what is the probability that all 7 will be
+  “clean”?
+
+Applying the Concepts—Intermediate  4.126  Gender discrimination suit. The Journal of Business &
+  Economic Statistics (July 2000) presented a case in which a
+4.122  Lot inspection sampling. Imagine that you are purchasing  charge of gender discrimination was filed against the U.S.
+  small lots of a manufactured product. If it is very costly to  Postal Service. At the time, there were 302 U.S. Postal
+  test a single item, it may be desirable to test a sample of  Service employees (229 men and 73 women) who applied
+  items from the lot instead of testing every item in the lot.  for promotion. Of the 72 employees who were awarded pro-
+  Suppose each lot contains 15 items. You decide to sample  motion, 5 were female. Make an inference about whether or
+  8 items per lot and reject the lot if you observe 1 or more  not females at the U.S. Postal Service were promoted fairly.
+  defectives.
+  a. If the lot contains 1 defective item, what is the proba-  4.127  Awarding of home improvement grants. A community devel-
+  opment agency makes home improvement grants each year
+  bility that you will accept the lot?  to homeowners in depressed city neighborhoods. One year,
+  b. What is the probability that you will accept the lot if it  grants were awarded by the city council via a “random selec-
+  tion” of 142 homeowners’ applications from among a total of
+  contains 2 defective items?  750 applications: 603 from the north side, and 147 from the
+  south side, of the city. Oddly, all 142 grants awarded were
+4.123  Museum management. Refer to the Museum Mana-  from the north side—clearly a highly improbable outcome if,
+  gement and Curatorship (June 2010) study of the criteria  in fact, the 142 winners were randomly selected from among
+  used to evaluate museum performance, Exercise 3.28  the 750 applicants.
+  (p. 159). Recall that the managers of 30 leading museums  a. Suppose the 142 winning applications were randomly
+  of contemporary art were asked to provide the perfor-
+  mance measure used most often. Of these 30 museums,  selected from among the total of 750, and let x equal the
+  8 specified “total visitors” as the performance measure.  number in the sample from the north side. Find the mean
+  Consider a random sample of 5 museums selected from  and standard deviation of x.
+  the 30. How likely is it that none of the museums in the  b. Use the results of part a to support a contention that the
+  sample will specify “total visitors” as the performance  grant winners were not randomly selected.
+  measure?
+252 CHAPTER 4 ■ Discrete Random Variables
+
+CHAPTER NOTES  S  Outcome of binomial trial denoted “success”
+
+Key Terms  F  Outcome of binomial trial denoted “failure”
+
+Note: Starred (*) terms are from the optional sections in this chapter.  p  P(S) in binomial trial
+
+Binomial distribution 233  *Hypergeometric random  q  P(F) in binomial trial = 1 - p
+Binomial experiment 229  variable 247
+Binomial random variable 229  e  Constant used in Poisson probability distribution;
+Continuous random  Mean value of a discrete
+  random variable 224  e = 2.71828 c
+  variable 215
+Countable 215  *Poisson distribution 242  Key Ideas
+Cumulative binomial  *Poisson random variable 243
+  Probability distribution of a  Properties of Discrete Probability Distributions
+  probabilities 236  1. p1x2 Ú 0
+Discrete random variable 215  discrete random variable 218
+Expected value 224  Random variable 213  2. a p1x2 = 1
+*Hypergeometric probability  Standard deviation of a discrete
+  all x
+  distribution 247  random variable 226
+  Variance of a random variable 225
+
+Key Symbols
+
+p(x) Probability distribution for discrete random variable x
+f(x) Probability distribution for continuous random variable x
+
+Guide to Selecting a Discrete Probability Distribution
+
+  Type
+  of
+
+  Random
+  Variable
+
+  DISCRETE  CONTINUOUS
+  (Countable)  (Uncountable)
+
+  Binomial  Poisson  Hypergeometric  (see Chapter 5)
+x = # of S’s in n trials
+1. n identical trials  x = # times a rare  x = # of S’s in n trials
+2. 2 outcomes: S, F  event (S) occurs in a unit
+3. P(S) &P(F ) same  1. n elements drawn
+  1. P(S) remains constant  without replacement
+  across trials  across units  from N elements
+4. Trials independent
+  2. Unit x-values are  2. 2 outcomes: S, F
+  independent
+  Supplementary Exercises 4.128–4.160 253
+
+Key Formulas  Probability Distribution  Mean  Variance
+
+  Random Variable  Table, formula, or graph for p1x2  ax # p1x2  a 1x - m22 # p1x2
+  General Discrete:
+  Binomial:  p1x2 = a n b pxqn - x  all x  all x
+  Poisson:  x
+  np  npq
+  Hypergeometric:  lx e-l
+  p1x2 = x!  l  l
+
+  arxb aN - r n - x b  nr  r1N - r2 n1N - n2
+  p1x2 =  N  N2 1N - 12
+
+  aNb
+  x
+
+Supplementary Exercises 4.128–4.160
+
+Note: Starred (*) exercises refer to the optional sections in this chapter.  in light of the state’s current fiscal condition. Suppose
+  a poll of 2,000 registered voters is conducted to deter-
+Understanding the Principles  mine how many would favor a state income tax in light
+  of the state’s current fiscal condition. Let x be the num-
+4.128 Which of the following describe discrete random variables,  ber in the sample who would favor the tax.
+  and which describe continuous random variables?
+  a. The heights of rubber plants  Learning the Mechanics
+  b. The number of second-hand cars on sale
+  c. The number of flats decorated by an interior designer  4.131 Suppose x is a binomial random variable with n = 22 and
+  d. The number of non-vegetarian guests in a party  p = .8.
+  a. Find P1x = 162.
+4.129 Identify the type of random variable—binomial, Poisson,  b. Find P1x … 182.
+  or hypergeometric—described by each of the following  c. Find P1x 7 182.
+  probability distributions:  d. Find P112 … x … 162.
+  .5xe-.5  e. Find P115 6 x 6 202.
+  f. Find m, s2, and s.
+  *a. p1x2 = x! 1x = 0, 1, 2, p2  g. What is the probability that x is in the interval
+  m { 2s?
+  b. p1x2 = a 6 b 1.22x1.826 - x 1x = 0, 1, 2, p , 62
+  x  *4.132 Given that x is a hypergeometric random variable, com-
+  pute p1x2 for each of the following cases:
+  c. p1x2 = 10! x!110 - x2! 1.92x1.1210 - x  a. N = 9, n = 5, r = 4, x = 0
+  1x = 0, 1, 2, c, 102  b. N = 10, n = 6, r = 4, x = 3
+  c. N = 6, n = 3, r = 4, x = 3
+4.130  For each of the following examples, decide whether x is a
+  binomial random variable and explain your decision:  4.133 Suppose x is a binomial random variable. Find p1x2 for
+  a. A manufacturer of computer chips randomly selects  each of the following combinations of x, n, and p:
+  a. x = 1, n = 4, p = .2
+  200 chips from each hour’s production in order to es-  b. x = 4, n = 21, p = .4
+  timate the proportion of defectives. Let x represent the  c. x = 0, n = 4, p = .5
+  number of defectives in the 200 chips sampled.  d. x = 4, n = 6, p = .6
+  b. Of six applicants for a job, two will be selected.  e. n = 16, x = 12, p = .8
+  Although all applicants appear to be equally  f. n = 12, x = 8, p = .7
+  qualified, only four have the ability to fulfill the ex-
+  pectations of the company. Suppose that the two  4.134 Consider the discrete probability distribution shown here:
+  selections are made at random from the six appli-
+  cants, and let x be the number of qualified applicants  x  5  10  12  14
+  selected.  p1x2
+  c. The number of calls received at a fire service sta-  .2  .3  .1  .4
+  tion is denoted by x. Let x represent the number
+  of calls received on the hot line during a specified  a. Calculate m, s2, and s.
+  workday.  b. What is P1x 6 122?
+  d. In a state there are two types of voters, one who
+  favors the state income tax and the other who does not
+254 CHAPTER 4 ■ Discrete Random Variables
+
+  c. Calculate m { 2s.  4.139  Tracking missiles with satellite imagery. The Space-Based
+  d. What is the probability that x is in the interval  Infrared System (SBIRS) uses satellite imagery to detect
+  and track missiles (Chance, Summer 2005). The probability
+  m { 2s?  that an intruding object (e.g., a missile) will be detected on
+  a flight track by SBIRS is .8. Consider a sample of 20 simu-
+*4.135 Suppose x is a Poisson random variable. Compute p1x2 for  lated tracks, each with an intruding object. Let x equal the
+  each of the following cases:  number of these tracks on which SBIRS detects the object.
+  a. l = 3, x = 4  a. Demonstrate that x is (approximately) a binomial
+  b. l = 2, x = 3
+  c. l = 1.5, x = 2  random variable.
+  b. Give the values of p and n for the binomial
+Applying the Concepts—Basic
+  distribution.
+4.136 Use of laughing gas. According to the American Dental  c. Find P1x = 152, the probability that SBIRS will detect
+  Association, 60% of all dentists use nitrous oxide (“laugh-
+  ing gas”) in their practice. If x equals the number of dentists  the object on exactly 15 tracks.
+  in a random sample of five dentists who use laughing gas in  d. Find P1x Ú 152, the probability that SBIRS will detect
+  practice, then the probability distribution of x is
+  the object on at least 15 tracks.
+  e. Find E1x2 and interpret the result.
+
+  x  0  1  2  3  4  5  *4.140  Emergency rescue vehicle use. An emergency rescue vehicle
+  p1x2  .0102  .0768  .2304  .3456  .2592  .0778  is used an average of 1.4 times daily. Use the Poisson distri-
+  bution to find
+  a. Find the probability that the number of dentists using  a. The probability that the vehicle will be used exactly
+  laughing gas in the sample of five is less than unity.
+  twice tomorrow
+  b. Find E1x2 and interpret the result.  b. The probability that the vehicle will be used more than twice
+  c. Show that the distribution of x is binomial with n = 5  c. The probability that the vehicle will be used exactly
+
+  and p = .6.  three times
+
+  4.141  Married-women study. According to Women’s Day maga-
+  zine (Jan. 2007), 50% of married women would marry their
+4.137  Benford’s Law of Numbers. Refer to the American Scientist  current husbands again if given the chance. Consider the
+  (July–Aug. 1998) study of which integer is most likely to  number x in a random sample of 12 married women who
+  occur as the first significant digit in a randomly selected num-  would marry their husbands again. Identify the discrete
+  ber (Benford’s law), presented in Exercise 2.206 (p. 139).  probability distribution that best models the distribution of
+  The table giving the frequency of each integer selected as the  x. Explain.
+  first digit in a six-digit random number is reproduced here:
+
+  First Digit  Frequency of Occurrence  *4.142  Dutch elm disease. A nursery advertises that it has 12 elm
+  trees for sale. Unknown to the nursery, 4 of the trees have
+  1  109  already been infected with Dutch elm disease and will die
+  2  75  within a year.
+  3  77  a. If a buyer purchases two trees, what is the probability
+  4  99
+  5  72  that both trees will be healthy?
+  6  117  b. Refer to part a. What is the probability that at least 1 of
+  7  89
+  8  62  the trees is infected?
+  9  43
+  4.143  Dust mite allergies. A dust mite allergen level that exceeds
+  Total  743  2 micrograms per gram 1mg>g2 of dust has been associated
+  with the development of allergies. Consider a random sam-
+  a. Construct a probability distribution for the first signifi-  ple of four homes, and let x be the number of homes with a
+  cant digit x.  dust mite level that exceeds 2 mg>g. The probability distribu-
+  tion for x, based on a study, is shown in the following table:
+  b. Find E1x2.
+  c. If possible, give a practical interpretation of E1x2.  x  0  1  2  3  4
+
+  p(x)  .07  .31  .38  .17  .07
+
+4.138  Parents who condone spanking. According to a nationwide  a. Verify that the probabilities for x in the table sum to 1.
+  survey, 60% of parents with young children condone spank-  b. Find the probability that three or four of the homes
+  ing their child as a regular form of punishment (Tampa
+  Tribune, Oct. 5, 2000). Consider a random sample of four  in the sample have a dust mite level that exceeds
+  people, each of whom is a parent with young children.  2 mg>g.
+  Assume that x, the number in the sample who condone  c. Find the probability that fewer than two homes
+  spanking, is a binomial random variable.  in the sample have a dust mite level that exceeds
+  a. What is the probability that none of the four parents  2 mg>g.
+  d. Find E1x2. Give a meaningful interpretation of the
+  condones spanking as a regular form of punishment for  result.
+  their children?  e. Find s.
+  b. What is the probability that at least one condones  f. Find the exact probability that x is in the interval
+  spanking as a regular form of punishment?  m { 2s. Compare your answer with Chebyshev’s rule
+  c. Give the mean and standard deviation of x. Interpret  and the empirical rule.
+  the results.
+  Supplementary Exercises 4.128–4.160 255
+
+*4.144  Deep-draft vessel casualties. Economists at the University  4.150  Testing for spoiled wine. Suppose that you are purchasing
+  of New Mexico modeled the number of casualties (deaths  cases of wine (10 bottles per case) and that, periodically,
+  or missing persons) experienced by a deep-draft U.S.  you select a test case to determine the adequacy of the bot-
+  flag vessel over a three-year period as a Poisson random  tles’ seals. To do this, you randomly select and test 4 bot-
+  variable x. The researchers estimated E1x2 to be .03  tles in the case. If a case contains 1 spoiled bottle of wine,
+  (Management Science, Jan. 1999).  what is the probability that this bottle will turn up in your
+  a. Find the variance of x.  sample?
+  b. Discuss the conditions that would make the researchers’
+  *4.151  Vinyl chloride emissions. The Environmental Protection
+  Poisson assumption plausible.  Agency (EPA) limits the amount of vinyl chloride in plant
+  c. What is the probability that a deep-draft U.S. flag vessel  air emissions to no more than 10 parts per million. Suppose
+  the mean emission of vinyl chloride for a particular plant is
+  will have no casualties over a three-year period?  5 parts per million. Assume that the number x of parts per
+  million of vinyl chloride in air samples follows a Poisson
+4.145  Belief in an afterlife. A national poll conducted by The New  probability distribution.
+  a. What is the standard deviation of x for the plant?
+  York Times (May 7, 2000) revealed that 80% of Americans  b. Is it likely that a sample of air from the plant would
+
+  believe that after you die, some part of you lives on, either  yield a value of x that would exceed the EPA limit?
+  Explain.
+  in a next life on earth or in heaven. Consider a random
+  4.152  Countries that allow a free press. The degree to which
+  sample of 12 Americans and count x, the number who be-  democratic and nondemocratic countries attempt to con-
+  trol the news media was examined in the Journal of Peace
+  lieve in life after death.  Research (Nov. 1997). The article reported that 80% of all
+  democratic regimes allow a free press. In contrast, 10% of
+  a. Find P1x = 32.  all nondemocratic regimes allow a free press.
+  b. Find P1x … 72.  a. In a random sample of 50 democratic regimes, how
+  c. Find P1x 7 42.
+  many would you expect to allow a free press? Give a
+Applying the Concepts—Intermediate  range that is highly likely to include the number of dem-
+  ocratic regimes with a free press.
+4.146  When to replace a maintenance system. An article in the  b. In a random sample of 50 nondemocratic regimes, how
+  Journal of Quality of Maintenance Engineering (Vol. 19,  many would you expect to allow a free press? Give a
+  2013) studied the problem of finding the optimal replace-  range that is highly likely to include the number of non-
+  ment policy for a maintenance system. Consider a system  democratic regimes with a free press.
+  that is tested every 12 hours. The test will determine whether
+  there are any flaws in the system. Assume the probability of  4.153  Chickens with fecal contamination. The United States
+  no flaw being detected is .85. If a flaw (failure) is detected,  Department of Agriculture (USDA) reports that,
+  the system is repaired. Following the 5th failed test, the sys-  under its standard inspection system, one in every 100
+  tem is completely replaced. Now let x represent the number  slaughtered chickens passes inspection for fecal contam-
+  of tests until the system needs to be replaced.  ination. In Exercise 3.21 (p. 158), you found the prob-
+  a. Give the probability distribution for x as a formula.  ability that a randomly selected slaughtered chicken
+  b. Find the probability that the system needs to be replaced  passes inspection for fecal contamination. Now find
+  the probability that, in a random sample of 6 slaugh-
+  after 8 total tests.  tered chickens, at least one passes inspection for fecal
+  contamination.
+*4.147  Extinct New Zealand birds. Refer to the Evolutionary Ecology
+  Research (July 2003) study of the patterns of extinction in the
+  NZBIRDS  New Zealand bird population, presented in Exercise 3.95 (p.
+  185). Of the 132 bird species in the population, 38 are extinct.
+  Suppose you randomly select 10 of the 132 bird species (with-  *4.154 Crime Watch neighborhood. In many cities, neighborhood
+  out replacement) and record the extinction status of each.  Crime Watch groups are formed in an attempt to reduce
+  a. What is the probability that exactly 5 of the 10 species  the amount of criminal activity. Suppose one neighbor-
+  hood that has experienced an average of 8 crimes per year
+  you select are extinct?  organizes such a group. During the first year following
+  b. What is the probability that at most 1 species is  the creation of the group, 2 crimes are committed in the
+  neighborhood.
+  extinct?
+  a. Use the Poisson distribution to calculate the proba-
+4.148  Student gambling on sports. A study of gambling activity  bility that 2 or fewer crimes are committed in a year,
+  at the University of West Georgia (UWG) discovered that  assuming that the average number is still 8 crimes per
+  60% of the male students wagered on sports the previous  year.
+  year (The Sport Journal, Fall 2006). Consider a random sam-
+  ple of 50 UWG male students. How many of these students  b. Do you think this event provides some evidence that
+  would you expect to have gambled on sports the previous  the Crime Watch group has been effective in this
+  year? Give a range that is likely to include the number of  neighborhood?
+  male students who have gambled on sports.
+
+4.149  Parents’ behavior at a gym meet. Pediatric Exercise Science
+  (Feb. 1995) published an article on the behavior of parents at
+  competitive youth gymnastic meets. On the basis of a survey  4.155 The Showcase Showdown. On the popular television
+  of the gymnasts, the researchers estimated the probability of  game show The Price Is Right, contestants can play “The
+  a parent “yelling” at his or her child before, during, or after  Showcase Showdown.” The game involves a large wheel
+  the meet as .05. In a random sample of 20 parents attending  with 20 nickel values, 5, 10, 15, 20, c, 95, 100, marked
+  a gymnastic meet, find the probability that at least 1 parent  on it. Contestants spin the wheel once or twice, with the
+  yells at his or her child before, during, or after the meet.
+256 CHAPTER 4 ■ Discrete Random Variables
+
+  objective of obtaining the highest total score without going  be determined with minimal testing. Consider a one-shot
+  over a dollar (100). [According to the American Statistician  device that has some probability p of failure. Of course, the
+  (Aug. 1995), the optimal strategy for the first spinner in a  true value of p is unknown, so designers will specify a value
+  three-player game is to spin a second time only if the value  of p that is the largest defective rate that they are willing
+  of the initial spin is 65 or less.] Let x represent the score  to accept. Designers will conduct n tests of the device and
+  of a single contestant playing “The Showcase Showdown.”  determine the success or failure of each test. If the num-
+  Assume a “fair” wheel (i.e., a wheel with equally likely  ber of observed failures, x, is less than or equal to some
+  outcomes). If the total of the player’s spins exceeds 100,  specified value k, then the device is considered to have the
+  the total score is set to 0.  desired failure rate. Consequently, the designers want to
+  a. If the player is permitted only one spin of the wheel,  know the minimum sample size n needed so that observing
+  K or fewer defectives in the sample will demonstrate that
+  find the probability distribution for x.  the true probability of failure for the one-shot device is no
+  b. Refer to part a. Find E1x2 and interpret this value.  greater than p.
+  c. Refer to part a. Give a range of values within which x is  a. Suppose the desired failure rate for a one-shot device
+
+  likely to fall.  is p = .12. Suppose also that designers will conduct
+  d. Suppose the player will spin the wheel twice, no matter  n = 30 tests of the device and conclude that the device is
+  performing to specifications if K = 1 (i.e., if 1 or no fail-
+  what the outcome of the first spin. Find the probability  ure is observed in the sample). Find P1x … pbc2.
+  distribution for x.  b. In reliability analysis, 1 - P1x … K2 is often called the
+  e. What assumption did you make to obtain the probabil-  level of confidence for concluding that the true failure
+  ity distribution in part d? Is it a reasonable assumption?  rate is less than or equal to p. Find the level of confi-
+  f. Find m and s for the probability distribution of part d,  dence for the one-shot device described in part a. In
+  and interpret the results.  your opinion, is this an acceptable level? Explain.
+  g. Refer to part d. What is the probability that in two  c. Demonstrate that the confidence level can be increased
+  spins the player’s total score exceeds a dollar (i.e., is set  by either (1) increasing the sample size n or (2) decreas-
+  to 0)?  ing the number K of failures allowed in the sample.
+  h. Suppose the player obtains a 20 on the first spin and  d. Typically, designers want a confidence level of .90, .95,
+  decides to spin again. Find the probability distribution  or .99. Find the values of n and K to use so that the de-
+  for x.  signers can conclude with at least 95% confidence that
+  i. Refer to part h. What is the probability that the player’s  the failure rate for the one-shot device of part a is no
+  total score exceeds a dollar?  greater than p = .12.
+  j. Given that the player obtains a 65 on the first spin
+  and decides to spin again, find the probability that the  Note: The U.S. Department of Defense Reliability Analysis Center
+  player’s total score exceeds a dollar.  (DoD RAC) provides designers with free access to tables and tool-
+  k. Repeat part j for different first-spin outcomes. Use this  boxes that give the minimum sample size n required to obtain a
+  information to suggest a strategy for the one-player game.  desired confidence level for a specified number of observed fail-
+  ures in the sample.
+Applying the Concepts—Advanced
+
+4.156  Network forensic analysis. A network forensic analyst is  *4.159  Emergency room bed availability. The mean number of
+  responsible for identifying worms, viruses, and infected  patients admitted per day to the emergency room of a
+  nodes in the computer network. A new methodology for  small hospital is 2.7. If, on a given day, there are only four
+  finding patterns in data that signify infections was investi-  beds available for new patients, what is the probability that
+  gated in IEEE Transactions on Information Forensics and  the hospital will not have enough beds to accommodate its
+  Security (May 2013). The method uses multiple filters to  newly admitted patients?
+  check strings of information. For this exercise, consider a
+  data string of length 4 bytes (positions), where each byte  Critical Thinking Challenge
+  is either a 0 or a 1 (e.g., 0010). Also, consider two possible
+  strings, named S1 and S2. In a simple single filter system,  *4.160  Space shuttle disaster. On January 28, 1986, the space
+  the probability that S1 and S2 differ in any one of the bytes
+  is .5. Derive a formula for the probability that the two  shuttle Challenger exploded, killing all seven astro-
+  strings differ on exactly x of the 4 bytes. Do you recognize
+  this probability distribution?  nauts aboard. An investigation concluded that the ex-
+
+4.157 How many questionnaires to mail? The probability that a  plosion was caused by the failure of the O ring seal in
+  person responds to a mailed questionnaire is .4. How many
+  questionnaires should be mailed if you want to be reason-  the joint between the two lower segments of the right
+  ably certain that at least 100 will be returned?
+  solid rocket booster. In a report made one year prior
+4.158 Reliability of a “one-shot” device. A “one-shot” device
+  can be used only once; after use, the device (e.g., a nu-  to the catastrophe, the National Aeronautics and Space
+  clear weapon, space shuttle, automobile air bag) either is
+  destroyed or must be rebuilt. The destructive nature of a  Administration (NASA) claimed that the probability of
+  one-shot device makes repeated testing either impractical  such a failure was about 1∙60,000, or about once in every
+  or too costly. Hence, the reliability of such a device must  60,000 flights. But a risk-assessment study conducted
+
+  for the Air Force at about the same time assessed the
+  probability to be 1∙35, or about once in every 35 missions.
+  (Note: The shuttle had flown 24 successful missions prior
+
+  to the disaster.) Given the events of January 28, 1986,
+
+  which risk assessment—NASA’s or the Air Force’s—
+
+  appears to be more appropriate?
+  Using Technology 257
+
+Activity Simulating Binomial Probabilities using Poker Chips
+
+Consider the following random variables:  will be marked “Failure.” Randomly select a chip from the 10,
+  observing whether it is a success or failure. Then return the chip,
+1. The number x of people who recover from a certain disease  randomly select a second chip from the 10 available chips, and
+  out of a sample of five patients  record this outcome. Repeat the process until a total of five
+  trials has been conducted. Count the number x of successes
+2. The number x of voters in a sample of five who favor a  observed in the five trials. Repeat the entire process 100 times
+  method of tax reform  to obtain 100 observed values of x.
+
+3. The number x of hits a baseball player gets in five official  a. Use the 100 values of x obtained from the simulation to
+  times at bat  construct a relative frequency histogram for x. Note that this
+  histogram is an approximation to p1x2.
+In each case, x is a binomial random variable (or approximately
+so) with n = 5 trials. Assume that in each case the probability  b. Calculate the exact values of p1x2 for n = 5 and p = .3,
+of success is .3. (What is a success in each of the examples?)  and compare these values with the approximations found in
+If this were true, the probability distribution for x would be the  part a.
+same for each of the three examples. To obtain a relative fre-
+quency histogram for x, conduct the following experiment: Place  c. If you were to repeat the simulation an extremely large number
+10 poker chips (pennies, marbles, or any 10 identical items)  of times (say, 100,000), how do you think the relative frequency
+in a bowl, and mark 3 of the 10 “Success.” The remaining 7  histogram and true probability distribution would compare?
+
+References  Parzen, E. Modern Probability Theory and Its Applications. New York:
+  Wiley, 1960.
+Hogg, R. V., McKean, J. W., and Craig, A. Introduction to Mathematical
+  Statistics, 6th ed. Upper Saddle River, NJ: Prentice Hall, 2005.  Wackerly, D., Mendenhall, W., and Scheaffer, R. L. Mathematical
+  Statistics with Applications, 7th ed. North Scituate, MA: Duxbury,
+Larsen, R. J., and Marx, M. L. An Introduction to Mathematical Statistics  2008.
+  and Its Applications, 4th ed. Upper Saddle River, N.J.: Prentice Hall,
+  2005.
+
+USING TECHNOLOGY MINITAB: Discrete Probabilities
+
+Step 1 Select the “Calc” button on the MINITAB menu bar,  Step 2 Select either “Probability” or “Cumulative probability”
+click on “Probability Distributions,” and then finally select the  on the resulting dialog box.
+discrete distribution of your choice (e.g., “Binomial”), as shown
+in Figure 4.M.1.  Step 3 Specify the parameters of the distribution (e.g., sample
+  size n, probability of success p).
+
+  [Note: For the Poisson option, enter the mean l. For the hyper-
+  geometric option, enter N, r, and n.]
+
+  Step 4 Specify the value x of interest in the “Input constant”
+  box.
+
+  Step 5 Click “OK.” The probability for the value of x will
+  appear on the MINITAB session window.
+
+  [Note: Figure 4.M.2 gives the specifications for finding p1x = 22
+  in a binomial distribution with n = 5 and p = .3.]
+
+  TI-83/TI-84 Plus Graphing Calculator:
+  Discrete Random Variables and
+  Probabilities
+
+Figure 4.M.1 MINITAB menu options for discrete probabilities  Calculating the Mean and Standard Deviation
+  of a Discrete Random Variable
+
+  Step 1 Enter the data
+  • Press STAT and select 1:Edit
+258 CHAPTER 4 ■ Discrete Random Variables  Step 1 Enter the binomial
+  parameter
+Figure 4.M.2 MINITAB binomial distribution dialog box  • Press 2nd VARS for DISTR
+(Note: If the lists already contain data, clear the old data. Use  • Press the down ARROW key
+the up ARROW to highlight ‘L1.’)
+• Press CLEAR ENTER.  until binompdf is
+• Use the up ARROW to highlight ‘L2’  highlighted
+• Press CLEAR ENTER  • Press ENTER
+• Use the ARROW and ENTER keys to enter the x-values of  • After binompdf(, type 8,
+  .4, 5) (Note: Be sure to use
+  the variable into L1  the COMMA key between
+• Use the ARROW and  each parameter)
+  • Press ENTER
+  ENTER keys to enter the  • You should see
+  probabilities, P1x2, into L2
+Step 2 Access the Calc Menu  Thus, P1x = k2 is about 12.4%.
+• Press STAT
+• Arrow right to CALC  II. P 1x " k2
+• Select 1-Var Stats
+• Press ENTER  To compute the probability of k or fewer successes in n trials where
+• Press 2nd 1 for L1  the p is probability of success for each trial, use the binomcdf(
+• Press COMMA  command. Binomcdf stands for “binomial cumulative probability
+• Select 2nd 2 for L2  density function.” This command is under the DISTRibution menu
+• Press ENTER  and has the format binomcdf(n, p, k).
+The mean and standard
+deviation will be displayed  Example Compute the probability of 5 or fewer successes in 8
+on the screen, as will the  trials where the probability of success for a single trial is 40%.
+quartiles, min, and max.  In this example, n = 8, p = .4, and k = 5.
+
+Calculating Binomial Probabilities  Step 2 Enter the binomial parameters
+I. P 1x ∙ k2  • Press 2nd VARS for DISTR
+  • Press down the ARROW
+To compute the probability of k successes in n trials where p
+is the probability of success for each trial, use the binompdf(  key until binomcdf is
+command. Binompdf stands for “binomial probability density  highlighted
+function.” This command is under the DISTRibution menu and  • Press ENTER
+has the format binompdf(n, p, k).  • After binomcdf(, type 8,
+Example Compute the probability of 5 successes in 8 trials  .4, 5)
+where the probability of success for a single trial is 40%. In this  • Press ENTER
+example, n = 8, p = .4, and k = 5.  • You should see
+  Thus, P1x … 52 is about 95%.
+
+  III. P 1x * k2, P 1x + k2, P 1x # k2
+
+  To find the probability of less than k successes P1x 6 k2, more
+  than k successes P1x 7 k2, or at least k successes P1x Ú k2,
+  variations of the binomcdf( command must be used as shown
+  below.
+  • P1x 6 k2 use binomcdf(n, p, k ∙ 1)
+  • P1x 7 k2 use 1 ∙ binomcdf(n, p, k)
+  • P1x Ú k2 use 1 ∙ binomcdf(n, p, k ∙ 1)
+
+  Calculating Poisson Probabilities
+
+  I. P 1x " k2
+
+  To compute P1x = k2, the probability of exactly k successes
+  in a specified interval where l is the mean number of successes
+  in the interval, use the poissonpdf( command. Poissonpdf
+  stands for “Poisson probability density function.” This com-
+  mand is under the DISTRibution menu and has the format
+  poissonpdf().
+
+  Example Suppose that the number, x, of reported sightings per
+  week of blue whales is recorded. Assume that x has approximately
+a Poisson probability distribution and that the average number of  Using Technology 259
+weekly sightings is 2.6. Compute the probability that exactly five
+sightings are made during a given week. In this example, l = 2.6  • Press ENTER
+and k = 5.  • You should see the screen at the bottom of the first column
+  Thus, the P1x = 52 is about 95.1%.
+Step 1 Enter the Poisson parameters
+• Press 2nd VARS for DISTR  III. P 1x * k2, P 1x + k2, P 1x # k2
+• Press the down ARROW key until poissonpdf is
+  To find the probability of less than k successes, more than k
+  highlighted  successes, or at least k successes, variations of the poissoncdf(
+• Press ENTER  command must be used as shown below.
+• After poissonpdf( , type 2.6,5)  • P1x 6 k2 use poissoncdf(𝛌, k ∙ 1)
+  • P1x 7 k2 use 1 ∙ poissoncdf(𝛌, k)
+  (Note: Be sure to use the  • P1x Ú k2 use 1 ∙ poissoncdf(𝛌, k ∙ 1)
+  COMMA key between each
+  parameter.)  Calculating Hypergeometric Probabilities
+• Press ENTER
+• You should see  r
+  Step 1 Compute axb using the keystrokes for combinations
+Thus, the P1x = 52 is about 7.4%.  (see Using Technology, Chapter 3).
+
+II. P 1x " k2  Step 2 Press STO>, ALPHA, 4, then press ENTER to save the
+  r
+To compute the probability of k or fewer successes in a
+specified interval where l is the mean number of successes in  result of axb as the variable T.
+the interval, use the poissoncdf( command. Poissoncdf stands  Step 3 Compute aN-r n-x b using the keystrokes for combinations
+for “Poisson cumulative probability density function.” This  (see Using Technology, Chapter 3).
+command is under the DISTRibution menu and has the format
+poissoncdf(.  Step 4 Press STO>, ALPHA, 5, then press ENTER to save the
+  result of aN-r n- x b as the variable U.
+Example In the preceding example, compute the probability  Step 5 Compute aNb using the keystrokes for combinations
+that five or fewer sightings are made during a given week. In this
+example, l = 2.6 and k = 5.  x
+  (see Using Technology, Chapter 3).
+Step 1 Enter the Poisson
+parameters  Step 6 Press STO>, ALPHA, 6, then press ENTER to save the
+• Press 2nd VARS for DISTR  result of aNb as the variable V.
+• Press the down ARROW
+  x
+  key until poissoncdf is  Step 7 Press ALPHA, 4, : , ALPHA, 5, ∙ , ALPHA, 6, then
+  highlighted  press ENTER.
+• Press ENTER
+• After poissoncdf(, type 2.6, 5)  The probability will be displayed on the window.
+5 Continuous Random Variables
+
+contents  Where We’ve Been
+
+5.1 Continuous Probability distributions  • Learned how to find probabilities of discrete
+5.2 The Uniform distribution  events by using the probability rules of Chapter 3
+5.3 The normal distribution
+  • Discussed probability models (distributions) for
+  discrete random variables in Chapter 4
+
+5.4 descriptive Methods for Assessing  Where We’re Going
+  normality
+  • Develop the notion of a probability distribution
+5.5 Approximating a Binomial distribution  for a continuous random variable. (5.1)
+  with a normal distribution (optional)
+  • Study several important types of continuous random
+5.6 The exponential distribution  variables and their probability models. (5.2–5.3, 5.6)
+  (optional)
+  • Introduce the normal probability distribution as one
+  of the most useful distributions in statistics. (5.3–5.5)
+  CHAPTER 5 ■ Continuous Random Variables 261
+
+Statistics IN Action Super Weapons development—is the hit
+
+  ratio optimized?
+
+The U.S. Army is working with a major defense contractor to considered. These 1,100 measurements
+
+develop a “super” weapon. The weapon is designed to fire a are saved in the MOAGUN file. (The
+
+large number of sharp tungsten bullets—called flechettes—with data are simulated for confidential-
+
+a single shot that will destroy a large number of enemy soldiers. ity reasons.) For example, a flechette
+
+Flechettes are about the size of an average nail, with small fins with a value of x = 5.5 hit the mid-
+
+at one end to stabilize them in flight. Since World War I, when dle target, but a flechette with a
+
+France dropped them in large quantities from aircraft on to value of x = 2.0 did not hit any of the
+
+masses of ground troops, munitions experts have experimented three targets. (See Figure SIA5.1.)
+
+with using flechettes in a variety of guns. The problem with  The defense contractor is inter-
+
+using flechettes as ammunition is accuracy: Current weapons ested in the likelihood of any one of
+
+that fire large quantities of flechettes have unsatisfactory hit the targets being hit by a flechette and,
+
+ratios when fired at long distances.  in particular, wants to set the gun specifications to maximize
+
+The defense contractor (not named here for both confi- the number of hits. The weapon is designed to have a mean
+
+dentiality and security reasons) has developed a prototype gun horizontal value equal to the aim point (e.g., m = 5 feet when
+
+that fires 1,100 flechettes with a single round. In range tests, aimed at the center target). By changing specifications, the
+
+three 2-feet-wide targets were set up a distance of 500 meters contractor can vary the standard deviation s. The MOAGUN
+
+(approximately 1,500 feet) from the weapon. With a number file contains flechette measurements for three different range
+
+line used as a reference, the centers of the three targets were tests: one with a standard deviation of s = 1 foot, one with
+
+at 0, 5, and 10 feet, respectively, as shown in Figure SIA5.1. s = 2 feet, and one with s = 4 feet.
+
+The prototype gun was aimed at the middle target (center  In this chapter, two Statistics in Action Revisited ex-
+
+at 5 feet) and fired once. The point where each of the 1,100 amples demonstrate how we can use one of the probability
+
+flechettes landed at the 500-meter distance was measured models discussed in the chapter—the normal probability
+
+with the use of a horizontal and vertical grid. For the purposes distribution—to aid the defense contractor in developing its
+
+of this application, only the horizontal measurements are “super” weapon.
+
+  Targets: 2 feet wide  Statistics IN Action Revisited
+
+  x  • Using the Normal Model to Maximize the Probability of a
+–2 –1 0 1 2 3 4 5 6 7 8 9 10 11 12  Hit with the Super Weapon (p. 276)
+
+Left  Middle  Right  • Assessing whether the Normal Distribution Is Appropriate
+  for Modeling the Super Weapon Hit Data (p. 284)
+Figure SIA5.1
+Target placement on gun range  Data Set: MOAGUN
+
+  In this chapter, we’ll consider some continuous random variables that are commonly
+  encountered. Recall that a continuous random variable is a random variable that can
+  assume any value within some interval or intervals. For example, the length of time
+  between a person’s visits to a doctor, the thickness of sheets of steel produced in a
+  rolling mill, and the yield of wheat per acre of farmland are all continuous random
+  variables. The methodology we employ to describe continuous random variables
+  will necessarily be somewhat different from that used to describe discrete random
+  variables. First we discuss the general form of continuous probability distributions,
+  and then we explore three specific types that are used in making statistical decisions.
+  The normal probability distribution, which plays a basic and important role in both the
+  theory and application of statistics, is essential to the study of most of the subsequent
+  chapters in this book. The other types have practical applications, but a study of these
+  topics is optional.
+262 CHAPTER 5 ■ Continuous Random Variables
+
+5.1 Continuous Probability Distributions
+
+f(x)  The graphical form of the probability distribution for a continuous random variable x
+  is a smooth curve that might appear as shown in Figure 5.1. This curve, a function of x,
+  A  is denoted by the symbol f(x) and is variously called a probability density function, a
+  frequency function, or a probability distribution.
+  a  b  x
+  The areas under a probability distribution correspond to probabilities for x. For
+Figure 5.1  example, the area A beneath the curve between the two points a and b, as shown in
+  Figure 5.1, is the probability that x assumes a value between a and b1a 6 x 6 b2.
+A probability distribution f(x) for  Because there is no area over a single point, say, x = a, it follows that (according to
+a continuous random variable x  our model) the probability associated with a particular value of x is equal to 0; that
+  is, P1x = a2 = 0, and hence P1a 6 x 6 b2 = P1a … x … b2. In other words, the
+  probability is the same regardless of whether you include the endpoints of the interval.
+  Also, because areas over intervals represent probabilities, it follows that the total area
+  under a probability distribution—the total probability assigned to the set of all values of
+  x—should equal 1. Note that probability distributions for continuous random variables
+  possess different shapes, depending on the relative frequency distributions of real data
+  that the probability distributions are supposed to model.
+
+  The probability distribution for a continuous random variable, x, can be represented
+  by a smooth curve—a function of x, denoted f(x). The curve is called a density
+  function or frequency function. The probability that x falls between two values,
+  a and b, i.e., P1a 6 x 6 b2, is the area under the curve between a and b.
+
+ Example 5.1  Problem Researchers at the University of Rochester studied the friction that occurs in
+  the paper-feeding process of a photocopier and published their results in the Journal
+Finding a Continuous  of Engineering for Industry. The friction coefficient, x, is a continuous random variable
+Probability—Paper  that measures the degree of friction between two adjacent sheets of paper in the
+Friction in a Photocopier  feeder stack. The random variable can be modeled using the smooth curve (called a
+  triangular density function) shown in Figure 5.2. Note that the friction coefficient, x,
+f (x)  ranges between the values 5 and 15. Find the probability that the friction coefficient is
+  less than 10.
+.2
+  Solution To find the probability that the friction coefficient is less than 10, we need to
+.1  compute P15 6 x 6 102. This is the area between x = 5 and x = 10 shaded on the
+  graph in Figure 5.2. Note that this area is represented by a right triangle with a base of
+  x  length 5 and a height of .2. Since the area of a triangle is 11/2 2 1base2 * 1height2, then
+
+  5  10  15  P15 6 x 6 102 = 11>221base2 * 1height2 = 1.521521.22 = .5
+
+Figure 5.2  Look Ahead The areas under most probability distributions are obtained by means
+  of calculus or numerical methods.* Because these methods often involve difficult
+Density Function for Friction  procedures, we give the areas for some of the most common probability distributions in
+Coefficient, Example 5.1  tabular form in Appendix B. Then, to find the area between two values of x, say, x = a
+  and x = b, you simply have to consult the appropriate table, or use technology such as
+  statistical software or a graphing calculator.
+
+  ■
+
+  *Students with a knowledge of calculus should note that the probability that x assumes a value in the interval
+  a 6 x 6 b is P1a 6 x 6 b2 = 1 ab f1x2 dx, assuming that the integral exists. As with the requirements for a
+  discrete probability distribution, we require that f1x2 Ú 0 and 1 ∞ f1x2 dx = 1.
+
+  -∞
+  SECTION 5.2 ■ The Uniform Distribution 263
+
+  For each of the continuous random variables presented in this chapter, we will
+  give the formula for the probability distribution, along with its mean m and standard
+  deviation s. These two numbers will enable you to make some approximate probability
+  statements about a random variable even when you do not have access to a table of
+  areas under the probability distribution.
+
+5.2 The Uniform Distribution
+
+  f(x)  All the probability problems discussed in Chapter 3 had sample spaces that contained
+  a finite number of sample points. In many of these problems—for example, in those
+ 1  involving a die toss or coin toss—the sample points were assigned equal probabilities.
+d – c  For continuous random variables, there is an infinite number of values in the sample
+  space, but in some cases the values may appear to be equally likely. For example, if a
+  ca b  d  short exists in a 5-meter stretch of electrical wire, it may have an equal probability of
+  being in any particular 1-centimeter segment along the line. Or if a safety inspector plans
+Figure 5.3  to choose a time at random during the 4 afternoon work hours to pay a surprise visit to
+  a certain area of a plant, then each 1-minute time interval in this 4-hour work period will
+The uniform probability  have an equally likely chance of being selected for the visit.
+distribution
+  Continuous random variables that appear to have equally likely outcomes over
+  their range of possible values possess a uniform probability distribution, perhaps the
+  x simplest of all continuous probability distributions. Suppose the random variable x can assume values only in an interval c … x … d. Then the uniform frequency function has a
+  rectangular shape, as shown in Figure 5.3. Note that the possible values of x consist of all
+  points in the interval between point c and point d, inclusive. The height of f(x) is constant
+  in that interval and equals 1> 1d - c2. Therefore, the total area under f(x) is given by
+
+  Total area of rectangle = 1Base21Height2 = 1d - c2 a 1 d - c b = 1
+
+  The uniform probability distribution provides a model for continuous random
+  variables that are evenly distributed over a certain interval. That is, a uniform random
+  variable is just as likely to assume a value in one interval as it is to assume a value in
+  any other interval of equal size. There is no clustering of values around any one value;
+  instead, there is an even spread over the entire region of possible values.
+
+  The uniform distribution is sometimes referred to as the randomness distribution,
+  since one way of generating a uniform random variable is to perform an experiment in which
+  a point is randomly selected on the horizontal axis between the points c and d. If we were to
+  repeat this experiment infinitely often, we would create a uniform probability distribution
+  like that shown in Figure 5.3. The random selection of points in an interval can also be used
+  to generate random numbers such as those in Table I of Appendix A. Recall that random
+  numbers are selected in such a way that every number has an equal probability of selec-
+  tion. Therefore, random numbers are realizations of a uniform random variable. (Random
+  numbers were used to draw random samples in Section 3.7.) The formulas for the uniform
+  probability distribution, its mean, and its standard deviation are shown in the next box.
+
+  Probability Distribution for a Uniform Random Variable x
+
+  Probability density function: f1x2 = 1 d - c 1c … x … d2
+
+  Mean: m = c + d Standard deviation: s = d - c
+  2  112
+
+  P1a 6 x 6 b2 = 1b - a2>1d - c2, c … a 6 b … d
+
+  Suppose the interval a 6 x 6 b lies within the domain of x; that is, it falls within
+  the larger interval c … x … d. Then the probability that x assumes a value within the
+264  CHAPTER 5 ■ Continuous Random Variables
+
+  interval a 6 x 6 b is equal to the area of the rectangle over the interval, namely,
+  1b - a2 > 1d - c2.* (See the shaded area in Figure 5.3.)
+
+ Example 5.2  Problem An unprincipled used-car dealer sells a car to an unsuspecting buyer, even
+  though the dealer knows that the car will have a major breakdown within the next
+Applying the uniform  6 months. The dealer provides a warranty of 45 days on all cars sold. Let x represent the
+Distribution— used-Car  length of time until the breakdown occurs. Assume that x is a uniform random variable
+Warranties  with values between 0 and 6 months.
+
+  a. Calculate and interpret the mean and standard deviation of x.
+
+  b. Graph the probability distribution of x, and show the mean on the horizontal axis.
+  Also show one- and two-standard-deviation intervals around the mean.
+
+  c. Calculate the probability that the breakdown occurs while the car is still under
+  warranty.
+
+  Solution
+
+  a. To calculate the mean and standard deviation for x, we substitute 0 and 6 months for
+  c and d, respectively, in the formulas for uniform random variables. Thus,
+
+  m = = = c + d 0 + 6 3 months
+  2  2
+
+  s = = = = d - c 6 - 0 6 1.73 months
+  112 112 3.464
+
+  Our interpretations of m and s follow:
+  The average length of time x until breakdown for all similar used cars is m = 3
+  months. From Chebyshev’s rule (Rule 2.1, p. 99), we know that at least 75% of the
+  values of x in the distribution will fall into the interval
+
+  m { 2s = 3 { 211.732
+  = 3 { 3.46
+
+  or between -.46 and 6.46 months. Consequently, we expect the length of time until
+  breakdown to be less than 6.46 months at least 75% of the time.
+
+  b. The uniform probability distribution is
+
+  f1x2 = d - c = 6 - 0 = 1 1 16 10 … x … 62
+
+  The graph of this function is shown in Figure 5.4. The mean and the one- and
+  two-standard-deviation intervals around the mean are shown on the horizontal axis.
+  Note that the entire distribution of x lies within the m { 2s interval. (This result
+  demonstrates, once again, the conservativeness of Chebyshev’s rule.)
+
+  f(x)
+
+  1/6
+
+Figure 5.4  x
+
+Distribution for x  0  1  2  3  4  5  6
+in Example 5.2
+
+  *The student with a knowledge of calculus should note that
+
+  b  b
+
+  P1a 6 x 6 b2 = f1x2 d1x2 = 31> 1d - c24 dx = 1b - a2 > 1d - c2
+  La  La
+  SECTION 5.2 ■ The Uniform Distribution 265
+
+  c. To find the probability that the car is still under warranty when it breaks down, we
+  must find the probability that x is less than 45 days, or (about) 1.5 months. As indi-
+  cated in Figure 5.5, we need to calculate the area under the frequency function f(x)
+  between the points x = 0 and x = 1.5. Therefore, in this case a = 0 and b = 1.5.
+  Applying the formula in the box, we have
+  P1x 6 1.52 = 11.5 - 02 > 16 - 02 = 1.5>6 = .25
+
+  f(x)
+
+  1/6
+
+Figure 5.5  x
+
+Probability that car breaks  0  1 1.5 2  3  4  5  6
+down within 1.5 months of
+purchase
+
+  That is, there is a 25% chance that the car will break down while under warranty.
+
+  Look Back The calculated probability in part c is the area of a rectangle with base
+  1.5 - 0 = 1.5 and height = 1>6. Alternatively, the probability that the unsuspecting car
+  buyer will be able to have the car repaired at the dealer’s expense is P10 6 x 6 1.52 =
+  1Base21Height2 = 11.5211>62 = .25.
+
+  ■ Now Work Exercise 5.9
+
+Exercises 5.1–5.20  c. P1x … a2 = 0
+  d. P14.5 … x … a2 = .5
+Understanding the Principles
+  5.7 The random variable x is best described by a uniform prob-
+ 5.1 True or False: The probability that the uniform random  ability distribution with c = 100 and d = 200. Find the
+  variable will assume a value in any interval of equal length  probability that x assumes a value
+  is different for each interval.  a. More than two standard deviations from m
+  b. Less than three standard deviations from m
+ 5.2 The uniform distribution is a __________ distribution. (Fill  c. Within two standard deviations of m
+  in the blank.)
+  5.8 The random variable x is best described by a uniform
+Learning the Mechanics  probability distribution with mean 100 and standard
+  deviation 10. Find c, d, and f(x). Graph the probability
+5.3 Suppose x is a random variable best described by a uni-  distribution.
+
+form probability distribution with c = 20 and d = 40.  Applet Exercise 5.1
+
+a. Find f(x).  Open the applet entitled Sample from a Population. On the pull-
+  down menu to the right of the top graph, select Uniform. The box
+b. Find the mean and standard deviation of x.  to the left of the top graph displays the population mean, median,
+  and standard deviation.
+c. Graph f(x), and locate m and the interval m { 2s on
+  the graph. Note that the probability that x assumes a  a. Run the applet for each available value of n on the pull-
+  down menu for the sample size. Go from the smallest to
+value within the interval m { 2s is equal to 1.  the largest value of n. For each value of n, observe the
+  shape of the graph of the sample data and record the
+5.4 Refer to Exercise 5.3. Find the following probabilities:  mean, median, and standard deviation of the sample.
+
+a. P115 … x … 302  b. P125 6 x 6 352  b. Describe what happens to the shape of the graph and
+  the mean, median, and standard deviation of the sample
+c. P1x Ú 302  d. P1x … 202  as the sample size increases.
+
+e. P1x … 302  f. P125.5 … x … 30.52  Applet Exercise 5.2
+
+5.5 Suppose x is a random variable best described by a uni-  Suppose we set the Random Numbers applet to generate one num-
+  ber between 1 and 100, inclusive. We let the value of the random
+  form probability distribution with c = 4 and d = 6.  variable x be the number generated when the Sample button is
+  clicked. Explain why the distribution of x is approximately uniform
+  a. Find f(x).  even though x is a discrete rather than continuous random variable.
+
+  b. Find the mean and standard deviation of x.
+  c. Find P1m - s … x … m + s2.
+  d. Find P1x 7 4.782.
+  e. Find P14.4 … x … 5.72.
+  f. Find P1x 6 42.
+
+5.6 Refer to Exercise 5.5. Find the value of a makes each of the
+
+  following probability statements true:
+  a. P1x Ú a2 = .5
+  b. P1x … a2 = .2
+266 CHAPTER 5 ■ Continuous Random Variables  Applying the Concepts—Intermediate
+
+Applying the Concepts—Basic  5.14 Social network densities. Social networks involve inter-
+  actions (connections) between members of the network.
+ 5.9 Uranium in the Earth’s crust. The American Mineralogist  Sociologists define network density as the ratio of actual
+  (Oct. 2009) published a study of the evolution of uranium  network connections to the number of possible one-to-one
+  minerals in the Earth’s crust. Researchers estimate that the  connections. For example, a network with 10 members has
+  trace amount of uranium x in reservoirs follows a uniform  a10b = 45 total possible connections. If that network has
+  distribution ranging between 1 and 3 parts per million.  2
+  a. Find E(x) and interpret its value.  only 5 connections, the network density is 5/45 = .111.
+  b. Compute P12 6 x 6 2.52.  Sociologists at the University of Michigan assumed that the
+  c. Compute P1x 6 1.752.  density x of a social network would follow a uniform distri-
+  bution between 0 and 1 (Social Networks, 2010).
+5.10 Requests to a Web server. According to Brighton Webs  a. On average, what is the density of a randomly selected
+  LTD, a British company that specializes in data analysis, the  social network?
+  arrival time of requests to a Web server within each hour  b. What is the probability that the randomly selected net-
+  can be modeled by a uniform distribution (http://www.brigh-  work has a density higher than .7?
+  ton-webs.co.uk). Specifically, the number of seconds x from  c. Consider a social network with only 2 members. Explain
+  the start of the hour that the request is made is uniformly dis-  why the uniform model would not be a good approxi-
+  tributed between 0 and 3,600 seconds. Find the probability  mation for the distribution of network density.
+  that a request is made to a Web server sometime during the
+  last 20 minutes of the hour.  5.15 Load on timber beams. Timber beams are widely used in
+  home construction. When the load (measured in pounds) per
+5.11 New method for detecting anthrax. Researchers at the  unit length has a constant value over part of a beam, the load
+  University of South Florida Center for Biological Defense  is said to be uniformly distributed over that part of the beam.
+  have developed a safe method for rapidly detecting anthrax  Uniformly distributed beam loads were used to derive the
+  spores in powders and on surfaces (USF Magazine, Summer  stiffness distribution of the beam in the American Institute of
+  2002). Consider a powder specimen that has exactly 10 an-  Aeronautics and Astronautics Journal (May 2013). Consider
+  thrax spores. Suppose that the number of anthrax spores in  a cantilever beam with a uniformly distributed load between
+  the sample detected by the new method follows an approx-  100 and 115 pounds per linear foot.
+  imate uniform distribution between 10 and 20.  a. What is the probability that a beam load exceeds
+  a. Find the probability that 16 or fewer anthrax spores are  110 pounds per linear foot?
+  detected in the powder specimen  b. What is the probability that a beam load is less than
+  b. Find the probability that between 12 and 15 anthrax  102 pounds per linear foot?
+  spores are detected in the powder specimen.  c. Find a value L such that the probability that the beam
+  load exceeds L is only .1.
+5.12 School attendance. A “discrete” uniform distribution
+  was the subject of an article published in the Journal  5.16 Cycle availability of a system. In the jargon of system main-
+  of Probability (Vol. 2014). The random variable of  tenance, “cycle availability” is defined as the probability
+  interest was the number of days x in a month that a sec-  that a system is functioning at any point in time. The U.S.
+  ondary school student attends a language class. Assume  Department of Defense developed a series of performance
+  that x can be approximated by a uniform probability  measures for assessing system cycle availability (START,
+  distribution with range 0 to 20 days. Is it likely that a  Vol. 11, 2004). Under certain assumptions about the failure
+  randomly selected student will attend 2 or fewer days in  time and maintenance time of a system, cycle availability is
+  the month?  shown to be uniformly distributed between 0 and 10. Find
+  the following parameters for cycle availability: mean, stan-
+5.13 Maintaining pipe wall temperature. Maintaining a constant  dard deviation, 20th percentile, lower quartile, and upper
+  temperature in a pipe wall in some hot process applications  quartile. Interpret the results.
+  is critical. A new technique that utilizes bolt-on trace ele-
+  ments to maintain the temperature was presented in the  5.17 Soft-drink dispenser. The manager of a local soft-drink
+  Journal of Heat Transfer (Nov. 2000). Without bolt-on  bottling company believes that when a new beverage-
+  trace elements, the pipe wall temperature of a switch con-  dispensing machine is set to dispense 8 ounces, it in fact dis-
+  denser used to produce plastic has a uniform distribution  penses an amount x at random anywhere between 7.5 and
+  ranging from 260° to 290°F. When several bolt-on trace  8.5 ounces, inclusive. Suppose x has a uniform probability
+  elements are attached to the piping, the wall temperature  distribution.
+  is uniform from 278° to 285°F.  a. Is the amount dispensed by the beverage machine a
+  a. Ideally, the pipe wall temperature should range be-  discrete or a continuous random variable? Explain.
+  tween 280° and 284°F. What is the probability that  b. Graph the frequency function for x, the amount of
+  the temperature will fall into this ideal range when no  beverage the manager believes is dispensed by the new
+  bolt-on trace elements are used? when bolt-on trace  machine when it is set to dispense 8 ounces.
+  elements are attached to the pipe?  c. Find the mean and standard deviation for the distribution
+  b. When the temperature is 268°F or lower, the hot liq-  graphed in part b, and locate the mean and the interval
+  uid plastic hardens (or “plates”), causing a buildup  m { 2s on the graph.
+  in the piping. What is the probability of the plastic  d. Find P1x Ú 82.
+  plating when no bolt-on trace elements are used?
+  when bolt-on trace elements are attached to the
+  pipe?
+  SECTION 5.3 ■ The Normal Distribution 267
+
+  e. Find P1x 6 72  the spindles malfunctions on occasion and places a single
+  f. Find P17.75 6 x 6 8.252.  gouge somewhere on the spindle. However, if the spindle
+  g. What is the probability that each of the next two bot-  can be cut so that it has 14 consecutive inches without a
+  gouge, then the spindle can be salvaged for other purposes.
+  tles filled by the new machine will contain more than  Assuming that the location of the gouge along the spindle is
+  8.25 ounces of beverage? Assume that the amount of  best described by a uniform distribution, what is the prob-
+  beverage dispensed in one bottle is independent of the  ability that a defective spindle can be salvaged?
+  amount dispensed in another bottle.
+  5.20 Reliability of a robotic device. The reliability of a piece
+5.18 Time delays at a bus stop. A bus is scheduled to stop at a  of equipment is frequently defined to be the probability p
+  certain bus stop every half hour on the hour and the half  that the equipment performs its intended function success-
+  hour. At the end of the day, buses still stop after every 30  fully for a given period under specific conditions (Render
+  minutes, but because delays often occur earlier in the day,  and Heizer, Principles of Operations Management, 1995).
+  the bus is never early and is likely to be late. The director  Because p varies from one point in time to another, some
+  of the bus line claims that the length of time a bus is late is  reliability analysts treat p as if it were a random variable.
+  uniformly distributed and the maximum time that a bus is  Suppose an analyst characterizes the uncertainty about the
+  late is 20 minutes.  reliability of a particular robotic device used in an automo-
+  a. If the director’s claim is true, what is the expected num-  bile assembly line by means of the following distribution:
+  ber of minutes a bus will be late?
+  b. If the director’s claim is true, what is the probability that  f1p2 = e1  0…p…1
+  the last bus on a given day will be more than 19 minutes  0  otherwise
+  late?
+  c. If you arrive at the bus stop at the end of a day at ex-  a. Graph the analyst’s probability distribution for p.
+  actly half-past the hour and must wait more than 19  b. Find the mean and variance of p.
+  minutes for the bus, what would you conclude about the  c. According to the analyst’s probability distribution for p,
+  director’s claim? Why?
+  what is the probability that p is greater than .95? Less
+Applying the Concepts—Advanced  than .95?
+  d. Suppose the analyst receives the additional information
+5.19 Gouges on a spindle. A tool-and-die machine shop pro-  that p is definitely between .90 and .95, but that there is
+  duces extremely high-tolerance spindles. The spindles are  complete uncertainty about where it lies between these
+  18-inch slender rods used in a variety of military equip-  values. Describe the probability distribution the analyst
+  ment. A piece of equipment used in the manufacture of  should now use to describe p.
+
+5.3 The Normal Distribution
+
+  One of the most commonly observed continuous random variables has a bell-shaped
+  probability distribution (or bell curve), as shown in Figure 5.6. It is known as a normal
+  random variable and its probability distribution is called a normal distribution.
+
+  f(x)
+
+Figure 5.6  x
+
+A normal probability  The normal distribution plays a very important role in the science of statistical infer-
+distribution  ence. Moreover, many phenomena generate random variables with probability distributions
+  that are very well approximated by a normal distribution. For example, the error made in
+  measuring a person’s blood pressure may be a normal random variable, and the probability
+  distribution for the yearly rainfall in a certain region might be approximated by a normal
+  probability distribution. You can determine the adequacy of the normal approximation to
+  an existing population of data by comparing the relative frequency distribution of a large
+  sample of the data with the normal probability distribution. Methods for detecting disagree-
+  ment between a set of data and the assumption of normality are presented in Section 5.4.
+268 CHAPTER 5 ■ Continuous Random Variables
+
+  BIOGRAPHY  The normal distribution is perfectly symmetric about its mean m, as can be seen
+  in the examples in Figure 5.7. Its spread is determined by the value of its standard devi-
+CARL F. GAUSS (1777–1855)  ation s. The formula for the normal probability distribution is shown in the next box.
+  When plotted, this formula yields a curve like that shown in Figure 5.6.
+The Gaussian Distribution
+  f(x)
+The normal distribution began in
+the 18th century as a theoretical  Figure 5.7
+distribution for errors in disciplines
+in which fluctuations in nature  Several normal distributions with
+were believed to behave randomly.
+Although he may not have been the  different means and standard  –4  0  3  x
+first to discover the formula, the  deviations
+normal distribution was named
+the Gaussian distribution after Carl  Probability Distribution for a Normal Random Variable x
+Friedrich Gauss. A well-known and
+respected German mathematician,  Probability density function: f1x2 = 1 e-11>2231x - m2>s42
+physicist, and astronomer, Gauss  s 12p
+applied the normal distribution
+while studying the motion of planets  where
+and stars. Gauss’s prowess as a  m = Mean of the normal random variable x
+mathematician was exemplified  s = Standard deviation
+by one of his most important  p = 3.1416 c
+discoveries: At the young age of  e = 2.71828 c
+22, Gauss constructed a regular
+17-gon by ruler and compasses—a  P1x 6 a2 is obtained from a table of normal probabilities.
+feat that was the most major
+advance in mathematics since
+the time of the ancient Greeks. In
+addition to publishing close to 200
+scientific papers, Gauss invented
+the heliograph as well as a primitive
+telegraph. ■
+
+  Note that the mean m and standard deviation s appear in this formula, so that
+  no separate formulas for m and s are necessary. To graph the normal curve, we have
+  to know the numerical values of m and s. Computing the area over intervals under the
+  normal probability distribution is a difficult task.* Consequently, we will use either tech-
+  nology or the computed areas listed in Table II of Appendix B. Although there are an
+  infinitely large number of normal curves—one for each pair of values of m and s—we
+  have formed a single table that will apply to any normal curve.
+
+  Table II is based on a normal distribution with mean m = 0 and standard deviation
+  s = 1, called a standard normal distribution. A random variable with a standard normal
+  distribution is typically denoted by the symbol z. The formula for the probability distri-
+  bution of z is
+
+  f1z2 = 1 e-11>22z2
+  12p
+
+  Figure 5.8 shows the graph of a standard normal distribution.
+
+  f(z)
+
+Figure 5.8  –3 –2 –1  0  1  2  3  z
+
+Standard normal distribution:
+m = 0, s = 1
+
+  *The student with a knowledge of calculus should note that there is no closed-form expression for
+
+  P1a 6 x 6 b2 = 1 ab f1x2 dx for the normal probability distribution.The value of this definite integral can be
+  obtained to any desired degree of accuracy by numerical approximation. For this reason, it is tabulated for the user.
+  SECTION 5.3 ■ The Normal Distribution 269
+
+  The standard normal distribution is a normal distribution with m = 0 and s = 1.
+  A random variable with a standard normal distribution, denoted by the symbol z, is
+  called a standard normal random variable.
+
+  Since we will ultimately convert all normal random variables to standard normal
+  variables in order to use Table II to find probabilities, it is important that you learn to
+  use Table II well. A partial reproduction of that table is shown in Table 5.1. Note that the
+  values of the standard normal random variable z are listed in the left-hand column. The
+  entries in the body of the table give the area (probability) between 0 and z. Examples
+  5.3–5.6 illustrate the use of the table.
+
+  Table 5.1 Reproduction of Part of Table II in Appendix B
+
+  f(z)
+
+  0z
+
+  z  .00 .01 .02 .03 .04 .05 .06 .07 .08 .09
+
+  .0 .0000 .0040 .0080 .0120 .0160 .0199 .0239 .0279 .0319 .0359
+  .1 .0398 .0438 .0478 .0517 .0557 .0596 .0636 .0675 .0714 .0753
+  .2 .0793 .0832 .0871 .0910 .0948 .0987 .1026 .1064 .1103 .1141
+  .3 .1179 .1217 .1255 .1293 .1331 .1368 .1406 .1443 .1480 .1517
+  .4 .1554 .1591 .1628 .1664 .1700 .1736 .1772 .1808 .1844 .1879
+  .5 .1915 .1950 .1985 .2019 .2054 .2088 .2123 .2157 .2190 .2224
+  .6 .2257 .2291 .2324 .2357 .2389 .2422 .2454 .2486 .2517 .2549
+  .7 .2580 .2611 .2642 .2673 .2704 .2734 .2764 .2794 .2823 .2852
+  .8 .2881 .2910 .2939 .2967 .2995 .3023 .3051 .3078 .3106 .3133
+  .9 .3159 .3186 .3212 .3238 .3264 .3289 .3315 .3340 .3365 .3389
+  1.0 .3413 .3438 .3461 .3485 .3508 .3531 .3554 .3577 .3599 .3621
+  1.1 .3643 .3665 .3686 .3708 .3729 .3749 .3770 .3790 .3810 .3830
+  1.2 .3849 .3869 .3888 .3907 .3925 .3944 .3962 .3980 .3997 .4015
+  1.3 .4032 .4049 .4066 .4082 .4099 .4115 .4131 .4147 .4162 .4177
+  1.4 .4192 .4207 .4222 .4236 .4251 .4265 .4279 .4292 .4306 .4319
+  1.5 .4332 .4345 .4357 .4370 .4382 .4394 .4406 .4418 .4429 .4441
+
+ Example 5.3  Problem Find the probability that the standard normal random variable z falls between
+  -1.33 and +1.33.
+using the Standard
+Normal Table to Find  Solution The standard normal distribution is shown again in Figure 5.9. Since all
+P 1 − z0 * z * z0 2  probabilities associated with standard normal random variables can be depicted as areas
+  under the standard normal curve, you should always draw the curve and then equate the
+  desired probability to an area.
+
+  In this example, we want to find the probability that z falls between -1.33 and +1.33,
+  which is equivalent to the area between -1.33 and +1.33, shown highlighted in Figure 5.9.
+
+  A2 A1
+
+  Figure 5.9  z
+
+  Areas under the standard  –3 –2 –1 0 1 2 3
+
+  normal curve for Example 5.3  –1.33  1.33
+270 CHAPTER 5 ■ Continuous Random Variables
+
+z .00 .01 .02 .03 ...  Table II gives the area between z = 0 and any positive value of z, so that if we look up
+  z = 1.33 (the value in the 1.3 row and .03 column, as shown in Figure 5.10), we find that
+.0  the area between z = 0 and z = 1.33 is .4082. This is the area labeled A1 in Figure 5.9. To
+  find the area A2 located between z = 0 and z = -1.33, we note that the symmetry of the
+.1  normal distribution implies that the area between z = 0 and any point to the left is equal to
+  the area between z = 0 and the point equidistant to the right.Thus, in this example the area
+.2  between z = 0 and z = -1.33 is equal to the area between z = 0 and z = +1.33. That is,
+
+.3  A1 = A2 = .4082
+
+.4  The probability that z falls between -1.33 and +1.33 is the sum of the areas of A1 and A2.
+  We summarize in probabilistic notation:
+.5
+  P1 -1.33 6 z 6 -1.332 = P1 -1.33 6 z 6 02 + P10 6 z … 1.332
+.6  = A1 + A2 = .4082 + .4082 = .8164
+
+.7  Look Back Remember that “6 ” and “… ” are equivalent in events involving z because
+  the inclusion (or exclusion) of a single point does not alter the probability of an event
+.8  involving a continuous random variable.
+
+..9  ■ Now Work Exercise 5.25e–f
+
+1.0
+
+1.1
+
+1.2
+
+1.3  .4082
+
+.
+
+.
+
+.
+
+Figure 5.10
+
+Finding z = 1.33 in the standard
+normal table, Example 5.3
+
+ Example 5.4  Problem Find the probability that a standard normal random variable exceeds 1.64; that
+  is, find P1z 7 1.642.
+using the Standard
+Normal Table to Find  Solution The area under the standard normal distribution to the right of 1.64 is the
+P 1 z + z0 2  highlighted area labeled A1 in Figure 5.11. This area represents the probability that z
+  exceeds 1.64. However, when we look up z = 1.64 in Table II, we must remember that
+Figure 5.11  the probability given in the table corresponds to the area between z = 0 and z = 1.64
+Areas under the standard  (the area labeled A2 in Figure 5.11). From Table II, we find that A2 = .4495. To find the
+normal curve for Example 5.4  area A1 to the right of 1.64, we make use of two facts:
+  1. The standard normal distribution is symmetric about its mean, z = 0.
+  2. The total area under the standard normal probability distribution equals 1.
+
+  Taken together, these two facts imply that the areas on either side of the mean, z = 0,
+  equal .5; thus, the area to the right of z = 0 in Figure 5.11 is A1 + A2 = .5. Then
+
+  P1z 7 1.642 = A1 = .5 - A2 = .5 - .4495 = .0505
+
+  P(z > 1.64) = A1
+
+  A2
+
+  z
+  –3 –2 –1 0 1 2 3
+
+  1.64
+
+  Look Back To attach some practical significance to this probability, note that the
+  implication is that the chance of a standard normal random variable exceeding 1.64 is
+  only about .05.
+
+  ■ Now Work Exercise 5.26a
+
+ Example 5.5  Problem Find the probability that a standard normal random variable lies to the left of .67.
+
+using the Standard  Solution The event sought is shown as the highlighted area in Figure 5.12. We want to find
+Normal Table to Find  P1z 6 .672. We divide the highlighted area into two parts: the area A1 between z = 0
+P 1 z * z0 2  and z = .67, and the area A2 to the left of z = 0. We must always make such a division
+  when the desired area lies on both sides of the mean 1z = 02 because Table II contains
+  SECTION 5.3 ■ The Normal Distribution 271
+
+  areas between z = 0 and the point you look up. We look up z = .67 in Table II to find
+  that A1 = .2486. The symmetry of the standard normal distribution also implies that half
+  the distribution lies on each side of the mean, so the area A2 to the left of z = 0 is .5.Then
+
+  P1z 6 .672 = A1 + A2 = .2486 + .5 = .7486
+
+  P(z < .67)
+
+Figure 5.12  A2 A1
+Areas under the standard
+normal curve for Example 5.5  z
+  0 .67
+ Example 5.6
+  Look Back Note that this probability is approximately .75. Thus, about 75% of the time,
+using the Standard  the standard normal random variable z will fall below .67. This statement implies that
+Normal Table to Find  z = .67 represents the approximate 75th percentile (or upper quartile) of the standard
+  normal distribution.
+P1 0 z 0 + z02
+  ■ Now Work Exercise 5.26h
+
+  Problem Find the probability that a standard normal random variable exceeds 1.96 in
+  absolute value.
+
+  Solution The event sought is shown highlighted in Figure 5.13. We want to find
+
+  P1 0 z 0 7 1.962 = P1z 6 -1.96 or z 7 1.962
+
+  A1  A2
+
+Figure 5.13  z
+
+Areas under the standard  –1.96  0  1.96
+normal curve for Example 5.6
+
+  Note that the total highlighted area is the sum of the two areas A1 and A2—areas that
+  are equal because of the symmetry of the normal distribution.
+
+  We look up z = 1.96 and find the area between z = 0 and z = 1.96 to be .4750.
+  Then A2, the area to the right of 1.96, is .5 - .4750 = .0250, so that
+
+  P1 0 z 0 7 1.962 = A1 + A2 = .0250 + .0250 = .05
+
+  Look Back We emphasize, again, the importance of sketching the standard normal curve
+  in finding normal probabilities.
+
+  ■
+
+  To apply Table II to a normal random variable x with any mean m and any standard
+  deviation s, we must first convert the value of x to a z-score. The population z-score for
+  a measurement was defined in Section 2.6 as the distance between the measurement and
+  the population mean, divided by the population standard deviation. Thus, the z-score
+  gives the distance between a measurement and the mean in units equal to the standard
+  deviation. In symbolic form, the z-score for the measurement x is
+
+  x-m
+  z= s
+
+  Note that when x = m, we obtain z = 0.
+  An important property of the normal distribution is that if x is normally distrib-
+
+  uted with any mean and any standard deviation, z is always normally distributed with
+  mean 0 and standard deviation 1. That is, z is a standard normal random variable.
+272 CHAPTER 5 ■ Continuous Random Variables
+
+  Converting a Normal Distribution to a Standard Normal Distribution
+
+  If x is a normal random variable with mean m and standard deviation s, then the
+  random variable z defined by the formula
+
+  x-m
+  z= s
+
+  has a standard normal distribution. The value z describes the number of standard
+  deviations between x and m.
+
+  Recall from Example 5.6 that P1 0 z 0 7 1.962 = .05. This probability, coupled with
+
+  our interpretation of z, implies that any normal random variable lies more than 1.96
+  standard deviations from its mean only 5% of the time. Compare this statement to the
+  empirical rule (Chapter 2), which tells us that about 5% of the measurements in mound-
+  shaped distributions will lie beyond two standard deviations from the mean. The nor-
+  mal distribution actually provides the model on which the empirical rule is based, along
+  with much “empirical” experience with real data that often approximately obey the rule,
+  whether drawn from a normal distribution or not.
+
+ Example 5.7  Problem Assume that the length of time, x, between charges of a cellular phone is
+  normally distributed with a mean of 10 hours and a standard deviation of 1.5 hours. Find
+Finding a Normal  the probability that the cell phone will last between 8 and 12 hours between charges.
+Probability—Cell Phone
+Application  Solution The normal distribution with mean m = 10 and s = 1.5 is shown in Figure 5.14.
+  The desired probability that the cell phone lasts between 8 and 12 hours is highlighted.
+  In order to find that probability, we must first convert
+  the distribution to a standard normal distribution, f(x)
+  which we do by calculating the z-score:
+
+  x-m
+  z= s
+
+  The z-scores corresponding to the important values  8 10 12  x
+  of x are shown beneath the x values on the horizontal
+  –1.33 0 1.33  z
+
+  axis in Figure 5.14. Note that z = 0 corresponds to the  Figure 5.14
+
+  mean of m = 10 hours, whereas the x values 8 and 12  Areas under the normal curve
+  yield z-scores of -1.33 and +1.33, respectively. Thus,  for Example 5.7
+
+  the event that the cell phone lasts between 8 and 12
+
+  hours is equivalent to the event that a standard normal random variable lies between
+
+  -1.33 and +1.33. We found this probability in Example 5.3 (see Figure 5.9) by doubling
+
+  the area corresponding to z = 1.33 in Table II. That is,
+
+  P18 … x … 122 = P1 -1.33 … z … 1.332 = 21.40822 = .8164
+
+  ■ Now Work Exercise 5.31a
+
+  Table II in Appendix B provides good approximations to probabilities under the
+  normal curve. However, if you do not have access to a normal table, you can always rely
+  on statistical software or a graphing calculator to compute the desired probability. With
+  most statistical software, you will need to specify the mean and standard deviation of the
+  normal distribution, as well as the key values of the variable for which you desire prob-
+  abilities. In Example 5.7, we desire P18 … x … 122, where m = 10 and s = 1.5. To find
+  this probability using MINITAB’s normal probability function, we enter 10 for the mean
+  and 1.5 for the standard deviation, and then find two cumulative probabilities: P1x … 122
+  and P1x 6 82. These two probabilities are shown (shaded) on the MINITAB printout in
+  Figure 5.15. The difference between the two probabilities yields the desired result:
+
+  P18 … x … 122 = P1x … 122 - P1x 6 82 = .908789 - .0912112 = .8175778
+
+  Note that this probability agrees with the value computed using Table II to two decimal
+  places. The difference is due to rounding of the probabilities given in Table II.
+  SECTION 5.3 ■ The Normal Distribution 273
+
+Figure 5.15
+MINITAB output with
+cumulative normal probabilities
+
+  The steps to follow in calculating a probability corresponding to a normal random
+  variable are shown in the following box:
+
+  Steps for Finding a Probability Corresponding to a Normal Random Variable
+  1. Sketch the normal distribution and indicate the mean of the random variable x.
+
+  Then shade the area corresponding to the probability you want to find.
+  2. Convert the boundaries of the shaded area from x values to standard normal
+
+  random variable z values by using the formula
+  x-m
+
+  z= s
+
+  Show the z values under the corresponding x values on your sketch.
+  3. Use technology or Table II in Appendix B to find the areas corresponding to the
+
+  z values. If necessary, use the symmetry of the normal distribution to find areas
+  corresponding to negative z values and the fact that the total area on each side
+  of the mean equals .5 to convert the areas from Table II to the probabilities of
+  the event you have shaded.
+
+ Example 5.8  Problem Suppose an automobile manufacturer introduces a new model that has an
+  advertised mean in-city mileage of 27 miles per gallon. Although such advertisements
+using Normal  seldom report any measure of variability, suppose you write the manufacturer for the
+Probabilities to Make an  details of the tests and you find that the standard deviation is 3 miles per gallon. This
+Inference—Advertised  information leads you to formulate a probability model for the random variable x,
+Gas Mileage  the in-city mileage for this car model. You believe that the probability distribution
+  of x can be approximated by a normal distribution with a mean of 27 and a standard
+  deviation of 3.
+
+  a. If you were to buy this model of automobile, what is the probability that you would
+  purchase one that averages less than 20 miles per gallon for in-city driving? In other
+  words, find P1x 6 202.
+
+  b. Suppose you purchase one of these new models and it does get less than 20 miles per
+  gallon for in-city driving. Should you conclude that your probability model is incorrect?
+
+  Solution
+
+  a. The probability model proposed for x, the in-city mileage, is shown in Figure 5.16. We
+  are interested in finding the area A to the left of 20, since that area corresponds to the
+  probability that a measurement chosen from this distribution falls below 20. In other
+  words, if this model is correct, the area A represents the fraction of cars that can be
+

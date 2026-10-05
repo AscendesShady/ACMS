@@ -1,0 +1,1672 @@
+  Highway Capacity Manual 2000
+
+6. Compute weaving segment   v   5,000 
+  density (use Equation 24-6).     
+   N  4 
+7. Determine level of service  D=  =  = 13.3 pc/km/ln
+  (use Exhibit 24-2).  S  93. 9
+
+8. Determine weaving segment  LOS C
+  capacity (use Exhibit 24-8).
+  cb = 8,474 pc/h [Exhibit 24-8(A)]
+
+The Results This weaving segment will operate at LOS C during the peak hour. The
+weaving segment density is 13.3 pc/km/ln, and the capacity is estimated to be 8,470 pc/h.
+Because neither the traffic composition nor the PHF is specified, capacities per full hour
+and for prevailing conditions cannot be determined.
+
+  24-27  Chapter 24 - Freeway Weaving
+  Example Problems
+Highway Capacity Manual 2000
+
+Example Problem 2  FREEWAY WEAVING WORKSHEET
+
+  General Information  Site Information
+
+  Analyst  ___M_._E_. ___________________  Freeway/Direction of Travel  ____-___________________
+  Agency or Company  ___C_E_I____________________  Weaving Segment Location  ____-___________________
+  Date Performed  ___8_/_3_/_9_9_________________  Jurisdiction  ____-___________________
+  Analysis Time Period  ___A_M__-P_e_a_k________________  Analysis Year  ____1_9_9_9________________
+
+  X Operational (LOS)   Design (N, L, Type)   Planning (LOS)   Planning (N, L, Type)
+
+  Inputs
+
+  L = 300 m  Freeway free-flow speed, SFF = ___1_2_0____ km/h
+
+  A  C  Weaving number of lanes, N = ___4______
+
+  Weaving segment length, L ___3_0__0___ m
+
+  Terrain   Level   Rolling
+
+  B 4000 D  Weaving type X Type A   Type B   Type C
+  300  vw  __0__.1_8_0___
+  __0__.3_3_3___
+  600  100  Volume ratio, VR = v
+  Weaving ratio, R = vw2
+
+  vw
+
+  Sketch (show lanes, L, vo1, vo2, vw1, vw2)
+
+  Conversion to pc/h Under Base Conditions
+
+  (pc/h)  AADT  K  D  V  PHF  % HV  fHV  fp v = V
+  PHF * fHV *fp
+  (veh/day)  (veh/h)  4,000
+  100
+  vo1  600
+  vo2  300
+  vw1  900
+  vw2  4,100
+  vw  5,000
+  vnw
+  v
+
+  Weaving and Nonweaving Speeds
+
+  Unconstrained  Constrained
+  Weaving (i = w) Nonweaving (i = nw)
+  Weaving (i = w)  Nonweaving (i = nw)
+
+  a (Exhibit 24-6)  0.15  0.0035
+  b (Exhibit 24-6)  2.2  4.0
+  c (Exhibit 24-6)  0.97  1.3
+  d (Exhibit 24-6)  0.80  0.75
+
+  Weaving intensity factor, Wi  0.879  0.410
+
+  a(1 + VR)b (v/N)c
+  Wi = (3.28L)d
+
+  Weaving and nonweaving speeds, Si (km/h)  79.3  97.8
+
+  Si = 24 + SFF – 16 1 + Wi
+
+  Number of lanes required for unconstrained operation, Nw (Exhibit 24-7) ___1._0_2_____
+
+  Maximum number of lanes, Nw(max) (Exhibit 24-7)  ___1._4______
+  X If Nw < Nw(max) unconstrained operation   If Nw ≥ Nw(max) constrained operation
+
+  Weaving Segment Speed, Density, Level of Service, and Capacity
+
+  Weaving segment speed, S (km/h)  93.9
+
+  S = v vw vnw  13.3
+  +  C
+
+  (Sw) (Snw)
+
+  Weaving segment density, D (pc/km/ln)
+
+  D = v/NS
+
+  Level of service, LOS (Exhibit 24-2)
+
+  Capacity for base condition, cb (pc/h)  8,474
+  (Exhibit 24-8)
+
+  Capacity as a 15-min flow rate, c (veh/h)  -
+  c = cb * fHV * fp
+
+  Capacity as a full-hour volume, ch (veh/h)  -
+  ch = c(PHF)
+
+Chapter 24 - Freeway Weaving  24-28
+Example Problems
+  Highway Capacity Manual 2000
+
+  EXAMPLE PROBLEM 3
+
+The Weaving Segment  A ramp-weaving segment on an urban freeway as shown on
+the worksheet.
+
+The Question What are the level of service and capacity of the weaving segment?
+
+The Facts  √ PHF = 0.85,
+  √ Volume (A-C) = 975 veh/h,  √ Rolling terrain,
+  √ Volume (A-D) = 650 veh/h,  √ Drivers are regular commuters,
+  √ Volume (B-C) = 520 veh/h,  √ FFS = 110 km/h for freeway, and
+  √ Volume (B-D) = 0 veh/h,  √ Weaving segment length = 300 m.
+  √ 15 percent trucks,
+
+Comments
+  √ Use Chapter 23, “Basic Freeway Segments,” to identify fHV and fp.
+
+Outline of Solution  All input parameters are known, so no default values are
+
+required. Demand volumes are converted to flow rates, and weaving configuration type is
+
+determined. Weaving and nonweaving speeds are computed and used to determine
+
+weaving segment speed. The density in the weaving segment is calculated, and level of
+
+service is determined. Capacity is then determined.
+
+Steps  v= V
+1. Convert volume (veh/h) to flow  (PHF)(fHV )(fp )
+
+  rate (pc/h) (use Equation  v(A-C) = 975 = 1,406 pc/h
+  24-1).  (0. 85)(0. 816)(1.000)
+
+1a. Determine fp (use Chapter  v(A-D) = 937 pc/h
+  23).  v(B-C) = 750 pc/h
+  fp = 1.000
+1b. Determine fHV (use Chapter
+  23).  fHV = 1
+  1+ PT (ET − 1) + PR (ER − 1)
+2. Determine weaving segment
+  configuration type (use Exhibit  fHV = 1 = 0. 816
+  24-5).  1+ 0.15(2. 5 − 1) + 0
+
+3. Compute critical variables.  Type A (all weaving vehicles must make one lane
+  change)
+
+  vw = 937 + 750 = 1,687 pc/h
+  vnw = 1,406 pc/h
+  v = 1,406 + 1,687 = 3,093 pc/h
+
+  VR = 1,687 = 0. 545  R = 750 = 0. 445
+  3, 093  1, 687
+
+  24-29  Chapter 24 - Freeway Weaving
+  Example Problems
+Highway Capacity Manual 2000
+
+  4. Compute weaving and  b vc  Si = 24 + SFF − 16
+  nonweaving speeds assuming  a(1+ VR)    1+ Wi
+  unconstrained operation (use
+  Exhibit 24-6 and Equations   N
+  24-3 and 24-4).  Wi = (3. 28L)d
+
+  5. Check type of operation (use  2.2  3, 093  0.97
+  Exhibit 24-7).  0.15(1+ 0. 545)   
+   3
+  6. Repeat Step 4 for constrained  Ww =  = 1. 319
+  operation.  (3. 28 * 300)0.80
+
+  7. Compute weaving segment  4.0  3, 093  1.3
+  speed (use Equation 24-5).  0.0035(1+ 0. 545)   
+   3
+  8. Compute weaving segment  Wnw =  = 0. 938
+  density (use Equation 24-6).  (3. 28 * 300)0.75
+
+  9. Determine level of service  Sw = 24 + 110 − 16 = 64.5 km/h
+  (use Exhibit 24-2).  1+ 1. 319
+
+  10. Determine weaving segment  Snw = 24 + 110 − 16 = 72.5 km/h
+  capacity (use Exhibit 24-8 and  1+ 0. 938
+  Equations 24-7 and 24-8).
+  Nw = 1.21(N)VR0.571L0.234/Sw0.438
+  Nw = 1.21(3)(0.5450.571)(3000.234)/64.50.438 = 1.57
+  Nw(max) = 1.4, therefore constrained operation
+
+  2.2  3, 093  0.97
+  0. 35(1+ 0. 545)   
+   3
+  Ww =  = 3.077
+  (3. 28 * 300)0.80
+
+  4.0  3, 093  0.97
+  0.0020(1+ 0. 545)   
+   3
+  Wnw =  = 0. 536
+  (3. 28 * 300)0.75
+
+  Sw = 24 + 110 − 16 = 47.1 km/h
+  1+ 3.077
+
+  Snw = 24 + 110 − 16 = 85.2 km/h
+  1+ 0. 536
+
+  S = v = 3,093 = 59.1 km/h
+   vw   vnw    1,687   1, 406 
+    +      +  
+   Sw   Snw    47.1   85. 2 
+
+   v   3,093 
+     
+   N  3 
+  D=  =  = 17.4 pc/km/ln
+  S  59.1
+
+  LOS D
+
+  cb = 4,790 pc/h [Exhibit 24-8(B)]
+  c = cb * fHV * fp = 4,790 * 0.816 * 1.000 = 3,909 veh/h
+  ch = c * PHF = 3,909 * 0.85 = 3,323 veh/h
+
+  The Results The weaving segment will operate at LOS D during the peak hour. The
+  weaving segment density is 17.4 pc/km/ln, and the capacity is estimated as 3,910 veh/h
+  (for the 15-min flow rate), or 3,320 veh/h (for the full-hour volume). Note that the three-
+  lane ramp-weave has a volume ratio of 0.545, which exceeds the maximum
+  recommended for such segments (0.45). Thus, operations may actually be worse than
+  predicted.
+
+  The capacity estimates must also be carefully considered. They reflect the maximum
+  VR that is tabulated for Type A, three-lane weaving segments (0.45). The actual value for
+  a VR of 0.545 would be expected to be lower than the values shown.
+
+  One approach to improving operations would be to change the configuration (Type A
+  segments do not handle volume ratios of 0.545 efficiently) to Type B by adding a lane to
+  the off-ramp on Leg D. This lane, not needed for general purposes, would have to be
+
+Chapter 24 - Freeway Weaving  24-30
+Example Problems
+  Highway Capacity Manual 2000
+
+dropped or designed into the ramp’s other terminus. This calculation, in effect,
+emphasizes the importance of configuration. The Type A configuration is not appropriate
+for the balance of flows presented.
+
+  FREEWAY WEAVING WORKSHEET  Example Problem 3
+
+General Information  Site Information
+
+Analyst  ___M_._E_. ___________________  Freeway/Direction of Travel  ____-___________________
+Agency or Company  ___C_E_I____________________  Weaving Segment Location  ____-___________________
+Date Performed  ___8_/_9_/_9_9_________________  Jurisdiction  ____-___________________
+Analysis Time Period  ___A_M__-P_e_a_k________________  Analysis Year  ____1_9_9_9________________
+
+X Operational (LOS)   Design (N, L, Type)   Planning (LOS)   Planning (N, L, Type)
+
+Inputs
+
+  L = 300 m  Freeway free-flow speed, SFF = ___1_10_____ km/h
+A  C Weaving number of lanes, N = ___3______
+
+B  Weaving segment length, L  ___3_0__0___ m
+  975  X Rolling
+  520  D Terrain   Level
+
+  650  Weaving type X Type A   Type B   Type C
+  Sketch (show lanes, L, vo1, vo2, vw1, vw2)
+  vw  __0__.5_4_5___
+  Volume ratio, VR = v  __0__.4_4_4___
+  Weaving ratio, R = vw2
+
+  vw
+
+Conversion to pc/h Under Base Conditions
+
+(pc/h)  AADT  K  D  V  PHF  % HV  fHV  fp  v= V
+  PHF * fHV *fp
+  (veh/day)  (veh/h)  0.85  15  0.816  1.000  1,406
+  0.85  15  0.816  1.000  0
+vo1  975  0.85  15  0.816  1.000  937
+vo2  0.85  15  0.816  1.000  750
+vw1  0  1,687
+vw2  1,406
+vw  650  3,093
+vnw
+v  520
+
+Weaving and Nonweaving Speeds
+
+  Unconstrained  Constrained
+  Weaving (i = w) Nonweaving (i = nw)
+  Weaving (i = w)  Nonweaving (i = nw)
+
+a (Exhibit 24-6)  0.15  0.0035  0.35  0.0020
+b (Exhibit 24-6)  2.2  4.0  2.2  4.0
+c (Exhibit 24-6)  0.97  1.3  0.97  1.3
+d (Exhibit 24-6)  0.80  0.75  0.80  0.75
+
+Weaving intensity factor, Wi  1.319  0.938  3.077  0.536
+
+  a(1 + VR)b (v/N)c
+  Wi = (3.28L)d
+
+Weaving and nonweaving speeds, Si (km/h)
+  Si = 24 + SFF – 16 1 + Wi  64.5  72.5  47.1  85.2
+
+Number of lanes required for unconstrained operation, Nw (Exhibit 24-7) ___1._5_7_____
+
+Maximum number of lanes, Nw(max) (Exhibit 24-7)  ___1._4______
+ If Nw < Nw(max) unconstrained operation  X If Nw ≥ Nw(max) constrained operation
+
+Weaving Segment Speed, Density, Level of Service, and Capacity
+
+Weaving segment speed, S (km/h)
+  S = v vw vnw
+  +
+  (Sw) (Snw)  59.1
+
+Weaving segment density, D (pc/km/ln)
+  D = v/NS 17.4
+
+Level of service, LOS (Exhibit 24-2)  D
+
+Capacity for base condition, cb (pc/h)  4,790
+(Exhibit 24-8)
+
+Capacity as a 15-min flow rate, c (veh/h)  3,909
+c = cb * fHV * fp  3,323
+Capacity as a full-hour volume, ch (veh/h)
+ch = c(PHF)
+
+  24-31  Chapter 24 - Freeway Weaving
+  Example Problems
+Highway Capacity Manual 2000
+
+  EXAMPLE PROBLEM 4
+
+  The Weaving Segment Alternative major weaving segments are being considered at a
+  major junction between two urban freeways as shown on the worksheets. Several design
+  constraints exist. Entry Leg A (left side) has two lanes; Entry Leg B (right side) has three
+  lanes. Exit Leg C (left side) has three lanes; Exit Leg D (right side) has two lanes. The
+  maximum length of the weaving segment is 300 m. The FFS of all entry and exit legs is
+  120 km/h.
+
+  The Question What are the required number of lanes and weaving segment
+  configuration to achieve LOS C?
+
+  The Facts  √ Flow rate (B-D) = 2,000 pc/h,
+  √ Flow rate (A-C) = 2,000 pc/h,  √ FFS = 120 km/h for both freeways, and
+  √ Flow rate (A-D) = 1,450 pc/h,  √ Weaving segment length = 300 m.
+  √ Flow rate (B-C) = 1,500 pc/h,
+
+  Outline of Solution Demand flows are given in passenger cars per hour for equivalent
+  base conditions. Therefore, no conversion of flows is required. Weaving number of lanes
+  and configuration are assumed, and LOS is determined. If the LOS is below C, a better
+  configuration is assumed until LOS C or better is achieved.
+
+  Steps  Type C (Movement B-C requires no lane change;
+  1. Assume lane configuration  Movement A-D requires two lane changes).
+
+  shown on the worksheet.  vw = 1,500 + 1,450 = 2,950 pc/h
+  2. Determine weaving  vnw = 2,000 + 2,000 = 4,000 pc/h
+  v = 4,000 + 2,950 = 6,950 pc/h
+  segment configuration
+  type (use Exhibit 24-5).  VR = 2, 950 = 0.424
+  3. Compute critical variables.  6, 950
+
+  4. Compute weaving and  R = 1, 450 = 0. 492
+  nonweaving speeds  2, 950
+  assuming unconstrained
+  operation (use Exhibit  b vc  Si = 24 + SFF − 16
+  24-6 and Equations 24-3  a(1+ VR)    1+ Wi
+  and 24-4).
+   N
+  Wi = (3. 28L)d
+
+  2.3  6, 950  0.80
+  0.08(1+ 0. 424)   
+   5
+  Ww =  = 0. 944
+  (3. 28 * 300)0.60
+
+  6.0  6, 950  1.1
+  0.0020(1+ 0. 424)   
+   5
+  Wnw =  = 0.765
+  (3. 28 * 300)0.60
+
+  Sw = 24 + 120 − 16 = 77.5 km/h
+  1+ 0. 944
+
+  Snw = 24 + 120 − 16 = 82.9 km/h
+  1+ 0.765
+
+Chapter 24 - Freeway Weaving  24-32
+Example Problems
+  Highway Capacity Manual 2000
+
+5. Check type of operation  Nw = N[0.761 + 0.047VR – 0.00036L – 0.0031(Snw – Sw)]
+  (use Exhibit 24-7).
+  Nw = 5[0.761 + (0.047 * 0.424) – (0.00036 * 300)
+  – 0.0031(82.9 – 77.5)] = 3.28
+
+  Nw(max) = 3.0, constrained operation
+
+6. Repeat Step 4 for  2.3  6, 950  0.80
+  constrained operation.  0.14(1+ 0. 424)   
+   5
+  Ww =  = 1.651
+  (3. 28 * 300)0.60
+
+  6.0  6, 950  1.1
+  0.0010(1+ 0. 424)   
+   5
+  Wnw =  = 0. 382
+  (3. 28 * 300)0.60
+
+  Sw = 24 + 120 − 16 = 63.2 km/h
+  1+ 1.651
+
+  Snw = 24 + 120 − 16 = 99.3 km/h
+  1+ 0. 382
+
+7. Compute weaving  S = v = 6, 950 = 79.9 km/h
+  segment speed (use   vw   vnw    2, 950   4,000 
+  Equation 24-5).    +      +  
+   Sw   Snw    63. 2   99. 3 
+
+8. Compute weaving   v   6, 950 
+  segment density (use     
+  Equation 24-6).   N  5 
+  D=  =  = 17.4 pc/km/ln
+  S  79. 9
+
+9. Determine level of service LOS D
+  (use Exhibit 24-2).
+
+  24-33  Chapter 24 - Freeway Weaving
+  Example Problems
+Highway Capacity Manual 2000
+
+Example Problem 4  FREEWAY WEAVING WORKSHEET
+
+  General Information  Site Information
+
+  Analyst  ___M_._E_. ___________________  Freeway/Direction of Travel  ____-___________________
+  Agency or Company  ___C_E_I____________________  Weaving Segment Location  ____-___________________
+  Date Performed  ___8_/_9_/_9_9_________________  Jurisdiction  ____-___________________
+  Analysis Time Period  ___A_M__-P_e_a_k________________  Analysis Year  ____1_9_9_9________________
+
+   Operational (LOS)  X Design (N, L, Type)   Planning (LOS)   Planning (N, L, Type)
+
+  Inputs  L = 300 m  Freeway free-flow speed, SFF = ___1_2_0____ km/h
+  A  C Weaving number of lanes, N = ___5______
+
+  Weaving segment length, L ___3_0__0___ m
+
+  B  D Terrain   Level   Rolling
+   Type B
+  2000  Weaving type  Type A  X Type C
+  1500
+  1450  vw  __0__.4_2_4___
+  Volume ratio, VR = v  __0__.4_9_2___
+  2000  Weaving ratio, R = vw2
+  Sketch (show lanes, L, vo1, vo2, vw1, vw2)
+  vw
+
+  Conversion to pc/h Under Base Conditions
+
+  (pc/h)  AADT  K  D  V  PHF  % HV  fHV  fp v = V
+  PHF * fHV *fp
+  (veh/day)  (veh/h)  2,000
+  2,000
+  vo1  1,500
+  vo2  1,450
+  vw1  2,950
+  vw2  4,000
+  vw  6,950
+  vnw
+  v
+
+  Weaving and Nonweaving Speeds
+
+  Unconstrained  Constrained
+  Weaving (i = w) Nonweaving (i = nw)
+  Weaving (i = w)  Nonweaving (i = nw)
+
+  a (Exhibit 24-6)  0.08  0.0020  0.14  0.0010
+  b (Exhibit 24-6)  2.3  6.0  2.3  6.0
+  c (Exhibit 24-6)  0.80  1.1  0.80  1.1
+  d (Exhibit 24-6)  0.60  0.60  0.60  0.60
+
+  Weaving intensity factor, Wi  0.944  0.765  1.651  0.382
+
+  a(1 + VR)b (v/N)c
+  Wi = (3.28L)d
+
+  Weaving and nonweaving speeds, Si (km/h)
+  Si = 24 + SFF – 16 1 + Wi
+  77.5  82.9  63.2  99.3
+
+  Number of lanes required for unconstrained operation, Nw (Exhibit 24-7) ___3_.2_8_____
+
+  Maximum number of lanes, Nw(max) (Exhibit 24-7)  ___3_.0______
+   If Nw < Nw(max) unconstrained operation  X If Nw ≥ Nw(max) constrained operation
+
+  Weaving Segment Speed, Density, Level of Service, and Capacity
+
+  Weaving segment speed, S (km/h)
+  S = v vw vnw
+  +
+  (Sw) (Snw)  79.9
+
+  Weaving segment density, D (pc/km/ln)
+  D = v/NS 17.4
+
+  Level of service, LOS (Exhibit 24-2)  D
+
+  Capacity for base condition, cb (pc/h)
+  (Exhibit 24-8)
+
+  Capacity as a 15-min flow rate, c (veh/h)
+  c = cb * fHV * fp
+  Capacity as a full-hour volume, ch (veh/h)
+  ch = c(PHF)
+
+Chapter 24 - Freeway Weaving  24-34
+Example Problems
+  Highway Capacity Manual 2000
+
+  The trial design just misses the design objective of LOS C. There are other troubling
+aspects of the results as well. The R value (0.492) exceeds the maximum recommended
+for Type C segments (0.40), and the segment might, therefore, operate worse than
+expected. The constrained operating condition produces a large difference in speed
+between weaving and nonweaving traffic streams. That is also undesirable.
+
+  There is no additional length available, since the maximum of 300 m has already been
+used. The width cannot be made six lanes without adding lanes to entry and exit roadways
+as well, where they are apparently not needed. The only other potential change would be to
+alter the configuration to a Type B design. This is best accomplished by adding a lane to
+Leg D. The lane will make weaving more efficient and can be dropped further downstream
+on Leg D.
+
+10. Assume lane configuration
+  shown on the worksheet.
+
+11. Determine weaving  Type B (Movement B-C requires no lane change;
+  segment configuration  Movement A-D requires one lane change).
+  type (use Exhibit 24-5).
+
+12. Compute weaving and  b vc  Si = 24 + SFF − 16
+  nonweaving speeds  a(1+ VR)    1+ Wi
+  assuming unconstrained
+  operation (use Exhibit   N
+  24-6 and Equations 24-3  Wi = (3. 28L)d
+  and 24-4).
+  2.2  6, 950  0.70
+  0.08(1+ 0. 424)   
+   5
+  Ww =  = 0. 880
+  (3. 28 * 300)0.50
+
+  6.0  6, 950  1.0
+  0.0020(1+ 0. 424)   
+   5
+  Wnw =  = 0.739
+  (3. 28 * 300)0.50
+
+  Sw = 24 + 120 − 16 = 79.3 km/h
+  1+ 0. 880
+
+  Snw = 24 + 120 − 16 = 83.8 km/h
+  1+ 0.739
+
+13. Check type of operation  Nw = N[0.085 + 0.703VR + (71.57/L) – 0.0112(Snw – Sw)]
+  (use Exhibit 24-7).
+  Nw = 5[0.085 + (0.703 * 0.424) + (71.57/300)
+  – 0.0112(83.8 – 79.3)] = 2.86
+
+  Nw(max) = 3.5, unconstrained operation
+
+14. Compute weaving  S = v = 6, 950 = 81.8 km/h
+  segment speed (use   vw   vnw    2, 950   4,000 
+  Equation 24-5).    +      +  
+   Sw   Snw    79. 3   83. 8 
+
+15. Compute weaving   v   6, 950 
+  segment density (use     
+  Equation 24-6).   N  5 
+  D=  =  = 17.0 pc/km/ln
+  S  81. 8
+
+16. Determine level of service LOS C
+  (use Exhibit 24-2).
+
+The Results Whereas the level of service does improve to barely provide the desired
+LOS C, there are many other beneficial effects of providing the Type B configuration.
+Unconstrained operation prevails, and the difference in speed between the weaving and
+nonweaving streams is reduced substantially. This calculation illustrates the advantage of
+a Type B configuration in handling high proportions of weaving traffic.
+
+  24-35  Chapter 24 - Freeway Weaving
+  Example Problems
+Highway Capacity Manual 2000
+
+Example Problem 4  FREEWAY WEAVING WORKSHEET
+
+  General Information  Site Information
+
+  Analyst  ___M_._E_. ___________________  Freeway/Direction of Travel  ____-___________________
+  Agency or Company  ___C_E_I____________________  Weaving Segment Location  ____-___________________
+  Date Performed  ___8_/_9_/_9_9_________________  Jurisdiction  ____-___________________
+  Analysis Time Period  ___A_M__-P_e_a_k________________  Analysis Year  ____1_9_9_9________________
+
+   Operational (LOS)  X Design (N, L, Type)   Planning (LOS)   Planning (N, L, Type)
+
+  Inputs  L = 300 m  Freeway free-flow speed, SFF = ___1_2_0____ km/h
+  A  C Weaving number of lanes, N = ___5______
+
+  Weaving segment length, L ___3_0__0___ m
+
+  B  D Terrain   Level   Rolling
+  X Type B
+  2000  Weaving type  Type A   Type C
+  1500
+  1450  vw  __0__.4_2_4___
+  Volume ratio, VR = v  __0__.4_9_2___
+  2000  Weaving ratio, R = vw2
+  Sketch (show lanes, L, vo1, vo2, vw1, vw2)
+  vw
+
+  Conversion to pc/h Under Base Conditions
+
+  (pc/h)  AADT  K  D  V  PHF  % HV  fHV  fp v = V
+  PHF * fHV *fp
+  (veh/day)  (veh/h)  2,000
+  2,000
+  vo1  1,500
+  vo2  1,450
+  vw1  2,950
+  vw2  4,000
+  vw  6,950
+  vnw
+  v
+
+  Weaving and Nonweaving Speeds
+
+  Unconstrained  Constrained
+  Weaving (i = w) Nonweaving (i = nw)
+  Weaving (i = w)  Nonweaving (i = nw)
+
+  a (Exhibit 24-6)  0.08  0.0020
+  b (Exhibit 24-6)  2.2  6.0
+  c (Exhibit 24-6)  0.70  1.0
+  d (Exhibit 24-6)  0.50  0.50
+
+  Weaving intensity factor, Wi  0.880  0.739
+
+  a(1 + VR)b (v/N)c
+  Wi = (3.28L)d
+
+  Weaving and nonweaving speeds, Si (km/h)  79.3  83.8
+
+  Si = 24 + SFF – 16 1 + Wi
+
+  Number of lanes required for unconstrained operation, Nw (Exhibit 24-7) ___2_.8_6_____
+
+  Maximum number of lanes, Nw(max) (Exhibit 24-7)  ___3_.5______
+  X If Nw < Nw(max) unconstrained operation   If Nw ≥ Nw(max) constrained operation
+
+  Weaving Segment Speed, Density, Level of Service, and Capacity
+
+  Weaving segment speed, S (km/h)
+  S = v vw vnw
+  +
+  (Sw) (Snw)  81.8
+
+  Weaving segment density, D (pc/km/ln)
+  D = v/NS 17.0
+
+  Level of service, LOS (Exhibit 24-2)  C
+
+  Capacity for base condition, cb (pc/h)
+  (Exhibit 24-8)
+
+  Capacity as a 15-min flow rate, c (veh/h)
+  c = cb * fHV * fp
+  Capacity as a full-hour volume, ch (veh/h)
+  ch = c(PHF)
+
+Chapter 24 - Freeway Weaving  24-36
+Example Problems
+  Highway Capacity Manual 2000
+
+  EXAMPLE PROBLEM 5
+
+The Weaving Segment  A major interchange is to be built to join two major freeways in
+a suburban area.
+
+The Question What are the required number of lanes, length, and configuration of the
+weaving segment to achieve LOS C operation?
+
+The Facts The flows analyzed are shown in the weaving diagram below. The flow
+rates are given in passenger cars per hour under base conditions. Since the interchange
+will join two future facilities, there is considerable flexibility in both the length and the width
+of the segment. The free-flow speed is 120 km/h.
+
+  A 1500 C
+  1000
+
+  700
+
+  B  1000  D
+
+The Results Since the length, width, and configuration to be used are open to
+question, so is the issue of whether to have a weaving segment at all. Speed, density,
+and level of service will be determined from trial computations for a range of conditions
+covering three, four, and five lanes, with the length ranging from 150 m to 750 m. All three
+types of weaving configuration will also be evaluated. This is a time-consuming process,
+and the use of a programmable calculator or spreadsheet is recommended. The analysis
+results are shown in the table on the next page.
+
+  A number of points should be made concerning the results and the effect on the final
+design decision.
+
+  1. Before all the potential solutions are examined, the configuration of entry and exit
+legs should be considered. To provide for minimum LOS C, two lanes are needed on
+each entry and exit leg. The five-lane option is eliminated because the four-lane option is
+able to meet the criteria.
+
+  2. If the legs are simply connected, a four-lane Type A configuration will result, and
+LOS C is produced. The main drawback of this configuration is that the operation is
+constrained. This indicates serious imbalance between weaving and nonweaving flows.
+Also, the VR of 0.405 is higher than the maximum recommended for Type A, 0.35. Traffic
+operation may be worse than predicted here.
+
+  3. There is no easy way to produce a Type C configuration given the criteria for
+entry and exit legs.
+
+  4. A Type B configuration can be achieved by adding one lane to Leg C. The
+resulting four-lane Type B segment will operate within all recommended parameters and
+meet minimum required LOS C for all lengths evaluated. A three-lane Type B
+configuration will result if a lane is merged at the entrance to and diverged at the exit from
+the segment. LOS C can also be met with three lanes if the length is 300 m or longer.
+
+  The results do not yield a clear answer, but they provide the analyst with the
+information to make a judgment. Obviously, the best operation will result from a long Type
+B segment with four lanes. However, economic and environmental considerations will
+also affect the final decision.
+
+  24-37  Chapter 24 - Freeway Weaving
+  Example Problems
+Highway Capacity Manual 2000
+
+  No. of Lanes  L (m)  S (km/h)  D (pc/km/ln)  LOS  Cons Y/N
+
+  Type A Configurations  N
+  N
+  150  59.3  23.6  E  N
+  Y
+  300  72.5  19.3  D  Y
+  Y
+  3  450  80.6  17.4  D  Y
+  Y
+  600  79.3  17.7  D  Y
+  Y
+  750  83.5  16.8  C  Y
+  Y
+  150  61.9  17.0  C  Y
+  Y
+  300  73.7  14.2  C  Y
+
+  4  450  81.2  12.9  C  N
+  N
+  600  86.5  12.1  C  N
+  N
+  750  90.5  11.6  B  N
+  N
+  150  66.9  12.6  C  N
+  N
+  300  79.2  10.6  B  N
+  N
+  5  450  86.6  9.7  B  Y
+  N
+  600  91.7  9.2  B  N
+  N
+  750  95.5  8.8  B  N
+
+  Type B Configurations  N
+  N
+  150  74.3  18.8  D  N
+  N
+  300  83.3  16.8  C  N
+  N
+  3  450  88.3  15.8  C  N
+  N
+  600  91.8  15.3  C  N
+  N
+  750  94.4  14.8  C  Y
+  Y
+  150  80.7  13.0  C  N
+  N
+  300  89.4  11.7  B  N
+
+  4  450  94.2  11.1  B
+
+  600  97.4  10.8  B
+
+  750  99.7  10.5  B
+
+  150  83.3  10.1  B
+
+  300  94.0  8.9  B
+
+  5  450  98.4  8.5  B
+
+  600  101.4  8.3  B
+
+  750  103.5  8.1  B
+
+  Type C Configurations
+
+  150  71.2  19.7  D
+
+  300  82.0  17.1  D
+
+  3  450  88.1  15.9  C
+
+  600  92.2  15.2  C
+
+  750  95.3  14.7  C
+
+  150  78.4  13.4  C
+
+  300  88.9  11.8  B
+
+  4  450  94.6  11.1  B
+
+  600  98.4  10.7  B
+
+  750  101.1  10.4  B
+
+  150  82.6  10.2  B
+
+  300  92.2  9.1  B
+
+  5  450  99.2  8.5  B
+
+  600  102.7  8.2  B
+
+  750  105.2  8.0  B
+
+  Note:
+  Cons—constrained flow; Y/N—yes/no.
+
+Chapter 24 - Freeway Weaving  24-38
+Example Problems
+  Highway Capacity Manual 2000
+
+  V. REFERENCES
+1. Reilly, W. R., J. H. Kell, and P. J. Johnson. Weaving Analysis Procedures for the
+
+  New Highway Capacity Manual. Technical Report. JHK & Associates, Tucson,
+  Ariz., 1984.
+2. Pignataro, L. J., W. R. McShane, R. P. Roess, B. Lee, and K. W. Crowley.
+  NCHRP Report 159: Weaving Areas: Design and Analysis. TRB, National
+  Research Council, Washington, D.C., 1975.
+3. Roess, R. P., et al. Freeway Capacity Analysis Procedures. Final Report, Project
+  DOT-FH-11-9336. Polytechnic Institute of New York, Brooklyn, 1979.
+4. McShane, W. R., R. P. Roess, and E. S. Prassas. Traffic Engineering, 2nd ed.
+  Prentice-Hall, Upper Saddle River, N.J., 1998.
+5. Jack E. Leisch & Associates. Completion of Procedures for Analysis and Design of
+  Traffic Weaving Sections. Final Report. Federal Highway Administration, U.S.
+  Department of Transportation, 1983.
+6. Roess, R. P. Development of Weaving Area Analysis Procedures for the 1985
+  Highway Capacity Manual. In Transportation Research Record 1112, TRB,
+  National Research Council, Washington, D.C., 1987, pp. 17–22.
+7. Fazio, J. Development and Testing of a Weaving Operational Analysis and Design
+  Procedure. Master’s thesis. University of Illinois at Chicago, Aug. 1985.
+
+  APPENDIX A. WORKSHEET
+
+  FREEWAY WEAVING WORKSHEET
+
+24-39  Chapter 24 - Freeway Weaving
+  References
+Highway Capacity Manual 2000
+
+  FREEWAY WEAVING WORKSHEET
+
+General Information  Site Information
+
+Analyst  _________________________  Freeway/Direction of Travel  _______________________
+Agency or Company  _________________________  Weaving Segment Location  _______________________
+Date Performed  _________________________  Jurisdiction  _______________________
+Analysis Time Period  _________________________  Analysis Year  _______________________
+
+ Operational (LOS)   Design (N, L, Type)   Planning (LOS)   Planning (N, L, Type)
+
+Inputs
+
+  Freeway free-flow speed, SFF =  _________ km/h
+  Weaving number of lanes, N =
+  _________
+
+  Weaving segment length, L  _________ m
+
+  Terrain   Level   Rolling
+
+  Weaving type  Type A   Type B    Type C
+
+  vw  _________
+  Volume ratio, VR = v  _________
+  Weaving ratio, R = vw2
+
+  vw
+
+  Sketch (show lanes, L, vo1, vo2, vw1, vw2)
+
+Conversion to pc/h Under Base Conditions
+
+(pc/h)  AADT  K  D  V  PHF  % HV  fHV  fp v = V
+  PHF * fHV *fp
+  (veh/day)  (veh/h)
+
+vo1
+vo2
+vw1
+vw2
+vw
+vnw
+v
+
+Weaving and Nonweaving Speeds
+
+  Unconstrained  Constrained
+  Weaving (i = w) Nonweaving (i = nw)
+  Weaving (i = w)  Nonweaving (i = nw)
+
+a (Exhibit 24-6)
+b (Exhibit 24-6)
+c (Exhibit 24-6)
+d (Exhibit 24-6)
+
+Weaving intensity factor, Wi
+
+  a(1 + VR)b (v/N)c
+  Wi = (3.28L)d
+
+Weaving and nonweaving speeds, Si (km/h)
+
+  Si = 24 + SFF – 16 1 + Wi
+
+Number of lanes required for unconstrained operation, Nw (Exhibit 24-7) __________
+
+Maximum number of lanes, Nw(max) (Exhibit 24-7)  __________
+
+ If Nw < Nw(max) unconstrained operation   If Nw ≥ Nw(max) constrained operation
+
+Weaving Segment Speed, Density, Level of Service, and Capacity
+
+Weaving segment speed, S (km/h)
+
+  S = v vw vnw
+  +
+
+  (Sw) (Snw)
+
+Weaving segment density, D (pc/km/ln)
+
+  D = v/NS
+
+Level of service, LOS (Exhibit 24-2)
+Capacity for base condition, cb (pc/h)
+(Exhibit 24-8)
+Capacity as a 15-min flow rate, c (veh/h)
+c = cb * fHV * fp
+Capacity as a full-hour volume, ch (veh/h)
+ch = c(PHF)
+
+Chapter 24 - Freeway Weaving
+  Highway Capacity Manual 2000
+
+CHAPTER 25
+
+RAMPS AND RAMP JUNCTIONS
+
+CONTENTS
+
+I. INTRODUCTION .....................................................................................................25-1
+  Scope of the Methodology ...............................................................................25-1
+  Limitations of the Methodology .........................................................................25-1
+
+II. METHODOLOGY ....................................................................................................25-1
+  Ramp Roadways ..............................................................................................25-3
+  LOS ..................................................................................................................25-4
+  Merge Influence Areas .....................................................................................25-5
+  Predicting Flow Entering Lanes 1 and 2 (v12) ...........................................25-5
+  Determining Capacity ................................................................................25-7
+  Determining LOS .......................................................................................25-8
+  Special Cases ...........................................................................................25-8
+  Two-Lane On-Ramps .........................................................................25-8
+  Lane Additions ...................................................................................25-9
+  Major Merge Areas.............................................................................25-9
+  On-Ramps on Ten-Lane Freeway (Five Lanes in
+  Each Direction) ...........................................................................25-10
+  Left-Hand On-Ramps .......................................................................25-11
+  Effects of Ramp Control at On-Ramps ............................................ 25-11
+  Diverge Influence Areas .................................................................................25-11
+  Predicting Flow Entering Lanes 1 and 2 (v12) .........................................25-12
+  Determining Capacity ..............................................................................25-14
+  Determining LOS .....................................................................................25-14
+  Special Cases .........................................................................................25-15
+  Two-Lane Off-Ramps .......................................................................25-15
+  Lane Drops ......................................................................................25-16
+  Major Diverge Areas ........................................................................25-16
+  Off-Ramps on Ten-Lane Freeways (Five Lanes in
+  One Direction) .............................................................................25-17
+  Left-Hand Off-Ramps .......................................................................25-17
+  Overlapping Ramp Influence Areas ...............................................................25-17
+  Determining Speed at Ramp Influence Areas ................................................ 25-18
+
+III. APPLICATIONS ....................................................................................................25-19
+  Computational Steps ......................................................................................25-20
+  Planning Applications .....................................................................................25-20
+  Analysis Tools ................................................................................................25-22
+
+IV. EXAMPLE PROBLEMS .........................................................................................25-23
+  Example Problem 1 ........................................................................................25-24
+  Example Problem 2 (Part I) ............................................................................25-26
+  Example Problem 2 (Part II) ...........................................................................25-28
+  Example Problem 3 (Part I) ............................................................................25-30
+  Example Problem 3 (Part II) ...........................................................................25-32
+  Example Problem 4 ........................................................................................25-34
+  Example Problem 5 ........................................................................................25-36
+  Example Problem 6 ........................................................................................25-38
+
+V. REFERENCES ......................................................................................................25-40
+APPENDIX A. WORKSHEET .....................................................................................25-40
+
+  Ramps and Ramp Junctions Worksheet
+
+  25-i  Chapter 25 - Ramps and Ramp Junctions
+Highway Capacity Manual 2000
+
+  EXHIBITS
+
+Exhibit 25-1.  Ramps and Ramp Junctions Methodology ............................................ 25-2
+Exhibit 25-2.  Critical Ramp Junction Variables .......................................................... 25-2
+Exhibit 25-3.  Approximate Capacity of Ramp Roadways ........................................... 25-4
+Exhibit 25-4.  LOS Criteria for Merge and Diverge Areas ........................................... 25-5
+Exhibit 25-5.  Models for Predicting v12 at On-Ramps ................................................ 25-6
+Exhibit 25-6.  Selecting Equations for PFM for Six-Lane Freeways ............................. 25-6
+Exhibit 25-7.  Capacity Values for Merge Areas .......................................................... 25-8
+Exhibit 25-8.  Typical Two-Lane On-Ramp ................................................................. 25-9
+Exhibit 25-9.  Major Merge Area with One Fewer Lane Leaving Influence Area ...... 25-10
+Exhibit 25-10.  Major Merge Area with Equal Number of Lanes Leaving
+  Influence Area ..................................................................................... 25-10
+Exhibit 25-11.  Flow in Lane 5 of Freeway Approaching Single-Lane, Right-Side
+  On-Ramp ............................................................................................. 25-11
+Exhibit 25-12.  Models for Predicting v12 at Off-Ramps .............................................. 25-12
+Exhibit 25-13.  Selecting Equations for PFD for Six-Lane Freeways ........................... 25-13
+Exhibit 25-14.  Capacity Values for Diverge Areas ..................................................... 25-14
+Exhibit 25-15.  Common Geometries for Two-Lane Off-Ramps .................................. 25-15
+Exhibit 25-16.  Major Diverge Area with Equal Number of Lanes Entering and
+  Leaving Influence Area ........................................................................25-16
+Exhibit 25-17.  Major Diverge Area with More Lanes Leaving Than Entering
+  Influence Area ..................................................................................... 25-16
+Exhibit 25-18.  Flow in Lane 5 of Freeway Approaching Single-Lane, Right-Hand
+  Off-Ramp ............................................................................................. 25-17
+Exhibit 25-19.  Average Speeds in Vicinity of Freeway-Ramp Terminals ................... 25-18
+Exhibit 25-20.  Ramps and Ramp Junctions Worksheet ............................................. 25-21
+
+Chapter 25 - Ramps and Ramp Junctions  25-ii
+  Highway Capacity Manual 2000
+
+  I. INTRODUCTION  Background and concepts for
+  this chapter are in Chapter 13,
+  A ramp is a length of roadway providing an exclusive connection between two  “Freeway Concepts”
+highway facilities. The facilities connected by a ramp may consist of freeways, multilane
+highways, two-lane highways, suburban streets, and urban streets.
+
+  A ramp may consist of up to three geometric elements of interest:
+  • Ramp-freeway junction,
+  • Ramp roadway, and
+  • Ramp-street junction.
+
+SCOPE OF THE METHODOLOGY
+
+  This chapter focuses on the operation of ramp-freeway junctions and on the
+characteristics of ramp roadways themselves. These procedures may be applied, in an
+approximate manner, to completely uncontrolled ramp terminals on other types of
+facilities such as multilane and two-lane highways.
+
+  Procedures in this chapter allow for the identification of likely congestion at ramp-
+freeway terminals [level of service (LOS) F] and for the analysis of operations at ramp-
+freeway junctions and on ramp roadways at LOS A through E. Chapter 22, “Freeway
+Facilities,” provides procedures for the analysis of oversaturated flow as well as special
+applications, including ramps on five-lane (one-direction) freeway segments, two-lane
+ramps, major merge areas, and major diverge areas.
+
+  For additional discussion of the general concepts and principles affecting ramp
+junction operation, consult Chapter 13, “Freeway Concepts.”
+
+  This edition of ramp-freeway terminal analysis procedures results primarily from
+studies conducted under National Cooperative Highway Research Program Project 3-37
+(1). Some special applications resulted from adaptations of procedures developed in the
+1970s (2). AASHTO policies (3) contain additional material on the geometric design and
+geometric design criteria for ramps.
+
+LIMITATIONS OF THE METHODOLOGY
+
+  The methodology in this chapter does not take into account nor is it applicable
+(without modifications by the analyst) to
+
+  • Special lanes, such as high-occupancy vehicle (HOV) lanes, as ramp entrance
+lanes;
+
+  • Ramp metering;
+  • Oversaturated conditions;
+  • Posted speed limit, and extent of police enforcement; and
+  • Presence of intelligent transportation system (ITS) features.
+
+  II. METHODOLOGY
+
+  Exhibit 25-1 illustrates input to and the basic computation order for the method for
+ramps and ramp junctions. The primary outputs of the method are LOS and capacity.
+
+  As shown in Exhibit 25-2, the basic approach to modeling merge and diverge areas
+focuses on an influence area of 450 m including the acceleration or deceleration lane and
+Lanes 1 and 2 of the freeway. Although other freeway lanes may be affected by merging
+or diverging operations and the impact of congestion in the vicinity of a ramp can extend
+beyond the 450-m influence area, this defined area experiences most of the operational
+impacts across all levels of service. Thus, the operation of vehicles within the ramp
+influence area, as defined in Exhibit 25-2, is the focus of the computational procedures.
+
+25-1  Chapter 25 - Ramps and Ramp Junctions
+  Introduction
+Highway Capacity Manual 2000
+
+  EXHIBIT 25-1. RAMPS AND RAMP JUNCTIONS METHODOLOGY
+  Input
+  - Geometric data
+  - Ramp free-flow speed
+  - Demand
+
+  Demand Flow Adjustment
+  - Peak-hour factor
+  - Heavy-vehicle factor
+  - Driver population factor
+
+  Compute flow rate
+  On-ramp (Merge influence) Off-ramp (Diverge influence)
+
+Compute demand flow rate immediately upstream  Compute demand flow rate immediately upstream
+of merge influence area  of the diverge influence area
+
+  - Lanes 1 and 2 of the mainline  - Lanes 1 and 2 of the mainline
+
+  Compute Capacity  Compute Capacity
+  - Total flow leaving merge area  - Total flow departing from diverge area
+  - Maximum flow entering merge area  - Maximum flow entering Lanes 1 and 2
+  prior to deceleration lane
+  - Existing legs of the freeway
+
+Adjusted demand flow < Capacity Adjusted demand flow ≥ Capacity Adjusted demand flow < Capacity Adjusted demand flow ≥ Capacity
+
+  Compute density  LOS Fa  Compute density  LOS Fa
+
+  Determine LOS  Determine LOS
+  Compute speeds
+  Compute speeds
+Note:
+a. Refer to Chapter 22.
+
+  EXHIBIT 25-2. CRITICAL RAMP JUNCTION VARIABLES
+
+  VF  V12  VFO
+
+  VR12 DR, SR
+
+  VR 450 m
+
+  VF  DR, SR  VFO
+  V12  450 m  VR
+
+Chapter 25 - Ramps and Ramp Junctions  25-2
+Methodology
+  Highway Capacity Manual 2000
+
+  The methodology has three major steps. First, flow entering Lanes 1 and 2
+immediately upstream of the merge influence area (v12) or at the beginning of the
+deceleration lane at diverge is determined.
+
+  Second, capacity values are determined and compared with existing or forecast
+demand flows to determine the likelihood of congestion. Several capacity values are
+evaluated:
+
+  • Maximum total flow approaching a major diverge area on the freeway (vF),
+  • Maximum total flow departing from a merge or diverge area on the freeway (vFO),
+  • Maximum total flow entering the ramp influence area (vR12 for merge areas and
+v12 for diverge areas), and
+  • Maximum flow on a ramp (vR).
+  The capacity of a merge or diverge area is always controlled by the capacity of its
+entering and exiting roadways, that is, the freeway segments upstream and downstream of
+the ramps, or by the capacity of the ramp itself. For diverge areas, failure most often
+occurs because of insufficient capacity on the off-ramp. Research has shown that the
+turbulence due to merging and diverging maneuvers does not affect the capacity of the
+roadways involved, although there may be local changes in lane distribution and use.
+  Finally, the density of flow within the ramp influence area (DR) and the level of
+service based on this variable are determined. For some situations, the average speed of
+vehicles within the influence area (SR) may also be estimated.
+  Exhibit 25-2 shows the ramp influence areas and key variables and their relationship
+to each other. A critical geometric parameter influencing operations at merge or diverge
+areas is the length of the acceleration lane (LA) or deceleration lane (LD). This length is
+measured from the point at which the left edge of the ramp lane or lanes and the right
+edge of the freeway lanes converge to the end of the taper segment connecting the ramp
+to the freeway. The point of convergence can be defined by painted markings or physical
+barriers or by some combination of the two. Note that both taper area and parallel ramps
+are measured in the same way.
+  All aspects of the model and LOS criteria are expressed in terms of equivalent
+maximum flow rates in passenger cars per hour (pc/h) under base conditions during the
+peak 15 min of the hour of interest. Therefore, before any of these procedures are
+applied, all relevant freeway and ramp flows must be converted to equivalent pc/h under
+base conditions during the peak 15 min of the hour, using Equation 25-1.
+
+  vi = Vi  (25-1)
+  PHF * f HV * f p
+
+where  = flow rate for movement i under base conditions during peak 15 min of
+  vi
+  hour (pc/h),
+  Vi  = hourly volume for movement i (veh/h),
+  PHF
+  = peak-hour factor,
+  fHV  = adjustment factor for heavy vehicles, and
+  fp  = adjustment factor for driver population.
+
+  Adjustment factors are the same as those used for analysis of basic freeway segments
+and can be found in Chapter 23.
+
+RAMP ROADWAYS
+
+  Because most operational problems occur at ramp terminals (either the ramp-
+freeway terminal or the ramp-street terminal), little information exists regarding the
+operational characteristics of ramp roadways themselves. Some basic design standards
+exist in AASHTO policies (3), but these are not related to specific operational
+characteristics. In the 1970s, this material was adapted (2) to provide a broader set of
+
+  25-3  Chapter 25 - Ramps and Ramp Junctions
+  Methodology
+Highway Capacity Manual 2000
+
+  criteria, which were, again, unrelated to specific operational characteristics. Thus,
+  information presented in this section is for general guidance only.
+
+  Ramp roadways differ from the freeway mainline in that
+  • They are roadways of limited length and width (often just one lane);
+  • Free-flow speed is frequently lower than that of the roadways connected,
+  particularly the freeway;
+  • On single-lane ramps, where passing is not possible, the adverse impact of trucks
+  and other slow-moving vehicles is more pronounced than on multilane roadways; and
+  • At ramp-street junctions, queuing may develop on the ramp, particularly if the
+  ramp-street junction is signalized.
+  Exhibit 25-3 lists approximate criteria for the capacity of ramp roadways. These
+  capacities are based on research studies (1) and previously noted work conducted in the
+  1970s (2).
+
+  EXHIBIT 25-3.  APPROXIMATE CAPACITY OF RAMP ROADWAYS
+
+The values in the exhibit  Free-Flow Speed of Ramp, SFR (km/h)  Capacity (pc/h)
+are not capacities of  > 80
+freeway terminals, but  > 65–80  Single-Lane Ramps  Two-Lane Ramps
+rather of ramps  > 50–65
+themselves  ≥ 30–50  2200  4400
+  < 30
+  2100  4100
+
+  2000  3800
+
+  1900  3500
+
+  1800  3200
+
+  Note that Exhibit 25-3 gives the capacity of the ramp roadway itself, not that of the
+  ramp-freeway terminal. There is no evidence, for example, that a two-lane on-ramp
+  freeway terminal can accommodate more vehicles than a one-lane ramp terminal.
+
+  It is unlikely that two-lane on-ramps can accommodate more than 2,250 to 2,400
+  pc/h through the merge area itself. The two-lane configuration will achieve a merge with
+  less turbulence and a higher LOS but will not increase the capacity of the merge, which is
+  controlled by the capacity of the downstream freeway segment. For higher on-ramp
+  flows, a two-lane on-ramp must be used in conjunction with a lane addition and a major
+  merge configuration.
+
+  Two-lane off-ramps can accommodate higher ramp flows through the diverge area
+  than can single-lane off-ramps. A major diverge configuration can also be considered,
+  which may more effectively balance the per-lane flows on each departing leg.
+
+  Where an off-ramp terminates at a signalized or unsignalized intersection, the
+  capacity of the ramp system may be controlled by the capacity of the ramp approach to
+  the intersection. Signalized intersections are analyzed using the techniques of Chapter
+  16, and procedures to analyze unsignalized intersections are provided in Chapter 17.
+
+  LOS
+
+  LOS in merge (and diverge) influence areas is determined by density for all cases of
+  stable operation, represented by LOS A through E. LOS F exists when the total flow
+  departing from the merge area (v) exceeds the capacity of the downstream freeway
+  segment. No density will be predicted for such cases. Refer to Chapter 22 for procedures
+  to analyze LOS F conditions.
+
+  LOS criteria for merge and diverge areas are listed in Exhibit 25-4. The density
+  values shown for LOS A through E assume stable operation, with no breakdowns within
+  the merge influence area.
+
+Chapter 25 - Ramps and Ramp Junctions  25-4
+Methodology
+  Highway Capacity Manual 2000
+
+EXHIBIT 25-4.  LOS CRITERIA FOR MERGE AND DIVERGE AREAS
+
+  LOS  Density (pc/km/ln)
+  A  ≤ 6
+  B  > 6–12
+  C  > 12–17
+  D  > 17–22
+  E  > 22
+  F
+  Demand exceeds capacity
+
+MERGE INFLUENCE AREAS
+
+  The subsections below describe the three primary steps in the model for analysis of
+merge areas. The model applies to single-lane, right-hand on-ramp merge areas.
+Additional sections discuss the application of procedures to other geometric
+configurations.
+
+Predicting Flow Entering Lanes 1 and 2 (v12)
+
+  The principal influences on flow remaining in Lanes 1 and 2 immediately upstream
+of the merge influence area are
+
+  • Total freeway flow approaching merge area (vF) (pc/h),
+  • Total ramp flow (vR) (pc/h),
+  • Total length of acceleration lane (LA) (m), and
+  • Free-flow speed of ramp at point of merge area (SFR) (km/h).
+  Ramps on four-lane, eight-lane, and ten-lane freeways are always analyzed as
+isolated merge or diverge areas. The nature of the procedure for predicting v12 makes the
+four-lane case trivial, and data are insufficient to determine the effects of adjacent ramps
+on eight-lane and ten-lane freeways.
+  For six-lane freeways, however, sufficient data are available to take into account the
+effect of adjacent ramps on lane distribution at a subject ramp. When nearby ramps
+inject vehicles into or remove them from Lane 1, the lane distribution may be seriously
+altered. Important variables determining this impact include the total flow on the
+upstream (vU) or downstream (vD) ramp (or both), in pc/h and the distance from the
+subject ramp to the adjacent upstream (Lup) or downstream (Ldown) ramp (or both), in
+meters. For ramps on six-lane freeways, therefore, an additional analysis step is
+necessary to determine whether adjacent ramps are close enough to affect lane
+distribution at the subject ramp.
+  With all of these variables, the total approaching freeway flow has the most
+dominant influence on flow in Lanes 1 and 2. Models are structured to account for this
+phenomenon without distorting other relationships. Longer acceleration lanes encourage
+less turbulence as ramp vehicles enter the freeway traffic stream and therefore lead to
+lower densities in the influence area and higher flows in Lanes 1 and 2. When the ramp
+has a higher free-flow speed, vehicles tend to enter the freeway at higher speeds, and
+approaching freeway vehicles tend to move further left to avoid the possibility of high-
+speed turbulence.
+  Exhibit 25-5 lists equations used for predicting v12 immediately upstream of the
+ramp influence area. These equations apply to six- and eight-lane freeways (with three
+and four lanes in each direction, respectively). For four-lane freeways (two lanes in each
+direction), only Lanes 1 and 2 exist, and v12 = vF by definition.
+
+  25-5  Chapter 25 - Ramps and Ramp Junctions
+  Methodology
+Highway Capacity Manual 2000
+
+  EXHIBIT 25-5. MODELS FOR PREDICTING v12 AT ON-RAMPS
+
+vF, vR, v12 , and vD are in  v12 = vF * PFM
+pc/h; LA, Lup, and Ldown
+are in meters; SFR is in  For 4-lane freeways  PFM = 1.000
+km/h  (2 lanes each direction)
+
+  For 6-lane freeways  PFM = 0.5775 + 0.000092LA  (Equation 1)
+  (3 lanes each direction)  PFM = 0.7289 – 0.0000135 (vF + vR) – 0.002048SFR + 0.0002Lup  (Equation 2)
+  PFM = 0.5487 + 0.0801 vD/Ldown  (Equation 3)
+  For 8-lane freeways  (Equation 4)
+  (4 lanes each direction)  PFM = 0.2178 – 0.000125vR + 0.05887LA/SFR
+
+  The variables used in Exhibit 25-5 are defined as follows:
+  v12 = flow rate in Lanes 1 and 2 of freeway immediately upstream of merge
+
+  (pc/h),
+  vF = freeway demand flow rate immediately upstream of merge (pc/h),
+  vR = on-ramp demand flow rate (pc/h),
+  vD = demand flow rate on adjacent downstream ramp (pc/h),
+  PFM = proportion of approaching freeway flow remaining in Lanes 1 and 2
+
+  immediately upstream of merge,
+  LA = length of acceleration lane (m),
+  SFR = free-flow speed of ramp (km/h),
+  Lup = distance to adjacent upstream ramp (m), and
+  Ldown = distance to adjacent downstream ramp (m).
+
+  The general model specifies that v12 is a proportion of the approaching freeway flow,
+  vF. For four-lane freeways, this is a trivial relationship since all approaching flow is in
+  Lanes 1 and 2. For eight-lane freeways, a single equation is used to determine this
+  proportion without regard to conditions on adjacent upstream or downstream ramps, or
+  both.
+
+  For six-lane freeways, the analysis is complicated by the fact that the effect of some
+  types of adjacent ramps can be predicted. Exhibit 25-6 lists the various sequences of
+  ramps that may occur on six-lane freeways and the appropriate equation from Exhibit
+  25-5 that should be applied in each case.
+
+  EXHIBIT 25-6.  SELECTING EQUATIONS FOR PFM FOR SIX-LANE FREEWAYS
+
+  Adjacent Upstream Ramp  Subject Ramp  Adjacent Downstream Ramp  Equation(s) Used
+  None
+  None  On  None  Equation 1
+  None
+  On  On  On  Equation 1
+  Off
+  On  On  Off  Equation 3 or 1
+  On
+  Off  On  None  Equation 1
+  Off
+  On  None  Equation 2 or 1
+
+  On  On  Equation 1
+
+  On  Off  Equation 3 or 1
+
+  On  On  Equation 2 or 1
+
+  On  Off  Equation 3, 2, or 1
+
+  Equation 2 from Exhibit 25-5 addresses cases with an adjacent upstream off-ramp,
+  whereas Equation 3 addresses cases with an adjacent downstream off-ramp. Adjacent on-
+  ramps do not affect subject ramp behavior, and the analysis proceeds using Equation 1.
+
+  Where an adjacent upstream or downstream off-ramp (or both) exists, the decision to
+  use Equation 2 or 3 versus 1 is made by determining the equilibrium separation distance
+
+Chapter 25 - Ramps and Ramp Junctions  25-6
+Methodology
+  Highway Capacity Manual 2000
+
+(LEQ) between ramps. If the distance between ramps is greater than or equal to LEQ,
+Equation 1 is always used. If the distance between ramps is less than LEQ, Equation 2 or
+
+3 is used as appropriate.
+  LEQ is that distance for which Equation 1 and Equation 2 or 3, as appropriate, yield
+
+the same value of PFM. Thus, where an adjacent upstream off-ramp exists, Equation 2
+must be considered. If Equation 2 is set equal to Equation 1, LEQ, is shown in Equation
+
+25-2.
+
+  LEQ = 0.0675 (vF + vR) + 0.46LA + 10.24SFR – 757  (25-2)
+
+where  = equilibrium distance when Equation 1 is set equal to Equation 2 from
+  LEQ  Exhibit 25-5 (m).
+
+If Lup ≥ LEQ, Equation 1 is used. If Lup < LEQ, Equation 2 is used. Similarly, when a
+choice between Equation 3 and Equation 1 must be made, Equation 25-3 is used to
+compute LEQ:
+
+  LEQ = v D  (25-3)
+  0.3596 + 0.001149 LA
+
+where  = equilibrium distance when Equation 1 is set equal to Equation 3 from
+  LEQ  Exhibit 25-5 (m).
+
+In this case, if the distance to the downstream off-ramp is greater than or equal to LEQ
+(Ldown ≥ LEQ), Equation 1 is used. If Ldown < LEQ, Equation 3 is used.
+
+  A special case exists when both a downstream and an upstream adjacent off-ramp
+exist. In such cases, two solutions for PFM may arise, depending on whether the analysis
+considers the upstream or the downstream adjacent ramp, because they cannot be
+
+considered simultaneously. In such cases, the analysis resulting in the largest value of
+PFM is used.
+
+Determining Capacity
+
+  The capacity of a merge area is determined primarily by the capacity of the  Two capacities are to be
+downstream freeway segment. Thus, the total flow arriving on the upstream freeway and  checked:
+the on-ramp cannot exceed the basic freeway capacity of the departing downstream
+freeway segment. There is no evidence that the turbulence of the merge area causes the  • Total flow from merge, and
+downstream freeway capacity to be less than that of a basic freeway segment.
+  • Total flow into merge
+  Studies have also shown that there is a practical limit to the total flow rate that can  influence area
+enter the ramp influence area. For an on-ramp, the flow entering the ramp influence area
+includes v12 and vR. Thus, the total flow entering the ramp influence area is given
+according to Equation 25-4.
+
+  vR12 = v12 + vR  (25-4)
+
+  Exhibit 25-7 lists capacity flow rates for the total downstream freeway flow (v = vF +
+vR) and maximum desirable values for the total flow entering the ramp influence area
+(vR12). Two conditions may occur for a given analysis. First, the total departing freeway
+flow (v) may exceed the capacity of the downstream freeway segment. Failure (LOS F)
+
+is expected, and queues will form upstream from the merge segment. When the
+
+downstream freeway capacity is exceeded, LOS F exists regardless of whether the flow
+
+rate entering the ramp influence area exceeds its capacity.
+
+  25-7  Chapter 25 - Ramps and Ramp Junctions
+  Methodology
+Highway Capacity Manual 2000  EXHIBIT 25-7. CAPACITY VALUES FOR MERGE AREAS
+
+  Freeway  Maximum Downstream Freeway Flow, v (pc/h)  Max Desirable Flow
+  Free-Flow
+  Speed (km/h)  Number of Lanes in One Direction  Entering Influence
+
+  120  2  3  4  > 4  Area, vR12 (pc/h)
+  110  4600
+  100  4800  7200  9600  2400/ln  4600
+  90  4600
+  4700  7050  9400  2350/ln  4600
+
+  4600  6900  9200  2300/ln
+
+  4500  6750  9000  2250/ln
+
+  The second condition occurs when the total flow entering the ramp influence area
+  (vR12) exceeds its maximum desirable level but the total freeway flow (v) does not
+  exceed the capacity of the downstream freeway segment. In this case, locally high
+  densities are expected, but no queuing is expected on the freeway. The actual lane
+  distribution of entering vehicles is likely to consist of more vehicles in the outer lanes
+  than is indicated by the models herein. Overall, operation will remain stable, and LOS F
+  is not expected to occur.
+
+  When the total downstream flow exceeds the basic freeway capacity of the
+  downstream segment, LOS F exists. In such cases, no further computations are needed,
+  and LOS F is assigned. For all other cases, including cases in which vR12 exceeds its
+  stated limit, LOS is determined by estimating the density in the ramp influence area.
+
+  Determining LOS
+
+  LOS criteria for merge areas are based on density in the merge influence area as
+
+  shown in Exhibit 25-4. Studies (2,4) have shown that there is an overlap in density
+
+  ranges in the area of capacity such that some breakdown operations may have lower
+
+  densities than those achieved under stable operation. This situation is due to the wavelike
+
+  motion of vehicles in a queue and the rather short length of the defined influence area, the
+
+  result being that the determination of LOS F is based solely on the comparison of demand
+
+  flows with capacity.
+
+  Equation 25-5 is used to estimate the density in the merge influence area. Note that
+
+Equation applicable only  the equation for density applies only to undersaturated flow conditions.
+to undersaturated flow
+conditions  DR = 3.402 + 0.00456vR + 0.0048v12 – 0.01278LA  (25-5)
+
+  where  = density of merge influence area (pc/km/ln),
+  DR  = on-ramp peak 15-min flow rate (pc/h),
+  vR  = flow rate entering ramp influence area (pc/h), and
+  v12  = length of acceleration lane (m).
+  LA
+
+  Special Cases
+
+  A number of merge configurations do not involve single-lane, right-side on-ramps.
+  These are dealt with using modifications to the basic merge analysis procedure and
+  adapting the results to the specific geometry being analyzed.
+
+  Two-Lane On-Ramps
+
+  Exhibit 25-8 illustrates a typical two-lane freeway on-ramp. It is characterized by
+  two separate acceleration lanes, each successively forcing merging maneuvers to the left.
+
+  Two-lane on-ramps entail two modifications to the basic methodology: the flow
+  remaining in Lanes 1 and 2 immediately upstream of the on-ramp is generally somewhat
+  higher than that for one-lane on-ramps in similar situations, and densities in the merge
+  area are lower than those for similar one-lane on-ramp situations. The lower density is
+  primarily due to the existence of two acceleration lanes and the generally longer distance
+
+Chapter 25 - Ramps and Ramp Junctions  25-8
+Methodology
+  Highway Capacity Manual 2000
+
+over which the two acceleration lanes extend. Thus, the effectiveness of two-lane on-
+ramps is that higher ramp flows are handled more smoothly and at better levels of service
+than if the same flows were carried on a one-lane ramp with conventional merge design.
+
+  EXHIBIT 25-8. TYPICAL TWO-LANE ON-RAMP
+
+  450 m
+
+  VF
+  Influence Area
+
+VR  LA1  LA2
+
+  In computation of v12 for two-lane on-ramps, the standard expression in Exhibit 25-5
+is used:
+
+  v12 = vF * PFM
+
+For two-lane on-ramps, however, the following values of PFM are used instead of the
+
+equations shown in Exhibit 25-5:
+  • Four-lane freeways, PFM = 1.000;
+  • Six-lane freeways, PFM = 0.555;
+  • Eight-lane freeways, PFM = 0.209.
+
+  In computation of the expected density in the ramp influence area, Equation 25-5 is
+applied except that the length of the acceleration lane, LA, is replaced by the effective
+length of the acceleration lane, LAeff, as computed by Equation 25-6.
+
+  LAeff = 2LA1 + LA2  (25-6)
+
+where LA1 and LA2 are as defined in Exhibit 25-8.  Capacities of two-lane ramps
+  The values governing maximum flow rates for v and vR12 are not affected by the use  are the same as those for
+  one-lane ramps
+of a two-lane on-ramp. The capacity of the downstream freeway segment continues to
+control the total output capacity of the merge, and the maximum desirable number of  Major merge defined
+vehicles that may enter the influence area on Lanes 1 and 2 of the freeway is not
+enhanced by the existence of a two-lane on-ramp. The values of Exhibit 25-7 are applied
+without change.
+
+Lane Additions
+
+  On-ramps are sometimes associated with the addition of a lane at the merge point.
+Where a single-lane on-ramp results in a lane addition, the capacity of the ramp is
+governed by the ramp geometry itself and not by the ramp-freeway junction. Where a
+two-lane on-ramp results in a lane addition, the junction should be classified as a major
+merge area.
+
+  Analysis of single-lane additions (and lane drops) is relatively straightforward. The
+downstream segment is simply considered to be a basic freeway segment with an
+additional lane. If, however, an added lane is dropped at a diverge point within 750 m of
+the point of addition, a weaving configuration will be formed, and the segment should be
+analyzed using the methodology of Chapter 24, “Freeway Weaving.”
+
+Major Merge Areas
+
+  A major merge area is one in which two primary roadways, each having multiple
+lanes, merge to form a single freeway segment. The merging roadways may originate in
+a freeway interchange or from an urban street or rural highway. Major merges are
+different from one- and two-lane on-ramps in that each of the merging roadways is
+
+  25-9  Chapter 25 - Ramps and Ramp Junctions
+  Methodology
+

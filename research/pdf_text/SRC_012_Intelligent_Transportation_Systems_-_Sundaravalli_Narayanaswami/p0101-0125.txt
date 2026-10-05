@@ -1,0 +1,797 @@
+82  Chapter 2.4
+
+Exhibit 2.4.1: Paris Subway Driving Cabin
+
+Note: 1. Brake Traction Manipulator, 2. Speed Indicator, 3. Door Closure
+and Closing, 4. Radio, 5. Closing the Doors (left or right).
+Source: Braida, Aurelien. 2017. “Circulations des Metros et Reseau
+RATP.” Le transport ferroviarie en images. Post on blog. Accessed June
+29, 2017. http://sncf.ratp.free.fr/circulationsratp.htm.
+ITS: Automation and People Framework  83
+
+Exhibit 2.4.2: Various Grades of Automation
+
+Source: UITP. 2012. Metro Automation Facts, Figures and Trends.
+Belgium: The International Association of Public Transport.
+http://metroautomation.org/automation-essentials/what-is-metro-automation.
+84  Chapter 2.4
+
+Exhibit 2.4.3 a: Map Showing the Cities with Automated Metro Lines,
+as of 2013
+
+Source: World Atlas Report. 2013. Observatory of Automated Metros.
+London: UITP.
+ITS: Automation and People Framework  85
+
+Exhibit 2.4.3 b: Graph Showing the Kilometers of Automated Metro in
+2013, by City
+
+Source: World Atlas Report. 2013. Observatory of Automated Metros.
+London: UITP.
+86  Chapter 2.4
+
+Exhibit 2.4.4: The Project Timeline
+
+  Project Timeline
+  Dec-02 Launch of feasibility studies
+  Apr-04 Report presented to RATP Board
+  Oct-05 Main contracts are awarded
+  Jul-07 Line works Begin
+  Dec-07 Signature of agreement with transport unions
+  Oct-08 Reception of the first MP05 at Valenciennes
+  Mar-09 Installation of the first platform screen doors
+  May-10 Service launch of the new centralized control command
+  Apr-11 Completion of platform screen door installation and works
+
+  on the line
+  08-Jul-11 First MP05 in automated mode is injected in the line during
+
+  daily commercial service, without passengers on board
+  03-Nov-11 Service launch of the first eight MP05 automatic shuttles
+
+Source: UITP. 2012. Metro Automation Facts, Figures and Trends.
+ITS: Automation and People Framework  87
+
+Exhibit 2.4.5: Pictures of the New Line 1 Trains
+
+Source:
+http://forum.skyscraperpage.com/showthread.php?t=133751&page=11,
+https://www.railengineer.uk/2012/02/28/paris-metro-line-1-a-new-
+beginning/, https://soundlandscapes.wordpress.com/tag/paris-metro-line-
+1/, all access
+  CHAPTER 2.5
+
+  ITS: POLICY FRAMEWORK
+
+  Introduction
+
+In today’s world, traffic congestion has become a huge problem in most of
+the urban areas around the globe. Increasing traffic congestion is limiting
+urban mobility, impacting road efficiency, the environment, safety, and
+cost, and contributing to an unsustainable economic environment and social
+environment. The emerging concept of Intelligent Transport Systems
+(ITS)—a combination of communications and real-time data, maps, databases,
+and information processing—aims to provide solutions that alleviate the
+aforementioned negative effects of traffic congestion. Deployment of ITS
+has a wide range of benefits. It enables i) infrastructure owners and
+operators to improve the quality, safety, and management of the transport
+network, ii) individual travelers, drivers, transport operators, and authorities
+to make better informed journey decisions, iii) network operators and third-
+party service providers to supply advanced information services, increasingly
+on a multi-modal basis, to all types of travelers, and iv) road users to drive
+safer and smarter vehicles. However, the lack of supportive policy
+frameworks limits the deployment of ITS.
+
+  The Transport Policy Objective
+
+UK Government transport policies largely reflect the ambitions discussed
+in the European Commission’s (EC)’s white paper, Transport Policy for
+2010: Time to Decide. Similarly, European transport policy highlights
+network management, road safety, and tackling congestion along with
+sustainable mobility and economic policies. To make technology-related
+initiatives the heart of the policy agenda, the EC has published an ITS
+Vision and Policy. The vision incudes the goal to implement Galileo (the
+European Union’s Global Satellite Navigation System, also called European
+GPS)—under the “e-Europe” (an ambitious program aimed at making
+information technologies as widespread as possible) banner—as a
+complementary GPS, alongside the existing GPS system. It also encourages
+greater deployment of Global Navigation Satellite System (GNSS)
+ITS: Policy Framework  89
+
+technologies that use location referencing to support many ITS services.
+Furthermore, it provides an additional policy support for advanced ticketing
+and vehicle-related ITS, called e-Safety initiatives. The Trans-European
+Road Network (TERN) aims to improve the internal road infrastructure of
+the European Union, unlock barriers, and encourage more effective cross-
+border transport. It supports demonstrations of harmonized ITS deployment
+through its Multi-Annual Indicative Program. Other funding is available
+through the European Framework Research Programs. Seven policy
+dimensions, where ITS applications play a crucial role for road transport
+and travelers, are listed below.
+
+  1. Improving road network management, including road pricing.
+  2. Improving road safety, by reducing collisions, casualties, and deaths.
+  3. Better travel and traveler information, helping to match supply and
+
+  demand by providing better information so that travelers can make
+  informed choices on when and how to travel.
+  4. Better public transport on the roads, supporting more reliable, safer,
+  more accessible, and more efficient services.
+  5. Supporting the efficiency of road freight efficiency.
+  6. Reducing negative environmental impacts.
+  7. Supporting security, crime reduction, and emergency planning
+  measures.
+
+It is important to understand that the true potential of ITS rests in their
+ability to resolve multiple issues simultaneously along with supporting cost-
+effectiveness and efficiency. Also, greater co-ordination, convergence, and
+interoperability of ITS must be ensured, both technologically and
+administratively.
+
+ The European Policy Framework for Deployment of ITS
+
+The EU has launched various initiatives to address existing and future
+challenges in road transport systems, with a focus to overcome the slow and
+fragmented uptake of ITS for the road sector. The EC’s ITS Action Plan and
+the ITS Directives (Directive 2010/40/EU of the European Parliament and
+of the Council adopted on July 7, 2010) are some dedicated EU legislation
+on ITS across Europe. These supporting elements, coupled with other
+necessary existing tools, foster ITS deployment to a new era, where
+integrated, interoperable systems, and unified transport services become the
+norm for Europe’s road transport system.
+90  Chapter 2.5
+
+The EC’s ITS Directives demonstrate the first EU-wide legislative basis for
+the coordinated deployment of ITS for the road sector. It aims to establish
+interoperable and seamless ITS services and promote harmonization. It sets
+out priorities and principles for ITS deployment while leaving EU member
+states the freedom to decide which systems to invest in. However, it should
+be noted, the directives do not oblige member states to deploy ITS on their
+territory. The directives are an important instrument for ITS implementation,
+bolstering the measures adopted in the ITS Action Plan with a set of
+enforceable legal provisions and helping to accelerate the deployment of
+innovative transport technologies in the road transport system. The ITS
+Action Plan mainly focuses on the following six action areas where the
+government can play a major role by providing policy and institutional
+support.
+
+  1. Optimal use of road, traffic and travel data (real-time traffic and
+  travel information; optimized collection and provision of road,
+  traffic and travel data; availability of accurate public data for digital
+  maps; and promotion of multi-modal journey planners and traffic
+  safety information services).
+
+  2. Continuity of traffic and freight management ITS services on
+  European transport corridors and in conurbations (continuity of ITS
+  services; e-Freight; ITS framework architecture; and electronic road
+  tolling).
+
+  3. Road safety and security (promotion of advanced driver assistance
+  systems and safety-related ITS; e-Call; safe on-board human-
+  machine interfaces; vulnerable road users; and services for safe and
+  secure truck parking places).
+
+  4. Integration of the vehicle into the transport infrastructure (open in-
+  vehicle platform; cooperative systems; I2I, V2I, V2V communication;
+  and standardization mandate).
+
+  5. Data security and protection, and liability issues (data security and
+  data protection; liability).
+
+  6. European ITS cooperation and coordination (legal framework:
+  Directive 2010/40/EU; a knowledge tool for decision makers;
+  funding ITS; and expert group on urban ITS).
+
+Within seven years of the formation of the ITS Directives, the EC is to adopt
+specifications to address the compatibility, interoperability, and continuity
+of ITS solutions across Europe. The specifications cover technical,
+functional, organizational, and service-provision issues in several areas. The
+first priorities are traffic and travel information, emergency systems, and
+intelligent parking for all commercial vehicles. The specifications should be
+ITS: Policy Framework  91
+
+followed diligently during the deployment of ITS in EU member states. The
+commission consulted experts and other stakeholders regarding existing
+standards and conducted an impact assessment with cost-benefit analysis.
+
+The European ITS Committee and the ITS Advisory Group will assist the
+EC in the implementation of the ITS Directive. The European ITS
+Committee is composed of representatives of the EU Member States and
+the ITS Advisory Group consists of representatives of stakeholders such as
+industries and service providers. The primary task of the ITS Committee is
+to advise regarding standardization mandates and possible guidelines, while
+that of the Advisory Group is to support the EC on the technical and
+business aspects of ITS deployment. Additionally, these two bodies will be
+able to give useful input for the framing of specifications under the ITS
+Directive.
+
+  Conclusion
+
+A transformation of the European transport system will only be possible
+through a combination of manifold initiatives at all levels. ITS is a
+technology-driven solution for the broader agenda of achieving a better
+public transportation system. The success of ITS deployment is determined
+by a combination of a perception of the value of ITS and a strong European
+Union ITS industry. To build an inclusive ITS model, the government’s role
+becomes crucial. Governments can pave the road to a successful ITS system
+by i) being the regulator, by framing ITS-related policies and regulations,
+and ii) creating a supportive environment for establishing ITS. It is crucial
+that governments provide a policy, institutional, and regulatory framework
+to enable speedy and proper development of ITS.
+
+  References
+
+Department for Transport. 2005. Intelligent Transport Systems (ITS) The
+  Policy Framework for the Roads Sector. doi:PPU3617/ES.
+
+Directorate General for Mobility and Transport. 2011. Intelligent Transport
+  System in Action. Luxembourg: European Commission.
+  doi:10.2832/44199.
+
+Lin, S. S. 2003. AN INSTITUTIONAL DEPLOYMENT FRAMEWORK FOR
+  INTELLIGENT TRANSPORTATION SYSTEMS. Cambridge, MA:
+  Massachusetts Institute of Technology, Department of Civil and
+  Environmental Engineering.
+  CHAPTER 2.6
+
+  ITS: BUSINESS FRAMEWORK
+
+Intelligent Transport Systems (ITS) provide various operational, social, and
+environmental benefits to the transport system. These benefits are based on
+leveraging the ever-evolving technological developments and communication
+standards of the ICT industry. Service standard and accessibility is
+dependent on the quality of physical transport infrastructure and ICT
+equipment. Most of the ITS applications require huge capital expenditure
+(investment) with longer return periods for procurement and installation.
+Despite the presence of technology and tools, the lack of cost-effective
+integration of systems hinders large-scale deployment of ITS. Most
+applications and ideas fail to develop beyond trial stages, mainly due to the
+lack of an effective business model that is contextually relevant,
+commercially sustainable, and socially/politically acceptable. During the
+2015 to 2020 period, the ITS’ market grew at a steady pace all over the
+world. A recent market study shows that, in the projection period of 2021 to
+2028, the ITS market is anticipated to develop at a pace of 18.2 %. Under
+the Intelligent Transport Systems Directive 2010/40/EU, the European
+Commission decided to create the European Intelligent Transport Systems
+(ITS) Advisory Group (2011/C 135/03), in 2011. The advisory group is
+responsible for technical and business aspects to facilitate wide-scale ITS
+deployment across Europe. The group consists of twenty-five members
+representing ITS service providers, user associations, transportation and
+infrastructure operators, the manufacturing industry, social partners,
+professional associations, municipal governments, and other relevant
+stakeholders.
+
+  Funding Mechanisms
+
+The funding mechanisms for ITS projects can be broadly classified into
+three categories:
+
+  1. Public funding
+  2. Private funding
+  3. Public-private partnership (PPP) model
+ITS: Business Framework  93
+
+The huge capital investment makes public funding an essential requirement
+for the deployment of ITS. Private funding is usually available for research
+projects and trial runs and is often provided by industry players and OEMs.
+Various PPP funding sources and opportunities are also provided by
+national and regional governments.
+
+The European Union has laid multiple structural funds and programs to
+support the development of ITS. Even though some project aspects are
+subject to public tender in many situations, the method of financing remains
+public. Trans-European Transport Network (TEN-T) development is
+supported through three main sources of funding: the Connecting Europe
+Facility (CEF), the Cohesion Fund, and the European Fund for Regional
+Development. These sources have a budget spread over a tenure of seven
+years under the European Multiannual Financial Framework for 2014 to
+2020. The CEF, with a total budget of €23.7 billion for the period 2014 to
+2020, supports the implementation of ITS corridors and the deployment of
+harmonized ITS services across the EU. The Innovation and Networks
+Executive Agency (INEA) is responsible for managing €22.4 billion of
+funding provided by the CEF. It is also responsible for managing a €6.3
+billion fund, provided under Horizon 2020 between the period of 2014 to
+2020. The financial support under the CEF is delivered in the forms of direct
+grants from the EU budget and/or support for the application of innovative
+financial instruments, developed in cooperation with trusted financial
+institutions such as the European Investment Bank (EIB), Marguerite Fund,
+Loan Guarantee Instrument for Trans-European Transport Network Projects
+(LGTT), and Project Bond Initiative (Nikolova 2018). The European
+Commission, European Investment Bank, and European Bank for
+Reconstruction and Development (EBRD) created a Joint Assistance to
+Support Projects in European Regions (JASPER). It helps in the absorption
+of funds available under the CEF and the Instrument for Pre-Accession
+Assistance (IPA) and, thus, acts as another source of funding for ITS
+projects in Europe. The European PPP Expertise Centre (EPEC) was
+created, in 2008, by the European Commission, to support the public sector
+across Europe in delivering better PPPs. The Loan Guarantee for TEN-T
+Projects (LGTT) is used for ITS deployment as part of the PPPs under the
+TEN-T investment program. LGTTs are used as PPPs for the construction
+of e-toll systems and charging for rail infrastructure. A list of ITS projects
+and their funding sources is presented in Table 2.6.1.
+94  Chapter 2.6
+
+  PROJECT NAMES  SOURCE OF FUNDING
+  Conference of European
+Digital Road for Evolving Connected and  Directors of Roads
+Automated Driving (DiREC), Driving
+Automated Vehicle Growth on National  EU: Connecting Europe
+Roads (DRAGON)  Facility (CEF)
+
+C-ROADS, Connected Corridor for Driving  EU: Electronic components
+Automation (CONCORDA), Interoperable  and system for European
+corridors (InterCor)  leadership (ECSEL)
+  The European Regional
+PRYSTINE, AutoDrive  Development Fund (ERDF)
+  EU H2020
+I-AT, Sohjoa Baltic
+  EU Tender
+5G-Blueprint, 5G-CARMEN, 5G Cross-  PPP
+Border Control, AUTOPILOT, C-Mobile,
+CARAMEL, CoEXist, Drive2TheFuture,  Industry (Automobile
+ENSEMBLE, ICT4CART, L3Pilot  manufacturers and OEMs)
+  Multi stakeholders (Research,
+C The Difference, Ride2Autonomy  Academia, Private, etc.)
+
+Aurora - The Intelligent Transport Cluster
+project, Data for Road Safety, Future
+Mobility Campus Ireland. (FMCI), Dutch
+Automated Vehicle Initiative (DAVI), Urban
+ICT Arena, Smartwayz
+
+Cruise4U, Bertha Benz Drive, Robopilot,
+TIC-IT, FLOURISH
+
+@CITY, 5Stars, ACCORD, Autonomous and
+Connected Vehicles for Cleaner Air
+(ACCRA), Autoconduct, AUTOMOST,
+CAPRI, CO-existence Simulation Modeling
+of Radars for Self-driving, (COSMOS (UK)),
+Digibus Austria, Effects of Automated
+Systems on Safety (EASY), Integrated
+Cooperative Automated Vehicles (i-CAVE),
+MultiCAV
+
+Table 2.6.1: ITS Projects and Funding Sources
+Source: Author’s compilation
+ITS: Business Framework  95
+
+  Sustainable Business Model
+
+The implementation cost of ITS services is a key facet, which must be
+addressed to ensure public acceptance and large-scale deployment. The cost
+benefit analysis carried out for the 2016 Cooperative Intelligent
+Transportation Systems (C-ITS) Deployment Study in Europe, by Ricardo
+(2016), has shown that the potential benefits of C-ITS strongly outweigh the
+costs. However, these benefits will take time to manifest, are largely societal
+benefits that are difficult to be quantified in monetary terms for institutions
+and companies, and rely heavily on coordinated and rapid implementation.
+The main benefits, like increased safety, traffic time reduction, lower fuel
+consumption, etc., go directly to the users and society at large, while the
+upfront investment on deployment, operation, and maintenance needs to be
+borne by service providers, road operators, vehicle manufacturers, and other
+such decision-makers. Given the public-oriented benefits of ITS,
+transferring these upfront costs to the public (i.e., the users) is a key
+challenge; there is a requirement for a clearly defined business model.
+
+A business model provides a link between the vision of the organization and
+its approach to its process to create value. Most of the study on ITS has been
+focused on technological aspects and implementation challenges pertaining
+to rules and litigation related to ITS deployment. Such studies have widely
+explored the economical evaluation of ITS projects using cost-benefit
+analysis (CBA) as a tool and ignoring the aspect of creating a robust
+business case. The lack of focus on exploring a sustainable business model
+has created major challenges in translating technological possibilities into
+real-world benefits to providers, users, and society.
+
+One of the recent works discussing a business case of ITS (Zografos et al.
+2008) uses a multi-criteria evaluation (MCE) method-developed business
+model framework for demand responsive transport (DRT) targeting elderly
+and differently abled people in Helsinki. The study has suggested a
+methodology for identifying and ranking the most feasible business model,
+based on criteria such as legal and regulatory framework, market opportunities,
+and business vision and mission. The business models in ITS are dynamic
+as they need to consider the divergent, unique, and transforming nature of
+the transport sector. Osterwalder and Pigneur (2001) defined a holistic
+approach to develop a business model based on four main pillars: a)
+products and services, b) infrastructure and network of partners, c)
+relationship capital, and d) financial aspects. In addition to the above-
+mentioned pillars, credibility of stakeholders is another aspect that needs to
+be considered to ensure a successful business model.
+96  Chapter 2.6
+
+  1. Products and Services: The quality of products and services provided
+  in ITS is the driver of revenue generation and societal value
+  enhancements. Value creation starts with ITS component providers
+  like smart vehicle manufactures, ICT component manufacturers,
+  smart infrastructure providers, etc. These products are then provided
+  to the users to generate value propositions in terms of safety, reduced
+  travel time, reduced congestions, etc. Direct benefits generate user
+  interest and create a willingness to pay for these services, resulting
+  in a rolling economy. This, in turn, creates new opportunities for
+  companies to enter the market as service providers. The topmost
+  level creates external benefits, like reduced road congestion,
+  decreased private vehicle usage, reduced noise and air pollution, less
+  travel cost, etc., that enhance the overall social, environmental, and
+  economic conditions of the region.
+
+  ECONOMY AND SOCIETY
+
+Saving on state budget, reduced pollution, decreased rate of accident, social
+  inclusion, etc.
+
+  ITS USER
+
+Safety, reduced travel time, congestion management, travel experience
+  enhancement, etc.
+
+  ITS PROVIDER
+
+  Smart vehicle and infrastructure
+
+Figure 2.6.1: Value Proposition for ITS
+Source: Giannoutakis and Li 2011
+
+  2. Infrastructure and Network of Partners: This aspect focuses on
+  leveraging intelligent infrastructure and ICT components to enhance
+  service delivery and net value gained. ITS stakeholders consist of
+  governments, funding bodies, transport groups, automobile companies,
+ITS: Business Framework  97
+
+  communication technology companies, the energy sector, road users,
+  etc. It is essential to create a synergy in this multi-stakeholder
+  environment and identify key partners, their responsibilities,
+  incentives expected, and the nature of potential partnerships. While
+  discussing the business case, the challenges of compatibility between
+  ITS infrastructure and vehicles also needs to be addressed.
+  3. Relationship Capital: This aspect addresses the challenges related to
+  user concerns, customer relationships, and the ascertaining of users
+  by an ITS service provider. One of the key concerns with ITS is user
+  data collection and storage. ITS service providers need to gain trust
+  from users to supply their services.
+  4. Financial Aspects: This refers to the generation of profits and
+  revenue for the service provider by the usage of pricing models and
+  various tangible and intangible assets. Financial success is highly
+  dependent on the success of the aforementioned aspects. ITS require
+  hefty initial investments with a long returns period. A successful ITS
+  business model is one that has satisfactory returns and benefits to the
+  investors, along with the creation of a self-financing environment
+  after a stipulated duration.
+  5. Stakeholder Credibility: Beyond financial viability, the long-term
+  success of ITS is dependent on the support of all major stakeholders.
+  Stakeholder trust is a critical criterion for different interest groups to
+  avail possible advantages along with achieving broader gains at the
+  societal level.
+
+A clear business model is needed for deploying ITS, as they cannot solely
+rely on public funding, and requires the involvement of different industries
+as well as public-sector stakeholders. It is essential to create a level-playing
+(commercially sustainable) field for all the potential market actors to keep
+them competitively ahead in designing innovative business models. The
+value proposition for ITS is illustrated in Figure 2.6.1.
+
+  ITS Cost-Benefit Evaluation Methods
+
+The prioritization of investment in ITS without a meaningful business case
+is bound to face huge losses after deployment. Despite a possibly good
+implementation, unpredictable circumstances—like driver and citizen
+behaviors—may create problems.
+98  Chapter 2.6
+
+There are various methods to evaluate the socioeconomic impact of an ITS
+project, such as i) traditional cost-benefit analysis (CBA), ii) multi-criteria
+analysis (MCA), iii) sketch-planning, iv) before-and-after studies, v)
+simulation studies, vi) “willingness-to-pay” analyses, vii) case-based
+reasoning techniques, and viii) hybrid real options (HRO) methodologies.
+
+CBA is a structured approach to determine the benefits and costs of multiple
+investment options from a socioeconomical point of view. CBA is the most
+used evaluation method for transport-sector stakeholders; it is used to
+conduct at least 80 % of feasibility studies (Mans et al. 2011). Despite its
+wide usage, CBA is criticized by researchers for a number of reasons; one
+criticism is that forecasting, and handling of future uncertainties, is difficult
+(Shapiro 2011). The method was first used in the transport sector for the UK
+motorway project for the M1, in 1960. CBA is also used in Canada and the
+US, by both federal and state transport departments (Transport Canada
+1994; US Federal Highway Administration 2003).
+
+MCA is also known as the Analytic Hierarchy Process (AHP). The key
+difference between MCA and CBA is that priority is given to investment
+efficiency rather than to cost to benefit ratio in MCA. Notably, MCA allows
+the evaluation of criteria that are difficult to quantify in terms of money.
+Some disadvantages include the subjectivity of decision makers and
+variations by case, thus, stifling transferability (Leviäkangas et al. 2002).
+
+Sketch-planning is a GIS-based technology that generates estimates of
+transportation and land-use demand, and their implications on an order-of-
+magnitude scale. Sketch-planning has been incorporated in a Florida
+Department of Transportation (FDOT) evaluation to determine the
+environmental benefits of ITS (Hadi et al. 2008). Two applications that are
+typically utilized in ITS sketch-planning are Screening for Intelligent
+Transportation Systems (SCRITIS) and the ITS Deployment Analysis
+System (IDAS).
+
+The “countdown” real-time information system on London transit has been
+evaluated using “willingness-to-pay” studies. HRO is a relatively new
+evaluation framework, introduced in the early 2000s by joint research from
+Neufville, MIT Technology and Policy, James E Neely III, and consultancy
+firm Booz-Allen and Hamilton Inc. (Neely and Neufville 2001). The
+method is widely used in academic research but not in practice. HRO has
+been applied to different investments where uncertainty is a large
+component, such as product platforms, risky R&D projects, and large-scale
+infrastructure investments (Jiao 2012; Houge and Westlie 2011).
+  ITS: Business Framework  99
+
+The following tables, 2.6.2, 2.6.3. 2.6.4 and 2.6.5, represent key benefits of
+ITS that contribute positively in ITS cost-benefit analysis.
+
+Benefits of Traveler Information
+
+  Specific  Measured  Reported  References
+component of the  benefits  improvement
+  2.7 %  European
+  information  Reduction of  1.8 %  Commission
+  system  fatal crashes  70 %  2013
+  11 %  European
+Integrated system  Reduction of  30 %–60 %  Commission
+in Europe  injury crashes  5 %–16 %  2013
+  30 %–40 %
+Integrated system  Reduction of  7 %–22 %  Ezell 2010
+in Europe  incident-related
+  delay  Ezell 2010
+Integrated system
+in Tucson, Arizona  Fuel saving  Khattak
+Integrated system  1996; Jou
+in Tucson, Arizona  Changing route  1997
+  leading to time
+Pre-trip information  savings, reduced  US DOT
+  driver frustration  2015a
+Pre-trip information  Benson
+  Reliability  2001;
+Variable message  Bertini 2005
+signs  Changing route  Nielson
+Variable message  leading to time  2003
+signs  savings
+  Travel time
+  reduction
+
+Table 2.6.2: Benefits of Traveler Information
+Source: Tomecki, Yushenko and Ashford (2016)
+100  Chapter 2.6
+
+  Benefits of Traffic Control and Management
+
+  Specific  Measured  Reported  References
+ component of  benefits  improvement
+ traffic control
+  Travel time  8 %–20 %  Nielsen 2003
+  and  saving
+ management  Reduction in  40 %  Bertini 2005
+Advanced signal  incident duration
+control  Reduction in  77 min to 33  Pretrov et al.
+Incident  incident duration  min  2002
+management  Reduction in  41 %  Bertini 2005
+Incident  crashes
+management  Reduction in  27 %–50 %  Bertini 2005;
+Incident  crashes  Nielsen 2003
+management  Travel time  65 %  Bertini 2005;
+Ramp metering  saving  Nielsen 2003
+  Speed increase  55 km/h to 75  Kang and
+Ramp metering  km/h  Gillen 1999
+  50 %  DfT 2015
+Ramp metering
+
+Parking  Time to find
+management  parking
+
+Table 2.6.3: Benefits of Traffic Control and Management
+Source: Tomecki et al. (2016)
+ITS: Business Framework  101
+
+Benefits of Public Transport Management
+
+ Specific component of  Measured  Reported  References
+  public transport  benefit  improvement
+  management  78 %–83 %  Hu 2002
+  On-time  35 %
+Vehicle location and  arrival  42 %  Bertini
+dispatch  Reliability  29 %–59 %  2005
+Vehicle location and  improved  Bertini
+dispatch  Traveler  5s/intersection  2005
+Real-time pre-trip  satisfaction  50 %  Bertini
+information  Variability  7.5 % annual  2005
+Signal pre-emption  of travel  10 %
+  time  5.6–7.8  Bertini
+Signal pre-emption  Reduced  2005
+  delay  Bertini
+Signal pre-emption  Reduction  2005
+  in stops  Booz 2009
+Integrated ticketing  Patronage
+  increase  Booz 2009
+Integrated ticketing  Revenue
+  increase  Paddington
+Integrated ticketing  Benefit–  2011
+  cost ratios
+
+Table 2.6.4: Benefits of Public Traffic Management
+Source: Tomecki et al. (2016)
+102  Chapter 2.6
+
+  Benefits of Enforcement
+
+  Specific  Measured benefits Reported  References
+ component  improvement
+  FHWA 2006
+  of the  Reduction of  3 %–7 %
+enforcement  violations  85 %  FHWA 2006
+  Crash reduction
+  system  Chen and
+Speed  Noise level  3db (A)  Miles 1999
+enforcement  reduction  15 %–25 %  Chen and
+Speed  Emission reduction  Miles 1999
+enforcement  Chen and
+Speed  Reduction in  20 %–60 %  Miles 1999
+enforcement  violations  44 %–54 %  Bunch 2011
+Speed  Crash reduction
+enforcement  Baththana and
+Red-light  Injury crash  44 %  Durdin 2014
+cameras  reduction  67 %  Baththana and
+Red-light  Fatal crash  Durdin 2014
+cameras  reduction
+Red-light
+cameras
+Red-light
+cameras
+
+Table 2.6.5: Benefits of Enforcement
+Source: Tomecki et al. (2016)
+
+  References
+
+Giannoutakis, K. N., and F. Li. 2011. “Developing Sustainable e-Business
+  Models for Intelligent Transportation Systems (ITS).” In Building the e-
+  World Ecosystem. I3E 2011. IFIP Advances in Information and
+  Communication Technology, vol. 353, edited by T. Skersys, R. Butleris,
+  L. Nemuraite and R. Suomi, 200–11. Berlin, Heidelberg: Springer.
+
+Nikolova, Christina. 2018. “Entrepreneurial Environment for Intelligent
+  Transport Systems Deployment.”
+
+Ostenwalder, A., and Y. Pigneur. 2002.An eBusiness Model Ontology for
+  Modeling eBusiness. Bled, Slovenia.
+
+Tomecki, A. B., K. Yushenko and A. Ashford. 2016. Considering a Cost-
+  benefit Analysis Framework for Intelligent Transport Systems February
+  2016. Retrieved from www.nzta.govt.nz.
+ITS: Business Framework  103
+
+Zografos, K. G., K. N. Androutsopoulos and T. Sihvola. 2008. “A
+  Methodological Approach for Developing and Assessing Business
+  Models for Flexible Transport Systems.” Transportation 35 (6): 777–
+  95.
+  CHAPTER 2.7
+
+  ITS: INNOVATION FRAMEWORK
+
+  Introduction
+
+In the modern world, technological advancement highly influences our
+personal choices, how we communicate, and even where we live and work.
+It is a rapidly changing society and economy. A substantial increase in
+inexpensive computing power, especially the advanced development in
+ICTs, is radically changing access to information and services. The effects
+of new technologies and different models of transportation service delivery
+are extensive and likely to transform the movement of people and goods in
+the near future. Modern technologies have given a new meaning to the urban
+transportation system, with new innovative transportation technologies
+constantly evolving and making their way into the mainstream. These
+emerging technologies, driven in part by communication systems, have
+redefined transportation as we know it.
+
+Over the past few decades, the automobile and technology (especially
+information and communication) industries have marked a huge success in
+bringing computerization and wireless capabilities into motor vehicles;
+technologies that allow sensors and software to replace some or all of the
+functions in driving is commonplace now. Emerging vehicle technology,
+infrastructure, communication, and roadway technology have significant
+positive prospects in improving urban transportation systems. Understanding
+these emerging trends and opportunities, and their potential ramifications
+on the urban transportation sector, is important to consider. Additionally,
+the range of impacts of transportation investment should be considered
+when forming federal, state, and local transportation policies. Innovative
+products like driverless cars, developed by Google and Hyperloop
+Transportation Technologies, currently being tested in Dubai, have a great
+potential to change the future of the urban transport system.
+
+Proper research, investigation, review, and adaptation of emerging trends
+and capabilities is an important part of the US Department of Transportation’s
+(USDOT) mission to ensure a fast, safe, efficient, accessible and convenient
+ITS: Innovation Framework  105
+
+transportation system in the United States. The San Diego Association of
+Governments (SANDAG) serves as the forum for regional decision-making
+for the San Diego region, under the umbrella of USDOT. SANDAG has
+deployed several ITS model programs, systems, and regional communications
+networks that have transitioned from implementation to pilot or normal
+operations. San Diego County along with the six other Southern California
+counties have collectively been designated by Congress as a national ITS
+demonstration corridor. SANDAG administers the demonstration project on
+behalf of twenty-two agencies that make up this important multiregional
+effort to build a Southern California Transportation Systems Management
+(TSM) Network. The TSM Network includes subsystems to better manage
+the region's freeways, roads, transit, incidents and emergency response,
+special events, commercial vehicle operations, and traveler information.
+
+  Intelligent Transportation Systems (ITS)
+
+ITS are the application of technologies to existing transportation systems,
+including vehicles, road infrastructure, traveler information, transit, bikes
+and pedestrian networks, and payment systems, to maximize the efficiency
+of those services. It offers the potential for more effective and efficient
+transportation operations and service delivery. Emerging ITS technologies
+can greatly influence transportation choices across all modes of travel.
+SANDAG already has a regional ITS program in place, which provides a
+solid foundation to incorporate emerging technological advancement in the
+transportation system. The program mainly focuses on planning,
+implementation, operation, and deployment of ITS technologies. Emerging
+technologies should be well integrated into a transportation system to
+determine their improvement capabilities. The progress and benefits of
+existing and planned project investments should be thoroughly assessed.
+
+  Latest Developments in ITS
+
+The way we make our daily travel decisions is set to change dramatically
+over the next twenty years. One of the key drivers of this change will be
+technology. Over the years, technological advancement has changed the
+transportation scenario. We can classify the developments in the
+transportation sector into five key components, namely, i) communication
+technology (internet, broadband, Bluetooth, wireless network, signaling
+systems, etc.), ii) computational technology (software applications,
+geospatial devices, GPS, maps, etc.), iii) data processing technology (cloud
+storage and processing of VLDBs, etc.), iv) vehicular technology
+106  Chapter 2.7
+
+(Hyperloop, driverless cars, AGVs, etc.), and v) infrastructure development
+(bridges, flyovers, tracks, roundabouts, etc.).
+
+1. Communication Technology
+
+This includes automatic data collection systems including automatic vehicle
+location systems, automatic passenger counting systems, advanced passenger
+information systems, and electronic fare payment and ticketing systems.
+These are becoming ubiquitous in large networks as they have a substantial
+impact on the availability, quality, and controlling of information for the
+planning of services and operations. In a modern transportation system,
+communication technology plays a crucial role. The entire system is hugely
+based on the communication system, either vehicle-to-infrastructure (V2I)
+or vehicle-to-vehicle (V2V) communications. Most components—such as
+the traffic system, control system, traffic-control system, surveillance, and
+operation center—work on communication technology through the internet
+and other networks.
+
+2. Cooperative Vehicle Highway Systems
+
+The emerging innovative aspect of cooperative vehicle highway systems
+(CVHS) is that they involve vehicle-to-infrastructure (V2I) and vehicle-to-
+vehicle (V2V) communications. CVHS communicate information
+dynamically between each vehicle and to the infrastructure. The goal is to
+advise and take actions with the objective of improving sustainability,
+safety, comfort, and efficiency. The scope of CVHS is wide; it ranges from
+driver-warning mechanisms to taking control in dangerous/critical
+situations. The scope excludes two conditions: i) vehicle-based systems that
+receive non-dynamic information from the infrastructure, such as temporary
+speed limits, and ii) applications where the driver is taken out of the loop
+under some or all normal driving conditions. Much of the recent research
+has focused on the interoperability of CVHS and a common platform for the
+various applications of it. The European project, Pre-Drive C2X, defined
+three different types of CVHS application: traffic efficiency, safety, and
+infotainment/business/deployment.
+
+3. Computational Technology
+
+Recent advancements in vehicle technology have permitted using fewer but
+more powerful computer processors in vehicles. These microprocessor
+modules, with hardware memory management and real-time operating
+systems, are more expensive. The new system allows a more sophisticated
+software implementation, including model-based process control, artificial
+

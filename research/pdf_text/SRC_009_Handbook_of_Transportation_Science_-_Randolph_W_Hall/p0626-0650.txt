@@ -1,0 +1,1202 @@
+628
+
+  Handbook of Transportation Science
+
+  Nested booking limits can also be defined in the usual way based on these protection
+  levels,
+
+  As shown in Talluri and van Ryzin, 2001, the notion of dominated sets can
+  also be used to characterize when nesting by fare order is optimal. However, the
+  details are beyond the scope of this chapter. The conditions confirm, for example,
+  that for the independent demand model of the traditional dynamic single-resource
+  problem, nesting by fare order is optimal. They also show that nesting by fare
+  order is optimal when the choice probabilities are determined by a multinomial
+  logit (MNL) discrete choice model.
+
+  16.3 Network Problems
+
+  We next examine the problem of capacity control on a network of resources; for
+  example, managing the capacities of a set of flights in a hub-and-spoke airline
+  network with connecting and local traffic. The dependence among the resources
+  in such cases is created by customer demand; customers may require several
+  resources simultaneously (e.g. two connecting flights) to satisfy their needs. Thus,
+  limiting availability of one resource may cause a loss of demand for comple-
+  mentary resources. This in turn creates dependencies among the resources that
+  necessitates making control decisions at the network level. In the airline industry,
+  network revenue management is also called “the passenger mix problem” or “O&D
+  (origin-destination) control”.
+
+  Simulation studies of airline hub-and-spoke networks have shown that there
+  can be significant revenue benefits from using network methods over single-
+  resource methods. (See Belobaba and Lee, 2000, Belobaba, 2001 and Williamson,
+  1992.) In terms of industrial practice, the potential improvements have been
+  sufficient to justify significant investments in network revenue management sys-
+  tems within the airline industry, hotel industry and elsewhere. However, network
+  revenue management poses significant implementation and methodological chal-
+  lenges. On the implementation side, network revenue management vastly increases
+  the complexity and volume of data that one must collect, store and manage. On
+  the forecasting side, it requires a massive increase in the scale of the forecast-
+  ing system, which now must produce forecasts for each individual itinerary and
+  price-class combination – which we will call a product – at each point in the
+  booking process. Optimization is more complex as well. In the case of a single-
+  resource problem there are many exact optimization methods, but in the network
+  case exact optimization is, for all practical purposes, impossible. Therefore opti-
+  mization methods necessarily require approximations of various types. Achieving
+  a good balance between the quality of the approximation and the efficiency of the
+  resulting algorithms becomes the primary challenge.
+  629
+
+Revenue Management
+
+Types of Controls
+
+As with single-resource problems, in network allocation problems there are a
+variety of ways one can control the availability of capacity. We next look at the
+major categories of network controls. Most are network versions of the controls
+used for single-resource problems. But others, virtual nesting in particular, are
+somewhat unique to the network setting.
+
+Partitioned Booking Limits Partitioned booking limits in networks are an exten-
+sion ofpartitioned booking limits in the single-resource setting. In the network case,
+partitioned booking limits allocate a fixed amount of capacity on each resource
+for every product (i.e. itinerary-fare-class in the airline case) that is offered. These
+allocated amounts of capacity are nonoverlapping – or partitioned; demand for one
+product has access only to its allocated capacity and no other product may use this
+capacity.
+
+  Partitioned booking limits have a number of defects. First, the number of
+product combinations in even a modest-size network can be very large. Thus,
+allocating fixed amounts of capacity to each combination results in dividing the
+capacity of each resource into a very large number of small allocations. But even
+if they are not practical, partitioned allocation have an important role to play
+both theoretically and computationally. Theoretically, they can be used to provide
+bounds that are useful in characterizing optimal network revenues and optimal
+network controls. Computationally, they are used in many approximate models
+that provide inputs to other types of controls. An asymptotic analysis of partitioned
+controls is given by Cooper, 2000.
+
+Virtual Nesting Controls Nested booking limits, of the type we saw in
+Section 16.2 for the single-resource case, are difficult to translate directly into
+a network setting. However, the ability of nested controls to dynamically share
+the capacity of a resource – and thereby recover the pooling economies lost in
+partitioned controls – is an attractive feature. Thus, it is desirable to have a control
+that combines these features.
+
+  Virtual nesting control – a hybrid of network and single-resource controls –
+provides one solution. This control scheme was developed by American Airlines
+beginning in 1983 as a strategy for incorporating some degree of network control
+within the single-leg nested allocation structure of American’s (then leg-based)
+reservation systems. It was first implemented in SABRE7 in 1986. (See Smith and
+Penn, 1988.)
+
+  Virtual nesting uses single-resource nested allocation controls at each resource
+in the network. However, the classes used in these nested allocations are not the
+630
+
+  Handbook of Transportation Science
+
+  fare classes themselves. Rather, they are based on a set of virtual classes that do
+  not necessarily correspond to the fares of each product. Products are assigned to a
+  virtual class through process know as indexing. This indexing is typically updated
+  over time as network demand patterns change, though typically indexing is not a
+  “real time” process. Nested booking limits (or protection levels) for each resource
+  are then computed using these virtual classes and their associated displacement
+  adjusted revenue estimates.
+
+  Virtual nesting has proven to be quite effective and popular in practice, espe-
+  cially in the airline industry. It preserves the booking-class control logic of most
+  airline CRSs yet incorporates network displacement cost information. It therefore
+  provides a nice compromise between leg-level and full network O&D control.
+
+  Descriptions of virtual nesting can be found in Belobaba, 1987a; Smith
+  and Penn, 1988; Williamson, 1988; Williamson, 1992 and Vinod, 1989; Vinod,
+  1995.
+
+  Bid-price Controls While nested allocations are difficult to extend directly to
+  networks, network bid-price controls are a simple extension of their single-resource
+  versions described in Section 16.2. In a network setting, a bid-price control sets
+  a threshold price – or bid-price - for each resource in the network. Roughly, this
+  bid-price is an estimate of the marginal cost to the network of consuming the next
+  incremental unit of the resource’s capacity. When a request for a product comes in,
+  the revenue of the request is compared to the sum of the bid prices of the resources
+  required by the product. If the revenue exceeds the sum of the bid prices, the
+  request is accepted; if not, it is rejected.
+
+  Bid-price controls were first introduced by Smith and Penn, 1988 and
+  Simpson, 1989. Williamson, 1988 and Williamson, 1992 provides variations of
+  bid-price controls and provides detailed simulation comparisons with other con-
+  trol methods. See also the industry publications of Phillips, 1994 and Curry, 1992.
+  Theoretical properties and an asymptotic analysis of bid-price controls is provided
+  by Talluri and van Ryzin, 1999a.
+
+A General Network Model
+
+We begin with a basic model of the network allocation problem. The network has
+
+m resources which can be used to provide n products. We let  if Resource i
+
+is used by Product j and  otherwise. Define the incidence matrix
+
+Thus, the j-th column of A, denoted is the incidence vector for products j;
+
+the i-th row, denoted has entries of one for any column j corresponding to
+
+a Product j that uses Resource i. We also use the notation  to indicate
+  631
+Revenue Management
+
+that Resource i is used by Product j and  to mean that Product j uses
+
+Resource i.
+
+The state of the network is described by a vector  of resource
+
+capacities. If Product j is sold, the state of the network changes to  To simplify
+
+our analysis at this stage, we will ignore cancellations and no-shows and assume
+
+the capacities represent virtual capacity inflated to account for cancellations and
+
+no-shows on each resource.
+
+Time is discrete, there are T periods and the index t represents the current
+
+time (time indices run forwards). Within each time Period t, we assume that at
+
+most one request for a product can arrive; that is, the discretization of time is
+
+sufficiently fine so that the probability of more than one request is negligible. This
+
+assumption can be generalized in many ofthe results below, but is the simplest case
+
+to present. It is analogous to the network version of the dynamic single-resource
+
+model.
+
+To make the notation more compact, demand in Period t is modeled as the
+
+realization of a single random vector  If
+
+this indicates a request for Product j occurred and that its associated revenue is
+
+  this indicates no request for Product j occurred. A realization
+
+R(t) = 0 (all components equal to zero) indicates that no request from any product
+
+occurred at time t. For example, if we have n = 3 products, then a value R(t) =
+
+(0,0,0) indicates no requests arrived, a value R(t) = (120,0,0) indicates a request
+
+for Product 1 with revenue of $120. Note by our assumption that at most one
+
+arrival occurs in each time period, at most one component of R(t) can be positive
+
+(as indicated in the example above). More formally, let
+
+where is the j-th unit n-vector and is the zero n-vector, and define the set
+
+  Then,  The revenue associated
+
+with Product j may be random as well. The sequence  is assumed to
+
+be independent with known joint distributions in each Period t. When revenues
+
+associated with Product j are fixed, we will also denote these by
+
+Given the current time, t, the current remaining capacity x and the current
+
+request R(t), we are faced with a decision: Do we or do we not accept the current
+
+request?
+
+Let an n-vector u(t) denote this decision, where  if we accept a
+
+request for Product j in Period t, and  otherwise. In general, the decision
+
+to accept, is a function of the remaining capacity vector x and the revenue
+
+of Product j, i.e.  and hence u(t) = u(t, x, r). Since we can accept
+
+at most one request in any period and resources cannot be oversold, if the current
+
+seat inventory is x, then u(t) is restricted to the set
+632
+  Handbook of Transportation Science
+
+The Structure of the Optimal Controls
+
+In order to formulate a dynamic program to determine optimal decisions
+
+let denote the maximum expected revenue-to-go given remaining capacity x
+
+in Period t. Then  must satisfy the Bellman equation
+
+with the boundary condition
+  Therefore, a control is optimal if and only if it satisfies:
+
+The control (16.25) says that an optimal policy for accepting requests is of the
+form: accept revenue for Product j if and only if we have sufficient remaining
+capacity and
+
+where  is the revenue value of the request for Product j. This reflects the
+
+rather intuitive notion that we accept a revenue of r for a given product only when
+
+it exceeds the opportunity cost of the reduction in resource capacities required to
+
+satisfy the request.
+
+One can show that bid prices are not able to acheive the optimal control (16.25)
+
+in all cases due to the non-additive nature of the value function. This can be shown
+
+via some simple counter examples. (See Talluri and van Ryzin, 2002 for details.)
+
+At the same time, one can show that bid-price controls have good asymptotic
+
+properties and are in fact asymptotically optimal as the number of seats sold and
+
+the demand are increased (proportionately), as shown in Talluri and van Ryzin,
+
+1999a. However, in practical terms, these results are somewhat crude. The real test
+
+of network control methods and models in practice must be determined through
+
+careful simulation testing.
+
+Approximations Based on Network Models
+
+The exact formulation (16.23) can not be solved exactly for most networks of
+realistic size. Instead, one must rely on approximations of various types. Most
+approximation methods proposed to date follow one of two basic (not necessarily
+  633
+Revenue Management
+
+mutually exclusive) strategies: The first, which we look at in this subsection, is
+
+to use a simplified network model. For example, posing the problem as a static
+
+math program. The second strategy, which we look at in the next subsection, is to
+
+decompose the network problem into a collection of single-resource problems.
+
+  Whichever method is used, it is useful to view all such methods as producing
+
+different approximations of the optimal value function. The outputs from these
+
+approximations can be used to construct controls of various types, either bid-price
+
+controls; partitioned or nested allocations; or virtual nesting controls.
+
+  Among the most useful information provided by an approximation method
+
+are estimates of displacement costs – or bid prices. These are used either directly
+
+in bid-price control mechanisms, or indirectly in other mechanisms like virtual
+
+nesting. Given an approximation method M that yields an estimate of the value
+
+function  we can approximate the displacement cost of accepting Product j
+
+by
+
+where  is the gradient of the value function approximation
+
+assuming the gradient exists. The bid prices are then defined by
+
+If the gradient does not exist, then  is typically replaced (at least implicitly)
+
+by a subgradient of  If the approximation is discrete, then first differences
+
+are used in place of partial derivatives.
+
+  Clearly, one objective for an approximation method is to produce a good
+
+estimate of the value function – and more importantly, a good estimate of the dis-
+
+placement costs or bid prices. On the other hand, speed of computation matters
+
+as well. The approximation  may be a static approximation that must be
+
+resolved quite frequently in practice to account for changes in remaining capacity
+
+x and remaining time t. A static method that is accurate but very computation-
+
+ally complex will therefore be of little use in practice. Thus, one should always
+
+keep these two criteria – accuracy and speed – in mind when judging network
+
+approximation methods.
+
+The Deterministic Linear Programming Model The deterministic linear
+programming (DLP) method uses the approximation
+634
+  Handbook of Transportation Science
+
+where recall  is the vector of demand-to-come (demand over the
+
+periods t, t + 1,..., T) for products j and  is the vector of revenues
+
+associated with the n products. The decision variables  represent
+
+partitioned allocation of capacity for each of the n products. The approximation
+
+effectively treats demand as if it were deterministic and equal to its mean E[D]
+
+and makes an optimal partitioned allocation accordingly.
+
+The DLP was among the first models analyzed in the early work of D’Sylva,
+
+1982; Glover et al., 1982; Dror et al., 1988; Simpson, 1989; Williamson, 1988;
+
+Williamson, 1992, Wollmer, 1986 and Wong, 1990; Wong et al., 1993. Bertsimas
+
+and Popescu, 2001 investigate a variation of the DLP method that corrects for
+
+integrality and degeneracy of the LP.
+
+Occasionally, the optimal primal solution to (16.26) is used to construct a
+
+partitioned control. More often, the primal allocations are discarded and one uses
+
+only the optimal dual variables, associated with the constraints  as bid
+
+prices.
+
+The main advantage of the DLP model is that it is computationally very effi-
+
+cient to solve. Due to its simplicity and speed, it is a popular in practice. The
+
+weakness of the DLP approximation is that it considers only the mean demand and
+
+ignores all other distributional information.
+
+Despite this deficiency, simulation studies have shown that with frequent reop-
+
+timization, the performance of DLP bid prices is quite good, producing higher
+
+revenue than both the probabilistic nonlinear programming model and a variety
+
+of leg-based EMSR heuristics. (See Belobaba and Lee, 2000; Belobaba, 2001;
+
+Williamson, 1988; Williamson, 1992.), though other studies have reported more
+
+mixed results. (See Belobaba, 1998.) In general, the performance of the DLP
+
+method (like many network methods) depends heavily on the type of network, the
+order in which fare products arrive and the frequency of reoptimization.8
+
+The Probabilistic Nonlinear Programming Model The probabilistic nonlinear
+programming (PNLP) method uses the approximation
+
+where again and are defined as in the DLP case. As in the DLP, the decision
+
+variables represent a partitioned allocation of capacity to each Product j and
+
+the term  is the expected sales of Product j under this partitioned
+  635
+Revenue Management
+
+allocation. While this model results in a nonlinear program, it is a relatively easy
+
+one; the objective function is concave and separable in the variables and the
+
+constraints are linear. A variety of specialized algorithms can be designed that
+
+make solving the PNLP model feasible for large networks.
+
+Again, one can obtain bid-price values from the dual variables of the PNLP. If
+
+the active constraints  are linearly independent at the optimal solution, then
+
+exists and is given by the unique vector of optimal dual prices associated
+
+with these constraints; if the active constraints are dependent, then multiple optimal
+
+dual vectors are subgradients of the function
+
+Randomized Linear Programming Randomized linear programming (RLP) is
+another approach for incorporating stochastic information into the DLP method
+based on replacing the expected value of D in the constraint (16.26) by the random
+vector D itself. The expected value of the resulting optimal solution then forms an
+approximation to the value function. That is, define
+
+The optimal value  is a random variable. Let  denote an optimal
+
+vector of dual prices for the set of constraints  and note that  is also
+
+a random vector.
+
+Next, consider approximating the value function by the expected value of
+
+Note the right hand side corresponds to a “perfect information” approximation,
+
+because it reflects a case in which future allocations (and revenues) are based on
+
+perfect knowledge of the realized demand D. We then use  as a
+
+vector of bid prices.
+
+The RLP approximation (16.29) requires a method to efficiently compute
+
+  One simple approach is to simulate k independent samples of the
+
+demand vector,  and solve (16.28) for each sample. Then estimate
+
+the gradient using
+
+That is, simply average the dual prices from k perfect-information allocation
+solutions on randomly generated demands. Hence the name randomized linear
+636
+  Handbook of Transportation Science
+
+programming (RLP) method. The randomized linear programming method first
+mentioned in Smith and Penn, 1988, and later investigated by Talluri and van
+Ryzin, 1999b.
+
+Approximations Based on Decomposition
+
+Another strategy for generating network controls is to decompose the problem
+
+(approximately) into m single-resource problems, each of which may incorporate
+
+some network information, but which are nevertheless independent. Formally, one
+
+can think of such a decomposition method as follows: an approximation method M
+
+decomposes the network problem into m single-resource models, denoted Model
+
+i = 1, . . . , m, with value functions  that depends on the time-to-go t and the
+
+remaining capacity of Resource i. These may be constructed by incorporating
+
+some static, network information into the estimates. Then, the total value function
+
+is approximated by
+
+Typically, such approximations are discrete and yield bid prices
+
+where  is the usual marginal expected value
+
+produced by Model i.
+
+Decomposition approximations have several advantages relative to network
+
+approximations. First, because they are based on single-resource problems, the
+
+displacement costs and bid prices are typically dynamic and can be represented as
+
+a table of outputs (in the case of dynamic programming models) or simple formu-
+
+las (in the case of EMSR approximations). Thus, it is easy to quickly determine
+
+the effect of changes in both the remaining time t and remaining capacity x on the
+
+resulting bid prices. This should be contrasted with network models, which must
+
+typically be re-solved to determine the effects of such changes. Second, because
+
+they are often based on simple, single-resource models, decomposition meth-
+
+ods allow for more realistic assumptions, such as discrete demand and capacity,
+
+sequential decision making over time and stochastic dynamic demand.
+
+The primary disadvantage of decomposition methods is that in the process
+
+of separating the problem by resources, it can be difficult to retain important
+
+network effects in the approximations. However, as we show below, hybrids of
+
+the two approaches can be used to try to achieve the benefits of both network and
+
+decomposition methods.
+  637
+Revenue Management
+
+Prorated EMSR This idea was first investigated by Williamson, 1992 with
+
+EMSR and was called the prorated expected marginal seat revenue (PEMSR)
+
+scheme.
+
+  The PEMSR schemes involve allocating a portion of the revenue of each
+
+product to the resources used by the product. One then solves m single-resource-
+
+level models using the EMSR heuristic, though other single-resource models can
+
+be used as well. The resulting marginal values from each resource are then used
+
+as bid prices in a bid-price control scheme or the allocations are used directly in
+
+resource-level nested allocation controls.
+
+  Specifically, let  be a non-negative real vector. For each
+
+Product j, define new revenues, one for each Resource i in the product, by
+
+Next, treat each resource i independently as if it received demand but with
+reduced revenue and solve the corresponding EMSR model. The approximation
+to the value function is then
+
+where  denotes the expected revenue of Model i under the alloca-
+
+tion
+
+  Williamson, 1992 investigated several methods for determining the allocation
+
+weights in airline problems, including prorating based on mileage, number of
+
+resources and the relative revenue value of local demand on each resource. Her
+
+conclusion is that none of these fixed allocations is very robust in general. This is
+
+one of the main disadvantages of fixed proration, and hence the idea is not used
+
+much anymore in practice.
+
+Displacement Adjusted Virtual Nesting (DAVN) While virtual nesting is often
+
+viewed as a control strategy – and indeed is used as such in most cases in practice
+
+– it can also be viewed as a decomposition approximation to the network value
+
+function. Indeed, the marginal values produced by the virtual nesting approxima-
+
+tion can be used in a bid-price control scheme which avoids the virtual nesting
+
+controls entirely.
+
+  DAVN starts with a set of static bid prices – or marginal value estimate –
+
+which we denote by  These estimates may be obtained, for
+
+example, from one of the various network math programming models presented in
+638
+
+  Handbook of Transportation Science
+
+  Section 16.3. Given the bid prices one then solves a leg-level problem at each
+  resource i as follows:
+
+  First, for all Products j that use Resource i, a displacement adjusted revenue
+  is computed using
+
+That is, the revenue of Product j on Resource i is reduced by the static bid-price
+
+values of the other resources used by Product j. This adjustment is intended to
+approximate the net benefit of accepting Product j on Resource i.9
+
+The next step is clustering – or indexing. In this step, the displacement adjusted
+
+revenue values on each resource are clustered into a specified number of virtual
+
+classes – or buckets – denoted  The number of virtual classes, is
+
+a design parameter, but is typically on the order of 10. It may also vary across
+
+resources. The indexing from Product j to Virtual Class c on each resource can be
+
+performed using a variety of clustering algorithms. The particular indexing method
+
+and clustering criteria are also design decisions and vary from implementation to
+
+implementation.
+
+Once the virtual classes are formed, we compute a representative revenue
+
+value for each class – usually the demand-weighted average revenue. Then, the
+
+distribution of total demand in a virtual class is computed – typically by adding the
+
+means and variances of demand-to-come. Next, one solves a multi-class, single-
+
+resource problem based on these data. The problem could be solved exactly using
+
+the static single-leg model or approximately using an EMSR heuristic. We call this
+
+Model i. This procedure yields a set of booking limits (or protection levels) for the
+
+virtual classes at each resource i and a value function estimate
+
+The resulting DAVN approximation can be used in two basic control strategies.
+
+Most often, the control is a booking limit control on the virtual classes. That is,
+
+a request for Product j is converted into a request for the corresponding virtual
+
+class at each Resource i required by Product j. (Note the virtual class on each
+
+of these resources need not be the same.) If the virtual class on each resource is
+
+available, the request is accepted. If the virtual class on one or more resources is
+
+closed, the request is rejected. Thus, once the indexing from products to virtual
+
+classes is performed, the control logic is an independent, nested allocation class-
+
+level control at each resource in the network. This is the primary appeal of – and
+
+motivation for – the method in the airline industry, because it produces the sort of
+
+booking-class-level controls that are widely used by CRSs.
+
+However, DAVN can also be used to produce bid-price controls. The bid price
+
+for Resource i is simply given by
+  639
+Revenue Management
+
+where as usual  denotes the marginal
+
+value generated by Model i.
+
+Regardless of the control method, typically the network model that was used
+
+to generate the static bid prices is re-solved and the products are re-indexed
+
+periodically as demand conditions change. In the airline industry, for example, the
+
+indexing process is a fairly major change to the CRS, so often it is only done on
+
+a seasonal basis.
+
+Dynamic Programming Decomposition
+
+Dynamic programming decomposition is very similar in spirit to DAVN. Indeed,
+the only real difference is that while DAVN takes displacement adjusted revenues
+and aggregates them into a small number of virtual classes, in dynamic program-
+ming decomposition, the revenue and demand remains disaggregated. As with
+other decomposition methods, there are several possible variations to the basic
+approach. However, for purposes of illustration we focus on one special case here;
+specifically, the dynamic single-resource model in which demand for Product j
+arrives in Period t with probability
+
+  We start the decomposition as in DAVN with a static vector of bid price
+Again, this may be computed in a variety of ways, though typically using one of the
+network math programming models of Section 16.3. Then, for each Resource i, we
+solve a single-resource dynamic program based on displacement adjusted revenues.
+That is, for each Product j that uses Resource i, compute the displacement adjusted
+revenue
+
+Then formulate a dynamic single-resource model for Resource i (Model i) with
+
+arrival rates  and revenues Let the resulting value function be denoted
+
+  The total value function approximation is then
+
+and the bid prices are given by
+
+where  is the marginal value from Model i.
+640
+
+  Handbook of Transportation Science
+
+  Because dynamic programming decomposition is so similar to DAVN, the
+  choice of which one to use is most often dictated by the control strategy one
+  wants to use in the end. If the objective is to construct virtual nesting controls,
+  then aggregating and indexing as in DAVN will more accurately match the control
+  strategy. If one is using bid-price controls, then the aggregating and indexing of
+  DAVN is not necessary and a dynamic programming decomposition will tend to
+  yield more accurate bid prices approximations.
+
+  Iterative Decomposition Methods Iterative decomposition methods are also
+  closely related to DAVN. The methods were originally based on the EMSR heuris-
+  tics for the single-resource problem and so were called iterative prorated EMSR
+  methods, but there are several variations of the general idea and it can be used
+  with any single-resource model. The approach can be found in several sources,
+  including Williamson, 1988; Williamson, 1992; Phillips, 1994. Here we look at
+  only one version to illustrate the idea.
+
+  Iterative DAVN is essentially a method for computing the static bid prices,
+  used by DAVN. The motivation for the approach is heuristic but intuitively
+  appealing. Namely, if indeed represents the marginal displacement cost vector,
+  then once DAVN is solved, for consistency we should have that
+
+where  the marginal value generated by Model i at
+
+the current time (time t). That is, the marginal costs produced by the DAVN
+
+decomposition should match our static estimate
+
+A natural question arises then: What happens if  The idea
+
+of iterative methods is that if these values do not match, we simply feed back the
+
+estimates  as new static bid prices into the procedure and recompute
+
+the DAVN models.
+
+Abstractly, this algorithm produces a mapping, from the space of bid-
+
+price vectors onto itself. That is,  The algorithm terminates
+
+if it finds a fixed point of this map,  However, whether is
+
+a contraction mapping or not has not been investigated to date for DAVN. For a
+
+similar scheme based on prorating revenues by the bid prices, Bratu, 1999 proves
+
+this mapping is convergent. Howver, one ought not to read too much into this fact
+
+(e.g. a convergence of all bid prices to zero would satisfy this claim), and there are
+
+some counter examples that show that the resulting convergent bid prices can be
+
+quite bad. (See Talluri and van Ryzin, 2002.)
+  641
+
+Revenue Management
+
+16.4 Overbooking
+
+Overbooking is somewhat distinct from the core pricing and capacity allocation
+problems of revenue management. While most of revenue management is con-
+cerned with how to best use or price a given amount of capacity, overbooking is
+concerned with how much capacity to provide in the first place. These two prob-
+lems are, of course, quite related, and generally both are considered part of revenue
+management.
+
+  From a historical standpoint, overbooking is the oldest – and, in financial
+terms, among the most successful – of revenue management practices. For exam-
+ple, in the airline industry it is estimated that approximately 50% of reservations
+result in cancellations or no-shows and, as a result, about 15% of all seats would
+go unsold without some form of overbooking. (See Smith et al., 1992.) This is to
+be compared to fare class allocation, which by most estimates accounts for on the
+order of 5% in incremental revenues. Despite this, many researchers consider over-
+booking a somewhat mature area and it has received less attention in the research
+literature than fare class allocation and pricing.
+
+  We first review the history and practice of overbooking. We then survey the
+main methods for making overbooking decisions.
+
+History and Practice of Overbooking
+
+Rothstein’s series of articles (Rothstein, 1971; Rothstein, 1975; Rothstein, 1985)
+provide the best source for the history of overbooking in the airline industry. There
+was also much lively debate surrounding the oversale auction idea, captured in a
+series of articles (Simon, 1968; Simon, 1972; Simon, 1993; Simon, 1994). Here,
+we briefly review this history.
+
+  Prior to 1961, intentional overbooking was practiced somewhat clandestinely
+by U.S. airlines and was not acknowledged publicly. Despite this fact, Rothstein,
+1985 reports that as director of OR at American Airlines he “... found much pub-
+licly available evidence that all the major airlines were deliberately overbooking.”
+In 1961, the Civil Aeronautics Board (CAB) reported a no-show rate of 1 out of
+every 10 passengers booked among the 12 leading carriers at that time. The CAB
+acknowledged that this situation created real economic problems for the airlines.
+The CAB conducted another study of overbooking in 1965–66. They found that
+the denied boarding rate at that time was only 7.69 per 10,000 passengers boarded
+(Civil Aeronautics Board, 1967) and concluded that, overall, overbooking prac-
+tices benefited the traveling public by lowering the cost of air travel. Thus, as of
+1965, overbooking was an officially sanctioned practice, provided it was “carefully
+controlled,” a criterion that was never precisely defined by the CAB.
+642
+  Handbook of Transportation Science
+
+  In parallel, the CAB also increased the denied boarding penalty to 100%
+  of the coupon. Airlines controlled the percentage of denied boardings and the
+  CAB carefully monitored the denied boarding performance of each airline.
+  The involuntary denied boarding rate is still carefully monitored in the U.S.
+  by the Department of Transportation (DOT) and currently hovers around 1–2
+  involuntary and 15–20 voluntary denied boardings per 10,000 passengers (see
+  Table 16.4).
+
+  In 1968, economist Julian Simon proposed what he called “an almost practical
+  solution to airline overbooking,” in which airlines would conduct a sealed-bid
+  “reverse auction” to find passengers willing to accept monetary compensation for
+  being bumped. Simon predicted (rightly so, as initial responses to his letters to
+  airline executives later indicated) that the airlines would object to the scheme.
+  Simon wrote many letters to executives, regulators, policy makers and consumer
+  groups arguing for his “oversale auction” idea. Despite these efforts, he failed to
+  get even one airline to experiment with it on one flight. The scheme continued to
+  flounder until 1977 when Alfred Kahn, an economist, was appointed to head the
+  CAB. Simon wrote to Kahn about his proposal and Kahn liked and largely adopted
+  it under the heading of a “volunteer” bumping plan, as mentioned above. It has
+  since proved very successful in the industry, providing a fair and efficient means
+  of implementing voluntary denied boarding in the airline industry, and is now a
+  widespread practice.
+  643
+
+Revenue Management
+
+Static Models
+
+We next look at the methodology for making overbooking decisions. The simplest
+and most widely used methodology is based on static overbooking models. In static
+models, the dynamics of customer cancellations and new reservation requests over
+time are ignored. Rather, the models simply determine the maximum number
+of reservations to hold at the current time given cancellation probabilities from
+the current time until the day of service. This maximum number of reservations,
+or overbooking limit, is then recomputed periodically prior to service to reflect
+changing cancellation probabilities over time. While more sophisticated dynamic
+overbooking models have been developed, the simplicity, flexibility and robustness
+of the simpler static models has made them more popular in practice.
+
+  Two types of events impact the overbooking decision: cancellations and no-
+shows, with the difference simply related to the timing ofthe events. A cancellation
+is a reservation that is withdrawn by a customer strictly prior to the time of service.
+A no-show is a reservation that is in the system until the time of service, but
+the customer does not show up at the time of service. Under a static model, the
+distinction between the two is unnecessary, since a static model assumes a static
+overbooking limit is set without recourse to adjust it. Thus, all that matters is the
+probability that a reservation survives to the time of service (the show demand as
+it is sometimes called). In dynamic overbooking models, however, the distinction
+between no-shows and cancellations is quite important.
+
+  As mentioned, static models are typically used to compute overbooking
+limits – also called virtual capacities or authorization levels in the airline indus-
+try – which in turn are inputs to capacity control models. These static overbooking
+models are typically resolved periodically to account for changes in the cancel-
+lation and no-show probabilities over time, resulting in overbooking limits that
+vary (typically decline) over time. The maximum number of reservations one can
+accept at any time is given by the current overbooking limit.
+
+  The situation is illustrated in Figure 16.5. The top, wide line is the overbooking
+limit over time. Solving a static model gives one point on this curve. Overbooking
+limits are initially high because the probability of a reservation currently in the
+system cancelling or no-showing prior to the time of service is typically higher
+when the time to service is further away. At the time of service (T) approaches,
+the overbooking limits fall. At the same time, reservations are being accumulated
+in the system over time. The dark line in Figure 16.5 shows that with overbooking
+in place, the reservations in the system can exceed the capacity C, and we don’t
+stop accepting reservations until the overbooking limit is reached. At that point
+reservations are rejected. The resulting show demand at time T is (ideally) close to
+the capacity C. The lighter line shows the same trajectory of reservations without
+644
+  Handbook of Transportation Science
+
+  overbooking. In this case, the reservations in the system are truncated at the capac-
+  ity C early on in the booking process. As a result, once reservations start to cancel
+  and no-show, the show demand is significantly less than capacity.
+
+  The static overbooking problem first appeared in a pair of papers by Beck-
+  mann, 1958; Beckman and Bobkowski, 1958. Other early treatments of the static
+  problem are Taylor, 1962, Thompson, 1961 and Rothstein and Stone, 1967. See
+  also Bierman Jr. and Thomas, 1975 and Shlifer and Vardi, 1975. Dynamic over-
+  booking models (not covered here) are addressed in Chatwin, 1993 and subsequent
+  published articles Chatwin, 1997; Chatwin, 1999.
+  The Binomial Model
+  The simplest static model is based on a Binomial model of cancellations in which
+  no-shows are lumped together with cancellations (e.g. a no-show is treated simply
+  as a cancellation that occurs at the day of service).
+
+  The following assumptions are made:
+  Customers cancel independently of one another.
+  Each customer has the same probability of canceling.
+  The cancellation probability is Markovian; it depends only on the time
+  remaining to service and is independent of the age of the reservations.
+  (Martinez and Sanchez, 1970 tested the Markovian property of the binomial model
+  empirically and showed it is a reasonable approximation.)
+  645
+Revenue Management
+
+  Let t denote the time remaining until service, C denote the physical capacity,
+u denote the number of reservations on-hand and q denote the probability that
+a reservation currently on hand shows up at the time of service (1 – q is the
+probability they cancel prior to the time of service). Note q is really a function of
+the time remaining, since in general the more time remaining the more likely it
+is that customers cancel before the time of service. However, to keep the notation
+simple we suppress the dependence of q on t.
+
+  Under the assumptions stated above, the number of customers who show up
+at the time of service (the show demand), denoted Z(u), is binomially distributed
+with p.m.f.
+
+c.d.f.
+
+mean E[Z(u)] = qu and variance Var(Z(u)) = uq(1 – q). It is convenient to work
+with the compliment of the distribution denoted by which is defined by
+
+  Several studies have validated this binomial model of cancellations. For exam-
+ple, in one of the earliest investigations of overbooking, Thompson Thompson,
+1961 considers data from 59 flights from Auckland to Sydney operated by Tasman
+Empire Airways. He eliminated groups of 6 or more since they exhibit much lower
+cancellation rates and although rare (11 total booking on the 59 flights), can sig-
+nificantly distort the cancellation rate on the flights involved. Parties of 6 or less
+constituted 99.6% of all bookings; 81% of the remaining were singles; 15% were
+paired and 4% were parties of 3-6. While the results showed that group cancellation
+behavior does invalidate the the binomial model for certain cabins at certain time
+periods, overall he concludes the binomial model adequately fits the data. (Group
+cancellation effects are discussed further below.)
+Overbooking Based on Service Level Criteria One measure of service is the
+probability of oversale at the time of service, which we call the Type 1 service
+646
+  Handbook of Transportation Science
+
+  level. Given that there are u reservations on hand, this probability is denoted
+  and is given by
+
+A more intuitive measure of service is the fraction of customers who are denied
+
+service, which we call the Type 2 service level and denote by  This fraction
+
+is given by
+
+Through some algebraic simplification, this simplifies to
+
+which is a more convenient formula for computations.10
+  Tabel 16.5 shows the Type 1 and Type 2 service levels for an example with
+
+c = 150, q = 0.85 and varying overbooking limits Typically, one first specifies
+a service standard and then numerically searches for the largest booking level
+satisfying this standard. The resulting is the overbooking limit. The quantity
+
+  (the excess over capacity) is typically referred to as the overbooking pad.
+
+Example 2 Suppose we want an average of no more than 0.1% of customers to
+
+be denied service  and our capacity is C = 150 and q = 0.85.
+
+From Table 16.5, we should accept at most 168 reservations  (Thought
+
+169 has a service level only slightly over the standard and might be a candidate
+
+as well.) Reservations would then be accepted as long as the number ofbookings
+
+on hand was less than The overbooking pad would be 168 – 150 = 18, so we
+
+would be willing to oversell the capacity by 18 units.
+
+Overbooking Based on Economic Criteria An alternative to setting overbook-
+ing limits based on service standards is to use an economic criteria. This approach
+requires an estimate of the revenue loss from not accepting additional reservations
+and an estimate of the cost of denied service. We first develop the details of the
+economic-based model, and then discuss some of the issues involved in estimating
+the required revenue and cost inputs.
+  647
+Revenue Management
+
+  Let z denote the number of customers who show up on the day of service
+(the show demand) and let c(z) denote the denied service cost. We shall assume
+c(z) is an increasing convex function of z. For example, a simple and common
+assumption in practice is that each denied service costs the provider a constant
+marginal amount h, in which case
+
+An arguably more realistic assumption is to assume strictly increasing marginal
+costs, reflecting the need to offer higher levels of compensation (or incur higher
+goodwill costs) as each additional customer is denied service.
+
+  Let r denote the marginal revenue of accepting an additional reservation. One
+could also allow this marginal revenue to vary, but it is a common simplification
+in practice to consider it fixed, though we discuss this issue further below. Then
+the total profit from having u reservations on hand is given by
+648
+  Handbook of Transportation Science
+
+  where recall that the random variable Z(u) denotes the number of customers who
+  show up on the day of service out of u reservations. One can show for the binomial
+  model that if c(z) is convex, then is convex in u.11 Therefore a maximizing
+
+  is the largest value of u satisfying
+
+For the constant marginal cost case where  this condition reduces
+to
+
+This expression can be argued intuitively by noting that when we accept the u-th
+
+reservation, we incur a marginal denied boarding penalty of h if and only if: (i) the
+
+current reservations on hand consume all the capacity  and (ii) the
+
+u-th customer shows up. The left-hand-side above is simply the marginal penalty
+
+multiplied by the probability of this event, or equivalently the expected marginal
+
+cost. Then u* is the largest value of u for which the expected marginal cost is less
+
+than the marginal revenue.
+
+We can express (16.38) as
+
+Note this is equivalent to setting a fixed Type 1 service level for a capacity of
+
+C – 1. For large capacities C,  so using economic criteria with
+
+constant marginal costs corresponds approximately to specifying a particular Type
+
+1 service level, which provides one justification for using Type 1 service levels.
+
+Table 16.5 displays probabilities for  for the example C = 100
+
+and q = 0.85. To illustrate (16.38), suppose the overbooking cost is h = $500 and
+
+the marginal revenue is r = $100. Then r/qh = 0.235. We see from Table 16.5
+
+that the optimal overbooking limit is then
+
+Static Model Approximations
+
+While the binomial model is quite simple, it is often desirable to have simpler,
+closed-form expressions for the overbooking limits. We next look briefly as such
+approximations.
+
+Deterministic Approximation The deterministic approximation simply sets the
+overbooking limit so that the average show demand is exactly equal to the capacity.
+That is,
+  649
+Revenue Management
+
+As simplistic as this is, we have seen implementations where this approximation
+(or variations of it) are in fact used.
+
+Normal Approximation A popular approximation in practice is the normal
+
+approximation, in which  is replaced by the normal distribution with mean,
+
+and variance, chosen to match the binomial, viz
+
+The Type 1 service level is then approximated by
+
+where  and  is the standard normal distribution
+
+  Let  denote the p.d.f. of the standard normal.
+
+The Type 2 service level is then approximated by:12
+
+The last columns of Table 16.5 show the estimates produced by the normal approx-
+imation for our example with C = 150 and q = 0.85, which are resonably close
+to the values of the binomial model.
+
+  The economic-based overbooking limit (16.38) for the constant-marginal-cost
+function (16.35) is approximated by chosing to satisfy
+
+Group Cancellations
+
+The presence of groups also has an important effect on cancellation models in
+practice. If a group decides to cancel, then all reservations are cancelled simulta-
+neously. The resulting positive correlation in cancellations increases the variance
+of the show demand. When dealing with large numbers of reservations, it is often
+possible to ignore the effect of groups but with small numbers of reservations,
+group effects can result in significant deviations from the binomial model.
+
+  To gain some sense of the presence of groups in airline reservations, Table 16.6
+provides an empirical distribution of group sizes over approximately one half
+650
+  Handbook of Transportation Science
+
+  million airline reservations, showing that about half of reservations are individual
+  reservations while the other half are from groups of two or more.
+
+  One simple technique used in practice to adjust for group size is to simply
+  inflate the variance of the show demand by a factor that accounts for group size.
+  For example, if one is using the normal approximation to the binomial model
+  as described above, then the mean estimate, is unchanged but the variance
+  estimate, is modified; that is,
+
+  where k is an estimate of the average group size.13 A more refined technique based
+  on moment generating functions and is discussed in Talluri and van Ryzin, 2002.
+  Combined Capacity Control and Overbooking Models
+  Thus far, we have analyzed the overbooking problem in isolation without con-
+  sidering the interaction of overbooking decisions with capacity controls. We next
+  look at both exact and approximate methods to model cancellations and no-shows
+  together with class allocations. The treatment here is largely based on the work of
+  Subramanian et al., 1999.
+  651
+Revenue Management
+
+  Incorporating no-shows or cancellations in either the static or dynamic single-
+resource model is not too difficult theoretically provide one makes the following
+set of assumptions:
+
+Assumption 1
+(i) The cancellation and no-show probabilities are the same for all customers.
+(ii) Cancellations and no-shows are mutually independent accross customers.
+
+(iii) Cancellations and no-shows in any period are independent of the time a
+
+  reservation was accepted.
+
+(iv) The refunds and denied service costs are the same for all customers.
+
+As a result of these assumptions, the number of no-shows and the costs incurred
+are only a function of the total number of reservations on hand. Therefore, we only
+need to retain a single state variable, and the resulting dynamic programs are only
+slightly more complex than those presented in Section 16.2.
+
+  The most offensive of these assumptions in practice are (i) and (iv). In par-
+ticular, because cancellation options and penalties are often linked directly to a
+booking class, cancellation and no-show rates and costs can be vary significantly
+from one class to the next. Ideally, these differences should be accounted for when
+making allocation decisions. However, this significantly complicates the problem
+as discussed below. As already mentioned, Assumption 1-(ii) is often unrealistic,
+because reservations from people in groups typically cancel at the same time.
+Assumption 1-(iii) is typically less of a problem in practice and as mentioned
+above has some empirical support (See Thompson, 1961.).
+
+  It is partly for all these reasons that in practice the overbooking problem is
+separated from the capacity allocation problem. Often, an approximate overbook-
+ing model can be solved that is able to relax (at least heuristically) some or all
+parts of Assumption 1. However, given Assumption 1 the two problems can be
+combined exactly as shown below.
+
+Exact Methods for No-shows Under Assumption 1 We first consider only
+
+no-shows without cancellations. (Recall, a no-show is a customer who does not
+
+show up at the time of service, while a cancellation is a reservation that departs
+
+the system strictly before the time of service.) Let denote the probability that a
+
+customer with a reservation shows up for service  is the no-show probability).
+
+By Assumption 1 (i), this probability is assumed to be the same for all customers,
+
+and by Assumption 1 (ii) it is assumed to be independent of when the reservation
+
+was made.
+
+Let  if customer i shows up for service and  otherwise. Given x
+
+reservations on hand at the time of service, the number of customers who show up
+652
+  Handbook of Transportation Science
+
+  at time zero (the show demand), denoted Z(x), is then
+
+and by Assumption 1-iii)  is a  random variable, with
+
+By Assumption 1 iv), the total cost of denied service is only a function of the
+
+show demand z. Let c(z) denote the overbooking cost given z. We will require the
+
+c(z) be increasing and convex with c(0) = 0. Convexity in cost is quite natural
+
+since the marginal cost of denying service to customers tends to increase with the
+
+number denied. For example, we could have a simple linear cost h per denied
+
+customer in which case  where, as before, C is the capacity. If
+
+customers are refunded a class
+
+Given this no-show model, the expected cost of service given that there are x
+
+reservations on hand at the time of service, which we denote  is given by
+
+Stochastic convexity arguments show that is concave in x if is convex. The
+above expression then replaces the boundary conditions of the dynamic program
+for the static and dynamic models. We look at each in turn.
+
+Static Model Consider the static model of Section 16.1, where the classes are
+
+ordered  and we assume classes arrive in the order of lowest
+
+to highest revenue. Classes and stages are indexed by j. The state variable, x, is
+
+now defined to be the number of reservations on-hand rather than the remaining
+
+capacity.
+
+The Bellman equation (16.2) for the static model is then modified to account
+
+for no-shows as follows
+
+with boundary conditions (16.41), where here  is now interpreted as the
+
+expected net benefit (expected revenue minus the expected terminal cost) of oper-
+
+ating the system from period j onward given that there are x reservations on
+hand.14
+

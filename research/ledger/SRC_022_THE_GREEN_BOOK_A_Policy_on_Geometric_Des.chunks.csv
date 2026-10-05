@@ -1,0 +1,43 @@
+chunk,covers,verdict,ideas,read_at
+p0001-0025,front matter and table of contents,none,0,2026-10-04 19:48
+p0026-0050,"table of contents, list of figures",none,0,2026-10-04 19:48
+p0051-0075,"list of tables, preface, chapter 1 framework (functional and context classes)",some,1,2026-10-04 19:48
+p0076-0100,"ch1 contexts, modes, performance-based design; start ch2 human factors",none,1,2026-10-04 19:48
+p0101-0125,"ch2 human factors, traffic volume (ADT, DHV, K, D), composition, speed, design speed, flow relationships",rich,5,2026-10-04 19:49
+p0126-0150,"ch2 capacity, LOS, PHF, access management and crash rates, pedestrians",rich,9,2026-10-04 19:49
+p0151-0175,"ch2 disabilities, bicyclists, design vehicles and turning paths",rich,11,2026-10-04 19:49
+p0176-0200,"ch2 end: turning paths, vehicle performance, safety, refs; ch3 sight distance start",some,13,2026-10-04 19:50
+p0201-0225,"ch3 sight distance (SSD, DSD, passing), horizontal curve theory, side friction",rich,16,2026-10-04 19:50
+p0226-0250,"ch3 superelevation methods 1-5, min radius Table 3-7, superelevation tables 3-8 to 3-12 (covered by curve_speed_model idea SRC_022-015/16)",some,16,2026-10-04 19:50
+p0251-0275,"ch3 low-speed street curves, turning roadways, compound curves, superelevation transition",some,17,2026-10-04 19:51
+p0276-0300,"ch3 spiral/superelevation runoff, axis of rotation, drainage (cross-section detail, not modelled)",none,17,2026-10-04 19:51
+p0301-0325,"ch3 curve widening, turning roadway widths, HSO start",some,18,2026-10-04 19:51
+p0326-0350,"ch3 grades, truck performance, critical length of grade, climbing lanes",rich,20,2026-10-04 19:51
+p0351-0375,"ch3 turnouts, shoulder driving, emergency escape ramps (not modelled)",none,20,2026-10-04 19:51
+p0376-0400,"ch3 end: vertical curves, alignment coordination, utilities, work zone traffic plan, references",none,20,2026-10-04 19:52
+p0401-0425,"ch4 cross slope, lane width, shoulders, curbs (cross-section detail)",none,20,2026-10-04 19:52
+p0426-0450,"ch4 drainage, barriers, medians, frontage roads, noise",some,21,2026-10-04 19:52
+p0451-0475,"ch4 driveways, tunnels, sidewalks (cross-section detail)",none,21,2026-10-04 19:53
+p0476-0500,"ch4 curb ramps, bicycle and transit facilities (bus turnouts), on-street parking, references",some,23,2026-10-04 19:53
+p0501-0525,"ch5 local roads and streets (rural and urban), design criteria",some,24,2026-10-04 19:53
+p0526-0550,"ch5 end, ch6 collectors rural: Tables 6-1 to 6-5 design speed/grade/width by volume (folded into check_design_standards SRC_022-024)",none,24,2026-10-04 19:54
+p0551-0575,"ch6 urban collectors, ch7 arterial intro (parking, medians, intersection design)",none,24,2026-10-04 19:54
+p0576-0600,"ch7 rural arterials access mgmt, speed transition zones, urban arterial design speeds/LOS/grades",some,25,2026-10-04 19:54
+p0601-0625,"ch7 urban arterial cross-section, lane widths, medians, parking, borders",none,25,2026-10-04 19:54
+p0626-0650,"ch8 freeways general design: design speed >=80 km/h, 2+ lanes, grades, shoulders (folded into check_design_standards)",none,25,2026-10-04 19:55
+p0651-0675,"ch8 urban freeways, elevated/depressed, reverse-flow roadways, C-D roads, managed lanes start",some,27,2026-10-04 19:55
+p0676-0700,"ch8 managed lanes/bus stops, ch9 intersections intro, conflict points, functional area, capacity/LOS",rich,30,2026-10-04 19:55
+p0701-0725,"ch9 intersection types, roundabout categories, alignment/profile, start of sight distance",some,32,2026-10-04 19:56
+p0726-0750,ch9 ISD cases (already recorded),none,34,2026-10-04 19:56
+p0751-0775,"ch9 channelized right turns, curb radii (4.5-12 m by vehicle), islands (covered by check_turning_paths)",none,34,2026-10-04 19:56
+p0776-0800,"ch9 turning roadway superelevation, SSD for turn roads, auxiliary lanes, deceleration lanes, left-turn storage Eqs 9-3/9-4",rich,35,2026-10-04 19:57
+p0801-0825,"ch9 left-turn lane geometry, double left (195% capacity), median openings, indirect left turns, MUT/RCUT/jughandle/CFI",rich,36,2026-10-04 19:57
+p0826-0850,"ch9 U-turn designs, roundabout design principles and capacity thresholds, frontage road intersections, rail crossings start",some,37,2026-10-04 19:57
+p0851-0875,"ch9 rail crossing sight distance, ch10 interchange warrants, adaptability, safety, economics",some,38,2026-10-04 19:58
+p0876-0900,"ch10 grade separation structures, interchange general, three-leg designs",some,39,2026-10-04 19:58
+p0901-0925,ch10 four-leg interchange types (DDI recorded),some,40,2026-10-04 19:58
+p0926-0950,"ch10 interchange configuration selection, spacing, uniformity, basic lanes, lane balance",rich,39,2026-10-04 19:58
+p0951-0975,"ch10 auxiliary lanes, lane reductions (taper 50:1-70:1, 600-900 m after interchange), weaving, C-D roads, single exit, wrong-way entry, ramp types",some,40,2026-10-04 19:59
+p0976-1000,"ch10 ramp design speed, widths, terminals, spacing, speed-change lane lengths (Tables 10-4/10-5)",rich,41,2026-10-04 19:59
+p1001-1025,"ch10 terminals on curves, multilane terminals, forks, testing ease of operation, ramp metering, references start",some,43,2026-10-04 19:59
+p1026-1048,references and index,none,43,2026-10-04 19:59

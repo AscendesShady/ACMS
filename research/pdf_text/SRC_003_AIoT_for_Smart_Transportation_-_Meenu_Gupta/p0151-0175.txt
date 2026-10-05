@@ -1,0 +1,1205 @@
+128 AIoT for smart transportation
+
+7.3.1.3 Sensor networks
+Wireless sensor network (WSNs) is commonly used in the large-scale imple-
+mentation of IoT sensors in transport systems. These networks consist of spatially
+distributed autonomous sensor nodes that watch and report on their environment
+independently of one another. WSNs use different media access control protocols
+including ZigBee, LoRaWAN, and BLE to form low-power and adaptive networks
+designed to forward messages over long distances.
+
+7.3.1.4 Crowdsourcing and participatory sensing
+The use of smart mobile phones and applications has made crowdsourcing and
+participatory sensing useful methodologies for data collection in ITS [13]. Social
+activities such as Waze and Google Maps utilise the availability of mobile devices
+with participation from the users to gather data including traffic conditions and the
+occurrence of traffic incidents and the condition of the road. The discussed Cyber-
+Physical System (CPS) assigns roles to users to share information through their
+smartphones, which makes them active nodes in the transportation environment.
+
+7.3.1.5 Edge computing
+Indeed, edge computing structures have a central role in data collection and pro-
+cessing in ITS systems. Through edge computing, the system enables peripheral
+nodes to utilise computational resources closer to the data source, filter, preprocess
+data, and make localised decisions. This helps reduce the need for communication
+bandwidth and minimises the latency caused by transmitting raw data to the cen-
+tralised processing units. Fixed targets like Road Side Units, smart junction boxes,
+and other vehicular computers can process and even make decisions based upon
+patterns in the data that they receive in real-time and reduce time sensitivity in the
+application [14]. Acquisition data methods in smart transportation systems include
+the collection and transfer of data from various nodes to central or distributed
+nodes. Some of the most used techniques are illustrated in Figure 7.3.
+
+7.3.2 Communication protocols
+
+Within smart transportation system (STS), different communication paradigms are
+used to integrate orchestrating data transmission among multiple entities, auto-
+mobiles, roadside devices, and central hubs. These protocols are critically essential
+to ensure that communication is secure, effective, and always dependable. In the
+next subsections, the primary communication protocols used in the characterisation
+of this domain are outlined.
+
+7.3.2.1 An example of a LAN protocol is SOHO Ethernet,
+  along with IP-based protocols
+
+Several ITS are designed using an Ethernet and IP-based protocol framework [15].
+They are widely used for intercommunication between traffic management centres
+and other network components such as RSUs as well as other connected systems.
+Where IP provides internetworking and end-to-end data transmission over WANs,
+Ethernet provides highly reliable and fast LAN connectivity.
+Role of data and IoT sensors in smart transportation 129
+
+  Vehicles
+
+  Collection  Various Sources  Sensors
+  Infrastructure Tech
+
+  Driver Tech
+
+Data Acquisition Techniques
+
+  Centralised  Central Processing
+
+  Transmission Processing Units
+
+  Distributed Distributed Processing
+
+  Figure 7.3 Data acquisition techniques in smart transportation
+
+7.3.2.2 IoT communication protocols
+The IoT plays a crucial role in smart transport systems, as it enables the integration
+of a large number of sensors, actuators, and devices. There are two well-known IoT
+communication protocols:
+
+1. Message Queuing Telemetry Transport (MQTT): MQTT is a low overhead,
+  lightweight publish-subscribe transported protocol suitable for devices.
+  Transportation systems employ digital communication extensively to provide
+  control command and to coordinate data acquisition and distribution of data
+  gathered by sensors respectively [16].
+
+2. Constrained Application Protocol (CoAP): CoAP is a web transfer protocol
+  specifically designed for constrained networks and devices. In particular, it facil-
+  itates the systematic monitoring and control of traffic lights, roadside equipment,
+  and other IoT devices integrated into transport infrastructure networks.
+
+7.3.2.3 Vehicle Ad hoc networks
+Two of the most important protocols for the direct exchange of information
+between vehicles as well as with roadside units are Dedicated Short-Range
+Communications (DSRC) and Cellular Vehicle-to-Everything (C-V2X).
+
+1. DSRC: DSRC is a short-range wireless communication protocol that operates
+  in the band of 5.9 GHz. The objectives encompass social, content, and con-
+  nectivity aspects, enabling the streaming of applications such as entertainment,
+  traffic control, and collaborative collision avoidance [17].
+130 AIoT for smart transportation
+
+2. C-V2X: C-V2X is a cellular vehicle-to-everything (V2X) communication
+  technology that uses existing LTE and 5G networks for V2V, V2I, and V2N
+  applications. Compared to DSRC it offers higher range and reliability and
+  hence various applications are possible with it.
+
+7.3.2.4 Bluetooth and Bluetooth Low Energy (BLE)
+Short-range wireless communication in smart transport systems is typically pro-
+vided via Bluetooth and BLE. Application of such protocols is in keyless entry, car
+diagnostics, and in-car infotainment systems among others. In particular, BLE is
+suitable for low-power IoT devices, including beacons and transportation structure
+monitoring sensors.
+
+7.3.2.5 RFID and NFC protocols
+As one of the most advanced key technologies in constructing smart transport sys-
+tems, NFC and RFID authentication and identification technologies are widely used.
+
+1. RFID: RFID employs radio waves to recognise objects or things including toll
+  tags, freight containers, and cars. Many applications include supply chain
+  management, asset tracking, electronic toll collection systems, etc.
+
+2. NFC: Being a form of short-range wireless communication, NFC is the wire-
+  less system that facilitates safe data transmission between neighbouring devi-
+  ces. It is especially widely used in contactless payments made for parking and
+  public transport tickets. A breakdown of these many communication protocols
+  that exist within smart transport systems is provided in Table 7.2. The proto-
+  cols described in the table are distinctive in the kind of transport function they
+  perform as well as the benefits of the features they have. When comparing
+  these elements, it becomes easier to understand all the different options
+  available for creating the communication network for smart transport thus
+  making it easier for the stakeholders to meet their intended needs for a parti-
+  cular use case scenario.
+
+7.3.3 Network architectures
+
+7.3.3.1 Cloud-based architecture
+ITS employ cloud computing platforms as a central data repository and server. Using
+the long-term scale of a cloud computing infrastructure and the computational power
+of its hosts, the enormous volume of data generated from a variety of sources can be
+stored and examined by transportation agencies and service providers.
+
+  There is, therefore, a need to integrate multiple data sources to develop a
+comprehensive view of the entire transportation ecosystem. These may include
+external databases, crowdsourced information, sensor data, and car telematics
+transmitted via the cloud.
+
+  Thus, it would be possible to employ advanced analytical, machine learning,
+and visualisation techniques and cloud-based applications to obtain more relevant
+information and make the most rational decisions in traffic management, route
+optimisation, predictive maintenance, and other transportation-related applications.
+Table 7.2 Comparison of communication protocols in smart transportation
+
+Protocol  Technology  Characteristics  Strengths  Typical use cases
+DSRC (802.11p)
+Cellular V2X  Dedicated Short-Range  l High-reliability, low l Well-established standard l Vehicle-to-Vehicle (V2V)
+Wi-Fi
+Bluetooth  Communication (DSRC) based on  latency communication l Adequate for applications communication
+  IEEE 802.11p  where safety is paramount l Vehicle-to-Infrastructure (V2I)
+Zigbee
+LoRaWAN  communication
+
+  Cellular networks (LTE/5G)  l Wide coverage area  l Seamless integration with  l Traffic management and optimization
+  existing cellular
+  l Support for high-speed  infrastructure  l Remote vehicle diagnostics and soft-
+  mobility  ware updates
+  l Scalability and flexibility
+
+  IEEE 802.11 standards (e.g.,  l High data rates  l Low deployment costs  l Passenger Wi-Fi services in public
+  802.11ac, 802.11ax)  transit
+  Bluetooth Low Energy (BLE)  l Ubiquitous availability  l Interoperability with
+  in urban areas  existing Wi-Fi  l Connectivity for smart city
+  Zigbee (IEEE 802.15.4)  infrastructure  applications
+
+  l Low power  l Low-cost hardware  l Personal device connectivity in
+  consumption  vehicles
+  l Support for short-range
+  l Simple device pairing  communication in IoT  l Beacon-based location services
+  and connection  applications
+  establishment  l Sensor networks for environmental
+  monitoring
+  l Low-data-rate, low  l Mesh networking
+  power communication  capability  l Smart parking systems
+
+  l Interference resistance
+
+  Wide Area Long Range Network  l Long-range commu-  l longer-lasting battery for  l Asset tracking and management
+  (LoRaWAN)  nication (up to several  IoT devices
+  kilometres)  l Remote monitoring of infrastructure
+  l Suitable for remote and  and equipment
+  l Low power  low-density areas
+  consumption
+
+  (Continues)
+Table 7.2 (Continued)
+
+Protocol  Technology  Characteristics  Strengths  Typical use cases
+NB-IoT
+  Internet of Things over  l Low power  l High device density  l Smart metering and utilities
+Ethernet  narrowband (NB-IoT)  consumption  support  management
+
+CAN (Controller  l Deep indoor coverage  l Cost-effective solution  l Environmental monitoring in urban
+Area Network)  for large-scale  areas
+  Ethernet over twisted pair cables  l High data rates  deployments
+RFID (Radio-  l Onboard vehicle networks (Ethernet
+Frequency  l Reliable and determi-  l Well-established  AVB)
+Identification)  nistic communication  technology
+  l High-speed data transfer in infra-
+  Serial communication bus  l Robustness and relia-  l High bandwidth capacity  structure backbones
+  primarily used in automotive  bility in noisy
+  applications  environments  l Standardised protocol for  l In-vehicle communication networks
+  automotive systems  l Automotive diagnostic systems
+  l Deterministic commu-
+  nication with low  l Support for real-time  l Electronic toll collection (ETC)
+  latency  control and diagnostics  systems
+
+  RFID technology for wireless data l Contactless operation  l Automated identification  l Asset tracking and inventory man-
+  and tracking  agement in logistics and supply chain
+  transmission  l Scalability for large-  management
+  l Integration with IoT and
+  scale deployments  inventory management
+  systems
+  Role of data and IoT sensors in smart transportation 133
+
+7.3.3.2 Edge computing architecture
+While cloud computing provides centralised computation solutions that have a
+remarkable processing ability, edge computing architectures deploy computational
+assets and decision-making at the data origin. Such an approach is most beneficial
+for the time-critical applications for ITS where fast response time and maximum
+availability of the response is essential.
+
+  Some of the edge devices include roadside units, intelligent traffic signals, and
+onboard car computers since they can hold and analyse data. This means that
+decisions and optimisations can be made quickly, on-the-fly, without necessarily
+having to interface with the centralised cloud infrastructures all the time.
+
+  On the same note, edge computing architectures can reduce load time and
+network bandwidth demands involved with the transfer of raw sensory data from
+various IoT sensors and gadgets to the cloud.
+
+7.3.3.3 Fog computing architecture
+Fog computing adds an intermediary layer between edge devices and the cloud,
+which further expands the concept of cloud computing by making it a hierarchical
+architecture for processing and data storage. For instance, ITS can use the place-
+ment of fog nodes at communication hubs or traffic management centres to process
+and filter data coming from nearby edge devices.
+
+  Fog computing is a bridging technique, allowing relevant information to be
+forwarded to the cloud for further analytics and extended period storage. This
+architecture enables effective data collection, preprocessing, and localised
+decision-making while enhancing the responsiveness of transport systems by
+reducing latency and network congestion. It also allows real-time monitoring,
+analysis, and control of traffic flow, vehicle operations, and infrastructure main-
+tenance. Furthermore, it enhances data safety and privacy based on the processing
+of sensitive data over local networks and minimises the transfer of raw data over
+public networks. Overall, fog computing is critical to the optimisation of efficiency,
+dependability, and scalability of ITS and to opening doors to smooth and networked
+mobility-related solutions.
+
+7.3.3.4 Hybrid architecture
+Fog computing, edge computing related to cloud computing, and hybrid archi-
+tecture are terms frequently used within ITS to solve the various needs and diffi-
+culties presented by the transportation ecosystem. Hybrid architecture delivers
+scalable and adaptable solutions made from the best of both architectural models
+and is adapted to specific use cases and applications. While long-term traffic pat-
+tern analysis and predictive maintenance reasonably align with cloud-based pro-
+cessing and storage, applications depending on decision-making on the edge of
+cloud computing, such as autonomous vehicle navigation and real-time traffic
+signal control, may require low latency only through edge computing. Besides this,
+by judiciously placing fog nodes, data from edge devices can be preprocessed and
+aggregated, freeing up resources in the clouds and lowering bandwidth require-
+ments over the network.
+134 AIoT for smart transportation
+
+7.3.3.5 Software-defined networking (SDN)
+SDN is a concept for transportation networks that separates the data plane, referred
+to as forwarding traffic, from the control plane, which symbolises the network’s
+intelligence. This separation allows for centralised management and program-
+mability of the network, which thus improves flexibility, scalability, and
+adaptability.
+
+  With ITS, SDN architectures have to allocate the network adaptively
+according to resources available in real-time traffic conditions, prioritise critical
+data flows, and allow for the seamless introduction of new services and
+applications.
+
+  With SDN, it is possible to abstract the underlying network infrastructure and
+provide a centralised control plane to more efficiently and responsively manage the
+orchestration of complex transportation networks.
+
+7.4 Data processing and analysis
+
+7.4.1 Big data analytics
+
+The sheer quantum, velocity, and variety of data being generated in smart trans-
+portation systems make it essential to embrace big data analytics approaches. Here
+are some of the most important big data analytics approaches that have been used
+as follows.
+
+7.4.1.1 Batch processing
+Traditional batch processing techniques such as MapReduce and Apache Hadoop
+are employed for fault-tolerant and scalable processing of large volumes of his-
+torical transportation data. It facilitates parallel processing of data across nodes,
+thereby dramatically easing the analysis of gigantic datasets [18]. Batch processing
+is mostly deployed for applications like traffic pattern analysis, long-term fore-
+casting, and predictive maintenance, where the urgency to process in real-time is
+not at a high level.
+
+7.4.1.2 Stream processing
+Many applications in an ITS need to process real-time or almost real-time continuous
+data streams from streams of IoT sensors, vehicles, and other source applications.
+Stream processing frameworks, including Apache Kafka, Apache Spark Streaming,
+and Apache Flink, allow these data streams to be ingested, processed, and analysed
+as they are consumed in real time. Stream processing is essential for applications that
+include real-time traffic monitoring, incident detection, and predictive analytics in
+which responses and inferences must be realised within a timely manner to be
+effective in the management of transportation.
+
+7.4.1.3 In-Memory data processing
+Applications that involve ultra-low latency and high-throughput data processing
+make use of in-memory computing techniques. Databases as well as in-memory
+  Role of data and IoT sensors in smart transportation 135
+
+data grids, such as Apache Ignite and Redis, actually store data entirely in RAM,
+thus minimising overhead associated with disk I/O operations. In-memory data
+processing will prove particularly valuable for time-critical applications in trans-
+portation systems that are provided with intelligence in autonomous vehicle navi-
+gation, real-time control of traffic in the signal, and dynamic optimisation of routes.
+
+7.4.1.4 Distributed data processing
+Distributed data processing frameworks have been used, due to the scale and
+complexity of the large data involved within smart transportation systems.
+Although parallel processing on multiple nodes is possible with Apache Spark and
+Dask, scalable and fault-tolerant. Jobs such as traffic simulation, modelling, and
+processing information from various sources in different formats require large-
+scale batch processing. In turn, distributed data processing has highly contributed to
+these kinds of jobs.
+
+  The comparison graph in Figure 7.4 presents the various big data analytics
+methods used in processing transportation data as well as the related uses for each
+method. Different colours have been applied to each of the data processing
+approaches and data processing techniques, that is in-memory data processing,
+distributed data processing, batch processing, and stream processing. The graph is
+richly represented with examples of applications ranging from real-time traffic
+monitoring and dynamic route optimisation to long-term forecasts and traffic pat-
+tern analysis. This graphic is very informative about which analytics methods are
+best suited for specific transportation-related data processing requirements.
+
+  Comparison of Big Data Analytics Techniques for Transportation Data
+
+  Batch Processing
+
+Big Data Analytics Techniques  Stream Processing
+
+  In-Memory Data Processing
+
+  Distributed Data Processing  Batch Processing
+  Stream Processing
+  In-Memory Data Processing
+  Distributed Data Processing
+
+  0.0  0.5  1.0  1.5  2.0  2.5  3.0
+
+  Number of Applications
+
+Figure 7.4 Comparison of big data analytics techniques for transportation data
+136 AIoT for smart transportation
+
+7.4.2 Intelligent transportation systems: Putting the
+  intelligent in smart using machine learning and AI
+
+With the application of AI together with machine learning, ITS can transform the
+nature of data analysis and decision-making. The model will actually refine insights
+while enabling a system to make informed, predictive decisions, thus enhancing
+efficiency and safety.
+
+7.4.2.1 Supervised learning in traffic management
+This methodology is quite instrumental in traffic management as it uses historical
+information to predict traffic patterns and incidents. For instance, a regression
+model can predict trip duration based on factors like time of day, type of route, etc.
+Due to its predictive ability, transportation authorities can really allocate resources
+towards improving the experiences of travellers as well as responses to incidents
+that come up.
+
+7.4.2.2 Unsupervised learning: Identifying hiding patterns
+Deep Learning algorithms can identify hidden patterns or anomalies as there is no
+labelled data. For example, with reference to traffic, clustering algorithms can
+recognise unusual patterns of congestion for urban planners to improvise infra-
+structure at specific points. In this approach, analysing traffic dynamics and plan-
+ning interventions before problems arise is quite achievable.
+
+7.4.2.3 Applications of Deep Learning in transportation
+Deep learning has revolutionised transportation, more so by the implementation of
+CNNs and RNNs, where CNNs support in-time vehicle detection in real-time video
+feeds, thereby enhancing the level of safety and effectiveness of operations, and
+RNNs mainly dominate time-series forecasting, as predicting traffic flow during
+peak hours can help in optimising traffic signals and routes.
+
+7.4.2.4 Reinforcement learning for dynamic optimisation
+Such complex transportation problems are now dynamically solved through rein-
+forcement learning (RL). RL algorithms can optimise traffic signal control using
+real-time data on observed interactions in the environment, thus smoothing the flow
+of traffic and reducing congestion. More importantly, autonomous vehicle navi-
+gation relies heavily on RL, equipping vehicles to learn and adapt to changing road
+conditions and patterns of traffic.
+
+7.4.2.5 The power of ensemble and hybrid models
+Examples of ensemble and hybrid modelling techniques provide good ways to
+combine different approaches in machine learning to further enhance the accuracy of
+prediction. For instance, the combination of a deep model with random forests may
+help improve the robustness of vehicle detection to yield more accurate responses in
+terms of traffic conditions. Synergy brings about solutions that can effectively be
+applied in the navigation of complex reality in transportation scenarios.
+  Role of data and IoT sensors in smart transportation 137
+Table 7.3 Machine learning and AI models in ITS
+
+Model type Description  Examples
+
+Supervised  Leverages historical data to forecast  l Trip duration prediction
+Learning  traffic patterns and incidents, enhancing  using regression
+  decision-making
+  l Incident detection through
+  historical pattern analysis
+
+Unsupervised  Identifies hidden patterns and anomalies  l Clustering to find unusual
+Learning  in unlabelled data, facilitating proactive  congestion patterns
+  interventions in traffic management
+  l Segmenting traffic data for
+  targeted infrastructure
+  planning
+
+Deep Learning  Utilises complex neural networks (CNNs l Vehicle detection via CNNs
+Applications
+  and RNNs) for visual and sequential data in video feeds
+
+  analysis, improving object detection  l Traffic flow prediction using
+  and time-series forecasting  RNNs for peak hour
+
+  forecasting
+
+Reinforcement  Adapts decision-making strategies  l Optimising traffic signal
+Learning  through trial-and-error interactions,  timings based on real-time
+  optimising traffic flow and supporting  data
+  autonomous systems
+  l Dynamic route planning for
+  adaptive navigation
+
+Ensemble and Combines multiple machine learning  l Random forests for improv-
+
+Hybrid Models techniques to enhance predictive accuracy ing traffic predictions
+
+  and robustness in solving complex  l Hybrid models integrating
+  transportation challenges  deep learning with tradi-
+
+  tional methods
+
+  The interaction between machine learning, AI, and ITS is transformative in the
+sense that it both enhances existing capabilities and opens the door for new advances.
+This means safer, more efficient, and more adaptive transportation networks able to
+better address the competitive challenges of modern mobility.
+
+  Table 7.3 shows the summary of some machine learning and AI models used in
+ITS Each model is described and illustrated with real-world applications in the
+development of safer and more adaptive transportation networks. As this knowl-
+edge is acquired, data analysis, decision-making, and operational efficiency
+improve, enabling stakeholders to better use technology to overcome the challenges
+of modern mobility.
+
+7.5 Applications of data and IoT sensors in smart
+  transportation
+
+With the convergence of IoT sensors, data sources, and sophisticated data processing
+methods, many varieties of applications have emerged that are revolutionising the
+138 AIoT for smart transportation
+
+transportation industry. The purpose of these apps is to enhance efficiency, safety,
+and sustainability in transportation by using data and IoT sensors.
+
+7.5.1 Traffic monitoring and management
+
+IoT sensor data, among other data sources, are the bedrock of intelligent monitoring
+and management systems of traffic. Such current data regarding the level of traffic
+flow, the number of vehicles, and the degree of congestion are obtained through
+traffic cameras, inductive loops, and radar sensors [19]. These data are coupled
+with data gathered from external sources, including meteorological data and
+crowdsourced data gathered from mobile applications to create a complete view of
+traffic conditions. All of this is done by using next-generation analytics and
+machine learning models to predict traffic patterns, identify obstacles, and adjust
+the timing of the traffic signals. These systems tend to reduce travel times and
+traffic, and enhance safety through variable speed limit adjustments, intelligent
+ramp metering, and dynamic route guidance.
+
+7.5.2 Predictive maintenance and asset management
+
+IoT sensors must be utilised to monitor the state of transportation infrastructure and
+assets such as roads, bridges, and automobiles. These sensors detect flaws and
+fissures in infrastructure using strain gauges, accelerometers, and acoustic emission
+sensors. Vehicle performance and maintenance requirements, along with fuel
+consumption, can also be updated using onboard diagnostics and telematics devi-
+ces. Predictive maintenance models analyse this data in terms of predicting prob-
+able failures and planning proactive maintenance, which minimises downtime and
+increases the life cycle of transportation assets.
+
+7.5.3 Route optimisation and fleet management
+
+Telematics data, GPS tracking devices, and traffic monitoring systems provide the
+data that enables fleet management as well as advanced route optimisation. The
+analysis based on machine learning algorithms, optimisation approaches, real-time
+traffic conditions, vehicle positions, and delivery schedules actually designs and
+modifies routes in real time. These optimisations result in more efficient and sus-
+tainable transportation operations, meaning reduced emissions, fuel consumption,
+and time devoted to the delivery of goods. By using data analytics and dashboards,
+fleet managers have access to a better basis for decision-making and resource
+allocation related to driver behaviour, vehicle utilisation, and operational
+parameters.
+
+7.5.4 Autonomous vehicle systems
+
+Fully autonomous cars will rely substantially on integrating multiple sources of
+data and information sensed by IoT devices and sensors, including cameras,
+LiDAR (Light Detection and Ranging), radar, and ultrasonic sensors that monitor
+the environment around the vehicle at high resolutions to enable object detection,
+  Role of data and IoT sensors in smart transportation 139
+
+obstacle avoidance, and route planning [20]. Inertial measurement units (IMUs)
+and GPS may be used for accurate navigation and localisation. This has been
+possible through vehicle-to-everything connectivity to real-time data exchange
+between the vehicle, infrastructure, and other entities, thus giving more situational
+awareness and decision-making ability to autonomous vehicles.
+
+7.5.5 Smart parking and electric vehicle charging
+
+Use of intelligent parking systems utilise data analytics and IoT devices for opti-
+misation of the use of parking space and availability, obtain real-time occupancy
+information from sensors placed in parking places or through cameras monitoring
+parking garages and process it to give vehicles directions to available places. This
+reduces traffic congestion, the emissions included. Similarly, customer preferences
+and travel patterns combined with the information provided at the electric vehicle
+charging stations enable intelligent load balancing and charge scheduling, which
+enables effective use of the infrastructure for charging and encourages the adoption
+of electric vehicles [21].
+
+7.5.6 Multimodal transportation and Mobility-as-a-Service
+  (MaaS)
+
+By having data available from several modes of transportation, including public
+transport, ride-share services, and private cars, solutions for multimodal transpor-
+tation solutions and MaaS platforms can be developed. These services make easy
+trip planning and booking across many modes of transport possible through real-
+time data on traffic conditions, transit schedules, and individual preferences. The
+concept of integrated mobility service is promoted by using complicated algorithms
+and optimisation techniques for suggesting most economical and environmentally
+friendly travel options [22].
+
+7.5.7 Transportation planning and modelling
+
+Transportation planning and modelling activities rely on data from various sources,
+including mobile applications, GIS, and traffic sensors. Predictive analytics,
+simulation models, and machine learning help calculate the policy change, the
+urban development plan, and the infrastructure project’s influence on transportation
+networks. A transportation planner can critically assess different scenarios, deter-
+mine potential bottlenecks, and make informed choices to improve overall func-
+tionality and resilience in transportation networks.
+
+  Applications of data and IoT sensors in smart transportation are shown by a pie
+chart in Figure 7.5, which highlights that the wide spectrum of applications feasible
+through smart transportation systems is brought through the integration of IoT
+sensors with data sources. The pie chart indicates the emphasis distribution over
+different constituents of transportation optimisation and management, and every
+constituent is an application area.
+140 AIoT for smart transportation
+
+  Applications of Data and IoT Sensors in Smart Transportation
+
+Transportation Planning  Multimodal Transportation
+
+Traffic Monitoring  15.0%  10.0%  Smart Parking
+  20.0%  10.0%  Autonomous Vehicles
+
+  15.0%  15.0%
+  15.0%
+
+Predictive Maintenance  Route Optimisation
+
+Figure 7.5 Applications of data and IoT sensors in smart transportation
+
+7.6 Experimental results and discussion
+
+Several pilot projects and real applications have illustrated the revolutionary power of the
+underlying data and IoT sensors in offering smart transport solutions. The subsequent
+section highlights the practical advantages and promise of these technologies with
+experimental findings and insights drawn from several research projects and case studies.
+
+7.6.1 Traffic management and congestion reduction
+
+Many cities and transportation agencies have established the deployment of intel-
+ligent traffic management systems based on data provided by IoT sensors and
+advanced analytics. For instance, Pittsburgh installed a flexible traffic signal con-
+trol system using data and real-time traffic techniques to dynamically optimise
+signal timings. Test results for this installation demonstrated a 21% reduction in
+vehicle releases and a 25% reduction in travel times along important corridors [23].
+
+  Similarly, Las Vegas established a predictive traffic management system that
+collects information from sensors, traffic cameras, and crowdsourced input. It uti-
+lises the data to forecast traffic patterns and manipulate signal timing accordingly
+to minimise congestion by 17% at peak hours.
+
+7.6.2 Predictive maintenance and asset management
+
+Predictive maintenance methods, powered by data from IoT sensors, have led to
+significant cost savings and extended lifeline transport infrastructure. In one recent
+pilot study by the California Department of Transportation, known as Caltrans, data
+  Role of data and IoT sensors in smart transportation 141
+
+analytics and structural health monitoring sensors were used to monitor bridges’
+condition. The result of the study was that monitored bridges gained an increase of
+20% in their service life and an average cutting in expenses related to maintenance
+by 30% [24].
+
+  Predictive maintenance was also applied by the Port Authority of New York
+and New Jersey to their trains and buses. This programme made use of sensor and
+on-board diagnostic data. Applying ML models to analyse that data to predict
+failures in components to schedule proactive maintenance, the agency reduced
+unexpected downtime by 15% and maintenance costs by 12%.
+
+7.6.3 Autonomous vehicle technology
+
+These technologies use the integration of IoT sensors with a myriad of data sources for
+the development of autonomous vehicle technology. Automobile and technology
+companies have tested and deployed autonomous vehicles extensively in controlled
+environments and real-world scenarios. For example, Alphabet Inc’s subsidiary
+Waymo logged over 35 billion miles of autonomous driving in many cities with the use
+of LiDAR, radar, cameras, and other sensors to produce the results of this trial: how
+safe and efficient autonomous cars are in navigating complex urban environments.
+
+  In contrast, Uber’s Advanced Technologies Group has run a pilot trial in
+Pittsburgh using a fleet of self-driving cars equipped with cutting-edge sensors and
+data processing power. The occurrence of reduction due to human intervention was
+drastic compared to earlier versions, which signifies autonomous vehicle technol-
+ogy can make traffic safer and transit effective.
+
+7.6.4 Electric vehicle charging infrastructure
+
+Electric vehicles need to have intelligent charging infrastructure, otherwise, the
+power cannot efficiently reach the electrical vehicle. Data analytics in combination
+with IoT sensors will really play a very important role in this enhancement of char-
+ging. California Energy Commission together with many partners, conducted pilot
+tests toward developing an intelligent charging management system for electric cars.
+The system optimised charging schedules and load balancing through the use of
+machine learning algorithms and information exploitation from charging stations, car
+telemetry, and user preferences. According to the experimental evidence, in terms of
+resource utilisation, such a system managed to achieve a 25% decrease in peak load
+demands and a 30% increase in utilisation of charging infrastructure, thereby creating
+a more reliable and effective electric grid [25].
+
+7.6.5 Implications and future outlook
+
+It is also the case studies and experimental findings that explain the innovative cap-
+abilities of data and IoT sensors addressing urgent transport issues such as traffic,
+sustainability, road safety, and infrastructure upkeep, where there is still research,
+collaboration, and much more investment into these successful deployments.
+
+  More exploration of more powerful and resilient data processing pipelines for
+analytics handling increasingly large and complex transport data should be pursued.
+142 AIoT for smart transportation
+
+In addition, further exploration into how blockchain, edge computing, and 5G tech-
+nologies could enable advanced sensing and communication and improve the cap-
+abilities of smart transportation systems through data sharing in safe manners and
+decentralised decision-making with real-time data processing should also be pursued.
+
+  Proactive attention to security, privacy, and ethical concerns is also necessary
+to ensure that these technologies are employed appropriately and reliably. Bringing
+together transportation authorities, technology companies, researchers, and legis-
+lators will all play a crucial role in developing strong governance frameworks and
+best practices. The rise of data and IoT sensors will impact the future of mobility.
+Accordingly, as the world population grows, there will be an increased demand for
+transportation. In this respect, a wise transport sector could use insights drawn
+from experimental outcomes and pilot studies to spur intelligent, sustainable, and
+user-centric transportation ecosystems that are aligned with the evolving needs of
+modern society.
+
+7.7 Utilising sensors in smart transportation
+
+Sensors are the core of smart transport systems, which will be allowed to collect
+real-time data and analyse it while responding adaptively. With many sensor
+technologies, cities would be allowed to optimise traffic flow, maximise safety, and
+improve mobility. Further on are explanations with regard to how different types of
+sensors are utilised in smart transportation.
+
+7.7.1 Traffic flow sensors
+
+Traffic flow sensors such as inductive loop sensors, radar detectors, and infrared
+sensors are suitably mounted on various roadways. These sense all characteristics
+of vehicle movement, including speed, and transmit the data to concerned centres.
+It provides real-time input about traffic density, vehicle counts, and speed patterns.
+This information helps the adaptive traffic signal control systems to know the
+extent to which the timing needs to be adapted according to prevailing traffic
+conditions. For instance, it could make a road traverse longer in green lights during
+peak hours while shortening the wait time when roads are under off-peak traffic.
+Optimising traffic signal operations will certainly reduce the amount of delay the
+cities experience, travel time, and eventually road accidents.
+
+7.7.2 Environmental sensors
+
+Sensors can be installed in the environment to measure air quality, temperature,
+humidity, and noise levels. Such sensors form the backbone of monitoring urban
+environments, providing data for transportation plan development and public health
+initiatives. For example, the increase in levels of air quality pollutants can be
+detected by air quality sensors, which, in response, trigger an alarm that leads to a
+change in the mode of operations by public transportation systems or increased
+implementation of cleaner vehicles. Noise sensors can also be crucial in coming up
+  Role of data and IoT sensors in smart transportation 143
+
+with sections where excess traffic noise is caused and intervening in appropriate
+places with the installation of sound barriers or by changing the traffic pattern.
+
+7.7.3 Connected vehicle sensors
+
+The vehicle is equipped with GPS, LiDAR, cameras, and ultrasonic sensors. The
+infrastructure on the road can receive information from the vehicles (Vehicle-to-
+Infrastructure, or V2I) as well as the other vehicles about live conditions of road
+conditions, traffic signals, and hazardous conditions. For instance, in the case of a
+sudden stop ahead of it, a car will notify surrounding vehicles to slow down gra-
+dually thus enhancing common safety. V2I may also enable vehicles to receive live
+updates from roadside equipment on changes in traffic signals, which could opti-
+mise travel routes and reduce stop-and-go driving.
+
+7.7.4 Parking sensors
+
+The parking sensors can be installed in car parking lots and garages. They monitor the
+real-time availability of parking spaces. Such sensors can use ultrasonic or infrared to
+identify whether a space is occupied. That information is passed to drivers through
+mobile applications, which guide them towards the nearest parking spot. These sen-
+sors reduce the burden of urban traffic congestion, decrease emissions because of
+idling cars, and improve drivers’ experience by saving time that they would have spent
+trying to find an appropriate parking spot. Additionally, cities could gain some insight
+based on the data from parking and leverage it to make a difference in decisions
+related to how they develop infrastructure or pricing strategies.
+
+7.7.5 Public transport sensors
+
+Public transportation systems integrate a wide variety of sensors, including RFID
+tags, GPS trackers, and occupancy sensors, to improve the reliability of service and
+experience for the users. GPS trackers can give a view of real-time location,
+enabling the proper updating of schedules by transit agencies and information to
+passengers at any desired time about expected arrival times. Occupancy sensors
+may indicate crowd level on buses and trains, thus guiding agencies on safety and
+managing how many people the system can carry. For example, when travelling is
+heaviest, alerts can be directed to users based on crowded conditions and ways of
+alternative travelling. Thus, data-driven insight makes routing more efficient, and
+services are well optimised to improve quality.
+
+7.7.6 Infrastructure sensors
+
+There are sensors embedded within roads, bridges, and tunnels, which can monitor
+the structural integrity together with the levels of traffic loads. These sensors can
+detect stress, vibrations, and other indicators of structural health. Sensors can be
+installed on bridges to monitor the weight limits and alert the authorities in the case
+of excess traffic loads that go beyond safe thresholds. These sensors enable
+proactive maintenance and prevent failure through real-time data on the conditions
+144 AIoT for smart transportation
+
+of infrastructure, thereby extending the life of critical transportation assets and
+reducing long-term maintenance costs for safety improvement.
+
+  In summary, sensors play a critical role in any functional and efficient smart
+transportation system. Sensors could provide the foundational data required to
+better manage traffic flows, improve safety, enhance public transit management,
+and understand better how to plan urban development. Integration and sophistica-
+tion in smart transportation solutions should increase further as sensor technology
+matures. So, therefore, the future of transportation lies in reaping this information
+to create efficient, effective, and responsive systems to dynamic needs in urban
+mobility. This thus allows cities to pave the way for safer, cleaner, and more sus-
+tainable transportation networks through these innovations.
+
+7.8 Real-world case studies
+
+Several real-world deployments and implementations have demonstrated the
+potential for transforming data and IoT sensors into a means of creating smart
+intelligent transportation solutions. This chapter covers several real-world case
+studies that clearly illustrate the tangible benefits and impacts of these technologies
+on the transportation sector.
+
+7.8.1 Amsterdam Smart Mobility Living Lab
+
+Amsterdam was the first city that started applying data and IoT technologies to
+optimise its transport network under smart mobility initiatives. It is an initiative of
+Amsterdam Smart Mobility Living Lab which comes through a collaborative effort
+of local administration, academic institutes, and business partners. Such IoT sen-
+sors and data sources like Bluetooth sensors, traffic cameras, inductive loops, and
+crowdsourced data from mobile applications among others have been put in this
+living lab. The data collected is thus analysed, modelled, and used to determine the
+traffic pattern, congestion hotspots, traveller behaviour among other things with the
+help of algorithms of machine learning and state-of-the-art analytics tools [26].
+Among city thoroughfares, the intelligent traffic signal control system is the major
+project of the living lab, which uses traffic data and predictive algorithms to change
+the timing of signals in real time. This technology has reduced travel times by a
+huge 10% and very much reduced emissions.
+
+  In addition to this, smart parking solutions have also been incorporated in the living
+lab by using cameras and sensors to know the availability of parking. Once merged with
+navigation applications, the information can help drivers locate a parking space without
+showing up at the juncture of possible traffic created by cars turning around.
+
+7.8.2 Singapore’s autonomous vehicle testbed
+
+Being aware of the potential for better safety and increased productivity in trans-
+portation, Singapore has been aggressively pursuing autonomous vehicle technology.
+Using its advanced infrastructure and accommodating data-driven technology, the
+  Role of data and IoT sensors in smart transportation 145
+
+nation has created an extensive testbed for testing autonomous vehicles. There is an
+equipped network of diverse IoT sensors, including cameras, radar, LiDAR, and V2X
+communication systems, to provide high-resolution information on the environment
+surrounding the vehicle to enable accurate obstacle avoidance and navigation. In the
+testbed, experiments were performed together with industry partners and research
+institutes on a range of use cases in autonomous vehicles, from last-mile deliveries to
+freight transportation and on-demand mobility services [27].
+
+  Yet another example would be the Punggol Digital District, where passengers
+travelling on clearly established routes are transported around by self-driving
+shuttles equipped with the latest sensing capabilities and data processing capacities
+to ensure safe, comfortable, and result-driven travel.
+
+7.8.3 PredictiveBC: British Columbia’s predictive analytics
+  for bridge maintenance
+
+It is the predictiveBC, a best-in-class predictive analytics system adopted by the
+British Columbia Ministry of Transportation and Infrastructure to maximise asset
+management and bridge maintenance plans. PredictiveBC uses data ranging from
+many sources, which includes environmental data and inspection records as well as
+sensors in monitoring structural health. Such data are processed with the applica-
+tion of machine learning algorithms for it to be analysed and examined so that the
+rates of deterioration of bridge components can be forecasted, together with pos-
+sible failure or maintenance requirements. It links over 2,700 bridges within the
+province, allowing transportation officials to effectively manage resources, prior-
+itise maintenance activities, and extend the service life of critical infrastructure
+assets. PredictiveBC has been found extremely cost-effective and operationally
+efficient, reducing maintenance spending likely by up to 20% while raising the
+service life of the monitored systems by about 25% [28].
+
+7.8.4 New York City’s intelligent traffic management
+
+New York City has proposed a highly integrated intelligent traffic management
+system to cope with the problems of congestion and improve mobility in this highly
+populated metropolitan environment. This system collects data from a wide range
+of crowdsourcing sources such as social media, mobile applications, cameras, and
+traffic sensors. Real-time advanced analytics and machine learning techniques are
+applied to process and analyse this information for proactive management of traf-
+fic, incident detection, and pattern recognition of congestion [29].
+
+  This is the critical Midtown in Motion initiative, part of the system that uses
+adaptive signal management technology in a dynamic way to change the traffic signal
+according to real-time traffic conditions. For instance, for the Midtown Manhattan
+neighbourhood, this programme has proven to reduce travel times by 10% and elim-
+inate large parts of emissions. The city also has intelligent parking guidance systems.
+Together, the goals are to reduce the time spent driving around while looking for a
+place to park and the emissions from driving around that accompany it. These systems
+detect open parking places using sensor and camera data and route cars there.
+146 AIoT for smart transportation
+
+7.8.5 Implications and lessons learned
+
+The case studies describe the observable benefits and the practical realities of
+embedding data and IoT sensors within transportation networks. These technolo-
+gies clearly show how disruptive this promise is by allowing predictive main-
+tenance, easing the deployment of autonomous cars, optimising traffic flows, and
+reducing congestion. However, effective implementation of such solutions requires
+coordination among stakeholders, including governmental bodies, scholarly estab-
+lishments, and industry associates. The responsible and sustainable effective
+deployment of such technologies would require well-structured data governance
+frameworks with guarantees for data privacy and security, with the problem of
+scalability and interoperability to be solved.
+
+  Table 7.4 compares real smart transport case studies and, at the same time,
+identifies important features of every implementation. The case studies show in
+various dimensions how sensor data and IoT can enhance mobility and optimise the
+transportation network. From predictive maintenance and congestion management
+to traffic optimisation and testing of autonomous vehicles, all of the case studies
+provide informative information regarding data-driven technology revolutionising
+the world of transport in its own unique way.
+
+Table 7.4 Comparative analysis of real-world case studies in smart
+  transportation
+
+Case study  Location  Key  Main  Key outcomes
+  Amsterdam,  technologies  objectives
+Amsterdam Smart  Netherlands
+Mobility Living Lab  IoT sensors,  Traffic  10% reduction in
+  Singapore  Machine
+Singapore’s  Learning  optimisation, travel times,
+Autonomous Vehicle  British
+Testbed  Columbia,  IoT sensors,  Smart parking Decrease in
+  Canada  LiDAR, V2X
+Predictive BC: British  communication  emissions
+Columbia’s Predictive  New York
+Analytics for Bridge  City, USA  Structural  Autonomous  Safe and
+Maintenance  health  mobility  convenient
+  monitoring  services, Last-  mobility,
+New York City’s  sensors,  mile delivery  Autonomous
+Intelligent Traffic  Machine  shuttle trials
+Management  Learning
+  Predictive  20% reduction in
+  Traffic sensors,  maintenance,  maintenance costs,
+  Machine  Asset  25% extension in
+  Learning  management  service life
+
+  Congestion  10% reduction in
+  management,  travel times,
+  Intelligent  Decrease in
+  parking  emissions
+  Role of data and IoT sensors in smart transportation 147
+
+  The case studies also bring into focus the requirement for continued innovation
+and research and investment in innovative analytics and the development of tech-
+nology. There will be a necessity for better data processing as well as decision
+support systems to extract useful information and enable intelligent transportation
+solutions since the growth in volume and complexity of the data related to trans-
+portation is projected to continue in the future.
+
+  Taking inspiration from these actual experiences, while assuming a cooperative and
+innovative mindset, the transportation sector can create new intelligent, sustainable, and
+user-centric mobility ecosystems that meet better changing modern society needs.
+
+7.9 Challenges and future trends
+
+Although IoT sensors and data provide various benefits in smart transportation,
+several emerging trends and challenges must be considered for the responsible and
+sustainable development of these technologies.
+
+7.9.1 Data privacy and security
+
+Smart transport systems would involve handling enormous amounts of data, which
+means there would be issues of data security and privacy. For instance, personal
+identification data and location data are sensitive information that should be pro-
+tected against misuse and unauthorised access. Strategies for encryption, robust
+data governance frameworks, and approaches for analytics would have to be
+implemented to safeguard personal data while offering the benefits brought by
+data-driven solutions in transportation.
+
+7.9.2 Scalability and interoperability
+
+This is where scalability and interoperability grow as a key issue with the spread of
+IoT devices and data sources. Solutions from single vendors, communication proto-
+cols, and various heterogeneous data formats may prevent seamless integration and
+exchange of data in transportation systems. Open data formats, standardisation efforts,
+and the development of interoperable architectures are needed to achieve scalable and
+efficient data management and analysis across different transportation systems.
+
+7.9.3 Integration of emerging technologies
+
+The integration of the newest technologies, such as edge computing, blockchain, and
+5G networks, brings both opportunities and challenges for further development in the
+transportation sector. 5G networks promise high bandwidth and extremely low latency.
+This can enable real-time data processing and transfer for applications in transporta-
+tion. Edge computing reduces latency and improves the decision-making capacity at
+local levels by bringing processing power closer to sources of data. Blockchain tech-
+nology can secure and decentralise data sharing in transportation ecosystems and aid in
+providing transparent and reliable transactions. New technologies and their possible
+impacts on smart transportation are described in Table 7.5. Some of these are 5G
+148 AIoT for smart transportation
+Table 7.5 Emerging technologies and their impact on smart transportation
+
+Emerging Description  Potential impact on smart
+technology  transportation
+
+5G  Fifth-generation wireless technology l Real-time data transfer is made
+Networks
+  with high data transfer rates and low possible for vital transportation
+
+  latency  applications by ultra-low latency
+
+  l Wide-scale data sharing and con-
+
+  nectivity between infrastructure and
+
+  vehicles are supported by high
+
+  bandwidth
+
+Edge  Data storage and processing are  l Brings computational resources clo-
+computing  moved closer to the data source via  ser to data sources, reducing latency
+  the distributed computing paradigm  in data processing
+
+  l Enhances local decision-making
+  capabilities for time-critical trans-
+  portation applications
+
+Blockchain Technology using distributed ledgers l Helps to provide trust and transpar-
+
+  to facilitate safe and open  ency in transportation networks by
+
+  transactions across a network of  securely and decentralising data
+
+  computers  sharing
+
+  l Promotes data integrity by enabling
+
+  unchangeable record-keeping for
+
+  exchanges of data and transactions
+
+networks, edge computing, and blockchain. It brings forth the opportunity for better
+data processing, transmission, and security features regarding transportation networks.
+
+7.9.4 Ethical considerations and governance
+
+AIoT-enabled smart transportation technology raises major ethical issues with
+responsibility, transparency, and algorithmic bias issues. Machine learning algo-
+rithms and decision-making processes should be designed to conduct fair con-
+siderations for diverse populations while being tested against all potential biases.
+Transparency should thus form data collection, processing, and the basis on which
+decisions will be made to build trust in the face of public consciousness. Lastly,
+sound governance frameworks and regulatory policies should be enacted so as to
+ensure that these data and AI technologies are used most responsibly and ethically
+in transportation systems.
+
+7.9.5 Sustainability and environmental impact
+
+The smart transport solutions have the potential to significantly reduce the impacts on
+the environment from transport through data-driven and IoT sensor solutions.
+Optimised routing, traffic management, and promotion of green modes of transport
+would lead to reduced emissions, improved air quality, and savings in the consump-
+tion of energy. Moreover, energy consumption and carbon footprint in data centres,
+  Role of data and IoT sensors in smart transportation 149
+
+communication networks, and the manufacturing processes of IoT devices have to be
+minimised further by inculcating practices and making use of renewable energy [30].
+
+7.10 Conclusion
+
+This transformation has been driven by the integration of diverse data sources, IoT
+sensors, and advanced analytics, paving the way for intelligent, efficient, and sus-
+tainable transportation ecosystems. Transportation agencies and service providers
+use data and IoT sensors to optimise traffic flow, improve asset management,
+enable autonomous vehicle systems, and offer sustainable mobility solutions. Data-
+driven decision-making, predictive analytics, and real-time monitoring have
+become the cornerstones of ITS, clearing the path for safer, more effective, and
+environmentally friendly transportation experiences [31]. But there are also various
+challenges now staring at completely realising the full potential of AIoT-enabled
+smart mobility. Some of these key steps on this journey include incorporating
+emerging technologies, grappling with issues of privacy and security of data,
+ensuring scalability and interoperability, and establishing principles of ethical
+governance. All these require concerted efforts by stakeholders in the form of
+transportation authorities, technology suppliers, researchers, and policymakers to
+ensure that these issues are faced appropriately while implementing data-driven
+transport solutions.
+
+  As the global population continues to grow and transportation needs increase
+further, it is the data and IoT sensors that are destined to play increasingly impor-
+tant roles in defining the next generation of mobility. The marriage of IoT, machine
+learning, and advanced analytics holds the key to unlocking creative solutions for
+safety improvement, reduction in traffic congestion, decreased emissions, and
+convenient and smooth transportation for all. Beyond just enhancing mobility,
+AIoT-enabled smart transportation helps society achieve its greater objectives:
+sustainability and economic growth, along with improved quality of life. These
+solutions can reduce urban sprawl, provide better access to transportation resour-
+ces, and create vibrant, living communities by optimising transportation networks
+and promoting the use of integrated mobility services.
+
+  Next, the transport sector will be in the epoch of revolution, wherein the
+power of data and IoT sensors will persistently influence how people and pro-
+ducts move. Realising a future intelligent, sustainable, and user-centric trans-
+portation system answering the needs of the modern world would thus mean
+embracing this paradigm change and promoting interdisciplinary collaborations.
+
+References
+
+ [1] Poon, S.T.F. “Designing for Urban Mobility: The Role of Digital Media
+  Applications in Increasing Efficiency of Intelligent Transportation Manage-
+  ment System.” In: Khan, M.A., Algarni, F., Quasim, M.T. (eds.) Smart
+150 AIoT for smart transportation
+
+  Cities: A Data Analytics Perspective. Lecture Notes in Intelligent Trans-
+  portation and Infrastructure. Springer, Cham. 2021. https://doi.org/10.1007/
+  978-3-030-60922-1_9.
+ [2] Paiva, S., Ahad, M.A., Tripathi, G., Feroz, N., and Casalino, G. “Enabling
+  Technologies for Urban Smart Mobility: Recent Trends, Opportunities
+  and Challenges.” Sensors. vol. 21, no. 6, p. 2143, 2021. https://doi.org/10.3390/
+  s21062143.
+ [3] Babar, M. and Arif, F. “Real-Time Data Processing Scheme Using Big Data
+  Analytics in Internet of Things Based Smart Transportation Environment.”
+  Journal of Ambient Intelligence and Humanized Computing vol. 10, pp.
+  4167–4177, 2019. https://doi.org/10.1007/s12652-018-0820-5.
+ [4] Jan, B., Farman, H., Khan, M., Talha, M., and Din, I. U., “Designing a Smart
+  Transportation System: An Internet of Things and Big Data Approach,”
+  IEEE Wireless Communications, vol. 26, no. 4, pp. 73–79, 2019. https://doi.
+  org/10.1109/MWC.2019.1800512.
+ [5] Harris, I., Wang, Y., and Wang, H. “ICT in Multimodal Transport and
+  Technological Trends: Unleashing Potential for the Future.” International
+  Journal of Production Economics, vol. 159, pp. 88–103, 2015. https://doi.
+  org/10.1016/j.ijpe.2014.09.005.
+ [6] Alahi, M.E.E., Sukkuea, A., Tina, F.W., et al. “Integration of IoT-Enabled
+  Technologies and Artificial Intelligence (AI) for Smart City Scenario: Recent
+  Advancements and Future Trends.” Sensors. vol. 23, no. 11, pp. 5206, 2023.
+  https://doi.org/10.3390/s23115206.
+ [7] Imoize, A.L., Adedeji, O., Tandiya, N., and Shetty, S. “6G Enabled Smart
+  Infrastructure for Sustainable Society: Opportunities, Challenges, and
+  Research Roadmap.” Sensors, vol. 21, p. 1709, 2021. https://doi.org/10.3390/
+  s21051709.
+ [8] Gao, L., Xiong, L., Xia, X., Lu, Y., Yu, Z., and Khajepour A. “Improved
+  Vehicle Localization Using On-Board Sensors and Vehicle Lateral Velocity.”
+  IEEE Sensors Journal, vol. 22, no. 7, pp. 6818–6831, 2022. https://doi.org/10.
+  1109/JSEN.2022.3150073.
+ [9] Dey, K. C., Mishra, A., and Chowdhury, M., “Potential of Intelligent
+  Transportation Systems in Mitigating Adverse Weather Impacts on Road
+  Mobility: A Review.” IEEE Transactions on Intelligent Transportation
+  Systems, vol. 16, no. 3, pp. 1107–1119, 2015. https://doi.org/10.1109/TITS.
+  2014.2371455.
+[10] Dueker, K.J. and Butler, J.A. “A Geographic Information System Framework
+  for Transportation Data Sharing.” Transportation Research Part C: Emer-
+  ging Technologies vol. 8, no. 1–6, pp. 13–36, 2000. https://doi.org/10.1016/
+  S0968-090X(00)00006-1.
+[11] Hamzah, M.L., Desnelita, Y., Purwati, A.A., Rusilawati, E., Kasman, R., and
+  Rizal, F. “A review of Near Field Communication Technology in Several
+  Areas” (Una revisio´n de la tecnolog´ıa de Comunicacio´n de Campo Cercano
+  en varias a´reas). Revista ESPACIOS, vol. 40, no. 32, p. 11, 2019.
+  Role of data and IoT sensors in smart transportation 151
+
+[12] Wu, X., Subramanian, S., Guha, R., et al., “Vehicular Communications
+  Using DSRC: Challenges, Enhancements, and Evolution.” IEEE Journal on
+  Selected Areas in Communications, vol. 31, no. 9, pp. 399–408, 2013. https://
+  doi.org/10.1109/JSAC.2013.SUP.0513036.
+
+[13] Kong, X., Liu, X., Jedari, B., Li, M., Wan, L., and Xia, F. “Mobile Crowd-
+  sourcing in Smart Cities: Technologies, Applications, and Future Challenges.”
+  IEEE Internet of Things Journal, vol. 6, no. 5, pp. 8095–8113, 2019. https://
+  doi.org/10.1109/JIOT.2019.2921879.
+
+[14] Lamb, Z.W. and Agrawal, D.P. “Analysis of Mobile Edge Computing for
+  Vehicular Networks.” Sensors vol. 19, p. 1303, 2019. https://doi.org/10.
+  3390/s19061303.
+
+[15] Ioana, A., Korodi, A., and Silea, I. “Automotive IoT Ethernet-Based Com-
+  munication Technologies Applied in a V2X Context via a Multi-Protocol
+  Gateway.” Sensors, vol. 22, p. 6382, 2022. https://doi.org/10.3390/s22176382.
+
+[16] Hank, P., Mu¨ller, S., Vermesan, O., and Van Den Keybus, J. “Automotive
+  Ethernet: In-Vehicle Networking and Smart Mobility.” 2013 Design, Auto-
+  mation & Test in Europe Conference & Exhibition (DATE), Grenoble,
+  France, pp. 1735–1739, 2013. https://doi.org/10.7873/DATE.2013.349.
+
+[17] Ansari, K. “Joint use of DSRC and C-V2X for V2X Communications in the
+  5.9 GHz ITS Band.” IET Intelligent Transport Systems, vol. 31, pp. 213–224,
+  2020. https://doi.org/10.1049/itr2.12015.
+
+[18] Zhang, Y., Cao, T., Li, S., et al., “Parallel Processing Systems for Big Data:
+  A Survey,” Proceedings of the IEEE, vol. 104, no. 11, pp. 2114–2136, 2016.
+  https://doi.org/10.1109/JPROC.2016.2591592.
+
+[19] Khattak, K.S., Minallah, N., Khan, Z.H., Khan, M.A., Khan, A.N., and Ayaz,
+  S. “Sensing Technologies for Traffic Flow Characterization: From Hetero-
+  geneous Traffic Perspective.” Journal of Applied Engineering Science, vol.
+  20, no. 1, p. 19, 2022. https://doi.org/10.5937/jaes0-32627.
+
+[20] Yu, X. and Marinov, M. “A Study on Recent Developments and Issues with
+  Obstacle Detection Systems for Automated Vehicles.” Sustainability, vol.
+  12, p. 3281, 2020. https://doi.org/10.3390/su12083281.
+
+[21] Kuran, M.Ş., Carneiro Viana, A., Iannone, L., Kofman, D., Mermoud, G.,
+  and Vasseur, J.P., “A Smart Parking Lot Management System for Scheduling
+  the Recharging of Electric Vehicles.” IEEE Transactions on Smart Grid, vol.
+  6, no. 6, pp. 2942–2953, 2015. https://doi.org/10.1109/TSG.2015.2403287.
+
+[22] Mitropoulos, L., Kortsari, A., Mizaras, V., and Ayfantopoulou, G. “Mobility
+  as a Service (MaaS) Planning and Implementation: Challenges and Lessons
+  Learned.” Future Transport, vol. 3, pp. 498–518, 2023. https://doi.org/10.
+  3390/futuretransp3020029.
+
+[23] Ca´rdenas, O., Valencia, A., and Montt, C. “Congestion Minimization
+  Through Sustainable Traffic Management: A Micro-Simulation Approach.”
+  LogForum: Scientific Journal of Logistics vol. 14, no. 1, pp. 21–31, 2018.
+  http://dx.doi.org/10.17270/J.LOG.2018.260.
+
+[24] Aremu, O.O., Palau, A.S., Parlikad, A.K., Hyland-Wood, D., and McAree, P.R.
+  “Structuring Data for Intelligent Predictive Maintenance in Asset Management.”
+152 AIoT for smart transportation
+
+  IFAC-PapersOnLine vol. 51, no. 11, pp. 514–519, 2018. https://doi.org/10.1016/
+  j.ifacol.2018.08.370.
+[25] Hardman, S., Jenn, A., Tal, G. et al. “A Review of Consumer Preferences of
+  and Interactions with Electric Vehicle Charging Infrastructure.” Transpor-
+  tation Research Part D: Transport and Environment vol. 62, pp. 508–523,
+  2018. https://doi.org/10.1016/j.trd.2018.04.002.
+[26] Alam, M.T. and Porras, J. “Architecting and Designing Sustainable Smart
+  City Services in a Living Lab Environment.” Technologies, vol. 6, p. 99,
+  2018. https://doi.org/10.3390/technologies6040099.
+[27] Tan, S.Y. and Taeihagh, A. “Adaptive Governance of Autonomous Vehicles:
+  Accelerating the Adoption of Disruptive Technologies in Singapore.” Gov-
+  ernment Information Quarterly vol. 38, no. 2, p. 101546, 2021. https://doi.
+  org/10.1016/j.giq.2020.101546.
+[28] Hungr, O., Evans, S.G., and Hazzard, J. “Magnitude and Frequency of Rock
+  Falls and Rock Slides along the Main Transportation Corridors of South-
+  western British Columbia.” Canadian Geotechnical Journal. vol. 36, no. 2,
+  pp. 224–238, 1999. https://doi.org/10.1139/t98-106.
+[29] Yeremenko, B., Mazurenko, R., Stetsyk, O., and Buhrov, A. “Intelligent
+  Management of Traffic Flows in Large Cities.” In: Prentkovskis, O., Yatskiv
+  (Jackiva), I., Skacˇkauskas, P., Maruschak, P., Karpenko, M. (eds.) TRANS-
+  BALTICA XIII: Transportation Science and Technology. TRANSBALTICA
+  2022. Lecture Notes in Intelligent Transportation and Infrastructure.
+  Springer, Cham, 2023. https://doi.org/10.1007/978-3-031-25863-3_4.
+[30] Masek, P., Masek, J., Frantik, P., et al. “A Harmonized Perspective on
+  Transportation Management in Smart Cities: The Novel IoT-Driven Envir-
+  onment for Road Traffic Modeling.” Sensors, vol. 16, p. 1872, 2016. https://
+  doi.org/10.3390/s16111872.
+[31] Baruah, A., Kumar, R., and Gupta, M. “Analysis of Traffic Sign Recognition
+  for Automated Transportation Systems Using Neural Networks.” 2023 IEEE
+  8th International Conference for Convergence in Technology (I2CT),
+  Lonavla, India, 2023, pp. 1–5. https://doi.org/10.1109/I2CT57861.2023.
+  10126423.
+

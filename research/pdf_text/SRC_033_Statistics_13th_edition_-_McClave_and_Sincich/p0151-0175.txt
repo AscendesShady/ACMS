@@ -1,0 +1,1645 @@
+  SECTION 3.1 ■ Events, Sample Spaces, and Probability 149
+
+  Table 3.1 Experiments and Their Sample Spaces
+
+  Experiment:  Observe the up face on a coin.
+
+  Sample Space:  1. Observe a head.
+
+  2. Observe a tail.
+
+  This sample space can be represented in set notation as a set containing two sample points:
+
+  S: 5H, T6
+
+  Here, H represents the sample point Observe a head and T represents the sample point
+
+  Observe a tail.
+
+  Experiment:  Observe the up face on a die.
+
+  Sample Space:  1. Observe a 1.
+
+  2. Observe a 2.
+
+  3. Observe a 3.
+
+  4. Observe a 4.
+
+  5. Observe a 5.
+
+  6. Observe a 6.
+
+  This sample space can be represented in set notation as a set of six sample points:
+
+  S: 51, 2, 3, 4, 5, 66
+
+  Experiment:  Observe the up faces on two coins.
+
+  Sample Space:  1. Observe HH.
+
+  2. Observe HT.
+
+  3. Observe TH.
+
+  4. Observe TT.
+
+  This sample space can be represented in set notation as a set of four sample points:
+
+  S: 5HH, HT, TH, TT6
+
+  BIOGRAPHY  Now that we know that an experiment will result in only one basic outcome—
+  called a sample point—and that the sample space is the collection of all possible
+JOHN VENN (1834–1923)  sample points, we’re ready to discuss the probabilities of the sample points. You have
+  undoubtedly used the term probability and have some intuitive idea about its meaning.
+The English Logician  Probability is generally used synonymously with “chance,” “odds,” and similar con-
+  cepts. For example, if a fair coin is tossed, we might reason that both the sample points
+Born in Hull, England, John Venn  Observe a head and Observe a tail have the same chance of occurring. Thus, we might
+is probably best known for his  state, “The probability of observing a head is 50%” or “The odds of seeing a head are
+pictorial representation of unions  50:50.” Both of these statements are based on an informal knowledge of probability.
+and intersections (the Venn  We’ll begin our treatment of probability by using such informal concepts and then so-
+diagram). While lecturing in moral  lidify what we mean later.
+science at Cambridge University,
+Venn wrote The Logic of Chance  The probability of a sample point is a number between 0 and 1 that measures the
+and two other treatises on logic.  likelihood that the outcome will occur when the experiment is performed. This number is
+In these works, Venn probably had  usually taken to be the relative frequency of the occurrence of a sample point in a very
+his greatest contribution to the  long series of repetitions of an experiment.* For example, if we are assigning probabili-
+field of probability and statistics:  ties to the two sample points in the coin-toss experiment (Observe a head and Observe
+the notion that the probability of  a tail), we might reason that if we toss a balanced coin a very large number of times, the
+an event is simply the long-run  sample points Observe a head and Observe a tail will occur with the same relative fre-
+proportion of times the event  quency of .5.
+occurs. Besides being a well-
+known mathematician, Venn was  Our reasoning is supported by Figure 3.3. The figure plots the relative frequency
+a historian, philosopher, priest,  of the number of times that a head occurs in simulations (by computer) of the toss
+and skilled machine builder.  of a coin N times, where N ranges from as few as 25 tosses to as many as 1,500 tosses.
+(His machine for bowling cricket  You can see that when N is large (e.g., N = 1,500), the relative frequency is converg-
+balls once beat a top star on the  ing to .5. Thus, the probability of each sample point in the coin-tossing experiment
+Australian cricket team.) ■  is .5.
+
+  For some experiments, we may have little or no information on the relative fre-
+  quency of occurrence of the sample points; consequently, we must assign probabili-
+  ties to the sample points on the basis of general information about the experiment.
+
+  * The result derives from an axiom in probability theory called the law of large numbers. Phrased informally,
+  the law states that the relative frequency of the number of times that an outcome occurs when an experiment
+  is replicated over and over again (i.e., a large number of times) approaches the true (or theoretical) probability
+  of the outcome.
+150 CHAPTER 3 ■ Probability
+
+  Proportion  0.56
+  0.54
+Figure 3.3  0.52  200  400  600  800  1000  1200  1400  1600
+  0.50
+Proportion of heads in N tosses  0.48
+of a coin  0.46
+  0.44
+  0.42
+  0.40
+  0.38
+  0.36
+
+  0
+
+  Sample Size N
+
+S  F  For example, if the experiment is about investing in a business venture and observing
+  whether it succeeds or fails, the sample space would appear as in Figure 3.4.
+  S
+  We are unlikely to be able to assign probabilities to the sample points of this ex-
+Figure 3.4  periment based on a long series of repetitions, since unique factors govern each perfor-
+  mance of this kind of experiment. Instead, we may consider factors such as the personnel
+Experiment: invest in a business  managing the venture, the general state of the economy at the time, the rate of success
+venture and observe whether it  of similar ventures, and any other information deemed pertinent. If we finally decide
+succeeds (S) or fails (F )  that the venture has an 80% chance of succeeding, we assign a probability of .8 to the
+  sample point Success. This probability can be interpreted as a measure of our degree of
+  belief in the outcome of the business venture; that is, it is a subjective probability. Notice,
+  however, that such probabilities should be based on expert information that is carefully
+  assessed. If not, we may be misled on any decisions based on these probabilities or based
+  on any calculations in which they appear. [Note: For a text that deals in detail with the
+  subjective evaluation of probabilities, see Winkler (1972) or Lindley (1985).]
+
+  No matter how you assign the probabilities to sample points, the probabilities as-
+  signed must obey two rules:
+
+  Probability Rules for Sample Points
+
+  Let pi represent the probability of sample point i. Then
+  1. All sample point probabilities must lie between 0 and 1 (i.e., 0 … pi … 1).
+
+  2. The probabilities of all the sample points within a sample space must sum to 1
+  (i.e., Σpi = 1).
+
+  Assigning probabilities to sample points is easy for some experiments. For exam-
+
+  ple, if the experiment is to toss a fair coin and observe the face, we would probably
+  all agree to assign a probability of 1΋2 to the two sample points, Observe a head and
+  Observe a tail. However, many experiments have sample points whose probabilities are
+
+  more difficult to assign.
+  SECTION 3.1 ■ Events, Sample Spaces, and Probability 151
+
+ Example 3.2  Problem Going Green is the term used to describe water conservation programs at
+  hotels and motels. Many hotels now offer their guests the option of participating in these
+Sample Point  Going Green programs by reusing towels and bed linens. Suppose you randomly select
+Probabilities—Hotel Water  one hotel from a registry of all hotels in Orange County, California, and check whether
+Conservation  the hotel participates in a water conservation program. Show how this problem might be
+  formulated in the framework of an experiment with sample points and a sample space.
+  Indicate how probabilities might be assigned to the sample points.
+
+  Solution The experiment can be defined as the selection of an Orange County hotel and
+  the observation of whether a water conservation program is offered to guests at the
+  hotel. There are two sample points in the sample space for this experiment:
+
+  C: {The hotel offers a water conservation program.}
+  N: {The hotel does not offer a water conservation program.}
+
+  The difference between this and the coin-toss experiment becomes apparent when
+  we attempt to assign probabilities to the two sample points. What probability should we
+  assign to sample point C? If you answer .5, you are assuming that the events C and N
+  occur with equal likelihood, just like the sample points Observe a head and Observe a
+  tail in the coin-toss experiment. But assigning sample point probabilities for the hotel
+  water conservation experiment is not so easy. In fact, a recent report by the Orange
+  County Water District stated that 70% of the hotels in the county now participate in a
+  water conservation program of some type. In that case, it might be reasonable to approx-
+  imate the probability of the sample point C as .7 and that of the sample point N as .3.
+
+  Look Back Here we see that the sample points are not always equally likely, so assigning
+  probabilities to them can be complicated, particularly for experiments that represent
+  real applications (as opposed to coin- and die-toss experiments).
+
+  ■ Now Work Exercise 3.22
+
+  Although the probabilities of sample points are often of interest in their own right,
+  it is usually probabilities of collections of sample points that are important. Example 3.3
+  demonstrates this point.
+
+ Example 3.3  Problem A fair die is tossed, and the up face is observed. If the face is even, you win $1.
+  Otherwise, you lose $1. What is the probability that you win?
+Probability of a Collection
+of Sample Points—  Solution Recall that the sample space for this experiment contains six sample points:
+Die-Tossing Experiment
+  S: 51,2,3,4,5,66
+  Since the die is balanced, we assign a probability of 1΋6 to each of the sample points in
+  this sample space. An even number will occur if one of the sample points Observe a 2,
+  Observe a 4, or Observe a 6 occurs. A collection of sample points such as this is called an
+  event, which we denote by the letter A. Since the event A contains three sample points—
+  all with probability 1΋6—and since no sample points can occur simultaneously, we reason
+  that the probability of A is the sum of the probabilities of the sample points in A. Thus,
+  the probability of A is 1΋6 + 1΋6 + 1΋6 = 1΋2.
+
+  Look Back On the basis of this notion of probability, in the long run, you will win $1 half
+  the time and lose $1 half the time.
+
+  ■ Now Work Exercise 3.14
+152 CHAPTER 3 ■ Probability
+
+1  3  Figure 3.5 is a Venn diagram depicting the sample space associated with a die-toss
+  experiment and the event A, Observe an even number. The event A is represented by
+  2  the closed figure inside the sample space S. This closed figure A comprises all of the sam-
+  ple points that make up event A.
+  46
+  A  To decide which sample points belong to the set associated with an event A, test
+  each sample point in the sample space S. If event A occurs, then that sample point is in
+5  the event A. For example, the event A, Observe an even number, in the die-toss experi-
+  ment will occur if the sample point Observe a 2 occurs. By the same reasoning, the sam-
+  S  ple points Observe a 4 and Observe a 6 are also in event A.
+
+Figure 3.5  To summarize, we have demonstrated that an event can be defined in words, or it
+Die-toss experiment with event  can be defined as a specific set of sample points. This leads us to the following general
+A, Observe an even number  definition of an event:
+
+  An event is a specific collection of sample points.
+
+ Example 3.4  Problem Consider the experiment of tossing two unbalanced coins. Because the coins
+  are not balanced, their outcomes (H or T) are not equiprobable. Suppose the correct
+Probability of an  probabilities associated with the sample points are given in the accompanying table.
+Event—Coin-Tossing  [Note: The necessary properties for assigning probabilities to sample points are satisfied.]
+Experiment  Consider the events
+
+  A: 5Observe exactly one head.6
+
+  B: 5Observe at least one head.6
+
+  Calculate the probability of A and the probability of B.
+
+  Sample Point  Probability
+
+  HH  4
+  HT  9
+  TH  2
+  TT  9
+  2
+  9
+  1
+  9
+
+  Solution Event A contains the sample points HT and TH. Since two or more sample
+  points cannot occur at the same time, we can easily calculate the probability of event A
+  by summing the probabilities of the two sample points. Thus, the probability of observing
+  exactly one head (event A), denoted by the symbol P(A), is
+
+  P1A2 = P1Observe HT.2 + P1Observe TH.2 = 2 + = 2 4
+  99 9
+
+  Similarly, since B contains the sample points HH, HT, and TH, it follows that
+
+  P1B2 = 4 + 2 + = 2 8
+  999 9
+
+  Look Back Again, these probabilities should be interpreted in the long run. For example,
+  P1B2 = 8΋9 ≈ .89 implies that if we were to toss two coins an infinite number of times,
+  we would observe at least two heads on about 89% of the tosses.
+
+  ■ Now Work Exercise 3.11
+
+  The preceding example leads us to a general procedure for finding the probability
+  of an event A:
+  SECTION 3.1 ■ Events, Sample Spaces, and Probability 153
+
+  Probability of an Event
+  The probability of an event A is calculated by summing the probabilities of the sample
+  points in the sample space for A.
+
+  Thus, we can summarize the steps for calculating the probability of any event, as
+  indicated in the next box.
+
+  Steps for Calculating Probabilities of Events
+  1. Define the experiment; that is, describe the process used to make an observation
+
+  and the type of observation that will be recorded.
+  2. List the sample points.
+  3. Assign probabilities to the sample points.
+  4. Determine the collection of sample points contained in the event of interest.
+  5. Sum the sample point probabilities to get the probability of the event.
+
+ Example 3.5  Problem The American Association for Marriage and Family Therapy (AAMFT) is a
+  group of professional therapists and family practitioners that treats many of the nation’s
+Applying the Five  couples and families. The AAMFT released the findings of a study that tracked the post-
+Steps to Find a  divorce history of 100 pairs of former spouses with children. Each divorced couple was
+Probability—Study of  classified into one of four groups, nicknamed “perfect pals (PP),” “cooperative colleagues
+Divorced Couples  (CC),” “angry associates (AA),” and “fiery foes (FF).” The proportions classified into
+  each group are shown in Table 3.2.
+  PP CC
+  AA  Table 3.2  Results of AAMFT Study of Divorced Couples
+  FF  Group
+  C  Proportion
+  S  Perfect Pals (PP)
+  (Joint-custody parents who get along well)  .12
+Figure 3.6  .38
+Venn diagram for AAMFT  Cooperative Colleagues (CC)  .25
+survey  (Occasional conflict, likely to be remarried)  .25
+
+  Angry Associates (AA)
+  (Cooperate on children-related issues only, conflicting otherwise)
+
+  Fiery Foes (FF)
+  (Communicate only through children, hostile toward each other)
+
+  Suppose one of the 100 couples is selected at random.
+
+  a. Define the experiment that generated the data in Table 3.2, and list the sample points.
+  b. Assign probabilities to the sample points.
+  c. What is the probability that the former spouses are “fiery foes”?
+  d. What is the probability that the former spouses have at least some conflict in their
+
+  relationship?
+
+  Solution
+
+  a. The experiment is the act of classifying the randomly selected couple. The sample
+  points—the simplest outcomes of the experiment—are the four groups (categories)
+  listed in Table 3.2. They are shown in the Venn diagram in Figure 3.6.
+
+  b. If, as in Example 3.1, we were to assign equal probabilities in this case, each of the
+  response categories would have a probability of one-fourth (1/4), or .25. But by ex-
+  amining Table 3.2, you can see that equal probabilities are not reasonable in this
+  case because the response percentages are not all the same in the four categories.
+154  CHAPTER 3 ■ Probability
+
+  It is more reasonable to assign a probability equal to the response proportion in each
+  class, as shown in Table 3.3.*
+
+  Table 3.3  Sample Point Probabilities
+  for AAMFT Survey
+
+  Sample Point  Probability
+
+  PP  .12
+
+  CC  .38
+
+  AA  .25
+
+  FF  .25
+
+  c. The event that the former spouses are “fiery foes” corresponds to the sample point
+  FF. Consequently, the probability of the event is the probability of the sample point.
+  From Table 3.3, we find that P1FF2 = .25. Therefore, there is a .25 probability (or
+  one-fourth chance) that the couple we select are “fiery foes.”
+
+  d. The event that the former spouses have at least some conflict in their relationship,
+  call it event C, is not a sample point because it consists of more than one of the re-
+  sponse classifications (the sample points). In fact, as shown in Figure 3.6, the event C
+  consists of three sample points: CC, AA, and FF. The probability of C is defined to
+  be the sum of the probabilities of the sample points in C:
+
+  P1C2 = P1CC2 + P1AA2 + P1FF2 = .38 + .25 + .25 = .88
+
+  Thus, the chance that we observe a divorced couple with some degree of conflict in their
+  relationship is .88—a fairly high probability.
+
+  Look Back The key to solving this problem is to follow the steps outlined in the box.
+  We defined the experiment (Step 1) and listed the sample points (Step 2) in part a. The
+  assignment of probabilities to the sample points (Step 3) was done in part b. For each
+  probability in parts c and d, we identified the collection of sample points in the event
+  (Step 4) and summed their probabilities (Step 5).
+
+  ■ Now Work Exercise 3.18
+
+  The preceding examples have one thing in common: The number of sample points
+  in each of the sample spaces was small; hence, the sample points were easy to identify
+  and list. How can we manage this when the sample points run into the thousands or
+  millions? For example, suppose you wish to select 5 marines for a dangerous mission
+  from a division of 1,000. Then each different group of 5 marines would represent a
+  sample point. How can you determine the number of sample points associated with
+  this experiment?
+
+  One method of determining the number of sample points for a complex experiment
+  is to develop a counting system. Start by examining a simple version of the experiment.
+  For example, see if you can develop a system for counting the number of ways to select 2
+  marines from a total of 4. If the marines are represented by the symbols M1, M2, M3, and
+  M4, the sample points could be listed in the following pattern:
+
+  1M1, M22  1M2, M32  1M3, M42
+  1M1, M32  1M2, M42
+  1M1, M42
+
+  Note the pattern and now try a more complex situation—say, sampling 3 marines out
+  of 5. List the sample points and observe the pattern. Finally, see if you can deduce the
+
+  *Since the response percentages were based on a sample of divorced couples, these assigned probabilities are
+  estimates of the true population response percentages. You will learn how to measure the reliability of proba-
+  bility estimates in Chapter 7.
+  SECTION 3.1 ■ Events, Sample Spaces, and Probability 155
+
+  pattern for the general case. Perhaps you can program a computer to produce the match-
+  ing and counting for the number of samples of 5 selected from a total of 1,000.
+
+  A second method of determining the number of sample points for an experiment is
+  to use combinatorial mathematics. This branch of mathematics is concerned with devel-
+  oping counting rules for given situations. For example, there is a simple rule for finding
+  the number of different samples of 5 marines selected from 1,000. This rule, called the
+  combinations rule, is given in the box.
+
+  Combinations Rule
+
+  Suppose a sample of n elements is to be drawn without replacement from a set of N
+
+  elements. Then the number of different samples possible is denoted by a N b and is
+  n
+  equal to
+
+  a Nn b = N! n!1N - n2!
+
+  where
+  n! = n1n - 121n - 22 g132122112
+
+  and similarly for N! and 1N - n2! For example, 5! = 5 # 4 # 3 # 2 # 1. [Note: The
+
+  quantity 0! is defined to be equal to 1.]
+
+ Example 3.6  Problem Consider the task of choosing 2 marines from a platoon of 4 to send on a
+  dangerous mission. Use the combinations counting rule to determine how many different
+using the Combinations  selections can be made.
+Rule—Selecting
+2 Marines from 4  Solution For this example, N = 4, n = 2, and
+
+  a42b = 2!2! = 4! 4 12 ## 3 # 2 # 1212 # 12 = 1 6
+
+  Look Back You can see that this answer agrees with the number of sample points listed
+  on p. 154.
+
+  ■ Now Work Exercise 3.13
+
+ Example 3.7  Problem Suppose a movie reviewer for a newspaper reviews 5 movies each month. This
+  month, the reviewer has 20 new movies from which to make the selection. How many
+using The Combinations  different samples of 5 movies can be selected from the 20?
+Rule—Selecting
+5 movies from 20  Solution For this example, N = 20 and n = 5. Then the number of different samples of
+  5 that can be selected from the 20 movies is
+
+  a 205 b = 5!120 - 52! = 20! 20! 5!15!
+
+  20 # 19 # 18 # g # 3 # 2 # 1
+  = 15 # 4 # 3 # 2 # 12115 # 14 # 13 # g# 3 # 2 # 12 = 15,504
+
+  Look Back You can see that attempting to list all the sample points for this experiment
+  would be an extremely tedious and time-consuming, if not practically impossible,
+  task.
+
+  ■
+156  CHAPTER 3 ■ Probability
+
+  The combinations rule is just one of a large number of counting rules that have
+  been developed by combinatorial mathematicians. This counting rule applies to situa-
+  tions in which the experiment calls for selecting n elements from a total of N elements,
+  without replacing each element before the next is selected. Several other basic counting
+  rules are presented in optional Section 3.7.
+
+Statistics IN Action Revisited The Probability of Winning Lotto
+
+In Florida’s state lottery game, called Pick-6 Lotto, you select  always a winner in the
+six numbers of your choice from a set of numbers ranging  Florida Lotto. This ap-
+from 1 to 53. We can apply the combinations rule to deter-  parent contradiction
+mine the total number of combinations of 6 numbers selected  can be explained with
+from 53 (i.e., the total number of sample points [or possible  the following analogy:
+winning tickets]). Here, N = 53 and n = 6; therefore, we have
+  Suppose there is a
+  aNn b = n!1N - n2! = N! 53! 6!47!  line of minivans, front
+  to back, from New York
+  1532 1522 1512 1502 1492 1482 147!2  City to Los Angeles,
+  =  California. Based on the distance between the two cities and
+  the length of a standard minivan, there would be approximately
+  162 152 142 132 122 112 147!2  23 million minivans in line. Lottery officials will select, at ran-
+  = 22,957,480  dom, one of the minivans and put a check for $10 million in the
+  glove compartment. For a cost of $1, you may roam the country
+Now, since the Lotto balls are selected at random, each of  and select one (and only one) minivan and check the glove com-
+these 22,957,480 combinations is equally likely to occur.  partment. Do you think you will find $10 million in the mini-
+Therefore, the probability of winning Lotto is  van you choose? You can be almost certain that you won’t. But
+  now permit anyone to enter the lottery for $1 and suppose that
+  P1Win 6>53 Lotto2 = 1> 122,957,4802 = .00000004356  50 million people do so. With such a large number of partici-
+  pants, it is very likely that someone will find the minivan with
+  This probability is often stated as follows: The odds of  the $10 million—but it almost certainly won’t be you! (This
+winning the game with a single ticket are 1 in 22,957,480, or 1 in  example illustrates an axiom in statistics called the law of large
+approximately 23 million. For all practical purposes, this proba-  numbers. See the footnote at the bottom of p. 149.)
+bility is 0, implying that you have almost no chance of winning
+the lottery with a single ticket. Yet each week there is almost
+
+Exercises 3.1–3.37  a. Find P1E32 if
+  P1E12 = .2, P1E22 = .1, P1E42 = .1, and
+Understanding the Principles  P1E52 = .2
+
+ 3.1 What is an experiment?  b. Find P1E32 if P1E12 = P1E32, P1E22 = .3,
+ 3.2 What are the most basic outcomes of an experiment called?  P1E42 = .3, and P1E52 = .2
+ 3.3 Define the sample space.
+ 3.4 What is a Venn diagram?  c. Find P1E32 if P1E12 = P1E22 = P1E42 =
+ 3.5 Give two probability rules for sample points.  P1E52 = .1
+ 3.6 What is an event?
+ 3.7 How do you find the probability of an event made up of  3.10 The following Venn diagram describes the sample space of
+
+  several sample points?  a particular experiment and events A and B:
+ 3.8 Give a scenario where the combinations rule is appropriate
+  7  9  2
+  for counting the number of sample points.
+  10 4  6
+Learning the Mechanics
+  5
+ 3.9 An experiment results in one of the sample points:
+  E1, E2, E3, E4, or E5.  A  B
+
+  8  3  1
+
+  S
+  SECTION 3.1 ■ Events, Sample Spaces, and Probability 157
+
+  a. Suppose the sample points are equally likely. Find P(A)  Applet Exercise 3.1
+  and P(B).
+  Use the applet entitled Simulating the Probability of Rolling a 6
+  b. Suppose P122 = P132 = P142 = P182 = P192 = 1΋20  to explore the relationship between the proportion of sixes rolled
+  and P112 = P152 = P162 = P172 = P1102 = 3΋20.  on several rolls of a die and the theoretical probability of rolling
+  Find P(A) and P(B).  a 6 on a fair die.
+
+3.11 The sample space for an experiment contains five sample  a. To simulate rolling a die one time, click on the Roll
+  points with probabilities as shown in the table. Find the  button on the screen while n = 1. The outcome of the
+  probability of each of the following events:  roll appears in the list at the right, and the cumulative
+  proportion of sixes for one roll is shown above the
+  A: 5Either 1, 2, or 3 occurs.6  graph and as a point on the graph corresponding to 1.
+  Click Reset and repeat the process with n = 1 several
+  B: 5Either 1, 3, or 5 occurs.6  times. What are the possible values of the cumulative
+  proportion of sixes for one roll of a die? Can the cu-
+  C: 54 does not occur.6  mulative proportion of sixes for one roll of a die equal
+  the theoretical probability of rolling a 6 on a fair die?
+  Sample Points  Probabilities  Explain.
+
+  1  .05  b. Set n = 10 and click the Roll button. Repeat this several
+  2  .20  times, resetting after each time. Record the cumulative
+  3  .30  proportion of sixes for each roll. Compare the cumula-
+  4  .30  tive proportions for n = 10 with those for n = 1 in part
+  5  .15  a. Which tend to be closer to the theoretical probability
+  of rolling a 6 on a fair die?
+3.12 Compute each of the following:
+  c. Repeat part b for n = 1,000, comparing the cumulative
+a. a6b  b. a6b  c. a3b  proportions for n = 1,000 with those for n = 1 in part a
+  5  3  3  and for n = 10 in part b.
+
+d. a4b  e. a8b  d. On the basis of your results for parts a, b, and c, do you
+  0  7  believe that we could justifiably conclude that a die is
+  unfair because we rolled it 10 times and didn’t roll any
+3.13 Compute the number of ways you can select n elements  sixes? Explain.
+  from N elements for each of the following:
+  a. n = 2, N = 5  Applet Exercise 3.2
+  b. n = 3, N = 6
+  c. n = 5, N = 20  Use the applet entitled Simulating the Probability of a Head with
+  a Fair Coin to explore the relationship between the proportion of
+3.14 Two fair dice are tossed, and the up face on each die is  heads on several flips of a coin and the theoretical probability of
+  recorded.  getting heads on one flip of a fair coin.
+  a. List the 36 sample points contained in the sample
+  space.  a. Repeat parts a–c of Applet Exercise 3.1 for the ex-
+  b. Assign probabilities to the sample points.  periment of flipping a coin and the event of getting
+  c. Find the probability of observing each of the following  heads.
+  events:
+  A: 5A 3 appears on each of the two dice.6  b. On the basis of your results for part a, do you believe
+  B: 5The sum of the numbers is even.6  that we could justifiably conclude that a coin is unfair
+  C: 5The sum of the numbers is equal to 7.6  because we flipped it 10 times and didn’t roll any heads?
+  D: 5A 5 appears on at least one of the dice.6  Explain.
+  E: 5The sum of the numbers is 10 or more.6
+  Applying the Concepts—Basic
+3.15 Two marbles are drawn at random and without replace-
+  ment from a box containing two blue marbles and three  3.17 Do social robots walk or roll? Refer to the International
+  red marbles.  Conference on Social Robotics (Vol. 6414, 2010) study
+  a. List the sample points.  of the trend in the design of social robots, Exercise 2.7
+  b. Assign probabilities to the sample points.  (p. 66). Recall that in a random sample of 106 social (or
+  c. Determine the probability of observing each of the fol-  service) robots designed to entertain, educate, and care
+  lowing events:  for human users, 63 were built with legs only, 20 with
+  A: 5Two blue marbles are drawn.6  wheels only, 8 with both legs and wheels, and 15 with
+  B: 5A red and a blue marble are drawn.6  neither legs nor wheels. One of the 106 social robots is
+  C: 5Two red marbles are drawn.6  randomly selected, and the design (e.g., wheels only) is
+  noted.
+3.16 Simulate the experiment described in Exercise 3.15, using any  a. List the sample points for this study.
+  five identically shaped objects, two of which are one color and  b. Assign reasonable probabilities to the sample points.
+  three another. Mix the objects, draw two, record the results,  c. What is the probability that the selected robot is
+  and then replace the objects. Repeat the experiment a large  designed with wheels?
+  number of times (at least 100). Calculate the proportion of  d. What is the probability that the selected robot is
+  times events A, B, and C occur. How do these proportions  designed with legs?
+  compare with the probabilities you calculated in Exercise 3.15?
+  Should these proportions equal the probabilities? Explain.
+158 CHAPTER 3 ■ Probability
+
+3.18 Crop damage by wild boars. The level of crop damage by  a. If a slaughtered chicken is selected at random, what
+  wild boars in southern Italy was investigated in Current  is the probability that it passes inspection for fecal
+  Zoology (Apr. 2014). In the study, crop damage occurred  contamination?
+  when the wild boars partially or completely destroyed
+  agricultural crops in privately owned lands. The research-  b. The probability of part a was based on a USDA study
+  ers identified 157 incident of crop damage in the study  that found that 306 of 32,075 chicken carcasses passed
+  area caused by wild boars over a five-year period. The ac-  inspection for fecal contamination. Do you agree
+  companying table gives the types of crops destroyed and  with the USDA’s statement about the likelihood of
+  corresponding percentage of incident. Consider the type  a slaughtered chicken passing inspection for fecal
+  of crop damaged by wild boars for one randomly selected  contamination?
+  incident.
+  3.22 African rhinos. Two species of rhinoceros native to Africa
+Type  Percentage  are black rhinos and white rhinos. The International Rhino
+  Federation estimates that the African rhinoceros popu-
+Cereals  45%  lation consists of 5,055 white rhinos and 20,405 black rhi-
+Orchards  5  nos. Suppose one rhino is selected at random from the
+Legumes  20  African rhino population and its species (black or white) is
+Vineyards  15  observed.
+Other crops  15  a. List the sample points for this experiment.
+  b. Assign probabilities to the sample points on the basis
+TOTAL  100%  of the estimates made by the International Rhino
+  Federation.
+  a. List the possible outcomes of this experiment.
+  b. Assign reasonable probabilities to the outcomes.  Applying the Concepts—Intermediate
+  c. What is the probability that cereals or orchards are
+  3.23 STEM experiences for girls. Refer to the 2013 National
+  damaged?  Science Foundation (NSF) study on girls’ participation in
+  d. What is the probability that a vineyard is not damaged?  informal science, technology, engineering, and mathemat-
+  ics (STEM) programs, Exercise 2.12 (p. 67). Recall that
+3.19 Colors of M&Ms candies. Originally, M&Ms Plain  the researchers sampled 174 young women who recently
+  Chocolate Candies came in only a brown color. Today,  participated in a STEM program. Of the 174 STEM par-
+  M&Ms in standard bags come in six colors: brown, yel-  ticipants, 107 were in urban areas, 57 in suburban areas,
+  low, red, blue, orange, and green. According to Mars  and 10 in rural areas. If one of the participants is selected
+  Corporation, today 24% of all M&Ms produced are blue,  at random, what is the probability that she is from an urban
+  20% are orange, 16% are green, 14% are yellow, 13% are  area? Not a rural area?
+  brown, and 13% are red. Suppose you purchase a randomly
+  selected bag of M&Ms Plain Chocolate Candies and ran-  3.24 Health risks to beachgoers. According to a University of
+  domly select one of the M&Ms from the bag. The color of  Florida veterinary researcher, the longer a beachgoer sits
+  the selected M&M is of interest.  in wet sand or stays in the water, the higher the health risk
+  a. Identify the outcomes (sample points) of this experiment.  (University of Florida News, Jan. 29, 2008). Using data col-
+  b. Assign reasonable probabilities to the outcomes, part a.  lected at 3 Florida beaches, the researcher discovered the
+  c. What is the probability that the selected M&M is brown  following: (1) 6 out of 1,000 people exposed to wet sand
+  (the original color)?  for a 10-minute period will acquire gastroenteritis; (2) 12
+  d. In 1960, the colors red, green, and yellow were added to  out of 100 people exposed to wet sand for two consecu-
+  brown M&Ms. What is the probability that the selected  tive hours will acquire gastroenteritis; (3) 7 out of 1,000
+  M&M is either red, green, or yellow?  people exposed to ocean water for a 10-minute period
+  e. In 1995, based on voting by American consumers, the  will acquire gastroenteritis; and (4) 7 out of 100 people ex-
+  color blue was added to the M&M mix. What is the  posed to ocean water for a 70-minute period will acquire
+  probability that the selected M&M is not blue?  gastroenteritis.
+  a. If a beachgoer spends 10 minutes in the wet sand,
+3.20 Rare underwater sounds. A study of underwater sounds  what is the probability that he or she will acquire
+  in a specific region of the Pacific Ocean focused on scarce  gastroenteritis?
+  sounds, such as humpback whale screams, dolphin whis-  b. If a beachgoer spends two hours in the wet sand,
+  tles, and sounds from passing ships (Acoustical Physics,  what is the probability that he or she will acquire
+  Vol. 56, 2010). During the month of September (non-rainy  gastroenteritis?
+  season), research revealed the following probabilities of  c. If a beachgoer spends 10 minutes in the ocean water,
+  rare sounds: P1whale scream2 = .03, P1ship sound2 = .14,  what is the probability that he or she will acquire
+  and P1rain2 = 0. If a sound is picked up by the acoustical  gastroenteritis?
+  equipment placed in this region of the Pacific Ocean, is it  d. If a beachgoer spends 70 minutes in the ocean water,
+  more likely to be a whale scream or a sound from a passing  what is the probability that he or she will acquire
+  gastroenteritis?
+  ship? Explain.
+  3.25 Cheek teeth of extinct primates. Refer to the American
+3.21 USDA chicken inspection. The United States Department  Journal of Physical Anthropology (Vol. 142, 2010) study
+  of Agriculture (USDA) reports that, under its standard
+  inspection system, one in every 100 slaughtered chickens  MOLARS of the dietary habits of extinct mammals, Exercise 2.9
+  passes inspection for fecal contamination.  (p. 66). Recall that 18 cheek teeth extracted from skulls of
+  an extinct primate species discovered in western Wyoming
+  SECTION 3.1 ■ Events, Sample Spaces, and Probability 159
+
+were analyzed. Each tooth was classified according to de-  a. In how many possible ways can the three-grill displays
+gree of wear (unworn, slight, light-moderate, moderate,  be selected from the 5 displays? List the possibilities.
+moderate-heavy, or heavy). The 18 measurements are re-
+produced in the accompanying table. One tooth is randomly  b. The next table shows the grill display combinations and
+selected from the 18 cheek teeth. What is the probability that  number of each selected by the 124 students. Use this
+the tooth shows a slight or moderate amount of wear?  information to assign reasonable probabilities to the
+  different display combinations.
+Data on Degree of Wear  Slight
+  Slight  c. Find the probability that a student who participated
+Unknown  Heavy  in the study selected a display combination involving
+Unknown  Unworn  Grill #1.
+Unknown  Light-moderate
+Moderate  Light-moderate  Grill Display Combination  Number of Students
+Slight  Moderate
+Unknown  Unworn  1–2–3  35
+Moderate-heavy  Unknown
+Moderate  1–2–4  8
+Slight
+  1–2–5  42
+
+  2–3–4  4
+
+  2–3–5  1
+
+  2–4–5  34
+
+3.26 Chance of rain. Answer the following question posed in  Based on Hamilton, R. W. “Why do people suggest what they do not
+  the Atlanta Journal-Constitution: When a meteorologist  want? Using context effects to influence others’ choices.” Journal of
+  says, “The probability of rain this afternoon is .4,” does  Consumer Research, Vol. 29, Mar. 2003, Table 1.
+  it mean that it will be raining 40% of the time during the
+  afternoon?  3.30 ESL students and plagiarism. The Journal of Education
+  and Human Development (Vol. 3, 2009) investigated
+3.27 Railway track allocation. Refer to the Journal of  the causes of plagiarism among six English-as-a-second-
+  Transportation Engineering (May 2013) investigation  language (ESL) students. All students in the class wrote
+  of railroad track allocation at a railway station with 11  two essays, one in the middle and one at the end of the
+  tracks, Exercise 2.16 (p. 68). A simple algorithm designed  semester. After the first essay, the students were in-
+  to minimize waiting time and bottlenecks is one in which  structed on how to avoid plagiarism in the second essay.
+  engineers randomly assign one of the 11 tracks to a train  Of the six ESL students, three admitted to plagiarizing on
+  entering the station.  the first essay. Only one ESL student admitted to plagia-
+  a. What is the probability that track #7 is assigned to an  rizing on the second essay. (This student, who also plagia-
+  entering train?  rized on the first essay, claimed she misplaced her notes
+  b. Unknown to the engineer, tracks #2, #5, and #10 will  on plagiarism.)
+  have maintenance problems. What is the probability  a. If one of the six ESL students is randomly selected,
+  that one of these problematic tracks is assigned to an  what is the probability that he or she plagiarized on the
+  entering train?  first essay?
+  b. Consider the results (plagiarism or not) for the six ESL
+3.28 Museum management. Refer to the Museum Management  students on the second essay. List the possible outcomes
+  and Curatorship (June 2010) study of the criteria used  (e.g., Students 1 and 3 plagiarize, the others do not).
+  c. Refer to part b. Assume that, despite the instruction on
+MMC to evaluate museum performance, Exercise 2.22 (p. 69).  plagiarism, the ESL students are just as likely as not to
+  Recall that the managers of 30 leading museums of con-  plagiarize on the second essay. What is the probability
+  temporary art were asked to provide the performance  that no more than one of the ESL students plagiarizes
+  measure used most often. A summary of the results is re-  on the second essay?
+  produced in the table. One of the 30 museums is selected
+  at random. Find the probability that the museum uses big  3.31 Jai alai Quinella bet. The Quinella bet at the parimutuel
+  shows most often as a performance measure.  game of jai alai consists of picking the jai alai players that
+  will place first and second in a game, irrespective of order.
+Performance Measure  Number of Museums  In jai alai, eight players (numbered 1, 2, 3, … , 8) compete
+  in every game.
+Total visitors  8  a. How many different Quinella bets are possible?
+Paying visitors  5  b. Suppose you bet the Quinella combination 2–7. If the
+Big shows  6  players are of equal ability, what is the probability that
+Funds raised  7  you win the bet?
+Members  4
+  3.32 Using game simulation to teach a course. In Engineering
+3.29 Choosing portable grill displays. A study of how people  Management Research (May 2012), a simulation game
+  attempt to influence the choices of others by offering unde-  approach was proposed to teach concepts in a course on
+  sirable alternatives was published in the Journal of Consumer  production. The proposed game simulation was for color
+  Research (Mar. 2003). In one phase of the study, the re-  television production. The products are two color televi-
+  searcher had each of 124 college students select showroom  sion models, A and B. Each model comes in two colors,
+  displays for portable grills. Five different displays (represent-  red and black. Also, the quantity ordered for each model
+  ing five different-sized grills) were available, but only three  can be 1, 2, or 3 televisions. The choice of model, color, and
+  would be selected. The students were instructed to select the  quantity is specified on a purchase order card.
+  displays to maximize purchases of Grill #2 (a smaller grill).
+160 CHAPTER 3 ■ Probability
+
+  a. Using a tree diagram, list how many different purchase  a. How many two-drug combinations of the six drugs are
+  order cards are possible. (These are the simple events  possible?
+  for the experiment.)
+  b. How many three-drug combinations of the six drugs are
+  b. Suppose, from past history, that black color TVs are in  possible?
+  higher demand than red TVs. For planning purposes,
+  should the engineer managing the production process  c. How many four-drug combinations of the six drugs are
+  assign equal probabilities to the simple events in part a?  possible?
+  Why or why not?
+  d. How many five-drug combinations of the six drugs are
+Applying the Concepts—Advanced  possible?
+
+3.33 Lead bullets as forensic evidence. Chance (Summer 2004)  e. The researchers stated that a total of 64 drug combi-
+  published an article on the use of lead bullets as forensic  nations were tested as treatments for nausea. Verify
+  evidence in a federal criminal case. Typically, the Federal  that there are 64 ways that the six drugs can be com-
+  Bureau of Investigation (FBI) will use a laboratory method  bined. (Remember to include the one-drug and six-
+  to match the lead in a bullet found at a crime scene with  drug combinations as well as the control treatment of
+  unexpended lead cartridges found in the possession of a sus-  no drugs.)
+  pect. The value of this evidence depends on the chance of
+  a false positive—that is, the probability that the FBI finds a  3.36 Dominant versus recessive traits. A gene is composed of
+  match, given that the lead at the crime scene and the lead  two alleles. An allele can be either dominant or recessive.
+  in the possession of the suspect are actually from two differ-  Suppose a husband and a wife, who are both carriers of
+  ent “melts,” or sources. To estimate the false positive rate,  the sickle cell anemia allele but do not have the disease,
+  the FBI collected 1,837 bullets that the agency was confident  decide to have a child. Because both parents are carriers
+  all came from different melts. Then, using its established  of the disease, each has one dominant normal cell allele
+  criteria, the FBI examined every possible pair of bullets and  (S) and one recessive sickle cell allele (s). Therefore, the
+  counted the number of matches. According to Chance, the  genotype of each parent is Ss. Each parent contributes
+  FBI found 693 matches. Use this information to compute the  one allele to his or her offspring with each allele being
+  chance of a false positive. Is this probability small enough for  equally likely.
+  you to have confidence in the FBI’s forensic evidence?  a. List the possible genotypes of their offspring.
+  b. What is the probability that the offspring will have
+3.34 Matching socks. Consider the following question posed to  sickle cell anemia? In other words, what is the proba-
+  Marilyn vos Savant in her weekly newspaper column, “Ask  bility that the offspring will have genotype ss? Interpret
+  Marilyn”:  this probability.
+  c. What is the probability that the offspring will not
+  I have two pairs of argyle socks, and they look nearly iden-  have sickle cell anemia but will be a carrier (one nor-
+  tical—one navy blue and the other black. [When doing the  mal cell allele and one sickle cell allele)? Interpret this
+  laundry] my wife matches the socks incorrectly much more  probability.
+  often than she does correctly…. If all four socks are in front
+  of her, it seems to me that her chances are 50% for a wrong  3.37 Drug testing of firefighters. Hillsborough County,
+  match and 50% for a right match. What do you think?  Florida, has 42 fire stations that employ 980 career fire-
+  fighters and 160 volunteers. Both types of firefighters
+  Source: Parade Magazine, Feb. 27, 1994.  are drug tested every six months. However, the career
+  firefighters and volunteers are treated as separate pop-
+  Use your knowledge of probability to answer this question.  ulations. For drug testing, 50% of the career firefighters
+  [Hint: List the sample points in the experiment.]  are randomly selected and 50% of the volunteers are
+  randomly selected. Some firefighters at a particular sta-
+3.35 Post-op nausea study. Nausea and vomiting after surgery  tion argue that due to the smaller number of volunteers,
+  are common side effects of anesthesia and painkillers. Six  an individual volunteer is more likely to be selected in
+  different drugs, varying in cost, were compared for their  the current sampling scheme than if all the career fire-
+  effectiveness in preventing nausea and vomiting (New  fighters and volunteers were combined into a single pop-
+  England Journal of Medicine, June 10, 2004). The medical  ulation and 50% sampled. Do you agree? Explain your
+  researchers looked at all possible combinations of the drugs  reasoning.
+  as treatments, including a single drug, as well as two-drug,
+  three-drug, four-drug, five-drug, and six-drug combinations.  cHint: aN - 1 n - 1 b n aNn b = n>N d
+
+3.2 Unions and Intersections
+
+  An event can often be viewed as a composition of two or more other events. Such events,
+  which are called compound events, can be formed (composed) in two ways.
+
+  The union of two events A and B is the event that occurs if either A or B (or both)
+  occurs on a single performance of the experiment. We denote the union of events A
+  and B by the symbol A ∪ B. A ∪ B consists of all the sample points that belong to
+  A or B or both. (See Figure 3.7a.)
+  SECTION 3.2 ■ Unions and Intersections 161
+
+  A  B  A  B
+
+Figure 3.7  Entire shaded area is∩  Shaded area is
+Venn diagrams for union and  A B.
+intersection  A ∩ B.
+  S
+ Example 3.8  a. Union  S
+  b. Intersection
+Probabilities of unions
+and Intersections—  The intersection of two events A and B is the event that occurs if both A and B occur on
+Die-Toss Experiment  a single performance of the experiment. We write A ¨ B for the intersection of A and B.
+  A ¨ B consists of all the sample points belonging to both A and B. (See Figure 3.7b.)
+
+  1  4  Problem Consider a die-toss experiment in which the following events are defined:
+
+B  2  A  A: 5Toss an even number.6
+  B: 5Toss a number less than or equal to 3.6
+  3  6
+  a. Describe A ∪ B for this experiment.
+  5  b. Describe A ¨ B for this experiment.
+  c. Calculate P1A ∪ B2 and P1A ¨ B2, assuming that the die is fair.
+  S
+Figure 3.8  Solution Draw the Venn diagram as shown in Figure 3.8.
+Venn diagram for die toss
+  a. The union of A and B is the event that occurs if we observe either an even number,
+  a number less than or equal to 3, or both on a single throw of the die. Consequently,
+  the sample points in the event A ∪ B are those for which A occurs, B occurs, or both
+  A and B occur. Checking the sample points in the entire sample space, we find that
+  the collection of sample points in the union of A and B is
+
+  A ∪ B = 51, 2, 3, 4, 66
+
+  b. The intersection of A and B is the event that occurs if we observe both an even num-
+  ber and a number less than or equal to 3 on a single throw of the die. Checking the
+  sample points to see which imply the occurrence of both events A and B, we see that
+  the intersection contains only one sample point:
+  A ¨ B = 526
+
+  In other words, the intersection of A and B is the sample point Observe a 2.
+  c. Recalling that the probability of an event is the sum of the probabilities of the sample
+
+  points of which the event is composed, we have
+  P1A ∪ B2 = P112 + P122 + P132 + P142 + P162
+  = 1 + 1 + 1 + 1 + = 1 5
+  66666 6
+
+  and
+
+  P1A ¨ B2 = P122 = 1
+  6
+
+  Look Back Since the six sample points are equally likely, the probabilities in part c are
+  simply the number of sample points in the event of interest, divided by 6.
+
+  ■ Now Work Exercise 3.47a–d
+162  CHAPTER 3 ■ Probability
+
+  Unions and intersections can be defined for more than two events. For example,
+  the event A ∪ B ∪ C represents the union of three events: A, B, and C. This event, which
+  includes the set of sample points in A, B, or C, will occur if any one (or more) of the
+  events A, B, and C occurs. Similarly, the intersection A ¨ B ¨ C is the event that all three
+  of the events A, B, and C occur. Therefore, A ¨ B ¨ C is the set of sample points that are
+  in all three of the events A, B, and C.
+
+ Example 3.9  Problem Family Planning Perspectives reported on a study of over 200,000 births in
+  New Jersey over a recent two-year period. The study investigated the link between the
+Finding Probabilities  mother’s race and the age at which she gave birth (called maternal age). The percentages
+from a Two-Way  of the total number of births in New Jersey, by the maternal age and race classifications,
+Table—Mother’s Race  are given in Table 3.4.
+versus Maternal Age
+
+  Table 3.4 Percentage of New Jersey Birth Mothers, by Age and Race
+
+  Race
+
+  Maternal Age (years)  White  Black
+
+  … 17  2%  2%
+  18–19
+  20–29  3%  2%
+  Ú 30
+  41%  12%
+
+  33%  5%
+
+  This table is called a two-way table because responses are classified according to two
+  variables: maternal age (rows) and race (columns).
+
+  Define the following event:
+
+  A: 5A New Jersey birth mother is white.6
+  B: 5A New Jersey mother was a teenager when giving birth.6
+
+  a. Find P(A) and P(B).
+  b. Find P1A ∪ B2.
+  c. Find P1A ¨ B2.
+
+  Solution Following the steps for calculating probabilities of events, we first note that the
+  objective is to characterize the race and maternal age distribution of New Jersey birth
+  mothers. To accomplish this objective, we define the experiment to consist of selecting
+  a birth mother from the collection of all New Jersey birth mothers during the two-year
+  period of the study and observing her race and maternal age class. The sample points are
+  the eight different age–race classifications:
+
+  E1: 5 … 17 yrs., white6  E5: 5 … 17 yrs., black6
+  E2: 518 - 19 yrs., white6  E6: 518 - 19 yrs., black6
+  E3: 520 - 29 yrs., white6  E7: 520 - 29 yrs., black6
+  E4: 5 Ú 30 yrs., white6  E8: 5 Ú 30 yrs., black6
+
+  Next, we assign probabilities to the sample points. If we blindly select one of the
+  birth mothers, the probability that she will occupy a particular age–race classification is
+  just the proportion, or relative frequency, of birth mothers in that classification. These
+  proportions (as percentages) are given in Table 3.4. Thus,
+
+  P1E12 = Relative frequency of birth mothers in age-race class 5 … 17 yrs.,
+  white6 = .02
+
+  P1E22 = .03
+  P1E32 = .41
+  P1E42 = .33
+  P1E52 = .02
+  P1E62 = .02
+  P1E72 = .12
+  P1E82 = .05
+  SECTION 3.3 ■ Complementary Events 163
+
+  You may verify that the sample point probabilities sum to 1.
+
+  a. To find P(A), we first determine the collection of sample points contained in event
+  A. Since A is defined as 5white6, we see from Table 3.4 that A contains the four
+  sample points represented by the first column of the table. In other words, the event
+  A consists of the race classification 5white6 in all four age classifications. The proba-
+  bility of A is the sum of the probabilities of the sample points in A:
+
+  P1A2 = P1E12 + P1E22 + P1E32 + P1E42 = .02 + .03 + .41 + .33 = .79
+  Similarly, B = 5teenage mother, age … 19 years6 consists of the four sample points
+  in the first and second rows of Table 3.4:
+
+  P1B2 = P1E12 + P1E22 + P1E52 + P1E62 = .02 + .03 + .02 + .02 = .09
+  b. The union of events A and B, A ∪ B, consists of all sample points in either A or B
+
+  (or both). That is, the union of A and B consists of all birth mothers who are white or
+  who gave birth as a teenager. In Table 3.4, this is any sample point found in the first
+  column or the first two rows. Thus,
+
+  P1A ∪ B2 = .02 + .03 + .41 + .33 + .02 + .02 = .83
+
+  c. The intersection of events A and B, A ¨ B, consists of all sample points in both A
+  and B. That is, the intersection of A and B consists of all birth mothers who are white
+  and who gave birth as a teenager. In Table 3.4, this is any sample point found in the
+  first column and the first two rows. Thus,
+
+  P1A ¨ B2 = .02 + .03 = .05.
+
+  Look Back As in previous problems, the key to finding the probabilities of parts b and c is
+  to identify the sample points that make up the event of interest. In a two-way table such
+  as Table 3.4, the total number of sample points will be equal to the number of rows times
+  the number of columns.
+
+  ■ Now Work Exercise 3.51f–g
+
+3.3 Complementary Events
+
+  A very useful concept in the calculation of event probabilities is the notion of
+  complementary events:
+
+  The complement of an event A is the event that A does not occur—that is, the event
+  consisting of all sample points that are not in event A. We denote the complement
+  of A by Ac.
+
+  A  An event A is a collection of sample points, and the sample points included in Ac
+  are those not in A. Figure 3.9 demonstrates this idea. Note from the figure that all sample
+  Ac  points in S are included in either A or Ac and that no sample point is in both A and Ac.
+  This leads us to conclude that the probabilities of an event and its complement must
+  S  sum to 1:
+Figure 3.9
+Venn diagram of  Rule of Complements
+complementary events  The sum of the probabilities of complementary events equals 1; that is,
+
+  P1A2 + P1Ac2 = 1.
+164  CHAPTER 3 ■ Probability
+
+  In many probability problems, calculating the probability of the complement of the
+  event of interest is easier than calculating the event itself. Then, because
+
+  P1A2 + P1Ac2 = 1
+  we can calculate P(A) by using the relationship
+
+  P1A2 = 1 - P1Ac2.
+
+ Example 3.10  Problem Consider the experiment of tossing fair coins. Define the following event:
+  A: 5Observing at least one head6.
+Probability of a
+Complementary  a. Find P(A) if 2 coins are tossed.
+Event—Coin-Toss  b. Find P(A) if 10 coins are tossed.
+Experiment
+  Solution
+
+  a. When 2 coins are tossed, we know that the event A: 5Observe at least one head.6
+  consists of the sample points
+
+  A: 5HH, HT, TH6
+
+  The complement of A is defined as the event that occurs when A does not occur.
+
+  Therefore,  Ac: 5Observe no heads.6 = 5TT6
+
+  This complementary relationship is shown in Figure 3.10. Since the coins are balanced,
+  we have
+
+  P1A 2 = P1TT2 =c  1
+
+  4
+
+  and
+
+  c  13
+  P1A2 = 1 - P1A 2 = 1 - = .
+  44
+  TT
+  HH  b. We solve this problem by following the five steps for calculating probabilities of
+  events. (See Section 3.1.)
+  HT  A
+
+  TH  Step 1  Define the experiment. The experiment is to record the results of the 10 tosses
+  Ac  Step 2  of the coin.
+
+  S  Step 3  List the sample points. A sample point consists of a particular sequence of
+  10 heads and tails. Thus, one sample point is HHTTTHTHTT, which de-
+Figure 3.10  notes head on first toss, head on second toss, tail on third toss, etc. Others are
+Complementary events in the  HTHHHTTTTT and THHTHTHTTH. Obviously, the number of sample points
+toss of two coins  is very large—too many to list. It can be shown (see Section 3.7) that there are
+  210 = 1,024 sample points for this experiment.
+
+  Assign probabilities. Since the coin is fair, each sequence of heads and tails has the
+  same chance of occurring; therefore, all the sample points are equally likely. Then
+
+  P1Each sample point2 = 1
+  1,024
+
+  Step 4  Determine the sample points in event A. A sample point is in A if at least one H
+  appears in the sequence of 10 tosses. However, if we consider the complement
+  of A, we find that
+
+  Ac = 5No heads are observed in 10 tosses.6
+
+  Thus, Ac contains only one sample point:
+
+  Ac: 5TTTTTTTTTT6
+
+  and P1A 2 =c 1
+
+  1,024
+  SECTION 3.4 ■ The Additive Rule and Mutually Exclusive Events 165
+
+  Step 5  Now we use the relationship of complementary events to find P(A):
+
+  cP1A2 = 1 - P1A 2 = 1 - 1  1,023  = .999
+
+  =
+  1,024 1,024
+
+  Look Back In part a, we can find P(A) by summing the probabilities of the sample points
+  HH, HT, and TH in A. Many times, however, it is easier to find P1Ac2 by using the rule
+  of complements.
+
+  Look Forward Since P1A2 = .999 in part b, we are virtually certain of observing at least
+  one head in 10 tosses of the coin.
+
+  ■ Now Work Exercise 3.47e–f
+
+3.4 The Additive Rule and Mutually Exclusive Events
+
+  A ∩ B.  In Section 3.2, we saw how to determine which sample points are contained in a union
+  of two sets and how to calculate the probability of the union by summing the separate
+A  B  probabilities of the sample points in the union. It is also possible to obtain the probability
+  of the union of two events by using the additive rule of probability.
+  Entire shaded area is∩
+  A B.  By studying the Venn diagram in Figure 3.11, you can see that the probability of
+  the union of two events A and B can be obtained by summing P(A) and P(B) and sub-
+  S  tracting P1A ¨ B2. We must subtract P1A ¨ B2 because the sample point probabilities
+  in A ¨ B have been included twice—once in P(A) and once in P(B).
+Figure 3.11
+Venn diagram of union  The formula for calculating the probability of the union of two events is given in
+  the next box.
+
+  Additive Rule of Probability
+  The probability of the union of events A and B is the sum of the probability of event
+  A and the probability of event B, minus the probability of the intersection of events
+  A and B; that is,
+
+  P1A ∪ B2 = P1A2 + P1B2 - P1A ¨ B2
+
+ Example 3.11  Problem Hospital records show that 12% of all patients are admitted for surgical
+  treatment, 16% are admitted for obstetrics, and 2% receive both obstetrics and surgical
+Applying the Additive  treatment. If a new patient is admitted to the hospital, what is the probability that the
+Rule—Hospital  patient will be admitted for surgery, for obstetrics, or for both?
+Admissions Study
+  Solution Consider the following events:
+
+  A: 5A patient admitted to the hospital receives surgical treatment.6
+  B: 5A patient admitted to the hospital receives obstetrics treatment.6
+
+  Then, from the given information,
+
+  P1A2 = .12
+  P1B2 = .16
+
+  and the probability of the event that a patient receives both obstetrics and surgical treat-
+  ment is
+
+  P1A ¨ B2 = .02
+166  CHAPTER 3 ■ Probability
+
+  The event that a patient admitted to the hospital receives either surgical treatment, ob-
+  stetrics treatment, or both is the union A ∪ B, the probability of which is given by the
+  additive rule of probability:
+
+  P1A ∪ B2 = P1A2 + P1B2 - P1A ¨ B2
+  = .12 + .16 - .02 = .26
+
+  Thus, 26% of all patients admitted to the hospital receive either surgical treatment, ob-
+  stetrics treatment, or both.
+
+  Look Back From the information given, it is not possible to list and assign probabilities
+  to all the sample points. Consequently, we cannot proceed through the five-step process
+  (p. 153) for finding P1A ∪ B2, and we must use the additive rule.
+
+  ■ Now Work Exercise 3.45
+
+  A very special relationship exists between events A and B when A ¨ B contains no
+  sample points. In this case, we call the events A and B mutually exclusive events.
+
+  A  B  Events A and B are mutually exclusive if A ¨ B contains no sample points—that is,
+  if A and B have no sample points in common. For mutually exclusive events,
+  S
+  P1A ¨ B2 = 0
+Figure 3.12
+Venn diagram of mutually  Figure 3.12 shows a Venn diagram of two mutually exclusive events. The events A
+exclusive events  and B have no sample points in common; that is, A and B cannot occur simultaneously,
+  and P1A ¨ B2 = 0. Thus, we have the important relationship given in the next box.
+
+  Probability of Union of Two Mutually Exclusive Events
+
+  If two events A and B are mutually exclusive, the probability of the union of
+  A and B equals the sum of the probability of A and the probability of B; that is,
+  P1A ∪ B2 = P1A2 + P1B2.
+
+  ! CAuTIoN The preceding formula is false if the events are not mutually exclusive. In
+  that case (i.e., two non-mutually exclusive events), you must apply the general additive
+  rule of probability. ▲
+
+ Example 3.12  Problem Consider the experiment of tossing two balanced coins. Find the probability of
+  observing at least one head.
+union of Two Mutually
+Exclusive Events—  Solution Define the events
+Coin-Tossing Experiment
+  A: 5Observe at least one head.6
+  B: 5Observe exactly one head.6
+  C: 5Observe exactly two heads.6
+
+  Note that
+
+  A = B∪C
+  A  SECTION 3.4 ■ The Additive Rule and Mutually Exclusive Events 167
+
+  HT  HH  and that B ¨ C contains no sample points. (See Figure 3.13.) Thus, B and C are mutually
+B  C  exclusive, and it follows that
+
+  TH  P1A2 = P1B ∪ C2 = P1B2 + P1C2 = 1 + = 1 3
+  24 4
+  TT
+  Look Back Although this example is quite simple, it shows us that writing events with
+  S  verbal descriptions that include the phrases “at least” or “at most” as unions of mutually
+Figure 3.13  exclusive events is very useful. This practice enables us to find the probability of the
+Venn diagram for coin-toss  event by adding the probabilities of the mutually exclusive events.
+experiment
+  ■
+
+Statistics IN Action Revisited The Probability of Winning Lotto with a Wheeling System
+
+Refer to Florida’s Pick-6 Lotto game, in which you select  Ticket #5 or Ticket #6
+six numbers of your choice from a field of numbers ranging  or Ticket #7 is the
+from 1 to 53. In Section 3.1, we learned that the probability  winning combination.
+of winning Lotto on a single ticket is only 1 in approximately  Note that this prob-
+23 million. The “experts” at Lottery Buster recommend many  ability is stated with
+strategies for increasing the odds of winning the lottery. One  the use of the word or,
+strategy is to employ a wheeling system. In a complete wheel-  implying a union of
+ing system, you select more than six numbers—say, seven—  seven events. Letting
+and play every combination of six of those seven numbers.  T1 represent the event
+  that Ticket #1 wins, and defining T2, T3, … , T7 in a similar
+  For example, suppose you choose to “wheel” the following  fashion, we want to find
+seven numbers: 2, 7, 18, 23, 30, 32, and 51. Every combination of
+six of these seven numbers is listed in Table SIA3.1. You can  P1T1 or T2 or T3 or T4 or T5 or T6 or T72
+see that there are seven different possibilities. (Use the com-
+binations rule with N = 7 and n = 6 to verify this.) Thus, we  Recall (Section 3.1) that the 22,957,480 possible combinations
+would purchase seven tickets (at a cost of $7) corresponding to  in Pick-6 Lotto are mutually exclusive and equally likely to
+these different combinations in a complete wheeling system.  occur. Consequently, the probability of the union of the seven
+  events is simply the sum of the probabilities of the individual
+Table SIA3.1  Wheeling the Seven Numbers  events, where each event has probability 1/(22,957,480):
+  2, 7, 18, 23, 30, 32, and 51
+  P1win Lotto with 7 Wheeled Numbers2
+Ticket #1  2  7  18  23  30  32
+  = P1T1 or T2 or T3 or T4 or T5 or T6 or T72
+Ticket #2  2  7  18  23  30  51  = 7> 122,957,4802 = .0000003
+
+Ticket #3  2  7  18  23  32  51  In terms of odds, we now have 3 chances in 10 million of winning
+  the Lotto with the complete wheeling system. Technically, the
+Ticket #4  2  7  18  30  32  51  “experts” are correct: Our odds of winning Lotto have increased
+  (from 1 in 23 million). However, the probability of winning is
+Ticket #5  2  7  23  30  32  51  so close to 0 that we question whether the $7 spent on lottery
+  tickets is worth the negligible increase in odds. In fact, it can be
+Ticket #6  2  18  23  30  32  51  shown that to increase your chance of winning the 6/53 Lotto to
+  1 chance in 100 (i.e., .01) by means of a complete wheeling sys-
+Ticket #7  7  18  23  30  32  51  tem, you would have to wheel 26 of your favorite numbers—a
+  total of 230,230 combinations at a cost of $230,230!
+  To determine whether this strategy does, in fact, in-
+crease our odds of winning, we need to find the probability
+that one of these seven combinations occurs during the 6/53
+Lotto draw. That is, we need to find the probability that
+either Ticket #1 or Ticket #2 or Ticket #3 or Ticket #4 or
+
+Exercises 3.38–3.67  3.42 State the rule of complements.
+
+Understanding the Principles  3.43 State the additive rule of probability for mutually exclusive
+  events.
+3.38 Define in words mutually exclusive events.
+3.39 Define in words the union of two events.  3.44 State the additive rule of probability for any two events.
+3.40 Define in words the intersection of two events.
+3.41 Define in words the complement of an event.
+168 CHAPTER 3 ■ Probability  3.49 A pair of fair dice is tossed. Define the events A and B as
+  follows. Define the following events:
+Learning the Mechanics
+  A: 5An 8 is rolled6 1The sum of the numbers of
+3.45 A fair coin is tossed three times, and the events A and B  dots on the upper faces of the two dice is equal to 8.)
+  are defined as follows:
+  B: 5At least one of the two dice is showing a 66
+  A: 5At least one head is observed.6
+  a. Identify the sample points in the event A, B, A ¨ B,
+  B: 5The number of heads observed is odd.6  A ∪ B, and Ac.
+
+  a. Identify the sample points in the events A, B, A ∪ B, Ac,  b. Find P1A2, P1B2, P1A ¨ B2, P1A ∪ B2, and P1Ac2
+  and A ¨ B.  by summing the probabilities of the appropriate sample
+  points.
+  b. Find P1A2, P1B2, P1A ∪ B2, P1Ac2, and P1A ¨ B2
+  by summing the probabilities of the appropriate sample  c. Use the additive rule to find P1A ∪ B2. Compare your
+  points.  answer with that for the same event in part b.
+
+  c. Use the additive rule to find P1A ∪ B2. Compare your  d. Are A and B mutually exclusive? Why?
+  answer with the one you obtained in part b.
+  3.50 Three fair coins are tossed. We wish to find the probability
+  d. Are the events A and B mutually exclusive? Why?  of the event A: 5Observe at most two tails.6
+  a. Express A as the union of three mutually exclusive
+3.46 Suppose P1B2 = .7, P1D2 = .5, and P1B ¨ D2 = .3.  events. Using the expression you wrote, find the proba-
+  Find the probabilities below.  bility of A.
+  a. P1Dc2  b. Express A as the complement of an event. Using the ex-
+  b. P1Bc2  pression you wrote, find the probability of A.
+  c. P1B ∪ D2
+  3.51 The outcomes of two variables are (Low, Medium, High)
+3.47 Consider the following Venn diagram, where  and (On, Off), respectively. An experiment is conducted
+  P1E22 = P1E32 = 1΋5, P1E42 = P1E52 = 1΋20,  in which the outcomes of each of the two variables are ob-
+  P1E62 = 1΋10, P1E72 = 1΋5:  served. The probabilities associated with each of the six
+  possible outcome pairs are given in the following table:
+  A  B
+  E1 E 2 E4
+
+  E5  Low  Medium  High
+
+  E3  E7
+
+  E6  On  .50  .10  .05
+
+  Off  .25  .07  .03
+
+  S  Consider the following events:
+
+Find each of the following probabilities:  A: 5On6
+  B: 5Medium or On6
+a. P(A)  e.  P1Ac2  C: 5Off and Low6
+  P1Bc2  D: 5High6
+b. P(B)  f.  P1A ∪ Ac2
+  P1Ac ¨ B2  a. Find P(A).
+c. P1A ∪ B2  g.  b. Find P(B).
+  c. Find P(C).
+d. P1A ¨ B2  h.  d. Find P(D).
+  e. Find P1Ac2.
+3.48 Consider the following Venn diagram, where  f. Find P1A ∪ B2.
+  g. Find P1A ¨ B2.
+P1E12 = .2, P1E22 = P(E3) = .04, P1E42 = .06,  h. Consider each possible pair of events taken from the
+P1E52 = .08, P1E62 = .15, P1E72 = .25, and
+P1E82 = .18  events A, B, C, and D. List the pairs of events that are
+  mutually exclusive. Justify your choices.
+  E1  E2  E3
+  A  Applet Exercise 3.3
+  E4  B
+  E7  Use the applets entitled Simulating the Probability of Rolling a 6
+  E5  E6  and Simulating the Probability of Rolling a 3 or 4 to explore the
+  additive rule of probability.
+  E8
+  a. Explain why the applet Simulating the Probability of
+  S  Rolling a 6 can also be used to simulate the probabil-
+  ity of rolling a 3. Then use the applet with n = 1000 to
+Find the following probabilities:  simulate the probability of rolling a 3. Record the cu-
+  a. P1Ac2  mulative proportion. Repeat the process to simulate the
+  b. P1Bc2  probability of rolling a 4.
+  c. P1A ¨ Bc2
+  d. P1A ¨ B2  b. Use the applet Simulating the Probability of Rolling a 3
+  e. P1A ∪ B2  or 4 with n = 1000 to simulate the probability of rolling
+  f. P1Ac ∪ Bc2  a 3 or 4. Record the cumulative proportion.
+
+  g. Are events A and B mutually exclusive? Why?
+SECTION 3.4 ■ The Additive Rule and Mutually Exclusive Events 169
+
+  c. Add the two cumulative proportions from part a. How  a. The analyst makes an early forecast and is only con-
+  does this sum compare with the cumulative proportion  cerned with accuracy.
+  in part b? How does your answer illustrate the additive
+  rule for probability?  b. The analyst is not only concerned with accuracy.
+  c. The analyst is from a small brokerage firm or makes an
+  Applet Exercise 3.4
+  early forecast.
+Use the applets entitled Simulating the Probability of Rolling a 6  d. The analyst makes a late forecast and is not only con-
+and Simulating the Probability of Rolling a 3 or 4 to simulate the
+probability of the complement of an event.  cerned with accuracy.
+
+  a. Explain how the applet Simulating the Probability of  3.55 Gene expression profiling. Gene expression profiling is a
+  Rolling a 6 can also be used to simulate the probability  state-of-the-art method for determining the biology of cells.
+  of the event rolling a 1, 2, 3, 4, or 5. Then use the applet  In Briefings in Functional Genomics and Proteomics (Dec.
+  with n = 1000 to simulate this probability.  2006), biologists reviewed several gene expression profiling
+  methods. The biologists applied two of the methods (A and
+  b. Explain how the applet Simulating the Probability of  B) to data collected on proteins in human mammary
+  Rolling a 3 or 4 can also be used to simulate the prob-  cells. The probability that the protein is cross-referenced
+  ability of the event rolling a 1, 2, 5, or 6. Then use the  (i.e., identified) by method A is .41, the probability that
+  applet with n = 1000 to simulate this probability.  the protein is cross-referenced by method B is .42, and the
+  probability that the protein is cross-referenced by both
+  c. Which applet could be used to simulate the probability  methods is .40.
+  of the event rolling a 1, 2, 3, or 4? Explain.  a. Draw a Venn diagram to illustrate the results of the
+  gene-profiling analysis.
+Applying the Concepts—Basic  b. Find the probability that the protein is cross-referenced
+  by either method A or method B.
+3.52 Social networking. According to the Pew Research Internet  c. On the basis of your answer to part b, find the proba-
+  Project (Dec. 2013) survey, the two most popular social  bility that the protein is not cross-referenced by either
+  networking sites in the United States are Facebook and  method.
+  LinkedIn. Of all adult Internet users, 71% have a Facebook
+  account, 22% have a LinkedIn account, and 18% visit both  3.56 Scanning errors at Wal-Mart. The National Institute of
+  Facebook and LinkedIn.  Standards and Technology (NIST) mandates that for
+  a. Draw a Venn diagram to illustrate the use of social net-  every 100 items scanned through the electronic checkout
+  working sites in the United States.  scanner at a retail store, no more than 2 should have an in-
+  b. Find the probability that an adult Internet user visits  accurate price. A study of the accuracy of checkout scan-
+  either Facebook or LinkedIn.  ners at Wal-Mart stores in California (Tampa Tribune,
+  c. Use your answer to part b to find the probability that an  Nov. 22, 2005) showed that, of the 60 Wal-Mart stores
+  adult Internet user does not have an account with either  investigated, 52 violated the NIST scanner accuracy stan-
+  social networking site.  dard. If 1 of the 60 Wal-Mart stores is randomly selected,
+  what is the probability that the store does not violate the
+3.53 Do social robots walk or roll? Refer to the International  NIST scanner accuracy standard?
+  Conference on Social Robotics (Vol. 6414, 2010) study
+  of the trend in the design of social robots, Exercise 3.17  3.57 Sleep apnea and sleep stage transitioning. Sleep apnea
+  (p. 157). Recall that in a random sample of 106 social  is a common sleep disorder characterized by collapses
+  robots, 63 were built with legs only, 20 with wheels only,  of the upper airway during sleep. Chance (Winter 2009)
+  8 with both legs and wheels, and 15 with neither legs nor  investigated the role of sleep apnea in how people transi-
+  wheels. Use the rule of complements to find the probabil-  tion from one sleep stage to another. The various stages
+  ity that a randomly selected social robot is designed with  of sleep for a large group of sleep apnea patients were
+  either legs or wheels.  monitored in 30-second intervals, or “epochs.” For each
+  epoch, sleep stage was categorized as Wake, REM, or
+3.54 Study of analysts’ forecasts. The Journal of Accounting  Non-REM. The table below provides a summary of the
+  Research (Mar. 2008) published a study on relationship in-  results. Each cell of the table gives the number of epochs
+  centives and degree of optimism among analysts’ forecasts.  that occurred when transitioning from the previous sleep
+  Participants were analysts at either a large or small bro-  stage to the current sleep stage. Consider the previous
+  kerage firm who made their forecasts either early or late  and current sleep stage of a randomly selected epoch
+  in the quarter. Also, some analysts were only concerned  from the study.
+  with making an accurate forecast, while others were also
+  interested in their relationship with management. Suppose  Previous Sleep Stage  Wake
+  one of these analysts is randomly selected. Consider the  Current Stage Non-REM REM
+  following events:
+  Non-REM  31,880  160  1,733
+  A = {The analyst is only concerned with making an  REM  346  7,609  175
+  accurate forecast.}  Wake
+  1,588  358  6,079
+  B = 5The analyst makes the forecast early in the quarter.6  Totals
+  C = 5The analyst is from a small brokerage firm.6  33,814  8,127  7,987
+
+  Describe each of the following events in terms of unions, in-  Based on Caffo, B. S., et al. “An overview of observational sleep
+  tersections, and complements (e.g., A ∪ B, A ¨ B, AC, etc.).  research with application to sleep stage transitioning.” Chance,
+  Vol. 22, No. 1, Winter 2009 (Table 2).
+170 CHAPTER 3 ■ Probability
+
+  a. List the sample points for this experiment.  b. Find the probability that the respondent chooses the
+  b. Assign reasonable probabilities to the sample points.  stated option (repair the car).
+  c. What is the probability that the current sleep stage of
+  c. Find the probability that the respondent is assigned to
+  the epoch is REM?  the guilty state and chooses the stated option.
+  d. What is the probability that the previous sleep stage of
+  d. Find the probability that the respondent is assigned to
+  the epoch is Wake?  the guilty state or chooses the stated option.
+  e. What is the probability that the epoch transitioned
+  3.60 Abortion provider survey. The Alan Guttmacher
+  from the REM sleep stage to the Non-REM sleep  Institute Abortion Provider Survey is a survey of all 358
+  stage?  known nonhospital abortion providers in the United
+  States (Perspectives on Sexual and Reproductive Health,
+Applying the Concepts—Intermediate  Jan./Feb. 2003). For one part of the survey, the 358 pro-
+  viders were classified according to case load (number of
+3.58 Attempted suicide methods. A study of attempted suicide  abortions performed per year) and whether they permit
+  methods was published in the journal Death Studies (Vol.  their patients to take the abortion drug misoprostol at
+  38, 2014). Data for 59 suicide victims who had previously  home or require the patients to return to the abortion fa-
+  attempted suicide were collected. The table gives a break-  cility to receive the drug. The responses are summarized
+  down of the number of suicide victims according to method  in the accompanying table. Suppose we select, at random,
+  used and gender. Suppose one of the suicide victims is se-  one of the 358 providers and observe the provider’s case
+  lected at random.  load (fewer than 50, or 50 or more) and home use of the
+  drug (yes or no).
+Method  Males  Females  Totals
+  Number of Abortions
+Self-poisoning  22  13  35
+Hanging  4  0  4  Permit Drug  Fewer  50 or  Totals
+Jumping from a height  7  4  11  at Home  than 50  More
+Cutting  6  3  9
+  Yes  170  130  300
+Totals  39  20  59  No
+
+  a. Find P(A), where A = 5male6.  Totals  48  10  58
+  b. Find P(B), where B = 5jumping from a height6.
+  c. Are A and B mutually exclusive events?  218  140  358
+  d. Find P(AC ).
+  e. Find P1A ∪ B2.  Based on Henshaw, S. K., and Finer, L. B. “The accessibility of abortion
+  f. Find P1A ¨ B2.  services in the United States, 2001.” Perspectives on Sexual and Repro-
+  ductive Health, Vol. 35, No. 1, Jan./Feb. 2003 (Table 4).
+3.59 Guilt in decision making. The effect of guilt emotion on
+  how a decision maker focuses on the problem was inves-  a. Find the probability that the provider permits home
+  tigated in the Jan. 2007 issue of the Journal of Behavioral  use of the abortion drug.
+  Decision Making (see Exercise 1.31, p. 50). A total of
+  171 volunteer students participated in the experiment,  b. Find the probability that the provider permits home
+  where each was randomly assigned to one of three emo-  use of the drug or has a case load of fewer than 50
+  tional states (guilt, anger, or neutral) through a reading/  abortions.
+  writing task. Immediately after the task, the students were
+  presented with a decision problem where the stated op-  c. Find the probability that the provider permits home
+  tion has predominantly negative features (e.g., spending  use of the drug and has a case load of fewer than 50
+  money on repairing a very old car). The results (number  abortions.
+  responding in each category) are summarized in the ac-
+  companying table. Suppose one of the 171 participants is  3.61 Fighting probability of fallow deer bucks. In Aggressive
+  selected at random.  Behavior (Jan./Feb. 2007), zoologists investigated the
+  likelihood of fallow deer bucks fighting during the mating
+Emotional  Choose  Do Not  Totals  season. During the observation period, the researchers re-
+State  Stated  Choose Stated  corded 205 encounters between two bucks. Of these, 167
+  Option  involved one buck clearly initiating the encounter with the
+  Option  other. In these 167 initiated encounters, the zoologists kept
+  track of whether or not a physical contact fight occurred
+Guilt  45  12  57  and whether the initiator ultimately won or lost the en-
+  counter. (The buck that is driven away by the other is con-
+Anger  8  50  58  sidered the loser.) A summary of the 167 initiated encoun-
+  ters is provided in the table on p. 171. Suppose we select
+Neutral  7  49  56  one of these 167 encounters and note the outcome (fight
+  status and winner).
+Totals  60  111  171  a. What is the probability that a fight occurs and the initi-
+  ator wins?
+Based on Gangemi, A., and Mancini, F. “Guilt and focusing in  b. What is the probability that no fight occurs?
+decision-making.” Journal of Behavioral Decision Making, Vol. 20,  c. What is the probability that there is no clear
+Jan. 2007 (Table 2).  winner?
+  d. What is the probability that a fight occurs or the initia-
+a. Find the probability that the respondent is assigned to  tor loses?
+  the guilty state.
+  SECTION 3.4 ■ The Additive Rule and Mutually Exclusive Events 171
+
+e. Are the events “No clear winner” and “Initiator loses”  c. What is the probability that a lab mouse responds to
+  mutually exclusive?  Mups A and Mups B, but not the kairomone?
+
+  Initiator  No Clear  Initiator  Totals  Kairomones
+  Wins  Winner  Loses  .165
+
+Fight  26  23  15  64
+
+No Fight  80  12  11  103
+
+Totals  106  35  26  167  .025  .025
+  .11
+Based on Bartos, L. et al. “Estimation of the probability of fighting in  .19  Mups B
+fallow deer (Dama dama) during the rut.” Aggressive Behavior, Vol. 33,  Mups A
+Jan./ Feb. 2007, pp. 7–13.
+  .21
+3.62 Cell phone handoff behavior. A “handoff” is a term used  .275
+  in wireless communications to describe the process of a
+  cell phone moving from a coverage area of one base sta-  3.64 Employee behavior problems. The Organizational
+  tion to another. Each base station has multiple channels  Development Journal (Summer 2006) reported on the re-
+  (called color codes) that allow it to communicate with  sults of a survey of human resource officers (HROs) at
+  the cell phone. The Journal of Engineering, Computing  major firms. The focus of the study was employee behavior,
+  and Architecture (Vol. 3., 2009) published a study of cell  namely absenteeism, promptness to work, and turnover.
+  phone handoff behavior. During a sample driving trip that  The study found that 55% of the HROs had problems with
+  involved crossing from one base station to another, the  absenteeism. Also, 41% of the HROs had problems with
+  different color codes accessed by the cell phone were mon-  turnover. Suppose that 22% of the HROs had problems
+  itored and recorded. The table below shows the number of  with both absenteeism and turnover.
+  times each color code was accessed for two identical driv-  a. Find the probability that a human resource officer
+  ing trips, each using a different cell phone model. (Note:  selected from the group surveyed had problems with
+  The table is similar to the one published in the article.)  employee absenteeism or employee turnover.
+  Suppose you randomly select one point during the com-  b. Find the probability that a human resource officer
+  bined driving trips.  selected from the group surveyed did not have prob-
+  lems with employee absenteeism.
+  Color Code  c. Find the probability that a human resource officer
+  0 5 b c Totals  selected from the group surveyed did not have prob-
+  lems with employee absenteeism nor with employee
+  Model 1 20 35 40 0  85  turnover.
+
+  Model 2 15 50 6 4  75  Applying the Concepts—Advanced
+
+  Totals  35 85 46 4 160  3.65 Cloning credit or debit cards. Wireless identity theft is
+  a technique of stealing an individual’s personal infor-
+  a. What is the probability that the cell phone is using  mation from radio-frequency-enabled cards (e.g., credit
+  color code 5?  or debit cards). Upon capturing this data, thieves are
+  able to program their own cards to respond in an iden-
+  b. What is the probability that the cell phone is using color  tical fashion via cloning. A method for detecting clon-
+  code 5 or color code 0?  ing attacks in radio-frequency identification (RFID)
+  applications was explored in IEEE Transactions on
+  c. What is the probability that the cell phone used is  Information Forensics and Security (Mar. 2013). The
+  Model 2 and the color code is 0?  method was illustrated using a simple ball drawing
+  game. Consider a group of 10 balls, 5 representing gen-
+3.63 Chemical signals of mice. The ability of a mouse to recog-  uine RFID cards and 5 representing clones of one or
+  nize the odor of a potential predator (e.g., a cat) is essen-  more of these cards. A coloring system was used to dis-
+  tial to the mouse’s survival. The chemical makeup of these  tinguish among the different genuine cards. Because
+  odors—called kairomones—was the subject of a study  there were 5 genuine cards, 5 colors—yellow, blue, red,
+  published in Cell (May 14, 2010). Typically, the sources of  purple, and orange—were used. Balls of the same color
+  these odors are major urinary proteins (Mups). Cells col-  represent either the genuine card or a clone of the card.
+  lected from lab mice were exposed to Mups from rodent  Suppose the 10 balls are colored as follows: 3 yellow,
+  species A, Mups from rodent species B, and kairomones  2 blue, 1 red, 3 purple, 1 orange. (See figure on p. 172.)
+  (from a cat). The accompanying Venn diagram shows the  Note that the singleton red and orange balls must repre-
+  proportion of cells that chemically responded to each of  sent the genuine cards (i.e., there are no clones of these
+  the three odors. (Note: A cell may respond to more than a  cards). If two balls of the same color are drawn (without
+  single odor.)  replacement) from the 10 balls, then a cloning attack is
+  a. What is the probability that a lab mouse responds to all
+  three source odors?
+  b. What is the probability that a lab mouse responds to the
+  kairomone?
+172 CHAPTER 3 ■ Probability  Find the flaw in the Grand Duke’s reasoning and answer
+  the question posed to Galileo.
+  detected. For this example, find the probability of de-
+  tecting a cloning attack.  3.67 Encoding variability in software. At the 2012 Gulf
+  Petrochemicals and Chemicals Association (GPCA)
+1  1  1  2  2  Forum, Oregon State University software engineers pre-
+  sented a paper on modeling and implementing variation
+3  4  4  4  5  in computer software. The researchers employed the
+  compositional choice calculus (CCC)—a formal language
+3.66 Galileo’s passe-dix game. Passe-dix is a game of chance  for representing, generating, and organizing variation in
+  played with three fair dice. Players bet whether the sum  tree-structured artifacts. The CCC language was compared
+  of the faces shown on the dice will be above or below 10.  to two other coding languages—the annotative choice
+  During the late 16th century, the astronomer and mathe-  calculus (ACC) and the computational feature algebra
+  matician Galileo Galilei was asked by the Grand Duke of  (CFA). Their research revealed the following: any type of
+  Tuscany to explain why “the chance of throwing a total of  expression (e.g., plain expressions, dimension declarations,
+  9 with three fair dice was less than that of throwing a total  or lambda abstractions) found in either ACC or CFA can
+  of 10.” (Interstat, Jan. 2004). The Grand Duke believed  be found in CCC; plain expressions exist in both ACC and
+  that the chance should be the same, since “there are an  CFA; dimension declarations exist in ACC but not CFA;
+  equal number of partitions of the numbers 9 and 10.”  lambda abstractions exist in CFA but not ACC. Based on
+  this information, draw a Venn diagram that illustrates the
+  relationships among the three languages. (Hint: An expres-
+  sion represents a sample point in the Venn diagram.)
+
+3.5 Conditional Probability
+
+  1B 3  The event probabilities we’ve been discussing give the relative frequencies of the
+  2  occurrences of the events when the experiment is repeated a very large number of
+  times. Such probabilities are often called unconditional probabilities because no special
+  A∩B  conditions are assumed other than those that define the experiment.
+
+  S  Often, however, we have additional knowledge that might affect the outcome of an
+  experiment, so we may need to alter the probability of an event of interest. A probability
+Figure 3.14  that reflects such additional knowledge is called the conditional probability of the event.
+Reduced sample space for the  For example, we’ve seen that the probability of observing an even number (event A) on
+die-toss experiment: given that  a toss of a fair die is 1΋2. But suppose we’re given the information that on a particular
+event B has occurred  throw of the die, the result was a number less than or equal to 3 (event B). Would the
+  probability of observing an even number on that throw of the die still be equal to 1΋2? It
+  can’t be because making the assumption that B has occurred reduces the sample space
+  from six sample points to three sample points (namely, those contained in event B). This
+  reduced sample space is as shown in Figure 3.14.
+
+  Because the sample points for the die-toss experiment are equally likely, each of
+  the three sample points in the reduced sample space is assigned an equal conditional
+  probability of 1΋3. Since the only even number of the three in the reduced sample
+  space B is the number 2 and the die is fair, we conclude that the probability that A
+  occurs given that B occurs is 1΋3. We use the symbol P1A ͉ B2 to represent the proba-
+  bility of event A given that event B occurs. For the die-toss example,
+
+  P1A ͉ B2 = 1
+  3
+
+  To get the probability of event A given that event B occurs, we proceed as follows:
+
+  We divide the probability of the part of A that falls within the reduced sample space B,
+  namely, P1A ¨ B2, by the total probability of the reduced sample space, namely, P(B).
+
+  Thus, for the die-toss example with event A: 5Observe an even number.6 and event
+
+  B: 5Observe a number less than or equal to 3.6, we find that
+
+  P1A ¨ B2  P122  1΋6 1
+  P1A ͉ B2 = P1B2 = P112 + P122 + P132 = 3΋ = 6 3
+  SECTION 3.5 ■ Conditional Probability 173
+
+  The formula for P1A ͉ B2 is true in general:
+
+  Conditional Probability Formula
+  To find the conditional probability that event A occurs given that event B occurs, di-
+  vide the probability that both A and B occur by the probability that B occurs; that is,
+
+  P1A ͉ B2 = P1A ¨ B2
+  P1B2
+
+  3We assume that P1B2 ≠ 0.4
+
+  This formula adjusts the probability of A ¨ B from its original value in the complete
+  sample space S to a conditional probability in the reduced sample space B. On the one
+  hand, if the sample points in the complete sample space are equally likely, then the formula
+  will assign equal probabilities to the sample points in the reduced sample space, as in the
+  die-toss experiment. On the other hand, if the sample points have unequal probabilities,
+  the formula will assign conditional probabilities proportional to the probabilities in the
+  complete sample space. The latter situation is illustrated in the next three examples.
+
+ Example 3.13  Problem To develop programs for business travelers staying at convention hotels, Hyatt
+  Hotels Corp. commissioned a study of executives who play golf. The study revealed that
+The Conditional  55% of the executives admitted that they had cheated at golf. Also, 20% of the executives
+Probability Formula—  admitted that they had cheated at golf and had lied in business. Given that an executive
+Executives Who Cheat  had cheated at golf, what is the probability that the executive also had lied in business?
+at Golf
+  Solution Let’s define events A and B as follows:
+ Example 3.14
+  A = 5Executive had cheated at golf.6
+Applying the Conditional  B = 5Executive had lied in business.6
+Probability Formula in a
+Two-Way Table—Smoking  From the study, we know that 55% of executives had cheated at golf, so P1A2 = .55.
+and Cancer
+  Now, executives who both cheat at golf (event A) and lie in business (event B) represent
+  the compound event A ¨ B. From the study, P1A ¨ B2 = .20. We want to know the
+
+  probability that an executive lied in business (event B) given that he or she cheated at
+  golf (event A); that is, we want to know the conditional probability P1B ͉ A2. Applying
+
+  the conditional probability formula, we have
+
+  P1B ͉ A2 = = = P1A ¨ B2 .20 .364
+  P1A2  .55
+
+  Thus, given that a certain executive had cheated at golf, the probability that the execu-
+  tive also had lied in business is .364.
+
+  Look Back One of the keys to applying the formula correctly is to write the information
+  in the study in the form of probability statements involving the events of interest. The
+  word “and” in the clause “cheat at golf and lie in business” implies an intersection of the
+  two events A and B. The word “given” in the phrase “given that an executive cheats at
+  golf” implies that event A is the given event.
+
+  ■ Now Work Exercise 3.87
+
+  Problem Many medical researchers have conducted experiments to examine the
+  relationship between cigarette smoking and cancer. Consider an individual randomly
+  selected from the adult male population. Let A represent the event that the individual
+  smokes, and let Ac denote the complement of A (the event that the individual does
+  not smoke). Similarly, let B represent the event that the individual develops cancer, and
+  let Bc be the complement of that event. Then the four sample points associated with
+  the experiment are shown in Figure 3.15, and their probabilities for a certain section of
+  the United States are given in Table 3.5. Use these sample point probabilities to examine
+  the relationship between smoking and cancer.
+

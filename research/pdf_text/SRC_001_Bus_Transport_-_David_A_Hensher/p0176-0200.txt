@@ -1,0 +1,1268 @@
+174 PART | II Contracting
+
+known to us8 and who were able to advise on eligible participants. Most importantly they also agreed to encourage the
+persons they put forward to participate in the survey.
+
+  The survey was designed as an online instrument. Each respondent was invited to participate via email with a full
+explanation of the aims of the study and reference to a person who had suggested their participation. We identiﬁed 64
+assessors from nine countries (Australia, New Zealand, UK, Chile, Singapore, Sweden, Malta, Switzerland and South
+Africa). The survey commenced in February 2015 and continued up to May 2015, after a pilot check on the instrument.
+Securing completed surveys from evaluators was challenging, with repeated reminders and a number of one-on-one phone
+calls and email meetings to explain the survey. A number of potential participants struggled to see how to contribute since
+they attempted to link the choice scenarios to their past experience instead of responding to the request to evaluate the
+circumstance as if this was the information in front of them in the future. After repeated follow ups, we closed the survey at
+17 effective responses (a response rate of 26.5%), but one was dropped in the analysis due to concerns over the response.
+The 16 responses (3 from Australia, 4 from Switzerland, 6 from Chile, 2 from New Zealand and 1 from Singapore) on ﬁve
+choice scenarios provided 80 observations (associated with three alternatives) for choice model estimation. This is suf-
+ﬁcient data to obtain interesting (preliminary) evidence.9
+
+14.5 Descriptive proﬁle of sample
+
+Table 14.2 provides a proﬁle of the sampled evaluators. On average, in the last ten years an evaluator was involved in 8.5
+evaluations, or slightly less than one evaluation per year. Most of the evaluations involved competitive tendering which
+reﬂects the increasing numbers of jurisdictions moving to competitive tendering for their land based public transport. The
+evaluators identiﬁed that about 3.0 out of 8.5 evaluations over the last ten years had been negotiated contracts with most of
+these being with the incumbents. On average, evaluation committees consist of 5.6 members with the majority of members
+(13 out of 16 respondents) believing they had equal voting rights when it came to selecting the preferred operator. On
+average, each evaluation committee used six selection criteria to assess the bidders/negotiators and 44% of the assessors
+(7 committee members) said that operator reputation played a role in the evaluation process. When asked to reveal an
+indicator for operator reputation, most assessors listed ‘experience in operating public transport services’ as the most
+important, followed by proven track record and the ability to demonstrate innovation and cooperation with the government
+in order to improve services. Financial strength and ﬂeet size were also mentioned as a proxy for the operator reputation but
+by only one evaluator. The results support the use of years in business as a proxy for measuring operator reputation in the
+
+TABLE 14.2 Proﬁle of the assessors and the nature of the assessments.  Mean/Median
+  8.5a
+Total number of assessments involved in last 10 years  3.0a
+Number of negotiated assessments involved in last 10 years  2.5a
+Negotiated assessment with incumbents  2.1
+Minimum number of operators entered in the assessment process  7.8
+Maximum number of operators entered in the assessment process  5.6
+Number of committee members  81%
+Committee members have equal voting rights  25%
+Rules to permit politicians to override the committee’s suggestion  6.2
+Number of assessment criteria (KPIs)  44%
+Operator reputation plays a role in assessment
+aIndicates median value.
+
+8. We are especially indebted to Ian Wallis, Tim Arbuckle, Juan Carlos Munoz and Waiyan Leong.
+9. While the variability in data over 80 observations applies for the design attributes, the other data varies only across the 17 observatioins, and this has
+limited the potential role that such data items might play.
+  Disruption costs in bus contract transitions Chapter | 14 175
+
+stated choice experiment as a way to help evaluation committees estimate changeover costs associated with new operators,
+if this is to be added to the offer price for comparison.
+
+  In terms of selection criteria, it is interesting to see a consistent set of KPIs considered by evaluators across different
+jurisdictions. Out of an average set of six selection criteria reported to be actually used in the evaluation process
+(Table 14.2), Table 14.3 shows that service reliability and cost efﬁciency were deemed as relevant by all evaluators. Also
+important are operator indicators of customer service, safety and asset conditions. A proxy for operator reputation e
+number of years in the business e is considered equal rank in importance as patronage growth, while other KPIs such as
+information, provision of assets if incumbent is not provided, and social welfare are slightly less important. Of the 11 KPIs
+listed for evaluators to rank, operator success rate in winning contracts is the least important with only a quarter of as-
+sessors (4 out of 16) identifying it as important enough to be considered as a selection criterion in the evaluation process. It
+is also worth a mention that the ranking of KPIs in Table 14.3 is largely consistent with that in real world assessment
+processes. That is, service reliability was used as a selection criterion by 75% of the committees in their last assessment,
+with the numbers for cost efﬁciency, customer service, safety and asset conditions being 94%, 50%, 44%, and 50%
+respectively. Patronage growth and years in business were used by 38% of the committees in their last evaluations while
+information provision was used by 19% of the evaluation committees, social welfare aspects and asset provision 13%, and
+operator success rate in winning contracts only 6%.
+
+14.6 Key ﬁndings
+
+A series of mixed logit models were estimated, in which we investigated the role of each of the attributes in the choice
+experiment. The changeover cost was transformed to a probability weighted cost, and together with the other attributes
+included with both random and non-random taste weight in order to establish the extent of preference heterogeneity. We
+considered a number of distributional assumptions for the random parameters, particularly unconstrained and constrained
+normal and triangular distributions. The best statistical ﬁt was with the constrained triangular distribution10 which speciﬁes
+that the mean of the distribution is a free parameter, b, but the two endpoints of the distribution are ﬁxed at zero and 2b, so
+there is no free variance (scaling) parameter. The parameter will satisfy a single sign, which is behaviourally appealing
+when the sign is expected to be either positive or negative as in the offer price and the changeover cost, both hypothesised
+to have a negative sign. Other attributes such as operator success rate could go either way; however the analysis herein
+suggested that a constrained triangular was the only distribution that obtained a statistically signiﬁcant standard deviation
+parameter estimate (possibly dues to the relatively small sample size and hence limits of preference heterogeneity), which
+is shown in the results to be negative.
+
+  The ﬁnal model is summarised in Table 14.4. We accounted for the correlation between respondent’s choices across
+ﬁve scenarios that each evaluator was asked to review and rank. We also considered scaled multinomial logit and latent
+class models but they were not an improvement over the standard random parameters model form.11 The alternatives are
+unlabelled and hence an offer-speciﬁc constant (OSCon) is not included. The overall goodness of ﬁt is very good with a
+pseudo R2 of 0.409. We were unable to identify any statistically signiﬁcant inﬂuences beyond those investigated in the
+stated choice experiment. We believe that this is due to the small sample size of 17 assessors and as we increase the sample
+size in ongoing research we test for the role of other KPIs.
+
+  The negative sign for the offer price and the changeover cost mark up are expected; however the sign for the operator
+success rate in winning contracts is less clear and could have gone either way. One evaluator indicated that they are
+cautious of operators who promote prior success and stated in the open-ended survey responses that “. a high success rate
+such as 80% indicates an irresponsible pricing policy and tends to drives poor service quality. In addition, these operators
+are typically aggressive bidders, and this often comes with higher associated changeover cost.” It appears that this
+sentiment is translated throughout the evaluator set in the negative parameter estimate.
+
+  The main focus of the study is to establish the role that soft variables may play and to see if the changeover cost has a
+role (subconsciously in most situations). What is interesting is the statistical non-signiﬁcance of the number of years that an
+operator has been in the bus service business and whether they are the incumbent or not. However, the changeover cost
+associated with transaction costs (or costs of transition and possible disruption) is statistically very signiﬁcant and reafﬁrms
+
+10. Let c be the centre and s the spread. The density starts at c-s, rises lineparﬃﬃly to c, and then drops linearly to c þ s. It is zeropbﬃeﬃ low c-s and above c þ s.
+The mean and mode are c. The standard deviation is the spread divided by 6; hence the spread is the standard deviation times 6. The height of the tent at
+c is 1/s (such that each side of the tent has area sÂ(1/s)Â(1/2) ¼ 1/2, and both sides have area 1/2 þ 1/2 ¼ 1, as required for a density). The slope is 1/s2.
+11. An error components mixed logit model makes no behavioural sense with unlabelled alternatives (although right to left bias could be accounted for if it
+is found to be present).
+176 PART | II Contracting
+
+TABLE 14.3 KPIs that regulators think should be in the assessment process and their rank.
+
+Key performance indicator (KPI)a  No. assessors deemed  Average  Highest  Lowest
+Service reliability (rate of on-time services;  relevant  rank  rank  rank
+cancelled/incomplete services, punctual headways)  16  2.0  1  4
+
+Financial (cost efﬁciency measured by $/km service or $/hour  16  2.7  1  7
+service)
+  14  2.9  1  10
+Customer services (complaints per boarding; complaint
+resolution; customer satisfaction; etc.)  14  3.8  1  9
+
+Safety (number of major defects; preventable accidents; major  14  4.8  1  8
+incidents)
+  9  4.8  1  8
+Asset condition (depots, vehicle ﬂeet, ﬂeet age, other critical
+systems)  9  5.3  1  10
+  8  5.8  3  8
+Patronage (growth in passenger km per annum; passenger  8  7.6  2  11
+crowding; revenue collection rate)
+  8  7.6  2  10
+Years operator has been in the business  4  11
+
+Information (for regulator, passengers and third party)
+
+Social welfare (social inclusion including affordability;
+accessibility for users)
+
+Ability to provide assets if incumbent will not hand over
+
+Operator success rate in winning contracts  4  9.3
+
+aSee Appendix A for a detailed description of each KPI.
+
+TABLE 14.4 Preferred Mixed Logit Model.  Parameter estimate  t-ratio
+
+Attribute  e0.1474  e4.79
+Mean of random parameters  e0.0130  e2.06
+Offer price as % mark up on lowest offer price (LOP)  e0.0948  e3.71
+Operator success rate in winning contracts (%)
+Weighted changeover cost as % mark up on LOPa  e0.1474  e4.79
+Standard deviation of random parameters  e0.0130  e2.06
+Offer price as % mark up on LOP  e0.0948  e3.71
+Operator success rate in winning contracts (%)
+Weighted changeover cost as % mark up on LOPa  e51.88
+Model summary statistics  0.409
+Log-likelihood at convergence  1.372
+McFadden pseudo R2
+Information criterion AIC/N
+
+16 assessors, 80 observations, 200 Halton draws.
+aWeighted changeover cost ¼ P Probi 3 Â ChangeoverCosti
+
+  i¼1
+
+what we thought might be the case. The parameter estimates per se, however, have little meaning in comparing the in-
+ﬂuence of each signiﬁcant attribute; what is of more behavioural interest is the construction of the marginal rate of
+substitution (MRS) between the offer price and the changeover cost. Given that the two attributes of interest are random
+parameters, there is a distribution of MRS to account for preference heterogeneity, as summarised in Fig. 14.2.
+MRS  Disruption costs in bus contract transitions Chapter | 14 177
+
+  3.00
+
+  2.50
+
+  2.00
+
+  1.50
+
+  1.00
+
+  0.50
+
+  0.00
+  1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16
+  Assessor
+
+  FIG. 14.2 Marginal rate of substitution between offer price and changeover cost.
+
+  The mean is 1.62 (a median of 1.51) with a standard deviation of 0.13 and a range from 0.88 to 2.60. Given the
+skewness of the data (i.e., a deviation from a normal distribution which explains the difference between the mean and the
+median), we will interpret the median as the best estimate of the relationship between the offer price and the risk aligned
+changeover cost. The estimate of 1.51 indicates that on average, a member of a competitive tender evaluation team values a
+1% higher changeover cost (as a probability weighted estimate) as equivalent to a 1.51% higher offer price, ceteris paribus.
+This might be interpreted as a relative risk index. In other words, they would be indifferent between an additional 1.51%
+increase in the offer price and a one percent increase in the changeover cost, both measured as a percentage mark up on the
+lowest offered price. Another way of putting this is that, on average, a tender evaluation committee member is indifferent
+between two tenders where one has the lowest offer price but is one percent higher in the changeover cost than the
+incumbent tender which is 1.51% higher in the offer price.
+
+  In addition to the marginal rate of substitution reported above, the mean direct elasticities are also of interest. The direct
+elasticity of the probability of choosing an operator with respect to the offer price is -0.61, suggesting that the probability
+that an operator being selected will decrease by 0.61% if its offer price is one percent higher than the lowest offer price.
+The direct elasticity with respect to the changeover cost mark up is -0.89, and with respect to the success rate it is -0.33.
+These elasticities are interpreted in the same way as the offer price elasticity.
+
+14.7 Conclusions and implications
+
+This chapter provides evidence that evaluators on tender evaluation committees do recognise the inherent risks in changing
+the service provider in bus contracts, and that it is possible to quantify the ﬁnancial trade-off that evaluators make in
+balancing the risk associated with transition and disruption and the offer price. For example, if we take the median marginal
+rate of substitution between changeover cost and offer price of 1.51, then the prices offered by a new provider might be
+adjusted upwards by the evaluation committee in their recognition of the impact of uncertainty due to expected risk of
+incurring transition costs from change of incumbent, with the adjusted amount depending on the lowest offer price. For
+example, if the lowest offer price was $120 m, with the offer price of the incumbent being $135 m, or 12.5% higher than
+the lowest price, then to be preferred as a new operator, the estimated changeover cost associated with the non-incumbent
+operator must be smaller than 12.5/1.51 ¼ 8.3% of the lowest offer price (or equivalent to 8.3% Â$120 m ¼ $9.96 m).
+Alternatively, if the tender with lowest offer price has an estimated cost of changeover equivalent to 10% of their offer
+price, their risk normalised offer price is $120 m þ 10% Â 120 Â 1.51 ¼ $138.1 m, which is higher than the incumbent’s
+price and therefore the incumbent is preferred. The extent to which the non-incumbent offer prices are adjusted will depend
+on the lowest offer price and the risk proﬁles of the evaluation committee.
+
+  In ongoing research, we are hoping to increase the number of participating evaluators and to condition the attributes
+associated with the choice scenarios with the contextual setting associated with country, other KPIs and evaluator
+experience. The current sample size does not offer enough variation in the data items outside of the choice experiments to
+be able to test for these other potential inﬂuences; however we anticipate that this will temper the current evidence but not
+nullify it.
+178 PART | II Contracting
+
+Appendix 14.A: Background questions
+Disruption costs in bus contract transitions Chapter | 14 179
+180 PART | II Contracting
+Chapter 15
+
+Sustainable bus systems: moving towards
+a value for money and network-based
+approach and away from blind
+commitment
+
+15.1 Introduction
+
+There is growing support for an attractive alternative means of transportation to the car in cities. If increased public
+transport capacity is the way to proceed, it is very important that the investment in such systems is made in a rational way.
+There is a need for sensible selection and funding of technology and consideration of appropriate ways of addressing the
+problems attributed to the automobile. Although there are signs of a shift from light rail to bus-based systems,1 following
+on from the earlier shift from heavy rail to light rail (Mackett and Edwards, 1996a,b; Edwards and Mackett, 1996), there
+are still many examples of more sophisticated technology being used than is necessary, especially given tight budgets and
+the risk of spreading thin resources even thinner.2
+
+  Using media exposure in Sydney as an example of the focus of the debate in many developed economies, which
+suggests the need for greater investment in public transport, something to be commended, the challenge is to place this
+recognition in context. After many years of trying to instill some sense of relevance in the debate on public transport, it is
+easy to conclude that if money was no object and the public as a voting democracy (with all its warts and limited
+information) really wants government to grow signiﬁcant amounts of public debt, then let’s invest in heavy and light
+rail3 e all would be happy so we are informed? Unfortunately there are at least two major deﬁciencies of this popular
+perception of a ‘solution’4 to meeting Sydney’s transport needs e namely the huge cost involved (in the billions, not
+millions) and the inability of such a solution to deliver more than a service to speciﬁc corridors, to the neglect of the
+systemwide network needs (Kain, 1988). There are many possible ways of investing in improved public transport,
+assuming that it will substantially resolve the claims about Sydney’s trafﬁc congestion. These include heavy rail, light rail,
+and bus rapid transit (BRT - where buses have their own dedicated roads just like trains have their own dedicate track e
+and please note we are NOT talking about buses competing with cars in mixed trafﬁc).
+
+  Globally there is growing support for delivering service capacity through bus rapid transit as a legitimate alternative to
+heavy and light rail within the trafﬁc density range that Sydney experiences. Typically, $1 billion buys 400 km of
+
+1. Given recent evidence that bus rapid transit is less riskier in terms of cost overruns and patronage forecasts than rail.
+2. We understand the deals that are done by manufacturers on huge discounts of capital costs; however this does not solve the problem of ongoing high
+maintenance and operating costs. At a recent UITP conference the President was criticised off-line by rail companies for promoting the virtues of bus rapid
+transit.
+3. A previous Director-General of Transport in Sydney (John Lee) has stated that if there is one issue in public transport policy that ranks as a cargo cult, it
+is light rail. “After six or so years of operating public transport, I believe the existing combination of heavy rail and buses is the right mix for Sydney.
+There is no substitute for heavy rail for mass transit over a distance. For sheer people-moving power around a spread-out city such as Sydney, it cannot be
+beaten. However, heavy rail cannot take us everywhere we want to go. There will always be a need for linking services in conﬁned areas such as the
+Sydney central business district. And any rail-based system is expensive to build and maintain because it involves both rolling stock and line infra-
+structure. The beneﬁt of buses is they cost very little to run and are ﬂexible to operate. Neither is true of light rail, which is comparatively expensive to run
+and delivers a corridor, not a network, of ﬂexible services. If a road is closed, a bus can take another route. If patronage changes, the route can be altered.
+Light rail can’t respond in this way.” (Opinion Piece, Sydney Morning Herald, 17 January 2006).
+4. The Sydney debate focuses on a view that buses cause congestion and Light rail in the CBD will eliminate trafﬁc gridlock! Buses cause congestion is
+fallacious; buses account for less than one percent of trafﬁc in the central business district of Sydney, according to Department of Planning data, so it is not
+buses causing congestion. Reducing congestion has to be directed at other vehicles, especially cars, which make up 67% of trafﬁc. Light rail’s track system
+and overhead cables make a much greater mess of city streets and take up more room.
+
+Bus Transport. https://doi.org/10.1016/B978-0-12-820132-9.00015-7  183
+Copyright © 2020 Elsevier Inc. All rights reserved.
+184 PART | III Bus Rapid Transit
+
+dedicated BRT in contrast to 15 km of elevated rail or 7 km of underground rail (Wright, 2005).5 Most importantly, this not
+only delivers greater network coverage (pretty obvious really) but also falsiﬁes the traditional view of the capacity of
+speciﬁc public modes (buses up to 6000 passengers per hour in one direction compared to up to 15,000 for light rail/tram
+and over 15,000 for heavy rail/metro). Advanced BRT systems such as TransMilenio in Bogota (Columbia) can move
+38,000 passengers per hour in each direction.6
+
+  There are a growing number of examples around the world, and the International Union of Public Transport Operators
+(UITPs) in Europe has stated that BRT is increasingly preferred over ﬁxed rail systems for value for money. Despite the
+evidence and argument, there will be readers who will immediately ignore what I have said and simply keep pushing very
+expensive ﬁxed corridor rail systems and which will fail to serve the fuller demands of the Sydney metropolitan area. Our
+challenge is to get away from thinking of BRT as those awful polluting buses that get delayed because they compete with
+cars and occasionally are offered bits of disconnected roads (in the name of bus lanes, T2, T3). This is not BRT. Today we
+can start the investment (as many cities have such as Curitiba, Brisbane, Taipei, Bogota, Pittsburgh) in BRT with clean
+fuelled ‘buses’7 and get away from the adage that ‘trains are sexy and buses are boring’ (Richmond, 1998; Hensher, 1999).
+
+  There is a need to set aside dedicated ‘roads’ for BRT to achieve its potential, noting that the width of a right of way
+required for BRT is far less than for railways,8 not only in the inner city-CBD area but across a metropolitan network?
+Crucially, the technology must not be the determining inﬂuence; rather the way forward is to identify systems (i.e., in-
+tegrated vehicles and infrastructure) that will provide a high level of service capacity throughout a connected network,
+delivering frequency, connectivity and visibility (that is e we know where the services go to and from). All of this support
+for public transport must be part of a larger package in which we consider ways of ﬁnancing improved public transport, and
+a good start is to learn from the experiences of London and Stockholm where a congestion charging scheme is in place. The
+money raised in London and Stockholm is earmarked for investment into public transport e surely a sensible strategy.
+Politically it has worked, which is very important. Over 30(25) percent of previous car users in the City of London (Central
+Stockholm) now use public transport, and continuing car users see beneﬁts in improved travel times; and most importantly
+the politicians have earned respect for taking such an initiative. All of this seems so obvious in many ways; yet will other
+world cities rise to the occasion?
+
+  What about the future for bus systems?9 Buses, especially bus-based transitway systems are arguably better value for
+money, and if designed properly, can have the essential characteristicity of permanence and visibility claimed to be
+important to attract property development along the route, which is compatible with medium to high density corridor
+mobility10. We argue, through an assessment of BRT systems throughout the world, that their cost structures impose less
+burden on taxpayers in subsidies per passenger, so you can build MUCH MORE of it than competing transit systems (such
+as LRT), for any given amount of investment in transit (see Chapter 28), and consequently, the environmental, energy, and
+trafﬁc reduction beneﬁts of BRT are likely to be much higher than LRT. BRT can also provide higher quality service by
+avoiding time-consuming transfers, with more direct origin to destination service, and modern technology permits
+designing BRT systems that can be very, very attractive, both the vehicles, stations, and rights of way. Importantly, BRT
+can be built MUCH faster than competing systems and is more adaptable to changing travel patterns.11
+
+5. Even if these numbers are debatable and subject to error, the differences are sufﬁciently stark to be worthy of note.
+6. The important point should not be the capacity of vehicles but the capacity of the service. At present, buses deliver 5100 people an hour inbound on
+George Street at Railway Square in Sydney in the morning peak. The buses have the capacity to carry about 7500 an hour at 60 people a bus. Light rail’s
+capacity is 3600 an hour at working capacity, with people sitting and standing comfortably, and 4800 an hour at crush capacity. Clearly, the arguments
+about capacity don’t wash. In addition, buses can seat 75% of passengers compared with 25% on light rail, so most passengers would have to stand. With
+fewer trams carrying more people, there would be longer waiting times.
+7. Diesel technology has come a long way in reducing emissions, with the new Euro standards for buses emitting less than natural gas buses. Light rail is
+cleaner for the environment. Heavy and Light rail is not powered by magic. Electricity has to be generated, typically by coal-ﬁred power stations in many
+jurisdictions, which are among the worst greenhouse polluters.
+8. In addition, there is no overhead wiring and gantry’s and signal systems.
+9. Furthermore, despite the growing appeal of bus-based transitways, there is still a lot that can be achieved by simple solutions such as adding more buses,
+adjusting fare schedules, improving information systems, and integrating ticketing which is lost in the debate on over whether special rights-of-way for
+buses as against light rail are better.
+10. Newman and Kenworthy (1989) puts forth the view that good rail transit systems provide the opportunity for highlighting public values in ways which
+give a city new pride and hope for the future. While this may have some truth, it should not deny the capability of achieving the same impact with a high
+quality dedicated bus-based transitway. The images created in promotion of the Liverpool-Parramatta transitway in Sydney and the Brisbane Busway
+system actually are more appealing to civic pride than the existing heavy and light rail systems. Yet rail buffs still do not like it.
+11. In some countries, BRT avoids the stranglehold that rail unions often have on the system, usually leading to inﬂated costs.
+  Sustainable bus systems Chapter | 15 185
+
+15.2 The appeal of BRT
+
+  BRT has shown to be an effective catalyst to help transform cities into more liveable and human-friendly environments. The
+  appeal of BRT is the ability to deliver a high-quality mass transit system within the budgets of most municipalities, even in low-
+  income cities. BRT has thus proven that the barriers to effective transit is not cost or high technology. The principal ingredient is
+  simply the political will to make it happen.
+
+  Wright and Hook (2006, preface)
+
+  There is growing evidence around the world, in origin-destination density contexts similar to the locations proposed for
+light rail, that a dedicated BRT system (i.e., road infrastructure dedicated to buses only as in Brisbane, Curitiba, Bogota,
+Pittsburgh, Ottawa etc.) can carry the same number of people as light rail for a typical cost 4 to 20 times less than a light
+rail transit (LRT) system and 10e100 times less than a heavy rail system.12 It is ﬂexible, it is as permanent as light rail and
+it can have the image of light rail (rather than image of boring buses) if planned properly.
+
+  The recent interest in trackless trams reinforces this position, with one of the greatest proponents of light rail (Peter
+Newman) who has been very critical of any arguments to promote BRT, has said that trackless trams could be the answer
+to Perth’s trafﬁc woes (Exclusive, Kent Acott, The West Australian, Thursday, December 28, 2017). Experts say the new
+technology could be a game changer for Perth. It is “trackless” because it is autonomous and guided by on-board optical
+systems that follow magnetic strips painted on the road. The news story goes on to quote Peter Newman, who said that
+“The trackless tram has a number of unique features that makes it particularly attractive, especially the price,” He also said.
+“It is estimated to cost between $10e$17 million per kilometre - about four times less the cost of a standard light rail like
+the MAX system proposed by the previous Barnett government. It could also be made locally.” “We have been working on
+light rail for Perth for several decades - we now believe technology like the trackless tram will be a game-changer for Perth
+and cities like it.” “It is cheap, involves little disruption, can be rapidly brought to market and has all the passenger comfort
+and ride-quality attributes of light rail - yet it is a new kind of bus on the road.” As a result, it does not require the digging
+up of streets and disruption to businesses, houses or trafﬁc while it is being built. The trackless tram would be electric and
+powered by lithium-ion batteries that are recharged at each station in 30 s. Planning has begun in 2019 on this ‘new’
+concept of public transport that experts believe will be a game changer for Perth.
+
+  The 16 km state-of-the-art South East Busway in Brisbane (opened in 2000) is an example of a busway system that has
+exceeded expectations in patronage. In the ﬁrst six months of operation, the number of passengers grew by 40% or by more
+than 450,000 new passenger trips, giving a daily average of 58,000. Over the ﬁrst 3.5 years there has been an 88% increase
+in patronage. It is reported (in The Urban Transport Monitor 2002) that 375,000 private vehicle trips have been converted
+to public transport. Pittsburgh’s (8 km) third busway, which opened in September 2000, secured average weekday
+patronage growth of 23% over the ﬁrst 17 months. Current Pittsburgh average daily passenger trips on the full busway
+system of 43.8 km is 48,000 and growing steadily.
+
+  On a number of reasonable assumptions, the patronage potential for a bus-based transitway can be as high as twice that
+of LRT.13 The relativities will be determined by the sophistication of the design of the bus-based transitway system.
+Establishing actual patronage is another issue, although we have yet to ﬁnd any unambiguous evidence to suggest that you
+can attract more people to LRT than a bus-based scheme. This arises because of the difﬁculty of ﬁnding very similar
+circumstances in which both LRT and a geographically comparable bus-based system are in place. Certainly the per-
+formance of the dedicated bus-based transitway systems in Curitiba, Bogota (Estache and Gomez-Lobo, 2005), Brisbane,
+Pittsburgh and Ottawa deserve closer scrutiny.
+
+12. The USA General Accounting Ofﬁce (2001) audit of BRT and light rail in 6 US cities. What they found was that the capital cost per mile for LRT
+compared to BRT in its own lane was 260% more costly. Comparisons with BRT on street or on an HOV lane are not useful and have been excluded.
+When one notes the lower operating costs of BRT as well, for both institutional and maintenance reasons, the case is clear.
+13. Results of Port Authority’s Busways, David Wohlwill, http://131.247.19.10/media/presents/trb-04/wohlwill.pdf suggest that the Average Operating
+and Maintenance Costs Per Rider (FY 1995 Data) are: South Busway ¼ $1.03; East Busway ¼ $0.95; Remainder of Bus System ¼ $2.55; Light Rail
+System ¼ $3.22. Operating costs for Pittsburgh’s East and South Busways (1989) averaged $0.52 per passenger trip whilst cost per passenger trip for light
+rail lines in Buffalo, Pittsburgh, Sacramento and San Diego averaged $1.31; See http://trb.org/publications/tcrp/tcrp_rpt_90v2.pdf. Sislak, (2000) un-
+dertook a comparison between light rail and BRT options in Cleveland and Nashville: Cleveland - operating and maintenance costs are around one-16th
+that for the light rail option and capital costs are just over a quarter of that estimated for the light rail option; Nashville-capital cost for BRT under half of
+that estimated for light rail option (at grade). Operating and maintenance costs for LRT estimated to be $4.6 million annually ($18.28 per LRT car mile).
+BRT operating and maintenance costs estimated to be $3.2 million annually ($12.73 per bus mile).
+186 PART | III Bus Rapid Transit
+
+  Menckhoff (2005) has reviewed the speciﬁcations and performance of 10 existing BRT systems (totalling 320 kms.)
+and 11 systems (adding another 240 kms.) that will be in place within two years in Latin America as part of a World Bank
+assessment. Describing Latin America as a ‘fascinating urban transport laboratory’, Menckhoff documents the distinctive
+image and high productivity of public transport systems that has arisen out of the South American initiatives. Key to the
+success is institutional reform and the speciﬁcation of a BRT system that delivers feeder-truck operations, bus overtaking at
+stops, four lane (2 þ 2) busways for high-demand corridors, limited stop and express services, high-capacity trunk-line
+articulated (18 m, 160 passenger) and bi-articulated (25 m, 260 passenger) vehicles, high level ‘heavy rail-like’ entry
+into buses often through centrally located bus stations, and prepayment of fares. A novel reverse of practice elsewhere is
+the decision to elevate the bus stop/station platform so that buses can be built on a truck chassis which is much less costly
+than low-ﬂoor buses. In addition, two-directional bus stations in the median were ﬁrst introduced in Bogota’s Trans-
+Milenio, which required left-hand doors for all trunk-line buses. This has the advantage of savings in physical space and
+station labour.
+
+  BRT in Latin America has shown to be capable of moving passengers at a fraction of the cost of other high capacity
+modes; and most importantly has helped to reshape the less than desirable image of road-based public transport. The
+political windfall has been substantial to the Mayors responsible for their implementation. A limited comparison of selected
+BRT, light rail, elevated rail and subway systems (Table 15.1) shows the appeal of BRT in terms of passenger ﬂows and
+costs. At relatively high commercial speeds (15e32 kph), Curitiba is carrying peak volumes in excess of 14,000 passengers
+per hour per direction, increasing to over 20,000 passengers per hour per direction where extra passing lanes are provided
+at bus stops. In Bogota the Transmilenio double-width busway accommodates 35,000 passengers per hour per direction
+with a mixture of all-stop and express bus services.
+
+  The success of BRT in Latin America should not be seen as a regional-centric peculiarity but rather a reﬂection of the
+particular period in time in which opportunities to work with speciﬁc technologies has occurred. Light rail is more common
+in Europe, in large part due to the availability and promotion of this technology by European manufacturers in earlier
+periods; which explains much of the inertia in not moving to alternative technologies and system. Indeed when recently
+questioned by a French researcher on this very point about the popularity of light rail in comparison to BRT in France, the
+point missing in the argument is that not only is the light rail technology French, it also came with generous ﬁnancial
+
+TABLE 15.1 Comparative indicators of performance.
+
+System type  City  Corridor length  Cost per km ($US million)  Actual capacity (passengers
+Latin America  per hour per direction)
+BRT  Curitiba (1994 extension)  57  1.5
+Heavy rail  Sao Paulo  114  3.0  15,100
+BRT  Bogota  40  5.3  60,000
+Other locations  42,000
+LRT  Lyon  18  18.9
+LRT  Bordeaux  23  20.5  **
+LRT  Los Angeles (Gold)  23  37.8  **
+LRT  Zurich (2005 ext)  20  42.0  **
+Elevated rail  Bangkok  23  73.9  **
+Heavy rail  London (Jubilee)  16  350.0  42,000
+BRT  Mexico city  20  60  25,000
+BRT  Hanoi  25
+BRT  Taipei  57  0.5  **
+
+**, not available.
+Modiﬁed from Wright, L., September 2005. Lectures on Bus Rapid Transit. UITP Workshop, Bangkok; Menckhoff, G., August 2005. Latin American
+experience with bus rapid transit. Paper Presented at the Annual Meeting, Institution of Transportation Engineers, Melbourne.
+  Sustainable bus systems Chapter | 15 187
+
+incentives in the context of limited French investment in new BRT systems. This is now changing as the global oppor-
+tunities to develop BRT systems are growing, in part attributable to the demonstrated beneﬁts ﬂowing from the South
+American success.
+
+  A review in Canada undertaken in 2004 by the Canadian Urban Transit Association identiﬁed a number of major
+beneﬁts of BRT, which have repeatedly been reported in many other jurisdictions:
+
+l Service speed and reliability. With average operating speeds of 45e50 km/h and consistent travel times, BRT services
+  on busways and bus lanes are more attractive than conventional transit routes operating at half that speed and with
+  lesser reliability due to congestion.
+
+l Greater patronage. BRT projects build patronage because they offer a premium service with faster speeds and greater
+  reliability. The use of special branding to promote BRT services also helps attract new users.
+
+l Lower costs. The faster average speeds of BRT reduce operating costs. And BRT facilities cost less to build than light
+  rail because they do not need specialised electrical, track, vehicle maintenance or storage infrastructure.
+
+l High capacity. High-capacity vehicles, frequent service and ﬂexible routing structures allow BRT to match or exceed
+  the passenger volumes of the busiest light rail systems.
+
+l Operational ﬂexibility. BRT allows a variety of customer services, with a single running way able to support express,
+  local and skip-stop services - a difﬁcult and expensive proposition in a rail environment.
+
+l Incremental implementation. BRT systems can be implemented in stages. Buses can use a BRT facility to travel
+  through a congested area, then switch onto a roadway to serve a relatively uncongested corridor.
+
+l Land use change. BRT can stimulate the development or redevelopment of compact, pedestrian- and transit-friendly
+  land uses, when supported by complementary land use and zoning policies. This contradicts the claims by proponents
+  of light rail that only rail-based investments can deliver such development stimulus because it is ‘permanent’.
+
+  A review of US BRT experience (Federal Transit Administration, 2004) indicated signiﬁcant increases in transit
+patronage in virtually all corridors where BRT has been implemented. Though much of the patronage increases have come
+from passengers formerly using parallel service in other corridors, passenger surveys have revealed that many trips are new
+to transit, either by individuals who used to drive or be driven, or individuals who used to walk, or by individuals who take
+advantage of BRT’s improved level of service to make trips that were not made previously. Aggregate analyses of
+patronage survey results suggest that the patronage increases due to BRT implementation exceed those that would be
+expected as the result of simple level of service improvements. This implies that the identity and passenger information
+advantages of BRT are attractive to potential BRT customers. Patronage gains of between 5% and 25% are common.
+Signiﬁcantly greater gains, such as 85% in Boston’s Silver Line represent the potential for BRT.
+
+15.3 Conclusions
+
+This short chapter is designed to reinforce the appeal of BRT systems over other public transport investment strategies. The
+growing evidence globally about the broad-based advantages of BRT over other systems such as light rail, and even heavy
+rail in some density contexts, is so strong on the main measures of performance that, at the very least, all governments
+should seriously evaluate the appeal of BRT. We acknowledge the big challenge in even referring to buses, given the
+emotional overtones and imagery that has not served the bus well in the past. But the incessant contrasts between buses in
+mixed trafﬁc and light rail (which often mixes with other trafﬁc), has failed to capture the real meaning of a BRT system in
+which the buses move along dedicated infrastructure. The challenge is to continue, through evidence, to reinforce this
+position and hopefully to move away from un- and mis-informed blind commitment to sensible outcome-based decision
+making.
+
+Appendix
+
+Source: Wright and Hook (2006).
+  Full BRT
+
+Continent  Country  Cities with “full” BRT systems
+Latin America
+  Brazil  Curitiba
+  Colombia  Bogota´ (TransMilenio)
+188 PART | III Bus Rapid Transit
+  Cities with BRT systems, as of January 2006
+
+Continent  Country  Cities with BRT systems
+Asia  China
+  Indonesia  Beijing
+Europe  Japan  Jakarta (TransJakarta)
+  South Korea  Nagoya (Yurikamome Line)
+Latin America and  Taiwan  Seoul
+Caribbean  France  Taipei
+  Caen (Twisto), Clermont Ferrand (Le´o, 2000), Lyon, Nancy (TVR line 1),
+North America  Netherlands  Nantes (Line 4), Nice (Busway), Paris (RN305 busway, Mobilien, and Val
+Oceania  UK  de Marne busway), Rouen (TEOR), Toulouse (RN88)
+  Amsterdam (Zuidtangent), Eindhoven
+  Germany  Bradford (Quality Bus), Crawley (Fastway), Edinburgh (Fastlink), Leeds
+  Brazil  (Superbus and Elite)
+  Essen (O-Bahn)
+  Chile  Curitiba, Goiaˆnia (METROBUS), Porto Alegre (EPTC),
+  Colombia  Sa˜o Paulo (Interligado)
+  Ecuador  Santiago (Transantiago)
+  Mexico  Bogota´ (TransMilenio)
+  Canada  Quito (Trole´, Ecov´ıa, central Norte)
+  United States  Leo´ n (Optibus SIT), Mexico city (Metrobu´ s)
+  Ottawa (Transitway)
+  Australia  Boston (Silver Line Waterfront), Los Angeles (Orange Line), Miami
+  (South Miami-Dade Busway), Pittsburgh (Busway)
+  Adelaide (O-Bahn), Brisbane (Busway),
+  Sydney (T-Ways)
+
+Existing BRT systems undergoing expansions, as of January 2006
+
+Continent  Country  Cities with BRT systems
+Asia
+Europe  China  Beijing
+Latin America and Caribbean  Indonesia  Jakarta (TransJakarta)
+  South Korea  Seoul
+North America  France  Paris (Mobilien)
+  Brazil  Curitiba, Porto Alegre (EPTC), Sa˜o Paulo
+  (Interligado)
+  Chile  Santiago (Transantiago)
+  Colombia  Bogota´ (TransMilenio)
+  Ecuador  Quito (Trole´, Ecov´ıa, Central Norte)
+  Mexico  Leo´ n (Optibus SIT), Mexico City (Metrobu´ s)
+  United States  Boston (Silver Line)
+
+Cities with basic busways, as of January 2006
+
+Continent  Country  Cities with basic busways
+Africa
+Asia  Ivory Coast  Abidjan (Boulevard de la Republique)
+Europe  Re´union (France)  Saint-Denis
+  China  Kunming, Shejiazhuang, Shenyang
+Latin America and  Japan  Nagoya (“Key” Routes)
+Caribbean  Turkey  Ankara (Besevler-dikimevi), Istanbul (Taksim-Zincirlikuyu)
+  Belgium  Liege
+  Evry
+  Italy  Genoa
+  Netherlands  Utrecht
+  Spain  Madrid (Paseo de la Castellana)
+  UK  Ipswich (Superoute 66), Runcorn
+  Brazil  Belo Horizonte (Avenida Cristiano Machado), Campinas (Amoreiras),
+  Manaus, Recife (Avenidas Caxanga´, Joaquim Nabuco, Sul, and
+  Chile  Herculano Bandeira), Rio de Janeiro (Avenida Brasil)
+  Peru  Santiago (Avenida Grecia)
+  Sustainable bus systems Chapter | 15 189
+
+North America  Trinidad and Tobago  Lima (Paseo de la Repu´ blica or “Via Expresa”, Avenida Abancay, and
+Oceania  United States  Avenida Brasil)
+  Port of Spain
+  Australia  Los Angeles (San Bernardino Freeway, Harbor Freeway), New York City
+  (Lincoln Tunnel), Philadelphia (Ardmore busway), Providence (East Side
+  bus tunnel)
+  Perth (Kwinana Freeway)
+
+Cities with Enhanced Bus Services (“BRT-Lite”), as of January 2006
+
+Continent  Country  Cities with enhanced bus services
+
+Asia  China  Hong Kong
+Europe  UK  London
+Latin American and  Puerto Rico (US  San Juan (R´ıo Hondo Connector)
+Caribbean  Commonwealth)
+North America  United States  Alameda and Contra Counties (AC Transit Rapid Bus), Albuquerque
+  (Rapid Ride), Boston (Silver Line Washington Street), Chicago (NEBR),
+  Canada  Denver (16th Street Mall), Honolulu (City/County Express), Kansas City
+  (MAX), Las Vegas (MAX), Los Angeles (Metro Rapid Wilshire Boulevard),
+  Orlando (Lynx Lymmo), Phoenix (RAPID), Santa Clara (VTA)
+  Vancouver (B-Line), Montreal (STM R-Bus 505), York (Viva)
+
+Cities with BRT systems under construction, as of January 2006
+
+Continent  Country  Cities with systems under construction
+Asia
+Europe  China  Hangzhou  system)
+Latin America and Caribbean  India  Delhi
+  France  Evry-Se´nart, Douai, Clermont-Ferrand (line 1 Lohr
+North America  Italy  Bologna
+Oceania  Colombia  Bucaramanga, Cali, Cartagena, Medell´ın, Pereira
+  Ecuador  Guayaquil (Metrov´ıa)
+  Venezuela  Me´rida (Trolme´rida)
+  United States  Cleveland, Eugene
+  Australia  Canberra
+  New Zealand  Auckland (Northern Busway)
+
+Cities with BRT systems in the planning process, as of January 2006
+
+Continent  Country  Cities with systems in the planning process
+Africa
+Asia  All Africa  Accra (Ghana), Dakar (Senegal), Dar es Salaam (Tanzania), Lagos (Nigeria)
+  China  Chengdu, Chongqing, Jinan, Shenzhen
+Europe  India  Ahmedabad, Bangalore, Mumbai
+  Taiwan  Chiayi, Kaohsiung, Taoyuan, Taichung, Tainan
+Latin America and  Other Asia  Bangkok (Thailand), Haifa (Israel), Hanoi (Vietnam), Jerusalem (Israel)
+Caribbean  France  Cannes, Montbe´liard, Besanc¸on, Lorient, Amiens, Metz, Nancy (Line 2),
+  Caen (Line 2), Valenciennes/Pays de Conde´, Nimes, Le Havre
+North America  UK  Cambridge, Coventry, Kent Thames-side, Leigh
+  Colombia  Barranquilla, Soacha (Bogota´)
+  Mexico  Aguas Calientes, Monterrey, Quere´taro, Torreo´ n
+  Other Latin America and  Barquisimento (Venezuela), Guatemala City (Guatemala), Lima (Peru),
+  Caribbean  Managua (Nicaragua), Fort-de-France (Martinique, France), Posadas
+  (Argentina), Rio de Janeiro (Brazil), San Jose´ (Costa Rica)
+  Canada  Brampton, Calgary, Durham region, Edmonton, Halifax, Mississauga,
+  Winnipeg
+  United States  Albany, Atlanta, Baton Rouge, Charlotte, Chicago (PACE), Denver, Detroit,
+  El Paso, Hartford, Houston, Louisville, Milwaukee, Minneapolis and St.
+  Paul, Montgomery County, New York City, Reno, Sacramento, Salt Lake
+  City, San Diego, San Francisco, San Jose, Tampa Bay
+190 PART | III Bus Rapid Transit
+
+Cities with systems at the exploratory stage, as of January 2006
+
+Continent  Country  Cities with systems at the pre-planning stage
+Asia  China
+  Other Asia  Fuzhou, Guangzhou, Nanjing, Tienjing, Wuhan, Xian
+Europe  Baguio (Philippines), Cebu (Philippines), Chittagong (Bangladesh), Ho Chi Minh
+Latin America and  UK  City (Vietnam), Karachi (Pakistan), Manila (Philippines), Pune (India), Vientiane
+Caribbean  All Latin  (Laos)
+  America  Luton
+  Guadalajara (Mexico), La Paz (Bolivia), Panama City (Panama), Santo Domingo
+  (Dominican Republic), San Salvador (El Salvador), Tegucigalpa (Honduras)
+
+BRT process stalled or cancelled, as of January 2006
+
+Continent  Country  City
+Africa
+Asia  South Africa  Cape Town
+  Bangladesh  Dhaka
+Latin America and Caribbean  China  Shanghai
+North America  India  Hyderabad
+  Mexico  Ciudad Juarez, Puebla
+  United States  Virginia Beach
+Chapter 16
+
+Ridership drivers of bus based transit
+systems*
+
+16.1 Introduction
+
+Bus rapid transit (BRT) is an innovative public transport (PT) system, deﬁned as “a ﬂexible, rubber-tyred form of rapid
+transit that combines stations, vehicles, services, running ways, and ITSs [intelligent transportation systems] elements into
+an integrated system with a strong identity” (Levinson et al., 2003, p.S-1).1 BRT combines some advantages of both
+conventional bus and rail modes, such as the ﬂexibility and lower cost of bus, and the speed and reliability of rail. Since the
+early BRT systems such as the system in Curitiba (open in 1974), many cities have embraced BRT as a solution to
+accommodate increasing public transport patronage, in particular in urban areas.
+
+  A number of studies have conducted reviews of BRT systems (see e.g., Hidalgo and Graftieaux, 2008; Hensher and
+Golob, 2008; Deng and Nelson, 2011). Among these existing BRT review studies, only Hensher and Golob (2008)
+conducted a formal statistical analysis to comparatively assess BRT systems (e.g., their infrastructure costs and ridership).
+This chapter focuses on patronage drivers, using a comparative analysis to determine which factors systematically affect
+BRT patronage to offer greater comparative and analytical power relative to traditional literature reviews. Compared to
+Hensher and Golob (2008), this study has a larger sample (46 vs. 37), includes more recent BRT systems opened between
+2006 and 2010 while only BRT systems implemented before 2006 were covered in Hensher and Golob, and takes a closer
+look at the relationship between a number of characteristics of BRT systems and patronage (e.g., whether there is an
+integrated network of routes and corridors and whether the system has pre-board fare collection and fare veriﬁcation). This
+study is a contribution to the build up of evidence on the features of BRT systems that promote patronage growth and
+hence should be taken into account in designing and planning BRT systems.
+
+  This chapter is organised as follows. The next section brieﬂy introduces the data. This is followed by the econometric
+model form, random effects regression, and its advantages over simple regression. We then present the key empirical
+ﬁndings, and discuss how these inﬂuence BRT patronage in terms of total system passenger-trips per day. The ﬁnal section
+presents key conclusions and recommendations for designing better BRT systems.
+
+16.2 Data
+
+To conduct a comparative analysis on BRT patronage performance, we collected information on 46 BRT systems opened
+between 1974 and 2010, from a large number of disparate sources including direct contact with current operators, BRT
+web sites and from specialist groups engaged in BRT system planning (such as Embarq and ITDP-China) from 15
+countries (Latin America: Brazil, Colombia, Ecuador and Mexico; Asia: China, Indonesia, Japan, Taiwan, India, and
+Thailand; North America: USA and Canada; Europe: France and the Netherlands; Oceania: Australia). The number of total
+system passengers-trips per day has a mean of 372,464 and a standard deviation of 1,276,264. The natural logarithm of
+ridership is used as the dependent variable in the regression model (shown in Fig. 16.1), with parameter estimates
+associated with logarithmic explanatory variable being interpreted as direct mean elasticities with respect to fare and
+headway. Daily ridership per corridor (passenger-trips/number of corridors) and daily ridership per system kilometre
+(passenger-trips/length of BRT network) for 46 BRT systems are shown in Figs 16.2 and 16.3 respectively.
+
+* Adapted by permission from Springer. Previous source of publication: Hensher, D.A., Li, Z., 2012. Ridership drivers of bus rapid transit systems.
+Transportation 39 (6), 1209e1221.
+1. An alternative deﬁnition suggested in the literature by the Institute for Transportation and Development Policy ITDP, (http://www.itdp.org/) and BRTuk
+(http://www.brtuk.org/) is “A ﬂexible, frequent, dependable bus transit system that combines a variety of physical and operating elements into a permanent
+and integrated system with a quality image and a unique identity”.
+
+Bus Transport. https://doi.org/10.1016/B978-0-12-820132-9.00016-9  191
+Copyright © 2020 Elsevier Inc. All rights reserved.
+192 PART | III Bus Rapid Transit
+
+Number
+
+  16
+  14
+  12
+  10
+
+  8
+  6
+  4
+  2
+  0
+
+  BRT system
+
+  FIG. 16.1 Natural logarithm of total system passengers-trips per day (46 systems).
+
+  A descriptive proﬁle of the key data items is given in Table 16.1. In addition to a number of continuous explanatory
+variables such as fare2 and total length of the BRT network,3 we have investigated the role of a number of categorical
+variables. These include whether the BRT system has segregated busways for bus-only roadways, an integrated network
+of routes and corridors,4 enhanced station environment, pre-board fare collection and fare veriﬁcation, at-level boarding
+and alighting, competitively-bid and transparent contracts and concessions, quality control oversight from an
+independent entity/agency,5 signal priority or grade separation at intersections, distinctive marketing identity for system,
+high-quality customer information, and modal integration at stations (e.g., bicycle parking, taxi stations, and easy
+transfers between public transport systems). All categorical variables are coded as dummy variables (yes or no) in the
+regression model.
+
+2. Given that this is a multinational study, it would have been desirable to express fare normalised by some form of cost-of-living index. We did test for the
+normalisation of Fare divided by GDP per capita to approximately capture this effect. However this normalised variable was not statistically signiﬁcant;
+and in addition its natural logarithm was much more correlated with some explanatory variables than with the dependent variable. For example we
+observed correlations of À0.2628 with the natural logarithm of headway vs. 0.1411 with the natural logarithm of daily passengers-trips (dependent
+variable). Given this, the stand-alone Fare is used in the model as an explanatory variable (see Table 16.2).
+3. We also investigated the use of population density to normalise the length of the BRT network (i.e., BRT length/population density); however this lead
+to similar correlation problems to those observed with the normalised fare variable (i.e., fare/GDP per capita). The only normalised variable that we found
+was statistically signiﬁcant with low relative correlation was the average distance between stations divided by population density.
+4. This level of integration means that a BRT system is connected with other public transport routes to establish a network which allows for door-to-door
+service.
+5. While many operators have their own internal quality control, the particular data item we were able to collect related to quality control from an in-
+dependent entity/agency.
+Sao Paulo
+  Bogota
+  Curitiba
+  Taipei
+
+  Porto Alegre
+  Guanzhou
+
+  Mexico City
+  Quito (Trole)
+
+  Leon
+  Zhengzhou
+
+  Jinan
+  Ottawa
+  Xiamen
+  Kunming
+  Pereira
+  Goiania
+  Changzhou
+  Quito(Central Notre)
+  Ahmedabad
+  Jakarta
+  Guayaquil
+  Brisbane
+  Quito(Ecovia)
+  Beijing
+
+  Heifei
+  Paris
+  Caen
+  Hangzhou
+  Rouen
+  Amsterdam
+  Pittsburgh (MLK East Busway)
+  Adelaide
+  Nantes
+  Miami
+  Los Angeles
+  Zaozhuang
+  Chorgqing
+  Eindhoven
+  Pittsburgh(South Busway)
+  Bangkok
+  Boston
+  Pittsburgh(West Busway)
+  Nagoya
+  Sydney (Liverpool-Parramatta T-way)
+  Lyon
+  Eugene
+  Sao Paulo  Number
+  Guanzhou
+  1000000
+  Taipei  900000
+  Porto Alegre  800000
+  700000
+  Curitiba  600000
+  Quito (Trole)  500000
+  400000
+  Bogota  300000
+  Mexico City  200000
+  Quito (Central Notre)  100000
+  Quito (Ecovia)  0
+
+  Leon  Number
+  Ottawa
+  Zhengzhou  70000
+  Guayaquil  60000
+  50000
+  Jinan  40000
+  Pereira  30000
+  Brisbane  20000
+  Beijing  10000
+  Kunming
+  0
+  Heifei  Sao Paulo
+  Goiania  Ridership drivers of bus based transit systems Chapter | 16 193Guanzhou
+  Mexico City
+  Paris  BRT system
+  Nantes  Bogota
+  Xiamen  FIG. 16.2 Daily ridership per corridor (46 systems).Zhengzhou
+  Ahmedabad
+  ChangzhouBRT system  Curitiba
+  Quito (Trole)
+  CaenFIG. 16.3 Daily ridership per system kilometre (46 systems).Quito (Central Notre)
+  Ahmedabad
+  Jakarta  Porto Alegre
+  Adelaide
+  Pittsburgh (MLK East Busway)  Taipei
+  Pittsburgh (South Busway)  Guayaquil
+  Hangzhou
+  Brisbane
+  Nagoya  Quito (Ecovia)
+  Rouen
+  Beijing
+  Lyon  Pereira
+  Pittsburgh (West Busway)
+  Leon
+  Chongqing  Goiania
+  Miami  Ottawa
+  Changzhou
+  Eindhoven  Xiamen
+  Los Angeles
+  Jinan
+  Amsterdam  Paris
+  Boston  Hangzhou
+  Kunming
+  Bangkok  Jakarta
+  Zaozhuang  Heifei
+  Pittsburgh (MLK East Busway)
+  Eugene  Nantes
+Sydney (Liverpool-Parramatta T-way)  Caen
+  Miami
+  Los Angeles
+  Zaozhuang
+  Amsterdam
+  Adelaide
+  Chongqing
+  Pittsburgh (South Busway)
+  Rouen
+  Bangkok
+  Boston
+  Pittsburgh (West Busway)
+  Nagoya
+  Eindhoven
+  Sydney (Liverpool-Parramatta T-way)
+  Lyon
+  Eugene
+TABLE 16.1 Proﬁle of candidate variables.a
+
+Variable  Unit  Mean  Standard deviation
+Quantitative variables  US$2006b  1.04  1.30
+Fare  Kilometres  27.38  22.90
+Total length of BRT network  Number  2.30  2.27
+Number of existing trunk corridors  Number  38.33  43.96
+Number of stations  Metres/(persons/square metre)  0.69  0.95
+Average distance between stations/population density  Kilometres per hour  25.68  12.40
+Average commercial speed  Minutes  3.35  2.80
+Average peak headway  Metre  16.69  3.85
+Trunk vehicle length
+
+Qualitative variables: whether the BRT system has  Percentage of “Yes”(%)
+Segregated busways for bus-only roadways  78.3
+An integrated network of routes and corridors  52.2
+Enhanced station environment  71.7
+Pre-board fare collection and fare veriﬁcation  47.8
+At-level boarding and alighting  54.3
+Competitively-bid and transparent contracts and concessions  26.1
+Signal priority or grade separation at intersections  47.8
+Distinctive marketing identity for system,  71.7
+Quality control oversight from an independent entity/agency  41.3
+High-quality customer information  76.1
+Modal integration at stations  23.9
+
+Location of BRT Systems  Percentage of “Yes”(%)
+Latin America  26.0
+Brazil  8.7
+Colombia  4.3
+Ecuador  8.7
+Mexico  4.3
+Asia  34.9
+China  23.9
+Indonesia  2.2
+Japan  2.2
+Taiwan  2.2
+India  2.2
+Thailand  2.2
+North America  17.4
+USA  15.2
+Canada  2.2
+Europe  15.2
+France  10.9
+the Netherlands  4.3
+Oceania  6.5
+Australia  6.5
+
+aOnly variables that are available in all 46 observations are reported and used in the model, given some variables have missing data, e.g., vehicle
+capacity, average non-peak headway, total length of existing feeder routes.
+
+bAll fares are converted into a common currency (US$) and period (2006).
+  Ridership drivers of bus based transit systems Chapter | 16 195
+
+16.3 Methodology
+
+In Hensher and Golob (2008), ordinary least squares (OLS) regression is used to investigate potential sources of systematic
+variation in BRT patronage. A key assumption of OLS regression is that all observations are independent. However, in this
+study, there are some cases where multiple BRT systems are located within one country (e.g., 11 systems in China, six
+systems in the US, ﬁve systems in France, four systems in Brazil). Given this, observations within one of those countries
+could be correlated to some extent, given some common characteristics of a country. To capture this, instead of an OLS
+regression model, a random effects regression model (Eq. 16.1) is used.
+
+  yit ¼ a þ b'xit þ ui þ εit  (16.1)
+
+x is a vector of regressors associated with the ith country and tth BRT system; εit is a random error term, with E½εit ¼ 0
+and Var½εit ¼ d2; ui is a country-speciﬁc disturbance with E½ui ¼ 0 and Var½ui ¼ 42, also Cov½εit; ui ¼ 0; i repre-
+sents a country (in this chapter, i ¼ 1, 2 . 15), and t is the number of BRT systems located within each country.
+
+  The way that a random effects regression model works is that it allows each ith country to have a unique disturbance
+
+ðuiÞ; hence within a set of observations drawn from the same country, the disturbances are no longer independent. The
+
+model is estimated by generalised least squares. In this random effects regression model, the number of sampled BRT
+
+systems within each country varies from one (e.g., Canada) to 11 (i.e., China).
+
+  We also investigated the possibility of multicollinearity which can often be a concern when using mean estimates from
+
+each of the sampled studies. A popular way to analyse multicollinearity is in terms of the effect of the inter-correlation of
+
+the regressors on the variance of the least squares parameter estimates. The variance inﬂation factor (VIF) (Eq. 16.2) is a
+
+measure of this effect.
+
+  À  2Á
+  VIFk ¼ 1= 1 À Rk  (16.2)
+
+R2  is  the  overall  explained  variance  (R2)  obtained  when  the  kth  regressor  is  regressed  on  the  remaining  variables.  The
+
+  k
+optimal value for this statistic is 1.0, which occurs when R2 is zero or this variable is orthogonal to the other variables.
+
+There is no consensus on what values of the variance inﬂation factor merit attention, or on what one should do with
+
+the results. Some authors (e.g., Chatterjee and Price, 1991) suggest that values in excess of 10 are problematic.
+
+16.4 Sources of systematic variation in BRT ridership
+
+The ﬁnal random effects regression model is reported in Table 16.2. This model explains 90% of the variation in daily
+passengers-trips of 46 BRT systems, where all parameter estimates are statistically signiﬁcant at or over the 95%
+conﬁdence level, with the exception of two dummy variables which are statistically signiﬁcant at the 90% conﬁdence level.
+VIF values are well below 10 on all regressors (see last column of Table 16.2), and hence we can conﬁdently reject the
+
+presence of multicollinearity to ensure the robustness of parameter estimates. The descriptive statistics and correlation
+
+matrix for these explanatory variables and the dependent variable (i.e., natural logarithm of total system passengers-trips
+
+per day) are given in Appendix 16.A.
+  In this model, the natural-logarithmic transformation is applied to two continuous variables: the fare variable and
+
+headway variable, and given that the dependent variable (ridership) is already in natural logarithm, the double-logarithmic
+
+form directly delivers the mean estimates of direct fare elasticity and headway elasticity, which measure the impacts of fare
+and headway on daily passenger-trips. The estimated fare elasticity is À0.366 which is substantially higher than the
+estimate of Hensher and Golob (2008) (i.e., À0.12), but which is closer to common estimates of fare elasticities associated
+with conventional and bus and rail systems. Hensher (2008) in a meta analysis of 241 observations reports a mean estimate
+of À0.395 for fares, which is close to À0.38 reported in Holmgren (2007) for 81 observations and other reviews such as
+Goodwin (1992), Oum et al. (1992) and Litman (2005). Price elasticities of PT demand for European countries reported in
+Nijkamp and Pepping (1998) are between À0.4 and À0.6.
+
+  This study estimates a headway elasticity of À0.294 which is close to À0.287, the mean estimate reported in Hensher
+(2008), calculated based on 21 observations ranging from À0.076 to À0.70. This headway elasticity is equivalent to a
+frequency per hour (¼60/headway) elasticity of 0.299, suggesting that a 100% increase in frequency would increase
+ridership by nearly 30%, holding other factors constant. Improved frequency has an important role in promoting public
+
+transport by reducing waiting time and dwelling time, and consequently reducing uncertainty and anxiety.
+  In addition to Fare and Headway (or frequency per hour), we also identify other systematic sources signiﬁcantly
+
+inﬂuencing ridership. The length of the BRT network is a dimension of the capacity of a BRT system, and it has a positive
+
+parameter estimate, which suggests that the increased length would lead to an increase in ridership, which is as expected,
+196 PART | III Bus Rapid Transit
+
+TABLE 16.2 Random effects regression model.
+
+Explanatory variable  Parameter  t-ratio  VIF
+
+Continuous variables
+
+Nature logarithm of fare (US$2006)  À0.3656  À2.11  3.20
+
+Nature logarithm of headway (minutes)  À0.243  À2.57  1.86
+
+Number of existing trunk corridors  0.2229  4.18  3.17
+
+Total length of BRT network (kilometres)  0.5582  3.40  3.36
+
+Average distance between stations/population density (metres)  À0.17358  À2.08  1.52
+
+Years difference relative to 2011  0.1669  2.22  3.2
+
+Dummy variables
+
+Existence of an integrated network of routes and corridors (Yes)  0.4143  2.22  1.42
+
+Modal integration at stations (Yes)  0.4529  2.04  2.01
+
+Pre-board fare collection and fare veriﬁcation (Yes)  0.6276  2.89  2.92
+
+Doorways located on median and curbside (Yes)  2.0989  4.03  3.21
+
+Quality control oversight from an independent entity/agency (Yes)  0.7608  4.45  1.33
+
+Latin America (location of BRT)  0.6249  2.09  1.81
+
+Constant  7.2437  11.69  e
+
+Disturbance term effects
+
+Country-speciﬁc disturbance (ui)  0.1334
+
+Random error term (εit )  0.1557
+
+Sample size  46
+
+Adjusted R2  0.875
+
+Dependent variable: natural logarithm of daily passengers-trips.
+
+given that increased capacity would stimulate demand. The number of existing trunk corridors represents the catchment
+
+coverage of a BRT system, which also has a positive impact on ridership.
+  The average distance between stations, normalised by population density, has a negative parameter estimate, which in
+
+turn suggests that ridership would be increased through reducing distance between stations (i.e., adding more stations).
+This ﬁnding shows the importance of connectivity in encouraging patronage, i.e., the shorter distance between BRT
+
+stations (or the more stations) would improve access and egress. This also translates into a cost effective potential
+
+advantage of BRT over other mass transit such as heavy rail, as it is much easier to add a new station in a BRT system both
+for a relatively low cost and also in terms of design constraints.6
+
+  A number of categorical variables are found to have a statistically signiﬁcant inﬂuence on ridership, providing further
+insights into the design and planning of BRT systems. Our statistical model suggests that two levels of integration are
+crucial to ridership, namely between systems (existence of an integrated network of routes and corridors), and at stations
+(modal integration at stations). A BRT system needs to be integrated with other PT routes to allow for more convenient
+
+transit (e.g., door-to-door service) so as to attract more users to public transport. Integration at stations is also important,
+
+such as bicycle parking, taxi stations, and easy transfers between public transport systems. At the planning stage, these two
+
+levels of integration have to been carefully considered.
+  We found that, all other things being equal, a BRT system equipped with pre-board fare collection and fare veriﬁcation
+
+would attract more ridership. Pre-board fare collection and fare veriﬁcation would signiﬁcantly reduce the boarding time,
+
+and hence contribute to the reduction in total journey time and time variability, as well as less crowding at stations and
+
+6. We recognise the loss of speed as a consequence of closer station spacing. There are often clear trade-offs between speed and access to the system from
+an origin location. A BRT system, compared to a railway, typically has closer bus stop spacing than train station spacing which provides better access
+times.
+  Ridership drivers of bus based transit systems Chapter | 16 197
+
+reduced congestion amongst buses. These improvements would substantially improve user beneﬁts and consequently
+increase public transport patronage. This ﬁnding is in line with Tirachini and Hensher (2011) who found that the pre-board
+system is the optimal choice for bus fare collection from a cost-effective perspective. We also ﬁnd that buses with one or
+more doorways at both the median and curbside relative to other conﬁgurations such as one or two doors on one side only,
+has a positive inﬂuence on patronage, since it enables a more efﬁcient ﬂow in and out from either one side or both sides of
+a bus. Finally we found a positive relationship between ridership and the number of years a BRT system has been in
+operation.
+
+  If there is quality control oversight from an independent entity/agency, the ridership number would be higher, holding
+other inﬂuences constant. This ﬁnding highlights how important it is to ensure the service quality of BRT. Our model also
+ﬁnds that the BRT systems operating in Latin America have signiﬁcantly higher ridership than BRT in other locations, all
+other factors remaining unchanged. Among the top 10 BRT systems in terms of daily passenger number sampled in this
+chapter, seven systems are located in Latin America. We speculate that an important underlying reason for high ridership of
+Latin American BRT systems is the relatively higher population density and lower car ownership. For example, urban
+density in Bogota (Columbia) is around 14,000 persons per square kilometre, compared to approximately 800 persons per
+square kilometre in Pittsburgh (USA); while the car ownership in Bogota is around 150 cars per 1000 people, signiﬁcantly
+lower than the ownership in Pittsburgh (nearly 700 cars per 1000 people). Asian cities also have high population density
+and low car ownership; however Asian BRT systems have a much shorter history (the majority started after 2008), and
+lower capacity relative to Latin American BRT systems. Most BRT systems in Asia (in particular in China) are still
+expanding or undergoing active expansion. For example, the initial BRT network in Hangzhou (Line 1 opened in 2006) is
+27.2 km,7 and doubling in length to 55.4 km (Line 2 opened in 2008 and Line 3 opened in 2010). The plan is to expand the
+Hangzhou BRT network to 395 km by 2020. Given the ﬁndings in this study that the capacity of a BRT system is positive
+to patronage, BRT patronage in Asian cities is expected to grow substantially in the future. We also investigate the po-
+tential role of population density8 in the ridership model shown in Table 16.2; however, this very aggregate measure,
+deﬁned as both continuous and dummy variables (low, medium, high population density), is highly correlated with a
+number of system variables, and consequently was found to be statistically insigniﬁcant. We also tested GDP per capita at
+the city level, which was also not statistically signiﬁcant, in terms of continuous or dummy variables for the same cor-
+relation logic.
+
+  Given the expectation that the economic and spatial base of a metropolitan area has an inﬂuence on BRT patronage, we
+investigated the role of GDP per capita and population density.9 We ran an additional random effects regression model to
+examine the inﬂuence of GDP per capita (in thousand US$2006) and population density (see Appendix 16.B). As ex-
+pected, we found that the higher is GDP per capita (linked to higher car ownership), the lower is BRT ridership; and the
+higher population density supports potentially higher demand for BRT ridership. However these macroeconomic and
+geographical effects could not be included in the same model as the signiﬁcant system and locational effects shown in
+Table 16.2 because of the high levels of partial correlation (see Table 16.3), supporting our view that we have adequately
+
+TABLE 16.3 Correlation matrix of selected system and context variables.
+
+LnRidership  LnRidership  LnFare  BRT network length  GDP per capita  Population density
+LnFare  1  À0.3918  0.7581  À0.5937  0.4171
+BRT network length  1  À0.2042  0.8441  À0.3087
+GDP per capita  1  À0.3797  0.4489
+  1  À0.3312
+  1
+Population density
+
+7. The passenger-trip number of Hangzhou BRT was collected in 2006. Therefore, only Line 1 (27.2 km) is used as its total length. We also used the year
+that the passenger-trip number was collected in the mode to address the difference in the data collection period, but it is not statistically signiﬁcant.
+8. We are only able to identify population density at the city level, not at the BRT corridor or catchment area level.
+9. We have not been able to obtain data on car ownership at the city level for all of the BRT system locations. Also GDP per capita will be highly
+positively correlated with car ownership, and hence including both would be problematic.
+198 PART | III Bus Rapid Transit
+
+captured the macroeconomic and aggregate spatial inﬂuences.10 For example, the correlation between GDP per capita and
+the natural logarithm of fare (LnFare) is 0.8441, stronger than the correlation between GDP per capita and the natural
+logarithm of daily passengers-trips (LnRidership). Population density also has a much higher correlation with the length of
+a BRT network than with the dependent variable.
+
+16.5 Conclusions
+
+We have collected information on 46 BRT systems from 15 countries to investigate the potential patronage drivers. A
+number of sources of systematic variation are identiﬁed which have a statistically signiﬁcant impact on daily passenger-trip
+numbers. These sources include: (1) price sensitivity: the estimated fare elasticity in this study is À0.366; (2) frequency of
+service: the estimated headway elasticity is À0.294; (3) capacity of a BRT system: we found that the length of BRT
+network is signiﬁcantly positive to total system passenger-trips per day; (4) connectivity: the shorter average distance
+between stations would stimulate the demand for BRT; (5) integration: it is crucial to have integration between systems
+(e.g., with other PT routes) and at stations (allowing for more convenient transfers), and hence BRT must be treated as a
+part of system, not an individual corridor; (6) equipment: for example, pre-board fare collection and fare veriﬁcation would
+increase the use of BRT, given that it can reduce travel time, variability, crowding and congestion; and (7) quality control
+to ensure the service level.
+
+  These ﬁndings offer some useful inputs into planning and designing BRT systems to hopefully attract more passengers,
+especially from cars to public transport.11 BRT has great potential as a sustainable transport system, which can deliver high
+levels of frequency, regularity, connectivity and visibility for a relatively lower cost than other ﬁxed rail systems, resulting
+in an attractive value for money outcome for an entire metropolitan area.
+
+Appendix 16.A: descriptive statistics and correlation matrix for variables in
+
+Table 16.2
+
+Descriptive statistics
+
+Variable  Deﬁnition  Mean  Std.Dev.  Minimum  Maximum  Cases
+LNPAST  11.1542  1.69484  8.1605  15.9632  46
+LNFARE  Natural logarithm of daily  À0.5122  1.0773  À2.4447  2.1005  46
+LNHWAY  passenger-trips  0.8367  0.9213  À0.9676  2.3026  46
+TLETC37  Natural logarithm of fare  27.3813  22.8959  4  129.50  46
+NUETC36  (US$2006)  2.3043  2.2693  1  11  46
+DISDES  Natural logarithm of headway  0.6886  0.9508  0.0245  4.1142  46
+  (minutes)
+EXIINYES  Number of existing trunk  0.52174  0.50505  0  1  46
+  corridors
+MODISYES  Total length of BRT network  0.23913  0.43127  0  1  46
+PRFCVYES  (kilometres)  0.47826  0.50505  0  1  46
+  Average distance
+ATLBAYES  between stations/population  0.54348  0.50361  0  1  46
+  density
+  (metres/(persons/m2))
+  Existence of an
+  integrated network of routes
+  and corridors (Yes)
+  Modal integration at stations
+  (Yes)
+  Pre-board fare
+  collection and fare veriﬁcation
+  (Yes)
+  At-level boarding and alighting
+  (Yes)
+
+10. The model estimated is not a demand model in the fuller sense of accounting for competing modes and the inﬂuence of the socio-economic and spatial
+context; rather it is a representation of a model designed to identify the potential inﬂuence of BRT design, service and fares on passenger trips per day,
+holding all other possible inﬂuences constant at an average level that is captured by the model constant.
+11. This also requires some appropriate pricing mechanisms such as congestion pricing.
+  Ridership drivers of bus based transit systems Chapter | 16 199
+
+QCOIEYES  Quality control  0.41304  0.49782  0  1  46
+
+  oversight from an
+
+  independent entity/agency (Yes)
+
+LATIN  Latin America  0.26087  0.44396  0  1  46
+
+  (location of BRT)
+
+Correlation matrix for listed variables
+
+  Correlation Matrix for Listed Variables
+
+  --------+-----------------------------------------------------------------------
+
+  Cor.Mat.| LNPAST LNFARE LNHWAY TLETC37 NUETC36 DISDES EXIINYES MODISYES
+
+  --------+-----------------------------------------------------------------------
+
+  LNPAST| 1.00000 -.39176 -.58589 .75808 .71317 -.32385 .19390 -.38061
+
+  LNFARE| -.39176 1.00000 .30139 -.20421 -.06703 .14296 .04906 .58311
+  LNHWAY| -.58589 .30139 1.00000 -.41231 -.46122 -.13051 -.15529 .27750
+  TLETC37| .75808 -.20421 -.41231 1.00000 .77957 -.24855 .31534 -.30417
+  NUETC36| .71317 -.06703 -.46122 .77957 1.00000 -.24825 .24616 -.25767
+  DISDES| -.32385 .14296 -.13051 -.24855 -.24825 1.00000 .13729 .22737
+  EXIINYES| .19390 .04906 -.15529 .31534 .24616 .13729 1.00000 .12864
+  MODISYES| -.38061 .58311 .27750 -.30417 -.25767 .22737 .12864 1.00000
+  --------+-----------------------------------------------------------------------
+  Cor.Mat.| LNPAST LNFARE LNHWAY TLETC37 NUETC36 DISDES EXIINYES MODISYES
+  --------+-----------------------------------------------------------------------
+  PRFCVYES| .39006 -.61502 -.08940 .11244 -.09105 -.26893 -.21591 -.33269
+  ATLBAYES| .07427 -.33860 .18991 .09271 -.08961 -.41677 -.17854 -.10009
+  QCOIEYES| .11878 .32009 .06730 -.02953 .00428 -.09555 -.25747 .04725
+
+  LATIN| .56966 -.16889 -.25475 .34328 .31647 -.33281 -.12496 -.33305
+  --------+-----------------------------------
+  Cor.Mat.|PRFCVYES ATLBAYES QCOIEYES LATIN
+  --------+-----------------------------------
+  PRFCVYES| 1.00000 .61539 -.00769 .42229
+  ATLBAYES| .61539 1.00000 -.02890 .34571
+  QCOIEYES| -.00769 -.02890 1.00000 .10492
+
+  LATIN| .42229 .34571 .10492 1.00000
+

@@ -1,0 +1,1105 @@
+Bus Transport
+
+Demand, Economics, Contracting, and Policy
+
+David A. Hensher
+
+Institute of Transport and Logistics Studies
+The University of Sydney Business School
+The University of Sydney
+NSW, Australia
+Elsevier
+Radarweg 29, PO Box 211, 1000 AE Amsterdam, Netherlands
+The Boulevard, Langford Lane, Kidlington, Oxford OX5 1GB, United Kingdom
+50 Hampshire Street, 5th Floor, Cambridge, MA 02139, United States
+
+Copyright © 2020 Elsevier Inc. All rights reserved.
+
+No part of this publication may be reproduced or transmitted in any form or by any means, electronic or mechanical, including
+photocopying, recording, or any information storage and retrieval system, without permission in writing from the publisher.
+Details on how to seek permission, further information about the Publisher’s permissions policies and our arrangements with
+organizations such as the Copyright Clearance Center and the Copyright Licensing Agency, can be found at our website: www.
+elsevier.com/permissions.
+
+This book and the individual contributions contained in it are protected under copyright by the Publisher (other than as may
+be noted herein).
+Notices
+Knowledge and best practice in this ﬁeld are constantly changing. As new research and experience broaden our understanding,
+changes in research methods, professional practices, or medical treatment may become necessary.
+
+Practitioners and researchers must always rely on their own experience and knowledge in evaluating and using any
+information, methods, compounds, or experiments described herein. In using such information or methods they should be
+mindful of their own safety and the safety of others, including parties for whom they have a professional responsibility.
+
+To the fullest extent of the law, neither the Publisher nor the authors, contributors, or editors, assume any liability for any
+injury and/or damage to persons or property as a matter of products liability, negligence or otherwise, or from any use or
+operation of any methods, products, instructions, or ideas contained in the material herein.
+Library of Congress Cataloging-in-Publication Data
+A catalog record for this book is available from the Library of Congress
+British Library Cataloguing-in-Publication Data
+A catalogue record for this book is available from the British Library
+
+ISBN: 978-0-12-820132-9
+
+  For information on all Elsevier publications visit our website
+  at https://www.elsevier.com/books-and-journals
+
+Publisher: Joe Hayton
+Acquisitions Editor: Brian Romer
+Editorial Project Manager: Michelle W. Fisher
+Production Project Manager: Kamesh Ramajogi
+Cover Designer: Mark Rogers
+
+Typeset by TNQ Technologies
+This book contributes to the research program of the Volvo Research and
+Education Foundation Bus Rapid Transit Centre of Excellence (BRTþ). We
+acknowledge the Foundation for partial funding support. It is dedicated to
+those who believe in the role of the Bus. With chapter co-author contributions
+from Camila Balbontin, Geoffrey Clifton, David Cosgrove, Richard Ellison,
+Chinh Ho, Loan Ho, Louise Knowles, Julieta Legaspi, Zheng Li, Corinne Mulley,
+John Rose, Neil Smith, John Stanley, Janet Stanley, Alejandro Tirachini, Baojin
+Wang, Glen Weisbrod and Yale Wong. Andre Pinto assisted me in preparing
+this volume.
+List of previous sources of publication
+
+Reviews
+
+Hensher, D.A., 2015. Keeping the debate informed on reforms in land passenger transport: the inﬂuence of the Thredbo Series. Transport Reviews 34 (6),
+  671e673.
+
+Hensher, D.A., 2018. Public service contracts - the economics of reform with special reference to the bus sector. In: Cowie, J., Ison, S. (Eds.), The
+  Routledge Handbook of Transport Economics. Routledge, London, pp. 93e107. Chapter 7.
+
+Stanley, J., Hensher, D.A., Wong, Y.Z., 2018. Disruptive technology: a better future for land passenger transport?. In: Bus and Coach Industry Policy
+  Paper 11. Report prepared for Bus Industry Confederation.
+
+Wong, Y., Hensher, D.A., 2018. The Thredbo story: a journey of competition and ownership in land passenger transport. In: Paper Presented at the 15th
+  International Conference on Competition and Ownership of Land Passenger Transport (Thredbo 15), Stockholm, Sweden, 13e17 August 2017).
+  (Linked to VREF Centre), vol. 69. Research in Transportation Economics (RETREC), pp. 9e22.
+
+Contracting
+
+Hensher, D.A., Stanley, J.K., 2010. Contracting regimes for bus services: what have we learnt after 20 years? Research in Transportation Economics 29,
+  140e144.
+
+Hensher, D.A., 2010. Incompleteness and clarity in bus contracts: identifying the nature of the ex ante and ex post perceptual divide. Research in
+  Transportation Economics 29, 106e117.
+
+Hensher, D.A., Mulley, C., Smith, N.A., 2013. Towards a simpliﬁed performance-linked value for money model as a reference point for bus contract
+  payments. Presented at the 12th International Conference on Competition and Ownership of Land Passenger Transport (Thredbo 12), Durban, South
+  Africa September 2011. Published in Research in Transportation Economics 39 (1), 232e238.
+
+Hensher, D.A., 2014. The relationship between bus contract costs, user perceived service quality and performance assessment, presented at Thredbo 12,
+  Durban, South Africa, September 2011. International Journal of Sustainable Transportation special issue 8 (1), 5e27.
+
+Hensher, D.A., 2015. Customer service quality and benchmarking in public transport contracts. invited paper for inaugural issue of International Journal of
+  Quality Innovation 1 (1), 4.
+
+Hensher, D.A., 2015. Cost efﬁciency under negotiated performance-based contracts and benchmarking for urban bus contracts - are there any gains
+  through competitive tendering in the absence of an incumbent public monopolist? Presented at the 13th International conference on competition and
+  ownership of land passenger transport (Thredbo 13), Oxford September 15e19 2013. Journal of Transport Economics and Policy 49 (1), 133e148.
+
+Hensher, D.A., Ho, C., Knowles, L., 2016. Efﬁcient contracting and incentive agreements between regulators and bus operators: the inﬂuence of risk
+  preferences of contracting agents on contract choice. Paper presented at the 14th International Conference on Competition and Ownership of Land
+  Passenger Transport (Thredbo 14), Chile, August 30 to September 3, 2015 Transportation Research Part A 87, 22e40.
+
+Hensher, D.A., 2015. Using contracted assets to undertake non-contracted services as a way to improve cost efﬁciency under negotiated or tendered bus
+  contracts. invited paper for the inaugural issue of Journal of Strategic Contracting and Negotiation 1 (2), 118e128.
+
+Hensher, D.A., Ho, C., Mulley, C.M., 2016. Disruption costs in contract transitions. Paper presented at the 14th International Conference on Competition
+  and Ownership of Land Passenger Transport (Thredbo 14), Chile, August 30 to September 3, 2015 Research in Transportation Economics 59, 75e85.
+
+Bus rapid transit
+
+Hensher, D.A., 2007. Sustainable public transport systems: moving towards a value for money and network-based approach and away from blind
+  commitment. Transport Policy 14 (1), 98e102.
+
+Hensher, D.A., Li, Z., 2012. Ridership drivers of bus rapid transit systems. Transportation 39 (6), 1209e1221.
+
+  xv
+xvi List of previous sources of publication
+
+Hensher, D.A., Wong, Y., Ho, L., Clifton, G., 2018. From workhorse to thoroughbred: review of bus rapid transit and branded bus services in Australia
+  and future opportunities. In: Report prepared for Bus Industry Confederation, 21 December 2018. Paper to be presented at 16th International
+  Conference on Competition and Ownership of Land Passenger Transport (Thredbo 16), Singapore, August 2019.
+
+Li, Z., Hensher, D.A., 2019. Performance contributors of bus rapid transit systems within the ITDP BRT standard: an ordered choice approach. In:
+  Prepared for the 16th International Conference on Competition and Ownership of Land Passenger Transport (Thredbo 16), Singapore, August 2019.
+
+Image
+
+Hensher, D.A., Ho, C., Mulley, C.M., 2015. Identifying resident preferences for bus-based and rail-based investments as a complementary buy in
+  perspective to inform project planning prioritisation. Journal of Transport Geography 46 (1), 1e9.
+
+Hensher, D.A., Balbontin, C., Ho, C., Mulley, C., 2019. Cross-cultural contrasts of preferences for bus rapid transit and light rail transit. Paper presented at
+  the 15th International Conference on Competition and Ownership of Land Passenger Transport (Thredbo 15), Stockholm, Sweden, 13e17 August
+  2017. (Linked to VREF Centre). Journal of Transport Economics and Policy 53 (1), 47e73.
+
+Elasticities
+
+Hensher, D.A., 2008. Assessing systematic sources of variation in public transport elasticities: some comparative warnings. Transportation Research Part
+  A 42, 1032e1043.
+
+Crowding
+
+Li, Z., Hensher, D.A., 2011. Crowding and public transport: a review of willingness to pay evidence. Transport Policy 18, 880e887.
+Li, Z., Hensher, D.A., 2013. Crowding in public transport: objective and subjective measures (linked to ARC- DP 2012e2014). Journal of Public
+
+  Transportation 16 (2), 107e134.
+Tirachini, A., Hensher, D.A., Rose, J.M., 2013. Crowding in public transport systems: Effects on users, operation and implications for the estimation of
+
+  demand. Transportation Research Part A 53, 36e52.
+
+System wide multi-modal assessment
+
+Tirachini, A., Hensher, D.A., 2012. Multimodal transport pricing: ﬁrst best, second best and extensions to non-motorised transport. Transport Reviews 32
+  (2), 181e202.
+
+Transport appraisal
+
+Legaspi, J., Hensher, D.A., Wang, B., 2015. Estimating the wider economic beneﬁts of transport investments: investigating the case of the Sydney north-
+  west rail link project. Case Studies on Transport Policy 3 (2), 182e195.
+
+Weisbrod, G., Mulley, C., Hensher, D.A., 2016. Recognising the complementary contributions of cost-beneﬁt analysis and economic impact analysis to an
+  understanding of the worth of public transport investment: a case study of bus rapid transit in Sydney, Australia. Paper Presented at the 14th
+  International Conference on Competition and Ownership of Land Passenger Transport (Thredbo 14), Chile, August 30 to September 3, 2015 Research
+  in Transportation Economics 59, 450e461.
+
+Hensher, D.A., Ellison, R., Ho, C., Weisbrod, G., 2019. How well does BRT perform in contrast to LRT? An Australian case study using MetroScan_TI.
+  In: Ferbrache, Fiona (Ed.), Developing Bus Rapid Transit: The Value of BRT in Urban Spaces. Edward Elgar Publisher. Chapter 8.
+
+Energy
+
+Mulley, C.M., Hensher, D.A., Cosgrove, D., 2017. Is rail cleaner and greener than bus? Transportation Research Part D 51 (1), 14e28.
+
+Social exclusion
+
+Stanley, J., Stanley, J., Balbontin, C., Hensher, D.A., 2019. Social exclusion: the roles of mobility and bridging social capital in regional Australia.
+  Transportation Research Part A 125, 223e233.
+  List of previous sources of publication xvii
+
+Mobility as a service
+
+Hensher, D.A., 2017. Future bus transport contracts under mobility as a service regime in the digital age: are they likely to change? Presented at the 15th
+  International Conference on Competition and Ownership of Land Passenger Transport (Thredbo 15), Stockholm, Sweden, 13e17 August 2017
+  Transportation Research Part A 98, 86e96.
+
+Ho, C., Hensher, D.A., Mulley, C.M., Wong, Y., 2018. Potential uptake and willingness-to-pay for Mobility as a Service (MaaS): a stated choice study.
+  Paper presented at the 15th International Conference on Competition and Ownership of Land Passenger Transport (Thredbo 15), Stockholm, Sweden,
+  13e17 August 2017 Transportation Research Part A 117, 302e318.
+
+Wong, Y.Z., Hensher, D.A., Mulley, C., 2019. Mode-agnostic mobility contracts: Identifying broker/aggregator models for delivering mobility as a
+  service (MaaS). In: World Conference on Transport Research - WCTR 2019, Mumbai, 26e31 May 2019. Also accepted for presentation at the
+  January 2019 Transportation Research Board Annual Conference, Washington D.C.
+
+Hensher, D.A., 2018. Tackling road congestion e what might it look like in the future under a collaborative and connected mobility model?, Invited paper
+  from an eminent academic on invitation from Editor in Chief Tae Oum. Transport Policy 66, A1eA8.
+About the author
+
+David Hensher is Professor of Management, and Founding Director of the Institute of Transport and Logistics Studies
+(ITLS): The Australian Key Centre of Teaching and Research in Transport Management in The Business School at The
+University of Sydney. ITLS is ranked under Excellence in Research Australia (ERA) at level 5 (‘well above world
+standards’). Educated in Kenya (Parklands, Lord Delamere), England (Lindﬁeld, Oxford) and Australia (UNSW), David is
+a Fellow of the Academy of Social Sciences in Australia (FASSA), Recipient of the 2009 IATBR (International Asso-
+ciation of Travel Behaviour Research) Lifetime Achievement Award in recognition for his long-standing and exceptional
+contribution to IATBR as well as to the wider travel behaviour community (http://iatbr.weebly.com/award-winners.html),
+Recipient of the 2006 Engineers Australia Transport Medal for lifelong contribution to transportation, Recipient of the
+2009 Bus NSW (Bus and Coach Association) Outstanding Contribution to Industry Award, and Recipient of the 2012 best
+paper released by the International Association of Maritime Economists (IAME). David is also the recipient of the Smart
+2013 Premier Award for Excellence in Supply Chain Management, and recipient of the 2014 Institute of Transportation
+Engineers (Australia and New Zealand) Transport Profession Award to an individual who has made a signiﬁcant
+contribution to the development of the transport/trafﬁc engineering profession over a sustained period; recipient of 2016
+Award for Outstanding Research as part of the inaugural University of Sydney Vice-Chancellor’s Awards for Excellence.
+David is also the recipient of the 2019 John Shaw Medal which honours an industry champion who has made a lasting
+contribution to Australia’s roads. Selected in 2018 by The University of Sydney as one of 25 research stars for the ARC
+Inaugural Engagement and Impact submission (ranked one of 12 with High Impact). A Director of Volvo Educational and
+Research Foundation Centre of Excellence in Bus Rapid Transit (2010 onwards), Emeritus Member of Singapore Land
+Transport Authority International Advisory Panel 2007e2010 (Chaired by Minister of Transport), Honorary Fellow
+Singapore Land Transport Authority Academy, Past President of the International Association of Travel Behaviour
+Research and a Past Vice-Chair of the International Scientiﬁc Committee of the World Conference of Transport Research.
+David is the Executive Chair and Co-Founder of The International Conference in Competition and Ownership of Land
+Passenger Transport (the Thredbo Series http://www.thredbo-conference-series.org/), now in its 30th year. David is on the
+editorial boards of 17 of the leading transport journals. David was appointed in 1999 by one of the world’s most prestigious
+academic publishing houses - Elsevier Science press - as series and volume co-editor of a handbook series Handbooks in
+Transport. In 2010 he was appointed by Routledge Publishers (UK) as Editor of a four-volume major works in Transport
+Economics as well as Edward Elgar Publishers as Series Editor for volumes on Transport and the Environment. He has
+published extensively (over 635 papers) in the leading international transport and economics journals (such as The
+Economic Journal, Review of Economics and Statistics, Journal of Econometrics, Journal of Applied Econometrics,
+Applied Economics, Empirical Economics, Transportation Research Parts A, B and E) as well as 16 books, and is
+Australia’s most cited transport academic. David has over 54,000 citations of his contributions in Google Scholar (seventh
+most cited academic at the University of Sydney in all disciplines). David is ranked third in the world for economists in the
+ﬁeld of discrete choice models, as of August 2019 (https://ideas.repec.org/top/top.dcm.html) and ITLS (and the Business
+School at Sydney) is ranked second. His books include the Demand for Automobiles, published by North-Holland, the Bus
+and Coach Business (with Ann Brewer published - Allen and Unwin), Transport: An Economics and Management
+Perspective (With Ann Brewer e Oxford University Press), Stated Choice Methods (with Jordan Louviere and Joffre
+Swait e Cambridge University Press), Applied Choice Analysis - a Primer (with John Rose and Bill Greene e Cambridge
+University Press, ﬁrst and second editions), Ordered Choice Models (with Bill Greene e Cambridge University Press) and
+Understanding Mobility as a Service (MaaS) - Past, Present and Future (with Corinne Mulley, Chinh Ho, John Nelson,
+Göran Smith and Yale Wong).
+
+  xix
+xx About the author
+
+  His particular interests are transport economics, transport strategy, sustainable transport, productivity measurement,
+traveller behaviour analysis, choice analysis, stated choice experiments, process heuristics, and institutional reform (PPPs,
+privatisation tendering and contracting) and Understanding Mobility as a Service (MaaS) - Past, Present and Future (with
+Corinne Mulley, Chinh Ho, John Nelson, Göran Smith and Yale Wong - Elsevier). David has advised numerous
+government and private sector organisations in many countries on matters related to transportation, especially matters
+related to forecasting demand for existing and new transportation services; for example the Speedrail high speed rail
+project, fast rail in regional NSW, the Fiji Travel Survey, the Liverpool-Parramatta Transitway, the North-West Rail
+project, West Connex, the Sydney Metro, public transport elasticities, and numerous toll road projects throughout Australia
+and internationally. David is regarded as Australia’s most eminent expert on matters relating to travel demand and
+valuation and transport reform. Appointments include: a member of the executive committee that reviewed bus transport
+bids for the Olympic Games, the NSW Government’s Peer Review Committee for the Sydney Strategic Transport Plan,
+Peer reviewer for Transfund (NZ) of the New Zealand project evaluation program, Peer reviewer of the NZ Land Passenger
+Transport Procurement Strategy for Land Transport NZ, member of the executive committee of ATEC, a consortium
+promoting a freight rail system between Melbourne and Darwin; economic adviser to GilbertþTobin Lawyers on valuation
+methods in IP context; panel member of Transport NSW benchmarking program; specialist toll road project adviser to
+Thiess, member of Infrastructure Australia’s reference panel on public transport, adviser to the West Connex toll road
+Project, adviser to Deloitte Access Economics, Transport for NSW and peer reviewer for Southern Water (UK) regulatory
+pricing reform, and member of Board of Advice of ITLS (Africa). In 2014 David was appointed as a Panel Member to
+Review The Faculty of Management at The University of Johannesburg and in 2016 to review the Department of
+Management Sciences at the City University of Hong Kong. Member of Transport for NSW Connected and Automated
+Vehicle Stakeholder Reference Group (formed in 2017) and Infrastructure NSW Smart Cities Working Group.
+Chapter 1
+
+Introduction
+
+Public transport is a theme of enormous importance in all societies. The bus is the most patronised of all landebased public
+passenger modes. It is however seen as a somewhat unglamourous means of supporting mobility and accessibility
+(in contrast to rail e heavy and light), yet offers so much to the travelling public as well as offering attractive sustainability
+opportunities. We recognise however that attracting and retaining public transport patronage in general, and bus in
+particular, is a growing challenge in many countries, developed and developing, rich and poor, and will be further
+exacerbated in economies that are moving towards a high level of economic efﬁciency and wealth, where the desire and
+ability to own and use an automobile will continue to impact the future of all forms of land-based public transport,
+especially for the majority of urban and regional travel. This future may be at further risk with the introduction of
+autonomous cars.
+
+  There is no doubt that the role of urban public transport is continuing to change. The gradual loss of market share in
+large metropolitan centres, typical of many western cities (despite some promising signs of a reversal in some cities), is a
+product of public transport being unable to be responsive to the changing needs of the market, while the car, due to its
+inherent attributes of ﬂexibility and convenience, keeps pace with people’s ever changing transport needs. If there are three
+overriding characteristics portraying the current market proﬁle, it is increasing real wealth for most groups but not all,
+greater complexity of activities undertaken in the daily life cycle, and the ﬂexibility offered by alternative forms of
+transport (and non-transport responses such as working from home). These are strong forces of change, which move
+conventional regular ﬁxed route public transport even further away from meeting many mainstream demands. Certainly,
+there are some signs of increasing use of public transport, although modal shares are going the other way e for many
+reasons such as longer train trips to lower priced residential locations, but the impact on the overall transport task is often
+small.
+
+  In many western societies and a growing number of developing economies, motorised urban public bus and rail
+transport is a niche market provider and looks like being so for the foreseeable future, even with new opportunities enabled
+by the increasing availability of digitally supported technology to better inform the public of the service opportunities
+provided by public transport. It is also unclear what role the bus might play in and future multi-modal developments
+associated with Mobility as a Service (MaaS), although there is a growing sense that without public transport at the centre
+of MaaS, it will be nothing more than a car-based offering that will be opposed by governments globally. But what market
+niches are we talking about? The answer lies in the realm of the diversity of customer needs (both real and latent) and the
+types of services that can be offered through public transport to capture some (even if small) amounts of particular
+passenger markets. For example, commuters with a ﬁxed workplace, travelling during the morning and evening peak
+between two locations with plenty of trafﬁc, and who have no commitments before or after work, other than to get to and
+from home, are good candidates for public transport use; school children; adults on very low household incomes; special
+events (sporting, cultural etc.), and the elderly in declining health who cannot drive.
+
+  This book reﬂects the author’s perspective on issues of importance to the preservation and health of the bus sector. The
+thirty four (34) chapters are edited versions of papers and reports written over the last twelve years, many of which have
+been published in journals and edited conference proceedings, while some are reports commissioned by transport
+authorities and associations. The research presented in this volume is intended to capture the debate on the role and
+relevance of the bus sector.
+
+  In preparing this document, I have selected papers that cover the themes of institutional reform, performance mea-
+surement and monitoring, service quality, travel choice and demand, integrated bus-based systems (referred to a bus rapid
+transit, busways, transitways), energy contrasts between PT modes, challenges in promoting bus over rail, and public
+transport policy, especially challenges in growing patronage, disruptive technology and mobility as a service (MaaS).
+
+  I have been privileged to work with many ﬁne researchers who have co-authored earlier versions of many of the
+chapters. I am indebted to Yale Wong (Chapters 3, 5, 18, 32 and 33), John Stanley (Chapters 3,6 and 30), Corinne Mulley
+(Chapters 8, 14, 19, 20, 27, 29, 32 and 33), Neil Smith (Chapter 8), Chinh Ho (Chapters 12, 14, 19, 20, 28 and 32), Louise
+
+Bus Transport. https://doi.org/10.1016/B978-0-12-820132-9.00001-7  1
+
+Copyright © 2020 Elsevier Inc. All rights reserved.
+2 Introduction
+
+Knowles (Chapter 12), Zheng Li (Chapters 16, 17, 22 and 23), Loan Ho and Geoffrey Clifton (Chapter 18), Camila
+Balbontin (Chapters 20 and 30), Alejandro Tirachini (Chapters 24 and 25), John Rose (Chapter 24), Julieta Legaspi
+(Chapter 26), Baojin Wang (Chapter 26), Glen Weisbrod (Chapters 27 and 28), Richard Ellison (Chapter 28), David
+Cosgrove (Chapter 29) and Janet Stanley (Chapter 30).
+
+  I also wish to thank the many researchers who have provided an opportunity for dialogue on the many issues discussed
+in this book. In particular, I acknowledge the support of Michael Apps, Bill Greene, Sergio Jara-Diaz, Chandra Bhat, Ian
+Wallis, Juan de Dios Ortuzar, Juan Carlos Munoz, Ricardo Giesen, Jackie Walters, John Nelson, Darryl Mellish, Matt
+Threlkeld, Stephen Rowe, Didier van de Velde, John Preston, Chris Nash, Neil Smith and David Bray.
+Chapter 2
+
+Public service contracts in the bus sector
+
+2.1 Introduction and background
+
+The provision of route bus services in many economies has changed considerably over the years. Following an initial
+situation that typically involved private sector provision up until the 1970s, as is still common among most developing
+economies, public sector monopolies became the norm. A substantial swing to private sector service provision then began
+in the 1980s, largely driven by a desire to reduce the growing call of services on the public purse and to provide scope for
+private sector innovation, which was thought likely to improve customer services and reduce costs (Hensher and Wallis,
+2005).
+
+  In the developed world, there has been a growing interest in creating a competitive environment in which to deliver
+improved passenger transport services that not only grows patronage but also reduces the amount of subsidy payment from
+government to operators, be they public or private. In most locations where competition was deemed suitable, the rights to
+provide service have been increasingly achieved through competitive tendering (CT). The enthusiasm for private delivery
+of route bus services through CT has varied between countries, with negotiated contracts still popular in mainland Europe
+with a few exceptions such as Norway, Sweden and the Netherlands; however the winds of change have begun to revise
+the agenda as a result of European Union competition policy. Australia has always had a signiﬁcant private sector presence
+in bus service provision, and the role of the private sector was increased through tendering out of services, initially in
+Adelaide and Perth in the 1990s (Wallis and Hensher, 2007). Sydney moved (in 2013) from negotiated contracts to CT but
+only for private operators, protecting the less efﬁcient public operator (see Hensher, 2015 for full details), until 2018
+when one of the public operator regions was put out to tender with a private operator winning the right to deliver services
+(including for the ﬁrst time a component of demand responsive services). Singapore in early 2015 put all of its bus
+services out to tender, with 11 bidders. In the USA we mainly see management contracts that involve another party running
+services under contracts that are owned by the State.
+
+  Interest in public sector contracts has clearly been growing among those involved with public passenger transport. As
+governments move towards separation of regulation from operations, explicit contracts are becoming more common. The
+incentive implications of different contracts (including cost-plus, gross-cost, gross-cost with incentives and net-cost) have
+been explored in numerous case studies. Classical agency theory describes the way in which principals (i.e., regulatory
+authorities) and agents (operators) trade-off risk-sharing and effort incentives when forming a contract. Typically, operators
+are assumed to be risk-averse and authorities risk-neutral. Risk can be efﬁciently allocated to the regulatory authority, but
+this gives the operator no incentive for effort. As a result, we would expect to ﬁnd operators bearing at least some risk, the
+optimal amount depending on the preferences of both parties as well as other factors such as the cost of monitoring effort.
+
+  The current chapter draws on the wider literature in economics that explores the role of contracting in the delivery of
+efﬁcient and effective services, which is very relevant to the passenger transport sector. There is an increasing interest in
+the type of contracts that govern transactions between regulators and public transport operators amongst transport
+researchers. The use of performance-based contracts (PBCs) designed to enhance operator performance via incentives
+(such as patronage growth and service enhancements). PBCs have been suggested as a contract form more likely to deliver
+an efﬁcient outcome than the prevalent ﬁxed-fee or cost-plus approaches (Hensher and Stanley, 2003; Carlquist, 2001;
+Johansen et al.,. 2001). Such contracts therefore are partly designed to replicate the rewards that would be found in a free
+market. However, the use of PBCs in public transport has been limited to a few countries such as Norway (Fearnley et al.,
+2005), New Zealand (Wallis, 2003) and Australia (Hensher and Stanley, 2003). Are these the only public transit
+environments where the use of incentive contracts is efﬁcient, or is there simply a lag in diffusion of this more efﬁcient
+contracting technology? The transport literature is strangely silent on this issue.
+
+  When looking for answers outside the transport literature, it is immediately apparent that an extraordinary amount of
+theoretical and empirical research has been undertaken relating to the use of different contract forms. Thousands of studies
+have been conducted which seek to explain and optimise contract use (for an overview of the literature see Boerner and
+
+Bus Transport. https://doi.org/10.1016/B978-0-12-820132-9.00002-9  5
+
+Copyright © 2020 Elsevier Inc. All rights reserved.
+6 PART | I Reviews
+
+Macher, 2002; Shelanski and Klein, 1995; Lyons, 1996; and Masten and Saussier, 2000). For example, empirical research
+has been applied to defence (e.g., Crocker and Reynolds, 1993; Adler et al., 1999), agriculture, health (Gaynor and Gertler,
+1995), mineral exploration, information technology (Banerjee and Dufﬂo, 2000), education, construction (Bajari and
+Tadelis, 2001), fund management, and much more. In their survey of the literature of transaction cost economics, much of
+which is directly relevant to contract choice, Boerner and Macher (2002) incorporated over 600 studies. Inclusion of
+relevant studies using principal-agent theory would be expected to add to this number exponentially. Contracts are
+everywhere and ongoing questions about the foundations of contract theory make this an open and fertile area of research.
+This chapter draws on this broader literature as a way of revealing the potential strengths and weaknesses of alternative
+ways to garner greater performance from the delivery of bus services that are primarily under the control of the public
+sector but which are increasingly delivered by the private sector on behalf of the public sector.
+
+2.2 Contract theory and risk
+
+The cost of contracting is central to the ‘make or buy’ question introduced in Coase’s famous 1937 article that founded the
+modern theory of the ﬁrm. Informed by both transaction cost economics and the neoclassical paradigm, a branch of enquiry
+emerged relating to incentive systems (Holmstrom and Milgrom, 1991, 1994). This line of research focuses on the
+incentive problem between a principal and an agent. Gibbons (2005) shows the relationship between incentive theory and
+other branches of the theory of the ﬁrm: rent seeking theory (e.g., Williamson, 1979, 1985; Klein et al. 1978); property-
+rights theory (e.g., Grossman and Hart 1986; Hart and Moore, 1990) and adaptation theory (e.g., Simon, 1951; Williamson,
+1991). Cheung (1969) and Stiglitz (1974) were among the ﬁrst to apply what we now recognise as the classical
+principaleagent framework with risk aversion attitude, in an attempt to explain the existence of sharecropping. Interest in
+the moral hazard induced by sharecropping can be traced to Adam Smith’s The Wealth of Nations.
+
+  Using the sharecropping example, we brieﬂy describe the model in general form, as presented by Gibbons (1998), to
+illustrate the central role of risk allocation and incentives on contract choice. Consider an agent who takes an unobservable
+action a to produce output y. For example, the production function might be linear y ¼ a þ ε, where ε is a random variable
+with mean 0 and variance s2. The principal owns the output but contracts to share it with the agent by paying a wage w
+contingent on output. For example, the wage contract might be linear, w ¼ s þ by, where the intercept s is the salary and
+the slope b is the bonus rate. The agent’s payoff is w e c(a), the realised wage minus the disutility of action, c(a). The
+principal’s payoff is y* e w, the realised output net of wages where y* is the dollar value of the output.
+
+  The farmer’s objective is to maximise their expected utility by choosing their optimum effort level given the terms of
+the land contract. Because effort is unobservable and because there is uncertainty in farm production, there is moral hazard
+for any contract where the farmer does not receive 100% of y. The principal maximises expected proﬁts by choosing the
+optimal contract parameters, usually some combination of salary s and bonus b (a share of y).
+
+  The key idea in this model is that the agent is risk-averse (the principal may be too). The equilibrium contract that
+solves this model trades off the incentive effects of paying a greater bonus to the agent against the agent’s risk aversion.
+The extreme case b ¼ 0 offers the agent complete insurance against uncertainty in the weather, s2, but no incentives to
+increase output y. The other extreme, b ¼ 1, gives the agent 100% of the output risk y, removing moral hazard, but offers
+no insurance. The efﬁcient bonus rate is between 0 and 1, and it depends on s2 and the risk preferences of the two parties.
+For a risk-neutral farmer, b ¼ 1 is a ﬁrst-best solution, but a risk-averse farmer prefers a contract where income is insured
+to some extent. For a risk-averse farmer, the size of s2 will determine both the likelihood of observing a bonus contract and
+the size of the bonus.
+
+  While sharecropping is the traditional application, it is easy to apply the agency model to the public transport context.
+From this perspective the cost of offering a PBC to a (risk-averse) operator is that it imposes risk on their compensation,
+which causes higher contract costs. The risk imposed on contractors is increasing in the uncertainty of the environment so
+that the standard test of the trade-off is to show that incentive pay is lower in more certain environments.
+
+  Agent risk-aversion is a necessary condition in the principleÀagent model because the farmer’s margin relates only to
+the farmer’s (unobservable) effort. In this classical paradigm, which dominates the literature relating to optimum contract
+form, the need to share risk efﬁciently is traded-off against the need to provide efﬁcient incentives. Surprisingly, of the few
+studies that have examined risk sharing and contract choice, most have failed to ﬁnd evidence to support the view that risk
+preferences are important (see Prendergast, 2002).
+
+  In addition to agent risk-aversion attitude, agent risk-neutrality attitude has been explored in what is known as a pure
+incentives framework. There is an extensive literature relating to contracts under conditions that complicate agent
+incentives. These include double-sided moral hazard (Lafontaine, 1992; Eswaren and Kotwal, 1985; Lafontaine and
+Bhattacharyya, 1995), multitask agency (Holmstrom and Milgrom, 1991; Baker, 1992, 2002), monitoring costs
+  Public service contracts in the bus sector Chapter | 2 7
+
+(Alston et al.,1984; Prendergast, 2002; Lafontaine and Slade, 2001), measurement costs (Allen and Lueck, 1992a, 1993)
+and delegation (Prendergast, 2002; Foss and Laursen, 2005).
+
+  Transaction cost economists have examined incentives in the lens of incomplete contracting and the resulting moral
+hazard, showing that asset speciﬁcity, uncertainty, complexity and transaction frequency inﬂuence contract choice
+(Williamson, 1979; Goldberg, 1990). This empirical work shows that optimal contract choice depends on speciﬁc
+knowledge of production processes to capture accurately complex incentive trade-offs. In general, incentive contracts will
+be attractive where the costs of measuring performance are low, and the opportunities for moral hazard are large and many.
+
+  Before moving on, it is worth noting that the role of risk preferences in determining optimal contract form is an open
+area of research. Despite the lack of empirical evidence, risk-aversion may be an important driver; and if this were the case,
+the implications of ignoring the risk-sharing/incentives trade-off are profound. See Kim and Wang (2004) for a discussion
+of how important risk preferences are in shaping contract choice even if the agent is almost neutral.
+
+2.3 Efﬁcient contracting
+
+Contract theorists have analysed different types of contracts and contract clauses and the factors that lead to their use in a
+variety of settings. Studies of contract choice typically analyse the choice among various types of contracts, usually cost-
+plus contracts and ﬁxed-fee contracts (e.g., Eswaren and Kotwal, 1985; Allen and Lueck, 1992a,b), and examine attributes
+of the current transaction to determine the optimal contract. Results are speciﬁc to the situation being investigated; however
+clues emerge about the type of environments that are conducive to performance-based contracting.
+
+2.3.1 The output that the principal cares about can be easily described
+
+Output is not always easy to measure and validate. In a famous article “on the folly of rewarding A, while hoping for B”,
+Kerr (1975) provided numerous examples of the unwelcome consequences of PBCs that distort rather than enhance agent’s
+effort to produce what the principal wants. Incentive payments tend to overemphasise tasks that are highly visible,
+objective, and easily quantiﬁed and measured. Gibbons (1998) provides an overview of the role of subjective assessments
+in incentive contracts. Holmstrom and Milgrom (1991) formalised this ‘multitask’ problem. In their model, the seller
+engages in two tasks: effort in cost reduction, ec, and effort in quality enhancement, eq. Their model employed two extreme
+assumptions: (1) the tasks are perfect substitutes in the seller’s private cost function, g(ec þ eq), and (2) costs are veriﬁable
+but quality is not. The model shows that giving the seller incentives to reduce costs will cause him to ignore quality
+considerations completely and engage only in cost reductions. If quality is important to the principal, this is not a good
+outcome. In a different context, Manelli and Vincent (1995) show that if the buyer cares a lot about quality, using an
+auction mechanism (which is associated with a ﬁxed price) is not efﬁcient.
+
+  The case study provided by Stanley and Hensher (2004), describing the use of incentive contracts in train and tram
+industry in Melbourne, Australia, indicates that it may be relatively easy to describe public transport output in an incentive
+contract. In the public transport context, “the best single measure of the success of a speciﬁc contracting regime is the
+growth in patronage” (Hensher and Wallis, 2005, p.312) which, depending on technology, can be relatively easy to
+measure.
+
+2.3.2 The agent has considerable discretion in their actions
+
+Bajari and Tadelis (2001) show that cost-plus contracts are preferred to a ﬁxed-price contract for complex projects which
+are expensive to design and associated with a low level of completeness or a high probability that adaptations will be
+needed. Conversely, more simple projects, with lower uncertainty, greater completeness and low probability of adapta-
+tions, will be procured using ﬁxed-price contracts. The intuition for this result stems from the trade-off between providing
+ex ante incentives and avoiding ex post transaction costs due to costly renegotiation. In ﬁxed price contracts, risk is
+allocated mainly on the contractor (b ¼ 1) while in cost-plus contracts the contractor bears very little risk (b ¼ 0). High
+incentives of ﬁxed-price contracts reduce costs but also dissipate ex post surplus due to renegotiation. Low incentives of
+cost-plus contracts do not erode ex post surplus but provide no incentive for cost saving effort. Thus, the introduction of
+PBCs would be most effective in more complex situations.
+
+  Another way to look at this is to consider that output-based incentive pay is more likely to be observed in cases where
+contractors have considerable discretion. There is little need to base pay on output when inputs are monitored. Thus,
+uncertain environments result in the delegation of responsibilities, which in turn generates incentive pay based on outputs
+(Prendergast, 2002).
+8 PART | I Reviews
+
+2.3.3 The agent owns assets
+
+Grossman and Hart (1986) and Hart and Moore (1990) formalised a model of incomplete contracting consistent with earlier
+transaction cost theory e contracts are incomplete (bounded rationality), contracts are not self-enforcing (opportunism),
+court ordering is limited (non-veriﬁability) and the parties are bilaterally dependent (transaction speciﬁc investments) e but
+they further assumed that there is no costly ex post renegotiation (they assume common knowledge of payoffs and costless
+bargaining). Their focus is instead on how different conﬁgurations of physical asset ownership, to which residual rights of
+control accrue, are responsible for efﬁciency differences at the ex ante stage of the contract.
+
+  In the same spirit, Holmstrom and Milgrim’s (1991) model shows that the optimal contract is different for an asset
+owner (called a contractor in the model) and a non-owner (employee). Measured performance p reﬂects one action a1, but
+another action a2 changes the value v of an asset used in the production process. These two actions compete for the agent’s
+attention. As before, the employee is paid only on measured performance (w ¼ s þ bp) but the contractor receives both
+wages and any change in the asset’s value (w þ v). Thus, the contractor has great incentive to invest in a2, and it
+will require a larger bonus rate, b, to focus the contractor’s attention on a1 than is the case for an employee who is not
+distracted by v.
+
+2.4 Why are performance-based contracts so rare?
+
+McAfee and McMillan (1986) analyse a model in which risk-averse contractors bid and the buyer is faced with both
+adverse selection and moral hazard. The model shows that the trade-off between risk sharing, incentives, and information
+cause incentive contracts (0 < b < 1) to be generally desirable and that cost-plus contracts (b ¼ 0) are never optimal.
+However, they acknowledge that most government contracts are ﬁxed-fee or cost-plus, and this is conﬁrmed
+overwhelmingly in the literature. How can we explain this?
+
+  Hart and Holmstrom (1987) suggest that optimal contracts (incentive contracts) are often extremely complicated. In the
+presence of moral hazard, optimality means inclusion of all relevant information and detailed speciﬁcation of multiple
+contingencies. That contracts are usually simple in practice is a result of incomplete information, leading to what Bajari and
+Tadelis (2001) describe as a ‘nonconvex’ procurement problem resulting in extreme contracts. They argue that there is a
+fundamental difference between a ﬁxed-price contract and an incentive contract, where a ﬁxed-price contract requires no
+cost measurement. This leads to a clear discontinuity in the cost of measuring and monitoring costs, and implies that ﬁxed-
+price contracts will dominate contracts that are ‘close’ to ﬁxed-price, and as it becomes costlier to measure costs, ﬁxed-
+price contracts will dominate a larger set of incentive contracts. Similarly, they suggest a fundamental difference
+between a cost-plus contract and incentive contracts, as there is a risk of costly distortion where incentives are introduced.
+Therefore, solutions close to cost-plus will be dominated by cost-plus contracts.
+
+  Schwartz and Watson (2004) use a legal framework to help explain the popularity of simple contracts. There is a trade-
+off between the costs of contract complexity with gains from efﬁcient investment incentives: higher contracting costs result
+in simpler contracts. Agents have preferences for high or low renegotiation costs depending on contract complexity
+(a complex contract requires high renegotiation costs to retain the incentive scheme). They argue that contract law
+(for example, the prohibition of contract renegotiation bans) discourages complex contractual forms by making renego-
+tiation relatively cheap.
+
+  So should incentive contracts be used more often? Dye and Sridhar (2005) uses moral hazard severity to help explain
+that simple contracts can be optimal, despite the potentially vast array of performance measures that are ‘marginally
+informative’ (see Holmstrom, 1979). Paul and Gutierrez (2005), looking from a practitioner angle, disagree. This is an
+open research question.
+
+2.5 An overview of contract regimes in passenger transport
+
+2.5.1 Competitive tendering
+
+Competition is important to ensure that privatisation improves efﬁciency. Many cities have introduced competition for the
+market through competitive tendering of licences to operate public transport services for a speciﬁed duration, for example,
+15 years to operate a rail line or 5 years to operate a package of bus services. Cherry-picking of proﬁtable routes could be
+prevented by packaging unproﬁtable routes with proﬁtable ones or by provision of government subsidies. Licences could
+be awarded based on a number of criteria, e.g., track record, proposed fares and services, or required amount of
+government subsidies.
+  Public service contracts in the bus sector Chapter | 2 9
+
+  Interested operators would submit competitive bids proposing high levels of service, low fares and low level of
+government subsidies in order to win the tenders. If there is intense competition for the tender, the winning bid would be
+close to the outcome with market competition. The transport regulator would enter into a contract with the winning
+operator based on the proposed terms. The operator has the incentive to be as efﬁcient as possible to maximise proﬁts for
+the limited duration of the licence. Extension of the licence could be contingent on the incumbent operator’s performance.
+The threat of replacement after expiry of the licence incentivises the incumbent to maintain good performance.
+
+  Due to the durable, immobile nature of transport investments, and the essential service nature of public transport, both
+parties e the operator and the regulator acting on behalf of passengers e are vulnerable to opportunistic behaviour of the
+other party. A long-term contract could protect both parties from opportunism by establishing clear commitments. The
+level of commitment depends on the completeness of the contract; a more complete contract is able to cover more con-
+tingencies (Hensher, 2010). However it is undesirable and impossible to write a complete contract with a long duration if
+the environment is changing rapidly. A contract that is overly prescriptive may be inﬂexible to changing circumstances.
+Drafting a relatively complete contract may be too difﬁcult and the transactions costs too high (Gomez-Ibanez, 2003).
+
+  London’s bus system is the oft-cited example of how one of the world’s largest urban bus systems has beneﬁted from
+CT at the route level. London began privatising its government-run bus operator and tendering bus services in 1985 and the
+conversion was completed by 1999. Cox (2004) compared the situation in London before and after the conversion, and
+found signiﬁcant productivity improvement and cost reductions. Prior to privatisation and CT, bus costs per vehicle
+kilometre had risen 79% between 1970 and 1985. This trend was reversed with costs per vehicle kilometre falling by 48%
+from 1985 to 2001. Annual capital and operating expenditures dropped 26%, despite service expansion of a similar
+magnitude in the same period. Unit costs fell 48% and productivity measured by level of service per unit of currency
+increased 91%. Government subsidies were reduced substantially and reached a low of zero subsidies in 1997/8. Similar
+beneﬁts were observed for Copenhagen, Stockholm, San Diego, Denver and Las Vegas after CT was introduced
+(Cox, 2004).
+
+  These cost savings, however, were often once-off - a windfall gain. Many of the cities which experienced cost savings
+after introducing CT saw unit costs rising in subsequent tenders, for example, in London, Copenhagen and Stockholm
+(Hensher and Wallis, 2005), despite the primary focus of CT being to lower costs, subject to prescribed service levels. This
+has stimulated discussion on alternatives to CT, such as negotiated performance-based contracts (NPBCs) between
+regulators and operators, where there is greater emphasis on service improvement.
+
+2.5.2 Negotiated performance-based contracts
+
+The evidence that savings from competitive tendering (CT) diminish beyond ﬁrst round tenders, together with dissatis-
+faction with what competitive tendering has delivered for service improvements in some jurisdictions, has encouraged the
+search for alternative awarding mechanisms that can sustain performance pressure (Wallis and Hensher, 2007). An
+important development has been the focus on the theory and practice of negotiated performance-based contracts (NPBCs),
+particularly as an alternative to competitive tendering, as a means to award the right to provide service (see, for example,
+Hensher and Stanley, 2003; Stanley et al., 2005; Yvrande-Billon, 2007b; Hensher and Stanley, 2010).
+
+  A common rationale for NPBCs is to deal with the inevitable uncertainty that creates difﬁculty for ex ante contract
+speciﬁcation and tender bidding, by adopting an awarding mechanism that can be adaptive and sustain performance
+pressure during the course of the contract. These areas of uncertainty relate, in particular, to questions that relate to service
+quality, which have proven to be much more difﬁcult to specify in tender requirements than price but are increasingly
+recognised as the key to desired policy outcomes. By focussing on performance pressure during the contract, NPBCs
+reﬂect alliance contracting as used in such areas as building and construction and in infrastructure Public Private
+Partnerships more broadly. CT remains a fall-back mechanism in the event that service providers operating under NPBCs
+do not measure up adequately against their key performance indicators.
+
+  A further important rationale seen by some proponents of NPBCs is the belief that this contract form is most likely to
+support a trusting partnership between purchaser and provider, particularly for system planning, and that, given scarce
+skills on both sides, such a relationship is more likely to maximise goal achievement through service provision than an
+awarding mechanism based on CT (Stanley et al. 2007). Australian bus contracts have been pioneers in the development of
+negotiated performance-based contracts (NPBCs), founded on trusting partnerships, whereby contracts are re-negotiated
+with existing operators, subject to meeting certain conditions. Melbourne and more recently Sydney are examples of
+this approach (Hensher and Stanley, 2010).
+
+  Wallis et al. (2010) review the Adelaide experience with three rounds of tendering bus services and conclude that there
+is little to gain in terms of cost efﬁciency and quality enhancement by going to a fourth round of tendering. They argue that
+10 PART | I Reviews
+
+a move to NPBCs can not only reduce the considerable transactions costs (associated with tendering) but also offers the
+opportunity to work closely with efﬁcient incumbents to grow trust and build patronage (mindful of the realities of the
+market for public transport services). It also reduces the uncertainty associated with renewal through tendering, where a
+very efﬁcient incumbent operator can still lose the right to provide services. Under tendering, there is a real and observed
+risk of incumbents tending to not commit to longer term investment in the industry (both physical and human resources)
+where contract continuity is uncertain, even when all the boxes are ticked on performance. Similar experiences have arisen
+elsewhere such as in the Netherlands. Wallis et al. (2010, pp. 89e98) state:
+
+  A key attribute of competitive tendering for the periodic selection of operators of subsidised public transport services is to secure
+  the provision of speciﬁed services at efﬁcient cost levels. This has proved particularly effective where services were previously
+  provided by an inefﬁcient monopoly operator. The arguments for the adoption of competitive tendering in preference to nego-
+  tiation with the incumbent operator may be less clear-cut in other cases.
+
+  .
+
+  The conclusions drawn from the assessment against relevant South Australian Government objectives are that the [negotiated
+  contract] NC strategy is clearly preferred against the group of ‘quality’ criteria, and also on balance preferred against the group
+  of ‘supplier market and cost’ criteria. These conclusions are essentially supported by the assessment against international
+  differentiating factors, which concludes that the current Adelaide situation has a number of features which indicate that an NC
+  strategy is likely to be more appropriate in this case. These two assessments together lead to the conclusion that, given the
+  Adelaide situation at the time of the assessment, there was a strong case for adopting an NC-based strategy (with CT as the
+  fallback) rather than CT as the primary strategy. (p. 96)
+
+  In very general terms, negotiation is the process through which parties perceive one or more incompatibilities between
+them, and work to ﬁnd a mutually acceptable solution. In contrast to competitive tendering, which is framed to determine
+the value of a product or service, negotiation is designed to create the value of the product or service.
+
+  Provisions to guard against regulatory capture are critical in a negotiated performance-based contractual process.
+Australian experience suggests that, under NPBCs, transparency and accountability can be achieved if the following four
+conditions are in place (Hensher and Stanley, 2010):
+
+1. Performance benchmarking to ensure that operator performance is efﬁcient and effective. This benchmarking needs to
+  be subjected to independent veriﬁcation. Key performance indicators (KPIs) and the threat of competition (through
+  tendering), in the event of inadequate performance, assists the maintenance of competitive pressure and efﬁcient
+  performance.
+
+2. An open book approach to costs, achieved through an independent auditor. Operators whose costs appear to be high
+  through this analysis must justify their numbers or face a cut in remuneration. Those whose costs appear low have the
+  opportunity to argue for an increase. Under competitive tendering, it is less likely that operators see any obligations to
+  reveal their cost structures, since government has awarded them a contract based on the offered price under competi-
+  tion. Thus the benchmarking and open book auditing under NPBCs provides a much better way to obtain detailed data
+  on operator performance that can be used to benchmark in a very meaningful way, controlling for differences that are
+  not under the control of the operator.
+
+3. The appointment of a probity auditor to oversee the negotiation process.
+4. Public disclosure of the contract.
+
+  Australian experience across jurisdictions that tender and those that negotiate is that there is a tendency for cost
+convergence. A number of operators who provide service under each regime have noted this trend. This result underlines
+the importance of negotiation as an alternative approach.
+
+  Under a negotiated approach, benchmarking plays an important role, designed to monitor and ensure efﬁciency and
+effectiveness through the life of a contract, and not just at the point of contract completion. We discuss benchmarking in
+detail in a later section. Incentives built into a negotiated contract conditioned on market-linked benchmarks, and the
+ultimate sanction of tendering if non-compliant, enable the incumbent operator to at least prove their worth initially and
+then, provided the regulator does their job, would deliver true value for money at minimum transaction cost, even after
+allowing for the regulatory costs that should be common to all regimes, be they competitive tendering or negotiation.
+
+  There is a growing body of theoretical and empirical evidence to support the promotion of awarding mechanisms with
+formal and informal devices, aimed at economic efﬁciency and effectiveness through the life of the contract i.e., ex ante
+and ex post coordination. Building on growing arguments to support NPBCs instead of CT, Bajari et al. (2002) suggest that
+CT performs poorly when ‘projects’ are complex and contractual design is incomplete. Area-wide metropolitan bus
+  Public service contracts in the bus sector Chapter | 2 11
+
+contracts ﬁt this circumstance. This literature argues that competitive tendering can stiﬂe communication between buyers
+(i.e., the regulator) and sellers (i.e., the service provider), preventing the buyer from utilising the contractor’s expertise
+when designing the project (which could be a network in the public transport setting).
+
+  Authors such as Yvrande-Billon (2007a), drawing on the French experience, promote the case for greater emphasis on
+establishing a credible regulatory scheme able to govern the procurement of public services ex post, arguing that focussing
+on introducing market mechanisms via competitive tendering per se ex ante does not guarantee better value for money.
+Implicit in her arguments is the need to develop trusting partnerships and (incomplete) commercial contracts with
+unambiguous incentive and penalty structures throughout the life of a contract, with market mechanisms such as
+competitive tendering always present as a way forward when operators fail to comply under reasonable notice.
+
+  This focus may well enable a greater emphasis on achieving social objectives in contrast to commercial objectives;
+some might say the tendering “paranoid” may have taken governments away from the real objectives of social obligation
+and maximising net social beneﬁt per dollar of subsidy, as recognised by Preston (2007), to a disproportionate and over-
+zealous focus on cost containment and reduction. We would argue that the key issue is not ‘applying the wrong kind of
+competitive tendering to the wrong market’ (Preston, 2007), but the inappropriateness of any form of competitive tendering
+where the transaction costs are so high as to nullify any ﬁnancial gains at the expense of the relative neglect of broader
+social obligations, which place as much emphasis on beneﬁts as on costs. The exception is typically a ﬁrst round tender
+when moving from a historically entrenched publicly provided public transport service. The latter usually delivers huge
+windfall ﬁnancial gains (Hensher and Wallis, 2005; Wallis and Hensher, 2007).
+
+  Through negotiations and performance incentives, NPBCs may better enable the regulator to tap an operator’s expertise
+to facilitate innovation, patronage growth and service improvement. In addition, transactions costs of NPBCs are likely to
+be lower than CT as operators do not have to spend signiﬁcant sums of money to prepare tender proposals. Efﬁcient
+incumbent operators also face less uncertainty associated with renewal of licences, thus encouraging them to make long-
+term investments. Importantly, negotiation increases trust between the regulators and the operators which enables better
+communication and quicker resolution of issues arising from the inevitable incompleteness and lack of clarity in contracts,
+thus saving time and money (Hensher and Stanley, 2010). Critics point out that there are risks of regulatory capture and
+collusion by operators with NPBCs. However these risks are also present in CT. NPBCs could complement CT, with CT as
+a last resort when incumbent operators fail to meet their contractual obligations.
+
+  Analysis of a survey of bus contracts throughout the world conﬁrmed the effects of increased trust in improving
+operators’ perceived clarity and completeness of contract obligations, which in turn improves the effectiveness of NPBCs
+and reduces the uncertainty with negotiations (Hensher, 2010).
+
+  Hensher (2015) investigated CT and negotiated performance-based contracts (NPBC) in ﬁve cities in Australia. Using
+data to link CT prices of successful bids to NPBC outcomes, the evidence suggests that the gains from CT are generally
+illusory or overstated (outside of the situation of an incumbent public operator). It appears from the evidence presented by
+Hensher (2015), in the Australian setting, that testing the market for value for money through competitive tendering,
+in situations where incumbent contract holders are from the private sector, is not consistent with the well-held view that
+such a procurement plan is looking after the interests of society, compared to benchmarked actioned NPBCs.
+
+2.6 Establishing a setting in which to compare the performance of operators
+
+When there is an interest in comparing the performance of bus contracts (or operators), it is essential that this is undertaken
+in such a way that clear and valid statements can be made about how one contract performs relative to one or more other
+contracts. It is often the case that individuals, be they operators, Associations or the government regulator, make comments
+on how efﬁcient one operator is compared to another operator. I am often asked how such individuals can make such
+comments! A common concern is that “surely they are not comparing like with like?”
+
+  While one can never be sure what a speciﬁc person actually does to form a view (factual or otherwise) as to how well
+one operator compares with another operator (or indeed an entire sector), there are nevertheless some good practical and
+meaningful principles to adhere to so that sensible debate can occur. The great majority of commentary appears to be based
+on a simple comparison of the gross cost per in-service kilometre (which excludes the margin and removes dead running
+kilometres). While the exclusion of the operator’s margin and dead running time is permissible, as long as the margin is
+eventually revealed and included as a cost to those who pay for the contract services (notably the government and through
+them the taxpayers), the failure to recognise sources of inﬂuence on cost efﬁciency that are not under the control of the
+operator and which vary by contract location is very poor analysis, resulting in nothing more than a comparison of ‘apples
+with oranges’.
+12 PART | I Reviews
+
+  So what should we do? As a start we need to identify those features of service provision that incur a disproportionate
+cost impact across contract areas, that the operator has effectively no control over, and are a recognition of the reality of
+operating in a speciﬁc jurisdiction. To make a valid comparison these differences must be recognised and accounted for.
+We call this ‘normalisation’, although some people often talk of ‘standardisation’.
+
+  In the context of metropolitan bus operations in Australia, the main inﬂuences that are outside of the control of an
+operator are (Hensher, 2015) (i) the speed on the road (the result often of trafﬁc congestion, but also road alignments
+including trafﬁc lights), (ii) the amount of in-service kilometres out of each bus each year (called bus utilisation), which
+impacts on the amount of capital and hence capital cost, and (iii) the spread of service hours, which can be deﬁned to
+describe the proportion of service hours on evenings and weekends when higher labour costs associated with penalty rates
+typically are incurred.
+
+  These three main sources of systematic variations for which normalisation adjustments should made to the raw or
+“gross” cost efﬁciency indicator, can be explained as follows:
+
+l Average peak speed. Slower average peak speed, due to trafﬁc congestion for instance, will typically increase driving
+  time and operating costs. The effect of normalisation will be to improve the Cost Efﬁciency indicator cost for a Contract
+  Region with low average peak speed relative to the industry median, and vice versa, to account for the impact of
+  differences in average peak speed.
+
+l Spread of operating hours. A higher ratio of timetabled operating hours during evenings and weekends when penalty
+  rates of pay apply will typically increase operating costs. The effect of normalisation will be to improve the Cost
+  Efﬁciency indicator for a Contract Region with a higher ratio of operating hours during evenings and weekends relative
+  to the industry median, and vice versa, to account for the impact of differences in spread of hours.
+
+l Average vehicle utilisation. A higher number of annual service kilometres per peak vehicle because of higher time-
+  tabled route frequencies will have the effect of diluting ﬁxed costs and improving the Cost Efﬁciency indicator. The
+  effect of normalisation will be to improve the Cost Efﬁciency indicator for a Contract Region with lower service kilo-
+  metres per peak vehicle relative to the industry median, and vice versa, to account for the impact of differences in
+  vehicle utilisation.
+
+  If there is a desire to compare any combination of contract situations, one must control through normalisation those
+inﬂuences that explain differences that are due to the local situation and which cannot and should not be the basis of
+making comments on whether one operator (or contract) is more or less cost efﬁcient than another operator (or contract).
+
+  How does normalisation work? The most popular method involves replacing the impact of a speciﬁc inﬂuence not
+under the control of the operator (but essentially under the control of the operating environment), such as average or
+median speed of a speciﬁc location, with the average speed associated with all locations in a comparison. The median is a
+preferred measure if the distribution of the variable deviates from a normal distribution across a sample. The same rule
+would apply to all selected inﬂuences that need to be ‘normalised’ as a way of removing the inﬂuence of these factors on
+the comparison of operator performance. However, the story does not stop there. Before we can normalise the gross cost
+per in-service kilometre (GC/INSKm), we need to ﬁnd out what role these normalisation criteria play in explaining
+differences in GC/INSKm, so that we can then ensure that this role is used as a weight to allow for the replacement of the
+contract-speciﬁc level of say speed with the average or median speed of the sample of all contracts being compared. These
+weights are obtained using a regression model that assures that all inﬂuences on differences in GC/INSKm are accounted
+for (which includes those inﬂuences under the control of the operator).
+
+  Intuitively, the formula for net cost per in-service kilometre (NC/INSKm) can be illustrated as follows using only two
+inﬂuences, one being under the control of the operator (call it inﬂuence X) and one not under the control of the operator,
+call it inﬂuence Y. w is the weight attached to the inﬂuence of variables X and Y. The formula for two operators, 1 and 2 is:
+
+  NC=INSKm for operator 1 ¼ wx Ã X1 þ wy Ã ðaverage or median of Y across all contractsÞ
+
+  NC=INSKm for operator 2 ¼ wx Ã X2 þ wy Ã ðaverage or median of Y across all contractsÞ
+
+  We now have two very useful measures of cost efﬁciency: the initial GC/INSKm and NC/INSKm. What do we do with
+this extra information? The most meaningful role for NC/INSKm is in assisting in deciding how cost efﬁcient an operator is
+relative to other operators after controlling, through normalisation, for the inﬂuences that they have no control of, which are
+effectively what comes with the territory when you operate there.
+
+  A comparison of an operators GC/INSKm with their NC/INSKm is not really very informative, since it only tells us
+whether the real costs of service provision are higher or lower than the normalised cost; however this does not help in
+understanding whether an operator is relatively cost efﬁcient or not. That requires a comparison of NC/INSKm with an
+  Public service contracts in the bus sector Chapter | 2 13
+
+agreed benchmark level. The focus should thus be on NC/INSKm. As interesting as direct comparisons of NC/INSKM are
+between any pair of operators or across the entire set of contracts (possibly ranking operators on NC/INSKm), a more
+useful exercise is to benchmark each operator relative to an agreed benchmark. Using this information to benchmark
+operators against some reasonable level that most operators are able to achieve provides a very positive way forward in
+providing the right incentives to ensure improvements in cost efﬁciency over time.
+
+  For example, we might obtain the average or median level of NC/INSKm from the entire set of contracts being assessed
+and then see which contracts have an NC/INSKm which is lower than this average or median. A contract or operator who
+has a lower NC/INSKm will be deemed to have satisﬁed the performance benchmark. An operator with a higher
+NC/INSKm will be deemed to have not satisﬁed the performance benchmark, and may be required to explain their current
+situation prior to the imposition (if deemed appropriate) of a target adjustment in cost efﬁciency gain over an agreed period.
+This is the basis of effective benchmarking and should be used in any procurement regime that involves negotiation or in
+monitoring the performance of operators who were initially awarded a contract through competitive tendering. The
+explanation above is relevant to any benchmarking exercise or performance assessment regime and can be applied to other
+key performance indicators such as network effectiveness (deﬁned as passengers per in-service kilometre) or customer
+satisfaction. Once we have controlled through normalisation for inﬂuences not under the control of the operator,
+meaningful comparisons can be made and benchmarks can be deﬁned. Benchmarks based on gross (i.e., unadjusted) cost
+or gross network effectiveness and gross customer satisfaction are not only misleading, they can easily result in penalising
+(or rewarding) operators in circumstances that have been incorrectly assessed.
+
+  A ﬁnal comment is a question for all analysts - are you using valid methods to undertake a comparative assessment of
+performance? You cannot and never should simply take, for example, the gross cost per in-service kilometre and use it to
+make statements about whether one operator is more or less cost efﬁcient than another operator (in situations that are
+potentially so different). Our real fear and concern is that this is exactly what is happening in many sectors, including the
+bus transport sector.
+
+2.7 Conclusions
+
+This chapter provides an overview of various economic theories that are relevant in informing an inquiry into the pros and
+cons of alternative public sector contracting regimes. Given the various theoretical perspectives, we then consider the case
+for competitive tendering versus negotiated contracts, highlighting some of the broader social welfare obligations of
+government in the delivery of passenger transport services.
+
+  The role of effective actionable benchmarking under both competitive tendering and negotiated contracts is presented
+with a suggested practical way to undertake such benchmarking in order to ensure that operators are being compared in a
+meaningful way.
+
+  By working through the suite of theoretical frameworks and the experience to date in implementing a number of service
+reforms through a contracting strategy, the reader should be in a better informed position to assess the value to society of
+future proposals.
+Chapter 3
+
+Disruptive technology and moving
+people
+
+3.1 Scope
+
+  We are on the cusp of one of the fastest, deepest, most consequential disruptions of transportation in history. By 2030, within 10
+  years of regulatory approval of autonomous vehicles (AVs), 95% of U.S. passenger miles traveled will be served by on-demand
+  autonomous electric vehicles owned by ﬂeets, not individuals, in a new business model we call “transport-as-a-service” (TaaS).
+
+  RethinkX (2017, p. 6).
+
+  Commentary on how land passenger transport’s future will evolve spans the evolutionary-revolutionary range, with the
+recent RethinkX (2017) position probably the most radical. That chapter presages massive disruption to value chains,
+stranded assets, job losses in traditional transport occupations and plummeting oil prices, along with vast new business
+opportunities, driven by the introduction of autonomous electric vehicles (AEVs). The well-researched business case they
+build for this future reads in compelling fashion.
+
+  At the more evolutionary end, commentators such as Corwin et al. (2015) and Litman (2018) envisage gradual
+introduction of new technologies that improve the customer experience, such as improvements in demand-responsive
+transport opportunities for the ﬁrst mile-last mile of public transport travel, with widespread adoption of autonomous
+vehicles (AVs) three or so decades away. The growing interest in Mobility-as-a-Service (MaaS) spans this range of
+possibilities over time, with the initial focus being on improvements in the convenience of customer travel choices but with
+longer term possibilities being inextricably linked to what happens with AVs.
+
+  Uncertainty is a key characteristic that envelopes any discussion of how future transport systems will emerge,
+following many decades in which change has generally been slow. These uncertainties relate, for example, to matters such
+as how, and how quickly, technologies develop, the way they will be received by consumers, how governments decide to
+react (or not) and the range of matters that bear on these questions. In terms of the scope of the present chapter, we consider
+some of the main technological inﬂuences or disruptions that are likely to shape the future of land passenger transport and
+how these disruptions might interface with a number of economic, social and environmental trends to affect life chances
+and the quality of the environment upon which such chances depend. We also explore opportunities that might be available
+to governments to help ensure that the outcomes from these forces enhance, rather than reduce, societal wellbeing. The
+chapter is inevitably set in a context dominated by ‘Rumsfeldian’ known/unknown unknowns. It limits itself to land
+passenger transport, though we acknowledge the third dimension (e.g., freight/passenger drones) as espoused by some
+proponents. It stays clear of matters about which we have little knowledge or understanding, such as privacy considerations
+and cyber security. We recognize these are Important and need to be resolved if AVs are to be net contributors to societal
+wellbeing but they are matters beyond our ﬁelds of expertise.
+
+  In Section 3.2 we summarize our understanding of the major technological trends that are disrupting land passenger
+transport, or are likely to do so in coming years. In particular, we consider:
+
+l smartphone apps, reﬂected in the rapid emergence of familiar businesses such as Uber, Lyft and Ola and, by extension,
+  integrated travel platforms commonly known as mobility as a service (MaaS)
+
+l autonomous vehicles (AVs), perhaps the subject of greatest interest in the literature because of their disruptive poten-
+  tial, and where some trials are taking place in Australia and overseas (of both cars and small buses)
+
+l electric vehicles (EVs), including autonomous electric vehicles (AEVs), which form much of the base for the future
+  visioning by RethinkX (2017), with accelerated impacts extending through both the transport and energy sectors,
+  through opportunities in distributed energy.
+
+Bus Transport. https://doi.org/10.1016/B978-0-12-820132-9.00003-0  15
+
+Copyright © 2020 Elsevier Inc. All rights reserved.
+16 PART | 1 Reviews
+
+  The discussion in Section 3.2 introduces some potential beneﬁts and costs of the technologies being considered.
+  Section 3.3 then sets out generic criteria that we suggest can indicate whether societal wellbeing is likely to be
+improved or worsened by major changes, such as the technological disruptions discussed in Section 3.2. This is ultimately
+a matter of value judgement but we are heartened to observe that there is widespread support internationally in land use
+transport policy and planning for triple bottom line (economic, social and environmental) approaches to assessing changes
+in societal wellbeing, complemented by governance arrangements that help assure alignment with desired outcomes. In-
+tegrated planning and policy approaches are central.
+  Assessing how technological disruptions might impact on societal wellbeing requires some understanding of major
+socio-economic and environmental trends against which these disruptions are likely to be taking place. In Australia’s case,
+such trends include:
+
+l growth of the knowledge economy and its spatial manifestations (with knowledge intensive jobs increasingly concen-
+  trating in inner urban areas and suburban business parks)
+
+l an ageing population, with generally a high level of car dependence but associated risks of mobility-related social
+  exclusion as people attain older ages
+
+l growing inequality, with disadvantaged groups often located in outer urban or rural settings, where opportunities and
+  services are more limited, including public transport services
+
+l climate change and the associated imperative for Australia to substantially reduce its greenhouse gas emissions
+l a growing interest in the sharing economy, reﬂected in areas such as accommodation and travel opportunities (e.g., car
+
+  sharing, ride sharing)
+l the high and increasing costs of our heavy dependence on motorized transport, these costs including congestion, air
+
+  pollution, safety, health costs and the costs of increasing obesity levels, from a lack of exercise
+l urban land use transport planning policies that are tackling many of the above matters, through an integrated focus on
+
+  achieving more compact settlement patterns.
+
+  Section 3.4 of the chapter considers these trends in greater detail. Accentuating the potential impacts of technological
+disruption on some of these trends is the current high rate of population growth being experienced in some of our major
+cities, driven in signiﬁcant part by a high rate of overseas migration, which is a policy variable rather than socio-economic
+trend. Population growth is not the major focus of the chapter but a high population growth rate will amplify some of the
+potential consequences of technological disruption in land passenger transport. For example, the faster the rate of popu-
+lation increase, ceteris paribus, the greater the rate of urban sprawl that will result, with its associated adverse consequences
+for trafﬁc congestion, greenhouse gas emissions and social exclusion, compounding pressures that are already inherent in
+AVs (as discussed in Section 5).
+
+  Section 3.5 brings the discussion in Sections 3.3 and 3.4 together by developing two scenarios to reﬂect how emerging
+technologies might impact societal wellbeing in coming years, drawing in part on what Isaac (2016) calls dystopian and
+utopian views, Cervero et al. (2017) call optimistic and pessimistic views and on contributions from a number of other
+authors in the ﬁeld, such as Mervis (2017) and McKinsey Bloomberg NEF (2016). Considering these scenarios in light of
+the criteria for improved societal wellbeing discussed in Section 3.3 leads to the development, in Section 3.6, of policy
+proposals to manage the technological disruptions that have been considered, with a view to increasing the prospects for
+better outcomes. The high levels of uncertainty that pervade the subject mean that these policy implications must remain
+somewhat tentative but we see this as more a matter of when rather than if, insofar as it relates to the technological
+disruptions being discussed.
+
+3.2 Disruptive technological changes affecting land passenger transport
+
+3.2.1 Scope
+
+A wide range of subjects could be considered under this section heading. We have limited the focus to a small number of
+matters that we see as having the potential to be game changers in terms of future land passenger mobility opportunities
+and impacts, either good or bad. The matters on which we focus are:
+
+l smartphone based apps and shared business models that depend thereon, including mobility as a service (MaaS). This
+  area is having an impact already but that impact could grow exponentially under the added impact of the following two
+  areas of technological change
+  Disruptive technology and moving people Chapter | 3 17
+
+l autonomous vehicles (AVs), with potentially huge long term beneﬁts in store, or costs, depending on the development
+  pathway
+
+l electric vehicles (EVs), which are a reality already but at small scale. Adding this element to AVs opens up opportu-
+  nities for much bigger impacts within the transport sector and adds opportunities for synergies that extend beyond
+  transport, into matters such as distributed energy systems.
+
+3.2.2 Smartphone based apps, shared mobility and MaaS
+
+Social and economic factors that create market demand opportunities for shared mobility futures need a supply side
+response that enables realization. Smartphone based apps provide a platform for this response, with applications now in
+place such as ﬂeet-based car sharing (e.g., car2go), peer-to-peer ride-hailing (e.g., Uber), peer-to-peer car sharing
+(e.g., easyCar club) and ride sharing (e.g., BlaBlaCar) (McKinsey Bloomberg NEF, 2016). Market penetration is typically
+low but growing fast in developed countries, where car ownership rates are high, with the prospect of offering a viable
+broadly-based alternative to own-your-own car-based mobility, including in developing countries, where rates of car
+ownership are currently low.
+
+  These various sharing models are extending the range of mobility choices available to consumers. In turn, this broader
+platform provides an opportunity for mobility brokers to emerge, packaging up a range of mobility options for sale to
+consumers in the form of Mobility-as-a-Service (MaaS) or Transport-as-a-Service (TaaS). MaaS/TaaS can be deﬁned as a
+personalised, one-stop travel management platform digitally unifying trip creation, purchase and delivery across all
+modes (Wong et al., 2017). It is about shifting transportation based on asset ownership (i.e., purchase of cars) to where it
+can be consumed as a service. Thus, for example, Helsinki’s pioneering Whim (MaaS) service offers customers and
+potential customers app-based bundled taxi, public transport, car service and bike share on a pay-as-you-go basis or
+monthly plan, with customers able to tailor their own monthly plan (Hensher, 2017). Various pilots with different levels of
+integration have been launched around the world including in Sweden, Germany, Austria, Finland, Italy, France, The
+Netherlands and the United Kingdom (Jittrapirom et al., 2017). Locally, MaaS Australia1 and SkedGo2 are trying to launch
+this concept with various transport operators and non-mobility partners.
+
+  In terms of customer take-up, stated choice experiments conducted in the Sydney context (Ho et al., 2018 and
+Appendix 3.A herein) suggest that MaaS is most attractive to infrequent car users over non-users (i.e., sole public transport
+users) and daily car users. That is, MaaS is most desirable for people who have an underutilised vehicle asset, perhaps
+using public transport during the week and driving only on weekends. On average, around 47% of respondents (n ¼ 252)
+they estimate will subscribe to a MaaS plan.
+
+  On the service delivery side, Hensher (2017) points to the role for the MaaS operator as an entrepreneur to broker new
+types of service, overcoming the traditional constraints of spatial boundaries in public transport (particularly bus) con-
+tracting. A new suite of partnerships between specialised businesses are being proposed which go beyond the standard
+procurement procedures set by government. Naturally, there exists tension between whether regulation or free market
+initiative ought to take precedence in the development of these new service offerings, whilst managing potential exter-
+nalities. The trend, though, is allowing greater market freedom to combine the best elements of competitive tendering and
+economic deregulation. This next generation service delivery model bodes well with the shift in public transport contracts
+from their present output-based form (delivering kilometres on deﬁned modes) to outcome-based models which seek to
+deliver accessibility using any modedthereby becoming truly mode-agnostic (Wong and Hensher, 2018). We return to
+this matter in Section 3.5.4, discussing shared mobility contracts.
+
+  Hensher (2017) argues that MaaS provides the opportunity to better match customer needs more closely to service
+supply opportunities. It does this in the short term largely by ﬁlling gaps in service offerings between public transport
+(e.g., route buses) and taxi services (a gap we call intermediate modes), using the digital app capability of smartphones
+(Cervero et al., 2017). The car tends to play a key role in these extended offerings, whether in sole use mode or shared use.
+In this sense, MaaS, in integrating intermediate modes as part of the broader transport offering, can be seen as bringing
+together what is often termed ﬂexible transport services, such as demand responsive transport (DRT), with the MaaS value
+add being the offering of such travel options direct to interested users via a smartphone based digital app (Hensher, 2017).
+
+  The history of customer-focussed DRT is littered with examples that turned out to be high cost ways of providing travel
+opportunities, particularly in low density demand settings, and this sums up the challenges facing MaaS in Australia (and
+elsewhere), particularly in the short term: How can a wider range of service offerings be provided to customers, that better
+
+1. http://maasaustralia.com targeting the business-to-consumer interface.
+2. http://skedgo.com targeting the business-to-business and business-to-government interface.
+18 PART | 1 Reviews
+
+meet their needs in a cost-efﬁcient manner, particularly in a country where even the higher density parts of the biggest cities
+are relatively low density in international terms? Hensher (2017), for example, cites the ‘mobility on demand’ example of
+Kutsplus in central Helsinki, where the subsidy per trip was around 20 Euros, never likely to be a viable long term solution.
+This poses the question of whether MaaS will ever actually extend beyond the spatial reach of a city’s train/tram networks?
+Will it amount to anything more than Uber-type services linking to mass transit in an enhanced ﬁrst-mile/last-mile service
+offering? Will it replace public transport as we currently know it in low demand settings, where service economics may be
+more favourable to a car-based service than a linked mass transit solution, at times? Policy settings will play important
+roles in answering such questions.
+
+  Cost-efﬁcient service provision in personal and shared transport is very much about getting labour costs down, since
+labour is typically the largest cost of providing personal transport. For those driving themselves, the labour cost is their
+own and is often ignored. In ‘public’ transport, including taxis, ride hailing, etc, the labour is the driver’s remuneration and,
+for urban route bus service, for example, labour typically accounts for about half the cost of the service. Mulley and
+Daniels (2012) have shown how the frequency(ridership)/coverage trade-off in public transport service provision can be
+approached by loading up kms/hrs on better used trunk routes and using freed up kms/hrs to provide coverage through a
+more ﬂexible system, commonly involving smaller vehicles and, sometimes, different (cheaper) drivers. There is an op-
+portunity to outsource this service offering to cheaper independent contractors through ride-hailing and the like, though this
+has not been realized in any Australian implementation.3 Such a delivery model opens up some opportunities for demand
+responsive MaaS type offerings to replace ﬁxed route/frequency PT services at times of low demand. A number of trials are
+now in operation across Greater Sydney, though they constitute an added service on top of the present bus offering e see
+Section 3.5.4.
+
+  Longer term, driverless (autonomous) vehicles offer a real opportunity to dramatically change the economics and
+scalability of MaaS, by taking out the driver’s cost. In the long term, therefore, we see MaaS as a major potential source of
+disruption to personal travel markets, particularly because of how it can potentially capitalize on the travel cost savings that
+may be released by AVs. In the short term, however, MaaS might be more sizzle than steak, though its steady impact on the
+evolving design of public transport contracts should be recognised.
+
+  Putting MaaS packages together inevitably encounters challenges of confronting modal and regulatory silos, including
+the data constraints that are locked in by these silos. Freeing up access to travel data is an important base level requirement
+for successful MaaS, as reﬂected in the UK Transport Systems Catapult’s September 2017 initiative to establish an
+Intelligent Mobility Data Hub.
+
+3.2.3 Autonomous vehicles
+
+Autonomous vehicles (AVs), which are also sometimes known as driverless or self-driving vehicles, can be classiﬁed into
+ﬁve levels of automation, with higher numbers meaning a higher level of vehicle independence and a correspondingly
+lesser onus on the human driver, with fully autonomous vehicles capable of sensing their environment and navigating on
+the road system without human intervention (Table 3.1). The levels are well described by Mervis (2017), in a short-hand
+explanation that includes a summary assessment of the prospects for each of the six autonomy levels. Advanced driver
+assistance systems (ADAS), as currently in use, are operative at levels One and Two, with Automated Driving Systems
+(ADS) operating at the higher levels. The recent Canadian Senate Standing Committee on Transport and Communications
+report on AVs provides a more detailed and technical description of the various levels (SSCTR, 2018).
+
+  In terms of the expected beneﬁts from AVs, safety has been perhaps the prime driving force behind the US interest in
+AVs, as discussed in Section 3.5, but the opportunity for more widespread availability of vehicle-based mobility (social
+inclusion beneﬁts) and, especially operating as electric AVs, lower environmental impacts, are also important motivating
+factors, as well as the business (proﬁt) opportunities associated with major technological change. Also, by freeing up the
+driver from driving, AVs mean that time spent in vehicle can be productive. Alternatively, people may choose to catch
+up on some sleep while travelling. Lower user costs, and freeing up household disposable income, are also in prospect, the
+extent depending on whether the development pathway is individual or shared. AVs also free up road space, by enabling
+vehicles to operate closer together and/or by removing/reducing the need for parking space, freeing up opportunities for
+more valuable use of scarce urban space. This is a substantial set of potential beneﬁts, explaining part of the interest and
+excitement around the concept of AVs.
+
+3. One (limited) exception is Canberra’s Night Rider service (now called Late Night Rapid) which replaced demand-responsive bus services with Uber
+connections from a more frequent trunk bus service. Under this partnership, the ACT Government contributes $5 subsidy per trip and Uber another $5
+which is provided to the customer as a $10 discount off every Uber connection to a bus trip.
+

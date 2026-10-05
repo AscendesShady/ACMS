@@ -1,0 +1,742 @@
+thermocouples) measure inaccurate values due to disturbances caused by the
+differences in thermophysical properties of the measuring probe and the coating
+substrate. Thus, mathematical modeling approaches are leveraged to predict surface
+temperature swings of the TBCs. GT-Suite can predict the temperature swing of the
+combustion chamber surfaces with the application of TBCs.
+
+  Figure 3.18 shows the predicted combustion chamber surface temperatures of a
+single-cylinder direct-injection spark-ignition (DISI) engine operated at 1500 RPM, 8
+bar IMEP with and without TBCs. Material properties of the gadolinium zirconate
+(GdZr) TBC, a commercially available TBC, were used for the predictions. The TBC-
+coated surface produced an average temperature swing of 100 K, as predicted by the
+GT-Suite model, compared to the metal baseline (aluminum), whose temperature
+swing is negligible (~ 3 K). The liner surface was decided to be uncoated due to
+durability issues as the piston moves over the liner. The valves show relatively high
+temperatures since they are not cooled like the other combustion chamber surfaces.
+
+  FIGURE 3.18 Surface temperatures of combustion chamber components
+  predicted by GT-Suite with and without TBCs in a single-cylinder DISI
+  engine. ⏎
+  Multi-physics simulation tools combining the several sub-models discussed above
+are valuable for system-level studies. To demonstrate the capability of GT-Suite for
+performing system-level studies, the following two case studies are used. The first
+case study is a system-level thermal analysis of a multi-cylinder SI engine for
+predicting the potential improvement of catalyst warmup rates by coating different
+surfaces of the engine. The second study shows the potential of GT-Suite for
+manifold dynamics tuning in a variable valve timing engine to maximize volumetric
+efficiency.
+3.3.5 System-Level Effects of TBCs
+
+There are some less explored application areas on an ICE where the TBCs could have
+potential benefits on a system level. One such potential application is the surfaces of
+the exhaust flow components, such as the ports, manifolds, runners, and pipes. Three-
+way catalytic converters (TWCs), the most common emission after-treatment system
+in modern SI engines, suffer from low emissions conversion efficiencies at low
+temperatures. During cold starts, the DISI engines emit a lot of unburned
+hydrocarbon and CO emissions due to poor combustion efficiency and colder walls
+[12]. Simultaneously, the low emissions conversion efficiencies of TWCs at colder
+conditions exacerbate the problem [13]. The large thermal inertia associated with the
+exhaust flow components and the turbocharger casing in a turbocharged engine
+absorbs exhaust enthalpy from the burnt gases, reducing the heating rate of the
+catalyst surfaces during cold starts.
+
+  TBCs, when coated on the combustion chamber surfaces and exhaust flow path
+(ports, manifolds, runners), could help increase the catalyst surface temperatures
+faster by blocking heat transfer to metal components and saving enthalpy for the
+catalyst during cold starts. A multi-cylinder turbocharged DISI engine was modeled
+in GT-Suite as shown in Figure 3.19, and the prospective use of TBCs on various
+surfaces of an ICE for faster catalyst warmup was explored [14].
+
+  FIGURE 3.19 GT-Suite model layout of a multi-cylinder turbocharged
+  DISI engine. ⏎
+
+  Measured dimensions from the experimental engine were used to model the
+geometry in GT-Suite, and the model was calibrated with measured data. Figure 3.20
+shows the predicted transient turbine inlet temperatures compared to measured slow-
+response thermocouple temperatures at the same location in the experimental engine
+for three low-load (2.5 bar IMEP), low-speed operating conditions.
+  FIGURE 3.20 Predicted transient turbine inlet temperatures compared with
+  the slow-response thermocouple temperatures for the three low-speed, low-
+  load operating conditions. ⏎
+
+  The model was run at a typical cold-start operating condition (1600 RPM, 2 bar
+IMEP) for 45 seconds after motoring for initial 35 cycles to develop the flow. A GdZr
+coating was tested on different engine surfaces to study the effects on catalyst surface
+temperature. A transient thermal solver in GT-Suite was used to predict the surface
+temperature changes during the cold-start. Figure 3.21 shows the evolution of catalyst
+surface temperature during the 45 seconds of the cold-start for different iterations of
+TBC application areas where the dotted lines correspond to the time at which the
+catalyst surface temperatures reach 623 K. This temperature was assumed as the
+catalyst light-off temperature (90% emissions conversion efficiency), and the time to
+reach the light-off temperature is usually defined as the catalyst light-off delay. The
+baseline is when no TBCs were applied on any of the surfaces.
+  FIGURE 3.21 Catalyst surface temperatures as a function of time during
+  cold-start operation predicted by GT-Suite model for TBCs on different
+  surfaces of the multi-cylinder DISI engine. ⏎
+
+  When 120-micron GdZr coating was applied on all the combustion chamber
+surfaces, a negligible effect on catalyst surface temperature was predicted since the
+uncoated exhaust flow components absorbed the blocked heat transfer from the
+combustion chamber. When an 800-micron GdZr coating was applied on all the
+surfaces upstream of the catalyst and downstream of the cylinder where the exhaust
+gases exchange heat (except the turbocharger casing), a 20-second reduction in
+catalyst light-off delay was predicted, which could help reduce cold-start emissions.
+When the turbocharger casing thermal inertia was theoretically reduced by 40% since
+the feasibility of TBCs on turbocharger casings was not investigated before, the
+catalyst light-off delay improved by 8 seconds. The improved curve in the plot refers
+to the iteration where the combined benefits of the three approaches discussed above
+were tested. A 25-second reduction (more than 50% reduction from the baseline) in
+the catalyst light-off delay was predicted, which could significantly reduce tailpipe
+emissions during cold starts.
+
+3.3.5.1 Manifold Dynamics
+
+Manifold dynamics are another important system-level aspect commonly studied
+using multi-physics simulation tools. In a multi-cylinder engine, intake and exhaust
+manifold dynamics are crucial for volumetric efficiency. Thus, modern engines use
+variable valve timing to maximize the volumetric efficiency. Figures 3.22 and 3.23
+show the pressure fluctuations in the intake and exhaust manifolds, respectively,
+during a motoring cycle of a turbocharged DSI engine predicted by GT-Suite motored
+at four different speeds. The manifold dynamics strongly correlate with engine speed,
+and the valve timings are tuned to maximize volumetric efficiency at each engine
+speed. GT-Suite can be leveraged to tune for the optimum valve timings at each
+speed. Figure 3.24 shows the mass flow rates predicted by GT-Suite after tuning the
+valve timings individually for each engine speed compared to the measurement. GT-
+Suite is often used as a tool to study the sensitivity of intake and exhaust flow
+pathways for modifying the manifold dynamics.
+
+  FIGURE 3.22 Intake manifold pressures predicted by GT-Suite for the
+  multi-cylinder DISI engine motored at four different speeds. ⏎
+  FIGURE 3.23 Exhaust manifold pressures predicted by GT-Suite for the
+  multi-cylinder DISI engine motored at four different speeds. ⏎
+
+  FIGURE 3.24 Mass flow rates predicted by GT-Suite after valve timing
+  tuning compared with measured data. ⏎
+  The demonstrated system-level simulation case studies show the relevance of
+multi-physics simulations with reduced-order models for ICE research. The forte of
+this tool is the capability to perform system-level studies at affordable computational
+expense. A detailed discussion about the computational expense will be provided
+later. Moreover, the competence of the tool to capture a certain degree of spatial
+stratification increases the usefulness of the reduced-order models. Also, the amount
+of experimental data needed for a reduced-order model is greatly reduced since
+ambient-to-ambient simulations are possible. Nonetheless, the sub-models require
+experimental or high-fidelity simulation data for tuning, which is typical of reduced-
+order models. This can be seen from the valve model discharge coefficient
+calculation, combustion model constant tuning, thermal model cooling boundary
+condition tuning, etc., which were discussed previously. To reduce the assumptions
+and tuning, high-fidelity three-dimensional simulations are performed on ICEs for
+more accurate solutions, traded for increased computational expense.
+
+3.4 SECTION-3: HIGH-FIDELITY SIMULATIONS
+
+High-performance computing has enabled the ICE research community to perform
+simulations that can almost mimic all of the physical phenomena in an ICE to the
+finest scale using high-fidelity multi-dimensional mathematical models. The
+underlying principle is that any physical control volume can be discretized into small
+enough volumes, and the governing equations can be solved digitally in each volume
+and among volumes to track the flow of energy or mass. Some valuable high-fidelity
+simulation tools used for ICE research such as three-dimensional computational fluid
+dynamics (3-D CFD) and finite element analysis (FEA) models are discussed below,
+with case studies illustrating their application to a heavy-duty diesel engine.
+Furthermore, this section contains discussion about the sub-models and boundary
+conditions essential for the high-fidelity simulations. A co-simulation methodology
+that combines the two high-fidelity numerical tools used for heat transfer studies is
+detailed following the CFD and FEA model descriptions. Results from an injection
+parameter sensitivity study using the co-simulation methodology on a heavy-duty
+diesel engine piston are then discussed. Converge CFD and Abaqus are the software
+tools used for the analyses discussed in this section. Some equations from the
+respective manuals of the software tools are used to explain the modeling theory.
+
+3.4.1 3-D CFD
+
+Since the dominant working substances in ICEs are fluids, 3-D CFD can be used to
+predict the fluid flow in an ICE. The flow prediction combined with chemistry
+solvers can predict the combustion. The governing equations for predicting 3-D fluid
+flow in CFD are conservation/transport equations for the mass, momentum, and
+energy, commonly called as Navier-Stokes equations, shown in equations (3.28),
+(3.29), and (3.30), respectively [15]:
+
+  ∂ρ  +  ∂ ρu i  =S  (3.28)
+  ∂t  ∂xi
+
+  ∂ ρu i  +  ∂ρui uj  ∂P  +  ∂ σ ij  + Si  (3.29)
+  ∂t  ∂xj  ∂xj
+  =−
+
+  ∂x
+
+∂ρe  ∂ ρeu j  ∂uj  ∂  ∂T  ∂uj  ∂  ∂Ym
+ ∂t  ∂xj
+  +  = −P  +  ∂xj (K ∂xj ) + σij ∂xj  + ∂xj m (ρ ∑ Dm hm ∂xj ) + S
+
+  ∂xj
+
+  (3.30)
+ui, uj – velocities in directions i, j; ρ – density; P – pressure; σij – viscous
+
+stress tensor; e – internal energy; K – thermal conductivity; T – temperature; Dm –
+
+species mass diffusion coefficient; Ym – species mass fraction; hm – species-specific
+
+enthalpy; ∂t – change in time; ∂x – change in space
+
+As discussed in the 1-D heat conduction model, these continuous equations can be
+
+discretized using various numerical schemes. 3-D CFD discretizes the control volume
+
+into multiple volumes/cells based on the chosen grid size, and the discretized
+
+transport equations can predict the flow of mass, momentum, and energy between the
+
+cells. The term S seen in the equations is the internal generation term. For example,
+
+the energy released from combustion is accounted for in each cell using the term S in
+
+the energy equation. Similarly, mass added or removed from a cell is accounted using
+
+the term S in the mass transport equation. For a stable solution, the time step should
+
+be chosen based on the grid size used. The Courant-Friedrichs-Lewy (CFL) number
+
+governs the proportionality between the grid size (Δx) and the time step (Δt)
+considering the maximum velocity (u). The CFL number given by equation (3.31)
+denotes the maximum number of cells a variable can travel in a time step:
+
+u⋅  Δt  < CFL  (3.31)
+
+  Δx
+
+Even the three-dimensional high-fidelity models use sub-models or assumptions to
+efficiently compute the solution. The necessity and limits of sub-models used with 3-
+D CFD can be understood from the following sub-section that discusses turbulence
+and their relevance to ICE simulations. Other important sub-models used with 3-D
+CFD such as the spray sub-models and the wall heat transfer (near-wall) sub-models
+are also discussed.
+
+3.4.1.1 Turbulence
+
+The most challenging problem or physical fluid dynamics phenomenon to capture in
+the computational space is turbulence. Turbulence is the irregular motion of fluids
+frequently appearing as circular structures in the fluid called eddies influenced by
+multiple factors. The turbulent eddies promote the mixing of fuel and oxidizer inside
+the cylinder and, therefore, greatly influence combustion. Thus, accounting for the
+turbulence effects is necessary to predict combustion accurately. These eddies can be
+in various scales ranging from the entire size of a control volume to the finest scale in
+a control volume, the smallest of the eddies dissipating as heat due to viscous forces.
+In terms of an ICE, the most considerable eddy would be the size of the cylinder (i.e.,
+the bore and/or stroke) and the smallest eddy could be microns.
+
+  Turbulent kinetic energy is the widely used terminology used to quantify the
+potential of the eddies for enhanced mixing. Figure 3.25 shows the turbulent kinetic
+energy as a function of the turbulent eddy length scales and the level of eddies
+captured by some popular CFD approaches to capture turbulence [16]. The large
+eddies contain the maximum kinetic energy, which is then transferred to the smaller
+eddies, and the smaller eddies finally dissipate the kinetic energy as heat due to
+viscous forces. The smallest length scale containing non-negligible kinetic energy in
+a control volume is given by the Kolmogorov length scale (η = ε ) υ3 1/4 determined
+
+using kinematic viscosity of the fluid (υ) and the dissipation rate (ε). Directly
+solving the Navier-stokes equations with a small enough grid size that could capture
+the Kolmogorov length scales is called direct numeric simulations (DNS) and is
+considered computationally impractical for an ICE simulation. Thus, alternate
+techniques have emerged to capture the turbulence effects with affordable
+computational expense based on the length scales of eddies solved.
+  FIGURE 3.25 Turbulent kinetic energy as a function of turbulent eddy
+
+  length scales and the length scales solved by each of the different CFD
+  approaches to solve for turbulence [16]. ⏎
+
+3.4.1.1.1 Reynolds-Averaged Navier-Stokes (RANS)
+
+RANS is a popular CFD technique where the mean flow is captured using a coarser
+
+grid, and the turbulence effects are accounted for using mathematical models. Since
+
+the objective of this type of simulation is to capture the mean flow, the velocity (u) is
+
+written as a combination of an ensemble-averaged term (u) and a fluctuating term
+
+  ′  (equation  3.32)  [15].
+
+(u )
+
+  u = u + u′  (3.32)
+
+Substituting this into the original Navier-Stokes equation provides the Reynolds-
+averaged Navier-Stokes (RANS) equations. For example, RANS momentum
+
+  ρu
+
+transport equation is shown in equation (3.33) [15]. Favre-average (u ˜ = ρ ) is used
+
+for compressible flow to account for density variations.
+
+∂ ρu ˜i  ∂ρu ˜i u ˜j  ∂P  (3.33) ∂u ˜j
+  ∂t  ∂xj  ∂  ∂ u ˜i  2  ∂ u ˜k  ∂  ′′
+  +  =−  [μ(  +  )− μ  ]+  ˜
+  +  (−ρu u )
+  ∂x  ∂xj  ∂xj  ∂xi  3  ∂xk  ∂xj  ij
+
+The final term in the right-hand side of the equation is known as the Reynolds stress
+tensor that accounts for the turbulence effects. The Reynolds stress tensor is modeled
+using mathematical models called as turbulence sub-models that account for the
+influence of turbulent eddies rather than solving them directly.
+
+3.4.1.1.2 Large Eddy Simulations (LES)
+Figure 3.25 shows that the larger length scale eddies contain the bulk of the kinetic
+energy compared to the smaller length scales. The large eddy simulations (LES) are
+used to solve for those energy-containing large eddies and mathematically model the
+kinetic energy available in the smaller eddies. The modeled part of the turbulence is
+called the sub-grid scale since the grid cannot resolve them. Similar to the RANS, the
+LES models the variables (for example, velocity (u)) as a combination of a spatially
+filtered term (⟨u⟩), which the grid resolves and a sub-grid term (u′′), as shown in
+equation (3.34) [15]. The spatial filtering of a variable is like applying a box filter in
+space, implying that the variable accounts only for the eddies resolved using the grid.
+Applying this definition of velocity to the momentum conservation equation gives the
+spatially filtered form shown in equation (3.35) [15]. The sub-grid scale (SGS)
+velocity induces an additional stress tensor that is modeled using mathematical
+models. It should be noted that the sub-grid term in LES and the fluctuating term in
+RANS are different, and therefore, should be modeled in different ways. Thus,
+different turbulence sub-models are required to solve the SGS stress tenor in LES:
+
+  u = ⟨u⟩ + u′′  (3.34)
+
+∂⟨ρ⟩⟨ui ⟩  +  ∂⟨ρ⟩⟨ui ⟩⟨uj ⟩  ∂⟨P ⟩  +  ∂⟨σij ⟩  +  ∂ τ ij  (3.35)
+  ∂t  ∂xj  ∂xj  ∂xj
+  =−
+
+  ∂x
+
+3.4.1.2 Unsteady RANS (URANS) vs. LES
+
+When the RANS equations are used to solve for unsteady flow like in an ICE, the
+simulations are termed as unsteady RANS (URANS). Figure 3.26 shows a slice of an
+8th sector of a heavy-duty diesel engine simulated with 1 mm mesh using the
+generalized k − ε RANS turbulence model and dynamic structure LES turbulence
+model. Circular structures in the fluid are clearly seen in the LES compared to the
+RANS, where the flow looks more dampened or smoothened. The reason being that
+the turbulence sub-models used for solving the Reynolds stress in the RANS induce
+artificial viscosity in the flow, restricting the smaller structures from forming since
+the objective is to capture the mean flow. On the other hand, the viscosity induced by
+the LES turbulence models is comparatively minor and has grid dependence,
+allowing the smaller structures to form depending on the grid size. With that said, an
+LES simulation with a small enough grid that could solve all the eddy length scales
+would make the SGS turbulent kinetic energy zero, which would be equivalent to
+DNS.
+  FIGURE 3.26 Temperature contour slice of a heavy-duty diesel engine
+  simulated with RANS and LES turbulence models. ⏎
+
+  The fact that LES can capture a certain level of eddies dictated by the grid size
+makes it better suited than RANS to capture the cycle-to-cycle variations
+characteristic of ICEs. LES is considered more accurate than URANS, since it can
+capture realistic fluid flow behavior. However, LES simulations are computationally
+expensive than URANS due to the requirement of smaller grid sizes and the need for
+simulating more cycles than URANS if cycle-averaged results are desired.
+Nonetheless, URANS provides a computationally efficient solution where the small-
+scale perturbations of the system are not a concern.
+
+  A wide variety of analyses are discussed in the following sections, where the
+URANS simulations are used for computational efficiency. The URANS cannot
+converge to DNS even with a fine grid since the turbulent viscosity induced by the
+RANS turbulence models is independent of the grid, restricting the formation of
+smaller eddies. Thus, refining the grid beyond a certain level has insignificant effects
+on the results in a URANS simulation since there are no smaller flow structures to
+capture. However, some length scales still need to be resolved in URANS as seen in
+Figure 3.25 called the integral length scales, where the kinetic energy formation
+occurs. A grid convergence study is essential for URANS to find the largest grid that
+could capture all the integral length scales for a computationally efficient solution.
+
+3.4.1.3 Grid Convergence Study
+
+The grid resolution required for unsteady RANS (URANS) simulations can be
+determined by performing a grid convergence study where the grid will be refined
+until the changes are below a threshold [17]. Converge CFD is one of the well-known
+software packages available for performing CFD simulations in ICEs. Converge CFD
+is known for its innovative meshing techniques, which can ease the onerous task of
+manually meshing complex geometries like those found in modern ICEs. Adaptive
+mesh refinement (AMR) is a state-of-the-art mesh refinement technique used by
+Converge CFD to refine the mesh locally and dynamically based on the difference
+between the actual and grid-resolved values. AMR reduces the computational time
+significantly by allowing coarser grids in regions without significant gradients and
+refining the necessary regions. Additionally, the grid can be refined at specific regions
+during specific time periods of a simulation using ‘fixed embedding’.
+
+  Figure 3.27 shows a cut section of the heavy-duty diesel engine at TDC simulated
+using 3-D CFD-RANS technique for the rated power condition of the engine with a
+start of injection timing of 19° bTDC. A base grid of 1.4 mm was used throughout the
+cylinder. AMR based on velocity and temperature was set to capture the strong
+gradients induced by the diesel combustion and the liquid fuel spray dynamics, which
+can be seen from the refinements around the spray plumes. Also, the grid was refined
+near the valve seats to capture the pressure drop across the valves, which are visible
+in Figure 3.27. The smallest grid size used in the simulation was 0.35 mm, which is
+recommended for diesel engine simulations using RANS turbulence models by
+Converge CFD. Without the AMR and embedding techniques, the entire CFD domain
+must be refined to 0.35 mm to capture the mean flow accurately, drastically
+increasing the computational expense. Renormalization group k − ε (RNG k − ε), a
+commonly used turbulence sub-model, was used for this simulation.
+
+  FIGURE 3.27 Cut section of the heavy-duty diesel engine CFD domain at
+  combustion TDC showing the mesh and temperature contours predicted. ⏎
+  To verify the largest grid size that could capture the integral length scales or mean
+flow, a grid convergence study for the RANS simulations of the diesel engine was
+conducted by changing the base grid with the mentioned embedding techniques,
+which scaled the local regions accordingly from the base grid. Figure 3.28 shows the
+cylinder pressures and gross heat release rates simulated by varying the base grid
+where the legend indicates the smallest grid size used in each case. The results
+significantly varied between 0.7 mm and 0.35 mm. However, the changes were minor
+between 0.35 and 0.175 mm, suggesting a grid size of 0.35 mm or smaller can be
+used for the simulation, which agrees with the converge CFD recommendation.
+
+  FIGURE 3.28 Cylinder pressures and gross heat release rates simulated by
+  varying the base grid. ⏎
+
+3.4.1.4 Spray Sub-Models
+
+Spray dynamics are crucial for accurately predicting combustion in a diesel engine.
+Measured injection rate profile and mass are provided as inputs to the CFD for
+simulating the diesel combustion. Since fossil fuels such as diesel, gasoline, and jet
+fuel have multiple chemical species in them and significant property variance is
+expected, it is hard to determine all the species and their mass fractions. Thus,
+C14H30 (tetradecane), a well-established surrogate for the physical properties of
+diesel fuel, is used for the diesel engine simulations. The liquid fuel is injected as
+discrete parcels into the cylinder. The parcel sizes are based on the injector geometry,
+injection rate profile, and mass. The liquid parcels undergo several physical processes
+to evaporate, such as spray break-up, drop drag, collision and coalescence, and
+turbulent dispersion, as shown in Figure 3.29 [15]. The CFD simulations need sub-
+models to account for these different physical processes to determine the evaporation
+rate of each liquid parcel. Also, the liquid spray impingement on the combustion
+chamber walls and their evaporation require additional sub-models. The sub-models
+for capturing spray dynamics used for the diesel engine simulation are listed in the
+table below.
+
+  FIGURE 3.29 Physical processes that a liquid fuel parcel undergoes,
+  before evaporating into gaseous species [15]. ⏎
+  Figure 3.30 shows the liquid spray penetration predicted by the CFD-RANS for
+2000 bar and 1000 bar injection pressures used for simulating the rated power
+condition with a start of injection timing of 29° bTDC in the heavy-duty diesel
+engine. The injection duration was increased by approximately 0.9 ms for the lower
+injection pressure. The higher injection pressure atomizes the fuel well, which
+increases the drag on individual droplets, thereby reducing the inertia of the fuel jet
+and consequently reducing the maximum liquid spray penetration length.
+  FIGURE 3.30 Spray penetration lengths predicted by the CFD-RANS
+  simulations of the heavy-duty diesel engine at the rated power conditions
+  with a start of injection timing of 29° bTDC using high and low injection
+  pressures. ⏎
+
+3.4.1.5 Near-Wall Model and Heat Transfer Sub-Model
+
+Another challenging physical phenomenon to capture in the computational space is
+the boundary layer and wall heat transfer in ICEs. Due to the interaction between
+turbulence in the bulk gas and viscosity near the wall, steep velocity and temperature
+gradients are formed near the wall boundaries, commonly called the ‘boundary layer’
+where the flow is dominantly laminar. The boundary layer influences the wall heat
+flux to a great extent. However, the boundary layer in ICEs is very thin and unsteady.
+Thus, the boundary layer requires a very fine grid near the wall boundaries to capture
+and resolve the boundary layer in CFD. To reduce the computational cost, the
+velocity and temperature gradients near the wall are assumed using a sub-grid scale
+wall function rather than solving the fluid flow in the boundary layer using a very
+fine grid.
+
+  One of the common wall functions developed by Launder and Spalding [23] to
+assume the near-wall boundary layer is written in equation (3.36). For generalization,
+the wall function uses dimensionless values for velocity (u*), and temperature (T *),
+which are formulized as a function of normalized distance from the wall (y+). The
+distance from the wall (y) is normalized using density (ρ), viscosity (μ), and shear
+velocity (uτ ) as shown in equation (3.37):
+*  1  +  +  ++  (3.36)
+  (3.37)
+u = { ln ln (9.8y )y > 11.2y y ≤ 11.2}
+  κ
+
+  +  yρuτ
+  μ
+  y=
+
+Ideally, heat transfer to the wall occurs by conduction from the last fluid molecule
+near the wall. Since the CFD-RANS simulations assume the boundary layer near the
+wall instead of solving it, a heat transfer sub-model must be used to calculate the heat
+flux from the last fluid cell to the wall, assuming equilibrium between them. A
+commonly used heat transfer sub-model for CFD developed by O’Rourke and
+Amsden [19] is used in the simulation shown in equation (3.38). The constant F in
+the equation is used to scale the heat flux based on the distance of the last fluid cell
+away from the wall, which has a functional form developed based on the near-wall
+temperature profile as shown in equation (3.39):
+
+  ∂T  =  μmcp  ⋅F ⋅  Tf −Tw  (3.38)
+  P rm  y
+  q˙ = K
+
+  ∂x
+
+  y  + Prt  (3.39)
+
+  +  Prm  +
+F = {1y ⟨11.05  y ⟩11.05}
+  1 ln ln (y+ Pr )+B+11.05( t −1)
+  k  Prm
+
+q˙ – heat flux; K – thermal conductivity; μm – molecular viscosity; cp – specific heat;
+Prm –molecular Prandtl number; Prt – turbulent Prandtl number; Tf – gas
+temperature; Tw – wall temperature
+
+3.4.2 Finite Element Analysis
+
+3-D FEA is another commonly used high-fidelity simulation tool for ICE analysis.
+Thermal and structural analysis of ICE components are often performed using 3-D FE
+models to predict the durability of ICEs. The underlying principle of the FEA is
+similar to the CFD, where the control volume is discretized into several small
+volumes/elements. The energy conservation equations are used to solve for local
+variables such as temperature, deformation, etc., considering the energy fluxes
+crossing each boundary. Heat transfer and electrical and structural analyses
+(sometimes coupled) can be performed using FE models. The energy conservation
+equation used for uncoupled heat transfer analysis by the Abaqus computer-aided
+engineering (CAE) software tool is shown in equation (3.40) [24]:
+
+  ∫ ρU dV = ∫ qds + ∫ rdV  (3.40)
+
+where U ˙ is the rate of change of internal energy of an element, q is the heat flux
+crossing each face of an element and r is the internal heat generation. The heat flux
+crossing each face is governed by Fourier’s law of conduction as shown in equation
+(3.41) where k is the thermal conductivity:
+
+  dT  (3.41)
+
+q = −k ⋅
+
+  dx
+
+Proper prescription of boundary conditions is crucial for an FEA to obtain accurate
+solutions. To conceive the importance of boundary conditions used for FEA, the
+following sub-section provides a literature review of the boundary conditions used for
+a 3-D FE thermal analysis of a combustion chamber component. 3-D FE models are
+commonly used for heat transfer analysis of ICE components. The boundary
+conditions prescribed vary from simple experimental correlations to 3-D maps from
+CFD found in literature. Based on the literature review, a methodology developed by
+synthesizing 3-D CFD and FEA will be elaborated upon in the following sub-section.
+
+3.4.2.1 Literature Review of Boundary Conditions for FE Thermal
+Analysis
+
+The two major boundary conditions required for an FE thermal model to perform heat
+transfer analysis in an IC engine are the thermal loads from combustion and the
+cooling conditions. It should be noted that combustion side boundary conditions can
+be prescribed as either heat flux or convection as defined by Newton’s cooling
+formula (i.e., heat transfer coefficients and near-wall gas temperatures). Heat transfer
+by radiation is usually ignored since it is negligible compared to convection or is
+sometimes included in the heat flux. The most accurate way of defining boundary
+conditions of an FE thermal analysis would be to use heat flux measurements from
+ICEs. However, each technique found in the literature has its advantages and
+disadvantages, which are laid out below.
+
+  Heat fluxes measured from an experimental engine using thermocouples were
+used as the combustion side boundary conditions to the FE piston model to evaluate
+potential materials for a heavy-duty diesel engine piston [25]. Nevertheless, heat flux
+measurement in IC engines is time- and cost-intensive. Alternatively, zero-
+dimensional heat transfer models such as the Woschni [3] or the Hohenberg [4] were
+used to predict the combustion side boundary conditions for the FE thermal model
+[26,27,28]. Simple empirical formulae were also used to predict the combustion side
+boundary conditions [29]. Using zero-dimensional heat transfer models or the
+empirical formulae for a 3-D thermal analysis is questionable since they involve
+empirical correlations and lack spatial discretization. The spatially varying transient
+combustion side boundary conditions could be predicted by simulating combustion
+using 3-D computational fluid dynamics (CFD).
+
+  Fontanesi et al. simulated diesel combustion using CFD and applied the CFD-
+predicted convective heat transfer boundary conditions for a V6 engine head 3-D FE
+model to assess fatigue after cycle-averaging (steady-state) [30]. The transients were
+ignored to save computational expense since the domain is large. Esfahanian et al.
+performed a thermal analysis of an SI engine piston using a 3-D FE model by
+prescribing CFD-predicted combustion side boundary conditions [31]. The study
+provided an understanding of the tradeoff between accuracy and computational time,
+depending on the processing of the applied combustion side boundary conditions
+(i.e., fully transient, time-average, or surface-average). It was stated that a spatially
+varying transient heat transfer analysis would be needed to capture the transient
+interaction between the heat flux from combustion and the piston temperature with
+added computational expense. The wall temperature boundary conditions for the
+initial CFD simulation were usually assumed. Wu et al. applied the surface
+temperatures predicted by the 3-D FE thermal analysis as boundary conditions for the
+consequent CFD simulation. They iterated between the CFD and the FE thermal
+model for better accuracy [32]. The number of iterations depends on the assumed
+initial temperature boundary conditions for the CFD.
+
+  Since temperatures of a solid component require multiple cycles to reach a steady-
+state, running multiple cycles of 3-D numerical simulations would be cumbersome.
+Sun et al. used a multi-time-scale approach to optimize the computational time
+required for 3-D transient heat transfer analysis of an IC engine piston [33]. Moser et
+al. developed a framework for transient heat transfer predictions on a heavy-duty
+diesel engine piston by coupling a 3-D CFD and a 3-D FE thermal model offline [34].
+The framework offered better control over mesh and time steps individually in the
+CFD and the FE thermal model since thermal diffusion time scales differ between
+fluid and solid regions. The authors termed the framework or the methodology as the
+‘CFD-FEA co-simulation’. Moreover, the CFD-FEA co-simulation was demonstrated
+to capture any in-cylinder changes caused by the changes in piston surface
+temperatures. Motwani et al. utilized the same framework to predict the temperature
+swing of low thermal inertia coatings applied on an SI engine piston [35]. They
+iterated between the fluid and the solid side predictions for better accuracy. The study
+used four iterations between the CFD and the FEA for the piston surface temperatures
+to converge.
+
+  Nonetheless, cooling boundary conditions are also required for heat transfer
+analysis in an IC engine. Due to the cooling conditions’ relatively lower significance
+compared to the combustion side, constant temperature [36] or convection [37]
+boundary conditions were applied based on sensitivity studies and literature. Some
+works have used empirical formulae for the cooling conditions [29,31]. For better
+accuracy, CFD could be used to predict spatially varying cooling conditions needed
+for a 3-D thermal analysis. Coolant flow through coolant galleries was simulated
+using CFD, and the convective heat transfer predicted was then used as the cooling
+boundary conditions for the 3-D thermal analysis of a multi-cylinder diesel engine
+head to assess fatigue, along with combustion side boundary conditions also
+predicted by CFD [30]. Some works have simulated oil flow through oil galleries of
+pistons to predict the cooling phenomenon there [38]. However, the computational
+expense of performing 3-D CFD for both the combustion and the cooling sides would
+be onerous. Wright et al. used a Bayesian-based calibration methodology to calibrate
+the piston cooling heat transfer coefficients (HTCs) based on the CFD-predicted
+combustion side boundary conditions and measured sub-surface temperatures [39].
+
+  It can be understood from the literature review that the combustion side boundary
+conditions are relatively important for the thermal analysis of a combustion chamber
+component. The current state-of-the-art is the mapping of convective heat transfer
+boundary conditions predicted by 3-D CFD. Thus, a synergy of 3-D CFD and 3-D
+FEA would be valuable for thermal analysis of a combustion chamber component,
+commonly termed as high-fidelity multi-physics simulation. To illustrate the use of
+high-fidelity multi-physics simulation in current ICE research, a methodology to co-
+simulate 3-D CFD and 3-D FEA for heat transfer analysis of a heavy-duty diesel
+engine piston is detailed below. Following the methodology, its applications are
+demonstrated by applying it to study the sensitivity of transient heat flux distribution
+to injection parameters on a heavy-duty diesel engine piston.
+
+3.4.3 3D CFD and FEA Co-simulation
+
+Previously, a reduced-order thermal analysis was carried out by combining the 0-D
+heat transfer model and a 1-D unsteady heat conduction model. The reduced-order
+analysis provided some insights about heat transfer in the heavy-duty diesel engine.
+However, spatial discretization is necessary to capture the strong spatial gradients that
+exist in diesel engine piston heat transfer. Thus, higher fidelity computational
+techniques such as three-dimensional computational fluid dynamics (3-D CFD) and
+3-D FE thermal models are coupled to capture spatially varying transient heat flux
+and surface temperature distribution on the heavy-duty diesel engine piston. The
+framework used for coupling 3-D CFD and FE thermal analysis was developed by
+Moser et al. [34] termed as ‘CFD-FEA co-simulation’. Figure 3.31 shows the process
+flow chart of the methodology employed and a brief description of the steps are
+provided as follows:
+  FIGURE 3.31 Process flow chart for the CFD-FEA co-simulation
+  methodology. ⏎
+  Validation: An injection timing (i.e., combustion phasing) sweep at rated power
+(2500 RPM, 20 bar IMEP in the heavy-duty diesel engine was simulated using CFD.
+RANS turbulence models were used for the simulation for computational efficiency.
+The simulations were validated with the measured cylinder pressures and the
+processed gross heat release rates, as shown in Figure 3.32. A maximum difference of
+5 bar between the simulation and the measurement was calculated but is within the
+cycle-to-cycle differences (maximum of 15 bar) in the cylinder pressure
+measurements.
+
+  FIGURE 3.32 Comparison of CFD-predicted cylinder pressures and gross
+  heat release rates with measurements for injection timing sweep. ⏎
+  Cycle-Averaging and Interpolation: The CFD-predicted crank angle-resolved
+piston near-wall gas temperatures (Tg) and convective heat transfer coefficients (h)
+were interpolated to 4379 evenly spaced nodes on the piston surface as shown in
+Figure 3.33 to reduce the input file sizes for the FE thermal analysis, and to reduce
+the processing time. The interpolated Tg and h at each node were then cycle-averaged
+using equations (3.42) and (3.43) where ht and Tgtare the instantaneous heat transfer
+coefficients and gas temperatures respectively. τ is the cycle time, and Δt is the time
+step:
+
+  FIGURE 3.33 CFD-predicted cycle-averaged heat transfer coefficients
+  (top) and near-wall gas temperatures (bottom) on the piston surface. ⏎
+  τ  (3.42)
+  (3.43)
+h=  ∑ ht ⋅Δt
+
+  t=0
+
+  τ
+
+  τ
+
+Tg =  ∑ ht .Tgt ⋅Δt
+
+  t=0
+  τ
+
+  ∑ ht ⋅Δt
+
+  t=0
+
+Cooling Condition Calibration: The cycle-averaged Tgand h were applied on the
+crown surface of the piston FE model. The measured slow-response sub-surface
+thermocouple temperatures were used to calibrate the backside cooling heat transfer
+coefficients for the oil gallery and under-crown surfaces shown in Figure 3.34, using
+a Bayesian model calibration methodology [39].
+
+  FIGURE 3.34 Piston backside cooling surfaces for which the calibration of
+  HTCs was performed. ⏎
+
+  Steady-state Thermal Analysis: A steady-state thermal analysis was performed
+using the 3-D piston FE model. The cycle-averaged Tg and h were applied on the
+piston crown and the calibrated heat transfer coefficients were prescribed as radially
+constant on the cooling surfaces. Other surface boundary conditions were assumed
+from the literature [25]. Figure 3.35 shows a cut section of the steady-state piston FE
+model temperatures for the rated power condition at a start of injection timing of 19°
+before TDC.
+  FIGURE 3.35 Steady-state piston temperatures predicted by FE thermal
+  analysis. ⏎
+  Transient Thermal Analysis: Transient piston thermal analysis was performed
+using the 3-D FE model to predict the transient, spatially varying surface
+temperatures. The CFD-predicted crank angle-resolved piston near-wall gas
+temperatures (Tg) and convective heat transfer coefficients (h) were applied on the
+crown surface. The backside cooling boundary conditions that were used were the
+same as the steady-state analysis. The initial temperature field was prescribed from
+the steady-state thermal analysis. The consequent cycles were initialized with the last
+step of the previous cycle. Figure 3.36 shows the transient surface-averaged piston
+temperatures of three consecutive cycles for the rated power condition with a start of
+injection timing of 19° before TDC. The surface nodal temperatures converged in the
+second cycle, with a maximum error of 0.2 K between the second cycle and third
+cycle.
+
+  FIGURE 3.36 Transient FEA-predicted crank angle-resolved area-
+  weighted surface-averaged piston temperatures for the three consecutive
+  cycles. ⏎
+
+3.4.4 Injection Parameter Sensitivity
+
+Experimental work [40,41] using thermocouples embedded in the piston has provided
+insights into the potential use of injection control parameters, such as injection
+pressure, timing, etc., to modify piston thermal loads in heavy-duty diesel engines
+and improve their durability. The durability of surface thermocouples for heat flux
+measurement and the lack of spatial resolution due to mechanical limitations
+constrained the scope of heat transfer studies in heavy-duty engines experimentally.
+The CFD-FEA co-simulation framework described above can be leveraged to study
+spatially varying transient heat transfer in heavy-duty engines. Transient heat flux and
+the temperature distribution on a heavy-duty diesel engine piston due to injection
+timing and pressure were analyzed numerically using the combined high-fidelity
+simulation methodology and the results are described below. The details of the
+analysis can be found in a recently published work [42].
+
+3.4.4.1 Injection Timing
+
+Injection timing/combustion phasing was retarded up to 15 degrees from the most
+advanced injection timing of 29° bTDC. Figure 3.37 shows the combustion duration
+(CA10–90) and the thermal efficiency as a function of combustion phasing (CA50).
+The peak thermal efficiency was predicted for CA50 at TDC, and the thermal
+efficiencies dropped for later combustion phasings due to the elongated combustion
+duration and increased exhaust enthalpy. A thermal efficiency reduction of
+approximately 2.5 percentage points was predicted when combustion phasing was
+retarded 15 degrees. On the other hand, a 75°C reduction in peak surface nodal
+temperature was predicted for the most retarded combustion phasing, as seen in
+Figure 3.38. These results show that there is a tradeoff between thermal efficiency
+and peak piston temperatures, which could be leveraged to find the optimum
+combustion phasing for an operating condition that maximizes thermal efficiency
+without exceeding the thermal limits of the piston.
+  FIGURE 3.37 CFD-predicted thermal efficiency and combustion duration
+  for the injection timing sweep at rated power. ⏎
+
+  FIGURE 3.38 Maximum temperature predicted by the transient thermal
+  analysis using the piston FE model for the injection timing sweep at rated
+  power. ⏎
+  Figure 3.39 shows the peak surface-averaged heat flux and temperature for the
+piston center, bowl, and squish regions as a function of CA50. The bowl region
+absorbed the maximum peak heat flux and showed maximum surface temperature
+across the combustion phasing sweep since the spray targets the bowl. The center
+region exhibited the maximum reduction in peak heat flux and surface temperatures
+when the combustion phasing is retarded because the combustion spreads away from
+

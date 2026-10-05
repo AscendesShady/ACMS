@@ -1,0 +1,936 @@
+Continuous Space Modelling  299
+
+  This integral is four times the so called complete elliptic integral ofthe second kind,
+usually denoted E(r), so finally
+
+  A numerical expression for the elliptic integral is most easily stated in terms of the
+power series
+
+  Compared to the previous unit exponent the concentration to the center is actually
+the same, equal to as we see from (9.77)-(9.78) as compared to (9.74). However,
+traffic decreases somewhat more steeply with distance from the center before it goes
+down to zero at the unit circle boundary.
+
+  Total traffic created, i.e. the integral of (9.77) over the unit disk, can be calculated
+
+to  as compared to  for the case with a distance dependence
+
+(see Puu 1979). It might seem odd that more traffic is created when there is no adverse
+
+effect from distance. The result is, however, not self evident, because distance depend-
+
+ence of the gravity type, though being an obstacle to long distance trips, creates many
+
+more local trips. In fact communication "within a point itself" goes to infinity, which
+
+has been taken as an absurdity in the gravity model, but it is harmless in this context.
+
+Case II: Spiral Routes. The other case where it is relatively easy to evaluate traffic
+in closed form is when the optimal routes are logarithmic spirals, or rather half spirals
+extending over an angle of halfthe disk. They arise when we have local transportation
+cost that is reciprocal to the distance from the center. As the cost goes to infinity at the
+center this represents avoiding a congested center of the region. The case is also of
+interest in principle as it illustrates a different mode of problem solution.
+
+  With k = 1 / r the Euler equation (9.9) becomes
+
+which implies  and therefore has the obvious solution
+
+where  and a is a new integration constant. With polar coordinates
+300  Handbook of Transportation Science
+
+and using as the path parameter we get the direction field
+
+where the primes denote differentiation with respect to The last result is obvious
+
+because from (9.80) we have  From equations (9.83)-(9.84) we get the
+
+following expression for the derivative of arc length with respect to the angular param-
+
+eter
+
+  The unit flow field is therefore obtained through dividing the derivatives (9.83)-
+(9.84) by (9.85). Thus:
+
+where as before denotes the angle of the route. Note that, unlike the case of linear
+routes, is not an invariant along the route. There however exists a spatial invariant,
+the scalar product
+
+as can easily be calculated from the expression (9.86) by scalar multiplication with the
+
+vector  Observe that as is the angular coordinate for any position
+
+vector, whereas is the angle for the route, the statement in (9.87) that the expression
+
+  be equal to  i.e. a constant, says that any given route crosses all
+
+circles of various radii under the same angle to the radius vector.
+Continuous Space Modelling  301
+
+  In principle we could now, as we know the route directions, go on as before, solve
+
+for from its appropriate differential equation, and then integrate with respect to all
+the points of origin. In the present case it however is not so easy to solve that equation,
+so therefore we illustrate a different strategy of actually circumventing having to solve
+any differential equation at all.
+
+  Consider the condition on the divergence of flow (9.53) given an interaction which
+
+we again take as dependent on distance traversed and given
+
+  Unlike the case of linear routes distance is no longer identical with cost, but we
+keep the distance dependence for computational reasons.
+
+  Given the spiral routes we can easily integrate the distance along any optimal route:
+
+since  To make things simple we take  so that from (9.88) and
+(9.89) we have
+
+From our previous result (9.87) we can also write
+
+  Now let us divide the unit disk S in an inner disk and an outer ring by a circle
+
+C with radius 0 < r < 1. Suppose we integrate the divergence of the flow field over
+he outer ring. From Gauss's Integral Theorem we get:
+302  Handbook of Transportation Science
+
+where the right hand line integral is taken along the boundary circle that separates the
+
+inner disk from the outer ring We integrate the outward normal component of
+
+the flow on the boundary circle. There is also the outer boundary circle of the whole
+
+region S , but we already assumed that there would be no traffic with the exterior of the
+insulated disk, so this other line integral vanishes. As to the right hand integrand we
+
+note that  so
+
+  Now parameterizing the circle C by the angle  we can express arc length as
+  Hence:
+
+  The minus sign comes from the fact that by integrating over the angle we traverse
+the boundary in the negative direction. Using the result in the preceding double integral
+we get
+
+  Suppose now that we had started from integrating  an expression
+which will be given an intuitive interpretation below, instead of just  Then the
+(9.95) would become
+
+  Finally, integrating (9.96) over all points of origin in the inner disk we get
+Continuous Space Modelling  303
+
+We hence arrived at a direct estimate oftraffic without ever solving the differential
+
+equation for At least this expression is correct when all routes are outward, starting
+
+in the inner disk and ending in the outer ring.
+  The method is more general and works in a large number of cases than might be
+
+apparent. What we do in the left hand side is to "count" trips in terms ofthe divergence
+
+In the right hand side we then get traffic intensity at the distance multipliedby
+
+the perimeter of the circle at that distance.
+
+Angel and Hyman(1976) introduced this procedure as "cordon crossing". The idea
+
+is that we imagine a circle or "cordon" at a given distance from the center and count the
+number of trips crossing that cordon. In order to arrive at the average density of cross-
+
+ing (i.e. traffic) we obviously have to divide by the perimeter of the circle (the length of
+the cordon).
+
+As shown in Puu (1979), however, we cannot just count the number of trips in
+
+terms of  From the above formula we see that we also have to use weights and
+
+integrate  instead of just  This makes intuitive sense. If the cordon
+
+is a thin ring instead of just a circle, then the length of any trip through it and hence the
+
+load oftraffic on the ring caused by it depends on the angle ofincidence. A radial route
+
+implies minimal load, whereas a tangential route implies maximal load. In the limit as
+
+the ring collapses to a circle,  is exactly the weight we need. The corrected
+
+procedure leads to a measure in terms of weighted cordon crossing.
+
+In terms of our spiral routes we had  from (9.91),and
+
+therefore the appropriate integrand is as handy as
+
+  Before putting this to use in (9.97) our previous formula we have to consider the
+following facts. First, we should not integrate for the destination points over an angle
+larger than because no optimal spiral routes extend over a larger angle, a clockwise
+route then being better than a counter-clockwise or vice versa. The integration over
+only half the complete circle also means that we have to double the traffic measure
+obtained, because otherwise we take care of counter clockwise trips only. There are
+equally many clockwise. Second, we only discuss trips originating in the inner disk and
+ending in the outer ring. There are also equally many trips in the reverse direction.
+Therefore we have to double the measure once more.
+
+  In summary we have
+
+Reverting to polar coordinates we have the substitutions  and
+
+  Accordingly
+304  Handbook of Transportation Science
+
+  The integrand is however independent of the angular coordinates so we can evalu-
+
+ate those two integrals to equal  Hence
+
+  This can finally be evaluated in closed form. We now see the reason why we used
+distance and not transportation cost to determine the adverse effect in the gravitation
+law. Had we taken the more logical alternative then the difference in the denominator
+ofthe integrand would have become a difference in the logarithms ofthe radii, and then
+no closed form solution would be at hand. Anyhow, the final result is:
+
+Unlike the two previous distributions derived in (9.74) and (9.77) there is no peak
+
+load in the center ofthe region. The center is avoided by the spiral routes and therefore
+peak load is at an intermediate distance between center and periphery. Peak load also is
+much lower than in the previous cases, but as it is spread out over a whole ring rather
+
+than concentrated in a point total traffic generated is again  just as in the case
+
+of linear routes and unit distance elasticity of interaction.
+
+The direct method illustrated in this section is applicable to a wide range of cases
+
+and is therefore of much more interest than might be imagined from the case illustrated.
+
+Logarithmic spirals are particularly simple as they are monotonously inward or out-
+
+ward and so cross each cordon circle only once. It is, however, possible to deal with
+
+cases where routes originating in the outer ring just pass through the inner disk and
+
+again end in the outer ring (as in the case of linear routes), or routes which originate in
+
+the inner disk, pass through the outer ring and re-enter. We only have to count the
+
+crossings by such trips twice. The method is useful for simulations, since very few
+
+cases are possible to treat in terms of closed form solutions.
+
+As expected, and unlike the previous distributions which result in a central concen-
+
+tration of traffic, the present distribution represents a distribution of traffic which has a
+
+maximum intensity at an intermediate distance from center to periphery. There is very
+
+small load in the center, which is in contradiction with the assumed distribution of
+
+transportation costs for the choice of the logarithmic routes (according to which the
+
+center was infinitely congested). The reverse was the case with linear routes which
+Continuous Space Modelling  305
+
+arose under an assumption of constant transportation costs, but led to considerable
+congestion in the center.
+
+  Therefore the case leading to traffic equilibrium is intermediate, but unlike these
+extreme cases it is so complex as to defy closed form solution. Anyhow, we get a
+feeling for the type of analysis by studying these extreme and ultimately simplified
+cases.
+
+9.5 Transportation Cost Metrics
+
+General Considerations: Real Metric Spaces
+
+It is now important that we realize the following fact: Any system of transportation
+possibilities as embodied in a network can be fully represented by a suitable transpor-
+tation cost metric.
+
+  The most natural metric is the Euclidean, which is implicit in all classical location
+and land use analysis. The connections are then always straight lines, and the constant
+distance (cost) loci become concentric circles. We should note that it is impossible to
+literally build a physical network in this manner, because the roads would have to go
+everywhere in all directions. So the entire region would have to be paved with roads,
+and there would have to be an infinite number of junctions, where an infinity of roads
+meet. The Euclidean distance function is, as we know:
+
+where  are the locations of the points to be connected.
+
+A general distance metric  is any nonnegative function, such that: (i)
+
+The distance is zero if and only if  (ii) The distance from  to
+
+  equals the distance from  to  (iii) The distance from  to
+
+does not exceed the sum ofthe distances from  to  and from  to
+
+for any  (The triangle inequality.)
+
+Another example, which in contrast to the Euclidean Metric is possible to construct
+
+in reality, at least in finite mesh, is the rectangular grid or Manhattan Metric. The
+
+distance along such an idealized regular network is the sum of the horizontal and ver-
+
+tical distances taken separately.
+
+A purely mathematical consequence of adding the horizontal and vertical distances
+
+separately is that we can move farther - in an Euclidean sense - if we move a certain
+
+network distance East-West or South-North, than if we move in a diagonal direction.
+
+As a matter of fact all points of equal network distance are found to lie on a square
+
+tilted 45 degrees. A family of such concentric tilted squares is the equivalent to the
+
+circles of the Euclidean metric.
+306  Handbook of Transportation Science
+
+  Note that, with a finite grid width, we do not reach all the points, just equally spaced
+points on it. Moreover, it should be noted that, with a finite mesh density the density of
+reachable dots on the tilted squares can only be increased in finite steps. The smaller
+the mesh, the more points can be reached - and in the limit of vanishing mesh size all
+points are reachable.
+
+  The form of the distance function for the Manhattan Metric is:
+
+  It is worth noting that the Manhattan Metric belongs to the same general family as
+the Euclidean. The family name is Minkowski Metrics, and the general form is:
+
+  For the Euclidean case we have  for the Manhattan  When
+
+the isodistance loci become pointed in the horizontal and vertical directions. They
+
+could mimic a case with efficient trunk line routes in the East-West and North-South
+
+directions, and a system of minor subsidiary roads that make points outside the net-
+
+work accessible, though considerably less efficiently, and therefore at higher cost.
+
+  Common to all those metrics is a strong directional dependence confined to two
+
+directions at right angles. Instead of a square grid we could, of course, also think of a
+
+triangular grid, based on three directions intersecting at angles of 60 degrees. The con-
+
+stant network distance loci have a hexagonal shape.
+
+  The metric for a triangular network can formally be written as:
+
+where
+
+  The distance loci (or iso-vectures) in this case become hexagonal. If we wish we
+can also make a Minkowski like metric out of this hexagonal structure, by putting:
+Continuous Space Modelling  307
+
+In particular, with  we get the Euclidean circles back.
+
+  Regular networks are of interest as idealized cases when regions with uniformly
+distributed population and economic activity have to be provided with means of trans-
+
+portation. There is a theorem, known already to Launhardt (1889), that at junctions in
+
+an optimally designed network the roads of equal capacity and equal traffic load must
+
+meet at equal angles. Consequently, the regular networks come out as natural candi-
+dates.
+
+  In the literature much has been written about network design when we consider
+transport in terms of collection or discharge between a center and its surroundings. The
+appropriate design for such a network is the ring-radial type. Mosler (1987) dealt ex-
+tensively with those.
+
+Historically this has been the typical layout for city regions with a central market
+
+place and a round city wall (by the way a solution to the isoperimetric problem because
+a minimum perimeter also provided for maximum defence efficiency). The natural
+communication system for such a city was in terms of radials and orthogonals to those,
+
+i.e. more or less concentric rings, as in a cobweb. In modern times it was the successive
+walls, moats, and fortresses of growing cities that provided the space for the spacious
+ring-roads which more or less solved the traffic problem of the modern city.
+
+  Like any other network, the ring-radial one has a finite mesh density, but there is no
+harm in finding out its geometric properties, i.e. its metric, by assuming the mesh infi-
+
+nitely dense.
+  Unlike the Euclidean, the Manhattan, and the other uniform networks discussed,
+
+the ring-radial system has a given spatial layout, so we cannot just put the point of
+departure at the origin of the coordinate system, because this would result in a simpli-
+
+fied special case.
+
+Hence, we have to specify both endpoints of a path, say  and  in polar
+
+coordinates. It is now obvious that the optimal path may follow two different princi-
+
+ples. It can follow one radial from the point of origin right into the centre, and another
+
+radial right out to the destination. In that case the distance is:
+
+The route can also traverse only the radial difference
+
+but then it must be combined with a path on a ringroad corresponding to the angular
+
+difference  The distance traversed in the latter transit will be
+308  Handbook of Transportation Science
+
+because the angular transit will be shortest at the smallest radius. Moreover, we have to
+check that the angular difference is less than otherwise we have to take the comple-
+mentary angle. This means going clockwise or counter-clockwise, whichever is short-
+est. The distance by the combined radial and angular transit is:
+
+  Equating the distance expressions we get:
+
+  For an angular difference smaller than 2, the shortest route is a combined ring-
+radial transit, for larger difference the transit is purely radial.
+
+  It should be emphasised that the different metrics can be combined or nested: For
+instance a square network of main roads of finite mesh with capillary Euclidean dis-
+tance feeding lines as already mentioned, or a droplike metric ofairports with an Eucli-
+dean or a Manhattan metric. See Puu (1997) for details. The different modes easily
+combine to a new metric.
+
+Refraction of Traffic. A combination of metrics is also present when traffic moves
+to a major highway from the surrounding area on which a Euclidean metric is assumed.
+Transportation cost per mile in this area will exceed transportation cost per mile
+on the highway.
+
+The question is in what direction, that is at what angle, should traffic approach the
+highway.
+
+  This seemingly marginal problem has generated a literature in economic theory,
+starting with Wilhelm Launhardt (1887, p. 20-21) and continued by Tord Palander
+(1935), Heinrich von Stackelberg (1938), August Lösch (1940, 1954) and Karl Mosler
+(1987).
+Continuous Space Modelling  309
+
+When traffic enters at an angle the saving in transportation cost is (Fig. 9.1)
+  Maximizing with respect to requires
+
+As the ratio  increases, approaches a right angle.
+
+According to Lösch the feeder lines to the Great Northern Railroad in North Da-
+
+kota have this angular orientation (Lösch 1954).
+
+Further Remarks. The three types of metrics discussed, the square, triangular, and
+ring-radial, share the property of having a strong directional dependence. In a continuous
+setting it is not impossible to deal with such ansisotropy, though the approach is much
+more powerful without a dependence on direction. It therefore is a good thing that most
+road networks in reality if extended over larger areas than a city centre tend to have
+such a strong stochastic element that any systematic directional influence from a strict
+regularity vanishes. The isotropic approximation, i.e. an "Euclidean" metric therefore
+becomes pretty good.
+310  Handbook of Transportation Science
+
+Computational Aspects: Virtual Metric Space
+
+The metrics inherent in a transportation network is one thing. Another is the transfor-
+mation ofthe real geographical space to a virtual space for analytical or computational
+purposes. Wardrop (1969) considered the transformation ofthe region to another (flat)
+and Tobler (1963) to another (curved) space, Wardrop using complex analytical func-
+tions, and Tobler using differential geometry. The purpose was to "straighten out" the
+optimal routes to geodesics, or even lines in Wardop's case.
+
+Conformal Mapping. We will first illustrate the case by the Wardrop issue which
+links neatly to the direct traffic computations discussed above.
+
+  Wardrop considered cases where  i.e. local transportation cost is a power
+
+function of the distance from the origin. We already considered two cases,
+
+n=0 and n=–1, where the routes became straight lines and logarithmic spirals respec-
+
+tively.
+
+  We can now consider the class of functions in full generality. With a power func-
+
+tion, and written in polar coordinates we get the transportation cost integral (9.6) to be
+
+minimized as:
+
+  Suppose we introduce the new coordinate transformation
+
+  Then we can easily compute the derivative  by differentiating the
+
+above expressions (9.119) and (9.120). Substituting into the integral (9.118) and mul-
+
+tiplying  squared into the square root expression we easily obtain:
+
+which in the new coordinates is an expression for finding minimum cost routes with
+just a unitary (constant) local transportation cost. The solutions for the optimal routes
+in the space
+Continuous Space Modelling  311
+
+are accordingly straight lines. Observe that we, unlike Wardrop, do not introduce any
+complex functions; we just consider the result of the operation in the real plane. The
+coordinate transformation projects radii vectors by a power function at the same time
+as it multiplies angles. Optimal routes which are straight lines in the virtual space ac-
+cordingly have mapped images that are curved in the original space.
+
+  It is, however, easier to deal with the straight lines in the virtual space. There is one
+particular reason for this: The mapping is conformal, and therefore it does not change
+angles between intersecting curves. In particular this applies to the angles under which
+the optimal routes intersect various circles of constant radius. So, if we want to com-
+
+pute the angle  to be used in counting the weighted cordon crossings it
+
+does not matter if we use  instead, where is the angle of the straight
+
+line route in the virtual space, and is the angle of the radius vector in that space as
+
+already defined. As we have  we can make things easy for us and
+
+compute the angle in the virtual space where optimal routes become straight lines and
+
+circles remain circles (see Puu 1979).
+
+There are however two things to be noted. First, the Jacobian of the map
+
+  becomes
+
+  Therefore, even if population is uniformly distributed on the original space, the
+distributions are no longer equal in the virtual space of analysis. They simply have to
+
+be modified by the Jacobians of the mapping. If n > 0, then population in the virtual
+space is moved closer to the center because the mapping packs the area that way. The
+overall density is also decreased because the map also enlarges a sector of the disk to
+the whole disk. The question is what becomes of the whole disk if each sector of a
+given angle is enlarged to the whole disk. The solution is in terms of multilayer cover-
+ing of the disk in terms of a Riemann surface. See Puu (1979).
+
+  In this context Angel and Hyman (1976) make an important observation: For an
+isotropic local transportation cost function we can always apply a map such that the
+optimal routes become geodesics in a virtual space, or we can apply a map so as to
+make a nonuniform density oforigins or destinations uniform, but we cannot do both at
+once. Any map to attain one of the goals automatically brings a given distortion to the
+312  Handbook of Transportation Science
+
+other. So, defining a virtual space by the coordinate transformation
+automatically results in a distortion of the population densities at origin and destination
+to be used at the simulations.
+
+  The second observation is the following. If the power n is positive, then the map
+  by multiplying angles enlarges only a sector of the disk to the entire
+
+disk. If for instance n = 1 then half the disk is enlarged to the whole disk. Looking at
+the situation in the original space we find that all the straight line routes in the virtual
+
+(X,Y)-space are squeezed into a half disk in (x,y)-space. There is a deeper reason
+
+behind this: There are no continuous routes that extend over an angle larger than half
+the disk. The higher n is, the smaller the sector into which the continuous optimal
+routes are squeezed.
+
+  But we must have connections also between points in the disk separated by larger
+angles, so how is this solved? The answer is that there are alternative routes consisting
+of broken radials which replace the smooth curves for angles that are too large. Actu-
+ally, we would have found out this from the outset if we had considered more advanced
+results from the calculus of variations, kinetic foci and the Jacobi conditions. See Puu
+(1979) for details. Then we would have found that sufficiency conditions fail for smooth
+routes covering too large angles.
+
+  As a consequence the traffic distributions are found by piecing two things together:
+Linear routes in for small angle connections in the virtual space, and radial ones for
+large angle connections.
+
+Stereographic Projection. To illustrate Tobler's case consider a transportation cost
+function
+
+where
+
+  This is a bit like the case of logarithmic spirals, with maximum local transportation
+cost in the supposedly congested center, though the cost does not go to infinity there.
+The transportation cost along a parameterized route x(s), y(s) is
+Continuous Space Modelling  313
+
+and is not obviously dealt with. Neither does it help to revert to polar coordinates.
+Instead we can introduce the following coordinate transformation into threespace:
+
+  It is easy to find that
+
+for any values of x,y. Hence all points to which the plane is mapped lay on a sphere
+with unit radius and center in the point u = v = 0, w = 1.
+
+  The plane is hence mapped onto the surface of a unit sphere through a so called
+stereographic projection. Geometrically we can imagine the sphere as placed laying
+tangentially on the origin in x,y-space. Then the points are mapped by a ray from the
+north pole through the sphere to the plane. This mapping is one to one, except the north
+pole itself on the sphere which corresponds to any point at infinity.
+
+  The most interesting thing to remember about the stereographic projection is that it
+maps great circles on the sphere to circles on the plane. This is interesting because the
+shortest paths on the sphere are the geodesic great circles, and should they turn up as
+optimal routes, which they will, then the optimal routes in the original space obviously
+become circular arcs.
+
+  The parameterized curve x(s), y(s) through the coordinate transformation
+  as defined maps to a parameterized curve u(s), v(s), w(s) embed-
+
+ded in the unit sphere. We easily obtain the derivatives from (9.128)-(9.130):
+314  Handbook of Transportation Science
+
+  We can now calculate the arc length element on the unit sphere from (9.132)-(9.134)
+
+  This calculation is messy but elementary. All the products of  vanish and
+
+only the squares remain. We note that the infinitesimal arc in our original parameter on
+
+the sphere equals the product of local transportation cost and the infinitesimal arc in
+our original space.
+
+  Hence the transportation cost integral we have to minimize becomes
+
+so that transportation cost in our original space indeed equals arc length on the virtual
+space which now is the unit sphere. Shortest paths on the unit sphere are geodesics,
+more specifically great circles.
+
+  If we consider a field of radiating paths in various directions from a certain point of
+origin they hence become a set of great circles on the unit sphere. The characteristic of
+such a bundle of great circles is that they all meet again in the point of the sphere
+opposite to the point of origin.
+
+  As we noted, the images of great circles on the unit sphere by the stereographic
+projection become circular arcs. Accordingly, in the original plane space the optimal
+routes from a given point are a set of circular arcs which again meet in another point.
+Such a field in physics is known from electrostatics as the dipole.
+
+  Hence, by using a curved virtual space in the spirit of Tobler we managed to solve
+the routing problem in a very simple manner without carrying out any calculations at
+all, just by the knowledge of the character of shortest routes on a sphere.
+Continuous Space Modelling  315
+
+9.6 Concluding Remarks: Road Investment
+
+Perhaps Continuous Space Modelling (CSM) is best at providing an overall picture of
+the direction and volume of traffic flows generated by a given distribution of traffic
+sources and sinks. To translate this into concrete proposals for road investments, say,
+would require supplementary studies in a narrower and presumably discrete context.
+
+  Put another way, CSM can lead us to an understanding of the economics of a situa-
+tion, while falling short of supplying engineering answers. Advances in computer im-
+age technology may however lead us to this goal in the future.
+
+  Still it is possible to formulate a few issues concerning road investments in the
+continuous space format.
+
+  We consider two stylized scenarios. The first deals with increasing the capacity of
+an existent road network, the second with increasing the density of the network.
+
+  If capacity is the issue, which is particularly appropriate in a congested urban area,
+then local transportation cost k will depend on the ratio of traffic f, as defined above, to
+road capacity, for which the areal density of road capital c can be taken as a proxy:
+
+A possible functional form will be
+
+which implies that when traffic goes to capacity then  as speed goes to a
+total stand still.
+
+  Minimizing total transportation cost:
+
+subject to a total road investment budget:
+leads to a Lagrange problem
+316  Handbook of Transportation Science
+
+which is solved by
+
+implying
+
+  Capacity should then be made proportional to traffic flow throughout. Notice, how-
+ever, the hidden assumptions in (9.139) that capacity costs the same per unit in all
+locations and that transportation cost is the same function of flow/capacity everywhere.
+
+  In the second scenario, increasing the density of the network rather than the capac-
+ity of an existent network, we can specify the local transportation cost function in the
+following way: Disregarding congestion, and hence taking cost as proportionate to the
+distance traversed, we note that whatever the density ofthe network it is always at least
+necessary to traverse the Euclidean distance, normalized to unity. If the network is
+sparse, adding a new short-cut saves the average necessity ofdetour-taking to a consid-
+erable degree.
+
+  However, the denser the network already is, the less will be saved in terms of de-
+tours. Accordingly there are decreasing returns from road investments, and we can
+specify local transportation cost in terms of this type of investment b as
+
+where k(b) is a decreasing concave function with a positive infimum as  for
+
+instance
+
+The equivalent to (9.139) now reads
+Continuous Space Modelling  317
+
+Maximizing (9.146) with respect to b subject to the budget constraint
+
+now leads to the Lagrange problem
+
+which is solved by
+or
+
+  Thus with k = 1+ 1/b as in (9.145):
+or
+
+  Road capital should be distributed in proportion to the square root of the measure of
+traffic rather than to traffic. In Puu (1979) this rule was tested for the sparsely popu-
+lated parts of Sweden where congestion was of little importance and the necessity of
+detour taking was considerable. The fit to the square root rule was astonishingly good,
+
+  with
+  This illustrates that one might get some general information by CSM about such
+issues as the distribution of road capital. Still, this is when the traffic distribution is a
+given datum. The tough part of analysis still remains as we noted in section 9.4.
+  Changing the distribution of road capital in terms of road density and/or road ca-
+pacity or density automatically changes the distribution of local transportation cost. As
+a consequence the choice of routes and the traffic distribution itself changes. The diffi-
+318  Handbook of Transportation Science
+
+culty, however, remains even in discrete modelling where most evaluations of road
+investment programs by that approach take traffic as a given datum.
+
+  These are highly stylized scenarios. The modelling of how transportation cost actu-
+ally depends on local conditions in order to arrive at realistic functions k(f / c) and
+
+k(b) is an engineering job. CSM can point research in this direction - but will not do
+this job as well.
+
+Bibliography
+
+Angel, S. and G. M. Hyman (1970) ”Urban Velocity Fields”, Environment and Plan-
+ning 2, 211-224.
+
+Angel, S. and G. M. Hyman (1971) ”Urban Travel Time”, Papers and Proceedings of
+the Regional Science Association 26, 85-99.
+
+Angel, S. and G. M. Hyman (1972) ”Urban Spatial Interaction”, Environment and
+Planning 4, 99-118.
+
+Angel, S. and G. M. Hyman (1972) ”Urban Transportation Expenditures”, Papers and
+Proceedings of the Regional Science Association 27, 105-123.
+
+Angel, S. and G. M. Hyman (1976) Urban Fields -A Geometry of Movement for Re-
+gional Science (Pion, London).
+
+Beckmann, M. J. (1952) ”A Continuous Model of Transportation”, Econometrica 20,
+643-660.
+
+Beckmann, M. J. (1953) ”The Partial Equilibrium of a Continuous Space Market”,
+Weltwirtschaftliches Archiv 71, 73-89.
+
+Beckmann, M. J. (1968) Location Theory (Random House, New York).
+
+Beckmann, M. J. (1985) "Spatial price policy and the demand for transportation", Journal
+of Regional Science 25, 367-371
+
+Beckmann M. J. and T. Puu (1985) Spatial Economics - Potential, Density, and Flow
+(North-Holland)
+
+Bunge, W. (1966) Theoretical Geography (Gleerups, Lund).
+
+Koopmans, T. C. (1949) "Optimum Utilization of the Transportation System",
+Econometrica 17: Suppl. 136-146.
+Continuous Space Modelling  319
+
+Launhardt, W. (1885) Mathematische Begründung der Volkswirtschaftslehre (B. B.
+Teubner, Leipzig. Reprinted (1945) by Scientia Verlag, Aalen.
+
+Launhardt, W. (1887) Theorie des Trassierens (Schmorl und von Seefeld, Hannover)
+
+Lösch, A. (1954) The Economics of Location (Yale University Press, New Haven,
+Conn.)
+
+Mosler, K. C. (1976) Optimale Transportnetze - Zur Bestimmung ihres kostengünstigsten
+Standorts bei gegebener Nachfrage (Springer, Berlin).
+
+Mosler, K. C. (1987) Continuous Location of Transportation Networks (Springer-
+Verlag)
+
+Palander, T. F. (1935) Beiträge zur Standortstheorie (Almqvist & Wiksell, Uppsala).
+
+Puu, T. (1977) ”A Proposed Definition of Traffic Flow in Continuous Transportation
+Models”, Environment and Planning 9, 559-567.
+
+Puu, T. (1978) ”On Traffic Equilibrium, Congestion Tolls and the Allocation of Trans-
+portation Capacity in a Congested Urban Area”, Environment and Planning 10, 29-36.
+
+Puu, T. (1978) ”Towards a Theory of Optimal Roads”, Regional Science and Urban
+Economics 8, 225-248.
+
+Puu, T. (1978) ”On the Existence of Optimal Paths and Cost Surfaces in Isotropic
+Continuous Transportation Models”, Environment and Planning 10, 1121-1130.
+
+Puu, T. (1979) The Allocation of Road Capital in Two-Dimensional Space (North-
+Holland)
+
+Puu, T. (1987) Mathematical Location and Land Use Theory - An Introduction
+(Springer-Verlag)
+von Stackelberg, H. (1938) "Das Brechungsgesetz des Verkehrs", Jahrbücher für
+Nationalökonomie und Statistik 148: 680-696.
+
+Tobler, W. R. (1963) "Geographic Area and Map Projections", Geographical Review
+53, 59-78
+
+Vaughan, R (1987) Urban Spatial Traffic Patterns (Pion Ltd.)
+
+Wardrop, J. G. (1966) ”Journey Speed and Flow in Central Urban Areas”, Traffic En-
+gineering and Control 9, 528-532.
+320  Handbook of Transportation Science
+
+Wardrop, J. G. (1969) ”Minimum Cost Paths in Urban Areas”, Strassenbau- und
+Strassenverkehrstechnik 86, 184-190.
+
+Warntz, W. (1967) ”Global Science and the Tyranny of Space”, Papers and Proceed-
+ings of the Regional Science Association 19, 7-19.
+
+Werner, C. (1966) Zur Geometrie von Verkehrsnetzen (Abhandlungen des 1.
+Geografischen Instituts der FU, Berlin).
+
+Williams, H. C. W. L. and J. D. Orthuzar Salas (1976) ”Some Generalizations and
+Applications of the Velocity Field Concept”, Transportation Research 10, 65-73.
+
+Zitron, N. R. (1974) ”A Continuous Model of Optimal-Cost Routes in a Circular City”,
+Journal ofOptimization Theory and Applications 14, 291-303
+
+Zitron, N. R. (1978) ”A Critical Conditions for the Cost Density in the Circular City
+Model", Journal of Optimization Theory and Applications 24, 507-512
+
+Acknowledgements
+
+We acknowledge gratefully the assistance ofMs. Gunvor Albihn in typing some earlier
+drafts of this article and the hospitality of the Center for Economic Studies (CES) at the
+University of Munich, under the directorship of H.W. Sinn, in enabling there to com-
+plete the final version of this chapter. We also wish to express our gratitude to The
+Swedish Transport and Communication Research Board who made the necessary visit
+in Munich for one of the authors financially possible.
+  10 LOCATION MODELS IN
+  TRANSPORTATION
+
+  Mark S. Daskin and Susan H. Owen
+
+10.1 Introduction
+
+Transportation as a derived demand and the relation to location
+choices
+
+The demand for transportation services is a derived demand (Manheim, 1979). In
+other words, the demand for such services arises from the need to move goods and/or
+people from one location to another and not from some inherent desirability of
+transportation in and of itself. Transportation is necessary only because people
+and/or goods are not located where they need to be when they need to be there.
+
+  For example, the need for either public or private commuter transportation in the
+morning and evening rush hours arises from the fact that an individual’s residence
+and his/her work location are rarely the same. Therefore, people need to travel from
+their homes to their workplaces in the early morning and vice versa in the late
+afternoon or evening. Similarly, the need to ship automobiles arises from the fact
+that they are produced in a limited number of assembly plants – typically only one or
+two plants produce a particular vehicle – and are sold throughout the country. Thus,
+cars need to be shipped from assembly plants to dealers for sale to customers. As a
+final example, only a few locations throughout the country are amenable to growing
+grapefruits. Thus, there is a need to transport the fruit from farms in Florida and
+California to locations throughout the remainder of the country.
+
+  Since the demand for transportation services arises from the spatial mismatch
+between where people are and where they want to be or where products are
+manufactured (or grown) and where they are sold (or used in subsequent
+manufacturing processes), it is important to study the factors that influence location
+decisions. Clearly, location decisions determine, in part, what transport facilities will
+be used. Note, however, that the existence or lack of good transport services may
+also influence location decisions. For example, the presence of a railroad line with
+at-grade crossings may dictate the need for additional emergency medical service
+322  Handbook of Transportation Science
+
+(EMS) bases in a community to ensure that residences on both sides of the tracks are
+adequately served even if trains are blocking the roadway.
+
+  While transportation systems and facility location decisions clearly interact, a
+complete analysis of the factors influencing location choices is beyond the scope of
+this chapter. Thus, we have elected not to examine residential location choices. The
+reader interested in this topic is referred to the seminal work of Lerman (1976) and
+subsequent research on the topic. Instead, the focus of this chapter will be on models
+that can be used to assist in locating public and private sector facilities. We use the
+word “assist” deliberately. Location decisions are strategic in nature. As such, there
+are typically many factors that affect these decisions, some of which are difficult or
+impossible to quantify. Mathematical models of the sort outlined below are therefore
+valuable tools that assist decision-makers; they cannot be considered a replacement
+for decision-making expertise and strong management.
+
+  The remainder of this chapter is organized as follows: We conclude this section
+with a discussion of four typical facility location contexts in which the models we
+will be discussing might be of use. In section 10.2 we present a taxonomy of facility
+location problems. This classification scheme helps us to further limit the scope of
+the chapter and to identify areas of emerging research. In section 10.3, we outline a
+number of classical facility location problems and formulate them using integer
+linear programs. Section 10.4 discusses several solution algorithms for these
+models. In section 10.5 we discuss limitations of the basic models and extensions to
+these models. Finally conclusions and directions for future work are outlined in
+section 10.6.
+
+Examples of facility location decision contexts
+
+The location of ambulance bases has been one topic of considerable attention in the
+location literature (Eaton and Daskin, 1980; Eaton et al., 1985). The problem is
+typically to determine the number and location of ambulance bases needed to ensure
+adequate service to the population at hand. Adequate service is often defined in
+terms of whether or not an ambulance can travel from its base to the location of an
+emergency within some specified time limit (e.g., five minutes). Sometimes more
+complex models are employed which consider travel from the base to the emergency
+site as well as travel from the emergency location to the hospital. Emergency
+services have also led to the incorporation of stochastic demand and service time
+elements into location models (Fitzsimmons, 1973).
+
+  The location of non-emergency public facilities has also been the subject of
+considerable attention within the location literature. Maze et al. (1981, 1982) study
+the location of bus garages. In such problems the objective is often to minimize the
+total deadhead time of buses, or the time a bus spends driving between its garage and
+the beginning and ending points of its route. The problem is often complicated by
+the presence of multiple bus types. A number of constraints typically limit the
+possible assignments. These constraints include the following: limits on the overall
+garage capacity in different locations and at different times of the day, restrictions on
+Location Models in Transportation  323
+
+the types of vehicles that can be assigned to each garage (since maintenance is
+performed on the buses at the garages and not all garages will be equipped to
+maintain all vehicle types), and minimum and maximum numbers of vehicles of each
+type that can be assigned to each garage.
+
+  In the private sector, facility location models have been used to locate production
+plants, warehouses and trans-shipment facilities. For example, in locating rail ramps
+(locations at which finished automobiles are transferred from rail cars to truck for
+final delivery to dealers) one needs to determine how many rail ramps to have
+throughout the network and where they should be. The objectives typically consider
+both cost and customer service. This problem is further complicated by the presence
+of multiple products and by the need to utilize the rail and truck fleets efficiently.
+
+  Finally, there are many cases in which facility location and network design
+interact. For example, the number and location of airline hubs determines the
+configuration of the network to a large degree (Flynn and Ratick, 1988; Kuby and
+Gray, 1993). Indeed, the location of hub facilities has become a subfield in its own
+right and is discussed in section 10.5 below.
+
+10.2 A taxonomy of facility location problems
+
+In this section we present a taxonomy of facility location models. We note that
+location problems and the models that represent them can be classified in a variety of
+ways. The scheme we present is similar to that outlined by Daskin (1995) and by
+Brandeau and Chiu (1989) and Krarup and Pruzan (1990). In the context of this
+taxonomy, we highlight those topics that will be the focus of the remainder of this
+chapter and identify areas of location research that are beyond its scope.
+
+Continuous vs. network location models
+
+In some situations, it is appropriate to allow facilities to be located anywhere within
+a particular space. Sometimes demands are also modeled as being continuously
+distributed through the space in question. Such models are continuous models.
+These models are most appropriate when one simply wants to get a feel for how
+many facilities might be needed and roughly where they should be located. The
+Weber problem (Weber, 1929), that of finding the center of gravity of a set of
+discrete points, is the prototype continuous location problem. A significant portion
+of continuous location research, particularly that which attempts to incorporate
+vehicle routing costs into location models, is based on geometric probability theory
+(Kendall and Moran, 1963)
+
+  Continuous location models present both computational and practical difficulties.
+From a computational perspective, continuous models often result in non-linear
+formulations that are difficult to solve, particularly when more than one facility is
+being located. From a practical perspective, such models often suggest locations that
+

@@ -1,0 +1,890 @@
+  Explainable Artificial
+  Intelligence for Intelligent
+  Transportation Systems
+
+Artificial Intelligence (AI) and Machine Learning (ML) are set to revolutionize all industries, and the Intelligent
+Transportation Systems (ITS) field is no exception. While ML, especially deep learning models, achieve great
+performance in terms of accuracy, the outcomes provided are not amenable to human scrutiny and can hardly
+be explained. This can be very problematic, especially for systems of a safety-critical nature such as transporta-
+tion systems. Explainable AI (XAI) methods have been proposed to tackle this issue by producing human inter-
+pretable representations of machine learning models while maintaining performance. These methods hold the
+potential to increase public acceptance and trust in AI-based ITS.
+
+FEATURES:
+
+  • Provides the necessary background for newcomers to the field (both academics and interested practi-
+
+  tioners)
+
+  • Presents a timely snapshot of explainable and interpretable models in ITS applications
+  • Discusses ethical, societal, and legal implications of adopting XAI in the context of ITS
+  • Identifies future research directions and open problems
+
+Amina Adadi is an assistant professor of Computer Science at Moulay Ismail University, Morocco. She has
+published several papers including refereed IEEE/Springer/Elsevier journal articles, conference papers, and book
+chapters. She has served and continues to serve on executive and technical program committees of numerous
+international conferences such as IEEE IRASET, ESETI, and WITS. Her research interests include Explainable
+AI, Data Efficient Models: Data Augmentation, Few-shot learning, Self-supervised learning, Transfer Learning,
+Blockchain, and Smart Contracts.
+
+Afaf Bouhoute holds a Ph.D., a Master’s degree in information systems, networking, and multimedia, and a bach-
+elor’s degree in computer science, all from the faculty of science, Sidi Mohamed Ben Abdellah University, Fez, Mo-
+rocco. She regularly serves in the technical and program committees of numerous international conferences such
+as ISCV, WINCOM, ICECOCS, and ICDS. She also served as a co-chair of the First International Workshop on
+Cooperative Vehicle Networking (CVNET 2020), which was organized in conjunction with EAI ADHOCNETS
+2020. Her research interests span different techniques and algorithms for modeling and analysis of driving behavior,
+with a focus on their application in cooperative intelligent transportation systems.
+Taylor & Francis
+
+Taylor & Francis Group
+
+http://taylorandfrancis.com
+  Explainable Artificial
+Intelligence for Intelligent
+ Transportation Systems
+
+  Edited by
+
+  Amina Adadi
+
+  Moulay Ismail University, Morocco
+
+  Afaf Bouhoute
+
+  Sidi Mohamed Ben Abdellah University, Morocco
+First edition published 2024
+by CRC Press
+6000 Broken Sound Parkway NW, Suite 300, Boca Raton, FL 33487-2742
+
+and by CRC Press
+4 Park Square, Milton Park, Abingdon, Oxon, OX14 4RN
+
+CRC Press is an imprint of Taylor & Francis Group, LLC
+
+© 2024 selection and editorial matter, Amina Adadi & Afaf Bouhoute; individual chapters, the contributors
+
+Reasonable efforts have been made to publish reliable data and information, but the author and publisher cannot as-
+sume responsibility for the validity of all materials or the consequences of their use. The authors and publishers have
+attempted to trace the copyright holders of all material reproduced in this publication and apologize to copyright holders
+if permission to publish in this form has not been obtained. If any copyright material has not been acknowledged please
+write and let us know so we may rectify in any future reprint.
+
+Except as permitted under U.S. Copyright Law, no part of this book may be reprinted, reproduced, transmitted, or
+utilized in any form by any electronic, mechanical, or other means, now known or hereafter invented, including pho-
+tocopying, microfilming, and recording, or in any information storage or retrieval system, without written permission
+from the publishers.
+
+For permission to photocopy or use material electronically from this work, access www.copyright.com or contact the
+Copyright Clearance Center, Inc. (CCC), 222 Rosewood Drive, Danvers, MA 01923, 978-750-8400. For works that are not
+available on CCC please contact mpkbookspermissions@tandf.co.uk
+
+Trademark notice: Product or corporate names may be trademarks or registered trademarks and are used only for iden-
+tification and explanation without intent to infringe.
+
+ISBN: 978-1-032-34457-7 (hbk)
+ISBN: 978-1-032-34853-7 (pbk)
+ISBN: 978-1-003-32414-0 (ebk)
+
+DOI: 10.1201/9781003324140
+
+Typeset in LM Roman font
+by KnowledgeWorks Global Ltd.
+
+Publisher’s note: This book has been prepared from camera-ready copy provided by the authors.
+Contents
+
+Preface  vii
+
+Contributors  ix
+
+Section I Toward Explainable ITS
+
+Chapter 1 ■ Explainable Artificial Intelligence for Intelligent Transportation
+
+  Systems: Are We There Yet?  3
+
+  Amina Adadi and Afaf Bouhoute
+
+Section II Interpretable Methods for ITS Applications
+
+Chapter 2 ■ Towards Safe, Explainable, and Regulated Autonomous
+
+  Driving  33
+
+  Shahin Atakishiyev, Mohammad Salameh, Hengshuai Yao, and Randy Goebel
+
+Chapter 3 ■ Explainable Machine Learning Method for Predicting
+
+  Road-Traffic Accident Injury Severity in Addis Ababa City
+
+  Based on a New Graph Feature Selection Technique  53
+
+  Yassine Akhiat, Younes Bouchlaghem, Ahmed Zinedine, and Mohamed Chahhou
+
+Chapter 4 ■ COVID-19 Pandemic Effects on Traffic Crash Patterns and
+
+  Injuries in Barcelona, Spain: An Interpretable Approach  75
+
+  Ahmad Aiash and Francesc Robuste´
+
+Chapter 5 ■ Advances in Explainable Reinforcement Learning: An
+
+  Intelligent Transportation Systems Perspective  93
+
+  Rudy Milani, Maximilian Moll, and Stefan Pickl
+
+Chapter 6 ■ Road-Traffic Data Collection: Handling Missing Data  119
+
+  Abdelilah Mbarek, Mouna Jiber, Ali Yahyaouy, and Abdelouahed Sabri
+
+Chapter  7 ■ Explainability of Surrogate Models for Traffic Signal Control 135
+
+  Pawel Gora , Dominik Bogucki, and M. Latif Bolum
+
+  v
+vi ■ Contents
+
+Chapter  8 ■ Intelligent Techniques and Explainable Artificial Intelligence
+
+  for Vessel Traffic Service: A Survey  153
+
+  Meng Joo Er, Huibin Gong, Chuang Ma, and Wenxiao Gao
+
+Chapter  9 ■ An Explainable Model for Detection and Recognition of Traffic
+
+  Road Signs  171
+
+  Anass Barodi, Abdelkarim Zemmouri, Abderrahim Bajit, Mohammed Benbrahim,
+  and Ahmed Tamtaoui
+
+Chapter 10 ■ An Interpretable Detection of Transportation Mode
+
+  Considering GPS, Spatial, and Contextual Data Based on
+
+  Ensemble Machine Learning  207
+
+  Sajjad Sowlati , Rahim Ali Abbaspour, and Alireza Chehreghan
+
+Chapter  11 ■ Blockchain and Explainable AI for Trustworthy Autonomous
+
+  Vehicles  241
+
+  Ouassima Markouh, Amina Adadi, and Mohammed Berrada
+
+Section III Ethical, Social, and Legal Implications of XAI in ITS
+
+Chapter  12 ■ Ethical Decision-Making under Different Perspective-Taking
+
+  Scenarios and Demographic Characteristics: The Case of
+
+  Autonomous Vehicles  257
+
+  Kareem Othman
+
+Index  275
+Preface
+
+Artificial Intelligence (AI), particularly Machine and Deep Learning, has been sig-
+nificantly advancing Intelligent Transportation Systems (ITS) research and industry.
+Due to their ability to recognize and to classify patterns in large datasets, AI algo-
+rithms have been successfully applied to address the major problems and challenges
+associated with traffic management and autonomous driving, e.g., sensing, percep-
+tion, prediction, detection, and decision-making. However, in their current incarna-
+tion, AI models, especially Deep Neural Networks (DNN), suffer from the lack of
+interpretability. Indeed, the inherent structure of the DNN is not intrinsically set up
+for providing insights into their internal mechanism of work. This hinders the use
+and acceptance of these “black-box” models in systems of a safety-critical nature like
+ITS. Transportation usually involves life-death decisions; entrusting such important
+decisions to a system that cannot explain or justify itself presents obvious dangers.
+Hence, explainability and ethical AI are becoming subjects to scrutiny in the context
+of intelligent transportation.
+
+  Explainable Artificial Intelligence (XAI) is an emergent research field that aims to
+make AI models’ results more human-interpretable without sacrificing performance.
+XAI is regarded as a key enabler of ethical and sustainable AI adoption in transporta-
+tion. In contrast with “black-box” systems, explainable and trustworthy intelligent
+transport systems will lend themselves to easy assessments and control by system de-
+signers and regulators. This would pave the way for easy and continual improvements
+leading to enhanced performance and security, as well as increased public trust.
+
+  Given its societal and technical implications, we believe that the field of XAI
+needs an in-depth investigation in the realm of ITS, especially in a post-pandemic era.
+This book aims at compiling into a coherent structure the state-of-the-art research
+and development of explainable models for ITS applications. The contributions are
+organized in three topical parts:
+
+  1. Toward explainable ITS: This part aims to round up reference material for
+  newcomers and researchers willing to join the dynamic area of explainable in-
+  telligent transportation systems by introducing them to fundamental concepts
+  and topics.
+
+  2. Interpretable methods for ITS applications: This part provides interested and
+  more experienced researchers with a timely holistic view of existing and poten-
+  tial methods and techniques for enabling and improving the interpretability of
+  transportation systems.
+
+  vii
+viii ■ Preface
+
+  3. Ethical, social, and legal implications of XAI in ITS: This part discusses ethical
+  and social implications of XAI in the ITS context.
+
+  In Chapter 1, the editors provide a comprehensive survey on the topic of XAI
+and its application to ITS. This survey aims to provide the fundamental knowledge
+required of researchers who are interested in explainability in ITS. The second part
+begins by introducing a theoretical design of an XAI-based autonomous driving sys-
+tem in Chapter 2; the theoretical framework is projected to a practical case study.
+Afterward, some inherent interpretable methods are explored for different ITS appli-
+cation, namely Chapter 3 proposes a graph feature selection-based interpretability
+for predicting accident injury severity. In Chapter 4, a decision tree-based model is
+used to classify crash effects in an attempt to evaluate the impact of the COVID-19
+pandemic on traffic crash injuries in the city of Barcelona. A survey on explainable
+reinforcement learning applied to ITS is proposed in Chapter 5. Chapter 6 deals with
+missing data estimation for traffic flow in Morocco using linear regression. The rest
+of the chapters focus on ad-hoc explainable techniques. Chapter 7 studies the ex-
+plainability of the GNN model using two methods: SHAP and Zorro method. The
+aim of the study is to estimate the importance of intersections and their impact on
+the times of waiting on red signals. The third survey proposed by the book investi-
+gates machine learning and XAI techniques for vessel traffic service. In Chapter 9, an
+explainable model for the detection and recognition of traffic road signs is proposed
+using heatmapping techniques (Saliency Map and Grad-cam). An ensemble machine
+learning-based model is proposed in Chapter 10 to classify transportation modes;
+SHAP is used to enhance the interpretability of the model. Finally, Chapter 11 ex-
+plores the potential of combining XAI and Blockchain for better trust in autonomous
+vehicles. Explainability is not a purely technological issue; it entails trust, fairness,
+and ethical considerations. In the last part of this book, a study of the public prefer-
+ence for autonomous vehicles in moral dilemma situations is presented. The chapter
+presents a questionnaire survey in order to study and analyze the moral choices of
+the public under different perspectives.
+
+  To the best of our knowledge, this is the first dedicated edited book that focuses
+on XAI in the context of ITS. We believe that the rich portfolio of the XAI techniques
+and the diverse ITS applications discussed in this book will help to bridge AI and
+transportation communities, and will contribute to the progress toward explainable,
+more trusted, and ethical intelligent transportation.
+
+  We would like to avail this opportunity to express our thanks to the contributing
+authors for their precious collaboration. But for their contributions, this initiative
+could not have become a reality. We would also like to thank Taylor and Francis /
+CRC Press as publication partner for their guidance and assistance; a special thanks
+to Elliott Morsia and Simran Kaur for their kind help throughout the book-editing
+process.
+
+Dr. Amina Adadi, Moulay Ismail University, Morocco
+Dr. Afaf Bouhoute, Sidi Mohamed Ben Abdellah University, Morocco
+Contributors
+
+Rahim Ali Abbaspour  M. Latif Bolum
+School of Surveying and Geospatial Eng  TensorCell, Poland
+University of Tehran, Iran  Poland
+
+Amina Adadi  Younes Bouchlaghem
+SIC Research Team, L2ISEI Laboratory  Department of Informatics, UAE
+Moulay Ismail University, Meknes, Morocco  Tetouan Morocco
+
+Ahmad Aiash  Afaf Bouhoute
+Civil Engineering School  Sidi Mohamed Ben Abdellah University
+UPC– BarcelonaTech, Barcelona, Spain  Faculty of Science, Fez, Morocco
+
+Yassine Akhiat  Mohamed Chahhou
+Department of Informatics  Department of Informatics, UAE
+LPAIS Laboratory, Fez, Morocco  Tetouan Morocco
+
+Shahin Atakishiyev  Alireza Chehreghan
+Department of Computing Science  Faculty of Mining Eng
+University of Alberta, Edmonton, Canada  Sahand University of Technology, Iran
+
+Abderrahim Bajit  Meng Joo Er
+ISA Laboratory, ENSA  Dalian Maritime University
+Ibn Tofail University, Kenitra, Morocco  Dalian, Liaoning, China
+
+Anass Barodi  Wenxiao Gao
+ISA Laboratory, ENSA  Dalian Maritime University
+Ibn Tofail University, Kenitra, Morocco  Dalian, Liaoning, China
+
+Mohammed Benbrahim  Randy Goebel
+ISA Laboratory, ENSA  Department of Computing Science
+Ibn Tofail University, Kenitra, Morocco  University of Alberta, Edmonton, Canada
+
+Mohammed Berrada  Huibin Gong
+LIASSE Laboratory  Dalian Maritime University
+ENSA Fez, USMBA, Morocco  Dalian, Liaoning, China
+
+Dominik Bogucki  Mouna Jiber
+TensorCell, Poland  Ministry of Equipment and Water
+Poland  Fez, Morocco
+
+  ix
+x ■ Contributors  Abdelouahed Sabri
+  LISAC Laboratory, FSDM
+Chuang Ma  USMBA, Fez, Morocco
+Dalian Maritime University
+Dalian, Liaoning, China  Sajjad Sowlati
+  School of Surveying and Geospatial Eng
+Ouassima Markouh  University of Tehran, Iran
+LIASSE Laboratory
+ENSA Fez, USMBA, Morocco  Mohammad Salameh
+  Huawei Technologies Canada Co., Ltd
+Abdelilah Mbarek  Edmonton, Canada
+LISAC Laboratory, FSDM
+USMBA, Fez, Morocco  Ahmed Tamtaoui
+  SC Department, INPT-Rabat
+Rudy Milani  Mohammed V University, Rabat, Morocco
+Universitaet der Bundeswehr Muenchen
+Neubiberg, Germany  Ali Yahyaouy
+  LISAC Laboratory, FSDM
+Maximilian Moll  USMBA, Fez, Morocco
+Universitaet der Bundeswehr Muenchen
+Neubiberg, Germany  Hengshuai Yao
+  Department of Computing Science
+Kareem Othman  University of Alberta, Edmonton, Canada
+Civil Engineering Department
+University of Toronto, Canada  Ahmed Zinedine
+  Department of Informatics
+Stefan Pickl  LPAIS Laboratory, Fez Morocco
+Universitaet der Bundeswehr Muenchen
+Neubiberg, Germany  Abdelkarim Zemmouri
+  ISA Laboratory, ENSA
+Francesc Robust´e  Ibn Tofail University, Kenitra, Morocco
+Civil Engineering School
+UPC– BarcelonaTech, Barcelona, Spain
+  I
+
+Toward Explainable ITS
+
+  1
+Taylor & Francis
+
+Taylor & Francis Group
+
+http://taylorandfrancis.com
+  CHAPTER 1
+
+Explainable Artificial
+
+Intelligence for Intelligent
+
+Transportation Systems: Are
+
+We There Yet?
+
+Amina Adadi
+
+ISIC Research Team, L2ISEI Laboratory, Moulay Ismail University, Meknes, Morocco
+
+Afaf Bouhoute
+
+Sidi Mohamed Ben Abdellah University, Faculty of Science, Fez, Morocco
+
+CONTENTS
+
+1.1 Introduction . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 4
+1.2 Background . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 5
+
+  1.2.1 Interpretability: Concepts and Terminology . . . . . . . . . . . . . . . . . . . . . 5
+  1.2.2 Need for Interpretability . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 6
+  1.2.3 Interpretability Stakeholders . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 8
+  1.2.4 Interpretability Techniques . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 9
+1.3 Review . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 10
+  1.3.1 XAI in Autonomous Vehicles . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 10
+  1.3.2 XAI in Road-Traffic Management . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 15
+  1.3.3 XAI in Air-Traffic Management . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 16
+  1.3.4 XAI in Maritime Transport . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 18
+  1.3.5 XAI in Railway Transport Systems . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 20
+1.4 Discussion . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 21
+1.5 Conclusion . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 22
+  Bibliography . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 23
+
+A rtificial Intelligence (AI) and Machine Learning (ML) are set to revolu-
+  tionize all industries. Intelligent Transportation Systems (ITS) field is no excep-
+tion. However, being a safety-critical system, transportation needs explanation and
+justification in order to ensure that AI-based decisions and results are made fairly
+and without errors. Nevertheless, due to the block-box nature of ML especially deep
+
+DOI: 10.1201/9781003324140-1  3
+4 ■ Explainable Artificial Intelligence for Intelligent Transportation Systems
+
+learning models, the outcomes provided by these models are not amenable to hu-
+man scrutiny. Explainable AI (XAI) methods have been proposed to tackle this issue
+by producing human interpretable representations of ML models while maintaining
+performance. These methods hold the potential to increase public acceptance and
+trust in AI-based ITS.
+
+  This chapter investigates the use of XAI in smart transportation, it aims to (i)
+provide the necessary background regarding XAI, its main concepts, and algorithms;
+(ii) identify the need of explanations for intelligent systems in transportation; (iii)
+examine efforts deployed to enable and/or improve ITS interpretability, by reviewing
+the literature related to explanations for intelligent transportation problems; and
+finally (iv) explore potential challenges and possible research avenues in the emergent
+field of Explainable ITS.
+
+1.1 INTRODUCTION
+
+AI is everywhere, in everything from the mobile voice chatbot to self-driving cars.
+Indeed, aided by advances in AI and automation, autonomous driving and intelli-
+gent transportation, in general, have seen rapid progress and maturation in recent
+years. However, from a public perspective, autonomous vehicles and intelligent traffic
+systems are still perceived as futuristic and even dangerous technology. Much of the
+discussion and critics of self-driving vehicles have been concerned with issues of safety
+and trust. Transportation usually involves life-death decisions, and entrusting such
+critical decisions to an algorithm may cause some frustration. A transparent algo-
+rithm with an “if-then” structure is relatively accepted since its behavior is known
+and predictable ahead. However, in the case of a black-box Deep Neural Networks
+(DNN) model, even its creator cannot predict its outcomes. Indeed, the inherent
+structure of the DNN is not intrinsically set up for providing insights into their in-
+ternal mechanism of work. This hinders the use and acceptance of these “black-box”
+models in systems of safety-critical nature like transportation. Interestingly though,
+DNNs are proven to be the best models in terms of performance for tasks like per-
+ception, prediction, and object recognition, which are considered the core tasks in
+the intelligent transportation industry. Making DNN models’ results more human-
+interpretable without scarifying performance has become then an intriguing research
+frontier. As a response to this challenge, explainable AI field emerged. XAI stud-
+ies and designs methods producing human-understandable explanations of black box
+models. This technology is regarded as a key enabler of ethical and responsible AI
+adoption in transportation.
+
+  The purpose of this work is to highlight the potential of using XAI in the con-
+text of intelligent transportation. Despite the fact that the extent of research on
+interpretable and explainable models is quickly expanding, a holistic review and a
+systematic classification of these research works within the transportation field are
+missing from the literature. Few works have attempted to review the issue [4,54], but
+the scope was limited only to autonomous vehicles. To the best of our knowledge, this
+is the first study that focuses on XAI in the context of transportation broadly includ-
+ing sea, road, air, and rail transportation. This work may offer a helpful starting point
+Explainable Artificial Intelligence for Intelligent Transportation Systems: Are We There Yet? ■ 5
+
+for researchers and practitioners who are interested in implementing interpretability
+in transport intelligent systems.
+
+  The rest of the chapter is organized as follows. Section 1.2 provides background
+on XAI and projects the concept into the transportation field. Section 1.3 presents a
+literature review of XAI for smart transport systems based on recent works. Section
+1.4 discusses current applications and future research directions, and finally, Section
+1.5 concludes the paper.
+
+1.2 BACKGROUND
+
+1.2.1 Interpretability: Concepts and Terminology
+
+Interpretable AI or Explainable AI refers to a suite of techniques that produce more
+human interpretable models while maintaining high prediction accuracy [2]. Inter-
+pretability in AI is not a new issue. In the mid-1970s researchers studied explain-
+ability for expert systems. Because the systems were based on symbolic knowledge
+representations, it was relatively straightforward to generate symbolic traces of their
+execution [58]. However, the pace of progress toward resolving interpretability has
+slowed down once ML and DNN, with their spectacular advances, have entered the
+game. Recently, there has been a resurgence of interest in XAI as researchers and
+practitioners seek to make their algorithms more understandable in order to comply
+with social, ethical, and legal obligations.
+
+  While there is general acknowledgment that it is important for intelligent systems
+to be explainable/interpretable, there is no general consensus over what is meant
+by “explainable” and “interpretable.” Two perspectives should be taken into account
+while approaching the notion of explanation, namely (i) the social science perspective
+and (ii) the etymology/terminology perspective.
+
+  In his work, Miller [48] explored bodies of research in philosophy, psychology, and
+cognitive science to investigate how people define, generate, and present explanations.
+He concluded that:
+
+  1. Explanations are contrastive: people do not ask why event P happened, but
+  rather why event P happened instead of some event Q.
+
+  2. Explanations are selected: humans are adept at selecting one or two causes from
+  a sometimes-infinite number of causes to be the explanation.
+
+  3. Explanations are social: explanations depend on the social and cultural back-
+  ground of both the explainee and the explainer.
+
+  4. Explanations are post hoc: generally, the explanation process is triggered after
+  the reasoning process produces a decision. That means that the brain generates
+  first a decision and then looks for a contextual and convincing explanation, if
+  one is required.
+
+All these four characteristics should be considered in developing XAI techniques in
+order to generate a human-like explanation.
+6 ■ Explainable Artificial Intelligence for Intelligent Transportation Systems
+
+  From a terminology perspective, in the interpretable ML community, many terms
+are used interchangeably. However, they refer to different meanings, which led to
+terminology confusion. Murdoch et al. [51] define Interpretable AI as the extraction
+of relevant knowledge from a machine-learning model concerning relationships either
+contained in data or learned by the model. AI interpretable systems become ex-
+plainable if their operations can be understood by humans. Transparent AI refers to
+white-box models that are inherently interpretable without alteration. On the other
+hand, Trustworthy AI is when an intelligent system succussed to generate the trust of
+its users. The guidelines for trustworthy AI published by the EU High-Level Expert
+Group on AI [16] list seven key requirements that AI systems should meet in order to
+be trustworthy (1) human agency and oversight, (2) technical robustness and safety,
+(3) privacy and data governance, (4) transparency, (5) diversity, non-discrimination
+and fairness, (6) environmental and societal well-being, and (7) accountability. It
+should be noted that while trustworthiness should be a property of every explainable
+system, this does not mean that every trustworthy system is also explainable. Finally,
+XAI implies Responsible AI, a methodology for the large-scale implementation of AI
+methods in real organizations with fairness, ethics, and accountability at its core [8].
+
+1.2.2 Need for Interpretability
+
+Broadly speaking, there are three key reasons why interpretability needs to be inte-
+grated into the design of AI-based systems [2], namely (i) to justify, (ii) to debug, or
+(iii) to discover.
+
+  • Justification: Intelligent models’ outcomes need to be justified, particularly
+  when unexpected decisions are made. This ensures an auditable way to pre-
+  vent unfair and/or unethical algorithmic decisions. From a legal point of view,
+  models need to be explainable to meet adherence to regulatory requirements.
+  Indeed, many international regulations require now “the right of explanation.”
+  For instance, in the European General Data Protection Regulation (GDPR)1,
+  it is stated that in case an automated decision-making system is used, “data
+  subjects” have the right to obtain explanations to ensure fair and transpar-
+  ent processing. Algorithmic Accountability Act 20192 requires companies to
+  provide an assessment of the risks posed by the automated decision system
+  to the privacy or security and the risks that contribute to inaccurate, un-
+  fair, biased, or discriminatory decisions impacting consumers. Washington Bill
+  16553 established a guideline for the use of automated decision systems to pro-
+  tect consumers, improve transparency, and create more market predictability.
+  Massachusetts Bill H.27014 established a commission on automated decision-
+  making, transparency, fairness, and individual rights. Finally, Illinois House Bill
+  34155 stated predictive data analytics determining credit worthiness or hiring
+
+  1https://gdpr.eu/what-is-gdpr/
+  2https://www.congress.gov/bill/116th-congress/house-bill/2231/all-info
+  3https://legiscan.com/WA/bill/HB1655/2023
+  4https://malegislature.gov/Bills/192/H2701
+  5https://www.ilga.gov/legislation/101/HB/PDF/10100HB3415lv.pdf
+Explainable Artificial Intelligence for Intelligent Transportation Systems: Are We There Yet? ■ 7
+
+  decisions may not include information that correlates with the applicant race
+  or zip code. Specifically in transportation, the reason to justify is very critical.
+  The lack of reasons by AI systems leads to muted trust and limited mainstream
+  adoption. Furthermore, legal institutions are interested in justifications for li-
+  ability and accountability purposes, especially when a self-driving system is
+  involved in a car accident. Recent events from autonomous cars illustrate well
+  this fact. In 2018, a self-driving Uber killed a woman in Arizona. It was the first
+  known fatality involving a fully autonomous vehicle. The information reported
+  by anonymous sources who claimed the car’s intelligent driving system regis-
+  tered an object in front of the vehicle, but treated it in the same way it would
+  a plastic bag or tumbleweed carried on the wind [9]. Many crashes of the type
+  were reported afterward. Only an explainable system can help investigate and
+  clarify the circumstances of such accidents and eventually prevent them from
+  occurring.
+
+  • Debuggability: A model that is not scrutable can lead to incorrect conclusions,
+  even with correct outcomes. In this case, explanation methods could not only
+  help in understanding but also debugging and validating the behavior of a
+  learned model. Lapuschkin et al. [40] demonstrated in their study how recent
+  techniques for explaining ML-based decisions can help evaluate whether the
+  learned strategy is valid and generalizable or whether the model has based
+  its decision on a spurious correlation in the training data. A pretrained DNN
+  fine-tuned on PASCAL VOC image dataset, shows an excellent accuracy on cat-
+  egories such as “ship” and “train.” However, inspecting the basis of the decisions
+  with explainable methods reveals substantial divergence for certain images. For
+  example, in the ship and train images, the heatmap pointed respectively at the
+  sea and the rail as the most relevant features (see Figure 1.1). These features
+  are not characteristic of these two objects. For instance, a ship or a boat im-
+  age could possibly not include the sea, in this case, the algorithm will fail to
+  recognize the object. Therefore, the fact that an algorithm produces a good
+  result does not mean that it is valid and generalizable. XAI can contribute
+  to control and adjust and eventually improve intelligent models. In the ITS
+  realm, XAI can play a major in testing and validation operations, particularly
+  for autonomous vehicles.
+
+  • Knowledge Discovery: One of the most spectacular accomplishments of AI is for
+  the intelligent machine AlphaGo to win against the world champion of Go game.
+  At the time, Fan Hui,6 a renowned go expert stated that “It’s not a human
+  move. I’ve never seen a human play this move” refereeing to the last move,
+  which allowed AlphaGo to win the match. It is incredible for a machine to win
+  against a human player. However, it would be more useful if the machine could
+  explain its game tactics for knowledge sharing. It is believed that systemizing
+  expandability in the intelligent technology pipeline would help discover new
+
+  6https://www.wired.com/2016/03/googles-ai-viewed-move-no-human-understand/
+8 ■ Explainable Artificial Intelligence for Intelligent Transportation Systems
+
+Figure 1.1 Images of the classes “boat” and “train,” processed by DNN models and
+heatmapped using LRP [40].
+
+  facts and realities provided by machines. XAI models can teach us about new
+  and hidden facts in driver behavior and machinery dynamics.
+
+1.2.3 Interpretability Stakeholders
+Explainability could mean different things depending on the recipient. The stake-
+holders involved in the interpretability process can be divided into three broad cate-
+gories [54]:
+
+  • Developers/data scientists: industrials and/or researcher actors who develop
+  intelligent models for ITS. The primary motive for seeking explainabil-
+  ity/interpretability for this community is quality assurance, meaning system
+  testing, debugging, and evaluation, and to improve the performance of their
+  models [58].
+
+  • Regulators and policy-makers: this category includes auditors, insurance agents,
+  and managers who inspect and control ITS design processes and operations in
+  order to ensure fairness, unbiased behavior, and compliance with regulations.
+
+  • End-Users: people who interact with ITS; this could include drivers, passengers,
+  pedestrians, and other road agents. Members of the user community need ex-
+  planations to help them decide whether to accept, trust, and thus act according
+  to the machine outputs, or not.
+
+Accordingly, adaptation and personalization are seen to be essential for the generation
+of meaningful and useful explanations. A creator, a controller, a user, or simply an
+observer, naturally need different representation of explanation. While a simple user
+without a technical background may be satisfied with a user-friendly explanation,
+Explainable Artificial Intelligence for Intelligent Transportation Systems: Are We There Yet? ■ 9
+
+Figure 1.2 Interpretable methods categories.
+
+developers would require a technical explanation that will support the design and
+validation of the intelligent system.
+
+1.2.4 Interpretability Techniques
+At a high level, interpretable methods could be categorized depending on three as-
+pects: the scope, the stage, and the applicability [2, 31] (Figure 1.2).
+
+  1. Scope of interpretability:
+  Global: the methods with a global scope explain the functionality of the whole
+  model.
+  Local: the methods with local scope are used to explicitly explain a single
+  instance (outcome or prediction). Local methods are the most used in the real-
+  world scenarios as they could provide the instance level justification required
+  by regulations.
+
+  2. Stage of interpretability:
+  Intrinsic: methods which have interpretability built-in, meaning that from the
+  beginning the model is designed to generate both the perdition and its related
+  explanation. Generally, this class includes transparent models that are inher-
+  ently interpretable, such as fuzzy models and tree-based models.
+  Post hoc: in this case, the system includes two components; the predictive model
+  (typically a DNN) and an external or surrogate model. The predictive model
+  remains intact, while the external model mimics the predictive model’s behav-
+  ior to generate an explanation. Most recent works done in XAI field belong to
+  post hoc class.
+
+  3. Applicability of interpretability:
+  Model specific: interpretable methods that work only for a specific model, gen-
+  erally this class refers to inherently interpretable models (which are specific to
+  themselves).
+  Model agnostic: post hoc methods that provide explanations undependably to
+  the type of the predictive model. Most of the state-of-art XAI methods belong
+  to this class.
+10 ■ Explainable Artificial Intelligence for Intelligent Transportation Systems
+
+  Table 1.1 describes the most popular interpretability techniques in the literature.
+The input data of an interpretable model vary following the problem to be solved
+and the predictive model in use. In transportation, as in other domains, inputs of
+interpretable methods can be in form of images, times series, text, or graphs. As for
+XAI method outputs, as aforementioned, their format depends on the expertise of the
+end-users. The most common forms of explanations are numeric, rules, textual, visual,
+and mixed [31]. Furthermore, it should be noted that implementing interpretability
+comes at a cost. Generally, a tradeoff is observed between accuracy and interpretabil-
+ity. The more the model is interpretable, the less it is accurate and vice versa [2].
+The tradeoff accuracy/explanation is an important factor to take in account in trans-
+portation context to make choice of appropriate interpretable techniques. Though,
+ITS is a safety-critical field, so trust and security come naturally first, however, in
+some tasks that do not involve safety, accuracy could be favored.
+
+1.3 REVIEW
+
+We conducted an extensive literature review by examining papers from two major
+academic databases, namely SCOPUS and Web of Science, in addition to Google
+Scholar and preprints posted on arXiv. Valuable literature of 154 articles was re-
+trieved and scanned. Next, we will present a detailed review of the relevant works by
+approaching them from a use case perspective. Indeed, additionally to investigating
+XAI methods that have been used within the field, we would like also to identify
+and categorize the niche applications of XAI in smart transportation. Hence, we sug-
+gest describing the XAI efforts along the four main Transportation Modes: (i) Road
+Transport (including road traffic and autonomous vehicles), (ii) Air Transport, (iii)
+Maritime Transport, and (iv) Railway Transport.
+
+1.3.1 XAI in Autonomous Vehicles
+
+Autonomous vehicles (AVs) are systems capable of driving themselves with little to
+no human intervention. Specifically, self-driving vehicles sense their environment and
+map such sensing data to real-time driving decisions using intelligent technologies.
+The Society of Automobile Engineers (SAE) defines six levels of automation from
+zero to five [14]. Level zero automation indicates no automation or fully manual,
+meaning the driver takes over all driving tasks himself. While level five describes
+full and complete automation. This means that the vehicle is capable of performing
+all driving maneuvers and tasks in a completely autonomous way, the only time a
+driver takes control of the car is when they request it. While AV is arguably the
+next significant disruptive innovation in transportation, widespread production and
+adoption are still some time away from anything higher than level two. In order for
+autonomous cars to enter the mainstream, they must fulfill several criteria, one of
+which is trust and safety. Multidisciplinary research is very active to address trust and
+safety roadblocks. As a trust-enabling technology, interpretable AI has stimulated a
+vibrant research activity in this field resulting in valuable literature about when and
+how interpretability should be incorporated in AV design and development.
+TABLE 1.1 XAI Techniques  Explainable Artificial Intelligence for Intelligent Transportation Systems: Are We There Yet? ■ 11
+
+Class of technique  Description  Techniques  Scope  Applicability  Stage
+  Local Global  Model Model  Intrinsic Post-hoc
+Surrogate models  Methods that mimics  Model Distillation  Specific Agnostic  X
+  (approximates) predictive  X
+Feature relevance  model to generate explanations  LIME  X  X  X
+explanation  Methods that evaluate feature  SHAP  XX  X  X
+Visualization  importance that influenced the  XX  X  X
+Explanation  prediction  LRP  X  X
+  Curves and plots that give  PDP  X  X  X
+Pixel attribution  insights of the predictive  X  X
+  models by internal pattern  ICE  X  X
+Self-Explanatory  A special case of feature  Grad-CAM  X
+Neural Networks  attribution, but for images. It  XX  X
+  also provides Visual  DeepLIFT  X
+Example based  Explanations  Capsule Network  XX  X
+explanation  Methods that generate  PINN  X
+  in-model interpretability by  KPRN  X
+  making DNN more transparent  Attention Mechanism
+  Contrefactuels
+  Select particular instances of
+  the dataset to explain the
+  behavior of the predictive mode
+12 ■ Explainable Artificial Intelligence for Intelligent Transportation Systems
+
+  In this subsection, we propose to explore this literature by reviewing, organizing,
+and discussing the recent work on explainability for AV. Only road AVs are considered
+in this section, other self-driving vehicles from other modes of transport such as aerial,
+maritime, and railway will be discussed in the next sections.
+Reviewed AV studies fall under two main application categories, (i) Environment
+Perception and (ii) Action Planning.
+
+  (a) Environment perception: AV needs to perceive its environment to have
+the necessary data based on which it makes autonomous decisions in real-world driv-
+ing scenarios. If the perception is wrong, the consequences could be harmful. Hence,
+a significant line of work discussed interpretability in this context.
+
+  Environment perception rely heavily upon reliable object detection techniques.
+Many models have been described in the literature for the detection of various ob-
+jects relevant to the tasks of self-driving cars or driver assistance systems. Most of
+them used variations of CNN architectures (e.g., YOLO and Faster R-CNN), this is
+the model of choice for detection and classification of objects from images with ex-
+cellent performance. Accordingly, many methods explaining CNN opaque outcomes
+have been discussed in the literature. Nowak et al. [53] detected charging stations
+from a moving electric bus under varying lighting and weather conditions. The inter-
+pretation was achieved by visualization of attention heat maps. Mankodiya et al. [45]
+proposed a segmentation model for road detection, Grad-CAM, and saliency map
+were used to explain the segmentation maps generated from DL models. In Marathe
+et al. [47] study, the problem of image restoration was addressed. Weather corrup-
+tions can hinder the object detectability. Thus, there is a need for efficient denoising,
+deraining, and restoration techniques. The authors used Generative Adversarial Net-
+works (GAN) model to this aim. Once more, Grad-CAM attention maps were used
+to visualize the results.
+
+  One of the earliest applications where explainability was discussed in transporta-
+tion was traffic sign detection. Back in 2016, Lu et al. [43] proposed a multi-modal
+tree-structure embedded multi-task learning for traffic sign recognition. The tree
+structure of the model made the proposed approach inherently explainable. In the
+same vein, deep reinforcement learning was used by Rizzo et al. [59] on the traffic
+light control optimization problem, neural network agents were trained to select the
+traffic light phase. SHAP was used to estimate the effect of the road detector state
+on the agent selected phases.
+
+  Another class of object detection applications is intention recognition, meaning
+detecting non-static, uncontrollable moving objects (pedestrians and vehicles). Li et
+al. [42] developed a vision-based system to detect and identify various objects in order
+to recognize the intention of pedestrians in the traffic scene. The system is based on
+YOLO v4 model. In this study, Randomized Input Sampling for Explanation (RISE)
+algorithm is applied to make the final classification explainable by generating the
+saliency map. The intention of other vehicles was recognized in [18] to perform a lane
+change maneuver. Layerwise Relevance Propagation (LRP) was used as heatmapping
+technique to emphasize the salient areas of the image.
+
+  Although, most of Deep Neural Perception works rely on Visual Explanations.
+Few works have attempted to generate Textual Explanations. Kim et al. [37]
+Explainable Artificial Intelligence for Intelligent Transportation Systems: Are We There Yet? ■ 13
+
+introduced an attention-based video-to-text model to produce Textual Explanations
+and descriptions of model actions. Chen et al. [12] proposed a framework imitating
+the learning process of human drivers by jointly modeling the visual input images and
+natural language, while using the language to induce the visual attention in the image.
+
+  (b) Action Planning: Decision or action planning refers to the process
+of making purposeful decisions based on collected data in order to achieve the
+AV’s order goals. In this category, we find mainly studies related to planning (i)
+paths/trajectories, (ii) behaviors, and (iii) other motions. The goal of these works is
+to justify the selected class of actions by providing necessary explanations.
+
+  AVs are expected to navigate complex urban environments safely. Therefore, in-
+terpretable trajectory planning and prediction is crucial for safe navigation and has
+therefore received much interest. Sun et al. [63] proposed human-like trajectory plan-
+ning at dynamic highway scenes. The model is based on inverse reinforcement learning
+which started to be used recently to improve interpretability of deep driving models
+by learning the cost maps which are visually understandable. Neumeier et al. [52] in-
+troduced the Descriptive Variational Autoencoder (DVAE) for predicting vehicle tra-
+jectories that provide partial interpretability. By introducing expert knowledge within
+the decoder part of the autoencoder, the encoder learns to extract latent parameters
+that provide a graspable meaning in human terms. Such an interpretable latent space
+enables explanations and thus validation by expert defined rule sets. Rjoub et al. [60]
+designed an explainable federated deep reinforcement learning model to improve the
+trustworthiness of the trajectory decisions for newcomer AVs. The basic idea behind
+this approach is that when newcomer AV seeks help for trajectory planning, the
+edge server launches a federated learning process to train the trajectory and velocity
+prediction model in a distributed collaborative fashion among participating AVs. To
+resolve the problem of selecting the appropriate AVs that should participate in the
+federated learning process, the authors capitalized on SHAP method to assess the
+importance of the features contributed by each vehicle to the overall solution in or-
+der to derive trust scores for them. Then, a trust-based deep reinforcement learning
+model is put forward to make the selection decisions.
+
+  On the other hand, numerous studies have been conducted in the area of behav-
+ior planning. AV operates in an open environment alongside other road users with
+whom it will interact regularly. When humans drive, they continually predict the
+behaviors of other vehicles based on their prior knowledge. In order for a self-driving
+car to be driven safely, it needs to rely on interpretable data-driven algorithms to be
+able to plan its actions according to the predicted behavior of other traffic agents.
+Zhou et al. [81] predicted situation awareness during the takeover transition pe-
+riod in conditionally automated driving using eye-tracking and self-reported data.
+First, an ensemble ML model called light gradient boosting machine tree (Light-
+GBM) was used to predict situation awareness. Then, in order to understand what
+factors influenced situation awareness and how, SHAP values of individual predictor
+variables in the LightGBM model were calculated. Hossain et al. [29] explored pedes-
+trian behavior prediction model as a prerequisite for AV path planning. The authors
+proposed SFMGNet, a hybrid approach combining social force model, a classical sim-
+ulation model for the dynamic behavior of pedestrians extended by pedestrian group
+14 ■ Explainable Artificial Intelligence for Intelligent Transportation Systems
+
+behavior modeling with a neural network for predicting pedestrian motion. The model
+is proved to be partially interactable. Kalatian et al. [34] predicted pedestrian wait
+time behavior using immersive virtual reality and data-driven Cox Proportional Haz-
+ards (CPH) model, in which the linear combination of the covariates is replaced by
+a flexible non-linear DNN. A SHAP-based interpretability is provided to understand
+the contribution of different covariates to the time pedestrians wait before crossing.
+
+  Even though trajectory and behavior planners are the most reported applications
+in the literature, growing research interest in explaining other actions/motions has
+been noted. Generally, deep reinforcement learning agents are used to learn complex
+driving tasks and motions. AVs operate in a continuous action space in which these
+types of models are specialized. Studies proved that these agents lead to a smooth
+human-like driving experience, but they are limited by the lack of interpretability. In
+this sense, Gangopadhyay et al. [19] proposed a hierarchical program-triggered rein-
+forcement learning, which uses a hierarchy consisting of a structured program along
+with multiple agents, each trained to perform a relatively simple task. The proposed
+architecture is proved to leading to a significantly more interpretable implementa-
+tion as compared to a complex reinforcement learning agent. Furthermore, Gyevnar
+et al. [24] proposed a transparent, human-centric explanation generation method for
+autonomous vehicle motion planning and prediction based on an existing white-box
+system called IGP2. The method integrates bayesian networks with context-free gen-
+erative rules and can give causal natural language explanations for the high-level
+driving actions of AV. Mankodiya et al. [46] used decision tree-based random for-
+est to plan cybersecurity related actions. The model is set to detect malicious AV
+in vehicular adhoc networks. The authors used a particular model interface of the
+evaluation metrics to explain and measure the model’s performance.
+
+  While the separation between perception and action planning is clear in modular
+driving systems, recent end-to-end neural networks blur the lines and perform both
+operations simultaneously and in an integrated way. Indeed, some recent works have
+been found to provide end-to-end autonomous driving systems while ensuring the
+interpretability of the overall solution. For instance, Chen et al. [11] proposed an
+interpretable deep reinforcement learning method for end-to-end autonomous driv-
+ing, which is able to handle complex urban scenarios. The model introduced a latent
+space that enables an interpretable explanation of how the policy reasons about
+the environment by decoding the latent state to a semantic bird eye mask. Sadat et
+al. [61] proposed a novel end-to-end learnable network that performs joint perception,
+prediction, and motion planning for self-driving vehicles and produces interpretable
+intermediate representations. Similarly, Zeng et al. [77] also introduced a neural mo-
+tion planner for learning to drive autonomously in complex urban scenarios. The
+authors designed a holistic model that takes as input raw LIDAR data and a HD
+map and produces interpretable intermediate representations in the form of 3D de-
+tections and their future trajectories, as well as a cost volume defining the goodness
+of each position that the self-driving car can take within the planning horizon.
+

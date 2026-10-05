@@ -1,0 +1,824 @@
+Third question: Why the values of and , obtained by the existing methods [2,
+6], are different from the proposed Mehar method-II?
+
+Fourth question: What is the impact of incorrect values of and on more-for-
+less solution?
+
+3.9.1 Response of the First Question  and , obtained by the existing
+
+The following clearly indicates that the values of
+methods [2, 6], are not correct.
+
+(i) For the first problem, the values of and , obtained by the existing methods
+
+[2, 6], represents the optimal decision variables of the dual problem (P3.10)
+corresponding to the crisp linear programming problem (P3.11). If these values
+are correct. Then, according to strong duality theorem [5], the value, obtained
+on substituting the obtained values of and in the objective function i.e.,
+
+  of the dual problem (P3.10), should be
+
+same as the optimal value of the crisp linear programming problem (P3.11).
+However, as discussed in Sect. 3.8.1 that the optimal value of the crisp linear
+programming problem (P3.11) is . While, it is obvious from Table 3.7 that
+the value, obtained on substituting the obtained values of and in the
+
+objective function i.e.,  of the dual
+
+problem (P3.10) is .
+  Also, it is pertinent to mention that
+
+(a) As the sign of 3rd constraint of the crisp linear programming problem
+
+(P3.11) is . So, according to duality theory [5], the dual variable
+
+should be i.e.,  . While, it is obvious that for the obtained
+
+value of this condition is not satisfying.
+
+(b) As the sign of 6th constraint of the crisp linear programming problem
+
+(P3.11) is . So, according to duality theory [5], the dual variable
+
+should be i.e.,  . While, it is obvious that for the obtained value
+
+of this condition is not satisfying.
+
+(ii) For the second problem, the values of and , obtained by the existing
+
+  methods [2, 6], represents the optimal decision variables of the dual problem
+  (P3.12) corresponding to the crisp linear programming problem (P3.13). If
+  these values are correct. Then, according to strong duality theorem [5], the
+  value, obtained on substituting the obtained values of and in the objective
+function i.e.,  of the dual problem
+
+(P3.12), should be same as the optimal value of the crisp linear programming
+problem (P3.13). However, as discussed in Sect. 3.8.2 that the optimal value of
+the crisp linear programming problem (P3.13) is . While, it is obvious from
+Table 3.7 that the value, obtained on substituting the obtained values of and
+
+in the objective function i.e.,  of the
+
+dual problem (P3.12) is .
+  Also, it is pertinent to mention that
+
+(a) As the sign of 3rd constraint of the crisp linear programming problem
+
+(P3.13) is . So, according to duality theory [5], the dual variable
+
+should be i.e.,  . While, it is obvious that for the obtained
+
+value of this condition is not satisfying.
+
+(b) As the sign of 6th constraint of the crisp linear programming problem
+
+(P3.13) is . So, according to duality theory [5], the dual variable
+
+should be i.e.,  . While, it is obvious that for the obtained value
+
+of this condition is not satisfying.
+
+3.9.2 Response of the Second Question  and , obtained by the
+
+The following clearly indicates that the values of
+proposed Mehar method-II, are correct.
+
+(i) For the first problem, the values of and , , obtained by the proposed
+
+Mehar method-II, represents the optimal decision variables of the dual problem
+(P3.10) corresponding to the crisp linear programming problem (P3.11). If
+these values are correct. Then, according to strong duality theorem [5], the
+value, obtained on substituting the obtained values of and in the objective
+
+function i.e.,  of the dual problem
+
+(P3.10), should be same as the optimal value of the crisp linear programming
+problem (P3.11). It is obvious from Sect. 3.8.1 that the optimal value of the
+crisp linear programming problem (P3.11) is . Also, it is obvious from Table
+3.7 that the value, obtained on substituting the obtained values of and in
+
+the objective function i.e.,  of the dual
+
+problem (P3.10) is .
+  Furthermore, it is pertinent to mention that
+
+(a) As the sign of 3rd constraint of the crisp linear programming problem
+  (P3.11) is ≤. So, according to duality theory [5], the dual variable
+  should be ≤ 0 i.e., ≤ 0. It is obvious from Table 3.7 that for the obtained
+  value of this condition is satisfying.
+(b) As the sign of 6th constraint of the crisp linear programming problem
+  (P3.11) is ≤. So, according to duality theory [5], the dual variable
+  should be ≤ 0 i.e., ≤ 0. It is obvious from Table 3.7 that for the obtained
+  value of this condition is satisfying.
+
+(ii) For the second problem, the values of and , obtained by the proposed
+
+Mehar method-II, represents the optimal decision variables of the dual problem
+(P3.12) corresponding to the crisp linear programming problem (P3.13). If
+these values are correct. Then, according to strong duality theorem [5], the
+value, obtained on substituting the obtained values of and in the objective
+
+function i.e.,  of the dual problem
+
+(P3.12), should be same as the optimal value of the crisp linear programming
+problem (P3.13). It is obvious from Sect. 3.8.2 that the optimal value of the
+crisp linear programming problem (P3.13) is . Also, it is obvious from Table
+3.7 that the value, obtained on substituting the obtained values of and in
+
+the objective function i.e.,  of the dual
+
+problem (P3.12) is 58
+  Furthermore, it is pertinent to mention that
+
+(a) As the sign of 3rd constraint of the crisp linear programming problem
+  (P3.13) is ≤. So, according to duality theory [5], the dual variable
+  should be ≤ 0 i.e., ≤ 0. It is obvious from Table 3.7 that for the obtained
+  value of this condition is satisfying.
+
+(b) As the sign of 6th constraint of the crisp linear programming problem
+  (P3.13) is . So, according to duality theory [5], the dual variable
+  should be ≤ 0 i.e., ≤ 0. It is obvious from Table 3.7 that for the obtained
+  value of this condition is satisfying.
+
+3.9.3 Response of the Third Question
+
+It is pertinent to mention that.  and , obtained by the proposed Mehar
+(i) For the first problem, the values of
+
+method-II, represents an optimal solution of the dual problem (P3.10).
+(ii) For the second problem, the values of and , obtained by the proposed
+  Mehar method-II, represents an optimal solution of the dual problem (P3.12).
+
+While, in the existing methods [2, 6], the following procedure is used to find the
+
+values of and .
+
+It is a well-known fact that the number of basic variables in an optimal solution of
+
+a crisp balanced transportation problem having sources and destinations will be
+
+exactly equal to  . On the same direction, in the existing methods [2, 6],
+
+it is assumed that the number of basic variables in an optimal solution of crisp/fuzzy
+
+transportation problem with mixed constraints having sources and destinations
+
+will be exactly equal to  .
+
+While, in actual case, the number of basic variables in an optimal solution of
+
+crisp/fuzzy transportation problem with mixed constraints having sources and
+
+destinations will not necessarily be equal to  .
+
+  The following clearly indicates that the above-mentioned assumption is
+considered in the existing methods [2, 6].
+
+3.9.3.1 Validity of the Claim for Vidhya et al.’s Method
+
+Vidhya et al. [6] considered the symmetric triangular fuzzy transportation problem
+with mixed constraints, represented by Table 3.5, to illustrate their proposed method.
+
+  Vidhya et al. [6] claimed that on solving the symmetric triangular fuzzy
+transportation problem with mixed constraints, represented by Table 3.5, the
+following fuzzy optimal solution is obtained.
+
+Vidhya et al. [6] further claimed that it is obvious from the obtained optimal
+
+solution that  are basic variables as the values of these variables are non-
+
+zero. However, as there are 3 sources and 3 destinations, so the number of basic
+variables should be  . Hence, Vidhya et al. [6] have considered and
+
+as basic variables.
+
+While, the following clearly indicates that in actual case,
+
+(a) The number of basic variables is 6.
+
+(b) and are not basic variables.
+
+  The symmetric triangular fuzzy transportation problem with mixed constraints,
+represented by Table 3.5, can be transformed into its equivalent fuzzy linear
+programming problem (P3.14).
+
+Problem (P3.14)  ,
+  Subject to  ,
+  ,
+  where,  ,
+
+  ,
+  ,
+  ,
+
+Introducing surplus variables  and slack variables  , the fuzzy linear
+
+programming problem (P3.14) can be transformed into its equivalent fuzzy linear
+
+programming problem (P3.15).
+
+Problem (P3.15) Minimize
+Subject to
+
+  ,
+  ,
+  ,
+
+  ,
+  ,
+
+  ,
+  .
+
+It can be easily verified that rank of the coefficient matrix of the fuzzy linear
+programming problem (P3.15) i.e, rank of the matrix
+
+  is .
+
+Hence, the number of basic variables in an optimal solution of the fuzzy
+transportation problem with mixed constraints, represented by Table 3.5, will be 6.
+
+  Also, it can be easily verified that on substituting the non-zero decision variables,
+in the obtained optimal solution i.e.,
+
+  , in the
+constraints of the fuzzy linear programming problem (P3.15), the following values of
+
+  and are obtained.
+
+  Therefore, the optimal solution (including the values of slack and surplus
+variables) of the symmetric triangular fuzzy transportation problem with mixed
+constraints, represented by Table 3.5, is
+  Since, the values of  and are non-zero. So, the variables
+  and  are basic variables. Hence, and are not basic
+
+variables.
+
+3.9.3.2 Validity of the Claim for Adlakha et al.’s Method
+
+Adlakha et al. [2] considered the crisp transportation problem with mixed constraints,
+
+represented by Table 3.4, to illustrate their proposed method.
+
+Adlakha et al. [2] claimed that on solving the crisp transportation problem with
+
+mixed constraints, represented by Table 3.4, the following optimal solution is
+
+obtained.
+
+  .
+
+Adlakha et al. [2] further claimed that it is obvious from the obtained optimal
+
+solution that  are basic variables as the values of these variables are non-
+
+zero. However, as there are 3 sources and 3 destinations, so the number of basic
+
+variables should be  . Hence, Adlakha et al. [2] have considered
+
+and as basic variables.
+
+While, the following clearly indicates that in actual case,
+
+(a) The number of basic variables is 6.
+
+(b) and are not basic variables.
+
+  The crisp transportation problem with mixed constraints, represented by Table
+3.4, can be transformed into its equivalent crisp linear programming problem (P3.16).
+Problem (P3.16)
+  Subject to
+
+Introducing surplus variables  and slack variables  , the crisp linear
+
+programming problem (P3.16) can be transformed into its equivalent crisp linear
+
+programming problem (P3.11).
+
+It can be easily verified that rank of the coefficient matrix of the crisp linear
+
+programming problem i.e. (P3.11)., rank of the matrix
+
+  is .
+
+Hence, the number of basic variables in an optimal solution of the crisp transportation
+
+problem with mixed constraints, represented by Table 3.4, will be .
+
+Also, it can be easily verified that on substituting the non-zero decision variables,
+
+in the obtained optimal solution i.e.,  , in the constraints of
+
+the crisp linear programming problem  , the following values of  and
+
+are obtained.
+
+  .
+
+Therefore, the optimal solution (including the values of slack and surplus
+
+variables) of the crisp transportation problem with mixed constraints, represented by
+
+Table 3.4, is.
+
+  .
+  Since, the values of  and are non-zero. So, the variables
+  and  are basic variables. Hence, and are not basic
+
+variables.
+
+3.9.4 Response of the Fourth Question
+
+It is pertinent to mention that according to the existing methods [2, 6], at least one
+more-for-less solution of the crisp/fuzzy transportation problems with mixed
+constraints, represented by Tables 3.1 and 3.2, will exist if the condition
+
+will be satisfied for at least one pair of optimal decision variables and . This
+clearly indicates that the existence of more-for-less solution is dependent upon the
+optimal values of the decision variables and . However, as discussed in
+
+Sect. 3.9.1 that the optimal values of the decision variables and , obtained by
+
+the existing methods [2, 6], are not correct. Hence, more-for-less solution obtained by
+the existing methods [2, 6] may or may not be correct.
+
+3.10 Conclusions
+
+In this chapter, the sufficient condition-II is proposed to check the existence of at
+least one more-for-less solution of symmetric triangular fuzzy transportation
+problems with mixed constraints. Also, a method is proposed to find all more-for-less
+solutions (if exist) of symmetric triangular fuzzy transportation problems with mixed
+constraints. Furthermore, it is pointed out that a more-for-less solution, obtained by
+the existing methods [2, 6], may or may not be correct. While, all more-for-less
+solutions, obtained by the proposed Mehar method-II, will always be correct.
+
+References
+
+1. G.M. Appa, The transportation problem and its variants. J. Operat. Res. Soc. 24, 79–99 (1973)
+  [MathSciNet][Crossref][zbMATH]
+
+2.
+  V. Adlakha, K. Kowalski, B. Lev, Solving transportation problems with mixed constraints. Inter. J.
+  Management Sci. Eng. Manag. 1, 47–52 (2006)
+
+3.
+  M.E.B. Brigden, A variant of the transportation problem in which the constraints are of mixed type. J. Operat.
+  Res. Soc. 25, 437–445 (1974)
+  [MathSciNet][Crossref][zbMATH]
+
+4.
+  D. Klingman, R. Russell, The transportation problem with mixed constraints. J. Operat. Res. Soc. 25, 447–455
+  (1974)
+  [MathSciNet][Crossref][zbMATH]
+
+5.
+  H.A. Taha, in Operations Research: An Introduction (Pearson Prentice Hall, Upper Saddle River, NJ, 2013)
+
+6.
+  V. Vidhya, P. Uma Maheswari, K. Ganesan, An alternate method for finding more for less solution to fuzzy
+  transportation problem with mixed constraints, Soft Comput. 25, 11989–11996 (2021)
+OceanofPDF.com
+© The Author(s), under exclusive license to Springer Nature Switzerland AG 2023
+T. K. Bhatia et al., More-for-Less Solutions in Fuzzy Transportation Problems, Studies in Fuzziness and Soft
+Computing 426
+https://doi.org/10.1007/978-3-031-30337-1_4
+
+4. Mehar Method-III to Find All More-for-
+Less Solutions of Symmetric Intuitionistic
+Fuzzy Transportation Problems with Mixed
+Constraints
+
+Tanveen Kaur Bhatia1 , Amit Kumar1 and Srimantoorao S. Appadoo2
+(1) School of Mathematics, Thapar Institute of Engineering and Technology,
+
+  Patiala, Punjab, India
+(2) Department of Supply Chain Management, Asper School of Business,
+
+  University of Manitoba, Manitoba, MB, Canada
+
+  Tanveen Kaur Bhatia
+  Email: tbhatia60_phd19@thapar.edu
+
+  Amit Kumar (Corresponding author)
+  Email: amitkumar@thapar.edu
+
+  Srimantoorao S. Appadoo
+  Email: ss.appadoo@umanitoba.ca
+
+In this chapter, firstly, the arithmetic operations of triangular fuzzy numbers as
+well as the method for comparing triangular fuzzy numbers, proposed by Vidhya
+et al. [3], are extended for triangular intuitionistic fuzzy numbers. Then, using the
+extended arithmetic operations and the extended comparing method, a new
+method (named as Mehar method-III) is proposed to find all more-for-less
+solutions of symmetric triangular intuitionistic fuzzy transportation problems with
+mixed constraints (transportation problems with mixed constraints in which each
+parameter and each variable is represented by a symmetric triangular intuitionistic
+fuzzy number). Finally, a symmetric triangular intuitionistic fuzzy transportation
+problem with mixed constraints is solved to illustrate the proposed Mehar method-
+III.
+
+4.1 Some Basic Definitions
+
+In this section, some basic definitions are discussed.
+
+Definition 4.1.1 [1] Let  be a universal set. Then, the set
+  is said to be an intuitionistic fuzzy set defined
+
+over the universal set , where
+
+(i)  and  are said to be the membership
+
+  function and non-membership function respectively.
+
+(ii) The values  and  are called the degree of membership and
+
+  degree of non-membership for  respectively.
+
+(iii) The values  and  satisfy the condition
+
+(iv)  is called an intuitionistic fuzzy number.
+
+Definition 4.1.2 [1] An intuitionistic fuzzy number is said to be a triangular
+intuitionistic fuzzy number if its membership function and non-membership
+function are defined as
+
+  A triangular intuitionistic fuzzy number  may be represented as
+  or  or
+  where
+
+  and  .
+
+Definition 4.1.3 [3] A triangular intuitionistic fuzzy number
+
+  where
+
+is said to be symmetric triangular intuitionistic fuzzy number if  and
+
+. Assuming  and  , a symmetric triangular
+
+intuitionistic fuzzy number can be represented as
+
+  where  .
+
+Definition 4.1.4 [3] A symmetric triangular intuitionistic fuzzy number
+
+  where
+
+is said to be zero triangular intuitionistic fuzzy number if  . Hence, a zero
+
+triangular intuitionistic fuzzy number can be represented as
+
+  where and are
+
+any non-negative real number and  .
+
+4.2 Extended Arithmetic Operations of Triangular
+Intuitionistic Fuzzy Numbers
+
+In this section, the existing arithmetic operations of triangular fuzzy numbers [3]
+is extended for triangular intuitionistic fuzzy numbers.
+
+(i) Let
+
+where  and
+Then,  be triangular intuitionistic fuzzy numbers.
+
+  (4.1)
+
+and
+(ii) Let  (4.2)
+  where
+  and
+  and
+  be two triangular intuitionistic fuzzy numbers. Then,
+
+  (4.3)
+
+4.3 Extended Method for Comparing Triangular
+
+Intuitionistic Fuzzy Numbers
+
+In this section, the existing method for comparing triangular fuzzy numbers [3] is
+extended for comparing triangular intuitionistic fuzzy numbers.
+
+  Let  and
+
+  where
+
+  and
+  be two triangular intuitionistic fuzzy numbers. Then,
+
+(i)
+
+(ii)
+(iii)
+where,
+
+  (4.4)
+
+4.4 Some Important Results
+
+In this section, it is proved that if
+
+,  ;  , where
+  are symmetric triangular
+
+intuitionistic fuzzy numbers. Then,
+
+  (4.5)
+
+  (4.6)
+
+  Also, it is proved that if  (4.7)
+  and
+triangular intuitionistic fuzzy numbers. Then,
+  where
+4.4.1 Proof of the First Result  are two
+
+Using the expression (4.4),  (4.8)
+
+  (4.9)
+4.4.2 Proof of the Second Result  (4.10)
+
+Using the expression (4.1),
+
+  Using the expression (4.4),
+
+  Using the expression (4.9),
+
+4.4.3 Proof of the Third Result
+
+Using the expression (4.2),
+
+  Using the expression (4.4),
+  Using the expression (4.9),  (4.11)
+  (4.12)
+4.4.4 Proof of the Fourth Result
+
+Using the expression (4.3),
+
+  Using the expression (4.4),
+
+  Using the expression (4.9),
+4.5 Tabular Representation of Symmetric Triangular
+Intuitionistic Fuzzy Transportation Problems with
+Mixed Constraints
+
+A symmetric triangular intuitionistic fuzzy transportation problem with mixed
+constraints can be represented into tabular form as shown by Table 4.1.
+
+Table 4.1 Tabular representation of a symmetric triangular intuitionistic fuzzy transportation problem with
+mixed constraints
+
+  Availability
+
+Demand
+
+where,  represents
+(i) The symmetric triangular intuitionistic fuzzy number
+
+  the supply of product at the source.
+(ii) The symmetric triangular intuitionistic fuzzy number
+
+  represents the demand of product at the destination.
+(iii) The symmetric triangular intuitionistic fuzzy number
+
+represents the cost for transporting one unit quantity of product from the
+  source to the destination.
+4.6 Intuitionistic Fuzzy Linear Programming
+Problems Corresponding to Symmetric Triangular
+Intuitionistic Fuzzy Transportation Problems with
+Mixed Constraints
+
+If it is assumed that the symmetric triangular intuitionistic fuzzy number
+  represents
+
+the fuzzy quantity of the product to be supplied from the source to the
+destination, the symmetric triangular intuitionistic fuzzy number represents the
+total intuitionistic fuzzy transportation cost and represents the zero triangular
+intuitionistic fuzzy number. Then, the symmetric triangular intuitionistic fuzzy
+transportation problem with mixed constraints, represented by Table 4.1, can be
+formulated into its equivalent intuitionistic fuzzy linear programming problem
+(P4.1) or into its equivalent crisp linear programming problem (P4.2) (dual
+problem of the intuitionistic fuzzy linear programming problem (P4.1).
+Problem (P4.1)
+
+  Subject to
+
+Problem (P4.2)
+
+  Subject to
+
+where,
+(i) will be if the sign of the source constraint of the intuitionistic
+
+  fuzzy linear programming problem (P4.1) is .
+(ii) will be if the sign of the source constraint of the intuitionistic
+  fuzzy linear programming problem (P4.1) is .
+
+(iii) If the sign of the source constraint of the intuitionistic fuzzy linear
+  programming problem (P4.1) is . Then, will be an unrestricted
+  variable.
+
+(iv) will be if the sign of the destination constraint of the intuitionistic
+  fuzzy linear programming problem (P4.1) is .
+
+(v) will be if the sign of the destination constraint of the intuitionistic
+  fuzzy linear programming problem (P4.1) is .
+
+(vi) If the sign of the destination constraint of the intuitionistic fuzzy linear
+  programming problem (P4.1) . Then, will be an unrestricted variable.
+
+The dual problem (P4.2) is obtained as follows.
+  Step 1: Using the comparing method, proposed in Sect. 4.3, the intuitionistic
+  fuzzy linear programming problem (P4.1) can be transformed into its
+  equivalent crisp linear programming problem (P4.3).
+  Problem (P4.3)
+
+  Subject to
+
+  Step 2: Using the expression (4.4), the crisp linear programming problem
+  (P4.3) can be transformed into its equivalent crisp linear programming problem
+  (P4.4).
+
+  Problem (P4.4)
+
+  Subject to
+Step 3: Using the expression (4.5), the crisp linear programming problem
+(P4.4) can be transformed into its equivalent crisp linear programming problem
+(P4.5).
+
+  Problem (P4.5)
+
+  Subject to
+  Constraints of the problem (P4.4).
+Step 4: Using the expression (4.2), transform the crisp linear programming
+problem (P4.5) into its equivalent crisp linear programming problem (P4.6).
+  Problem (P4.6)
+
+  Subject to
+
+Step 5: Using the duality theory [2], the crisp linear programming problem
+(P4.2) represents the dual of the crisp linear programming problem (P4.6).
+Hence, the crisp linear programming problem (P4.2) represents the dual of the
+intuitionistic fuzzy linear programming problem (P4.1).
+4.7 Crisp Transportation Problem Equivalent to
+Symmetric Intuitionistic Fuzzy Transportation
+Problem
+
+The following clearly indicates that the symmetric triangular intuitionistic fuzzy
+transportation problem with mixed constraints, represented by Table 4.1, is
+equivalent to crisp transportation problem with mixed constraints represented by
+Table 4.2.
+
+Table 4.2 Crisp transportation problem with mixed constraints
+  Availability
+
+ Demand
+
+  It is obvious from Step 1 to Step 4 of Sect. 4.6 that the intuitionistic fuzzy
+linear programming problem (P4.1) corresponding to the symmetric triangular
+intuitionistic fuzzy transportation problem with mixed constraints, represented by
+Table 4.1, is equivalent to the crisp linear programming problem (P4.6). Also, it is
+obvious from Sect. 3.​4 of Chap. 3 that the crisp linear programming problem
+(P4.6) is equivalent to crisp transportation problem with mixed constraints
+represented by Table 4.2.
+
+4.8 Proposed Sufficient Condition-III for the
+Existence of at Least One More-for-Less Solution
+
+It is obvious from Sect. 4.7 that the symmetric triangular intuitionistic fuzzy
+transportation problem with mixed constraints, represented by Table 4.1, is
+equivalent to the crisp transportation problem with mixed constraints represented
+by Table 4.2. Hence, to propose a sufficient condition-III for the existence of at
+least one more-less-solution for the symmetric triangular intuitionistic fuzzy
+transportation problem with mixed constraints, represented by Table 4.1, is
+equivalent to propose a sufficient condition-III for the existence of at least one
+more-less-solution for the crisp transportation problem with mixed constraints
+represented by Table 4.2. Hence, the following sufficient condition-III to check
+
+the existence of at least one more-for-less solution of crisp transportation problem
+
+with mixed constraints, proposed in Sect. 3.​7 of Chap. 3, can be used to check the
+
+existence of at least one more-less-solution of symmetric triangular intuitionistic
+
+fuzzy transportation problem with mixed constraints represented by Table 4.1.
+
+“If in an optimal solution of the crisp linear programming problem (P4.2),
+
+there exist variables and such that  . Then, at least one more-
+
+for-less solution of crisp transportation problem with mixed constraints,
+represented by Table 4.2, will exist. Hence, at least one more-for-less solution of
+symmetric triangular fuzzy transportation problem with mixed constraints,
+represented by Table 4.1, will exist.”
+
+4.9 Proposed Mehar Method-III
+
+In this section, a new method (named as Mehar method-III) is proposed to check
+the existence of at least one more-for-less solution as well as to find all more-for-
+less solutions (if exists) of symmetric triangular intuitionistic fuzzy transportation
+problems with mixed constraints.
+
+  The steps of the proposed Mehar method-III are as follows.
+
+Step 1: Use Step 1.1 to Step 1.4 to check that for the symmetric triangular
+intuitionistic fuzzy transportation problem with mixed constraints, represented
+by Table 4.1, at least one more-for-less solution will exist or not.
+
+Step 1.1: Transform the symmetric triangular intuitionistic fuzzy
+transportation problem with mixed constraints, represented by Table 4.1, into
+its equivalent crisp transportation problem with mixed constraints,
+represented by Table 4.2.
+Step 1.2: Find an optimal solution
+
+  of the problem (P4.2) by
+
+substituting the values of  and from Table 4.2.
+
+Step 1.3: Using the optimal values of
+  , obtained in Step 1.2, construct a
+
+shadow price matrix  , where  .
+
+Step 1.4: Check that all the elements of the shadow price matrix,
+
+obtained in Step 1.3, are non-negative or not.
+
+Case (i): If all the elements of the shadow price matrix, obtained in Step
+1.3, are non-negative. Then, there does not exist a more-for-less solution.
+  Case (ii): If at least one element of the shadow price matrix, obtained in
+  Step 1.3, is negative. Then, at least one more-for-less solution will exist.
+Step 2: If the element corresponding to the row and the column of the
+
+shadow price matrix, obtained in Step 1.3, is negative i.e., if  .
+
+Then, a more-for-less solution can be obtained by increasing the availability of
+the source and the demand of the destination with the help of Step 2.1
+
+to Step 2.8 of the post-optimality analysis [2].
+
+Step 2.1: Construct the matrix
+
+where,
+(i) is a positive real number.
+
+(ii) is the availability of the product at the source.
+
+(iii) is the demand of the product at the destination.
+
+  Step 2.2: Identify the basic variables in an optimal solution of the crisp linear
+  programming problem (P4.7).
+
+  Problem (P4.7)
+  Subject to
+
+where,
+
+(i)  if the sign of the source constraint of the crisp linear
+
+  programming problem (P4.6) is .
+
+(ii)  if the sign of the source constraint of the crisp linear
+
+  programming problem (P4.6) is .
+
+(iii)  if the sign of the source constraint of the crisp linear
+
+  programming problem (P4.6) is .
+
+(iv)  if the sign of the destination constraint of the crisp linear
+
+  programming problem (P4.6) is .
+
+(v)  if the sign of the destination constraint of the crisp linear
+
+  programming problem (P4.6) is .
+
+(vi)  if the sign of the destination constraint of the crisp linear
+
+  programming problem (P4.6) is .
+
+Step 2.3: Construct the basis matrix with the help of the coefficients of the
+
+identified optimal basic variables in the constraints of the crisp linear
+
+programming problem (P4.7).
+
+Step 2.4: Find the multiplicative inverse of the basis matrix i.e., find .
+
+Step 2.5: Find the matrix  .
+
+Step 2.6: Find the range of  for which all the elements of the
+
+matrix  , obtained in Step 2.5, are greater than or equal to zero.
+
+Step 2.7: For any value of lying in its range, obtained in Step 2.6, the
+
+element (say, ) of the matrix  represents the value of the basic
+
+variable in a more-for-less solution of crisp transportation problem with mixed
+
+constraints represented by Table 4.2.
+

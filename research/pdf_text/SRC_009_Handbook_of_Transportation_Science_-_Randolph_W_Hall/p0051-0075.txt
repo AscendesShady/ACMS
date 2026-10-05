@@ -1,0 +1,1290 @@
+44  Handbook of Transportation Science
+
+the collection of activities that form an agenda for individual participation. Travel
+patterns are viewed as arising from a more fundamental activity scheduling process.
+Activity scheduling is affected by spatial/temporal constraints of travel, specifications
+of precedence among activities, requirements to be with other family members at
+particular times and places (coupling constraints), and available individual
+transportation supply environment (the allocation of activities between household
+members that shapes the activity agenda of each individual and the allocation of
+household transportation supply between members is presumed to be exogenous in
+these studies).
+
+  Activity episode scheduling models generally take the structure of a computerized
+production system which comprises a set of rules in the form of condition-action pairs
+(see Newell and Simon, 1972). Studies in the psychology field suggest that a
+production system is consistent with the way in which humans perceive, appraise, and
+respond to spatial and aspatial information within the context of limited-information
+processing ability (Gärling et al., 1994).
+
+  One of the earliest scheduling models was CARLA, developed by the Oxford
+University Transport Studies Unit (Clarke 1986). This model uses the list of activities
+to be scheduled and their durations to produce all feasible activity patterns in response
+to a change in the travel environment (for example, transit service improvements or
+cuts). It does so through the use of a branch-and-bound based combinatorial algorithm
+which reorganizes a given activity program and selects only those patterns which are
+feasible in terms of spatio-temporal and inter-personal constraints.
+
+  Recker et al. (1986a, 1986b) developed another scheduling model called
+STARCHILD. Their model partitions the daily scheduling process into two stages. In
+the first stage (also referred to as the pre-travel stage), the individual decides on a
+planned activity episode schedule based on a pre-determined directory of activities and
+their duration, location and time window for participation. STARCHILD models the
+selection of a planned activity program by generating distinct non-inferior patterns
+using combinatorics and then applying a logit choice model to establish the pattern
+choice with highest utility. The assignment of a utility value to each pattern is a
+function of the amount of time in the pattern associated with activity participation, wait
+time and travel time. The planned activity episode schedule is continuously revised and
+updated in the second dynamic scheduling stage circumstances or new activity
+demands. More recently, Recker (1995a) has extended the STARCHILD approach to
+include a mathematical programming formulation for the choice of an activity-travel
+pattern from several possible patterns.
+
+  Gärling et al. (1989) proposed yet another activity scheduling model labeled
+SCHEDULER. This computational model assumes the presence of a long term
+calendar (an agenda of activity episodes with duration, appointment details and
+preference) at the start of any time period. A small set of episodes with high priority
+are selected from this long term "calendar" and stored in a short term calendar as the
+subset of episodes to be executed in the short-run. This activity subset is sequenced, and
+Activity-Based Modeling of Travel Demand  45
+
+activity locations determined based on a "distance-minimizing" heuristic procedure
+(see Axhausen and Gärling for a detailed review). SMASH (Ettema et al., 1993) is a
+development of the SCHEDULER framework in which heuristic scheduling rules are
+specified and tested.
+
+  A more recent scheduling model is the adaptation simulation system labeled
+AMOS (for Activity-MObility Simulator) developed by Kitamura et al. (1996) to
+examine the short-term responses to Transportation Control Measures (TCMs). The
+model takes an observed daily activity-travel pattern of an individual (baseline pattern)
+and determines an adaption choice (for example, do nothing, change mode, change
+departure time, etc.) to a TCM using a response option generator.
+
+Activity Episode Generation and Scheduling The studies reviewed in this section
+attempt to capture individual activity/travel patterns by focusing on the mechanism by
+which individual activities are generated and sequenced.
+
+  Kitamura (1983) studied episode sequencing and the tendencies or preferences in
+the formation of the set of activities to be pursued. A sequential history dependent
+approach is taken (sequential in that the probability of a given set of activities being
+chosen and pursued in a particular order is represented by a set of sequential and
+conditional probabilities). He found a consistent hierarchical order in sequencing
+episodes (with the less-flexible activities being pursued earlier). Kitamura and
+Kermanshah (1983) adopted the same sequential view in their extension of the above
+study to include the time dimension of activity choice. Adler and Ben Akiva (1979)
+examined inter-trip linkages from a simultaneous decision perspective, i.e, on the
+premise that the individual plans and pre-determines her/his daily travel schedule. The
+choice alternatives in this approach are entire daily patterns. However, the daily
+patterns are described by rather simple aggregate measures such as the mode used in
+travel and number of tours in the pattern. Golob (1986) also used a simultaneous
+decision approach, though his focus was on trip-chains or tours rather than daily
+patterns. The spatial and temporal dimensions are suppressed in this analysis. A set of
+different types of trip-chains are identified and modeled as dependent variables. A
+multivariate statistical technique (non-linear canonical correlation analysis) is
+employed for the analysis. Other studies of inter-trip linkage are Kitamura (1984),
+Nishii et al (1988) and O'Kelly & Miller (1984).
+
+  More recently, Ben-Akiva and Bowman (1994) have estimated a utility-based
+choice model of daily activity schedule of individuals that comprises a nested logit
+model of activity pattern choices (i.e., purposes, priorities and structure of the day's
+activities and travel) and tour choices (mode choice, destination choice of stops in
+tours, and departure time from home and from the "primary" activity in tour). Similar
+efforts by Wen and Koppelman (1997, 1999) include generation and allocation of
+maintenance stops and automobiles to household members but excludes mode and
+destination choice. In contrast to the utility-maximizing discrete choice formulations
+of Ben-Akiva and Bowman and Wen and Koppelman, Vause (1997) proposes the use
+of a rule-based mechanism to restrict the number of activity-related choices available
+46  Handbook of Transportation Science
+
+to an individual as well as for choice selection from the restricted choice set. Vause
+emphasizes the need to avoid the use of a single choice strategy in modeling and
+advances the use ofthe rule-based mechanism as a method to simulate different choice
+strategies (such as satisfaction, dominance, lexicographic and utility) within the same
+operational framework.
+
+  Vaughn, Speckman and Pas (Vaughn et al, 1997, and Speckman et al, 1997)
+developed a statistical approach to generate a set of baseline household activity patterns
+including the number and type of each activity episode and its duration, the number of
+home-based and work/school-based tours and start and end times for tours for a
+synthetic population represented by a continuous path through space and time. The
+statistical (as opposed to behavioral) basis of this approach raises questions about its
+use in prediction. However, it could provide initial travel-activity patterns for input to
+adaptive modeling systems such as SMASH and AMOS.
+
+  The studies ofepisode patterns discussed thus far either do not model the temporal
+dimension of episodes or assume broad time periods in the analysis. More recently, two
+approaches have been proposed to model activity episode generation and scheduling
+within the context of a continuous time domain. The first is the Prism-Constrained
+Activity-Travel Simulator proposed by Kitamura and Fujii, 1998 and the other is the
+Comprehensive Activity-Travel Generation for Workers (CATGW) model system
+proposed by Bhat and Singh (1999). These two studies are discussed in section 4.2
+under the heading of "Emergence of Comprehensive Activity-based Travel Demand
+Models".
+
+3.3 Modeling Methods in Activity-Travel Analysis
+
+The methods used in activity-based travel analysis include discrete choice models as
+well as other methods that accommodate non-discrete variables in activity modeling.
+The latter methods have emerged more recently because of the need to model travel as
+part of a larger (and holistic) activity-travel pattern and involve relatively non-
+traditional (in the travel analysis field) methodologies such as duration analysis and
+limited-dependent variable models. In this section, we discuss these various methods.
+The material here is drawn liberally from Bhat (1997a), though in a substantially
+condensed form.
+
+Discrete Choice Models
+
+The multinomial logit (MNL) model has been the most widely used structure for
+modeling discrete choices in travel behavior analysis. The random components of the
+utilities ofthe different alternatives in the MNL model are assumed to be independent
+and identically distributed (IID) with a type I extreme-value (or Gumbel) distribution
+(McFadden, 1973). The MNL model also maintains an assumption of homogeneity in
+responsiveness to attributes of alternatives across individuals (i.e., an assumption of
+response homogeneity). Finally, the MNL model also maintains an assumption that the
+error variance-covariance structure of the alternatives is identical across individuals
+Activity-Based Modeling of Travel Demand  47
+
+(i.e., an assumption of error variance-covariance homogeneity). The three assumptions
+together lead to the simple and elegant closed-form mathematical structure of the
+MNL. However, these assumptions also leave the MNL model saddled with the
+"independence of irrelevant alternatives" (IIA) property at the individual level (Ben-
+Akiva and Lerman, 1985). In the next three sections, we will discuss generalizations
+of the MNL structure along each of the three dimensions mentioned above: a)
+Relaxation of the IID (across alternatives) error structure, b) Relaxation of response
+homogeneity, and c) Relaxation of the error variance-covariance structure
+homogeneity. While we discuss each of the dimensions separately, one can combine
+extensions across different dimensions to formulate several more generalized and
+richer structures.
+
+Relaxation of the IID (Across Alternatives) Error Structure The rigid inter-
+alternative substitution pattern of the multinomial logit model can be relaxed by
+removing, fully or partially, the IID assumption on the random components of the
+utilities of the different alternatives. The IID assumption can be relaxed in one of three
+ways: a) allowing the random components to be correlated while maintaining the
+assumption that they are identically distributed (identical, but non-independent random
+components), b) allowing the random components to be non-identically distributed
+(differentvariances), but maintaining the independence assumption (non-identical, but
+independent random components), and c) allowing the random components to be non-
+identical and non-independent (non-identical, non-independent random components).
+Each of these alternatives is discussed below.
+
+Identical, Non-Independent Random Components The distribution of the random
+components in models which use identical, non-independent random components can
+be specified to be either normal or type I extreme value. Discrete choice literature has
+mostly used the type I extreme value distribution since it nests the multinomial logit
+and results in closed-form expressions for the choice probabilities.
+
+  The models with the type I extreme value error distribution belong to the
+Generalized Extreme Value (GEV) class of random utility-maximizing models. Five
+model structures have been formulated and applied within the GEV class. These are:
+the Nested Logit (NL) model, the Paired Combinatorial Logit (PCL) model, the cross-
+nested logit (CNL) model, the Ordered GEV (OGEV) model, and the Multinomial
+Logit-Ordered GEV (MNL-OGEV) model.
+
+  The nested logit (NL) model permits covariance in random components among
+subsets (or nests) of alternatives (each alternative can be assigned to one and only one
+nest). Alternatives in a nest exhibit an identical degree of increased sensitivity relative
+to alternatives not in the nest (Williams, 1977, Daly and Zachary, 1978, Daganzo and
+Kusnic, 1993).
+
+  The paired combinatorial logit (PCL) model initially proposed by Chu (1989) and
+recently examined in detail by Koppelman and Wen (1996) generalizes, in concept, the
+nested logit model by allowing differential correlation between each pair of
+48  Handbook of Transportation Science
+
+alternatives. While the nested logit model is not nested within the PCL structure, an
+appropriate constrained PCL closely approximates the nested logit model.
+
+  Another generalization of the nested logit model is the cross-nested logit (CNL)
+model of Vovsha (1996). In this model, an alternative need not be exclusively assigned
+to one nest as in the nested logit structure. Instead, each alternative can be
+probabilistically assigned to multiple nests. Vovsha proposes a heuristic procedure for
+estimation of the CNL model.
+
+  The ordered GEV model was developed by Small (1987) to accommodate
+correlation among the unobserved random utility components of alternatives close
+together along a natural ordering implied by the choice variable (examples of such
+ordered choice variables might include car ownership, departure time of trips, etc.).
+
+  The MNL-OGEV model formulated by Bhat (1998b) generalizes the nested logit
+model by allowing adjacent alternatives within a nest to be correlated in their
+unobserved components.
+
+  The advantage of all the GEV models discussed above is that they allow partial
+relaxations of the independence assumption among alternative error terms while
+maintaining closed-form expressions for the choice probabilities. The problem with
+these models is that they are consistent with utility maximization only under rather
+strict (and often empirically violated) restrictions on the dissimilarity parameters. The
+origin of these restrictions can be traced back to the requirement that the variance of
+the joint alternatives be identical.
+
+Non-Identical, Independently Distributed Random Components The concept that
+heteroscedasticity in alternative error terms (i.e., independent, but not identically
+distributed error terms) relaxes the IIA assumption is not new (see Daganzo, 1979), but
+has received little (if any) attention in travel demand modeling and other fields. Four
+models have been proposed which allow non-identical random components. The first
+is the negative exponential model of Daganzo (1979), the second is the heteroscedastic
+multinomial logit (HMNL) model of Swait and Stacey (1996), the third is the oddball
+alternative model of Recker (1995b) and the fourth is the heteroscedastic extreme-value
+(HEV) model of Bhat (1995).
+
+  Daganzo (1979) used independent negative exponential distributions with different
+variances for the random error components to develop a closed-form discrete choice
+model which does not have the IIA property. His model has not seen much application
+since it requires that the perceived utility of any alternative not exceed an upper bound.
+
+  Swait and Stacey (1996) allowed heteroscedasticity by specifying the variance of
+
+the alternative error terms to be functions of observed alternative characteristics. The
+
+error terms themselves are assumed to be type I extreme-value. The scale parameter
+
+characterizing the variance of each alternative i is written as  where
+Activity-Based Modeling of Travel Demand  49
+
+is a vector of attributes associated with alternative i and is a corresponding vector
+of parameters to be estimated. The resulting model has a closed-form structure.
+
+  Recker (1995b) proposed the oddball alternative model which permits the random
+utility variance of one "oddball" alternative to be larger than the random utility
+variances of other alternatives. This situation might occur because of attributes which
+define the utility of the oddball alternative, but are undefined for other alternatives.
+Then, random variation in the attributes that are defined only for the oddball
+alternative will generate increased variance in the overall random component of the
+oddball alternative relative to others.
+
+  Bhat (1995) formulated the heteroscedastic extreme-value (HEV) model which
+assumes that the alternative error terms are distributed with a type I extreme value
+distribution. The variance of the alternative error terms are allowed to be different
+across all alternatives (with the normalization that the error terms of one of the
+alternatives has a scale parameter of one for identification). Bhat develops an efficient
+Gauss-Laguerre quadrature technique to approximate the one-dimensional integral in
+the choice probabilities of the HEV model. The reader is referred to Hensher (1998a;
+1998b) and Hensher et al. (1999) for applications of the HEV model to estimation from
+revealed and stated preference data.
+
+  The advantage of the heteroscedastic class of models discussed above is that they
+allow a flexible cross-elasticity structure among alternatives than many of the GEV
+models discussed earlier. Specifically, the models (except the oddball model) permit
+differential cross-elasticities among all pairs of alternatives. The limitation (relative to
+the GEV models) is that the choice probabilities do not have a closed-form analytical
+expression in the HEV model.
+
+Non-Identical, Non-Independent Random Components Models with non-identical, non-
+independent random components use one of two general structures: the first is an error-
+components structure and the second is the general multinomial probit (MNP)
+structure.
+
+  The error-components structure partitions the overall error into two components:
+one component which allows the random components to be non-identical and non-
+independent, and the other component which is specified to be independent and
+identically distributed across alternatives. In particular, consider the following utility
+function for alternative i:
+
+where and are the systematic and random components ofutility, and is further
+
+partitioned into two components, and  is a vector of observed data associated
+
+with alternative i, is a random vector with zero mean and density  is the
+50  Handbook of Transportation Science
+
+variance-covariance matrix of the vector and is independently and identically
+standard distributed across alternatives with density function f(.). The component
+induces heteroscedasticity and correlation across unobserved utility components ofthe
+alternatives (see Train, 1995). While different distributional assumptions might be
+made regarding f(.) and g(.), it is typical to assume a standard type I extreme value for
+f(.), and a normal distribution for g(.). This results in a error-components model with
+a logit kernel. On the other hand, if a standard normal distribution is used for f(.), the
+result is a error-components probit model. Both these structures will involve integrals
+in the choice probability expressions which do not have a closed-form solution. The
+estimation of these models is achieved using logit simulators (in the first case) or probit
+simulators (in the second case). Different and very general patterns
+of heteroscedasticity and correlation in unobserved components among alternatives can
+be generated by appropriate specification of the and vectors (see Bhat, 1998c,
+Ben-Akiva and Bolduc, 1996 and Brownstone and Train, 1999).
+
+  The general multinomial probit (MNP) structure does not partition the error terms,
+and estimates (subject to certain identification considerations) the variance-covariance
+matrix of the overall random components among the different alternatives (see Bunch
+and Kitamura, 1990; Lam, 1991; and Lam and Mahmassani, 1991). However,
+McFadden and Train (1996) have shown that the error-components formulation can
+approximate a multinomial probit formulation as closely as one needs it to. Further, the
+error-components models can be estimated using simulators which are conceptually
+simple, easy to program and inherently faster than simulators for the MNP model (see
+Brownstone and Train, 1999).
+
+Relaxation of Response Homogeneity The standard multinomial logit, and other
+models which relax the IID assumption across alternatives, typically assume that the
+response parameters determining the sensitivity to attributes of the alternatives are the
+same across individuals in the population. However, if such an assumption is imposed
+when there is response heterogeneity, the result is biased and inconsistent parameter
+and choice probability estimates (see Chamberlain, 1980).
+
+  Response heterogeneity may be accommodated in one of two ways. In the first
+approach, the varying coefficients approach, the coefficients on alternative attributes
+are allowed to vary across individuals while maintaining a single utility function. In
+the second approach, the segmentation approach, individuals are assigned to segments
+based on their personal/trip characteristics, and a separate utility function is estimated
+for each segment. Each of these approaches is discussed next.
+
+Varying Coefficients Approach Consider the utility  that an individual q associates
+with alternative i and write it as:
+
+where is an individual-invariant bias constant, is a vector of observed individual
+characteristics, is a vector of parameters to be estimated, is a random term
+Activity-Based Modeling of Travel Demand  51
+
+representing idiosyncracies in preferences, and is a vector representing the
+responsiveness of individual q to a corresponding vector of alternative-associated
+variables The terms may be specified to have any of the structures discussed in
+Section 3.2. Conditional on and the assumption regarding the terms, the form
+of the conditional choice probabilities can be developed. The unconditional choice
+probabilities corresponding to the conditional choice probabilities will depend on the
+response heterogeneity specification adopted for the vector. A general heterogeneity
+specification involves allowing each element of the vector to vary across
+individuals based on observed as well as unobserved individual characteristics:
+
+  where is a vector of relevant observed individual
+characteristics and is a term representing random taste variation across individuals
+with the same observed characteristics The exponential form is used to ensure the
+appropriate sign on the response coefficients: a '+' sign is applied for a non-negative
+response coefficient and the '-' sign is applied for a non-positive response coefficient.
+is typically assumed to be normally distributed. The random response specification does
+not exhibit the restrictive independence from irrelevant alternatives (IIA) property even
+if the IID error assumption across alternatives of the MNL is maintained (see Bhat,
+1998d).
+
+Segmentation Approaches Two segmentation approaches may be identified depending
+on whether the assignment of individuals to segments is exogenous (deterministic) or
+endogenous (probabilistic).
+
+  The exogenous segmentation approach to capturing heterogeneity assumes the
+existence of a fixed, finite number of mutually-exclusive market segments (each
+individual can belong to one and only one segment). The segmentation is based on one
+or two key socio-demographic variables (sex, income, etc.). Within each segment, all
+individuals are assumed to have identical preferences and identical sensitivities to
+level-of-service variables (i.e., the same utility function). Typically, very few (one or
+two) demographic variables are used for segmentation. The advantage of the exogenous
+segmentation approach is that it is easy to implement. The disadvantage is that its
+practicality comes at the expense of suppressing potentially higher-order interaction
+effects of the segmentation variables on response to alternative attributes.
+
+  The endogenous market segmentation approach attempts to accommodate
+heterogeneity in a practical manner not by suppressing higher-order interaction effects
+of segmentation variables (on response to alternative attributes), but by reducing the
+dimensionality of the segment-space. Each segment, however, is allowed to be
+characterized by a large number of segmentation variables. Individuals are assigned
+to segments in a probabilistic fashion based on the segmentation variables. Since this
+approach identifies segments without requiring a multi-way partition of data as in the
+exogenous market segmentation method, it allows the use of many segmentation
+variables in practice and, therefore, facilitates incorporation of the full order of
+interaction effects of the segmentation variables on preference and sensitivity to
+alternative attributes (see Bhat, 1997b and Gopinath and Ben-Akiva, 1995).
+52  Handbook of Transportation Science
+
+Relaxation of Error Variance-Covariance Structure Homogeneity The assumption
+of error variance-covariance structure homogeneity across individuals can be relaxed
+either by a) allowing the variance components to vary across individuals (variance
+relaxation), b) allowing the covariance components to vary across individuals
+(covariance relaxation), or c) allowing both variance and covariance components to
+vary across individuals (variance-covariance relaxation).
+
+Variance Relaxation Swait and Adamowicz (1996) formulate a heteroscedastic
+multinomial logit (HMNL) model that allows the variance ofalternatives to vary across
+individuals based on attributes characterizing the individual and her/his environment
+(the variance, however, does not vary across alternatives). The motivation for such a
+model is that individuals with the same deterministic utility for an alternative may have
+different abilities to accurately perceive the overall utility offered by the alternative.
+The HMNL model has exactly the same structure as the heteroscedastic model
+described earlier in this section, though the motivations for their development are
+different. McMillen (1995) also proposes a heteroscedastic model in the context of
+spatial choice and Gliebe et al (1998) incorporated heteroscedastic scaling into the
+PCL model for stochastic route choice.
+
+Covariance Relaxation Bhat (1997c) develops a nested logit model that allows
+heterogeneity across individuals in the magnitude of covariance among alternatives in
+a nest. The heterogeneity is incorporated by specifying the logsum (dissimilarity)
+parameter(s) in the nested logit model to be a deterministic function of individual-
+related characteristics. The model is applied to intercity mode choice analysis, where
+such heterogeneity may be likely to occur.
+
+  The author is not aware of any study that allows both variance and covariance
+components to vary across individuals (variance-covariance relaxation), though in
+concept the extension involves combining the variance and covariance relaxations
+discussed earlier.
+
+Hazard Duration Models
+
+Hazard-based duration models are ideally suited to modeling duration data. Such
+models focus on an end-of-duration occurrence (such as end of shopping activity
+participation) given that the duration has lasted to some specified time (Hensher and
+Mannering, 1994). This concept of conditional probability of "failure" or termination
+of activity duration recognizes the dynamics of duration; that is, it recognizes that the
+likelihood of ending a shopping activity participation depends on the length of elapsed
+time since start of the activity.
+
+  Hazard-based duration models are being increasingly used to model duration time
+in activity analysis. To include an examination of covariates which affect duration
+time, most studies use a proportional hazard model which operates on the assumption
+that covariates act multiplicatively on some underlying or baseline hazard.
+Activity-Based Modeling of Travel Demand  53
+
+  Two important methodological issues in the proportional hazard model are a) the
+distributional assumptions regarding duration (equivalently, the distributional
+assumptions regarding the baseline hazard) and b) the assumptions about unobserved
+heterogeneity (i. e., unobserved differences in duration across people). We discuss each
+of these issues in next two sections. A comprehensive review of the extension of the
+simple univariate duration model to include multiple duration processes, multiple
+spells from the same individual, and related issues may be found in Bhat (1997a).
+
+Baseline Hazard Distribution The distribution of the hazard may be assumed to be
+one of many parametric forms or may be assumed to be nonparametric. Common
+parametric forms include the exponential, Weibull, log-logistic, gamma, and log-
+normal distributions. Different parametric forms imply different assumptions regarding
+duration dependence. For example, the exponential distribution implies no duration
+dependence; that is, the time to "failure" is not related to the time elapsed. The Weibull
+distribution generalizes the exponential distribution and allows for monotonically
+increasing or decreasing duration dependence. The form of the duration dependence
+is based on a parameter that indicates whether there is positive duration dependence
+(implying that the longer the time has elapsed since start of the duration, the more
+likely it is to exit the duration soon), negative duration dependence (implying that the
+longer the time has elapsed since start of the duration, the less likely it is to exit the
+duration soon), or no duration dependence (which is the exponential case). The log-
+logistic distribution allows a non-monotonic hazard function.
+
+  The choice of the distributional form for the hazard function may be made on
+theoretical grounds. However, a serious problem with the parametric approach is that
+it inconsistently estimates the baseline hazard and the covariate effects when the
+assumed parametric form is incorrect (Meyer, 1990). The advantage of using a
+nonparametric form is that even when a particular parametric form is appropriate, the
+resulting estimates are consistent and the loss of efficiency (resulting from disregarding
+information about the hazard's distribution) may not be substantial.
+
+  Most studies of duration to date have made an a priori assumption of a parametric
+hazard. The most relevant duration studies for activity-travel modeling include a) the
+homestay duration models for commuters (i.e., the time between coming home from
+work and leaving home for another out-of-home activity participation) of Mannering
+et al. (1992) and Hamed and Mannering (1993), b) the sex-differentiated shopping
+duration models of Niemeier and Morita (1996), c) the shopping activity duration
+during the evening work-to-home commute of Bhat (1996a), and d) the delay duration
+model for border crossings by Paselk and Mannering (1993). These studies have been
+reviewed in greater detail by Pas (1997).
+
+Unobserved Heterogeneity Unobserved heterogeneity arises when unobserved factors
+(i.e., those not captured by the covariate effects) influence durations. It is well-
+established now that failure to control for unobserved heterogeneity can produce severe
+bias in the nature of duration dependence and the estimates of the covariate effects
+(Heckman and Singer, 1984).
+54  Handbook of Transportation Science
+
+  The standard procedure used to control for unobserved heterogeneity is the random
+effects estimator. This involves specification of a distribution for the unobserved
+heterogeneity (across individuals) in the population. Two general approaches may be
+used to specify the distribution of unobserved heterogeneity. One approach is to use a
+parametric distribution such as a gamma distribution or a normal distribution (most
+earlier research has used a gamma distribution). The problem with the parametric
+approach is that there is seldom any justification for choosing a particular distribution;
+further, the consequence of a choice of an incorrect distribution on the consistency of
+the model estimates can be severe (see Heckman and Singer, 1984). A second approach
+to specifying the distribution of unobserved heterogeneity is to use a nonparametric
+representation for the distribution and to estimate the distribution empirically from the
+data. This is achieved by approximating the underlying unknown heterogeneity
+distribution by a finite number of support points and estimating the location and
+associated probability masses of these support points. The nonparametric approach
+enables consistent estimation since it does not impose a prior probability distribution.
+
+  Application of duration models in the transportation field have, for the most part,
+ignored unobserved heterogeneity (but see Bhat, 1996a and Hensher, 1994).
+
+Limited-Dependent Variable Models
+
+Limited-dependent variable models encompass a wide variety of structures. In this
+section, we will focus on inter-related discrete and non-discrete variable systems. The
+non-discrete variable can take several forms. However, the three most interesting cases
+in the context of travel and activity modeling are the continuous, ordinal, and grouped
+forms. Further, the structure for the discrete/ordinal and discrete/grouped variable
+systems are very similar; so we will examine limited-dependent variable systems under
+two headings: discrete/continuous and discrete/ordinal models.
+
+Discrete/Continuous Models Hamed and Mannering (1993) use the
+discrete/continuous model framework to model activity type choice, travel time
+duration to the activity, and activity duration. Barnard and Hensher (1992) estimate a
+discrete/continuous model of shopping destination choice and retail expenditure. They
+use Lee's (1983) transformation method for polychotomous choice situations with non-
+normal error distributions in the choice model. Bhat (1998e) has also used Lee's
+method for discrete/continuous models, but extends the method to jointly estimate a
+polychotomous discrete choice and two continuous choices.
+
+Discrete/Ordinal Models Bhat and Koppelman (1993) estimate a discrete/grouped
+system of employment status (represented by a binary flag indicating whether or not
+an individual is employed) and annual income earnings. Observed income earnings in
+their data is in grouped form (i.e., observed only in grouped categories such as <
+20,000, 20,000-39,999, 40,000-59,999, etc.). Since it is likely that people who are
+employed are also likely to be the people who can earn higher incomes, the two
+variables are modeled jointly.
+Activity-Based Modeling of Travel Demand  55
+
+  Bhat (1997d) has recently developed a joint model of polychotomous work mode
+choice and number of non-work activity stops during the work commute (i.e., the total
+number of non-work stops made during the morning home-to-work commute and
+evening work-to-home commute). The joint model provides an improved basis to
+evaluate the effect on peak-period traffic congestion of conventional policy measures
+such as ridesharing improvements and solo-auto use dis-incentives.
+
+3.4 Results of Activity-Travel Analysis
+
+The substantial literature on activity-travel studies precludes a discussion of the results
+of individual studies. Instead, in this section, we discuss how activity-based travel
+research has and is influencing travel demand modeling.
+
+Better Specification of Travel Demand Models
+
+The insights obtained from activity-based research has enabled the incorporation of
+measures of complex behavior in a simple, albeit valuable way in travel choice models.
+Beggan (1988) used simple descriptors of travel-activity behavior such as the number
+of stops made during the work tour and the number of tours made during the work day
+as independent variables and found that even these simplified descriptors had a
+significant influence on mode-choice to work. Damm (1980) used various descriptors
+of lifecycle, temporal constraints, spatial constraints, interaction between time periods
+and interaction between household members in a nested logit model to estimate the
+participation and duration in discretionary activities. Goulias et al. (1989), Bhat et al.
+(1999) and Felendorfet al. (1997) recognize the inter-relationships among home-based
+and non-home based trips in a sojourn from home or from work and develop methods
+that can be used not only to generate trips but also to determine their placement within
+the larger daily activity-travel pattern of individuals. Purvis and his colleagues (Purvis
+et al., 1996) at the Metropolitan Transportation Commission (MTC) of the San
+Francisco Bay area introduced the notion of time constraints by using work travel time
+as an explanatory variable in their traditional non-work trip generation model.
+
+  Clearly, one way that activity-based research is influencing (and has influenced)
+travel demand modeling is through incremental improvements to trip-based planning
+methods.
+
+Emergence of comprehensive Activity-Based Travel Forecasting Models
+
+As indicated earlier in the section on activity episode generation and scheduling, two
+approaches have been recently proposed to model the entire diary activity-travel pattern
+of individuals within the context of a continuous time domain. The first is the Prism-
+Constrained Activity-Travel Simulator proposed by Kitamura and Fujii, 1998 and the
+other is the Comprehensive Activity-Travel Generation for Workers (CATGW) model
+system proposed by Bhat and Singh (1999).
+56  Handbook of Transportation Science
+
+  PCATS divides the day (or any other unit of time) into two types of periods:
+"open" periods and "blocked" periods. "Open" periods represent times of day when an
+individual has the option of traveling and engaging in "flexible" activities. "Blocked"
+periods represent times when an individual is committed to performing "fixed"
+activities. PCATS then attempts to "fill" the open periods based on a space-time prism
+of activities contained within the open period. PCATS uses a sequential structure for
+generation of the activity episodes and associated attributes (activity type, activity
+duration, activity location, and mode choice) within the "open" period (thus, the unit
+of analysis in PCATS is the individual activity).
+
+  The CATGW framework is based on the fixity of two temporal points in a worker's
+continuous daily time domain. The two fixed points correspond to the arrival time of
+an individual at work and the departure time of an individual from work. The day is
+divided into four different patterns: before morning commute pattern, work commute
+pattern, midday pattern, and post home-arrival pattern. Within each of the before work,
+midday and post home-arrival patterns, several tours may be present. A tour is a circuit
+that begins at home and ends at home for the before work and post home-arrival
+patterns and is a circuit that begins at work and ends at work for the midday pattern.
+Further, each tour within the before work, midday and post home-arrival patterns may
+comprise several activity episodes. Similarly, the morning commute and evening
+commute components of the work commute pattern may also comprise several activity
+episodes. The modeling representation for the entire daily activity-travel pattern is
+based on a descriptive analysis of actual survey data from two metropolitan areas in the
+U.S. The suite of models in the modeling representation can be used for generation of
+synthetic baseline patterns as well as to evaluate the effect of Transportation Control
+Measures (TCMs). The models have been applied to evaluate the potential effect of
+TCMs on stop-making and cold starts in the Boston Metropolitan area.
+
+Study of Important Policy Issues
+
+The study of policy issues is improved and/or made possible by the activity-based
+approach. Demand management strategies that attempt to suppress or spread traffic
+peaks need to be designed based on the effect of these measures on re-scheduling of
+activities and household interactions. For example, a change in work schedule to an
+early departure from work may lead to increased trip-making at the evening because
+of the additional time available to participate in out-of-home activities. If some of this
+travel is undertaken during the same time as the PM peak-period travel, the extent of
+congestion alleviation projected by traditional models will not be realized (see Jones
+et al., 1990). In fact, from an air quality standpoint, Bhat (1998a) illustrates that an
+early departure from work would lead to more cold starts because of the increased
+activity durations of evening commute stops resulting from more time availability.
+Similarly, improvements in high-occupancy vehicle modes or peak period pricing
+measures are likely to have a rather small impact on the mode choice of individuals
+who make stops during the commute. The activity-based approach would recognize this
+association, while traditional mode choice models will overestimate the shift to high-
+occupancy modes, as clearly demonstrated by Bhat (1997d) using actual empirical data.
+Activity-Based Modeling of Travel Demand  57
+
+Another example of the advantage of activity-based analysis relative to traditional
+methods is in the evaluation of the travel impacts of telecommuting. Specifically,
+displacements of travel (and its associated consequences) to other times of day due to
+a change in activity patterns caused by adoption of work telecommuting strategies
+cannot be examined by the narrow trip-based models, but can be examined using
+activity-based models (see Mokhtarian, 1993).
+
+Improvements in Data Collection Procedures
+
+Activity research has and continues to provide insights into cost-effective methods of
+collecting data and improving the accuracy of data collection procedures. It also
+facilitates the development of new data collection techniques that are responsive to
+current needs. Improvements in the accuracy ofconventional data collection procedures
+due to activity-based research include the employment of a verbal activity recall
+framework, stated preference techniques, multi-day surveys, longitudinal data
+collection, pattern reconstruction techniques, and interactive measurement and gaming
+simulation techniques (see Lawton and Pas, 1996, for a comprehensive resource paper
+on survey methods associated with activity analysis).
+
+Contributions to Regional and Community Planning
+
+Models with a soundbehavioral casual linkagebetween individual activity patterns and
+the travel environment will be critical to good regional and community planning. The
+activity perspective of travel provides a clear picture of the functioning of urban areas
+(for example, the spatial characteristics of intra-urban labor markets) and has the
+potential to identify the differential quality of life associated with different segments
+of the population. For example, some researchers (see Johnston-Anumonwo, 1995;
+Hanson and Pratt, 1988,1992; Preston et al., 1993; and MacDonald and Peter, 1994)
+have used the activity analysis framework to study the social and spatial context of
+information exchange with regard to employment-related decisions. Ferguson and
+Jones (1990), on the other hand, used the activity-based perspective to identify the
+special needs of the elderly and disabled in Adelaide and were able to make specific
+recommendations to improve the mobility ofthese population groups by identifying the
+rhythms and timing under which such individuals live.
+
+3.5 Future directions in Activity-Based Travel Research
+
+The review of activity-based studies in section 3.2 indicates the substantial progress
+that has been made in recent years. There is no question that there is an increasing
+realization and awareness of the need to model travel as part of a holistic (and
+temporally continuous) activity-travel pattern. However, there is still a long way to go
+in understanding how households and individuals make choices that drive their activity
+and travel patterns. The objective of this section is to highlight some of the directions
+that we consider important in activity-based travel analysis.
+58  Handbook of Transportation Science
+
+Inter-Individual Interactions in Activity Behavior
+
+An area that has received limited attention thus far in the activity analysis literature is
+the interactions among individuals in a household and the effect of such interactions
+on individual activity episode patterns. Interactions among individuals might take the
+form of joint participation in certain activities (such as shopping together or engaging
+in recreational/social activities together), “serve-passenger” and “escort” activities
+where one individual facilitates and oversees the participation of another in activities
+(for example, the "soccer mom" phenomenon), and allocation of autos and activities
+among individuals (especially in multi-adult, one-car households). Such interactions
+can lead to constraints that may be very important in individual activity/travel
+responses to changes in the transportation or land-use environment. However, the
+comprehensive activity analysis frameworks today that model individual activity
+patterns within a continuous time domain (such as those discussed in section 3.2) do
+not consider inter-individual interactions. On the other hand, some recent efforts (for
+example, see Wen and Koppelman, 1999) have focused on inter-individual interactions
+in activity decisions but have not examined individual activity-travel patterns at a fine
+level of temporal resolution. Integration of efforts which accommodate inter-individual
+interactions in activity patterns with efforts that use a continuous time domain is,
+therefore, likely to be a very fruitful area for further research.
+
+Time-Space Interactions in Activity Behavior
+
+Another area that needs substantial attention in the future is the explicit
+accommodation of time and space interactions. Most early research in the activity
+analysis area emphasized the dependence in spatial choices among activities using
+either semi-Markov processes or discrete-choice models (Horowitz, 1980; Kitamura,
+1984; O'Kelly and Miller, 1984; Lerman, 1979). These studies ignored the temporal
+aspects of activity participation. More recently, some studies have focused on the
+timing and duration of activities (Ettema et al., 1995; Hamed and Mannering, 1993;
+Bhat, 1996a). But these studies have not examined spatial issues. Thus, though one of
+the key concepts of the activity-based approach is the time-space interaction, little work
+has been done toward developing such an integrated modeling approach. Thill and
+Thomas, 1987, indicated the following in their review of travel behavior research: "In
+spite of various devices to account for links between decisions, no study has thus far
+appropriately restored the simultaneity of intended choices....It is necessary to
+conceive a framework that combines both temporal and spatial aspects of travel choice
+and that considers multipurpose multistop behavior as a multidimensional whole".
+This statement remains valid even today. Recent work by Thill and Horowitz
+(1997a,b), Dijst and Vidakovic (1997), and Bhat (1998a) starts to address this concern,
+but there is still much work to be done in this area.
+
+In-Home and Out-of-Home Activity Substitution
+
+In-home and out-of-home activities have quite diiferent implications for travel; an in-
+home episode does not involve travel (for a person already at home), while an out-of-
+Activity-Based Modeling of Travel Demand  59
+
+home episode requires travel. Thus, the in-home/out-of-home participation decision has
+an impact on the generation of trips (see Jones et al., 1993). Understanding this
+substitution is important, particularly at a time when opportunities for entertainment
+at home are increasing because of the increasing accessibility of households to
+computers, theater quality audio and video systems, and an almost unlimited choices
+of movies to view from home. Despite the importance of understanding in-home and
+out-of-home substitution effects, very few studies have examined this issue (see
+Kitamura et al, 1996, Kraan, 1996 and Bhat, 1998e). And even these studies have
+examined substitution only in the context of broad activity types (such as discretionary
+activities, maintenance activities, etc.) rather than the more relevant substitution in
+specific activity types.
+
+  One of the impediments to a detailed analysis of in-home and out-of-home
+substitution has been (until recently) the unavailability of data on in-home activities.
+From a data collection standpoint, a related complication is the participation of
+individuals in multiple activities at the same time at home (for example, eating and
+watching television at the same time). Thus, research is required into how we might
+collect detailed data on activity type ofparticipation at home and how we might be able
+to elicit information on multi-activity participation.
+
+Unit of Analysis
+
+The unit of analysis typically used in the activity-based travel models is the weekday.
+The implicit assumption is that there is little variation in activity-travel patterns across
+different days of the week. Research focusing even on simple aggregate measures of
+activity-travel behavior (such as trip frequency, and number and type of stops made
+during the morning/evening commutes) has indicated quite substantial intrapersonal
+variability across weekdays (see Pas and Koppelman, 1986; Jou and Mahmassani,
+1997). One can therefore expect substantial day-to-day variations when considering
+entire activity-travel patterns. In addition, the focus on a single weekday does not allow
+the examination of the interaction in activity participation between weekends and
+weekdays. Of course, the use of an entire week as the unit of analysis will require the
+collection of time-use diary data over at least one week. This offers research
+opportunities for the development of data techniques that can collect time-use data
+over a week without being prohibitively expensive or appearing excessively intrusive.
+
+The Decision Mechanism
+
+As described earlier in the paper, there have been several previous modeling efforts to
+generate activity episode patterns. However, we still lack a good understanding of the
+decision mechanism underlying revealed activity episode patterns. For example, how
+do households and individuals acquire and assimilate information about their
+activity/travel environment, is activity-travel behavior pre-planned or is it subject to
+dynamic adjustment or is there a mixture of these processes, are attributes of activity
+episodes determined jointly or sequentially, and what objective do individuals follow
+while determining their scheduling decisions? The main challenge to studying these
+60  Handbook of Transportation Science
+
+issues is that the generation and scheduling process that determines the revealed
+episode patterns can only be understood if additional data on the internal mechanism
+leading up to revealed episode patterns is collected. Such data are not currently
+available and again this offers another research opportunity in the area of data
+collection.
+
+  Clearly, there are important theoretical and methodological advances still to be
+made in the activity-based travel research field. As progress is made on these fronts,
+we are bound to see more applications of the activity paradigm in travel demand
+modeling. Some metropolitan planning organizations (MPOs) are already embracing
+this new paradigm and pursuing efforts to develop comprehensive activity model
+systems to replace the traditional four-step trip-based methods. Many other MPOs
+realize the need to switch to an activity-based modeling system in the near future. To
+conclude, the activity-based approach to travel demand modeling is slowly, but
+steadily, finding its way into actual practice.
+
+Acknowledgements
+This research was supported by National Science Foundation grants DMS 9208758 and
+DMS 9313013 to the National Institute of Statistical Sciences (NISS).
+Activity-Based Modeling of Travel Demand  61
+
+References
+
+Adler, T. and M. Ben-Akiva (1979) Atheoretical and empirical model of trip-chaining behavior, Transportation
+  Research, 13B, 243-257.
+
+Axhausen, K. and T. Garling (1992) Activity-based approaches to travel analysis: conceptual frameworks,
+  models and research problems, Transport Reviews, 12, 324-341.
+
+Barnard and Hensher (1992) The spatial distribution of retail expenditures, Journal of Transport Economics
+  and Policy, September, 299-311.
+
+Beggan, J.G. (1988) The relationship between travel/activity behavior and mode choice for the work trip,
+  unpublished Master’s Thesis, Northwestern University.
+
+Ben-Akiva, M. and S.R. Lerman (1985) Discrete Choice Analysis: Theory and Application to Travel Demand,
+  The MIT Press, Cambridge.
+
+Ben-Akiva, M. and D. Bolduc (1996) Multinomial probit with a logit kernel and a general parametric
+  specification of the covariance structure, working paper, Department of Civil and Environmental
+  engineering, Massachusetts Institute of Technology, Cambridge, MA and Département d’économique,
+  Université Laval, Sainte-Foy, Qc, Canada.
+
+Ben-Akiva, M.E. and J.L. Bowman (1995) Activity-based disaggregate travel demand model system with daily
+  activity schedules, Paper presented at the EIRASS Conference on Activity-Based Approaches:
+  Activity Scheduling and the Analysis of Activity patterns, Eindhoven, The Netherlands.
+
+Bhat, C.R. and F.S. Koppelman (1993) An endogenous switching simultaneous equation system of employment,
+  income, and car ownership, Transportation Research, 27A, 6, 447-459.
+
+Bhat, C.R. (1995) A heteroscedastic extreme-value model of intercity mode choice, Transportation Research,
+  29B, 6, 471-483.
+
+Bhat, C.R. (1996a) A hazard-based duration model of shopping activity with nonparametric baseline specification
+  and nonparametric control for unobserved heterogenetty, Transporation Research, 30B, 3, 189-207.
+
+Bhat, C.R. (1996b) Incorporating observed and unobserved heterogeneity in work mode choice modeling,
+  forthcoming in Transportation Science.
+
+Bhat, C.R. (1997a) Recent methodological advances relevant to activity and travel behavior analysis, invitational
+  resource paper prepared for presentation at the International Association of Travel Behavior Research
+  Conference to be held in Austin, Texas, September 1997.
+
+Bhat, C.R. (1997b) An endogenous segmentation mode choice model with an application to intercity travel,
+  Transportation Science, 31, 34-48.
+
+Bhat, C.R. (1997c) A nested logit model with covariance heterogeneity, Transportation Research, 31B, 11 -21.
+Bhat, C.R. (1997d) Work mode choice and number of non-work commute stops, Transportation Research, 31 B,
+
+  41-54.
+Bhat, C.R. (1998a) Modeling the commute activity-travel pattern of workers: formulation and empirical analysis,
+
+  Technical Paper, Department of Civil Engineering, University of Texas at Austin.
+Bhat, C.R. (1998b) An analysis of travel mode and departure time choice for urban shopping trips,
+
+  Transportation Research, 32B, 387-400.
+Bhat, C.R. (1998c) Accommodating flexible substitution patterns in multidimensional choice modeling:
+
+  formulation and application to travel mode and departure time choice, Transportation Research,
+  32B, 425-440.
+Bhat, C.R. (1998d) Accommodating variations in responsiveness to level-of-service measures in travel mode
+  choice modeling, Transportation Research, 32A, 495-507.
+Bhat, C.R. (1998e) A post-home arrival model of activity participation behavior, Transportation Research, 32B,
+  361-371.
+Bhat, C.R. and S.K. Singh (1999) A comprehensive daily activity-travel generation model system for workers,
+  forthcoming, Transportation Research.
+Bhat, C.R. and F.S. Koppelman (1998) A retrospective and prospective survey of time-use research, under
+  consideration for possible publication in a special time-use issue in Transportation.
+Bhat, C.R., J.P. Carini and R. Misra (1999) On the generation and organization of household activity stops,
+  forthcoming, Transportation Research Record.
+Brownstone, D. and K. Train (1999) Forecasting new product penetration with flexible substitution patterns,
+  Journal of Econometrics, Vol. 89, pp. 109-129.
+Bunch, D.S. and R. Kitamura (1990) Multinomial probit model estimation revisited: testing estimable model
+  specifications, maximum likelihood algorithms, and probit integral approximations for trinomial
+  models of household car ownership, UCD-ITS-RP-90-1, Institute of Transportation Studies,
+  University of California,
+62  Handbook of Transportation Science
+
+Cambridge Systematics, Inc. (1994) Short-Term Travel Model Improvements, Final report (DOT-95-05),
+  Prepared for the U.S. Department of Transportation and US Environmental Protection Agency.
+
+Chamberlain, G. (1980) Analysis of covariance with qualitative data, Review of Economic Studies, 47, 225-238.
+
+Clarke, M.I. (1986) Activity modelling - a research tool or a practical planning technique ?, in Behavioral
+  Research for Transport Policy, 3-15, VNU Science Press, Utrecht, The Netherlands.
+
+Chapin, F.S., Jr. (1971) Free-time activities and the quality of urban life, Journal of the American Institute of
+  Planners, 37, 411-417.
+
+Chu, C. (1989) A paired combinatorial logit model for travel demand analysis, Proceedings of the Fifth World
+  Conference on Transportation Research, 295-309, Ventura, CA.
+
+Cox, D. R. (1972) Regression models with life tables, Journal of the Royal Statistical Society Series B,34,187-
+  220.
+
+Cullen, I. and V. Godson (1975) Urban networks: the structure of activity patterns, Progress in Planning, 4, 1-
+  96.
+
+Cullen, I. and E. Phelps (1975) Diary techniques and the problems of urban life, Final Report submitted to the
+  Social Science Research Council, Grant HR 2336, London.
+
+Damm, D. (1980) Interdependencies in activity behavior”, Transportation Research Record, 750, 33-40.
+Daganzo, C. (1979) Multinomial Probit: The Theory and its Application to Demand Forecasting, Academic
+
+  Press, New York.
+Daganzo, C.F. and M. Kusnic (1993) Two properties of the nested logit model, Transportation Science, 27, 395-
+
+  400.
+Daly, A.J. and S. Zachary (1978) Improved multiple choice models, in D.A. Hensher and M.Q. Dalvi (eds.)
+
+  Determinants of Travel Choice, Saxon House, Westmead.
+Deakin, Harvey, Skabardonis, Inc. (1993) Manual of Regional Transportation Modeling Practice for Air Quality
+
+  Analysis, The National Association of Regional Councils, Washington, D.C.
+Dijst, M. and V. Vidakovic. (1997) Individual action space in the city, in Activity-Based Approaches to Travel
+
+  Analysis, ed. Dick Ettema and Harry Timmermans. Elsevier Science, Ltd., pp. 117-134.
+Ettema, D., A. W.J. Borgers and H.J.P. Timmermans (1993) Simulation model of activity scheduling behavior,
+
+  Transportation Research Record, 1413, 1-11.
+Fellendorf, M., T. Haupt, U. Heidi and W. Scherr (1997) PTV vision: activity-based demand forecasting in daily
+
+  practice, in Activity-Based Approaches to Travel Analysis, editors: Ettema, D.F. and H.J.P.
+  Timmermans, 55-71, Elsevier Science Ltd. New York.
+Ferguson, D. and P.M. Jones (1990) HATS study of wheelchair disability in Adelaide, Report to the Director
+  General of Transport, South Australia.
+Gärling, T..K. Brannas, J. Garvill, R.G. Golledge, S.Gopal, E.Holm and E. Lindberg(1989). Household activity
+  scheduling. In Transport policy, management & technology towards 2001: Selected proceedings of
+  the fifth world conference on transport research (Vol. IV, pp. 235-248). Ventura, CA: Western
+  Periodicals.
+Gärling, T., M.P. Kwan and R. G. Golledge (1994) Computational-process modeling of household travel activity
+  scheduling, Transportation Research, 25B, 355-364.
+Gliebe, J.P., F.S. Koppelman and A. Ziliaskopoulos (1998) Route choice using a paired combinatorial logit
+  model, prepared for presentation at the 78th meeting of the Transportation Research Board,
+  Washington, D.C., January 1999.
+Golledge, R.G., M.P. Kwan and T. Gärling (1994) Computational process modeling of travel decisions using
+  geographical information systems, Papers in Regional Science, 73-99.
+Golob, T.F. (1986) A non-linear canonical correlation analysis of weekly chaining behavior, Transportation
+  Research, 20A, 385-399.
+Gopinath, D. and M. Ben-Akiva (1995) Estimation of randomly distributed value of time, working paper,
+  Department of Civil Engineering, Massachusetts Institute of Technology.
+Gordon, P., A Kumar and H. W. Richardson (1988) Beyond the journey to work, Transportation Research,
+  21A, 6, 419-426.
+Goulias, K.G., R.M. Pendyala and R. Kitamura (1989) Practical method for the estimation oftrip generation and
+  trip chaining, Transportation Research Record, 1285, 47-56.
+Hägerstrand, T. (1970) What about people in regional science?, Papers and Proceedings of the Regional
+  Science Association, 24, 7-24.
+Hamed, M.M and F.L. Mannering (1993) Modeling travelers’ postwork activity involvement: toward a new
+  methodology, Transportation Science, 27, 4, 381-394.
+Han, A. and J.A. Hausman (1990) Flexible parametric estimation of duration and competing risk models,
+  Journal of Applied Econometrics, 5, 1-28.
+Activity-Based Modeling of Travel Demand  63
+
+Hanson, S. (1980) Spatial diversification and multipurpose travel: implications for choice theory, Geographical
+  Analysis, 12, 245-257.
+
+Hanson, S. and G. Pratt (1988) Reconceptualizng the links between home and work in urban geography,
+
+  Economic Geography, 64, 299-321.
+Hanson, S. and G. Pratt (1992) Dynamic dependencies: a geographic investigation of local labor markets,
+
+  Economic Geography, 68, 373-405.
+Heckman, J. and B. Singer (1984) A method for minimizing the distributional assumptions in econometric
+
+  models for duration data, Econometrica, 52, 271-320.
+Hensher, D.A. and F.L. Mannering (1994) Hazard-based duration models and their application to transport
+
+  analysis, Transport Reviews, 14, 1, 63-82.
+Hensher, D.A. (1998a) Establishing a fare elasticity regime for urban passenger transport, Journal of Transport
+
+  Economics and Policy, 32 (2), 221-246.
+Hensher, D.A. (1998b) Extending valuation to controlled value functions and non-uniform scaling with
+
+  generalized unobserved variances. In Gärling, T., Laitila, T., & Westin, K. Theoretical Foundations
+  of Travel Choice Modeling. Oxford: Pergamon, 75-102
+Hensher, D. A., J. Louviere, and J. Swait (1999) Combining sources of preference data, Journal of Econometrics,
+  89, 197-221.
+Hirsh, M., J.N. Prashker and M.E. Ben-Akiva (1986). “Dynamic Model of Weekly Activity Pattern,
+  Transportation Science, 20,, 24-36.
+Horowitz, J.L. (1980). A utility maximizing model of the demand for multi-destination non-work travel,
+  Transportation Research, 14B, 369-386.
+Johnson-Anumonwo, I. (1995) Racial differences in the commuting behavior of women in Buffalo, 1980-1990,
+  Urban Geography, 16, 23-45.
+Jones, P. M., F.S. Koppelman, and J.P. Orfeuil (1990) Activity analysis: state of the art and future directions, in
+  Developments in Dynamic and Activity-Based Approaches to Travel Analysis, 34-55, Gower,
+  Aldershot, England.
+Jou, R-C and H.S. Mahmassani (1997) Comparative analysis of day-to-day trip chaining behavior of urban
+  commuters in two cities, forthcoming, Transportation Research Record.
+Kim, S.G., M. Hamed and F. Mannering (1993) A note on modeling travelers’ home-stay duration and the
+  efficiency of proportional hazards model, working paper, Department of Civil Engineering, University
+  of Washington.
+Kitamura, R. (1983) A sequential, history dependent approach to trip chaining behavior, Transportation
+  Research Record, 944, 13-22.
+Kitamura, R. and M. Kermanshah (1983) Identifying time and history dependencies of activity choice,
+  Transportation Research Record, 944, 22-30.
+Kitamura, R. (1984) Incorporating trip chaining into analysis of destination choice, Transportation Research,
+  18B, 67-81.
+Kitamura, R., E.I. Pas, C.V. Lula, T.K. Lawton, and P.E. Benson (1996) The sequenced activity mobility
+  simulator (SAMS): an integrated approach to modeling transportation, land use and air quality,
+  Transportation, 23, 267-291.
+Kitamura, R. and S. Fujii (1998) Two computational process models of activity-travel behavior, In T. Garling,
+  T. Laitila and K. Westin (eds.) Theoretical Foundations of Travel Choice Modeling, Oxford: Elsevier
+
+  Science, pp. 251-279.
+Kitamura, R., T. Yamamoto, S. Fujii and S. Sampath (1996). A discrete-continuous analysis of time allocation
+
+  to two types of discretionary activities which accounts for unobserved heterogeneity”, in J.B. Lesort
+  (editor) Transportation and Traffic Theory, 431-453, Elsevier, Oxford.
+Koppelman, F.S. and C-H Wen (1996) The paired combinatorial logit model: properties, estimation and
+  application, Department of Civil Engineering, Northwestern University, Evanston, Illinois.
+Kraan, M. (1996) Time to travel?; a model for the allocation of time and money, Unpublished Ph.D. dissertation,
+  Department of Civil Engineering, University of Twente, The Netherlands.
+Lam, S-H (1991) Multinomial probit model estimation: computational procedures and applications, Unpublished
+  Ph.D. dissertation, Department of Civil Engineering, The University of Texas at Austin.
+Lam, S-H. and H.S. Mahmassani (1991) Multinomial probit model estimation: computational procedures and
+  applications, in Methods for Understanding Travel Behavior in the 1990s, Proceedings of the
+
+  International Association of Travel Behavior, 229-242.
+Lawton, T.K. and E.I. Pas (1996) Resource paper for survey methodologies workshop, Conference Proceedings
+
+  on Household Travel Surveys: New Concepts and Research Needs, Transportation Research Board,
+  National Research Council, Washington, D.C.
+Lee, M. (1996). Analysis of accessibility and travel behavior using GIS, Unpublished Master of Science Thesis,
+  Department of Civil and Environmental Engineering, The Pennsylvania State University, May.
+64  Handbook of Transportation Science
+
+Lerman, S. (1979). “The Use of Disaggregate Choice Models in Semi-Markov Process Models of Trip Chaining
+  Behavior”, Transportation Science, 13, 273-291.
+
+Lockwood, P.B. and M.J. Demetsky (1994) Nonwork travel - A study of changing behavior”, presented at the
+  73rd Annual Meeting of the Transportation Research Board, Washington, D.C., January.
+
+Lee, L.F. (1983) Generalized econometric models with selectivity, Econometrica, 51, 2, 507-512.
+MacDonald, H. and A. Peters (1994) Spatial constraints on rural women workers, Urban Geography, 15, 720-
+
+  740.
+Mannering, F., E. Murakami and S.G. Kim (1994) Temporal stability of travelers’ activity choice and home-stay
+
+  duration: some empirical evidence, Transportation, 21, 371-392.
+McFadden, D. (1973) Conditional logit analysis ofqualitative choice behavior in Zaremmbka, P. (ed.) Frontiers
+
+  in Econometrics, Academic press, New York.
+McFadden, D. and K. Train (1996) Mixed MNL models for discrete response, working paper, Department of
+
+  economics, University of California, Berkeley.
+McMillen, D.P. (1995) Spatial effects in probit models: a monte carlo investigation, in L. Anselin and R.J.G.M.
+
+  Florax (editors) New Directions in Spatial Econometrics, Springer-Verlag, New York.
+Meyer, B.D. (1990) Unemployment insurance and unemployment spells, Econometrica, 58, 4, 757-782.
+Mokhtarian, P.L. (1993) The travel and urban form implications of telecommunications technology, Discussion
+
+  Paper for FHWA/LILP Workshop on Metropolitan America in Transition: Implications for Land Use
+  and Transportation Planning, Washington, D.C..
+Niemeier, D.A. and J.G. Morita (1996) Duration of trip-making activities by men and women, Transportation,
+  23, 353-371.
+Newell, A. and H.A. Simon (1972) Human Problem Solving, Prentice-Hall, Englewood Cliffs, NJ.
+Nishii, K., K. Kondo and R. Kitamura (1988) Empirical analysis of trip-chaining behavior, Transportation
+  Research Record, 1203, 48-59.
+O’Kelly, M.E. and E.J. Miller (1984) Characteristics of multistop multipurpose travel: an empirical study of trip
+  length, Transportation Research Record, 976,33-39.
+Pas, E.I. (1997) Recent advances in activity-based travel demand modeling, Activity-Based Travel Forecasting
+  ConferenceProceedings, June 2-5,1996, Summary, Recommendations and Compendium of Papers,
+  February 1997
+Pas, E.I. and F.S. Koppelman (1986). “An Examination of the Determinants of Day-to-Day Variability in
+  Individuals’ Urban Travel Behavior, Transportation, 13, 183-200.
+Paselk, T. and F. Mannering (1993) Use of duration models to predict vehicular delay at US/Canadian border
+  crossings, paper presented at the 1993 Annual Meeting of the Transportation Research Board,
+  Washington, D.C.
+Preston, V., S. McLafferty and E. Hamilton (1993) The impact of family status on black, white, and hispanic
+  women’s commuting, Urban Geography, 14, 228-250.
+Purvis, C.L., M. Iglesias and V. A. Eisen (1996) Incorporating work trip accessibility in non-work trip generation
+  models in the San Francisco Bay area, presented at the 75th Annual Transportation Research Board
+  Meeting, Washington, D.C., January.
+Recker, W.W. (1995a) The household activity pattern problem: general formulation and solution,
+  Transportation Research, 29B, 61-77.
+Recker, W.W. (1995b) Discrete choice with an oddball alternative, Transportation Research, 29B, 201-212.
+Recker, W.W., M.G. McNally and G.S. Root (1986a) A model of complex travel behavior: part i. Theoretical
+  development, Transportation Research, 20A, 307-318.
+Recker, W.W., M.G. McNally and G.S. Root (1986b) A model of complex travel behavior: part ii. An
+  operational model, Transportation Research, 20A, 319-330.
+Small, K.A. (1987) A discrete choice model for ordered alternatives, Econometrica, 55(2), 409-424.
+Spear, B.D. (1994) New approaches to travel forecasting models: a synthesis of four research proposals, Final
+  Report (DOT-T-94-15) submitted to the U.S. Department of Transportation and US Environmental
+  Protection Agency.
+Speckman, P., K.M. Vaughn and E.I. Pas (1997) A Continuous Spatial Interaction Model: Application to-Home-
+  Work Travel in Portland, Oregon, presented at the 1997 Annual Transportation Research Board
+  Meeting, Washington, D.C.
+Steckel, J.H. and W.R. Vanhonacker (1988) A heterogenous conditional logit model of choice, Journal of
+  Business and Economic Statistics, 6, 391-398.
+Swait, J. and E.C. Stacey (1996) Consumer brand assessment and assessment confidence in models of
+  longitudinal choice behavior, presented at the 1996 INFORMS Marketing Science Conference,
+  Gainesville, FL, March 7-10.
+Activity-Based Modeling of Travel Demand  65
+
+Swait, J. and W. Adamowicz (1996) The effect of choice environment and task demands on consumer behavior:
+  discriminating between contribution and confusion, working paper, Department of Rural Economy,
+  University of Alberta.
+
+Thill, J-C. and J.L. Horowitz (1997a), Travel time constraints on destination-choice sets, Geographic Analysis,
+  29, 108-123.
+
+Thill, J-C. and J.L. Horowitz (1997b), Modeling nonwork destination choices with choice sets defined by travel
+  time constraints, Department of Geography, State University of New York at Buffalo, Working Paper.
+
+Train, K. (1995) Simulation methods for probit and related models based on convenient error partitioning,
+  working paper, Department of economics, University of California, Berkeley.
+
+Van der Hoorn, T. (1983) Development of an activity model using a one-week activity-diary data base, in S.
+  Carpenter & P. Jones (eds.), Recent Advances in Travel Demand Analysis, 335-349, Gower,
+  Aldershot, England.
+
+Vause, M. (1997) A rule-based model of activity scheduling behavior, in Activity-Based:Approaches to Travel
+  Analysis, editors: Ettema, D.F. and H.J.P. Timmermans, 73-88, Elsevier Science Ltd. New York.
+
+Vovsha, P. (1997) The cross-nested logit model: application to mode choice in the Tel-Aviv metropolitan area,
+  presented at the 1997 Annual Transportation Research Board Meeting, Washington, D.C.
+
+Vaughn, K.M., P. Speckman and E.I. Pas. (1997) Generating household activity-travel patterns (HATPs) for
+  synthetic populations, presented at the 1997 Annual Transportation Research Board Meeting,
+  Washington, D.C.
+
+Wen, C. (1998) Development of stop generation and tour formation models for the analysis of travel/activity
+  behavior, Unpublished Ph.D. dissertation, Dept. of Civil Engineering, Northwestern University,
+  Evanston, Illinois.
+
+Wen, C. and F.S. Koppelman (1997) A conceptual and methodological framework for the generation of
+  activity-travel patterns, Proceedings, The International Association of Travel Behavior Research
+  Conference, Austin, Texas, September 1997.
+
+Wen, C. and F.S. Koppelman (1999) An Integrated Model System of Stop Generation and Tour Formation for
+  the Analysis of Activity and Travel Patterns, forthcoming, Transportation Research Record.
+
+Williams, H.C. W.L (1977) On the formation of travel demand models and economic evaluation measures of user
+  benefit, Environment and Planning, 9 A, 285-344.
+  4 TRANSPORTATION SAFETY
+  Leonard Evans
+
+4.1 Introduction
+
+Specialists and the public widely use the term safety. Such use rarely generates
+serious misunderstanding even though there is no precise, let alone quantitative,
+definition of safety. The general concept is the absence of unintended harm to living
+creatures or inanimate objects. Quantitative safety measures nearly always focus on
+the magnitudes of departures from perfect safety, rather than directly on safety as
+such. Depending on the specific subject and on available data, many measures have
+been used.
+
+  A feature that measures of safety have in common is that they are, in essentially all
+cases, rates. That is, some measure of harm (deaths, injuries, or property damage) divided
+by some indicator of exposure to the risk of this harm. For example, rates related to
+driver deaths include the number of driver deaths per kilometer of travel, per vehicle,
+per licensed driver, and per year. Note that the number of driver deaths per year is
+just as much a rate as any of the other examples.
+
+  Even within a narrow portion of transportation (say, scheduled airlines or
+motorcycles), there is no one rate that is superior to others in any general sense.
+Which rate is appropriate depends on what question is asked (and also on what data
+are available).
+
+  While safety is an important consideration in many human activities, it has a
+particularly prominent role in transportation. Every type of transportation system
+involves some risk of harm, as has been the case since antiquity, and seems likely to
+remain the case in the future. The primary goal of transportation, the effective
+movement of people and goods, is better served by ever increasing speeds. A
+substantial proportion of technological innovation for the last few thousand years has
+focused on increasing transportation speeds, from animal-powered to supersonic
+flight. In general, as speed increases so does risk.
+68  Handbook of Transportation Science
+
+The Sinking of the Titanic
+
+Some safety concepts can be illustrated by the best known of all unintended events in
+
+transportation safety -- the sinking of the Titanic. (We have no way to know whether
+
+in 90 years the intrinsically more important intentional events of 11 September 2001
+
+will have left as indelible an impression on the world’s consciousness). On Sunday
+
+14 April 1912 the 47,000-ton liner Titanic maintained its top speed of 22.5 knots
+
+(42 km/h) despite receiving nine ice warnings. At 11:40 p.m. the crew reported an
+
+iceberg directly ahead. Despite vigorous evasive action, a glancing impact ripped a
+
+90 m gash in the starboard side. The Titanic sank at 2:20 a.m. on Monday 15 April,
+
+2 hours and 40 minutes after the impact, with the loss of over 1500 lives, including
+
+that of the 62-year-old captain, Edward J. Smith, on his scheduled last voyage
+
+(Company captain, 1998).
+
+  What if? Any unintended incident leading to harm begs a series of “what if”
+
+questions. What if, by chance, the Titanic had been a few dozen meters north or
+
+south of its actual position? What if the lookout had spotted the iceberg a few
+
+seconds earlier? What if there had been more effective procedures for deploying the
+
+available lifeboats? What if there had been more lifeboats? US law prohibits 62-
+
+year-olds from piloting passenger-carrying aircraft. So, was it an older driver
+
+problem? It is generally concluded that if the ship had maintained its initial high
+
+speed, the resulting increase in rudder effectiveness would have prevented contact
+
+with the iceberg. It is also claimed that cutting the speed to half rather than stopping
+
+completely after impact forced additional water into the vessel. Another hour afloat
+
+could have substantially reduced casualties as the liner Carpathia arrived less than
+
+two hours after the Titanic sank.
+
+  What if impact had been head-on? One “what if” given less attention than
+
+others is: What if no one had detected the iceberg and the Titanic had crashed head-
+
+on into it at 42 km/h? When a car traveling at 42 km/h strikes an immovable barrier,
+
+about 8% of its total length (or about 0.4 m) is crushed (Wood, 1997). The
+
+uncrushed portion of the car experiences an average deceleration of
+
+equivalent to 17 times the acceleration due to gravity, or 17 g. The associated forces
+
+of the occupants against their safety belts are likely to produce some injuries
+
+(unbelted occupants would sustain greater levels of injury as they continued to travel
+
+at 42 km until abruptly stopped by striking the near stationery interior of the vehicle).
+
+Assume, as a very rough approximation, that 8% of the Titanic’s 269 m length would
+
+have been crushed by the head-on impact. This 21.5 m of crush would generate an
+
+average deceleration of  or about 0.3 g. The energy dissipated, equivalent to
+
+30,000 cars crashing (in the 4 seconds during which crush occurred) would have
+
+made an enormous noise. Those in the 92% of the liner that was not crushed by the
+
+impact would have experienced a mild deceleration, not too unlike that of a car or
+
+train coming to a gentle stop at a traffic light or station. Anyone in the portion that
+
+was crushed would likely have been killed or seriously injured. As few crew
+
+members, and even fewer passengers, would be close to the front of the ship at near
+
+midnight, casualties would have been light. The ship would have been in no danger
+
+of sinking because of its watertight compartment structure. It would likely have
+Transportation Safety  69
+
+returned to its maker in Belfast for repairs, and today almost nobody would have
+heard of it.
+
+  Number of fatalities – reliability of data. Immediately after the sinking, official
+inquiries were conducted by a special committee of the U.S. Senate (because
+American lives were lost) and the British Board of Trade (under whose regulations
+the Titanic operated). The total numbers of deaths established by these hearings
+were:
+
+U.S. Senate committee:  1,517 lives lost
+
+British Board of Trade:  1,503 lives lost
+
+Confusion over the number of fatalities was exacerbated by the official reports to the
+U.S. Senate and the British Parliament, which revised the numbers to 1,500 and
+1,490, respectively. Press reports included numbers as high as 1,522. Additional
+revisions cement the conclusion that we will never how many people died on the
+Titanic. (We do know that there were 705 survivors). Likewise, we will never know
+how many people were killed in the 11 September 2001 terrorist attacks.
+
+  The uncertainty regarding the number of deaths in exhaustively investigated
+prominent events alerts us to the likelihood of uncertainties in even the most
+seemingly reliable data. At some intuitive level, one might expect the number of
+deaths to be generally determinable without mistake. For various reasons, this is
+rarely the case. Arbitrary criteria are often necessary even to classify whether a death
+should be counted as a transportation death. Drivers may have fatal heart attacks at
+the wheel prior to crashing; vehicle occupants may be transported to hospital after a
+crash and die later for reasons, such as pneumonia, that may not be strongly linked to
+the crash. While there is uncertainty associated with fatality data, such data
+constitute, by far, the most reliable safety data available. Hence, much of the
+scientific study in safety focuses on fatalities.
+
+  Crashworthiness and crash avoidance. Neither builder nor owner ever used the
+term “unsinkable.” However, the claim of a high level of design safety was well
+justified, notwithstanding many later questions about the quality of the steel sheeting,
+the absence of tops on the watertight compartments, and the number of lifeboats.
+The Titanic contained the best crashworthiness that had ever been engineered into a
+ship. However, engineering safety must be viewed in the context of the way it is used.
+Interactions between crashworthiness and crash avoidance are examples of more
+general behavior feedback effects (or technology/human interface effects) that are
+important in safety (Evans, 1991; 1996). If the Titanic had not processed such
+superior crashworthiness, it would have sunk in minutes rather than hours, with the
+near-certain loss of all on board. Indeed, its fate may have remained a mystery to this
+day. Less confidence in Titanic’s crashworthiness would likely have led to more
+caution on the bridge. Shakespeare writes, "Best safety lies in fear" (Hamlet, Act I,
+Scene 3). Because of the ice conditions less safe vessels were waiting for dawn
+before proceeding. The sinking of the Titanic raises a fundamental safety question
+with parallels in other areas, such as the effect of airbags on fatalities: “Did the
+Titanic’s superior crashworthiness save 705 lives or cause over 1,500 deaths?”
+

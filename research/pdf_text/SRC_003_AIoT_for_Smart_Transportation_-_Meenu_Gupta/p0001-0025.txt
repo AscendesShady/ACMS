@@ -1,0 +1,1180 @@
+AIoT for Smart
+Transportation
+Other related titles:
+
+You may also like
+
+l PBTR007 | Lu | Evaluation of Intelligent Road Transport Systems | pub September 2016
+l PBTR025 | Lu | Cooperative Intelligent Transport Systems | pub September 2019
+l PBTR001 | Fiorini and Lin | Clean Mobility and Intelligent Transport Systems | pub September 2015
+
+We also publish a wide range of books on the following topics:
+Computing and Networks
+Control, Robotics and Sensors
+Electrical Regulations
+Electromagnetics and Radar
+Energy Engineering
+Healthcare Technologies
+History and Management of Technology
+IET Codes and Guidance
+Materials, Circuits and Devices
+Model Forms
+Nanomaterials and Nanotechnologies
+Optics, Photonics and Lasers
+Production, Design and Manufacturing
+Security
+Telecommunications
+Transportation
+
+All books are available in print via https://shop.theiet.org or as eBooks via our Digital Library
+https://digital-library.theiet.org.
+
+IET TRANSPORTATION SERIES 47
+AIoT for Smart
+Transportation
+
+Transforming the future of mobility
+
+Edited by
+Meenu Gupta, Rakesh Kumar and Shakeel Ahmed
+
+The Institution of Engineering and Technology
+About the IET
+
+This book is published by the Institution of Engineering and Technology (The IET).
+  We inspire, inform and influence the global engineering community to engineer a better world. As a
+
+diverse home across engineering and technology, we share knowledge that helps make better sense of the
+world, to accelerate innovation and solve the global challenges that matter.
+
+  The IET is a not-for-profit organisation. The surplus we make from our books is used to support
+activities and products for the engineering community and promote the positive role of science, engineering
+and technology in the world. This includes education resources and outreach, scholarships and awards,
+events and courses, publications, professional development and mentoring, and advocacy to governments.
+
+  To discover more about the IET please visit https://www.theiet.org/
+
+About IET books
+
+The IET publishes books across many engineering and technology disciplines. Our authors and editors offer
+fresh perspectives from universities and industry. Within our subject areas, we have several book series
+steered by editorial boards made up of leading subject experts.
+
+  We peer review each book at the proposal stage to ensure the quality and relevance of our
+publications.
+
+Get involved
+
+If you are interested in becoming an author, editor, series advisor, or peer reviewer please visit
+https://www.theiet.org/publishing/publishing-with-iet-books/ or contact author_support@theiet.org.
+
+Discovering our electronic content
+
+All of our books are available online via the IET’s Digital Library. Our Digital Library is the home of technical
+documents, eBooks, conference publications, real-life case studies and journal articles. To find out more,
+please visit https://digital-library.theiet.org.
+
+  In collaboration with the United Nations and the International Publishers Association, the IET is a
+Signatory member of the SDG Publishers Compact. The Compact aims to accelerate progress to achieve the
+Sustainable Development Goals (SDGs) by 2030. Signatories aspire to develop sustainable practices and act
+as champions of the SDGs during the Decade of Action (2020–30), publishing books and journals that will
+help inform, develop, and inspire action in that direction.
+
+  In line with our sustainable goals, our UK printing partner has FSC accreditation, which is reducing our
+environmental impact to the planet. We use a print-on-demand model to further reduce our carbon footprint.
+Published by The Institution of Engineering and Technology, London, United Kingdom
+
+The Institution of Engineering and Technology (the “Publisher”) is registered as a
+Charity in England & Wales (no. 211014) and Scotland (no. SC038698).
+
+Copyright † The Institution of Engineering and Technology and its licensors 2025
+
+First published 2025
+
+All intellectual property rights (including copyright) in and to this publication are
+owned by the Publisher and/or its licensors. All such rights are hereby reserved by their
+owners and are protected under the Copyright, Designs and Patents Act 1988
+(“CDPA”), the Berne Convention and the Universal Copyright Convention.
+
+With the exception of:
+
+  (i) any use of the publication solely to the extent as permitted under:
+
+  a. the CDPA (including fair dealing for the purposes of research, private study,
+  criticism or review); or
+
+  b. the terms of a licence granted by the Copyright Licensing Agency (“CLA”)
+  (only applicable where the publication is represented by the CLA); and/or
+
+  (ii) any use of those parts of the publication which are identified within this
+  publication as being reproduced by the Publisher under a Creative Commons
+  licence, Open Government Licence or other open source licence (if any) in
+  accordance with the terms of such licence, no part of this publication, including
+  any article, illustration, trade mark or other content whatsoever, may be used,
+  reproduced, stored in a retrieval system, distributed or transmitted in any form
+  or by any means (including electronically) without the prior permission in
+  writing of the Publisher and/or its licensors (as applicable).
+
+The commission of any unauthorised activity may give rise to civil or criminal liability.
+Please visit https://digital-library.theiet.org/copyrights-and-permissions for information
+regarding seeking permission to reuse material from this and/or other publications
+published by the Publisher. Enquiries relating to the use, including any distribution, of this
+publication (or any part thereof) should be sent to the Publisher at the address below:
+
+The Institution of Engineering and Technology
+Futures Place,
+Kings Way,
+Stevenage,
+Herts, SG1 2UA,
+United Kingdom
+
+www.theiet.org
+
+Whilst the Publisher and/or its licensors believe that the information and guidance given
+in this publication is correct, an individual must rely upon their own skill and judgement
+when performing any action or omitting to perform any action as a result of any
+statement, opinion or view expressed in the publication and neither the Publisher nor its
+licensors assume and hereby expressly disclaim any and all liability to anyone for any loss
+or damage caused by any action or omission of an action made in reliance on the
+publication and/or any error or omission in the publication, whether or not such an error
+or omission is the result of negligence or any other cause. Without limiting or otherwise
+affecting the generality of this statement and the disclaimer, whilst all URLs cited in the
+publication are correct at the time of press, the Publisher has no responsibility for the
+persistence or accuracy of URLs for external or third-party internet websites and does not
+guarantee that any content on such websites is, or will remain, accurate or appropriate.
+Whilst every reasonable effort has been undertaken by the Publisher and its licensors
+to acknowledge copyright on material reproduced, if there has been an oversight,
+please contact the Publisher and we will endeavour to correct this upon a reprint.
+
+Trade mark notice: Product or corporate names referred to within this publication may
+be trade marks or registered trade marks and are used only for identification and
+explanation without intent to infringe.
+
+Where an author and/or contributor is identified in this publication by name, such
+author and/or contributor asserts their moral right under the CPDA to be identified as
+the author and/or contributor of this work.
+
+British Library Cataloguing in Publication Data
+A catalogue record for this product is available from the British Library
+
+ISBN 978-1-83724-096-8 (hardback)
+ISBN 978-1-83724-097-5 (PDF)
+
+Typeset in India by MPS Limited
+Printed in the UK by CPI Group (UK) Ltd, Eastbourne
+
+Cover image: lupengyu/Moment via Getty Images
+  Contents
+
+Preface  xvii
+
+About the editors  xxi
+
+1 Introduction to AIoT in smart transportation  1
+
+Anjuli Goel and Chander Prabha
+
+1.1 Introduction  1
+
+1.2 Evolution of smart transportation  2
+
+  1.2.1 Components of ITS  4
+
+  1.2.2 Standards for smart transportation system  4
+
+1.3 The main development projects of smart transportation  6
+
+1.4 AIoT technologies for smart transportation systems  7
+
+  1.4.1 IoTs place in Intelligent Transportation Systems  8
+
+  1.4.2 AIs place in smart transit systems  8
+
+  1.4.3 AIs place in the Internet of Things  9
+
+  1.4.4 Advantages of intelligent transportation  10
+
+1.5 Emerging trends of AIoT in smart transportation  10
+
+  1.5.1 Significant advancements in smart transportation  10
+
+  1.5.2 Using AI to facilitate strategic development of cities  11
+
+  1.5.3 AIs place in traffic control  11
+
+1.6 Case studies  12
+
+  1.6.1 Case study 1: Ford’s creative way of using AI in
+
+  transportation systems  12
+
+  1.6.2 Case study 2: Electric bus service: Dehradun  12
+
+1.7 Challenges and issues in implementing smart transportation  13
+
+1.8 Conclusion  14
+References  15
+
+2 Understanding AIoT technologies and their relevance in modern
+
+transportation systems  17
+
+Shaik Numa Saniya, Shugufta Fatima, C Kishor Kumar Reddy and
+
+Marlia Mohad Hanafiah
+
+2.1 Introduction to AIoT technologies  18
+
+  2.1.1 Definition and concept of AIoT  18
+
+  2.1.2 AIoT: Evolution and convergence  19
+
+2.2 Literature survey  21
+
+2.3 AIoT in modern transportation systems  22
+viii AIoT for smart transportation
+
+2.3.1 The Role of AI and IoT in advancing sustainable transportation 22
+
+2.3.2 Operational framework of AIoT systems  23
+
+2.3.3 Core technologies enabling AIoT in transportation  25
+
+2.4 AIoT adoption trends in transportation sector  26
+
+2.4.1 Smart traffic management systems  27
+
+2.4.2 Autonomous and connected vehicles  28
+
+2.4.3 Fleet management and optimisation  31
+
+2.4.4 Predictive maintenance for vehicles  33
+
+2.5 Case studies and real-world applications  33
+
+2.5.1 Case study 1: Predictive maintenance in electric vehicles 34
+
+2.5.2 Case study 2: Fleet management optimisation  34
+
+2.6 Challenges and solutions in AIoT implementation  35
+
+2.6.1 Technical challenges: Scalability, data privacy, and security 35
+
+2.6.2 Infrastructure and integration issues  35
+
+2.6.3 Regulatory, ethical, and social implications  36
+
+2.7 Future trends and innovations  37
+
+2.7.1 Emerging technologies in AIoT for transportation  37
+
+2.7.2 Impact of AIoT on future mobility and transportation trends 37
+
+2.8 Conclusion  38
+References  39
+
+3 Advancement in intelligent transportation systems using AIoT  41
+
+Hemlata Rauthan and Rashika Singh
+
+3.1 Introduction to intelligent transportation systems (ITS)  41
+
+3.2 History of ITS  42
+
+3.3 Pillars of AIoT in transportation  43
+
+3.3.1 IoT sensors and connectivity  43
+
+3.3.2 Artificial intelligence and machine learning algorithms  44
+
+3.3.3 Edge computing and cloud integration  44
+
+3.4 Transportation sector – use cases of AIoT  45
+
+3.4.1 Traffic monitoring and congestion detection  45
+
+3.4.2 Vehicle to Infrastructure (V2I) communication  46
+
+3.4.3 Intelligent parking system and vehicle routing optimisation 47
+
+3.5 Safety and security  48
+
+3.5.1 Collision Avoidance Systems  48
+
+3.5.2 Emergency service and incident management  49
+
+3.5.3 Cyber security and solutions  49
+
+3.6 Ease of use and accessibility  50
+
+3.6.1 Intelligent public transportation system  50
+
+3.6.2 MaaS (Mobility as a Service) platform  51
+
+3.6.3 Technical solutions for people with disabilities  52
+
+3.7 Environmental sustainability and energy efficiency  53
+
+3.7.1 Emission reduction solutions  53
+
+3.7.2 Electric and autonomous vehicle integration  53
+
+3.7.3 Sustainable urban mobility planning  54
+  Contents ix
+
+3.8 Challenges and opportunities  55
+
+3.8.1 Data privacy and ethics  55
+
+3.8.2 Challenges with interoperability and standardisation  55
+
+3.8.3 Different investment strategies and business models  55
+
+3.9 Case studies and best projects  56
+
+3.10 Market, future directions, and key emerging trends  57
+
+3.10.1 Driverless mobility  57
+
+3.11 Conclusions: a roadmap to smart and sustainable transport systems 59
+References  59
+
+4 Enhancing transportation: a real-world use case of AI  63
+
+Shalini Kumari and Chander Prabha
+
+4.1 Introduction  63
+
+4.2 Transportation using the IoT and AIoT for the future  65
+
+4.2.1 Enhancing traffic regulation and efficiency  66
+
+4.3 Related work  66
+
+4.3.1 Intelligent traffic management system case studies  67
+
+4.3.2 Improvements to public transportation systems  69
+
+4.4 The positive aspects of smart public transportation systems  69
+
+4.4.1 Intelligent public transportation implementation barriers  70
+
+4.5 Safe and secure intelligent transportation networks  70
+
+4.5.1 Connected vehicle-to-vehicle communication for safe driving 71
+
+4.5.2 Reduced emissions and environmental sustainability  72
+
+4.6 Difficulties in using the Internet of Things and AI in the
+
+transportation industry  74
+
+4.7 Application of AIoT for smart transportation  75
+
+4.8 Issues with AI and ML in Intelligent Transportation Systems  75
+
+4.9 Trends and potential improvements in sustainable transportation 76
+
+4.10 Conclusion  77
+References  78
+
+5 AIoT in smart transportation in Industry 5.0  83
+
+Mansi Subhedar and Tushar Jadhav
+
+5.1 Introduction  83
+
+5.2 Role of IoT and ML in smart transportation  85
+
+5.3 Challenges and considerations in AIoT systems for transportation 88
+
+5.3.1 Ethical considerations of autonomous decision-making in
+
+  Connected and Autonomous Vehicles (CAVs) in transport
+
+  systems  89
+
+5.3.2 Interoperability of different AIoT platforms and devices in
+
+  transportation  89
+
+5.4 Infrastructure development and investment needs for AIoT in
+
+transportation systems  90
+
+5.5 Data security and privacy concerns in AIoT systems  91
+
+5.6 Regulatory frameworks for AIoT applications in transportation  92
+x AIoT for smart transportation
+
+5.7 Future trends in AIoT in the transport sector  92
+
+5.8 Conclusions  93
+References  93
+
+6 AIoT for real-time traffic analysis and optimisation  97
+
+Shubham Gupta and Rajnish Kohli
+
+6.1 Introduction of AIoT in urban mobility  98
+
+6.1.1 Importance of real-time traffic analysis and optimisation  98
+
+6.2 AIoT framework for real-time traffic management  100
+
+6.2.1 Fundamentals of AIoT systems  100
+
+6.2.2 Traffic-specific AIoT architecture  102
+
+6.2.3 Core system components  103
+
+6.3 AI models for real-time traffic analysis  103
+
+6.3.1 Predictive modelling for traffic flow and congestion analysis 104
+
+6.3.2 Incident detection and anomaly detection  106
+
+6.3.3 Computer vision in traffic analytics  106
+
+6.4 Optimisation techniques in traffic control with AIoT  107
+
+6.4.1 Adaptive traffic signal control  107
+
+6.4.2 Route optimisation algorithms  108
+
+6.4.3 Load balancing in traffic networks  109
+
+6.5 System architecture and deployment strategies  110
+
+6.5.1 Distributed AIoT architecture for scalability and resilience 110
+
+6.5.2 Integration with existing infrastructure  111
+
+6.5.3 Communication networks and protocols  112
+
+6.6 Future directions in AIoT-driven traffic optimisation  113
+
+6.6.1 Advances in AI for traffic prediction and control  113
+
+6.6.2 The potential of digital twins for traffic simulation and
+
+  optimisation  114
+
+6.6.3 Next-gen communication technologies (6G) and edge AI 114
+
+6.7 Conclusion  115
+References  115
+
+7 Role of data and IoT sensors in smart transportation  119
+
+Ushaa Eswaran, Vivek Eswaran, Keerthna Murali and Vishal Eswaran
+
+7.1 Introduction  120
+
+7.2 Data sources and IoT sensors in smart transportation  121
+
+7.2.1 Data sources  121
+
+7.2.2 IoT sensor types  123
+
+7.3 Data acquisition and communication  127
+
+7.3.1 Data acquisition techniques  127
+
+7.3.2 Communication protocols  128
+
+7.3.3 Network architectures  130
+
+7.4 Data processing and analysis  134
+
+7.4.1 Big data analytics  134
+  Contents xi
+
+7.4.2 Intelligent transportation systems: Putting the intelligent
+
+  in smart using machine learning and AI  136
+
+7.5 Applications of data and IoT sensors in smart transportation  137
+
+7.5.1 Traffic monitoring and management  138
+
+7.5.2 Predictive maintenance and asset management  138
+
+7.5.3 Route optimisation and fleet management  138
+
+7.5.4 Autonomous vehicle systems  138
+
+7.5.5 Smart parking and electric vehicle charging  139
+
+7.5.6 Multimodal transportation and Mobility-as-a-Service (MaaS) 139
+
+7.5.7 Transportation planning and modelling  139
+
+7.6 Experimental results and discussion  140
+
+7.6.1 Traffic management and congestion reduction  140
+
+7.6.2 Predictive maintenance and asset management  140
+
+7.6.3 Autonomous vehicle technology  141
+
+7.6.4 Electric vehicle charging infrastructure  141
+
+7.6.5 Implications and future outlook  141
+
+7.7 Utilising sensors in smart transportation  142
+
+7.7.1 Traffic flow sensors  142
+
+7.7.2 Environmental sensors  142
+
+7.7.3 Connected vehicle sensors  143
+
+7.7.4 Parking sensors  143
+
+7.7.5 Public transport sensors  143
+
+7.7.6 Infrastructure sensors  143
+
+7.8 Real-world case studies  144
+
+7.8.1 Amsterdam Smart Mobility Living Lab  144
+
+7.8.2 Singapore’s autonomous vehicle testbed  144
+
+7.8.3 PredictiveBC: British Columbia’s predictive analytics
+
+  for bridge maintenance  145
+
+7.8.4 New York City’s intelligent traffic management  145
+
+7.8.5 Implications and lessons learned  146
+
+7.9 Challenges and future trends  147
+
+7.9.1 Data privacy and security  147
+
+7.9.2 Scalability and interoperability  147
+
+7.9.3 Integration of emerging technologies  147
+
+7.9.4 Ethical considerations and governance  148
+
+7.9.5 Sustainability and environmental impact  148
+
+7.10 Conclusion  149
+References  149
+
+8 AIoT-based safety and security in smart transportation  153
+
+Neha Gupta, Priya and Gunjan Verma
+
+8.1 Overview of AIoT in smart transportation  154
+
+8.1.1 Importance of safety and security in transportation systems 155
+
+8.2 The role of AIoT in predictive maintenance  157
+
+8.2.1 Real-time data analysis for early failure detection  158
+xii AIoT for smart transportation
+
+8.2.2 Applications in vehicle maintenance  159
+
+8.2.3 Infrastructure component monitoring  160
+
+8.3 AI-powered monitoring systems  160
+
+8.3.1 Key benefits of integrating AI into public transit  161
+
+8.3.2 Challenges and considerations in AI integration  161
+
+8.4 Using AIoT for optimising traffic flow and reducing congestion 162
+
+8.5 Driver assistance systems: Enhancing safety and efficiency on the
+
+road  164
+
+8.6 Comprehensive security monitoring  165
+
+8.7 Emergency response optimisation  166
+
+8.7.1 Use cases and examples from the real world  167
+
+8.8 Autonomous vehicles and AIoT  168
+
+8.9 Challenges and considerations  168
+
+8.10 Conclusion  169
+References  169
+
+9 Enhancing tourists’ experience with AIoT in smart transportation
+
+systems for Industry 5.0  173
+
+Meenu Gupta, Palvi Sharma and Rakesh Kumar
+
+9.1 Introduction to AIoT and Industry 5.0 in tourism  173
+
+9.2 Background study  176
+
+9.3 The role of AIoT in smart transportation systems  176
+
+9.3.1 Key elements of AIoT in transportation  176
+
+9.3.2 Applications of AIoT for urban mobility and tourism  181
+
+9.3.3 Public transport, shared mobility, and autonomous vehicles
+
+  examples of AIoT  182
+
+9.4 Using smart transportation to enhance tourist experience  183
+
+9.5 AIoT technologies driving smart tourism  186
+
+9.6 Benefits of AIoT in smart transportation for tourism  187
+
+9.7 Challenges and considerations  190
+
+9.8 Future directions for AIoT-driven smart transportation in tourism 191
+
+9.9 Conclusion  193
+References  194
+
+10 Promoting sustainable mobility for advancements in autonomous
+
+vehicle using AIoT  197
+
+Palvi Sharma, Rakesh Kumar and Meenu Gupta
+
+10.1 Introduction  198
+
+10.2 Background study  199
+
+10.3 Technological overview of AIoT in autonomous vehicles  199
+
+10.3.1 Scope of AIoT  199
+
+10.3.2 AI, IoT, sensors, and connectivity  204
+
+10.3.3 Integration of AIoT into vehicle systems  205
+
+10.4 Challenges and opportunities  206
+
+10.4.1 Environmental impacts of conventional mobility solutions 207
+  Contents xiii
+
+10.4.2 Obstacles to sustainable mobility  208
+
+10.4.3 AIoT opportunities in autonomous vehicles  208
+
+10.5 AIoT-driven solutions for sustainable autonomous vehicles  208
+
+10.5.1 Energy-efficient route planning and optimisation  209
+
+10.5.2 Real-time traffic management and decision making  209
+
+10.5.3 Predictive maintenance and resource management  209
+
+10.5.4 Emission reduction with intelligent control systems  210
+
+10.6 Future trends and innovations  210
+
+10.6.1 Emerging technologies in AIoT for autonomous vehicles 210
+
+10.6.2 Future of sustainable mobility with AIoT  211
+
+10.6.3 Technological and market development forecast  211
+
+10.7 Conclusion  212
+References  212
+
+11 Blockchain technology and cyber security in Intelligent
+
+transportation systems  215
+
+Cagatay Korkuc, Yasin Genc and Erkan Afacan
+
+11.1 Introduction  216
+
+11.2 Intelligent transportation systems  216
+
+11.3 Connected vehicles  217
+
+11.4 Communication technologies  220
+
+11.4.1 Dedicated short-range communications  220
+
+11.4.2 Cellular vehicle-to-everything communications  220
+
+11.5 Vehicular networks  221
+
+11.6 Security in intelligent transportation systems  222
+
+11.7 Blockchain technology  223
+
+11.7.1 Historical development  224
+
+11.7.2 Fundamental concepts of blockchain  225
+
+11.8 Security measures of ITS and BC (blockchain) integration  229
+
+11.8.1 Cyberattacks  230
+
+11.8.2 Blockchain attacks  230
+
+11.8.3 Data privacy and data security  231
+
+11.9 Conclusions  231
+References  232
+
+12 Future of mobility: potential challenges and ethical
+
+considerations  235
+
+Sitesh Kumar Singh and Ritural Jain
+
+12.1 Introduction to mobility  235
+
+12.2 Future transportation mobility  237
+
+12.3 AIoT in transportation mobility  240
+
+12.3.1 Applications of Artificial Intelligence of Things (AIoT)
+
+  in the field of transportation mobility  240
+
+12.3.2 Advantages of AIoT in transportation mobility  242
+
+12.3.3 Obstacles and factors to consider  243
+xiv AIoT for smart transportation
+
+12.4 Potential challenges and possible solutions  243
+
+12.4.1 Potential challenges  243
+
+12.4.2 Possible solutions  246
+
+12.5 Ethical considerations  248
+
+12.6 Conclusion  250
+References  251
+
+13 Optimizing emergency response: an AIoT-powered approach to
+
+traffic management  255
+
+C.V. Suresh Babu and S. Kowsika
+
+13.1 Introduction  255
+
+13.1.1 Background and significance  256
+
+13.1.2 Objectives of the chapter  257
+
+13.1.3 Structure of the chapter  257
+
+13.2 Impact of traffic congestion on ambulance response times  258
+
+13.2.1 Review of literature AIoT sensors for intelligent
+
+  transportation  258
+
+13.3 Development of an AIoT model for ambulance detection  260
+
+13.3.1 Pre-processing of traffic camera footage  261
+
+13.3.2 Training a convolutional neural network (CNN)  261
+
+13.3.3 Fine-tuning the AI model with transfer learning  261
+
+13.3.4 Real-time traffic analysis algorithms  262
+
+13.4 Metrics for assessing AIoT model accuracy  262
+
+13.4.1 Simulation studies for system evaluation  263
+
+13.5 Ethical implications of emergency vehicle prioritization  263
+
+13.5.1 Stakeholder engagement for ethical AIoT deployment  264
+
+13.5.2 Societal perceptions of AIoT-driven traffic management 264
+
+13.6 Deployment and requirement specification  265
+
+13.6.1 Data collection and methodology documentation  265
+
+13.6.2 Algorithm and pseudocode  267
+
+13.6.3 System design and monitoring during implementation phase 269
+
+13.6.4 Preparation of reports and academic papers  269
+
+13.6.5 Output and evaluation  270
+
+13.7 Increased awareness of traffic congestion challenges  272
+
+13.7.1 Enhanced understanding of AIoT-driven traffic management 273
+
+13.7.2 Insightful analysis of existing research  273
+
+13.7.3 Practical guidance for AIoT model development and
+
+  implementation  273
+
+13.7.4 Validation of AIoT-powered approach through case study 274
+
+13.7.5 Ethical considerations and societal implications  274
+
+13.7.6 Future directions for research and policy development  275
+
+13.8 Summary of contributions  276
+References  276
+  Contents xv
+
+14 AI on the move: a real-world use case of artificial intelligence
+
+enhancing transportation  279
+
+Krishnendu Ghosh, Debraj Chatterjee, Ricardo Fitas, Munmun Patra
+
+and Eshita Dey
+
+14.1 Introduction  280
+
+14.1.1 Overview of transportation challenges  280
+
+14.1.2 Introduction to AI for transportation  280
+
+14.2 Application of AI in traffic management  281
+
+14.2.1 Traffic guidance  281
+
+14.2.2 Traffic light control  281
+
+14.3 Real-time traffic monitoring  283
+
+14.3.1 Traffic detection  283
+
+14.3.2 Object detection  283
+
+14.4 Traffic prediction and forecasting  284
+
+14.4.1 Traffic prediction  284
+
+14.4.2 Traffic forecasting  284
+
+14.5 Traffic signal optimization  286
+
+14.5.1 Background of traffic signal timing  286
+
+14.5.2 Optimization models for traffic signal control  287
+
+14.6 Dynamic route guidance systems  290
+
+14.6.1 Link travel time forecasting under incident condition  290
+
+14.6.2 Dynamic routing  291
+
+14.6.3 Route guidance system  291
+
+14.6.4 Applying prediction models to RGS  293
+
+14.7 Traffic incident detection and management  294
+
+14.7.1 Incident detection  294
+
+14.7.2 Incident management  300
+
+14.8 ITS  302
+
+14.8.1 Intelligent traffic management  302
+
+14.8.2 Improved safety and incident response  302
+
+14.9 Public transportation optimization  303
+
+14.9.1 Demand prediction and scheduling  303
+
+14.9.2 Route optimization and efficiency  304
+
+14.10 Adaptive traffic control systems  304
+
+14.10.1 Real-time traffic signal adjustment  304
+
+14.10.2 Reduced congestion and improved fuel efficiency  304
+
+14.11 Challenges and considerations  305
+
+14.12 Conclusion  306
+References  307
+
+15 Future perspectives of AIoT for smart transportation  311
+
+Shakeel Ahmed and Parvathaneni Naga Srinivasu
+
+15.1 Introduction  311
+
+15.2 Potential challenges in AIoT technology in transportation  312
+
+15.3 Key future perspectives of AIoT for smart transportation  314
+xvi AIoT for smart transportation
+
+  15.3.1 Autonomous vehicles  315
+
+  15.3.2 Smart traffic management  315
+
+  15.3.3 Enhanced public transport systems  315
+
+  15.3.4 Vehicle-to-everything (V2X) communication  315
+
+  15.3.5 Predictive maintenance and fleet management  316
+
+  15.3.6 Sustainability and energy efficiency  316
+
+  15.3.7 Personalized travel experience  316
+
+  15.3.8 Integrated mobility ecosystems  316
+
+  15.3.9 Enhanced safety and security  317
+
+  15.3.10 AIoT for logistics and supply chain  317
+
+15.4 Conclusion of the book  317
+
+15.5 Future perspectives and research directions  319
+
+Index  321
+  Preface
+
+The convergence of Artificial Intelligence (AI) and IoT (Internet of Things) offers
+unparalleled opportunities in the domain of transportation, to redefine how mobility
+is perceived, managed, and experienced. IoT deals with devices interacting through
+the internet and is made up of interconnected objects with built-in sensors which
+has the potential to generate or collect a vast amount of data, AI enables these
+devices to learn from their data and experience to produce next-generation intelli-
+gent transportation systems.
+
+  The book, AIoT for Smart Transportation: Transforming the Future of Mobility,
+explores the dynamic intersection of AIoT technologies and their pivotal role in
+shaping the future of transportation systems. The books address the critical challenges
+posed by urbanisation, and the demand for efficient, safe, and sustainable mobility
+solutions. This book provides a comprehensive analysis of state-of-the-art technolo-
+gies, methodologies, and applications and a roadmap for researchers, practitioners,
+and policymakers to navigate the evolving landscape of smart transportation.
+
+  This book is structured and comprises of contributions from leading experts in
+academia and industry to provide both theoretical insights and practical perspec-
+tives offering a multidimensional view of how AIoT technologies are deployed to
+tackle real-world transportation challenges. The book highlights innovative appli-
+cations and emerging trends that are set to redefine mobility paradigms and con-
+tains theoretical and practical knowledge of the most recent state-of-the-art AIoT
+for Smart Transportation. The book applies various AI techniques as well as pro-
+mising future research attempts in the transportation domain. The book consists of
+15 quality chapters on the below mentioned topics. It is a result of the handwork of
+outstanding researchers around the globe.
+
+  The target audience for this book includes academics, researchers, engineers,
+urban planners, and policymakers who are keen on understanding and leveraging
+the potential of AIoT in transportation. By addressing critical issues such as data
+security, ethical considerations, and interoperability, the book ensures a holistic
+exploration of the subject.
+
+  It is our hope that this book serves as both a comprehensive guide and an
+inspiration for stakeholders committed to building a smarter, more connected
+future. We extend our deepest gratitude to the contributors, reviewers, and pub-
+lishers whose efforts have brought this vision to life. Together, let us embark on
+this journey to unlock the transformative potential of AIoT for smart transportation.
+xviii AIoT for smart transportation
+
+Overview of the chapter content
+
+Chapter 1 explores the transformative potential of integrating AI and IoT in modern
+transportation systems. It highlights how AIoT-driven solutions address pressing
+challenges. The evolution of smart transportation and key components, the benefits,
+challenges, and real-world applications of AIoT are discussed.
+
+  Chapter 2 Introduces how the AIoT is revolutionising contemporary trans-
+portation. The overview of the AIoT, real-world examples, and its potential for the
+future are among the main points. The chapter also examines the advantages and
+difficulties of AIoT, highlighting its role in building more intelligent and net-
+worked transportation systems.
+
+  Chapter 3 discusses the potential of AIoT to improve urban mobility and
+modify Intelligent Transportation Systems (ITS) to satisfy the changing needs of
+future cities. It describes how ITS employs computers, electronics, and commu-
+nication technologies to increase traffic efficiency through automated systems.
+
+  Chapter 4 examines how traffic control, public transit, and road safety via
+vehicle-to-vehicle communication, route optimisation and sustainability are
+achieved. Case studies of intelligent traffic systems in various cities are covered.
+Future trends and problems are examined.
+
+  Chapter 5 discusses how AIoT advances Industry 4.0 and gives rise to AIoT. It
+talks about Mobility 5.0, which emphasises sustainability, efficiency, and accessi-
+bility. It also highlights the problems of integrating AI and IoT.
+
+  Chapter 6 examines how AIoT is used to solve the traffic management issues
+brought on by growing vehicle density and fast urbanisation. Real-time data, multi-
+layered AIoT architecture, machine learning applications, use cases, and emerging
+technologies are discussed.
+
+  Chapter 7 discusses the topics on network topologies, connectivity, data pro-
+cessing techniques, IoT and data acquisition. The difficulties with data security and
+privacy, blockchain scaling, integrating modern technologies and ethical and gov-
+ernance concerns are discussed.
+
+  Chapter 8 examines how AIoT has revolutionary effects on enhancing ITS
+efficiency, security, and safety. Case studies are provided to show how AIoT is
+used in emergency response, traffic control, driver assistance, and predictive
+maintenance, among other areas.
+
+  Chapter 9 outlines the ways AIoT is changing travel while pointing out
+obstacles. The technology is used to give travellers customised experiences, along
+with personalised travel solutions. The chapter also examines successful interna-
+tional examples, suggesting a bright future for smart tourism in Industry 5.0.
+
+  Chapter 10 delves into how AIoT is key to creating a greener, more efficient
+transportation system and transitioning to smarter, more sustainable urban envir-
+onments, it highlights the crucial role of AIoT in promoting sustainability. The
+opportunities and the collaboration aspects among the industry stakeholders, pol-
+icymakers, and researchers is presented.
+  Preface xix
+
+  Chapter 11 outlines the integration of blockchain and cybersecurity technolo-
+gies within ITS and how cybersecurity can be applied to intelligent transportation
+systems (ITS) and its effectiveness in achieving security. The benefits of integra-
+tion and how the merger with transportation system helps.
+
+  Chapter 12 highlights the necessity of ethical considerations while applying
+AIoT. Ethical challenges are discussed, along with worries about bias in decision-
+making procedures and ethical problems pertaining to data and system operations.
+The necessity of striking a balance between innovation and governance is
+discussed.
+
+  Chapter 13 examines how AIoT might enhance reaction times for emergencies
+by improving traffic flow and detecting emergency vehicles, such as ambulances,
+in real time. It discusses the effects of urban traffic congestion on ambulance
+response times. It highlights the significance of real-time data collection and traffic
+analysis.
+
+  Chapter 14 explores critical issues in transportation systems and how AI is
+revolutionising transportation for effective and sustainable mobility solutions.
+Real-world use cases, overcoming obstacles, and potential effects are covered. It
+also covers the significance of explainable AI, legal frameworks, and responsible
+innovation.
+
+  Chapter 15 summarises the book and explores future perspectives of AIoT for
+Smart Transportation. It challenges key future viewpoints on AIoT in smart trans-
+portation and presents the book’s conclusion, along with future directions.
+This page intentionally left blank
+  About the editors
+
+Meenu Gupta is a professor at the UIE-CSE Department, Chandigarh University,
+Punjab, India. She is pursuing her postdoctoral fellowship from MIR lab, USA. She
+completed her PhD in computer science and engineering from Ansal University,
+Gurgaon, India, 2020. Her research areas cover machine learning, intelligent sys-
+tems, and data mining. She is a life member of ISTE and IAENG, a senior member
+of IEEE and executive member of IEEE Delhi Section.
+
+Rakesh Kumar is associate director at the UIE-CSE Department, Chandigarh
+University, Punjab, India. He is pursuing his postdoctoral fellowship from MIR lab,
+USA. He completed his PhD in computer science and engineering from Punjab
+Technical University, Jalandhar, 2017. His research interests are IoT, machine
+learning, and natural language processing. He works as a reviewer for several
+journals and is a senior member of IEEE.
+
+Shakeel Ahmed is an associate professor at the Taylor’s University, Malaysia. He
+holds a PhD in computer science from Indore University, India, with expertise in
+software engineering, artificial intelligence, cloud computing, software verification
+and validation. He has authored numerous research papers in reputable journals and
+IEEE conferences. As a book editor, he edited books on AIoT technologies and
+health care. A reviewer for prestigious quartile journals and a PC member of
+international conferences.
+This page intentionally left blank
+  Chapter 1
+
+  Introduction to AIoT in smart transportation
+
+  Anjuli Goel1 and Chander Prabha1
+
+Abstract
+
+As technology develops, our society acquires increasingly complex devices that facil-
+itate the more effective and efficient completion of daily chores. The Internet of Things
+(IoT) is one of the biggest technological advances of our time; it connects a multitude
+of smart devices and makes data sharing and interaction simple. Artificial Intelligence
+is another breakthrough technology that contributes to data analysis and decision-
+making. Thanks to new technologies such as artificial intelligence and the IoT, it has
+become possible to create smart transportation systems capable of enhancing drivers’
+safety, better flow of traffic, and decreasing the cost of transportation. Smart transport
+systems have emerged as a possible approach to increasing transport efficiency, safety,
+and sustainability. This chapter gives a comprehensive view of smart transportation.
+The various stages that have taken place in the evolution of smart transportation are
+discussed, from no technology used to autonomous transport. Smart transportation
+consists of three components – smart vehicles, smart parking, and smart roads. The
+shortcomings in traditional transportation are given to better understand the importance
+of smart transportation. The various benefits and emerging trends of Artificial
+Intelligence of Things (AIoT) in smart transportation are explained. The technologies
+that help in the deployment of AIoT in smart transportation are highlighted. Lastly, the
+various challenges in implementing smart transportation are focused on.
+
+  Keywords: Intelligent; Smart; Transport; Environmental; Safety; Autono-
+  mous; Machine learning
+
+1.1 Introduction
+
+Smart transportation makes commuting around a city easier, less expensive, and
+safer by using new and developing technology. In the words of the US Department
+of Transportation, ‘Intelligent transportation systems use a set of various technol-
+ogies to control, assess, and administer the transportation systems to improve their
+efficiency and safety’ [1]. Smart transportation systems may be utilised to enhance
+
+1Chitkara University Institute of Engineering and Technology, Chitkara University, Punjab, India
+2 AIoT for smart transportation
+
+traffic lights in cities. Rather than depending on traditional pre-timed traffic lights,
+these signals may now use previous data and artificial intelligence (AI) to assess
+traffic movements in real time and make necessary modifications. Smart transport
+eliminates the need to sit at a traffic signal for minutes even when traffic is clear
+[2]. Smart Transportation Systems mean the integration of management practices,
+computer and electronics, communication technologies, and traveller information
+to enhance the effectiveness and safety of surface transportation. To improve the
+safety and capacity of the road system, these systems integrate the interactions of
+automobiles, drivers, passengers, road operators, and management with the envir-
+onment and with each other. Smart transport systems make the most use of the
+existing transport infrastructure and enhance traffic management by utilising a
+range of wireline and wireless communication-based information and electronics
+technologies. It improves driving conditions, road network capacity, safety, and
+efficiency. It also reduces transportation risks, eases traffic congestion, boosts
+transportation effectiveness, and lessens pollution [3].
+
+Key Issues in Present Transportation
+
+l Insufficiently reliable and secure public transit
+l Insufficient capability of public transit
+l Concerns about road safety
+l Road network congestion
+l Bad traffic control
+l Parking problems
+l Vehicle theft
+l The bad state of the roads
+l Absence of available modalities
+
+  To summarise, transportation volumes are increasing out of control in cities
+around the world, resulting in bad transportation management systems, delays,
+traffic, the construction of new roads, carbon dioxide emissions, accidents, emer-
+gency services, and theft of cars and lives. Almost 60% of transport takes place on
+roads, exceeding the actual capacity of the road infrastructure. Due to this, roads
+are overcrowded, and accidents happen. Additionally, the public struggles to find
+parking spaces, and there is always a threat of mishaps.
+
+1.2 Evolution of smart transportation
+
+Intelligent Transportation Systems (ITS), which first appeared in the 1990s, are the
+forerunners of smart transport. To optimise traffic management, lessen congestion,
+and boost road safety, ITS sought to make use of sensors, communication networks,
+and data analytics. Smart transport has surpassed traditional ITS as a result of
+developments in artificial intelligence, processing power, and connectivity, usher-
+ing in a new era of innovation and revolution. Figure 1.1 illustrates the progression
+of technological advancement from a state in which vehicles are not in
+

@@ -1,0 +1,1722 @@
+  Highway Capacity Manual 2000
+
+QUICK ESTIMATION LANE VOLUME WORKSHEET (RUN 2)
+
+  EB  WB  NB  SB  Example Problem 4
+
+  Right-Turn Movement  Shared  Shared
+  180  100
+Lane type  Exclusive  Shared  1  1
+RT volume, RV  460  100  0.85  0.85
+Number of exclusive RT lanes, NRT  1  1  212  118
+RT adjustment factor, fRT
+RT volume per lane, VRT  0.85  0.85  Exclusive  Exclusive
+  Prot  Prot
+Lane type  541  118  260  200
+LT treatment  650  880
+LT volume, VL  Left-Turn Movement
+Opposing volume, Vo  169000  176000
+Cross-product, VLVo  Exclusive  Exclusive  1  1
+Number of exclusive LT lanes, NLT  Prot  Prot
+LT adjustment factor, fLT  120  80  0.95  0.95
+LT volume per lane, VLT  274  211
+  1300  1760
+Through volume, VT  700  550
+Parking adjustment factor, fp  156000 140800  1.000  1.000
+Number of through lanes, NHT
+Total approach volume, Vtot  1  1  2  2
+Through volume per lane, VHT  912  668
+Critical lane volume, VCL  0.95  0.95  456  334
+  456  334
+Permitted left sneaker capacity, cLS  126  84
+  N/A  N/A
+  Through Movement
+
+  1300  1200
+
+  1.000  1.000
+
+  3  3
+
+  1300  1318
+
+  433  439
+
+  541  439
+
+  Sneaker Left-Turn Check
+
+  N/A  N/A
+
+QUICK ESTIMATION CONTROL DELAY AND LOS WORKSHEET (RUN 2)
+
+  East-West Phasing Plan
+
+  Phase 1 Phase 2  Phase 3
+  EBWBTH
+Selected plan  3a
+  499
+Movement codes  EBWBLT EBTHLT  4
+
+Critical phase volume, CV  84  42  NBSBTH
+  393
+Lost time/phase, tL  4  0  4
+
+  North-South Phasing Plan  Phase 3
+  36.4
+Selected plan  3a
+  Phase 3
+Movement codes  NBSBLT NBTHLT  29.6
+
+Critical phase volume, CV  211  63
+
+Lost time/phase, tL  4  0
+
+  Intersection Status Computation
+
+Critical sum, CS  1292
+
+Lost time/cycle, L  16
+
+Reference sum flow rate, RS  1539
+
+Cycle length, C  100.0
+
+Critical v/c ratio, Xcm  0.999
+
+Intersection status  At capacity
+
+  Green-Time Calculation
+
+East-west phasing  Phase 1 Phase 2
+
+Green time, g  9.5  2.7
+
+North-south phasing  Phase 1 Phase 2
+
+Green time, g  17.7  4.1
+
+  16-77  Chapter 16 - Signalized Intersections
+  Example Problems
+Highway Capacity Manual 2000
+
+  LOS MODULE WORKSHEET (RUN 2)
+
+Example Problem 4  Direction/  v/c  g/C  Unif  Progr  Lane Cal  Incr  Lane Lane  Delay  LOS by
+  LnGrp  Ratio  Ratio  Delay  Factor  by App  App
+  PF  Grp Term k Delay Grp  Grp
+  EB/L  0.917  0.082  d1  51.0  D
+  EB/T  0.876  0.324  1.000  Cap  d2  Delay LOS  40.8  D
+  EB/R  0.996  0.324  45.562  1.000  59.0  E
+  WB/L  1.000  145 0.500 55.293 100.9 F  52.6  D
+  WB/TR  31.904
+  NB/L  1648 0.500 6.870  38.8 D
+  NB/TR  33.735
+  SB/L  513 0.500 38.767  72.5 E
+  SB/TR
+  0.614  0.082  44.370  1.000  145 0.500  17.901  62.3 E
+  0.886  0.324  32.049  1.000  1629 0.500  7.493  39.5 D
+
+  0.917  0.178  40.374  1.000  315 0.500  33.351  73.7 E
+  0.960  0.297  34.566  1.000  1019 0.500  20.053  54.6 D
+
+  0.917  0.137  42.589  1.000  242 0.500  39.789  82.4 F
+  0.816  0.256  34.985  1.000  885 0.500  8.452  43.4 D
+
+  Intersection Delay = 50.3 s/veh  Intersection LOS = D
+
+Chapter 16 - Signalized Intersections  16-78
+Example Problems
+  Highway Capacity Manual 2000
+
+  EXAMPLE PROBLEM 5
+
+The Intersection The intersection of Eighth Avenue (EB/WB) and Main Street (NB/SB)
+is located in a rapidly growing semirural community. Eighth Avenue is a four-lane
+roadway, and Main Street is a two-lane roadway. No turning lanes exist. The existing
+intersection geometry and projected volumes are shown on the Input Worksheet.
+
+The Question Will projected demand exceed the existing intersection capacity? If so,
+what countermeasures should be implemented?
+
+The Facts
+√ PHF = 0.90,
+√ Cycle length = 80 s to 120 s,
+√ Movement lost time = 4 s, and
+√ Non-CBD.
+
+Steps
+  1. Run 1—Exclusive left turn for westbound approach: For the westbound approach,
+
+one lane is assigned as an exclusive left-turn lane, and the other is assigned as a shared
+lane. This assignment is appropriate for the volumes. The initial solution for signal
+phasing is to use protected-only left-turn treatment for the westbound approach and
+permitted treatment for all other approaches.
+
+  The quick estimation method is used to assess traffic operations. The results show
+that critical lane volumes are high, and the critical v/c ratio is computed as 1.077,
+indicating operations over capacity.
+
+  2. Run 2—Right-turn lane added on eastbound approach: The eastbound through
+and right-turn movement is identified as the critical lane group largely because of the high
+right-turn volume. An exclusive right-turn lane is added to the eastbound approach as a
+countermeasure. The traffic operation is reassessed, and the results show that the critical
+v/c ratio is reduced to 0.962. The intersection operates at capacity.
+
+  3. Run 3—Split phase operation for northbound and southbound approaches:
+Although the intersection status is satisfied, northbound and southbound left turns merit
+further consideration. Significant left-turn volumes in a pair of opposing single-lane
+approaches should be avoided. Split phase signal phasing is introduced to provide a
+complete directional separation between the northbound and southbound traffic.
+
+  The results show that the critical v/c ratio is increased to 1.138, which is over
+capacity. The split phasing is not appropriate. Although northbound and southbound per-
+lane volumes have been reduced, the critical sum is increased as the reduced volumes
+are added into the critical sum because northbound and southbound movements operate
+in different phases.
+
+  4. Run 4—Exclusive left-turn lane added on northbound and southbound
+approaches: In order to provide a protected phase for the northbound and southbound left
+turns while satisfying the operational requirement, an exclusive left-turn lane is added. As
+shown in the results, northbound and southbound per-lane volumes decrease
+substantially. The critical v/c ratio is computed as 0.933, which is near capacity.
+
+16-79  Chapter 16 - Signalized Intersections
+  Example Problems
+Highway Capacity Manual 2000
+
+Example Problem 5
+
+  QUICK ESTIMATION INPUT WORKSHEET
+
+  General Information  Site Information
+
+  Analyst  ______C_J_M________________  Intersection  ____E_i_g_ht_h__A_ve_._a_n_d_M__a_in_S__t.____
+  Agency or Company  _______C_E_I __________________  Area Type
+  Date Performed  _______5_/1_3_/_9_9_______________  Jurisdiction  " CBD  "X Other
+  Analysis Time Period  _______4_:3_0__-_5_:_3_0__p_m_________  Analysis Year
+  ____F_a_ir_fa_x_,_V_A________________
+
+  _____19__9_9_____________________
+
+  Intersection Geometry
+
+  Main St.  Show North
+  Street
+  Eighth Ave.
+  Street  = Through
+  = Right
+  = Left
+  = Through + Right
+  = Left + Through
+  = Left + Right
+  = Left + Through + Right
+
+  Volume and Signal Input
+
+  EB  WB  NB  SB
+  LT TH  TH RT1 LT
+  RT1 LT  TH RT1 LT TH RT1
+
+  Volume, V (veh/h)  120 690 280 170 360 110 80  150 60  120 230 170
+  Proportion of LT or RT (PLT or PRT)2
+  Parking (Yes/No)  -  -  -  -
+
+  Left-turn treatment (permitted, protected,  No  No  No  No
+  not opposed) (if known)
+  Peak-hour factor, PHF __0__.9_0___
+
+  Cycle length  Minimum, Cmin ___8_0__ s  Maximum, Cmax __12_0___ s  or  Given, C ______ s
+  Lost time/phase  ____4____s
+
+  Notes
+
+  1. RT volumes, as shown, exclude RTOR.
+  2. PLT = 1.000 for exclusive left-turn lanes, and PRT = 1.000 for exclusive right-turn lanes. Otherwise, they are equal to the proportions of turning
+
+  volumes in the lane group.
+
+Chapter 16 - Signalized Intersections  16-80
+Example Problems
+  Highway Capacity Manual 2000
+
+QUICK ESTIMATION LANE VOLUME WORKSHEET (RUN 1)
+
+  EB  WB  NB  SB  Example Problem 5
+
+  Right-Turn Movement  Shared
+  170
+Lane type  Shared  Shared  Shared  1
+  280  110  60  0.85
+RT volume, RV  1  1  1  200
+  0.85  0.85  0.85
+Number of exclusive RT lanes, NRT  329  129  71  Shared
+RT adjustment factor, fRT  Perm
+RT volume per lane, VT  120
+  210
+  Left-Turn Movement  25200
+
+Lane type  Shared  Exclusive  Shared  0
+  Perm  Prot  Perm  0.95
+LT treatment  120  170  80
+  470  1090  400  0
+LT volume, VS  56400  32000
+  185300  230
+Opposing volume, Vo  0  1  0  1.000
+Cross-product, VL Vo  0.95  0.95
+Number of exclusive LT lanes, NT  0.95  1
+  0  179  0  430
+LT adjustment factor, fLT  592
+LT volume per lane, VT  592
+
+  Through Movement  N/A
+
+Through volume, VT  690  360  150
+Parking adjustment factor, fp  1.000  1.000  1.000
+Number of through lanes, NHT
+Total approach volume, Vtot  2  1  1
+Through volume per lane, VHT  1019  489  221
+Critical lane volume, VCL  721  489  287
+  721  489  287
+
+  Sneaker Left-Turn Check
+
+Permitted left sneaker capacity, cLS  N/A  N/A  N/A
+
+QUICK ESTIMATION CONTROL DELAY AND LOS WORKSHEET (RUN 1)
+
+  East-West Phasing Plan
+
+  Phase 1 Phase 2  Phase 3
+
+Selected plan  2a  Phase 3
+  Phase 3
+Movement codes  WBTHLT EBWBTH
+
+Critical phase volume, CV  179  721
+
+Lost time/phase, tL  4  4
+
+  North-South Phasing Plan
+
+Selected plan  1
+
+Movement codes  NBSBLT
+
+Critical phase volume, CV  592
+
+Lost time/phase, tL  4
+
+  Intersection Status Computation
+
+Critical sum, CS  1492
+
+Lost time/cycle, L  12
+
+Reference sum flow rate, RS  1539
+
+Cycle length, C  120.0
+
+Critical v/c ratio, Xcm  1.077
+
+Intersection status  Over capacity
+
+  Green-Time Calculation
+
+East-west phasing  Phase 1 Phase 2
+
+Green time, g  17.0  56.2
+
+North-south phasing  Phase 1 Phase 2
+
+Green time, g  46.9
+
+  16-81  Chapter 16 - Signalized Intersections
+  Example Problems
+Highway Capacity Manual 2000
+
+  QUICK ESTIMATION LANE VOLUME WORKSHEET (RUN 2)
+
+Example Problem 5  EB  WB  NB  SB
+  Right-Turn Movement
+  Lane type  Shared  Shared  Shared
+  RT volume, VR  Exclusive  110  60  170
+  Number of exclusive RT lanes, NRT  280  1  1  1
+  RT adjustment factor, fRT  1  0.85  0.85  0.85
+  RT volume per lane, VRT  0.85  71  200
+
+  Lane type  329  129  Shared  Shared
+  LT treatment  Perm  Perm
+  LT volume, VL  Left-Turn Movement  Exclusive  80  120
+  Opposing volume, Vo  Prot  400  210
+  Cross-product, VLVo  Shared  170  32000  25200
+  Number of exclusive LT lanes, NLT  Perm
+  LT adjustment factor, fLT  120  0  0
+  LT volume per lane, VLT  0.95  0.95
+  470  1090
+  Through volume, VT  0  0
+  Parking adjustment factor, fp  56400  185300
+  Number of through lanes, NHT  0  1  150  230
+  Total approach volume, Vtot  1.000  1.000
+  Through volume per lane, VHT  0.95  0.95
+  Critical lane volume, VCL  0  179  1  1
+  221  430
+  Permitted left sneaker capacity, cLS  Through Movement  360  287  592
+  690  1.000  287  592
+  1.000
+  2  1  N/A  N/A
+  690  489
+  488  489
+  488  489
+
+  Sneaker Left-Turn Check
+
+  N/A  N/A
+
+  QUICK ESTIMATION CONTROL DELAY AND LOS WORKSHEET (RUN 2)
+
+  East-West Phasing Plan
+
+  Phase 1 Phase 2  Phase 3
+
+  Selected plan  2a  Phase 3
+  Phase 3
+  Movement codes  WBTHLT EBWBTH
+
+  Critical phase volume, CV  179  488
+
+  Lost time/phase, tL  4  4
+
+  North-South Phasing Plan
+
+  Selected plan  1
+
+  Movement codes  NBSBLT
+
+  Critical phase volume, CV  592
+
+  Lost time/phase, tL  4
+
+  Intersection Status Computation
+
+  Critical sum, CS  1259
+
+  Lost time/cycle, L  12
+
+  Reference sum flow rate, RS  1539
+
+  Cycle length, C  80.0
+
+  Critical v/c ratio, Xcm  0.962
+
+  Intersection status  At capacity
+
+  Green-Time Calculation
+
+  East-west phasing  Phase 1 Phase 2
+
+  Green time, g  13.7  30.4
+
+  North-south phasing  Phase 1 Phase 2
+
+  Green time, g  36.0
+
+Chapter 16 - Signalized Intersections  16-82
+Example Problems
+  Highway Capacity Manual 2000
+
+QUICK ESTIMATION LANE VOLUME WORKSHEET (RUN 3)
+
+  EB  WB  NB  SB  Example Problem 5
+
+  Right-Turn Movement  Shared  Shared
+  60  170
+Lane type  Exclusive  Shared  1  1
+RT volume, VR  280  110  0.85  0.85
+Number of exclusive RT lanes, NRT  71  200
+RT adjustment factor, fRT  1  1
+RT volume per lane, VRT  Shared  Shared
+  0.85  0.85  Nopp  Nopp
+Lane type  120
+LT treatment  329  129  80
+LT volume, VL  0  0
+Opposing volume, Vo  Left-Turn Movement  0  0
+Cross-product, VLVo  0  0
+Number of exclusive LT lanes, NLT  Shared  Exclusive  0.95  0.95
+LT adjustment factor, fLT  Perm  Prot  80  120
+LT volume per lane, VLT  120  170
+  150  230
+Through volume, VT  470  1090  1.000  1.000
+Parking adjustment factor, fp
+Number of through lanes, NHT  56400  185300  1  1
+Total approach volume, Vtot  301  550
+Through volume per lane, VHT  0  1  301  550
+Critical lane volume, VCL  301  550
+  0.95  0.95
+Permitted left sneaker capacity, cLS  N/A  N/A
+  0  179
+
+  Through Movement
+
+  690  360
+
+  1.000  1.000
+
+  2  1
+
+  690  489
+
+  488  489
+
+  488  489
+
+  Sneaker Left-Turn Check
+
+  N/A  N/A
+
+QUICK ESTIMATION CONTROL DELAY AND LOS WORKSHEET (RUN 3)
+
+  East-West Phasing Plan
+
+  Phase 1 Phase 2  Phase 3
+
+Selected plan  2a  Phase 3
+  Phase 3
+Movement codes  WBTHLT EBWBTH
+
+Critical phase volume, CV  179  488
+
+Lost time/phase, tL  4  4
+
+  North-South Phasing Plan
+
+Selected plan  4
+
+Movement codes  NBTHLT SBTHLT
+
+Critical phase volume, CV  301  550
+
+Lost time/phase, tL  4  4
+
+  Intersection Status Computation
+
+Critical sum, CS  1518
+
+Lost time/cycle, L  16
+
+Reference sum flow rate, RS  1539
+
+Cycle length, C  120.0
+
+Critical v/c ratio, Xcm  1.138
+
+Intersection status  Over capacity
+
+  Green-Time Calculation
+
+East-west phasing  Phase 1 Phase 2
+
+Green time, g  16.3  37.4
+
+North-south phasing  Phase 1 Phase 2
+
+Green time, g  24.6  41.7
+
+  16-83  Chapter 16 - Signalized Intersections
+  Example Problems
+Highway Capacity Manual 2000
+
+  QUICK ESTIMATION LANE VOLUME WORKSHEET (RUN 4)
+
+Example Problem 5  EB  WB  NB  SB
+
+  Right-Turn Movement  Shared  Shared
+  60  170
+  Lane type  Exclusive  Shared  1  1
+  RT volume, VR  280  110  0.85  0.85
+  Number of exclusive RT lanes, NRT  71  200
+  RT adjustment factor, fRT  1  1
+  RT volume per lane, VRT  Exclusive  Exclusive
+  0.85  0.85  Prot  Prot
+  Lane type  80  120
+  LT treatment  329  129  400  210
+  LT volume, VL  32000  25200
+  Opposing volume, Vo  Left-Turn Movement  1  1
+  Cross-product, VLVo  0.95  0.95
+  Number of exclusive LT lanes, NLT  Shared  Exclusive  84  126
+  LT adjustment factor, fLT  Perm  Prot
+  LT volume per lane, VLT  120  170  150  230
+  1.000  1.000
+  Through volume, VT  470  1090
+  Parking adjustment factor, fp  1  1
+  Number of through lanes, NHT  56400  185300  221  430
+  Total approach volume, Vtot  221  430
+  Through volume per lane, VHT  0  1  221  430
+  Critical lane volume, VCL
+  0.95  0.95  N/A  N/A
+  Permitted left sneaker capacity, cLS
+  0  179
+
+  Through Movement
+
+  690  360
+
+  1.000  1.000
+
+  2  1
+
+  690  489
+
+  488  489
+
+  488  489
+
+  Sneaker Left-Turn Check
+
+  N/A  N/A
+
+  QUICK ESTIMATION CONTROL DELAY AND LOS WORKSHEET (RUN 4)
+
+  East-West Phasing Plan
+
+  Phase 1 Phase 2  Phase 3
+
+  Selected plan  2a  NBSBTH
+  388
+  Movement codes  WBTHLT EBWBTH  4
+
+  Critical phase volume, CV  179  488  Phase 3
+  Phase 3
+  Lost time/phase, tL  4  4
+  28.3
+  North-South Phasing Plan
+
+  Selected plan  3b
+
+  Movement codes  NBSBLT SBTHLT
+
+  Critical phase volume, CV  84  42
+
+  Lost time/phase, tL  4  0
+
+  Intersection Status Computation
+
+  Critical sum, CS  1181
+
+  Lost time/cycle, L  16
+
+  Reference sum flow rate, RS  1539
+
+  Cycle length, C  90.0
+
+  Critical v/c ratio, Xcm  0.933
+
+  Intersection status  Near capacity
+
+  Green-Time Calculation
+
+  East-west phasing  Phase 1 Phase 2
+
+  Green time, g  15.2  34.6
+
+  North-south phasing  Phase 1 Phase 2
+
+  Green time, g  9.3  2.6
+
+Chapter 16 - Signalized Intersections  16-84
+Example Problems
+  Highway Capacity Manual 2000
+
+  EXAMPLE PROBLEM 6
+
+The Intersection  A two-lane through movement at one approach to a signalized
+
+intersection has a cycle length of 90 s with a g/C ratio of 0.50. The arrival type is currently
+
+3 (random), but this could be improved by altering the progression.
+
+The Question  What is the maximum service flow rate that could be accommodated
+
+at LOS B (20 s/veh delay) on this approach?
+
+The Facts
+√ Cycle length = 90 s,
+√ g/C = 0.50, and
+√ s = 3,200 veh/h.
+
+Comments  This calculation is intended to illustrate the potential for alternative
+
+computational sequences using the basic operational analysis format. Only one lane
+
+group is addressed. The computations become far more complex when multiple lane
+
+groups are addressed simultaneously. Nevertheless, the procedure is capable of
+
+determining service flow rates or geometric or signal parameters based on a desired LOS.
+
+Steps
+  1. Delay is a function of the v/c ratio, X; the green ratio, g/C; the cycle length, C; the
+
+lane group capacity, c; and the progression factor, PF. The lane group capacity is the
+product of a saturation flow rate, s, and a g/C ratio.
+
+  c = s * g/C = 3200 * 0.50 = 1600 veh/h
+
+2. At the LOS B threshold of 20.0 s/veh, the delay equation is expressed as follows:
+
+  20.0 = d1PF + d2 + d3
+
+where
+  0. 5(90)(1− 0. 50)2
+
+  d1 =
+  (1− 0. 50X)
+
+    2  X 
+d2 = 225(X − 1) + (X − 1) +   
+     100  
+
+d3 = 0
+
+  3. Two tables are generated based on the equations above. The first table provides
+delay as a function of arrival types and v/c ratios, X. The second table provides v/c ratios
+and service flow rates as a function of delay and arrival types. In this problem, the second
+table is more appropriate because service flows are the direct output.
+
+  4. Service flow rates, SF, are computed as X * c, where c = 1,600 veh/h. Thus, at
+LOS B, the approach can carry a maximum service flow rate of 1,126 veh/h at existing
+Arrival Type 3. The maximum flow rate increases to 1,491 veh/h at Arrival Type 5 and to
+1,571 at Arrival Type 6.
+
+  16-85  Chapter 16 - Signalized Intersections
+  Example Problems
+Highway Capacity Manual 2000
+
+  SERVICE FLOW RATE SOLUTIONS FOR EXAMPLE PROBLEM 6
+
+Example Problem 6  Delay
+
+  X Flow d1  d2 AT 1 AT 2 AT 3 AT 4 AT 5 AT 6
+  Rate
+
+  0.0  0 11.250 0.000 18.8 14.0 11.3 8.6 3.7 0.0
+
+  0.1 160 11.842 0.125 19.9 14.8 12.0 9.2 4.1 0.1
+
+  0.2 320 12.500 0.281 21.1 15.8 12.8 9.9 4.4 0.3
+
+  0.3 480 13.235 0.481 22.5 16.9 13.7 10.6 4.9 0.5
+
+  0.4 640 14.063 0.748 24.2 18.2 14.8 11.5 5.4 0.7
+
+  0.5 800 15.000 1.119 26.1 19.7 16.1 12.6 6.1 1.1
+
+  0.6 960 16.071 1.672 28.5 21.6 17.7 14.0 7.0 1.7
+
+  0.7 1120 17.308 2.576 31.4 24.0 19.9 15.9 8.3 2.6
+
+  0.8 1280 18.750 4.295 35.6 27.5 23.0 18.7 10.5 4.3
+
+  0.9 1440 20.455 8.514 42.6 33.9 29.0 24.2 15.3 8.5
+
+  1.0 1600 22.500 22.500 60.0 50.4 45.0 39.8 30.0 22.5
+
+  AT 1  AT 2  AT 3  AT 4  AT 5  AT 6
+
+  LOS Max SFmax  X  SFmax X  SFmax X  SFmax X  SFmax X SFmax X
+
+  Delay
+
+  A  5  513 0.32 1307 0.82
+
+  10  348 0.22 1241 0.78 1457 0.91
+
+  15  191 0.12 663 0.41 1046 0.65 1429 0.89 1514 0.95
+
+  B  20 177 0.11 824 0.51 1126 0.70 1318 0.82 1491 0.93 1571 0.98
+
+  25 707 0.44 1164 0.73 1333 0.83 1448 0.91 1546 0.97
+
+  30 1043 0.65 1342 0.84 1450 0.91 1500 0.94
+
+  C  35 1259 0.79 1451 0.91 1500 0.94 1551 0.97
+
+  40 1381 0.86 1499 0.94 1550 0.97
+
+  45 1462 0.91 1548 0.97 1600 1.00
+
+  50 1508 0.94 1596 1.00
+
+  D  55 1554 0.97
+
+  60 1600 1.00
+
+  65
+
+  70
+
+  75
+
+  E  80
+
+  V. REFERENCES
+
+  1. Signalized Intersection Capacity Method. NCHRP Project 3-28(2). JHK &
+  Associates, Tucson, Ariz., Feb. 1983.
+
+  2. Signalized Intersection Capacity Study. Final Report, NCHRP, Project 3-28(2).
+  JHK & Associates, Tucson, Ariz., Dec. 1982.
+
+  3. Messer, C. J., and D. B. Fambro. Critical Lane Analysis for Intersection Design.
+  In Transportation Research Record 644, TRB, National Research Council,
+  Washington, D.C., 1977.
+
+  4. Berry, D. S. Other Methods for Computing Capacity of Signalized Intersections.
+  Presented at the 56th Annual Meeting of the Transportation Research Board,
+  Washington, D.C., Jan. 1977.
+
+  5. Berry, D. S., and P. K. Gandhi. Headway Approach to Intersection Capacity. In
+  Highway Research Record 453, HRB, National Research Council, Washington,
+  D.C., 1973.
+
+  6. Miller, A. J. The Capacity of Signalized Intersections in Australia. Australian
+  Road Research Bulletin 3. Australian Road Research Board, Kew, Victoria,
+  Australia, 1968.
+
+Chapter 16 - Signalized Intersections  16-86
+Example Problems
+  Highway Capacity Manual 2000
+
+ 7. Webster, F. V., and B. M. Cobbe. Traffic Signals. Her Majesty’s Stationery
+  Office, London, England, 1966.
+
+ 8. Petersen, B. E., and E. Imre. Swedish Capacity Manual. Stockholm, Sweden,
+  Feb. 1977.
+
+ 9. Akcelik, R. (ed.). Signalized Intersection Capacity and Timing Guide. Presented
+  at Signalized Intersection Capacity Workshop, Australian Road Research Board,
+  Kew, Victoria, Australia, 1979.
+
+10. Akcelik, R. Traffic Signals: Capacity and Timing Analysis. Australian Road
+  Research Report 123. Australian Road Research Board, Kew, Victoria, Australia,
+  1981.
+
+11. Reilly, W. R., C. C. Gardner, and J. H. Kell. A Technique for Measurement of
+  Delay at Intersections. FHWA Report RD-76-135/137. FHWA, U.S. Department
+  of Transportation, Washington, D.C., 1976.
+
+12. Courage, K. G., D. F. Fambro, R. Akcelik, P. S. Lin, and M. Anwar. Final Report,
+  NCHRP Project 3-48. University of Florida; Texas Transportation Institute;
+  ARRB Transport Research, Ltd., 1996.
+
+13. Akcelik, R. Analysis of Vehicle-Actuated Signal Operations. Working Paper WD
+  TE 93/007. Australian Road Research Board, Kew, Victoria, Australia, 1993.
+
+14. Akcelik, R. Estimation of Green Times and Cycle Time for Vehicle-Actuated
+  Signals. Presented at the 73rd Annual Meeting of the Transportation Research
+  Board, Washington, D.C., Jan. 1994.
+
+15. Lin, F. B. Estimation of Average Phase Durations for Full-Actuated Signals. In
+  Transportation Research Record 881, TRB, National Research Council,
+  Washington, D.C., 1982, pp. 65–72.
+
+16. Lin, F. B. Predictive Models of Traffic-Actuated Cycle Splits. Transportation
+  Research, Vol. 16B, No. 5, 1982, pp. 65–72.
+
+17. Cowan, R. J. Useful Headway Models. Transportation Research, Vol. 9, No. 6,
+  1975, pp. 371–375.
+
+18. Akcelik, R., and E. Chung. Calibration of the Bunched Exponential Distribution
+  of Arrival Headways. Road and Transport Research, Vol. 3, No. 1, 1994, pp. 42–
+  59.
+
+19. Kell, J. H., and I. J. Fullerton. Manual of Traffic Signal Design. Institute of
+  Transportation Engineers; Prentice-Hall, Inc., Englewood Cliffs, N.J., 1982.
+
+20. Lin, F. B. Optimal Timing Setting and Detector Lengths of Presence Mode Full-
+  Actuated Control. In Transportation Research Record 1010, TRB, National
+  Research Council, Washington, D.C., 1985, pp. 37–45.
+
+21. Milazzo, J. S., II, N. M. Rouphail, J. E. Hummer, and D. P. Allen. Effect of
+  Pedestrians on Capacity of Signalized Intersections. In Transportation Research
+  Record 1646, TRB, National Research Council, Washington, D.C., 1998, pp. 37–
+  46.
+
+22. Allen, D. P., J. E. Hummer, N. M. Rouphail, and J. S. Milazzo II. Effect of
+  Bicycles on Capacity of Signalized Intersections. In Transportation Research
+  Record 1646, TRB, National Research Council, Washington, D.C., 1998, pp. 87–
+  95.
+
+23. Rouphail, N. M., J. E. Hummer, J. S. Milazzo II, and D. P. Allen. Recommended
+  Procedures for Chapter 9, Signalized Intersections, of the Highway Capacity
+  Manual. Report FHWA-RD-98-106. FHWA, U.S. Department of Transportation,
+  1999.
+
+24. Akcelik, R. A Queue Model for the HCM 2000. Technical Note. ARRB
+  Transport Research Ltd., Vermont South, Australia, Oct. 13, 1998.
+
+16-87  Chapter 16 - Signalized Intersections
+  References
+Highway Capacity Manual 2000
+
+Equipment and  APPENDIX A. FIELD MEASUREMENT OF INTERSECTION
+personnel requirements  CONTROL DELAY
+
+Delay during  GENERAL NOTES
+deceleration is not
+directly measured  As an alternative to the estimation of control delay per vehicle using Equation 16-9
+  and the progression adjustment factor, delay at existing locations may be measured
+  directly. There are a number of techniques for making this measurement, including the
+  use of test-car observations, path tracing of individual vehicles, and the recording of
+  arrival and departure volumes on a cycle-by-cycle basis. The method summarized here is
+  based on direct observation of vehicle-in-queue counts at the intersection and normally
+  requires two field personnel per lane group surveyed, unless the volume is light. Also
+  needed is a multifunction digital watch that includes a countdown-repeat timer, with the
+  countdown interval in seconds, plus a volume-count board with at least two tally
+  counters. As an alternative, a laptop computer can be programmed to emit audio count
+  markers at user-selected intervals, take volume counts, and execute real-time delay
+  computations, thus simplifying data reduction.
+
+  In general, this method is applicable to all undersaturated signalized intersections.
+  For oversaturated conditions, queue buildup normally makes the method impractical.
+  Under such conditions, more personnel will be required to complete the field study, and
+  other methods may be considered, such as an input-output technique or a zoned-survey
+  technique.
+
+  In the input-output technique, different observers count arrivals separately from
+  departures and vehicles in queue are calculated as the accumulated difference, subject to
+  in-process checks for vehicles leaving the queue before they reach the stop line. The
+  zoned-survey technique requires subdividing the approach into manageable segments to
+  which the observers are assigned; they then count queued vehicles in their assigned zone.
+  Both of these techniques require more personnel and are more complicated in setup and
+  execution.
+
+  The method described here is applicable to situations in which the average maximum
+  queue per cycle is no more than about 20 to 25 veh/ln. When queues are long or the
+  demand to capacity ratio is near 1.0, care must be taken to continue the vehicle-in-queue
+  count past the end of the arrival count period, as detailed below. This requirement is for
+  consistency with the analytic delay equation used in the chapter text.
+
+  The method does not directly measure delay during deceleration and during a portion
+  of acceleration, which are very difficult to measure without sophisticated tracking
+  equipment. However, this method has been shown to yield a reasonable estimate of
+  control delay. The method includes an adjustment for errors that may occur when this
+  type of sampling technique is used, as well as an acceleration-deceleration delay
+  correction factor. The acceleration-deceleration factor is a function of the typical number
+  of vehicles in queue during each cycle and the normal free-flow speed when vehicles are
+  unimpeded by the signal.
+
+  Exhibit A16-1 is a worksheet that can be used for recording observations and
+  computation of average time-in-queue delay. Before beginning the detailed survey, the
+  observers need to make an estimate of the average free-flow speed during the study
+  period. Free-flow speed is the speed at which vehicles would pass unimpeded through
+  the intersection if the signal were green for an extended period. This speed may be
+  obtained by driving through the intersection a few times when the signal is green and
+  there is no queue and recording the speed at a location least affected by signal control.
+  Typically, the recording location should be upstream about midblock.
+
+Chapter 16 - Signalized Intersections  16-88
+Appendix A
+  Highway Capacity Manual 2000
+
+  EXHIBIT A16-1. INTERSECTION CONTROL DELAY WORKSHEET
+
+  INTERSECTION CONTROL DELAY WORKSHEET
+
+General Information  Site Information
+
+Analyst  _______________________________  Intersection  ____________________________
+Agency or Company  _______________________________  Area Type
+Date Performed  _______________________________  Jurisdiction  " CBD  " Other
+Analysis Time Period  _______________________________  Analysis Year
+  ____________________________
+
+  ____________________________
+
+Input Initial Parameters
+
+Number of lanes, N  ___________________  Total vehicles arriving, Vtot  ________________
+Free-flow speed, FFS (km/h)  ___________________  Stopped-vehicle count, Vstop  ________________
+Survey count interval, Is (s)  ___________________  Cycle length, C (s)  ________________
+
+Input Field Data
+
+  Number of Vehicles in Queue
+
+Clock  Cycle  Count Interval
+
+Time  Number  1  2  3  4  5  6  7  8  9  10
+
+Total
+
+Computations
+
+Total vehicles in queue, ∑Viq =  ______________  Number of cycles surveyed, Nc = Vstop  ______________
+  Fraction of vehicles stopping, FVS = Vtot  ______________
+Time-in-queue per vehicle, dvq = (Is * Vtot ∑Viq ) * 0.9 _____________ s  Accel/Decel correction delay, dad = FVS * CF  ______________ s
+  Vstop  __________________ s
+No. of vehicles stopping per lane each cycle = (N x N) _________c  Control delay/vehicle, d = dvq + dad
+
+Accel/Decel correction factor, CF (Ex. A16-2) ______________
+
+MEASUREMENT TECHNIQUE  Field procedure
+
+  The survey should begin at the start of the red phase of the lane group, ideally when
+there is no overflow queue from the previous green phase. There is a need for
+consistency with the analytic delay equation, which is based on delay to vehicles that
+arrive during the study period, not before. If the survey does start with an overflow
+queue, the overflow vehicles need to be excluded from subsequent queue counts.
+
+  Observer 1 performs the following tasks during the field study.
+
+  16-89  Chapter 16 - Signalized Intersections
+  Appendix A
+Highway Capacity Manual 2000
+
+  1. Keeps track of the end of standing queues for each cycle in the survey period by
+observing the last vehicle in each lane that stops because of the signal. This count
+includes vehicles arriving when the signal is actually green but stopped because vehicles
+in front have not yet started moving. For purposes of the survey, a vehicle is considered
+as having joined the queue when it approaches within one car length of a stopped vehicle
+and is itself about to stop. This definition is used because of the difficulty of keeping
+precise track of the moment when a vehicle comes to a stop. All vehicles that join a
+queue are then included in the vehicle-in-queue counts until they cross the stop line.
+
+  2. At regular intervals of between 10 and 20 s, records the number of vehicles in
+queue (e.g., using the countdown-repeat timer on a digital watch to signal the count time).
+The regular intervals should not be an integral divisor of the cycle length (e.g., if the
+cycle length is 120 s, 14-s or 16-s count intervals should be used, not 15-s intervals).
+Vehicles in queue are those that are included in the queue of stopping vehicles as defined
+in Step 1 and have not yet exited the intersection. For through vehicles, exiting the
+intersection can be considered to occur when the rear axle of a vehicle crosses the stop
+line. For turning vehicles, exiting the intersection occurs the instant a vehicle clears
+opposing through traffic or pedestrians to which it must yield and begins accelerating
+back to free-flow speed. Note that the vehicle-in-queue count often includes some
+vehicles that have regained speed but have not yet exited the intersection.
+
+  3. Enters the vehicle-in-queue counts in the appropriate box on the worksheet.
+Cycles of the survey period are listed in the second column of the sheet, after the column
+to record clock time every five cycles, and interval count identifiers are listed as column
+headings. For ease in conducting the study, the survey period is most conveniently
+defined as an integer number of cycles, though a precisely defined time length for the
+survey period (e.g., 15 min) can be used. The key point is that the end of the survey
+period must be clearly defined in advance since the last arriving vehicle or vehicles that
+stop in the period must be identified and counted until they exit the intersection, per the
+next step.
+
+  4. At the end of the survey period, continues taking vehicle-in-queue counts for all
+vehicles that arrived during the survey period until all of them have exited the
+intersection. This step requires mentally noting the last stopping vehicle that arrived
+during the survey period in each lane of the lane group and continuing the vehicle-in-
+queue counts until the last stopping vehicle or vehicles, plus all vehicles in front of the
+last stopping vehicles, exit the intersection. Stopping vehicles that arrive after the end of
+the survey period are not included in the final vehicle-in-queue counts.
+
+  Observer 2 performs the following study task.
+  1. During the entire survey period, maintains separate volume counts of total
+vehicles arriving during the survey period and total vehicles arriving during the survey
+period that stop one or more times. A vehicle stopping multiple times is counted only
+once as a stopping vehicle. Enters these volumes in the appropriate boxes on the
+worksheet.
+  Data reduction is accomplished with the following steps.
+  1. Sum each column of vehicle-in-queue counts, then sum the column totals for the
+entire survey period.
+  2. A vehicle recorded as part of a vehicle-in-queue count is in queue, on average, for
+the time interval between counts. The average time-in-queue per vehicle arriving during
+the survey period is estimated using Equation A16-1.
+
+   ∑V iq 
+  Time-in-queue per vehicle = ls *   *0.9  (A16-1)
+   V tot 
+
+where  = interval between vehicle-in-queue counts (s),
+  Is  = sum of vehicle-in-queue counts (veh),
+
+  ∑Viq
+
+Chapter 16 - Signalized Intersections  16-90
+Appendix A
+  Highway Capacity Manual 2000
+
+Vtot = total number of vehicles arriving during the survey period (veh), and
+0.9 = empirical adjustment factor.
+
+  The 0.9 adjustment factor accounts for the errors that may occur when this type of
+sampling technique is used to derive actual delay values, normally resulting in an
+overestimate of delay. Research has shown the correction required to be fairly consistent
+over a variety of conditions.
+
+  3. Compute the fraction of vehicles stopping and the average number of vehicles
+stopping per lane in each signal cycle, as indicated on the worksheet.
+
+  4. Using Exhibit A16-2, look up a correction factor appropriate to the lane group
+free-flow speed and the average number of vehicles stopping per lane in each cycle. This
+factor adds an adjustment for deceleration and acceleration delay, which cannot be
+measured directly with manual techniques.
+
+EXHIBIT A16-2. ACCELERATION-DECELERATION DELAY CORRECTION FACTOR, CF (s)
+
+Free-Flow Speed  ≤ 7 Vehicles  8 - 19 Vehicles  20 - 30 Vehiclesa
+  + 5
+  ≤ 60 km/h  + 7  + 2  - 1
+  > 60–71 km/h  + 9  + 4  + 2
+  > 71 km/h  + 7  + 5
+
+Note:
+a. Vehicle-in-queue counts in excess of about 30 vehicles per lane are typically unreliable.
+
+  5. Multiply the correction factor by the fraction of vehicles stopping, then add this
+product to the time-in-queue value of Step 2 to obtain the final estimate of control delay
+per vehicle.
+
+  Exhibit A16-3 presents a sample computation for a study site over a 15-min period,
+operating with a 115-s cycle over almost eight cycles. The exhibit is annotated to clarify
+the procedure. The 15-s count interval is not an integral divisor of the cycle length, thus
+eliminating potential survey bias due to queue buildup in a regular, cyclic pattern.
+
+  Exhibit A16-4 shows how the field study would have been finished if a queue still
+remained at the end of the 15-min study period. Only the vehicles that arrived during the
+15-min period would be counted.
+
+  If the study site is an actuated signal with varying cycle and phase lengths, the count
+interval may be chosen as the most convenient value for conducting the field survey on
+the basis of volume and vantage point considerations.
+
+  16-91  Chapter 16 - Signalized Intersections
+  Appendix A
+Highway Capacity Manual 2000
+
+  EXHIBIT A16-3. EXAMPLE APPLICATION
+
+  INTERSECTION CONTROL DELAY WORKSHEET
+
+  General Information  Site Information
+
+  Analyst  _______________________________  Intersection  ______C_ic_e_r_o_&__B_e_lm__o_n_t__________
+  Agency or Company  _______________________________  Area Type
+  Date Performed  _______________________________  Jurisdiction  " CBD  "X Other
+  Analysis Time Period  ___________P_M___________________  Analysis Year
+  _____________________________
+
+  ___________19__9_9_______________
+
+  Input Initial Parameters
+
+  Number of lanes, N  _______2____________  Total vehicles arriving, Vtot  _______5_3_0_______
+  Free-flow speed, FFS (km/h)  _______6_5___________  Stopped vehicles count, Vstop  _______2_2_3_______
+  Survey count interval, Is (s)  _______1_5___________  Cycle length, C (s)  ________________
+
+  Input Field Data
+
+  Number of Vehicles in Queue
+
+  Clock  Cycle  Count Interval
+
+  Time  Number  1  2  3  4  5  6  7  8  9  10
+
+  4:34  1  3  8  11  15  12  2  0  2
+
+  2  6  12  15  16  6  0  0  2
+
+  3  7  11  14  14  2  0  0
+
+  4  5  7  10  13  13  2  0  1
+
+  4:42  5  4  6  10  12  3  0  0  1
+
+  6  5  7  9  13  4  0  0
+
+  7  3  6  8  12  12  0  0  0
+
+  4:47  8  4  7  11  16  9  0
+
+  Total  37  64  88 111  61  4  0  6
+
+  Computations
+
+  Total vehicles in queue, ∑Viq =  _______3_7_1_____  Number of cycles surveyed, Nc = Vstop  ______7_.8_______
+  Fraction of vehicles stopping, FVS = Vtot  ______0_._4_2_____
+  Time-in-queue per vehicle, dvq = (Is * Vtot ∑Viq ) * 0.9 ______9_._5_____ s  Accel/Decel correction delay, dad = FVS * CF  ______1_.7_______ s
+  No. of vehicles stopping per lane each cycle = (NVsc xtopN) __1_4______  ________1_1._2________ s
+  Control delay/vehicle, d = dvq + dad
+  Accel/Decel correction factor, CF (Ex. A16-2) _______4_______
+
+Chapter 16 - Signalized Intersections  16-92
+Appendix A
+  Highway Capacity Manual 2000
+
+  EXHIBIT A16-4. EXAMPLE APPLICATION WITH RESIDUAL QUEUE AT END
+
+  INTERSECTION CONTROL DELAY WORKSHEET
+
+General Information  Site Information
+
+Analyst  _______________________________  Intersection  _______C_i_c_er_o__&_B_e_l_m_o_n_t_________
+Agency or Company  _______________________________  Area Type
+Date Performed  _______________________________  Jurisdiction  " CBD  "X Other
+Analysis Time Period  ____________P_M__________________  Analysis Year
+  _____________________________
+
+  ___________19__9_9_______________
+
+Input Initial Parameters
+
+Number of lanes, N  _______2____________  Total vehicles arriving, Vtot  ________________
+Free-flow speed, FFS (km/h)  _______6_5___________  Stopped-vehicle count, Vstop  ________________
+Survey count interval, Is (s)  _______1_5___________  Cycle length, C (s)  ________________
+
+Input Field Data
+
+  Number of Vehicles in Queue
+
+Clock  Cycle  Count Interval
+
+Time  Number  1  2  3  4  5  6  7  8  9  10
+
+4:47  8  4  7  11  16  9  0 Queue count in previous example
+
+4:47  8  4  4*  4*  4*  0  First four in queue have cleared by now
+
+  say 15 min. survey period ends here
+
+  4* - last stopping vehicles in survey period;
+  count only until they clear.
+
+Total  37  61  81  99  52  4  0  6
+
+Computations
+
+Total vehicles in queue, ∑Viq =  ______________  Number of cycles surveyed, Nc = Vstop  ______________
+  Fraction of vehicles stopping, FVS = Vtot  ______________
+Time-in-queue per vehicle, dvq = (Is * Vtot ∑Viq ) * 0.9 _____________ s  Accel/Decel correction delay, dad = FVS * CF  ______________ s
+  Vstop  __________________ s
+No. of vehicles stopping per lane each cycle = (N x N) _________c  Control delay/vehicle, d = dvq + dad
+
+Accel/Decel correction factor, CF (Ex. A16-2) ______________
+
+  APPENDIX B. SIGNAL TIMING DESIGN
+
+  The design for the operation of a traffic signal is a complex process involving three
+important decisions: type of signal controller to be used, phase plan to be adopted, and
+allocation of green time among the various phases.
+
+  Each of these three decisions is heavily influenced by state and local policies,
+guidelines, and standards. This appendix presents the alternatives available to the analyst
+
+  16-93  Chapter 16 - Signalized Intersections
+  Appendix A
+Highway Capacity Manual 2000
+
+Three types of controllers  along with a general discussion of the range in which they are employed. These
+defined:  discussions are intended only to assist the analyst in establishing an initial signal design
+  for study and do not represent established standards or guidelines.
+• fully actuated
+  TYPE OF SIGNAL CONTROLLER
+• semiactuated
+  Traffic engineering reference books describe three types of traffic signal controllers:
+• pretimed  pretimed, fully actuated, and semiactuated. Pretimed controllers have a preset sequence
+  of phases displayed in repetitive order. Each phase has a fixed green time and change
+  interval that are repeated in each cycle to produce a constant cycle length.
+
+  Fully actuated controllers operate with timing on all approaches being influenced by
+  vehicle detectors. Each phase is subject to a minimum and maximum green time, and
+  some phases may be skipped if no demand is detected. The cycle length for fully
+  actuated control will vary from cycle to cycle.
+
+  Semiactuated controllers operate with some approaches (typically on the minor
+  street) having detectors. The earliest form of semiactuated control was designed to
+  maintain the green on the major street in the absence of a minor-street actuation. Once
+  actuated, the minor-street green is displayed for a period just long enough to
+  accommodate the traffic demand.
+
+  Although these equipment-based definitions have persisted in traffic engineering
+  terminology, the evolution of traffic control technology has complicated their function
+  from the analyst’s perspective. For purposes of capacity and LOS analysis, it is no longer
+  sufficient to consider the controller type as a global descriptor of the intersection
+  operation. Instead, an expanded set of these definitions must be applied individually to
+  each lane group.
+
+  Each lane group may be served by a phase that is either actuated or nonactuated.
+  Nonactuated phases may be coordinated with neighboring signals on the same route, or
+  they may function in an isolated mode without influence from other signals. Nonactuated
+  phases generally operate with fixed minimum green times, which can be extended by
+  reassigning unused green time from actuated phases with low demand.
+
+  Actuated phases, on the other hand, may be used at intersections at which other
+  phases are coordinated, but they may not, for purposes of this chapter, be coordinated
+  themselves. Actuated phases are subject to being shortened on cycles with low demand.
+  On cycles with no demand, they may be skipped entirely, or they may be displayed for
+  their minimum duration. With systems in which the nonactuated phases are coordinated,
+  the actuated phases are also subject to early termination (force off) to accommodate the
+  progression design for the system.
+
+  If all of the phases at an intersection are nonactuated, the length of each phase, and
+  consequently the cycle length, will be fixed for purposes of analysis. This arrangement
+  denotes the condition of pretimed operation. In current practice, one or more phases
+  under this type of control will usually be coordinated. In general, if the intersection is
+  sufficiently removed from its neighbors to operate in an isolated mode, actuated operation
+  can produce lower delays and a better level of service. The methodology in this chapter
+  will indicate the degree to which vehicle delay may be reduced by actuated control.
+
+  If all of the phases at an intersection are actuated, the length of each phase, and
+  consequently the cycle length, will vary with each cycle. This arrangement denotes the
+  condition of fully actuated operation. No coordination with neighboring signals is
+  possible under this control mode. Fully actuated signals are generally used only at
+  intersections where distances are such that coordination would not be expected to be
+  beneficial or where, for administrative or cost reasons, it would not be expected to be
+  implemented. The analysis procedures prescribed previously in this chapter will support
+  an evaluation of the comparative benefits of coordinated operation versus actuated
+  operation.
+
+  The semiactuated control mode includes all of the cases that do not fit into either the
+  pretimed or fully actuated categories. The majority of coordinated signal systems must
+
+Chapter 16 - Signalized Intersections  16-94
+Appendix B
+  Highway Capacity Manual 2000
+
+be treated as systems of semiactuated controllers with coordinated nonactuated phases  Analysis procedures in this
+serving the major-street approaches and isolated actuated phases serving the cross-street  chapter are based on fixed
+approaches. The cycle length is constant at coordinated semiactuated intersections and  lengths of intervals and
+variable at isolated semiactuated intersections.  sequences of phases. Other
+  types of control are
+  The analysis procedures in this chapter are based on the assumption of a fixed  approximated.
+sequence of phases, each of which is displayed for a predictable time. In the case of
+pretimed control (i.e., no actuated phases), the length of each phase is assumed to be
+fixed and constant from cycle to cycle. Actuated phases must be approximated for
+analysis purposes by their average green time, recognizing that the actual time may differ
+from cycle to cycle. For a given timing plan (i.e., constant or average green times), the
+differences between actuated and nonactuated phases are recognized by the parameters
+used in the incremental term (d2) of the delay equation.
+
+PHASE PLANS
+
+  The most critical aspect of any design of signal timing is the selection of an
+appropriate phase plan. The phase plan comprises the number of phases to be used and
+the sequence in which they are implemented. As a general guideline, simple two-phase
+control should be used unless conditions dictate the need for additional phases. Because
+the change interval between phases contributes to lost time in the cycle, as the number of
+phases increases, the percentage of the cycle made up of lost time generally also
+increases.
+
+  Exhibit B16-1 shows a number of common phase plans that may be used with either
+pretimed or actuated controllers. Exhibit B16-2 illustrates an optional phasing scheme
+that typically can be implemented only with actuated controllers.
+
+  EXHIBIT B16-1. PHASE PLANS FOR PRETIMED AND TRAFFIC-ACTUATED CONTROL
+
+  Two phases
+
+  (a)  aa
+  Exclusive
+  left-turn  a
+  phase  a
+
+  Three phases  aa
+  aa
+  (b)
+  Leading/
+  lagging
+  green
+
+  overlapping phases
+
+  (c)
+  Four phases
+
+  Two left-turn phases
+
+  (d)
+Note:
+a. Optional movement.
+
+  16-95  Chapter 16 - Signalized Intersections
+  Appendix B
+Highway Capacity Manual 2000
+
+  EXHIBIT B16-2. DUAL-RING CONCURRENT PHASING SCHEME WITH ASSIGNED MOVEMENTS
+
+  1  2  RING 1 3  4
+
+  WBL  EBT  NBL  SBT
+
+  5 EBL  6 WBT  7  SBL  8 NBT
+
+  Left Side of Barrier  RING 2  Right Side of Barrier
+  (E-W Movements)  Barrier  (N-S Movements)
+
+It is common practice to  Two-Phase Control
+provide exclusive lanes
+for left or right turns with  Two-phase control is the simplest of the available phase plans. Each of two
+protected phases  intersecting streets is given a green phase during which all movements on the street are
+  allowed to proceed. All left and right turns are made on a permitted basis against an
+  opposing vehicle flow, pedestrian flow, or both. The two-phase plan is shown in Exhibit
+  B16-1(a). This phase plan is generally used unless turn volumes require protected
+  phasing.
+
+  Multiphase Control
+
+  Multiphase control is adopted at any intersection where one or more left or right
+  turns require protected phasing. It is generally the left-turn movement that requires a
+  partially or fully protected phase. Local policy and practice are critical determinants of
+  this need. Most agencies have guidelines for when left turns require protected phasing.
+  Protected left-turn phasing is also considered when the speed of opposing traffic is
+  greater than 65 km/h.
+
+  Multiphase control can be provided in a variety of ways, depending on the number of
+  turns requiring protected phasing and the sequence and overlaps used. Exhibit B16-1
+  presents three common plans for multiphase control. Exhibit B16-1(b) shows a three-
+  phase plan in which an exclusive left-turn phase is provided for both left-turn movements
+  on the major street. It is followed by a through phase for both directions of the major
+  street, during which left turns in both directions may be permitted on an optional basis.
+
+  The use of a permitted left-turn phase following protected left-turn phases is very
+  much a matter of local practice. The phasing illustrated in Exhibit B16-1(b) can be used
+  either for protected or protected-permitted operation in either mode. Note that a few
+  agencies use permitted-plus-protected phasing. Exclusive left-turn phases provide for
+  simultaneous movement of opposing left turns and are most efficient when the opposing
+  left-turn volumes are nearly equal. When volumes are unequal, or in cases in which only
+  one left turn requires protected phasing, other phase plans are more efficient.
+
+  The three-phase plan may be expanded to a four-phase sequence if both streets
+  require left-turn phases. Such a sequence is shown in Exhibit B16-1(d). Left turns may
+  be continued on a permitted basis concurrent with the through phases. It is common
+  practice to provide exclusive lanes for left or right turns with protected phases.
+
+  Exhibit B16-1(c) shows what is commonly referred to as leading and lagging green
+  phasing. The initial phase is a through plus left-turn phase for one direction of the major
+  street, followed by a through phase for both directions of the major street, during which
+  left turns in both directions may be permitted on an optional basis. Note that many
+  operating agencies do not, as a matter of policy, use the optional permitted left turn with
+  this type of phasing because of safety considerations. The direction of flow started in the
+
+Chapter 16 - Signalized Intersections  16-96
+Appendix B
+  Highway Capacity Manual 2000
+
+first phase is then stopped, providing the opposing direction with a through-plus-left-turn
+phase. The final phase accommodates all movements on the minor street.
+
+  Such phasing is extremely flexible. When only one left turn requires a protected
+phase, a leading green can be provided without a lagging green phase. When left-turn
+volumes are unequal, the lengths of the leading and lagging green can be adjusted to
+avoid excessive green time for one or both left-turn movements. Leading or lagging
+green phase, or both, can even be used where no left-turn exists as long as turns are
+permitted to continue during the through phase. The phasing of Exhibit B16-1(c) may
+also be expanded to incorporate leading or lagging green phases on both streets.
+
+  All of the phase plans discussed to this point can be implemented with pretimed or
+actuated controllers. The only difference in operation would be the manner in which
+green time is allocated to the various phases. For pretimed controllers, green times are
+preset, whereas for actuated controllers, green times vary on the basis of detector
+actuations.
+
+  At this point, it is necessary to recognize the differences in the way that modern
+traffic-actuated controllers actually implement the phase plan. Exhibit B16-1 depicts a
+single-ring, sequential representation of the phase plan, in which a signal phase is used to
+indicate the combination of all movements that are proceeding at a given point in time.
+Modern traffic-actuated controllers do not use this scheme. Instead, they implement a
+dual-ring concurrent phasing in which each phase controls only one movement, but two
+phases are generally being displayed concurrently.
+
+  The dual-ring concurrent concept is illustrated in Exhibit B16-2. Note that eight
+phases are shown, each of which accommodates one of the through or left-turning
+movements. A barrier separates the north-south phases from the east-west phases. Any
+phase in the top group (Ring 1) may be displayed with any phase in the bottom group
+(Ring 2) on the same side of the barrier without introducing traffic conflicts. For
+simplicity, the right turns are omitted and assumed to proceed with the through
+movements.
+
+  The definition of a phase as presented in Exhibit B16-2 is not consistent with that in
+Exhibit B16-1 nor with the definition given in Chapter 10. It is, however, a definition
+that is universally applied in the traffic control industry. It is the responsibility of the
+analyst to recognize which definition is applicable to any given situation. For purposes of
+the capacity and delay analysis procedures presented in the body of this chapter, each
+lane group is considered to be controlled separately by a phase with specified red, green,
+yellow, and all-red times, so either definition could apply. The examples shown
+throughout the chapter are based on the single-ring sequential concept. However, the
+dual-ring definition must be used for estimating the timing plan at traffic-actuated
+intersections using the procedure presented in this appendix.
+
+  The dual-ring phases that accommodate left turns will only be used if the left turns
+are protected. Left turns with compound protection will proceed with their concurrent
+through movements. For example, none of the left-turn phases would be used by a
+dual-ring controller to implement the two-phase plan shown in Exhibit B16-1(a). All of
+the other phase plan examples shown in Exhibit B16-1 may be created by selectively
+omitting left-turn phases and by reversing the order in which the through and left-turn
+phases are displayed in either ring.
+
+  The advantage of the dual-ring concept is that it is able to generate the optimal phase
+plan for each cycle in response to the traffic demand. Pretimed controllers, and earlier
+versions of traffic-actuated controllers, are more constrained in this regard. The
+maximum flexibility is provided by allowing the first (usually left-turn) phases in Rings 1
+and 2 to terminate independently after their respective demands have been satisfied.
+
+  It is also possible to constrain these phases to terminate simultaneously to emulate
+the older, less efficient equipment. For example, simultaneous termination of the
+northbound and southbound left-turn phases in Exhibit B16-2 would produce the phasing
+example shown in Exhibit B16-1(b). Independent termination of the two left turns would
+
+16-97  Chapter 16 - Signalized Intersections
+  Appendix B
+Highway Capacity Manual 2000
+
+Careful selection of a  introduce an overlap phase between the left-turn phase and the through-movement phase
+phase plan is necessary  in Exhibit B16-1(b). The overlap phase would accommodate the heavier volume of the
+to achieve efficient  two left turns together with the concurrent through movement, thereby making more
+operation  effective use of the cycle length. The degree of benefit obtained from phase overlaps of
+  this nature depends on the degree of difference in the opposing left-turn volumes.
+Equalizing the v/c ratios
+for critical lane groups is  The establishment of a phase plan is the most creative part of signal design and
+the simplest strategy and  deserves the careful attention of the analyst. A good phase plan can achieve efficiency in
+the only one that may be  the use of available space and time, whereas an inappropriate plan can cause inefficiency.
+calculated without  The phase plans presented and discussed in this appendix represent a sampling of the
+excessive iteration  more common forms used. They may be combined in a number of innovative ways on
+  various approaches of an intersection.
+
+  Again, local practice is an important determinant in the selection of a phase plan.
+  Phasing throughout an area should be relatively uniform. The introduction of the
+  protected-plus-permitted phasing at one location in an area where left turns are generally
+  handled in exclusive left-turn phases, for example, may confuse drivers. Thus, system
+  considerations should also be evaluated when phase plans are established.
+
+  ALLOCATION OF GREEN TIME
+
+  The allocation of green time is an important input to the methodology presented
+  earlier in this chapter for the estimation of delay. The average cycle length and effective
+  green time for each lane group must be defined. The most desirable way to obtain these
+  values is by field measurement; however, there are many cases in which field
+  measurement is not possible. For example, the comparison of hypothetical alternatives
+  precludes field measurements. Even for the evaluation of existing conditions, the
+  required data collection is beyond the resources of many agencies.
+
+  A procedure for estimating the signal timing characteristics is therefore an important
+  traffic analysis tool. Such a procedure is also useful in designing timing plans that will
+  optimize some aspect of the signal operation. In this respect, pretimed and actuated
+  control must be treated differently because the design and analysis objectives are
+  different. For pretimed control, the objective is to design an implementable timing plan
+  as an end product. In traffic-actuated control, the timing plan is generated by the
+  controller itself on the basis of operating parameters that are established for each phase.
+  This operation creates two separate objectives for traffic-actuated control. The first is to
+  determine how the controller will respond to a specified combination of operating
+  parameters and traffic conditions. The second is to provide some indication of the
+  optimal values for the key operating parameters.
+
+  TIMING PLAN DESIGN FOR PRETIMED CONTROL
+
+  The design of an implementable timing plan is a complex and iterative process that is
+  generally carried out with the assistance of computer software. Several software products
+  are available for this purpose, some of which employ, at least in part, the methodology of
+  this chapter.
+
+  Design Strategies
+
+  There are several aspects of signal timing design that are beyond the scope of this
+  manual. One such aspect is the choice of the timing strategy itself. Three basic strategies
+  are commonly used for pretimed signals.
+
+  Equalizing the v/c ratios for critical lane groups is the simplest strategy and the only
+  one that may be calculated without excessive iteration. It will be described briefly in this
+  appendix. It is also employed in the timing plan synthesis procedures of the planning
+  procedure presented in Chapter 10. Under this strategy, the green time is allocated
+  among the various signal phases in proportion to the flow ratio of the critical lane group
+  for each phase.
+
+Chapter 16 - Signalized Intersections  16-98
+Appendix B
+  Highway Capacity Manual 2000
+
+  Minimizing the total delay to all vehicles is generally proposed as the optimal  Minimizing the total delay to
+solution to the signal timing problem, often in combination with other measures such as  all vehicles is generally
+stops and fuel consumption. Many signal timing models offer this optimization feature.  proposed as the optimal
+Some use a delay estimation procedure identical to the methodology in this chapter,  solution to the signal timing
+whereas others employ minor departures from this method.  problem, often in combination
+  with other measures such as
+  Balancing the LOS for all critical lane groups promotes an LOS on all approaches  stops and fuel consumption
+that is consistent with the overall intersection LOS. Both of the other strategies tend to
+produce a higher delay per vehicle, and therefore a less favorable LOS, for the minor  Balancing the LOS for all
+movements at an intersection. This lack of balance in LOS for critical lane groups causes  critical lane groups promotes
+some difficulty in representing the overall intersection LOS.  an LOS on all approaches that
+  is consistent with the overall
+  intersection LOS
+
+Procedure for Equalizing Degree of Saturation
+
+  Once a phase plan and signal type have been established, signal timing may be
+estimated using Equations B16-1, B16-2, B16-3, and B16-4.
+
+  Xi = viC  (B16-1)
+  si gi
+
+  v   C 
+  Xc = ∑      (B16-2)
+  i  s  ci  C − L   (B16-3)
+  (B16-4)
+  C = LX c
+    v  
+  Xc − ∑   
+    i  s  ci 
+
+  gi =  viC v   C 
+  =   
+  si Xi  s  i  Xi 
+
+where  = cycle length (s);
+  C  = lost time per cycle (s);
+  L  = critical v/c ratio for the intersection;
+  Xc  = v/c ratio for lane group i (note that target v/c ratio is a user-specified
+  Xi
+  input with respect to this procedure; default value suggested is 0.90);
+  (v/s)i  = flow ratio for lane group i;
+  si  = saturation flow rate for lane group i (veh/h); and
+  gi  = effective green time for lane group i (s).
+
+Cycle lengths and green times may be estimated using these relationships, computed flow
+ratios, and desired v/c ratios.
+
+  For pretimed signals, fixed green times and cycle lengths may be estimated using
+Equations B16-3 and B16-4. The procedure will be illustrated using a sample
+calculation. Consider the two-phase signal shown in Exhibit B16-3. Flow ratios are
+shown, and it is assumed that lost times equal the change-and-clearance intervals, which
+are 4 s for each phase or 8 s/cycle.
+
+  The cycle length is computed from Equation B16-3 for the desired v/c ratio Xc,
+which must be selected by the analyst. The shortest cycle length that will avoid
+oversaturation may be computed by Equation B16-5 using Xc = 1.00:
+
+  C (minimum) = LX c  (B16-5)
+    v  
+  Xc − ∑   
+    i  s  ci 
+
+  C (minimum) = 8(1.0 ) [1.0 − (0.45 + 0.35 )] = 8 0. 2 = 40 s
+
+  16-99  Chapter 16 - Signalized Intersections
+  Appendix B
+Highway Capacity Manual 2000
+
+  EXHIBIT B16-3. SAMPLE TWO-PHASE SIGNAL
+
+  (.20)  North
+
+  (.40)
+  (.45)
+
+  ( ) = Flow ratio
+  E/W = Phase 1
+  N/S = Phase 2
+
+  (.35)
+
+  This cycle length has no direct value in the design of implementable timing plans;
+however, it is commonly used as a departure point for iterative procedures that seek to
+minimize or equalize delay among lane groups.
+
+  If a v/c ratio of no more than 0.8 were desired, the computation would become
+
+  C = 8(0.80 ) [0.8 − (0.45 + 0.35 )] = 6.4 0 = infinity
+
+  This computation indicates that a critical v/c ratio of 0.8 cannot be provided for a
+40-s cycle and the demand levels existing at the intersection. Any cycle length greater
+than 40 s may be selected. For purposes of illustration, assume a cycle length of 60 s. In
+all cases, the cycle length assumed would be rounded to the nearest 5 s for values
+between 30 and 90 s and to the nearest 10 s for higher values.
+
+  The actual critical v/c ratio provided by a 60-s cycle is given by Equation B16-6:
+
+  v   (B16-6)
+  ∑  C
+
+   s i
+
+  X c = i(C − L)
+
+  X c = (0.45 + 0.35 )(60 ) = 0.923
+  (60 − 8 )
+
+  A number of different policies may be employed in allocating the available green
+time. A common policy for two-phase signals is to allocate the green such that the v/c
+ratios for critical movements in each phase are equal. Thus, for the example problem, the
+v/c ratio for each phase would be 0.923, and green times are computed using Equation
+B16-7.
+
+  v   C   (B16-7)
+  gi =   *  
+
+   si  Xi 
+
+Chapter 16 - Signalized Intersections  16-100
+Appendix B
+  Highway Capacity Manual 2000
+
+  g1 = 0.45(60/0.923)  = 29.3 s
+  g2 = 0.35(60/0.923)  = 22.7 s
+
+Lost time  52.0 s
+  = 8.0 s
+
+  60.0 s
+
+Another common policy would be to allocate the minimum required green time to
+
+the minor approach and assign all remaining green to the major approach. In this case,
+
+the v/c ratio for Phase 2 would be 1.0, and
+
+g2 = 0.35(60/1.0) = 21.0 s
+
+g1 = 60 – 8 – 21 = 31.0 s
+
+  52.0 s
+
+Lost time  = 8.0 s
+
+  60.0 s
+
+  Note that in both cases the entire 60-s cycle is fully allocated among the green times
+and lost time.
+
+  The procedure for timing may be summarized as follows:
+  • Estimate the cycle length for full saturation using Equation B16-3 and Xc = 1.0.
+  • Estimate the cycle length for the desired critical v/c ratio, Xc, using Equation
+B16-3.
+  • From the results of the first two calculations, select an appropriate cycle length for
+the signal. When system constraints determine the cycle length, the first step and this
+step may be eliminated.
+  • Estimate the green times using Equation B16-4 and v/c ratios, Xi, appropriate to
+the proportioning policy adopted.
+  • Check the timing to ensure that the sum of green times and the lost time equals the
+cycle length. Include overlapping green times only once in this summation.
+
+TIMING PLAN ESTIMATION FOR TRAFFIC-ACTUATED CONTROL
+
+  This procedure encompasses both a traffic-actuated control model and an analytical
+structure for implementation of the model.
+
+Functional Requirements of Model
+
+  A practical traffic-actuated control model must be functionally capable of providing
+reasonable estimates of the operating characteristics of traffic-actuated controllers under
+the normal range of design configurations at both isolated and coordinated intersections.
+It must also be sensitive to common variations in design parameters. Examples of design
+parameters include
+
+  • Traffic-actuated controller settings (initial interval, allowable gap, maximum green
+time),
+
+  • Conventional actuated versus volume-density control strategies,
+  • Detector configuration (length and setback),
+  • Pedestrian timing (Walk and flashing Don’t Walk),
+  • Left-turn treatment (permitted, protected, permitted and protected, not opposed),
+and
+  • Left-turn phase position (leading or lagging).
+
+Data Requirements
+
+  The information that is already required by this chapter methodology is used to the
+extent possible to avoid the need for new data. Most of the additional data items relate to
+the operation of the controller itself. The model structure is based on the standard
+
+  16-101  Chapter 16 - Signalized Intersections
+  Appendix B
+

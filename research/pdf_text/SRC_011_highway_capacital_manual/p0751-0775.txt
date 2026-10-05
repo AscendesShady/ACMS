@@ -1,0 +1,1640 @@
+Highway Capacity Manual 2000
+
+  11. Compute fHV and vo for percent time-  fHV = 1 = 0. 935
+  spent-following in the opposing  1+ 0.14(1. 5 − 1) + 0.04(1.0 − 1)
+  direction (use Exhibit 20-10 and
+  Equations 20-4 and 20-14).  vo 400 = 479 pc/h
+  (0. 95)(0. 94)(0. 935)
+  12. Check vd and vo against the capacity
+  value of 1,700 pc/h.  1,263 pc/h < 1,700 pc/h
+  479 pc/h < 1,700 pc/h
+  13. Compute base percent time-spent-
+  following the analysis direction (use  BPTSFd = 1001− eavbd 
+  Exhibit 20-21 and Equation 20-17).
+  BPTSFd = 1001− e(−0.074)(1,263)0.453  = 84. 7%
+  14. Compute percent time-spent-following
+  for the analysis direction (use Exhibit  PTSFd = BPTSFd + fnp
+  20-20 and Equation 20-16).
+  PTSFd = 84.7 + 11.7 = 96.4%
+  15. Determine LOS (use Exhibit 20-3).
+  ATSd = 63.0 km/h and PTSFd = 96.4%
+  LOS E
+
+  Results The two-lane highway operates at LOS E in the analysis direction.
+
+  Other Performance Measures
+  v/c = vd = 1, 370 = 0. 81
+
+  1,700 1,700
+
+   Vd    1, 200 
+  VkmT15 = 0. 25Lt   = 0. 25(10)   = 3,158 veh-km
+   PHF    0. 95 
+
+  VkmT60 = Vd * Lt = (1, 200)(10) = 12,000 veh-km
+  TT15 = VkmT15 = 3,158 = 50.1 veh-h
+
+  ATSd 63.0
+
+Chapter 20 - Two-Lane Highways  20-40
+Example Problems
+  Highway Capacity Manual 2000
+
+  DIRECTIONAL TWO-LANE HIGHWAY SEGMENT WORKSHEET  Example Problem 3
+
+General Information  ________M__.E_.________________  Site Information  ___S_t_a__t_e_H__ig_h_w_a__y_4_5_______
+  ________C_E__I ________________  ___R_D__2_0__/_R_D__3_5___________
+Analyst  ________5_/_2_0__/9__9____________  Highway/Direction of Travel  _________________________
+Agency or Company  ___________________________  From/To  ___1_9_9_9___________________
+Date Performed  Jurisdiction
+Analysis Time Period  Analysis Year
+
+"X Operational (LOS)  " Design (vp)  " Planning (LOS)  " Planning (vp)
+
+Input Data
+
+  Shoulder width  ___1_.2____  m "X Class I highway Terrain " Level  " Class II highway
+  Opposing direction  Lane width  ___3__.3___  m  "X Rolling
+  Analysis direction  ___3__.3___  Grade Length ____km
+  Lane width  ___1_.2____  Up/down ____%
+  Shoulder width  m Show North Arrow Peak-hour factor, PHF  ___0_._9_5__
+  ___1_4____ %
+  m  % Trucks and buses, PT
+  PR ___4_____ %
+  % Recreational vehicles,  ___5_0____ %
+  ___1_2____/km
+  Segment length, Lt ____1_0___ km  % No-passing zone
+  volume, Vd _1,_2_0_0__veh/h Opposing direction
+Analysis  direction  volume, Vo  Access points/km
+  _4_0_0__veh/h
+
+Average Travel Speed
+
+Passenger-car equivalent for trucks, ET (Exhibit 20-9 or 20-15)  Analysis Direction (d)  Opposing Direction (o)
+Passenger-car equivalent for RVs, ER (Exhibit 20-9 or 20-17)  1.5  1.9
+Heavy-vehicle adjustment factor,5 fHV fHV = 1 1 + PT(ET - 1) + PR(ER - 1)  1.1  1.1
+Grade adjustment factor,1 fG (Exhibit 20-6 or 20-12)
+Directional flow rate,2 vi (pc/h) vi = V PHF * fiHV * fG  0.931  0.885
+  0.99  0.93
+  Free-Flow Speed from Field Measurement
+  1,370  512
+
+  Estimated Free-Flow Speed
+
+Field measured speed,3 SFM  __________________km/h  Base free-flow speed,3 BFFS  ____1_0_0_________km/h
+Observed volume,3 Vf  __________________veh/h
+  Adj. for lane width and shoulder width,3 fLS (Exh. 20-5) __2__.8__km/h
+Free-flow speed, FFSd Vf  __________________km/h  Adj. for access points,3 fA (Exhibit 20-6) ____8_._0_________km/h
+
+FFSd = SFM + 0.0125 ( fHV )  Free-flow speed, FFSd  ____8_9_._2________km/h
+
+  FFSd = BFFS – fLS – fA
+
+Adjustment for no-passing zones, fnp (km/h) (Exhibit 20-19)  2.7
+Average travel speed, ATSd (km/h) ATSd = FFSd – 0.0125(vd + vo) – fnp
+  63.0
+
+Percent Time-Spent-Following  Analysis Direction (d)  Opposing Direction (o)
+  1.0  1.5
+Passenger-car equivalent for trucks, ET (Exhibit 20-10 or 20-16)  1.0  1.0
+Passenger-car equivalent for RVs, ER (Exhibit 20-10 or 20-16)
+Heavy-vehicle adjustment factor, fHV fHV = 1 1 + PT(ET – 1) + PR(ER – 1)  1.000  0.935
+Grade adjustment factor,1 fG (Exhibit 20-8 or 20-14)  1.0  0.94
+Directional flow rate,2 vi (pc/h) vi = V PHF * fiHV * fG
+Base percent time-spent-following,4 BPTSFd (%)  1,263  479
+BPTSFd = 100(1 – eavdb)
+Adjustment for no-passing zone, fnp (Exhibit 20-20)  84.7
+Percent time-spent-following, PTSFd (%) PTSFd = BPTSFd + fnp
+  11.7
+  96.4
+
+Level of Service and Other Performance Measures
+
+Level of service, LOS (Exhibit 20-3 or 20-4)  E
+  vd  0.81
+Volume to capacity ratio, v/c  v/c = 1700
+  3,158
+Peak 15-min vehicle-kilometers of travel, VkmT15 (veh-km)  12,000
+VkmT15 = 0.25Lt( Vd )  50.1
+
+  PHF
+
+Peak-hour vehicle-kilometers of travel, VkmT60 (veh-km) VkmT60 = Vd * Lt
+Peak 15-min total travel time, TT15 (veh-h) TT15 = ATS VkmT15 d
+
+Notes
+
+1. If the highway is extended segment (level) or rolling terrain, fG = 1.0
+2. If vi (vd or vo) ≥ 1,700 pc/h, terminate analysis—the LOS is F.
+3. For the analysis direction only.
+4. Exhibit 20-21 provides factors a and b.
+5. Use alternative Equation 20-14 if some trucks operate at crawl speeds on a specific downgrade.
+
+  20-41  Chapter 20 - Two-Lane Highways
+  Example Problems
+Highway Capacity Manual 2000
+
+  EXAMPLE PROBLEM 4
+
+  The Highway A Class I two-lane highway segment described in Example Problem 3.
+  In this analysis, a 2-km passing lane is to be added beginning at a location 2 km
+  downstream from the beginning of the 10-km two-lane highway in the analysis direction.
+
+  The Question What is the LOS in the peak direction including the passing lane?
+
+  The Facts
+  √ All input parameters listed in Example Problem 3,
+  √ 2-km length of two-lane highway upstream of the passing lane, and
+  √ 2-km length of passing lane including tapers.
+
+  Outline of Solution The length of roadway expected to be affected downstream of the
+  passing lane will be determined. These lengths will be applied to the average travel speed
+  and percent time-spent-following without a passing lane to compute the average travel
+  speed and percent time-spent-following with the passing lane. Using these parameters,
+  the LOS will be determined.
+
+  Steps  Ld = Lt – (Lu + Lpl + Lde)
+  1. Compute Ld for average travel  Ld = 10 – (2 + 2 + 2.8) = 3.2 km
+
+  speed (use Exhibit 20-23 and  ATSpl =  ATSd * Lt
+  Equation 20-18).  Lpl 2Lde
+  2. Compute average travel speed of  Lu + Ld + +
+  the analysis direction including  fpl 1+ fpl
+  passing lane (use Exhibit 20-24
+  and Equation 20-21).  ATSpl =  63. 0(10)  = 65.2 km/h
+
+  3. Compute Ld for percent time-   2  2(2. 8)
+  spent-following (use Exhibit 20-23  2 + 3. 2 +   +
+  and Equation 20-18).   1.11 1+ 1.11
+
+  4. Compute percent time-spent-  Ld = Lt – (Lu + Lpl + Lde)
+  following of the analysis direction  Ld = 10 – (2 + 2 + 5.8) = 0.2 km
+  including passing lane (use
+  Exhibit 20-24 and Equation     1+ fpl  
+  20-19).  PTSFd Lu + Ld + fplLpl +    Lde 
+     2  
+  5. Determine LOS (use Exhibit  PTSFpl =
+  20-3).  Lt
+
+  96. 42 + 0. 2 + 0.62(2) +  1+ 0.62  
+   5. 8
+     2 
+  PTSFpl = 10 =
+
+  78.5%
+  ATSpl = 65.2 km/h and PTSFpl = 78.5%
+
+  LOS D
+
+  Results The two-lane highway operates at LOS D in the analysis direction with the
+  passing lane as compared to LOS E without the passing lane (from Example Problem 3).
+
+  Other Performance Measures
+  v/c = vd = 1, 370 = 0. 81
+
+  1,700 1,700
+
+   Vd    1, 200 
+  VkmT15 = 0. 25Lt   = 0. 25(10)   = 3,158 veh-km
+   PHF    0. 95 
+
+Chapter 20 - Two-Lane Highways  20-42
+Example Problems
+  Highway Capacity Manual 2000
+
+VkmT60 = Vd * Lt = (1, 200)(10) = 12,000 veh-km
+TT15 = VkmT15 = 3,158 = 48.4 veh-h
+
+  ATSpl 65. 2
+
+DIRECTIONAL TWO-LANE HIGHWAY SEGMENT WITH PASSING LANE WORKSHEET  Example Problem 4
+
+General Information  Site Information
+
+Analyst  _______M_._E_.______________  Highway/Direction of Travel  __S_t_a__t_e_H__ig_h_w_a__y_4_5______
+Agency or Company  _______C_E_I_______________  From/To  __R_D__2_0__/_R_D__3_5__________
+Date Performed  _______5_/_2_0_/_9_9___________  Jurisdiction  _______________________
+Analysis Time Period  ________________________  Analysis Year  __1_9_9_9__________________
+
+X" Operational (LOS)  " Design (vp)  " Planning (LOS)  " Planning (vp)
+Input Data
+  "X Class I highway  " Class II highway
+
+  Opposing direction  Show North Arrow
+  Analysis direction
+
+  Lu  Lpl  Lde  Ld
+
+  Lt  10
+  2
+Total length of analysis segment, Lt (km)  2
+Length of two-lane highway upstream of the passing lane, Lu (km)  63.0
+Length of passing lane including tapers, Lpl (km)  96.4
+Average travel speed, ATSd (from Directional Two-Lane Highway Segment  E
+Worksheet)
+  2.8
+Percent time-spent-following, PTSFd (from Directional Two-Lane Highway  3.2
+Segment Worksheet)  1.11
+Level of service,1 LOSd (from Directional Two-Lane Highway Segment
+Worksheet)  65.2
+
+Average Travel Speed  5.8
+  0.2
+Downstream length of two-lane highway within effective length of passing  0.62
+
+lane for average travel speed, Lde (km) (Exhibit 20-23)  78.5
+
+Length of two-lane highway downstream of effective length of the passing  D
+  48.4
+lane for average travel speed, Ld (km) Ld = Lt – (Lu + Lpl + Lde)
+
+Adj. factor for the effect of passing lane on average speed, fpl
+(Exhibit 20-24)
+
+Average travel speed including passing lane,2 ATSpl
+  ATSd * Lt
+ATSpl =  Lpl 2Lde
+  Lu + Ld + fpl + 1 + fpl
+
+Percent Time-Spent-Following
+Downstream length of two-lane highway within effective length of passing
+lane for percent time-spent-following, Lde (km) (Exhibit 20-23)
+Length of two-lane highway downstream of effective length of the passing
+lane for percent time-spent-following, Ld (km) Ld = Lt – (Lu + Lpl + Lde)
+Adj. factor for the effect of passing lane on percent time-spent-following,
+fpl (Exhibit 20-24)
+Percent time-spent-following including passing lane,3 PTSFpl (%)
+
+  ( ) PTSF PTSF pl = d Lu + Ld + fplLpl + 1 + fpl 2 Lde
+  Lt
+Level of Service and Other Performance Measures 4
+
+Level of service including passing lane, LOSpl (Exhibits 20-3 or 20-4)
+
+Peak 15-min total travel time, TT15 (veh-h) TT15 = VkmT ATS 15 pl
+
+Notes
+1. If LOSd = F, passing lane analysis cannot be performed.
+2. If Ld < 0, use alternative Equation 20-22.
+3. If Ld < 0, use alternative Equation 20-20.
+4. v/c, VkmT15, and VkmT60 are calculated on Directional Two-Lane Highway Segment Worksheet.
+
+  20-43  Chapter 20 - Two-Lane Highways
+  Example Problems
+Highway Capacity Manual 2000
+
+  V. REFERENCES
+  1. Harwood, D. W., A. D. May, I. B. Anderson, L. Leiman, and A. R. Archilla.
+
+  Capacity and Quality of Service of Two-Lane Highways. Final Report, NCHRP
+  Project 3-55(3), Midwest Research Institute, 1999.
+  2. Robertson, H. Douglas (ed.) Manual of Transportation Engineering Studies.
+  Prentice-Hall, Washington, D.C., 1994.
+  3. Harwood, D. W., and C. J. Hoban. Low Cost Methods for Improving Traffic
+  Operations on Two-Lane Roads—Informational Guide. Report FHWA-IP-87/2,
+  Federal Highway Administration, U.S. Department of Transportation, January
+  1987.
+  4. American Association of State Highway and Transportation Officials. A Policy on
+  Geometric Design of Highways and Streets. Washington, D.C., 1994.
+
+  APPENDIX A. DESIGN AND OPERATIONAL TREATMENTS
+
+  Two-lane highways comprise approximately 80 percent of all paved rural highways
+  in the United States but carry only about 30 percent of all traffic. For the most part, two-
+  lane highways carry light volumes and experience few operational problems. Some two-
+  lane highways, however, periodically experience significant operational and safety
+  problems due to a variety of traffic, geometric, and environment causes. Such highways
+  may require design or operation improvements to alleviate congestion.
+
+  When traffic operational problems occur on a two-lane highway, many highway
+  agencies consider widening the highway to four lanes. Another effective method for
+  alleviating operational problems on two-lane highways is to provide passing lanes at
+  intervals in each direction of travel or to provide climbing lanes on steep upgrades.
+  Passing and climbing lanes cannot increase the capacity of a two-lane highway but can
+  improve its level of service. Short sections of four-lane highway can function as a pair of
+  passing lanes in opposite directions of travel. Operational analysis procedures for passing
+  and climbing lanes on two-lane highways are included in this chapter.
+
+  There are a number of other design and operational treatments that are effective in
+  alleviating operational congestion on two-lane highways. These include
+
+  • Turnouts,
+  • Shoulder use,
+  • Wide cross sections,
+  • Intersection turn lanes, and
+  • Two-way left-turn lanes.
+  No calculation methodologies are provided in this chapter for these treatments; however,
+  the treatments are discussed below to indicate their potential for improving traffic
+  operations on two-lane highways.
+
+  TURNOUTS
+
+  A turnout is a widened, unobstructed shoulder area on a two-lane highway that
+  allows slow-moving vehicles to pull out of the through lane so that vehicles following
+  may pass. Turnouts are relatively short, generally less than 190 m. At a turnout, the
+  driver of a slow-moving vehicle that is delaying one or more following vehicles is
+  expected to pull out of the through lane, allowing the vehicles to pass. The driver of the
+  slow-moving vehicle is expected to remain in the turnout only long enough for the
+  following vehicles to pass and then should return to the through lane. When there are
+  only one or two following vehicles, this maneuver usually can be completed smoothly
+  and there is no need for the vehicle to stop in the turnout. When there are three or more
+
+Chapter 20 - Two-Lane Highways  20-44
+References
+  Highway Capacity Manual 2000
+
+following vehicles, however, the vehicle in the turnout will usually need to stop so that all
+of the following vehicles may pass. Signs inform motorists of the turnout’s location and
+reinforce the legal requirements concerning turnout use.
+
+  Turnouts have been used in several countries to provide additional passing
+opportunities on two-lane highways. In the United States, turnouts have been used most
+extensively in the western states. Exhibit A20-1 illustrates a typical turnout.
+
+ EXHIBIT A20-1. TYPICAL TURNOUT TO INCREASE PASSING OPPORTUNITIES ON A TWO-LANE HIGHWAY
+
+  Turnouts may be used on nearly any type of two-lane highway that offers limited
+passing opportunities. Most often they appear on lower-volume highways in level or
+rolling terrain, on which long platoons are rare, and on difficult terrain with steep grades
+or with isolated slow-moving vehicles because the construction of a passing or climbing
+lane may not be cost-effective. To avoid confusing drivers, turnouts and passing lanes
+should not be intermixed on the same highway.
+
+  A single well-designed and well-located turnout can be expected to provide 20 to 50
+percent of the number of passes that would occur in a 1.6-km passing lane in level terrain
+(1, 2). Turnouts have been found to operate safely—according to safety researchers
+turnout accidents occur at a rate of only 1 per 80,000 to 400,000 users (2–4).
+
+SHOULDER USE
+
+  The primary purpose of the shoulder on a two-lane highway is to provide a stopping
+and recovery area for disabled or errant vehicles. However, paved shoulders also may be
+used to increase passing opportunities on a two-lane highway.
+
+  In some parts of the United States and Canada, if the paved shoulders are adequate,
+there is a longstanding custom for slower vehicles to move to the shoulder when another
+vehicle approaches from the rear and then return to the travel lane once the passing
+vehicle has cleared. This custom is regarded as a courtesy and requires little or no
+sacrifice in speed by either motorist. In this way, paved shoulders can function as
+continuous turnouts. A few highway agencies encourage drivers of slow-moving vehicles
+to use the shoulder in this way because it improves the LOS of two-lane highways
+without the expense of adding passing lanes or widening the highway. On the other hand,
+many highway agencies discourage this practice because their shoulders are not designed
+for frequent use by heavy vehicles.
+
+  One highway agency in the western United States generally does not permit shoulder
+use by slow-moving vehicles but designates specific sections on which the shoulder may
+be used by slow-moving vehicles. These shoulder-use sections range in length from 0.3
+to 5.0 km and are identified by traffic signs.
+
+  Research has shown that a shoulder-use section is about 20 percent as effective in
+reducing platoons as a passing lane of comparable length (1, 2).
+
+WIDE CROSS SECTIONS
+
+  Two-lane highways with lanes about 50 percent wider than normal have been used in
+several European countries as a less expensive alternative to passing lanes. Sweden, for
+example, has built approximately 800 km of roadways with two 5.5-m travel lanes and
+relatively narrow 1.0-m shoulders. The wider lane permits faster vehicles to pass slower
+vehicles while encroaching only slightly on the opposing lane of traffic. Opposing
+vehicles must move toward the shoulder to permit such maneuvers. Roadway sections
+with wider lanes can be provided at intervals, like passing lanes, to increase passing
+opportunities on two-lane highways.
+
+20-45  Chapter 20 - Two-Lane Highways
+  Appendix A
+Highway Capacity Manual 2000
+
+  Research has found that speeds at low traffic volumes tend to increase on wider
+  lanes, but the effect on speeds at higher volumes varies (5). More than 70 percent of
+  drivers indicated that they appreciate the increased passing opportunities on the wider
+  lanes. No safety problems have been associated with the wider lanes (5).
+
+  Formal procedures have not yet been established for evaluating the traffic operational
+  effectiveness of wider lanes in increasing the passing opportunities on a two-lane
+  highway. It is reasonable to estimate the traffic operational performance of a directional
+  two-lane highway segment containing a section with widened lanes as midway between
+  the same segment with and without a passing lane of comparable length.
+
+  INTERSECTION TURN LANES
+
+  Intersection turn lanes are desirable at selected locations on two-lane highways to
+  reduce delays to through vehicles caused by turning vehicles and to reduce accidents
+  related to turning. Separate right-turn and left-turn lanes may be provided, as appropriate,
+  to remove turning vehicles from the through-travel lanes. Left-turn lanes, in particular,
+  provide a protected location for turning vehicles to wait for a gap in opposing traffic.
+  This reduces the potential for collisions from the rear and also may encourage drivers of
+  left-turning vehicles to wait for an adequate gap in opposing traffic before turning.
+  Exhibit A20-2 shows a typical two-lane highway intersection with left-turn lanes.
+
+  EXHIBIT A20-2. TYPICAL TWO-LANE HIGHWAY INTERSECTION WITH LEFT-TURN LANES
+
+  Research recommends specific traffic operational warrants for left-turn lanes at
+  intersections on two-lane highways based on the directional volumes and the percentage
+  of left turns (6). Intersection analysis with the methodologies of Chapter 16 for
+  signalized intersections and Chapter 17 for unsignalized intersections can be used to
+  quantify the effects of intersection turn lanes on delay at the intersection. There is no
+  general methodology for estimating the effect of intersection turn lanes in increasing
+  speed or reducing delay on the two-lane highway downstream. However, modeling of
+  intersection delays shows the relative magnitude of likely effects of turning delays on
+  percent time-spent-following (7); the results are shown in Exhibit A20-3. The top line in
+  the exhibit shows that turning vehicles can increase percent time-spent-following
+  substantially over a short road section. However, when these effects are averaged over a
+  longer road section, the increase in percent time-spent-following is greatly reduced, as
+  indicated by the dashed line in the exhibit. Provision of intersection turn lanes has the
+  potential to minimize these delays.
+
+  Several highway agencies in the United States provide shoulder bypass lanes at
+  three-leg intersections as a low-cost alternative to a left-turn lane. As shown in Exhibit
+  A20-4, a portion of the paved shoulder opposite the minor-road leg may be marked as a
+  lane for through traffic to bypass vehicles that are slowing or stopped to make a left turn.
+  Shoulder bypass lanes may be appropriate for intersections that do not have volumes high
+  enough to warrant a left-turn lane.
+
+  The delay reduction benefits of shoulder bypass lanes have not been quantified, but
+  field studies have indicated that 97 percent of drivers who need to avoid delay will make
+
+Chapter 20 - Two-Lane Highways  20-46
+Appendix A
+  Highway Capacity Manual 2000
+
+use of an available shoulder bypass lane. One state has reported a marked decrease in
+rear-end collisions after shoulder bypass lanes were provided (8).
+
+EXHIBIT A20-3.  EFFECT OF TURNING DELAYS AT INTERSECTIONS ON PERCENT TIME-SPENT-FOLLOWING
+  100  IN A TWO-LANE HIGHWAY
+  90
+  0.8-km section with 20% left turns at one location
+  0.8-km section with 20% left turns at two locations
+  Normal two-lane, two-way segment
+
+  80
+
+Percent Time-Spent-Following  70
+
+  60
+
+  50
+  40
+
+  30
+  20
+
+  10
+
+  0
+
+  0  200 400 600 800 1000 1200 1400 1600 1800 2000
+
+  Two-Way Flow Rate (veh/h)
+
+Source: Hoban (7).
+
+EXHIBIT A20-4. TYPICAL SHOULDER BYPASS LANE AT A THREE-LEG INTERSECTION ON A TWO-LANE
+  HIGHWAY
+
+  Approach  Approach  Departure  Departure
+  taper  lane  lane  taper
+
+TWO-WAY LEFT-TURN LANES
+
+  A two-way left-turn lane (TWLTL) is a paved area in the highway median that
+extends continuously along a roadway section and is marked to provide a deceleration
+and storage area, for vehicles traveling in either direction and making left turns at
+intersections and driveways. TWLTLs have been used for many years on urban and
+suburban streets with high driveway densities and turning demands to improve safety and
+reduce delays to through vehicles. TWLTLs also can be used on two-lane highways in
+rural and urban fringe areas to obtain these same types of operational and safety benefits.
+Exhibit A20-5 illustrates a typical TWLTL on a two-lane highway.
+
+  20-47  Chapter 20 - Two-Lane Highways
+  Appendix A
+Highway Capacity Manual 2000
+  EXHIBIT A20-5. TYPICAL TWO-WAY LEFT-TURN LANE ON A TWO-LANE HIGHWAY
+
+  There is no formal methodology for evaluating the traffic operational effectiveness of
+  TWLTLs on two-lane highways. Research has found that the delay reduction provided
+  by a TWLTL depends on both the left-turn demand and the opposing traffic volume (2).
+  Without a TWLTL or other left-turn treatment, vehicles that are slowing or stopped to
+  make a left turn may create delays for following through vehicles. A TWLTL minimizes
+  these delays and makes the roadway section operate more like two-way and directional
+  segments with 100 percent no-passing zones. These research results apply to sites that do
+  not have paved shoulders available for following vehicles to bypass turning vehicles.
+  Paved shoulders may alleviate as much of the delay as a TWLTL.
+
+  Research has found little delay reduction at rural TWLTL sites with traffic volumes
+  below 300 veh/h in one direction of travel (2). At several low-volume sites, no reduction
+  was observed. The highest delay reduction observed was 3.4 s per left-turning vehicle.
+  At low-volume rural sites, therefore, TWLTLs generally should be considered for
+  reducing accidents but should not be expected to increase the operational performance of
+  the highway.
+
+  At higher-volume urban fringe sites, greater delay reduction was found with
+  TWLTLs on a two-lane highway. Exhibit A20-6 shows the expected delay reduction per
+  left-turning vehicle as a function of opposing volume. As the delay reduction increases, a
+  TWLTL can be justified for improving both traffic operation and safety.
+
+  EXHIBIT A20-6.  ESTIMATED DELAY REDUCTION WITH A TWO-WAY LEFT-TURN LANE ON A TWO-LANE
+  HIGHWAY WITHOUT PAVED SHOULDERS
+  100
+  90  Upper limit
+
+  Delay Reduction, DR (s/left-turning vehicle)  80
+
+  70
+
+  60
+
+  50
+
+  40  Typical
+
+  30
+
+  20
+
+  10  Lower limit
+  100 200 300 400 500 600 700 800 900 1000
+  0
+  0
+
+  Opposing Volume, Vo (veh/h)
+
+  Note:
+  DR = –6.87 + 0.058Vo
+  Source: Harwood and St. John (2).
+
+Chapter 20 - Two-Lane Highways  20-48
+Appendix A
+  Highway Capacity Manual 2000
+
+  REFERENCES
+1. Harwood, D. W., and C. J. Hoban. Low Cost Methods for Improving Traffic
+
+  Operations on Two-Lane Roads—Informational Guide. Report FHWA-IP-87/2,
+  Federal Highway Administration, U.S. Department of Transportation, January
+  1987.
+2. Harwood, D. W., and A. D. St. John. Passing Lanes and Other Operational
+  Improvements on Two-lane Highways. Report FHWA/RD-85/028, Federal
+  Highway Administration, U.S. Department of Transportation, July 1984.
+3. Rooney, F. D. Turnouts—Summary Report: Traffic Operational Report No. 1.
+  California Department of Transportation, Sacramento, November 1976.
+4. Rooney, F.D. Turnouts: Traffic Operational Report No. 2. California Department
+  of Transportation, Sacramento, November 1976.
+5. Bergh, T. A2+1 Roads with Cable Barrier for Improved Traffic Safety.
+  Proceedings of the Third International Symposium on Highway Capacity, Road
+  Directorate, Ministry of Transport, Denmark, June 1998.
+6. Harmelink, M. D. Volume Warrants for Left-Turn Storage Lanes at Unsignalized
+  Grade Intersections. In Highway Research Record 211, Highway Research Board,
+  1967, pp. 1–18.
+7. Hoban, C. J. A Model for Predicting Turning and Platooning Delays. Internal
+  Report AIR 359-16, Australian Road Research Board, 1986.
+8. Sebastian, O. L., and R. S. Pusey. Paved-Shoulder Left-Turn By-Pass Lanes: A
+  Report on the Delaware Experience. Delaware Department of Transportation,
+  October 1982.
+
+  APPENDIX B. WORKSHEETS
+
+  TWO-WAY TWO-LANE HIGHWAY SEGMENT WORKSHEET
+
+  DIRECTIONAL TWO-LANE HIGHWAY SEGMENT WORKSHEET
+
+  DIRECTIONAL TWO-LANE HIGHWAY SEGMENT WITH PASSING LANE WORKSHEET
+
+20-49  Chapter 20 - Two-Lane Highways
+  Appendix A
+Highway Capacity Manual 2000
+
+  TWO-WAY TWO-LANE HIGHWAY SEGMENT WORKSHEET
+
+General Information  Site Information
+
+Analyst  ___________________________  Highway  ___________________________
+Agency or Company  ___________________________  From/To  ___________________________
+Date Performed  ___________________________  Jurisdiction  ___________________________
+Analysis Time Period  ___________________________  Analysis Year  ___________________________
+
+" Operational (LOS)  " Design (vp)  " Planning (LOS)  " Planning (vp)
+
+Input Data
+
+  " Class I highway  " Class II highway
+
+  Shoulder width  ________ m  Terrain  " Level  " Rolling
+  Lane width  ________ m
+  Two-way hourly volume ________ veh/h
+  Lane width  ________ m
+  Shoulder width  ________ m  Show North Arrow  Directional split ______ /_____
+
+  Peak-hour factor, PHF ________
+
+  % Trucks and buses, PT ________ %
+
+  Segment length, Lt _________ km  % Recreational vehicles, PR ________ %
+
+  % No-passing zone  ________ %
+
+  Access points/km  ________/km
+
+Average Travel Speed
+
+Grade adjustment factor, fG (Exhibit 20-7)
+
+Passenger-car equivalents for trucks, ET (Exhibit 20-9)
+
+Passenger-car equivalents for RVs, ER (Exhibit 20-9)
+Heavy-vehicle adjustment factor, fHV fHV = 1 1 + PT(ET – 1) + PR(ER – 1)
+Two-way flow rate,1 vp (pc/h)  vp = V PHF * fG * fHV
+
+vp * highest directional split proportion2 (pc/h)
+
+Free-Flow Speed from Field Measurement  Estimated Free-Flow Speed
+
+Field measured speed, SFM  __________________km/h  Base free-flow speed, BFFS  _______________km/h
+Observed volume, Vf  __________________veh/h
+  Adj. for lane width and shoulder width, fLS (Exhibit 20-5) _____km/h
+
+Free-flow speed, FFS Vf  __________________km/h  Adj. for access points, fA (Exhibit 20-6) _______________km/h
+
+FFS = SFM + 0.0125( f )  Free-flow speed, FFS  _______________km/h
+  HV
+  FFS = BFFS – fLS – fA
+Adj. for no-passing zones, fnp (km/h) (Exhibit 20-11)
+Average travel speed, ATS (km/h) ATS = FFS – 0.0125vp – fnp
+
+Percent Time-Spent-Following
+
+Grade adjustment factor, fG (Exhibit 20-8)
+
+Passenger-car equivalents for trucks, ET (Exhibit 20-10)
+
+Passenger-car equivalents for RVs, ER (Exhibit 20-10)
+Heavy-vehicle adjustment factor, fHV fHV = 1 1 + PT(ET – 1) + PR(ER – 1)
+  vp = V PHF * fG * fHV
+Two-way flow rate,1 vp (pc/h)
+
+vp * highest directional split proportion2 (pc/h)
+
+Base percent time-spent-following, BPTSF (%)
+BPTSF = 100(1 – e–0.000879vp)
+
+Adj. for directional distribution and no-passing zone, fd/np (%)
+(Exhibit 20-12)
+
+Percent time-spent-following, PTSF (%) PTSF = BPTSF + fd/np
+
+Level of Service and Other Performance Measures
+
+Level of service, LOS (Exhibit 20-3 for Class I or 20-4 for Class II)
+
+  vp
+
+Volume to capacity ratio, v/c v/c = 3,200
+Peak 15-min vehicle-kilometers of travel, VkmT15 (veh-km)
+
+VkmT15 = 0.25Lt(PHF V )
+
+Peak-hour vehicle-kilometers of travel, VkmT60 (veh-km) VkmT60 = V * Lt
+Peak 15-min total travel time, TT15 (veh-h) TT15 = VkmT ATS15
+
+Notes
+
+1. If vp ≥ 3,200 pc/h, terminate analysis—the LOS is F.
+2. If highest directional split vp ≥ 1,700 pc/h, terminate analysis—the LOS is F.
+
+Chapter 20 - Two-Lane Highways
+  Highway Capacity Manual 2000
+
+  DIRECTIONAL TWO-LANE HIGHWAY SEGMENT WORKSHEET
+
+General Information  ___________________________  Site Information  _________________________
+  ___________________________  _________________________
+Analyst  ___________________________  Highway/Direction of Travel  _________________________
+Agency or Company  ___________________________  From/To  _________________________
+Date Performed  Jurisdiction
+Analysis Time Period  Analysis Year
+
+" Operational (LOS)  " Design (vp)  " Planning (LOS)  " Planning (vp)
+
+Input Data
+
+  Shoulder width  ________  m " Class I highway Terrain " Level  " Class II highway
+  Opposing direction  Lane width  ________  m  " Rolling
+  Analysis direction  Grade Length ____km
+  Lane width  ________  Up/down ____%
+  Shoulder width  ________  m Show North Arrow Peak-hour factor, PHF  ________
+  ________ %
+  m  % Trucks and buses, PT
+  PR ________ %
+  % Recreational vehicles,  ________ %
+  ________/km
+  Segment length, Lt ________ km  % No-passing zone
+  volume, Vd ______veh/h Opposing direction
+Analysis  direction  volume, Vo  Access points/km
+  _____veh/h
+
+Average Travel Speed
+
+  Analysis Direction (d)  Opposing Direction (o)
+
+Passenger-car equivalent for trucks, ET (Exhibit 20-9 or 20-15)  Estimated Free-Flow Speed
+Passenger-car equivalent for RVs, ER (Exhibit 20-9 or 20-17)
+Heavy-vehicle adjustment factor,5 fHV fHV = 1 1 + PT(ET - 1) + PR(ER - 1)
+Grade adjustment factor,1 fG (Exhibit 20-6 or 20-12)
+Directional flow rate,2 vi (pc/h) vi = V PHF * fiHV * fG
+
+  Free-Flow Speed from Field Measurement
+
+Field measured speed,3 SFM  __________________km/h  Base free-flow speed,3 BFFS  _______________km/h
+Observed volume,3 Vf  __________________veh/h
+  Adj. for lane width and shoulder width,3 fLS (Exh. 20-5) ______km/h
+Free-flow speed, FFSd Vf  __________________km/h  Adj. for access points,3 fA (Exhibit 20-6) _______________km/h
+
+FFSd = SFM + 0.0125 ( fHV )  Free-flow speed, FFSd  _______________km/h
+
+  FFSd = BFFS – fLS – fA
+
+Adjustment for no-passing zones, fnp (km/h) (Exhibit 20-19)
+Average travel speed, ATSd (km/h) ATSd = FFSd – 0.0125(vd + vo) – fnp
+
+Percent Time-Spent-Following  Analysis Direction (d)  Opposing Direction (o)
+
+Passenger-car equivalent for trucks, ET (Exhibit 20-10 or 20-16)
+Passenger-car equivalent for RVs, ER (Exhibit 20-10 or 20-16)
+Heavy-vehicle adjustment factor, fHV fHV = 1 1 + PT(ET – 1) + PR(ER – 1)
+Grade adjustment factor,1 fG (Exhibit 20-8 or 20-14)
+Directional flow rate,2 vi (pc/h) vi = V PHF * fiHV * fG
+Base percent time-spent-following,4 BPTSFd (%)
+BPTSFd = 100(1 – eavdb)
+Adjustment for no-passing zone, fnp (Exhibit 20-20)
+Percent time-spent-following, PTSFd (%) PTSFd = BPTSFd + fnp
+
+Level of Service and Other Performance Measures
+
+Level of service, LOS (Exhibit 20-3 or 20-4)
+  vd
+Volume to capacity ratio, v/c  v/c = 1700
+
+Peak 15-min vehicle-kilometers of travel, VkmT15 (veh-km)
+VkmT15 = 0.25Lt( Vd )
+
+  PHF
+
+Peak-hour vehicle-kilometers of travel, VkmT60 (veh-km) VkmT60 = Vd * Lt
+Peak 15-min total travel time, TT15 (veh-h) TT15 = ATS VkmT15 d
+
+Notes
+
+1. If the highway is extended segment (level) or rolling terrain, fG = 1.0
+2. If vi (vd or vo) ≥ 1,700 pc/h, terminate analysis—the LOS is F.
+3. For the analysis direction only.
+4. Exhibit 20-21 provides factors a and b.
+5. Use alternative Equation 20-14 if some trucks operate at crawl speeds on a specific downgrade.
+
+  Chapter 20 - Two-Lane Highways
+Highway Capacity Manual 2000
+
+DIRECTIONAL TWO-LANE HIGHWAY SEGMENT WITH PASSING LANE WORKSHEET
+
+General Information  Site Information
+
+Analyst  ________________________  Highway/Direction of Travel  _______________________
+Agency or Company  ________________________  From/To  _______________________
+Date Performed  ________________________  Jurisdiction  _______________________
+Analysis Time Period  ________________________  Analysis Year  _______________________
+
+" Operational (LOS)  " Design (vp)  " Planning (LOS)  " Planning (vp)
+
+Input Data
+
+  " Class I highway " Class II highway
+
+  Opposing direction  Show North Arrow
+  Analysis direction
+
+  Lu  Lpl  Lde  Ld
+
+  Lt
+
+Total length of analysis segment, Lt (km)
+Length of two-lane highway upstream of the passing lane, Lu (km)
+Length of passing lane including tapers, Lpl (km)
+Average travel speed, ATSd (from Directional Two-Lane Highway Segment
+Worksheet)
+
+Percent time-spent-following, PTSFd (from Directional Two-Lane Highway
+Segment Worksheet)
+Level of service,1 LOSd (from Directional Two-Lane Highway Segment
+Worksheet)
+
+Average Travel Speed
+
+Downstream length of two-lane highway within effective length of passing
+
+lane for average travel speed, Lde (km) (Exhibit 20-23)
+
+Length of two-lane highway downstream of effective length of the passing
+
+lane for average travel speed, Ld (km) Ld = Lt – (Lu + Lpl + Lde)
+
+Adj. factor for the effect of passing lane on average speed, fpl
+(Exhibit 20-24)
+
+Average travel speed including passing lane,2 ATSpl
+  ATSd * Lt
+ATSpl =  Lpl 2Lde
+  Lu + Ld + fpl + 1 + fpl
+
+Percent Time-Spent-Following
+Downstream length of two-lane highway within effective length of passing
+lane for percent time-spent-following, Lde (km) (Exhibit 20-23)
+Length of two-lane highway downstream of effective length of the passing
+lane for percent time-spent-following, Ld (km) Ld = Lt – (Lu + Lpl + Lde)
+Adj. factor for the effect of passing lane on percent time-spent-following,
+fpl (Exhibit 20-24)
+Percent time-spent-following including passing lane,3 PTSFpl (%)
+
+  ( ) PTSF PTSF pl = d Lu + Ld + fplLpl + 1 + fpl 2 Lde
+  Lt
+
+Level of Service and Other Performance Measures 4
+
+Level of service including passing lane, LOSpl (Exhibits 20-3 or 20-4)
+
+Peak 15-min total travel time, TT15 (veh-h) TT15 = VkmT ATS 15 pl
+
+Notes
+1. If LOSd = F, passing lane analysis cannot be performed.
+2. If Ld < 0, use alternative Equation 20-22.
+3. If Ld < 0, use alternative Equation 20-20.
+4. v/c, VkmT15, and VkmT60 are calculated on Directional Two-Lane Highway Segment Worksheet.
+
+Chapter 20 - Two-Lane Highways
+  Highway Capacity Manual 2000
+
+CHAPTER 21
+
+MULTILANE HIGHWAYS
+
+  CONTENTS
+
+I. INTRODUCTION .....................................................................................................21-1
+  Base Conditions for Multilane Highways .......................................................... 21-1
+  Limitations of the Methodology .........................................................................21-1
+
+II. METHODOLOGY ....................................................................................................21-1
+  LOS ..................................................................................................................21-2
+  Determining FFS ..............................................................................................21-3
+  Estimating FFS .................................................................................................21-5
+  Base FFS ..................................................................................................21-5
+  Adjustment for Lane Width ........................................................................21-5
+  Adjustment for Lateral Clearance .............................................................21-6
+  Median Type .............................................................................................21-6
+  Adjustment for Access-Point Density ........................................................21-7
+  Determining Flow Rate .....................................................................................21-7
+  PHF ...........................................................................................................21-7
+  Heavy-Vehicle Adjustments ......................................................................21-7
+  Extended General Highway Segments .............................................. 21-8
+  Specific Grade ...................................................................................21-8
+  Equivalents for Extended General Highway Segments ............................ 21-8
+  Level Terrain ......................................................................................21-8
+  Rolling Terrain....................................................................................21-9
+  Mountainous Terrain ..........................................................................21-9
+  Equivalents for Specific Grades ................................................................21-9
+  Equivalents for Specific Upgrades .....................................................21-9
+  Equivalents for Specific Downgrades ................................................ 21-9
+  Equivalents for Composite Grades .................................................... 21-9
+  Driver Population Factor .........................................................................21-11
+  Determining LOS ............................................................................................21-11
+  Sensitivity of Results to Input Variables .........................................................21-11
+
+III. APPLICATIONS ....................................................................................................21-12
+  Segmenting the Highway ...............................................................................21-13
+  Computational Steps ......................................................................................21-13
+  Planning Applications .....................................................................................21-13
+  Analysis Tools ................................................................................................21-15
+
+IV. EXAMPLE PROBLEMS .........................................................................................21-15
+  Example Problem 1 (Part I) ............................................................................21-16
+  Example Problem 1 (Part II) ...........................................................................21-18
+  Example Problem 2 (Part I) ............................................................................21-20
+  Example Problem 2 (Part II) ...........................................................................21-22
+  Example Problem 3 ........................................................................................21-24
+  Example Problem 4 ........................................................................................21-26
+  Example Problem 5 ........................................................................................21-28
+
+V. REFERENCES ......................................................................................................21-29
+APPENDIX A. WORKSHEET .....................................................................................21-30
+
+  Multilane Highways Worksheet
+
+  21-i  Chapter 21 - Multilane Highways
+Highway Capacity Manual 2000
+
+  EXHIBITS
+
+  Exhibit 21-1.  Multilane Highway Methodology ............................................................ 21-2
+  Exhibit 21-2.  LOS Criteria for Multilane Highways...................................................... 21-3
+  Exhibit 21-3.  Speed-Flow Curves with LOS Criteria................................................... 21-4
+  Exhibit 21-4.  Adjustment for Lane Width ....................................................................21-5
+  Exhibit 21-5.  Adjustment for Lateral Clearance .......................................................... 21-6
+  Exhibit 21-6.  Adjustment for Median Type ................................................................. 21-6
+  Exhibit 21-7.  Access-Point Density Adjustment ......................................................... 21-7
+  Exhibit 21-8.  Passenger-Car Equivalents on Extended General
+  Highway Segments ............................................................................... 21-8
+  Exhibit 21-9.  Passenger-Car Equivalents for Trucks and Buses on
+  Uniform Upgrades ............................................................................... 21-10
+  Exhibit 21-10.  Passenger-Car Equivalents for RVs on Uniform Upgrades ................ 21-10
+  Exhibit 21-11.  Passenger-Car Equivalents for Trucks on Downgrades ..................... 21-11
+  Exhibit 21-12.  Effect of v/c Ratio on Mean Speed ...................................................... 21-12
+  Exhibit 21-13.  Multilane Highways Worksheet ........................................................... 21-14
+
+Chapter 21 - Multilane Highways  21-ii
+Highway Capacity Manual 2000
+
+  I. INTRODUCTION  For background and concepts,
+  see Chapter 12, “Highway
+  The procedures in this chapter are used to analyze the capacity, level of service  Concepts”
+(LOS), lane requirements, and impacts of traffic and design features of rural and
+suburban multilane highways.
+
+  The methodology in this chapter is based on the results of a National Cooperative
+Highway Research study (1). The study used additional references in developing the
+original methodology (2–6), which subsequently has been updated (7).
+
+BASE CONDITIONS FOR MULTILANE HIGHWAYS
+
+  The procedures in this chapter determine the reduction in travel speed that occurs for
+less-than-base conditions. Under base conditions, the full speed and capacity of a
+multilane highway are achieved. These conditions include good weather, good visibility,
+and no incidents or accidents.
+
+  Studies of the flow characteristics of multilane highways have defined base
+conditions for developing flow relationships and adjustments to speed. The base
+conditions for multilane highways are as follows:
+
+  • 3.6-m minimum lane widths;
+  • 3.6-m minimum total lateral clearance in the direction of travel—this represents
+the total lateral clearances from the edge of the traveled lanes to obstructions along the
+edge of the road and in the median (in computations, lateral clearances greater than 1.8 m
+are considered in computations to be equal to 1.8 m);
+  • Only passenger cars in the traffic stream;
+  • No direct access points along the roadway;
+  • A divided highway; and
+  • Free-flow speed (FFS) higher than 100 km/h.
+  These base conditions represent the highest operating level of multilane rural and
+suburban highways.
+
+LIMITATIONS OF THE METHODOLOGY
+
+  The methodology in this chapter does not take into account the following conditions:
+  • Transitory blockages caused by construction, accidents, or railroad crossings;
+  • Interference caused by parking on the shoulders (such as in the vicinity of a
+country store, flea market, or tourist attraction);
+  • Three-lane cross sections;
+  • The effect of lane drops and additions at beginning or end of segments;
+  • Possible queuing delays when transitions from a multilane segment into a two-lane
+segment are neglected;
+  • Differences between median barriers and two-way left-turn lanes; and
+  • FFS below 70 km/h or above 100 km/h.
+
+  II. METHODOLOGY  Methodology applies to signal
+  spacing greater than 3.0 km
+  The methodology described in this chapter is intended for analysis of
+uninterrupted-flow highway segments. Chapter 15 presents the methodology for  Chapter 21 - Multilane Highways
+analyzing urban streets that have one or more of the following characteristics:  Introduction
+
+  • Flow significantly influenced by other signals (i.e., a signal spacing less than or
+equal to 3.0 km),
+
+  • Significant presence of on-street parking,
+  • Presence of bus stops that have significant use, or
+  • Significant pedestrian activity.
+
+  21-1
+Highway Capacity Manual 2000
+
+  Exhibit 21-1 illustrates the inputs and the basic computational order for the method
+  described in this chapter. The primary output is LOS.
+
+  Uninterrupted-flow facilities that allow access solely through a system of on-ramps
+  and off-ramps from grade separations or service roads are considered freeways and
+  should be evaluated using the methodology presented in Chapter 23.
+
+  EXHIBIT 21-1. MULTILANE HIGHWAY METHODOLOGY
+  Input
+  - Geometric data
+  - Free-flow speed (FFS) field measured, or
+  base free-flow speed (BFFS)
+  - Volume
+
+  If BFFS is input  If field-measured FFS is input  Volume adjustment
+  BFFS adjustment  - Peak-hour factor
+  - Number of lanes
+  - Lane width  - Driver population
+  - Median type  - Heavy vehicles
+  - Access point
+  - Lateral clearance  Compute flow rate
+
+  Compute FFS
+
+  Define speed-flow curve
+  Determine speed using speed-flow curve
+  Compute density using flow rate and speed
+
+  Determine LOS
+
+  LOS
+
+  Although speed is a major concern of drivers, freedom to maneuver within the traffic
+  stream and the proximity to other vehicles are also important. LOS criteria are listed in
+  Exhibit 21-2. The criteria are based on the typical speed-flow and density-flow
+  relationships shown in Exhibits 12-1 and 12-2. Exhibit 21-3 shows LOS boundaries as
+  sloped lines, each corresponding to a constant value of density.
+
+Chapter 21 - Multilane Highways  21-2
+Methodology
+  Highway Capacity Manual 2000
+
+  EXHIBIT 21-2. LOS CRITERIA FOR MULTILANE HIGHWAYS
+
+  LOS
+
+Free-Flow Speed  Criteria  A  B  C  D  E
+
+100 km/h Maximum density (pc/km/ln)  7  11  16  22  25
+
+  Average speed (km/h)  100.0 100.0 98.4  91.5  88.0
+
+  Maximum volume to capacity ratio 0.32  0.50  0.72  0.92  1.00
+
+  (v/c)
+
+  Maximum service flow rate (pc/h/ln) 700  1100 1575 2015 2200
+
+90 km/h  Maximum density (pc/km/ln)  7  11  16  22  26
+
+  Average speed (km/h)  90.0  90.0  89.8  84.7  80.8
+
+  Maximum v/c  0.30  0.47  0.68  0.89  1.00
+
+  Maximum service flow rate (pc/h/ln) 630  990 1435 1860 2100
+
+80 km/h  Maximum density (pc/km/ln)  7  11  16  22  27
+
+  Average speed (km/h)  80.0  80.0  80.0  77.6  74.1
+
+  Maximum v/c  0.28  0.44  0.64  0.85  1.00
+
+  Maximum service flow rate (pc/h/ln) 560  880 1280 1705 2000
+
+70 km/h  Maximum density (pc/km/ln)  7  11  16  22  28
+
+  Average speed (km/h)  70.0  70.0  70.0  69.6  67.9
+
+  Maximum v/c  0.26  0.41  0.59  0.81  1.00
+
+  Maximum service flow rate (pc/h/ln) 490  770 1120 1530 1900
+
+Note:
+The exact mathematical relationship between density and volume to capacity ratio (v/c) has not always been maintained at LOS
+boundaries because of the use of rounded values. Density is the primary determinant of LOS. LOS F is characterized by highly
+unstable and variable traffic flow. Prediction of accurate flow rate, density, and speed at LOS F is difficult.
+
+  The LOS criteria reflect the shape of the speed-flow and density-flow curves,
+particularly as speed remains relatively constant across LOS A to D but is reduced as
+capacity is approached. For FFS of 100, 90, 80, and 70 km/h, Exhibit 21-2 gives the
+average speed, the maximum value of v/c, the maximum density, and the corresponding
+maximum service flow rate for each LOS.
+
+  As with other LOS criteria, the maximum service flow rates in Exhibit 21-2 are
+stated in terms of flow rate based on the peak 15-min volume. Demand or forecast hourly
+volumes generally are divided by the peak-hour factor (PHF) to reflect a maximum
+hourly flow rate before comparison with the criteria of Exhibit 21-2. Using the basic
+speed-flow curves (see Exhibit 21-3), the relationships between LOS, flow, and speed can
+be analyzed.
+
+DETERMINING FFS  FFS occurs at flow rates ≤
+  1,400 pc/h/ln
+  FFS is measured using the mean speed of passenger cars operating in low-to-
+moderate flow conditions (up to 1,400 pc/h/ln). Mean speed is virtually constant across
+this range of flow rates. Field measurement and estimation with guidelines provided in
+this chapter are methods that can be used to determine FFS.
+
+  The field measurement procedure is for those who prefer to gather data directly or to
+incorporate the measurements into a speed-monitoring program. However, field
+measurements are not necessary to apply the method.
+
+  The FFS of a highway can be determined directly from a speed study conducted in
+the field. If field-measured data are used, no adjustments need to be made to FFS. The
+speed study should be conducted along a reasonable length of highway within the
+segment under evaluation; for example, an upgrade should not be selected within a site
+that is generally level. Any speed measurement technique acceptable for other types of
+traffic engineering speed studies can be used.
+
+  The field study should be conducted in the more stable regime of low-to-moderate
+flow conditions (up to 1,400 pc/h/ln). If the speed study must be conducted at a flow rate
+of more than 1,400 pc/h/ln, the FFS can be found by using the model speed-flow curve,
+assuming that data on traffic volumes are recorded at the same time.
+
+  21-3  Chapter 21 - Multilane Highways
+  Methodology
+Highway Capacity Manual 2000
+
+  EXHIBIT 21-3. SPEED-FLOW CURVES WITH LOS CRITERIA
+
+  110
+  100 Free-Flow Speed, FFS = 100 km/h
+  90 90 km/h
+  80 80 km/h
+
+  70 km/h
+  70 LOS A B C D E
+  60
+  Average Passenger-Car Speed (km/h)
+  Density = 7 p
+  11 p c c /k / m/ln
+  km/ln
+  40 6 pc/k 50 m/l pc/km n /ln m/ln
+
+  1 22 28 pc/k
+
+  30
+
+  20
+
+  10
+
+  0 0 400 800 1200 1600 2000 2400
+
+  Flow Rate (pc/h/ln)
+
+  Note:
+  Maximum densities for LOS E occur at a v/c ratio of 1.0. They are 25, 26, 27, and 28 pc/km/ln at FFS of 100, 90, 80, and 70
+  km/h, respectively. Capacity varies by FFS. Capacity is 2,200, 2,100, 2,000, and 1,900 pc/h/ln at FFS of 100, 90, 80, and 70
+  km/h, respectively.
+  For flow rate (vp), vp > 1400 and
+
+  90 < FFS ≤ 100 then
+
+    1.31
+   9.3  630   vp − 1,400  
+  S = FFS −  FFS −    
+     25  25   15.7FFS − 770   
+
+  For vp > 1,400 and
+  80 < FFS ≤ 90 then
+
+    1.31
+   10.4  696   vp − 1,400  
+  S = FFS −  FFS −    
+     26  26   15.6FFS − 704   
+
+  For vp > 1,400 and
+  70 < FFS ≤ 80 then
+
+    1.31
+   11.1  728   vp − 1,400  
+  S = FFS −  FFS −    
+     27  27   15.9FFS − 672   
+
+  For vp > 1,400 and
+  FFS = 70 then
+
+    1.31
+   3  75   vp − 1,400  
+  S = FFS −  FFS −    
+     28  14   25FFS − 1,250   
+
+  For vp ≤ 1,400, then
+  S = FFS
+
+  The speed study should measure the speeds of all passenger cars or of a systematic
+  sampling of passenger cars (e.g., of every 10th passenger car). The speed study not only
+  should measure speeds for unimpeded vehicles but also should include representative
+  numbers of impeded vehicles. A sample should obtain at least 100 passenger-car speeds.
+  Further guidance on the conduct of speed studies available in standard traffic engineering
+  publications, such as the Manual of Traffic Engineering Studies, published by the
+  Institute of Transportation Engineers (6).
+
+  The average passenger-car speed under low-volume conditions can be used as the
+  free-flow speed if the field measurements were made at flow rates at or below 1,400
+  pc/h/ln. This FFS reflects the net effects of all conditions at the site that influence speed,
+
+Chapter 21 - Multilane Highways  21-4
+Methodology
+  Highway Capacity Manual 2000
+
+including those identified in this procedure (lane width, lateral clearance, type of median,
+and access points), as well as others, such as speed limit and vertical and horizontal
+alignment.
+
+  Highway agencies with ongoing speed-monitoring programs or with speed data on
+file might prefer to use those data rather than conduct a new speed study or use an
+indirect method to estimate speed. The data can be used directly if collected in
+accordance with the procedures presented above. Data including both passenger-car and
+heavy-vehicle speeds probably can be used for level terrain or moderate downgrades, but
+they should not be used for rolling or mountainous terrain.
+
+ESTIMATING FFS
+
+The FFS can be estimated indirectly when field data are not available.  (21-1)
+  FFS = BFFS – fLW – fLC – fM – fA
+
+where  = base FFS (km/h);
+  BFFS  = estimated FFS (km/h);
+  = adjustment for lane width, from Exhibit 21-4 (km/h);
+  FFS  = adjustment for lateral clearance, from Exhibit 21-5 (km/h);
+  fLW  = adjustment for median type, from Exhibit 21-6 (km/h); and
+  fLC  = adjustment for access points, from Exhibit 21-7 (km/h).
+
+  fM
+  fA
+
+Base FFS
+
+  When it is not possible to use data from a similar roadway, an estimate might be
+necessary, based on available data, experience, and consideration of the variety of factors
+that have an identified effect on FFS. The speed limit is one factor that affects FFS.
+Recent research suggests that FFS on multilane highways under base conditions is
+approximately 11 km/h higher than the speed limit for 65 and 70 km/h speed limits, and it
+is 8 km/h higher for 80 and 90 km/h speed limits. Chapter 12 provides default values for
+base FFS.
+
+Adjustment for Lane Width
+
+  Base conditions for multilane highways require 3.6-m lane widths. Exhibit 21-4
+presents the adjustment to modify the estimated FFS to account for narrower lanes.
+Exhibit 21-4 shows that 3.0 m and 3.3 m lanes reduce free-flow speeds by 10.6 km/h and
+3.1 km/h, respectively. For Exhibit 21-4, lane widths greater than 3.6 m are considered
+3.6 m. There are no research data for lane widths less than 3.0 m.
+
+  EXHIBIT 21-4.  ADJUSTMENT FOR LANE WIDTH
+
+  Lane Width (m)  Reduction in FFS (km/h)
+  3.6  0.0
+  3.5  1.0
+  3.4  2.1
+  3.3  3.1
+  3.2  5.6
+  3.1  8.1
+  3.0  10.6
+
+  21-5  Chapter 21 - Multilane Highways
+  Methodology
+Highway Capacity Manual 2000
+
+  Adjustment for Lateral Clearance
+
+For undivided highways  Exhibit 21-5 lists the speed reductions caused by the lateral clearance for fixed
+and highways with two-
+way left-turn lanes  obstructions on the roadside or in the median. Fixed obstructions with lateral clearance
+(TWLTL), the left edge
+lateral clearance equals  effects include light standards, signs, trees, abutments, bridge rails, traffic barriers, and
+1.8 m
+  retaining walls. Standard raised curbs are not considered obstructions. Exhibit 21-5
+
+  shows the appropriate reduction in FFS based on the total lateral clearance, which is
+
+  defined as
+
+  TLC = LCR + LCL  (21-2)
+
+  where  = total lateral clearance (m),
+  TLC  = lateral clearance (m), from the right edge of the travel lanes to roadside
+  LCR
+  obstructions (if greater than 1.8 m, use 1.8 m), and
+  LCL  = lateral clearance (m), from the left edge of the travel lanes to
+
+  obstructions in the roadway median (if the lateral clearance is greater
+  than 1.8 m, use 1.8 m). For undivided roadways, there is no adjustment
+  for left-side lateral clearance. The undivided design is taken into
+  account by the median adjustment. To use Exhibit 21-5 for undivided
+  highways, the lateral clearance on the left edge is always 1.8 m. Lateral
+  clearance in the median of roadways with two-way left-turn lanes
+  (TWLTLs) is considered to be 1.8 m.
+
+  EXHIBIT 21-5. ADJUSTMENT FOR LATERAL CLEARANCE
+
+  Four-Lane Highways  Six-Lane Highways
+
+  Total Lateral Clearancea  Reduction in FFS (km/h)  Total Lateral Clearancea  Reduction in FFS (km/h)
+  (m)  (m)
+
+  3.6  0.0  3.6  0.0
+
+  3.0  0.6  3.0  0.6
+
+  2.4  1.5  2.4  1.5
+
+  1.8  2.1  1.8  2.1
+
+  1.2  3.0  1.2  2.7
+
+  0.6  5.8  0.6  4.5
+
+  0.0  8.7  0.0  6.3
+
+  Note:
+  a. Total lateral clearance is the sum of the lateral clearances of the median (if greater than 1.8 m, use 1.8 m) and shoulder (if
+  greater than 1.8 m, use 1.8 m). Therefore, for purposes of analysis, total lateral clearance cannot exceed 3.6 m.
+
+  Thus, a total lateral clearance of 3.6 m is used for a completely unobstructed roadside
+  and median; however, the actual value is used when obstructions are located closer to the
+  roadway. The adjustment for lateral clearance on six-lane highways is slightly less than
+  for four-lane highways because lateral obstructions have a minimal effect on traffic
+  operations in the center lane of a three-lane roadway.
+
+  Median Type
+
+  The values in Exhibit 21-6 indicate that the average FFS should be decreased by 2.6
+  km/h for undivided highways to account for the friction caused by opposing traffic in an
+  adjacent lane.
+
+  EXHIBIT 21-6.  ADJUSTMENT FOR MEDIAN TYPE
+
+  Median Type  Reduction in FFS (km/h)
+  Undivided highways  2.6
+  Divided highways (including TWLTLs)  0.0
+
+Chapter 21 - Multilane Highways  21-6
+Methodology
+  Highway Capacity Manual 2000
+
+Adjustment for Access-Point Density
+
+  Exhibit 21-7 presents the adjustment to FFS for various levels of access-point
+density. The data indicate that for each access point per kilometer the estimated FFS
+decreases by approximately 0.4 km/h, regardless of the type of median. The access-point
+density on a divided roadway is determined by dividing the total number of access points
+( i.e., intersections and driveways) on the right side of the roadway in the direction of
+travel by the segment’s total length in kilometers. An intersection or driveway should
+only be included if it influences traffic flow. Access points unnoticed by the driver or
+with little activity should not be included in determining access-point density.
+
+  EXHIBIT 21-7.  ACCESS-POINT DENSITY ADJUSTMENT
+
+  Access Points/Kilometer  Reduction in FFS (km/h)
+  0  0.0
+  6  4.0
+  12  8.0
+  18  12.0
+  16.0
+  ≥ 24
+
+  Although the access-point adjustments do not include data for one-way multilane  Guidelines for one-way
+highways, it might be appropriate to include intersections and driveways on both sides of  highways
+a one-way roadway to determine the total number of access points per kilometer.
+
+DETERMINING FLOW RATE
+
+Two adjustments must be made to hourly volume counts or estimates to arrive at the
+
+equivalent passenger-car flow rate used in LOS analyses. These adjustments are the PHF
+
+and the heavy vehicle adjustment factor. The number of lanes also is used so that the
+
+flow rate can be expressed on a per-lane basis. These adjustments are applied in the
+
+following manner using Equation 21-3.
+
+  V  (21-3)
+  vp = PHF * N * fHV * fp
+
+where  = 15-min passenger-car equivalent flow rate (pc/h/ln),
+  vp
+  V  = hourly volume (veh/h),
+  = peak-hour factor,
+  PHF  = number of lanes,
+  = heavy-vehicle adjustment factor, and
+  N  = driver population factor.
+  fHV
+
+  fp
+
+PHF
+
+  PHF represents the variation in traffic flow within an hour. Observations of traffic
+flow consistently indicate that the flow rates found in the peak 15-min period within an
+hour are not sustained throughout the entire hour. The application of PHF in Equation
+21-3 accounts for this phenomenon.
+
+Heavy-Vehicle Adjustments
+
+  The presence of heavy vehicles in the traffic stream decreases the FFS because base
+conditions allow a traffic stream of passenger cars only. Therefore, traffic volumes must
+be adjusted to reflect an equivalent flow rate expressed in passenger cars per hour per
+lane (pc/h/ln). This is accomplished by applying the heavy-vehicle factor (fHV). Once
+values for ET and ER have been determined, the adjustment factor for heavy vehicles may
+be computed as shown in Equation 21-4.
+
+  21-7  Chapter 21 - Multilane Highways
+  Methodology
+Highway Capacity Manual 2000
+
+  1  (21-4)
+  fHV = 1 + PT (ET – 1) + PR (ER – 1)
+
+  where  = passenger-car equivalents for trucks and buses and for recreational
+  ET and ER
+  vehicles (RVs), respectively;
+  PT and PR  = proportion of trucks and buses, and RVs, respectively, in the traffic
+
+  fHV  stream (expressed as a decimal fraction); and
+  = adjustment factor for heavy vehicles.
+
+  Adjustment for heavy vehicles in the traffic stream applies to three types of vehicles:
+  trucks, RVs, and buses. No evidence indicates any distinct differences in the
+  performance characteristics of trucks and buses on multilane highways; therefore, buses
+  are considered trucks in this method. Finding the heavy-vehicle adjustment factor
+  requires two steps. First, find an equivalent truck factor (ET) and RV factor (ER) for
+  prevailing operating conditions. Second, using ET and ER, compute an adjustment factor
+  for all heavy vehicles in the traffic stream.
+
+  Extended General Highway Segments
+
+  Passenger-car equivalents can be selected for two conditions: extended general
+  highway segments and specific grades. Values of passenger-car equivalents are selected
+  from Exhibits 21-8 through 21-11. For long segments of highway in which no single
+  grade has a significant impact on operations, Exhibit 21-8 is used to select passenger-car
+  equivalents for trucks and buses (ET) and for RVs (ER).
+
+  EXHIBIT 21-8.  PASSENGER-CAR EQUIVALENTS ON EXTENDED GENERAL HIGHWAY SEGMENTS
+
+  Factor  Type of Terrain
+  ET (trucks and buses)
+  ER (RVs)  Level  Rolling  Mountainous
+
+  1.5  2.5  4.5
+
+  1.2  2.0  4.0
+
+  A long multilane highway segment can be classified as an extended general highway
+  segment if no grade exceeding 3 percent is longer than 0.8 km, and if grades of 3 percent
+  or less do not exceed 1.6 km.
+
+  Specific Grade
+
+  Any grade of 3 percent or less that is longer than 1.6 km or a grade greater than 3
+  percent that is longer than 0.8 km should be treated as an isolated, specific grade. In
+  addition, the upgrade and downgrade must be treated separately, because the impact of
+  heavy vehicles differs substantially in each.
+
+  Equivalents for Extended General Highway Segments
+
+  For an extended general segment analysis, the terrain of the highway must be
+  classified as level, rolling, or mountainous. These three classifications are discussed
+  below.
+
+  Level Terrain
+
+  Level terrain is any combination of horizontal and vertical alignment that permits
+  heavy vehicles to maintain approximately the same speed as passenger cars. This type of
+  terrain generally includes short grades of no more than 1 to 2 percent.
+
+Chapter 21 - Multilane Highways  21-8
+Methodology
+  Highway Capacity Manual 2000
+
+Rolling Terrain  Weight-to-power ratio for
+  trucks
+  Rolling terrain is any combination of horizontal and vertical alignment that causes
+heavy vehicles to reduce their speeds substantially below those of passenger cars.  Generally, an average grade
+However, the terrain does not cause heavy vehicles to operate at crawl speeds for any  can be used to represent
+significant length of time or at frequent intervals.  consecutive grades, but for a
+  more detailed method, see
+Mountainous Terrain  Appendix A of Chapter 23
+
+  Mountainous terrain is any combination of horizontal and vertical alignment that
+causes heavy vehicles to operate at crawl speeds for significant distances or at frequent
+intervals. For these general highway segments, values of ET and ER are selected from
+Exhibit 21-8.
+
+Equivalents for Specific Grades
+
+  Any highway grade of more than 1.6 km for grades less than 3 percent or of 0.8 km
+for grades of 3 percent or more should be considered a separate segment. Analysis of
+such segments must consider the upgrade and downgrade conditions and whether the
+grade is single and isolated, with a constant percentage of change, or part of a series
+forming a composite grade.
+
+Equivalents for Specific Upgrades
+
+  Exhibits 21-9 and 21-10 give passenger-car equivalents for trucks and buses (ET) and
+for RVs (ER), respectively, on uniform upgrades on four- and six-lane highways. Exhibit
+21-9 is based on an average weight-to-power ratio of 100 kg/kW, which is typical of
+trucks on multilane highways in the United States.
+
+Equivalents for Specific Downgrades
+
+  Downgrade conditions for trucks and buses on four- or six-lane highways are
+analyzed using equivalents from Exhibit 21-11. For all downgrades less than 4 percent
+and for steeper downgrades less than or equal to 3.2 km long, use the passenger-car
+equivalents for trucks and buses in level terrain, given in Exhibit 21-8. For grades of at
+least 4 percent and longer than 3.2 km, use the specific values shown in Exhibit 21-11.
+For all cases of RVs on downgrades, use the passenger-car equivalents for level terrain,
+given in Exhibit 21-8.
+
+Equivalents for Composite Grades
+
+  When several consecutive grades of different steepness form a composite grade, an
+average, uniform grade is computed and used in analysis. The average grade is
+commonly computed as the total rise from the beginning of the grade divided by the total
+horizontal distance over which the rise occurs.
+
+  The composite grade technique is reasonably accurate for segment lengths of 1200 m
+or less, or for grades of 4 percent or less. For steeper grades and longer segment lengths,
+a more exact technique is described in Appendix A of Chapter 23. If a large change in
+grade occurs for a significant length, the analyst should consider segmenting the roadway
+to apply the composite grade technique.
+
+  Sometimes a single, steep grade creates a critical effect that might not be identified in
+a length of highway to be analyzed; in this case, the composite grade technique can be
+supplemented by a specific grade analysis.
+
+21-9  Chapter 21 - Multilane Highways
+  Methodology
+Highway Capacity Manual 2000
+
+  EXHIBIT 21-9. PASSENGER-CAR EQUIVALENTS FOR TRUCKS AND BUSES ON UNIFORM UPGRADES
+
+  Upgrade  Length  ET
+  Percentage of Trucks and Buses
+
+  (%)  (km)  2  4  5  6  8  10 15 20 25
+
+  <2  All  1.5 1.5 1.5 1.5 1.5 1.5 1.5 1.5 1.5
+
+  ≥ 2–3  0.0–0.4  1.5 1.5 1.5 1.5 1.5 1.5 1.5 1.5 1.5
+  > 0.4–0.8  1.5 1.5 1.5 1.5 1.5 1.5 1.5 1.5 1.5
+  > 0.8–1.2  1.5 1.5 1.5 1.5 1.5 1.5 1.5 1.5 1.5
+  > 1.2–1.6  2.0 2.0 2.0 2.0 1.5 1.5 1.5 1.5 1.5
+  > 1.6–2.4  2.5 2.5 2.5 2.5 2.0 2.0 2.0 2.0 2.0
+  > 2.4  3.0 3.0 2.5 2.5 2.0 2.0 2.0 2.0 2.0
+
+  > 3–4  0.0–0.4  1.5 1.5 1.5 1.5 1.5 1.5 1.5 1.5 1.5
+  > 0.4–0.8  2.0 2.0 2.0 2.0 2.0 2.0 1.5 1.5 1.5
+  > 0.8–1.2  2.5 2.5 2.0 2.0 2.0 2.0 2.0 2.0 2.0
+  > 1.2–1.6  3.0 3.0 2.5 2.5 2.5 2.5 2.0 2.0 2.0
+  > 1.6–2.4  3.5 3.5 3.0 3.0 3.0 3.0 2.5 2.5 2.5
+  > 2.4  4.0 3.5 3.0 3.0 3.0 3.0 2.5 2.5 2.5
+
+  > 4–5  0.0–0.4  1.5 1.5 1.5 1.5 1.5 1.5 1.5 1.5 1.5
+  > 0.4–0.8  3.0 2.5 2.5 2.5 2.0 2.0 2.0 2.0 2.0
+  > 0.8–1.2  3.5 3.0 3.0 3.0 2.5 2.5 2.5 2.5 2.5
+  > 1.2–1.6  4.0 3.5 3.5 3.5 3.0 3.0 3.0 3.0 3.0
+  > 1.6  5.0 4.0 4.0 4.0 3.5 3.5 3.0 3.0 3.0
+
+  > 5–6  0.0–0.4  2.0 2.0 1.5 1.5 1.5 1.5 1.5 1.5 1.5
+  > 0.4–0.5  4.0 3.0 2.5 2.5 2.0 2.0 2.0 2.0 2.0
+  > 0.5–0.8  4.5 4.0 3.5 3.0 2.5 2.5 2.5 2.5 2.5
+  > 0.8–1.2  5.0 4.5 4.0 3.5 3.0 3.0 3.0 3.0 3.0
+  > 1.2–1.6  5.5 5.0 4.5 4.0 3.0 3.0 3.0 3.0 3.0
+  > 1.6  6.0 5.0 5.0 4.5 3.5 3.5 3.5 3.5 3.5
+
+  0.0–0.4  4.0 3.0 2.5 2.5 2.5 2.5 2.0 2.0 2.0
+
+  > 0.4–0.5  4.5 4.0 3.5 3.5 3.5 3.0 2.5 2.5 2.5
+
+  > 6  > 0.5–0.8  5.0 4.5 4.0 4.0 3.5 3.0 2.5 2.5 2.5
+
+  > 0.8–1.2  5.5 5.0 4.5 4.5 4.0 3.5 3.0 3.0 3.0
+
+  > 1.2–1.6  6.0 5.5 5.0 5.0 4.5 4.0 3.5 3.5 3.5
+
+  >1.6  7.0 6.0 5.5 5.5 5.0 4.5 4.0 4.0 4.0
+
+  EXHIBIT 21-10. PASSENGER-CAR EQUIVALENTS FOR RVS ON UNIFORM UPGRADES
+
+  Grade Length  ER
+  Percentage of RVs
+
+  (%)  (km)  2  4  5  6  8  10  15  20 25
+
+  ≤2  All  1.2  1.2  1.2  1.2  1.2  1.2  1.2  1.2 1.2
+
+  > 2–3 0.0–0.8  1.2  1.2  1.2  1.2  1.2  1.2  1.2  1.2 1.2
+
+  > 0.8  3.0  1.5  1.5  1.5  1.5  1.5  1.2  1.2 1.2
+
+  0.0–0.4  1.2  1.2  1.2  1.2  1.2  1.2  1.2  1.2 1.2
+
+  > 3–4 > 0.4–0.8 2.5  2.5  2.0  2.0  2.0  2.0  1.5  1.5 1.5
+
+  > 0.8  3.0  2.5  2.5  2.5  2.0  2.0  2.0  1.5 1.5
+
+  0.0–0.4  2.5  2.0  2.0  2.0  1.5  1.5  1.5  1.5 1.5
+
+  > 4–5 > 0.4–0.8 4.0  3.0  3.0  3.0  2.5  2.5  2.0  2.0 2.0
+
+  > 0.8  4.5  3.5  3.0  3.0  3.0  2.5  2.5  2.0 2.0
+
+  0.0–0.4  4.0  3.0  2.5  2.5  2.5  2.0  2.0  2.0 1.5
+
+  > 5 > 0.4–0.8 6.0  4.0  4.0  3.5  3.0  3.0  2.5  2.5 2.0
+
+  > 0.8  6.0  4.5  4.0  4.5  3.5  3.0  3.0  2.5 2.0
+
+Chapter 21 - Multilane Highways  21-10
+Methodology
+

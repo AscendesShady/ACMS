@@ -1,0 +1,1118 @@
+  Chapter 8
+
+  AIoT-based safety and security in smart
+  transportation
+
+  Neha Gupta1, Priya1 and Gunjan Verma2
+
+Abstract
+
+In the modern world, the application of artificial intelligence to intelligent transpor-
+tation systems is a developing field. Ensuring efficiency and addressing safety and
+security concerns have already become essential measures. Predictive maintenance
+(PdM) is made possible by real-time data analysis, suggesting that infrastructure and
+machinery may be able to detect early warning signs of an impending failure.
+Moreover, AI-powered monitoring systems continuously analyse data from sensors
+deployed across transportation networks, allowing for proactive identification of
+anomalies and prompt response to safety threats. This means that threats are detected
+and eliminated without users’ interference. It also optimises traffic control, leading to
+considerable declines in both jams and accidents. These issues are managed by
+adaptive technology that adjusts the flow of tasks based on real-time information.
+AIoT is heavily utilised in driver assistance systems that provide warnings and
+impose assistance immediately to reduce the likelihood of accidents. The AIoT cal-
+culates the best way to respond to an accident and use the available resources more
+effectively. This chapter aims to emphasise the revolutionary impact of AIoT tech-
+nology on improving the safety and security of intelligent transportation systems,
+which consequently results in more reliable, effective, and sustainable means of
+mobility for communities across the globe. The purpose of the chapter is to provide
+an in-depth analysis of the methods in which AIoT techniques can be employed for
+various types of transportation applications, including, but not limited to, emergency
+response, traffic control, driver assistance, and PdM. In addition, the chapter will
+address the benefits and challenges of using AIoT in the transportation industry
+through a range of case studies and real-life scenarios.
+
+  Keywords: Intelligent transportation system; Artificial Internet of Things;
+  Predictive maintenance; AI-powered monitoring systems; Security
+  monitoring
+
+1School of Computer Applications, Manav Rachna International Institute of Research and Studies, India
+2Department of Computer Applications, GL Bajaj Institute of Technology and Management, India
+154 AIoT for smart transportation
+
+8.1 Overview of AIoT in smart transportation
+
+The rapid urbanisation of cities in developing nations like India has caused a
+sharp rise in the number of cars on the road in recent years. This heavily puts
+pressure on the transport system and creates an alarming rate of negative
+environmental impacts like heavy traffic jams, air pollution, frequent traffic
+accidents, etc. Conventional traffic management methods have numerous issues
+as a result of inadequate communication between vehicles and vehicle-to-
+infrastructure [1]. The world will thus see an enormous expansion in motor cars
+due to the increase in the number of people living in metropolitan areas. This will
+have a negative impact and contribute to issues such as road accidents, noise
+pollution, traffic congestion, and other problems. Because of the increased reli-
+ance on transportation systems in contemporary society, a person often has to
+cope with a wide range of problems related to these systems on a daily basis.
+These problems can include traffic jams, parking issues with a shortage of
+spaces, longer commutes, high CO2 emissions, an increase in accidents, and
+many more. It is essential to use information technology more frequently to
+increase the operational efficacy of transportation systems [10]. The definition of
+Intelligent Transportation Systems also known as Smart Transportation, is ‘the
+application of advanced sensor, computer, electronics, and communication
+technologies, as well as management strategies in an integrated manner to
+improve the surface transportation system’s safety and efficiency’ [11]. In
+addition to cutting travel times and fuel consumption, smart transportation
+solutions increase traffic flow and safety. The development of Intelligent Traffic
+Systems to enhance traffic flow and safety has been spurred by the progress
+made in wireless communication and Internet capabilities. One of the main
+elements influencing Intelligent Transport System (ITS) effectiveness is the
+most recent advancements in communication technology. Effective commu-
+nication may greatly increase safety while also assisting in lowering traffic and
+gas emissions to an absolute minimum. Figure 8.1 shows the various applications
+of smart transport systems.
+
+  However, in recent years, researchers have been inspired to reconsider and
+redevelop ITS by the Internet of Things (IoT) and the idea of Vehicular Ad-hoc
+Networks (VANETs) [2]. The employment of electronics in automobiles has
+enabled certain tasks that were previously thought to be mechanically impractical.
+Examples include location monitoring devices in cars, accident alert systems,
+electronic toll collection systems, and artificial intelligence. Despite the sharing of
+many parts, these systems are marketed as separate systems with distinct protocols.
+The most powerful modern mobility solution is smart transportation systems that
+use Artificial Intelligence of Things (AIoT). The IoT and artificial intelligence are
+integrated for real data analysis. AIoT facilitates seamless communication between
+people, infrastructure, and vehicles in all aspects of transportation, creating an
+ecosystem that is more responsive, intelligent, and effective. The components of
+ITS are shown in Figure 8.1.
+  AIoT-based safety and security in smart transportation 155
+
+  Self driving Car
+
+  Smart bus  Smart Train/Tram
+Smart traffic lights
+  Intelligent Transportation Systems
+
+  Smart Delivery
+
+  Content distribution  Smart and connected roads
+
+Figure 8.1 Intelligent Transportation System
+
+8.1.1 Importance of safety and security in transportation
+  systems
+
+When it comes to the health and well-being of people, safety and security are the top-most
+priorities for transportation. Transporters face many problems other than traffic accidents,
+crashes, and breakdowns. By implementing AIoT technology, one can take proactive
+security measures and anticipate the problems before they escalate [3]. It is essential to
+cultivate public trust and support for intelligent transportation, as a strong security system
+is required. The safety and security in any transportation are of utmost importance as they
+have a bearing on national security, economic prosperity, and public well-being.
+
+8.1.1.1 Public health
+Transportation networks are primarily designed to move people and things across
+space. The public’s faith and assurance in these systems will only be maintained
+when passenger and cargo safety is maintained. In case of mishaps and security
+lapses, there can be loss of lives, injuries, and psychological repercussions for both
+the survivors and society at large. By performing routine maintenance, educating
+drivers on safety, and using advanced safety systems, we can lower the risk of
+accidents. Security measures such as monitoring, controlling access, and detection
+of threats help us a lot to avoid vandalism and terrorism.
+
+8.1.1.2 A stable economy
+The networks of transportation systems are facilitators of global trade and business.
+Events derailed by security threats or safety breaches can lead the economy astray.
+156 AIoT for smart transportation
+
+Whether a security breach at a major port or thousands of miles from home, a col-
+lision on the interstate interrupts supply chains increasing costs and delaying ship-
+ments [4]. By investing in robust safety and security capabilities, the movement of
+goods and services is facilitated, providing resilience against potential interruptions
+caused by tailbacks. This in turn incentivises the creation of reliable, efficient
+transportation networks that further support economic stability and growth.
+
+8.1.1.3 Defence of deregulation
+Transportation Infrastructure is a key part of National Security. Secure transport
+would protect from questionable actions, terrorism, and smuggling. The main-
+tenance and security of transportation networks require cooperation between gov-
+ernmental organisations, commercial enterprises, and international partners [5].
+Together, these steps will provide a global approach to security planning, help
+identify potential vulnerabilities, and enhance the overall resilience of various
+transportation networks against attacks.
+
+8.1.1.4 Advances in technology
+There are so many new technological innovations that could be implemented which
+would result in enhanced security and safety for transportation networks including
+the use of more sophisticated AI. Artificial intelligence (AI), powerful surveillance
+systems, and driverless cars could lead to a total removal of transportation security.
+Similarly, autonomous cars would eliminate human error which is responsible for
+the majority of the accidents. AI can detect potential security threats by analysing a
+large amount of data [6]. This means solving other problems like cyber security
+threats that stem as a result of adopting many different technologies to ensure they
+are safely and securely integrated.
+
+8.1.1.5 The information you need
+Strong laws and rules are essential for maintaining and improving the security and
+safety of transportation networks. Governments are necessary to create laws, enforce
+them, and provide oversight. Policies must have the agility to address emerging risks
+and technologies. The legislative frameworks should ‘find the right balance’ in making
+room for innovation that does not compromise security and safety. As transportation
+networks often cross national borders, global security problems will be solved by
+combining the efforts and unifying the legislation at an international level [7].
+
+8.1.1.6 Education and public awareness
+Another primary ingredient in any comprehensive safety and security plan is edu-
+cation and public awareness. The security and safety of the transportation system
+can be ensured by promoting awareness campaigns in trains through rail rider
+programs illustrating the first response to emergency preparedness and commer-
+cials/ awareness surrounding public transit on security protocols. Campaigns, talks,
+and occurrences that exhibit a good community attitude create an environment
+where people feel secure – it not only enables them to be vigilant but also helps
+them respond in smarter ways when facing various circumstances and obstacles.
+  AIoT-based safety and security in smart transportation 157
+
+8.2 The role of AIoT in predictive maintenance
+
+With the arrival of predictive maintenance (PdM), timed-based schedules are now a
+thing of the past for industrial maintenance. A vital contribution to this revolution
+has come from The AIoT – an intersection between the IoT and AI. AIoT averts
+machinery failures by anticipating preferred hardware maltreatment hence,
+enhancing the maintenance operational steps and reducing process expenses [8]. It
+accomplishes this by combining the connectivity and data collection functions of
+IoT devices with AI’s advanced data analysis and predictive machine learning
+(ML) algorithms, as illustrated in Figure 8.2.
+
+  Collection and Aggregation of Data: AIoT powers PdM as it allows self-
+monitoring of installed sensors on industrial setups to collect continuous data.
+These sensors measure multiple parameters including temperature, vibration,
+pressure, humidity, and many more; the data obtained is accumulated in real time
+and released to centralised platforms for further analysis. Smooth integration of
+many data streams through IoT devices provides comprehensive, real-time insight
+into the operational state of the equipment.
+
+  A large part of the foundation of inflammation testing comes from techniques
+in machine learning and data analysis where artificial intelligence systems piece
+through heaps of information after it has been collected, looking for patterns that
+would indicate a future issue or an aberrancy. Machine learning is used to train the
+model with historical data, so that performance degradation or wear and tear, etc.
+can be detected beforehand. These models improve accuracy over time as they
+continuously learn from new data and give us more confidence in the forecasts [9].
+
+  Action  Data
+  Capture
+
+Decision  Process
+
+  Learn  Analyse
+
+Figure 8.2 Components of AIoT
+158 AIoT for smart transportation
+
+With its predictive capabilities, maintenance can be scheduled right as it is needed,
+eliminating any downtime and extending the life of equipment.
+
+  Real-time Monitoring and Decision Making: The AIoT will provide real-time
+monitoring to anticipate potential issues, enabling PdM to take place. Traditional
+Extract, Transform and Load (ETL) follows a batch execution model, waiting for all
+data to be generated before performing updates and analysis. Artificial intelligence
+algorithms can analyse an anomaly to determine the magnitude and potential con-
+sequences of that specific alert. They receive an alert and a recommendation on the
+exact steps they should take – adjust operation settings or swap out parts. Such real-
+time decision-making processes add to overall operational efficiency reducing the
+chance of catastrophic failures.
+
+  Resource Optimisation and Cost Reduction: Moving from reactive or sched-
+uled maintenance to condition-based PdM enabled by AIoT saves substantially in
+maintenance costs (around ten times) [10]. The ability to predict breakdowns in
+advance leads to a more efficient use of resources and saves unnecessary preventive
+maintenance. In addition to full cost savings, the reduction of total costs is even more
+meaningful because the equipment has extended life and reduced unplanned downtime.
+With such accurate predictions, businesses can then optimise their maintenance sche-
+dules to ensure machines are only fixed when genuinely needed.
+
+  While the benefits of AIoT have been discussed, several more problems must
+be addressed to capitalise on PdM opportunities. When connectivity is the new
+normal, you should build your IoT ecosystem on a secured infrastructure; data
+protection and privacy take prominence because of increased cyber risks. Strong
+data protection protocols and encrypted communication routes are a must. In
+addition, because current legacy systems are widespread, it may be challenging and
+costly to implement AIoT technologies.
+
+  The expectations from future developments in AIoT would further improve PdM
+going forward. Edge computing improvements will enable greater on-device proces-
+sing, thereby reducing latency and supplementing real-time decision-making [11]. For
+their part, more advanced machine learning models and improved AI algorithms pro-
+mise even more accurate predictions of failure. They will also boost the IoT network
+connectivity and speed further by blurring information technology (IT) and operational
+technology (OT) struggles – allowing easier data processing, and transmission.
+
+  AIoT transforms the PdM game, using a preventative strategy for asset man-
+agement to increase productivity while reducing costs and extending equipment
+life. By using AI and IoT, companies can predict precisely when equipment will
+break down. AIoT will be increasingly significant over time and in turn, affect
+innovation, shaping the future of industrial maintenance and contributing to a more
+resilient and efficient industrial ecosystem.
+
+8.2.1 Real-time data analysis for early failure detection
+
+PdM allows you to monitor the condition of infrastructure and vehicles in real time
+through AIoT. Data from sensors placed inside transport assets is analysed by
+artificial intelligence (AI) algorithms that can pick out patterns of degradation and
+  AIoT-based safety and security in smart transportation 159
+
+notional failure. This approach can identify sooner and react faster, resulting in a
+reduced occurrence of costly failures and higher end-to-end system reliability.
+
+  This rapid advancement of technology has enabled to capture an extensive amount
+of data from different companies on a real-time basis. With the rise of data, there are
+now even more chances to leverage real-time data analysis for catching serious system
+crashes before they strike. In areas such as manufacturing, healthcare, transportation,
+and information technology infrastructure where small failures lead to great costs in
+terms of money, safety risks, and opportunity loss, early failure detection is very
+important [12]. Real-time data analysis monitors the sense of each incoming data
+stream to detect any abnormalities or patterns that may be indicative of pending fail-
+ures and to act accordingly before it happens, decreasing the risks promptly. Fail fast –
+you must be able to identify failures early on for different reasons. In the first instance,
+it drives operational efficiency by reducing maintenance expenses and averting
+unscheduled downtime. Second, it improves safety by anticipating potential hazards
+before they turn into catastrophic events. Third, it helps increase the equipment life
+span by keeping the problem from metastasising. This ultimately leads to an increase in
+client satisfaction by ensuring the quality and availability of services and goods.
+
+8.2.2 Applications in vehicle maintenance
+
+In vehicle maintenance, AIoT systems can easily keep track of certain environmental
+metrics like tyre pressure, brake wear, or even engine performance By watching for
+these signals, an AIoT can tell when maintenance is imminent and thus avoid a no-
+notice equipment breakdown. Then they craft service schedules around that data,
+which reduces the number of times a vehicle goes in for maintenance, decreases
+downtime and operating expenses, and increases safety. The technology has made
+remarkable strides in the evolution of vehicle maintenance. The use of modern
+methods and tools increases both the longevity and safety of vehicles, in addition to
+the efficacy and efficiency of maintenance operations [13]. Vehicle maintenance
+applications include PdM, computerised maintenance management systems
+(CMMS), telematics, and sophisticated diagnostic instruments.
+
+l Predictive Maintenance (PdM) relies on data analytics and tools that foretell
+  issues, helping to predict and anticipate potential failures before they occur.
+  Comprehending patterns and deviations with sensor information and advanced
+  analytics PdM can detect malfunctions in potential devices. For instance, they
+  are often known to use thermography, vibration measurement, and oil analysis
+  to monitor the health of important components like engines and transmissions.
+  The results are lower maintenance costs, less downtime, and longer vehicle
+  service lives thanks to the PdM implementation.
+
+l Computerised Maintenance Management Systems: These are used to
+  automate the tasks of maintaining equipment. This simplifies the process of
+  planning, tracking, and recording maintenance tasks. Integrating CMMS with
+  other systems (such as Inventory Management Systems and Enterprise
+  Resource Planning) can help in getting an overall view of your requirements
+  for maintenance and the availability of resources. This ability, as well as
+160 AIoT for smart transportation
+
+  features such as work order management, helps in scheduling and executing
+  maintenance tasks enabling the vehicles to run smoothly by keeping them
+  well-greased with log maintenance history logs for the tracking of assets so
+  that they are maintained at all times.
+l Telecom-Based Telematics: With informatics and telecommunications seam-
+  lessly integrated into one solution, a telematic system allows near-instant data
+  transfer from the vehicle to a remote location(s). The system provides a complete
+  framework to monitor car performance, detect issues, and predict maintenance
+  needs. In the ways of car maintenance, telematics is used in remote diagnostics,
+  enhanced fleet management, real-time monitoring, and alerts advanced diagnostic
+  equipment: Along with telematics, advanced diagnostic equipment is dramati-
+  cally transforming the way cars are being serviced. They offer direct and exten-
+  sive readings of the condition of your vehicle, which translates into better
+  diagnosing and repair. Examples of these are advanced code readers and scan-
+  ners, oscilloscopes, thermal image photographic equipment, wireless tools for
+  diagnosis, software-based diagnostics, and other applications.
+
+8.2.3 Infrastructure component monitoring
+
+The AIoT is important for monitoring infrastructure elements such as highways,
+tunnels, and bridges. Sensors can also detect vibrations, structural damage, or other
+signs of decay. AI algorithms process this data to predict maintenance needs and help
+protect the safety of the infrastructure. This predictive ability is also essential to
+prevent catastrophic breakdowns and it will prolong the lifespan of critical trans-
+portation assets [14]. Infrastructure monitoring through The IoT and Artificial
+Intelligence (AI), known as AIoT, is the solution. By merging these two aspects, the
+effectiveness, reliability, and safety of essential infrastructure structures increase by
+leveraging the gathering of data supplied by IoT elements and the nearly unlimited
+analytical power provided by AI. Some real-world applications help show why AIoT
+is so beneficial in PdM. For instance, an AIoT pilot project in a large city used
+sensors to monitor the structural health of bridges; this data was converted into
+insights that improved safety and the repair process. Another use case was a fleet
+management company that utilised AIoT to predict auto repair necessity, this led to a
+drastic reduction in breakdowns and maintenance costs. The figures above conclude
+the potential benefits with respect to the preservation of transportation assets due
+to AIoT.
+
+8.3 AI-powered monitoring systems
+
+AI in public transportation is transforming urban mobility. It is making travel
+sensible and effective. This new era of mobility combines people-centred design
+with speed. Future transportation systems are built on intelligence. It will react
+swiftly in this situation and is aware of what will come next. The use of AI in
+surveillance is transforming transit safety. It is excellent at identifying issues and
+foreseeing dangers. This improves safety in transportation by mimicking human
+  AIoT-based safety and security in smart transportation 161
+
+behaviour without error. AI can help in route optimisation. It can interpret traffic
+information to provide seamless bus and train guidance [15]. AI provides dynamic
+scheduling. AI quickly adapts to modifications, presenting alternate routes and
+times. AI can help in safety management. Surveillance systems using smart tech-
+nology stop threats in their tracks. AI in transportation does more than merely
+transport you. It provides a swift, secure, and enjoyable journey. It is about care-
+fully and intelligently planning to suit your demands.
+
+  Urban travel is undergoing significant change due to artificial intelligence. It
+improves the efficiency and intelligence of public transportation networks. This
+lowers expenses while enhancing service quality. AI assists in determining the
+optimal routes for trains and buses. This satisfies the demand for more intelligent
+and efficient city transportation options.
+
+8.3.1 Key benefits of integrating AI into public transit
+
+a) Sensor Deployment throughout Transportation Networks: Transportation
+  networks must be equipped with sensors to support an AI-powered monitoring
+  system. The different types of data these sensors collect are: traffic flow,
+  weather, and vehicle performance. In such a scenario, real-time accurate data
+  may be obtained by the transportation authorities on how things are looking or
+  working within their system through the development of a blanket of sensors.
+
+b) Automatic Anomaly Detection with Data Analysis: This records readings and
+  identifies anomalies or potential security and safety-related vulnerabilities.
+  Unusual traffic pattern anomalies may refer to accidents or heavy traffic in
+  certain parts, and in other parts, one can use it to ascertain dangerous situations
+  with environmental measurements. With the help of AI technology, one can
+  view huge datasets so that very minor patterns may be picked up, thus allowing
+  anomalies to be detected speedily and accurately.
+
+c) Proactive Safety Threat Responses: In case any anomaly is detected with AI-
+  enabled ML-as-a-Service monitoring solutions, safety threats can be responded to
+  with proactive responses. This would include alerting the police, changing traffic
+  conditions, and contacting emergency services. With AIoT for transport, the system
+  gets ready to prepare against road safety concerns through focused and timely actions.
+
+d) Improved Traffic Management: These AI-based monitoring systems gather
+  huge benefits in traffic control as well. By providing real-time insights into
+  traffic conditions, technologies such as these allow for on-the-fly adjustment of
+  traffic signals, lane allocations, and speed limits. This allows for more free flow
+  of traffic and reduces congestion and the likelihood of accidents. Best-in-class
+  deployments such as smart traffic control systems in large cities have had great
+  improvements in traffic efficiency and security.
+
+8.3.2 Challenges and considerations in AI integration
+
+The increasing complexity of urban environments is contributing to the emergence of
+AI in public transportation. The benefits are clear, but integrating these systems with
+cities is challenging. This article outlines the key problems and what has to be fixed
+162 AIoT for smart transportation
+Table 8.1 Challenges and impact of integrating AI in transport systems
+
+Challenge  Impact on AI integration Strategies for addressing
+
+Data privacy and  High risk to passenger trust if Implement advanced encryption and
+security
+  breached  cybersecurity measures
+Regulatory
+compliance  Must navigate varying global/ Active engagement in policy
+
+Infrastructure  regional standards  development processes
+investment
+  Significant upfront costs  Secure public–private partnerships
+Public expectation  and funding
+management
+  Essential for technology  Outreach and education campaigns
+  acceptance
+
+for AI in public transportation to be successful. Security and data privacy are major
+issues with autonomous transportation. Building robust cyber defences is imperative
+for officials and developers as they amass a vast amount of consumer data. This
+guards against hacking and improper use of passenger data [16]. The regulations
+governing self-driving cars in urban areas are novel and intricate. It is important to
+communicate with legislators and move quickly to adjust to changing laws. This
+guarantees that legislation and AI developers cooperate effectively. AI in transpor-
+tation requires significant planning and funding. AI system setup and operation come
+at a hefty expense. These include installing sensors and overseeing the systems. It is
+critical to establish trust in AI transport. For these services to win the trust of the
+public, they must be trustworthy and safe. This entails emphasising public education,
+maintaining transparency, and demonstrating the dependability of AI. Table 8.1
+shows the challenges and impact of integrating AI in transport systems.
+
+8.4 Using AIoT for optimising traffic flow and reducing
+  congestion
+
+Due to technological advancements during the past century, a large number of
+people have moved from rural to urban areas in various states across the world.
+These cities have thus grown extremely populous, which has led to a number of
+societal issues, such as traffic congestion. Additionally, a huge number of con-
+sumers’ growing demand and the dropping prices of automobiles both significantly
+contributed to the increase in traffic congestion [4]. Actually, the issue of traffic
+congestion is more pronounced in third-world nations because of inadequate
+infrastructure. Traffic jams lead to excessive fuel use, which not only raises the cost
+of communication but also pollutes the environment. Production expenses rise and
+a significant number of working hours are lost as a result of traffic congestion.
+
+  Moreover, it creates issues for law enforcement agencies, firefighters, and
+medical and/or paramedical teams, resulting in a rise in crime and fatalities. It is now
+feasible to fight this issue by rerouting cars from extremely congested highways to
+  AIoT-based safety and security in smart transportation 163
+
+less congested ones using satellite and computer technologies thanks to the emer-
+gence of smart cities that leverage technological advancements. Furthermore, tech-
+nology is moving towards a smart society where widespread usage of driverless
+autonomous vehicles is possible. All of them have the common characteristic that
+they are usually fitted with advanced technology, which records data regarding
+density levels on most roads. The data will aid the vehicles in determining the best
+course or route to use while attempting to locate the target [18].
+
+  This will give AIoT a transformational potential in the sense of improving the
+circulation of traffic and, therefore, reducing congestion in urban areas because the
+AIoT systems combine AI’s advanced data processing capacity with IoT connectivity
+that will be instrumental in gathering and analysing real-time data from sources such as
+traffic cameras, sensors, and GPS devices. Such systems would be able to predict the
+flow of traffic and dynamically alter its signal. In addition, the related devices can
+update the status of the drivers in real time. For example, the AI algorithm may
+recognise blockages within the flow of traffic and act to clear out the congestion either
+by changing the light sequence or through vehicle rerouting. It further coordinates
+different traffic intersections such that the transitions at those points could be as smooth
+as possible and also reduce the time taken by a vehicle to travel a particular distance. It
+further ensures that this smart orchestration of traffic helps improve the management of
+traffic in cities along with reducing emissions while bringing better mobility.
+
+Some of the major advantages of using AIoT to ameliorate traffic and reduce
+congestion include:
+
+a) Adaptive Traffic Adjustments: AIoT will allow real-time information con-
+  cerning traffic density, automobile speed, and road conditions to facilitate
+  dynamic traffic adjustments. To ensure smooth and efficient traffic flow, AI
+  systems can regulate the use of lanes, suggest alternative routes, and even
+  optimise intervals for traffic signals. The reductions in the density of traffic
+  increase overall efficiency in travelling [19].
+
+b) Real-Time Data Insights for Traffic Optimisation: Transportation authorities
+  would be able to take the right decisions in making the right traffic flow with
+  real-time data insights. The steady supply of data in AIoT systems can modify
+  and alter plans made regarding traffic control according to a situation requiring
+  intervention. Such a real-time approach assures rapid as well as efficient policy
+  towards optimisation of traffic.
+
+c) Accident Mitigation Strategies: The accident mitigation technique under this
+  context is AIoT; this technique utilises real-time interventions along with ana-
+  lytics. For example, both the traffic context and its trends can help predict
+  instances that are likely to become highly unsafe or hazardous, enabling pro-
+  tective actions are taken. Probably an excellent way to remarkably limit the
+  potential of having an accident is by constructing some sign boards at locations
+  liable for probable accidents or reworking the speed barriers and increasing
+  them according to environmental issues.
+
+d) Examples of Successful Implementations: Some examples of the successful
+  implementation of AIoT are observed in smart traffic applications, such as in
+164 AIoT for smart transportation
+
+  Singapore and Amsterdam. Such systems measure the traffic, regulate traffic
+  signals, and provide timely traffic updates to the drivers. In fact, it was found
+  that the congestion on roads and travel times decreased rapidly. Therefore, AIoT
+  proves to be useful for urban traffic control.
+
+8.5 Driver assistance systems: Enhancing safety and
+  efficiency on the road
+
+AIoT-based driver assistance systems (DAS) combine the IoT and artificial intelli-
+gence in the safety and efficiency of cars. This will make the reaction of a vehicle
+even safer by requiring proper decisions that are based on real-time information
+acquired through sensors, cameras, and GPS. An example is how AIoT-based algo-
+rithms look up data for possible dangers, including pedestrians or hard braking, to
+make necessary corrections in response to events like brake automation. Predictive
+capabilities keep an eye on the health of the vehicle, maintain its reliability, and save
+on expenditure as it predicts any possible breakdown [20]. DAS, with the integration
+of AIoT, is optimised in terms of navigation routes and provides actual information
+concerning traffic conditions at specific hours to minimise travelling time as well as
+reduce traffic congestion. Advanced safety technologies also allow vehicles to
+maintain distances safely while maintaining their position correctly. The driver,
+under all circumstances, remains to be helped more in matters relating to adaptive
+cruise control as well as lane-keeping assistance. Voice commands along with aug-
+mented reality displays create a highly user-friendly human–machine interface that
+lets drivers gain any information possible with minimal levels of distraction to make
+both road safety and driving pleasurable on the whole.
+
+  The AIoT DAS also optimises navigation by showing alternative routes and
+real-time traffic information, reducing the time spent on travel and congestion.
+With a focus on holding safe distances and proper lane positioning, advanced safety
+features such as adaptive cruise control and lane-keeping assistance push drivers to
+new heights of safety. With the user-friendly human–machine interface through
+voice commands and augmented reality displays, the attainment of critical infor-
+mation can be done with a minimal amount of distraction, thus both promoting road
+safety and general driving satisfaction [21].
+
+Some of the most valuable features of AIoT-based DAS include the following:
+
+a) Real-time Warnings and Support: AIoT-driven driving assistance technolo-
+  gies offer safety and comfort to drivers by providing real-time warnings and
+  support. It might, therefore, trigger warnings or even enforce other correcting
+  measures to prevent accidents through the monitoring and detection of possible
+  risks. Some of these are lane departure warnings, collision prevention technol-
+  ogies, and adaptive cruise controls.
+
+b) Accident Prevention and Avoidance: AIoT DAS can now foresee accidents
+  even before they occur, using real-time data streamed from sensors inside and
+  outside the vehicle. For example, such DAS on self-braking emergency
+  AIoT-based safety and security in smart transportation 165
+
+  automation can catch instances of probable collisions or may even brake pos-
+  sibly and eventually prevent one or mitigate its impact to become effective.
+  Such measures would highly enhance safety on roads since accidents are
+  minimised, mostly without being experienced.
+c) Integration with AIoT Technologies: Thus, the coherent and intelligent
+  transportation system results from integration that seamlessly amalgamates the
+  driver assistant systems with other technologies of AIoT. This, on its end, gives
+  full collection and analysis to push up precision and potency. The intelligent
+  transportation ecosystem avails of interlinked AIoT to give a driver correct
+  information that allows the development of driving expertise at all times.
+d) Driver Safety Impact: Driver assistance technologies that the IoT would offer
+  are essential for road safety. Studies indicate that such devices can bring down
+  the rate of crashes substantially as well as traffic safety. AIoT would empower
+  better judgement on the drivers in real-time and respond effectively to emerging
+  threats more skillfully by providing support and intervention.
+
+8.6 Comprehensive security monitoring
+
+Using AIoT for intelligent security monitoring has made a significant advance-
+ment in ensuring safety and security in different environments. Combining arti-
+ficial intelligence with the IoT, these systems can provide smart, real-time
+monitoring and threat detection [22]. The sensors, cameras, and access restric-
+tions of a network of networked devices data are analysed by Artificial intelli-
+gence (AI) algorithms. This will help to quickly detect suspicious behaviour or
+potential security violations. So measures can then be considered, such as alerting
+security staff or initiating a lockdown. These may also learn and improve them-
+selves over time, providing much higher accuracy in threat detection and low-
+ering false alarms. It also facilitates the integration, and orchestration of diverse
+security parts as a combined security environment. The need for a high level of
+in-depth monitoring is greater and also indeed much better for public safety as
+well as operational efficiency, to protect residential areas, business buildings, and
+critical infrastructure [23].
+
+  However, keep a few things in mind:
+
+Video Surveillance and Access Control Integration: The IoT includes AI ana-
+lytics with an access control system, posing improved security monitoring func-
+tionalities. Suspicious activity and unauthorised access can be found through non-
+stop surveillance and evaluation of security footage due to the integration. Due to
+its AIoT intelligence, the plants are automatically able to alert their security staff
+about the threat and user needs for carrying out certain anti-measures [19]. AIoT-
+enabled security systems, for example, use a network of connected cameras and
+sensors to constantly observe their surroundings. Built on top of this are artificial
+intelligence (AI) algorithms capable of quickly analysing video feeds and sensor
+data to identify anomalous activity, potential threats, or breaches. AI can recognise
+abnormal activities, such as loitering and tailgating, and create alarms for the
+166 AIoT for smart transportation
+
+response team. This instant analysis reduces reaction times by substantial orders of
+magnitude when compared to previous systems, allowing lightning-fast reactions to
+potential safety issues.
+
+  Perimeter Monitoring AI-Based Analytics: Perimeter monitoring systems
+based on AIoT can quickly detect and respond to security breaches. By analysing
+data from motion sensors, cameras, and other security devices, AI algorithms can
+identify potential intruders and trigger alarms. Tackling security threats promptly is
+possible if they are addressed in advance. Perimeter monitoring systems powered
+by AI use this modern technology to monitor in real time to increase safety and
+reduce outage time and response [9]. Traditional techniques of securing are being
+upgraded these days.
+
+  Cyber Security Measures AIoT: AIoT is crucial in supporting advanced
+security measures and programmes to enhance physical as well as cyber secur-
+ity. Proactive threat detection and a continuous look at network traffic are the
+ways to protect transportation systems from cyber-attacks. AI systems can
+identify incipient patterns and possible vulnerabilities which in turn allows
+timely responses to emerging cyber security threats [15]. This is an issue for
+traditional security systems because it will make the end user increasingly
+desensitised and sluggish, which will not only lead to inefficiencies but also
+false alarm rates which can be incredibly irritating to deal with. Through
+advanced machine learning models, AIoT systems provide the ability to distin-
+guish between normal and abnormal activity to substantially reduce false alarms.
+This process of learning is essential to reduce false alarms and ensure that only
+credible security professionals are informed about the actual threats. Artificial
+Intelligence helps prevent unnecessary alerts such as the differentiation between
+humans or animals on camera or regular process vs. human intervention inside a
+company.
+
+  Continuous Network Traffic Monitoring and Threat Detection:
+Contemporary cyber security methods need to have threat detection along with
+consistent network traffic monitoring. Solutions leveraging advanced features are
+critical as threats continue to evolve –and grow in numbers – across company
+networks, and highly sensitive data [21]. AI-driven threat detection and continuous
+monitoring can make organisations keep stronger cyber security defences with real-
+time protection claims and proactive threat management. AIoT can keep network
+traffic continuously monitored ensuring that any abnormal or suspicious activity is
+detected without delay. It is necessary to constantly observe this in real time for the
+safety and security of transportation networks. Leveraging AI-driven analytics
+could help implement safety measures for transportation authorities to safeguard
+against an increasingly larger and ever-changing attack vector.
+
+8.7 Emergency response optimisation
+
+Bringing AIoT into emergency response optimisation is a remarkable step forward
+to make the entire service more effective and efficient. By integrating Artificial
+  AIoT-based safety and security in smart transportation 167
+
+Intelligence (AI) with the IoT, emergency response systems can enhance the
+effectiveness of decision-making and resource allocation with real-time data
+transacted from a variety of sources such as sensors, wearable technology, and
+mobile applications. Cloud-based AI algorithms analyse incoming data to predict
+where disasters will strike next, identify the most vulnerable regions, and optimise
+response times. For example, AIoT can prioritise ambulance dispatch based on the
+availability of hospital resources, the conditions of roads travelled to get there, and
+the severity of a patient’s condition [24]. Additionally, AIoT helps establish
+seamless communication and information sharing at times of crisis, helping better
+communication between central command centres to the emergency services.
+Integration equalises implementation and increases disaster resilience at the com-
+munity level, shortening both times to respond and gaining overall safety as well as
+operational efficacy.
+
+  High-level key points for AIoT-based emergency response optimisation are
+listed below.
+
+  Real-time Incident Severity Analytics: AIoT technologies help in real-time
+analysis of incident severity that gives relevant information for emergency
+response. Using AI algorithms, accidents can be prioritised and resources allocated
+according to evaluations of several parameters such as the number of cars, envir-
+onmental conditions, and impact on the traffic flow [25].
+
+  The mechanisms of optimal resource allocation are important for efficient
+emergency response. AIoT systems will also be able to recommend the dispatch of
+emergency services like an ambulance or tow truck as they process real-time data.
+The holy grail of this is that quick and effective usage of resources ultimately leads
+to better emergency scenario outcomes.
+
+  AIoT for Emergency: The implementation of AIoT in the case of emergen-
+cies goes far apart from resource allocation only. For example, AIoT systems can
+provide emergency responders with live data so that they can travel more effi-
+ciently through traffic and reach the location of an event faster. In addition, AIoT
+technology can provide better agency-to-agency collaboration and communication
+which will improve the effective operations of emergency response [17].
+
+8.7.1 Use cases and examples from the real world
+
+Emergency response in Barcelona: This smart city application undertaken by one of
+Barcelona’s projects is to provide an emergency response system equipped with
+AIoT technology that merges data from different types of sensors and public safety
+networks. In this case study, the system was utilised to analyse real-time data from
+social media feeds, environmental sensors, and surveillance cameras during a large-
+scale blaze [7]. This enabled emergency services to gain accurate insight into the
+situation, effectively distinguish priorities, deploy resources instantly, and evacuate
+communities swiftly. Predictive analytics of the AIoT system predicted possible
+spread patterns as well and enabled preventive action to minimise the effect on
+neighbouring areas.
+
+  Japan’s Disaster Response: In a large application, because Japan is an earth-
+quake and tsunami-prone country, AIoT equipment is combined to improve its
+168 AIoT for smart transportation
+
+emergency response capabilities. AIoT systems were critical to disaster manage-
+ment during the 2011 To¯hoku earthquake and tsunami. Real-time seismic data and
+tsunami predictions were incorporated into evacuation methods, enabling timely
+joint actions. The application of AI-driven algorithms helped in interpreting the
+structure damages and optimising the resource deployments to make rescue efforts
+more effective [16].
+
+  The above case studies illustrate how AIoT could significantly disrupt emer-
+gency response optimisation. Using on-the-ground data in conjunction with
+advanced analytics can help cities enhance their crisis response and resilience –
+ultimately saving lives and property.
+
+8.8 Autonomous vehicles and AIoT
+
+From early Driver Support Systems (DSSs) to fully autonomous cars that are
+capable of driving through complex urban environments, the technologies for
+autonomous vehicles (AVs) have improved. The initial advances focused on cam-
+eras and sensors to allow rudimentary object identification and collision avoidance –
+things such as radar and LiDAR. Later, it was incorporated with sophisticated AI
+algorithms over time, thus enabling real-time data processing into corresponding
+decision-making [10]. IoT: an essential part of security in a driverless car that utilises
+machine learning algorithms that are constantly connecting information from the
+vehicle with their global AI algorithms, autonomous cars (AV) can essentially teach
+them how to adapt to new driving situations. The driving tactics rely on such input
+data to ensure that the vehicle can navigate safely, even in unforeseen situations, as
+these may vary from one street to another and depend on factors such as traffic lights,
+slippery roads, or similar conditions. Besides serving as a liaison between vehicles
+and infrastructure, AIoT systems actively contribute to safer traffic by coordinating
+movements and preventing collisions.
+
+  One of the biggest advantages that cars with AI have is their potential to totally
+eradicate human error, which is a huge cause of traffic accidents. AIoT systems can
+consistently make decisions in real-time with a high level of accuracy that would
+likely not be possible for humans as well. This reduces the chance of accidents
+resulting from human factors such as fatigue, inattentiveness, or error on a person’s
+part. It provides extensive and present data that allows AIoT to make decisions for
+autonomous cars [9]. Machine learning algorithms analyse patterns to predict
+potential threats, allowing reactive responses to become proactive. An autonomous
+car could predict, for example as a result of historical data and instant observation
+when a possible pedestrian may want to cross the road and adjust its speed and
+trajectory thus-level.
+
+8.9 Challenges and considerations
+
+Despite these advancements, the incorporation of AIoT into smart transportation
+systems faces several operational and technical challenges. Understanding the
+  AIoT-based safety and security in smart transportation 169
+
+complex AI algorithms and managing these algorithms is still a challenging task.
+Ensuring data integrity and allowing for reliable and instantaneous device-to-
+device communication is also a key task while retaining performance. The com-
+patibility of various systems and standards additionally remains a key challenge.
+
+  Ethical and Privacy Issues: Using AIoT in transportation also opens up ethical
+and privacy concerns. Ongoing data collection and monitoring can lead to possible
+privacy violations. There is also the matter of morality – when it all comes down to
+hard decisions. As an example, a driverless car may need to determine the relative
+value of different sets of human lives when allocating road space between pedes-
+trians and (possibly paying) passengers [8].
+
+  Regulatory and Compliance: The new regulatory frameworks (especially
+around autonomous vehicles) are evolving. Standards for interoperability, safety,
+and data security are needed to ensure the wide application of these technologies.
+Maintaining compliance with existing transportation laws, such as crafting new
+regulations around AIoT-specific challenges, is an ongoing process.
+
+  Future Trends and Opportunities of AIoT in Transportation: The prevailing
+blossoming trend with intelligent system integration, leveraging transportation with
+AIOT seems to be quite a promising opportunity for the automotive field. With
+technologies like Artificial Intelligence, Machine Learning, and 5G taking shape,
+more advanced apps can be developed. For everything from personalised mobility
+services to smart city infrastructure and eco-friendly transportation alternatives, the
+opportunities are there.
+
+8.10 Conclusion
+
+One of the most crucial ways of upgrading security and safety is by imple-
+menting AIoT in intelligent transportation networks. AIoT shortens emergency
+response times and enables PdM practices and traffic prediction based on real-
+time data with deep analytics. The AIoT-based autonomous vehicles outperform
+in terms of the decision-making process and this leads to less number of acci-
+dents. The AIoT-based transportations are more efficient, secure, robust as well
+as sustainable.
+
+  AIoT advancements will allow for innovation in mobility modalities such as
+autonomous public transport and on-demand car hire. These suggestions will get
+cars off the road, diminish pollution and enable transport for everybody. As AIoT
+grows, it will play a greater role in securing smart transportation systems.
+Stakeholders must work together and invest in AIoT and do thorough research to
+realise its potential for safer, more efficient transportation across communities
+globally.
+
+References
+
+ [1] Alladi, T., Agrawal, A., Gera, B., Chamola, V., and Yu, F. R. (2023). Ambient
+  intelligence for securing intelligent vehicular networks: Edge-enabled
+170 AIoT for smart transportation
+
+  intrusion and anomaly detection strategies. IEEE Internet of Things Magazine,
+  6(1), 128–132.
+ [2] Anvigh, A. A., Khavan, Y., and Pourghebleh, B. (2024). Transforming
+  vehicular networks: How 6G can revolutionize intelligent transportation?.
+  Science, Engineering and Technology, 4(1), 80–93.
+ [3] Balasubramanian, S. B., Balaji, P., Munshi, A., et al. (2023). Machine
+  learning based IoT system for secure traffic management and accident
+  detection in smart cities. PeerJ Computer Science, 9, e1259.
+ [4] Basargan, H., Zsolt, S., and To¨ro¨k, A´ . (2020). Evaluation of intelligent
+  transportation system in security consideration. In TRANSBALTICA XI:
+  Transportation Science and Technology: Proceedings of the International
+  Conference TRANSBALTICA, 2019, Vilnius, Lithuania (pp. 273–282).
+  Springer International Publishing.
+ [5] Chhillar, R. S. (2022). IoT enabled security management approach for intel-
+  ligent transportation system in smart cities. In 2022 IEEE 6th Conference on
+  Information and Communication Technology (CICT) (pp. 1–5). IEEE.
+ [6] Garvanov, I., Garvanova, M., Borissova, D., Vasovic, B., and Kanev, D.
+  (2021). Towards IoT-based transport development in smart cities: Safety and
+  security aspects. In Business Modeling and Software Design: 11th Interna-
+  tional Symposium, BMSD 2021, Sofia, Bulgaria, 2021, Proceedings 11 (pp.
+  392–398). Springer International Publishing.
+ [7] Gyamfi, E., Ansere, J. A., Kamal, M., Tariq, M., and Jurcut, A. (2022). An
+  adaptive network security system for IoT-enabled maritime transportation.
+  IEEE Transactions on Intelligent Transportation Systems, 24(2), 2538–2547.
+ [8] He, Y., Kong, M., Du, C., Yao, D., and Yu, M. (2022). Communication
+  security analysis of intelligent transportation system using 5G Internet of
+  Things from the perspective of big data. IEEE Transactions on Intelligent
+  Transportation Systems, 24(2), 2199–2207.
+ [9] Karthikeyan, H., and Usha, G. (2023). A secured IoT-based intelligent
+  transport system (IoT-ITS) framework based on cognitive science. Soft
+  Computing, 28, 1–11.
+[10] Kumar, G., and Altalbe, A. (2024). Artificial intelligence (AI) advancements
+  for transportation security: in-depth insights into electric and aerial vehicle
+  systems. Environment, Development and Sustainability, 1–51. https://doi.
+  org/10.1007/s10668-024-04790-4.
+[11] Liu, J., Zhang, L., Li, C., Bai, J., Lv, H., and Lv, Z. (2022). Blockchain-
+  based secure communication of intelligent transportation digital twins sys-
+  tem. IEEE Transactions on Intelligent Transportation Systems, 23(11),
+  22630–22640.
+[12] Mika, K., Griessl, R., Kucza, N., et al. (2023). VEDLIoT: Next generation
+  accelerated AIoT systems and applications. In Proceedings of the 20th ACM
+  International Conference on Computing Frontiers (pp. 291–296).
+[13] Mishra, A. K., Ravinder Reddy, R., Tyagi, A. K., and Arowolo, M. O.
+  (2024). Artificial intelligence-enabled edge computing: Necessity of next
+  AIoT-based safety and security in smart transportation 171
+
+  generation future computing system. In IoT Edge Intelligence (pp. 67–109).
+  Cham: Springer Nature Switzerland.
+[14] Mishra, V., and Yadav, M. K. (2022). IoT-based smart transportation system:
+  Implementation and security challenges. International Journal of Vehicle
+  Structures & Systems, 14(5), 567–571.
+[15] Mohanta, B. K., Jena, D., Mohapatra, N., Ramasubbareddy, S., and Rawal, B.
+  S. (2022). Machine learning based accident prediction in secure IoT enable
+  transportation system. Journal of Intelligent & Fuzzy Systems, 42(2), 713–725.
+[16] Pradeepkumar, G., Vijayakumar, P., Chandrasekaran, N., Bhat, C. R.,
+  Senthilkumar, C., and Kumar, N. S. (2023). Safe transportation system using
+  IoT-based alcohol detection. In 2023 7th International Conference on Intel-
+  ligent Computing and Control Systems (ICICCS) (pp. 1521–1526). IEEE.
+[17] Raj, A., Dubey, M., Gugnani, L., and Gupta, N. (2022). Synergizing smart
+  home with smart parking using IOT. In 2022 Second International Conference
+  on Artificial Intelligence and Smart Energy (ICAIS) (pp. 1283–1286). IEEE.
+[18] Rehman, A., Haseeb, K., Saba, T., Lloret, J., and Ahmed, Z. (2022). Towards
+  resilient and secure cooperative behavior of intelligent transportation system
+  using sensor technologies. IEEE Sensors Journal, 22(7), 7352–7360.
+[19] Roy, P., Jain, S. K., Yadav, V., Chaurasia, A., and Yadav, A. K. (2022). IoT-
+  based smart system for safety and security of driver and vehicle. In Pro-
+  ceedings of Third International Conference on Sustainable Computing:
+  SUSCOM 2021 (pp. 359–373). Springer Singapore.
+[20] Sabri, Y., Siham, A., and Maizate, A. (2021). Internet of Things (IoT) based
+  smart vehicle security and safety system. International Journal of Advanced
+  Computer Science and Applications, 12(4), 708–714.
+[21] Sharmila, P., Nandhini, J. M., Anuratha, K., and Joshi, S. (2022). An IoT-
+  based intelligent transport and road safety system. In 2022 International
+  Conference on Innovative Trends in Information Technology (ICITIIT) (pp.
+  1–5). IEEE.
+[22] Shukla, A. K., Shree, R., Pandey, D., Shukla, V., and Pandey, R. P. (2023). A
+  Fusion of VANETs and IoT for intelligent and secure communication. In
+  Modelling and Simulation of Fast-Moving Ad-Hoc Networks (FANETs and
+  VANETs) (pp. 140–154). IGI Global.
+[23] Thuraisingham, B. (2020). Cyber security and artificial intelligence for
+  cloud-based internet of transportation systems. In 2020 7th IEEE Interna-
+  tional Conference on Cyber Security and Cloud Computing (CSCloud)/2020
+  6th IEEE International Conference on edge computing and scalable cloud
+  (EdgeCom) (pp. 8–10). IEEE.
+[24] Tyagi, A. K., and Sreenath, N. (2022). Intelligent transportation system in
+  internet of things-based computing environment. In Intelligent Transporta-
+  tion Systems: Theory and Practice (pp. 265–281). Singapore: Springer Nat-
+  ure Singapore.
+[25] Zhang, J., Wang, Y., Li, S., and Shi, S. (2020). An architecture for IoT-
+  enabled smart transportation security system: A geospatial approach. IEEE
+  Internet of Things Journal, 8(8), 6205–6213.
+This page intentionally left blank
+  Chapter 9
+
+  Enhancing tourists’ experience with AIoT in
+ smart transportation systems for Industry 5.0
+
+  Meenu Gupta1, Palvi Sharma2 and Rakesh Kumar1
+
+Abstract
+
+With the tourism sector embracing the transformative power of Industry 5.0,
+Artificial Intelligence of Things (AIoT) integration into smart transportation sys-
+tems continues to transform how tourists experience and travel. This chapter looks
+at the influence exerted by AIoT in creating responsive, efficient, and personalised
+transportation solutions for modern travellers – improving convenience, safety, and
+user engagement. Advanced IoT sensors integrated with real-time analytics and AI-
+driven predictive insights will enable the tourist to receive personalised route
+recommendations, local attractions instantaneously, and adaptive travel options
+that are oriented towards being more accessible and sustainable. Digital twins and
+augmented reality/virtual reality for transportation will also add a whole new fla-
+vour to the journey experienced by tourists-to-be. Even while this new innovation
+brings previously unseen advantages, issues such as data protection, ethical con-
+cerns, and infrastructure requirements call for an adequate regulatory framework.
+Taking a cue from the best examples worldwide, this chapter has something for
+stakeholders on how AIoT could help achieve smooth, sustainable, and enriching
+travel experiences, so much a precursor to the bright future for smart tourism in
+Industry 5.0.
+
+  Keywords: AI; IoT; Tourism; Smart transportation system; Traffic congestion
+
+9.1 Introduction to AIoT and Industry 5.0 in tourism
+
+The convergence of artificial intelligence and IoT has come to be known as the
+Artificial Intelligence of Things (AIoT), a new, ultra-pragmatic innovation that is
+revolutionising all industries by enabling devices to communicate, assess situations,
+and make autonomous decisions. AIoT plays a significant role in tourism concerning
+developing smart, interconnected systems that bring new experiences for tourists –
+
+1Department of Computer Science and Engineering, Chandigarh University, India
+2Model Institute of Engineering and Technology, Jammu, India
+174 AIoT for smart transportation
+
+from personal travel options to sustainable transportation solutions [1]. With the
+emerging principles of Industry 5.0 that are human-centric and approach sustain-
+able development as the next evolution, AIoT technology presents newer avenues
+to revolutionise the smart transportation of travellers towards their destinations, in
+the context of broader human and environmental welfare. AIoT technology inte-
+grates AIs power of decision-making with the connectivity and data-collecting
+capabilities of IoTs, to build systems that are ever so responsive, autonomous, and
+adaptive [2]. This would involve collecting data over the physical environment and
+then processing the same using AI for optimised, data-driven decision-making,
+feeding that back into the network of connected devices that would be automated in
+adjustments made for improved system performance. For instance, intelligent
+transportation systems can monitor and process traffic in real time to enable tra-
+vellers to identify the lowest congestion route or provide other convenient alter-
+natives, reducing hassle as well as expediting both tourer convenience and
+efficiency [3]. The AIoT applications of the tourism industry vary widely, including
+intelligent city map navigation, customised travel recommendations, real-time
+language translations, and automatic customer support. For instance, such con-
+nectivity would enable a touristic system where tourists can get connected, access
+dynamic route planning, AI-powered sign or menu translation, or even intelligent
+virtual assistants to help plan and guide their trips. Such connectivity supports a
+seamless travel experience, thus making destinations accessible and enjoyable for
+tourists. The data generated from tourist interactions and environmental factors can
+be helpful to tourism operators and city planners in making informed decisions
+regarding sustainable tourism development [4]. From the point of evolution,
+Industry 5.0 emphasises a human-centred approach over the automation exchanges
+emphasised in Industry 4.0. This covers sustainability, resilience, and inclusivity in
+its general application. Therefore, it makes use of the maximum potential of tech-
+nology with all aspects of human values and environmental well-being maintained
+unspoiled in the process of technological application. In tourism, Industry 5.0 is
+used to improve the experience of the traveller, the security of the traveller, and
+access, all while preserving social, ethical, and ecological implications. At its core,
+Industry 5.0 has the objective of fusing human skills with artificial intelligence,
+generating systems that augment, rather than replace, human roles. This makes it all
+the more relevant to the tourism sector, whereby service is largely personalised,
+empathised, and culturally sensitive [5]. Using Industry 5.0, AIoT systems for
+tourism can be designed closer to meeting a traveller’s specific needs so as to make
+the environment more inclusive and accessible. Smart transportation will be
+tailored to different audiences, which will embrace the differently abled tourists
+through personalised transit solutions or navigation support. Lastly, with Industry
+5.0, there is a focus on sustainability, which will put the need for the tourism sector
+to exercise management responsibility for resource use, reduce carbon footprints
+while travelling, and also improve the quality of visitor experiences.
+
+  The integration of AIoT in smart transportation systems benefits cities and
+destinations by serving them with reliable and safe transit solutions for tourists.
+Smart transportation uses AIoT to help optimise routes, optimise traffic flow, and
+  Enhancing tourists’ experience with AIoT for Industry 5.0 175
+
+communicate with travellers in real time so that they receive actual and relevant
+information about their journeys. For example, AIoT might energise autonomous
+vehicles or shuttle services that simultaneously empower tourists to move around
+the urban areas without personal vehicle usage or having extensive knowledge of
+the locality [6]. Moreover, ride-sharing platforms empowered by AIoT can make
+real-time adjustments with demand and traffic conditions to the price, availability,
+and pickup location, thus offering flexible and affordable transit options. This
+allows intelligent transportation systems to monitor and operate energy with respect
+to sustainable tourism principles [7]. Electric buses, self-driving taxis, and other
+AIoT-powered vehicles, integrated into renewable sources of energy, attain effec-
+tive clean greener transportation solutions. Also, AIoT sensors and predictive
+analytics can further be used to detect as well as mitigate bottlenecks in traffic to
+support congestion management, such that tourist flows will improve without
+harming the environment too much [8]. For tourists, AIoT-enabled smart trans-
+portation is more than just convenient but also enhances accessibility, personali-
+sation, and connectivity. Tourists can be equipped with real-time updates that may
+steer them towards less crowded destinations or recommend cultural events [9].
+Even personalised transit options, based on individual preferences, can be provided
+to tourists through AIoT. With AIoT, efficiency in transportation will be aug-
+mented by the integration of real-time data and analytics with the human-centric
+design values of Industry 5.0. Other possibilities enabled by AIoT include mul-
+tilingual navigation, location-based services, and even AR experiences, which
+foster deeper engagement with the local culture for the tourists. Aligned with the
+goals of Industry 5.0 – human-centeredness and sustainable growth – the AIoT in
+smart transport systems integrates advanced technology with an inclusive and
+responsible approach to system design. This ensures that intelligent tourism sys-
+tems not only positively impact the tourism sector but will also offer efficient,
+personalised, environmentally friendly travel experiences [10].
+
+  The chapter is structured as follows: Section 9.2 examines the existing litera-
+ture and fundamental concepts related to the transformation of tourism through
+smart transportation systems. In Section 9.3, the role of AIoT in the smart trans-
+portation system with main components and applications to improve the experience
+of urban mobility for visitors is described. Section 9.4 covers the improvement of
+the tourist experience through smart transport by personalisation, in-time infor-
+mation, predictive analytics, and smart navigation solutions. Section 9.5 outlines
+the various AIoT technologies that are driving intelligent tourism development,
+such as IoT sensors to collect real-time data, AI-based decision support systems,
+augmented and virtual reality applications, and mobile technologies for tourists.
+Section 9.6 describes the benefits that AIoT brings to smart transportation for
+tourism in terms of greater ease and safety for tourists, environmental sustain-
+ability, reduced traffic congestion, and cost-cutting for operators of tourism ser-
+vices. It discusses the challenges and considerations for AIoT-based
+implementation in tourism, which include privacy and data security concerns,
+ethical implications, technical and infrastructure challenges, and regulatory fra-
+meworks. Section 9.8 presents future directions for AIoT-driven smart
+176 AIoT for smart transportation
+
+transportation in tourism: development of emerging trends, capabilities of human-
+AI collaboration, and a vision for sustainable and resilient tourism through the
+Industry 5.0 framework. The last section (Section 9.9) of this chapter sums up all
+those points presented earlier and recommends how to implement AIoT in tourism,
+and final thoughts about the future of smart transportation and tourism are
+discussed.
+
+9.2 Background study
+
+This background research discusses how AIoT technologies are improving the
+traveller experience in Industry 5.0 Smart Transportation Systems (as shown in
+Table 9.1).
+
+9.3 The role of AIoT in smart transportation systems
+
+The AIoT is accelerating smart transportation systems rapidly by integrating the
+power of data captured in IoT with predictive and analytical features of AI. This
+allows transportation systems to operate autonomously and respond according to
+changing circumstances in real time based on data. In the tourism sector, AIoT-
+enhanced smart transportation offers a seamless, efficient, and accessible experi-
+ence for travellers while supporting urban mobility and unlocking destination
+attractions. Some of the main components of AIoT in transportation, applications
+for urban mobility and tourism, as well as examples of AIoT in public transport,
+shared mobility, and autonomous vehicles, are all discussed below.
+
+9.3.1 Key elements of AIoT in transportation
+
+AIoT in the transportation system contains several critical components that work
+together to provide real-time functionality driven by data as shown in Figure 9.1.
+These key elements are:
+
+l Sensors and IoT Devices: Among them, sensors and IoT devices are installed
+  across the transportation structures, vehicles, and wearables that can collect a
+  range of data including vehicle speed, location, traffic conditions, pollution
+  levels, and the number of people being carried. Sensors in the vehicles could
+  track the fuel efficiency, the road conditions, and the status of the route, while
+  sensors in the infrastructure track road wear or maintenance needs.
+
+l Edge and Cloud Computing: AIoT makes use of both edges and cloud
+  computing to process large volumes of real-time data. Edge computing allows
+  for processing at source like within the vehicle or transit hub for an immediate
+  response with lower latency in emergency braking or changing routes. Cloud
+  computing is relevant for processing and storing datasets whereby thorough
+  analysis and predictive modelling such as predicting specific demands along
+  particular routes in tourist flow can be conducted.
+Table 9.1 Integration of AIoT in smart transportation system for tourism
+
+Reference  Author  Study focus  Key contribution  Technology  Highlight
+[11]  F. Zhu et al.  Intelligent  Social signals, IoT,
+  Transportation  Proposed Parallel  agent-based control,  Introduction of PTMS
+[12]  M. Derawi et al.  Systems (ITS)  Transportation  Cloud computing  components such as ITS
+[13]  Management System  clouds, social signals, and
+[14]  IoT-based  (PTMS) using ACP  IoT, V2I (Vehicle-to-  agent-based traffic control.
+  Smart  (Artificial System,  Infrastructure)  Case study included for
+  Transportation  Computational  communication, I2C  effectiveness analysis.
+  for Road Safety  Experiment, Parallel  (Infrastructure-to-Cloud)
+  Execution) approach  Emphasises how IoT can
+  enhance road safety and
+  Review of IoT-enabled  introduces an IoT-based
+  smart transportation  smart traffic system for safer
+  systems focusing on  roads. Highlights the role of
+  road safety  V2I in road safety.
+
+  J. Qiao  Sustainable  Evaluation of sustainable  Sustainable strategies,  Analyses the impact of smart
+  Investment in  strategies in urban  urban mobility, carbon  transportation components on
+  Urban  transport systems,  emission reduction  sustainability in cities and
+  Transportation  using Chongqing as a case  offers strategies for
+  Systems  study  optimising transportation
+  systems with limited funding.
+  H. Hettikankanama  Overview of  Review of research trends,  ICT, IoT, Smart city
+  and S.  Smart  methods, and gaps in  infrastructure  Summarises key
+  Vasanthapriyan  Transportation  smart transportation  perspectives, benefits,
+  Research  studies for smart cities  challenges, and technologies
+  in smart transportation.
+  Identifies research needs and
+  future directions in the field.
+
+  (Continues)
+

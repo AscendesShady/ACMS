@@ -1,0 +1,724 @@
+28.
+  Ullah W, Ullah A, Haq IU, Muhammad K, Sajjad M, Baik SW (2021) CNN features with bi-
+  directional LSTM for real-time anomaly detection in surveillance networks. Multimed Tools
+  Appl 80(11):16979–16995. https://​doi.o​ rg/​10.​1007/s​ 11042-020-09406-3
+  [Crossref]
+
+29.
+  Zhao B, Fei-Fei L, Xing EP (2011) Online detection of unusual events in videos via dynamic
+  sparse coding. In: Proceedings of the IEEE computer society conference on computer vision and
+  pattern recognition, pp 3313–3320. https://​doi.o​ rg/​10.​1109/C​ VPR.2​ 011.​5995524
+
+30.
+  Rezaee K, Rezakhani SM, Khosravi MR, Moghimi MK (2024) A survey on deep learning-based
+  real-time crowd anomaly detection for secure distributed video surveillance. Pers Ubiquitous
+  Comput 28(1):135–151. https://​doi.o​ rg/​10.​1007/s​ 00779-021-01586-5
+  [Crossref]
+
+31.
+  Ren J, Xia F, Liu Y, Lee I (2021) Deep video anomaly detection: opportunities and challenges.
+  In: IEEE international conference on data mining workshops (ICDMW), vol 2021-December, pp
+  959–966. https://​doi.o​ rg/​10.​1109/I​CDMW53433.​2021.​00125
+
+32.
+  Ullah W, Hussain T, Khan ZA, Haroon U, Baik SW (2022) Intelligent dual stream CNN and
+  echo state network for anomaly detection. Knowl-Based Syst 253:109456, [Online]. https://​doi.​
+  org/​10.​1016/j​.​knosys.​2022.​109456
+
+33.
+  Liu W, Luo W, Lian D, Gao S (2018) Future frame prediction for anomaly detection—a new
+  baseline. In: Proceedings of the IEEE computer society conference on computer vision and
+  pattern recognition, pp 6536–6545. https://​doi.o​ rg/​10.​1109/C​ VPR.2​ 018.​00684
+
+34.
+  Michau G, Fink O (2021) Unsupervised transfer learning for anomaly detection: application to
+  complementary operating condition transfer. Knowl-Based Syst 216. https://​doi.o​ rg/​10.​1016/j​.​
+  knosys.​2021.​106816
+
+35.
+  Nayak R, Pati UC, Das SK (2021) A comprehensive review on deep learning-based methods for
+  video anomaly detection. Image Vis Comput 106:104078, [Online]. https://​doi.o​ rg/​10.​1016/j​.​
+  imavis.​2020.​104078
+
+36.
+  Ramachandra B, Jones MJ, Vatsavai RR (2022) A Survey of single-scene video anomaly
+  detection. IEEE Trans Pattern Anal Mach Intell 44(5):2293–2312. https://​doi.o​ rg/​10.​1109/​
+  TPAMI.2​ 020.​3040591
+  [Crossref]
+
+37.
+  Ullah A et al (2024) Smart cities: the role of Internet of Things and machine learning in realizing
+  a data-centric smart environment. Complex Intell Syst 10(1):1607–1637. https://​doi.o​ rg/​10.​1007/​
+  s40747-023-01175-4
+  [Crossref]
+
+38.
+  Wan J, Li D, Zou C, Zhou K (2012) M2M communications for smart city: an event-based
+  architecture. In: IEEE 12th international conference on computer and information technology,
+  [Online]. https://​doi.o​ rg/​10.​1109/C​ IT.​2012.​188
+
+39.
+  Moses OO, Prudence EE (2025) IoT device security, privacy, and risks in smart city
+  environments. 6(2):135–147
+40.
+  Axelsson K, Granath M (2018) Stakeholders’ stake and relation to smartness in smart city
+  development: insights from a Swedish city planning project. Gov Inf Q 35(4):693–702. https://​
+  doi.o​ rg/​10.​1016/j​.​giq.2​ 018.​09.​001
+  [Crossref]
+
+  OceanofPDF.com
+© The Author(s), under exclusive license to Springer Nature Switzerland AG 2025
+S. Mallik et al. (eds.), Applications of Computational Learning and IoT in Smart Road
+Transportation System, Springer Tracts on Transportation and Traffic 22
+https://doi.org/10.1007/978-3-031-87627-1_4
+
+Enhancing Emergency Response and
+Traffic Management with a Smart
+Ambulance Detection System Using Image
+Processing
+
+A. Asha Kumari1 , Pramiee Lenish 2 and V. N. Manju3
+(1) Computer Science Department, The Oxford College of Engineering,
+
+  Bengaluru, India
+(2) Computer Science Department, PES University, Bengaluru, India
+(3) Computer Science Department, CMR Institute of Technology,
+
+  Bengaluru, India
+
+  A. Asha Kumari
+  Email: asha.hebbar@gmail.com
+
+  Pramiee Lenish (Corresponding author)
+  Email: lenish.pj@pes.edu
+
+  V. N. Manju
+  Email: manju.vn@cmrit.ac.in
+
+Abstract
+An image processing-based smart ambulance detection system provides an
+enhanced emergency response and traffic management with an all-inclusive
+solution. Three prominent use cases are integrated into the system to
+maximise collaboration and communication in urgent circumstances. First,
+an MIT program allows ambulance drivers to submit messages when the
+vehicle is far from the camera. The messages are then instantly shown on an
+LCD screen. This function allows the ambulance crew and traffic
+management authorities to communicate in real-time, facilitating adequate
+route clearance and navigation. Second, traffic cops may now remotely
+regulate LEDs placed along the road thanks to a dedicated app. The
+technology sounds like a buzzer to inform surrounding cars of an
+ambulance's impending passing by turning the LED green.
+
+Keywords Smart ambulance detection – Traffic management – Image
+processing – MIT App – Smart traffic lights
+
+1 Introduction
+
+Road travel has been a primary mode of transportation even to this day in
+many parts of the world. The number of vehicles on the roads is increasing
+daily as traffic is needed to regulate the vehicle flow and avoid congestion.
+Traffic lights are the devices installed at intersections to regulate the traffic
+flow [1]. These traffic lights were introduced in London in 1898. In
+modern-day scenarios, they are present and required in almost all cities
+around the globe. Most traffic signals operate on a fixed timing schedule;
+the major drawback of this is that it usually leads to unnecessary delays for
+vehicles and pedestrians when the traffic is unusual where expected clock
+timing may not work. The above-mentioned drawback has led to inefficient
+traffic control, which is a significant concern for almost all major cities,
+leading to congestion and many problems for pedestrians. Currently,
+various research has already been done, and some valid efforts have been
+made to make these traffic light sequences more real-time so that they can
+adapt to the current real-time traffic scenarios [2]. Still, even though some
+have also been implemented, congestion remains a significant and common
+issue. Using inefficient traffic systems or signals in managing traffic usually
+results in wasted time, environmental pollution, fuel consumption,
+increased transportation costs, and stress. Due to the above reason,
+Emergency vehicles, such as ambulances, are often delayed in traffic. RFID
+technology, based on radio waves for object detection and identification, is
+widely used in various fields, including medicine, commerce, security, and
+electronic toll collection. RFID technology, though efficient, also has
+drawbacks [3]. These include a limited range. Another drawback is its
+reduced readability. Passive RFID tags have a limited range. They need
+Close contact with RFID readers. It ensures reliable operation. Active RFID
+tags provide longer ranges. Still, they are more expensive. Besides, they
+require regular battery replacement. Traffic lights are Crucial for managing
+traffic. They usually work on a static schedule. They don't consider the
+number of vehicles. Nor do they think their priority is at intersections.
+Emergency vehicles such as ambulances and fire trucks can get stuck in
+traffic. These lead to the wastage of valuable time [4].
+
+  Today's world is fast-paced; therefore, we need effective systems which
+can be used in the context of emergency responses. These usually save lives
+and lessen the impact of disasters [5]. However, there are various hurdles
+that must be dealt with, such as traffic congestion, communication
+challenges, and many other types of issues or problems that must be dealt
+with later on. These issues can minimise the efficacy of these systems.
+
+  To combat these problems, we need to use the latest technologies.
+Image processing is one such innovative technology. It boosts the detection
+and handling of Emergency vehicles [6]. An example is its use in
+ambulances. Innovative ambulance detection systems use computer vision.
+They utilise various machine learning principles, too. Visual data is
+analysed. Cameras capture the data. Therefore, the system can now
+accurately find emergency vehicles. Ambulances are identified based on a
+set of features like shape and colour. Motion patterns are also essential and
+usually taken into consideration. Once the system recognises an ambulance,
+it kicks in its responses. Traffic signals are now adjusted to create a clear
+path for the vehicle. Such technology seems promising as it can Enhance
+response times during emergencies. The above-mentioned technology can
+also improve public safety as well.
+
+  Ambulance detection systems can streamline the passage of
+ambulances. These areas are congested. The systems can save time in
+urgent medical situations. When time is of the essence, it’s crucial. It
+ultimately raises the chances of survival during emergencies [7]. This
+introduction delves into key principles of image processing-based smart
+ambulance detection. We will touch on its significant components. We will
+also explore its applications as well as its drawbacks and implications.
+
+  The emphasis is on ambulance detection via image processing. It
+consists of essential parts. These may be helpful. Applications exist. The
+ramifications are important. This is particularly true for contemporary
+emergency services. The same is true for efficient traffic management.
+  This analysis can shed light on how revolutionary this technology is. We
+have new options thanks to current technologies; it suggests improvements
+in our response to crises. This is important as it will influence how
+emergency response systems develop in the future.
+
+2 Emergency Vehicle Detection
+
+In computer vision, emergency vehicle detection is a specific application
+that uses HOG Feature Descriptor to recognise vehicles such as police cars,
+fire trucks, and ambulances to optimise emergency response systems. In
+traffic conditions, this feature is essential for promptly identifying and
+ranking these vehicles, as these are important and may affect the lives of
+civilians. Emergency vehicle detection systems use a variety of strategies,
+ranging from sophisticated deep-learning techniques to conventional image-
+processing algorithms. These techniques use distinctive characteristics of
+emergency vehicles like sirens, flashing lights, or specific colour schemes
+to set them apart from other cars on the road. Convolutional neural
+networks (CNNs), in particular, have advanced deep learning by
+automatically extracting unique characteristics from large datasets [8].
+Preprocessing techniques like picture enhancement and feature extraction
+are commonly used in these systems, after which candidate zones are
+classified as either background or emergency vehicles. For timely detection
+in dynamic traffic settings, real-time performance is essential, necessitating
+practical hardware implementations and algorithms. Implementing effective
+emergency vehicle detection systems can reduce response times, enhance
+traffic management, and bolster safety for emergency personnel and the
+public. Ongoing research aims to refine detection techniques and create
+robust systems that seamlessly integrate into existing emergency response
+infrastructure (Fig. 1).
+Fig. 1 Ambulance detection using CNN
+
+3 Estimating Hardware and Their Functionality
+
+This section typically deals with a brief estimation of the hardware the
+proposed prototype will require. The analysis is based on well-grounded
+research and the recent development in the field of electronics to conclude
+the hardware that is to be acquired to build our prototype.
+
+  Once the hardware was estimated, it was to know its functionality and
+capability to be put together and perform the execution (Fig. 2).
+Fig. 2 Circuit connection and LCD emergency display
+
+  The estimated hardware components are as follows:
+1. Arduino Uno
+
+2. HC-05 Bluetooth module
+
+3. Liquid Crystal Display
+
+4. ESP8266 WiFi Module
+5. Webcam
+
+6. Power Supply Unit
+
+7. Jumper
+
+4 Smart Ambulance Detection Using Image
+Processing
+
+Building and fabricating the Smart Ambulance Detection system prototype
+involves a multi-phase approach that integrates hardware, software, and
+communication technologies. The first step is to install high-resolution
+cameras at key traffic intersections and along major roads. These cameras
+should be capable of capturing clear video feeds under various lighting and
+weather conditions. The development team will create and use a reliable
+image processing module at that time. To precisely identify ambulances in
+real-time, this module will use cutting-edge deep learning techniques,
+including YOLO (You Only Look Once) or Faster R-CNN, which have
+been trained on large datasets [9]. The MIT app for traffic cops and
+ambulance drivers is being developed in the next stage. When the
+ambulance is far from the camera, the app's simple UI will allow drivers to
+send an “Emergency” message. This message will be sent to a central
+control system to warn other drivers and pedestrians, which will then show
+it on carefully positioned LCD screens.
+
+  The software would provide traffic cops with the ability to turn traffic
+signals green and sound a buzzer manually. This necessitates connecting the
+app to the buzzer system and traffic light control technology. The
+application must guarantee dependable and safe communication, perhaps
+with the help of real-time data transmission protocols and encryption. The
+controllers for the traffic lights are linked and synchronised with the picture
+processing system, which will ensure that the traffic light automatically
+turns green whenever an ambulance is detected, allowing it to pass through
+without any problems [10]. Appropriate programming needs to be done in
+the image processing module to ensure that the traffic light controllers will
+receive and respond based on images and signals. In order to guarantee
+dependability and efficacy, the complete system will undergo extensive
+testing in various circumstances, which should make it accurate and
+dependable. This includes evaluating the MIT app's usability, traffic light
+controller responsiveness, image processing algorithm correctness, and
+camera feeds. The prototype will be created based on feedback and
+performance data to satisfy real-world traffic management and emergency
+response requirements [11]. Cooperation with emergency services and local
+authorities will be essential throughout the development stage to guarantee
+that the system manages all real-world problems and integrates seamlessly
+with existing infrastructure (Fig. 3).
+Fig. 3 Flow chart of intelligent ambulance detection and enhancing emergency response
+
+Step 1: Setting Up the Development Environment
+1. Install Required Software:
+  – Install Python and relevant libraries for deep learning (TensorFlow
+  or PyTorch).
+
+  – Install OpenCV for image processing.
+  – Set up a development environment using an IDE like PyCharm or
+
+  VSCode.
+  – For app development, install Android Studio for the MIT App
+
+  Inventor.
+2. Set up Hardware:
+
+  – Install high-resolution cameras at the designated locations.
+  – Ensure you have access to an LCD and traffic light controllers.
+
+Step 2: Develop the Image Processing Module
+1. Collect and Prepare Data:
+
+  – Gather a dataset of images/videos containing ambulances and other
+  vehicles.
+
+  – Label the data to train the object detection model.
+
+2. Train the Deep Learning Model:
+  – Fine-tune a pre-trained model (like YOLO or Faster R-CNN) on
+  your dataset.
+  – Split the data into training and validation sets.
+  – Train the model and evaluate its performance.
+  – Save the trained model.
+
+3. Implement Real-Time Detection:
+  – Write a script to capture video feed from cameras using OpenCV.
+  – Load the trained model and apply it to detect ambulances in real
+  time.
+  – Integrate the detection output with the traffic light controller.
+
+Step 3: Develop the MIT App
+1. Set up MIT App Inventor:
+  – Create a new project in MIT App Inventor.
+  – Design the user interfaces for the ambulance driver and traffic
+  police.
+
+2. Implement Functionality for Ambulance Driver:
+  – Add a button to send the “Emergency” message.
+  – Implement code to send this message to the central control system.
+
+3. Implement Functionality for Traffic Police:
+  – Add controls for changing the traffic light to green.
+  – Implement code to trigger the buzzer when the traffic light is
+  changed to green.
+
+Step 4: Integrating the System Components
+1. Connect the MIT App to the Control System:
+
+  – Use Firebase or a similar backend service to communicate between
+  the app and the control system.
+
+  – Ensure messages from the ambulance driver are displayed on the
+  LCD.
+
+  – Ensure commands from the traffic police are sent to the traffic light
+  controller and buzzer system.
+
+2. Connect the Image Processing Module to the Traffic Light Controller:
+  – Write scripts to interface with the traffic light controller.
+  – Ensure that the image processing module detects an ambulance by
+  triggering a signal to change the traffic light to green.
+
+Step 5: Testing and Debugging
+1. Unit Testing:
+  – Test individual components such as the image processing module,
+  MIT app, and traffic light controller interface.
+
+  – Verify the accuracy and reliability of ambulance detection.
+2. Integration Testing:
+
+  – Test the integration between the MIT app and the control system.
+  – Ensure that messages and commands are correctly transmitted and
+
+  executed.
+
+3. Field Testing:
+
+  – Deploy the system in a typically controlled environment.
+  – The entire system is tested with real ambulances and traffic
+
+  scenarios.
+  – Finally, now we can collect feedback based on testing and hence
+
+  refine the system.
+
+Step 6: Deployment and Monitoring
+
+1. Deploy the System:
+
+  – First, the initial installation of LCDs and cameras is done in real-
+  time traffic environments.
+
+  – Now, we deploy the trained model on a central server or an edge
+  device which can enable real-time processing.
+
+  – To monitor the result, launch the MIT app for ambulance drivers and
+  traffic police.
+
+2. Monitor and Maintain:
+
+  – Continuously monitor the system's performance based on real-time
+  data, as this can help reduce false positives and increase the model's
+  trust.
+
+  – Collect the data and retrain the model periodically to improve the
+  overall detection accuracy.
+  The final step is troubleshooting if any issues come up, which may be
+both technical and non-technical, and also ensuring regular maintenance.
+
+Step 7: Documentation and Training
+
+1. Document the System:
+
+  – Create appropriate documentation for the system; this may include
+  step-by-step instructions, user guides, tips, and the things to do while
+  some error persists, which are the troubleshooting tips in general.
+
+  – Provide generic documentation for the existing codebase and APIs
+  so anyone can access and understand the underlying implementation.
+
+2. Train Users:
+
+  – Conduct training sessions for ambulance drivers and traffic police on
+  using the MIT app, as this may be useful for both parties, even for
+  the drivers, and for the model to fine-tune itself.
+
+  – Provide appropriate training for technicians to maintain and
+  troubleshoot the system if any issue persists independently.
+
+5 Emergency Message Display for Distant
+Ambulance Using MIT App
+
+The driver of an ambulance can use the MIT app to send an emergency
+message when the ambulance is out of the camera's field of vision in the
+Smart Ambulance Detection system. This capability is essential in cases
+where the ambulance is not immediately visible to ensure that the camera-
+based detection system receives timely notifications about the incoming
+emergency vehicle. With just a few touches, the ambulance driver may
+rapidly send an “Emergency” message thanks to the MIT app's user-friendly
+UI. The message is relayed to a central control system, which interprets it
+and sends it to LCD screens positioned at key points along the ambulance's
+path. These screens are placed at strategic locations like busy crossroads to
+optimise exposure. These LCD screens boldly display the emergency
+notification as soon as it is received, warning other cars and pedestrians of
+the incoming ambulance. Delays are minimised by giving the ambulance
+advance notice, and emergency response times are accelerated. The MIT
+app's connection with the LCD system guarantees that the ambulance can
+efficiently convey its urgent state even outside of the camera range,
+improving traffic control and emergency response coordination (Fig. 4).
+
+Fig. 4 Flow chart of LCD Display to get notification
+
+6 Traffic Police-Controlled LED and Buzzer
+Activation via Arduino Bluetooth App
+
+These screens are positioned at strategic locations like busy crossroads to
+optimise exposure. These LCD screens boldly display the emergency
+notification as soon as it is received, warning other cars and pedestrians of
+the incoming ambulance. Delays are minimised by giving the ambulance
+advance notice, and emergency response times are accelerated. The MIT
+app's connection with the LCD system guarantees that the ambulance can
+efficiently convey its urgent state even outside of the camera range,
+improving traffic control and emergency response coordination. A
+comprehensive warning system that improves visibility and the urgency of
+the ambulance's need to pass through is ensured by the combination of
+visual (LED light change) and aural (buzzer sound) signals. This lowers the
+chance of traffic delays and speeds up response times. To ensure that
+emergency vehicles may get to their destinations as soon as feasible, this
+system enables a more coordinated and efficient traffic control plan (Fig. 5).
+
+Fig. 5 Flow chart of LCD display and bluetooth with buzzer notification
+
+7 Automated Led Change to Green upon Camera
+Detection of Ambulance
+An automated procedure is created through real-time picture analysis to
+improve emergency vehicle response speed and efficiency. Video feeds are
+continuously captured by cameras positioned at key traffic crossings.
+Advanced image processing algorithms specially trained to identify
+ambulances evaluate these data. The technology instantly analyses the
+information and notifies the traffic light controller when an ambulance is
+found within the camera's range of vision. The ambulance has a free and
+unobstructed path through the crossing thanks to this signal, which tells the
+traffic light to turn green. By removing the requirement for physical traffic
+police intervention, this automated traffic light control drastically reduces
+response time. In life-saving situations, the rapid change to a green light
+ensures the ambulance can pass through crowded locations swiftly.
+Combining real-time image processing with traffic signal control produces
+a smooth and effective system that prioritises emergency vehicles. This
+enhances both emergency response effectiveness and traffic management in
+general (Fig. 6).
+Fig. 6 Flow chart of LCD display and bluetooth with buzzer notification
+
+8 Conclusion and Future Works
+
+The Smart Ambulance Detection System is evidence of innovative
+applications of technological activities in critical emergency response
+scenarios. It integrates an app developed by MIT with the image-processing
+capability to create a responsive and efficient solution in traffic
+management. The system empowers ambulance drivers to let everyone on
+the road know about their approach before reaching the concerned place
+through “emergency” messages, displayed promiscuously on LCD screens
+in time to alert every user of that road. The flexibility of manual override of
+traffic signals is enhanced by using a buzzer that sounds whenever the
+signal turns green, enhancing consciousness. The system detects
+ambulances automatically through camera feeds, which will make it change
+the traffic lights without hesitation so that the emergency vehicles do not
+face any delay or hindrance in passing through. This orchestration of
+communication, manual control, and automation not only streamlines the
+flow of traffic but also underlines the potential of intelligent systems for
+public safety and saving lives. The Ambulance Detection System through
+image processing, though innovative as it is, has limitations of the
+inaccuracy of environmental variables on image recognition, wide camera
+coverage to avoid any blind spots and reliance on strong network
+connectivity for communication in real-time. Future work can target
+optimisation of the algorithmic performance under various scenarios,
+extend the usage of IoT devices towards more excellent coverage, and
+advance more complex models of machine learning towards predicting
+traffic patterns and ambulance routes. Moreover, improved edge computing
+would promote lower latency, whereas a feedback mechanism would
+enhance the system's response.
+
+References
+
+1. Sayeed MA, Mohanty SP, Kougianos E, Zaveri HP (2019) Neurodetect: a machine learning-
+  based fast and accurate seizure detection system in the IoMT. IEEE Trans Consum Electron
+  65(3):359–368
+  [Crossref]
+2.
+  Sardar TH, Das S, Pandey BK. Explainable AI (XAI): concepts and theory. In: Medical data
+  analysis and processing using explainable artificial intelligence. CRC Press, pp 1–18
+
+3.
+  Sardar TH, Muttineni A, Ranjan R (2024) The future of big data in customer experience and
+  inventory management. In: Big data computing. CRC Press, pp 233–248
+
+4.
+  Khatun A, Sardar TH (2025) Cryptography algorithms to prevent different security attacks. In:
+  Next generation mechanisms for data encryption. CRC Press, pp 35–46
+
+5.
+  Haghi M et al (2020) A flexible and pervasive IoT-based healthcare platform for physiological
+  and environmental parameters monitoring. IEEE Internet Things J 7(6):5628–5647
+  [Crossref]
+
+6.
+  Awais M et al (2021) LSTM-based emotion detection using physiological signals: IoT
+  framework for healthcare and distance learning in COVID-19. IEEE Internet Things J
+  8(23):16863–16871
+  [Crossref]
+
+7.
+  Adeniyi EA, Ogundokun RO, Awotunde JB (2021) IoMT-based wearable body sensors network
+  healthcare monitoring system. In: IoT in healthcare and ambient assisted living. Springer,
+  Singapore, pp 103–121
+
+8.
+  Sardar TH, Faizabadi AR, Ansari Z (2017) An evaluation of MapReduce framework in cluster
+  analysis. In: 2017 International conference on intelligent computing, instrumentation and control
+  technologies (ICICICT). IEEE, pp 110–114
+
+9.
+  Hu H, Elkus A, Kerschberg L (2016) A personal health recommender system incorporating
+  personal health records, modular ontologies, and crowd-sourced data. In: Proceedings of the
+  IEEE/ACM international conference on advances in social networks analysis and mining
+  (ASONAM), pp 1027–1033
+
+10.
+  Sardar TH, Sarkar R, Ahmed SJ, Bandyopadhyay A (2023) A novel ensemble methodology to
+  validate fuzzy clusters of big data. In: Proceedings of the fourth international conference on
+  trends in computational and cognitive engineering: TCCE 2022. Springer Nature Singapore,
+  Singapore, pp 267–278
+
+11.
+  Sardar TH, Faizabadi AR, Ansari Z (2017) An analysis of data processing using Mapreduce
+  paradigm on the Hadoop framework. Int J Emerg Res Manag Technol 6(5)
+
+  OceanofPDF.com
+© The Author(s), under exclusive license to Springer Nature Switzerland AG 2025
+S. Mallik et al. (eds.), Applications of Computational Learning and IoT in Smart Road
+Transportation System, Springer Tracts on Transportation and Traffic 22
+https://doi.org/10.1007/978-3-031-87627-1_5
+
+IoT-Driven Machine Learning Solutions
+for Smarter Urban Living
+
+D. S. Sahana1 , J. Vidya1 , J. A. Madhurya1 and Kousar G. Nida1
+(1) Department of CSE, GITAM School of Technology, GITAM
+
+  University, Bengaluru, Karnataka, India
+
+  D. S. Sahana (Corresponding author)
+  Email: ssanthos@gitam.edu
+
+  J. Vidya
+  Email: vjyothip@gitam.edu
+
+  J. A. Madhurya
+  Email: mambuja@gitam.edu
+
+  Kousar G. Nida
+  Email: knida@gitam.edu
+
+Abstract
+The impact of IoT and ML on smart cities from a city infrastructure
+development perspective has converged, and data processing, decision-
+making, and collection have never been more efficient. IoT Sensors are
+essential for collecting information on environmental parameters, energy
+consumption, traffic patterns, and public safety. This massive amount of
+data can provide valuable insights using ML algorithms to predict patterns
+and enhance local governance. This also aids in projects like waste
+preservation and traffic provisioning, which work towards efficient energy
+utilisation within the urbanised spots. Success would require addressing
+scalability, interoperability, privacy, and data security issues.
+Keywords Internet of Things – Machine learning (ML) – Smart city – Data
+analytics
+
+1 Introduction
+
+This innovative idea of Smart City has become increasingly popular and
+might soon revolutionise citizen interactions in urban environments.
+Urbanisation has caused problems in modern times as many people of the
+world have shifted to towns, which is dealt with by this invention [1]. Cities
+must find innovative solutions for them, as urban areas, to cope with rising
+expectations around first-rate services. To boost the effectiveness and
+efficiency of public services, smart cities utilise cutting-edge technologies
+and data-driven approaches [2]. This will represent a significant change in
+waste management, transport and vehicle control, and health monitoring
+[3].
+
+  The convergence of IoT and ML is indeed presenting smart cities that
+are more resilient, efficient and sustainable. The collection of all these
+physical objects connected to the Internet is known as the “IoT” or IoT. One
+branch of artificial intelligence is “ML,” which involves statistical models
+and algorithms that enable systems to learn from data and improve
+incrementally [4]. Adopt an industrial IoT and ML to enable collecting data
+locally, as well conduct powerful analysis upon this information—in real
+time that will derive better intuitions for driving city operation decisions.
+
+  The integration of both can improve urban services by using ML and
+IoT. A growing number of ML algorithms are applied to transport scenarios
+regularly; the aim is often to monitor IoT data sensing as it relates to use
+cases to better anticipate public transportation needs, improve traffic flow,
+and reduce vehicle emissions. The latter is employed by ML to absorb
+flexible, green electricity consumption in a manner that encourages
+renewable generation while allowing load stability and pro-active waste
+avoidance signals. Real-time monitoring of energy consumption is obtained
+in energy management through IoT-integrated devices [5]. Reduce
+operating costs and unnecessary lifts by programming pick-ups or
+maintaining routes automatically with Intelligent waste management
+systems [6].
+
+  However, despite these benefits, integrating IoT and ML into smart
+cities may present several challenges, such as privacy and security issues,
+because of the volume of collected and shared data. Robust security
+measures are required because every additional IOT device raises the risk of
+cyberattacks and data breaches. Financial resources allocated to
+infrastructure development and data management capability development
+are necessary for these ethical uses [7]. However, the main goal of
+developing intelligent cities is to use IoT and ML together to enhance the
+sustainability of urban life and provide fresh perspectives on how to solve
+existing problems [8].
+
+  The combination of machine learning (ML) and the Internet of Things
+(IoT) is critical to the development of smart cities because it allows for
+data-driven, real-time decision-making and automation in a variety of urban
+processes. IoT devices, which comprise sensors and smart meters, collect
+copious amounts of data from domains like energy, transportation,
+healthcare, and environmental monitoring, creating a networked world.
+After that, machine learning algorithms examine this data to find trends,
+forecast patterns, and improve resource management (such as waste
+collection, traffic flow, and energy usage). Predictive analytics and
+intelligent automation are tools that cities may use to enhance the quality of
+life, increase public safety, and lower operating costs, but they also promote
+sustainable growth. As a result, IoT and ML are working together to foster
+citizen-centric services and adaptive urban planning, making smart cities
+more efficient and resilient as they prepare for new challenges.
+
+1.1 IoT for Smart City
+
+The IoT is the network of sensors and devices connected that collect, share,
+and analyse data to improve urban living for intelligent cities. IoT
+technologies can help cities achieve sustainable development, efficiency,
+and improved quality of life among their residents [9]. Below is a summary
+of IoT concerning intelligent towns. Smart city optimises resources by
+utilising digital technology and data analytics, leading to cost reduction and
+improving urban services. Waste management, pollution, traffic congestion,
+and public safety are intended to create a better environment [10].
+
+1.1.1 Role of IoT in Smart City
+
+This means that ordinary objects can be embedded with sensors and
+connectivity to communicate with one another. Figure 1 illustrates some
+typical activities or roles IoT plays in developing smart cities.
+Fig. 1 Role of IoT in smart cities
+
+  These sensors all over the city provide real-time data on various
+parameters such as temperature, air quality, energy consumption, traffic
+flow, etc. [11]. Communication allows information to be exchanged among
+different devices and central systems. By automating waste collection,
+energy distribution, and traffic management using IoT systems, city
+operations can be more efficient [12, 13].
+
+1.2 ML for Smart City
+
+Smart city integrated with ML is a game-changing strategy that uses
+cutting-edge algorithms and data analytics to improve urban living. Smart
+cities can enhance the effectiveness and efficiency of city services, resulting
+in a higher standard of living for citizens, by integrating multiple data
+sources and applying ML techniques [14]. This is a quick overview of the
+idea: An intelligent city maximises resource efficiency, lowers expenses,
+and enhances the quality of urban services using digital technology and data
+analytics. By tackling issues like waste management, pollution, traffic
+congestion, and public safety, it seeks to establish a sustainable
+environment.
+1.2.1 Role of ML in Smart Cities
+
+ML, a branch of artificial intelligence (AI), teaches algorithms to learn from
+data and make predictions or decisions without being specifically
+programmed for a task. Intelligent cities generate vast amounts of data from
+cameras, sensors, social media, and other sources. Figure 2 [15] illustrates
+how ML algorithms can process and analyse this data to produce insightful
+results. ML models can predict future trends in energy consumption,
+pollution levels, and traffic patterns. This predictive capability helps
+municipalities use resources and services more efficiently. ML can automate
+tedious tasks and enhance decision-making processes. It can, for example,
+adjust traffic signals or optimise waste collection routes based on real-time
+data.
+
+Fig. 2 Role of ML in smart cities
+
+1.3 IoT and ML Integration for Smart Cities
+
+As they improve the efficiency, sustainability, and quality of urban life [16],
+Smart Cities have extensively benefitted from integrating both IoT and ML
+technologies. When applied to this crusade, ML and Artificial Intelligence
+

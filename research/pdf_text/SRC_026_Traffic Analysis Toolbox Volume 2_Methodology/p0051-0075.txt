@@ -1,0 +1,500 @@
+aggregate level and for each travel mode. Traveler response needs to be considered since
+route shifting between the arterial and parallel facilities is of interest to the stakeholders.
+
+Project Assessment
+
+Based on the information provided, the following can be used to summarize the project:
+
+• Project Context: Operations
+
+• Project Goal: Signal optimization and successful introduction of signal preemption
+
+• Project Objectives and Background:
+
+  − Traffic signal optimization
+  − Long arterial study area with parallel roadways 16 km (10 mi))
+  − Emphasis on cars, buses, and light rail
+  − Volumes, geometric data available
+  − Traveler response, particularly route diversion, is necessary
+  − Good presentation/animation capabilities
+  − Avoidance of high-end, computer-intensive analytical tools
+  − Dependable, trusted tool with flat learning curve
+  − Output in terms of LOS, speed, travel time, and intersection delay by mode
+
+Tool Category Selection Worksheet for Example 3
+
+Table 11, at the end of this section, shows a completed worksheet for example 3. Based on
+the analysis performed using the worksheet, it seems that this project can be adequately
+evaluated using four different tool categories, including microscopic simulation tools,
+followed by macroscopic and mesoscopic simulation tools and traffic optimization tools.
+However, the city will probably need to improve their computing capabilities in order to
+conduct the analysis using simulation.
+
+3.3 Guidance for Selecting the Specific Tool
+
+Once the most appropriate tool category has been identified, the user should narrow
+down the candidate tools within the category. While the features of the specific traffic
+analysis tools are beyond the scope of this document, the worksheet presented in appendix C
+may assist users in comparing different tools during their research effort or vendor
+interviews. This approach is intended to help users identify what is important to consider
+in their selection of the specific tool(s). Instructions on how to use the worksheet are
+provided below:
+
+1. Enter the name of the tool being reviewed. If reviewing different versions/releases of
+  the same tool, do not forget to include the version number or release date.
+
+  43
+  Step 1 – Enter name, version, and
+  contact information for tool being
+  reviewed.
+
+Tool Name:  Acme Traffic  Version/Release: 2.0 .
+
+Vendor Name/Contact Information: AcmeSoft, Inc. / Mr. John Smith .
+
+  Figure 12. Selecting the specific tool, step 1.
+
+2. Assign subcriteria relevance weights (column 2). The subcriteria listed in this
+  worksheet are expanded versions of the ones listed in appendix B. An “other” field has
+  been added to each criterion for users to consider other subcriteria that may not be
+  included in this list. Subcriteria that should be highly considered in the analysis
+  should be given higher weights. The values should range from 0 (not relevant) to 5
+  (most relevant). The relevance factors entered in the subcriteria relevance cells should
+  be the relevance within that particular criteria (e.g., is the SOV travel mode more
+  important than the HOV mode?). The subcriteria relevance weights in column 2
+  should be identical for every tool considered.
+
+  1  2
+
+Criteria  Subcriteria
+  Relevance
+
+1 Geographic Scope (0 = not important, 5 = most important)  Step 2 – E nter s ubcriteria
+  relevance weights in Column 2.
+Isolated Location  0  Values range between 0 (not
+  relevant) and 5 ( most rel evant).
+Segment  1
+
+Corridor  3
+
+Region  5
+
+Other: ________________
+
+  Figure 13. Selecting the specific tool, step 2.
+
+3. Assign tool relevance values (column 3). The relevance factors presented in tables 1
+  through 8 are generalized views of available tools for each tool category. Therefore,
+  users must perform additional research to find the most appropriate tool within the
+  tool category. Based on literature reviews, product specifications, or vendor
+  interviews, the user should rate the relevance of the tools under review against the
+  criteria presented in this worksheet. Appendix D identifies some readily available
+  literature that contains detailed reviews of some of the more commonly used traffic
+  analysis tools. The values entered in column 3 should range from 0 (not featured by
+  the tool) to 5 (strongly featured by the tool). If necessary, use column 5 for additional
+  notes and/or comments.
+
+  44
+  Step 3 – Based o n tool r esearch or
+  vendor int erviews, rate the tool’s
+  capabilities in Col umn 3. Values
+  range from 0 ( not f eatured) to 5
+  (strongly feat ured). Use Col umn
+  5 for comments.
+
+  1  2  3  4  5
+
+Criteria  Subcriteria  Comments
+  Relevance
+  Tool
+  Relevance*
+  Col 2 x Col 3
+
+1 Geographic Scope (0 = not important, 5 = most important)
+
+Isolated Location  0  0 0x0 = 0 Poor for intersections
+
+Segment  1  1 1x1 = 1
+
+Corridor  3  5 3x5 = 15  Step 4 – M ultiply Columns 2 and
+Region  3 for each s ubcriteria, and ins ert
+Other: ________  5  4 5x4 = 20  results in Column 4.
+
+  Figure 14. Selecting the specific tool, steps 3 and 4.
+
+4. Multiply columns 2 and 3 (column 4). For each subcriterion, multiply the values in
+  columns 2 and 3 and enter into column 4.
+
+5. Sum the values of column 4. Add up the values in column 4 for each criteria category,
+  and enter the total into the “Subtotal” row for each criterion.
+
+6. Count the number of subcriteria relevance weights above 0. For each criterion, count
+  the number of subcriteria relevance weights in column 2 that are larger than 0, and
+  enter the number into the “Relevance Weights Above 0” cell.
+
+7. Calculate the adjusted ratings. Divide the value in the “Subtotal” row with the
+  “Relevance Weights Above 0” value and enter into the “Weighted Subtotal” row.
+  Repeat this process for each criterion.
+
+Step 5 – For each criterion, sum  0  Step 6 – Co unt the numb er of
+the values of Colum n 4 into the  1  subcriteria relevanc e weig hts
+“Subtotal” row.  15  (Colum n 2) t hat are great er than
+  20  zero for each criterion.
+  Subtotal  0+1+15+20=36
+  Criteria Weights Above 0  3  Step 7 – Divide the values i n the
+  WEIGHTED SUBTOTAL  36/3=12  “Subtotal” rows by the
+  “Relevanc e W eights Abov e 0”
+  cell, enter i n the “W eight ed
+  Subtotal” row.
+
+  Figure 15. Selecting the specific tool, steps 5–7.
+
+  45
+8. Group weighted subtotals (column 8). For each criterion, copy the weighted subtotals
+  from the respective rows to column 8 at the bottom of the worksheet.
+
+9. Assign criteria relevance weights (column 7). In steps 1 through 8, the weighting
+  scheme was applied to the subcriteria within each major criteria category. This step
+  involves weighting the major criteria categories against each other. This should be
+  based on the project’s goals and objectives, priorities, needs, and constraints. For each
+  of the seven criteria, assign the appropriate weights, ranging from 0 (not relevant) to 5
+  (most relevant). The criteria relevance weights in column 7 should be identical for
+  every tool considered.
+
+  Step 8 – Co py t he criteria-weighted
+  subtotals into Column 8.
+
+6  7  8
+
+Criteria  Criteria
+(0 = not relevant, 5 = most relevant)  Weight
+  Weighted
+1 Geographic Scope  Subtotals
+2 Facility Type
+3 Travel Mode  3  12
+4 Management Strategy/Application
+5 Traveler Response  4  WEIGHTED SUBTOTAL 12
+6 Performance Measures
+7 Tool/Cost Effectiveness  2  WEIGHTED SUBTOTAL
+
+  2 WEIGHTED SUBTOTAL WEIGHTED SUBTOTAL
+
+  5
+
+  2
+
+  5
+
+Step 9 – Assign rel evanc e weig hts
+for each criteria, ranging from 0
+(not relevant) to 5 (most relevant) .
+
+  Figure 16. Selecting the specific tool, steps 8 and 9.
+
+10. Multiply columns 7 and 8 (column 9). Multiply columns 7 and 8 for each criterion and
+  enter the products into the appropriate cells in column 9.
+
+11. Determine the tool’s total score. Sum column 9 and enter the product in the “Total
+  Score” cell.
+
+12. Repeat this process for all tools considered. Use one worksheet for each tool under
+  consideration. Keep in mind that the users’ criteria and subcriteria relevance weights
+  should remain constant for all tools. Users are encouraged to review as many tools as
+  possible from each tool category selected (section 3.1). Please refer to appendix E for a
+  list of available tools for each category and their Web site links to obtain further
+  information.
+
+  46
+13. Select the best tool. Compare the total scores of all tools under review. The one with
+  the highest score is the probably the best tool for the project under consideration.
+
+Step 10 – M ultiply Colum ns 7 and  Col 9  Steps 12 and 13 – Use o ne
+8. Enter r esults in Col umn 9.  worksheet for each tool b eing
+  36  reviewed. Selec t the m ost suitable
+ Step 11 – S um t he values in  125  tool with the hig hest score.
+ Colum n 9. This is the reviewed
+ tool’s total score.  0
+  226
+  TOTAL SCORE  96
+  360
+  125
+  968
+
+  Figure 17. Selecting the specific tool, steps 10–13.
+
+Again, the user should review the subcriteria with high weights, but low scores, to
+assess whether they can be addressed through other means. If the best tool selected by
+this process does not satisfy the users’ needs (e.g., the project’s goal is ramp metering
+analysis; however, the best tool’s ramp metering feature is only a “3”), additional tools
+should be researched. If necessary, review the project’s goals and objectives, needs,
+and constraints and repeat the entire process if no tool within a particular category
+addresses the project’s needs. In most cases, the tool selection process would be
+iterative. Hopefully, careful consideration of the project’s goals and objectives in this
+process will lead the user to the most appropriate tool for the project.
+
+47
+  Table 9. Example 1 worksheet (refer to sections 2.1 and 2.2 for criteria definitions).
+
+48
+  Table 9. Example 1 worksheet (refer to sections 2.1 and 2.2 for criteria definitions) (continued).
+
+49
+  Table 9. Example 1 worksheet (refer to sections 2.1 and 2.2 for criteria definitions) (continued).
+
+50
+  Table 9. Example 1 worksheet (refer to sections 2.1 and 2.2 for criteria definitions) (continued).
+
+51
+  Table 10. Example 2 worksheet (refer to sections 2.1 and 2.2 for criteria definitions).
+
+52
+  Table 10. Example 2 worksheet (refer to sections 2.1 and 2.2 for criteria definitions) (continued).
+
+53
+  Table 10. Example 2 worksheet (refer to sections 2.1 and 2.2 for criteria definitions) (continued).
+
+54
+  Table 10. Example 2 worksheet (refer to sections 2.1 and 2.2 for criteria definitions) (continued).
+
+55
+  Table 11. Example 3 worksheet (refer to sections 2.1 and 2.2 for criteria definitions).
+
+56
+  Table 11. Example 3 worksheet (refer to sections 2.1 and 2.2 for criteria definitions) (continued).
+
+57
+  Table 11. Example 3 worksheet (refer to sections 2.1 and 2.2 for criteria definitions) (continued).
+
+58
+  Table 11. Example 3 worksheet (refer to sections 2.1 and 2.2 for criteria definitions) (continued).
+
+59
+4.0 Available Traffic Analysis Tools
+
+  Before selecting a particular tool, users are strongly encouraged to assess the strengths
+  and weaknesses of the specific analytical tools since this document only presents a
+  generalized view of each tool category. Appendix E provides a list of available traffic
+  analysis tools by tool category and Web site links for further information (available as of
+  August 2003). An updated version of this list can be found at the FHWA Office of
+  Operations Web site at:
+  http://ops.fhwa.dot.gov/Travel/Traffic_Analysis_Tools/traffic_analysis_tools.htm
+  The worksheet in appendix C may be used to assess the capabilities of each tool in
+  comparison to the project’s goals and objectives.
+
+  61
+5.0 Challenges and Limitations in the Use of
+  Traffic Analysis Tools
+
+  As long as they are used correctly, traffic analysis tools are useful and effective in helping
+  transportation professionals best address their transportation needs. Each tool and tool
+  category is designed to perform different traffic analysis functions, and there is no one
+  analytical tool that can do everything or solve every problem. This section addresses some
+  of the challenges and limitations of available traffic analysis tools that should be
+  considered when selecting a tool:
+
+  • Availability of quality data. If good data are not available, the user should consider a
+  less data-intensive tool category, such as a sketch-planning tool rather than
+  microsimulation. However, the results of the simpler tool categories are usually more
+  generalized, so the user should carefully balance the needs of a more detailed analysis
+  with the amount of data required.
+
+  • Limited empirical data. Data collection can often be the most costly component of a
+  study. The best approach is to look at the ultimate goals and objectives of the task and
+  focus data collection on the data that are crucial to the study.
+
+  • Limited funding. Limited funding for conducting the study, purchasing tools,
+  running analytical scenarios, and training users is often a consideration in
+  transportation studies. Traffic analysis tools can require a significant capital
+  investment. Software licensing and training fees can make up a large portion of the
+  budget. Also, the analysis of more scenarios costs money. When faced with funding
+  limitations, focus on the project’s goals and objectives, and try to identify the point of
+  diminishing returns for the investment.
+
+  • Training limitations. Traffic simulation tools usually have steep learning curves and,
+  as a result, some transportation professionals do not receive adequate modeling and
+  simulation training.
+
+  • Limited resources. Limitations in staffing, capabilities, and funding for building the
+  network and conducting the analysis should be considered. The implementation of
+  most traffic analysis tools is a resource-intensive process, especially in the model
+  coding and calibration (front-end) phases for simulation analyses. Careful scheduling
+  and pre-agreed upon acceptance criteria are necessary to keep the project focused and
+  on target.
+
+  • Data input and the diversity and inconsistency of data. Each tool uses unique
+  analytical methodologies, so the data requirements for analysis can vary greatly from
+  tool to tool and by tool category. In many cases, data from previous projects contribute
+  very little to a new analytical effort. Adequate resources must be budgeted for data
+  collection.
+
+  63
+• Lack of understanding of the limitations of analytical tools. Often, limitations and
+  “bugs” are not discovered until the project is underway. It is important to learn from
+  experiences with past projects or to communicate with fellow users of a particular tool
+  or tool category in order to assess the tool’s capabilities and limitations. By researching
+  the experiences of others, users can gain a better understanding of what they may
+  encounter as the project progresses.
+
+• Tools may not be designed to evaluate all types of impacts produced by
+  transportation strategies/applications. The output measures produced by each tool
+  vary, so the process of matching the project’s desired performance measures with the
+  tool’s output is important. In addition, there are very few tools that directly analyze
+  ITS strategies and the impacts associated with them (e.g., reduction in incident
+  duration, agency cost savings, etc.).
+
+• Lack of features. Some analytical tools are not designed to evaluate the specific
+  strategies that users would like to implement. This is more prevalent in modeling ITS
+  strategies or other advanced traffic operations strategies. Often, “tricking” the tool into
+  mimicking a certain strategy is a short-term solution; however, there should be
+  flexibility so that advanced users may customize the tools.
+
+• Desire to run real-time solutions. Many tools require a significant amount of time for
+  setup, modeling, and analysis. It is hoped that future tools will be able to be linked to
+  traffic management centers (TMCs) and detectors so that the analysis can be
+  implemented directly and in real time. This would allow transportation professionals
+  to respond to recurring and nonrecurring congestion using real-time solutions.
+
+• Tendency to use simpler analytical tools and those available in house, although
+  they might not be the best tools for the job. Because of lack of resources, past
+  experience, or lack of familiarity with other available tools, many agencies prefer to
+  use a tool currently in their possession, even if it is not the most appropriate tool for
+  the project.
+
+• Biases against models and traffic analysis tools. These biases are not only because of
+  the challenges listed above, but also because models are not always reliable and are
+  often considered “black boxes.” Some transportation professionals prefer to use “back-
+  of-the-envelope” calculations, charts, or nomographs to estimate the results. This may
+  be adequate for simpler tasks; however, more complex projects require more advanced
+  tools.
+
+• Long computer run times. Depending on the computer hardware and the scope of the
+  study (e.g., area size, data requirements, duration, analytical time periods, etc.), an
+  analytical run may range from a few seconds to several hours. The most effective
+  approaches to addressing this issue involve using the most robust computer
+  equipment available and/or carefully limiting the scope of the study to conform to the
+  analytical needs.
+
+  64
+Appendix A: Limitations of HCM
+
+  65
+  Table 12. Limitations of the HCM methodologies.
+
+  Section  Limitations
+“Urban Street
+Methodology”  This methodology does not directly account for the following conditions that can occur
+(chapter 15,  between intersections:
+HCM 2000)  • Presence or lack of onstreet parking
+  • Driveway density or access control
+“Signalized  • Lane additions leading up to or lane drops leading away from intersections
+Intersection  • Impact of grades between intersections
+Methodology”  • Any capacity constraints between intersections (such as a narrow bridge)
+(chapter 16,  • Midblock medians and two-way left-turn lanes
+HCM 2000)  • Turning movements that exceed 20 percent of the total volume on the street
+“Unsignalized  • Queues at one intersection backing up to and interfering with the operation of an
+Intersection
+Methodology”  upstream intersection
+(chapter 17,  • Cross-street congestion blocking through traffic
+HCM 2000)
+  Because any one of these conditions might have a significant impact on the speed of
+“Pedestrian  through traffic, the analyst should modify the methodology to incorporate the effects as
+Methodology”  well as possible.
+(chapter 18,
+HCM 2000)  This methodology does not take into account the potential impact of downstream
+  congestion on intersection operation, nor does it detect and adjust for the impact of
+“Bicycle  turn-pocket overflows on through traffic and intersection operation.
+Methodology”
+(chapter 19,  HCM 2000 does not include a detailed method for estimating delay for yield sign-
+HCM 2000)  controlled intersections. All of the methods are for steady-state conditions (i.e., the
+  demand and capacity conditions are constant during the analysis period). The methods
+  are not designed to evaluate how fast or how often the facility transitions from one
+  demand/capacity state to another. Analysts interested in that kind of information
+  should consider applying simulation models.
+
+  HCM 2000 treats each of these facilities from the point of view of the pedestrian.
+  Procedures for assessing the impact of pedestrians on vehicular capacity and LOS are
+  incorporated into other chapters. The material in HCM 2000 is the result of research
+  sponsored by FHWA.
+
+  The pedestrian methodology for midblock sidewalk analysis cannot determine the
+  effects of high volumes of pedestrians entering from the doorways of office buildings
+  or subway stations. It also cannot determine the effects of high volumes of motor
+  vehicles entering or leaving a parking garage and crossing the sidewalk area.
+  Moreover, the methodology does not consider grades; it is adequate for grades from -3
+  to +3 percent; however, the effects of more extreme grades have not been well
+  documented.
+
+  The bicycle methodology does not account for bicycle paths or lane-width reduction
+  caused by fixed objects adjacent to these facilities. No credible data were found on fixed
+  objects and their effects on bicycles using these types of facilities. In addition, the
+  methodology does not account for the effects of right-turning motor vehicles crossing
+  bicycle lanes at intersections or midblock locations, and grade is not considered. The
+  methodology can be used for the analysis of facilities with grades from -3 to +3 percent.
+  The effects created by more extreme grades are unknown.
+
+  66
+Table 12. Limitations of the HCM methodologies (continued).
+
+  Section  Limitations
+“Two-Lane
+Highway  Some two-lane highways—particularly those that involve interactions among several
+Methodology”  passing or climbing lanes—are too complex to be addressed by the procedures of HCM
+(chapter 20,  2000. For analytical problems beyond the scope of HCM 2000, see part V of HCM 2000,
+HCM 2000)  which describes the application of simulation modeling to two-lane highway analyses.
+  Several design treatments discussed in appendix A in HCM 2000 are not accounted for
+“Multilane  by the methodology.
+Highway
+Methodology”  The operational analytical methodologies in HCM 2000 do not address two-lane
+(chapter 21,  highways with signalized intersections. Isolated signalized intersections on two-lane
+HCM 2000)  highways can be evaluated using the signalized intersections methodology (chapter 16,
+  HCM 2000). Two-lane highways in urban and suburban areas with multiple signalized
+“Freeway  intersections at spacings of 3.2 km (2.0 mi) or less can be evaluated using the urban
+Methodology”  street methodology (chapter 15, HCM 2000).
+(chapter 22,
+HCM 2000)  The methodology in HCM 2000 does not take into account the following conditions:
+
+  • Transitory blockages caused by construction, crashes, or railroad crossings
+
+  • Interference caused by parking on the shoulders (such as in the vicinity of a country
+  store, flea market, or tourist attraction)
+
+  • Three-lane cross sections
+
+  • Effects of lane drops and additions at the beginning or ending of the segments
+
+  • Possible queuing delays when a transition from a multilane segment to a two-lane
+  segment is neglected
+
+  • Differences between median barriers and two-way left-turn lanes
+
+  • Free-flow speeds below 72 km/h (45 mi/h) or above 97 km/h (60 mi/h)
+
+  A complete discussion of freeway control systems or even the analysis of the
+  performance alternatives is beyond the scope of HCM 2000. The reader should consult
+  the references identified in HCM 2000. The methodology does not account for delays
+  caused by vehicles using alternate routes or vehicles leaving before or after the
+  duration of the study.
+
+  Certain freeway traffic conditions cannot easily be analyzed by the methodology (e.g.,
+  multiple overlapping bottlenecks). Therefore, other tools may be more appropriate for
+  specific applications beyond the capabilities of the methodology. Refer to part V, HCM
+  2000, for a discussion of simulations and other models.
+
+  User demand responses, such as spatial, temporal, modal, or total demand responses
+  caused by traffic management strategies, are not automatically incorporated within the
+  methodology. After viewing the facility traffic performance results, the analyst can
+  modify the demand input manually to analyze the effect of user demand responses or
+  traffic growth. The accuracy of the results depends on the accuracy of the estimation of
+  the users’ demand responses.
+
+  The freeway facility methodology is limited to the extent that it can accommodate
+  demand in excess of capacity. The procedures address only local oversaturated flow
+  situations, not systemwide oversaturated flow conditions.
+
+  The completeness of the analysis will be limited if freeway segments in the first time
+  interval, the last time interval, and the first freeway segment do not all have demand-
+  to-capacity ratios less than 1.00. The rationale for these limitations is discussed in the
+  section on demand-capacity ratio.
+
+  67
+

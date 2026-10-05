@@ -1,0 +1,1097 @@
+40 ■ Explainable AI for Intelligent Transportation Systems
+
+  A human-operated car
+
+  crash point
+
+  An autonomous car
+
+Figure 2.3 A traffic accident in an uncontrolled four-way intersection with au-
+tonomous and human-operated cars. Both vehicles try to turn left and incorrect
+coordination of time and maneuvers leads to a crash. As there may not be witnesses
+or other helpful arguments, an explainable AI-based driving system, storing a his-
+tory of explanations alongside the relevant actions of an autonomous car can help
+understand which party made the wrong decision that caused the mishap. Graphics
+adapted from [7].
+
+car (i.e., ego car) and another vehicle happens while both are attempting to make
+left turns in a given time step tn (Figure 2.3). Accident investigators analyze the
+decisive actions of both cars at that particular time step. Suppose an autonomous
+vehicle records its action at tn and provides an explanation as a justification for a
+taken action and the quantitative description of a residual risk associated with the
+performed action. Such functionality can help the investigators understand the main
+cause of the accident, i.e., whether an autonomous or other car took the wrong ac-
+tion. It immediately turns out that providing human interpretable justifications on a
+history of performed actions is a powerful tool both from a regulatory perspective in
+a post-accident analysis and from the lens of debugging and improving the existing
+automated system.
+
+  The other benefit of our framework is that it can help diminish the responsibility,
+liability, and semantic gaps in autonomous driving, as identified by [6]. In terms of
+the responsibility gap, the framework, with its ability to explain a history of temporal
+actions, can help regulators and inspectors conclude whom to blame for the mishap.
+Once the leading actor of the accident is identified, financial responsibility can also
+be determined, and the liability gap can be resolved. Finally, the debuggability of
+intelligent driving can reduce the semantic gap: By inspecting the history of previ-
+ously taken actions, AI engineers can take the opportunity to improve an existing
+system by deploying improved AI techniques. Therefore, we see that an intelligent
+driving system with explainability features and safety verification within the prede-
+fined standards has manifold benefits both from legal and consumer perspectives.
+  Towards Safe, Explainable, and Regulated Autonomous Driving ■ 41
+
+2.5 XAI HEREAFTER: WHAT TO EXPECT?
+
+We infer that end-to-end learning and motion trajectory of autonomous vehicles is
+based on precisely mapping perceived observations to corresponding actions. To date,
+perception has been mainly carried out through convolutional neural network (CNN)
+architectures and their augmented variations, and reinforcement learning (RL)-based
+approaches have proven computationally robust and adequate to map such real-
+time perception of states to relevant actions. Based on this intuition, we can note
+that explainable autonomous driving can be achieved by explaining the decisions of
+some combination of CNN/RL learning architecture. To conform to the framework
+presented, we provide directions for (1) explainable vision, (2) explainable RL, (3)
+representation of knowledge acquired from the operational environment, and (4) a
+question-driven software hierarchy for comprehensible action selection.
+
+2.5.1 Use of Trusted Explainable Vision: Understanding Limitations and Improving
+  CNNs
+
+In recent studies, autonomous driving researchers and practitioners have already at-
+tempted to leverage CNN-based end-to-end learning. For example, Bojarski et al. [5]
+used convolutional neural networks to map camera inputs to steering actions and ob-
+tained impressive results with minimal training data. Their CNN architecture learned
+a complete set of driving operations for driving in situations with and without lane
+markings in sunny, rainy, and cloudy weather conditions. In a further work, [50] com-
+bined a dilated CNN with a long-short term memory (LSTM) network to predict a
+self-driving vehicle’s future motions. Another empirically successful end-to-end learn-
+ing example from vision is [47]s’ study, where the authors used reinforcement learning
+along with a convolutional encoder to drive an autonomous car safely while consid-
+ering road users (e.g., pedestrians) and respecting driving rules (e.g., lane keeping,
+collision prevention, and traffic light detection). Their ablation study of the method
+proved effectiveness of the proposed approach by winning the “Camera Only” track
+of the CARLA competition challenge [9]. So, the end-to-end learning approach has
+demonstrated its effectiveness with an appropriate choice of real-time computational
+decision-making methods. Consequently, explainable vision-directed actions for au-
+tonomous vehicles are based on how high-level features are used to detect and identify
+objects. CNNs, as the standard deep learning architectures, are “black-box” models,
+so there is a need to develop explainable CNN (XCNN) architectures to comply with
+the requirements of the proposed framework. In this direction, there has been recent
+research on explaining predictions of CNNs: DeepLift [36], Class Activation Maps
+(CAM) [58] and its extended versions such as Grad-CAM [33], Grad-CAM ++ [10],
+Guided Grad-CAM [46], as well as heuristics-based Deep Visual Explanations [1, 2].
+Motivated by such vision-based explainability methods, some recent studies have at-
+tempted to generate visual explanations for autonomous driving tasks. In a related
+project, [4] developed a method, called VisualBackProp, that shows which set of
+pixels are primarily and the most influential in triggering the predictions of convolu-
+tional networks. The authors Kim and Canny [20] introduced a vision-based frame-
+work using causal attention that shows what parts of an image control the steering
+42 ■ Explainable AI for Intelligent Transportation Systems
+
+  time
+
+Input
+  images
+
+  Vehicle controller  control outputs
+
+(acceleration, change of course)  Explanation generator
+
+  attention alignment  (Textual descriptions+explanations)
+
+Vehicle  10 -3
+  Controller’s  6
+  Attention map  5
+  4
+  3
+  2
+  1
+
+  Example of textual descriptions + explanations:
+  Ours: “The car is driving forward + because there are no other cars in its lane”
+  Human annotator: “The car heads down the street + because the street is clear.”
+
+Figure 2.4 The intelligent driving system produces a textual explanation in a natural
+language, and a visual explanation with an attention mechanism on a taken action.
+Original source [21].
+
+wheel for appropriate actions. The authors extended their work in their further study
+and produce intelligible textual explanations on the vehicle’s actions [21] (e.g., see
+Figure 2.4). Such post hoc explanations are a promising step towards transparent
+autonomous driving and can be helpful to understand critical decisions of an auto-
+mated vehicle from legislative and stakeholders’ perspectives, as mentioned in our
+case study.
+
+  Taking a further strategic step, in addition to these post-hoc explanations, it
+is strongly argued that autonomous driving control systems also need to provide
+intrinsic explanations, where the developed system already becomes interpretable by
+design [30]. While post hoc explanations are useful for root cause identification in
+accident analysis, intrinsic explanations can be helpful to prevent such accidents. For
+instance, a back-up driver or an in-vehicle passenger can see textual explanations of
+critical decisions of a car with a suitable XAI interface while driving: in case these
+explanations do not reflect the actual decisions, the back-up driver can control the
+car with their input (if available) or end the trip and prevent potential accidents in
+more complicated situations, foreseeable ahead.
+
+  There are also at least two additional limitations of CNNs. Firstly, they need an
+enormous volume of training data to perform well in image recognition and object
+classification tasks. Moreover, conventional CNNs require all possible orientations
+of a sample image during training, in order to accurately identify and recognize
+unseen images which have various orientations and poses. They do not learn pose-
+invariant objects and this property hampers CNN ’s modeling abilities. To overcome
+this downside of CNNs, [17] proposed the concept of capsules, a set of artificial neurons
+that capture orientation and represent pose parameters such as size, position, and
+skewing of an object. In their subsequent work, [31] they used a dynamic routing
+algorithm to train information passage between capsules at two successive layers.
+This feature enables the neural network to detect segments of an image and represent
+spatial representations differences between them although it is not yet clear how
+effective this can be. The hope is that the capsule neural network can detect an
+object in different shapes and poses even if a new sample of the same image has
+Towards Safe, Explainable, and Regulated Autonomous Driving ■ 43
+
+  CapsNet  A red tra c light
+  A pedestrian is crossing the
+Recognizing images
+  in di erent poses  road
+  The speed limit is 50 km/h
+
+  Expected inference
+
+Figure 2.5 Three exemplary images in different poses: A traffic light sign affected
+by wind, a pedestrian leaning forward, and a speed limit sign with a changed vertical
+orientation. While CNNs work well with properly aligned images, changed shapes
+and poses may result in reduced accuracy in object recognition and classification
+tasks leading to further high-stakes consequences. CapsNet architectures, on the other
+hand, are able to detect objects with different poses. Similar to the provided images,
+we can see many other static and dynamic objects in everyday traffic that can be in
+various poses and shapes in specific times. CapsNet with its ability to detect objects
+in any poses can improve accuracy in object recognition and classification tasks in
+addition to its explainability advantage in perception tasks of autonomous driving.
+
+not previously been used in the training phase. Sabour et al.’s most recent work [32]
+further improves the concept of dynamic routing and learns primary capsule encoders,
+which detect very tiny pieces of an image.
+
+  From the perspective of explainability, the learning mechanism of a capsule net-
+work makes this architecture intrinsically interpretable. For example, in the medical
+domain, Sharoudnejad et al. have empirically shown that likelihood and instantiation
+parameter vector values provide rational explanations in classification tasks on the
+28 × 28 MNIST dataset and MRI images of patients with brain cancer [34]. Simi-
+larly, [23] have shown that their explainable capsule network, called X-Caps, carries
+human-interpretable features in the vectors of its capsules encoded as high-level visual
+attributes.
+
+  Overall, both explainability and the ability to recognize objects in different poses
+make CapsNets promising in vision tasks of autonomous driving. In particular, static
+road objects such as speed signs and traffic lights often undergo the impact of ad-
+verse weather conditions (e.g., snow and wind) and collisions by vehicles that change
+their stance angle and form (e.g., see Figure 2.5). As CNNs ultimately require regu-
+lar shape and orientations of objects for real-time perception, CapsNet can improve
+their accuracy and consider the likelihood of the aforementioned pose, shape, and po-
+sition changes along the traffic. Therefore, a CapsNet architecture’s superior abilities
+44 ■ Explainable AI for Intelligent Transportation Systems
+
+with explainability and improved accuracy on object recognition tasks are promising
+research directions for the vision problems of autonomous driving.
+
+2.5.2 Explanation Opportunity Using Model-Based Reinforcement Learning
+
+Autonomous vehicles make sequential decisions throughout their motion trajectory
+within a setting formally characterized as a Markov Decision Process (MDP). The
+field of reinforcement learning (e.g., [41]) provides an MDP implementation archi-
+tecture whose high-level goal is to estimate the differential reward of any possible
+action and to incrementally adjust the priority of making decisions by computing a
+policy that produces ranking preferred actions. An RL agent’s interaction with the
+environment as an MDP can be implemented either as model-free or model-based
+RL. In a model-free setting (such as Q-learning), the algorithm does not have access
+to the dynamics of the environment (i.e., transition or reward function). It estimates
+the value function directly from a sensed experience [41]. So, model-free RL lacks ex-
+plainability for learned policies. On the other hand, in the case of a model-based RL
+approach, an agent firstly tries to understand the world as prior knowledge, then de-
+velops a model to represent this world [22,26,41,52,53]. This approach in model-based
+RL is known as planning. The idea of planning in RL is essential for understanding
+the explicit components of decision-making and has powered further model-based
+architectures (i.e., the Dyna architectures [40, 44, 51]). While in a model-free setting,
+an RL agent directly learns a policy with the environment through interaction that
+produces a reward, in the Dyna and linear-Dyna style architectures an agent simulta-
+neously learns a world model whilst learning an optimal policy through interactions
+with the world. Such a structure of planning makes it naturally explainable. Whether
+based on approximations of state descriptions from the world or an imaginary state
+defined by the model, the planning process uses a model representation to generate a
+predicted future trajectory. According to the model projection, an “optimal” action
+is decided at each planning step, which provides a predicted state and a predicted
+reward. The predicted states and rewards can be analyzed and visualized for the
+planned trajectory, thus providing an explanation of why the agent favors the choice
+of a particular action at a specific time step. Within that context, the potential ben-
+efits and perspectives of using Dyna architectures and model-based RL are huge for
+XAI and autonomous driving.
+
+2.5.3 Leveraging Predictive Knowledge
+
+It is important to specify how an agent could both represent and use the knowledge
+collected through interaction with the environment. This knowledge can be consid-
+ered a compendium of predictions that the agent makes in anticipation of a selection
+from possible actions. Within the RL literature, such an approach to knowledge rep-
+resentation is called predictive knowledge, and has received significant attention in RL
+studies [12,42,45,49]. An agent regularly expects a response from the environment by
+making many predictions about the dynamics of the environment in accordance with
+the autonomous system’s behavior. Therefore, predictive knowledge, as one of the es-
+sential notions of reinforcement learning, can be considered as prior knowledge about
+  Towards Safe, Explainable, and Regulated Autonomous Driving ■ 45
+
+the possible worlds in which the corresponding actions might be taken. In order to
+consider a prediction as knowledge, a prediction should comply with the requirements
+of knowledge; first, a prediction should carry fundamental elements of epistemology
+– justification and truth, in itself [19]. Some, for example, [49] and [35] have shown
+that General Value Functions (GVFs) [42], an architecture to learn numerous value
+functions from experience, are a promising proposal for the robust representation of
+predictive knowledge. In particular, [35] has empirically validated that GVFs, as a
+scalable representation, form a predictive model of an agent’s interaction with its
+environment and can represent an operational environment. Recent works on GVFs
+have proven their value in perception [15] and policy learning problems of real-world
+autonomous driving [14]. Motivated by these results, it is beneficial to further in-
+vestigate the concept of predictive knowledge and its representation with GVFs, to
+evaluate the robustness of such a formalism for autonomous driving. However, it is
+noteworthy to point out that GVFs commit to a particular encoding of predictive
+knowledge, which leaves their explanatory value undetermined.
+
+2.5.4 Temporal Questions and Question Hierarchies
+
+If there is one common design principle that is shared by the autonomous driv-
+ing industry, it is the commitment to arrange the control software in a hierarchical
+structure. To have a self-explainable decision procedure for autonomous driving, it
+is important that this hierarchy becomes question driven. In particular, the ques-
+tions frequently arising while driving are those like “Am I going to see the traffic
+lights turning yellow shortly?”, “ Why is the car in front braking?”, “Will the car
+in the front right of me cut to my lane?”, etc. All these questions seem to come to
+us naturally when we drive. However, this concept of asking questions receives very
+little attention from current research on AI methods for autonomous driving. Un-
+derstanding why human beings have this ability is vital to advancing the safety of
+autonomous machines. These questions don’t emerge randomly but subconsciously;
+considering answers to these questions prepares us for a safe drive.
+
+  To better understand the usefulness of the question-answering concept, assuming
+an autonomous car’s intelligent driving system produces such a question-answer pair
+in a natural language in a particular time step: Q: “Why did the car change its
+lane?” – A: “Because an obstruction was observed ahead in the current lane.” Such
+a question-answering pair would mainly be helpful in case of accident investigation,
+and also could help inspectors to ask further follow-up questions.
+
+  From the RL perspective, one potential approach to generate temporal questions
+based on the ongoing actions would be to use the concept of options [43]. Options are
+the generalized concept of actions that has a policy for taking action with terminal
+conditions. The option-critic architecture was recently proposed by [3]. Both internal
+policies and terminal conditions of options have been experimentally successful in
+end-to-end learning of options in the Arcade Learning Environment (ALE).
+
+  The option-critic architecture is useful for temporal questions in autonomous
+driving; because driving-related questions are often temporal, new questions can be
+generated for the subsequent actions after just several seconds. Hence, it is important
+46 ■ Explainable AI for Intelligent Transportation Systems
+
+to study the formulation of questioning, with research focused on the generation, or-
+ganization, and evaluation of questions for transparent autonomous driving [56]. Note
+also that the sensitivity of driving decisions varies dynamically in real time, creating
+different levels of risk for the vehicle. In general, low-risk actions and options are pre-
+ferred. However, in safety stringent situations, we need to explore efficiently (possibly
+in real-time) to manage possible dangers. This step requires a representation of the
+risks in decision making with a principled way of evaluating the risks to decide which
+risk level the vehicle is to undertake. Experiments by [57] showed that considering
+no risks but only acting according to the maximum reward principle as in traditional
+RL is not always the best decision and can fail to discover the optimal policy. In
+contrast, acting according to a variety of levels of risk can find an optimal policy in
+environments with a diverse range of different transition and reward dynamics. We
+can thus infer and conclude that decision-making for autonomous vehicles is time-
+sensitive, often in sub-seconds, and a well-composed question hierarchy may not only
+help to select the present action but also determine subsequent actions that help sus-
+tain safe driving. The hierarchical structure can also provide temporal, informative,
+and reliable explanations in critical traffic situations with appropriate benefits.
+
+2.6 CONCLUSIONS
+
+As a result of our ongoing study, we presented a general design framework for XAI
+-based autonomous driving. We validated the framework with a case study of a post-
+accident analysis and showed that the proposed framework could have multi-faceted
+benefits to autonomous driving systems. First, the concept of the intrinsic and post-
+hoc explanations is not only limited to providing transparency on real-time decisions
+but also provides further opportunities to debug, fix, and enhance existing intelligent
+driving systems. Moreover, we showed that the principles of the proposed framework
+could address three actual issues, namely, responsibility, liability, and semantic gaps
+in the realm of autonomous driving. Finally, we presented some XAI approaches
+as future work and elucidated their potential in the explainability of autonomous
+driving.
+
+  While the presented propositions are promising directions to follow, whether these
+concepts work effectively in a real driving environment remains unclear for now and
+is a limitation of our preliminary study. As a next step, we are performing empiri-
+cal research conforming to the principles of the presented framework. Currently, we
+are trying to incorporate visual question answering with model-based reinforcement
+learning to achieve explainable vision mapped to explainable actions. Two interest-
+ing areas for deeper investigation are (1) a comparative analysis of model-free and
+model-based reinforcement learning approaches on the same task, and (2) whether
+the interpretability of an AI architecture for intelligent driving results in reduced
+accuracy of the interpretable algorithm compared to its original version on the same
+task. Therefore the contributions of this paper are mainly theoretical and further
+empirical studies are needed for proof of concept. We anticipate that further prac-
+tical work based on these propositions can be helpful towards public acceptance of
+autonomous driving technology.
+  Toward Safe, Explainable, and Regulated Autonomous Driving ■ 47
+
+2.7 ACKNOWLEDGMENTS
+
+We acknowledge support from the Alberta Machine Intelligence Institute (Amii), from
+the Computing Science Department of the University of Alberta, and the Natural
+Sciences and Engineering Research Council of Canada (NSERC). Shahin Atakishiyev
+also acknowledges support from the Ministry of Science and Education of the Republic
+of Azerbaijan.
+
+Bibliography
+
+ [1] Housam Babiker and Randy Goebel. Using KL-divergence to focus Deep Visual
+  Explanation. 31st Neural Information Processing Systems Conference (NIPS),
+  Interpretable ML Symposium. Long Beach, CA, USA, 2017.
+
+ [2] Housam Khalifa Bashier Babiker and Randy Goebel. An Introduction to Deep
+  Visual Explanation. 31st Neural Information Processing Systems Conference
+  (NIPS), Long Beach, CA, USA, 2017.
+
+ [3] Pierre-Luc Bacon, Jean Harb, and Doina Precup. The option-critic architecture.
+  In Proceedings of the AAAI Conference on Artificial Intelligence, volume 31,
+  2017, AAAI.
+
+ [4] Mariusz Bojarski, Anna Choromanska, Krzysztof Choromanski, Bernhard
+  Firner, Larry Jackel, Urs Muller, and Karol Zieba. Visualbackprop: visualiz-
+  ing CNNs for autonomous driving. arXiv preprint arXiv:1611.05418, 2, 2016.
+
+ [5] Mariusz Bojarski, Davide Del Testa, Daniel Dworakowski, Bernhard Firner, Beat
+  Flepp, Prasoon Goyal, Lawrence D Jackel, Mathew Monfort, Urs Muller, Ji-
+  akai Zhang, et al. End to end learning for self-driving cars. arXiv preprint
+  arXiv:1604.07316, 2016.
+
+ [6] Simon Burton, Ibrahim Habli, Tom Lawton, John McDermid, Phillip Morgan,
+  and Zoe Porter. Mind the gaps: Assuring the safety of autonomous systems from
+  an engineering, ethical, and legal perspective. Artificial Intelligence, 279:103201,
+  2020.
+
+ [7] Cameron McKay. Uncontrolled intersection rules in Alberta, 2021. Accessed on
+  April 10, 2022.
+
+ [8] Sean Campbell, Niall O’Mahony, Lenka Krpalcova, Daniel Riordan, Joseph
+  Walsh, Aidan Murphy, and Conor Ryan. Sensor technology in autonomous ve-
+  hicles: A review. In 2018 29th Irish Signals and Systems Conference (ISSC),
+  pages 1–4. IEEE, 2018.
+
+ [9] CARLA’s blog. The CARLA Autonomous Driving Challenge, 2019. (Accessed
+  on November 1, 2021).
+48 ■ Explainable AI for Intelligent Transportation Systems
+
+[10] Aditya Chattopadhay, Anirban Sarkar, Prantik Howlader, and Vineeth N Bala-
+  subramanian. Grad-cam++: Generalized gradient-based visual explanations for
+  deep convolutional networks. In 2018 IEEE Winter Conference on Applications
+  of Computer Vision (WACV), pages 839–847. IEEE, 2018.
+
+[11] Dentons. Global Guide to Autonomous Vehicles 2021. 2021.
+
+[12] Gary L Drescher. Made-up minds: A constructivist approach to artificial intel-
+  ligence. MIT Press, 1991.
+
+[13] GDPR. Regulation EU 2016/679 of the European Parliament and of the Council
+  of 27 April 2016. Official Journal of the European Union, 2016.
+
+[14] Daniel Graves, Nhat M Nguyen, Kimia Hassanzadeh, and Jun Jin. Learning
+  predictive representations in autonomous driving to improve deep reinforcement
+  learning. arXiv preprint arXiv:2006.15110, 2020.
+
+[15] Daniel Graves, Kasra Rezaee, and Sean Scheideman. Perception as predic-
+  tion using general value functions in autonomous driving applications. In 2019
+  IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS),
+  pages 1202–1209. IEEE, 2019.
+
+[16] Samuel Greydanus, Anurag Koul, Jonathan Dodge, and Alan Fern. Visualiz-
+  ing and understanding atari agents. In International Conference on Machine
+  Learning, pages 1792–1801. PMLR, 2018.
+
+[17] Geoffrey E Hinton, Alex Krizhevsky, and Sida D Wang. Transforming auto-
+  encoders. In International Conference on Artificial Neural Networks, pages 44–
+  51. Springer, 2011.
+
+[18] ISO 26262. Road vehicles-functional safety. International Standard ISO/FDIS,
+  26262, 2011.
+
+[19] Alex Kearney and Patrick M Pilarski. When is a prediction knowledge? arXiv
+  preprint arXiv:1904.09024, 2019.
+
+[20] Jinkyu Kim and John Canny. Interpretable learning for self-driving cars by
+  visualizing causal attention. In Proceedings of the IEEE International Conference
+  on Computer Vision, pages 2942–2950. IEEE, 2017.
+
+[21] Jinkyu Kim, Anna Rohrbach, Trevor Darrell, John Canny, and Zeynep Akata.
+  Textual explanations for self-driving vehicles. In Proceedings of the European
+  Conference on Computer Vision (ECCV), pages 563–578. CVF, 2018.
+
+[22] B Ravi Kiran, Ibrahim Sobh, Victor Talpaert, Patrick Mannion, Ahmad A
+  Al Sallab, Senthil Yogamani, and Patrick Perez. Deep reinforcement learning for
+  autonomous driving: A survey. IEEE Transactions on Intelligent Transportation
+  Systems, 23(6):4909–4926, 2021.
+  Toward Safe, Explainable, and Regulated Autonomous Driving ■ 49
+
+[23] Rodney LaLonde, Drew Torigian, and Ulas Bagci. Encoding visual attributes
+  in capsules for explainable medical diagnoses. In International Conference on
+  Medical Image Computing and Computer-Assisted Intervention, pages 294–304.
+  Springer, 2020.
+
+[24] Roger Lanctot et al. Accelerating the future: The economic impact of the emerg-
+  ing passenger economy. Strategy Analytics, 5, 2017.
+
+[25] Todd Litman. Autonomous vehicle implementation predictions: Implications for
+  transport planning. 2021.
+
+[26] Thomas M Moerland, Joost Broekens, and Catholijn M Jonker. Model-based
+  reinforcement learning: A survey. arXiv preprint arXiv:2006.16712, 2020.
+
+[27] NHTSA. Federal automated vehicles policy: Accelerating the next revolution in
+  roadway safety. US Department of Transportation, 2016.
+
+[28] NTSB. Collision between a sport utility vehicle operating with partial driving
+  automation and a crash attenuator Mountain View, California. 2020.
+
+[29] Andreas Reschka. Safety concept for autonomous vehicles. In Autonomous
+  Driving, pages 473–496. Springer, 2016.
+
+[30] Cynthia Rudin. Stop explaining black box machine learning models for high
+  stakes decisions and use interpretable models instead. Nature Machine Intelli-
+  gence, 1(5):206–215, 2019.
+
+[31] Sara Sabour, Nicholas Frosst, and Geoffrey E Hinton. Dynamic routing between
+  capsules. In Advances in Neural Information Processing Systems, volume 30,
+  2017.
+
+[32] Sara Sabour, Andrea Tagliasacchi, Soroosh Yazdani, Geoffrey Hinton, and
+  David J Fleet. Unsupervised part representation by flow capsules. In Inter-
+  national Conference on Machine Learning, pages 9213–9223. PMLR, 2021.
+
+[33] Ramprasaath R Selvaraju, Michael Cogswell, Abhishek Das, Ramakrishna
+  Vedantam, Devi Parikh, and Dhruv Batra. Grad-CAM: Visual explanations
+  from deep networks via gradient-based localization. In Proceedings of the IEEE
+  International Conference on Computer Vision, pages 618–626. IEEE, 2017.
+
+[34] Atefeh Shahroudnejad, Parnian Afshar, Konstantinos N Plataniotis, and Arash
+  Mohammadi. Improved explainability of capsule networks: Relevance path by
+  agreement. In 2018 IEEE Global Conference on Signal and Information Pro-
+  cessing (GlobalSIP), pages 549–553. IEEE, 2018.
+
+[35] Craig Sherstan. Representation and general value functions. PhD thesis, Uni-
+  versity of Alberta, 2020.
+50 ■ Explainable AI for Intelligent Transportation Systems
+
+[36] Avanti Shrikumar, Peyton Greenside, and Anshul Kundaje. Learning important
+  features through propagating activation differences. In International Conference
+  on Machine Learning, pages 3145–3153. PMLR, 2017.
+
+[37] Jennifer Shuttleworth. SAE standard news: J3016 automated-driving graphic
+  update, 2019. Accessed online on August 16, 2021.
+
+[38] R. Slagter and R. Voster. Autonomous Compliance Standing on the shoulders
+  of RegTech! Compact, 2017.
+
+[39] Neville A Stanton, Paul M Salmon, Guy H Walker, and Maggie Stanton. Mod-
+  els and methods for collision analysis: a comparison study based on the Uber
+  collision with a pedestrian. Safety Science, 120:117–128, 2019.
+
+[40] Richard S Sutton. Dyna, an integrated architecture for learning, planning, and
+  reacting. ACM Sigart Bulletin, 2(4):160–163, 1991.
+
+[41] Richard S Sutton and Andrew G Barto. Reinforcement learning: An introduction.
+  MIT Press, Second edition, 2018.
+
+[42] Richard S Sutton, Joseph Modayil, Michael Delp, Thomas Degris, Patrick M
+  Pilarski, Adam White, and Doina Precup. Horde: A scalable real-time architec-
+  ture for learning knowledge from unsupervised sensorimotor interaction. In The
+  10th International Conference on Autonomous Agents and Multiagent Systems-
+  Volume 2, pages 761–768. IFAAMAS, 2011.
+
+[43] Richard S Sutton, Doina Precup, and Satinder Singh. Between MDPs and semi-
+  MDPs: A framework for temporal abstraction in reinforcement learning. Artifi-
+  cial Intelligence, 112(1–2):181–211, 1999.
+
+[44] Richard S. Sutton, Csaba Szepesvari, Alborz Geramifard, and Michael H. Bowl-
+  ing. Dyna-style planning with linear function approximation and prioritized
+  sweeping. In David A. McAllester and Petri Myllym¨aki, editors, UAI 2008, Pro-
+  ceedings of the 24th Conference in Uncertainty in Artificial Intelligence, Helsinki,
+  Finland, July 9-12, 2008, pages 528–536. AUAI Press, 2008.
+
+[45] Richard S Sutton and Brian Tanner. Temporal-difference networks. In Advances
+  in Neural Information Processing Systems, pages 1377–1384, 2005.
+
+[46] Ziqi Tang, Kangway V Chuang, Charles DeCarli, Lee-Way Jin, Laurel Beck-
+  ett, Michael J Keiser, and Brittany N Dugger. Interpretable classification of
+  Alzheimer’s disease pathologies with a convolutional neural network pipeline.
+  Nature Communications, 10(1):1–14, 2019.
+
+[47] Marin Toromanoff, Emilie Wirbel, and Fabien Moutarde. End-to-end model-free
+  reinforcement learning for urban driving using implicit affordances. In Proceed-
+  ings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition,
+  pages 7153–7162. IEEE/CVF, 2020.
+  Toward Safe, Explainable, and Regulated Autonomous Driving ■ 51
+
+[48] Transport Canada. Guidelines for testing automated driving systems in Canada.
+  Ministry of Transportation of Canada, 2021.
+
+[49] Adam White. Developing a predictive approach to knowledge. PhD thesis,
+  University of Alberta, 2015.
+
+[50] Huazhe Xu, Yang Gao, Fisher Yu, and Trevor Darrell. End-to-end learning of
+  driving models from large-scale video datasets. In Proceedings of the IEEE Con-
+  ference on Computer Vision and Pattern Recognition, pages 2174–2182. IEEE,
+  2017.
+
+[51] Hengshuai Yao, Shalabh Bhatnagar, Dongcui Diao, Richard S Sutton, and Csaba
+  Szepesvari. Multi-step dyna planning for policy evaluation and control. In
+  Y. Bengio, D. Schuurmans, J. Lafferty, C. Williams, and A. Culotta, editors,
+  Advances in Neural Information Processing Systems, volume 22. Curran Asso-
+  ciates, Inc., 2009.
+
+[52] Hengshuai Yao and Csaba Szepesvari. Approximate policy iteration with linear
+  action models. In Proceedings of the AAAI Conference on Artificial Intelligence,
+  volume 26, pages 1212–1218. AAAI, 2012.
+
+[53] Hengshuai Yao, Csaba Szepesvari, Bernardo Avila Pires, and Xinhua Zhang.
+  Pseudo-mdps and factored linear action models. In 2014 IEEE Symposium on
+  Adaptive Dynamic Programming and Reinforcement Learning (ADPRL), pages
+  1–9. IEEE, 2014.
+
+[54] De Jong Yeong, Gustavo Velasco-Hernandez, John Barry, Joseph Walsh, et al.
+  Sensor and sensor fusion technology in autonomous vehicles: A review. Sensors,
+  21(6):2140, 2021.
+
+[55] Ekim Yurtsever, Jacob Lambert, Alexander Carballo, and Kazuya Takeda. A
+  survey of autonomous driving: Common practices and emerging technologies.
+  IEEE Access, 8:58443–58469, 2020.
+
+[56] Eloi Zablocki, Hedi Ben-Younes, Patrick Perez, and Matthieu Cord. Explain-
+  ability of deep vision-based autonomous driving systems: Review and challenges.
+  International Journal of Computer Vision, pages 1–28, 2022.
+
+[57] Shangtong Zhang, Borislav Mavrin, Linglong Kong, Bo Liu, and Hengshuai Yao.
+  QUOTA: the quantile option architecture for reinforcement learning. CoRR,
+  abs/1811.02073, 2018.
+
+[58] Bolei Zhou, Aditya Khosla, Agata Lapedriza, Aude Oliva, and Antonio Torralba.
+  Learning deep features for discriminative localization. In Proceedings of the
+  IEEE Conference on Computer Vision and Pattern Recognition, pages 2921–
+  2929. IEEE, 2016.
+Taylor & Francis
+
+Taylor & Francis Group
+
+http://taylorandfrancis.com
+  CHAPTER 3
+
+Explainable Machine
+Learning Method for
+Predicting Road-Traffic
+Accident Injury Severity in
+Addis Ababa City Based on
+a New Graph Feature
+Selection Technique
+
+Yassine Akhiat
+
+Department of Informatics, LPAIS Laboratory, USMBA, Fez Morocco
+
+Younes Bouchlaghem
+
+Department of Informatics, UAE, Tetouan Morocco
+
+Ahmed Zinedine
+
+Department of Informatics, LPAIS Laboratory, USMBA, Fez Morocco
+
+Mohamed Chahhou
+
+Department of Informatics, UAE, Tetouan Morocco
+
+CONTENTS
+
+3.1 Introduction . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 54
+3.2 Methodology . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 57
+
+  3.2.1 Similarity Matrix . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 57
+  3.2.2 Graph Representation and Community Detection . . . . . . . . . . . . . . 58
+  3.2.3 Feature Selection . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 58
+
+  3.2.3.1 ReliefF-Based Feature Selection . . . . . . . . . . . . . . . . . . . . . 59
+  3.2.4 Ensemble Learning . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 60
+  3.2.5 Explainable Artificial Intelligence . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 60
+3.3 Experimental Results and Discussion . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 61
+
+DOI: 10.1201/9781003324140-3  53
+54 ■ Explainable Artificial Intelligence for Intelligent Transportation Systems
+
+  3.3.1 Dataset Description . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 62
+  3.3.1.1 Data Transformation . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 64
+  3.3.1.2 Handling Imbalance Data . . . . . . . . . . . . . . . . . . . . . . . . . . . 64
+
+  3.3.2 Classification Algorithms and Evaluation Metrics . . . . . . . . . . . . . . . 64
+  3.3.3 Experiment Settings . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 66
+3.4 Conclusion and Recommendations . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 70
+  Bibliography . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 71
+
+R oad traffic accidents (RTAs) are the leading cause of injuries and fatalities
+  worldwide, especially in developing countries. Addis Ababa, with a demographic
+population estimated with at least 4 million dwellers, is the largest urban center in
+Ethiopia has the high road crash rate in the world. Recently, RTAs have become a
+challenging public health concern within the city as the trend of RTAs injuries and
+death is increasing drastically. To date, few studies have been proposed to identify
+the crucial factors contributing to road crashes and to classify fatalities. In addition,
+most AI applications lack explainability/transparency. In this paper, we developed an
+explainable method capable of classifying accident severity accurately and providing
+interpretations and explanations about the pivotal features and factors that may
+lead to road accidents based on the proposed graph feature selection for the sake of
+improving road safety.
+
+  The recorded results on Addis Ababa RTAs dataset confirm the validity of our
+proposed method and its superiority using five evaluation metrics and three well-
+known classification algorithms.
+
+3.1 INTRODUCTION
+
+Nowadays, the rapid growth of the population and the number of vehicles on the
+road has made road traffic accident one of the concerns of the modern times [2, 19].
+World Health Organization (WHO) has reported top ten disastrous reasons for taking
+human’s life, and unfortunately road accidents come at ninth place, and by 2030 road
+traffic injuries are estimated to become the fifth leading cause of mortality globally
+[18,19]. The Global status report on road safety 2018, launched by WHO in December
+2018, highlights that the number of annual road traffic deaths has attained 1.35
+million. The highest number of RTA deaths are reported in particular in developing
+and low-income countries and its number is increasing from time to time [30,39]. This
+is resulting in negative consequences for the environment, health and the economy
+sector.
+
+  In Addis Ababa the capital of Ethiopia with a population of more than 4 mil-
+lion people, the situation has been worsened as the number of vehicles has increased
+consequently due to increased traffic flow and conflicts between vehicles and pedes-
+trians [2,38]. The capital is encountering the highest rate TRAs resulting in fatalities
+and various levels of injuries. According to Addis Ababa Traffic Police Commission
+data, around 300 people are killed and 12,000 are seriously injured due to RTAs each
+  Explainable ML Method for Predicting Road-Traffic Accident Injury Severity ■ 55
+
+Figure 3.1 Top ten causes of death in Ethiopia per 100,000 population in 2000 and
+2019.
+year in Addis Ababa [11]. Furthermore, the numbers of road traffic injuries and deaths
+have been increasing from time to time in Ethiopia as it had the highest death rate
+due to road traffic injuries worldwide at 28 per 100,000 population in 2019 according
+to WHO (see Figures 3.1 and 3.2).
+
+  The cost of RTAs has brought unprecedented challenges that influence on the
+community in various levels [11,27,38]. Understanding circumstances leading to road
+traffic accidents is crucial to improve road safety via developing Intelligent Trans-
+portation Systems (ITS) counting on collected RTAs datasets. Machine learning is
+now a trending and powerful technique that facilitates the analyzing and processing
+
+Figure 3.2 Death rate due to road traffic injuries per 100,000 population from 2015
+and 2019.
+56 ■ Explainable Artificial Intelligence for Intelligent Transportation Systems
+
+huge amounts of data to quantify the hidden patterns among the data characteris-
+tics [10, 34]. This can contribute a lot to the decision-makers to propose improved
+road traffic safety and traffic crashes controlling policies, rules, and systems. The mas-
+sive amount of RTA data generated through many resources and different features
+of governmental and non-governmental organizations can be used for early accident
+prediction and identification of the main factors of the accident using a plethora of
+machine learning tools. In literature, there are few researches that have been carried
+out regarding road traffic accidents in Ethiopia to address burden of RTA, types of
+vehicles involved in injury, severity of injury, situation of the victims during accident,
+body region injured by the accident, and other associated factors [10]. In this study,
+we put more emphasize of classifying accident severity and identifying their major
+impacting variables.
+
+  The costs of fatalities and injuries due to traffic accidents have a great impact
+on society [14, 26]. Recently, many researchers have paid increasing attention to de-
+tecting crucial factors that significantly affect injury severity due to car crashes [26].
+A plethora of studies have been conducted to tackle this problem including neural
+networks, log-linear models, and fuzzy systems [28].
+
+  The authors of [25] have proposed a new system for injury severity levels classifi-
+cation based on real data gathered from Addis Ababa traffic office. The main purpose
+of the study was the development of a machine learning model able to analyze road
+accident severity for the sake of enhancing road safety in Addis Ababa. The limi-
+tation of this study is that the authors have selected the most informative features
+and factors counting on the importance of Decision Tree which in not the best choice
+as it can overfit on noisy features [9]. Therefore, training machine learning models
+on noisy features may lead to unreliable and unstable results [26, 28]. Another study
+is carried out in [15] to evaluate the crucial characteristics (factors) affecting injury
+severity levels.
+
+  In this paper, a new intelligent transportation system based on graph feature
+selection and ensemble learning is introduced to identify the major causes of road
+traffic accidents. Therefore, this research study addresses the following thorough key
+points:
+
+  • Identifying the major contributing features that can cause a road traffic accident
+  and design mitigation.
+
+  • Which machine learning classification technique performs well in identifying
+  the major causes of a road traffic accident?
+
+  • Providing accident severity classification.
+
+  • Offering an explainable and interpretable ITS.
+
+  • Providing some recommendations to enhance road safety.
+
+  The reminder of this paper is structured as follows: first, Section 3.2 and sub-
+sections are devoted to the proposed RTA method for accident severity classifica-
+tion ending up with the role of expandability in transportation sector. Section 3.3
+Explainable ML Method for Predicting Road-Traffic Accident Injury Severity ■ 57
+
+Figure 3.3 Flowchart of the proposed method. The squares denote the representative
+feature using ReliefF technique.
+
+introduced the experimental setups, dataset description, and findings. Section 3.4
+concluded this work by providing some recommendations.
+
+3.2 METHODOLOGY
+
+In this paper, we have proposed a novel graph feature selection method to identify
+and select the most relevant features of RTA dataset. The method consists of five
+main steps (see Figure 3.3). First, based on RTA data, we create a N × N symmet-
+ric similarity matrix (N is the number of features in RTA data) of pairwise feature
+correlation where the diagonal is initialized by the individual correlation of each fea-
+ture with itself. Second, we construct a weighted graph using the similarity matrix.
+Third, relying on the well-known community detection technique [3], we cluster the
+graph into sub-graphs (communities) of the same characteristics. Fourth, detecting
+the representative feature from each sub-graph counting on ReliefF feature impor-
+tance method [4, 23, 35, 36]. The selected optimal subset which includes relevant and
+informative features is capable of classifying accident severity accurately. Fifth, the
+selected subset is meant to build an ensemble learning classifier to enhance stability,
+reliability, and accuracy.
+
+3.2.1 Similarity Matrix
+
+After processing RTA dataset by cleaning it and increasing its quality by removing
+noisy features handling outliers and missing values as well as converting categorical
+variables into the most suitable format for machine learning methods, we create an
+N × N matrix (N is the number of features) counting on some similarity measures
+such as Normalized Mutual Information [3]. The weight Wij between two variables is
+computed using the following formula:
+
+Wij = N M I(Fi, Fj) =  I(Fi, Fj)  (3.1)
+  H (Fi )H (Fj )
+
+where I(Fi, Fj) is the Mutual Information between Fi and Fj, and H(.) denotes their
+Entropy.
+58 ■ Explainable Artificial Intelligence for Intelligent Transportation Systems
+
+Figure 3.4 Example of weighted graph.
+
+3.2.2 Graph Representation and Community Detection
+A graph, or a network, G is simply a couple of collections (N ; E), where N is a set of
+nodes and E is a set of edges, so that each edge being a pair of nodes in N . Nodes are
+also referred to as vertices. Edges are also referred to as links or connections. If each
+edge is an unordered couple of vertices, the edge is undirected. Thus, the graph is an
+undirected (Figure 3.4). Otherwise, if each edge is an ordered couple of vertices, the
+edge is directed from one vertex to the other. So, the graph is a directed graph. In this
+case, an ordered couple of vertices (v1; v2) is an edge directed from vertex v1 to vertex
+v2. If each edge has an associated numeric value called weight, the edge is weighted,
+and the graph is a weighted graph. In this study, since the correlation between jth
+feature and ith feature is the same as the correlation between the ith feature and jth
+feature, we only used the weighted graph where each vertex represents one feature
+and the edges are used to describe the correlation between the corresponding pair of
+features [5,7,8]. See Figure 3.5, where the initial graph is partitioned to communities
+using the entire features of RTA dataset.
+
+3.2.3 Feature Selection
+Feature selection is an important pre-processing technique used for the purpose of
+selecting the relevant features and discarding the irrelevant, redundant and noisy
+ones, aiming to obtain the best performing subset of original features without any
+transformation [6,9,13]. As a result, the constructed models counting on the identified
+feature subset are more interpretable, explainable and readable. The main reasons
+for applying feature selection are the following:
+
+  • The facilitation of model’s interpretation
+  • The reduction of resources requirement (short training time, small storage ca-
+
+  pacity, etc.)
+  Explainable ML Method for Predicting Road-Traffic Accident Injury Severity ■ 59
+
+Figure 3.5 Using community detection algorithm to cluster the initial graph into
+homogenous groups of features (a) Initial graph and (b) partitioned into communities.
+
+  • Avoiding the curse of dimensionality
+  • Avoiding over-fitting problem, automatically leading to a better model
+  • generalization.
+  • Improving accuracy: less noise in data which means an improved modeling
+
+  accuracy.
+  Feature selection is an active research filed in machine learning as it is an im-
+portant pre-processing, finding success in different real problem applications [16]. In
+general, feature selection algorithms are categorized into supervised, Semi-supervised
+and Unsupervised feature selection according to the availability of label information.
+Supervised feature selection methods usually come in three flavors: Filter, Wrapper
+and Embedded approach [5, 7–9]. The suggested graph feature selection method in
+this paper is counting on community detection in order to reduce the search space
+and select the best performing feature subset that could help to develop the accident
+prediction model. Whereas those irrelevant variables to this research objective were
+removed from the gathered RTA dataset. The choice of the graph representation is
+made relying on the fact that graphs are powerful and many-sided data structure
+which allow us to easily represents real-world datasets and the interactions between
+different type of features [29].
+
+3.2.3.1 ReliefF-Based Feature Selection
+
+The main idea behind ReliefF, which is an extension of relief, is to estimate feature
+importance according to how well feature values discriminate concept (endpoint)
+values among instances that are similar (near) to each other. In contrast to relief, the
+variant ReliefF method can handle the classification of multi-class tasks by selecting a
+sample randomly from training. Then it tries to find the k nearest neighbors from the
+60 ■ Explainable Artificial Intelligence for Intelligent Transportation Systems
+
+Figure 3.6 Using community detection algorithm to cluster the initial graph into
+homogenous groups of features.
+
+same class (nearest hit) and from the opposite classes (nearest misses). Therefore,
+the quality of features is updated according to their powerful efficiency in making
+proper separation of the examples from different classes.
+
+  After clustering the initial graph into groups of homogeneous features in such
+a way that attributes in the same cluster (group) have more same characteristics
+than those in other clusters. The process of selecting the best features to be in the
+final ensemble consists of choosing just one feature from each cluster to avoid
+the selection of correlated and redundant features to be included in the final sub-
+set. The quantification and the selection of the important features have performed
+relying on RelifF’s feature importance Therefore, the proposed algorithm is advan-
+tageous and unique in many ways. As the majority of attributes inside each cluster
+are similar, the introduced method can efficiently handle missing values problem by
+replacing the outliers and missing values counting on other features’ values within
+the same group. In addition, the feature generation enhancement is another merit
+of our method where new features can be created using the best characteristics that
+better relate to the target.
+
+3.2.4 Ensemble Learning
+Ensemble methods or multiple classifier systems are considered the state-of-the-art
+solution for various machine learning problems [31]. These methods improve the pre-
+dictive performance of a single classifier by training multiple models and combining
+their predictions via voting schemes (see Figure 3.6). Relying on the fact that a set
+of experts is better than a single one, we have combined three classifiers together
+including SVM, RF, and AdaBoost. Consequently, this employed ensemble technique
+could produce accurate, reliable and more stable results [20, 31].
+
+3.2.5 Explainable Artificial Intelligence
+Recently, artificial intelligence and machine learning methods have proved their dra-
+matic success in many sensitive areas of daily life (for example, criminal justice,
+medicine, transportation, security, and finance). However, the black-box design of the
+  Explainable ML Method for Predicting Road-Traffic Accident Injury Severity ■ 61
+
+Figure 3.7 The evolution of the number of total published papers whose title, ab-
+stract or keywords refer to the domain of XAI between 2015 and 2021. The statistics
+are retrieved from Scopus database using the terms (XAI, Interpretable AI and Ex-
+plainable AI).
+most machine learning and Deep Learning techniques make it difficult to understand
+the underlying and the inner behaviors of each trained models [12]. Whereas in many
+different domains such as medical and transportation sectors, providing explanation
+and transparency is as crucial as providing good results [21]. Thus, explanations for
+machine decisions and predictions are needed to justify their reliability. To adjust the
+lack of interpretability of artificial intelligence based-systems, their inner processes,
+and their generated outputs, explainable AI (XAI) has been emerged lately [32]. In
+order to justify that XAI is the the research trend in AI, a literature search using
+the keywords “XAI,” “Interpretable AI,” and “Explainable AI” has been conducted
+of publications listed at Scopus during the last 7 years (from 2015 to 2021). The
+obtained results are presented in Figures 3.7 which clearly justifies that fact.
+
+  A good machine learning method is not the one that achieves only good results but
+also the one that could provide and offer transparent explanations whenever it is cru-
+cial and important (see Figure 3.8). Lately, A plethora of method-based interpretabil-
+ity are introduced in the literature [22]. In this study, we have put more emphasize
+on feature selection-based interpretability/expandability relying on the importance
+generated using ReliefF feature selection technique so as to enhance transparency
+and clarity. In addition, it could be helpful for experts to take good decisions when it
+is necessary by understanding how the model makes predictions by assessing which
+features are deemed important during model training.
+
+3.3 EXPERIMENTAL RESULTS AND DISCUSSION
+This section describes and discusses the practical implementation and experimen-
+tal results of this work. It provides detailed information and description about the
+62 ■ Explainable Artificial Intelligence for Intelligent Transportation Systems
+
+Figure 3.8 Machine Learning vs Explainable AI.
+
+employed road traffic dataset, the conducted experiments and state-of-the-art ma-
+chine learning used for accident severity classification. In addition, it discusses the
+reported results by evaluating the performance of classification models and reporting
+their results.
+
+3.3.1 Dataset Description
+
+The RTA dataset [1] employed in this work is gathered from Addis Ababa Sub city
+police departments. It contains manual records of road traffic accident of three years
+flow traffic from 2017 to 2020. Personal and sensitive information have been excluded
+from RTA dataset for privacy reasons. RTA is a multi-class classification dataset
+with 32 features and 12,316 examples (accident). Road traffic injuries in Ethiopia are
+classified into the following three groups:
+
+  • Fatal Injury: if a road user involved in the accident died within 30 days of the
+  crash date.
+
+  • Serious Injury: if at least one person is hospitalized for a period of 24 hours
+  or more
+
+  • Slight injury: if at least one person suffers from a road traffic injury that
+  requires outpatient medical treatment or hospitalization for less than 24 hours.
+
+  Table 3.1 provides a description of the dataset. the selected attributes with their
+description and data type are presented in Table 3.2.
+
+TABLE 3.1 Descriptive Characteristics of RTA Dataset
+
+Dataset  Features  Instances  Accident severity (class label)
+RTA dataset  32  12,316
+  Class  Distribution (%)
+
+  Slight Injury(class 0) 10,415 (84.56)
+
+  Serious Injury(class 1) 1743(14.15)
+
+  Fatal Injury(class 2) 158(1.28)
+
+The bold values indicate the percentage of imbalances for each class.
+  Explainable ML Method for Predicting Road-Traffic Accident Injury Severity ■ 63
+
+TABLE 3.2 RTA Dataset Characteristics
+
+No Variable name  Type  Description
+
+1 Accident ID  Numerical The identifier of an accident
+
+2 Age band of driver  Categorical The age group of the driver causing the
+
+  accident
+
+3 Sex of driver  Categorical The sex of the driver causing the
+
+  accident
+
+4 Educational level  Categorical The educational level of the driver
+
+  causing the accident
+
+5 Vehicle driver relation  Categorical Shows whether the driver is the owner,
+
+  employed driver, or other.
+
+6 Driving experience  Categorical The driving experience of the driver
+
+7 Lanes or Median  Categorical The Lane type in which the vehicle was
+
+  moving
+
+8 Types of junction  Categorical The type of road junction
+
+9 Road surface type  Categorical Shows whether the road is asphalt, earth
+
+  road, or other
+
+10 Light condition  Categorical The light condition at the time of the
+
+  accident
+
+11 Weather condition  Categorical The weather condition at the time of the
+
+  accident
+
+12 Type of collision  Categorical Shows the collision type of the vehicles
+
+13 Vehicle movement  Categorical The driver action before the accident
+
+15 Pedestrian movement  Categorical The pedestrian action before the
+
+  accident
+
+15 Cause of accident  Categorical The cause of the accident
+
+16 Accident severity  Categorical The severity of the accident
+
+17 Time  Categorical The time of accident
+
+18 Day of week  Categorical Day of accident
+
+19 Type of vehicle  Categorical Type of vehicle involved in the accident
+
+20 Owner of vehicle  Categorical The owner of the vehicle
+
+21 Service year of vehicle  Categorical The service year of the vehicle
+
+22 Defect of vehicle  Categorical The failure of the vehicle
+
+23 Area accident occured  Categorical Gives information about the location of
+
+  the accident
+
+24 Road allignment  Categorical The category of the road
+
+25 Number of vehicles involved Numerical Total number of involved vehicles
+
+26 Number of casualties  Numerical Total number of involved causalities
+
+27 Casualty class  Categorical The causality class
+
+28 Sex of casualty  Categorical The sex of the causality
+
+29 Age band of casualty  Categorical Age band of involved causality
+
+30 Casualty severity  Categorical The injury severity of causality
+
+31 Work of casuality  Categorical The work of the causality
+
+32 Fitness of casuality  Categorical The fitness of causality
+
+33 Accident severity  Categorical The accident severity
+64 ■ Explainable Artificial Intelligence for Intelligent Transportation Systems
+
+TABLE 3.3 Handling Imbalanced RTA Dataset via SMOTE Technique
+
+Without SMOTE  Class  Samples  Distribution
+  Class = slight injury  n=10,415  (84.56%)
+With SMOTE  Class = serious injury  n=1743  (14.15%)
+Up-sampled data shape  Class = Fatal injury  n=158  (1.28%)
+  Class = slight injury  n=10,415  (33.33%)
+  Class = serious injury  n=10,415  (33.33%)
+  Class = Fatal injury  n=10,415  (33.33%)
+  31,245  (100)%
+
+The bold values indicate the percentage of imbalances for each class.
+
+3.3.1.1 Data Transformation
+
+Data transformation is used to convert the data instances into the most suitable for-
+mat for the machine learning algorithms. RTA dataset used in this study includes
+categorical features only. Since the most machine learning algorithm cannot be ap-
+plied directly on categorical data, data transformation is mandatory before training
+phase. In this study, we have mapped any categorical data into numerical format via
+one hot encoding technique [33].
+
+3.3.1.2 Handling Imbalance Data
+
+Imbalanced data consists of a skewed class proportion (unequal class distribution)
+where the target class has an uneven distribution of samples. Some classes have a
+small number of observations (called minority classes) and the other have a very
+high number of observations (called majority classes). As shown in Table 3.1, the
+RTA dataset is visibly unbalanced dataset as the slight injury class is the majority
+class with a distribution of 84.56%. This means that RTA dataset is biased towards
+the majority class (slight injury) in the dataset. Which may lead the classification
+algorithm trained on imbalance dataset to be biased toward the same class. For this
+reason, we have prevented the impact of imbalanced data issue by increasing the
+number of rare samples of minority classes using the well-known technique called
+Synthetic Minority Over-sampling Technique (SMOTE) [24]. The results of applying
+SMOTE technique on RTA dataset is presented in Table 3.3.
+
+3.3.2 Classification Algorithms and Evaluation Metrics
+
+Through this paper, we have evaluated the performance of the proposed system when
+used in conjunction with three classification algorithms (AdaBoost, Random Forest,
+and Support Vector Machine). In this section, we will provide a brief overview of each
+classifier as well as model evaluation metrics.
+
+  • Random Forest (RF): Random Forest is a robust algorithm in different ap-
+  plications. Based on the aggregation technique, RF combines several individual
+  classifications or regression trees. Several bootstrap samples are drawn from the
+

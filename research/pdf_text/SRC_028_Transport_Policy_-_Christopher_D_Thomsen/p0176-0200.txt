@@ -1,0 +1,1006 @@
+  162  Ignacio Lo´pez, Javier Rodr´ıguez, Alberto Garc´ıa et al.
+
+Copyright © 2011. Nova Science Publishers, Incorporated. All rights reserved.  The measure we are going to analyze here is one of the possible
+  ways of using interoperability for improving freight transport. By shifting
+  freight trains from conventional to high speed lines in mountainous areas
+  they will have to ascend less, they will have to travel shorter distances and
+  waste less energy in overcoming the resistance of curves. As a result, they
+  will save energy, take less time to cover the same distance and possibly
+  allow the operator to offer services which might not be possible today,
+  when freight trains circulate exclusively by conventional lines.
+
+  However, there exists a need for quantifying the effects of all the po-
+  tential measures which will derive from European policy, so that technical
+  criteria are made available for designing lower-level policies. The task of
+  correlating ﬁgures to this kind of actions is arguably difﬁcult. Any generic
+  measure must, in the end, be deployed over a speciﬁc context whose par-
+  ticularities might invalidate it partially or completely. On the other hand,
+  any measure must be studied in generic terms so that it may be applicable
+  to a wide range of scenarios. As a result, a study capable of offering repre-
+  sentative conclusions to a variety of speciﬁc scenarios of application must
+  combine a sufﬁcient level of generality with a certain degree of accuracy.
+
+  We shall attempt here to achieve a compromise between both points.
+  For this, we shall study the problem of freight transportation across the
+  Guadarrama mountain range in the centre of Spain, NW of Madrid. This
+  pass divides the Northern from the Southern Plains. We shall consider the
+  real infrastructure but ideal trains, one representative of a light train and
+  one of a dense one. There are four railway lines which cross the range,
+  which we shall denote A, B, C and D, naming them from south to north.
+  The two ﬁrst were built in the nineteenth century, line C is a high-speed
+  line opened in 2007 and line D is a mid-twentieth century infrastructure.
+  We shall simulate both trains, always the same trains, running on each
+  line on both directions, travelling fully loaded and empty. From this sim-
+  ulation we shall obtain consumption data with and without regenerative
+  braking, which we shall analyze for obtaining further conclusions.
+
+  1. Introduction. The Context of European Transport
+  Policy
+
+  By the year 2001, the share of the goods market carried by rail in Europe had
+  fallen to 8.4%, while the share of air and road had been increasing for decades.
+  The problems derived from this situation, congestion and pollution mainly, were
+  rising accordingly. The European Commission issued the White Paper: Euro-
+  pean Transport Policy for 2010: Time to Decide [1], which was to lay out the
+
+Transport Policy, Nova Science Publishers, Incorporated, 2011. ProQuest Ebook Central,
+  Policies of Railway Interoperability  163
+
+  strategy for transport until 2010. The three basic ideas which were to underlie
+  European transport policy were:
+
+  • Shifting the balance between modes of transport
+
+  • Eliminating bottlenecks
+
+  • Placing the users at the heart of transport policy.
+
+  Railways were to have a major role in realizing these ideas. The document
+  explicitly proposes revitalising the railways, and railway freight trafﬁc in partic-
+  ular, by integrating rail transport in the internal market, making optimum use of
+  the infrastructure and modernising services. Apart from other targets regarding
+  efﬁciency and pollutant emissions, it sets a 15% share for railway freight traf-
+  ﬁc by 2020. Among the major guidelines for progressing towards this scenario
+  were three affecting railway freight trafﬁc directly (p.29):
+
+  Updating the Interoperability Directives to harmonise the technical require-
+  ments and provisions on use of all components of the high-speed and
+  conventional railway networks
+
+Copyright © 2011. Nova Science Publishers, Incorporated. All rights reserved.  Ensuring quality of rail services and users’ rights. In particular, a directive
+  will be proposed to lay down the terms of compensation in the event of
+  delays or failure to meet service obligations.
+
+  Creation of a Community structure for safety and interoperability. (. . . )
+  No railway system can be fully competitive unless all matters relating
+  to the removal of technical barriers to trade in trains and to their inter-
+  operability –i.e. their ability to run on any stretch of the network– are
+  resolved ﬁrst.
+
+  A series of actions derived from the White Paper which included measures
+  for opening up the markets within Europe, modernising infrastructures and,
+  above all, for increasing interoperability. The measures were not limited to
+  overcoming technical barriers. The White Paper and subsequent documents [2],
+  [3] analyze the difﬁculties for implementing these actions in reality, which may
+  come from all sides: technical, administrative, regulatory, organizational, etc. In
+  fact, the complex scenario of operators, regulations, administration on one side,
+  and the technical heterogeneities of the European networks and rolling stock,
+  are in many cases inherited from the past and from years of low investment.
+
+Transport Policy, Nova Science Publishers, Incorporated, 2011. ProQuest Ebook Central,
+  164  Ignacio Lo´pez, Javier Rodr´ıguez, Alberto Garc´ıa et al.
+
+  !*#$##%  !###%  !##+%  !##!%  !##,%  !##"%  !##&%  !##'%  !##(%
+  !)&$##%
+  !)#$##%
+  !(&$##%
+  !(#$##%
+  !'&$##%
+  !'#$##%
+  !&&$##%
+  !&#$##%
+  !"&$##%
+  !"#$##%
+
+  +***%
+
+  Figure 1. Rail freight trafﬁc in EU15 from 2000 to 2006. Trafﬁc in billions of
+  ton·km. Source: Eurostat.
+
+Copyright © 2011. Nova Science Publishers, Incorporated. All rights reserved.  Revitalising railways for freight required a new paradigm. A new concept
+  for transport, the Transeuropean Transport Network (TEN-T), was proposed
+  [4]. Within this framework, freight would be organized in a network of cor-
+  ridors forming the Trans European Rail Freight Network (TERFN), in which
+  freight would have priority either in the form of infrastructure or as time slots
+  [5]. Opposed to the traditional schemes, generally with region or line-oriented
+  management, this stands for corridor-based management, path allocation, statis-
+  tics, control systems, etc.
+
+  Assessing interoperability speciﬁcally, possibly the most representative
+  measures are the development of the European Rail Trafﬁc Management System
+  (ERTMS), which uniﬁes, among other aspects, the variety of incompatible sig-
+  nalling systems coexisting within Europe and even within countries, and of the
+  Technical Speciﬁcation Relating to Telematics Applications Relating to Freight
+  (TAF-TSI), integrating the management of the infrastructure.
+
+  By the last third of 2008, the European Commission issued a communica-
+  tion which analyzed the quality of rail freight services and the problems still
+  to be overcome [6]. From the rail freight trafﬁc data available at the time (see
+  ﬁgure 1), it acknowledges that progress has been made in most of the critical
+  ones pointed out by the White Paper, but that they were not entirely solved. The
+  communication stresses the need to continue with the already ongoing actions
+
+Transport Policy, Nova Science Publishers, Incorporated, 2011. ProQuest Ebook Central,
+  Policies of Railway Interoperability  165
+
+  until their full deployment. It mentions explicitly ERTMS and TSI-TAF, and the
+  TEN-T. The study presented here covers trafﬁc between Madrid and Valladolid,
+  which corresponds to a stretch of the Priority Axis No. 3 of TEN-T [7].
+
+Copyright © 2011. Nova Science Publishers, Incorporated. All rights reserved.  2. Infrastructure
+
+  We shall study the four lines in the centre of the Iberian peninsula represented
+  in ﬁgure 2. The Guadarrama mountain range is oriented in NE direction. It is
+  approximately 80 km long and is the natural division between the northern and
+  the southern plains. Mountains part from 900 m above sea level and the highest
+  peak is 2428 masl.
+
+  The longitudinal section of the four lines that have been considered for the
+  study can be seen in ﬁgure 3. It can be seen that the most demanding part of the
+  way is that travelling above 900 masl. In the old lines, the curve radii may be
+  as short as 300 m or under. Apart from generating extra resistance to the train
+  motion, they lower the speed limit to 80 km/h, exceptionally less.
+
+  Line A was designed in the mid-nineteenth century minimizing tunnels,
+  viaducts and softening slopes. Line B was built at the end of the nineteenth
+  century, allowing steeper slopes. Line C is the high speed line open in Decem-
+  ber 2007. It crosses the Guadarrama mountains by two major tunnels, the Mount
+  San Pedro tunnel (8930 m) and the Guadarrama tunnel (28377 m). Line D runs
+  from Madrid to Burgos and its construction was begun in 1928 and concluded,
+  after long and a number of interruptions, in 1963. The line has maximum slopes
+  of 10 mm/m, for which it was necessary to build a large number of tunnels and
+  viaducts for crossing the Guadarrama range.
+
+  These lines were selected for two reasons. First, so that consumption results
+  could be compared on homogeneous terms. Second, because each line is repre-
+  sentative of a different philosophy of railway design, each adapted to a speciﬁc
+  technological level.
+
+  All lines have the same origin in Madrid and cover the same distance in
+  straight line to their destination. The ﬁrst three lines end in Valladolid. Line D,
+  which travels north to Burgos, is considered only up to the town Bahabo´n de
+  Esgueva. All the lines cross the same mountain range at different points, which
+  were decided according to the technology available at the time. The location of
+  the pass of line D, added to technological considerations, was located according
+  to the ﬁnal destination of the line, Burgos, approximately north of Madrid. This
+  makes that line D, although comparable to the rest in global terms, may have
+
+Transport Policy, Nova Science Publishers, Incorporated, 2011. ProQuest Ebook Central,
+  166  Ignacio Lo´pez, Javier Rodr´ıguez, Alberto Garc´ıa et al.
+
+  )*"+",(-.#/.  /.*0123.4
+  0123/4"
+
+  8<::,$4#
+
+  &"''"#('%#
+  #
+
+  &'(")$*('#*
+  +$,-.
+
+  56"#$  7'3.6"$
+  899::,$4#  89:::,$4#
+
+  "!
+
+  !"##$#%$
+
+  $ 8<::,$4#
+
+  !"#$%#
+
+  8;::,$4#
+
+Copyright © 2011. Nova Science Publishers, Incorporated. All rights reserved.  Figure 2. Geographical situation of the lines of the study and the Guadarrama
+  mountain range. Origin, destinations and important intermediate points are rep-
+  resented.
+
+  particularities of its own. In fact, the highest point is approximately half way
+  from each end, while in the rest of lines is nearer to Madrid.
+
+  3. Trains
+
+  As we mentioned earlier, the trains that will be considered in the study are ideal.
+  We shall have one light train, for transportation of cars, and one dense train for
+  coils. No load factor will be applied, so that wagons are always fully loaded, and
+  the trains are the largest possible within the restrictions of 450 m of maximum
+  total length and a tonnage rating of 1040 ton. In this way we have two fairly
+  extreme compositions which will provide an expectable minimum-maximum
+  range for energy consumption in the four lines. In both cases we have consid-
+  ered an ideal locomotive which is identical to the Renfe 253 series (Bombardier
+
+  Transport Policy, Nova Science Publishers, Incorporated, 2011. ProQuest Ebook Central,
+  Policies of Railway Interoperability  167
+
+  !
+
+Copyright © 2011. Nova Science Publishers, Incorporated. All rights reserved.  "
+  #
+  $
+
+  Figure 3. Longitudinal sections of the four lines considered for the study. Al-
+  titude is given in metres above sea level –masl– in ordinates against travelled
+  distance in km (x-axis). The origins in C and D have different altitudes due to
+Transport Policy,tNhoevairScdieencpeaPrutbulisrheersf,rInocmorpodraitfefd,e2r0e11n.tPrsotQauteisot Enbsoo(ktCheentrealf, fect is negligible).
+  168  Ignacio Lo´pez, Javier Rodr´ıguez, Alberto Garc´ıa et al.
+
+  Table 1. Main characteristics of the rolling stock assumed for the study.
+  Source for the locomotive data: Bombardier.
+
+Copyright © 2011. Nova Science Publishers, Incorporated. All rights reserved.  Dense composition  Total train weight (ton)  1127
+  Light composition  Length of train (m)  174,9
+  1040
+  Locomotive  Gross load hauled (t)
+  No. of wagons  13
+  80
+  Mass of wagon (t)  54,9
+  Max. wagon load (t)  25,1
+  12
+  Wagon payload  727
+  Wagon length (m)  441,3
+  Total train weight (ton)  640
+  Length of train (m)  16
+  Gross load hauled (t)  40
+  15
+  No. of wagons  25
+  Mass of wagon (t)  26,4
+  Max. wagon load (t)  87
+  18,9
+  Wagon payload  300
+  Wagon length (m)  5600
+  140
+  Mass (t)
+  Length (m)
+  Maximum tractive effort (kN)
+  Maximum power (kW)
+  Maximum speed (km/h)
+
+  Traxx 140DC), in terms of power, maximum tractive effort, length and mass,
+  regardless its operating voltage. The Renfe 253 series operates at 3kV DC, and
+  in later sections we shall discuss the possibility of using the sister locomotive
+  Bombardier Traxx 140AC, operating at 25 kV AC. Table 1 shows the main char-
+  acteristics of the locomotive and the two train compositions.
+
+  4. Methodology
+
+  Consumption of railways may be estimated either at a high level of aggregation,
+  as when it is estimated for emission inventories, or at a lower level, when the
+
+Transport Policy, Nova Science Publishers, Incorporated, 2011. ProQuest Ebook Central,
+  Policies of Railway Interoperability  169
+
+  FM
+  FR V
+  Fg
+  FC
+
+  is
+
+Copyright © 2011. Nova Science Publishers, Incorporated. All rights reserved.  Figure 4. Diagram of the equilibrium of the forces actuating on a train when
+  travelling upslope. For simplicity, only the locomotive is represented.
+
+  consumption of speciﬁc lines wants to be evaluated. In the ﬁrst case, method-
+  ologies require regional statistical data on trafﬁc and speed as input data, and
+  provide bulk emission factors. The second case might be signiﬁcantly more
+  complex, depending on the level of detail desired for the estimates, due to the
+  detail and the amount of input data required. It is the case of the study described
+  here.
+
+  In essence, the methodology that has been employed is an evolution of the
+  disaggregated methodology described in [8]. Basically, it consists in calculating
+  the integral of the motor force made by the locomotive along the longitudinal
+  section of the line.
+
+  There are a number of forces actuating on the train at a certain instant: motor
+  force, gravity, rolling resistance, internal friction, etc. (see ﬁgure 4). The motor
+  force must be equal to the rest of forces together to remain at constant speed.
+  The basic equilibrium can be expressed:
+
+  FM = Fg + FR + FC
+  Where F M is the motor force, F g is the force of gravity, F C is the resistance
+  due to curves. When accelerating, the expression becomes an inequality: F M ≥
+  F g + F R + F C . In convenient units, the terms can be written:
+
+  F g = M · g · is
+  F R = M · (a + bV + cV 2)
+
+  FC = K
+  R
+
+  Transport Policy, Nova Science Publishers, Incorporated, 2011. ProQuest Ebook Central,
+  170  Ignacio Lo´pez, Javier Rodr´ıguez, Alberto Garc´ıa et al.
+
+  Gravity is a function which depends on the mass of the train, M , and the
+  inclination of the gradient, is, expressed as a ratio between ascended and trav-
+  elled distance (normal units are mm/m or m/km). F R is expressed as a func-
+  tion of three terms which stand for internally generated resistance, vehicle-track
+  rolling resistance and aerodynamic resistance. In modern literature the formu-
+  lation might change slightly: F R = M · a + BV + CV 2. F C represents the
+  resistance put by curves, where K is a coefﬁcient which depends on the gauge
+  of the line, and R is the radius of the curve. It shows that the resistance is lower
+  the larger the radius. For counting the resistance put to the train by tunnels, an
+  extra term should be added to the balance.
+
+Copyright © 2011. Nova Science Publishers, Incorporated. All rights reserved.  4.1. Calculating Consumption
+
+  In strict terms, the work done by the motor force when travelling from point 1
+  to point 2 would be:
+
+  2
+
+  W M = F M · dl
+
+  1
+
+  Where dl stands for an inﬁnitely short stretch of the line. The result of this inte-
+  gral, however, would be of little use, for it is the mathematical balance between
+  the energy which is imported for climbing mountains and maintaining speed,
+  and the energy which could be returned by the train when running downslope.
+  This balance, however, does not happen in reality, because the excess of energy
+  when travelling downslope is wasted, or only partially recovered with regener-
+  ative braking.
+
+  It must be distinguished whether F M is positive or negative at each instant.
+  Positive means that the train is consuming energy, negative that it is braking.
+  So, for calculating consumption along the line, the integral should only count
+  F M whenever it is positive.
+
+  Reciprocally, if the integral counted only negative values of, F M , the result
+  would be the energy dissipated by braking. In fact, it is used for estimating
+  how much energy might be returned to the network in the case of regenerative
+  braking.
+
+  4.2. Train Speed
+
+  We may realize that, for a given train, the expression of F M is dependent on
+  train speed, V , and line parameters such as is and R. These variables depend
+
+Transport Policy, Nova Science Publishers, Incorporated, 2011. ProQuest Ebook Central,
+  Policies of Railway Interoperability  171
+
+  on where in the line the force is being calculated. The longitudinal section
+  describes the variation of is with position, and the length and radii of the curves.
+
+  The speed limits along the line are the minimum of those given by:
+
+  • Class of load (passengers/freight)
+  • Type of train
+  • Infrastructure
+
+Copyright © 2011. Nova Science Publishers, Incorporated. All rights reserved.  Regarding the class of load, passenger or goods, the maximum speed is 100
+  km/h for freight trains in Spain. As to the type of trains, the trains of our study
+  are included in the category ‘N’ which stands for ‘normal’. The infrastructure
+  allows speed of over 120 km/h in some parts of the three conventional lines, and
+  limits under 80 km/h apply in some mountainous stretches. The high speed line
+  would allow running the trains at full speed for the most part of the trip. The
+  minimum of these restrictions would be 100 km/h in the best of conditions, and
+  the curve limits for type ‘N’ trains.
+
+  Apart from the ofﬁcial limitations, the actual speed at which the train can
+  travel is limited also by the power of the locomotive and the maximum trac-
+  tive effort, in our case 5600 kW and 300 kN respectively (see table 1). These
+  values would allow travelling over the 100 km/h limitation along most of the
+  line in all cases. In the most demanding stretches of line B, with high gradients
+  and closed curves, heavy trains would have a limitation of approximately 84
+  km/h, light trains of approximately 96 km/h loaded. Empty trains could reach
+  approximately 100 km/h in every case.
+
+  The maximum tractive effort and the maximum power of the locomotive
+  also limit the maximum acceleration that the train may achieve when passing
+  from a lower speed limit to a higher one. We have taken these limitations into
+  account in the study. This makes that the train may not always reach the speed
+  limit, because it may not have time to accelerate before having to break again.
+
+  4.3. Assumptions
+
+  The trafﬁc of freight trains in reality is very much conditioned by the parameters
+  of line exploitation. As the passenger trains have priority over freight, these last
+  may have to stop many times to give way, depending on the volume of trafﬁc
+  and the frequency of passenger trains. Freight trains may also be stopped and
+
+Transport Policy, Nova Science Publishers, Incorporated, 2011. ProQuest Ebook Central,
+  172  Ignacio Lo´pez, Javier Rodr´ıguez, Alberto Garc´ıa et al.
+
+  recomposed on the way, so that the train arriving to a destination is different
+  from the one which parted from a certain origin. These are only some of the
+  circumstances which affect freight trains, and which make it very difﬁcult to
+  simulate real trafﬁc.
+
+  Thus, in order to have meaningful criteria, studies must abstract these cir-
+  cumstantial aspects so as to isolate the desired effect as much as possible. In the
+  case of this study, the basic simpliﬁcations are:
+
+  Trains travel without stopping: The trains are assumed to run alone on the
+  lines, subject only to their power limitations and those of the infrastruc-
+  ture.
+
+  The driving maximizes speed: The behaviour of drivers in reality may not ad-
+  just to the maximum possible speed at every moment. It may also depend
+  on the day or on other factors. Here, speed follows the criteria summa-
+  rized in section 4.2..
+
+  Therefore, to evaluate the real effect of running trains on high speed lines,
+  many other aspects must be taken into account apart from the estimates of this
+  study. Some of them will be commented in sections 5. and 6..
+
+Copyright © 2011. Nova Science Publishers, Incorporated. All rights reserved.  5. Results
+
+  The estimates for energy consumption are shown in table 2. Prior to any dis-
+  cussion, it must be remarked that the values, although representative, must be
+  valued relatively and not in absolute terms. This is because, ﬁrst, the circulat-
+  ing conditions here are ideal, in that all travels are assumed with no intermedi-
+  ate stops between origin and destination, and driving is assumed to match the
+  characteristics of the locomotive with the speed limitations of the infrastructure
+  perfectly all the time. This has been done to leave apart exploitation and driver
+  speciﬁc issues from the comparison. Second, because real, absolute, consump-
+  tion values show a non-negligible variability due to many factors such as driver,
+  line trafﬁc, weather conditions and season, that invalidates them for comparison
+  in homogeneous terms.
+
+  It can be observed from the results that from the point of view of energy
+  consumption, there exists a clear distinction between the old lines A and B, and
+  the more modern ones C and D. These last are always more economic than the
+
+Transport Policy, Nova Science Publishers, Incorporated, 2011. ProQuest Ebook Central,
+  Policies of Railway Interoperability  173
+
+  Table 2. Estimates of train consumption and time delays on the four lines.
+  Consumption is expressed in kWh. Increments and delays are calculated
+
+  with respect to line C.
+
+Copyright © 2011. Nova Science Publishers, Incorporated. All rights reserved.  Light Trains (full load)  Direction  Distance (km)  A  B  C  D
+  Dense Trains (full load)  Up  249  232  180  209
+  Consumption
+  Light Trains (empty)  Down  Increment (%)  4842  4629  3722  4656
+  Dense Trains (empty)  Up  30  24  0  25
+  Delay (min)  47  48  0  19
+  Down  Consumption
+  Up  Increment (%)  4564  4329  3946  3916
+  16  10  0  -1
+  Down  Delay (min)  48  48  0  20
+  Up
+  Consumption  4573  4751  3446  4372
+  Down  Increment (%)  33  38  0  27
+  43  45  0  14
+  Delay (min)
+  Consumption  4399  4633  3864  3584
+  Increment (%)  14  20  0  -7
+  46  46  0  17
+  Delay (min)
+  3805  3512  2904  3670
+  Consumption  31  21  0  26
+  Increment (%)  49  49  0  20
+
+  Delay (min)  3565  3282  3024  3172
+  Consumption  18  9  0  5
+  Increment (%)  49  49  0  20
+
+  Delay (min)  2138  2161  1646  2067
+  30  31  0  26
+  Consumption  49  49  0  20
+  Increment (%)
+  2064  2048  1813  1684
+  Delay (min)  14  13  0  -7
+  Consumption  48  49  0  20
+  Increment (%)
+
+  Delay (min)
+
+  former, but it is unclear which is the most energy-saving between them in one-
+  direction travels. For the moment, we shall leave line D apart, and comment on
+  it later.
+
+  The results for lines A, B and C may be compared directly. It is clear that
+  energy consumption is higher in A and B by a minimum of 10%, ranging up
+  to 38%. The main explanation for this differences is the difference in distances
+  travelled by either way with respect to line C, grossly 70 and 50 km more. How-
+  ever, there must exist some other effect other than distance, for in some cases
+  consumption is better in A than in B, in spite of A being longer (about 7%).
+
+Transport Policy, Nova Science Publishers, Incorporated, 2011. ProQuest Ebook Central,
+  174  Ignacio Lo´pez, Javier Rodr´ıguez, Alberto Garc´ıa et al.
+
+Copyright © 2011. Nova Science Publishers, Incorporated. All rights reserved.  The fact is that Line A has considerably softer gradients than B, which may or
+  may not compensate the effect of the longer distance, depending, basically, on
+  the mass of the train. Thus, consumption for loaded dense trains is lower in A
+  than in B, while the pattern is the opposite in light trains, and the same holds for
+  empty ones. It must be remarked that line C, in spite of having strong gradients,
+  compensates this by far because, on one side, the stretches with these inclina-
+  tions are relatively shorter than the ones in B, and because the total distance is
+  shorter, as it has been mentioned.
+
+  The possibility of feeding energy back to the network while braking is one
+  of the measures for reducing net consumption that are being currently studied
+  for deploying them at a large scale. Before quantifying their possible effect,
+  some aspects must be commented regarding to implementing them in practice.
+  The beneﬁt of regenerative braking in direct current lines such as A and B is
+  very limited, because the energy that a braking train returns must be consumed
+  by another running simultaneously on the same line; it cannot be returned to
+  the main network. Thus, there would exist the problem of synchronizing the
+  excess of energy of some trains with the demand of others, and deviations from
+  the schedule may alter the actual balance signiﬁcantly. Alternating current lines
+  do not have this problem, for they do admit returning the braking energy to the
+  general network. Assuming lines A and B could admit regeneration, the savings
+  in energy consumption by circulating by line C would range from 10 to 35%.
+
+  A typical value for the CO2 emission factor in Spain is 0.33 kg/kWh. The
+  proportional savings in emissions follow those of energy consumption men-
+  tioned above. Currently, the major part of freight transportation between Madrid
+  and Valladolid follows line A, with no regeneration. Let us consider the case of
+  less consumption for a loaded train, the dense train in down direction, 4399
+  kWh. This would correspond to emitting approximately 1450 kg of CO 2. Cir-
+  culating the train by line C would emit approximately 180 kg less. However,
+  we should also consider the possibility of regenerating in line C while main-
+  taining A as it is, because it would be technically more immediate (the main
+  requirement would be to use locomotive Bombardier Traxx 140AC instead of
+  the 140DC-Renfe series 253). In this case, the net consumption of line C would
+  be 3576 kWh, thus a net saving of 270 kg of CO 2, an improvement of 90 kg
+  with respect to the previous case.
+
+  Another aspect which must be assessed is the reduction of travelling times
+  by line C, for its strategical importance, which will be discussed in section 6..
+  We see that travelling by the conventional alternatives is approximately 45 min-
+
+Transport Policy, Nova Science Publishers, Incorporated, 2011. ProQuest Ebook Central,
+  Policies of Railway Interoperability  175
+
+  utes slower than by line C. It must be remarked, however, that these delays will
+  result underestimated with respect to any practical case. In the real exploitation
+  of the infrastructure, and especially in lines like this, right out of a large city, the
+  main problem is the volume of trafﬁc. For freight trains, this problem is even
+  greater, given that they have to stop to give way to passenger trains. Thus, the
+  real time for a freight train from Madrid to get to Valladolid by line A could be
+  from two to three times the one in this study, longer even in the event of un-
+  planned contingencies. The problem of congested conventional lines is difﬁcult
+  to solve for freight trains, but as it will be discussed in section 6., it is relatively
+  straightforward, technically, to allow them to use the high speed infrastructure
+  at certain time slots.
+
+  Much of the freight trafﬁc in Spain is unbalanced between the up and the
+  down directions. It is frequent that trains in one direction travel full and return
+  empty or vice versa. Therefore it is necessary to analyze these possibilities in
+  order to evaluate the potential impact of a measure. Table 3 shows the con-
+  sumption and delay estimates for different possible combinations of full and
+  empty trains. The previous considerations about time delays apply equally. It
+  is remarkable that lines A and B become more economical than each other de-
+  pending on whether the train is light or dense.
+
+Copyright © 2011. Nova Science Publishers, Incorporated. All rights reserved.  5.1. Comparability of Line D
+
+  As it was mentioned in section 2., the segments of line considered for the study
+  have been selected to ensure maximum comparability of results, while repre-
+  senting each a different philosophy of design. Lines A, B and C, having the
+  same origin and destination, result perfect for the comparison. However, the re-
+  sults of line D must be interpreted taking into account its different ultimate des-
+  tination, the town of Bahabo´n de Esgueva, in the way to Burgos. This implies
+  some differences apart from the philosophy of design, due to the geographical
+  features of this region.
+
+  If we look at the longitudinal sections shown in ﬁgure 3 carefully, we might
+  ﬁnd that the four lines do not start at the same altitude. A and B start approxi-
+  mately at 600 masl, while C and B at approximately 700. At the other end, A,
+  B and C ﬁnish at about 700 masl, while line D ﬁnishes at approximately 900m.
+
+  The different starting points are due to representing two different train sta-
+  tions in Madrid, which were the original stations for their lines. However, to-
+  day they all start at approximately 700 masl, as in C and D. This difference in
+
+Transport Policy, Nova Science Publishers, Incorporated, 2011. ProQuest Ebook Central,
+  176  Ignacio Lo´pez, Javier Rodr´ıguez, Alberto Garc´ıa et al.
+
+  Table 3. Estimates of bidirectional train consumption and time delays on
+  the four lines. Consumption is expressed in kWh. Increments and delays
+
+  are calculated with respect to line C. U=Up direction, F=Fully loaded,
+  D=Down direction, E=Empty.
+
+  Light trains  UFDE  Distance (km)  A  B  C  D
+  Dense trains  UEDF  Consumption  497  464  359  419
+  UFDF  Increment (%)  8407  7912  6747  7828
+Copyright © 2011. Nova Science Publishers, Incorporated. All rights reserved.  UFDE
+  UEDF  Delay (min)  25  17  0  16
+  UFDF  Consumption  96  97  0  39
+  Increment (%)  8369  7841  6851  7586
+  22  14  0  11
+  Delay (min)  97  97  0  39
+  Consumption  9406  8958  7669  8572
+  Increment (%)  23  17  0  12
+  97  97  0  39
+  Delay (min)
+  6637  6798  5259  6057
+  Consumption  20  23  0  12
+  Increment (%)  92  94  0  34
+
+  Delay (min)  6537  6794  5511  5650
+  Consumption  19  23  0  3
+  Increment (%)  94  95  0  36
+
+  Delay (min)  8971  9383  7311  7956
+  Consumption  23  28  0  9
+  Increment (%)  89  91  0  31
+
+  Delay (min)
+
+  altitude has been updated for the study although the original proﬁle has been
+  represented in the ﬁgure. Thus, all lines start from the same point.
+
+  The difference of altitude in the destinations, however, is not negligible. We
+  might observe that, while lines A, B and C start and ﬁnish approximately at 700
+  masl, line D ﬁnishes 200m higher. This means a net gain of potential energy of
+  613 kWh in the case of the dense train and 395 kWh in the light train, which
+  is comparable to the differences in consumption with respect to line C that can
+  be observed in table 2. More still, this explains that line D appears to be more
+  economical than line C in the down direction and more energy consuming in the
+  other, as the net loss of potential energy in the ﬁrst case reduces consumption
+  and the gain of the second requires it.
+
+  Transport Policy, Nova Science Publishers, Incorporated, 2011. ProQuest Ebook Central,
+  Policies of Railway Interoperability  177
+
+  5.2. Study of the Mountain Pass
+
+Copyright © 2011. Nova Science Publishers, Incorporated. All rights reserved.  The lines considered for the study, A, B, C and D, include stretches at each
+  side of the mountain pass which, although not ﬂat, could appear in regions with
+  low or medium mountains, for which the measure studied here might be of less
+  signiﬁcance. They have been included because it is expectable that they will
+  necessarily exist for connecting high speed lines with conventional ones, given
+  that conventional and high speed lines may become wide apart in mountainous
+  regions, and nearer when apart.
+
+  However, the effect of these stretches on the total consumption results might
+  obscure the behaviour of the lines through the actual mountain pass. In order
+  to explore this, we have considered the part of the lines included between the
+  ﬁrst time they rise above 900 masl and the last time they descend below. The
+  resulting sections are shown in ﬁgure 5, and they isolate the proper mountain
+  pass from the rest of the lines. At ﬁrst sight, it can be observed that lines A and
+  D were built minimizing gradients while B and C have steeper slopes. Hence,
+  we may also observe that A and D are signiﬁcantly larger than B and C.
+
+  These differences show on the results of table 4. We may observe that the
+  consumption in lines B and C is considerably lower than in the other two, from
+  which we may deduce that the main factor determining consumption is distance.
+  This pattern holds between A and D; D being the largest makes it also the most
+  consuming.
+
+  Explaining the differences in consumption between B and C is not straight-
+  forward. In many cases they fall between an interval of ±5%, which may easily
+  fall within the margin of error of the estimation. There are some points of in-
+  terest, however, that can be explained. For it, it is necessary to introduce the
+  concept of equilibrium gradient .
+
+  Apart from the motor force, there are basically two forces actuating on the
+  train when travelling downslope. Pulling from the train downwards there is
+  gravity, while pulling upward is aerodynamic resistance and inner friction. If
+  the gradient is sufﬁcient, gravity will be greater than the other force, and the
+  train will accelerate forward. If it is not, the train will decelerate. When the
+  driver pretends to maintain the train at constant speed, he will have to brake in
+  the ﬁrst case or to press the accelerator in the second. Given a certain speed
+  target, there exists one gradient on which the driver would not need either to
+  brake or to accelerate, so that the train would remain at constant speed by itself.
+  This is the equilibrium gradient .
+
+Transport Policy, Nova Science Publishers, Incorporated, 2011. ProQuest Ebook Central,
+  178  Ignacio Lo´pez, Javier Rodr´ıguez, Alberto Garc´ıa et al.
+
+  !
+
+Copyright © 2011. Nova Science Publishers, Incorporated. All rights reserved.  "
+  #
+  $
+
+  Figure 5. Stretches of A, B, C and D considered apart for isolating the mountain
+  pass. They have been shown with double line against the total longitudinal
+  section of the lines. The dashed line shows the 900 masl altitude.
+
+Transport Policy, Nova Science Publishers, Incorporated, 2011. ProQuest Ebook Central,
+  Policies of Railway Interoperability  179
+
+  Table 4. Estimates of train consumption and time delays in the mountain
+  pass on the four lines. Consumption is expressed in kWh. Increments and
+
+  delays are calculated with respect to line C.
+
+Copyright © 2011. Nova Science Publishers, Incorporated. All rights reserved.  Light Trains (full load)  Direction  Distance (km)  A  B  C  D
+  Dense Trains (full load)  Up  114  67  71  135
+  Consumption
+  Light Trains (empty)  Down  Increment (%)  2236  1567  1673  2833
+  Dense Trains (empty)  Up  34  -6  0  69
+  Delay (min)  30  4  0  39
+  Down  Consumption
+  Up  Increment (%)  2288  1631  1676  2830
+  37  -3  0  69
+  Down  Delay (min)  30  4  0  39
+  Up
+  Consumption  2284  2010  1817  2544
+  Down  Increment (%)  26  11  0  40
+  27  4  0  36
+  Delay (min)
+  Consumption  2347  2076  1848  2634
+  Increment (%)  27  12  0  43
+  28  3  0  36
+  Delay (min)
+  1735  1125  1268  2262
+  Consumption  37  -11  0  78
+  Increment (%)  30  4  0  39
+
+  Delay (min)  1753  1164  1256  2260
+  Consumption  40  -7  0  80
+  Increment (%)  30  4  0  39
+
+  Delay (min)  1023  810  778  1229
+  31  4  0  58
+  Consumption  27  4  0  36
+  Increment (%)
+  1065  840  804  1229
+  Delay (min)  32  5  0  53
+  Consumption  28  3  0  36
+  Increment (%)
+
+  Delay (min)
+
+  Returning to lines B and C, if we examine the sections carefully, we shall
+  ﬁnd that they differ in the evolution of the gradients. Line B has many long
+  stretches with gradients above 15 mm/m, although they seldom pass 17 mm/m.
+  On the other hand, line C has a few long stretches with gradients close to 20
+  mm/m, and the rest near or below 10 mm/m. This means that line B is very
+  steep all the way, while C is moderately steep most of the way, but steeper than
+  B at some parts.
+
+  Consumption by line B is lower than by C only in the cases of light or empty
+  trains, higher in the case of loaded dense ones. The equilibrium gradients for
+
+Transport Policy, Nova Science Publishers, Incorporated, 2011. ProQuest Ebook Central,
+  180  Ignacio Lo´pez, Javier Rodr´ıguez, Alberto Garc´ıa et al.
+
+  these last, due to their greater mass, will be low, while the gradients for the other
+  trains will be higher; more, the lighter the train. In the case of the heavy trains,
+  all the gradients in both lines is enough for the train to travel by gravity, having
+  to break not to pass the speed limits. The equilibrium gradient for the lighter
+  ones, however, falls between the ones of B and the softer ones of C. They will
+  travel by gravity most of the time in B, while only in the very steep stretches of
+  C, requiring energy in the rest. We see that the results in table 4 show exactly
+  this.
+
+  This study of the mountain pass shows that the fundamental factor for en-
+  ergy consumption in mountainous areas is the distance travelled. Between two
+  similarly long lines, it is difﬁcult to decide which would be the most econom-
+  ical, because it would depend on the exact topology of the lines and on the
+  precise composition of the trains. The differences might fall within the natural
+  variability of train consumption due to driver, day of the week, season, etc.
+
+Copyright © 2011. Nova Science Publishers, Incorporated. All rights reserved.  6. Conclusion
+
+  In terms of the framework of European transport policy, the measure of using
+  high-speed infrastructures for freight transport in mountainous regions must be
+  valued according to its contribution to the three strategies for revitalising rail-
+  ways:
+
+  1. Integrating rail transport into the internal market
+
+  2. Making optimum use of the infrastructure
+
+  3. Modernisation of services
+
+  The contribution of the measure to optimizing the use of the infrastructure
+  is straightforward. Let us consider the case of this study, for instance. Approx-
+  imately 130 freight trains travel weekly by line A, and their average travelling
+  time between Madrid and Valladolid is above 5 hours, maily due to having to
+  stop to give way to passenger trains. By shifting freight trafﬁc to line C, this
+  capacity would be freed for conventional passenger trains. Now, turning to line
+  C, we might observe that this stretch is one of the backbones of the Spanish high
+  speed network, and that, consequently, the number of passenger trains will, ex-
+  pectably, be very high. The two tracks coming out of Madrid divide in eight
+  lines with 16 tracks further on, but the capacity for this measure is limited by
+
+Transport Policy, Nova Science Publishers, Incorporated, 2011. ProQuest Ebook Central,
+  Policies of Railway Interoperability  181
+
+Copyright © 2011. Nova Science Publishers, Incorporated. All rights reserved.  the common stretch right out of Madrid, the one considered in this study. Thus,
+  simultaneous trafﬁc of passengers and freight in this line could barely exist dur-
+  ing the day.
+
+  However, it would be possible for freight trains to travel by night. There
+  is no passenger trafﬁc, and they could use the infrastructure virtually on their
+  own. This would mean travelling a shorter distance than by line A but, most
+  importantly, not having to stop.
+
+  A ﬁrst consequence of the measure would be the simpliﬁcation of trafﬁc
+  management on this bottleneck. One of the problems identiﬁed in the White
+  Paper is that freight trains get delayed not only by a great number of planned
+  stops for passenger trains, but also by stops which are overcome at short notice
+  and which penalize reliability of service. A second effect of the measure would
+  be to bring the average speed nearer to the values calculated in this study (which
+  assumed no stops at all and ideal driving), approximately 90 km/h against the
+  current 48 km/h.
+
+  Further consequences derive from these, mainly regarding exploitation
+  costs. They can be classiﬁed in two categories: those depending on travelling
+  times and those on distance.
+
+  Energy and maintenance costs depend basically on distance. On the other
+  hand, the cost of the locomotives, the drivers and the wagons is proportional to
+  the travelling time, because the shorter the time, the more available they become
+  for other trips. As an example, [9] analyzes the mountain pass of Pajares in the
+  north of Spain. The conventional line has an exploitation cost of 10.94 euro/km,
+  while the cost of the high speed line is 12.48 euro/km. The difference in the
+  length of the lines compensates for this, so that the total cost of the conventional
+  line adds up to 909 euro and the high speed line to 620 euro, 31% less.
+
+  Regarding how the measure would contribute to integrating rail transport
+  into the internal market and how it would enable a modernisation of services,
+  we must bear in mind that rail, although best suited in principle for certain
+  types of transport, does not represent an attractive alternative to the customer
+  in practice. The services that the customer needs are either unavailable or they
+  lack reliability, punctuality or take longer times than they do by road or air.
+
+  The White Paper and the subsequent documents mention the lack of reli-
+  ability and punctuality in rail freight trafﬁc as one of the causes of mismatch
+  between the market and the services offered by rail. In order to force their im-
+  provement, a full scheme for managing delays is being developed, from detec-
+  tion of delays and prevention of cascade delays to determining responsibilities.
+
+Transport Policy, Nova Science Publishers, Incorporated, 2011. ProQuest Ebook Central,
+  182  Ignacio Lo´pez, Javier Rodr´ıguez, Alberto Garc´ıa et al.
+
+  Although the causes for delays in freight trafﬁc are complex, and not always
+  liable to the rail operator, a signiﬁcant part is due to path allocation to passenger
+  trains. If delays in freight trafﬁc are to become a priority, freight trafﬁc should
+  be given a way to react to the nature and contingencies of passenger trafﬁc,
+  such as line sharing. We may see that signiﬁcantly higher average speeds and
+  less perturbances due to passenger trafﬁc could enable offering a wider range of
+  services, for example transportation of perishable goods, and, more important
+  still, improving existing ones.
+
+  Returning to European policy, as it was mentioned in section 1., the three
+  basic strategies of European policy just commented are reﬂected on a series of
+  more speciﬁc targets by 2020:
+
+  • For rail to increase its market share of (. . . ) goods trafﬁc from 8% to 15%,
+  • A trebling of manpower productivity on the railways,
+  • A 50% gain in energy efﬁciency,
+  • A 50% reduction in emissions of pollutants,
+  • An increase in infrastructure capacity commensurate with trafﬁc targets.
+
+Copyright © 2011. Nova Science Publishers, Incorporated. All rights reserved.  In order to quantify the effect of shifting freight to high speed lines, a full de-
+  ployment plan should be designed, specifying affected lines, volume of freight
+  and trains shifted, regulating concurrence with passenger trafﬁc, etc. This study
+  allows, however, to valuate the technical feasibility of the measure qualitatively.
+
+  We have already seen how it could help modernising services and integrat-
+  ing rail into the market, and brieﬂy commented on the potential gain in produc-
+  tivity by reducing costs and optimizing management. The increase in infras-
+  tructure capacity is straightforward, by releasing capacity in conventional lines
+  and by using the capacity of the high speed ones, otherwise unused at night.
+
+  The contribution to energy efﬁciency and reduction in pollutants, on the
+  other side, goes further than the decrease in consumption at the pantograph
+  which has been analyzed here. The conventional lines of the study are electri-
+  ﬁed at 3kV direct current. This has two main consequences. First, direct current
+  is an obstacle for feeding electricity back to the network by regenerative brak-
+  ing. It makes necessary that a second train consumes the excess of energy of the
+  braking one instantaneously, otherwise, the excess will have to be dissipated ei-
+  ther with conventional brakes or with rheostats in the case of electric brakes, and
+
+Transport Policy, Nova Science Publishers, Incorporated, 2011. ProQuest Ebook Central,
+  Policies of Railway Interoperability  183
+
+  thus, wasted. Further still, the low voltage of 3kV makes that high power loco-
+  motives will require large currents. Thus, the losses from the substation through
+  the catenary to the pantograph will increase accordingly. The situation wors-
+  ens when considering lower voltage lines, also frequent in Europe, of 1.5kV.
+  On the opposite side, high speed lines operate at 2x25kV alternating current,
+  which eliminates the problem of regenerative braking and reduces the currents
+  signiﬁcantly.
+
+  It must be taken into account that, in spite of these advantages, if freight
+  trains are to be commuted from conventional to high speed lines and back, this
+  might require either changing locomotives or using dual-voltage ones. In the
+  ﬁrst case, this would penalize the gain in travelling times, although if the process
+  of changing is optimized, the overall effect could be minor.
+
+  As concluding remarks, we may ﬁrst observe that the success in deploy-
+  ing any policy depends critically on it matching reality, particularly in ﬁnancial
+  terms. It emerges from the discussion above that sharing the high speed infras-
+  tructure for freight trafﬁc might have a high possibility of success because it
+  brings together three key points:
+
+Copyright © 2011. Nova Science Publishers, Incorporated. All rights reserved.  • Potential reduction of costs for the operator
+  • Creation of new services
+  • Improvement of existing ones
+
+  We have extensively commented on the adequacy of these points to Euro-
+  pean Policy. However, and more important still, they are positive for rail oper-
+  ators on the long term. With adequate strategies and business plans, they could
+  derive in more proﬁtable services, which would constitute the ﬁnancial viability
+  for the measure.
+
+  As it was indicated earlier in this section, quantifying the full effect of
+  freight shift to high speed lines requires evaluating a full policy, deﬁned in all
+  its aspects. However, in the light of this study it can be said that the principle
+  of such a policy, which is transferring trains from one line to another to cross
+  mountains, is sound in terms of:
+
+  • Complying with European policy, and making use of the improving levels
+  of interoperability.
+
+  • Optimizing the use of the network.
+
+Transport Policy, Nova Science Publishers, Incorporated, 2011. ProQuest Ebook Central,
+  184  Ignacio Lo´pez, Javier Rodr´ıguez, Alberto Garc´ıa et al.
+
+  • Reducing consumption.
+
+  • Reducing costs.
+
+  • Reducing pollutant emissions.
+
+  Designing a full policy based on this measure would require identifying
+  paths and time slots which would allow shifting trafﬁc in advantageous condi-
+  tions, as well as designing a speciﬁc priority scheme. It would depend critically
+  on generating the adequate infrastructure and procedures (operational and reg-
+  ulatory) for induced operations, such as possible locomotive changes. Above
+  all, it would be necessary for it to be proﬁtable, so it should include a busi-
+  ness plan in the case of new services, a set of speciﬁc objectives and indicators
+  quantifying improvements in existing services and in energy consumption.
+
+Copyright © 2011. Nova Science Publishers, Incorporated. All rights reserved.  References
+
+  [1] European Commission, White paper: European transport policy for 2010:
+  Time to decide, White Paper COM(2001) 370 ﬁnal, European Commission,
+  2001.
+
+  [2] European Commission, Commission staff working paper. annex to the com-
+  munication from the commission to the council and the european parlia-
+  ment. towards a rail network giving priority to freight., Working Paper
+  SEC(2007) 1322, European Commission, 2007.
+
+  [3] European Commission, Proposal for a regulation of the european parlia-
+  ment and the council concerning a european rail network for competitive
+  freight, Proposal COM(2008) 852 ﬁnal. 2008/0247 (COD), European Com-
+  mission, 2008.
+
+  [4] European Commission, Green paper. ten-t: A policy review. towards a bet-
+  ter integrated transeuropean transport network at the service of the common
+  transport policy, Green paper COM (2009) 44 ﬁnal, European Commission,
+  2009.
+
+  [5] Price Waterhouse Coopers, Preparatory study for an impact assessment for a
+  rail network giving priority to freight, Report to the European Commission.
+  Directorate General Energy and Transport . Contract No. 2008/E2/143-
+  2007/01/SI2.501586, Price Waterhouse Coopers, 2008.
+
+Transport Policy, Nova Science Publishers, Incorporated, 2011. ProQuest Ebook Central,
+  Policies of Railway Interoperability  185
+
+  [6] European Commission, The quality of rail freight services, Communi-
+  cation from the Commission to the Council and the European Parliament
+  COM(2008) 536 ﬁnal, European Commission, 2008.
+
+  [7] European Commission, Ten-t trans-european transport network. implemen-
+  tation of the priority projects, Progress report, European Commission.
+  Directorate-General for Energy and Transport , 2008.
+
+  [8] I. Lo´pez, J. Rodr´ıguez, J. M. Buro´n, and A. Garc´ıa, Energy Policy 37, 5393
+  (2009).
+
+  [9] A. Garc´ıa and V. Rallo, V´ıa Libre , 18 (2010).
+
+Copyright © 2011. Nova Science Publishers, Incorporated. All rights reserved.
+
+Transport Policy, Nova Science Publishers, Incorporated, 2011. ProQuest Ebook Central,
+Copyright © 2011. Nova Science Publishers, Incorporated. All rights reserved.
+
+Transport Policy, Nova Science Publishers, Incorporated, 2011. ProQuest Ebook Central,
+

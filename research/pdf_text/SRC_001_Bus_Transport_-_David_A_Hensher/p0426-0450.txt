@@ -1,0 +1,1316 @@
+440 PART | X Mobility as a Service (MaaS)
+
+TABLE 32.4 Estimation results for the stated choice of MaaS plans in the presence of the status quo, Sydney
+Metropolitan Area 2017.
+
+Description  Para  Sig  t-value
+Heteroscedastic conditioning function (Iq)
+Car non-user (1/0/À1, base ¼ infrequent user)  0.306  b  6.87
+Car frequent user (3e4 days/week) (1/0/À1, base ¼ infrequent user)  À4.06
+Car very frequent user (5e7 days/week) (1/0/À1, base ¼ infrequent user)  À0.147  b  0.65
+Age between 35 and 44 (1/0/À1, reference ¼ age 18e24)  À7.46
+Age 55 or over (1/0/À1, reference ¼ age 18e24)  0.021  8.61
+Household with 2þ children (1/0/À1, base ¼ up to one child)  4.22
+Car-negotiating household (1/0/À1, base ¼ car-sufﬁcient household)  À0.200  b  À0.76
+Member of GoGet car-share (1/0/À1, base ¼ not a member)  0.08
+Standard utility function (Vjq)  0.326  b
+Fortnightly fee of pre-deﬁned MaaS plans ($)  À12.43
+Fortnightly fee of CIY MaaS plan ($)  0.096  b  À13.33
+Fortnightly fee of PayG MaaS plan ($)  À3.19
+Number of days entitled to unlimited PT use, mean ¼ spreada  À0.012  11.76
+Number of hours entitled to car-share use, mean ¼ spreada  12.2
+Hourly rate of car-share if PayG ($/hour)  0.003  À1.9
+One-way car-sharing (1/0/-1, base ¼ return-to-base or round-trip)  4.47
+Advance booking time for car-share (minutes)  À0.069  b  À1.25
+Entitled to taxi discount (% off every taxi bill)  2.22
+Entitled to ride-share discount (% off every UberPOOL bill)  À0.083  b  4.81
+Unused credit lost (1/0/À1), reference ¼ roll-over  0.14
+Constant of MaaS plan A  À0.117  b  À5.61
+Constant of MaaS plan B  À5.63
+Constant of PayG MaaS plan  0.447  b  À2.79
+Constant of CIY MaaS plan  0.77
+Average fortnightly cost of car ownership and use ($)  0.411  b  À10.15
+Number of days using PT in a typical fortnight (day)  À1.79
+Number of hours using car in a typical fortnight (hour)  À0.062  d  À2.68
+Model summary statistics
+Number of choice tasks (#interviewees)  0.252  b
+Number of model parameters
+Log likelihood at convergence  À0.005
+McFadden adjusted pseudo-R2
+  0.026  c
+
+  0.050  b
+
+  0.009
+
+  À1.871  b
+
+  À1.768  b
+
+  À1.858  b
+
+  0.307
+
+  À0.006  b
+
+  À0.037  d
+
+  À0.023  b
+
+  1260 (252)
+  23
+  À1058.3
+  0.467
+
+AIC/N  1.755
+
+aRandom parameters follow a constrained triangular distribution with mean ¼ spread.
+bSigniﬁcance at 99%
+c95%, and
+d90% level of conﬁdence.
+  Potential uptake and willingness-to-pay for mobility as a service Chapter | 32 441
+
+  FIG. 32.5 Kernel density of the conditioning (Iq) standard utility (Vqj) and nonlinear utility (VÃjq) functions.
+
+  The non-linear random parameter model ﬁts the data reasonably well with the McFadden adjusted R2 of 0.467. This
+model rejects the non-linear MNL-like model (32.4) at any level of conﬁdence based on a log-likelihood test. All the
+parameter estimates have the expected sign with the kernel density plots shown in Fig. 32.5 assisting the interpretation of
+model parameters. Fig. 32.5 shows that the standard utilities (Viq) of all MaaS plans are in the negative domain. Thus, a
+positive parameter for individual-speciﬁc variables included in the conditioning function Iq suggests a lower likelihood of
+subscription because the negative standard utilities are scaled by a factor larger than 1 (see Eq. (32.3)) resulting in more
+negative (i.e., higher) disutility, and hence less preferred. By contrast, a negative parameter for the conditioning function
+suggests the opposite. That is, people in these groups are more likely to buy into MaaS plans in the presence of the status
+quo. Note also that the conditioning function is in the positive domain, satisfying the non-negative condition required by
+Eq. (32.2).
+
+  Table 32.4 shows that the effects coded ‘car non-user’ variable has a signiﬁcantly positive parameter, indicating that car
+non-users are less likely than average to take up MaaS.4 Conversely, those who typically use a car three to four days per
+week (i.e., car frequent users) are more likely than average to subscribe to MaaS, as evidenced in the signiﬁcantly negative
+
+4. Effects coding is an alternative to dummy coding in which an attribute with L levels is transformed into L e 1 variables with the reference level being
+coded as e1 instead of 0. Each effects coded variable is set equal to 1 when the attribute is present, equal to e1 if the reference case is present, and equal to
+0 if otherwise. When a categorical variable is effects coded, the comparison would be with the grand mean (i.e., average across the entire sample) as
+opposed to the reference group in the case of dummy coding.
+442 PART | X Mobility as a Service (MaaS)
+
+parameter associated with this variable. The parameter for the infrequent car users (the base) can be calculated as the
+negative sum of the ‘car non-user’, ‘car frequent user’, and ‘car very frequent user’ parameters (À0.306 þ 0.147 À
+0.021 ¼ À0.180). That is, those who use car 1 or 2 days per week (i.e., car infrequent users) are more likely than average to
+take up MaaS plans. The relative differences in the magnitude of these parameters suggest that car non-users (0.306) are
+least likely to subscribe, followed by very frequent car users (0.021), whilst infrequent car users (À0.180) and frequent car
+users (À0.147) are most likely adopters. The modelling evidence conﬁrms the effect of current travel patterns on MaaS
+potential uptake described in Section 35.5.1, especially Fig. 32.4. As car non-users are very likely to be frequent users of
+PT (pairwise correlation of 0.406), these ﬁndings suggest that frequent PT users are happy with the Opal card that allows
+them to pay for the use of all PT modes at a cap of $15 per day or $60 per week. Thus, the experimental MaaS plans
+suggested for these people, which includes mainly PT days and an entitlement to few hours of car-share and discounts of
+taxi/Uber bills, are less attractive even with a heavy discount to PT cap fares (ﬁxed at $10 a day or $50 a week in the SP
+experiment).
+
+  Amongst the individual and household characteristics tested with the model speciﬁcation, age and number of children
+in the household were found to impact MaaS subscription whilst gender, car-sharing membership status, household
+structure, household size, household car ownership (deﬁned directly as number of household cars or as relative to number
+of household drivers such as car-negotiating and car-sufﬁcient households) exhibited no impact on MaaS subscription
+propensity. Speciﬁcally, households with two or more children were signiﬁcantly less likely to subscribe to MaaS than
+households with up to one child. This is reasonable as the demand for a private car and its convenience (e.g., available at
+any time and able to install child car restraints on it) increases with household children numbers.
+
+  Turning to the utility of different MaaS plans, Table 32.4 shows that the parameters associated with the costs of MaaS
+plans are signiﬁcantly negative, as is the parameter associated with the average fortnightly cost of car ownership and use.
+Although it is difﬁcult (and debatable) to compare the two costs of different natures (one links to the subscription fee of a
+MaaS plan where users are entitled to a number of transport services vs. another linked to vehicle ownership, maintenance
+and use), it may be safe to interpret, from the parameters associated with the costs and their value ranges, that travellers are
+much less sensitive to the long-term costs of vehicle ownership (and use) than the on-going cost of MaaS subscription. This
+ﬁnding supports the hypothesis expounded within the literature that car drivers consider only direct out of pocket costs at
+the point of travel (Scott and Axhausen, 2006).
+
+  With respect to different mobility services the MaaS subscribers are entitled to, all else being equal, people prefer more
+days with unlimited PT use and more hours of car-share use, but the preference varies signiﬁcantly across the respondents.
+This is evidenced by the signiﬁcantly positive random parameters associated with these two mobility elements. As for car-
+sharing, a one-way car-share format is preferred to return-to-base car-share (i.e., round-trip car-share). Also, a MaaS plan
+that requires longer advance booking time for the use of a shared car is seen as less attractive than the one that guarantees
+access to car-share within a shorter notice period. Adding taxi and ridesharing discount entitlements to MaaS plans is found
+to improve their attractiveness, but this positive effect applies only to regular Taxi/Uber users (24% of the sample), deﬁned
+in this study as people who use these modes at least once in their typical week. Surprisingly, the roll-over of unused credits
+(i.e., entitlements to car hours and PT days) does not exhibit any effect on the attractiveness of a MaaS plan. One possible
+explanation for this insigniﬁcant parameter is that the MaaS plans suggested by the experiment were customised to each
+individual’s travel needs by pivoting around their current travel patterns. This probably results in respondents seeing most
+credits being used up by the end of the period, making the need to roll-over/transfer unnecessary.
+
+  Alternative-speciﬁc constants (ASCs) were estimated for all MaaS plans with the status quo serving as the reference.
+Since all categorical variables included in the model are effects coded, these ASCs reﬂect their pure effect in reproducing
+the sample shares (as opposed to when dummy codes are used, the constants partly capture the effect of the reference group
+e see Bech and Gyrd-Hansen, 2005). The ASCs estimated for the pre-deﬁned MaaS plans and PayG were signiﬁcantly
+negative, suggesting that all else being equal, respondents are more likely to stay with the status quo. Although not shown,
+t-tests of statistical differences between these ASCs were conducted with no differences found. This is also evidenced in
+the kernel density of the ﬁnal utility shown in Fig. 32.5 where the utility of the two unlabelled MaaS plans (Plan A and Plan
+B) are almost identical. Together, the evidence suggests no preference bias toward a particular MaaS plan due to its
+position in the SP experiment (note that the PayG plan is always placed to the rightmost of each choice task as per
+Fig. 32.1). Finally, the constant of the CIY Plan is positive, suggesting that allowing travellers to create their own MaaS
+plans increases the likelihood of them subscribing to MaaS, although the gain is small (due to a small constant, not its
+statistical insigniﬁcance which is immaterial because the constant should always be included to reproduce the market
+share).
+
+  The signs and the signiﬁcance levels of the parameters presented in Table 32.4 identify the potential adopters of MaaS
+when it is introduced, but this does not tell us how much they are willing to pay for different mobility services/entitlements
+Potential uptake and willingness-to-pay for mobility as a service Chapter | 32 443
+
+TABLE 32.5 Estimated respondent’s WTP for different mobility entitlements of MaaS plan.  WTP ($/fortnight)
+  $6.39
+MaaS component  $63.85
+An hour access to car-share  $7.27
+A full day access to car-share (10 h)  $0.00
+One-way car-share  À$1.06
+Round-trip car-share  $5.92
+Every 15 min increase in advance booking time  $3.68
+A day of unlimited PT use  $7.18
+10% discount to every taxi bill
+10% discount to every ride-sharing bill
+
+included in a MaaS plan, referred to as MaaS components. To this end, Table 32.5 presents the sample average willingness-
+to-pay (WTP) for different MaaS components. Before going into any detail, it is important to highlight that these WTPs
+were derived from the sampled respondents and not the population of the Sydney Metropolitan area. Thus, caveats must be
+taken into account for the use of these estimated WTPs in bundling and pricing MaaS plans for practical release as bundles
+for purchase.
+
+  Table 32.5 shows that on average, Sydney travellers are willing to pay $6.40 for an hour of access to car-share or about
+$64 per day if a full day of access is priced at the rate of 10 h e a rule employed in this experimental study and also by
+Sydney-based car-sharing companies such as GoGet. Options for car-sharing also include the car-sharing formats (one-way
+or round-trip) and advance booking time which, on average, the respondents are willing to pay an extra $7.30 per fortnight
+for one-way car-sharing and about $1.05 less for every 15 min increase in advance booking time. The average WTP for a
+day of unlimited PT use to be included in a fortnightly MaaS plan is $5.90 but this varies across the sample with a standard
+deviation of $2.40 and a maximum of $11.85 (min ¼ 5 cents).
+
+  Placing these WTPs into context for how MaaS is likely to work in practice, Fig. 32.6 shows the distribution of re-
+spondents’ WTP for two example fortnightly MaaS plans. Plan 1 includes two full day’s use of car-share (e.g., 1 day for
+each week’s social outing), 10 h of one-way car-share with a 60 min advance booking time to cover the remaining days of
+the fortnight (e.g., 3 days per week doing 30 min one-way drop-off/pick-up children at a day care centre en route to/from
+work and 2 h weekly shopping), four days of unlimited PT use per fortnight (e.g., commuting by PT 2 days per week when
+children do not attend day care), and a 10% discount off every taxi and ridesharing (e.g., UberPOOL) bill. The average
+WTP for this example plan is $185 per fortnight. Plan 2 offers more days with unlimited PT use and more car hours on a
+round-trip car-sharing format with shorter notice than Plan 1. The average WTP for this plan is estimated at $231 per
+fortnight.
+
+FIG. 32.6 Distribution of WTP for example MaaS plans.
+444 PART | X Mobility as a Service (MaaS)
+
+32.7 Conclusions and ongoing research
+
+This chapter is an initial contribution to understanding what types of MaaS subscription plans might appeal to potential
+users. Using state of the art stated choice methods to reveal preferences as of today in the context of Sydney, Australia,
+provides a baseline of candidate drivers of interest in MaaS packages. The packages investigated include what we believe
+are likely to be the main inputs into the design and offering of a range of app-based subscription plans.
+
+  There are many innovative features in this study, in particular the design of the choice experiment which tends to be
+more complex than what one would typically develop for a single mode alternative (even with the choice set allowing for
+more than one labelled mode); however, complexity must be aligned with behavioural validity of the potential subscription
+plans and hence an extensive amount of work was undertaken to ensure that the choice experiment was comprehensive and
+comprehendible. One way this is ensured is through an investment in the survey design customised to each individual and
+administered face-to-face where well-trained interviewers sat with each respondent to answer any question they might have
+had about MaaS.
+
+  MaaS and how it might occur in the market is an area where many researchers are devoting time. With the same goals
+in mind, researchers in this domain will have overlapping ideas even when they are located on other sides of the world. The
+main contributions of this chapter were developed when the ideas of MaaS were still being developed, and the devel-
+opment of an SP experiment for the Australian context was a natural extension of the descriptive information available at
+the time. With increasingly more researchers undertaking SP experiments and choice modelling, or working in the MaaS
+domain more generally, we will all beneﬁt from work on common themes particularly with SP studies when they are
+executed using state of the art choice methods (many developed by ITLS e notably Hensher, Rose and Bliemer).5
+
+  This study highlights some important questions for policy-makers in the public transport arena. The MaaS plans were
+not particularly attractive to existing public transport users. To move towards the sustainable future craved almost uni-
+versally by governments all over the world, building public transport patronage with choice riders is essential. This study
+suggests that there may be a need for lowering public transport fares, especially the daily and weekly cap, to attract more
+choice riders and to retain current travellers. This does not necessarily mean that greater subsidy is required since disruptive
+transport technologies could make public transport provision cheaper (through reducing operating costs or offering in-
+dividual plans that consider subscriber’s travel patterns including the number of trips made and fare bands).
+
+  Another feature of this research that we have shown to be increasingly important in other studies unrelated to MaaS is
+experience with the alternatives (Hensher and Ho, 2016). While MaaS in its full deﬁnition is not yet available in Australia
+(and indeed in most geographic jurisdictions), various modal elements are clearly well established (e.g., conventional
+public transport) or entering fast into various markets (e.g., Uber taxi-based services and car-sharing). The ﬁndings in this
+study reinforce the importance of accounting for experiences in use or awareness of speciﬁc modal inputs into MaaS
+packages, conditioning the utility expressions deﬁning the attributes of each MaaS and pay-as-you-go alternative. This is
+particularly important in a preference model that will be updated over time on a regular basis as people get exposed to these
+new opportunities which will modify experience and hence can be expected to have a signiﬁcant impact on preference
+towards MaaS. What may be a meaningful preference regime today may very likely be unreliable in the near and far future
+as more and more MaaS plans are rolled out. Ongoing research must involve regular surveys in order to capture this
+changing experience setting, guiding ongoing assessment of the changing demand for MaaS plans and how it might impact
+on the future demand for choosing to use and pay for a single mode outside of a MaaS plan.
+
+  As a ﬁrst detailed effort of studying a sample of individual preferences for MaaS subscription plans over the status quo
+and pay-as-you-go, we have learnt a lot about what can be done differently in the next phase of research. Speciﬁcally, we
+will allow for the MaaS packages to be subscribed to by households since, for example, the ownership of a car is more
+likely to be a household-based decision. It might also be important to allow groups of any form to be the basis of a MaaS
+plan (families, friends, etc.) rather than just individuals, but maybe with a limit on the number of registered users (with the
+limit being one aspect that is tested). A closer look at the future role of the car will take on greater interest, especially as we
+move to autonomous vehicles, which is expected to change the cost of accessing a car in the MaaS plan either as a shared
+vehicle (in the sense of sharing with others) or as a use alone option. We need to consider whether the ﬁrst move out of the
+
+5. In this relatively new research space where empirical research is emerging, we need to acknowledge the important parallel contributions of Kamargianni
+and Matyas at UCL (e.g., Kamargianni et al., 2016; Karmargianni and Matyas, 2017) UK; Nelson at Aberdeen University, UK (e.g., Ramazzotti et al.,
+2016); Kaarlson, Smith, and Sochor, Stromberg at Chalmers University, Sweden (e.g., Sochor et al., 2015); Timmermans, Caiati at Eindhoven University,
+The Netherlands (Ebrahimi et al., 2018); Meurs, Jittrapirom, Marchau at Rambould University, The Netherlands (Jittrapirom et al., 2017a,b) and
+Alonso-Gonzalez at TU Delft, The Netherlands (Jittrapirom et al., 2017a,b); and Fijigaki, Takami at Tokyo University, Japan (Fujigaki et al., 2018) and
+the many others who have contributed to this knowledge. Many of these authors have contributed papers to the Special Issue on MaaS and Intelligent
+Mobility, to appear in Transportation Research Part A in 2019.
+  Potential uptake and willingness-to-pay for mobility as a service Chapter | 32 445
+
+private car to the non-owned car available in a MaaS plan might be through the second car and not all cars in a current
+private ﬂeet. In addition to individuals and groups of individuals, we need to look at prospects MaaS subscriptions targeted
+at organisations. It is also worth noting that the SP experiment follows the MaaS plans that are in place elsewhere in the
+world in assuming that people are willing to share, and that car-sharing and ride-sharing (e.g., UberPOOL) would be
+acceptable. It is clear that the population at large needs to be more prepared to share resources in the future and that this
+would likely have a detectable difference on the uptake of MaaS plans.
+
+  As the concept of MaaS plans become more widespread and understood, it will become easier to run large scale surveys
+where the travel behaviour of the sample is closer to population behaviour. Whilst the current work is based on conve-
+nience sampling, only time will reveal whether differences in the travel behaviour of the sample will be mirrored in the
+population or whether differences will be carried through to the take up of MaaS plans. In the short term, however, the
+willingness-to-pay estimates will act as a guide to suppliers designing MaaS bundles for market.
+
+  The focus of this chapter has been on the preferences of users; however, we have commenced an investigation into the
+preferences of suppliers of modal services into MaaS subscription plans. These plans will be provided by what we call
+brokers but also known (in the UK) as aggregators. A stated preference survey is presently in ﬁeld studying the preferences
+of potential suppliers to MaaS schemes, be they established transport operators or non-mobility providers including en-
+trepreneurs interested in managing and securing modal supply. We also want to understand the extent to which particular
+types of MaaS plans might be delivered under an economically deregulated market model or whether they may be
+controlled to some extent by government through competition for the market using competitive tendering. While we
+currently believe that many governments would desire to encourage private enterprise to deliver greater mobility services
+to the market, time will tell whether the MaaS models on offer align with the objectives of government in representing the
+broader interests of society, which might include using MaaS as a way of providing improved public transport for a lower
+subsidy outlay than at present, and avoiding the growth in car-based travel, with its implications on congestion and urban
+efﬁciency. Clearly the latter phenomenon will be less likely to occur with shared cars (and reduced private ownership)
+accessed through MaaS but it may place the use of mass transit at risk in a way that government is not prepared to allow to
+occur.
+Chapter 33
+
+Identifying broker/aggregator models for
+delivering mobility as a service
+
+33.1 Introduction
+
+In recent years, a burgeoning literature has emerged on the mobility as a service (MaaS) concept - a popular interpretation
+of future collaborative and connected urban transportation, centred on a changing society embracing a sharing culture
+which can satisfy our mobility needs without owning assets such as a car. MaaS emerges because of opportunities afforded
+by digital information platforms to plan and deliver multimodal mobility options in point-to-point trips and/or ﬁrst-and-last
+mile travel to public transport journeys. MaaS packages will provide consumers with seamless mobility options with
+integrated payments through a single application in much the same way as uniﬁed mobile plans provide users with a choice
+of calls, text and data options.
+
+  The premise for MaaS is to transform mobility based on asset ownership (usually, in the form of a private vehicle) to
+one where it may be consumed as a service. Central to this proposition is the move from outright purchase of mobility
+provision to a subscription-based model with a higher marginal cost of consumption, as compared with vehicle ownership
+where much of the cost is borne initially upfront and thereby regarded as ‘sunk’. Accompanying this challenge of
+acceptance is the public’s ideological attachment towards cars (Mulley, 2017), but changing demographics offer
+encouraging signs for (at least in the younger generation in the West) embracing this cultural shift. Already, some versions
+of MaaS have been implemented, with UbiGo1 in Gothenburg and Whim2 in Helsinki (now also Birmingham) as promient
+examples, and core characteristics of MaaS schemes also beginning to be deﬁned (Kamargianni et al., 2016; Jittrapirom
+et al., 2017).
+
+  The design and implementation of MaaS may be related to the three Bs “budgets, bundles and brokers” initially
+proposed in Hensher (2017: 91). Bundles relate to mobility packages which customers purchase, granting them a deﬁned
+volume of access to each included mode (usually quantiﬁed by kilometres, hours or a percentage discount). Stated choice
+studies on end user preferences for bundled mobility products have thus far been conducted in London (Matyas and
+Kamargianni, 2017), Sydney (Ho et al., 2018), Newcastle upon Tyne (ITLS, forthcoming), as well as in work commis-
+sioned by industry bodies (e.g., Intelligent Transport Systems Australia) and consultancies (e.g., SYSTRA) as a way of
+revealing potential user preferences. Market testing MaaS is related to the budgets concept in terms of the need to elucidate
+the preferences of all stakeholders including demanders and suppliers in the MaaS supply chain. Far less work has to date
+been undertaken on the supply-side, particularly around potential business models and the likely emergence of mobility
+brokers (also known as aggregators) which bring together specialised businesses and value-add by offering that integrative
+function. Brokers form the conduit for connecting demanders of transport service and suppliers of the transport asset/
+capacity by facilitating the delivery of physical transportation (Wong et al., 2017).
+
+  In this chapter, we focus on the second and third Bs in terms of mobility brokers and the budgets (preferences) of
+suppliers by identifying the conditions around which interested businesses might invest or supply in the MaaS entre-
+preneurial model. An empirical program of work based on interviews and participatory research helps inform the candidate
+attributes for inclusion in business investment utility models we are developing for MaaS. Our qualitative research focuses
+on key stakeholders including MaaS operators, conventional transport operators, public transport authorities and
+consultancies, especially those in Sweden and Finland where such schemes are presently well advanced. Through this,
+mobility contracts are designed and incorporated as part of a stated choice experiment to test supplier buy-in to the
+entrepreneurial model or broker interface for delivering MaaS. A face-to-face pilot with experts and industry stakeholders
+is then undertaken to ﬁnesse the survey instrument. Preliminary results are then presented. MaaS as a concept is moving
+
+1. See http://ubigo.se (soon to be active in Antwerp and Stockholm).
+2. See https://whimapp.com (operated by MaaS Global and based on the SkedGo platform).
+
+Bus Transport. https://doi.org/10.1016/B978-0-12-820132-9.00033-9  447
+Copyright © 2020 Elsevier Inc. All rights reserved.
+448 PART | X Mobility as a Service (MaaS)
+
+fast, but we believe we have begun the ﬁrst formalised study to test some of the ideas behind service delivery - this chapter
+presents our starting position on the journey to ﬁll this important research gap.
+
+  The remainder of this chapter is structured as follows. Section 33.2 reviews urban passenger transport developments
+with a focus on Australia before introducing our framework for the MaaS ecosystem, including brokers and the idea of
+mode-agnostic mobility contracts. Section 33.3 presents the method used to help us design these contracts and test our
+survey instrument. Section 33.4 discusses candidate attributes like how modal mix, risk and return, business size and equity
+contribution, branding and government support might inﬂuence respondents’ propensity to invest/supply in these new
+business models. Following this, Section 33.5 presents the experimental design, including decisions around the sampling
+frame and what respondent characteristics or contextual variables to collect. Initial results are presented in Section 33.6 by
+applying a mixed logit choice model on data collected thus far. Section 33.7 concludes and describes next steps in our
+effort to identify the structure of mobility broker models for delivering MaaS.
+
+33.2 Delivering mobility as a service
+
+A number of service delivery models have been proposed for MaaS, with a range of different actors and varying degrees of
+government involvement. With a special focus on Australia and our region, we consider collaborative efforts between
+public transport operators, transportation network companies (TNCs) and local authorities, as well as new ventures by
+non-mobility businesses adapting to stay relevant. A likely model is then proposed based on mobility brokers/aggregators
+and deﬁned by mode-agnostic mobility contracts which form the basis for the empirical program of research.
+
+33.2.1 Recent developments in urban passenger transport
+
+Aided by digital technologies, TNCs have ushered in a new era of carsharing, ridesharing and bikesharing around the
+world. As of May 2018, there are already 35 (and rapidly growing) shared mobility providers active in the Australian
+market (Wong, 2018). Depending on geographic context and market demographic, these TNCs simultaneously compete
+with and complement public transport (Sadowsky and Nelson, 2017; Hall et al., 2017). There exists few instances of public
+transport operators cooperating with TNCs to deliver integrated service, particularly in providing ﬁrst/last mile connections
+(see Boone et al., 2018) for a summary of cases in the US), and indeed only one such example in Australia-Canberra’s
+Night Rider þ Uber3 initiative, backed by government. As part of the Future Transport 2056 agenda, the NSW government
+has funded on demand, microtransit-type trials in Greater Sydney (and soon to be rural and regional NSW). Bus operators
+have worked in conjunction with technology providers like Via, Routematch and TaxiCaller4 (though some have devel-
+oped in-house products) to deliver some very innovative service offerings. In a way, this can be considered a primitive
+aggregator model of two specialised businesses - a public transport operator (the broker plus supplier) and a platform
+provider (supplier) - a precursor to what we propose for MaaS. The NSW government has now launched a MaaS
+Innovation Challenge5 which is an incubator process to bring eligible and interested parties together as part of a
+government-led MaaS trial (where government acts as the broker).
+
+  There is active interest across market sectors (in Australia) to partake in the future MaaS ecosystem. Public transport
+operators (at least those privately-owned) are looking to the future including more on demand service models plus
+incorporating autonomous technologies as they come online. TNCs like Uber are transforming into multimodal mobility
+platforms through acquisitions6 and partnerships. There is even interest in the community transport sector for MaaS
+(Mulley et al., 2017). Digital disruption is also occurring within non-service operators like vehicle manufacturers
+(concerned with future buyers as cars become autonomous and pooled, so are venturing into the service provision space),
+motoring associations (e.g., NRMA and RACV acquiring transport operators), insurance companies (future of liability with
+autonomy and also their customer base under shared mobility models), energy providers (wholescale electriﬁcation of the
+transport sector) and even property developers (future of parking and opportunities to bundle mobility as part of rental
+agreements).
+
+3. In this instance, the ACT government has withdrawn their demand-responsive late-night buses from the suburbs and replaced them with more frequent
+service on their trunk (Rapid) network. Using promotional codes, customers beneﬁt from a $10 discount off their Uber connection from a public Night
+Ride service - of which the government contributes $5 with Uber subsidising the other $5. Taxi operators have lost out (despite being initially approached
+for this partnership) and evidence points to Uber driver-partners making better money from higher passenger turnover and shorter trips.
+4. Note that these all exist as B2B businesses in Australia (although Via operates in the B2C space in the US), and despite bus operators initially involving
+larger players like Uber, these proposals have not proceeded for a variety of reasons (see Section 33.4.4).
+5. See https://maaschallenge.transport.nsw.gov.au.
+6. For example, Uber’s recent purchase of bikeshare startup JUMP, which took many (even) industry insiders by surprise.
+  Identifying broker/aggregator models for delivering mobility as a service Chapter | 33 449
+
+  Wong (2017) conducted an extensive interview program with industry leaders which identiﬁed the key ingredients for
+forward thinking businesses in future mobility. Innovation off-shoots and cross-sector collaboration emerged as the most
+effective for transforming an infrastructure and assets industry into a future services-oriented industry. What is evident is
+the increasing blur of sector boundaries as businesses collide and collaborate on new ventures (McKinsey and Bloomberg,
+2016) - indeed a precursor to our idea of mobility brokers. Major unknowns, however, remain in the candidate actors
+(see Section 33.5.3) which we categorise under mode-speciﬁc operators (incumbent providers of passenger service) and
+non-mobility providers (new entrants) interested in partaking in the MaaS business model. The conditions around their
+involvement (and in what form) is also a major question, together with how incumbents might play strategic games
+(issues of bias) in an effort to maintain the status quo. These are amongst the unknowns we wish to test in this study.
+
+33.2.2 Deﬁning the broker: new business models
+Despite these developments, fully-ﬂedged MaaS brokers/aggregators remain few and far in between. Part of the reason is
+because the design and institutionalisation of such business model is particularly demanding given that innovations occur
+outside the exclusive control of traditional ﬁrm boundaries (De Reuver et al., 2013). Romanyuk (2018) argues that MaaS is
+not a traditional business model but rather a networked business model co-created in a network of actors where the
+development process is continuous and iterative by nature. Kamargianni and Matyas (2017) propose seven candidate actors
+including transport operators (plus mobility service providers like parking operators), data providers, technology and
+platform providers, information and communication technology infrastructure, insurance companies, regulatory organi-
+sations and universities/research institutions. Government is an active player amongst these actors which even as an
+interface magniﬁes the aggregation challenge. In their work, Kamargianni and Matyas (2017) advocate for a government
+agency or quasi-government entity (including a public transport authority) to assume this broker role. Jittrapirom et al.
+(2018), however, in a Delphi study of 46 experts found transport operators as the preferred service integrator, followed by a
+third-party mobility provider and then local authorities.
+
+  We believe a government broker is a particularly challenging proposition since they might not only lack the incentive to
+innovate but also cause a potential conﬂict of interest,7 especially where both public and private operators exist as is the
+case in Australia. In Australia (and most other Western economies8), government is increasingly removing themselves
+from service provision but rather only involving themselves at arm’s length (Wong and Hensher, 2018). They are better
+positioned playing a regulatory function to ensure a ‘level’ playing ﬁeld (including setting common standards) for different
+MaaS operators to compete. Government might still provide seed funding or act as a catalyst for innovation as is the case in
+NSW through their Future Transport agenda. We have hence assumed a private entity broker in our proposed model of the
+MaaS ecosystem for this research.
+
+33.2.3 Situating the broker: mode-agnostic mobility contracts
+Having deﬁned the broker, it is now necessary to situate it within a framework of demanders, suppliers and government
+(Fig. 33.1). Brokers bring together suppliers of the transport asset/capacity, as well as other specialised businesses
+
+FIG. 33.1 Proposed framework for the MaaS ecosystem, comprising the new function for a mobility broker aggregating different suppliers and
+delivering integrated service to demanders - excerpt from Wong et al. (2017).
+
+7. Though there is a view in the UK that this might be appropriate in an economically deregulated market.
+8. The US might be a sole exception.
+450 PART | X Mobility as a Service (MaaS)
+
+(like platform providers and ﬁnancial enterprises), with this interface deﬁned by mobility contracts. Opportunities exist for
+suppliers to also take up this broker role, as is the case with the aforementioned on demand trials in NSW (hence the blue
+shading). The broker in turn packages these raw services as bundles to demanders (end users), who purchases these
+products under a subscription or pay-as-you-go model. Given the new MaaS focus, government (who previously dealt
+directly with transport operators/suppliers) would now also interface with the MaaS broker/aggregator. Whether the
+broker(s) operate in an economically deregulated or a contracted environment (deﬁned by what we term accessibility
+contracts as explored in Wong et al., 2017) is beyond the scope of the present discussion. There is merit, however, in
+considering a framework without government interference initially to determine what the market is willing to provide
+before an institutional overlay is applied to ensure alignment with broader societal objectives. This is the approach we are
+assuming and has been supported by our ﬁeldwork.
+
+  Our primary interest in this chapter, however, is in the broker/supplier interface as governed by mobility contracts.
+Various forms of involvement are possible from these constituent suppliers ranging from mere ﬁnancing (investing) of the
+service provider to supplying intellectual knowhow or tangible assets like vehicles and depots. These binary options form
+the basis for the choice variable responses in this study - see Section 33.5.1. We have further considered at length what
+MaaS might mean for the future of public transport contracts (Hensher, 2017). In Australia, there is a move from
+area-based, mode-speciﬁc, output-based contracts (in effect, to deliver kilometres on deﬁned vehicle types), to mode-
+agnostic, outcome-based contracts where the MaaS operator has the ﬂexibility to deliver services using any mode of
+their choosing. This suggestion aligns with public transport institutional reform over the past 30 years, including the
+increasing desire for a hybrid model which brings together the best of a contracted regime with the beneﬁts and incentives
+inherent under economic deregulation (Wong and Hensher, 2018). This serves as the context and theoretical underpinning
+for our empirical program of research to design the broker/supplier interface that is the mobility contract.
+
+33.3 Methodology
+
+To design mobility contracts, we embarked on a qualitative program of interviews and participatory research with key
+stakeholders during August 2017. Informal interviews (structured around a study visit) were held with senior decision
+makers of two incumbent MaaS operators active in Helsinki and their regional public transport authority HSL. The
+conversations included broader MaaS and public transport topics which continue to inform related work at ITLS. Our
+participatory research took place at the 15th International Conference on Competition and Ownership in Land Passenger
+Transport9 (known as the Thredbo series) in Stockholm where we ran a workshop over four days on the “‘uberisation’ of
+public transport and mobility as a service (MaaS)” (documented in Mulley and Kronsell, 2018). Twenty-seven participants
+representing academia, government and industry (including transport operators and consultancies)10 came together in this
+Thredbo workshop (henceforth, the Workshop) to consider the objectives of MaaS, regulatory challenges, policy
+recommendations and research priorities (amongst other issues). We took these opportunities in Helsinki and Stockholm to
+test which attributes ought to be included in mobility contracts, the units they should be speciﬁed in (and levels), as well as
+candidate contextual inﬂuences on choice outcomes.
+
+  With mobility contracts deﬁned, we then designed them as hypothetical choice scenarios and incorporated these choice
+tasks and other contextual variables as part of a stated choice experiment (using the Conﬁrmit platform). Given the novelty
+of the MaaS concept and limited application of stated preference methods on supply-side issues in any market, a face-to-
+face testing process was required to ﬁnesse and validate the survey instrument (conducted in February to April 2018).
+An internal pilot (n ¼ 9) within ITLS was undertaken with experts in both the choice methodology and transport policy to
+test the use of language, layout, presentation and suitability of questions for those less initiated. Data was not collected in
+this instance. This was followed by an external pilot (n ¼ 14) with industry leaders (including bus and rail operators,
+technology providers, vehicle manufacturers, consultancies and a government authority) with a focus on commercial
+sensitivity and the suitability of contextual variables. Data was collected from this external pilot to validate the model and
+conﬁrm priors. The pilot results and qualitative research inform the remainder of this chapter.
+
+9. See http://www.thredbo-conference-series.org.
+10. Participants hailed from Australia, Brazil, Finland, Germany, Japan, the Netherlands, Norway, Singapore, South Africa, Sweden, UK and US.
+  Identifying broker/aggregator models for delivering mobility as a service Chapter | 33 451
+
+TABLE 33.1 Attribute levels (see Appendix Fig. 33A1 for a more thorough description offered to survey
+respondents).
+
+Attribute category  Attribute  Attribute levels11
+  Fixed route public transport  0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100%
+Mobility offering (revenue  On demand public transport  0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100%
+mix)12
+
+  Carsharing  0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100%
+
+  Taxi-like services  0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100%
+
+  Shared ridehailing services  0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100%
+
+Government support  Appeal to government through strategic/regulatory  Enthusiastic, lukewarm, none
+Return on investment  support
+Business branding  Monetary support for ﬁxed route public transport  N/A,13 Yes, No
+Equity contribution  Expected average annual return on investment  e10, e5, 0, 5, 10, 15, 20%
+  Possible range for annual return on investment  Æ2, 4, 6, 8, 10% applied additively to above
+  attribute
+  MaaS business and service branding  [Own company]14-branded, new company
+  branding, partner company branding
+  Total value of the MaaS business15  Small: USD 0.7, 1, 2.5, 4.5, 7, 10 million
+
+  Medium: USD 7, 10, 25, 45, 70, 100 million
+
+  Large: USD 70, 100, 250, 450, 700, 1000
+  million
+
+  Proportion equity and voting rights in the MaaS  10, 20, 30, 40, 50, 60%
+  business
+
+  Equity contribution to the MaaS business  Product of above two attributes
+
+33.4 Mobility contract design
+
+Informed by ﬁeldwork, a mobility contract was built around ﬁve attribute categories and thirteen design attributes.
+Table 33.1 outlines the list of attributes and attribute levels whilst Fig. 33.2 situates them within an example choice task
+design. We now discuss the rationale for including each attribute.
+
+33.4.1 Mobility offering (revenue mix)
+
+Mobility offering deﬁnes the mix of modes operated by a mobility broker and in turn offered as part of integrated packages
+to end users. Five modes were selected as part of the potential set: (1) ﬁxed route public transport, covering urban mass
+transit options; (2) on demand public transport, the microtransit-type (like in NSW) operated as part of the contractual
+framework; (3) carsharing, including peer-to-peer, ﬂeet-managed, return-to-base, one-way and roaming models16; (4) taxi-
+like services, including point-to-point services operated by TNCs; and (5) shared ridehailing services, microtransit led by
+private enterprise such as uberPOOL. On demand public transport differs from shared ridehailing services in that there is an
+underlying contract being serviced by a subcontractor (often a TNC and heavily subsidised). Mode labels and descriptors
+were reﬁned (particularly this distinction) and the way values were presented tweaked (now with coloured bars) based on
+pilot feedback. The proportion of revenue from the ﬁve modes total 100%. Sole modal offerings (i.e., 100% of one mode
+and 0% of the rest) can thus be interpreted as a status quo mode-speciﬁc contract.
+
+11. The reference/base level is underlined for dummy variables (as deﬁned in the experimental design).
+12. Sum of attribute levels in this category is 100%.
+13. Nested attribute level - only displayed if ﬁxed route public transport ¼ 0%.
+14. Respondents’ actual organisation name is displayed within the choice task.
+15. Segmentation by value - see Section 33.4.5.
+16. Not all of these are presently available in Australia.
+452 PART | X Mobility as a Service (MaaS)
+
+  FIG. 33.2 Screenshot of a choice task programmed in the survey instrument, for a hypothetical medium-sized mode-speciﬁc operator Metro.
+
+  One variable that was tested extensively is how best to deﬁne the mobility offering mix. An alternative to revenue, as
+eventually selected, is service quantity, deﬁned by some capacity measure like vehicle or passenger/seat kilometres. The
+complication in this case arises from clouding the internal cross-subsidisation potential within the broker business. Further,
+respondents might hold an implicit bias on the ﬁnancial return or revenue potential from each mode (evidenced especially
+from the non-mobility pilot participants). Our approach ensures a level of transparency, but we recognise some limitation
+by excluding other revenue streams like advertising. Government subsidies or the lack thereof is explored in a separate
+attribute.
+
+  The need for this mobility offering attribute category is to test how different modal mixes might alter the propensity for
+respondents to invest/supply in the mobility broker. In the [Thredbo] Workshop, participants felt overwhelmingly that
+public transport ought to be at the core of any MaaS model. Whether public transport will naturally dominate, or must
+government play a role in directing the market through regulation and subsidies, is an unknown worth testing. We believe
+respondents from different sectors will be more inclined to support contracts with a particular modal bent (e.g., TNCs will
+support those with more taxi-like services). We further considered adding some demand variables for each mode
+(as informed by our end user survey in Ho et al. (2018)) but this proved problematic due to a likely endogeneity issue.
+33.4.2 Government support
+Two types of government involvement have been selected as attributes deﬁning each mobility contract, both of which exist
+as dummy variables. First, strategic/regulatory support refers to government in-principle support for MaaS, which may be
+exhibited through general policy direction (government masterplans, etc.) and further operationalised through the regu-
+latory environment. Private investors are likely to avoid entry where there is only lukewarm government support or great
+market uncertainty. In pilot testing, this attribute was deemed even more important for publicly-owned transport operators.
+The Workshop recognised great tension between policy formulation and operator viewpoints, with regulatory support for
+MaaS which attempts to control for market failure thought to have the unintended consequence of stiﬂing innovation
+(Mulley and Kronsell, 2018).
+
+  The second attribute refers to monetary support by government in terms of any subsidy adjustment for ﬁxed route
+public transport (the status quo) given a greater MaaS focus in the future. This constitutes a nested attribute since it will not
+  Identifying broker/aggregator models for delivering mobility as a service Chapter | 33 453
+
+feature for mobility contracts without a ﬁxed route public transport component. There are important links here with
+whether MaaS can evolve in the absence of government ﬁnancial support, and also the possible need for community
+service obligation payments to the broker. The question of whether these subsidies will be passed on as a proﬁt margin to
+the private enterprise is also relevant.
+
+33.4.3 Return on investment
+
+Potential return on investment is a critical part of any business decision. Two attributes are included in this category - the
+expected average annual return and the potential variance in this return, the latter capturing risk and uncertainty.
+The expected return (linked to proﬁt margin) varies in 5% increments between -10% and þ20%. Negative return levels are
+included given the ubiquity of TNCs making short term losses in an effort to gain (effectively ‘purchase’) market share,
+backed by venture capital investors. Negative returns can also be used as tax losses to write off tax liabilities from other
+businesses/ventures, as practiced by Australian toll road operators. The Workshop revealed Australian bus operators
+exhibiting a strong desire to enter the on demand market regardless of cost in order to showcase themselves as entre-
+preneurial, and hence help them win future tenders (particularly given government interest in on demand of late). We also
+found return expectations to vary considerably between businesses, with 8%e30% having been touted (the upper end not
+uncommon with the community transport sector).
+
+  Return on investment might be a dominating attribute, but it is equally important to consider how this ﬁgure might vary.
+Realistically, the return might be based on some form of distribution (e.g., normal), but for simplicity we have not placed a
+probability for how this return might vary. Instead, a possible range for this return is deﬁned, based on applying a number
+(2%e10%) additively to the expected return. This is in contrast to applying risk multiplicatively as initially tested which
+caused great confusion amongst pilot respondents. True return on investment will hence range between -20% and þ30%,
+though a much smaller range will be displayed within each mobility contract.
+
+33.4.4 Business branding
+
+Branding, bidding power and ownership of the customer emerged as important issues during the interview program and
+Workshop. On one hand, businesses are keen to maintain their brand since customer loyalty is part of the value proposition
+they bring to any relationship. This is especially the case with Australian bus operators, who pointed to their loss of livery
+and brand identity as part of recent changes to the contracting regime. In partnering with technology providers
+(for instance, for on demand trials in NSW), bus operators found it difﬁcult to proceed with larger players like Uber who
+were adamant in maintaining their brand, control of data and their digital platform. In the Helsinki case, the regional
+authority HSL expressed an element of regret in partnering with a MaaS provider since it meant a loss of control of their
+product, including marketing and ticket distribution channels.17
+
+  Sometimes, businesses might prefer to introduce an entirely new brand for a product or service, usually as a risk
+management strategy in case the venture is unsuccessful. Other reasons may include the existing branding is too localised
+(e.g., Punchbowl Bus Company18), to implement region-speciﬁc branding (e.g., Go-Ahead19), and when the parent
+branding is perceived to lack strength (e.g., FirstGroup rail business20). Rarely will companies desire a competitor’s brand
+on their product (though this is not the case in acquisitions - e.g., Transit Systems and BRIDJ), but we have designed three
+dummy levels to capture and test the realm of possibilities.
+
+33.4.5 Equity contribution
+
+The three equity contribution attributes devised are important in that they deﬁne the scale of the MaaS business and also the
+size of respondents’ stake in the broker. The ﬁrst of these attributes relate to the size of the broker business by total value in
+USD - selected as a global currency of trade. It is crucial to include a dollar item to estimate willingness-to-pay for
+individual attributes. Originally designed as a percentage of respondents’ present turnover (e.g., 40% of your stated annual
+turnover of AUD 50 million), we found through the pilot that many respondents had difﬁculty providing this information.
+
+17. The partnership was also instrumental in helping the MaaS operator secure a large investment from a vehicle manufacturer which was not viewed upon
+kindly by HSL.
+18. Operates as PBC in recent Goulburn (NSW) acquisition.
+19. Usually operates city/region-speciﬁc brands in UK bus and rail businesses.
+20. FirstGroup has been steadily unbranding their rail operations - e.g., First Great Western now Great Western Railway, First TransPennine Express now
+TransPennine Express.
+454 PART | X Mobility as a Service (MaaS)
+
+Another reason is that for a given percentage, larger organisations would see a signiﬁcantly greater proportion of funds
+invested in what may be perceived to be a very small activity. For these reasons, a ﬁxed range of dollars was devised, and
+segmentation by value in terms of organisation size implemented to ensure that the contracts remain relevant (almost a
+pivot design in effect). After thorough testing, we settled on using number of employees (collected as an earlier contextual
+variable) as a proxy for capturing organisation size, recognising the limitation in terms of labour intensity differences
+across sectors. The three respondent segments are:
+
+l Small enterprises: 999 employees
+l Medium enterprises: 1000e9999 employees
+l Large enterprises: !10,000 employees
+
+  The second attribute relates to respondents’ proportional equity contribution in the MaaS business, which range in 10%
+increments from 10 to 60%. Voting rights in the business are understood to be directly correlated with their equity
+investment, though in reality this may not always be the case.21 We propose to test how different broker sizes might affect
+interest in the business. For some companies, they may want a dominating share (and be monopolists) whilst others might
+be more risk averse and prefer a smaller starting stake. The actual contribution by respondents in USD is the ﬁnal attribute
+and displayed in bold - a function of the previous two values. Actual contribution captures either the value of respondents’
+ﬁnancial investment or investment in-kind, thereby monetarising assets to their equivalent amount in equity (capturing the
+two choice response variables investing and supplying in the contract). This may be more difﬁcult for transport operators in
+the case where government owns the assets (e.g., management contracts in Singapore, and increasingly even in Sydney and
+Melbourne), but there exists the opportunity for operators to use contracted assets in private work - charters are one
+example (Hensher, 2015 and Chapter 13). The actual contribution range varies between USD 0.07e6 million for small
+enterprises, USD 0.7e60 million for medium enterprises, and USD 7e600 million for large enterprises. We ensured a
+degree of overlap to cater for organisation sizes at the margin.
+
+33.5 The survey instrument
+
+Having identiﬁed relevant attributes for mobility contracts, we then designed them as stated choice tasks and incorporated
+these, together with contextual variables, into a state-of-the-art survey instrument. The qualitative research informed the
+survey structure as well as candidate respondents.
+
+33.5.1 Choice tasks and choice responses
+
+The mobility contracts were incorporated within a hypothetical setting using best practice design principles to deﬁne
+alternatives associated with designed levels of attributes (Louviere et al., 2000). Using Ngene, we generated D-efﬁcient
+choice tasks of four alternatives (three mobility contracts plus one no choice/reference status quo - see Fig. 33.2) in a
+six block, four sets per block design. We state that the choice scenario is situated within a jurisdiction where the respondent
+presently operates so as not to introduce an institutional dummy variable (representing country, for instance). Further, we
+had initially designed a Create-It-Yourself mobility contract scenario but found during pilot testing that it added no value.
+One major issue was the lack of a constraining variable (like a cost parameter) unlike what is usually present in demand-
+side studies.
+
+  The Thredbo Workshop explored a suite of partnership issues looking at market relationships in the MaaS era and the
+development of collaborations beyond standard procurement procedures (Mulley and Kronsell, 2018). Recognising this,
+we offered choice responses to either supply in or invest into the new MaaS business. The difference herein lies between
+contributing physical assets and assets in-kind (e.g., buses, depots, personnel) or becoming solely a ﬁnancial shareholder in
+the broker business. A range of ranking systems were tested and we settled on a ﬁrst choice only for the mobility contract
+(even when no choice was initially selected). To better understand how respondents might supply, we asked which assets
+they would contribute (technology, vehicle, bricks and mortar, right-of-way and personnel), what partners they might like
+to work with (other transport operators, platform providers and ﬁnancial enterprises - all of which we regard as crucial), as
+well as how involvement will affect their present service offering (in the case of mode-speciﬁc operators). These three
+factors were originally incorporated as choice task-speciﬁc questions, but pilot testing found these responses not to be
+conditional on attribute levels.
+
+21. Consider Softbank and their ridesharing ventures around the world.
+  Identifying broker/aggregator models for delivering mobility as a service Chapter | 33 455
+
+33.5.2 Contextual variables and survey structure
+
+The survey instrument included a range of contextual questions to further embellish the stated choice data - see full survey
+structure in Table 33.2. The survey begins with objective questions collecting respondent characteristics (Part B), including
+market sector, ownership structure, jurisdiction of operation and number of employees. The survey then branches and for
+mode-speciﬁc operators (C1), we ask for the modes they operate and for a vehicle count of each mode (as another measure
+of organisation size). This part initially included extensive contract-speciﬁc questions (around market arbitration, award
+mechanism, asset ownership, contract design, risk allocation and contract management) which were removed after the pilot
+round. Non-mobility providers (C2) are asked for their transport-related activities and interest in future transport initiatives.
+Both groups are requested to provide their return on investment expectations and perceived risk-free rate. Remarkably,
+industry respondents in the pilot exhibited no qualms in sharing this information (despite concern from academic experts).
+
+  Experience-conditioned discrete choice models constitute a recent advancement in the choice modelling literature,
+which to date has seen only limited applications - in transport modelling contexts (Hensher and Ho, 2016; Ben-Elia et al.,
+2008), healthcare (Neuman et al., 2010; Ryan and Ubach, 2003) and recreation (Wirtz et al., 2003). Each of these studies
+have found that respondent preferences are heavily inﬂuenced by their experience or familiarity with attributes and
+alternatives in the choice task. In the case of products or services not yet available on the market (like MaaS), then the
+conditioning agent can be considered as the respondents’ awareness of an idea or experience. To account for hetero-
+scedasticity conditioning in the analysis, we ask for respondents’ (and their organisations’) familiarity with the MaaS
+concept in Part H.
+
+  Hoefﬂer and Ariely (1999) makes a distinction between ‘hard’ and ‘easy’ choice tasks. Respondents in hard tasks
+exhibit greater preference stability but lower conﬁdence in their choice, whilst those in easy tasks show lower preference
+stability, but with (a potentially misled) greater conﬁdence in their decision-making. In Part I, we ask respondents to rate
+(on a Likert-scale) their decision-making conﬁdence so as to allow us to validate the data whilst making a methodological
+contribution. The survey concludes with questions about respondents’ position title, responsibilities and years active in the
+industry to see whether these factors might carry particular biases in their responses.
+
+  Ethics approval was obtained (protocol number 2017/1020) for our ﬁnal survey design22 titled Business Opportunities
+in Future Mobility. We generated unique URLs for online distribution to help us track progress and ensure that
+respondents need not ﬁnish the survey in one sitting. The ﬁnal survey takes an estimated 15e20 min to complete,
+compared with up to 45 min in the pilot version.
+
+33.5.3 Candidate respondents
+
+A candidate sampling frame was deﬁned in terms of jurisdiction, market sector and position title. We desired an inter-
+national survey from the outset to obtain a global view, but recognise that some level of comparability between contexts is
+
+TABLE 33.2 Structure of the survey instrument and function of each section.
+
+Page  Title  Function
+A  Introduction  Introduces survey to respondent, including ethical information and contact details
+  of researchers
+B  Your organisation  Preliminary information on respondents’ organisation characteristics
+C1  Mode-speciﬁc  Questions tailored for mode-speciﬁc operators relating to their present contract
+C2  Non-mobility  Questions tailored for non-mobility providers relating to their present operations
+D-G  Choice tasks  Four choice tasks with alternative mobility contract options deﬁned by a range of
+  attributes
+H  MaaS experience  Experience conditioning questionnaire on familiarity with the MaaS concept
+
+I  About you  Questions relating to the respondents’ individual characteristics
+
+22. Test link for ﬁnal survey design: https://survey.conﬁrmit.com.au/wix/8/p2506968.aspx (data not captured).
+456 PART | X Mobility as a Service (MaaS)
+
+important, given the vastly different institutional and governance arrangements between countries. Hence, the jurisdictions
+of Australia, Hong Kong, Singapore, Japan, Western Europe and the United States23 were selected as the sampling frame
+due to similar perspectives on risk and investment, and a level of dialogue and engagement between these economies.
+A number of neighbouring countries within these regions (e.g., Canada for US) were also selected where there is a high
+level of cross-cultural interaction.
+
+  The organisations selected were categorised under mode-speciﬁc operators (incumbent providers of passenger service)
+and non-mobility providers (new entrants) interested in partaking in the MaaS business model. Mode-speciﬁc operators
+include public transport operators, taxi operators, transportation network companies, carshare operators and bikeshare
+operators. Non-mobility providers comprise of vehicle manufacturers/suppliers, technology providers/startups, ﬁnancial
+enterprises, infrastructure operators, property developers, telecommunications providers, consultancies, insurance
+companies and industry bodies. As mentioned, we decided that governments (i.e., transport regulators/authorities) would
+not form part of the candidate sample (unless they were an operator of transport service) since we deemed it unlikely they
+would partner within a mobility broker model (see Section 33.2.2). In pilot testing, logistics companies were excluded from
+the sample due to concerns about relevance.
+
+  One of the most important issues and major challenges in the study of business is identifying relevant decision makers
+within an organisation since preference responses are highly dependent on who provides the data (Balbontin and Hensher,
+2018). Our speciﬁc focus is on senior executives making investment decisions within companies in the market sectors of
+interest. These include Managing Directors, Executive Directors, Chief Executive Ofﬁcers, Chairmen and Strategy
+Directors but the actual respondent’s position is difﬁcult to control for due to different organisational structures between
+companies (hence the importance of capturing respondent-speciﬁc data, together with ﬁrm-speciﬁc data). It was also
+decided to allow capture of additional data points from within the one organisation (in many cases either part of the
+executive team, or Head of a different division/jurisdiction), collected as independent observations but to be pooled in
+subsequent analysis. In terms of recruitment, we considered hiring a business-to-business panel,24 but enquires indicated
+that they might be less effective in our target (and somewhat niche) market sectors. Instead, we engaged our partners in
+academia and industry (bus associations being particularly helpful) to assist with outreach as part of the respondent
+recruitment process.
+
+33.6 Preliminary results
+
+Data collection on the live survey instrument has been in progress since May 2018.121 responses have been collected as of
+mid-July 2018 (Table 33.3), with a roughly equal mix of mode-speciﬁc operators and non-mobility providers, as well as
+Australian and non-Australian organisations. Small enterprises, however, account for 56% of the sample, as compared with
+26% medium and 18% large. Our contextual Likert-scale questionnaire revealed smaller organisations to be more receptive
+towards MaaS initiatives than larger organisations amongst all stakeholders - board of directors, employees, shareholders
+and customers. Based on design levels, the mean attribute levels (Table 33.4) for mobility contracts which respondents
+chose to invest or supply in were determined. These reveal a large public transport component amongst MaaS businesses
+which garnered the highest level of support. A higher return on investment expectation is also evident when respondents
+were asked to invest rather than supply. Larger business propositions are preferred by non-mobility providers, more than
+double the size of those selected by mode-speciﬁc operators. Finally, the average preferred stake in the broker business is a
+little more than one-third, with implied voting rights to the same extent.
+
+  A number of choice models were estimated using the econometric and statistical software package NLOGIT6, using
+generic utility functions for an unlabelled choice experiment. We began with a simple multinomial logit (ﬁxed parameters)
+model to test the robustness of the model before moving to a more advanced, mixed logit (random parameters) model.
+Table 33.5 shows the statistical signiﬁcance of the parameter estimates and how they contribute to the utility of a packaged
+alternative. It is clear again that public transport (both ﬁxed and on demand) is an important part of the preferred modal
+mix. Return on investment and business size are also relevant attributes. Surprisingly, branding considerations proved to be
+statistically insigniﬁcant (and thus omitted from this model). It is worth noting that even if the parameters are not
+statistically signiﬁcant in the mean, they can be are in their variance (standard deviation parameter estimate), demonstrating
+preference heterogeneity across the sample that is not adequately accommodated through only a mean estimate. We added
+
+23. South Africa was later added given the emergence of a broker model associated with digital platform interfaces for minibus taxi (informal transport)
+operators.
+24. As an example, see B2B market research services offered by Survey Sampling International: https://www.surveysampling.com/services/data-
+collection/online-surveys/b2b.
+  Identifying broker/aggregator models for delivering mobility as a service Chapter | 33 457
+
+TABLE 33.3 Respondent sample for data collected thus far.
+
+  Mode-speciﬁc operator  Non-mobility provider  Grand total
+
+Jurisdiction  Small  Medium  Large  Total  Small  Medium  Large  Total  58
+Australia  24  6  1  31  17  7  3  27  2
+New Zealand  1  1  1  2  5
+Hong Kong  1  1  2  3  3  2
+China  2  1  1  6
+Singapore  1  2  1  5  1  1  3
+Japan  1  1  7
+United Kingdom  1  3  1  1  11
+Continental Europe  29  6  17
+United States  3  5  3  3  6
+Canada  3  3  4
+Other  2  2  3  1  4  121
+Grand total  19  54
+  6  0  5  11
+
+  8  2  2  12
+
+  1  2  3
+
+  2  2
+
+  39  12  16  67
+
+TABLE 33.4 Mean attribute levels for chosen alternatives (mobility contracts), stratiﬁed by organisation type and
+choice response.
+
+  Willing-to-invest  Willing-to-supply
+
+Fixed route public transport  Mode-speciﬁc  Non-mobility  Mode-speciﬁc  Non-mobility
+On demand public transport  operator  provider  operator  provider
+Carsharing  31.9%  20.8%  34.3%  25.2%
+Taxi-like services  19.1%  20.9%  19.9%  19.9%
+Shared ridehailing services  15.2%  18.0%  13.5%  19.3%
+Expected average annual ROI  19.4%  17.6%  16.8%  15.1%
+ROI risk/variance  14.5%  22.7%  15.4%  20.5%
+Total value of MaaS business  8.9%  9.7%  7.0%  7.3%
+  Æ6.4%  Æ6.2%  Æ6.3%  Æ6.5%
+Proportion equity and voting  USD 53.9 million  USD 126.5 million  USD 59.5 million  USD 124.3
+rights  million
+Equity contribution to MaaS  35.9%  34.3%  37.5%  35.30%
+business
+Sample cases  USD 14.8 million  USD 43.7 million  USD 20.3 million  USD 42.3 million
+
+  170  196  205  238
+
+an alternative-speciﬁc constant on contract A (ASCA) to investigate any possible showed there to be a left-right bias in
+terms of selected alternatives within the sample (noting that a constant has no behavioural meaning in a strictly unlabeled
+choice experiment except for directional bias). For the null (no choice) alternative, we tested contextual variables and
+found different effects between the invest and supply choice responses and respondents’ organisation type and size.
+
+  Using the mixed logit model, willingness-to-pay estimates (Table 33.6) were obtained with the Wald method
+(see Hensher et al., 2015). Again, public transport is shown to be an important part of the preferred modal mix, whilst
+carsharing and taxi-like services are more marginal in this regard. Interestingly, ﬁnancial support is negative but strategic/
+regulatory support is positive, showing a preference for government involvement at arm’s length only, without the
+possibility of undue interference. There are also signs of risk aversion evident with smaller equity contributions being
+preferred. As an application, our willingness-to-pay estimates can be used as inputs to determine the value of different
+458 PART | X Mobility as a Service (MaaS)
+
+TABLE 33.5 Mixed logit model parameters.
+
+  Willing-to-invest  Willing-to-supply
+
+  Parameter estimates  Parameter estimates (z-score)
+  (z-score)
+
+Random parameters: Mean
+
+Fixed route public transport (%)  0.64176  ***  (3.19)  0.80827  ***  (4.15)
+
+On demand public transport (%)  0.38134  ***  (4.81)  0.23206  ***  (3.48)
+
+Carsharing (%)  0.11575  (1.19)  0.15338  *  (1.72)
+Taxi-like services (%)  0.00879  (1.39)  (e0.52)
+  e0.00383
+
+Shared ridehailing services (%)  0.01471  **  (2.46)  0.01229  **  (2.08)
+
+Expected average annual ROI (%)  0.62552  ***  (5.55)  0.33350  ***  (3.44)
+Total value of MaaS business (USD millions)
+Proportion equity and voting rights (%)  e0.25212  **  (e2.09)  e0.25431  *  (e1.87)
+
+  e0.07551  (e0.45)  0.13359  (0.81)
+
+Enthusiastic appeal to government (1/0)  0.63265  **  (2.40)  0.46035  *  (1.95)
+Lukewarm appeal to government (1/0)
+  e0.07534  (e0.30)  0.31868  *  (1.66)
+
+Fixed (non-random) parameters  e0.47208  **  (e2.37)  e0.34255  *  (e1.9)
+ASCA  (e1.27)  (e1.84)
+Monetary support for public transport (1/0)  e0.76513  e1.03658  *
+
+No choice constant (null)  2.50282  **  (2.42)  1.15014  (1.12)
+Mode-speciﬁc operator (for null)  (e2.53)
+Medium-sized enterprise (for null)  e1.62726  **  (e0.66)  e0.53949  (e0.52)
+Large-sized enterprise (for null)  (e0.95)
+Australian enterprise (for null)  e0.45986  (0.83)  e2.87332  **  (e2.35)
+
+  e1.01405  e4.09931  ***  (e2.63)
+
+  0.47674  e1.47531  (e1.56)
+
+Random parameters: Distribution (normal)
+
+Fixed route public transport (%)  0.39796  ***  (4.12)  0.35050  ***  (2.76)
+
+On demand public transport (%) (constrained)  0.38134  ***  (4.81)  0.23206  ***  (3.48)
+
+Carsharing (%)  0.53666  ***  (5.27)  0.22751  **  (2.14)
+
+Taxi-like services (%)  0.00022  (0.02)  0.03227  ***  (3.80)
+
+Shared ridehailing services (%)  0.00544  (0.85)  0.01128  (1.09)
+
+Expected average annual  0.63297  ***  (4.93)  0.47854  ***  (3.58)
+ROI (%)
+
+Total value of MaaS business (USD millions)  0.53622  ***  (5.04)  0.70923  ***  (4.54)
+
+Proportion equity and voting rights (%)  0.73798  ***  (5.56)  0.60667  ***  (3.95)
+
+Enthusiastic appeal to government (1/0)  1.17987  ***  (3.80)  0.87844  ***  (2.82)
+
+Lukewarm appeal to government (1/0)  0.96464  ***  (2.89)  0.08101  (0.11)
+
+Model ﬁt  e670.96647  e670.96647
+Log-likelihood at zero  e531.50862  e506.48087
+Log-likelihood at convergence
+
+McFadden Pseudo R-squared  0.2078462  0.2451473
+
+AIC (sample adjusted)  2.304  2.2
+
+Mixed logit (random parameters) model based on 484 observations from 121 respondents
+
+***, **, * ¼ ¼> Signiﬁcance at 1%, 5%, 10% level.
+Identifying broker/aggregator models for delivering mobility as a service Chapter | 33 459
+
+TABLE 33.6 Willingness-to-pay estimates for contract elements.
+
+Willingness-to-pay estimates  To invest (USD million)  To supply (USD million)
+1% additional ﬁxed route public transport revenue  11.8  13.8
+1% additional on demand public transport revenue  8.2  4.5
+1% additional carsharing revenue  2.6  3.0
+1% additional taxi-like services revenue  3.5  e1.5
+1% additional shared ridehailing services revenue  5.9  4.6
+Presence of government subsidy  e303.3  e385.1
+Lukewarm appeal to government  e21.6  118.3
+Enthusiastic appeal to government  260.9  170.0
+1% additional return on investment  41.8  20.3
+  e1.4
+1% additional equity contribution  0.7
+
+TABLE 33.7 Example mobility contracts and pricing (based on mean attribute levels in Table33.4).
+
+  Mobility contract
+
+Fixed route public transport  1  2  3  4
+On demand public transport  31.9%  20.8%  34.3%  25.2%
+Carsharing  19.1%  20.9%  19.9%  19.9%
+Taxi-like services  15.2%  18.0%  13.5%  19.3%
+Shared ridehailing services  19.4%  17.6%  16.8%  15.1%
+Expected average annual ROI  14.5%  22.7%  15.4%  20.5%
+Contract value to invest (USD million)  8.9%  9.7%  7.0%  7.3%
+  1123.16  1088.62  1045.28  989.66
+  715.05
+Contract value to supply (USD million)  790.04  710.02  791.13
+
+MaaS business propositions. Table 33.7 prices the mean preferred contracts (based on a selection of attributes only), given
+the preference function of the sample. We note the higher value of investing in contracts, as compared with supplying -
+consistent with our earlier ﬁndings. The values presented are a lifetime ﬁgure so we divide by (say) 20 for a 20 year period
+(giving USD 40e50 million which is a reasonable sum).
+
+33.7 Conclusion and next steps
+
+MaaS is a nascent topic which has emerged only in the past several years. Quantitative and empirical evidence on the
+design of supply-side subscription plans remains virtually non-existent and in this chapter we begin the process of tackling
+the challenge to identify the conditions around which businesses might invest or supply in the mobility broker/aggregator
+model. The interview and participatory research process helped deﬁne the potential attributes to include in the mobility
+contract whilst pilot testing (n ¼ 9 þ 14) helped us reﬁne the survey instrument used in this novel application on MaaS.
+In retrospect, we underestimated the amount of work required for what is typically a straightforward experimental design
+process. Data collection has thus far been smooth but not without its hiccups. We have received encouraging feedback
+including that the survey is interesting and helps respondents organise their thoughts. Many participants, however, also
+found the choice scenarios a little challenging with a few dropping out and others raising concerns of sensitivity over some
+of the questions asked (an issue which did not emerge in pilot). Some non-mobility providers invited to participate
+(e.g. logistics companies) also felt that the survey was not relevant, though this is a ﬁnding in itself for us about likely
+market interest as investors and/or suppliers. Analysis of preliminary data (n ¼ 121) conﬁrmed the robustness of our
+approach and offered some useful initial insights.
+
+  We have commented on some of the challenges inherent and have prepared this chapter with a view of streamlining
+future stated preference research on the supplier interface for MaaS. Our present focus is to continue data collection, with
+an aim to increase the present sample. As additional data is obtained, we will be further ﬁnessing our model, including
+interacting the attributes with the many (more than 50) contextual variables in the survey. This will became an innovative
+460 PART | X Mobility as a Service (MaaS)
+ﬁrst view on the topic and the beginning of greater interest in identifying the commercial, market-led equilibrium for MaaS.
+We plan to identify this by mapping the present results onto consumer preferences we have determined in our
+MaaS demand-side studies (Ho et al., 2018). Government can then evaluate whether it ﬁnds these results acceptable,
+aligning with the broader societal and urban efﬁciency goals of cities, or whether an institutional overlay will be required to
+ensure that these objectives are met (Wong et al., 2017). Our research agenda is a ﬁrst step towards informing these
+unknowns.
+
+Appendix
+
+(Fig, 33.A1).
+
+FIG. 33.A1 Explanation of attributes offered to respondents as part of the choice task introduction in the survey instrument, for a hypothetical medium-
+sized mode-speciﬁc operator Metro.
+Chapter 34
+
+What might road congestion look like in
+the future under a collaborative and
+connected mobility model?
+
+34.1 Introduction
+
+The growing interest in smart1 cities and the role of digital-based technology in driving new agendas for how our cities will
+perform in the near and far future has opened up commentary on what this might mean for curbing road trafﬁc congestion.
+Will, for example, autonomous vehicles (at levels 3 and 4 in particular2) contribute to reducing if not eliminating or better
+manage trafﬁc congestion, and when might this occur? How might a move to a sharing culture with less private car
+ownership affect levels of congestion even without autonomous cars? What will all this mean for future investment in
+infrastructure, especially major highways, and might the design of such roads change in recognition of the safety outcomes
+associated with computer-controlled cars that can travel in platoons? Will lanes be narrower,3 with possibly autonomous
+intersection management? Under the sharing model, car-based movements might start to take on the feel of conventional
+bus public transport, albeit with smaller vehicles, offering improved public transport-like services that can stretch
+throughout suburbia under a point to point initiative, or as a ﬁrst and last mile (almost seamless) connection with
+conventional line-haul high capacity public transport. These speculative assertions are eroding daily as we come to grips
+with the real possibilities of technology-enhanced mobility opportunities, driverless or otherwise. What this will mean for
+the changing landscape of service provision under the adage ‘the customer comes ﬁrst’, and the implications for the
+governance of cities, are rapidly becoming priority agenda items.
+
+  With a focus on what this might mean for future levels of trafﬁc congestion, this chapter looks closely at a number of
+themes that might throw up clues as to the implications for future congestion and what conditions are likely to have to be in
+place to support taming trafﬁc congestion. We have selected four themes: smart mobility, governance reform, ownership of
+information, and road pricing reform. In one sense the arguments presented below are speculative (although almost daily
+we acquire further factual evidence); but then so is the future. To recognise that the digitally disrupted future and its
+interface with autonomous vehicle technology may have signiﬁcant downsides, once we start to understand behavioural
+response, must be given a greater focus. Importantly, we need to be clear from the outset that mobility as a service (MaaS),
+the popular interpretation of future collaborative and connected mobility services, must be considered under both the
+presence and absence of autonomous vehicles as well as the extent to which we can change society to adopt a sharing
+culture. These are the critical elements that have to be in place or not in judging the opportunity to change the way transport
+services are provided and the success of any initiatives (see also Cavoli et al., 2017 for an excellent review of the literature
+and Cohen et al., 2017, also Stathopoulos and Sener, 2017).
+
+  This chapter is as much about uncertain futures as it is about identifying research themes that will need to be given great
+attention if we are to gain greater conﬁdence in the likely impact that these exciting initiatives might have on levels of
+congestion. There is one outcome that we feel reasonably conﬁdent about however e congestion is likely to become less
+
+1. See Lyons (2017) for a review and critique of the meaning and value of the word ‘smart’.
+2. A Level 3 autonomous system is capable of monitoring the driving environment around them, allowing vehicles to make decision themselves. Cars with
+on board computers that can handle tasks like indicating, braking and steering at the same time are classed as Level 4 systems. A Level 4 car is ofﬁcially
+driverless in certain environments and can drive safely on its own even if a driver chooses not to intervene when asked. See https://en.wikipedia.org/wiki/
+Autonomous_car.
+3. Although this may require no lane access by heavy vehicles.
+
+Bus Transport. https://doi.org/10.1016/B978-0-12-820132-9.00034-0  461
+Copyright © 2020 Elsevier Inc. All rights reserved.
+462 PART | X Mobility as a Service (MaaS)
+
+random and somewhat more predictable, but it is unlikely to disappear. Much of the criticism of historical and current
+trafﬁc congestion is related to its great variability and uncertainty every time one travels, and the growing incidence of
+accidents and breakdowns as a contributing inﬂuence.
+
+34.2 Smart shared mobility and potential implications for levels of congestion
+
+The transition to smarter mobility that is taking place, referred to as Smart Transition, typically involves greater car sharing
+(facilitated by apps) and less owning of cars by private individuals, as well as the future role of (electric) autonomous
+vehicles. It has an underlying mandate to redeﬁne and commit to a Collaborative and Connected Society (CCS) whereby
+the mode is far less important that the service levels that satisfy customer needs. While we will always need reﬂective and
+effective governance frameworks to ensure deliver of CCS, we have an opportunity to ﬁnally break the stranglehold that
+outmoded mode-speciﬁc regulatory models have had on the provision of transport services.4 Why should we continue with
+mode-speciﬁc contracts, often associated in the public transport sphere with public monopolies or provided by competition
+for the market (i.e., competitive tendering e see Hensher, 2017 and chapter 2), all supported with provider-side subsidies?
+This includes the limitations imposed on the over-speciﬁcation of network service levels (and the predominance of
+timetables for conventional public transport). The car-based systems associated with taxis are now being broken by the
+arrival of new service models such as Uber and Lyft, although they are essentially mode-speciﬁc (though covering an
+increasingly expanding mix of intermediate modes, many of which are being deﬁned for the ﬁrst time). Fundamentally, we
+increasingly see many variants on the conventional wisdom that are tantamount to delivery models that cannot operate
+under outdated regulations. Smart Transition is the context in which we have to contemplate that anything goes as long as it
+has a sensible customer outcome, and one might hope an acceptance by government as the custodian of societal interests
+through a reformed governance (and funding) model.
+
+  The current interest is in how this all relates to the future of road congestion reduction, something that is claimed to be a
+major beneﬁt of an era of intelligent mobility. This appears to be premised on one crucial consideration, the success in
+moving society to a regime of collaboration and connectivity, initially without autonomous vehicles, but subsequently with
+such vehicles. Collaboration is often associated with the sharing economy which can take at least two paths e shared and
+pooled (see Wong et al., 2017), or without others, for a particular ‘point to point’ or ‘point via another point to point’ trip.
+It is far from clear how much of the congestion challenge can be resolved through greater sharing of private cars (no matter
+whether they are autonomous or not), increasing occupancy, assuming a constant number of person trips. However, sharing
+of private cars could lead to increased trips overall through a higher number of trips per vehicle, and to greater congestion if
+the number of trips overall goes up.
+
+  A very speciﬁc issue being raised within the new reform agenda is what all of this might mean for the number of cars on
+the road and the amount car usage (vehicle kilometres travelled). The limited evidence on smart transition (predominantly
+associated with smart apps, opportunities to ride hail and dispose of a car), is simultaneously creating the promise of a
+system that can reduce demand (congestion), but at the same time fulﬁlling previously unmet demand and creating new
+demand (e.g., Truong et al., 2017). Smart transition moves society to a rentier model (Docherty et al., 2017) where the
+incentive for the mobility service provider is to generate as much mobility as possible (i.e., trips and kilometres) to
+maximise returns on capital (Karlsson et al., 2016).
+
+  What little evidence there is at present, based on simulated scenarios of futures, is informative, but can it be relied on?
+Two studies are of particular interest, one from the ITF/OECD, and one from University of California Davis (Clewlow and
+Mishra, 2017). These studies say nothing about the impact of autonomous cars or indeed any renewed future role of public
+transport (except on demand buses)e they primarily focus on shared cars with a driver, the latter likely to be the basis of
+car travel for at least the next 20 years.
+
+  The ITF/OECD (2017) study modelled the impact of replacing all car and bus trips in a city with mobility provided
+through ﬂeets of shared vehicles. The study found that if all individually-owned private cars were removed from the city
+with shared vehicles only, there would be a substantial reduction in the number of vehicles required to service overall
+mobility demand, and greater equity of service across the city as a whole. However, the ﬁndings suggested an increase in
+vehicle kilometres driven of 6.4% per day. Once the assumption of perfect conditions breaks down, and 50% of private
+cars are assumed to remain, the performance of the system deteriorates further, with up to 90.9% more kilometres being
+driven per day. This does not sound like a congestion buster? Even more congestion on our roads; although the congestion
+
+4. Interestingly, New South Wales, Australia made a start with this is the 2014 Passenger transport Act where linking of speciﬁc vehicles of modes was
+removed.
+  What might road congestion look like in the future Chapter | 34 463
+
+levels may be more predictable (non-random) with improved reliability, and maybe a lower value of travel time savings
+and reliability willingness to pay.5
+
+  ITF/OECD (2017) also undertook a simulation study, using mobility and network data from Lisbon, Portugal and
+examined scenarios where shared mobility is delivered by a ﬂeet of six-seat vehicles (shared taxis) that offer on-demand,
+door-to-door shared rides in conjunction with a ﬂeet of eight-person and 16-person mini-buses (taxi-buses) that serve
+pop-up stops on demand and provide transfer-free rides. Rail and subway services are assumed to keep operating in the
+current pattern. They tested scenarios where car owners could use their car for one, two or three days each working week,
+which corresponds to having 20%, 40%, and 60% of trips currently made by private car continuing to be made by that
+same mode.6 Allowing for 60% of the private cars7 brings virtually no reduction in congestion, thus producing no visible
+result of improvement, and no support for the political argument in favour of introduction of shared mobility solutions. On
+the contrary, allowing 40% of the private cars (each private car allowed two days per week) reduces vehicle kilometres at
+the peak hour by 13%, which according to the authors ‘essentially makes congestion disappear’. The reduction of parking
+space needs is also visible (see Rantasila, 2016) and it is suggested that this would allow a beneﬁt for pedestrians
+(and cyclists) in many parts of the city (assuming this space is not used for other endeavours). Environmental impacts are
+also likely to positive (Brendel and Mandrella, 2016). These “quick wins” can be essential to gain political support for the
+change.
+
+  Clewlow and Mishra (2017) presents ﬁndings from a comprehensive travel and residential survey deployed in seven
+major U.S. cities (Boston, Chicago, Los Angeles, New York, San Francisco/Bay Area, Seattle, and Washington, D.C.),
+undertaken in two phases from 2014 to 2016, with a targeted representative sample of urban and suburban populations.
+4094 completed responses were collected between the two surveys, with 2217 from respondents residing in dense, urban
+neighbourhoods and 1877 from more suburban locations.8 They show that directionally, based on mode substitution and
+ride-hailing frequency of use data, that ride-hailing is currently likely to contribute to growth in vehicle miles travelled
+(VMT) in the major cities represented in this study.9
+
+  Speciﬁcally, they ﬁnd that ride-hailing users, on average, do not possess signiﬁcantly fewer vehicles than their non-ride
+hailing counterparts, and have more vehicles than those who only use transit. While some amount of ride-hailing users
+reduce the miles that they personally drive, and nine percent disposed of a vehicle, these miles return in the form of miles
+travelled in a ride-hailing vehicle. They found a strong correlation between increasing ride-hailing use and increasing rates
+of vehicle reduction. That is, the more frequently an adopter uses ride-hailing services (from once a month to daily), the
+more likely they were to have reduced their household vehicles. The reduction of vehicle ownership is primarily of value
+insomuch as it reduces total vehicle miles travelled (VMT), although the reduction in the number of vehicles is the system
+is encouraging. What is currently unclear is the net vehicle miles travelled (VMT) adjustment due to the introduction of
+ride-hailing e has it gone up or down? And what are the likely longer-term impacts of these services as ride-hailing
+companies operate a commercial model with a usage maximisation objective?
+
+  There is nothing in this evidence to inform us about the role of autonomous vehicles. Whereas the studies reported
+above are related to driver based cars, a study by MacKenzie et al. (2016) estimates that autonomous cars can cut the cost
+of travel by as much as 80%, which in turn drives up kilometres travelled by 60%10. Clearly the price elasticity is at work
+and really does matter. MacKenzie suggests that “You are talking about a technology that promises to make travel safer,
+cheaper, and more convenient. And when you do that, you’d better expect people are going to do more of it.”
+
+  Maciejewski and Bischoff (2017) investigate the inﬂuence of ﬂeets of shared autonomous vehicles replacing private
+cars by providing a taxi-like service but at a cost similar to driving a private car. They use MATSim, a multi-agent transport
+
+5. The study only forecasts a minor increase in travel times by having distributors and local streets absorb much of this increasedthereby ignoring the road
+hierarchy and bringing associated externalities.
+6. A related issue and cautionary evidence is what happened when Athens allowed vehicles to be driven every other day (odd and even registration plates),
+albeit for pollution control. The outcome was an increase in the number of vehicles as households moved to buy more vehicles so they had a permitted
+vehicle for each day or they went for one of the exempted vehicles. It is not easy to stop people once they have a car, so reducing the number of vehicles
+overall has to be where we start.
+7. The study found that if conventional cars were replaced with driverless cars that take either a single passenger at a time or several passengers together,
+as long as half of travel is still carried out by conventional cars, total vehicle miles travelled will increase from 30 to 90%, suggesting that even widespread
+sharing of driverless cars would mean greater congestion for a long time.
+8. The authors correctly express concern about many other studies in the USA that have self-selection bias in that their samples are from locations where
+car ownership is typically much lower than normal, and the socio economic characteristics and density of the built environment are more supportive of not
+owning a car and using taxi-like services.
+9. A recent US Department of Transport study of autonomous car sharing in Chicago predicted a 70% worsening of trafﬁc congestion. 30% is the cited
+ﬁgure for San Francisco. Referenced in McCabe (2017) video talk at http://ozebus.com.au/information-for-moving-people/confspeakers.
+10. To realise this savings, signiﬁcant investment is required up front with a long term ROI model.
+464 PART | X Mobility as a Service (MaaS)
+
+simulation platform for the city area of Berlin to investigate the levels of trafﬁc congestion under scenarios that vary the
+replacement rate of private driver cars with shared autonomous cars under various assumptions of road capacity (vehicles
+per hour) increase. Using a congestion index deﬁned as a delay ratio (deﬁned as the average travel delay (i.e., actual-free
+ﬂow travel time)/average ﬂow (uncongested) travel time, they conclude that without any increase in road capacity level, the
+delay ratio will worsen (contributed to by empty vehicle trips and induced demand) and that after a 50% increase in
+capacity, we start to see a reduction of 0.5e2 absolute percentage points in the delay ratio depending on the replacement
+rate varying from 20 to 100%. The empty vehicle trips are then being compensated for by improved road capacity due to
+efﬁcient spacing of vehicles. With a doubling of capacity, this range increases from 0.9 to 3.7 respectively for 20, 40, 60,
+80 and 100% replacement of the private driver cars. The message here is that the impact on congestion is dependent on the
+extent to which shared autonomous cars can deliver greater road capacity as a consequence of their more efﬁcient
+contribution to trafﬁc ﬂow, assisted in large part by reduced gaps between following vehicles and improved performance
+through intersections.
+
+  As interest in shared mobility grows, with evidence thus far mainly focussing on switching between a privately owned
+car usage model to a car-based shared vehicle model, a broader question of interest becomes the mix of modes that will
+(might) be offered through the subscription plans that are starting to enter the market, or being actively considered, by
+mobility service providers (and how these ought to be allocated including the link with modal efﬁciency and land use - see
+Wong et al., 2017). When autonomous vehicles are added into the mix in future years, and there is greater acceptance of
+sharing non-owned cars (in contrast to sharing existing public transport),11 there are real prospects of signiﬁcant changes in
+the performance of the transport network, especially roads.12 But the question remains e how much of the kilometres
+travelled on the roads by shared vehicles will be car based and result in signiﬁcant reductions in conventional public
+transport use (Hensher, 2017)? Will this also make trafﬁc congestion worse, even if more predictable, but in a safer
+mobility environment, or not? Maybe the advent of the small bus will become nothing more than a higher vehicle
+occupancy shared car, which may be a good thing and is almost inevitable that it will become the bus mode under a
+demand-responsive system13?
+
+  MaaS (Australia),14 for example, argues that without public transport at the centre of MaaS complemented with
+on-demand transport covering the ﬁrst and last mile, it will not succeed in delivering mobility solutions that are more than
+simply commercial propositions designed to make money for car-based services, but will deliver on the goals and
+expectations of government and society more broadly. It is a balancing act e optimising the supply and demand chains of
+the transport services without compromising the intended goals and objectives. This will require all transport providers and
+MaaS operators to collaborate transparently (the commercial model yet to be contested/trialled). This creates a real
+challenge for a number of the players in this space who have a vehement interest in a car-based solution, and who are
+reticent about joining forces in a subscription plan with conventional public transport modes, which they believe will be
+loss making. This raises important questions about how the packages can be designed to allow for internal cross subsidy15
+and still deliver an acceptable return on investment, while at the same time not requiring government subsidy, and hence
+allowing the MaaS model to be delivered under a truly free market setting.16 MaaS (Australia) envisions that mobility
+ecosystem beneﬁts will be realised by establishing a trusted partnership between the public and private sector and
+unlocking the access to data.
+
+11. This also implies a greater level of personal intimacyehow acceptable this is has yet to be adequately tested.
+12. All this depends on the pricing model. One of the serious impediments to sharing is the way in which the private car is a low marginal cost mode,
+especially in comparison to shared cars, public transport etc. MaaS relies on people being prepared to understand the full costs of car ownership.
+13. An important question is to what extent conventional ﬁxed route timetabled bus services will be replaced by demand responsive bus services (DRTs),
+and importantly what this will mean for future large bus needs and contracting models. DRTs can be built into existing contracts (as variations) under
+tendered or negotiated contracts; however the author argues that DRTs should be part of an economically deregulated market, at least initially, as a way of
+encouraging competition. If as might be expected in some jurisdictions, the DRT appeal is in replacing conventional (RPT) services with DRTs because of
+the thinness of the market, then a natural monopoly setting may evolve which suggests that a single operator makes sense. But this does not have to be the
+incumbent RPT provider, especially where the buses are small and not available under a shared cost model with the incumbent RPT services.
+14. I thank Hany Eldaly (Managing Director and Co-founder of MaaS (Australia)) for discussions on this theme and the commitment that MaaS
+(Australia) has to ensuring public transport is in the mix. See http://maasaustralia.com/.
+15. This is the basis of a current study by ITLS, led by Corinne Mulley, on community transport in NSW.
+16. There is a lot of value add from the data collected by apps; hence if this has real value in a MaaS context, then this value can be used to deﬂate the
+MaaS package price. In the UK, although less in Australia, for example, there is a lot of advertising around leasing of cars (for individuals, not necessarily
+ﬁrms). These are all inclusive lease prices (car, repairs, maintenance and in some cases road tax). The more this becomes the way in which people buy their
+cars, the more the MaaS package will look less expensive as the marginal cost of the car use will be including all the costs rather than just fuel. I thank
+Corinne Mulley and participants at the January UTRSG meeting in The UK for these insights.
+  What might road congestion look like in the future Chapter | 34 465
+
+  The ‘limited’ evidence also suggests that if the cost of mobility drops under a CCS model (after accounting for
+removing ownership and hence costs, and eventually the widespread presence of autonomous cars), then we should expect
+more road based travel (i.e., increased passenger kilometres), but what is unclear is whether the move to sharing will reduce
+vehicle kilometres e it may be fewer vehicles doing more kilometres since they will be on the road for many more hours
+(being more temporally efﬁcient) than the privately owned vehicle. If you believe some pundits, this is the model that will
+evolve as the business model of the growing number of competing ride sharing and ride sourcing services, forcing prices
+down17 and increasing the hours that any one car has to be on the road to recover the commercial objective (aligned with
+arguments given by Hollands, 2015). Conventional public transport needs to heed this warning as does government.
+
+  Part of the solution in protecting the future of public transport may rest with future government funding models,18
+especially if the current provider side subsidy regime for public transport is replaced with a user-side controlled scheme19
+that gives users control on where subsidy is allocated given what public transport trips they choose. This will also engender
+a competitive process as mobility providers compete to attract customers, and hence is expected to result in a much more
+efﬁcient level of subsidy provision and hopefully modal mix of offers. If it results in reduced demand for public transport
+services and increased demand for shared car services, government will have to decide how much of conventional public
+transport should continue to be provided, both in the MaaS package and separate from such packages. It is likely that
+conventional rail (and bus rapid transit) will remain as the backbone of the transport network (even if scaled back where
+services are no longer justiﬁed), but the rest of the public transport system (essentially bus based and increasingly demand
+responsive) might be folded into the new mobility model. With autonomous buses we might also expect a reduction in the
+cost of travel unless the gains are taken up by government in reducing subsidy while maintaining fares. A recent example
+of such a bus is “Auto Pilot,” a self-driving bus project spearheaded by operator Nobina, launched on January 24, 2018 a
+ﬁrst of its kind in Scandinavia20. The minibuses each carry 11 passengers (six seated and no steering wheel) use LiDAR
+technology (‘Light Detection and Ranging’), an array of sensors that enable self-driving vehicles to “see” what is around
+them so they can safely navigate roads. At present the one kilometre trial the bus is staffed with a ‘host’, who keeps watch
+over the vehicle and closes the door once all passengers have boarded.
+
+  In summary, will MaaS schemes be dominated by car based offers? What does it mean for conventional public
+transport, and government’s response to a car dominated solution? Does it matter what modes are in the mix? Maybe in the
+future the autonomous car in a safe platoon will act like public transport and so does it not matter what the mode is? This,
+however, is likely to be less spatially efﬁcient than purpose-built large vehicles (and higher cost autonomous or not, being
+unable to reap economies of scale from shared componentsdengines, etc.) and possibly sabotage many of the intrinsic
+beneﬁts (e.g., land use) of ﬁxed route mass transit. The land use implications (in terms of density and where people will
+live and work) must be given closer scrutiny since the initial transition to sharing under MaaS without autonomous
+vehicles, and the subsequent roll out with a signiﬁcant amount of autonomous vehicles, will change the location landscape,
+with even more diverse origin-destination patterns and longer commutes expected. The one instrument that can protect a
+preferred land use and activity proﬁle for our cities in particular is pricing and funding reform, which may be the greatest
+disruptive instrument available to government to achieve its desired objectives. This should be central to the new
+governance model and an opportunity not to be missed.
+
+34.3 The need for a governance framework to ensure smart mobility delivers
+  congestion reduction
+
+As the interest in innovation in delivering customer-focussed mobility services grows, and especially the tendency to
+support the role of the market, and entrepreneurs and start-ups in the mix, including their roles as providers of digital
+platforms, government needs to start contemplating the role it might (or should) have in ensuring that outcomes are
+consistent with the broad goals for our society (‘smart’ liveable cities in particular). MaaS has often been described as a
+concept that can deliver sustainability gains in terms of reduced congestion and transport emissions and improved
+accessibility and improved public transport performance, but we question this given the limited evidence and thoughtful
+considerations above. MaaS is also billed as an innovation opportunity, underpinned by the development of new business
+models in transport, such that it can deliver economic beneﬁts.
+
+17. Including low labour costs for drivers, which is a criticism of many Uber services; and with driverless cars in the future these costs will be even lower
+(possibly halved), making car based travel very popular at the risk of a future role for public transport.
+18. I am indebted to John Stanley for suggestions and discussion on this point.
+19. As is potentially going to happen for with the community transport sector in New South Wales.
+20. See http://www.truckandbus.net.au/swede-self-drive-mini-busses-hit-roads-stockholm/.
+

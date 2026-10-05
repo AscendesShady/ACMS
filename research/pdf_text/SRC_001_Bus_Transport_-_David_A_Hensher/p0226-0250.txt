@@ -1,0 +1,1186 @@
+  Identifying resident preferences for bus and rail investments Chapter | 19 227
+
+for each attribute and the desire to maintain attribute level balance, the survey is designed using Ngene2 (Choice Metrics,
+2012) with 24 rows (i.e., choice tasks) and blocked into 12 blocks so that each respondent will be assigned a block with 2
+choice tasks. A set of conditions are employed to ensure that peak-hour level of service is no worse than the off-peak level
+of service, so if the level of peak-hour frequency of System A is 10 (minutes), then the allowed levels of off-peak frequency
+of System A are 10, 15 and 20 (minutes). When the level of peak frequency is 5 min, the off-peak frequency can be any of
+the predeﬁned levels, and thus no condition is required. This condition provided the only large correlation between design
+attributes (r ¼ 0.46) with all other correlations being small (À0.2 < r < 0.2).
+
+  This survey is designed for estimating MNL models deﬁned by the utility functions of the unlabelled alternatives
+(System A and System B). When generating an efﬁcient design, each parameter must have a prior value, which can be ﬁxed
+(e.g., MNL RR model) or random (e.g., mixed logit RR model). To obtain the priors, we undertook a pilot survey
+(designed using a D-error measure, see Choice Metrics (2012) and Hensher et al. (2015b) for details of such designs) of
+200 respondents (each shown the two choice screens) and estimated a choice model. The parameter estimates were used to
+redesign the choice experiment. We then collected another 400 respondents, giving a total of 600 respondents or 1200
+choice responses, and re-estimated the model to obtain more accurate priors. These priors were used to undertake a further
+redesign of the choice experiment and a further 400 respondents were then sought, giving a total of 1000 respondents or
+2000 choice responses (although the survey ﬁrm obtained an additional 18 respondents or 36 choice sets). The Ngene
+designs allow for nonlinear relationships through the model utility functions with dummy coded attributes.
+
+  Two Australian panels were used to obtain a sample, the Pure Proﬁle panel (www.pureproﬁle.com) and the SSI panel
+(www.surveysampling.com/), both of which have many thousands of participants in the chosen study areas. Data was
+collected over the period April to June 2014 in all capital cities in Australia (Ethics approval was received from the
+University of Sydney, Project number 2013/260, 16 May 2013). The sample sizes were set to reﬂect the relative size of the
+populations of each city. In total, 509 of the surveys were collected through SSI and the balance through Pure Proﬁle (with
+a comparative analysis showing no signiﬁcant difference between the panels data). The socioeconomic proﬁle and
+experience in using public transport of the sample together with the city-speciﬁc sample sized is summarised in Table 19.2.
+We focus on the response to the question “which investment would you personally prefer?”, although the choice responses
+were predominantly the same for each of the choice response questions shown in Fig. 19.1.
+
+  In an inﬂuential paper, Cameron and DeShazo (2014) conclude that any biases associated with consumer panels are
+minimal in respect of a number of tests of representativeness, summarising that “Overall, our results can probably be
+characterised as reassuring news for researchers who have used (or who contemplate using) the Knowledge Networks
+panel for policy-oriented research.” These comments by Cameron and DeShazo (2014) support the growing evidence that a
+consumer panel can deliver a representative sample if appropriate quota criteria are applied (see Hatton McDonald et al.,
+2010; Lindhjem and Navrud, 2011).
+
+  We report the results for the choice model when the modal label is revealed, rearranging the data so that the ﬁrst
+alternative was the BRT labelled, and the second alternative LRT. A comparison of the choice response in the absence and
+presence of the mode name tells us that close to 90% of the choice tasks (i.e., 1796 choice tasks) assessed by respondents
+resulted in no revision of the preferred alternative.
+
+19.5 Model results
+
+A large number of mixed logit random regret models were estimated as we investigated which attributes demonstrated
+preference heterogeneity through statistically signiﬁcant random parameters. The ﬁnal models are summarised in
+Table 19.3 together with the mean and standard deviation of each attribute. It should be noted that a positive sign for the
+attribute “travel time” (door to door) compared to car (% quicker or slower) is as expected since quicker values are coded
+as positive, and thus this identiﬁes that the quicker the public transport system, the more attractive it is to respondents.
+
+  All the parameter estimates (random and ﬁxed) are statistically signiﬁcant and of the expected sign, except for the ‘risk
+of being closed after the assured period’ which has a statistically non-signiﬁcant mean estimate but a highly signiﬁcant
+standard deviation parameter estimate. The BRT label has the expected negative sign suggesting that, all other things being
+equal, there is a bias against BRT. A particularly interesting ﬁnding relates to the dummy variable for respondents in
+Brisbane. In comparison to the other seven cities, whose dummy variables were not statistically signiﬁcant, we ﬁnd that
+residents of Brisbane have a greater preference for BRT (compared to LRT) than residents of the other cities. This is very
+encouraging evidence, suggesting that the reputation of the Busway system in Brisbane and possibly respondent
+
+2. Full details of the Ngene syntax, and efﬁciency outputs for this application, is given in Hensher et al. (2015a, Chapter 6.6.3 Design 3: D-Efﬁcient
+Choice Design).
+228 PART | IV Image
+
+TABLE 19.2 Sample sizes by city and descriptive proﬁle of sample.  Actual (target)
+  271 (270)
+Location  241 (240)
+Sydney  100 (100)
+Melbourne  201 (200)
+Canberra  80 (50)
+Brisbane  70 (50)
+Adelaide  21 (50)
+Perth  34 (50)
+Darwin  1,018 (1,010)
+Hobart
+Total sample  Mean (std. dev)
+  43.84 (15.5)
+Socioeconomic proﬁle  0.41
+Age (years)  0.19
+Proportion full time employed  0.17
+Proportion part time employed  20.75 (16.99)
+Proportion students  2.11 (0.89)
+Working hours per week  0.66 (1.03)
+Number of adults in household  62.47 (40.47)
+Number of children in household  1.66 (0.98)
+Personal income in 1000$  0.09
+Number of cars in household  0.06
+Member of PT association (proportion)
+Member of environment association (proportion)  Mean (std. dev)
+  5.85 (9.13)
+Trip proﬁle  1.73 (4.35)
+Number of times using bus/BRT in the last month  6.49 (9.92)
+Number of times using light rail/tram in the last month  28.62 (18.11)
+Number of times using train/metro in the last month  35.87 (21.93)
+Travel time last bus trip
+Travel time last train trip
+
+experience in using the Brisbane system has enhanced the support for BRT (we call this “the Brisbane effect”). We have
+always believed that overt experience is very important in selling speciﬁc public transport if it is a success, as the Brisbane
+system is. It is also supportive of the literature, identiﬁed above, that suggests familiarity is important, e.g., TCRP (2000).
+
+19.6 Application to project planning
+
+Whilst the model ﬁndings are informative and interesting, they do not inform as to the sensitivity of a population to
+changes in the levels of each attribute, and hence how we might improve the support for BRT over LRT through judicious
+implementation of projects that can deliver such an outcome. Support in this context means improving the possibility that
+residents would vote for a BRT project over a LRT project. This section provides two further pieces of evidence. First, a
+discussion of the elasticity effects which give information on the responsiveness of the respondent’s preferences to changes
+in the attributes and second, a resident preference model which is the result of a series of simulated scenarios associated
+with project planning proposal ideas, and is a way to identify opportunities that could garner support for BRT over LRT
+from the voting population.
+Identifying resident preferences for bus and rail investments Chapter | 19 229
+  FIG. 19.1 Illustrative choice set screen.
+230 PART | IV Image
+
+TABLE 19.3 Summary of RRM results 500 Halton draws,3 with panel structure accommodated random parameters
+are unconstrained normal distributions.
+
+Means of random parameters:  Parameter estimates (t-values)
+Modal option (BRT ¼ 1, LRT ¼ 0)
+Construction time (years)  À0.2136 (À3.95)
+Construction cost ($m)  À0.0525 (À6.75)
+On-board staff presence (yes ¼ 1)  À0.1009 (À7.80)
+Risk of being closed after assured period (yes ¼ 1)  0.2642 (5.27)
+Overall environmental friendliness compared to car (%)  À0.0009 (À1.25)
+Non-random parameters:  0.0097 (5.63)
+Percent metro population serviced (%)
+Percent of route dedicated to this system only (%)  0.0295 (7.10)
+Annual operating and maintenance cost ($m)  0.0037 (4.37)
+Service capacity in one direction (0000s passengers/hour)  À0.0148 (À3.04)
+Peak service frequency (every x min)  0.0135 (5.72)
+Off- peak service frequency (every x min)  À0.0176 (À2.48)
+Travel time (door to door) compared to car (% quicker)  À0.0128 (À2.42)
+Travel cost compared to car (%)  0.0128 (6.41)
+Integrated fare availability (yes ¼ 1)  À0.0063 (À3.97)
+Boarding (level ¼ 1, step ¼ 0)  0.2922 (5.92)
+Respondents in Brisbane (yes ¼ 1)  0.2002 (4.02)
+Standard deviation of random parameters:  0.4922 (6.12)
+Modal option (BRT ¼ 1, LRT ¼ 0)
+Construction time (years)  0.6025 (15.77)
+Construction cost ($m)  0.3184 (27.45)
+On-board staff presence (yes ¼ 1)  0.6092 (30.06)
+Risk of being closed after assured period (%)  0.6770 (19.02)
+Overall environmental friendliness compared to car (%)  0.01045 (23.33)
+Summary statistics  0.0271 (13.54)
+Log-likelihood at zero
+Log-likelihood at convergence  À1411.25
+McFadden pseudo-R2  À1333.54
+Info. criterion: AIC  0.055
+Sample size  1.333
+Sample mean (standard deviation)  2036
+Route length (km)
+Construction time (years)  20.08 (8.17)
+Construction cost ($m)  4.48 (3.49)
+On-board staff presence (yes ¼ 1)  2.62 (2.16)
+  0.5
+
+  Continued
+Identifying resident preferences for bus and rail investments Chapter | 19 231
+
+TABLE 19.3 Summary of RRM results 500 Halton draws,3 with panel structure accommodated random parameters
+are unconstrained normal distributions.dcont’d
+
+Risk of being closed after assured period (%)  Parameter estimates (t-values)
+Overall environmental friendliness compared to car (%)  43.79 (37.09)
+Percent metro population serviced (%)  À1.67 (15.19)
+Percent of route dedicated to this system only (%)  12.49 (5.59)
+Annual operating and maintenance cost ($m)  62.5 (27.9)
+Service capacity in one direction (0000s passengers/hour)  7.99 (4.94)
+Peak service frequency (every x min)  16.67 (10.30)
+Off- peak service frequency (every x min)  9.15 (4.0)
+Travel time (door to door) compared to car (% quicker)  14.08 (5.08)
+Travel cost compared to car (%)  10.0 (12.79)
+Integrated fare availability (yes ¼ 1)  8.75 (7.39)
+Level boarding (yes ¼ 1)  0.5
+Respondents in Brisbane (yes ¼ 1)  0.5
+  0.19
+
+19.6.1 Elasticities
+
+A series of elasticities were identiﬁed to determine which attributes have the greatest impact on changing preferences.
+These are summarised in Table 19.4 as probability weighted averages using full sample enumeration. It should be noted
+that the BRT and LRT estimated elasticities are very similar (the difference being in the BRT constant and “the Brisbane
+effect”), and so we have reported a single set of mean estimates. This is a consequence of generic parameter estimates and
+the experimental design. To answer the research question, the design of the experiment gave the same set of attribute levels
+to each mode (recalling the unlabelled focus of the initial preference response), albeit assigned differently in the design for
+each choice scenario for each respondent.
+
+  To illustrate the way that the evidence in Table 19.4 can be interpreted, we need to recognise how the RRM model takes
+into account the level of an attribute associated with both the BRT and LRT modes. For example, for a 10% increase in
+construction cost, the 0.72% reduction in the probability of choosing either BRT or LRT in RRM explicitly accounts for
+the levels of construction cost in both alternatives, in recognition of the regret that one may have chosen the worse
+alternative. The highest elasticity estimate in Table 19.4 is for the percent of the metropolitan population served (0.114)
+suggesting a 10% increase in the population served increases the probability of supporting an alternative that can deliver on
+this by 1.14%.
+
+19.6.2 The resident preference model
+
+To see how the model can be used in promoting BRT in the presence of LRT, a resident preference model (RPM) has been
+developed which provides a number of interesting scenarios (inspired by the behavioural results discussed above under
+elasticities). This model offers a more appealing way of identifying the gains in voter support which is potentially available
+under various planning opportunities and could usefully be used as a screening process when deriving the options for
+appraisal. Scenarios that can be assessed by the RPM emphasise some key issues that are often raised about BRT, as
+compared to LRT. These are construction cost, the catchment of the population served, the extent of dedicated right of way,
+and a general bias against BRT compared to LRT. Fig. 19.2 shows the extent of a change in preference for BRT associated
+with a number of individual scenarios with an illustration of how a combination of these scenarios would affect a voter’s
+
+3. We considered Halton draws of 50, 100, 150, 250, 500, 1000 and the parameter estimates were very similar over the range 150e1000.
+232 PART | IV Image
+
+TABLE 19.4 Summary of direct elasticities.  Elasticity
+  À0.062
+Variable  À0.072
+Construction time (years)  0.037
+Construction cost ($m)  À0.006
+On-board staff presence (yes ¼ 1)  À0.003
+Risk of being closed after assured period (%)  0.114
+Overall environmental friendliness compared to car (%)  0.075
+Percent metro population serviced (%)  À0.038
+Percent of route dedicated to this system only (%)  0.070
+Annual operating and maintenance cost ($m)  À0.053
+Service capacity in one direction (0000s passengers/hour)  À0.059
+Peak service frequency (every x min)  0.040
+Off- peak service frequency (every x min)  À0.002
+Travel time (door to door) compared to car (% quicker)  0.040
+Travel cost compared to car (%)  0.033
+Integrated fare availability (yes ¼ 1)  0.027
+Level boarding (yes ¼ 1)
+Brisbane location dummy (yes ¼ 1)
+
+  Change to support for BRT
+
+  BRT costs half LRT to build  BRT serves 50% more people
+  BRT costs 75% LRT to build
+  BRT serves 50% more people
+  BRT has no negative prejudice
+  ROW: BRT 80%, LRT 20%
+Voters are not familiar with BRT
+  Voters are familiar with BRT
+
+  BRT costs half LRT to build
+
+-4% -2%  0%  2%  4%  6%  8%  10% 12% 14%
+
+  FIG. 19.2 Simulated gain in preference for BRT.
+
+preference for BRT. Importantly, this resident preference model offers a platform to show the relative merits, in terms of
+preference, which can be associated with voter or general community support of a project speciﬁcation that is of interest to
+planners. In our example, a planning agency might be assessing BRT and LRT project proposals and have identiﬁed the
+construction cost, the amount of dedicated right of way and the catchment area served. This information can be fed into the
+RPM as assumptions of the project alternatives (noting that if the project is in Brisbane then the Brisbane dummy variable
+is activated), to obtain predictions of gains in support, as illustrated in Fig. 19.2. All attribute levels for the non-scenario
+attributes are initially set equal between BRT and LRT. In addition if we could neutralise the emotional bias against BRT,
+then that becomes an inﬂuence on the outcome.
+  Identifying resident preferences for bus and rail investments Chapter | 19 233
+
+  Fig. 19.2 suggests that if BRT can be shown to be 50% or 75% less expensive to construct than a LRT with exactly the
+same service levels, coverage, time to build etc., and given the prejudices against BRT (but recognising strong positive
+support in Brisbane), then the support for BRT will be up by 4.1%. It is important to remember that the resident preference
+model starts with equal levels of support under identical service levels and other characteristics, with the only difference
+being the “Brisbane effect” and the BRT prejudice shown by the dummy variable. As a result, these gains in support are
+effectively relative to a point of modal indifference. Fig. 19.2 also shows that, even with equal construction costs, if BRT
+delivers greater coverage to 50% more population, then the preference and voting support for BRT increases by 6.3%.
+Since the effects are additive, Fig. 19.2 provides a ﬂexible way to estimate the effect for different possible combinations
+that BRT can deliver on. For example, if we could deliver a BRT system that serves 50% more population than LRT
+(þ6.3%) with a 50% lower construction cost (þ4.1%) e all very realistic assumptions for BRT e then Fig. 19.2 shows a
+huge 10.4% gain in support for BRT (6.3% þ 4.1% ¼ 10.4%). As more features are added in, preferences in support of
+BRT over LRT rise by a signiﬁcant amount (up to 24.6%). These percentages are non-trivial and reinforce our view that
+BRT can compete in a very meaningful way with LRT if it is designed in a way that reveals some very real advantages, as
+shown by these simulated scenarios.4
+
+  As identiﬁed by the literature, familiarity with BRT appears to increase support. The “Brisbane effect” is revealing in
+that removing the familiarity effect reduces the support for BRT by 3.2%. While this effect seems to be small compared to
+other effects, it should be noted that the scenario affects Brisbane respondents only (20% of the sample) while other effects
+inﬂuence the entire sample. In the scenario where all voters are as familiar with BRT as respondents in Brisbane, the
+support for BRT increases by 12.9%. This suggests that experience is important and support for BRT will be higher in a
+jurisdiction where more people experience BRT. In terms of the BRT prejudice, identiﬁed by the modal option in
+Table 19.3, an effective marketing campaign or other initiatives which removes the prejudice would lead to a 7.5% gain in
+support for BRT as shown in Fig. 19.2. This is the ﬁrst very explicit evidence, as far as we are aware, on the extent of
+potential gain in preference and therefore support for BRT which is associated with some very speciﬁc project planning
+assumptions.
+
+19.7 Conclusions and synthesis
+
+The motivation for this research was the way in which urban areas throughout the developed world appear to concentrate
+(with growing fervour), with rare exception, on the provision of LRT as the only new infrastructure for public transport,
+and hence there is no serious effort to evaluate LRT against BRT. This is in contrast to the predominant implementation of
+BRT in the developing world. With this as background, this chapter set out to investigate how much of this difference is
+due to the apparent belief in many developed economies that rail-based projects are typically superior to bus-based projects
+and that gaining community support for large bus-based infrastructure investments is difﬁcult.
+
+  A discrete choice experiment was conducted that included important potential drivers of community preferences for
+improved public transport. The experiment was initially unlabelled but was followed by a labelling of each alternative as
+either BRT or LRT. The analysis and results conﬁrm the existing literature in terms of a number of key attributes which
+drive the choice of a public transport mode.
+
+  The chapter sought to see whether society would temper its preference for a rail-based solution to a bus based solution
+and show signs of positive gains in support for BRT once the role of relevant attributes driving preferences were identiﬁed.
+The chapter developed a resident preference model that provides simulated examples of project planning scenarios that
+show the impact on preferences, and hence support, for BRT. Speciﬁcally there is a considerable increase in preference for
+BRT when it is identiﬁed that there is a real possibility that a BRT system can be delivered for a lower construction cost
+than LRT; that it can provide service coverage to a larger population for a given construction cost; and that it can be
+delivered as a dedicated corridor for a sizeable amount of its length (and even better than many LRT systems that are in
+mixed trafﬁc for much of their route length). The simulated scenarios show that there are real opportunities in project
+planning that can align with signiﬁcant gains in public support for BRT over LRT, suggesting that BRT should be in the
+mix of candidate projects and not ignored as is so often the case in developed economies.
+
+  The resident preference model developed in this chapter is an important complementary model to planning process
+(regardless of what emotional biases might exist in the planning process). The random regret model identiﬁes the role of
+each of the attributes in the model developed herein associated with a speciﬁc project. However, when these are fed into the
+
+4. We recognise that simulated scenarios can be constructed to reveal more support for LRT; however the point of this exercise is to see how realistic
+scenarios in terms of attribute levels often associated with BRT and LRT can demonstrate positive support for BRT that is greater than the support for
+LRT.
+234 PART | IV Image
+
+resident preference model, important ancillary evidence on the support for a particular project is provided. This is a
+signiﬁcant contribution which has been missing in almost all project planning exercises in terms of providing appropriate
+comparisons between infrastructure solutions based on LRT or BRT. It complements beneﬁt-cost analysis by a comparison
+of support for different planning options in a way that is not incorporated in the formal economic assessment but is
+strategically important in securing community buy-in and hopefully assistance in prioritising projects.
+
+  Finally, our approach is useful in identifying the extent of the presence of a BRT prejudice, although it does not claim
+to be able to remove the bias. However, knowing the extent of this bias is crucial in setting a challenge on how we break
+the emotional ideological cycle of a commitment to rail regardless of the beneﬁts of bus-based systems. It is important too
+that BRT prejudice does not become a habit and there are now some very useful suggestions on breaking the habit cycle
+(Schwanen et al., 2012) and a growing literature on nudging as a way of effecting positive community change. The
+evidence presented here goes beyond simply identifying respondent preferences to some practical solutions for stake-
+holders interested in making change in our urban areas e the transport industry itself, retailers and advertising companies,
+the media, lobby groups, employers and non-transport government agencies and departments e whose practices contribute
+to the collective sense-making and normative coding of different forms of mobility.
+Chapter 20
+
+Cultural contrasts of preferences for bus
+rapid transit and light rail transit*
+
+20.1 Introduction
+
+  .to sell something surprising, make it familiar; and to sell something familiar, make it surprising.1
+
+  Raymond Loewy
+
+  There is much discussion as to why cities appear to prefer rail over bus solutions for new infrastructure. Even when
+service levels of bus-based systems are as good as or better than rail-based services (including greater coverage and lower
+construction costs), there is still strong emotion favouring rail (see Kain, 1988). Using a stated choice experiment, Hensher
+et al. (2015c) investigated differences in support for bus rapid transit (BRT) over light rail transit (LRT) in all Australian
+capital cities. The study concluded that there is a considerable increase in preference for BRT when a real possibility exists
+for BRT solutions to deliver high frequency services, to cover a larger population, or to operate on a dedicated corridor for
+a sizeable amount of its length at a fraction of LRT construction cost. Voters’ experience with BRT was also shown to
+enhance BRT’s appeal and support. This chapter builds on this research from Australia, implementing the exact same
+stated choice experiment in four other developed countries e USA, France, Portugal, and UK e to investigate the drivers
+of community preferences for BRT and LRT in different cultural and modal settings. The main aim is to understand which
+of the drivers of community preferences are common and also different across countries, and what impact these may have
+in identifying community preferences for BRT in the presence of LRT.
+
+  Studies investigating modal preferences between LRT and BRT often ignore the cost/budget component associated
+with each system. Speciﬁcally, these studies often ask which mode is preferred without accounting for differences in
+infrastructure provision costs. This issue is addressed in the current chapter which employs a stated choice experiment in
+which respondents were asked to choose which modal investment options they prefer given the same route length but with
+different costs and service levels.
+
+20.2 Literature review
+
+The literature on key drivers of preferences for bus- and rail-based public transport has been summarised in a number of
+sources (Currie and Wallis, 2008; Currie and Delbrosc, 2013; Hensher et al., 2015a). A review of the academic, technical
+and grey literature was initially undertaken, and a long list of potential attributes were selected for a best-worst experiment
+(Hensher and Mulley, 2015; Mulley et al., 2014) as a way of synthesis and creating a short list of the most important
+quality attributes for use in this current choice experiment. The best-worst experiment identiﬁed attributes affecting the
+design and service characteristics of the mode, with the same statements being used in the context of being in favour of a
+rail-based mode and a bus-based mode. The literature underpinning this work is documented in the above papers and came
+from peer reviewed papers by Hensher (1991), Swanson et al. (1997), Cirillo et al. (2011), dell’Olio et al. (2010a,b), Eboli
+and Mazzulla (2010, 2008a,b), and Marcucci and Gatta (2007), and more strategic and the grey literature including
+Hass-Klau and Crampton (2002), Hensher and Waters (1994), Mackett and Edwards (1996a,b), Canadian Urban Transit
+
+* This is an adapted version from the original publication: Hensher, D.A., Balbontin, C., Ho, C., Mulley, C., 2019. Cross-cultural contrasts of preferences
+for bus rapid transit and light rail transit. Journal of Transport Economics and Policy 53 (1), 47e73. It has not been reviewed by the Editors of JTEP and
+the Journal bares no responsibility for the contents.
+1. In the 1960s, the psychologist Robert Zajonc conducted a series of experiments where he showed subjects nonsense words, random shapes, and
+Chinese-like characters and asked them which they preferred. In study after study, people reliably gravitated toward the words and shapes they’d seen the
+most. Their preference was for familiarity (URL: https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3008563/).
+
+Bus Transport. https://doi.org/10.1016/B978-0-12-820132-9.00020-0  235
+Copyright © 2020 Elsevier Inc. All rights reserved.
+236 PART | IV Image
+
+Association (2004), Cornwell and Cracknell (1990), Kain (1988), Pickrell (1992), Sislak (2000), Currie and Wallis (2008),
+Currie and Delbrosc (2013), and Hensher et al. (2015a).
+
+  The literature described above, together with our previous empirical work in exactly the same setting (see Chapter 19),
+underpinned the inclusion of attributes in a choice experiment to capture differences in cost and coverage between rail and
+bus based modes, population serviced, % dedicated right of way, operating and maintenance costs and route length (given a
+ﬁxed budget between two options), service levels which are critical in capturing patronage (service capacity, peak and
+off-peak headways, travel time and public transport fare), features of the system described by fare payment (on or off
+vehicle, integrated fare or not), interchange penalty, safety and security and ease of boarding and other general factors
+shown to be important in personal preferences and voting between transport systems (the assurance of a minimum period
+of operation and risk of being closed down after this period, value uplift around stations, mode switch from cars and
+environmental friendliness of the system).
+
+  However, while the travel behaviour literature is rich in examples about the drivers of mode choice, the focus has been
+on perceptions and objective measurements. In the quality of service literature, preference drivers are well established and
+included in many of the papers cited above irrespective of their different emphases. What is generally lacking in the
+literature is the impact of cultural (country) context on travel behaviour and preferences although this has been highlighted
+by Buehler (2011) in terms of a comparison between Germany and USA for mode choice. This chapter directly addresses
+this shortfall in the literature by looking at cross cultural impacts on preferences for BRT and LRT systems.
+
+20.3 The choice experiment
+
+The centrepiece of this study is a stated choice experiment in which sampled respondents from 19 cities in ﬁve countries
+were interviewed to obtain their preferences for BRT and LRT as a way to understand how a government might spend
+money on new infrastructure. From the community perspective the experiment was designed to elicit voter’s preferences
+for an investment option, be it a BRT system or a LRT system, together with their service attributes that are important to
+the community. The service attributes are classiﬁed into four groups shown in Table 20.1, together with the attribute levels
+and attribute names. The stated choice experiment is designed with the same route length for BRT and LRT systems which
+are referred to as System A and System B in each choice scenario. Subsequent to the respondent indicating their preference
+
+TABLE 20.1 Predeﬁned attributes and attribute levels for the choice experiment.
+
+Attributes  Attribute level  # Levels
+Route length (same for both systems in each choice scenario)  10, 20, 30 kms or miles  3
+Description of investment
+Construction cost of project  0.5, 1, 3, 6 bn$  4
+Construction time  1, 2, 5, 10  4
+% Metropolitan population serviced  5, 10, 15, 20  4
+% Route dedicated to this system only and no other means of transport  25, 50, 75, 100  4
+Operating and maintenance cost per year (millions)  2, 5, 10, 15 m$  4
+Service levels:
+Service capacity in one direction (passengers/hour)  5k, 15k, 30k  3
+Peak headway of service, every.  5, 10, 15 mins  3
+Off-peak headway of service, every.  5, 10, 15, 20 mins  4
+Travel time (door-to-door) compared to car  À10%,10%, 15%, 25%  4
+Fare per trip compared to car-related costs (fuel, tolls, parking)  Æ20%, Æ10%  4
+Features of the system:
+Off-vehicle prepaid ticket required  Yes, no  2
+Integrated fare  Yes, no  2
+Waiting time incurred when transferring  1, 5, 10, 15 mins  4
+
+  Continued
+Cultural contrasts of preferences for bus rapid transit and light rail transit Chapter | 20 237
+
+TABLE 20.1 Predeﬁned attributes and attribute levels for the choice experiment.dcont’d
+
+Attributes  Attribute level  # Levels
+On-board staff for passenger safety and security  Present, absent  2
+Ease of boarding public transport vehicle  Level boarding, steps  2
+General characteristics of investment:
+Operation is assured for a minimum of  10, 20, 30, 40, 50, 60 years  6
+Risk of it being closed down after the assured minimum period  0%, 25%, 50%, 100%  4
+Attracting business around stations/stops  Low, medium, high  3
+% Car trips switching to this option within ﬁrst 3 years of opening  0%, 5%, 10%, 20%  4
+Overall environmental friendliness compared to car  Æ25%, À10%, Æ5%, 0%  6
+
+The two systems described above are actually “ ”  BRT, LRT  2
+
+The attributes and attribute levels are exactly the same across all cities. We only change the cost unit ($AU e $US e EU) and length unit (km e miles).a
+
+aRegarding costs, Australia and UK presented the levels shown in AUD$, Portugal and France in EUR$, and US in US$. In the case of the length, US
+presented the route length as miles and the rest of the countries in kilometres.
+
+for a bundle of attributes deﬁning two unlabelled alternatives, the modal label (BRT or LRT) is revealed (being assigned
+randomly to the left and right alternatives), and the respondent is asked to review, and possibly revise, their choice. This is
+designed to reveal whether images about bus-based and rail-based systems are relevant in preference revelation. The focus
+in this chapter is on the labelled choice, noting that the responses did not differ noticeably in the absence and presence of
+the modal labels which is encouraging evidence of the role of the service and costs levels play in preference revelation.
+
+  Each respondent is asked to answer two choice tasks with the same route length. Given the number of levels for each
+attribute and the desire to maintain attribute level balance, the survey was designed using Ngene2 (Choice Metrics, 2012)
+with 24 rows (i.e., choice tasks) and blocked into 12 blocks so that each respondent is assigned a block with 2 choice tasks.
+A set of conditions were employed to ensure that peak-hour level of service is no worse than the off-peak level of service,
+so if the level of peak-hour headway of System A is 10 (minutes), then the allowed levels of off-peak headway of System A
+are 10, 15 and 20 (minutes). When the level of peak headway is 5 min, the off-peak headway can be any of the predeﬁned
+levels, and thus no condition is required. This condition provided the only large correlation between design attributes
+(r ¼ 0.46) with all other correlations being small (À0.2 < r < 0.2). At the end of the experiment, respondents were asked
+to indicate which attributes they consider as irrelevant (i.e., those they did not attend to).
+
+  This survey is designed for estimating multinomial logit (MNL) and Mixed (Random Parameter) Logit (ML) models
+deﬁned by the utility functions of the labelled alternatives (BRT and LRT). How prior values were determined for
+generating the efﬁcient design is described in Hensher et al. (2015a). These same designs were implemented subsequently
+in the other four countries, which is an ‘extension’ type of replication study where the sample and population are different
+but the methodology is the same (Clemens, 2017). Replication studies have increased in popularity in the economic
+literature for their ability to identify possible disparities in evidence associated with a single study or location and in
+offering support or otherwise for geographical transferability of key policy and assessment ﬁndings (Hamermesh, 2017;
+Coffman et al., 2017; Maniadis et al., 2017). Implementing the exact same choice experiment in ﬁve different countries and
+numerous cities provides a way to determining both the robustness of the design and the strength of portability of
+behavioural outputs such as willingness to pay estimates. Fig. 20.1 shows an illustrative choice experiment. In this study
+we focus on the response to the question “which investment would you personally prefer?” when showing labelled
+alternatives (BRT and LRT).
+
+20.4 The samples and sources
+
+A number of different consumer panels were used to obtain the target sample for each of the studied cities whose quotas
+were set to reﬂect their relative populations, given the total sample sizes assigned for each country. Table 20.2 shows the
+
+2. Full details of the Ngene syntax, and efﬁciency outputs for this application, is given in Hensher et al. (2015b, Chapter 6.6.3, Design 3: D-efﬁcient choice
+design).
+238 PART | IV Image
+  FIG. 20.1 An illustrative choice screen.
+  Cultural contrasts of preferences for bus rapid transit and light rail transit Chapter | 20 239
+
+TABLE 20.2 Studied cities, sample sizes and consumer panels used.
+
+Country  City  Quota  Sample  Consumer panel used  Survey period
+Australia  Sydney  270  271  10 April 2014e10
+  Melbourne  240  241  PureProﬁle (www.pureproﬁle.com)  June 2014
+  SSI (www.surveysampling.com)
+  24 February 2015e19
+  Canberra  100  100  March 2015
+
+  Brisbane  200  201  4 May 2015e21
+  May 2015
+  All other capital cities  200  205  1 June 2015e21
+  June 2015
+US  Boston  180  181  Affordable samples  1 June 2015e21
+  June 2015
+  Los Angeles-long Beach  300  300  (www.affordablesamples.com)
+
+  Seattle-Bellevue-Everett  100  100
+
+  Minneapolis e St Paul  100  100
+
+  Dallas e Fort Worth  150  150
+
+  Philadelphia  170  170
+  Lisbon
+Portugal  405  425  Light speed GMI
+Britain  Birmingham  (www.lightspeedresearch.com)
+France  Newcastle  280  274  Light speed GMI
+  Lyon
+  150  153  Light speed GMI
+
+  185  128
+
+  Toulouse  173  137
+
+consumer panels used by country, together with the valid sample sizes and the survey periods. All ﬁeld surveys were
+completed within a month, except for the survey in Australia which was live for two months because two consumer panels
+were used (one after another) to separately evaluate if there are differences between the two panels. In total, 509 of the
+Australian surveys were collected through SSI and the balance through PureProﬁle, with a comparative analysis showing
+no signiﬁcant difference between the panels’ data. ‘All other capital cities’ in Australia included respondents residing in
+Adelaide (80), Perth (70), Darwin (21) and Hobart (34).
+
+20.5 Descriptive proﬁle of sample
+
+The sample proﬁle is summarised in Table 20.3. There are similarities in the socioeconomic proﬁles across the countries
+(although there are the obvious difﬁculties in comparing income), but there are differences as well. Speciﬁcally, household
+car ownership is much lower in the UK and France, compared to the other countries. Respondents from Portugal and France
+have longer working hours due to the higher incidence of full time workers compared to part time workers in our sample.
+
+  The trip proﬁle is informative with marked differences in use of BRT and LRT. Speciﬁcally, Portugal shows greater use
+of Bus/BRT compared to the other countries (with Australia the lowest incidence); likewise the Portugal sample has the
+highest incidence of train/metro use with the US being the lowest. Overall, the US respondents showed a low level of
+public transport use e for example, the lowest use of light rail/tram together with Australia (reﬂecting the lack of such
+modal infrastructure compared to France and Portugal). The UK is interesting, showing a low use of rail-based modes
+compared to the other four countries, but high use of bus-based modes. The potential role of experience in using a mode
+may impact on the preferences for BRT and LRT, which is explored below.
+
+  Not all attributes presented in the choice experiment are relevant to each respondent and Fig. 20.2 summarises the
+incidence of each attribute being ignored (attribute non-attendance or ANA).3 There is an extensive literature suggesting
+that respondents use a range of heuristics (or rules) when evaluating choice scenarios. ANA is one such rule that has
+demonstrated behavioural relevance (Hensher et al., 2015b provide details). The incidence of ANA is remarkably similar
+
+3. Note that ANA only applies to the attributes of the alternatives and not socioeconomics and experience.
+240 PART | IV Image
+
+TABLE 20.3 Country-speciﬁc socioeconomic proﬁles and experience.
+
+Location  Australia  US  Portugal  France  UK
+Socioeconomic proﬁle
+Average (std dev) of respondent age in year  44.32 (14.9)  44.42  40.75  42.83  47.52
+  (16.11)  (11.45)  (14.41)  (15.35)
+% Female respondent  54%  61%  52%  53%  50%
+Average (std dev) of personal income in  $61.24  $80.57  $30.36  $50.63  $39.12
+AUD$1000  (43.50)  (60.79)  (26.11)  (35.26)  (31.53)
+% Full time employed  41%  43%  72%  63%  44%
+% Part time employed  20%  16%  6%  7%  16%
+% Students  6%  7%  7%  4%  4%
+Average (std dev) working hours per week  20.75  21.9 (17.42)  31.79  27.13  20.16
+  (17.00)  (14.36)  (15.55)  (17.32)
+Average (std dev) household adults  2.11 (0.89)  2.02 (0.94)  2.18 (1.04)  1.85 (0.68)  2.08 (0.89)
+Average (std dev) household children  0.66 (1.03)  0.6 (0.98)  0.68 (0.91)  0.68 (0.92)  0.57 (0.95)
+Average (std dev) household cars  1.66 (0.98)  1.76 (1.02)  1.86 (1.37)  1.50 (1.00)  1.25 (0.89)
+Member of PT association (%)a  9%  7%  3%  2%  7%
+Member of environment association (%)  7%  12%  6%  4%  7%
+Trip proﬁle
+Times using bus/BRT in last month  5.85 (9.13)  7.46 (9.63)  11.46  7.13 (10.19)  7.27 (9.45)
+  (14.26)
+Use bus/BRT at least once last month (%)  45%  39%  49%  49%  62%
+Times using LRT last month  1.73 (4.35)  2.14 (4.34)  2.48 (5.69)  3.91 (6.23)  0.53 (1.76)
+Used LRT at least once last month (%)  19%  19%  22%  37%  14%
+Times using train/metro last month  6.49 (9.92)  4.29 (7.9)  13.94  9.27 (11.58)  3.55 (6.57)
+  (13.88)
+Used train/metro at least once last month (%)  46%  31%  66%  56%  50%
+  25.77 (17.1)  23.44 (17)  28.36
+Travel time of the last bus trip  28.62  33.28  (18.24)
+  (18.11)  (21.51)  24.1 (14.66)  24.15  33.8 (25.26)
+  (20.52)
+Travel time of the last train/metro trip  35.87  36.3 (23.21)
+  (21.93)
+
+aThe US survey asked “Are you active in any public transit advocacy groups or organisations?”
+
+between the countries, with the average incidence of an attribute being ignored by the respondent ranging from 12% to
+22%. Also, the range of ANA across countries all fall within two standard deviations. Given that identical choice ex-
+periments were used across the countries, this is a very important result, suggesting some cultural commonality in the
+attendance given to each attribute.
+
+  In addition to ANA, this study examines the effect of voter’s experience with BRT and LRT on their support for these
+systems. To this end, Table 20.4 shows respondent’s experience with BRT and LRT through day-to-day travel at their home
+city. Of course, experience with different transport modes could be obtained outside their residential area, but it is argued that
+local (overt) experiences are more relevant in revealing respondent’s support for a particular public transport system.
+
+20.6 The mode preference model form
+
+It is generally accepted that overt experience is likely to inﬂuence the extent to which a particular mode is preferred over
+other alternatives. Including the level of experience as an explanatory variable in a choice model that is linear in the
+parameters and additive in the attributes is not an appropriate way of recognising the role that experience can play in
+conditioning all of the attributes that inﬂuence preferences. We adopt the method proposed by Hensher and Ho (2016)
+which conditions the entire utility expression deﬁning each individual’s preferences for BRT and LRT. Intuitively, a good
+  Cultural contrasts of preferences for bus rapid transit and light rail transit Chapter | 20 241
+
+  FIG. 20.2 Incidence of each attribute being not attended to by country.
+
+experience with an alternative will increase its overall utility relative to another alternative and vice versa for a bad
+experience, ceteris paribus. Consequently, experience will have an inﬂuence on the marginal utility of each attribute that
+contributes to the overall level of utility.
+
+  This approach to incorporate experience is analogous to the approach developed by Swait and Adamowizc (2001) to
+accommodate complexity, in which the theoretical context is aligned with information theory in order to provide a measure
+of information content or uncertainty. Experience is a source of information quantity. Swait and Adamowizc assume that
+complexity affects the utilities only through the stochastic component and assume that differences in complexity generate
+differential consistency levels in preferences across individuals, which will be reﬂected in the standard utility expression
+Vqj þ εj by affecting the variances of the assumed distribution for the disturbances. As shown in Swait and Adamowicz
+(2001), under the usual distributional assumptions associated with logit model form, the complexity conditioning
+expression, or in our case, experience conditioning expression, is the scale function m(E), where m is inversely related to the
+variance of the errors. Also, so long as experience/information is a function of object attributes X and decision maker
+characteristics, the resulting model does not have the Independence of Irrelevant Alternatives property (unlike the standard
+MNL model). This is referred to as the Heteroscedastic MNL model.
+242 PART | IV Image
+
+TABLE 20.4 Respondent’s experience with BRT and LRT services.
+
+Country  City  BRT available  LRT available
+Australia  Sydney  X  X
+  Melbourne  e  X
+  X  X
+  Adelaide  X  e
+  e  e
+  Brisbane  X  X
+  X  X
+  All other capital cities  e  X
+  X  X
+US  Boston  e  X
+  X  X
+  Los Angeles-Long Beach  e  X
+  e  X
+  Seattle-Bellevue-Everett  e  X
+  Minneapolis e St Paul  e  X
+  Dallas e Fort Worth  e  X
+
+Portugal  Philadelphia
+Britain  Lisbon
+  Birmingham
+France  Newcastle
+  Lyon
+
+  Toulouse
+
+Beginning with the standard utility expression associated with the jth alternative contained in a choice set of j ¼ 1, ., J
+
+alternatives, it is assumed that an index deﬁning overt experience with the jth alternative and qth individual, referred to as
+
+Eqj, conditions the utility expression. The functional form can be denoted by Eq. (20.1):
+
+  UqjÃ ¼ mqðEqjÞUqj ¼ mqðEqjÞðVqj þ εqjÞ;  (20.1)
+
+where UÃqj is the standard utility expression (Uqj) conditioned on the overt experience (and other possible inﬂuences) with
+an alternative. This conditioning is a form of heteroscedasticity. Eqj recognises that individual-speciﬁc experience, proxied
+by some metric such as frequency of use, conditions the marginal (dis)utility of each and every attribute, observed and
+
+unobserved, associated with the jth alternative in a pre-deﬁned choice set.
+  In Eq. (20.1), the random variables m(Eqj)εj, for all q and j contained in an individual’s choice set, are IID Gumbel but
+
+with unit scale factors. Multiplying both the left and right hand sides of (20.1) by mqj ! 0, the probability expression
+remains unchanged, as shown in (20.2).
+
+  Pr½Uqj ! Uqj0  ¼ Pr½Vqj À Vqj0 ! εqj À εqj0 
+  Â  Ã  (20.2)
+  ¼ Pr mqjðVqj À Vqj0 Þ ! mqjðεqj À εqj0 Þ
+
+  Given the IID property of the error difference, it follows that the probability of choosing an alternative is an MNL-like
+model with the observed sources of utility mq(Eqj)Vqj as given in Eq. (20.3).
+
+  exp½mðEqjjgÞ$VqjðXqjjbÞ  (20.3)
+  Prqj ¼ P
+
+  exp½mðEqj0 jgÞ$Vqj0 ðXqj0 jbÞ
+
+  j0 ˛Jq
+
+where we have parameters g and b, and the observed variables E and X associated with each alternative and each individ-
+
+ual. Model (20.3) is non-linear-in-parameters since the parameters associated with the experience effect interact with the
+
+parameters associated with attributes Xqj.
+  Against the background of the theory above, four dummy variables representing individual experience on BRT and
+
+LRT were speciﬁed: (1) dummyuseBRT onlyBRT which equals 1 if the individual had used the bus in the last month and their
+home city has BRT system only, and 0 otherwise; (2) dummyuseLRT onlyLRT equals 1 if the individual had used the rail or
+metro in the last month and only had LRT system available in their city, and 0 otherwise; (3) dummyuseBRT BRTLRT if the
+individual had used the bus in the last month and had both BRT and LRT systems available in their city; and
+
+(4) dummyuseLRT BRTLRT if the individual had used the rail or metro in the last month and had both BRT and LRT systems
+available in their city.
+  Cultural contrasts of preferences for bus rapid transit and light rail transit Chapter | 20 243
+
+These dummy variables were established using the information in Table 20.4 and the information provided by
+
+respondents as to the modes they had used during the previous month. It is important to note from Table 20.4 that Brisbane
+
+is the only city in Australia that has only BRT available. Therefore, the ﬁrst dummy presented above will only represent
+
+respondents from Brisbane. Moreover, the only cities included in this dataset that have both BRT and LRT available
+
+belong to Australia or US, so the third and fourth dummy variables are considered for these countries only.
+
+Dummy variables (1) and (3) were added to condition the BRT utility function, and the other two to condition the LRT
+
+utility function. All dummy variables, except for dummy variable (3) were statistically signiﬁcant. Hence, the BRT utility
+
+function was only conditioned by those individuals in the sample that have used the bus in the last month and only have the
+
+BRT system available in their city. The only city included in our sample meeting these criteria is Brisbane. Hence, those
+
+individuals from Brisbane that used the bus in the last month had a signiﬁcant inﬂuence on conditioning the utility
+
+function. This ﬁnding aligns with the results found in Hensher et al. (2015) that showed a higher preference towards the
+
+BRT system in Brisbane than in other cities of Australia.
+
+The speciﬁc functional form of heteroscedastic conditioning, implemented herein, is given in Eq. (20.4).
+
+  À  Á
+  UBRT ¼ 1 þ 4useBRT onlyBRT $ dummyuseBRT onlyBRT $½ASCBRT þ qcos t $ cos tBRT.  (20.4)
+
+À  Á
+ULRT ¼ 1 þ 4useLRT onlyLRT $ dummyuseLRT onlyLRT þ 4useLRT BRTLRT $ dummyuseLRT BRTLRT $½ASCLRT þ qcos t $ cos tLRT.
+
+20.7 Model results
+
+We estimated two ﬁnal models, one that does not include the stated attribute non-attendance (ANA) and the other which
+includes it. Different interactions between countries and attributes were tested and the ﬁnal models included interactions
+that were statistically signiﬁcant. The ﬁnal mixed logit model under attribute non-attendance is summarised in Table 20.5
+(the model that treats all attributes as relevant is provided in the Appendix as Table 20.A1). All monetary items were
+converted to the June 2014 currency value of $AUD.
+
+  The ﬁnal model pooled the data from all ﬁve countries which enables us to compare parameter estimates across
+countries as well as test whether some parameters are generic in contrast to country speciﬁc. Many attributes describing
+BRT and LRT interact with country-speciﬁc dummy variables, suggesting that the contribution (as a marginal (dis)utility to
+the preference for BRT or LRT) varies between the countries.
+
+  Several parameters were estimated as random and normally distributed and shown in Table 20.5 and the Appendix
+Table 20.A1. Signiﬁcant socioeconomic effects were found to be limited to gender (as a random parameter in France where
+this denotes signiﬁcant preference heterogeneity with females having a positive marginal utility for BRT). Gender as a
+ﬁxed parameter was signiﬁcant and positive in Portugal and France for BRT. This evidence may be aligned to the more
+visible presence of the bus driver compared to the tram driver in a multi-tram set. Travellers often indicate that they feel
+safer in a bus than on a train. The overall ﬁt of the two models e with and without considering ANA is similar. However,
+when including ANA, more interactions becomes statistically signiﬁcant. In general, as a result of the large number of
+differences in the mean and standard deviation (for random parameters) parameter estimates between countries it suggests a
+notable presence of preference heterogeneity between countries.
+
+  Although discussion of the statistical signiﬁcant of parameter estimates is informative, a more behaviourally appealing
+way to identify differences is to obtain willingness to pay estimates for each attribute, which is considered in the next section.
+
+20.8 Willingness to pay
+
+The willingness to pay (WTP) estimates for each attribute are calculated relative to the construction cost. However, in the
+models that did not include ANA (Appendix Table 20.A2), the construction costs for BRT were not statistically signiﬁcant
+for every country, only for Australia, and France.
+
+  Table 20.6 presents the WTP estimates where ANA is implemented. The WTP estimates under all attributes being
+relevant are provided in the Appendix Table 20.A2. The ﬁndings between the two models are directly comparable because
+they are calculated as ratios of parameter estimates. The non-ANA model (in the Appendix Table 20.A1) obtained a
+statistically signiﬁcant estimate of construction cost for BRT and LRT for all countries, so it was possible to obtain an
+estimate of WTP for all the attributes that were statistically signiﬁcant.
+
+  The ﬁrst column in Table 20.6 provides the interpretation given to each WTP estimate. In interpreting the ﬁndings, it is
+important to recognise that some estimates of mean WTP are dependent on a dummy variable (i.e., the presence vs.
+absence of a particular attribute). For example, the WTP estimates associated with level boarding and availability of
+integrated fares are high in dollar values because they represent a single value under presence vs. absence of that attribute
+through the use of a dummy variable. In contrast, many of the other WTP estimates are related to a unit change such as a
+1 min change of service headway.
+TABLE 20.5 Summary of model (mixed logit with ANA) results.  244 PART | IV Image
+
+  Australia  US  Portugal  France  UK
+  LRT
+  BRT  LRT  BRT  BRT  LRT  BRT  LRT  BRT  LRT
+  e
+System characteristics  À0.243  e  À0.243  À0.243  e  À0.243  e  À0.243  e
+Constant  (2.88)  (2.88)  e  (2.88)  (2.88)  (2.88)
+  0.007  0.007  e  e  e  e  e  e  e
+Travel time compared to car (% quicker/  (2.85)  (2.85)  À0.004
+slower)  À0.004  À0.004  À0.004  (3.63)  À0.004  À0.004  À0.004  À0.004  À0.004  À0.004
+Travel cost compared to car  (3.63)  (3.63)  (3.63)  À0.106  (3.63)  (3.63)  (3.63)  (3.63)  (3.63)  (3.63)
+(% cheaper/dearer)  À0.017  À0.071  À0.017  (4.36)  À0.017  À0.071  À0.074  À0.071  À0.017  À0.071
+Construction cost ($m),  (1.22)  (3.75)  (1.22)  0.140  (1.22)  (3.75)  (1.83)  (3.75)  (1.22)  (3.75)
+mean  0.097  0.161  0.097  (2.16)  0.097  0.161  0.304  0.161  0.097  0.161
+Construction cost  (2.21)  (4.14)  (2.21)  À0.046  (2.21)  (4.14)  (1.83)  (4.14)  (2.21)  (4.14)
+($m), std. dev  e  e  À0.020  (3.69)  e  À0.039  e  À0.046  e  À0.038
+Waiting time if transfer  (1.96)  e  (2.57)  (2.13)  (2.93)
+(mins), mean  e  e  0.065  e  e  e  e  e  e
+Waiting time if transfer  (1.96)  e
+(mins), std. dev  À0.030  À0.035  À0.030  À0.030  e  À0.030  e  À0.030  À0.065
+Construction time (year), mean  (3.45)  (2.47)  (3.45)  e  (3.45)  (3.45)  (3.45)  (2.76)
+  e  e  e  e  e  e  e  e  0.164
+Construction time  e  (3.22)
+(year), std. dev  0.016  e  e  e  e  e  0.059  e  e
+Percent metro population serviced (%)  (2.23)  e  (3.65)
+  À0.008  e  À0.008  À0.030  e  À0.008  e  À0.008  e
+Annual operating and maintenance cost  (1.47)  (1.47)  e  (3.28)  (1.47)  (1.47)
+($m)  0.010  e  e  e  e  0.029  e  e  e
+One-way service capacity (’000  (2.33)  e  (3.41)
+passengers)  e  e  e  À0.037  e  e  e  e  e
+Peak-hour headway (mins)  (2.57)
+  e  e  e  e  e  e
+Off-peak headway (mins)  À0.028  e  e  e
+Prepaid ticket required (1/0)  e  e  À0.504  0.447  e  e
+  (4.00)  (2.05)  (1.62)
+  e  e  e  e  e  e
+  e  e  e  e
+
+Integrated fare availability (1/0)  0.185  e  e  e
+
+  (1.62)
+Level boarding (vs. step boarding)  0.206  e  e  e  e  e  e  e  e  e
+  (2.01)  e  0.003
+Operation period assured (year)  0.003  e  0.003  e  0.003  e  0.003  (2.27)  e
+  (2.27)  (2.27)  (2.27)  (2.27)  0.012  e
+Environmental friendliness (% better/worse  e  0.012  e  0.012  0.012  0.012  e  (4.78)  e  0.012
+vs. car)  (4.78)  (4.78)  (2.18)  (4.78)  e  e  (4.78)
+Percent car switched to this mode (%)  e  e  e  e  e  e  0.023  e  e
+  e  (1.97)  0.203  e
+Staff presence on board (1/0)  e  0.203  e  0.203  e  0.203  e  (3.18)  e  0.203
+  (3.18)  e  (3.18)  e  (3.18)
+  (3.18)  e  e  À0.008  e  e  e
+  (3.16)  0.153  e
+Risk of being closed after assured  e  e  e  0.153  0.447  0.153  e  (1.93)  0.153  Cultural contrasts of preferences for bus rapid transit and light rail transit Chapter | 20 245
+  (1.93)  (3.24)  (1.93)  e  e  (1.93)
+period (%)  0.360  e  e  e  e  0.452
+  (2.63)  e  e  (2.91)
+Medium level of business attracted to sta-  e  0.153  e  e  e
+  e  e  e
+tion/stop (1/0)  (1.93)  e  e
+  e  e
+High level of business attracted to station/ e  0.234  e  e
+stop (1/0)  e
+  (1.91)
+  e
+Socioeconomic characteristics
+  e
+Female (1/0), mean  e  e  e  e  0.535
+
+  (2.51)
+
+Female (1/0), std. dev.  e  e  e  e  e  1.680
+
+  (2.51)
+
+Experience  À1.210  e  e  e  e
+Dummy (use BRT_onlyBRT)  (2.09)
+  e  À0.213  e  À0.213  e  e
+Dummy (use LRT_onlyLRT)  (1.83)
+  e  (1.83)
+Dummy (use LRT_BRTLRT)  À0.328
+  À0.328  e  (2.08)  e  e
+Summary statistics
+Log-likelihood at zero  (2.08)
+Log-likelihood at convergence
+McFadden pseudo R2  À5104.34
+Info. criterion AIC  À4931.52
+Sample size (number of observations)  0.034
+  À1.342
+  7420
+
+500 Halton draws, with panel structure accommodated. Random parameters are unconstrained normal distributions.
+246 PART | IV Image
+
+TABLE 20.6 Willingness to pay estimates (with ANA).
+
+WTP higher construction cost  Australia  US  France  Portugal  UK
+(AUD$m)a to.
+  BRT  LRT  BRT LRT  BRT LRT  BRT LRT  BRT  LRT
+Reduce the construction time in  $1.81  $0.50  $1.81 e  $0.41 e  $1.81 e  $1.81  $0.92
+one year
+  $0.96 e  e  e  e  $0.73  e  e  e  e
+Increase the population serviced
+in 1%  $0.47 e  $0.47 e  $0.11 e  $1.84 e  $0.47 e
+
+Reduce the annual operating  $0.63 e  e  e  $0.39 e  e  e  e  e
+costs in million $
+  e  e  e  e  e  e  $2.22 e  e  e
+Increase the service capacity in
+1000 passengers  $1.72 e  e  e  e  e  e  e  e  e
+
+Reduce the headway in peak  $0.40 $0.09 e  e  e  e  e  e  e  e
+hours by 1 min
+  $0.23 $0.05 $0.23 $0.04  $0.05 $0.05  $0.23 $0.05  $0.23 $0.05
+Reduce the headway in off-peak
+hours by 1 min  e  e  e  e  $6.86 $6.29  e  e  e  e
+
+Increase the travel time  $11.21 e  e  e  e  e  e  e  e  e
+compared to the car in 1%  $1.19  $0.44
+quicker  e  e  e  $0.65  e  $0.54  e  $0.53
+
+Reduce the travel cost compared  e  $2.86  e  $1.92  e  $2.86  e  $2.86  e  $2.86
+to the car in 1%  $12.48  e  e  e  e  e  e  e  e  e
+  $0.20  e  $0.20  e  $0.05  e  $0.20  e  $0.20  e
+Require prepaid ticket in the
+service  e  e  e  e  e  e  e  $0.11  e  e
+
+Integrate fare availability  e  $2.15 e  $1.44  e  $2.15  e  $2.15  e  $2.15
+
+Reduce the waiting time if trans-  e  $3.29 e  $3.40  e  e  e  e  e  $6.36
+fer in 1 min
+  e  $0.17 e  $0.12  e  $0.17  $0.73 $0.17  e  $0.17
+Have staff presence on-board
+  e  e  e  e  $0.32 e  e  e  e  e
+Have level boarding
+
+Increase the operation period
+assured in 1 year
+
+Decrease in 1% the risk of being
+closed after assured period
+
+Have a medium level of business
+attracted to the station/stop
+
+Have a high level of business
+attracted to the station/stop
+
+Increase the environmental
+friendliness in 1% compared to
+car
+
+Increase in 1% the cars switched
+to this mode
+
+aWTP are presented as AUD$ June 2014.
+
+  Table 20.6 shows that the community in Australia is willing to spend an additional $0.96m for the construction of BRT in
+order to increase the served population by 1%, or an extra $9.6m for a 10% increase. This is similar to the WTP of the
+community in France for LRT for an increase in the served population of $7.3m for a 10% increase. Although some of the
+WTP estimates are very similar across countries (after a statistical test of differences), for example, travel cost compared to
+the car (in percentages, except for BRT in France which is signiﬁcantly lower), there are some notable differences such as
+waiting time if transfer, environmental friendliness compared to the car and level of business attracted to a station/stop (high),
+with the latter showing a big difference between the UK ($6.36m) compared to Australia ($3.29m) and the USA ($3.40m).
+
+  Table 20.6 and Appendix Table 20.A2 show that differences between countries are sufﬁcient to suggest that there are
+cultural differences between countries with individuals in each country exhibiting different willingness to pay for speciﬁc
+service attributes. The differences also suggest that transferability of evidence on preferences between the countries is of
+  Cultural contrasts of preferences for bus rapid transit and light rail transit Chapter | 20 247
+
+questionable merit, and while there are some common attribute inﬂuences on preferences for BRT and LRT, their role
+varies quite noticeably.
+
+  The ﬁndings suggest that we should not just focus on the very narrow traditional sources of user beneﬁt (e.g., travel
+time and fare) in a beneﬁt-cost analysis where bus-based and rail-based projects are being evaluated. Instead, we should
+recognise and incorporate the larger set of relative beneﬁts, many of which would demonstrate increased support for BRT,
+or at least change the comparative analysis in a way that gives greater credibility as to the provision of a level playing ﬁeld
+assessment of the relative merits of BRT and LRT.
+
+20.9 Community preference model: simulated scenarios
+
+To illustrate how the preference model can be used in promoting BRT in the presence of LRT, a community preference
+model (CPM) has been developed which provides a number of interesting scenarios. This model offers an appealing way of
+identifying the gains in user or voter support which is potentially available under various planning opportunities, and could
+usefully be used as a screening process when deriving the options for appraisal as well as providing an intuitive comparison
+across cultures. Scenarios that can be assessed by the CPM emphasise some key issues that are often raised about BRT, as
+compared to LRT. These include construction cost, the catchment of the population served, the extent of dedicated right of
+way, waiting time if transfer, and a general bias against BRT compared to LRT linked to modal experience (i.e., famil-
+iarity). It can in principle be extended to all attributes of the choice experiment.
+
+  Given that the relative utilities are conditioned by the level of experience that individuals have of BRT and LRT if
+available in their cities, the cities that have different systems available have to be differentiated. That is, Australian cities
+will be separated into four categories: (1) cities that have only BRT available (i.e., Brisbane), (2) cities that have LRT
+available (i.e., Melbourne), (3) cities that have both systems available (i.e., Sydney and Adelaide), and (4) those cities that
+do not have BRT or LRT (i.e., Canberra, Perth, Darwin and Hobart). Equivalently, and as can be deduced from Table 20.4,
+US cities will be separated into two categories: ones that have only LRT and the ones that have both systems. France,
+Portugal and UK cities only have the LRT system available, so they will be part of only one category. Table 20.7 show the
+percentage of use of BRT and/or LRT in each of the categories.4
+
+  Fig. 20.3, using the ANA Model illustrates the extent of a (percentage) change in preference towards or away from BRT
+associated with a number of individual scenarios, with an illustration of how a combination of these scenarios might affect the
+preference for BRT. All attribute levels for the non-scenario attributes are initially set equal between BRT and LRT at the
+means shown in Table 20.8, and in Tables 20.3 and 20.7 for those other variables that are not attributes of the modes.
+
+  The support levels towards BRT and LRT in the base scenarios (i.e., with the current characteristics of the systems) for
+each country are presented in Table 20.9. To illustrate some of the evidence, we see in Fig. 20.3 that increasing BRT off-peak
+frequency by 50% in Australia increases on average voter support for BRT by 4.4%, which is a signiﬁcant gain when voting
+outcomes are often close to 50%. In the USA, we see a large increase in support for LRT (5.1% drop in BRT support) when it
+is 50% less expensive to construct than BRT and considering that 80% of voters have used bus in the last month.
+
+  Fig. 20.4 highlights the role that experience plays in modifying the percentage change in voter support for the same
+scenarios presented in Fig. 20.3. Only Australian and American cities were used in this exercise since BRT is not available
+
+TABLE 20.7 Percentage of use of the BRT and LRT systems (considering city availability).
+
+Description  % Of use in those citiesa  % Of use in whole country (given availability)b
+
+Australia
+
+Only BRT  49%  10%
+
+Only LRT  70%  17%
+
+Both BRT and LRT  57%  20%
+
+US
+
+Only LRT  23%  6%
+
+  Continued
+
+4. We are not able to identify residents of a particular city/country who have experienced LRT and/or BRT in other jurisdictions, which should, ceteris
+paribus, increase the percentage who have experienced that mode.
+248 PART | IV Image
+
+TABLE 20.7 Percentage of use of the BRT and LRT systems (considering city availability).dcont’d
+
+Description  % Of use in those citiesa  % Of use in whole country (given availability)b
+Both BRT and LRT  42%  31%
+Portugal
+
+Only LRT  68%  68%
+
+France
+
+Only LRT  61%  61%
+
+UK
+
+Only LRT  51%  51%
+
+aFor example: 49% of the people that live in cities with only BRT have used the bus in the last month; 70% of the people that live in cities with only LRT
+have used the metro or rail in the last month, and; 57% of the people that live in cities with both LRT and BRT have used the bus, metro or rail in the last
+month.
+bFor example: 10% of the total sample in Australia have only BRT system available and have used the bus in the last month; 17% have only LRT system
+and have used metro or rail in the last month; and 20% have both systems available and have used bus, metro or rail in the last month.
+
+  FIG. 20.3 Simulated potential gains in voter support for BRT.
+TABLE 20.8 Mean levels of each signiﬁcant attribute used in the scenarios.a
+
+Description  Mean (std deviation)
+Construction cost in AUD$ million
+Australia  2.632 (2.17)
+US  3.331 (2.74)
+Portugal  3.637 (3.00)
+France  3.752 (3.08)
+UK  2.593 (2.13)
+Construction time in years  4.496 (3.50)
+Percent metro population serviced  12.498 (5.59)
+Percent right of way  62.500 (27.95)
+Annual operating and maintenance cost in AUD$ million
+Australia  7.996 (4.93)
+US  10.151 (6.28)
+Portugal  11.075 (6.87)
+France  11.482 (7.10)
+UK  7.982 (4.92)
+Service capacity in one way in 000 passengers  16.667 (10.27)
+Service headway in peak hours (mins)  9.163 (4.00)
+Service headway in off-peak hours (mins)  14.071 (5.07)
+Travel time compared to car in % (% quicker or slower)  10.003 (12.75)
+Travel cost compared to car in %  0.000 (15.83)
+Prepaid ticket required (1,0)  0.500 (0.50)
+Integrated fare availability (1,0)  0.500 (0.50)
+Waiting time if transfer in minutes  7.749 (5.27)
+On-board staff presence (1,0)  0.500 (0.50)
+Level boarding (1,0)  0.500 (0.50)
+Operation period assured in years  35.000 (17.11)
+Risk of being closed after assured period  43.758 (37.00)
+Level of business attracted to station/stop e medium (1,0)  0.333 (0.47)
+Level of business attracted to station/stop e high (1,0)  0.334 (0.47)
+Environmental friendliness compared to car (%)  À1.666 (15.18)
+
+% Car switched to this mode  8.749 (7.39)
+
+aThe mean estimates are almost identical (some small amount of rounding error) across countries given the same choice design was used and hence we
+report the overall sample mean. The only attributes with differences across countries are those related with the costs, since the currencies used for each
+country varied across them. The cost attribute levels are converted to $AUD for June 2014.
+
+TABLE 20.9 Level of support towards BRT in base scenarios for each country.
+
+Country e systems availability  Using model without ANA  Using model with ANA
+Australia
+
+Only BRT  49.38%  50.40%
+  48.21%
+Only LRT  47.77%  48.14%
+  48.46%
+Both BRT and LRT  47.76%  48.67%
+
+None  48.08%
+
+All cities together  48.15%
+
+  Continued
+TABLE 20.9 Level of support towards BRT in base scenarios for each country.dcont’d
+
+Country e systems availability  Using model without ANA  Using model with ANA
+US  47.29%
+  46.29%
+Only LRT  46.98%  46.54%
+
+Both BRT and LRT  46.07%  42.62%
+
+All cities together  46.30%  47.54%
+
+Portugal  51.72%
+
+Only LRT  44.16%
+
+France
+
+Only LRT  48.08%
+
+UK
+
+Only LRT  50.54%
+
+  FIG. 20.4 Potential gains in voter’s support for BRT: inﬂuence of the existing system (experience).
+  Cultural contrasts of preferences for bus rapid transit and light rail transit Chapter | 20 251
+
+in other surveyed countries. Assuming a high level of business attraction for LRT (third line from the top of Fig. 20.4), we
+could expect that support for BRT will drop by around 3.9% in Australian cities with BRT (i.e., Brisbane), by around 3.3%
+for cities with LRT only (i.e., Melbourne), 3.2% in cities with both systems (i.e., Adelaide and Sydney), and close to 3.9%
+in cities with no BRT/LRT system (i.e., Canberra, Perth, Darwin and Hobart). What this tell us is that experience, be it
+positive or negative, results in a change in voter support, albeit small in this example. Another example that highlights the
+general perception of BRT is BRT off peak frequency increasing by 50%. In Fig. 20.3, we have on average for all
+Australian cites, a 4.4% increase in voter support; however when this is segmented by cities with various modal expe-
+riences, we see that this gain drops to 2.0% in cities with BRT only (which is Brisbane e see Table 20.5) whilst increases
+to 5.0% in other cities. That is, when the BRT off-peak frequency is improved, support towards it increases at a higher rate
+in cities that have LRT relative to cities that do not. This is an interesting (if not curious) ﬁnding e which might suggest
+that LRT is not so great and hence the support for BRT where there is experience with LRT actually grows. The message is
+that experience is both good and bad, and hence there are opportunities for BRT to be given a better light where LRT has
+resulted in possibly a more negative outcome when experienced than when not.
+
+  Importantly, this community preference model offers a platform to show the relative merits, in terms of preference,
+which can be associated with voter or general community support of a project speciﬁcation that is of interest to planners. In
+our example, a planning agency might be assessing BRT and LRT project proposals and have identiﬁed the construction
+cost, the amount of dedicated right of way and the catchment area served. This information can be fed into the CPM as
+assumptions of the project alternatives to obtain predictions of gains in support, as illustrated in Figs 20.3 and 20.4.
+
+  Overall, the evidence shows that there are signiﬁcant differences between the ﬁve countries in the potential gain in voter
+support for BRT, both in respect of the attribute level associated with BRT and LRT and also with the role that experience
+with various public transport modes plays in modal preferencing (or what may be seen by some as modal bias).
+
+20.10 Conclusions
+
+This chapter has presented evidence on the key drivers of community preferences for BRT and LRT across ﬁve developed
+countries. Although there are demonstrations of cultural commonality in attribute attendance and non-attendance, there are
+different drivers (with different WTP estimates) of relative support for bus over rail between the countries studied. In turn,
+these differences suggest that country-speciﬁc promotion of bus-based systems must draw on different attribute sets (with a
+very few common attributes of relevance) (mainly construction cost, fare, and waiting time).
+
+  An important result is the inﬂuence of experience with a speciﬁc mode on modal support, something that has been
+known in the broader literature on preferences for some time. ‘We learn by our experiences’ is a catch cry that resonates in
+many situations of real life (see Hoefﬂer and Ariely, 1999).
+
+  The community preference scenario-based simulation model presented shows how to assess likely potential gains in
+supporting BRT over LRT in each country as a consequence of speciﬁc changes in service and cost levels, as well as
+familiarity (proxied by overt experience) in using bus and rail-based modes. The ﬁndings reinforce the need to focus in on
+speciﬁc features of BRT that make it an attractive alternative to LRT in building support for BRT.
+
+  Overall, the key ﬁnding of this study is that it is necessary to identify preferences in each geographical jurisdiction for
+BRT and LRT and not making (as appropriate) unqualiﬁed commentary of the merits of one mode over the other without
+accounting for the responses of communities that will be impacted by a speciﬁc investment. Far too often, it appears,
+arguments are mounted for support of one mode (typically LRT) over another in ignorance of the level of services and
+experience that local communities have for speciﬁc modes. Importantly, by empirically identifying experience with each
+mode and estimating models to account for this, experience-conditioned scenario analysis can identify the extent of
+preference change when more information and familiarity is in place. Ideally, no judgement of modal preferences can be
+informed by community responses without at least recognising that more relevant information (associated with a
+circumstance as if a community had been able to experience a speciﬁc mode) will offer richer evidence on the potential
+support for speciﬁc modes. In turn this will at least help to neutralise the emotional bias in support of LRT, often driven by
+a love of trains and an absence of real experience in using high quality dedicated corridor rapid bus transport. The evidence
+provided by this chapter shows that support for BRT or LRT is often inﬂuenced by whether an experience of one mode has
+been good or bad, in a relative sense, and how examples of a poor experience with LRT has helped the support for BRT
+even where BRT has not been experienced.
+

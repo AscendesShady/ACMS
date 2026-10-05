@@ -1,0 +1,1668 @@
+Highway Capacity Manual 2000
+
+  QbL = Qb  (G16-5)
+  NLG
+
+  where  = lane group flow rate per lane (veh/h),
+  vL
+  s  = lane group saturation flow rate (veh/h),
+  sL  = lane group saturation flow rate per lane (veh/h),
+  c
+  cL  = lane group capacity (veh/h),
+  = lane group capacity per lane (veh/h),
+  QbL  = lane group initial queue at start of analysis period per lane (veh), and
+  NLG  = number of lanes in lane group.
+
+  AVERAGE BACK OF QUEUE
+
+  The average back-of-queue measure is the basis to calculate percentile back of
+
+  queue. Equation G16-6 shows average back-of-queue characteristics at signalized
+
+  intersections.
+
+  Q = Q1 + Q2  (G16-6)
+
+  where  = maximum distance in vehicles over which queue extends from stop line
+  Q  on average signal cycle (veh),
+
+  Q1  = first-term queued vehicles (veh), and
+  Q2  = second-term queued vehicles (veh).
+
+Q1 is the number of  The first term, Q1, is the average back of queue, determined first by assuming a
+vehicles arriving  uniform arrival pattern and then adjusting for the effects of progression for a given lane
+assuming uniform  group. The first term is calculated using Equation G16-7.
+pattern, adjusted for
+progression
+
+  v LC  g 
+  1 − 
+  3600  C 
+  Q1 = PF 2  g   (G16-7)
+
+  1 − min(1.0 , X L ) 
+    C
+
+  where  = first-term queued vehicles (veh),
+  Q1  = adjustment factor for effects of progression,
+  PF2  = lane group flow rate per lane (veh/h),
+  vL
+  C  = cycle length (s),
+  = effective green time (s), and
+  g  = ratio of flow rate to capacity (vL/cL ratio).
+  XL
+
+  Q1 represents the number of vehicles that arrive during the red phases and during the
+  green phase until the queue has dissipated.
+
+  The adjustment factor for the effects of progression is calculated by Equation G16-8.
+
+    g  vL 
+  1 − Rp  1 − 
+    C   sL 
+   g  PF 2 =   (G16-8)
+  vL 
+  1 −  1 − Rp   
+   C     sL  
+
+  where  = adjustment factor for effects of progression,
+  PF2  = lane group flow rate per lane (veh/h),
+  vL  = lane group saturation flow rate per lane (veh/h),
+  sL
+  g  = effective green time (s),
+  = cycle length (s), and
+  C  = platoon ratio [P(C/g)].
+  Rp
+
+Chapter 16 - Signalized Intersections  16-152
+Appendix G
+  Highway Capacity Manual 2000
+
+  The second term, Q2, is an incremental term associated with randomness of flow and  Q2 is the overflow queue
+overflow queues that may result because of temporary failures, which can occur even
+when demand is below capacity. This value can be an approximate cycle overflow queue
+when there is no initial queue at the start of the analysis period. Initial queue at the start
+of the analysis period is also accounted for in the second term, Q2. Equation G16-9 is
+used to compute the second term of the average back of queue.
+
+    2 8 kB X L 16 kBQbL 
+  Q2 = 0. 25 cLT (X L −1) +  (XL −1) +  +  2  (G16-9)
+  cLT  (cLT ) 
+  
+
+where  = second term of queued vehicles, estimate for average overflow queue
+  Q2
+  (veh);
+  cL  = lane group capacity per lane (veh/h);
+  T
+  XL  = length of analysis period (h);
+  kB  = vL/cL ratio;
+  QbL  = second-term adjustment factor related to early arrivals;
+  C  = initial queue at start of analysis period (veh); and
+
+  = cycle length (s).
+
+The second-term adjustment factor related to early arrivals is calculated using Equation
+G16-10.
+
+  kB = 0.12 I  sLg  0.7
+   (pretimed signals)
+   3600 
+
+  kB = 0.10 I  sLg  0.6
+   (actuated signals)  (G16-10)
+   3600 
+
+where
+  kB = second-term adjustment factor related to early arrivals,
+  sL = lane group saturation flow rate per lane (veh/h),
+  g = effective green time (s), and
+
+  I = upstream filtering factor for platoon arrivals (Chapter 15).
+
+  Exhibit G16-1 depicts the development of the back of queue over a typical
+undersaturated cycle in an analysis period. The exhibit shows the queue developing over
+the red interval and into the green interval until the front of the queue reaches the back of
+queue, thus dissipating the entire queue. The diagram shows the randomness of arrival
+rate. The variation in demand may cause individual cycle failures even though the
+demand over the analysis period is less than the capacity available. During some cycles
+queue overflow may be experienced as shown in Exhibit G16-2. Thus, the model for
+average back of queue accounts both for the queuing that occurs with a basic regular flow
+rate and for that which occurs because of randomness. Thus, there are two basic terms in
+the equation for determining average back of queue.
+
+  Exhibits G16-3 and G16-4 depict the relative contribution of each of the terms for Q
+across a range of v/c ratios. Exhibit G16-3 is calculated for poor progression, and Exhibit
+G16-4 shows results for good progression. Unlike the associated delay term, the portion
+of the queue arising from uniform flow will grow as v/c increases. However, the
+contribution of the second term (Q2), the portion of the queue that results from random
+arrivals and overflow queues, grows proportionally as v/c increases.
+
+  16-153  Chapter 16 - Signalized Intersections
+  Appendix G
+Highway Capacity Manual 2000
+
+  EXHIBIT G16-1. UNDERSATURATED CYCLE BACK OF QUEUE
+  Time
+
+  C
+
+  r  g
+
+  Stop line
+
+  Last queued vehicle
+  crossing the stop line
+
+  Vehicle arrivals  Back of queue
+  Queue at the end  Unqueued vehicle
+  of red period
+
+  EXHIBIT G16-2. OVERSATURATED CYCLE BACK OF QUEUE
+  Time
+
+  C
+
+  r  g
+
+  Stop line
+
+  Overflow vehicles
+  Last departing queued vehicle
+  crossing the stop line
+
+  Vehicle arrivals  Back of queue
+
+  Queue at the end
+  of red period
+
+Chapter 16 - Signalized Intersections  16-154
+Appendix G
+  Highway Capacity Manual 2000
+
+Back of Queue (number of vehicles)EXHIBIT G16-3.  CONTRIBUTION OF THE FIRST AND SECOND TERMS OF BACK OF QUEUE WITH POOR
+  PROGRESSION
+  20
+  15  (SEE FOOTNOTE FOR ASSUMED VALUES)
+
+  Q1
+  Q
+
+  10
+
+  5
+
+  0  0.2  0.4  0.6  0.8  1.0
+
+  Volume/Capacity Ratio
+
+Note:
+Assumes Arrival Type 1, g/C = 0.44, T = 0.25 h, QbL = 0, and sL = 1,000 veh/h.
+
+Back of Queue (number of vehicles)EXHIBIT G16-4.  CONTRIBUTION OF THE FIRST AND SECOND TERMS OF BACK OF QUEUE WITH GOOD
+  20  PROGRESSION
+  15
+  (SEE FOOTNOTE FOR ASSUMED VALUES)
+
+  Q1
+  Q
+
+  10
+
+  5
+
+  0
+
+  0.2  0.4  0.6  0.8  1.0
+
+  Volume/Capacity Ratio
+Note:
+
+Assumes Arrival Type 6, g/C = 0.44, T = 0.25 h, QbL = 0, sL = 1,000 veh/h.
+
+PERCENTILE BACK OF QUEUE
+
+  The percentile back of queue is computed by applying the percentile back-of-queue
+
+factor to the average back of queue. Equation G16-11 shows this relationship.
+
+  Q% = Q fB%  (G16-11)
+
+where  = percentile back of queue (veh),
+  Q%
+  Q  = average number of vehicles in queue (veh), and
+  = percentile back-of-queue factor.
+  fB%
+
+The percentile back-of-queue factor is calculated using Equation G16-12.  (G16-12)
+
+  −Q
+
+  f B % = p1 + p2e p3
+
+where
+  fB% = percentile back-of-queue factor,
+
+  16-155  Chapter 16 - Signalized Intersections
+  Appendix G
+Highway Capacity Manual 2000
+
+  p1 = first parameter for percentile back-of-queue factor (Exhibit G16-5),
+  p2 = second parameter for percentile back-of-queue factor (Exhibit G16-5),
+  p3 = third parameter for percentile back-of-queue factor (Exhibit G16-5),
+
+  and
+  Q = average number of vehicles in queue (veh).
+
+  Exhibit G16-5 gives the first, second, and third parameters of the percentile back-of-
+  queue factor for pretimed and actuated signals.
+
+  EXHIBIT G16-5. PARAMETERS FOR 70TH-, 85TH-, 90TH-, 95TH-, AND 98TH-PERCENTILE BACK
+  OF QUEUE
+
+  Pretimed Signals  Actuated Signals
+
+  p1  p2  p3  p1  p2  p3
+
+  fB70%  1.2  0.1  5  1.1  0.1  40
+  fB85%
+  fB90%  1.4  0.3  5  1.3  0.3  30
+  fB95%
+  fB98%  1.5  0.5  5  1.4  0.4  20
+
+  1.6  1.0  5  1.5  0.6  18
+
+  1.7  1.5  5  1.7  1.0  13
+
+  QUEUE STORAGE RATIO
+
+Queue storage ratio is a  The back-of-queue measure is useful for dealing with the blockage of available
+test for possible blockage  queue storage distance, determined by the queue storage ratio. If the queue storage ratio
+  is less than 1, blockage will not occur. If the queue storage ratio is equal to or greater
+  than 1, blockage will occur. Equations G16-13 and G16-14 are used to calculate average
+  queue storage ratio and percentile queue storage ratio, respectively.
+
+  RQ = LhQ  (G16-13)
+  La
+
+  where  = average queue storage ratio,
+  = average queue spacing in a stationary queue (m),
+  RQ  = available queue storage distance (m), and
+  Lh  = average number of vehicles in queue (veh).
+  La
+  Q
+
+  RQ % = LhQ%  (G16-14)
+  La
+
+  where  = percentile queue storage ratio, and
+  RQ%  = percentile back of queue (veh).
+  Q%
+
+One must assume an  Average queue spacing is the average length between the front bumpers of two
+average distance  successive vehicles in a stationary queue.
+between front bumpers
+of successive vehicles  APPLICATION
+standing in queue
+  Exhibit G16-6 provides a worksheet to perform back-of-queue computations. Queue
+  lengths are calculated for each lane in the lane group. Lane group information, flow
+  rates, capacities, and saturation flow rates for each lane group are taken from the Input
+  Worksheet, Volume Adjustment and Saturation Flow Rate Worksheet, and Capacity and
+  LOS Worksheet after they are adjusted for initial queue present and computed on a per-
+  lane basis. The proportion of vehicles arriving on the green should be observed in the
+  field. If field information is available, average arrival rate on green can be calculated.
+  Initial queue at the start of the analysis period also should be observed in the field.
+
+Chapter 16 - Signalized Intersections  16-156
+Appendix G
+  Highway Capacity Manual 2000
+
+However, if field information is not available, successive period analyses, beginning with
+a period in which there is no initial queue, can be performed.
+
+  EXHIBIT G16-6. BACK-OF-QUEUE WORKSHEET
+
+  BACK-OF-QUEUE WORKSHEET
+
+General Information
+
+Project Description ____________________________________________________________________________________
+
+Average Back of Queue
+
+  EB  WB  NB  SB
+
+  LT TH RT LT TH RT LT TH RT LT TH RT
+
+Lane group
+
+Initial queue per lane at the start of analysis
+period, QbL
+Flow rate per lane, vL (veh/h)
+Saturation flow rate per lane, sL (veh/h)
+Capacity per lane, cL (veh/h)
+Flow ratio, vL/sL
+v/c ratio, XL = vL/cL
+Effective green time, g (s)
+
+Green ratio, g/C
+
+Upstream filtering factor, I
+
+Proportion of vehicles arriving on green, P
+
+Platoon ratio, Rp Rp = ( P )
+  g/C
+
+Effects of progression adjustment factor, PF2
+  ( 1  g  )(1  svL )
+  –  Rp  C  –
+
+PF2 = g v L  L
+
+  (1 – C )1 – Rp( sL)
+
+First-term queued vehicles, Q1 (veh)
+  vLC 1 – g
+Q1 = PF2
+  3600 ( C)
+  1 – min (1.0, XL)( gC )
+
+Second-term adju0s.7tment factor, kB
+
+  sLg
+
+kB = 0.12 I ( 3600 ) (pretimed signals)
+
+  sLg 0.6
+
+kB = 0.10 l ( 3600 ) (actuated signals)
+
+Second-term queued vehicles, Q2
+
+  2 8kBXL 16kBQbLLL
+Q2 = 0.25cLT (XL–1) + (XL–1) + c T + (c T)2
+
+Average number of queued vehicles, Q
+Q = Q1 + Q2
+
+Percentile Back of Queue  " 70%  " 85%  " 90%  " 95%  " 98%
+
+Percentile back-of-queue factor,1 fB%
+Percentile back-of-queue, Q% (veh), Q% = QfB%
+
+Queue Storage Ratio
+
+Average queue spacing, Lh (m)
+Available queue storage, La (m)
+Average queue storage ratio, RQ = Lh Q
+
+  La
+
+Percentile queue storage ratio, RQ% = Lh Q%
+
+  La
+
+Notes
+
+  ( p3 –Q)
+
+1. fB% = p1 + p2 e , where p1, p2, and p3 are obtained from Exhibit G16-5.
+
+  After these parameters have been gathered, the average back of queue, Q, is
+calculated. Then percentile back of queue is calculated for any desired percentile.
+
+  Queue storage ratios for average back of queue and desired percentile back of queue
+are calculated. The available queue storage distance should be determined by field
+observation. If the facility has not yet been built (planning application), right-of-way
+limitations or agency requirements should be used to determine available queue storage
+distance. The average queue spacing in a stationary queue is the average length between
+
+  16-157  Chapter 16 - Signalized Intersections
+  Appendix G
+Highway Capacity Manual 2000
+
+  the front bumper of the queued vehicle to the front bumper of the queued vehicle in front.
+  Average queue spacing can be determined according to the traffic composition.
+
+  The queue values produced by the estimation procedure in this appendix may be
+  higher than those from other procedures found in the literature, especially at high degrees
+  of saturation or high percentiles, for two reasons. First, many procedures report only
+  average values, applying no queue expansion factor to estimate a higher-percentile
+  approximation. Second, overflow queues that occur occasionally at the end of a cycle are
+  forgiven in many procedures that compute the average back of queue. It must be
+  recognized that the common wisdom that has evolved from popular estimation techniques
+  may be unduly optimistic and that low probabilities of queue overflow may be difficult to
+  achieve when demand is near capacity.
+
+Stability of saturation  APPENDIX H. DIRECT MEASUREMENT OF PREVAILING SATURATION
+flow rates  FLOW RATES
+
+  GENERAL NOTES
+
+  The default base saturation flow rate used in the methodology of this chapter is 1,900
+  pc/h/ln. This value must be adjusted for prevailing traffic conditions such as lane width,
+  left turns, right turns, heavy vehicles, grade, parking, parking blockage, area type, bus
+  blockage, and left-turn blockage. These computations are made in the Volume
+  Adjustment and Saturation Flow Rate Worksheet. As an alternative to these
+  computations, the actual saturation flow rate can be measured directly in the field.
+
+  Saturation flow rate is the maximum discharge rate during the green time. It is
+  usually achieved after about 10 to 14 s of green, which corresponds to the front axle of
+  the fourth to sixth passenger car crossing the stop line after the beginning of green.
+
+  The base saturation flow rate is defined as the discharge rate from a standing queue
+  in a 3.6-m-wide lane that carries only through passenger cars and is otherwise unaffected
+  by conditions such as grade, parking, and turning vehicles. Vehicles are recorded when
+  their front axles cross the stop line. The measurement starts at the beginning of the green
+  time or when the front axle of the first vehicle in the queue passes the stop line.
+  Saturation flow, however, is calculated only from the headways after the fourth vehicle in
+  queue passes the stop line. Other reference points on the vehicle, on the road, or in time
+  may yield different saturation flow rates. In order to maintain consistency with the
+  method described in this chapter and to allow for information exchange, maintaining the
+  roadway and vehicle reference points identified here is essential.
+
+  The base saturation flow rate is usually stable over a period of time for similar traffic
+  conditions in a given community. Values measured in the same lane during repetitive
+  weekday traffic conditions (e.g., a.m. or p.m. peaks) normally exhibit relatively narrow
+  distributions. On the other hand, saturation flow rates for different communities or
+  different traffic conditions and compositions, even at the same location, may vary
+  significantly.
+
+  For practical purposes, prevailing saturation flow rates are usually expressed in
+  vehicles per hour per lane. As a result, their values also depend on traffic flow
+  composition. The default value is expressed in passenger cars per hour per lane (i.e.,
+  passenger cars only). Preferably, local prevailing saturation flow rates should be
+  observed directly. Alternatively, the computation module can be used, with the measured
+  regional base saturation flow rates as the starting values. The default value should be
+  used only as an approximate substitute. Severe weather conditions, unusual traffic mixes,
+  or other special local conditions can yield saturation flow rates that differ markedly from
+  those estimated using the computation procedures. The procedure for measuring
+
+Chapter 16 - Signalized Intersections  16-158
+Appendix G
+  Highway Capacity Manual 2000
+
+prevailing saturation flow rates is summarized below. A sample field worksheet for
+recording observations is included as Exhibit H16-1.
+
+  EXHIBIT H16-1. FIELD SATURATION FLOW RATE STUDY WORKSHEET
+
+  FIELD SATURATION FLOW RATE STUDY WORKSHEET
+
+General Information  Site Information
+
+Analyst  _______________________________  Intersection  ____________________________
+Agency or Company  _______________________________  Area Type
+Date Performed  _______________________________  Jurisdiction  " CBD  " Other
+Analysis Time Period  _______________________________  Analysis Year
+  ____________________________
+
+  ____________________________
+
+Lane Movement Input
+
+  grade =
+
+  street
+
+  grade =  Movements Allowed
+  street  " Through
+  " Right turn
+  " Left turn
+
+  grade =
+
+  Identify all lane movements and the lane studied
+
+Input Field Measurement  grade =
+
+Veh. in  Cycle 1  Cycle 2  Cycle 3  Cycle 4  Cycle 5  Cycle 6
+q ueue  Time HV T  Time HV T  Time HV T  Time HV T  Time HV T  Time HV T
+
+  1
+  2
+  3
+  4
+  5
+  6
+  7
+  8
+  9
+  10
+  11
+  12
+  13
+  14
+  15
+  16
+  17
+  18
+  19
+  20
+
+End of saturation
+
+End of green
+
+No. veh. > 20
+
+No. veh. on yellow
+
+Glossary and Notes
+
+HV = Heavy vehicles (vehicles with more than 4 tires on pavement)
+T = Turning vehicles (L = Left, R = Right)
+Pedestrians and buses that block vehicles should be noted with the time that they block traffic, for example,
+P12 = Pedestrians blocked traffic for 12 s
+B15 = Bus blocked traffic for 15 s
+
+MEASUREMENT TECHNIQUE
+
+  The following example describes a single-lane saturation flow survey. A two-person
+field crew is recommended. However, one person with a tape recorder, push-button event
+recorder, or a notebook computer with appropriate software will suffice. The field notes
+
+  16-159  Chapter 16 - Signalized Intersections
+  Appendix H
+Highway Capacity Manual 2000
+
+  and tasks identified in the following section must be adjusted according to the type of
+  equipment used.
+
+  1. General tasks: Measure and record the area type and width and grade of the lane
+  being studied. Fill out the survey identification data shown in Exhibit H16-1. Select an
+  observation point where the stop line for the surveyed lane and the corresponding signal
+  heads are clearly visible. The reference point is normally the stop line. Vehicles should
+  consistently stop behind this line. When a vehicle crosses it unimpeded, it has entered the
+  intersection conflict space for the purpose of saturation flow measurement. Left- or right-
+  turning vehicles yielding to opposing through traffic or yielding to pedestrians are not
+  recorded until they proceed through the opposing traffic.
+
+  2. Recorder tasks: Note the last vehicle in the stopped queue when the signal turns
+  green. Describe the last vehicle to the timer. Note on the worksheet which vehicles are
+  heavy vehicles and which vehicles turn left or right. Record the time called out by the
+  timer.
+
+  3. Timer tasks: Start stopwatch at beginning of green and notify the recorder. Count
+  aloud each vehicle in the queue as its front axle crosses the stop line and note the time of
+  crossing. Call out the time of the fourth, tenth, and last vehicle in the stopped queue as its
+  front axle is crossing the stop line.
+
+  If queued vehicles are still entering the intersection at the end of the green, call out
+  (saturation through the end of green - last vehicle was number XX). Note any unusual
+  events that may have influenced the saturation flow rate, such as buses, stalled vehicles,
+  and unloading trucks.
+
+  The period of saturation flow begins when the front axle of the fourth vehicle in the
+  queue crosses the stop line or reference point and ends when the front axle of the last
+  queued vehicle crosses the stop line. The last queued vehicle may be a vehicle that joined
+  the queue during the green time.
+
+  Measurements are taken cycle by cycle. To reduce the data for each cycle, the time
+  recorded for the fourth vehicle is subtracted from the time recorded for the last vehicle in
+  the queue. This value is the sum of all headways for (n – 4) vehicles, where n is the
+  number of the last vehicle surveyed (this may not be the last vehicle in the queue). This
+  sum is divided by the number of headways after the fourth vehicle [i.e., divided by
+  (n – 4)] to obtain the average headway per vehicle under saturation flow. The saturation
+  flow rate is 3,600 divided by this value.
+
+  For example, if the time for the fourth vehicle was observed as 10.2 s and the time
+  for the 14th and last vehicle surveyed is 36.5 s, the average saturation headway per
+  vehicle is
+
+  (36.5 − 10. 2) = 26.3 = 2.63 s/veh
+  (14 − 4)  10
+
+  and the prevailing saturation flow rate in that cycle is
+
+  3600 = 1369 veh/h/ln
+  2. 63
+
+Guidelines for attaining  In order to obtain a statistically significant value, a minimum of 15 signal cycles with
+statistically satisfying  more than eight vehicles in the initial queue is typically required. An average of the
+results  saturation flow rate values in individual cycles represents the prevailing local saturation
+  flow rate for the surveyed lane. The percentage of heavy vehicles and turning vehicles in
+  the sample used in the computations should be determined and noted for reference.
+
+Chapter 16 - Signalized Intersections  16-160
+Appendix H
+  Highway Capacity Manual 2000
+
+  APPENDIX I. WORKSHEETS
+  INPUT WORKSHEET
+
+  VOLUME ADJUSTMENT AND SATURATION FLOW RATE WORKSHEET
+  CAPACITY AND LOS WORKSHEET
+
+ SUPPLEMENTAL UNIFORM DELAY WORKSHEET FOR LEFT TURNS FROM EXCLUSIVE LANES WITH
+  PROTECTED AND PERMITTED PHASES
+
+  TRAFFIC-ACTUATED CONTROL INPUT DATA WORKSHEET
+ SUPPLEMENTAL WORKSHEET FOR PERMITTED LEFT TURNS OPPOSED BY MULTILANE APPROACH
+SUPPLEMENTAL WORKSHEET FOR PERMITTED LEFT TURNS OPPOSED BY SINGLE-LANE APPROACH
+SUPPLEMENTAL WORKSHEET FOR PEDESTRIAN-BICYCLE EFFECTS ON PERMITTED LEFT TURNS AND
+
+  RIGHT TURNS
+  INITIAL QUEUE DELAY WORKSHEET
+
+  BACK-OF-QUEUE WORKSHEET
+  INTERSECTION CONTROL DELAY WORKSHEET
+  FIELD SATURATION FLOW RATE STUDY WORKSHEET
+
+16-161  Chapter 16 - Signalized Intersections
+  Appendix I
+Highway Capacity Manual 2000
+
+  INPUT WORKSHEET
+
+General Information  Site Information
+
+Analyst  _______________________________  Intersection  _____________________________
+Agency or Company  _______________________________  Area Type
+Date Performed  _______________________________  Jurisdiction  " CBD  " Other
+Analysis Time Period  _______________________________  Analysis Year
+  _____________________________
+
+  _____________________________
+
+Intersection Geometry
+
+  grade=  = Pedestrian Button
+
+  Street  = Lane Width
+  = Through
+  Show North Arrow  = Right
+
+  grade=
+
+  = Left
+
+  = Through + Right
+
+  grade=  = Left + Through
+
+  Street
+
+  = Left + Right
+
+  = Left + Through + Right
+
+  grade=
+
+Volume and Timing Input
+
+  EB  WB  NB  SB
+
+  LT TH RT1 LT TH RT1 LT TH RT1 LT TH RT1
+
+Volume, V (veh/h)
+
+% heavy vehicles, % HV
+
+Peak-hour factor, PHF
+
+Pretimed (P) or actuated (A)
+
+Start-up lost time, l1 (s)
+Extension of effective green time, e (s)
+
+Arrival type, AT
+
+Approach pedestrian volume,2 vped (p/h)
+Approach bicycle volume,2 vbic (bicycles/h)
+Parking (Y or N)
+
+Parking maneuvers, Nm (maneuvers/h)
+Bus stopping, NB (buses/h)
+Min. timing for pedestrians,3 Gp (s)
+
+Signal Phasing Plan
+
+D  Ø1  Ø2  Ø3  Ø4  Ø5  Ø6  Ø7  Ø8
+I
+A
+G
+R
+A
+M
+
+Timing G =  G =  G =  G =  G =  G =  G =  G =
+  Y =  Y =  Y =  Y =  Y =  Y =  Y =  Y =
+  Permitted turns
+  Protected turns  Pedestrian  Cycle length, C = _____ s
+
+Notes
+
+1. RT volumes, as shown, exclude RTOR.
+2. Approach pedestrian and bicycle volumes are those that conflict with right turns from the subject approach.
+3. Refer to Equation 16-2.
+
+Chapter 16 - Signalized Intersections
+  Highway Capacity Manual 2000
+
+  VOLUME ADJUSTMENT AND SATURATION FLOW RATE WORKSHEET
+General Information
+
+Project Description______________________________________________________________________________________
+
+Volume Adjustment
+
+  EB  WB  NB  SB
+
+  LT TH RT LT TH RT LT TH RT LT TH RT
+
+Volume, V (veh/h)
+Peak-hour factor, PHF
+Adjusted flow rate, vp = V/PHF (veh/h)
+Lane group
+
+Adjusted flow rate in lane group, v (veh/h)
+
+Proportion1 of LT or RT (PLT or PRT)  -  -  -  -
+
+Saturation Flow Rate (see Exhibit 16-7 to determine adjustment factors)
+
+Base saturation flow, so (pc/h/ln)
+
+Number of lanes, N
+
+Lane width adjustment factor, fw
+
+Heavy-vehicle adjustment factor, fHV
+
+Grade adjustment factor, fg
+
+Parking adjustment factor, fp
+
+Bus blockage adjustment factor, fbb
+
+Area type adjustment factor, fa
+
+Lane utilization adjustment factor, fLU
+
+Left-turn adjustment factor, fLT
+
+Right-turn adjustment factor, fRT
+
+Left-turn ped/bike adjustment factor, fLpb
+
+Right-turn ped/bike adjustment factor, fRpb
+
+Adjusted saturation flow, s (veh/h)
+s = so N fw fHV fg fp fbb fa fLU fLT fRT fLpb fRpb
+Notes
+
+1. PLT = 1.000 for exclusive left-turn lanes, and PRT = 1.000 for exclusive right-turn lanes. Otherwise, they are equal to the proportions
+  of turning volumes in the lane group.
+
+  Chapter 16 - Signalized Intersections
+Highway Capacity Manual 2000
+
+  CAPACITY AND LOS WORKSHEET
+
+General information
+
+Project Description _____________________________________________________________________________________
+
+Capacity Analysis
+
+Phase number
+Phase type
+
+Lane group
+
+Adjusted flow rate, v (veh/h)
+
+Saturation flow rate, s (veh/h)
+
+Lost time, tL (s), tL = l1 + Y – e
+Effective green time, g (s), g = G + Y – tL
+Green ratio, g/C
+Lane group capacity,1 c = s(g/C), (veh/h)
+
+v/c ratio, X
+
+Flow ratio, v/s
+
+Critical lane group/phase (√)
+Sum of flow ratios for critical lane groups, Yc
+Yc = ∑ (critical lane groups, v/s)
+Total lost time per cycle, L (s)
+
+Critical flow rate to capacity ratio, Xc
+Xc = (Yc)(C)/(C – L)
+
+Lane Group Capacity, Control Delay, and LOS Determination
+
+  EB  WB  NB  SB
+
+Lane group
+
+Adjusted flow rate,2 v (veh/h)
+
+Lane group capacity,2 c (veh/h)
+
+v/c ratio,2 X = v/c
+
+Total green ratio,2 g/C
+Uniform delay, d1 = 0.50 C [1 – (g/C)]2 1 – [min(1, X)g/C] (s/veh)
+
+Incremental delay calibration,3 k
+
+Incremental delay,4 d2
+d2 = 900T[(X – 1) + (X – 1)2 + 8kIX cT ](s/veh)
+Initial queue delay, d3 (s/veh) (Appendix F)
+
+Uniform delay, d1 (s/veh) (Appendix F)
+
+Progression adjustment factor, PF
+
+Delay, d = d1(PF) + d2 + d3 (s/veh)
+
+LOS by lane group (Exhibit 16-2)
+Delay by approach, dA = ∑(d)(v) ∑v (s/veh)
+LOS by approach (Exhibit 16-2)
+
+Approach flow rate, vA (veh/h)  (s/veh)  Intersection LOS (Exhibit 16-2)
+Intersection delay, dI = ∑(dA)(vA)
+
+  ∑vA
+
+Notes
+
+1. For permitted left turns, the minimum capacity is (1 + PL)(3600/C).
+2. Primary and secondary phase parameters are summed to obtain lane group parameters.
+3. For pretimed or nonactuated signals, k = 0.5. Otherwise, refer to Exhibit 16-13.
+4. T = analysis duration (h); typically T = 0.25, which is for the analysis duration of 15 min.
+
+  I = upstream filtering metering adjustment factor; I = 1 for isolated intersections.
+
+Chapter 16 - Signalized Intersections
+  Highway Capacity Manual 2000
+
+SUPPLEMENTAL UNIFORM DELAY WORKSHEET FOR LEFT TURNS FROM EXCLUSIVE
+  LANES WITH PROTECTED AND PERMITTED PHASES
+
+General Information
+
+Project Description ____________________________________________________________________________________
+
+v/c Ratio Computation
+
+  EB  WB  NB  SB
+
+Cycle length, C (s)
+
+Protected phase eff. green interval, g (s)
+
+Opposing queue effective green interval, gq (s)
+Unopposed green interval, gu (s)
+Red time, r (s)
+
+r = C – g – gq – gu
+
+Arrival rate, qa (veh/s)
+qa = v 3600 * max[X, 1.0]
+
+Protected phase departure rate, sp (veh/s)
+sp = s 3600
+Permitted phase departure rate, ss (veh/s)
+ss = s(gq + gu) (gu * 3600)
+If leading left (protected + permitted)
+v/c ratio, Xperm = qa(gq + gu) ss gu
+If lagging left (permitted + protected)
+v/c ratio, Xperm = ss g qa(r + gq + gu) u
+If leading left (protected + permitted)
+v/c ratio, Xprot = qa(r + g) sp g
+If lagging left (permitted + protected)
+
+v/c ratio, Xprot is N/A
+
+Uniform Queue Size and Delay Computations
+
+Queue at beginning of green arrow, Qa
+Queue at beginning of unsaturated green, Qu
+Residual queue, Qr
+Uniform delay, d1
+
+Uniform Queue Size and Delay Equations
+
+  Case  Qa  Qu  Qr  d1
+  qar  qagq  0  [0.50/(q aC)][rQ a + Qa2/(sp– q a) + gqQu + Qu2/(ss – qa)]
+If Xperm ≤ 1.0 & Xprot ≤ 1.0 1  qar  Qr + qagq  [0.50/(qaC)][rQ a + g(Qa + Qr) + gq(Qr + Qu) + Qu2/(ss – qa)]
+If Xperm ≤ 1.0 & Xprot > 1.0 2  Qr + qar  qagq  Qa – g(sp – qa)  [0.50/(q aC)][g qQu + gu(Qu + Qr) + r(Q r + Qa) + Qa2/(sp– qa)]
+If Xperm > 1.0 & Xprot ≤ 1.0 3  0  qa(r + gq)  Qu – gu(ss – qa)  [0.50/(q aC)][(r + gq)Qu + Qu2/(ss – q a )]
+If Xperm ≤ 1.0 (lagging lefts) 4  qa(r + gq)  [0.50/(q aC)][(r + gq)Qu + gu(Qu + Qa) + Qa2/(sp – q a)]
+If Xperm > 1.0 (lagging lefts) 5  Qu – g u(ss – qa )  0
+
+  0
+
+  Chapter 16 - Signalized Intersections
+Highway Capacity Manual 2000
+
+  TRAFFIC-ACTUATED CONTROL INPUT DATA WORKSHEET
+
+General Information  Site Information
+
+Analyst  _______________________________  Intersection  _____________________________
+Agency or Company  _______________________________  Area Type
+Date Performed  _______________________________  Jurisdiction  " CBD  " Other
+Analysis Time Period  _______________________________  Analysis Year
+  _____________________________
+
+  _____________________________
+
+Approach-Specific Data  WB  NB  SB
+  EB
+
+Left-turn treatment code1
+
+Left-turn position (leading, lagging, or N/A)
+
+Left-turn max sneakers, vLS (veh)  Ring 1  4. SBTH  Ring 2  8. NBTH
+Left-turn free queue, Qf (veh)  1. WBLT 2. EBTH 3. NBLT  5. EBLT 6. WBTH 7. SBLT
+Approach speed, SA (km/h)
+Ring 1 and 2 termination (simultaneous,
+independent, or N/A)
+Phase-Specific Data
+
+Phase type2 (L, T, G, N, X)
+
+Phase reversal (Yes or No)
+
+Detector length, DL (m)
+
+Detector setback, DS (m)
+
+Max initial interval, MxI (s)
+
+Added initial per actuation, AI (s)
+
+Min allowable gap, MnA (s)
+
+Gap reduction rate, GR
+
+Ped Walk + Don't Walk, WDW (s)
+
+Maximum green, MxG (s)
+
+Intergreen time, Y (s)
+
+Recall mode (min, max, ped, none)
+
+Min veh phase time, MnV (s)
+Notes
+
+1. (0) Does not exist (1) Permitted (2) Protected (3) Protected + Permitted  (4) Not opposed
+2. (L) Protected left turn on a green arrow
+
+  (T) Through and right-turning traffic only
+  (G) Permitted left turns and compound left-turn protection
+  (N) In addition to other movements, left turns are not opposed
+  (X) Inactive phases
+
+Chapter 16 - Signalized Intersections
+  Highway Capacity Manual 2000
+
+  SUPPLEMENTAL WORKSHEET FOR PERMITTED LEFT TURNS
+  OPPOSED BY MULTILANE APPROACH
+
+General Information
+
+Project Description _____________________________________________________________________________________
+
+Input
+
+  EB  WB  NB  SB
+
+Cycle length, C (s)
+Total actual green time for LT lane group,1 G (s)
+Effective permitted green time for LT lane group,1 g (s)
+
+Opposing effective green time, go (s)
+Number of lanes in LT lane group,2 N
+
+Number of lanes in opposing approach, No
+Adjusted LT flow rate, vLT (veh/h)
+Proportion of LT volume in LT lane group,3 PLT
+Adjusted flow rate for opposing approach, vo (veh/h)
+Lost time for LT lane group, tL
+
+Computation
+
+LT volume per cycle, LTC = vLTC/3600
+
+Opposing lane utilization factor, fLUo (refer to Volume
+Adjustment and Saturation Flow Rate Worksheet)
+
+Opposing flow per lane, per cycle
+volc = 3600Nof voC LUo (veh/C/ln)
+gf = G[e–0.882(LTC0.717)] – tL gf ≤ g (except for exclusive
+left-turn lanes)1, 4
+
+Opposing platoon ratio, Rpo (refer to Exhibit 16-11)
+Opposing queue ratio, qro = max[1 – Rpo(go/C), 0]
+
+  volcqro
+
+gq = 0.5 – [volc(1 – qro)/go] – tL, volc(1 – qro)/go ≤ 0.49
+(note case-specific parameters)1
+gu = g – gq if gq ≥ gf, or
+gu = g – gf if gq < gf
+EL1 (refer to Exhibit C16-3)
+
+PL = PLT 1 + (gf + gu/EL1 + 4.24) (N – 1)g
+
+(except with multilane subject approach)5
+fmin = 2(1 + PL)/g
+fm = [gf/g] + [gu/g] 1 + PL(EL1 – 1) 1 , (fmin ≤ fm ≤ 1.00)
+
+fLT = [fm + 0.91(N – 1)]/N (except for permitted left
+turns)6
+
+Notes
+
+ 1. Refer to Exhibits C16-4, C16-5, C16-6, C16-7, and C16-8 for case-specific parameters and adjustment factors.
+ 2. For exclusive left-turn lanes, N is equal to the number of exclusive left-turn lanes. For shared left-turn lanes, N is equal to the sum of the
+
+  shared left-turn, through, and shared right-turn (if one exists) lanes in that approach.
+ 3. For exclusive left-turn lanes, PLT = 1.
+ 4. For exclusive left-turn lanes, gf = 0, and skip the next step. Lost time, tL, may not be applicable for protected-permitted case.
+ 5. For a multilane subject approach, if PL ≥ 1 for a left-turn shared lane, then assume it to be a de facto exclusive left-turn lane and redo the
+
+  calculation.
+ 6. For permitted left turns with multiple exclusive left-turn lanes fLT = fm.
+
+  Chapter 16 - Signalized Intersections
+Highway Capacity Manual 2000
+
+  SUPPLEMENTAL WORKSHEET FOR PERMITTED LEFT TURNS
+  OPPOSED BY SINGLE-LANE APPROACH
+
+General Information
+
+Project Description _____________________________________________________________________________________
+
+Input
+
+  EB  WB  NB  SB
+
+Cycle length, C (s)
+
+Total actual green time for LT lane group,1 G (s)
+
+Effective permitted green time for LT lane group,1 g (s)
+
+Opposing effective green time, go (s)
+Number of lanes in LT lane group,2 N
+
+Adjusted LT flow rate, vLT (veh/h)
+
+Proportion of LT volume in LT lane group, PLT
+
+Proportion of LT volume in opposing flow, PLTo
+
+Adjusted flow rate for opposing approach, vo (veh/h)
+
+Lost time for LT lane group, tL
+
+Computation
+
+LT volume per cycle, LTC = vLTC/3600
+Opposing flow per lane, per cycle,
+
+volc = voC/3600 (veh/C/ln)
+
+Opposing platoon ratio, Rpo (refer to Exhibit 16-11)
+
+gf = G[e–0.860(LTC0.629)] – tL  gf ≤ g (except exclusive
+left-turn lanes)3
+
+Opposing queue ratio, qro = max[1 – Rpo(go/C), 0]
+
+gq = 4.943volc0.762qro1.061 – tL  gq ≤ g
+
+gu = g – gq if gq ≥ gf, or
+
+gu = g – gf if gq < gf
+
+n = max[(gq – gf)/2, 0]
+
+PTHo = 1 – PLTo
+
+EL1 (refer to Exhibit C16-3)
+
+EL2 = max[(1 – PTHon)/PLTo, 1.0]
+
+fmin = 2(1 + PLT)/g
+
+gdiff = max[gq – gf, 0] (except when left-turn volume
+is 0)4
+
+fLT = fm = [gf/g] +  gu/g  + gdiff/g
+  1 + PLT(EL1 – 1) 1 + PLT(EL2 – 1)
+(fmin ≤ fm ≤ 1.00)
+
+Notes
+
+1. Refer to Exhibits C16-4, C16-5, C16-6, C16-7, and C16-8 for case-specific parameters and adjustment factors.
+2. For exclusive left-turn lanes, N is equal to the number of exclusive left-turn lanes. For shared left-turn lanes, N is equal to the sum of
+
+  the shared left-turn, through, and shared right-turn (if one exists) lanes in that approach.
+3. For exclusive left-turn lanes, gf = 0, and skip the next step. Lost time, tL, may not be applicable for protected-permitted case.
+4. If the opposing left-turn volume is 0, then gdiff = 0.
+
+Chapter 16 - Signalized Intersections
+  Highway Capacity Manual 2000
+
+  SUPPLEMENTAL WORKSHEET FOR PEDESTRIAN-BICYCLE EFFECTS
+  ON PERMITTED LEFT TURNS AND RIGHT TURNS
+
+General Information
+
+Project Description _____________________________________________________________________________________
+
+Permitted Left Turns
+
+  EB  WB  NB  SB
+
+ Effective pedestrian green time,1,2 gp (s)
+ Conflicting pedestrian volume,1 vped (p/h)
+ vpedg = vped (C/gp)
+ OCCpedg = vpedg/2000 if (vpedg ≤ 1000) or
+ OCCpedg = 0.4 + vpedg/10,000 if (1000 < vpedg ≤ 5000)
+ Opposing queue clearing green,3,4 gq (s)
+ Effective pedestrian green consumed by opposing
+
+ vehicle queue, gq/gp; if gq ≥ gp then fLpb = 1.0
+ OCCpedu = OCCpedg [1 – 0.5(gq/gp)]
+ Opposing flow rate,3 vo (veh/h)
+ OCCr = OCCpedu [e–(5/3600)vo]
+ Number of cross-street receiving lanes,1 Nrec
+ Number of turning lanes,1 Nturn
+ ApbT = 1 – OCCr if Nrec = Nturn
+ ApbT = 1 – 0.6(OCCr) if Nrec > Nturn
+ Proportion of left turns,5 PLT
+ Proportion of left turns using protected phase,6 PLTA
+ fLpb = 1.0 – PLT(1 – ApbT)(1 – PLTA)
+
+Permitted Right Turns
+
+Effective pedestrian green time,1,2 gp (s)  5. Refer to Volume Adjustment and Saturation Flow Rate Worksheet.
+Conflicting pedestrian volume,1 vped (p/h)  6. Ideally determined from field data; alternatively, assume it equal to
+Conflicting bicycle volume,1,7 vbic (bicycles/h)
+vpedg = vped(C/gp)  (1 – permitted phase fLT)/0.95.
+OCCpedg = vpedg/2000 if (vpedg ≤ 1000), or  7. If vbic = 0 then vbicg = 0, OCCbicg = 0, and OCCr = OCCpedg.
+OCCpedg = 0.4 + vpedg/10,000 if (1000 < vpedg ≤ 5000)  8. PRTA is the proportion of protected green over the total green, gprot/(gprot
+Effective green,1 g (s)
+vbicg = vbic(C/g)  + gperm). If only permitted right-turn phase exists, then PRTA = 0.
+OCCbicg = 0.02 + vbicg/2700
+OCCr = OCCpedg + OCCbicg – (OCCpedg)(OCCbicg)
+Number of cross-street receiving lanes,1 Nrec
+Number of turning lanes,1 Nturn
+ApbT = 1 – OCCr if Nrec = Nturn
+ApbT = 1 – 0.6(OCCr) if Nrec > Nturn
+Proportion of right turns,5 PRT
+Proportion of right turns using protected phase,8 PRTA
+fRpb = 1.0 – PRT(1 – ApbT)(1 – PRTA)
+
+Notes
+
+1. Refer to Input Worksheet.
+2. If intersection signal timing is given, use Walk + flashing Don't Walk (use G + Y if
+
+  no pedestrian signals). If signal timing must be estimated, use (Green Time – Lost
+  Time per Phase) from Quick Estimation Control Delay and LOS Worksheet.
+3. Refer to supplemental worksheets for left turns.
+4. If unopposed left turn, then gq = 0, vo = 0, and OCCr = OCCpedu = OCCpedg.
+
+  Chapter 16 - Signalized Intersections
+Highway Capacity Manual 2000
+
+  INITIAL QUEUE DELAY WORKSHEET
+
+General Information
+
+Project Description ____________________________________________________________________________________
+
+Input Parameters  _______________
+  _______________ h
+Period (i)  _______________ s
+Duration, T
+Cycle length, C
+
+  EB  WB  NB  SB
+
+Lane group
+
+Initial queue, Qb (veh)  {
+Green ratio, g/C
+v/c ratio, X
+X = v/c
+Adjusted lane group capacity, c (veh/h)
+Duration of unmet demand in T (h)
+
+  Qb
+
+t = min{T, c[1 – min(1,X)]
+
+Case
+
+Cases I and II (Qb = 0)
+
+Initial queue delay, d3 = 0, and uniform delay , d1, is as shown on Capacity and LOS Worksheet
+
+Case III (Qb > 0)  (X ≤ 1.0)  (t < T)
+  (t = T)
+Initial queue delay, d3 (s)  (t = T)
+d3 = cT 1800 Qbt
+Uniform delay, d1 (s)
+
+d1 = 0.50C(1 – g/C) tT + 0.5C(1 – g/C) 1 – g/C min (1, X) T * PF 2 (T – t)
+
+Case IV (Qb > 0)  (X ≤ 1.0)
+
+Delay parameter, u
+
+u = 1 – cTQb 1 – min(1,X)
+
+Initial queue delay, d3 (s)
+  1800 Qb (1 + u)
+d3 =  c
+
+Uniform delay, d1 (s)
+d1 = 0.50C(1 – g/C)
+
+Case V (Qb > 0)  (X > 1.0)
+
+Initial queue delay, d3 (s)
+d3 = c 3600 Qb
+
+Uniform delay, d1 (s)
+d1 = 0.50C (1 – g/C)
+
+Chapter 16 - Signalized Intersections
+  Highway Capacity Manual 2000
+
+  BACK-OF-QUEUE WORKSHEET
+
+General Information
+
+Project Description ____________________________________________________________________________________
+
+Average Back of Queue
+
+  EB  WB  NB  SB
+
+  LT TH RT LT TH RT LT TH RT LT TH RT
+
+Lane group
+
+Initial queue per lane at the start of analysis
+period, QbL
+Flow rate per lane, vL (veh/h)
+Saturation flow rate per lane, sL (veh/h)
+Capacity per lane, cL (veh/h)
+Flow ratio, vL/sL
+v/c ratio, XL = vL/cL
+Effective green time, g (s)
+
+Green ratio, g/C
+
+Upstream filtering factor, I
+
+Proportion of vehicles arriving on green, P
+
+Platoon ratio, Rp Rp = ( P )
+  g/C
+
+Effects of progression adjustment factor, PF2
+  ( 1  g  )(1  svL )
+  –  Rp  C  –
+
+PF2 = g v L  L
+
+  (1 – C)1 – Rp( sL)
+
+First-term queued vehicles, Q1 (veh)
+  vLC 1 – g
+Q1 = PF2
+  3600 ( C)
+  1 – min (1.0, XL)( gC )
+
+Second-term adju0s.7tment factor, kB
+
+  sLg
+
+kB = 0.12 I (3600 ) (pretimed signals)
+
+  sLg 0.6
+
+kB = 0.10 l (3600 ) (actuated signals)
+
+Second-term queued vehicles, Q2
+
+  2 8kBXL 16kBQbLLL
+Q2 = 0.25cLT (XL–1) + (XL–1) + c T + (c T)2
+
+Average number of queued vehicles, Q
+Q = Q1 + Q2
+
+Percentile Back of Queue  " 70%  " 85%  " 90%  " 95%  " 98%
+
+Percentile back-of-queue factor,1 fB%
+Percentile back-of-queue, Q% (veh), Q% = QfB%
+
+Queue Storage Ratio
+
+Average queue spacing, Lh (m)
+Available queue storage, La (m)
+Average queue storage ratio, RQ = Lh Q
+
+  La
+
+Percentile queue storage ratio, RQ% = Lh Q%
+
+  La
+
+Notes
+
+  ( p3 –Q)
+
+1. fB% = p1 + p2 e , where p1, p2, and p3 are obtained from Exhibit G16-5.
+
+  Chapter 16 - Signalized Intersections
+Highway Capacity Manual 2000
+
+  INTERSECTION CONTROL DELAY WORKSHEET
+
+General Information  Site Information
+
+Analyst  _______________________________  Intersection  _____________________________
+Agency or Company  _______________________________  Area Type
+Date Performed  _______________________________  Jurisdiction  " CBD  " Other
+Analysis Time Period  _______________________________  Analysis Year
+  _____________________________
+
+  _____________________________
+
+Input Initial Parameters
+
+Number of lanes, N  ___________________  Total vehicles arriving, Vtot  ________________
+Free-flow speed, FFS (km/h)  ___________________  Stopped-vehicle count, Vstop  ________________
+Survey count interval, Is (s)  ___________________  Cycle length, C (s)  ________________
+
+Input Field Data
+
+  Number of Vehicles in Queue
+
+Clock  Cycle  Count Interval
+
+Time  Number  1  2  3  4  5  6  7  8  9  10
+
+Total
+
+Computations
+
+Total vehicles in queue, ∑Viq =  ______________  Number of cycles surveyed, Nc = Vstop  ______________
+  Fraction of vehicles stopping, FVS = Vtot  ______________
+Time-in-queue per vehicle, dvq = (Is * Vtot ∑Viq ) * 0.9 _____________ s  Accel/Decel correction delay, dad = FVS * CF  ______________ s
+  Vstop  __________________ s
+No. of vehicles stopping per lane each cycle = (N x N) _________c  Control delay/vehicle, d = dvq + dad
+
+Accel/Decel correction factor, CF (Ex. A16-2) ______________
+
+Chapter 16 - Signalized Intersections
+  Highway Capacity Manual 2000
+
+  FIELD SATURATION FLOW RATE STUDY WORKSHEET
+
+General Information  Site Information
+
+Analyst  _______________________________  Intersection  _____________________________
+Agency or Company  _______________________________  Area Type
+Date Performed  _______________________________  Jurisdiction  " CBD  " Other
+Analysis Time Period  _______________________________  Analysis Year
+  _____________________________
+
+  _____________________________
+
+Lane Movement Input
+
+  grade =
+
+  street
+
+  grade =  Movements Allowed
+  street  " Through
+  " Right turn
+  " Left turn
+
+  grade =
+
+  Identify all lane movements and the lane studied
+
+Input Field Measurement  grade =
+
+Veh. in  Cycle 1  Cycle 2  Cycle 3  Cycle 4  Cycle 5  Cycle 6
+q ueue  Time HV T  Time HV T  Time HV T  Time HV T  Time HV T  Time HV T
+
+  1
+  2
+  3
+  4
+  5
+  6
+  7
+  8
+  9
+  10
+  11
+  12
+  13
+  14
+  15
+  16
+  17
+  18
+  19
+  20
+
+End of saturation
+
+End of green
+
+No. veh. > 20
+
+No. veh. on yellow
+
+Glossary and Notes
+
+HV = Heavy vehicles (vehicles with more than 4 tires on pavement)
+T = Turning vehicles (L = Left, R = Right)
+Pedestrians and buses that block vehicles should be noted with the time that they block traffic, for example,
+P12 = Pedestrians blocked traffic for 12 s
+B15 = Bus blocked traffic for 15 s
+
+  Chapter 16 - Signalized Intersections
+  Highway Capacity Manual 2000
+
+CHAPTER 17
+
+UNSIGNALIZED INTERSECTIONS
+
+CONTENTS
+
+PREFACE .......................................................................................................................17-1
+  Overview...........................................................................................................17-1
+  Limitations of the Methodology .........................................................................17-1
+
+PART A. TWO-WAY STOP-CONTROLLED INTERSECTIONS ...................................17-1
+I. INTRODUCTION - PART A .....................................................................................17-1
+II. METHODOLOGY - PART A ....................................................................................17-1
+
+  Level-of-Service Criteria ...................................................................................17-1
+  Input Data Requirements .................................................................................17-3
+  Priority of Streams ............................................................................................17-3
+  Conflicting Traffic..............................................................................................17-4
+  Critical Gap and Follow-Up Time .....................................................................17-5
+  Potential Capacity ............................................................................................17-7
+  Movement Capacity .........................................................................................17-8
+
+  Impedance Effects ....................................................................................17-9
+  Vehicle Impedance ............................................................................17-9
+  Pedestrian Impedance .....................................................................17-11
+
+  Shared-Lane Capacity ............................................................................17-12
+  Minor-Street Approaches .................................................................17-12
+  Major-Street Approaches .................................................................17-13
+
+  Upstream Signals ....................................................................................17-13
+  Time to Clear Standing Queue - Computation 1 .............................. 17-14
+  Proportion of Time TWSC Intersection Is Blocked -
+  Computation 2 ............................................................................17-15
+  Platoon Event Periods - Computation 3 ...........................................17-17
+  Conflicting Flows During Unblocked Period - Computation 4 .......... 17-19
+  Capacity During Unblocked Period - Computation 5 .......................17-19
+
+  Two-Stage Gap Acceptance ...................................................................17-19
+  Flared Minor-Street Approaches .............................................................17-21
+  Estimating Queue Lengths .............................................................................17-22
+  Control Delay .................................................................................................17-23
+  Other Relevant Delay Estimates ....................................................................17-25
+  Delay to Rank 1 Vehicles ........................................................................17-25
+  Intersection and Approach Delay ............................................................17-25
+  Interpreting Results ........................................................................................17-26
+  Shared Lanes ..........................................................................................17-26
+  Performance Measures ...........................................................................17-26
+  Determining Intersection Control Type ...........................................................17-27
+III. APPLICATIONS - PART A ....................................................................................17-28
+  Sequence of Capacity Computations .............................................................17-28
+  Computational Steps ......................................................................................17-28
+  Geometrics and Movements (Worksheet 1) ...........................................17-28
+  Volume Adjustments (Worksheet 2) .......................................................17-28
+  Site Characteristics (Worksheet 3)..........................................................17-28
+  Critical Gap and Follow-Up Time (Worksheet 4) .....................................17-30
+  Effect of Upstream Signals (Worksheet 5) .............................................. 17-30
+  Impedance and Capacity Calculation (Worksheet 6) .............................. 17-30
+  Two-Stage Gap Acceptance (Worksheet 7) ...........................................17-31
+
+  17-i  Chapter 17 - Unsignalized Intersections
+Highway Capacity Manual 2000
+
+  Shared-Lane Capacity (Worksheet 8) .................................................... 17-31
+  Effect of Flared Minor-Street Approaches (Worksheet 9) ....................... 17-31
+  Control Delay, Queue Length, Level of Service (Worksheet 10) ............ 17-31
+  Delay to Rank 1 Vehicles (Worksheet 11) ..............................................17-31
+  Planning and Design Applications .................................................................. 17-31
+PART B. ALL-WAY STOP-CONTROLLED INTERSECTIONS .................................... 17-32
+I. INTRODUCTION - PART B................................................................................... 17-32
+II. METHODOLOGY - PART B ..................................................................................17-32
+  Level-of-Service Criteria................................................................................. 17-32
+  Overview of Methodology ..............................................................................17-32
+  Capacity Model ..............................................................................................17-34
+  Intersection of Two One-Way Streets ..................................................... 17-34
+  Intersection of Two Two-Way Streets ..................................................... 17-35
+  Generalized Model for Single-Lane Sites ............................................... 17-35
+  Generalized Model for Multilane Sites .................................................... 17-36
+  Control Delay ................................................................................................. 17-40
+III. APPLICATIONS - PART B ....................................................................................17-40
+  Computational Steps ......................................................................................17-41
+  Geometrics and Movements (Worksheet 1) ........................................... 17-41
+  Volume Adjustments and Lane Assignments (Worksheet 2) .................. 17-41
+  Saturation Headways (Worksheet 3) ...................................................... 17-42
+  Departure Headway and Service Time (Worksheet 4) ........................... 17-42
+
+  Worksheet 4a ..................................................................................17-42
+  Worksheet 4b ..................................................................................17-42
+  Capacity and Level of Service (Worksheet 5) ......................................... 17-44
+  Planning and Design Applications .................................................................. 17-44
+PART C. ROUNDABOUTS ..........................................................................................17-45
+I. INTRODUCTION - PART C ..................................................................................17-45
+II. METHODOLOGY - PART C ..................................................................................17-45
+  Overview of Methodology ..............................................................................17-45
+  Capacity ......................................................................................................... 17-46
+III. APPLICATIONS - PART C ....................................................................................17-48
+PART D. EXAMPLE PROBLEMS ..............................................................................17-49
+  Example Problem 1 ........................................................................................17-50
+  Example Problem 2 ........................................................................................17-57
+  Example Problem 3 ........................................................................................17-67
+  Example Problem 4 ........................................................................................17-77
+  Example Problem 5 ........................................................................................17-86
+  Example Problem 6 ........................................................................................17-99
+REFERENCES ........................................................................................................... 17-101
+  Part A - TWSC Unsignalized Intersections .................................................. 17-101
+  Part B - AWSC Unsignalized Intersections .................................................. 17-102
+  Part C - Roundabouts ..................................................................................17-102
+APPENDIX A. WORKSHEETS ................................................................................. 17-103
+  Part A - TWSC Unsignalized Intersections
+  Worksheet 1 - Geometrics and Movements
+  Worksheet 2 - Volume Adjustments
+  Worksheet 3 - Site Characteristics
+  Worksheet 4 - Critical Gap and Follow-Up Time
+  Worksheet 5 - Effect of Upstream Signals
+  Worksheet 6 - Impedance and Capacity Calculation
+  Worksheet 7 - Effect of Two-Stage Gap Acceptance
+  Worksheet 8 - Shared-Lane Capacity
+  Worksheet 9 - Effect of Flared Minor-Street Approaches
+
+Chapter 17 - Unsignalized Intersections  17-ii
+  Highway Capacity Manual 2000
+
+  Worksheet 10 - Control Delay, Queue Length, Level of Service
+  Worksheet 11 - Delay to Rank 1 Vehicles
+Part B - AWSC Unsignalized Intersections
+  Worksheet 1 - Geometrics and Movements
+  Worksheet 2 - Volume Adjustments and Lane Assignments
+  Worksheet 3 - Saturation Headways
+  Worksheet 4 - Departure Headway and Service Time
+  Worksheet 5 - Capacity and Level of Service
+Part C - Roundabouts
+  Roundabout Worksheet
+
+  EXHIBITS
+
+Exhibit 17-1.  TWSC Unsignalized Intersection Methodology .....................................17-2
+Exhibit 17-2.  Level-of-Service Criteria for TWSC Intersections .................................. 17-2
+Exhibit 17-3.  Traffic Streams at a TWSC Intersection ................................................ 17-4
+Exhibit 17-4.  Definition and Computation of Conflicting Flows ...................................17-6
+Exhibit 17-5.  Base Critical Gaps and Follow-Up Times for TWSC Intersections .......17-7
+Exhibit 17-6.  Potential Capacity for Two-Lane Streets ...............................................17-8
+Exhibit 17-7.  Potential Capacity for Four-Lane Streets ..............................................17-9
+Exhibit 17-8.  Adjustment to Impedance Factors for Major Left Turn,
+  Minor Through .....................................................................................17-11
+Exhibit 17-9.  Relative Pedestrian/Vehicle Hierarchy ................................................ 17-12
+Exhibit 17-10.  Platoon Dispersion from Upstream Signalized Intersections ...............17-14
+Exhibit 17-11.  Upstream Signalized Intersection ........................................................ 17-15
+Exhibit 17-12.  Platoon Dispersion Model ...................................................................17-16
+Exhibit 17-13.  Platoon Dispersion Factor ...................................................................17-16
+Exhibit 17-14.  Platoon Overlap Cases .......................................................................17-18
+Exhibit 17-15.  Proportion of Analysis Period for Each Flow Regime
+  (Average Case) ...................................................................................17-18
+Exhibit 17-16.  Proportion of Analysis Period Unblocked for Each Minor
+  Movement (Average Case) .................................................................17-18
+Exhibit 17-17.  Two-Stage Gap Acceptance Intersection ............................................ 17-20
+Exhibit 17-18.  Capacity of Flared Approaches ...........................................................17-21
+Exhibit 17-19.  95th-Percentile Queue Length .............................................................17-23
+Exhibit 17-20.  Control Delay and Flow Rate ...............................................................17-24
+Exhibit 17-21.  TWSC Intersection Methodology .........................................................17-29
+Exhibit 17-22.  Level-of-Service Criteria for AWSC Intersections................................ 17-32
+Exhibit 17-23.  Operation Patterns at AWSC Intersections .........................................17-33
+Exhibit 17-24.  AWSC Configuration - Formulation 1 .................................................. 17-34
+Exhibit 17-25.  AWSC Configuration - Formulation 2 .................................................. 17-35
+Exhibit 17-26.  Probability of Degree-of-Conflict Case ................................................ 17-36
+Exhibit 17-27.  Degree-of-Conflict Cases for Two-Lane Approach Intersections ........ 17-37
+Exhibit 17-28.  Degree-of-Conflict Cases for Three-Lane Approach Intersections .....17-37
+Exhibit 17-29.  Probability of Degree-of-Conflict Case–Multilane AWSC
+  Intersections (Two-Lane Approach) .................................................... 17-38
+Exhibit 17-30.  Probability of Degree-of-Conflict Case–Multilane AWSC
+  Intersections (Two-Lane Approaches, by Lane).................................. 17-39
+Exhibit 17-31.  AWSC Intersection Methodology .........................................................17-41
+Exhibit 17-32.  Geometry Groups ................................................................................17-42
+Exhibit 17-33.  Saturation Headway Adjustments by Geometry Group .......................17-42
+Exhibit 17-34.  Probability of aj ....................................................................................17-43
+Exhibit 17-35.  Saturation Headway Values by Case and Geometry Group ...............17-44
+
+  17-iii  Chapter 17 - Unsignalized Intersections
+

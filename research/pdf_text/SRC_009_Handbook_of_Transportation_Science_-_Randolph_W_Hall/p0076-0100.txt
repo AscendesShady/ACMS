@@ -1,0 +1,603 @@
+70  Handbook of Transportation Science
+
+Terminology
+
+The above discussion has already introduced a number of terms, which we now
+discuss more fully.
+
+  A vehicle striking anything is referred to as a crash. The widely used term
+accident is unsuitable for technical use (Pless and Davis 2001, Evans, 1994; Langley,
+1988; Doege, 1978). Accident conveys a sense that the losses incurred are due
+exclusively to fate. Perhaps this is what gives accident its most potent appeal -- the
+sense that it exonerates participants from responsibility. Accident also conveys a
+sense that losses are devoid of predictability. Yet the purpose of studying safety is to
+examine factors that influence the likelihood of occurrence and resulting harm from
+crashes. Some crashes are purposeful acts for which the term accident would be
+inappropriate even in popular use. There can be little doubt that at least a few
+percent (perhaps as much as 5%) of driver fatalities are suicides (Hernetkoski and
+Keskinen, 1998; Ohberg et al., 1997; Bollen and Philipps, 1981; Philipps, 1979).
+Although the use of vehicles for homicide may be less common than in the movies,
+such use is certainly not zero. Popular usage refers to the crash of Pan Am flight
+103, now known to be no accident, in any sense of the word. Even more so, the
+events of 11 September 2001, known to be intentional acts immediately after the
+second plane crashed into the World Trade Center.
+
+  Generally the term cause is avoided, in large measure because it all too often
+invokes the inappropriate notion of a single cause. Crashes result from many factors
+operating together. To say that the loss of life on Titanic was caused by the absence
+of a mandatory retirement age for captains, the owner being on board, the look-out
+being too alert or not alert enough, by climate conditions, or by poor quality steel
+may generate more confusion than clarity. Instead of focusing on a single cause, we
+generally think in terms of a list of factors, which, if different, would have led to a
+different outcome. The goal in safety analysis is to examine factors associated with
+crashes with the aim of identifying those which can be changed by countermeasures,
+or interventions, to enhance future safety.
+
+  Collections of observed numbers are referred to as data and not statistics. Since
+statistics is the name of a branch of mathematics dealing with hypothesis testing and
+confidence limits, using it to also mean data invites needless ambiguity.
+
+  We follow common usage in referring to ages; age 20 means people with ages
+equal to or greater than 20 years, but less than 21 years. This is plotted at 20.5 years,
+very close to the average age of 20-year-olds; 40-year-olds are not quite twice as old
+as 20-year-olds, which might come as good news to some!
+
+  The consequences of crashes include fatalities, injuries and property damage.
+Useful terms encompassing all of these are harm and losses. Measures that reduce
+harm can be placed into two distinct categories.
+
+  Crashworthiness refers to engineering features aimed at reducing losses, given
+that a specific crash occurs. Examples are improved occupant protection by making
+the structure close to the occupant less likely to crush, and devices such as collapsible
+steering columns; other examples of crashworthiness include reducing risks of post-
+crash fires, or of ships sinking from crash impact.
+Transportation Safety  71
+
+  Crash prevention refers to measures aimed at preventing the crash from occurring.
+Such measures may be either of an engineering nature (making vehicles easier to see,
+better braking, radar, etc.) or of a behavioral nature (driver selection, training,
+motivating and licensing, traffic law enforcement, etc.).
+
+  A fundamental difference between crashworthiness and crash prevention is that
+when a crash is prevented all harm is reduced to zero. Improved crashworthiness
+rarely eliminates harm in a severe crash, but does reduce the level of harm (say,
+converting a fatality into a severe injury, or a severe injury into a less severe injury,
+or an expensive vehicle-repair into a less expensive repair). The finding that safety
+belts reduce car-driver fatality risk by 42% means that out of 100 drivers who would
+have been killed without belts, 42 would have survived if all had worn belts.
+However, the 42 survivors would sustain injuries, in many cases very severe injuries.
+Crashworthiness is measured by the percent reduction in risk for some specific level
+of injury, such as fatality or minor injury. A crash prevention measure that reduces
+crash risk by some percent is necessarily a far more effective intervention than a
+crashworthiness measure with the same percent effectiveness.
+
+4.2. Overview of Transportation Fatalities
+
+The US Department of Transportation (1998) estimates that 44,505 people lost their
+lives in connection with transportation in the United States in 1996. The distribution
+of these by transportation mode is presented in Table 4-1. The numbers in Table 4-1
+in a few cases differ slightly from those in the original source because of minor
+72  Handbook of Transportation Science
+
+corrections to achieve consistent totals.
+  These 44,505 deaths occurred in a system in which vehicles traveled over 4 billion
+
+km in 1996, as detailed in Table 4-2. As there is, on average, more than one person
+per vehicle, the distance traveled by all people will exceed the distance traveled by
+all vehicles (details in Table 4-3.) The unfortunate term passenger miles (or
+passenger km) appears often in the literature, even though most travel is in vehicles
+containing no passengers. People traveling in (or on) road transportation vehicles are
+more appropriately referred to as occupants. Occupants are either drivers or
+passengers. Vehicles referred to in the literature as “passenger cars” will here be
+called simply “cars.” Because different situations arise for different modes,
+additional categories (such as crew) are also used.
+
+  Table 4-4 shows the number of deaths per billion vehicle miles derived by dividing the
+estimates in Table 4-1 by those in Table 4-2. No estimates are given in Table 4-4 if
+the definitions for the categories of distance of vehicle travel and the fatalities were
+substantially different, or the estimates of travel are too uncertain. Even without problems
+of data availability and reliability, it is surprisingly difficult to define categories that apply
+across all modes. For US road traffic, a fatality is counted if the crash occurs on a
+US public road, without regard to the origin of the vehicle or its occupants, whereas
+for air traffic factors such as the home base of the airline are relevant while the
+location of the crash may not be. Rail rates are not given as most fatalities occur to
+people outside the train (at grade crossings), and passenger and freight-train data are
+collected in different ways. A car driver killed in a car-train crash is likely to be
+added to both the road traffic and the train totals. A worker killed in a fire unrelated
+to transportation in a railroad facility is counted as a railroad fatality. Tables 4-4
+(and 4-5) should be interpreted in the context of these uncertainties.
+
+  The overall national rate for all modes of transportation is 11.1 fatalities per
+billion km of vehicle travel. The road transportation rate of 10.5 fatalities per billion
+km is equivalent to 1.7 fatalities per hundred million miles (conversion factor is
+1.609334/10 exactly). As vehicles with high occupancy travel with more people at
+risk, it is appropriate to examine the deaths for the same distance of occupant travel.
+
+  Table 4-5 shows the number of deaths per billion km of travel, derived by
+dividing the estimates in Table 4-1 by those in Table 4-3. The cross-modal
+comparisons in Tables 4-4 and 4-5 are sufficiently unreliable that they should be
+interpreted as little more than suggestive. Scheduled airline rates are much lower
+than the average for all airline travel. As one or two major airline crashes have a
+large influence on this rate, it is highly unstable from year to year. The rate averaged
+over 1990-1996 is 0.2 deaths per billion aircraft km. The overwhelming majority of
+those killed in airline crashes have minimal control over events. All are at similar
+risk, regardless of behavior or personal characteristics. While the average rate for
+road-vehicle occupants is much higher, this rate varies greatly according to such
+characteristics as driver age, use of alcohol, safety-belt use, conformance with traffic
+law, etc. A car driver with many characteristics associated with lower crash risk can
+drive a 1,000 km trip with no more risk of death than taking a plane for the
+Transportation Safety  73
+74  Handbook of Transportation Science
+Transportation Safety  75
+
+same trip. The longer the trip the greater is the safety advantage of air travel,
+because nearly all the risk is concentrated in the take-off and landing phases, whereas
+the ground vehicle risk is approximately proportional to the distance traveled.
+
+  Within the road transportation mode, the comparisons are more reliable. The risk
+of occupant death depends systematically, and very strongly, on the mass and size of
+the vehicle (Evans, 2001a). For a same distance journey, a motorcycle rider is about
+20 times as likely to be killed as a car occupant, and about a thousand times as likely
+to be killed as a bus occupant.
+
+  Tables 4-1 through 4-5 underline the dominance of road transportation over all
+other modes combined in the US. Road transportation accounts for over 99% of all
+the distance traveled by vehicles, and almost 90% of all the distance traveled by
+people. It accounts for 94% of all transportation deaths, and for an even higher
+percent of injuries and property damage. Because of its dominant role, most of the
+rest of this chapter is devoted to road transportation. Unless otherwise apparent, the
+term vehicle denotes an engine-powered vehicle designed to travel on a road, and the
+term traffic crash denotes a crash involving at least one such a vehicle. Traffic
+crashes also generally involve non-vehicles (pedestrians, bicycles, animal-powered
+vehicles, and fixed objects –trees being the most common).
+
+4.3 Introduction To Road Traffic Fatalities
+
+Road traffic deaths and injuries constitute one of the largest public health problems in
+industrialized countries. In the US, traffic crashes account for half of all injury
+deaths (National Safety Council 1997), and 94% of all transportation deaths. In a
+typical two-week period, more people are killed on US roads than the 1500 lost on
+the Titanic. In a typical month, more Americans die on US roads than were killed in
+the terrorist attacks.
+
+  In the US, traffic crashes account for half of 19-year-old female deaths and a third
+of 19-year-old male deaths (Evans, 2000). The fraction is lower for males because of
+so many male deaths from firearms. The total number of pre-retirement years of life
+lost due to traffic crashes is similar to that due to the combined effects of the two
+leading diseases, cancer and heart disease. Worldwide, about a million people are killed
+annually in traffic crashes (WHO, 2001), with injuries about 70 times this number.
+The victims are predominantly young, and about 65% are male. As motorization
+increases, totals are expected to increase.
+
+  Analysis of road safety differs from that for the other modes in that enormous
+quantities of relevant data are available, most commonly based on police reports.
+The Fatality Analysis Reporting System (FARS – before 1998 called Fatal Accident
+Reporting System) documents over a million people killed on US roads since 1975.
+The availability of large quantities of data lead to safety for roads being better
+understood than safety for any other transportation mode.
+
+  Variables coded in large data sets generally include gender and age of crash
+participants, weather, make and model of vehicle, etc. Variables not known include
+vehicle speed at onset of crash event, vehicle speed just prior to impact, amount of
+76  Handbook of Transportation Science
+
+vehicle crush, and medical details of injuries. Such details can be estimated only
+after expensive post-crash investigations, which are not routinely performed. For
+other transportation modes, nearly all information comes from intensive in-depth
+analysis of the few crashes that occur.
+
+Historical Trends
+
+In the early decades of the twentieth century few people were killed on US roads
+because there were few motorized vehicles (Figure 4-1). As vehicle ownership
+increased rapidly, so did traffic deaths, peaking in 1972 at 54,589, and declining later
+to a present fairly stable rate of just over 40,000 per year. The rate in China and
+other rapidly industrializing countries continues to increase rapidly.
+
+  The number of traffic deaths per year shows little in the way of a pattern.
+However, if we instead examine the number of traffic deaths in the US for the same
+distance of vehicle travel, a clear trend emerges (Figure 4-2). Ever since 1921 when
+data on the total distance traveled by all vehicles were first collected, the number of
+traffic deaths for the same distance of travel has trended downwards at an average
+decrease of about 3.5% per year. The 2000 rate of 9.7 traffic deaths per billion km of
+travel is 94% below the 1921 rate of 150. If the 1921 rate were to apply today, the
+number of US traffic fatalities would exceed half a million. The downward trend in
+the number of deaths for the same distance of travel is observed in all countries for
+which data are available (Evans, 1997). As motorization continues, the fraction of all
+deaths that are pedestrians trends downwards (Figure 4-3).
+
+  The number of traffic deaths for the same distance of travel can be measured only
+after a nation instigates a procedure to estimate the distance all vehicles are driven.
+Even when available, estimates of distance of travel differ greatly in reliability from
+country to country. A useful universally available measure is the number of traffic
+deaths per thousand registered vehicles. The registration, and thereby counting, of
+vehicles is routinely performed by nearly all jurisdictions. The number of deaths per
+thousand vehicles varies greatly between countries -- by more than a factor of one
+hundred (Table 4-6 and Figure 4-4). In general, the higher the degree of
+motorization (as indicated by the number of vehicles per 1000 people), the lower is
+the number of traffic fatalities per thousand vehicles. Another key factor is mix
+between rural and urban driving. Fatality risk tends to be lower in urban areas where
+speeds are lower. Within the US, the fairly urban states of Rhode Island,
+Massachusetts and Connecticut have 0.09, 0.11 and 0.12 deaths per thousand
+vehicles, respectively, whereas the more rural states of Mississippi and Arkansas
+have 0.39 deaths per thousand vehicles. While the rate for China, the world’s most
+populous nation, is substantially higher than that for more motorized countries, it is
+dropping at a much faster rate than in the US and other more motorized countries
+(Figure 4-5). Although the rate is dropping, the dramatic growth of vehicle
+ownership in China (Figure 4-6) and in other countries that are rapidly industrializing
+will inexorably increase casualties.
+Transportation Safety  77
+78  Handbook of Transportation Science
+Transportation Safety  79
+80  Handbook of Transportation Science
+Transportation Safety  81
+
+Approaches To Reducing Harm From Traffic Crashes
+
+Why do fatality rates decline in time and vary so much from country to country?
+This question is somewhat akin to asking why average longevity increases in time
+and varies so much from country to country. Such effects are due to many factors –
+public health policy and implementation, availability of and advancements in drugs,
+surgery, preventative medicine, plumbing, nutrition, hygiene, etc. In the traffic crash
+and longevity cases it is difficult to assign in any quantitative way the relative
+contributions of the different factors. The structure in Table 4-7, which is one of a
+number of possible categorizations, is aimed at clarifying some of the main factors
+that contribute to traffic safety. Not reflected, because it is somewhat outside the
+scope of this chapter, are the important contributions from improved medicine, which
+reduce average harm from all sources. As medical science continues to advance,
+those injured in any transportation crash are less likely to die. Indeed, it is often
+claimed that if a victim can be transported alive to a modern well-equipped
+emergency trauma center, the probability of survival is extremely high. This places
+high value on rapid transportation from the crash site to the hospital. Here the
+infrastructure of vehicular transportation contributes in a fairly direct way to reducing
+the severity of the harm from the crashes that occur on it.
+
+4.4 Engineering Factors
+
+Roadway Engineering
+
+On rural two-lane roads, vehicles traveling in opposite directions pass each other
+only a meter or so apart. Even if speed limits are obeyed, the combined relative
+82  Handbook of Transportation Science
+
+speed may still far exceed 150 km/h. A head-on crash at such relative speeds will
+likely prove fatal, yet such crashes occur due to, for example, improper overtaking or
+loss of control on curves. On freeways where there is physical separation between
+traffic traveling in opposite directions, the only vehicles permitted to drive close to
+each other are traveling in the same direction at similar speeds. Fixed objects, such
+as trees, are far removed from the path of vehicles. Risk of side-impact at
+intersections is eliminated through the replacement of intersections by under- or over-
+passes.
+
+  The roadway engineering improvements typified by the differences between
+freeways and rural two-lane roads constitute one of the most effective engineering
+countermeasures available. In the US, fatality risk on interstate rural freeways is
+55% lower than the average for all non-interstate rural roads (Table 4-8). The lowest
+rate in Table 4-8 is 85% lower than the highest rate. Such dramatic safety effects
+dependant on roads and road use bring one face to face with the types of tradeoffs
+that often arise in traffic safety decisions. Freeways are expensive undertakings that
+are justified mainly to produce improved mobility. They can are rarely installed
+primarily to improve safety. Additional considerations may argue against building
+freeways, including their effect on city neighborhoods, landscape aesthetics, and wild
+life. Better roads generate more traffic and stimulate urban sprawl, increasing
+pressure on resources and the environment. The additional travel that freeways
+stimulate generates additional travel risk, but this effect is small compared to the risk
+reduction resulting from replacing rural two-lane roadways by freeways.
+Transportation Safety  83
+
+Vehicle Engineering
+
+In the earliest days of the auto industry, crashes often resulted from the mechanical
+failure of such key components as wheels, tires or brakes. As component reliability
+increased, focus shifted towards fundamental understanding of injury mechanisms
+and on technologies aimed at protecting occupants of vehicles when crashes occur.
+
+  Biomechanics – the science of relating injury to mechanical force.
+Biomechanics is the bridge that links engineering and medicine. Trauma surgeons
+distinguish between penetrating trauma and blunt trauma. Penetrating trauma occurs
+when small objects exert sufficient localized force to penetrate the human body, an
+obvious example being a bullet. Blunt trauma occurs when an object of larger area
+applies sufficient force on the body to damage its structure, such as occurs when
+someone falls from a building. Nearly all traffic injuries, whether to vehicle
+occupants or to pedestrians, involve blunt trauma. Consider a vehicle traveling at,
+say, 50 km/h and crashing into a perfectly rigid horizontal barrier. An unbelted
+driver would, in accord with elementary physics, continue to travel at 50 km/h until
+stopped by a force. Such a force occurs when the driver impacts, at a speed of 50
+km/h, the interior of the now stationary vehicle. It is this so-called second collision
+that causes injuries, not the first collision of the vehicle striking the barrier. A person
+falling from a fourth floor window would strike the ground at a similar speed and be
+subject to similar injury forces. While evolution has provided humans with a
+protective fear of heights, no corresponding fear exists for the relatively new
+experience of traveling at speeds faster than can be produced by muscle power.
+
+  Goal of occupant protection. The theoretical best protection would be for the
+occupant to slow down from the initial speed of 50 km/h to zero at a constant
+deceleration using the entire distance between his or her body and the barrier. The
+engine and other rigid components make it impossible to achieve this ideal goal. The
+practical goal is for the vehicle structure to crumble in such a way as to provide as
+much ride-down distance as possible, and for the occupant to travel this distance at as
+uniform a deceleration as possible. In addition, a strong “safety cage” that does not
+crumple reduces the risk of occupants being crushed.
+
+  Engineering changes that have contributed to reductions in driver risk include
+collapsible steering columns, lap/shoulder safety belts and design changes in the
+structure surrounding the occupants to reduce intrusion. When a driver’s chest
+strikes a steering wheel, the collapsible steering column allows the steering column to
+compress and thereby reduce the maximum force on the chest. This simple device is
+estimated to reduce overall driver fatality risk in a crash by about 6%.
+
+  Estimates of the effectiveness of occupant protection devices are summarized in
+Table 4-9. The interpretation is that if 100 fatally injured drivers not wearing belts
+had been wearing belts, 42 would have survived. This is equivalent to saying that
+wearing a belt reduces a driver’s risk of being killed in a crash by 42%.
+84  Handbook of Transportation Science
+
+  By far the most effective occupant protection device is the familiar lap/shoulder
+safety belt. This not only reduces the likelihood and severity of impact with the
+interior of the vehicle, but is highly effective at preventing ejection from the vehicle.
+Ejection quadruples the risk of death in a crash -- about one in four unbelted drivers
+killed are ejected from their vehicles. The effectiveness of the lap/shoulder belt is,
+on average, enhanced by airbags.
+
+  In this chapter airbag refers to frontal airbags, which are designed to inflate
+rapidly in order to place a cushioning barrier between occupant and vehicle structure
+when sensors detect a frontal crash with severity exceeding some pre-set limit,
+typically equivalent to striking a barrier at a speed in the range 10 to 20 km/h. The
+driver rides down the crash in contact with the airbag, which spreads the impact
+forces over a larger area and reduces forces due to the belt. Side airbags are being
+introduced without any estimate of their overall effectiveness, which is expected to
+be, at most, far lower than for frontal airbags.
+
+  Increased size and weight of a vehicle increase protection. Doubling the weight
+reduces occupant risk by about half. All vehicles being heavier does not eliminate
+the safety benefits of increased vehicle weight (Evans, 1994; 1995), because, in the
+US, 41% of car drivers and 58% of light-truck drivers who are killed are killed in
+single-vehicle crashes (Table 4-10). The drivers of two large cars crashing into each
+other are at lower risk than the drivers of two small cars crashing into each other
+(Evans, 2001a, Wood and Simms, 2002).
+
+  The influence of weight on crash risk is so great that even adding the weight of a
+passenger generates clearly measurable effects. If a car with a passenger crashes into
+a car with a lone driver, the accompanied driver is 14.5% less likely to be killed than
+the unaccompanied driver (Evans, 2001).
+Transportation Safety  85
+
+  Riders of two-wheeled vehicles are at dramatically higher risks than occupants of
+even the smallest four-wheel vehicle. Helmets reduce motorcycle driver or passenger
+fatality risk by 28%. An unhelmeted motorcyclist is about 22 times as likely to be
+killed as is an average car driver. Wearing a helmet reduces this risk to 18 times that
+of the car driver. Riders of two-wheeled vehicles (whether engine or human
+powered) and pedestrians are particularly vulnerable road users. Such road users
+account for a large fraction of all traffic deaths in the early stages of motorization.
+
+  While much attention has been devoted to possible modifications to vehicle
+design to better protect pedestrians in crashes, the opportunities are intrinsically
+much less than for vehicle occupants. The main opportunity to prevent such harm is
+by changing how pedestrians and drivers behave.
+86  Handbook of Transportation Science
+
+4.5 Human Factors Of Road-Users
+
+Discussion of the influence of human factors of drivers (and of road users in general)
+on road safety must make the clearest distinction between two deceptively similar but
+fundamentally different concepts:
+
+  Driver performance -- what the driver can do, or is capable of doing
+
+  Driver behavior -- what the driver in fact does
+
+Driver Performance
+
+Studies have concluded that driver error is a contributory factor in over 95% of
+traffic crashes. Such findings have generated suggestions that the first priority for
+better safety is to teach higher levels of skill and knowledge about driving. That is,
+to improve levels of driver performance. While driver training, especially of
+motorcycle riders, has reduced crash rates in some cases, it has not generally been
+found to do so. A number of considerations show why crash risk is not determined
+mainly by driver performance.
+
+  Everywhere young male drivers have the highest crash rates (see also section 4-6,
+Older and younger drivers). Yet this is the very age group with the best visual acuity,
+swiftest reaction times, and fastest cognitive processing skills. Males tend to be more
+knowledgeable about and interested in driving and automobiles. Racing-car drivers
+have higher on-the-road crash rates than average drivers. Much more important than
+what the driver can do is what the driver chooses to do.
+
+Driver Behavior
+
+The average driver has a crash about once per decade (usually a minor property
+damage crash -- for fatal crashes it is about one per 4,000 years). Drivers tend to
+dismiss their crashes as unpredictable and unpreventable bad luck, or the other
+involved driver’s fault. A more appropriate interpretation is that average driving
+produces one crash per ten years. Feedback once per decade is unlikely to affect
+behavior. Every crash-free trip reinforces the driver’s incorrect conclusion that
+average driving is safe driving. Individual experience is a false teacher. I wonder
+how many of us would fly on commercial aircraft if a pilot’s method of learning how
+to avoid crashes was by experiencing them?
+
+  A crucial factor that contributes to the high level of commercial airline safety
+(Table 4-5) is that pilots follow procedures based on expert analyses of the
+experience of many. For road vehicles, traffic law attempts to fulfill a parallel role.
+However, ground vehicle drivers routinely violate such laws. Table 4-11 compares
+various safety characteristics of road and air traffic.
+
+  Two of the factors most affecting road-traffic fatality risk are travel speed and
+alcohol consumption. Research indicates that the risk of crashing increases
+approximately in proportion to travel speed, injury risk in proportion to travel speed
+squared, and fatality risk in proportion to travel speed to the fourth power. When
+speed limits on the US rural intrastate system were reduced in 1974 from 70 mph to
+55 mph following the October 1973 Arab oil embargo, average travel speed dropped
+Transportation Safety  87
+
+from 63.4 mph to 57.6 mph. This change leads to a predicted fatality risk decrease of
+32%, remarkably close to the 34% decline observed. Case-control studies found
+casualty crash to double with each 5 km/h increase in speed (Kloeden et al., 1997).
+
+  Drunk driving is a major traffic safety problem in all countries in which alcohol is
+used widely, often accounting for about half of all fatalities. Reducing the
+availability of alcohol has in many cases led to reduced traffic deaths. When all US
+states increased the minimum age to purchase or consume alcohol to 21 years, from
+earlier ages of 18 to 20 years in various states, a 13% reduction in fatal-crash
+involvements of affected drivers followed. Police use of random breath testing to
+enforce drunk driving laws more effectively has reduced casualties. The Australian
+state of New South Wales tests about a third of all drivers each year, many of them
+more than once. This intervention decreased overall fatalities by about 19%.
+
+  Driver behavior is a crucial factor in occupant protection because the most
+effective occupant protection device, the safety belt, works only when fastened.
+88  Handbook of Transportation Science
+
+Mandatory wearing laws have been introduced in most countries, though wearing
+rates and level and type of enforcement vary greatly. The best evaluated wearing law
+was that for the United Kingdom, where fatality rates for drivers and left front
+passengers declined by about 20%.
+
+  Vehicles are used for purposes that go beyond transportation, including
+competitiveness, sense of power and control, or more generally, hedonistic objectives
+-- the pursuit of sensual pleasure for its own sake. Speed and acceleration appear to
+produce pleasurable excitement even when no specific destination lies ahead and
+there is no point in haste. While most drivers are motivated by non-transportation
+motives at some times, as they mature the mix of motives evolves in a more
+utilitarian direction. This is likely one reason why crash risk is so much lower for 40-
+year-olds than for 20-year-olds. It seems plausible that as a nation’s motorization
+matures, a similar evolution occurs and contributes to a lowering of crash rates.
+Drivers in newly motorized countries are likely to be the first generation to drive, and
+to approach the activity with a sense of novelty, excitement and adventure. In
+motorized countries, children grow up with the motor vehicle playing an essential
+role in even the most routine and mundane aspects of daily life.
+
+  Crash risk relates to the deepest human characteristics. Factors at the very
+core of human personality influence behavior in traffic. A comparison of the gender
+and age dependence of involvement rates in severe single-vehicle crashes and in
+crimes unrelated to traffic offenses (say, burglary, as a typical example) show
+remarkable similarities (Figure 4-7). No one would suggest seriously that 40-year-
+olds commit fewer burglaries than 20-year-olds solely because the 40-year-olds have
+learned how not to commit burglaries! This should invite a parallel caution against
+interpreting lower crash rates for 40-year-old drivers compared to those for 20-year-
+old drivers to mean that the 40-year-olds have simply learned how to not crash. The
+most compelling interpretation of the similarity between the two curves in Figure 4-7
+is that there are fundamental human characteristics related both to involvement in
+severe crashes and arrests for offenses unrelated to driving; neither conduct is likely
+to be changed dramatically by increasing knowledge or skill.
+
+  Figure 4-8 compares male and female pedestrian deaths. If male and female rates
+were similar, the data would lie randomly above and below the dotted line indicating
+equality. An entirely different, and remarkably consistent, picture emerges. At all
+ages, plotted in one-year intervals, the male rate exceeds the female rate, including
+the first year of life. For this first year, with average age close to six months, there
+were 93 male deaths compared to 59 female deaths, or 93/59. The corresponding
+numbers of fatalities for ages 1.5, 2.5, and 3.5 years are 590/418, 1131/730, and
+1353/741, respectively. Such large robust differences suggest an intrinsic gender
+difference at the most basic level, likely linked to testosterone.
+
+  In driving behavior, as in most human activities, social norms play a central role.
+People drive in a way that they think will win the approval of those whose approval
+they desire. A change in social norms regarding drunk driving has taken place in the
+US. The drunk driver is no longer the amiable comic character of the past, a change
+that has contributed to reductions in drunk driving. While the fictional portrayal of
+drunk driving as a harmless activity has become uncommon, the same cannot be said
+Transportation Safety  89
+
+for the portrayal of illegal and life-threatening driving in general, which is often
+presented as humorous or heroic in television programs and movies specifically
+aimed at young people. The possibility that such behavior may lead to tragic
+consequences is rarely addressed. Claims that fictional portrayals do not influence
+behavior ring hollow in the light of the billions of dollars spent for television
+advertising. These expenditures are predicated on the firm belief that they do
+influence behavior. Surely the programs must have a dramatically greater influence
+than the advertisements. Shaming the entertainment industry into desisting from
+some current practices would, in my view, save the lives of many young people.
+
+  The dominant role of driver behavior. As discussed above, reducing the speed
+limit from 70 to 55 miles per hour reduced fatality rates on US rural interstate roads
+by 34%, mandatory safety-belt wearing in the United Kingdom reduced front-seat
+occupant fatalities by 20%, and random breath testing for alcohol in the Australian
+state of New South Wales reduced driver fatalities by 19%. Hingson et al. (1996)
+report similarly large changes in risk in response to programs aimed at changing
+behavior.
+
+  In the 1970s, major independent studies in the US and in Britain identified factors
+associated with large samples of crashes. The US study found the road user to be the
+sole factor in 57% of crashes, the roadway in 3%, and the vehicle in 2%; the
+corresponding values from the British study were 65%, 2% and 2% respectively. In
+nearly all cases the vehicular factor was in fact a vehicle maintenance problem, such
+as bald tires or worn brake linings. The road user was identified as a sole or
+contributing factor in 94% of crashes in the US study and in 95% of crashes in the
+British study.
+
+4.6 Older And Younger Drivers
+
+Much information is available on how various rates depend on age and gender
+because these variables are nearly always coded in large data sets. Little additional
+information on the personal characteristics of people involved in road crashes is
+available, in large part because of privacy concerns.
+
+  Demographic projections of increasingly large numbers of increasingly older
+drivers have generated concerns captured in the phrase “the older-driver problem”.
+Examining how rates depend on age and gender addresses the older driver problem
+and the younger-driver problem. Behavior is already identified above as the
+90  Handbook of Transportation Science
+Transportation Safety  91
+
+as the dominant factor in the elevated rates of younger drivers, but performance
+becomes more critical with increasing age. Because age effects include performance
+and behavior factors, the topic is treated in this separate section. The material
+presented is based on Evans (1991) and Evans (2000).
+
+  Changes in driving risk with increasing age are best separated into two distinct
+components:
+
+  Changing risks to the drivers themselves, and
+  Changing risks they impose on other road users.
+
+  These risks are of a different nature. There is near universal agreement that
+society should take stronger measures to prevent its members from doing things that
+endanger others than to prevent them from doing things that endanger only
+themselves. Public safety makes a stronger claim on public resources than does
+personal safety, which can be supported often using personal resources. Differences
+between the risks we assume ourselves and those we impose on others impact
+legislation, licensing policy, police enforcement, and so on.
+92  Handbook of Transportation Science
+
+Changing Risks Drivers Face As They Age
+
+Figures 4-9 to 4-12 show fatality data normalized for the same length of time, the
+same number of people, the same number of licensed drivers, and for the same
+distance of travel. Three of the relationships exhibit a characteristic “U-shape,”
+exhibiting particularly strong increases at the oldest ages.
+
+Involvement rates in severe crashes. Increases with age like those in the above
+figures have often been interpreted in terms solely of the older drivers’ risk of
+involvement in a crash. Such an interpretation misses the crucial point that the
+number of drivers of given age and gender killed is the product of two factors:
+
+1 The number of involvements in very serious crashes, and
+2. The probability that involvement proves fatal.
+
+The first factor reflects influences due to all use and behavioral factors, such as
+amount and type of driving, driver capabilities, type of vehicle driven, time of day,
+degree of intoxication, and driving risks. The second factor can be influenced also
+by such behavioral factors as safety belt wearing and alcohol consumption. Apart
+from such considerations, the probability that a given crash results in death is
+essentially physiological rather than behavioral in nature. The graphs that follow are
+based on the relationships given on page 26 of Evans, 1991. These are not materially
+different from more recent and more precise estimates (Evans 2001b, 2001c):
+
+  and
+
+where R(A) is the fatality risk to an individual of age A compared to the risk to an
+individual of age 20 when both are subject to the same physical insult, or impact.
+When driver age is 16 to 20, we assume R = 1 for males and R = 1.311 for females;
+that is, the fatality risk from the same severity crash is the same as for a 20-year-old
+driver of the same gender. These relationships are applicable from age 20 to age 80.
+Fatality rates focus on the outcome, not the severity of the crash that led to the death.
+Figures 4-13 and 4-14 show involvement rates in crashes of similar severity by
+considering crashes in a severity range greater than or equal to that sufficient to likely
+kill 80-year-old male drivers, for which case R has a value of 4.0. Comparing
+Figures 4-13 and 4-11 shows that most of the increase in the fatality rate per licensed
+driver results from the same severity crash being more likely to lead to death. When
+this is factored out, an increase at older age remains, but of smaller magnitude. The
+rate of involvement for the same distance of travel increases with
+Transportation Safety  93
+94  Handbook of Transportation Science
+

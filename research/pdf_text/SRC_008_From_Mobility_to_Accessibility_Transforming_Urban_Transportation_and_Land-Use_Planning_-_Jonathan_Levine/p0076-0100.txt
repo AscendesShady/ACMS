@@ -1,0 +1,1059 @@
+62  CHAPTER 3
+
+the cost of worsened congestion is at an acceptably low level. The proposed acces-
+sibility elasticity method goes beyond the mobility-only focus of traffic-impact
+analysis to show not just the cost of congestion but also the countervailing ben-
+efits of enhanced accessibility.
+
+  Development approval must consider multiple factors beyond accessibility
+alone, such as the adequacy of infrastructure, the quality of the urban design,
+and consistency with current zoning. However, to the extent that transportation
+is the issue at hand, accessibility impacts should be the primary benchmark by
+which transportation-related impacts are assessed. Although the case study dem-
+onstrated here is focused on automobile-based accessibility, the method can be
+extended to other modes as well. A thorough accessibility evaluation for a pro-
+posed development project would take into account the accessibility impacts for
+all modes and consider the importance of each mode according to local planning
+priorities.
+
+Evaluating the Accessibility of
+Transportation Projects
+
+Like the accessibility analysis of land-development proposals, the analysis of
+transportation investments’ accessibility requires a forecast of impacts on the
+complementary system (land use in the case of transportation projects). Forecast-
+ing impacts of transportation investment on land use is more complex than the
+reverse, however, because land-use impacts materialize over a longer time frame
+and also because there is greater uncertainty in the land-use forecasting process.
+The case study that follows demonstrates accessibility-based analyses for trans-
+portation projects and compares the results to a pure mobility-based analysis.
+
+  The accessibility-based evaluation ultimately comes to different conclusions
+than an evaluation based solely on mobility impacts. Transportation projects
+have two effects on accessibility, one short term and direct, and the other long
+term and indirect. Traditionally only the short-term, mobility-based impacts have
+been considered in transportation plan and project evaluation. The short-term
+impact is the reduction in travel times, costs, or distances resulting from the new
+infrastructure; this speed component increases accessibility by reducing general-
+ized travel costs. The long-term impact is from the induced land-use effects,19
+which may counteract these short-term mobility-based benefits through land-
+use dispersal, or, alternatively, enhance them through land-use concentration.
+
+  Transportation analysts commonly take the future spatial distribution of land
+uses as fixed and exogenous to the transportation planning process to allow them
+to predict trip patterns. This may be due to a number of factors, including lack
+  ACCESSIBILITY IN EVERYDAY PLANNING  63
+
+of technical capacity, since few metropolitan planning organizations maintain
+integrated transportation/land-use models; the politicized and hence hard-to-
+predict nature of land-use decision making; and the desire to garner resources
+for infrastructure investment without calling attention to undesirable land-
+use impacts. Taking future land-use patterns as exogenous, that is, unaffected
+by transportation investments, biases forecasts of the accessibility impacts of
+transportation projects. Because transportation projects do shift future land-use
+patterns, land-use shifts must be taken into account within any comprehensive
+accessibility analysis of transportation projects.
+
+  The following case study illustrates an approach to accessibility-based trans-
+portation project analysis that incorporates the potential for induced land-use
+change, employing a land-use model to forecast how proposed transportation
+projects are likely to affect employment and residential locations. This contrasts
+with the current state of the practice (figure 3.4, bottom) in which a future land-
+use forecast serves only as an input into shaping future travel patterns.
+
+  The proposed method addresses all the requirements for a project-level acces-
+sibility analysis. Impacts to the transportation system and the land-use system
+are forecast through a travel-demand model and a land-use model, respectively.
+In this case, the land-use component of accessibility is calculated based on fore-
+casts of the locations of jobs by industry and households by income category
+in future years. The basis of comparison for transportation projects here is the
+no-build scenario.
+
+  The scale of project that is analyzable in accessibility terms differs between the
+land-development and transportation contexts. Any land-development project
+that is amenable to traffic-impact analysis can be analyzed for accessibility impacts
+using the approach described in this chapter. By contrast, a transportation project
+
+  Accessibility  Proposed technique
+  analysis of no
+  Accessibility
+  build  analysis of build
+
+Land use  Travel patterns  Proposed new  Updated travel  Updated land
+forecast  infrastructure  patterns  use forecast
+
+  Mobility analysis  Mobility analysis
+  of no bulid  of build
+
+  Current state of the practice
+
+FIGURE 3.4. Accessibility-based transportation project evaluation
+64  CHAPTER 3
+
+would need to be significant at the regional scale before its land-use impacts
+could be meaningfully forecast. Individual transportation projects that fall below
+the threshold of discernible land-use impacts could be bundled into larger plans
+for analytic purposes. We have used this latter approach, analyzing a relatively
+large bundle of projects to ensure that the land-use effects are significant and play
+a role in the final accessibility impact analysis.
+
+The Mobility 2040 Plan
+
+The San Antonio, Texas, metropolitan area, also known as the Alamo Area, is
+a fast-growing region with significant planned investment in new roadways.
+According to the region’s long-range transportation plan, the metropolitan-area
+population is expected to grow from 2.0 million in 2010 to 3.4 million by 2040.20
+Employment is likewise expected to grow rapidly from 0.9 million jobs in 2010
+to 1.7 million jobs. Employment centers are located in historic downtown San
+Antonio, as well as in a band following a circumferential highway along the
+northern suburbs. The metropolitan San Antonio region embodies a strong
+decentralization trend, with the highest population and employment growth
+between 2000 and 2010 occurring in suburban locations and along major high-
+way corridors.
+
+  The entire Mobility 2040 plan is analyzed here, including all the proposed
+roadway expansion projects in the region’s long-term transportation plan,
+adopted in 2014. The time horizon for the accessibility analysis is 2020, so
+only transportation impacts through the year 2020 are considered. The fore-
+casts are built on the baseline year of 2010. The twenty-five-year plan includes
+a total of $17.2 billion in transportation funding for operations, mainte-
+nance, safety improvements, and roadway expansions, including significant
+investment in radial freeways extending outward from the metropolitan core.
+Approximately $2.1 billion of this total is applied to roadway and capacity
+expansions.
+
+Forecasting Land-Use Impacts
+
+The land-use model forecasts change in numbers of households and employ-
+ment by location and type based on trends prior to the baseline year (in this
+case, 2005–10). The Alamo Area Metropolitan Planning Organization provided
+detailed land-use data for 2010, which enabled the calibration of the land-
+consumption component of the land-use model. Based on these data, a zone-
+based land-use model, known as TELUM, was used to forecast 2020 land-use
+patterns for both the build and no-build scenarios. Two different 2020 travel-
+time matrices, corresponding respectively to the build and no-build scenarios,
+  ACCESSIBILITY IN EVERYDAY PLANNING  65
+
+were fed into the model to produce two distinct land-use forecasts for the future
+of the Alamo Area region. The challenges of land-use forecasting, together with
+the relatively coarse nature of the TELUM model, mean that any land-use fore-
+cast comes with a great deal of uncertainty. TELUM was used for this project
+not because it is the best land-use forecasting model available, but because of
+its ready availability to planners in local practice. TELUM’s forecasts are not
+presented as fact, but as superior to standard travel-demand modeling with its
+implicit assumption of no land-use impacts whatsoever.
+
+  Work accessibility by automobile was calculated for each of the two sce-
+narios with a gravity model (see equations 3.2 and 3.3). Because the TELUM
+land-use model produces population forecasts by household type and employ-
+ment forecasts by industry type, a variety of accessibility metrics are possible;
+for example, it is possible to calculate the accessibility impacts on low-income
+households separately from the impacts on high-income households. How-
+ever, only aggregate average population accessibility impacts are reported here.
+The travel cost for the accessibility calculations in this case is peak-hour auto
+travel times.
+
+∑ ai =  g j ∗ e −0 14∗tij  (3.2)
+  (3.3)
+  i
+
+ARegion ∑i aihi
+
+  ARegion is the total household-weighted accessibility to jobs for the San Anto-
+nio metropolitan region. It is calculated via two steps: the first step is to cal-
+
+culate accessibility for each zone (in this case the zones are census tracts), and
+
+the second step is to weight the accessibility in each zone by the number of
+
+households in that zone. For these equations, ai is accessibility for zone i, hi
+is the number of households residing in zone i, gj is the total number of jobs
+located in zone j, tij is the auto-based travel time between zone i and j during the
+peak hour, and –0.14 is the impedance coefficient. Changes to mobility were
+
+also examined for each of the two scenarios by comparing the aggregate (sum
+
+total) travel times for 2020 vehicle flows across the metropolitan region. We
+
+summed projected peak-hour zone-to-zone vehicle flows adding up the peak-
+
+hour vehicular travel time for each individual vehicle flow. In equation 3.4, T is
+
+the aggregate regional sum of peak-hour travel times in minutes, fij is the flow
+of vehicles from zone i to zone j over the peak hour, and tij is the peak-hour
+travel time from zone i to zone j.
+
+T ∑i j fij ∗tij  (3.4)
+66  CHAPTER 3
+
+  The mobility and accessibility implications of the Mobility 2040 long-
+range plan are examined through a comparison of the build and no-build sce-
+narios. The build scenario represents what would happen if all the Mobility
+2040 roadway expansion projects planned through 2020 were built and the
+associated land-use changes occurred. The no-build scenario represents what
+would happen if none of the Mobility 2040 projects were built and includes
+the land-use patterns that would result from not introducing any new roadway
+infrastructure.
+
+  Anticipated household gains that result from the Mobility 2040 projects are
+concentrated along the northern metropolitan fringe, in particular in the north-
+east. Population losses are concentrated in the northern, inner-ring suburbs and
+much of the central city (figure 3.5). Employment gains due to the transporta-
+tion plan cluster in the far northwest and northeast of the region, while employ-
+ment losses are scattered throughout the central city and the northern inner ring
+(figure 3.6).
+
+  Table 3.2 portrays mobility and accessibility performance across four sce-
+narios: build, no-build, speed-only effects, and year 2010. The results indicate
+
+FIGURE 3.5. Forecast household shift due to Alamo transportation plan
+for 2020. Darker areas indicate areas with higher population growth (or less
+population decrease).
+FIGURE 3.6. Forecast employment shift due to Alamo transportation plan
+for 2020. Darker areas indicate areas with higher employment growth (or less
+employment decrease).
+
+Table 3.2 Alamo area long-range transportation plan mobility and accessibility
+impacts for 2020
+
+  BUILD  NO-BUILD  SPEED-ONLY  YEAR 2010
+  SCENARIO  SCENARIO  EFFECTS
+
+Mobility impacts  Aggregate auto travel time
+Vehicular travel time, minutes
+Average trip time, minutes  82,098,736 86,908,769  NA  73,189,146
+Percent difference no-build
+Percent difference with 2010  24.59  26.03  NA  21.92
+Accessibility impacts
+Minimum zone  –5.5%  NA  NA  NA
+Maximum zone
+Mean zone  12.2%  18.7%  NA  NA
+Standard Deviation
+Population-weighted accessibility  Gravity-weighted auto accessibility to all employment
+Percent difference no-build
+Percent difference with 2010  22  21  21  66
+
+  96,340  96,069  97,071  107,978
+
+  28,105  27,790  28,298  29,330
+
+  23,335  23,635  23,553  25,382
+
+  24,406  24,446  25,194  27,988
+
+  –0.2%  NA  3.1%  NA
+
+  –12.8%  –12.7%  –10.0%  NA
+68  CHAPTER 3
+
+that the mobility improvements of the Alamo’s Mobility 2040 Plan through
+2020 are considerable. By contrast, its accessibility impacts are negligible. The
+build scenario reduces aggregate peak-hour travel time by 5.5 percent. In addi-
+tion, if the associated transportation projects had no land-use effect, that is,
+if they only changed interzonal speeds, they would increase average house-
+hold accessibility by 3.1 percent. The reason the accessibility improvement
+is smaller than the mobility improvement is that accessibility incorporates
+household locations, and the speed improvements are predominantly concen-
+trated in less-populated areas of the region. However, after the land-use effects
+are taken into account, the net average accessibility benefits for the region
+are –0.2 percent.
+
+Mobility Analysis Is Not the Same as Accessibility Analysis
+
+The Mobility 2040 Plan demonstrates mobility benefits through decreased
+average peak-hour travel times, but it offers no net accessibility benefits for the
+average resident of the San Antonio metropolitan region. The proposed trans-
+portation plan is forecast to decentralize both households and employment, and
+with these anticipated land-use shifts over a ten-year time horizon, the average
+household has no greater accessibility in 2020 than if no roadway expansion proj-
+ects were completed at all (i.e., the no-build scenario). The advantage of faster
+speeds, which are documented in the mobility analysis, is completely counter-
+balanced by the land-use decentralization induced by the planned portfolio of
+roadway projects.
+
+  A contrasting case is found in a subset of the Mobility 2040 projects, termed
+“Loop 1604.” This suite of upgrades to a ring expressway north of San Antonio
+was modeled for its accessibility effects compared to a baseline defined as the
+remainder of the Mobility 2040 projects (as opposed to a no-build alternative).21
+In this comparison, the Loop 1604 projects were forecast to concentrate land
+uses compared to the Mobility 2040 minus Loop 1604 forecasts, which feature
+extensive low-density peripheral development. As a consequence, Loop 1604’s
+accessibility impacts were markedly positive, with the land-use impacts amplify-
+ing, rather than reversing, their mobility effects.
+
+  In the full analysis, the Loop 1604 projects offered a triply compounded acces-
+sibility benefit. First, average auto travel speeds increased, which, all else being
+equal, increases accessibility. Second, these travel-speed improvements were
+focused on concentrated areas of population and employment, so the benefit
+of these mobility enhancements occurred where the most people actually travel.
+And third, the Loop 1604 projects were forecast to spur the centralization of
+ACCESSIBILITY IN EVERYDAY PLANNING  69
+
+population and employment relative to the no-build scenario. As a consequence,
+a mobility-based analysis of Loop 1604 would actually significantly underesti-
+mate its auto accessibility benefits.
+
+  Although the evaluations presented here assess accessibility impacts for the
+average household, the method readily supports the disaggregation of accessi-
+bility impacts, including a differentiation of accessibility impacts by household
+type (e.g., by income), by destination type (e.g., work, nonwork, shopping, health
+care), and by mode (public transport, bicycle, walking). The key to the proposed
+method is that induced land-use effects of transportation projects must be taken
+into account for a full and fair accessibility evaluation.
+
+Integrating Accessibility into Everyday Planning
+
+Analysis of transportation or land-use projects differs from regional-scenario-
+based accessibility evaluation, and we have presented two methods for project-
+level accessibility analysis, one for land-use projects, and the other for transpor-
+tation projects. Since project-based analysis must usually consider changes in
+either land use or transportation infrastructure, it requires tools that forecast
+the impact of changes in one system on the other. Furthermore, any marginal
+project-level change must be evaluated with respect to some meaningful basis of
+comparison. The methods illustrated here address these various challenges for
+conducting an accessibility analysis at the project level.
+
+  As we have demonstrated, transportation analysis that employs mobility
+tools alone can lead to perverse outcomes. Projects that enhance mobility do
+not necessarily enhance accessibility—indeed, they can even degrade it. The
+best-performing land-use development evaluated here, which is located in the
+central part of downtown Ann Arbor, Michigan, scores poorly when it is evalu-
+ated with traffic-impact analysis alone. The Mobility 2040 Plan, of San Antonio,
+Texas, improves peak-hour vehicle speeds, but actually offers no net accessibility
+benefits to the average household once anticipated land-use changes are taken
+into account.
+
+  In every case where a transportation-related planning decision must be
+made, there is a way to analyze that decision from an accessibility-centered point
+of view. If existing transportation-analysis tools consider only travel times or
+speeds, then these tools are mobility based, and planners who rely on such prac-
+tices will fail to distinguish between accessibility-improving and accessibility-
+degrading projects. Realization of the accessibility shift demands new tools and
+methods that are applicable to decision making in everyday planning, including
+70  CHAPTER 3
+
+methods appropriate to evaluating project-level decisions.22 This project-level
+analysis is an essential complement to the growing body of regional-scenario
+analyses that are increasingly incorporating accessibility metrics. Project-level
+accessibility analysis is necessary for enabling accessibility thinking to move out
+of the airy realm of concept, theory, and visioning and into the grounded every-
+day of transportation- and land-use-planning practice.
+  4
+ACCESSIBILITY AND URBAN FORM
+
+A prevalent view among urban planning researchers is that low-density, auto-
+oriented metropolitan regions are also low-accessibility areas.1 While we argue
+against equating such areas with poor accessibility by definition, accessibility in
+these regions may in fact be measurably low. This view, if supported, would have
+important implications for policy reform. Compact-city and smart-growth plan-
+ning approaches would have a transportation-improvement rationale. Though
+they are not designed for high automotive travel speeds, they could nevertheless
+increase accessibility and thereby yield a transportation benefit, potentially even
+for car travel. Transportation, environmental, and societal goals might be more
+synergistic than is generally thought as policy shifts allowing for closer destina-
+tions and less car travel lead to improvements in accessibility, even if they slow
+traffic somewhat.
+
+  Claims that higher densities degrade transportation outcomes abound,
+yet these are based almost entirely in a mobility logic. New York City, for
+instance, has been singled out as a particularly problematic transportation case
+based strictly on its congestion; the fact that its density offers greater origin-
+destination proximity than most locales has not entered into the analysis.2 The
+sentiment that densities should be restricted for the sake of mobility is simi-
+larly reflected in planning conflicts from numerous countries around the world
+(text box 4.1).
+
+  71
+72  CHAPTER 4
+
+  Text box 4.1. International examples of calls
+  for planning to limit densities based
+  on congestion concerns
+
+  Daily Camera (Boulder, Colorado, United States). “Planning Board
+  Rejects North Boulder Middle-Income Housing Proposal.” December 2,
+  2016: “Just before midnight Thursday, the Boulder Planning Board
+  rejected a proposed mixed-use development with commercial space and
+  50 middle-income housing units near the corner of Broadway and Iris
+  Avenue. . . . Opponents at Thursday’s hearing urged the city’s Planning
+  Board to deny the project, because it’s too dense, too tall and threatens to
+  exacerbate traffic and parking woes.”
+
+  New Straits Times (Kuala Lumpur, Malaysia). “High-Density Project
+  Gets Residents Down.” July 3, 2010: “Residents of Kuchai Entrepreneurs
+  Park want City Hall to reject a proposed high-density condominium on
+  grounds that it will add to the congestion in the area. The residents learnt
+  of the development through a sign erected at Lot 1221, Jalan Kuchai Lama
+  about two weeks ago.”
+
+  Sentinel (Stoke-on-Trent, United Kingdom). “900-Home Plan Is Bun-
+  kered.” September 1, 2016: “‘INAPPROPRIATE’ plans to build 900 homes
+  on a former golf course have been blocked. . . . Haddon Property Develop-
+  ments wanted to build the houses—along with shops and a school—on the
+  site of Gorstyhill Golf Course, near Crewe. Villagers in Wychwood, which
+  is encircled by the course, objected to the scheme, saying it would mean the
+  loss of a leisure facility and lead to traffic chaos.”
+
+  Prince George Citizen (Prince George, British Columbia, Canada).“Coun-
+  cil Rejects Housing Project.” April 26, 2017: “City council has rejected a
+  rezoning application for a multifamily residential development in a Spruce
+  Street neighbourhood. . . . Coun. Brian Skakun opposed the application.
+
+  “‘This makes no sense to me. I support the residents. This is making a
+  bad problem worse especially in terms of traffic,’ Skakun said.”
+
+  While higher densities frequently degrade traffic speeds, they could enhance
+accessibility if the increase in proximity they support outweighs any slowing of
+travel (see chapter 3). If this were the case, the densities would confer a trans-
+portation benefit, rather than creating a problem to be solved. And the converse
+would also be true: land-use regulations to enforce a low-density development
+ACCESSIBILITY AND URBAN FORM  73
+
+pattern could be potentially harmful to transportation goals (defined again in
+accessibility terms) even if they succeeded in keeping the traffic flowing rapidly.
+A nationwide comparison of metropolitan job accessibility by auto is sugges-
+tive in this regard: of the ten metropolitan areas with the greatest job accessibil-
+ity by auto, six are also found on the list of the ten areas with the greatest loss
+in job accessibility due to congestion.3 While congestion reduces accessibility, it
+appears that some external factor tends to lead both to high automotive acces-
+sibility and to high roadway congestion. This factor may be urban form. If one
+defines accessibility in urbanist terms—an approach we reject (see chapter 2)—
+then the relationship of land-use patterns to accessibility is a foregone conclu-
+sion. But low-density regions with a high degree of separation of land uses do not
+necessarily demonstrate low accessibility. This is because a low-density pattern
+of settlement can have high accessibility (at least by motorized modes) if speeds
+are fast enough to compensate for the great distances. Which urban forms lead to
+higher accessibility is an empirical, not a definitional, question.
+
+  Empirical analysis of the relationship between urban form and accessibility
+can be accomplished by comparing the same regions over time or by comparing
+a range of regions at a single point in time.4 In this chapter, we compare acces-
+sibility across metropolitan regions in the United States using this cross-sectional
+approach, estimating auto-based work accessibility metrics for thirty-eight of the
+largest fifty metropolitan regions in the United States. The automobile focus here
+is designed to test for potential accessibility benefits to compact metropolitan
+urban form that are not self-evident. Compactness supports public-transport
+accessibility (see chapter 5) in line with expectations; by contrast, low-density
+development is often thought to benefit auto-oriented transportation systems.
+
+  Much of the prior research on measuring accessibility is focused on case stud-
+ies of single metropolitan regions.5 A smaller body of work has compared acces-
+sibility between regions.6 The approach presented here can be used to analyze
+accessibility differences across regions as well as accessibility change over time
+within and between regions, and can help assess the factors enhancing or degrad-
+ing regional accessibility, including metropolitan compactness.7
+
+Accessibility Comparison between Regions
+
+Intermetropolitan comparisons of accessibility present a challenge because peo-
+ple in different regions have different propensities to travel in response to travel
+time or cost. The concept of “minute,” “work destination,” and “nonwork destina-
+tion” can be reasonably consistently defined between regions. By contrast, people’s
+74  CHAPTER 4
+
+willingness to take trips, a key element of virtually all measures of accessibility,
+varies markedly from one region to another. A traveler in Los Angeles, for example,
+is more likely to make a trip of sixty minutes than a traveler in a smaller region
+like Omaha. Whereas in some regions, such a trip would be considered long and
+hence avoided if at all possible, in others it would be routine. This is at least in part
+a function of varying urban patterns; if there are few destinations nearby, but many
+farther away, people are inclined to travel relatively long distances. If the reverse is
+true, and there are many destinations nearby and few far away, people find much
+less need for long trips. There may also be interregional differences that are unex-
+plained by the physical environment in people’s innate propensity to travel.
+
+  In gravity-based models of accessibility, differing propensities to travel across
+regions are expressed in differences in coefficients of the impedance function (see
+chapter 3), with higher values indicating a lower willingness to travel. The phe-
+nomenon has its expression in other metrics of accessibility as well. For example,
+the cumulative-opportunities model defines a travel-time radius, for example, 15,
+30, or 45 minutes. Choice among these radii is analogous to the choice of an
+impedance coefficient, with a short travel-time radius equating to a high coef-
+ficient. The choice of both impedance coefficients in gravity-based accessibility
+and the search radius in the cumulative-opportunities model will influence both
+accessibility metrics, and, potentially, the ordinal accessibility ranking of the met-
+ropolitan regions in the study.
+
+  In the customary application of the gravity model, the impedance coefficient is
+estimated separately for each region. Use of these varying functions for the com-
+parison of accessibility across regions would lead to a logical inconsistency, how-
+ever. Regions whose land-use and transportation systems require a lot of time and
+money in travel demonstrate a higher propensity to travel further. For this reason,
+using region-specific impedance coefficients in intermetropolitan comparisons of
+accessibility is tantamount to giving the region with harder-to-reach destinations
+“credit” that it does not deserve. A consistent impedance coefficient, by contrast,
+creates an evenhanded metric on the ability to reach destinations across regions; it
+treats a minute as equally burdensome no matter where a person lives. Therefore,
+the impedance coefficient used here is the expected value for the parameter in the
+median region in terms of population.8
+
+Evaluating the Interaction of Speed
+and Proximity
+
+In order to explore the interaction of speed and proximity on accessibility, met-
+ropolitan areas were paired on the basis of population size, and the distribution
+  ACCESSIBILITY AND URBAN FORM  75
+
+of accessibility was analyzed between the two regions. For example, a pairing of
+metropolitan Washington, DC, with the San Francisco Bay Area reveals similar
+levels of accessibility at the low end (e.g., the 1st-percentile household in acces-
+sibility terms) and the high end (e.g., the 99th-percentile household in accessi-
+bility terms). The rest of the distribution reveals higher accessibility for the San
+Francisco Bay Area (figure 4.1). Though the horizontal axis in these graphs is
+ordered simply by population percentile of the accessibility score, it has some-
+thing of a geographical interpretation: since accessibility generally declines as
+one moves outward from the center of the region, households at the low end of
+the distribution tend to reside in peripheral areas, while those at the high end
+live at the center.
+
+  Accessibility differences between two regions may be decomposed into a
+proximity component and a speed component.9 This is accomplished by trans-
+forming the speed distribution of San Francisco into that of Washington, DC.
+
+  600,000
+
+  500,000
+
+  400,000
+
+Accessibility score  300,000
+
+  200,000
+
+  100,000
+
+  0  25%  50%  75%  100%
+  0%
+
+  Population percentile
+
+  San Francisco accessibility  Speed effect:
+  Washington, DC accessibility  Advantage to San Francisco
+
+  Proximity Effect:
+  Advantage to Washington, DC
+
+FIGURE 4.1. Decomposition of accessibility differences between metropolitan
+San Francisco and Washington, DC
+76  CHAPTER 4
+
+A new set of accessibility indicators are calculated for San Francisco, using travel
+times derived from Washington speeds, generating a new accessibility curve
+(figure 4.1).10 The transformed curve, which in this case is the lowest of the three,
+represents the accessibility distribution that would hold for the San Francisco Bay
+Area if travel speeds there matched those of Washington, DC. For this reason, the
+gap between that curve and the San Francisco accessibility curve is entirely speed
+related, while the difference with the Washington, DC, curve is entirely proximity
+related. The speed-related advantage to San Francisco is thus shown as the cross-
+hatched area between the top and bottom curves; the proximity-related advan-
+tage to Washington is represented by the shaded area below the bottom curve.
+Notwithstanding the greater density of the San Francisco Bay Area, Washington,
+DC, demonstrates a proximity advantage. But that advantage is negated by the
+greater magnitude of Washington, DC’s speed disadvantage; the potential acces-
+sibility benefit of greater proximity was squandered by poor mobility relative to
+that of the San Francisco Bay Area—in this case, automobility, since the accessibil-
+ity metric is automobile-based. Here, the accessibility outcome is consistent with
+traditional mobility-based transportation planning; poor mobility has degraded
+the accessibility of what might otherwise be a highly accessible metropolitan area.
+At the same time, this comparison demonstrates the redundancy of defining twin
+goals for “mobility and accessibility.” Where mobility is sufficient to overcome a
+proximity disadvantage—as in the San Francisco case—the outcome materializes
+as superior accessibility. Because accessibility incorporates mobility, mobility does
+not need a separate accounting to assess its benefit.
+
+  The relationship between speeds and accessibility demonstrated in the
+Washington–San Francisco comparison is not universal, however, as illustrated
+by a similar decomposition of accessibility differences between another pair of
+similarly sized metropolitan areas: Philadelphia and Houston (figure 4.2). Phila-
+delphia enjoys a considerable accessibility advantage over Houston for most of the
+population distribution. A decomposition of accessibility between the two regions
+reveals that Houston enjoys a large speed advantage over Philadelphia, but suf-
+fers from a proximity disadvantage. Notably, the proximity disadvantage exceeds
+the speed advantage, generating an accessibility disadvantage for Houston overall.
+While the Washington–San Francisco comparison illustrates how mobility can
+create a higher accessibility outcome, Houston-Philadelphia provides a counter-
+example: Houston’s accessibility suffers when compared to Philadelphia’s despite
+Houston’s faster travel speeds. The vast distances in low-density Houston render
+it less accessible than the slower but more compact Philadelphia.
+  ACCESSIBILITY AND URBAN FORM  77
+
+  700,000
+
+  600,000
+
+  500,000
+
+Accessibility score  400,000
+
+  300,000
+
+  200,000
+
+  100,000
+
+  0
+
+  0%  25%  50%  75%  100%
+
+  Population percentile
+
+  Philadelphia accessibility  Speed effect:
+  Houston accessibility  Advantage to Houston
+
+  Proximity effect:
+  Advantage to Philadelphia
+
+FIGURE 4.2. Decomposition of accessibility differences between metropolitan
+Philadelphia and Houston
+
+  A third case presents itself as well: if region “A” enjoys both a speed and a prox-
+imity advantage over region “B,” it will demonstrate higher accessibility overall.
+This is the case with New York as compared with Los Angeles (figure 4.3). New
+York enjoys a slight speed advantage, a considerable proximity advantage, and
+an overall accessibility advantage over Los Angeles for most of the population
+distribution. This finding puts the view of New York as a particularly problematic
+transportation case in a different light.11 Notwithstanding the serious congestion
+problems of New York City, its region has the highest accessibility of all regions
+studied (a function in part of its very large size).
+78  CHAPTER 4
+
+  1,800,000
+
+  1,600,000
+
+  Accessibility score  1,400,000
+  1,200,000
+  1,000,000
+
+  800,000
+  600,000
+
+  400,000
+  200,000
+
+  0
+
+  0%  25%  50%  75%  100%
+
+  Population percentile
+
+  New York accessibility  Speed effect:
+  Los Angeles accessibility  Advantage to New York
+
+  Proximity effect:
+  Advantage to New York
+
+FIGURE 4.3. Decomposition of accessibility differences between metropolitan
+New York and Los Angeles
+
+Accessibility and Urban Form Study
+
+The analyses we have presented focus on metropolitan size but do not account
+for urban form. To develop data sufficient to test the accessibility/urban-form
+relationship, metropolitan planning organizations (MPOs) of the fifty largest
+U.S. metropolitan regions (ranked on the metropolitan statistical area [MSA]
+population count of the year 2000) were contacted with a request for travel-
+demand modeling data, the central piece of information needed to calculate
+peak-period auto- and employment-based accessibility scores. Due to variations
+in travel-demand modeling data across different metropolitan regions, sufficient
+data from thirty-eight regions were received; the remaining twelve regions were
+left out of the study (appendix A, table 4a).
+ACCESSIBILITY AND URBAN FORM  79
+
+  The most important data items are matrices of interactions between all zones
+in a metropolitan region, including travel times and the number of trips between
+zones. Local definitions of the peak period differed between regions; in each case,
+the definition of the morning peak period in use in the area was employed. Mod-
+els for generating travel times varied between metropolitan areas, and some of
+the intermetropolitan variability in data would be attributable to these differ-
+ences in data collection and modeling methods, introducing error of unknown
+magnitude into future analyses.
+
+  For work and nonwork destinations, data on business establishments were
+purchased from the private vendor Claritas, Inc.12 This dataset contains several
+attributes of business establishments, including the number of jobs at each loca-
+tion in 2008, and classification codes from the North American Industry Classi-
+fication System (NAICS), allowing identification of businesses by industry type.
+All business establishments within the thirty-eight regions were geocoded to the
+street-address level, then aggregated by traffic-analysis zones into the number of
+work and nonwork destinations by zone.
+
+  This study uses the gravity model as a “place-based” measure. All people resid-
+ing in a zone are assigned the same level of accessibility, regardless of their per-
+sonal choices of destinations or preferences for travel. Because each metropolitan
+area experiences a range of accessibility distributed across its population, the
+accessibility experienced by the median resident was selected as a summary sta-
+tistic for evaluating overall regional performance.
+
+Density’s Relationship with Accessibility
+
+An examination of the relationship between accessibility and urban form con-
+text could entail a host of metropolitan characteristics, including centralization,
+concentration, density, and others.13 However, exploratory regression models
+revealed little to no relationship between such metrics as centralization or con-
+centration and accessibility; by contrast, average regional densities appeared to
+be a significant determinant of median work accessibility by automobile.
+
+  The finding that several common urban form indicators have little relation-
+ship to regional accessibility is, in part, a function of a focus on the median resi-
+dent. The median resident in accessibility terms of the typical U.S. metropolis
+is a suburbanite (in each of the thirty-eight regions, the zone with the median
+accessibility score is located outside the central city, and in many instances at a
+substantial distance from the central city). In nearly every case, this individual
+does not live in or near the downtown, or even in or near a suburban concen-
+tration such as a downtown or transit-oriented development. Thus, the extent
+80  CHAPTER 4
+
+of these concentrations affects this person only marginally. By contrast, overall
+regional densities can affect median accessibility markedly in two ways: speed
+and proximity.
+
+  SPEED
+
+Higher densities can reduce average travel speed. Auto-ownership rates in U.S.
+metropolitan regions, including higher-density regions, are high. Thus, popula-
+tion density in these regions can lead to high traffic densities and therefore slow
+speeds. If distances are held constant, slower travel speeds will degrade accessibility.
+
+  PROXIMITY
+
+Higher densities can increase proximity by shortening the distance between ori-
+gins and destinations. Higher-density regions put numerous destinations closer
+to a given origin than their lower-density counterparts. For example, in the case
+of jobs, higher job densities mean more job locations are within a closer proxim-
+ity, increasing accessibility.
+
+  Thus, the effect of density on accessibility can be thought of as the sum of the
+speed effect and the proximity effect. If the speed effect dominates, low-density
+regions will be more accessible; if the proximity effect dominates, high-density
+regions will be more accessible.
+
+  There are good reasons to believe that the speed effect might dominate, a phe-
+nomenon that would render low-density regions more auto accessible than their
+higher-density counterparts. To illustrate, consider the cumulative-opportunities
+measure, or the number of destinations reachable within a given amount of time.
+The territory accessible within Y minutes is an irregularly shaped area (depend-
+ing on the shape of the street network) but can be roughly conceived of as a circle
+(appendix A, figure 4a). When speed doubles, the radius of the circle that can be
+reached within a given time doubles as well. As a consequence, the reachable area
+within the circle quadruples. Given a constant density of destinations, those places
+that can be reached within the specified time also quadruple with the doubling of
+speeds. In this stylized case, accessibility increases with the square of speed.
+
+  The impact of increasing densities on accessibility can be illustrated in
+a similar fashion. If speeds are held constant, but the density of destinations
+doubles, accessibility doubles (appendix A, figure 4b). Thus, while accessibility
+increases with the square of speed, it increases linearly with density. For this rea-
+son, increasing speed confers a very significant accessibility advantage, one that
+will be difficult to overcome with the proximity effect. This observation tends
+to support the mobility-centered view that is reflected so dominantly in current
+transportation policy—but there is another possible explanation for density’s
+influence on accessibility.
+  ACCESSIBILITY AND URBAN FORM  81
+
+Density and Speeds
+
+Metropolitan density may influence auto travel speeds in two competing ways.
+First, low-density regions typically offer more roadway capacity per person than
+their high-density counterparts. Low-density regions in the United States tend to
+have a high ratio of roadway lane-miles per capita, a factor that would tend to raise
+travel speeds (figure 4.4). Yet the tendency for higher roadway capacity in low-
+density regions appears to be at least partly negated by the higher vehicle-miles
+traveled (VMT) per capita observed in these regions (figure 4.5). Low-density
+regions are thus simultaneously roadway-intensive and travel-intensive. Speeds
+are determined neither by vehicle-miles traveled nor by roadway miles in isolation,
+but rather as a function of the interaction of the two. One broad indicator of this
+interaction is traffic density, measured as the ratio of VMT to freeway lane miles.
+The relatively strong (r2=0.26) negative relationship between density and VMT per
+capita interacts with a somewhat stronger (r2=0.37) relationship between density
+and freeway lane miles per capita. The net result is that the relationship between
+population density and traffic density, while positive, is relatively weak (r2=0.11)
+(figure 4.6). Lower-density regions show less traffic density than their higher-
+density counterparts, but only marginally. Thus, while the speed-accessibility link
+
+  12.5  Kansas City  Y = 265.31*X-0.49
+  10  R2 power = 0.370
+Freeway lane miles per 10,000 residents 7.5  Richmond
+  5  St. Louis  Los Angeles
+  2.5
+  Nashville  Houston
+
+  Charlotte
+
+  Hartford Louisville San Antonio
+  Oklahoma CIty Austin Cleveland
+
+  Jacksonville Providence Dayton Columbus  Baltimore
+  Rochester Dallas
+  Indianapolis
+
+  Pittsburgh Cincinnati Bridgeport  San Diego
+
+  Buffalo  Minneapolis
+
+  Virginia Beach Memphis BostonOrlando Seattle San Francisco
+  Denver Salt Lake City
+  Atlanta  Milwaukee  Las Vegas
+  Washington
+
+  Tucson  Philadelphia  Detroit  Sacramento
+  New York
+  Tampa Phoenix Portland  Miami
+
+  Chicago  New Orleans
+
+  0  2000  4000  6000
+
+  Urbanized area density (persons per square mile)
+
+FIGURE 4.4. Urbanized area density and freeway lane miles per 10,000
+residents. U.S. Department of Transportation, Highway Statistics 2008
+(Washington, DC: Federal Highway Administration, 2008).
+  35
+
+  Oklahoma City
+
+  Charlotte
+
+Daily vehicle miles traveled per capita  Tucson  Houston  Las Vegas
+  Nashville Orlando
+
+  30 Jacksonville St. Louis
+
+  Austin  Tampa
+  Atlanta
+
+  Richmond
+  Kansas City
+
+  Indianapolis Louisville  Detroit
+
+  25 Dayton Hartford Memphis Dallas San Antonio
+  Columbus  Minneapolis Baltimore
+  Bridgeport Milwaukee  Miami
+
+  Virginia Beach Cincinnati  Denver  San Diego  Los Angeles
+
+  Boston  Seattle  Washington
+
+  Pittsburgh  Rochester  Phoenix
+  Buffalo Salt Lake City
+  20 Chicago Providence Philadelphia San Francisco
+  Portland Sacramento
+
+  New York
+
+  15
+
+  New Orleans
+  Y = 152.02*X-0.24
+  R2 power = 0.257
+
+  10
+
+  0  2000  4000  6000
+
+  Urbanized area density (persons per square mile)
+
+FIGURE 4.5. Daily vehicle miles traveled per capita by urbanized area
+density, largest ﬁfty U.S. (census-deﬁned) urbanized areas. U.S. Department
+of Transportation, Highway Statistics 2008 (Washington, DC: Federal Highway
+Administration, 2008).
+
+  80,000  Y = 30964.27+3.67*X
+  70,000  R2 linear = 0.111
+
+  Tucson
+
+Ratio of daily VMT to freeway lane miles  Tampa
+
+  60,000  Miami Las Vegas
+  50,000
+  40,000  Chicago
+  30,000
+  20,000  Atlanta  Detroit  Los Angeles
+  Orlando  Phoenix
+
+  Washington
+
+  Memphis  Milwaukee  Portland  Sacramento
+  New York
+  Jacksonville Philadelphia Denver
+
+  Oklahoma CIty  Minneapolis Salt Lake City
+
+  Virginia Beach Charlotte Boston  Dallas Seattle  New Orleans
+  Austin
+  Bridgeport  San Diego San Francisco
+  Indianapolis
+  Houston
+  Nashville Buffalo  Cincinnati  Baltimore
+  Dayton  Columbus
+  Pittsburgh  Louisville
+  San Antonio
+  Providence Hartford  Rochester
+
+  Richmond St. Louis  Cleveland
+
+  Kansas City
+
+  0  2,000  4,000  6,000
+
+  Urbanized area density (persons per square mile)
+
+FIGURE 4.6. Trafﬁc density by population density
+
+Source: U.S. Department of Transportation, Highway Statistics 2008 (Washington, DC: Fed-
+eral Highway Administration, 2008)
+ACCESSIBILITY AND URBAN FORM  83
+
+is expected to be strong, the density-speed link appears to be quite weak and, by
+extension, may lead to a weak link between density and accessibility.
+
+  These relationships were tested through a path analysis, using the thirty-eight
+U.S. metropolitan areas for which data were available. Path analysis is an appli-
+cation of multiple regression that aims to identify dependencies among a set of
+variables. It uses several regression equations in a recursive manner to estimate
+a system of interrelated variables, and it is customary to represent the results
+graphically as shown in appendix A, figure 4c.
+
+  The analysis tests the strength of relationships along causal paths. In this analy-
+sis, the effect of density on accessibility via speed is compared to the effect of
+density on accessibility via proximity. As expected, the effect via speed is nega-
+tive and the effect via proximity is positive. But most important are the relative
+magnitudes: notwithstanding the conceptual advantages of speed in generating
+accessibility, density exerts a positive accessibility effect via proximity that is much
+stronger than its negative effect via speeds. This finding is consistent with a 2018
+study demonstrating that proximity exerts a stronger influence on job accessibility
+than speeds.14
+
+  These results—with the positive impacts of density on auto accessibility
+outweighing its negative impacts—are corroborated by the data displayed in
+figure 4.7. Overall, the figure demonstrates a positive relationship between
+urbanized-area density and accessibility. There is also some correlation between
+density and metropolitan size—New York and Los Angeles are simultaneously
+two of the largest and densest regions—but the positive relationship holds even
+without these cases. And even the small region of Las Vegas demonstrates high
+accessibility, in part as a function of its population density.
+
+  Las Vegas represents an interesting case for another reason as well. It is gen-
+erally considered to be a fairly sprawling metropolitan area; for example, Reid
+Ewing, Rolf Pendall, and Don Chen ranked it as the 48th most sprawled region
+of 83 analyzed.15 Indeed, in the dimension of neighborhood mix of homes, jobs,
+and services, Las Vegas was much more sprawling than the typical region. Yet its
+high levels of automobile accessibility illustrate the problem with defining acces-
+sibility as sprawl’s antithesis: a sprawling region can offer high auto accessibility.
+While Las Vegas has achieved this through density, other regions have achieved
+a similar outcome differently. For example, Kansas City, a low-density region
+that is the 29th most sprawled in the study, nonetheless achieved high levels of
+auto accessibility because it is relatively free from traffic congestion.16 Public-
+transport accessibility is another issue entirely, and it is quite difficult for a low-
+density region to achieve high scores in that regard. For example, Kansas City’s
+public-transport accessibility ranks 38th out of the 49 metropolitan regions
+studied by Andrew Owen, Brendan Murphy, and David Levinson.17
+84  CHAPTER 4
+
+  Y = 11900.7+95.04*X
+  R2 linear = 0.263
+
+Median work accessibility via automobile  New York
+
+  300,000
+
+  250,000
+
+  Philadelphia  Los Angeles
+  Las Vegas
+  200,000  Cincinnati  Phoenix
+  150,000
+  100,000  Dallas
+  50,000
+  Kansas City  Baltimore
+
+  Detroit  Portland  San Francisco
+  Minneapolis Houston  San Diego
+
+  Oklahoma CIty  Cleveland  Denver  New Orleans
+  Columbus  Chicago
+
+  Hartford  Orlando
+  Tucson Boston
+
+  Indianapolis Virginia Beach
+  Seattle
+
+  Nashville Louisville Memphis  Washington
+
+  Charlotte  Rochester  San Antonio
+  Atlanta  Buffalo
+  Richmond
+
+  750  1,000  1,250  1,500  1,750  2,000
+
+  Population density of urban area (persons per square kilometer)
+
+  Population of Year 2000 of MPO  15–20 million  5–10 million
+  Over 25 million  10–15 million  Under 5 million
+  20–25 million
+
+FIGURE 4.7. Median work accessibility via automobile by urbanized area
+density
+
+Metropolitan Densities and
+Transportation-Service Quality
+
+For metropolitan areas in the U.S. overall, there is a positive relationship
+between density and auto accessibility. This suggests that land-use policy can
+be highly relevant to accessibility outcomes. In particular, allowing metropoli-
+tan compactness by easing land-use regulations mandating low development
+densities can improve the effectiveness of the roadway transportation system as
+defined in accessibility terms. Yet the success of the strategy remains a matter
+for empirical accessibility evaluation. The relationship between metropolitan
+density and work accessibility via automobile, while positive, is hardly iron-
+clad, and some low-density regions do offer high auto accessibility. And trans-
+portation success overall should not just consider the automobile but should
+consider accessibility via all travel modes, including walking, cycling, public
+transport, and cars.
+ACCESSIBILITY AND URBAN FORM  85
+
+  By contrast, traditional mobility-based transportation evaluations tend to
+militate against denser development on the theory that dense land use can lead
+to dense traffic and hence congestion. The analysis presented here suggests a
+more nuanced understanding of dense development: increasing density may
+well be accessibility enhancing if the proximity effect on accessibility outweighs
+the speed-reduction effect. Conversely, land-use regulations that constrain such
+densification may degrade accessibility by car even as they strive to maintain or
+enhance mobility by automobile. Whereas higher densities are frequently viewed
+as a transportation disadvantage because of their impacts on automobility, they
+may offer distinct transportation advantages when viewed in accessibility terms.
+  5
+THE SPECIAL CASE OF
+PUBLIC-TRANSPORT ACCESSIBILITY
+
+Public transport plays a special role in accessibility. Like driving, biking, or walk-
+ing, its first job is to provide the mobility that allows travelers to reach their
+destinations. But public transport differs from other modes in its capacity to
+boost proximity indirectly; it can bring origins and destinations closer together
+to shape land-use development toward higher proximity. “If a new subway sta-
+tion opens near your house, you get improved mobility,” writes public-transport
+consultant Jarrett Walker. “But if the station leads to new development around
+it, you may get a new grocery store close to home. Even if you never ride transit,
+that’s an access improvement for you.”1
+
+  These proximity impacts operate at both local and regional scales. When public
+transport enables large and concentrated downtowns to thrive, or when it facili-
+tates metropolitan compactness overall, it is supporting a regional accessibility
+benefit that accrues to transit users and nonusers alike. Other modes can influ-
+ence proximity as well. But investments in automobile infrastructure frequently
+lead to proximity reductions through the spreading of land-use development,
+an effect that can degrade or even reverse the investments’ accessibility benefits
+(chapter 3).2 And neither cycling nor walking generally shape the proximity of
+metropolitan development with the strength and magnitude of public transport.
+
+  Public transport also differs from other modes in that measuring its acces-
+sibility involves a series of technical challenges that planners and public offi-
+cials must confront when they seek to extend the accessibility shift to the transit
+context. In this chapter, we consider the special challenges of public-transport
+
+  86
+

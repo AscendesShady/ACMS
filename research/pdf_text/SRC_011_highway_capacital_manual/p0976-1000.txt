@@ -1,0 +1,1410 @@
+  Highway Capacity Manual 2000
+
+6. (continued)  SO = SFF – 0.0058(vOA – 500)
+7. Determine LOS (use Exhibit 25-4).  SO = 110 – 0.0058(1440 – 500) = 104.5 km/h
+
+  S = 3737 + 1440(1) = 97.5 km/h
+   3737   1440 *1
+     +  
+   95.0   104.5 
+
+  LOS C
+
+The Results The on-ramp merge influence area will provide LOS C with a merge
+influence area speed of 95 km/h, system speed of 98 km/h, and density of 15.5 pc/km/ln.
+
+  Example Problem 4
+
+  RAMPS AND RAMP JUNCTIONS WORKSHEET
+
+General Information  Site Information
+
+Analyst  _________C_M_U______________  Freeway/Direction of Travel  ________R_o_u_t_e__4_____________
+Agency or company  _________Po_l_y______________  Junction  ________R_a__m_p_#__1 ____________
+Date Performed  _________________________  Jurisdiction  ___________________________
+Analysis Time Period  _________P_M__P_ea_k___________  Analysis Year  ________1_9_9_9________________
+
+X Operational (LOS)   Design (LA, LD, or N)   Planning (LOS)   Planning (LA, LD, or N)
+
+Inputs
+
+Upstream Adjacent Ramp  Terrain ___L_ev_e_l____  Downstream Adjacent Ramp
+  3000 veh/h
+ Yes   On  5% Trucks  10.8 m   Yes   On
+
+X No   Off  X No   Off
+
+Lup = ___________ m  1800 veh/h  150 m  120 m  Ldown = _________ m
+Vu = ___________veh/h  5% Trucks  VD = __________veh/h
+
+  SFF = ___1_10______ km/h  SFR = ____8_0_____ km/h
+
+  Sketch (show lanes, LA, LD, vR, vF)
+
+Conversion to pc/h Under Base Conditions
+
+(pc/h) AADT  K  D  V  PHF  % HV  fHV  fp  v= V
+  (veh/day)  (veh/h)  PHF fHV fp
+  1.000
+vF  3000  0.95  5  0.976  1.000  3236
+  0.976  1941
+vR  1800  0.95  5
+
+vU
+
+vD
+
+  Merge Areas  Diverge Areas
+
+Estimation of v12  Estimation of v12
+  v12 = vF * PFM  v12 = vR + (vF – vR)PFD
+
+LEQ =  _________(Equation 25-2 or 25-3)  LEQ = _________ (Equation 25-8 or 25-9)
+PFM =  _0_.5_5__5____ using Equation s_p_e_c_ia_l _ca_s_e(Exhibit 25-5)  PFD = _________ using Equation ________ (Exhibit 25-12)
+v12 =  _17_9_6______ pc/h  v12 = _________ pc/h
+
+Capacity Checks  Maximum  LOS F?  Capacity Checks  Actual  Maximum  LOS F?
+  Actual  See Exhibit 25-14
+  vFl = vF  4400: All
+vFO  5177  See Exhibit 25-7  No  v12  See Exhibit 25-14
+  vFO = vF – vR  See Exhibit 25-3
+vR12  3737  4600: All  No  vR
+
+Level-of-Service Determination (if not F)  Level-of-Service Determination (if not F)
+
+  DR = 3.402 + 0.00456 vR + 0.0048 v12 – 0.01278 LA  DR = 2.642 + 0.0053 v12 – 0.0183 LD
+DR = __________15_._5___________ pc/km/ln  DR = ___________________________ pc/km/ln
+LOS = __________C_____________(Exhibit 25-4)  LOS = __________________________ (Exhibit 25-4)
+
+Speed Estimation  Speed Estimation
+Ms = _______0_._3_5_0________ (Exhibit 25-19)  Ds = ______________________ (Exhibit 25-19)
+SR = _______9_5_._0_________ km/h (Exhibit 25-19)  SR = ______________________ km/h (Exhibit 25-19)
+SO = _______1_0_4_.5_________ km/h (Exhibit 25-19)  SO = ______________________ km/h (Exhibit 25-19)
+S = _______9_7_._5_________ km/h (Equation 25-14)  S = ______________________ km/h (Equation 25-15)
+
+  25-35  Chapter 25 - Ramps and Ramp Junctions
+  Example Problems
+Highway Capacity Manual 2000
+
+  EXAMPLE PROBLEM 5
+
+The Ramp  An off-ramp (single-lane) from a 10-lane freeway. The length of the
+
+deceleration lane is 220 m.
+
+The Question What is the LOS during the peak hour for current conditions?
+
+The Facts  √ Five-lane (in one direction)
+  √ One-lane off-ramp,  freeway segment,
+  √ Rolling terrain,
+  √ 10 percent trucks on freeway and ramp,  √ PHF = 0.95,
+  √ 0 percent RVs,  √ One-way peak-hour freeway
+  √ Off-ramp volume = 400 veh/h,
+  √ Commuter traffic,  volume = 7,200 veh/h,
+  √ FFS = 70 km/h for off-ramp, and
+  √ FFS = 100 km/h for freeway.
+
+Comments
+
+  √ Use Chapter 23, “Basic Freeway Segments,” to identify fHV and fp.
+  √ Estimate eight-lane equivalent freeway segment flow rate assuming v5 is 20
+percent of vF.
+
+Outline of Solution Demand volumes will be converted to flow rates. An eight-lane
+equivalent freeway segment flow rate will be established. Capacity will then be checked.
+Density will be calculated and LOS determined.
+
+Steps  v= V
+1. Convert volume (veh/h) to flow rate  (PHF)(fHV)(fp)
+
+  (pc/h) (use Equation 25-1).  vF = 7,200 = 8,711 pc/h
+  (0.95)(0.870)(1.000)
+1a. Determine fHV (use Chapter 23).  400
+
+2. Estimate eight-lane equivalent freeway  vR = (0.95)(0.870)(1.000) = 484 pc/h
+  flow rate (Exhibit 25-18).  1
+
+3. Compute v12 (use Exhibit 25-12, PFD =  fHV = 1 + PT(ET – 1) + PR(ER – 1)
+  0.436).  1
+
+4. Check capacity of upstream segment  fHV (fwy and ramps) = 1 + 0.10(2.5 – 1) = 0.870
+  (Exhibit 25-14 shows 9,200 pc/h).  vF4eff = vF – v5
+  v5 = 0.20vF = 0.20(8,711) = 1,742 pc/h
+5. Check maximum flow entering diverge  vF4eff = 8,711 – 1,742 = 6,969 pc/h
+  influence area (Exhibit 25-14 shows  v12 = vR + (vF – vR)PFD
+  4,400 pc/h).  v12 = 484 + (6,969 – 484)(0.436) = 3,311 pc/h
+  vF = 6,969 pc/h
+6. Check capacity of downstream
+  segment (Exhibit 25-14 shows 9,200  v12 = 3,311 pc/h
+  pc/h).
+  vFO = 6,969 – 484 = 6,485 pc/h
+7. Check capacity of off-ramp (use Exhibit
+  25-3, 2,100 pc/h).  vR = 484 pc/h
+
+8. Compute density (use Equation 25-10).  DR = 2.642 + 0.0053v12 – 0.0183 LD
+  DR = 2.642 + 0.0053(3311) – 0.0183(220) =
+9. Compute speeds as supplemental  16.2 pc/km/ln
+  information (use Exhibit 25-19 and  SR = SFF – (SFF – 67)Ds
+  Equations 25-13 and 25-15).  Ds = 0.883 + 0.00009(484) – 0.008(70) = 0.367
+  SR = 100 – (100 – 67)(0.367) = 87.9 km/h
+  vOA = (vF – v12)/NO = (6969 – 3,311)/2 = 1,829 pc/h
+
+Chapter 25 - Ramps and Ramp Junctions  25-36
+Example Problems
+  Highway Capacity Manual 2000
+
+9. (continued)  SO = 1.06SFF – 0.0062(vOA – 1000)
+10. Determine LOS (use Exhibit 25-4).  SO = 1.06(100) – 0.0062(1829 – 1000) = 100.9 km/h
+
+  S = 3311+ 1829(2) = 94.3 km/h
+   3311  1829(2) 
+    +  
+   87.9   100.9 
+
+  LOS C
+
+The Results The off-ramp diverge influence area will provide LOS C with a diverge
+influence area speed of 88 km/h, system speed of 94 km/h, and density of 16.2 pc/km/ln.
+
+  Example Problem 5
+
+  RAMPS AND RAMP JUNCTIONS WORKSHEET
+
+General Information  Site Information
+
+Analyst  _______R_P__R_______________  Freeway/Direction of Travel  _______I-_5___________________
+Agency or company  _______P_o_ly________________  Junction  _______R_a_m__p_#_1______________
+Date Performed  _________________________  Jurisdiction  ___________________________
+Analysis Time Period  _______A__M__Pe_a_k____________  Analysis Year  _______1_9_9_9_________________
+
+X Operational (LOS)   Design (LA, LD, or N)   Planning (LOS)   Planning (LA, LD, or N)
+
+Inputs
+
+Upstream Adjacent Ramp  Terrain __R_o_ll_in_g____  Downstream Adjacent Ramp
+  7200 veh/h
+ Yes   On  10% Trucks  18.0 m   Yes   On
+
+X No   Off  X No   Off
+
+Lup = ___________ m  Ldown = _________ m
+  VD = __________veh/h
+Vu = ___________veh/h  220 m  400 pc/h
+  10% Trucks
+
+  SFF = ___1_0_0_____ km/h  SFR = ____7_0_____ km/h
+
+  Sketch (show lanes, LA, LD, vR, vF)
+
+Conversion to pc/h Under Base Conditions
+
+(pc/h) AADT  K  D  V  PHF  % HV  fHV  fp  v= V
+  (veh/day)  (veh/h)  PHF fHV fp
+  1.000
+vF  7200  0.95  10  0.870  1.000  8711
+  484
+vR  400  0.95  10  0.870
+
+vU
+
+vD
+
+  Merge Areas  Diverge Areas
+
+Estimation of v12  Estimation of v12
+  v12 = vF * PFM  v12 = vR + (vF – vR)PFD
+
+LEQ =  _________(Equation 25-2 or 25-3)  LEQ = _________ (Equation 25-8 or 25-9)
+PFM =  _________ using Equation ________ (Exhibit 25-5)  PFD = __0_._4_3_6___ using Equation _____8___ (Exhibit 25-12)
+v12 =  _________ pc/h  v12 = __3_3__11____ pc/h
+
+Capacity Checks  Capacity Checks
+  Actual
+  Maximum  LOS F?  Actual  Maximum  LOS F?
+vFO  See Exhibit 25-7  See Exhibit 25-14
+  vFl = vF  6969  4400: All  No
+vR12  4600: All  v12  3311  See Exhibit 25-14  No
+  vFO = vF – vR  6485  See Exhibit 25-3  No
+  vR  484  No
+
+Level-of-Service Determination (if not F)  Level-of-Service Determination (if not F)
+
+  DR = 3.402 + 0.00456 vR + 0.0048 v12 – 0.01278 LA  DR = 2.642 + 0.0053 v12 – 0.0183 LD
+DR = _______________________ pc/km/ln  DR = ___________1_6_.2______________ pc/km/ln
+LOS = _______________________(Exhibit 25-4)  LOS = __________C________________ (Exhibit 25-4)
+
+Speed Estimation  Speed Estimation
+Ms = ___________________ (Exhibit 25-19)  Ds = ________0_.3__6_7__________ (Exhibit 25-19)
+SR = ___________________ km/h (Exhibit 25-19)  SR = ________8_7_.9____________ km/h (Exhibit 25-19)
+SO = ___________________ km/h (Exhibit 25-19)  SO = ________10__0_.9___________ km/h (Exhibit 25-19)
+S = ___________________ km/h (Equation 25-14)  S = ________9_4_.3____________ km/h (Equation 25-15)
+
+  25-37  Chapter 25 - Ramps and Ramp Junctions
+  Example Problems
+Highway Capacity Manual 2000
+
+  EXAMPLE PROBLEM 6
+
+The Ramp  An on-ramp (single lane on the left-hand side of freeway) to a six-lane
+
+freeway. The length of the acceleration lane is 250 m.
+
+The Question What is the LOS during the peak hour?
+
+The Facts  √ Three lanes in one direction,
+  √ Left-side one-lane on-ramp,  √ 15 percent trucks on freeway,
+  √ Level terrain,  √ PHF = 0.90,
+  √ 5 percent trucks on ramp,  √ On-ramp volume = 500 veh/h,
+  √ Freeway volume = 4,000 veh/h,  √ Commuter traffic, and
+  √ FFS = 50 km/h for on-ramp,  √ 0 percent RVs.
+  √ FFS = 110 km/h for freeway,
+
+Comments
+  √ Use Chapter 23, “Basic Freeway Segments,” to identify fHV and fp.
+  √ On a six-lane freeway, the flow in the left two lanes is 1.12 times the flow in Lanes
+  1 and 2 if the ramp is on the left side.
+
+Outline to Solution Demand volumes will be converted to flow rates. v12 is computed
+as if the ramp were on the right-hand side, then adjusted by a factor to account for the left-
+hand ramp. Two capacity values will then be checked (freeway departing and total flow
+entering the influence area). Density will be calculated and LOS determined.
+
+Steps  v= V
+1. Convert volume (veh/h) to flow rate (pc/h)  (PHF)(fHV)(fp)
+
+  (use Equation 25-1).  vF = 4,000 = 4,779 pc/h
+  (0.90)(0.930)(1.000)
+1a. Determine fHV (use Chapter 23).
+  500
+2. Compute v12 (use Exhibit 25-5).  vR = (0.90)(0.976)(1.000) = 569 pc/h
+2a. Compute PFM (use Exhibit 25-5).
+3. Compute v23.  1
+4. Check capacity of downstream segment  fHV = 1 + PT(ET – 1) + PR(ER – 1)
+
+  (Exhibit 25-7 shows 7,050 pc/h).  1
+5. Check vR23 (Exhibit 25-7 shows 4,600  fHV (fwy) = 1 + 0.15(1.5 – 1) = 0.930
+
+  pc/h).  1
+6. Compute density (use Equation 25-5).  fHV (ramp) = 1 + 0.05(1.5 – 1) = 0.976
+
+7. Compute speeds as supplemental  v12 = vF * PFM = 4,779 * 0.601 = 2,872 pc/h
+  information (use Exhibit 25-19 and  PFM = 0.5775 + 0.000092(250) = 0.601
+  Equations 25-13 and 25-14).  v23 = 2,872(1.12) = 3,217 pc/h
+  vFO = vF + vR = 4,779 + 569 = 5,348 pc/h
+8. Determine LOS (use Exhibit 25-4).
+  vR23 = v23 + vR = 3,217 + 569 = 3,786 pc/h
+
+  DR = 3.402 + 0.00456vR + 0.0048v23 – 0.01278LA
+  DR = 3.402 + 0.00456(569) + 0.0048(3217) –
+  0.01278(250) = 18.2 pc/km/ln
+
+  SR = SFF – (SFF – 67)Ms
+  Ms = 0.321 + 0.0039e(3786/1000) – 0.004(250 *
+  50/1,000) = 0.443
+
+  SR = 110 – (110 – 67)(0.443) = 91.0 km/h
+  vOA = (vF – v23)/NO = (4,779 – 3,217)/1 = 1,562 pc/h
+  SO = SFF – 0.0058(vOA – 500) = 103.8 km/h
+
+  S = 3786 + 1562(1) = 94.4 km/h
+   3786   1562(1) 
+     +  
+   91.0   103.8 
+
+  LOS D
+
+Chapter 25 - Ramps and Ramp Junctions  25-38
+Example Problems
+  Highway Capacity Manual 2000
+
+The Results This on-ramp merge influence area will provide LOS D with a merge
+influence area speed of 91 km/h, system speed of 94 km/h, and density of 18.2 pc/km/ln.
+
+  Example Problem 6
+
+  RAMPS AND RAMP JUNCTIONS WORKSHEET
+
+General Information  Site Information
+
+Analyst  _______X_U_________________  Freeway/Direction of Travel  _______R_o_u_t_e_6_______________
+Agency or company  _______P_o_ly________________  Junction  _______R_a_m__p_#_1______________
+Date Performed  _________________________  Jurisdiction  ___________________________
+Analysis Time Period  _______P_M__P_e_a_k____________  Analysis Year  _______1_9_9_9_________________
+
+X Operational (LOS)   Design (LA, LD, or N)   Planning (LOS)   Planning (LA, LD, or N)
+
+Inputs
+
+  Terrain ___L_e_ve_l____
+
+Upstream Adjacent Ramp  500 veh/h  Downstream Adjacent Ramp
+  5% Trucks
+ Yes   On  250 m   Yes   On
+
+X No   Off  4000 veh/h  X No   Off
+  15% Trucks
+Lup = ___________ m  10.8 m  Ldown = _________ m
+
+Vu = ___________veh/h  VD = __________veh/h
+
+  SFF = ___1_1_0_____ km/h  SFR = ___5__0_____ km/h
+
+  Sketch (show lanes, LA, LD, vR, vF)
+
+Conversion to pc/h Under Base Conditions
+
+(pc/h) AADT  K  D  V  PHF  % HV  fHV  fp  v= V
+  (veh/day)  (veh/h)  PHF fHV fp
+  1.000  4779
+vF  4000  0.90  15  0.930  1.000  569
+  0.976
+vR  500  0.90  5
+
+vU
+
+vD
+
+  Merge Areas  Diverge Areas
+
+Estimation of v12  Estimation of v12
+  v12 = vF * PFM  v12 = vR + (vF – vR)PFD
+
+LEQ =  _________(Equation 25-2 or 25-3)  LEQ = _________ (Equation 25-8 or 25-9)
+PFM =  _0__.6_0__1 ___ using Equation _____1 ___ (Exhibit 25-5)  PFD = _________ using Equation ________ (Exhibit 25-12)
+v12 =  _2__8_7_2____ pc/h v23 = v12 x 1.12 = 3217  v12 = _________ pc/h
+
+Capacity Checks  Maximum  LOS F?  Capacity Checks  Actual  Maximum  LOS F?
+  Actual  See Exhibit 25-14
+  vFl = vF  4400: All
+vFO 5348 See Exhibit 25-7 No  v12  See Exhibit 25-14
+  vFO = vF – vR  See Exhibit 25-3
+vR12 3786 4600: All No  vR
+
+Level-of-Service Determination (if not F)  Level-of-Service Determination (if not F)
+
+  DR = 3.402 + 0.00456 vR + 0.0048 v12 – 0.01278 LA  DR = 2.642 + 0.0053 v12 – 0.0183 LD
+DR = _________1_8_.2____________ pc/km/ln  DR = __________________________pc/km/ln
+LOS = _________D______________(Exhibit 25-4)  LOS = __________________________ (Exhibit 25-4)
+
+Speed Estimation  Speed Estimation
+Ms = _______0__.4_4_3________ (Exhibit 25-19)  Ds = ______________________ (Exhibit 25-19)
+SR = _______9__1._0_________ km/h (Exhibit 25-19)  SR = ______________________ km/h (Exhibit 25-19)
+SO = _______1_0_3__.8________ km/h (Exhibit 25-19)  SO = ______________________ km/h (Exhibit 25-19)
+S = _______9__4_.4_________ km/h (Equation 25-14)  S = ______________________ km/h (Equation 25-15)
+
+  25-39  Chapter 25 - Ramps and Ramp Junctions
+  Example Problems
+Highway Capacity Manual 2000
+
+  V. REFERENCES
+  1. Roess, R., and J. Ulerio. Capacity of Ramp-Freeway Junctions, Final Report.
+
+  NCHRP Project 3-37. Polytechnic University, Brooklyn, N.Y., Nov. 1993.
+  2. Leisch, J. Capacity Analysis Techniques for Design and Operation of Freeway
+
+  Facilities. FHWA, U.S. Department of Transportation, 1974.
+  3. A Policy on Geometric Design of Highways and Streets. American Association of
+
+  State Highway and Transportation Officials, Washington, D.C., 1990.
+  4. Elefteriadou, L. A Probabilistic Model of Breakdown at Freeway-Merge
+
+  Junctions. Doctoral dissertation. Polytechnic University, Brooklyn, N.Y., June
+  1994.
+
+  APPENDIX A. WORKSHEET
+
+  RAMPS AND RAMP JUNCTIONS WORKSHEET
+
+Chapter 25 - Ramps and Ramp Junctions  25-40
+References
+  Highway Capacity Manual 2000
+
+  RAMPS AND RAMP JUNCTIONS WORKSHEET
+
+General Information  Site Information
+
+Analyst  _________________________  Freeway/Direction of Travel  ___________________________
+Agency or company  _________________________  Junction  ___________________________
+Date Performed  _________________________  Jurisdiction  ___________________________
+Analysis Time Period  _________________________  Analysis Year  ___________________________
+
+ Operational (LOS)   Design (LA, LD, or N)   Planning (LOS)   Planning (LA, LD, or N)
+
+Inputs
+
+  Terrain __________
+
+Upstream Adjacent Ramp  Downstream Adjacent Ramp
+
+ Yes   On   Yes   On
+
+ No   Off   No   Off
+
+Lup = ___________ m  Ldown = _________ m
+
+Vu = ___________veh/h  VD = __________veh/h
+
+  SFF = __________ km/h  SFR = __________ km/h
+
+  Sketch (show lanes, LA, LD, vR, vF)
+
+Conversion to pc/h Under Base Conditions
+
+(pc/h) AADT  K  D  V  PHF  % HV  fHV  fp v = V PHF fHV fp
+  (veh/day)  (veh/h)
+
+vF
+
+vR
+
+vU
+
+vD
+
+  Merge Areas  Diverge Areas
+
+Estimation of v12  Estimation of v12
+  v12 = vF * PFM  v12 = vR + (vF – vR)PFD
+
+LEQ =  _________(Equation 25-2 or 25-3)  LEQ = _________ (Equation 25-8 or 25-9)
+PFM =  _________ using Equation ________ (Exhibit 25-5)  PFD = _________ using Equation ________ (Exhibit 25-12)
+v12 =  _________ pc/h  v12 = _________ pc/h
+
+Capacity Checks  Maximum  LOS F?  Capacity Checks  Actual  Maximum  LOS F?
+  Actual  See Exhibit 25-7  See Exhibit 25-14
+  vFl = vF  4400: All
+vFO  v12  See Exhibit 25-14
+  vFO = vF – vR  See Exhibit 25-3
+vR12  4600: All  vR
+
+Level-of-Service Determination (if not F)  Level-of-Service Determination (if not F)
+
+  DR = 3.402 + 0.00456 vR + 0.0048 v12 – 0.01278 LA  DR = 2.642 + 0.0053 v12 – 0.0183 LD
+DR = _______________________ pc/km/ln  DR = ___________________________ pc/km/ln
+LOS = _______________________(Exhibit 25-4)  LOS = __________________________ (Exhibit 25-4)
+
+Speed Estimation  Speed Estimation
+Ms = ___________________ (Exhibit 25-19)  Ds = ______________________ (Exhibit 25-19)
+SR = ___________________ km/h (Exhibit 25-19)  SR = ______________________ km/h (Exhibit 25-19)
+SO = ___________________ km/h (Exhibit 25-19)  SO = ______________________ km/h (Exhibit 25-19)
+S = ___________________ km/h (Equation 25-14)  S = ______________________ km/h (Equation 25-15)
+
+  Chapter 25 - Ramps and Ramp Junctions
+  Highway Capacity Manual 2000
+
+CHAPTER 26
+
+INTERCHANGE RAMP TERMINALS
+
+  CONTENTS
+
+I. INTRODUCTION .....................................................................................................26-1
+  Types of Interchanges ......................................................................................26-1
+  Diamond Interchanges ..............................................................................26-1
+  Partial Cloverleaf Interchanges .................................................................26-1
+  Influence of Interchange Type on Turning Movements .............................26-3
+  Unique Operations at Signalized Diamond Interchanges .................................26-4
+  Queuing Characteristics ............................................................................26-5
+  Lane Change Movements .........................................................................26-6
+  Lane Utilization .........................................................................................26-6
+  Platoon Behavior .......................................................................................26-6
+  Demand Starvation ...................................................................................26-7
+  Signal Phasing and Timing Strategies ......................................................26-7
+
+II. METHODOLOGY ....................................................................................................26-7
+  LOS Framework ...............................................................................................26-7
+  Saturation Flow Rates for Interchange Lane Groups .......................................26-9
+
+III. APPLICATIONS ....................................................................................................26-10
+IV. EXAMPLE PROBLEMS .........................................................................................26-11
+V. REFERENCES ......................................................................................................26-11
+APPENDIX A. TIMING CONSIDERATIONS FOR SIGNALIZED
+
+  DIAMOND INTERCHANGES ..............................................................26-11
+  Phasing Options .............................................................................................26-12
+  Establishing Offsets .......................................................................................26-13
+APPENDIX B. ASSESSMENT OF ALTERNATIVE
+
+  INTERCHANGE CONFIGURATIONS .................................................26-14
+
+  EXHIBITS
+
+Exhibit 26-1.  Types of Diamond Interchanges ...........................................................26-2
+Exhibit 26-2.  Types of Cloverleaf Interchanges .......................................................... 26-3
+Exhibit 26-3.  Effects of Interchange Type on Turning Movements .............................26-4
+Exhibit 26-4.  Typical Signalized Diamond Interchange .............................................. 26-5
+Exhibit 26-5.  Lane Change Movements at a Diamond Interchange ...........................26-6
+Exhibit 26-6.  Movements in a Diamond Interchange .................................................. 26-8
+Exhibit 26-7.  Components of Interchange Delay ........................................................ 26-8
+Exhibit 26-8.  LOS Criteria for Interchanges ................................................................26-9
+Exhibit 26-9.  Framework for Comprehensive Interchange Ramp
+  Terminal Analysis ................................................................................26-10
+Exhibit A26-1.  Common Signalization Schemes for Diamond Interchanges .............. 26-12
+Exhibit A26-2.  Four-Phase Plan with Overlap .............................................................26-13
+
+  26-i  Chapter 26 - Interchange Ramp Terminals
+  Highway Capacity Manual 2000
+
+  I. INTRODUCTION
+
+  This chapter presents general material for analyzing interchange ramp terminals
+involving freeways, major highways, and urban streets. Although the chapter presents
+ideas and concepts relating to most types of interchanges that include two intersections, it
+focuses primarily on signalized, two-intersection diamond interchanges. The close
+proximity of the two signalized intersections forming the diamond creates interactive
+effects that complicate the analysis. A complete methodology for predicting the impact
+of these effects is not yet available; this chapter therefore is primarily conceptual in
+content.
+
+TYPES OF INTERCHANGES
+
+  Several interchange types are recognized in the literature. The common types that
+may result in two closely spaced surface intersections are illustrated and discussed here.
+The single-point diamond interchange, with only one signalized intersection, also is
+illustrated. The term freeway is used here to denote a freeway, expressway, or a major
+through highway.
+
+Diamond Interchanges
+
+  Most forms of diamond interchanges result in two or more closely spaced surface
+intersections, as illustrated in Exhibit 26-1. On a diamond interchange, only one
+connection is made for each freeway entry and exit, with one connection per quadrant.
+Left- and right-turning movements are used for entry to or exit from the two directions of
+the surface facility; diamond interchanges require left-turn movements. In rural areas, the
+junction of diamond interchange ramps with the surface facility is often controlled by
+stop or yield signs. If traffic demand is high, signalization becomes necessary.
+
+  There are many variations on the diamond interchange. The typical diamond has
+three subcategories defined by the spacing of the intersections formed by the ramp-street
+connections. Conventional diamond interchanges provide a separation of 240 m or more
+between the two intersections. Compressed diamond interchanges have intersections
+spaced between 120 m and 240 m, and tight urban diamond interchanges feature spacing
+of less than 120 m.
+
+  Split diamond interchanges have freeway entry and exit ramps separated at the street
+level, creating four intersections. Diamond configurations also can be combined with
+continuous one-way frontage roads. The frontage roads become one-way arterials, and
+turning movements at the intersections created by the diamond interchange become even
+more complex, due to the additional need to serve movements to and from the frontage
+road. Separated U-turn lanes also may be added, removing U-turns from the signal
+scheme, if there is a signal. A partial diamond interchange has fewer than four ramps, so
+that not all of the freeway-street or street-freeway movements are served. A three-level
+diamond interchange features two divided levels, so that ramps are necessary on both
+facilities to allow continuous through movements. Two interlocking split diamonds are
+created.
+
+  A single-point diamond interchange combines all the ramp movements into a single
+signalized intersection and has the advantage of operating as such. The design eliminates
+the critical issue of coordinating the operation of two closely spaced intersections.
+
+  All of these forms of diamond interchanges are depicted in Exhibit 26-1.
+
+Partial Cloverleaf Interchanges
+
+  Partial cloverleaf interchanges—or parclos—are depicted in Exhibit 26-2. A variety
+of partial cloverleaf interchanges can be created with one or two loop ramps. In such
+cases, one or two of the outer ramps take the form of a diamond ramp, allowing a
+movement to take place by making a left turn. In some partial cloverleaf configurations,
+left turns also may be made onto or off of a loop ramp.
+
+26-1  Chapter 26 - Interchange Ramp Terminals
+  Introduction
+Highway Capacity Manual 2000  EXHIBIT 26-1. TYPES OF DIAMOND INTERCHANGES
+
+  d
+
+  Conventional, d > 240 m  Diamond with continuous frontage roads
+  Compressed, d = 120–240 m
+
+  Tight urban, d < 120 m
+
+  Diamond with U-turn  Split diamond interchange
+  lanes and service roads  (cross roads, one- or two-way)
+
+  Partial (half) diamond interchange  Three-level diamond interchange
+
+  Single-point diamond interchange
+Note:
+Schematic, not to scale.
+
+  Possible configuration of signal bypasses operating as unsignalized movements
+
+Chapter 26 - Interchange Ramp Terminals  26-2
+Introduction
+  Highway Capacity Manual 2000
+
+EXHIBIT 26-2. TYPES OF CLOVERLEAF INTERCHANGES
+
+Diamond Plus One Loop  Parclo A, 4 Quadrants
+(Loop in any one of four quadrants)
+
+Parclo AB, 2 Quadrants  Parclo AB, 4 Quadrants
+
+Parclo A, 2 Quadrants  Parclo B, 4 Quadrants
+
+Possible configuration of signal bypasses operating as unsignalized movements
+
+Influence of Interchange Type on Turning Movements
+
+  The type of interchange has a major influence on turning movements. Movements
+that involve a right-side merge in one configuration become left turns in another.
+Movements approaching the interchange on the surface facility are also affected by the
+interchange type, depending on whether the ramp movements involve left or right turns.
+Lane-changing and weaving movements also are affected.
+
+  Exhibit 26-3 shows the impact of interchange type on turning movements. The eight
+basic movements between the freeway or major highway and the surface facility are
+listed. The exhibit indicates whether the movement is a merge (M), diverge (D), or
+turning (T) movement at the surface facility terminal, and whether the movement
+involves a right-side (R) or left-side (L) maneuver.
+
+  26-3  Chapter 26 - Interchange Ramp Terminals
+  Introduction
+Highway Capacity Manual 2000
+
+  EXHIBIT 26-3. EFFECTS OF INTERCHANGE TYPE ON TURNING MOVEMENTS
+  N
+
+  W  E
+
+  S
+
+  Type of Movement Required for:
+
+  From Surface Street  From Freeway/Highway
+
+Type of Interchange  S-E  S-W N-W  N-E  E-N  E-S  W-N W-S
+
+Diamond  TRa  TL  TRa  TL  TRb  TL  TL  TRb
+Split Diamond
+Parclo A - 4 Quad  TRa  TL  TRa  TL  TRb  TL  TL  TRb
+Parclo A - 2 Quad
+Parclo B - 4 Quad  DR  DR  DR  DR  TRb  TL  TL  TRb
+Parclo B - 2 Quad
+Parclo AB - 4 Quadc  TL  TRa  TL  TRa  TRb  TL  TL  TRb
+Parclo AB - 2 Quadc
+  TRa  TL  TRa  TL  MR  MR  MR  MR
+
+  TRa  TL  TRa  TL  TL  TRb  TRb  TL
+
+  DR  TL  TR  DR  MR  MR  TL  TRb
+
+  TRa  DR  TL  TL  TRb  TL  MR  TL
+
+Notes:
+
+Assumes freeway movements are eastbound and westbound. Movement types are with respect to surface street.  Merges and
+
+diverges may be with or without conflicting flows.
+
+T = turn against conflicting flow R = right-side movement
+
+M = merge with traffic  L = left-side movement
+
+D = diverge from traffic
+
+a. Could be diverge.
+
+b. Could be merge.
+
+c. Movements are correct only if loop ramps are on east side.
+
+  In selecting an appropriate type of interchange, the impacts on the turning
+movements should be considered. Left-turning movements are always the most difficult
+in terms of efficiency of operation, and high-volume left-turning movements should be
+avoided, if possible. By selecting a type of interchange that requires left turns only of
+minor movements, the overall operation can be enhanced considerably. However, it is
+not always possible to accomplish this. Right-of-way limitations may preclude the use of
+loop ramps, and economic and environmental constraints may make multilevel structures
+undesirable. In the final analysis, a diamond configuration may be required even though
+it generates heavy left-turn volumes.
+
+UNIQUE OPERATIONS AT SIGNALIZED DIAMOND INTERCHANGES
+
+  The signalized diamond interchange presents several unique situations for analysis.
+In effect, the diamond interchange configuration—except for that of the single-point
+diamond—places two signalized intersections in proximity, with heavier-than-usual left-
+turning and right-turning movements as vehicles enter and exit the freeway or major
+highway. The two intersections do not operate in isolation—each affects the other in
+ways that are unique to the configuration. Some of these effects, however, also may
+occur at other signalized intersections that are closely spaced and that have a large
+amount of left-turn movements. Two-quadrant parclos, for example, typically encounter
+the same types of problems because their three-phase signalization is similar to that of
+diamond interchanges. These concepts, therefore, also can apply to similar
+
+Chapter 26 - Interchange Ramp Terminals  26-4
+Introduction
+  Highway Capacity Manual 2000
+
+noninterchange situations in which closely spaced signalized intersections—including
+closely spaced intersections adjacent to interchange ramp terminals—interact.
+
+  Exhibit 26-4 shows a typical signalized diamond interchange. For simplicity, the
+drawing focuses on one direction of the surface street. Similar impacts occur in the other
+direction.
+
+  EXHIBIT 26-4. TYPICAL SIGNALIZED DIAMOND INTERCHANGE
+  A
+  D2
+
+  U3
+B U1 C D1
+
+U2
+  D
+
+  Each of the signalized intersections of the diamond interchange (in the subject  Impacts from downstream
+direction) consists of two approaches, labeled A and B for the upstream intersection, and  queuing
+C and D for the downstream intersection. The downstream intersection is fed by
+movements U1 and U3 of the upstream intersection. Exiting freeway traffic forms a
+stream that is movement U3 at the upstream intersection and part of movement D1 at the
+downstream intersection. Entering freeway traffic is part of movement U1 at the
+upstream intersection, and all of movement D2 at the downstream intersection. The
+interaction of these movements creates special problems at signalized diamond
+interchanges.
+
+Queuing Characteristics
+
+  The most critical features of a signalized diamond interchange, therefore, are the
+interdependency of movements and the distance between intersections, both of which
+influence queuing. The distance separating the intersections limits the amount of queuing
+that can occur downstream without blocking the upstream intersection. The extent of
+queuing at the downstream intersection depends on several factors, including the timing
+at the upstream and downstream signals, the number and use of the lanes at both
+intersections, and the flow rates in the movements (U1 and U3) that feed the downstream
+intersection.
+
+  Queuing from the downstream intersection can have one of the following three
+impacts on the discharge from the upstream intersection:
+
+  1. Conditions at the downstream intersection are not severe enough to affect the
+upstream intersection.
+
+  2. Queuing from the downstream intersection does not completely block the
+upstream discharge but reduces its rate due to the proximity of the back of the queue.
+
+  3. Queuing from the downstream intersection effectively blocks the discharge from
+the upstream signal during portions of its green period.
+
+  Queued vehicles within a short segment (or link) limit the effective length of the link.
+Vehicles can travel freely only from the upstream stop line to the back of the downstream
+queue. Because this distance may be small, the impact on upstream discharge rate is
+significant.
+
+  Complicating the situation is that this process is iterative. Downstream queues affect
+upstream discharges; upstream discharges affect downstream queues by metering the
+
+26-5  Chapter 26 - Interchange Ramp Terminals
+  Introduction
+Highway Capacity Manual 2000
+
+Internal links  number of vehicles that can enter the short link between the diamond intersections. This
+  complex relationship has not been fully studied and documented; therefore, the material
+  in this chapter is conceptual and is not based on a definitive model for signalized
+  diamond interchange operations.
+
+  Lane Change Movements
+
+  Because of the turning movements at diamond interchanges, the internal link of the
+  surface street (the link between the two signalized diamond intersections) is subject to
+  abnormally high numbers of lane-changing maneuvers. Exhibit 26-5 depicts this
+  phenomenon.
+
+  EXHIBIT 26-5. LANE CHANGE MOVEMENTS AT A DIAMOND INTERCHANGE
+
+  The lane changes occur because of origin-destination patterns. The turbulence of the
+  lane changing can decrease the normal link speed. In addition, if there is queuing on the
+  link, it reduces the effective weaving or lane-changing distance, increasing the turbulence
+  and its potential effects on the traffic. In many cases, drivers try to pre-position
+  themselves in the appropriate upstream lane, and left turns from the surface street can
+  enter a turn bay at the entry point on the internal link. This tends to minimize lane-
+  changing turbulence.
+
+  Lane Utilization
+
+  Because of the potential for heavy turning flows at signalized diamond interchanges,
+  lane utilization may differ from that at other signalized intersections. At the downstream
+  intersection, heavy left-turning and through flows normally will segregate, and lane-use
+  regulations generally encourage maximum segregation. While this might occur at any
+  signalized intersection with turning flows, the difference is in the impact on the upstream
+  intersection. Because the internal link generally is short, segregation may occur at the
+  upstream intersection by driver selection or by designated signing and striping. Thus, the
+  upstream approach flow can be segregated substantially into two flows, both of which are
+  through flows at the upstream intersection: one will turn left at the downstream
+  intersection, and one will continue through it. This can create lane-use imbalances that
+  exceed those at normal intersections but that must be taken into account by creating
+  separate lane groups for through vehicles at the upstream intersection.
+
+  Platoon Behavior
+
+  Because of the high volume of turns at a diamond interchange, it is difficult to
+  maintain platoons as vehicles pass through the two intersections. It is also difficult to
+  maintain the signal progression through the interchange. Platooned arrivals at the
+  downstream intersection come from two sources: left turns from an interchange ramp,
+  and through movements from the surface street. The ramp may contribute a higher
+  volume than the surface street and therefore would be the primary candidate for
+  progressed movement. In any case, the two sources arrive from two different signal
+
+Chapter 26 - Interchange Ramp Terminals  26-6
+Introduction
+  Highway Capacity Manual 2000
+
+phases. No matter what signalization is adopted, one of the movements will be  Appendix A provides more
+disadvantaged. Some portion of the lesser movement will arrive at the downstream  information about the
+intersection during a red period, and the queued vehicles then will alter the platoon  signalization of diamond
+structure that proceeds down the surface link.  interchanges
+
+  Although heavy turning movements from the interchange ramps add vehicles to
+platoons on the surface link, heavy left-turning movements of vehicles onto the freeway
+or major highway remove significant numbers of vehicles, creating gaps in the platoons.
+
+Demand Starvation
+
+  Demand starvation occurs when portions of the green at the downstream intersection
+are not used because conditions prevent vehicles at the upstream intersection from
+reaching the downstream stop line. These conditions at the upstream intersection can
+include delays or blockage due to queue overflow from another lane group. Demand
+starvation occurs in one of two ways:
+
+  1. Queues from the downstream intersection effectively block departures from the
+upstream intersection during part or all of the upstream green. This reduces the effective
+green time for flow at the upstream location during the green time at the downstream
+intersection.
+
+  2. Signal coordination between the two intersections is suboptimal even without
+downstream queuing. As a result, sometimes the upstream signal is red while unsaturated
+flow conditions prevail during the green at the downstream signal.
+
+Signal Phasing and Timing Strategies
+
+  Because of the unique operational characteristics of signalized diamond
+interchanges, special signal phase plans and timing often are appropriate. Appendix A
+covers the signalization of diamond interchanges in greater detail. Capacity of
+Interchange Ramp Terminals (1) describes a range of interchange signalization practices.
+The key point is that interchange performance is closely linked to signal timing, due to
+the interdependence of flows, queuing, and timing.
+
+  II. METHODOLOGY
+
+  Because this chapter outlines only a conceptual approach for analyzing signalized
+diamond interchanges, it does not present a detailed analytic methodology with
+applications. The conceptual methodology has two primary components:
+
+  • A level-of-service (LOS) framework, and
+  • A framework for estimating saturation flow rates.
+
+LOS FRAMEWORK
+
+  The recommended framework for LOS is to treat the diamond interchange as a point
+rather than as a segment or system, and to focus on the total control delay experienced by
+drivers as they move through the interchange.
+
+  Exhibit 26-6 shows the various movements at the diamond interchange. In the
+exhibit, movements are labeled as coming from the west intersection (W) or the east
+intersection (E). An r designation indicates that the movement originates from one of the
+ramps. The next two letters indicate whether the movement is a left turn (L), a right turn
+(R), or a through movement (T) first at the upstream intersection and then at the
+downstream intersection, if both intersections are traversed. For example, the designation
+WrLT means a left turn from the west intersection ramp proceeding straight through the
+east intersection.
+
+26-7  Chapter 26 - Interchange Ramp Terminals
+  Introduction
+Highway Capacity Manual 2000
+
+  EXHIBIT 26-6. MOVEMENTS IN A DIAMOND INTERCHANGE
+
+  West Intersection C  U-turn  WTL  North
+  WrLL
+WrR  B  WrLT WTT
+  A
+
+  WR
+
+ETT ErLT  E  ER
+  ErLL
+  ETL  U-turn  East Intersection
+  D
+  ErR
+
+  F
+
+  Exhibit 26-7 indicates the components of delay that must be included in the LOS
+analysis of each movement. Each movement experiences the delay of each lane group it
+uses while passing through the interchange. Since the diamond interchange is being
+considered as a point, the recommended LOS framework does not account for the travel
+time between the two diamond intersections.
+
+  EXHIBIT 26-7.  COMPONENTS OF INTERCHANGE DELAY
+
+  Movement  Control Delay from Lane Groups of Approacha
+
+  WTL  A and B
+  WTT  A and B
+  WR  A only
+  WrR  C only
+  WrLT  C and B
+  WrLL  C and B
+  ETL  D and E
+  ETT  D and E
+  ER  D only
+  ErR  F only
+  ErLT  F and E
+  ErLL  F and E
+
+Note:
+a. See Exhibit 26-6 for approach designations.
+
+  The control delay for each of the approach lane groups can be estimated using the
+signalized and unsignalized intersection methodologies of Chapters 16 and 17, taking into
+account progressive flows by estimating an appropriate arrival type. Unsignalized yield
+and free-flow movements are to be included in the analysis, because performance
+differences between alternate interchange forms can be seen only by considering all ramp
+terminal movements. For instance, the benefits of free-flow movements may be hidden
+
+Chapter 26 - Interchange Ramp Terminals  26-8
+Methodology
+  Highway Capacity Manual 2000
+
+unless delays and volumes of all movements are incorporated, as shown in the example in
+Appendix B.
+
+  LOS for the individual groups is then determined from Exhibit 26-8, which uses LOS
+criteria for signalized intersections described in Chapter 16. If any lane group performs
+poorly—that is, if it falls in the LOS E or F range—the impact on the rest of the
+interchange likely will not be identified unless queuing is analyzed in greater detail. If
+there is severe queuing or upstream blockage, timing or design changes should be
+considered, regardless of the LOS. In all cases, spillback onto the mainline freeway
+should be avoided because of the potential for high-speed rear-end accidents. To reduce
+ramp queuing, the timing may be adjusted so that the surface street approaches, rather
+than the exit ramp approaches, perform at LOS F.
+
+  EXHIBIT 26-8.  LOS CRITERIA FOR INTERCHANGES
+
+  Level of Service  Delay (s/veh)
+  A  ≤ 10
+  B  > 10–20
+  C  > 20–35
+  D  > 35–55
+  E  > 55–80
+  F  > 80
+
+  A comprehensive analysis would consider the interaction of flows, queues, and
+signal timing. The LOS analysis could be based on complete movements through the
+interchange, as defined in Exhibits 26-6 and 26-7. Such a procedure may be presented in
+future editions of this manual.
+
+  Finally, a combined average control delay per vehicle for the interchange is
+computed:
+
+  dINT = Σ (div i )A −F  (26-1)
+  Σ (v i )A −F
+
+where  = average control delay per vehicle for the interchange (s/veh),
+  dINT  = average control delay for Lane Group i on Approaches A–F (s/veh),
+  di
+  and
+  vi  = demand flow rate for Lane Group i (veh/h).
+
+  The equation includes the delays and the flow rates from all lane groups in A through
+F. The computed delay therefore is the weighted average intersection delay of the two
+ramp terminal intersections. LOS is determined using the criteria in Exhibit 26-8.
+
+SATURATION FLOW RATES FOR INTERCHANGE LANE GROUPS
+
+  The estimation of saturation flow rates at signalized intersections within a diamond
+or other interchange generally follows the procedures of Chapter 16. However, there are
+necessary modifications for the unique interactions that occur in closely spaced,
+signalized intersections with high turning volumes. Currently, there are no fully
+developed and evaluated methodologies for making these modifications, although some
+have been proposed and are under study.
+
+  26-9  Chapter 26 - Interchange Ramp Terminals
+  Methodology
+Highway Capacity Manual 2000
+
+  III. APPLICATIONS
+
+  Without a complete methodology, specific applications cannot be discussed or
+  illustrated. However, the methodologies of Chapters 16 and 17 can be applied as a rough
+  approximation, as presented above, and the LOS criteria listed in Exhibit 26-8 then can be
+  used to estimate LOS.
+
+  Nonetheless, such an application does not take into account all of the unique
+  operating conditions that affect operations at interchanges. Exhibit 26-9 lists the
+  principal components of the framework for a complete interchange analysis.
+
+  EXHIBIT 26-9. FRAMEWORK FOR COMPREHENSIVE INTERCHANGE RAMP TERMINAL ANALYSIS
+  Inputs
+
+  • Traffic characteristics,
+  • Geometrics, and
+  • Control characteristics.
+
+  Signalized Movement Analysis
+  • Generally follow Chapter 16;
+  • Modify to include
+
+  - Appropriate lane group definition, including pre-positioning,
+  - Blockage by downstream queues,
+  - Proximity to downstream queues (reduced speed),
+  - Traffic pressure and interchange site effects,
+  - Left- and right-turn radius effects, and
+  - Demand starvation, and
+  • Analyze resulting capacity, queuing, delay, and LOS.
+
+  Weaving and Merge Movements
+  • Consider operational effects (no procedure defined in HCM) and
+  • Analyze capacity, queuing, delay, and LOS.
+
+  Unsignalized Movements
+  • Apply Chapter 17 methodology and
+  • Analyze resulting capacity, queuing, delay, and LOS.
+
+  Evaluation
+  • Measure performance (including queuing effects) of approach lane groups and movements through the
+
+  interchange;
+  • Perform an iterative analysis, to account for queue interactions;
+  • Determine average performance of interchange;
+  • Determine overall LOS of interchange; and
+  • Analyze short interchange area segments comprising three to four closely spaced intersections.
+
+  When determining the LOS for diamond interchanges, the analyst should identify
+  several components integral to operational analysis, including, but not limited to
+
+  • Interchange geometry, including the number of lanes and storage;
+  • Lane use and utilization;
+  • Peak-hour turning volumes; and
+  • Anticipated signal phasing and cycle lengths.
+  The first step is to determine the current or projected queuing by lane group and by
+  traffic signal phase. If the queuing between traffic signals is due to the signal phasing
+  and if this is causing backups that cannot be stored, then alternative signal phasing should
+  be identified so that the interchange may operate more efficiently within its geometric
+  limitations. However, the ramifications of this new signal phasing must be explored to
+  determine its impact on the operational efficiency of the interchange.
+
+Chapter 26 - Interchange Ramp Terminals  26-10
+Applications
+  Highway Capacity Manual 2000
+
+  An example of analyzing phasing would be to determine if the traffic queuing and
+storage for three-phase operation at a diamond interchange will function without causing
+queue spillback and additional traffic delays. If three-phase operation causes queue
+spillback and is inefficient, then changing to four-phase operation may be necessary.
+Four-phase signal timing basically allows each of the four approaches to the interchange
+to operate on a separate phase. There are many different ways to achieve four-phase
+operation, by changing phase order and by sequencing signal overlaps. Three-phase
+operation allows two directions of travel to move concurrently most of the time, but four-
+phase operation requires that three phases wait while one is served. Changing from three-
+phase to four-phase operation at a diamond interchange normally creates a significant
+adverse impact on delays and LOS.
+
+  There are many other phasing sequences and offset relationships to consider.
+Variations on the basic sequence should stem from the interchange configuration, the
+ability to store queues, system coordination elements, and the location of queue storage.
+The selection of leading or lagging (or both) left-turn arrows and overlap phasing may be
+necessary, as well as choice of protected, permissive, or protected-and-permissive left-
+turn phasing. Actuated operation is another factor. Appendix A presents signal timing
+considerations for signalized diamond interchanges; more discussion on this complex
+topic can be found in other references (1, 2).
+
+  IV. EXAMPLE PROBLEMS
+
+  Example problems are omitted from this chapter because a complete methodology is
+not specified. However, Appendix B presents a numerical exercise illustrating the
+simplified approach described earlier.
+
+  V. REFERENCES
+
+1 Messer, C. J., and J. A. Bonneson. Capacity of Interchange Ramp Terminals.
+  Final Report NCHRP Project 3-47. Texas A&M Research Foundations, College
+  Station, April 1997.
+
+2. Akcelik, R. Interchange Capacity and Performance Model for HCM 2000.
+  Technical Note, ARRB Transport Research Ltd., Vermont South, Australia,
+  October 1998.
+
+  APPENDIX A. TIMING CONSIDERATIONS FOR SIGNALIZED DIAMOND
+  INTERCHANGES
+
+  The signalization of two closely spaced intersections with heavy turning movements,
+as in a signalized diamond interchange, presents several major challenges. Most of these
+involve the queuing of vehicles between the two intersections on the inside link, affecting
+operations as described in this chapter. In addition, virtually every signalized diamond
+interchange involves heavy left-turning movements, necessitating multiphase
+signalization at both intersections and making progression and platoon cohesion along the
+surface street difficult to maintain.
+
+26-11  Chapter 26 - Interchange Ramp Terminals
+  Applications
+Highway Capacity Manual 2000
+
+PHASING OPTIONS
+
+  Signalized diamond interchanges usually employ integrated phasing—that is, they
+use a single, often semiactuated controller for both intersections. Although there are
+several subalternates, the basic decision is whether to use a three-phase or a four-phase
+system. The three-phase system provides a more efficient use of time, but can lead to
+queuing problems on the inside link. The four-phase system is less efficient in use of
+time but avoids most queuing problems. Both are illustrated in Exhibit A26-1.
+
+  EXHIBIT A26-1. COMMON SIGNALIZATION SCHEMES FOR DIAMOND INTERCHANGES
+
+  Three Phase  Four Phase  North
+
+  Phase 1  Phase 1
+
+  Phase 2  Phase 2
+
+  Phase 3  Phase 3
+
+  N/A
+  Phase 4
+
+  The basic three-phase scheme features a phase for through movements on the surface
+street, a phase for movements from all inside links, and a phase for ramp movements. As
+an alternative, Phases 2 and 3 can be switched.
+
+  The primary problem occurs in Phase 3. Left-turning vehicles from both ramps are
+entering the inside link and begin to queue at the downstream signal during the phase,
+which is now red. If queuing can cause a problem, this scheme should be avoided. The
+number of vehicles that will accumulate on the inside link can be estimated by taking the
+effective green time for Phase 3 and applying an estimated discharge rate for left-turning
+vehicles for each ramp. Given the number of lanes and the length of the inside link, the
+general impact of queued vehicles (in each direction) can be assessed.
+
+  Note that in the three-phase sequence of Exhibit A26-1, Phase 1 follows Phase 3 and
+introduces another set of vehicles into the inside link. If Phases 2 and 3 are switched, a
+phase discharging the inside link would follow and should help to reduce the impact of
+the queues.
+
+Chapter 26 - Interchange Ramp Terminals  26-12
+Appendix A
+  Highway Capacity Manual 2000
+
+  If it is clear that queuing on the inside link will be a regularly occurring problem in
+the three-phase configuration, the four-phase option is a better choice. Each of the four
+approaches from which interchange traffic originates is given a clear phase through both
+intersections. Queuing is minimized because vehicles are stopped from entering the
+inside link at the same time that vehicles are stopped from leaving it. Although it
+constrains the negative impacts of queuing, a four-phase plan generally decreases the
+effective green time per cycle (g/C) ratio for major movements, so that expected delays
+are higher than for a three-phase plan—assuming in both cases that there are no flow
+breakdowns due to queuing.
+
+  Exhibit A26-2 shows a four-phase plan with overlaps that is more efficient than the
+simple four-phase plan. In Overlap Phases 1 and 4 of this plan, an opposing through
+vehicle is allowed to enter the inside link during a phase in which it cannot exit the link.
+The timing of these overlap phases is critical to proper operation and is related to the
+ideal offset between the two diamond intersections. The initiation of Phase 2 with respect
+to Phase 1 should be the ideal offset on the inside link in the eastbound direction, while
+the initiation of Phase 5 with respect to Phase 4 should be the ideal offset on the inside
+link in the westbound direction.
+
+  EXHIBIT A26-2. FOUR-PHASE PLAN WITH OVERLAP
+
+  North
+
+Overlap  Phase 2
+Phase 1
+
+Phase 3  Overlap
+  Phase 4
+
+Phase 5  Phase 6
+
+ESTABLISHING OFFSETS
+
+  An offset is the difference, in seconds, between the start of green time at the two
+signalized intersections of a diamond interchange; it is used to coordinate the through
+traffic passing through the internal link. Both intersections in either the basic three-phase
+or four-phase signalization are commonly timed from a single controller. The signal
+phases and overlaps installed in the timing pattern can be established to allow traffic to
+move through the interchange, reducing the probability of stopping. The two
+intersections sometimes are timed by separate controllers and linked together; the offsets
+then should be established to minimize unnecessary stopping.
+
+  26-13  Chapter 26 - Interchange Ramp Terminals
+  Appendix A
+Highway Capacity Manual 2000
+
+Optimizing offsets  When the through traffic on the surface street is a dominant feature and the ramp
+  flows are no larger than the normal turning volumes at other intersections, the standard
+  ideal offset may be used; this offset is equal to the travel time from the upstream to the
+  downstream stop line at the average running speed of traffic.
+
+  θij = L  (A26-1)
+  S
+
+  where
+  θ ij = offset for through movements at Intersections i and j, between the start
+  of the downstream through green and the upstream green (s);
+  L = length of the link (i-j) from the upstream stop line to the downstream
+
+  stop line (m); and
+  S = average running speed on the surface street (m/s).
+
+  Normally, however, ramp movements are significant enough to create queuing on the
+  inside link. In such cases, the ideal offset should be based on clearing the queue at the
+  downstream intersection:
+
+  θij = L − (1 − P ) * v * C  (A26-2)
+  S  s
+
+  where
+  P = proportion of vehicles arriving on green,
+  v = arrival flow rate at the downstream intersection (veh/h),
+  C = cycle length (s), and
+  s = saturation flow rate at the downstream intersection (veh/h).
+
+  A third guideline for optimizing offsets is also available (1). This criterion is based
+
+  on minimizing demand starvation and is related to the maximum storage on the inside
+
+  link. To minimize demand starvation, the offset should be greater than or equal to the
+
+  computation produced by Equation A26-3.
+
+  θij = L − 3,600 * N * L  (A26-3)
+  S  s *l
+
+  where
+
+  N = number of lanes on link i-j, and
+  l = queue storage length per vehicle (m).
+
+  In general, the selection of an offset must consider many factors, including the flow
+  level, the traffic pattern, and the degree of saturation at the downstream signal. However,
+  to enhance the throughput efficiency during high-volume conditions, the offset should be
+  greater than or equal to the larger value produced by Equations A26-2 and A26-3.
+
+  Ideal offsets often can be provided only in a single direction. Once an ideal offset is
+  established in one direction, the offset in the other is often already determined. Although
+  multiphase operation at most interchange signals can provide some flexibility, other
+  signal timing requirements can dictate the opposing offset. In such cases, it is necessary
+  to consider both offsets and to determine a plan that is most effective for the overall
+  operation of the interchange, even though neither offset may be ideal.
+
+  APPENDIX B. ASSESSMENT OF ALTERNATIVE INTERCHANGE
+  CONFIGURATIONS
+
+  Assessment Three alternative configurations are presented for an interchange.
+  Volumes (veh/h) and control delay (s/veh) are given for each movement. Control delay
+
+Chapter 26 - Interchange Ramp Terminals  26-14
+Appendix A
+  Highway Capacity Manual 2000
+
+and overall LOS are determined to compare the alternatives and to illustrate the effect of
+including all interchange movements in the calculations.
+Alternative 1. Diamond, no free-flow movements or right turn on red (RTOR)
+
+  11 12  9
+  10
+  7
+  1  3  8
+  2  56
+  4
+
+Movement No.  Volume (veh/h)  Delay (s/veh)
+
+  1  800  30
+  2  300  30
+  3  300  20
+  4  800  35
+  5  200  50
+  6  400  50
+  7  400  40
+  8  900  40
+  9  700  45
+  10  400  25
+  11  300  45
+  12  300  45
+
+Calculations
+  • Total interchange delay (all 12 movements), 217,500 veh-s;
+  • Total interchange volume (all 12 movements), 5,800 veh/h; and
+  • Average interchange control delay = 217, 500 = 37.5 s/veh (LOS D).
+  5, 800
+
+Alternative 2. Diamond with free-flow right turns to and from ramps
+
+  11 12  9  7
+  10
+  1  8
+  2
+  3  Delay (s/veh)
+Movement No.  4 56
+  1  30
+  2  Volume (veh/h)  0
+  3  800  20
+  4  300  35
+  5  300  50
+  6  800  0
+  7  200  0
+  8  400  40
+  9  400  45
+  10  900  25
+  11  700  0
+  12  400  45
+  300
+  300
+
+  26-15  Chapter 26 - Interchange Ramp Terminals
+  Appendix B
+Highway Capacity Manual 2000
+
+Calculations
+  • Total interchange delay (all 12 movements), 159,000 veh-s;
+  • Total interchange volume (all 12 movements), 5,800 veh/h;
+  • Total volume (excluding free-flow movements), 4,400 veh/h;
+  • Average interchange control delay (all volumes) = 159,000 = 27.4 s/veh (LOS C),
+  5, 800
+  and
+  • Average interchange control delay (excluding free-flow volumes) =
+  159,000 = 36.1 s/veh (LOS D).
+  4, 400
+
+Alternative 3. Two-quadrant Parclo A with free-flow right-turn exit ramps
+
+  11 12  7
+
+  9  8
+
+  1 10 3
+  2  4
+
+  56
+
+  Movement No.  Volume (veh/h)  Delay (s/veh)
+
+  1  300  30
+  2  800  30
+  3  800  35
+  4  300  0
+  5  200  50
+  6  400  0
+  7  900  40
+  8  400  40
+  9  400  0
+  10  700  45
+  11  300  0
+  12  300  45
+
+Calculations
+  • Total interchange delay, 168,000 veh-s;
+  • Total interchange volume, 5,800 veh/h;
+  • Total volume (excluding free-flow movements), 4,400 veh/h;
+  • Average interchange control delay (all volumes) = 168,000 = 29.0 s/veh
+  5, 800
+  (LOS C); and
+  • Average interchange control delay (excluding free-flow volumes) =
+  168,000 = 38.2 s/veh (LOS D).
+  4, 400
+
+Results The summary of results follows.
+
+Chapter 26 - Interchange Ramp Terminals  26-16
+Appendix B
+

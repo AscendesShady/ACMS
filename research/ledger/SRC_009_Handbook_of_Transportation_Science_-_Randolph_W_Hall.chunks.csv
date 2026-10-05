@@ -1,0 +1,31 @@
+chunk,covers,verdict,ideas,read_at
+p0001-0025,"front matter, intro chapter 1, start of ch2 discrete choice",none,0,2026-10-04 19:48
+p0026-0050,"ch2 discrete choice: GEV/probit/mixed logit, route and departure choice; start ch3 activity based",some,3,2026-10-04 19:48
+p0051-0075,"ch3 activity-based modelling review (GEV, hazard, scheduling) and ch4 safety intro (Titanic)",some,4,2026-10-04 19:49
+p0076-0100,"ch4 safety: fatality overview, engineering, human factors, speed power model",some,6,2026-10-04 19:49
+p0101-0125,"ch4 end (age effects, US safety, airbags) and ch5 queueing intro/history start",some,7,2026-10-04 19:49
+p0126-0150,"ch5 queueing: history by mode, cumulative diagrams, fluid models, EOQ bulk service",rich,11,2026-10-04 19:49
+p0151-0175,"ch5 end (EOQ bulk service), refs; ch6 traffic flow definitions and bottleneck diagnostics start",rich,14,2026-10-04 19:50
+p0176-0200,"ch6 end: capacity estimation, saturation flow, gap acceptance, Newell kinematic wave theory; ch7 start vehicle dynamics",rich,17,2026-10-04 19:50
+p0201-0225,"ch7 automated vehicle control: dynamics, human driver models, ICC controller, MSS, lane change start",some,18,2026-10-04 19:50
+p0226-0250,(re-read tail) ch8 intro and basic TTS property,some,22,2026-10-04 19:51
+p0251-0275,"ch8 traffic control: signals (SIGSET, Miller, MAXBAND, TRANSYT, SCOOT, store-and-forward), ramp metering ALINEA, route guidance",rich,28,2026-10-04 19:52
+p0276-0300,"ch8 refs; ch9 continuous space modelling theory (shortest paths calculus of variations, market areas, monocentric city): no implementable idea",none,28,2026-10-04 19:52
+p0301-0325,"ch9 end (cost metrics, road investment) and ch10 location models intro/taxonomy",some,29,2026-10-04 19:53
+p0326-0350,"ch10 location models: covering, p-median, algorithms, multi-objective",some,30,2026-10-04 19:53
+p0351-0375,"ch10 end: scenarios, stochastic, dynamic, location-routing; ch11 network equilibrium intro",some,32,2026-10-04 19:53
+p0376-0400,"ch11 network equilibrium: Wardrop UE/SO, Frank-Wolfe, stochastic MSA, multiclass, dynamic, Braess",rich,34,2026-10-04 19:54
+p0401-0425,"ch11 tolls (MSCP, MINTB), conclusion; ch12 street routing intro (VRP assumptions)",some,35,2026-10-04 19:54
+p0426-0450,"ch12 street routing: vehicle routing problem formulations and heuristics (logistics, no traffic-sim use); ch13 long-haul freight intro",none,35,2026-10-04 19:54
+p0451-0475,"ch13 long-haul freight: systems, strategic planning, logistics network design (freight logistics, not road simulation)",none,35,2026-10-04 19:54
+p0476-0500,"ch13 service network design, operational planning (freight)",none,35,2026-10-04 19:54
+p0501-0525,"ch13 end perspectives, ch14 airline crew scheduling intro (airline, not applicable)",none,35,2026-10-04 19:54
+p0526-0550,ch14 airline crew scheduling algorithms (not applicable),none,35,2026-10-04 19:54
+p0551-0575,"ch14 robustness/recovery in crew pairing, ch15 supply chains intro (not applicable)",none,35,2026-10-04 19:54
+p0576-0600,ch15 supply chain logistics cost trade-offs; ch16 revenue management intro (not applicable),none,35,2026-10-04 19:54
+p0601-0625,"ch16 revenue management: capacity control (airline yield, not applicable)",none,35,2026-10-04 19:54
+p0626-0650,"ch16 revenue management: network capacity, overbooking (not applicable)",none,35,2026-10-04 19:54
+p0651-0675,"ch16 end; ch17 spatial interaction: four-stage model, trip generation, gravity distribution (deterrence, constraints), modal choice start",rich,37,2026-10-04 19:55
+p0676-0700,"ch17 modal choice (VOT, elasticities), land use, ch18 transport economics start",rich,37,2026-10-04 19:55
+p0701-0725,"ch18 transport economics: second best, bottleneck model, mass transit (Mohring)",some,39,2026-10-04 19:56
+p0726-0737,biographies and index,none,39,2026-10-04 19:56

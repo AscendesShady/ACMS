@@ -1,0 +1,1210 @@
+18  Handbook of Transportation Science
+
+  The Network GEV model is a class of models within the GEV family proposed
+
+by Bierlaire (2002) and based on the same idea as Daly’s RNEV. Each instance is
+
+defined by a network where each edge (m,k) is associated with a non-negative
+
+parameter  The network must have the following properties.
+
+  1. It does not contain any circuit.
+
+  2. It has one special node with no predecessor, called the root.
+
+  3. It has J special nodes with no successor, called the alternatives.
+
+  4. For each alternative i, there exists a path between the root and i such that
+
+  all parameters on the path are non-zero.
+
+Each node m of the network is associated with an homogeneous function with
+
+homogeneity parameter such that
+
+If each alternative i is associated with the trivial function
+
+then the G function associated with each node of the network generates a GEV
+model. In general, only the GEV model associated with the root is considered. This
+result, formally proven by Bierlaire (2001c), provides an intuitive and general way of
+generating new GEV models. Namely, all GEV models mentioned above fit in that
+framework.
+
+Multinomial Probit Model
+
+The Probability Unit (or Probit) model is derived from the assumption that the error
+terms of the utility functions are normally distributed. The Probit model captures
+explicitly the correlation among all alternatives. Therefore, we adopt a vector
+notation for the utility functions:
+
+where  and are  vectors. The vector of error terms  is
+
+multivariate normal distributed with a vector of means 0 and a  variance-
+
+covariance matrix
+
+  The probability that a given individual n chooses alternative i from the choice set
+
+  is given by
+
+Denoting the  matrix such that
+Discrete Choice Models with Applications to Departure Time and Route choice 19
+
+The matrix is such that the column contains -1 everywhere. If the column is
+
+removed, the remaining  matrix is the identity matrix. For example, in the
+
+case of a trinomial choice model, we have
+
+Given this transformation, we have that
+The density function is given by
+where
+and
+
+  We note that the multifold integral becomes intractable even for a relatively low
+number of alternatives. Moreover, the number of unknown parameters in the
+variance-covariance matrix grows with the square of the number of alternatives. We
+refer the reader to McFadden (1989) for a detailed discussion of multinomial Probit
+models. The complexity of Probit models can be reduced using a Factor Analytic
+form of the model, as described in the next section.
+
+Generalized Factor Analytic Specification of the Random Utility
+
+The general formulation of the factor analytic formulation is
+
+where is a  vector of utilities, is a  vector of deterministic utilities,
+
+is a  vector of random terms, is an (M×1) vector of factors which are IID
+
+standard normal distributed, is a  matrix of loadings that map the factors to
+
+the random utility vector and T is a MxM lower triangular matrix, capturing the
+
+Cholesky factor of the variance-covariance matrix. This specification is very general,
+
+and allows explicitly specifying some structure in the model and, consequently,
+
+decreasing the complexity. We describe here special cases of factor analytic
+
+representations. They are discussed in more detail by Ben-Akiva, Bolduc, and
+
+Walker (2001) and Walker (2001).
+20  Handbook of Transportation Science
+
+Heteroscedasticity A heteroscedastic2 model is obtained when is the identity
+matrix, and T is a diagonal matrix containing the alternative specific standard
+deviations
+
+Error components The error component formulation is based on fixed factor
+loadings equal to 0 or 1. Entry in row i and column j of is 1 if error term
+applies to alternative i, and 0 otherwise. A typical specification of is based on a
+nested structure, where each alternative belongs to exactly one next. In that case, a
+factor is associated with each nest, and the entry (i,j) of is 1 if alternative i belongs
+to nest j. A cross-nested specification is also possible, by allowing an alternative to
+belong to more than one nest. Finally, we note that the matrix T is usually diagonal
+and must be estimated.
+
+Factor analytic The term “factor analytic” usually refers to the formulation where
+the loading factor is not imposed a priori and must be estimated. In general, the
+matrix T is usually diagonal in that case.
+
+General autoregressive process Assuming that the disturbances follow an
+autoregressive process allows decreasing the model complexity while keeping a
+reasonable level of generality. Interestingly, such an assumption fits in the
+Generalized Factor Analytic Specification. We consider the case where the error term
+
+  is generated from a first-order autoregressive process:
+
+where is a  matrix of weights describing the influence of each component
+
+of the error terms on the others, and is an (M×1) vector of error terms which are
+
+IID standard normal distributed. We can write the process as
+
+which is a special case of the Generalized Factor Analytic Specification with
+
+Random parameters We consider a utility function  and we assume that the
+
+parameters are normally distributed with mean and variance-covariance matrix
+
+TT’. Therefore,  where are IID normal distribution. The utility function
+can be written as
+
+2 Heteroscedasticity here refers to different variances among the alternatives. We use
+it in this context to refer to a diagonal variance-covariance matrix with potentially
+different terms on the diagonal.
+Discrete Choice Models with Applications to Departure Time and Route choice 21
+
+which is a Generalized Factor Analytic formulation, with  Using such a utility
+
+function in a probit model does not cause any difficulty, as all random terms are
+
+normally distributed. If a Multinomial Logit model is preferred, the formulation
+
+contains both Gumbel and normal error terms, and the model becomes a Hybrid
+
+Logit model, or Mixed Logit model, which is described in the next section.
+
+Hybrid Logit Model
+
+The Multinomial Probit with a Logit kernel model, called Hybrid Logit or Mixed
+Logit, has been introduced by Bolduc and Ben-Akiva (1991). It is intended to bridge
+the gap between Logit and Probit models by combining the advantages of both. It is
+based on the following utility functions:
+
+where are normally distributed and capture correlation between alternatives, and
+  are independent and identically distributed Gumbel variables. If the are given,
+
+the model corresponds to a Multinomial Logit formulation:
+
+where  is the vector of unobserved random terms. Therefore, the
+
+probability to choose alternative i is given by
+
+where is the probability density function of This model is a generalization of
+
+the Multinomial Probit Model when the distribution  is a multivariate normal.
+
+Other distributions may also be used. The earliest application of this model to capture
+
+random coefficients in the Logit Model (see below) was by Cardell and Dunbar
+
+(1980). More recent results highlighted the robustness of Hybrid Logit (see
+
+McFadden and Train, 2000). We note that the Hybrid Logit model can be combined
+
+with any Generalized Factor Analytic formulation. The random parameters model
+
+presented above is an example of such a combination. We refer the reader to Ben-
+
+Akiva et al. (2002) for a review of Hybrid Logit models.
+
+Latent Class Choice Model
+
+Latent class choice models are also designed to capture unobserved heterogeneity
+(see Everitt, 1984, for an introduction to latent variable models). The underlying
+assumption is that the heterogeneity is generated by discrete constructs. These
+constructs are not directly observable and therefore are represented by latent classes.
+For example, heterogeneity may be produced by taste variations across segments of
+the population, or when choice sets considered by individuals vary (latent choice set).
+22  Handbook of Transportation Science
+
+  The latent class choice model is given by:
+
+where S is the number of latent classes, is the vector of attributes of alternatives
+and characteristics of decision-maker n, are the choice model parameters specific
+to class s, is the choice set specific to class s, and is an unknown parameter
+vector.
+
+  The model
+
+is the class membership model, and
+
+is the class-specific choice model (Kamakura and Russell, 1989, Gopinath, 1995).
+Special case: latent choice sets A special case is the choice model with latent choice
+sets:
+
+where G is the set of all non-empty subsets of the universal choice set M, and
+
+  is a choice model. We note here that the size of G grows exponentially
+
+with the size of the universal choice set.
+
+  The latent choice set can be modeled using the concept of alternative availability.
+
+For such a model, a list of constraints or criteria is used to characterize the
+
+availability of alternatives. For each alternative i, a binary random variable is
+
+defined such that  if alternative i is available to individual n, and 0 otherwise. A
+
+list of constraints is defined as follows:
+
+For example, in a path choice context, one may consider that a path is not available if
+the ratio between its length and the shortest path length is above some threshold,
+represented by a random variable. For example, the associated constraint for path i
+could be:
+
+where is the length of the shortest path, is the length of path i and a random
+variable with zero mean. It means that, on average, paths longer than twice the length
+of the shortest path are rejected.
+
+  The probability for an alternative to be available is given by
+
+The latent choice set probability is then:
+Discrete Choice Models with Applications to Departure Time and Route choice 23
+
+  If the availability criteria are assumed to be independent, we have
+
+Swait and Ben-Akiva (1987) estimate a latent choice set model of mode choice in a
+Brazilian city. See also Ben-Akiva and Boccara (1995) for a more detail analysis of
+discrete choice models with latent choice sets.
+
+2.3 Model estimation
+
+The estimation of discrete choice models from sample data is a difficult and
+important task. Most statistical packages provide estimation capabilities for simple
+models, like the Multinomial Logit models. Dedicated commercial software packages
+are available for the estimation of Nested-Logit models. Free software for estimation
+of Hybrid, or Mixed, Logit models (emlab.berkeley.edu/users/train/software.html)
+and GEV models (rosowww.epfl.ch/mbi/biogeme) is also available. However, these
+packages do not cover the entire range of models, and a specific implementation of
+an estimation procedure is sometimes necessary. We discuss here some issues related
+to such implementation.
+
+  Maximum likelihood estimation is the most widely used technique for discrete
+choice model estimation (see statistical textbooks, such as Sprott, 2000, and Severini,
+2000). It aims at identifying the set of parameters maximizing the probability that a
+given model perfectly reproduces the observations. It is a nonlinear programming
+problem. The nature of the objective function and of the constraints determines the
+type of solution algorithm that must be used.
+
+  The objective function of the maximum likelihood estimation problem for GEV
+models is a nonlinear analytical function, as the probability density function has a
+closed form. In general, the function is not concave (except for the Multinomial Logit
+Model) and, therefore, significantly complicates the identification of a (global)
+maximum. Most nonlinear programming algorithms (see Dennis and Schabel, 1983,
+or Bertsekas, 1995) are designed to identify local optima of the objective function.
+There exists some meta-heuristics designed to identify global optima (like genetic
+algorithms, and simulated annealing) but none of them can guarantee that the
+provided solution is a global optimum. Therefore, whatever algorithm is preferred,
+starting it from different initial solutions is a good practice.
+
+  For the Probit or Hybrid-logit models, the objective function does not have an
+analytical form and must be evaluated based on Monte Carlo (Metropolis and Ulam,
+1949) or Quasi-Monte Carlo methods (Morokoff and Caflish, 1995). Contrarily to
+MonteCarlo, Quasi-Monte Carlo techniques are deterministic. They require fewer
+24  Handbook of Transportation Science
+
+“draws” than Monte-Carlo simulation to reach the same level of accuracy (see
+Spanier and Maize, 1994).
+
+  Not all parameters of a model can be identified from the data. Parameter
+identification and model normalization issues are important to analyze before
+performing an actual estimation. We refer the reader to Ben-Akiva and Lerman
+(1985) for a general discussion on such issues. Bunch (1991) and Bolduc (1992)
+address the case of the Probit model. Walker (2001) provides a detailed analysis of
+identification issues for the Hybrid Logit model.
+
+  The parameters to be estimated must verify some constraints. First, most of them
+must lie within bounds in order for the model to be consistent with the theory (e.g.
+the homogeneous parameters of GEV functions must be non-negative) or with their
+intuitive interpretation (e.g. the coefficient for cost or travel time in a utility function
+is usually non-positive). Moreover, some constraints have to be verified in order for
+the model to be estimable (e.g. the sum of parameters must sum up to one in a
+Cross-Nested Logit model). In the past, it was usually advised to ignore the bound
+constraints, to eliminate other constraints by incorporating them in the objective
+function, and to use unconstrained optimization algorithms. The increasing
+complexity of the models, combined with the availability of efficient software
+packages for constrained optimization motivate now the explicit management of
+constraints in the estimation process.
+
+2.4 Route Choice Applications
+
+The route choice problem plays an important role in many transportation related
+applications. In this section, we analyze its specific assumptions, and present some
+models designed to capture this complex behavioral problem.
+
+  Given a transportation network composed of nodes, links, origins and
+destinations; and given an origin o, a destination d and a transportation mode m, what
+is the chosen route between o and d on mode m. This discrete choice problem has
+specific characteristics. First, the universal choice set is usually very large. Second,
+the decision-maker considers not all physically feasible alternatives. Third, the
+alternatives are usually correlated, due to overlapping paths.
+
+  We now describe typical assumptions associated with route choice models.
+
+Decision-Maker
+
+The traveler’s characteristics most often used for route choice applications are:
+
+  Value-of-time. Obviously, travel time is a key attribute of alternative routes.
+  Its influence on behavior, however, may vary across individuals. The
+  sensitivity of an individual to travel time is usually referred to as the value-of-
+  time. It can be represented by a continuous variable (e.g., the dollar-value
+  equivalent of a minute spent traveling) or by a discrete variable identifying
+  the decision-maker’s value-of-time as low, medium or high.
+Discrete Choice Models with Applications to Departure Time and Route choice 25
+
+  Access to information. Information about network conditions may
+  significantly influence route choice behavior. Therefore, it may be important
+  that a route choice model explicitly differentiates travelers with access to such
+  information from those without access. It is also an important policy variable.
+  It may be modeled by a single binary attribute (access/no access) or by
+  several binary variables identifying the type of information available to the
+  traveler (pre-trip information, on-board computer, etc.)
+
+  Trip purpose. The purpose of the trip may significantly influence the route
+  choice behavior. For example, a trip to work may be associated with a penalty
+  for late arrival, while a shopping trip would usually have no such penalty.
+
+Alternatives
+
+Identifying the choice set in a route choice context is a difficult task. Two main
+approaches can be considered.
+
+  First, it may be assumed that each individual can potentially choose any path
+between her/his origin and destination. The choice set is easy to identify, but the
+number of alternatives can be very large, causing operational problems in estimating
+and applying the model. Moreover, this assumption is behaviorally unrealistic.
+
+  Second, a restricted number of paths may be considered in the choice set. The
+choice set generation can be deterministic or stochastic, depending on the analyst’s
+knowledge of the problem.
+
+  Dial (1971) proposes to include in the choice set “reasonable” paths composed of
+links that would not move the traveler farther away from her/his destination. The
+labeling approach (proposed by Ben-Akiva et al., 1984) includes paths meeting
+specific criteria, such as shortest paths, fastest paths, most scenic paths, paths with
+fewest stop lights, paths with least congestion, paths with greatest portion of
+freeways, paths with no left turns, etc.
+
+  Azevedo et al. (1993) propose the link elimination approach, where the shortest
+path (according to a given impedance) is first calculated and introduced in the choice
+set. Then, some links belonging to the shortest path are removed, and a the shortest
+path in the modified network is computed and introduced in the choice set.
+
+  Cascetta and Papola (1998) propose an implicit probabilistic choice set generation
+model, where the utility function associated with path i by individual n is defined as
+
+where is a random variable with mean
+
+  are the attributes for availability and perception of the path and are
+parameters to be estimated.
+26  Handbook of Transportation Science
+
+  Swait (2001) combines the probabilistic choice set generation with the route
+choice model within a Cross-Nested structure.
+
+  Some recent models (Nguyen and Pallottino, 1987, Nguyen, Pallottino and
+Gendreau, 1988) consider hyperpaths instead of paths as alternatives. A hyperpath is
+a collection of paths with associated strategies at decision nodes. This technique is
+particularly appropriate for a public transportation network.
+
+Attributes
+
+In describing the attributes of the alternatives to be included in the utility function,
+
+we need to distinguish between link-additive and non-link-additive attributes.
+
+  If i is a path composed of links  is a link-additive attribute of i if
+
+where is the corresponding attribute of link a. For example, the travel time on a
+path is the sum of the travel times on links composing the path. Qualitative attributes
+are in general non-link-additive. For example, a binary variable equal to one if the
+path is a habitual path and 0 otherwise, is non link-additive. In the context of public
+transportation, variables like transfers and fares are usually not link-additive. The
+distinction is important because some models, designed to avoid path enumeration,
+use link attributes and not path attributes.
+
+  Among the many attributes that can potentially be included in a utility function,
+travel time is probably the most important. But what does travel time mean for the
+decision-maker? How does she/he perceive travel time? Many models are based on
+the assumption that most travelers are sufficiently experienced and knowledgeable
+about usual network conditions and, therefore, are able to estimate travel times
+accurately. This assumption may be satisfactory for planning applications using static
+models. With the emergence of Intelligent Transportation Systems, models that are
+able to predict the impact of real-time information have been developed. In this
+context, the “perfect knowledge” assumption is contradictory with the ITS services
+that provide information. Several approaches can be used to capture perceptions of
+travel times. One approach represents travel time as a random variable in the utility
+function. This idea was introduced by Burrell (1968) and is captured by a random
+utility model. Also, the uncertainty or the variability of travel time along a given path
+can be explicitly included as an attribute of the path.
+
+  In addition to travel time, the following attributes are usually included.
+
+  Path length. The length of the path is likely to influence the decision maker’s
+  choice. Also, this attribute is easy to measure. Note that it may be highly
+  correlated with travel time, especially in uncongested networks.
+
+  Travel cost. In addition to the obvious behavioral motivation, including travel
+  cost in the utility function is necessary to forecast the impact of tolls and
+  congestion pricing, for example. It is common practice to distinguish the so-
+Discrete Choice Models with Applications to Departure Time and Route choice 27
+
+  called out-of-pocket costs (like tolls), which are directly associated with a
+  specific trip, from other general costs (like car operating costs).
+  Transit specific. Attributes specific to route choice in transit networks include
+  number of transfers, waiting and walking time and service frequency.
+  Others. Traffic conditions (e.g. level of congestion, volume of conflicting
+  traffic streams or pedestrian movements), obstacles (e.g. number of stop
+  signs, number of traffic lights, number of left turns against traffic), road types
+  (e.g. dummy variable capturing preference for freeways) and road condition
+  (e.g. surface quality, number of lanes, safety, scenery) are some of the other
+  attributes that may be considered. Whether to include them in the utility
+  function depends on their behavioral pertinence in a specific context, and on
+  data availability.
+  Finally, the level of path overlapping can also be included in the utility function of
+a path. It is not one of its attributes per se. It is more a measure of how the
+alternative is perceived within a choice set. Several formulations have been proposed
+in the literature.
+Commonality Factor. Cascetta et al. (1996) propose the following specification for
+the commonality factor
+
+where is the length3 of links common to paths i and j, and and are the overall
+length of paths i and j, respectively. is a coefficient to be estimated. The
+parameter may be estimated or constrained to a convenient value, often 1 or 2.
+
+  Considering the path choice example in Figure 1, the commonality factor for path
+1 is zero because it does not overlap with any other path. The commonality factor for
+paths 2a and 2b is
+
+Path Size. The Path Size model, first proposed by Ben-Akiva and Bierlaire (1999),
+is an application of the notion of elemental alternatives and size variables. In the
+route choice context, we assume that an overlapping path may not be perceived as a
+distinct alternative. Indeed, a path contains links that may be shared by several paths.
+Hence, the size of a path with one or more shared links may be less than one. We
+include in the utility function of path i for individual n a size variable defined by
+
+3 or any other link-additive attribute
+28  Handbook of Transportation Science
+
+and is the set of links in path i; and are the length of link a and path i,
+respectively; is the link-path incidence variable that is one if link a is on path j and
+
+0 otherwise; and  is the length of the shortest path in Considering again the
+
+path choice problem from Figure 1, the size of path 1 is 1, and the size of paths 2a
+and 2b is
+
+Generalized Path Size Ramming (2001) proposed a generalized formulation of the
+Path Size where
+
+and G is a function with paratemer g. The Exponential Path-Size formulation is
+
+obtained with  Note that corresponds to a normalized version of
+
+the original Path Size model. Based on experiments on a case study in Boston,
+Ramming (2001) observes a better behavior of the Path Size correction in terms of its
+capability of reproducing observed data, compared to the Commonality Factor. Also,
+it is observed that low values of may lead to counter-intuitive results, motivating the
+generalized version.
+
+Decision Rules
+
+Shortest path. The simplest possible decision rule in the route choice context
+assumes that each individual chooses the path with the highest utility. Models based
+on deterministic utility maximization are supported by efficient algorithms to
+compute shortest paths in a graph (e.g. Dijkstra, 1959, and Dial, 1969). However, the
+behavioral limitations of this approach have motivated the development of stochastic
+models based on the random utility model.
+
+Logit route choice. A Multinomial Logit Model with an efficient algorithm for
+route choice has been proposed by Dial (1971). Using the concept of “reasonable
+paths” to define the choice set and assuming the paths attributes to be link-additive,
+this algorithm avoids explicit path enumeration.
+
+  As described earlier, the IIA property of the Multinomial Logit Model is the major
+weakness of Dial’s algorithm in the context of highly overlapping routes. Therefore,
+its use is limited to networks with specific topologies. A Logit model may also be
+used with a choice set generation model, such as the Labeling approach, that results
+in a small size choice set with limited overlap.
+Discrete Choice Models with Applications to Departure Time and Route choice 29
+
+Probit route choice. Given the shortcomings of the Logit route choice model,
+Probit models have been proposed in the context of stochastic network loading by
+Burrell (1968), Daganzo and Sheffi (1977) and Yai et al. (1997). The two problems
+in this case are the complexity of the variance-covariance matrix and the lack of an
+analytical formulation for the probabilities. The covariance structure can be
+simplified when path utilities are link-additive, the variance of link utility is
+proportional to the utility itself, and the covariance of utilities of two different links is
+zero. The use of a factor analytic formulation, where the matrix is the link-path
+incidence matrix, enables to reduce the complexity of the model from the number of
+paths in the network down to the number of links. A Monte Carlo or Quasi-Monte
+Carlo simulation is often used to circumvent the absence of a closed analytical form.
+
+Cross-Nested Logit route choice. Vovsha and Bekhor (1998) have proposed an
+interesting Cross-Nested formulation, where each link of the network corresponds to
+a nest, and each path to an alternative. The parameters of the Cross-Nested logit
+are not estimated. They capture the network topology and, consequently, the path
+overlapping. Note that this approach can be combined with attribute-based path
+overlapping measures, like the commonality factor and the path-size.
+
+Hybrid Logit route choice. Ramming (2001) has estimated a route choice model
+based on Hybrid Logit. Although there are some issues regarding the number of
+draws for the Simulated Maximum Likelihood Estimation, experiments on a case
+study in Boston report a good behavior of the Hybrid Logit approach, especially
+when it is combined with the Path Size overlapping attribute.
+
+2.5 Departure Choice Applications
+
+Modeling the choice of departure time appears in the context of dynamic traffic
+assignment as an extension of the route choice problem. It is important to distinguish
+the departure time choice itself and the choice of changing departure time. The latter
+appears usually in the context of Traveler Information Systems, where individuals
+may revisit a previous choice using additional information. We now describe typical
+modeling assumptions associated with the departure time choice model.
+
+Decision-Maker
+
+  The central traveler’s characteristic of departure time choice models is the
+preferred arrival time at the destination. It is often presented as a time interval or
+window with variable length reflecting schedule flexibility. Other relevant traveler’s
+characteristics are the (monetary and psychological) penalties for early and late
+arrivals. In the context of a departure time change, the individual’s “habitual”
+departure time must also be known.
+30  Handbook of Transportation Science
+
+  Travelers generally use their expectations of travel time and “subtract” this from
+their intended arrival time to determine what the departure time should be, with a
+safety margin factored in. The magnitude of the safety margin depends on the travel
+time variability and the penalties for late or early arrival. In this context, an intended
+arrival time is the outcome of a choice and is not necessarily the same as the
+preferred arrival time. Within some constraints, travelers may change their intended
+arrival time in the process of making a departure time choice.
+
+  From travel diaries one can obtain data on actual departure and arrival times.
+Preferred arrival times can be obtained only by a direct question. Such questions are
+usually not included in travel diary surveys. Moreover, even when these questions
+are included, the answers may be biased towards the actual or the intended arrival
+time, since respondents may try to justify (to themselves and/or the interviewer) their
+actual behavior when questioned about their preferences. Therefore, the preferred
+arrival time characteristic may be measured with significant errors. The modeling
+implications are considered below.
+
+Alternatives
+
+The choice set specification for departure time models is an intricate problem. First,
+
+the continuous time must be discretized. A reasonable compromise must be found
+
+between a fine temporal resolution and the model complexity. Indeed, there is a
+
+potentially large number of alternatives, particularly for realistic dynamic traffic
+
+applications. Second, the correlation among alternatives cannot be ignored,
+
+especially when time intervals are short. Choosing between the 7:45-7:50 and 7:50-
+
+7:55 time intervals differs from choosing between 7:45-7:50 and 8:45-8:50. In the
+
+first case, the two alternatives are likely to share unobserved attributes. Third, the
+
+perception of the alternatives depends on trip travel time. Most individuals round
+
+time and the rounding may depend on the travel time and travel time variability. For
+
+short trips, 7:52 may be rounded to 7:50, whereas for long trips it may be
+
+approximated by 8:00.
+
+  The choice set generation consists of defining an acceptable range of departure
+
+time intervals considered by an individual n. A common procedure is based on the
+
+preferred arrival time  Let  be the feasible arrival time
+
+interval, and let  be the range of travel times. Then the interval of
+
+acceptable departure times is
+
+  Overestimating the length of the acceptable or feasible departure time
+
+interval should not cause errors if the model is otherwise well specified. The
+
+tendency may be to attempt to reduce the number of alternatives in the model by
+
+understating this interval. This, unfortunately, may cause significant errors. Small
+
+(1987) analyzed the impact of truncating the departure time choice set. He concluded
+
+that there is no problem if the true model is a Multinomial Logit Model. Some
+
+adjustments are needed if a Cross-Nested Logit with ordered alternatives is assumed.
+
+In the context of departure time change, the alternatives may be described in a
+
+relative way. Antoniou et al. (1997) propose a choice set with five alternatives: do
+
+not change, switch to an earlier or a later departure, by one or two time intervals.
+Discrete Choice Models with Applications to Departure Time and Route choice 31
+
+Attributes
+
+Travel time is a key attribute of departure time alternatives. Travel time variability
+
+also affects departure time choice through the above mentioned safety margin.
+
+However, data on this attribute are rarely available and it is conveniently assumed to
+
+be constant across the peak period. Other important attributes are the early and late
+
+schedule delays. These are interactions of travel time and preferred arrival time, as
+
+follows. Given a preferred arrival time  a penalty-free interval is defined:
+
+  It is assumed that the individual suffers no penalty if the arrival
+
+times lies within the interval. The actual arrival time  is equal to
+
+  where  is the travel time if the trip starts at time  The
+
+early schedule delay is defined as
+
+and the late schedule delay is defined as
+
+  In the context of a change in departure time, individuals may also assign a penalty
+to departure times that are significantly different from their habitual departure times,
+due to the inertia associated with habits.
+
+  The key data requirement concerns the travel times for the alternative departure
+times, denoted by TT(DT). A calibrated dynamic traffic assignment or a traffic
+simulation model with sufficiently high temporal resolution could be used to predict
+these travel times.
+
+Decision Rules
+
+Deterministic models assume that there are no unobserved effects. The chosen
+departure time is determined by maximizing a utility (or minimizing a generalized
+cost) function that is a linear combination of the above-mentioned attributes. A
+deterministic departure time choice model, when applied as part of an equilibrium
+model with congested networks, may result in a spread of demand across a time
+interval with a constant utility (or generalized cost). Across this constant utility
+interval the change in travel time disutility is equal to the negative of the change in
+schedule delay disutility. If schedule delay disutility changes linearly, then the
+equilibrium travel time also changes linearly.
+
+  It is clearly unreasonable that such a constant utility condition and a linear trend of
+travel time will hold over long time intervals. Thus, to achieve a reasonable spread
+of departure times, an application of a deterministic model must account for a high
+degree of heterogeneity. To a limited extent, heterogeneity may be captured by
+market segmentation (as in multiple classes of travelers). However, for the same
+considerations that apply to mode choice models, there are significant unobserved
+effects that can only be captured by continuous distributions using probabilistic
+departure time choice models.
+32  Handbook of Transportation Science
+
+Probabilistic Choice Models. Departure time choice models have been estimated
+using both revealed preferences (RP) and stated preferences (SP) data. Availability
+of suitable RP data sets for departure time choice is limited because data on travel
+times for the different departure time alternatives are usually unavailable at sufficient
+detail. SP data have been used to estimate models of the choice of changing
+departure time.
+
+  The cumulative experience in estimating RP departure time choice models is very
+limited. Small (1982), Hendrickson and Plank (1984) and Cascetta et al. (1992) used
+RP data to estimate Logit models of departure time choice. Small (1987) extended
+his earlier work with a Cross-Nested Logit model, where m adjacent departure time
+intervals are nested together, capturing their intrinsic correlation. A single departure
+time interval belongs to m different nests, source of the cross-nested structure.
+
+  de Palma, Fontan and Mekkaoui (2000) estimate the distribution of desired
+departure times for public transportation users, based on traffic counts, using a non
+parametric regression approach.
+
+  de Palma and Fontan (2001) calibrate a Hybrid Logit model with SP data,
+collected from a computer-assisted survey, with personalized scenarios. In the
+context of departure time change, Antoniou et al. (1997) proposed a Nested Logit
+Model based on SP data for joint choice of departure time and route. Liu and
+Mahmassani (1998) used SP data to estimate a Probit model where day-to-day
+correlation is assumed.
+
+Choice Models with Latent Variables. The departure time choice model considered
+so far is the conditional probability of departure time given a known preferred arrival
+time, or preferred arrival time window. It was argued above that preferred arrival
+times cannot be observed from travel diaries and are measured with significant errors.
+Thus, the proper modeling framework requires that the preferred arrival time be
+treated as a latent variable. A marginal departure choice probability is then
+calculated by integrating the model over a distribution of preferred arrival time. The
+parameters of this preferred arrival time distribution are unknown and need to be
+estimated jointly with the unknown parameters of the conditional departure time
+probability. Responses to survey questions about preferred arrival times can be used
+by adding the corresponding measurement equations or by estimating a model of the
+joint probability of the departure time choice and the reported preferred arrival time.
+See Ben-Akiva et al. (1997) for more detail concerning this modeling framework.
+
+2.5 Conclusion
+
+Discrete choice methods are constantly evolving to accommodate the requirements of
+specific applications. This is an exciting field of research, where a deep
+understanding of the underlying theoretical assumptions is necessary both to apply
+the models and develop new ones. In this Chapter, we have summarized the
+fundamental aspects of discrete choice theory, and we have introduced recent model
+developments, illustrating their richness. A discussion on route choice and departure
+Discrete Choice Models with Applications to Departure Time and Route choice 33
+
+time choice applications have shown how specific aspects of real applications must
+be addressed.
+
+References
+
+Antoniou, C., Ben-Akiva, M., Bierlaire, M. and Mishalani, R. (1997). Demand simulation for
+  dynamic traffic assignment, Proceedings of the 8th IFAC Symposium on Transportation
+  Systems, Chania, Greece.
+
+Azevedo J.A., Santos Costa M.E.O., Silvestre Madeira J.J.E.R. and Vieira Martins, E.Q.
+  (1993) “An algorithm for the ranking of shotest paths”. European Journal of Operational
+  Research 69 97-106.
+
+Ben-Akiva, M. and Bierlaire, M. (1999). Discrete choice methods and their applications to
+  short-term travel decisions, in R. Hall (ed.), Handbook of Transportation Science, Kluwer,
+  pp. 5-34.
+
+Ben-Akiva, M. and Bolduc, D. (1996). Multinomial probit with a logit kernel and a general
+  parametric specification of the covariance structure. Paper presented at the 3rd Invitational
+  Choice Symposium, Columbia University.
+
+Ben-Akiva, M., Bolduc, D. and Walker, J. (2001). Specification, Identification, & Estimation
+  of the Logit Kernel (or Continuous Mixed Logit) Model, Working paper, Department of
+  Civil Engineering, MIT, Camridge, MA.
+
+Ben-Akiva, M. E. (1973). Structure of passenger travel demand models, PhD thesis,
+  Department of Civil Engineering, MIT, Cambridge, Ma.
+
+Ben-Akiva, M. E. (1974). Structure of passenger travel demand models, Transportation
+  Research Record 526.
+
+Ben-Akiva, M.E. and Boccara, B. (1995) Discrete Choice Models with Latent Choice sets,
+  International Journal of Research in Marketing 12, pp. 9-24.
+
+Ben-Akiva, M. E., Bergman, M. J., Daly, A. J. and Ramaswamy, R. (1984). Modeling inter-
+  urban route choice behaviour, in J. Volmuller and R. Hamerslag (eds), Proceedings from
+  the ninth international symposium on transportation and traffic theory, VNU Science Press,
+  Utrecht, Netherlands, pp. 299-330.
+
+Ben-Akiva, M. E. and Lerman, S. R. (1985). Discrete Choice Analysis: Theory and
+  Application to Travel Demand, MIT Press, Cambridge, Ma.
+
+Ben-Akiva, M. and Francois, B. (1983). homogeneous generalized extreme value model,
+  Working paper, Department of Civil Engineering, MIT, Cambridge, Ma.
+
+Ben-Akiva, M., McFadden, D., Train, K., Walker, J., Bhat, C., Bierlaire, M., Bolduc, D.,
+  Boersch-Supan, A., Brownstone, D., Bunch, D., Daly, A., de Palma, A., Gopinath, D.,
+34  Handbook of Transportation Science
+
+  Karlstrom, A. and Munizaga, M. A. (2002). Hybrid choice models: Progress and
+  challenges. Accepted for publication in Marketing Letters.
+
+Bertsekas, D. P. (1995). Nonlinear Programming, Athena Scientific, Belmont.
+
+Bhat, C. (2001). Quasi-random maximum simulated likelihood estimation of the mixed
+  multinomial logit model, TRB 35(7): 677-693.
+
+Bierlaire, M. (1995). A robust algorithm for the simultaneous estimation of hierarchical logit
+  models, GRT Report 95/3, Department of Mathematics, FUNDP.
+
+Bierlaire, M. (1998). Discrete choice models, in M. Labbé, G. Laporte, K. Tanczos and P.
+  Toint (eds), Operations Research and Decision Aid Methodologies in Traffic and
+  Transportation Management, Vol. 166 of NATO ASI Series, Series F: Computer and
+  Systems Sciences, Springer Verlag, pp. 203-227.
+
+Bierlaire, M. (2001a). A general formulation of the cross-nested logit model, Proceedings of
+  the 1st Swiss Transportation Research Conference, Ascona, Switzerland,
+  http ://www.strc.ch
+
+Bierlaire, M. (2001b). An introductory tutorial to BIOGEME. URL:
+  http://rosowww.epfl.ch/mbi/biogeme
+
+Bierlaire, M. (2002). The network GEV model, Proceedings of the 2nd Swiss Transportation
+  Research Conference, Ascona, Switzerland. http://www.strc.ch
+
+Bierlaire, M., Lotan, T. and Toint, P. L. (1997). On the overspecification of multinomial and
+  nested logit models due to alternative specific constants, Transportation Science 31(4):
+  363-371.
+
+Bierlaire, M. and Vandevyvere, Y. (1995). HieLoW: the interactive user’s guide,
+  Transportation Research Group - FUNDP, Namur.
+
+Bolduc, D. (1992). Generalized Autoregressive Errors in the Multinomial Probit Model,
+  Transportation Research B 26(2), 155-170
+
+Bolduc, D. (1999). A practical technique to estimate multinomial probit models in
+  transportation, Transportation Research B 33(1): 63-79.
+
+Bolduc, D. and Ben-Akiva, M. (1991) A Multinomial Probit Formulation for Large Choice
+  Sets. Proceedings of the 6th International Conference on Travel Behaviour 2, 243-258.
+
+Bradley, M. A. and Daly, A. (1991). Estimation of logit choice models using mixed stated
+  preferences and revealed preferences information, Methods for understanding travel
+  behaviour in the 1990's, International Association for Travel Behaviour, Qu'ebec, pp. 116-
+  133. 6th international conference on travel behaviour.
+
+Bunch, D.A. (1991) Estimability in the Multinomial Probit Model. Transportation Research B
+  25 1-12.
+Discrete Choice Models with Applications to Departure Time and Route choice 35
+
+Burrell, J. E. (1968). Multipath route assignment and its application to capacity restraint,
+  Proceedings of the 4th International Symposium on the Theory of Road Traffic Flow
+  (Karlsruhe).
+
+Cardell and Dunbar (1980). Measuring the societal impacts of automobile downsizing,
+  Transportation Research A 14(5-6): 423-434.
+
+Cascetta, E., Nuzzolo, A. and Biggiero, L. (1992). Analysis and modeling of commuters'
+  departure time and route choice in urban networks, Proceedings of the second international
+  Capri seminar on urban traffic networks.
+
+Cascetta, E., Nuzzolo, A., Russo, F. and Vitetta, A. (1996). A modified logit route choice
+  model overcoming path overlapping problems. Specification and some calibration results
+  for interurban networks, Proceedings of the 13th International Symposium on the Theory
+  of Road Traffic Flow (Lyon, France).
+
+Cascetta, E. and Papola, A. (1998). Random utility models with implicit
+  availability/perception of choice alternatives for the simulation of travel demand, Technical
+  report, Universita degli Studi di Napoli Federico II.
+
+Conn, A., Gould, N. and Toint, P. (2000). Trust region methods, MPS-SIAM Series on
+  Optimization, SIAM.
+
+Daganzo, C. F. and Sheffi, Y. (1977). On stochastic models of traffic assignment,
+  Transportation Science 11(3): 253-274.
+
+Daly, A. (1987). Estimating "tree" logit models, Transportation Research B 21(4): 251-268.
+
+Daly, A. (2001). Recursive nested EV model. Paper presented at the Invitational Choice
+  Symposium, Asilomar, Ca.
+
+de Palma, A. and Fontan, C. (2001). Departure time choice and heterogeneity of commuters,
+  Proceedings of the 9th WCTR. Paper 4149.
+
+de Palma, A., Fontan, C. and Mekkaoui, O. (2000). Trip timing for public transportation: an
+  empirical application, Technical Report 2000- 19, Université de Cergy-Pontoise -
+  Univcersité de Paris X - Nanterre, Théorie Economique, Modélisation et Application.
+  UMR 7536 CNRS.
+
+Dennis, J. E. and Schnabel, R. B. (1983). Numerical methods for unconstrained optimization
+  and nonlinear equations, Prentice-Hall, Englewood Cliffs, USA.
+
+Dial, R. B. (1969). Algorithm 360: shortest path forest with topological ordering.,
+  Communications of ACM 12: 632-633.
+
+Dial, R. B. (1971). A probabilistic multipath traffic assignment algorithm which obviates path
+  enumeration, Transportation Research 5(2): 83-111.
+36  Handbook of Transportation Science
+
+Dijkstra, E. W. (1959). A note on two problems in connexion with graphs, Numerische
+  Mathematik 1: 269-271.
+
+Everitt,B.S. (1984). An Introduction to Latent Variable Models, Monographs on Statistical
+  and Applied Probability, Chapman and Hall.
+
+Gopinath, D.A. (1995) Modeling Heterogeneity in Discrete Choice Processes: Application to
+  Travel Demand, Ph.D. Dissertation, Department of Civil and Environmental Engineering,
+  Massachusetts Institute of Technology.
+
+Gumbel, E. J. (1958). Statistics of Extremes, Columbia University Press, New York.
+
+Hendrickson, C. and Plank, E. (1984). The flexibility of departure times for work trips,
+  Transportation Research A 18: 25-36.
+
+Hensher D.A. and Greene W.H. (2002). Specification and estimation of the nested logit
+  model: alternative normalizations, Transportation Research B 36(1): 1-18.
+
+Kamakura, W.A. and G.J. Russell (1989). A Probabilistic Choice Model for Market
+  Segmentation and Elasticity Structure, Journal of Marketing Research 25, 379-390.
+
+Koppelman, F. S. and Wen, C.-H. (1998). Alternative nested logit models: Structure,
+  properties and estimation, Transportation Research B 32(5): 289-298.
+
+Liu, Y.-H. and Mahmassani, H. (1998). Dynamic aspects of departure time and route decision
+  behavior under ATIS: modeling framework and experimental results, presented at the 77th
+  annual meeting of the Transportation Research Board, Washington DC.
+
+Luce, R. (1959). Individual choice behavior: a theoretical analysis, J. Wiley and Sons, New
+  York.
+
+Manski, C. (1977). The structure of random utility models, Theory and Decision 8: 229-254.
+
+McFadden, D. (1978). Modelling the choice of residential location, in A. Karlquist et al. (ed.),
+  Spatial interaction theory and residential location, North-Holland, Amsterdam, pp. 75-96.
+
+McFadden, D. (1989). A method of simulated moments for estimation of discrete response
+  models without numerical integration, Econometrica 57(5): 995-1026.
+
+McFadden, D. and Train, K. (2000). Mixed multinomial logit models for discrete response,
+  Journal of Applied Econometrics, Vol. 15, No. 5, pp. 447-470.
+
+Morokoff, W.J. and Caflish R.E. (1995) Quasi-Monte Carlo integration. Journal of
+  Computational Physics 122.
+
+Nguyen, S. and Pallottino, S. (1987). Traffic assignment for large scale transit networks, in A.
+  Odoni (ed.), Flow control of congested networks, Springer Verlag.
+
+Nguyen, S., Pallottino, S. and Gendreau, M. (1998). Implicit enumeration of hyperpaths in
+  a logit model for transit networks, Transportation Science 32(1).
+Discrete Choice Models with Applications to Departure Time and Route choice 37
+
+Panier, E. and Tits, A. L. (1993). On combining feasibility, descent and superlinear
+  convergence in inequality constrained optimization, MP 59: 261-276.
+
+Papola, A. (2000). Some development of the cross-nested logit model, Proceedings of the 9th
+  IATBR Conference.
+
+Ramming, M. S. (2001). Network Knowledge and Route Choice, PhD thesis, Massachusetts
+  Institute of Technology.
+
+Severini, T.A. (2000) Likelihood methods in statistics, Oxford statistical science series,
+  Oxford University Press.
+
+Small, K. (1982). The scheduling of consumer activities: work trips, The American Economic
+  Review pp. 467-479.
+
+Small, K. (1987). A discrete choice model for ordered alternatives, Econometrica 55(2): 409-
+  424.
+
+Spanier, J. and Maize, H. (1994). Quasi-random methods for estimating integrals using
+  relatively small samples, SIREV 36(1): 18-44.
+
+Sprott D. A. (2000) Statistical inference in science, Springer series in statistics, Springer, New
+  York.
+
+Swait, J. (2001). Choice set generation within the generalized extreme value family of discrete
+  choice models, TRB 35(7): 643-666.
+
+Swait, J. and Ben-Akiva, M. (1987). Incorporating random constraints in discrete models of
+  choice set generation, TRB 21(2).
+
+Tversky, A. (1972). Elimination by aspects: a theory of choice, Psychological Review 79:
+  281-299.
+
+Vovsha, P. (1997). Cross-nested logit model: an application to mode choice in the Tel-Aviv
+  metropolitan area, Transportation Research Board, 76th Annual Meeting, Washington DC.
+  Paper #970387.
+
+Vovsha, P. and Bekhor, S. (1998). The link-nested logit model of route choice: overcoming
+  the route overlapping problem, Transportation Research Record 1645: 133-142.
+
+Walker, J. L. (2001). Extended discrete choice models: integrated framework, flexible error
+  structures, and latent variables, PhD thesis, Massachusetts Institute of Technology.
+
+Wen, C.-H. and Koppelman, F. S. (2001). The generalized nested logit model, Transportation
+  Research B 35(7): 627-641.
+
+Yai T., Iwakura, S. and Morichi S. (1997). Multinomial Probit with Structured Covariance for
+  Route Choice Behavior. Transportation Research B. 31(3) 195-207.
+  3 ACTIVITY-BASED MODELING OF
+
+  TRAVEL DEMAND
+
+  Chandra R. Bhat and Frank S. Koppelman
+
+3.1 Introduction and Scope
+
+Since the beginning of civilization, the viability and economic success of communities
+have been, to a major extent, determined by the efficiency of the transportation
+infrastructure. To make informed transportation infrastructure planning decisions,
+planners and engineers have to be able to forecast the response of transportation
+demand to changes in the attributes of the transportation system and changes in the
+attributes of the people using the transportation system. Travel demand models are
+used for this purpose; specifically, travel demand models are used to predict travel
+characteristics and usage of transport services under alternative socio-economic
+scenarios, and for alternative transport service and land-use configurations.
+
+  The need for realistic representations of behavior in travel demand modeling is
+well acknowledged in the literature. This need is particularly acute today as emphasis
+shifts from evaluating long-term investment-based capital improvement strategies to
+understanding travel behavior responses to shorter-term congestion management
+policies such as alternate work schedules, telecommuting, and congestion-pricing. The
+result has been an increasing realization in the field that the traditional statistically-
+oriented trip-based modeling approach to travel demand analysis needs to be replaced
+by a more behaviorally-oriented activity-based modeling approach. The next two
+sections discuss the basic concepts of the trip-based and the activity-based approaches
+to travel demand analysis.
+
+The Trip-Based Approach
+
+  The trip based approach uses individual trips as the unit of analysis and usually
+includes four sequential steps. The first, trip generation, step involves the estimation
+of the number of home-based and non-home based person-trips produced from, and
+attracted to, each zone in the study area. The second, trip distribution, step determines
+the trip-interchanges (i.e., number of trips from each zone to each other zone). The
+third, mode choice, step splits the person-trips between each pair of zones by travel
+mode obtaining both the number of vehicle trips and number of transit trips between
+zones. The fourth, assignment, step assigns the vehicle trips to the roadway network
+to obtain link volumes and travel times and the person trips to the transit network.
+Time-of-day of trips is either not modeled or is modeled in only a limited way, in the
+trip-based approach. Most commonly, time is introduced by applying time-of-day
+40  Handbook of Transportation Science
+
+factors to 24-hour travel volumes at the end of the traffic assignment step or at the end
+of the trip generation step.
+
+  A fundamental conceptual problem with the trip-based approach is the use of trips
+as the unit of analysis. Separate models are developed for home-based trips and non-
+home based trips, without consideration of dependence among such trips. Further, the
+organization (scheduling) of trips is not considered; that is, there is no distinction
+between home-based trips made as part of a single-stop sojourn from home and those
+made as part of a multiple-stop sojourn from home. Similarly, there is no distinction
+between non-home based trips made during the morning commute, evening commute,
+from work, and as part ofpursuing multiple stops in a single sojourn from home. Thus,
+the organization oftrips and the resulting inter-relationship in the attributes ofmultiple
+trips is ignored in all steps of the trip-based method. This is difficult to justify from a
+behavioral standpoint. It is unlikely that households will determine the number of
+home-based trips and the number of non-home based trips separately. Rather, the needs
+of the households are likely to be translated into a certain number of total activity stops
+by purpose followed by (or jointly with) decisions regarding how the stops are best
+organized. Similarly, the location of a stop in a multistop sojourn (or tour) is likely to
+be affected by the location of other stops on the tour. Such multistop tours are
+becoming increasingly prevalent (see Gordon et al., 1988; Lockwood and Demetsky,
+1994) and ignoring them in travel analysis means "discarding an element that is
+doubtless important in the individual's organization of time and space" (Hanson,
+1980). Also, in a multistop tour from home consisting of, say, a grocery shopping stop
+and a social visit, the trip-based approach fails to recognize that the travel mode for all
+three trips (home to shop, shop to visit, and visit to home) will be the same. The travel
+mode chosen will depend on various characteristics of all three trips (and not any one
+single trip) and, consequently, these trips cannot be studied independently.
+
+  The behavioral inadequacy of the trip-based approach, and the consequent
+limitations of the approach in evaluating demand management policies, has led to the
+emergence of the activity-based approach to demand analysis.
+
+The Activity-Based Approach
+
+The activity-based approach to travel demand analysis views travel as a derived
+demand; derived from the need to pursue activities distributed in space (see Jones et
+al., 1990 or Axhausen and Gärling, 1992). The approach adopts a holistic framework
+that recognizes the complex interactions in activity and travel behavior. The conceptual
+appeal of this approach originates from the realization that the need and desire to
+participate in activities is more basic than the travel that some of these participations
+may entail. By placing primary emphasis on activity participation and focusing on
+sequences or patterns of activity behavior (using the whole day or longer periods of
+time as the unit of analysis), such an approach can address congestion-management
+issues through an examination of how people modify their activity participations (for
+example, will individuals substitute more out-of-home activities for in-home activities
+in the evening if they arrived early from work due to a work-schedule change?).
+Activity-Based Modeling of Travel Demand  41
+
+  The shift to an activity-based paradigm has also received an impetus because of
+the increased information demands placed on travel models by the 1990 Clean Air Act
+Amendments (CAAAs). These amendments require the inclusion of transportation
+control measures (TCMs) in transportation improvement programs for MPOs in
+heavily polluted non-attainment areas and, by state law, for all non-attainment areas
+in California. Some TCMs, such as HOV lanes and transit extensions, can be
+represented in the existing modeling framework; however, non-capital improvement
+measures such as ridesharing incentives, congestion pricing and employer-based
+demand management schemes can not be so readily represented (Deakin, Harvey and
+Skabardonis, Inc. 1993, Chapter 2). The ability to model both individual activity
+behavior and interpersonal linkages between individuals, a core element of activity
+modeling, is required for the analysis of such TCM proposals. The CAAAs also require
+travel demand models to provide (for the purpose of forecasting mobile emission levels)
+link flows at a high level of resolution along the time dimension (for example, every
+30 minutes or an hour as opposed to peak-period and off-peak period link flows) and
+also to provide the number of new vehicle trips (i.e., cold starts) which begin during
+each time period. Because of the simplistic, "individual-trip" focus of the trip-based
+models, they are not well-equipped to respond to these new requirements (see
+Cambridge Systematics, Inc., 1994; Chapter 5). Since the activity-based approach
+adopts a richer, more holistic approach with detailed representation of the temporal
+dimension, it is better suited to respond to the new requirements.
+
+  The activity-based approach requires time-use survey data for analysis and
+estimation. A time-use survey entails the collection of data regarding all activities (in-
+home and out-of-home) pursued by individuals over the course of a day (or multiple
+days). Travel constitutes the medium for transporting oneself between spatially dis-
+located activity participations. The examination of both in-home and out-of-home
+activities facilitates an understanding of how individuals substitute out-of-home
+activities for in-home activities (or vice-versa) in response to changing travel
+conditions. This, in turn, translates to an understanding ofwhen trips are generated or
+suppressed.
+
+  It is important to note that administrating time-use surveys is similar to
+administrating household travel surveys, except for collection of in-home as well as
+out-of-home activities. The information elicited from respondents is a little more
+extensive in time-use surveys compared to travel surveys, but experience suggests that
+the respondent burden or response rates are not significantly different between time-use
+and travel surveys (see Lawton and Pas, 1996 for an extensive discussion).
+
+  The activity-based approach does require more careful and extensive preparation
+of data to construct entire "sequences" of activities and travel. On the other hand, such
+intensive scrutiny of data helps identify data inconsistencies which might go unchecked
+in the trip-based approach (for example, there might be "gaps" in an individual's travel
+diary because of non-reporting of several trips; these will be identified during data
+preparation for activity analysis, but may not be identified in the trip-based approach
+since it highlights individual trips and not the sequence between trips and activities).
+42  Handbook of Transportation Science
+
+  The rest of this chapter focuses on the activity-based approach to travel demand
+forecasting. The next section traces the history of research on activity analysis. Section
+3.3 presents an overview of the modeling methods being used in activity-travel
+analysis. Section 3.4 discusses how activity-based travel research has been influencing
+travel demand analysis. Section 3.5 concludes the chapter by identifying important
+future research topics in the activity analysis area.
+
+3.2 History of Research on Activity Analysis
+
+The seminal works by Chapin (1971), Hagerstrand (1970) and Cullen and Godson
+(1975) form the basis for much of the research on activity analysis. Chapin (1971)
+proposed a motivational framework in which societal constraints and inherent
+individual motivations interact to shape revealed activity participation patterns.
+Hagerstrand (1970), on the other hand, emphasized the constraints imposed by the
+spatial distribution of opportunities for activity participation and temporal
+considerations on individual activity participation decisions, thus laying the foundation
+for what is now commonly referred to as the space-time "prism". Cullen and Godson
+(1975) argued that the spatial and temporal constraints identified by Hagerstrand are
+fundamentally characterized by varying degrees of rigidity (or flexibility). They
+undertook extensive empirical analysis to indicate that temporal constraints are more
+rigid than spatial constraints and that the rigidity of temporal constraints is closely
+related to activity type of participation (with more temporal rigidity associated with
+work-related activities compared to leisure activities).
+
+  Activity-based travel research has received much attention and seen considerable
+progress since these early studies. In the following review, we will use the term
+"activity episode" to refer to a discrete activity participation. The term "activity" refers
+to a collection of episodes of the same type or purpose over some time unit (say a day
+or a week). The review is undertaken in two categories. The first category focuses on
+participation decisions associated with a single activity episode. The second category
+examines individual decisions regarding activity episode patterns (that is, multiple
+activity episodes and their sequencing).
+
+Single Activity Episode Participation
+
+The studies in this section focus on the participation of individuals in single activity
+episodes, along with one or more accompanying characteristics of the episode such as
+duration, location, or time window of participation. The effect of household
+interdependencies on individual activity choice is represented in these models in the
+form of simple measures such as presence of working spouse, number of adults, and
+household structure.
+
+  Damm (1980) developed a multivariate daily model of participation and duration
+in out-of-home non-work activities (no distinction between activity types is made). He
+partitions the day into five periods based on the work schedule and introduces
+interdependence in activity participation and duration among time periods using
+Activity-Based Modeling of Travel Demand  43
+
+variables which measure the "time spent in other periods". Temporal constraints are
+represented in the model in the form of variables like duration of work, flexibility of
+work hours and time spent in other periods. Spatial fixity of work place (an indicator
+of whether the individual has a fixed work location or not), accessibility, years lived
+at residence and presence of driver's license are defined to represent spatial constraints.
+Other socio-economic variables are included to represent the influence of lifecycle (eg.,
+number of children), potential allocation process (eg., work status of spouse), and other
+familial responsibilities on individual activity participation.
+
+  Van der Hoorn (1983) developed an activity episode model for the choice of
+activity type and location of the episode. The three available locations in his analysis
+are "at home", "in town" and "outside town" (the term "town" representing the area of
+residence). Separate logit models are proposed for each previous location, each of five
+person groups, and for the workweek and weekend. Activity episode choice is regarded
+as being conditional on the location of the previous activity episode, but not on the
+activity type performed at the previous location. Location choice is dependent on the
+previous location and on the next activity episode. The restrictions imposed by external
+constraints and mandatory activities are taken into account while defining the choice
+set of available activities and locations.
+
+  Hirsh et al. (1986) developed a dynamic theory of weekly activity behavior and
+modified it suitably to model shopping activity in Israel. They recognized the benefit
+of studying activities on the basis of a weekly cycle rather than on a daily period. The
+attributes used in the model are similar to the ones used by Damm and van der Hoorn.
+
+  Mannering and his colleagues (Mannering et al., 1994, Kim et al., 1993) analyzed
+home-stay duration between successive participations in out-of-home activity episodes.
+Bhat (1996a) and Neimeier and Morita (1996), on the other hand, formulated and
+estimated models for the duration of out-of-home activity episodes. The results from
+these studies suggest that the socio-demographics of the individual's household and the
+individual (such as household size, income earnings, age, sex, etc.), and the work
+schedule characteristics of the individual, have a substantial effect on the duration of
+home-stay and out-of-home activity episodes. All the duration studies listed above use
+a hazard-based duration structure in their analyses.
+
+Activity Episode Pattern Analysis
+
+In this section, we review studies which examine activity episode patterns (i.e.,
+multiple activity episodes and their sequence). Some of these studies focus only on
+activity episode scheduling and consider the generation of activity episodes and their
+attributes as exogenous inputs. Such studies are reviewed in the next section. Other
+studies analyze both activity episode generation and scheduling, and these are reviewed
+in the subsequent section.
+
+Activity Episode Scheduling A fundamental tenet of the activity episode scheduling
+approach to the analysis of activity/travel patterns is that travel decisions are driven by
+

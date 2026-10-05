@@ -1,0 +1,1040 @@
+Traffic Analysis Toolbox Volume III: Guidelines for
+Applying Traffic Microsimulation Modeling Software
+
+  2019 Update to the 2004 Version
+
+  April 2019
+  Notice
+  This document is disseminated under the sponsorship of the U.S.
+  Department of Transportation in the interest of information exchange.
+  The U.S. Government assumes no liability for the use of the
+  information contained in this document.
+  The U.S. Government does not endorse products or manufacturers.
+  Trademarks or manufacturers' names appear in this report only
+  because they are considered essential to the objective of the document.
+
+  Quality Assurance Statement
+  The Federal Highway Administration (FHWA) provides high-quality
+  information to serve Government, industry, and the public in a manner
+  that promotes public understanding. Standards and policies are used to
+  ensure and maximize the quality, objectivity, utility, and integrity of
+  its information. FHWA periodically reviews quality issues and adjusts
+  its programs and processes to ensure continuous quality improvement.
+
+Cover Image Sources (clockwise from top left)
+U.S. Department of Transportation
+Thinkstock.com
+Thinkstock.com
+Thinkstock.com
+Thinkstock.com
+Thinkstock.com
+Center Image: Noblis for U.S. Department of Transportation
+1. Report No.  2. Government Accession No.  Technical Report Documentation Page
+FHWA-HOP-18-036  3. Recipient’s Catalog No.
+4. Title and Subtitle
+  5. Report Date
+
+TAT Volume III: Guidelines for Applying Traffic Microsimulation Modeling Software  April 2019
+2019 Update to the 2004 Version  6. Performing Organization Code
+
+7. Author(s)  8. Performing Organization Report No.
+
+2019 Update Authors: Karl Wunderlich, Meenakshy Vasudevan, and Peiwei Wang
+(Noblis)
+
+  2004 Authors: Richard Dowling, Alexander Skabardonis, Vassili Alexiadis  10. Work Unit No. (TRAIS)
+9. Performing Organization Name And Address
+
+  Noblis  11. Contract or Grant No.
+  500 L’Enfant Plaza, S.W., Suite 900
+  Washington, DC 20024  DTFH61-16-D-00036
+  13. Type of Report and Period Covered
+12. Sponsoring Agency Name and Address
+
+U.S. Department of Transportation  Final Report
+Federal Highway Administration  14. Sponsoring Agency Code
+Office of Operations
+1200 New Jersey Avenue, SE  HOP
+Washington, DC 20590
+
+15. Supplementary Notes
+
+  Work Performed for: John Halkias (FHWA) and James Colyar (FHWA)
+16. Abstract
+
+Microsimulation is the modeling of individual vehicle movements on a second or sub-second basis for the purpose of assessing the traffic
+performance of highway and street systems, transit, and pedestrians. Microsimulation analyses are increasingly visible and important – fostered
+both by the continued evolution of microsimulation software capability and increasing application within transportation engineering and
+planning practices. These guidelines provide practitioners with guidance on the appropriate application of microsimulation models to traffic
+analysis problems, with an overarching focus on existing and future alternatives analysis.
+
+This 2019 Update of the original 2004 guide [1] includes significantly enhanced and detailed technical guidance dealing with data collection
+and analysis (Chapter 2), model calibration (Chapter 5), and alternatives analysis (Chapter 6). A more complex corridor-based example
+problem is used to illustrate application of the updated guidance. Finally, a complete end-to-end case study using a large microsimulation
+model for a hypothetical work zone alternatives analysis is included in an appendix. This case study illustrates the application of the detailed
+guidance on data collection and analysis, calibration and alternatives analysis. The goals of this update are to:
+
+• Encourage comprehensive experimental design based a range of varying travel conditions, rather than a normative “average”
+  day.
+
+• Focus calibration and alternatives analysis on the representation of time-dynamic system performance measures including
+  bottleneck formation and dissipation.
+
+• Eliminate all subjective criteria, replace with criteria that are statistically valid and derived from observed data.
+• Develop a calibration process that is data-driven, repeatable, and potentially automatable.
+
+17. Key Words  18. Distribution Statement
+
+Simulation Modeling, Transportation Analysis Tools,  No restrictions.
+
+Operational Conditions, Travel Conditions, Calibration,
+
+Alternatives Analysis, Cluster Analysis, Data Collection and
+
+Analysis, Traffic Simulation, Traffic Modeling
+
+19. Security Classif. (of this report)  20. Security Classif. (of this page)  21. No. of Pages 22. Price
+
+Unclassified  Unclassified  130  N/A
+
+Form DOT F 1700.7 (8-72)  Reproduction of completed page authorized
+  FOREWORD REGARDING THE 2019 UPDATE
+
+The purpose of the Guidelines for Applying Traffic Microsimulation Modeling Software is to
+provide a recommended process for using traffic microsimulation software in transportation
+operations analyses. The guidelines provide the reader with a seven-step process that begins with
+planning a microsimulation analysis for the project and ends with the final project report. The
+process is generic, in that it is independent of the specific software tool used in the analysis. In
+fact, the first step in the process involves picking the appropriate tool for the job at hand.
+
+The 2004 version of this guide created a set of standard practices for effective application of
+microsimulation tools. The guide addressed the most critical need of the day, namely to provide
+a systematic process that began with project scoping, tool selection, data collection and input
+preparation, model testing and calibration, alternatives analysis, and project documentation.
+
+When the 2019 update effort was initiated, the Federal Highway Administration (FHWA)
+engaged more than two dozen experts from around the world to provide their views on the
+current state of the microsimulation practice and how this document might be best improved.
+These experts responded to a structured set of questions to identify the most pressing current
+needs and to provide prioritization among competing needs.
+
+Taken as a whole, the panel responses reinforced the concept of an increasingly complex and
+demanding landscape for microsimulation analyses. The experts noted a trend towards more
+complex applications of microsimulation tools on larger networks, the evaluation of increasingly
+complex alternatives, and the increasing importance of microsimulation studies in influencing
+both operational and investment decisionmaking.
+
+Another crucial consensus observation among the experts was the rise of more comprehensive
+and detailed data sources available to the microsimulation analyst. Pre-2004, data were relatively
+scarce, and simulation analysts were often forced to rely on a set of vehicle count data limited to
+some larger facilities within the system. In this era, notions of microsimulation calibration were
+adapted from travel demand forecasting methods and targeted the accurate reflection of average
+vehicle counts at detector locations within the network. The panel pointed out that new forms of
+time-dynamic data were now available but often ignored or ineffectively incorporated within
+simulation studies.
+
+IDENTIFIED HIGH-PRIORITY AREAS
+
+The expert panel prioritization exercise identified four high-priority areas for the 2019 update:
+
+  • Fully Integrate Time-Dynamic Representation of Congestion. The panel indicated that
+  current practice in microsimulation was too focused on fixed or average demand patterns
+  and that congestion development and dissipation over time were often poorly reflected in
+  tool application. This issue resulted in unrealistic analyses that failed to reflect accurately
+  the performance of alternatives under congestion conditions. An identified need for an
+
+  i
+Foreword Regarding the 2019 Update
+
+  updated version of this document was to provide more emphasis on time-dynamic data in
+  simulation development, calibration, and alternatives analysis.
+  • Require Better Representation of Recurrent and Non-Recurrent Conditions. Simply put,
+  the panel indicated that many simulation analyses used to justify investments failed to
+  represent adequately incidents, weather, and variations in travel demand. In some cases,
+  the impact of particular alternatives (traveler information, incident management, road-
+  weather applications) were not accounted for within the simulation study, and suffered
+  relative to other alternatives (e.g., geometric improvements). The identified need was to
+  provide guidance on how to integrate a variety of data sources to create meaningful and
+  realistic models for these travel conditions. This guidance should also include the
+  tailoring of driver behavioral model parameters (e.g., gap acceptance and car-following
+  distance) to the specific conditions being modeled.
+  • Remove Subjective Calibration Criteria. Some elements of guidance presented as best-
+  practice examples within the guidebook included subjective criteria (e.g., the phrase “to
+  the analyst’s satisfaction”). This resulted in two issues. First, these criteria often led to
+  contention among stakeholders since “satisfaction” is highly subjective. Second, in the
+  absence of clear FHWA guidance on calibration, examples used as illustrations within the
+  document were misinterpreted as FHWA guidance. The identified need was to create and
+  document FHWA guidelines on a data-driven calibration process based on statistically-
+  derived and objective criteria.
+  • Emphasize Accurate Bottleneck Modeling. The accurate representation of the bottleneck
+  location, onset time, and duration were identified as a critical aspect of modeling
+  congested systems. The panel recommended more emphasis on modeling and calibrating
+  bottleneck dynamics.
+
+GOALS
+
+From these recommendations, FHWA focused available resources for the 2019 update on the
+following goals:
+
+  • Encourage comprehensive experimental design based a range of varying travel
+  conditions, rather than a normative “average” day.
+
+  • Focus calibration and alternatives analysis on the representation of time-dynamic system
+  performance measures including bottleneck formation and dissipation.
+
+  • Eliminate all subjective criteria, to be replaced with criteria that are statistically valid and
+  derived from observed data.
+
+  • Develop a calibration process that is data-driven, repeatable, and potentially automatable.
+
+It is hoped that these guidelines will assist the transportation community in moving away from
+outdated practices that were developed in the relatively data-poor past dependent on the analysis
+of averages or the assumption that unrealistic “normal” conditions always prevail, and towards
+conducting data-driven, statistically-valid objective analyses.
+
+  ii
+Foreword Regarding the 2019 Update
+
+FORMAT OF THE UPDATE
+In order to meet the goals of the update, a complete rewrite of the document was neither feasible
+nor desirable. Instead, the 2019 update retains the general structure and intent of the main
+sections of the 2004 guidebook [1], with updated materials throughout the document.
+Significantly enhanced and detailed technical guidance has been included in chapters dealing
+with data collection and analysis (Chapter 2), model calibration (Chapter 5), and alternatives
+analysis (Chapter 6). A more complex corridor-based example problem is used to illustrate
+application of the updated guidance. A series of technical appendices from the 2004 document
+on ancillary topics have been either incorporated into the body of the document or removed.
+References have been updated, particularly with respect to the larger body of current and
+projected Traffic Analysis Tools volumes. Finally, a complete end-to-end case study using a
+large microsimulation model for a hypothetical work zone alternatives analysis is included in an
+appendix. This case study illustrates the application of the detailed guidance on data collection
+and analysis, calibration and alternatives analysis.
+Aside from this section, for the purposes of clarity, the 2019 update is presented as a complete
+document without reference to original source (2004 or 2019). That is, the specific passages and
+updates introduced into this version are not identified separately from materials which appeared
+in the original version.
+
+  iii
+  SI* (MODERN METRIC) CONVERSION FACTORS
+
+  APPROXIMATE CONVERSIONS TO SI UNITS
+
+  SYMBOL  WHEN YOU KNOW  MULTIPLY BY  TO FIND  SYMBOL
+
+in  LENGTH  mm
+ft  m
+yd  inches  25.4  millimeters  m
+mi  km
+  feet  0.305  meters
+in2  mm2
+ft2  yards  0.914  meters  m2
+yd2  m2
+ac  miles  1.61  kilometers  ha
+mi2  km2
+  AREA
+fl oz  mL
+gal  square inches  645.2  square millimeters  L
+ft3  m3
+yd3  square feet  0.093  square meters  m3
+
+oz  square yard  0.836  square meters  g
+lb  kg
+T  acres  0.405  hectares  Mg (or "t")
+
+oF  square miles  2.59  square kilometers  oC
+
+fc  VOLUME  lx
+fl  cd/m2
+  fluid ounces  29.57  milliliters
+lbf  N
+lbf/in2  gallons  3.785  liters  kPa
+
+  SYMBOL  cubic feet  0.028  cubic meters  SYMBOL
+
+mm  cubic yards  0.765  cubic meters  in
+m  ft
+m  NOTE: volumes greater than 1000 L shall be shown in m3  yd
+km  mi
+  MASS
+mm2  in2
+m2  ounces  28.35  grams  ft2
+m2  yd2
+ha  pounds  0.454  kilograms  ac
+km2  mi2
+  short tons (2000 lb)  0.907  megagrams (or "metric ton")
+mL  fl oz
+L  TEMPERATURE (exact degrees)  gal
+m3  ft3
+m3  Fahrenheit  5 (F-32)/9  Celsius  yd3
+  or (F-32)/1.8
+g  oz
+kg  ILLUMINATION  lb
+Mg (or "t")  T
+  foot-candles  10.76  lux
+oC  foot-Lamberts  3.426  candela/m2  oF
+
+lx  FORCE and PRESSURE or STRESS  fc
+cd/m2  fl
+  poundforce  4.45  newtons
+N  lbf
+kPa  poundforce per square inch  6.89  kilopascals  lbf/in2
+
+  APPROXIMATE CONVERSIONS FROM SI UNITS
+
+  WHEN YOU KNOW  MULTIPLY BY  TO FIND
+
+  LENGTH
+
+  millimeters  0.039  inches
+
+  meters  3.28  feet
+
+  meters  1.09  yards
+
+  kilometers  0.621  miles
+
+  AREA
+
+  square millimeters  0.0016  square inches
+
+  square meters  10.764  square feet
+
+  square meters  1.195  square yards
+
+  hectares  2.47  acres
+
+  square kilometers  0.386  square miles
+
+  VOLUME
+
+  milliliters  0.034  fluid ounces
+
+  liters  0.264  gallons
+
+  cubic meters  35.314  cubic feet
+
+  cubic meters  1.307  cubic yards
+
+  MASS
+
+  grams  0.035  ounces
+
+  kilograms  2.202  pounds
+
+  megagrams (or "metric ton")  1.103  short tons (2000 lb)
+
+  TEMPERATURE (exact degrees)
+
+  Celsius  1.8C+32  Fahrenheit
+
+  ILLUMINATION
+
+  lux  0.0929  foot-candles
+  candela/m2  0.2919  foot-Lamberts
+
+  FORCE and PRESSURE or STRESS
+
+  newtons  0.225  poundforce
+
+  kilopascals  0.145  poundforce per square inch
+
+  iv
+  TABLE OF CONTENTS
+
+Introduction................................................................................................................................... 1
+  Guiding Principles of Microsimulation ...................................................................................... 1
+  Overview of the Microsimulation Analytical Process ................................................................ 2
+  Organization of This Document.................................................................................................. 4
+
+Chapter 1. Microsimulation Analysis Planning ......................................................................... 5
+  Establish Project Purpose............................................................................................................ 5
+  Select Key Performance Measures ............................................................................................. 6
+  Define Scope ............................................................................................................................... 7
+  Develop the Analytical Approach............................................................................................... 8
+  Estimate Required Resources ..................................................................................................... 9
+  Prepare a Preliminary Analysis Plan........................................................................................... 9
+  Example Problem: Alligator City ............................................................................................. 10
+  Key Points................................................................................................................................. 14
+
+Chapter 2. Data Collection and Analysis.................................................................................. 15
+  Identify Data Sources................................................................................................................ 18
+  Data for Base Model Development....................................................................................... 18
+  Data for Determining Travel Conditions .............................................................................. 20
+  Data for Calibration .............................................................................................................. 24
+  Assemble Contemporaneous Data ............................................................................................ 25
+  Verify Data Quality................................................................................................................... 25
+  Identify Travel Conditions Using Cluster Analysis.................................................................. 26
+  Example Problem: Data Collection and Analysis..................................................................... 29
+  Key Points................................................................................................................................. 38
+
+Chapter 3. Base Model Development ........................................................................................ 41
+  Specify Model Input Data ......................................................................................................... 41
+  Link-Node Diagram: Model Blueprint .................................................................................. 42
+  Link Geometry Data ............................................................................................................. 44
+  Traffic Control Data.............................................................................................................. 44
+  Traffic Operations and Management Data............................................................................ 45
+  Traffic Demand Data ............................................................................................................ 45
+  Driver Behavior Data ............................................................................................................ 45
+  Event Data............................................................................................................................. 46
+  Simulation Run Control Data................................................................................................ 47
+  Coding Techniques for Complex Situations ......................................................................... 47
+  Example Problem: Base Model Development .......................................................................... 48
+  Key Points................................................................................................................................. 48
+
+  v
+Table of Contents
+
+Chapter 4. Error Checking ........................................................................................................ 50
+  Review Software Errors ............................................................................................................ 50
+  Review Input Errors .................................................................................................................. 50
+  View Animation........................................................................................................................ 51
+  Residual Errors.......................................................................................................................... 53
+  Key Decision Point ................................................................................................................... 53
+  Example Problem: Error Checking ........................................................................................... 53
+  Key Points................................................................................................................................. 55
+
+Chapter 5. Model Calibration.................................................................................................... 56
+  Overview of the Calibration Process ........................................................................................ 57
+  Identify Representative Days .................................................................................................... 57
+  Prepare Variation Envelopes..................................................................................................... 59
+  Select Calibration Performance Measures ............................................................................ 59
+  Creating Variation Envelopes ............................................................................................... 60
+  Calibrate Model Variant to Meet Acceptability Criteria .......................................................... 61
+  Adjust Parameters Influencing Bottleneck Throughput ....................................................... 62
+  Adjust Parameters Affecting Dynamic Travel Demand and Assignment ............................ 63
+  Perform Test Against Acceptability Criteria ........................................................................ 64
+  Example Problem: Model Calibration ...................................................................................... 65
+  Key Points................................................................................................................................. 71
+
+Chapter 6. Alternatives Analysis ............................................................................................... 72
+  Forecast Future Demands ......................................................................................................... 73
+  Represent Alternatives .............................................................................................................. 73
+  Determine Required Number of Replications........................................................................... 74
+  Test Differences in Alternatives Performance .......................................................................... 76
+  Perform Hypothesis Testing ................................................................................................. 76
+  Perform Sensitivity Testing .................................................................................................. 77
+  Example Problem: Alternative Analysis................................................................................... 78
+  Key Points................................................................................................................................. 79
+
+Chapter 7. Final Report ............................................................................................................. 80
+  Preparing the Results Briefing .................................................................................................. 80
+  Preparing the Final Report ........................................................................................................ 81
+  Key Points................................................................................................................................. 82
+
+Appendix A. Work Zone Case Study in the Seattle I-405 Corridor ...................................... 83
+Appendix B. Glossary ............................................................................................................... 107
+Acknowledgements ................................................................................................................... 109
+References .................................................................................................................................. 110
+
+  vi
+  LIST OF FIGURES
+
+Figure 1. Diagram. The Microsimulation Analytical Process ........................................................ 3
+Figure 2. Diagram. Step 1: Microsimulation Analysis Planning .................................................... 5
+Figure 3. Map. Key Features of the Alligator City Example Problem ......................................... 11
+Figure 4. Diagram. Step 2: Data Collection and Analysis ............................................................ 15
+Figure 5. Diagram. Step 3: Base Model Development ................................................................. 41
+Figure 6. Diagram. Example of link node diagram ...................................................................... 43
+Figure 7. Diagram. Link-Node Diagram for Alligator City.......................................................... 49
+Figure 8. Diagram. Step 4: Error Checking .................................................................................. 50
+Figure 9. Diagram. Step 5: Model Calibration ............................................................................. 56
+Figure 10. Chart. Plot of Variation Envelope for Eastbound AM Travel Times, West Hills to
+Alligator City ................................................................................................................................ 68
+Figure 11. Chart. Assessing Criterion I, Alligator City ................................................................ 69
+Figure 12. Chart. Assessing Criterion II, Alligator City............................................................... 70
+Figure 13. Diagram. Step 6: Alternative Analysis........................................................................ 72
+Figure 14. Diagram. Step 7: Final Report..................................................................................... 80
+Figure 15. Map. I-405 Geographical Coverage ............................................................................ 83
+Figure 16. Map. Bottleneck Locations.......................................................................................... 85
+Figure 17. Chart. Plot of Heuristic Index Calculation Results ..................................................... 87
+Figure 18. Diagram.I-405 Travel Condition Dartboard................................................................ 89
+Figure 19. Chart. Travel Time and Bottleneck Throughput Profiles for Each Travel Condition. 90
+Figure 20. Map. Locations for Demand Adjustment .................................................................... 91
+Figure 21. Chart. Variation Envelope and Calibration Results for Low Demand Travel Condition
+....................................................................................................................................................... 92
+Figure 22. Chart. Variation Envelope and Calibration Results for Low Visibility Travel
+Condition....................................................................................................................................... 93
+Figure 23. Chart. Variation Envelope and Calibration Results for Weather + Incidents Travel
+Condition....................................................................................................................................... 94
+Figure 24. Chart. Variation Envelope and Calibration Results for Many Incidents Travel
+Condition....................................................................................................................................... 95
+Figure 25. Chart. Variation Envelope and Calibration Results for Bottleneck Trouble Travel
+Condition....................................................................................................................................... 96
+Figure 26. Chart. Variation Envelope and Calibration Results for Few Incidents Travel Condition
+....................................................................................................................................................... 97
+Figure 27. Map. Sinkhole Damaged Sections............................................................................... 99
+Figure 28. Chart. Travel Time Profiles of Alternatives .............................................................. 100
+Figure 29. Chart. South Bound Travel Time Profile for Low Demand Travel Condition ......... 102
+Figure 30. Chart. South Bound Travel Time Profile for Many Incidents Travel Condition ...... 102
+Figure 31. Chart. Total Cost (Hard Cost and Soft Cost) Computation....................................... 104
+Figure 32. Chart. Planning Time Index ...................................................................................... 105
+
+  vii
+  LIST OF TABLES
+
+Table 1. Data Assembled for Travel Conditions Identification (Step 1) ...................................... 33
+Table 2. Example Transformation of Incident Qualitative Data into Numeric Data (Step 2) ...... 34
+Table 3. Transforming Qualitative Data onto Quantitative Scale (Step 2)................................... 35
+Table 4. Normalizing Data (Step 3) .............................................................................................. 36
+Table 5. Iteration 0 - Preliminary Assignment of Data into Clusters (Step 5.3)........................... 39
+Table 6. Calculating Cluster Means (Step 5.4) ............................................................................. 40
+Table 7. Calculating Distance to Cluster Centroids and Assigning to Nearest Cluster (Steps 5.5-
+5.6) ................................................................................................................................................ 40
+Table 8. Example node numbering convention ............................................................................ 44
+Table 9. Time-Variant Travel Times, West Hills Eastbound to Alligator City ............................ 66
+Table 10. Differences Comparing Individual Days and the Average for the Travel Condition,
+Expressed as a Percentage of the Time Variant Averages............................................................ 67
+Table 11. Travel Time Variation Envelope Band Calculation, Alligator City ............................. 68
+Table 12. Assessing Criteria III and IV, Alligator City................................................................ 71
+Table 13. Aggregate Results from Alligator City Alternative Analysis ....................................... 79
+Table 14. Sum of Squared Error and Average Coefficient of Variation for Different Number of
+Clusters ......................................................................................................................................... 87
+Table 15. Sum of Squared Error for Each Cluster Group............................................................. 88
+Table 16. A Summary of Cluster Analysis Results ...................................................................... 88
+Table 17. Summary of Acceptability Criteria Calculation Results............................................... 98
+Table 18. Total Additional Delay Calculation using Traditional Approach............................... 101
+Table 19. Delay Estimation Method in Travel Conditions Alternatives Analysis ..................... 101
+Table 20. Total Additional Delay Calculation using Travel Conditions Approach ................... 103
+
+  viii
+  INTRODUCTION
+
+Microsimulation is the modeling of individual vehicle movements on a second or sub-second
+basis for the purpose of assessing the traffic performance of highway and street systems, transit,
+and pedestrians. Microsimulation analyses are increasingly visible and important – fostered both
+by the continued evolution of microsimulation software capability and increasing application
+within transportation engineering and planning practices. These guidelines provide practitioners
+with guidance on the appropriate application of microsimulation models to traffic analysis
+problems, with an overarching focus on existing and future alternatives analysis.
+
+The use of these guidelines will aid in the consistent and reproducible application of
+microsimulation models. They are also intended to support further the accuracy and credibility of
+analyses using these tools. As a result, practitioners and decision makers will be equipped to
+make informed decisions that will account for current and evolving technology. It is hoped that
+these guidelines will assist the transportation community in moving away from outdated
+practices that were developed in the relatively data-poor past dependent on the analysis of
+averages or the assumption that unrealistic “normal” conditions always prevail, and towards
+conducting data-driven, statistically-valid objective analyses. Depending on the project-specific
+purpose, need, and scope, elements of the process described in these guidelines may be enhanced
+or adapted to support the analyst and the project team. It is strongly recommended that the
+respective stakeholders and partners be engaged prior to and throughout the application of any
+microsimulation model. This further supports the credibility of the results, recommendations, and
+conclusions, and minimizes the potential for unnecessary or unanticipated tasks.
+
+GUIDING PRINCIPLES OF MICROSIMULATION
+
+Microsimulation can provide the analyst with valuable information on the performance of the
+existing transportation system and potential improvements. However, microsimulation can also
+be a time-consuming and resource-intensive activity. The key to planning and conducting an
+effective (and cost-effective) microsimulation analysis revolves around a set of guiding
+principles:
+
+  • Ensure the Analysis Has a Clear Objective, Hypotheses and Well-Defined Performance
+  Measures. Prior to embarking on the development of a microsimulation model, establish
+  its scope among the partners, taking into consideration expectations, tasks, and an
+  understanding of how the tool will support the engineering decision. Output of a
+  microsimulation model is different from that of the Highway Capacity Manual (HCM)
+  (Transportation Research Board (TRB)). Definitions of key terms, such as “delay” and
+  “queues,” are different at the microscopic level of microsimulation models than at the
+  macroscopic level typical of the HCM. In addition, because well-defined performance
+  measures may be different when applied to observed (field) data or standard simulation
+  outputs, these differences must be reconciled for effective analysis. Additional
+  Resources: Forthcoming FHWA guidance document Scoping and Conducting Data-
+  Driven 21st Century Transportation System Analyses [2] and Traffic Analysis Toolbox
+  Volume VI [10].
+
+  1
+Introduction
+
+  • Select an Appropriate Tool. Use of the appropriate tool is essential. Do not use
+  microsimulation analysis when it is not appropriate. Understand the limitations of the tool
+  and ensure that it accurately represents the traffic operations theory. Confirm that it can
+  be applied to support the purpose, needs, and scope of work, and can address the question
+  that is being asked. Additional Resources: Traffic Analysis Toolbox Volume II [25].
+
+  • Budget Sufficient Analytical Resources and Time. Do not use microsimulation if
+  sufficient budget or schedule (time to conduct) are not available. A rushed or under-
+  resourced analysis can result in faulty conclusions and lead to a loss of credibility in
+  simulation analyses in general. Additional Resources: Scoping and Conducting Data-
+  Driven 21st Century Transportation System Analyses [2].
+
+  • Obtain Sufficient Available Data. In particular, good data are critical for good
+  microsimulation model results. Modeling without sufficient data either to determine
+  operational conditions or to calibrate effectively can be risky, resulting in faulty
+  conclusions and leading to a loss of credibility. Additional Resources: Scoping and
+  Conducting Data-Driven 21st Century Transportation System Analyses [2].
+
+  • Use a Model that is Calibrated Specifically for the Study Purpose. It is critical that the
+  analyst calibrate any microsimulation model to local conditions and prevailing travel
+  conditions. Failure to calibrate a model sufficiently can lead to erroneous alternatives
+  analysis and can be detrimental to effective transportation systems management.
+
+  • Engage Stakeholders Early and often Throughout. To minimize disagreements between
+  partners, embed interim periodic reviews at prudent milestones in the model development
+  and calibration processes. Maintain a Methods and Assumptions document to ensure there
+  is a consistent and logbook of key decisions made throughout the simulation project.
+
+OVERVIEW OF THE MICROSIMULATION ANALYTICAL PROCESS
+
+The overall process for developing and applying a microsimulation model to a specific
+transportation analysis problem consists of seven major tasks. Each task is summarized below
+and described in more detail in subsequent chapters. A flow chart, complementing the overall
+process, is presented in Figure 1. This figure is intended to be a quick reference that will be
+traceable throughout the document.
+
+Chapter 1 addresses the management, scope, and organization of microsimulation analyses. In
+this section, the guidebook describes key issues for the management of a microsimulation study.
+This includes defining the project purpose, identifying the project influence area and analytic
+time period(s), characterizing the alternatives to be evaluated, selecting performance measures,
+developing a general technical approach (including tool selection) and estimating staff time and
+other costs.
+
+Chapter 2 discusses the steps necessary to collect and prepare input data for use in
+microsimulation models. This task involves the collection and preparation of all of the data
+necessary for the microsimulation analysis. Microsimulation models require extensive input data,
+including: roadway geometry, controls, travel demand, and calibration data, among others.
+Chapter 2 also includes guidance on analyzing contemporaneous data on traffic counts (demand),
+weather, incidents, and key performance measures (e.g., travel time) to characterize a set of
+operational and travel conditions.
+
+  2
+Introduction  Chapter 1
+
+Chapter 3 discusses the coding of input data to  1 Microsimulation Analysis Planning
+create a base model. The goal of base model
+development is a model that is verifiable,  • Define Project Purpose
+reproducible, and accurate. It is a complex and  • Identify Influence Areas
+time-consuming task with steps that are specific to  • Select Approach
+the software used to perform the microsimulation  • Select Tool
+analysis. The details of model development are best  • Estimate Staff Time
+covered in software-specific user’s guides. For this
+reason, the development process may vary. This  Chapter 2
+report provides a general outline of the model
+development task.  2 Data Collection and Analysis
+
+Chapter 4 presents error-checking methods. The  • Identify Data Sources
+error-checking task is necessary to identify and  • Assemble Contemporaneous Data
+correct model coding errors so that they do not  • Verify Data Quality
+interfere with the model calibration task. Coding  • Identify Travel Conditions Using
+errors can distort the model calibration process and
+cause the analyst to adopt incorrect values for the  Cluster Analysis
+calibration parameters. Error checking involves
+various tests of the coded network and the demand  Chapter 3
+data to identify input coding errors.
+  3 Base Model Development
+Chapter 5 provides guidance on a systematic
+calibration of the error-free base model developed  • Specify Model Input Data
+in Step 4 to reproduce observed throughput and
+other performance measures for distinct travel  4  Chapter 4
+conditions characterized in Step 2. First, individual
+bottleneck capacities are obtained from observed  Error Checking
+data. The analyst then performs systematic
+adjustment of relevant tool parameters to reproduce  • Review Software Errors
+this throughput rate in model outputs. Second,
+aggregate demand crossing key strategic internal  • Review Input Coding Errors
+boundaries (screenlines) are characterized from
+observed data and are reproduced through alteration  • View Animation
+of travel demand flow rates. Third, a statistical
+analysis of observed data creates a series of time-  5  Chapter 5
+dynamic ranges for key performance measures (e.g.,
+bottleneck throughput and travel times) in each of  Model Calibration
+the travel conditions identified in Chapter 2. One
+model variant for each travel condition is then  • Identify Representative Days
+calibrated to fall within these time dynamic
+statistical envelopes, passing four distinct  • Prepare Variation Envelopes
+calibration criteria. When these criteria are met for
+all operational condition model variants, calibration  (for each Travel Condition)
+is complete and alternatives analysis may begin.
+  • Calibrate Model Within
+
+  Acceptability Criteria
+
+  6  Chapter 6
+
+  Alternatives Analysis
+
+  • Represent Alternatives in Model
+
+  • Conduct Statistical Tests on Outputs
+
+  7  Chapter 7
+
+  Final Report
+
+  • Summarize Key Results
+
+  • Prepare Technical Documentation
+
+  Figure 1. Diagram. The Microsimulation
+  Analytical Process (Source: FHWA)
+
+3
+Introduction
+
+Chapter 6 explains how to use microsimulation models in a well-designed experiment to support
+an analysis of alternative improvements proposed for the modeled transportation system. The set
+of calibrated microsimulation model variants corresponding to the set of travel conditions are run
+several times to test various project alternatives. The first step is to develop a baseline demand
+pattern, potentially for a future year. Then the various improvement alternatives are coded into
+the simulation model representing each travel condition. Randomness in simulation outputs is
+analyzed to determine the required number of runs to assess statistical validity satisfactorily
+when comparing the impacts of competing alternatives. The analyst then runs each model variant
+for the required number of replications for each alternative to generate the necessary output to
+generate the key performance measures. A statistical test is then performed to determine whether
+differences between two alternatives are statistically significant, i.e., to determine if the test
+meets the minimum criteria bounding the risk that the differences are only related to randomness
+in model outputs.
+
+Chapter 7 provides guidance on the documentation of microsimulation model analysis. This task
+involves summarizing the analytical results in a final report and documenting the analytical
+approach in a technical document. This task may also include presentation of study results to
+technical supervisors, elected officials, and the general public. The final report presents the
+analytical results in a form that is readily understandable by the decision makers for the project.
+The effort involved in summarizing the results for the final report should not be underestimated,
+since microsimulation models produce a wealth of numerical output that should be tabulated and
+summarized.
+
+ORGANIZATION OF THIS DOCUMENT
+
+  • Introduction (this chapter) highlights the key guiding principles of microsimulation and
+  provides an overview of these guidelines.
+
+  • Each chapter addresses one of the steps in the process. An example problem is used to
+  illustrate specific aspects in selected steps within the process.
+
+  • Appendix A presents a hypothetical case study regarding the application of a
+  microsimulation analysis to support cost-effective planning for a significant work zone
+  project.
+
+  4
+CHAPTER 1. MICROSIMULATION ANALYSIS PLANNING
+
+Microsimulation can provide a wealth of  Chapter 1
+information; however, it can also be a very time-
+consuming and resource-intensive effort. It is  1 Microsimulation Analysis Planning
+critical that the manager effectively coordinate the
+microsimulation effort to ensure a cost-effective  • Define Project Purpose
+outcome to the study (Figure 2). The primary  • Identify Influence Areas
+component of an effective management plan is the  • Select Approach
+study scope, which defines the objectives,  • Select Tool
+hypotheses, performance measures, scope, technical  • Estimate Staff Time
+approach, and an estimate of resources required for
+the study. The topic of effective analytic planning  Chapter 2
+and scoping is a complex topic addressed in several
+FHWA guidance documents. Guidance drawn from  2 Data Collection and Analysis
+these documents are referenced throughout this
+chapter. This chapter presents the key components  • Identify Data Sources
+of an overall management approach for planning a  • Assemble Contemporaneous Data
+cost-effective microsimulation analysis.  • Verify Data Quality
+  • Identify Travel Conditions Using
+ESTABLISH PROJECT PURPOSE
+  Cluster Analysis
+Before embarking on any major analytical effort, it
+is critical to establish a clear objective of the  Chapter 3
+analysis among stakeholders. An analytical effort
+that has unclear objectives can often lead to  3 Base Model Development
+avoidable negative outcomes such as failure to meet
+schedule or budget targets, weak or inconclusive  • Specify Model Input Data
+findings, and a general loss of credibility in
+microsimulation analysis among decision-makers.  4  Chapter 4
+
+Ideas for analyses may arise from many potential  Error Checking
+sources. Competing concepts for new investments
+may require systematic analysis. Proposed changes  • Review Software Errors
+to operational practice or system policy may
+warrant examination. Diagnostic analysis of system  • Review Input Coding Errors
+performance may reveal critical anomalies and
+potential mitigating actions. In each case there is an  • View Animation
+underlying hypothesis – that specific actions to be
+taken will result in improved system performance. It  5  Chapter 5
+is useful to discuss ideas for analytical projects
+among the full range of stakeholders responsible for  Model Calibration
+the performance of the transportation system as well
+as the stakeholders potentially impacted by the  • Identify Representative Days
+alternatives considered in the analysis.
+  • Prepare Variation Envelopes
+
+  (for each Travel Condition)
+
+  • Calibrate Model Within
+
+  Acceptability Criteria
+
+  6  Chapter 6
+
+  Alternatives Analysis
+
+  • Represent Alternatives in Model
+
+  • Conduct Statistical Tests on Outputs
+
+  7  Chapter 7
+
+  Final Report
+
+  • Summarize Key Results
+
+  • Prepare Technical Documentation
+
+  Figure 2. Diagram. Step 1:
+  Microsimulation Analysis Planning
+
+  (Source: FHWA)
+
+5
+Chapter 1. Microsimulation Analysis Planning
+
+To capture the purpose of the project clearly and succinctly, a prospective analysis should have a
+well-defined statement of objectives. A limit of 50-75 words for this statement (including all
+objectives) can be helpful in crafting a focused analytical project.
+Study objectives should answer the following questions:
+
+  • What is the system performance problem being addressed?
+  • What are the alternatives that will be analyzed and associated hypotheses?
+  • Who are the intended decision makers for analytical results?
+
+In some cases, there may be many competing ideas about how to improve the system, and
+multiple complementary concepts that together might be tested using microsimulation. The
+analyst can be helpful in leading stakeholders in crafting a statement of objectives that includes
+clearly identifying the alternatives to be considered. With some discussion, ideas often naturally
+group together into natural comprehensive solutions that can be represented and evaluated as
+alternatives within the analysis.
+
+Try to avoid broad, all-encompassing study objectives. They are difficult to achieve with the
+limited resources normally available and they do not help focus the analysis on the top-priority
+needs. A great deal of study resources can be saved if the manager and the analyst can identify
+upfront what will not be achieved by the analysis. The objectives for the analysis should be
+realistic, recognizing the resources and time that may be available for their achievement.
+
+The FHWA guidance document Scoping and Conducting Data-Driven 21st Century
+Transportation System Analyses [1] provides related guidance on integrating simulation analytics
+within an effective transportation systems management process. In the project conceptualization
+phase, a portfolio prioritization process is recommended that collects, integrates, and ranks
+project concepts to ensure that analytical resources are focused on the highest priorities.
+
+SELECT KEY PERFORMANCE MEASURES
+
+The objectives of the analytical effort should align with the overarching goals of organizations
+that manage the transportation system. For example, as a part of a system-wide performance
+management plan, there may be a focus on improving productivity, personal mobility, system
+safety, or environmental impact (or all of the above).
+
+Just as it is not good practice to attempt to address a large number of objectives in a single
+analytical effort, it is also risky to attempt to examine a large number of performance measures
+within a single analysis. Simply put, as the number of key performance measures grows, the
+level of effort associated with the prospective effort grows exponentially. This exponential level
+of effort is related to the effort to obtain and analyze observed data for each measure, to calibrate
+simulation models to reflect each measure, to conduct an analysis of alternatives based on each
+measure, and to integrate each measure within an overall framework supporting decisionmaking.
+
+Performance measures identified for an analytical project should focus on what will differentiate
+the alternatives identified in the objectives statement. Since these measures will directly inform
+
+  6
+Chapter 1. Microsimulation Analysis Planning
+
+decision makers, they are a critical element to focus on early in the project planning step. Key
+questions to consider when selecting performance measures:
+
+  • Can the performance measure be observed using field data?
+  • Can the performance measure be generated from simulation outputs?
+  • Can the performance measure effectively differentiate the alternatives?
+
+If the answer to any of these questions is no, then the performance measure should not be used.
+A well-defined analytical project should have at least one (and preferably multiple) key
+performance measure that meet these criteria.
+
+DEFINE SCOPE
+
+Once the study objectives and performance measures have been identified, the next step is to
+identify the scope—both in terms of geographic and temporal limits. Several questions related to
+analytical scope should be considered:
+
+  • What is the nature of the alternatives to be analyzed?
+  • How many of them are there?
+  • How complex are they?
+  • In what significant ways do they differ?
+
+  • What performance measures will be required to evaluate the alternatives?
+  • Over what geographic area are observed data available to calculate these measures?
+  • In what time periods are these data available?
+  • At what intervals (e.g., 15 minutes) can these measures be characterized?
+  • What types of simulation output (e.g., speed by lane) required?
+
+  • In what geographic locations are the alternatives expected to influence system
+  performance?
+
+  • In what time periods (months of the year, days of the week, hours of the day) will
+  alternatives influence system performance? For what year(s) and time period(s) will
+  output data be needed for other analyses (e.g., environmental studies)?
+
+  • Will the resulting influence in system performance from the alternatives influence
+  adjacent facilities or the time-dynamics travel demand patterns?
+
+  • What resources are available to the analyst?
+
+The geographic and temporal scopes of a microsimulation model should be sufficient to
+completely encompass all of the traffic congestion present in the primary influence area of the
+project during the target analysis period (current or future). What degree of precision in system
+performance will be required to differentiate alternatives? Are hourly averages satisfactory? Will
+the impact of the alternatives be very similar or very different from those of the proposed
+project? How disaggregate an analysis is required? Is the analysis likely to produce a set of
+alternatives where the decision makers should choose between varying levels of congestion (as
+opposed to a situation where one or more alternatives eliminate congestion, while others do not)?
+
+  7
+Chapter 1. Microsimulation Analysis Planning
+
+The analyst should try to design the model to geographically and temporally encompass all
+resulting congestion to ensure that the model outputs provide a complete picture of impacts on
+system performance. However, given the extent of congestion in many urban areas and resource
+limitations, it may not always be possible to achieve this goal. If this goal cannot be achieved,
+then the analyst should attempt to encompass as much of the congestion as is feasible within the
+resource constraints and be prepared to estimate (by post-processing model outputs) to
+compensate for the portion of congestion not included in the model. Increasing the temporal
+simulation horizon may be helpful in projects where expanding geographic boundaries is highly
+impractical.
+
+The model study area should include areas that might be impacted by the proposed improvement
+strategies. For example, if an analysis is to be conducted of incident management strategies, the
+model study area should include the area impacted by the diverted traffic. All potentially
+impacted areas should be included in the model network. For example, if queues are identified in
+the network boundary areas, the analyst might need to extend the network further upstream.
+
+DEVELOP THE ANALYTICAL APPROACH
+
+Microsimulation takes more effort than macroscopic simulation, and macroscopic simulation
+takes more effort than HCM-type analyses. The analyst should employ only the level of effort
+required by the problem being studied. Microsimulation models are data- intensive. They should
+only be used when sufficient resources can be made available and less data-intensive approaches
+cannot yield satisfactory results.
+
+In some cases, a microsimulation can be used in combination with other tools in a multi-
+resolution modeling (MRM) approach. A compilation of MRM studies can be found in Traffic
+Analysis Toolbox Volume XIV [3]. MRM methods are relatively new and experimental in
+nature, and each application should be customized to the effort at hand. The guidance in this
+document is relevant to a microsimulation project performed in the absence of other tools or
+within a well-defined MRM effort.
+
+Microsimulations have critical analytical strengths to be brought to bear. Some notable cases
+where these strengths are particularly useful include:
+
+  • Alternatives impacting lane-level capacities and throughput.
+  • Time-dynamic analyses detailing the onset, intensity, and duration of system congestion.
+  • System congestion dynamics that influence multiple intersections, interchanges and
+
+  facilities over time.
+
+Because they are sensitive to different vehicle performance characteristics and differing driver
+behavior characteristics, microsimulation models are useful for informing decision-makers on a
+wide range of potential investments, including:
+
+  • Signalized network systems analysis.
+  • Freeway operational studies.
+  • Managed lane deployments.
+
+  8
+Chapter 1. Microsimulation Analysis Planning
+
+  • Incident management projects.
+  • Integrated corridor management strategy assessments.
+  • Work zone planning.
+  • Studies of Intelligent Transportation System (ITS) technologies and applications.
+
+The modern analyst has an increasingly wide selection of commercial microsimulation tools to
+consider for a particular analysis. Some of the key criteria to be considered in software selection
+are technical capabilities, input/output/interfaces, user training/support, and ongoing software
+enhancements. Traffic Analysis Toolbox Volume II [25] provides detailed guidance on the
+selection of an appropriate analytical approach that may include a microsimulation tool.
+
+ESTIMATE REQUIRED RESOURCES
+
+The resource requirements for the development, calibration, and application of microsimulation
+models will vary according to the complexity of the project, its geographic scope, temporal
+scope, number of alternatives, and the availability and quality of the data. Adequate time should
+also be allotted to conduct a successful analysis. Data collection, coding, error checking, and
+calibration are the critical tasks for completing a calibrated model. The alternatives analysis
+cannot be started until the calibrated model has been reviewed and accepted. The FHWA
+guidance document Scoping and Conducting Data-Driven 21st Century Transportation System
+Analyses [2] provides a useful reference for the estimation of required resources to conduct
+simulation studies, including an interactive tool for the rough estimation of total hours (by
+experience level).
+
+PREPARE A PRELIMINARY ANALYSIS PLAN
+
+Much of the management of a microsimulation study is the same as managing any other complex
+project: establish clear objectives, define a solid scope of work and schedule, monitor milestones,
+and review deliverables. One of the key attributes of project management includes documenting
+key assumptions early in the effort and socializing these assumptions with key stakeholders. The
+Analysis Plan should be updated as the project moves through the sequence of stages from
+planning to alternatives analysis. One key component of an Analysis Plan is a Methods and
+Assumptions document that summarizes key decision made between the simulation project
+management (e.g., the sponsoring agency and their staff) and the simulation analyst responsible
+for carrying out the project. The outline (or template) for how entries in the Methods and
+Assumptions document are expected be logged and described. Prior to moving to data collection
+and analysis, it is critical to document (and socialize) these key aspects of the proposed analysis
+discussed in this chapter in a first iteration of an Analysis Plan:
+
+  • Study Objective.
+  • Key Performance Measures.
+  • Study Scope.
+  • Analytical Approach.
+  • Methods and Assumptions (outline).
+  • Estimated Resources.
+
+  9
+Chapter 1. Microsimulation Analysis Planning
+
+EXAMPLE PROBLEM: ALLIGATOR CITY
+
+The example problem is a complex corridor analysis in a hypothetical location (Alligator City).
+
+Background
+
+Our example problem is set in Alligator City (Figure 3), a mid-sized hypothetical metropolitan
+area on the Gulf Coast. It has attributes combining three different Gulf Coast metro areas but is
+not intended to represent any specific location. Like most rapidly growing metropolitan areas, it
+has significant congestion and mobility issues.
+
+Figure 3 presents the major geographic features in the region. Okanahatchee County spans the
+majority of the region, which features two high-ground locations. The first, Alligator City itself,
+located on an oval-shaped high-ground location adjacent to a deep-water harbor where the
+Chattacola River enters the Gulf of Mexico. Surrounding Alligator City is a series of wetlands
+and swampy grounds that include the slow-moving and shallow Chattacola.
+
+Overland access from Alligator City has been built crossing the Chattacola to the west across the
+Great Gloomy Swamp. The Marine Causeway, Komodo Tunnel and Victory Island Bridge
+connect to the West Hills, the other high-ground location in the region. As the metro area has
+grown, much of the growth in the last 40 years has been in the West Hills, putting pressure on
+the limited capacity of the facilities crossing the swamps and wetlands on the east/west axis.
+
+The Victory Island Bridge is an aging, toll-free facility that is the oldest east-west crossing of the
+Chattacola. In the 1970s, the Komodo Tunnel was constructed to supplement the bridge. The
+tunnel has three tubes. The center tube is reversible and is used as a carpool HOV-3 facility
+eastbound in the morning hours and westbound in the afternoon hours. Tolls are collected only
+on the inbound tunnel tube (all day) primarily through electronic toll tags.
+
+AM peak period congestion is a key issue in the metropolitan area. Figure 3 highlights some of
+the locations of highest local concern about congestion. Egress from the bridge and tunnel are
+often made difficult by congestion on the arterial grid within Alligator City.
+
+Access to the Victory Island Bridge from the Marine Causeway traverses some of the oldest
+infrastructure in the region. Traffic in these sections breaks down frequently in narrow lanes and
+some sections are subject to flooding.
+
+Current congestion reduction programs include the use of the reversible tunnel tube for HOV and
+bus access. Bus and Carpool facilities have been established in the West Hills to encourage the
+use of the carpool lane(s).
+
+Traveler information is provided primarily through commercial radio broadcast. At least one
+local media outlet uses fixed-wing aircraft to observe traffic conditions to support regular traffic
+reports. Finally, since there is almost no access between the two cities and very limited right-of-
+way, the County maintains and deploys a fleet of incident management trucks that patrol the
+Marine.
+
+  10
+Chapter 1. Microsimulation Analysis Planning
+
+  Figure 3. Map. Key Features of the Alligator City Example Problem (Source: FHWA)
+  11
+

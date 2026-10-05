@@ -1,0 +1,2 @@
+[console_scripts]
+acms = traffic_simulator.main:main

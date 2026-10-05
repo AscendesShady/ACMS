@@ -1,0 +1,1627 @@
+  SECTION 5.6 ■ The Exponential Distribution (Optional) 299
+
+5.100 Suppose x has an exponential distribution with u = 1. Find  company, the interarrival times (i.e., the time between suc-
+  cessive e-mail notifications, in seconds) have an approxi-
+  the following probabilities:  mate exponential distribution with a mean of 95 seconds.
+  a. What is the probability of observing an interarrival
+  a. P1x 7 12  b. P1x … 32
+  time of at least 2 minutes?
+  c. P1x 7 1.52  d. P1x … 52  b. Data for a sample of 267 interarrival times are saved in
+
+5.101 Suppose x has an exponential distribution with u = 5. Find  the PHISH file. Do the data appear to follow an expo-
+  nential distribution?
+  the following probabilities:
+
+  a. P1x … 42  b. P1x 7 52
+
+  c. P1x … 22  d. P1x 7 32
+
+5.102 The random variable x can be adequately approximated  5.108  Preventative maintenance tests. The optimal scheduling
+  by an exponential probability distribution with u = 3. Find  of preventative maintenance tests of some (but not all) of
+  the probability that x assumes a value  n independently operating components was developed in
+  a. More than three standard deviations from m.  Reliability Engineering and System Safety (Jan. 2006). The
+  b. Less than two standard deviations from m.  time (in hours) between failures of a component was ap-
+  c. Within half a standard deviation of m.  proximated by an exponentially distributed random vari-
+  able with mean u.
+5.103 Suppose the random variable x has an exponential proba-  a. Suppose u = 1,000 hours. Find the probability that
+  bility distribution with u = 3. Find the mean and standard
+  deviation of x. Find the probability that x will assume a  the time between component failures ranges between
+  value within the interval m { 2s.  1,200 and 1,500 hours.
+  b. Again, assume u = 1,000 hours. Find the probability
+Applying the Concepts—Basic  that the time between component failures is at least
+  1,200 hours.
+5.104  Bus interarrival times. In the Social and Natural Sciences  c. Given that the time between failures is at least 1,200
+  Journal (Vol. 6, 2012), the time x (in minutes) between two  hours, what is the probability that the time between fail-
+  successive arrivals of buses was modeled using an expo-  ures is less than 1,500 hours?
+  nential distribution with mean u = 3.77.
+  a. Give the value of E(x).  Applying the Concepts—Intermediate
+  b. What is the standard deviation of x?
+  c. Find P1x 7 52. Interpret this probability in the words  5.109 Earthquake recurrence in Iran. The Journal of Earthquake
+  Engineering (Vol. 17, 2013) modeled the time x (in years)
+  of the problem.  between major earthquakes occurring in the Iranian
+  d. Find P12.5 6 x 6 3.52. Interpret this probability in the  Plateau. One of the models considered had the following
+  density function:
+  words of the problem.
+  f1x2 = .04e-.04x, x 7 0
+5.105  Lead in metal shredder residue. On the basis of data col-
+  lected from metal shredders across the nation, the amount
+  x of extractable lead in metal shredder residue has an ap-  a. Find E(x). Interpret the result.
+  proximate exponential distribution with mean u = 2.5
+  milligrams per liter (Florida Shredder’s Association).  b. Find the variance of x.
+  a. Find the probability that x is greater than 3 milligrams
+  c. Use the empirical rule to estimate
+  per liter.  P1m - 2s 6 x 6 m + 2s2.
+  b. Find the probability that x is less than 6 milligrams per
+  d. Find the actual probability, P1m - 2s 6 x 6 m + 2s2.
+  liter.
+  How does the answer compare to the result in part c?
+5.106  Critical-part failures in NASCAR vehicles. In NASCAR
+  races such as the Daytona 500, 43 drivers start the race;  e. The earthquake system reliability at time t, R(t), is de-
+  however, about 10% of the cars do not finish due to the  fined as R1t2 = 1 - F1t2. Find R(5) and interpret this
+  failure of critical parts. University of Portland profes-
+  sors conducted a study of critical-part failures from 36  probability.
+  NASCAR races (The Sport Journal, Winter 2007). The
+  researchers discovered that the time (in hours) until the  5.110  Forest fragmentation study. Refer to the Conservation
+  first critical-part failure is exponentially distributed with a  Ecology (Dec. 2003) study on the causes of fragmentation
+  mean of .10 hour.  FRAG  in 54 South American forests, presented in Exercise 2.166
+  a. Find the probability that the time until the first  (p. 125). Recall that the cause is classified as either an-
+  thropogenic or natural in origin. The anthropogenic frag-
+  critical-part failure is 1 hour or more.  mentation index (saved in the FRAG file) for the South
+  b. Find the probability that the time until the first  American forests has an approximate exponential distribu-
+  tion with a mean of 23.
+  critical-part failure is less than 30 minutes.  a. Find the probability that a South American forest
+
+5.107  Phishing attacks to e-mail accounts. Refer to the Chance  has an anthropogenic fragmentation index between
+  (Summer 2007) article on phishing attacks at a company,  20 and 40.
+PHISH  Exercise 2.47 (p. 81). Recall that phishing describes an at-  b. Find the probability that a South American forest has
+  tempt to extract personal/financial information through  an anthropogenic fragmentation index below 50.
+  fraudulent e-mail. The company set up a publicized e-mail  c. The natural fragmentation index (also saved in the
+  account—called a “fraud box”—that enabled employees to  FRAG file) does not have an approximate exponential
+  notify it if they suspected an e-mail phishing attack. If there  distribution. Why?
+  is minimal or no collaboration or collusion from within the
+  5.111 Ship-to-shore transfer times. Lack of port facilities or shal-
+  low water may require cargo on a large ship to be trans-
+  ferred to a pier in smaller craft. The smaller craft may have
+300 CHAPTER 5 ■ Continuous Random Variables
+
+  to cycle back and forth from ship to shore many times.  the life (in hours) of a new halogen light bulb, and assume
+  An exponential distribution in Naval Research Logistics,  that x has an exponential distribution with mean u = 250
+  Vol. 41, 1994, was used to model the time between arrivals  hours. According to Microelectronics and Reliability (Jan.
+  of the smaller craft at the pier.  1986), the“ life” distribution of x is considered new better
+  a. Assume that the mean time between arrivals at the pier  than used (NBU) if
+
+  is 17 minutes. Give the value of u for this exponential  P1x 7 a + b2 … P1x 7 a2P1x 7 b2
+  distribution. Graph the distribution.
+  b. Suppose there is only one unloading zone at the pier  Alternatively, a “life” distribution is considered new worse
+  available for the small craft to use. If the first craft  than used (NWU) if
+  docks at 10:00 a.m. and doesn’t finish unloading until
+  10:15 a.m., what is the probability that the second craft  P1x 7 a + b2 Ú P1x 7 a2P1x 7 b2
+  will arrive at the unloading zone and have to wait be-
+  fore docking?  a. Show that when a = 300 and b = 200, the exponential
+  distribution is both NBU and NWU.
+5.112  Product failure behavior. An article in Hotwire (Dec.
+  2002) discussed the length of time till failure of a product  b. Choose any two positive numbers a and b, and repeat
+  produced at Hewlett-Packard. At the end of the product’s  part a.
+  lifetime, the time till failure is modeled using an exponen-
+  tial distribution with mean 500 thousand hours. In reliabil-  c. Show that, in general, for any positive a and b, the ex-
+  ity jargon, this is known as the “wear-out” distribution for  ponential distribution with mean u is both NBU and
+  the product. During its normal (useful) life, assume the  NWU. Such a “life” distribution is said to be new same
+  product’s time till failure is uniformly distributed over the  as used, or memoryless. Explain why.
+  range 100 thousand to 1 million hours.
+  a. At the end of the product’s lifetime, find the probability  5.114  Acceptance sampling of a product. An essential tool
+  in the monitoring of the quality of a manufactured
+  that the product fails before 800 thousand hours.  product is acceptance sampling. An acceptance sam-
+  b. During its normal (useful) life, find the probability that  pling plan involves knowing the distribution of the life
+  length of the item produced and determining how many
+  the product fails before 800 thousand hours.  items to inspect from the manufacturing process. The
+  c. Show that the probability of the product failing before  Journal of Applied Statistics (Apr. 2010) demonstrated
+  the use of the exponential distribution as a model for
+  830 thousand hours is approximately the same for both  the life length x of an item (e.g., a bullet). The article
+  the normal (useful) life distribution and the wear-out  also discussed the importance of using the median of
+  distribution.  the lifetime distribution as a measure of product qual-
+  ity, since half of the items in a manufactured lot will
+Applying the Concepts—Advanced  have life lengths exceeding the median. For an expo-
+  nential distribution with mean u, give an expression for
+5.113 Length of life of a halogen bulb. For a certain type of halo-  the median of the distribution. [Hint: Your answer will
+  gen light bulb, an old bulb that has been in use for a while  be a function of u.]
+  tends to have a longer life than a new bulb. Let x represent
+
+CHAPTER NOTES  Key Symbols
+
+Key Terms  f(x) Probability distribution (density function) for
+  continuous random variable x
+Note: Starred (*) terms are from the optional sections in this chapter.
+
+Bell curve 267  Normal probability plot 282  e  Constant used in normal probability distributions,
+Bell-shaped probability  Normal random variable 267
+  Probability density  e = 2.71828 c
+  distribution 267
+Continuous probability  function 262  p  Constant used in normal probability distributions,
+  Probability distribution 262
+  distribution 261  Randomness distribution 263  p = 3.1416 c
+Continuous random variable 261  Standard normal distribution 269
+*Correction for continuity 290  Standard normal random  u  Mean of exponential random variable
+*Exponential probability
+  variable 269  Key Ideas
+  distribution 295  Uniform probability
+*Exponential random  Properties of Continuous Probability Distributions
+  distribution 263
+  variables 296  Uniform random variable 263  1. P1x = a2 = 0
+Frequency function 262  *Waiting-time distribution 295  2. P1a 6 x 6 b2 is area under curve between a and b
+Normal distribution 267
+Methods for Assessing Normality  (4) Normal probability plot  Chapter Notes 301
+(1) Histogram
+  x
+
+(2) Stem-and-leaf display  17  z-scores
+(3) 1IQR2 > ≈1.3  2 3389
+  3 245677  Normal Approximation to Binomial
+  4 19  x is binomial (n, p)
+  52  P1 … a2 ≈ P5z 6 1a + .52 - m6
+
+Key Formulas  Prob. Dist’n  Mean  Variance
+  1c + d2>2  1d - c22>12
+  Random Variable  f1x2 =  1>1d - c2  s  s2
+  Uniform:  1c … x  … d2  m=0  s2 = 1
+  Normal:  f1x2 =
+  Standard Normal:  1 e-1>2[1x - m2>s]2  m=u  s=u
+  f1z2 =  s 12p
+  *Exponential:  z = 1x
+  f1x2 =  1 e-1>21z22
+  12p
+  - m2>s
+
+  1 e-x>u
+  u
+
+Guide to Selecting a Probability Distribution
+
+  Type
+  of
+
+  Random
+  Variable
+
+  DISCRETE  CONTINUOUS
+  (Countable)  (Uncountable)
+
+  Binomial  Poisson  Uniform  Normal  Exponential
+x = # of S’s in n trials  Randomness  Bell-shaped curve  Waiting time
+1. n identical trials  x = # times a rare  (evenness)  distribution
+2. 2 outcomes: S,F  event (S) occurs in a unit  distribution  f(x)
+3. P(S) & P(F ) same  f(x)
+  1. P(S) remains constant  f(x)
+  across trials  across units
+4. Trials independent
+  2. Unit x-values are
+  independent
+
+  c dx x x
+302 CHAPTER 5 ■ Continuous Random Variables
+
+Supplementary Exercises 5.115–5.157
+
+Note: Starred (*) exercises refer to the optional sections in this  *5.121  Assume that x is a binomial random variable with n = 100
+chapter.
+  and p = .5. Use the normal probability distribution to ap-
+Understanding the Principles
+  proximate the following probabilities:
+*5.115  Identify the type of continuous random variable—uniform,  a. P1x … 482
+  b. P150 … x … 652
+  normal, or exponential—described by each of the follow-  c. P1x Ú 702
+  d. P155 … x … 582
+  ing probability density functions:
+  a. f1x2 = 1e-x>82 >8, x 7 0  e. P1x = 622
+  b. f1x2 = 1>30, 10 6 x 6 40  f. P1x … 49 or x Ú 722
+
+  e-.531x - 122>742  5.122  Assume that x is a random variable best described by a
+  c. f1x2 =
+  uniform distribution with c = 50 and d = 80.
+  7 22p
+  a. Find f(x).
+*5.116  Consider the continuous random variables that follow.
+  Give the probability distribution (uniform, normal, or ex-  b. Find the mean and standard deviation of x.
+  ponential) that is likely to best approximate the distribu-
+  tion of the random variable:  c. Graph the probability distribution for x, and locate its
+  a. The weekly wage distribution of workers in a
+  mean and the interval m { 2s on the graph.
+  factory  d. Find P1x … 602.
+  b. The lifetime of a light bulb.  e. Find P1x Ú 702.
+  c. The systolic blood pressure (in mmHg) of an individual  f. Find P1x … 1002.
+  g. Find P1m - s … x … m + s2.
+  selected at random from a certain population.  h. Find P1x 7 672.
+  d. Difference between test scores for tests taken at two
+  *5.123 Assume that x has an exponential distribution with u = 4.
+  different times
+  Find
+Learning the Mechanics  a. P1x … 12
+  b. P1x 7 12
+5.117 Find the following probabilities for the standard normal
+  c. P1x = 1.42
+  random variable z:  d. P1x … 62
+  a. P1z … 2.32  e. P12 … x … 102
+  b. P1z 7 2.32
+  c. P1z Ú - 1.552  Applying the Concepts—Basic
+  d. P1 - 2.23 … z … - .4322
+  e. P1 - 1.46 … z … 2.162  5.124  NHTSA crash safety tests. Refer to the National Highway
+  f. P1z … - 1.452  Traffic Safety Administration (NHTSA) crash test data for
+  CRASH  new cars, presented in Exercise 2.190 (p. 135). One of the
+  variables measured is the severity of a driver’s head injury
+5.118 For a standard normal random variable, find a z-score, say,  when the car is in a head-on collision with a fixed barrier
+  while traveling at 35 miles per hour. The more points
+  z0, such that  .8132  assigned to the head injury rating, the more severe is the
+  a. P1z … z02 = .8729  injury. The head injury ratings can be shown to be approx-
+  b. P1z Ú z02 = .0516  imately normally distributed with a mean of 605 points and
+  c. P1z … z02 = .5  a standard deviation of 185 points. One of the crash-tested
+  d. P1 - z0 … z … z02 =  cars is randomly selected from the data, and the driver’s
+  e. P1z Ú z02 = .7995  head injury rating is observed.
+  f. P1z Ú z02 = .004  a. Find the probability that the rating will fall between 500
+
+5.119 The random variable x has a normal distribution with  and 700 points.
+  b. Find the probability that the rating will fall between 400
+  m = 80 and s = 20. Find the following probabilities:
+  a. P1x … 852  and 500 points.
+  b. P1x Ú 1202  c. Find the probability that the rating will be less than 850
+  c. P160 … x … 902
+  d. P1x 7 852  points.
+  e. P1x 6 1302  d. Find the probability that the rating will exceed 1,000
+
+  f. P1x = 952  points.
+  e. What rating will only 10% of the crash-tested cars
+5.120  The random variable x has a normal distribution with
+  m = 40 and s2 = 36. Find a value of x, say, x0, such that  exceed?
+  a. P1x Ú x02 = .5
+  b. P1x … x02 = .9909  *5.125 Galaxy velocity study. Refer to the Astronomical Journal
+  c. P1x … x02 = 54.16  (July 1995) study of galaxy velocities, presented in Exercise
+  d. P1x Ú x02 = .0217  2.200 (p. 137). A histogram of the velocities of 103 galaxies
+  e. P1x … x02 = .1075  located in a particular cluster named A2142 is reproduced
+  f. P1x Ú x02 = .8051  on the next page. Comment on whether the galaxy veloci-
+  ties are approximately normally distributed.
+  Supplementary Exercises 5.115–5.157 303
+
+Histogram for Excercise 5.125Number of galaxies  Engineering, Sept. 1, 2000). Assume that the distribution
+  of alkalinity levels is approximately normal, and find the
+  15  probability that a water specimen collected from the river
+  A2142 Velocity Distribution  has an alkalinity level
+  a. exceeding 45 milligrams per liter.
+  10  b. below 55 milligrams per liter.
+  c. between 51 and 52 milligrams per liter.
+
+  5.130  Weights of contaminated fish. Refer to the U.S. Army
+  Corps of Engineers data on contaminated fish in the
+  FISHDDT  Tennessee River, presented in Example 1.4 (p. 38). Recall
+  that one of the variables measured for each captured fish
+  5  is weight (in grams). The weights in the data set (saved in
+  the FISHDDT file) can be shown to be approximately nor-
+  0  mally distributed with a mean of 1,050 grams and a stan-
+  dard deviation of 375 grams. An observation is randomly
+  20  25  30  selected from the data and the fish weight is observed.
+  a. Find the probability that the weight will fall between
+  Observed velocity (/1000 km/sec)
+  1,000 and 1,400 grams.
+Oegerle, W. R., Hill, J. M., and Fitchett, M. J. “Observations of high dispersion  b. Find the probability that the weight will fall between
+clusters of galaxies: Constraints on cold dark matter.” The Astronomical Journal,
+Vol. 110, No. 1, July 1995, p. 37 (Figure 1). Reproduced by permission of the AAS.  800 and 1,000 grams.
+  c. Find the probability that the weight will be less than
+5.126  Trajectory of an electrical circuit. Researchers have de-
+  signed, built, and tested a switched-capacitor circuit for  1,750 grams.
+  generating random signals (International Journal of Circuit  d. Find the probability that the weight will exceed 500
+  Theory and Applications, May–June 1990). The circuit’s
+  trajectory was shown to be uniformly distributed on the  grams.
+  interval (0, 1).  e. Ninety-five percent of the captured fish have a weight
+  a. Give the mean and variance of the circuit’s trajectory.
+  b. Compute the probability that the trajectory falls be-  below what value?
+  f. Another variable saved in the FISHDDT file is the
+  tween .2 and .4.
+  c. Would you expect to observe a trajectory that exceeds  amount of DDT (in parts per million) detected in each
+  fish captured. Determine whether the DDT level is
+  .995? Explain.  approximately normal.
+
+  *5.131  Melanoma deaths. According to the American Cancer
+  Society, melanoma, a form of skin cancer, kills 15% of
+5.127  Passing the FCAT math test. All Florida high schools re-  Americans who suffer from the disease each year. Consider
+  quire their students to demonstrate competence in mathe-  a sample of 20,000 melanoma patients.
+  matics by scoring 70% or above on the FCAT mathematics  a. What are the expected value and variance of x, the num-
+  achievement test. The FCAT math scores of those students
+  taking the test for the first time are normally distributed  ber of the 20,000 melanoma patients who will die of the
+  with a mean of 77% and a standard deviation of 7.3%.  affliction this year?
+  What percentage of students who take the test for the first  b. Find the probability that x will exceed 3,100 patients per
+  time will pass it?  year.
+  c. Would you expect x, the number of patients dying
+5.128  Improving SAT scores. Refer to the Chance (Winter  of melanoma, to exceed 4,500 in any single year?
+  2001) study of students who paid a private tutor to help  Explain.
+  them improve their SAT scores, presented in Exercise
+  2.197 (p. 136). The table summarizing the changes in both  *5.132  Where will you get your next pet? Refer to Exercise 5.86
+  the SAT-Mathematics and SAT-Verbal scores for these  (p. 294), Recal that 50% of pet owners will get their next
+  students is reproduced here. Assume that both distribu-  dog or cat from a shelter (USA Today, May 12, 2010).
+  tions of SAT score changes are approximately normal.  Now, consider a random sample of 300 pet owners, and let
+  x be the number who will get their next dog or cat from a
+  Mean change in score  SAT-Math  SAT-Verbal  shelter.
+  19  7  a. Find the mean of x.
+  Standard deviation  b. Find the standard deviation of x.
+  of changes in score  65  49  c. Find the z-score for the value x = 165.
+  d. Find the approximate probability that x is less than or
+
+  equal to 165.
+
+  a. What is the probability that a student increases his or her  5.133  Transmission delays in wireless technology. In Mobile
+  score on the SAT-Math test by at least 50 points?  Networks and Applications (Dec. 2003), Resource
+  Reservation Protocol (RSVP) was applied to mobile wireless
+  b. What is the probability that a student increases his or her  technology (e.g., a PC notebook with wireless LAN card for
+  score on the SAT-Verbal test by at least 50 points?  Internet access). A simulation study revealed that the trans-
+  mission delay (measured in milliseconds) of an RSVP–linked
+5.129 Alkalinity of river water. The alkalinity level of water  wireless device has an approximate normal distribution with
+  specimens collected from the Han River in Seoul, Korea,  mean m = 48.5 milliseconds and s = 8.5 milliseconds.
+  has a mean of 50 milligrams per liter and a standard devi-
+  ation of 3.2 milligrams per liter (Environmental Science &
+304 CHAPTER 5 ■ Continuous Random Variables
+
+  a. What is the probability that the transmission delay is  5.137  Visually impaired students. The Journal of Visual
+  less than 57 milliseconds?  Impairment & Blindness (May–June 1997) published a
+  study of the lifestyles of visually impaired students. Using
+  b. What is the probability that the transmission delay is  diaries, the students kept track of several variables, includ-
+  between 40 and 60 milliseconds?  ing number of hours of sleep obtained in a typical day.
+  These visually impaired students had a mean of 9.06 hours
+*5.134  Hospital patient interarrival times. The length of time be-  and a standard deviation of 2.11 hours. Assume that the
+  tween arrivals at a hospital clinic has an approximately ex-  distribution of the number of hours of sleep for this group
+  ponential probability distribution. Suppose the mean time  of students is approximately normal.
+  between arrivals for patients at a clinic is 5 minutes.  a. Find the probability that a visually impaired student ob-
+  a. What is the probability that a particular interarrival
+  tains less than 6 hours of sleep on a typical day.
+  time (the time between the arrival of two patients) is  b. Find the probability that a visually impaired student gets
+  less than 1 minute?
+  b. What is the probability that the next four interarrival  between 8 and 10 hours of sleep on a typical day.
+  times are all less than 1 minute?  c. Twenty percent of all visually impaired students ob-
+  c. What is the probability that an interarrival time will ex-
+  ceed 10 minutes?  tain less than how many hours of sleep on a typical
+  day?
+5.135  Dart-throwing errors. How accurate are you at the game
+  of darts? Researchers at Iowa State University attempted  5.138  Comparison of exam scores: red versus blue exam. Refer to
+  to develop a probability model for dart throws (Chance,  the Teaching Psychology (May 1998) study of how external
+  Summer 1997). For each of 590 throws made at certain  clues influence performance, presented in Exercise 2.128
+  targets on a dart board, the distance from the dart to the  (p. 110). Recall that two different forms of a midterm psy-
+  target point was measured (to the nearest millimeter).  chology examination were given, one printed on blue paper
+  Descriptive statistics for the distances from the target for  and the other on red paper. Grading only the difficult ques-
+  the 590 throws are as follows:  tions, the researchers found that scores on the blue exam had
+  a distribution with a mean of 53% and a standard deviation
+  x = 24.4 mm  of 15%, while scores on the red exam had a distribution with
+  s = 12.8 mm  a mean of 39% and a standard deviation of 12%. Assuming
+  QL = 14 mm  that both distributions are approximately normal, on which
+  QU = 34 mm  exam is a student more likely to score below 20% on the dif-
+  ficult questions, the blue one or the red one? (Compare your
+  Use this information to decide whether the error distribu-  answer with that of Exercise 2.128 c.)
+  tion is approximately normal.
+  5.139  Waiting for an elevator. The manager of a large department
+  store with three floors reports that the time a customer on
+Applying the Concepts—Intermediate  the second floor must wait for an elevator has a uniform dis-
+  tribution ranging from 0 to 5 minutes. If it takes the elevator
+5.136  Marine losses for an oil company. The frequency distribu-  20 seconds to go from floor to floor, find the probability that
+  tion shown in the accompanying table depicts the property  a hurried customer can reach the first floor in less than 2 min-
+  and marine losses incurred by a large oil company over  utes after pushing the second-floor elevator button.
+  a two-year period. In the insurance business, each “loss”
+  interval is called a layer. Research Review (Summer 1998)  5.140  Length of gestation for pregnant women. On the basis of data
+  demonstrated that analysts often treat the actual loss value  from the National Center for Health Statistics, N. Wetzel used
+  within a layer as a uniform random variable.  the normal distribution to model the length of gestation for
+  pregnant U.S. women (Chance, Spring 2001). Gestation has a
+  Layer  Marine Losses  Relative  mean length of 280 days with a standard deviation of 20 days.
+  ($ thousands)  Frequency  a. Find the probability that the length of gestation is be-
+
+  1  0–10  .927  tween 275.5 and 276.5 days. (This estimate is the proba-
+  bility that a woman has her baby 4 days earlier than the
+  2  10–50  .053  “average” due date.)
+  b. Find the probability that the length of gestation is be-
+  3  50–100  .010  tween 258.5 and 259.5 days. (This estimate is the prob-
+  ability that a woman has her baby 21 days earlier than
+  4  100–250  .006  the “average” due date.)
+  c. Find the probability that the length of gestation is be-
+  5  250–500  .003  tween 254.5 and 255.5 days. (This estimate is the prob-
+  ability that a woman has her baby 25 days earlier than
+  6  500–1,000  .001  the “average” due date.)
+  d. The Chance article referenced a newspaper story about
+  7  1,000–2,500  .000  three sisters who all gave birth on the same day (Mar. 11,
+  1998). Karralee had her baby 4 days early, Marrianne
+  Based on Cozzolino, J. M., and Mikola, P. J. “Applications of  had her baby 21 days early, and Jennifer had her baby
+  the piecewise constant Pareto distribution.” Research Review,  25 days early. Use the results from parts a9 c to estimate
+  Summer 1998, pp. 39–59.  the probability that three women have their babies 4, 21,
+  and 25 days early, respectively. Assume that the births
+  a. Use the uniform distribution to find the mean loss  are independent events.
+  amount in layer 2.
+
+  b. Use the uniform distribution to find the mean loss
+  amount in layer 6.
+
+  c. If a loss occurs in layer 2, what is the probability that it
+  exceeds $30,000?
+
+  d. If a loss occurs in layer 6, what is the probability that it
+  is between $750,000 and $800,000?
+  Supplementary Exercises 5.115–5.157 305
+
+5.141  Galaxy velocity study. Recall The Astronomical Journal  Activity Quarterly, Oct. 1997). Assume that this distribution
+  (July 1995) study of galaxy velocity, Exercise 5.125 (p. 302).  is approximately normal.
+  The observed velocity of a galaxy located in galaxy clus-  a. What is the probability that a cardiac patient who reg-
+  ter A2142 was found to have a normal distribution with a
+  mean of 27,117 kilometers per second (km/s) and a stan-  ularly participates in sports has a maximum oxygen up-
+  dard deviation of 1,280 km/s. A galaxy with a velocity of  take of at least 20 ml/kg?
+  24,350 km/s is observed. Comment on the likelihood of this  b. What is the probability that a cardiac patient who regularly
+  galaxy being located in cluster A2142.  exercises has a maximum oxygen uptake of 10.5 ml/kg or
+  lower?
+*5.142  Parents who condone spanking. In Exercise 4.138 (p. 254),  c. Consider a cardiac patient with a maximum oxygen
+  you learned that 60% of parents with young children condone  uptake of 10.5. Is it likely that this patient participates
+  spanking their child as a regular form of punishment (Tampa  regularly in sports or exercise programs? Explain.
+  Tribune, Oct. 5, 2000). A child psychologist with 200 parent
+  clients claims that no more than 40 of the parents condone  5.147  Forest development following wildfires. Ecological
+  spanking. Do you believe this claim? Explain.  Applications (May 1995) published a study on the develop-
+  ment of forests following wildfires in the Pacific Northwest.
+*5.143  Victims of domestic abuse. In Exercise 4.79 (p. 241), you  One variable of interest to the researcher was tree diame-
+  learned that some researchers believe that one in every  ter at breast height 110 years after the fire.
+  three women has been a victim of domestic abuse (Domestic  a. The population of Douglas fir trees was shown to have
+  Violence: Incidence and Prevalence study, Sept.–Dec., 2005).
+  a. For a random sample of 240 women, what is the approx-  an approximately normal diameter distribution with
+  m = 50 centimeters (cm) and s = 12 cm. Find the di-
+  imate probability that more than half are victims of do-  ameter d such that 30% of the Douglas fir trees in the
+  mestic abuse?  population have diameters that exceed d.
+  b. For a random sample of 240 women, what is the approx-  b. Another species of tree, western hemlock, was found to
+  imate probability that fewer than 78 are victims of do-  have a breast height diameter distribution that resem-
+  mestic abuse?  bled an exponential distribution with u = 30 centime-
+  c. Would you expect to observe fewer than 50 domesti-  ters. Find the probability that a western hemlock tree
+  cally abused women in a sample of 240? Explain.  growing in the forest damaged by wildfire 110 years ago
+  has a diameter that exceeds 25 centimeters.
+5.144  Mile run times. A physical-fitness association is including
+  the mile run in its secondary-school fitness test for students.  5.148  Sedimentary deposits in reservoirs. Geologists have suc-
+  The time for this event is approximately normally distrib-  cessfully used statistical models to evaluate the nature of
+  uted with a mean of 470 seconds and a standard deviation of  sedimentary deposits (called facies) in reservoirs. One of
+  45 seconds. If the association wants to designate the fastest  the models’ key parameters is the proportion P of facies
+  10% of secondary-school students as “excellent,” what time  bodies in a reservoir. An article in Mathematical Geology
+  should the association set for this criterion?  (Apr. 1995) demonstrated that the number of facies bodies
+  that must be sampled to estimate P satisfactorily is approx-
+5.145  Wear-out of used display panels. Wear-out failure time of  imately normally distributed with m = 99 and s = 4.3.
+  electronic components is often assumed to have a normal  How many facies bodies are required to estimate P satis-
+PANEL  distribution. Can the normal distribution be applied to the  factorily for 99% of the reservoirs evaluated?
+  wear-out of used manufactured products, such as colored
+  display panels? A lot of 50 used display panels was pur-  5.149 Normal curve approximation. A. K. Shah published a sim-
+  chased by an outlet store. Each panel displays 12 to 18  ple approximation for areas under the normal curve in The
+  color characters. Prior to acquisition, the panels had been  American Statistician (Feb. 1985). Shah showed that the
+  used for about one-third of their expected lifetimes. The  area A under the standard normal curve between 0 and z is
+  data in the table below give the failure times (in years)
+  of the 50 used panels. Use the techniques of this chapter  z14.4 - z2/10  for 0 … z … 2.2
+  to determine whether the used panel wear-out times are  for 2.2 6 z 6 2.6
+  approximately normally distributed.  A ≈ • .49  for z Ú 2.6
+  .50
+
+5.146  Fitness of cardiac patients. The physical fitness of a patient  a. Use Shah’s approximation to find
+  is often measured by the patient’s maximum oxygen uptake  i. P10 6 z 6 1.22
+  (recorded in milliliters per kilogram, ml/kg). The mean  ii. P10 6 z 6 2.52
+  maximum oxygen uptake for cardiac patients who regularly  iii. P1z 7 .82
+  participate in sports or exercise programs was found to be  iv. P1z 6 1.02
+  24.1, with a standard deviation of 6.30 (Adapted Physical
+  b. Find the exact probabilities in part a.
+
+Data for Exercise 5.145
+
+0.01  1.21  1.71  2.30  2.96  0.19  1.22  1.75  2.30  2.98  0.51
+
+1.24  1.77  2.41  3.19  0.57  1.48  1.79  2.44  3.25  0.70  1.54
+
+1.88  2.57  3.31  0.73  1.59  1.90  2.61  1.19  0.75  1.61  1.93
+
+2.62  3.50  0.75  1.61  2.01  2.72  3.50  1.11  1.62  2.16  2.76
+
+3.50  1.16  1.62  2.18  2.84  3.50
+
+Based on Irony, T. Z., Lauretto, M., Pereira, C., and Stern, J. M. “A Weibull wearout test: Full Bayesian approach,” paper presented at Mathematical Sciences Colloquium,
+Binghamton University, Binghamton, UK, Dec. 2001.
+306 CHAPTER 5 ■ Continuous Random Variables
+
+  c. Shah showed that the approximation has a maximum  b. What is the probability that more than one serious acci-
+  absolute error of .0052. Verify this for the approxima-  dent will occur within the next month?
+  tions in part a.
+  5.155  Water retention of soil cores. A team of soil scientists
+  investigated the water retention properties of soil cores
+*5.150  Spruce budworm infestation. An infestation of a cer-  sampled from an uncropped field consisting of silt loam
+  tain species of caterpillar called the spruce budworm can  (Soil Science, Jan. 1995). At a pressure of .1 megapascal
+  cause extensive damage to the timberlands of the north-  (MPa), the water content of the soil (measured in cubic
+  ern United States. It is known that an outbreak of this  meters of water per cubic meter of soil) was determined
+  type of infestation occurs, on the average, every 40 years.  to be approximately normally distributed with m = .27 and
+  Assuming that this phenomenon obeys an exponential  s = .04. In addition to water content readings at a pres-
+  probability law, what is the probability that catastrophic  sure of .1 MPa, measurements were obtained at pressures
+  outbreaks of spruce budworm infestation will occur within  0, .005, .01, .03, and 1.5 MPa. Consider a soil core with a
+  8 years of each other?  water content reading of .14. Is it likely that this reading
+  was obtained at a pressure of .1 MPa? Explain.
+5.151  Maximum time to take a test. A professor believes that
+  if a class is allowed to work on an examination as long as
+  desired, the times spent by the students would be approx-  Critical Thinking Challenges
+  imately normal with mean 45 minutes and standard devia-
+  tion 6.5 minutes. About how long should be allotted for the  *5.156  Weights of corn chip bags. The net weight per bag of a
+  examination if the professor wants almost all (say, 97.5%)  certain brand of corn chips is listed as 12 ounces. The
+  of the class to finish?  weight of chips actually dispensed in each bag by an au-
+  tomated machine, when operating to specifications, is a
+*5.152  Reliability of CD-ROMs. In Reliability Ques (Mar.  normal random variable with mean 11.5 ounces and stan-
+  2004), the exponential distribution was used to model the  dard deviation .27 ounce. A quality control inspector will
+  lengths of life of CD-ROM drives in a two-drive system.  randomly select 1,500 bags from the automated process
+  The two CD-ROM drives operate independently, and at  and measure the weight of each bag precisely. Ideally, all
+  least one drive must be operating for the system to oper-  of the bags should contain at least 10 ounces of corn chips.
+  ate successfully. Both drives have a mean length of life of  However, if at least 97% of the bags contain 12 ounces or
+  25,000 hours.  more, the process is considered “under control” and no
+  a. The reliability R(t) of a single CD-ROM drive is the  adjustments to the machine are deemed necessary. Assess
+  the likelihood that the quality control inspector will find
+  probability that the life of the drive exceeds t hours.  fewer than 97% of the bags with 12 ounces or more even
+  Give a formula for R(t).  if the process is “under control.”
+  b. Use the result from part a to find the probability that the
+  life of the single CD-ROM drive exceeds 8,760 hours  5.157  IQs and The Bell Curve. The controversial book, The
+  (the number of hours of operation in a year).  Bell Curve (Free Press, 1994), employs statistical analy-
+  c. The reliability S(t) of the two-CD-ROM-drive system is  ses heavily in an attempt to support the authors’ position
+  the probability that the life of at least one drive exceeds  on “intelligence and class structure in American life.”
+  t hours. Give a formula for S(t). [Hint: Use the rule of  Since the book’s publication, many expert statisticians
+  complements and the fact that the two drives operate  have raised doubts about the authors’ statistical methods
+  independently.]  and the inferences drawn from them. (See, for example,
+  d. Use the result from part c to find the probability that  “Wringing The Bell Curve: A cautionary tale about
+  the two-drive CD-ROM system has a life whose length  the relationships among race, genes, and IQ,” Chance,
+  exceeds 8,760 hours.  Summer 1995.) One of the many controversies sparked
+  e. Compare the probabilities you found in parts b and d.  by the book is the authors’ tenet that level of intelligence
+  (or lack thereof) is a cause of a wide range of intractable
+Applying the Concepts—Advanced  social problems, including constrained economic mobil-
+  ity. The measure of intelligence chosen by the authors is
+5.153  Dye discharged in paint. A machine used to regulate the  the well-known intelligence quotient (IQ). Psychologists
+  amount of dye dispensed for mixing shades of paint can  traditionally treat IQ as a random variable having a
+  be set so that it discharges an average of m milliliters (mL)  normal distribution with mean m = 100 and standard
+  of dye per can of paint. The amount of dye discharged is  deviation s = 15.
+  known to have a normal distribution with a standard de-
+  viation of .4 mL. If more than 6 mL of dye are discharged  The Bell Curve refers to five cognitive classes of
+  when making a certain shade of blue paint, the shade is  people defined by percentiles of the normal distribution.
+  unacceptable. Determine the setting for m so that only 1%  Class I (“very bright”) consists of those with IQs above the
+  of the cans of paint will be unacceptable.  95th percentile; Class II (“bright”) are those with IQs be-
+  tween the 75th and 95th percentiles; Class III (“normal”)
+5.154  Accidents at a plant. The number of serious accidents in a  includes IQs between the 25th and 75th percentiles; Class
+  manufacturing plant has (approximately) a Poisson prob-  IV (“dull”) are those with IQs between the 5th and 25th
+  ability distribution with a mean of three serious accidents  percentiles; and Class V (“very dull”) are IQs below the
+  per month. It can be shown that if x, the number of events  5th percentile.
+  per unit time, has a Poisson distribution with mean l, then  a. Assuming that the distribution of IQ is accurately rep-
+  the time between two successive events has an exponential
+  probability distribution with mean u = 1>l.  resented by the normal curve, determine the propor-
+  a. If an accident occurs today, what is the probability that  tion of people with IQs in each of the five cognitive
+  classes.
+  the next serious accident will not occur within the next
+  month?
+b. Although the authors define the cognitive classes in  Using Technology 307
+  terms of percentiles, they stress that IQ scores should be
+  compared with z-scores, not percentiles. In other words,  c. Researchers have found that scores on many intelli-
+  it is more informative to give the difference in z-scores  gence tests are decidedly nonnormal. Some distribu-
+  for two IQ scores than it is to give the difference in  tions are skewed toward higher scores, others toward
+  percentiles. Do you agree?  lower scores. How would the proportions in the five
+  cognitive classes defined in part a differ for an IQ distri-
+  bution that is skewed right? Skewed left?
+
+Activity The Normal Approximation to the Binomial
+
+For large values of n, the computational effort involved in work-  c. Find the magnitude of the difference between each of the
+ing with the binomial probability distribution is considerable.  three probabilities as determined by the binomial distribution
+Fortunately, in many instances the normal distribution provides  and by the normal approximation.
+a good approximation to the binomial distribution. This activity
+was designed to enable you to demonstrate to yourself how well  d. Letting x have a binomial distribution with n = 20 and
+the normal distribution approximates the binomial distribution.  p = .5, repeat parts a, b, and c. Notice that the probability
+  estimates provided by the normal distribution are more ac-
+a. Let the random variable x have a binomial probability with  curate for n = 20 than for n = 10.
+  n = 10 and p = .5. Using the binomial distribution, find the
+  probability that x takes on a value in each of the following  e. Letting x have a binomial distribution with n = 20 and
+  intervals: m { s, m { 2s, and m { 3s.  p = .01, repeat parts a, b, and c. Notice that the probability
+  estimates provided by the normal distribution are poor in this
+b. Find the probabilities requested in part a by using a normal  case. Explain why this occurs.
+  approximation to the given binomial distribution.
+
+References  Ross, S. M. Stochastic Processes, 2nd ed. New York: Wiley, 1996.
+
+Hogg, R.V., McKean, J. W., and Craig, A.T. Introduction to Mathematical  Wackerly, D., Mendenhall, W., and Scheaffer, R. L. Mathematical
+  Statistics, 6th ed. Upper Saddle River, NJ: Prentice Hall, 2005.  Statistics with Applications, 7th ed. North Scituate, MA: Duxbury,
+  2008.
+Lindgren, B. W. Statistical Theory, 4th ed. New York: Chapman & Hall,
+  1993.  Winkler, R. L., and Hays, W. Statistics: Probability, Inference, and
+  Decision, 2nd ed. New York: Holt, Rinehart and Winston, 1975.
+Mood, A. M., Graybill, F. A., and Boes, D. C. Introduction to the Theory
+  of Statistics, 3rd ed. New York: McGraw-Hill, 1974.
+
+Ramsey, P. P., and Ramsey, P. H. “Simple tests of normality in small
+  samples.” Journal of Quality Technology, Vol. 22, 1990.
+
+USING TECHNOLOGY  MINITAB: Continuous Random Variable Probabilities
+  and Normal Probability Plots
+
+Continuous Probabilities  Figure 5.M.1 MINITAB menu options for continuous
+  probabilities
+Step 1 Select the “Calc” button on the MINITAB menu bar,
+click on “Probability Distributions,” and then finally select the
+Continuous distribution of your choice (e.g., “Normal”), as
+shown in Figure 5.M.1.
+
+Step 2 Select either “Probability” or “Cumulative probability”
+on the resulting dialog box.
+
+Step 3 Specify the parameters of the distribution (e.g., the range
+for a uniform distribution, m and s for a normal distribution, and
+the mean u for an exponential distribution).
+
+Step 4 Specify the value x of interest in the “Input constant”
+box.
+
+Step 5 Click “OK”. The probability for the value of x will appear
+on the MINITAB session window.
+308 CHAPTER 5 ■ Continuous Random Variables  Step 2 Select “Single” (for one variable) on the next box, and
+  the dialog box will appear as shown in Figure 5.M.4.
+Figure 5.M.2 MINITAB normal distribution dialog box
+[Note: Figure 5.M.2 gives the specifications for finding  Step 3 Specify the variable of interest in the “Graph variables”
+P1x … 232 in a normal distribution with m = 24.5 and s = 1.]  box, and then click the “Distribution” button and select the
+  “Normal” option. Click “OK” to return to the Probability Plot
+Normal Probability Plot  dialog box.
+
+Step 1 Select “Graph” on the MINITAB menu bar, and then  Step 4 Click “OK” to generate the normal probability plot.
+click on “Probability Plot,” as shown in Figure 5.M.3.
+  TI–83/TI–84 Plus Graphing Calculator:
+Figure 5.M.3 MINITAB options for a normal probability plot  Normal Random Variable and Normal
+  Probability Plots
+Figure 5.M.4 MINITAB normal probability plot dialog box
+  Graphing the Area under the Standard
+  Normal Curve
+
+  Step 1 Turn off all plots
+  • Press 2nd PRGM and select 1:ClrDraw
+  • Press ENTER, and ‘Done’ will appear on the screen
+  • Press 2nd Y= and select 4:PlotsOff
+  • Press ENTER, and ‘Done’ will appear on the screen
+
+  Step 2 Set the viewing window (Recall that almost all of the area
+  under the standard normal curve falls between - 5 and 5. A height
+  of 0.5 is a good choice for Ymax.)
+
+  Note: When entering a negative number, be sure to use the
+  negative sign ( - ), and not the minus sign.
+  • Set Xmin = −5
+  • Xmax = 5
+  • Xscl = 1
+  • Ymin = 0
+  • Ymax = .5
+  • Yscl = 0
+  • Xres = 1
+
+  Step 3 View graph
+  • Press 2nd VARS
+  • Arrow right to DRAW
+  • Press ENTER to select 1:ShadeNorm(
+  • Enter your lower limit (e.g., -5)
+  • Press COMMA
+  • Enter your upper limit
+
+  (e.g., 1.5)
+  • Press)
+  • Press ENTER
+
+  The graph will be displayed
+  along with the area, lower
+  limit, and upper limit.
+  Thus, P1Z 6 1.52 = .9332
+
+  Finding Normal Probabilities without a Graph
+
+  To compute probabilities for a normal distribution, use the
+  normalcdf( command. Normalcdf stands for “normal cumulative
+  density function.” This command is under the DISTRibution
+menu and has the format normalcdf(lower limit, upper limit,  Using Technology 309
+mean, standard deviation).
+  • Press COMMA
+Step 1 Find the probability  • Enter the standard deviation
+• Press 2nd VARS for DISTR and select Normalcdf(  • Press)
+• After Normalcdf(, type in the lower limit  • Press ENTER
+• Press COMMA
+• Enter the upper limit  The graph will be displayed along with the area, lower limit,
+• Press COMMA  and upper limit.
+• Enter the mean  Example What is P1x 6 1152 for a normal distribution with
+• Press COMMA  m = 100 and s = 10? In this example, the lower limit is
+• Enter the standard deviation  - ∞ , the upper limit is 115, the mean is 100, and the standard
+• Press)  deviation is 10. To represent - ∞ on the calculator, enter
+• Press ENTER  ( − ) 1, press 2nd and press the comma key for EE, and then
+  press 99. The screens appear as follows:
+  The probability will be displayed on the screen.
+  Graphing a Normal Probability Plot
+  Example What is P1x 6 1152 for a normal distribution with
+  m = 100 and s = 10? In this example, the lower limit is  Step 1 Enter the data
+  - ∞ , the upper limit is 115, the mean is 100, and the standard  • Press STAT and select 1:Edit
+  deviation is 10. To represent
+  - ∞ on the calculator, enter  Note: If the list already contains data, clear the old data. Use
+  (−) 1, press 2nd and press  the up arrow to highlight L1
+  the COMMA key for EE,  • Press CLEAR ENTER
+  and then press 99. The  • Use the ARROW and ENTER keys to enter the data set into L1
+  screen appears as follows:  Step 2 Set up the normal probability plot
+  • Press Y = and CLEAR all functions from the Y registers
+  Thus, P1x 6 1152 = .9332  • Press 2nd and press Y = for STAT PLOT
+  • Press 1 for Plot 1
+Finding Normal Probabilities with a Graph  • Set the cursor so that ON is flashing
+  • For Type, use the ARROW and ENTER keys to highlight
+Step 1 Turn off all plots  and select the last graph in
+• Press Y = and CLEAR all functions from the Y registers  the bottom row
+• Press 2nd Y = and select 4:PlotsOff  • For Data List, choose the
+• Press ENTER ENTER, and ‘Done’ will appear on the screen  column containing the data
+  (in most cases, L1)
+Step 2 Set the viewing window (These values depend on the  (Note: Press 2nd 1 for L1)
+mean and standard deviation of the data.) Note: When entering  • For Data Axis, choose X and
+a negative number, be sure to use the negative sign (−), not the  press ENTER
+minus sign.  Step 3 View plot
+• Press WINDOW  • Press ZOOM 9
+• Set Xmin = m- 5s  Your data will be displayed against the expected z-scores
+• Xmax = m + 5s  from a normal distribution. If you see a “generally” linear
+• Xscl = s  relationship, your data set is approximately normal.
+• Ymin = − .125>s
+• Ymax = .5>s
+• Yscl = 1
+• Xres = 1
+
+Step 3 View graph
+• Press 2nd VARS
+• ARROW right to DRAW
+• Press ENTER to select 1:ShadeNorm(
+• Enter the lower limit
+• Press COMMA
+• Enter the upper limit
+• Press COMMA
+• Enter the mean
+6 Sampling Distributions
+
+contents  Where We’ve Been
+
+6.1 The Concept of a Sampling  • Learned that the objective of most statistical
+  distribution  investigations is inference—that is, making
+  decisions about a population on the basis of
+6.2 Properties of Sampling distributions:  information about a sample
+  Unbiasedness and Minimum Variance
+  • Discovered that sample statistics such as the
+6.3 The Sampling distribution of x and the  sample mean and sample variance can be used to
+  Central Limit Theorem  make decisions
+
+6.4 The Sampling distribution of the  • Found that probability distributions for random
+  Sample Proportion  variables are used to construct theoretical models
+  of populations
+
+  Where We’re Going
+
+  • Establish that a sample statistic is a random
+  variable with a probability distribution (6.1)
+
+  • Define a sampling distribution as the probability
+  distribution of a sample statistic (6.1)
+
+  • Give two important properties of sampling
+  distributions (6.2)
+
+  • Learn that the sampling distribution of both the
+  sample mean and the sample proportion tends to
+  be approximately normal (6.3, 6.4)
+  CHAPTER 6 ■ Sampling Distributions 311
+
+Statistics IN Action The insomnia Pill: is it effective?
+
+More than 20 years ago, neuroscientists at the Massachusetts  According to the lead
+Institute of Technology (MIT) began experimenting with  investigator, Professor Richard
+melatonin—a hormone secreted by the pineal gland in the  Wurtman, “Our volunteers fall
+brain—as a sleep-inducing hormone. Their original study, pub-  asleep in 5 or 6 minutes on
+lished in the Proceedings of the National Academy of Sciences  melatonin, while those on pla-
+(Mar. 1994), brought encouraging news to insomniacs and  cebo take about 15 minutes.”
+travelers who suffer from jet lag: Melatonin was discovered  Wurtman warned, however,
+to be effective in reducing sleep onset latency (the amount  that uncontrolled doses of melatonin could cause mood-altering
+of time between a person lying down to sleep and the actual  side effects.
+onset of stage one sleep). Furthermore, since the hormone is
+naturally produced, it is nonaddictive.  Now, consider a random sample of 40 young males, each
+  of whom is given a dosage of the sleep-inducing hormone
+  Since then, pharmaceutical companies that produce  melatonin. The times taken (in minutes) to fall asleep for
+melatonin pills for treating insomnia have received nega-  these 40 males are listed in Table SIA6.1 and saved in the
+tive reports on the efficacy of the drug. Many people don’t  INSOMNIA file. The researchers know that with the placebo
+think the melatonin pills work. Consequently, the MIT re-  (i.e., no hormone), the mean sleep onset latency is m = 15
+searchers undertook a follow-up study and published their  minutes and the standard deviation is s = 10 minutes. They
+results in Sleep Medicine Reviews (Feb. 2005). They reported  want to use the data to make an inference about the true
+that commercially available melatonin pills contain too high  value of m for those taking the melatonin. Specifically, the
+a dosage of the drug. When the melatonin receptors in the  researchers want to know whether melatonin is an effective
+brain are exposed to too much of the hormone, they become  drug against insomnia.
+unresponsive. The researchers’ analysis of all previous stud-
+ies on melatonin as a sleep inducer confirmed that, taken in  In this chapter, a Statistics in Action Revisited example
+small doses, melatonin is effective in reducing sleep onset  demonstrates how we can use one of the topics discussed in
+latency.  the chapter—the Central Limit Theorem—to make an infer-
+  ence about the effectiveness of melatonin as a sleep-inducing
+  In this Statistics in Action, our focus is on the original  hormone.
+MIT study. Young male volunteers were given various doses
+of melatonin or a placebo (a dummy medication containing  Statistics IN Action Revisited
+no melatonin). Then they were placed in a dark room at mid-
+day and told to close their eyes for 30 minutes. The variable of  • Making an Inference about the Mean Sleep Onset Latency
+interest was sleep onset latency (in minutes).  for Insomnia Pill Takers (p. 328)
+
+Table SIA6.1 Times Taken (in Minutes) for 40 Male Volunteers to Fall Asleep
+
+7.6  2.1  1.4  1.5  3.6  17.0  14.9  4.4  4.7  20.1
+
+7.7  2.4  8.1  1.5  10.3  1.3  3.7  2.5  3.4  10.7
+
+2.9  1.5  15.9  3.0  1.9  8.5  6.1  4.5  2.2  2.6
+
+7.0  6.4  2.8  2.8  22.8  1.5  4.6  2.0  6.3  3.2
+
+[Note: These data are simulated sleep times based on summary information provided in the MIT study.]  Data Set: INSOMNIA
+
+  In Chapters 4 and 5, we assumed that we knew the probability distribution of a random
+  variable, and using this knowledge, we were able to compute the mean, variance, and prob-
+  abilities associated with the random variable. However, in most practical applications, this
+  information is not available. To illustrate, in Example 4.13 (p. 236), we calculated the prob-
+  ability that the binomial random variable x, the number of 20 polled voters who favored a
+  certain mayoral candidate, assumed specific values. To do this, it was necessary to assume
+  some value for p, the proportion of all voters who favored the candidate. Thus, for the
+  purposes of illustration, we assumed that p = .6 when, in all likelihood, the exact value
+  of p would be unknown. In fact, the probable purpose of taking the poll is to estimate p.
+  Similarly, when we modeled the in-city gas mileage of a certain automobile model, we
+  used the normal probability distribution with an assumed mean and standard deviation
+  of 27 and 3 miles per gallon, respectively. In most situations, the true mean and standard
+  deviation are unknown quantities that have to be estimated. Numerical quantities that
+312  CHAPTER 6 ■ Sampling Distributions
+
+  describe probability distributions are called parameters. Thus, p, the probability of a suc-
+  cess in a binomial experiment, and m and s, the mean and standard deviation, respectively,
+  of a normal distribution, are examples of parameters.
+
+  A parameter is a numerical descriptive measure of a population. Because it is based
+  on the observations in the population, its value is almost always unknown.
+
+  We have also discussed the sample mean x, sample variance s2, sample standard
+  deviation s, and the like, which are numerical descriptive measures calculated from the
+  sample. (See Table 6.1 for a list of the statistics covered so far in this text.) We will often
+  use the information contained in these sample statistics to make inferences about the
+  parameters of a population.
+
+  A sample statistic is a numerical descriptive measure of a sample. It is calculated
+  from the observations in the sample.
+
+  Table 6.1 List of Population Parameters and Corresponding Sample Statistics
+
+  Population Parameter  Sample Statistic
+
+  Mean:  m  x
+
+  Median:  h  M
+
+  Variance:  s2  s2
+
+  Standard deviation:  s  s
+
+  Binomial proportion:  p  pn
+
+  Note that the term statistic refers to a sample quantity and the term parameter refers to
+  a population quantity.
+
+  Before we can show you how to use sample statistics to make inferences about
+  population parameters, we need to be able to evaluate their properties. Does one sample
+  statistic contain more information than another about a population parameter? On what
+  basis should we choose the “best” statistic for making inferences about a parameter?
+  The purpose of this chapter is to answer these questions.
+
+6.1 The Concept of a Sampling Distribution
+
+  If we want to estimate a parameter of a population—say, the population mean m—we
+  can use a number of sample statistics for our estimate. Two possibilities are the sample
+  mean x and the sample median M. Which of these do you think will provide a better
+  estimate of m?
+
+  Before answering this question, consider the following example: Toss a fair die, and
+  let x equal the number of dots showing on the up face. Suppose the die is tossed three
+  times, producing the sample measurements 2, 2, 6. The sample mean is then x = 3.33,
+  and the sample median is M = 2. Since the population mean of x is m = 3.5, you can
+  see that, for this sample of three measurements, the sample mean x provides an estimate
+  that falls closer to m than does the sample median (see Figure 6.1a). Now suppose we
+  toss the die three more times and obtain the sample measurements 3, 4, 6. Then the
+  mean and median of this sample are x = 4.33 and M = 4, respectively. This time, M is
+  closer to m. (See Figure 6.1b.)
+
+  This simple example illustrates an important point: Neither the sample mean nor
+  the sample median will always fall closer to the population mean. Consequently, we
+  cannot compare these two sample statistics or, in general, any two sample statistics on
+  SECTION 6.1 ■ The Concept of a Sampling Distribution 313
+
+Figure 6.1  0  1  2  3  4  5  60  1  2  3  4  5  6
+
+Comparing the sample mean  x
+(x) and sample median (M) as
+estimators of the population  M  x  M
+mean 1m2
+
+  the basis of their performance with a single sample. Instead, we need to recognize that
+  sample statistics are themselves random variables because different samples can lead
+  to different values for the sample statistics. As random variables, sample statistics must
+  be judged and compared on the basis of their probability distributions (i.e., the collec-
+  tion of values and associated probabilities of each statistic that would be obtained if the
+  sampling experiment were repeated a very large number of times). We will illustrate this
+  concept with another example.
+
+  Suppose it is known that in a certain part of Canada the daily high temperature
+  recorded for all past months of January has a mean m = 10°F and a standard deviation
+  s = 5°F. Consider an experiment consisting of randomly selecting 25 daily high tem-
+  peratures from the records of past months of January and calculating the sample mean
+  x. If this experiment were repeated a very large number of times, the value of x would
+  vary from sample to sample. For example, the first sample of 25 temperature mea-
+  surements might have a mean x = 9.8, the second sample a mean x = 11.4, the third
+  sample a mean x = 10.5, etc. If the sampling experiment were repeated a very large
+  number of times, the resulting histogram of sample means would be approximately the
+  probability distribution of x. If x is a good estimator of m, we would expect the values
+  of x to cluster around m as shown in Figure 6.2. This probability distribution is called a
+  sampling distribution because it is generated by repeating a sampling experiment a very
+  large number of times.
+
+  The sampling distribution of a sample statistic calculated from a sample of n tem-
+  perature measurements is the probability distribution of the statistic.
+
+  In actual practice, the sampling distribution of a statistic is obtained mathemati-
+  cally or (at least approximately) by simulating the sample on a computer, using a proce-
+  dure similar to that just described.
+
+  If x has been calculated from a sample of n = 25 measurements selected from a
+  population with mean m = 10 and standard deviation s = 5, the sampling distribution
+  (Figure 6.2) provides information about the behavior of x in repeated sampling.
+
+Figure 6.2  x
+
+Sampling distribution for x  7  8  9 10 11 12 13
+based on a sample of n = 25
+temperature measurements
+
+  For example, the probability that you will draw a sample of 25 measurements and obtain
+  a value of x in the interval 9 … x … 10 will be the area under the sampling distribution
+  over that interval.
+
+  Since the properties of a statistic are typified by its sampling distribution, it fol-
+  lows that, to compare two sample statistics, you compare their sampling distributions.
+  For example, if you have two statistics, A and B, for estimating the same parameter (for
+314  CHAPTER 6 ■ Sampling Distributions
+
+  purposes of illustration, suppose the parameter is the population variance s2), and if
+  their sampling distributions are as shown in Figure 6.3, you would prefer statistic A over
+  statistic B. You would do so because the sampling distribution for statistic A centers
+  over s2 and has less spread (variation) than the sampling distribution for statistic B.
+  Then, when you draw a single sample in a practical sampling situation, the probability is
+  higher that statistic A will fall nearer s2.
+
+  Sampling  Sampling
+  distribution  distribution
+  for statistic B  for statistic A
+
+  Figure 6.3
+  Two sampling distributions
+  for estimating the population
+  variance s2
+
+  Remember that, in practice, we will not know the numerical value of the unknown
+  parameter s2, so we will not know whether statistic A or statistic B is closer to s2 for a par-
+  ticular sample. We have to rely on our knowledge of the theoretical sampling distributions
+  to choose the best sample statistic and then use it sample after sample. The procedure for
+  finding the sampling distribution for a statistic is demonstrated in Examples 6.1 and 6.2.
+
+ Example 6.1  Problem In a single toss of a fair coin, let x equal the number of heads observed. Now
+  consider a sample of n = 2 tosses. Find the sampling distribution of x, the sample mean.
+Finding a Sampling
+Distribution—Coin  Solution For one coin toss, the result is either a head (H) or tail (T). Thus, the value of x
+Tossing Experiment  is either x = 1 or x = 0. The four possible outcomes (sample points) for two coin tosses
+  and corresponding probabilities are listed Table 6.2. Since a fair coin is tossed, these four
+  possible outcomes are equally likely.
+
+  Table 6.2 outcomes for n = 2 Coin Tosses
+
+  Outcome (Toss 1, Toss 2)  Probability  x
+
+  H H 1x = 1, x = 12  1΋4  1
+  H T 1x = 1, x = 02
+  T H 1x = 0, x = 12  1΋4  .5
+  T T 1x = 0, x = 02
+  1΋4  .5
+
+  1΋4  0
+
+  The value of x for each outcome is also listed in Table 6.2. You can see that the values are
+  either 0, .5, or 1. Now, P1x = 12 = P1H H2 = 1΋4. Similarly, P1x = 02 = P1T T2 = 1΋4.
+  Finally, using the probability law for unions of mutually exclusive events,
+  P1x = .52 = P1H T or T H2 = P1H T2 + P1T H2 = 1΋4 + 1΋4 = 1΋2. Thus, the sam-
+  pling distribution of x is:
+
+  x  0 .5 1
+  p1x2  1΋4 1΋2 1΋4
+
+  ■
+
+ Example 6.2  Problem Consider the popular casino game of craps, in which a player throws two dice
+
+Finding a Sampling  and bets on the outcome (the sum total of the dots showing on the upper faces of the two
+Distribution—Come-out
+Roll in Craps  dice). In Example 4.5 (p. 218), we looked at the possible outcomes of a $5 wager on the
+
+  first toss (called the come-out roll). Recall that if the sum total of the dice is 7 or 11, the
+  roller wins $5; if the total is a 2, 3, or 12, the roller loses $5 (i.e., the roller “wins” - $5);
+  SECTION 6.1 ■ The Concept of a Sampling Distribution 315
+
+and, for any other total (4, 5, 6, 8, 9, or 10), no money is lost or won on that roll (i.e., the
+roller wins $0). Let x represent the result of the come-out roll wager ( - $5, $0, or + $5).
+
+We showed in Example 4.5 that the actual probability distribution of x is:
+
+Outcome of wager, x  -5  0  5
+
+p(x)  1>9  6>9  2>9
+
+Now, consider a random sample of n = 3 come-out rolls.
+
+a. Find the sampling distribution of the sample mean, x.
+b. Find the sampling distribution of the sample median, M.
+
+Solution The outcomes for every possible sample of n = 3 come-out rolls are listed
+in Table 6.3, along with the sample mean and median. The probability of each sample
+is obtained using the Multiplicative Rule. For example, the probability of the sample
+
+(0, 0, 5) is p102 # p102 # p152 = 16>9216>9212>92 = 72>729 = .099. The probability
+
+for each sample is also listed in Table 6.3. Note that the sum of these probabilities is
+equal to 1.
+
+Table 6.3 All Possible Samples of n = 3 Come-out Rolls in Craps
+
+Possible Samples  x  M  Probability
+
+  - 5, - 5, - 5  -5  -5  11>9211>9211>92 = 1>729
+  - 5, - 5, 0  11>9211>9216>92 = 6>729
+  - 5, - 5, 5  - 3.33  -5  11>9211>9212>92 = 2>729
+  - 5, 0, - 5  11>9216>9211>92 = 6>729
+  - 5, 0, 0  - 1.67  -5  11>9216>9216>92 = 36>729
+  - 5, 0, 5  11>9216>9212>92 = 12>729
+  - 5, 5, - 5  - 3.33  -5  11>9212>9211>92 = 2>729
+  - 5, 5, 0  11>9212>9216>92 = 12>729
+  - 5, 5, 5  - 1.67  0  11>9212>9212>92 = 4>729
+  16>9211>9211>92 = 6>729
+  0, -5, - 5  0  0  16>9211>9216>92 = 36>729
+  0, -5, 0  16>9211>9212>92 = 12>729
+  0, -5, 5  - 1.67  -5  16>9216>9211>92 = 36>729
+  0, 0, -5  16>9216>9216>92 = 216>729
+  0  0  16>9216>9212>92 = 72>729
+  0, 0, 0  16>9212>9211>92 = 12>729
+  1.67  5  16>9212>9216>92 = 72>729
+  0, 0, 5  16>9212>9212>92 = 24>729
+  0, 5, -5  - 3.33  -5  12>9211>9211>92 = 2>729
+  12>9211>9216>92 = 12>729
+  0, 5, 0  - 1.67  0  12>9211>9212>92 = 4>729
+  12>9216>9211>92 = 12>729
+  0, 5, 5  0  0  12>9216>9216>92 = 72>729
+  5, - 5, -5  12>9216>9212>92 = 24>729
+  5, -5, 0  - 1.67  0  12>9212>9211>92 = 4>729
+  5, -5, 5  12>9212>9216>92 = 24>729
+  5, 0, - 5  0  0  12>9212>9212>92 = 8>729
+
+  5, 0, 0  1.67  0  Sum = 729>729 = 1
+
+  5, 0, 5  0  0
+  5, 5, -5
+  1.67  0
+  5, 5, 0
+  3.33  5
+  5, 5, 5
+  - 1.67  -5
+
+  0  0
+
+  1.67  5
+
+  0  0
+
+  1.67  0
+
+  3.33  5
+
+  1.67  5
+
+  3.33  5
+
+  5  5
+
+a. FromTable 6.3,you can see that x can assume the values -5, -3.33, -1.67, 0, 1.67, 3.33,
+
+  and 5. Because x = -5 occurs only in one sample, P1x = -52 = 1>729. Similarly,
+  x = -3.33 occurs in three samples, 1 -5, -5, 02, 1 -5, 0, -52, and 10, -5, -52.
+  Therefore, P1x = -3.332 = 6>729 + 6>729 + 6>729 = 18>729. Calculating the
+316 CHAPTER 6 ■ Sampling Distributions
+
+  probabilities of the remaining values of x and arranging them in a table, we obtain
+  the following probability distribution:
+
+  x  -5  - 3.33  - 1.67  0  1.67  3.33  5
+  p1x2
+  1>729 =  18>729 =  114>729 =  288>729 =  228>729 =  72>729 =  8>729 =
+  .0014  .0247  .1564  .3951  .3127  .0988  .0110
+
+  This is the sampling distribution for x because it specifies the probability associated with
+  each possible value of x.You can see that the most likely mean outcome after 3 randomly
+  selected come-out rolls is x = $0; this result occurs with probability 288>729 = .3951.
+
+  b. In Table 6.3, you can see that the median M can assume one of three values:
+  -5, 0, and 5. The value M = -5 occurs in 7 different samples. Therefore,
+  P1M = -52 is the sum of the probabilities associated with these 7 samples; that is,
+  P1M = -52 = 1>729 + 6>729 + 2>729 + 6>729 + 2>729 + 6>729 + 2>729 = 25>729.
+  Similarly, M = 0 occurs in 13 samples and M = 5 occurs in 7 samples. These probabil-
+  ities are obtained by summing the probabilities of their respective sample points. After
+  performing these calculations, we obtain the following probability distribution for the
+  median M:
+
+  M  -5  0  5
+  p(M)  25>729 = .0343  612>729 = .8395  92>729 = .1262
+
+  Once again, the most likely median outcome after 3 randomly selected come-out
+  rolls is x = $0—a result that occurs with probability 612>729 = .8395.
+
+  Look Back The sampling distributions of parts a and b are found by first listing all
+  possible distinct values of the statistic and then calculating the probability of each value.
+  Note that if the values of x were equally likely, the 27 sample points in Table 6.3 would
+  all have the same probability of occurring, namely, 1/27.
+
+  ■ Now Work Exercise 6.3
+
+  Examples 6.1 and 6.2 demonstrate the procedure for finding the exact sampling dis-
+  tribution of a statistic when the number of different samples that could be selected from
+  the population is relatively small. In the real world, populations often consist of a large
+  number of different values, making samples difficult (or impossible) to enumerate. When
+  this situation occurs, we may choose to obtain the approximate sampling distribution for
+  a statistic by simulating the sampling over and over again and recording the proportion of
+  times different values of the statistic occur. Example 6.3 illustrates this procedure.
+
+ Example 6.3  Problem The rolling machine of a steel manufacturer produces sheets of steel of varying
+  thickness. The thickness of a steel sheet follows a uniform distribution with values
+Simulating a Sampling  between 150 and 200 millimeters. Suppose we perform the following experiment over
+Distribution—Thickness  and over again: Randomly sample 11 steel sheets from the production line and record
+of Steel Sheets  the thickness x of each. Calculate the two sample statistics
+
+  f(x)  x = Sample mean = Σx
+  11
+1
+50  M = Median = Sixth sample measurement when the 11 thicknesses
+  are arranged in ascending order
+  x
+  Obtain approximations to the sampling distributions of x and M.
+150  200
+  Solution The population of thicknesses follows the uniform distribution shown in
+Figure 6.4  Figure 6.4. We used MINITAB to generate 1,000 samples from this population, each
+  with n = 11 observations. Then we computed x and M for each sample. Our goal is to
+Uniform distribution for  obtain approximations to the sampling distributions of x and M in order to find out which
+thickness of steel sheets  sample statistic (x or M) contains more information about m. [Note: In this particular
+  SECTION 6.1 ■ The Concept of a Sampling Distribution 317
+
+  example, we know that the population mean is m = 175 mm. (See Section 5.2.)] The first
+  10 of the 1,000 samples generated are presented in Table 6.4. For instance, the first
+  computer-generated sample from the uniform distribution contained the following
+  measurements (arranged in ascending order): 151, 157, 162, 169, 171, 173, 181, 182, 187, 188,
+  and 193 millimeters. The sample mean x and median M computed for this sample are
+
+  x = = 151 + 157 + g + 193 174.0
+  11
+
+  M = Sixth ordered measurement = 173
+
+  The MINITAB relative frequency histograms for x and M for the 1,000 samples of size
+  n = 11 are shown in Figure 6.5. These histograms represent approximations to the true
+  sampling distributions of x and M.
+
+Table 6.4 First 10 Samples of n = 11 Thickness Measurements from uniform Distribution
+
+Sample  Thickness Measurements  Mean Median
+
+1  173  171  187  151  188  181  182  157  162  169  193 174.00 173
+  193 182.09 182
+2  181  190  182  171  187  177  162  172  188  200  173 180.36 182
+  187 172.45 173
+3  192  195  187  187  172  164  164  189  179  182  160 169.46 169
+  187 176.55 173
+4  173  157  150  154  168  174  171  182  200  181  193 172.09 175
+  180 169.73 164
+5  169  160  167  170  197  159  174  174  161  173  175 179.27 181
+  150 176.18 173
+6  179  170  167  174  173  178  173  170  173  198
+  Data Set: SIMUNI
+7  166  177  162  171  154  177  154  179  175  185
+
+8  164  199  152  153  163  156  184  151  198  167
+
+9  181  193  151  166  180  199  180  184  182  181
+
+10  155  199  199  171  172  157  173  187  190  185
+
+Figure 6.5
+
+MINITAB histograms for
+sample mean and sample
+median, Example 6.3
+
+  Look Back You can see that the values of x tend to cluster around m to a greater extent
+  than do the values of M. Thus, on the basis of the observed sampling distributions, we
+  conclude that x contains more information about m than M does—at least for samples of
+  n = 11 measurements from the uniform distribution.
+
+  ■ Now Work Exercise 6.8
+318  CHAPTER 6 ■ Sampling Distributions
+
+  As noted earlier, many sampling distributions can be derived mathematically, but
+  the theory necessary to do so is beyond the scope of this text. Consequently, when we
+  need to know the properties of a statistic, we will present its sampling distribution and
+  simply describe its properties. Several of the important properties we look for in sam-
+  pling distributions are discussed in the next section.
+
+Exercises 6.1–6.9  distribution for the 10,000 sample means would be al-
+  most identical to the sampling distribution of x found in
+Understanding the Principles  Exercise 6.3, part e.]
+
+ 6.1 What is the difference between a population parameter  6.5 Consider the population described by the probability dis-
+  and a sample statistic?  tribution shown below. The random variable x is observed
+  twice with independent observations.
+ 6.2 What is a sampling distribution of a sample statistic?
+
+Learning the Mechanics  x  0  1  2  3
+
+ 6.3 The probability distribution shown here describes a pop-  p1x2  .3  .2  .3  .2
+  ulation of measurements that can assume values of 0,
+  2, 4, and 6, each of which occurs with the same relative
+  frequency:
+
+  x  0  2  4  6  Sample  Probability  Sample  Probability
+
+  p1x2  1΋4  1΋4  1΋4  1΋4  0, 0  .09  2, 0  .09
+  0, 1  .06  2, 1  .06
+  a. List all the different samples of n = 2 measurements  0, 2  .09  2, 2  .09
+  that can be selected from this population.  0, 3  .06  2, 3  .06
+  1, 0  .06  3, 0  .06
+  b. Calculate the mean of each different sample listed in  1, 1  .04  3, 1  .04
+  part a.  1, 2  .06  3, 2  .06
+  1, 3  .04  3, 3  .04
+  c. If a sample of n = 2 measurements is randomly se-
+  lected from the population, what is the probability that  a. Complete the sampling distribution table. Type the val-
+  a specific sample will be selected?  ues of x in ascending order.
+
+  d. Assume that a random sample of n = 2 measurements  b. Construct a probability histogram for the sampling dis-
+  is selected from the population. List the different values  tribution of x.
+  of x found in part b, and find the probability of each.
+  Then give the sampling distribution of the sample mean  c. What is the probability that x is 3 or larger?
+  x in tabular form.  d. Would you expect to observe a value of x equal to 3 or
+
+  e. Construct a probability histogram for the sampling dis-  larger? Explain.
+  tribution of x.
+  6.6 Refer to Exercise 6.5 and find E1x2 = m. Then use the
+6.4 Simulate sampling from the population described in  sampling distribution of x found in Exercise 6.5 to find the
+  Exercise 6.3 by marking the values of x, one on each of  expected value of x. Note that E1x2 = m.
+  four identical coins (or poker chips, etc.). Place the coins
+  (marked 0, 2, 4, and 6) into a bag, randomly select one, and  6.7 Refer to Exercise 6.5. Assume that a random sample of n = 2
+  observe its value. Replace this coin, draw a second coin,  measurements is randomly selected from the population.
+  and observe its value. Finally, calculate the mean x for this  a. List the different values that the sample median M may
+  sample of n = 2 observations randomly selected from the  assume, and find the probability of each. Then give the
+  population (Exercise 6.3, part b). Replace the coins, mix  sampling distribution of the sample median.
+  them, and, using the same procedure, select a sample of  b. Construct a probability histogram for the sampling dis-
+  n = 2 observations from the population. Record the num-  tribution of the sample median, and compare it with the
+  bers and calculate x for this sample. Repeat this sampling  probability histogram for the sample mean (Exercise
+  process until you acquire 100 values of x. Construct a rel-  6.5, part b).
+  ative frequency distribution for these 100 sample means.
+  Compare this distribution with the exact sampling dis-  6.8 In Example 6.3, we used the computer to generate
+  tribution of x found in part e of Exercise 6.3. [Note: The  1,000 samples, each containing n = 11 observations,
+  distribution obtained in this exercise is an approximation  from a uniform distribution over the interval from 150
+  to the exact sampling distribution. However, if you were  to 200. Now use the computer to generate 500 samples,
+  to repeat the sampling procedure, drawing two coins not  each containing n = 15 observations, from that same
+  100 times, but 10,000 times, then the relative frequency  population.
+SECTION 6.2 ■ Properties of Sampling Distributions: Unbiasedness and Minimum Variance 319
+
+  a. Calculate the sample mean for each sample. To approx-  occur with equal probability. Use the computer to generate
+  imate the sampling distribution of x, construct a rela-
+  tive frequency histogram for the 500 values of x.  500 samples, each containing n = 20 measurements, from
+
+  b. Repeat part a for the sample median. Compare this ap-  this population. Calculate the sample mean x and sample
+  proximate sampling distribution with the approximate  variance s2 for each of the 500 samples.
+  sampling distribution of x found in part a.
+  a. To approximate the sampling distribution of x, con-
+6.9 Consider a population that contains values of x equal to
+  00, 01, 02, 03, c, 96, 97, 98, 99. Assume that these values  struct a relative frequency histogram for the 500 values
+
+  of x.
+  b. Repeat part a for the 500 values of s2.
+
+6.2 Properties of Sampling Distributions: Unbiasedness
+  and Minimum Variance
+
+  The simplest type of statistic used to make inferences about a population parameter is a
+  point estimator—a rule or formula that tells us how to use the sample data to calculate a
+  single number that is intended to estimate the value of some population parameter. For
+  example, the sample mean x is a point estimator of the population mean m. Similarly, the
+  sample variance s2 is a point estimator of the population variance s2.
+
+  A point estimator of a population parameter is a rule or formula that tells us how to
+  use the sample data to calculate a single number that can be used as an estimate of
+  the population parameter.
+
+ Example 6.4  Often, many different point estimators can be found to estimate the same param-
+  eter. Each will have a sampling distribution that provides information about the point
+Comparing Two  estimator. By examining the sampling distribution, we can determine how large the dif-
+Statistics  ference between an estimate and the true value of the parameter (called the error of
+  estimation) is likely to be. We can also tell whether an estimator is more likely to overes-
+  timate or to underestimate a parameter.
+
+  Problem Suppose two statistics, A and B, exist to estimate the same population parameter
+  u (theta). (Note that u could be any parameter: m, s2, s, etc.) Suppose the two statistics
+  have sampling distributions as shown in Figure 6.6. On the basis of these sampling
+  distributions, which statistic is more attractive as an estimator of u?
+
+  Solution As a first consideration, we would like the sampling distribution to center over
+  the value of the parameter we wish to estimate. One way to characterize this property is
+  in terms of the mean of the sampling distribution. Consequently, we say that a statistic is
+  unbiased if the mean of the sampling distribution is equal to the parameter it is intended
+  to estimate. This situation is shown in Figure 6.6a, where the mean mA of statistic A
+  is equal to u. If the mean of a sampling distribution is not equal to the parameter it is
+  intended to estimate, the statistic is said to be biased. The sampling distribution for a
+
+  f(A)  f(B)
+  A Bias B
+Figure 6.6
+Sampling distributions of  Mean of sampling distribution
+unbiased and biased estimators
+320  CHAPTER 6 ■ Sampling Distributions
+
+  biased statistic is shown in Figure 6.6b. The mean mB of the sampling distribution for
+  statistic B is not equal to u; in fact, it is shifted to the right of u.
+
+  Look Back You can see that biased statistics tend either to overestimate or to
+  underestimate a parameter. Consequently, when other properties of statistics tend to
+  be equivalent, we will choose an unbiased statistic to estimate a parameter of interest.*
+
+  ■ Now Work Exercise 6.14
+
+  Unbiased and Biased Estimators
+
+  If the sampling distribution of a sample statistic 1un2 has a mean equal to the popu-
+  lation parameter 1u2 the statistic is intended to estimate, the statistic is said to be an
+  unbiased estimate of the parameter. If the mean of the sampling distribution is not
+  equal to the parameter, the statistic is said to be a biased estimate of the parameter.
+
+  Unbiased: E1un2 = u
+  Biased: E1un2 ≠ u
+
+  The standard deviation of a sampling dis-
+
+  tribution measures another important property  Sampling
+
+  of statistics: the spread of these estimates gener-  Sampling  distribution
+  ated by repeated sampling. Suppose two statistics,  distribution  for statistic A
+  A and B, are both unbiased estimators of the  for statistic B
+  population parameter. Since the means of the
+
+  two sampling distributions are the same, we turn
+
+  to their standard deviations in order to decide
+
+  which will provide estimates that fall closer to the  Parameter value
+
+  unknown population parameter we are estimat- Figure 6.7
+
+  ing. Naturally, we will choose the sample statistic Sampling distributions for two
+  that has the smaller standard deviation. Figure 6.7 unbiased estimators
+
+  depicts sampling distributions for A and B. Note
+
+  that the standard deviation of the distribution for A is smaller than the standard devia-
+
+  tion of the distribution for B, indicating that, over a large number of samples, the values
+
+  of A cluster more closely around the unknown population parameter than do the values
+
+  of B. Stated differently, the probability that A is close to the parameter value is higher
+
+  than the probability that B is close to the parameter value.
+
+  In sum, to make an inference about a population parameter, we use the sample
+
+  statistic with a sampling distribution that is unbiased and has a small standard deviation
+
+  (usually smaller than the standard deviation of other unbiased sample statistics). The
+
+  derivation of this sample statistic will not concern us, because the “best” statistic for
+
+  estimating specific parameters is a matter of record. We will simply present an unbi-
+
+  ased estimator with its standard deviation for each population parameter we consider.
+
+  [Note: The standard deviation of the sampling distribution of a statistic is also called the
+
+  standard error of the statistic.]
+
+ Example 6.5  Problem Refer to Example 6.2 and the outcome x of a $5 wager in craps. We found the
+  sampling distributions of the sample mean x and the sample median M for random
+Biased and unbiased  samples of n = 3 dice rolls from a population defined by the following probability
+Estimators—Craps  distribution:
+Application
+
+  x  -5  0  5
+  p1x2
+  1΋9 6΋9 2΋9
+
+  *Unbiased statistics do not exist for all parameters of interest, but they do exist for all the parameters
+  considered in this text.
+SECTION 6.2 ■ Properties of Sampling Distributions: Unbiasedness and Minimum Variance  321
+
+  The sampling distributions of x and M were found to be as follows:
+
+  x  -5  - 3.33  - 1.67  0  1.67  3.33  5
+  p1x2  1΋729  18΋729  114΋729  288΋729  228΋729  72΋729  8΋729
+
+  M  -5  0  5
+  p1M2  25΋729  612΋729  92΋729
+
+  a. Show that x is an unbiased estimator of m in this situation.
+  b. Show that M is a biased estimator of m in this situation.
+
+  Solution
+
+  a. The expected value of a discrete random variable x (see Section 4.3) is defined as
+  E1x2 = Σxp1x2, where the summation is over all values of x. Then
+
+  E1x2 = m = Σxp1x2 = 1 -52 11΋9 2 + 102 16΋9 2 + 152 12΋9 2 = 5 = .556
+
+  9
+  The expected value of the discrete random variable x is
+
+  E1x2 = Σ1x2p1x2
+
+  summed over all values of x, or
+  E1x2 = 1 - 52 11΋7292 + 1 - 3.332 118΋7292 + 1 - 1.672 1114΋7292 + g+ 152 18΋7292 = .556
+
+  Since E1x2 = m, x is an unbiased estimator of m.
+  b. The expected value of the sample median M is
+
+  E1M2 = ΣMp1M2 = 1 - 52 125΋7292 + 102 1612΋7292 + 152 192΋ 335 7292 = = .460
+  729
+
+  Since the expected value of M is not equal to m 1m = .5562, the sample median M is
+  a biased estimator of m.
+
+  ■ Now Work Exercise 6.16a–d
+
+ Example 6.6  Problem Refer to Example 6.5 and find the standard deviations of the sampling
+  distributions of x and M. Which statistic would appear to be a better estimator of m?
+Variance of
+Estimators—Craps  Solution  The  variance  of  the  sampling  distribution  of  x  (we  denote  it  by  the  symbol  2
+Application
+  sx)
+
+  is found to be
+
+  E5[x - E1x2]26 = Σ 1x - m22p1x2
+
+  where, from Example 6.5,
+
+  E1x2 = m = .556
+
+  Then
+
+  2  =  1 - 5 - .5562211΋7292  +  1 - 3.33 - .55622118΋7292  +  g+  15 - .5562218΋7292
+
+  sx
+
+  = 2.675
+
+  and
+  sx = 12.675 = 1.64
+
+  Similarly, the variance of the sampling distribution of M (we denote it by s2M) is
+  s2M = E5 3M - E1M2 426
+322  CHAPTER 6 ■ Sampling Distributions
+
+  where, from Example 6.5, the expected value of M is E1M2 = .460. Then
+  s2M = E5 3M - E1M2 426 = Σ 3M - E1M2 42p1M2
+  = 1 - 5 - .4602 125΋7292 + 10 - .4602 1612΋7292 + 15 - .4602 192΋7292 = 3.801
+
+  and
+
+  sM = 13.801 = 1.95
+
+  Which statistic appears to be the better estimator for the population mean m, the
+  sample mean x or the median M? To answer this question, we compare the sampling
+  distributions of the two statistics. The sampling distribution of the sample median M is
+  biased (i.e., it is located to the left of the mean m), and its standard deviation sM = 1.95
+  is larger than the standard deviation of the sampling distribution of x, sx = 1.64.
+  Consequently, for the population in question, the sample mean x would be a better esti-
+  mator of the population mean m than the sample median M would be.
+
+  Look Back Ideally, we desire an estimator that is unbiased and has the smallest variance
+  among all unbiased estimators. We call this statistic the minimum-variance unbiased
+  estimator (MVUE).
+
+  ■ Now Work Exercise 6.16e, f
+
+Exercises 6.10–6.20  c. Find the sampling distribution of the sample median M
+  for a random sample of n = 3 measurements from this
+Understanding the Principles  distribution, and show that the median is a biased esti-
+  mator of m.
+6.10 What is a point estimator of a population parameter?
+6.11 What is the difference between a biased and unbiased  d. If you wanted to use a sample of three measurements
+  from this population to estimate m, which estimator
+  estimator?  would you use? Why?
+6.12 What is the MVUE for a parameter?
+6.13 What are the properties of an ideal estimator?  6.16 Consider the following probability distribution:
+
+Learning the Mechanics  x  0  1  2
+  p1x2
+6.14 Consider the following probability distribution:  1΋3 1΋3 1΋3
+
+  x  0  1  4  a. Find m.
+  p1x2  b. For a random sample of n = 3 observations from this
+  1΋3 1΋3 1΋3
+  distribution, find the sampling distribution of the sample
+  a. Find m and s2.  mean.
+  b. Find the sampling distribution of the sample mean x  c. Find the sampling distribution of the median of a sample
+  of n = 3 observations from this population.
+  for a random sample of n = 2 measurements from this  d. Refer to parts b and c, and show that both the mean and
+  distribution.  median are unbiased estimators of m for this population.
+  c. Show that x is an unbiased estimator of m. [Hint: Show  e. Find the variances of the sampling distributions of the
+  that E1x2 = Σxp1x2 = m.]  sample mean and the sample median.
+  d. Find the sampling distribution of the sample variance s2  f. Which estimator would you use to estimate m? Why?
+  for a random sample of n = 2 measurements from this
+  distribution.  6.17 Use the computer to generate 750 samples, each contain-
+  e. Show that s2 is an unbiased estimator for s2.  ing n = 20 measurements, from a population that con-
+  tains values of x equal to 1, 2, …, 48, 49, 50. Assume that
+6.15 Consider the following probability distribution:  these values of x are equally likely. Calculate the sample
+  mean x and median M for each sample. Construct rela-
+  x  2  4  9  tive frequency histograms for the 750 values of x and the
+  p1x2  750 values of M. Use these approximations to the sampling
+  1΋3 1΋3 1΋3  distributions of x and M to answer the following questions:
+  a. Does it appear that x and M are unbiased estimators of
+  a. Calculate m for this distribution.  the population mean? [Note: m = 25.5.]
+  b. Find the sampling distribution of the sample mean  b. Which sampling distribution displays greater variation?
+
+  x for a random sample of n = 3 measurements from
+  this distribution, and show that x is an unbiased esti-
+  mator of m.
+  SECTION 6.3 ■ The Sampling Distribution of x and the Central Limit Theorem 323
+
+6.18 Refer to Exercise 6.5.  d. Find the sampling distribution of the sample standard
+  deviation s.
+  a. Show that x is an unbiased estimator of m.
+  b. Find s x2.  e. Show that s is a biased estimator of s.
+  c. Find the probability that the x will fall within 2sxm
+  6.20 Refer to Exercise 6.7, in which we found the sampling dis-
+6.19 Refer to Exercise 6.5.  tribution of the sample median. Is the median an unbiased
+  a. Find the sampling distribution of s2.  estimator of the population mean m?
+  b. Find the population variance s2.
+  c. Show that s2 is an unbiased estimator of s2.
+
+6.3 The Sampling Distribution of x and the Central Limit Theorem
+
+  Estimating the mean useful life of automobiles, the mean number of crimes per month in
+  a large city, and the mean yield per acre of a new soybean hybrid are practical problems
+  with something in common. In each case, we are interested in making an inference
+  about the mean m of some population. As we mentioned in Chapter 2, the sample mean
+  x is, in general, a good estimator of m. We now develop pertinent information about
+  the sampling distribution for this useful statistic. We will show that x is the minimum-
+  variance unbiased estimator (MVUE) of m.
+
+ Example 6.7  Problem Suppose a population has the uniform probability distribution given in
+  Figure 6.8. Then the mean and standard deviation of this probability distribution
+Describing the Sampling  are, respectively, m = 175 and s = 14.43. (See Section 5.2 for the formulas for m
+Distribution of x  and s.) Now suppose a sample of 11 measurements is selected from this population.
+  Describe the sampling distribution of the sample mean x based on the 1,000 sampling
+  experiments discussed in Example 6.3.
+
+  f(x)
+
+  1
+  50
+
+  Figure 6.8  x
+  Sampled uniform population 150  200
+
+  Solution Recall that in Example 6.3 we generated 1,000 samples of n = 11 measurements
+  each. The MINITAB histogram for the 1,000 sample means is shown in Figure 6.9, with a
+  normal probability distribution superimposed. You can see that this normal probability
+  distribution approximates the computer-generated sampling distribution very well.
+
+  To fully describe a normal probability distribution, it is necessary to know its mean
+  and standard deviation. MINITAB gives these statistics for the 1,000 x’s in the upper
+  right corner of the histogram of Figure 6.9. You can see that the mean is 175.2 and the
+  standard deviation is 4.383.
+
+  To summarize our findings based on 1,000 samples, each consisting of 11 measure-
+  ments from a uniform population, the sampling distribution of x appears to be approxi-
+  mately normal with a mean of about 175 and a standard deviation of about 4.38.
+

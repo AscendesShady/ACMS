@@ -1,0 +1,1677 @@
+  Highway Capacity Manual 2000
+
+  EXHIBIT 21-11. PASSENGER-CAR EQUIVALENTS FOR TRUCKS ON DOWNGRADES
+
+Downgrade  Length  ET
+  Percentage of Trucks
+
+(%)  (km)  5  10  15  20
+
+< 4  All  1.5  1.5  1.5  1.5
+  4–5
+  4–5  ≤ 6.4  1.5  1.5  1.5  1.5
+
+> 5–6  > 6.4  2.0  2.0  2.0  1.5
+> 5–6
+> 6  ≤ 6.4  1.5  1.5  1.5  1.5
+> 6
+  > 6.4  5.5  4.0  4.0  3.0
+
+  ≤ 6.4  1.5  1.5  1.5  1.5
+
+  > 6.4  7.5  6.0  5.5  4.5
+
+Driver Population Factor
+
+  The adjustment factor fp reflects the effect weekend recreational and perhaps even
+midday drivers have on the facility. The values for fp range from 0.85 to 1.00. Typically,
+the analyst should select 1.00, which reflects weekday commuter traffic (i.e., users
+familiar with the highway), unless there is sufficient evidence that a lesser value,
+reflecting more recreational or weekend traffic characteristics, should be applied. When
+greater accuracy is needed, comparative field studies of weekday and weekend traffic
+flow and speeds are recommended.
+
+DETERMINING LOS
+
+  The LOS on a multilane highway can be determined directly from Exhibit 21-3 on
+the basis of the FFS and the service flow rate (vp) in pc/h/ln. The procedure is as follows:
+
+  • Step 1. Define and segment the highway as appropriate.
+  • Step 2. On the basis of the measured or estimated FFS, construct an appropriate
+speed-flow curve of the same shape as the typical curves shown in Exhibit 21-3. The
+curve should intercept the y-axis at the FFS.
+  • Step 3. Based on the flow rate vp, read up to the FFS curve identified in Step 2
+and determine the average passenger-car speed and LOS corresponding to that point.
+  • Step 4. Determine the density of flow according to Equation 21-5.
+
+  D = vp  (21-5)
+  S
+
+where
+
+  D = density (pc/km/ln),
+  vp = flow rate (pc/h/ln), and
+  S = average passenger-car travel speed (km/h).
+
+  The LOS also can be determined by comparing the computed density with the
+density ranges provided in Exhibit 21-2.
+
+SENSITIVITY OF RESULTS TO INPUT VARIABLES
+
+  Exhibit 21-12 shows the impact of v/c ratios on passenger-car speed for multilane
+highways. Note that speed is insensitive to demand until demand is at least 70 percent of
+capacity; also note that the mean speed on lower-speed segments is not sensitive to
+demand until the demand reaches at least 90 percent of capacity.
+
+  21-11  Chapter 21 - Multilane Highways
+  Methodology
+Highway Capacity Manual 2000
+
+  Passenger-Car Speed (km/h)  EXHIBIT 21-12. EFFECT OF v/c RATIO ON MEAN SPEED
+  120
+
+  100 FFS = 100 km/h
+  = 90 km/h
+
+  80 = 80 km/h
+  = 70 km/h
+
+  60
+
+  40
+
+  20
+
+  0
+
+  0  0.2  0.4  0.6  0.8  1
+
+  v/c Ratio
+
+For guidelines on  III. APPLICATIONS
+required inputs and
+estimated values, see  The methodology of this chapter can be used to analyze the capacity and LOS of
+Chapter 12, “Highway  multilane highways. The analyst must address two fundamental questions. First, the
+Concepts”  primary output must be identified. Primary outputs typically solved for in a variety of
+  applications include LOS, number of lanes required (N), and flow rate achievable (vp).
+  Performance measures related to density (D) and speed (S) are also achievable but are
+  considered secondary outputs.
+
+  Second, the analyst must identify the default values or estimated values for use in the
+  analysis. Basically, the analyst has three sources of input data:
+
+  1. Default values found in this manual;
+  2. Estimates and locally derived default values developed by the user; and
+  3. Values derived from field measurements and observation.
+  For each of the input variables, a value must be supplied to calculate the outputs, both
+  primary and secondary.
+  A common application of the method is to compute the LOS of an existing segment
+  or of a changed segment in the near term or distant future. This type of application is
+  often termed operational, and its primary output is LOS, with secondary outputs for
+  density and speed. Another application is to check the adequacy or to recommend the
+  required number of lanes for a multilane highway given the volume or flow rate and LOS
+  goal. This is termed a design application since its primary output is the number of lanes
+  required to serve the assumed conditions. Other outputs from this application include
+  speed and density. Finally, the achievable flow rate vp can be calculated as a primary
+  output. This analysis requires stating a LOS goal and a number of lanes as inputs. This
+  analysis typically estimates the point at which a flow rate will cause the highway to
+  operate at an unacceptable LOS.
+  Another general type of analysis can be termed planning. These analyses use
+  estimates, Highway Capacity Manual (HCM) default values, and local default values as
+  inputs in the calculation. As outputs, LOS, number of lanes, or flow rate can be
+  determined, along with the secondary outputs of density and speed. The difference
+  between planning analysis and operational or design analysis is that most or all of the
+  input values in planning come from estimates or default values, but the operational and
+  design analyses tend to use field measurements or known values for most or all of the
+
+Chapter 21 - Multilane Highways  21-12
+Methodology
+  Highway Capacity Manual 2000
+
+input variables. Note that for each of the analyses, FFS, either measured or estimated, is
+required as an input for the computation.
+
+SEGMENTING THE HIGHWAY  Study segments should be at
+  least 760 m long and 0.4 km
+  The procedures described in this chapter are best applied to homogeneous segments  from a signal
+of roadway, for which the variables affecting travel speeds are constant. Therefore, it is
+often necessary for the analyst to divide a section of highway into separate segments for
+analysis. The following conditions generally necessitate segmenting the highway:
+
+  • A change in the basic number of travel lanes along the highway,
+  • A change in the median treatment along the highway,
+  • A change of grade of 2 percent or more or a constant upgrade over 1220 m,
+  • The presence of a traffic signal or a stop sign along the multilane highway,
+  • A significant change in the density of access points,
+  • A change in speed limits, and
+  • The presence of a bottleneck condition.
+  In general, when segmenting a highway for analysis, the minimum length of a study
+segment should be 760 m. Also, the limits of study segments should be no closer than 0.4
+km to a signalized intersection. The procedures in this chapter are based on average
+conditions observed over an extended highway segment with generally consistent
+physical characteristics.
+
+COMPUTATIONAL STEPS  Operational (LOS) analysis
+  Design (N) analysis
+  The multilane highways worksheet for computations is shown in Exhibit 21-13. For  Design (vp) analysis
+all applications, the analyst provides general information and site information.
+
+  For operational (LOS) analysis, all speed and flow data are entered as inputs.
+Equivalent flow is then computed with the aid of the exhibits for passenger-car
+equivalencies. FFS is estimated by adjusting a base FFS. Finally, LOS is determined by
+entering (with vp) the speed-flow graph at the top of the worksheet and intersecting the
+specific curve that has been selected or constructed for the highway segment.
+
+  This point of intersection identifies the LOS and, on the vertical axis of the graph, the
+estimated speed S. If the analyst requires a value for density D, it is calculated as vp/S.
+
+  The key to design analysis for number of lanes N is establishing an hourly volume.
+All information, with the exception of number of lanes, can be entered in the flow input
+and speed input portion of the worksheet (see Exhibit 21-13). An FFS, either computed
+or measured directly, is entered on the worksheet. The appropriate curve representing the
+FFS is established on the graph. The required or desired LOS is also entered. Then, the
+analyst assumes N and computes flow vp with the aid of the exhibits for passenger-car
+equivalencies. LOS is determined by entering the speed-flow graph with vp at the top of
+the worksheet. The derived LOS is compared with the desired LOS. This process is then
+repeated, adding one lane to the previously assumed number of lanes, until the
+determined LOS matches or is better than the desired LOS. Density is calculated using
+vp and S.
+
+  The objective of design analysis for flow rate vp is to estimate the flow rate in pc/h/ln
+given a set of traffic, roadway, and FFS conditions. A desired LOS is entered on the
+worksheet. Then, the FFS of the segment is established using either the base FFS and the
+four adjustment factors or an FFS measured in the field. Once this segment speed-flow
+curve is established, the analyst can determine what flow rate is achievable with the given
+LOS. This would be considered the maximum flow rate achievable or allowable for the
+given level. Also directly available from the graph is the average passenger-car speed.
+Finally, if required, a value for density can be calculated, using vp and S.
+
+PLANNING APPLICATIONS  Planning (LOS), Planning (vp),
+  and Planning (N) applications
+  The three planning applications—planning for LOS, flow rate vp, and number of
+lanes N—correspond directly to the procedures described for operations and design. The
+
+21-13  Chapter 21 - Multilane Highways
+  Applications
+Highway Capacity Manual 2000
+
+  primary criterion categorizing these as planning applications is the use of estimates, HCM
+  default values, and local default values for inputs into the calculations. The use of annual
+  average daily traffic (AADT) to estimate directional design-hour volume (DDHV) also
+  characterizes a planning application. (For guidelines on computing DDHV, refer to
+  Chapter 8.)
+
+  To perform planning applications, the analyst typically has few, if any, of the
+  required input values. Chapter 12 contains more information on the use of default values.
+
+  EXHIBIT 21-13. MULTILANE HIGHWAYS WORKSHEET
+
+  MULTILANE  HIGHWAYS  WORKSHEET
+
+  Average Passenger-Car Speed (km/h)  110  Speed = 100 km/h  E  Application
+  7 pc/km/ln  100 Free-Flow  2000  Operational (LOS)
+  11 pc/  90  90 km/h  Design (N)  Input  Output
+  80  Design (vp)  FFS, N, vp  LOS, S, D
+  km/ln 70  80 km/h  Planning (LOS)  FFS, LOS, vp  N, S, D
+  60  Planning (N)  FFS, LOS, N  vp, S, D
+  50  70 km/h  Planning (vp)  FFS, N, AADT  LOS, S, D
+  40 0  FFS, LOS, AADT  N, S, D
+  LOS A  B  C  D  2400  FFS, LOS, N  vp, S, D
+
+  16 pc/km 22 pc / / l k n m/ln  28 pc/km/ln
+
+  400  800  1200  1600
+
+  Flow  Rate (pc/h/ln)
+
+  General Information  Site Information
+
+  Analyst  ___________________  Highway/Direction of Travel  ________________
+  Agency or Company  ___________________  From/To  ________________
+  Date Performed  ___________________  Jurisdiction  ________________
+  Analysis Time Period  ___________________  Analysis Year  ________________
+
+  Operational (LOS)  Design (N)  Design (vp)  Planning (LOS)  Planning (N)  Planning (vp)
+
+  Flow Inputs  ___________________veh/h  Peak-hour factor, PHF  _______________
+  Volume, V  ___________________veh/day  _______________
+  Annual avg. daily traffic, AADT  ___________________  % Trucks and buses, PT  _______________
+  Peak-hour proportion of AADT, K  ___________________  % RVs, PR
+  Peak-hour direction proportion, D  ___________________veh/h  General terrain  Mountainous
+  DDHV = AADT * K * D  Up/Down ________%
+  Driver type  Recreational/Weekend  Level  Rolling  _______________
+
+  Commuter/Weekday  Grade:  Length _______km
+
+  Number of lanes
+
+  Calculate Flow Adjustments
+
+  fp  ___________________  ER  ____________________
+
+  ET  ___________________  fHV =  1  _______________
+  1 + PT(ET – 1) + PR(ER – 1)
+
+  Speed Inputs  Calculate Speed Adjustments and FFS
+
+  Lane width, LW  ___________________m  fLW  ____________ km/h
+  Total lateral clearance, TLC
+  Access points, A  ___________________m  fLC  ____________ km/h
+  Median type, M
+  FFS (measured)  ___________________A/km  fA  ____________ km/h
+  Base free-flow Speed, BFFS
+  Undivided  Divided
+
+  ___________________km/h  fM  ____________ km/h
+
+  ___________________km/h  FFS = BFFS – fLW – fLC – fA – fM  ____________ km/h
+
+  Operational, Planning (LOS); Design, Planning (vp)  Design, Planning (N)
+
+  Operational (LOS) or Planning (LOS)  Design (N) or Planning (N) 1st Iteration
+
+  vp = PHF * N * fHV * fp V or DDHV  ___________________pc/h/ln  N  _______________assumed
+  S  ___________________km/h  vp = PHF * N * fHV * fp V or DDHV  _______________pc/h/ln
+  LOS  _______________
+  D = vp /S  ___________________pc/km/ln
+  LOS  ___________________
+
+  Design (vp) or Planning (vp)  ___________________  Design (N) or Planning (N) 2nd Iteration  _______________assumed
+  LOS  _______________pc/h/ln
+  N  _______________
+  vp  ___________________pc/h/ln  vp = V or DDHV PHF * N * fHV * fp  _______________km/h
+  V = vp * PHF * N * fHV * fp  ___________________veh/h  LOS  _______________pc/km/ln
+  S  ___________________km/h
+  S  fLW - Exhibit 21-4
+  D = vp/S  ___________________pc/km/ln  fLC - Exhibit 21-5
+  D = vp /S  fM - Exhibit 21-6
+  Glossary  S - Speed  fA - Exhibit 21-7
+  D - Density  Factor Location
+  N - Number of lanes  FFS - Free-flow speed
+  V - Hourly volume  BFFS - Base free-flow speed  ET - Exhibit 21-8, 21-9, 21-11
+  vp - Flow rate  ER - Exhibit 21-8, 21-10
+  LOS - Level of service  fp - Page 21-11
+  DDHV - Directional design-hour volume  LOS, S, FFS, vp - Exhibit 21-2, 21-3
+
+Chapter 21 - Multilane Highways  21-14
+Applications
+  Highway Capacity Manual 2000
+
+ANALYSIS TOOLS
+  The multilane highways worksheet shown in Exhibit 21-13 and provided in
+
+Appendix A can be used to perform all applications, including operational for LOS;
+design for flow rate vp and number of lanes N; and planning for LOS, vp, and N.
+
+  IV. EXAMPLE PROBLEMS
+
+Problem No.  Description  Application
+  1  Operational (LOS)
+  2  Find LOS on an undivided four-lane highway  Operational (LOS)
+  3
+  Find LOS on a five-lane highway with TWLTL  Planning (N)
+  4
+  Find the cross section required within a right-of-way to achieve desired  Planning (vp)
+  5  LOS
+  Planning (N)
+  Find how much additional traffic can be accommodated by grade
+  separation of a signalized intersection on a highway segment
+
+  Find opening-day volume and number of lanes on a new suburban
+  highway facility
+
+  21-15  Chapter 21 - Multilane Highways
+  Applications
+Highway Capacity Manual 2000
+
+  EXAMPLE PROBLEM 1 (PART I)
+
+  The Highway A 5.23-km undivided four-lane highway on level terrain. A 975-m
+  segment with 2.5 percent grade also is included in the study.
+
+  The Question What are the peak-hour LOS, speed, and density for the level terrain
+  portion of the highway?
+
+  The Facts
+  √ Level terrain,
+  √ 74.0-km/h field-measured FFS,
+  √ 3.4-m lane width,
+  √ 1,900-veh/h peak-hour volume,
+  √ 13 percent trucks and buses,
+  √ 2 percent RVs, and
+  √ 0.90 PHF.
+
+  Outline of Solution All input parameters are known. Demand will be computed in
+  terms of pc/h/ln, and the LOS determined from the speed-flow diagram. An estimate of
+  passenger-car speed is determined from the graph, and a value of density is calculated
+  using speed and flow rate.
+
+  Steps  1
+  1. Find fHV (use Exhibit 21-8 and Equation  fHV = 1 + PT(ET – 1) + PR(ER – 1)
+
+  21-4)  1
+  fHV = 1 + 0.13(1.5 – 1) + 0.02(1.2 – 1)
+  2. Find vp (use Equation 21-3)  fHV = 0.935
+
+  3. Determine LOS (use Exhibit 21-3)  V
+  vp = PHF * N * fHV * fp
+  vp = 1, 900
+
+  0. 90 * 2 * 0. 935 * 1.00
+  vp = 1,129 pc/h/ln
+  LOS C
+
+  The Results
+
+  • LOS C,
+  • Speed = 74.0 km/h, and
+  • Density = 15.3 pc/km/ln.
+
+Chapter 21 - Multilane Highways  21-16
+Example Problems
+  Highway Capacity Manual 2000
+
+  MULTILANE  HIGHWAYS  WORKSHEET  Example Problem 1 (Part I)
+
+Average Passenger-Car Speed (km/h)  110  Speed = 100 km/h  E  Application
+  7 pc/km/ln  100 Free-Flow  2000  Operational (LOS)
+  11 pc/km/ln 90  90 km/h  Design (N)  Input  Output
+  80  Design (vp)  FFS, N, vp  LOS, S, D
+  70  80 km/h  Planning (LOS)  FFS, LOS, vp  N, S, D
+  60  Planning (N)  FFS, LOS, N  vp, S, D
+  50  70 km/h  Planning (vp)  FFS, N, AADT  LOS, S, D
+  40 0  FFS, LOS, AADT  N, S, D
+  LOS A  B  C  D  2400  FFS, LOS, N  vp, S, D
+
+  16 pc/km 22 pc / / l k n m/ln  28 pc/km/ln
+
+  400  800  1200  1600
+
+  Flow  Rate (pc/h/ln)
+
+General Information  Site Information
+
+Analyst  ______J_M__Y_E_________  Highway/Direction of Travel  __U_S__8_0__(_E_a__s_t_)_
+Agency or Company  ______E_H_I___________  From/To  __M_P__1_7_-__M_P__2_0__
+Date Performed  ______5_/_16__/_9_9_______  Jurisdiction  __M_._C__o_u_n_t_y_____
+Analysis Time Period  ______A_M____________  Analysis Year  __19__9_9__________
+
+  X  Design (N)  Design (vp)  Planning (LOS)  Planning (N)  Planning (vp)
+Operational (LOS)
+
+Flow Inputs
+
+Volume, V  ______1,_9_0__0_________veh/h  Peak-hour factor, PHF  ______0__.9_0______
+Annual avg. daily traffic, AADT  ___________________veh/day  ______1_3________
+Peak-hour proportion of AADT, K  ___________________  % Trucks and buses, PT  ______2_________
+Peak-hour direction proportion, D  ___________________  % RVs, PR
+DDHV = AADT * K * D  ___________________veh/h  General terrain  Mountainous
+Driver type  Up/Down ________%
+  Recreational/Weekend  X Level  Rolling  ______2_________
+  X Commuter/Weekday
+  Grade:  Length _______km
+
+  Number of lanes
+
+Calculate Flow Adjustments
+
+fp  ______1._0_0___________  ER  ________1_._2__________
+
+ET  ______1._5____________  fHV =  1  ______0__.9_3__5____
+  1 + PT(ET – 1) + PR(ER – 1)
+
+Speed Inputs  Calculate Speed Adjustments and FFS
+
+Lane width, LW  ______3_.4____________m  fLW  ____________ km/h
+
+Total lateral clearance, TLC  ___________________m  fLC  ____________ km/h
+
+Access points, A  ___________________A/km  fA  ____________ km/h
+
+Median type, M  X  Undivided  Divided
+
+FFS (measured)  ______7_4_.0___________km/h  fM  ____________ km/h
+
+Base free-flow Speed, BFFS  ___________________km/h  FFS = BFFS – fLW – fLC – fA – fM  ____________ km/h
+
+Operational, Planning (LOS); Design, Planning (vp) Design, Planning (N)
+
+Operational (LOS) or Planning (LOS)  Design (N) or Planning (N) 1st Iteration
+  N
+vp = PHF * N * fHV * fp V or DDHV  ______1_12__9__________pc/h/ln  vp = PHF * N * fHV * fp V or DDHV  _______________assumed
+S  ______7_4_._0__________km/h  LOS  _______________pc/h/ln
+  _______________
+D = vp /S  ______1_5_.3___________pc/km/ln  Design (N) or Planning (N) 2nd Iteration
+LOS  ______C_____________  N  _______________assumed
+  vp = V or DDHV PHF * N * fHV * fp  _______________pc/h/ln
+Design (vp) or Planning (vp)  ___________________  LOS  _______________
+LOS  S  _______________km/h
+  D = vp /S  _______________pc/km/ln
+vp  ___________________pc/h/ln
+V = vp * PHF * N * fHV * fp  ___________________veh/h
+S  ___________________km/h
+
+D = vp/S  ___________________pc/km/ln
+
+Glossary  S - Speed  Factor Location  fLW - Exhibit 21-4
+  D - Density  fLC - Exhibit 21-5
+N - Number of lanes  FFS - Free-flow speed  ET - Exhibit 21-8, 21-9, 21-11  fM - Exhibit 21-6
+V - Hourly volume  BFFS - Base free-flow speed  ER - Exhibit 21-8, 21-10  fA - Exhibit 21-7
+vp - Flow rate  fp - Page 21-11
+LOS - Level of service  LOS, S, FFS, vp - Exhibit 21-2, 21-3
+DDHV - Directional design-hour volume
+
+  21-17  Chapter 21 - Multilane Highways
+  Example Problems
+Highway Capacity Manual 2000
+
+  EXAMPLE PROBLEM 1 (PART II)
+
+  The Highway A 5.23-km undivided four-lane highway on level terrain. A 975-m
+  segment with 2.5 percent grade also is included in the study.
+
+  The Question What are peak-hour LOS, speed, and density of traffic on the 2.5
+  percent grade? Does this operation still meet the minimum required LOS D?
+
+  The Facts
+  √ 2.5 percent grade (upgrade and downgrade),
+  √ 74.0-km/h field-measured FFS,
+  √ 3.4-m lane width,
+  √ 1,900-veh/h peak-hour volume,
+  √ 13 percent trucks and buses,
+  √ 2 percent RVs, and
+  √ 0.90 PHF.
+
+  Comments
+  √ For the 2.5 percent downgrade, trucks, buses, and RVs all operate as though on
+  level terrain. Therefore, results obtained in Part I are applicable for downgrade
+  results of the 2.5 percent grade segment.
+  √ Assume FFS of 74.0 km/h applies to both upgrade and downgrade segments.
+
+  Outline of Solution All input parameters are known. Demand will be computed in
+  terms of pc/h/ln, and the LOS determined from the speed-flow diagram. An estimate of
+  passenger-car speed is determined from the graph, and a value of density is calculated
+  using speed and flow rate.
+
+  Steps  1
+  1. Find fHV (use Exhibits 21-9 and 21-10).  fHV = 1 + PT(ET – 1) + PR(ER – 1)
+
+  2. Find vp.  1
+  fHV = 1 + 0.13(1.5 – 1) + 0.02(3.0 – 1)
+  3. Determine LOS (use Exhibit 21-3).  fHV = 0.905
+
+  V
+  vp = PHF * N * fHV * fp
+  vp = 1, 900
+
+  0. 90 * 2 * 0. 905 * 1.00
+  vp = 1,166 pc/h/ln
+  LOS C (upgrade)
+  LOS C (downgrade)
+
+  The Results  Upgrade:
+  Downgrade:  • LOS C,
+  • LOS C,  • Speed = 74.0 km/h, and
+  • Speed = 74.0 km/h, and  • Density = 15.8 pc/km/ln.
+  • Density = 15.3 pc/km/ln.
+
+Chapter 21 - Multilane Highways  21-18
+Example Problems
+  Highway Capacity Manual 2000
+
+  MULTILANE  HIGHWAYS  WORKSHEET  Example Problem 1 (Part II)
+
+Average Passenger-Car Speed (km/h)110Speed = 100 km/h  E  Application
+  7 pc/km/ln100 Free-Flow  2000  Operational (LOS)
+  11 pc/9090 km/h  Design (N)  Input  Output
+  80  Design (vp)  FFS, N, vp  LOS, S, D
+  km/ln7080 km/h  Planning (LOS)  FFS, LOS, vp  N, S, D
+  downgrade60  Planning (N)  FFS, LOS, N  vp, S, D
+  upgrade5070 km/h  Planning (vp)  FFS, N, AADT  LOS, S, D
+  40 0  FFS, LOS, AADT  N, S, D
+  LOS A  B  C  D  2400  FFS, LOS, N  vp, S, D
+
+  16 pc/km 22 pc / / l k n m/ln  28 pc/km/ln
+
+  400  800  1200  1600
+
+  Flow  Rate (pc/h/ln)
+
+General Information  _______J_M__Y_E________  Site Information  __U__S__8_0__(_E_a_s_t_)__
+  _______E_H_I__________  __M__P__17__-_M__P__2_0__
+Analyst  _______5_/_16__/_9_9______  Highway/Direction of Travel  __M__._C_o_u_n__t_y_____
+Agency or Company  _______A_M___________  From/To  __1_9_9__9__________
+Date Performed  Jurisdiction
+Analysis Time Period  Analysis Year
+
+  X  Design (N)  Design (vp)  Planning (LOS)  Planning (N)  Planning (vp)
+Operational (LOS)
+
+Flow Inputs
+
+Volume, V  _______1,_9_0__0________veh/h  Peak-hour factor, PHF  _____0_._9_0_______
+  _____1_3_________
+Annual avg. daily traffic, AADT ___________________veh/day  % Trucks and buses, PT  _____2__________
+  % RVs, PR
+Peak-hour proportion of AADT, K ___________________  General terrain  Mountainous
+  Up/Down _2_.5__(_u_p_)_%
+Peak-hour direction proportion, D ___________________  _______2________
+
+DDHV = AADT * K * D  ___________________veh/h  Level  Rolling
+
+Driver type  Grade:  Length _0_._9_7_5__km
+
+  X Commuter/Weekday  Recreational/Weekend  Number of lanes
+
+Calculate Flow Adjustments
+
+fp  ______1_._0_0__________  ER  ___3__._0______________
+
+ET  ______1_._5___________  fHV =  1  ___0_._9_0_5________
+  1 + PT(ET – 1) + PR(ER – 1)
+
+Speed Inputs  Calculate Speed Adjustments and FFS
+
+Lane width, LW  ______3__.4___________m  fLW  ____________ km/h
+
+Total lateral clearance, TLC  ___________________m  fLC  ____________ km/h
+
+Access points, A  ___________________A/km  fA  ____________ km/h
+
+Median type, M  X  Undivided  Divided
+
+FFS (measured)  ______7__4_.0__________km/h  fM  ____________ km/h
+
+Base free-flow Speed, BFFS  ___________________km/h  FFS = BFFS – fLW – fLC – fA – fM  ____________ km/h
+
+Operational, Planning (LOS); Design, Planning (vp) Design, Planning (N)
+
+Operational (LOS) or Planning (LOS)  Design (N) or Planning (N) 1st Iteration
+  N
+vp = PHF * N * fHV * fp V or DDHV  _______1_16__6_________pc/h/ln  vp = PHF * N * fHV * fp V or DDHV  _______________assumed
+S  _______7_4_._0_________km/h  LOS  _______________pc/h/ln
+  _______________
+D = vp /S  _______1_5_.8__________pc/km/ln  Design (N) or Planning (N) 2nd Iteration
+LOS  _______C____________  N  _______________assumed
+  vp = V or DDHV PHF * N * fHV * fp  _______________pc/h/ln
+Design (vp) or Planning (vp)  ___________________  LOS  _______________
+LOS  S  _______________km/h
+  D = vp /S  _______________pc/km/ln
+vp  ___________________pc/h/ln
+V = vp * PHF * N * fHV * fp  ___________________veh/h
+S  ___________________km/h
+
+D = vp/S  ___________________pc/km/ln
+
+Glossary  S - Speed  Factor Location  fLW - Exhibit 21-4
+  D - Density  fLC - Exhibit 21-5
+N - Number of lanes  FFS - Free-flow speed  ET - Exhibit 21-8, 21-9, 21-11  fM - Exhibit 21-6
+V - Hourly volume  BFFS - Base free-flow speed  ER - Exhibit 21-8, 21-10  fA - Exhibit 21-7
+vp - Flow rate  fp - Page 21-11
+LOS - Level of service  LOS, S, FFS, vp - Exhibit 21-2, 21-3
+DDHV - Directional design-hour volume
+
+  21-19  Chapter 21 - Multilane Highways
+  Example Problems
+Highway Capacity Manual 2000
+
+  EXAMPLE PROBLEM 2 (PART I)
+
+  The Highway A 3.4-km segment of an east-west five-lane highway with two travel
+  lanes in each direction separated by a two-way left-turn lane (TWLTL). The highway
+  includes a 4 percent grade, 1830-m in length, followed by level terrain of 1570 m.
+
+  The Question What is the LOS of the highway on level terrain during the peak hour?
+
+  The Facts  √ 83.0-km/h 85th-percentile speed,
+  √ Level terrain,  √ 1,500-veh/h peak-hour volume,
+  √ 3.6-m lane width,  √ 8 access points/km (westbound), and
+  √ 6 percent trucks and buses,  √ 0.90 PHF.
+  √ 6 access points/km (eastbound),
+  √ 3.6-m and greater lateral clearance for
+  westbound and eastbound,
+
+  Comments
+  √ Assume base FFS to be 3.0 km/h less than 85th-percentile speed.
+  BFFS = 83.0 – 3.0 = 80.0 km/h
+  √ Assume no RVs, since none is indicated.
+
+  Outline of Solution All input parameters are known. Demand will be computed in
+  terms of pc/h/ln, an FFS estimate, and the LOS determined from the speed-flow diagram.
+  An estimate of passenger-car speed is determined from the graph, and a value of density
+  is calculated using speed and flow rate.
+
+  Steps  1
+  1. Find fHV (EB and WB) (use Exhibit 21-8).  fHV = 1 + PT(ET – 1) + PR (ER – 1)
+
+  2. Find vp (EB and WB) (use Equation  1
+  21-3).  fHV = 1 + 0.06(1.5 – 1) + 0
+  fHV = 0.971
+  3. Compute EB and WB free-flow speeds
+  (use Exhibits 21-4, 21-5, 21-6, 21-7, and  V
+  Equation 21-1).  vp = PHF * N * fHV * fp
+
+  4. Determine LOS (use Exhibit 21-3).  vp = 1, 500
+  0. 90 * 2 * 0. 971* 1.00
+
+  vp = 858 pc/h/ln
+  FFS = BFFS – fLW – fLC – fA – fM
+  FFS = 80 – 0.0 – 0.0 – 4.0 – 0.0
+  FFS = 76.0 km/h (EB)
+  FFS = 80 – 0.0 – 0.0 – 5.3 – 0.0
+  FFS = 74.7 km/h (WB)
+
+  LOS C (EB and WB)
+
+  The Results  Westbound:
+  Eastbound:  • LOS C,
+  • LOS C,  • Speed = 74.7 km/h, and
+  • Speed = 76.0 km/h, and  • Density = 11.5 pc/km/ln.
+  • Density = 11.3 pc/km/ln.
+
+Chapter 21 - Multilane Highways  21-20
+Example Problems
+  Highway Capacity Manual 2000
+
+  MULTILANE HIGHWAYS WORKSHEET  Example Problem 2 (Part I)
+
+  110
+  100 Free-Flow Speed = 100 km/h
+  90 90 km/h
+Average Passenger-Car Speed (km/h)  Application  Input  Output
+  7 pc/km/ln  Operational (LOS)  FFS, N, vp  LOS, S, D
+  Design (N)  FFS, LOS, vp  N, S, D
+  11 pc/km/ln  Design (vp)  FFS, LOS, N  vp, S, D
+  16 pc/  Planning (LOS)  FFS, N, AADT  LOS, S, D
+  Planning (N)  FFS, LOS, AADT  N, S, D
+  km/ln  Planning (vp)  FFS, LOS, N  vp, S, D
+  80 80 km/h
+
+  70 70 km/h  B  C  D  E
+  LOS A  1600
+
+  60  22 pc/km/ln c/km/ln
+  28 p
+  50
+
+  400 400  800  1200  2000  2400
+
+  Flow Rate (pc/h/ln)
+
+General Information  Site Information
+
+Analyst  ______J_M__Y_E_________  Highway/Direction of Travel  _B_u_c_k_e_y_e__R_d_._(_E_B_/_WB)
+Agency or Company  ______E__H_I__________  From/To  _5_0_t_h__-_5__8_t_h__S_t_._
+Date Performed  ______5__/1_6_/_9_9_______  Jurisdiction  _N_._C_o_u__n_t_y_______
+Analysis Time Period  ______P__M___________  Analysis Year  _19__9_9____________
+
+  X  Design (N)  Design (vp)  Planning (LOS)  Planning (N)  Planning (vp)
+Operational (LOS)
+
+Flow Inputs
+
+Volume, V  _______1_,5_0__0________veh/h  Peak-hour factor, PHF  _____0__.9_0_______
+Annual avg. daily traffic, AADT  ___________________veh/day  _____6__________
+Peak-hour proportion of AADT, K  ___________________  % Trucks and buses, PT  _____0__________
+Peak-hour direction proportion, D  ___________________  % RVs, PR
+DDHV = AADT * K * D  ___________________veh/h  General terrain  Mountainous
+Driver type  Up/Down ________%
+  Recreational/Weekend  X Level  Rolling  ________2_______
+  X Commuter/Weekday
+  Grade:  Length _______km
+
+  Number of lanes
+
+Calculate Flow Adjustments
+
+fp  ______1_.0__0__________  ER  ____________________
+
+ET  ______1_.5____________  fHV =  1  _____0__.9__7_1_____
+  1 + PT(ET – 1) + PR(ER – 1)
+
+Speed Inputs  Calculate Speed Adjustments and FFS
+
+Lane width, LW  _______3_.6___________m  fLW  ____________ km/h
+Total lateral clearance, TLC
+Access points, A  _______>_3__.6_________m  fLC  ____________ km/h
+Median type, M
+FFS (measured)  _______6_/_8__________A/km  fA  ___4_.0_/_5_._3____km/h
+Base free-flow Speed, BFFS
+  Undivided  X Divided
+
+  ___________________km/h  fM  ____________ km/h
+
+  _______8_0___________km/h  FFS = BFFS – fLW – fLC – fA – fM  ___7_6_.0_/_7_4_._7__km/h
+
+Operational, Planning (LOS); Design, Planning (vp) Design, Planning (N)
+
+Operational (LOS) or Planning (LOS)  Design (N) or Planning (N) 1st Iteration
+  N
+vp = PHF * N * fHV * fp V or DDHV  ______8_5_8___________pc/h/ln  vp = PHF * N * fHV * fp V or DDHV  _______________assumed
+S  ______7_6_._0_/_7_4_.7______km/h  LOS  _______________pc/h/ln
+  _______________
+D = vp /S  ______11_.3__/1_1_.5________pc/km/ln  Design (N) or Planning (N) 2nd Iteration
+LOS  ______C_/C____________  N  _______________assumed
+  vp = V or DDHV PHF * N * fHV * fp  _______________pc/h/ln
+Design (vp) or Planning (vp)  ___________________  LOS  _______________
+LOS  S  _______________km/h
+  D = vp /S  _______________pc/km/ln
+vp  ___________________pc/h/ln
+V = vp * PHF * N * fHV * fp  ___________________veh/h
+S  ___________________km/h
+
+D = vp/S  ___________________pc/km/ln
+
+Glossary  S - Speed  Factor Location  fLW - Exhibit 21-4
+  D - Density  fLC - Exhibit 21-5
+N - Number of lanes  FFS - Free-flow speed  ET - Exhibit 21-8, 21-9, 21-11  fM - Exhibit 21-6
+V - Hourly volume  BFFS - Base free-flow speed  ER - Exhibit 21-8, 21-10  fA - Exhibit 21-7
+vp - Flow rate  fp - Page 21-11
+LOS - Level of service  LOS, S, FFS, vp - Exhibit 21-2, 21-3
+DDHV - Directional design-hour volume
+
+  21-21  Chapter 21 - Multilane Highways
+  Example Problems
+Highway Capacity Manual 2000
+
+  EXAMPLE PROBLEM 2 (PART II)
+
+  The Highway A 3.4-km segment of an east-west five-lane highway with two travel
+  lanes in each direction separated by a TWLTL. The highway characteristics include a 4
+  percent grade, 1830 m in length, followed by level terrain of 1570 m.
+
+  The Question What is the LOS of the 4 percent grade segment during the peak hour?
+
+  Additional Facts
+  √ 4.0 percent grade (EB downgrade, WB upgrade),
+  √ 87.0-km/h eastbound 85th-percentile speed,
+  √ 77.0-km/h westbound 85th-percentile speed,
+  √ 3.6-m lane width,
+  √ 6 access points/km (EB), and
+  √ 0 access points (WB).
+
+  Comments
+  √ Assume base FFS to be 3.0 km/h less than 85th-percentile speed.
+  BFFS (EB) = 87.0 – 3.0 = 84.0 km/h
+  √ BFFS (WB) = 77.0 – 3.0 = 74.0 km/h
+  √ Assume no RVs, since none indicated.
+
+  Outline of Solution All input parameters are known. Demand will be computed in
+  terms of pc/h/ln, an FFS estimate, and the LOS determined from the speed-flow diagram.
+  An estimate of passenger-car speed is determined from the graph, and a value of density
+  is calculated using speed and flow rate.
+
+  Steps  1
+  1. Find fHV (EB and WB) (use Exhibits  fHV = 1 + PT(ET – 1) + PR (ER – 1)
+
+  21-9 and 21-11).  1  = 0.971 (EB)
+  fHV =
+  2. Find vp (EB and WB).  1 + 0.06(1.5 – 1) + 0
+
+  3. Compute EB and WB FFS (use  1  = 0.893 (WB)
+  Exhibits 21-4, 21-5, 21-6, and 21-7).  fHV =
+  1 + 0.06(3.0 – 1) + 0
+  4. Determine LOS (use Exhibit 21-3).
+  V
+  vp = PHF * N * fHV * fp
+
+  vp = 1, 500 = 858 pc/h/ln (EB)
+  0. 90 * 2 * 0. 971* 1.00
+
+  vp = 1, 500 = 933 pc/h/ln (WB)
+  0. 90 * 2 * 0. 893 * 1.00
+
+  FFS = BFFS – fLW – fLC – fA – fM
+  FFS = 84.0 – 0.0 – 0.0 – 4.0 – 0.0 = 80.0 km/h
+  (EB)
+  FFS = 74.0 – 0.0 – 0.0 – 0.0 – 0.0 = 74.0 km/h
+  (WB)
+
+  LOS B (EB)
+  LOS C (WB)
+
+  The Results  Westbound:
+  Eastbound:  • LOS C,
+  • LOS B,  • Speed = 74.0 km/h, and
+  • Speed = 80.0 km/h, and  • Density = 12.6 pc/km/ln.
+  • Density = 10.7 pc/km/ln.
+
+Chapter 21 - Multilane Highways  21-22
+Example Problems
+  Highway Capacity Manual 2000
+
+  MULTILANE HIGHWAYS WORKSHEET  Example Problem 2 (Part II)
+
+  110
+  100 Free-Flow Speed = 100 km/h
+  90 90 km/h
+Average Passenger-Car Speed (km/h)  Application  Input  Output
+  7 pc/km/ln  Operational (LOS)  FFS, N, vp  LOS, S, D
+  11 pc/km/ln  Design (N)  FFS, LOS, vp  N, S, D
+  Design (vp)  FFS, LOS, N  vp, S, D
+  EB downgrade  Planning (LOS)  FFS, N, AADT  LOS, S, D
+  WB upgrade  Planning (N)  FFS, LOS, AADT  N, S, D
+  80 80 km/h  Planning (vp)  FFS, LOS, N  vp, S, D
+
+  70  70 km/h  2400
+  60
+  50  LOS A  B  C  22 pc/km/ln  D  E
+  40 0
+  6 pc/km/ln  28  pc/km/ln
+  1
+
+  400  800  1200  1600  2000
+
+General Information  _____J__M_Y__E_________  Site Information  _B_u_c_k_e_y_e_R__d_._(_E_B_/_WB)
+  _____E__H_I___________  _5_0_t_h__-_5__8_t_h__S_t_._
+Analyst  _____5__/1_6_/_9__9_______  Highway/Direction of Travel  _N_. _C_o_u_n_t_y________
+Agency or Company  _____P__M____________  From/To  _19__9_9____________
+Date Performed  Jurisdiction
+Analysis Time Period  Analysis Year
+
+  X  Design (N)  Design (vp)  Planning (LOS)  Planning (N)  Planning (vp)
+Operational (LOS)
+
+Flow Inputs
+
+Volume, V  _____1_,_5_0_0__________veh/h  Peak-hour factor, PHF  ______0_._9_0______
+Annual avg. daily traffic, AADT  ___________________veh/day  ______6_________
+  % Trucks and buses, PT  ______0_________
+Peak-hour proportion of AADT, K ___________________  % RVs, PR
+  General terrain  Mountainous
+Peak-hour direction proportion, D ___________________  Up/Down ___4_____%
+  _______2________
+DDHV = AADT * K * D  ___________________veh/h  Level  Rolling
+
+Driver type  Grade:  Length _1._8_3__0__km
+  X Commuter/Weekday
+  Recreational/Weekend  Number of lanes
+
+Calculate Flow Adjustments
+
+fp  _____1_._0_0___________  ER  ____________________
+
+ET  _____1_._5_/_3_.0_________  fHV =  1  __0_.9__7_1_/0__.8__9_3___
+  1 + PT(ET – 1) + PR(ER – 1)
+
+Speed Inputs  Calculate Speed Adjustments and FFS
+
+Lane width, LW  _____3__.6____________m  fLW  ____________ km/h
+Total lateral clearance, TLC
+Access points, A  _____>__3__.6__________m  fLC  ____________ km/h
+Median type, M
+FFS (measured)  _____6__/_0___________A/km  fA  ___4_.0_/_0_._0____km/h
+Base free-flow Speed, BFFS
+  Undivided  X Divided
+
+  ___________________km/h  fM  ____________ km/h
+
+  _____8__4_._0_/_7_4_.0______km/h  FFS = BFFS – fLW – fLC – fA – fM  ___8_0_._0_/7_4_._0__km/h
+
+Operational, Planning (LOS); Design, Planning (vp)  Design, Planning (N)
+
+Operational (LOS) or Planning (LOS)  Design (N) or Planning (N) 1st Iteration
+
+vp = PHF * N * fHV * fp V or DDHV  ______8__5_8_/_9_3__3_____pc/h/ln  N  _______________assumed
+S  ______8__0_.0__/_7_4_.0_____km/h  vp = PHF * N * fHV * fp V or DDHV  _______________pc/h/ln
+  LOS  _______________
+D = vp /S  ______1_0_._7_/1_2_._6______pc/km/ln
+LOS  ______B__/C___________
+
+Design (vp) or Planning (vp)  ___________________  Design (N) or Planning (N) 2nd Iteration  _______________assumed
+LOS  _______________pc/h/ln
+  N  _______________
+vp  ___________________pc/h/ln  vp = V or DDHV PHF * N * fHV * fp  _______________km/h
+V = vp * PHF * N * fHV * fp  ___________________veh/h  LOS  _______________pc/km/ln
+S  ___________________km/h
+  S  fLW - Exhibit 21-4
+D = vp/S  ___________________pc/km/ln  fLC - Exhibit 21-5
+  D = vp /S  fM - Exhibit 21-6
+Glossary  S - Speed  fA - Exhibit 21-7
+  D - Density  Factor Location
+N - Number of lanes  FFS - Free-flow speed
+V - Hourly volume  BFFS - Base free-flow speed  ET - Exhibit 21-8, 21-9, 21-11
+vp - Flow rate  ER - Exhibit 21-8, 21-10
+LOS - Level of service  fp - Page 21-11
+DDHV - Directional design-hour volume  LOS, S, FFS, vp - Exhibit 21-2, 21-3
+
+  21-23  Chapter 21 - Multilane Highways
+  Example Problems
+Highway Capacity Manual 2000
+
+  EXAMPLE PROBLEM 3
+
+  The Highway  A new 3.2-km segment of multilane highway with right-of-way width of
+  27.4 m.
+
+  The Question What is the cross section required to meet the design criterion of LOS
+  D? What is the expected travel speed for passenger cars?
+
+  The Facts  √ Rolling terrain,
+  √ 60,000 annual average daily traffic,  √ 5 percent trucks,
+  √ 80.0-km/h speed limit,  √ 6 access points/km, and
+  √ Peak-hour volume is 10 percent of daily traffic,  √ 0.90 peak-hour factor.
+  √ Peak-hour traffic has 55/45 directional split,
+
+  Comments
+  √ This solution assumes that the given AADT is for the design year and that the
+  other factors, although current, are accepted as representative of expected design
+  year conditions.
+  √ Assume base FFS to be 8.0 km/h greater than the posted speed.
+  BFFS = 80.0 + 8.0 = 88.0 km/h
+
+  Steps  DDHV = AADT * K * D
+  1. Convert AADT to design-hour volume.  DDHV = 60,000 * 0.10 * 0.55 = 3,300 veh/h
+
+  2. Find fHV (use Exhibit 21-8 ).  1
+  1  fHV = 1 + 0.05(2.5 – 1) + 0 = 0.930
+
+  fHV = 1 + PT(ET – 1) + PR (ER – 1)  FFS = BFFS – fLW – fLC – fA – fM
+  3. Compute free-flow speed (use  FFS = 88.0 – 0.0 – 0.0 – 4.0 – 0.0 = 84.0 km/h
+  vp = 1,775 pc/h/ln
+  Exhibits 21-4, 21-5, 21-6, and 21-7).
+  N= V
+  4. Determine maximum vp (use Exhibit  PHF * vp * fHV * fp
+  21-3).
+
+  5. Determine minimum N required.
+
+  N = 3, 300  = 2.2 (use 3)
+  0. 90 * 1,775 * 0. 930 * 1.00
+
+  6. Compute vp using minimum N  vp = 3, 300 = 1,314 pc/h/ln
+  required.  0. 90 * 3 * 0. 930 * 1.00
+
+  7. Determine if base conditions will fit  Median width = 3.6 m
+  within available right-of-way with a  Lane width = 3.6 m
+  3.6-m median to accommodate left-  Lateral clearance (shoulder) = 1.8 m
+  turn bays in the future.  Total required width = 3.6 + 6 * 3.6 + 2 * 1.8
+  = 28.8 m (greater than available width)
+  8. Assume different design to fit available
+  right-of-way. Use 1.8-m median and  Median width = 1.8 m (raised)
+  do not use shoulder at median.  Lane width = 3.6 m
+  Lateral clearance (shoulder) = 1.8 m
+  9. Compute FFS (use Exhibits 21-4,  Total required width = 1.8 + 21.6 + 2 * 1.8 =
+  21-5, 21-6, and 21-7).  27.0 m (fits within available 27.4 m)
+
+  10. Determine LOS (use Exhibit 21-3).  FFS = 88.0 – 0.0 – 0.0 – 4.0 – 0.0 = 84.0 km/h
+
+  LOS D
+
+  The Results A six-lane highway with lane widths of 3.6 m, a 1.8-m median, and lateral
+  clearances of 1.8 m on the right will meet the operational objective of LOS D during the
+
+Chapter 21 - Multilane Highways  21-24
+Example Problems
+  Highway Capacity Manual 2000
+
+peak-hour period. The passenger-car speed of 84.0 km/h and density of 15.6 pc/km/ln are
+computed.
+
+  MULTILANE HIGHWAYS WORKSHEET  Example Problem 3
+
+  110
+  100 Free-Flow Speed = 100 km/h
+  90 90 km/h
+Average Passenger-Car Speed (km/h)  Application  Input  Output
+  7 pc/km/ln  Operational (LOS)  FFS, N, vp  LOS, S, D
+  11 pc/km/ln  Design (N)  FFS, LOS, vp  N, S, D
+  16 pc/  Design (vp)  FFS, LOS, N  vp, S, D
+  Planning (LOS)  FFS, N, AADT  LOS, S, D
+  km/ln  Planning (N)  FFS, LOS, AADT  N, S, D
+  80 80 km/h  Planning (vp)  FFS, LOS, N  vp, S, D
+
+  70 70 km/h  B  C  D  E
+  LOS A  1600
+
+  60
+
+  50  22 pc/km/ln 28 pc/km/ln
+
+  400 400  800  1200  2000  2400
+  Flow Rate (pc/h/ln)
+
+General Information  _____J_M__Y_E__________  Site Information  _U_S__6__(_N_/_E_)______
+  _____E__H_I___________  _3_1_s_t_t_o__15__6_t_h__S_t_.
+Analyst  _____5__/1_6_/_9_9________  Highway/Direction of Travel  _M_._C__o_u_n_t_y_______
+Agency or Company  _____P__M____________  From/To  _19__9_9____________
+Date Performed  Jurisdiction
+Analysis Time Period  Analysis Year
+
+Operational (LOS)  Design (N)  Design (vp)  Planning (LOS)  X  Planning (vp)
+  Planning (N)
+
+Flow Inputs
+
+Volume, V  ___________________veh/h  Peak-hour factor, PHF  ____0_._9_0________
+  ____5___________
+Annual avg. daily traffic, AADT  _____6_0_,_0_0__0________veh/day  % Trucks and buses, PT  ____0___________
+Peak-hour proportion of AADT, K  _____0_.1_0____________  % RVs, PR
+Peak-hour direction proportion, D  _____5_5_/_4_5__________  General terrain  Mountainous
+DDHV = AADT * K * D  _____3_3_0__0__________veh/h  Up/Down ________%
+Driver type  Level  X Rolling  _______________
+
+  Grade:  Length _______km
+
+  X Commuter/Weekday  Recreational/Weekend  Number of lanes
+
+Calculate Flow Adjustments
+
+fp  _______1._0_0__________  ER  _____0_______________
+
+ET  _______2_.5___________  fHV =  1  ____0_._9_3_0_______
+  1 + PT(ET – 1) + PR(ER – 1)
+
+Speed Inputs  Calculate Speed Adjustments and FFS
+
+Lane width, LW  ______3_.6__/_3_.6________m  fLW  ___0_.0__/0_._0____km/h
+Total lateral clearance, TLC
+Access points, A  ______3_.6____________m  fLC  ___0_.0__/0_._0____km/h
+Median type, M  fA  ___4_.0_/_4_._0____km/h
+FFS (measured)  ______6_____________A/km  fM  ___0_.0________km/h
+Base free-flow Speed, BFFS  FFS =  ___8_4_.0__/8_4_._0__km/h
+  Undivided  X Divided
+
+  ___________________km/h
+
+  ______8_8__.0__________km/h  BFFS – fLW – fLC – fA – fM
+
+Operational, Planning (LOS); Design, Planning (vp) Design, Planning (N)
+
+Operational (LOS) or Planning (LOS)  Design (N) or Planning (N) 1st Iteration
+  N
+vp = PHF * N * fHV * fp V or DDHV  ___________________pc/h/ln  vp = PHF * N * fHV * fp V or DDHV  ____2_.2__________assumed
+S  ___________________km/h  LOS  ____1,_7_7_5________pc/h/ln
+  ____D___________
+D = vp /S  ___________________pc/km/ln  Design (N) or Planning (N) 2nd Iteration
+LOS  ___________________  N  ______3_________assumed
+  vp = V or DDHV PHF * N * fHV * fp  _____1_,_3_1_4______pc/h/ln
+Design (vp) or Planning (vp)  ___________________  LOS  ______C_________
+LOS  S  _____8__4_._0______km/h
+  D = vp /S  ______15_._6_______pc/km/ln
+vp  ___________________pc/h/ln
+V = vp * PHF * N * fHV * fp  ___________________veh/h
+S  ___________________km/h
+
+D = vp/S  ___________________pc/km/ln
+
+Glossary  S - Speed  Factor Location  fLW - Exhibit 21-4
+  D - Density  fLC - Exhibit 21-5
+N - Number of lanes  FFS - Free-flow speed  ET - Exhibit 21-8, 21-9, 21-11  fM - Exhibit 21-6
+V - Hourly volume  BFFS - Base free-flow speed  ER - Exhibit 21-8, 21-10  fA - Exhibit 21-7
+vp - Flow rate  fp - Page 21-11
+LOS - Level of service  LOS, S, FFS, vp - Exhibit 21-2, 21-3
+DDHV - Directional design-hour volume
+
+  21-25  Chapter 21 - Multilane Highways
+  Example Problems
+Highway Capacity Manual 2000
+
+  The Highway  EXAMPLE PROBLEM 4
+  improved.
+  A 4.0-km segment of a six-lane highway in a growing urban area to be
+
+  The Question What is the estimated LOS for the existing and improved roadway?
+  How much additional traffic can be added and still maintain the improved LOS?
+
+  The Facts
+  √ 1,400 pc/h/ln flow rate,
+  √ Free-flow travel time is 180 s, and
+  √ Improved free-flow travel time is 150 s.
+
+  Comments
+  This problem involves upgrading the design of a substandard section of multilane
+
+  highway. The substandard highway has a measured FFS of 80 km/h. It is proposed to
+  upgrade the design to a 96-km/h FFS through wider shoulders, widening the lanes to
+  current standards, straightening the alignment on a few critical curves, restricting access
+  to fronting properties and constructing a median.
+
+  Outline of Solution Using given peak-hour volume and FFS, determine LOS for
+  improved and for current conditions. Determine additional volume that can be
+  accommodated while still maintaining the improved LOS.
+
+  Steps  vp = 1,400 pc/h/ln, S = 80.0 km/h, LOS D
+
+  1. Determine LOS and speed of  vp = 1,400 pc/h/ln, FFS = 96.0 km/h, LOS C,
+  existing highway (use Exhibit  Speed = 96.0 km/h
+  21-3).
+
+  2. Determine maximum allowable flow
+  at improved LOS and FFS (use
+  Exhibit 21-3).
+
+  3. Compute additional volume.  Additional volume = 1,536 – 1,400 = 136 pc/h/ln
+
+  The Results
+
+  • Currently LOS D,
+  • Improved LOS C,
+  • Additional volume = 136 pc/h/ln,
+  • Speed = 96.0 km/h, and
+  • Density = 14.6 pc/km/ln.
+
+Chapter 21 - Multilane Highways  21-26
+Example Problems
+  Highway Capacity Manual 2000
+
+  MULTILANE HIGHWAYS  WORKSHEET  Example Problem 4
+
+Average Passenger-Car Speed (km/h)  110  Speed = 100 km/h  Additional growth with LOS C  Application
+  7 pc/km/ln  100 Free-Flow  Operational (LOS)
+  11 pc/km/ln 90  {  Design (N)  Input  Output
+  80  Design (vp)  FFS, N, vp  LOS, S, D
+  70  90 km/h  Planning (LOS)  FFS, LOS, vp  N, S, D
+  60  Planning (N)  FFS, LOS, N  vp, S, D
+  50  80 km/h  Planning (vp)  FFS, N, AADT  LOS, S, D
+  400  FFS, LOS, AADT  N, S, D
+  70 km/h  2400  FFS, LOS, N  vp, S, D
+
+  LOS A  B  C  D  E
+
+  16 pc/km 22 pc/ / k ln m/ln  28 pc/km/ln
+
+  400  800  1200  1600  2000
+
+  Flow  Rate (pc/h/ln)
+
+General Information  Site Information
+
+Analyst  ______J_M__Y_E_________  Highway/Direction of Travel  _G_e_o_r_g_ia__D__r.______
+Agency or Company  ______E_H__I __________  From/To  _M_e_n_o__t_o__W_o_o_d_s_t_o_ck
+Date Performed  ______5_/_1_6_/_9_9_______  Jurisdiction  _M_._C_o__u_n_t_y_______
+Analysis Time Period  ______P_M____________  Analysis Year  _19__9_9____________
+
+Operational (LOS)  Design (N)  X  Planning (LOS)  Planning (N)  Planning (vp)
+  Design (vp)
+
+Flow Inputs
+
+Volume, V  ___________________veh/h  Peak-hour factor, PHF  _______________
+Annual avg. daily traffic, AADT  ___________________veh/day  _______________
+Peak-hour proportion of AADT, K  ___________________  % Trucks and buses, PT  _______________
+Peak-hour direction proportion, D  ___________________  % RVs, PR
+DDHV = AADT * K * D  ___________________veh/h  General terrain  Mountainous
+Driver type  Up/Down ________%
+  Recreational/Weekend  X Level  Rolling  ______3_________
+  Commuter/Weekday
+  Grade:  Length _______km
+
+  Number of lanes
+
+Calculate Flow Adjustments
+
+fp  ___________________  ER  ____________________
+
+ET  ___________________  fHV =  1  _______________
+  1 + PT(ET – 1) + PR(ER – 1)
+
+Speed Inputs  Calculate Speed Adjustments and FFS
+
+Lane width, LW  ___________________m  fLW  ____________ km/h
+Total lateral clearance, TLC
+Access points, A  ___________________m  fLC  ____________ km/h
+Median type, M
+FFS (measured)  ___________________A/km  fA  ____________ km/h
+Base free-flow Speed, BFFS
+  Undivided  X Divided
+
+  ____9_6_._0____________km/h  fM  ____________ km/h
+
+  ___________________km/h  FFS = BFFS – fLW – fLC – fA – fM  ____________ km/h
+
+Operational, Planning (LOS); Design, Planning (vp)  Design, Planning (N)
+
+Operational (LOS) or Planning (LOS)  Design (N) or Planning (N) 1st Iteration
+
+vp = PHF * N * fHV * fp V or DDHV  ___________________pc/h/ln  N  _______________assumed
+S  ___________________km/h  vp = PHF * N * fHV * fp V or DDHV  _______________pc/h/ln
+  LOS  _______________
+D = vp /S  ___________________pc/km/ln
+LOS  ___________________
+
+Design (vp) or Planning (vp)  ___________________  Design (N) or Planning (N) 2nd Iteration  _______________assumed
+LOS  N  _______________pc/h/ln
+  vp = V or DDHV PHF * N * fHV * fp  _______________
+vp  _1_,5_3__6__-_1_,4_0__0__=__13__6_pc/h/ln  LOS  _______________km/h
+V = vp * PHF * N * fHV * fp  ___________________veh/h  S  _______________pc/km/ln
+S  _9_6__.0_______________km/h  D = vp /S
+  _1_4_.6________________pc/km/ln
+D = vp/S
+
+Glossary  S - Speed  Factor Location  fLW - Exhibit 21-4
+  D - Density  fLC - Exhibit 21-5
+N - Number of lanes  FFS - Free-flow speed  ET - Exhibit 21-8, 21-9, 21-11  fM - Exhibit 21-6
+V - Hourly volume  BFFS - Base free-flow speed  ER - Exhibit 21-8, 21-10  fA - Exhibit 21-7
+vp - Flow rate  fp - Page 21-11
+LOS - Level of service  LOS, S, FFS, vp - Exhibit 21-2, 21-3
+DDHV - Directional design-hour volume
+
+  21-27  Chapter 21 - Multilane Highways
+  Example Problems
+Highway Capacity Manual 2000
+
+  EXAMPLE PROBLEM 5
+
+  The Highway New suburban facility under planning with an opening-day AADT
+  forecast of 42,000 veh/day.
+
+  The Question For opening-day volumes, how many lanes will be needed to provide
+  LOS C during the peak hour?
+
+  The Facts
+  √ 42,000 veh/day,
+  √ Rolling terrain, and
+  √ 10 percent trucks.
+
+  Comments
+  √ Several input variables are not given. Reasonable default values based on the
+  traffic engineer’s knowledge of local conditions are selected as 10 percent trucks, 0
+  percent RVs, lane width of 3.6 m, undivided highway, K = 0.10, directional split of
+  60/40, BFFS = 90.0 km/h, access-point density of 4 access points/km, PHF = 0.90,
+  and shoulder width of 1.8 m.
+  √ Assume commuter traffic (fp = 1.00).
+
+  Outline of Solution Using the multilane highways worksheet (Appendix A), determine
+  required lane configuration.
+
+  Steps  DDHV = AADT * K * D
+  1. Convert AADT to directional design-  DDHV = 42,000 * 0.10 * 0.60
+  DDHV = 2,520 veh/h
+  hour volume (DDHV).
+  1
+  2. Find fHV (use Exhibit 21-8).  fHV = 1 + PT(ET – 1) + PR (ER – 1)
+
+  3. Compute free-flow speed (use Exhibits  1
+  21-4, 21-5, 21-6, and 21-7).  fHV = 1 + 0.1(2.5 – 1) + 0 = 0.870
+  FFS = BFFS – fLW – fLC – fA – fM
+  4. Assume four-lane highway and compute  FFS = 90.0 – 0.0 – 0.0 – 2.7 – 2.6
+  vp (use Equation 21-3).  = 84.7 km/h
+  vp = 2, 520 = 1,609 pc/h/ln
+  5. Determine LOS (use Exhibit 21-3).
+  6. Assume six-lane highway and compute  0. 90 * 0. 870 * 2 * 1.00
+  LOS D
+  vp (use Equation 21-3).  vp = 2, 520 = 1,073 pc/h/ln
+  7. Determine LOS (use Exhibit 21-3).
+  0. 90 * 0. 870 * 3 * 1.00
+  LOS C
+
+  The Results
+
+  • A 6-lane freeway is needed,
+  • LOS C,
+  • Speed = 84.7 km/h, and
+  • D = 12.7 pc/km/h.
+
+Chapter 21 - Multilane Highways  21-28
+Example Problems
+  Highway Capacity Manual 2000
+
+  MULTILANE HIGHWAYS WORKSHEET  Example Problem 5
+
+Average Passenger-Car Speed (km/h)  110  Application  Input  Output
+  7 pc/km/ln  100 Free-Flow Speed = 100 km/h  Operational (LOS)  FFS, N, vp  LOS, S, D
+  11 pc/km/ln 90 90 km/h  Design (N)  FFS, LOS, vp  N, S, D
+  Design (vp)  FFS, LOS, N  vp, S, D
+  80 80 km/h  Planning (LOS)  FFS, N, AADT  LOS, S, D
+  70 70 km/h LOS A B C D E  Planning (N)  FFS, LOS, AADT  N, S, D
+  60  Planning (vp)  FFS, LOS, N  vp, S, D
+  50 16 pc/km 22 pc / /k ln m/ 28 ln pc/km/ln
+  400 400 800 1200 1600 2000  2400
+
+  Flow Rate (pc/h/ln)
+
+General Information  Site Information
+
+Analyst  _____J_M__Y_E__________  Highway/Direction of Travel  ________________
+Agency or Company  _____E_H_I____________  From/To  ________________
+Date Performed  _____5_/_16__/_9_9________  Jurisdiction  __M_.__C_o_u_n_t_y______
+Analysis Time Period  _____P_M_____________  Analysis Year  __19__9_9___________
+
+Operational (LOS)  Design (N)  Design (vp)  Planning (LOS)  X  Planning (vp)
+  Planning (N)
+
+Flow Inputs
+
+Volume, V  ___________________veh/h  Peak-hour factor, PHF  _____0_._9_0_______
+Annual avg. daily traffic, AADT  _____4__2_,0__0_0________veh/day  _____10__________
+Peak-hour proportion of AADT, K  _____0__.1_0___________  % Trucks and buses, PT  _____0__________
+Peak-hour direction proportion, D  _____0__.6__0__________  % RVs, PR
+DDHV = AADT * K * D  _____2__5_2_0__________veh/h  General terrain  Mountainous
+Driver type  Up/Down ________%
+  Recreational/Weekend  Level  X Rolling  _______________
+  X Commuter/Weekday
+  Grade:  Length _______km
+
+  Number of lanes
+
+Calculate Flow Adjustments
+
+fp  ______1._0_0___________  ER  ____________________
+
+ET  ______2_.5____________  fHV =  1  ____0__.8__7_0______
+  1 + PT(ET – 1) + PR(ER – 1)
+
+Speed Inputs  Calculate Speed Adjustments and FFS
+
+Lane width, LW  ______3_._6___________m  fLW  ____0_.0_______km/h
+
+Total lateral clearance, TLC  ______3_._6___________m  fLC  ____0_.0_______km/h
+
+Access points, A  ______4_____________A/km  fA  ____2_.7_______km/h
+
+Median type, M  X  Undivided  Divided
+
+FFS (measured)  ___________________km/h  fM  ____2_.6_______km/h
+
+Base free-flow Speed, BFFS  ______9_0____________km/h  FFS = BFFS – fLW – fLC – fA – fM  ____8_4_.7______km/h
+
+Operational, Planning (LOS); Design, Planning (vp)  Design, Planning (N)
+
+Operational (LOS) or Planning (LOS)  Design (N) or Planning (N) 1st Iteration
+
+vp = PHF * N * fHV * fp V or DDHV  ___________________pc/h/ln  N  ______2_________assumed
+S  ___________________km/h  vp = PHF * N * fHV * fp V or DDHV  ______1,_6_0__9_____pc/h/ln
+  LOS  ______D_________
+D = vp /S  ___________________pc/km/ln
+LOS  ___________________
+
+Design (vp) or Planning (vp)  ___________________  Design (N) or Planning (N) 2nd Iteration  _______3________assumed
+LOS  N  _______1_,0__7_3____pc/h/ln
+  vp = V or DDHV PHF * N * fHV * fp  _______C________
+vp  ___________________pc/h/ln  LOS  _______8__4_.7_____km/h
+V = vp * PHF * N * fHV * fp  ___________________veh/h  S  _______1_2_._7_____pc/km/ln
+S  ___________________km/h  D = vp /S
+
+D = vp/S  ___________________pc/km/ln
+
+Glossary  S - Speed  Factor Location  fLW - Exhibit 21-4
+  D - Density  fLC - Exhibit 21-5
+N - Number of lanes  FFS - Free-flow speed  ET - Exhibit 21-8, 21-9, 21-11  fM - Exhibit 21-6
+V - Hourly volume  BFFS - Base free-flow speed  ER - Exhibit 21-8, 21-10  fA - Exhibit 21-7
+vp - Flow rate  fp - Page 21-11
+LOS - Level of service  LOS, S, FFS, vp - Exhibit 21-2, 21-3
+DDHV - Directional design-hour volume
+
+  V. REFERENCES
+
+  1. Reilly, W., D. Harwood, J. Schoen, and M. Holling. Capacity and LOS
+  Procedures for Rural and Urban Multilane Highways. NCHRP Project 3-33,
+  Final Report, JHK & Associates, Tucson, Ariz., May 1990.
+
+  21-29  Chapter 21 - Multilane Highways
+  Example Problems
+Highway Capacity Manual 2000
+
+  2. Hool, J. N., S. Maghsoodloo, A. D. Veren, and D. D. Brown. Analysis of
+  Selective Enforcement Strategy Effects on Rural Alabama Traffic Speeds. In
+  Transportation Research Record 910, TRB, National Research Council,
+  Washington, D.C., 1983, pp. 74–81.
+
+  3. Armour, M. The Effect of Police Presence on Urban Driving Speeds. Australian
+  Road Research, Vol. 14, No. 3, Sept. 1984, pp. 142–148.
+
+  4. Hauer, E., and F. J. Ahlin. Speed Enforcement and Speed Choice. Accident
+  Analysis and Prevention, Vol. 14, No. 4, 1982, pp. 267–278.
+
+  5. Tignor, S. C. Driver Speed Behavior on U.S. Streets and Highways. Compendium
+  of Technical Papers, Institute of Transportation Engineers, August 5–8, 1990.
+
+  6. Manual of Traffic Engineering Studies. Institute of Transportation Engineers,
+  Arlington, Va., 1976.
+
+  7. Webster, N., and L. Elefteriadou. A Simulation Study of Truck Passenger Car
+  Equivalents (PCE) on Basic Freeway Sections. Transportation Research B33,
+  Washington, D.C., 1999, pp. 323–336.
+
+  APPENDIX A. WORKSHEET
+
+  MULTILANE HIGHWAYS WORKSHEET
+
+Chapter 21 - Multilane Highways  21-30
+References
+  Highway Capacity Manual 2000
+
+  MULTILANE  HIGHWAYS  WORKSHEET
+
+Average Passenger-Car Speed (km/h)  110  Speed = 100 km/h  E  Application
+  7 pc/km/ln  100 Free-Flow  2000  Operational (LOS)
+  11 pc/  90  90 km/h  Design (N)  Input  Output
+  80  Design (vp)  FFS, N, vp  LOS, S, D
+  km/ln 70  80 km/h  Planning (LOS)  FFS, LOS, vp  N, S, D
+  60  Planning (N)  FFS, LOS, N  vp, S, D
+  50  70 km/h  Planning (vp)  FFS, N, AADT  LOS, S, D
+  40 0  FFS, LOS, AADT  N, S, D
+  LOS A  B  C  D  2400  FFS, LOS, N  vp, S, D
+
+  16 pc/km 22 pc / / l k n m/ln  28 pc/km/ln
+
+  400  800  1200  1600
+
+  Flow  Rate (pc/h/ln)
+
+General Information  Site Information
+
+Analyst  ___________________  Highway/Direction of Travel  ________________
+Agency or Company  ___________________  From/To  ________________
+Date Performed  ___________________  Jurisdiction  ________________
+Analysis Time Period  ___________________  Analysis Year  ________________
+
+Operational (LOS)  Design (N)  Design (vp)  Planning (LOS)  Planning (N)  Planning (vp)
+
+Flow Inputs  ___________________veh/h  Peak-hour factor, PHF  _______________
+Volume, V  ___________________veh/day  _______________
+Annual avg. daily traffic, AADT  ___________________  % Trucks and buses, PT  _______________
+Peak-hour proportion of AADT, K  ___________________  % RVs, PR
+Peak-hour direction proportion, D  ___________________veh/h  General terrain  Mountainous
+DDHV = AADT * K * D  Up/Down ________%
+Driver type  Recreational/Weekend  Level  Rolling  _______________
+
+  Commuter/Weekday  Grade:  Length _______km
+
+  Number of lanes
+
+Calculate Flow Adjustments
+
+fp  ___________________  ER  ____________________
+
+ET  ___________________  fHV =  1  _______________
+  1 + PT(ET – 1) + PR(ER – 1)
+
+Speed Inputs  Calculate Speed Adjustments and FFS
+
+Lane width, LW  ___________________m  fLW  ____________ km/h
+Total lateral clearance, TLC
+Access points, A  ___________________m  fLC  ____________ km/h
+Median type, M
+FFS (measured)  ___________________A/km  fA  ____________ km/h
+Base free-flow Speed, BFFS
+  Undivided  Divided
+
+  ___________________km/h  fM  ____________ km/h
+
+  ___________________km/h  FFS = BFFS – fLW – fLC – fA – fM  ____________ km/h
+
+Operational, Planning (LOS); Design, Planning (vp)  Design, Planning (N)
+
+Operational (LOS) or Planning (LOS)  Design (N) or Planning (N) 1st Iteration
+
+vp = PHF * N * fHV * fp V or DDHV  ___________________pc/h/ln  N  _______________assumed
+S  ___________________km/h  vp = PHF * N * fHV * fp V or DDHV  _______________pc/h/ln
+  LOS  _______________
+D = vp /S  ___________________pc/km/ln
+LOS  ___________________
+
+Design (vp) or Planning (vp)  ___________________  Design (N) or Planning (N) 2nd Iteration  _______________assumed
+LOS  _______________pc/h/ln
+  N  _______________
+vp  ___________________pc/h/ln  vp = V or DDHV PHF * N * fHV * fp  _______________km/h
+V = vp * PHF * N * fHV * fp  ___________________veh/h  LOS  _______________pc/km/ln
+S  ___________________km/h
+  S  fLW - Exhibit 21-4
+D = vp/S  ___________________pc/km/ln  fLC - Exhibit 21-5
+  D = vp /S  fM - Exhibit 21-6
+Glossary  S - Speed  fA - Exhibit 21-7
+  D - Density  Factor Location
+N - Number of lanes  FFS - Free-flow speed
+V - Hourly volume  BFFS - Base free-flow speed  ET - Exhibit 21-8, 21-9, 21-11
+vp - Flow rate  ER - Exhibit 21-8, 21-10
+LOS - Level of service  fp - Page 21-11
+DDHV - Directional design-hour volume  LOS, S, FFS, vp - Exhibit 21-2, 21-3
+
+  Chapter 21 - Multilane Highways
+  Highway Capacity Manual 2000
+
+CHAPTER 22
+
+FREEWAY FACILITIES
+
+  CONTENTS
+
+I. INTRODUCTION .....................................................................................................22-1  Chapter 22 - Freeway Facilities
+  Scope of Methodology .....................................................................................22-1
+  Limitations to Methodology ...............................................................................22-1
+
+II. METHODOLOGY ....................................................................................................22-2
+  Performance Measures ....................................................................................22-3
+  Segmenting Freeway Facilities ........................................................................22-4
+  Freeway Facility Demands and Estimation of Traffic Demand .........................22-5
+  Adjustments of Segment Capacity ...................................................................22-6
+  Permanent Capacity Reduction ................................................................22-7
+  Construction Activities Capacity Reduction ...............................................22-7
+  Short-Term Work Zones.....................................................................22-7
+  Long-Term Construction Zones .........................................................22-8
+  Lane Width Consideration .................................................................22-8
+  Adverse Weather Capacity Reduction ...................................................... 22-8
+  Rain ...................................................................................................22-9
+  Snow ..................................................................................................22-9
+  Fog .....................................................................................................22-9
+  Environmental Capacity Reduction ...........................................................22-9
+  Capacity Reductions due to Traffic Accidents or
+  Vehicular Breakdowns .......................................................................22-10
+  Applying Capacity Reductions ................................................................22-11
+  Demand-Capacity Ratio .................................................................................22-12
+  Undersaturated Conditions .............................................................................22-14
+  Oversaturated Conditions ...............................................................................22-15
+  Flow Fundamentals .................................................................................22-15
+  Segment Initialization ..............................................................................22-16
+  Mainline Flow Calculation .......................................................................22-16
+  Mainline Input ..........................................................................................22-16
+  Mainline Output .......................................................................................22-16
+  Mainline Output from Ramps ...........................................................22-16
+  Mainline Output from Segment Storage ...........................................22-17
+  Mainline Output from Front-Clearing Queue .................................... 22-17
+  Mainline Flow ..........................................................................................22-17
+  Determining On-Ramp Flow....................................................................22-17
+  Determining Off-Ramp Flow....................................................................22-17
+  Determining Segment Flow .....................................................................22-18
+  Determining Segment Service Measures ...............................................22-18
+  Determining Freeway Facility Performance Measures ...................................22-18
+
+III. APPLICATIONS ....................................................................................................22-19
+  Computational Steps ......................................................................................22-19
+  Traffic Management Strategies ......................................................................22-21
+
+IV. EXAMPLE PROBLEMS .........................................................................................22-23
+  Example Problem 1 ........................................................................................22-24
+  Example Problem 2 ........................................................................................22-28
+  Example Problem 3 ........................................................................................22-32
+  Example Problem 4 ........................................................................................22-34
+  Example Problem 5 ........................................................................................22-37
+
+  22-i
+Highway Capacity Manual 2000
+
+  Example Problem 6 ........................................................................................22-38
+  V. REFERENCES ......................................................................................................22-41
+  APPENDIX A. DETAILED COMPUTATIONAL MODULES FOR
+
+  FREEWAY FACILITIES ......................................................................22-42
+  A.1 Scope of Appendix Material ..................................................................... 22-42
+
+  A.1.1 Limitations ..................................................................................... 22-42
+  A.1.2 Glossary ........................................................................................22-42
+
+  Global Variables ..............................................................................22-43
+  Segment Variables ..........................................................................22-43
+  Node Variables ................................................................................22-44
+  On-Ramp Variables ......................................................................... 22-44
+  Off-Ramp Variables ......................................................................... 22-44
+  Facilitywide Variables ......................................................................22-45
+  A.2 Overall Procedure Description ................................................................. 22-45
+  A.2.1 Input Module ..................................................................................22-45
+  A.2.2 Demand Estimation Module ..........................................................22-45
+  A.2.3 Establish Spatial and Time Units ................................................... 22-47
+  A.2.4 Demand Adjustment Module ......................................................... 22-47
+  A.2.5 Segment Capacity Estimation and Adjustment Module ................ 22-47
+  A.2.6 Demand-to-Capacity Ratio Module ............................................... 22-48
+  A.3 Undersaturated Segment MOE Module ..................................................22-49
+  A.4 Oversaturated Segment MOE Module .................................................... 22-50
+  A.4.1 Procedure Parameters ..................................................................22-50
+  A.4.2 Flow Estimation ............................................................................. 22-51
+  A.4.2.1 Segment Initialization (Exhibit A22-6, Steps 1
+
+  Through 4) ..................................................................................22-55
+  A.4.2.2 Mainline Flow Calculations (Exhibit A22-6, Steps 9 and
+
+  16 Through 23) ........................................................................... 22-56
+  A.4.2.2.1 Mainline Input (Exhibit A22-6, Step 9) ...................... 22-57
+  A.4.2.2.2 Mainline Output (Exhibit A22-6, Steps 16
+  Through 21) ..........................................................................22-57
+  A.4.2.2.2.1 Mainline Output 1—Ramp Flows (Exhibit A22-6,
+  Step 16) ................................................................................22-57
+  A.4.2.2.2.2 Mainline Output 2—Segment Storage (Exhibit
+  A22-6, Steps 20 and 21) ....................................................... 22-57
+  A.4.2.2.2.3 Mainline Output 3—Front-Clearing Queues
+  (Exhibit A22-6, Steps 17 Through 19) .................................. 22-58
+  A.4.2.2.3 Mainline Flow (Exhibit A22-6, Steps 22 and 23) ....... 22-59
+
+  A.4.2.3 On-Ramp Calculations (Exhibit A22-6, Steps 10
+  Through 15) ................................................................................22-59
+  A.4.2.3.1 On-Ramp Input (Exhibit A22-6, Steps 10 and 11) .... 22-59
+  A.4.2.3.2 On-Ramp Output (Exhibit A22-6, Step 12) ................ 22-59
+  A.4.2.3.3 On-Ramp Flows, Queues, and Delays (Exhibit
+  A22-6, Steps 13 Through 15) ................................................ 22-60
+
+  A.4.2.4 Off-Ramp Flow Calculation (Exhibit A22-6, Steps 5
+  Through 8) ..................................................................................22-61
+
+  A.4.2.5 Segment Flow Calculation (Exhibit A22-6, Steps 24
+  and 25) ....................................................................................... 22-61
+
+  A.4.3 Segment and Ramp Performance Measures (Exhibit A22-6,
+  Steps 26 Through 30) ........................................................................22-62
+
+  A.5 Directional Facility Module (Exhibit A22-6, Step 36) ................................ 22-63
+
+Chapter 22 - Freeway Facilities  22-ii
+  Highway Capacity Manual 2000
+
+  Exhibits
+
+Exhibit 22-1.  Freeway Facility Methodology ...............................................................22-2
+Exhibit 22-2.  Time-Space Domain of a Freeway Facility ............................................22-4
+Exhibit 22-3.  Conversion of Freeway Sections into Freeway Segments .................... 22-5
+Exhibit 22-4.  Summary of Capacity Values for Long-Term Construction Zones ........ 22-8
+Exhibit 22-5.  Capacities on German Autobahns Under Varying
+  Conditions (veh/h/ln) ...........................................................................22-10
+Exhibit 22-6.  Proportion of Freeway Segment Capacity Available Under
+  Incident Conditions ..............................................................................22-11
+Exhibit 22-7.  Speed-Flow Curves for Different Weather Conditions .........................22-12
+Exhibit 22-8.  Adjusted Speed-Flow Curves for Indicated Capacity Adjustments .....22-13
+Exhibit 22-9.  Node-Segment Representation of a Freeway Facility .........................22-15
+Exhibit 22-10.  Mainline and Segment Flow at On- and Off-Ramps ............................ 22-15
+Exhibit 22-11.  Implementation of Freeway Facility Methodology ...............................22-19
+Exhibit 22-12.  Required Input Data for Freeway Facility Analysis .............................. 22-20
+Exhibit A22-1.  Overall Procedure Layout ....................................................................22-46
+Exhibit A22-2.  Alternative Speed-Flow Curves for Indicated Capacity
+  Adjustment Factors .............................................................................22-49
+Exhibit A22-3.  Node-Segment Representation of a Directional Freeway Facility .......22-50
+Exhibit A22-4.  Recommended Time Step Duration for Oversaturated Analysis .........22-50
+Exhibit A22-5.  Segment Flow-Density Function .........................................................22-51
+Exhibit A22-6.  Oversaturated Analysis Procedure ...................................................... 22-52
+Exhibit A22-7.  Definitions of Mainline and Segment Flows .........................................22-57
+Exhibit A22-8.  Flow-Density Function with a Shock Wave .........................................22-59
+
+  22-iii  Chapter 22 - Freeway Facilities
+

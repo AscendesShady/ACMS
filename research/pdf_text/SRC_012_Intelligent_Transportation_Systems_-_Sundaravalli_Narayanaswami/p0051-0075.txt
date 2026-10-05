@@ -1,0 +1,873 @@
+32  Chapter 1.3
+
+in both the existing transportation infrastructure and in vehicles has been
+one of the most important and successful strategies for improving the
+efficiency and safety of the existing transportation system. The US has
+developed a national architecture that provides guidance, to states willing to
+implement an ITS, of what functions and communications technologies are
+necessary to be compatible with other such systems. Despite all the efforts
+made by the government, public agencies, and private companies, the US
+still lags in developing and deploying nationwide, efficient ITS. In this
+chapter, the determinants that shaped the development of ITS in the US and
+why it lags among the global leaders in ITS deployment, despite being the
+most powerful nation in the world, are discussed.
+
+  Why ITS?
+
+ITS improve transportation mobility and safety, enhance productivity, and
+reduce negative environmental impact through the integration of advanced
+technologies into the existing transportation system’s infrastructure and the
+vehicles themselves (ITS Overview). ITS are basically sets of tools that
+facilitate connected, integrated, and automated transportation systems that
+are information-intensive for better customer centricity and better
+responsiveness to the needs of users and operators. They provide a proven
+set of strategies for addressing the existing challenges of transportation
+systems, while accommodating the growth in transit ridership and freight
+movement.
+
+The transportation problems faced by cities in the US—like traffic
+congestion and its associated problems of increased travel time, vehicle
+emission, environmental degradation, air pollution, fuel consumption, and
+the potential for traffic accidents—are similar to the problems existing in
+other cities of developed nations. Apart from these problems, lack of
+mobility, disconnects between transportation modes, budgetary constraints,
+and traffic fatalities are also some of the challenges that need to be
+considered.
+
+Traffic congestion was the biggest problem in the US. The Texas
+Transportation Institute estimated that, in a single year, the nation wasted
+4.2 billion manhours and burned 2.8 billion gallons of gas, while getting
+stuck in traffic. The government, public agencies, and private investors have
+two choices while facing this dilemma of unmet needs: add more pavements
+or look for smarter alternatives that use existing systems more efficiently. It
+was realized that in most of the urban areas, highways had reached their
+capacity for major expansion. While many thought that improving
+Determinants of ITS  33
+
+transportation systems solely meant repairing aging infrastructure or
+building new roads, the future of transportation lies not only in these efforts,
+but also in the deployment of ITS technologies. ITS are perceived as the
+most suitable solution in the US for all these transportation problems, and
+the government of the US was determined to improve transportation
+services.
+
+  Determinants of ITS: The US
+
+Developing and deploying ITS faces a range of challenges, including
+system interdependency, funding, scale, network effect, institutional,
+political, and other challenges. Some challenges are inherent in all
+countries, others are specific challenges in the context of the US.
+
+Despite being the most powerful nation in the world, the US lags behind
+global leaders—particularly Japan, Singapore, and South Korea—in ITS
+deployment, in terms of real-time traffic information by transportation
+agencies, progress on vehicle to infrastructure (V2I) and vehicle to vehicle
+(V2V) integration, adoption of computerized traffic signals, and
+maximizing the effectiveness of its already installed system. This has been
+mainly because of two key factors that prevailed in the context of the US: a
+continued lack of adequate funding for ITS and lack of the right
+organizational system to drive ITS, particularly the lack of a federally led
+approach. For developing and deploying ITS, every state has its own
+approach that has prevailed to date. Implementation of ITS in the US varies
+enormously by state and region, thus, tending to be irregular, isolated,
+incremental, and not connected to a nationally integrated ITS. In the specific
+context of the US, a few of the major determinants that shaped the present
+state of the ITS environment are listed:
+
+1. Socioeconomic Environment
+
+The early 2000’s recession caused a decline in economic activity, mainly in
+developed countries. The recession affected the US to a large extent, which
+shifted the focus to making the most efficient use of the highway system
+and vehicle fleet. During the same period, advancement in communication
+and information technology systems and applications was happening at a
+rapid rate. All these factors, ultimately, led to innovative research initiatives
+and an explosion of new transportation apps with improved geographic
+location and mapping systems, in the form of user-friendly mobile and in-
+vehicle user interfaces. Primarily, ITS applications were considered in the
+context of automated purposes and connected vehicles (CVs).
+34  Chapter 1.3
+
+2. Funding, Procurement and Partnership
+
+Financial resources available to fund all the transportation projects are
+limited. The states are not capable of allocating enough funds to these
+transportation projects. Considering today’s volatile economy, the
+capability of an agency to sufficiently fund projects is a dichotomy. Changes
+in existing process may be viable or new methods or improvements might
+need to be considered to deliver timelier and quicker ITS deployment when
+there is a projected technological and cost-effective advantage.
+
+With respect to how agencies can manage ITS funds and budgets prudently,
+a survey of ITS deployment by the Research and Innovative Technology
+Administration was conducted in 2010; it indicated that many states still
+maintain separate budgets for ITS deployments and related costs (see
+Exhibit 1.3.1 for budget trends in the US).
+
+Apart from public-sector funding, the ITS development in the US has
+attracted many private investors and companies. In most of the states, ITS
+is being developed on the public-private partnership (PPP) model and
+technical support is provided by private companies.
+
+3. ITS Policy Development in the US
+
+There are various transportation legislation bills in the US (see Exhibit
+1.3.2 for a list of transportation legislation funding bills prevailing in the
+US). Back in the day, federal activity regarding ITS began with the
+Intermodal Surface Transportation Efficiency Act (ISTEA) of 1991. This
+act established a federal program to research, develop, and operationally test
+ITS and promote their implementation. ISTEA originally authorized $659
+million to ITS for the fiscal years 1992 to 1997 (US Department of
+Transportation, Research and Innovative Technology Administration, “The
+Federal ITS Program Mission”). After that, the Transportation Efficiency
+Act for the twenty-first century (TEA-21), passed in 1998, authorized a
+similar amount ($1.3 billion) through the 2003 fiscal year. Again, in 2005,
+Congress enacted the Safe, Accountable, Flexible, Efficient Transportation
+Equity Act: A Legacy for Users (SAFETEA-LU). It ended the ITS
+deployment program at the close of the 2005 fiscal year but continued ITS
+research at $110 million annually through to the 2009 fiscal year. Since
+ending the ITS deployment program, the federal ITS effort has been much
+more focused on research than on a deployment role. The US Department
+of Transportation estimates that states and localities annually invest $500
+million to $1 billion in ITS projects in the US (USDOT 2006).
+Determinants of ITS  35
+
+The ITS Management Council (a corporate style board of directors)
+develops and directs federal ITS policy. As of May 2006, the Research and
+Innovative Technology Administration (RITA), within the USDOT, took
+responsibility for the strategic direction and management oversight of the
+DOT’s ITS program. Activity is coordinated through the ITS Joint Program
+Office (JPO), which is comprised of program managers and coordinators of
+DOT’s multi-modal ITS initiatives.
+
+The focus of the USDOT’s ITS program is on intelligent infrastructure,
+intelligent vehicles, and the creation of ITS through integration with and
+between these two components. The federal ITS effort focuses on
+Cooperative Intersection Collision Avoidance, Integrated Vehicle based
+Safety Systems, Integrated Corridor Management Systems, Clarus (roadside
+weather condition monitoring), Emergency Transportation Operations,
+Mobility Services for all Americans, and Electronic Freight Management.
+
+On July 6, 2012, President Obama signed MAP-21 into law. It funded
+surface transportation programs at over $105 billion for fiscal years 2013
+and 2014. MAP-21 continued support for the ITS program by restoring the
+ITS research budget to $100 million per year and establishing a Technology
+and Innovation Deployment Program for $62.5 million per year. MAP-21
+changed the focus of ITS activities by directing the Secretary of
+Transportation to encourage the deployment of ITS technologies that will
+improve the performance of the national highway system.
+
+4. Provision of Real-time Traffic Information
+
+The US notably trails other world leaders in the provision of publicly
+available, real-time traffic information to citizens (see Exhibit 1.3.3 for the
+percentage of metropolitan areas in the US disseminating real-time
+information to the public). In 2005, after realizing that real-time traffic
+information can be used to improve traffic flow and congestion, Congress
+enacted a legislation requiring the USDOT to establish the Real-time
+System Management Information Program to provide states the capability
+to monitor traffic and travel conditions on major highways, and share that
+information. The Federal Highway Administration issued a rule proposing
+requirements for states to make certain traffic information available,
+specifically travel speed, travel time, and incident notification, on major
+highways, maintaining the data quality standards, including standards for
+timeliness, accuracy, and availability of that traffic information.
+36  Chapter 1.3
+
+5. Vehicle Infrastructure Integration in the US
+
+Over the past fifteen years, a primary focus of US ITS policy has been an
+initiative initially called Vehicle Infrastructure Integration (VII). The
+objective of the VII initiative was to deploy and enable a communications
+infrastructure that supports V2I, as well as V2V, communications for a
+variety of vehicle safety applications and transportation operations
+(Intelligent Transportation Society of America). At the end of 2007, the
+USDOT announced the VII program would undergo a full reassessment.
+The DOT opened every aspect of the VII program—from providers,
+technologies, and wireless communications methods to business models and
+public-private partnerships—to re-evaluate it and implement it more
+effectively at a broader level.
+
+6. Research and Technological Advancement
+
+The CV safety pilot model deployment occurred from 2012 to 2013. It was
+the largest real-world test of CV technology to date, with over 2,700
+participating vehicles using wireless safety technology. After analyzing data
+from the pilot program, the US implemented V2V technology across the
+nation. A major success in the world of CVs occurred in 2015, when the
+USDOT announced the selection of three CV deployment sites as
+participants in the CV pilot development program. In August 2010,
+Washington State Department of Transportation (WSDOT) launched the
+Active Traffic and Demand Management (ATDM) system to reduce
+collisions associated with congestion and blocked lanes. The USDOT’s
+Application for the Environment: Real-time Information System (AERIS)
+research program develops advanced vehicle applications that reduce
+transportation’s impact on the environment. It employs a multi-modal
+approach and encourages the development of technologies and applications
+that reduce fuel use and resulting emissions. There is also an emerging trend
+for private companies to invest in automation. In the race to automation,
+traditional automobile companies are joined by tech giants like Google and
+Apple. The Apple iGo car sharing service concept is one of the most
+successful examples. Google’s self-driving car project is another widely
+known initiative in the automated vehicle space.
+
+  Absence of Nationwide Integrated ITS
+
+The US has pockets of regions with strong ITS applications, including the
+use of variable rate highway tolling, electronic toll collection, certain
+advanced traffic management systems, such as ramp metering, and an active
+Determinants of ITS  37
+
+private sector market in telematics and travel information provision. There
+are many factors that are responsible for the efficient development and
+deployment of ITS in the US. Despite being the most powerful nation in the
+world, the US still lags behind the global leaders in terms of ITS because of
+financial, technical, and institutional constraints. Some major reasons are
+listed below.
+
+  1. There is a huge lack of coordination between different public
+  transportation agencies and jurisdictions, because of which there is
+  no proper sharing of resources and the roles of individual agencies
+  are being threatened.
+
+  2. There is a lack of financial resources to fund all the transportation
+  projects, mainly due to economic considerations and lobbying by
+  vested interest groups.
+
+  3. Every state has its own approach to developing and deploying ITS,
+  because of which there is no successful implementation of integrated
+  ITS nationwide.
+
+  4. US still lags behind global ITS leaders in terms of technological
+  advancement. The US needs to buy the advanced technologies used
+  in ITS from other countries.
+
+  5. The organizational structure for ITS development and deployment is
+  not clearly defined.
+
+  6. There is a need to develop ITS stakeholder policies to ensure
+  efficiency, consistency, and interoperability in deploying integrated
+  systems.
+
+  7. Operations management programs, as well as maintenance
+  programs, are ineffective and inadequate in ITS deployment.
+
+  8. There is no formal data-sharing policy and data archiving systems
+  are inadequate among traffic managers.
+
+  9. There is no proper consideration of PPP-based unique financing
+  methods as ways to cover costs for transportation projects.
+
+  10. There is no rigorous testing prior to deployment of an ITS project,
+  which results in the needs of the users and customers not being met.
+
+  11. There is an exclusion of the rural environment from ITS
+  development planning and a lack of utilization of national ITS
+  architecture.
+
+  12. There is a lack of public participation in the planning process.
+38  Chapter 1.3
+
+  Conclusion
+
+Every country has unique problems and challenges in transportation
+systems management and some of them are common across countries, but
+many issues are local and specific to each country. Over the past few years,
+deploying ITS is an emerging trend worldwide and is a proven solution to
+address several transportation problems. ITS in the US are, certainly, not
+too successful, but are a good demonstration of systemic development and
+of how an ITS environment is designed and planned. Transportation
+problems prevailing in the US are not very different from other developed
+countries. Like the rest of the developed nations, the US also chose to
+develop ITS to find a solution, to its existing transportation systems, that
+could be environmentally and economically sustainable. Despite having the
+national architecture for ITS, the US has not been able to develop advanced,
+integrated nationwide ITS. There is no coordination between state
+transportation agencies, every state has its own problem and its own
+approach to develop and deploy ITS. At the apex level, there is no exclusive
+policy or act regulating the development of ITS; responsibilities of agencies
+regarding ITS deployment are not clearly defined. Lack of funding for
+transportation projects is also one of the major reasons that ITS have not
+been implemented at the desired and required scale. The US still lags behind
+Japan, Singapore, and South Korea in terms of technological advancement
+in ITS. As the US is moving towards a more intelligent and connected
+transportation system, it is important to reflect on the history of the field,
+adopt best practices, identify trends and their historical implications, and
+benchmark both the positive and negative outcomes of the evolving status
+of ITS.
+  Determinants of ITS  39
+
+Exhibit 1.3.1 Number of Various Agencies and Their Budget Trends for
+ITS Components as of 2010
+
+ITS Funding  Freeway  Toll  Transportation  Arterial  Transit
+and Budget  Management  Collection  Management  Management  Management
+  Agencies
+  Practices  Agencies  Centers  Agencies  Agencies
+
+Separate
+
+budget for  83  39  134  76  26
+
+ITS
+
+Track budget  46  18
+separately for 59 30 88
+ITS
+deployments
+
+Track budget
+
+separately for
+
+ITS 74 23 98  45  13
+operations
+
+and
+
+maintenance
+
+Track budget
+
+separately for
+
+traffic  64  29  87  56  2
+
+management
+
+or operations
+
+center
+
+Source: Research and Innovative Technology Administration (RITA), US
+40  Chapter 1.3
+
+Exhibit 1.3.2 Showing Key Transportation Legislation Funding Bills
+
+Source: US Department of Transportation
+  Determinants of ITS  41
+
+Exhibit 1.3.3 Percentage of metropolitan areas in which incident, travel
+time, and travel speed information were disseminated to the US public in
+2007
+
+ Type of Information  Freeways  Arterial Roads
+Incident  87%  68%
+Travel Time  36%  19%
+Travel Speed  32%  16%
+
+  References
+
+American Public Transportation Association. n.d. Public Transportation
+
+  Ridership Statistics.
+Auer, A., S. Feese and S. Lockwood. 2016. HISTORY OF INTELLIGENT
+
+  TRANSPORTATION SYSTEM. Washington, DC: US Department of
+  Transportation, Intelligent Transportation Systems Joint Program
+  Office.
+Barbaresso, J., G. Cordahi, D. Garcia, C. Hill and K. Wright. 2014.
+
+  USDOT’s Intelligent Transportation Systems (ITS) ITS Strategic Plan
+  2015-2019. Washington, DC: US Department of Transportation,
+  Intelligent Transportation Systems, Joint Program Office.
+Ezell, S. 2010. Explaining International IT Application Leadership:
+  Intelligent Transportation Systems. The Informatition Technology &
+  Innovatition Foundatition.
+Maccubin, R. P., B. L. Staples, F. Kabir, C. F. Lowrence, M. R. Mercer, B.
+  H. Philips and S. R. Gordon. 2008. Intelligent Transportation Systems
+  Benefits, Costs, Deployment, and Lessons Learned. Washington, DC:
+  US Department of Transportation.
+Schrank, David, and T. Lomax. 2007. Urban Mobility Report. Texas: Texas
+  A & M University, Texas Transportation Institute.
+US DOT Federal Highway Administration, Office of Safety. 2007. FHWA
+  Safety.
+US DOT Federal Highway Administration, Freight Management and
+  Operations. 2006. Freight Facts and Figures 2006.
+US DOT, ITS Joint Program Office. n.d. ITS Overview.
+  MODULE 2
+
+ANATOMY AND FRAMEWORK
+  OF DEVELOPMENT
+  CHAPTER 2.1
+
+  ROLE OF INFORMATION AND
+  COMMUNICATION TECHNOLOGY
+
+  Introduction
+
+In the twenty-first century, information and communication technology
+(ICT) is rapidly evolving and playing a huge role in our everyday lives.
+Now, it is globally accepted that ICT can be a great tool for development. It
+can improve economic opportunities, governance, delivery of services, and
+benefit social change. The low costs and high functionality of ICT systems
+have a deep effect in increasing the population of internet users and
+nurturing the growth of e-commerce.
+
+In the transportation field, the use of ICT is crucial in the quest to achieve a
+sustainable urban transport. With advancement in ICT, the popularity of
+smart mobile devices, and developments in cloud technology have increased
+public demands for real-time traffic information updates, transport-related
+internet and mobile applications, and integrated transportation data. ICT is
+a great influencer in people’s mobility and travel choices as well as travel
+experience. ICT-based monitoring infrastructure is a major player for traffic
+management and traveler information services. The primary goal of ICT in
+the transport sector is to use all available data to depict an accurate picture
+of the live traffic situation, especially congestion. Broadly, connected ICT
+infrastructure consists of three dimensions: i) systems for collection of data
+such as monitoring and positioning systems, ii) systems and protocols for
+communicating data (e.g., between traffic control centers and to and from
+vehicles), and iii) quality of the data such as accuracy and timeliness.
+
+ICT infrastructure is a prerequisite for the deployment of Intelligent
+Transport Systems’ (ITS) services, providing relevant and high-quality data
+from systems that monitor the road’s status. ITS integrate functions with the
+ICT industries to make transportation services more convenient, safe, and
+efficient. ITS—like car navigation systems and vehicle information and
+communication systems (VICS), which provide drivers with traffic
+information—have begun to find their way into private vehicles. In
+Role of Information and Communication Technology  45
+
+commercial vehicles, it is now easy to track the location, as well as the
+condition, of vehicles and freight and to apply such information to optimize
+travel routes and freight arrival times. In addition, there is a great potential
+for the use of electronic tags (RFID) and Dedicated Short Range
+Communication (DSRC) systems, such as the ETC system used to collect
+highway tolls, and the integrated fair mechanism and parking fees
+collection.
+
+  Taipei Smart City
+
+Taipei is the capital city and a special municipality of Taiwan, officially
+known as the Republic of China (ROC). Taipei is the economic, political,
+educational, and cultural center of Taiwan, and one of the major hubs of the
+Chinese-speaking world. Considered to be a global city, Taipei is a part of
+a major high-tech industrial area; railways, high speed rails, highways,
+airports, and bus lines connect Taipei with all parts of the island. Taipei is
+one of the smartest cities in the world.
+
+The government of Taipei city is determined to provide a convenient
+mobility service to its citizens. They released a comprehensive long-term
+plan for city development, as seen in metropolises like Seoul, Tokyo,
+London, and Amsterdam. Today, Taipei’s service innovations have established
+it as one of the smartest cities in the world. Several services use various ICT
+to make the citizens mobility comfortable, safe, and sustainable. Taipei has
+installed various ICT-based programs, such as triple play in telecommunication
+to enhance municipal cloud services, an intelligent traffic system, and a
+public safety program.
+
+Public transport systems account for a substantial portion of different
+transport modes in Taipei city. Taipei Station serves as the comprehensive
+hub for the subway, bus, conventional rail, and high-speed rail. A
+contactless smartcard (Easy Card) can be used for all modes of public transit
+as well as several retail outlets. The Easy Card is read via proximity sensory
+panels on buses and in MRT stations.
+
+  Role of ICT in Development of Taipei ITS
+
+The idea of smarter transport systems in Taipei is not something new; ITS
+are globally recognized to improve urban transportation systems by
+integrating smart technologies. ITS typically integrate communications,
+sensing, traffic management, information technology, and control, thereby,
+46  Chapter 2.1
+
+improving coordination between different transportation systems and
+enhancing safety, efficiency, and passenger comfort. The major functions
+of the complete ITS in Taipei include i) the traffic surveillance and
+information center, ii) the transportation system’s vision system, iii)
+intelligent traveler and information and safety assistance, iv) audio machine
+interface, v) intelligent vehicle control and safety assistance, vi) advanced
+communication network, vii) automated smart car driving, viii) inter-
+vehicle video conference, and ix) smart agent-based travel information.
+
+There are various ICT components in Taipei ITS (see Exhibit 2.1.1 for
+components and mechanism of ICT in service innovation). Using these ICT
+components, for an ICT-enabled service innovation in a smart city area, the
+following are achieved.
+
+1. Ubiquitous Deployment
+
+It is a mechanism that contains basic ICT components. The government of
+Taipei has deployed a city-wide ICT-based mechanism. Free Wi-Fi,
+monitoring cameras, smart payment using Easy Card, self-service stations
+for rental bikes, MRTS, RFID tags, and readers for security, in addition to
+the manual keys, are implemented throughout the whole city.
+
+2. On-time Resource Control
+
+This ICT-based mechanism ensures that all resources in the smart city work
+reliably and on time. This mechanism enables citizens to have better
+decision making and better mobility planning for an easy, safe, and
+comfortable commuter experience. The system manages by tracking road
+conditions, number of vehicles, and estimated mileage. Real-time data
+collection and analytics are employed for dynamic estimation of real-time
+scenarios, and to propose changes in road conditions, to enhance customer
+experience.
+
+3. Data Value Development
+
+Data value development deals with the design and development of
+complementary applications to support smart city management. It allows
+developers in the smart city to open data access of all ITS-related data, and
+also to allocate application program interfaces (APIs) for developers.
+Role of Information and Communication Technology  47
+
+4. Behavioral Pattern
+
+The concept of smart city is a dynamic process—once the city becomes
+smart it then focuses on becoming smarter by using ICT components
+appropriately. A smart city can never cease to upgrade their services.
+Understanding behavioral patterns of users plays a key role in understanding
+the system and helps in further development or improvement of services.
+The city of Taipei also focused on the same details. By analyzing the
+citizens’ travel patterns and usage of services, improving the quality of
+services became much easier.
+
+5. Navigation Control
+
+The objective of this mechanism is to control all kinds of vehicles, including
+public transport and commercial vehicles. To fall under the category of
+smart city, it is important to use technologies like digital maps and GPS to
+analyze real-time traffic volume for reducing congestion. Undoubtedly,
+congestion is one of the major problems and a common issue in a densely
+populated city like Taipei. The city has already deployed GPS in all the
+public transport vehicles with automatic announcement of the approaching
+stations. The system relates to alert system using LED text displays. The
+city also has an advanced vehicle control and safety system (AVCSS), such
+as the anti-collision warning system, which has been installed in all the
+public transport, personal, and commercial vehicles. Also, they have audio
+signals at every intersection, and they recently developed a vulnerable
+individual protection service (VIPS) system with separate bike and
+pedestrian lanes.
+
+6. Information Center
+
+The information center is one of the most important components of any
+smart city, and Taipei has a well-networked and high-technology
+information center: through several internet-based media, such as websites,
+mobile applications, social media accounts, social media platforms and
+cloud storages, real-time information is communicated to all stakeholders.
+
+7. Service Monitoring
+
+In order to maintain the quality of services, sustainable monitoring becomes
+very important. By using real-time information systems and other ICT-
+based systems, Taipei monitors all services to ensure the quality of services
+and to make continuous improvements. YouBike is a mass transportation
+service in Taipei that uses back-end management to properly run the service.
+48  Chapter 2.1
+
+8. Management Control
+
+Management control generally refers to the mechanism that monitors and
+controls the transportation systems. It allows the city to maintain the quality
+of public transportation services and makes it more stable and efficient. This
+mechanism also makes it feasible for upgradation. To address transport-
+related issues, environmental impacts and pollution, the city promoted the
+use of bicycles and non-motorized transportation. An integrated ICT has
+been established in the city of Taipei by coupling bicycle manufacturers,
+system platform operators, and logistics and maintenance providers; 24/7
+rental stations have been set up throughout the city. To make this initiative
+successful and get public endorsement, user registration and rental
+procedures have been simplified, and a smart bicycle management system
+has been set up through back-end cloud computing.
+
+  Conclusion
+
+Advancement in ICTs has an enormous influence on today’s transportation
+systems. The transportation systems around which the modern world has
+been built are on the verge of an extraordinary transformation based on
+recent advancement in ICT and other technologies; this may save billions
+of dollars by facilitating far better utilization of existing transportation
+infrastructure. Governments need to assume an active leadership role to
+deploy such emerging technologies. Smart cities of the future will only be
+those that embrace and integrate ITS in their existing systems. As depicted
+through the case of Taipei city, an ICT-based interconnected and integrated
+mechanism is important for developing ITS in any city. ICT acts as the
+backbone and heart of ITS; it provides a supporting environment to develop
+ITS. It is representing an emerging infrastructure platform—making driving
+and traffic management better and safer for everyone—from which a whole
+host of new products and services are likely to emerge, many of which can
+barely be imagined today.
+
+  References
+
+Alamsyah, N., T.-C. Chou, T. D. Susanto. 2016. “ICT-MECHANISMS OF
+  INTELLIGENT TRANSPORTATION SYSTEM IN TAIPEI CITY AS
+  A SMART CITY.” International Journal of Computer Science &
+  Information Technology (IJCSIT) 8 (3). doi:10.5121/ijcsit.2016.8305
+
+Executive Yuan, R.O.C. (Taiwan). 2017. Government Plans to Develop
+  Intelligent Transportation Systems.
+Role of Information and Communication Technology  49
+
+  http://english.ey.gov.tw/News_Hot_Topic.aspx?n=4635A87F2197A89
+  5&sms=3E25961B493A668D.
+YOSHIMOTO, R., and T. NEMOTO. 2005. “THE IMPACT OF
+  INFORMATION AND COMMUNICATION TECHNOLOGY ON
+  ROAD FREIGHT TRANSPORTATION.” THE COMPUTERIZATION
+  OF TRANSPORTATION 29 (1).
+
+Exhibit 2.1.1: Components and Mechanisms in Service Innovation
+
+  ICT Components  ICT-Enabled  Service Innovation
+  Mechanism  Service
+ Internet connection,  Ubiquitous
+  ubiquitous Wi-Fi,  Deployment  Development
+  wireless
+  communication,  On-time Resource  Service Integration
+  cameras, vehicle  Control
+ sensors, self-service
+  station, smart  Data Value
+  Development
+payment cards, RFID  Behavioral Pattern
+  tags, and RFID  Navigation Control
+  readers.
+  Traffic behavior
+
+  statistical analysis,
+district closed-circuit
+
+  television cameras
+  (CCTV) systems,
+monitoring of specific
+  road sections, and
+analysis of commuting
+
+  time.
+ Open data and API
+
+  for developers.
+  Data mining, data
+  visualization, and
+  GPS data traces of
+  human movement.
+ Digital maps, GPSs,
+ and real-time traffic
+
+  analysis.
+50  Chapter 2.1
+
+ Cloud guide system,  Information Center  Supportive Service
+official website, social  Service Monitoring  Innovation
+
+  media, and mobile
+  apps.
+
+Real-time information
+  system, voice-call
+
+service, and back-end
+  management.
+
+  Control center,  Management Control
+
+  logistics, and
+
+  maintenance
+
+  management.
+
+Source: Alamsyah, Chou and Susanto (2016)
+  CHAPTER 2.2
+
+  BIG DATA PROCESSING AND STORAGE
+
+  Introduction
+
+Processed data in the digital age is termed as “information.” With large-
+scale digitization of our everyday activities and ICT advancements, the
+amount of transportation and mobility data generated by human activities is
+far more than the storage capacity and computational ability of systems to
+process it on a real-time basis. The high penetration of smartphones,
+sensors, and the internet has resulted in massive amounts of data generation.
+Smart transport infrastructure systems generate and acquire huge quantities
+of real-time data from different sources like road sensors, cameras, GPS,
+mobile, radio frequency identification readers (RFID), etc., to be processed,
+stored, managed, interpreted, aggregated, and analyzed to enhance user
+experience and assist transport service providers in the decision-making
+process. This huge amount of structured and unstructured data sets
+generated from various sources poses great challenges in processing using
+traditional data processing tools; owing to their huge volume and
+complexity, such data is termed as big data. As the ITS produces high-
+volume, -velocity, -value, -variety, and -veracity data, storing, processing,
+and visualizing it has become a key challenge in ITS development. Due to
+issues like data inconsistency, redundant and obsolete data, harmonizing
+large volumes of data coming from multiple sources makes data processing
+a difficult task. Every component in ITS behaves like a data provider and
+consumer. Current levels of ITS deployments have limited functionality in
+terms of data monitoring and analysis. There is a requirement to develop
+innovative applications and processes to collect, clean, interpret, process
+and transform these real-time data into information to better support
+decision making and efficiency in transport systems. Traditional data
+retrieval and management techniques like SQL and other technologies like
+Hadoop and MapReduce are further developed as NoSQL-distributed
+processing models. Moreover, predictive analysis techniques are a
+compounding factor in big data analysis, so as to assist data collection,
+pattern deduction, processing, and analysis to make useful interpretations in
+addressing and resolving transportation issues. From a transportation
+52  Chapter 2.2
+
+perspective, big data handling not only provides solutions to resolve
+conventional challenges, such as traffic congestion, increased accident
+risks, etc., but also provides an opportunity to develop a safer, cleaner and
+more efficient transport. Traffic management is one of the scenarios where
+data has played a crucial role, even before the introduction of the big data
+concept. The increased spatial-temporal resolution of traffic data due to
+advanced computational processes and big data technologies has resulted in
+better traffic management than with traditional systems. IOT, cloud
+computing and big data have become the key technological components of
+data-intensive services and applications in ITS, and the interdependency is
+illustrated in Figure 2.2.1.
+
+Figure 2.2.1: Big data, IoT and Cloud Computing
+Source: Torre-Bastida et al. (2018)
+
+  Big Data and ITS
+
+The concepts of data mining, data harvesting, data warehouse, and data
+analytics have been common practices in the past few years but big data
+techniques are comparatively new. The principles of distributed computing
+(PARAM from C-DAC) were conceived long before big data; however, big
+data has offered size and magnitude to data processing within budgetary
+constraints. The concept of predictive modelling has also evolved with
+Big Data Processing and Storage  53
+
+emerging big data technologies. Many businesses have built data warehouses
+and analytical platforms based on their historical and transactional data
+sources to support sales and distribution and improve logistics but big data
+has enabled these businesses to manage data as a new kind of business
+potential. Use of big data technologies in ITS is hoped to enable efficient
+sharing of geographic vehicle monitoring, and traffic data across various
+agencies and across nations.
+
+Big data is pertinent to three major issues with respect to transportation data:
+data storage, data analysis, and data management. Distributed data architecture
+in big data systems has the inbuilt ability to handle the expanding volume
+of data. Since data is stored and replicated on different nodes, a single large
+task is divided into several smaller tasks and processed in parallel; agility
+and fault tolerance play a key role in such data processing as the amount of
+data is massive and diverse in nature (structured, semi structured or
+unstructured). (Mounica and Lavanya 2019).
+
+The analytical models of big data can be broadly classified into three
+categories:
+
+  1. Descriptive Analytics: Attempts at condensing and extracting useful
+  information from the data set and discarding irrelevant data from the
+  big data cluster. Typical approaches include pattern recognition and
+  statistical distribution methods to deduce useful patterns and make
+  useful inferences. These techniques are broadly used in traffic
+  monitoring, safety systems, and vehicle detection for automated
+  vehicles.
+
+  2. Predictive Analysis: Applied on a regulated data set where learning
+  algorithms are applied to establish a relationship between a target
+  variable and previously observed patterns or features. Learning
+  models, over time, can learn to infer and predict new target variables
+  for new input data, which might not be similar to any of the previous
+  examples over which the model was built. Such models are very
+  widely used in ITS, particularly by ride sharing platforms, such as
+  Uber, and traffic forecasting systems.
+
+  3. Prescriptive Analysis: Utilizes the information gained from both
+  descriptive and predictive analytics. It uses optimization techniques
+  to make informed decisions from a range of possibilities using
+  operational research, computational intelligence and mathematical
+  programming. Prescriptive analysis is widely used in active traffic
+  management, logistics optimization, and user-driven passenger
+  information systems.
+54  Chapter 2.2
+
+  The Application of Big Data Technology in Intelligent
+  Traffic
+
+Big data technology provides the technical ability to collect, analyze, and
+process the transport data for development and application of ITS. Big data
+applications can be broadly classified:
+
+1. Traffic Flow Prediction for Better Planning and Management
+
+The key requirement for effective traffic management and planning is
+accurate and updated information related to the traffic flow. Big data
+provides insight in terms of customer needs and demand on various routes
+in the network. The monitoring and processing of real-time data and
+previously stored data can be used to predict the traffic flow in real-time.
+This will help the transport providers to better allocate their resources to
+improve the planning of efficient routes, schedules, and frequency of
+transportation modes. This data can also be used by the transport app
+developers to help the user select the most efficient route with shortest
+possible travel time. With the advancement of technologies, AI methods are
+also used to undertake planning and demand modelling. Figure 2.2.2
+represents the typical process flow for a traffic-flow prediction method (Zhu
+et al. 2018). To obtain the effective data set, the original ITS data is first
+pre-processed. With the pre-process data, a traffic-flow model is created
+using a chosen data mining or analytic approach. The traffic-flow model
+assists traffic management authorities in making decisions and receives
+input from actual traffic flows in order to regularly calibrate the model.
+Big Data Processing and Storage  55
+
+Figure 2.2.2: ITS Traffic-flow Model
+Source: Torre-Bastida et al. (2018)
+
+Canaud et al. offer a real-time traffic-flow prediction model based on
+probability hypothesis density filtering. Antoniou et al. offer a data-driven
+computational method for local traffic flow condition prediction. Lu et al.
+use the simulated annealing genetic method and fuzzy c-means (SAGA-
+FCM) to create a traffic-flow condition grouping model.
+
+2. Public Transport Operation Efficiency and Predictive Maintenance
+
+Big data analytics can help to better streamline public transport services
+planning to meet the demands of the user. The data can be used to predict
+the daily OD trip patterns to understand travel behavior. In Istanbul, Turkey,
+operational big data from automated fare collection (AFC) systems is used
+for transportation planning management. Various research works in MIT
+also highlight how data from London AFC can be used to enhance the rail
+transport planning and operation. This data, combined with other data sets
+from users, will help transportation apps to create an integrated travel
+56  Chapter 2.2
+
+planning and booking interface, including rail, buses, private cars, and other
+FMLM modes like bicycle, e-scooter, etc. By lowering travel time, traffic
+congestion, pollution, and greenhouse-gas emissions, big data analytics in
+these transportation apps produces significant economic advantages. For
+example, the opening of TfL data has resulted in the development of over
+two hundred travel apps, creating a value proposition of fifteen to fifty-eight
+million pounds per year.
+
+Furthermore, the data from on-board units and other sensors installed on the
+vehicle can be used to predict the optimal maintenance schedule for the
+vehicle components like brakes, tires, and exhausts, etc. It will assist in
+taking pre-emptive measures before the failure point is approached and
+minimize maintenance costs. This will increase vehicle reliability and
+reduce breakdown incidents during operations. Data from the probe vehicle
+can also help in assessing infrastructure conditions of the route like
+pavement degradation, track geometry, etc. Additionally, using historical
+and aggregate traffic data, the overall operation efficiency of the transport
+system can be enhanced by better traffic predictions and techniques like
+congestion-based toll pricing.
+
+3. Event Response Management and Safety Improvements
+
+Efficient traffic data analyses can help authorities to take proactive steps to
+draft policies and take measures to prevent and mitigate life threatening
+accidents. Analysis of big data can improve emergency response time to a
+huge extent. It can assist in predicting accident-prone areas and help create
+user awareness while traveling on a particular route. It can help authorities
+to effectively respond and make informed decisions to questions regarding
+alternate means of transportation in the event of any disruptions. Big data
+analysis will assist transport planners to create transport systems and
+infrastructures that are resilient. Various studies have been undertaken to
+show the efficiency of big data analytics in traffic accident analysis. Bédard
+et al. determined the respective effect of driver, crash, and vehicle
+characteristics to the fatality risk of drivers by using a multivariate logistic
+regression algorithm. Results indicated that seat belt use, vehicle speed
+reduction, and decrease in the number and severity of driver-side impacts
+could prevent traffic accidents. Using measured traffic-flow data, Golob and
+Recker studied the relationships between weather, lighting conditions,
+traffic flow, and urban freeway accidents, with a multivariate statistical
+model. Xiong et al. introduced classification and regression trees (CART),
+logistic regression, and multivariate adaptive regression splines (MARS) to
+perform analytical operations on motor vehicle accident injury data. Lee and
+

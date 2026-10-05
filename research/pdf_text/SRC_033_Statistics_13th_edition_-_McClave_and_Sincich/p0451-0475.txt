@@ -1,0 +1,1501 @@
+  SECTION 8.8 ■ Test of Hypothesis about a Population Variance (Optional) 449
+
+  d. Test the null hypothesis s2 = 1 against the alternative  f. What assumptions about the data are required for the
+  hypothesis s2 ≠ 1. Use a = .01.  inference to be valid?
+
+8.115 Refer to Exercise 8.114. Suppose we had n = 80, x = 19.4,  8.118  Irrelevant speech effects. Refer to the Acoustical Science
+  and s2 = 2.208.  & Technology (Vol. 35, 2014) study of irrelevant speech
+  a. Test the null hypothesis H0: s2 = 1 against the alterna-  ISR  effects, Exercise 8.47 (p. 420). Recall that 71 subjects
+  tive hypothesis Ha: s2 7 1.  performed a memorization task under two conditions:
+  b. Compare your test result with that of Exercise 8.114.  (1) with irrelevant background speech and (2) in silence.
+  Descriptive statistics on the relative difference in the error
+8.116 A random sample of n = 7 observations from a normal  rates (RDER) for the two conditions yielded x = 78.2
+  population produced the following measurements: 6, 2, 8,  percent and s = 63.2 percent. Suppose the researchers
+  5, 5, 7, and 11. Do the data provide sufficient evidence to  theorize that the true standard deviation of the RDER val-
+  indicate that s2 6 2? Test, using a = .05.  ues differs from 60 percent.
+  a. Set up the null and alternative hypotheses for testing
+Applying the Concepts—Basic
+  the researchers’ theory.
+8.117  Trading skills of institutional investors. The Journal of  b. Compute the test statistic.
+  Finance (Apr. 2011) published the results of an analysis of  c. Find the rejection region of the test using a = .01.
+  trading skills of institutional investors. The study focused  d. Use statistical software to find the p-value of the test.
+  on “round-trip” trades, i.e., trades in which the same stock  e. Make the appropriate practical conclusion. State your
+  was both bought and sold in the same quarter. In a random
+  sample of 200 round-trip trades made by institutional inves-  answer in the words of the problem.
+  tors, the sample standard deviation of the rates of return was  f. What assumption about the population of RDER
+  8.82%. One property of a consistent performance of institu-
+  tional investors is a small variance in the rates of return of  values must hold true for the inference, part e, to be
+  round-trip trades, say, a standard deviation of less than 10%.  valid?
+  a. Specify the null and alternative hypotheses for deter-
+  8.119  Characteristics of a rockfall. Refer to the Environmental
+  mining whether the population of institutional inves-  Geology (Vol. 58, 2009) simulation study of how far a
+  tors performs consistently.  ROCKS  block from a collapsing rockwall will bounce down a
+  b. Find the rejection region for the test using a = .05.  soil slope, Exercise 2.61 (p. 89). Rebound lengths (in
+  c. Interpret the value of a in the words of the problem.  meters) were estimated for 13 rock bounces. The data
+  d. A MINITAB printout of the analysis is shown below.  are repeated in the table. Descriptive statistics for the
+  Locate the test statistic and p-value on the printout.  rebound lengths are shown on the SAS printout at the
+  bottom of the page. Consider a test of hypothesis for the
+  e. Give the appropriate conclusion in the words of the  variation in rebound lengths for the theoretical popu-
+  problem.  lation of rock bounces from the collapsing rockwall. In
+  particular, a geologist wants to determine if the variance
+  differs from 10 m2.
+
+  10.94 13.71 11.38 7.26 17.83 11.92 11.87 5.44 13.35
+  4.90 5.85 5.10 6.77
+
+  Based on Paronuzzi, P. “Rockfall-induced block propagation on a soil slope,
+  northern Italy.” Environmental Geology, Vol. 58, 2009 (Table 2).
+
+  a. Define the parameter of interest.
+  b. Specify the null and alternative hypotheses.
+  c. Compute the value of the test statistic.
+  d. Determine the rejection region for the test using a = .10.
+  e. Find the approximate p-value of the test.
+  f. Make the appropriate conclusion.
+  g. What condition must be satisfied in order for the infer-
+
+  ence, part f, to be valid?
+
+  SAS Output for Exercise 8.119
+450 CHAPTER 8 ■ Inferences Based on a Single Sample
+
+8.120  Shaft graves in ancient Greece. Refer to the American  8.123  Strand bond performance of pre-stressed concrete. An
+  Journal of Archaeology (Jan. 2014) study of sword shaft  experiment was carried out to investigate the strength
+SHAFTS  graves in ancient Greece, Exercise 2.37 (p. 78). The number  FORCE  of pre-stressed, bonded concrete after anchorage failure
+  of sword shafts buried at each of 13 recently discovered grave  has occurred and the results published in Engineering
+  sites is reproduced in the following table. Let s represent  Structures (June 2013). The maximum strand force, mea-
+  the standard deviation of the number of sword shafts for the  sured in kiloNewtons (kN), achieved after anchorage
+  population of all shaft graves in ancient Greece. Consider  failure for 12 pre-stressed concrete strands is given in the
+  the test H0: s = 3 versus Ha: s 6 3, using a = .05.  accompanying table. Conduct a test of hypothesis to de-
+  termine if the true standard deviation of the population
+  1231562412429  of maximum strand forces is less than 5 kN. Test using
+  a = .10.
+  Source: Harrell, K. “The fallen and their swords: A new explanation for
+  the rise of the shaft graves.” American Journal of Archaeology, Vol. 118,  158.2 161.5 166.5 158.4 159.9 161.9 162.8 161.2 160.1 175.6 168.8 163.7
+  No. 1, Jan. 2014 (Figure 1).
+  8.124  Drug content assessment. Analytical Chemistry (Dec. 15,
+  a. Use statistical software to find the sample standard  2009) presented research on a new method used by
+  deviation, s.  TABLET  GlaxoSmithKline Medicines Research Center to deter-
+  mine the amount of drug in a tablet. Drug concentrations
+  b. Calculate the test statistic.  (measured as a percentage) for 50 randomly selected tab-
+  c. Use statistical software to find the p-value of the test.  lets are provided in the accompanying table. The standard
+  method of assessing drug content yields a concentration
+  Interpret the result.  variance of 9. Can the scientists at GlaxoSmithKline con-
+  d. Assume the sample grave with 9 sword shafts was  clude that the new method of determining drug concentra-
+  tion is less variable than the standard method? Test using
+  discovered to be an outlying observation by the  a = .01.
+  researchers, i.e., one from a different population.
+  Remove the data point from the sample and repeat
+  parts a–c. What conclusions can you now draw?
+
+8.121  Latex allergy in health care workers. Refer to the Current
+  Allergy & Clinical Immunology (Mar. 2004) study of
+  n = 46 hospital employees who were diagnosed with a  91.28  92.83  89.35  91.90  82.85  94.83  89.83  89.00  84.62
+  latex allergy from exposure to the powder on latex gloves,  86.96  88.32  91.17  83.86  89.74  92.24  92.59  84.21  89.36
+  presented in Exercise 7.15 (p. 352). Recall that the num-  90.96  92.85  89.39  89.82  89.91  92.16  88.67  89.35  86.51
+  ber of latex gloves used per week by the sampled work-  89.04  91.82  93.02  88.32  88.76  89.26  90.36  87.16  91.74
+  ers is summarized as follows: x = 19.3 and s = 11.9. Let  86.12  92.10  83.33  87.61  88.20  92.78  86.35  93.84  91.20
+  s2 represent the variance in the number of latex gloves  93.44  86.77  83.77  93.19  81.79
+  used per week by all hospital employees. Consider testing
+  H0: s2 = 100 against Ha: s2 ≠ 100.  Source: Borman, P. J., Marion, J. C., Damjanov, I., & Jackson, P. “Design and
+  a. Give the rejection region for the test at a significance  analysis of method equivalence studies.” Analytical Chemistry, Vol. 81, No. 24,
+  Dec. 15, 2009 (Table 3).
+  level of a = .01.
+  b. Calculate the value of the test statistic.  8.125  Point spreads of football games. During a football league
+  c. Use the results from parts a and b to draw the appropri-  season, oddsmakers establish a point spread on each
+  game for betting purposes. For example, the defend-
+  ate conclusion.  ing champion were established as a 1-point underdog
+  against another team in a season. The final scores of the
+Applying the Concepts—Intermediate  games were compared against the final point spreads es-
+  tablished by the betting agency. The difference between
+8.122  Oil content of fried sweet potato chips. Refer to the  the outcome of the game and the point spread (called
+  Journal of Food Engineering (Sept. 2013) study of the  a point-spread error) was calculated for 12 games. The
+  characteristics of sweet potato chips fried at different tem-  mean and standard deviation of the point-spread er-
+  peratures, Exercise 7.111 (p. 384). Recall that a sample of 6  rors are x = - 1.6 and s = 13.3. Suppose a researcher
+  sweet potato slices were fried at 130° using a vacuum fryer  wants to know whether the true standard deviation of
+  and the internal oil content (gigagrams) was measured for  the point-spread errors exceeds 15. Conduct the analysis
+  each slice. The results were: xQ = .178 g>g and s = .011 g>g.  using a = .05.
+  a. Conduct a test of hypothesis to determine if the standard
+  8.126  Cooling method for gas turbines. Refer to the Journal
+  deviation, s, of the population of internal oil contents  of Engineering for Gas Turbines and Power (Jan. 2005)
+  for sweet potato slices fried at 130° differs from .1. Use  TURBINE  study of the performance of augmented gas turbine en-
+  a = .05.  gines, presented in Exercise 8.46 (p. 420). Recall that
+  b. In Exercise 7.111, you formed a 95% confidence  the performance of each in a sample of 67 gas turbines
+  interval for the true standard deviation of the in-  was measured by heat rate (kilojoules per kilowatt per
+  ternal oil content distribution for the sweet potato  hour). Suppose that standard gas turbines have heat
+  chips. Use this interval to make an inference about  rates with a standard deviation of 1,500 kJ>kWh. Is there
+  whether s = .1. Does the result agree with the test,  sufficient evidence to indicate that the heat rates of the
+  part a?
+  Chapter Notes 451
+
+  augmented gas turbine engine are more variable than the  Applying the Concepts—Advanced
+  heat rates of the standard gas turbine engine? Test, using
+  a = 0.5.  8.128  Motivation of drug dealers. Refer to the Applied
+  Psychology in Criminal Justice (Sept. 2009) study of the
+8.127  Birth weights of cocaine babies. A group of researchers at the  personality characteristics of convicted drug dealers,
+  University of Texas-Houston conducted a comprehensive  Exercise 7.17 (p. 352). A random sample of 100 drug
+  study of pregnant cocaine-dependent women (Journal of  dealers had a mean Wanting Recognition (WR) score of
+  Drug Issues, Summer 1997). All the women in the study used  39 points, with a standard deviation of 6 points. Recall
+  cocaine on a regular basis (at least three times a week) for  that the WR score is a quantitative measure of a per-
+  more than a year. One of the many variables measured was  son’s level of need for approval and sensitivity to social
+  birth weight (in grams) of the baby delivered. For a sample  situations. (Higher scores indicate a greater need for ap-
+  of 16 cocaine-dependent women, the mean birth weight  proval.) A criminal psychologist claims that the range of
+  was 2,971 grams and the standard deviation was 410 grams.  WR scores for the population of convicted drug dealers
+  Test (at a = .01) to determine whether the variance in birth  is 42 points. Do you believe the psychologist’s claim?
+  weights of babies delivered by cocaine-dependent women is  (Hint: Assume the population of WR scores is normally
+  less than 200,000 grams2.  distributed.)
+
+CHAPTER NOTES  Key Ideas
+
+Key Terms  Key Words for Identifying the Target Parameter
+
+Note: Starred (*) terms are from the optional sections in this chapter.  m—Mean, Average
+  p—Proportion, Fraction, Percentage, Rate, Probability
+Alternative (research)  One-tailed (one-sided)  s2—Variance, Variability, Spread
+  hypothesis 398  statistical test 403
+  Elements of a Hypothesis Test
+*Chi-square 1x22  *Power of the test 440
+  distribution 445  Rejection region 399  1. Null hypothesis 1H02
+  Test of hypothesis 397  2. Alternative hypothesis 1Ha2
+Conclusion 401  Test statistic 398  3. Test statistic 1z, t, or X 22
+Hypothesis 397  Two-tailed (two-sided)  4. Significance level 1a2
+Level of significance 402  5. p-value
+Lower-tailed test 403  hypothesis 403  6. Conclusion
+*Null distribution 436  Two-tailed test 403
+Null hypothesis 398  Type I error 399  Forms of Alternative Hypothesis
+Observed significance level  Type II error 400  Lower tailed: Ha: m0 6 50
+  Upper-tailed test 403  Upper tailed: Ha: m0 7 50
+  (p-value) 409  Two tailed: Ha: m0 ≠ 50
+
+Key Symbols  Type I Error = Reject H0 when H0 is true (occurs with
+  probability a)
+m  Population mean
+  Type II Error = Accept H0 when H0 is false (occurs with
+p  Population proportion, P(Success), in binomial trial  probability b)
+
+s2  Population variance  Power of the Test = P(Reject H0 when H0 is false)
+  =1-b
+x  Sample mean (estimator of m)
+  Using p-Values to Decide
+pn  Sample proportion (estimator of p)
+  1. Choose significance level 1a2
+s2  Sample variance (estimator of s2)  2. Obtain p-value of the test
+  3. If a 7 p-value, Reject H0
+H0  Null hypothesis
+
+Ha  Alternative hypothesis
+
+a  Probability of a Type I error
+
+b  Probability of a Type II error
+
+x2  Chi-square (sampling distribution of s2 for normal data)
+452 CHAPTER 8 ■ Inferences Based on a Single Sample
+
+Guide to Selecting a One-Sample Hypothesis Test
+
+  Type of Data
+
+  QUALITATIVE  QUANTITAT IVE
+  (2 Outcomes: S,F)
+  Binomial Dist’n  TARGET PARAMETER  TARGET PARAMETER
+  m = Mean or Average  s2 = Variance
+TARGET PARAMETER
+  p = Proportion of S’s  Sample Size  All Samples
+  Population has
+  Sample Size  Normal Dist’n
+
+  LLaarrggee  Small  Large (nı30)  Small (n * 30)  Test Statistic
+  x2 = (n – 1)s2 /(s0)2
+(Both np0ı15 and  (np0 * 15 or  Population has  Population has
+  nq0ı15)  nq0 * 15)  Any Dist’n  Normal Dist’n
+
+Test Statistic  Exact Binomial  Test Statistic  Test Statistic
+z = ˆp – p0  Test  t = n (x – m0)/s
+
+  p0q0/ n  S Known: z =  n (x – m0)/s
+  S Unknown: z L  n (x – m0)/s
+
+Supplementary Exercises 8.129–8.170
+
+Note: List the assumptions necessary for the valid implementation  b. Test H0: m = 90 against Ha: m 6 90. Use a = .05.
+of the statistical procedures you use in solving all these exercises.  c. Test H0: m = 90 against Ha: m ≠ 90. Use a = .01.
+Starred (*) exercises refer to the optional sections in this chapter.  d. Form a 90% confidence interval for m.
+
+Understanding the Principles  e. How large a sample would be required to estimate m to
+
+8.129 What is the p-value associated with a test of hypothesis in  within 1 unit with 99% confidence?
+  statistics?
+  8.135  A random sample of n = 300 observations from a bino-
+8.130 What is the criterion of the parent population for a
+  large-sample and small-sample test of hypothesis about a  mial population yields pn = .39.
+  population variance s2.
+  a. Test H0: p = .45 against Ha: p 6 .45. Use a = .05.
+8.131 What is the critical value of the test?  b. Test H0: p = .45 against Ha: p ≠ .45. Use a = .05.
+  c. Form a 99% confidence interval for p.
+8.132 If the acceptance of the alternative hypothesis of a particu-
+  lar test would cause your firm to go out of business, would  d. Form a 95% confidence interval for p.
+  you want a to be small or large? Explain.
+  e. How large a sample would be required to estimate p to
+8.133 Complete the following statement: The larger the
+  p-value associated with a test of hypothesis, the weaker  within .05 with 99% confidence?
+  is the support for the ____ hypothesis. Explain your
+  answer.  8.136 A random sample of 185 measurements possessed a mean
+  of x = 18.2 and a standard deviation of s = .89.
+Learning the Mechanics  a. Form a 95% confidence interval for m.
+  b. Test H0: m = 18.3 against Ha: m { 18.3. Use a = .05.
+8.134 A random sample of 20 observations selected from a nor-  c. Test H0: m = 18.4 against Ha: m { 18.4. Use a = .05.
+  mal population produced x = 82.6 and s2 = 29.4.
+  a. Form a 95% confidence interval for m.  8.137 A random sample of 51 observations from a normal pop-
+  ulation possessed a mean of x = 88 and a standard devi-
+  ation of s = 6.9.
+  a. Test H0: s2 = 20 against Ha: s2 7 20. Use a = .05.
+  b. Test H0: s2 = 20 against Ha: s2 ≠ 20. Use a = .05.
+  Supplementary Exercises 8.129–8.170 453
+
+8.138  A t-test is conducted for the null hypothesis H0: m = 20  a. Identify the population parameter of interest in the
+  versus the alternative hypothesis Ha: m 7 20 for a ran-  study.
+  dom sample of n = 25 observations. The test results are
+  t = 1.165 and p@value = .1452.  b. Set up H0 and Ha for a test to determine whether the true
+  a. Interpret the p-value.  proportion of items scanned at California Wal-Mart stores
+  b. What assumptions are necessary for the validity of this test?  exceeds the 2% NIST standard.
+  c. Calculate and interpret the p-value, assuming that the
+  c. Find the test statistic and rejection region (at a = .052
+  alternative hypothesis was Ha: m ≠ 20 instead.  for the test.
+
+Applying the Concepts—Basic  d. Give a practical interpretation of the test.
+  e. What conditions are required for the inference made in
+
+  part d to be valid? Are these conditions met?
+
+8.139  Use of herbal therapy. According to the Journal of Advanced  8.143  Accounting and Machiavellianism. Behavioral Research in
+  Nursing (Jan. 2001), 45% of senior women (i.e., women over  Accounting (Jan. 2008) published a study of Machiavellian
+  the age of 65) use herbal therapies to prevent or treat health  traits in accountants. (Machiavellian describes negative
+  problems. Also, senior women who use herbal therapies use  character traits that include manipulation, cunning, duplic-
+  an average of 2.5 herbal products in a year.  ity, deception, and bad faith.) A Machiavellian (“Mach”)
+  a. Give the null hypothesis for testing the first claim by the  rating score was determined for each in a sample of 122
+  purchasing managers with the following results: x = 99.6,
+  journal.  s = 12.6. (Note: Scores range from a low of 40 to a high of
+  b. Give the null hypothesis for testing the second claim by  160, with the theoretical neutral Mach rating score of 100.)
+  A director of purchasing at a major firm claims that the true
+  the journal.  mean Mach rating score of all purchasing managers is 85.
+  a. Specify the null and alternative hypotheses for a test of
+8.140  FDA mandatory new-drug testing. When a new drug is
+  formulated, the pharmaceutical company must subject it  the director’s claim.
+  to lengthy and involved testing before receiving the neces-  b. Define a Type I error for this test.
+  sary permission from the Food and Drug Administration  c. Interpret the value, a = .10.
+  (FDA) to market the drug. The FDA requires the pharma-  d. Give the rejection region for the test using a = .10.
+  ceutical company to provide substantial evidence that the  e. Find the value of the test statistic.
+  new drug is safe for potential consumers.  f. Use the result, part e, to make the appropriate
+  a. If the new-drug testing were to be placed in a test-of-
+  conclusion.
+  hypothesis framework, would the null hypothesis be that  g. Do you need to make any assumptions about the dis-
+  the drug is safe or unsafe? the alternative hypothesis?
+  b. Given the choice of null and alternative hypotheses in  tribution of Mach rating scores for the population of all
+  part a, describe Type I and Type II errors in terms of this  purchasing managers? Explain.
+  application. Define a and b in terms of this application.
+  c. If the FDA wants to be very confident that the drug is  8.144  The “Pepsi challenge.” “Take the Pepsi Challenge” was
+  safe before permitting it to be marketed, is it more im-  a marketing campaign used by the Pepsi-Cola Company.
+  portant that a or b be small? Explain.  Coca-Cola drinkers participated in a blind taste test in
+  which they tasted unmarked cups of Pepsi and Coke and
+8.141  Sleep deprivation study. In a certain study, 22 healthy  were asked to select their favorite. Pepsi claimed that
+  college students deprived of one night’s sleep received an  “in recent blind taste tests, more than half the Diet Coke
+  array of tests intended to measure their thinking time, flu-  drinkers surveyed said they preferred the taste of Diet
+  ency, flexibility, and originality of thought. The overall test  Pepsi.” Suppose 100 Diet Coke drinkers took the Pepsi
+  scores of the sleep-deprived students were compared with  Challenge and 65 preferred the taste of Diet Pepsi. Test
+  the average score expected from students who received  the hypothesis that more than one third of all Diet Coke
+  their accustomed sleep. Suppose the overall scores of the  drinkers will select Diet Pepsi in a blind taste test. Use
+  22 sleep-deprived students had a mean of x = 73 and a  a = .01.
+  standard deviation of 17. (Lower scores are associated with
+  a decreased ability to think creatively.)  8.145  Masculinizing human faces. Nature (Aug. 27, 1998) pub-
+  a. Test the hypothesis that the true mean score of sleep-  lished a study of facial characteristics that are deemed
+  attractive. In one experiment, 67 human subjects viewed
+  deprived subjects is less than 80, the mean score of  side by side an image of a Caucasian male face and the
+  subjects who received sleep prior to taking the test. Use  same image 50% masculinized using special computer
+  a = .05.  graphics. Each subject was asked to select the facial
+  b. Write the 95% confidence interval for the testing  image they deemed more attractive. Fifty-eight of the
+  problem.  67 subjects felt that masculinization of face shape de-
+  creased attractiveness of the male face. The researchers
+8.142  Accuracy of price scanners at Wal-Mart. Refer to Exercise  used this sample information to test whether the sub-
+  7.129 (p. 387) and the study of the accuracy of checkout  jects showed a preference for either the unaltered or the
+  scanners at Wal-Mart stores in California. Recall that the  morphed male face.
+  National Institute for Standards and Technology (NIST)  a. Set up the null and alternative hypotheses for this test.
+  mandates that, for every 100 items scanned through the  b. Compute the test statistic.
+  electronic checkout scanner at a retail store, no more  c. The researchers reported a p@value ≈ 0 for the test. Do
+  than 2 should have an inaccurate price. A study of ran-
+  dom items purchased at California Wal-Mart stores found  you agree?
+  that 8.3% had the wrong price (Tampa Tribune, Nov. 22,  d. Make the appropriate conclusion in the words of the
+  2005). Assume that the study included 1,000 randomly se-
+  lected items.  problem. Use a = .01.
+454 CHAPTER 8 ■ Inferences Based on a Single Sample
+
+*8.146  Identifying type of urban land cover. Geographical Analysis  a. State the null and alternative hypotheses for determin-
+  (Oct. 2006) published a study of a new method for analyz-  ing whether the average number of books read by all
+  ing remote-sensing data from satellite pixels in order to  students who participated in the extensive reading pro-
+  identify urban land cover. The method uses a numerical  gram exceeds 25.
+  measure of the distribution of gaps, or the sizes of holes, in
+  the pixel, called lacunarity. Summary statistics for the lacu-  b. Find the rejection region for the test, using a = .05.
+  narity measurements in a sample of 100 grassland pixels are  c. Compute the test statistic.
+  x = 225 and s = 20. It is known that the mean lacunarity  d. State the appropriate conclusion for the test.
+  measurement for all grassland pixels is 220. The method  e. What conditions are required for the test results to be
+  will be effective in identifying land cover if the standard
+  deviation of the measurements is 10% (or less) of the true  valid?
+  mean (i.e., if the standard deviation is less than 22).  f. Locate the p-value on the MINITAB printout and use
+  a. Give the null and alternative hypotheses for a test to
+  it to test the hypothesis. Your conclusion should agree
+  determine whether, in fact, the standard deviation of all  with your answer in part d.
+  grassland pixels is less than 22.
+  b. A MINITAB analysis of the data is provided below.  8.149  Teacher perceptions of child behavior. Developmental
+  Locate and interpret the p-value of the test. Use  Psychology (Mar. 2003) published a study on teacher
+  a = .10.  perceptions of the behavior of elementary school chil-
+  dren. Teachers rated the aggressive behavior of a sample
+  of 11,160 New York City public school children by re-
+  sponding to the statement “This child threatens or bullies
+  others in order to get his/her own way.” Responses were
+  measured on a scale ranging from 1 (never) to 5 (always).
+  Summary statistics for the sample of 11,160 children were
+  reported as x = 2.15 and s = 1.05. Let m represent the
+  mean response for the population of all New York City
+  public school children. Suppose you want to test H0: m = 3
+  against Ha: m ≠ 3.
+  a. In the words of the problem, define a Type I error and
+
+  a Type II error.
+  b. Use the sample information to conduct the test at a sig-
+
+  nificance level of a = .05.
+  c. Conduct the test from part b at a significance level of
+
+  a = .10.
+
+8.147  Alkalinity of river water. In Exercise 5.129 (p. 303), you  Applying the Concepts—Intermediate
+  learned that the mean alkalinity level of water speci-
+  mens collected from the Han River in Seoul, South  8.150  Errors in medical tests. Medical tests have been developed
+  Korea, is 50 milligrams per liter (Environmental Science  to detect many serious diseases. A medical test is designed
+  & Engineering, Sept. 1, 2000). Consider a random sam-  to minimize the probability that it will produce a “false
+  ple of 100 water specimens collected from a tributary of  positive” or a “false negative.” A false positive is a positive
+  the Han River. Suppose the mean and standard devia-  test result for an individual who does not have the disease,
+  tion of the alkalinity levels for the sample are, respec-  whereas a false negative is a negative test result for an indi-
+  tively, x = 67.8 mpl and s = 14.4 mpl. Is there sufficient  vidual who does have the disease.
+  evidence (at a = .01) to indicate that the population  a. If we treat a medical test for a disease as a statistical test
+  mean alkalinity level of water in the tributary exceeds
+  50 mpl?  of hypothesis, what are the null and alternative hypoth-
+  eses for the medical test?
+8.148  Reading Japanese books. Refer to the Reading in a Foreign  b. What are the Type I and Type II errors for the test?
+  Language (Apr. 2004) experiment to improve the Japanese  Relate each to false positives and false negatives.
+JREAD  reading comprehension levels of University of Hawaii stu-  c. Which of these errors has graver consequences?
+  dents presented in Exercise 2.188 (p. 134). Recall that 14  Considering this error, is it more important to minimize
+  students participated in a 10-week extensive reading pro-  a or b? Explain.
+  gram in a second-semester Japanese course. The data on
+  number of books read by each student are saved in the  8.151  Post-traumatic stress of POWs. Psychological Assessment
+  JREAD file. A MINITAB printout of the data analysis is  (Mar. 1995) published the results of a study of World War
+  shown below.  II aviators captured by German forces after having been
+  shot down. Having located a total of 239 World War II avi-
+  ator POW survivors, the researchers asked each veteran to
+  participate in the study; 33 responded to the letter of invi-
+  tation. Each of the 33 POW survivors was administered the
+  Minnesota Multiphasic Personality Inventory, one com-
+  ponent of which measures level of post-traumatic stress
+  disorder (PTSD). [Note: The higher the score, the higher
+  is the level of PTSD.] The aviators produced a mean PTSD
+  score of x = 9.00 and a standard deviation of s = 9.32.
+  Conduct a test to determine if the true mean PTSD score
+  Supplementary Exercises 8.129–8.170 455
+
+  for all World War II aviator POWS is less than 16. [Note:  allow you to conclude that more than 45% of male youths
+  The value 16 represents the mean PTSD score established  are raised in a single-parent family? Test at a = .05.
+  for Vietnam POWS.] Use a = .10.
+  *8.156  Weights of parrot fish. A marine biologist wishes to use
+  parrot fish for experimental purposes due to the belief that
+8.152  Colored string preferred by chickens. Refer to the Applied  their weight is fairly stable (i.e., the variability in weights
+  Animal Behaviour Science (Oct. 2000) study of domes-  among parrot fish is small). The biologist randomly sam-
+  tic chickens exposed to a pecking stimulus, presented in  ples 10 parrot fish and finds that their mean weight is 6.3
+  Exercise 7.25 (p. 354). Recall that the average number of  pounds and the standard deviation is 2.4 pounds. The biol-
+  pecks a chicken takes at a white string over a specified time  ogist will use the parrot fish only if there is evidence that
+  interval is known to be m = 7.5 pecks. In an experiment in  the variance of their weights is less than 6.
+  which 72 chickens were exposed to blue string, the average  a. Is there sufficient evidence for the biologist to claim
+  number of pecks was x = 1.13 pecks, with a standard devi-
+  ation of s = 2.21 pecks.  that the variability in weights among parrot fish is small
+  a. On average, are chickens more apt to peck at white  enough to justify their use in the experiment? Test at
+  a = .01.
+  string than at blue string? Conduct the appropriate test  b. State any assumptions that are needed for the test men-
+  of hypothesis, using a = .05.  tioned in part a to be valid.
+  b. Compare your answer to part a with your answer to
+  Exercise 7.25b.  8.157  PCB in plant discharge. The EPA sets a limit of 5 parts per
+  c. Find the p-value for the test and interpret it.  million (ppm) on PCB (polychlorinated biphenyl, a dan-
+  gerous substance) in water. A major manufacturing firm
+8.153  Inbreeding of tropical wasps. Refer to the Science study of  producing PCB for electrical insulation discharges small
+  inbreeding in tropical swarm-founding wasps, presented in  amounts from the plant. The company management, at-
+  Exercise 7.139 (p. 389). A sample of 197 wasps, captured,  tempting to control the PCB in its discharge, has given in-
+  frozen, and subjected to a series of genetic tests, yielded  structions to halt production if the mean amount of PCB in
+  a sample mean inbreeding coefficient of x = .044 with a  the effluent exceeds 4 ppm. A random sample of 50 water
+  standard deviation of s = .884. Recall that if the wasp has  specimens produced the following statistics: x = 4.1 ppm
+  no tendency to inbreed, the true mean inbreeding coeffi-  and s = .5 ppm.
+  cient m for the species will equal 0.  a. Do these statistics provide sufficient evidence to halt
+  a. Test the hypothesis that the true mean inbreeding
+  the production process? Use a = .01.
+  coefficient m for this species of wasp exceeds 0. Use  b. If you were the plant manager, would you want to use a
+  a = .05.
+  b. Compare the inference you made in part a with the  large or a small value for a for the test in part a?
+  inference you obtained in Exercise 7.139, using a confi-
+  dence interval. Do the inferences agree? Explain.  *8.158  PCB in plant discharge (cont’d). Refer to Exercise 8.157.
+  a. In the context of the problem, define a Type II error.
+8.154 A dental bonding agent. When bonding teeth, orthodon-  b. Calculate b for the test described in part a of Exercise
+  tists must maintain a dry field. A bonding adhesive (called
+  “Smartbond”) has been developed to eliminate the neces-  8.157, assuming that the true mean is m = 4.1 ppm.
+  sity of a dry field. However, there is concern that the new  c. What is the power of the test to detect the effluent’s de-
+  bonding adhesive is not as strong as the current standard,
+  a composite adhesive (Trends in Biomaterials & Artificial  parture from the standard of 4.0 ppm when the mean is
+  Organs, Jan. 2003). Tests on a sample of 10 extracted teeth  4.1 ppm?
+  bonded with the new adhesive resulted in a mean breaking  d. Repeat parts b and c, assuming that the true mean is
+  strength (after 24 hours) of x = 5.07 Mpa and a standard  4.2 ppm. What happens to the power of the test as the
+  deviation of s = .46 Mpa, where Mpa = megapascal, a  plant’s mean PCB departs farther from the standard?
+  measure of force per unit area.
+  a. Orthodontists want to know if the true mean breaking  8.159  PCB in plant discharge (cont’d). Refer to Exercises 8.157
+  strength of the new bonding adhesive is less than 5.70  and 8.158.
+  Mpa, the mean breaking strength of the composite ad-  a. Suppose a value of .10 is used to conduct the test. Does
+  hesive. Conduct the appropriate analysis for the ortho-
+  dontists. Use a = .01.  this change favor the manufacturer? Explain.
+  *b. In addition to requiring a good mean breaking strength,  b. Determine the value of b and the power of the test
+  orthodontists are concerned about the variability in
+  breaking strength of the new bonding adhesive. Conduct  when a = .10 and m = 4.1.
+  a test to determine whether the breaking strength vari-  c. What happens to the power of the test when a is
+  ance differs from .5 Mpa.
+  increased?
+
+  8.160  Federal civil trial appeals. Refer to the Journal of the
+  American Law and Economics Association (Vol. 3,
+8.155 Single-parent families. Examining data collected on 835  2001) study of appeals of federal civil trials, presented in
+  males from the National Youth Survey (a longitudinal sur-  Exercise 3.170 (p. 205). A breakdown of 678 civil cases
+  vey of a random sample of U.S. households), researchers  that were originally tried in front of a judge and appealed
+  at Carnegie Mellon University found that 401 of the male  by either the plaintiff or the defendant is reproduced in
+  youths were raised in a single-parent family (Sociological  the table on p. 456. Do the data provide sufficient evi-
+  Methods & Research, Feb. 2001). Does this information  dence to indicate that the percentage of civil cases ap-
+  pealed that are actually reversed is less than 25%? Test,
+  using a = .01.
+456 CHAPTER 8 ■ Inferences Based on a Single Sample
+
+  Table for Exercise 8.160  8.164  Study of lunar soil. Meteoritics (Mar. 1995) reported the
+  Outcome of Appeal  results of a study of lunar soil evolution. Data were ob-
+  Number of  tained from the Apollo 16 mission to the moon, during
+  Cases  which a 62-cm core was extracted from the soil near the
+  landing site. Monomineralic grains of lunar soil were
+  Plaintiff trial win—reversed  71  separated out and examined for coating with dust and
+  glass fragments. Each grain was then classified as coated
+  Plaintiff trial win—affirmed/dismissed  240  or uncoated. Of interest is the “coat index”—that is, the
+  proportion of grains that are coated. According to soil
+  Defendant trial win—reversed  68  evolution theory, the coat index will exceed .5 at the top
+  of the core, equal .5 in the middle of the core, and fall
+  Defendant trial win—affirmed/dismissed  299  below .5 at the bottom of the core. Use the summary data
+  in the accompanying table to test each part of the three-
+  Total  678  part theory. Use a = .05 for each test.
+
+8.161  Choosing portable grill displays. Refer to the Journal of
+  Consumer Research (Mar. 2003) experiment on influenc-
+  ing the choices of others by offering undesirable alter-  Location (depth)
+  natives, presented in Exercise 3.29 (p. 159). Recall that
+  each of 124 college students selected three portable grills  Top  Middle  Bottom
+  out of five to display on the showroom floor. The stu-  (4.25 cm)  (28.1 cm)  (54.5 cm)
+  dents were instructed to include Grill #2 (a smaller-sized
+  grill) and select the remaining two grills in the display to  Number of grains
+  maximize purchases of Grill #2. If the six possible grill
+  display combinations (1–2–3, 1–2–4, 1–2–5, 2–3–4, 2–3–5,  sampled  84  73  81
+  and 2–4–5) are selected at random, then the proportion
+  of students selecting any display will be 1>6 = .167. One  Number coated  64  35  29
+  theory tested by the researcher is that the students will
+  tend to choose the three-grill display so that Grill #2 is  Based on Basu, A., and McKay, D. S. “Lunar soil evolution processes and Apollo
+  a compromise between a more desirable and a less de-  16 core 60013/60014.”Meteoritics, Vol. 30, No. 2, Mar. 1995, p. 166 (Table 2).
+  sirable grill. Of the 124 students, 85 students selected a
+  three-grill display that was consistent with that theory.  Applying the Concepts—Advanced
+  Use this information to test the theory proposed by the
+  researcher at a = .05.  8.165  Polygraph test error rates. In a classic study reported
+  in Discover magazine, a group of physicians subjected
+*8.162  Interocular eye pressure. Ophthalmologists require an  the polygraph (or lie detector) to the same careful test-
+  instrument that can rapidly measure interocular pressure  ing given to medical diagnostic tests. They found that if
+  for glaucoma patients. The device now in general use is  1,000 people were subjected to the polygraph and 500
+  known to yield readings of this pressure with a variance  told the truth and 500 lied, the polygraph would indicate
+  of 10.3. The variance of five pressure readings on the  that approximately 185 of the truth tellers were liars and
+  same eye by a newly developed instrument is equal to 9.8.  that approximately 120 of the liars were truth tellers.
+  Does this sample variance provide sufficient evidence to  a. In the application of a polygraph test, an individual
+  indicate that the new instrument is more reliable than the
+  instrument currently in use? (Use a = .05.)  is presumed to be a truth teller 1H02 until “proven”
+  a liar 1Ha2. In this context, what is a Type I error? A
+8.163  Radioactive lichen. Refer to the Lichen Radionuclide  Type II error?
+  Baseline Research project to monitor the level of radioac-  b. According to the study, what is the probability (approxi-
+LICHEN  tivity in lichen, presented in Exercise 7.133 (p. 388). Recall  mately) that a polygraph test will result in a Type I error?
+  that University of Alaska researchers collected nine lichen  A Type II error?
+  specimens and measured the amount of the radioactive
+  element cesium-137 (in microcuries per milliliter) in each  8.166  Parents who condone spanking. In Exercise 4.138 (p. 254)
+  specimen. Assume that in previous years the mean cesium  you read about a nationwide survey that claimed that 60%
+  amount in lichen was m = .003 microcurie per milliliter. Is  of parents with young children condone spanking their
+  there sufficient evidence to indicate that the mean amount  child as a regular form of punishment (Tampa Tribune,
+  of cesium in lichen specimens differs from this value? Use  Oct. 5, 2000). In a random sample of 100 parents with
+  the SAS printout below to conduct a complete test of hy-  young children, how many parents would need to say that
+  pothesis at a = .10.  they condone spanking as a form of punishment in order to
+  refute the claim?
+
+  8.167  Solar joint inspections. X-rays and lasers are used to
+  inspect solder-joint defects on printed circuit boards
+  PCB  (PCBs). A particular manufacturer of laser-based
+  inspection equipment claims that its product can inspect
+  at least 10 solder joints per second, on average, when
+  the joints are spaced .1 inch apart. The equipment was
+  tested by a potential buyer on 48 different PCBs. In each
+  case, the equipment was operated for exactly 1 second.
+  The numbers of solder joints inspected on each run are
+  listed in the table on the next page.
+  Supplementary Exercises 8.129–8.170 457
+
+Data for exercise 8.167  Critical Thinking Challenges
+
+  10 9 10 10 11 9 12 8 8 9 6 10  8.169  Verifying voter petitions. To get their names on the ballot
+  7 10 11 9 9 13 9 10 11 10 12 8  of a local election, political candidates often must obtain
+  9 9 9 7 12 6 9 10 10 8 7 9  petitions bearing the signatures of a minimum number of
+  11 12 10 0 10 11 12 9 7 9 9 10  registered voters. According to the St. Petersburg Times,
+  in Pinellas County, Florida, a certain political candidate
+ a. The potential buyer doubts the manufacturer’s claim.  obtained petitions with 18,200 signatures. To verify that
+  Do you agree?  the names on the petitions were signed by actual registered
+  voters, election officials randomly sampled 100 of the sig-
+*b. Assume that the standard deviation of the number of  natures and checked each for authenticity. Only 2 were in-
+  solder joints inspected on each run is 1.2, and the true  valid signatures.
+  mean number of solder joints that can be inspected is  a. Is 98 out of 100 verified signatures sufficient to believe
+  really equal to 9.5. How likely is the buyer to correctly
+  conclude that the claim is false?  that more than 17,000 of the total 18,200 signatures are
+  valid? Use a = .01.
+8.168  Effectiveness of skin cream. Pond’s has discontinued  b. Repeat part a if only 16,000 valid signatures are
+  the production of Age-Defying Complex, a cream with  required.
+PONDS  alpha-hydroxy acid, with Age-Defying Towlettes. Pond’s ad-
+  vertised that the product could reduce wrinkles and improve
+  the skin. In a study published in Archives of Dermatology  8.170  The Hot Tamale caper. “Hot Tamales” are chewy, cin-
+  (June 1996), 33 middle-aged women used a product with  namon-flavored candies. A bulk vending machine is
+  alpha-hydroxy acid for 22 weeks. At the end of the study  known to dispense, on average, 15 Hot Tamales per bag.
+  period, a dermatologist judged whether each woman ex-  Chance (Fall 2000) published an article on a classroom
+  hibited any improvement in the condition of her skin. The  project in which students were required to purchase
+  results for the 33 women (where I = improved skin and  bags of Hot Tamales from the machine and count the
+  N = no improvement) are listed in the accompanying table.  number of candies per bag. One student group claimed
+  Can you conclude that the cream will improve the skin of  it purchased five bags that had the following candy
+  more than 60% of middle-aged women?  counts: 25, 23, 21, 21, and 20. There was some question
+  as to whether the students had fabricated the data. Use
+  I ININNII I I I I  a hypothesis test to gain insight into whether or not the
+  NI I IN I IININI  data collected by the students were fabricated. Use a
+  I I I I I NIIN  level of significance that gives the benefit of the doubt
+  to the students.
+
+Activity Challenging a Claim: Tests of Hypotheses
+
+Use the Internet or a newspaper or magazine to find an example  3. Explain the steps necessary to reject the group’s claim at
+of a claim made by a political or special-interest group about  level a. State the null and alternative hypotheses. If you re-
+some characteristic (e.g., favor gun control) of the U.S. popula-  ject the claim, does it mean that the claim is false?
+tion. In this activity, you represent a rival group that believes the
+claim may be false.  4. If you reject the claim when the claim is actually true, what
+  type of error has occurred? What is the probability of this
+1. In your example, what kinds of evidence might exist that  error occurring?
+  would cause one to suspect that the claim might be false
+  and therefore worthy of a statistical study? Be specific. If the  5. If you were to file a lawsuit against the group based on your
+  claim were false, how would consumers be hurt?  rejection of its claim, how might the group use your results
+  to defend itself?
+2. Describe what data are relevant and how that data might be
+  collected.
+
+References  Wackerly, D., Mendenhall, W., and Scheaffer, R. Mathematical Statistics
+  with Applications, 7th ed. Belmont, CA: Thomson, Brooks/Cole, 2008.
+Snedecor, G. W., and Cochran, W. G. Statistical Methods, 7th ed. Ames,
+  IA: Iowa State University Press, 1980.
+458 CHAPTER 8 ■ Inferences Based on a Single Sample
+
+ USING TECHNOLOGY MINITAB: Tests of Hypotheses
+
+Testing M
+
+Step 1 Access the MINITAB data worksheet that contains the
+sample data.
+Step 2 Click on the “Stat” button on the MINITAB menu bar
+and then click on “Basic Statistics” and “1-Sample t,” as shown in
+Figure 8.M.1.
+
+Figure 8.M.1 MINITAB menu options for testing a mean  Figure 8.M.3 MINITAB 1-sample t test options
+
+Step 3 On the resulting dialog box (shown in Figure 8.M.2),  Step 6 Click “OK” to return to the “1-Sample t” dialog box and
+click on “Samples in columns” and then specify the quantitative  then click “OK” again to produce the hypothesis test.
+variable of interest in the open box.
+  Note: If you want to produce a test for the mean from sum-
+  mary information (e.g., the sample mean, sample standard
+  deviation, and sample size), click on “Summarized data” in
+  the “1-Sample t” dialog box, enter the values of the summary
+  statistics and m0, and then click “OK.”
+  Important: The MINITAB one-sample t-procedure uses the
+  t-statistic to generate the hypothesis test. When the sample
+  size n is small, this is the appropriate method. When the
+  sample size n is large, the t-value will be approximately equal
+  to the large-sample z-value, and the resulting test will still be
+  valid. If you have a large sample and you know the value of
+  the population standard deviation s (which is rarely the case),
+  select “1-Sample Z” from the “Basic Statistics” menu options
+  (see Figure 8.M.1) and make the appropriate selections.
+
+  Testing p
+
+  Step 1 Access the MINITAB data worksheet that contains the
+  sample data.
+
+  Step 2 Click on the “Stat” button on the MINITAB menu bar
+  and then click on “Basic Statistics” and “1 Proportion” (see
+  Figure 8.M.1).
+
+  Step 3 On the resulting dialog box (shown in Figure 8.M.4),
+  click on “Samples in columns,” and then specify the qualitative
+  variable of interest in the open box.
+
+Figure 8.M.2 MINITAB 1-sample t test dialog box  Figure 8.M.4 MINITAB 1-proportion test dialog box
+
+Step 4 Check “Perform hypothesis test” and then specify
+the value of m0 for the null hypothesis in the “Hypothesized
+mean” box.
+Step 5 Click on the “Options” button at the bottom of the
+dialog box and specify the form of the alternative hypothesis,
+as shown in Figure 8.M.3.
+Step 4 Check “Perform hypothesis test” and then specify the  Using Technology 459
+null hypothesis value p0 in the “Hypothesized proportion” box.
+  Step 5 Click on the “Options” button at the bottom of the
+Step 5 Click “Options,” then specify the form of the alternative  dialog box and specify the form of the alternative hypothesis
+hypothesis in the resulting dialog box, as shown in Figure 8.M.5.  (similar to Figure 8.M.3).
+Also, check the “Use test and interval based on normal distribu-  Step 6 Click “OK” twice to produce the hypothesis test.
+tion” box at the bottom.  Note: If you want to produce a test for the variance from
+  summary information (e.g., the sample standard deviation and
+  sample size), click on “Summarized data” in the “1 Variance”
+  dialog box (Figure 8.M.6) and enter the values of the summary
+  statistics.
+
+Figure 8.M.5 MINITAB 1-proportion test options  TI-83/TI-84 Plus Graphing Calculator:
+Step 6 Click “OK” to return to the “1 Proportion” dialog box  Tests of Hypotheses
+and then click “OK” again to produce the test results.
+Note: If you want to produce a confidence interval for a proportion  Note: The TI-83/TI-84 Plus graphing calculator cannot currently
+from summary information (e.g., the number of successes and the  conduct a test for a population variance.
+sample size), click on “Summarized data” in the “1 Proportion”
+dialog box (see Figure 8.M.4). Enter the value for the number  Hypothesis Test for a Population Mean
+of trials (i.e., the sample size) and the number of events (i.e., the  (Large Sample Case)
+number of successes), and then click “OK.”
+  Step 1 Enter the data (Skip to Step 2 if you have summary statistics,
+Testing S2  not raw data.)
+  • Press STAT and select 1:Edit
+Step 1 Access the MINITAB data worksheet that contains the
+sample data set.  Note: If the list already contains data, clear the old data. Use the
+Step 2 Click on the “Stat” button on the MINITAB menu bar and  up ARROW to highlight “L1.”
+then click on “Basic Statistics” and “1 Variance” (see Figure 8.M.1).  • Press CLEAR ENTER
+Step 3 Once the resulting dialog box appears (see Figure 8.M.6),  • Use the ARROW and ENTER keys to enter the data set
+click on “Samples in columns” and then specify the quantitative
+variable of interest in the open box.  into L1
+
+Figure 8.M.6 MINITAB 1-variance test dialog box  Step 2 Access the statistical tests menu
+Step 4 Check “Perform hypothesis test” and specify the null  • Press STAT
+hypothesis value of the standard deviation s0 in the open box.  • Arrow right to TESTS
+  • Press ENTER to select either Z-Test (if large sample and
+
+  known) or T-Test (if unknown)
+
+  Step 3 Choose “Data” or “Stats” (“Data” is selected when
+  you have entered the raw data into a List. “Stats” is selected
+  when you are given only the mean, standard deviation, and
+  sample size.)
+  • Press ENTER
+
+  If you selected “Data,” enter the values for the hypothesis test
+  where m0 = the value for m in the null hypothesis, s = assumed
+  value of the population standard deviation.
+  • Set List to L1
+  • Set Freq to 1
+  • Use the ARROW to highlight
+
+  the appropriate alternative
+  hypothesis
+  • Press ENTER
+  • Arrow down to “Calculate”
+  • Press ENTER
+
+  If you selected “Stats,” enter the values for the hypothesis test
+  where m0 = the value for m in the null hypothesis, s = assumed
+  value of the population standard deviation.
+460 CHAPTER 8 ■ Inferences Based on a Single Sample
+
+• Enter the sample mean, sam-  • Press CLEAR ENTER
+  ple standard deviation, and  • Use the ARROW and ENTER keys to enter the data set
+  sample size
+  into L1
+• Use the ARROW to high-
+  light the appropriate alterna-  Step 2 Access the statistical tests menu
+  tive hypothesis  • Press STAT
+  • Arrow right to TESTS
+• Press ENTER  • Press ENTER after selecting 1-Prop Z Test
+• Arrow down to “Calculate”
+• Press ENTER  Step 3 Enter the hypothesized proportion p0, the number of
+  success x, and the sample size n
+The chosen test will be displayed as well as the z (or t) test statistic,  • Use the ARROW to highlight the appropriate alternative
+the p-value, the sample mean, and the sample size.
+  hypothesis
+Testing p  • Press ENTER
+  • Arrow down to “Calculate”
+Step 1 Enter the data (Skip to Step 2 if you have summary statis-  • Press ENTER
+tics, not raw data.)
+• Press STAT and select 1:Edit  The chosen test will be displayed as well as the z-test statistic
+  and the p-value.
+Note: If the list already contains data, clear the old data. Use the
+up ARROW to highlight “L1.”
+9 Inferences Based on Two
+  Samples Conﬁdence Intervals and Tests of Hypotheses
+
+contents  Where We’ve Been
+
+9.1 identifying the Target Parameter  • Explored two methods for making statistical
+  inferences: confidence intervals and tests of
+9.2 Comparing Two Population Means:
+  independent Sampling  hypotheses
+
+9.3 Comparing Two Population Means:  • Studied confidence intervals and tests for a single
+  Paired difference experiments  population mean m, a single population proportion p,
+  and a single population variance s2
+9.4 Comparing Two Population
+  Proportions: independent Sampling  • Learned how to select the sample size necessary to
+  estimate a population parameter with a specified
+9.5 determining the Sample Size  margin of error
+
+9.6 Comparing Two Population Variances:  Where We’re Going
+  independent Sampling (optional)
+  • Learn how to identify the target parameter for
+  comparing two populations (9.1)
+
+  • Learn how to compare two means by using
+  confidence intervals and tests of hypotheses (9.2–9.3)
+
+  • Apply these inferential methods to problems
+  in which we want to compare two population
+  proportions, or two population variances (9.4, 9.6)
+
+  • Determine the sizes of the samples necessary to
+  estimate the difference between two population
+  parameters with a specified margin of error (9.5)
+462 CHAPTER 9 ■ Inferences Based on Two Samples
+
+Statistics IN Action Zixit Corp. v. Visa USA inc.—A Libel Case
+
+The National Law Journal (Aug. 26–Sept. 2, 2002)  showing that there was
+reported on an interesting court case in volving ZixIt  an equal number of days
+Corp., a start-up Internet credit card clearing center.  when the stock went up as
+ZixIt claimed that its new online credit card processing  went down after a posting,
+system would allow Internet shoppers to make purchases  helped the lawyers repre-
+without revealing their credit card numbers. This claim  senting Visa to prevail in
+violated the established protocols of most major credit  the case. The National Law
+card companies, including Visa. Without the company’s  Journal reported that, after
+knowledge, a Visa vice president for technology research  two and a half days of deliberation, “the jurors found [the
+and development began writing e-mails and Web site  Visa executive] was not acting in the scope of his employ-
+postings on a Yahoo! message board for ZixIt investors,  ment and that Visa had not defamed ZixIt or interfered
+challenging ZixIt’s claim and urging investors to sell their  with its business.”
+ZixIt stock. The Visa executive posted over 400 e-mail
+and notes before he was caught. Once it was discovered  In this chapter, we demonstrate several of the sta-
+that a Visa executive was responsible for the postings,  tistical analyses McClave used to infer that the Visa
+ZixIt filed a lawsuit against Visa Corp., alleging that  executive’s postings had no effect on ZixIt’s stock price.
+Visa—using the executive as its agent—had engaged in  The daily ZixIt stock prices as well as the timing of the
+a “malicious two-part scheme to disparage and interfere  Visa executive’s postings are saved in the ZIXITVISA
+with ZixIt” and its efforts to market the new online credit  file.* We apply the statistical methodology presented in
+card processing system. In the libel case ZixIt asked for  this chapter to this data set in two Statistics in Action
+$699 million in damages.  Revisited examples.
+
+  Dallas lawyers Jeff Tillotson and Mike Lynn, of the  Statistics IN Action Revisited
+law firm Lynn Tillotson & Pinker, were hired to defend Visa
+in the lawsuit. The lawyers, in turn, hired Dr. James McClave  • Comparing Mean Price Changes (p. 473)
+(co-author of this text) as their expert statistician. McClave  • Comparing Proportions (p. 497)
+testified in court on an “event study” he did matching the
+Visa executive’s e-mail postings with movement of ZixIt’s  Data Set: ZIXITVISA
+stock price the next business day. McClave’s testimony,
+
+9.1 Identifying the Target Parameter
+
+  Many experiments involve a comparison of two populations. For instance, a sociologist
+  may want to estimate the difference in mean life expectancy between inner-city and
+  suburban residents. Or a consumer group may want to test whether two major brands of
+  food freezers differ in the average amount of electricity they use. Or a political candidate
+  might want to estimate the difference in the proportions of voters in two districts who
+  favor her candidacy. Or a professional golfer might be interested in comparing the
+  variability in the distance that two competing brands of golf balls travel when struck
+  with the same club. In this chapter, we consider techniques for using two samples to
+  compare the populations from which they were selected.
+
+  The same procedures that are used to estimate and test hypotheses about a single
+  population can be modified to make inferences about two populations. As in Chapters 7
+  and 8, the methodology used will depend on the sizes of the samples and the parameter
+  of interest (i.e., the target parameter). Some key words and the type of data associated
+  with the parameters covered in this chapter are listed in the following box.
+
+  *Data provided (with permission) from Info Tech, Inc., Gainesville, Florida.
+  SECTION 9.2 ■ Comparing Two Population Means: Independent Sampling 463
+
+  Determining the Target Parameter
+
+  Parameter  Key Words or Phrases  Type of Data
+  Quantitative
+  m1 - m2  Mean difference; difference in averages  Qualitative
+  p1 - p2
+  Difference between proportions, percentages,  Quantitative
+  1s122> 1s222  fractions, or rates; compare proportions
+
+  Ratio of variances; difference in variability
+  or spread; compare variation
+
+  You can see that the key words difference and compare help identify the fact that
+
+  two populations are to be compared. In the previous examples, the words mean in mean
+
+  life expectancy and average in average amount of electricity imply that the target param-
+  eter is the difference in population means, m1 - m2. The word proportions in proportions
+  of voters in two districts indicates that the target parameter is the difference in propor-
+  tions, p1 - p2. Finally, the key word variability in variability in the distance identifies the
+  ratio of population variances, 1s122> 1s222, as the target parameter.
+
+  As with inferences about a single population, the type of data (quantitative or
+
+  qualitative) collected on the two samples is also indicative of the target parameter. With
+
+  quantitative data, you are likely to be interested in comparing the means or variances of
+
+  the data. With qualitative data with two outcomes (success or failure), a comparison of
+
+  the proportions of successes is likely to be of interest.
+
+  We consider methods for comparing two population means in Sections 9.2 and 9.3.
+
+  A comparison of population proportions is presented in Section 9.4 and population vari-
+
+  ances in optional Section 9.6. We show how to determine the sample sizes necessary for
+
+  reliable estimates of the target parameters in Section 9.5.
+
+9.2 Comparing Two Population Means: Independent Sampling
+
+ Example 9.1  In this section, we develop both large-sample and small-sample methodologies for
+  comparing two population means. In the large-sample case, we use the z-statistic; in the
+  DIETS  small-sample case, we use the t-statistic.
+
+A Large-Sample  Large Samples
+
+Confidence Interval for  Problem A dietitian has developed a diet that is low in fats, carbohydrates, and cholesterol.
+1 M1 − M2 2 —Comparing  Although the diet was initially intended to be used by people with heart disease, the
+Mean Weight Loss for  dietitian wishes to examine the effect this diet has on the weights of obese people. Two
+  random samples of 100 obese people each are selected, and one group of 100 is placed on
+Two Diets  the low-fat diet. The other 100 are placed on a diet that contains approximately the same
+  quantity of food, but is not as low in fats, carbohydrates, and cholesterol. For each person,
+  the amount of weight lost (or gained) in a three-week period is recorded. The data, saved
+  in the DIETS file, are listed in Table 9.1. Form a 95% confidence interval for the difference
+  between the population mean weight losses for the two diets. Interpret the result.
+
+  Solution Recall that the general form of a large-sample confidence interval for a single
+  mean m is x { za>2sx. That is, we add and subtract za>2 standard deviations of the
+  sample estimate x to and from the value of the estimate. We employ a similar procedure
+  to form the confidence interval for the difference between two population means.
+
+  Let m1 represent the mean of the conceptual population of weight losses for all
+  obese people who could be placed on the low-fat diet. Let m2 be similarly defined for
+  the other diet. We wish to form a confidence interval for 1m1 - m22. An intuitively
+  appealing estimator for 1m1 - m22 is the difference between the sample means,
+  1x1 - x22. Thus, we will form the confidence interval of interest with
+
+  1x1 - x22 { za>2 s1x1 - x22
+464 CHAPTER 9 ■ Inferences Based on Two Samples
+
+  Table 9.1 Diet Study Data, Example 9.1
+  Weight Losses for Low-Fat Diet
+
+  8  10  10  12  9  3  11  7  9  2
+
+  21  8  9  2  2  20  14  11  15  6
+
+  13  8  10  12  1  7  10  13  14  4
+
+  8  12  8  10  11  19  0  9  10  4
+
+  11  7  14  12  11  12  4  12  9  2
+
+  4  3  3  5  9  9  4  3  5  12
+
+  3  12  7  13  11  11  13  12  18  9
+
+  6  14  14  18  10  11  7  9  7  2
+
+  16  16  11  11  3  15  9  5  2  6
+
+  5  11  14  11  6  9  4  17  20  10
+
+  Weight Losses for Regular Diet
+
+  6  6  5  5  2  6  10  3  9  11
+
+  14  4  10  13  3  8  8  13  9  3
+
+  4  12  6  11  12  9  8  5  8  7
+
+  6  2  6  8  5  7  16  18  6  8
+
+  13  1  9  8  12  10  6  1  0  13
+
+  11  2  8  16  14  4  6  5  12  9
+
+  11  6  3  9  9  14  2  10  4  13
+
+  8  1  1  4  9  4  1  1  5  6
+
+  14  0  7  12  9  5  9  12  7  9
+
+  8  9  8  10  5  8  0  3  4  8
+
+  Data Set: DIETS
+
+  Assuming that the two samples are independent, we write the standard deviation of the
+  difference between the sample means (i.e., the standard error of x1 - x2) as
+
+  s1x1 - x22 = s12 + s22
+
+  B n1 n2
+
+  Typically (as in this example), the population variances s12 and s22 are unknown. Since the
+  samples are both large 1n1 = n2 = 1002, the sample variances s12 and s22 will be good esti-
+  mators of their respective population variances. Thus, the estimated standard error is
+
+  s1x1 - x22 ≈ s12 + s22
+
+  B n1 n2
+
+  Summary statistics for the diet data are displayed at the top of the SPSS printout shown
+  in Figure 9.1. Note that x1 = 9.31, x2 = 7.40, s1 = 4.67, and s2 = 4.04. Using these
+  values and observing that a = .05 and z.025 = 1.96, we find that the 95% confidence
+  interval is, approximately,
+
+  19.31 - 7.402 { 1.96  14.6722 14.0422
+  +  = 1.91 { 11.9621.622 = 1.91 { 1.22
+  B 100  100
+
+  or (.69, 3.13). This interval (rounded) is highlighted in Figure 9.1.
+
+Figure 9.1
+SPSS analysis of diet study data
+  SECTION 9.2 ■ Comparing Two Population Means: Independent Sampling 465
+
+  Using this estimation procedure over and over again for different samples, we
+  know that approximately 95% of the confidence intervals formed in this manner will
+  enclose the difference in population means 1m1 - m22. Therefore, we are highly confi-
+  dent that the mean weight loss for the low-fat diet is between .69 and 3.13 pounds more
+  than the mean weight loss for the other diet. With this information, the dietitian better
+  understands the potential of the low-fat diet as a weight-reduction diet.
+
+  Look Back If the confidence interval for 1m1 - m22 contains 0 [e.g., 1 -2.5, 1.32], then it
+  is possible for the difference between the population means to be 0 (i.e., m1 - m2 = 0).
+  In this case, we could not conclude that a significant difference exists between the mean
+  weight losses for the two diets.
+
+  ■ Now Work Exercise 9.6a
+
+  The justification for the procedure used in Example 9.1 to estimate 1m1 - m22
+  relies on the properties of the sampling distribution of 1x1 - x22. The performance
+  of the estimator in repeated sampling is pictured in Figure 9.2, and its properties are
+  summarized in the following box:
+
+Figure 9.2  (x – x )
+Sampling distribution of
+1x1 - x22  Properties of the Sampling Distribution of (x1 − x2)
+  1. The mean of the sampling distribution of 1x1 - x22 is 1m1 - m22.
+  2. If the two samples are independent, the standard deviation of the sampling
+
+  distribution is
+  s1x1 - x22 = s12 + s22
+
+  B n1 n2
+
+  where s12 and s22 are the variances of the two populations being sampled and n1
+  and n2 are the respective sample sizes. We also refer to s1x1 - x22 as the standard
+  error of the statistic 1x1 - x22.
+  3. By the Central Limit Theorem, the sampling distribution of 1x1 - x22 is
+  approximately normal for large samples.
+
+  In Example 9.1, we noted the similarity in the procedures for forming a large-sample
+  confidence interval for one population mean and a large-sample confidence interval for
+  the difference between two population means. When we are testing hypotheses, the pro-
+  cedures are again similar. The general large-sample procedures for forming confidence
+  intervals and testing hypotheses about 1m1 - m22 are summarized in the following boxes:
+
+  Large, Independent Samples Confidence Interval for (M1 − M2): Normal (z) Statistic
+  s12 and s22 known: 1x1 - x22 { za>2 s1x1 - x22 = 1x1 - x22 { za>2 s12 + s22
+
+  B n1 n2
+
+  s12 and s22 unknown: 1x1 - x22 { za>2 s1x1 - x22 ≈ 1x1 - x22 { za>2 s12 + s22
+
+  B n1 n2
+466 CHAPTER 9 ■ Inferences Based on Two Samples
+
+  Large, Independent Samples Test of Hypothesis for (M1 − M2): Normal (z) Statistic
+
+  s12 and s22 known  s12 and s22 unknown
+
+  Test statistic:  zc = 1x1 - x22 - D0  zc ≈ 1x1 - x22 - D0
+  a s12 b + a s22 b  a s12 b + a s22 b
+  C n1  n2  C n1  n2
+
+  One-Tailed Tests  Two-Tailed Test
+
+  Rejection region:  H0: 1m1 - m22 = D0 H0: 1m1 - m22 = D0  H0: 1m1 - m22 = D0
+  p-value:  Ha: 1m1 - m22 6 D0 Ha: 1m1 - m22 7 D0  Ha: 1m1 - m22 ≠ D0
+
+  zc 6 - za zc 7 za  ͉ zc ͉ 7 za>2
+
+  P1z 6 zc2 P1z 7 zc2  2P1z 7 zc2 if zc is positive
+  2P1z 6 zc2 if zc is negative
+
+  Decision: Reject H0 if a 7 p@value or if test statistic 1zc2 falls in rejection region where
+  P1z 7 za2 = a, P1z 7 za>22 = a>2, and a = P1Type I error2 = P1Reject H0 ͉ H0 true2.
+
+  [Note: The symbol for the numerical value assigned to the difference 1m1 - m22 under the
+  null hypothesis is D0. For testing equal population means, D0 = 0.]
+
+  Conditions Required for Valid Large-Sample Inferences about (M1 − M2)
+
+  1. The two samples are randomly selected in an independent manner from the two
+  target populations.
+
+  2. The sample sizes, n1 and n2, are both large (i.e., n1 Ú 30 and n2 Ú 30). (By the
+  Central Limit Theorem, this condition guarantees that the sampling distribu-
+  tion of 1x1 - x22 will be approximately normal, regardless of the shapes of the
+  underlying probability distributions of the populations. Also, s12 and s22 will pro-
+  vide good approximations to s12 and s22 when both samples are large.)
+
+ Example 9.2  Problem Refer to the study of obese people on a low-fat diet and a regular diet presented
+  in Example 9.1. Another way to compare the mean weight losses for the two different
+  DIETS  diets is to conduct a test of hypothesis. Suppose we want to determine if the low-fat diet
+  is more effective than the regular diet. Use the information on the SPSS printout shown
+A Large-Sample Test for  in Figure 9.1 to conduct the test at a = .05.
+1 M1 − M2 2 —Comparing
+Mean Weight Loss
+
+for Two Diets
+
+  Solution Again, we let m1 and m2 represent the population mean weight losses of obese
+  people on the low-fat diet and regular diet, respectively. If the low-fat diet is more
+
+  effective in reducing the weights of obese people, then the mean weight loss for the
+  low-fat diet, m1, will exceed the mean weight loss for the regular diet, m2. That is m1 7 m2.
+
+  Thus, the elements of the test are as follows:
+
+  H0: 1m1 - m22 = 0 1i.e., m1 = m2; note that D0 = 0 for this hypothesis test2
+
+  Ha: 1m1 - m22 7 0 1i.e., m1 7 m22
+
+  Test statistic: z = = 1x1 - x22 - D0 x1 - x2 - 0
+  s1x1 - x22  s1x1 - x22
+
+  Rejection region: z 7 z.05 = 1.645  (see Figure 9.3)
+
+  Substituting the summary statistics given in Figure 9.1 into the test statistic,
+  we obtain
+
+  z = = 1x1 - x22 - 0 9.31 - 7.40
+  s1x1 - x22  s12 + s22
+
+  B n1 n2
+  SECTION 9.2 ■ Comparing Two Population Means: Independent Sampling 467
+
+  = .05  Now, since s12 and s22 are unknown, we approximate the test statistic value as
+  follows:
+  z
+  0  z ≈ = = = 9.31 - 7.40 1.91 1.91 3.09
+  s12 + s22  14.6722 + 14.0422 .617
+  Rejection  B n1 n2 B 100  100
+  1.645 region
+  [Note: The value of the test statistic is highlighted in the SPSS printout of Figure 9.1.]
+  z = 3.09  As you can see in Figure 9.3, the calculated z-value clearly falls into the rejection
+
+Figure 9.3  region. Therefore, the samples provide sufficient evidence, at a = .05, for the dietitian to
+Rejection region for  conclude that the mean weight losses for the two diets differ.
+Example 9.2
+
+  Look Back First, note that this conclusion agrees with the inference drawn from the 95%
+  confidence interval in Example 9.1. However, the confidence interval provides more
+  information on the mean weight losses. From the hypothesis test, we know only that
+  the two means differ; that is, m1 7 m2. From the confidence interval in Example 9.1, we
+  found that the mean weight loss m1 of the low-fat diet was between .69 and 3.13 pounds
+  more than the mean weight loss m2 of the regular diet. In other words, the test tells us
+  that the means differ, but the confidence interval tells us how large the difference is.
+
+  Second, a one-tailed hypothesis test and a confidence interval (which is two-tailed)
+  may not always agree. However, a two-tailed hypothesis test and a confidence interval
+  will always give the same inference about the target parameter for the same value of a.
+
+  ■
+
+ Example 9.3  Problem Find the observed significance level for the test in Example 9.2. Interpret the
+  result.
+  DIETS
+  Solution The alternative hypothesis in Example 9.2, Ha: m1 - m2 7 0, required an upper
+The p-Value for a  one-tailed test using
+
+Test of 1 M − M2 2  z = x1 - x2
+  s1x1 - x22
+
+  as a test statistic. Since the z-value calculated from the sample data was 3.09, the observed
+  significance level (p-value) for the one-tailed test is the probability of observing a value
+  of z at least as contradictory to the null hypothesis as z = 3.09; that is,
+
+  p@value = P1z Ú 3.092
+
+  This probability is computed under the assumption that H0 is true and is equal to the
+  highlighted area shown in Figure 9.4.
+
+  A = .499
+  p-value = .5–A = .001
+
+  Figure 9.4  z
+
+  The observed significance level  0  3.09
+  for Example 9.2
+  p-value = P(z Ú 3.09)
+
+  The tabulated area corresponding to z = 3.09 in Table II of Appendix B is .4990.
+  Therefore, the observed significance level for the test is
+
+  p@value = P1z Ú 3.092 = .5 - .4990 = .0010
+
+  Since our selected a value, .05, exceeds this p-value, we have sufficient evidence to reject
+  H0: 1m1 - m22 = 0 in favor of Ha: 1m1 - m22 7 0.
+468  CHAPTER 9 ■ Inferences Based on Two Samples
+
+  Look Back The p-value of the test is more easily obtained from a statistical software
+  package. A MINITAB printout for the hypothesis test is displayed in Figure 9.5. The one-
+  tailed p-value, highlighted on the printout is .001. This value agrees with our calculated
+  p-value.
+
+Figure 9.5  ■ Now Work Exercise 9.6b
+MINITAB Printout for
+One-Tailed Test, Example 9.3  Small Samples
+
+Figure 9.6  In comparing two population means with small samples (say, either n1 6 30 or n2 6 30
+Assumptions for the  or both), the methodology of the previous three examples is invalid. The reason? When
+two-sample t: (1) normal  the sample sizes are small, estimates of s12 and s22 are unreliable and the Central Limit
+populations; (2) equal variances  Theorem (which guarantees that the z statistic is normal) can no longer be applied. But
+  as in the case of a single mean (Section 8.4), we use the familiar Student’s t-distribution
+  described in Chapter 7.
+
+  To use the t-distribution, both sampled populations must be approximately normally
+
+  distributed with equal population variances, and the random samples must be selected inde-
+  pendently of each other. The assumptions of normality and equal variances imply relative
+  frequency distributions for the populations that would appear as shown in Figure 9.6.
+
+  Since we assume that the two populations have equal variances 1s12 = s22 = s22,
+  it is reasonable to use the information contained in both samples to construct a pooled
+  sample estimator S2 for use in confidence intervals and test statistics. Thus, if s12 and s22
+  are the two sample variances (each estimating the variance s2 common to both popula-
+  tions), the pooled estimator of s2, denoted as sp2, is
+
+  2 1n1 - 12s12 + 1n2 - 12s22 1n1 - 12s12 + 1n2 - 12s22
+  sp =  1n1 - 12 + 1n2 - 12  =  n1 + n2 - 2
+
+  or
+
+  From sample 1  From sample 2
+
+  e
+  e
+
+  a 1x1 - x122 + a 1x2 - x222
+  sp2 =
+
+  n1 + n2 - 2
+
+  where x1 represents a measurement from sample 1 and x2 represents a measurement
+  from sample 2. Recall that the term degrees of freedom was defined in Section 7.2 as 1 less
+  than the sample size.Thus, in this case, we have 1n1 - 12 degrees of freedom for sample 1
+  and 1n2 - 12 degrees of freedom for sample 2. Since we are pooling the information on
+  s2 obtained from both samples, the number of degrees of freedom associated with the
+  pooled variance sp2 is equal to the sum of the numbers of degrees of freedom for the two
+  samples, namely, the denominator of sp2; that is, 1n1 - 12 + 1n2 - 12 = n1 + n2 - 2.
+
+  Note that the second formula given for sp2 shows that the pooled variance is simply
+  a weighted average of the two sample variances s12 and s22. The weight given each vari-
+  ance is proportional to its number of degrees of freedom. If the two variances have the
+  SECTION 9.2 ■ Comparing Two Population Means: Independent Sampling 469
+
+same number of degrees of freedom (i.e., if the sample sizes are equal), then the pooled
+variance is a simple average of the two sample variances. The result is an average, or
+“pooled,” variance that is a better estimate of s2 than either s12 or s22 alone.
+
+  BIOGRAPHY BRADLEY EFRON (1938–PRESENT)
+The Bootstrap Method
+
+Bradley Efron was raised in St. Paul, Minnesota, the son of a truck driver who was the amateur statistician
+for his bowling and baseball leagues. Efron received a B.S. in mathematics from the California Institute
+of Technology in 1960 but, by his own admission, had no talent for modern abstract math. His interest in
+the science of statistics developed after he read a book by Harold Cramer from cover to cover. Efron went
+to Stanford University to study statistics, and he earned his Ph.D there in 1964. He has been a faculty
+member in Stanford’s Department of Statistics since 1966. Over his career, Efron has received numerous
+awards and prizes for his contributions to modern statistics, including the MacArthur Prize Fellow (1983),
+the American Statistical Association Wilks Medal (1990), and the Parzen Prize for Statistical Innovation
+(1998). In 1979, Efron invented a method—called the bootstrap—of estimating and testing population
+parameters in situations in which either the sampling distribution is unknown or the assumptions are
+violated. The method involves repeatedly taking samples of size n (with replacement) from the original
+sample and calculating the value of the point estimate. Efron showed that the sampling distribution of the
+estimator is simply the frequency distribution of the bootstrap estimates. ■
+
+  Both the confidence interval and the test-of-hypothesis procedures for comparing
+two population means with small samples are summarized in the following boxes:
+
+Small, Independent Samples Confidence Interval for 1 M1 − M2 2 : Student’s t-Statistic
+
+  21 1
+  1x1 - x22 { ta>2 sp a + b
+
+  B n1 n2
+
+  2 1n1 - 12s12 + 1n2 - 12s22
+where sp =
+
+  n1 + n2 - 2
+
+and ta>2 is based on 1n1 + n2 - 22 degrees of freedom.
+
+2 s12 + s22  when n1 = n2]
+[Note: sp =
+  2
+
+Small, Independent Samples Test of Hypothesis for 1 M1 − M2 2 : Student’s t-Statistic
+
+Test statistic:  tc = 1x1 - x22 - D0  2 1n1 - 12s21 + 1n2 - 12s22
+  21 1  where sp =
+  spa + b
+  1n1 + n2 - 22
+  C n1 n2
+
+  One-Tailed Tests  Two-Tailed Test
+
+  H0:1m1 - m22 = D0  H0:1m1 - m22 = D0  H0:1m1 - m22 = D0
+  Ha:1m1 - m22 7 D0  Ha:1m1 - m22 ≠ D0
+  Ha:1m1 - m22 6 D0
+  tc 7 ta  ͉ tc ͉ 7 ta>2
+Rejection region:  tc 6 - ta  P1t 7 tc2  2P1t 7 tc2 if tc is positive
+  2P1t 6 tc2 if tc is negative
+p-value:  P1t 6 tc2
+
+Decision: Reject H0 if a 7 p@value or if test statistic (tc) falls in rejection region where
+P1t 7 ta2 = a, P1t 7 ta>22 = a>2, the distribution of t is based on 1n1 + n2 - 22df, and
+a = P1Type I error2 = P1Reject H0 ͉ H0 true2.
+
+[Note: The symbol for the numerical value assigned to the difference 1m1 - m22 under
+the null hypothesis is D0. For testing equal population means, D0 = 0.]
+470 CHAPTER 9 ■ Inferences Based on Two Samples
+
+  Conditions Required for Valid Small-Sample Inferences about (M1 − M2)
+  1. The two samples are randomly selected in an independent manner from the two
+
+  target populations.
+  2. Both sampled populations have distributions that are approximately normal.
+  3. The population variances are equal (i.e., s12 = s22).
+
+Example 9.4  Problem Suppose you wish to compare a new method of teaching reading to “slow
+  learners” with the current standard method. You decide to base your comparison on the
+  READING  results of a reading test given at the end of a learning period of six months. Of a random
+  sample of 22 “slow learners,” 10 are taught by the new method and 12 are taught by
+A Small-Sample  the standard method. All 22 children are taught by qualified instructors under similar
+  conditions for the designated six-month period. The results of the reading test at the end
+Confidence Interval for  of this period are given in Table 9.2.
+
+1 M1 − M2 2 —Comparing
+
+Two Methods of Teaching
+
+  Table 9.2 Reading Test Scores for Slow Learners
+
+  New Method  Standard Method
+
+  80  80  79  81  79  62  70  68
+
+  76  66  71  76  73  76  86  73
+
+  70  85  72  68  75  66
+
+  Data Set: READING
+
+  a. Use the data in the table to estimate the true mean difference between the test scores
+  for the new method and the standard method. Use a 95% confidence interval.
+
+  b. Interpret the interval you found in part a.
+
+  c. What assumptions must be made in order that the estimate be valid? Are they
+  reasonably satisfied?
+
+  Solution
+
+  a. For this experiment, let m1 and m2 represent the mean reading test scores of “slow
+  learners” taught with the new and standard methods, respectively. Then the objective
+  is to obtain a 95% confidence interval for 1m1 - m22.
+  The first step in constructing the confidence interval is to obtain summary statis-
+  tics (e.g., x and s) on reading test scores for each method. The data of Table 9.2 were
+  entered into a computer, and SAS was used to obtain these descriptive statistics. The
+  SAS printout appears in Figure 9.7. Note that x1 = 76.4, s1 = 5.8348, x2 = 72.333,
+  and s2 = 6.3437.
+
+Figure 9.7
+SAS printout for Example 9.4
+SECTION 9.2 ■ Comparing Two Population Means: Independent Sampling 471
+
+  Next, we calculate the pooled estimate of variance to obtain
+
+  2 1n1 - 12s12 + 1n2 - 12s22
+  sp =
+
+  n1 + n2 - 2
+
+  110 - 12 15.834822 + 112 - 12 16.343722
+  = 10 + 12 - 2 = 37.45
+
+where sp2 is based on 1n1 + n2 - 22 = 110 + 12 - 22 = 20 degrees of freedom.
+Also, we find ta>2 = t.025 = 2.086 (based on 20 degrees of freedom) from Table III
+of Appendix B.
+
+  Finally, the 95% confidence interval for 1m1 - m22, the difference between
+mean test scores for the two methods, is
+
+  21 1  11
+1x1 - x22 { ta>2 sp a + b = 176.4 - 72.332 { t.025 37.45 a + b
+  B n1 n2  B  10 12
+
+  = 4.07 { 12.086212.622
+  = 4.07 { 5.47
+
+  or 1 -1.4, 9.542. This interval agrees (except for rounding) with the one shown at the
+  bottom of the SAS printout of Figure 9.7.
+
+b. The interval can be interpreted as follows: With a confidence coefficient equal
+  to .95, we estimate that the difference in mean test scores between using the
+  new method of teaching and using the standard method falls into the interval
+  from -1.4 to 9.54. In other words, we estimate (with 95% confidence) the mean
+  test score for the new method to be anywhere from 1.4 points less than, to 9.54
+  points more than, the mean test score for the standard method. Although the
+  sample means seem to suggest that the new method is associated with a higher
+  mean test score, there is insufficient evidence to indicate that 1m1 - m22 differs
+  from 0 because the interval includes 0 as a possible value for 1m1 - m22. To
+  demonstrate a difference in mean test scores (if it exists), you could increase
+  the sample size and thereby narrow the width of the confidence interval for
+  1m1 - m22. Alternatively, you can design the experiment differently. This possi-
+  bility is discussed in the next section.
+
+c. To use the small-sample confidence interval properly, the following assumptions
+  must be satisfied:
+
+1. The samples are randomly and independently selected from the populations of
+  “slow learners” taught by the new method and the standard method.
+
+2. The test scores are normally distributed for both teaching methods.
+
+3.  The  variance  of  the  test  scores  is  the  same  for  the  two  populations;  that  is,  s  2  =  s22.
+  1
+
+  On the basis of the information provided about the sampling procedure in the
+description of the problem, the first assumption is satisfied. To check the plausibility
+of the remaining two assumptions, we resort to graphical methods. Figure 9.8 is a
+MINITAB printout that gives normal probability plots for the test scores of the two
+samples of “slow learners.” The near straight-line trends on both plots indicate that
+the distributions of the scores are approximately mound shaped and symmetric.
+Consequently, each sample data set appears to come from a population that is
+approximately normal.
+
+  One way to check the third assumption is to test the null hypothesis H0: s12 = s22.
+This test is covered in Section 9.6. Another approach is to examine box plots of the
+sample data. Figure 9.9 is a MINITAB printout that shows side-by-side vertical box
+plots of the test scores in the two samples. Recall from Section 2.7 that the box plot
+represents the “spread” of a data set. The two box plots appear to have about the
+same spread; thus, the samples appear to come from populations with approximately
+the same variance.
+472 CHAPTER 9 ■ Inferences Based on Two Samples
+
+Figure 9.8
+MINITAB normal probability
+plots for Example 9.4
+
+Figure 9.9
+
+MINITAB box plots for
+Example 9.4
+
+  Look Back All three assumptions, then, appear to be reasonably satisfied for this
+  application of the small-sample confidence interval.
+
+  ■ Now Work Exercise 9.9
+
+  The two-sample t-statistic is a powerful tool for comparing population means when
+  the assumptions are satisfied. It has also been shown to retain its usefulness when the
+  sampled populations are only approximately normally distributed. And when the sam-
+  ple sizes are equal, the assumption of equal population variances can be relaxed. That is,
+  if n1 = n2, then s12 and s22 can be quite different, and the test statistic will still possess,
+  approximately, a Student’s t-distribution. In the case where s12 ≠ s22 and n1 ≠ n2, an
+  approximate small-sample confidence interval or test can be obtained by modifying the
+  number of degrees of freedom associated with the t-distribution.
+
+  The next box gives the approximate small-sample procedures to use when the
+  assumption of equal variances is violated. The test for the case of “unequal sample sizes”
+  is based on Satterthwaite’s (1946) approximation.
+SECTION 9.2 ■ Comparing Two Population Means: Independent Sampling 473
+
+Approximate Small-Sample Procedures when S21 3 S22
+ 1. Equal Sample Sizes 1n1 = n2 = n2
+
+Confidence interval:  1x1 - x22 { ta>2 11s12 + s222 >n
+
+Test statistic for H0: 1m1 - m22 = 0:  t  =  1x1  -  x2  2  >  1  1  s  2  +  s222 >n
+  1
+
+where t is based on n = n1 + n2 - 2 = 21n - 12 degrees of freedom.
+
+2. Unequal Sample Sizes 1n1 3 n22  1x1 - x22 { ta>2 21s12>n12 + 1s22>n22
+  Confidence interval:
+
+Test statistic for H0: 1m1 - m22 = 0:  t  =  1x1  -  x2  2  >  2  1  s  2  >  n  1  2  +  1 s22 > n2 2
+  1
+
+where t is based on degrees of freedom equal to
+
+  1s12>n1 + s22>n222
+  n= 2 2
+  1 s1 > n1 2  +  1 s22 > n2 2 2
+
+  n1 - 1  n2 - 1
+
+Note: The value of n will generally not be an integer. Round n down to the nearest
+integer to use the t-table.
+
+  When the assumptions are not clearly satisfied, you can select larger samples from
+the populations or you can use other available statistical tests (nonparametric statistical
+tests, described in Chapter 14).
+
+What Should You Do If the Assumptions Are Not Satisfied?
+
+Answer: If you are concerned that the assumptions are not satisfied, use the Wilcoxon
+rank sum test for independent samples to test for a shift in population distributions.
+(See Chapter 14).
+
+Statistics IN Action Revisited Comparing Mean Price Changes
+
+Refer to the ZixIt v. Visa court case described in the Statistics  following nonposting days
+in Action (p. 462). Recall that a Visa executive wrote e-mails  should exceed the average
+and made Web site postings in an effort to undermine a new  price change following post-
+online credit card processing system developed by ZixIt. ZixIt  ing days. Consequently, one
+sued Visa for libel, asking for $699 million in damages. An ex-  way to analyze the data is
+pert statistician, hired by the defendants (Visa), performed an  to conduct a comparison
+“event study” in which he matched the Visa executive’s e-mail  of two population means
+postings with movement of ZixIt’s stock price the next busi-  through either a confidence
+ness day. The data were collected daily from September 1 to  interval or a test of hypothesis. Here, we let m1 represent
+December 30, 1999 (an 83-day period) and are available in  the mean price change of ZixIt stock following all nonpost-
+the ZIXITVISA file. In addition to daily closing price (dol-  ing days and m2 represent the mean price change of ZixIt
+lars) of ZixIt stock, the file contains a variable for whether the  stock following posting days. If, in fact, the charges made
+Visa executive posted an e-mail and the change in price of the  by ZixIt are true, then m1 will exceed m2. However, if the
+stock the following business day. During the 83-day period,  data do not support ZixIt’s claim, then we will not be able
+the executive posted e-mails on 43 days and had no postings  to reject the null hypothesis H0: 1m1 - m22 = 0 in favor of
+on 40 days.  Ha: 1m1 - m22 7 0. Similarly, if a confidence interval for
+  1m1 - m22 contains the value 0, then there will be no evi-
+  If the daily posting by the Visa executive had a nega-  dence to support ZixIt’s claim.
+tive impact on ZixIt stock, then the average price change
+

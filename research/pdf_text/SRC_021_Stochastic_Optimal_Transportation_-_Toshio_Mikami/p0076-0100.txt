@@ -1,0 +1,1253 @@
+66  2 Stochastic Optimal Transportation Problem
+
+and for Dϕ in Corollary 2.6,
+
+lim E sup |Xε(t) − {X0 + t (Dϕ(X0) − X0)}|2 = 0.  (2.147)
+
+ε→0 0≤t ≤1
+
+Remark 2.12
+
+(i) If P1 ∈ P2(Rd ), then for ε > 0,
+
+−∞ <  {log g(1, x)}P1,ε(dx) ≤ S(P1,ε) ≤ − log √2π εd < ∞
+
+  Rd
+
+  (2.148)
+
+  since the relative entropy H (P1,ε|g(1, x)dx) is nonnegative.
+(ii) Suppose that c(x, y) = |y − x|2. The following result is known under the
+
+  technical assumptions on P0, P1 ∈ P2,ac(Rd ) (see [1, 51, 53, 128]):
+
+lim VS,ε(P0, P1) − 1 T (P0, P1) = 1 (S (P1) − S (P0)) .  (2.149)
+ε→0  2ε  2
+
+  In the rest of this section, we prove Theorems 2.8 and 2.9. We ﬁrst state and
+
+prove technical lemmas.
+  For x, y ∈ Rd , m ≥ 1, and ε > 0,
+
+Hm,ε(x, y)  (2.150)
+  με(dz1dz2) ,
+:= ε log  exp  x, z2 + y, z1 − z1, z2
+  ε  ε
+  Um(o)×Um(o)
+
+Hi,m,ε(x) := ε log  g(ε, x − zj )νj,ε(dzj )  + |x| (i, j 2 = 1, 2, i = j ),
+  2
+  Um(o)  (2.151)
+
+μ1,m,ε(dz1) := με(dz1 × Um(o)), μ2,m,ε(dz2) := με(Um(o) × dz2), (2.152)
+
+where Um(o) := {x ∈ Rd : |x| < m}. Then the following holds.
+
+Lemma 2.8 For any m ≥ 1 and ε > 0 for which με(Um(o) × Um(o)) > 0, the
+following holds. (i) For any x and y ∈ Rd ,
+
+Hm,ε(x, y) = H1,m,ε(x) + H2,m,ε(y) + ε log √2π εd ,  (2.153)
+
+με(dz1dz2) = exp 1 ( z1, z2 − Hm,ε(z1, z2)) μ1,m,ε(dz1)μ2,m,ε(dz2),  (2.154)
+  ε
+2.3 Zero-Noise Limit of SOT  67
+
+Hm,ε(x, y) = ε log  exp  x, z2 + y, z1
+  ε
+  Um (o)×Um (o)
+
+  − Hm,ε(z1, z2) μ1,m,ε(dz1)μ2,m,ε(dz2) .  (2.155)
+  ε  (2.156)
+
+(ii) Hm,ε(·, ·) is convex, and for any x and y ∈ Rd ,
+
+|Hm,ε(x, y)| ≤ (|x| + |y|)m + m2 − ε log με(Um(o) × Um(o)).
+
+Proof of Corollary 2.5 We ﬁrst prove (i). Equation (2.153) can be obtained from
+
+(2.132) and (2.150)–(2.151) easily. Equation (2.154) holds from (2.132), (2.153),
+and from the following: for i, j = 1, 2 for which i = j ,
+
+μi,m,ε (dzi )  1  |zi |2
+  =  g(ε, zi − zj )νj,ε(dzj ) = exp Hi,m,ε(zi) −  .
+νi,ε (dzi )  ε  2
+  Um(o)
+
+  (2.157)
+
+Equation (2.155) can be obtained from (2.150) and (2.154) easily.
+
+  Next, we prove (ii). Hm,ε(·, ·) is convex since for any λ ∈ (0, 1) and any (x, y),
+(x˜, y˜) ∈ Rd × Rd ,
+
+Hm,ε(λx + (1 − λ)x˜, λy + (1 − λ)y˜)
+
+= ε log  exp  λ( x, z2 + y, z1 − z1, z2 )
+  ε
+  Um(o)×Um(o)
+
+  × exp (1 − λ)( x˜, z2 + y˜, z1 − z1, z2 ) με(dz1dz2)
+  ε
+
+≤ λHm,ε(x, y) + (1 − λ)Hm,ε(x˜, y˜)
+
+by Hölder’s inequality. Equation (2.156) can be obtained from (2.150) easily.
+Remark 2.13 For x ∈ Rd , m ≥ 1, ε > 0, and i, j = 1, 2, i = j ,
+
+Hi,m,ε(x) = ε log  1  1 ( x, zj − Hj,m,ε(zj )) μj,m,ε (dzj )
+  √ d exp  ε
+  Um(o) 2π ε
+
+from (2.151) and (2.157).
+Lemma 2.9 Suppose that P0, P1 ∈ P2(Rd ). Then for any sequence {εn}n≥1 for
+which εn → 0 as n → ∞, there exist a subsequence {εn(k)}k≥1 and m0 ≥ 1 such
+that Hm,εn(k) is convergent in C(Rd × Rd ) as k → ∞ for all m ≥ m0. In particular,
+
+m → Hm := lim Hm,εn(k)(: Rd × Rd −→ (−∞, ∞))  (2.158)
+
+  k→∞
+68  2 Stochastic Optimal Transportation Problem
+
+is nondecreasing on {m0, m0 + 1, · · · },  (2.159)
+  (x, y) → H (x, y) := lim Hm(x, y) ∈ (−∞, ∞]  (2.160)
+
+  m→∞
+
+is convex on Rd × Rd ,
+  x, y − H (x, y) ≤ 0, (x, y) ∈ supp(P0) × supp(P1),
+
+and the following set is cyclically monotone:
+
+  S := {(x, y) ∈ supp(P0) × supp(P1)| x, y = H (x, y)}.  (2.161)
+
+Proof of Corollary 2.5 There exist m0 ≥ 1 such that for any m ≥ m0, {Hm,εn}n≥1
+is bounded in U +1(o)×U +1(o) for any ≥ 1 from (2.156) and from the following:
+
+  1 − με(Um(o) × Um(o))  (2.162)
+
+  ≤  Rd×Rd (|x|2 + |y|2)με(dxdy) Rd |x|2P0(dx) + Rd |y|2P1,ε(dy)
+  =
+  m  2  m  2
+
+  =  Rd |x|2P0(dx) + Rd×Rd |x + y|2g(ε, x)dxP1(dy)
+
+  m  2
+
+  ≤  Rd |x|2P0(dx) + 2(εd + Rd |y|2P1(dy))  → 0,  m → ∞,
+
+  m  2
+
+uniformly for ε = εn, n ≥ 1. Hence for any m ≥ m0 and any ≥ 1, {Hm,εn}n≥1
+contains a uniformly convergent subsequence on U (o) × U (o) since Hm,εn(·, ·) is
+
+convex from Lemma 2.8, (ii) (see [8, p. 21, Theorem 3.2]). By the diagonal method,
+{Hm,εn}n≥1 contains a convergent subsequence {Hm,εm,n }n≥1 in C(Rd × Rd ). In
+particular, we can take {εm,n}n≥1 so that m → {εm,n}n≥1 is nonincreasing on
+{m0, m0 + 1, · · · }.
+
+  εn(k) := εk+m0−1,k+m0−1 (k ≥ 1).
+Then Hm,εn(k) is convergent in C(Rd × Rd ) as k → ∞ for all m ≥ m0.
+
+  m → Hm is nondecreasing on {m0, m0 + 1, · · · } since
+
+  Hm+1,εn(k) ≥ Hm,εn(k) , k ≥ 1
+
+for all m ≥ m0 from (2.150). Hence for any (x, y) ∈ Rd × Rd , Hm(x, y) is
+convergent or diverges to ∞ as m → ∞.
+2.3 Zero-Noise Limit of SOT  69
+
+  As the limit of convex functions, H (·, ·) in (2.159) is convex in Rd × Rd .
+  For any (x, y) ∈ supp(P0) × supp(P1), r > 0, m ≥ r + |x| + |y| + m0, and
+k ≥ 1, from (2.155),
+
+  Hm,εn(k)(x, y)  (2.163)
+
+  ≥  inf  { x, z2 + y, z1 − Hm,εn(k) (z1, z2)}
+  (z0,z1)∈Ur (x)×Ur (y)
+
+  + εn(k) log{μ0,m,εn(k)(Ur (x))μ1,m,εn(k)(Ur (y))}.
+
+Since Hm,εn(k) converges to Hm as k → ∞, uniformly on every compact subset of
+Rd × Rd ,
+
+  inf  ( x, z2 + y, z1  − Hm,εn(k) (z1, z2))  (2.164)
+  (z1,z2)∈Ur (x)×Ur (y)  − Hm(z1, z2)), k → ∞,
+
+  →  inf  ( x, z2 + y, z1
+  (z1,z2)∈Ur (x)×Ur (y)
+
+  → 2 x, y − Hm(x, y), r → 0,
+
+  → 2 x, y − H (x, y), m → ∞.
+
+For sufﬁciently large m ≥ 1,
+
+  lim inf{μ0,m,ε(Ur (x))μ1,m,ε(Ur (y))} > 0.  (2.165)
+
+  ε→0
+
+Indeed,
+
+  μ0,m,ε(Ur (x))μ1,m,ε(Ur (y))
+= {P0(Ur (x)) − με(Ur (x) × Um(o)c)}{P1,ε(Ur (y)) − με(Um(o)c × Ur (y))},
+
+με(Ur (x) × Um(o)c) ≤ 2 1  |z| P1,ε(dz) ≤2 2(εd + Rd |z|2P1(dz))  ,
+
+  m Rd  m  2
+
+  με(Um(o)c × Ur (y)) ≤ m2 1 |z|2P0(dz), Rd
+  lim inf P1,ε(Ur (y)) ≥ P1(Ur (y))
+
+  ε→0
+
+since P1,ε weakly converges to P1 as ε → 0. Hence (2.165) holds since for (x, y) ∈
+supp(P0) × supp(P1),
+
+  (P0 × P1)(Ur (x) × Ur (y)) > 0.
+
+Equations (2.163)–(2.165) implies (2.160).
+70  2 Stochastic Optimal Transportation Problem
+
+  The set S is cyclically monotone. Indeed, for any k, ≥ 1, (x1, y1), · · · , (x , y )
+∈ S, and m ≥ m0, from (2.153),
+
+  (Hm,εn(k) (xi+1, yi ) − Hm,εn(k) (xi , yi )) = 0,  (2.166)
+
+  i=1
+
+where x +1 := x1. Let k → ∞ and then m → ∞. Then from (2.160),
+
+  xi+1 − xi, yi ≤ (H (xi+1, yi ) − H (xi, yi )) = 0.  (2.167)
+
+  i=1  i=1
+
+Here notice that H (xi, yi) is ﬁnite for all i = 1, · · · , .
+
+Remark 2.14 H is lower semicontinuous since Hm ↑ H as m → ∞ and since Hm
+is a ﬁnite convex function and hence is continuous for sufﬁciently large m (see the
+proof of Lemma 2.9). If H (x, y) and H (a, b) are ﬁnite, then H (x, b) and H (a, y)
+are also ﬁnite since for sufﬁciently large m ≥ 1, from (2.159) and (2.166),
+
+−∞ < Hm(x, b) + Hm(a, y) ≤ H (x, b) + H (a, y) = H (x, y) + H (a, b) < ∞.
+
+In particular,
+
+  H (x, y) = H (x, b) + H (a, y) − H (a, b).  (2.168)
+
+Proof of Theorem 2.8 {με}ε∈(0,1] is tight from (2.162) (see, e.g. [75, p. 7]). Take
+a weakly convergent subsequence {μεn}n≥1 and denote by μ its weak limit, where
+εn → 0 as n → ∞.
+
+  By taking m0 ≥ 1 and a subsequence {εn(k)}k≥1, construct a convex function H
+as in Lemma 2.9.
+
+  From (2.160)–(2.161), we only have to show the following to complete the proof:
+
+  μ({(x, y) ∈ Rd × Rd | x, y − H (x, y) < 0}) = 0.  (2.169)
+
+By the monotone convergence theorem and Lemma 2.9,
+
+  μ({(x, y) ∈ Rd × Rd | x, y − H (x, y) < 0})  (2.170)
+
+  = lim lim μ({(x, y) ∈ Rd × Rd | x, y − Hm(x, y) < −r}) .
+
+  r↓0 m↑∞
+2.3 Zero-Noise Limit of SOT  71
+
+For any m ≥ m0, Hm,εn(k) converges to Hm as k → ∞, uniformly on every compact
+subset of Rd × Rd . Therefore for any R > 0,
+
+  μ({(x, y)| x, y − Hm(x, y) < −r, |x|, |y| < R})  (2.171)
+≤ lim inf μεn(k)({(x, y)| x, y − Hm(x, y) < −r, |x|, |y| < R})
+
+  k→∞
+
+≤ lim inf μεn(k)  (x, y) x, y − Hm,εn(k)(x, y) < − r , |x|, |y| < R
+  2
+  k→∞
+
+≤ lim inf exp − r = 0 (from (2.154)).
+k→∞  2εn(k)
+
+Notice that the set {(x, y)| x, y − Hm(x, y) < −r, |x|, |y| < R} is open since
+Hm ∈ C(Rd × Rd ) from Lemma 2.8, (ii).
+
+  Letting R → ∞ in (2.171), we obtain (2.169) from (2.170).
+
+Next, we prove Theorem 2.9.
+
+Proof of Theorem 2.9 The proof of (2.140) is divided into the following:
+
+  lim inf 2εVS,ε(P0, P1,ε) ≥ TM (P0, P1),  (2.172)
+
+  ε→0
+
+lim sup 2εVS,ε(P0, P1,ε) ≤ TM (P0, P1) < ∞.  (2.173)
+
+  ε→0
+
+To prove (2.172), we only have to show that for any {εn}n≥1 for which εn → 0 and
+
+  1
+
+E |bεn(s, Xεn (s))|2ds is convergent as n → ∞,
+
+  0
+
+ lim E  1  (2.174)
+
+n→∞  |bεn(s, Xεn (s))|2ds ≥ TM (P0, P1)
+
+  0
+
+(see (2.132) and (2.139) for notation). Equation (2.174) holds since {Xεn(·)}n≥1
+is tight in C([0, 1]; Rd), and since any weak limit point X(·) of {Xεn(·)}n≥1 is
+an absolutely continuous stochastic process (see, e.g. [78, 159] or Lemmas 2–3 in
+
+[107]), and
+
+ lim E  1  (2.175)
+
+n→∞  |bεn(s, Xεn (s))|2ds
+
+  0
+
+1 ≥ E dX(s) 2ds ≥ E[|X(1) − X(0)|2] ≥ TM (P0, P1)
+  0 ds
+
+from (2.137) (see [76], p. 78 in [64], the proof of (3.17) in [107] or Lemma 3.1 in
+[119]).
+72  2 Stochastic Optimal Transportation Problem
+
+  Next, we prove (2.173). Take ϕ for which P0(Dϕ)−1 = P1, which is possible
+from Corollary 2.6. Then from assumption,
+
+  TM (P0, P1) ≤ E[|Dϕ(X0) − X0|2] ≤ 2 |x|2(P0(dx) + P1(dx)) < ∞.
+
+  Rd
+
+  Xε,ϕ(t) := X0 + t (Dϕ(X0) − X0) + √εW (t).  (2.176)
+  (2.177)
+
+Then P Xε,ϕ (1) = P1,ε, which implies (2.173).
+
+  By (2.137), (2.140), and (2.175), Dϕ in Corollary 2.6 is a minimizer of
+TM (P0, P1) with c = |y − x|2. The uniqueness of the minimizer of TM (P0, P1)
+with c = |y − x|2 can be shown easily (see, e.g. [152, p. 69]).
+
+  Equations (2.141)–(2.142) is an easy consequence of (2.140). For t ∈ [0, 1],
+
+  |Xε(t) − {X0 + t (Dϕ(X0) − X0)}|  (2.178)
+
+  1  √
+
+  ≤ |bε(s, Xε(s)) − (Dϕ(X0) − X0)|ds + ε sup |WXε (t)|.
+  0≤t ≤1
+  0
+
+  E sup |WXε (t)|2 ≤ 4d  (2.179)
+
+  0≤t ≤1
+
+by Doob’s inequality (see, e.g. [75, p. 34]), and from (2.140),
+
+  1  (2.180)
+  ε → 0.
+  E |bε(s, Xε(s)) − (Dϕ(X0) − X0)|2ds
+
+  0
+
+  =E  1
+
+  |bε(s, Xε(s))|2ds + |Dϕ(X0) − X0|2
+  0√
+  − 2E[ Xε(1) − X0 − εWXε (1), Dϕ(X0) − X0 ]
+
+  → 2TM (P0, P1) − 2E[ Dϕ(X0) − X0, Dϕ(X0) − X0 ] = 0,
+
+Indeed,
+
+  E[ WXε (1), Dϕ(X0) − X0 ] = E[WXε (1)], E[Dϕ(X0) − X0] = 0.
+
+For any R > 0, taking fR ∈ C(Rd ; [0, 1]) for which fR(x) = 1 (|x| ≤ R) and
+fR(x) = 0 (|x| ≥ R + 1),
+
+  E[ Xε(1), Dϕ(X0) − X0 ]
+  = E[ Xε(1), Dϕ(X0) − X0 {1 − fR(Xε(1))fR(Dϕ(X0) − X0)}]
+
+  + E[ Xε(1), Dϕ(Xε(0)) − Xε(0) fR(Xε(1))fR(Dϕ(Xε(0)) − Xε(0))].
+2.3 Zero-Noise Limit of SOT  73
+
+  E[| Xε(1), Dϕ(X0) − X0 |{1 − fR(Xε(1))fR(Dϕ(X0) − X0)}]
+  ≤ (E[|Dϕ(X0) − X0|2]E[|Xε(1)|2; |Xε(1)| ≥ R])1/2
+
+  + (E[|Xε(1)|2]E[|Dϕ(X0) − X0|2; |Dϕ(X0) − X0| ≥ R])1/2 → 0
+
+as R → ∞, uniformly in ε ∈ [0, 1]. (Xε(0), Xε(1)) weakly converges to
+(X0, Dϕ(X0)) as ε → 0 by the uniqueness of the minimizer of TM (P0, P1).
+One can assume, by taking a new probability space ( ˜ , B˜ , P˜ ) if necessary, that
+(Xε(0), Xε(1)) converges to (X0, Dϕ(X0)) as ε → 0, P˜ –a.s., by Skhorohod’s
+theorem (see, e.g. [75, p. 9]).
+
+  A := {y ∈ Rd |ϕ(y) < ∞, ∂ϕ(y) = {Dϕ(y)}},
+
+where ∂ϕ(y) denotes the subdifferential of ϕ at y:
+
+∂ϕ(y) := {p ∈ Rd |ϕ(z) ≥ ϕ(y) + p, z − y , z ∈ Rd }.
+
+Then X0 ∈ A a.s. since P0(dx) dx and ∩r>0∂ϕ(Ur (x)) = {Dϕ(x)} for any
+x ∈ A (see [152, p. 54]), from which the following holds:
+
+  E[ Xε(1), Dϕ(Xε (0)) − Xε(0) fR (Xε(1))fR (Dϕ(Xε(0)) − Xε(0))]  ε → 0,
+→ E˜ [ Dϕ(X0), Dϕ(X0) − X0 fR(Dϕ(X0))fR (Dϕ(X0) − X0) : X0 ∈ A],
+→ E[ Dϕ(X0), Dϕ(X0) − X0 ], R → ∞.
+
+Equations (2.178)–(2.180) imply (2.141)–(2.142).
+  We prove Corollary 2.7.
+
+Proof of Corollary 2.7 First, we prove that {bε(t, Xε(t))}0≤t<1 is an (FtXε )-
+martingale. The following holds from (3.7) in Sect. 3.1.1: for t ∈ [0, 1),
+
+bε(t, Xε(t)) = εDx log hε(t, Xε(t)) = E  Xε(1) − Xε(t) 1 − t (t, Xε(t))  (2.181)
+  =E  Xε(1) − Xε(t) 1 − t FtXε
+
+since Xε(t) is Markovian. If 0 ≤ s ≤ t < 1, then
+
+E[bε(t, Xε(t))|FsXε ] = E Xε(1) − Xε(t) 1 − t FsXε  (2.182)
+  = E Xε(1) − Xε(s) 1 − s FsXε .
+74  2 Stochastic Optimal Transportation Problem
+
+Indeed, from the SDE for Xε in (2.132) and (2.181),
+
+  E Xε(1) − Xε(t) FsXε = 1  1
+  1−t  1−t t
+  E bε(α, Xε(α)) F Xs ε dα
+
+  = 1 1 − t E F t 1 − α s dα. 1 Xε(1) − Xε(α) Xε
+
+If f (t) = 1 1 − t  1
+s ≤ t < 1 since
+  f (α)dα, s ≤ t < 1, then f ∈ C([s, 1)) and f (t) = f (s),
+
+  t
+
+  d f (t) =  1  1  f (t)
+
+  2 f (α)dα −  = 0,  s ≤ t < 1.
+  dt  (1 − t) t  1−t
+
+Equations (2.181)–(2.182) imply that {bε(t, Xε(t))}0≤t<1 is an (FtXε )-martingale.
+  If 0 < t < 1, then the following holds: by Doob’s inequality,
+
+  E[ sup |bε(s, Xε(s)) − (Dϕ(X0) − X0)|2]  (2.183)
+
+  0≤s≤t
+
+  ≤ 4E[|bε(t, Xε(t)) − (Dϕ(X0) − X0)|2]
+
+  = 4 1 E[ |E[bε(α, Xε(α)) − (Dϕ(X0) − X0)|F Xε t ]|2dα]
+  1−t t
+
+  ≤ 4 1 E[ |bε(α, Xε(α)) − (Dϕ(X0) − X0)|2dα] → 0 (from (2.141)),
+  1−t t
+
+which completes the proof.
+
+2.3.2 Duality Theorem for OT by the Zero-Noise Limit of SOT
+
+In this section, we prove the Duality Theorem for the OT by the zero-noise limit of
+the Duality Theorem for the SOT.
+
+  We assume that a = ε × I d and write V (P0, P1) = Vε(P0, P1) and denote by
+T (P0, P1) and Vε(P0, P1) the right-hand side of (2.5) and (2.38), respectively.
+
+  If L = L(u) and (A.1)–(A.2) hold, then (A.3) also holds and Vε(P0, P1) =
+Vε(P0, P1) from Theorem 2.4.
+
+  The following generalizes [120], where we assumed L ∈ C1(Rd ; [0, ∞)) and is
+strictly convex.
+2.3 Zero-Noise Limit of SOT  75
+
+Theorem 2.10 Suppose that L = L(u), c(x, y) = L(y − x), and (A.1)–(A.2) hold.
+Then for any P0, P1 ∈ P(Rd ),
+
+  T (P0, P1) ≤ T (P0, P1) ≤ lim inf Vε(P0, P1,ε),  (2.184)
+
+  ε→0
+
+  Vε(P0, P1,ε) ≤ T (P0, P1), ε > 0.  (2.185)
+
+In particular, the following holds:  (2.186)
+  T (P0, P1) = T (P0, P1).
+
+Proof of Corollary 2.7 The ﬁrst inequality in (2.184) is trivial. The second inequal-
+ity in (2.184) can be proved by the lower semicontinuity of T since P1,ε → P1 as
+ε → 0 weakly. Indeed, for any X ∈ A , by Jensen’s inequality,
+
+  1  1  = L(X(1) − X(0) − √εWX(1))
+
+  L(βX(t, X))dt ≥ L  βX(t, X)dt
+
+  0  0
+
+  ≥ T (g(ε, ·) ∗ P X(0), P X(1))
+
+(see (2.131) for notation). Next, we prove (2.185). For f ∈ Cb∞(Rd ),
+
+  f (y)P1,ε(dy) − ϕ(0, x; f )P0(dx) ≤ T (P0, P1).  (2.187)
+
+  Rd  Rd
+
+Indeed,
+
+  Rd  f (y)P1,ε(dy) = E[f (y + √εW (1))]P1(dy).
+  Rd
+
+E[f  (·  +  √  (1))]  ∈  Cb (Rd  ).  ϕ(0,  ·;  f  )  ∈  Cb (Rd  )  from  Lemma  2.5.
+  εW
+
+  Xx,y ε (t) := x + t (y − x) + √εW (t), x, y ∈ Rd , t ∈ [0, 1].
+
+Then from Lemma 2.5 with Q = δx in (2.89),
+  E[f (y + √εW (1))] − ϕ(0, x; f ) = E[f (Xx,y ε (1))] − ϕ(0, x; f ) ≤ L(y − x),
+  (2.188)
+
+which completes the proof.
+Chapter 3
+
+Marginal Problem
+
+Abstract The SOT is a class of marginal problems, in that it constructs a
+semimartingale with given marginal distributions as a minimizer of a variational
+problem. In this chapter, we study the upper and lower bounds, the time-reversal, the
+semiconcavity, and the continuity of the inﬁmum in Schrödinger’s problem which is
+a typical class of the SOTs. We also study the regularity of Schrödinger’s Func. Eqn.
+with respect to two endpoint marginal distributions and a kernel function and give
+an interpretation, as a mean ﬁeld PDE, to the coupled Fokker–Planck HJB equation
+for marginal distributions of an h-path process. We consider the construction of
+stochastic processes with given marginals from the viewpoint of the SOT. By the OT
+and the superposition principle that can be considered a class of marginal problems,
+we also consider the SOT with a nonconvex cost in the one-dimensional case.
+
+3.1 Schrödinger’s Problem
+
+As we discussed in Sect. 1.4, Schrödinger’s problem is the variational problem
+on relative entropies of distributions of particles with given initial and terminal
+distributions. In this section, we ﬁrst describe Schrödinger’s problem, then we study
+the upper and the lower bounds and the time-reversal of the inﬁmum in the problem.
+We also show the semiconcavity and the continuity, in random variables with given
+distributions, of the inﬁmum, though it is convex and lower semicontinuous in
+marginal distributions. Lastly, we study the regularity of Schrödinger’s Func. Eqn. in
+two endpoint marginal distributions and a kernel function and give an interpretation,
+as a mean ﬁeld PDE, of the coupled Fokker–Planck HJB equation for marginal
+distributions of an h-path process.
+
+© The Author(s), under exclusive license to Springer Nature Singapore Pte Ltd. 2021  77
+
+T. Mikami, Stochastic Optimal Transportation, SpringerBriefs in Mathematics,
+
+https://doi.org/10.1007/978-981-16-1754-6_3
+78  3 Marginal Problem
+
+3.1.1 Schrödinger’s Problem on P(Rd ) as SOT
+
+In this section, we consider Schrödinger’s problem in the case where a kernel
+function q in (1.40) is the transition probability density of a diffusion process and
+show that Schrödinger’s problem is the SOT considered in Corollary 2.3.
+
+  We ﬁrst describe assumptions and then state Jamison’s results.
+
+(A.6).  σ (t, x)  =  (  σ  ij  (  t  ,  x  )  )  d  =1  ,  (t, x)  ∈  [0, 1] × Rd , is a d × d-matrix.
+(A.7).  i,
+  j
+
+  a(t, x) := σ (t, x)σ (t, x)t , (t, x) ∈ [0, 1] × Rd , is uniformly positive
+
+  deﬁnite, bounded, once continuously differentiable, and uniformly Hölder
+
+  continuous. Dx a(t, x) is bounded and the ﬁrst derivatives of a(t, x) are
+  uniformly Hölder continuous in x uniformly in t ∈ [0, 1].
+
+  ξ(t, x) : [0, 1] × Rd → Rd is bounded, continuous, and uniformly Hölder
+
+  continuous in x uniformly in t ∈ [0, 1].
+
+Theorem 3.1 (See [80, p. 330]) Suppose that (A.6)–(A.7) hold. Then for any P0 ∈
+
+P(Rd ), the following SDE has a unique weak solution with a positive continuous
+transition probability density p(t, x; s, y), 0 ≤ t < s ≤ 1, x, y ∈ Rd :
+
+  dX(t) = ξ(t, X(t))dt + σ (t, X(t))dWX(t), 0 < t < 1,  (3.1)
+
+  P X(0) = P0
+
+(see Sect. 2.2 for notation).
+
+  We recall Schrödinger’s Func. Eqn. in our setting.
+
+Deﬁnition 3.1 (Schrödinger’s Func. Eqn.) Suppose that (A.6)–(A.7) hold. For
+
+P0, P1 ∈ P(Rd ), ﬁnd a product measure ν1(dx1)ν2(dx2) of nonnegative σ -ﬁnite
+Borel measures on Rd for which the following holds:
+
+  ⎧  (3.2)
+  ⎪⎪⎪⎪⎨P0(dx1) = ν1(dx1) p(0, x1; 1, x2)ν2(dx2), Rd
+  ⎪⎪⎪
+  ⎪⎩P1(dx2) = ν2(dx2) p(0, x1; 1, x2)ν1(dx1).
+
+  Rd
+
+  Since p(0, x1; 1, x2) is positive under (A.6)–(A.7), Schrödinger’s Func. Eqn. has
+the unique solution for any P0, P1 ∈ P(Rd ) (see [79] and also [36]). Besides, the
+following is known.
+
+Theorem 3.2 (See [80, p. 330]) Suppose that (A.6)–(A.7) hold. Then for any
+P0, P1 ∈ P(Rd ) and ν2 in (3.2),
+
+  h(t, x) := p(t, x; 1, x2)ν2(dx2) ∈ C1,2([0, 1) × Rd ),  (3.3)
+  (3.4)
+  Rd
+
+  (∂t + At ) h(t, x) = 0, (t, x) ∈ [0, 1) × Rd .
+3.1 Schrödinger’s Problem  79
+
+Here
+
+  At := 1 T race(a(t, x)Dx2) + ξ(t, x), Dx .
+  2
+
+Theorem 3.3 (Markovian Reciprocal Process (See [80, Theorem 2])) Suppose
+that (A.6)–(A.7) hold. Then for any P0 ∈ P(Rd ) and P1 ∈ Pac(Rd ), there exists a
+unique weak solution to the following SDE:
+
+  dX(t) = {a(t, X(t))Dx log h(t, X(t)) + ξ(t, X(t))}dt  (3.5)
+
+  + σ (t, X(t))dWX(t), 0 < t < 1,
+
+  P X(t) = Pt , t = 0, 1.
+
+Besides,
+
+  P ((X(0),X(1))(dxdy) = ν1(dx)p(0, x; 1, y)ν2(dy),  (3.6)
+
+  P X(t)(dx) =  ν1(dx1)p(0, x1; t, x) h(t, x)dx, 0 ≤ t ≤ 1,  (3.7)
+where
+  Rd
+
+  ν1(dx1)p(0, x1; 0, x)dx := ν1(dx),
+
+  Rd
+
+  h(1, x) = ν2(dx2)p(1, x; 1, x2) := ν2(dx) .
+  Rd  dx
+
+  Schrödinger’s Func. Eqn. is Euler’s equation for Schrödinger’s problem (see
+(1.40)). Besides, Schrödinger’s problem is the SOT VS(P0, P1) := V (P0, P1) in
+the case where
+
+  L = 1 |σ −1(t, x)(u − ξ(t, x))|2.
+  2
+
+Proposition 3.1 Suppose that (A.6)–(A.7) hold. Then any P0 ∈ P(Rd ) and P1 ∈
+Pac(Rd ),
+
+inf{H (μ(dxdy)|P0(dx)p(0, x; 1, y)dy)|μ1 = P0, μ2 = P1} = VS (P0, P1)
+  (3.8)
+
+(see (1.39) and (2.2) for notation). {X(t)}0≤t≤1 in (3.5) is the unique minimizer,
+provided (3.8) is ﬁnite.
+80  3 Marginal Problem
+
+  We explain why this is true. For {X(t)}0≤t≤1 ∈ A (see Sect. 2.2 for notation)
+such that P X(t) = Pt , t = 0, 1, by Jensen’s inequality,
+
+  1 E 1 |σ −1(t, X(t))(βX(t, X) − ξ(t, X(t)))|2dt  (3.9)
+  02
+
+  = H (P X(·)|P X(·))
+  ≥ H (P (X(0),X(1))|P (X(0),X(1))) ≥ l.h.s. of (3.8).
+
+Theorem 3 in [135] implies that ν1(dx)p(0, x; 1, y)ν2(dy) is the unique minimizer
+of the l.h.s. of (3.8), provided the l.h.s. of (3.8) is ﬁnite since
+
+  P0(dx)p(0, x; 1, y)dy = p(0, x; 1, y)P0(dx)p(1, y)dy  P0(dx)p(1, y)dy
+  p(1, y)
+
+(see (C.1) in Sect. 2.2.3 for notation). This implies that {X(t)}0≤t≤1 in (3.5) is the
+unique minimizer of VS(P0, P1) and that (3.8) holds, provided the l.h.s. of (3.8) is
+ﬁnite (see Corollary 2.3). Indeed, for {X(t)}0≤t≤1 in (3.5),
+
+  l.h.s. of (3.8) = H (P (X(0),X(1))|P (X(0),X(1))) = H (P X(·)|P X(·)).
+
+Remark 3.1 If H (P X(·)|P X(·)) is ﬁnite, then P X(·) P X(·). In particular, P X(1) ∈
+Pac(Rd ) since P X(1) ∈ Pac(Rd ), provided (A.6)–(A.7) hold.
+
+3.1.2 Bounds of Schrödinger’s Problem
+
+In this section, we give the upper and lower bounds of VS(P0, P1) in (3.8) by
+Schrödinger’s Func. Eqn. and compare the upper bound with that obtained in
+Sect. 2.2.3.
+
+  Let λ1 and λd denote the inﬁmum of the least eigenvalue and the supremum of
+the largest eigenvalue of a(t, x), respectively.
+
+  ||f ||∞ := sup{|f (t, x)||(t, x) ∈ [0, 1] × Rd }, f ∈ Cb([0, 1] × Rd ).
+
+From Corollary 2.3 and Lemma 2.7 in Sect. 2.2, the following holds.
+3.1 Schrödinger’s Problem  81
+
+Proposition 3.2 Suppose that (A.4)’ in Sect. 2.2.1 holds. Then for any P0, P1 ∈
+P(Rd ) for which (C.1) in Sect. 2.2.3 holds,
+
+  VS (P0, P1)  (3.10)
+
+≤  3  2  5  t2  2
+  |y − x| p(0, x)p(1, y)dxdy + (||Dxa||∞ + ||ξ ||∞)
+  λ1 Rd ×Rd  4λ1
+
+  + λd (p(0, x)|Dx log p(0, x)|2 + p(1, x)|Dx log p(1, x)|2)dx.
+  2 Rd
+
+Proof We only have to consider the case where (C.2)’ with r = 2 holds. Otherwise,
+the right-hand side of (3.10) is inﬁnite. From Corollary 2.3 and Lemma 2.7,
+
+VS (P0, P1)  (3.11)
+
+≤ 3 dt 1  {|2(y − x)|2 + ||Dxt a||2∞ + ||ξ ||2∞}p(0, x)p(1, y)dxdy
+4λ1 0  Rd ×Rd
+
+  + 1 1 min  λ 1 2 ||ξ ||2 d Dx log p(0, x) + ∞ p(0, x)dx,
+  20  Rd  1−t  λ1
+
+  λ 1 2 ||ξ ||2 d Dy log p(1, y) + ∞ p(1, y)dy dt
+  Rd  t  λ1
+
+=3  |y − x|2p(0, x)p(1, y)dxdy +  1  t2  2
+  (3||Dxa||∞ + 5||ξ ||∞)
+λ1 Rd ×Rd  4λ1
+
+  + λd min 1  12
+  20  Rd 1 − t Dx log p(0, x) p(0, x)dx,
+
+  12
+  Rd t Dy log p(1, y) p(1, y)dy dt.
+
+The last integral on the right-hand side of (3.11) can be estimated as follows:
+
+  1  12
+  Rd 1 − t Dx log p(0, x) p(0, x)dx,
+  min
+
+  0
+
+  12  (3.12)
+  Rd t Dx log p(1, x) p(1, x)dx dt
+
+  1
+
+  ≤ 0 (1 − t)2 dt 2 1 |Dx log p(0, x)|2p(0, x)dx Rd
+82  3 Marginal Problem
+
+  11  |Dx log p(1, x)|2p(1, x)dx
+  + 2 dt
+  1t  Rd
+  2
+
+  = (|Dx log p(0, x)|2p(0, x) + |Dx log p(1, x)|2p(1, x))dx.
+
+  Rd
+
+Equations (3.11)–(3.12) complete the proof.
+  In Theorem 3.3,
+
+  ϕh(t, x) := log h(t, x), (t, x) ∈ [0, 1] × Rd  (3.13)
+
+and let q(s, x; t, y), 0 ≤ s < t ≤ 1, x, y ∈ Rd denote the transition probability
+density of {X(t)}0≤t≤1 in (3.5). Then the following is known:
+
+  q(s, x; t, y) = exp(ϕh(t, y) − ϕh(s, x))p(s, x; t, y),  (3.14)
+
+  VS (P0, P1) = ϕh(1, y)p(1, y)dy − ϕh(0, x)P0(dx),
+  Rd  Rd
+
+provided VS(P0, P1) is ﬁnite (see [45, 62, 119, 135, 156] and also Corollary 2.3 in
+Sect. 2.2.1). Here log 0 := −∞ and e−∞ := 0.
+
+  We have the following from Schrödinger’s Func. Eqn. (see (2.145) for notation).
+
+Proposition 3.3 Suppose that (A.6)–(A.7) hold. Then for any P0, P1 ∈ P(Rd ) for
+which S (P1) is ﬁnite (see (2.145) for notation),
+
+  S (P1) −  {log p(0, x; 1, y)}P0(dx)q(0, x; 1, y)dy  (3.15)
+
+  Rd ×Rd
+
+  ≤ VS (P0, P1)
+
+  ≤ S (P1) −  Rd ×Rd  {log p(0, x; 1, y)}P0(dx)P1(dy).
+
+Proof We prove the ﬁrst inequality in (3.15). From Proposition 3.1 and (3.14), by
+Jensen’s inequality,
+
+  VS (P0, P1)  (3.16)
+
+  = dy (log q(0, x; 1, y) − log p(0, x; 1, y))P0(dx)q(0, x; 1, y)
+  Rd  Rd
+
+  ≥ S (P1) −  Rd ×Rd  {log p(0, x; 1, y)}P0(dx)q(0, x; 1, y)dy.
+3.1 Schrödinger’s Problem  83
+
+The second inequality in (3.15) can be shown from the following: from (3.8),
+
+  VS (P0, P1) ≤ H (P0(dx)P1(dy)|P0(dx)p(0, x; 1, y)dy),  (3.17)
+
+which completes the proof.
+
+  By the log-Sobolev inequality for the Gaussian measure (see, e.g. [152, p. 547,
+(21.5)]),
+
+  p(1, y) log p(1, y) dy ≤ 1  Dy log  p(1, y) 2  p(1, y)dy,  (3.18)
+
+Rd  g(1, y)  2 Rd  g(1, y)
+
+where g denotes a Gaussian kernel (see (1.47) for notation). The following holds
+under (A.6)–(A.7) (see [6, 66]): there exist constants C1, C2 > 0 such that
+
+− C1 + C−1 2 |x − y|2 ≤ − log p(0, x; 1, y) ≤ C1 + C2|x − y|2.  (3.19)
+
+The following implies that Schrödinger’s Func. Eqn. gives a better upper bound of
+VS(P0, P1) than our approach by the Duality Theorem for VS (P0, P1), in that the
+ﬁniteness of |Dx log p(0, x)|2p(0, x)dx is not assumed.
+
+  Rd
+
+  From the second inequality in (3.15) and (3.18), the following holds.
+
+Corollary 3.1 Suppose that (A.6)–(A.7) hold. Then for any P0 ∈ P2(Rd ) and P1 ∈
+P2,ac(Rd ) for which |Dx log p(1, x)|2P1(dx) is ﬁnite,
+
+  Rd
+
+VS(P0, P1) ≤ 1  (|Dx log p(1, x)|2 + 2 Dx log p(1, x), x )p(1, x)dx (3.20)
+  2
+  Rd
+
+  − d log(2π) −  {log p(0, x; 1, y)}P0(dx)P1(dy).
+  2  Rd ×Rd
+
+  From Proposition 3.3, (3.16), and (3.19), the following also holds (see
+Remark 3.1).
+
+Corollary 3.2 Suppose that (A.6)–(A.7) hold. Then for any P0, P1 ∈ P2(Rd ),
+VS(P0, P1) is ﬁnite if and only if S (P1) is ﬁnite.
+
+3.1.3 Time-Reversal of Schrödinger’s Problem
+
+In this section, we consider the time-reversal of Schrödinger’s problem on [0, 1].
+We only consider distributions of semimartingales in C([0, 1]; Rd).
+
+  We assume that (A.6)–(A.7) in Sect. 3.1.1 hold. Then for X in (3.1), P X(t) has a
+density pX(t, x) for t > 0 (see Theorem 3.1).
+84  3 Marginal Problem
+
+  For a function f which depends on t ∈ [0, 1],
+  f (t, ·) := f (1 − t, ·).
+
+For X = {X(t)}0≤t≤1 ∈ A ,
+
+  H (P X|P X) = H (P X|P X)  (3.21)
+
+  = H (P X(1)|P X(1)) + H (P X|P X(0)(dx)P X(·|X(0) = x))
+
+since
+
+  P X(·) = P X(0)(dx)P X(·|X(0) = x),  P X(0) = P X(1),
+  P X(·) = P X(0)(dx)P X(·|X(0) = x),  P X(0) = P X(1).
+
+  Suppose that
+
+  ξ(t, x) = 1 {Dxt a(t, x)}t = 1  d ∂aij (t, x)  d  (3.22)
+  2  2  i=1 ∂xi
+  .
+
+  j =1
+
+Then the following holds: for any f ∈ Cb2(Rd )
+
+  f (x)(pX(t, x) − pX(0, x))dx  (3.23)
+
+  Rd
+
+  = 1 divx (a(s, x)Df (x))dspX(s, x)dx
+  [0,t ]×Rd 2
+
+and f → divx (a(t, x)Df (x)) is self-adjoint for t ∈ [0, 1]. Let Y = {Y(t)}0≤t≤1 be
+the unique weak solution to the following SDE:
+
+  dY(t) = ξ (t, Y(t))dt + σ (t, Y(t))dWY(t),  0 < t < 1,  (3.24)
+  P Y(0) = P X(1).
+
+Then the transition densities of Y and X are the following:
+
+  P (Y(t) ∈ dy|Y(s) = x) = p(1 − t, y; 1 − s, x)dy,  (3.25)
+  (3.26)
+  pX(1 − t, y)
+  P (X(t) ∈ dy|X(s) = x) = X  p(1 − t, y; 1 − s, x)dy,
+  p (1 − s, x)
+3.1 Schrödinger’s Problem  85
+
+0 ≤ s < t ≤ 1, x, y ∈ Rd (see Chapter 6.4 in [65] and also [66]). Indeed, since X
+is Markovian, so is X and
+
+P (X(s) ∈ dx, X(t) ∈ dy) = P (X(1 − s) ∈ dx, X(1 − t) ∈ dy)
+
+  = pX(1 − t, y)dyp(1 − t, y; 1 − s, x)dx
+
+  X  pX(1 − t, y)
+  = p (1 − s, x)dx X  p(1 − t, y; 1 − s, x)dy
+  p (1 − s, x)
+
+(see [79] on Bernstein processes). The following is also known (see [73] and
+
+also [122] for related topics): if a and ξ are uniformly Lipschitz continuous in x,
+uniformly in t and if |pX(t, x)|2 and a(t, x)DxpX(t, x), Dx pX(t, x) are locally
+integrable on (0, 1] × Rd , then on [0, 1),
+
+dX(t) =  {Dxt (a(t, X(t))pX(t, X(t)))}t − ξ (t, X(t))  dt + σ (t, X(t))dWX(t).
+  pX(t, X(t))  (3.27)
+
+If S (P X(1)) and S (P X(0)) is ﬁnite, then the following holds from (3.21):
+
+H (P X|P X) = S (P X(1)) − S (P X(0)) + H (P X|P X(0)(dx)P Y(·|Y(0) = x)),
+  (3.28)
+
+since from (3.25)–(3.26),
+
+  X  pX(0, Y(1)) Y
+  P (·) = X  P (·).
+  p (1, Y(0))
+
+Let V S (P0, P1) denote VS(P0, P1) with a and ξ replaced by a and ξ . Then the
+following also holds from (3.28) since the assumption in (3.27) holds under that in
+the following proposition (see [6]).
+
+Proposition 3.4  Suppose that (A.6) holds and that a and ξ  =  1  {  Dt  a  (  t  ,  x  )  }  t  are
+  2
+  x
+
+uniformly Lipschitz continuous in x, uniformly in t. Then for any P0, P1 ∈ P(Rd )
+
+for which S (P0), S (P1), and VS (P0, P1) are ﬁnite and for the unique minimizer
+
+X of VS (P0, P1), X is the unique minimizer of V S (P1, P0) and the following holds.
+
+  VS(P0, P1) = S (P1) − S (P0) + V S (P1, P0).  (3.29)
+86  3 Marginal Problem
+
+3.1.4 Semiconcavity and Continuity of Schrödinger’s Problem
+
+The Duality Theorem for V (see Theorem 2.4 in Sect. 2.2) implies that
+
+  P(Rd ) × P(Rd ) (P , Q) → V (P , Q)
+
+is convex and lower semicontinuous (see also (2.64)).
+  In this section, under some assumptions, we show that for a ﬁxed Q ∈
+
+P2,ac(Rd ),
+
+  L2( , P ; Rd ) X → VS(P X, Q)  (3.30)
+
+is semiconcave and is continuous, i.e., there exists C > 0 such that
+
+  L2( , P ; Rd ) X → VS(P X, Q) − CE[|X|2]  (3.31)
+
+is concave and is continuous. Here L2( , P ; Rd ) denotes the space of all square
+integrable functions from a probability space ( , F , P ) to (Rd , B(Rd )). Let W2
+denote the Wasserstein distance of order 2, i.e. T 1/2 with c = |y − x|2 in (2.3):
+
+  1/2
+
+W2(P0, P1) := inf  |y − x|2μ(dxdy) μ ∈ A (P0, P1)  (3.32)
+
+  Rd ×Rd
+
+  = (inf{E[|X1 − X0|2]|P Xi = Pi , i = 0, 1})1/2, P0, P1 ∈ P(Rd ).
+
+We also show the Lipschitz continuity of P2(Rd ) P → VS(P , Q) in W2.
+  In section 6 of [27], P. Cardaliaguet considered a functional of probability
+
+measure as a function of a random variable and discussed the notion of derivatives in
+random variables. The study of the regularity of (3.30) is the ﬁrst step to the theory
+of the Hamilton–Jacobi equation for the SOT. The concavity of (3.31) is useful to
+prove the uniqueness of a variational problem (see Remark 3.2, (ii)).
+
+  We recall the deﬁnition of displacement convexity.
+
+Deﬁnition 3.2 (Displacement Convexity (See [102])) Let G : P(Rd ) −→ R ∪
+{∞}. G is displacement convex if the following is convex: for any ρ0, ρ1 ∈ P(Rd )
+and convex function ϕ : Rd −→ R ∪ {∞},
+
+  [0, 1] t → G(ρt ),  (3.33)
+
+where ρt := ρ0(id + t (Dϕ − id))−1, 0 < t < 1, provided ρ1 = ρ0(Dϕ)−1 and ρt
+can be deﬁned. Here id denotes an identity mapping.
+
+  Recall that a convex function is differentiable dx—-a.e. in the interior of its
+domain (see, e.g. [152]) and ρt , 0 < t < 1 in (3.33) is well deﬁned if ρ0 ∈ Pac(Rd ).
+ϕ in (3.33) exists if ρ0 ∈ P2,ac(Rd ) and if ρ1 ∈ P2(Rd ) (see Theorem 2.9).
+3.1 Schrödinger’s Problem  87
+
+  (A.4)’ in Sect. 2.2.1 implies (A.6)–(A.7). The following implies that P(Rd )
+P → VS(P , Q) is displacement semiconcave for a ﬁxed Q ∈ P(Rd ) and will be
+proved later in this section.
+
+Theorem 3.4 (See [118]) Suppose that (A.4)’ holds and that there exists a constant
+C > 0 such that x → log p(0, x; 1, y) + C|x|2 is convex for any y ∈ Rd . Then for
+any Q ∈ Pac(Rd ), Xi ∈ L2( , P ; Rd ), i = 1, 2, and λ1 ∈ (0, 1),
+
+ 2  2  λi  Xi  ,  Q),  (3.34)
+  i=1  (3.35)
+  λiVS (P Xi , Q) − Cλ1λ2E[|X1 − X2|2] ≤ VS(P
+
+i=1
+
+where λ2 := 1 − λ1. Equivalently, the following is concave:
+
+  L2( , P ; Rd ) X → VS(P X, Q) − CE[|X|2].
+
+In particular, the following is displacement convex:
+
+  P2,ac(Rd ) P → −VS(P , Q) + C |x|2P (dx).  (3.36)
+
+  Rd
+
+Remark 3.2 (i) Suppose that aij = aij (x), ξi = ξi(x) ∈ Cb∞(Rd ) and that a(x) is
+  D2  ;
+uniformly  nondegenerate.  Then  log  p(0,  x  1,  y  )  is  bounded  (see  [143,  Theorem
+  x
+B]). In particular, there exists a constant C > 0 such that x → log p(0, x; 1, y) +
+
+C|x|2 is convex for any y ∈ Rd . (ii) For C > 0 and P , Q ∈ P(Rd ),
+
+Q,C(P ) := S (P ) − VS (P , Q) + C  Rd ×Rd  |x − y|2P (dx)Q(dy).  (3.37)
+
+  Q,C(P ) plays a crucial role in the construction of moment measures by the SOT
+(see [117] and also [138] for the approach by the OT). Since Pac(Rd ) P →
+S (P ) is strictly displacement convex from Theorem 2.2 in [102], so is P2,ac(Rd )
+P → Q,C(P ) under the assumption of Theorem 3.4.
+
+  Suppose that (A.6)–(A.7) hold. Then from Corollary 3.2, for any Q ∈ P2(Rd )
+such that S (Q) is ﬁnite, P2(Rd ) P → VS(P , Q) ∈ [0, ∞). Since (A.4)’ implies
+(A.6)–(A.7), we obtain the following in the same way as in the ﬁnite-dimensional
+case.
+
+Corollary 3.3 (See [118]) Suppose that the same assumption as in Theorem 3.4
+holds. Then for any Q ∈ P2,ac(Rd ) for which S (Q) is ﬁnite, the following holds:
+for P0, P1 ∈ P2(Rd ),
+
+  |VS (P0, Q) − VS(P1, Q)|  (3.38)
+  ≤ f (max(||x||L2(P0), ||x||L2(P1)), ||x||L2(Q))W2(P0, P1),
+88  3 Marginal Problem
+
+where ||x||L2(P ) := ( Rd |x|2P (dx))1/2, P ∈ P2(Rd ) and
+
+  f (x, y) := 2C2x2 + 2(C2y2 + C1) + C
+
+(see (3.19) for notation).
+  In particular, if p(0, x; 1, y) = g(a, y − x), a > 0, then the following holds:
+
+  |VS(P0, Q) − VS(P1, Q)|  (3.39)
+
+  ≤ 1 {||x||L2(P0) + ||x||L2(P1) + 2(1 + max(σ0, σ1))||x||L2(Q)}W2(P0, P1),
+  2a
+
+where
+
+  2  1/2
+
+  σi :=  x − yPi(dy) Pi (dx) ,  i = 0, 1.
+
+  Rd  Rd
+
+Remark 3.3 If a(t, x) = ε > 0 and ξ = 0, then p(0, x; 1, y) = g(ε, y − x). In
+the setting of Corollary 3.3, 2εVS(Pi, Q) → W2(Pi , Q)2, ε → 0, i = 0, 1 (see
+Proposition 2.4 in Sect. 2.3 and also [95]). Since W2 is a metric on P2(Rd ) (see,
+e.g. [152]), for any P0, P1, Q ∈ P2(Rd ),
+
+  |W2(P0, Q)2 − W2(P1, Q)2| = (W2(P0, Q) + W2(P1, Q))|W2(P0, Q) − W2(P1, Q)|
+≤ {W2(P0, Q) + W2(P1, Q)}W2(P0, P1)
+≤ {||x||L2(P0) + ||x||L2(P1) + 2||x||L2(Q)}W2(P0, P1).
+
+We would like to study the best Lipschitz constant of VS(P , Q) in future.
+
+  For P , Q ∈ P(Rd ), let μ(dxdy; P , Q) denote the joint distribution at t =
+0, 1 of the minimizer of VS(P , Q), provided VS(P , Q) is ﬁnite. For C2 in (3.19)
+which depends on the lower bound of log p(0, x; 1, y), we discuss the weak lower
+semicontinuity of
+
+  P2(Rd ) P → −VS(P , Q) + C2  Rd ×Rd  |x − y|2P (dx)Q(dy)
+
+and the continuity of
+
+  L2( , P ; Rd ) X → VS(P X, Q).
+
+Here the assumption is weaker than Theorem 3.4 since we do not use the Duality
+Theorem. The proof is given in the end of this section.
+3.1 Schrödinger’s Problem  89
+
+Proposition 3.5 (See [118]) Suppose that (A.6)–(A.7) hold. For P , Q ∈ P2(Rd ),
+if S (Q) is ﬁnite, then the following holds:
+
+− VS(P , Q) = H (P × Q|μ(P , Q)) − S (Q)  (3.40)
+
+  +  Rd ×Rd  log p(0, x; 1, y)P (dx)Q(dy).
+
+In particular, the following is weakly lower semicontinuous:
+
+P2(Rd ) P → −VS(P , Q) + C2  Rd ×Rd  |x − y|2P (dx)Q(dy).  (3.41)
+
+The following is also continuous:
+
+  L2( , P ; Rd ) X → VS(P X, Q).  (3.42)
+
+In particular, P2(Rd )  P → VS(P , Q) is continuous in the topology induced
+by W2.
+
+Remark 3.4 In the same way as in the proof of Proposition 3.5, in the setting of
+Proposition 3.5, one can show that the following holds:
+
+VS(P , Q) = H (μ(P , Q)|P × Q) + S (Q)  (3.43)
+
+  −  Rd ×Rd  log p(0, x; 1, y)μ(dxdy; P , Q).
+
+I (X; Y ) := H (P (X,Y )|P X × P Y ) is called the mutual information of random
+variables X and Y (see, e.g. [41]). From (3.40) and (3.43),
+
+  log p(0, x; 1, y){μ(dxdy; P , Q) − P (dx)Q(dy)}  (3.44)
+
+  Rd ×Rd
+
+= H (μ(P , Q)|P × Q) + H (P × Q|μ(P , Q)) ≥ 0,
+
+which means that for an h-path process {X(t)}0≤t≤1 with p(0, x; 1, y) = g(a, y −
+x), a > 0, the covariance Cov(X(0), X(1)) is nonnegative. We would like to know
+the role of mutual information in Schrödinger’s problem in future. Indeed, one
+might develop a new research ﬁeld between Schrödinger’s problem and information
+theory.
+90  3 Marginal Problem
+
+  We prove Theorem 3.4, Corollary 3.3, and Proposition 3.5.
+Proof of Theorem 3.4 For any fi ∈ C∞ b (Rd ), ϕi(x) := ϕ(0, x; fi) (see (2.49) with
+c = 0 for notation). Then
+
+  2  fi (x)Q(dx) − ϕi(x)P Xi (dx)  (3.45)
+
+  λi  Rd  Rd
+
+  i=1  2  λi Xi  ,  Q)  +  λ1λ2CE[|X1  −  X2|2].
+  i=1
+  ≤ VS (P
+
+Indeed,
+
+  2  fi (x)Q(dx) − ϕi(x)P Xi (dx)
+  Rd  Rd
+  λi
+
+  i=1
+
+  2  2  2
+
+=  λi fi (x)Q(dx) − E λi {ϕi(Xi) + C|Xi|2}  + CE  λi |Xi |2 ,
+
+  Rd i=1 i=1  i=1
+
+  2  2  2  2
+  i =1  i =1
+  λifi(x)Q(dx) ≤ VS (P  λi Xi  ,  Q)  +  ϕ 0, x;  λi fi P  λi  Xi  (d  x  ),
+
+Rd i=1  Rd i=1
+
+by the Duality Theorem for VS(P  2  λi Xi  ,  Q)  (see  Corollary  2.3).
+  i=1
+
+  2  2  2  2
+  i=1
+  ϕ 0, x;  λi fi  P  λi Xi  (d x )  =  E  ϕ  0,  λi Xi ;  λi fi
+
+  Rd i=1  i=1  i=1
+
+  2  2  2
+
+  ≤E  λi ϕi(Xi ) + C|Xi |2  − CE  λi Xi .
+
+  i=1  i=1
+
+In the inequality above, we considered as follows:
+
+ϕ(t, x; f ) = log  p(t, x; 1, y) exp(f (y))dy , (t, x) ∈ [0, 1)×Rd , (3.46)
+
+  Rd
+
+  2  2  22
+
+  exp  log p 0, λiXi ; 1, y  + C λiXi + λifi (y) dy
+
+  Rd  i=1  i=1  i=1
+
+  ≤ exp  2
+
+  Rd  λi {log p(0, Xi; 1, y) + C|Xi|2 + fi (y)} dy
+
+  i=1
+
+  2  λi
+
+  ≤  exp(log p(0, Xi ; 1, y) + C|Xi|2 + fi (y))dy
+
+  i=1  Rd
+3.1 Schrödinger’s Problem  91
+
+by Hölder’s inequality. Taking the supremum in fi over Cb∞(Rd ) on the left-hand
+side of (3.45), the Duality Theorem for VS(P Xi , Q) (see Corollary 2.3) completes
+the proof.
+
+Proof of Corollary 3.3 Let X, Y ∈ L2( , P ; Rd ) and λ := min(1, ||X − Y ||2).
+Then
+
+VS(P X, Q) − VS(P Y , Q) ≤ λ{2C2(||X||22 + ||x||2L2(Q)) + 2C1 + C}, (3.47)
+
+where ||X||2 := {E[|X|2]}1/2, X ∈ L2( , P ; Rd ) (see (3.19) for notation). We
+prove (3.47) in the case where λ > 0. Since Y = (1 − λ)X + λ(λ−1(Y − X) + X),
+
+  (1 − λ)VS (P X, Q) + λVS (P λ−1(Y −X)+X, Q)
+≤ λ(1 − λ)C||λ−1(Y − X)||22 + VS (P Y , Q)
+
+from Theorem 3.4. From this,
+
+VS (P X, Q) − VS(P Y , Q)  (3.48)
+
+≤ λ{VS (P X, Q) − VS(P λ−1(Y −X)+X, Q) + C(1 − λ)||λ−1(Y − X)||22}.
+
+Since (A.4)’ implies (A.6)–(A.7),
+
+  VS(P X, Q) − VS(P λ−1(Y −X)+X, Q)
+≤ S (Q) + C1 + 2C2(||X||22 + ||x||2L2(Q)) − S (Q) + C1
+
+from Proposition 3.3 and (3.19). The following completes the proof of the ﬁrst part:
+
+(1 − λ)||λ−1(Y − X)||22 = 1 − λ,  λ = ||X − Y ||2 < 1,
+
+  0 = 1 − λ, λ = 1.
+
+We prove the second part. One can set C = (2a)−1. From (3.48), the following
+holds:
+
+VS(P X, Q) − VS(P Y , Q)
+
+≤ λ VS (P X, Q) − VS (P λ−1(Y −X)+X, Q) − 1 ||X||22 + 1 ||λ−1(Y − X) + X||22
+  2a  2a
+
++ 1 (||X||22 − ||Y ||22),
+  2a
+

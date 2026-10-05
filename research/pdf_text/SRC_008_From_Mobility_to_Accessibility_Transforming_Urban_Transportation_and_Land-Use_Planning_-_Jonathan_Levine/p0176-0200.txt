@@ -1,0 +1,1210 @@
+TABLE A.4A. Metropolitan regions included in the study
+
+REGION  POPULATION RANK  2009 MSA POPULATION
+
+New York  1  19,069,796
+Los Angeles
+Chicago  2  12,874,797
+Dallas
+Philadelphia  3  9,580,567
+Houston
+Washington, DC  4  6,447,615
+Atlanta
+Boston  5  5,968,252
+Detroit
+Phoenix  6  5,867,489
+San Francisco
+Seattle  8  5,476,241
+Minneapolis
+San Diego  9  5,475,213
+Baltimore
+Denver  10  4,588,680
+Portland
+Cincinnati  11  4,403,437
+Cleveland
+Orlando  12  4,364,094
+San Antonio
+Kansas City  13  4,317,853
+Las Vegas
+Columbus  15  3,407,848
+Charlotte
+Indianapolis  16  3,269,814
+Virginia Beach
+Nashville  17  3,053,793
+Memphis
+Louisville  20  2,690,886
+Richmond
+Oklahoma City  21  2,552,195
+Hartford
+New Orleans  23  2,241,841
+Buffalo
+Rochester  24  2,171,896
+Tucson
+  26  2,091,286
+
+  27  2,082,421
+
+  28  2,072,128
+
+  29  2,067,585
+
+  30  1,902,834
+
+  32  1,801,848
+
+  33  1,745,524
+
+  34  1,743,658
+
+  36  1,674,498
+
+  38  1,582,264
+
+  41  1,304,926
+
+  42  1,258,577
+
+  43  1,238,187
+
+  44  1,227,278
+
+  45  1,195,998
+
+  46  1,189,981
+
+  50  1,123,804
+
+  51  1,035,566
+
+  52  1,020,200
+  x  x  x
+  x
+  x  x
+  xx
+  x  x  Destinations
+
+  x  x  x  Radius Area Density  or
+  x
+  x  r  x  accessibility
+  x
+xx  x  2r  Smaller r
+  circle
+  x  x  πr2 10/πr2  10
+  x
+  x  x
+
+x  x  Larger circle 2r 4πr2 10/πr2 40
+
+  x  xx  x
+
+  xx  x
+
+  x  x  x  x
+
+  x  x
+
+FIGURE A.4A. Illustration of speed effect of accessibility (holding
+destinations constant). One “x” represents one destination.
+
+  x  x
+
+  x
+x rx
+
+  x
+
+x  x  Destinations
+
+  x  Radius Area Density  or
+
+  x  accessibility
+
+  Top  r  πr2  10/πr2  10
+
+  circle
+
+  x x xx  Bottom  r  πr2  20/πr2  20
+
+x xr  circle
+
+xx x
+x xx x
+x  x
+  x
+  xx
+
+FIGURE A.4B. Illustration of density effect of accessibility (holding speeds
+constant). One “x” represents one destination.
+164  APPENDIX A
+
+  Urban area population
+  0.629
+
+  Urban area density
+
+  –0.537  –0.448
+
+  Total freeway lane  Total daily
+  miles per capita  VMT per capita
+
+  –1.145  0.746  0.587
+
+  Daily VMT to freeway  Proximity
+  lane miles ratio
+  0.720
+  –0.440
+
+Highway  0.492  Weighted average
+speed limit  auto speed
+
+  0.271
+
+  Accessibility
+
+FIGURE A.4C. Path analysis of relationships of density, speed, proximity, and
+accessibility
+
+Variables in figure A.4c are defined as follows:
+
+Urban area density: Population of the urbanized area divided by its total
+  land area in square kilometers, retrieved from Highway Statistics 2008 by
+  the Federal Highway Administration.6
+
+Proximity: Median gravity-based work accessibility index when distance
+  between origins and workplace destinations (rather than travel time) is
+  used as the metric of impedance.
+
+Accessibility: Median accessibility score for residents in the region, calculated
+  as a gravity model with peak-period travel time by automobile between
+  origins and workplace destinations used as the metric of impedance.
+
+Highway speed limit: The speed limit of the state or territory to which each
+  region belongs. Among the 38 MPOs in the study, this variable takes one
+  of three values: 65 mph, 70 mph, or 75 mph.
+PROCEDURE FOR ACCESSIBILITY ANALYSIS  165
+
+  Total daily VMT per capita: Total daily vehicle-miles traveled by the residents
+  of the region divided by the total population of the region, retrieved from
+  Highway Statistics 2008 by the Federal Highway Administration.
+
+  Total freeway lane miles per capita: Total freeway lane miles within the
+  region divided by the total population of the region, retrieved from High-
+  way Statistics 2008 by the Federal Highway Administration.
+
+  Total daily VMT to total lane miles ratio: Total daily VMT per capita divided
+  by total freeway lane miles per capita.
+
+  Weighted average auto speed: The average speed, weighted by the imputed
+  travel volume share for the corresponding zonal pair.7
+
+  The values represented along each link in the figure are standardized regres-
+sion coefficients, a measure of the strength of the relationship between the vari-
+ables shown in the diagram. The dependent variable of each regression equation
+is the variable to which an arrow points. Independent variables are those repre-
+sented as pointing toward the dependent variable. For example, “weighted aver-
+age auto speed” is the dependent variable in a regression with “highway speed
+limit” and “daily VMT to total lane miles ratio” as the independent variables.
+
+  In a path analysis (appendix A, fig. 4.c), weights along sequential paths are
+multiplied to calculate the weight (or strength of relationship) along the entire
+link; weights of parallel paths are summed. Thus, the weight from density to
+speed is calculated as:
+
+  [(–0.537*–1.145) + (–0.448*0.746)]*(–0.440) = –0.123
+
+As predicted, this link is weak relative to the other links shown in the figure,
+because it incorporates two countervailing factors: low-density regions are
+freeway-rich on a per-capita basis, but these regions simultaneously demonstrate
+high VMT per capita.
+
+  The net effect of density on accessibility is the sum of the positive effect via
+higher proximity and the negative effect via slower speeds. The effect of density
+on accessibility can be analyzed by comparing the composite weight along the
+right-hand path (via proximity) and the left-hand path (via speed). The weight
+along the entire speed path equals
+
+  (–0.123*0.271) = –0.033,
+
+while that along the proximity path equals
+
+  (0.587*0.720) = 0.423.
+TABLE A.5A. Metropolitan area summary data, in rank order of public-transport accessibility (2014)
+
+METRO AREA  TIME-WEIGHTED JOB  85TH-PERCENTILE 30-MINUTE JOB  POPULATION  RAIL VRM  BUS VRM  PERCENT IN  FIT INDEX  GINI INDEX
+  ACCESSIBILITY VIA TRANSIT  ACCESSIBILITY VIA TRANSIT  (MILLIONS)  PER CAPITA  PER CAPITA  HIGH DENSITY
+  0.34  0.81
+New York  47,536  210,186  19.0  27.9  16.9  31.8%  0.22  0.76
+San Francisco  14,400  65,246  4.4  19.1  15.0  5.6%  0.15  0.67
+Los Angeles  11,811  43,430  18.1  3.8%  0.17  0.83
+Washington  11,505  47,759  13.0  2.5  18.3  2.5%  0.17  0.80
+Chicago  11,418  48,116  5.6  14.5  13.4  3.3%  0.30  0.81
+Boston  11,015  49,237  9.4  12.3  11.8  4.4%  0.14  0.80
+Philadelphia  35,217  4.5  11.7  12.8  4.0%  0.28  0.81
+Seattle  7,845  26,141  6.0  27.4  0.8%  0.13  0.71
+Denver  6,598  20,467  3.5  7.7  16.3  0.1%  0.13  0.51
+San Jose  5,466  16,441  2.6  3.0  11.0  0.4%  0.22  0.70
+Portland  5,076  18,723  1.9  4.1  14.3  0.1%  0.36  0.67
+Milwaukee  4,858  19,216  2.3  2.9  14.3  0.2%  0.36  0.78
+Minneapolis  4,735  17,651  1.6  3.8  14.8  0.2%  0.14  0.82
+Baltimore  4,476  14,633  3.3  0.0  13.5  1.0%  0.07  0.67
+Miami  4,226  15,333  2.8  1.1  14.7  1.7%  0.04  0.81
+Houston  4,000  15,166  5.6  3.7  12.1  0.4%  0.21  0.61
+Salt Lake City  3,940  13,733  5.9  2.5  11.3  0.0%  0.26  0.65
+San Diego  3,824  12,752  1.1  0.2  14.6  0.8%  0.08  0.70
+Phoenix  3,536  9,981  3.0  7.4  0.1%  0.15  0.73
+Sacramento  2,936  11,052  4.3  3.4  9.7  0.0%  0.02  0.76
+Dallas  2,898  10,113  2.2  0.6  7.2  0.5%  0.15  0.84
+Pittsburgh  2,846  12,268  6.5  1.8  8.3  0.0%  0.15  0.74
+San Antonio  2,779  9,849  2.4  1.7  13.3  0.0%  0.06  0.66
+Las Vegas  2,650  8,162  2.2  2.0  15.0  0.4%
+  2,626  2.0  0.0  12.7
+  1.4
+Buffalo  2,486  10,432  1.1  0.9  9.0  0.0%  0.28  0.67
+Cleveland  2,266  8,372
+Columbus  2,233  9,506  2.1  1.9  10.7  0.2%  0.14  0.71
+St. Louis  2,184  7,804
+Hartford  2,137  9,768  1.9  0.0  8.5  0.2%  0.12  0.77
+Atlanta  1,910  6,995
+Providence  1,871  8,252  2.8  2.2  10.4  0.0%  0.14  0.76
+New Orleans  1,844  8,364
+Tampa  1,746  6,865  1.2  0.0  9.5  0.3%  0.29  0.77
+Detroit  1,736  6,373
+Charlotte  1,672  6,541  5.4  3.3  8.6  0.0%  0.08  0.87
+Louisville  1,639  6,509
+Kansas City  1,624  6,696  1.7  0.0  9.6  0.4%  0.22  0.69
+Indianapolis  1,607  6,263
+Austin  1,590  7,001  1.2  0.8  6.7  0.2%  0.13  0.71
+Raleigh  1,432  6,372
+Cincinnati  1,421  5,792  2.8  0.0  8.7  0.1%  0.04  0.69
+Orlando  1,329  4,921
+Nashville  1,250  5,232  4.3  0.1  7.1  0.0%  0.03  0.62
+Virginia Beach  1,200  4,784
+Riverside  1,105  4,346  1.8  0.5  11.9  0.0%  0.09  0.84
+Birmingham  2,828
+  705  1.3  0.0  10.0  0.0%  0.22  0.78
+
+  2.1  0.2  7.0  0.0%  0.15  0.74
+
+  1.7  0.0  5.9  0.0%  0.09  0.76
+
+  1.8  0.2  11.0  0.4%  0.15  0.83
+
+  1.2  0.0  7.2  0.0%  0.02  0.83
+
+  2.1  0.0  7.9  0.0%  0.21  0.79
+
+  1.9  0.1  13.4  0.0%  0.02  0.74
+
+  1.6  0.1  6.4  0.0%  0.08  0.85
+
+  1.7  0.2  9.3  0.0%  0.07  0.64
+
+  4.1  0.5  6.2  0.0%  0.25  0.61
+
+  1.1  0.0  4.1  0.0%  0.03  0.82
+
+Sources: Andrew Owen and David M. Levinson, Access Across America: Transit 2014 Data (Minneapolis: University of Minnesota Digital Conservancy, 2014), retrieved from http://dx.doi.
+org/10.13020/D6MW2Q; Federal Transit Administration, National Transit Database (Washington, DC, 2014), retrieved from https://www.transit.dot.gov/ntd; Minnesota Population Center,
+National Historical Geographic Information System (2011).
+
+Note: Rail is defined as synonymous with the NTD’s fixed-guideway service, and bus is defined as the NTD’s non-fixed-guideway service.
+TABLE A.7A. Correspondence between NHTS travel purposes and NAICS job
+classiﬁcations
+
+NHTS TRIP PURPOSES/NAICS JOB CLASSIFICATION  PERCENT OF NONWORK TRIPS
+
+Buy goods: groceries/clothing/hardware store; shopping  28.8
+  New car dealers; used car dealers, motorcycle, ATV, and
+  personal watercraft dealers; boat dealers; all other motor  12.9
+  vehicle dealers; automotive parts and accessories stores;  11.3
+  tire dealers; furniture stores; floor covering stores; window
+  treatment stores; all other home furnishings stores;
+  household appliance stores; radio, television, and other
+  electronics stores; computer and software stores; camera
+  and photographic supplies stores; home centers; paint and
+  wallpaper stores; hardware stores; other building material
+  dealers; outdoor power equipment stores; nursery, garden
+  center, and farm supply stores; supermarkets and other
+  grocery (except convenience) stores; convenience stores;
+  meat markets; fish and seafood markets; fruit and vegetable
+  markets; baked goods stores; confectionery and nut stores;
+  all other specialty food stores; beer, wine, and liquor stores;
+  pharmacies and drugstores; cosmetics, beauty supplies,
+  and perfume stores; optical goods stores; food (health)
+  supplement stores; all other health and personal care stores;
+  men’s clothing stores; women’s clothing stores; children’s
+  and infants’ clothing stores; family clothing stores; clothing
+  accessories stores; other clothing stores; shoe stores; jewelry
+  stores; luggage and leather goods stores; sporting goods
+  stores; hobby, toy, and game stores; sewing, needlework, and
+  piece goods stores; musical instrument and supplies stores;
+  book stores, news dealers and newsstands; prerecorded
+  tape, compact disc, and record stores; department stores
+  (except discount department stores); discount department
+  stores; warehouse clubs and supercenters; all other general
+  merchandise stores; florists, office supplies and stationery
+  stores; gift, novelty, and souvenir stores; used merchandise
+  stores; art dealers; manufactured (mobile) home dealers;
+  tobacco stores; all other miscellaneous store retailers (except
+  tobacco stores)
+
+Get/eat meal; meals; social event
+  Full-service restaurants; limited-service restaurants; cafeterias,
+  grill buffets, and buffets; mobile food services
+
+Visit friends/relatives
+  Population (rather than NAICS codes) is considered as the
+  number of destinations in this category.
+NHTS TRIP PURPOSES/NAICS JOB CLASSIFICATION  PERCENT OF NONWORK TRIPS
+
+Go to gym/exercise/play sports  7.1
+  Golf courses and country clubs; skiing facilities; fitness and  7.0
+  recreational sports centers; bowling centers
+  6.5
+Buy services: video rentals/dry cleaner/post office/car service/bank  4.9
+  Postal service; couriers and express delivery services;
+  commercial banking; savings institutions; credit unions; other  (Continued)
+  depository credit intermediation; consumer lending; mortgage
+  and nonmortgage loan brokers; consumer electronics and
+  appliances rental; formal wear and costume rental; video tape
+  and disc rental; general rental centers; general automotive repair;
+  automotive exhaust system repair; automotive transmission
+  repair; other automotive mechanical and electrical repair and
+  maintenance; automotive body, paint, and interior repair and
+  maintenance; automotive glass replacement shops; automotive
+  oil change and lubrication shops; car washes; all other
+  automotive repair and maintenance; consumer electronics repair
+  and maintenance; computer and office machine repair and
+  maintenance; communication equipment repair and maintenance;
+  other electronic and precision equipment repair and maintenance;
+  home and garden equipment repair and maintenance; appliance
+  repair and maintenance; reupholstery and furniture repair;
+  footwear and leather goods repair; other personal and household
+  goods repair and maintenance; coin-operated laundries and
+  drycleaners; drycleaning and laundry services (except coin-
+  operated); pet care (except veterinary) services; photofinishing
+  laboratories (except one-hour); one-hour photofinishing
+
+Go to school as student
+  Elementary and secondary schools; junior colleges, colleges,
+  universities, and professional schools; business and secretarial
+  schools; computer training; professional and management
+  development training; cosmetology and barber schools; flight
+  training; apprenticeship training; other technical and trade
+  schools; fine arts schools; sports and recreation instruction;
+  language schools; exam preparation and tutoring; automobile
+  driving schools; all other miscellaneous schools and instruction;
+  educational support services
+
+Go to religious activity and school/religious activity
+  Funeral homes and funeral services; cemeteries and
+  crematories; religious organizations
+TABLE A.7A. Continued  PERCENT OF NONWORK TRIPS
+
+NHTS TRIP PURPOSES/NAICS JOB CLASSIFICATION  4.3
+
+Go out/hang out: entertainment/theater/sports event/bar  3.4
+  Motion picture theaters (except drive-ins); drive-in motion  3.2
+  picture theaters; theater companies and dinner theaters; dance
+  companies, musical groups and artists; other performing arts  2.9
+  companies; sports teams and clubs; racetracks; other spectator
+  sports; amusement and theme parks; amusement arcades;
+  casinos (except casino hotels); other gambling industries;
+  marinas; all other amusement and recreation industries; drinking
+  places (alcoholic beverages)
+
+Buy gas
+  Gasoline stations with convenience stores; other gasoline stations
+
+Family personal business/obligations
+  Offices of real estate agents and brokers; offices of real estate
+  appraisers; other activities related to real estate; passenger car
+  rental; offices of notaries; title abstract and settlement offices;
+  architectural services; landscape architectural services; building
+  inspection services; interior design services; photography
+  studios, portrait; employment placement agencies; temporary
+  help services; travel agencies; investigation services; solid
+  waste landfill; labor unions and similar labor organizations;
+  political organizations; other similar organizations (except
+  business, professional, labor, and political organizations); courts;
+  police protection; legal counsel and prosecution; correctional
+  institutions; parole offices and probation offices
+
+Medical/dental services
+  Offices of physicians (except mental health specialists); mental
+  health specialists; offices of dentists; offices of chiropractors;
+  offices of optometrists; offices of mental health practitioners
+  (except physicians); offices of physical, occupational and speech
+  therapists, and audiologists; offices of podiatrists; offices of all
+  other miscellaneous health practitioners; family planning centers;
+  outpatient mental health and substance abuse centers; HMO
+  medical centers; kidney dialysis centers; freestanding ambulatory
+  surgical and emergency centers; all other outpatient care centers;
+  medical laboratories; diagnostic imaging centers; home health
+  care services; ambulance services; blood and organ banks; all
+  other miscellaneous ambulatory health care services; general
+  medical and surgical hospitals; psychiatric and substance abuse
+  hospitals; specialty (except psychiatric and substance abuse)
+  hospitals; nursing care facilities; residential mental retardation
+  facilities; residential mental health and substance abuse facilities;
+  continuing care retirement communities; homes for the elderly;
+  other residential care facilities; services for the elderly and persons
+  with disabilities; other individual and family services; emergency
+  and other relief services; vocational rehabilitation services
+NHTS TRIP PURPOSES/NAICS JOB CLASSIFICATION  PERCENT OF NONWORK TRIPS
+
+Coffee/ice cream/snacks  1.4
+  Snack and nonalcoholic beverage bars  1.3
+  1.0
+Visit public place: historical site/museum/park/library; go to  1.0
+  library: school related
+  Libraries and archives; museums; historical sites; zoos and  1.0
+  botanical gardens; nature parks and other similar institutions
+  0.9
+Day care  0.5
+  Child day care services  0.5
+
+Rest or relaxation/vacation
+  Scheduled passenger air transportation; nonscheduled
+  chartered passenger air transportation; deep-sea passenger
+  transportation; coastal and Great Lakes passenger
+  transportation; inland water passenger transportation; scenic
+  and sightseeing transportation, land; scenic and sightseeing
+  transportation, water; scenic and sightseeing transportation,
+  other; tour operators; convention and visitors bureaus;
+  hotels (except casino hotels) and motels; casino hotels; bed-
+  and-breakfast inns; all other traveler accommodations; RV
+  (recreational vehicle) parks and campgrounds; recreational and
+  vacation camps (except campgrounds)
+
+Attend meeting: PTA/home owners association/local government
+  Civic and social organizations; legislative bodies; executive
+  and legislative offices, combined; American Indian and Alaska
+  native tribal governments; other general government support;
+  other justice, public order, and safety activities; administration
+  of public health programs; administration of human resources
+  programs (except education, public health, and Veterans Affairs
+  programs); Administration of Veterans Affairs; Administration
+  of Housing programs; Administration of Urban Planning and
+  Community and Rural Development; Administration of General
+  Economic Programs; regulation, licensing, and inspection of
+  miscellaneous commercial sectors
+
+Pet care: walk the dog/vet visits
+  Pet and pet supplies stores; veterinary services
+
+Use personal services: grooming/haircut/nails
+  Barber shops, beauty salons, nail salons, diet and weight-
+  reducing centers, other personal care services
+
+Use professional services: attorney/accountant
+  Offices of lawyers, all other legal services, offices of certified
+  public accountants, tax preparation services, other accounting
+  services
+Appendix B
+
+VARIABLES USED IN THE TEXT
+
+VARIABLE NAME OR SYMBOL  DESCRIPTION
+
+Nm  Estimated number of nonwork trips for
+85th-percentile 30-minute job accessibility  metropolitan region m
+
+  via transit  The average number of jobs reachable within
+  30 minutes of travel time by public transport
+aai  at the 85th percentile of the regional
+ati  accessibility distribution
+Accessibility
+  Accessibility index for travel by automobile for
+ai  zone i
+Aregion
+dj  Accessibility index for travel by public transport
+  for zone i
+
+  Median accessibility score for residents in
+  the region, calculated as a gravity model
+  with peak-period travel time by automobile
+  between origins and workplace destinations
+  used as the metric of impedance
+
+  Accessibility of each zone i
+  Total regional population-weighted accessibility
+
+  to jobs
+  Destinations in each zone j
+
+  (Continued)
+
+  173
+VARIABLE NAME OR SYMBOL  DESCRIPTION
+
+Er  The share of all national nonwork trips for
+f(tij)  purpose r
+fij
+Fit Index  Impedance between zones i and j
+  Flow of vehicles from zone i to zone j over the
+Gini Index
+  peak hour
+gj  A dimensionless index that measures the
+hi
+Highway speed limit  correlation between block-level 30-minute
+i  public-transport accessibility and block-level
+j  gross population density
+Jir  A dimensionless index that measures the
+Jm  evenness of the distribution of public-
+MLMR  transport accessibility across the regional
+Nm  population
+Nr  Total number of jobs located in zone j
+Percent in high density  The number of households residing in zone i
+  The speed limit of the state or territory to which
+pi  each region belongs
+Population  Zonal index, residential zones
+Proximity  Zonal index, destination zones
+  The number of jobs in zone i associated with
+Rail VRM per capita  trip purpose r
+sai  Number of jobs in metropolitan region m
+sti  Mode-location match ratio
+  Estimated number of nonwork trips for
+  174  metropolitan region m
+  The number of nonwork trips in a metropolitan
+  region for trip purpose r
+  Share of the regional population living in
+  densities higher than 60 persons per gross
+  acre
+  Total residential population in each zone i
+  Total regional population
+  Median gravity-based work accessibility index
+  when distance between origins and workplace
+  destinations (rather than travel time) is used
+  as the metric of impedance
+  Rail service deployed, in per-capita vehicle-
+  revenue miles (VRM) for rail modes
+  Share of the region’s automobile-owning
+  households located in zone i
+  Share of the region’s transit-dependent
+  households located in zone i
+VARIABLE NAME OR SYMBOL  DESCRIPTION
+
+T  Aggregate regional sum of peak-hour travel
+tij  times
+Time-weighted job accessibility via transit
+  Travel cost/time from zone i to j
+Total daily VMT per capita  A weighted-average accessibility score for each
+
+Urban area density  metropolitan area based on the average
+Weighted average auto speed  number of jobs that are reachable by public
+  transport within 10, 20, 30, 40, 50, and 60
+Wi  minutes
+  Total daily vehicle-miles traveled by the
+  residents of the region divided by the total
+  population of the region
+  Population of the urbanized area divided by its
+  total land area in square kilometers
+  The average speed, weighted by the imputed
+  travel volume share for the corresponding
+  zonal pair
+  The nonwork attractiveness index at zone i
+
+  175
+Notes
+
+INTRODUCTION
+
+  1. Noah Kazis, a former writer for Streetsblog, offers a particularly apt example to
+illustrate the same point: “Imagine two drivers leaving downtown to head home. Each
+of them sits in traffic for the first ten miles of the commute but at that point, their paths
+diverge. The first one has reached home. The second has another twenty miles to drive,
+though luckily for her, the roads are clear and congestion doesn’t slow her down. Who’s
+got a better commute?” Most metrics of mobility—average speeds, percent of congested
+travel, peak-to-off-peak travel-time ratio, buffer index (the percent of travel time needed
+to ensure an on-time arrival)—would (perversely) assess the second driver to have the
+superior commute. Noah Kazis, “Report: Want to Ease Commuter Pain? Highways
+and Sprawl Won’t Help,” Streetsblog NYC, September 29, 2010, http://nyc.streetsblog.
+org/2010/09/29/report-want-to-ease-commuter-pain-highways-and-sprawl-wont-help/.
+
+  2. In other contexts, “accessibility” focuses on accommodating the needs of people
+with a range of abilities and is focused on building and facility design. By contrast, the
+use here pertains to the ability to reach destinations in a city or region and is focused on
+transportation and land use.
+
+  3. Reid Ewing,” Measuring Transportation Performance,” Transportation Quarterly
+49, no. 1 (1995): 91–104.
+
+  4. David Schrank et al., 2015 Urban Mobility Scorecard (College Station: Texas Trans-
+portation Institute, Texas A&M University, 2015).
+
+  5. Edward Weiner, Urban Transportation Planning in the United States: A Historic
+Overview (Westport, CT: Praeger, 1999).
+
+  6. Nathaniel Baum-Snow, “Did Highways Cause Suburbanization?,” Quarterly Jour-
+nal of Economics 122, no. 2 (2007): 775–805; Paul Waddell et al., “Modeling Interde-
+pendence in Household Residence and Workplace Choices,” Transportation Research
+Record: Journal of the Transportation Research Board, no. 2003 (2007): 84–92; Transporta-
+tion Research Board, Expanding Metropolitan Highways: Implications for Air Quality and
+Energy Use, Special Report 245 (Washington, DC: National Academies Press, 1995).
+
+  7. Michael D. Meyer and Eric J. Miller, Urban Transportation Planning: A Decision-
+Oriented Approach, 2nd ed. (New York: McGraw-Hill, 2001).
+
+  8. Peter R. Stopher and Arnim H. Meyburg, Urban Transportation Modeling and
+Planning (Lexington, MA: Lexington Books, 1975); Edward K. Morlok, Introduction to
+Transportation Engineering and Planning (New York: McGraw-Hill, 1978); Meyer and
+Miller, Urban Transportation Planning.
+
+  9. Robert B. Mitchell and Chester Rapkin, Urban Traffic: A Function of Land Use
+(New York: Columbia University Press, 1954).
+
+  10. Avijit Ghosh and C. Samuel Craig, “Formulating Retail Location Strategy in a
+Changing Environment,” Journal of Marketing 47, no. 3 (1983): 53–68.
+
+  11. Hongbo Du and Corinne Mulley, “Relationship between Transport Accessibil-
+ity and Land Value: Local Model Approach with Geographically Weighted Regression,”
+Transportation Research Record: Journal of the Transportation Research Board, no. 1977
+(2006): 197–205; Andy L. Krause and Christopher Bitter, “Spatial Econometrics, Land
+Values, and Sustainability: Trends in Real Estate Valuation Research,” supplement, Cities
+
+  177
+178  NOTES TO PAGES 5–13
+
+29, no. 2 (2012): S19–25; Paul Cheshire and Stephen Sheppard, “On the Price of Land and
+the Value of Amenities,” Economica 62, no. 246 (1995): 247–67.
+
+  12. Jonathan Levine, Zoned Out: Regulations, Market, and Choices in Transportation
+and Metropolitan Land Use (Washington, DC: Resources for the Future, 2006).
+
+  13. For consistency with international terminology, we use metric units, except when
+quoting other documents or referring to data sources that employ Imperial units.
+
+  14. Ilan Salomon and Patricia L. Mokhtarian, “What Happens When Mobility-Inclined
+Market Segments Face Accessibility-Enhancing Policies?,” Transportation Research Part D
+3, no. 3 (1998): 129–40; Gerald L. Houseman, The Right of Mobility (Port Washington,
+NY: Kennikat Press, 1979), 19.
+
+  15. Susan L. Handy and Deb A. Niemeier, “Measuring Accessibility: An Exploration
+of Issues and Alternatives,” Environment and Planning A 29, no. 7 (1997): 1176; Derek
+Halden, “Using Accessibility Measures to Integrate Land Use and Transport Policy in
+Edinburgh and the Lothians,” Transport Policy 9, no. 4 (2002): 314.
+
+  16. Petter Naess, “‘New Urbanism’ or Metropolitan-Level Centralization?: A Com-
+parison of the Influences of Metropolitan-Level and Neighborhood-Level Urban Form
+Characteristics on Travel Behavior,” Journal of Transport and Land Use 4, no. 1 (2011):
+25–44.
+
+  17. Martin Wachs and T. Gordon Kumagai, “Physical Accessibility as a Social Indica-
+tor,” Socio-Economic Planning Sciences 7, no. 5 (1973): 439.
+
+  18. Jean-Paul Rodrigue, Claude Comtois, and Brian Slack. The Geography of Transport
+System (New York: Routledge, 2009), 54.
+
+  19. Irene Casas, “Evaluating the Importance of Accessibility to Congestion Response
+Using a GIS-Based Travel Simulator,” Journal of Geographical Systems 5, no. 1 (2003): 110.
+
+  20. Transportation Research Board, Highway Capacity Manual 2010, http://hcm.trb.
+org/?qr=1.
+
+  21. WNYC Average Commute Times, from the 2006–10. U.S. Census Bureau’s Ameri-
+can Community Survey five-year estimates, https://project.wnyc.org/commute-times-us/
+embed.html.
+
+  22. Yingling Fan, “Household Structure and Gender Differences in Travel Time:
+Spouse/Partner Presence, Parenthood, and Breadwinner Status,” Transportation 44, no. 2
+(2017): 271–91.
+
+  23. Robert M. Haig, Major Economic Factors in Metropolitan Growth and Its Arrange-
+ment: A Study of Trends and Tendencies in the Economic Activities within the Region of
+New York and Its Environs (New York: Committee on Regional Plan of New York and Its
+Environs, 1927); Walter G. Hansen, “How Accessibility Shapes Land Use,” Journal of the
+American Planning Association 25, no. 2 (1959): 73–76.
+
+  24. Geneviève Boisjoly and Ahmed M. El-Geneidy, “How to Get There?: A Critical
+Assessment of Accessibility Objectives and Indicators in Metropolitan Transportation
+Plans,” Transport Policy 55 (2017): 38–50.
+
+  25. Karst T. Geurs and Bert van Wee, “Accessibility Evaluation of Land-Use and
+Transport Strategies: Review and Research Directions,” Journal of Transport Geography
+12, no. 2 (2004): 127–40.
+
+  26. Transportation Research Board, Driving and the Built Environment: The Effects of
+Compact Development on Motorized Travel, Energy Use, and CO2 Emissions (Washington,
+DC: National Academies Press, 2009); Transportation Research Board, Highway Capacity
+Manual 2010, http://hcm.trb.org/?qr=1.
+
+  27. Institute of Transportation Engineers, Transportation Impact Analyses for Site
+Development: An ITE Recommended Practice (Washington, DC, 2010).
+
+  28. Gilles Duranton and Erick Guerra, Developing a Common Narrative on Urban
+Accessibility: An Urban Planning Perspective (Washington DC: Brookings, 2016).
+NOTES TO PAGES 13–20  179
+
+  29. Bent Flyvbjerg, Making Social Science Matter: Why Social Inquiry Fails and How It
+Can Succeed Again (New York: Cambridge University Press, 2001).
+
+  30. José Moore, Karen Lucas, and John Bates, Social Disadvantage and Transport in
+the UK: A Trip-Based Approach (Oxford: Transport Studies Unit, University of Oxford,
+2013).
+
+  31. Bert van Wee and Karst T. Geurs, “The Role of Accessibility in Urban and Trans-
+port Planning,” in Handbook on Transport and Urban Planning in the Developed World,
+ed. Michiel C. J. Bleimer, Corinne Mulley, and Claudine J. Moutou (Cheltenham, UK:
+Edward Elgar, 2016), 55–59.
+
+  32. While the accessibility shift pertains to all transportation modes, pedestrianism
+and cycling pose their own challenges for accessibility analysis, including the sparseness
+of available data and the prominence of difficult-to-measure safety and amenities in active
+transportation. These issues are beyond the scope of this book. Yet, even in the case of
+walking or cycling, there exist mobility and accessibility approaches to planning. For
+example, the Highway Capacity Manual’s assessments of level of service for nonmotor-
+ized facilities are based on pedestrian space (square feet of facility per pedestrian); bicycle-
+pedestrian meetings and passings per hour (a measure of potential interference on shared
+facilities); and, for bike facilities, meetings and active passings per minute, presence of a
+centerline, path width, and delayed passings. All these measure the quality of movement
+but shed no light on the ability of pedestrians and cyclists to reach destinations; an ample
+path that failed to offer any destinations within walking or cycling distance would still
+receive top scores. By contrast, shifting to accessibility in active transportation implies a
+move to a destination focus, which, for many walking and cycling facilities, would include
+recreation as a destination.
+
+  33. Derek Halden, “The Use and Abuse of Accessibility Measures in UK Passenger
+Transport Planning,” Research in Transportation Business & Management 2 (2011): 12–19;
+Karel Martens, Transport Justice: Designing Fair Transportation Systems (New York: Rout-
+ledge, 2017).
+
+  34. Charles E. Lindblom, “The Science of ‘Muddling Through,’” Public Administration
+Review 19, no. 2 (1959): 79–88.
+
+1. WHAT IS TRANSPORTATION FOR?
+
+  1. Jules Dupuit, “On the Measurement of the Utility of Public Works,” in Readings in
+Welfare Economics, by Kenneth J. Arrow and Tibor Scitovsky (Homewood, IL: Richard D.
+Irwin, 1969), selected by a committee of the American Economic Association, translated
+in International Economic Papers 2 (1952): 83–110, English translation by R. H. Barback
+from “De la Mesure de l’Utilité des Travaux Publics,” Annales des Ponts et Chausées, 2nd
+ser., vol. 8, 1844; Augustin Cournot, Researches into the Mathematical Principles of the
+Theory of Wealth, trans. Nathaniel T. Bacon with a Bibliography of Mathematical Eco-
+nomics by Irving Fisher (1838; repr. New York: MacMillan, 1897).
+
+  2. Alfred Marshall, Principles of Economics (New York: Macmillan, 1895).
+  3. Michael R. Bonavia, The Economics of Transport (London: Cambridge at the Uni-
+versity Press, 1936), 4.
+  4. Paul A. Samuelson, “The Pure Theory of Public Expenditure,” Review of Economics
+and Statistics 36, no. 4 (1954): 387–89.
+  5. Bonavia, Economics of Transport, 4.
+  6. Mitchell and Rapkin, Urban Traffic.
+  7. Mitchell and Rapkin’s terms for the concept of derived demand in transportation
+were not as direct as those in use today. They clearly subordinated the trip to the desire to
+reach the destination. But like many seminal works viewed from the perspective of time, the
+book’s treatment of its topic is more oblique than is generally remembered: “Psychological
+180  NOTES TO PAGES 20–24
+
+analysis of travel motivations might include study of the formation of a tension within
+an individual (whether conscious or not) which he hopes to satisfy in the course of a trip,
+and the translation of this tension into an action decision. The decision process by which
+goal events and intended destinations are chosen should be explored. Attention should
+be given to the cognitive aspects of the potential destinations (locations or general locali-
+ties where an individual is aware, believes or hopes that a goal event can occur) that are
+considered by the individual in choosing an intended destination.” Mitchell and Rapkin,
+Urban Traffic, 54.
+
+  8. Mitchell, and Rapkin, Urban Traffic, 55.
+  9. Mitchell, and Rapkin, Urban Traffic, 105.
+  10. Patricia L. Mokhtarian and Ilan Salomon, “How Derived Is the Demand for
+Travel?: Some Conceptual and Measurement Considerations,” Transportation Research
+Part A 35, no. 8 (2001): 695–719; Lothlorien S. Redmond and Patricia L. Mokhtarian,
+“The Positive Utility of the Commute: Modeling Ideal Commute Time and Relative
+Desired Commute Amount,” Transportation 28, no. 2 (2001): 179–205; Salomon and
+Mokhtarian, “Mobility-Inclined Market.”
+  11. Mokhtarian and Salomon, “How Derived Is the Demand for Travel?,” 698.
+  12. Wachs and Kumagai, “Physical Accessibility as a Social Indicator,” 439.
+  13. Randall Crane, “On Form versus Function: Will the New Urbanism Reduce Traf-
+fic, or Increase It?” Journal of Planning Education and Research 15, no. 2 (1996): 120.
+  14. Patricia L. Mokhtarian, Ilan Salomon, and Lothlorien S. Redmond, “Understand-
+ing the Demand for Travel: It’s Not Purely ‘Derived,’” Innovation: The European Journal
+of Social Science Research 14, no. 4 (2001): 355–80.
+  15. Salomon and Mokhtarian, “Mobility-Inclined Market Segments.”
+  16. Mokhtarian and Salomon, “How Derived Is the Demand for Travel?,” 699.
+  17. Patricia L. Mokhtarian and Ilan Salomon, “Travel for the Fun of It,” Access 15
+(1999): 27.
+  18. “The term [access] is not a good substitute for ‘mobility’, however, for it refers only
+to a limited number of circumstances in which access may be operative in place of physical
+mobility. . . . It is not even a good substitute for physical mobility, for it describes some-
+thing other than mobility. In many cases, . . . it describes immobility. It can even mean,
+apparently without consultation with immobile persons, an assumption of the undesir-
+ability of a right of mobility for them. . . . The adoption of access as a social goal in place
+of mobility may at first blush appear to be a broader and more useful approach, but the
+most cursory examination shows that this is deceptive.” Houseman, Right of Mobility, 20.
+“Most authors inside and outside transportation sciences see travel as an activity with a
+secondary utility, as opposed to those activities having primary utility. . . . To my thinking
+this is only partly true. Man is mobile. He cannot easily stay indoors all day long. He wants
+to ‘exercise his legs’, ‘get a breath of fresh air’ and feels satisfaction in the mere act of mov-
+ing, in taking his body and mind from one place to another. We are, after all, descendants
+from the ‘naked ape’ who roamed the plains.” Geurt Hupkes,“The Law of Constant Travel
+Time and Trip-Rates,” Futures, 14, no. 1 (1982): 38–46.
+  19. Mokhtarian and Salomon, “How Derived Is the Demand for Travel?,” 697.
+  20. Mokhtarian and Salomon, “How Derived Is the Demand for Travel?,” 695–719.
+  21. Metropolitan Transportation Commission and Association of Bay Area Govern-
+ments, Bay Area Census, http://www.bayareacensus.ca.gov/transportation/Commute
+time19802000.htm.
+  22. Levine, Zoned Out.
+  23. Michael Heilig et al., “Large-Scale Application of a Combined Destination and
+Mode Choice Model Estimated with Mixed Stated and Revealed Preference Data.” Trans-
+portation Research Record: Journal of the Transportation Research Board, no. 2669 (2017):
+NOTES TO PAGES 25–30  181
+
+31–40; Marcel Paulssen et al., “Values, Attitudes and Travel Behavior: A Hierarchical
+Latent Variable Mixed Logit Model of Travel Mode Choice,” Transportation 41, no. 4
+(2014): 873–88; David A. Hensher, “Measurement of the Valuation of Travel Time Sav-
+ings,” Journal of Transport Economics and Policy 35, no. 1 (2001): 71–98; Ron Dalump-
+ines and Darren M. Scott, “Determinants of Route Choice Behavior: A Comparison of
+Shop versus Work Trips Using the Potential Path Area-Gateway (PPAG) Algorithm and
+Path-Size Logit,” Journal of Transport Geography 59 (2017): 59–68; Brian H. Y. Lee et al.,
+“Reexamining the Influence of Work and Nonwork Accessibility on Residential Loca-
+tion Choices with a Microanalytic Framework,” Environment and Planning A 42, no. 4
+(2010): 913–30; Barry Zondag and Marits Pieters, “Influence of Accessibility on Resi-
+dential Location Choice,” Transportation Research Record: Journal of the Transportation
+Research Board, no. 1902 (2005): 63–70; Patrick M. Schirmer, Michael A. B. van Egg-
+ermond, and Kay W. Axhausen, “The Role of Location in Residential Location Choice
+Models: A Review of Literature,” Journal of Transport and Land Use 7, no. 2 (2014): 3–21;
+Issam Srour, Kara M. Kockelman, and Travis P. Dunn, “Accessibility Indices: Connec-
+tion to Residential Land Prices and Location Choices,” Transportation Research Record:
+Journal of the Transportation Research Board, no. 1805 (2002): 25–34; Joshua Auld and
+Abolfazl Mohammadian, “Planning-Constrained Destination Choice in Activity-Based
+Model: Agent-Based Dynamic Activity Planning and Travel Scheduling,” Transportation
+Research Record: Journal of the Transportation Research Board, no. 2254 (2011): 170–79.
+
+  24. Juliet Jain and Glen Lyons, “The Gift of Travel Time,” Journal of Transport Geog-
+raphy 16, no. 2 (2008): 81–89.
+
+  25. Louis A. Merlin, “A Portrait of Accessibility Change for Four US Metropoli-
+tan Areas,” Journal of Transport and Land Use 10, no. 1 (2017): 309–36, http://dx.doi.
+org/10.5198/jtlu.2015.808.
+
+  26. David M. Levinson, Wes Marshall, and Kay Axhausen, Elements of Access: Trans-
+port Planning for Engineers, Transport Engineering for Planners (Sydney: Network Design
+Laboratory, 2017), 48.
+
+  27. Mokhtarian and Salomon, “How Derived Is the Demand for Travel?”
+  28. Mokhtarian and Salomon, “Mobility-Inclined Market Segments,” 138.
+  29. Mokhtarian and Salomon, “How Derived Is the Demand for Travel?,” 716–17.
+  30. Mokhtarian and Salomon, “Mobility-Inclined Market Segments,” 138.
+  31. David Banister, “The Sustainable Mobility Paradigm,” Transport Policy 15, no. 2
+(2008): 73–80.
+  32. Banister, “Sustainable Mobility Paradigm,” 75.
+  33. Mokhtarian, Salomon, and Redmond, “Understanding the Demand for Travel,”
+355; Mokhtarian and Salomon, “How Derived Is the Demand for Travel?”
+  34. Reid Ewing and Robert Cervero, “Travel and the Built Environment: A Meta-
+Analysis,” Journal of the American Planning Association 76, no. 3 (2010): 265–94; Mark R.
+Stevens, “‘Does Compact Development Make People Drive Less?’: The Answer Is Yes,”
+Journal of the American Planning Association 83, no. 1 (2016): 19–25.
+  35. Shima Hamidi et al., “Measuring Sprawl and Its Impacts: An Update,” Journal of
+Planning Education and Research 35, no. 1 (2015): 35–50.
+  36. Randal O’Toole, Gridlock: Why We’re Stuck in Traffic and What to Do About It
+(Washington, DC: Cato Institute, 2010), 169.
+  37. Mokhtarian and Salomon, “Mobility-Inclined Market Segments,” 139.
+  38. John B. Lansing, Robert W. Marans, and Robert B. Zehner, Planned Residential
+Environments (Ann Arbor, MI: Survey Research Center, Institute for Social Research,
+1970); Robert Cervero, “Jobs-Housing Balancing and Regional Mobility,” Journal of
+the American Planning Association 55, no. 2 (1989): 136–50; Marlon Boarnet and Ran-
+dall Crane, Travel by Design: The Influence of Urban Form on Travel (New York: Oxford
+182  NOTES TO PAGES 30–37
+
+University Press, 2001); Transportation Research Board, Driving and the Built Environ-
+ment; Reid Ewing et al., “Testing Newman and Kenworthy’s Theory of Density and
+Automobile Dependence,” Journal of Planning Education and Research 38, no. 2 (2018):
+167–82.
+
+  39. Marcial H. Echenique et al., “Does Urban Form Really Matter?,” Journal of the
+American Planning Association 78, no. 2 (2012): 121–37; Stevens, “Does Compact Devel-
+opment Make People Drive Less?,” 7–18.
+
+  40. Ewing et al., “Testing Newman and Kenworthy’s Theory.”
+  41. Robert Cervero and Jin Murakami, “Effects of Built Environments on Vehicle
+Miles Traveled: Evidence from 370 US Urbanized Areas,” Environment and Planning A
+42, no. 2 (2010): 400–418; James McIntosh et al., “The Role of Urban Form and Transit
+in City Car Dependence: Analysis of 26 Global Cities from 1960 to 2000,” Transportation
+Research Part D 33 (2014): 95–110.
+  42. CalTrans, Guide for the Preparation of Traffic Impact Studies (Sacramento: Depart-
+ment of Transportation, State of California, December 2002), 19.
+  43. Liam Dillon, “Want a Bike Lane in Your Neighborhood?: It’s Not So Simple in
+California,” Los Angeles Times, April 7, 2016, http://www.latimes.com/politics/la-pol-sac-
+enviro-bike-lanes-20160407-story.html.
+  44. According to the CEQA law, the alternative metrics could include “vehicle miles
+traveled, vehicle miles traveled per capita, automobile trip generation rates, or automobile
+trips generated.”
+  45. Governor’s Office of Planning and Research (CA), “Revised Proposal on Updates
+to the CEQA Guidelines on Evaluating Transportation Impacts in CEQA” (Sacramento,
+CA, 2016), https://www.opr.ca.gov/docs/Revised_VMT_CEQA_Guidelines_Proposal_
+January_20_2016.pdf.
+  46. Ewing and Cervero, “Travel and the Built Environment,” 265–94; Dimitris Mila-
+kis, Robert Cervero, and Bert van Wee, “Stay Local or Go Regional?: Urban Form Effects
+on Vehicle Use at Different Spatial Scales: A Theoretical Concept and Its Application to
+the San Francisco Bay Area,” Journal of Transport and Land Use 8, no. 2 (2015): 59–86.
+  47. Crane, “On Form versus Function,” 117–26.
+  48. Bert van Wee, “Evaluating the Impact of Land Use on Travel Behavior: The Envi-
+ronment versus Accessibility,” Journal of Transport Geography 19, no. 6 (2011): 1530.
+  49. Metz argues similarly that transportation-infrastructure improvement is much
+more likely to translate into accessibility improvement to more distant destinations
+than into travel-time savings. David Metz, “The Myth of Travel Time Saving,” Transport
+Reviews 28, no. 3 (2008): 321–36.
+
+2. EVOLUTION OF THE ACCESSIBILITY CONCEPT
+
+  1. Richard M. Hurd, Principles of City Land Values (New York: Record and Guide,
+1903); Robert M. Haig, “The Assignment of Activities to Areas in Urban Regions,” in
+Regional Survey of New York and Its Environs (New York: Regional Survey, 1927), 1:31–44
+(originally published in Quarterly Journal of Economics 40 [1926]: 402–34); John Q. Stew-
+art, “Demographic Gravitation: Evidence and Applications,” Sociometry 11, no. 1 (1948):
+31–58.
+
+  2. Stewart, “Demographic Gravitation,” 57.
+  3. W. G. Hansen, “How Accessibility Shapes Land Use,” 73–76.
+  4. Stewart, “Demographic Gravitation,” 73.
+  5. Willard B. Hansen, “An Approach to the Analysis of Metropolitan Residen-
+tial Extension,” Journal of Regional Science 3, no. 1 (1961): 37–55; Donald M. Hill,
+“A Growth Allocation Model for the Boston Region,” Journal of the American Institute of
+Planners 31, no. 2 (1965): 111–20; Nancy J. Leathers, “Residential Location and Mode of
+NOTES TO PAGES 37–42  183
+
+Transportation to Work: A Model of Choice,” Transportation Research 1, no. 2 (1967):
+129–55; Knud R. Overgaard, Traffic Estimation in Urban Transportation Planning
+(Copenhagen: Danish Academy of Technical Sciences, 1966); Ross D. MacKinnon and M.
+John Hodgson, “Optimal Transportation Networks: A Case Study of Highway Systems,”
+Environment and Planning 2, no. 3 (1970): 267–84; Alan G. Wilson, “A Family of Spatial
+Interaction Models, and Associated Developments,” Environment and Planning A 3, no. 1
+(1971): 1–32; M. Cordey Hayes and Alan G. Wilson, “Spatial Interaction,” Socio-Economic
+Planning Sciences 5, no. 1 (1971): 73–95; David R. Ingram, “The Concept of Accessibility:
+A Search for an Operational Form,” Regional Studies 5, no. 2 (1971): 101–7.
+
+  6. For example, Mei-Po Kwan, “Space-Time and Integral Measures of Individual
+Accessibility: A Comparative Analysis Using a Point-Based Framework,” Geographical
+Analysis 30, no. 3 (1998): 191–216; Harvey J. Miller, “Measuring Space-Time Accessibility
+Benefits within Transportation Networks: Basic Theory and Computational Procedures,”
+Geographical Analysis 31, no. 1 (1999): 1–26; Inge Thorsen and Jens P. Gitlesen, “A Simu-
+lation Approach to Studying the Sensitivity of Commuting-Flow Predictions with Respect
+to Specific Changes in Spatial Structure,” Environment and Planning A 34, no. 2 (2002):
+271–88.
+
+  7. Haig, “Assignment of Activities to Urban Regions,” 38.
+  8. Haig, “Assignment of Activities to Urban Regions,” 44.
+  9. Christopher G. Turner, “A Model Framework for Transportation and Community
+Plan Analysis,” Journal of the American Planning Association 38, no. 5 (1972): 325–31.
+  10. Wachs and Kumagai, “Physical Accessibility as a Social Indicator,” 440–41.
+  11. Jennifer M. Morris, Peter L. Dumble, and Marcus R. Wigan, “Accessibility Indica-
+tors for Transport Planning,” Transportation Research Part A 13, no. 2 (1979): 91.
+  12. Chandra Bhat et al., Accessibility Measures: Formulation Considerations and Cur-
+rent Applications, Research Report 4938-2 (Austin: Center for Transportation Research,
+Bureau of Engineering Research, University of Texas, 2000), 11; David Schrank and Tim
+Lomax, The 2007 Urban Mobility Report (College Station: Texas Transportation Institute,
+Texas A&M University, 2007); United States Department of Transportation, Highway
+Statistics 2002 (Washington, DC: Bureau of Highway Statistics, 2002); Transportation
+Research Board, Highway Capacity Manual (Washington, DC: National Academies Press,
+1994); John D. Edwards Jr., Transportation Planning Handbook (Englewood Cliffs, NJ:
+Prentice-Hall, 1992).
+  13. Wachs and Kumagai, “Physical Accessibility as a Social Indicator,” 442.
+  14. Jeffrey Tumlin, Sustainable Transportation Planning: Tools for Creating Vibrant,
+Healthy, and Resilient Communities (Hoboken, NJ: Wiley, 2012), 4.
+  15. Kevin J. Krizek, “Operationalizing Neighborhood Accessibility for Land Use–
+Travel Behavior Research and Regional Modeling,” Journal of Planning Education and
+Research 22, no. 3 (2003): 270–87; Louis Merlin, “Measuring Community Completeness:
+Jobs Housing Balance, Accessibility, and Convenient Local Access to Nonwork Desti-
+nations,” Environment and Planning B 41, no. 4 (2014): 736–56, http://doi.org/10.1068/
+b120010p.
+  16. Robert Cervero, Paradigm Shift: From Automobility to Accessibility Planning,
+Working Paper 677 (Berkeley: Institute of Urban and Regional Development, University
+of California, 1996), 2.
+  17. Susan L. Handy, Accessibility- vs. Mobility-Enhancing Strategies for Addressing
+Automobile Dependence in the U.S., UCD-ITS-RR-02-15 (Davis: Institute of Transporta-
+tion Studies, University of California, 2002).
+  18. Cervero, Paradigm Shift, 3.
+  19. Cervero, Paradigm Shift, 18.
+  20. Tumlin, Sustainable Transportation Planning, 4.
+184  NOTES TO PAGES 42–53
+
+  21. See the discussion of this problem in Handy, Accessibility- vs. Mobility-Enhancing
+Strategies, 3.
+
+  22. Southeast Michigan Council of Governments, 2030 Regional Transportation Plan for
+Southeast Michigan (Detroit: Southeast Michigan Council of Governments, 2004), http://
+s3.amazonaws.com/zanran_storage/library.semcog.org/ContentPages/2455560602.pdf.
+
+  23. CalTrans, Performance Measure for Rural Transportation Systems: Guidebook
+(2006), sec. 3-1, http://www.dot.ca.gov/perf/library/pdf/RSPMGuidebook.pdf.
+
+  24. CalTrans, Performance Measure, sec. 4-1.
+  25. Boisjoly and El-Geneidy, “How to Get There?”
+  26. United States Code of Federal Regulations, Title 23, Highways, chap. 1, sec. 134(h)
+(1)(D) (2006).
+  27. National Research Council, Key Transportation Indicators: Summary of a Work-
+shop, ed. Janet Norwood and Jamie Casey, Committee on National Statistics, Division
+of Behavioral and Social Sciences and Education (Washington, DC: National Academy
+Press, 2002), https://www.nap.edu/read/10404/chapter/4#20.
+  28. Randall Crane, “Counterpoint: Accessibility and Sprawl,” Journal of Transport and
+Land Use 1, no. 1 (2008): 17.
+
+3. ACCESSIBILITY IN EVERYDAY PLANNING
+
+  1. For reviews, see Geurs and van Wee, “Accessibility Evaluation”; and Handy and
+Niemeier, “Measuring Accessibility,” 1175–94.
+
+  2. Qing Shen, “Location Characteristics of Inner-City Neighborhoods and Employ-
+ment Accessibility of Low-Wage Workers,” Environment and Planning B 25, no. 3 (1998):
+345–65.
+
+  3. Joe Grengs, “Nonwork Accessibility as a Social Equity Indicator,” International
+Journal of Sustainable Transportation 9, no. 1 (2015): 1–14.
+
+  4. A common form used in standard transportation planning models is the nega-
+tive exponential function. Transportation Research Board, Travel Estimation Techniques
+for Urban Planning, NCHRP Report 365 (Washington, DC: National Academies Press,
+1998).
+
+  5. The result will differ by the mode of travel—a car provides a far wider range of
+coverage than a bus for a given travel time.
+
+  6. Walter Isard, Methods of Regional Analysis: An Introduction to Regional Science
+(Cambridge, MA: MIT Press, 1960); Wilson, “Family of Spatial Interaction Models,”
+1–32.
+
+  7. Moshe E. Ben-Akiva and Steven E. Lerman, Discrete Choice Analysis: Theory and
+Application to Predict Travel Demand, vol. 9 (Cambridge, MA: MIT Press, 1985).
+
+  8. Joe Grengs, “Equity and the Social Distribution of Job Accessibility in Detroit,”
+Environment and Planning B 39, no. 5 (2012): 785–800; Joe Grengs, “Comparing Peo-
+ple and Places with Transportation Accessibility in Metropolitan Detroit,” in Mapping
+Detroit: Land, Community, and Shaping a City, ed. June M. Thomas and Henco Bekkering
+(Detroit, MI: Wayne State University Press, 2015): 101–14; Grengs et al., “Intermetro-
+politan Comparison of Transportation Accessibility: Sorting Out Mobility and Proximity
+in San Francisco and Washington, D.C.,” Journal of Planning Education and Research 29,
+no. 4 (2010): 427–43.
+
+  9. Grengs et al., “Intermetropolitan Comparison”; Levine et al., “Does Accessibility
+Require Density or Speed?: A Comparison of Fast versus Close in Getting Where You
+Want to Go in U.S. Metropolitan Regions,” Journal of the American Planning Association
+78, no. 2 (2012): 157–72.
+
+  10. Keith Bartholomew, Reid Ewing, and Gail Meakins, “Integrated Transportation
+Scenario Planning,” Environment and Planning FHWA-HEP-10-034 (July 2010): 1–229.
+NOTES TO PAGES 54–73  185
+
+  11. Boisjoly and El-Geneidy “How to Get There?”; Proffitt et al., “Accessibility Plan-
+ning in American Metropolitan Areas: Are We There Yet?,” Urban Studies 15 (2017):
+1–26.
+
+  12. Chicago Metropolitan Agency for Planning, Preferred Regional Scenario (Chicago:
+Chicago Metropolitan Agency for Planning, 2008); Metropolitan Planning Commission
+and Association of Bay Area Governments, Equity Analysis Report: Plan BayArea 2040
+Final Supplemental Report (San Francisco: Metropolitan Transportation Commission
+and Association of Bay Area Governments, 2017), http://2040.planbayarea.org/sites/
+default/files/2017-07/Equity_Report_PBA%202040%20_7-2017.pdf.
+
+  13. ARC, LCI Transportation Program (Atlanta, GA: Atlanta Regional Commission,
+2010), http://www.atlantaregional.com/land-use/livable-centers-initiative/lci-transpor
+tation-program; Envision Utah, Wasatch Choices 2040: A Four County Land-Use and
+Transportation Vision (Salt Lake City, UT: Envision Utah, 2006).
+
+  14. Kay W. Axhausen, “Accessibility Long Term Perspectives,” Journal of Transport
+and Land Use 1, no. 2 (2008): 5–22; Andrew Owen, Brendan Murphy, and David M.
+Levinson, Access Across America: Auto 2015, Report CTS 16-07 (Minneapolis: Accessibil-
+ity Observatory, Center for Transportation Studies, Department of Civil, Environmental,
+and Geo-Engineering, University of Minnesota, 2016), http://access.umn.edu/research/
+america/auto/2015/.
+
+  15. The method described in this chapter for land-development projects is imple-
+mented for the United States on the freely accessible website: http://aim.fau.edu.
+
+  16. Grengs et al., “Intermetropolitan Comparison of Transportation Accessibility,”
+427–43.
+
+  17. For details on the described procedure, see Jonathan Levine, Louis Merlin, and Joe
+Grengs, “Project-Level Accessibility Analysis for Land-Use Planning,” Transport Policy 53
+(2017): 107–19.
+
+  18. Arthur C. Nelson, Planner’s Estimating Guide (Washington DC: American Plan-
+ning Association Planners Press, 2004).
+
+  19. Marlon G. Boarnet and Andrew F. Haughwout, “Do Highways Matter?: Evidence
+and Policy Implications of Highways’ Influence on Metropolitan Development” (Berke-
+ley: University of California Transportation Center, 2000).
+
+  20. San Antonio–Bexar County Metropolitan Planning Organization, Mobility 2040
+(San Antonio, TX, 2015).
+
+  21. Louis A. Merlin, Jonathan Levine, and Joe Grengs, “Accessibility Analysis for
+Transportation Projects and Plans,” Transport Policy 69 (2018): 35–48.
+
+  22. Enrica Papa et al., “Accessibility Instruments for Planning Practice: A Review of
+European Experiences,” Journal of Transport and Land Use 3, no. 3 (2015): 1–20.
+
+4. ACCESSIBILITY AND URBAN FORM
+
+  1. Reid Ewing, “Characteristics, Causes, and Effects of Sprawl: A Literature Review,”
+Urban Ecology 21, no. 2 (1994): 519–35; Cervero, Paradigm Shift, 7.
+
+  2. Sam Staley and Adrian T. Moore, Mobility First: A New Vision for Transportation in
+a Globally Competitive Twenty-First Century (Lanham, MD: Rowman & Littlefield, 2009).
+
+  3. Owen, Murphy, and Levinson, Access Across America: Auto 2015.
+  4. See Joe Grengs, “Measuring Change in Small-Scale Transit Accessibility with
+Geographic Information Systems: The Cases of Buffalo and Rochester,” Transportation
+Research Record: Journal of the Transportation Research Board, no. 1887 (2004): 10–17; and
+Owen, Murphy, and Levinson, Access Across America: Auto 2015.
+  5. See David Levinson, Bernadette Marion, and Michael Iacono, Access to Destina-
+tions, Phase 3: Measuring Accessibility by Automobile, Mn/DOT 2010-09 (Minneapolis:
+Department of Civil Engineering, University of Minnesota, 2010); Itzhak Benenson et al.,
+186  NOTES TO PAGES 73–87
+
+“Public Transport versus Private Car: GIS-Based Estimation of Accessibility Applied to
+the Tel Aviv Metropolitan Area,” Annals of Regional Science 47, no. 3 (2011): 499–515;
+Darren Scott and Mark Horner, “Examining the Role of Urban Form in Shaping Peo-
+ple’s Accessibility to Opportunities: An Exploratory Spatial Data Analysis,” Journal of
+Transport and Land Use 1, no. 2 (2008): 89–119; Cynthia Chen, The Temporal and Social
+Dimension of Accessibility for New York City Residents, RF 49777-13-18 (New York: Uni-
+versity Transportation Research Center, City College of New York, 2008); and Jianquan Q.
+Cheng, Luca Bertolini, and Frank le Clercq, “Measuring Sustainable Accessibility,”
+Transportation Research Record: Journal of the Transportation Research Board, no. 2017
+(2007): 16–25.
+
+  6. See Grengs et al., “Intermetropolitan Comparison,” 427–43; Levine et al., “Does
+Accessibility Require Density or Speed?,” 157–72; and Owen, Murphy, and Levinson,
+Access Across America: Auto 2015.
+
+  7. The complete study is available in Levine et al., “Does Accessibility Require Density
+or Speed?,” 157–72.
+
+  8. Levine et al., “Does Accessibility Require Density or Speed?,” 157–72.
+  9. Grengs et al., “Intermetropolitan Comparison,” 427–43.
+  10. As explained more fully in Grengs et al., “Intermetropolitan Comparison,” the
+transformation is accomplished by calculating a z-score for each value in a zone-to-zone
+travel speed matrix from metro A. This z-score matrix is then applied to the mean and
+standard deviation of speeds from metro B to transform the speed distribution of metro
+A into that of metro B.
+  11. Staley and Moore, Mobility First.
+  12. Claritas, Inc., Claritas Business-Facts Methodology (Ithaca, NY: Claritas, 2002).
+  13. George Galster et al., “Wrestling Sprawl to the Ground: Defining and Measur-
+ing an Elusive Concept,” Housing Policy Debate 12, no. 4 (2001): 681–717; Bumsoo Lee,
+“‘Edge’ or ‘Edgeless’ Cities?: Urban Spatial Structure in US Metropolitan Areas, 1980 to
+2000,” Journal of Regional Science 47, no. 3 (2007): 479–515.
+  14. Trevor Thomas et al., “Not So Fast?: Examining Neighborhood-Level Effects of
+Traffic Congestion on Job Access, Transportation Research Part A 113 (2018): 529–41.
+  15. Reid Ewing, Rolf Pendall, and Don Chen, Sprawl Scores for 83 Metropolitan Regions
+(Washington, DC: Smart Growth America, 2002).
+  16. David Schrank and Tim Lomax, 2009 Urban Mobility Report (College Station:
+Texas Transportation Institute, Texas A&M University, 2009).
+  17. Andrew Owen, Brendan Murphy, and David Levinson, Access Across America:
+Transit 2015, Report CTS 16-09 (Minneapolis: Accessibility Observatory, Center for
+Transportation Studies, Department of Civil, Environmental, and Geo-Engineering,
+University of Minnesota, 2016), http://www.cts.umn.edu/Publications/ResearchReports/
+reportdetail.html?id=2554.
+
+5. THE SPECIAL CASE OF PUBLIC-TRANSPORT ACCESSIBILITY
+
+  1. Jarrett Walker, Human Transit: How Clearer Thinking about Public Transit Can
+Enrich Our Communities and Our Lives (Washington, DC: Island Press, 2012), 20.
+
+  2. Transportation Research Board, Expanding Metropolitan Highways.
+  3. Jonathan Levine et al., Metropolitan Accessibility and Transportation Sustainability:
+Comparative Indicators for Policy Reform (Final Report from EPA Agreement Number:
+RD-833334901-0 and FHWA Cooperative Agreement Number: DTFH61-07-H-00037,
+January 2011), http://hdl.handle.net/2027.42/147459.
+  4. Eric Jaffe, “Explaining Transit’s Secret Language,” CityLab (March 8, 2012), https://
+www.citylab.com/transportation/2012/03/teaching-language-transit/1438/.
+

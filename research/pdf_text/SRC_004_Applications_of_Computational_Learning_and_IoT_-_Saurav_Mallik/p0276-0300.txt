@@ -1,0 +1,750 @@
+10.
+  Sardar TH, Sarkar R, Ahmed SJ, Bandyopadhyay A (2023) a novel ensemble methodology to
+  validate fuzzy clusters of big data. In: Proceedings of the fourth international conference on
+  trends in computational and cognitive engineering: TCCE 2022. Springer Nature Singapore,
+  Singapore, pp 267–278
+
+11.
+  Sardar TH, Faizabadi AR, Ansari Z (2017) An analysis of data processing using Mapreduce
+  paradigm on the Hadoop framework. Int J Emerg Res Manag Technol 6(5)
+
+12.
+  Subbarao E, Gite P, Sharma A, Vyakaranam L, Sardar TH, Taqui SN, Kalam MA (2023)
+  Investigation of solar energy for urban areas and metropolitan communities using machine
+  learning. Electr Power Compon Syst 1–11
+
+  OceanofPDF.com
+© The Author(s), under exclusive license to Springer Nature Switzerland AG 2025
+S. Mallik et al. (eds.), Applications of Computational Learning and IoT in Smart Road
+Transportation System, Springer Tracts on Transportation and Traffic 22
+https://doi.org/10.1007/978-3-031-87627-1_13
+
+Smart Traffic Management: Automated
+Rerouting and Congestion Detection with
+Sensor Technology
+
+Sanjoy Bhattacharjee1 , Debdatta Chatterjee2 , Dipankar Misra3 ,
+Kaustav Sharma1 and Papri Ghosh4
+(1) Department of Computer Science and Engineering, Dr Sudhir Chandra
+
+  Sur Institute of Technology and Sports Complex, Kolkata, West
+  Bengal, India
+(2) Department of Computer Science and Engineering (Artificial
+  Intelligence and Machine Learning), University of Engineering and
+  Management Kolkata, Kolkata, India
+(3) Department of Computer Science and Engineering, JIS University,
+  Kolkata, West Bengal, India
+(4) Department of Computer Science and Engineering (Data Science),
+  Haldia Institute of Technology, Haldia, West Bengal, India
+
+  Sanjoy Bhattacharjee (Corresponding author)
+  Email: sanjoy.bhattacharjee@dsec.ac.in
+
+  Debdatta Chatterjee
+  Email: debdatta.chatterjee@uem.edu.in
+
+  Dipankar Misra
+  Email: dipankar.misra@jisuniversity.ac.in
+
+  Kaustav Sharma
+  Email: kaus.sharma111@gmail.com
+  Papri Ghosh
+  Email: ghoshpapri007@gmail.com
+
+Abstract
+Traffic congestion is one of the unforeseen situations in travel and touring
+that makes a planned schedule incapable of taking care at the spur of the
+moment. The problem can even lead to fatal consequences when there is
+urgency such as fire tendering, healthcare and medical services, criminal
+investigations, law and order problems, disaster management, etc. The
+problem is felt more in urban metropolis as there is a sharp increase in the
+number of vehicles every day and the facilities are always networked
+among a cluster of roadways as well as their arteries and other
+transportation services. The proposed study is based on a sensor-based
+model for the detection of traffic congestion and automated retouring
+instructions along arterial routes for the commuters keeping the safety and
+time management as the highest priority goals. The process for resolution of
+traffic congestion includes automated data display in Wi-Fi connected
+devices in the vehicles as well as on the traffic control system display
+giving everybody enough time for decision making on on-the-fly alternate
+commutation. Furthermore, a prototype of traffic simulation has also been
+provided to assess the feasibility of the model and its validity using a
+number of sensor based opto electronic devices. An animated simulation of
+the prototype has been provided for the veracity of the proposed model.
+
+1 Introduction
+
+Traffic congestion and its control is an everyday problem having variance
+from mere existence to high volume vehicular accumulation beyond limit
+that makes the whole system stand still without any predictability on
+solution or time estimation. A number of studies have been conducted on
+accommodation of peak value of congestion and lying of the roads and its
+arteries accordingly. The proposed system is a miniature study using
+sensors to capture dynamic data as well as continuous computation over
+data aggregation and semi-automated control resulting in suggested detours.
+The sensor based fully automatic opto electronic device is not packaged as
+the part of the project due to financial constraints. However, the prototype
+generated uses three-sensor based data aggregation and computation to
+control the traffic congestion with maximum congestion time and detour
+time for comparison. The commuters are at liberty to take any action
+accordingly. The proposed system considers a locality having roads and
+detouring arteries of greater length than the direct reach. The traffic control
+system is fed with data from three installed sensors on each block of the
+road and dynamically checks on the following conditions:
+1. The number of vehicles on an identified block of roads exceeds a
+
+  certain number of vehicles of any variation.
+
+2. The average waiting time spent by the vehicles on the roads exceeds
+  the estimated time limit.
+
+  The prototype also computes the loco-motor data such as speed of the
+vehicles etc. using the first two sensors on the block of the roads under
+consideration as well as certain static data for the system (width of the road,
+number of channels allowed, number of connections to the arteries,
+detouring options, etc.) and the data collected determine the time period to
+reach the third sensor. If the time spent by vehicles on the road is, say, 30 s
+greater than the predictable time limit then condition 2 holds true and the
+flag is ON for condition 2. On the basis of binary combination of these two
+conditions, a traffic congestion is detected and related data such as average
+waiting time spent by vehicles on the road to be considered as the weight of
+the computational implementation of the Boris Kerner’s Three Phase Traffic
+Theory. The implementation of the prototype is further developed on the
+basis of a proposed algorithm, known as OptiflowAlgorithm, an algorithm
+developed to customize a particular situation manipulating data from all the
+three sensors for better efficiency of predictability. The OptiflowAlgorithm
+algorithm is capable of finding the shortest path between two points having
+pre-determined road weights from the first condition on being true. The
+algorithm is further supported by another set of computational model
+collecting data to determine the optimal path around the congested channels
+and arteries leading to the optimum value of the number of vehicles to be
+accommodated on the particular block of road. This set of computational
+model is attributed to Congestion detection model.
+
+  The system with the proposed computational model can predict accident
+possibilities and its occurrence in a particular geo-location. The speed
+sensors and location sensors can predict the time exactly to reach the
+accident prone geo-location so that the indication through traffic display is
+generated for avoiding an unfortunate situation of collision between
+unaware incoming vehicles. This is particularly applicable in two/three or
+multi-channel arteries meeting a common geo-location from hidden
+direction. The interface can be made operational with an exclusive web
+based application or an optional voice-controlled mobile application to
+communicate the road conditions over the traffic display as well as on the
+Google Map with location “ON” for the end users such as drivers.
+
+1.1 Problem Definition
+
+A sensor-based traffic congestion, detection and resolution using automated
+retouring are taken up for animated simulation and its further application in
+accident avoidance. The system is applicable in any urban or semi-urban
+communication network of transportation. The data is real-time, dynamic
+and can be used for forensic evidence when continuously stored in a
+suitable hybrid cloud. However, the proposed system carries on the study to
+concentrate on feasibility, veracity and validity in a limited semi-automated
+system amounting to manual intervention on the basis of suggestion and
+timely prompts through mobile applications and traffic display.
+
+2 Background Study and Literature Survey
+
+There are a number of systems to tour, travel and transport such as Google
+Maps [1] and Apple Maps [2] which offer solutions to the problem of traffic
+congestion, detection and possible prediction over congestion detection.
+However, the systems are not without flaws and/or vulnerabilities. The pin-
+pointing a particular geo-location is not at all efficient making the systems
+in effective in some cases. The necessity of the mobile applications for pin-
+pointing a geo-location is long overdue and very recently has been
+introduced with the famous mobile application What3words [3]. Thus, there
+is always a need for alternate traffic congestion detection and control
+system that can take care of basic needs of transportation with enhanced
+efficiency and accident awareness.
+
+  The existing systems are developed by independent business houses and
+researchers having privacy protection of the databases and computational
+protocols. The compliance of local government rules and regulations is
+never a priority for such developers. The systems therefore, cannot be
+customised to the fullest extent even though there is third party maintenance
+offering limited data access. The proposed system is again an open access
+system with the divergence of actual code of computation and the
+respective computational model. The proposed system is capable of having
+add-ons depending upon the changes in the governance of the nation. Such
+flexibility makes the proposed system a truly open access traffic
+management system which can be closely controlled and monitored by city-
+planners.
+
+2.1 Scope of the Proposed System
+
+The proposed system is presented in a semi-automatic mode considering the
+limitations of transportation and road conditions that calls for timely
+manual intervention on the basis of prompt information display. The
+proposed system can be packaged with static as well as dynamic data
+sensed by sensors at strategic locations of particular traffic corner making it
+a fully automatic opto electronic device with certain control over the regular
+traffic conditions. The scope of the proposed system is limited to the
+following:
+
+  A sensor-based system for congestion detection is hereby proposed in this
+  paper.
+  A detour detection and dynamic computation of sensor based aggregated
+  data are used to estimate the best possible route around the congested
+  geo-location.
+  The proposed system can be used to predict accidents from hidden
+  corners within a viable span of time enhancing safety.
+  The proposed system generates a real time dashboard to display the
+  condition of the road ahead and the optimum favourable alternatives the
+  commuters can avail.
+  The proposed system works on accident predictability upon sensing the
+  speed and locomotion of the vehicles.
+  The proposed system applies the computed value of coefficient of road
+  quality while predicting the detouring options.
+
+3 Research Methodology and Related Simulation
+The proposed traffic congestion detection and its resolution in an automated
+mode is based on a number of theories and applications. Some of the earlier
+applications are having similar parameters that can be compared for
+efficiency analysis. The truncated model of the proposed system has
+undergone a suitable simulation to present itself for testing and simulation
+under unforeseen conditions.
+
+3.1 Traffic Congestion Detection and Its Handling
+3.1.1 Traffic Congestion
+
+Traffic congestion is recognised under certain specific conditions when
+these conditions are tested true into the context of capacity of the channels
+on the road as well as its arteries and time taken by vehicles in an ever-
+increasing queue. For a congestion to be declared on a particular geo-
+location following specific conditions are needed to be satisfied:
+1. The number of vehicles on a particular geo-location exceeds a certain
+
+  number of vehicles of any variation.
+
+2. The average time spent by vehicles on the same geo-location exceeds
+  expected waiting time.
+
+  If both conditions are set on Flag ON the condition is considered to be
+TRUE. The approaching threshold value of a particular geo-location
+depends upon the dimensions of roads as well as it’s arteries respectively,
+considering variable data such as size and shape of each vehicle identified
+including their loco-motor data such as speed and deviations of relative
+speed among each other.
+
+3.1.2 Three-Phase Traffic Theory
+
+This Three Phase Traffic Theory, given by Russian Physicist Boris Kerner,
+describes the flow of traffic with reference to space and time, i.e. Traffic
+Dynamics. The theory helps us to understand the behavioural issues of
+traffic under ever changing circumstances [4].
+
+  Kerner’s theory describes traffic in three phases: Free Flow,
+Synchronized Flow, and Wide Moving Jam, where the latter two are
+together called Congested Traffic. The parameters required for defining any
+traffic state, stated to be: Velocity (V): the rate of change of position with
+respect to time.
+Density (K): the number of vehicles in a certain area of geo-location.
+
+Flow Rate (Q): the total number of varied vehicles passing a point in a
+
+particular geo-location.
+
+Flow rate (Q) is defined as the number of vehicles (N) passing a specific
+
+geo-location area within finite time T. Or, Q = N/T. The inverse of flow rate
+
+can be defined as Headway (H), which is the distance between two
+
+successive vehicles. A shorter headway signifies closer spacing between
+
+vehicles, and vice versa.
+
+Therefore, Headway (H) is the inverse of Flow Rate (Q), or in other
+
+words, H = 1/Q.
+
+Hence  .
+
+Substituting, H = 1/Q = T/N:  .
+
+  Traffic density (K) is defined as the number of vehicles (N) in in a
+certain area of geo-location. (S), or in other words, K = N/S. While dealing
+with the traffic, it is always important to keep a track of the parameters such
+as vehicle length, space between vehicles etc.
+
+  Vehicular Safety Gap (G) is defined as the time taken by one vehicle to
+cross a point such that the succeeding vehicle is at a safe distance when it
+crosses the same point. In mathematical terms, it is defined as G = S/N.
+
+  The traffic movement is dependent on the vehicle’s state (whether it’s
+moving or is stationary) in a certain time frame, which may be
+instantaneous or its mean value. Hence we define the instantaneous velocity
+of a vehicle at any given time frame. If the calculated derivative for any
+arbitrary point in the geo-location is zero, the vehicle is considered as
+stationary, otherwise for any incremental values for the derivative, the
+vehicle will be considered in a state of motion.
+
+  In Fig. 1, a vehicle whose instantaneous position is measured at the two
+points x1 and x2 at the times t1 and t2 respectively. Therefore, from this
+figure, the velocity is calculated as follows:
+Fig. 1 Calculation of velocity
+
+3.1.3 Fundamental Traffic Relation (FTR)
+
+FTR defines the relationship between the variables speed, density, and flow.
+It states that the flow rate is the product of density and velocity. The above
+statement is formulated as Q = K * V.
+
+  The Fundamental Traffic Relation (FTR) comes very handy while
+studying the actual traffic movements. The traffic is studied on the basis of
+the density of the road and the flow rate of vehicles. Based on these two
+factors, conclusions are draw for a traffic state to be free movement traffic
+with no congestion, or congestion with negligible locomotion.
+
+  The transition between these phases can be depicted through a graph
+presented above considering density at a geo-location and its subsequent
+equation of complex real-time relationship [5].
+
+  Figure 2 shows relation between the Density and Rate of Traffic at
+different point’s time at different geo-location fitting a curve which is
+parabolic in nature. From the above graph the following can be concluded:
+Fig. 2 Relation between traffic flow rate and road density
+
+  When k = 0, the traffic rate will be maximum, but this is contradicted as
+  k = 0 defines no vehicle on the road. Hence at k = 0 the road is empty,
+  which is a true case in contrast to real life.
+  As the value of k increases, the traffic flow will increase as well, and at a
+  certain density, it will be maximum as shown by q(max) which is also
+  known as vehicle capacity of road.
+  When the density increases beyond q(max), the flow gradually decreases.
+  At k = max, the flow once again will be 0, but this time since density is
+  maximum, the systems will display number of vehicles with a peak
+  value, which restricts the vehicle flow, and hence it is a condition
+  triggering Traffic Congestion.
+  At any instance, the traffic state from the Fig. 2 can be obtained as the
+  coordinates along k and q axis i.e. TS (k1, q1).
+  Here the two slopes are: one with a smaller angle and the other with a
+  greater. They both depict different scenarios; having the same flow rate,
+  but the one with greater slope shows less density value, while the one
+  with the lower slope shows high density value. Hence, just by knowing
+  the gradient, congestion can be identified.
+  The region, left to the parabola is a Free Flow condition where traffic can
+  freely move. The right region of parabola shows the congestion in the
+traffic and is considered as Traffic Congestion. The circles in their
+respective regions depict the vehicle position, thus reflecting whether it’s
+a Free Flow or Congestion.
+
+Synchronized Flow: Once there is a transition in congestion phase, the
+Free Flow state changes to Synchronized Flow. In Synchronized Flow, the
+flow rate of the vehicles drops significantly, but there is no observable
+change in the flow rate as such. This is due to the increase in the density of
+the vehicle so that the product of the speed and density remains nearly the
+same.
+
+Wide Moving Congestion: At this stage, both the rate of flow and the
+vehicle speed drop as well, as they become relatively uniform than the
+synchronized flow. Hence the relational analysis of parameters density,
+speed and flow rate can be simplified in a tabular format as given below
+(Table 1).
+
+Table 1 Phases of road traffic
+
+State  Speed Flow rate  Density
+
+Free flow  High High  Low
+
+Synchronised flow Low  Close to free flow Middle
+
+Wide moving jam Ignorable Ignorable  Highest
+
+3.1.4 Queuing Theory for Congestion and Bottleneck
+
+When the vehicles enter, get struck near the bottleneck, it may get delayed
+for quite some time, and released in a random fashion that cannot be
+handled without fitting the situation queuing model. Figure 3 depicts a
+simple situation where bottleneck creation or other restriction can occur in a
+random fashion.
+Fig. 3 Queuing model for bottleneck
+
+  In Fig. 3, input is the rate of vehicular arrival, storage is the geo-
+locational area of vehicular space occupied, restriction/bottleneck is the rate
+at which the vehicle goes before it enters the bottleneck, and output is the
+rate at which vehicles leave the bottleneck.
+
+  Figure 4 considers three vehicles 1, 2, and 3 entering at their respective
+time t1, t2, t3. T1 is the departure time of Vehicle 1. Therefore, waiting time
+can be calculated as: w(t) = T1 – t1.
+
+Fig. 4 Vehicle arrival and departure times
+
+3.1.5 Simulation and Feasibility of the Model
+
+The model is considered for a simplistic view of free flow having one
+vehicle that is considered as input of data at three different point of time on
+a block of road, namely, t1, t2, and t3 respectively. Before reaching the
+signal, it is assumed that there is no restriction or bottleneck.
+  The vehicle initially is located at an arbitrary point from the crossing,
+whose length will be sensed and dynamically stored in the first sensor.
+Figure 5 indicates that a free flow is available at t1, and t2 respectively
+whose aggregated data is available at sensor C. A single vehicle crosses
+point A and B at t1 and t2. Sensor C passes the data along with aggregated
+data to the central server for traffic signal to remain open for stipulated
+duration based on computation on central server. In the schematic diagram
+(Fig. 5) vehicles are depicted as pentagons.
+
+Fig. 5 A simple road network in a free flow
+
+  The inter-sensor distance is designed to be static depicted as x and y in
+above schematic diagram (Fig. 5). Therefore, speed of the vehicle
+determined by simply finding quotient of inter-sensor distance and time
+difference. AB is the distance parallel to which a diversion is noticed.
+Hence, if any vehicle passes point B will have no option for detour. The
+geo-location region y is a fixed distance where the traffic congestion will
+take place. If any vehicle will pass point C, it indicates there is no
+congestion (Fig. 6).
+
+Fig. 6 A simple road network of congestion
+
+  A scenario, where, the first car could not cross the Point C. The
+successive vehicles crosses point B and stand in queue behind the first car.
+Times for each are sensed by the sensors as and when they pass the sensors.
+
+  The capacity between B and C is fixed. Therefore, the maximum
+number of vehicles in the queue is the length of distance BC divided by the
+inter-vehicular gap N = S/G, or N = ΔBC/G or N = y/G.
+
+  G is a value fixed being a constant throughout. When that number of
+vehicles is equivalent to the number N, the maximum capacity of all the
+channels of the road, capacity is exhausted. The density of vehicles on the
+road is calculated as K = N/S. Now, using Fundamental Traffic Relation, we
+have Q = K * V.
+
+  Hence, the values of traffic flow of the vehicles are determined. The
+time delay is needed to be considered for average waiting time to conclude
+that whether it is more than the threshold value, (say 30 s or not). If the cars
+show any deviation within 30 s, the waiting time will be calculated using
+the equation w(t) = T1 – t1.
+
+  If w(t) > 30 s, the scenario is declared as Congestion detection
+Algorithm is applied.
+
+Congestion Detection Algorithm
+
+The algorithm takes Road X as its primary parameter, three sensors (Sensor
+A, Sensor B, and Sensor C) as secondary parameters, and three predefined
+values set as constants (distance_of_AB, distance_of_BC, and
+maximum_road_vehicles). This algorithm is run every time a vehicle
+crosses Sensor A.
+
+1. If a vehicle crosses Sensor A, then record its time of crossing (record as
+  t1).
+
+2. If a vehicle crosses Sensor B, then record its time of crossing (record as
+  t2).
+
+3. Calculate vehicle speed by dividing the distance AB by time (calculated
+  by t2 – t1).
+
+4. Estimate the time to reach sensor C based on vehicle speed and length
+  of road BC.
+
+5. Enqueue the estimated time into a linked list (initially declared empty).
+
+6. If the actual time to cross is 30 s greater than the estimated time, AND
+  the road length of the queue (in Step 5) is equal to
+  maximum_road_vehicles, then DO:
+
+  Declare Congestion on the road.
+  Calculate waiting time based on actual time to cross.
+  Set roadweight as the average of actual time to cross.
+  call Optiflow_Algorithm().
+
+7. If a vehicle crosses Sensor C, dequeue the linked list.
+
+  The velocity of an incoming vehicle is calculated based on the time of
+crossing the first two sensors. Later, estimated the time to reach the third
+sensor is calculated.
+
+  If the current time exceeds the waiting time by 30 s, congestion is
+declared, and the current waiting time is set as time of resolution.
+
+  The Optiflow Algorithm comes to the rescue for handling traffic.
+
+3.1.6 Optiflow Algorithm
+
+After detection of congestion on a block of road, first initialise road_weight
+as a double value, which determines the time period for the vehicle to cross
+the road (in seconds).
+
+  This value can be found by the Congestion detection Algorithm; by
+calculating the average time it takes for a vehicle to cross a given block of
+road.
+
+  Optiflow Algorithm uses recursion to compare two or more road
+networks to find the optimal solution around the congested area.
+
+  To achieve its goal, Optiflow Algorithm computes in the following
+steps:
+
+1. Assign original_road_weight as average time taken by a vehicle to
+  traverse the road.
+
+2. Call find_detour() to find the optimal detour around the congested area.
+
+3. If a detour is found, calculate the weight of the detour road; else, END.
+
+4. If there is congestion on detour road, call OptiflowAlgorithm with
+  current detour in place of the original road.
+
+5. If the original road’s travel time is greater than that of detour road,
+  switch roads; else, END.
+
+  In other words, the algorithm calls the function find_detour() to find
+viable alternate routes to the road in question, and then checks them for
+congestions. If there is congestion, then call OptiflowAlgorithm. Then find
+an alternate detour to the detour road. OptiflowAlgorithm efficiently
+determines the optimal detour to a given congested road.
+
+  A flowchart of the proposed system is much more evident in its
+procedures and process. The feasibility of this model has been completed
+using an animation on the result of computation at the end (Fig. 7).
+Fig. 7 Flowchart of optiflow algorithm
+
+3.1.7 Accident Prediction and Avoidance
+
+Accidents occurs in case of rush traffics, as the drivers are not aware of the
+locomotion-related-data of other vehicles. There can a number of reasons
+for a traffic accident to take place, but the proposed system considers
+accident as a collision between two vehicles at the traffic junctions of the
+roads, as the drivers approaching from opposite or adjacent end are not
+aware of each other’s locomotion data, i.e. speed, position and time. The
+proposed system works for its prevention rather than management based on
+a simple application of speed time distance relationship in a state of motion.
+
+  As per the proposed system, the position of the vehicles will be captured
+while they in a state of motion with respective speed along with expected
+time of reaching geo-located traffic junction. If its speed is found to be a
+value greater than threshold, a warning will be displayed on the board near
+the junction which will include the speed and arrival time, acquainting the
+drivers from other end about the risk. The drivers are liable to obey the
+traffic rules and restrict themselves accordingly. Figure 8 depicts two
+vehicles approaching from Road I and Road II respectively.
+Fig. 8 Accident avoidance system: on Road I, at time t1, the blue vehicle crossed sensor A which
+detected and noted its time. The same crossed point B at time t2 and using the speed time relation
+velocity is calculated as
+
+If v > threshold value, it is considered as accident prone and speed
+
+warning is displayed on the traffic display. The display will also contain the
+
+probable time to reach point C for the blue vehicle. Therefore time taken by
+
+the blue vehicle to reach the junction will be  .
+
+  The obtained value of T will again be displayed on the display board
+along with speed.
+
+  The driver of the red vehicle from the other end on Road II, will get
+timely alert about the peril coming from the Road I. The same calculations
+can be applied on Road II and vice-versa. The probable locomotory details
+to the drivers through the display prepares the drivers for accident
+avoidance.
+
+3.1.8 Detour Discovery Algorithm
+
+Optiflow Algorithm calls the function find_detour() to find suitable detours
+around the congestion. The function is a modified version of the A*
+algorithm that finds the shortest route between the vehicle and its
+destination. The algorithm searches for routes around the congestion area
+and evaluates the least time to travel through a detour. The following cases
+can be considered using the algorithm.
+
+Individual Vehicles Versus Roadside Display
+
+For individual vehicles, the algorithm provides optimal path from the
+location of said vehicles and the destination, whereas for roadside display
+units, the algorithm will search for optimal paths around the roads on which
+the congestion has taken place. This will help the individual vehicles to
+move faster resolving congestions.
+
+Road Condition Checker
+
+This is a toggle on the app for finding detour. The find_detour() algorithm
+takes quality of the road into consideration when evaluating the road
+weights.
+
+  Road condition here refers to a coefficient floating point variable
+between 0 and 1 which will be applied to the road weights of every road,
+where 0 refers to the road that cannot be travelled, whereas 1 refers the road
+is in perfect condition. It should also be noted that the road condition
+coefficient can be approaching 0 or 1, but will never be 0. The equation for
+‘actual road weight’ will be the obtained as:
+
+For example, if the apparent road weight is 600 s, and the coefficient is 0.5,
+then the actual road weight will be 1200 s.
+
+  In Fig. 9 there is a car at point A moving to Point B, but there is an
+obstacle on the way. The algorithm find_detour() is called, and two roads
+are revealed, a village road whose weight is 600, and a city road whose
+weight is 900 (in seconds). Ordinarily, the village road is 600 < 900. But
+since the village road has a coefficient of 0.6, divide 600 by 0.6 and get the
+actual weight of the village road to be 1000. And since 1000 > 900, the city
+road chosen.
+Fig. 9 Road quality system
+
+4 Implementation
+
+The dry runs of the two algorithms in isolation and together are considered
+through the Unity Simulation to assess the working of the Congestion
+detection and OptiflowAlgorithm.
+
+4.1 Demonstration of Congestion Detection Algorithm
+
+The following fictitious data been gathered from the first two sensors (Table
+2).
+
+Table 2 Sensor A and Sensor B
+
+Time (s) Event
+
+0  Sensor A pings
+
+1  Sensor A pings
+
+2  Sensor A pings
+
+5  Sensor B pings
+
+6  Sensor B pings
+
+8  Sensor B pings
+
+  Since Sensor A is pinged three times, it is concluded that there are a
+total of 3 vehicles in the roadblock. Given the distance from Sensor A to
+Sensor B is 60 m, the velocities of the three vehicles are calculated.
+
+  Vehicle 1 speed =   =   = 12 m/s.
+
+  Vehicle 2 speed =  =   = 12 m/s.
+
+  Vehicle 3 speed =  =   = 10 m/s.
+
+  Given there is a Sensor C down the road, and the distance from Sensor
+B to Sensor C is 600 m, it is estimated that the time it will take for the three
+vehicles to reach the Sensor C as:
+
+  Estimated time = 
+
+  Therefore, the Estimated Times (ET) are:
+
+  ET of Vehicle 1=   = 50 s.
+
+  ET of Vehicle 2 =   = 51 s.
+  ET of Vehicle 3 =   = 62 s.
+
+  The values 50, 51, and 62 are placed in a queue. For every time that
+Sensor C pings, dequeue the queue, and remove the values. Table 3 is
+compiled at t = 105 s.
+
+Table 3 Sensor C information and congestion detection w.r.t. time
+
+Time (s) Event
+
+48  Sensor C pings
+
+52  Sensor C pings
+
+92  Jam declared
+
+104  Sensor C pings
+
+  At t = 92, since 30 s have passed since the third vehicle entered the zone
+BC, it is declared traffic congestion. The parameter,
+maximum_road_vehiclesis disregarded here to consider waiting time only.
+
+  At t = 92, a traffic congestion is declared as the waiting time is 92 – 62 
+= 30, and thus the road weight = average crossing time + waiting time = 
+54.33 + 30 = 83.33 s. Optiflow Algorithm takes care of the situation and
+dynamically update the road weight as the waiting time keeps growing,
+until at last at t = 104, the congestion is resolved, and the algorithm is
+terminated. But if there were more vehicles in the queue, at t = 104, the
+average waiting time is set as 104 – 62 = 42, and road weight = 54.33 + 42 
+= 95.33, and then again Optiflow Algorithm is applied.
+
+4.2 Demonstration of Optiflow Algorithm
+
+Figure 10 is a simplified road network which will run a number of cases.
+Suppose there is a vehicle at Point A, and it must reach Point B, and it can
+do so by taking Road X, Road Y, or Road Z.
+Fig. 10 A simple road network
+
+  Road X takes 10 min (600 s) to travel when in free flow condition, Road
+Y takes 20 min (1200 s), and Road Z takes 30 min (1800s) to travel when
+there is no congestion. Since vehicle’s top priority is to reach its destination
+as fast as possible, i.e. spend as little time on the road as possible, Road X is
+the choice when there is no congestion.
+
+4.2.1 Condition 1
+
+There is a 5 min (300 s) congestion on Road X.
+  The algorithm at first assigns original road weight as 600 + 300 = 900.
+
+The function find_detour() is called, and Road Y is discovered. Detour road
+weight is assigned 1200. Since detour road has no congestion, Optiflow
+Algorithm is not required. The comparison of the weight of the original
+road (900) and that of the detour road (1200) reveals that 900 > 1200 is
+false, no roads are required to be switched.
+
+4.2.2 Condition 2
+
+There is a 15 min (900 s) jam on Road X.
+  The algorithm at first assigns original road weight as 600 + 900 = 1500.
+
+The function find_detour() is called, and Road Y is discovered. Detour road
+weight is assigned 1200. Since detour road has no congestion,
+OptiflowAlgorithm is not required. The comparison of the weight of the
+original road (1500) and that of the detour road (1200) reveals that 1500 > 
+1200 is true, the roads are required to be switched.
+
+4.2.3 Condition 3
+There is a 15 min (900 s) jam on Road X, and 15 min (900 s) jam on Road
+Y.
+
+  The algorithm at first assigns original road weight as 600 + 900 = 1500.
+The function find_detour() is called, and Road Y is discovered. Detour road
+weight is assigned 1200. Since there is congestion on detour road, Optiflow
+Algorithm is required to be applied.
+
+  The algorithm at first assigns original road weight as 1200 + 900 = 2100.
+The function find_detour() is called, and Road Z is discovered. Detour road
+weight is assigned 1800. Since detour road has no congestion, Optiflow
+Algorithm is not required. The comparison of the weight of the original
+road (2100) and that of the detour road (1800) reveals that 2100 > 1800 is
+true; the roads are required to be switched.
+
+  The comparison of the weight of the original road (1500) and that of the
+detour road (1800) reveals as 1500 > 1800 is false, no roads are required to
+be switched.
+
+4.3 Unity Simulation
+
+To assess the feasibility of the Congestion detection algorithm part of this
+model, a traffic simulation in Unity has been tried.
+
+  In this simulation, simple sprite-based entities to act as vehicles are
+used, all of which will be travelling at a near constant speed with an error
+margin of 5%, which will be enough so that the vehicles travel the road, but
+there are occasional congestions as a vehicle moving at 105% speed gets
+too close to a vehicle moving at 95% speed.
+
+  Furthermore, each vehicle will use raycast pointers to determine their
+distance from other vehicle entities. If the vehicle detects it is too close to
+another vehicle, it will apply brakes and start to slow down, until it comes
+to a full halt. And when it detects the space ahead has been cleared, it will
+again start moving, and slowly increasing its speed until it reaches its
+default speed. However, since the simulation is of limited resources, a
+complex grid of road networks cannot be built, and instead an
+entity_creator and an entity_destroyer are used to mark the starting and
+ending terminals of a single road. When a specific key is pressed on the
+keyboard, the entity_creator will spawn a vehicle entity, which will travel
+down the road at a near-constant speed until it collides with the
+entity_destroyer, at which point the vehicle will be destroyed and removed
+from memory.
+

@@ -1,0 +1,1103 @@
+  THIS PAGE INTENTIONALLY LEFT BLANK.
+
+  --`,```,``,`,`,`,``````,,,,``-`-`,,`,,`,`,,`---
+
+Copyright American Association of State Highway and Transportation Officials
+  © 2018 by the American Association of StLaicteenHseeig=AhrkwanasyasaSntadteTHrigahnwsayp&orTtraantisoponrtaOtiofnfiDceipat/l5s9.88317001, User=Sichmelle
+Provided by IHS Markit under license with AASHTO
+
+No reproduction or networking permitted without license from IHS  All rights reserved. DuplicationNiost aforvRieoslaalet,i1o0n/09o/2f0a18pp09l:i1c7a:1b8lMeDlTaw.
+  li  --`,```,``,`,`,`,``````,,,,``-`-`,,`,,`,`,,`---
+
+  LIST OF TABLES
+
+CHAPTER 2 DESIGN CONTROLS AND CRITERIA
+
+Table 2-1. Corresponding Design Speeds in Metric and U.S. Customary Units. . . . . . . . . . . . . . . . . . 2-25
+Table 2-2. General Definitions of Levels of Service. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2-36
+Table 2-3. Guidelines for Selection of Design Levels of Service. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2-37
+Table 2-4a. Design Vehicle Dimensions (U.S. Customary Units) . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2-56
+Table 2-4b. Design Vehicle Dimensions (Metric Units). . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2-57
+Table 2-5a. Minimum Turning Radii of Design Vehicles (U.S. Customary Units) . . . . . . . . . . . . . . . . . . 2-59
+Table 2-5b. Minimum Turning Radii of Design Vehicles (Metric Units) . . . . . . . . . . . . . . . . . . . . . . . . . 2-60
+
+CHAPTER 3 ELEMENTS OF DESIGN
+
+Table 3-1. Stopping Sight Distance on Level Roadways . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 3-4
+Table 3-2. Stopping Sight Distance on Grades. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 3-6
+Table 3-3. Decision Sight Distance. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 3-8
+Table 3-4. Passing Sight Distance for Design of Two-Lane Highways. . . . . . . . . . . . . . . . . . . . . . . . . . 3-11
+Table 3-5. Minimum Passing Zone Lengths to Be Included in Traffic Operational Analyses . . . . . . . . 3-14
+Table 3-6. Average Running Speeds . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 3-30
+Table 3-7. Minimum Radius Using Limiting Values of e and f. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 3-34
+Table 3-8. Minimum Radii for Design Superelevation Rates, Design Speeds, and emax = 4%. . . . . . . . 3-42
+Table 3-9. Minimum Radii for Design Superelevation Rates, Design Speeds, and emax = 6%. . . . . . . . 3-43
+Table 3-10. Minimum Radii for Design Superelevation Rates, Design Speeds, and emax= 8% . . . . . . . 3-45
+Table 3-11. Minimum Radii for Design Superelevation Rates, Design Speeds, and emax = 10%. . . . . . 3-47
+Table 3-12. Minimum Radii for Design Superelevation Rates, Design Speeds, and emax = 12%. . . . . . 3-49
+Table 3-13. Minimum Radii and Superelevation for Low-Speed Streets in Urban Areas. . . . . . . . . . . . 3-54
+Table 3-14. Lengths of Circular Arcs for Different Compound Curve Radii. . . . . . . . . . . . . . . . . . . . . . 3-61
+Table 3-15. Adjustment Factor for Number of Lanes Rotated . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 3-64
+Table 3-16a. Superelevation Runoff Lr (ft) for Horizontal Curves. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . -66
+Table 3-16b. Superelevation Runoff Lr (m) for Horizontal Curves. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 3-68
+Table 3-17. Limiting Superelevation Rates. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 3-73
+Table 3-18. Maximum Radius for Use of a Spiral Curve Transition. . . . . . . . . . . . . . . . . . . . . . . . . . . . . 3-75
+Table 3-19. Desirable Length of Spiral Curve Transition . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 3-78
+Table 3-20. Superelevation Rates Associated with Large Relative Gradients. . . . . . . . . . . . . . . . . . . . 3-79
+
+Copyright American Association of State Highway and Transportation Officials
+  © 2018 by the American Association of StLaicteenHseeig=AhrkwanasyasaSntadteTHrigahnwsayp&orTtraantisoponrtaOtiofnfiDceipat/l5s9.88317001, User=Sichmelle
+Provided by IHS Markit under license with AASHTO
+
+No reproduction or networking permitted without license from IHS  All rights reserved. DuplicationNiost aforvRieoslaalet,i1o0n/09o/2f0a18pp09l:i1c7a:1b8lMeDlTaw.
+--`,```,``,`,`,`,``````,,,,``-`-`,,`,,`,`,,`---lii
+
+  Table 3-21. Tangent Runout Length for Spiral Curve Transition Design. . . . . . . . . . . . . . . . . . . . . . . . 3-80
+  Table 3-22. Minimum Lengths of Spiral for Intersection Curves. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 3-89
+  Table 3-23. Length of Circular Arc for a Compound Intersection Curve When Followed by a Curve of
+  One-Half Radius or Preceded by a Curve of Double Radius. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 3-91
+  Table 3-24a. Calculated and Design Values For Traveled Way Widening on Open Highway Curves
+  (Two-Lane Highways, One-Way Or Two-Way) (U.S. Customary) . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 3-99
+  Table 3-24b. Calculated and Design Values for Traveled Way Widening on Open Highway Curves
+  (Two-Lane Highways, One-Way or Two-Way) (Metric) . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 3-100
+  Table 3-25. Adjustments for Traveled Way Widening Values on Open Highway Curves (Two-Lane
+  Highways, One-Way or Two-Way). . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 3-102
+  Table 3-26a. Derived Pavement Widths for Turning Roadways for Different Design Vehicles
+  (U.S. Customary) . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 3-106
+  Table 3-26b. Derived Pavement Widths for Turning Roadways for Different Design Vehicles
+  (Metric) . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 3-107
+  Table 3-27. Design Widths of Pavements for Turning Roadways. . . . . . . . . . . . . . . . . . . . . . . . . . . . . 3-109
+  Table 3-28. Design Width Modifications for Edge Conditions of the Traveled Way
+  for Turning Roadways. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 3-110
+  Table 3-29. Cases and Traffic Conditions by Design. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  3-111
+  Table 3-30. Cases and Traffic Conditions for Larger Vehicles. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  3-111
+  Table 3-31. Range of Usable Shoulder Widths or Equivalent Lateral Clearances outside of Turning
+  Roadways, Not on Structure. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 3-113
+  Table 3-32. Optimal Passing Lane Lengths for Traffic Operational Efficiency (30, 31). . . . . . . . . . . . 3-149
+  Table 3-33. Recommended Lengths of Turnouts Including Taper. . . . . . . . . . . . . . . . . . . . . . . . . . . . 3-153
+  Table 3-34. Rolling Resistance of Roadway Surfacing Materials. . . . . . . . . . . . . . . . . . . . . . . . . . . . . 3-156
+  Table 3-35. Design Controls for Crest Vertical Curves Based on Stopping Sight Distance. . . . . . . . 3-170
+  Table 3-36. Design Controls for Crest Vertical Curves Based on Passing Sight Distance . . . . . . . . . 3-172
+  Table 3-37. Design Controls for Sag Vertical Curves. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 3-176
+
+  CHAPTER 4 CROSS-SECTION ELEMENTS
+
+  Table 4-1. Normal Traveled-Way Cross Slope . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 4-7
+  Table 4-2. Design Guidelines and Countermeasures to Reduce Median-Related Crashes on High-
+  Speed Roadways (36). . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 4-42
+  Table 4-3. Noise-Abatement Criteria for Various Land Uses (27) . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 4-48
+  Table 4-4. Driveway Width Guidelines (31) . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 4-54
+
+Copyright American Association of State Highway and Transportation Officials
+  © 2018 by the American Association of StLaicteenHseeig=AhrkwanasyasaSntadteTHrigahnwsayp&orTtraantisoponrtaOtiofnfiDceipat/l5s9.88317001, User=Sichmelle
+Provided by IHS Markit under license with AASHTO
+
+No reproduction or networking permitted without license from IHS  All rights reserved. DuplicationNiost aforvRieoslaalet,i1o0n/09o/2f0a18pp09l:i1c7a:1b8lMeDlTaw.
+  liii  --`,```,``,`,`,`,``````,,,,``-`-`,,`,,`,`,,`---
+
+CHAPTER 5 LOCAL ROADS AND STREETS
+
+Table 5-1. Minimum Design Speeds for Local Roads in Rural Areas. . . . . . . . . . . . . . . . . . . . . . . . . . . . 5-3
+Table 5-2. Maximum Grades for Local Roads in Rural Areas. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 5-4
+Table 5-3. Design Controls for Stopping Sight Distance and for Crest and Sag Vertical Curves. . . . . . 5-5
+Table 5-4. Design Controls for Crest Vertical Curves Based on Passing Sight Distance . . . . . . . . . . . . 5-5
+Table 5-5. Minimum Width of Traveled Way and Shoulders for Two-Lane Local Roads
+in Rural Areas . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 5-7
+Table 5-6. Minimum Clear Roadway Widths and Design Loadings for New and Reconstructed
+Bridges . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 5-9
+Table 5-7. Maximum Grades for Recreational Roads. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 5-30
+Table 5-8. Design Controls for Stopping Sight Distance and for Crest and Sag Vertical Curves—
+Recreational Roads. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 5-31
+Table 5-9. Guidelines for Minimum Radius of Curvature for New Construction of Unpaved Surfaces with
+No Superelevation [adapted from (20)] . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 5-32
+Table 5-10. Design Controls for Passing Sight Distance for Crest Vertical Curves—Recreational
+Roads. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 5-33
+Table 5-11. Widths of Traveled Way and Shoulders—Recreational Roads . . . . . . . . . . . . . . . . . . . . . . 5-34
+Table 5-12. Design Speeds for Resource Recovery and Local Service Roads. . . . . . . . . . . . . . . . . . . . 5-38
+
+CHAPTER 6 COLLECTOR ROADS AND STREETS
+
+Table 6-1. Minimum Design Speeds for Collectors in the Rural Context . . . . . . . . . . . . . . . . . . . . . . . . 6-3
+Table 6-2. Maximum Grades for Collectors in Rural Areas . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 6-4
+Table 6-3. Design Controls for Stopping Sight Distance and for Crest and Sag Vertical Curves. . . . . . 6-5
+Table 6-4. Design Controls for Crest Vertical Curves Based on Passing Sight Distance . . . . . . . . . . . . 6-5
+Table 6-5. Minimum Width of Traveled Way and Shoulders. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 6-6
+Table 6-6. Minimum Roadway Widths and Design Loadings for New and Reconstructed Bridges. . . . 6-8
+Table 6-7. Maximum Grades for Collectors in the Urban and Urban Core Contexts . . . . . . . . . . . . . . 6-15
+
+CHAPTER 7 RURAL AND URBAN ARTERIALS
+
+Table 7-1. Minimum Sight Distances for Arterials in Rural Areas. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 7-5
+Table 7-2. Maximum Grades for Arterials in Rural Areas. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 7-6
+Table 7-3. Minimum Width of Traveled Way and Usable Shoulder for Arterials in Rural Areas . . . . . . . 7-7
+Table 7-4a. Maximum Grades for Urban Arterials, U.S. Customary . . . . . . . . . . . . . . . . . . . . . . . . . . . 7-38
+Table 7-4b. Maximum Grades for Urban Arterials, Metric. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 7-38
+
+Copyright American Association of State Highway and Transportation Officials
+  © 2018 by the American Association of StLaicteenHseeig=AhrkwanasyasaSntadteTHrigahnwsayp&orTtraantisoponrtaOtiofnfiDceipat/l5s9.88317001, User=Sichmelle
+Provided by IHS Markit under license with AASHTO
+
+No reproduction or networking permitted without license from IHS  All rights reserved. DuplicationNiost aforvRieoslaalet,i1o0n/09o/2f0a18pp09l:i1c7a:1b8lMeDlTaw.
+liv  --`,```,``,`,`,`,``````,,,,``-`-`,,`,,`,`,,`---
+
+  CHAPTER 8 FREEWAYS
+
+  Table 8-1. Maximum Grades for Freeways in Rural and Urban Areas . . . . . . . . . . . . . . . . . . . . . . . . . . . 8-5
+
+  CHAPTER 9 INTERSECTIONS
+
+  Table 9-1. Key Dimensions of Specific Types of Nonmotorized Users. . . . . . . . . . . . . . . . . . . . . . . . . . . 9-8
+  Table 9-2. Motor Vehicle Level of Service Definitions for Signalized Intersections (49) . . . . . . . . . . . . 9-10
+  Table 9-3. Comparison of Roundabout Types (41). . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 9-28
+  Table 9-4. Length of Sight Triangle Leg—Case A, No Traffic Control . . . . . . . . . . . . . . . . . . . . . . . . . 9-41
+  Table 9-5. Adjustment Factors for Intersection Sight Distance Based on Approach Grade . . . . . . . . 9-42
+  Table 9-6. Time Gap for Case B1, Left Turn from Stop . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 9-44
+  Table 9-7. Design Intersection Sight Distance—Case B1, Left Turn from Stop . . . . . . . . . . . . . . . . . . 9-46
+  Table 9-8. Time Gap for Case B2—Right Turn from Stop . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 9-47
+  Table 9-9. Design Intersection Sight Distance—Case B2, Right Turn from Stop . . . . . . . . . . . . . . . . . 9-48
+  Table 9-10. Time Gap for Case B3, Crossing Maneuver from the Minor Road . . . . . . . . . . . . . . . . . . . 9-49
+  Table 9-11. Design Intersection Sight Distance—Case B3, Crossing Maneuver . . . . . . . . . . . . . . . . . 9-50
+  Table 9-12. Case C1—Crossing Maneuvers from Yield-Controlled Approaches, Length of Minor Road
+  Leg and Travel Times . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 9-52
+  Table 9-13. Length of Sight Triangle Leg along Major Road—Case C1, Crossing Maneuver at Yield-
+  Controlled Intersections . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 9-54
+  Table 9-14. Time Gap for Case C2, Left or Right Turn at Yield-Controlled Intersections . . . . . . . . . . 9-55
+  Table 9-15. Design Intersection Sight Distance—Case C2, Left or Right Turn at Yield-55
+  Controlled Intersections . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 9-55
+  Table 9-16. Time Gap for Case F, Left Turns from the Major Road . . . . . . . . . . . . . . . . . . . . . . . . . . . . 9-57
+  Table 9-17. Intersection Sight Distance—Case F, Left Turn from the Major Road . . . . . . . . . . . . . . . . 9-57
+  Table 9-18. Maximum Algebraic Difference in Cross Slope at Turning Roadway Terminals . . . . . . . . 9-89
+  Table 9-19. Stopping Sight Distance for Turning Roadways . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 9-91
+  Table 9-20. Desirable Lane Change and Deceleration Distances . . . . . . . . . . . . . . . . . . . . . . . . . . . . 9-96
+  Table 9-21. Calculated Storage Lengths to Accommodate the 50th Percentile Critical Gap (16). . . . . 9-98
+  Table 9-22. Calculated Storage Lengths to Accommodate the 85th Percentile Critical Gap (16). . . . . 9-99
+  Table 9-23. Queue Storage Length Adjustments for Trucks (48). . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 9-99
+  Table 9-24. Suggested Left-Turn Lane Guidelines Based on Results from Benefit–Cost Evaluations for
+  Unsignalized Intersections on Arterials in Urban Areas (16). . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 9-106
+  Table 9-25. Suggested Left-Turn Treatment Guidelines Based on Results from Benefit–Cost Evaluations
+  for Intersections on Two-Lane Highways in Rural Areas (16). . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 9-107
+
+Copyright American Association of State Highway and Transportation Officials
+  © 2018 by the American Association of StLaicteenHseeig=AhrkwanasyasaSntadteTHrigahnwsayp&orTtraantisoponrtaOtiofnfiDceipat/l5s9.88317001, User=Sichmelle
+Provided by IHS Markit under license with AASHTO
+
+No reproduction or networking permitted without license from IHS  All rights reserved. DuplicationNiost aforvRieoslaalet,i1o0n/09o/2f0a18pp09l:i1c7a:1b8lMeDlTaw.
+  lv  --`,```,``,`,`,`,``````,,,,``-`-`,,`,,`,`,,`---
+
+Table 9-26. Suggested Left-Turn Lane Guidelines Based on Results from Benefit–Cost Evaluations for
+Unsignalized Intersections on Four-Lane Highways in Rural Areas (16). . . . . . . . . . . . . . . . . . . . . . . . 9-108
+Table 9-27. Swept Path Widths for 90-Degree Left Turns (23). . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  9-117
+Table 9-28. Minimum Designs for U-Turns . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 9-140
+Table 9-29. Design Sight Distance for Combination of Motor Vehicle and Train Speeds; 73.5-ft [22.4-m]
+Truck Crossing a Single Set of Tracks at 90 Degrees. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 9-167
+
+CHAPTER 10 GRADE SEPARATIONS AND INTERCHANGES
+
+Table 10-1. Guide Values for Ramp Design Speed as Related to Highway Design Speed. . . . . . . . 10-105
+Table 10-2. Guidelines for Maximum Ramp Grade . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 10-110
+Table 10-3. Minimum Length of Taper beyond an Offset Nose . . . . . . . . . . . . . . . . . . . . . . . . . . . . 10-118
+Table 10-4. Minimum Acceleration Lane Lengths for Entrance Terminals with Flat Grades of Less
+Than 3 Percent . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 10-132
+Table 10-5. Speed Change Lane Adjustment Factors as a Function of Grade. . . . . . . . . . . . . . . . . 10-133
+Table 10-6. Minimum Deceleration Lane Lengths for Exit Terminals with Flat Grades of Less
+Than 3 Percent . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 10-138
+
+Copyright American Association of State Highway and Transportation Officials
+  © 2018 by the American Association of StLaicteenHseeig=AhrkwanasyasaSntadteTHrigahnwsayp&orTtraantisoponrtaOtiofnfiDceipat/l5s9.88317001, User=Sichmelle
+Provided by IHS Markit under license with AASHTO
+
+No reproduction or networking permitted without license from IHS  All rights reserved. DuplicationNiost aforvRieoslaalet,i1o0n/09o/2f0a18pp09l:i1c7a:1b8lMeDlTaw.
+lvi  --`,```,``,`,`,`,``````,,,,``-`-`,,`,,`,`,,`---
+
+  PREFACE
+
+  Public works projects of all scales are more sensitive to funding than ever before. In many cases,
+  cost magnitude and cost effectiveness play increasingly large roles in scoping projects. Often,
+  reconstruction projects are limited in scope or available funding, or may be affected by physical
+  constraints or social or environmental considerations. In some locations, especially constrained
+  locations, designing to the criteria recommended herein simply is not feasible. Adaptive, flexi-
+  ble, and cost-effective designs customized to each project context are encouraged. Flexibility in
+  the application of design criteria herein is recommended to encourage a sustainable approach to
+  highway design decision making by weighing and balancing choices among the environmental,
+  economic, and social aspects while meeting the project’s performance objectives.
+
+  Designers should recognize the joint use of transportation corridors by motorists, pedestrians,
+  bicyclists, public transit, and freight vehicles. Designers are encouraged to consider not only
+  vehicular movement, but also movement of people, distribution of goods, and provision of es-
+  sential services. A more comprehensive transportation program is thereby emphasized.
+
+  A Policy on Geometric Design of Highways and Streets provides geometric design guidance based
+  on established practices that are supplemented by recent research. This document is intended as
+  a comprehensive reference manual to assist in administrative, planning, and educational efforts
+  pertaining to design formulation. This policy is not intended to be a prescriptive design manual
+  that supersedes engineering judgment by the knowledgeable design professional.
+
+  The design concepts and criteria in this policy are intended for use when designing new con-
+  struction projects on new location or designing reconstruction projects on an existing location.
+  Projects on existing roads particularly call for a flexible, performance-based approach to design.
+  The policy also encourages flexible design, which emphasizes the role of the planner and design-
+  er in determining appropriate design dimensions based on project-specific conditions and ex-
+  isting and future roadway performance more than on meeting specific nominal design criteria.
+  This publication is not intended as a policy for resurfacing, restoration, or rehabilitation (3R);
+  traffic engineering; safety; and preventive maintenance-type projects that include very minor or
+  no roadway work. When designing 3R projects, the designer should refer to the design guide-
+  lines presented in NCHRP Report 876, Guidelines for Integrating Safety and Cost-Effectiveness into
+  Resurfacing, Restoration, and Rehabilitation (3R) Projects, for more information. NCHRP Report
+  876 was developed as a replacement for TRB Special Report 214, Designing Safer Roads: Practices
+  for Resurfacing, Restoration, and Rehabilitation.
+
+  The fact that new design values and concepts are presented herein does not imply that existing
+  streets and highways are unsafe, nor does it mandate the initiation of improvement projects. The
+  highway, vehicle, and individual users are all integral parts of transportation safety and efficien-
+  cy. While this document primarily addresses geometric design issues, a properly equipped and
+  maintained vehicle and reasonable and prudent performance by the user are also needed for safe
+  and efficient operation of the transportation facility.
+
+Copyright American Association of State Highway and Transportation Officials
+  © 2018 by the American Association of StLaicteenHseeig=AhrkwanasyasaSntadteTHrigahnwsayp&orTtraantisoponrtaOtiofnfiDceipat/l5s9.88317001, User=Sichmelle
+Provided by IHS Markit under license with AASHTO
+
+No reproduction or networking permitted without license from IHS  All rights reserved. DuplicationNiost aforvRieoslaalet,i1o0n/09o/2f0a18pp09l:i1c7a:1b8lMeDlTaw.
+--`,```,``,`,`,`,``````,,,,``-`-`,,`,,`,`,,`---  lvii
+
+  Chapter 1 of this edition has been rewritten entirely and provides a new framework for geo-
+  metric design. It expands the land use contexts from two (urban or rural) to five (rural, rural
+  town, suburban, urban, or urban core). It emphasizes design flexibility provided in this policy
+  and encourages designers to take advantage of that flexibility. Chapter 1 also introduces a per-
+  formance-based approach to geometric design which, when used, will allow practitioners to
+  quantify and convey design tradeoffs in meaningful terms to a broad audience and, ultimately,
+  for consideration by decision makers.
+
+  Design values are presented in this document in both U.S. customary and metric units and were
+  developed independently within each system. The relationship between the U.S. customary and
+  metric values is neither an exact (soft) conversion nor a completely rationalized (hard) conver-
+  sion; and the use of brackets around metric values does not indicate as in some AASHTO pub-
+  lications that these are soft conversions. The U.S. customary values are those that would have
+  been used if the policy had been presented exclusively in U.S. customary units; the metric values
+  are those that would have been used had the policy been presented exclusively in metric units.
+  Therefore, the user is advised to work entirely in one system and not attempt to convert directly
+  between the two.
+
+  This publication supersedes the 2011 AASHTO publication of the same name. Because the
+  concepts presented cannot be completely covered in this one document, references to additional
+  literature are given at the end of each chapter. These references include works that were cited
+  or consulted in the development of the chapter or are of interest to the discussion of the subject
+  matter therein. Of these documents, only those balloted and published by AASHTO represent
+  AASHTO policy.
+
+  The Committee on Design and the Technical Committee on Geometric Design would like to
+  extend a special thank you to Doug Harwood of MRI Global for his technical editing expertise
+  during the development of the seventh edition.
+
+Copyright American Association of State Highway and Transportation Officials
+  © 2018 by the American Association of StLaicteenHseeig=AhrkwanasyasaSntadteTHrigahnwsayp&orTtraantisoponrtaOtiofnfiDceipat/l5s9.88317001, User=Sichmelle
+Provided by IHS Markit under license with AASHTO
+
+No reproduction or networking permitted without license from IHS  All rights reserved. DuplicationNiost aforvRieoslaalet,i1o0n/09o/2f0a18pp09l:i1c7a:1b8lMeDlTaw.
+  1-1
+
+1 New Framework for Geometric Design
+
+  1.1 INTRODUCTION
+
+  This seventh edition of the A Policy on Geometric Design of Highways and Streets incor-
+  porates recent research that provides insight into the effect of specific geometric design
+  elements of roads and streets for all transportation modes. This edition of the policy
+  also introduces the consideration of five specific context classifications as an element of
+  the geometric design process and emphasizes the consideration of multimodal needs in
+  design. Together, context classification and functional classification constitute a new
+  framework for geometric design. The policy also encourages flexible design, which
+  emphasizes the role of the planner and designer in determining appropriate design
+  dimensions based on project-specific conditions and existing and future roadway per-
+  formance more than on meeting specific nominal design criteria. In the past, design-
+  ers sought to assure good traffic operational and safety performance for the design of
+  specific projects primarily by meeting the dimensional design criteria in this policy.
+  This approach was appropriate in the past because the relationship between design
+  dimensions and future performance was poorly understood. Traditional applications of
+  this policy took the approach that, if the geometric design of a project met or exceeded
+  specific dimensional design criteria, it would be likely to perform well. In some cases,
+  this may have led to overdesign, constructing projects that were more costly than they
+  needed to be or were inappropriate for the roadway context.
+
+  Recent research has improved our knowledge of the relationship between geometric
+  design features and traffic operations for all modes of transportation and has developed
+  new knowledge about the relationship of geometric design features to crash frequency
+  and severity. Much of the recently developed information about assessing traffic oper-
+  ations for all transportation modes is presented in the TRB Highway Capacity Manual
+  (25), while the recently developed information about estimating future crash frequen-
+  cies and severities is presented in the AASHTO Highway Safety Manual (4, 7).
+
+  This edition of the policy introduces new definitions of project types—new construc-
+  tion, reconstruction, and projects on existing roads—and explains how design flexibil-
+  ity is provided for each project type as part of the project development process.
+
+  --`,```,``,`,`,`,``````,,,,``-`-`,,`,,`,`,,`---
+
+Copyright American Association of State Highway and Transportation Officials
+  © 2018 by the American Association of StLaicteenHseeig=AhrkwanasyasaSntadteTHrigahnwsayp&orTtraantisoponrtaOtiofnfiDceipat/l5s9.88317001, User=Sichmelle
+Provided by IHS Markit under license with AASHTO
+
+No reproduction or networking permitted without license from IHS  All rights reserved. DuplicationNiost aforvRieoslaalet,i1o0n/09o/2f0a18pp09l:i1c7a:1b8lMeDlTaw.
+--`,```,``,`,`,`,``````,,,,``-`-`,,`,,`,`,,`---1-2 A Policy on Geometric Design of Highways and Streets
+
+  Project development is broader than just geometric design and should consider many factors for
+  all transportation modes, including:
+  yy Project purpose and need
+  yy Existing and expected future traffic operational efficiency
+  yy Existing and expected future crash frequency and severity
+  yy Construction cost
+  yy Future maintenance cost
+  yy Context classification
+  yy Service and ease of use for each transportation mode:
+
+  –– automobile
+  –– bicycle
+  –– pedestrian
+  –– transit
+  –– truck
+  yy Accessibility for persons with disabilities
+  yy Available right-of-way
+  yy Existing and potential future development
+  yy Operational flexibility during future incidents and maintenance activities
+  yy Stakeholder input
+  yy Community goals and plans and potential community impacts
+  yy Historical structures
+  yy Impacts on the natural environment:
+  –– air quality
+  –– noise
+  –– wetlands preservation
+  –– wildlife and endangered species
+  yy Preservation of archeological artifacts
+
+  These factors are not necessarily presented in priority order and, indeed, the priorities placed on
+  them vary from project to project. None of these factors is uniquely important and geometric
+  design should complement other aspects of project development in seeking the appropriate bal-
+  ance among their potential effects.
+
+Copyright American Association of State Highway and Transportation Officials
+  © 2018 by the American Association of StLaicteenHseeig=AhrkwanasyasaSntadteTHrigahnwsayp&orTtraantisoponrtaOtiofnfiDceipat/l5s9.88317001, User=Sichmelle
+Provided by IHS Markit under license with AASHTO
+
+No reproduction or networking permitted without license from IHS  All rights reserved. DuplicationNiost aforvRieoslaalet,i1o0n/09o/2f0a18pp09l:i1c7a:1b8lMeDlTaw.
+  New Framework for Geometric Design 1-3  --`,```,``,`,`,`,``````,,,,``-`-`,,`,,`,`,,`---
+
+A 2016 resolution of the AASHTO Standing Committee on Highways (8) has directed that
+geometric design policy and practice should become more flexible and performance-based to
+more fully address the needs of all transportation modes and the challenges to transportation
+agencies created by funding and right-of-way constraints. This AASHTO resolution is consis-
+tent with the direction set by Federal legislation in the Fixing America’s Surface Transportation
+(FAST) Act (14). This seventh edition of the policy takes a first step toward implementing a new
+framework for geometric design to accomplish this goal. There was already substantial flexibility
+in the geometric design guidance presented in previous editions of this policy, and this seventh
+edition expands that flexibility. This chapter explains how the flexible, performance-based ap-
+proach should be applied and describes how Chapters 2 through 10, together with other avail-
+able resources, can be used in implementing the new framework and the performance-based
+approach for all transportation modes. The next edition of this policy will more fully incor-
+porate this approach, with full implementation of the new framework and the flexible, perfor-
+mance-based approach in each chapter.
+
+1.2  PROJECT PURPOSE AND NEED
+
+The design of every road or street improvement project should begin with an explicit statement
+developed by the roadway agency that indicates why the project is being undertaken and what
+the project is intended to accomplish. This statement may be in the form of the purpose and need
+statement used in National Environmental Policy Act (NEPA) analyses, a formal statement of
+objectives for the project, or a combination of the two approaches. Either separately or collec-
+tively, these statements set out the purpose and need for the project and the objectives that the
+project should satisfy in fulfilling that purpose and need. In the remainder of this discussion,
+these two types of documents collectively will be referred to as the purpose and need statement.
+
+The purpose and need statement informs priorities on what will, and what will not, be undertak-
+en in the project. The designer should refer to this purpose and need statement in determining
+the scope of geometric design changes to include in the project and assessing whether any geo-
+metric design changes suggested by others are germane to the project purpose and need.
+
+The purpose and need statement for a project should be built around an assessment of past
+performance for all transportation modes of the roads and streets within the project limits and
+a forecast of future performance if no project is undertaken. The purpose and need statement
+should address the project context and how each transportation mode should be accommodated.
+The purpose and need statement should also indicate what aspects of performance should be im-
+proved and, in some cases, may also set targets for how much performance should be improved.
+Thus, improvement needs should be based on specific performance issues that are identified
+by the agency as in need of improvement. Performance, in this context, is broader than traffic
+operational or safety performance and potentially addresses any of the performance issues listed
+in Section 1.1. Both quantitative and qualitative performance measures may be used in defining
+
+Copyright American Association of State Highway and Transportation Officials
+  © 2018 by the American Association of StLaicteenHseeig=AhrkwanasyasaSntadteTHrigahnwsayp&orTtraantisoponrtaOtiofnfiDceipat/l5s9.88317001, User=Sichmelle
+Provided by IHS Markit under license with AASHTO
+
+No reproduction or networking permitted without license from IHS  All rights reserved. DuplicationNiost aforvRieoslaalet,i1o0n/09o/2f0a18pp09l:i1c7a:1b8lMeDlTaw.
+1-4 A Policy on Geometric Design of Highways and Streets  --`,```,``,`,`,`,``````,,,,``-`-`,,`,,`,`,,`---
+
+  the purpose and need for projects. The roadway agency should involve other stakeholders in
+  establishing the project purpose and need.
+
+  The performance-based approach to establishing the purpose and need for and the objectives
+  of the project enables the designer to focus on addressing the needs of a project without need-
+  lessly exceeding them. By limiting a project’s scope to focus only on documented performance
+  improvement needs, more resources are available to be spent on other needs throughout the road
+  and street system.
+
+  The scope of projects, based on their purpose and need, may range from simple projects on ex-
+  isting roads (addressing a single issue) to new construction projects that create a new road and
+  complex reconstruction projects that may change the character of an existing road. Construction
+  of roads on new alignment and reconstruction projects that change the basic roadway type (see
+  Section 1.7.2) should utilize the design criteria in Chapters 2 through 10, to the extent practical,
+  while seeking the appropriate balance among transportation modes and among the many factors
+  that affect project development. Less complex projects on existing roads that do not change the
+  basic roadway type are typically undertaken primarily to address specific identified performance
+  issues, such as poor infrastructure condition, current or anticipated traffic congestion, or current
+  or anticipated crash patterns. Such projects should focus on addressing the performance issues
+  that prompted the project, as well as any other known performance issues within the project
+  limits that are identified in the purpose and need statement.
+
+  Performance issues identified by the purpose and need statement may address any of the many
+  factors listed in Section 1.1, but need not include them all. In fact, when one aspect of perfor-
+  mance needs improvement and other aspects do not, good project management should focus on
+  the performance issues that need improvement. The purpose and need statement serves as a tool
+  for agency management to focus the scope of projects to improvements that are expected to have
+  a specific, anticipated effect on project performance. Performance issues also include assessment
+  of the service provided to each transportation mode.
+
+  Performance issues are often identified from existing agency databases or field data, but may
+  also be documented with models such as traffic simulation models, crash prediction or systemic
+  safety models, and air quality or noise models. These same models can be used to quantify the
+  effectiveness of candidate design alternatives in improving performance.
+
+  It is important to understand that noncompliance with geometric design criteria is not, by itself,
+  a performance issue for a project on an existing road. Noncompliance with geometric design
+  criteria is not sufficient to be identified as an issue in a project purpose and need statement;
+  such noncompliance with geometric design criteria only becomes an issue to be addressed in the
+  project purpose and need if that noncompliance has resulted in (or is forecast to result in) poor
+  performance that is correctable by a geometric design improvement and that the agency choos-
+  es to address. If some aspects of the geometric design for a road or street do not fully comply
+
+Copyright American Association of State Highway and Transportation Officials
+  © 2018 by the American Association of StLaicteenHseeig=AhrkwanasyasaSntadteTHrigahnwsayp&orTtraantisoponrtaOtiofnfiDceipat/l5s9.88317001, User=Sichmelle
+Provided by IHS Markit under license with AASHTO
+
+No reproduction or networking permitted without license from IHS  All rights reserved. DuplicationNiost aforvRieoslaalet,i1o0n/09o/2f0a18pp09l:i1c7a:1b8lMeDlTaw.
+--`,```,``,`,`,`,``````,,,,``-`-`,,`,,`,`,,`---  New Framework for Geometric Design 1-5
+
+  with the geometric design criteria presented in Chapters 2 through 10, but the road or street
+  is performing satisfactorily, there is no need to change those aspects of the existing geometric
+  design for projects in which the basis roadway type will remain the same. Thus, noncompliance
+  with geometric design criteria should be addressed in projects on existing roads only where it is
+  established that the current design is performing poorly or that a geometric design improvement
+  would be cost-effective. This approach is intended to avoid expenditures that have no impact on
+  performance. Some exceptions, where quantitative performance measures are not available, are
+  addressed below.
+
+  It is important to understand that, while great progress has been made in developing perfor-
+  mance assessment tools, not every aspect of past and anticipated future performance can be
+  quantified for projects on existing roads. Some issues may need to be assessed qualitatively. For
+  example, there are no performance measures for the effect of pavement cross slope in normal
+  crown sections on safety. Surrogates, such as noting the ponding of water during rainstorms,
+  may need to be applied in the absence of quantitative performance measures; simply apply-
+  ing the applicable design criteria may be the most applicable approach. Similarly, there are no
+  quantitative performance measures for vertical clearance; vertical clearance should generally be
+  addressed by reference to applicable design criteria.
+
+  Two types of data may be available for use in establishing the project purpose and need and
+  guiding the design process:
+  yy past performance data
+  yy forecasts of future performance
+
+  For new construction projects, there are no past performance data, so forecasts of future per-
+  formance are most relevant to design decisions. For projects on existing roads, past (or present)
+  performance data are available and forecasts of future performance may be developed.
+
+  Projects need not address every aspect of poor performance. Designation of the performance
+  issues to be addressed in any given project is an agency management decision, with due consid-
+  eration of funding availability and the effect that improvements in some aspects of performance
+  may have on other aspects of performance. The purpose and need statement should make clear
+  any limitations on the scope of the project.
+
+  1.3  OVERVIEW OF THE NEW FRAMEWORK FOR GEOMETRIC DESIGN
+
+  This policy incorporates a framework for geometric design based primarily upon:
+  yy a functional classification system that characterizes roadways by their position in the trans-
+
+  portation network and the type of service they provide to motor vehicles
+
+Copyright American Association of State Highway and Transportation Officials
+  © 2018 by the American Association of StLaicteenHseeig=AhrkwanasyasaSntadteTHrigahnwsayp&orTtraantisoponrtaOtiofnfiDceipat/l5s9.88317001, User=Sichmelle
+Provided by IHS Markit under license with AASHTO
+
+No reproduction or networking permitted without license from IHS  All rights reserved. DuplicationNiost aforvRieoslaalet,i1o0n/09o/2f0a18pp09l:i1c7a:1b8lMeDlTaw.
+1-6 A Policy on Geometric Design of Highways and Streets
+
+yy a context classification system that characterizes roadways by their surrounding environment
+  and how the roadway fits into the community
+
+The functional classification system considers four general functional classes: freeways, arterials,
+collectors, and local roads and streets. These functional classes are defined in Section 1.4. The
+context classification system considers five context classes: rural, rural town, suburban, urban,
+and urban core. These context classes are defined in Section 1.5.
+
+The first steps in the design process are to prepare a purpose and need and/or objectives state-
+ment for the project (see Section 1.2) and to determine where the project falls in the design
+framework shown in Figure 1-1. The design framework consists of twenty specific combinations
+of the four functional classes and the five context classes for roadways. Each of the combinations
+includes roadways that serve a distinct set of user needs. Nineteen of these twenty roadway types
+(all but freeways in the rural town context) are commonly found on the road and street network;
+the exception, representing a freeway in a rural town context, is unlikely to occur often.
+
+  Functional  Rural  Context Class  Urban  Urban Core
+  Class  Rural Town Suburban
+
+Local Road
+or Street
+
+Collector Road
+or Street
+
+Arterial Road
+or Street
+
+Freeway
+
+Note: This framework together with an assessment of multimodal needs and performance measures should guide  --`,```,``,`,`,`,``````,,,,``-`-`,,`,,`,`,,`---
+the flexible approach to the design of projects. The shaded cell, representing a freeway in a rural town context, is
+unlikely to occur often.
+
+Figure 1-1. Framework for Roadway Design Based on Functional Classification and Roadway
+Context
+
+While the functional and context classes provide general information for the designer about the
+character of the roadway at any given location, roadway conditions may vary widely within these
+classes. Thus, merely identifying the functional and context classification for the roadway is not
+a sufficient basis for design. More specific guidance on the design of individual roadways within
+given functional and context classes is provided by:
+
+yy a modal classification system so that the needs of all transportation modes are considered in
+  the design of each roadway or project (see Section 1.6)
+
+Copyright American Association of State Highway and Transportation Officials
+  © 2018 by the American Association of StLaicteenHseeig=AhrkwanasyasaSntadteTHrigahnwsayp&orTtraantisoponrtaOtiofnfiDceipat/l5s9.88317001, User=Sichmelle
+Provided by IHS Markit under license with AASHTO
+
+No reproduction or networking permitted without license from IHS  All rights reserved. DuplicationNiost aforvRieoslaalet,i1o0n/09o/2f0a18pp09l:i1c7a:1b8lMeDlTaw.
+  New Framework for Geometric Design 1-7  --`,```,``,`,`,`,``````,,,,``-`-`,,`,,`,`,,`---
+
+yy a design process incorporating a project type classification system used to choose the appro-
+  priate design approach for each project (see Section 1.7)
+
+yy a flexible design approach to finding the appropriate balance for each project to meeting the
+  needs of all users and transportation modes (see Section 1.8)
+
+yy a performance-based approach for considering the effects of geometric design decisions (see
+  Section 1.9)
+
+1.4  FUNCTIONAL CLASSIFICATION FOR MOTOR VEHICLES
+
+Functional classification defines the role of each roadway in serving motor-vehicle movements
+within the overall transportation system. The functional classification of a roadway suggests its
+position within the transportation network and its general role in serving automobile, truck, and
+transit vehicles. This section reviews the approach used to define the functional classification of
+roadways and the application of functional classification in the design process.
+
+Functional classification has traditionally served as a central organizing criterion for the geo-
+metric design process. This seventh edition of the policy, like its predecessors, explicitly pres-
+ents geometric design criteria for specific functional classes of roadways in separate chapters.
+Geometric design for local roads and streets, collector roads and streets, arterial roads and
+streets, and freeways are presented in Chapters 5 through 8, respectively. However, function-
+al classification, by itself, does not address explicitly fitting the roadway into the community
+or the needs of other transportation modes including bicyclists and pedestrians. This seventh
+edition emphasizes context classification and multimodal considerations, as well as functional
+classification.
+
+Over the years, functional classification has come to assume additional significance beyond
+its stated purpose as identifying the particular role of a roadway in moving vehicles through a
+network of roads and streets. Functional classification carries with it expectations about road-
+way design, including the roadway’s speed and capacity. Federal legislation continues to use
+functional classification in determining eligibility for funding under the Federal-aid program.
+Transportation agencies describe roadway system performance, benchmarks, and targets by
+functional classification. As agencies continue to move towards a more performance-based de-
+sign and management approach, functional classification will continue as an important con-
+sideration in setting expectations and measuring outcomes for motor-vehicle mobility. FHWA
+guidelines for determining the functional classification for roads and streets are presented in
+Highway Functional Classification Concepts, Criteria and Procedures (10).
+
+The formal classification of roadways as freeways, arterials, collectors, and local roads and streets
+serves as a useful starting point for the design process, but the designer should not simply rely
+on this formal designation as a design control. The roadway type, for design purposes, should
+be based on the actual role that the roadway plays in the transportation system, as determined
+
+Copyright American Association of State Highway and Transportation Officials
+  © 2018 by the American Association of StLaicteenHseeig=AhrkwanasyasaSntadteTHrigahnwsayp&orTtraantisoponrtaOtiofnfiDceipat/l5s9.88317001, User=Sichmelle
+Provided by IHS Markit under license with AASHTO
+
+No reproduction or networking permitted without license from IHS  All rights reserved. DuplicationNiost aforvRieoslaalet,i1o0n/09o/2f0a18pp09l:i1c7a:1b8lMeDlTaw.
+1-8 A Policy on Geometric Design of Highways and Streets  --`,```,``,`,`,`,``````,,,,``-`-`,,`,,`,`,,`---
+
+  through the project development process. Section 1.5 on contexts for geometric design and
+  Section 1.6 on multimodal considerations in geometric design address these additional design
+  considerations.
+
+  1.4.1 Hierarchy of Motor Vehicle Movement
+
+  Motor vehicle travel involves a series of distinct travel movements. The six recognizable stages
+  in most trips include main movement, transition, distribution, collection, access, and termi-
+  nation. For example, Figure 1-2 shows a hypothetical highway trip using a freeway, where the
+  main movement of vehicles is uninterrupted, high-speed flow. When approaching destinations
+  from the freeway, vehicles reduce speed on freeway ramps, which act as transition roadways.
+  The vehicles then enter moderate-speed arterials (distributor facilities) that bring them nearer
+  to the vicinity of their destination neighborhoods. They next enter collector roads that penetrate
+  neighborhoods. The vehicles finally enter local access roads that provide direct approaches to
+  individual residences or other terminations. At their destinations, the vehicles are parked at an
+  appropriate terminal facility.
+
+  Each of the six stages of this hypothetical trip is handled by a separate facility designed specif-
+  ically for its function. Because the movement hierarchy is based on the total amount of traffic
+  volume, freeway travel is generally the highest level in the movement hierarchy, below that is
+  arterial travel, and lowest in the movement hierarchy is travel on collectors and local roads and
+  streets.
+
+Copyright American Association of State Highway and Transportation Officials
+  © 2018 by the American Association of StLaicteenHseeig=AhrkwanasyasaSntadteTHrigahnwsayp&orTtraantisoponrtaOtiofnfiDceipat/l5s9.88317001, User=Sichmelle
+Provided by IHS Markit under license with AASHTO
+
+No reproduction or networking permitted without license from IHS  All rights reserved. DuplicationNiost aforvRieoslaalet,i1o0n/09o/2f0a18pp09l:i1c7a:1b8lMeDlTaw.
+  New Framework for Geometric Design 1-9
+
+  0DLQ0RYHPHQW
+
+&ROOHFWLRQ  7HUPLQDO$FFHVV
+  7UDQVLWLRQ
+
+  'LVWULEXWLRQ
+
+Figure 1-2. Hierarchy of Movement
+
+Although many trips can be subdivided into all of the six recognizable stages, intermediate
+facilities are not always needed. The complete hierarchy of circulation facilities most closely
+applies to conditions of low-density suburban development, where traffic flows are cumulative
+on successive elements of the system. However, travelers sometimes follow a reduced number of
+components in the chain. For instance, some local roads and streets connect directly to arterials
+and some trip origins and destinations are located directly on arterials or collectors. Some large
+traffic generators may be connected directly to a freeway ramp, so that traffic does not need to
+use the arterial system. This absence of intermediate facilities for some trips does not eliminate
+the need for all functional classes of roads and streets in the transportation network.
+
+A prominent cause of highway obsolescence is the failure of a design to recognize and accom-
+modate each of the different trip levels of the movement hierarchy. Conflicts and congestion
+occur at interfaces between public highways and private traffic-generating facilities when the
+functional transitions are inadequate. Examples are commercial driveways that connect directly
+from a relatively high-speed arterial to a parking aisle without intermediate provisions for tran-
+sition deceleration and arterials, or more seriously, freeway ramps that connect directly to or
+from large traffic generators such as major shopping centers.
+
+  --`,```,``,`,`,`,``````,,,,``-`-`,,`,,`,`,,`---
+
+Copyright American Association of State Highway and Transportation Officials
+  © 2018 by the American Association of StLaicteenHseeig=AhrkwanasyasaSntadteTHrigahnwsayp&orTtraantisoponrtaOtiofnfiDceipat/l5s9.88317001, User=Sichmelle
+Provided by IHS Markit under license with AASHTO
+
+No reproduction or networking permitted without license from IHS  All rights reserved. DuplicationNiost aforvRieoslaalet,i1o0n/09o/2f0a18pp09l:i1c7a:1b8lMeDlTaw.
+1-10 A Policy on Geometric Design of Highways and Streets  --`,```,``,`,`,`,``````,,,,``-`-`,,`,,`,`,,`---
+
+  1.4.2  Access Control and Mobility Needs
+
+  The two major considerations in classifying highway and street networks functionally are access
+  and mobility. The conflict between providing mobility for through-traffic movements and pro-
+  viding access to a dispersed pattern of trip origins and destinations leads to the differences and
+  gradations in the various functional types.
+
+  Freeways are provided almost exclusively to enhance mobility for through traffic. Access to
+  freeways is provided only at specific grade-separated interchanges, with no direct access to the
+  freeway from adjacent land except by way of those interchanges. Design of freeways is addressed
+  in Chapter 8.
+
+  Selected roads and streets are designated as arterials to recognize that mobility of through traffic
+  is one of their primary functions. However, arterials also connect to both collectors and local
+  roads and streets and many arterials provide direct access to adjacent development. Access man-
+  agement techniques can be used to reduce the conflicts between mobility for through traffic and
+  access to adjacent development. However, such conflicts are unavoidable, especially in urban
+  areas, because access to adjacent development is essential to thriving communities. The extent
+  of adjacent development varies with the context of the road or street, which is a primary reason
+  that context classification (see Section 1.5) has been added to the design framework along with
+  functional classification. The demands for nonmotorized travel may also vary widely among
+  arterial roads and streets. Design of arterial roads and streets to meet these multiple demands is
+  addressed in Chapter 7.
+
+  Collector roads and streets connect arterials to local roads and streets as well as providing access
+  to adjacent development. Mobility for through traffic is less important on collectors than on ar-
+  terials because motor vehicles often travel only moderate distances on a collector before reaching
+  an arterial or local road. Collectors generally offer approximately balanced service to both the
+  mobility and access functions but, as with arterials, the context of surrounding development on
+  collectors and the demands for nonmotorized travel may vary widely. Design of collector roads
+  and streets to meet these multiple demands is addressed in Chapter 6.
+
+  Local roads and streets exist primarily to serve adjacent development. Mobility for through traf-
+  fic is of little importance because the distance from the origin or destination of a motor vehicle
+  trip to the nearest collector is usually short. Like arterials and collectors, local roads and streets
+  have a variety of surrounding contexts and serve varying demands for nonmotorized travel.
+  Design of local roads and streets to meet these multiple demands is addressed in Chapter 5.
+
+  Figure 1-3 illustrates the general balance between mobility and access for each functional class.
+  Figure 1-3 is conceptual in nature because the extent and context of development along each
+  road and street varies widely, and some arterials may have more extensive access needs than
+  many collector or local roads. Further discussion of the various degrees of access control appro-
+
+Copyright American Association of State Highway and Transportation Officials
+  © 2018 by the American Association of StLaicteenHseeig=AhrkwanasyasaSntadteTHrigahnwsayp&orTtraantisoponrtaOtiofnfiDceipat/l5s9.88317001, User=Sichmelle
+Provided by IHS Markit under license with AASHTO
+
+No reproduction or networking permitted without license from IHS  All rights reserved. DuplicationNiost aforvRieoslaalet,i1o0n/09o/2f0a18pp09l:i1c7a:1b8lMeDlTaw.
+  New Framework for Geometric Design 1-11
+
+priate to street and highway development is provided in Section 2.5, “Access Control and Access
+Management.”
+
+  Freeway
+  Principal Arterial
+  Minor Arterial
+  Major Collector
+  Minor Collector
+Increasing Proportion
+  of Through Traffic  Local Street
+  Cul-de-Sac
+  --`,```,``,`,`,`,``````,,,,``-`-`,,`,,`,`,,`---
+  Increasing
+  Access
+
+Figure 1-3. Relationship of Functionally Classified Systems Serving Traffic Mobility and
+Land Access for Motor-Vehicle Traffic
+
+1.4.3  Functional System Characteristics
+
+This section explains how roads and streets in rural and urban settings are classified using the
+traditional approach to functional classification (10). Section 1.4.4 explains how these function-
+al classifications are adapted for design.
+
+1.4.3.1  Definitions Of Urban And Rural Areas
+
+Urban and rural areas have fundamentally different characteristics with regard to density and
+types of land use, density of street and highway networks, nature of travel patterns, and the
+way in which these elements are related. Consequently, urban and rural functional systems are
+classified separately.
+
+Section 101 of Title 23 U.S. Code (28) defines urban areas as those places within boundaries
+set by the responsible state and local officials having a population of 5,000 or more. Urban areas
+are further subdivided into urbanized areas (population of 50,000 and over) and small urban
+areas (population between 5,000 and 50,000). Rural areas are defined as all areas of a State not
+included in urban areas. As such, roadways have traditionally been classified as either “urban”
+or “rural.” However, it is important to recognize that a roadway’s formal classification as urban
+or rural may differ from actual site circumstances or prevailing conditions. For this reason, it is
+important for the designer, working with the community and project reviewers, to determine an
+appropriate area type or types for a project early in the planning process. The area type classifi-
+cation should be based on actual roadway conditions, not boundaries shown on maps. Thus, the
+
+Copyright American Association of State Highway and Transportation Officials
+  © 2018 by the American Association of StLaicteenHseeig=AhrkwanasyasaSntadteTHrigahnwsayp&orTtraantisoponrtaOtiofnfiDceipat/l5s9.88317001, User=Sichmelle
+Provided by IHS Markit under license with AASHTO
+
+No reproduction or networking permitted without license from IHS  All rights reserved. DuplicationNiost aforvRieoslaalet,i1o0n/09o/2f0a18pp09l:i1c7a:1b8lMeDlTaw.
+1-12 A Policy on Geometric Design of Highways and Streets  --`,```,``,`,`,`,``````,,,,``-`-`,,`,,`,`,,`---
+
+  area type classification (urban or rural) used in design may differ from that used in the roadway’s
+  formal functional classification.
+
+  1.4.3.2  Functional Categories
+
+  The roads making up the functional systems differ for urban and rural areas. The hierarchy
+  of the functional systems consists of principal arterials (for main movement), minor arterials
+  (distributors), collectors, and local roads and streets; however, in urban areas there are relatively
+  more arterials with further functional subdivisions of the arterial category whereas in rural areas
+  there are relatively more collectors with further functional subdivisions of the collector category.
+
+  1.4.3.3  Functional Systems for Rural Areas
+
+  Rural roads consist of facilities outside of urban areas, although they may pass through built-up
+  areas and small towns or villages. The functional systems utilized in traditional functional clas-
+  sification for rural roads include principal arterials, minor arterials, major and minor collectors,
+  and local roads.
+
+  1.4.3.3.1  Rural Principal Arterial System
+
+  The rural principal arterial system consists of a network of routes with the following service
+  characteristics:
+  1. Corridor movement with trip length and density suitable for substantial statewide or
+
+  interstate travel.
+  2. Movements between all, or virtually all, urban areas with populations over 50,000 and a
+
+  large majority of those with populations over 25,000.
+  3. Integrated movement without stub connections except where unusual geographic or traffic
+
+  flow conditions dictate otherwise (e.g., international boundary connections or connections
+  to coastal cities).
+
+  In the more densely populated states, this class of highway includes most (but not all) heavily
+  traveled routes that might warrant multilane improvements in the majority of states; the princi-
+  pal arterial system includes most (if not all) existing rural freeways.
+
+  The principal arterial system is stratified into the following three classifications: (1) Interstate
+  highways, (2) other freeways, and (3) other principal arterials.
+
+  For design purposes, freeways are treated as a separate functional class from other arterials.
+
+  1.4.3.3.2  Rural Minor Arterial System
+
+  The rural minor arterial road system, in conjunction with the rural principal arterial system,
+  forms a network with the following service characteristics:
+
+Copyright American Association of State Highway and Transportation Officials
+  © 2018 by the American Association of StLaicteenHseeig=AhrkwanasyasaSntadteTHrigahnwsayp&orTtraantisoponrtaOtiofnfiDceipat/l5s9.88317001, User=Sichmelle
+Provided by IHS Markit under license with AASHTO
+
+No reproduction or networking permitted without license from IHS  All rights reserved. DuplicationNiost aforvRieoslaalet,i1o0n/09o/2f0a18pp09l:i1c7a:1b8lMeDlTaw.
+  New Framework for Geometric Design 1-13
+
+1. Linkage of cities, larger towns, and other traffic generators (such as major resort areas) that
+  are capable of attracting travel over similarly long distances.
+
+2. Integrated interstate and intercounty service.
+3. Internal spacing consistent with population density, so that all developed areas of the state
+
+  are within reasonable distances of arterial highways.
+4. Corridor movements consistent with items (1) through (3) with trip lengths and travel
+
+  densities greater than those predominantly served by rural collector or local systems.
+
+Minor arterials therefore constitute routes that should provide for relatively high travel speeds
+and minimum interference to through movement consistent with the roadway context and con-
+sidering the range of users to be served.
+
+1.4.3.3.3  Rural Collector System
+
+The rural collector routes generally serve travel of primarily intracounty rather than statewide
+importance and constitute those routes on which (regardless of traffic volume) predominant
+travel distances are shorter than on arterial routes. Consequently, more moderate speeds may
+be typical and frequent access to roadside development may be provided, consistent with the
+roadway context and the range of users to be served. To define rural collectors more clearly, this
+system is subclassified according to the following criteria:
+yy Major Collector Roads—These routes (1) serve county seats not on arterial routes, larger
+
+  towns not directly served by the higher systems, and other traffic generators of equivalent
+  intracounty importance, such as consolidated schools, shipping points, county parks, and
+  important mining and agricultural areas; (2) link these places with nearby larger towns or
+  cities, or with routes of higher classifications; and (3) serve the more important intracounty
+  travel corridors.
+yy Minor Collector Roads—These routes should (1) be spaced at intervals consistent with pop-
+  ulation density to accumulate traffic from local roads and bring all developed areas within
+  reasonable distances of collector roads; (2) provide service to the remaining smaller commu-
+  nities; and (3) link the locally important traffic generators with their rural hinterland.
+
+1.4.3.3.4  Rural Local Road System
+
+The rural local road system, in comparison to collectors and arterial systems, primarily provides
+access to land adjacent to the roadway and serves travel over relatively short distances. The local
+road system constitutes all rural roads not classified as principal arterials, minor arterials, or
+collector roads. The design of rural local roads should be consistent with the roadway context
+and the range of users to be served.
+
+  --`,```,``,`,`,`,``````,,,,``-`-`,,`,,`,`,,`---
+
+Copyright American Association of State Highway and Transportation Officials
+  © 2018 by the American Association of StLaicteenHseeig=AhrkwanasyasaSntadteTHrigahnwsayp&orTtraantisoponrtaOtiofnfiDceipat/l5s9.88317001, User=Sichmelle
+Provided by IHS Markit under license with AASHTO
+
+No reproduction or networking permitted without license from IHS  All rights reserved. DuplicationNiost aforvRieoslaalet,i1o0n/09o/2f0a18pp09l:i1c7a:1b8lMeDlTaw.
+--`,```,``,`,`,`,``````,,,,``-`-`,,`,,`,`,,`---1-14 A Policy on Geometric Design of Highways and Streets
+
+  1.4.3.4  Functional Systems for Urban Areas
+
+  The four functional highway systems for urban areas used in traditional functional classification
+  are urban principal arterials, minor arterial streets, collector streets, and local streets. The differ-
+  ences in the nature and intensity of development in rural and urban areas warrant corresponding
+  differences in urban system characteristics relative to the correspondingly named rural systems.
+
+  1.4.3.4.1  Urban Principal Arterial System
+
+  In every urban environment, one system of streets and highways can be identified as unusually
+  significant in terms of the nature and composition of travel it serves. In small urban areas (popu-
+  lation under 50,000), these facilities may be limited in number and extent, and their importance
+  may be derived primarily from the service provided to through travel. In larger urban areas,
+  their importance also derives from service to rurally oriented traffic, but equally or even more
+  importantly, from service for major circulation movements within these urban areas.
+
+  The urban principal arterial system serves the major centers of activity of urban areas, the high-
+  est traffic volume corridors, and the longest trip lengths. This system carries a high proportion
+  of the total urban area travel even though it constitutes a relatively small percentage of the total
+  roadway network. Many urban principal arterials serve high volumes of bicycle and pedestrian
+  travel. The system should be integrated both internally and between major rural connections.
+
+  The urban principal arterial system carries most of the trips entering and leaving the urban area,
+  as well as most of the through movements bypassing the central city. In addition, significant in-
+  tra-area travel, such as between central business districts and outlying residential areas, between
+  major inner-city communities, and between major suburban centers, is served by this class of
+  facility. Frequently, the urban principal arterial system carries important intra-urban as well
+  as intercity bus routes. Finally, in urbanized areas, this system provides continuity for all rural
+  arterials that intercept the urban boundary.
+
+  Because of the nature of the travel served by the principal arterial system, almost all fully and
+  partially controlled access facilities are usually part of this functional class. However, this system
+  is not restricted to controlled-access routes. To preserve the identification of controlled-access
+  facilities, the principal arterial system should be stratified as follows: (1) Interstate highways, (2)
+  other freeways, and (3) other principal arterials (with partial or no control of access).
+
+  The spacing of urban principal arterials is closely related to the trip-end density characteristics
+  of particular portions of the urban areas. Although no firm spacing rule applies in all or even
+  in most circumstances, the spacing between principal arterials (in larger urban areas) may vary
+  from less than 1 mi [1.6 km] in the highly developed central business areas to 5 mi [8 km] or
+  more in the sparsely developed urban fringes.
+
+Copyright American Association of State Highway and Transportation Officials
+  © 2018 by the American Association of StLaicteenHseeig=AhrkwanasyasaSntadteTHrigahnwsayp&orTtraantisoponrtaOtiofnfiDceipat/l5s9.88317001, User=Sichmelle
+Provided by IHS Markit under license with AASHTO
+
+No reproduction or networking permitted without license from IHS  All rights reserved. DuplicationNiost aforvRieoslaalet,i1o0n/09o/2f0a18pp09l:i1c7a:1b8lMeDlTaw.
+--`,```,``,`,`,`,``````,,,,``-`-`,,`,,`,`,,`---  New Framework for Geometric Design 1-15
+
+  For freeways, service to abutting land is subordinate to travel service to major traffic movements.
+  For facilities within the subclass of other principal arterials in urban areas, mobility is often
+  balanced against the need to provide direct access considering the roadway context and the ac-
+  commodation of pedestrians, bicyclists, and transit users.
+
+  For design purposes, freeways are treated as a separate functional class from other arterials.
+
+  1.4.3.4.2  Urban Minor Arterial Street System
+
+  The urban minor arterial street system interconnects with and augments the urban principal
+  arterial system. It accommodates trips of moderate length at a somewhat lower level of travel
+  mobility than principal arterials do. This system distributes travel to geographic areas smaller
+  than those identified with the higher system.
+
+  The urban minor arterial street system includes all arterials not classified as principal. This
+  system places more emphasis on land access, multimodal accommodation, and serving the com-
+  munity context than the higher system does and offers lower traffic mobility. Such a facility
+  may carry local bus routes and provide intracommunity continuity but ideally does not pene-
+  trate identifiable neighborhoods. This system includes urban connections to rural collector roads
+  where such connections have not been classified as urban principal arterials for internal reasons.
+  Minor arterials and collectors are increasingly the location for regional bicycle networks.
+
+  The spacing of urban minor arterial streets may vary from 0.1 to 0.5 mi [0.2 to 1.0 km] in the
+  central business district to 2 to 3 mi [3 to 5 km] in the suburban fringes but is normally not more
+  than 1 mi [2 km] in fully developed areas.
+
+  1.4.3.4.3  Urban Collector Street System
+
+  The urban collector street system provides both land access service and traffic circulation within
+  residential neighborhoods and commercial and industrial areas. It differs from the urban arte-
+  rial system in that facilities on the collector system may penetrate residential neighborhoods,
+  distributing trips from the arterials through the area to their ultimate destinations. Conversely,
+  the urban collector street also collects traffic from local streets in residential neighborhoods and
+  channels it into the arterial system. In the central business district, and in other areas of similar
+  development and traffic density, the urban collector system may include the entire street grid.
+  The urban collector street system may also carry local bus routes. The design of urban collector
+  streets should fit the community context and serve a range of bicyclists, pedestrians, and transit
+  users. Minor arterials and collectors are increasingly the location for regional bicycle networks.
+
+  1.4.3.4.4  Urban Local Street System
+
+  The urban local street system comprises all facilities not in one of the higher systems. It primar-
+  ily permits direct access to abutting lands and connections to the higher order systems. It offers
+  the lowest level of mobility and usually contains no bus routes. Service to through-traffic move-
+
+Copyright American Association of State Highway and Transportation Officials
+  © 2018 by the American Association of StLaicteenHseeig=AhrkwanasyasaSntadteTHrigahnwsayp&orTtraantisoponrtaOtiofnfiDceipat/l5s9.88317001, User=Sichmelle
+Provided by IHS Markit under license with AASHTO
+
+No reproduction or networking permitted without license from IHS  All rights reserved. DuplicationNiost aforvRieoslaalet,i1o0n/09o/2f0a18pp09l:i1c7a:1b8lMeDlTaw.
+1-16 A Policy on Geometric Design of Highways and Streets
+
+  ment usually is deliberately discouraged. The design of urban local streets should be consistent
+  with the community context. Local urban streets typically serve frequent bicycle and pedestrian
+  movements.
+
+  1.4.4  Functional Classification as a Design Type
+
+  The discussion in this chapter has introduced the functional classification system that will serve
+  as a basis for organizing geometric design criteria in the remainder of this policy. The functional
+  classification of a road or street, together with its context classification, helps designers to antic-
+  ipate the basic design type(s) that may be appropriate for that facility. The needs of multimodal
+  users also influence the selection of an appropriate design type.
+
+  Two modifications to the traditional functional classification system are generally made in ap-
+  plying functional classification in the design process. The first modification involves freeways. A
+  freeway is not a functional class in itself but is normally classified as a principal arterial. It does,
+  however, have unique geometric criteria that demand a separate design designation apart from
+  other arterials. Therefore, Chapter 8 on freeways has been included as a separate chapter along
+  with chapters on arterials, collectors, and local roads and streets. The addition of the universally
+  familiar term “freeway” to the basic functional classes seems preferable to the adoption of a
+  completely separate system of design types.
+
+  The second modification is that the distinctions between principal arterials and minor arteri-
+  als, and between major collectors and minor collectors, do not necessarily imply any physical
+  differences in the appropriate roadway designs for these facility types. Other factors such as
+  context classes and demand volumes for individual transportation modes provide more relevant
+  information about the appropriate facility design than the distinction between types of arterials
+  or collectors. Therefore, for design purposes, the principal arterial and minor arterial classes and
+  are combined into a single arterial class and the major and minor collector classes are combined
+  into a single collector class.
+
+  With these modifications, the four functional classes used in the design framework are: free-
+  ways, arterials, collectors, and local roads and streets.
+
+  1.5  CONTEXT CLASSIFICATION FOR GEOMETRIC DESIGN
+
+  Traditionally, geometric design criteria have considered only two contexts—rural and urban—
+  with additional guidance provided for specific types of rural and urban locations. This seventh
+  edition of the policy begins a transition to a broader set of contexts for geometric design. Five
+  contexts are used, two for rural areas and three for urban areas:
+
+  --`,```,``,`,`,`,``````,,,,``-`-`,,`,,`,`,,`---
+
+Copyright American Association of State Highway and Transportation Officials
+  © 2018 by the American Association of StLaicteenHseeig=AhrkwanasyasaSntadteTHrigahnwsayp&orTtraantisoponrtaOtiofnfiDceipat/l5s9.88317001, User=Sichmelle
+Provided by IHS Markit under license with AASHTO
+
+No reproduction or networking permitted without license from IHS  All rights reserved. DuplicationNiost aforvRieoslaalet,i1o0n/09o/2f0a18pp09l:i1c7a:1b8lMeDlTaw.
+--`,```,``,`,`,`,``````,,,,``-`-`,,`,,`,`,,`---  New Framework for Geometric Design 1-17
+
+  Rural areas
+  yy Rural context
+  yy Rural town context
+
+  Urban areas
+  yy Suburban context
+  yy Urban context
+  yy Urban core context
+
+  These contexts are defined based on development density (existence of structures and struc-
+  ture types), land uses (primarily residential, commercial, industrial, and/or agricultural), and
+  building setbacks (distance of structures to adjacent roadways). These five contexts were initially
+  presented in NCHRP Report 855, An Expanded Functional Classification System for Highways
+  and Streets (22), which has prepared a guide for classifying contexts and applying the context
+  classes in design.
+
+  Figures 1-4 through 1-8 illustrate typical roads and streets in each of the five contexts, respec-
+  tively, including the rural, rural town, suburban, urban, and urban core contexts. These context
+  classes supplement, but do not replace, the functional classification system used in geometric
+  design (see Section 1.4). The functional classifications represent the appropriate role of specific
+  roads in serving motor vehicles, including passenger cars, trucks, and transit. The context clas-
+  sification and the multimodal considerations discussed below in Section 1.6 help designers in
+  serving community needs and finding an appropriate balance among the transportation modes
+  that use a specific facility. It is intended that the context for a road or street be identified through
+  a simple review of the character of development in the field or using an aerial photograph,
+  without the need for quantitative analysis. The primary factors that define the context classes—
+  development density, land uses, and building setbacks—are easy to identify by observing the
+  landscape adjacent to an existing or planned facility. Other factors including topography, soil
+  type, land value, population density, and building square footage are related to context classifi-
+  cation; however, data on these other factors are more quantitative and more difficult to acquire,
+  so the context classification system does not rely on them. Roads in any context classification
+  may also fall within almost any of the functional classes (the only exception is freeways, which
+  rarely, if ever, are designed for a rural town context).
+
+  Both the current context classification for roads and streets, as well as possible changes in con-
+  text classification resulting from future development, should be considered in design. Specific
+  context classes found in both rural and urban areas are described below. These context classes,
+  together with functional classes (described in Section 1.4), provide a framework for design. Just
+  as a wide range of roadway conditions can be found within any given functional class, roadway
+  conditions can vary widely within each context class. Thus, there is no single design type or
+  solution that is applicable to all roads and streets within any given functional class.
+
+Copyright American Association of State Highway and Transportation Officials
+  © 2018 by the American Association of StLaicteenHseeig=AhrkwanasyasaSntadteTHrigahnwsayp&orTtraantisoponrtaOtiofnfiDceipat/l5s9.88317001, User=Sichmelle
+Provided by IHS Markit under license with AASHTO
+
+No reproduction or networking permitted without license from IHS  All rights reserved. DuplicationNiost aforvRieoslaalet,i1o0n/09o/2f0a18pp09l:i1c7a:1b8lMeDlTaw.
+

@@ -1,0 +1,403 @@
+  Ethical Decision-Making: The Case of Autonomous Vehicles ■ 265
+
+Figure 12.3 Visual illustration of experiment 3 (offered to the respondents of the
+experiment).
+
+  the ten pedestrians or stays on its path to kill the ten pedestrians and saves
+  the passenger of the vehicle”. In addition to the text, Figure 12.3 was provided
+  to the respondents in order to visually understand the experiment.
+  4. Experiment 4: “You could be the sole driver of an autonomous vehicle that is
+  driving at the speed limit of a road. Or you could be one of ten pedestrians who
+  suddenly appeared on the road in front of the vehicle that the vehicle cannot
+  stop before crashing into them. However, the vehicle has a second option which
+  is swerving to hit the road barrier and save the ten pedestrians. The vehicle can
+  be programmed to swerve and hit the road barrier and kill the passenger of the
+  vehicle (that might be you) but save the ten pedestrians or stays on its path to
+  kill the ten pedestrians (that might include you) and saves the passenger of the
+  vehicle”. In addition to the text, Figure 12.4 was provided to the respondents
+  in order to visually understand the experiment.
+
+12.3 ANALYSIS AND RESULTS
+In this paper, the impact of the level of involvement, perspective-taking, and demo-
+graphic characteristics on ethical decisions were investigated. The analysis conducted
+was based on the responses of 1012 individuals who responded to the survey from the
+USA. In total, this study analyses the responses for the reports in four different ex-
+periments. Every respondent has access to only one scenario of the four tested in this
+study. This scenario was assigned to the respondents randomly with 0.25 probability
+in order to collect the same number of responses for every experiment.
+266 ■ Explainable Artificial Intelligence for Intelligent Transportation Systems
+
+Figure 12.4 Visual illustration of experiment 4 (offered to the respondents of the
+experiment).
+
+Figure 12.5 Summary of the different levels of involvement and perspective-taking
+in every experiment tested.
+12.3.1 Impact of the Different Levels of Involvement and Perspective Taking on Ethical
+
+  Decision-Making
+In this study, two different levels of involvement were tested: (a) no involvement; (b)
+participants involved. In addition, for perspective taking, three levels of perspective
+taking were tested: (a) the participant is not taking the perspective of anyone on the
+situation; (b) partial perspective taking, and in this case the respondents were asked
+to imagine themselves as the passenger of the AV or one of the pedestrians crossing
+the street; (c) full prescriptive taking and in this experiments the respondents were
+informed that they might be the passage of the AV or one of the pedestrians crossing
+the street. Every experiment was designed to test a specific scenario for the level of
+involvement and the perspective-taking accessibility as shown in Figure 12.5. The
+  Ethical Decision-Making: The Case of Autonomous Vehicles ■ 267
+
+figure shows that experiment one focuses on evaluating ethical decision-making when
+the respondents are not involved in the situation at all as the respondents are watching
+the situation from a pedestrian bridge. In addition, the respondents were not asked
+to take the perspective of anyone in the scenario so this experiment analyses the
+ethical decisions for the scenario of no prescriptive taking. For the second level of
+involvement (participant involved) the respondents were involved in the scenarios of
+experiments 2, 3, and 4 but with different levels of perspective-taking. In experiment
+2, the respondents were asked to imagine themselves as the passengers of an AV,
+while in experiment 3 the respondents were asked to imagine themselves as one of ten
+pedestrians crossing the street. While the respondents were involved in the situation
+in the two experiments (2 and 3), they have partial accessibility to the respective
+taking as they were asked to imagine themselves as the passengers of an AV or
+pedestrians who are crossing the street. Finally, in experiment 4, the respondents
+were informed that they might be the passengers of an AV or a pedestrian crossing
+the street so that the participants are involved and have full accessibility to the
+perspective-taking as every person might have an AV but they became pedestrians
+once they leave the vehicle.
+
+  In every scenario, the respondents were asked to rank the two decisions (swerve,
+stay) on a scale from 1 to 10 where 1 represents that the action is morally inappro-
+priate and 10 represents that the action is morally appropriate. Then, the utilitarian
+weight was calculated for every respondent using equation (1) as the difference be-
+tween the utilitarian swerve action and the non-utilitarian stay action in order to
+understand whether the response is utilitarian or non-utilitarian. Thus, a high and
+positive value for the utilitarian weight means that the respondent has a utilitar-
+ian judgment, while a negative utilitarian weight indicates that the respondent has a
+non-utilitarian judgment. The average utilitarian weights of the different experiments
+are shown in Figure 12.6. The results show that the highest and lowest levels of utili-
+tarian weights are observed in experiments 2 and 3 when the respondents got partial
+accessibility to the perspective-taking. In experiment 2 when the respondents were
+asked to imagine themselves as the passengers of AVs, this scenario has the lowest
+average utilitarian weight (−0.5) which indicates that the respondents selected the
+action that saved themselves at the cost of hitting and killing the ten pedestrians.
+On the other side, the highest level of utilitarian weight can be observed in exper-
+iment 3 when the respondents were asked to imagine themselves as one of the ten
+pedestrians crossing the street. The results show that the utilitarian weight reached
+8.5 indicating that the respondents believe that the vehicle should swerve to sacrifice
+the passenger of the AV to save the ten pedestrians. Experiment one was designed so
+that the respondents judge the situation without being involved at all so the results
+of this scenario can be used as a benchmark for other scenarios. This experiment
+was selected to be the benchmark as it is expected that the experts will select the
+ranks that represent their ethical decision as the action selected will not affect them.
+Thus, comparing the results of experiments 2 and 3 to experiment 1 shows that
+the respondent became more self-protective in the two scenarios as the utilitarian
+weights changed in a way that protect the respondents across the two scenarios. As
+268 ■ Explainable Artificial Intelligence for Intelligent Transportation Systems
+
+Figure 12.6 Average utilitarian weight across the four experiments.
+
+experiments 2 and 3 provide the respondents with partial perspective taking, it can
+be concluded that the two scenarios resulted in biased results as the response will
+try to save their lives at the cost of sacrificing the lives of the others. Thus, it can
+be concluded that partial perspective taking results in biased results as people will
+always try to save their lives. Finally, the average utilitarian weight for experiment 4
+was similar to the average utilitarian weight for experiment 1. In experiment 4, the
+respondents were informed that they might be the passengers of an AV or one of the
+pedestrians crossing the street so the responses have accessibility to full perspective
+taking as they might be the passengers of the AV or they might be the pedestrian
+crossing the street. Thus, full accessibility to the perspective-taking resulted in a
+utilitarian weight that is similar to the no involvement scenario. Thus, the results
+of experiment 4 show that full accessibility to perspective-taking resulted in moral
+results that are not biased; similar to the results of experiments 2 and 3.
+12.3.2 Impact of the Demographic Characteristics on Ethical Decision-Making
+
+12.3.2.1 Impact of the Gender on Ethical Decision-Making
+
+While the previous discussion in the previous subsection focuses on analyzing the
+overall responses of the respondents, this subsection focuses on analyzing the re-
+sponses to the four experiments by gender in order to understand the perspective of
+male and female respondents. Figure 12.7 shows the average utilitarian weight across
+the four scenarios for male and female respondents. The results show that the av-
+erage utilitarian weight is always higher than the average utilitarian weight of male
+respondents. In addition, conducting the t-test between the responses of the male
+  Ethical Decision-Making: The Case of Autonomous Vehicles ■ 269
+
+Figure 12.7 average utilitarian weight across the four experiments for male and
+female respondents.
+
+respondents and female respondents using a 95% level of confidence shows that there
+is a significant difference between the responses of male and female respondents as
+the resulting p-value across the four experiments were lower than 0.05. thus, it can be
+concluded that female respondents will select more utilitarian weights than male re-
+spondents, and there is a statically significant difference between the responses of the
+two categories. However, the results of both males and females have the same pattern
+across the four experiments as partial accessibility to the preserve taking resulted in
+biased results as experiments 2 and 3 were the experiments with the highest and
+lowest utilitarian weights. On the other hand, the utilitarian weights in experiments
+1 and 4 are similar for male and female respondents.
+
+12.3.2.2 Impact of the Age on Ethical Decision-Making
+
+This subsection focuses on analyzing the responses to the four experiments by age
+in order to understand the perspective of the different respondents at different age
+groups in making the decisions across the different experiments. The results show that
+the average utilitarian weight increases with the increase in the age of the respondents
+across the four experiments as shown in Figure 12.8. However, the changes in the
+utilitarian weights across the different age groups are minor for experiments 1, 3, and
+4. On the other side, the changes in the utilitarian weights between the different age
+groups in experiment 2 are major as the minimum utilitarian weight for the youngest
+group is −2.45 and the maximum utilitarian weight for the oldest group is 0.678.
+270 ■ Explainable Artificial Intelligence for Intelligent Transportation Systems
+
+Figure 12.8 average utilitarian weight across the four experiments by age.
+
+thus, the difference in the utilitarian weight between the oldest and youngest groups
+is 3.128. On the other side, the results of utilitarian weights across the different age
+groups have the same pattern across the four experiments as partial accessibility
+to the preserve taking resulted in biased results as experiments 2 and 3 were the
+experiments with the highest and lowest utilitarian weights. On the other hand,
+the utilitarian weights in experiments 1 and 4 are similar across the different age
+groups.
+
+12.3.2.3 Impact of Prior Knowledge about AVs on Ethical Decision-Making
+
+This subsection focuses on understanding how respondents with different prior knowl-
+edge about AVs make ethical decisions across the four experiments tested. Figure 12.9
+shows the average utilitarian weight for respondents with different prior knowledge
+about AVs across the four experiments. The results show that the utilitarian weight
+increases with the increase in the level of knowledge about AVs; however, the changes
+in the utilitarian weights are minor across the four experiments. In addition, the
+results show that the responses of the different respondents with different levels of
+knowledge about AVs have the same pattern across the different experiments. Fur-
+thermore, the results show that partial accessibility to the preserve taking resulted
+in biased results as experiments 2 and 3 were the experiments with the highest and
+lowest utilitarian weights. On the other hand, the utilitarian weights in experiments
+1 and 4 are similar for respondents with different prior knowledge about AVs.
+  Ethical Decision-Making: The Case of Autonomous Vehicles ■ 271
+
+Figure 12.9 Average utilitarian weight across the four experiments for respondents
+with different background knowledge about AVs.
+
+12.4 CONCLUSION
+This study focuses on understanding the impact of three independent factors on the
+ethical decision-making of the public in the case of AVs. These factors are the level
+of involvement, accessibility to perspective-taking, and demographic characteristics.
+Thus, a questionnaire survey was designed and conducted in order to evaluate the
+moral responses of respondents from the USA. This survey focuses on understanding
+the public decision in four different scenarios or experiments. Every respondent got
+access to one of these experiments and the experiments were randomly assigned to
+the respondents with a probability of 0.25 in order to collect the same number of
+responses for every experiment. The survey was published between March to August
+2022 and a total of 1012 complete responses were collected for the four experiments.
+250, 256, 250, and 256 responses were collected for experiments 1, 2, 3, and 4 re-
+spectively. The results show that partial accessibility to the perceptive talking, which
+is the traditional method used in previous studies, results in biased results as the
+respondents were asked to imagine themselves as the passengers of the AV or pedes-
+trians who are crossing the street in front of the AV (experiments 2 and 3). Thus,
+in these two experiments, the respondents selected the action that saves their lives
+at the cost of the others. However, people will not always be passengers of AVs or
+pedestrians. Thus, experiment 4 focused on providing the respondents with full per-
+spective taking as the respondents were informed that they might be the passengers
+of an AV or might be pedestrians who are crossing the street in front of the AV, which
+is the real-life scenario. Thus, full accessibility to the perspective-taking resulted in
+272 ■ Explainable AI for Intelligent Transportation Systems
+
+a utilitarian weight that is similar to the no involvement scenario (experiment 1)
+during which the respondents were not involved in the situation at all. Thus, the
+results of experiment 4 show that full accessibility to perspective-taking resulted in
+moral results that are not biased similar to the results of experiments 2 and 3. In
+addition, in experiment 4 the respondents were not following a self-protective logic
+but were selecting the moral action that saves the largest number of lives. As a re-
+sult, full perspective-taking should be provided to the public in order to avoid the
+public resistance to buying AVs or buying a vehicle that might take the decision of
+sacrificing the passenger of the AV to save the pedestrians. Thus, it is expected that
+the different perspective taking scenarios would have an impact in the public willing-
+ness to buy and ride in a utilitarian AV. As a result, future studies should focus on
+understanding the influence of the different perspective taking scenarios on the level
+of willingness to buy a self-protective and utilitarian AVs.
+
+Bibliography
+
+  [1] Abraham, H., et al.: Autonomous vehicles and alternatives to driving: trust,
+  preferences, and effects of age. In: Transportation Research Board 96th An-
+  nual Meeting (2017).
+
+  [2] Awad, E., Dsouza, S., Kim, R., Schulz, J., Henrich, J., Shariff, A. et al. (2018).
+  The moral machine experiment. Nature, 563, 59–64.
+
+  [3] Bigman, Y. E., & Gray, K. (2018). People are averse to machines making
+  moral decisions. Cognition, 181, 21–34.
+
+  [4] Bonnefon, J. F., Shariff, A., & Rahwan, I. (2016). The social dilemma of
+  autonomous vehicles. Science, 352(6293), 1573–1576
+
+  [5] Burton, S., Habli, I., Lawton, T., McDermid, J., Morgan, P., & Porter, Z.
+  (2020). Mind the gaps: Assuring the safety of autonomous systems from an
+  engineering, ethical, and legal perspective. Artificial Intelligence, 279, 103201.
+
+  [6] Cervantes, J. A., Lopez, S., Rodriguez, L. F., Cervantes, S., Cervantes, F.,
+  & Ramos, F. (2020). Artificial moral agents: A survey of the current status.
+  Science and Engineering Ethics, 26(2), 501-532.
+
+  [7] De Melo, C. M., Marsella, S., & Gratch, J. (2021). Risk of injury in moral
+  dilemmas with autonomous vehicles. Frontiers in Robotics and AI, 7, 572529.
+
+  [8] Fagnant, D. J., & Kockelman, K. (2015). Preparing a nation for autonomous
+  vehicles : Barriers and policy recommendations. Transportation Research Part
+  A: Policy and Practice, 77, 167–181.
+
+  [9] Gogoll, J., & Muller, J. F. (2017). Autonomous cars: In favor in mandatory
+  ethics. Science and Engineering Ethics, 23(3), 681–700.
+  Ethical Decision-Making: The Case of Autonomous Vehicles ■ 273
+
+[10] Goodall, N. J. (2014). Ethical decision making during automated vehicle
+  crashes. Transportation Research Record: Journal of the Transportation Re-
+  search Board, 2424, 58–65.
+
+[11] Kim, R., Kleiman-Weiner, M., Abeliuk, A., Awad, E., Dsouza, S., Tenenbaum,
+  J. B., & Rahwan, I. (2018, December). A computational model of common-
+  sense moral decision making. In Proceedings of the 2018 AAAI/ACM Con-
+  ference on AI, Ethics, and Society (pp. 197–203). Association for Computing
+  Machinery.
+
+[12] Kollock, P. (1998). Social dilemmas: The anatomy of cooperation. Annual
+  Review Sociology, 24, 183–214.
+
+[13] Lee, C., Ward, C., Raue, M., D’Ambrosio, L. and Coughlin, J.F., 2017, July.
+  Age differences in acceptance of self-driving cars: A survey of perceptions and
+  attitudes. In international conference on Human Aspects of IT for the Aged
+  Population (pp. 3–13). Springer, Cham.
+
+[14] Lucifora, C., Grasso, G. M., Perconti, P., & Plebe, A. (2021). Moral reasoning
+  and automatic risk reaction during driving. Cognition, Technology & Work,
+  23(4), 705–713.
+
+[15] Martin, R., Kusev, I., Cooke, A., Baranova, V., van Schaik, P., & Kusev, P.
+  (2017). Commentary: The social dilemma of autonomous vehicles. Frontiers
+  in Psychology, 8 (808).
+
+[16] Martin, R., Kusev, P., & Van Schaik, P. (2021). Autonomous vehicles: How
+  perspective-taking accessibility alters moral judgments and consumer pur-
+  chasing behavior. Cognition, 212, 104666.
+
+[17] Nees, M. A. (2016). Acceptance of self-driving cars: An examination of ide-
+  alized versus realistic portrayals with a self-driving car acceptance scale. In,
+  Vol. 60(1). Proceedings of the human factors and ergonomics society annual
+  meeting (pp. 1449–1453). Los Angeles, CA: Sage CA, SAGE Publications.
+
+[18] O’Sullivan, S., Nevejans, N., Allen, C., Blyth, A., Leonard, S., Pagallo, U.,
+  . . . & Ashrafian, H. (2019). Legal, regulatory, and ethical frameworks for de-
+  velopment of standards in artificial intelligence (AI) and autonomous robotic
+  surgery. The international journal of medical robotics and computer assisted
+  surgery, 15(1), e1968.
+
+[19] Othman, K. (2021a). Impact of Autonomous Vehicles on the Physical Infras-
+  tructure: Changes and Challenges. Designs, 5(3), 40.
+
+[20] Othman, K. (2021b). Public acceptance and perception of autonomous vehi-
+  cles : a comprehensive review. AI and Ethics, 1(3), 355–387.
+
+[21] Othman, K. (2022a). Cities in the Era of Autonomous Vehicles: A Comparison
+  Between Conventional Vehicles and Autonomous Vehicles. In Resilient and
+  Responsible Smart Cities (pp. 95–108). Springer, Cham.
+274 ■ Explainable AI for Intelligent Transportation Systems
+
+  [22] Othman, K. (2022b). Exploring the implications of autonomous vehicles : A
+  comprehensive review. Innovative Infrastructure Solutions, 7(2), 1-32.
+
+  [23] Othman, K. (2022c). Multidimension Analysis of Autonomous Vehicles: The
+  Future of Mobility. Civil Engineering Journal, 7, 71-93.
+
+  [24] Park, J., Hong, E. and Le, H.T. (2021). Adopting autonomous vehicles : The
+  moderating effects of demographic variables. Journal of Retailing and Con-
+  sumer Services, 63, p.102687.
+
+  [25] Piao, J., McDonald, M., Hounsell, N., Graindorge, M., Graindorge, T., Mal-
+  hene, N. (2016). Public views towards implementation of automated vehicles
+  in urban areas. Transp. Res. Procedia 14, 2168–2177.
+
+  [26] Pigeon, C., Alauzet, A. and Paire-Ficout, L. (2021). Factors of acceptability,
+  acceptance and usage for non-rail autonomous public transport vehicles: A
+  systematic literature review. Transportation research part F: traffic psychol-
+  ogy and behaviour, 81, pp.251-270.
+
+  [27] Polydoropoulou, A., Tsouros, I., Thomopoulos, N., Pronello, C., Elvarsson,
+  A., Sigþorsson, H., Dadashzadeh, N., Stojmenova, K., Sodnik, J., Neophytou,
+  S. and Esztergar-Kiss, D., 2021. Who is willing to share their AV? Insights
+  about gender differences among seven countries. Sustainability, 13(9), p.4769.
+
+  [28] Rezaei, A., & Caulfield, B. (2020). Examining public acceptance of au-
+  tonomous mobility. Travel behaviour and society, 21, 235-246.
+
+  [29] Richardson, E., Davies, P. (2018). The changing public’s perception of self-
+  driving cars.
+
+  [30] Schoettle, B. and Sivak, M. (2014). A survey of public opinion about au-
+  tonomous and self-driving vehicles in the US, the UK, and Australia. Univer-
+  sity of Michigan, Ann Arbor, Transportation Research Institute.
+
+  [31] Seoane-Pardo, A. M. (2016, November). Computational thinking beyond
+  STEM: An introduction to” moral machines” and programming decision mak-
+  ing in ethics classroom. In Proceedings of the fourth international conference
+  on technological ecosystems for enhancing multiculturality (pp. 37-44).
+
+  [32] SurveyMonkey. https://www.surveymonkey.com/
+
+  [33] United States Census Bureau. (2022). Census Bureau Releases New Educa-
+  tional Attainment Data. https://www.census.gov/newsroom/press-releases/
+  2022/educational-attainment.html
+Index
+
+Accident Severity, 54, 56, 57, 62, 63,  Interpretable Machine Learning, 175, 203
+  68–71, 89, 91
+  LIME, 11, 16–20, 161
+Air Traffic, 16–18, 155, 161  Linear regression, 121, 124, 125,
+Artificial Intelligence, 60, 94, 121, 172,
+  128–130, 132
+  181, 200, 241, 242, 272
+Autonomous Driving, 4, 14, 34–36,  Pandemic, 75–78, 82, 84, 85, 88–92
+
+  38–46, 160  Reinforcement Learning, 12–14, 16, 17,
+Autonomous Vehicles, 4, 7, 10, 21,  19, 34, 41, 44, 46, 107, 136
+
+  34–36, 39, 41, 46, 175, 241–246,  ReliefF, 57, 59, 61, 67
+  248–250, 258, 272–274  Road Safety, 15, 36, 54–56, 71, 90, 121,
+
+Blockchain, 241–247, 249, 250  172, 173, 175, 198
+
+CNN, 12, 17, 41, 42, 105, 159, 172–175,  Saliency map, 12, 39, 104, 105
+  180–186, 190–200, 202, 203, 205,  SHAP, 11–20, 22, 23, 98, 105, 131, 132,
+  211, 233
+  141, 161, 162, 208, 223,
+Community Detection, 57–60, 65  230–233, 239
+Computer Vision, 159, 176, 178, 183  Smart contracts, 242, 247, 250
+
+ERSDRA Algorithm, 175, 199  Textual Explanations, 12, 13, 17, 38, 42
+Ethical, 4–6, 36, 160, 163, 241, 242, 249,  Time-Series, 20, 80, 88, 91, 158
+  Traffic Crashes, 56, 75, 77–79, 82, 87, 88
+  258–262, 265–273  Traffic Signal, 94, 105, 135–138, 141,
+Explainable AI, 4–11, 15–23, 34, 36, 38,
+  142, 144, 145, 147, 150, 151
+  42, 44, 46, 61, 62, 94, 105,  Transportation Mode, 10, 208–214, 216,
+  153–156, 160–163, 181, 196, 199,
+  241, 243, 248–251  217, 219, 221, 224, 225,
+  228–231, 233–237
+Feature selection, 54, 56–59, 61, 66–68,
+  71, 208–212, 228–230, 233, 234,  Vessel traffic services, 153, 154
+  238  Visual Explanations, 11, 12, 38, 39, 41,
+
+Forecast, 15, 16, 75, 77, 79, 80, 85, 86,  205
+  88, 89, 102, 121, 125, 134, 209
+  XGBoost, 17–20, 208, 210, 211, 220,
+Grad-CAM, 11, 12, 41, 105, 172, 175,  225–229, 233, 239
+  181, 182, 196, 197, 199, 205
+  ZORRO method, 136–140, 144, 147–150
+Graph neural networks, 135–137
+
+Injury Severity, 16, 56, 63, 66, 68, 70, 71
+Intelligent Transportation Systems, 3,
+
+  34, 55, 71, 93, 94, 120, 172, 206,
+  209, 235, 248
+
+  275
+

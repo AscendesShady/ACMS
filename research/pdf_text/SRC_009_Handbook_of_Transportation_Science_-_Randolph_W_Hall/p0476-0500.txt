@@ -1,0 +1,1179 @@
+Long-Haul Freight Transportation  477
+
+one may actually obtain, are strongly dependent upon the choice of the nondiffer-
+entiable optimization technique used to solve the Lagrangian duals, and require
+careful calibration. Crainic, Frangioni, and Gendron (2001) calibrate and compare
+subgradient (Camerini, Fratta, and Maffioli 1978, Crowder 1976) and bundle-
+based methods (Lemaréchal 1989, Hiriart-Urruty and Lemaréchal 1993) for the
+shortest path and knapsack relaxations obtained by the dualization of constraints
+(13.6) and (13.5), respectively. Experiments on a large set of problem instances
+(largest problem had 700 design arcs and 400 commodities) were used to identify
+strategies for the efficient design and implementation of each method. The study
+showed, in particular, that bundle methods converge faster toward the optimal value
+of the Lagrangian dual, and that they are more robust with respect to parameter
+calibration.
+
+  The lower bounds reported in these studies are within 9 percent of the optimum
+on average. Feasible solutions were obtained by using resource-based decom-
+position methods but these yielded poor bounds. Tabu search meta-heuristics
+offer currently the best procedures for determining high quality feasible solutions.
+Crainic, Gendreau, and Farvolden (2000) propose a tabu search metaheuristic that
+identifies good solutions for the path formulation (13.13)–(13.17). The method
+combines simplex pivot moves and column generation in a tabu search framework
+where the design objective (13.13) is used to select the next solution from among
+the possible candidates. Long-term memories record for each design arc the fre-
+quency of inclusion in good solutions and guide the diversification of the search.
+Extensive experiments, on the same set of problems also used by Crainic, Fran-
+gioni, and Gendron (2001), have shown that the method dramatically improves
+the solutions found by the resource decomposition method. The utilization of
+the cycle-based neighbourhoods proposed by Ghamlouche, Crainic, and Gen-
+dreau (2002a) promises to improve further the performances of meta-heuristics
+for network design. According to this strategy, the search proceeds in the space
+of the design variables by moving flow of several commodities simultaneously
+around suitably defined residual networks. Integrating these neighbourhoods in
+a tabu search-based path relinking method (Glover and Laguna 1992) consti-
+tutes the current best methodology for obtaining high quality, feasible solutions
+to capacitated multicommodity network design problems (Ghamlouche, Crainic,
+and Gendreau 2002b). The average optimality gap obtained for the same set of
+test problems was of the order of 2–3 percent, according to the problem type,
+with a maximum gap of the order of 10 percent. These results correspond to
+problems for which the optimal solutions are known. Notice that all mentioned
+meta-heuristics also allowed the resolution of problems too hard for the standard
+branch-and-bound of a state-of-the-art software in terms of CPU time or memory
+limitations.
+478  Handbook of Transportation Science
+
+  Very few, if any, polyhedral results exist for the general network design for-
+
+mulation (13.4)–(13.9). When actually used, inequalities derived for “simpler”
+formulations (e.g., location models, uncapacitated network design or network load-
+ing problems) are adapted to the more general formulations. See, for example, the
+work of Kim et al. (1999), who use the cutset inequalities initially derived for
+the capacitated loading problem for the design of service networks for express
+package delivery firms.
+
+  These inequalities state that the total capacity of any cut must support the
+total demand with endpoints on the two sides of the cut and they are certainly
+valid for the general formulation. We do not know, however, if they define facets
+or how efficient they are. We certainly do not know how to generate these cuts
+efficiently. Since their number is extremely high, we have little guaranty regarding
+the efficiency of this procedure. The same questions are also pertinent regarding
+the other families of cuts proposed in the literature for formulations “similar” to
+network design. More work is thus required to identify valid inequalities and facets
+for the MCND and to develop methods to automatically and efficiently generate
+these new constraints (the separation problem). The work of Chouman, Crainic,
+and Gendron (2001, 2002) contributes towards feeling this gap. The authors adapt
+and specialize to multicommodity network design a number of important fami-
+lies of valid inequalities. They also introduce a new familly of valid inequalities.
+Extensive experimentation shows that (1) not all combinations of valid inequalities
+are equally effective in terms of solution quality, and (2) specialized cuts and pro-
+cedures yield significant gains in solution quality and, especially, computational
+efficiency over state-of-the-art general purpose methods.
+
+  The situation and needs are similar concerning methods to identify the opti-
+mal solution of general MCND formulations. Holmberg and Yuan (1996, 1998)
+propose a branch-and-bound algorithm based on the Lagrangian relaxation of the
+flow constraints and subgradient optimization. The results appear promising, but
+not conclusive, especially when the dimensions of the network and the number of
+commodities increase. For larger problems, Kim, Barnhart, and Ware (1999) apply
+a combination of heuristics to reduce the size of the problem and branch-and-bound
+with column and constraint generation (the so-called branch-and-price-and-cut;
+cuts are added to the root problem only). This constitutes a very interesting overture
+to a promising algorithmic avenue. See Hoffman and Padberg (1993), Desrosiers
+et al. (1995), Barnhart et al. (1998), and Barnhart, Hane, and Vance (2000) for
+examples of similar algorithmic structures aimed at various complex problems that
+arise in transportation science and which emphasize the challenges associated with
+the development of such methods for the MCND.
+
+  Parallel computation may help address realistically dimensioned problem
+instances in reasonable times. In the case of heuristics, parallelism may also
+Long-Haul Freight Transportation  479
+
+enhance the robustness of the method and improve the quality of the solutions
+(Crainic 2002, Crainic and Gendreau 2002a, Crainic and Toulouse 2002). Applied
+to branch-and-bound, parallelism may be used to solve the subproblem at each
+node of the tree (Gendron and Crainic 1994b) or to explore the tree in paral-
+lel (Gendron and Crainic 1994a). Many issues still remain to be addressed in
+this area however. For example, the addition of cuts often destroys the “nice”
+structure (network, knapsack, etc.) obtained by relaxing some constraints. The
+relaxation of the cut constraints could them be contemplated. The issue might
+become even more challenging when constraints are to be generated at nodes
+other than the root. It is generally believed, however, that the combination of relax-
+ations, polyhedral results, and heuristics within a parallel computation framework
+constitutes a promising avenue towards a comprehensive solver for capacitated,
+multicommodity network design.
+
+13.5 Service Network Design
+
+Service network design is particularly relevant to firms and organizations that oper-
+ate consolidation transportation systems and is typically related to the planning
+of operations. It is usually part of tactical planning activities, although often it is
+referred to as strategic/tactical or tactical/operational according to the planning tra-
+ditions and horizons of the firm. The goal is to operate efficiently to answer demand
+and ensure the profitability of the firm. The “supply” side of this equation implies
+a system-wide, network view of operations, integrating consolidation activities in
+terminals, and the selection, routing, and scheduling of services. On the “demand”
+side, the routing of freight through the network must be planned to ensure timely
+and reliable delivery according to the customer specifications and the carrier’s own
+targets.
+
+  The objectives of the process are complex as well. The customer’s expectations
+have traditionally been expressed in terms of “getting there” at the lowest cost
+possible. This, combined with the usual cost consciousness of any firm, has implied
+that the primary objective of a freight carrier was, and still is for many carriers,
+to operate at the lowest possible cost. Increasingly, however, customers not only
+expect low tariffs, but also require a high quality service, mostly in terms of speed,
+flexibility, and reliability. The significant increase in the market share achieved
+by motor carriers, mainly at the expense of railway transportation, is due to a
+large extent to this phenomenon. Consequently, one of the major objectives of
+tactical planning is to achieve the best tradeoff between operating costs and firm
+profitability, and service performance measured, in most cases, by delays incurred
+by freight and rolling-stock or by the respect of predefined performance targets.
+480  Handbook of Transportation Science
+
+  To illustrate the complexity of decisions and tradeoffs characteristic of tac-
+tical planning, consider the routing of a shipment between two terminals of a
+consolidation transportation system operated, for example, by a railway or LTL
+motor carrier. Figure 13.2 displays a representation of such a system made up of
+five terminals and seven services (for simplicity, the actual service routes are not
+shown). A shipment that originates at terminal A with destination terminal D is
+sorted (classified) at A and may be routed according to a number of strategies,
+including:
+
+1. Consolidate it with other shipments going directly to its destination terminal
+  and put it on one of the available direct services, S1 or S2, ofpossibly different
+  types. If the freight volume is sufficiently high and the customer contract
+  allows it, S1 or S2 might be operated as a dedicated service, such as a full
+  truck moving direct between two end-of-lines or an unit train.
+
+2. Same consolidation, but move the shipment by using a service, such as S3,
+  that stops at one or several other terminals to drop and pickup traffic.
+
+3. Use the same consolidation policy but move the shipment by a direct service
+  S4 to the intermediate terminal C, where it is transferred to another direct
+  service, S5, that moves it to destination. This strategy may outperform the
+  previous one if the service level offerred on the direct routes outweights the
+  transfer costs; in Figure 13.2, it is also the only strategy available to move
+  from terminal B to terminal D.
+Long-Haul Freight Transportation  481
+
+4. Consolidate the shipment into a load for an intermediate terminal where it
+  will be reclassified and consolidated together with traffic originating at various
+  other terminals into a load for its final destination. The shipment is thus moved
+  by service S3 or S4 from A to C, consolidated together with traffic from B to
+  D and C to D, and then moved by S3 or S5 from terminal C to destination.
+
+  Which alternative is “best”? Each has its own cost and delay measures that
+follow from the service characteristics of each terminal and service. Thus, for
+example, strategies based on reconsolidation and routing through intermediate
+terminals may be more efficient when direct services between the origin and des-
+tination terminals of the shipment are offered rarely due to generally low level
+of traffic demand. Such strategies would probably result in higher equipment uti-
+lization and lower waiting times at the original terminal; hence, in a more rapid
+service for the customer. The same decision would also result, however, in addi-
+tional unloading, consolidation, and loading operations, creating heavier delays
+and higher congestion levels at intermediary terminals, as well as a decrease in the
+total reliability of the shipment. On the other hand, to increase the frequency of
+a direct service between the origin and destination terminals of a shipment would
+imply a faster and more reliable service for the corresponding traffic, as well as a
+decrease in the level of congestion at the intermediate terminals at the expense of
+additional resources, thus increasing the direct costs of the system. Therefore, to
+select the “best” solution for the customer and the company, one has to simultane-
+ously consider the routing of all traffic, the level of service on each route, and the
+costs and service characteristics of each terminal. These problems and decisions
+have network-wide impacts and are strongly and complexly interconnected both in
+their economic aspects and the space-time dimensions of the associated operations.
+Therefore decisions should be made globally, network-wide, in an integrated man-
+ner (Crainic and Roy 1988). More formally, main decisions made at the tactical
+level concern the following issues:
+
+1. Service selection. The routes – origin and destination terminals, physical route
+  and intermediate stops – on which services will be offered and the charac-
+  teristics of each service. Frequency or scheduling decisions are part of this
+  process.
+
+2. Traffic distribution. The itineraries (routes) used to move the flow of each
+  demand: services used, terminals passed through, operations performed in
+  these terminals, etc.
+
+3. Terminal policies. General rules that specify for each terminal the consolida-
+  tion activities to perform. For rail applications, these rules would specify, for
+  example, the blocks into which cars should be classified (the blocking poli-
+  cies), as well as the trains that are to be formed and the blocks that should be
+482  Handbook of Transportation Science
+
+  put on each train (the make up rules). An efficient allocation of work among
+  terminals is an important policy objective.
+4. General empty balancing strategies, indicating how to reposition empty
+  vehicles to meet the forecast needs of the next planning period.
+
+  Several efforts have been directed toward the formulation of tactical models.
+See the reviews of Assad (1980), Crainic (1988), Delorme, Roy, and Rousseau
+(1988), and Cordeau, Toth, and Vigo (1998). Network models, which take advan-
+tage of the structure of the system and integrate policies affecting several terminal
+and line operations, are the most widely developed. Simulation models have been
+proposed and used by transportation firms to evaluate scenarios and select policies.
+Network optimization formulations, on the other hand, may efficiently generate,
+evaluate, and select integrated network-wide operating strategies, transportation
+plans, and schedules. These models are discussed in this section.
+
+  Most service network design and related issues yield fixed cost, capacitated,
+multicommodity network design formulations (Section 13.4). These formulations
+may be static or dynamic but, up to now, have been generally deterministic. For
+a clearer view of tactical planning issues and service network design formula-
+tions, we distinguish between frequency and dynamic service network design
+models.
+
+  The former typically addresses strategic/tactical planning issues. The study
+and representation of interactions and tradeoffs among subsystems and decisions
+form a central part of this class of approaches. Typical issues addressed by such
+models concern questions such as: What type of service to offer? How often over
+the planning horizon to offer it? Which traffic itineraries to operate? What are the
+appropriate terminal workloads and policies? Frequency service network design
+models may be further classified according to the role service levels play in the
+formulations: decision or output. In a nutshell, service frequencies are explicit
+integer decision variables in the first class of models. Formulations that belong
+to the second class include “operate or not” ({0,1}) decision variables and derive
+frequencies from traffic flows subject to lower bound restrictions that represent
+minimum service levels. The output of frequency service network design models,
+the transportation or load plan, is used to determine the day-to-day policies that
+guide the operations of the system and is also a privileged evaluation tool for
+“what-if” questions raised during scenario analysis in strategic planning. Dynamic
+formulations are closer to the operational side of things. They usually target the
+planning of schedules and support decisions related to if and when services leave.
+Subsections 13.5, 13.5, and 13.5 examine models and methods that belong to
+each of these three classes. Section 13.5 briefly reviews the literature associated
+to service network design and tactical planning.
+Long-Haul Freight Transportation  483
+
+Frequency Service Network Design
+
+The network optimization modeling framework proposed by Crainic and Rousseau
+
+(1986) constitutes a prototypical frequency service network design formulation
+
+where explicit decision variables are used to determine how often each selected
+
+service will be run during the planning period. It is a multi-modal multicommodity
+
+model that integrates the service selection and traffic distribution problems with
+
+general terminal and blocking policies. Its goal is the generation of global strate-
+
+gies to improve the cost and service performance of the system. It is a modeling
+
+framework in the sense that while it may represent a large variety of real situa-
+
+tions, it has to be adapted to each application. Rail applications are to be found
+
+in Crainic (1982, 1984), Crainic, Ferland, and Rousseau (1984), and Crainic and
+
+Nicolle (1986). Roy (1984) and Delorme and Roy (1989) present applications of
+
+this framework to LTL trucking. In the following, we present a simplified model
+
+in order to emphasize the main modeling issues and challenges.
+
+Let  represent the “physical network” over which the carrier oper-
+
+ates. Vertices in  correspond to nodes where the terminals selected for
+
+the particular application are situated. For simplicity, assume that all terminals
+
+can perform all operations. The service network specifies the transportation ser-
+
+vices that could be offered to satisfy this demand. Each service  is defined
+
+by its route through the physical network; origin, destination, and intermedi-
+
+ary terminals where the service stops and work may be performed on its vehicles
+
+and cargo; capacity on each link of service class that indicates character-
+
+istics such as the mode, preferred traffic or restrictions, speed and priority of the
+
+service, etc.
+
+Transportation demand is defined in terms of volume (e.g., number of vehi-
+
+cles) of a certain commodity to be moved between two terminals in To simplify,
+
+we refer to product p = (commodity type, origin, destination) with a positive
+
+demand In the literature, one also finds the terms market and traffic-class with
+
+a similar meaning. Empty vehicles may be included as commodities to be moved
+
+between given origin-destination pairs. Traffic moves according to itineraries. An
+
+itinerary  for product p specifies the service path used to move (part of) the
+
+corresponding demand: the origin, destination, and intermediary terminals where
+
+operations are to be performed; the sequence of services between each pair of con-
+
+secutive terminals where work is performed; the commodity class that indicates
+
+characteristics such as priority, minimum service level, preferred transportation
+
+mode, etc.
+
+Service frequencies  define the level of service offered, i.e., how
+
+often each service is run during the planning period. To design the service network
+
+thus means to decide the frequency of each service contemplated in the planning
+484  Handbook of Transportation Science
+
+process such that the demand is satisfied. Many itineraries may be defined for
+
+each product and more than one may be actually used, according to the level
+
+of congestion in the system and the service and cost criteria of the particular
+
+application. Flow distribution decisions are therefore represented by variables
+
+indicating the volume of product  moved by using its itinerary
+
+Workloads and general consolidation strategies for each terminal in the system
+
+may be derived from these decision variables.
+
+  Let  and  be the vectors containing the decision variables.
+
+The model states that the total generalized system cost must be minimized, while
+
+satisfying the demand for transportation and the service standards:
+
+  Minimize
+
+  subject to
+
+where,
+
+  total cost of operating service s;
+  total cost of moving the freight of product p by using its itinerary l;
+  penalty terms capturing various relations and restrictions, such as the
+  limited service capacity.
+
+  This model is similar to the path formulation of the capacitated network
+
+design model ((13.13)–(13.17)) introduced in Section 13.4, except that the lin-
+
+ear cost functions of the latter have been replaced by a notation that indicates
+
+more general functional forms. The objective function defines the total system
+
+cost and includes the total cost of operating a service network at given frequen-
+
+cies, the total cost of moving freight by using the selected itineraries for each
+
+product, as well as a number of terms translating operational and service restric-
+
+tions into monetary vales.  and  thus correspond to the fixed and
+
+variable costs, respectively, of the network formulation given the general level of
+
+service of the firm and the corresponding traffic pattern. The objective function
+
+computes a generalized cost, in the sense that it may include various productivity
+
+measures related to terminal and transportation operations. Other than the actual
+
+costs of performing the operations, one may thus explicitly consider the costs,
+
+delays, and other performance measures related to the quality and reliability of
+Long-Haul Freight Transportation  485
+
+the service offered, to evaluate alternatives and determine the most advantageous
+
+tradeoffs.
+
+The delays incurred by vehicles, convoys, and freight due to congestion and
+
+operational policies in terminals and on the road are generally used as a measure
+
+of service quality. Define  and  as the total durations of service s
+
+and itinerary l for product p, respectively. Equations (13.22)–(13.23) illustrate one
+
+approach to use delays to integrate service considerations into the total general-
+
+ized system cost. On the one hand, unit operating costs and are computed
+
+for each service and product itinerary, respectively. On the other hand, the cor-
+
+responding total expected service,  and itinerary,  times are
+
+converted into measures compatible with the operating costs via unit time costs
+
+for each traffic  and service  class. These costs are usually based on
+
+equipment depreciation values, product inventory costs, and time-related charac-
+
+teristics, such as priority or different degrees of time sensitivity for specific traffic
+
+classes.
+
+Although nonlinear functions could be used, unit operation costs and
+
+are usually computed as the sum of the unit costs of all terminal and trans-
+
+portation activities described in the service routes and freight itineraries. For rail
+
+applications, these may include hauling costs for trains and cars over the lines of
+
+the network, as well as yard handling costs associated with car classification, the
+
+transferring of cars and blocks among trains, and the making-up and breaking-
+
+down of trains. Similar terms appear in LTL applications: loading, unloading,
+
+transdock, and consolidation operations at terminals, energy costs, maintenance,
+
+crews, etc.
+
+The expected total delays  and  are also computed by sum-
+
+ming up the expected delays associated with the terminal and line operations that
+
+make up the service and freight routes. No correlation is usually considered.
+
+Some durations are simply assumed proportional to the volume of vehicles or
+
+traffic handled. It is typically the case for the yard transfer delays for rail appli-
+
+cations and intercity transportation time for LTL tracking. In many operations,
+
+however, vehicles of different services carrying freight for different products on
+
+various itineraries must use the same facilities. It is the case, for example, of
+
+most consolidation and classification operations. As a consequence, most time-
+
+related functions are built to reflect the increasingly larger delays that result when
+
+facilities of limited capacity must serve a growing volume of traffic. Such con-
+
+gestion functions are typically derived from engineering procedures and queuing
+486  Handbook of Transportation Science
+
+models (see Section 13.6) and are built to represent: average delays due to rail
+yard operations, particularly car classification and blocking, and train make up;
+waiting time of trucks at LTL terminals before loading and unloading opera-
+tions (rail cars and trucks at port loading/unloading facilities experience similar
+delays); delays incurred by trains when meeting, overtaking, or being overtaken
+by other trains on the lines of the network; congestion on highways in urban areas;
+expected departure or connection delays in rail yards, LTL terminals, and mar-
+itime ports representing the waiting time for the designated service to be available,
+and so on.
+
+  Average transportation delays do not tell the whole story, however. Often, the
+goal is not only rapid delivery but also consistent, reliable service. The variance of
+the total service or itinerary time may then be used to penalize unreliable operations.
+Equation (13.24) illustrates this approach for the case when service quality targets
+are announced. Here, each traffic-class has a delivery objective (e.g., 24 hours) and
+reliability requirements (e.g., target must be achieved for 90 percent of deliveries),
+noted and n, respectively. A penalty is then imposed when the expected
+
+itinerary time, adjusted for its standard deviation  does not comply
+
+with the service objective. The total itinerary cost then becomes:
+
+  Finally, equation (13.25) illustrates the use of penalty terms to capture various
+
+restrictions and conditions. Here, stands for the total volume of freight hauled
+
+by service s over its service leg k,  with  if service
+
+leg k of service s is used by itinerary l of product p, and 0 otherwise. Thus, in
+
+this example, the service capacity restrictions are considered as utilization targets
+
+and the over-assignment of traffic is permitted at the expense of additional costs
+
+and delays. Tradeoffs between the cost of increasing the level of service and the
+
+extra costs of insufficient capacity may then be addressed while the associated
+mathematical programming problem is solved.
+
+  The model has the structure of a nonlinear, mixed integer, multi-modal, multi-
+commodity network flow problem. No exact solution method has yet been proposed
+for this model. The original method described by Crainic and Rousseau (1986)
+combines a heuristic (based on finite differences in the objective function) that
+iteratively decreases frequencies from initial high values, with a convex network
+optimization procedure to distribute the freight. The latter makes use of column
+Long-Haul Freight Transportation  487
+
+generation to create itineraries and descent procedures to optimize the flow distribu-
+tion. The procedure appeared efficient for the rail and LTL applications considered.
+Crainic and Roy (1988) and Roy and Crainic (1992) also report on the utilization of
+this approach to perform scenario and postoptimal analyses, particularly concern-
+ing the tradeoffs between the cost of operating the system and the value of time,
+and the level of demand required to operate direct services over long distances.
+
+Service Frequencies as Derived Output
+
+The load planning model for LTL motor carriers introduced by Powell and Sheffi
+
+(1983, 1986, 1989; see also Powell 1986a and Lamar, Sheffi, and Powell 1990)
+
+constitutes a major example of frequency service network design formulations that
+
+yield service levels as one of their outputs. What follows is a condensed version
+
+of this model.
+
+The model is defined on a service network  where all nodes are
+
+terminals and links represent potential direct services between two terminals. Two
+
+types of terminals are considered: end-of-lines, where freight originates and ter-
+
+minates; and breakbulk consolidation terminals. Although not forbidden, direct
+
+movements between end-of-line terminals are extremely rare, especially for very
+
+large LTL carriers. Consequently, the design decisions concern only services
+
+between end-of-lines and breakbulks, and between breakbulk terminals. This has
+
+the benefit of considerably reducing the size of the problem. The main parameters
+
+and decision variables that define the model are:
+
+unit linehaul cost per trailer, loaded or empty, from terminal i to terminal j;
+
+unit trailer handling cost at terminal i, if terminal i is a breakbulk (0,
+
+otherwise);
+
+a function that computes the trailer handling cost at end-of-line i according
+
+to the total number of direct services operated out of i(0, if i is a breakbulk);
+
+number of LTL trailers originating at terminal o and destined for
+
+terminal d;
+
+set of permissible freight routings, i.e., that respect particular constraints
+
+with respect to the association of end-of-line terminals to breakbulks (the
+
+so-called clustering constraints);
+
+service design decisions;  if the carrier is offering direct service
+
+from terminal i to terminal j, and 0 otherwise;
+
+volume of LTL traffic on link (i,j) with destination terminal d;
+
+auxiliary flow routing variable (its use simplifies the representation of the
+clustering constraints);
+488  Handbook of Transportation Science
+
+  flow of empty trailers moving from i to j;
+
+  volume of total LTL traffic handled at breakbulk i, that is, the traffic that
+  originates at i plus the traffic that is transferred at the terminal;
+  : minimum frequency if a direct service is offered from terminal i to
+  terminal j;
+  service frequency – the number of trailers dispatched over the planning
+  period, from terminal i to terminal j, where,
+
+  The model may be written as:
+  Minimize
+
+  subject to
+
+  The objective function (13.27) computes the total cost of dispatching trailers
+according to the determined service level, moving the loaded and empty trailers,
+and handling freight in terminals. Constraints (13.28) and (13.29) ensure that
+freight itineraries obey routing restrictions and that demand is satisfied. Relation
+(13.30) is the usual linking constraint that ensures that only operated services are
+used. Equations (13.31) and (13.32) balance the empty flows.
+Long-Haul Freight Transportation  489
+
+  The modeling framework is strongly influenced by the LTL context and the
+considerable challenges associated with the large size of the LTL carriers operat-
+ing at the national level in the United States. It may be viewed as an extension
+of the arc-based multicommodity network design formulation ((13.4)–(13.9)) in
+Section 13.4, with no explicit capacities and a number of complicating constraints.
+The authors implemented a heuristic procedure based on the hierarchical decom-
+position of the problem into a master problem and several subproblems. The master
+problem is a simple network design problem where the total system cost (13.27)
+is computed for each given configuration of selected services. The design is modi-
+fied by adding or dropping one arc at a time (Powell 1986a). Each time the design
+is modified, the subproblems must be solved and the objective function must be
+evaluated. The first subproblem concerns the routing of loaded LTL trailers and
+it is solved by shortest-path-type procedures with tree constraints (Powell and
+Koskosidis 1992). The empty balancing subproblem is solved as a minimum cost
+transshipment formulation with adjusted supply and demand to account for timing
+conditions not included in the original formulation (Roy and Delorme 1989, use
+a similar approach).
+
+  The model and solution method are at the core of an interactive decision sup-
+port system, dubbed APOLLO (Advanced Planner Of LtL Operations), and has
+been implemented at a major U.S. LTL carrier. Impressive results are reported with
+respect to the impact of the system both on load planning operations and strategic
+studies of potential terminal location. Powell and Scheffi (1986, 1989) present in
+more details the functionalities of APOLLO and discuss its performances on actual
+problems. They also emphasize the importance of allowing planners to interact with
+the software to explore alternatives and to select among various options. In this
+way, planners are better positioned to understand how the system works and, ulti-
+mately, to accept its suggestions. The same modeling framework was also used as
+the basis for the development of a more comprehensive load planning system called
+SYSNET (Braklow et al. 1992), implemented at one of the largest LTL carriers
+in the United States. In this version, the issue of running direct services, bypass-
+ing breakbulk terminals, was explicitly addressed by including such services into
+the service network. The routing of the freight also acknowledged the geographic
+and labor structure of the company and considered the relay points where trailers
+are passed from one driver to the next. The resulting network representation is
+huge. Heuristics based on company operating rules are used to prune it before the
+optimization routines are called upon. Other than the optimization model and pro-
+cedures, the planning system includes demand forecasting, database management,
+user monitoring and control functionalities. The system has been used with great
+success to build the load plan, to study the location and dimension of breakbulks,
+490  Handbook of Transportation Science
+
+to determine the routing of loaded and empty trailers, and to study which directs
+should be added or dropped.
+
+Deterministic Dynamic Service Network Design
+
+When schedules are contemplated, a time dimension must be introduced into the
+formulation. This is usually achieved by representing the operations of the system
+over a certain number of time periods by using a space-time network.
+
+  The representation of the physical network is replicated in each period. Start-
+ing from its origin in a given period, a service arrives (and leaves, in the case of
+intermediary stops) later at other terminals. Services thus generate temporal ser-
+vice links, between different terminals at different time periods. Temporal links
+that connect two representations of the same terminal at two different time periods
+may represent the time required by terminal activities or the freight waiting for the
+next departure. The costs associated with the arcs of this network are similar to
+those used in the static formulations of the previous subsections. Additional arcs
+may be used to capture penalties for arriving too early or too late.
+
+  There are again two types of decision variables. Integer design variables are
+associated with each service. Restricted to {0, 1} values, these variables indicate
+whether or not the service leaves at the specified time. When several departures
+may take place in the same time period, general (nonnegative) integer variables
+must be used. (Note that one can always use {0, 1} variables only by making the
+time periods appropriately small.) Continuous variables are used to represent the
+distribution of the freight flows through this service network.
+
+  The resulting formulations are network design models similar to those pre-
+sented in Section 13.4, but on a significantly larger network due to the time
+dimension. Actually, any of the two previous modeling frameworks, service net-
+work design with frequency variables or derived output, may be used as the basis
+for a dynamic scheduling model. The sheer size of the dynamic network, as well
+as the additional constraints usually required by the time dimension, makes this
+class of problems even harder to solve than the static ones. Thus, the pioneering
+effort of Morlok and Peterson (1970), which integrated blocking, train formation,
+and train scheduling into a very large mixed integer formulation, never did yield a
+solution method or an application. Heuristic methods have been used so far.
+
+  Farvolden and Powell (1991, 1994) present a dynamic service network design
+model for LTL transportation. The formulation allows for several departures in
+the same period, but the simpler {0, 1} version is solved. An efficient primal-
+partitioning with column generation algorithm is used to solve the freight routing
+problem for any given service configuration (Farvolden, Powell, and Lustig 1992).
+This was also used to determine the dual variables for service links used to develop
+Long-Haul Freight Transportation  491
+
+an add-drop heuristic for the design problem. The methodology appeared inter-
+esting, especially concerning the quality of the evaluation of the add and drop
+moves. No comprehensive experimental analysis is available, however. Equi et al.
+(1997) determine which shipments of a given good are to be performed and
+the schedules of the vehicles that will undertake them. The model is a mixed-
+integer formulation. The proposed heuristic decomposes the problem according to
+a Lagrangian-type decomposition and proceeds in two steps: a metaheuristic imple-
+ments tabu search ideas to approximate the design subproblem, and a transportation
+problem addresses the scheduling part. The methodology has been successfully
+applied to the problem of transporting wood from cutting areas to ports.
+
+  Haghani (1989) attempts to combine the empty car distribution with the train
+make-up and routing problems. The dynamic network includes normal and express
+modes for each service route for each time period, but traffic on each link is pre-
+specified and access to express links is restricted to given markets. Travel times
+are fixed. Linear functions are used for costs and delays, except for classifica-
+tion, which makes use of a convex congestion function. The dynamic service
+network design has continuous empty and loaded car flows and integer engine
+flows. A heuristic decomposition approach is used to solve somewhat simpler
+problems and appears efficient for small rail systems. The study also points to
+better performances, in terms of operating costs, of an integrated formulation as
+compared to the “traditional” hierarchical approach.
+
+  Gorman (1998a) also attempts to integrate the various service network design
+aspects into a scheduled operating plan that minimizes operating costs, meets
+the customer’s service requirements, and obeys the operation rules of a partic-
+ular railroad. Model simplifications must be introduced in order to achieve a
+comprehensive mathematical network design formulation. The solution method
+is innovative. A hybrid metaheuristic, a tabu-enhanced genetic search, is used to
+generate candidate train schedules, which are evaluated on their economic, ser-
+vice, and operational performances. On relatively small but realistic problems, the
+metaheuristic performed very well. A major U.S. railroad has successfully used
+this model for strategic scenario analysis of their operations (Gorman 1998b).
+This work emphasizes the interesting perspectives offered by modern heuristics in
+addressing complex service network design problems.
+
+More Service Network Design Models
+
+Several other service network design modeling efforts make use of {0, 1} mixed
+integer network flow formulations similar to the network design models in
+Section 13.4. Keaton (1989, 1991, and 1992) proposes a model to develop oper-
+ating plans for railroads. The model aims to determine which pairs of terminals
+492  Handbook of Transportation Science
+
+to connect by direct service, and whether to offer more than one train a day, as
+well as the routing of freight and the blocking of rail cars. The service network is
+made up of one network for each origin-destination pair of terminals in the system
+with positive demand. Links represent trains and connections in yards, as well as
+a priori determined blocking alternatives. Continuous car flows and integer train
+connections represent the decision variables. All cost functions are linear – there
+is no congestion and fixed average yard delays are used. The model minimizes
+the total cost computed as the sum of fixed train costs, car time-related costs, and
+classification costs. The maximum number of blocks that may be built in a yard
+yields the linking constraints. Feasibility constraints limit the maximum number
+of connections and the minimum number of trains for a given pair of terminals.
+Solutions were obtained by using a Lagrangian relaxation of the linking constraints
+combined with various heuristics based on operation rules. Results were mixed.
+While the model was used to perform a number of analyses on relatively small
+systems, convergence difficulties were also reported.
+
+  Newton (1996), Newton, Barnhart, and Vance (1998), and Barnhart, Jin,
+and Vance (2000) also address the rail blocking problem. They formulate it as
+a network design problem, where nodes correspond to classification yards, and
+candidate blocks correspond to arcs. No fixed costs are associated with blocks, but
+several capacity restrictions are introduced to limit the number of blocks and the
+total volume of freight processed at each yard. The first two references present a
+path-formulation and a branch-and-price solution approach (Barnhart et al. 1998).
+In the third paper, a dual-based Lagrangian relaxation is used to decompose the
+problem into easier-to-address subproblems: a continuous multicommodity flow
+problem and an integer block formulation that selects blocks that satisfy the yard
+capacity constraints. Subgradient optimization is used to solve the Lagrangian
+dual, while column generation is applied to the flow subproblem. To solve the
+block subproblem, a branch-and-cut approach is used, where constraints that force
+the connectivity of at least one path for each commodity are added to the nodes of
+the enumeration tree. With these constraints, the Lagrangian relaxation identifies
+a better bound than previously. By incorporating significant data preprocessing to
+reduce the number of potential blocks and paths, the method could address the
+problem of a major American railroad and propose blocking plans that represent
+significant cost improvements.
+
+  Kuby and Gray (1993) developed an early model for the design of the network
+of an express package delivery firm. It is a path-based {0, 1} network design model,
+similar to formulation (13.13)–(13.17), where multistop aircraft routes must be
+selected in and out of a given hub. Paths were generated a priori, and the model
+was solved with a standard mixed-integer package. Analyses illustrated the cost
+effectiveness of a design with multiple stops over a pure hub-and-spoke network.
+Long-Haul Freight Transportation  493
+
+Kim, Barnhart, and Ware (1999) propose more comprehensive models for the
+design of the multi-modal version of the problem (Barnhart and Schneur 1996,
+address a simplified version of the problem). Here, several hubs and aircraft types
+are considered, while trucks may perform pickup and delivery activities, as well as
+transportation over limited distances. The problem is further complicated by time
+window restrictions on pickup and delivery times at major collection centers, as
+well as on the sorting periods at hubs. One product is considered in the application.
+The authors examine arc, path, and tree-based formulations, and select the latter
+since it significantly reduces the size of the problem. To solve the linear relaxation
+of the resulting formulation, the authors combine heuristics to further reduce the
+size of the problem, cut-set inequalities, and column generation. Branch-and-
+bound is then used to obtain an integer solution. The paper by Kim and Barnhart
+(1997) presents a good summary of the authors’ experience with these difficult
+problems and the branch-and-price-and-cut methodology.
+
+  The design of postal networks and services forms a class of problems very
+close to those just mentioned. The LTL frequency service network design by Roy
+(1984) has already been applied to the design of express letter services for Canada
+Post. The reorganization of the German postal services belongs to the same prob-
+lem class, albeit on a more comprehensive scale. To bring the problem down to
+manageable proportions, Grünert and Sebastian (2000; see also Grünert, Sebastian,
+and Thärigen 1999 and Buedenbender, Grünert, and Sebastian 2000) decompose
+it into several subproblems: the optimization of the night airmail network, the
+design of the ground feeding and delivery transportation system, the scheduling
+of operations. Vehicle routing models and techniques are used for the routing and
+scheduling tasks. A discrete dynamic network design formulation, similar to those
+discussed in Section 13.5, is also proposed. The air network design formulation is
+further decomposed into a direct flight problem and a hub system problem; both
+yield fixed cost, multicommodity, capacitated network design formulations with
+side constraints. To optimize these formulations, the authors propose combina-
+tions of classical heuristics, tabu search and evolutionary metaheurstics, and exact
+mathematical programming methods (e.g., branch-and-bound). A decision support
+system integrates the models and associated solution methods, as well as the tools
+required to handle the data, models, and methods, and to assist the decision process.
+
+  Armacost, Barnhart, and Ware (2002) also address next-day express (air)
+delivery service design but through a different methodological approach. The
+authors transform the problem formulation by defining variables that represent
+combinations of service routes. The new variables implicitly account for the flow
+distribution and thus yield a pure design formulation for which stronger bounds
+and thus more efficient solution methods may be derived. The results obtained on
+data from a major U.S. express shipment firm is very encouraging and emphasizes
+494  Handbook of Transportation Science
+
+the need to continue to explore the network design formulations for new insights
+and more efficient solution methods.
+
+13.6 Operational Planning and Management
+
+The ultimate goal of any transportation firm is to make profits and improve, or at
+least maintain, its competitive position. To this end, strategic and tactical plans can
+be drawn up to guide operations, but the operational capabilities of the firm will
+ultimately determine its performance.
+
+  There are many different issues that must be addressed at the operational level
+in order to ensure that demand is satisfied within the required service criteria and
+that the resources of the carrier are efficiently used. Most of these issues must
+consider the time factor. For example, an empty truck must be assigned and moved
+following a customer request; empty rail cars have to be repositioned, otherwise,
+soon, idle equipment will be observed at some terminals while others will not
+be able to satisfy demands; a container must arrive in time to be loaded on the
+departing ship; a truck has to pick up a load within a specified time window;
+and so on and so forth. For other types of operations, the very notion of a planned
+solution does not make sense and the whole operation must continuously adapt and
+react in real time. Consider, for example, truckload motor carrier services where
+drivers learn their next assignment only after the current task is concluded. Thus,
+the need to answer customer requests in real time, to conform to time restrictions
+on operations, and to integrate in today’s decisions their possible impact on future
+decisions and performances, emphasize the dynamic aspect of operational planning
+and management issues for a freight carrier.
+
+  Many models traditionally used in transportation planning use known static
+data as their input. Tactical planning formulations, for example, consider aggre-
+gated forecast demand data as “known”. However, the real world in which these
+models are used is in a constant state of change and solutions cannot always be
+implemented as planned. If traffic is slower than predicted, vehicles may arrive late
+at customers’ locations or at the terminal. Forecasted customer requests for empty
+containers or trailers may not materialize while unexpected demands may have to
+be satisfied. The planned supplies of empty vehicles at depots may thus be unsettled
+and additional empty movements may have to be performed. Consequently, the
+dynamic aspect of operations is further compounded by the stochasticity inherent
+to the system, that is, by the set of uncertainties that are characteristic of real-life
+management and operations. Increasingly, these characteristics are reflected in the
+models and methods aimed at operational planning and management issues, as
+illustrated in this section.
+Long-Haul Freight Transportation  495
+
+Crew Scheduling
+
+Crews are assigned to vehicles and convoys in order to support the planned oper-
+ations. There are also numerous other issues related to manpower management
+such as the scheduling of reserve crews, terminal employees (e.g., Nobert and Roy
+1998), maintenance crews, etc. A significant body of methodological and techno-
+logical knowledge has been developed to deal with these issues, especially in the
+context of transit (bus and passenger rail) and airline transportation. Some form of
+set covering model is generally used. The resulting mixed-integer formulation is
+usually very large and it is addressed by column generation and branch-and-price
+techniques. See, for example, Barnhart and Talluri (1997), Desrosiers et al. (1995),
+Desaulniers et al. (1998a,b).
+
+  These methodologies were developed for applications where detailed sched-
+ules are known and adhered to. Consequently, although a few similar developments
+have targeted crew scheduling issues in the freight transportation industry (e.g.,
+Crainic and Roy 1990, 1992), currently it appears that better results can be achieved
+by applying the class of methodologies used to dynamically allocate resources to
+tasks described in Section 13.6. Crew scheduling issues and models form the
+subject of Chapter 14 of this book.
+
+Terminal and Linehaul Operations
+
+Terminal and line managers, operators, and dispatchers face a host of control and
+dispatch issues that form the subject of an extensive literature. The corresponding
+models and methods aim either to analyze and plan operations or to assist the
+real-time dispatch of resources and control of operations. A brief enumeration of
+a number of important issues and references follows.
+
+  Terminal models mainly address issues related to the estimation of delays
+associated with the various operations: load or unload freight, classify vehicles,
+form blocks and trains, transfer freight between vehicles or convoys, etc. The
+restricted number of available resources and the large volumes of freight and vehi-
+cles that require service result in congestion conditions usually evaluated through
+the average (and, sometimes, the variance) of the associated waiting time. Delays
+may also result from the need to wait for the planned connection. Queuing for-
+mulations are generally used to derive models for these phenomena (e.g., Crainic
+1988 and Chapter 5). Petersen (1977b,c; see also Petersen 1971a,b and Petersen
+and Fullerton 1975) presented what is probably the first comprehensive analysis
+of yard delays. Bulk service queues, where service is performed for groups of cus-
+tomers (cars) emerge as the main methodological approach. They are difficult to
+solve, however, in all but the simplest limiting cases. Turnquist and Daskin (1982)
+496  Handbook of Transportation Science
+
+use similar formulations for their rail yard model but relax a number of restrictions
+
+in order to obtain a more tractable model. Daskin and Walton (1983) propose a
+
+set of queuing models to represent the lightering operations (transfers from large
+
+ocean tankers to smaller vessels) in crude transportation.
+
+  Powell (1981, 1986b; see also Powell and Humblet 1986) undertook a signifi-
+
+cant study of bulk queues and their applications to modeling delays in transportation
+
+terminals. He proposed efficient numerical methods (Powell 1986d) and closed-
+
+form approximations (Powell 1986c) to compute the moments of the distributions.
+
+Closed-form approximation formulas have also been proposed by Crainic and
+
+Gendreau (1986). Such closed-form approximations of delays in freight terminals
+
+(as well as on the lines of the systems) are equally important as generators of
+
+functions and measures for the service network design and the strategic planning
+
+models presented in Sections 13.5 and 13.3, respectively. A different perspective
+
+on yard-blocking performance is offered by Daganzo (1987a,b). Based on direct
+
+analyses of the departure schedules, policies, and operational rules, formulae are
+
+determined for a number of performance measures – number of tracks in the yard
+
+and number of switches per car, for example – for various blocking strategies.
+
+  Many rail line models aim to represent the delays that result when trains meet
+
+(on single-track lines) or when one train overtakes another. When traffic volumes
+
+are low, analytical formulae may be obtained directly from the corresponding oper-
+
+ating rules (Petersen 1974, 1975a,b). Queuing models are again the methodology
+
+of choice, the approach being similar to that used to analyze rail yard operations
+
+when congestion conditions occur (Petersen 1977c). More recently, Chen and
+
+Harker (1990) and Harker and Hong (1990) consider the case when services are
+
+scheduled and evaluate the mean and variance of delays on double and single-track
+
+lines, respectively. Hallowell and Harker (1996) evaluate and predict performance
+
+on partial double-track rail line with scheduled traffic.
+
+  The preceding models may be combined and, eventually, approximated, to
+
+yield formulations that may be used in more comprehensive planning systems.
+
+Petersen and Taylor (1982), Petersen (1984), Crainic, Ferland, and Rousseau
+
+(1984), and Crainic, Florian, and Léal (1990) integrate queuing submodels or
+
+functions into the planning systems they propose.
+
+  A different line of research relative to rail line models addresses issues related
+
+to the scheduling and pacing of trains on a line.  and Harker (1991) pro-
+
+pose a mixed integer formulation, solved by branch-and-bound, to assist the tactical
+
+(weekly or monthly) scheduling of trains on a line. The model is embedded in the
+
+SCAN1 software. The issue of optimally pacing trains over a line is addressed by
+
+Kraay, Harker, and Chen (1991), Higgins, Ferreira, and Kozan (1995) and Higgins,
+
+Kozan, and Ferreira (1996, 1997). Network-based mixed integer formulations also
+Long-Haul Freight Transportation  497
+
+appear here. The application of genetic, tabu search, and hybrid metaheuristics to
+the same problem is explored by Higgins, Ferreira, and Kozan (1997).
+
+Empty Vehicle Distribution and Repositioning
+
+A particularly important and challenging issue for freight carriers is the need to
+move empty vehicles. Indeed, the geographic differences in demand and supply
+for each commodity type often result in an accumulation of empty vehicles in
+regions where they are not needed and in deficits of vehicles in other regions that
+require them. Then, vehicles must be moved empty, or additional loads must be
+found, in order to bring them where they will be needed to satisfy known and
+forecasted demand in the following planning periods. This operation is known as
+repositioning and is a major component of what is known as fleet management.
+In its most general form, fleet management covers the whole range of planning
+and management issues from procurement of power units and vehicles to vehicle
+dispatch and scheduling of crews and maintenance operations. Often, however,
+the term designates a somewhat restricted set of activities: allocation of vehicles
+to customer requests and repositioning of empty vehicles.
+
+  Moving vehicles empty does not directly contribute to the profit of the firm but
+it is essential to its continuing operations. Consequently, one attempts to minimize
+empty movements within the limits imposed by the demand and service require-
+ments. Empty balancing, the distribution of empty vehicles to balance the supply
+and demand in future periods, is a major objective of dispatchers and a central
+component of planning and operations of most transportation firms. This issue
+must also be considered at the tactical level. In rail transportation, for example,
+empty rail cars are put on the same trains as loaded ones and thus contribute to an
+increase in the number of trains, in the volume of vehicles handled in terminals
+and, ultimately, in system costs and delays. For planning purposes, the demand
+for empty cars may be approximated and introduced in tactical model by view-
+ing empties as another commodity to be transported (e.g., Crainic, Ferland, and
+Rousseau 1984). A similar approach may also be used for the planning of multi-
+modal regional or national systems (e.g., Crainic, Florian, and Léal 1990). The
+issue is also relevant in LTL trucking where empty balancing is an integral part of
+a transportation plan. In this case, a load plan is first obtained for the actual traffic
+demands, and an empty balancing model is then solved to reposition the empties
+(see Delorme and Roy 1989 and Braklow et al. 1992, for example).
+
+  Numerous studies reflect the significant research and development effort that
+has been dedicated to empty vehicle distribution issues. Interested readers may
+start exploring this field with the review of Dejax and Crainic (1987). It includes
+contributions going back to the ’60s and spans the whole spectrum of modeling
+498  Handbook of Transportation Science
+
+approaches from simple static transport models to formulations that integrate the
+dynamic and stochastic characteristics of the problem. In the following, we recall
+some of the main articles and models in this field.
+
+  The first empty vehicle allocation models used straightforward transportation
+formulations (e.g., Leddon and Wrathall 1967, Misra 1972, Baker 1977). Given
+estimations of future supply and demand of empty cars of a homogeneous fleet
+at the yards of the network, and the cost in car-hours, for each pair of yards, the
+distribution of empty cars is optimized to minimize the total cost.
+
+  A significant step forward in modeling capabilities was achieved with the
+explicit consideration of the time perspective. A space-time diagram represents
+the various paths that vehicles may travel to reach their proper destination at a
+specified time (Figure 13.3 illustrates such a network). The resulting formulation
+takes the form of a deterministic dynamic transshipment network model, where
+flows are optimized such that either the total cost is minimized, or the profitability
+of the system is maximized. Starting with the pioneering contributions of White
+Long-Haul Freight Transportation  499
+
+(1968) and White and Bomberault (1969) for rail car distribution, and of White
+(1972) for container allocation, many models that aimed for the distribution of
+empty vehicles, took the form of a dynamic transshipment network optimization
+problem (e.g., Herren 1973, 1977, McGaughey, Gohring, and McBrayer 1973).
+Linear programming and network flow algorithms were usually applied. This line
+of research is still very active today. The formulations are more complex, though.
+Multiple commodities, substitutions, integer flows, are some of the characteris-
+tics that add realism to these formulations (Shan 1985, Chih 1986, Turnquist and
+Markowicz 1989, Markowicz and Turnquist 1990, Turnquist 1994; and others).
+Alternatively, the strict schedules and booking policies enforced by many Euro-
+pean railways impose additional conditions on empty vehicle distribution, such
+as limited hauling capacity for empties, and pre-defined itineraries (Joborn 1995,
+Holmberg, Joborn, and Lundgren 1998, Joborn et al. 2001).
+
+  The explicit consideration of uncertainties in empty vehicle distribution
+models constitutes another significant methodological contribution. The first com-
+prehensive effort in this direction was made by Jordan and Turnquist (1983) for rail.
+The formulation aims to maximize the profits of the firm, and integrates revenues
+from performing the service as well as various costs from moving cars between
+yards, holding them at yards, or from not filling orders due to stockouts. The model
+structure is again a multicommodity, dynamic network. Stochasticity of supply,
+demand, and travel times is explicitly considered. The resulting model is a nonlin-
+ear optimization formulation, solved by using the Frank-Wolfe algorithm (1956).
+A similar approach is proposed by Beaujon and Turnquist (1991) for a model that
+simultaneously considers vehicle inventories at terminals and their allocation in
+order to answer fleet-sizing issues. The whole research area addressing the dynamic
+allocation of limited resources in uncertain environments naturally continues these
+important developments.
+
+Dynamic Allocation of Resources
+
+Many operational problems, fleet management in particular, dynamically allocate
+limited resources to requests and tasks. For example, empty vehicles, trailers
+and rail cars are allocated to the appropriate terminals; motive power tractors
+and locomotives to services; crews to vehicles or services; loads to driver-truck
+combinations; empty containers from depots to customers and returning containers
+from customers to depots; and so on. All these problems have several common
+characteristics:
+
+1. Some future demands are known, but most can only be forecasted, and
+  unpredictable requests may happen.
+500  Handbook of Transportation Science
+
+2. Many requests materialize in real or quasi-real time and must be acted upon
+  in relatively short time.
+
+3. Once a resource is allocated to an activity, it is no longer available for a certain
+  duration (whose length may be subject to variations as well).
+
+4. Once a resource becomes available again, it is often in a different location
+  than its initial one.
+
+5. The value of an additional unit of a given resource at a location greatly depends
+  on the total quantity of resources available (which are determined from previ-
+  ous decisions at potentially all terminals in previous periods) and the current
+  demand.
+
+  This is an extremely rich field both for research and development and for
+applications. In a sense, it extends and complements the empty vehicle distribution
+problems described previously. The latest developments in the field also allow to
+plan and control the activities of several resources simultaneously (Powell 1996b,
+1998, Powell and Carvalho 1998b, Powell and Shapiro 2001). Dynamic and sto-
+chastic network formulations have been, and continue to be, extensively studied for
+these problems. This has resulted in important modeling and algorithmic results.
+A number of these results have been transferred to industry (Powell et al. 1992, for
+example). The interested reader should consult the excellent synthesis and review
+by Powell, Jaillet, and Odoni (1995) and the numerous references quoted in this
+work. In the following, we briefly illustrate two main modeling approaches.
+
+  One may represent dynamic allocation issues by an activity graph similar to
+the one displayed in Figure 13.3. Here, the operations of a simple four-terminal
+system are schematically drawn for a certain length of time, which is arbitrarily
+divided into three periods. At each terminal, there are a number of vehicles that are
+available to satisfy customer requests during the current period and in future ones.
+Customer demands have precise characteristics, such as the origin and destina-
+tion of movement, and pickup and delivery dates (with time window restrictions,
+eventually). At any period, a vehicle may be assigned to a customer demand in
+the current period and at the current location, moved to another location to satisfy
+a known future request, held at the current location, or moved empty to another
+location in preparation for future, forecasted demands.
+
+  Accepting requests and performing the corresponding movements implies
+expenses and generates revenues. Crainic, Gendreau, and Dejax (1993) developed
+a model for the assignment and management of a heterogenous fleet of contain-
+ers where loaded movements are exogenously accepted. Here, the objective is
+to minimize the total operating cost, including substitutions and stockouts. Sev-
+eral other models also address the issue of whether a request is profitable with
+respect to the operation of the system and should therefore be accepted. Indeed,
+Long-Haul Freight Transportation  501
+
+repositioning empty vehicles does not generate any immediate revenues. One may
+be ready to incur these expenses, however, in the hope that, as a consequence,
+vehicles will be adequately posted to take advantage of future (known, forecasted
+or estimated) opportunities. Refused requests represent lost business opportuni-
+ties, while accepted but unsatisfied ones generally result in penalties. Powell et al.
+(1992) and Powell (1996a) present such applications to truckload motor carrier
+transportation.
+
+  A classical modeling approach for this class of problems is to consider the
+entire planning horizon with the objective of maximizing the total system profit
+computed as the sum of the profit resulting from decisions taken for the current
+period, plus the expected profit over future periods. The usual constraints apply:
+satisfy the demand; do not use more than the number of available vehicles; adhere
+to specific operations rules; etc. When the state of the system and its environment
+in future periods is known, or assumed to be known, the resulting formulation
+is deterministic and is often written as a network flow optimization model with
+additional constraints.
+
+  The major difficulty with this approach becomes apparent when the uncertain-
+ties in future demands, as well as, eventually, uncertainties related to performing
+the operations, are explicitly considered. In this case, decisions taken “now” for
+future periods cannot be based on sure data, but only on estimations of how the
+system will evolve, which demand will materialize, and so on. From a mathe-
+matical programming point of view, random variables are used to represent the
+stochastic elements and decisions in future periods. Consequently, the expectation
+of future profits that appears in the objective function of the model becomes a very
+complex, recursive stochastic equation where the statistical expectation of the total
+profit must be computed over all possible realizations of all random variables.
+
+  To address this complex issue, the model generally takes the form of a recourse
+formulation. Such formulations are based on the idea that today’s decisions are
+taken within today’s deterministic context but using an estimation of the variability
+of the random factors, and that their consequences are reflected in later decisions.
+The recourse represents these later decisions which must be taken to adjust the ini-
+tial policies once the actual realization of the random variables is observed. In the
+simplest possible recourse formulation, called simple recourse, it is assumed that
+one does not attempt to change the decisions but pays a penalty when the observed
+value of a random variable is different from the estimation. More complex formu-
+lations, such as nodal, tree, and network recourse attempt to evaluate the possible
+modifications to the initial decisions, and the impact on the total expected profit.
+Refer to Powell (1988), Frantziskakis (1990), Powell and Frantzeskakis (1994),
+and Powell and Cheung (1994a,b) for details. Powell (1987), Frantziskakis and
+Powell (1990), Cheung and Powell (1996a), Chen and Powell (1999), Powell and
+

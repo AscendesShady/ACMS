@@ -1,0 +1,1319 @@
+122  Example T
+
+Table T.l. Intervals between failures (operating hours)
+
+Aircraft number
+
+  2  3  4  5  6  7  8  9  10
+
+413 90 74  55  23  97  50 359 487 102
+
+14 10 57 320 261  51  44  9  18 209
+
+58 60 48  56  87  11 102  12 100  14
+
+37 186 29 104  7  4  72 270  7 57
+
+100 61 502 220 120 141  22 603  98  54
+
+65 49 12 239  14  18  39  3  5  32
+
+9 14 70  47  62 142  3 104  85  67
+
+169 24 21 246  47  68  15  2  91  59
+
+447 56 29 176 225  77 197 438  43 134
+
+184 20 386 182  71  80 188  230 152
+
+36 79  59  33 246  1 79  3 27
+
+201 84 27  15  21  16  88  130  14
+
+118 44 153 104  42 106  46  230
+
+34 59 26  35  20 206  5  66
+
+31 29 326  5  82  5  61
+
+18 118  12  54  36  34
+
+18 25  120  31  22
+
+67 156  11 216 139
+
+57 310  3 46 210
+
+62 76  14 111  97
+
+7 26  71  39  30
+
+22 44  11  63  23
+
+34 23  14  18  13
+
+  62  11 191  14
+
+  130  16  18
+
+  208  90 163
+
+  70  1 24
+
+  101  16
+
+  208  52
+
+  95
+
+As an approximation for r(p) when f3 > 1, we use
+
+  -p p-l l {  1  1  139  }
+  e f3 >(2n)> 1 + 12{3 + 288{32 - 51840/33 · · •
+
+which together with r(/3 + 1)= {Jr(/3) gives an approximation in our required
+range 0.4 < f3 < 1.8. Within this range it is accurate to 0.0001.
+
+Program
+
+BMDPAR, a nonlinear least squares program, is used.lfxloss, equal to minus
+the log likelihood, is specified in the fun paragraph and loss written into the
+Failure of air-conditioning equipment in aircraft  123
+
+regress paragraph, the program will calculate maximum likelihood estimates.
+  We need to fit a separate gamma distribution for each aircraft to estimate
+
+P1, ... , P10• Instructions for aircraft 1are given below. For aircraft 2, . .. , 10
+
+amend the two sentences use= aircraft eq l. and mu =95.7. appropriately; the
+
+values of mu for aircraft 2, ... , 10 are 83.5, 121.3, 130.0, 59.6, 76.8, 64.1,
+
+200.0, 108.1, 82.0, respectively.
+
+/problem  title = 'example t . air-conditioning .  aircraft 1 only
+/input  individual beta. aircraft 1. bmdpar'.
+/variable  variables = 2. format = free.  initial approx. for p
+/transform  names= aircraft, time. add= new.
+/regress  dummy = 1.0.  pl=P
+/parameter  use= aircraft eq 1.
+/fun  dependent= dummy.  g = log r(p)-log(2n)i
+  parameters= 1. print= 0. loss .  llt =95.7
+fend  initial = 1.0.
+1 413  xloss= -Jog likelihood +n
+1 14  u =pl + 1.0.  log(2n)2
+
+  c1 = 1.0/12.0.  dummy recalculated
+  c2 = 1.0/288.0 .  199 lines of data.
+  c3 = -139 .0/51840.0.
+  g = -ln(p1) - u + (u - 0.5)•1n(u) +  col. 1= aircraft no.
+  mu = 95.7 .
+  ln(((c3/u + c2)/u + c1}/u + 1.0).
+
+  f = p1•1n(p1) - p1•1n(mu) - g +
+
+  (p1 - 1.0)•1n(time) - p1•time/mu.
+  xloss =-f.
+
+  dummy = f + 1.0.
+
+Note: the for-% option may be used to make the program repeat
+automatically for all ten aircraft, but to do so requires the data to be on a
+separate file and its name stated in the input paragraph. After the problem
+
+paragraph insert
+
+for k=1 to 10.
+  mu = 95.7,83.5,121.3,130.0,59.6,76.8,64.1,200.0,108.1,82.0.
+
+%
+
+and amend the sentence in the transform paragraph to
+use= aircraft eq k.
+
+See note 9(ii) in the introductory section (p. 9).  ,
+
+The value of the loss function, i.e. -log likelihood + n log(2n)2, and the
+estimate P1 for aircraft 1 are shown in Output T.l. Note that the mean time
+interval is also printed, giving a check on the value read in above for P,1. (The
+estimate Pfor aircraft 3 is incorrect in early printings of App. Stat.)
+To fit gamma distributions with a common index p the instructions are
+
+amended as follows:
+124  Example T
+
+/problem  title= 'example t . air-conditioning.  recode mu for aircraft 1, ..., 10
+/input  common beta. bmdpar'.  199 lines of data as before
+/variable  variables = 2. format= free.
+/transform  names = aircraft, time. add = new.
+/regress  dummy = 1.0.
+/parameter  dependent= dummy.
+/fun  parameters= 1. print= 0. loss.
+  initial = 1.0.
+/end  u = p1 + 1.0.
+1 413  c1 =·1.0/12.0.
+1 14
+  c2 = 1.0/288.0.
+
+  c3 = -139.0/51840.0.
+  g = -ln(p1) - u + (u- 0 .5)•1n(u)+
+  ln(((c3/u + c2)/u + c1)/u + 1.0).
+
+  mu = rec(aircraft, 1, 95 .7,
+
+  2, 83.5, 3, 121.3, 4, 130.9, 5, 59.6,
+  6, 76.8, 7, 64.1, 8, 200.0,
+  9, 108.1, 10, 82.0).
+  f = p1•1n(p1) - p1•1n(mu) - g +
+  (p1 - 1.0)•In(time) - p1•timefmu.
+  meansquare = 1 .0.
+  xloss =-f .
+
+  dummy = f + 1.0.
+
+Output T.2 shows the loss function and estimate fj. The hypothesis of a
+common index f3 can be tested by differencing the total of the loss functions for
+
+separate fJ/s and the loss function for common {3, and comparing the difference
+
+with !x2 with 9 degrees of freedom.
+
+  Aircraft 8 will be found to have a low value of fj (=0.46). To exclude this
+
+aircraft from the calculations when estimating a common {3, write
+use= aircraft ne 8.
+
+into the transform paragraph. This yields an estimate fj = 1.07.
+
+  For an interpretation of the conclusions from the above analysis, see the
+discussion in App. Stat.; the conclusions are not clear-cut.
+
+Other program
+
+BMDP3R is also a nonlinear iterative least squares program which will give
+maximum likelihood estimates. It requires the derivatives of the likelihood
+and this will necessitate a series approximation for the derivative oflog r({J), as
+well as for r(p).
+
+Suggested further work
+
+ (i) Rerun the analysis iterating on (p., fj) instead ofjust fj. How much slower is
+
+  the iteration?
+Failure of air-conditioning equipment in aircraft  125
+
+(ii) If the gamma distribution is reparameterized as pPyP- 1e -py/r({J) with
+
+  iteration on (fi, P>. how is the speed of iteration affected?
+
+(iii) Carry out a similar analysis using the Weibull distribution and compare
+
+  your results.
+126  Example T
+
+Output T.l
+
+Loss function and maximum likelihood estimate P1 for aircraft 1. BMDPAR
+
+  VARIABLE  MEAN  STANDARD
+  NO. NAME
+  DEVIATION  MINIMl.t.l  MAXIMUM
+
+  1 aircraft  1.000000  0.000000  1 . 000000  1.000000
+  2 time  95.695656  119.289726  7.000000  447.000000
+  3 dun10y  1.000000  1 .000000
+  0.000000  1 . 000000
+
+ITER. INCR.  LOSS  PARAMETERS
+ NO. HALV.  FUNCTION  P1
+
+  0 0  106.894068  1.100000
+  0 0  106.771223  1.000000
+  1 3  106.764172  0.982649
+  2 1  106.762016  0.959537
+  3 2  106.761832  0.962191
+  4 1  106.761767  0.966151
+  5 2  106.761762  0.965687
+  6 1  106.761760  0.965018
+  106.761760
+  7 2  0 . 965095
+
+THE LOSS FUNCTION ( =  106.762  ) WAS SMALLEST WITH THE FOLLOWING
+
+PARAMETER VALUES
+
+PARAMETER  ESTIMATE  ASYMPTOTIC  COEFFICIENT
+  OF VARIATION
+  STANDARD DEVIATION
+
+P1  0 .965095  0.743254  0.770136
+
+Similar tables are output for aircraft 2 to 10.
+
+Output T.2
+
+Loss function and maximum likelihood estimate P(common to all aircraft).
+
+BMDPAR
+
+ITER. INCR.  LOSS  PARAMETERS
+ NO. HALV.  FUNCTION  P1
+
+  0 0  904.183083  1.100000
+  0 0  903.665293  1.000000
+  1 4  903.663284  1.003410
+  2 1  903.662744  1.006518
+  3 4  903.662742  1.006403
+  4 1  903.662742  1.006319
+  5 2  903 .662742  1.006328
+
+THE LOSS FUNCTION ( =  903.663  ) WAS SMALLEST WITH THE FOLLOWING
+
+PARAMETER VALUES
+
+PARAMETER  ESTIMATE  ASYMPTOTIC  COEFFICIENT
+P1  OF VARIATION
+  STANDARD DEVIATION
+  0 .218082
+  1.006328  0.219462
+Example U  Survival times of
+  leukemia patients
+
+Description of data
+
+The data in Table U.1 from Feigl and Zelen (1965) are time to death, Y, in
+weeks from diagnosis and log 10 (initial white blood cell count), x, for 17
+patients suffering from leukemia. The relation between Y and x is the main
+aspect of interest.
+
+Table U.l. Survival time Yin weeks and log10
+(initial white blood cell count), x, for 17 leukemia
+patients
+
+X  y  X  y  X  y
+
+3.36 65  4.00 121 4.54  22
+
+2.88 156  4.23  4 5.00  1
+
+3.63 100  3.73 39 5.00  1
+
+3.41 134  3.85 143 4.72  5
+
+3.78 16  3.97 56 5.00  65
+
+4.02 108  4.51 26
+
+The analysis
+
+It is sensible to choose a model for Y which is positive for all values of x . Hence
+we consider
+
+  (U.l, App. Stat.)
+
+where e; is a random term assumed provisionally to be exponentially
+distributed with unit mean. Then E(Y;)=s.d.(Y;)=Po exp{P1(x;-.X)}. We fit
+the model by BMDP3R using the method of iterated weighted least squares,
+with weights equal to {var(Y;)} -t .
+
+  For BMDP3R we need the partial derivatives of E( Y;) with respect to Po and
+
+P1, which are respectively exp{P1(x;-.X)} and P0(x;- .X)exp{P1(x;-.X)}.
+
+  Taking the model in the above form leads to zero covariance between the
+
+estimates Po and fj 1 which is helpful if determining a standard error for
+
+  127
+128  Example U
+
+predicted values of Y and which with more complex sets of data would have
+numerical analytical advantages.
+
+Program
+
+BMDP3R is used to fit the model by the method of iterated weighted least
+squares. In the fun paragraph it is necessary to write
+
+ (i) f=E(YJ
+
+(ii) dfl and df2 for the derivatives with respect to P0 , P1.
+
+(iii) w = 1/fl for the weight.
+(vi) pl =Po and p2 = P1 denoting the unknown parameters.
+
+  See Example H, or BMDP manual (Dixon et al., 1985), for comments on the
+regress paragraph. The instructions for using BMDP3R to fit the above model
+are as follows:
+
+/problem  title = 'example u.
+
+/input  leukemia patients. bmdp3r'.
+/variable
+/transform  variables = 2. format = free.
+/regress
+  names = lwbc, weeks.  add = new.
+/parameter
+/fun  w =1.0.
+
+/plot  dependent= weeks.
+fend
+3.36 65  parameters= 2. weight= w.
+2.88 156
+  halving= 0. meansquare = 1.0.
+
+  initial = 40.0, -1 .0 .
+
+  u = exp(p2•(1wbc- 4.0959)).  x=4.0959
+  f=E(Y)
+  f =phu.  dfl=oF/oflo
+  d f 2 = o Ff ofJ,
+  dfl = u.  w=weight
+  plot fitted model
+  df2 = f•(lwbc- 4.0959).
+  17 lines of data
+  w =1/(f..2).
+
+  variable = lwbc.
+
+The default value for initial values for Po and P1 is zero; instead we specify them
+
+as 40.0 and -1.0.
+
+  Output U.l shows the estimates /30 and fj 1 and their asymptotic standard
+
+errors. They agree with those fitted by maximum likelihood in App. Stat.
+
+Output U.2 lists the predicted and observed values and shows them plotted
+against x ( = lwbc). The residuals listed in Output U.2 are irrelevant, it being
+better to define residuals in this case as the ratio of the observed to fitted
+survival time, which can then be examined for consistency with an exponential
+distribution by plotting against expected exponential order statistics.
+
+Other program
+
+BMDPAR will fit by iterated weighted least squares and does not require
+derivatives to be specified.
+Survival times of leukemia patients  129
+
+Suggested further work
+
+(i) Fit the model in the nonorthogonal form, i.e. E(Y;)=y0 exp(y1x;), and
+  compare with preceding analysis.
+
+(ii) Determine a confidence interval for the expected value of Y for a given
+  value x.
+130  Example U
+
+Output U.l  P2
+
+Estimates and standard errors. BMDP3R  -1.000000
+  -1.129909
+  ITERATION INCREMENT  RESIDUAL SI.Al  P1  - 1.110681
+  NI.AlBER HALVINGS  OF SqUARES  -1.109389
+  40.000000  -1.109304
+  0  0  22.3032  51.211838  -1.109298
+  14.3075  51.110878  - 1.109298
+  1  0  14.0994  51.107160  -1.109298
+  14.0842  51 .107143  -1.109298
+  2  0  14 .0830  51.107143  -1.109298
+  14.0830  51 .107143
+  3  0  14.0830  51.107143
+  14 .0830  51 .107143
+  4  0  14 .0830  51 .107143
+  14.0830
+  5  0
+
+  6  0
+
+  7  0
+
+  8  0
+
+  9  0
+
+ASYMPTOTIC CORRELATION MATRIX OF THE PARAMETERS
+
+  P1  P2
+
+  1  2
+
+P1  1  1.0000
+
+P2  2  0.0000  1.0000
+
+PARAMETER  ESTIMATE  ASYMPTOTIC  TOLERANCE
+
+P1  STANDARD DEVIATION  0 .9999999991
+P2  0 .9999999991
+  51.107143  12.395303
+  - 1.109298  0.399654
+
+Output U.2
+
+Predicted and observed values. BMDP3R
+
+ CASE  PREDICTED  STD DEV OF  OBSERVED  RESIDUAL
+NO . LABEL  weeks  PRED VALUE  weeks
+  -60.613968
+  1  116.613968 44 .072674 66 .000000  -40 . 904640
+  14.309146
+  2  196.904648 106. 938293 166.000000  24.623978
+  -66.666486
+  3  86.690867 26.201086 100.000000  62 .403611
+  64.166266
+  4  109.376022 40.032681 134.000000  -40.043046
+  -37.693469
+  6  72 .666489 19. 838467 16.000000  76.866318
+  -2.767261
+  6  66.696489 13. 689133 106.000000  -6.283743
+  -9 . 227064
+  7  66.843736 13.967647 121.000000  -17.746619
+  -17.746619
+  8  44 .043046 10.939761  4 .000000  - 20.674909
+  46.263483
+  9  76.693469 21.720068 39.000000
+
+10  67.134682 17 .668281 143.000000
+
+11  68.767262 14.666666 66 .000000
+
+12  32.283746  9. 479286 26 .000000
+
+13  31.227064  9.386149 22 .000000
+
+14  18.746619  8.168210  1.000000
+
+16  18.746619  8.168210  1.000000
+
+16  26 . 674909  8 . 897698  6.000000
+
+17  18.746619  8.168210 66.000000
+Survival times of leukemia patients  131
+
+Output U.2 (continued)  2) AND VERSUS
+
+SERIAL CORRELATION  -0 .134
+
+PLOTS OF VARIABLE{ 1) VERSUS PREDICTED AND OBSERVED VARIABLE(
+RESIDUALS .
+
+  • . . .+. 0 0 •• • +. 0 • • • • + . . • • 0 .+. 0 0 •• • +. 0 • • • • + . • . 0 • • +. 0 • • • 0
+
+  200  +  +
+
+  -P
+
+  160 +  +
+
+  -0
+
+  0
+
+  0
+
+w
+
+e 120 +  p  0  +
+
+e  p
+
+k  0
+
+s  0
+
+  p
+
+  80. +  +
+  40. +
+  pp
+
+  p
+
+  0  0-
+
+  •P
+
+  p
+
+  0  p  +
+
+  OP
+  0 p
+
+  0  P-
+
+  0.0  0  0
+
+  +  0+
+
+  • 0 0 .+. 0 •• 0 .+ ... •• . + . • • ••• +. 0 0 •• • +. 0. 0 • • + ••• 0 • • +. 0 0 •• 0
+
+  3.3  3.9  4.5
+
+  3.0  3.6  4.2  4.8
+
+  lwbc
+Example V  A retrospective study
+  with binary data
+
+Description of data
+
+In a retrospective study of the possible effect of blood group on the incidence of
+peptic ulcers, Woolf(1955) obtained data from three cities. Table V.l gives for
+each city data for blood groups 0 and A only. In each city, blood group is
+recorded for peptic-ulcer subjects and for a control series of individuals not
+having peptic ulcer.
+
+Table V.l. Blood groups for peptic ulcer and control subjects
+
+  Peptic ulcer  Control
+
+  Group 0 Group A  Group 0 Group A
+
+London  911  579  4578  4219
+
+Manchester 361  246  4532  3775
+
+Newcastle  396  219  6598  5261
+
+The analysis
+
+As discussed in App. Stat., we wish to study how the probability of a peptic
+ulcer depends on blood group, but the data have been collected in an inverse
+way from samples of peptic ulcer and non-peptic ulcer subjects. However, the
+log of the odds ratio is given by
+
+  A =log{pr (ulceriA) x pr (no ulceriO)}
+  u  pr (u1cerIO) pr (no u1cerIA)  (V.l, App. Stat.)
+
+  1 {pr (Aiulcer)} 1 {pr (Aino ulcer)}
+  = og pr (Oiulcer) - og pr (Oino ulcer)
+
+ and we can estimate A by fitting the logistic model (taking the approximately
+
+orthogonal form with ± P1):
+
+132
+A retrospective study with binary data  133
+
+  ulcer group
+
+  non-ulcer group
+
+where !l.=2P1. We fit the model to each of the cities separately, to check the
+consistency of!l., and then an overall model to obtain a common estimate of!l..
+
+  The model fitted here is very simple, just a comparison of two groups, but
+the principle illustrated is much more general and widely used in case-control
+studies.
+
+Program
+
+BMDPLR is used to fit a logistic model by maximum likelihood to the
+proportion of blood group A subjects in the ulcer and no-ulcer samples. This is
+done separately for each city. Instructions for city 1 (London) are given below.
+For city 2 (Manchester) or city 3 (Newcastle) amend the sentence use= city eq
+l. appropriately.
+
+/problem  title= 'example v. peptic ulcers .  use only data for city 1.
+  london. bmdplr'.
+/input  variables = 4. format = free.  6 lines of data.
+/variables  names= city, ulcer, o, a.  Code: col 1. London= I, Man-
+/transform  use = city eq 1 .
+/regress  chester= 2, Newcastle= 3
+  scount =a .  col 2. ulcer= l, control =0.
+/end  fcount = o.
+1 1 911 579  model =ulcer .
+1 0 4578 4219
+
+Note: the for-% option may be used to make the program repeat
+automatically for all three cities but to do so requires the data to be on a
+separate file; see note 9(ii) in the introductory section (p. 9).
+
+  The program generates design variables ± 1 to represent the ulcer and
+
+control group; see Output V.l. The estimates and standard errors for the
+parameters are shown in Output V.2. The estimate of !l. for London is
+2x(-0.18579)= -0.3716. The estimates and standard errors agree with
+those of Table V.2, App. Stat., obtained by other large-sample approximate
+
+methods.
+  To obtain an estimate of !l. pooled over the three cities, we remove the
+
+transform paragraph and specify a model to include cities. The instructions
+
+are:
+134  Example V
+
+/problem  title= 'example v . peptic ulcers .  model with ulcer and city parameters
+  bmdpl r. •.  6 lines of data as before
+/input
+/variables  variables = 4. format = free .
+/ regress  names= city, ulcer, o, a .
+  scount =a .
+fend  fcount = o.
+1 1 911 579  model =ulcer, city .
+1 0 4578 4219
+
+Estimates for the fitted model are shown in Output V.3. Also shown is the
+
+value of -2 log (likelihood)=2.965 with 2 d.f., agreeing closely with the
+
+x2 statistic (V.6) in App. Stat. The estimated value of d is
+
+2 x (-0.16511)= -0.3302, with standard error 0.0417.
+A retrospective study with binary data  135
+
+Output V.l
+
+Design variables for control and ulcer groups. BMDPLR
+
+ VARIABLE  VALUE DR  DESIGN VARIABLES
+NO. N A ME  INTERVAL  FREQ ( 1}
+
+  2 ulcer  0  8797  -1
+  1
+  1490  1
+
+Output V.2
+
+Estimates and standard errors. Separate cities. BMDPLR
+(a) London
+
+  TERM  COEFFICIENT  STANDARD
+  -0.18579  ERROR COEFF/S.E.
+ulcer  -0 .26745
+  0.2864E-01 -6 .488
+CONSTANT  0.2864E-01 -9.339
+
+(b) Manchester  COEFFICIENT  STANDARD
+  -0.10039  ERROR COEFF/S.E .
+  TERM  -0.28315
+  0.4278E-01 -2 .347
+ulcer  0.4278E-01 -6.619
+
+CONSTANT  COEFFICIENT  STANDARD
+  -0.18295  ERROR COEFF/S.E.
+(c) Newcastle  -0.40939
+  0.4311E-01 -4.244
+  TERM  0.4311E-01 -9.497
+
+ulcer
+
+CONSTANT
+
+Output V.3
+
+Estimates and standard errors. Model over cities. BMDPLR
+
+GOODNESS OF FIT CHI-SQ  (2•0•LN(O/E)) =  2.965 D.F.= 2  P-VALUE= 0.227
+GOODNESS OF FIT CHI-SQ  ( D. HOSMER ) =  0.229 D.F.= 2  P-VALUE= 0.892
+GOODNESS OF FIT CHI-SQ  ( C.C.BRDWN ) =  0.000 D.F .= 0  P-VALUE= 1.000
+
+  TERM  COEFFICIENT  STANDARD
+  ERROR COEFF/S .E.
+
+ulcer  - 0 . 16511  0.2084E-01 -7 .924
+  -0 .11014E-01  0.1679E-01 -0 .6558
+city  (1)  -0.64826E-01  0.1553E-01 -4 .174
+  -0.32837  0.2077E-01 -15.81
+CONSTANT  (2)
+Example W  Housing and
+  associated factors
+
+Description of data
+
+The data in Table W.1 (Madsen, 1976) relate to an investigation into
+satisfaction with housing conditions in Copenhagen. A total of 1681 residents
+from selected areas living in rented homes built between 1960 and 1968 were
+questioned on their satisfaction, the degree ofcontact with other residents and
+their feeling of influence on apartment management. The purpose of the
+investigation was to study association between these three factors and the type
+of housing.
+
+Table W.l. 1681 persons classified according to satisfaction, contact, influence and
+type of housing
+
+Contact  Low  High
+  Low Medium High  Low Medium High
+Satisfaction
+
+Housing  Influence  21  21  28  14 19  37
+Tower blocks  Low
+  Medium  34 22  36  17 23  40
+Apartments  High
+  10 11  36  3  5  23
+Atrium houses  Low
+  Medium  61  23  17  78 46  43
+Terraced houses  High
+  43 35  40  48 45  86
+  Low
+  Medium  26 18  54  15 25  62
+  High
+  13  9  10  20 23  20
+  Low
+  Medium  8  8  12  10 22  24
+  High
+  6  7  9  7 10  21
+
+  18  6  7  57 23  13
+
+  15 13  13  31  21  13
+
+  7  5  11  5  6  13
+
+The analysis
+Type of housing is treated as an explanatory variable, with satisfaction,
+contact and influence being treated as response variables.
+
+136
+Housing and associated factors  137
+
+  We first inspect the distribution for each response variable within each type
+of housing. There are marked differences in distribution between types of
+housing. Hence we fit loglinear models in the three response variables,
+separately within each type of housing, but hoping to obtain reasonably
+consistent conclusions from the separate models.
+
+Program
+
+BMDP4F is used for all the analysis. The instructions are given below. The
+data are read in exactly the layout of Table W.l (this is an option available for
+BMDP4F).
+
+{problem  title= 'example w. housing. bmdp4f'.  describes layout of data
+/input  variables = 4. table= 3, 2, 3, 4.
+/variable  format = free.  labels for output
+/category  names= satisfy, contact, influenc,
+  housing.  print input data
+/table  codes(satisfy,influenc) = 1 to 3.
+{table  names(satisfy,influenc) =low,  print 2-way tables H x S, H x C,
+/print  medium, high.  Hxl.
+/table  codes(contact) = 1, 2.
+/fit  names(contact) = low, high.  percentages across rows of 2-way
+  codes(housing) = 1 to 4.  tables
+  names(housing ) =tower, apt,
+  atrium, terrace.  S,C,I =response variables
+  indices =satisfy, contact,  H =explanatory variable
+  influence, housing.  hierarchy of models within
+  row= housing.
+  col = satisfy, contact, influenc .  SxCxl
+  cross.  main effects plus S x I
+  percent ; row.  independence model
+  print fitted frequencies and resi-
+  indices= satisfy, contact, influenc.
+  condition= housing.  duals
+  all.  percentages not required
+  12 lines of data
+/print  model = si, c.
+  model = s, c, i .
+  expected. standardized.
+
+  percent = no .
+fend
+21 21 28 14 19 37
+34 22 36 17 23 40
+
+The first table paragraph prints simply the full array of observed frequencies.
+The second table paragraph prints two-way tables for satisfaction x housing,
+contact x housing, and influence x housing; percentages across rows are also
+printed (corresponding to Table W.2, App. Stat.). Output W.l gives details for
+satisfaction x housing.
+
+  The third table paragraph prints, separately within each type of housing, the
+three-way table S x C x I of observed frequencies. The fit paragraph fits
+models to these S x C xI tables. Output W.2 shows, for tower blocks,
+goodness-of-fit statistics for all models within the hierarchy containing all
+138  Example W
+
+two-factor interactions (i.e. given by fit all.). Output W.3 gives, also for tower
+blocks, the fitted frequencies and standardized residuals for the model SI,C,
+i.e. containing main effects and S x I. Note that this model will not be found to
+fit so well for apartments; see discussion in App. Stat.
+
+  Fitted frequencies based on the independence model (i.e. main effects only)
+are used in App. Stat. to aid interpretation of the interactionS xI. These are
+given by the sentence model= s,c,i. in the fit paragraph, but the output is not
+shown here.
+
+Suggested further work
+
+ (i) Insert lambda. into the final print paragraph to obtain estimates and
+  standard errors of parameters in the loglinear model SI,C. Do these aid
+  interpretation of data?
+
+(ii) Try adding cell= standardized. and step= 5. to the final fit paragraph.
+  This will permit the program to identify up to 5 extreme residuals and refit
+  the model omitting the appropriate cells.
+
+(iii) Consider ways in which the order of the categories low, medium and high
+  for satisfaction and influence may be taken into account.
+Housing and associated factors  139
+
+Output W.l
+
+Distribution of respondents according to satisfaction for each type of housing.
+BMDP4F
+
+  ••••••••••••••••••••••••
+
+  • TABLE PARAGRAPH 2 •
+
+  ••••••••••••••••••••••••
+
+••••• OBSERVED FREQUENCY TABLE 2
+
+housing  satisfy
+
+  low med i um high TOTAL
+
+tower  99  101  200 I 400
+  302 I 765
+apt  271  192  96 I 239
+
+atrium  64  79  70 I 277
+
+terrace  133  74
+
+T-O-T-A-L---------5-6-7--------4-4-6-------6-6-8-1I ---1-6-8-1---
+
+••••• PERCENTS OF ROW TOTALS -- TABLE 2
+
+housing  satisfy
+
+  low medium high TOTAL
+
+tower  24.8 25 .3 50 .0 I 100.0
+  35 .4 25 .1 39 .5 I 100.0
+apt  26 .8 33 .1 40 .2 I 100.0
+
+atrium
+terrace 48 .0 26 .7 25 .3 I 100 .0
+
+T-O-T-A--L--------3-3-.-7------2-6-.-5------3-9-.-7-1I---1-0-0-.-0--
+
+MINIMUM ESTIMATED EXPECTED VALUE IS  63.41
+
+STATISTIC  VALUE  D. F. PROS .
+PEARSON CHISQUARE  60 .286
+  6 0 .0000
+
+Similar tables are output for contact and influence.
+140  Example W
+
+Output W.2
+
+Tower blocks: observed frequencies and goodness-of-fit statistics for Jog linear
+models. BMDP4F
+
+  ••••••••••••••••••••••••
+
+  • TABLE PARAGRAPH 3 •
+
+  ••••••••••••••••••••••••
+
+••••• OBSERVED FREQUENCY TABLE 5
+
+USING LEVEL tower  OF VARIABLE 4  housing
+  satisfy
+  ••••••••  ••••••••
+
+influenc contact
+
+  low medium  high TOTAL
+
+low  low  21  21  28 I  70
+medium
+high  high  14  19  37 1 10
+
+  -----------------------------------1---------
+  TOTAL  35  40  65 I 140
+
+  low  34  22  36 I  92
+
+  high  11  23  40 1  80
+
+  -----------------------------------1---------
+  TOTAL  51  45  76 I 172
+
+  low  10  11  36 I  57
+
+  high  3  5  23 I  31
+
+  T-O-T-A-L-----------1-3----- ---1-6--------5-9-1I ---- -8--8--
+
+  TOTAL OF THE OBSERVED FREQUENCY TABLE IS  400
+
+•• • • • ALL IIODaS ARE RE~UESTED--
+
+IIODa  OF  LIKaiHOOD-  PROS .  PEARSON  PROS.  ITERATIONS
+
+..  RATIO CHIS~  0.0000  CHIS~  0.0000  ----------
+  0 .0000  0.0000
+c.  16 -------6-0-.6--6  0.0000  66.60  0 .0000  1
+i.  0.0000  96.46  0.0000  1
+s,c.  16  104 .07  0.0000  82.63  0 .0000  1
+c, i.  0.0021  62.27  0.0027  1
+i ,a.  16  79 . 66  0.0042  80.02  0.0068  1
+a,c, i .  0 .0000  31.66  0.0000  1
+  14  66 . 93  0.0369  27.39  0.0410  1
+sc.  0.0000  44.66  0.0000  1
+ai.  14  76.94  0.0082  17.63  0.0086  1
+ci.  0.0737  74 . 68  0.0806  1
+a,ci .  13  32.42  0 .0148  23.68  0.0166  1
+c,si.  0.2704  14.06  0.2797  1
+i,sc.  12  28.80  0.1672  21.90  0.1663  1
+ac,a i .  0.02117  7.47  0.0330  1
+s i ,ci.  12  60.19  0.11663  11 . 16  0 . 9663  1
+ci,ac .  16.74  1
+ac,ai,ci.  9  17.94  0.67  4
+
+  12  70 . 92
+
+  10  23.78
+
+  8  14.32
+
+  10  22.06
+
+  6  7.68
+
+  6  11.30
+
+  8  17.04
+
+  4  0.67
+
+Similar tables are output for apartments, atrium and terraced houses.
+Housing and associated factors  141
+
+Output W.3
+
+Tower blocks: fitted frequencies and standardized residuals from model
+containing S xI. BMDP4F
+
+................
+
+  MODEL 1
+
+••••••••••••••••
+
+MODEL  LIKB..IHOOD-RATIO  PEARSON  PROB
+  D.F. CHI-SCIUARE PROB  CHI-SCIUARE
+
+ai,c.  8  14.32 0 .0737  14.05 0 .0808
+
+••••• EXPECTED VALUES USINC ABOVE MODB..
+
+i nf Iuenc contact
+
+  high TOTAL
+
+low  low  19.2  21.9  35. 6 I 76.7
+Hdil.11  29.4 1 63.3
+high  high  15.8  18.1
+  -----------------------------------1---------
+  TOTAL  35.0  40.0  66.0 I 140.0
+
+  low  27.9  24.8  41.6 I 94.2
+  34.4 1 77.8
+  high  23.1  20.4
+  ----------------------------------1---------
+  TOTAL  51.0  45.0  76.0 I 172.0
+
+  low  7.1  8.8  32.3 I 48.2
+  26.1 1 311.8
+  high  5.11  1.2
+  -----------------------------------1---------
+  TOTAL  13.0  18.0  511.0 I 88.0
+
+••••• STANDARDIZED DEVIATES • (OBS - EXP)/SCIRT(EXP) FOR ABOVE MODB..
+
+i nf Iuenc contact  . .t i a f 7
+
+  low Mdi1.11  high
+
+low  low  0.4  -0.2  -1.3
+  high  -0.5  0.2  1.4
+~~edil.ll
+  low  1.2  -0. 5  -0.11
+high  high  -1.3  0.6  1.0
+
+  low  1.1  0.8  0.7
+  high  -1.2  -0 . 8  -0.7
+
+Similar tables are output for apartments, atrium and terraced houses.
+Example X  Educational plans of
+  Wisconsin schoolboys
+
+Description of data
+
+Sewell and Shah (1968) have investigated for some Wisconsin highschool
+'senior' boys and girls the relationship between variables:
+
+ (i) socioeconomic status (high, upper middle, lower middle, low);
+(ii) intelligence (high, upper middle, lower middle, low);
+(iii) parental encouragement (low, high);
+(iv) plans for attending college (yes, no).
+
+The data for boys are given in Table X.l.
+
+  Table X.l. Socioeconomic status, intelligence, parental encourage-
+  ment and college plans for Wisconsin schoolboys
+
+  IQ  College Parental  SES
+
+  plans  encouragement
+
+  L  LM UM H
+
+  L  Yes  Low  4 284
+  High  13 27 47 39
+  No  Low  349 232 166 48
+  High  64 84 91 57
+
+  LM Yes  Low  9  7  6  5
+  No  High
+  Low  33 64 74 123
+  High
+  207 201 120 47
+  Low
+  High  72 95 110 90
+  Low
+  UM Yes  High  12 12 17  9
+  No
+  Low  38 93 148 224
+  High
+  Low  126 115 92 41
+  High
+  54 92 100 65
+
+  H  Yes  10 17 6 8
+  49 119 198 414
+  No  67 79 42 17
+  43 59 73 54
+
+142
+Educational plans of Wisconsin schoolboys  143
+
+The analysis
+
+The binary variable college plans (CP) is treated as the observed response and
+we study its dependence upon socioeconomic status (SES), intelligence (IQ)
+and parental encouragement (PE) treated as explanatory variables on an equal
+footing.
+
+  For preliminary inspection we first calculate the percentages responding
+'yes' to CP in each of the 4 x 4 x 2 cells. This is done using BMDP4F.
+
+  We could then consider analysing these percentages directly using, say,
+BMDP2V or BMDP4V for analysis of variance, but given that the
+percentages vary from 1% to 88%, and that they are based on very unequal
+numbers, it is preferable to proceed instead by fitting a logistic model, for
+which we use BMDPLR.
+
+  Note that BMDP4F used above will fit loglinear models. Provided
+appropriate interaction terms are included so as to give the correct marginal
+fitted frequencies, loglinear models and logistic models are equivalent except
+that differences of parameter estimates are required for interpretation of the
+results if a loglinear model is fitted.
+
+  Instructions for both approaches are given, i.e. logistic models fitted by
+BMDPLR and equivalent loglinear models by BMDP4F.
+
+Program
+
+BMDP4F is used to compute the preliminary percentages responding 'yes' to
+CP. Various options for the format of the input data are available with
+BMDP4F; that chosen here is suitable also for BMDPLR. The following
+instructions print the observed frequencies set out as in Table X.l, and the
+required percentages.
+
+/problem  title= 'example x.  labels for output
+/input  wisconsin schoolboys. bmdp4f'.
+/variable  print observed frequency table
+/category  variables = 5. format = free.
+  names = iq , cp, pe, ses, n.  print percentages for CP
+/table  64 lines of data
+/table  codes(ses , iq) = 1 to 4 .  Code: cols I, 4. L =I, LM = 2, UM = 3,
+/print  names(ses, iq) = I, lm, um, h.
+fend  H=4
+1 1 1 1 4  codes(pe) = 1, 2.  col. 2. Yes= I, No=2.
+1 1 1 2 2  names(pe) = low, high.  col. 3. Low= I, High= 2.
+
+  codes(cp) = 1, 2.
+  names(cp) = yes, no .
+  indices= ses, pe, cp, iq .
+  count = n.
+  indices a cp , ses, pe, iq.
+  count • n.
+  percent = row.
+144  Example X
+
+The second table paragraph rearranges the data to make rows correspond to
+CP in order to print percentages for CP. Output X.l shows the rearranged
+data and percentages.
+
+  BMDPLR is a stepwise logistic regression program. The following
+instructions carry out a stepwise procedure selecting terms from the main
+effects IQ, PE, SES; no interaction terms will be included. The stepwise aspect
+may be suppressed, to fit directly a model containing the three main effects, by
+inserting model= iq, pe, ses. into the regress paragraph; in principle this would
+be preferable, although with the given data each main effect is significant, so
+the stepwise procedure fits the full model.
+
+{problem  title= 'example x.  labels for output
+/input  wisconsin schoolboys . bmdplr'.
+/variable  variables = 5. format = free.  print observed and predicted
+/group  proportions in order of IQ, PE, SES.
+  names = iq, cp, pe, ses, n.
+/regress  64 lines of data as before
+/print  codes (ses, i q) = 1 to 4 .
+fend
+1 1 1 1 4  names(ses, iq) = I, lm, um, h.
+1 1 1 2 2  codes(pe) = 1, 2.
+  names(pe) = low, high .
+  codes(cp) = 1, 2 .
+  names(cp) = yes, no .
+  dependent = cp. count= n.
+  ce II s = use. sort = var .
+
+The program generates design variables to represent the four levels of IQ and
+SES, and the two levels of PE as shown in Output X.2. Variables enter the
+model in the order PE, IQ, SES. Estimates of the coefficients when all three
+variables are included are given in Output X.3; also shown is the goodness-of-
+fit statistic, 2 log (maximized likelihood)= 25.236 with 24 d.f., agreeing with
+the result in App. Stat .
+
+  The lowest level L of SES is represented by the combination of estimated
+parameters equal to 0.252-0.054-0.806= -0.608; likewise we get -0.252,
+0.054, 0.806 for LM, UM and H. These agree with those given in App. Stat.
+except there, instead of the mean being zero, the first level is set to zero.
+
+  Output X.4 shows the predicted probabilities of responding 'yes' to CP,
+listed in the order ofiQ, PE, SES. They correspond to those in Table X.2, App.
+Stat.
+
+  To fit a logistic model containing interaction terms add a model statement
+to the regress paragraph specifying all the terms to be considered. Hierarchical
+models are implied. For example,
+
+model= ses•iq•pe.
+
+will include all possible interactions and main effects;
+
+model= ses, iq•pe.
+
+will include all main effects plus the IQ x PE interaction.
+Educational plans of Wisconsin schoolboys  145
+
+  BMDP4F can be used to achieve the same results by fitting equivalent
+loglinear models, instead of logistic models. For the equivalent of a main-
+effects logistic model containing SES, IQ and PE, we specify a loglinear model
+containing the three-factor interaction SES x IQ x PE (and lower-order terms
+in the hierarchical model) plus the interactions of the main effects with CP.
+This can be done by adding a fit paragraph to the BMDP4F program used
+above for computing observed percentages as follows. Identify variables by
+
+their initial letters: s = SES, i = IQ, p = PE, c = CP. Replace the print
+
+paragraph in the BMDP4F program with the following fit and print
+paragraphs:
+
+/fit  model =cs, cp, ci, spi.  terms in loglinear model
+/print  percent = row. expected.  print percentages for CP
+
+  lambda . variance .  print expected frequencies
+  parameter estimates
+  variances/covariances of parameter esti-
+
+  mates
+
+/end
+1 1 1 1 4
+1 1 1 2 2
+
+The output includes that given earlier (percentages for CP) plus goodness-of-
+fit statistics and fitted frequencies as in Output X.5, and estimates of all
+parameters in the model. Estimates for theSES x CP interaction are shown in
+Output X.6. Note that -2 log (likelihood ratio)= 25.24 with 24 d.f., agreeing
+with the logistic model value. Also, differing the estimated parameters for the
+SES x CP interaction across CP gives values for the four categories of SES
+equal to
+
+  -0.608, -0.252, 0.054, 0.806
+
+agreeing exactly with those obtained using BMDPLR to fit the logistic model.
+Standard errors for these differences can be obtained from the output
+variance-covariance matrix of the parameter estimates (not shown here).
+Estimates for the categories of IQ and PE can likewise be obtained.
+
+Suggested further work
+
+Use BMDPLR to fit a main-effects logistic model using scores (e.g. 1, 2, 3 and
+4) to represent the categories ofSES and IQ. To do this insert interval =ses, iq.
+in the regress paragraph. Compare the fit of this model with that already fitted.
+146  Example X
+
+Output X.l
+
+Observed frequencies and percentages responding 'yes' and 'no' to college
+plans. BMDP4F
+
+••••• OBSERVED FREqUENCY
+
+iq  pe  ses  cp
+
+  yes  no TOTAL
+
+  I ow  4  349 I 353
+  lm  232 I 234
+  um  2  166 I 174
+
+  8
+
+  h  4  48 1  s2
+
+  T-O--T-A-L----------1-8-------7-9-5-1I -----8-1-3--
+
+  h; gh  13  64 1  11
+  84 I 111
+  lm  27  91 I 138
+
+  um  47  57 1 96
+
+  h  39
+  --------------------------1---------
+  TOTAL  126  296 I 422
+
+••••• PERCENTS OF ROW TOTALS
+
+iq  pe  ses  cp
+
+  yes  no TOTAL
+
+  low  I  1.1  98 . 9 I 100 .0
+  99 . 1 I 100.0
+  lm  0.9  95 . 4 I 100.0
+
+  um  4.6  92.3 1 100.0
+
+  h  1.1
+
+  --------------------------1---------
+  TOTAL  2.2  97.8 I 100 .0
+
+  high  16 . 9  83 . 1 1 100 .0
+  75 . 7 I 100 .0
+  lm  24 . 3  65.9 I 100.0
+
+  um  34 . 1  59.4 1 100 .0
+
+  h  40 . 6
+
+  --------------------------1---------
+  TOTAL  29.9  70.1 I 100.0
+
+Similar tables are output for IQ = LM, UM, H.
+

@@ -1,0 +1,703 @@
+222  Handbook of Transportation Science
+
+two cases are considered: first,  implying that the merging vehicle only
+
+accelerates during the maneuver. The safety region expands for this scenario as
+
+shown in Fig. 7-17. Second, for  , simulation results in Fig. 7-18 indicate that
+
+if the merging vehicle is initially in the unsafe region, it can move into the safe
+region by applying adequate deceleration.
+
+  The demerit of the previous scheme is that the merging vehicle may not always be
+in a position to perform such decelerations because of the following vehicle in the
+originating lane. In such cases, the authors considered another acceleration profile as
+shown in Fig. 7-19, which shows that a similar transition from the unsafe into the
+safe region is possible with a lower deceleration (Fig. 7-20). These analyses enable
+Automated Vehicle Control  223
+
+the merging automated vehicle to perform safe lane change/merge with minimum
+risk of collision.
+224  Handbook of Transportation Science
+
+7.7 String Stability
+
+In vehicle following the dynamics of each vehicle are coupled with other vehicles
+leading to a larger dynamical system. Even though each vehicle may have stable
+behavior and good performance, the behavior of the overall coupled system may not
+be desirable. For example, transients caused by a single vehicle changing its speed
+may be amplified upstream leading to what is known as “slinky-type effect”
+Automated Vehicle Control  225
+
+(Sheikholeslam and Desoer, 1991) or string instability. String stability (Swaroop and
+Hendrick, 1996) in vehicle following implies that any nonzero position, velocity and
+acceleration error of an individual vehicle in a string of vehicles does not get
+amplified as it propagates upstream. Bose and Ioannou (1999) carried out an analysis
+on string stability of manual and automated traffic using the models presented in
+sections 7.3 & 7.4.
+
+  A system of vehicles in a single lane under moderately dense traffic conditions can
+be considered as a countable infinite interconnected system. Such a system shown in
+Fig. 7-21 is modeled as
+
+where  the total number of vehicles considered, i s the velocity of the i-th
+
+vehicle and  is a proper stable transfer function that represents the input-output
+
+behavior of the i-th vehicle. The system represents traffic in a single lane without
+passing in which every vehicle tries to match the speed of the preceding vehicle with
+some precision and intervehicle spacing.
+
+  The following errors are defined for the i-th vehicle:
+
+where denotes the abscissa of the rear bumper of the i-th vehicle; is the length
+of i-th vehicle, is the constant intervehicle spacing followed by the i-th vehicle,
+measured from the rear of the (i-1)-th vehicle to the front of the i-th vehicle;
+denotes the velocity of the i-th vehicle and denotes the acceleration of the i-th
+vehicle.
+
+  It can be shown that for vehicles with constant intervehicle spacing policy, the
+error propagation is given by
+226  Handbook of Transportation Science
+
+and for vehicles with constant time headway policy, it is given by
+
+To have string stability for a class of interconnected system of vehicles, Bose and
+
+Ioannou (1999) showed that the impulse response  of the error propagation
+
+transfer function  or  as the case may be, for each individual
+
+vehicle in this class must satisfy
+
+Assuming identical input/output characteristics in a fleet of vehicles, the string
+stability of the manual vehicle and the automated longitudinal models presented in
+the earlier sections is investigated.
+
+Pipes Model
+
+The transfer function of the Pipes model is
+
+The impulse response is such that  which shows that the Pipes model
+
+does not belong to the class of systems that guarantee string stability. The frequency
+response shown in Fig. 7-22 has magnitude greater than unity for very small
+frequencies. In Fig. 7-23 it is demonstrated that a string of vehicles represented by
+Pipes model lacks string stability.
+Automated Vehicle Control  227
+228  Handbook of Transportation Science
+
+Optimal Control Model
+
+The optimal control model (7.28) is linearized around three different operating
+speeds. After linearization, a parameter A is obtained that depends on the speed at
+which linearization is performed and is defined as
+
+The transfer function of the linearized model is given by
+
+It is seen that  for all values of A which shows that the optimal control
+
+model belongs to the class of systems that guarantee string stability.
+
+Look Ahead Model
+
+The transfer functions for the two positions of the model are
+
+It is clearly seen that (7.55) and (7.56) satisfy (7.51) and the model belongs to the
+class of systems that guarantee string stability.
+
+Automated Longitudinal Controller
+
+The automated vehicle longitudinal controller presented in section 7.4 is designed
+using constant time headway policy. For automated vehicle longitudinal controllers
+using a constant spacing policy, it has been shown that vehicle-to-vehicle
+communication is necessary to guarantee string stability (Shladover, 1977;
+Sheikholeslam and Desoer, 1991; Swaroop et al., 1994).
+
+Throttle controller. The transfer function of the throttle subsystem (Ioannou and
+Xu, 1994) is given by
+Automated Vehicle Control  229
+
+where  are designed controller parameters; h is the time headway desired
+
+and a, b are coefficients determined by the operating point which is the speed of the
+vehicle ahead. Using parameter values in (7.57) that have been used on a validated
+nonlinear vehicle model and tested using simulations to satisfy the performance
+criteria given in Ioannou and Xu (1994), the following transfer function is obtained
+
+that has the property  which shows that the throttle controller belongs to
+
+the class of systems that guarantee string stability.
+
+Brake controller. For the closed loop brake subsystem we have the following
+transfer function (Ioannou and Xu, 1994)
+
+where  are the brake controller gains and h is the desired time headway. Using
+
+parameter values in (7.59) that satisfy the performance criteria given in Ioannou and
+
+Xu (1994), we get  which shows that the brake controller belongs to the
+
+class of systems that guarantee string stability.
+  Therefore the longitudinal control design satisfies string stability. The automated
+
+longitudinal controller developed by Kanellakopoulos and Tomizuka (1997) for
+heavy-duty vehicles was designed to satisfy string stability such that the errors
+decrease in magnitude as they propagate upstream.
+
+7.8 Mixed Traffic
+
+The introduction of automated vehicles into the current manual traffic system where
+they will coexist with manually driven vehicles will usher the stage of mixed
+manual/automated traffic. In this section we investigate the possible effects of the
+introduction of automated vehicles on throughput, transients in vehicle following,
+fuel consumption and the environment.
+230  Handbook of Transportation Science
+
+Throughput
+
+The use of automation guarantees that an automated vehicle with full longitudinal
+automation always follows a time headway that is lower than the average time
+headway followed by manual traffic. As a consequence, mixed automated/manual
+traffic promise improvement in traffic throughput. Concepts such as platooning
+(Ioannou, 1997; Kanaris, Ioannou and Ho, 1997) in fully automated traffic promise
+greater improvement in traffic throughput as shown in Shladover (1997) and
+Carbaugh et al. (1998). These studies show that larger number of vehicle platoons
+under certain assumptions about the braking capabilities of vehicles is expected to
+significantly improve throughput.
+
+Throughput model (without communication). Random sequencing of automated
+and manual vehicles in mixed traffic operations produce different combinations of
+pair of vehicles. We assume that the automated vehicles do not have communication
+capability. In other words, an automated vehicle following a vehicle is not able to
+determine the type of vehicle ahead, i.e. whether it is following a manual or an
+automated vehicle. Therefore, it always maintains the same time headway in traffic
+at a given speed. Likewise, we assume that a manual vehicle follows the same time
+headway at a given speed regardless of the type of the vehicle ahead.
+
+  We adopt the model used in Milestone 2 Report (Appendix I, 1996). We assume
+an identical speed for the automated and the manual vehicles and that all manual
+vehicles follow an identical average time headway at a given speed. Let the market
+penetration of the automated vehicles be a. The probability that a vehicle is
+automated or manual is given by
+
+  P(automated vehicle) = a
+  P(manual vehicle) = 1-a
+
+This means that when a =0.1, 10% of the vehicles in mixed traffic are automated.
+  Let the following represent the time headways for manual and automated vehicles:
+
+  time headway of automated vehicles
+  time headway of manual vehicles
+
+  The average time headway of mixed traffic, assuming the total number of vehicles
+on the highway is very large compared to the number under analysis, is given by
+
+and the throughput is calculated as
+Automated Vehicle Control  231
+
+Throughput model (with communication). An automated vehicle with
+communication capability determines if the leader is automated or manual by
+attempting to communicate to the vehicle ahead. If the leader does not acknowledge,
+then it is assumed to be a manually driven vehicle. Accordingly, the following
+vehicle selects and maintains an appropriate time headway.
+
+  We define the following probabilities
+
+  P(A,M) = probability that an automated vehicle is followed by a manual vehicle
+  P(A,A) = probability that an automated vehicle is followed by an automated
+
+  vehicle
+  P(M,A) = probability that a manual vehicle is followed by an automated vehicle
+  P(M,M) = probability that a manual vehicle is followed by a manual vehicle
+
+  So we have from previous notation
+
+  The throughput in Milestone 2 Report (Appendix I, 1996) is formulated based on
+intervehicle data for the four possible outcomes. We carry out the analysis based on
+time headway data and follow the notation given below
+
+  H(A,M): time headway of a manual vehicle following an automated vehicle
+  H(A,A): time headway of an automated vehicle following an automated vehicle
+  H(M,A): time headway of an automated vehicle following a manual vehicle
+  H(M,M): time headway of a manual vehicle following a manual vehicle
+
+The average time headway of mixed traffic is given by
+
+and the throughput is calculated using (7.61).
+
+Time headway of a manual vehicle The time headway of manual vehicles
+follows a shifted lognormal distribution (Fig. 7-24 (Cohen, 1991)). It can be
+considered to have a mean value of 1.8s, which is about 2000veh/hr/lane that has
+been termed as ‘national average’ in the Highway Capacity Manual (TRB, 1985).
+There is considerable influence of age, gender and experience on the manual traffic
+time headway (Fancher et al., 1995). A part of the highway might have time
+headway other than 1.8s due to any of the above factors. However, for simplicity we
+use the average value of 1.8s for our analysis. The same value is used for H(A,M)
+and H(M,M) in (7.62).
+232  Handbook of Transportation Science
+
+Time headway of an automated vehicle The MSS is calculated based on a worst
+case stopping scenario with vehicle characteristics obtained from actual vehicles.
+
+  We use the SPACING software tool (Kanaris, Grammagnat and Ioannou, 1997) to
+calculate the time headway of an automated vehicle. Assuming the worst case
+scenario that the vehicle ahead is a manual one, we consider that it performs hard
+braking with a deceleration of 0.90g. On the other hand, automated vehicles are
+assumed to meet a minimum performance criterion and have a lower bound for
+maximum deceleration of 0.75g. The sensor detection delay of an automated vehicle
+time headway system and the brake actuation delay are taken from a study by
+Ioannou et al. (1994). The parameter values are listed in Table 7-2.
+Automated Vehicle Control  233
+
+  The intervehicle spacing that measures the distance from the rear of the leading
+vehicle to the front of the following vehicle obtained using the SPACING software is
+13.44m for speed of 55mph. The manual traffic time headway (Fig. 7-24) measures
+the time it takes a manual vehicle to cover the distance between the same points of
+successive vehicles, i.e. it includes the vehicle length. Assuming an average vehicle
+length of 5m, we get an intervehicle spacing of 18.44m that translates into an
+automated vehicle time headway of 0.75s at 55mph for the automated vehicles. This
+value is also used for H(M,A) in (7.60). However, when an automated vehicle is
+following another automated vehicle and both are exchanging information, then the
+time headway H(A,A) is smaller than H(M,A). When the lead vehicle performs hard
+braking, it immediately notifies the following vehicle about its rate. After a
+propagation and actuation delay, the following vehicle performs the exact maneuver
+at the same rate. Considering this braking scenario, we obtain an intervehicle spacing
+of 9.84m using SPACING. Adding the average vehicle length of 5m this translates
+into a time headway of 0.61s. Using (7.60), (7.61) and (7.62), Fig. 7-25 shows how
+increased penetration of automated vehicles improves traffic throughput. We also
+observe that increased level of automation in an automated vehicle such as vehicle-
+to-vehicle communication further improves throughput.
+234  Handbook of Transportation Science
+
+Traffic Flow Characteristics
+
+The presence of automated vehicles improves traffic flow characteristics in manual
+traffic. Bose and Ioannou (1999) show that automated vehicles do not contribute to
+the “slinky-type effect” (Sheikholeslam and Desoer, 1991) observed in today’s
+manual traffic. Simulations demonstrate that automated vehicles smooth traffic flow
+by filtering the transients caused by rapidly accelerating manual vehicles. Consider a
+string of 10 vehicles in mixed manual/automated traffic. We use the Pipes model for
+manual vehicles as it models the slinky-type effects we observe in today’s manual
+traffic. The ICC model in Ioannou and Xu (1994) is used to simulate automated
+vehicles. Assume the vehicle to be automated that corresponds to 10% mixing of
+automated with manual vehicles. The lead vehicle accelerates at 0.35g from 0m/s to
+24.5m/s, maintains a constant speed at 24.5m/s, thereafter decelerates to 14.5m/s at
+0.3g and finally accelerates to 24.5m/s at 0.25g. The acceleration and deceleration
+values used are typical for many passenger cars (Consumer Reports, 1998). The
+velocity responses in Fig. 7-26(a) show that the automated vehicle v4 filters the
+response of the rapidly accelerating vehicle v3 in an effort to maintain smooth
+driving. As a result the responses of vehicles v5, v9 and v10 are less oscillatory than
+that of v1 and v3. However, this is done at the expense of large position error in v4
+(Fig. 7-26(b)).
+
+Travel time? If the presence of an automated vehicle in mixed traffic improves
+traffic flow stability, the question remains if it changes the total travel time. The
+automated vehicle has limited acceleration and is not able to keep up with fast
+accelerating manual vehicles. We perform the same rapid acceleration maneuver by
+the lead vehicle and compare the difference in the distance as a percentage of the
+total distance covered by the vehicle in manual traffic and mixed traffic. If there
+is no difference in the distance covered by the vehicle in manual and mixed
+traffic, then there is no difference in the distances covered by the other vehicles
+ahead and therefore in the total travel time. This is because each vehicle follows the
+vehicle ahead using a constant time headway policy. As shown in Fig. 7-27, though
+there is a transient percentage difference in the distance covered by the vehicle
+when the automated vehicle cannot keep up with the accelerating leader, it finally
+goes to zero. This happens when the lead vehicle attains a constant speed after rapid
+acceleration and theautomated vehicle catches up with it. Therefore, the presence of
+an automated vehicle is not expected to change the total travel time for the following
+vehicles.
+
+Fuel Consumption and Pollution
+
+Barth (1997) lists vehicle parameters such as second-by-second velocity,
+acceleration and grade that determine the emission levels and fuel consumption.
+Bose and Ioannou (2001) used the above stated parameters in simulations and
+experiments using actual vehicles to examine the environmental effect of automated
+Automated Vehicle Control  235
+236  Handbook of Transportation Science
+
+vehicles among manual ones. The quantities measured are the tailpipe emissions of
+
+unburnt hydrocarbons (HC), carbon monoxide  oxides of nitrogen
+
+  denoted by  in this Chapter) and fuel consumption. The Comprehensive
+
+Modal Emissions Model (CMEM) version 1.00 developed at UC Riverside is used to
+analyze the vehicle data and calculate the air pollution and fuel consumption [3]. It is
+a high fidelity, recently developed model that is more sensitive to transients than
+previous TRAF models (Barth, 1998). The model calculates vehicle emissions and
+fuel consumption as a function of the vehicle operating mode, i.e. idle, steady state
+cruise, various levels of acceleration/deceleration, among others.
+
+  In simulations, smooth and rapid acceleration scenarios were evaluated for a string
+of 10 vehicles following a lead vehicle in a single lane without passing in manual
+and mixed traffic. It is seen that the accurate speed and position tracking and the
+smoothing of traffic flow by the automated vehicle translates into lower air pollution
+and fuel savings that are significant during rapid acceleration transients, as shown in
+Table 7-3.
+Automated Vehicle Control  237
+
+  Furthermore, three actual vehicles were used in experiments since it was not
+possible to use 10 vehicles. Therefore to see how the simulation results compare with
+the experimental results, we reran the simulations using only 2 vehicles following a
+lead vehicle in manual traffic and mixed traffic. The lead vehicle speed profiles
+obtained during the experiments were used. The speed responses of the models were
+collected and analyzed using CMEM. The environmental benefits measured due to
+the presence of the automated vehicle during experiments and simulations are
+presented in Table 7-4. The simulation results are conservative compared to
+environmental benefits in actual driving, a consequence of the fact that the Pipes
+model gives a smooth approximation of actual manual driving.
+
+7.9 Conclusion
+
+In this chapter we outlined a design for a longitudinal and a lateral controller and
+discussed communication technologies and sensor requirements for automated
+vehicles. We highlighted benefits in safety that may be expected due to use of
+automation. We presented how the presence of lateral sensors and automated lane
+238  Handbook of Transportation Science
+
+changing in fully automated vehicles has the potential to improve safety on freeways.
+We observed that automated vehicles among manual ones in mixed traffic behave
+like a filter and smooth the traffic flow characteristics when following fast
+accelerating manual vehicles, without changing the total travel time. This smoothing
+out of the traffic flow is expected to have a beneficial environmental impact and
+decrease fuel consumption.
+
+References
+
+Barth, M.J. (1997) Integrating a modal emissions model into various transportation modeling frameworks.
+  ASCE Conference Proceedings.
+
+Barth, M.J. (1998) CMEM User’s Manual, UC Riverside.
+
+Bastian, A. et al. (1998) Autonomous cruise control: A first step towards automated driving. SAE
+  Technical Paper Series 981942.
+
+Bekey, G.A., Burnham, G.O. and Seo, J. (1977) Control theoretic models of human drivers in car
+  following. Human Factors 19, 399-413.
+
+Bose, A. and Ioannou, P.A. (1998) Issues and analysis of mixed semi-automated/manual traffic. SAE
+  Technical Paper Series 981943.
+
+Bose, A. and Ioannou, P.A. (1999) Analysis of traffic flow with mixed manual and semi-automated
+  vehicles. Proc. American Control Conference, 2173-2177.
+
+Bose, A. and Ioannou, P.A. (2001) Evaluation of the environmental effects of Intelligent Cruise Control
+  vehicles. Journal of the Transportation Research Board 1774, 90-97.
+
+Burnham, G.O., Seo, J. and Bekey, G.A. (1974) Identification of human driver models in car following.
+  IEEE Transactions on Automatic Control 19, 911-915.
+
+Carbaugh, J., Godbole, D.N. and Sengupta, R. (1998) Safety and capacity analysis of automated and
+  manual highway systems. Transportation Research Part C (Emerging Technologies) 6C:l-2, 69-99.
+
+Chandler, P.E., Herman, R. and Montroll, E.W. (1958) Traffic dynamics: studies in car following.
+  Operations Research 6, 165-184.
+
+Cho, D. and Hedrick, J.K. (1989) Automotive powertrain modeling for control. Trans ASME, J. of Dyn.
+  Sys. Meas. & Contr. 111:4, 568-576.
+
+Cohen, S. (1991) Flow variables. Concise Encyclopedia of Traffic & Transportation Systems, (M.
+  Papageorgiou, ed.) Pergamon Press.
+
+Cointot, B. et al. (1993) Detection of driver’s low vigilance periods on motorway.  ISATA Intern.
+  Symp. Automotive Technology and Automation, 347.
+
+Consumer reports online, (1998).
+
+Dingus, T., Hardee, L. and Wierwille, W. (1987) Development of models for on-board detection of driver
+  impairment. Accid. Anal. And Prev. 19:4.
+Automated Vehicle Control  239
+
+Fancher, P. et al (1995) Fostering development, evaluation and deployment of Forward Crash Avoidance
+  System (FOCAS). NHTSA, Report No. DOT HS 808 437.
+
+Graefe, V. and Kuhnert, K.-D. (1988) Towards a vision-based robot with a driver’s license. Proceedings,
+  IEEE International Workshop on Intelligent Robots and Systems, 627-632.
+
+Hall, R.W. (1997) System configurations: Evolutionary deployment considerations. Automated Highway
+  Systems (P. A. Ioannou, ed.), pp. 49-71, Plenum Press, New York.
+
+Hedrick, J.K., McMahon, D., Narendran, V. and Swaroop, D. (1991) Longitudinal vehicle controller
+  design for IVHS systems. Proceedings of American Control Conference, 3107-3112.
+
+Hessburg, T., Peng, H, Tomizuka, M. and Zhang, W.-B. (1991) An experimental study on lateral control
+  of a vehicle. PATH Research Report UCB-IT-PRR-91-17, UC Berekley.
+
+Hovanessian, S.A. (1988) Introduction to Sensor Systems. Artech House.
+
+Interstate hazard analysis, (1994).
+
+Jula, H., Kosmatopoulos, E. and Ioannou, P.A. (1998) Collision avoidance analysis for lane changing and
+  merging. Submitted to IEEE Trans, on Vehicular Technology.
+
+Ioannou, P.A., Ahmed-Zaid, F. and Wuh, D. (1992) A time headway autonomous Intelligent Cruise
+  Controller: Design and simulation. Technical Report, USC-SCT 92-11-01, Los Angeles.
+
+Ioannou, P.A. and Chien, C.C. (1993) Autonomous Intelligent Cruise Control. IEEE Trans. on Vehicular
+  Tech. 42:4, 657-672.
+
+Ioannou, P.A. and Xu, T. (1994) Throttle and Brake Control. IVHS Journal 1:4, 345-377.
+
+Ioannou, P.A. et al (1994) Activity D: Lateral and longitudinal control analysis. Final Report.
+
+Ioannou, P.A. (1997) Control and sensor requirements and issues in AHS. Automated Highway Systems
+  (P. A. Ioannou, ed.), pp. 195-212, Plenum Press, New York.
+
+Jurie, F. et al. (1993) High speed vehicle guidance based on vision. Intelligent Autonomous Vehicles IFAC
+  Workshop, 203-208.
+
+Kaltwasser, J. and Kassubek, J. (1994) A new cooperative optimized access for inter-vehicle
+  communication. Vehicle Navigation & Information Systems Conference Proceedings, 144-148.
+
+Kanaris, A., Grammagnat, A. and Ioannou, P.A. (1997) Inter vehicle spacing – User’s manual. USC
+  Center for Advanced Transportation Technologies, Los Angeles.
+
+Kanaris, A., Ioannou, P.A. and Ho, F.-S., (1997) Spacing and capacity evaluations for different AHS
+  concepts. Proc. of American Control Conference, 2036-2040.
+
+Kanellakopoulos, I. and Tomizuka, I.(1997) Commercial trucks and buses in Automated Highway
+  Systems. Automated Highway Systems (P. A. Ioannou, ed.), pp. 213-246, Plenum Press, New York.
+
+Kogure, G., Katahara, S. and Aoki, M. (1993) Iris motion and blink detection using video image sequence.
+  ISATA Intern. Symp. Automotive Technology and Automation, 375.
+240  Handbook of Transportation Science
+
+Milestone 2 Report (1996) Cooperative Vehicle Concept Description. Appendix B, National Automated
+  Highway System Consortium (NAHSC).
+
+Milestone 2 Report (1996) Mixed traffic throughput analysis. Appendix I, National Automated Highway
+  System Consortium (NAHSC).
+
+Milestone 2 Report (1996) Hard-braking safety analysis method and detailed results. Appendix J, National
+  Automated Highway System Consortium (NAHSC).
+
+Mitzui, K. et al (1994) Vehicle-to-vehicle 2-way communication & ranging system using spread spectrum
+  technique. Vehicle Navigation & Information Systems Conference Proceedings, 153-158.
+
+Nathoo, N.S. and Healey, A.J. (1978) Coupled vertical-lateral dynamics of a pneumatic tired vehicle: part
+  I- A mathematical model. ASME J. Dyn. Syst. Meas. Control 100, 311-318.
+
+Pipes, L.A. (1953) An operational analysis of traffic dynamics. J. of Applied Physics 24, 271-281.
+
+Peng, H. and Tomizuka, M. (1990) Vehicle lateral control for highway automation. Proc. American
+  Control Conference, 788-793.
+
+Raza, H., Xu, Z., Yang, B. and Ioannou, P.A. (1997) Modeling and control design for a computer-
+  controlled brake system. IEEE Trans. on Control Systems Technol. 5:3, 279-296.
+
+Scolfield, J. et al. (1993) Progress towards impaired driver attentiveness detection system. Prometheus-
+  Future Systems, auto tech.
+
+Sheikholeslam, S. and Desoer, C.A. (1991) Longitudinal control of a platoon of vehicles with no
+  communication of lead vehicle information. Proc. American Control Conference, 3102-3106.
+
+Shladover, S.E. (1977) Longitudinal control of automated guideway transit vehicles within platoons.
+  ASME J. Dyn. Syst. Meas. Control 100, 302-310.
+
+Shladover, S.E. (1997) Reasons for operating AHS vehicles in platoons. Automated Highway Systems (P.
+  A. Ioannou, ed.), pp. 11-27, Plenum Press, New York.
+
+Skipper, J. and Wierwille, W. (1986) Drowsy driver detection using discriminant analysis. Human Factors
+  28:5, 527.
+
+Smith, S.M. and Brady, J.M. (1993) A scene segmenter: visual tracking of moving vehicles. Intelligent
+  Autonomous Vehicles, IFAC Workshop, 117-124.
+
+Stevens, W.B. (1997) Evolution to an Automated Highway System. Automated Highway Systems (P. A.
+  Ioannou, ed.), pp. 109-124, Plenum Press, New York.
+
+Swaroop, D. and Hedrick, J.K. (1996) String stability of interconnected systems. IEEE Trans. on
+  Automatic Control 41:3, 349-357.
+
+Swaroop, D. Hedrick, J.K., Chien, C.C. and Ioannou, P.A. (1994) A comparison of spacing and headway
+  control laws for automatically controlled vehicles, J. of Vehicle System Dynamics 23, 597-625.
+
+TRB (1985) Special Report 209, Highway Capacity Manual. Transportation Research Board, Washington,
+  D.C.
+
+Trassoudaine, L. et al, (1993) Visual tracking by a multisensorial approach. Intelligent Autonomous
+  Vehicles, IFAC Workshop, 111-116.
+Automated Vehicle Control  241
+
+Tyler, J.S. (1964) The characteristics of model following systems as synthesized by optimal control. IEEE
+  Transactions on Automatic Control 9, 485-498.
+
+Walker, R.J. and Harris, C.J. (1993) A Multi-Sensor Fusion System for a Laboratory Based Autonomous
+  Vehicle. Intelligent Autonomous Vehicles IFAC Workshop, 105-110.
+
+Wang, J.-S. and Knipling, R.R. (1993) Lane change/merge: Problem size assessment and statistical
+  description. USDOT Techinical Report (Draft), Information Management Consultants Inc., McLean,
+  Virginia.
+
+Ward, J.D. (1997) Step by step to an Automated Highway System-and beyond. Automated Highway
+  Systems (P. A. Ioannou, ed.), pp. 73-91, Plenum Press, New York.
+
+Zhang, S. and Thomas, B.T. (1993) Knowledge-based vehicle navigation in complex road networks.
+  Intelligent Autonomous Vehicles IFAC Workshop, 209-214.
+  8 TRAFFIC CONTROL
+  Markos Papageorgiou
+
+8.1 Introduction
+
+Traffic Congestion
+
+Transportation has always been a crucial aspect of human civilization, but it is only
+in the second half of this century that the phenomenon of traffic congestion has
+become predominant due to the rapid increase in the number of vehicles and in the
+transportation demand in virtually all transportation modes. Traffic congestion
+appears when too many vehicles attempt to use a common transportation
+infrastructure with limited capacity. In the best case, traffic congestion leads to
+queueing phenomena (and corresponding delays) while the infrastructure capacity
+(“the server”) is fully utilized. In the worst (and far more typical) case, traffic
+congestion leads to a degraded use of the available infrastructure (reduced
+throughput that may even lead to a fatal gridlock) with excess delays, reduced safety,
+and, recently, increased environmental pollution.
+
+The Need for Traffic Control
+
+The emergence of traffic (i.e. many interacting vehicles using a common
+infrastructure) and subsequently traffic congestion (whereby demand exceeds the
+infrastructure capacity) have opened new innovation needs in the transportation area.
+The energy crisis in the 1970’s, the increased importance of environmental concerns,
+and the limited economic and physical resources are among the most important
+reasons why a brute-force approach (i.e., the continuous expansion of the available
+transportation infrastructure) cannot continue to be the only answer to the ever
+increasing transportation and mobility needs of modern societies. The efficient, safe,
+and less polluting transportation of persons and goods calls for an optimal utilization
+of the available infrastructure via suitable application of a variety of traffic control
+measures. This trend is enabled by the rapid developments in the areas of
+communications and computing, but it is quite evident that the efficiency of traffic
+control directly depends on the efficiency and relevance of the employed control
+244  Handbook of Transportation Science
+
+methodologies. This chapter will provide an overview of advanced traffic control
+strategies for three particular areas: Urban road networks, freeway networks, and
+route guidance and information systems.
+
+The Control Loop
+
+Figure 8.1 illustrates the basic elements of a control loop. The traffic flow behaviour
+in the (road or freeway or mixed) network depends on some external quantities that
+are classified into two groups:
+
+  Control inputs that are directly related to corresponding control devices such as
+  traffic lights, variable message signs, etc; the control inputs may be selected
+  from an admissible control region subject to technical, physical, and operational
+  constraints.
+
+  Disturbances, whose values cannot be manipulated, but may possibly be
+  measurable (e.g. demand) or detectable (e.g, incident) or predictable over a
+  future time horizon.
+
+  The network’s output or performance is measured via suitable indices, such as
+  the total time spent by all vehicles in the network over a time horizon. The task of
+  the surveillance is to enhance and to extend the information provided by
+  measurement devices (e.g. loop detectors) as required by the subsequent control
+  strategy and the human operators. The kernel of the control loop is the control
+  strategy, whose task is to specify in real time the control inputs, based on available
+  measurements/estimations/predictions, so as to achieve the pre-specified goals (e.g.
+  minimization of total time spent) despite the influence of various disturbances. If
+  this task is undertaken by a human operator, we have a manual control system. In
+Traffic Control  245
+
+an automatic control system, this task is undertaken by an algorithm (the control
+strategy). The relevance and efficiency of the control strategy largely determines the
+efficiency of the overall control system. Therefore, whenever possible, control
+strategies should be designed with care, via application of powerful and systematic
+methods of optimization and automatic control, rather than via questionable
+heuristics (Papageorgiou, 1998). Traffic control strategies for urban road and
+freeway networks is the main focus of this chapter.
+
+Discrete-Time Representation
+
+For the needs of this chapter we will use a discrete-time representation of traffic
+variables with discrete time index k = 0, 1, 2, ... and time interval T. A traffic
+volume or flow q(k) (in veh/h) is defined as the number of vehicles crossing a
+corresponding location during the time period [kT, (k+1)T], divided by T. Traffic
+
+density  (in veh/km) is the number of vehicles included in a road segment of
+
+length at time kT, divided by . Mean speed v(k) (in km/h) is the average speed
+at time kT of all vehicles included in a road segment.
+
+A Basic Property
+
+We consider a traffic network (Figure 8-2) that receives demands  (in veh/h) at
+
+its origins i = 1, 2, ... and we define the total demand  We
+
+assume that d(k), k = 0, ..., K, is independent of any control measures taken in the
+
+network. We define exit flows at the network destinations i = 1, 2, ..., and the
+
+total exit flow  We wish to apply control measures so as to
+
+minimize the total time spent in the network over a time horizon K, i.e.
+
+where N(k) is the total number of vehicles in the network at time k. Due to
+conservation of vehicles
+
+hence
+246  Handbook of Transportation Science
+Substituting (8.3) in (8.1) we obtain
+
+The first two terms in the outer sum of (8.4) are independent of the control measures
+taken in the network, hence minimization of is equivalent to maximization of the
+following quantity
+
+Thus, minimization of the total time spent in a traffic network is equivalent to
+maximization of the time-weighted exit flows. In other words, the earlier the vehicles
+are able to exit the network (by appropriate use of the available control measures) the
+less time they will have spent in the network.
+
+8.2 Road Traffic Control
+
+Basic Notions
+
+Traffic lights at intersections is the major control measure in road networks. Traffic
+lights were originally installed in order to guarantee the safe crossing of antagonistic
+streams of vehicles and pedestrians. With steadily increasing traffic demands, it was
+soon realized that once traffic lights exist, they may lead (under equally safe traffic
+conditions) to more or less efficient network operations, hence there must exist an
+optimal control strategy leading to minimization of the total time spent by all
+vehicles in the network.
+
+  Although the corresponding optimal control problem may be readily formulated
+for any road network, its real-time solution and realization in a control loop like the
+one of Figure 8-1 faces a number of apparently insurmountable difficulties:
+
+  The red-green switchings of traffic lights call for the introduction of binary
+  variables, which renders the optimization problem combinatorial.
+  The size of the problem for a whole network is very large.
+  Many unpredictable and hardly measurable disturbances (incidents, illegal
+  parking, pedestrian crossings, intersection blocking, etc.) may perturb the traffic
+  flow.
+  Measurements of traffic conditions are mostly local (via loop detectors) and
+  highly noisy due to various physical effects.
+  There are tight real-time constraints, e.g. decision making within 2s for
+  advanced control systems.
+Traffic Control  247
+
+The combination of these difficulties renders the solution of a detailed optimal
+control problem infeasible for more than one intersection. Therefore, proposed
+control strategies for road traffic control introduce a number of simplifications of
+different kinds or address only a part of the related traffic control problems.
+
+An intersection consists of a number of approaches and the crossing area. An
+approach may have one or more lanes but has a unique, independent queue.
+Approaches are used by corresponding traffic streams (veh/h). A saturation flow s is
+the average flow crossing the stop line of an approach when the corresponding
+stream has right of way (r.o.w.) and the upstream demand (or the waiting queue) is
+sufficiently large. Two compatible streams can safely cross the intersection
+simultaneously, else they are called antagonistic. A signal cycle is one repetition of
+the basic series of signal combinations at an intersection; its duration is called cycle
+time c. A stage (or phase) is a part of the signal cycle, during which one set of
+streams has r.o.w. (Figure 8-3). Constant lost times of a few seconds are necessary
+between stages to avoid interference between antagonistic streams of consecutive
+stages (Figure 8-4).
+
+  There are four possibilities for influencing traffic conditions via traffic lights
+operation:
+

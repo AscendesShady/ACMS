@@ -1,0 +1,1233 @@
+A Policy on
+Geometric Design of
+Highways and Streets
+
+  2018
+
+  7th Edition
+
+--`,```,``,`,`,`,``````,,,,``-`-`,,`,,`,`,,`---
+
+THE GREEN BOOK Copyright American Association of State Highway and Transportation Officials
+  Provided by IHS Markit under license with AASHTO
+  No reproduction or networking permitted without license from IHS
+  Licensee=Arkansas State Highway & Transportation Dept/5988317001, User=Sichmelle
+  Not for Resale, 10/09/2018 09:17:18 MDT
+  A Policy on Geometric Design of Highways and Streets
+  2018
+
+  7th Edition
+
+--`,```,``,`,`,`,``````,,,,``-`-`,,`,,`,`,,`---
+
+Copyright American Association of State Highway and Transportation Officials
+  © 2018 by the American Association of StLaicteenHseeig=AhrkwanasyasaSntadteTHrigahnwsayp&orTtraantisoponrtaOtiofnfiDceipat/l5s9.88317001, User=Sichmelle
+Provided by IHS Markit under license with AASHTO
+
+No reproduction or networking permitted without license from IHS  All rights reserved. DuplicationNiost aforvRieoslaalet,i1o0n/09o/2f0a18pp09l:i1c7a:1b8lMeDlTaw.
+  American Association of State Highway and Transportation Officials
+  444 North Capitol Street, NW, Suite 249
+  Washington, DC 20001
+  202-624-5800 phone/202-624-5806 fax
+  www.transportation.org
+
+© 2018 by the American Association of State Highway and Transportation Officials.
+  All rights reserved. Duplication is a violation of applicable law.
+  Publication Code: GDHS-7
+  ISBN: 978-1-56051-676-7
+
+  --`,```,``,`,`,`,``````,,,,``-`-`,,`,,`,`,,`---
+
+Copyright American Association of State Highway and Transportation Officials
+  © 2018 by the American Association of StLaicteenHseeig=AhrkwanasyasaSntadteTHrigahnwsayp&orTtraantisoponrtaOtiofnfiDceipat/l5s9.88317001, User=Sichmelle
+Provided by IHS Markit under license with AASHTO
+
+No reproduction or networking permitted without license from IHS  All rights reserved. DuplicationNiost aforvRieoslaalet,i1o0n/09o/2f0a18pp09l:i1c7a:1b8lMeDlTaw.
+--`,```,``,`,`,`,``````,,,,``-`-`,,`,,`,`,,`---  iii
+
+  EXECUTIVE COMMITTEE
+  2018–2019
+
+  Officers
+  President: John Schroer, TENNESSEE
+  Vice President: Carlos Braceras, UTAH
+  Secretary/Treasurer: Scott Bennett, ARKANSAS
+  Immediate Past President: David Bernhardt, MAINE
+
+  Regional Representatives
+  REGION I
+
+  Pete Rahn, MARYLAND
+  Jennifer Cohan, DELAWARE
+
+  REGION II
+  James M. Bass, TEXAS
+  Russel McMurray, GEORGIA
+
+  REGION III
+  Patrick McKenna, MISSOURI
+
+  Joe McGuiness, INDIANA
+
+  REGION IV
+  Roger Millar, WASHINGTON STATE
+
+  Marc Luiken, ALASKA
+
+  Non-Voting Members
+  Executive Director: Bud Wright, AASHTO
+
+Copyright American Association of State Highway and Transportation Officials
+  © 2018 by the American Association of StLaicteenHseeig=AhrkwanasyasaSntadteTHrigahnwsayp&orTtraantisoponrtaOtiofnfiDceipat/l5s9.88317001, User=Sichmelle
+Provided by IHS Markit under license with AASHTO
+
+No reproduction or networking permitted without license from IHS  All rights reserved. DuplicationNiost aforvRieoslaalet,i1o0n/09o/2f0a18pp09l:i1c7a:1b8lMeDlTaw.
+iv
+
+  TECHNICAL COMMITTEE ON GEOMETRIC DESIGN
+  2018–2019
+
+  Officers  TENNESSEE
+  Jeff C. Jones, Chair  MINNESOTA
+  Jim Rosenow, Vice Chair  FHWA
+  Elizabeth Hilton, Liaison
+  Oregon
+  AASHTO Members  California
+  Kent Belleque  North Dakota
+  Antonette Clark  Kansas
+  Chad Frisinger  Arkansas
+  Aaron Frits  South Dakota
+  Michael Fugett  Iowa
+  Mark A. Leiferman  Maryland
+  Deanna Maifield  Georgia
+  Eric Marabello  Virginia
+  Brent Story  Pennsylvania
+  Bart Thrasher  New Jersey
+  Ryan VanKirk  New York
+  Amutha Vijayakumar
+  Richard Wilder  AASHTO Liaison
+  Transportation Research Board
+  Other  American Public Works Association
+  Patricia Bush  Port Authority of New York and New Jersey
+  Ray Derr  National Association of County Engineers
+  Marshall Elizer  National League of Cities
+  Armando Lepore
+  Ricky Mitchell
+  Robert Wunderlich
+
+Copyright American Association of State Highway and Transportation Officials--`,```,``,`,`,`,``````,,,,``-`-`,
+  © 2018 by the American Association of StLaicteenHseeig=AhrkwanasyasaSntadteTHrigahnwsayp&orTtraantisoponrtaOtiofnfiDceipat/l5s9.88317001, User=Sichmelle
+Provided by IHS Markit under license with AASHTO
+
+No reproduction or networking permitted without license from IHS  All rights reserved. DuplicationNiost aforvRieoslaalet,i1o0n/09o/2f0a18pp09l:i1c7a:1b8lMeDlTaw.
+  v
+
+  COMMITTEE ON DESIGN
+  2017–2018
+
+  CARLOS BRACERAS, Chair
+  JOYCE TAYLOR, Vice Chair
+  ROBERT MOONEY, FHWA, Liaison
+  PATRICIA BUSH, AASHTO, Staff Liaison
+
+--`,```,``,`,`,`,``````,,,,``-`-`,,`,,`,`,,`---  ALABAMA  Steven E. Walker, William Adams, Stan Biddick
+  ALASKA  Pat Carroll, Mark Neidhold, Sarah E. Schacher
+  ARIZONA  Steve Boschen, Todd Emery
+  ARKANSAS  Michael Fugett, Charles Martin, Trinity Smith
+  CALIFORNIA  Janice Benton, Cathrina Barros
+  COLORADO  Neil Lacey, Ken Brubaker
+  CONNECTICUT  Scott Hill, Rabih M. Barakat
+  DELAWARE  Thad McIlvaine, Michael Nauman
+  DISTRICT OF COLUMBIA  Paul Hoffman, Adil Rizvi, Zahra Dorriz
+  FLORIDA  Tim Lattner, Paul Hiers, Michael Shephard
+  GEORGIA  Brent Story, Andy Casey, Andrew Heath
+  HAWAII  Julius Fronda
+  IDAHO  Kevin Sablan, Ted E. Mason
+  ILLINOIS  Mike Brand, Dan Mlacnik
+  INDIANA  Elizabeth W. Phillips, Jeff Clanton
+  IOWA  Michael J. Kennerly, Tony Gustafson, Chris Poole
+  KANSAS  Scott W. King, Tom Rhoads, Debbie Tanking
+  KENTUCKY  Bradley S. Eldridge, Jill Asher, Keith Caudill
+  LOUISIANA  Chad Winchester, David S. Smith
+  MAINE  Brad Foley, Steve Bodge, Charles S. Hebson
+  MARYLAND  Jason A. Ridgway, Eric E. Marabello, Angela Smith
+  MASSACHUSETTS  Andrew Paul, Lyris Liautaud, Hasmukh M. Patel
+  MICHIGAN  Kristin Schuster, Colin Forbes, Demetrius Parker
+  MINNESOTA  Chris Roy, Andrea Hendrickson, Tom Styrbicki
+  MISSISSIPPI  Richard Pittman, Amy Mood, David Seal
+  MISSOURI  Eric Shroeter
+
+Copyright American Association of State Highway and Transportation Officials
+  © 2018 by the American Association of StLaicteenHseeig=AhrkwanasyasaSntadteTHrigahnwsayp&orTtraantisoponrtaOtiofnfiDceipat/l5s9.88317001, User=Sichmelle
+Provided by IHS Markit under license with AASHTO
+
+No reproduction or networking permitted without license from IHS  All rights reserved. DuplicationNiost aforvRieoslaalet,i1o0n/09o/2f0a18pp09l:i1c7a:1b8lMeDlTaw.
+vi  Lesly Tribelhorn, James Combs, Dustin E. Rouse
+  Mike H. Owen, Nathan Sorben
+  MONTANA  Paul Frost, Casey Connor
+  NEBRASKA  James Marshall, Keith A. Cota
+  NEVADA  Robert Marshall, Paul F. Schneider
+  NEW HAMPSHIRE  Gabriela Contreras-Apodaca, Priscilla Benavides, Lawrence Lopez
+  NEW JERSEY  Richard D. Wilder, Bradley J. Bortnick, Stephen A. Zargham
+  NEW MEXICO  Christopher Werner, Teresa Bruton, Glenn Mumford
+  NEW YORK  Roger Weigel
+  NORTH CAROLINA  David L. Holstein, Kyle Brandon
+  NORTH DAKOTA  Caleb Austin, Eduardo Elder, Tim Tegeler
+  OHIO  David Polly
+  OKLAHOMA  Melissa Batula, Christine Spangler
+  OREGON  Vacant
+  PENNSYLVANIA  Richard Bernardo, Robert Rocchio
+  PUERTO RICO  Ladd Gibson, Rob Bedenbaugh
+  RHODE ISLAND  Brian Raecke, Mark A. Leiferman
+  SOUTH CAROLINA  Jennifer Lloyd, Ali R. Hangul, Jeff C. Jones
+  SOUTH DAKOTA  Camille Thomason
+  TENNESSEE  Ben G. Huot, George C. Lukes, Fred Doehring
+  TEXAS  Jesse Alan Devlin, Ken Robie, Nick Wark
+  UTAH  Susan Keen, Vernon W. Heishman, Barton A. Thrasher
+  VERMONT  Jeff Carpenter, Mike Fleming, Julie Heilman
+  VIRGINIA  RJ Scites, Dirar M. Ahmed, Chad Toney
+  WASHINGTON  David L. Stertz
+  WEST VIRGINIA  Jeffrey E. Brown, Andrea Allen, Sandra A. Pecemka
+  WISCONSIN
+  W YOMING
+
+  --`,```,``,`,`,`,``````,,,,``-`-`,,`,,`,`,,`---
+
+Copyright American Association of State Highway and Transportation Officials
+  © 2018 by the American Association of StLaicteenHseeig=AhrkwanasyasaSntadteTHrigahnwsayp&orTtraantisoponrtaOtiofnfiDceipat/l5s9.88317001, User=Sichmelle
+Provided by IHS Markit under license with AASHTO
+
+No reproduction or networking permitted without license from IHS  All rights reserved. DuplicationNiost aforvRieoslaalet,i1o0n/09o/2f0a18pp09l:i1c7a:1b8lMeDlTaw.
+  vii
+
+  TABLE OF CONTENTS
+
+CHAPTER 1  NEW FRAMEWORK FOR GEOMETRIC DESIGN
+
+1.1 INTRODUCTION. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 1-1
+
+1.2 PROJECT PURPOSE AND NEED. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 1-3
+
+1.3 OVERVIEW OF THE NEW FRAMEWORK FOR GEOMETRIC DESIGN. . . . . . 1-5
+
+1.4 FUNCTIONAL CLASSIFICATION FOR MOTOR VEHICLES. . . . . . . . . . . . . . . 1-7
+  1.4.1 Hierarchy of Motor Vehicle Movement. . . . . . . . . . . . . . . . . . . . . . . . 1-8
+  1.4.2 Access Control and Mobility Needs . . . . . . . . . . . . . . . . . . . . . . . . . 1-10
+  1.4.3 Functional System Characteristics. . . . . . . . . . . . . . . . . . . . . . . . . . . 1-11
+
+  1.4.3.1 Definitions of Urban and Rural Areas. . . . . . . . . . . . . . . . . . . . .  1-11
+
+  1.4.3.2 Functional Categories . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  1-12
+
+  1.4.3.3 Functional Systems for Rural Areas . . . . . . . . . . . . . . . . . . . . . .  1-12
+
+  1.4.3.3.1 Rural Principal Arterial System . . . . . . . . . . . . . . .  1-12
+
+  1.4.3.3.2 Rural Minor Arterial System . . . . . . . . . . . . . . . . .  1-13
+
+  1.4.3.3.3 Rural Collector System. . . . . . . . . . . . . . . . . . . . .  1-13
+
+  1.4.3.3.4 Rural Local Road System . . . . . . . . . . . . . . . . . . .  1-13
+
+  1.4.3.4 Functional Systems for Urban Areas. . . . . . . . . . . . . . . . . . . . . .  1-14
+
+  1.4.3.4.1 Urban Principal Arterial System . . . . . . . . . . . . . .  1-14
+
+  1.4.3.4.2 Urban Minor Arterial Street System . . . . . . . . . . .  1-15
+
+  1.4.3.4.3 Urban Collector Street System. . . . . . . . . . . . . . .  1-15
+
+  1.4.4  1.4.3.4.4 Urban Local Street System. . . . . . . . . . . . . . . . . .  1-15
+  Functional Classification as a Design Type . . . . . . . . . . . . . . . . . . . . 1-16
+
+1.5 CONTEXT CLASSIFICATION FOR GEOMETRIC DESIGN. . . . . . . . . . . . . . . 1-16
+  1.5.1 Context Classes for Roads and Streets in Rural Areas . . . . . . . . . . . 1-20
+
+  1.5.1.1 Rural Context. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  1-20
+
+  1.5.2  1.5.1.2 Rural Town Context . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  1-20
+  Context Classes for Roads and Streets in Urban Areas . . . . . . . . . . 1-21
+
+  1.5.2.1 Suburban Context . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  1-21
+
+  1.5.2.2 Urban Context. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  1-21
+
+--`,```,``,`,`,`,``````,,,,``-`-`,,`,,`,`,,`---
+
+Copyright American Association of State Highway and Transportation Officials
+  © 2018 by the American Association of StLaicteenHseeig=AhrkwanasyasaSntadteTHrigahnwsayp&orTtraantisoponrtaOtiofnfiDceipat/l5s9.88317001, User=Sichmelle
+Provided by IHS Markit under license with AASHTO
+
+No reproduction or networking permitted without license from IHS  All rights reserved. DuplicationNiost aforvRieoslaalet,i1o0n/09o/2f0a18pp09l:i1c7a:1b8lMeDlTaw.
+viii
+
+  1.5.3  1.5.2.3 Urban Core Context. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  1-22
+  Design Guidance for Specific Context Classes. . . . . . . . . . . . . . . . . 1-22
+
+  1.6 MULTIMODAL CONSIDERATIONS . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 1-23
+  1.6.1 Road and Street User Groups/Transportation Modes. . . . . . . . . . . . 1-23
+
+  1.6.1.1 Automobiles. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  1-23
+
+  1.6.1.2 Bicyclists. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  1-23
+
+  1.6.1.3 Pedestrians. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  1-24
+
+  1.6.1.4 Transit. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  1-25  --`,```,``,`,`,`,``````,,,,``-`-`,,`,,`,`,,`---
+
+  1.6.2  1.6.1.5 Trucks. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  1-25
+  Consideration of All Transportation Modes in Design . . . . . . . . . . . 1-26
+
+  1.7 DESIGN PROCESS TO ADDRESS SPECIFIC PROJECT TYPES . . . . . . . . . . . 1-28
+  1.7.1 New Construction Projects . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 1-28
+  1.7.2 Reconstruction Projects. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 1-29
+  1.7.3 Construction Projects on Existing Roads. . . . . . . . . . . . . . . . . . . . . . 1-30
+
+  1.8 DESIGN FLEXIBILITY . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 1-32
+
+  1.9 PERFORMANCE-BASED DESIGN . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 1-34
+
+  1.10 REFERENCES . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 1-36
+
+  CHAPTER 2 DESIGN CONTROLS AND CRITERIA
+
+  2.1 INTRODUCTION. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2-1
+
+  2.2 DRIVER PERFORMANCE AND HUMAN FACTORS. . . . . . . . . . . . . . . . . . . . . 2-1
+  2.2.1 Introduction. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2-1
+  2.2.2 Older Drivers and Older Pedestrians . . . . . . . . . . . . . . . . . . . . . . . . . 2-2
+  2.2.3 The Driving Task . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2-2
+  2.2.4 The Guidance Task. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2-3
+
+  2.2.4.1 Lane Placement and Road Following. . . . . . . . . . . . . . . . . . . . . .  2-3
+
+  2.2.4.2 Car Following. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  2-3
+
+  2.2.4.3 Passing Maneuvers. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  2-4
+
+  2.2.5  2.2.4.4 Other Guidance Activities . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  2-4
+  The Information System. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2-4
+
+  2.2.5.1 Traffic Control Devices. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  2-4
+
+Copyright American Association of State Highway and Transportation Officials
+  © 2018 by the American Association of StLaicteenHseeig=AhrkwanasyasaSntadteTHrigahnwsayp&orTtraantisoponrtaOtiofnfiDceipat/l5s9.88317001, User=Sichmelle
+Provided by IHS Markit under license with AASHTO
+
+No reproduction or networking permitted without license from IHS  All rights reserved. DuplicationNiost aforvRieoslaalet,i1o0n/09o/2f0a18pp09l:i1c7a:1b8lMeDlTaw.
+  ix
+
+  2.2.6  2.2.5.2 The Roadway and Its Environment. . . . . . . . . . . . . . . . . . . . . . . .  2-4
+  Information Handling. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2-5
+
+  2.2.6.1 Reaction Time . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  2-5
+
+  2.2.6.2 Primacy. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  2-8
+
+  2.2.7  2.2.6.3 Expectancy. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  2-8
+  Driver Error . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2-8
+
+  2.2.7.1 Errors Due to Driver Deficiencies. . . . . . . . . . . . . . . . . . . . . . . . .  2-9
+
+  2.2.7.1.1 Older Drives. . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  2-9  --`,```,``,`,`,`,``````,,,,``-`-`,,`,,`,`,,`---
+
+  2.2.8  2.2.7.2 Errors Due to Situation Demands. . . . . . . . . . . . . . . . . . . . . . . .  2-11
+  2.2.9  Speed and Design. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2-11
+  Design Assessment. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2-12
+
+2.3 TRAFFIC CHARACTERISTICS. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2-13
+  2.3.1 General Considerations. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2-13
+  2.3.2 Volume. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2-13
+
+  2.3.2.1 Average Daily Traffic. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2-13
+
+  2.3.2.2 Design Hour Traffic: Rural Areas. . . . . . . . . . . . . . . . . . . . . . . . .  2-14
+
+  2.3.3  2.3.2.3 Design Hour Traffic: Urban Areas. . . . . . . . . . . . . . . . . . . . . . . .  2-17
+  2.3.4  Directional Distribution. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2-18
+  2.3.5  Composition of Traffic. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2-19
+  2.3.6  Projection of Future Traffic Demands . . . . . . . . . . . . . . . . . . . . . . . . 2-20
+  Speed. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2-21
+
+  2.3.6.1 Operating Speed. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  2-22
+
+  2.3.6.2 Running Speed. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  2-22
+
+  2.3.7  2.3.6.3 Design Speed. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  2-23
+  Traffic Flow Relationships . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2-27
+
+2.4 HIGHWAY CAPACITY. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2-29
+  2.4.1 General Characteristics. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2-29
+  2.4.2 Application . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2-29
+  2.4.3 Capacity as a Design Control . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2-30
+
+  2.4.3.1 Design Service Flow Rate versus Design Volume . . . . . . . . . . .  2-30
+
+  2.4.3.2 Measures of Congestion . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  2-30
+
+  2.4.3.3 Relation between Congestion and Traffic Flow Rate. . . . . . . . .  2-32
+
+Copyright American Association of State Highway and Transportation Officials
+  © 2018 by the American Association of StLaicteenHseeig=AhrkwanasyasaSntadteTHrigahnwsayp&orTtraantisoponrtaOtiofnfiDceipat/l5s9.88317001, User=Sichmelle
+Provided by IHS Markit under license with AASHTO
+
+No reproduction or networking permitted without license from IHS  All rights reserved. DuplicationNiost aforvRieoslaalet,i1o0n/09o/2f0a18pp09l:i1c7a:1b8lMeDlTaw.
+x
+
+  2.4.3.4 Acceptable Degrees of Congestion. . . . . . . . . . . . . . . . . . . . . .  2-32
+
+  2.4.4 Factors Other Than Traffic Volume That Affect Operating
+  Conditions. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2-33
+
+  2.4.4.1 Roadway Factors . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  2-33
+
+  2.4.4.2 Alignment. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  2-34
+
+  2.4.4.3 Weaving Sections. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  2-34
+
+  2.4.4.4 Ramp Terminals . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  2-34
+
+  2.4.4.5 Traffic Factors. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  2-35
+
+  2.4.5  2.4.4.6 Peak Hour Factor. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  2-35
+  2.4.6  Levels of Service . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2-36
+  Design Service Flow Rates. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2-38
+
+  2.4.6.1 Weaving Sections. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  2-38
+
+  2.4.6.2 Multilane Highways without Access Control . . . . . . . . . . . . . . .  2-41
+
+  2.4.6.3 Arterial Streets and Highways in Urban Areas. . . . . . . . . . . . . .  2-41
+
+  2.4.6.4 Intersections. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  2-41
+
+  2.5 ACCESS CONTROL AND ACCESS MANAGEMENT. . . . . . . . . . . . . . . . . . . 2-41
+  2.5.1 General Conditions. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2-41
+  2.5.2 Basic Principles of Access Management. . . . . . . . . . . . . . . . . . . . . . 2-43
+  2.5.3 Access Classifications . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2-44
+  2.5.4 Methods of Controlling Access. . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2-45
+  2.5.5 Benefits of Controlling Access. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2-45
+
+  2.6 PEDESTRIANS. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2-50
+  2.6.1 General Considerations. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2-50
+  2.6.2 General Characteristics. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2-50
+  2.6.3 Walking Speeds. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2-52
+  2.6.4 Walkway Level of Service. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2-52
+  2.6.5 Intersections . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2-52
+  2.6.6 Reducing Pedestrian–Vehicular Conflicts . . . . . . . . . . . . . . . . . . . . . 2-53
+  2.6.7 Accommodating Persons with Disabilities . . . . . . . . . . . . . . . . . . . . 2-53
+
+  2.6.7.1 Mobility Disabilities . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  2-53
+
+  2.6.7.2 Vision Disabilities. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  2-54
+
+  2.6.7.3 Cognitive Disabilities. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  2-54
+
+  --`,```,``,`,`,`,``````,,,,``-`-`,,`,,`,`,,`---
+
+Copyright American Association of State Highway and Transportation Officials
+  © 2018 by the American Association of StLaicteenHseeig=AhrkwanasyasaSntadteTHrigahnwsayp&orTtraantisoponrtaOtiofnfiDceipat/l5s9.88317001, User=Sichmelle
+Provided by IHS Markit under license with AASHTO
+
+No reproduction or networking permitted without license from IHS  All rights reserved. DuplicationNiost aforvRieoslaalet,i1o0n/09o/2f0a18pp09l:i1c7a:1b8lMeDlTaw.
+  xi
+
+  2.6.7.4 Hearing Disabilities . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  2-54
+
+2.7 BICYCLISTS. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2-54
+
+2.8 DESIGN VEHICLES. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2-55
+  2.8.1 General Characteristics. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2-55
+  2.8.2 Minimum Turning Paths of Design Vehicles . . . . . . . . . . . . . . . . . . . 2-58
+  2.8.3 Vehicle Performance . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2-86
+  2.8.4 Vehicular Pollution. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2-89
+
+2.9 SAFETY. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2-90
+  2.9.1 Key Factors Related to Traffic Crashes . . . . . . . . . . . . . . . . . . . . . . . 2-90
+
+  2.9.1.1 Roadway Design. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  2-91
+
+  2.9.1.2 Roadside Design . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  2-92
+
+  2.9.2  2.9.1.3 Traffic Control Devices. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  2-93
+  2.9.3  Key Safety Resources. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2-93
+  2.9.4  Safety Improvement Programs . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2-94
+  Project Development Process. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2-94
+
+2.10 ENVIRONMENT . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2-95
+
+2.11 REFERENCES . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 2-95
+
+CHAPTER 3 ELEMENTS OF DESIGN
+
+3.1 INTRODUCTION. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 3-1
+
+3.2 SIGHT DISTANCE. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 3-1
+  3.2.1 General Considerations. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 3-1
+  3.2.2 Stopping Sight Distance. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 3-2
+
+  3.2.2.1 Brake Reaction Time . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  3-2
+
+  3.2.2.2 Braking Distance . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  3-3
+
+  3.2.2.3 Design Values. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  3-5
+
+  3.2.2.4 Effect of Grade on Stopping . . . . . . . . . . . . . . . . . . . . . . . . . . . .  3-5
+
+  3.2.2.5 Variation for Trucks. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  3-6
+
+  3.2.3  3.2.2.5.1 New Construction vs. Projects on Existing Roads .  3-7
+  3.2.4  Decision Sight Distance. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 3-7
+  Passing Sight Distance for Two-Lane Highways . . . . . . . . . . . . . . . . 3-10
+
+  --`,```,``,`,`,`,``````,,,,``-`-`,,`,,`,`,,`---
+
+Copyright American Association of State Highway and Transportation Officials
+  © 2018 by the American Association of StLaicteenHseeig=AhrkwanasyasaSntadteTHrigahnwsayp&orTtraantisoponrtaOtiofnfiDceipat/l5s9.88317001, User=Sichmelle
+Provided by IHS Markit under license with AASHTO
+
+No reproduction or networking permitted without license from IHS  All rights reserved. DuplicationNiost aforvRieoslaalet,i1o0n/09o/2f0a18pp09l:i1c7a:1b8lMeDlTaw.
+xii
+
+  3.2.4.1 Criteria for Design . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  3-10
+
+  3.2.4.2 Design Values. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  3-10
+
+  3.2.4.3 Effect of Grade on Passing Sight Distance. . . . . . . . . . . . . . . . .  3-12
+
+  3.2.5  3.2.4.4 Frequency and Length of Passing Sections. . . . . . . . . . . . . . . .  3-12
+  3.2.6  Sight Distance for Multilane Highways. . . . . . . . . . . . . . . . . . . . . . . 3-14
+  Criteria for Measuring Sight Distance. . . . . . . . . . . . . . . . . . . . . . . . 3-15
+
+  3.2.6.1 Height of Driver’s Eye. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  3-15
+
+  3.2.6.2 Height of Object . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  3-15
+
+  3.2.6.3 Sight Obstructions. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  3-16
+
+  3.2.6.4 Measuring Sight Distance . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  3-16
+
+  3.3 HORIZONTAL ALIGNMENT. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 3-19
+  3.3.1 Theoretical Considerations. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 3-19
+  3.3.2 General Considerations. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 3-20
+
+  3.3.2.1 Superelevation. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  3-20
+
+  3.3.2.2 Side Friction Factor . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  3-21
+
+  3.3.3  3.3.2.3 Distribution of e and f over a Range of Curves . . . . . . . . . . . . .  3-26
+  Design Considerations. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 3-31
+
+  3.3.3.1 Normal Cross Slope. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  3-31
+
+  3.3.3.2 Maximum Superelevation Rates for Streets and Highways . . . .  3-31
+
+  3.3.3.3 Minimum Radius. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  3-33
+
+  3.3.3.4 Effects of Grades . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  3-35
+
+  3.3.4 Design for Rural Highways, Urban Freeways, and High-Speed Urban
+  Streets . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 3-36
+
+  3.3.4.1 Side Friction Factors. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  3-36
+
+  3.3.4.2 Superelevation. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  3-37
+
+  3.3.5  3.3.4.3 Procedure for Development of Method 5 Superelevation
+  Distribution . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  3-37
+
+  Design Superelevation Tables. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 3-41
+
+  3.3.6  3.3.5.1 Minimum Radius of Curve for Section with Normal Crown. . . .  3-52
+  Design for Low-Speed Urban Streets. . . . . . . . . . . . . . . . . . . . . . . . 3-53
+
+  3.3.6.1 Side Friction Factors. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  3-53
+
+  3.3.6.2 Superelevation. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  3-53
+
+  --`,```,``,`,`,`,``````,,,,``-`-`,,`,,`,`,,`---
+
+Copyright American Association of State Highway and Transportation Officials
+  © 2018 by the American Association of StLaicteenHseeig=AhrkwanasyasaSntadteTHrigahnwsayp&orTtraantisoponrtaOtiofnfiDceipat/l5s9.88317001, User=Sichmelle
+Provided by IHS Markit under license with AASHTO
+
+No reproduction or networking permitted without license from IHS  All rights reserved. DuplicationNiost aforvRieoslaalet,i1o0n/09o/2f0a18pp09l:i1c7a:1b8lMeDlTaw.
+  xiii
+
+  3.3.7  Turning Roadways. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 3-59
+  3.3.8  3.3.7.1 Design Speed. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  3-59
+  3.3.7.2 Maximum Superelevation for Turning Roadways. . . . . . . . . . . .  3-59
+--`,```,``,`,`,`,``````,,,,``-`-`,,`,,`,`,,`---  3.3.7.3 Use of Compound Curves . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  3-60
+  Transition Design Controls. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 3-61
+  3.3.8.1 General Considerations. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  3-61
+  3.3.8.2 Tangent-to-Curve Transition. . . . . . . . . . . . . . . . . . . . . . . . . . . .  3-62
+
+  3.3.8.2.1 Minimum Length of Superelevation Runoff . . . . .  3-62
+  3.3.8.2.2 Minimum Length of Tangent Runout . . . . . . . . . .  3-70
+  3.3.8.2.3 Location with Respect to End of Curve . . . . . . . .  3-70
+  3.3.8.2.4 Limiting Superelevation Rates . . . . . . . . . . . . . . .  3-72
+  3.3.8.3 Spiral Curve Transitions . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  3-73
+  3.3.8.4 Length of Spiral . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  3-74
+  3.3.8.4.1 Length of Spiral . . . . . . . . . . . . . . . . . . . . . . . . . .  3-74
+  3.3.8.4.2 Maximum Radius for Use of a Spiral. . . . . . . . . . .  3-75
+  3.3.8.4.3 Minimum Length of Spiral . . . . . . . . . . . . . . . . . .  3-76
+  3.3.8.4.4 Maximum Length of Spiral. . . . . . . . . . . . . . . . . .  3-76
+  3.3.8.4.5 Desirable Length of Spiral . . . . . . . . . . . . . . . . . .  3-77
+  3.3.8.4.6 Length of Superelevation Runoff . . . . . . . . . . . . .  3-78
+  3.3.8.4.7 Limiting Superelevation Rates . . . . . . . . . . . . . . .  3-78
+  3.3.8.4.8 Length of Tangent Runout . . . . . . . . . . . . . . . . . .  3-79
+  3.3.8.4.9 Location with Respect to End of Curve . . . . . . . .  3-81
+  3.3.8.5 Compound Curve Transition . . . . . . . . . . . . . . . . . . . . . . . . . . .  3-81
+  3.3.8.6 Methods of Attaining Superelevation . . . . . . . . . . . . . . . . . . . .  3-81
+  3.3.8.7 Design of Smooth Profiles for Traveled-Way Edges. . . . . . . . . .  3-85
+  3.3.8.8 Axis of Rotation with a Median . . . . . . . . . . . . . . . . . . . . . . . . .  3-86
+  3.3.8.8.1 Case I . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  3-86
+  3.3.8.8.2 Case II. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  3-86
+  3.3.8.8.3 Case III . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  3-86
+  3.3.8.8.4 Divided Highway . . . . . . . . . . . . . . . . . . . . . . . . .  3-87
+  3.3.8.9 Minimum Transition Grades and Drainage Considerations. . . .  3-87
+  3.3.8.10 Transitions and Compound Curves for Turning Roadways. . . . .  3-88
+
+Copyright American Association of State Highway and Transportation Officials
+  © 2018 by the American Association of StLaicteenHseeig=AhrkwanasyasaSntadteTHrigahnwsayp&orTtraantisoponrtaOtiofnfiDceipat/l5s9.88317001, User=Sichmelle
+Provided by IHS Markit under license with AASHTO
+
+No reproduction or networking permitted without license from IHS  All rights reserved. DuplicationNiost aforvRieoslaalet,i1o0n/09o/2f0a18pp09l:i1c7a:1b8lMeDlTaw.
+xiv
+
+  3.3.8.11 Length of Spiral for Turning Roadways . . . . . . . . . . . . . . . . . . .  3-89
+
+  3.3.9  3.3.8.12 Compound Circular Curves . . . . . . . . . . . . . . . . . . . . . . . . . . . .  3-90
+  Offtracking. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 3-91
+
+  3.3.9.1  Derivation of Design Values for Widening on Horizontal
+  Curves  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  3-91
+
+  3.3.10  Traveled-Way Widening on Horizontal Curves. . . . . . . . . . . . . . . . . 3-97
+
+  3.3.10.1 Design Values for Traveled-Way Widening . . . . . . . . . . . . . . .  3-101
+
+  3.3.11  3.3.10.2 Application of Widening on Curves. . . . . . . . . . . . . . . . . . . . .  3-101
+  Widths for Turning Roadways at Intersections . . . . . . . . . . . . . . . . 3-103
+
+  3.3.11.1 Three Cases. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  3-105
+
+  3.3.11.1.1 Case I . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  3-105
+
+  3.3.11.1.2 Case II. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  3-105
+
+  3.3.11.1.3 Case III . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  3-105
+
+  3.3.11.2 Design Values . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  3-107
+
+  3.3.12  3.3.11.3 Widths Outside the Traveled Way. . . . . . . . . . . . . . . . . . . . . .  3-112
+  Sight Distance on Horizontal Curves. . . . . . . . . . . . . . . . . . . . . . . . 3-113
+
+  3.3.12.1 Stopping Sight Distance . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  3-114
+
+  3.3.13  3.3.12.2 Passing Sight Distance. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  3-119
+  General Controls for Horizontal Alignment. . . . . . . . . . . . . . . . . . . 3-119
+
+  3.4 VERTICAL ALIGNMENT. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 3-121
+  3.4.1 Terrain . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 3-121
+  3.4.2 Grades. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 3-122
+
+  3.4.2.1 Vehicle Operating Characteristics on Grades . . . . . . . . . . . . .  3-122
+
+  3.4.2.1.1 Passenger Cars. . . . . . . . . . . . . . . . . . . . . . . . . .  3-122
+
+  3.4.2.1.2 Trucks. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  3-122
+
+  3.4.2.1.3 Recreational Vehicles . . . . . . . . . . . . . . . . . . . . .  3-126
+
+  3.4.2.2 Control Grades for Design. . . . . . . . . . . . . . . . . . . . . . . . . . . .  3-130
+
+  3.4.2.2.1 Maximum Grades. . . . . . . . . . . . . . . . . . . . . . . .  3-130
+
+  3.4.2.2.2 Minimum Grades . . . . . . . . . . . . . . . . . . . . . . . .  3-130
+
+  3.4.2.2.3 Pedestrian Considerations. . . . . . . . . . . . . . . . .  3-130
+
+  3.4.3  3.4.2.3 Critical Lengths of Grade for Design. . . . . . . . . . . . . . . . . . . .  3-130
+  Climbing Lanes . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 3-137
+
+  --`,```,``,`,`,`,``````,,,,``-`-`,,`,,`,`,,`---
+
+Copyright American Association of State Highway and Transportation Officials
+  © 2018 by the American Association of StLaicteenHseeig=AhrkwanasyasaSntadteTHrigahnwsayp&orTtraantisoponrtaOtiofnfiDceipat/l5s9.88317001, User=Sichmelle
+Provided by IHS Markit under license with AASHTO
+
+No reproduction or networking permitted without license from IHS  All rights reserved. DuplicationNiost aforvRieoslaalet,i1o0n/09o/2f0a18pp09l:i1c7a:1b8lMeDlTaw.
+  xv
+
+  3.4.3.1 Climbing Lanes for Two-Lane Highways. . . . . . . . . . . . . . . . . .  3-137
+
+  3.4.3.1.1 General. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  3-137
+
+  3.4.3.1.2 Trucks. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  3-139
+
+  3.4.3.1.3 Summary. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  3-141
+
+  3.4.3.2 Climbing Lanes on Freeways and Multilane Highways . . . . . .  3-142
+
+  3.4.3.2.1 General. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  3-142
+
+  3.4.4  3.4.3.2.2 Trucks. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  3-142
+  Roads
+  Methods for Increasing Passing Opportunities on Two-Lane
+  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 3-145
+
+  3.4.4.1 Passing Lanes. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  3-145
+
+  3.4.4.2 2+1 Roadways . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  3-149
+
+  3.4.4.3 Turnouts. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  3-152
+
+  3.4.4.4 Shoulder Driving . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  3-153
+
+  3.4.5  3.4.4.5 Shoulder Use Sections. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  3-154
+  Emergency Escape Ramps. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 3-154
+
+  3.4.5.1 General. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  3-154
+
+  3.4.5.2 Need and Location for Emergency Escape Ramps . . . . . . . . .  3-156
+
+  3.4.5.3 Types of Emergency Escape Ramps. . . . . . . . . . . . . . . . . . . . .  3-157
+
+  3.4.5.4 Design Considerations. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  3-159
+
+  3.4.5.5 Brake-Check Areas. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  3-164
+
+  3.4.6  3.4.5.6 Maintenance. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  3-164
+  Vertical Curves. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 3-164
+
+  3.4.6.1 General Considerations. . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  3-164
+
+  3.4.6.2 Crest Vertical Curves . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  3-166
+
+  3.4.6.2.1 Design Controls: Stopping Sight Distance. . . . .  3-167
+
+  3.4.6.2.2 Design Controls: Passing Sight Distance. . . . . .  3-171
+
+  3.4.6.3 Sag Vertical Curves. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  3-172
+
+  3.4.6.4 Sight Distance at Undercrossings. . . . . . . . . . . . . . . . . . . . . . .  3-177
+
+  3.4.6.5 General Controls for Vertical Alignment . . . . . . . . . . . . . . . . .  3-179
+
+3.5 COMBINATIONS OF HORIZONTAL AND VERTICAL ALIGNMENT. . . . . . 3-180
+  3.5.1 General Considerations. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 3-180
+  3.5.2 General Design Controls. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 3-181
+
+  --`,```,``,`,`,`,``````,,,,``-`-`,,`,,`,`,,`---
+
+Copyright American Association of State Highway and Transportation Officials
+  © 2018 by the American Association of StLaicteenHseeig=AhrkwanasyasaSntadteTHrigahnwsayp&orTtraantisoponrtaOtiofnfiDceipat/l5s9.88317001, User=Sichmelle
+Provided by IHS Markit under license with AASHTO
+
+No reproduction or networking permitted without license from IHS  All rights reserved. DuplicationNiost aforvRieoslaalet,i1o0n/09o/2f0a18pp09l:i1c7a:1b8lMeDlTaw.
+xvi
+
+  3.5.3 Alignment Coordination in Design. . . . . . . . . . . . . . . . . . . . . . . . . 3-182
+
+  3.6 OTHER FEATURES AFFECTING GEOMETRIC DESIGN . . . . . . . . . . . . . . . 3-186
+  3.6.1 Erosion Control and Landscape Development. . . . . . . . . . . . . . . . 3-186
+  3.6.2 Rest Areas, Information Centers, and Scenic Overlooks. . . . . . . . . 3-187
+  3.6.3 Lighting. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 3-188
+  3.6.4 Utilities. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 3-190
+
+  3.6.4.1 General. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  3-191
+
+  3.6.4.2 Rural Areas. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  3-192
+
+  3.6.5  3.6.4.3 Urban Areas. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  3-192
+  Traffic Control Devices. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 3-193
+
+  3.6.5.1 Traffic Signs, Pavement Markings, and Traffic Signals . . . . . . .  3-193
+
+  3.6.6  3.6.5.2 Intelligent Transportation Systems. . . . . . . . . . . . . . . . . . . . . .  3-194
+  Traffic Management Plans for Construction . . . . . . . . . . . . . . . . . . 3-195
+
+  3.7 REFERENCES . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 3-196
+
+  CHAPTER 4 CROSS-SECTION ELEMENTS
+
+  4.1 GENERAL . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 4-1
+
+  4.2 TRAVELED WAY . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 4-1
+  4.2.1 Surface Type . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 4-1
+  4.2.2 Cross Slope. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 4-2
+
+  4.2.2.1 Rate of Cross Slope . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  4-6
+
+  4.2.2.2 Weather Considerations. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  4-7
+
+  4.2.3  4.2.2.3 Unpaved Surfaces. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 4-7
+  4.2.4  Skid Resistance . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 4-8
+  Hydroplaning. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 4-8
+
+  4.3 LANE WIDTHS . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 4-9  --`,```,``,`,`,`,``````,,,,``-`-`,,`,,`,`,,`---
+
+  4.4 SHOULDERS. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 4-10
+  4.4.1 General Characteristics. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 4-10
+  4.4.2 Shoulder Width . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 4-12
+  4.4.3 Shoulder Cross Sections . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 4-13
+  4.4.4 Shoulder Stability. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 4-14
+
+Copyright American Association of State Highway and Transportation Officials
+  © 2018 by the American Association of StLaicteenHseeig=AhrkwanasyasaSntadteTHrigahnwsayp&orTtraantisoponrtaOtiofnfiDceipat/l5s9.88317001, User=Sichmelle
+Provided by IHS Markit under license with AASHTO
+
+No reproduction or networking permitted without license from IHS  All rights reserved. DuplicationNiost aforvRieoslaalet,i1o0n/09o/2f0a18pp09l:i1c7a:1b8lMeDlTaw.
+  xvii
+
+  4.4.5  Shoulder Contrast. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 4-15
+  4.4.6  Turnouts. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 4-16
+
+4.5 RUMBLE STRIPS . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 4-16
+
+4.6 ROADSIDE DESIGN . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 4-17
+  4.6.1 Clear Zones. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 4-17
+  4.6.2 Lateral Offset. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 4-18
+
+4.7 CURBS. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 4-19  --`,```,``,`,`,`,``````,,,,``-`-`,,`,,`,`,,`---
+  4.7.1 General Considerations. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 4-19
+  4.7.2 Curb Configurations . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 4-19
+
+  4.7.3  4.7.2.1 Gutters. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  4-21
+  Curb Placement. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 4-22
+
+4.8 DRAINAGE CHANNELS AND SIDESLOPES . . . . . . . . . . . . . . . . . . . . . . . . . 4-23
+  4.8.1 General Considerations. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 4-23
+  4.8.2 Drainage . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 4-23
+  4.8.3 Drainage Channels . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 4-26
+  4.8.4 Sideslopes. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 4-28
+
+4.9 ILLUSTRATIVE OUTER CROSS SECTIONS. . . . . . . . . . . . . . . . . . . . . . . . . . . 4-32
+  4.9.1 Normal Crown Sections. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 4-32
+  4.9.2 Superelevated Sections. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 4-32
+
+4.10 TRAFFIC BARRIERS. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 4-33
+  4.10.1 General Considerations. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 4-33
+  4.10.2 Longitudinal Barriers. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 4-34
+
+  4.10.2.1 Roadside Barriers. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  4-34
+
+  4.10.3  4.10.2.2 Median Barriers . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  4-35
+  4.10.4  Bridge Railings. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 4-37
+  Crash Cushions . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 4-38
+
+4.11 MEDIANS . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 4-38
+
+4.12 FRONTAGE ROADS . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 4-41
+
+4.13 OUTER SEPARATIONS. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 4-45
+
+4.14 ROADWAY TRAFFIC NOISE ABATEMENT . . . . . . . . . . . . . . . . . . . . . . . . . . 4-46
+
+Copyright American Association of State Highway and Transportation Officials
+  © 2018 by the American Association of StLaicteenHseeig=AhrkwanasyasaSntadteTHrigahnwsayp&orTtraantisoponrtaOtiofnfiDceipat/l5s9.88317001, User=Sichmelle
+Provided by IHS Markit under license with AASHTO
+
+No reproduction or networking permitted without license from IHS  All rights reserved. DuplicationNiost aforvRieoslaalet,i1o0n/09o/2f0a18pp09l:i1c7a:1b8lMeDlTaw.
+xviii
+
+  4.14.1  General Considerations. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 4-46
+  4.14.2  Noise Evaluation Procedures. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 4-47
+  4.14.3  Noise Reduction . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 4-48
+
+  4.15 ROADSIDE CONTROL . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 4-52
+  4.15.1 General Considerations. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 4-52
+  4.15.2 Driveways. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 4-52
+  4.15.3 Mailboxes . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 4-56
+  4.15.4 Fencing . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 4-57
+
+  4.16 TUNNELS . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 4-57
+  4.16.1 General Considerations. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 4-57
+  4.16.2 Types of Tunnels . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 4-58
+  4.16.3 General Design Considerations. . . . . . . . . . . . . . . . . . . . . . . . . . . . . 4-59
+  4.16.4 Tunnel Sections. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 4-60
+  4.16.5 Examples of Tunnels . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 4-63
+
+  4.17 PEDESTRIAN FACILITIES. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 4-65
+  4.17.1 Sidewalks. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 4-65
+  4.17.2 Grade-Separated Pedestrian Crossings . . . . . . . . . . . . . . . . . . . . . . 4-67
+  4.17.3 Curb Ramps. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 4-70
+
+  4.18 BICYCLE FACILITIES. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 4-77
+
+  4.19 TRANSIT FACILITIES. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 4-77
+  4.19.1 Bus Turnouts on Freeways. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 4-79
+  4.19.2 Bus Turnouts on Arterials. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 4-80
+  4.19.3 Park-and-Ride Facilities. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 4-82
+
+  4.19.3.1 Location. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  4-82
+
+  4.19.3.2 Design . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  4-82
+
+  4.20 ON-STREET PARKING . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 4-85
+
+  4.21 REFERENCES . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 4-88
+
+  CHAPTER 5 LOCAL ROADS AND STREETS
+
+  5.1 INTRODUCTION. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 5-1
+  5.2 LOCAL ROADS IN RURAL AREAS. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 5-2
+
+  --`,```,``,`,`,`,``````,,,,``-`-`,,`,,`,`,,`---
+
+Copyright American Association of State Highway and Transportation Officials
+  © 2018 by the American Association of StLaicteenHseeig=AhrkwanasyasaSntadteTHrigahnwsayp&orTtraantisoponrtaOtiofnfiDceipat/l5s9.88317001, User=Sichmelle
+Provided by IHS Markit under license with AASHTO
+
+No reproduction or networking permitted without license from IHS  All rights reserved. DuplicationNiost aforvRieoslaalet,i1o0n/09o/2f0a18pp09l:i1c7a:1b8lMeDlTaw.
+  xix
+
+  5.2.1 General Design Considerations. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 5-2
+
+  5.2.1.1 Design Speed. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  5-2
+
+  5.2.1.2 Design Traffic Volume. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  5-3
+
+  5.2.1.3 Levels of Service. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  5-3
+
+  5.2.1.4 Alignment. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  5-3
+
+  5.2.1.5 Grades. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  5-3
+
+  5.2.2  5.2.1.6 Cross Slope . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  5-4
+  Cross-Sectional Elements . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 5-6
+
+  5.2.2.1 Width of Roadway . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  5-6
+
+  5.2.2.2 Number of Lanes. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  5-6
+
+  5.2.2.3 Right-of-Way Width. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  5-7
+
+  5.2.2.4 Medians. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  5-7
+
+  5.2.2.5 Bicycle and Pedestrian Facilities . . . . . . . . . . . . . . . . . . . . . . . . .  5-8
+
+  5.2.2.6 Driveways. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  5-8
+
+  5.2.2.7 Structures. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  5-9
+
+  5.2.2.7.1 New and Reconstructed Structures . . . . . . . . . . . .  5-9
+
+  5.2.2.7.2 Vertical Clearance. . . . . . . . . . . . . . . . . . . . . . . . . .  5-9
+
+  5.2.2.8 Roadside Design . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  5-9
+
+  5.2.2.8.1 Clear Zones. . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  5-10
+
+  5.2.2.8.2 Lateral Offset . . . . . . . . . . . . . . . . . . . . . . . . . . . .  5-10
+
+  5.2.2.8.3 Foreslopes . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  5-10
+
+  5.2.2.9 Intersection Design . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  5-11
+
+  5.2.2.10 Railroad–Highway Grade Crossings. . . . . . . . . . . . . . . . . . . . . .  5-11
+
+  5.2.2.11 Traffic Control Devices. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  5-12
+
+  5.2.2.12 Drainage. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  5-12
+
+  5.2.2.13 Erosion Control and Landscaping . . . . . . . . . . . . . . . . . . . . . . .  5-12
+
+  5.2.2.14 Design of Local Streets in the Rural Town Context . . . . . . . . . .  5-12
+
+5.3 LOCAL STREETS IN URBAN AREAS . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 5-12
+  5.3.1 General Design Considerations. . . . . . . . . . . . . . . . . . . . . . . . . . . . . 5-13
+
+  5.3.1.1 Design Speed. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  5-14
+
+  5.3.1.2 Design Traffic Volume. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  5-14
+
+  5.3.1.3 Levels of Service. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  5-14
+
+--`,```,``,`,`,`,``````,,,,``-`-`,,`,,`,`,,`---
+
+Copyright American Association of State Highway and Transportation Officials
+  © 2018 by the American Association of StLaicteenHseeig=AhrkwanasyasaSntadteTHrigahnwsayp&orTtraantisoponrtaOtiofnfiDceipat/l5s9.88317001, User=Sichmelle
+Provided by IHS Markit under license with AASHTO
+
+No reproduction or networking permitted without license from IHS  All rights reserved. DuplicationNiost aforvRieoslaalet,i1o0n/09o/2f0a18pp09l:i1c7a:1b8lMeDlTaw.
+xx
+
+  5.3.1.4 Alignment. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  5-14
+
+  5.3.1.5 Grades. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  5-15
+
+  5.3.1.6 Cross Slope . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  5-15
+
+  5.3.1.7 Superelevation. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  5-15
+
+  5.3.2  5.3.1.8 Sight Distance . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  5-16
+  Cross-Sectional Elements . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 5-16
+
+  5.3.2.1 Width of Traveled Way. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  5-16
+
+  5.3.2.2 Number of Lanes. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  5-16
+
+  5.3.2.3 Parking Lanes. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  5-16
+
+  5.3.2.4 Medians. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  5-17
+
+  5.3.2.5 Curbs . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  5-17
+
+  5.3.2.6 Right-of-Way Width. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  5-17
+
+  5.3.2.7 Provision for Utilities. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  5-17
+
+  5.3.2.8 Border Area . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  5-18
+
+  5.3.2.9 Bicycle and Pedestrian Facilities . . . . . . . . . . . . . . . . . . . . . . . .  5-18
+
+  5.3.2.10 Cul-de-Sacs and Turnarounds . . . . . . . . . . . . . . . . . . . . . . . . . .  5-19
+
+  5.3.2.11 Alleys . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  5-20
+
+  5.3.3  5.3.2.12 Driveways. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  5-21
+  Structures. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 5-22
+
+  5.3.3.1 New and Reconstructed Structures. . . . . . . . . . . . . . . . . . . . . .  5-22
+
+  5.3.4  5.3.3.2 Vertical Clearance. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  5-23
+  Roadside Design. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 5-23
+
+  5.3.4.1 Clear Zones . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  5-23
+
+  5.3.5  5.3.4.2 Lateral Offset. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  5-23
+  5.3.6  Intersection Design. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 5-23
+  5.3.7  Railroad–Highway Grade Crossings . . . . . . . . . . . . . . . . . . . . . . . . . 5-25
+  5.3.8  Traffic Control Devices. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 5-25
+  5.3.9  Roadway Lighting . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 5-25
+  5.3.10  Drainage . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 5-26
+  5.3.11  Erosion Control. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 5-26
+  Landscaping. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 5-27
+
+  5.4 RECREATIONAL ROADS . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 5-27
+
+  --`,```,``,`,`,`,``````,,,,``-`-`,,`,,`,`,,`---
+
+Copyright American Association of State Highway and Transportation Officials
+  © 2018 by the American Association of StLaicteenHseeig=AhrkwanasyasaSntadteTHrigahnwsayp&orTtraantisoponrtaOtiofnfiDceipat/l5s9.88317001, User=Sichmelle
+Provided by IHS Markit under license with AASHTO
+
+No reproduction or networking permitted without license from IHS  All rights reserved. DuplicationNiost aforvRieoslaalet,i1o0n/09o/2f0a18pp09l:i1c7a:1b8lMeDlTaw.
+  xxi
+
+  5.4.1 General Design Considerations. . . . . . . . . . . . . . . . . . . . . . . . . . . . . 5-27
+
+  5.4.1.1 Design Speed. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  5-28
+
+  5.4.1.2 Design Vehicle. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  5-29
+
+  5.4.1.3 Grades. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  5-29
+
+  5.4.1.4 Vertical Alignment . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  5-30
+
+  5.4.1.5 Horizontal Alignment and Superelevation. . . . . . . . . . . . . . . . .  5-31
+
+  5.4.1.6 Sight Distance . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  5-32
+
+  5.4.1.7 Passing Sight Distance. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  5-32
+
+  5.4.2  5.4.1.8 Cross Slope . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  5-33
+  Cross-Sectional Elements . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 5-33
+
+  5.4.2.1 Width of Roadway . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  5-33
+
+  5.4.3  5.4.2.2 Number of Lanes. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  5-34
+  5.4.4  Structures. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 5-35
+  Roadside Design. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 5-36
+
+  5.4.4.1 Clear Zones . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  5-36
+
+  5.4.4.2 Roadside Slopes. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  5-36
+
+  5.4.5  5.4.4.3 Roadside Barriers. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  5-37
+  5.4.6  Signing and Marking. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 5-37
+  Bicycle and Pedestrian Facilities. . . . . . . . . . . . . . . . . . . . . . . . . . . . 5-37
+
+  5.5 RESOURCE RECOVERY AND LOCAL SERVICE ROADS. . . . . . . . . . . . . . . . 5-37
+
+  5.6 LOW-VOLUME ROADS. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 5-39
+
+  5.7 REFERENCES . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 5-39
+
+  CHAPTER 6 COLLECTOR ROADS AND STREETS
+
+--`,```,``,`,`,`,``````,,,,``-`-`,,`,,`,`,,`---  6.1 INTRODUCTION. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 6-1
+  6.2 COLLECTORS IN RURAL AREAS. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 6-2
+
+  6.2.1 General Design Considerations. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 6-2
+  6.2.1.1 Design Speed. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  6-2
+  6.2.1.2 Design Traffic Volumes. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  6-3
+  6.2.1.3 Level of Service . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  6-3
+  6.2.1.4 Alignment. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  6-3
+
+Copyright American Association of State Highway and Transportation Officials
+  © 2018 by the American Association of StLaicteenHseeig=AhrkwanasyasaSntadteTHrigahnwsayp&orTtraantisoponrtaOtiofnfiDceipat/l5s9.88317001, User=Sichmelle
+Provided by IHS Markit under license with AASHTO
+
+No reproduction or networking permitted without license from IHS  All rights reserved. DuplicationNiost aforvRieoslaalet,i1o0n/09o/2f0a18pp09l:i1c7a:1b8lMeDlTaw.
+xxii
+
+  6.2.1.5 Grades. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  6-4
+
+  6.2.1.6 Cross Slope . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  6-4
+
+  6.2.1.7 Superelevation. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  6-4
+
+  6.2.2  6.2.1.8 Sight Distance . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  6-4
+  Cross-Sectional Elements . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 6-6
+
+  6.2.2.1 Width of Roadway . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  6-6
+
+  6.2.2.2 Number of Lanes. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  6-6
+
+  6.2.2.3 Parking Lanes. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  6-7
+
+  6.2.2.4 Medians. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  6-7  --`,```,``,`,`,`,``````,,,,``-`-`,,`,,`,`,,`---
+
+  6.2.2.5 Right-of-Way Width. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  6-7
+
+  6.2.3  6.2.2.6 Bicycle/Pedestrian Facilities. . . . . . . . . . . . . . . . . . . . . . . . . . . . .  6-7
+  Structures. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 6-7
+
+  6.2.3.1 New and Reconstructed Structures. . . . . . . . . . . . . . . . . . . . . . .  6-7
+
+  6.2.4  6.2.3.2 Vertical Clearance. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  6-8
+  Roadside Design. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 6-8
+
+  6.2.4.1 Clear Zones . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  6-8
+
+  6.2.4.2 Lateral Offset. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  6-8
+
+  6.2.5  6.2.4.3 Foreslopes. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  6-9
+  6.2.6  Intersection Design. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 6-9
+  6.2.7  Railroad–Highway Grade Crossings . . . . . . . . . . . . . . . . . . . . . . . . . 6-10
+  6.2.8  Traffic Control Devices. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 6-10
+  6.2.9  Drainage . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 6-10
+  6.2.10  Erosion Control and Landscaping. . . . . . . . . . . . . . . . . . . . . . . . . . . 6-10
+  6.2.11  Speed Transitions Entering Rural Towns. . . . . . . . . . . . . . . . . . . . . . 6-10
+  Design of Collectors in the Rural Town Context. . . . . . . . . . . . . . . . 6-12
+
+  6.3 COLLECTORS IN URBAN AREAS. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 6-12
+  6.3.1 General Design Considerations. . . . . . . . . . . . . . . . . . . . . . . . . . . . . 6-13
+
+  6.3.1.1 Design Speed. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  6-13
+
+  6.3.1.2 Design Traffic Volumes. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  6-14
+
+  6.3.1.3 Level of Service . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  6-14
+
+  6.3.1.4 Alignment. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  6-14
+
+  6.3.1.5 Grades. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  6-14
+
+Copyright American Association of State Highway and Transportation Officials
+  © 2018 by the American Association of StLaicteenHseeig=AhrkwanasyasaSntadteTHrigahnwsayp&orTtraantisoponrtaOtiofnfiDceipat/l5s9.88317001, User=Sichmelle
+Provided by IHS Markit under license with AASHTO
+
+No reproduction or networking permitted without license from IHS  All rights reserved. DuplicationNiost aforvRieoslaalet,i1o0n/09o/2f0a18pp09l:i1c7a:1b8lMeDlTaw.
+  xxiii
+
+  6.3.1.6 Cross Slope . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  6-15
+
+  6.3.1.7 Superelevation. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  6-15
+
+  6.3.2  6.3.1.8 Sight Distance . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  6-15  --`,```,``,`,`,`,``````,,,,``-`-`,,`,,`,`,,`---
+  Cross-Sectional Elements . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 6-16
+
+  6.3.2.1 Width of Roadway . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  6-16
+
+  6.3.2.2 Number of Lanes. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  6-16
+
+  6.3.2.3 Parking Lanes. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  6-16
+
+  6.3.2.4 Medians. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  6-17
+
+  6.3.2.5 Curbs . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  6-18
+
+  6.3.2.6 Right-of-Way Width. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  6-18
+
+  6.3.2.7 Provision for Utilities. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  6-19
+
+  6.3.2.8 Border Area . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  6-19
+
+  6.3.2.9 Bicycle/Pedestrian Facilities. . . . . . . . . . . . . . . . . . . . . . . . . . . .  6-19
+
+  6.3.3  6.3.2.10 Driveways. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  6-20
+  Structures. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 6-20
+
+  6.3.3.1 New and Reconstructed Structures. . . . . . . . . . . . . . . . . . . . . .  6-20
+
+  6.3.4  6.3.3.2 Vertical Clearance. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  6-20
+  Roadside Design. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 6-21
+
+  6.3.4.1 Clear Zones . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  6-21
+
+  6.3.5  6.3.4.2 Lateral Offset. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  6-21
+  6.3.6  Intersection Design. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 6-22
+  6.3.7  Railroad–Highway Grade Crossings . . . . . . . . . . . . . . . . . . . . . . . . . 6-23
+  6.3.8  Traffic Control Devices. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 6-23
+  6.3.9  Roadway Lighting . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 6-23
+  6.3.10  Drainage . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 6-24
+  6.3.11  Erosion Control. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 6-24
+  Landscaping. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 6-24
+
+6.4 REFERENCES . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 6-25
+
+CHAPTER 7 ARTERIAL ROADS AND STREETS
+
+7.1 INTRODUCTION. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 7-1
+7.2 ARTERIALS IN RURAL AREAS. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 7-2
+
+Copyright American Association of State Highway and Transportation Officials
+  © 2018 by the American Association of StLaicteenHseeig=AhrkwanasyasaSntadteTHrigahnwsayp&orTtraantisoponrtaOtiofnfiDceipat/l5s9.88317001, User=Sichmelle
+Provided by IHS Markit under license with AASHTO
+
+No reproduction or networking permitted without license from IHS  All rights reserved. DuplicationNiost aforvRieoslaalet,i1o0n/09o/2f0a18pp09l:i1c7a:1b8lMeDlTaw.
+xxiv
+
+  7.2.1  General Characteristics. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 7-2  --`,```,``,`,`,`,``````,,,,``-`-`,,`,,`,`,,`---
+  7.2.2  General Design Considerations. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 7-3
+  7.2.2.1 Design Speed. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  7-3
+  7.2.3  7.2.2.2 Design Traffic Volumes. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  7-3
+  7.2.2.3 Level of Service . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  7-4
+  7.2.4  7.2.2.4 Sight Distance . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  7-4
+  7.2.2.5 Alignment. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  7-5
+  7.2.5  7.2.2.6 Grades. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  7-5
+  7.2.6  7.2.2.7 Cross Slope . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  7-6
+  7.2.7  7.2.2.8 Superelevation. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  7-6
+  7.2.8  Cross-Sectional Elements . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 7-6
+  7.2.9  7.2.3.1 Roadway Width . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  7-6
+  Areas  7.2.3.2 Number of Lanes. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  7-7
+  7.2.10  7.2.3.3 Cross Section and Right-of-Way. . . . . . . . . . . . . . . . . . . . . . . . . .  7-7
+  7.2.11  Roadside Design. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 7-8
+  7.2.4.1 Clear Zones . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  7-8
+  7.2.4.2 Lateral Offset. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  7-8
+  Structures. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 7-9
+  7.2.5.1 Vertical Clearances. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  7-9
+  Traffic Control Devices. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 7-9
+  Erosion Control. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 7-9
+  Provision for Passing. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 7-9
+  Ultimate Development of Multilane Divided Arterials in Rural
+  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 7-11
+  Multilane Undivided Arterials in Rural Areas. . . . . . . . . . . . . . . . . . . 7-13
+  Divided Arterials in Rural Areas. . . . . . . . . . . . . . . . . . . . . . . . . . . . . 7-15
+  7.2.11.1 General Features . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  7-15
+  7.2.11.2 Lane Widths. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  7-15
+  7.2.11.3 Cross Slope . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  7-15
+  7.2.11.4 Shoulders. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  7-16
+  7.2.11.5 Median Barrier Clearance. . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  7-17
+  7.2.11.6 Medians. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .  7-17
+
+Copyright American Association of State Highway and Transportation Officials
+  © 2018 by the American Association of StLaicteenHseeig=AhrkwanasyasaSntadteTHrigahnwsayp&orTtraantisoponrtaOtiofnfiDceipat/l5s9.88317001, User=Sichmelle
+Provided by IHS Markit under license with AASHTO
+
+No reproduction or networking permitted without license from IHS  All rights reserved. DuplicationNiost aforvRieoslaalet,i1o0n/09o/2f0a18pp09l:i1c7a:1b8lMeDlTaw.
+

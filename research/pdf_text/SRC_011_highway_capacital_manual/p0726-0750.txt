@@ -1,0 +1,1866 @@
+  Highway Capacity Manual 2000
+
+EXHIBIT 20-13. GRADE ADJUSTMENT FACTOR (fG) FOR ESTIMATING AVERAGE TRAVEL SPEED ON
+  SPECIFIC UPGRADES
+
+  Grade Adjustment Factor, fG
+
+  Range of Directional Flow Rates vd (pc/h)
+
+Grade (%) Length of Grade (km)  0–300  > 300–600  > 600
+
+≥ 3.0 < 3.5  0.4  0.81  1.00  1.00
+
+  0.8  0.79  1.00  1.00
+
+  1.2  0.77  1.00  1.00
+
+  1.6  0.76  1.00  1.00
+
+  2.4  0.75  0.99  1.00
+
+  3.2  0.75  0.97  1.00
+
+  4.8  0.75  0.95  0.97
+
+  ≥ 6.4  0.75  0.94  0.95
+
+≥ 3.5 < 4.5  0.4  0.79  1.00  1.00
+
+  0.8  0.76  1.00  1.00
+
+  1.2  0.72  1.00  1.00
+
+  1.6  0.69  0.93  1.00
+
+  2.4  0.68  0.92  1.00
+
+  3.2  0.66  0.91  1.00
+
+  4.8  0.65  0.91  0.96
+
+  ≥ 6.4  0.65  0.90  0.96
+
+≥ 4.5 < 5.5  0.4  0.75  1.00  1.00
+
+  0.8  0.65  0.93  1.00
+
+  1.2  0.60  0.89  1.00
+
+  1.6  0.59  0.89  1.00
+
+  2.4  0.57  0.86  0.99
+
+  3.2  0.56  0.85  0.98
+
+  4.8  0.56  0.84  0.97
+
+  ≥ 6.4  0.55  0.82  0.93
+
+≥ 5.5 < 6.5  0.4  0.63  0.91  1.00
+
+  0.8  0.57  0.85  0.99
+
+  1.2  0.52  0.83  0.97
+
+  1.6  0.51  0.79  0.97
+
+  2.4  0.49  0.78  0.95
+
+  3.2  0.48  0.78  0.94
+
+  4.8  0.46  0.76  0.93
+
+  ≥ 6.4  0.45  0.76  0.93
+
+≥ 6.5  0.4  0.59  0.86  0.98
+
+  0.8  0.48  0.76  0.94
+
+  1.2  0.44  0.74  0.91
+
+  1.6  0.41  0.70  0.91
+
+  2.4  0.40  0.67  0.91
+
+  3.2  0.39  0.67  0.89
+
+  4.8  0.39  0.66  0.88
+
+  ≥ 6.4  0.38  0.66  0.87
+
+  20-15  Chapter 20 - Two-Lane Highways
+  Methodology
+Highway Capacity Manual 2000
+
+  EXHIBIT 20-14. GRADE ADJUSTMENT FACTOR (fG) FOR ESTIMATING PERCENT TIME-SPENT-
+  FOLLOWING ON SPECIFIC UPGRADES
+
+  Grade Adjustment Factor, fG
+
+  Range of Directional Flow Rates, vd (pc/h)
+
+  Grade (%) Length of Grade (km)  0–300  > 300–600  > 600
+
+  ≥ 3.0 < 3.5  0.4  1.00  0.92  0.92
+
+  0.8  1.00  0.93  0.93
+
+  1.2  1.00  0.93  0.93
+
+  1.6  1.00  0.93  0.93
+
+  2.4  1.00  0.94  0.94
+
+  3.2  1.00  0.95  0.95
+
+  4.8  1.00  0.97  0.96
+
+  ≥ 6.4  1.00  1.00  0.97
+
+  ≥ 3.5 < 4.5  0.4  1.00  0.94  0.92
+
+  0.8  1.00  0.97  0.96
+
+  1.2  1.00  0.97  0.96
+
+  1.6  1.00  0.97  0.97
+
+  2.4  1.00  0.97  0.97
+
+  3.2  1.00  0.98  0.98
+
+  4.8  1.00  1.00  1.00
+
+  ≥ 6.4  1.00  1.00  1.00
+
+  ≥ 4.5 < 5.5  0.4  1.00  1.00  0.97
+
+  0.8  1.00  1.00  1.00
+
+  1.2  1.00  1.00  1.00
+
+  1.6  1.00  1.00  1.00
+
+  2.4  1.00  1.00  1.00
+
+  3.2  1.00  1.00  1.00
+
+  4.8  1.00  1.00  1.00
+
+  ≥ 6.4  1.00  1.00  1.00
+
+  ≥ 5.5 < 6.5  0.4  1.00  1.00  1.00
+
+  0.8  1.00  1.00  1.00
+
+  1.2  1.00  1.00  1.00
+
+  1.6  1.00  1.00  1.00
+
+  2.4  1.00  1.00  1.00
+
+  3.2  1.00  1.00  1.00
+
+  4.8  1.00  1.00  1.00
+
+  ≥ 6.4  1.00  1.00  1.00
+
+  ≥ 6.5  0.4  1.00  1.00  1.00
+
+  0.8  1.00  1.00  1.00
+
+  1.2  1.00  1.00  1.00
+
+  1.6  1.00  1.00  1.00
+
+  2.4  1.00  1.00  1.00
+
+  3.2  1.00  1.00  1.00
+
+  4.8  1.00  1.00  1.00
+
+  ≥ 6.4  1.00  1.00  1.00
+
+Chapter 20 - Two-Lane Highways  20-16
+Methodology
+  Highway Capacity Manual 2000
+
+EXHIBIT 20-15. PASSENGER-CAR EQUIVALENTS FOR TRUCKS FOR ESTIMATING AVERAGE SPEED ON
+  SPECIFIC UPGRADES
+
+  Passenger-Car Equivalent for Trucks, ET
+
+  Range of Directional Flow Rates, vd (pc/h)
+
+Grade (%)  Length of Grade (km)  0–300  > 300–600  > 600
+
+≥ 3.0 < 3.5  0.4  2.5  1.9  1.5
+
+  0.8  3.5  2.8  2.3
+
+  1.2  4.5  3.9  2.9
+
+  1.6  5.1  4.6  3.5
+
+  2.4  6.1  5.5  4.1
+
+  3.2  7.1  5.9  4.7
+
+  4.8  8.2  6.7  5.3
+
+  ≥ 6.4  9.1  7.5  5.7
+
+≥ 3.5 < 4.5  0.4  3.6  2.4  1.9
+
+  0.8  5.4  4.6  3.4
+
+  1.2  6.4  6.6  4.6
+
+  1.6  7.7  6.9  5.9
+
+  2.4  9.4  8.3  7.1
+
+  3.2  10.2  9.6  8.1
+
+  4.8  11.3  11.0  8.9
+
+  ≥ 6.4  12.3  11.9  9.7
+
+≥ 4.5 < 5.5  0.4  4.2  3.7  2.6
+
+  0.8  6.0  6.0  5.1
+
+  1.2  7.5  7.5  7.5
+
+  1.6  9.2  9.0  8.9
+
+  2.4  10.6  10.5  10.3
+
+  3.2  11.8  11.7  11.3
+
+  4.8  13.7  13.5  12.4
+
+  ≥ 6.4  15.3  15.0  12.5
+
+≥ 5.5 < 6.5  0.4  4.7  4.1  3.5
+
+  0.8  7.2  7.2  7.2
+
+  1.2  9.1  9.1  9.1
+
+  1.6  10.3  10.3  10.2
+
+  2.4  11.9  11.8  11.7
+
+  3.2  12.8  12.7  12.6
+
+  4.8  14.4  14.3  14.2
+
+  ≥ 6.4  15.4  15.2  15.0
+
+≥ 6.5  0.4  5.1  4.8  4.6
+
+  0.8  7.8  7.8  7.8
+
+  1.2  9.8  9.8  9.8
+
+  1.6  10.4  10.4  10.3
+
+  2.4  12.0  11.9  11.8
+
+  3.2  12.9  12.8  12.7
+
+  4.8  14.5  14.4  14.3
+
+  ≥ 6.4  15.4  15.3  15.2
+
+  20-17  Chapter 20 - Two-Lane Highways
+  Methodology
+Highway Capacity Manual 2000
+
+  EXHIBIT 20-16. PASSENGER-CAR EQUIVALENTS FOR TRUCKS AND RVS FOR ESTIMATING PERCENT
+  TIME-SPENT-FOLLOWING ON SPECIFIC UPGRADES
+
+  Passenger-Car Equivalent for Trucks, ET
+
+  Range of Directional Flow Rates, vd (pc/h)
+
+  Grade (%)  Length of Grade (km)  0–300  > 300–600  > 600  RVs, ER
+  ≥ 3.0 < 3.5  1.0
+  ≥ 3.5 < 4.5  0.4  1.0  1.0  1.0  1.0
+  ≥ 4.5 < 5.5  0.8  1.0
+  ≥ 5.5 < 6.5  1.2  1.0  1.0  1.0  1.0
+  1.6  1.0
+  ≥ 6.5  2.4  1.0  1.0  1.0  1.0
+  3.2  1.0
+  4.8  1.0  1.0  1.0  1.0
+  ≥ 6.4
+  0.4  1.0  1.0  1.0  1.0
+  0.8  1.0
+  1.2  1.0  1.0  1.0  1.0
+  1.6  1.0
+  2.4  1.4  1.0  1.0  1.0
+  3.2  1.0
+  4.8  1.5  1.0  1.0  1.0
+  ≥ 6.4  1.0
+  0.4  1.0  1.0  1.0
+  0.8  1.0
+  1.2  1.0  1.0  1.0  1.0
+  1.6  1.0
+  2.4  1.0  1.0  1.0  1.0
+  3.2  1.0
+  4.8  1.0  1.0  1.0  1.0
+  ≥ 6.4  1.0
+  0.4  1.1  1.0  1.0  1.0
+  0.8
+  1.2  1.4  1.0  1.0  1.0
+  1.6  1.0
+  2.4  1.7  1.1  1.2  1.0
+  3.2  1.0
+  4.8  2.0  1.5  1.4  1.0
+  ≥ 6.4  1.0
+  0.4  1.0  1.0  1.0  1.0
+  0.8  1.0
+  1.2  1.0  1.0  1.0
+  1.6  1.0
+  2.4  1.0  1.0  1.0  1.0
+  3.2  1.0
+  4.8  1.0  1.0  1.0  1.0
+  ≥ 6.4  1.0
+  1.1  1.2  1.2  1.0
+  1.0
+  1.6  1.3  1.5  1.0
+
+  2.3  1.9  1.7
+
+  3.3  2.1  1.8
+
+  1.0  1.0  1.0
+
+  1.0  1.0  1.0
+
+  1.0  1.0  1.0
+
+  1.0  1.2  1.2
+
+  1.5  1.6  1.6
+
+  1.9  1.9  1.8
+
+  3.3  2.5  2.0
+
+  4.3  3.1  2.0
+
+  1.0  1.0  1.0
+
+  1.0  1.0  1.0
+
+  1.0  1.0  1.3
+
+  1.3  1.4  1.6
+
+  2.1  2.0  2.0
+
+  2.8  2.5  2.1
+
+  4.0  3.1  2.2
+
+  4.8  3.5  2.3
+
+Chapter 20 - Two-Lane Highways  20-18
+Methodology
+  Highway Capacity Manual 2000
+
+EXHIBIT 20-17.  PASSENGER-CAR EQUIVALENTS FOR RVS FOR ESTIMATING AVERAGE TRAVEL SPEED ON
+  Grade (%)  SPECIFIC UPGRADES
+  ≥ 3.0 < 3.5
+  Passenger-Car Equivalent for RVs, ER
+  ≥ 3.5 < 4.5
+  Range of Directional Flow Rates, vd(pc/h)
+  ≥ 4.5 < 5.5
+  Length of Grade (km)  0–300  > 300–600  > 600
+  ≥ 5.5 < 6.5
+  0.4  1.1  1.0  1.0
+  ≥ 6.5
+  0.8  1.2  1.0  1.0
+
+  1.2  1.2  1.0  1.0
+
+  1.6  1.3  1.0  1.0
+
+  2.4  1.4  1.0  1.0
+
+  3.2  1.4  1.0  1.0
+
+  4.8  1.5  1.0  1.0
+
+  ≥ 6.4  1.5  1.0  1.0
+
+  0.4  1.3  1.0  1.0
+
+  0.8  1.3  1.0  1.0
+
+  1.2  1.3  1.0  1.0
+
+  1.6  1.4  1.0  1.0
+
+  2.4  1.4  1.0  1.0
+
+  3.2  1.4  1.0  1.0
+
+  4.8  1.4  1.0  1.0
+
+  ≥ 6.4  1.5  1.0  1.0
+
+  0.4  1.5  1.0  1.0
+
+  0.8  1.5  1.0  1.0
+
+  1.2  1.5  1.0  1.0
+
+  1.6  1.5  1.0  1.0
+
+  2.4  1.5  1.0  1.0
+
+  3.2  1.5  1.0  1.0
+
+  4.8  1.6  1.0  1.0
+
+  ≥ 6.4  1.6  1.0  1.0
+
+  0.4  1.5  1.0  1.0
+
+  0.8  1.5  1.0  1.0
+
+  1.2  1.5  1.0  1.0
+
+  1.6  1.6  1.0  1.0
+
+  2.4  1.6  1.0  1.0
+
+  3.2  1.6  1.0  1.0
+
+  4.8  1.6  1.2  1.0
+
+  ≥ 6.4  1.6  1.5  1.2
+
+  0.4  1.6  1.0  1.0
+
+  0.8  1.6  1.0  1.0
+
+  1.2  1.6  1.0  1.0
+
+  1.6  1.6  1.0  1.0
+
+  2.4  1.6  1.0  1.0
+
+  3.2  1.6  1.0  1.0
+
+  4.8  1.6  1.3  1.3
+
+  ≥ 6.4  1.6  1.5  1.4
+
+  20-19  Chapter 20 - Two-Lane Highways
+  Methodology
+Highway Capacity Manual 2000
+
+  EXHIBIT 20-18. PASSENGER-CAR EQUIVALENTS FOR ESTIMATING THE EFFECT ON AVERAGE TRAVEL
+  SPEED OF TRUCKS THAT OPERATE AT CRAWL SPEEDS ON LONG STEEP DOWNGRADES
+
+  Passenger-Car Equivalent for Trucks at Crawl Speeds, ETC
+
+  Range of Directional Flow Rates, vd (pc/h)
+
+  Difference Between FFS and Truck  0–300  > 300–600  > 600
+  Crawl Speed (km/h)
+
+  ≤ 20  4.4  2.8  1.4
+
+  40  14.3  9.6  5.7
+
+  ≥ 60  34.1  23.1  13.0
+
+  Iterative Computations
+
+  As with the two-way segment procedure, Equations 20-12 and 20-13 must be applied
+  iteratively in some situations to determine appropriate values of vd and vo. This iterative
+  process for directional segments is analogous to that for two-way segments, but with the
+  following differences:
+
+  • For extended segments in level and rolling terrain and for specific downgrades, the
+  directional flow rates from Exhibits 20-7 through 20-10 are used instead of the two-way
+  rates;
+
+  • For specific upgrades, Exhibits 20-13 through 20-17 are used instead of Exhibits
+  20-7 through 20-10; and
+
+  • For specific downgrades on which some trucks travel at crawl speeds, Equation
+  20-14 is used instead of Equation 20-4.
+
+  Determining Average Travel Speed
+
+  The average travel speed is estimated from the FFS, the demand flow rate, the
+  opposing flow rate, and an adjustment factor for the percentage of no-passing zones in the
+  analysis direction. Average travel speed is then estimated using Equation 20-15.
+
+  ATSd = FFSd − 0.0125 (v d + vo ) − f np  (20-15)
+
+  where  = average travel speed in the analysis direction (km/h),
+  ATSd  = free-flow speed in the analysis direction (km/h),
+  FFSd  = passenger-car equivalent flow rate for the peak 15-min period in the
+  vd
+  analysis direction (pc/h),
+  vo  = passenger-car equivalent flow rate for the peak 15-min period in the
+
+  fnp  opposing direction (pc/h), determined from Equation 20-13; and
+  = adjustment for percentage of no-passing zones in the analysis direction
+
+  (see Exhibit 20-19).
+
+  The term containing vd and vo in Equation 20-15 represents the relationship between
+  average travel speed and the directional and opposing flow rates presented in Chapter 12.
+  The adjustment fnp accounts for the effect of the percentage of no-passing zones in the
+  analysis direction. As shown in Exhibit 20-19, this effect is greatest when opposing flow
+  rates are low; as the opposing flow rates increase, the effect decreases to zero, since
+  passing and no-passing zones become irrelevant if the opposing flow allows no
+  opportunities to pass.
+
+Chapter 20 - Two-Lane Highways  20-20
+Methodology
+  Highway Capacity Manual 2000
+
+EXHIBIT 20-19. ADJUSTMENT (fnp) TO AVERAGE TRAVEL SPEED FOR PERCENTAGE OF NO-PASSING
+  ZONES IN DIRECTIONAL SEGMENTS
+
+  No-Passing Zones (%)
+
+Opposing Demand  ≤ 20  40  60  80  100
+
+Flow Rate, vo (pc/h)
+
+  FFS = 110 km/h
+
+≤ 100  1.7  3.5  4.5  4.8  5.0
+
+200  3.5  5.3  6.2  6.5  6.8
+
+400  2.6  3.7  4.4  4.5  4.7
+
+600  2.2  2.4  2.8  3.1  3.3
+
+800  1.1  1.6  2.0  2.2  2.4
+
+1000  1.0  1.3  1.7  1.8  1.9
+
+1200  0.9  1.3  1.5  1.6  1.7
+
+1400  0.9  1.2  1.4  1.4  1.5
+
+≥ 1600  0.9  1.1  1.2  1.2  1.3
+
+  FFS = 100 km/h
+
+≤ 100  1.2  2.7  4.0  4.5  4.7
+
+200  3.0  4.6  5.9  6.4  6.7
+
+400  2.3  3.3  4.1  4.4  4.6
+
+600  1.8  2.1  2.6  3.0  3.2
+
+800  0.9  1.4  1.8  2.1  2.3
+
+1000  0.9  1.1  1.5  1.7  1.9
+
+1200  0.8  1.1  1.4  1.5  1.7
+
+1400  0.8  1.0  1.3  1.3  1.4
+
+≥ 1600  0.8  1.0  1.1  1.1  1.2
+
+  FFS = 90 km/h
+
+≤ 100  0.8  1.9  3.6  4.2  4.4
+
+200  2.4  3.9  5.6  6.3  6.6
+
+400  2.1  3.0  3.8  4.3  4.5
+
+600  1.4  1.8  2.5  2.9  3.1
+
+800  0.8  1.1  1.7  2.0  2.2
+
+1000  0.8  0.9  1.3  1.5  1.8
+
+1200  0.8  0.9  1.2  1.4  1.6
+
+1400  0.8  0.9  1.1  1.2  1.4
+
+≥ 1600  0.8  0.8  0.9  0.9  1.1
+
+  FFS = 80 km/h
+
+≤ 100  0.3  1.1  3.1  3.9  4.1
+
+200  1.9  3.2  5.3  6.2  6.5
+
+400  1.8  2.6  3.5  4.2  4.4
+
+600  1.0  1.5  2.3  2.8  3.0
+
+800  0.6  0.9  1.5  1.9  2.1
+
+1000  0.6  0.7  1.1  1.4  1.8
+
+1200  0.6  0.7  1.1  1.3  1.6
+
+1400  0.6  0.7  1.0  1.1  1.3
+
+≥ 1600  0.6  0.7  0.8  0.8  1.0
+
+  FFS = 70 km/h
+
+≤ 100  0.1  0.6  2.7  3.6  3.8
+
+200  1.5  2.6  5.0  6.1  6.4
+
+400  1.5  0.8  3.2  4.1  4.3
+
+600  0.7  0.5  2.1  2.7  2.9
+
+800  0.5  0.5  1.3  1.8  2.0
+
+1000  0.5  0.5  1.0  1.3  1.8
+
+1200  0.5  0.5  1.0  1.2  1.6
+
+1400  0.5  0.5  1.0  1.0  1.2
+
+≥ 1600  0.5  0.5  0.7  0.7  0.9
+
+  20-21  Chapter 20 - Two-Lane Highways
+  Methodology
+Highway Capacity Manual 2000
+
+  Determining Percent Time-Spent-Following
+
+  The percent time-spent-following is estimated from the demand flow rate, the
+  opposing flow rate, and an adjustment factor for the percentage of no-passing zones in
+  the analysis direction. Percent time-spent-following is estimated using Equation 20-16.
+
+  PTSFd = BPTSFd + fnp  (20-16)
+
+  where  = percent time-spent-following in the direction analyzed,
+  = base percent time-spent-following in the direction analyzed, and
+  PTSFd  = adjustment for percentage of no-passing zones in the analysis direction
+  BPTSFd
+  (see Exhibit 20-20).
+  fnp
+
+  The percent time-spent-following for base conditions under actual traffic volumes in
+  the direction analyzed in Equation 20-16 is estimated by Equation 20-17.
+
+  BPTSF d = 100 1 − eavdb  (20-17)
+
+  The values of the coefficients a and b in Equation 20-17 are determined from the flow
+  rate in the opposing direction of travel, as shown in Exhibit 20-21.
+
+  The adjustment fnp in Equation 20-16 accounts for the effect of the percentage of no-
+  passing zones in the analysis direction. This effect, shown in Exhibit 20-20, is greatest at
+  low opposing flow rates and decreases as the opposing flow rate increases, since passing
+  and no-passing zones become irrelevant if the opposing flow rate is so high that there are
+  no opportunities to pass.
+
+  Determining LOS
+
+  The first step in determining level of service is to compare the passenger-car
+  equivalent flow rate (vd) to the roadway capacity of 1,700 pc/h. If vd is greater than the
+  capacity, then the roadway is oversaturated and the LOS is F. In LOS F, percent time-
+  spent-following is nearly 100 percent and speeds are highly variable and difficult to
+  estimate.
+
+  For a segment on a Class I facility with demand less than capacity, the LOS is
+  determined by locating the point corresponding to the estimated percent time-spent-
+  following and average travel speed in Exhibit 20-3. For a segment on a Class II facility
+  with demand less than capacity, the LOS is determined by comparing the directional
+  percent time-spent-following to the criteria in Exhibit 20-4. The reported results of the
+  analysis should include the LOS and the estimated values of percent time-spent-following
+  and average travel speed. Although average travel speed is not considered in the LOS
+  determination for a Class II roadway, the estimate of average travel speed may be useful
+  in evaluating the quality of service of two-lane highway facilities, highway networks, or
+  systems of which the roadway segment is a part.
+
+  Other Traffic Performance Measures
+
+  Other traffic performance measures, including v/c ratio, total travel, and total travel
+  time, can be determined from Equations 20-8 through 20-11, but using directional
+  volumes, flow rates, and speeds, rather than their two-way equivalents.
+
+The procedure should  DIRECTIONAL SEGMENTS WITH PASSING LANES
+not be applied to
+mountainous terrain or  Providing a passing lane on a two-lane highway in level or rolling terrain has an
+specific upgrades  effect on its LOS; an operational analysis procedure allows this effect to be estimated.
+  This procedure, however, does not address added lanes in mountainous terrain or on
+  specific upgrades, which are known as climbing lanes. A separate operational analysis
+  procedure for climbing lanes is presented later in this chapter.
+
+Chapter 20 - Two-Lane Highways  20-22
+Methodology
+  Highway Capacity Manual 2000
+
+EXHIBIT 20-20. ADJUSTMENT (fnp) TO PERCENT TIME-SPENT-FOLLOWING FOR PERCENTAGE OF
+  NO-PASSING ZONES IN DIRECTIONAL SEGMENTS
+
+  No-Passing Zones (%)
+
+Opposing Demand  ≤ 20  40  60  80  100
+
+Flow Rate, vo (pc/h)
+
+  FFS = 110 km/h
+
+≤ 100  10.1  17.2  20.2  21.0  21.8
+
+200  12.4  19.0  22.7  23.8  24.8
+
+400  9.0  12.3  14.1  14.4  15.4
+
+600  5.3  7.7  9.2  9.7  10.4
+
+800  3.0  4.6  5.7  6.2  6.7
+
+1000  1.8  2.9  3.7  4.1  4.4
+
+1200  1.3  2.0  2.6  2.9  3.1
+
+1400  0.9  1.4  1.7  1.9  2.1
+
+≥ 1600  0.7  0.9  1.1  1.2  1.4
+
+  FFS = 100 km/h
+
+≤ 100  8.4  14.9  20.9  22.8  26.6
+
+200  11.5  18.2  24.1  26.2  29.7
+
+400  8.6  12.1  14.8  15.9  18.1
+
+600  5.1  7.5  9.6  10.6  12.1
+
+800  2.8  4.5  5.9  6.7  7.7
+
+1000  1.6  2.8  3.7  4.3  4.9
+
+1200  1.2  1.9  2.6  3.0  3.4
+
+1400  0.8  1.3  1.7  2.0  2.3
+
+≥ 1600  0.6  0.9  1.1  1.2  1.5
+
+  FFS = 90 km/h
+
+≤ 100  6.7  12.7  21.7  24.5  31.3
+
+200  10.5  17.5  25.4  28.6  34.7
+
+400  8.3  11.8  15.5  17.5  20.7
+
+600  4.9  7.3  10.0  11.5  13.9
+
+800  2.7  4.3  6.1  7.2  8.8
+
+1000  1.5  2.7  3.8  4.5  5.4
+
+1200  1.0  1.8  2.6  3.1  3.8
+
+1400  0.7  1.2  1.7  2.0  2.4
+
+≥ 1600  0.6  0.9  1.2  1.3  1.5
+
+  FFS = 80 km/h
+
+≤ 100  5.0  10.4  22.4  26.3  36.1
+
+200  9.6  16.7  26.8  31.0  39.6
+
+400  7.9  11.6  16.2  19.0  23.4
+
+600  4.7  7.1  10.4  12.4  15.6
+
+800  2.5  4.2  6.3  7.7  9.8
+
+1000  1.3  2.6  3.8  4.7  5.9
+
+1200  0.9  1.7  2.6  3.2  4.1
+
+1400  0.6  1.1  1.7  2.1  2.6
+
+≥ 1600  0.5  0.9  1.2  1.3  1.6
+
+  FFS = 70 km/h
+
+≤ 100  3.7  8.5  23.2  28.2  41.6
+
+200  8.7  16.0  28.2  33.6  45.2
+
+400  7.5  11.4  16.9  20.7  26.4
+
+600  4.5  6.9  10.8  13.4  17.6
+
+800  2.3  4.1  6.5  8.2  11.0
+
+1000  1.2  2.5  3.8  4.9  6.4
+
+1200  0.8  1.6  2.6  3.3  4.5
+
+1400  0.5  1.0  1.7  2.2  2.8
+
+≥ 1600  0.4  0.9  1.2  1.3  1.7
+
+  20-23  Chapter 20 - Two-Lane Highways
+  Methodology
+Highway Capacity Manual 2000
+
+  EXHIBIT 20-21. VALUES OF COEFFICIENTS USED IN ESTIMATING PERCENT TIME-SPENT-FOLLOWING FOR
+  DIRECTIONAL SEGMENTS
+
+  Opposing Demand Flow Rate, vo (pc/h)  a  b
+  ≤ 200
+  400  –0.013  0.668
+  600  –0.057  0.479
+  800  –0.100  0.413
+  1000  –0.173  0.349
+  1200  –0.320  0.276
+  1400  –0.430  0.242
+  –0.522  0.225
+  ≥ 1600  –0.665  0.199
+
+  Exhibit 20-22 illustrates the operational effect of a passing lane on percent time-
+  spent-following. The figure shows that installation of a passing lane provides operational
+  benefits for some distance downstream before percent time-spent-following returns to its
+  former level. Thus, the effective length of a passing lane is greater than its actual length.
+  Exhibit 20-23 shows how the traffic flow rate on a downstream length of a two-lane
+  highway benefits from a passing lane in terms of both percent time-spent-following and
+  average travel speed.
+
+  EXHIBIT 20-22. OPERATIONAL EFFECT OF A PASSING LANE ON PERCENT TIME-SPENT-FOLLOWING
+
+  100
+
+  Percent Time-Spent-Following  80  Normal two-lane highway
+
+  60
+
+  Two-lane highway with passing lane
+  40
+
+  Actual length of passing lane
+  Downstream length affected by passing lane
+
+  20
+
+  Effective length of passing lane
+
+  0
+
+  0  2  4  6  8  10 12  14 16 18  20
+
+  Position Along Highway (km)
+
+  Source: Harwood and Hoban (3).
+
+  EXHIBIT 20-23. DOWNSTREAM LENGTH OF ROADWAY AFFECTED BY PASSING LANES ON DIRECTIONAL
+  SEGMENTS IN LEVEL AND ROLLING TERRAIN
+
+  Downstream Length of Roadway Affected, Lde (km)
+
+  Directional Flow Rate (pc/h)  Percent Time-Spent-Following  Average Travel Speed
+
+  ≤ 200  20.9  2.8
+
+  400  13.0  2.8
+
+  700  9.1  2.8
+
+  ≥ 1000  5.8  2.8
+
+For complex systems of  The operational analysis procedures presented here for passing lanes in level or
+passing lanes, consider  rolling terrain are applicable to directional segments of two-lane highways that include
+use of a computer  the entire passing lane. Sections of two-lane highway upstream and downstream of the
+simulation model  passing lane also may be included. Whenever possible, the directional segment should
+
+Chapter 20 - Two-Lane Highways  20-24
+Methodology
+  Highway Capacity Manual 2000
+
+include not only the passing lane but also its full effective downstream length, as
+indicated in Exhibit 20-23. There are special procedures for directional segments that
+include only part of the effective downstream length of the passing lane (e.g., when an
+analysis segment must end because of the proximity of a small town or due to a change in
+the demand volume). The effects of providing another passing lane in the same direction
+of travel within the effective length of the first passing lane are too complex to evaluate.
+In such situations, an evaluation with a traffic simulation model is recommended. The
+operational analysis procedures for passing lanes in level or rolling terrain are described
+below.
+
+Analysis of a Directional Segment with a Passing Lane
+
+  The first step in the operational analysis of a passing lane is to apply the procedure
+for directional segments in level or rolling terrain to the normal cross section without the
+passing lane. The data required are the demand volume in the analysis direction, demand
+volume in the opposing direction, vehicle mix, lane width, shoulder width, and
+percentage of no-passing zones. The result is the percent time-spent-following and the
+average travel speed for the normal two-lane cross section.
+
+Dividing the Segment into Regions
+
+  The next step is to divide the analysis segment into four regions. These regions are  For constraints on applicable
+  1. Upstream of the passing lane,  lengths of lane additions see
+  2. The passing lane,  Chapter 12, “Highway
+  3. Downstream of the passing lane but within its effective length, and  Concepts”
+  4. Downstream of the passing lane but beyond its effective length.
+These four lengths must add up to the total length of the analysis segment. The analysis
+regions and their lengths will differ for estimations of percent time-spent-following and
+average travel speed, because the downstream lengths for these measures differ, as shown
+in Exhibit 20-23.
+  The length of the passing lane, Lpl, used in the analysis, is either the length of the
+passing lane as constructed or its planned length. The passing lane length should include
+the lengths of the lane addition and lane drop tapers. The analysis procedure is calibrated
+for passing lanes within the optimal ranges of length shown in Chapter 12. Passing lane
+lengths substantially shorter or longer than the optimum may provide less operational
+benefit than predicted by this procedure.
+  The length of the conventional two-lane highway segment upstream of the passing
+lane, Lu, is determined by the actual or planned placement of the passing lane within the
+analysis section. The length of the downstream highway segment within the effective
+length of the passing lane, Lde, is determined from Exhibit 20-23. Any remaining length
+within the analysis segment downstream of the passing lane is included in Ld as shown in
+Equation 20-18.
+
+  Ld = Lt − (Lu + Lpl + Lde )  (20-18)
+
+where  = length of two-lane highway downstream of the passing lane and beyond
+  Ld
+  its effective length (km),
+  Lt  = total length of analysis segment (km),
+  Lu  = length of two-lane highway upstream of the passing lane (km),
+  Lpl  = length of the passing lane including tapers (km), and
+  Lde  = downstream length of two-lane highway within the effective length of
+
+  the passing lane (km) (from Exhibit 20-23).
+
+  20-25  Chapter 20 - Two-Lane Highways
+  Methodology
+Highway Capacity Manual 2000
+
+  Determining Percent Time-Spent-Following
+
+  Percent time-spent-following within lengths Lu and Ld is assumed to be equal to
+  PTSFd, as predicted by the directional segment procedure. Within the passing lane,
+  percent time-spent-following is generally equal to 58 to 62 percent of its upstream value.
+  This effect varies as a function of the directional flow rate, as shown in Exhibit 20-24.
+  Within the downstream length, Lde, percent time-spent-following is assumed to increase
+  linearly with distance from the passing-lane value to its normal upstream value. Thus, the
+  average percent time-spent-following with the passing lane in place can be computed
+  using Equation 20-19.
+
+    1 + f pl  
+  PTSF d Lu + Ld + f pl Lpl +    Lde 
+     2  
+  PTSF pl =  (20-19)
+  Lt
+
+  where  = percent time-spent-following for the entire segment including the
+  PTSFpl  passing lane,
+
+  PTSFd  = percent time-spent-following for the entire segment without the passing
+  lane from Equation 20-16, and
+  fpl
+  = factor for the effect of a passing lane on percent time-spent-following
+  (see Exhibit 20-24).
+
+  The variations in percent time-spent-following are shown in Exhibit 20-25.
+
+  EXHIBIT 20-24. FACTORS (fpl) FOR ESTIMATION OF AVERAGE TRAVEL SPEED AND PERCENT TIME-
+  SPENT-FOLLOWING WITHIN A PASSING LANE
+
+  Directional Flow Rate (pc/h)  Average Travel Speed  Percent Time-Spent-Following
+
+  0–300  1.08  0.58
+
+  > 300–600  1.10  0.61
+
+  > 600  1.11  0.62
+
+  EXHIBIT 20-25. EFFECT OF A PASSING LANE ON PERCENT TIME-SPENT-FOLLOWING AS REPRESENTED INPercent Time-Spent-Following
+  THE OPERATIONAL ANALYSIS METHODOLOGY
+
+  PTSFd
+
+  Lu  Lpl  Lde  Ld
+
+  Position Along Highway (km)
+
+Special case:  If the analysis section is truncated by a town or a major intersection before the full
+downstream effective  downstream effective length of the passing lane has been reached, then distance Ld is not
+length is truncated  used and the actual downstream length within the analysis segment, L'de, is less than the
+  value of Lde tabulated in Exhibit 20-23. In this case, Equation 20-19 should be replaced
+
+Chapter 20 - Two-Lane Highways  20-26
+Methodology
+  Highway Capacity Manual 2000
+
+by Equation 20-20. Equation 20-20 applies whenever distance, Ld, computed with
+Equation 20-8, is negative.
+
+    1 − f pl   (Ld′e )2  
+  PTSF d Lu + f pl Lpl + f pl Ld′e +   
+      
+    2     Lde  
+    
+  PTSF pl =  (20-20)
+  Lt
+
+where  = actual distance from end of passing lane to end of analysis segment
+  L'de  (km). L'de must be less than or equal to the value of Lde from Exhibit
+  20-23.
+
+Determining Average Travel Speed
+
+  Average travel speed within lengths Lu and Ld is assumed to equal ATSd, as
+predicted by the directional segment procedure. Within the passing lane, average travel
+speed is generally 8 to 11 percent higher than its upstream value. This effect varies as a
+function of directional flow rate, as shown in Exhibit 20-24. Within the downstream
+length, Lde, average travel speed is assumed to decrease linearly with distance from the
+within-passing-lane value to its normal upstream value. Thus, the average travel speed
+with the passing lane in place can be computed using Equation 20-21.
+
+  ATSpl =  ATSd * Lt  (20-21)
+  Lpl 2 Lde
+  Lu + Ld + +
+  f pl 1 + f pl
+
+where  = average travel speed for the entire segment including the passing lane
+  ATSpl  (km/h),
+
+  ATSd  = average travel speed for the entire segment without the passing lane
+  from Equation 20-15 (km/h), and
+  fpl
+  = factor for the effect of a passing lane on average travel speed (see
+  Exhibit 20-23).
+
+The variations in average travel speed are shown in Exhibit 20-26. If the analysis section
+
+is truncated by the presence of a town or a major intersection before the full downstream
+effective length of the passing lane has been reached, then distance Ld is not used and the
+actual downstream length within the analysis segment, L'de, is less than the value of Lde
+tabulated in Exhibit 20-23. In this case, Equation 20-21 should be replaced by Equation
+20-22. Equation 20-22 applies whenever distance, Ld, computed with Equation 20-18, is
+negative.
+
+  ATSpl = Lpl  ATSd * Lt  (20-22)
+  2 Ld′e
+  Lu + f pl + 
+  1 + f pl + (f pl −1)  Lde − Ld′e 
+  
+    Lde 
+
+Determining LOS
+
+  Determining LOS for a directional segment with a passing lane is similar to
+determining LOS for a directional segment without a passing lane; however, for the
+passing lane, the values of PTSFpl and ATSpl are used instead of PTSFd and ATSd. The
+LOS for a Class I highway segment with a passing lane is determined by locating the
+point corresponding to PTSFpl and ASTpl in Exhibit 20-3. The LOS for a Class II
+highway segment with a passing lane is determined by comparing PTSFpl to the LOS
+
+  20-27  Chapter 20 - Two-Lane Highways
+  Methodology
+Highway Capacity Manual 2000  Average Travel Speed (km/h)
+
+  thresholds in Exhibit 20-4. If the directional demand flow rate, vd, exceeds 1,700 pc/h,
+  the roadway is oversaturated, and the LOS is F. Although a passing lane section with two
+  lanes in the same direction can serve more than 1,700 pc/h, the sections with a single
+  directional lane between passing lanes will be oversaturated and will become bottlenecks.
+
+  EXHIBIT 20-26. EFFECT OF A PASSING LANE ON AVERAGE TRAVEL SPEED AS REPRESENTED IN THE
+  OPERATIONAL ANALYSIS METHODOLOGY
+
+  ATSd
+
+  Lu  Lpl  Lde  Ld
+
+  Position Along Highway (km)
+
+  Effects of Passing Lanes on Opposing Traffic
+
+  If the installation of a passing lane on a directional segment changes the percentage
+  of no-passing zones for the opposing direction of travel, the directional analysis for the
+  opposing direction must be revised. This can occur, for example, if a highway agency
+  routinely prohibits passing in the opposing direction of travel to a passing lane. However,
+  if passing is permitted in the opposing direction of travel, the passing lane may have little
+  effect on the LOS for the opposing direction. It is possible that a passing lane, by
+  breaking up platoons in one direction of travel, may reduce passing opportunities for the
+  other direction. However, this effect has not been quantified and is not reflected in the
+  operational analysis procedure.
+
+  When passing lanes are provided in both directions of travel, the operational analyses
+  for the two directions can proceed independently, unless the addition of the passing lane
+  in one direction substantially changes the percentage of no-passing zones outside the
+  passing lane in the other direction.
+
+The operational analysis  DIRECTIONAL SEGMENTS WITH CLIMBING LANES ON UPGRADES
+procedure does not
+address traffic operations  A climbing lane is a passing lane added on an upgrade to allow traffic to pass heavy
+on the roadway  vehicles whose speeds are reduced. According to the American Association of State
+downstream of a  Highway and Transportation Officials (AASHTO) Policy on Geometric Design of
+climbing lane beyond the  Highways and Streets (4), climbing lanes on two-lane highway upgrades are warranted
+top of the grade.  when
+Consider use of a
+computer simulation  • The directional flow rate on the upgrade exceeds 200 veh/h,
+model of two-lane  • The directional flow rate for trucks on the upgrade exceeds 20 veh/h, and
+highway operations to  • Any of the following conditions apply: a speed reduction of 15 km/h for a typical
+analyze such segments.  heavy truck, LOS E or F on the grade, or a reduction of two or more levels of service
+  from the approach segment to the grade.
+  The AASHTO policy on climbing lanes directly refers to the LOS determined with
+  the HCM operational analysis procedures. Operational analysis of climbing lanes on
+  specific upgrades can be performed with the same procedures for passing lanes in level
+  and rolling terrain, with two major differences. First, in applying the directional segment
+  procedure to the roadway without the added lane, the grade adjustment factor, fG, and the
+  heavy-vehicle adjustment factor, fHV, should be the values for specific upgrades. If the
+
+Chapter 20 - Two-Lane Highways  20-28
+Methodology
+  Highway Capacity Manual 2000
+
+grade on which the lane is added is not sufficiently long or steep to be analyzed as a
+specific upgrade, then it should be analyzed as a passing lane rather than a climbing lane.
+Second, the values of the adjustment factors for average travel speed and percent time-
+spent-following in Exhibit 20-27 should be used instead of those in Exhibit 20-24.
+
+EXHIBIT 20-27. FACTORS (fpl) FOR ESTIMATION OF AVERAGE TRAVEL SPEED AND PERCENT TIME-
+  SPENT-FOLLOWING WITHIN A CLIMBING LANE
+
+Directional Flow Rate (pc/h)  Average Travel Speed  Percent Time-Spent-Following
+
+0–300  1.02  0.20
+
+> 300–600  1.07  0.21
+
+> 600  1.14  0.23
+
+  Because climbing lanes are analyzed as part of a specific upgrade, the lengths Lu and
+Ld used in Equations 20-19 through 20-22 generally equal zero. The downstream
+effective length, Lde, also generally equals zero unless the climbing lane ends before the
+top of the grade. In this case, a value of Lde shorter than the values shown in Exhibit 20-
+
+23 should be considered.
+
+LOS ASSESSMENT FOR DIRECTIONAL TWO-LANE FACILITIES
+
+  A directional two-lane highway facility is a series of contiguous directional two-lane
+highway segments. If an operational analysis has been conducted for each segment in the
+series, the results can be combined to obtain an operational assessment of the facility as a
+whole. The same approach can be used to combine operational results from directional
+segments in the opposing directions of travel on a two-lane highway. In either case, the
+applicable LOS criteria are shown in Exhibits 20-3 and 20-4 for Class I and II highways,
+respectively.
+
+  The combined percent time-spent-following for several directional segments can be
+determined by Equation 20-23.
+
+  PTSF c = TT1 * PTSF1 + TT 2 * PTSF 2 + ... + TT n * PTSF n  (20-23)
+  TT1 + TT 2 + ... + TT n
+
+where  = percent time-spent-following for all segments combined,
+  PTSFc  = total travel time (veh-h) for Segment x (determined from Equation
+  TTx
+  20-11), and
+  PTSFx  = percent time-spent-following for Segment x.
+
+  The combined average travel speed for several directional segments can be
+determined using Equation 20-24.
+
+  ATSc = VkmT1 +VkmT 2 + ... +VkmT n  (20-24)
+  TT1 + TT 2 + ... + TT n
+
+where  = average travel speed for all segments combined (km/h) and
+  = total travel for Segment x, determined from Equation 20-9 (veh-km).
+  ATSc
+  VkmTx
+
+LOS ASSESSMENT FOR UNINTERRUPTED-FLOW FACILITIES AND  Results from individual
+CORRIDORS WITH TWO-LANE HIGHWAYS  segments may be combined
+
+  A directional analysis procedure has been provided in this chapter so that operational
+analysis results for directional segments on two-lane facilities can be combined readily
+with results for interrupted-flow facilities, including multilane highways (see Chapter 21)
+and basic freeway segments (see Chapter 23). Operational analysis across different types
+
+  20-29  Chapter 20 - Two-Lane Highways
+  Methodology
+Highway Capacity Manual 2000
+
+  of uninterrupted-flow facilities should be based solely on average travel speed, because
+  percent time-spent-following generally is a consideration only for two-lane highways.
+  Equations 20-20, 20-21, and 20-22 can be used to combine estimates of average travel
+  speed from segments on different types of facilities.
+
+Guidelines on required  III. APPLICATIONS
+inputs and estimated
+values are in Chapter 12,  The methodology of this chapter can be used to analyze the capacity and LOS of
+“Highway Concepts”  two-lane highways. The analyst must address two fundamental questions. First, what is
+  the primary output? Primary outputs typically solved for in a variety of applications
+Operational (LOS)  include LOS and achievable flow rate (vp). Performance measures related to average
+analysis  travel speed (ATS) and percent time-spent-following (PTSF) are also achievable but are
+  secondary.
+
+  Second, what are the default values or estimated values for use in the analysis?
+  Basically, there are three sources of input data:
+
+  1. Default values found in this manual,
+  2. Estimates and locally derived default values developed by the user, and
+  3. Values derived from field measurements and observation.
+  For each of the input variables, a value must be supplied to calculate the primary and
+  secondary outputs.
+  A common application of the method is to compute the LOS of a current or a
+  changed facility in the near term or in the future. This type of application is often termed
+  operational, and its primary output is LOS, with secondary outputs for ATS and PTSF.
+  The achievable flow rate, vp, can be solved for as the primary output. This analysis
+  requires a LOS goal and geometric data as inputs for estimating when a flow rate will be
+  exceeded, causing the highway to operate at an unacceptable LOS. Using the
+  methodology to determine the number of lanes required (known as a design application in
+  this manual) is of course not necessary for two-lane highways. Modifications to grade,
+  alignment, and cross section, however, can improve the operational efficiency of a two-
+  lane facility. Computational examples are provided for two design-related applications—
+  the addition of a passing or climbing lane to a two-lane highway and the addition of
+  through lanes to convert a two-lane highway to a four-lane highway. The latter example
+  involves a comparison of results obtained from this chapter with results obtained from
+  Chapter 21, “Multilane Highways.”
+  Another general type of analysis is the planning analysis, which uses estimates,
+  HCM default values, and local default values as inputs. As outputs, LOS or flow rate can
+  be determined along with the secondary outputs of average travel speed and percent time-
+  spent-following. The difference between this type of analysis and operational analysis is
+  that most or all of the input values come from estimates or default values, while the
+  operational analyses use field-measured values or known values.
+
+  COMPUTATIONAL STEPS
+
+  The worksheet for two-way, two-lane highway segment computations is shown in
+  Exhibit 20-28. The worksheets for directional two-lane highway segments with or
+  without a passing lane are included in Appendix B. For all applications, the analyst
+  provides general information and site information.
+
+  For operational (LOS) analysis, the analyst inputs all the required data. For
+  estimating average travel speed, equivalent flow is computed with the aid of exhibits for
+  passenger-car equivalencies. FFS is estimated by applying adjustments to the base FFS.
+  Then average travel speed is estimated. Similarly, equivalent flow is estimated by using
+  passenger-car equivalency exhibits to estimate percent time-spent-following. Percent
+
+Chapter 20 - Two-Lane Highways  20-30
+Methodology
+  Highway Capacity Manual 2000
+
+time-spent-following is estimated by adjusting the base percent time-spent-following
+value for the percentage of no-passing zones. Finally, LOS is determined by average
+travel speed, percent time-spent-following, or both, depending on the highway
+classification.
+
+  EXHIBIT 20-28. TWO-WAY TWO-LANE HIGHWAY SEGMENT WORKSHEET
+
+  TWO-WAY TWO-LANE HIGHWAY SEGMENT WORKSHEET
+
+General Information  Site Information
+
+Analyst  ___________________________  Highway  ___________________________
+Agency or Company  ___________________________  From/To  ___________________________
+Date Performed  ___________________________  Jurisdiction  ___________________________
+Analysis Time Period  ___________________________  Analysis Year  ___________________________
+
+" Operational (LOS)  " Design (vp)  " Planning (LOS)  " Planning (vp)
+
+Input Data
+
+  " Class I highway  " Class II highway
+
+  Shoulder width  ________ m  Terrain  " Level  " Rolling
+  Lane width  ________ m
+  Two-way hourly volume ________ veh/h
+  Lane width  ________ m
+  Shoulder width  ________ m  Show North Arrow  Directional split ______ /_____
+
+  Peak-hour factor, PHF ________
+
+  % Trucks and buses, PT ________ %
+
+  Segment length, Lt _________ km  % Recreational vehicles, PR ________ %
+
+  % No-passing zone  ________ %
+
+  Access points/km  ________/km
+
+Average Travel Speed
+
+Grade adjustment factor, fG (Exhibit 20-7)
+
+Passenger-car equivalents for trucks, ET (Exhibit 20-9)
+
+Passenger-car equivalents for RVs, ER (Exhibit 20-9)
+Heavy-vehicle adjustment factor, fHV fHV = 1 1 + PT(ET – 1) + PR(ER – 1)
+Two-way flow rate,1 vp (pc/h)  vp = V PHF * fG * fHV
+
+vp * highest directional split proportion2 (pc/h)
+
+Free-Flow Speed from Field Measurement  Estimated Free-Flow Speed
+
+Field measured speed, SFM  __________________km/h  Base free-flow speed, BFFS  _______________km/h
+Observed volume, Vf  __________________veh/h
+  Adj. for lane width and shoulder width, fLS (Exhibit 20-5) _____km/h
+
+Free-flow speed, FFS Vf  __________________km/h  Adj. for access points, fA (Exhibit 20-6) _______________km/h
+
+FFS = SFM + 0.0125( f )  Free-flow speed, FFS  _______________km/h
+  HV
+  FFS = BFFS – fLS – fA
+Adj. for no-passing zones, fnp (km/h) (Exhibit 20-11)
+Average travel speed, ATS (km/h) ATS = FFS – 0.0125vp – fnp
+
+Percent Time-Spent-Following
+
+Grade adjustment factor, fG (Exhibit 20-8)
+
+Passenger-car equivalents for trucks, ET (Exhibit 20-10)
+
+Passenger-car equivalents for RVs, ER (Exhibit 20-10)
+Heavy-vehicle adjustment factor, fHV fHV = 1 1 + PT(ET – 1) + PR(ER – 1)
+  vp = V PHF * fG * fHV
+Two-way flow rate,1 vp (pc/h)
+
+vp * highest directional split proportion2 (pc/h)
+
+Base percent time-spent-following, BPTSF (%)
+BPTSF = 100(1 – e–0.000879vp)
+
+Adj. for directional distribution and no-passing zone, fd/np (%)
+(Exhibit 20-12)
+
+Percent time-spent-following, PTSF (%) PTSF = BPTSF + fd/np
+
+Level of Service and Other Performance Measures
+
+Level of service, LOS (Exhibit 20-3 for Class I or 20-4 for Class II)
+  vp
+
+Volume to capacity ratio, v/c v/c = 3,200
+Peak 15-min vehicle-kilometers of travel, VkmT15 (veh-km)
+
+VkmT15 = 0.25Lt(PHF V )
+
+Peak-hour vehicle-kilometers of travel, VkmT60 (veh-km) VkmT60 = V * Lt
+Peak 15-min total travel time, TT15 (veh-h) TT15 = VkmT ATS15
+
+Notes
+
+1. If vp ≥ 3,200 pc/h, terminate analysis—the LOS is F.
+2. If highest directional split vp ≥ 1,700 pc/h, terminate analysis—the LOS is F.
+
+  20-31  Chapter 20 - Two-Lane Highways
+  Applications
+Highway Capacity Manual 2000
+
+Design (vp) analysis  The objective of design (vp) analysis is to estimate the flow rate in passenger cars per
+  hour given a set of traffic, roadway, and FFS conditions. A desired LOS is stated and
+Planning (LOS) and  entered in the worksheet. Then a flow rate is assumed and the procedure for operational
+planning (vp) analyses  (LOS) analysis is performed. This computed LOS is then compared with the desired
+  LOS. If the desired LOS is not met, another flow rate is assumed. This iteration
+  continues until the maximum flow rate for the desired LOS is achieved.
+
+  PLANNING APPLICATIONS
+
+  The two planning applications, planning for LOS and for vp, correspond directly to
+  the procedures for operational and design analyses. The criterion that categorizes these as
+  planning applications is the use of estimates, HCM default values, and local default
+  values as inputs. Another characteristic of a planning application is the use of annual
+  average daily traffic (AADT) to estimate directional design-hour volume (DDHV). For
+  guidelines in computing DDHV, see Chapter 8. Chapter 12 also lists the required data
+  and estimated values to perform a planning application.
+
+  ANALYSIS TOOLS
+
+  Worksheets for two-way, directional, and directional with passing lane segments are
+  provided in Appendix B. These worksheets can be used to perform operational (LOS),
+  design (vp), planning (LOS), and planning (vp) analyses.
+
+  IV. EXAMPLE PROBLEMS
+
+  Problem  Description  Application
+  No.
+  Find the two-way LOS of a Class I two-lane highway  Operational (LOS)
+  1  Find the two-way LOS of a Class II two-lane highway  Operational (LOS)
+  2  Find the directional LOS of a Class I two-lane highway  Operational (LOS)
+  3  Find the directional LOS of a Class I two-lane highway including a passing lane  Operational (LOS)
+  4
+
+Chapter 20 - Two-Lane Highways  20-32
+Applications
+  Highway Capacity Manual 2000
+
+The Highway  EXAMPLE PROBLEM 1
+
+  A Class I two-lane highway segment.
+
+The Question What is the two-way segment LOS for the peak hour?
+
+The Facts  √ 50/50 directional split,
+  √ 1,600 veh/h (two-way volume),  √ 4 percent RVs,
+  √ 14 percent trucks and buses,  √ 100-km/h base FFS,
+  √ 0.95 PHF,  √ 3.4-m lane width,
+  √ Rolling terrain,  √ 10-km length, and
+  √ 1.2-m shoulder width,  √ 12 access points/km.
+  √ 50 percent no-passing zones,
+
+Outline of Solution Two-way average travel speed and percent time-spent-following
+will be determined, and from these parameters, the LOS.
+
+Steps  fG = 0.99
+1. Determine grade adjustment factor for
+  fHV = 1
+  average travel speed (use Exhibit  1+ PT (ET − 1) + PR (ER − 1)
+  20-7).
+2. Compute fHV for average travel speed  fHV = 1 = 0. 931
+  (use Exhibit 20-9 and Equation 20-4).  1+ 0.14(1. 5 − 1) + 0.04(1.1− 1)
+
+3. Compute vp (use Equation 20-3).  vp = V
+  PHF * fG * fHV
+4. Calculate highest directional flow rate.
+5. Check the highest directional flow rate  vp = 1,600 = 1,827 pc/h
+  (0. 95)(0. 99)(0. 931)
+  and two-way flow rate against capacity
+  values of 1,700 pc/h and 3,200 pc/h,  vp * 0.50 = 1,827 * 0.50 = 914 pc/h
+  respectively.  914 pc/h < 1,700 pc/h
+6. Compute the FFS (use Exhibits 20-5  1,827 pc/h < 3,200 pc/h
+  and 20-6 and Equation 20-2).
+  FFS = BFFS – fLS – fA
+7. Compute the average travel speed (use  FFS = 100 – 2.8 – 8.0 = 89.2 km/h
+  Exhibit 20-11 and Equation 20-5).  ATS = FFS – 0.0125vp – fnp
+  ATS = 89.2 – 0.0125(1827) – 1.3 = 65.1 km/h
+8. Determine grade adjustment factor for  fG = 1.00
+  percent time-spent-following (use
+  Exhibit 20-8).  fHV = 1 = 1.000
+  1+ 0.14(1.0 − 1) + 0.04(1.0 − 1)
+9. Compute fHV for time-spent-following
+  (use Exhibit 20-10 and Equation 20-4).  vp = 1,600 = 1,684 pc/h
+  (0. 95)(1.000)(1.00)
+10. Compute vp (use Equation 20-3).
+  vp * 0. 50 = 1,684 * 0. 50 = 842 pc/h
+11. Calculate the highest directional flow
+  rate.  842 pc/h < 1,700 pc/h
+  1,684 pc/h < 3,200 pc/h
+12. Check the highest directional flow rate
+  and two-way flow rate against the
+  capacity values of 1,700 pc/h and
+  3,200 pc/h, respectively.
+
+  20-33  Chapter 20 - Two-Lane Highways
+  Example Problems
+Highway Capacity Manual 2000
+
+  13. Compute base percent time-spent-  ( ) BPTSF = 100 1− e−0.000879vp
+  following (use Equation 20-7).
+  [ ] BPTSF = 100 1− e−0.000879(1,684) = 77. 2%
+  14. Compute percent time-spent-following
+  (use Exhibit 20-12 and Equation 20-6).  PTSF = BPTSF + fd/np
+  PTSF = 77.2 + 4.8 = 82.0%
+  15. Determine LOS (use Exhibit 20-3).
+  ATS = 65.1 km/h and PTSF = 82.0%
+  LOS E
+
+  Results The two-lane highway operates at LOS E.
+
+  Other Performance Measures
+  v/c = vp = 1, 827 = 0. 57
+
+  3, 200 3, 200
+
+   V   1,600 
+  VkmT15 = 0. 25Lt   = 0. 25(10)   = 4,211 veh-km
+   PHF    0. 95 
+
+  VkmT60 = V * Lt = (1,600)(10) = 16,000 veh-km
+  TT15 = VkmT15 = 4, 211 = 64.7 veh-h
+
+  ATS 65.1
+
+Chapter 20 - Two-Lane Highways  20-34
+Example Problems
+  Highway Capacity Manual 2000
+
+  TWO-WAY TWO-LANE HIGHWAY SEGMENT WORKSHEET  Example Problem 1
+
+General Information  Site Information
+
+Analyst  ________M__.E__. _______________  Highway  ____U__S__3_9_1_________________
+Agency or Company  From/To  ____S__R_-_3_3__/A__d_a_m__s_R__d_. ______
+Date Performed  ________C_E__I ________________  Jurisdiction  ___________________________
+Analysis Time Period  ________5_/_2_0__/9__9____________  Analysis Year  ____1_9__9_9___________________
+  ___________________________
+
+"X Operational (LOS)  " Design (vp)  " Planning (LOS)  " Planning (vp)
+
+Input Data
+
+  "X Class I highway  " Class II highway
+
+  Shoulder width  ____1._2___ m  Terrain  " Level  "X Rolling
+  Lane width  ____3_.4___ m
+  Two-way hourly volume __1_,6_0__0__ veh/h
+  Lane width  ____3_.4___ m
+  Shoulder width  ____1._2___ m  Show North Arrow  Directional split __5__0__ /_5_0___
+
+  Peak-hour factor, PHF __0_._9_5___
+
+  % Trucks and buses, PT __1_4_____ %
+
+  Segment length, Lt ____1_0____ km  % Recreational vehicles, PR __4______ %
+
+  % No-passing zone  __5_0_____ %
+
+  Access points/km  __1_2_____/km
+
+Average Travel Speed
+
+Grade adjustment factor, fG (Exhibit 20-7)  0.99
+  1.5
+Passenger-car equivalents for trucks, ET (Exhibit 20-9)  1.1
+  0.931
+Passenger-car equivalents for RVs, ER (Exhibit 20-9)
+Heavy-vehicle adjustment factor, fHV fHV = 1 1 + PT(ET – 1) + PR(ER – 1)
+Two-way flow rate,1 vp (pc/h)  vp = V PHF * fG * fHV
+  1,827
+
+vp * highest directional split proportion2 (pc/h)  914
+
+Free-Flow Speed from Field Measurement  Estimated Free-Flow Speed
+
+Field measured speed, SFM  __________________km/h  Base free-flow speed, BFFS  ___1_0_0__________km/h
+Observed volume, Vf  __________________veh/h
+  Adj. for lane width and shoulder width, fLS (Exhibit 20-5) __2_.8__km/h
+
+Free-flow speed, FFS Vf  __________________km/h  Adj. for access points, fA (Exhibit 20-6) ___8__.0__________km/h
+
+FFS = SFM + 0.0125( f )  Free-flow speed, FFS  ___8__9_.2_________km/h
+  HV
+  FFS = BFFS – fLS – fA
+Adj. for no-passing zones, fnp (km/h) (Exhibit 20-11)
+Average travel speed, ATS (km/h) ATS = FFS – 0.0125vp – fnp  1.3
+
+  65.1
+
+Percent Time-Spent-Following
+
+Grade adjustment factor, fG (Exhibit 20-8)  1.00
+  1.0
+Passenger-car equivalents for trucks, ET (Exhibit 20-10)  1.0
+  1.000
+Passenger-car equivalents for RVs, ER (Exhibit 20-10)  1,684
+Heavy-vehicle adjustment factor, fHV fHV = 1 1 + PT(ET – 1) + PR(ER – 1)  842
+  vp = V PHF * fG * fHV
+Two-way flow rate,1 vp (pc/h)  77.2
+
+vp * highest directional split proportion2 (pc/h)  4.8
+  82.0
+Base percent time-spent-following, BPTSF (%)
+BPTSF = 100(1 – e–0.000879vp)
+
+Adj. for directional distribution and no-passing zone, fd/np (%)
+(Exhibit 20-12)
+
+Percent time-spent-following, PTSF (%) PTSF = BPTSF + fd/np
+
+Level of Service and Other Performance Measures  E
+  0.57
+Level of service, LOS (Exhibit 20-3 for Class I or 20-4 for Class II)
+  vp  4,211
+
+Volume to capacity ratio, v/c v/c = 3,200  16,000
+Peak 15-min vehicle-kilometers of travel, VkmT15 (veh-km)  64.7
+
+VkmT15 = 0.25Lt(PHF V )
+
+Peak-hour vehicle-kilometers of travel, VkmT60 (veh-km) VkmT60 = V * Lt
+Peak 15-min total travel time, TT15 (veh-h) TT15 = VkmT ATS15
+
+Notes
+
+1. If vp ≥ 3,200 pc/h, terminate analysis—the LOS is F.
+2. If highest directional split vp ≥ 1,700 pc/h, terminate analysis—the LOS is F.
+
+  20-35  Chapter 20 - Two-Lane Highways
+  Example Problems
+Highway Capacity Manual 2000
+
+  The Highway  EXAMPLE PROBLEM 2
+
+  A Class II two-lane highway segment on a scenic and recreational route.
+
+  The Question What is the two-way segment LOS?
+
+  The Facts  √ 70/30 directional split,
+  √ 1,050 veh/h (two-way volume),  √ 7 percent RVs,
+  √ 5 percent trucks and buses,  √ 90-km/h base FFS,
+  √ 0.85 PHF,  √ 3.0-m lane width,
+  √ Rolling terrain,  √ 10-km roadway length, and
+  √ 0.6-m shoulder width,  √ 6 access points/km.
+  √ 60 percent no-passing zones,
+
+  Outline of Solution Two-way average travel speed and percent time-spent-following
+  will be determined, and with these parameters, the LOS. Since V/PHF = 1,050/0.85 =
+  1,235, select truck equivalencies and grade adjustment factors for flow rates greater than
+  1,200 pc/h.
+
+  Steps  fG = 0.99
+  1. Determine grade adjustment factor
+  fHV = 1
+  for average travel speed (use  1+ PT (ET − 1) + PR (ER − 1)
+  Exhibit 20-7).
+  2. Compute fHV for average travel  fHV = 1 = 0. 969
+  speed (use Exhibit 20-9 and  1+ 0.05(1. 5 − 1) + 0.07(1.1− 1)
+  Equation 20-4).
+  vp = V
+  3. Compute vp (use Equation 20-3).  PHF * fG * fHV
+
+  4. Calculate the highest directional  vp = 1,050 = 1,288 pc/h
+  flow rate.  (0. 85)(0. 99)(0. 969)
+
+  5. Check the highest directional flow  vp * 0.70 = 1,288 * 0.70 = 902 pc/h
+  rate and two-way flow rate against
+  capacity values of 1,700 pc/h and  902 pc/h < 1,700 pc/h
+  3,200 pc/h, respectively.  1,288 pc/h < 3,200 pc/h
+
+  6. Compute FFS (use Exhibit 20-5 and  FFS = BFFS – fLS – fA
+  20-6 and Equation 20-2).  FFS = 90 – 5.9 – 4.0 = 80.1 km/h
+  ATS = FFS – 0.0125vp – fnp
+  7. Compute ATS (use Exhibit 20-11  ATS = 80.1 – 0.0125(1288) – 2.3 = 61.7 km/h
+  and Equation 20-5).  fG = 1.00
+
+  8. Determine grade adjustment factor  fHV = 1 = 1.000
+  of percent time-spent-following (use  1+ 0.05(1.0 − 1) + 0.07(1.0 − 1)
+  Exhibit 20-8).
+  vp = 1,050 = 1,235 pc/h
+  9. Compute fHV for percent time-spent-  (0. 85)(1.000)(1.00)
+  following (use Exhibit 20-10 and
+  Equation 20-4).  vp * 0.70 = 1,235 * 0.70 = 865 pc/h
+
+  10. Compute vp (use Equation 20-3).
+
+  11. Calculate the highest directional
+  flow rate.
+
+Chapter 20 - Two-Lane Highways  20-36
+Example Problems
+  Highway Capacity Manual 2000
+
+12. Check the highest directional flow  865 pc/h < 1,700 pc/h
+  rate and two-way flow rate against  1,235 pc/h < 3,200 pc/h
+  the capacity values of 1,700 pc/h
+  and 3,200 pc/h, respectively.  ( ) BPTSF = 100 1− e−0.000879vp
+
+13. Compute base percent time-spent-  [ ] BPTSF = 100 1− e−0.000879(1,235) = 66. 2%
+  following (use Equation 20-7).
+  PTSF = BPTSF + fd/np
+14. Compute percent time-spent-  PTSF = 66.2 + 9.0 = 75.2%
+  following (use Exhibit 20-12 and
+  Equation 20-6).  PTSF = 75.2%
+  LOS D
+15. Determine LOS (use Exhibit 20-4).
+
+Results The two-lane highway operates at LOS D.
+
+Other Performance Measures
+v/c = vp = 1, 288 = 0. 40
+
+  3, 200 3, 200
+
+   V   1,050 
+VkmT15 = 0. 25Lt   = 0. 25(10)   = 3,088 veh-km
+   PHF    0. 85 
+
+VkmT60 = V * Lt = (1,050)(10) = 10,500 veh-km
+
+TT15 = VkmT15 = 3,088 = 50.0 veh-h
+ATS  61. 7
+
+  20-37  Chapter 20 - Two-Lane Highways
+  Example Problems
+Highway Capacity Manual 2000
+
+Example Problem 2  TWO-WAY TWO-LANE HIGHWAY SEGMENT WORKSHEET
+
+  General Information  Site Information
+
+  Analyst  ________M_._E_.________________  Highway  _____S__t_a_t_e__H_ig__h_w_a_y__3_4______
+  Agency or Company  From/To  _____U__S__2_4_/_C_r_e_e_k_R__d_. _______
+  Date Performed  ________C_E_I_________________  Jurisdiction  ___________________________
+  Analysis Time Period  ________5_/_2_0_/_9_9_____________  Analysis Year  _____1_9__9_9__________________
+  ___________________________
+
+  "X Operational (LOS)  " Design (vp)  " Planning (LOS)  " Planning (vp)
+
+  Input Data
+
+  " Class I highway "X Class II highway
+
+  Shoulder width  ____0_._6__ m  Terrain  " Level  "X Rolling
+  Lane width  ____3_._0__ m
+  ____3_._0__ m  Two-way hourly volume __1_,0_5__0__ veh/h
+  Lane width  ____0_._6__ m
+  Shoulder width  Show North Arrow  Directional split ___7_0__ /_3_0___
+
+  Peak-hour factor, PHF __0_._8_5___
+
+  % Trucks and buses, PT __5______ %
+
+  Segment length, Lt _____10____ km  % Recreational vehicles, PR __7______ %
+
+  % No-passing zone  __6_0_____ %
+
+  Access points/km  __6______/km
+
+  Average Travel Speed
+
+  Grade adjustment factor, fG (Exhibit 20-7)  0.99
+  1.5
+  Passenger-car equivalents for trucks, ET (Exhibit 20-9)  1.1
+
+  Passenger-car equivalents for RVs, ER (Exhibit 20-9)  0.969
+  Heavy-vehicle adjustment factor, fHV fHV = 1 1 + PT(ET – 1) + PR(ER – 1)
+  Two-way flow rate,1 vp (pc/h)  vp = V PHF * fG * fHV
+  1,288
+
+  vp * highest directional split proportion2 (pc/h)  902
+
+  Free-Flow Speed from Field Measurement  Estimated Free-Flow Speed
+
+  Field measured speed, SFM  __________________km/h  Base free-flow speed, BFFS  ___9__0__________km/h
+  Observed volume, Vf  __________________veh/h
+  Adj. for lane width and shoulder width, fLS (Exhibit 20-5) __5_.9__km/h
+
+  Free-flow speed, FFS Vf  __________________km/h  Adj. for access points, fA (Exhibit 20-6) ___4__.0__________km/h
+
+  FFS = SFM + 0.0125( f )  Free-flow speed, FFS  ___8__0_.1_________km/h
+  HV
+  FFS = BFFS – fLS – fA
+  Adj. for no-passing zones, fnp (km/h) (Exhibit 20-11)
+  Average travel speed, ATS (km/h) ATS = FFS – 0.0125vp – fnp  2.3
+
+  61.7
+
+  Percent Time-Spent-Following
+
+  Grade adjustment factor, fG (Exhibit 20-8)  1.00
+  1.0
+  Passenger-car equivalents for trucks, ET (Exhibit 20-10)  1.0
+  1.000
+  Passenger-car equivalents for RVs, ER (Exhibit 20-10)  1,235
+  Heavy-vehicle adjustment factor, fHV fHV = 1 1 + PT(ET – 1) + PR(ER – 1)  865
+  vp = V PHF * fG * fHV  66.2
+  Two-way flow rate,1 vp (pc/h)
+  9.0
+  vp * highest directional split proportion2 (pc/h)  75.2
+
+  Base percent time-spent-following, BPTSF (%)
+  BPTSF = 100(1 – e–0.000879vp)
+
+  Adj. for directional distribution and no-passing zone, fd/np (%)
+  (Exhibit 20-12)
+
+  Percent time-spent-following, PTSF (%) PTSF = BPTSF + fd/np
+
+  Level of Service and Other Performance Measures  D
+  0.40
+  Level of service, LOS (Exhibit 20-3 for Class I or 20-4 for Class II)
+  vp  3,088
+  10,500
+  Volume to capacity ratio, v/c v/c = 3,200  50.0
+  Peak 15-min vehicle-kilometers of travel, VkmT15 (veh-km)
+
+  VkmT15 = 0.25Lt(PHFV )
+
+  Peak-hour vehicle-kilometers of travel, VkmT60 (veh-km) VkmT60 = V * Lt
+  Peak 15-min total travel time, TT15 (veh-h) TT15 = VkmT ATS15
+
+  Notes
+
+  1. If vp ≥ 3,200 pc/h, terminate analysis—the LOS is F.
+  2. If highest directional split vp ≥ 1,700 pc/h, terminate analysis—the LOS is F.
+
+Chapter 20 - Two-Lane Highways  20-38
+Example Problems
+  Highway Capacity Manual 2000
+
+The Highway  EXAMPLE PROBLEM 3
+
+  A Class I two-lane highway segment.
+
+The Question What is the LOS of the peak direction?
+
+The Facts  √ 400 veh/h (opposing direction
+  √ 1,200 veh/h (analysis direction volume),  volume),
+  √ 14 percent trucks and buses,
+  √ 4 percent RVs,  √ 0.95 PHF,
+  √ 100-km/h base FFS,  √ Rolling terrain,
+  √ 3.3-m lane width,  √ 1.2-m shoulder width, and
+  √ 10-km roadway length,  √ 50 percent no-passing zones.
+  √ 12 access points/km,
+
+Outline of Solution Analysis direction average travel speed and percent time-spent-
+following will be determined, and with these parameters, the LOS.
+
+Steps  fG = 0.99
+1. Determine the grade adjustment
+  fHV = 1 = 0. 931
+  factor, fG, for average travel speed for  1+ 0.14(1. 5 − 1) + 0.04(1.1− 1)
+  the analysis direction (use Exhibit
+  20-7).  vd = 1, 200 = 1,370 pc/h
+2. Compute fHV and vd for average travel  (0. 95)(0. 99)(0. 931)
+  speed in the analysis direction (use
+  Exhibit 20-9 and Equations 20-4 and  fG = 0.93
+  20-12).
+  fHV = 1 = 0. 885
+3. Determine the grade adjustment  1+ 0.14(1. 9 − 1) + 0.04(1.1− 1)
+  factor, fG, for average travel speed for
+  the opposing direction (use Exhibit  vo = 400 = 512 pc/h
+  20-7).  (0. 95)(0. 93)(0. 885)
+
+4. Compute fHV and vo for average travel  1,370 pc/h < 1,700 pc/h
+  speed in the opposing direction (use  512 pc/h < 1,700 pc/h
+  Exhibit 20-9 and Equations 20-4 and  FFS = BFFS – fLS – fA
+  20-13).  FFS = 100 – 2.8 – 8.0 = 89.2 km/h
+  ATSd = FFSd – 0.0125(vd + vo) – fnp
+5. Check vd and vo with the capacity  ATSd = 89.2 – 0.0125(1370 + 512) – 2.7 =
+  value of 1,700 pc/h.  63.0 km/h
+  fG = 1.00
+6. Compute FFS (use Exhibits 20-5 and
+  20-6, and Equation 20-2).  fHV = 1 = 1.000
+  1+ 0.14(1.0 − 1) + 0.04(1.0 − 1)
+7. Compute average travel speed (use
+  Exhibit 20-19 and Equation 20-15).  vd = 1, 200 = 1,263 pc/h
+  (0. 95)(1.00)(1.000)
+8. Determine the grade adjustment
+  factor, fG, for percent time-spent-  fG = 0.94
+  following for the analysis direction
+  (use Exhibit 20-8).
+
+9. Compute fHV and vd for percent time-
+  spent-following in the analysis
+  direction (use Exhibit 20-10 and
+  Equations 20-4 and 20-12).
+
+10. Determine the grade adjustment
+  factor, fG, for percent time-spent-
+  following for the opposing direction
+  (use Exhibit 20-8).
+
+  20-39  Chapter 20 - Two-Lane Highways
+  Example Problems
+

@@ -1,0 +1,1667 @@
+174 CHAPTER 3 ■ Probability
+
+  A ∩ B  A∩ Bc
+  (Smoker, cancer)  (Smoker, no cancer)
+
+  Ac ∩ B  Ac ∩ Bc
+  (Nonsmoker, cancer)  (Nonsmoker, no cancer)
+
+Figure 3.15  S
+Sample space for Example 3.15
+
+  Table 3.5  Probabilities of Smoking
+  and Developing Cancer
+  Smoker
+  Yes, A  Develops Cancer
+  No, Ac
+  Yes, B  No, Bc
+
+  .05  .20
+
+  .03  .72
+
+  Solution One method of determining whether the given probabilities indicate that smoking
+  and cancer are related is to compare the conditional probability that an adult male acquires
+  cancer given that he smokes with the conditional probability that an adult male acquires cancer
+  given that he does not smoke [i.e., compare P1B ͉ A2 with P1B ͉ Ac2].
+
+  First, we consider the reduced sample space A corresponding to adult male smok-
+  ers. This reduced sample space is shaded in Figure 3.15. The two sample points A ¨ B
+  and A ¨ Bc are contained in this reduced sample space, and the adjusted probabilities of
+  these two sample points are the two conditional probabilities
+
+  P1B ͉ A2 P1A ¨ B2 = and P1Bc ͉ A2 P1A ¨ Bc2 =
+  P1A2  P1A2
+
+  The probability of event A is the sum of the probabilities of the sample points in A:
+  P1A2 = P1A ¨ B2 + P1A ¨ Bc2 = .05 + .20 = .25
+
+  Then the values of the two conditional probabilities in the reduced sample space A are
+
+  P1B ͉ A2 = = .05 .20 and P1Bc ͉ A2 = = .20 .80
+  .25  .25
+
+  These two numbers represent the probabilities that an adult male smoker develops can-
+  cer and does not develop cancer, respectively.
+
+  In a like manner, the conditional probabilities of an adult male nonsmoker devel-
+  oping cancer and not developing cancer are
+
+  c P1Ac ¨ B2 .03
+  P1B ͉ A 2 =  c = = .04
+  P1A 2  .75
+
+  c c P1Ac ¨ Bc2 .72
+  P1B ͉ A 2 =  c = = .96
+  P1A 2  .75
+
+  Two of the conditional probabilities give some insight into the relationship between
+  cancer and smoking: the probability of developing cancer given that the adult male is a
+  smoker, and the probability of developing cancer given that the adult male is not a smoker.
+  The conditional probability that an adult male smoker develops cancer (.20) is five times the
+  probability that a nonsmoker develops cancer (.04). This relationship does not imply that
+  smoking causes cancer, but it does suggest a pronounced link between smoking and cancer.
+
+  Look Back Notice that the conditional probabilities P1Bc ͉ A2 = .80 and P1B ͉ A2 = .20
+  are in the same 4-to-1 ratio as the original unconditional probabilities, .20 and .05.
+  The conditional probability formula simply adjusts the unconditional probabilities so
+  SECTION 3.6 ■ The Multiplicative Rule and Independent Events 175
+
+  that they add to 1 in the reduced sample space A of adult male smokers. Similarly, the
+  conditional probabilities P1Bc ͉ Ac2 = .96 and P1B ͉ Ac2 = .04 are in the same 24-to-1
+  ratio as the unconditional probabilities .72 and .03.
+
+  ■ Now Work Exercise 3.73a–b
+
+ Example 3.15  Problem The Federal Trade Commission’s investigation of consumer product complaints
+  has generated much interest on the part of manufacturers in the quality of their products.
+Conditional Probability  A manufacturer of an electromechanical kitchen utensil conducted an analysis of a large
+in a Two-Way Table—  number of consumer complaints and found that they fell into the six categories shown
+Consumer Complaints  in Table 3.6. If a consumer complaint is received, what is the probability that the cause
+  of the complaint was the appearance of the product, given that the complaint originated
+  during the guarantee period?
+
+  Table 3.6  Distribution of Product Complaints
+  Reason for Complaint
+
+  Electrical Mechanical Appearance  Totals
+
+  During Guarantee Period  18%  13%  32%  63%
+  37%
+  After Guarantee Period  12%  22%  3%
+  100%
+  Totals  30%  35%  35%
+
+  Solution Let A represent the event that the cause of a particular complaint is the
+
+  appearance of the product, and let B represent the event that the complaint
+
+  occurred during the guarantee period. Checking Table 3.6, you can see that
+  118 + 13 + 322% = 63% of the complaints occur during the guarantee period. Hence,
+
+  P1B2 = .63. The percentage of complaints that were caused by appearance and occurred
+  during the guarantee period (the event A ¨ B2 is 32%. Therefore, P1A ¨ B2 = .32.
+
+  Using these probability values, we can calculate the conditional probability
+  P1A ͉ B2 that the cause of a complaint is appearance given that the complaint occurred
+
+  during the guarantee time:
+
+  P1A ͉ B2 = = = P1A ¨ B2 .32 .51
+  P1B2  .63
+
+  Thus, slightly more than half of the complaints that occurred during the guarantee period
+  were due to scratches, dents, or other imperfections in the surface of the kitchen devices.
+
+  Look Back Note that the answer .32 is the proportion for the event of interest A (.32),
+  .63
+
+  divided by the row total proportion for the given event B (.63). That is, it is the proportion
+  of the time that A occurs together with the given event B.
+
+  ■ Now Work Exercise 3.86a
+
+3.6 The Multiplicative Rule and Independent Events
+
+  The probability of an intersection of two events can be calculated with the multiplicative
+  rule, which employs the conditional probabilities we defined in the previous section.
+  Actually, we’ve already developed the formula in another context. Recall that the
+  conditional probability of B given A is
+
+  P1B ͉ A2 = P1A ¨ B2
+  P1A2
+
+  Multiplying both sides of this equation by P(A), we obtain a formula for the probability
+  of the intersection of events A and B. This formula is often called the multiplicative rule
+  of probability.
+176 CHAPTER 3 ■ Probability
+
+  Multiplicative Rule of Probability
+  P1A ¨ B2 = P1A2P1B ͉ A2 or, equivalently, P1A ¨ B2 = P1B2P1A ͉ B2
+
+ Example 3.16  Problem In a classic psychology study conducted in the early 1960s, Stanley Milgram
+  performed a series of experiments in which a teacher is asked to shock a learner who is
+The Multiplicative  attempting to memorize word pairs whenever the learner gives the wrong answer. The
+Rule—a Famous  shock levels increase with each successive wrong answer. (Unknown to the teacher, the
+Psychological  shocks are not real.) Two events of interest are
+Experiment
+  A: 5The teacher “applies” a severe shock 1450 volts2.6
+ Example 3.17  B: 5The learner protests verbally prior to receiving the shock.6
+
+Applying The  A recent application of Milgram’s shock study revealed that P1B2 = .5 and
+Multiplicative  P1A ͉ B2 = .7. On the basis of this information, what is the probability that a learner will
+Rule—Study of  protest verbally and a teacher will apply a severe shock? That is, find P1A ¨ B2.
+Welfare Workers
+  Solution We want to calculate P1A ¨ B2. Using the formula for the multiplicative rule,
+  we obtain
+
+  P1A ¨ B2 = P1B2 P1A ͉ B2 = 1.521.72 = .35
+
+  Thus, about 35% of the time, the learner will give verbal protest and the teacher will
+  apply a severe shock.
+
+  Look Back The multiplicative rule can be expressed in two ways: P1A ¨ B2 =
+  P1A2 P1B ͉ A2, or P1A ¨ B2 = P1B2 P1A ͉ B2. Select the formula that involves a
+  given event for which you know the probability (e.g., event B in the example).
+
+  ■ Now Work Exercise 3.81
+
+  Intersections often contain only a few sample points. In this case, the probabil-
+  ity of an intersection is easy to calculate by summing the appropriate sample point
+  probabilities. However, the formula for calculating intersection probabilities is in-
+  valuable when the intersection contains numerous sample points, as the next example
+  illustrates.
+
+  Problem A county welfare agency employs 10 welfare workers who interview
+  prospective food stamp recipients. Periodically, the supervisor selects, at random, the
+  forms completed by two workers and subsequently audits them for illegal deductions.
+  Unknown to the supervisor, three of the workers have regularly been giving illegal
+  deductions to applicants. What is the probability that both of the workers chosen have
+  been giving illegal deductions?
+
+  Solution Define the following two events:
+
+  A: 5First worker selected gives illegal deductions.6
+  B: 5Second worker selected gives illegal deductions.6
+
+  We want to find the probability that both workers selected have been giving illegal
+  deductions. This event can be restated as 5First worker gives illegal deductions and
+  second worker gives illegal deductions.6. Thus, we want to find the probability of the
+  intersection A ¨ B. Applying the multiplicative rule, we have
+
+  P1A ¨ B2 = P1A2P1B ͉ A2
+
+  To find P(A), it is helpful to consider the experiment as selecting 1 worker from the 10.
+  Then the sample space for the experiment contains 10 sample points (representing the
+  10 welfare workers), in which the 3 workers giving illegal deductions are denoted by the
+N1 N2  I2  SECTION 3.6 ■ The Multiplicative Rule and Independent Events 177
+N3 N4  I1
+N5 N6  symbol I 1I1, I2, I32 and the 7 workers not giving illegal deductions are denoted by the
+  I3  symbol N 1N1, c, N72. The resulting Venn diagram is illustrated in Figure 3.16.
+  N7  A
+  Since the first worker is selected at random from the 10, it is reasonable to assign
+  S  equal probabilities to the 10 sample points. Thus, each sample point has a probability
+Figure 3.16  of 1΋10. The sample points in event A are 5I1, I2, I36—the three workers who are giving
+Venn diagram for finding P(A)  illegal deductions. Thus,
+
+N1 N2  B A  P1A2 = P1I12 + P1I22 + P1I32 = 1 + 1 + = 1 3
+N3 N4  I1  10 10 10 10
+N5 N6
+  I2  To find the conditional probability P1B ͉ A2, we need to alter the sample space S.
+  N7  Since we know that A has occurred (i.e., the first worker selected is giving illegal deduc-
+  tions), only 2 of the 9 remaining workers in the sample space are giving illegal deductions.
+  S  The Venn diagram for this new sample space is shown in Figure 3.17.
+Figure 3.17
+Venn diagram for finding  Each of these nine sample points is equally likely, so each is assigned a probability
+P1B ͉ A2  of 1΋9. Since the event B ͉ A contains the sample points 5I1, I26, we have
+
+  P1B ͉ A2 = P1I12 + P1I22 = 1 + = 1 2
+  99 9
+
+  Substituting P1A2 = 3΋10 and P1B ͉ A2 = 2΋9 into the formula for the multiplicative
+  rule, we find that
+
+  P1A ¨ B2 = P1A2P1B ͉ A2 = a 3 b a 2 b = = 6 1
+  10 9 90 15
+
+  Thus, there is a 1-in-15 chance that both workers chosen by the supervisor have been
+  giving illegal deductions to food stamp recipients.
+
+  Look Back The key words both and and in the statement “both A and B occur” imply an
+  intersection of two events. This, in turn, implies that we should multiply probabilities to
+  obtain the answer.
+
+  ■ Now Work Exercise 3.77
+
+  The sample-space approach is only one way to solve the problem posed in
+  Example 3.17. An alternative method employs the tree diagram (introduced in
+  Example 3.1). Tree diagrams are helpful for calculating the probability of an intersection.
+
+  To illustrate, a tree diagram for Example 3.17 is displayed in Figure 3.18. The
+  tree begins at the far left with two branches. These branches represent the two possi-
+  ble outcomes N (no illegal deductions) and I (illegal deductions) for the first worker
+
+  Select 1st  Select 2nd  Outcome  Probability
+  worker  worker
+
+  N (6/9)  NപN (107 ( 9 90 6 = 42
+  ((
+  N  I (3/9)  NപI (107 ( 9 90 3 = 21 ((
+
+  (7/10)  ((
+  ((
+  (3/10)  N (7/9)  I പN (103 ( 9 90 7 = 21
+  I പ I (103 ( 9 90 2 = 6
+  I
+
+Figure 3.18  I (2/9)
+Tree diagram for Example 3.17
+178  CHAPTER 3 ■ Probability
+
+  selected. The unconditional probability of each outcome is given (in parentheses) on the
+  appropriate branch. That is, for the first worker selected, P1N 2 = 7΋10 and P1I 2 = 3΋10.
+  (These unconditional probabilities can be obtained by summing sample point probabil-
+  ities as in Example 3.17.)
+
+  The next level of the tree diagram (moving to the right) represents the outcomes
+  for the second worker selected. The probabilities shown here are conditional probabili-
+  ties, since the outcome for the first worker is assumed to be known. For example, if the
+  first worker is giving illegal deductions (I), the probability that the second worker is also
+  giving illegal deductions (I) is 2΋9, because, of the 9 workers left to be selected, only 2
+  remain who are giving illegal deductions. This conditional probability, 2΋9, is shown in
+  parentheses on the bottom branch of Figure 3.18.
+
+  Finally, the four possible outcomes of the experiment are shown at the end of
+  each of the four tree branches. These events are intersections of two events (out-
+  come of first worker and outcome of second worker). Consequently, the multiplica-
+  tive rule is applied to calculate each probability, as shown in Figure 3.18. You can see
+  that the intersection 5I ¨ I6—the event that both workers selected are giving illegal
+  deductions—has probability 6΋90 = 1΋15, which is the same as the value obtained in
+  Example 3.17.
+
+  In Section 3.5, we showed that the probability of event A may be substantially
+  altered by the knowledge that an event B has occurred. However, this will not always
+  be the case; in some instances, the assumption that event B has occurred will not alter
+  the probability of event A at all. When this occurs, we say that the two events A and B
+  are independent events.
+
+  Events A and B are independent events if the occurrence of B does not alter the
+  probability that A has occurred; that is, events A and B are independent if
+
+  P1A ͉ B2 = P1A2
+
+  When events A and B are independent, it is also true that
+  P1B ͉ A2 = P1B2
+
+  Events that are not independent are said to be dependent.
+
+ Example 3.18  Problem Consider the experiment of tossing a fair die, and let
+  A = 5Observe an even number.6
+Checking for  B = 5Observe a number less than or equal to 4.6
+Independence—
+Die-Tossing Experiment  Are A and B independent events?
+
+  1  A  Solution The Venn diagram for this experiment is shown in Figure 3.19. We first calculate
+  P1A2 = P122 + P142 + P162 = 1
+B 26  2
+  4  P1B2 = P112 + P122 + P132 + P142 = = 4 2
+  63
+  3
+  P1A ¨ B2 = P122 + P142 = = 2 1
+5  63
+
+  S  Now, assuming that B has occurred, we see that the conditional probability of A given B is
+  P1A ¨ B2 1΋3 1
+Figure 3.19
+Venn diagram for die-toss  P1A ͉ B2 = P1B2 = 2΋ = = P1A2 3 2
+experiment
+  SECTION 3.6 ■ The Multiplicative Rule and Independent Events 179
+
+  Thus, assuming that the occurrence of event B does not alter the probability of observing
+  1
+  an  even  number,  that  probability  remains  2  .  Therefore,  the  events  A  and  B  are  independent.
+
+  Look Back Note that if we calculate the conditional probability of B given A, our
+  conclusion is the same:
+
+  P1A ¨ B2 1΋3 2
+  P1B ͉ A2 = P1A2 = 1΋ = = P1B2 2 3
+
+  ■
+
+ Example 3.19  Problem Refer to the consumer product complaint study in Example 3.15. The
+  percentages of complaints of various types during and after the guarantee period are
+Checking for  shown in Table 3.6 (p. 175). Define the following events:
+Independence—
+Consumer Complaint  A: 5The cause of the complaint is the appearance of the product.6
+Study  B: 5The complaint occurred during the guarantee term.6
+
+  BIOGRAPHY  Are A and B independent events?
+BLAISE PASCAL (1623–1662)
+Solver of the Chevalier’s  Solution Events A and B are independent if P1A ͉ B2 = P1A2. In Example 3.15, we
+Dilemma  calculated P1A ͉ B2 to be .51, and from Table 3.6, we see that
+
+As a precocious child growing  P1A2 = .32 + .03 = .35
+up in France, Blaise Pascal  Therefore, P1A ͉ B2 is not equal to P(A), and A and B are dependent events.
+showed an early inclination toward
+mathematics. Although his father  ■ Now Work Exercise 3.73c
+would not permit Pascal to study
+mathematics before the age  To gain an intuitive understanding of independence, think of situations in which
+of 15 (removing all math texts  the occurrence of one event does not alter the probability that a second event will occur.
+from his house), at age 12 Blaise  For example, new medical procedures are often tested on laboratory animals. The scien-
+discovered on his own that the  tists conducting the tests generally try to perform the procedures on the animals so that
+sum of the angles of a triangle are  the results for one animal do not affect the results for the others. That is, the event that
+two right angles.  the procedure is successful on one animal is independent of the result for another. In this
+Pascal went on to become a  way, the scientists can get a more accurate idea of the efficacy of the procedure than if
+distinguished mathematician, as  the results were dependent, with the success or failure for one animal affecting the re-
+well as a physicist, a theologian,  sults for other animals.
+and the inventor of the first digital
+calculator. Most historians attribute  As a second example, consider an election poll in which 1,000 registered voters are
+the beginning of the study of  asked their preference between two candidates. Pollsters try to use procedures for select-
+probability to the correspondence  ing a sample of voters so that the responses are independent. That is, the objective of the
+between Pascal and Pierre de  pollster is to select the sample so that one polled voter’s preference for candidate A does
+Fermat in 1654. The two solved the  not alter the probability that a second polled voter prefers candidate A.
+Chevalier’s Dilemma, a gambling
+problem related to Pascal by  Now consider the world of sports. Do you think the results of a batter’s succes-
+his friend and Paris gambler the  sive trips to the plate in baseball, or of a basketball player’s successive shots at the bas-
+Chevalier de Mere. The problem  ket, are independent? For example, if a basketball player makes two successive shots,
+involved determining the expected  is the probability of making the next shot altered from its value if the result of the
+number of times one could roll two  first shot is not known? If a player makes two shots in a row, the probability of a third
+dice without throwing a double 6.  successful shot is likely to be different from what we would assign if we knew nothing
+(Pascal proved that the “break-  about the first two shots. Why should this be so? Research has shown that many such
+even” point was 25 rolls.) ■  results in sports tend to be dependent because players (and even teams) tend to get on
+  “hot” and “cold” streaks, during which their probabilities of success may increase or
+  decrease significantly.
+
+  We will make three final points about independence.
+
+  Point 1:  The property of independence, unlike the property of mutual exclusivity, gen-
+  erally cannot be shown on, or gleaned from, a Venn diagram. This means that
+  you can’t trust your intuition. In general, the only way to check for indepen-
+  dence is by performing the calculations of the probabilities in the definition.
+180 CHAPTER 3 ■ Probability
+
+A  B  Point 2:  Suppose that events A and B are mutually exclusive, as shown in Figure 3.20,
+  Point 3:  and that both events have nonzero probabilities. Are these events indepen-
+  S  dent or dependent? That is, does the assumption that B occurs alter the prob-
+  ability of the occurrence of A? It certainly does, because if we assume that
+Figure 3.20  B has occurred, it is impossible for A to have occurred simultaneously. That
+Mutually exclusive events are  is, P1A ͉ B2 = 0. Thus, mutually exclusive events are dependent events, since
+dependent events  P1A2 ≠ P1A ͉ B2.
+
+  The probability of the intersection of independent events is very easy to calcu-
+  late. Referring to the formula for calculating the probability of an intersection,
+  we find that
+
+  P1A ¨ B2 = P1A2P1B ͉ A2
+
+  Thus, since P1B ͉ A2 = P1B2 when A and B are independent, we have the
+  following useful rule:
+
+  Probability of Intersection of Two Independent Events
+  If events A and B are independent, then the probability of the intersection of A and
+  B equals the product of the probabilities of A and B; that is,
+
+  P1A ¨ B2 = P1A2P1B2
+
+  The converse is also true: If P1A ¨ B2 = P1A2P1B2, then events A and B are
+  independent.
+
+  In the die-toss experiment, we showed in Example 3.18 that the two events
+  A: 5Observe an even number.6 and B: 5Observe a number less than or equal to 4.6
+  are independent if the die is fair. Thus,
+
+  P1A ¨ B2 = P1A2P1B2 = a 1 b a 2 b = 1
+  23 3
+
+  This result agrees with the one we obtained in the example:
+
+  P1A ¨ B2 = P122 + P142 = = 2 1
+  63
+
+ Example 3.20  Problem Recall from Example 3.5 (p. 153) that the American Association for Marriage
+  and Family Therapy (AAMFT) found that 25% of divorced couples are classified as
+Probability of Independent  “fiery foes” (i.e., they communicate through their children and are hostile toward each
+Events occurring  other).
+Simultaneously—Divorced
+Couples Study  a. What is the probability that in a sample of 2 divorced couples, both are classified as
+  “fiery foes”?
+
+  b. What is the probability that in a sample of 10 divorced couples, all 10 are classified
+  as “fiery foes”?
+
+  Solution
+
+  a. Let F1 represent the event that divorced couple 1 is classified as a pair of “fiery foes” and
+  F2 represent the event that divorced couple 2 is also classified as a pair of “fiery foes.”
+  Then the event that both couples are “fiery foes” is the intersection of the two events,
+  F1 ¨ F2. On the basis of the AAMFT survey, which found that 25% of divorced cou-
+  ples are “fiery foes,” we could reasonably conclude that P1F12 = .25 and P1F22 = .25.
+  However, in order to compute the probability of F1 ¨ F2 from the multiplicative rule,
+  SECTION 3.6 ■ The Multiplicative Rule and Independent Events 181
+
+  we must make the assumption that the two events are independent. Since the classifica-
+  tion of any divorced couple is not likely to affect the classification of another divorced
+  couple, this assumption is reasonable. Assuming independence, we have
+
+  P1F1 ¨ F22 = P1F12P1F22 = 1.252 1.252 = .0625
+
+b. To see how to compute the probability that 10 of 10 divorced couples will all be clas-
+  sified as “fiery foes,” first consider the event that 3 of 3 couples are “fiery foes.” If F3
+  represents the event that the third divorced couple are “fiery foes,” then we want to
+  compute the probability of the intersection F1 ¨ F2 ¨ F3. Again assuming indepen-
+  dence of the classifications, we have
+
+  P1F1 ¨ F2 ¨ F32 = P1F12P1F22P1F32 = 1.252 1.252 1.252 = .015625
+
+  Similar reasoning leads us to the conclusion that the intersection of 10 such events
+  can be calculated as follows:
+
+  P1F1 ¨ F2 ¨ F3 ¨ c¨ F102 = P1F12P1F22 cP1F102 = 1.25210 = .000001
+
+  Thus, the probability that 10 of 10 divorced couples sampled are all classified as “fiery
+  foes” is 1 in 1 million, assuming that the probability of each couple being classified as
+  “fiery foes” is .25 and that the classification decisions are independent.
+
+Look Back The very small probability in part b makes it extremely unlikely that 10
+of 10 divorced couples are “fiery foes.” If this event should actually occur, we should
+question the probability of .25 provided by the AAMFT and used in the calculation—it
+is likely to be much higher. (This conclusion is another application of the rare-event
+approach to statistical inference.)
+
+  ■ Now Work Exercise 3.89
+
+Statistics IN Action Revisited The Probability of Winning Cash 3 or Play 4
+
+In addition to the biweekly Lotto 6/53, the Florida Lottery  find the odds of win-
+runs several other games. Two popular daily games are Cash  ning Cash 3 and Play
+3 and Play 4. In Cash 3, players pay $1 to select three num-  4. The probability of
+bers in order, where each number ranges from 0 to 9. If the  matching a numbered
+three numbers selected (e.g., 2–8–4) match exactly the order  ball being drawn from
+of the three numbers drawn, the player wins $500. Play 4  a chamber is 1/10;
+is similar to Cash 3, but players must match four numbers  therefore,
+(each number ranging from 0 to 9). For a $1 Play 4 ticket
+(e.g., 3–8–3–0), the player will win $5,000 if the numbers  P1Win Cash 32 = P1match pink and match blue
+match the order of the four numbers drawn.  and match yellow2
+
+  During the official drawing for Cash 3, 10 table ten-  = P1match pink2 * P1match blue2 *
+nis balls numbered 0, 1, 2, 3, 4, 5, 6, 7, 8, and 9 are placed  P1match yellow2
+into each of three chambers. The balls in the first cham-
+ber are colored pink, the balls in the second chamber are  = 11>102 11>102 11>102 = 1>1000 = .001
+blue, and the balls in the third chamber are yellow. One ball
+of each color is randomly drawn, with the official order as  P1Win Play 42 = P1match pink and match blue
+pink–blue–yellow. In Play 4, a fourth chamber with orange  and match yellow and match orange2
+balls is added, and the official order is pink–blue–yellow–
+orange. Since the draws of the colored balls are random  = P1match pink2 * P1match blue2 *
+and independent, we can apply an extension of the proba-  P1match yellow2 * P1match orange2
+bility rule for the intersection of two independent events to
+  = 11>102 11>102 11>102
+  = 1>10,000 = .0001
+
+  (Continued)
+182 CHAPTER 3 ■ Probability
+
+Statistics IN Action  Although the odds of winning  in 1,000 chance (for Cash 3) or 1 in 10,000 chance (for Play 4)
+  one of these daily games is much  of winning the daily game. And the payoffs ($500 or $5,000)
+  (continued)  better than the odds of winning  are much smaller. In fact, it can be shown that you will lose an
+  Lotto 6/53, there is still only a 1  average of 50¢ every time you play either Cash 3 or Play 4!
+
+Exercises 3.68–3.103  f. Find P1C ͉ B2.
+  g. Consider each pair of events A and B, A and C, and
+Understanding the Principles
+  B and C. Are any of the pairs of events independent?
+3.68 Explain the difference between an unconditional probabil-  Why?
+  ity and a conditional probability.
+  3.77 Consider the experiment defined by the accompany-
+3.69 Give the multiplicative rule of probability for  ing Venn diagram, with the sample space S contain-
+  a. two independent events.  ing five sample points. The sample points are assigned
+  b. any two events.  the following probabilities: P1E12 = .1, P1E22 = .1,
+  P1E32 = .2, P1E42 = .5, P1E52 = .1.
+3.70 Give the formula for finding P1B ͉ A2.
+  E1  E2  E3
+3.71 Defend or refute each of the following statements:  A
+  a. Dependent events are always mutually exclusive.
+  b. Mutually exclusive events are always dependent.  E4
+  c. Independent events are always mutually exclusive.
+
+Learning the Mechanics  E5 B
+
+3.72 For two events, A and B, P1A2 = .4, P1B2 = .4, and  S
+  P1A ͉ B2 = .75.
+  a. Find P1A ¨ B2.  a. Calculate P(A), P(B), and P1A ¨ B2.
+  b. Find P1B ͉ A2.  b. Suppose we know that event A has occurred, so the re-
+
+3.73 For two events A and B, P1A2 = .4, P1B2 = .2, and  duced sample space consists of the three sample points
+  P1A ¨ B2 = .1.  in A: E1, E2, and E3. Use the formula for conditional
+  a. Find P1A ͉ B2.  probability to determine the probabilities of these three
+  b. Find P1B ͉ A2.  sample points given that A has occurred. Verify that the
+  c. Are A and B independent events?  conditional probabilities are in the same ratio to one an-
+  other as the original sample point probabilities and that
+3.74 An experiment results in one of three mutually exclu-  they sum to 1.
+  sive events A, B, and C. It is known that P1A2 = .50,  c. Calculate the conditional probability P1B ͉ A2 in two
+  P1B2 = .30, and P1C2 = .20, Find each of the following  ways: First, sum P1E2 ͉ A2 and P1E3 ͉ A2, since these
+  probabilities:  sample points represent the event that B occurs given
+  a. P1A ∪ B2  that A has occurred. Second, use the formula for condi-
+  b. P1A ¨ B2  tional probability:
+  c. P1A ͉ B2
+  d. P1B ∪ C2  P1B ͉ A2 = P1A ¨ B2
+  e. Are B and C independent events? Explain.  P1A2
+
+3.75 For two independent events, A and B, P1A2 = .2 and  Verify that the two methods yield the same result.
+  P1B2 = .6.
+  a. Find P1A ¨ B2.  3.78 A sample space contains six sample points and events A,
+  b. Find P1A ͉ B2.  B, and C, as shown in the Venn diagram below. The prob-
+  c. Find P1A ∪ B2.  abilities of the sample points are P112 = .20, P122 = .05,
+  P132 = .30, P142 = .10, P152 = .10, and P162 = .25.
+3.76 An experiment results in one of five sample points with
+  probabilities P1E12 = .22, P1E22 = .21, P1E32 = .21,
+  P1E42 = .24, and P1E52 = .12. The following events
+  have been defined:
+
+  A: 5E1, E36  56
+  B: 5E2, E3, E46  C
+  C: 5E1, E56
+
+a. Find P(A).  1  4
+
+b. Find P(B).  A 3B
+c. Find P1A ¨ B2.
+d. Find P1A ͉ B2.  2
+e. Find P1B ¨ C2.
+  S
+SECTION 3.6 ■ The Multiplicative Rule and Independent Events 183
+
+  a. Which pairs of events, if any, are mutually exclusive?  below. The researchers also determined that of the cereal
+  Why?  crops damaged, 71% involved wheat, barley, or oats. For one
+  randomly selected incident, what is the likelihood that the
+  b. Which pairs of events, if any, are independent?  wild boars damaged a wheat, barley, or oats cereal crop?
+  Why?
+  Type  Percentage
+  c. Find P1A ∪ B2 by adding the probabilities of the
+  sample points and then by using the additive rule.  Cereals  45%
+  Verify that the answers agree. Repeat for P1A ∪ C2.  Orchards  5
+  Legumes  20
+3.79 Two fair dice are tossed, and the following events are defined:  Vineyards  15
+  Other crops  15
+  A: 5The sum of the numbers showing is odd.6
+  B: 5The sum of the numbers showing is 9, 11, or 12.6  Total  100%
+
+  Are events A and B independent? Why?  3.84 Cardiac stress testing. In addition to standard exercise
+  electrocardiography (SEE), two widely applied methods
+3.80 A box contains two white, two red, and two blue poker  of stress testing of cardiac patients are stress echocar-
+  chips. Two chips are randomly chosen without replacement,  diography (SE) and single-photon emission computed
+  and their colors are noted. Define the following events:  tomography (SPECT). These methods were evaluated in
+  the American Journal of Medical Quality (Mar./Apr. 2014).
+  A: 5Both chips are of the same color.6  A sample of 866 heart catheterization patients in the Penn
+  B: 5Both chips are red.6  State Hershey Medical Center all received some form of
+  C: 5At least one chip is red or white.6  stress testing prior to the catheterization. Of these, SE was
+  performed on 272 patients, SPECT on 560 patients, and
+  Find P1B ͉ A2, P1B ͉ Ac2, P1B ͉ C2, P1A͉C2, and P1C ͉ Ac2.  SEE on 38 patients. Four patients received both SE and
+  SPECT but not SEE. Consider a patient randomly selected
+  Applet Exercise 3.5  from those in the study.
+  a. What is the probability that the patient received SE
+Use the applet entitled Simulating the Probability of Rolling a 6  prior to the catheterization?
+to simulate conditional probabilities. Begin by running the ap-  b. What is the probability that the patient received both
+plet twice with n = 10, without resetting between runs. The data  SE and SPECT prior to the catheterization?
+on your screen represent 20 rolls of a die. The diagram above  c. Given that the patient received SPECT, what is the
+the Roll button shows the frequency of each of the six possi-  probability the patient also received SE prior to the
+ble outcomes. Use this information to find each of the following  catheterization?
+probabilities:
+  3.85 National firearms survey. The Harvard School of Public
+  a. The probability of 6 given that the outcome is 5 or 6  Health conducted a study of privately held firearm stock in
+  b. The probability of 6 given that the outcome is even  the United States. In a representative household telephone
+  c. The probability of 4 or 6 given that the outcome is even  survey of 2,770 adults, 26% reported that they own at least
+  d. The probability of 4 or 6 given that the outcome is odd  one gun (Injury Prevention, Jan. 2007). Of those that own
+  a gun, 5% own a handgun. Suppose one of the 2,770 adults
+Applying the Concepts—Basic  surveyed is randomly selected.
+  a. What is the probability that the adult owns at least one
+3.81 Blood diamonds. According to Global Research News  gun?
+  (Mar. 4, 2014), one-fourth of all rough diamonds pro-  b. What is the probability that the adult owns at least one
+  duced in the world are blood diamonds. (Any diamond  gun and the gun is a handgun?
+  that is mined in a war zone—often by children—in order to
+  finance a warlord’s activity, an insurgency, or an invading  3.86 Guilt in decision making. Refer to the Journal of
+  army’s effort is considered a blood diamond.) Also, 90% of  Behavioral Decision Making (Jan. 2007) study of the ef-
+  the world’s rough diamonds are processed in Surat, India,  fect of guilt emotion on how a decision maker focuses on
+  and of these diamonds, one-third are blood diamonds.  the problem, Exercise 3.59 (p. 170). The results (number
+  a. Find the probability that a rough diamond is not a  responding in each category) for the 171 study participants
+  blood diamond.  are reproduced in the accompanying table. Suppose one of
+  b. Find the probability that a rough diamond is processed  the 171 participants is selected at random.
+  in Surat and is a blood diamond.
+  Emotional  Choose  Do Not Choose  Totals
+3.82 Do social robots walk or roll? Refer to the International  State  Stated Option  Stated Option
+  Conference on Social Robotics (Vol. 6414, 2010) study
+  of the trend in the design of social robots, Exercise 3.17  Guilt  45  12  57
+  (p. 157). Recall that in a random sample of 106 social ro-
+  bots, 63 were built with legs only, 20 with wheels only, 8  Anger  8  50  58
+  with both legs and wheels, and 15 with neither legs nor
+  wheels. If a social robot is designed with wheels, what is  Neutral  7  49  56
+  the probability that the robot also has legs?
+  Totals  60  111  171
+3.83 Crop damage by wild boars. Refer to the Current Zoology
+  (Apr. 2014) study of crop damage by wild boars, Exercise 3.18  Based on Gangemi, A., and Mancini, F. “Guilt and focusing in decision-making.”
+  (p. 158). Recall that researchers identified 157 incidents of  Journal of Behavioral Decision Making, Vol. 20, Jan. 2007 (Table 2).
+  crop damage in the study area caused by wild boars over a
+  five-year period. The table giving the types of crops destroyed
+  and corresponding percentage of incidents is reproduced
+184 CHAPTER 3 ■ Probability
+
+  a. Given the respondent is assigned to the guilty state,  Current Stage  Previous Sleep Stage  Wake
+  what is the probability that the respondent chooses the  Non-REM REM
+  stated option?
+  Non-REM  31,880  160  1,733
+  b. If the respondent does not choose to repair the car,  REM  346  7,609  175
+  what is the probability of the respondent being in the  Wake
+  anger state?  1,588  358  6,079
+
+  c. Are the events 5repair the car6 and 5guilty state6  Totals  33,814  8,127  7,987
+  independent?
+  Based on Caffo, B. S., et al. “An overview of observational sleep
+3.87 Speeding linked to fatal car crashes. According to the  research with application to sleep stage transitioning.” Chance,
+  National Highway Traffic Safety Administration’s  Vol. 22, No. 1, Winter 2009 (Table 2).
+  National Center for Statistics and Analysis (NCSA),
+  “Speeding is one of the most prevalent factors contrib-  c. Are the events {previous stage is REM} and {current
+  uting to fatal traffic crashes” (NHTSA Technical Report,  stage is REM} mutually exclusive?
+  Aug. 2005). The probability that speeding is a cause of a
+  fatal crash is .3. Furthermore, the probability that speeding  d. Are the events {previous stage is REM} and {current
+  and missing a curve are causes of a fatal crash is .12. Given  stage is REM} independent?
+  that speeding is a cause of a fatal crash, what is the proba-
+  bility that the crash occurred on a curve?  e. Are the events {previous stage is Wake} and {current
+  stage is Wake} independent?
+3.88 Appraisals and negative emotions. According to psycholog-
+  ical theory, each negative emotion one has is linked to some  3.91 Firefighters’ use of gas detection devices. Two deadly
+  thought (appraisal) about the environment. This theory  gases that can be present in fire smoke are hydrogen
+  was tested in the journal Cognition and Emotion (Vol. 24,  cyanide and carbon monoxide. Fire Engineering (Mar.
+  2010). Undergraduate students were asked to respond to  2013) reported the results of a survey of 244 firefighters
+  events that occurred within the past 15 minutes. Each stu-  conducted by the Fire Smoke Coalition. The purpose of
+  dent rated the negative emotions he or she felt (e.g., anger,  the survey was to assess the base level of knowledge of
+  sadness, fear, or guilt) and gave an appraisal of the event  firefighters regarding the use of gas detection devices at
+  (e.g., unpleasant or unfair). A total of 10,797 responses  the scene of a fire. The survey revealed the following:
+  were evaluated in the study, of which 594 indicated a per-  Eighty percent of firefighters had no standard operating
+  ceived unfairness appraisal. Of these unfairness appraisals,  procedures (SOP) for detecting/monitoring hydrogen
+  the students reported feeling angry in 127 of them. Consider  cyanide in fire smoke; 49% had no SOP for detecting/
+  a response randomly selected from the study.  monitoring carbon monoxide in fire smoke. Assume that
+  a. What is the probability that the response indicates a  94% of firefighters had no SOP for detecting either hy-
+  perceived unfairness appraisal?  drogen cyanide or carbon monoxide in fire smoke. What
+  b. Given a perceived unfairness appraisal, what is the  is the probability that a firefighter has no SOP for detect-
+  probability of an angry emotion?  ing hydrogen cyanide and no SOP for detecting carbon
+  monoxide in fire smoke?
+Applying the Concepts—Intermediate
+  3.92 Compensatory advantage in education. According to
+3.89 Health risks to beachgoers. Refer to the University of  Sociology of Education (Apr. 2014), compensatory
+  Florida study of health risks to beachgoers, Exercise 3.24  advantage occurs when individuals from privileged back-
+  (p. 158). According to the study, 6 out of 1,000 people  grounds are less dependent on prior negative outcomes
+  exposed to wet sand for a 10-minute period will acquire  than individuals from disadvantaged families. The re-
+  gastroenteritis and 7 out of 1,000 people exposed to ocean  searcher applied this theory to educational success.
+  water for a 10-minute period will acquire gastroenteritis.  Let St represent the event that a student is successfully
+  Suppose you and a friend go to the beach. Over the next 10  promoted to the next grade level in year t, and let Ft
+  minutes, you play in the wet sand while your friend swims  represent the event that a student fails to be promoted
+  in the ocean. What is the probability that at least one of  to the next grade level in year t. Now consider two proba-
+  you acquires gastroenteritis? (What assumption did you  bilities: P1 = the probability that a student is successfully
+  need to make in order to find the probability?)  promoted to the next grade level in year t + 1 given that
+  the student was successfully promoted the previous year
+3.90 Sleep apnea and sleep stage transitioning. Refer to the sleep  (i.e., in year t) and P2 = the probability that a student
+  apnea study published in Chance (Winter 2009), Exercise 3.57  is successfully promoted to the next grade level in year
+  (p. 169). Recall that the various stages of sleep for a large  t + 1 given that the student failed in the previous year.
+  group of sleep apnea patients were monitored in 30-second  Compensatory advantage theory states that the differ-
+  “epochs,” and the sleep stage for the previous and current  ence between the two probabilities, P1 - P2, is greater
+  epoch was determined. A summary table is reproduced in the  for disadvantaged families (say, the lower-class L) than
+  next column. One of the epochs in the study is selected.  for privileged families (say, the upper-class U).
+  a. Given that the previous sleep stage for the epoch was  a. Write P1 as a conditional probability using symbols.
+  the Wake state, what is the probability that the current  b. Write P2 as a conditional probability using symbols.
+  sleep stage is REM?  c. The tables on p. 185 give the grade promotion results
+  b. Given that the current sleep stage for the epoch is REM,  (number of students) for both upper- and lower-class
+  what is the probability that the previous sleep stage was  students at a particular school. Does the compensatory
+  not the Wake state?  advantage theory hold at this school?
+  SECTION 3.6 ■ The Multiplicative Rule and Independent Events 185
+
+Results for Exercise 3.92  Successfully  Failure  3.95  Extinct New Zealand birds. Refer to the Evolutionary
+  promoted  (Ft )  Ecology Research (July 2003) study of the patterns of ex-
+  Upper Class  (St )  NZBIRDS  tinction in the New Zealand bird population, presented in
+  Successfully promoted 1St + 12  8  Exercise 2.24 (p. 70). Consider the data on extinction sta-
+  Failure 1Ft + 12  45  2  tus (extinct, absent from island, present) for the 132 bird
+  Totals  5  species. The data are summarized in the accompanying
+  10  MINITAB printout. Suppose you randomly select 10 of
+  50  the 132 bird species (without replacement) and record the
+  extinction status of each.
+Lower Class  Successfully  Failure  a. What is the probability that the first species you se-
+  promoted  (Ft )
+Successfully promoted 1St + 12  (St )  lect is extinct? (Note: Extinct = Yes on the MINITAB
+Failure 1Ft + 12  15  printout.)
+  90  5  b. Suppose the first 9 species you select are all extinct.
+Totals  10  What is the probability that the 10th species you select
+  20  is extinct?
+  100
+
+3.93 Are you really being served red snapper? Red snapper is a  3.96 Muscle, fat, and bone issues while aging. In Ageing Research
+  rare and expensive reef fish served at upscale restaurants.  Reviews (May 2014), nutritionists published a study of
+  Federal law prohibits restaurants from serving a cheaper,  the health issues faced by aging adults. Three of the most
+  look-alike variety of fish (e.g., vermillion snapper or lane  common health conditions are obesity (high body fat mass),
+  snapper) to customers who order red snapper. Researchers at  osteoporosis (low bone mineral density in neck and spine),
+  the University of North Carolina used DNA analysis to exam-  and sarcopenia (low skeletal muscle mass index). The
+  ine fish specimens labeled “red snapper” that were purchased  researchers provided names for aging adults who suffer
+  from vendors across the country (Nature, July 15, 2004). The  from one or more of these conditions. These are shown in
+  DNA tests revealed that 77% of the specimens were not red  the accompanying Venn diagram. Statistics from the CDC
+  snapper, but the cheaper, look-alike variety of fish.  are used to estimate the following probabilities:
+  a. Assuming that the results of the DNA analysis are
+  valid, what is the probability that you are actually  P1Obesity2 = .35
+  served red snapper the next time you order it at a  P1Osteoporosis2 = .30
+  restaurant?  P1Sarcopenia2 = .15
+  b. If there are five customers at a restaurant, all who have  P1Osteopenic Obesity2 = .01
+  ordered red snapper, what is the probability that at least  P1Osteopenic Sarcopenia2 = .03
+  one customer is actually served red snapper?  P1Sarcopenic Obesity2 = .05
+  P1Osteo@sarcopenic Obesity2 = .02
+3.94 Fighting probability of fallow deer bucks. Refer to the
+  Aggressive Behavior (Jan./Feb. 2007) study of fallow  Osteopenia/Osteoporosis
+  deer bucks fighting during the mating season, presented
+  in Exercise 3.61 (p. 170). Recall that researchers re-  Osteopenic  Osteopenic
+  corded 167 encounters between two bucks, one of which  Obesity  Sarcopenia
+  clearly initiated the encounter with the other. A sum-
+  mary of the fight status of the initiated encounters is pro-
+  vided in the accompanying table. Suppose we select 1 of
+  these 167 encounters and note the outcome (fight status
+  and winner).
+  a. Given that a fight occurs, what is the probability that
+  the initiator wins?
+  b. Given no fight, what is the probability that the initiator
+  wins?
+  c. Are the events “no fight” and “initiator wins”
+  independent?
+
+  Initiator  No Clear  Initiator  Totals  OSTEO-
+  Wins  Winner  Loses  SARCOPENIC
+  64
+  26  23  15  103  OBESITY
+  80  12  11
+Fight  Obesity  Sarcopenia
+No Fight
+  Sarcopenic
+Totals  106  35  26  167  Obesity
+
+Based on Bartos, L. et al. “Estimation of the probability of fighting in
+fallow deer (Dama dama) during the rut.” Aggressive Behavior, Vol. 33,
+Jan./Feb. 2007, pp. 7–13.
+186 CHAPTER 3 ■ Probability
+
+  a. Find the probability that an adult suffers from both  pedigree from a single cell that has divided. Note that one
+  obesity and sarcopenia.  “daughter” cell is mutant ( ) and one is a normal cell ( ).
+
+  b. Find the probability that an adult suffers from either  a. Consider a single, normal cell that divides
+  obesity or sarcopenia.  into two offspring. List the different possible
+  pedigrees.
+3.97 Ambulance response time. Geographical Analysis (Jan.
+  2010) presented a study of Emergency Medical Services  b. Assume that a “daughter” cell is equally likely to be
+  (EMS) ability to meet the demand for an ambulance.  mutant or normal. What is the probability that a single,
+  In one example, the researchers presented the follow-  normal cell that divides into two offspring will result in
+  ing scenario. An ambulance station has one vehicle and  at least one mutant cell?
+  two demand locations, A and B. The probability that
+  the ambulance can travel to a location in under eight  c. Now assume that the probability of a mutant “daughter”
+  minutes is .58 for location A and .42 for location B. The  cell is .2. What is the probability that a single, normal
+  probability that the ambulance is busy at any point in  cell that divides into two offspring will result in at least
+  time is .3.  one mutant cell?
+  a. Find the probability that EMS can meet demand for an
+  ambulance at location A.  d. The schematic below shows a possible second-
+  b. Find the probability that EMS can meet demand for an  generation pedigree from a single cell that has divided.
+  ambulance at location B.  Note that the first-generation mutant cell automatically
+  produces two mutant cells in the second generation.
+3.98 Intrusion detection systems. A computer intrusion de-  List the different possible second-generation pedigrees.
+  tection system (IDS) is designed to provide an alarm  (Hint: Use your answer to part a.)
+  whenever there is unauthorized access into a computer
+  system. A probabilistic evaluation of a system with two  e. Assume that a “daughter” cell is equally likely to be
+  independently operating intrusion detection systems (a  mutant or normal. What is the probability that a sin-
+  double IDS) was published in the Journal of Research  gle, normal cell that divides into two offspring will
+  of the National Institute of Standards and Technology  result in at least one mutant cell after the second
+  (Nov.–Dec. 2003). Consider a double IDS with system  generation?
+  A and system B. If there is an intruder, system A sounds
+  an alarm with probability .9 and system B sounds an  3.101  Testing a psychic’s ability. Consider an experiment in
+  alarm with probability .95. If there is no intruder, the  which 10 identical small boxes are placed side by side on
+  probability that system A sounds an alarm (i.e., a false  a table. A crystal is placed at random inside one of the
+  alarm) is .2 and the probability that system B sounds an  boxes. A self-professed “psychic” is asked to pick the box
+  alarm is .1.  that contains the crystal.
+  a. Use symbols to express the four probabilities just given.  a. If the “psychic” simply guesses, what is the probability
+  b. If there is an intruder, what is the probability that both
+  systems sound an alarm?  that she picks the box with the crystal?
+  c. If there is no intruder, what is the probability that both  b. If the experiment is repeated seven times, what is the
+  systems sound an alarm?
+  d. Given that there is an intruder, what is the probability  probability that the “psychic” guesses correctly at least
+  that at least one of the systems sounds an alarm?  once?
+  c. A group called the Tampa Bay Skeptics tested a self-
+3.99 Detecting traces of TNT. University of Florida re-  proclaimed “psychic” by administering the preceding
+  searchers in the Department of Materials Science and  experiment seven times. The “psychic” failed to pick the
+  Engineering have invented a technique that rapidly de-  correct box all seven times (Tampa Tribune, Sept. 20, 1998).
+  tects traces of TNT (Today, Spring 2005). The method,  What would you infer about this person’s psychic ability?
+  which involves shining a laser on a potentially contami-
+  nated object, provides instantaneous results and gives no  3.102  Risk of a natural-gas pipeline accident. Process Safety
+  false positives. In this application, a false positive would  Progress (Dec. 2004) published a risk analysis for a natu-
+  occur if the laser detected traces of TNT when, in fact, no  ral-gas pipeline between Bolivia and Brazil. The most likely
+  TNT were actually present on the object. Let A be the  scenario for an accident would be natural-gas leakage from
+  event that the laser light detects traces of TNT. Let B be  a hole in the pipeline. The probability that the leak ignites
+  the event that the object contains no traces of TNT. The  immediately (causing a jet fire) is .01. If the leak does not
+  probability of a false positive is 0. Write this probability  immediately ignite, it may result in the delayed ignition of
+  in terms of A and B, using symbols such as “ ∪ ”, “¨”,  a gas cloud. Given no immediate ignition, the probability
+  and “ ͉ ”.  of delayed ignition (causing a flash fire) is .01. If there is
+  no delayed ignition, the gas cloud will disperse harmlessly.
+Applying the Concepts—Advanced  Suppose a leak occurs in the natural-gas pipeline. Find the
+
+3.100  Random mutation of cells. Chance (Spring 2010) pre-
+  sented an article on the random mutation hypothesis de-
+  veloped by microbiologists. Under this hypothesis, when a
+  wild-type organic cell (e.g., a bacteria cell) divides, there is
+  a chance that at least one of the two “daughter” cells is a
+  mutant. When a mutant cell divides, both offspring will be
+  mutant. The schematic in the next column shows a possible
+  SECTION 3.7 ■ Some Additional Counting Rules (Optional) 187
+
+  probability that either a jet fire or a flash fire will occur.  data encryption system, the probability of receiving an er-
+  Illustrate with a tree diagram.  roneous ciphertext is assumed to be b, where 0 6 b 6 1.
+  The researchers showed that if an erroneous ciphertext oc-
+3.103  Encryption systems with erroneous ciphertexts. In cryp-  curs, the probability of an error in restoring plaintext using the
+  tography, ciphertext is encrypted or encoded text that is  decryption system is .5. When no error occurs in the received
+  unreadable by a human or computer without the proper  ciphertext, the probability of an error in restoring plaintext
+  algorithm to decrypt it into plaintext. The impact of  using the decryption system is ab, where 0 6 a 6 1. Use this
+  erroneous ciphertexts on the performance of an encryp-  information to give an expression for the probability of an
+  tion system was investigated in IEEE Transactions on  error in restoring plaintext using the decryption system.
+  Information Forensics and Security (Apr. 2013). For one
+
+3.7 Some Additional Counting Rules (Optional)
+
+  In Section 3.1, we pointed out that experiments sometimes have so many sample points
+  that it is impractical to list them all. However, many of these experiments possess sample
+  points with identical characteristics. If you can develop a counting rule to count the number
+  of sample points for such an experiment, it can be used to aid in the solution of the problems.
+  The combinations rule for selecting n elements from N elements without regard to order
+  was presented in Section 3.1 (p. 155). In this optional section, we give three additional
+  counting rules: the multiplicative rule, the permutations rule, and the partitions rule.
+
+ Example 3.21  Problem A product can be shipped by four airlines, and each airline can ship via three
+  different routes.
+Applying the
+Multiplicative Rule—  a. How many distinct ways exist to ship the product?
+Airline Shipping  b. Assuming the airline and route are selected at random, what is the probability that
+
+Figure 3.21  Route 2 is used?
+Tree diagram for shipping
+problem  Solution
+
+  a. A pictorial representation of the different ways to ship the product will aid in counting
+  them. The tree diagram (see Section 3.6) is useful for this purpose. Consider the tree
+  diagram shown in Figure 3.21. At the starting point (stage 1), there are four choices—
+  the different airlines—to begin the journey. Once we have chosen an airline (stage 2),
+  there are three choices—the different routes—to complete the shipment and reach
+  the final destination. Thus, the tree diagram clearly shows that there are 142132 = 12
+  distinct ways to ship the product. These are the sample points for the experiment.
+
+  Route 1
+
+  2
+
+  3
+
+  irline 1  Route 1
+  A Airline 2  2
+  3
+
+  Airline 3  Route 1
+  Airline 4  2
+  3
+
+  Route 1
+
+  2
+
+  3
+
+  b. Since the airline and route are randomly selected, it is reasonable to assume that the
+  sample points are equiprobable. Thus, each has probability 1΋12. Route 2 is selected
+  on 4 of the 12 shipping options, hence
+
+  P1Route 22 = 4΋12 = 1΋3.
+188  CHAPTER 3 ■ Probability
+
+  Look Back The method of solving this example can be generalized to any
+  number of stages with sets of different elements. This method is given by the
+  multiplicative rule.
+
+  ■ Now Work Exercise 3.114c
+
+  The Multiplicative Rule
+
+  You have k sets of elements, n1 in the first set, n2 in the second set, ..., and nk in the
+  kth set. Suppose you wish to form a sample of k elements by taking one element
+  from each of the k sets. Then the number of different samples that can be formed is
+  the product
+
+  n1n2n3 cnk
+
+ Example 3.22  Problem There are 20 candidates for three different executive positions: E1, E2, and E3.
+  How many different ways could you fill the positions?
+Applying the
+Multiplicative  Solution For this example, there are k = 3 sets of elements, corresponding to
+Rule—Hiring
+Executives  Set 1: Candidates available to fill position E1
+  Set 2: Candidates remaining (after filling E1) that are available to fill E2
+  Set 3: Candidates remaining (after filling E1 and E2) that are available to fill E3
+
+  The numbers of elements in the sets are n1 = 20, n2 = 19, and n3 = 18. Therefore, the
+  number of different ways of filling the three positions is given by the multiplicative rule
+  as n1n2n3 = 1202 1192 1182 = 6,840.
+
+  ■
+
+ Example 3.23  Problem Consider the experiment discussed in Example 3.10 of tossing a coin 10 times.
+  Show how we found that there were 210 = 1,024 sample points for this experiment.
+Applying the Multiplicative
+Rule—10 Coin Tosses  Solution There are k = 10 sets of elements for this experiment. Each set contains two
+  elements: a head and a tail. Thus, there are
+
+  122 122 122 122 122 122 122 122 122 122 = 210 = 1,024
+  different outcomes (sample points) of this experiment.
+
+  ■
+
+ Example 3.24  Problem Suppose there are five dangerous military missions, each requiring one soldier.
+  In how many different ways can 5 soldiers from a squadron of 100 be assigned to these
+Applying the Permutations  five missions?
+Rule—Selecting Soldiers
+for a Mission  Solution We can solve this problem by using the multiplicative rule. The entire set of
+  100 soldiers is available for the first mission, and after the selection of 1 soldier for that
+  mission, 99 are available for the second mission, etc. Thus, the total number of different
+  ways of choosing 5 soldiers for the five missions is
+
+  n1n2n3n4n5 = 11002 1992 1982 1972 1962 = 9,034,502,400
+
+  Look Back The arrangement of elements in a distinct order is called a permutation. There
+  are more than 9 billion different permutations of 5 elements (soldiers) drawn from a set
+  of 100 elements!
+
+  ■
+  SECTION 3.7 ■ Some Additional Counting Rules (Optional) 189
+
+  Permutations Rule
+  Given a single set of N different elements, you wish to select n elements from the N
+  and arrange them within n positions. The number of different permutations of the N
+  elements taken n at a time is denoted by PNn and is equal to
+
+  PNn = N1N - 121N - 22 # g # 1N - n + 12 = N! 1N - n2!
+
+  where n! = n1n - 121n - 22 c132122112 and is called n factorial. (For example,
+
+  5! = 5 # 4 # 3 # 2 # 1 = 120.) The quantity 0! is defined to be 1.
+
+ Example 3.25  Problem Suppose you wish to drive, in sequence, from a starting point to each of five
+  cities, and you wish to compare the distances—and, ultimately, the costs—of the different
+Applying the Permutations  routes. Denote the five cities as C1, C2, C3, C4, and C5.
+Rule—Driving Routes
+  a. How many different routes would you have to compare?
+
+  b. Suppose the driving distance from C2 to C1 is the most costly. How many of the
+  routes include this distance?
+
+  c. If the routes are selected at random, what is the probability that the route includes
+  driving from C2 to C1?
+
+  Solution
+
+  a. Represent a route moving from the starting point to C2 to C1 to C3 to C4 to C5 as
+
+  {C2C1C3C4C5}. Then the total number of routes would equal the number of ways you
+
+  could arrange N = 5 cities into n = 5 positions, where position order matters. This
+
+  number is
+
+  N  5  5!  5! 15 # 4 # 3 # 2 # 12
+  Pn = P5 = 15 - 52! = 0! = 1 = 120
+
+  (Recall that 0! = 1.) This value represents the number of sample points in the
+  experiment.
+
+  b. To determine the number of routes going directly from C2 to C1, first consider the
+  different routing configurations that would include this distance. These would in-
+  clude all routes with C2 in the position next to, and to the left of, C1 as shown here:
+
+  5C2C1___ ___ ___6, 5___ C2C1 ___ ___6, 5___ ___ C2C1 ___6, 5___ ___ ___C2C16
+
+  For each of these configurations, the remaining 3 cities can be arranged in the 3 open
+
+  positions in 6 different ways, since
+
+  N  3  3!  3! 13 # 2 # 12
+  Pn = P3 = 13 - 32! = 0! = 1 = 6
+
+  Since there are 4 configurations of this form, each with 6 routing possibilities, there
+
+  are a total of 4 # 6 = 24 different routes going directly from C2 to C1.
+
+  c. Due to the random selection of routes, the 120 sample points (part a) are equiprobable,
+  i.e., each sample point has probability 1/120. Then the probability that the route se-
+  lected includes driving from C2 to C1 is the number of sample points that include this
+  event (i.e., 24, as shown in part b) divided by the total number of sample points, 120.
+  That is,
+
+  P1route includes driving from C2 to C12 = = = 24 1 .2
+  120 5
+
+  ■ Now Work Exercise 3.115c
+190 CHAPTER 3 ■ Probability
+
+ Example 3.26  Problem Suppose you are supervising four construction workers. You must assign three
+  to job 1 and one to job 2. In how many different ways can you make this assignment?
+Applying the Partitions
+Rule—Assigning  Solution To begin, suppose each worker is to be assigned to a distinct job. Then, using
+Workers  the multiplicative rule, you obtain 142132122112 = 24 ways of assigning the workers
+  to four distinct jobs. The 24 ways are listed in four groups in Table 3.7 (where ABCD
+  signifies that worker A was assigned the first distinct job, worker B the second, etc.).
+
+  Table 3.7  Workers Assigned to Four Jobs, Example 3.26
+
+  Group 1  Group 2  Group 3  Group 4
+
+  ABCD  ABDC  ACDB  BCDA
+  ACBD  ADBC  ADCB  BDCA
+  BACD  BADC  CADB  CBDA
+  BCAD  BDAC  CDAB  CDBA
+  CABD  DABC  DACB  DBCA
+  CBAD  DBAC  DCAB  DCBA
+
+Table 3.8 Workers  Now suppose the first three positions represent job 1 and the last position rep-
+Assigned to Two Jobs,  resents job 2. You can see that all the listings in group 1 represent the same outcome of
+Example 3.26  the experiment of interest. That is, workers A, B, and C are assigned to job 1 and worker
+  D to job 2. Similarly, group 2 listings are equivalent, as are group 3 and group 4 listings.
+Job 1  Job 2  Thus, there are only four different assignments of four workers to the two jobs. These
+  assignments are shown in Table 3.8.
+ABC  D
+  Look Back To generalize this result, we point out that the final result can be found by
+ABD  C
+  142132122112
+ACD  B  132122112112 = 4
+
+BCD  A  The numerator, 142132122112, is the number of different ways (permutations)
+  the workers could be assigned four distinct jobs. In the denominator, the division by
+  132122112 is to remove the duplicated permutations resulting from the fact that three
+  workers are assigned the same job, and the division by 1 is associated with the worker
+  assigned to job 2.
+
+  ■ Now Work Exercise 3.116
+
+  Partitions Rule
+  Suppose you wish to partition a single set of N different elements into k sets, with the
+  first set containing n1 elements, the second containing n2 elements, …, and the kth
+  set containing nk elements. Then the number of different partitions is
+
+  N! n , where n 1!n2! cnk! 1 + n2 + n3 + g + nk = N
+
+ Example 3.27  Problem Suppose you have 12 construction workers and you wish to assign 3 to jobsite
+  1, 4 to jobsite 2, and 5 to jobsite 3. In how many different ways can you make this
+Applying the Partitions  assignment?
+Rule—Assigning
+Workers  Solution For this example, k = 3 (corresponding to the k = 3 different jobsites),
+
+  N = 12, n1 = 3, n2 = 4, and n3 = 5. Then the number of different ways to assign the
+
+  workers to the jobsites is  12 # 11 # 10 # g # 3 # 2 # 1
+
+  N!  12!
+  n1!n2!n3! = 3!4!5! = 13 # 2 # 1214 # 3 # 2 # 1215 # 4 # 3 # 2 # 12 = 27,720
+
+  ■
+  SECTION 3.7 ■ Some Additional Counting Rules (Optional) 191
+
+ Example 3.28  Problem Five soldiers from a squadron of 100 are to be chosen for a dangerous mission.
+  In how many ways can groups of 5 be formed?
+Applying the
+Combinations Rule—  Solution This problem is equivalent to sampling n = 5 elements from a set of N = 100
+Selecting Soldiers  elements. Here, we apply the combinations rule from Section 3.1. The number of ways is
+for a Mission  the number of possible combinations of 5 soldiers selected from 100, or
+
+  100  100!  100 # 99 # 98 # 97 # 96 # 95 # 94 # g # 2 # 1
+  a 5 b = 15!2195!2 = 15 # 4 # 3 # 2 # 12195 # 94 # g # 2 # 12
+  100 # 99 # 98 # 97 # 96
+  # # # # = 75,287,520
+  =
+  54321
+
+  Look Back Compare this result with that of Example 3.24, where we found that the
+  number of permutations of 5 elements drawn from 100 was more than 9 billion. Because
+  the order of the elements does not affect combinations, there are fewer combinations
+  than permutations.
+
+  ■ Now Work Exercise 3.115a
+
+  When working a probability problem, you should carefully examine the experi-
+  ment to determine whether you can use one or more of the rules we have discussed in
+  this section. Let’s see how these rules (summarized in the next box) can help solve a
+  probability problem.
+
+  Summary of Counting Rules
+  1. Multiplicative rule. If you are drawing one element from each of k sets of elements,
+
+  where the sizes of the sets are n1, n2, # c # , nk, then the number of different
+
+  results is
+
+  n1 n2 n3 cnk
+
+  2. Permutations rule. If you are drawing n elements from a set of N elements and
+  arranging the n elements in a distinct order, then the number of different results is
+
+  N  N!
+  Pn =
+  1N - n2!
+
+  3. Partitions rule. If you are partitioning the elements of a set of N elements into
+  k groups consisting of n1, n2, c, nk elements 1n1 + g + nk = N2, then the
+  number of different results is
+
+  N!
+
+  n1!n2! # c # nk!
+
+  4. Combinations rule. If you are drawing n elements from a set of N elements with-
+  out regard to the order of the n elements, then the number of different results is
+
+  a Nn b = N! n!1N - n2!
+
+  [Note: The combinations rule is a special case of the partitions rule when k = 2.]
+192 CHAPTER 3 ■ Probability
+
+ Example 3.29  Problem A consumer testing service is commissioned to rank the top 3 brands of laundry
+  detergent. Ten brands are to be included in the study.
+Applying Several
+Counting Rules—Ranking  a. In how many different ways can the consumer testing service arrive at the final
+Detergents  ranking?
+
+  b. If the testing service can distinguish no difference among the brands and therefore
+  arrives at the final ranking by random selection, what is the probability that com-
+  pany Z’s brand is ranked first? in the top three?
+
+  Solution
+
+  a. Since the testing service is drawing 3 elements (brands) from a set of 10 elements and
+  arranging the 3 elements into a distinct order, we use the permutations rule to find
+  the number of different results:
+
+  P130 = 10! 110 - 32! = 10 # 9 # 8 = 720
+
+  b. The steps for calculating the probability of interest are as follows:
+
+  Step 1  The experiment is to select and rank 3 brands of detergent from 10 brands.
+  Step 2
+  Step 3  There are too many sample points to list. However, we know from part a that
+  there are 720 different outcomes (i.e., sample points) of this experiment.
+  Step 4
+  If we assume that the testing service determines the rankings at random, each of
+  the 720 sample points should have an equal probability of occurrence. Thus,
+
+  P1Each sample point2 = 1
+  720
+
+  One event of interest to company Z is that its brand receives top ranking. We
+  will call this event A. The list of sample points that result in the occurrence of
+  event A is long, but the number of sample points contained in event A is deter-
+  mined by breaking event A into two parts:
+
+  Company Z brand  9 other brands
+
+  ∂
+  ∂  ∂
+  Rank 1  ∂Rank 2Rank 3
+
+  Only 1 possibility  9P2 =  9!  = 72 possibilities
+
+  19 - 22!
+
+  ∂
+  Event A
+
+  1 # 72 = 72 sample points
+
+  Step 5  Thus, event A can occur in 72 different ways.
+  Now define B as the event that company Z’s brand is ranked in the top
+
+  three. Since event B specifies only that brand Z appear in the top three, we repeat
+  the previous calculations, fixing brand Z in position 2 and then in position 3. We
+  conclude that the number of sample points contained in event B is 31722 = 216.
+
+  The final step is to calculate the probabilities of events A and B. Since the
+  720 sample points are equally likely to occur, we find that
+
+  P1A2 = = = Number of sample points in A 72 1
+  Total number of sample points 720 10
+
+  Similarly,
+
+  P1B2 = = 216 3
+  720 10
+
+  ■
+  SECTION 3.7 ■ Some Additional Counting Rules (Optional) 193
+
+ Example 3.30  Problem Refer to Example 3.29. Suppose the consumer testing service is to choose the
+  top 3 laundry detergents from the group of 10, but is not to rank them.
+Applying Several Counting
+Rules—Top 3 Detergents  a. In how many different ways can the testing service choose the 3 brands to be desig-
+  nated as top detergents?
+
+  b. Assuming that the testing service makes its choice by a random selection and that
+  company X has 2 brands in the group of 10, what is the probability that exactly 1 of
+  company X’s brands is selected in the top 3? At least 1?
+
+  Solution
+
+  a. The testing service is selecting 3 elements (brands) from a set of 10 elements without
+  regard to order, so we can apply the combinations rule to determine the number of
+
+  different results: a103 b = 3!110 - 32! = 10! 103 ## 92 # 1 = # 8 120
+
+  b. The steps for calculating the probabilities of interest are as follows:
+
+  Step 1  The experiment is to select (but not rank) three brands from 10.
+  Step 2  There are 120 sample points for this experiment.
+  Step 3  Since the selection is made at random,
+
+  Step 4  P1Each sample point2 = 1
+  120
+
+  Now, define events A and B as follows:
+
+  A: 5Exactly one company X brand is selected.6
+  B: 5At least one company X brand is selected.6
+
+  Since each of the sample points is equally likely to occur, we need only know the
+  number of sample points in A and B to determine their probabilities.
+
+  For event A to occur, exactly 1 brand from company X must be selected,
+  along with 2 of the remaining 8 brands from other companies. We thus break A
+  into two parts:
+
+  2 company X brands  8 other brands
+  T  T
+
+  Select 1  Select 2
+
+  a 2b = 2 different  a 8b = = 8! 28 different
+  1  possibilities  2 2!18 - 22!  possibilities
+
+  Event A QQ
+
+  2 # 28 = 56 sample points
+
+  Note that the 1 company X brand can be selected in 2 ways, whereas the 2 other
+  brands can be selected in 28 ways. (We use the combinations rule because the or-
+  der of selection is not important.) Now we use the multiplicative rule to combine
+  1 of the 2 ways to select a company X brand with 1 of the 28 ways to select two
+  other brands, yielding a total of 56 sample points for event A.
+
+  To count the sample points contained in B, we first note that
+
+  B = A∪C
+
+  where A is defined as before and we have
+
+  C: 5Both company X brands are selected.6
+194 CHAPTER 3 ■ Probability
+
+  We have determined that A contains 56 sample points. Using the same method
+  for event C, we find that
+
+  2 company X brands  8 other brands
+  T  T
+
+  Select 2  Select 1
+
+  a 2b = 1 possibility  a 8b = 8 different possibilities
+  2  1
+
+  ∂  ∂
+  Event C
+  Step 5
+  1 # 8 = 8 sample points
+
+  Thus, event C contains eight sample points, and P1C2 = 8 .
+  120
+
+  Since all the sample points are equally likely,
+  P1A2 = = = Number of sample ponts in A 56 7
+  Total number of sample points 120 15
+  P1B2 = P1A ∪ C2 = P1A2 + P1C2 - P1A ¨ C2
+
+  where P1A ¨ C2 = 0 because the testing service cannot select exactly one and
+  exactly two of company X’s brands; that is, A and C are mutually exclusive events.
+  Thus,
+
+  P1B2 = 56 + = = 8 64 8
+  120 120 120 15
+  ■ Now Work Exercise 3.128
+
+Exercises 3.104–3.131  a. 4 objects from 8  b. 2 objects from 5
+  c. 2 objects from 34  d. 7 objects from 9
+Understanding the Principles  e. n objects from t
+
+3.104 Give a scenario where the multiplicative rule applies.  Applying the Concepts—Basic
+3.105 Give a scenario where the permutations rule applies.
+3.106 Give a scenario where the partitions rule applies.  3.112  Cheek teeth of extinct primates. Refer to the American
+3.107 What is the difference between the permutations rule and  Journal of Physical Anthropology (Vol. 142, 2010) study
+  MOLARS  of the dietary habits of extinct mammals, Exercise 3.25
+  the combinations rule?  (p. 158). Recall that 18 cheek teeth extracted from skulls of
+  an extinct primate species discovered in western Wyoming
+Learning the Mechanics  were analyzed. Each tooth was classified according to de-
+  gree of wear (unworn, slight, light-moderate, moderate,
+3.108 Find the numerical values of  moderate-heavy, or heavy), with the 18 measurements
+  shown in the accompanying table.
+a. a6b  b. P52  c. P42  d. a100b
+  3  98
+
+e. a50b  f. a50b  g. P53  h.  P10
+  50  0
+  0
+
+3.109 Use the multiplicative rule to determine the number of  Data on Degree of Wear
+  sample points in the sample space corresponding to the
+  experiment of tossing the following.  Unknown  Slight
+  Unknown  Slight
+a. a 4-sided die 4 times  Unknown  Heavy
+b. a 4-sided die 5 times  Moderate  Unworn
+c. a 4-sided die 6 times  Slight  Light-moderate
+d. a 4-sided die n times  Unknown  Light-moderate
+  Moderate-heavy  Moderate
+3.110 Determine the number of sample points contained in the  Moderate  Unworn
+  Slight  Unknown
+sample space when you toss the following:
+
+a. 1 die  c. 4 dice
+
+b. 2 dice  d. n dice  a. Suppose the researcher will randomly select one
+  tooth from each wear category for a more de-
+3.111 An experiment consists of choosing objects without regard  tailed analysis. How many different samples are
+  to order. How many sample points are there if you choose  possible?
+  the following?
+  SECTION 3.7 ■ Some Additional Counting Rules (Optional) 195
+
+  b. Repeat part a, but do not include any teeth classified as  game consists of a choice of one of two color television brands
+  “unknown” in the sample.  (A or B), one of two colors (red or black), and the quantity
+  ordered (1, 2, or 3 TVs). Use a counting rule to determine
+  c. If the tooth is selected at random, what is the probabil-  the number of different purchase order cards that are pos-
+  ity it is not classified as “unknown”?  sible. Does your answer agree with the list you produced in
+  Exercise 3.32?
+3.113  Choosing portable grill displays. Refer to the Journal of
+  Consumer Research (Mar. 2003) study of how people attempt
+  to influence the choices of others, Exercise 3.29 (p. 159).  3.118  ZIP codes. An eight-digit code is used to distinguish be-
+  Recall that students selected three portable grill displays to  tween different regions. The code uses numbers between 1
+  be compared from an offering of five different grill displays.  and 9, inclusive.
+  a. Use a counting rule to count the number of ways the  a. How many different codes are available for use?
+
+  three displays can be selected from the five available  (Assume that any eight-digit number can be used as a
+  displays to form a three-grill-display combination.  code.)
+  b. The researchers informed students to select the three  b. The first three digits of a code for a particular region
+  displays in order to convince people to choose Grill #2.  are 333. If no other region has these first three digits
+  Consequently, Grill #2 was a required selection. Use a  as part of its code, how many codes can exist in this
+  counting rule to count the number of different ways the  region?
+  three grill displays can be selected from the five displays
+  if Grill #2 must be selected. (Your answer should agree  3.119  Traveling between cities. A salesperson living in city A
+  with the answer in 3.29a.)  wishes to visit five cities B, C, D, E, and F.
+  c. Now suppose the three selected grills will be set up in a  a. If the cities are all connected by airlines, how many dif-
+  specific order for viewing by a customer. (The customer
+  views one grill first, then the second, and finally the third  ferent travel plans could be constructed to visit each
+  grill.) Again, Grill #2 must be one of the three selected.  city exactly once and then return home?
+  How many different ways can the three grill displays be  b. Suppose all cities are connected, except that D and E
+  selected if customers view the grills in order?  are not directly connected. How many different flight
+  plans would be available to the salesperson?
+
+3.114  Monitoring impedance to leg movements. In an experi-  Applying the Concepts—Intermediate
+  ment designed to monitor impedance to leg movement,
+  Korean engineers attached electrodes to the ankles and  3.120  Football uniform combinations. Nike manufactures
+  knees of volunteers. Of interest were the voltage read-  uniforms for both major college and professional (NFL)
+  ings between pairs of electrodes (IEICE Transactions on  football teams. The company achieved notoriety for re-
+  Information & Systems, Jan. 2005). These readings were  inventing the look of the Oregon Ducks football team.
+  used to determine the signal-to-noise ratio (SNR) of im-  Oregon now has five different helmets, seven different
+  pedance changes such as knee flexes and hip extensions.  jerseys, and six different pants to choose from each game.
+  a. Six voltage electrodes were attached to key parts of  How many different uniform combinations are available
+  for Oregon football players?
+  the ankle. How many electrode pairs on the ankle are
+  possible?  3.121  Kiwifruit as an iron supplement. An article published in BMC
+  b. Ten voltage electrodes were attached to key parts of the  Public Health (Vol. 10, 2010) studied the effectiveness of
+  knee. How many electrode pairs on the knee are possible?  gold kiwifruit as an iron supplement in women with an iron
+  c. Determine the number of possible electrode pairs such  deficiency. Fifty women were assigned to receive an iron-
+  that one electrode is attached to the knee and one is  fortified breakfast cereal with a banana, and 50 women were
+  attached to the ankle.  assigned to receive an iron-fortified breakfast cereal with gold
+  kiwifruit. At the conclusion of the 16-week study, the med-
+3.115  Picking a basketball team. Suppose you are to choose a  ical researchers selected two women from each group and
+  basketball team (five players) from eight available athletes.  performed a full physical examination on each. How many
+  a. How many ways can you choose a team (ignoring  possible ways could the selections be made?
+
+  positions)?  3.122  Randomization in a study of TV commercials. Gonzaga
+  b. How many ways can you choose a team composed of  University professors conducted a study of over 1,500
+  television commercials and published their results in the
+  two guards, two forwards, and a center?  Journal of Sociology, Social Work and Social Welfare (Vol.
+  c. How many ways can you choose a team composed of  2, 2008). Commercials from eight networks—ABC, FAM,
+  FOX, MTV, ESPN, CBS, CNN, and NBC—were sampled
+  one each of a point guard, shooting guard, power for-  during an eight-day period, with one network randomly
+  ward, small forward, and center?  selected each day. The table below shows the order deter-
+  mined by random draw:
+3.116  Selecting project teams. Suppose you are managing 10 em-
+
+  ployees and you need to form three teams to work on differ-
+
+  ent projects. Assume that each employee may serve on any
+
+  team. In how many different ways can the teams be formed if
+
+  the number of members on each project team are as follows:  ABC—July 6 (Wed)
+  FAM—July 7 (Thr)
+  a. 3, 3, 4  b. 2, 3, 5  FOX—July 9 (Sat)
+  MTV—July 10 (Sun)
+  c. 1, 4, 5  d. 2, 4, 4  ESPN—July 11 (Mon)
+  CBS—July 12 (Tue)
+3.117 Using game simulation to teach a course. Refer to the  CNN—July 16 (Sat)
+  Engineering Management Research (May 2012) study of using  NBC—July 17 (Sun)
+  a simulation game to teach a production course, Exercise 3.32
+  (p. 159). Recall that a purchase order card in the simulated
+196 CHAPTER 3 ■ Probability
+
+  a. Determine the number of possible orderings of the net-  letters of the alphabet, followed by three digits selected
+  works over the eight days.  from the 10 digits 0, 1, 2, . . . , 9.
+  a. How many different license plates did this system
+  b. What is the probability that ESPN is selected on
+  Monday, July 11th?  allow?
+  b. New Florida tags were obtained by reversing the pro-
+  c. What is the probability that MTV is selected on a
+  Sunday?  cedure, starting with three digits followed by three
+  letters. How many new tags did the new system
+3.123  Multilevel marketing schemes. Successful companies employ  provide?
+  multilevel marketing (MLM) schemes to distribute their  c. Since the new tag numbers were added to the old num-
+  products. In one company, each distributor recruits several  bers, what is the total number of licenses available for
+  additional distributors to work at the first level. Each of  registration in Florida?
+  these first-level distributors, in turn, recruits distributors to
+  work at the second level. Distributors at any level continue  3.127  Selecting a maintenance support system. In the Journal
+  to recruit distributors, forming additional levels. A distrib-  of Quality in Maintenance Engineering (Vol. 9, 2003),
+  utor at any particular level makes a 5% commission on the  researchers used an analytic hierarchy process to help build
+  sales of all distributors at lower levels in his or her “group.”  a preferred maintenance organization for ARTHUR, the
+  a. Elaine is a distributor for an MLM company. Elaine  Norwegian Army’s high-tech radar system. The process
+  requires the builder to select alternatives in three different
+  recruits seven distributors to work for her at the first  stages (called echelons). In the first echelon, the builder
+  level. Each of these distributors recruits an additional  must choose one of two mobile units (regular soldiers or sol-
+  six distributors to work at the second level. How many  diers with engineering training). In the second echelon, the
+  second-level distributors are under Elaine?  builder chooses one of three heavy mobile units (units in the
+  b. Refer to part a. Suppose each distributor at Elaine’s sec-  Norwegian Army, units from Supplier 2, or shared units).
+  ond level recruits six third-level distributors, and each of  Finally, in the third echelon, the builder chooses one of three
+  these third-level distributors recruits four level-four dis-  maintenance workshops (Norwegian Army, Supplier 1, or
+  tributors. How many fourth-level distributors are under  Supplier 2).
+  Elaine?  a. How many maintenance organization alternatives exist
+
+3.124  Mathematical theory of partitions. Mathematicians at the  when choices are made in the three echelons?
+  University of Florida solved a 30-year-old mathematics  b. The researchers determined that only four of the alter-
+  problem with the use of the theory of partitions (Explore,
+  Fall 2000). In mathematical terminology, a partition is a  natives in part a are feasible alternatives for ARTHUR.
+  representation of an integer as a sum of positive integers.  If one of the alternatives is randomly selected, what is
+  (For example, the number 3 has three possible partitions:  the probability that it is a feasible alternative?
+  3, 2 + 1, and 1 + 1 + 1.) The researchers solved the prob-
+  lem by using “colored partitions” of a number, where the  3.128  Volleyball positions. Intercollegiate volleyball rules
+  colors correspond to the four suits—red hearts, red diamonds,  require that after the opposing team has lost its serve,
+  black spades, and black clubs—in a standard 52-card bridge  each of the six members of the serving team must rotate
+  deck. Consider forming colored partitions of an integer.  into new positions on the court. Hence, each player must
+  a. How many colored partitions of the number 3 are possible?  be able to play all six different positions. How many dif-
+  ferent team combinations, by player and position, are
+  [Hint: One partition is 31; another is 22 + 13.]  possible during a volleyball game? If players are initially
+  b. How many colored partitions of the number 5 are  assigned to the positions in a random manner, find the
+  probability that the best server on the team is in the
+  possible?  serving position.
+
+3.125  The “marriage” problem. A mathematics assignment prob-
+  lem in which each element from one set is matched with one
+  and only one element from another set is often referred to  3.129  Studying exam questions. A college professor hands out
+  as a “marriage” problem. Mathematical Social Sciences (May  a list of 10 questions, 5 of which will appear on the final
+  2014) considered the following marriage problem. After pass-  examination for the course. One of the students taking the
+  ing their preliminary exams, doctoral students in a Ph.D. pro-  course is pressed for time and can prepare for only 6 of the
+  gram are each assigned to a professor for research assistance.  10 questions on the list. Suppose the professor chooses the
+  Each professor can accept only one additional student per  5 questions at random from the 10.
+  year. Suppose there are three students, a, b, and c, who have  a. What is the probability that the student will be pre-
+  passed their preliminary exams and three professors, A, B,
+  and C. Also suppose that professor A prefers student a, pro-  pared for all 5 questions that appear on the final
+  fessor B prefers student b, and professor C prefers student c.  examination?
+  a. If the assignment is made at random, what are the  b. What is the probability that the student will be prepared
+  for fewer than 2 questions?
+  chances that the preferred matches occur?  c. What is the probability that the student will be prepared
+  b. If the assignment is made at random, what are the  for exactly 4 questions?
+
+  chances that professor A is matched with student a?  Applying the Concepts—Advanced
+  c. If the assignment is made at random, what are the
+  3.130 Modeling the behavior of granular media. Granular media
+  chances that none of the professors are matched with  are substances made up of many distinct grains—including
+  their preferred student?  sand, rice, ball bearings, and flour. The properties of
+  these materials were theoretically modeled in Engineering
+3.126 Florida license plates. In the mid-1980s, the state of Florida  Computations: International Journal for Computer-Aided
+  ran out of combinations of letters and numbers for its
+  license plates. Then, each license plate contained three
+  SECTION 3.8 ■ Bayes’s Rule (Optional)  197
+
+  Engineering and Software (Vol. 30, No. 2, 2013). The  A: 5You draw a flush.6
+  model assumes there is a system of N non-interacting  B: 5You draw a straight.6
+  granular particles. The particles are grouped according
+  to energy level. Assume there are r energy levels, with Ni  [Note: A flush consists of any 5 cards of the same suit. A
+  particles at energy level i, i = 1, 2, 3, c, r. Consequently,  straight consists of any 5 cards with values in sequence. In
+  N = N1 + N2 + g + Nr. A microset is defined as a pos-  a straight, the cards may be of any suit, and an ace may be
+  sible grouping of the particles among the energy levels. For  considered as having a value of 1 or, alternatively, a value
+  example, suppose N = 7 and r = 3. Then one possible mi-  higher than a king.]
+  croset is N1 = 1, N2 = 2, and N3 = 4. That is, there is one  a. How many different 5-card hands can be dealt from a
+  particle at energy level 1, two particles at energy level 2,
+  and four particles at energy level 3. Determine the number  52-card bridge deck?
+  of different microsets possible when N = 7 and r = 3.  b. Find P(A).
+  c. Find P(B).
+3.131 A straight flush in poker. Consider 5-card poker hands  d. The event that both A and B occur—that is, A ¨ B—is
+  dealt from a standard 52-card bridge deck. Two important
+  events are  called a straight flush. Find P1A ¨ B2.
+
+3.8 Bayes’s Rule (Optional)
+
+  An early attempt to employ probability in making inferences is the basis for a branch
+  of statistical methodology known as Bayesian statistical methods. The logic employed
+  by the English philosopher Thomas Bayes in the mid-1700s involves converting an
+
+  unknown conditional probability, say, P1B 0 A2, to one involving a known conditional
+  probability, say, P1A 0 B2. The method is illustrated in the next example.
+
+ Example 3.31  Problem An unmanned monitoring system uses high-tech video equipment and
+  microprocessors to detect intruders. A prototype system has been developed and is in
+Applying Bayes’s  use outdoors at a weapons munitions plant. The system is designed to detect intruders
+Logic—Intruder  with a probability of .90. However, the design engineers expect this probability to vary
+Detection System  with the weather. The system automatically records the weather condition each time
+  an intruder is detected. On the basis of a series of controlled tests in which an intruder
+  was released at the plant under various weather conditions, the following information is
+  available: Given that the intruder was, in fact, detected by the system, the weather was
+  clear 75% of the time, cloudy 20% of the time, and raining 5% of the time. When the
+  system failed to detect the intruder, 60% of the days were clear, 30% cloudy, and 10%
+  rainy. Use this information to find the probability of detecting an intruder, given rainy
+  weather. (Assume that an intruder has been released at the plant.)
+
+  Solution Define D to be the event that the intruder is detected by the system. Then Dc
+  is the event that the system failed to detect the intruder. Our goal is to calculate the
+
+  conditional probability P1D 0 Rainy2. From the statement of the problem, the following
+
+  information is available:
+
+  P1D2 = .90  PDc = .10
+
+  P 1Clear 0 D2 = .75  P 1Clear 0 Dc2 = .60
+  P 1Cloudy 0 D2 = .20  P 1Cloudy 0 Dc2 = .30
+  P 1Rainy 0 D2 = .05  P 1Rainy 0 Dc2 = .10
+
+  Note that P1D 0 Rainy2 is not one of the conditional probabilities that is known. However,
+
+  we can find
+
+  P1Rainy ¨ D2 = P1D2P1Rainy 0 D2 = 1.9021.052 = .045
+
+  and
+
+  P1Rainy ¨ Dc2 = P1Dc2P1Rainy 0 Dc2 = 1.102 1.102 = .01
+
+  by the multiplicative probability rule. These two probabilities are highlighted on the tree
+  diagram for the problem in Figure 3.22.
+198  CHAPTER 3 ■ Probability
+
+  Now, the event Rainy is the union of two mutually exclusive events: 1Rainy ¨ D2
+  and 1Rainy ¨ Dc2. Thus, applying the additive probability rule, we have
+
+  P1Rainy2 = P1Rainy ¨ D2 + P1Rainy ¨ Dc2 = .045 + .01 = .055
+  We now apply the formula for conditional probability to obtain
+
+  P1D 0 Rainy2 = P1Rainy2 = P1Rainy ¨ D2 + P1Rainy ¨ Dc2 = .055 = P1Rainy ¨ D2 P1Rainy ¨ D2 .045 .818
+
+  Therefore, under rainy weather conditions, the prototype system can detect the intruder
+  with a probability of .818, a value lower than the designed probability of .90.
+
+  Intruder  Weather  Outcome  Probability
+  Condition  D പ Clear  (.9)(.75) = .675
+
+  Clear
+  (.75)
+
+  Cloudy (.20)  D പ Cloudy (.9)(.20) = .180
+
+  (Detect :  .05)
+  .  Rainy (
+  9) D
+
+  D പ Rainy  (.9)(.05) = .045
+  Dc പ Clear  (.1)(.60) = .06
+
+  (.10)Clear (
+  Rainy.60)
+
+  cCloudy (.30) Dc പ Cloudy (.1)(.30) = .03
+
+  (.1) ct: D
+  Dete
+
+  Fail to
+
+Figure 3.22  Dc പ Rainy (.1)(.10) = .01
+
+Tree Diagram for Example 3.31  ■
+
+  BIOGRAPHY  The technique utilized in Example 3.31, called Bayes’s rule, can be applied when
+THOMAS BAYES (1702–1761)  an observed event A occurs with any one of several mutually exclusive and exhaustive
+  events, B1, B2, c, Bk. The formula for finding the appropriate conditional probabilities
+The Inverse Probabilist  is given in the next box.
+
+The Reverend Thomas Bayes was  Bayes’s Rule
+an ordained English Presbyterian  Given k mutually exclusive and exhaustive events, B1, B2, c, Bk such that
+minister who became a Fellow  P1B12 + P1B22 + g + P1Bk2 = 1, and given an observed event A, it follows that
+of the Royal Statistical Society
+without benefit of any formal  P1Bi 0 A2 = P1Bi ¨ A2 >P1A2
+training in mathematics or any  P1Bi2P1A 0 Bi2
+published papers in science during
+his lifetime. His manipulation of the  =
+formula for conditional probability
+in 1761 is now known as Bayes’s  P1B12P1A 0 B12 + P1B22P1A 0 B22 + g + P1Bk2P1A 0 Bk2
+theorem. At the time and for 200
+years afterward, the use of Bayes’s  In applying Bayes’s rule to Example 3.31, the observed event A = 5Rainy6 and
+theorem (or inverse probability, as  the k = 2 mutually exclusive and exhaustive events are the complementary events
+it was called) was controversial
+and, to some, considered an
+inappropriate practice. It was not
+until the 1960s that the power of
+the Bayesian approach to decision
+making began to be tapped. ■
+

@@ -1,0 +1,37 @@
+chunk,covers,verdict,ideas,read_at
+p0001-0025,"Front matter and chapters 1-4: intro, descriptive statistics, probability, discrete random variables (textbook basics, covered)",none,0,2026-10-04 19:53
+p0026-0050,"Front matter and chapters 1-4: intro, descriptive statistics, probability, discrete random variables (textbook basics, covered)",none,0,2026-10-04 19:53
+p0051-0075,"Front matter and chapters 1-4: intro, descriptive statistics, probability, discrete random variables (textbook basics, covered)",none,0,2026-10-04 19:53
+p0076-0100,"Front matter and chapters 1-4: intro, descriptive statistics, probability, discrete random variables (textbook basics, covered)",none,0,2026-10-04 19:53
+p0101-0125,"Front matter and chapters 1-4: intro, descriptive statistics, probability, discrete random variables (textbook basics, covered)",none,0,2026-10-04 19:53
+p0126-0150,"Front matter and chapters 1-4: intro, descriptive statistics, probability, discrete random variables (textbook basics, covered)",none,0,2026-10-04 19:53
+p0151-0175,"Front matter and chapters 1-4: intro, descriptive statistics, probability, discrete random variables (textbook basics, covered)",none,0,2026-10-04 19:53
+p0176-0200,"Front matter and chapters 1-4: intro, descriptive statistics, probability, discrete random variables (textbook basics, covered)",none,0,2026-10-04 19:53
+p0201-0225,"Front matter and chapters 1-4: intro, descriptive statistics, probability, discrete random variables (textbook basics, covered)",none,0,2026-10-04 19:53
+p0226-0250,"Front matter and chapters 1-4: intro, descriptive statistics, probability, discrete random variables (textbook basics, covered)",none,0,2026-10-04 19:53
+p0251-0275,"End of ch4 hypergeometric/Poisson, start ch5 continuous distributions",none,1,2026-10-04 19:53
+p0276-0300,"Normal distribution, assessing normality, exponential distribution",some,1,2026-10-04 19:53
+p0301-0325,"Ch5 exercises, ch6 sampling distributions and CLT (textbook basics)",none,2,2026-10-04 19:53
+p0326-0350,"Ch5 exercises, ch6 sampling distributions and CLT (textbook basics)",none,2,2026-10-04 19:53
+p0351-0375,"Ch7 confidence intervals, sample size determination, variance CI",some,2,2026-10-04 19:53
+p0376-0400,Ch7 exercises,none,2,2026-10-04 19:53
+p0401-0425,"Ch8 tests of hypothesis basics, z and t tests",none,2,2026-10-04 19:53
+p0426-0450,"Type II error and power, variance test (power idea logged)",some,2,2026-10-04 19:53
+p0451-0475,"Ch8 exercises; ch9 two-sample independent means (Welch/pooled, logged under SRC_020)",none,2,2026-10-04 19:53
+p0476-0500,"Ch9 paired differences, two proportions",none,2,2026-10-04 19:53
+p0501-0525,"Ch9 sample size for differences, variance ratio F test (logged)",some,2,2026-10-04 19:53
+p0526-0550,"Ch10 designed studies, completely randomized ANOVA",rich,4,2026-10-04 19:54
+p0551-0575,"Ch10 multiple comparisons (Tukey, Bonferroni, Scheffe), randomized block design",rich,4,2026-10-04 19:54
+p0576-0600,"Ch10 factorial experiments, two factors, interaction",some,5,2026-10-04 19:54
+p0601-0625,"Ch10 exercises, ch11 simple linear regression start",none,7,2026-10-04 19:54
+p0626-0650,"Ch11 least squares, model assumptions",none,7,2026-10-04 19:54
+p0651-0675,"Ch11 correlation, determination, estimation and prediction intervals",some,7,2026-10-04 19:54
+p0676-0700,Ch12 multiple regression models,none,7,2026-10-04 19:54
+p0701-0725,"Ch12 inference on beta, overall utility, interaction models (basic, logged under regress ideas)",none,7,2026-10-04 19:54
+p0726-0750,"Ch12 quadratic, dummy variables, nested model F test (logged)",none,7,2026-10-04 19:54
+p0751-0775,"Ch12 stepwise regression, residual analysis (logged)",some,7,2026-10-04 19:54
+p0776-0800,"Ch12 pitfalls: multicollinearity, extrapolation; exercises",none,7,2026-10-04 19:54
+p0801-0825,"Ch13 chi-square tests of categorical probabilities, contingency tables (logged under SRC_020)",none,7,2026-10-04 19:55
+p0826-0850,"Ch13 caution on chi-square (expected count >=5, no causal inference), appendix start",none,7,2026-10-04 19:55
+p0851-0875,"Appendix tables (F, t, chi-square)",none,7,2026-10-04 19:55
+p0876-0900,"Appendix tables, answers, credits, index",none,7,2026-10-04 19:55

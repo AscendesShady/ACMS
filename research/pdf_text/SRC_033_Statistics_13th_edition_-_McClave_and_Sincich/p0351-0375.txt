@@ -1,0 +1,1605 @@
+  SECTION 7.2 ■ Confidence Interval for a Population Mean: Normal (z) Statistic 349
+
+  Conditions Required for a Valid Large-Sample Confidence Interval for M
+  1. A random sample is selected from the target population.
+  2. The sample size n is large (i.e., n Ú 30). (Due to the Central Limit Theorem,
+
+  this condition guarantees that the sampling distribution of x is approximately
+  normal. Also, for large n, s will be a good estimator of s.)
+
+Example 7.3  Problem Unoccupied seats on flights cause airlines to lose revenue. Suppose a large
+  airline wants to estimate its average number of unoccupied seats per flight over the
+A Large-Sample  NOSHOW  past year. To accomplish this, the records of 225 flights are randomly selected, and the
+  number of unoccupied seats is noted for each of the sampled flights. (The data are saved
+Confidence Interval  in the NOSHOW file.) Descriptive statistics for the data are displayed in the MINITAB
+  printout of Figure 7.8.
+for M—Mean Number
+  Estimate m, the mean number of unoccupied seats per flight during the past year,
+of unoccupied Seats  using a 90% confidence interval.
+
+per Flight
+
+  Solution The form of a large-sample 90% confidence interval for a population mean
+  (based on the z-statistic) is:
+
+  s
+  x { za>2sx = x { z.05sx = x { 1.645 a b
+
+  1n
+
+  From Figure 7.8, we find (after rounding) that x = 11.6. Since we do not know the value
+  of s (the standard deviation of the number of unoccupied seats per flight for all flights
+  of the year), we use our best approximation—the sample standard deviation, s = 4.1,
+  shown on the MINITAB printout. Then the 90% confidence interval is approximately
+
+  11.6 { 1.645a  4.1  b = 11.6 { .45
+
+  1225
+
+Figure 7.8  or from 11.15 to 12.05. That is, at the 90% confidence level, we estimate the mean number
+  of unoccupied seats per flight to be between 11.15 and 12.05 during the sampled year.
+MINITAB printout with  This result is verified (except for rounding) on the right side of the MINITAB printout
+descriptive statistics and 90%  in Figure 7.8.
+confidence interval for
+Example 7.3
+
+  Look Back We stress that the confidence level for this example, 90%, refers to the
+  procedure used. If we were to apply that procedure repeatedly to different samples,
+  approximately 90% of the intervals would contain m. Although we do not know for sure
+  whether this particular interval (11.15, 12.05) is one of the 90% that contain m or one
+  of the 10% that do not, our knowledge of probability gives us “confidence” that the
+  interval contains m.
+
+  ■ Now Work Exercise 7.16a
+
+  The interpretation of confidence intervals for a population mean is summarized in
+  the next box.
+
+  Interpretation of a Confidence Interval for a Population Mean
+  When we form a 10011 - a2% confidence interval for m, we usually express our
+  confidence in the interval with a statement such as “We can be 10011 - a2% con-
+  fident that m lies between the lower and upper bounds of the confidence inter-
+  val,” where, for a particular application, we substitute the appropriate numerical
+350 CHAPTER 7 ■ Inferences Based on a Single Sample
+
+  values for the level of confidence and for the lower and upper bounds. The state-
+  ment reflects our confidence in the estimation process, rather than in the particular
+  interval that is calculated from the sample data. We know that repeated applica-
+  tion of the same procedure will result in different lower and upper bounds on the
+  interval. Furthermore, we know that 10011 - a2% of the resulting intervals will
+  contain m. There is (usually) no way to determine whether any particular interval
+  is one of those that contain m or one of those that do not. However, unlike point
+  estimators, confidence intervals have some measure of reliability—the confidence
+  coefficient—associated with them. For that reason, they are generally preferred to
+  point estimators.
+
+  Sometimes, the estimation procedure yields a confidence interval that is too wide
+  for our purposes. In this case, we will want to reduce the width of the interval to obtain
+  a more precise estimate of m. One way to accomplish that is to decrease the confidence
+  coefficient, 1 - a. For example, consider the problem of estimating the mean length of
+  stay, m, for hospital patients. Recall that for a sample of 100 patients, x = 4.53 days and
+  s = 3.68 days. A 90% confidence interval for m is
+
+  x { 1.6451s> 1n2 ≈ 4.53 { 11.645213.682 > 1100 = 4.53 { .61
+
+  or (3.92, 5.14). You can see that this interval is narrower than the previously calculated
+  95% confidence interval, (3.81, 5.25). Unfortunately, we also have “less confidence” in the
+  90% confidence interval. An alternative method used to decrease the width of an interval
+  without sacrificing “confidence” is to increase the sample size n. We demonstrate this
+  method in Section 7.5.
+
+Exercises 7.1–7.28
+
+Understanding the Principles  c. x { 2.53a s b
+  1n
+ 7.1 Define the target parameter.
+  d. x { 1.11a s b
+ 7.2 What is the confidence coefficient in a 90% confidence in-  1n
+  terval for m?
+  e. x { .04a s b
+ 7.3 Explain the difference between an interval estimator and a  1n
+  point estimator for m.
+  7.9 A random sample of n measurements was selected from a
+ 7.4 Explain what is meant by the statement “We are 95% con-  population with unknown mean m and standard deviation
+  fident that an interval estimate contains m.”  s = 20. Calculate a 95% confidence interval for m for each
+  of the following situations:
+ 7.5 Will a large-sample confidence interval be valid if the pop-  a. n = 75, x = 28
+  ulation from which the sample is taken is not normally dis-  b. n = 200, x = 102
+  tributed? Explain.  c. n = 100, x = 15
+  d. n = 100, x = 4.05
+ 7.6 What conditions are required to form a valid large-sample  e. Is the assumption that the underlying population of
+  confidence interval for m?  measurements is normally distributed necessary to
+  ensure the validity of the confidence intervals in parts
+Learning the Mechanics  a–d? Explain.
+
+7.7 Find za>2 for each of the following:  7.10 A random sample of 86 observations produced a mean
+  x = 26.1 and a standard deviation s = 2.6.
+a. a = .10  b. a = .01  a. Find a 95% confidence interval for m.
+  b. Find a 90% confidence interval for m.
+c. a = .05  d. a = .20  c. Find a 99% confidence interval for m.
+
+7.8 What is the confidence level of each of the following confi-
+  dence intervals for m?
+  a. x { 2.12a s b
+  1n
+
+b. x { 1.69a s b
+  1n
+SECTION 7.2 ■ Confidence Interval for a Population Mean: Normal (z) Statistic 351
+
+7.11 A random sample of 100 observations from a normally dis-  proportion of 99% confidence intervals that contain
+  tributed population possesses a mean equal to 76.7 and a  the mean as you run the applet more and more? Do
+  standard deviation equal to 7.9.  the proportions seem to be approaching the values that
+  a. Find a 90% confidence interval for m.  you would expect?
+  b. What do you mean when you say that a confidence co-  b. Clear and run the applet several times, using n = 100.
+  efficient is .90?  What happens to the proportions of 95% confidence in-
+  c. Find a 95% confidence interval for m.  tervals and 99% confidence intervals that contain the
+  d. What happens to the width of a confidence interval  mean this time? How do these results compare with
+  as the value of the confidence coefficient is increased  your results in part a?
+  while the sample size is held fixed?  c. Clear and run the applet several times, using n = 1000.
+  e. Would your confidence intervals of parts a and c be  How do the results compare with your results in parts
+  valid if the distribution of the original population were  a and b?
+  not normal? Explain.  d. Describe the effect of sample size on the likelihood that
+  a confidence interval contains the mean for a skewed
+7.12 The mean and standard deviation of a random sample of n  distribution.
+  measurements are equal to 33.5 and 3.5, respectively.
+  a. Find a 90% confidence interval for m if n = 144.  Applying the Concepts—Basic
+  b. Find a 90% confidence interval for m if n = 576.
+  c. Find the widths of the confidence intervals found in  7.13 Heart rate variability of police officers. The heart rate vari-
+  parts a and b. What is the effect on the width of a con-  ability (HRV) of police officers was the subject of research
+  fidence interval of quadrupling the sample size while  published in the American Journal of Human Biology (Jan.
+  holding the confidence coefficient fixed?  2014). HRV is defined as the variation in the time intervals
+  between heartbeats. A measure of HRV was obtained for
+  Applet Exercise 7.1  each in a sample of 355 Buffalo, NY, police officers. (The
+  lower the measure of HRV, the more susceptible the offi-
+Use the applet entitled Confidence Intervals for a Mean (the impact  cer is to cardiovascular disease.) For the 73 officers diag-
+of confidence level) to investigate the situation in Exercise 7.11  nosed with hypertension, a 95% confidence interval for the
+further. For this exercise, assume that m = 83.2 is the population  mean HRV was (4.1, 124.5). For the 282 officers that are
+mean and s = 6.4 is the population standard deviation.  not hypertensive, a 95% confidence interval for the mean
+  HRV was (148.0, 192.6).
+  a. Using n = 100 and the normal distribution with mean  a. What confidence coefficient was used to generate the
+  and standard deviation as just given, run the applet one  confidence intervals?
+  time. How many of the 95% confidence intervals con-  b. Give a practical interpretation of both of the 95% confi-
+  tain the mean? How many would you expect to contain  dence intervals. Use the phrase “95% confident” in your
+  the mean? How many of the 99% confidence intervals  answer.
+  contain the mean? How many would you expect to  c. When you say you are “95% confident,” what do you
+  contain the mean?  mean?
+  d. If you want to reduce the width of each confidence
+  b. Which confidence level has a greater frequency of in-  interval, should you use a smaller or larger confidence
+  tervals that contain the mean? Is this result what you  coefficient? Explain.
+  would expect? Explain.
+  7.14 Irrelevant speech effects. Refer to the Acoustical
+  c. Without clearing, run the applet several more times.  Science & Technology (Vol. 35, 2014) study of irrelevant
+  What happens to the proportion of 95% confidence
+  intervals that contain the mean as you run the applet  ISR speech effects, Exercise 2.34 (pp. 77). Recall that sub-
+  more and more? What happens to the proportion of  jects performed a memorization task under two condi-
+  99% confidence intervals that contain the mean as you  tions: (1) with irrelevant background speech and (2) in
+  run the applet more and more? Interpret these results  silence. The difference in the error rates for the two
+  in terms of the meanings of the 95% confidence interval  conditions—called the relative difference in error rate
+  and the 99% confidence interval.  (RDER)—was computed for each subject. Descriptive
+  statistics for the RDER values are reproduced in the fol-
+  d. Change the distribution to right skewed, clear, and run the  lowing SAS printout. Suppose you want to estimate the
+  applet several more times. Do you get the same results  average difference in error rates for all subjects who
+  as in part c? Would you change your answer to part e of  perform the memorization tasks.
+  Exercise 7.11? Explain.
+
+  Applet Exercise 7.2
+
+Use the applet entitled Confidence Intervals for a Mean (the im-
+pact of confidence level) to investigate the effect of the sample
+size on the proportion of confidence intervals that contain the
+mean when the underlying distribution is skewed. Set the distri-
+bution to right skewed, the mean to 10, and the standard devia-
+tion to 1.
+
+  a. Using n = 30, run the applet several times without
+  clearing. What happens to the proportion of 95%
+  confidence intervals that contain the mean as you
+  run the applet more and more? What happens to the
+352 CHAPTER 7 ■ Inferences Based on a Single Sample
+
+  a. Define the target parameter in words and in symbols.  Scale, which provides a quantitative measure of a person’s
+  b. In Exercise 2.104b (p. 105), you computed the interval  level of need for approval and sensitivity to social situa-
+  tions. (Higher scores indicate a greater need for approval.)
+  x { 2s. Explain why this formula should not be used as  The sample of drug dealers had a mean WR score of 39,
+  an interval estimate for the target parameter.  with a standard deviation of 6. Use this information to find
+  c. Form a 98% confidence interval for the target parameter.  an interval estimate of the mean WR score for all con-
+  Interpret the result.  victed drug dealers. Use a confidence coefficient of 99%.
+  d. Explain what the phrase “98% confident” implies in  Interpret the result.
+  your answer to part c.
+  e. Refer to the histogram of the sample RDER values  7.18  Corporate sustainability of CPA firms. Corporate sustain-
+  shown in Exercise 2.34 and note that the distribution is  ability refers to business practices designed around social
+  not symmetric. Consequently, it is likely that the pop-  SUSTAIN  and environmental considerations. Refer to the Business
+  ulation of RDER values is not normally distributed.  and Society (Mar. 2011) study on the sustainability behav-
+  Does this compromise the validity of the interval esti-  iors of CPA corporations, Exercise 2.105 (p. 105). Recall
+  mate, part c? Explain.  that the level of support for corporate sustainability (mea-
+  sured on a quantitative scale ranging from 0 to 160 points)
+7.15 Latex allergy in health care workers. Health care work-  was obtained for each in a sample of 992 senior managers
+  ers who use latex gloves with glove powder may develop  at CPA firms. Higher point values indicate a higher level of
+  a latex allergy. Symptoms of a latex allergy include con-  support for sustainability. The accompanying MINITAB
+  junctivitis, hand eczema, nasal congestion, a skin rash, and  printout gives a 90% confidence interval for the mean level
+  shortness of breath. Each in a sample of 46 hospital em-  of support for all senior managers at CPA firms.
+  ployees who were diagnosed with latex allergy reported
+  on their exposure to latex gloves (Current Allergy &  a. Locate the 90% confidence interval on the printout.
+  Clinical Immunology, Mar. 2004). Summary statistics for  b. Use the sample mean and standard deviation on the
+  the number of latex gloves used per week are x = 19.3 and
+  s = 11.9.  printout to calculate the 90% confidence interval.
+  a. Give a point estimate for the average number of latex  Does your result agree with the interval shown on the
+  gloves used per week by all health care workers with a  printout?
+  latex allergy.  c. Give a practical interpretation of the 90% confidence
+  b. Form a 95% confidence interval for the average number  interval.
+  of latex gloves used per week by all health care workers  d. Suppose the CEO of a CPA firm claims that the true
+  with a latex allergy.  mean level of support for sustainability is 75 points. Do
+  c. Give a practical interpretation of the interval you found  you believe this claim? Explain.
+  in part b.
+  d. Give the conditions required for the interval in part b  7.19  Albedo of ice melt ponds. Refer to the National Snow
+  to be valid.  and Ice Data Center (NSIDC) collection of data on the
+  PONDICE  albedo, depth, and physical characteristics of ice-melt
+7.16 Lipid profiles of hypertensive patients. People with high  ponds in the Canadian Arctic, presented in Exercise 2.15
+  blood pressure suffer from hypertension. A study of the  (p. 68). Albedo is the ratio of the light reflected by the ice
+  to that received by it. (High albedo values give a white ap-
+HYPER lipid profiles of hypertensive patients was carried out and  pearance to the ice.) Visible albedo values were recorded
+  the results published in Biology and Medicine (Vol. 2,  for a sample of 504 ice-melt ponds located in the Barrow
+  2010). Data on fasting blood sugar (milligrams/deciliter)  Strait in the Canadian Arctic; these data are saved in the
+  and magnesium (milligrams/deciliter) in blood specimens  PONDICE file.
+  collected from 50 patients diagnosed with hypertension  a. Find a 90% confidence interval for the true mean visi-
+  were collected. The accompanying MINITAB printout
+  gives 90% confidence intervals for the mean fasting blood  ble albedo value of all Canadian Arctic ice ponds.
+  sugar (FBS) and mean magnesium level (MAG).  b. Give both a practical and a theoretical interpretation of
+  a. Locate and interpret the 90% confidence interval for
+  mean fasting blood sugar on the printout.  the interval.
+  b. Locate and interpret the 90% confidence interval for  c. Recall from Exercise 2.15 that the type of ice for each
+  mean magnesium level on the printout.
+  c. If the confidence level is increased to 95%, what will  pond was classified as first-year ice, multiyear ice, or
+  happen to the width of the intervals?  landfast ice. Find 90% confidence intervals for the
+  d. If the sample of hypertensive patients is increased from  mean visible albedo for each of the three types of ice.
+  50 to 100, what will likely happen to the width of the  Interpret the intervals.
+  intervals?
+  Applying the Concepts—Intermediate
+7.17 Motivation of drug dealers. Refer to the Applied
+  Psychology in Criminal Justice (Sept. 2009) study of the  7.20 Evaporation from swimming pools. A new formula for es-
+  personality characteristics of drug dealers, Exercise 2.102  timating the water evaporation from occupied swimming
+  (p. 105). Recall that each in a sample of 100 convicted drug  pools was proposed and analyzed in the journal Heating/
+  dealers was scored on the Wanting Recognition (WR)  Piping/Air Conditioning Engineering (Apr. 2013). The
+  key components of the new formula are number of pool
+  occupants, area of pool’s water surface, and the density
+  SECTION 7.2 ■ Confidence Interval for a Population Mean: Normal (z) Statistic 353
+
+  difference between room air temperature and the air at  conducted interviews with a sample of 38 women shop-
+  the pool’s surface. Data were collected from a wide range  ping on Black Friday to gauge their shopping habits and
+  of pools where the evaporation level was known. The new  reported the results in the International Journal of Retail
+  formula was applied to each pool in the sample, yielding  and Distribution Management (Vol. 39, 2011). One ques-
+  an estimated evaporation level. The absolute value of the  tion was “How many hours do you usually spend shopping
+  deviation between the actual and estimated evaporation  on Black Friday?” Data for the 38 shoppers are listed in
+  level was then recorded as a percentage. The researchers  the accompanying table.
+  reported the following summary statistics for absolute de-  a. Describe the population of interest to the researchers.
+  viation percentage: x = 18, s = 20. Assume that the sam-  b. What is the quantitative variable of interest to the
+  ple contained n = 500 swimming pools.
+  a. Estimate the true mean absolute deviation percentage  researchers?
+  c. Use the information in the table to estimate the popu-
+  for the new formula with a 90% confidence interval.
+  b. The American Society of Heating, Refrigerating, and  lation mean number of hours spent shopping on Black
+  Friday with a 95% confidence interval.
+  Air-Conditioning Engineers (ASHRAE) handbook  d. Give a practical interpretation of the interval.
+  also provides a formula for estimating pool evapora-  e. A retail store advertises that the true mean number
+  tion. Suppose the ASHRAE mean absolute deviation  of hours spent shopping on Black Friday is 5.5 hours.
+  percentage is m = 34%. (This value was reported in the  Should the store be sued for false advertising? Explain.
+  article.) On average, is the new formula “better” than
+  the ASHRAE formula? Explain.  6 6 4 4 3 16 4 4 5 6 6 5 5 4
+  6 5 6 4 5 4 4 4 7 12 5 8 6 10
+7.21 Facial structure of CEOs. In Psychological Science (Vol.  5 8 8 3 3 8 5 6 10 11
+  22, 2011), researchers reported that a chief executive
+  officer’s facial structure can be used to predict a firm’s  Source: Thomas, J. B., and Peters, C. “An exploratory investigation of Black
+  financial performance. The study involved measuring the  Friday consumption rituals.” International Journal of Retail and Distribution
+  facial width-to-height ratio (WHR) for each in a sample  Management, Vol. 39, No. 7, 2011 (Table I).
+  of 55 CEOs at publicly traded Fortune 500 firms. These
+  WHR values (determined by computer analyzing a photo  7.23 Personality and aggressive behavior. A team of univer-
+  of the CEO’s face) had a mean of x = 1.96 and a standard  sity psychologists conducted a review of studies that
+  deviation of s = .15.
+  a. Find and interpret a 95% confidence interval for m,  PERAGGR examined the relationship between personality and
+  the mean facial WHR for all CEOs at publicly traded  aggressive behavior (Psychological Bulletin, Vol. 132,
+  Fortune 500 firms.  2006). One variable of interest was the difference be-
+  b. The researchers found that CEOs with wider faces  tween the aggressive behavior level of individuals in the
+  (relative to height) tended to be associated with firms  study who scored high on a personality test and those
+  that had greater financial performance. They based their  who scored low on the test. This variable, standardized
+  inference on an equation that uses facial WHR to pre-  to be between -7 and 7, was called “effect size.” (A large
+  dict financial performance. Suppose an analyst wants to  positive effect size indicates that those who score high
+  predict the financial performance of a Fortune 500 firm  on the personality test are more aggressive than those
+  based on the value of the true mean facial WHR of  who score low.) The researchers collected the effect sizes
+  CEOs. The analyst wants to use the value of m = 2.2.  for a sample of n = 109 studies published in psychology
+  Do you recommend he use this value?  journals. This data is saved in the PERAGGR file. A dot
+  plot and summary statistics for effect size are shown in
+7.22 Shopping on Black Friday. The day after Thanksgiving—  the MINITAB printouts at the bottom of the page. Of
+  called Black Friday—is one of the largest shopping days  interest to the researchers is the true mean effect size m
+  for all psychological studies of personality and aggressive
+BLKFRI in the United States. Winthrop University researchers  behavior.
+
+MINITAB Output for
+Exercise 7.23
+354 CHAPTER 7 ■ Inferences Based on a Single Sample
+
+  a. Identify the parameter of interest to the researchers.  decrease implies that the athlete’s time after completion of
+  b. Examine the dot plot. Does effect size have a normal  the program was higher than his time prior to training.] The
+  goal of the research is to demonstrate that the training pro-
+  distribution? Explain why your answer is irrelevant to  gram is effective in improving 40-yard sprint times.
+  the subsequent analysis.
+  c. Locate a 95% confidence interval for m on the printout  - .01 .1 .1 .24 .25 .05 .28 .25 .2 .14
+  on p. 353. Interpret the result.  .32 .34 .3 .09 .05 0 .04 .17 0 .21
+  d. If the true mean effect size exceeds 0, then the research-  .15 .3 .02 .12 .14 .1 .08 .5 .36 .1
+  ers will conclude that in the population, those who score  .01 .9 .34 .38 .44 .08 0 0
+  high on a personality test are more aggressive than
+  those who score low. Can the researchers draw this con-  Based on Gray, M., & Sauerbeck, J. A. “Speed training program for high school
+  clusion? Explain.  football players.” The Sport Journal, Vol. 7, No. 1, Winter 2004 (Table 2).
+
+7.24 Shell lengths of sea turtles. Refer to the Aquatic Biology  a. Find a 95% confidence interval for the true mean decrease
+  (Vol. 9, 2010) study of green sea turtles inhabiting the  in sprint times for the population of all football players
+  who participate in the speed-training program.
+TURTLES Grand Cayman South Sound lagoon, Exercise 2.85 (p. 97).
+  The data on curved carapace (shell) length, measured in  b. Based on the confidence interval, is the training program
+  centimeters, for 76 captured turtles are displayed in the  really effective in improving the mean 40-yard sprint
+  table. Environmentalists want to estimate the true mean  time of high school football players? Explain.
+  shell length of all green sea turtles in the lagoon.
+  Applying the Concepts—Advanced
+33.96  30.37  32.57  31.50  36.46  35.54  36.16  35.32  35.99
+39.55  44.33  42.73  42.15  42.43  49.96  46.04  48.76  47.78  7.27 Study of undergraduate problem drinking. In Alcohol &
+45.81  49.05  49.65  49.71  54.29  52.01  51.15  54.42  52.62  Alcoholism (Jan./Feb. 2007), psychologists at the University
+53.27  54.07  50.40  53.69  51.30  54.29  54.58  55.11  57.65  of Pennsylvania compared the levels of alcohol consump-
+56.35  55.68  58.40  58.06  57.79  56.54  57.03  57.64  59.27  tion of male and female freshman students. Each student
+64.79  61.96  60.08  62.34  63.84  60.61  64.91  60.35  62.63  was asked to estimate the amount of alcohol (beer, wine, or
+63.33  63.00  64.55  60.03  64.75  60.24  69.01  65.07  65.77  liquor) they consume in a typical week. Summary statistics
+65.30  68.24  65.28  67.54  68.49  66.98  65.67  70.26  70.94  for 128 males and 184 females are provided in the accompa-
+70.52  72.01  74.34  81.63  nying table.
+  a. For each gender, find a 95% confidence interval for mean
+  a. Define the parameter of interest to the environmentalists.  weekly alcohol consumption.
+  b. Use the data to find a point estimate of the target  b. Prior to sampling, what is the probability that at least
+  one of the two confidence intervals will not contain the
+  parameter.  population mean it estimates? Assume that the two in-
+  c. Compute a 95% confidence interval for the target pa-  tervals are independent.
+  c. Based on the two confidence intervals, what inference
+  rameter. Interpret the result.  can you make about which gender consumes the most
+  d. Suppose a biologist claims that the mean shell length  alcohol, on average, per week? [Caution: In Chapter 9,
+  we will learn about a more valid method of comparing
+  of all green sea turtles in the lagoon is 60 cm. Make an  population means.]
+  inference about the validity of this claim.
+  Males  Females
+7.25 Colored string preferred by chickens. Animal behavi-
+  orists have discovered that the more domestic chickens  Sample size, n  128  184
+  peck at objects placed in their environment, the healthier  Mean (ounces), x  16.79  10.79
+  the chickens seem to be. White string has been found to  Standard deviation, s  13.57  11.53
+  be a particularly attractive pecking stimulus. In one ex-
+  periment, 72 chickens were exposed to a string stimulus.  Based on Leeman, R. F., Fenton, M., & Volpicelli, J. R. “Impaired
+  Instead of white string, blue string was used. The number  control and undergraduate problem drinking.” Alcohol & Alcoholism,
+  of pecks each chicken took at the blue string over a speci-  Vol. 42, No. 1, Jan./Feb. 2007 (Table 1).
+  fied interval of time was recorded. Summary statistics for
+  the 72 chickens were x = 1.13 pecks and s = 2.21 pecks  7.28 The Raid test kitchen. According to scientists, the cock-
+  (Applied Animal Behaviour Science, Oct. 2000).  roach has had 300 million years to develop a resistance to
+  a. Use a 99% confidence interval to estimate the popula-  destruction. In a study conducted by researchers for S. C.
+  tion mean number of pecks made by chickens pecking  Johnson & Son, Inc. (manufacturers of Raid® and Off®),
+  at blue string. Interpret the result.  5,000 roaches (the expected number in a roach-infested
+  b. Previous research has shown that m = 7.5 pecks if chick-  house) were released in the Raid test kitchen. One week
+  ens are exposed to white string. Based on the results you  later, the kitchen was fumigated and 16,298 dead roaches
+  found in part a, is there evidence that chickens are more  were counted, a gain of 11,298 roaches for the 1-week
+  apt to peck at white string than blue string? Explain.  period. Assume that none of the original roaches died
+  during the 1-week period and that the standard deviation
+7.26 Speed training in football. Researchers at Northern  of x, the number of roaches produced per roach in a 1-week
+  Kentucky University designed and tested a speed-training  period, is 1.5. Use the number of roaches produced by the
+  sample of 5,000 roaches to find a 95% confidence interval
+SPRINT program for junior varsity and varsity high school football  for the mean number of roaches produced per week for
+  players (The Sport Journal, Winter 2004). Each in a sam-  each roach in a typical roach-infested house.
+  ple of 38 high school athletes was timed in a 40-yard sprint
+  prior to the start of the training program and timed again
+  after completing the program. The decreases in times (mea-
+  sured in seconds) are listed in the table. [Note: A negative
+  SECTION 7.3 ■ Confidence Interval for a Population Mean: Student’s t-Statistic 355
+
+7.3 Confidence Interval for a Population Mean: Student’s t-Statistic
+
+  BIOGRAPHY  Federal legislation requires pharmaceutical companies to perform extensive tests on
+  new drugs before they can be marketed. Initially, a new drug is tested on animals. If the
+WILLIAM S. GOSSET (1876–1937)  drug is deemed safe after this first phase of testing, the pharmaceutical company is then
+  permitted to begin human testing on a limited basis. During this second phase, inferences
+Student’s t-Distribution  must be made about the safety of the drug on the basis of information obtained from
+  very small samples.
+At the age of 23, William Gosset
+earned a degree in chemistry and  Suppose a pharmaceutical company must estimate the average increase in blood
+mathematics at prestigious Oxford  pressure of patients who take a certain new drug. Assume that only six patients (ran-
+University. He was immediately  domly selected from the population of all patients) can be used in the initial phase of
+hired by the Guinness Brewing  human testing. The use of a small sample in making an inference about m presents two
+Company in Dublin, Ireland, for his  immediate problems when we attempt to use the standard normal z as a test statistic.
+expertise in chemistry. However,
+Gosset’s mathematical skills  Problem 1 The shape of the sampling distribution of the sample mean x (and the
+allowed him to solve numerous  z-statistic) now depends on the shape of the population that is sampled. We can no
+practical problems associated  longer assume that the sampling distribution of x is approximately normal because the
+with brewing beer. For example,  Central Limit Theorem ensures normality only for samples that are sufficiently large.
+Gosset applied the Poisson
+distribution to model the number  Solution to Problem 1 The sampling distribution of x (and z) is exactly normal even for
+of yeast cells per unit volume in  relatively small samples if the sampled population is normal. It is approximately normal
+the fermentation process. His  if the sampled population is approximately normal.
+most important discovery was
+the t-distribution in 1908. Since  Problem 2 The population standard deviation s is almost always unknown. Although
+most applied researchers worked
+with small samples, Gosset was  it is still true that sx = s> 2n, the sample standard deviation s may provide a poor
+interested in the behavior of the  approximation for s when the sample size is small.
+mean in the case of small samples.
+He tediously took numerous small  Solution to Problem 2  Instead of using the standard normal statistic
+sets of numbers, calculated the  x-m x-m
+mean and standard deviation of
+each, obtained their t-ratio, and  z = sx s> 1 = n
+plotted the results on graph paper.
+The shape of the distribution was  which requires knowledge of, or a good approximation to, s, we define and use the
+always the same: the t-distribution.
+Under company policy, employees  statistic  x-m
+were forbidden to publish their  t=
+research results, so Gosset used
+the pen name Student to publish  s> 1n
+a paper on the subject. Hence,
+the distribution has been called  in which the sample standard deviation s replaces the population standard deviation s.
+Student’s t-distribution. ■  If we are sampling from a normal distribution, the t-statistic has a sampling
+
+  distribution very much like that of the z-statistic: mound shaped, symmetric, and
+  with mean 0. The primary difference between the sampling distributions of t and z
+  is that the t-statistic is more variable than the z, a property that follows intuitively
+  when you realize that t contains two random quantities (x and s), whereas z contains
+  only one (x).
+
+  The actual amount of variability in the sampling distribution of t depends on the
+  sample size n. A convenient way of expressing this dependence is to say that the t statis-
+  tic has 1n - 12 degrees of freedom (df).* Recall that the quantity 1n - 12 is the divisor
+  that appears in the formula for s2. This number plays a key role in the sampling distri-
+  bution of s2 and appears in discussions of other statistics in later chapters. In particular,
+  the smaller the number of degrees of freedom associated with the t-statistic, the more
+  variable will be its sampling distribution.
+
+  In Figure 7.9, we show both the sampling distribution of z and the sampling distri-
+  bution of a t-statistic with both 4 and 20 df. You can see that the t-distribution is more
+  variable than the z-distribution and that this variability increases as the degrees of free-
+  dom decrease. You can also see that the increased variability of the t-statistic means that
+
+  *Since degrees of freedom are related to the sample size n, it is helpful to think of the number of degrees of
+  freedom as the amount of information in the sample available for estimating the target parameter.
+356 CHAPTER 7 ■ Inferences Based on a Single Sample
+
+  Normal (z) distribution
+
+  t-distribution  t-distribution
+  df = 4  df = 20
+
+Figure 7.9  0
+
+Standard normal (z)
+distribution and t-distributions
+
+  the t-value, ta, that locates an area a in the upper tail of the t-distribution is larger than
+  the corresponding value, za. For any given value of a the t-value, ta, increases as the
+  number of degrees of freedom (df) decreases. Values of t that will be used in forming
+
+  small-sample confidence intervals of m can be obtained using technology (e.g., statistical
+
+  software) or from Table III of Appendix B. A partial reproduction of this table is shown
+
+  in Table 7.3. Note that ta values are listed for various degrees of freedom, where a refers
+  to the tail area under the t-distribution to the right of ta.
+
+  For example, if we want the t-value with an area of .025 to its right and 4 df, we
+
+  look in the table under the column t.025 for the entry in the row corresponding to 4 df.
+  This entry is t.025 = 2.776, shaded in Table 7.3 and shown in Figure 7.10. The correspond-
+  ing standard normal z-score is z.025 = 1.96. Note that the last row of Table III, where
+  df = ∞ (infinity), contains the standard normal z-values. This follows from the fact that
+  as the sample size n grows very large, s becomes closer to s and thus t becomes closer in
+
+  distribution to z. In fact, when df = 29, there is little difference between corresponding
+
+  tabulated values of z and t. Thus, we choose the arbitrary cutoff of n = 30 1df = 292
+
+  to distinguish between large-sample and small-sample inferential techniques when s is
+
+  unknown.
+
+  Table 7.3 Reproduction of Part of Table III in Appendix B
+
+  Degrees of Freedom  t.100  t.050  0  t.010  t.005  t.001  t.0005
+
+  1  3.078  6.314  t.025  31.821  63.657  318.31  636.62
+  2  1.886  2.920  6.965  9.925  22.326  31.598
+  3  1.638  2.353  12.706  4.541  5.841  10.213  12.924
+  4  1.533  2.132  4.303  3.747  4.604  7.173  8.610
+  5  1.476  2.015  3.182  3.365  4.032  5.893  6.869
+  6  1.440  1.943  2.776  3.143  3.707  5.208  5.959
+  7  1.415  1.895  2.571  2.998  3.499  5.408
+  8  1.397  1.860  2.447  2.896  3.355  4.785  5.041
+  9  1.383  1.833  2.365  2.821  3.250  4.501  4.781
+  10  1.372  1.812  2.306  2.764  3.169  4.297  4.587
+  11  1.363  1.796  2.262  2.718  3.106  4.144  4.437
+  12  1.356  1.782  2.228  2.681  3.055  4.025  4.318
+  13  1.350  1.771  2.201  2.650  3.012  3.930  4.221
+  14  1.345  1.761  2.179  2.624  2.977  3.852  4.140
+  15  1.341  1.753  2.160  2.602  2.947  3.787  4.073
+  f  2.145  f  3.733  f
+  f  f  2.131  f  f
+  ∞  f  2.576  3.291
+  1.282  1.645  2.326  3.090
+  1.960
+  SECTION 7.3 ■ Confidence Interval for a Population Mean: Student’s t-Statistic 357
+
+  t-distribution  Normal z-distribution
+
+Figure 7.10  0
+  z.025 t.025
+The t.025 value in a t-distribution  (1.96) (2.776)
+with 4 df, and the corresponding
+z.025 value
+
+ Example 7.4  Problem Consider the pharmaceutical company that desires an estimate of the mean
+  increase in blood pressure of patients who take a new drug. The blood pressure
+Confidence Interval for  increases (measured in points) for the n = 6 patients in the human testing phase are
+Mean Blood Pressure  shown in Table 7.4. Use this information to construct a 95% confidence interval for m,
+Increase, t-Statistic  the mean increase in blood pressure associated with the new drug for all patients in
+  the population.
+  Table 7.4 Blood Pressure
+  Increases (Points) for Six  Solution First, note that we are dealing with a sample too small to assume, by the Central
+  Patients  Limit Theorem, that the sample mean x is approximately normally distributed. That
+ 1.7 3.0 .8 3.4 2.7 2.1  is, we do not get the normal distribution of x “automatically” from the Central Limit
+  Theorem when the sample size is small. Instead, we must assume that the measured
+  Data Set: BPINCR  variable, in this case the increase in blood pressure, is normally distributed in order for
+  the distribution of x to be normal.
+
+  Second, unless we are fortunate enough to know the population standard devia-
+  tion s, which in this case represents the standard deviation of all the patients’ increases
+  in blood pressure when they take the new drug, we cannot use the standard normal
+  z-statistic to form our confidence interval for m. Instead, we must use the t-distribution,
+  with 1n - 12 degrees of freedom.
+
+  In this case, n - 1 = 5 df, and the t-value is found in Table 7.3 to be
+
+  t.025 = 2.571 with 5 df
+  Recall that the large-sample confidence interval would have been of the form
+
+  x { za>2 sx = x { za>2  s  = x { z.025  s
+
+  1n  1n
+
+  where 95% is the desired confidence level. To form the interval for a small sample from a
+  normal distribution, we simply substitute t for z and s for s in the preceding formula, yielding
+
+  s
+  x { ta>2
+
+  1n
+
+  An SPSS printout showing descriptive statistics for the six blood pressure increases
+  is displayed in Figure 7.11. Note that x = 2.283 and s = .950. Substituting these numer-
+  ical values into the confidence interval formula, we get
+
+  .950
+  2.283 { 12.5712 a b = 2.283 { .997
+
+  16
+
+  or 1.286 to 3.280 points. Note that this interval agrees (except for rounding) with the
+  confidence interval highlighted on the SPSS printout in Figure 7.11.
+
+  We interpret the interval as follows: We can be 95% confident that the mean increase
+  in blood pressure associated with taking this new drug is between 1.286 and 3.28 points.
+  As with our large-sample interval estimates, our confidence is in the process, not in this
+  particular interval. We know that if we were to repeatedly use this estimation procedure,
+358 CHAPTER 7 ■ Inferences Based on a Single Sample
+
+Figure 7.11
+
+SPSS confidence interval for
+mean blood pressure increase
+
+  95% of the confidence intervals produced would contain the true mean m, assuming that
+  the probability distribution of changes in blood pressure from which our sample was selected
+  is normal. The latter assumption is necessary for the small-sample interval to be valid.
+
+  Look Back What price did we pay for having to utilize a small sample to make the
+  inference? First, we had to assume that the underlying population is normally
+  distributed, and if the assumption is invalid, our interval might also be invalid.* Second,
+  we had to form the interval by using a t value of 2.571 rather than a z value of 1.96,
+  resulting in a wider interval to achieve the same 95% level of confidence. If the interval
+  from 1.286 to 3.28 is too wide to be of much use, we know how to remedy the situation:
+  Increase the number of patients sampled in order to decrease the width of the interval
+  (on average).
+
+  ■ Now Work Exercise 7.31
+
+  The procedure for forming a small-sample confidence interval is summarized in
+  the accompanying boxes.
+
+  Small-Sample 10011 − A2 Confidence Interval for M, t-Statistic
+  s unknown: x { 1ta>22 1s> 1n2
+  where ta>2 is the t-value corresponding to an area a>2 in the upper tail of the
+  Student’s t-distribution based on 1n - 12 degrees of freedom.
+  s known: x { 1za>22 1s> 1n2
+
+  Conditions Required for a Valid Small-Sample Confidence Interval for M
+  1. A random sample is selected from the target population.
+  2. The population has a relative frequency distribution that is approximately normal.
+
+ Example 7.5  Problem Some quality control experiments require destructive sampling (i.e., the test to
+  determine whether the item is defective destroys the item) in order to measure a partic-
+A Small-Sample  ular characteristic of the product. The cost of destructive sampling often dictates small
+Confidence Interval  samples. Suppose a manufacturer of printers for personal computers wishes to estimate
+for M—Destructive  the mean number of characters printed before the printhead fails.The printer manufac-
+Sampling  turer tests n = 15 printheads and records the number of characters printed until failure
+
+  *By invalid, we mean that the probability that the procedure will yield an interval that contains m is not equal
+  to 11 - a2. Generally, if the underlying population is approximately normal, the confidence coefficient will
+  approximate the probability that the interval contains m.
+  SECTION 7.3 ■ Confidence Interval for a Population Mean: Student’s t-Statistic 359
+
+  for each. These 15 measurements (in millions of characters) are listed in Table 7.5, fol-
+  lowed by a MINITAB summary statistics printout in Figure 7.12.
+
+  a. Form a 99% confidence interval for the mean number of characters printed before
+  the printhead fails. Interpret the result.
+
+  b. What assumption is required for the interval you found in part a to be valid? Is that
+  assumption reasonably satisfied?
+
+  Table 7.5  Number of Characters (in Millions) for n = 15 Printhead Tests
+  1.13 1.55  1.43 .92 1.25 1.36 1.32 .85 1.07 1.48 1.20 1.33 1.18 1.22 1.29
+
+Figure 7.12  Data Set: PRNTHD
+
+MINITAB printout with
+descriptive statistics and 99%
+confidence interval for
+Example 7.5
+
+  Solution
+
+  a. For this small sample 1n = 152, we use the t-statistic to form the confidence interval.
+  We use a confidence coefficient of .99 and n - 1 = 14 degrees of freedom to find
+  ta>2 in Table III:
+
+  ta>2 = t.005 = 2.977
+
+  [Note: The small sample forces us to extend the interval almost three standard deviations
+  (of x) on each side of the sample mean in order to form the 99% confidence interval.]
+  From the MINITAB printout shown in Figure 7.12, we find that x = 1.24 and s = .19.
+  Substituting these (rounded) values into the confidence interval formula, we obtain
+
+  s  .19
+  x { t.005 a b = 1.24 { 2.977 a b
+  1n  115
+
+  = 1.24 { .15 or 11.09, 1.392
+
+  This interval is highlighted in Figure 7.12.
+  Our interpretation is as follows: The manufacturer can be 99% confident that the
+
+  printhead has a mean life of between 1.09 and 1.39 million characters. If the manufacturer
+  were to advertise that the mean life of its printheads is (at least) 1 million characters, the
+  interval would support such a claim. Our confidence is derived from the fact that 99% of
+  the intervals formed in repeated applications of this procedure will contain m.
+
+  b. Since n is small, we must assume that the number of characters printed before the
+  printhead fails is a random variable from a normal distribution. That is, we assume
+  that the population from which the sample of 15 measurements is selected is dis-
+  tributed normally. One way to check this assumption is to graph the distribution
+  of data in Table 7.5. If the sample data are approximately normally distributed,
+  then the population from which the sample is selected is very likely to be normal.
+  A MINITAB stem-and-leaf plot for the sample data is displayed in Figure 7.13.
+
+Figure 7.13
+
+MINITAB stem-and-leaf
+display of data in Table 7.5
+360  CHAPTER 7 ■ Inferences Based on a Single Sample
+
+  The distribution is mound shaped and nearly symmetric. Therefore, the assumption
+  of normality appears to be reasonably satisfied.
+
+  Look Back Other checks for normality, such as a normal probability plot and the ratio
+  IQR/s, may also be used to verify the normality condition.
+
+  ■ Now Work Exercise 7.37
+
+  We have emphasized throughout this section that an assumption that the
+  population is approximately normally distributed is necessary for making small-sample
+  inferences about m when the t-statistic is used. Although many phenomena do have ap-
+  proximately normal distributions, it is also true that many random phenomena have dis-
+  tributions that are not normal or even mound shaped. Empirical evidence acquired over
+  the years has shown that the t-distribution is rather insensitive to moderate departures
+  from normality. That is, the use of the t-statistic when sampling from slightly skewed
+  mound-shaped populations generally produces credible results; however, for cases in
+  which the distribution is distinctly nonnormal, we must either take a large sample or use
+  a nonparametric method (the topic of Chapter 14).
+
+  What Do You Do When the Population Relative Frequency Distribution Departs
+  Greatly from Normality?
+
+  Answer: Use the nonparametric statistical methods of Chapter 14 (available online).
+
+Statistics IN Action Revisited Estimating the Mean Overpayment
+
+Refer to the Medicare fraud investigation described in the  represents the overpayment for each
+Statistics in Action (p. 343). Recall that the United States  claim. This value is recorded as the
+Department of Justice (USDOJ) obtained a random sample  amount denied in the MCFRAUD
+of 52 claims from a population of 1,000 Medicare claims. For  file. These overpayment amounts are
+each claim, the amount paid, the amount disallowed (denied)  listed in Table SIA7.1.
+by the auditor, and the amount that should have been paid
+(allowed) were recorded and saved in the MCFRAUD file.  MINITAB software is used to
+The USDOJ wants to use these data to calculate an estimate  find a 95% confidence interval for m,
+of the overpayment for all 1,000 claims in the population.  the mean overpayment amount. The
+  MINITAB printout is displayed in
+  One way to do this is to first use the sample data to es-  Figure SIA7.1. The 95% confidence in-
+timate the mean overpayment per claim for the population,  terval for m, (highlighted on the print-
+then use the estimated mean to extrapolate the overpayment  out) is (16.51, 27.13). Thus, the USDOJ
+amount to the population of all 1,000 claims.The difference be-  can be 95% confident that the mean overpayment amount for
+tween the amount paid and the amount allowed by the auditor  the population of 1,000 claims is between $16.51 and $27.13.
+
+  Table SIA7.1 overpayment Amounts for Sample of 52 Claims
+
+  $0.00  $31.00  $0.00  $37.20  $37.20  $0.00  $43.40  $0.00
+  $37.20  $43.40  $0.00  $37.20  $0.00  $24.80  $0.00  $0.00
+  $37.20  $37.20  $37.20  $37.20  $37.20  $0.00
+  $37.20  $0.00  $0.00  $0.00  $37.20  $43.40  $37.20
+  $37.20  $0.00  $0.00  $37.20  $0.00  $37.20  $37.20
+  $0.00  $37.20  $43.40  $37.20  $37.20  $0.00  $37.20  $0.00
+  $0.00  $37.20  $43.40  $0.00  $37.20
+  $43.40  $0.00
+  $0.00
+
+  Data Set: MCFRAUD
+
+Figure SIA7.1
+
+MINITAB confidence interval
+for mean overpayment
+  SECTION 7.3 ■ Confidence Interval for a Population Mean: Student’s t-Statistic 361
+
+Statistics IN Action  Now, let xi represent the  Consequently, to estimate the total overpayment amount
+  overpayment amount for the i  for the 1,000 claims, the USDOJ will simply multiply
+  (continued)  the end points of the interval by 1,000. This yields the
+  claim. If the true mean m were  95% confidence interval ($16,510, $27,130).* Typically,
+  the USDOJ is willing to give the Medicare provider in
+  known, then the total overpay-  question the benefit of the doubt by demanding a repay-
+  ment equal to the lower 95% confidence bound—in this
+ment amount for all 1,000 claims would be equal to  case, $16,510.
+
+1,000  1,000
+
+a xi = 11,0002 c a d xi> 11,0002 = 11,0002m
+i=1  i = 1
+
+Exercises 7.29–7.51  c. Describe any patterns you observe between the pro-
+  portion of z-intervals that contain the mean and the
+Understanding the Principles  proportion of t-intervals that contain the mean as the
+  sample size increases.
+7.29 State the two problems (and corresponding solutions) that
+  arise with using a small sample to estimate m.  d. How does the skewness of the underlying distribution
+  affect the proportions of z-intervals and t-intervals that
+7.30 Compare the shapes of the z- and t-distributions.  contain the mean?
+
+7.31 Explain the differences in the sampling distributions  Learning the Mechanics
+  of x for large and small samples under the following
+  assumptions:  7.32 Suppose you have selected a random sample of n = 7
+  a. The variable of interest, x, is normally distributed.  measurements from a normal distribution. Compare the
+  b. Nothing is known about the distribution of the variable  standard normal z-values with the corresponding t-values
+  x.  if you were forming the following confidence intervals:
+  a. 80% confidence interval
+  Applet Exercise 7.3  b. 90% confidence interval
+  c. 95% confidence interval
+Use the applet entitled Confidence Intervals for a Mean (the  d. 98% confidence interval
+impact of not knowing the standard deviation) to compare pro-  e. 99% confidence interval
+portions of z-intervals and t-intervals that contain the mean for a  f. Use the table values you obtained in parts a–e to sketch
+population that is normally distributed.  the z- and t-distributions. What are the similarities and
+  differences?
+  a. Using n = 5 and the normal distribution with mean 50
+  and standard deviation 10, run the applet several times.  7.33 Let t0 be a specific value of t. Use technology or Table III
+  How do the proportions of z-intervals and t-intervals  in Appendix B to find t0 values such that following state-
+  that contain the mean compare?  ments are true.
+  a. P1t Ú t02 = .025, where df = 10
+  b. Repeart part a first for n = 10 and then for n = 20.  b. P1t Ú t02 = .01, where df = 18
+  Compare your results with those you obtained in  c. P1t … t02 = .005, where df = 7
+  part a.  d. P1t … t02 = .05, where df = 14
+
+  c. Describe any patterns you observe between the pro-  7.34 Let t0 be a specific value of t. Use technology or Table III of
+  portion of z-intervals that contain the mean and the  Appendix B to find t0 values such that the following state-
+  proportion of t-intervals that contain the mean as the  ments are true:
+  sample size increases.  a. P1 - t0 6 t 6 t02 = .95, where df = 19
+  b. P1t … t02 = .01, where df = 6
+  Applet Exercise 7.4  c. P1t … - t0 or t Ú t02 = .10, where df = 19
+  d. P1t … - t0 or t Ú t02 = .01, where df = 16
+Use the applet entitled Confidence Intervals for a Mean (the im-
+pact of not knowing the standard deviation) to compare propor-  7.35 The following random sample was selected from a normal
+tions of z-intervals and t-intervals that contain the mean for a  distribution: 4, 6, 3, 5, 9, 3.
+population with a skewed distribution.  a. Construct a 90% confidence interval for the population
+  mean m.
+  a. Using n = 5 and the right-skewed distribution with
+  mean 50 and standard deviation 10, run the applet sev-
+  eral times. How do the proportions of z-intervals and
+  t-intervals that contain the mean compare?
+
+  b. Repeat part a first for n = 10 and then for n = 20.
+  Compare your results with those you obtained in part a.
+
+  *This interval represents an approximation to the true 95% confidence interval for the total amount of
+  overpayment. The precise interval involves use of a continuity correction for population size. Consult the
+  references for the use of a finite population correction factor in interval estimation.
+362 CHAPTER 7 ■ Inferences Based on a Single Sample
+
+  b. Construct a 95% confidence interval for the population  native to Zimbabwe, Africa. One variable measured was
+  mean m.  eye mass (in grams). The study reported x = 53.4 g and
+  s = 8.6 g.
+  c. Construct a 99% confidence interval for the population  a. Use this information to find a 99% confidence inter-
+  mean m.
+  val for the true mean eye mass of giraffes native to
+  d. Assume that the sample mean x and sample standard  Zimbabwe.
+  deviation s remain exactly the same as those you just  b. Suppose it is known that the mean eye mass of an
+  calculated, but that they are based on a sample of  African water buffalo is m = 31 grams. Is it likely that
+  n = 25 observations rather than n = 6 observations.  the true mean eye mass of a giraffe is larger or smaller
+  Repeat parts a–c. What is the effect of increasing the  than this mean? Explain.
+  sample size on the width of the confidence intervals?  c. Suppose it is known that the mean eye mass of an
+  African elephant is m = 58 grams. Is it likely that the
+7.36 The following sample of 16 measurements was se-  true mean eye mass of a giraffe is larger or smaller than
+  lected from a population that is approximately normally  this mean? Explain.
+
+LO7036 distributed:  7.39 Radon exposure in Egyptian tombs. Many ancient
+  Egyptian tombs were cut from limestone rock that con-
+  91 80 99 110 95 106 78 121 106 100  tained uranium. Since most tombs are not well-ventilated,
+  97 82 100 83 115 104  guards, tour guides, and visitors may be exposed to deadly
+  radon gas. In Radiation Protection Dosimetry (Dec. 2010),
+  a. Construct an 80% confidence interval for the popula-  a study of radon exposure in tombs in the Valley of Kings,
+  tion mean.  Luxor, Egypt (recently opened for public tours), was con-
+  ducted. The radon levels—measured in becquerels per
+  b. Construct a 95% confidence interval for the population  cubic meter (Bq/m3)—in the inner chambers of a sample
+  mean, and compare the width of this interval with that  of 12 tombs were determined. For this data, assume that
+  of part a.  x = 3,643 Bq>m3 and s = 1,187 Bq>m3. Use this infor-
+  mation to estimate, with 95% confidence, the true mean
+  c. Carefully interpret each of the confidence intervals, and  level of radon exposure in tombs in the Valley of Kings.
+  explain why the 80% confidence interval is narrower.  Interpret the resulting interval.
+
+Applying the Concepts—Basic  7.40 Rainfall and desert ants. Refer to the Journal of
+  Biogeography (Dec. 2003) study of ants and their habitat
+7.37 Music performance anxiety. Refer to the British Journal of
+  Music Education (Mar. 2014) study of performance anxi-  ANTS in the desert of Central Asia, presented in Exercise 2.68
+  (p. 91). Recall that botanists randomly selected five sites
+PAI ety by music students, Exercise 2.39 (p. 78). Recall that the  in the Dry Steppe region and six sites in the Gobi Desert
+  Performance Anxiety Inventory (PAI) was used to mea-  where ants were observed. One of the variables of interest
+  sure music performance anxiety on a scale from 20 to 80  is the annual rainfall (in millimeters) at each site. Summary
+  points. The table below gives PAI values for participants in  statistics for the annual rainfall at each site are provided in
+  eight different studies.  the SAS printout below.
+  a. Give a point estimate for the average annual rainfall
+  54 42 51 39 41 43 55 40  amount at ant sites in the Dry Steppe region of Central
+  Asia.
+  Source: Patston, T. “Teaching stage fright?—Implications for music  b. Give the t-value used in a small-sample 90% confidence
+  educators.” British Journal of Music Education, Vol. 31, No. 1, Mar. 2014  interval for the true average annual rainfall amount at
+  (adapted from Figure 1).  ant sites in the Dry Steppe region.
+  c. Use the result you obtained in part b and the values of
+  a. Compute the mean PAI value, x, for the sample of 8  x and s shown on the SAS printout to form a 90% confi-
+  studies. (See your answer to Exercise 2.62a.)  dence interval for the target parameter.
+  d. Give a practical interpretation for the interval you
+  b. Compute the standard deviation of the PAI values,  found in part c.
+  s, for the sample of 8 studies. (See your answer to  e. Use the data in the ANTS file to check the validity of
+  Exercise 2.87b.)  the confidence interval you found in part c.
+  f. Repeat parts a–e for the Gobi Desert region of Central
+  c. Use the results, parts a and b, to form a 95% confi-  Asia.
+  dence interval for μ, the true mean PAI value for the
+  population of all similar music performance anxiety
+  studies.
+
+  d. For the interval, part c, to be valid, how should the pop-
+  ulation of PAI values for all music performance anxiety
+  studies be distributed?
+
+  e. If you were to repeatedly sample eight music perfor-
+  mance anxiety studies and form a 95% confidence inter-
+  val for μ for each sample, what proportion of the intervals
+  will actually contain the true value of μ?
+
+7.38 Giraffes have excellent vision. Due to habitat, giraffes
+  travel in small groups. Hence, they require excellent vision
+  in order to detect predators. The eyesight of giraffes was
+  studied in African Zoology (Oct. 2013). The researchers
+  measured a variety of eye characteristics for 27 giraffes
+  SECTION 7.3 ■ Confidence Interval for a Population Mean: Student’s t-Statistic 363
+
+7.41 Lobster trap placement. An observational study of  c. Practically interpret the confidence interval.
+  teams fishing for the red spiny lobster in Baja California  d. Comment on the method of sampling. Do you think the
+
+TRAPS Sur, Mexico, was conducted and the results published in  sample is representative of the target population?
+  Bulletin of Marine Science (Apr. 2010). One of the vari-
+  ables of interest was the average distance separating  SPSS Output for Exercise 7.43
+  traps—called trap spacing—deployed by the same team of
+  fishermen. Trap spacing measurements (in meters) for a
+  sample of seven teams of red spiny lobster fishermen are
+  shown in the accompanying table. Of interest is the mean
+  trap spacing for the population of red spiny lobster fisher-
+  men fishing in Baja California Sur, Mexico.
+
+93  99  105  94  82  70  86
+
+  Based on Shester, G. G. “Explaining catch variation among Baja California  Applying the Concepts—Intermediate
+  lobster fishers through spatial analysis of trap-placement decisions.”
+  Bulletin of Marine Science, Vol. 86, No. 2,Apr. 2010 (Table 1), pp. 479–498.  7.44  Do social robots walk or roll? Refer to the International
+  Conference on Social Robotics (Vol. 6414, 2010) study on
+  a. Identify the target parameter for this study.  ROBOTS  the current trend in the design of social robots, Exercise
+  b. Compute a point estimate of the target parameter.  2.7 (p. 66). Recall that in a random sample of social robots
+  c. What is the problem with using the normal (z) statistic  obtained through a Web search, 28 were built with wheels.
+  The number of wheels on each of the 28 robots is repro-
+  to find a confidence interval for the target parameter?  duced in the accompanying table.
+  d. Find a 95% confidence interval for the target  a. Estimate m, the average number of wheels used on all
+
+  parameter.  social robots built with wheels, with 99% confidence.
+  e. Give a practical interpretation of the interval, part d.  b. Practically interpret the interval, part a.
+  f. What conditions must be satisfied for the interval, part d,  c. Refer to part a. In repeated sampling, what proportion
+
+  to be valid?  of all similarly constructed confidence intervals will
+  contain the true mean, m?
+7.42 Shell lengths of sea turtles. Refer to the Aquatic Biology
+  (Vol. 9, 2010) study of green sea turtles inhabiting the  44333642221333
+  34432822343342
+TURTLES Grand Cayman South Sound lagoon, Exercise 7.24
+  (p. 354). Time-depth recorders were deployed on 6 of the  Source: Chew, S., et al. “Do social robots walk or roll?” International
+  76 captured turtles. The time-depth recorders allowed the  Conference on Social Robotics, Vol. 6414, 2010 (adapted from Figure 2).
+  environmentalists to track the movement of the sea turtles
+  in the lagoon. These 6 turtles had a mean shell length of  7.45 Pitch memory of amusiacs. A team of psychologists and
+  52.9 cm with a standard deviation of 6.8 cm.  neuroscientists tested the pitch memory of individuals di-
+  a. Use the information on the 6 tracked turtles to esti-  agnosed with amusia (a disorder that impacts one’s per-
+  mate, with 99% confidence, the true mean shell length  ception of music) and reported their results in Advances
+  of all green sea turtles in the lagoon. Interpret the  in Cognitive Psychology (Vol. 6, 2010). Each in a sample of
+  result.  17 amusiacs listened to a series of tone pairs and then were
+  b. What assumption about the distribution of shell lengths  asked to determine if the tones were the same or different.
+  must be true in order for the confidence interval, part a,  In one trial, the tones were separated by 1 second. In a sec-
+  to be valid? Is this assumption reasonably satisfied? (Use  ond trial, the tones were separated by 5 seconds. Scores
+  the data saved in the TURTLES file to help you answer  in the two trials were compared for each amusiac. The
+  this question.)  mean score difference was .11 with a standard deviation
+  of .19. Use this information to form a 90% confidence
+7.43 Duration of daylight in western Pennsylvania. What area of  interval for the true mean score difference for all amusiacs.
+  the United States has the least amount of daylight, on aver-  Interpret the result. What assumption about the popula-
+  tion of score differences must hold true for the interval to
+DAYLT age? Having grown up in western Pennsylvania, co-author  be valid?
+  Sincich wonders if it is his hometown of Sharon, PA. Data
+  on the number of minutes of daylight per day in Sharon,  7.46  Shaft graves in ancient Greece. Refer to the American
+  PA, for 12 randomly selected days (one each month) in a  Journal of Archaeology (Jan. 2014) study of shaft graves
+  recent year were obtained from the Naval Oceanography  SHAFTS  in ancient Greece, Exercise 2.37 (p. 78). Recall that shaft
+  Portal Web site (aa.usno.navy.mil/USNO/astronomical-  graves are named for the beautifully decorated sword shafts
+  applications/data-services). The data are listed in the table.  that are buried along with the bodies. The table on p. 364
+  Descriptive statistics and a 95% confidence interval for the
+  mean are produced in the SPSS printout in the next column.
+  a. Locate the confidence interval on the printout and give
+  the value of the confidence coefficient.
+  b. Use the descriptive statistics on the printout to calcu-
+  late the 95% confidence interval. Be sure your answer
+  agrees with the interval shown on the printout.
+
+591 618 704 831 896 909 865 839 748 672 583 565
+
+Based on Astronomical Applications Dept., U.S. Naval Observatory, Washington, DC.
+364 CHAPTER 7 ■ Inferences Based on a Single Sample
+
+  gives the number of shafts buried at each of 13 recently dis-  c. What conditions are required for the inference you
+  covered grave sites.  made in part b to be valid? Are these conditions reason-
+  ably satisfied?
+  1231562412429
+  d. A logger working on the road claims that the mean skid-
+  Source: Harrell, K. “The fallen and their swords: A new explanation for  ding distance is at least 425 meters. Do you agree?
+  the rise of the shaft graves.” American Journal of Archaeology, Vol. 118,
+  No. 1, Jan. 2014 (Figure 1).  7.49 Reproduction of bacteria-infected spider mites. Zoologists
+  in Japan investigated the reproductive traits of spider
+  a. Estimate the average number of shafts buried in ancient  mites with a bacterial infection (Heredity, Jan. 2007). Male
+  Greece graves using a 90% confidence interval. Give a  and female pairs of infected spider mites were mated in a
+  practical interpretation of the interval.  laboratory and the number of eggs produced by each fe-
+  male recorded. Summary statistics for several samples are
+  b. What assumption about the data on shaft graves is re-  provided in the accompanying table. Note that, in some
+  quired for the inference, part a, to be valid?  samples, one or both infected spider mites were treated
+  with antibiotic prior to mating.
+7.47  Oxygen bubbles in molten salt. Molten salt is used in an  a. For each type of female–male pair, construct and inter-
+  electro-refiner to treat nuclear fuel waste. Eventually,  pret a 90% confidence interval for the population mean
+BUBBLE  the salt needs to be purified (for reuse) or disposed of.  number of eggs produced by the female spider mite.
+  A promising method of purification involves oxidation.  b. Identify the type of female–male pair that appears to pro-
+  Such a method was investigated in Chemical Engineering  duce the highest mean number of eggs.
+  Research and Design (Mar. 2013). An important aspect
+  of the purification process is the rising velocity of oxygen  Female–  Sample Size  Mean # of Eggs  Standard
+  bubbles in the molten salt. An experiment was conducted  Male Pairs  Deviation
+  in which oxygen was inserted (at a designated sparging
+  rate) into molten salt and photographic images of the bub-  Both
+  bles taken. A random sample of 25 images yielded the data
+  on bubble velocity (measured in meters per second) shown  untreated  29  20.9  3.34
+  in the table. [Note: These data are simulated based on in-
+  formation provided in the article.]  Male treated  23  20.3  3.50
+
+  Female
+
+  treated  18  22.9  4.37
+
+  Both treated  21  18.6  2.11
+
+  0.275 0.261 0.209 0.266 0.265 0.312 0.285 0.317 0.229  Based on Gotoh, T., Noda, H., & Ito, S. “Cardinium symbionts cause cytoplasmic
+  0.251 0.256 0.339 0.213 0.178 0.217 0.307 0.264 0.319  incompatibility in spider mites.” Heredity, Vol. 98, No. 1, Jan. 2007 (Table 2).
+  0.298 0.169 0.342 0.270 0.262 0.228 0.220
+  7.50 Antigens for a parasitic roundworm in birds. Ascaridia
+  a. Use statistical software to find a 95% confidence interval  galli is a parasitic roundworm that attacks the intestines of
+  for the mean bubble rising velocity of the population.  birds, especially chickens and turkeys. Scientists are work-
+  Interpret the result.  ing on a synthetic vaccine (antigen) for the parasite. The
+  success of the vaccine hinges on the characteristics of DNA
+  b. The researchers discovered that the mean bubble rising  in peptide (protein) produced by the antigen. In the jour-
+  velocity is m = .338 when the sparging rate of oxygen is  nal Gene Therapy and Molecular Biology (June 2009), sci-
+  3.33 * 10-6. Do you believe that the data in the table  entists tested alleles of antigen-produced protein for level
+  were generated at this sparging rate? Explain.  of peptide. For a sample of 4 alleles, the mean peptide
+  score was 1.43 and the standard deviation was .13.
+7.48 Minimizing tractor skidding distance. In planning for a  a. Use this information to construct a 90% confidence in-
+  new forest road to be used for tree harvesting, planners  terval for the true mean peptide score in alleles of the
+  antigen-produced protein.
+SKID must select the location that will minimize tractor skidding  b. Interpret the interval for the scientists.
+  distance. In the Journal of Forest Engineering (July 1999),  c. What is meant by the phrase “90% confidence”?
+  researchers wanted to estimate the true mean skidding
+  distance along a new road in a European forest. The skid-  Applying the Concepts—Advanced
+  ding distances (in meters) were measured at 20 randomly
+  selected road sites. These values are given in the accom-  7.51 Study on waking sleepers early. Scientists have discovered
+  panying table.  increased levels of the hormone adrenocorticotropin in peo-
+  ple just before they awake from sleeping (Nature, Jan. 7,
+  488 350 457 199 285 409 435 574 439 546  1999). In the study described, 15 subjects were monitored
+  385 295 184 261 273 400 311 312 141 425  during their sleep after being told that they would be woken
+  at a particular time. One hour prior to the designated
+  Based on Tujek, J., & Pacola, E. “Algorithms for skidding distance model-  wake-up time, the adrenocorticotropin level (pg/mL) was
+  ing on a raster Digital Terrain Model.” Journal of Forest Engineering, Vol.  measured in each, with the following results:
+  10, No. 1, July 1999 (Table 1).
+  x = 37.3 s = 13.9
+  a. Estimate, with a 95% confidence interval, the true
+  mean skidding distance of the road.  a. Use a 95% confidence interval to estimate the true
+  mean adrenocorticotropin level of sleepers one hour
+  b. Give a practical interpretation of the interval you found  prior to waking.
+  in part a.
+  SECTION 7.4 ■ Large-Sample Confidence Interval for a Population Proportion 365
+
+b. Interpret the interval you found in part a in the words  woken three hours earlier than expected. Use the
+  of the problem.  interval from part a to make an inference about the
+  mean adrenocorticotropin level of sleepers under
+c. The researchers also found that if the subjects were  two conditions: one hour before the anticipated
+  woken three hours earlier than they anticipated, the  wake-up time and three hours before the antici-
+  average adrenocorticotropin level was 25.5 pg/mL.  pated wake-up time.
+  Assume that m = 25.5 for all sleepers who are
+
+7.4 Large-Sample Confidence Interval for a Population Proportion
+
+  The number of public-opinion polls has grown at an astounding rate in recent years.
+  Almost daily, the news media report the results of some poll. Pollsters regularly
+  determine the percentage of people in favor of the president’s welfare-reform program,
+  the fraction of voters in favor of a certain candidate, the fraction of customers who favor
+  a particular brand of wine, and the proportion of people who smoke cigarettes. In each
+  case, we are interested in estimating the percentage (or proportion) of some group with
+  a certain characteristic. In this section, we consider methods for making inferences about
+  population proportions when the sample is large.
+
+ Example 7.6  Problem Public-opinion polls are conducted regularly to estimate the fraction of U.S.
+  citizens who trust the president. Suppose 1,000 people are randomly chosen and 637
+Estimating a Population  answer that they trust the president. How would you estimate the true fraction of all U.S.
+Proportion—Fraction Who  citizens who trust the president?
+Trust the President
+  Solution What we have really asked is how you would estimate the probability p of
+  success in a binomial experiment in which p is the probability that a person chosen
+  trusts the president. One logical method of estimating p for the population is to use the
+  proportion of successes in the sample. That is, we can estimate p by calculating
+
+  Number of people sampled who trust the president
+  pn = Number of people sampled
+
+  where pn is read “p hat.” Thus, in this case,
+
+  pn = = 637 .637
+  1,000
+
+  Look Back To determine the reliability of the estimator pn, we need to know its sampling
+  distribution. That is, if we were to draw samples of 1,000 people over and over again,
+  each time calculating a new estimate pn, what would be the frequency distribution of all
+  the pn-values? The answer lies in viewing pn as the average, or mean, number of successes
+  per trial over the n trials. If each success is assigned a value equal to 1 and each failure
+  is assigned a value of 0, then the sum of all n sample observations is x, the total number
+  of successes, and pn = x>n is the average, or mean, number of successes per trial in the
+  n trials. The Central Limit Theorem tells us that the relative frequency distribution of the
+  sample mean for any population is approximately normal for sufficiently large samples.
+
+  ■ Now Work Exercise 7.59a
+
+  The repeated sampling distribution of pn has the characteristics listed in the next
+  box and shown in Figure 7.14.
+
+Figure 7.14  p^
+Sampling distribution of pn  p
+
+  p  p
+366 CHAPTER 7 ■ Inferences Based on a Single Sample
+
+  Sampling Distribution of pn
+  1. The mean of the sampling distribution of pn is p; that is, pn is an unbiased
+
+  estimator of p.
+  2. The standard deviation of the sampling distribution of pn is 2pq>n; that is,
+
+  sp = 1pq>n, where q = 1 - p.
+  3. For large samples, the sampling distribution of pn is approximately normal. A
+
+  sample size is considered large if both npn Ú 15 and nqn Ú 15.
+
+  The fact that pn is a “sample mean fraction of successes” allows us to form con-
+  fidence intervals about p in a manner that is completely analogous to that used for
+  large-sample estimation of m.
+
+  Large-Sample Confidence Interval for p
+
+  pn { za>2spn = pn { za>2 pq A n ≈ pn { za>2 pnqn C n
+  where pn = x and qn = 1 - pn
+
+  n
+  Note: When n is large, pn can approximate the value of p in the formula for spn .
+
+  Conditions Required for a Valid Large-Sample Confidence Interval for p
+  1. A random sample is selected from the target population.
+  2. The sample size n is large. (This condition will be satisfied if both npn Ú 15 and
+
+  nqn Ú 15. Note that npn and nqn are simply the number of successes and number
+  of failures, respectively, in the sample.
+
+Table 7.6 Values of pq  Thus, if 637 of 1,000 U.S. citizens say they trust the president, a 95% confidence
+for Several Different  interval for the proportion of all U.S. citizens who trust the president is
+Values of p
+  pq
+  p  pq  1pq  p A n { za>2snp = .637 { 1.96 1,000
+
+.5  .25  .50  where q = 1 - p. Just as we needed an approximation for s in calculating a large-sample
+  confidence interval for m, we now need an approximation for p. As Table 7.6 shows, the
+.6 or .4  .24  .49  approximation for p does not have to be especially accurate because the value of 1pq
+  needed for the confidence interval is relatively insensitive to changes in p. Therefore, we
+.7 or .3  .21  .46  can use pn to approximate p. Keeping in mind that qn = 1 - pn, we substitute these values
+  into the formula for the confidence interval:
+.8 or .2  .16  .40
+  pn { 1.962pq>1,000 ≈ pn { 1.962pnqn >1,000
+.9 or .1  .09  .30  = .637 { 1.9621.63721.3632 >1,000 = .637 { .030
+  = 1.607, .6672
+
+  Then we can be 95% confident that the interval from 60.7% to 66.7% contains the true
+  percentage of all U.S. citizens who trust the president. That is, in repeated constructions
+  of confidence intervals, approximately 95% of all samples would produce confidence
+  SECTION 7.4 ■ Large-Sample Confidence Interval for a Population Proportion 367
+
+  intervals that enclose p. Note that the guidelines for interpreting a confidence interval
+  about m also apply to interpreting a confidence interval for p because p is the “popula-
+  tion mean fraction of successes” in a binomial experiment.
+
+ Example 7.7  Problem Many public polling agencies conduct surveys to determine the current
+  consumer sentiment concerning the state of the economy. For example, the Bureau
+A Large-Sample  of Economic and Business Research (BEBR) at the University of Florida conducts
+Confidence Interval for  quarterly surveys to gauge consumer sentiment in the Sunshine State. Suppose that
+p—Proportion optimistic  BEBR randomly samples 484 consumers and finds that only 157 are optimistic about the
+about the Economy  state of the economy. Use a 90% confidence interval to estimate the proportion of all
+  consumers in Florida who are optimistic about the state of the economy. Based on the
+  confidence interval, can BEBR infer that a minority of Florida consumers is optimistic
+  about the economy?
+
+  Solution The number x of the 484 sampled consumers who are optimistic about the
+  Florida economy is a binomial random variable if we can assume that the sample was
+  randomly selected from the population of Florida consumers and that the poll was
+  conducted identically for each consumer sampled.
+
+  The point estimate of the proportion of Florida consumers who are optimistic
+  about the economy is
+
+  pn = = = x 157 .324
+  n 484
+
+  We first check to be sure that the sample size is sufficiently large that the normal
+  distribution provides a reasonable approximation to the sampling distribution of pn. We
+  require the number of successes in the sample, npn, and the number of failures, nqn, both
+  to be at least 15. Since the number of successes is npn = 157 and the number of failures is
+  nqn = 327, we may conclude that the normal approximation is reasonable.
+
+  We now proceed to form the 90% confidence interval for p, the true proportion of
+  Florida consumers who are optimistic about the state of the economy:
+
+  pn { za>2spn = pn { za>2 pq A n ≈ pn { za>2 pnqn A n
+
+  1.32421.6762
+  = .324 { 1.645B 484  = .324 { .035 = 1.289, .3592
+
+  (This interval is also shown on the MINITAB printout of Figure 7.15.) Thus, we can be
+  90% confident that the proportion of all Florida consumers who are confident about the
+  economy is between .289 and .359. As always, our confidence stems from the fact that
+  90% of all similarly formed intervals will contain the true proportion p and not from any
+  knowledge about whether this particular interval does.
+
+  Can we conclude on the basis of this interval that a minority of Florida consumers
+  is optimistic about the economy? If we wished to use this interval to infer that a mi-
+  nority is optimistic, the interval would have to support the inference that p is less than
+  .5—that is, that less than 50% of Florida consumers are optimistic about the economy.
+  Note that the interval contains only values below .5. Therefore, we can conclude on the
+  basis of this 90% confidence interval that the true value of p is less than .5.
+
+Figure 7.15
+
+MINITAB printout with 90%
+confidence interval for p
+368  CHAPTER 7 ■ Inferences Based on a Single Sample
+
+  Look Ahead If the confidence interval includes .5 (e.g., an interval from .42 to .54), then
+  we could not conclude that the true proportion of consumers who are optimistic is less
+  than .5. (This is because it is possible that p is as high as .54.)
+
+  ■ Now Work Exercise 7.65
+
+  We conclude this section with a warning and an illustrative example.
+
+  ! CAuTIoN Unless n is extremely large, the large-sample procedure presented in this
+  section performs poorly when p is near 0 or near 1.
+
+  The problem stated in the above warning can be illustrated as follows. Suppose you
+  want to estimate the proportion of people who die from a bee sting using a sam-
+  ple size of n = 100. This proportion is likely to be near 0, say p ≈ .001. If so, then
+  np ≈ 1001.0012 = .1 is less than the recommended value of 15 (see conditions in the
+  box on p. 366). Consequently, a confidence interval for p based on a sample of n = 100
+  will probably be misleading.
+
+  To overcome this potential problem, an extremely large sample size is required.
+  Since the value of n required to satisfy “extremely large” is difficult to determine, statis-
+  ticians (see Agresti & Coull, 1998) have proposed an alternative method, based on the
+  Wilson (1927) point estimator of p. Wilson’s adjustment for estimating p is outlined in
+  the next box. Researchers have shown that this confidence interval works well for any p,
+  even when the sample size n is very small.
+
+  Adjusted 1 1 − a2 100% Confidence Interval for a Population Proportion p
+  ∼p { za>2 ∼p 11 - ∼p 2
+  C n+4
+
+  ∼ x+2  is the adjusted sample proportion of observations with the charac-
+  where p =  n+4
+
+  teristic of interest, x is the number of successes in the sample, and n is the sample size.
+
+ Example 7.8  Problem According to True Odds: How Risk Affects Your Everyday Life (Walsh, 1997),
+  the probability of being the victim of a violent crime is less than .01. Suppose that, in a
+using the Adjusted  random sample of 200 Americans, 3 were victims of a violent crime. Use a 95% confidence
+Confidence Interval  interval to estimate the true proportion of Americans who were victims of a violent crime.
+Procedure—Proportion
+Who Are Victims of a  Solution Let p represent the true proportion of Americans who were victims of a violent
+Violent Crime  crime. Since p is near 0, an “extremely large” sample is required to estimate its value
+  by the usual large-sample method. Here, the number of “successes,” 3, is less than 15.
+  Thus, we doubt whether the sample size of 200 is large enough to apply the large-sample
+  method. Alternatively, we will apply Wilson’s adjustment outlined in the box.
+
+  Because the number of “successes” (i.e., number of victims of a violent crime) in
+  the sample is x = 3, the adjusted sample proportion is
+
+  ∼ x+2 3+2  5
+  p=  = = .025
+  =
+  n + 4 200 + 4 204
+
+  Note that this adjusted sample proportion is obtained by adding a total of four
+  observations—two “successes” and two “failures”—to the sample data. Substituting
+  ∼p = .025 into the equation for a 95% confidence interval, we obtain
+
+  ∼p { 1.96  ∼p 11 - ∼p 2  1.02521.9752
+  = .025 { 1.96
+  C n+4  B 204
+
+  = .025 { .021
+
+  or (.004, .046). Consequently, we are 95% confident that the true proportion of
+  Americans who are victims of a violent crime falls between .004 and .046.
+  SECTION 7.4 ■ Large-Sample Confidence Interval for a Population Proportion 369
+
+  Look Back: If we apply the standard large-sample confidence interval formula, where
+  pn = 3>200 = .015, we obtain
+
+  pn qn  1.01521.9852
+  p B n { 1.96 200 = .015 { 1.96 B 200
+
+  = .015 { .017
+
+  or, 1 -.002, .0322. Note that the interval estimate contains negative (nonsensical)
+  values for the true proportion. Such a result is typical when the large-sample method is
+  misapplied.
+
+  ■ Now Work Exercise 7.71b
+
+Statistics IN Action Revisited Estimating the Coding Error Rate
+
+In the previous Statistics in Action Revisited (p. 360), we  The MCFRAUD file includes
+showed how to estimate the mean overpayment amount for  a qualitative variable (called
+claims in a Medicare fraud study. In addition to estimating  “Coding Error”) at two levels,
+overcharges, the USDOJ also is interested in estimating the  where “Yes” represents that the
+coding error rate of a Medicare provider. The coding error  claim is coded incorrectly and
+rate is defined as the proportion of Medicare claims that are  “No” represents that the claim is
+coded incorrectly. Thus, for this inference, the USDOJ is in-  coded correctly. Thus, the USDOJ
+terested in estimating a population proportion, p. Typically,  desires an estimate of the pro-
+the USDOJ finds that about 50% of the claims in a Medicare  portion of “Yes” values for the
+fraud case are incorrectly coded.  “Coding Error” variable. A con-
+  fidence interval for the propor-
+  If you examine the sample data in Table SIA7.1, you can  tion of incorrectly coded claims
+verify that of the 52 audited claims, 31 were determined to be  is highlighted on the accompany-
+coded incorrectly, resulting in an overcharge. These are the  ing MINITAB printout, Figure
+claims with a disallowed amount greater than $0. Therefore,  SIA7.2. The interval, (.45, .73), implies that the true coding
+an estimate of the coding error rate, p, for this Medicare pro-  error rate for the 1,000 claims in the population falls between
+vider is  .45 and .73, with 95% confidence. Note that the value .5—
+  the proportion of incorrectly coded claims expected by the
+  pn = 31>52 = .596  USDOJ—falls within the 95% confidence interval.
+
+A 95% confidence interval for p can be obtained with the use  Data Set: MCFRAUD
+of a confidence interval formula or with statistical software.
+
+Figure SIA7.2
+
+MINITAB confidence interval
+for coding error rate
+
+Exercises 7.52–7.73  Applet Exercise 7.5
+
+Understanding the Principles  Use the applet entitled Confidence Intervals for a Proportion to
+  investigate the effect of the value of p on the number of confi-
+7.52 Describe the sampling distribution of pn on the basis of  dence intervals that contain the population proportion p for a
+  large samples of size n. That is, give the mean, the stan-  fixed sample size. For this exercise, use sample size n = 10.
+  dard deviation, and the (approximate) shape of the distri-
+  bution of pn when large samples of size n are (repeatedly)  a. Run the applet several times without clearing for p = .1.
+  selected from the binomial distribution with probability p  What proportion of the 95% confidence intervals con-
+  of success.  tain p? What proportion of the 99% confidence intervals
+  contain p? Do the results surprise you? Explain.
+7.53 Explain the meaning of the phrase “pn is an unbiased esti-
+  mator of p.”  b. Repeat part a for each value of p: p = .2, p = .3,
+  p = .4. p = .5, p = .6, p = .7, p = .8, and p = .9.
+7.54 If p is near 0 or 1, how large a sample is needed to employ
+  the large-sample confidence interval procedure?
+370 CHAPTER 7 ■ Inferences Based on a Single Sample
+
+  c. Which value of p yields the greatest proportion of each  b. Provide a statistical interpretation for the confidence
+  type of interval that contains p?  interval you constructed in part a.
+
+  d. Based on your results, what values of p will yield more  Applying the Concepts—Basic
+  reliable confidence intervals for a fixed sample size n?
+  Explain.  7.59 Paying for music downloads. If you use the Internet, have
+  you ever paid to access or download music? This was one
+  Applet Exercise 7.6  of the questions of interest in a recent Pew Internet and
+  American Life Project Survey (Oct. 2010). Telephone in-
+Use the applet entitled Confidence Intervals for a Proportion to  terviews were conducted on a representative sample of
+investigate the effect of the sample size on the number of con-  1,003 adults living in the United States. For this sample,
+fidence intervals that contain the population proportion p for a  506 adults stated that they have paid to download music.
+value of p close to 0 or 1.  a. Use the survey information to find a point estimate
+  for the true proportion of U.S. adults who have paid to
+  a. Run the applet several times without clearing for  download music.
+  p = .5 and n = 50. Record the proportion of the 99%  b. Find an interval estimate for the proportion, part a. Use
+  confidence intervals containing p.  a 90% confidence interval.
+  c. Give a practical interpretation of the interval, part b. Your
+  b. Now set p = .1 and run the applet several times with-  answer should begin with “We are 90% confident …”
+  out clearing for n = 50. How does the proportion of the  d. Explain the meaning of the phrase “90% confident.”
+  99% confidence intervals containing p compare with
+  that in part a?  7.60 Interactions in a children’s museum. Refer to the Early
+  Childhood Education Journal (Mar. 2014) study of
+  c. Repeat part b, keeping p = .1 and increasing the sam-  interactions in a children’s museum, Exercise 2.19 (p. 69).
+  ple size by 50 until you find a sample size that yields a  (Interactions by visitors to the museum included show-
+  similar proportion of the 99% confidence intervals con-  and-tell, learning, teaching, refocusing, participatory play,
+  taining p as that in part a.  advocating, and disciplining interactions.) Recall that the
+  researchers observed a sample of 170 meaningful interac-
+  d. Based on your results, describe how the value of p af-  tions, of which 81 were led by children and 89 were led by
+  fects the sample size needed to guarantee a certain level  adult caregivers.
+  of confidence.  a. Give a point estimate of the true proportion of all
+  meaningful interactions in a children’s museum that are
+Learning the Mechanics  led by children.
+  b. Form a 90% confidence interval around the proportion,
+7.55 A random sample of size n = 250 yielded p = .80.  part a.
+  a. Is the sample size large enough to use the large sample  c. Interpret the interval, part b, in the words of the study.
+  approximation to construct a confidence interval for p?  d. Suppose an educator claims that the true proportion of
+  Explain.  all meaningful interactions in a children’s museum that
+  b. Construct a 95% confidence interval for p.  are led by children is 35%. Make an inference about this
+  c. Interpret the 95% confidence interval.  claim.
+  d. Explain what is meant by the phrase “95% confidence
+  interval.”  7.61 Is Starbucks coffee overpriced? The Minneapolis Star
+  Tribune (Aug. 12, 2008) reported that 73% of Americans
+7.56 A random sample of size n = 169 yielded pn = .65.  say that Starbucks coffee is overpriced. The source of
+  a. Is the sample size large enough to use the methods of  this information was a national telephone survey of 1,000
+  this section to construct a confidence interval for p?  American adults conducted by Rasmussen Reports.
+  Explain.  a. Identify the population of interest in this study.
+  b. Construct a 90% confidence interval for p.  b. Identify the sample for the study.
+  c. What assumption is necessary to ensure the validity of  c. Identify the parameter of interest in the study.
+  this confidence interval?  d. Find and interpret a 95% confidence interval for the
+  parameter of interest.
+7.57 For the binomial sample information summarized in each
+  part, indicate whether the sample size is large enough to  7.62 Nannies who work for celebrities. The International Nanny
+  use the methods of this chapter to construct a confidence  Association reports that in a sample of 528 in-home child
+  interval for p.  care providers (nannies), 20 work for either a nationally
+  a. n = 500, pn = .05  known, a locally known, or an internationally known ce-
+  b. n = 100, pn = .05  lebrity (2011 International Nanny Association Salary and
+  c. n = 10, pn = .5  Benefits Survey). Use Wilson’s adjustment to find a 95%
+  d. n = 10, pn = .3  confidence interval for the true proportion of all nannies
+  who work for a celebrity. Interpret the resulting interval.
+7.58 A random sample of 50 consumers taste-tested a new
+  snack food. Their responses were coded (0: do not like; 1:  7.63 National Firearms Survey. Refer to the Harvard School
+  of Public Health survey to determine the size and compo-
+SNACK like; 2: indifferent) and recorded as follows:  sition of privately held firearm stock in the United States,
+  presented in Exercise 3.85 (p. 183). Recall that, in a rep-
+  1001201100  resentative household telephone survey of 2,770 adults,
+  0102022001
+  1000010200
+  0100100101
+  0200110001
+
+  a. Use an 80% confidence interval to estimate the propor-
+  tion of consumers who like the snack food.
+SECTION 7.4 ■ Large-Sample Confidence Interval for a Population Proportion 371
+
+  26% reported that they own at least one gun (Injury  a. Find a 99% confidence interval for the proportion
+  Prevention, Jan. 2007). The researchers want to estimate  of all social robots designed with legs but no wheels.
+  the true percentage of adults in the United States that own  Interpret the result.
+  at least one gun.
+  a. Identify the population of interest to the researchers.  b. In Exercise 6.55, you assumed that 40% of all social ro-
+  b. Identify the parameter of interest to the researchers.  bots are designed with legs but no wheels. Comment on
+  c. Compute an estimate of the population parameter.  the validity of this assumption.
+  d. Form a 99% confidence interval around the estimate.
+  e. Interpret the confidence interval practically.  7.68 Study of aircraft bird strikes. As worldwide air traffic vol-
+  f. Explain the meaning of the phrase “99% confident.”  ume has grown over the years, the problem of airplanes
+  striking birds and other flying wildlife has increased
+7.64 Are you really being served red snapper? Refer to the  dramatically. The International Journal for Traffic and
+  Nature (July 15, 2004) study of fish specimens labeled  Transport Engineering (Vol. 3, 2013) reported on a study
+  “red snapper,” presented in Exercise 3.93 (p. 185). Recall  of aircraft bird strikes at Aminu Kano International
+  that federal law prohibits restaurants from serving a  Airport in Nigeria. During the survey period, a sample
+  cheaper look-alike variety of fish to customers who order  of 44 aircraft bird strikes were analyzed. The researchers
+  red snapper. In an effort to estimate the true proportion  found that 36 of the 44 bird strikes at the airport occurred
+  of fillets that are really red snapper, researchers analyzed  above 100 feet. Suppose an airport air traffic control-
+  the meat from each in a sample of 22 “red snapper” fish  ler estimates that less than 70% of aircraft bird strikes
+  fillets purchased from vendors across the United States.  occur above 100 feet. Comment on the accuracy of this
+  DNA tests revealed that 17 of the 22 fillets (or 77%)  estimate. Use a 95% confidence interval to support your
+  were not red snapper but the cheaper look-alike variety  inference.
+  of fish.
+  a. Identify the parameter of interest to the researchers.  7.69 Teenagers’ use of emoticons in school writing. Due to the
+  b. Explain why a large-sample confidence interval is inap-  popularity of instant messaging and social networking, in-
+  propriate to apply in this study.  formal elements such as emoticons (e.g., the symbol “:)”
+  c. Use Wilson’s adjustment to construct a 95% confidence  to represent a smile) and abbreviations (e.g., “LOL” for
+  interval for the parameter of interest.  “laughing out loud”) have worked their way into teen-
+  d. Give a practical interpretation of the confidence interval.  agers’ school writing assignments. A Pew Internet and
+  American Life Project (Apr. 2008) survey interviewed 700
+7.65 What we do when we are sick at home. USA Today (Feb. 15,  randomly selected U.S. teenagers by telephone on their
+  2007) reported on the results of an opinion poll in which  writing habits. Overall, 448 of the teenagers admitted
+  adults were asked what one thing they are most likely to do  using at least one informal element in school writing as-
+  when they are home sick with a cold or the flu. In the sur-  signments. Based on the survey results, construct a 99%
+  vey, 63% said that they are most likely to sleep and 18%  confidence interval for the proportion of all U.S. teenag-
+  said that they would watch television. Although the sample  ers who have used at least one informal element in school
+  size was not reported, typically opinion polls include ap-  writing assignments. Give a practical interpretation of the
+  proximately 1,000 randomly selected respondents.  interval.
+  a. Assuming a sample size of 1,000 for this poll, construct
+  a 95% confidence interval for the true percentage of  7.70  Characteristics of ice-melt ponds. Refer to the University
+  all adults who would choose to sleep when they are at  of Colorado study of ice-melt ponds in the Canadian
+  home sick.  PONDICE  Arctic, presented in Exercise 2.15 (p. 68). Environmental
+  b. If the true percentage of adults who would choose to  engineers are using data collected by the National
+  sleep when they are at home sick is 70%, would you be  Snow and Ice Data Center to learn how climate affects
+  surprised? Explain.  the sea ice. Data on 504 ice melt ponds revealed 88 as
+  having “first-year ice.” Recall that the researchers es-
+Applying the Concepts—Intermediate  timated that about 17% of melt ponds in the Canadian
+  Arctic have first-year ice. Use the methodology of this
+7.66 Curbing street gang gun violence. Refer to the Journal of  chapter to estimate, with 90% confidence, the percent-
+  Quantitative Criminology (Mar. 2014) study of a program de-  age of all ice-melt ponds in the Canadian Arctic that
+  signed to curb street gang gun violence, Exercise 2.18 (p. 69).  have first-year ice. Give a practical interpretation of the
+  After implementation of Boston’s Operation Ceasefire pro-  results.
+  gram, the researchers examined 80 shootings by members
+  of a particular Boston street gang over the next five years.  7.71 Splinting in mountain-climbing accidents. The most com-
+  Of these, only 18 involved shootings of non-gang members.  mon injury that occurs among mountain climbers is trauma
+  Use a 99% confidence interval to estimate the true propor-  to the lower extremity (leg). Consequently, rescuers must
+  tion of shootings by members of this Boston street gang that  be proficient in immobilizing and splinting of fractures.
+  involved non-gang members. Interpret the result.  In High Altitude Medicine & Biology (Vol. 10, 2009), re-
+  searchers provided official recommendations for mountain
+7.67 Do social robots walk or roll? Refer to the International  emergency medicine. As part of the document, the re-
+  Conference on Social Robotics (Vol. 6414, 2010) study  searchers examined the likelihood of needing certain types
+  of the trend in the design of social robots, Exercise 2.7  of splints. A Scottish Mountain Rescue study reported that
+  (p. 66). The researchers obtained a random sample of 106  there was 1 femoral shaft splint needed among 333 live ca-
+  social robots through a Web search and determined that  sualties. The researchers will use this study to estimate the
+  63 were designed with legs but no wheels.  proportion of all mountain casualties that require a femo-
+  ral shaft splint.
+372 CHAPTER 7 ■ Inferences Based on a Single Sample
+
+  a. Is the sample large enough to apply the large-sample esti-  b. Give several reasons why the inference, part a, may be
+  mation method of this section? Show why or why not.  invalid. Explain.
+
+  b. Use Wilson’s adjustment to find a 95% confidence  Applying the Concepts—Advanced
+  interval for the true proportion of all mountain casu-
+  alties that require a femoral shaft splint. Interpret the  7.73 Eye shadow, mascara, and nickel allergies. Pigmented
+  result.  makeup products like mascara and eye shadow may con-
+  tain metal (e.g., nickel) allergens. Is a nickel allergy more
+7.72 Do you think you smell? If you falsely believe you emit an  likely to occur in women who report cosmetic dermatitis
+  unpleasant, foul, or offensive body odor, you may suffer  from using eye shadow or mascara? This was the ques-
+  from olfactory reference syndrome (ORS). The disorder  tion of interest in a paper published in the Journal of the
+  disables patients, who often isolate themselves and consider  European Academy of Dermatology and Venereology
+  suicide. Psychiatrists disagree over how prevalent ORS is in  (June 2010). In a sample of 131 women with cosmetic der-
+  the human population. Depression and Anxiety (June 2010)  matitis from using eye shadow, 12 were diagnosed with a
+  discussed one self-reported survey of 2,481 university stu-  nickel allergy. In a sample of 250 women with cosmetic
+  dents in Japan. The study reported that 52 of the students  dermatitis from using mascara, 25 were diagnosed with a
+  were “concerned with emitting a strange bodily odor.”  nickel allergy. Suppose you are informed that the true pro-
+  a. Use the survey results to estimate the true proportion  portion with a nickel allergy for one of the two groups (eye
+  of all people in the world who suffer from ORS. Place  shadow or mascara) is .12. Can you determine which group
+  95% confidence bounds around the estimate and inter-  is referenced? Explain.
+  pret the result.
+
+7.5 Determining the Sample Size
+
+  Recall from Section 1.5 that one way to collect the relevant data for a study used to
+  make inferences about a population is to implement a designed (planned) experiment.
+  Perhaps the most important design decision faced by the analyst is to determine
+  the size of the sample. We show in this section that the appropriate sample size for
+  making an inference about a population mean or proportion depends on the desired
+  reliability.
+
+  Estimating a Population Mean
+
+  Consider Example 7.1 (p. 345), in which we estimated the mean length of stay for
+  patients in a large hospital. A sample of 100 patients’ records produced the 95%
+  confidence interval x { 1.96sx = 4.5 { .78. Consequently, our estimate x was within
+  .78 day of the true mean length of stay, m, for all the hospital’s patients at the 95%
+  confidence level. That is, the 95% confidence interval for m was 21.782 = 1.56 days
+  wide when 100 accounts were sampled. This is illustrated in Figure 7.16a.
+
+  Now suppose we want to estimate m to within .25 day with 95% confidence. That
+  is, we want to narrow the width of the confidence interval from 1.56 days to .50 day, as
+
+  a. n = 100  1.96 x= .78  1.96 x= .78
+
+Figure 7.16  b. n = 983  x
+Relationship between sample  1.96 x= .25  1.96 x= .25
+size and width of confidence
+interval: hospital-stay example
+  SECTION 7.5 ■ Determining the Sample Size 373
+
+  shown in Figure 7.16b. How much will the sample size have to be increased to accom-
+  plish this? If we want the estimator x to be within .25 day of m, then we must have
+
+  s
+  1.96sx = .25 or, equivalently, 1.96 a b = .25
+
+  1n
+
+  s
+  Note that we are using sx = 2n in the formula, since we are dealing with the sampling
+  distribution of x (the estimator of m).
+
+  The necessary sample size is obtained by solving this equation for n. First, we need
+  the value of s. In Example 7.1, we assumed that the standard deviation of length of stay
+  was s = 4 days. Thus,
+
+  1.96a s b = 1.96a 4 b = .25
+  1n  1n
+
+  1.96142
+  1n = .25 = 31.36
+
+  n = 131.3622 = 983.45
+
+  Consequently, over 983 patients’ records will have to be sampled to estimate the
+  mean length of stay, m, to within .25 day with (approximately) 95% confidence. The con-
+  fidence interval resulting from a sample of this size will be approximately .50 day wide.
+  (See Figure 7.16b.)
+
+  In general, we express the reliability associated with a confidence interval for the
+  population mean m by specifying the sampling error within which we want to estimate
+  m with 10011 - a2% confidence. The sampling error (denoted SE) is then equal to the
+  half-width of the confidence interval, as shown in Figure 7.17.
+
+  The procedure for finding the sample size necessary to estimate m with a specific
+  sampling error is given in the following box. Note that if s is unknown (as is usually the
+  case, in practice), you will need to estimate the value of s.
+
+Figure 7.17  x
+
+Specifying the sampling error  SE  SE
+SE as the half-width of a
+confidence interval
+
+  Determination of Sample Size for 1001 1 − a2 % Confidence Intervals for M
+  In order to estimate m with a sampling error SE and with 10011 - a2% confidence,
+  the required sample size is found as follows:
+
+  s
+  za>2 a b = SE
+
+  1n
+
+  The solution for n is given by the equation
+  1za>222s2
+
+  n = 1SE22
+
+  Note: The value of s is usually unknown. It can be estimated by the standard devi-
+  ation s from a previous sample. Alternatively, we may approximate the range R of
+  observations in the population and (conservatively) estimate s ≈ R>4. In any case,
+  you should round the value of n obtained upward to ensure that the sample size will
+  be sufficient to achieve the specified reliability.
+

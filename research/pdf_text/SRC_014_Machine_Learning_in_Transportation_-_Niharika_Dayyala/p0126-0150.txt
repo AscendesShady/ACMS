@@ -1,0 +1,689 @@
+iteration. The average of the performance measures for each K is used to find
+the preferred K. The number of iterations to be used in k-fold cross-validation
+method is set using the trainControl() function. The value of K for the KNN
+method is given as arguments in the train() function as shown in R Code
+Snippet 3. To ensure reproducibility of the cross-validation results, the
+set.seed() function is run prior to the KNN. The results of the train() function
+are stored in the KNN object. The predictive accuracy of each iteration is tested
+with different values of K from 1 through 6 (since we set k = 6 in R code). The K
+value with high predictive accuracy is chosen as the best K by the algorithm.
+The output results are shown in Output for Code Snippet 3.
+
+  #Setting the value of k for k-fold cross validation method
+
+  myCtrl <- trainControl(method= "cv", number=10)
+
+  #Setting the value of K for K-Nearest neighbors
+
+  k<-data.frame(k=c(1:6))
+
+  #Run K-nearest neighbors’ algorithm with 10-fold validation method
+  where K=6
+
+  set.seed(20)
+
+  KNN <- train(Fatalities ~ ., data=trainSet, method = "knn",
+  trControl=myCtrl,tuneGrid=k)
+
+  KNN
+
+R Code Snippet 3
+  Output for Code Snippet 3
+  Based on the output from the KNN method, K = 4 is identified as the best K
+with the highest predictive accuracy of 0.816, which will be used in further
+analysis. To verify the predictive accuracy of the KNN model on a new dataset,
+we apply the KNN model with the chosen K on the testing dataset and
+determine the model fit indices such as confusion matrix, sensitivity,
+specificity, and accuracy as shown in R Code Snippet 4. The confusion matrix
+summarizes the correct and incorrect predictions into a table. R uses 0.5 as the
+default cutoff value to predict binary outcomes.
+
+  #predicting the testing dataset
+
+  Predicted <- predict(KNN, newdata = testSet)
+
+  #checking the model fit indices using confusion matrix, sensitivity
+  specificity, accuracy
+
+  confusionMatrix(Predicted, testSet$Fatalities, positive = '1')
+
+R Code Snippet 4
+  Output for Code Snippet 4
+  The Output for Code Snippet 4 shows a confusion matrix with zero
+misclassifications, accuracy, sensitivity, and specificity as 1, indicating a very
+good model. Thus, the model can be used to predict new records. We can also
+evaluate the predictive performance using a different cutoff value as shown in
+R Code Snippet 5 with 0.2 as the cutoff value. The Output from Code Snippet 5
+shows a false positive, resulting in 0.89 accuracy, low specificity, and high
+sensitivity. Thus, the analyst can choose to increase or decrease the target
+class based on the costs associated with the misclassified records.
+
+  #getting probabilities predicting with a different cutoff value
+
+  KNN_probabilities <- predict(KNN, newdata = testSet, type='prob')
+
+  KNN_probabilities
+
+  #getting fit indices with a lower cut off value
+
+  predicted_prob<-as.factor(ifelse(KNN_probabilities[2]>0.2, '1', '0'))
+
+  confusionMatrix(predicted_prob, testSet$Fatalities, positive = '1')
+R Code Snippet 5
+
+  Output for Code Snippet 5
+
+4.1.2  Numerical prediction with KNN in R
+
+In a numerical prediction problem, the training dataset will be used to predict
+the numerical outcome variable of the new records using the average
+outcome of the KNN. We will use the same traffic safety dataset to apply KNN
+to determine the number of people killed with predictor variables such as
+population, licensed drivers, and registered vehicles.
+
+  The below figure (Figure 4.2) explains the KNN’ numerical prediction with
+an example. Variable 1 and Variable 2 are represented on the X- and Y-axes,
+respectively, and the outcome variable is identified by the numbers in the
+bubbles. If K = 3, the closest three neighbors of a new record (identified by the
+black dot) that need to be predicted are identified. The average of the
+outcome variable is calculated and assigned as the predicted outcome of the
+new record. Based on the average outcome rule, the outcome of a new record
+is predicted as 32.67, which is the average of 24, 38, and 46.
+Figure 4.2: Classification example with KNN’ numerical prediction.
+
+We will apply the KNN numerical prediction method on the traffic safety
+dataset (Table 4.1) for 51 states in the United States (→NHTSA, Traffic Safety
+Facts 2021) to predict the number of people killed. The predictor variables are
+population, number of licensed drivers, number of registered vehicles, and
+vehicle miles traveled.
+
+  library(openxlsx)
+
+  myData<-read.xlsx("Traffic Safety table.xlsx", 1)
+
+  #Scaling all the numerical variables used in the analysis
+  myData1<- scale(myData[c(2,4:7)])
+  #renaming the outcome variable as 'TotalKilled'
+  colnames(myData1)[1] <- 'TotalKilled'
+
+R Code Snippet 6
+  The data is loaded from an Excel spreadsheet. All variables used in the
+
+analysis including the outcome variable are numerical; hence, they are
+standardized using the scale() function as shown in R Code Snippet 6. The
+standardized data is shown in Output of R Code Snippet 6.
+
+  Output of R Code Snippet 6
+  The dataset is partitioned into training and testing partitions as shown in R
+Code Snippet 7.
+
+  #creating partitions training (80%) and testing (20%)
+  set.seed(1)
+  trainIndex<-sample(row.names(myData1),0.8✶nrow(myData1))
+  testIndex<-setdiff(row.names(myData1),trainIndex)
+  trainSet <- myData1[trainIndex,] #create training data
+  testSet <- myData1[testIndex,] #Create testing data
+
+R Code Snippet 7
+  Using the k-fold cross-validation method, the KNN method is run on the
+
+training dataset to identify the best K as shown in R Code Snippet 8.
+  #Setting the value of k for k-fold cross validation method
+  myCtrl <- trainControl(method= "cv", number=10)
+  #Setting the value of K for K-Nearest neighbors
+  k<-data.frame(k=c(1:8))
+  #Run K-nearest neighbors’ algorithm with 10-fold validation method
+  where K=8
+  set.seed(20)
+  KNN_num <- train(TotalKilled ~ ., data=trainSet, method = "knn",
+  trControl=myCtrl,tuneGrid=k)
+  KNN_num
+R Code Snippet 8
+  Results from the KNN’s method show the model fit indices such as RMSE
+(root mean square error), R-squared, and MAE (mean absolute error) for
+different values of K from 1 to 8. The output also indicates that the best K is 1
+with high predictive accuracy based on the RMSE as shown in Output for R
+Code Snippet 8.
+
+  Output for R Code Snippet 8
+  To verify the predictive accuracy of the KNN model on a new dataset, we
+apply the KNN model with the chosen K on the testing dataset and determine
+the model fit indices such as RMSE, R-squared, and MAE as shown in R Code
+Snippet 9.
+
+  #predicting the testing dataset with k=the best k suggested
+
+  KNN_Predicted<- predict(KNN_num, newdata = testSet)
+
+  #converting the test set into a data frame
+
+  testSet<-data.frame(testSet)
+
+  str(testSet)
+
+  #Calculating the model fit indices for predictive accuracy root mean
+  square error and mean square error
+
+  library(mltools)
+
+  rmse(preds=KNN_Predicted,actuals=testSet$TotalKilled) #rmse
+
+  sum(abs(KNN_Predicted-testSet$TotalKilled))/nrow(testSet) #mse
+
+  #calculating R square for testing data
+
+  x=sum((KNN_Predicted-testSet$TotalKilled)^2)
+
+  y=sum((testSet$TotalKilled-mean(testSet$TotalKilled))^2)
+
+  1-(x/y)
+
+R Code Snippet 9
+  Output from R Code Snippet 9 shows that the RMSE and mean absolute
+
+deviation are low, with a high R-squared, indicating that the model is a good fit
+for predicting new records.
+  Output for R Code Snippet 9
+
+4.2  Analysis with MATLAB
+
+4.2.1  KNN model
+
+→Figure 4.3 shows an example of MATLAB code for KNN technique and
+→Figure 4.4 shows the results.
+% Define the data
+
+data = [1 2; 2 3; 3 1; 4 2; 5 3; ...
+
+6 7; 7 6; 8 7; 7 8; 9 9; ...
+
+10 1; 11 2; 12 1; 10 3; 11 4];
+
+% Define the labels for the data (assuming binary classification for illustration)
+
+labels = [1; 1; 1; 1; 1; ... % Class A (1)
+
+0; 0; 0; 0; 0; ... % Class B (0)
+
+1; 1; 1; 0; 0];  % Mix of Class A (1) and
+
+Class B (0)
+
+% Create a scatter plot of the dataset
+
+classA = data(labels == 1, :);
+
+classB = data(labels == 0, :);
+
+scatter(classA(:, 1), classA(:, 2), 'r', 'filled');
+
+hold on;
+
+scatter(classB(:, 1), classB(:, 2), 'b', 'filled');
+
+title('Example Binary Classification Dataset');
+
+legend('Class A', 'Class B');
+
+xlabel('Feature 1');
+
+ylabel('Feature 2');
+
+% Annotate the data points with their feature values
+
+for i = 1:length(data)
+
+text(data(i, 1) + 0.2, data(i, 2), sprintf('(%d, %d)',
+
+data(i, 1), data(i, 2)));
+
+end
+
+Figure 4.3: Example MATLAB code for KNN classification.
+  % Create a new data point for classification
+
+  newDataPoint = [5, 5];
+
+  % Combine data and labels
+
+  allData = data;
+
+  % Train a KNN classifier
+  K = 5; % Number of nearest neighbors to consider
+
+  mdl = fitcknn(allData, labels, 'NumNeighbors', K);
+
+  % Make a prediction for the new data point
+
+  predictedClass = predict(mdl, newDataPoint);
+
+  % Plot the new data point and its K-nearest neighbors
+
+  scatter(newDataPoint(1), newDataPoint(2), 100, 'k', 'x');
+ title(['KNN Binary Classification (K = ', num2str(K), ')']);
+
+  hold off;
+  if predictedClass == 1
+  disp('Predicted class for the new data point: Class
+
+  A');
+  else
+  disp('Predicted class for the new data point: Class
+  B');
+  end
+
+Figure 4.3: (continued)
+Figure 4.4: Output from KNN classification.
+
+4.2.2  Naïve Bayes’ model
+
+Another popular machine learning algorithm is the Naïve Bayes’ algorithm,
+which is based on Bayes’ theorem. The Naïve Bayes’ algorithm finds the
+probability of a certain class given a set of features. Bayes’ theorem uses a
+probabilistic framework and updates the probability based on new
+information (→Rish, 2001). The “naive” in Naïve Bayes comes from the
+assumption that features used to describe an observation are conditionally
+independent, given the class label. This means that the presence or absence of
+a particular feature does not affect the presence or absence of any other
+feature. This assumption simplifies the calculations and makes it
+computationally efficient, even though it may not always hold true in real-
+world scenarios.
+  Bayes’ theorem is a mathematical formula that describes the probability of
+an event, based on prior knowledge that might be related to the event. The
+theorem is expressed as
+
+  P(A|B) = P(B|A) ∗ P(A)/P(B)
+
+where P(A) is the probability of event A; P(B) is the probability of event B;
+P(A|B) is the probability of event A given event B; and P(B|A) is the probability
+of event B given event A.
+
+  When there is a new set of variables, the Naïve Bayes’ algorithm will
+calculate the probability of each class with the features. Finally, the class with
+the highest probability is predicted.
+
+  Advantages:
+
+  1. Simple to understand.
+  2. Can be implemented easily and can predict quickly.
+  3. Requires less training data and can handle both continuous and discrete
+
+  data.
+
+Disadvantage:
+
+  1. The assumption of all predictors being independent may not hold good
+  at all times and hence limits the applicability of this model.
+
+→Figures 4.5 and →4.6 show an example MATLAB code and the corresponding
+output for a naïve Bayes’ model, respectively.
+% Define the example data
+
+data = [1 2; 2 3; 3 1; 4 2; 5 3; ...
+
+6 7; 7 6; 8 7; 7 8; 9 9; ...
+
+10 1; 11 2; 12 1; 10 3; 11 4];
+
+% Define the labels for the data (assuming binary classification for illustration)
+
+labels = [1; 1; 1; 1; 1; ... % Class A (1)
+
+0; 0; 0; 0; 0; ... % Class B (0)
+
+1; 1; 1; 0; 0];  % Mix of Class A (1) and
+
+Class B (0)
+
+% Create a scatter plot of the dataset
+
+classA = data(labels == 1, :);
+
+classB = data(labels == 0, :);
+
+scatter(classA(:, 1), classA(:, 2), 'r', 'filled');
+
+hold on;
+
+scatter(classB(:, 1), classB(:, 2), 'b', 'filled');
+
+title('Example Binary Classification Dataset');
+
+legend('Class A', 'Class B');
+
+xlabel('Feature 1');
+
+ylabel('Feature 2');
+
+% Annotate the data points with their feature values
+
+for i = 1:length(data)
+
+text(data(i, 1) + 0.2, data(i, 2), sprintf('(%d, %d)',
+
+data(i, 1), data(i, 2)));
+
+end
+
+% Create a new data point for classification
+
+newDataPoint = [5, 5];
+
+% Combine data and labels
+
+allData = data;
+
+% Train a Naive Bayes classifier
+
+nbModel = fitcnb(allData, labels);
+
+% Make a prediction for the new data point
+
+predictedClass = predict(nbModel, newDataPoint);
+
+% Plot the new data point and its classification
+
+scatter(newDataPoint(1), newDataPoint(2), 100, 'k', 'x');
+
+text(newDataPoint(1) + 0.2, newDataPoint(2), sprintf('(%d,
+
+%d)', newDataPoint(1), newDataPoint(2)), 'FontWeight',
+
+'bold');
+
+title('Naive Bayes Binary Classification');
+  hold off;  Class
+  Class
+  % Display the predicted class for the new data point
+
+  if predictedClass == 1
+disp('Predicted class for the new data point:
+
+  A');
+  else
+disp('Predicted class for the new data point:
+  B');
+  end
+
+Figure 4.5: Example of MATLAB code for naïve Bayes’ classification.
+
+Figure 4.6: Output from NB classification.
+4.2.3  Support vector machine (SVM)
+
+→Figures 4.7 and →4.8 show examples of MATLAB code and outputs,
+respectively, for SVM. The data is for air voids and effective air voids from fine
+and coarse mixes in the Excel file (datasvmclassifyChapter4.xlsx).
+  % Load data from Excel file
+
+  filename = 'datasvmclassifyChapter4data.xlsx';
+  dataTable = readtable(filename);
+
+  % Extract features and labels
+X = table2array(dataTable(:, 2:3)); % Features: 2nd and 3rd columns
+
+  y = table2array(dataTable(:, 1)); % Labels: 1st column
+  % Ensure y is numeric
+
+  y = double(y);
+
+  % Convert numeric labels to categorical labels
+y = categorical(y, [1, 2], {'fine', 'coarse'}); % Assuming 1 =
+
+  'fine' and 2 = 'coarse'
+  % Shuffle the data
+
+  rng(42); % For reproducibility
+
+  shuffleIdx = randperm(length(y));
+  X = X(shuffleIdx, :);
+  y = y(shuffleIdx);
+
+  % Train a Support Vector Machine classifier
+
+  svmModel = fitcsvm(X, y, 'KernelFunction', 'linear',
+  'Standardize', true);
+
+  % Create a grid of points to predict class scores
+
+  xrange = min(X(:,1)) - 1:0.01:max(X(:,1)) + 1;
+  yrange = min(X(:,2)) - 1:0.01:max(X(:,2)) + 1;
+
+  [x, y_grid] = meshgrid(xrange, yrange);
+  XGrid = [x(:), y_grid(:)];
+
+  % Predict the class labels for the grid points
+
+  [label, score] = predict(svmModel, XGrid);
+
+  % Plot the decision boundaries
+
+  figure;
+
+  % Plot decision regions
+
+  gscatter(XGrid(:,1), XGrid(:,2), label, [0.8 0.8 1; 1 0.8
+  0.8], '.', 1);
+  hold on;
+
+  % Plot the original data points
+
+  gscatter(X(:,1), X(:,2), y, 'rb', 'o');
+
+  % Set the axis limits to be the same for both x and y
+
+  xlim([4, 7]);
+  ylim([4, 7]);
+  % Add grid lines  'Coarse',
+
+  grid on;
+
+  % Labels and title
+
+  xlabel('Air Voids, %');
+  ylabel('Effective Air Voids, %');
+  title('SVM Binary Classification');
+
+  % Adjust legend
+
+legend('Fine Region', 'Coarse Region', 'Fine',
+  'Location', 'Best');
+  hold off;
+
+Figure 4.7: Example MATLAB code for SVM analysis.
+
+Figure 4.8: Output from SVM classification.
+4.2.4  Decision tree
+
+One of the effective supervised learning algorithms is a decision tree, which is
+used across various domains and applications. Decision trees can handle a
+wide range of data and are very proficient in predicting both categorical and
+continuous variables (Breiman et al., 1984).
+
+  Based on specific conditions, decision trees can represent solutions in a
+visual form. Each node of the tree is a decision point and based on the
+condition, data is split into subsets. During the training process, the algorithm
+creates branches, which lead to different outcomes and thus form a
+hierarchical structure. This structure allows for a clear and intuitive
+understanding of the decision-making process.
+
+  The effectiveness of decision trees can be compared based on impurity
+measures. These measures or metrics serve to ensure that each split optimally
+enhances the purity of the predicted variable within each subset. The accuracy
+of the classification problem can be improved by maximizing the purity of the
+decision trees.
+
+  Common metrics used to quantify the impurities are entropy and
+information gain (→Dash, 2022). Entropy measures the uncertainty or disorder
+within a set of data, while information gain quantifies the reduction in
+uncertainty achieved by splitting the data based on a particular feature. These
+measures can be evaluated at each decision point; the algorithm can construct
+a tree that best separates classes and minimizes classification errors.
+
+4.2.4.1  Pruning
+
+Like any machine learning model, overfitting is one of the problems with the
+decision tree. The tree can become large while capturing the information of
+the training data. When a decision tree becomes too large and complex, it
+struggles to generalize well to new samples. Conversely, if the tree is too
+small, it may fail to capture the intricate patterns present in the training data,
+leading to poor performance. Balancing between complexity and simplicity is
+crucial for building decision trees that generalize effectively (→Bradford et al.,
+1998).
+
+  Just like in the case of a big tree where we cut the branches and prune
+them, “pruning” is the process of reducing the size of the decision tree to
+avoid overfitting. The branch node can be converted to a leaf node, and by
+removing branches of the tree, the complexity of tree can be reduced, thereby
+reducing the risk of overfitting.
+  Pruning makes the model focus on the important features in the dataset
+and avoids the irrelevant features. In this way, it helps to develop a more
+generalized and robust model that can perform well both with the training and
+the new data.
+
+  →Figures 4.9 and →4.10 show examples of MATLAB code for decision tree
+and output, respectively.
+  % Numerical Prediction using Decision Tree with Example Data and Plot
+  % Load data from Excel file
+
+  filename = 'datadecisionTreeChapter4data.xlsx'
+  dataTable = readtable(filename);
+
+  % Extract features and labels from specific columns
+  X = table2array(dataTable(:, 1)); % Independent variable from the
+
+  first column
+  Y = table2array(dataTable(:, 2)); % Dependent variable from the
+
+  second column
+  % Create a decision tree model
+
+  tree_model = fitrtree(X, Y);
+  % Make predictions using the decision tree model
+
+  Y_pred = predict(tree_model, X);
+
+  % Evaluate the performance of the model
+
+  mse = mean((Y - Y_pred).^2);
+  mse_text = sprintf('Mean Squared Error (MSE): %.4f', mse);
+
+  % Plot the original data and the predicted values
+
+  figure;
+  scatter(X, Y, 'o', 'DisplayName', 'Original Data');
+
+  hold on;
+  plot(X, Y_pred, 'r-', 'DisplayName', 'Predicted Values');
+
+  hold off;
+  title('Numerical Prediction using Decision Tree');
+
+  xlabel('Independent Variable (X)');
+  ylabel('Dependent Variable (Y)');
+
+  legend('show', 'Location','southeast');
+
+  % Display MSE on the plot
+
+  xLimits = xlim;
+  yLimits = ylim;
+text(mean(xLimits), max(yLimits) ✶ 0.9, mse_text, 'FontSize',
+  12, 'Color', 'k', 'HorizontalAlignment', 'center');
+
+  % Display the decision tree model (optional)
+
+  view(tree_model, 'Mode', 'graph');
+
+Figure 4.9: Example MATLAB code for decision tree analysis.
+Figure 4.10: Example of the use of a decision tree.
+
+For example, consider a transportation mode prediction using a supervised
+classification model in MATLAB (→Figure 4.11). We’ll use a decision tree
+classifier. We generate synthetic data for age, distance, and weather. We
+assign labels based on random criteria. The dataset is split into training and
+testing sets. A decision tree classifier is trained using the training data.
+Predictions are made on the test set, and the accuracy is calculated. The
+confusion matrix (→Figure 4.12) is plotted for model evaluation.
+  % Generate synthetic transportation mode data
+  rng(42); % Set seed for reproducibility
+  % Features: [Age, Distance, Weather]
+
+  % Labels: Transportation Mode (Car, Bus, Train, Walking, Biking)
+
+  numSamples = 1000;
+  age = randi([18, 65], numSamples, 1);
+  distance = randi([5, 30], numSamples, 1);
+  weather = randi([1, 3], numSamples, 1);
+
+  % Assign labels based on random criteria
+
+  labels = zeros(numSamples, 1);
+
+  % Assign labels based on random criteria
+
+  for i = 1:numSamples
+  if age(i) < 30 && distance(i) < 15
+
+  labels(i) = 1; % Car
+
+  elseif distance(i) >= 15 && distance(i) < 25
+
+  labels(i) = 2; % Bus
+
+  elseif age(i) >= 30 && weather(i) == 1
+
+  labels(i) = 3; % Train
+
+  elseif age(i) < 40
+
+  labels(i) = 4; % Walking
+
+  else
+
+  labels(i) = 5; % Biking
+
+  end
+  end
+
+  % Create a table for easy handling of data
+
+  data = table(age, distance, weather, labels);
+
+  % Split the dataset into training and testing sets
+  splitRatio = 0.7; % 70% training, 30% testing
+
+  splitIdx = round(splitRatio ✶ numSamples);
+  trainData = data(1:splitIdx, :);
+
+  testData = data(splitIdx+1:end, :);
+
+  % Train a Decision Tree classifier
+
+treeModel = fitctree(trainData(:, 1:3), trainData.labels);
+
+  % Make predictions on the test set
+
+  predictedLabels = predict(treeModel, testData(:, 1:3));
+
+  % Evaluate the model performance
+
+  accuracy = sum(predictedLabels == testData.labels) /
+  numel(testData.labels);
+
+  % Display the results
+
+  fprintf('Accuracy: %.2f%%\n', accuracy ✶ 100);
+
+  % Plot the confusion matrix
+
+  figure;
+  confusionchart(testData.labels, predictedLabels,
+
+  'RowSummary', 'row-normalized');
+  title('Confusion Matrix');
+
+Figure 4.11: Example of supervised classification model in MATLAB.
+
+Figure 4.12: Example of confusion matrix for supervised classification
+problem.
+

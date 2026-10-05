@@ -1,0 +1,907 @@
+188 Machine Learning for Transportation Research and Applications
+
+FIGURE 11.1 System architecture on the edge computing device.
+
+system: the main thread, the road mask extraction thread, and the trafﬁc ﬂow-
+detection thread. The reason for designing three threads instead of one is that the
+road mask-detection task and the trafﬁc ﬂow-detection task have high computa-
+tion complexity. This architecture design, coupled with the road mask extraction
+method and the AI trigger method, can address this issue, thus enabling real-time
+processing on the edge device.
+
+  In the main thread, background modeling and SORT tracking are imple-
+mented to generate foreground image and blobs for detecting and tracking
+moving objects. At the same time, the background image (without moving ob-
+jects) is used for roadway surface- condition classiﬁcation (dry, rainy, snowy).
+The road mask received from the road mask- extraction thread serves as a ﬁl-
+ter to isolate the road pixels in the background image. Thus, moving trafﬁc on
+the road and non-road regions in the camera view are ﬁltered out in the road
+surface condition-classiﬁcation task for improved accuracy. Four features, in-
+cluding two image features (intensity and black channel) and two environmental
+features (temperature and humidity) are used by a random forest model for the
+road condition classiﬁcation.
+
+  The road mask-extraction thread also takes the raw video stream as input.
+The intuition behind this new road mask-extraction method is that human eyes
+can tell where the road regions are at night, with the help of vehicle trajectories.
+Optical ﬂow tracker extracts moving pixels at night in trafﬁc videos with good
+  Edge and parallel artiﬁcial intelligence Chapter | 11 189
+
+accuracy. In this case study, the optical ﬂow tracker is applied to extract mov-
+ing pixels to roughly get the vehicle trajectories, and then to cluster the pixels
+into road regions for various trafﬁc directions with location and motion features
+and DBSCAN clustering. DBSCAN clustering is chosen since it determines the
+number of clusters and ﬁlters out outliers.
+
+  The third thread is for trafﬁc ﬂow counting and classiﬁcation. We designed
+an AI trigger method to select, store, and process just a small portion of the
+original video frames, which are the video frames of interest. Speciﬁcally, when
+moving objects are deﬁned and tracked in predeﬁned regions on the road, the
+frame will be stored in a queue waiting to be processed. The Mobilenet ﬁne-
+tuned on the MIO-TCD trafﬁc surveillance dataset is implemented to locate and
+classify road users in the predeﬁned road region. With the tracked and classiﬁed
+objects, trafﬁc volume data for each type of road user are obtained.
+
+11.6.3 Algorithms and results
+
+In the parallel architecture, the road mask-extraction algorithm serves two pur-
+poses: to help locate the road regions so that the image features (intensity and
+black channel) for the road surface condition classiﬁcation are more represen-
+tative, and to identify the number of travel directions and roughly locate the
+regions for each direction to assist trafﬁc volume detection. We adopt the clus-
+tering of motion vectors extracted from the optical ﬂow on the moving trafﬁc,
+instead of using the appearance features of the road itself. The intuition behind
+this method is an approximation of human eyes identifying road regions at night
+by watching the moving trafﬁc. The DBSCAN clustering algorithm is applied
+to the ﬁltered optical ﬂow motion-vectors to extract the road regions and clas-
+sify the travel directions using the positions, moving direction, and speed of the
+motion-vectors. DBSCAN is also able to ﬁlter out outliers that do not belong to
+any of the clusters, thereby auto-removing false positives. Closing operation in
+image morphology is applied to ﬁll the “holes” within the clusters. Two example
+results are shown in Fig. 11.2.
+
+  In the road surface condition-classiﬁcation algorithm, we selected four scalar
+features: temperature, humidity, median image intensity, and median image
+black-channel value. The intensity value is selected because it can differenti-
+ate snowy conditions and non-snowy conditions since the intensity values are
+high in snowy conditions where the color is white in many places. The dark
+channel value is deﬁned as the minimum value among R, G, and B channels for
+a given pixel. For most objects in nature, the dark channel value is pretty small,
+otherwise, the object will be white. This is also the case for most road sur-
+faces. However, for rainy or snowy conditions where there are many reﬂections
+or white pixels, the dark channel can be relatively higher. We tested multiple
+traditional machine learning classiﬁers on the features and selected the random
+forest in the end. Experimental data is collected from the WSDOT Traveler API
+(see Figs. 11.3 and 11.4).
+190 Machine Learning for Transportation Research and Applications
+
+FIGURE 11.2 Motion-vector clustering method to extract road mask and identify trafﬁc direc-
+tions.
+
+FIGURE 11.3 WSDOT camera distribution (left), WSDOT weather station distribution (middle),
+and the selected locations for testing the road surface classiﬁers (right).
+
+  Regarding the AI-trigger-based trafﬁc ﬂow monitoring, the training of the
+Mobilenet classiﬁer is standard. Transfer learning is applied with the MIO–
+TCD surveillance dataset to enhance the classiﬁer. We combine the original
+class labels into four road- user categories (car, truck, bus, and cyclist) and the
+background. As shown in the design system architecture, this Mobilenet classi-
+ﬁer operates in a separate thread with a queue storing those “triggered frames”
+for further classiﬁcation and validation. As shown in Fig. 11.5, when moving
+blobs are detected and tracked in the main thread, they are ﬁrst ﬁltered using the
+road mask to determine if they are in the ROI. If yes, the current frame will be
+pushed to the queue, and the AI thread will be triggered to further validate if the
+  Edge and parallel artiﬁcial intelligence Chapter | 11 191
+
+FIGURE 11.4 Surveillance camera image samples for rainy, snowy, and dry road surfaces, and
+weather data sample ﬁle collected from the WSDOT API for Station 3274.
+
+FIGURE 11.5 AI trigger method that uses traditional detection and tracking as the trigger, and the
+ﬁnetuned Mobilenet as the ﬁnal classiﬁer for trafﬁc ﬂow detection.
+
+moving objects are road users or background (moving background blobs may
+be caused by camera shaking or sudden lighting changes) and then count the
+road users of each type. Since we track the road users, a new object ID will add
+one count to a speciﬁc road-user type. The system architecture that separates
+the AI classiﬁer into a separate queue enabling capturing the video temporal in-
+formation in real-time and automatically ﬁnalizes the classiﬁcation and volume
+counting a few seconds later in dense trafﬁc-volume conditions (i.e., when the
+queue is not empty).
+192 Machine Learning for Transportation Research and Applications
+
+11.7 Case study 2: edge AI in vehicle near-crash detection
+
+11.7.1 Motivations
+
+This case study is from our work reported in Ke et al. (2020a). Herbert Hein-
+rich proposed the relationship among major injury, minor injury, and no injury
+incidents (1 major injury incident to 29 minor injury incidents to 300 no injury
+incidents) (Heinrich et al., 1941). The linear relationship holds for trafﬁc safety
+events as well, though the exact ratio may be different (Klauer et al., 2006;
+Talebpour et al., 2014; Makizako et al., 2018). The near-crash scenario has two
+major properties that make it valuable for a variety of research and engineering
+topics: (1) It reﬂects the underlying causes of the incidents that resulting no or
+minor losses; (2) It occurs on many more occasions than the accidents involving
+contact.
+
+  Near-crash data is irreplaceable in smart transportation applications. In traf-
+ﬁc safety research, near-crash data is the surrogate safety data for studying and
+assessing the safety performance of particular locations or scenarios This is be-
+cause a certain amount of data is required to feed either traditional statistical
+analytical methods or emerging machine learning models. For example, to un-
+derstand the safety-related designs at a roadway intersection, the collision data
+might be far from sufﬁcient to support models to reach any statistically signif-
+icant conclusions. Near-crash data ﬁlls this void with the aforementioned two
+properties.
+
+  With the emergence of concepts and technologies in the intelligent vehicle
+(IV) and autonomous vehicle (AV), near-crash events become an even more
+valuable data source for not only traditional trafﬁc safety research but also IV
+and AV safety. The latest AVs have been demonstrated to be able to handle most
+situations they may encounter. However, the lack of corner cases for training and
+testing is a major bottleneck that is slowing down the pace to achieve the goal of
+Level-5 (L5) fully autonomous driving. Corner cases belong to subsets of near-
+crashes; they rarely occur, such as pedestrians walking across a highway, but
+can cause severe losses. Leading research in the AV ﬁeld is focused on speeding
+up the generation of corner cases in simulation by leveraging historical crash or
+near-crash data for model calibration and training.
+
+  Three key challenges remain for near-crash detection and data collection.
+Firstly, near-crashes are still rare events that require intensive computing, trans-
+mission bandwidth, and data storage services on the original large data sources.
+Secondly, existing methods documented in papers and reports rely on manual
+checking or post-analysis of the original data sources, which are inefﬁcient.
+Thirdly, while the state-of-the-practice commercial collision avoidance systems
+(e.g., the aforementioned Shield + system) can serve for the purpose of near-
+crash data collection, their purchase and maintenance costs are very high, and
+each product lacks transferability and scalability due to the design for a certain
+type of vehicles or roadside units.
+  Edge and parallel artiﬁcial intelligence Chapter | 11 193
+
+  Under the context of edge computing, real-time video analytics is regarded
+as the killer app, given the restricted computing resources on edge devices and
+the property of video data requiring large capacity due to their enormous 3D
+matrices. To this end, this case study introduces a light-weight edge computing
+system for real-time near-crash detection and data transmission with normal
+dashcams and network bandwidth. The system is a low-cost and stand-alone
+system that is backward-compatible with existing vehicles. It is being developed
+based on the Nvidia Jetson TX2 Internet-of-Things (IoT) platform.
+
+11.7.2 Relative motion patterns in camera views for near-crashes
+
+Relative motions between the ego vehicle and other road users are important
+cues for near-crash detection using a single camera. Relative motion patterns, as
+well as the relationship between a pattern in the camera view and its correspond-
+ing pattern in the real world, must be understood (see Fig. 11.6). The relative
+motion patterns between two road users vary from case to case. Roadway geom-
+etry, road user’s behavior, relative position, trafﬁc scenario, etc. are all factors
+that may affect the relative motion patterns. For example, from the ego vehicle’s
+perspective, its motion relative to a vehicle it is overtaking in the neighboring
+lane and that to another vehicle it is following in the same lane are different.
+
+  Relative motion that has the potential to develop into a crash/near-crash is
+characterized from the ego vehicle’s perspective as the target road user moving
+towards it. This kind of relative motion is shown as a motion vector of the target
+road user moving vertically towards the bottom side of the camera view. Exam-
+ples are shown as solid red arrows in Fig. 11.6. In the real-world top view, the
+three solid red arrows represent the relative motions between the ego vehicle and
+each of the three road users (a pick-up truck, a car, and a pedestrian). Each of the
+three camera sight lines aligns with a relative motion vector (Z2, Z4, and Z7).
+In the camera view, the lines of sight are shown as vertical bands. The relative
+motion vectors for near-crashes in the top view correspond to vectors moving
+towards the bottom in the camera view aligning with Z2, Z4, and Z7.
+
+  Two road users have an apparent relative motion at any time. In addition to
+the near-crash cases just deﬁned, other patterns may occur. First, a target road
+user may move towards the ego vehicle, move away from the ego vehicle, or stay
+at the same distance to the ego vehicle. These can be identiﬁed as object image-
+size changes in the camera. This property will be utilized later in our approach.
+An image size decrease or no size change would not indicate a potential crash
+or near-crash. For size increases, there are three cases. The ﬁrst cases constitute
+the potential crashes, shown as the solid red arrows in Fig. 11.6. The second
+are the warning cases, shown as the dashed orange arrows, in which the relative
+motion is towards the center line of sight of the camera (the pick-up truck and the
+pedestrian), or the relative motion is slightly different from the solid red arrow,
+while the target road user is at the center line of sight (the car). The warning
+cases could develop into crashes if there are slight changes in the speeds or
+194 Machine Learning for Transportation Research and Applications
+
+FIGURE 11.6 Relative motion patterns in a dashcam view.
+
+headings of either the target or the ego vehicle. The third case is the safety case
+that relative motion is moving away from the center line of sight, shown as the
+dotted green arrows in Fig. 11.6.
+11.7.3 Edge computing system architecture
+The overall system architecture on the edge computing platform is shown in
+Fig. 11.7. The two major functions of the system are near-crash detection and
+data collection. Given the real-time operation requirement, the design is concise
+enough to be highly efﬁcient and sophisticated enough for high accuracy and
+reliability. The near-crash detection method also should be insensitive to camera
+parameters to accommodate large-scale deployments.
+
+  The system is implemented in a multi-thread manner. Four threads are op-
+erating simultaneously: the main thread, data transmission thread, video frame
+  Edge and parallel artiﬁcial intelligence Chapter | 11 195
+
+FIGURE 11.7 Edge architecture for near-crash detection on intelligent vehicles.
+
+reading thread, and CAN receiving thread (CAN = Controller Area Network).
+The proposed near-crash detection method is implemented in the main thread.
+When near-crash events are detected, a trigger will be sent to the data transmis-
+sion thread, and it will record video frames from a queue (a global variable)
+and other data that are associated with the near-crash event. The third thread for
+video frame reading stores the latest video frame captured from the camera in
+another queue and will dump previous frames when the capturing speed is faster
+than the main thread’s frame-processing speed. The CAN receiving thread pro-
+vides additional information for each near-crash event with the ego vehicle’s
+speed, brake, acceleration, etc.
+
+  The proposed architecture ensures that the system delay is small. The frame
+reading thread ensures that the main thread reads the latest frame captured by the
+camera by not accumulating frames. The data transmission thread is designed
+as an individual thread to handle data transmission so that the main thread op-
+eration is not affected by the network bandwidth. The CAN receiving thread is
+for additional information collection, and the purpose for separating it as an-
+other individual thread is the consideration of system function extension. The
+196 Machine Learning for Transportation Research and Applications
+
+proposed system can communicate with other systems via this thread while not
+affecting the performance of itself.
+
+11.7.4 Camera-parameter-free near-crash detection algorithm
+
+The main thread starts with applying a deep learning-based object detector to ev-
+
+ery video frame. The object detection creates bounding boxes and identiﬁes the
+
+types of road users in each video frame. To associate the information from each
+
+frame and ﬁnd each road user’s movement, the standard step following object
+
+detection is object tracking, in this case, SORT tracker. An object appears larger
+
+in the camera view it approaches the camera, and smaller as distance to the cam-
+
+era increases. In this study, the proposed approach for TTC estimation mainly
+
+considers: (1) leveraging the power of recent achievements in deep learning, (2)
+
+making the computation as efﬁcient as possible to support real-time processing
+
+on the Jetson, and (3) transferability to any dashboard camera without knowing
+
+the camera’s intrinsic parameters.
+
+Given a video with a frame rate of 24 FPS, the next frame is captured in
+
+less than 0.05 seconds. Thus, for size change detection, we use more frames
+
+to compensate for the noise in each frame and increase the time interval for
+
+the detection. Linear regression is used for bounding boxes’ heights or widths
+
+over a group of consecutive frames. We found that 10–15 frames are enough to
+
+compensate for noise and the time associated with 10–15 frames is still small
+
+enough (about 0.5 second) to assume that the road user’s motion is consistent.
+
+Therefore, the input to the linear regression is a list of heights or widths extracted
+
+from the bounding boxes, and the slope outputted by the regression will be the
+
+size change rate. With a similar mathematical derivation shown in Chap. 7 of
+
+Ke (2020), the TTC value can be estimated without camera parameters using
+
+the following equation, where Dt , Vt , st , rt are the distance between the ego
+
+vehicle and a target road user, the relative longitudinal speed, the size of the
+
+bounding box, and the size change rate of the bounding box, respectively, all at
+
+time t:
+
+  T T C = −Dt = st .  (11.3)
+  Vt rt
+
+  According to Eq. (11.3), TTC can be calculated as the size of the bounding
+box at time t divided by the size change rate at time t, and it is not related to the
+focal length or other intrinsic camera parameters. The TTC value can be either
+positive or negative, where being positive means the target is approaching the
+ego vehicle, and being negative means it is moving away from the ego vehicle.
+
+11.7.5 Height or width
+
+There are two options for the size of the road user in the camera view: height
+and width. We argue that height is a better indicator than width. From the ego
+Edge and parallel artiﬁcial intelligence Chapter | 11 197
+
+vehicle’s perspective, one might observe a target vehicle’s rear view, front view,
+side view, or a combination of them, depending on the angle between the two
+vehicles. That is to say, the bounding box’s width change may be caused by
+either the relative distance change or the view angle change. For example, when
+the ego vehicle is overtaking the target vehicle, or the target vehicle is making a
+turn, the view angle changes and will lead to the bounding box’s width change.
+
+  However, the bounding box’s height of the target vehicle is not inﬂuenced
+by the view angle; it is solely determined by the relative distance between the
+two vehicles. Similarly, a pedestrian walking or standing on the street may have
+different bounding box widths due to not only the relative distance to the ego
+vehicle but also the pose of the pedestrian; but the height of a pedestrian is
+relatively constant.
+
+  Despite the challenge of using width to determine an accurate TTC, it still
+provides valuable information. Since we are using only less than one second
+of frames for the calculation, the view change does not contribute as much as
+the distance change, so width still roughly indicate the longitudinal movement
+of the road user. This is very important in some cases. For instance, a vehicle
+moving in the opposite direction of the ego vehicle is truncated by the video
+frame boundary. In this case, the height of the vehicle increases, while the width
+decreases. This is not a near-crash case at all, but the TTC can be very small and
+falsely indicate a near-crash by only looking at the height change.
+
+  We propose a double-threshold rule: If the TTC threshold for determining a
+near-crash is δ, we will set δ as the TTC threshold associated with the height
+regression. At the same time, we have another TTC threshold φ associated with
+the width regression. The second threshold φ is to ensure that the width and
+height changes are in the same direction. The rule is represented as in Eq. (11.4):
+
+0 < h < δ; 0 < w < φ; δ < φ,  (11.4)
+rh  rw
+
+where rh and rw are the change rates for height h and width w.
+
+11.7.6 Modeling bounding box centers for horizontal motion
+  pattern identiﬁcation
+
+As shown in Fig. 11.6, there are three scenarios for the case that a road user
+approaches the ego vehicle; they correspond to potential crashes, warnings, and
+safe scenarios. Besides TTC, these scenarios can be differentiated with the rela-
+tive horizontal motion between the ego vehicle and the target. This also needs to
+be calculated with computationally fast methods. We propose to apply another
+linear regression using a list of bounding box’s centers of the target road user.
+The regression result would be able to indicate the moving direction of the road
+user in the camera view.
+
+  In general, when the target’s location is closer to the bottom and closer to
+the center line of sight, the risk of a collision is higher, so the threshold for the
+198 Machine Learning for Transportation Research and Applications
+
+moving direction ω is looser. We propose a rule to show this judgment as in
+Eq. (11.5):
+
+α < ω × (Cx − Clos ) × (By − B) < β,  (11.5)
+
+where Cx is the center’s x coordinate, Clos is the center line of sight, By is
+the bottom side of the bounding box, and B is the bottom of the video frame.
+Since cameras have different resolutions, Cx − Clos is normalized to [−1, 1],
+and By − B is normalized to [0, 1]. The two thresholds are α, β. α should be
+set to negative to capture the potential warning scenarios (the orange dashed
+arrows in Fig. 11.6). Also, β should be just slightly larger than zero to capture
+the potential crashes (the solid red arrows in Fig. 11.6) and ﬁlter out most of
+the safe scenarios (the green dotted arrows in Fig. 11.6). Eqs. (11.4) and (11.5)
+together identify near-crash events.
+
+11.7.7 Experimental results
+
+The system consists of an Nvidia Jetson TX2, a dashcam (can be USB camera or
+IP camera), a GPS receiver, an in-vehicle power inverter, a PEAK CAN adapter
+for CAN bus communication, an external circuit based on Arduino board for
+auto bootup, a shell for the Jetson device, an ethernet cable, two power cables,
+an internet switch, mounting materials, and a cloud server. The Nvidia Jetson
+device is the key processing unit of the system, running the near-crash detection,
+video streaming, data transmission, data fusion threads, and algorithms. The
+Jetson was powered by in-vehicle (either car or bus) 12V-DC power through the
+power inverter. The Arduino circuit is connected to the Jetson, and, when the
+vehicle’s power is on, it will auto boot up the system. Fig. 11.8 shows the system
+and testing buses for the real-world test. From top to bottom: the systems ready
+to be installed (before installation), three of the testing buses at Pierce Transit,
+the radio box behind bus driver’s seat where the system works, and the system
+being tested in the radio box.
+
+  Essentially, near-crash is a type of trafﬁc anomaly. To evaluate the proposed
+method’s accuracy, we used the evaluation process of the trafﬁc anomaly de-
+tection task (Track 4) of the 2021 AI City Challenge as the reference. First, the
+task dataset has 100 video clips with some anomalies. It is unknown exactly how
+many anomalies are in the test dataset, but the number is between 0 and 100, as
+mentioned in the introduction to Track 4. Likewise, we made a local test dataset
+with 5,000 video clips with 500 near-crash events. As aforementioned, the test
+videos were from online resources and dashboard cameras on private cars and
+transit buses. This data set is not being published due to potential privacy and
+copyright issues. There is a plan to create such a video data set for near-crash
+detection in the future.
+
+  We manually labeled all the near-crash events with their occurrence videos
+and times. As in AI City Challenge Track 4, we deﬁned a true-positive (TP) as a
+predicted near-crash within 10 sec of the true near-crash. A false-positive (FP)
+  Edge and parallel artiﬁcial intelligence Chapter | 11 199
+
+FIGURE 11.8 The system prototypes, buses for the real-world testing, and the bus radio box
+where the system works.
+200 Machine Learning for Transportation Research and Applications
+
+is a predicted near-crash that is not a TP for a near-crash. A false-negative (FN)
+
+was a true near-crash that was not predicted. We used the F1 score to evaluate
+
+accuracy. F1 score was the harmonic mean of the precision and recall, where the
+best value = 1 and the worst value = 0:
+
+F 1 = 2 × precision × recall = 2T P .  (11.6)
+  precision + recall 2T P + F P + F N
+
+FIGURE 11.9 Sample near-crash detection results, where red bounding boxes (mid gray in print
+version) indicate the potential conﬂict with the road user. Each row is a four-frame sequence of one
+near-crash event.
+
+  Sample near-crash detection results are shown in Fig. 11.9. The top three
+rows were three vehicle–vehicle near-crashes, and the bottom two rows were
+two of the vehicle–pedestrian near-crashes. The bounding boxes turned red
+to indicate a predicted near-crash, while other detected road users had green
+bounding boxes. A few more sample detection results can be found in the video
+published at https://www.youtube.com/watch?v=9NGo4Ef59i0.
+  Edge and parallel artiﬁcial intelligence Chapter | 11 201
+
+FIGURE 11.10 Sample CAN data collected from a vehicle–vehicle near-crash (left) and a
+vehicle–pedestrian near-crash (right) on May 7, 2021.
+
+  Our system correctly predicted 496 out of the 500 labeled near-crashes and
+missed just 4. It generated 18 FPs in the 5,000 video clips. Based on Eq. (11.6),
+the ﬁnal F1 score was 0.988, and the average processing speed with Max-N
+mode was about 18 frames-per-sec (FPS). The performance was promising,
+considering that we intentionally included a variety of near-crash scenarios
+and some very challenging cases in the data set. There were adverse weather
+conditions (e.g., foggy, rainy, snowy), nighttime situations, trafﬁc congestion,
+urban/rural trafﬁc scenes, and so on. It is worth mentioning that the 5,000 video
+clips are from various cameras, and the proposed system knew nothing about
+the camera parameters of any of these cameras. This result beneﬁted from the
+near-crash detection method. It again highlighted the possibility for low-cost
+and highly efﬁcient large-scale application of the edge computing system to
+partially fulﬁll the purposes of safety data generation, IV corner case collection,
+and collision avoidance.
+
+  We carefully examined the FN and FP cases and summarized the causes.
+One of the four FNs that the system missed was a vehicle–pedestrian near-crash
+at night on a rural freeway with no streetlight. The pedestrian violated trafﬁc
+rules by crossing the freeway, and the driver did not see him until he had al-
+most run into him. The pedestrian was entirely in the dark so the object detector
+missed him. Though there were more FPs than FNs, we considered only 18 FPs
+out of 5,000 video clips acceptable and encouraging, given the tradeoff in the
+efﬁciency of the system. While the proposed near-crash detection method can
+compensate for bounding box size noise in most cases, it was not perfect. In the
+fourth case (the fourth row) of Fig. 11.9, right before the correct detection of
+this vehicle–pedestrian near-crash, there was a vehicle-vehicle FP caused by a
+signiﬁcant error in vehicle size detection. It was included in our YouTube demo
+video. To further improve detection performance, a practical solution is to en-
+hance the algorithm by further incorporating CAN messages into the detection
+algorithm. Sample CAN data, including bus speed, deceleration (can be calcu-
+lated from speed), and brake switch associated with two sample events on May
+7, 2021, are shown in Fig. 11.10. Throttle percentage data were collected as
+well, but not shown in the ﬁgure because they were zero in both events.
+202 Machine Learning for Transportation Research and Applications
+
+11.8 Case study 3: federated learning for vehicle trajectory
+  prediction
+
+11.8.1 Motivation
+
+Data privacy has been given increasing attention in smart city applications with
+the rapidly improved ability in big data analytics. McMahan et al. (2017) ﬁrst
+proposed the Federated Learning (FL) technique, which later developed into a
+mainstream technology of shared learning with privacy.
+
+  At present, FL has been used in many ﬁelds, such as mobile keyboard pre-
+diction (Hard et al., 2018), Healthcare (Xu et al., 2021), etc. Feng et al. (2020)
+proposed PMF and Li et al. (2020a) proposed STSAN using FL to predict hu-
+man mobility. The most widely used federated learning algorithm is the FedAvg
+algorithm (McMahan et al., 2017). Li et al. (2019a) proposed the problem of Q-
+FFL, targeting a fairer algorithm. A semi-supervised federated learning (SSFL)
+framework is proposed to accurately identify travel patterns without using the
+user’s original trajectory data or relying on signiﬁcant data tags.
+
+  FL is explored in this case study for vehicle trajectory data mining. Since
+vehicle trajectory data are collected mostly from private vehicles, user privacy
+should be considered while making the data useful for trafﬁc studies and oper-
+ations. Data similar in locations or start times can have inner links; therefore,
+besides using FL for different users or clients, the case study proposes a new
+FL method called STFL, which is an FL model with a second layer to consider
+spatial and temporal features. We design and integrate two FL algorithms, i.e.,
+space trajectory FL (s-FedWvg) and time trajectory FL (t-FedWvg). The model
+balances privacy protection and spatiotemporal feature sharing and learning.
+
+  In summary, in this case study, FL is applied to vehicle trajectory data, and
+the transformer model is combined to predict the trajectory location. It enables
+users to train the model together without sharing private information, and get
+better results compared to training locally. Considering the spatial character-
+istics of trajectories, FL based on spatial division(s-FedWvg) is carried out
+inside each client to extract the internal characteristics of trajectories in mul-
+tiple regions to improve the learning effect. In addition, another algorithm of
+FL, namely FedWvg, is adopted. Compared with the FedAvg[1] algorithm, our
+model allocates different weights according to the different trajectory numbers.
+Time-division-based FL(t-FedWvg) is carried out inside the client to extract
+the track within the same time period for joint learning to improve the learn-
+ing effect. FedWvg is also used, and s-FedWvg and t-FedWvg are combined to
+become the STFL.
+
+11.8.2 Methodology
+
+The proposed STFL model is divided into two layers (see Fig. 11.11):
+• In the ﬁrst layer, each client is a different user that needs data privacy protec-
+
+  tion. During each communication round, each client trains the model locally,
+Edge and parallel artiﬁcial intelligence Chapter | 11 203
+
+FIGURE 11.11 The general structure of the model.
+
+  then uploads the parameters to the central server, which then weights and
+  averages the parameters and returns the values to each client.
+• In the second layer, we designed time federated learning block and space
+  federated learning block for each client. We believe that the design of these
+  two parts can capture more of the temporal and spatial characteristics of the
+  trajectory. In the spatio-part, data in each client is allocated into some small
+  second clients based on the location of the trajectory. In the temporal part,
+  data in each client is allocated into some small second clients based on the
+  time of the trajectory.
+
+  The clients of the ﬁrst layer are different users who need data privacy pro-
+tection. They train the model together through federated learning.
+
+  In this ﬁrst layer, let C = {C1, C2, · · · , Cn} represents n different clients,
+Di = {Di1, Di2, · · · , Dij } represents j pieces of data in the ith client, and w is
+the global parameter during training. T is the number of communication round.
+The training process is as follows:
+
+• Initialization: In each training round, the server randomly selects n clients
+  for interaction in this round. The server sends the current parameters w to
+  each participating client to update its parameters.
+
+• Training: The m selected client performs training locally. After the training
+  is complete, parameter w for each client is uploaded to the central client.
+
+• Aggregation: The central server uses FedAvg to assign parameters for the
+  next round of training. The formula is as follows:
+
+w = im=1 wi .  (11.7)
+  m
+
+After the calculation, the parameters are reserved for allocation to participat-
+ing clients in the next round.
+204 Machine Learning for Transportation Research and Applications
+
+Algorithm 1: FedAvg in trajectory.
+
+1: Update the global parameter w to each client
+
+2: for each round t ∈ [1, T ] do
+
+3: randomly choose C1, C2, · · · , Cm from C
+
+4: for each client Cx do
+
+5:  ClientTrain(w, Dx);
+
+6: end for
+
+7: wt = m mi=1 wi
+
+8: end for
+
+Algorithm 2: Spatio-Federated learning.
+
+Spatio-Clustering Input:
+  Data set D = {D1, D2, · · · , Dn}
+
+  x, the number of groups to be divided
+
+Spatio-Clustering Output:
+  Result x client groups G = {G1, G2, · · · , Gx}
+  ith group with j clients Gi = {Di1, Di2, · · · , Dij }
+
+1: Update the global parameter w to each client group
+
+2: for each round t ∈ [1, T ] do
+
+3: randomly choose G1, G2, · · · , Gm from G
+
+4: for each client group Gx do
+
+5:  ClientTrain(w, Dx);
+
+6: end for
+
+7: ith weight for ith client group αi = n ni total
+
+8: wt = m mi=1 αi wi
+
+9: end for
+
+  We designed a spatio-block to extract more spatial features of the trajectory.
+Based on the spatial characteristics of the trajectory, K-means is used to divide
+the regions of trajectories. This helps the model learn better spatial properties.
+We take the location of the starting point of each trajectory as the basis for
+the division of the K-means algorithm because we believe that the trajectory
+of the same starting point may have similar characteristics. At the same time,
+we believe that FedAvg algorithm is not enough to achieve a better effect on
+the model, so we use a weighted average algorithm(FedWvg) to determine the
+proportion of the client’s contribution according to the amount of data.
+
+• Client Division: For each trajectory data D = {d1, d2, · · · }, we select the
+  location location1 of the starting point d1 as the dividing basis, and use k-
+  means algorithm to divide the trajectory to form different clients.
+Edge and parallel artiﬁcial intelligence Chapter | 11 205
+
+• Training: m clients are randomly selected. The server distributes the parame-
+
+  ters of this round to the clients. After the parameters of the clients are updated,
+
+  each client starts the training of this round.
+• Aggregation(FedWvg): After all clients are trained, parameters are updated
+
+  to the server. Set the number of datas of m clients involved in training as
+  n1, n2, · · · , nm, its parameters are w1, w2, · · · , wm, and we set the weight of
+  ith client group:
+
+αi = ni .  (11.8)
+  nt ot al
+
+We believe that the total number of tracks m owned by each client is different,
+so FedWvg is used:
+
+wt =  im=1 αi wi .  (11.9)
+  m
+
+  Based on the time characteristic of the trajectory, we designed a temporal-
+block. We divide the data according to the time of each trajectory. This helps
+the model learn better time characteristics. For example, a Monday trajectory
+might have certain characteristics that are different from a Saturday trajectory.
+Also, the distribution of trajectory during the day will be different from that
+at night. Therefore, taking these two points into consideration, we distinguish
+the trajectories from Monday to Sunday, and divide each day into x different
+clients in several hours according to the degree of time aggregation of the tracks.
+Finally, the weighted average algorithm(FedWvg) is also used to determine the
+weight of each client participating in updating parameters.
+
+• Client Division: For each trajectory D = {d1, d2, · · · }, we choose t1 at the
+  starting point d1 as the dividing basis, and ﬁrst divide it into seven different
+  groups according to the day of the week. In each group, the clustering al-
+  gorithm K-means is used to divide it into x group, so 7x clients are ﬁnally
+  obtained.
+
+• Training: The same in the spatio-block.
+• Aggregation(FedWvg): The same in the spatio-block.
+
+  In general, multiple physical features can make model training more effec-
+
+tive. However, the normal trajectory data set usually only has several features
+d = {idtraj , iduser , x, y, t}, id of trajectory, id of user, longitude, latitude, and
+time. Therefore, we extend several physical features according to the original
+
+data, and can choose them according to the actual situation in the training (see
+Table 11.1).
+
+• number: According to the range of all coordinate points, the maximum lon-
+  gitude, the minimum longitude, the maximum latitude, and the minimum
+  latitude are enclosed into rectangles, and then the rectangles are divided into
+  several grids, and then the grids are labeled. The value of the number is the
+  grid number of the location of the point.
+206 Machine Learning for Transportation Research and Applications
+
+Algorithm 3: Temporal-Federated learning.
+
+Temperal-Clustering Input:
+  Data set D = {D1, D2, · · · , Dn}
+
+  x, the number of groups to be divided
+
+Temporal-Clustering Output:
+  Result 7x client groups G = {G1, G2, · · · , G7x}
+  ith group with j clients Gi = {Di1, Di2, · · · , Dij }
+
+1: Update the global parameter w to each client group
+
+2: for each round t ∈ [1, T ] do
+
+3: randomly choose G1, G2, · · · , Gm from G
+
+4: for each client group Gx do
+
+5:  ClientTrain(w, Dx);
+
+6: end for
+
+7: ith weight for ith client group αi = n ni total
+
+8: wt = m mi=1 αi wi
+
+9: end for
+
+  TABLE 11.1 Features.
+
+  Feature Name  Feature Meaning
+  number  Trajectory grid number
+  datetime  Time between now and the ﬁrst point
+  lng  Longitude
+  lat  Latitude
+  q_lng  Quantile of longitude
+  q_lat  Quantile of latitude
+  CVlng  CV of longitude
+  CVlat  CV of latitude
+  Time difference with last point
+  t  Distance difference with last point
+  locC  Speed
+  s  Rotation rate
+  rot  f(x)’ of the trajectory curve
+  f(x)’  f(x)” of the trajectory curve
+  f(x)”  Radius of curvature
+  ρ  Angular velocity
+
+• datetime: The time from the start of the trajectory to the current position.
+  datetime2 is the time of this point, datetime1 is the time of the ﬁrst point of
+  Edge and parallel artiﬁcial intelligence Chapter | 11 207
+
+the trajectory.
+
+  datetime = datetime2 − datetime1  (11.10)
+• q_lng/q_lat: The wave rate of the longitude/latitude is
+
+wave_rate = quantile(x, 0.9) − quantile(x, 0.1) + 1  (11.11)
+  quantile(x, 0.1) + 1
+
+• CVlng/CVlat: Coefﬁcient of variation of trajectory. STD is the standard de-
+  viation and Mean is the average value
+
+  CV = ST D  (11.12)
+  Mean
+
+• t: The time from the last point to the current point. datetime2 is the time
+  of this point, datetime1 is the time of the previous point
+
+  t = datetimei − datetimei−1  (11.13)
+
+• locC: Absolute distance between the point and the previous point:
+
+  locC = (latxi − latxi−1)2 + (lonxi − lonxi−1)2  (11.14)
+• f(x)’: The ﬁrst derivative of the trajectory curve  (11.15)
+  (11.16)
+  f (x) = y  (11.17)
+  x  (11.18)
+
+• f(x)”: The second derivative of the trajectory curve
+
+  f (x) = f(x)
+  x
+
+• ρ: Radius of curvature.  ρ=  y
+• : Angular velocity.
+  1+y  2  3/2
+
+  =s
+  ρ
+
+11.8.3 Results
+
+The data set we used is the public data set of the Didi Gaia program. We used
+data of Chengdu from November 15 to November 21, 2021. The dataset has the
+feature of traj_id, user_id, longitude, latitude, and datetime. Traj_id and user_id
+are serial numbers randomly generated by the company, in order to protect user
+208 Machine Learning for Transportation Research and Applications
+
+privacy, longitude and latitude are the latitude and longitude of the current point
+of the track, and datetime is the time when the current point is recorded. We
+took about 100,000 points from the dataset for a total of 2,797 trajectories. We
+choose 60% as the training set, 20% as the validation set, and 20% as the test
+set.
+
+  We set some default parameters as follows:
+
+• num_of_clients: We set num_of_clients to 6 because we have only six days
+  of data.
+
+• cfraction: The proportion of the selected training clients in each communi-
+  cating round. We set it to 0.4.
+
+• epoch: The number of training rounds for each client during local training.
+  We set it to 70.
+
+• batchsize: We set it to 40, which we think is appropriate for our data size.
+• learning_rate: Set to 0.01.
+• num_communicate: Number of training rounds. In our experiment, training
+
+  effects of different models at different stages were compared by changing this
+  parameter.
+
+  We run our code using PyCharm, an optimizer for optim.SGD and Loss
+Function for cross_entropy.
+
+  We use the proposed federated learning model in combination with a stan-
+dard transformer for trajectory prediction, predicting the next target point of the
+trajectory. When measuring the effectiveness of the model, we removed the last
+point of each track in the test set and predicted the coordinate of the last track
+point through the previous track point. We mainly evaluated the predicted accu-
+racy as our index. We also carried out and presented other evaluations: top ﬁve
+accuracy, recall score, precision, and f1-score (Fig. 11.12).
+
+  By changing communication round, we compared the accuracy of prediction
+of temporal federated learning, spatial federated learning and ordinary federated
+learning, as shown in Fig. 11.12. It can be found that, although there is little dif-
+ference in the effects of the three models in the early stage, when communicating
+round 6, temporal and spatial federated learning begins to show better results.
+Other evaluations are also consistent with this result.
+
+  For the combination of spatiotemporal model, we also compare it with the
+common federated model. Evaluation scores are shown in the Table 11.2.
+
+  In this training process, the clients are divided into six parts by time ﬁrst,
+and then ﬁve parts by space in each group by K-means, forming 30 clients. We
+set the grid number to 50, the more the total grid number is, the lower score and
+the higher accuracy that we will achieve. Using the FedWvg method, it can be
+seen that the seven evaluation indicators of this model are better than those of
+traditional federated learning.
+
+  We made some visual analysis. In the test set, we randomly selected a few
+trajectories, compared their original terminal point location with the predicted
+point location, and drew them in the same color. As shown in Fig. 11.13, we box
+or connect example pairs of points that are successful in trajectory prediction.
+Edge and parallel artiﬁcial intelligence Chapter | 11 209
+
+FIGURE 11.12 Model performance.
+FIGURE 11.13 Comparison between original and predicted trajectory points.  210 Machine Learning for Transportation Research and Applications
+Edge and parallel artiﬁcial intelligence Chapter | 11 211
+
+TABLE 11.2 Comparison.
+
+macro-pre  st_FedWvg  FedAvg
+macro-rec  0.0692  0.0528
+macro-f1  0.1594  0.1406
+acc@1  0.0945  0.0737
+acc@5  0.4598  0.4168
+acc@10  0.517  0.4794
+acc@20  0.6029  0.5653
+  0.7048  0.687
+
+FIGURE 11.14 Loss of FedAvg and s-FedWvg.
+
+In the index evaluation, it is impossible to completely predict the exact location,
+so we divide the area into several grids, and we consider the prediction as suc-
+cessful as long as it is in the same grid. The smaller each grid area is, the less
+score but the higher accuracy we will get.
+
+  In our model, we can’t simply use the model convergence effect as the basis
+of model training. Take s-FedWvg as an example. Because different clients are
+randomly selected in each communication round and each group has different
+characteristics, the performance of loss score for each group in the same round is
+quite different. As shown in Fig. 11.14, loss scores do not form smooth curves
+in s-FedWvg because each client has its own characteristics. But, in FedAvg,
+because data are randomly selected, the curve is smooth and each client in one
+communication round performs similarly. Therefore, we mainly use the index
+score as the evaluation of the training model.
+
+11.9 Exercises
+• What are the motivations for using federated learning and edge computing?
+
+  What are their common properties and the common challenges they address?
+• What is the difference between horizontal federated learning and vertical fed-
+
+  erated learning?
+• Write down the pseudo-code for FedAvg algorithm.
+212 Machine Learning for Transportation Research and Applications
+
+• In case study 1, we did not write out the AI trigger algorithm. Can you write
+  out its pseudo-code? If so, please do.
+
+• Why deploy AI at the edge? What are the beneﬁts or edge AI?
+• Do you consider edge computing and federated learning the future of intelli-
+
+  gent transportation systems? Why?
+• What kind of role does cloud computing play in edge computing?
+• List the techniques you learned that support real-time edge AI at both the
+
+  system level and algorithm level.
+• Describe the parallel intelligence designs on an individual edge device versus
+
+  across multiple edge devices.
+• Give two promising examples in transportation operation and autonomous
+
+  driving that combine federated learning and edge AI.
+

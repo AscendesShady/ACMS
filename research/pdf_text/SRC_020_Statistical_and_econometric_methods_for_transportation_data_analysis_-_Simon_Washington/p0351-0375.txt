@@ -1,0 +1,1209 @@
+  dependent; that is, annual mileage is dependent on model year.
+  A contingency table, or cross-classiﬁcation analysis, is useful for
+  testing statistical independence among two or more variables.
+
+C
+
+Categorical variable: Also called a nominal scale variable, a variable
+  that has no particular ordering, and intervals between these vari-
+  ables are without meaning. A categorical variable is a discrete
+  variable. Examples of categorical variables include vehicle man-
+  ufacturer and gender. For a categorical variable to be deﬁned
+  appropriately, it must consist of mutually exclusive and collec-
+  tively exhaustive categories.
+
+Causation or causality: When event A causes event B, there exists a
+  material, plausible, underlying reason or explanation relating
+  event B with event A. Causality is not proved with statistics —
+  statistics and statistical models instead provide probabilistic evi-
+  dence supporting or refuting a causal relation. The statistical ev-
+  idence is a necessary but not sufﬁcient condition to demonstrate
+  causality. Causality is more defensible in light of statistical evi-
+  dence obtained from designed experiments, whereas data ob-
+  tained from observational and quasi-experiments too often yield
+  relationships where causation cannot be discerned from associa-
+  tion (see also post hoc theorizing and correlation).
+
+Censored distribution: A statistical distribution that occurs when a re-
+  sponse above or below a certain threshold value is ﬁxed at that
+  threshold. For example, for a stadium that holds 50,000 seats, the
+  number of tickets sold cannot exceed 50,000, even though there
+  might be a demand for more than 50,000 seats.
+
+Central limit theorem: If xave is calculated on a sample drawn from a
+  distribution with mean Q and known ﬁnite variance W2, then the
+  sampling distribution of the test statistic Z is approximately stan-
+  dard normal distributed, regardless of the characteristics of the
+  parent distribution (i.e., normal, Poisson, binomial, etc.). Thus, a
+  random variable Z* computed as follows is approximately stan-
+  dard normal (mean = 0, variance = 1) distributed:
+
+  Z* ! X  Q } ZE .
+  W
+  n
+
+© 2003 by CRC Press LLC
+  The distribution of random variable Z approaches that of the
+  standard normal distribution as n approaches inﬁnity.
+
+Central tendency: The tendency of quantitative data to cluster around
+  some variate value.
+
+Chebyshev’s inequality: A useful theorem, which states that for a
+  probability distribution with mean Q and standard deviation
+  W, the probability that an observation drawn from the distri-
+  bution differs from Q by more than kW is less than 1/k2 or, stated
+  mathematically,
+
+  P_x  Q " kWa k21 .
+
+Chi-square distribution: A distribution that is of great importance for
+  inferences concerning population variances or standard devia-
+  tions, for comparing statistical distributions, and for comparing
+  estimated statistical models. It arises in connection with the sam-
+  pling distribution of the sample variance for random samples
+  from normal populations. The chi-squared density or distribution
+  function is given by
+
+  f x ! xn/21EXPx / 2 /?2n/2 rn / 2 A; x " 0 ,
+
+  where n/2 and 2 are shape and scale parameters, respectively,
+  and _(z) is the gamma function. The chi-square distribution is a
+  special case of the gamma distribution (with n/2 and 2 for shape
+  and scale parameters).
+
+Class:  Observations grouped according to convenient divisions of the
+  variate range, usually to simplify subsequent analysis (the upper
+  and lower limits of a class are called class boundaries; the interval
+  between them the class interval; and the frequency falling into
+  the class is the class frequency).
+
+Classical statistical philosophy: See frequentist and Bayesian statistical
+  philosophy.
+
+Cluster sampling: A type of sampling whereby observations are se-
+  lected at random from several clusters instead of at random
+  from the entire population. It is intended that the heterogeneity
+  in the phenomenon of interest is reﬂected within the clusters;
+  i.e., members in the clusters are not homogenous with respect
+  to the response variable. Cluster sampling is less satisfactory
+  from a statistical standpoint but often is more economical and/
+  or practical.
+
+Coefﬁcient: See parameter.
+
+© 2003 by CRC Press LLC
+Coefﬁcient of determination: Employed in ordinary least squares re-
+  gression and denoted R2, the proportion of total variance in the
+  data taken up or “explained” by the independent variables in the
+  regression model. It is the ratio or proportion of explained vari-
+  ance to total variance and is bounded by 0 and 1 for models with
+  intercept terms. Because adding explanatory variables to a model
+  cannot reduce the value of R2, adjusted R2 is often used to compare
+  models with different numbers of explanatory variables. The val-
+  ue of R2 from a model cannot be evaluated as “good” or “bad”
+  in singularity; it can only be judged relative to other models that
+  have been estimated on similar phenomenon. Thus an R2 of 30%
+  for some phenomenon may be extremely informative, whereas
+  for another phenomenon it might be quite uninformative.
+
+Collectively exhaustive: When a categorical variable is collectively ex-
+  haustive it represents all possible categories into which a random
+  variable may fall.
+
+Compensating variation: Used in utility theory, the amount of money
+  that would have to be paid (or taken away from) individuals to
+  render them as well off after a change in a speciﬁc variable as
+  they were before a change in that variable.
+
+Conditional probability: The long-run likelihood that an event will oc-
+  cur given that a speciﬁc condition has already occurred, e.g., the
+  probability that it will rain today, given that it rained yesterday.
+  The standard notation for conditional probability is P(A|B),
+  which corresponds to the probability that event A occurs given
+  the event B has already occurred. It can also be shown that
+
+  PA B ! PAB PB ,
+
+  where P(AB) is the probability that both event A and B occur.
+Conﬁdence coefﬁcient: The measure of probability E (see alpha error)
+
+  associated with a conﬁdence interval that the interval will include
+  the true population parameter of interest.
+
+Conﬁdence interval or region: A calculated range of values known to
+  contain the true parameter of interest over the average of repeated
+  trials with speciﬁc certainty (probability). The correct interpretation
+  of a conﬁdence interval is as follows: If the analyst were to draw
+  samples repeatedly at the same levels of the independent variables
+  and compute the test statistic (mean, regression, slope, etc.), then
+  the true population parameter would lie in the (1 – E)% conﬁdence
+  interval E times out of 100, conditional on a true null hypothesis.
+
+Confounded variables: Generally a variable in a statistical model that is
+  correlated with a variable that is not included in a model; some-
+
+© 2003 by CRC Press LLC
+  times called an omitted variable problem. When variables in a
+  model are correlated with variables excluded from a model, then
+  the estimates of parameters in the model are biased. The direction
+  of bias depends on the correlation between the confounded vari-
+  ables. In addition, the estimate of model error is also biased.
+
+Consistency: An estimate of a population parameter, such as the pop-
+  ulation mean or variance, obtained from a sample of observations
+  is said to be consistent if the estimate approaches the value of the
+  true population parameter as the sample size approaches inﬁnity.
+  Stated more formally,
+
+  P Fˆ  F I p 1 as n p g for all I " 0 ,
+
+  where Fˆ are estimated parameters, F are true population param-
+  eters, n is sample size, and I is a positive small difference between
+  estimated and true population parameters.
+
+Contemporaneous correlation: Correlation among disturbance terms of
+  different statistical model equations within a system of equations.
+  This correlation is typically caused by shared unobserved effects
+  of variates appearing in multiple equations.
+
+Contingency coefﬁcient: A measure of the strength of the association
+  between two variables, usually qualitative, on the basis of data
+  tallied into a contingency table. The statistic is never negative and
+  has a maximum value less than 1, depending on the number of
+  rows and columns in the contingency table.
+
+Contingency table: Cross-classiﬁcation or contingency table analysis is
+  a statistical technique that relies on properties of the multinomial
+  distribution, statistical independence, and the chi-square distri-
+  bution to determine the strength of association (or lack thereof)
+  between two or more factors or variables.
+
+Continuous variable: A variable that is measured either on the interval
+  or ratio scale. A continuous variable can theoretically take on an
+  inﬁnite number of values within an interval. Examples of contin-
+  uous variables include measurements in distance, time, and mass.
+  A special case of a continuous variable is a data set consisting of
+  counts. Counts consist of non-negative integer values (see also
+  discrete, nominal, and ordinal data).
+
+Control group: A comparison group of experimental units that do not
+  receive a treatment and are used to provide a comparison to the
+  experimental group with respect to the phenomenon of interest.
+
+Correlation: The relationship (association or dependence) between two
+  or more qualitative or quantitative variables. When two variables
+  are correlated they are said to be statistically dependent; when
+
+© 2003 by CRC Press LLC
+  they are uncorrelated they are said to be statistically independent.
+  For continuous variables Pearson’s product moment correlation
+  coefﬁcient is often used, whereas for rank or ordinal data Ken-
+  dall’s coefﬁcient of rank correlation is used.
+
+Correlation coefﬁcient: A measure of the interdependence between two
+  variates or variables. For interval or ratio scale variables it is a
+  fraction, which lies between –1 for perfect negative correlation
+  and 1 for perfect positive correlation.
+
+Correlation matrix: For a set of variables X1 … Xn, with correlation be-
+  tween Xi and Xj denoted by rij, this is a square symmetric matrix
+  with values rij.
+
+Count data: Ratio-scale data that are non-negative integers.
+
+Covariance: The expected value of the product of the deviations of two
+  random variables from their respective means; i.e., E [(X1 – Q1)(X2
+  – Q2)] = §i=1 to n [(X1i – Q1)(X2 – Q2)]/n. Correlation and covariance
+  are related statistics in that the correlation is the standardized
+  form of the covariance; that is, covariance is a measure of the
+  association in original units, whereas the correlation is the mea-
+  sure of association in standardized units.
+
+Covariates: Term often used to refer to independent variables in the
+  model — the variables in the right-hand side of a statistical model.
+
+Cross-sectional data: Data collected on some variable, at the same point
+  or during a particular period of time, from different geographical
+  regions, organizations, households, etc. (see also panel data, time-
+  series data, and before–after data).
+
+Cumulative distribution function: A function related to a distribu-
+  tion’s density function that is written as F(x) = P[X < x], where P
+  denotes probability, X is a random time variable, and x is some
+  speciﬁed value of the random variable. The density function cor-
+  responding to the distribution function is the ﬁrst derivative of
+  the cumulative distribution with respect to x, f(x) = dF(x)/dx.
+
+Cumulative frequency: The frequency with which an observed variable
+  takes on a value equal to or less than a speciﬁed value. Cumula-
+  tive frequencies are often depicted in bar charts or histograms,
+  known as cumulative frequency distributions.
+
+D  Information or measurements obtained from a survey, experi-
+Data:  ment, investigation, or observational study. Data are stored in a
+  database, usually in electronic form. Data are discrete (measured
+
+© 2003 by CRC Press LLC
+  on the nominal or ordinal scale) or continuous (measured on the
+  interval or ratio scale).
+
+Data  mining: Process undertaken with the intent to uncover previously
+  undiscovered relationships in data. Unfortunately, data mining
+  leads to a higher likelihood of illusory correlation, omitted vari-
+  able bias, and post hoc theorizing, all of which threaten high-
+  quality research and scientiﬁc investigations. Data mining should
+  be undertaken with great caution, and conclusions drawn from
+  it should be made with sufﬁcient caveats and pessimism. The
+  logical role of data mining in research is for generating research
+  ideas that deserve follow-on detailed research investigations.
+
+Deduction: A type of logic or thinking process used in statistical hy-
+  pothesis testing. Deductive logic stipulates that if event A causes
+  or leads to event B, and event B is not observed to occur, then
+  event A also did not occur. In probabilistic terms, if the null
+  hypothesis is true (A), then the sample data should be observed
+  with high probability (B). If, instead, the sample data are observed
+  with low probability, then the null hypothesis is rejected as im-
+  plausible (see also induction).
+
+Degrees of freedom: The number of free variables in a set of observations
+  used to estimate statistical parameters. For example, the estimation
+  of the population standard deviation computed on a sample of
+  observations requires an estimate of the population mean, which
+  consumes 1 degree of freedom to estimate — thus the sample stan-
+  dard deviation has n – 1 degrees of freedom remaining. The degrees
+  of freedom associated with the error around a linear regression
+  function has n – P degrees of freedom, as P degrees of freedom have
+  been used to estimate the parameters in the regression model.
+
+Density function: Often used interchangeably with probability density
+  function, the function that deﬁnes a probability distribution in
+  that integration of this function gives probability values.
+
+Dependent variables: If a function is given by Y = f (X1,…, Xn), it is
+  customary to refer to X1,…, Xn as independent or explanatory
+  variables, and Y as the dependent or response variable. The ma-
+  jority of statistical investigations in transportation aim to predict
+  or explain values (or expected values) of dependent variables
+  given known or observed values of independent variables.
+
+Descriptive statistics: Statistics used to display, describe, graph, or de-
+  pict data. Descriptive statistics do not generally include modeling
+  of data, but are used extensively to check assumptions of statis-
+  tical models.
+
+Deterministic model or process: This model, as opposed to a stochastic
+  model, is one that contains effectively no or negligible random
+  elements and for which, therefore, the future course of the system
+
+© 2003 by CRC Press LLC
+  is completely determined by its position, velocities, etc. An exam-
+  ple of a deterministic model is given by force = mass v acceleration.
+Discrepancy function: Used primarily in structural equation models, this
+  function measures the differences between the observed vari-
+  ance–covariance matrix and the variance–covariance matrix im-
+  plied by a postulated structural equation model. All else being
+  equal, a small value of the discrepancy function is preferred to a
+  larger value, indicating greater lack of ﬁt to the data (see also
+  structural equations and goodness-of-ﬁt statistics).
+Discrete/continuous models: A class of models that has a system of both
+  discrete and continuous interrelated dependent variables.
+Discrete variable: A variable (or outcome) that is measured on the nom-
+  inal or ordinal scale. Examples of discrete variables include mode
+  of travel (with discrete possibilities being car, bus, train) and
+  accident severity (with discrete possibilities being property dam-
+  age only, injury, fatality).
+Dispersion: The degree of scatter or concentration of observations around
+  the center or middle. Dispersion is usually measured as a devia-
+  tion about some central value such as the mean, standard or
+  absolute deviation, or by an order statistic such as deciles, quin-
+  tiles, and quartiles.
+Distribution: The set of frequencies or probabilities assigned to various
+  outcomes of a particular event or trial. Densities (derived from
+  continuous data) and distributions (derived from discrete data)
+  are often used interchangeably.
+Distribution function: See cumulative distribution function.
+Disturbances: Also referred to as errors, residuals, and model noise, these
+  are random variables added to a statistical model equation to
+  account for unobserved effects. The choice of their statistical dis-
+  tribution typically plays a key role in parametric model deriva-
+  tion, estimation, and inference.
+Double sampling: The process by which information from a random
+  sample is used to direct the gathering of additional data often
+  targeted at oversampling underrepresented components of the
+  population.
+Dummy variables: See indicator variables.
+
+E
+
+Econometrics: The development and application of statistical and/or
+  mathematical principles and techniques for solving economic
+  problems.
+
+© 2003 by CRC Press LLC
+Efﬁciency: A statistical estimator or estimate is said to be efﬁcient if it
+  has small variance. In most cases, a statistical estimate is preferred
+  if it is more efﬁcient than alternative estimates. It can be shown
+  that the Cramer–Rao bound represents the best possible efﬁciency
+  (lowest variance) for an unbiased estimator. That is, if an unbiased
+  estimator is shown to be equivalent to the Cramer–Rao bound,
+  then there are no other unbiased estimators that are more efﬁcient.
+  It is possible in some cases to ﬁnd a more efﬁcient estimate of a
+  population parameter that is biased.
+
+Elasticity: Commonly used to determine the relative importance of a
+  variable in terms of its inﬂuence on a dependent variable. It is
+  generally interpreted as the percent change in the dependent
+  variable induced by a 1% change in the independent variable.
+
+Empirical: Derived from experimentation or observation rather than
+  underlying theory.
+
+Endogenous variable: In a statistical model, a variable whose value is
+  determined by inﬂuences or variables within the statistical model.
+  An assumption of statistical modeling is that explanatory vari-
+  ables are exogenous. When explanatory variables are endoge-
+  nous, parameter estimation problems arise (see also exogenous
+  variable, instrumental variables, simultaneous equations, and
+  structural equations).
+
+Enriched sampling: Refers to merging a random sample with a sample
+  from a targeted population. For example, a random sample of
+  commuters’ mode choices may be merged with a sample of com-
+  muters observed taking the bus.
+
+Error:  In statistics the difference between an observed value and its
+  “expected” value as predicted or explained by a model. In addi-
+  tion, errors occur in data collection, sometimes resulting in out-
+  lying observations. Finally, Type I and Type II errors refer to
+  speciﬁc interpretive errors made when analyzing the results of
+  hypothesis tests.
+
+Error mean square: In analysis of variance and regression, the residual
+  or error sum of squares divided by the degrees of freedom. Often
+  called the mean square error (MSE), the error mean square pro-
+  vides an estimate of the residual or error variance of the popula-
+  tion from which the sample was drawn.
+
+Error of observation: An error arising from imperfections in the method
+  of observing a quantity, whether due to instrumental or to human
+  factors
+
+Error rate: In hypothesis testing, the unconditional probability of making
+  an error; that is, erroneously accepting or rejecting a statistical
+  hypothesis. Note that the probabilities of Type I and Type II errors,
+  E and F, are conditional probabilities. The ﬁrst is subject to the
+
+© 2003 by CRC Press LLC
+  condition that the null hypothesis is true, and the second is subject
+  to the condition that the null hypothesis is false.
+Error term: See disturbance.
+Error variance: The variance of the random or unexplainable component
+  of a model; the term is used mainly in the presence of other
+  sources of variation, as, for example, in regression analysis or in
+  analysis of variance.
+Exogenous variable: In a statistical model, a term referring to a variable
+  whose value is determined by inﬂuences outside of the statistical
+  model. An assumption of statistical modeling is that explanatory
+  variables are exogenous. When explanatory variables are endog-
+  enous, parameter estimation problems arise (see also endogenous
+  variable, instrumental variables, simultaneous equations, and
+  structural equations).
+Expectation: The expected or mean value of a random variable, or func-
+  tion of that variable such as the mean or variance.
+Experiment: A set of measurements carried out under speciﬁc and con-
+  trolled conditions to discover, verify, or illustrate a theory, hy-
+  pothesis, or relationship. Experiment is the cornerstone of
+  statistical theory and is the only accepted method for suggesting
+  causal relationships between variables. Experimental hypotheses
+  are not proved using statistics; however, they are disproved. El-
+  ements of an experiment generally include a control group, ran-
+  domization, and repeat observations.
+Experimental data: Data obtained by conducting experiments under con-
+  trolled conditions. Quasi-experimental data are obtained when
+  some factors are controlled as in an experiment, but some factors
+  are not. Observational data are obtained when no exogenous factors
+  other than the treatment are controlled or manipulated. Analysis
+  and modeling based on quasi-experimental and observation data
+  are subject to illusory correlation and confounding of variables.
+Experimental design: Plan or blueprint for conducting an experiment.
+Experimental error: Any error in an experiment whether due to stochastic
+  variation or bias (not including mistakes in design or avoidable
+  imperfections in technique).
+Exponential: A variable raised to a power of x. The function F(x) = ax is
+  an exponential function.
+Exponential distribution: A continuous distribution that is typically used
+  to model life cycles, growth, survival, hazard rate, or decay of
+  materials or events. Its probability density function is given by
+
+  f(x) ! P EXPPx ,
+
+  where P is single parameter of the exponential distribution.
+
+© 2003 by CRC Press LLC
+Exponential smoothing: Time-series regression in which recent obser-
+  vations are given more weight by way of exponentially decaying
+  regression parameters.
+
+F
+
+F distribution: A distribution of fundamental importance in analysis
+  of variance and regression. It arises naturally as a ratio of
+  estimated variances and sums of squares. The F density func-
+  tion is given as
+
+  +©¨ n  m¸ n/2 m/2
+  ª 2º¹n m  x n/21
+fx !
+  ¨ n¸ ¨ m¸ m  nx nm /2 ,
+  +© ¹+© ¹
+  ª 2º ª 2 º
+
+  where +(z) is the gamma function, and n and m are the numerator
+  and denominator degrees of freedom for the F distribution, re-
+  spectively (see gamma distribution for gamma function).
+
+F ratio: The ratio of two independent unbiased estimates of variance of
+  a normal distribution, which has widespread application in the
+  analysis of variance.
+
+F test: A computed statistic that under an appropriate null hypothesis
+  has an approximate F distribution. It is used routinely to test full
+  and restricted statistical models.
+
+Factor analysis: An analytical technique used to reduce the number of
+  P variables to a smaller set of parsimonious K < P variables, so
+  that the covariance among many variables is described in terms
+  of a few unobserved factors. An important difference between
+  principal components and factor analysis is that factor analysis is
+  based on a speciﬁc statistical model, whereas principal compo-
+  nents analysis is not (see also principal components analysis and
+  structural equations).
+
+Factorial experiment: An experiment designed to examine the effect of
+  one or more factors, with each factor applied to produce orthog-
+  onal or independent effects on the response.
+
+Fixed effects model: A model appropriate when unobserved hetero-
+  geneity of sampled units is thought to represent the effects of
+  a particular sampled unit (see random effects model).
+
+© 2003 by CRC Press LLC
+Full factorial experiment: An experiment investigating all the possible
+  treatment combinations that may be formed from the factors un-
+  der investigation.
+
+Full information maximum likelihood (FIML): A likelihood function
+  written such that all possible information and restrictions related to
+  model estimation are included. For example, in simultaneous equa-
+  tions estimation, the FIML approach accounts for overidentiﬁcation
+  of model parameters and cross-equation correlation of disturbances.
+
+Frequency: The number of occurrences of a given type of event.
+
+Frequentist statistical philosophy: Also called classical statistical philos-
+  ophy, this philosophy represents the majority of currently applied
+  statistical techniques in practice, although Bayesian philosophy is
+  gaining increased acceptance. In simple terms, classical statisticians
+  assert that probabilities are obtained through long-run repeated
+  observations of events. Frequentist statistical philosophy results in
+  hypothesis tests that provide an estimate of the probability of ob-
+  serving the sample data conditional on a true null hypothesis,
+  whereas Bayesian statistical philosophy results in an estimate of
+  the probability of the null hypothesis being true conditional on the
+  observed sample data (see also Bayesian statistical philosophy).
+
+G
+
+Gamma distribution: A distribution that includes as special cases the chi-
+  square distribution and the exponential distribution. It has many
+  important applications; in Bayesian inference, for example, it is
+  sometimes used as the a priori distribution for the parameter (mean)
+  of a Poisson distribution. It is also used to describe unobserved
+  heterogeneity in some models. The gamma density is given by
+
+  E1 ¨ x ¸
+f(x) ! x EXP©  ¹ /?+E F A; x " 0 ,E
+
+  ª Fº
+
+where E is the shape parameter, F is a scale parameter, and +(z)
+is the gamma function, which is given by the formula
+
+  g
+
+  ´ +z ! tz1EXPtdt .
+  0
+
+When the location parameter is equal to 0 and the scale pa-
+rameter is equal to 1, the gamma distribution reduces to the
+
+© 2003 by CRC Press LLC
+  standard gamma distribution, with mean K and standard devi-
+  ation K .
+Gantt chart: A bar chart showing actual performance or output ex-
+  pressed as a percentage of a quota or planned performance per
+  unit of time.
+Gaussian distribution: Another name for the normal distribution.
+Generalized extreme value (GEV): A generalized distribution used to
+  derive a family of models that includes the multinomial and
+  nested logit models.
+Generalized least squares (GLS): An estimation procedure that gener-
+  alizes least squares estimation by accounting for possible hetero-
+  geneity and correlation of disturbance terms.
+Goodness–of-ﬁt (GOF) statistics: A class of statistics used to assess the
+  ﬁt of a model to observed data. There are numerous GOF measures,
+  including the coefﬁcient of determination R2, the F test, the chi-square
+  test for frequency data, and numerous other measures. GOF statistics
+  may be used to measure the ﬁt of a statistical model to estimation
+  data, or data used for validation. GOF measures are not statistical
+  tests, like F-ratio and likelihood-ratio tests to compare models.
+Gumbel distribution: The density for a continuous variable that ap-
+  proximates many decay, survival, and growth processes, as well
+  provides appealing analytical qualities in analytical problems.
+  The Gumbel distribution is given by
+
+  FI ! EXP?EXPL?I  [A A ,
+
+  where L is a positive scale parameter, [ is a location parameter
+  (mode), and the mean is [ + 0.5772/L.
+
+H
+
+Hazard function: Function used to describe the conditional probability
+  that an event will occur between time t and t + dt, given that the
+  event has not occurred up to time t. It is written as, h(t) = f(t)/[1
+  – F(t)], where F(t) is the cumulative distribution function, and f(t)
+  is the density function. In words, the hazard function, h(t), gives
+  the rate at which event durations are ending at time t (such as
+  the duration in an accident-free state that would end with the
+  occurrence of an accident), given that the event duration has not
+  ended up to time t.
+
+© 2003 by CRC Press LLC
+Heterogeneity: A term used to describe samples or individuals from
+  different populations, which differ with respect to the phenome-
+  non of interest. If the populations are not identical, they are said
+  to be heterogeneous, and by extension the sample data are also
+  said to be heterogeneous (see also unobserved heterogeneity).
+
+Heteroscedasticity: In regression analysis, the property that the condition-
+  al distributions of the response variable Y for ﬁxed values of the
+  independent variables do not all have constant variance. Noncon-
+  stant variance in a regression model results in inﬂated estimates of
+  model mean square error. Standard remedies include transforma-
+  tions of the response, and/or employing a generalized linear model.
+
+Histogram: A univariate frequency diagram in which rectangles pro-
+  portional in area to the class frequencies are erected on sections
+  of the horizontal axis, the width of each section representing the
+  corresponding class interval of the variate.
+
+Holt–Winters smoothing: A seasonal time-series modeling approach in
+  which the original series is decomposed into its level, trend, and
+  seasonal components with each of the components modeled with
+  exponentially smoothed regression.
+
+Homogeneity: Term used in statistics to describe samples or individuals
+  from populations that are similar with respect to the phenomenon
+  of interest. If the populations are similar, they are said to be
+  homogeneous, and by extension the sample data are also said to
+  be homogeneous.
+
+Homoscedasticity: In regression analysis, the property that the condi-
+  tional distributions of Y for ﬁxed values of the independent vari-
+  able all have the same variance (see also heteroscedasticity).
+
+Hypothesis: In statistics, a statement concerning the value of parameters
+  or form of a probability distribution for a designated population
+  or populations. More generally, a statistical hypothesis is a formal
+  statement about the underlying mechanisms that have generated
+  some observed data.
+
+Hypothesis testing: Term used to refer to testing whether or not observed
+  data support a stated position or hypothesis. Support of a research
+  hypothesis suggests that the data would have been unlikely if the
+  hypothesis were indeed false (see also Type I and Type II errors).
+
+I
+
+Identiﬁcation problem: A problem encountered in the estimation of sta-
+  tistical models (in particular simultaneous and structural equations
+
+© 2003 by CRC Press LLC
+  models) that creates difﬁculty in uncovering underlying equation
+  parameters from a reduced form model.
+Illusory correlation: Also called spurious correlation, an omitted vari-
+  able problem, similar to confounding. Illusory correlation is used
+  to describe the situation where Y and X1 are correlated, yet the
+  relation is illusory, because X1 is actually correlated with X2, which
+  is the true “cause” of the changes in Y.
+Independence of irrelevant alternatives (IIA): A property of multi-
+  nomial logit models that is an outgrowth of the model derivation,
+  which assumes disturbance terms are independent. If the outcome
+  disturbances are correlated, the model will give erroneous out-
+  come probabilities when forecasting.
+Independent events: In probability theory, two events are said to be
+  statistically independent if, and only if, the probability that they
+  will both occur equals the product of the probabilities that each
+  one, individually, will occur. Independent events are not correlat-
+  ed, whereas dependent events are (see also dependence and cor-
+  relation).
+Independent variables: Two variables are said to be statistically inde-
+  pendent if, and only if, the probability that they will both occur
+  equals the product of the probabilities that each one, individually,
+  will occur. Independent events are not correlated, whereas depen-
+  dent events are (see also dependence and correlation).
+Indicator variables: Variables used to quantify the effect of a qualitative
+  or discrete variable in a statistical model. Also called dummy
+  variables, indicator variables typically take on values of zero or
+  one. Indicator variables are coded from ordinal or nominal vari-
+  ables. For a nominal variable with n levels, n – 1 indicator vari-
+  ables are coded for use in a statistical model. For example, the
+  nominal variable Vehicle Type: truck, van, or auto, the analyst
+  would code X1 = 1 for truck, 0 otherwise, and X2 = 1 for van, 0
+  otherwise. When both X1 and X2 are coded as zero, the respondent
+  was an auto.
+Indirect least squares: A method used in simultaneous equations esti-
+  mation that applies ordinary least squares to the reduced form
+  model.
+Indirect utility: Utility that has prices and incomes as arguments. It is
+  based on optimal consumption and is tied to underlying demand
+  equations by Roy’s identity.
+Induction: The type of logic or thinking process, where inferences are
+  drawn about an entire class or group based on observations on a
+  few of its members (see also deduction).
+
+© 2003 by CRC Press LLC
+Inference: The process of inferring qualities, characteristics, or relation-
+  ships observed in the sample onto the population. Statistical in-
+  ference relies on both deductive and inductive logic systems.
+
+Information criteria: Model performance measures that balance de-
+  crease in model error with increase in model complexity. In gen-
+  eral, information criteria are based on the Gaussian likelihood of
+  the model estimates with a penalty for the number of model
+  parameters.
+
+Innovation series: The zero-mean uncorrelated stochastic component of
+  a time series of observations that remains after all deterministic
+  and correlated elements have been appropriately modeled. The
+  innovations are also referred to as the series noise.
+
+Instrumental variables: A common approach used in model estimation
+  to handle endogenous variables — those variables that are corre-
+  lated with the disturbance term causing a violation in model
+  assumptions. The ideal instrument is a variable that is highly
+  correlated with the endogenous variable it replaces but is not
+  correlated with the disturbance term.
+
+Interaction: Two variables X1 and X2 are said to interact if the value of
+  X1 inﬂuences the value of X2 positively or negatively. An inter-
+  action is a synergy between two or more variables and reﬂects
+  the fact that their combined effect on a response not only de-
+  pends on the level of the individual variables, but their com-
+  bined levels as well.
+
+Interval estimate: The estimation of a population parameter by speci-
+  fying a range of values bounded by an upper and a lower limit,
+  within which the true value is asserted to lie.
+
+Interval scale: A measurement scale that has equal differences be-
+  tween pairs of points anywhere on the scale, but the zero point
+  is arbitrary; thus, ratio comparisons cannot be made. An ex-
+  ample interval scale is the temperature in degrees Celsius. Each
+  interval on the scale represents a single degree; however, 50rC
+  is not twice as hot as 25rC (see also nominal, ordinal, and ratio
+  scales).
+
+J
+
+Joint probability: The joint density function of two random variables,
+  or bivariate density.
+
+© 2003 by CRC Press LLC
+K
+
+Kendall’s coefﬁcient of rank correlation: Denoted as Xij, where i and j
+  refer to two variables, a coefﬁcient that reﬂects the degree of linear
+  association between two ordinal variables, and is bounded be-
+  tween +1 for perfect positive correlation and –1 for perfect nega-
+  tive correlation. The formula for Xij is given by
+
+  Xij ! S 1 ,
+
+  2 nn  1)
+
+  where S is the sum of scores (see nonparametric statistic reference
+  for computing scores) and n is sample size.
+
+L
+
+Latent variable: A variable that is not directly observable. Examples
+  include intelligence, education, and satisfaction. Typically, latent
+  variables or constructs are measured inexactly with many vari-
+  ables. For example, intelligence may be partially captured with
+  IQ score, GPA (grade point average) from college, and number
+  of books read per year.
+
+Least  squares estimation: Also called ordinary least squares, a tech-
+  nique of estimating statistical parameters from sample data
+  whereby parameters are determined by minimizing the squared
+  differences between model predictions and observed values of
+  the response. The method may be regarded as possessing an
+  empirical justiﬁcation in that the process of minimization gives
+  an optimum ﬁt of observation to theoretical models; in restricted
+  cases, such as normal theory linear models, estimated parame-
+  ters have optimum statistical properties of unbiasedness and
+  efﬁciency.
+
+Level of signiﬁcance: The probability of rejecting a null hypothesis,
+
+  when it is in fact true. It is also known as E, or the probability of
+  committing a Type I error.
+
+Likelihood function: The probability or probability density of obtaining
+  a given set of sample values, from a certain population, when this
+  probability or probability density is regarded as a function of the
+
+© 2003 by CRC Press LLC
+  parameter of the population and not as a function of the sample
+  data (see also maximum likelihood method).
+
+Likelihood ratio test: A test frequently used to test for restrictions in
+  models estimated by maximum likelihood. The test is used for a
+  wide variety of reasons, including the testing of the signiﬁcance
+  of individual parameters and the overall signiﬁcance of the mod-
+  el. The likelihood ratio test statistic is –2[LL(FR) – LL(FU)], where
+  LL(FR) is the log likelihood at convergence of the “restricted”
+  model and LL(FU) is the log likelihood at convergence of the
+  “unrestricted” model. This statistic is G2 distributed with the de-
+  grees of freedom equal to the difference in the numbers of param-
+  eters in the restricted and unrestricted models, that is, the number
+  of parameters in the FR and the FU parameter vectors.
+
+Limited information maximum likelihood (LIML): A likelihood func-
+  tion written such that some possible information on the model is
+  excluded. For example, in simultaneous equations estimation, the
+  LIML approach does not account for possible cross-equation cor-
+  relation of disturbances.
+
+Linear correlation: A somewhat ambiguous expression used to denote
+  either Pearson’s product moment correlation, in cases where the
+  corresponding variables are continuous, or a correlation coefﬁ-
+  cient on ordinal data such as Kendall’s rank correlation coefﬁcient.
+  There are other linear correlation coefﬁcients in addition to the
+  two listed here.
+
+Linear model: A mathematical model in which the equations relating
+  the random variables and parameters are linear in parameters.
+  Although the functional form of the model Y = E + F1X1 + F2X12
+  includes the nonlinear term F2X12, the model itself is linear, be-
+  cause the statistical parameters are linearly related to the random
+  variables.
+
+Logistic distribution: A distribution used for various growth models
+  and in logistic regression models. The general logistic distribution
+  is given by
+
+  ¨ 1¸ «x  E»
+  © ¹ EXP¬ ¼
+  fx ! ®  ªFº ­ F ½
+  2,
+  «x  E »¾
+  ¯1  EXP¬ ¼¿
+  °  ­ F ½À
+
+where E is the location parameter and F is the scale parameter.
+The mean of the general logistic distribution is E, and the variance
+is F2T2/3.
+
+© 2003 by CRC Press LLC
+Logit model: A discrete outcome model derived, in multinomial form
+  (three or more outcomes), by assuming the disturbances are
+  Weibull distributed (Gumbel extreme value type I).
+
+Log-logistic distribution: A distribution used in a number of applica-
+  tions including duration modeling. In duration modeling the log-
+  logistic distribution allows for nonmonotonic hazard functions
+  and is often used as an approximation of the more computation-
+  ally cumbersome lognormal distribution. The log-logistic with
+  parameters P > 0 and P > 0 has the density function
+
+  f x ! PPPx P12 .
+
+  ?1  Px P A
+
+Lognormal distribution: A distribution where random variable X has
+  the lognormal distribution if ln(X) is normally distributed with
+  mean Q and variance W2. The density for the lognormal distribu-
+  tion is given by
+
+  fx ! EXP_?LNx  QA2 / 2W2 a/?x2T A1/2 W ; x " 0 ,
+
+  where Q and W are location and scale parameters of the lognormal
+  distribution. The mean and variance of the lognormal distribu-
+  tion are EXP(Q  W2 / 2) and EXP[2(Q  W2 )]  EXP[2Q  W2 ] , re-
+  spectively.
+
+M
+
+Marginal effect: An economic term used to measure the effect that a
+  unit change in an independent variable has on the response vari-
+  able of interest. Marginal effects are indicators of how inﬂuential
+  or important a variable is in a particular data-generating process
+  (see also signiﬁcance).
+
+Marginal rate of substitution (MRS): An economic term used to mea-
+  sure the trade-off consumers are willing to make between at-
+  tributes of a good. For example, if one were to use a logit model
+  in the analysis of discrete outcome data, the MRS is determined
+  from the ratio of parameter estimates.
+
+Maximum likelihood method: A method of parameter estimation in
+  which a parameter is estimated by the value of the parameter that
+
+© 2003 by CRC Press LLC
+  maximizes the likelihood function. In other words, the maximum
+  likelihood estimator is the value of U that maximizes the proba-
+  bility of the observed sample. The method can also be used for
+
+  the simultaneous estimation of several parameters, such as re-
+
+  gression parameters. Estimates obtained using this method are
+
+  called maximum likelihood estimates.
+
+Mean: That value of a variate such that the sum of deviations from it is
+  zero; thus, it is the sum of a set of values divided by their number.
+
+Mean square error: For unbiased estimators, an estimate of the popu-
+  lation variance, usually denoted MSE. For biased estimators, the
+  mean squared deviation of an estimator from the true value is
+  equal to the variance plus the squared bias. The square root of
+  the mean square error is referred to as the root mean square error.
+
+Median: The middle-most number in an ordered series of numbers. It
+  is a measure of central tendency and is often a more robust mea-
+  sure of central tendency; that is, the median is less sensitive to
+  outliers than is the sample mean.
+
+Mixed multinomial logit models: A class of multinomial logit models
+  that has a mixing distribution introduced to account for random
+  variations in parameters across the population.
+
+Mode: The most common or most probable value observed in a set of
+  observations or sample.
+
+Model:  A formal expression of a theory or causal or associative relation-
+  ship between variables, which is regarded by the analyst as hav-
+  ing generated the observed data. A statistical model is always a
+  simpliﬁed expression of a more complex process; thus, the analyst
+  should anticipate some degree of approximation a priori. A statis-
+  tical model that can explain the greatest amount of underlying
+  complexity with the simplest model form is preferred to a more
+  complex model.
+
+Moving average (MA) processes: Stationary time series that are char-
+  acterized by a linear relationship between observations and past
+  innovations. The order of the process q deﬁnes the number of past
+  innovations on which the current observation depends.
+
+Multicollinearity: A term that describes the state when two variables
+  are correlated with each other. In statistical models, multicol-
+  linearity causes problems with the efﬁciency of parameter esti-
+  mates. It also raises some philosophical issues because it becomes
+  difﬁcult to determine which variables (both, either, or neither) are
+  causal and which are the result of illusory correlation.
+
+Multinomial logit model (MNL): A multinomial (three or more out-
+  come) discrete model derived by assuming the disturbances are
+  Weibull distributed (Gumbel extreme value type I).
+
+© 2003 by CRC Press LLC
+Multiple linear regression: A linear regression involving two or more
+  independent variables. Simple linear regression, which is merely
+  used to illustrate the basic properties of regression models, contains
+  one explanatory variable and is rarely if ever used in practice.
+
+Mutually exclusive events: In probability theory, two events are said to
+  be mutually exclusive if and only if they are represented by dis-
+  joint subsets of the sample space, namely, by subsets that have
+  no elements or events in common. By deﬁnition, the probability
+  of mutually exclusive events A and B occurring is zero.
+
+N
+
+Negative binomial distribution: A discrete distribution characterized
+  by the count of observations that remain unchanged in a binomial
+  process. It also arises as a combination of gamma distributed
+  heterogeneity of Poisson means. The probability distribution of
+  the negative binomial is given as
+
+  PYk ! n ! Cn  1, k  1 pk 1  p nk ; for n ! k, k  1, k  2, ... ,
+
+  where k is the number of successes, p is the probability of success,
+  and C(a,b) is the number of combinations of b objects taken from
+  a objects, deﬁned as
+
+  Ca, b ! a! a  b !b! .
+
+  The mean and variance of the negative binomial distribution are
+  k/p and k(1 – p)/p2. The negative binomial probability distribution
+  provides the probability of observing k successes in n Bernoulli
+  trials (see also binomial and Bernoulli).
+Nested logit model: A modiﬁcation of the multinomial logit model, a
+  model that is derived from a generalized extreme value distribu-
+  tion and that can eliminate common logit-model problems related
+  to the independence of irrelevant alternatives property. The ap-
+  proach of a nested logit model is to group alternative outcomes
+  suspected of sharing unobserved effects into nests of outcome
+  possibilities.
+Noise: A convenient term for a series of random disturbances or devi-
+  ation from the actual distribution. Statistical noise is a synonym
+  for error term, disturbance, or random ﬂuctuation.
+
+© 2003 by CRC Press LLC
+Nominal scale: A variable measured on a nominal scale is the same as
+  a categorical or discrete variable. The nominal scale lacks order
+  and does not possess even intervals between levels of the variable.
+  An example of a nominal scale variable is vehicle type, where
+  levels of response include truck, van, and auto (see also ordinal,
+  interval, and ratio scales of measurement).
+
+Nonlinear relation: A relation where a scatter plot between two vari-
+  ables X1 and X2 will not produce a straightline trend. In many
+  cases a linear trend is observed between two variables by trans-
+  forming the scale of one or both variables. For example, a scatter
+  plot of LN(X1) and X2 might produce a linear trend. In this case,
+  the variables are said to be nonlinearly related in their original
+  scales, but linear in transformed scale of X1.
+
+Nonparametric statistics: Statistical methods that do not rely on statis-
+  tical distributions with estimable parameters. In general, nonpara-
+  metric statistical methods are best suited for ordinal scale
+  variables or, better, for dealing with small samples, and for cases
+  when parametric methods assumptions are suspect (see also para-
+  metric statistics).
+
+Nonrandom sample: A sample selected by a nonrandom method. For
+  example, a scheme whereby units are self-selected would yield a
+  nonrandom sample, where units that prefer to participate do so.
+  Some aspects of nonrandom sampling can be overcome, however.
+
+Normal distribution: A continuous distribution that was ﬁrst studied
+  in connection with errors of measurement and, thus, is referred
+  to as the “normal curve of errors.” The normal distribution forms
+  the cornerstone of a substantial portion of statistical theory. Also
+  called the Gaussian distribution, the normal distribution has the
+  two parameters Q and W, when Q = 0 and W = 1 the normal
+  distribution is transformed into the standard normal distribution.
+  The normal distribution is characterized by its symmetric shape
+  and bell-shaped appearance. The normal distribution probability
+  density is given by
+
+  * EXP z ! ?x  Q 2 2W2 1 2 A .
+
+  2T
+
+Null hypothesis: In general, a term relating to the particular research
+  hypothesis tested, as distinct from the alternative hypothesis,
+  which is accepted if the research hypothesis is rejected. Contrary
+  to intuition, the null hypothesis is often a research hypothesis that
+  the analyst would prefer to reject in favor of the alternative hy-
+  pothesis, but this is not always the case. Erroneous rejection of
+
+© 2003 by CRC Press LLC
+  the null hypothesis is known as a Type I error, whereas erroneous
+  acceptance of the null hypothesis is known as a Type II error.
+
+O
+
+Observational data: Non-experimental data. Because there is no control
+  of potential confounding variables in a study based on observa-
+  tional data, the support for conclusions based on observational
+  data must be strongly supported by logic, underlying material
+  explanations, identiﬁcation of potential omitted variables and
+  their expected biases, and caveats identifying the limitations of
+  the study.
+
+Omitted variable bias: Variables affecting the dependent variable that
+  are omitted from a statistical model are problematic. Irrelevant
+  omitted variables cause no bias in parameter estimates. Important
+  variables that are uncorrelated with included variables will also
+  cause no bias in parameter estimates, but the estimate of W2 is
+  biased high. Omitted variables that are correlated with an includ-
+  ed variable X1 will produce biased parameter estimates. The sign
+  of the bias depends on the product of the covariance of the omit-
+  ted variable and X1 and b1, the biased parameter. For example, if
+  the covariance is negative and b1 is negative, then the parameter
+  is biased positive. In addition, W2 is also biased.
+
+One-tailed test: Also known as a one-sided test, a test of a statistical
+  hypothesis in which the region of rejection consists of either the
+  right-hand tail or the left-hand tail of the sampling distribution
+  of the test statistic. Philosophically, a one-tailed test represents the
+  analyst’s a priori belief that a certain population parameter is
+  either negative or positive.
+
+Ordered probability models: A general class of models used to model
+  discrete outcomes that are ordered (for example, from low to
+  high). Ordered probit and ordered logit are the most common of
+  these models. They are based on the assumption of normal and
+  Weibull distributed disturbances, respectively.
+
+Ordinal scale: A scale of measurement occurs when a variable can take
+  on ordered values, but there is not an even interval between levels
+  of the variable. Examples of ordinal variables include measuring
+  the desirability of different models of vehicles (Mercedes SLK,
+  Ford Mustang, Toyota Camry), where the response is highly de-
+  sirable, desirable, and least desirable (see also nominal, interval,
+  and ratio scales of measurement).
+
+© 2003 by CRC Press LLC
+Ordinary differencing: Creating a transformed series by subtracting the
+  immediately adjacent observations.
+
+Ordinary least squares (OLS): See least squares estimation.
+Orthogonal: A condition of two variables where the linear correlation
+
+  coefﬁcient between them is zero. In observational data, the cor-
+  relation between two variables is almost always nonzero. Orthog-
+  onality is an extremely desirable property among independent
+  variables in statistical models, and typically arises by careful de-
+  sign of data collection through experimentation or cleverly crafted
+  stated preference surveys.
+Outliers: Observations that are identiﬁed as such because they “appear”
+  to lie outside a large number of apparently similar observations
+  or experimental units according to a speciﬁed model. In some
+  cases, outliers are traced to errors in data collecting, recording, or
+  calculation and are corrected or appropriately discarded. How-
+  ever, outliers sometimes arise without a plausible explanation. In
+  these cases, it is usually the analyst’s omission of an important
+  variable that differentiates the outlier from the remaining, other-
+  wise similar observations, or a misspeciﬁcation of the statistical
+  model that fails to capture the correct underlying relationships.
+  Outliers of this latter kind should not be discarded from the
+  “other” data unless they are modeled separately, and their exclu-
+  sion justiﬁed.
+
+P
+
+p-value: The smallest level of signiﬁcance E that leads to rejection of the
+  null hypothesis.
+
+Panel data: Data that are obtained from experimental units across var-
+  ious points in time, but not necessary continuously over time like
+  time-series data (see also before–after data, time-series data, and
+  cross-sectional data).
+
+Parameter: Sometimes used interchangeably with coefﬁcient, an un-
+  known quantity that varies over a certain set of inputs. In statis-
+  tical modeling, it usually occurs in expressions deﬁning frequency
+  or probability distributions in terms of their relevant parameters
+  (such as mean and variance of normal distribution), or in statis-
+  tical models describing the estimated effect of a variable or vari-
+  ables on a response. Of utmost importance is the notion that
+  statistical parameters are merely estimates, computed from the
+  sample data, which are meant to provide insight regarding what
+
+© 2003 by CRC Press LLC
+  the true population parameter value is, although the true popu-
+  lation parameter always remains unknown to the analyst.
+Parametric statistics: Methods of statistical analysis that utilize param-
+  eterized statistical distributions. These methods typically require
+  that a host of assumptions be satisﬁed. For example, a standard
+  t test for comparing population means assumes that distributions
+  are approximately normally distributed and have equal variances
+  (see also nonparametric statistics).
+Pearson’s product moment correlation coefﬁcient: D e n o t e d a s r i j ,
+  where i and j refer to two variables, a coefﬁcient that reﬂects the
+  degree of linear association between two continuous (ratio or
+  interval scale) variables and that is bounded between +1 for per-
+  fect positive correlation and –1 for perfect negative correlation.
+  The formula for rij is given by
+
+  rij ! sij ,
+  si sj
+
+  where sij is the covariance between variables i and j, and si and sj
+  are the standard deviations of variables i and j, respectively.
+Point estimate: A single estimated value of a parameter, or an estimate
+  without a measure of sampling variability.
+Poisson distribution: A discrete distribution that is often referred to as
+  the distribution of rare events. It is typically used to describe the
+  probability of occurrence of an event over time, space, or length.
+  In general, the Poisson distribution is appropriate when the fol-
+  lowing conditions hold: the probability of “success” in any given
+  trial is relatively small; the number of trials is large; and the trials
+  are independent. The probability distribution function for the
+  Poisson distribution is given as
+
+  P X ! x ! P(x; P) ! PxEXPP , for x = 1, 2, 3,..., g ,
+
+  x!
+
+  where x is the number of occurrences per interval, and P is the
+  mean number of occurrences per interval.
+Population: In statistical usage, a term that is applied to any ﬁnite or
+  inﬁnite collection of individuals. It is important to distinguish
+  between the population, for which statistical parameters are ﬁxed
+  and unknown at any given instant in time, and the sample of
+  the population, from which estimates of the population param-
+  eters are computed. Population statistics are generally unknown
+
+© 2003 by CRC Press LLC
+  because the analyst can rarely afford to measure all members of
+  a population, so a random sample is drawn.
+
+Post  hoc theorizing: Theorizing that is likely to occur when the analyst
+  attempts to explain analysis results after the fact (post hoc). In this
+  less than ideal approach to scientiﬁc discovery, the analyst devel-
+  ops hypotheses to explain the data, instead of the reverse (collect-
+  ing data to nullify a well-articulated hypothesis). The number of
+  post hoc theories that are developed to “ﬁt” the data is limited
+  only by the imagination of a group of scientists. With an abun-
+  dance of competing hypotheses, and little forethought as to which
+  hypothesis is afforded more credence, there is little in the way of
+  statistical justiﬁcation to prefer one hypothesis to another. Espe-
+  cially when data are observational, there is little evidence to elim-
+  inate the prospect of illusory correlation.
+
+Power: The probability that a statistical test of some hypothesis rejects
+  the alternative hypothesis when the alternative is false. The power
+  is greatest when the probability of a Type II error is least. Power
+  is 1 – F, whereas level of conﬁdence is 1 – E.
+
+Precision: Degree of scatter to which repeated estimates agree with the
+  true state of nature. Typically, precision is a measure of the vari-
+  ation of predictions around the true and often unknown average
+  (see also accuracy, bias, efﬁciency, and consistency).
+
+Prediction interval: A calculated range of values known to contain
+  some future observation over the average of repeated trials with
+  speciﬁc certainty (probability). The correct interpretation of a pre-
+  diction interval is as follows. If the analyst were to repeatedly
+  draw samples at the same levels of the independent variables and
+  compute the test statistic (mean, regression slope, etc.), then a
+  future observation will lie in the (1 – E)% prediction interval E
+  times out of 100. The prediction interval differs from the conﬁ-
+  dence interval in that the conﬁdence interval provides certainty
+  bounds around a mean, whereas the prediction interval provides
+  certainty bounds around an observation.
+
+Principal components analysis: An analytical tool used to explain the
+  variance–covariance structure of a relatively large multivariate
+  data set using a few linear combinations of the originally mea-
+  sured variables. It is used to reveal structure in data and enable
+  the identiﬁcation of underlying dimensions in the data (see also
+  factor analysis and structural equations).
+
+Probability density functions: Synonymous with probability distribu-
+  tions (sometimes referred to simply as density functions); know-
+  ing the probability that a random variable takes on certain values,
+  judgments are made regarding how likely or unlikely were the
+  observed values. In general, observing an unlikely outcome tends
+
+© 2003 by CRC Press LLC
+

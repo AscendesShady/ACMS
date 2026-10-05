@@ -1,0 +1,1046 @@
+Machine Learning for Transportation
+Research and Applications
+This page intentionally left blank
+Machine Learning for
+Transportation
+Research and
+Applications
+
+Yinhai Wang
+
+Smart Transportation Applications and Research Laboratory
+Department of Civil and Environmental Engineering
+University of Washington
+Seattle, WA, United States
+
+Zhiyong Cui
+
+School of Transportation Science and Engineering
+Beihang University
+Beijing, China
+
+Ruimin Ke
+
+Department of Civil Engineering
+University of Texas, El Paso
+El Paso, TX, United States
+Elsevier
+Radarweg 29, PO Box 211, 1000 AE Amsterdam, Netherlands
+The Boulevard, Langford Lane, Kidlington, Oxford OX5 1GB, United Kingdom
+50 Hampshire Street, 5th Floor, Cambridge, MA 02139, United States
+
+Copyright © 2023 Elsevier Inc. All rights reserved.
+
+No part of this publication may be reproduced or transmitted in any form or by any means,
+electronic or mechanical, including photocopying, recording, or any information storage and
+retrieval system, without permission in writing from the publisher. Details on how to seek
+permission, further information about the Publisher’s permissions policies and our arrangements
+with organizations such as the Copyright Clearance Center and the Copyright Licensing Agency,
+can be found at our website: www.elsevier.com/permissions.
+
+This book and the individual contributions contained in it are protected under copyright by the
+Publisher (other than as may be noted herein).
+
+Notices
+
+Knowledge and best practice in this ﬁeld are constantly changing. As new research and
+experience broaden our understanding, changes in research methods, professional practices, or
+medical treatment may become necessary.
+
+Practitioners and researchers must always rely on their own experience and knowledge in
+evaluating and using any information, methods, compounds, or experiments described herein. In
+using such information or methods they should be mindful of their own safety and the safety of
+others, including parties for whom they have a professional responsibility.
+
+To the fullest extent of the law, neither the Publisher nor the authors, contributors, or editors,
+assume any liability for any injury and/or damage to persons or property as a matter of products
+liability, negligence or otherwise, or from any use or operation of any methods, products,
+instructions, or ideas contained in the material herein.
+
+ISBN: 978-0-323-96126-4
+
+ For information on all Elsevier publications
+ visit our website at https://www.elsevier.com/books-and-journals
+
+Publisher: Joseph P. Hayton
+Acquisitions Editor: Kathryn Eryilmaz
+Editorial Project Manager: Aleksandra Packowska
+Production Project Manager: Kiruthika Govindaraju
+
+  & Selvaraj Raviraj
+Cover Designer: Mark Rogers
+
+Typeset by VTeX
+Contents
+
+About the authors  xi
+
+1. Introduction
+
+1.1 Background  1
+
+1.1.1 Importance of transportation  1
+
+1.1.2 Motivation  2
+
+1.2 ML is promising for transportation research and applications  3
+
+1.2.1 A brief history of ML  3
+
+1.2.2 ML for transportation research and applications  4
+
+1.3 Book organization  5
+
+2. Transportation data and sensing
+
+2.1 Data explosion  9
+
+2.2 ITS data needs  10
+
+2.3 Infrastructure-based data and sensing  11
+
+2.3.1 Trafﬁc ﬂow detection  11
+
+2.3.2 Travel time estimation  11
+
+2.3.3 Trafﬁc anomaly detection  12
+
+2.3.4 Parking detection  13
+
+2.4 Vehicle onboard data and sensing  14
+
+2.4.1 Trafﬁc near-crash detection  14
+
+2.4.2 Road user behavior sensing  15
+
+2.4.3 Road and lane detection  15
+
+2.4.4 Semantic segmentation  16
+
+2.5 Aerial sensing for ground transportation data  17
+
+2.5.1 Road user detection and tracking  17
+
+2.5.2 Advanced aerial sensing  18
+
+2.5.3 UAV for infrastructure data collection  18
+
+2.6 ITS data quality control and fusion  19
+
+2.7 Transportation data and sensing challenges  20
+
+2.7.1 Heterogeneity  20
+
+2.7.2 High probability of sensor failure  21
+
+2.7.3 Sensing in extreme cases  22
+
+2.7.4 Privacy protection  23
+
+  v
+vi Contents
+
+2.8 Exercises  23
+
+3. Machine learning basics
+
+3.1 Categories of machine learning  25
+
+3.1.1 Supervised vs. unsupervised learning  25
+
+3.1.2 Generative vs. discriminative algorithms  26
+
+3.1.3 Parametric vs. nonparametric modeling  27
+
+3.2 Supervised learning  28
+
+3.2.1 Linear regression  28
+
+3.2.2 Logistic regression  33
+
+3.3 Unsupervised learning  35
+
+3.3.1 Principal component analysis  36
+
+3.3.2 Clustering  37
+
+3.4 Key concepts in machine learning  37
+
+3.4.1 Loss  37
+
+3.4.2 Regularization  37
+
+3.4.3 Gradient descent vs. gradient ascent  39
+
+3.4.4 K-fold cross-validation  39
+
+3.5 Exercises  40
+
+3.5.1 Questions  40
+
+4. Fully connected neural networks
+
+4.1 Linear regression  41
+
+4.2 Deep neural network fundamentals  42
+
+4.2.1 Perceptron  42
+
+4.2.2 Hidden layers  44
+
+4.2.3 Activation functions  45
+
+4.2.4 Loss functions  46
+
+4.2.5 Back-propagation  47
+
+4.2.6 Validation dataset  50
+
+4.2.7 Underﬁtting or overﬁtting?  51
+
+4.3 Transportation applications  51
+
+4.3.1 Trafﬁc prediction  52
+
+4.3.2 Trafﬁc sign image classiﬁcation  53
+
+4.4 Exercises  54
+
+4.4.1 Questions  54
+
+5. Convolution neural networks
+
+5.1 Convolution neural network fundamentals  57
+
+5.1.1 From fully connected layers to convolutions  57
+
+5.1.2 Convolutions  58
+
+5.1.3 Architecture  59
+
+5.1.4 AlexNet  61
+
+5.2 Case study: trafﬁc video sensing  62
+
+5.3 Case study: spatiotemporal trafﬁc pattern learning  63
+  Contents vii
+
+5.4 Case study: CNNs for data imputation  69
+
+5.4.1 CNN-based imputation approach  70
+
+5.4.2 Experiment  73
+
+5.5 Exercises  77
+
+6. Recurrent neural networks
+
+6.1 RNN fundamentals  82
+
+6.2 RNN variants and related architectures  83
+
+6.2.1 Long short-term memory (LSTM) and gated recurrent
+
+units (GRU)  83
+
+6.2.2 Bidirectional RNN  85
+
+6.2.3 Sequence to sequence  86
+
+6.3 RNN as a building block for transportation applications  86
+
+6.3.1 RNN for road trafﬁc prediction  86
+
+6.3.2 Trafﬁc prediction with missing values  89
+
+6.4 Exercises  91
+
+6.4.1 Questions  91
+
+6.4.2 Project: predicting network-wide trafﬁc using LSTM  91
+
+7. Reinforcement learning
+
+7.1 Reinforcement learning setting  95
+
+7.1.1 Markov property  96
+
+7.1.2 Goal of reinforcement learning  96
+
+7.1.3 Categories and terms in reinforcement learning  97
+
+7.2 Value-based methods  101
+
+7.2.1 Q-learning  101
+
+7.2.2 Deep Q-networks  102
+
+7.3 Policy gradient methods for deep RL  103
+
+7.3.1 Stochastic policy gradient  103
+
+7.3.2 Deterministic policy gradient  105
+
+7.4 Combining policy gradient and Q-learning  106
+
+7.4.1 Actor–critic methods  106
+
+7.5 Case study 1: trafﬁc signal control  107
+
+7.5.1 Agent formulation  108
+
+7.6 Case study 2: car following control  109
+
+7.6.1 Agent formulation  110
+
+7.6.2 Model and simulation settings  112
+
+7.7 Case study 3: bus bunching control  112
+
+7.7.1 Agent formulation  114
+
+7.8 Exercises  115
+
+7.8.1 Questions  115
+
+8. Transfer learning
+
+8.1 What is transfer learning  117
+
+8.2 Why transfer learning  117
+viii Contents
+
+8.3 Deﬁnition  118
+
+8.4 Transfer learning steps  119
+
+8.5 Transfer learning types  120
+
+8.5.1 Domain adaptation  120
+
+8.5.2 Multi-task learning  120
+
+8.5.3 Zero-shot learning  120
+
+8.5.4 Few-shot learning  122
+
+8.6 Case study: vehicle detection enhancement through transfer
+
+learning  122
+
+8.7 Case study: parking information management and prediction
+
+system by attribute representation learning  123
+
+8.7.1 Background  123
+
+8.7.2 Methods  126
+
+8.7.3 Results  132
+
+8.8 Case study: transfer learning for nighttime trafﬁc detection  133
+
+8.9 Case study: simulation to real-world knowledge transfer for
+
+driving behavior recognition  136
+
+8.10 Exercises  138
+
+9. Graph neural networks
+
+9.1 Preliminaries  141
+
+9.2 Graph neural networks  141
+
+9.2.1 Spectral GNN  141
+
+9.2.2 Spatial GNN  143
+
+9.2.3 Attention-based GNNs  144
+
+9.3 Case study 1: trafﬁc graph convolutional network for trafﬁc
+
+prediction  145
+
+9.3.1 Problem deﬁnition  145
+
+9.3.2 Method: trafﬁc graph convolutional LSTM  148
+
+9.3.3 Results  149
+
+9.4 Case study 2: graph neural network for trafﬁc forecasting with
+
+missing values  151
+
+9.4.1 Problem deﬁnition  151
+
+9.4.2 Method: graph Markov network  155
+
+9.4.3 Results  156
+
+9.5 Case study 3: graph neural network (GNN) for vehicle
+
+keypoints’ correction  158
+
+9.5.1 Problem deﬁnition  158
+
+9.5.2 Method: graph neural network for keypoints correction 161
+
+9.5.3 Results  162
+
+9.6 Exercises  163
+
+9.6.1 Questions  163
+
+10. Generative adversarial networks
+
+10.1 Generative adversarial network (GAN)  166
+
+10.1.1 Binary classiﬁcation  166
+  Contents ix
+
+10.1.2 Original GAN formulation as binary classiﬁcation  166
+
+10.1.3 Objective (loss) function  167
+
+10.1.4 Optimization algorithm  168
+
+10.2 Case studies: GAN-based roadway trafﬁc state estimation  170
+
+10.2.1 Problem formulation  171
+
+10.2.2 Model: generative adversarial architecture for
+
+spatiotemporal trafﬁc-state estimation  172
+
+10.2.3 Results  173
+
+10.3 Case study: conditional GAN-based taxi hotspots prediction 175
+
+10.3.1 Problem formulation  175
+
+10.3.2 Model: LSTM-CGAN-based-hotspot prediction  175
+
+10.3.3 Results  177
+
+10.4 Case study: GAN-based pavement image data transferring  178
+
+10.4.1 Problem formulation  179
+
+10.4.2 Model: CycleGAN-based image style transfer  179
+
+10.4.3 Results  181
+
+10.5 Exercises  182
+
+11. Edge and parallel artiﬁcial intelligence
+
+11.1 Edge computing concept  183
+
+11.2 Edge artiﬁcial intelligence  183
+
+11.3 Parallel artiﬁcial intelligence  184
+
+11.4 Federated learning concept  185
+
+11.5 Federated learning methods  185
+
+11.5.1 Horizontal federated learning  185
+
+11.5.2 Vertical federated learning  186
+
+11.6 Case study 1: parallel and edge AI in multi-task trafﬁc
+
+surveillance  187
+
+11.6.1 Motivations  187
+
+11.6.2 Parallel edge computing system architecture  187
+
+11.6.3 Algorithms and results  189
+
+11.7 Case study 2: edge AI in vehicle near-crash detection  192
+
+11.7.1 Motivations  192
+
+11.7.2 Relative motion patterns in camera views for
+
+near-crashes  193
+
+11.7.3 Edge computing system architecture  194
+
+11.7.4 Camera-parameter-free near-crash detection algorithm 196
+
+11.7.5 Height or width  196
+
+11.7.6 Modeling bounding box centers for horizontal motion
+
+pattern identiﬁcation  197
+
+11.7.7 Experimental results  198
+
+11.8 Case study 3: federated learning for vehicle trajectory
+
+prediction  202
+
+11.8.1 Motivation  202
+
+11.8.2 Methodology  202
+
+11.8.3 Results  207
+x Contents
+
+  11.9 Exercises  211
+
+12. Future directions
+
+  12.1 Future trends of deep learning technologies for transportation 213
+
+  12.2 The future of transportation with AI  214
+
+  12.3 Book extension and future plan  215
+
+Bibliography  217
+
+Index  231
+
+Companion Web Site:
+https://www.elsevier.com/books-and-journals/book-companion/9780323961264
+About the authors
+
+Yinhai Wang—Ph.D., P.E., Professor, Transportation Engineering, University
+of Washington, USA. Dr. Yinhai Wang is a fellow of both the IEEE and Amer-
+ican Society of Civil Engineers (ASCE). He also serves as director for Paciﬁc
+Northwest Transportation Consortium (PacTrans), USDOT University Trans-
+portation Center for Federal Region 10, and the Northwestern Tribal Technical
+Assistance Program (NW TTAP) Center. He earned his Ph.D. in transportation
+engineering from the University of Tokyo (1998) and a Master in Computer
+Science from the UW (2002). Dr. Wang’s research interests include trafﬁc sens-
+ing, transportation data science, artiﬁcial intelligence methods and applications,
+edge computing, trafﬁc operations and simulation, smart urban mobility, trans-
+portation safety, among others.
+
+Zhiyong Cui—Ph.D., Associate Professor, School of Transportation Science
+and Engineering, Beihang University. Dr. Cui received the B.E. degree in soft-
+ware engineering from Beijing University in 2012, the M.S. degree in software
+engineering from Peking University in 2015, and the Ph.D. degree in civil engi-
+neering (transportation engineering) from the University of Washington in 2021.
+Dr. Cui’s primary research focuses on intelligent transportation systems, artiﬁ-
+cial intelligence, urban computing, and connected and autonomous vehicles.
+
+Ruimin Ke—Ph.D., Assistant Professor, Department of Civil Engineering, Uni-
+versity of Texas at El Paso, USA. Dr. Ruimin Ke received the B.E. degree in
+automation from Tsinghua University in 2014, the M.S. and Ph.D. degrees in
+civil engineering (transportation) from the University of Washington in 2016
+and 2020, respectively, and the M.S. degree in computer science from the Uni-
+versity of Illinois Urbana–Champaign. Dr. Ke’s research interests include intel-
+ligent transportation systems, autonomous driving, machine learning, computer
+vision, and edge computing.
+
+  xi
+This page intentionally left blank
+Chapter 1
+
+Introduction
+
+This book aims to help current and future transportation professionals build their
+understanding of, and capability to use, machine learning (ML) methods and
+tools to address transportation challenges. Although this book is designed as
+an entry level textbook for college or graduate students, it can also serve as a
+reference book for working professionals on ML research and applications in
+transportation engineering.
+
+  This book does not require any prior experience nor knowledge of computer
+programming or the concepts of ML and its transportation related applications
+to read it. Readers can gradually build the needed programming skills through
+reading this book and working on the exercises in each chapter. Considering
+the breadth of the topics covered in this book and the frequent updates needed
+for the programming scripts and the supporting packages, the authors choose
+to provide the computer codes for all the exercises online rather than in the
+book. Also, to make it easier for instructors to teach courses relevant to ML in
+transportation using this textbook, the authors will share PowerPoint ﬁles for
+each chapter and solutions to the example problems in the companion website
+of this book.
+
+  The remaining part of this chapter introduces the general background of
+transportation and ML and explains why the authors consider this book to be
+needed for transportation education, followed by the organization of this book.
+
+1.1 Background
+
+1.1.1 Importance of transportation
+
+Transportation is a means of moving goods, humans, and animals from place to
+place. It is essential for everyone’s daily life. Every aspect of modern economies,
+and the ways of life they support, can be tied directly or indirectly to transporta-
+tion. Thus, transportation is very important to the economy. At the microscopic
+level, a typical household spends about 15% of its income on transportation.
+Trafﬁc congestion alone costs each American driver $1,377, indicating a to-
+tal congestion cost of $88 billion in the US in 2019, according to the INRIX
+2019 Global Trafﬁc Scorecard. Transportation is the second largest household
+expenditure category in the US when household spending, such as healthcare
+beneﬁts, is excluded. The 2020 data show that an average of $9,826, or 16%,
+was spent on transportation by households in the US. At the macroscopic level,
+
+Machine Learning for Transportation Research and Applications  1
+
+https://doi.org/10.1016/B978-0-32-396126-4.00006-0
+
+Copyright © 2023 Elsevier Inc. All rights reserved.
+2 Machine Learning for Transportation Research and Applications
+
+many wealthy countries spend approximately 6% to 12% of the Gross Domes-
+tic Product (GDP) on transportation (Rodrigue, 2020). In the US, transportation
+contributed 8% to the 2020 GDP and is the fourth largest contributor following
+housing, healthcare, and food.
+
+  Transportation plays a critical role in climate change. Transportation con-
+sumed 28% of total energy use in the US in 2021. Petroleum is the main source
+of energy for transportation in the US, accounting for 90% of the total trans-
+portation sector energy use. Consequently, transportation has been the largest
+contributor to US greenhouse gas emissions, account for 27% of the total. The
+increase of greenhouse gas emissions in the transportation sector is greater than
+any other sectors in absolute terms between 1990 and 2020.
+
+  Transportation also impacts public health signiﬁcantly. Air pollutants emit-
+ted from transportation vehicles lead to poor air quality that has negative impacts
+on public health. Many health problems, such as respiratory infections, cardio-
+vascular diseases, lung cancers, etc., have been found to be related to trafﬁc
+pollution. Also, trafﬁc crashes kill approximately 1.35 million people each year
+globally. Road trafﬁc collisions are the leading cause of death among people
+aged 5–29 according to the 2018 Global Status Report on Road Safety pub-
+lished by the World Health Organization. Although many new safety solutions
+have been applied to vehicles and roadways, trafﬁc fatalities are still high in
+the US, with approximately 40,000 people killed each year. Pedestrian fatalities
+have also been increasing after hitting the lowest recent number in 2009.
+
+1.1.2 Motivation
+
+Transportation is important. Improvements in the transportation system can gen-
+erate remarkables beneﬁt for the economy and society. Investment in transporta-
+tion infrastructure can generate a 5% to 20% annual return (Rodrigue, 2020).
+However, transportation is a very complicated system-of-systems through which
+humans, technologies, and infrastructure interact. Our transportation system is
+about how people connect, build, consume, and work, with many variables in-
+volved, including policy, human, geographical, and technical factors, among
+others. To gain a good understanding of the transportation issues and identify
+effective solutions, quality data are essential.
+
+  Over the recent decades, transportation agencies have made signiﬁcant in-
+vestments in system sensing and data gathering. For example, data exchange
+and AI/ML are both listed as fundamental elements of intelligent transportation
+systems (ITS), a system of technologies and operational advancements that im-
+prove the capacities of the overall transportation system. The global investment
+on ITS technologies is projected to grow at a compounded annual rate of 8.8%,
+reaching $49.5 billion by 2026. These new ITS system data, third-party data
+(such as those from navigation apps), and classical trafﬁc sensor and survey data
+form big data streams that enable system-wide in-depth analyses concerning a
+variety of important transportation issues.
+  Introduction Chapter | 1 3
+
+  Unfortunately, classical transportation research and practice have been
+mainly based on the very limited amounts of data collected from periodical
+surveys or limited sensor locations. Most methods, including the commonly
+used ones, are based on mathematical assumptions without sufﬁcient validation
+(Ma et al., 2011) and are not suitable for using such new datasets. Transportation
+curricula currently used in universities are strong in design, construction, and
+operation topics, but lack coverage of database, data analytics, and information
+technologies. Consequently, transportation agencies and companies are facing
+increasing workforce challenges, particularly for the use of new technologies
+such as sensing, Internet of Things (IoT), connected and automated vehicles,
+drones, big data analytics, and artiﬁcial intelligence (AI).
+
+  To help address this workforce challenge, the authors decided to write this
+book and focus on ML because it has the potential to “transform ITS at every
+level of implementation.” (Chan-Edmiston et al., 2020) ML has been widely ap-
+plied in transportation data collection, autonomous driving, transportation asset
+management, demand forecasting, safety improvement, mobility as a service,
+etc. It is clearly a critical skill for future transportation professionals. This book
+provides an introduction to ML methods for those transportation students and
+working professionals who are interested in studying this subject. Hopefully,
+this book lays a solid foundation for addressing the current and future work-
+force challenges in transportation.
+
+1.2 ML is promising for transportation research and
+  applications
+
+1.2.1 A brief history of ML
+
+Before presenting ML, we need to brieﬂy introduce AI, a research ﬁeld which
+started at a workshop held on the campus of Dartmouth College, NH, in the
+summer of 1956 (Kaplan and Haenlein, 2019). The term of AI was ﬁrst coined
+at this workshop by John McCarthy, a professor of computer science at Stan-
+ford University. Although there is not a universally accepted deﬁnition of AI,
+the key concept is the same: AI leverages computers and machines to mimic
+the problem-solving and decision-making capabilities of the human mind, as
+described on the IBM website at https://www.ibm.com/cloud/learn/what-is-
+artiﬁcial-intelligence. Research investigation in whether machine could sub-
+stitue human for some jobs can be dated back to 1945 when Vannevar Bush
+proposed a system to amplify people’s own knowledge and understanding (Bush
+et al., 1945). Machine intelligence was more clearly described in 1950 by Alan
+Turing, one of the most inﬂuential British mathematician and logician who
+made major contributions to mathematics, cryptanalysis, logic, philosophy, and
+mathematical biology and also to the new areas later named computer science,
+cognitive science, artiﬁcial intelligence, and artiﬁcial life. In his paper (Turing
+and Haugeland, 1950), Turing proposed a method for answering the question he
+raised at the beginning of his paper “Can machines think?” This method, now
+4 Machine Learning for Transportation Research and Applications
+
+referred to as the Turing test, can be used to test a machine’s ability to exhibit
+intelligent behavior equivalent to, or indistinguishable from, that of a human.
+
+  Over recent decades, AI has attracted a substantial amount of attention and
+has been intensively studied. With the ubiquitous use of smart phones and de-
+ployment of Internet of Things (IoT), data has become increasingly available
+that has further stimulated AI research, particularly ML. Although AI and ML
+are often used exchangeably, these two terms are actually two different concepts
+even though ML is actually a part of AI. ML is an application of AI that focuses
+on the use of data and algorithms to imitate the way that humans learn, gradu-
+ally improving its accuracy. ML algorithms build a model based on sample data,
+known as training data, in order to make predictions or decisions without being
+explicitly programmed to do so.
+
+  ML originated from the mathematical modeling of neural networks in 1943.
+Walter Pitts and Warren McCulloch (McCulloch and Pitts, 1943) attempted to
+mathematically map out thought processes and decision making in human cog-
+nition. Because of the emerging data sets and new computing technologies, ML
+technologies have advanced very quickly, making them signiﬁcantly more effec-
+tive than in the past. A remarkable milestone is the development of AlphaGo, the
+ﬁrst computer program defeated in 2016 a Go world champion, Lee Sedol, and is
+arguably the strongest Go player in history. AlphaGo is a computer program de-
+veloped by Google DeepMind to play the board game Go. AlphaGo’s algorithm
+uses a combination of machine learning and tree search techniques, combined
+with extensive training, both from human and computer play. AlphaGo was
+trained on thousands of human amateur and professional games to learn how
+to play Go. Its improved version, AlphaGo Zero, released just roughly a year
+after, skips this human Go game data based training step and learns to play sim-
+ply by playing games against itself, starting from completely random play. In
+doing so, it quickly surpassed human level of play and defeated the previously
+published champion-defeating version of AlphaGo by 100 games to 0. This ex-
+ample demonstrates the power of ML.
+
+1.2.2 ML for transportation research and applications
+
+Although the history of using ML in transportation is short, researchers have
+made remarkable progress demonstrating the high value of the method. From
+transportation data collection to transportation operations, demand forecasting,
+and planning, ML methods have been proven effective over the conventional
+methods. Here are some examples.
+• Trafﬁc data collection. This is the ﬁrst and foremost step for ITS.It is the
+
+  foundation for trafﬁc system control, demand prediction, infrastructure mon-
+  itoring and management, etc. It is also the most important technology for
+  autonomous vehicles. Trafﬁc data collection, or trafﬁc sensing, from the
+  functionality perspective, has various manners including infrastructure-based
+  sensing, vehicle onboard sensing, and aerial sensing. Due to the different
+  Introduction Chapter | 1 5
+
+  characteristics of trafﬁc sensing technologies, how to extract useful trafﬁc
+  data and merge different types of sensing technologies together is critical
+  for the future transportation system. ML methods have been used for vehicle
+  detection and classiﬁcation, road surface condition sensing, pedestrian and
+  bicyclist counting, etc.
+• Trafﬁc prediction. Coupled with trafﬁc sensing, trafﬁc state prediction is an-
+  other motivating application. The trafﬁc state variables include trafﬁc speed,
+  volume, travel time, and other travel demand factors, such as origin and des-
+  tinations (OD). The road trafﬁc state prediction considered as a time series
+  forecasting problem can be easily solved by various types methods. However,
+  when comes to the trafﬁc prediction for large-scale city areas with hundreds
+  or thousands of road segments involved, the common time series forecasting
+  methods may not work. Thus, how to extract comprehensive spatial-temporal
+  features from a road network to fulﬁll trafﬁc prediction and assist further traf-
+  ﬁc management is a key task for transportation planning and operations. ML
+  methods have been widely used for short and long term trafﬁc forecasts.
+• Trafﬁc system operations. AI trafﬁc management is poised to revamp urban
+  transportation, relieving bottlenecks and choke-points that routinely snarl our
+  urban trafﬁc. This helps reduce not only congestion and travel time but also
+  vehicle emissions. Trafﬁc congestion mostly occurs due to the negligence of
+  certain factors like distance maintained between two moving vehicles, trafﬁc
+  lights, and road signs. Congestion leads to higher fuel consumption, increased
+  air pollution, unnecessarily wastage of time & energy, chronic stress & other
+  physiological problems, whereas higher trafﬁc violations are the major cause
+  of road fatalities. Intelligent trafﬁc management systems refer to the usage
+  of AI, machine learning, computer vision, sensors, and data analysis tools
+  to collect and analyze trafﬁc data, generate solutions, and apply them to the
+  trafﬁc infrastructure. AI can use live camera feeds, sensors, and even Google
+  Maps to develop trafﬁc management solutions that feature predictive algo-
+  rithms to speed up trafﬁc ﬂow. Siemens Mobility recently built an ML-based
+  monitoring system that processes video feeds from trafﬁc cameras. It auto-
+  matically detects trafﬁc anomalies and alerts trafﬁc management authorities.
+  The system is effective at estimating road trafﬁc density to modulate the traf-
+  ﬁc signals accordingly for smoother movement. ML methods will improve
+  many smart transportation applications including emergency vehicle preemp-
+  tion, transit signal priority, and pedestrian safety.
+
+1.3 Book organization
+
+The chapters in this book are organized based on the optimal learning order
+of the selected machine learning methods. In each chapter, we ﬁrst introduce
+machine learning algorithms and then present related transportation case studies
+into which those algorithms can be applied. Speciﬁcally, the book is organized
+to include the following chapters:
+6 Machine Learning for Transportation Research and Applications
+
+• Chapter 2 covers the various transportation data and sensing technologies
+  including infrastructure-based, vehicle onboard, and aerial sensing technolo-
+  gies and the corresponding generated datasets. This chapter also introduces
+  existing transportation data and sensing challenges.
+
+• Chapter 3: This chapter introduces a spectrum of key concepts in the ﬁeld
+  of machine learning, starting with the deﬁnition and categories of machine
+  learning, and then covering the basic building blocks of advanced machine
+  learning algorithms. The theory behind the common regressions, including
+  linear regression and logistic regression, gradient descent algorithms, regu-
+  larization, and other key concepts of machine learning are discussed.
+
+• Chapter 4: This chapter introduces neural network techniques starting from
+  linear regression to the feed-forward neural network (FNN). Basic FNN com-
+  ponents, including layers, activation functions, back-propagation algorithms,
+  and training strategies are introduced. Additionally, case studies of represen-
+  tative transportation applications using FNN are presented.
+
+• Chapter 5: This chapter introduces the fundamental mechanism of convolu-
+  tional neural network (CNN) which has been widely used to learn matrix-like
+  data, such as images. The case studies introduced in this chapter includes traf-
+  ﬁc video sensing and spatiotemporal trafﬁc pattern learning.
+
+• Chapter 6: This chapter introduces the fundamental mechanism of recurrent
+  neural network (RNN) and its famous variants, like LSTM and GRU. We
+  also present transportation related case studies adopting RNN including road
+  trafﬁc prediction and trafﬁc time series data imputation.
+
+• Chapter 7: This chapter introduces reinforcement learning (RL), which is a
+  branch of machine learning targeting to solve these sequential decision prob-
+  lems. In this chapter, the basic concepts, such as Markov decision process
+  (MDP), and value-based and policy-based algorithms of RL are introduced
+  in detail. Multi-agent reinforcement learning (MARL) aiming at controlling a
+  bunch of objects/agents cooperatively to achieve a better system performance
+  is also brieﬂy introduced in this chapter. We also present typical simulated
+  and real scenarios to apply different RL algorithms in transportation applica-
+  tions, such as trafﬁc signal control and car following problems.
+
+• Chapter 8: This chapter introduces transfer learning and its applications
+  in improving intelligent transportation systems, such as enhancing parking
+  surveillance and trafﬁc volume detection.
+
+• Chapter 9: Graph neural network (GNN) as a building block of deep neu-
+  ral networks has the superiority in extracting and processing comprehensive
+  features from graph data and enhances the interpretability of neural network
+  models. This chapter describes the basic concepts of GNN and state-of-the-
+  art GNN variants, such as graph convolutional neural network (GCN). In
+  addition, a variety of transportation applications using GNN, including trafﬁc
+  signal control and road trafﬁc prediction, are introduced.
+
+• Chapter 10: This chapter introduces a representative generative model, i.e.
+  generative adversarial network (GAN). is an unsupervised learning task that
+  Introduction Chapter | 1 7
+
+  involves automatically mining and learning the patterns or distributions in a
+  dataset to generate new data samples with some variants. We introduce the
+  theoretical background of generative models and the details of the frame-
+  works of and GAN variants. GAN-related case studies in the transportation
+  domain, such as trafﬁc state estimation, are also brieﬂy introduced in this
+  chapter.
+• Chapter 11: Edge computing is crucial for the future ITS applications to
+  enable the interaction between connected trafﬁc participants. This chapter
+  presents representative edge computing scenarios in the ITS ﬁeld and intro-
+  duces the background and fundamental concepts of federated learning (FL),
+  which is a method for distributed model training across many edge computing
+  devices.
+• Chapter 12: AI will deﬁnitely be one of the fundamentals of future trans-
+  portation systems. This chapter introduces key aspects and directions of AI
+  techniques that will hugely impact and advance the urban transportation sys-
+  tems in the future. Additionally, this chapter also discuss the extension and
+  future plan of this book.
+This page intentionally left blank
+Chapter 2
+
+Transportation data and sensing
+
+2.1 Data explosion
+
+Urbanization has been posing great opportunities and challenges in multiple
+areas, including the environment, health care, the economy, housing, transporta-
+tion, among others. The opportunities and challenges boost the rapid advances
+in cyber-physical technologies and bring connected mobile devices to people’s
+daily life. Nowadays, approximately 90% of people are connected to the internet
+and have fast access to a wide variety of information. The superb communica-
+tion infrastructure in urban area has been attracting more and more residents to
+cities at an unprecedented scale and speed. In order to efﬁciently manage the
+data generated every day and to use them to better allocate urban resources,
+the smart city concept has emerged. This concept combines sensors, system
+engineering, artiﬁcial intelligence (AI), and information and communication
+technologies to optimize city services and operations. Naturally, the transporta-
+tion system that moves goods and people is a critical component of the smart
+city. Intelligent Transportation Systems (ITS) has likewise emerged as a con-
+cept that applies sensing, analysis, control, and communications technologies to
+ground transportation in order to improve safety, mobility, efﬁciency, and sus-
+tainability.
+
+  Modern ITS applications are data-driven and make high demands for com-
+puting services and sophisticated models to process, analyze, and store big data.
+Transportation data, as a major data source in urban computing, is characterized
+by its high volume, high heterogeneity in data formats, and high variance in data
+quality. Machine learning has been extensively applied to ITS and greatly lever-
+ages the power and potential of ITS data. Machine learning models are often
+data-hungry and computationally expensive compared to traditional statistical
+models. The training of a machine learning model, especially deep neural net-
+works (DNNs), may take days or weeks to complete. In most cases, making
+inferences from machine learning models is also less efﬁcient than traditional
+methods. Understanding trafﬁc data types and properties is a critical step for
+comprehending machine learning applications in ITS.
+
+  Trafﬁc data collection, or, in other words, trafﬁc sensing, is the ﬁrst and
+foremost step in ITS since it is the foundation for modeling, system analy-
+sis, trafﬁc prediction, and control. Trafﬁc data collection and sensing, from the
+functionality perspective, can be divided into infrastructure-based sensing, vehi-
+cle onboard sensing, and aerial sensing. Transportation infrastructures and road
+
+Machine Learning for Transportation Research and Applications  9
+
+https://doi.org/10.1016/B978-0-32-396126-4.00007-2
+
+Copyright © 2023 Elsevier Inc. All rights reserved.
+10 Machine Learning for Transportation Research and Applications
+
+users are the two major components of ground transportation systems, and aerial
+sensing using aircraft such as drones is an emerging technology and can be con-
+sidered an extension of ground transportation systems.
+
+2.2 ITS data needs
+
+Data collection is the ﬁrst step in most ITS applications. Advanced trafﬁc man-
+agement systems (ATMS) need trafﬁc operation data, e.g., inductive loop data
+and surveillance camera data, to monitor the roadways and intersections. Ad-
+vanced traveler information systems (ATIS) need trafﬁc and environmental data
+and communicates with travelers regarding congestion, incident, work zone, ex-
+treme weather, etc. Advanced vehicle control systems (AVCS) need information
+on the subject vehicles, as well as that of the surrounding environment, to oper-
+ate certain advanced vehicular functions, such as collision warning and adaptive
+cruise control. In Commercial Vehicle Operations (CVO), weigh-in-motion data
+and sensor data regarding the containers are critical in monitoring truck opera-
+tions and safety. These subsystems of ITS all rely heavily on high-quality ITS
+data, often from multiple sources, to function in the expected manner.
+
+  ITS data are generated from sensors (Klein et al., 2006). ITS sensors have
+their own working mechanisms, pros/cons, and application scenarios. The in-
+ductive loop detector detects vehicles via loop inductance decreases when a
+vehicle is on top of it. Inductive loop detection is a well-understood technology
+that provides basic trafﬁc parameters and is insensitive to inclement weather.
+But the loop detector’s installation and maintenance require pavement cuts and
+lane closures. The magnetic sensor detects the earth’s magnetic ﬁeld change
+when a vehicle is over it and can be used where loops are not feasible, e.g.,
+on bridge decks. They are less susceptible than loops to the stresses of trafﬁc,
+but cannot detect motionless vehicles unless special sensor layouts and signal
+processing software are used. Pneumatic road-tube sensors are portable and can
+be set up easily on roads to count vehicles by using air pressure signals. They
+have a low power usage and are lower cost to maintain, yet are temperature sen-
+sitive and may produce inaccurate axle counting when truck and bus volumes
+are high. Microwave radar sensors can generate speed and multi-lane count data
+with high accuracy, but generate no vehicle classiﬁcation information. Infrared
+sensors can detect vulnerable road users in addition to vehicles, but have re-
+duced vehicle sensitivity in heavy rain, snow, and dense fog. Trafﬁc cameras
+are a type of sensor for collecting rich trafﬁc information and are widely de-
+ployed, but the data production process sometimes requires advanced computer
+vision algorithms and powerful computers. Acoustic sensors, ultrasonic sensors,
+LiDAR, etc.are other popular ITS sensors that support ITS data collection.
+
+  According to Ke (2020), modern ITS systems operations, from both the
+functionality and the methodological perspectives, can be roughly divided
+into surface transportation-infrastructure systems, surface transportation-vehicle
+systems, and aerial transportation systems as an extension. These three compo-
+nents each serve different purposes and pose different properties to be leveraged
+  Transportation data and sensing Chapter | 2 11
+
+in data-driven application development. In the following three sections, the data
+and example ITS data-driven applications are introduced based this categoriza-
+tion.
+
+2.3 Infrastructure-based data and sensing
+
+A key objective of the ITS concept is to leverage the existing civil infrastructures
+to improve trafﬁc performance. Transport infrastructure refers to roads, bridges,
+tunnels, terminals, railways, trafﬁc controllers, trafﬁc signs, other roadside units,
+etc. Sensors installed within transport infrastructures monitor certain locations
+in a transportation system, such as intersections, roadway segments, freeway
+entrances/exists, and parking facilities.
+
+2.3.1 Trafﬁc ﬂow detection
+
+One of the fundamental functions of infrastructure-based ITS sensing is traf-
+ﬁc ﬂow detection and classiﬁcation at particular locations. Vehicle counts, ﬂow
+rate, speed, density, trajectories, classes, and many other valuable data can be
+made available through trafﬁc ﬂow detection and classiﬁcation. Chen et al.
+(2020b) proposed a trafﬁc ﬂow detection method using optimized YOLO (You
+Only Look Once) for vehicle detection and DeepSORT (Deep Simple Online
+and Realtime Tracking) for vehicle tracking and implemented the method on
+the edge device Nvidia Jetson TX2. Haferkamp et al. (2017) proposed a method
+by applying machine learning (KNN and SVM) to radio attenuation signals
+and were able to achieve success in trafﬁc ﬂow detection and classiﬁcation. If
+processed with advanced signal processing methods, traditional trafﬁc sensors,
+such as loop detectors and radar, can also expand their detection categories and
+performance. Ho and Chung (2016) applied Fast Fourier Transforms (FFTs)
+to radar signals to detect trafﬁc ﬂow at the roadside. Ke et al. (2018b) devel-
+oped a method for trafﬁc ﬂow bottleneck detection using wavelet transforms on
+loop detector data. Distributed sensing with acoustic sensing, trafﬁc ﬂow outlier
+detection, deep learning, and robust trafﬁc ﬂow detection in congestion are ex-
+amples of other state-of-the-art studies in this subﬁeld (Liu et al., 2020c, 2018;
+Djenouri et al., 2018; Liang et al., 2020).
+
+2.3.2 Travel time estimation
+
+Coupled with trafﬁc ﬂow detection, travel time estimation is another task in
+ITS sensing. Accurate travel time estimation needs multilocation sensing and
+reidentiﬁcation of road users. Bluetooth sensing is the primary way to detect
+travel time since Bluetooth detection comes with a MAC address of a device
+so it can naturally reidentify road users that carry the device. Vehicle travel
+time (Martchouk et al., 2011) and pedestrian travel time (Malinovskiy et al.,
+2012) can both be extracted with Bluetooth sensing, but Bluetooth sensing
+has generated privacy concerns. With advances in computer vision and deep
+12 Machine Learning for Transportation Research and Applications
+
+learning, travel time estimation has improved for road user reidentiﬁcation us-
+ing surveillance cameras. Deep image features are extracted for vehicles and
+pedestrians and then compared employing region-wide surveillance cameras for
+multi-camera tracking (Liu et al., 2016; He et al., 2020; Lee et al., 2020; Han et
+al., 2020b,a). An effective and efﬁcient pedestrian reidentiﬁcation method was
+developed by Han et al. (2020b), called KISS+ (Keep It Simple and Straight-
+forward Plus), in which multifeature fusion and feature dimension reduction are
+performed based on the original KISS method. Sometimes it is not necessary to
+estimate travel time for every single road user. In such cases, more conventional
+detectors and methods could achieve good results. As Oh et al. (2002) proposed
+a method to estimate link travel time, using loop detectors. The key idea was
+based on road section density that can be acquired by ob-serving in-and-out
+trafﬁc ﬂows between two loop stations. While no reidentiﬁcation was realized,
+these methods had reasonably good performances and provided helpful travel
+time information for trafﬁc management and users (Oh et al., 2002; Stehly et
+al., 2007; Cortes et al., 2002).
+
+2.3.3 Trafﬁc anomaly detection
+
+Another topic in infrastructure-based sensing is trafﬁc anomaly detection. As the
+name suggests, trafﬁc anomaly refers to such abnormal incidents in an ITS. They
+rarely occur, and examples include vehicle breakdown, collision, near-crash,
+wrong-way driving, among others. Two major challenges in trafﬁc anomaly de-
+tection are (1) the lack of sufﬁcient anomaly data for algorithm development
+and (2) the wide variety of anomalies that have no clear deﬁnition. Anomalies
+detection is achieved mainly using surveillance cameras, given the requirement
+for rich information, though time series data is also feasible in some relatively
+simple anomaly detection tasks (Mercader and Haddad, 2020). Trafﬁc anomaly
+detection can be divided into three categories: supervised learning, unsuper-
+vised learning, and semi-supervised learning. Supervised learning methods are
+useful when the number of classes is clearly deﬁned and training data is large
+enough to make the model statistically signiﬁcant; but supervised learning re-
+quires manual labeling and needs both data and labor, and they cannot detect
+unforeseen anomalies (Singh and Mohan, 2018; Lee et al., 2018; Loewenherz
+et al., 2017). Unsupervised learning has no requirement for labeling data and
+is more generalizable to the unforeseen anomaly as long as sufﬁcient normal
+data is provided; however, anomaly detection is difﬁcult when the data nature
+changes over time (e.g., if a surveillance camera keeps changing its angle and
+direction) (Roshtkhari and Levine, 2013). Li et al. (2020c) designed an unsu-
+pervised method based on multi-granularity tracking, and their method won
+ﬁrst prize in the 2020 AI City Challenge. Semi-supervised learning needs only
+weak labels. Chakraborty et al. (2018) proposed a semi-supervised model for
+freeway trafﬁc trajectory classiﬁcation using YOLO, SORT, and maximum-
+likelihood-based Contrastive Pessimistic Likelihood Estimation (CPLE). This
+

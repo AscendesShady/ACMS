@@ -1,0 +1,1695 @@
+724 CHAPTER 12 ■ Multiple Regression and Model Building
+
+  a. Write the complete second-order model for  d. Give the null and alternative hypotheses for testing
+  if the rate of increase of ratio (y) with diameter (x) is
+  E(y).  slower for larger pipe sizes.
+
+  b. The coefficient of determination for the model, part a,  e. Carry out the test, part d, using a = .01.
+  was reported as R2 = .14. Interpret this value.  f. Locate on the printout a 95% prediction interval for
+
+  c. The estimate of the b-value for the 1x222 term in the  the ratio of repair to replacement cost for a pipe with a
+  model was found to be negative. Interpret this result,  diameter of 250 millimeters. Interpret the result.
+
+  practically.
+
+  d. A t-test on the b-value for the interaction term in the
+
+  model, x1x2, resulted in a p-value of .02. Practically in-
+
+  terpret this result, using a = .05.
+
+12.73  Estimation of urban population by means of satellite im-
+  ages. Refer to the Geographical Analysis (Jan. 2007) study
+  that demonstrated the use of satellite image maps for es-
+  timating urban population, presented in Exercise 12.18
+  (p. 698). A first-order model for census block population
+  density (y) was fit as a function of the proportion of a block
+  with low-density residential areas 1x12 and the proportion
+  of a block with high-density residential areas 1x22. Now
+  consider a complete second-order model for y.
+  a. Write the equation of the model.
+  b. Identify the terms in the model that allow for curvilin-
+
+  ear relationships.
+
+Applying the Concepts—Intermediate
+
+12.74  Estimating repair and replacement costs of water pipes.
+  Refer to the IHS Journal of Hydraulic Engineering (Sept.
+H20PIPE  2012) study of the repair and replacement of water pipes,
+  Exercise 11.28 (p. 628). Recall that a team of civil engi-
+  neers used regression analysis to model y = the ratio of
+  repair to replacement cost of commercial pipe as a function
+  of x = the diameter (in millimeters) of the pipe. Data for
+  a sample of 13 different pipe sizes are reproduced in the
+  accompanying table. In Exercise 11.28, you fit a straight-
+  line model to the data. Now consider the quadratic model
+  E1y2 = b0 + b1x + b2x2. A MINITAB printout of the
+  analysis follows in the next column.
+
+  Diameter  Ratio  12.75  Estimating change-point dosage. A standard method for
+  studying toxic substances and their effects on humans is to
+  80  6.58  observe the responses of rodents exposed to various doses
+  100  6.97  of the substance over time. In the Journal of Agricultural,
+  125  7.39  Biological, and Environmental Statistics (June 2005), re-
+  150  7.61  searchers used least squares regression to estimate the
+  200  7.78  “change-point” dosage, defined as the largest dose level
+  250  7.92  that has no adverse effects. Data were obtained from
+  300  8.20  a dose-response study of rats exposed to the toxic sub-
+  350  8.42  stance aconiazide. A sample of 50 rats was evenly divided
+  400  8.60  into five dosage groups: 0, 100, 200, 500, and 750 milli-
+  450  8.97  grams per kilogram of body weight. The dependent vari-
+  500  9.31  able y measured was the weight change (in grams) after a
+  600  9.47  2-week exposure. The researchers fit the quadratic model
+  700  9.72  E1y2 = b0 + b1x + b2x2, where x = dosage level, with
+  the following results: yn = 10.25 + .0053x - .0000266x2.
+  Source: Suribabu, C. R., and Neelakantan, T. R. “Sizing of  a. Construct a rough sketch of the least squares predic-
+  water distribution pipes based on performance measure and
+  breakage-repair replacement economics.” IHS Journal of  tion equation. Describe the nature of the curvature in
+  Hydraulic Engineering, Vol. 18, No. 3, Sept. 2012 (Table 1).  the estimated model.
+  b. Estimate the weight change (y) for a rat given a dosage
+  a. Give the least squares prediction equation relating ratio  of 500 mg/kg of aconiazide.
+  c. Estimate the weight change (y) for a rat given a dos-
+  of repair to replacement cost (y) to pipe diameter (x).  age of 0 mg/kg of aconiazide. (This dosage is called the
+  “control” dosage level.)
+  b. Conduct a global F-test for the model using a = .01.
+
+  What do you conclude about overall model adequacy?
+  c. Evaluate the adjusted coefficient of determination, R2a,
+
+  for the model.
+  SECTION 12.6 ■ Quadratic and Other Higher Order Models 725
+
+  d. Of the five groups in the study, find the largest dosage  b. The regression results are reported in the table below.
+  level x that yields an estimated weight change that is clos-  Interpret the value of R2.
+  est to, but below, the estimated weight change for the con-
+  trol group. This value is the change-point dosage.  c. Use the R2 statistic to conduct a test of overall model
+
+12.76  Shopping on Black Friday. Refer to the International Journal  adequacy. Test using a = .10.
+  of Retail and Distribution Management (Vol. 39, 2011) study
+BLKFRI  of shopping on Black Friday (the day after Thanksgiving),  d. Conduct a test to determine whether needs (x1) is cur-
+  Exercise 7.22 (p. 353). Recall that researchers conducted  vilinearly related to satisfaction (y). Test using a = .10.
+  interviews with a sample of 38 women shopping on Black
+  Friday to gauge their shopping habits. Two of the variables  e. Conduct a test to determine whether supplies (x2) is cur-
+  measured for each shopper were age (x) and number of years  vilinearly related to satisfaction (y). Test using a = .10.
+  shopping on Black Friday (y). Data on these two variables
+  for the 38 shoppers are listed in the accompanying table.  Independent Variable  Estimated Beta  Standard Error
+  a. Fit the quadratic model, E1y2 = b0 + b1x + b2x2, to
+  Needs (x1)  .952  .780
+  the data using statistical software. Give the prediction  Supplies (x2)  1.198  .766
+  equation.  Needs * Supplies 1x1x22  .356  .429
+  b. Conduct a test of the overall adequacy of the model.  Needs * Needs 1x122  - .181  .302
+  Use a = .01.  Supplies * Supplies 1x222  - .755  .413
+  c. Conduct a test to determine if the relationship between
+  age (x) and number of years shopping on Black Friday  R2 = .402
+  (y) is best represented by a linear or quadratic function.
+  Use a = .01.  12.78  Failure times of silicon wafer microchips. Researchers at
+  National Semiconductor experimented with tin-lead solder
+  WAFER  bumps used to manufacture silicon wafer integrated circuit
+  chips (International Wafer Level Packaging Conference,
+  Age  Years  Age  Years  Nov. 3–4, 2005). The failure times of the microchips (in
+  hours) were determined at different solder temperatures
+  32  5  21  5  (degrees Celsius). The data for one experiment are given
+  in the following table. The researchers want to predict fail-
+  27  3  52  10  ure time (y) based on solder temperature (x).
+  a. Construct a scatterplot for the data. What type of rela-
+  40  12  40  18
+  tionship, linear or curvilinear, appears to exist between
+  62  35  38  5  failure time and solder temperature?
+  b. Fit the model, E1y2 = b0 + b1x + b2x2, to the data.
+  47  20  56  8  Give the least squares prediction equation.
+  c. Conduct a test to determine if there is upward curvature
+  53  30  60  5  in the relationship between failure time and solder tem-
+  perature. (Use a = .05.)
+  24  8  35  15
+
+  27  2  50  25
+
+  47  24  56  10
+
+  40  25  20  2
+
+  45  11  20  4
+
+  22  11  21  4
+
+  25  5  22  5
+
+  60  35  50  10
+
+  22  3  30  6  Temperature (°C)  Time to Failure (hours)
+
+  50  15  28  16  165  200
+  162  200
+  70  22  25  7  164  1,200
+  158  500
+  50  10  30  6  158  600
+  159  750
+  21  6  49  30  156  1,200
+  157  1,500
+  Source: Thomas, J. B., and Peters, C. “An exploratory investigation  152  500
+  of Black Friday consumption rituals.” International Journal of Retail  147  500
+  and Distribution Management, Vol. 39, No. 7, 2011 (Table I).  149  1,100
+  149  1,150
+12.77  Satisfaction with membership in a new religious movement.  142  3,500
+  How satisfied are people who have recently joined a new  142  3,600
+  religious movement? To answer this question, German re-  143  3,650
+  searchers collected data for a sample of 58 believers who had  133  4,200
+  recently joined a new religious group (Applied Psychology:  132  4,800
+  An International Review, Apr. 2010). The dependent vari-  132  5,000
+  able of interest was satisfaction level (y), measured quanti-  134  5,200
+  tatively on an 11-point scale (where 0 = totally dissatisfied  134  5,400
+  and 10 = totally satisfied). Two independent variables were  125  8,300
+  used to predict satisfaction level: Needs (x1)—a measure of  123  9,700
+  the level of needs one requires in a religion, and Supplies
+  (x2)—a measure of the level of supplies provided by the re-  Based on Gee, S., and Nguyen, L. “Mean time to failure in wafer level–CSP
+  ligion. In theory, if the level of needs matches the level of  packages with SnPb and SnAgCu solder bmps.” International Wafer Level
+  supplies, one will be highly satisfied with the religion.  Packaging Conference, San Jose, CA, Nov. 3–4, 2005 (adapted from Figure 7).
+  a. The researchers fitted a complete second-order model
+
+  for E(y) as a function of x1 and x2. Write the equation
+  of this model.
+726 CHAPTER 12 ■ Multiple Regression and Model Building
+
+12.79  Public perceptions of health risks. In the Journal of  a. Fit the quadratic model to the data, and then conduct
+  Experimental Psychology: Learning, Memory, and  a test to determine whether the actual incidence is
+INFECT  curvilinearly related to the estimated incidence. (Use
+  Cognition (July 2005), University of Basel (Switzerland)  a = .05.)
+  psychologists tested the ability of people to judge the risk
+  of an infectious disease. The researchers asked German  b. Construct a scatterplot of the data. Locate the data
+  college students to estimate the number of people who are  point for botulism on the graph. What do you observe?
+  infected with a certain disease in a typical year. The median
+  estimates, as well as the actual incidence of the disease for  c. Repeat part a, but omit the data point for botulism
+  each in a sample of 24 infections, are listed in the table.  from the analysis. Has the fit of the model improved?
+  Consider the quadratic model E1y2 = b0 + b1x + b2x2,  Explain.
+  where y = actual incidence rate and x = estimated rate.
+  Applying the Concepts—Advanced
+
+  12.80  Tree frog study. The optomotor responses of tree frogs
+  were studied in the Journal of Experimental Zoology
+  Infection  Actual Incidence  Estimate  (Sept. 1993). Microspectrophotometry was used to mea-
+  sure the threshold quantal flux (the light intensity at which
+  Polio  0.25  300  the optomotor response was first observed) of tree frogs
+  Diphtheria  1  1,000  tested at different spectral wavelengths. The data revealed
+  Trachoma  the relationship between the logarithm of quantal flux (y)
+  Rabbit Fever  1.75  691  and wavelength (x), shown in the following graph.
+  Cholera  2  200
+  Leprosy  3  17.5  a. Explain why a first-order model would not be appro-
+  Tetanus  5  0.8
+  Hemorrhagic Fever  9  1,000  priate for modeling E(y).
+  Trichinosis  150
+  Undulant Fever  10  326.5  b. Explain why a second-order model would not be appro-
+  Well’s Disease  22  146.5
+  Gas Gangrene  23  370  priate for modeling E(y).
+  Parrot Fever  39  400
+  Typhoid  98  225  c. Demonstrate that the third-order model
+  Q Fever  119  200  E1y2 = b0 + b1x + b2x2 + b3x3 may be the most
+  Malaria  152  200  appropriate model for E(y).
+  Syphilis  179  400
+  Dysentery  936  1,500
+  Gonorrhea  1,514  1,000
+  Meningitis  1,627  6,000
+  Tuberculosis  2,926  5,000
+  Hepatitis  4,019  1,500
+  Gastroenteritis  12,619  10,000
+  Botulism  14,889  37,000
+  203,864  37,500
+  15
+
+  Based on Hertwig, R., Pachur, T., and Kurzenhauser, S. “Judgments of
+  risk frequencies: Tests of possible cognitive mechanisms.” Journal of
+  Experimental Psychology: Learning, Memory, and Cognition, Vol. 31,
+  No. 4, July 2005 (Table 1).
+
+12.7 Qualitative (Dummy) Variable Models
+
+  Multiple-regression models can also be written to include qualitative (or categorical)
+  independent variables. Qualitative variables, unlike quantitative variables, cannot
+  be measured on a numerical scale. Therefore, we must code the values of the qualitative
+  variable (called levels) as numbers before we can fit the model. These coded qualitative
+  variables are called dummy (or indicator) variables, since the numbers assigned to
+  the various levels are arbitrarily selected.
+
+  To illustrate, suppose a female executive at a certain company claims that male
+  executives earn higher salaries, on average, than female executives with the same educa-
+  tion, experience, and responsibilities. To support her claim, she wants to model the salary
+  y of an executive, using a qualitative independent variable representing the gender of
+  the executive (male or female).
+
+  A convenient method of coding the values of a qualitative variable at two levels
+  involves assigning a value of 1 to one of the levels and a value of 0 to the other. For ex-
+  ample, the dummy variable used to describe gender could be coded as follows:
+
+  x = e 1 if male
+  0 if female
+  SECTION 12.7 ■ Qualitative (Dummy) Variable Models 727
+
+  The choice of which level is assigned to 1 and which is assigned to 0 is arbitrary. The
+  model then takes the following form:
+
+  E1y2 = b0 + b1x
+
+  The advantage of using a 0–1 coding scheme is that the b coefficients are easily inter-
+  preted. The foregoing model allows us to compare the mean executive salary E(y) for
+  males with the corresponding mean for females:
+
+  Males 1x = 12:  E1y2 = b0 + b1 112 = b0 + b1
+  Females 1x = 02:  E1y2 = b0 + b1 102 = b0
+
+E(y)  These two means are illustrated in the bar graph in Figure 12.18.
+
+Mean salary  b1  First note that b0 represents the mean salary for females (say, mF). When a 0–1
+  coding convention is used, b0 will always represent the mean response associated with
+  the level of the qualitative variable assigned the value 0 (called the base level). The dif-
+  ference between the mean salary for males and the mean salary for females, mM - mF, is
+  represented by b1; that is,
+
+  b0  b0  mM - mF = 1b0 + b12 - 1b02 = b1
+
+  Females  Males  This difference is shown in Figure 12.18.* With a 0–1 coding convention, b1 will always
+  represent the difference between the mean response for the level assigned the value 1
+Figure 12.18
+  and the mean for the base level. Thus, for the executive salary model, we have
+Bar chart comparing E(y) for
+males and females  b0 = mF
+  b1 = mM - mF
+
+  The model relating a mean response E(y) to a qualitative independent variable at two
+  levels is summarized in the following box.
+
+  A Model Relating E(y) to a Qualitative Independent Variable with Two Levels
+
+  E1y2 = b0 + b1x
+
+  where
+
+  x = e 1 if level A
+  0 if level B 1base level2
+
+  Interpretation of b’s:
+  b0 = mB1mean for base level2
+  b1 = mA - mB 1mean for level assigned “1” minus mean for base level2
+
+  Note: mi represents the value of E(y) for level i.
+
+  Now carefully examine the model with a single qualitative independent variable
+  at two levels because we will use exactly the same pattern for any number of levels.
+  Moreover, the interpretation of the parameters will always be the same.
+
+  One level (say, level A) is selected as the base level. Then, for the 0–1 coding† for
+  the dummy variables,
+
+  mA = b0
+
+  *Note that b1 could be negative. If b1 were negative, the height of the bar corresponding to males would
+  be reduced (rather than increased) from the height of the bar for females by the amount b1. Figure 12.18
+  is constructed under the assumption that b1 is a positive quantity.
+  †You do not have to use a 0–1 system of coding for the dummy variables. Any two-value system will work, but
+  the interpretation given to the model parameters will depend on the code. Using the 0–1 system makes the
+  model parameters easy to interpret.
+728  CHAPTER 12 ■ Multiple Regression and Model Building
+
+  The coding for all dummy variables is as follows: To represent the mean value of y for
+  a particular level, let that dummy variable equal 1; otherwise, the dummy variable is set
+  equal to 0. Using this system of coding, we obtain
+
+  mB = b0 + b1
+  mC = b0 + b2
+
+  and so on. Because mA = b0, any other model parameter will represent the difference
+  between means for that level and the base level; that is,
+
+  b1 = mB - mA
+  b2 = mC - mA
+
+  and so on. Consequently, each b multiplied by a dummy variable represents the differ-
+  ence between E(y) at one level of the qualitative variable and E(y) at the base level.
+
+  A Model Relating E(y) to One Qualitative Independent Variable with k Levels
+
+  Always use a number of dummy variables that is one less than the number of levels
+  of the qualitative variable. Thus, for a qualitative variable with k levels, use k - 1
+
+  dummy variables:
+
+  E1y2 = b0 + b1 x1 + b2 x2 + g + bk - 1 xk - 1
+  where xi is the dummy variable for level i + 1 and
+
+  xi = e 1  if y is observed at level i + 1
+  0  otherwise
+
+  Then, for this system of coding,
+
+  m1 = b0  and  b1 = m2 - m1
+  b2 = m3 - m1
+  m2 = b0 + b1  b3 = m4 - m1
+
+  m3 = b0 + b2  f f
+  bk-1 = mk - m1
+  m4 = b0 + b3
+
+  f  f
+
+  mk = b0 + bk-1
+
+  Note: mi represents the value of E(y) for level i.
+
+Example 12.9  Problem Refer to Example 10.4 (p. 544). Recall that the USGA wants to compare the
+  mean driving distances of four different golf ball brands (A, B, C, and D). Iron Byron,
+  GOLFCRD  the USGA’s robotic golfer, is used to hit a sample of 10 balls of each brand. The distance
+  data are reproduced in Table 12.3.
+A Model with one
+  a. Hypothesize a regression model for driving distance y, using Brand as an indepen-
+Qualitative Independent  dent variable.
+
+Variable: Golf Ball Driving  b. Interpret the b’s in the model.
+  c. Fit the model to the data and give the least squares prediction equation. Show that
+Distances
+  the b-estimates can also be obtained from the sample means.
+  d. Use the model to determine whether the mean driving distances for the four brands
+
+  are significantly different at a = .05.
+
+  Solution
+
+  a. Note that golf ball brand (A, B, C, and D) is a qualitative variable (measured on a
+  nominal scale). According to the previous box, for a four-level qualitative variable
+  we require three dummy variables in the regression model. The model relating E(y),
+  where y is the distance the ball is driven by Iron Byron, to this single qualitative vari-
+  able, golf ball Brand, is
+
+  E1y2 = b0 + b1x1 + b2x2 + b3x3
+  SECTION 12.7 ■ Qualitative (Dummy) Variable Models 729
+
+  Table 12.3 Driving Distances (in feet) for Four Golf Ball Brands
+
+  Brand A  Brand B  Brand C  Brand D
+
+  251.2  263.2  269.7  251.6
+  245.1  262.9  263.2  248.6
+  248.0  265.0  277.5  249.4
+  251.1  254.5  267.4  242.0
+  260.5  264.3  270.5  246.5
+  250.0  257.0  265.5  251.3
+  253.9  262.8  270.7  261.8
+  244.6  264.4  272.9  249.0
+  254.6  260.6  275.6  247.1
+  248.8  255.9  266.5  245.9
+
+  Data Set: GOLFCRD
+
+  where
+
+  x1 = e 1 if Brand B x2 = e 1 if Brand C x3 = e 1 if Brand D
+  0 if not  0 if not  0 if not
+
+  We arbitrarily choose Brand A to be the base level.
+
+  b. Since Brand A is the base level, b0 represents the mean driving distance for Brand A
+  (i.e., b0 = mA). The other b’s are differences in means, namely,
+
+  b1 = mB - mA
+  b2 = mC - mA
+  b3 = mD - mA
+
+  where mA, mB, mC, and mD are the mean distances for Brands A, B, C, and D, respectively.
+  c. The MINITAB printout of the regression analysis is shown in Figure 12.19. The least
+
+  squares estimates of the b’s are highlighted on the printout, yielding the following
+  least squares prediction equation:
+
+  yn = 250.78 + 10.28x1 + 19.17x2 - 1.46x3
+
+Figure 12.19
+
+MINITAB output for model
+with dummy variables
+730 CHAPTER 12 ■ Multiple Regression and Model Building
+
+  The interpretations of the b’s in part b allow us to obtain the b estimates from the
+  sample means associated with the different levels of the qualitative variable.*
+
+  Since b0 = mA, then the estimate of b0 is the estimated mean driving dis-
+  tance for Brand A (base level). This sample mean, highlighted at the bottom of the
+  MINITAB printout, is 250.78; thus, bn0 = 250.78.
+
+  Now b1 = mB - mA; therefore, the estimate of b1 is the difference be-
+  tween the sample mean driving distances for Brands B and A. Based on the
+  sample means highlighted at the bottom of the MINITAB printout, we have
+  bn1 = 261.06 - 250.78 = 10.28.
+
+  Similarly, the estimate of b2 = mC - mA is the difference between the sample
+  mean distances for Brands C and A. From the sample means highlighted at the bottom
+  of the MINITAB printout, we have bn2 = 269.95 - 250.78 = 19.17.
+
+  Finally, the estimate of b3 = mD - mA is the difference between the sample
+  mean distances for Brands D and A. Using the sample means highlighted at the
+  bottom of the MINITAB printout, we have bn3 = 249.32 - 250.78 = -1.46.
+
+d. Testing the null hypothesis that the means for the four brands are equal (i.e.,
+  mA = mB = mC = mD) is equivalent to testing
+
+  H0: b1 = b2 = b3 = 0
+
+  You can see this by observing that if b1 = mB - mA = 0, then mA = mB. Similarly,
+  b2 = mC - mA = 0 implies that mA = mC, and b3 = mD - mA = 0 implies that
+  mA = mD. The alternative hypothesis is
+
+  Ha : At least one of the parameters b1, b2, and b3 differs from 0
+
+  which implies that at least two of the four means (mA, mB, mC, and mD) differ.
+  To test this hypothesis, we conduct the global F-test on the model. The value of
+
+  the F-statistic for testing the adequacy of the model, F = 43.99, and the observed sig-
+  nificance level of the test, p = .000, are both highlighted in Figure 12.19. Since a = .05
+  exceeds the p-value, we reject H0 and conclude that at least one of the parameters dif-
+  fers from 0. Or, equivalently, we conclude that the data provide sufficient evidence to
+  indicate that the mean driving distance does vary from one golf ball brand to another.
+
+Look Back This global F-test is equivalent to the analysis-of-variance F-test in Chapter 10 for
+a completely randomized design.
+
+  ■ Now Work Exercise 12.84
+
+ ! CAuTIoN A common mistake by regression analysts is the use of a single dummy
+variable x for a qualitative variable at k levels, where x = 1, 2, 3, c, k. Such a regression
+model will have unestimable b’s and b’s that are difficult to interpret. Remember, in
+modeling E(y) with a single qualitative independent variable, the number of 0–1 dummy
+variables to include in the model will always be one less than the number of levels of the
+qualitative variable.
+
+Exercises 12.81–12.99  Learning the Mechanics
+
+Understanding the Principles  12.83 The model E1y2 = b0 + b1x1 + b2x2 + b3x3, where
+
+12.81 Write a regression model relating the mean value of y to a  x1 = e 1 if level 2
+  qualitative independent variable that can assume two lev-  0 if not
+  els. Interpret all the terms in the model.
+  x2 = e 1 if level 3
+12.82 Write a regression model relating E(y) to a qualitative in-  0 if not
+  dependent variable that can assume three levels. Interpret
+  all the terms in the model.  x3 = e 1 if level 4
+  0 if not
+
+*The least squares method and the sample means method will yield equivalent b estimates when the sample
+sizes associated with the different levels of the qualitative variable are equal.
+  SECTION 12.7 ■ Qualitative (Dummy) Variable Models 731
+
+  was used to relate E(y) to a single qualitative variable with  12.86  Production technologies, terroir, and quality of Bordeaux
+  four levels. This model was fit to n = 45 data points, and  wine. The production of quality wine is strongly influenced
+  the result was and the following result was obtained:  by the natural endowments of the grape-growing region—
+  called the “terroir.” The Economic Journal (May 2008)
+  yn = 16.3 - 7x1 + 15x2 + 3x3  published an empirical study of the factors that yield a qual-
+  ity Bordeaux wine. A quantitative measure of wine quality
+  a. Use the least squares prediction equation to find the  (y) was modeled as a function of several qualitative inde-
+  estimate of E(y) for each level of the qualitative inde-  pendent variables, including grape-picking method (manual
+  pendent variable.  or automated), soil type (clay, gravel, or sand), and slope
+  orientation (east, south, west, southeast, or southwest).
+  b. Specify the null and alternative hypotheses you would  a. Create the appropriate dummy variables for each of the
+  use to test whether E(y) is the same for all four levels of
+  the independent variable.  qualitative independent variables.
+  b. Write a model for wine quality (y) as a function
+12.84 MINITAB was used to fit the model
+  y = b0 + b1x1 + b2x2 + e  of grape-picking method. Interpret the b’s in the
+  model.
+  where  c. Write a model for wine quality (y) as a function of soil type.
+  Interpret the b’s in the model.
+  x1 = e 1  if level 2  d. Write a model for wine quality (y) as a func-
+  0  if not  tion of slope orientation. Interpret the b’s in the
+  model.
+  x2 = e 1  if level 3
+  0  if not  12.87  Whales entangled in fishing gear. Refer to the Marine
+  Mammal Science (Apr. 2010) study of whales entan-
+  to n = 15 data points. The results are shown in the accom-  gled in fishing gear, Exercise 12.17 (p. 698). These en-
+  panying MINITAB printout.  tanglements involved one of three types of fishing
+  gear: set nets, pots, and gill nets. Consequently, the
+  researchers used gear type as a predictor of the body
+  length (y, in meters) of the entangled whale. Consider
+  the regression model E1y2 = b0 + b1x1 + b2x2, where
+  x1 = 51 if set net, 0 if not6 and x2 = 51 if pots, 0 if not6.
+  [Note: Gill nets is the “base” level of gear type.]
+  a. The researchers want to know the mean body length
+
+  of whales entangled in gill nets. Give an expression for
+  this value in terms of the b’s in the model.
+  b. Practically interpret the value of b1 in the
+  model.
+  c. In terms of the b’s in the model, how would you test to de-
+  termine if the mean body lengths of entangled whales dif-
+  fer for the three types of fishing gear?
+
+  12.88  Do blondes raise more funds? During fundraising, does
+  the physical appearance of the solicitor affect the level of
+  a. Report the least squares prediction equation.  capital raised? An economist at the University of Nevada–
+  b. Interpret the values of b1 and b2.  Reno designed an experiment to answer this question and
+  c. Interpret the following hypotheses in terms of m1, m2,  published the results in Economic Letters (Vol. 100, 2008).
+  Each in a sample of 955 households was contacted by a
+  and m3:  female solicitor and asked to contribute to the Center for
+  Natural Hazards Mitigation Research. The level of contri-
+  H0: b1 = b2 = 0  bution (in dollars) was recorded as well as the hair color
+  Ha: At least one of the parameters b1 and b2  of the solicitor (blonde Caucasian, brunette Caucasian, or
+  minority female).
+  differs from 0  a. Consider a model for the mean level of contribution,
+
+  d. Conduct the hypothesis test of part c.  E(y), that allows for different means depending on the
+  hair color of the solicitor. Create the appropriate num-
+Applying the Concepts—Basic  ber of dummy variables for hair color. (Use minority
+  female as the base level.)
+12.85  Modeling number of children. As part of a study on how  b. Write the equation of the model, part a, incorporating
+  children affect parents’ depression in old age, researchers  the dummy variables.
+  fit a model for total number of children in a family (Social  c. In terms of the b’s in the model, what is the mean level
+  Science & Medicine, Jan. 2014). One of the key indepen-  of contribution for households contacted by a blonde
+  dent variables used in the model is whether the first birth  Caucasian solicitor?
+  was a single birth or a multiple (twin, triplet) birth.  d. In terms of the b’s in the model, what is the difference
+  a. Create a dummy variable for type of first birth.  between the mean level of contribution for households
+  b. Write a model for total number of children (y) as a func-  contacted by a blonde solicitor and those contacted by a
+  minority female?
+  tion of type of first birth.
+  c. Give a practical interpretation of each of the
+
+  b@coefficients in the model.
+732 CHAPTER 12 ■ Multiple Regression and Model Building
+
+  e. One theory posits that blonde solicitors will achieve the  c. Interpret the b-values in the model you wrote in part b.
+  highest mean contribution level but there will be no dif-  d. Give the null hypothesis for testing whether the overall
+  ference between the mean contribution levels attained
+  by brunette Caucasian and minority females. If this  model from part b is statistically useful for predicting
+  theory is true, give the expected signs of the b’s in the  extent of the disease, y.
+  model.
+  Applying the Concepts—Intermediate
+  f. The researcher found the b estimate for the dummy vari-
+  able for blonde Caucasian to be positive and significantly  12.92  Ascorbic acid reduces goat stress. Refer to the Animal
+  different from 0 1p@value 6 .012. The b estimate for the  Science Journal (May 2014) study on the use of ascorbic
+  dummy variable for brunette Caucasian was also positive  acid (AA) to reduce the stress in goats during transpor-
+  but not significantly different from 0 1p@value 7 .102.  tation, Exercise 10.7 (p. 537). Recall that 24 healthy goats
+  Do these results support the theory, part e?  were randomly divided into four groups (A, B, C, and D)
+  of six animals each. Goats in group A were administered
+12.89  Impact of race on football card values. University of  a dosage of AA 30 minutes prior to transportation; goats
+  Colorado sociologists investigated the impact of race on  in group B were administered a dosage of AA 30 minutes
+  the value of professional football players’ “rookie” cards  following transportation; group C goats were not given
+  (Electronic Journal of Sociology, 2007). The sample con-  any AA prior to or following transportation; and goats in
+  sisted of 148 rookie cards of National Football League  group D were not given any AA and were not transported.
+  (NFL) players who were inducted into the Football Hall  Weight was measured before and after transportation and
+  of Fame. The price of a card (in dollars) was modeled as a  the weight loss (in kilograms) determined for each goat.
+  function of several qualitative independent variables: race  a. Write a model for mean weight loss, E(y), as a function
+  of player (black or white), availability of the card (high
+  or low), and position of the player (quarterback, running  of AA dosage group (A, B, C, or D). Use group D as the
+  back, wide receiver, tight end, defensive lineman, line-  base level.
+  backer, defensive back, or offensive lineman).  b. Interpret the b’s in the model, part a.
+  a. Create the appropriate dummy variables for each of  c. Recall that the researchers discovered that mean weight
+  loss is reduced in goats administered AA compared
+  the qualitative independent variables.  with goats not given any AA. Based on this result, de-
+  b. Write a model for price (y) as a function of race.  termine the sign (positive or negative) of as many of the
+  b’s in the model, part a, as possible.
+  Interpret the b’s in the model.
+  c. Write a model for price (y) as a function of the availabil-  12.93  Major depression and personality disorders. A team of phy-
+  sicians, psychiatrists, and psychologists investigated whether
+  ity of the card. Interpret the b’s in the model.  depressed patients exhibit more or fewer personality disor-
+  d. Write a model for price (y) as a function of the player’s  der symptoms than nondepressed patients in the American
+  Journal of Psychiatry (May 2010). A study group of over 400
+  position. Interpret the b’s in the model.  psychiatric patients was monitored over a six-year period.
+  At the start of the study, each was diagnosed as having (1)
+12.90  Chemical composition of rainwater. Researchers at the  major depression only, (2) personality disorder only, or (3)
+  University of Aberdeen (Scotland) developed a statistical  both major depression and personality disorder. Of interest
+  model for estimating the chemical composition of water  to the researchers was the number of personality disorder
+  (Journal of Agricultural, Biological, and Environmental  criteria met at the end of the study. Consider a regression
+  Statistics, Mar. 2005). For one application, the nitrate concen-  model for the number of personality disorders (y).
+  tration y (milligrams per liter) in a water sample collected  a. Write a model for E(y) as a function of the qualitative vari-
+  after a heavy rainfall was modeled as a function of water
+  source (groundwater, subsurface flow, or overground flow).  able, patient diagnosis group.
+  a. Write a model for E(y) as a function of the qualitative  b. If there are no differences among the mean number of
+
+  independent variable.  personality disorders for the three patient groups, what are
+  b. Give an interpretation of each of the b parameters in  the values of the b’s in the model, part a?
+  c. How could you test to determine if the mean number
+  the model you wrote in part a.  of personality disorders for the major depression–only
+  patients is less than the corresponding mean for the
+12.91  Detecting quantitative traits in genes. In gene therapy,  patients with both major depression and personality
+  it is important to know the location of a gene for a dis-  disorder?
+  ease on the genome (genetic map). Although many genes
+  yield a specific trait (e.g., disease or not), others cannot  12.94  Study of recall of TV commercials. Refer to the Journal
+  be categorized, since they are quantitative in nature (e.g.,  of Applied Psychology (June 2002) study of recall of tele-
+  extent of disease). Researchers at the University of North  TVADS  vision commercials, presented in Exercise 10.37 (p. 553).
+  Carolina at Wilmington developed statistical models that  Participants were assigned to watch one of three types of TV
+  link quantitative genetic traits to locations on the genome  programs, with nine commercials embedded in each show.
+  (Chance, Summer 2006). The extent of a certain disease is  Group V watched a TV program with a violent-content code
+  determined by the absence (A) or presence (B) of a gene  rating, Group S viewed a show with a sex-content code rating,
+  marker at each of two locations, L1 and L2, on the genome.  and Group N watched a neutral TV program with neither a
+  For example, AA represents absence of the marker at both  V nor an S rating. The dependent variable measured for each
+  locations, while AB represents absence at location L1, but  participant was the score (y) on his/her recall of the brand
+  presence at location L2.  names mentioned in the commercial messages, with scores
+  a. How many different gene marker combinations are  ranging from 0 (no brands recalled) to 9 (all brands recalled).
+
+  possible at the two locations?
+  b. Using dummy variables, write a model for extent of the
+
+  disease, y, as a function of gene marker combination.
+  SECTION 12.7 ■ Qualitative (Dummy) Variable Models 733
+
+  a. Write a model for E(y) as a function of viewer group.  12.97  Extinct New Zealand birds. Refer to the Evolutionary
+  b. Fit the model you wrote in part a to the data. Give the  Ecology Research (July 2003) study of the patterns of ex-
+  NZBIRDS  tinction in the New Zealand bird population, presented in
+  least squares prediction equation.  Exercise 2.24 (p. 70). Recall that the NZBIRDS file contains
+  c. Conduct a test of overall model utility at a = .01.  qualitative data on flight capability (volant or flightless), hab-
+  itat (aquatic, ground terrestrial, or aerial terrestrial), nest-
+  Interpret the results. Show that the results agree with  ing site (ground, cavity within ground, tree, or cavity above
+  the analysis performed in Exercise 10.37.  ground), nest density (high or low), diet (fish, vertebrates,
+  d. The sample mean recall scores for the three groups were  vegetables, or invertebrates), and extinct status (extinct,
+  yV = 2.08, yS = 1.71, and yN = 3.17. Show how to find  absent from island, present), and quantitative data on body
+  these sample means by using only the b-estimates ob-  mass (grams) and egg length (millimeters) for 132 bird spe-
+  tained in part b.  cies at the time of the Maori colonization of New Zealand.
+  a. Write a model for mean body mass as a function of
+12.95  Expert testimony in homicide trials of battered women.
+  An article published in the Duke Journal of Gender Law &  flight capability.
+  Policy (Summer 2003) examined the impact of expert tes-  b. Write a model for mean body mass as a function of diet.
+  timony on the outcome of homicide trials that involve bat-  c. Write a model for mean egg length as a function of nest-
+  tered woman syndrome. On the basis of data collected on
+  individual juror votes from past trials, the article reported  ing site.
+  that “when expert testimony was present, women jurors  d. Fit the model you wrote in part a to the data and inter-
+  were more likely than men to change a verdict from not
+  guilty to guilty after deliberations.” Assume that when no  pret the estimates of the b’s.
+  expert testimony was present, male jurors were more likely  e. Conduct a test to determine whether the model from
+  than women to change a verdict from not guilty to guilty
+  after deliberations. These results were obtained from a  part a is statistically useful (at a = .01) for estimating
+  multiple-regression model for likelihood of changing a ver-  mean body mass.
+  dict from not guilty to guilty after deliberations, y, as a  f. Fit the model you wrote in part b to the data and inter-
+  function of juror gender (male or female) and expert tes-  pret the estimates of the b’s.
+  timony (yes or no). Give the model for E(y) that hypothe-  g. Conduct a test to determine whether the model from
+  sizes the relationships reported in the article. Illustrate the  part b is statistically useful (at a = .01) for estimating
+  model with a sketch.  mean body mass.
+  h. Fit the model you wrote in part c to the data and inter-
+12.96  Homework assistance for college students. Do college  pret the estimates of the b’s.
+  professors who provide their students with assistance on  i. Conduct a test to determine whether the model from
+ACCHW  homework help improve student grades? This was the re-  part c is statistically useful (at a = .01) for estimating
+  search question of interest in the Journal of Accounting  mean egg length.
+  Education (Vol. 25, 2007). A sample of 175 accounting
+  students took a pretest on a topic not covered in class, then  12.98  Permeability of sandstone during weathering. Refer to the
+  each was given a homework problem to solve on the same  Geographical Analysis (Vol. 42, 2010) study of the per-
+  topic. The students were assigned to one of three home-  SAND  meability of sandstone exposed to the weather, Exercise
+  work assistance groups. Some students received the com-  2.69 (p. 91). Recall that blocks of sandstone were cut into
+  pleted solution, some were given check figures at various  300 equal-sized slices and the slices randomly divided into
+  steps of the solution, and some received no help at all.  three groups of 100 slices each. Slices in group A were not
+  After finishing the homework, the students were all given  exposed to any type of weathering; slices in group B were
+  a posttest on the subject. The dependent variable of inter-  repeatedly sprayed with a 10% salt solution (to simulate
+  est was the knowledge gain (or test score improvement).  wetting by driven rain) under temperate conditions; and
+  These data are saved in the ACCHW file.  slices in group C were soaked in a 10% salt solution and
+  a. Propose a model for the knowledge gain (y) as a func-  then dried (to simulate blocks of sandstone exposed during
+  a wet winter and dried during a hot summer). All sand-
+  tion of the qualitative variable, homework assistance  stone slices were then tested for permeability, a measure
+  group.  of pressure decay in milliDarcies (mD). The data for the
+  b. In terms of the b’s in the model, give an expression for the  study (simulated) are saved in the SAND file.
+  difference between the mean knowledge gains of students  a. Write a model for mean permeability, E(y), as a function
+  in the “completed solution” and “no help” groups.
+  c. Fit the model to the data and give the least squares pre-  of sandstone group (A, B, or C).
+  diction equation.  b. Measures of central tendency for the permeability mea-
+  d. Conduct the global F-test for model utility using a = .05.
+  Interpret the results practically.  surements of each sandstone group are displayed in the
+  MINITAB printout below. Use this information to esti-
+  mate the b parameters of the model, part a.
+
+  MINITAB Output for Exercise 12.98
+734 CHAPTER 12 ■ Multiple Regression and Model Building
+
+  c. Fit the model, part a, to the data in the SAND file. Use  a. In terms of the b’s in the model, what is the mean
+  the output to verify your b estimates in part b.  violent crime rate in Center, Texas, for months follow-
+  ing the murder?
+Applying the Concepts—Advanced
+  b. In terms of the b’s in the model, what is the mean vio-
+12.99  Community responses to a violent crime. How communities  lent crime rate in Jasper, Texas, for months following the
+  respond to a disaster or a violent crime was the subject of  murder?
+  research published in the American Journal of Community
+  Psychology (Vol. 44, 2009). Psychologists at the University  c. For months following the murder, find the difference
+  of California tracked monthly violent crime incidents in two  between the mean violent crime rate for Jasper and
+  Texas cities, Jasper and Center, before and after the murder  Center. (Use your answers to parts a and b.)
+  of a Jasper citizen that had racial overtones and heavy media
+  coverage. (Center, Texas, was selected as comparison city  d. Repeat part c for months before the murder.
+  since it had roughly the same population and racial makeup
+  as Jasper.) Using monthly data on violent crimes, the re-  e. Note that the differences, parts c and d, are not the
+  searchers fit the regression model:  same. Explain why this illustrates the notion of interac-
+  tion between x 1 and x 2.
+  E1y2 = b0 + b1x1 + b2x2 + b3x1x2,
+  f. A test for H0: b3 = 0 yielded a p@value 6 .001. Using
+  where y = violent crime rate 1number of crimes per 1,000  a = .01, interpret this result.
+
+  population2, x1 = 51 if Jasper, 0 if Center6, and x2 = 51  g. The regression resulted in the following b-estimates:
+  if after the murder, 0 if before the murder6.  bn1 = - 429, bn2 = - 169, bn3 = 255. Use these estimates
+  to illustrate that average monthly violent crime de-
+  creased in Center after the murder but increased in
+  Jasper.
+
+12.8 Models with Both Quantitative and Qualitative Variables (Optional)
+
+  Suppose you want to relate the mean monthly sales E(y) of a company to the monthly
+
+  advertising expenditure x for three different advertising media (say, newspaper, radio, and
+
+  television) and you wish to use first-order (straight-line) models to model the responses for all
+
+  three media. Graphs of these three relationships E(y)
+
+  might appear as shown in Figure 12.20.  Mean monthly sales
+
+  Since the lines in Figure 12.20 are hypothet-
+
+  ical, a number of practical questions arise. Is one  Television
+
+  advertising medium as effective as any other?  Newspaper
+  That is, do the three mean sales lines differ for  Radio
+
+  the three advertising media? Do the increases  x
+
+  in mean sales per dollar input in advertising dif- 0 5 10 15 20 25 30 35 40
+
+  fer for the three advertising media? That is, do  Monthly advertising expenditures
+  the slopes of the three lines differ? Note that the  (thousands of dollars)
+
+  two practical questions have been rephrased into Figure 12.20
+
+  questions about the parameters that define the Graphs of the relationship between mean
+  three lines of Figure 12.20. To answer these ques- sales E(y) and advertising expenditure x
+
+  tions, we must write a single regression model that will characterize the three lines of the
+
+  figure and that, by testing hypotheses about the lines, will answer the questions.
+
+  The response described previously, monthly sales, is a function of two independent
+
+  variables, one quantitative (advertising expenditure x1) and one qualitative (type of me-
+
+  dium). We will proceed in stages to build a model relating E(y) to these variables and will
+
+  show graphically the interpretation we would give to the model at each stage. This approach
+
+  will help you see the contributions of the various terms in the model.
+
+  1. The straight-line relationship between  E(y)Mean sales
+  mean sales E(y) and advertising
+  expenditure is the same for all three  x1
+  media; that is, a single line will describe  0
+  the relationship between E(y) and
+  advertising expenditure x1 for all the  Advertising expenditure
+  media. (See Figure 12.21.) Thus,  Figure 12.21
+  The relationship between E(y) and x1
+  E1y2 = b0 + b1x1,  is the same for all media
+
+  where
+
+  x1 = Advertising expenditure
+  SECTION 12.8 ■ Models with Both Quantitative and Qualitative Variables (Optional) 735
+
+E(y)  2. The straight lines relating mean sales E(y) to advertising expenditure x1 differ
+  from one medium to another, but the rate of increase in mean sales per increase
+Mean sales  Television
+  Newspaper  in dollar advertising expenditure x1 is the same for all media; that is, the lines
+  are parallel but possess different y-intercepts. (See Figure 12.22.) Hence,
+  Radio
+  E1y2 = b0 + b1x1 + b2x2 + b3x3
+
+  0  x1 where
+  Advertising expenditure
+  x1 = Advertising expenditure
+Figure 12.22  x2 = e 1 if radio medium
+Parallel response lines for the three
+media  0 if not
+  x3 = b 1 if television medium
+
+  0 if not
+
+  Notice that this model is essentially a combination of a first-order model with a
+  single quantitative variable and a model with a single qualitative variable. That is,
+
+  First-order model with a single  E1y2 = b0 + b1x1
+  quantitative variable:
+
+  Model with single qualitative  E1y2 = b0 + b2x2 + b3x3
+  variable at three levels:
+
+Mean monthly salesE(y)  where x1, x2, and x3 are as just defined. The model described here implies no
+  interaction between the two independent variables, which are advertising expend-
+  Television  iture x1 and the qualitative variable (type of advertising medium). The change in
+  Newspaper  E(y) for a one-unit increase in x1 is identical (the slopes of the lines are equal) for
+  Radio  all three advertising media. The terms corresponding to each of the independent
+  variables are called main-effect terms because they imply no interaction.
+  0 5 10 15 20 25 30 35 40
+  Monthly advertising expenditures  3. The straight lines relating mean sales E(y) to advertising expenditure x1 differ
+  for the three advertising media; that is, both the line intercepts and the slopes
+  (thousands of dollars)  differ. (See Figure 12.23.) This interaction model is obtained by adding terms
+Figure 12.23  involving the cross-product terms, one each from each of the two independent
+Different response lines for the  variables:
+three media
+  Main effect, Main effect,
+
+  advertising  type of
+
+  expenditure  medium  Interaction
+  $%&  $11%11&  $111%111&
+  E1y2 = b0 + b1 x1 + b2 x2 + b3 x3 + b4 x1 x2 + b5 x1 x3
+  x
+
+  Note that each of the preceding models is obtained by adding terms to
+  Model 1, the single first-order model used to model the responses for all three
+  media. Model 2 is obtained by adding the main-effect terms for type of medium,
+  the qualitative variable. Model 3 is obtained by adding the interaction terms to
+  Model 2.
+
+ Example 12.10  Problem Refer to the mean monthly sales models. Substitute the appropriate values of
+  the dummy variables in Model 3 above to obtain the equations of the three response
+Interpreting the B’s in  lines in Figure 12.23.
+a Model with Mixed
+Variables  Solution The complete model that characterizes the three lines in Figure 12.23 is
+
+  E1y2 = b0 + b1 x1 + b2 x2 + b3 x3 + b4 x1 x2 + b5 x1 x3
+
+  where
+
+  x1 = Advertising expenditure
+  x2 = e 1 if radio medium
+
+  0 if not
+  x3 = e 1 if television medium
+
+  0 if not
+736  CHAPTER 12 ■ Multiple Regression and Model Building
+
+  Examining the coding, you can see that x2 = x3 = 0 when the advertising medium
+  is newspaper. Substituting these values into the expression for E(y), we obtain the
+
+  newspaper medium line:
+
+  E1y2 = b0 + b1x1 + b2 102 + b3 102 + b4x1 102 + b5x1 102 = b0 + b1x1
+
+  Similarly, we substitute the appropriate values of x2 and x3 into the expression for E(y)
+  to obtain the radio medium line 1x2 = 1, x3 = 02,
+
+  E1y2 = b0 + b1x1 + b2 112 + b3 102 + b4x1 112 + b5x1 102
+
+  y-intercept  $11S% lop1e1&
+
+  $11%11&
+  = 1b0 + b22 + 1b1 + b42x1
+
+  and the television medium line 1x2 = 0, x3 = 12,
+  E1y2 = b0 + b1x1 + b2 102 + b3 112 + b4x1 102 + b5x1 112
+
+  y-intercept  $11S%lop1e1&
+
+  $11%11&
+  = 1b0 + b32 + 1b1 + b52x1
+
+  Look Back If you were to fit Model 3, obtain estimates of b0, b1, b2, c, b5, and substitute
+  them into the equations for the three media lines, you would obtain exactly the same
+  prediction equations as you would if you were to fit three separate straight lines, one
+  to each of the three sets of media data. You may ask why we would not fit the three
+  lines separately. Why bother fitting a model that combines all three lines (Model 3) into
+  the same equation? The answer is that you need to use this procedure if you wish to
+  use statistical tests to compare the three media lines. We need to be able to express a
+  practical question about the lines in terms of a hypothesis that a set of parameters in the
+  model equals 0. (We demonstrate this procedure in the next section.) You could not do
+  that if you were to perform three separate regression analyses and fit a line to each set
+  of media data.
+
+  ■ Now Work Exercise 12.103
+
+ Example 12.11  Problem An industrial psychologist conducted an experiment to investigate the
+  relationship between worker productivity and a measure of salary incentive for two
+  CASTING  manufacturing plants; one plant operates under “disciplined management practices” and
+  the other plant uses a traditional management style. The productivity y per worker was
+Testing for Two Different  measured by recording the number of machined castings that a worker could produce
+  in a four-week period of 40 hours per week. The incentive was the amount x1 of bonus
+Slopes—Worker  (in cents per casting) paid for all castings produced in excess of 1,000 per worker for
+  the four-week period. Nine workers were selected from each plant, and three from each
+Productivity Data  group of nine were assigned to receive a 20¢ bonus per casting, three a 30¢ bonus, and
+  three a 40¢ bonus. The productivity data for the 18 workers, three for each type of plant
+  and incentive combination, are shown in Table 12.4.
+
+  Table 12.4  Productivity Data (Number of Castings) for Example 12.11
+  Incentive
+
+  Management Style  20¢/casting  30¢/casting  40¢/casting
+
+  Traditional  1,435 1,512 1,491 1,583 1,529 1,610 1,601 1,574 1,636
+  Disciplined  1,575 1,512 1,488 1,635 1,589 1,661 1,645 1,616 1,689
+
+  Data Set: CASTING
+  SECTION 12.8 ■ Models with Both Quantitative and Qualitative Variables (Optional) 737
+
+  a. Write a model for mean productivity E(y), assuming that the relationship between
+  E(y) and incentive x1 is first order.
+
+  b. Fit the model, and graph the prediction equations for the traditional and disciplined
+  plants.
+
+  c. Do the data provide sufficient evidence to indicate that the rate of increase in worker
+  productivity is different for disciplined and traditional plants? Test at a = .10.
+
+  Solution
+
+  a. If we assume that a first-order model* is adequate to detect a change in mean pro-
+  ductivity as a function of incentive x1, then the model that produces two straight
+  lines, one for each management style, is
+
+  E1y2 = b0 + b1x1 + b2x2 + b3x1x2
+
+  where
+
+  x1 = Incentive  x2 = e 1 if disciplined management style
+  0 if traditional management style
+
+  b. A MINITAB printout for the regression analysis is shown in Figure 12.24. Reading
+  the parameter estimates highlighted on the printout, you can see that
+
+  yn = 1,365.83 + 6.217x1 + 47.78x2 + .033x1x2
+
+  The prediction equation for the plant using traditional management style can be
+  obtained (see the coding) by substituting x2 = 0 into the general prediction equa-
+  tion. Then
+
+  yn = bn0 + bn1x1 + bn2 102 + bn3x1 102 = bn0 + bn1x1
+  = 1,365.83 + 6.217x1
+
+  Similarly, the prediction equation for the plant with a disciplined management style
+  can be obtained by substituting x2 = 1 into the general prediction equation. Then
+
+  yn = bn0 + bn1x1 + bn2x2 + bn3x1x2
+  = bn0 + bn1x1 + bn2 112 + bn3x1 112
+
+  y-intercept  Slope
+  $11%11& $11%11&
+  = 1bn0 + bn22 + 1bn1 + bn32 x1
+
+  = 11,365.83 + 47.782 + 16.217 + .0332x1
+
+  = 1,413.61 + 6.250x1
+
+Figure 12.24
+
+MINITAB printout of the
+complete model for the casting
+data
+
+  *Although the model contains a term involving x1 x2, it is first-order (graphs as a straight line) in the quan-
+  titative variable x1. The variable x2 is a dummy variable that introduces or deletes terms in the model. The
+  order of a model is determined only by the quantitative variables that appear in the model.
+738  CHAPTER 12 ■ Multiple Regression and Model Building
+
+  A MINITAB graph of these prediction equations is shown in Figure 12.25. Note that
+  the slopes of the two lines are nearly identical (6.217 for traditional and 6.250 for
+  disciplined).
+
+Figure 12.25
+
+MINITAB plot of prediction
+equations for two plants
+
+  c. If the rate of increase in productivity with incentive (i.e., the slope) for the disciplined
+  management style plant is different from the corresponding slope for the traditional
+  plant, then the interaction b (i.e., b3) will differ from 0. Consequently, we want to test
+
+  H0: b3 = 0
+  Ha : b3 ≠ 0
+
+  This test is conducted with the use of the t-test of Section 12.2. The test statistic and
+  the corresponding p-value are highlighted on the MINITAB printout:
+
+  t = .014 p@value = .989
+
+  Since a = .10 is less than the p-value, we fail to reject H0, meaning that there is insuf-
+  ficient evidence to conclude that the traditional and disciplined shapes differ. Thus,
+  the test supports our observation of two nearly identical slopes in part b.
+
+  Look Back Since interaction is not significant, we will drop the x1 x2 term from the model
+  and use the simpler model E1y2 = b0 + b1x1 + b2x2 to predict productivity.
+
+  ■ Now Work Exercise 12.106
+
+E(y)  Models with both quantitative and qualitative x’s may also include higher order
+  vision, Radio, Newspaper
+  (e.g., second-order) terms. In the problem of relating mean monthly sales E(y) of a com-
+  Tele
+  pany to monthly advertising expenditure x1 and type of medium, suppose we think that
+Figure 12.26  the relationship between E(y) and x1 is curvilinear. We will construct the model stage
+The relationship between E(y)  by stage to enable you to compare the procedure with the stage-by-stage construction of
+and x1 is the same for all media
+  the first-order model at the beginning of this section. The graphical interpretations will
+
+  help you understand the contributions of the model terms.
+
+  1. The mean sales curves are identical for all three advertising media; that is, a
+
+  single second-order curve will suffice to describe the relationship between E(y)
+
+  x1  and x1 for all the media. (See Figure 12.26.) Thus,
+
+  E1y2 = b0 + b1x1 + b2x21
+
+  where x1 = Advertising expenditure
+  SECTION 12.8 ■ Models with Both Quantitative and Qualitative Variables (Optional) 739
+
+  2. The response curves possess the same shapes but different y-intercepts. (See
+  Figure 12.27.) Hence,
+  E1y2 = b0 + b1x1 + b2x12 + b3x2 + b4x3
+  where
+  x1 = Advertising expenditure
+  x2 = e 1 if radio medium
+  0 if not
+  x3 = e 1 if television medium
+  0 if not
+
+  3. The response curves for the three advertising media are different (i.e., Advertising
+  expenditure and Type of medium interact), as shown in Figure 12.28. Then
+
+  E1y2 = b0 + b1 x1 + b2 x12 + b3 x2 + b4 x3 + b5 x1 x2 + b6 x1 x3 + b7 x12 x2 + b8 x12 x3
+
+  E(y)  E(y)
+
+  Television  Television
+  Newspaper
+  Radio  Newspaper
+  Radio
+
+  x1  x1
+  Figure 12.28
+  Figure 12.27  The response curves for the three media differ
+  The response curves have the same shapes,
+  but different y-intercepts
+
+  Now that you know how to write a model with two independent variables—one
+  qualitative and one quantitative—we ask a question: Why do it? Why not write a sep-
+  arate second-order model for each type of medium where E(y) is a function of only
+  advertising expenditure? As stated earlier, one reason we wrote the single model repre-
+  senting all three response curves is so that we can test to determine whether the curves
+  are different. We illustrate this procedure in optional Section 12.9. A second reason for
+  writing a single model is that we obtain a pooled estimate of s2, the variance of the ran-
+  dom-error component e. If the variance of e is truly the same for each type of medium,
+  the pooled estimate is superior to three separate estimates calculated by fitting a sepa-
+  rate model for each type of medium.
+
+Exercises 12.100–12.116
+
+Understanding the Principles  12.101  Refer to Exercise 12.100.
+  a. Write a complete second-order model that relates
+12.100  Consider a multiple-regression model for a response y
+  with one quantitative independent variable x1 and one  E(y) to the quantitative variable.
+  qualitative variable at three levels.  b. Add the main-effect terms for the qualitative variable
+  a. Write a first-order model that relates the mean re-
+  (at three levels) to the model of part a.
+  sponse E(y) to the quantitative independent variable.  c. Add terms to the model of part b to allow for interac-
+  b. Add the main-effect terms for the qualitative indepen-
+  tion between the quantitative and qualitative indepen-
+  dent variable to the model of part a. Specify the cod-  dent variables.
+  ing scheme you use.  d. Under what circumstances will the response curves of the
+  c. Add terms to the model of part b to allow for inter-  model have the same shape, but different y-intercepts?
+  action between the quantitative and qualitative inde-  e. Under what circumstances will the response curves of
+  pendent variables.  the model be parallel lines?
+  d. Under what circumstances will the response lines of  f. Under what circumstances will the response curves of
+  the model in part c be parallel?  the model be identical?
+  e. Under what circumstances will the model in part c have
+  only one response line?  12.102 Write a model that relates E(y) to two independent
+  variables, one quantitative and one qualitative (at four
+740 CHAPTER 12 ■ Multiple Regression and Model Building
+
+  levels). Construct a model that allows the associated re-  Applying the Concepts—Basic
+  sponse curves to be second order but does not allow for
+  interaction between the two independent variables.  12.105  Reality TV and cosmetic surgery. Refer to the Body Image:
+
+Learning the Mechanics  IMAGE  An International Journal of Research (Mar. 2010) study of
+
+12.103  Consider the model  the impact of reality TV shows on a college student’s deci-
+
+  y = b0 + b1x1 + b2x2 + b3x3 + e  sion to undergo cosmetic surgery, Exercise 12.25 (p. 700).
+  Consider the interaction model E1y2 = b0 + b1x1 +
+  where x1 is a quantitative variable and x2 and x3 are dum-  b2x4 + b3x1x4, where y = desire to have cosmetic sur-
+  my variables describing a qualitative variable at three  gery (25-point scale), x1 = 51 if male, 0 if female6, and
+  levels, using the coding scheme  x4 = impression of reality TV (7-point scale). The model
+  was fit to the data and the resulting SAS printout appears
+  x2 = e 1 if level 2 x3 = e 1 if level 3
+  0 otherwise  0 otherwise  at the bottom of the page.
+
+  The resulting least squares prediction equation is  a. Give the least squares prediction equation.
+  yn = 44.8 + 2.2x1 + 9.4x2 + 15.6x3
+  b. Find the predicted level of desire (y) for a male col-
+  a. What is the response line (equation) for E(y) when
+  lege student with an impression-of-reality-TV-scale
+  x2 = x3 = 0? When x2 = 1 and x3 = 0? When
+  x2 = 0 and x3 = 1?  score of 5.
+  b. What is the least squares prediction equation associ-
+  c. Conduct a test of overall model adequacy. Use
+  ated with level 1? Level 2? Level 3? Plot these on the
+  a = .10.
+  same graph.  d. Give a practical interpretation of R2a.
+  e. Give a practical interpretation of s.
+12.104 Consider the model
+  f. Conduct a test (at a = .10) to determine if gender
+  y = b0 + b1x1 + b2x12 + b3x2 + b4x3 + b5x1x2
+  + b6x1x3 + b7x12x2 + b8x12x3 + e  (x1) and impression of reality TV show (x4) interact
+  in the prediction of level of desire for cosmetic sur-
+  where x1 is a quantitative variable and
+  gery (y).
+
+  g. Give an estimate of the change in desire (y) for every
+
+  1-point increase in impression of reality TV show (x4)
+  for female students.
+
+  h. Repeat part g for male students.
+
+  x2 = e 1 if level 2 x3 = e 1 if level 3  12.106  Impact of dropping ping-pong balls. Refer to the
+  0 otherwise  0 otherwise
+  PONG  American Journal of Physics (Mar. 2014) study of the im-
+  The resulting least squares prediction equation is
+  pact of dropping ping-pong balls, Exercise 11.122 (p. 666).
+  yn = 45.6 - 4.7x1 + .07x12 - 3.7x2 - 5.9x3 + 3.1x1x2
+  + 2.5x1x3 - .09x12x2 - .03x12x3  Recall that 19 standard ping-pong balls were dropped
+
+  a. What is the response curve for E(y) when x2 = 0 and  vertically onto a force plate. The data on y = coefficient
+  x3 = 0? When x2 = 1 and x3 = 0? When x2 = 0 and
+  x3 = 1?  of restitution (COR, measured as a ratio of the speed
+
+  b. On the same graph, plot the least squares prediction  at impact and rebound speed), x1 = speed at impact
+  (meters/second), and x2 = 51 if ball buckled, 0 if not6
+  equation associated with level 1, with level 2, and with  are reproduced in the table on p. 741. Consider the in-
+  teraction model E1y2 = b0 + b1x1 + b2x2 + b3x1x2.
+  level 3. Choose the correct graph below.  A MINITAB printout of the regression analysis is also
+
+  shown on p. 741.
+
+  PONG
+
+SAS output for Exercise 12.105
+  SECTION 12.8 ■ Models with Both Quantitative and Qualitative Variables (Optional) 741
+
+  Data for Exercise 12.106  b. Refer to the model, part a. For each hair color, ex-
+  press the change in contribution level for each 1-point
+  COR  SPEED  BUCKLE  increase in solicitor’s beauty rating in terms of the
+  model parameters.
+  Ball  y  x1  x2
+  c. Write an interaction model for mean contribution
+  1 .945  0.8  0 (No)  level, E(y), as a function of a solicitor’s hair color and
+  2 .950  1.0  0 (No)  her beauty rating.
+  3 .930  1.5  0 (No)
+  4 .920  1.8  0 (No)  d. Refer to the model, part c. For each hair color, express
+  5 .920  3.0  0 (No)  the change in contribution level for each 1-point in-
+  6 .930  3.4  0 (No)  crease in solicitor’s beauty rating in terms of the model
+  7 .905  4.4  0 (No)  parameters.
+  8 .915  5.0  0 (No)
+  9 .910  6.4  0 (No)  e. Refer to the model, part c. Illustrate the interaction
+  10 .900  4.4  1 (Yes)  with a graph.
+  11 .885  5.3  1 (Yes)
+  12 .870  5.4  1 (Yes)  12.108  Impact of race on football card values. Refer to the
+  13 .850  7.4  1 (Yes)  Electronic Journal of Sociology (2007) study of the im-
+  14 .795  7.2  1 (Yes)  pact of race on the value of professional football play-
+  15 .790  7.2  1 (Yes)  ers’ “rookie” cards, presented in Exercise 12.89 (p. 732).
+  16 .800  8.0  1 (Yes)  Recall that the sample consisted of 148 rookie cards of
+  17 .820  8.5  1 (Yes)  National Football League (NFL) players who were in-
+  18 .810  9.4  1 (Yes)  ducted into the Football Hall of Fame. The researchers
+  19 .780  9.0  1 (Yes)  modeled the natural logarithm of card price (y) as a func-
+  tion of the following independent variables:
+
+a. Give the equation of the hypothesized line relating  Race: x1 = 1 if black, 0 if white
+  COR (y) to impact speed (x1) for ping-pong balls that  Card availability: x2 = 1 if high, 0 if low
+  did not buckle. What is the estimated slope of this line?  Card vintage: x3 = year card printed
+  Finalist: x4 = natural logarithm of number of times player
+b. Repeat part a for ping-pong balls that buckled.
+c. The researcher believes that the rate of increase in  was on final Hall of Fame ballot
+  Position-QB: x5 = 1 if quarterback, 0 if not
+  COR with impact speed differs depending on whether  Position-RB: x7 = 1 if running back, 0 if not
+  the ping-pong ball buckles. Do the data support this hy-  Position-WR: x8 = 1 if wide receiver, 0 if not
+  pothesis? Conduct the appropriate test using a = .05.  Position-TE: x9 = 1 if tight end, 0 if not
+  Position-DL: x10 = 1 if defensive lineman, 0 if not
+  Position-LB: x11 = 1 if linebacker, 0 if not
+  Position-DB: x12 = 1 if defensive back, 0 if not
+  [Note: For Position, offensive lineman is the base level]
+
+12.107  Do blondes raise more funds? Refer to the Economic  a. The model E1y2 = b0 + b1x1 + b2x2 + b3x3 + b4x4 +
+  Letters (Vol. 100, 2008) study of whether the color of a  b5x5 + b6x6 + b7x7 + b8x8 + b9x9 + b10x10 + b11x11
+  female solicitor’s hair affects the level of capital raised,  + b11x11 + b12x12 was fit to the data, with the fol-
+  Exercise 12.88 (p. 731). Recall that 955 households were  lowing results: R2 = .705, adj. R2 = .681, F = 26.9.
+  contacted by a female solicitor to raise funds for hazard  Interpret the results practically. Make an inference
+  mitigation research. In addition to the household’s level of  about the overall adequacy of the model.
+  contribution (in dollars) and the hair color of the solicitor
+  (blonde Caucasian, brunette Caucasian, or minority fe-  b. Refer to part a. Statistics for the race vari-
+  male), the researcher also recorded the beauty rating of  able were reported as follows: bn1 = - 147,
+  the solicitor (measured quantitatively on a 10-point scale).  sbn1 = .145, t = - 1.014, p@value = .312. Use this in-
+  a. Write a first-order model (with no interaction) for  formation to make an inference about the impact
+  of race on the value of professional football players’
+  mean contribution level, E(y), as a function of a solic-  rookie cards.
+  itor’s hair color and her beauty rating.
+  c. Refer to part a. Statistics for the card vintage vari-
+  able were reported as follows: bn3 = - .074, sbn2 = .007,
+  t = - 10.92, p@value = .000. Use this information to
+  make an inference about the impact of card vintage on
+  the value of professional football players’ rookie cards.
+
+  d. Write a first-order model for E(y) as a function of card
+  vintage 1x42 and position 1x59x122 that allows for the
+  relationship between price and vintage to vary with
+  position.
+
+  12.109  Whales entangled in fishing gear. Refer to the Marine
+  Mammal Science (Apr. 2010) study of whales entangled in
+  fishing gear, Exercise 12.87, (p. 731). Now consider a model
+  for the length (y) of an entangled whale (in meters) that
+742 CHAPTER 12 ■ Multiple Regression and Model Building
+
+  is a function of water depth of the entanglement (in meters)  12.112  d. Refer to part c. What do each of the b’s represent in
+  and gear type (set nets, pots, or gill nets).  the model?
+  a. Write a main-effects-only model for E(y).  WAGAP
+  b. Sketch the relationships hypothesized by the model,  e. Does the model support the researchers’ theory that
+  the curvilinear relationship between task performance
+  part a. (Hint: Plot length on the vertical axis and water  score (y) and conscientiousness score (x1) depends on
+  depth on the horizontal axis.)  job complexity (x2)? Explain.
+  c. Add terms to the model, part a, that include interac-
+  tion between water depth and gear type. (Hint: Be  Agreeableness, gender, and wages. Do agreeable indi-
+  sure to interact each dummy variable for gear type  viduals get paid less, on average, than those who are less
+  with water depth.)  agreeable on the job? And is this gap greater for males
+  d. Sketch the relationships hypothesized by the model,  than for females? These questions were addressed in
+  part c.  the Journal of Personality and Social Psychology (Feb.
+  e. In terms of the b’s in the model of part c, give the rate  2012). Several variables were measured for each in a
+  of change of whale length with water depth for set  sample of individuals enrolled in the National Survey of
+  nets.  Midlife Development in the United States. Three of these
+  f. Repeat part e for pots.  variables are: (1) level of agreeableness score (where
+  g. Repeat part e for gill nets.  higher scores indicate a greater level of agreeableness),
+  h. In terms of the b’s in the model of part c, how would  (2) gender (male or female), and (3) annual income (dol-
+  you test to determine if the rate of change of whale  lars). The researchers modeled mean income, E(y), as a
+  length with water depth is the same for all three types  function of both agreeableness score (x1) and a dummy
+  of fishing gear?  variable for gender 1x2 = 1 if male, 0 if female2. Data
+  for a sample of 100 individuals (simulated, based on infor-
+12.110  Winning marathon times. Refer to the Chance (Winter  mation provided in the study) are saved in the WAGAP
+  2000) study of men’s and women’s winning times in the  file. The first 10 observations are listed in the accompany-
+  Boston Marathon, presented in Exercise 11.146 (p. 675).  ing table.
+  Suppose the researchers want to build a model for pre-
+  dicting winning time (y) of the marathon as a function  Data for First 10 Individuals in Study
+  of year 1x12 in which race is run and gender of winning
+  runner 1x22.  Income  Agree Score  Gender
+  a. Set up the appropriate dummy variables (if necessary)
+  44,770  3.0  1
+  for x1 and x2.  51,480  2.9  1
+  b. Write the equation of a model that proposes parallel  39,600  3.3  1
+  24,370  3.3  0
+  straight-line relationships between winning time (y)  15,460  3.6  0
+  and year 1x12, one line for each gender.  43,730  3.8  1
+  c. Write the equation of a model that proposes nonpar-  48,330  3.2  1
+  allel straight-line relationships between winning time  25,970  2.5  0
+  (y) and year 1x12, one line for each gender.  17,120  3.5  0
+  d. Which of the models do you think will provide the  20,140  3.2  0
+  best predictions of winning time (y)? Base your an-
+  swer on the graph displayed in Exercise 11.146.  a. Consider the model E1y2 = b0 + b1x1 + b2x2. The
+  researchers theorize that for either gender, income
+Applying the Concepts—Intermediate  will decrease as agreeableness score increases. If this
+  theory is true, what is the expected sign of b1 in the
+12.111  Personality traits and job performance. Refer to the  model?
+  Journal of Applied Psychology (Jan. 2011) study of the rela-
+  tionship between task performance and conscientiousness,  b. The researchers also theorize that the rate of decrease
+  Exercise 12.67 (p. 722). Recall that the researchers used  of income with agreeableness score will be steeper for
+  a quadratic model to relate y = task performance score  males than for females (i.e., the income gap between
+  (measured on a 30-point scale) to x1 = conscientiousness  males and females will be greater the less agreeable
+  score (measured on a scale of - 3 to + 3). In addition, the  the individuals are). Can this theory be tested using
+  researchers included job complexity in the model, where  the model, part a? Explain.
+  x2 = 51 if highly complex job, 0 if not6. The complete
+  model took the form  c. Consider the interaction model E1y2 = b0 + b1x1 +
+  b2x2 + b3x1x2. If the theory, part b, is true, give the
+E1y2 = b0 + b1x1 + b21x122 + b3x2 + b4x1x2 + b51x122x2  expected sign of b1 and the expected sign of b3.
+
+  a. For jobs that are not highly complex, write the  d. Fit the model, part c, to the sample data. Check the
+  signs of the estimated b coefficients. How do they
+  equation of the model for E(y) as a function of x1.  compare to the expected values, part c?
+  (Substitute x2 = 0 into the equation.)
+  b. Refer to part a. What do each of the b’s represent in  e. Refer to the interaction model, part c. Give the null and
+  alternative hypotheses for testing whether the rate of
+  the model?  decrease of income with agreeableness score is steeper
+  for males than for females.
+  c. For highly complex jobs, write the equation of the
+  f. Conduct the test, part e. Use a = .05. Is the researchers’
+  model for E(y) as a function of x1. (Substitute x2 = 1  theory supported?
+  into the equation.)
+  SECTION 12.8 ■ Models with Both Quantitative and Qualitative Variables (Optional) 743
+
+12.113  Workplace bullying and intention to leave. Workplace  a. Write the equation of a first-order model relating
+  bullying is defined as harassment, persistent criticism,  mean lead level E(y) to elevation 1x12 and slope face
+  withholding of key information, spreading of rumors, or  1x22. Include interaction between elevation and slope
+  intimidation on the job. In Human Resource Management  face in the model.
+  Journal (Oct. 2008), researchers employed multiple re-
+  gression to examine whether perceived organizational  b. Graph the relationship between mean lead level and
+  support would moderate the relationship between work-  elevation for the different slope faces that is hypothe-
+  place bullying and victims’ intention to leave the firm.  sized by the model you wrote in part a.
+  The dependent variable in the analysis, intention to leave
+  (y), was measured on a quantitative scale. The two key  c. In terms of the b’s of the model from part a, give the
+  independent variables in the study were bullying (x1,  change in lead level for every 1-foot increase in eleva-
+  measured on a quantitative scale) and perceived organi-  tion for moss specimens on the east slope.
+  zational support (measured qualitatively as “low,” “neu-
+  tral,” or “high”).  d. Fit the model from part a to the data, using an avail-
+  a. Set up the dummy variables required to represent  able statistical software package. Is the overall model
+  statistically useful in predicting lead level? Test, using
+  perceived organizational support (POS) in the regres-  a = .10.
+  sion model.
+  b. Write a model for E(y) as a function of bullying and  12.115  Chemical composition of rainwater. Refer to the Journal
+  POS that hypothesizes three parallel straight lines, one  of Agricultural, Biological, and Environmental Statistics
+  for each level of POS.  (Mar. 2005) study of the chemical composition of rainwa-
+  c. Write a model for E(y) as a function of bullying and  ter, presented in Exercise 12.90 (p. 732). Recall that the
+  POS that hypothesizes three nonparallel straight lines,  nitrate concentration y (milligrams per liter) in a sample
+  one for each level of POS.  of rainwater was modeled as a function of water source
+  d. The researchers discovered that the effect of bullying  (groundwater, subsurface flow, or overground flow).
+  on intention to leave was greater at the low level of  Now consider adding a second independent variable, sil-
+  POS than at the high level of POS. Which of the two  ica concentration (milligrams per liter), to the model.
+  models, parts b and c, supports these findings?  a. Write a first-order model for E(y) as a function of
+
+12.114  Lead levels in mountain moss. A study of the atmospheric  the independent variables. Assume that the rate of
+  pollution on the slopes of the Blue Ridge Mountains (in  increase of nitrate concentration with silica con-
+MOSS  Tennessee) was conducted. The file MOSS contains the  centration is the same for all three water sources.
+  levels of lead found in 70 fern moss specimens (in micro-  Sketch the relationships hypothesized by the model
+  grams of lead per gram of moss tissue) collected from  on a graph.
+  the mountain slopes, as well as the elevation of the moss  b. Write a first-order model for E(y) as a function of the
+  specimen (in feet) and the direction (1 if east, 0 if west) of  independent variables, but now assume that the rate
+  the slope face. The first five and last five observations of  of increase of nitrate concentration with silica concen-
+  the data set are listed in the following table.  tration differs for the three water sources. Sketch the
+  relationships hypothesized by the model on a graph.
+
+  Applying the Concepts—Advanced
+
+  Specimen  Lead Level  Elevation  Slope Face  12.116  Iron supplement for anemia. Many women suffer from
+  anemia. A female physician who is also an avid jogger
+  1  3.475  2,000  0  wanted to know if women who exercise regularly have a
+  2  3.359  2,000  0  different mean red blood cell count than women who do
+  3  3.877  2,000  0  not. She also wanted to know if the amount of a partic-
+  4  4.000  2,500  0  ular iron supplement a woman takes has any effect and
+  5  3.618  2,500  0  whether the effect is the same for both groups. Write a
+  f  f  model that will reflect the relationship between red blood
+  f  f  cell count and the two independent variables just de-
+  66  1  scribed, assuming that
+  67  5.413  2,500  1  a. the effect of the iron supplement on mean blood cell
+  68  7.181  2,500  1
+  69  6.589  2,500  1  count is the same regardless of whether a woman ex-
+  70  6.182  2,000  1  ercises regularly.
+  3.706  2,000  b. the effect of the iron supplement on mean blood cell
+  count depends on whether a woman exercises regularly.
+  Based on Schilling, J. “Bioindication of atmospheric heavy metal
+  deposition in the Blue Ridge using the moss, Thuidium delicatulum.”
+  master-of-science thesis, Spring 2000.
+744 CHAPTER 12 ■ Multiple Regression and Model Building
+
+12.9 Comparing Nested Models (Optional)
+
+  To be successful model builders, we require a statistical method that will allow us to
+  determine (with a high degree of confidence) which one among a set of candidate
+  models best fits the data. In this section, we present such a technique for nested
+  models.
+
+Two models are nested if one model contains all the terms of the second model
+and at least one additional term. The more complex of the two models is called the
+complete model, and the simpler of the two is called the reduced model.
+
+  To illustrate the concept of nested models, consider the straight-line interaction
+model for the mean auction price E(y) of a grandfather clock as a function of two quan-
+titative variables: age of the clock 1x12 and number of bidders 1x22. The interaction
+model fit in Example 12.6 is
+
+  E1y2 = b0 + b1x1 + b2x2 + b3x1x2
+
+If we assume that the relationship between auction price (y), age 1x12, and bidders 1x22
+is curvilinear, then the complete second-order model is more appropriate:
+
+Terms in interaction model  Quadratic terms
+$11111%11111& $11%11&
+E1y2 = b0 + b1 x1 + b2 x2 + b3 x1 x2 + b4 x12 + b5 x22
+
+  Note that the curvilinear model contains quadratic terms for x1 and x2, as well
+as the terms in the interaction model. Therefore, the models are nested models. In
+this case, the interaction model is nested within the more inclusive curvilinear model.
+Thus, the curvilinear model is the complete model and the interaction model is the
+reduced model.
+
+  Suppose we want to know whether the curvilinear model contributes more infor-
+mation relevant to the prediction of y than the straight-line interaction model does. This
+is equivalent to determining whether the quadratic betas b4 and b5 should be retained in
+the model. To test whether these terms should be retained, we set up the null and alter-
+native hypotheses as follows:
+
+H0: b4 = b5 = 0 (i.e., quadratic terms are not important in predicting y).
+Ha: At least one of the parameters b4 and b5 is nonzero (i.e., at least one of the
+
+  quadratic terms is useful in predicting y).
+
+Note that the terms being tested are those additional terms in the complete (curvilinear)
+
+model that are not in the reduced (straight-line interaction) model.
+
+  We presented the t-test for a single b coefficient (Section 12.2) and the global
+
+F-test for all the b parameters (except b0) in the model (Section 12.3). We now need
+a test for a subset of the b parameters in the complete model. The test procedure is
+
+intuitive. First, we use the method of least squares to fit the reduced model and cal-
+
+culate the corresponding sum of squares for error, SSER (the sum of squares of the
+deviations between the observed and the predicted y-values). Next, we fit the com-
+
+plete model and calculate its sum of squares for error, SSEC. Then we compare SSER
+with SSEC by calculating the difference, SSER - SSEC. If the additional terms in the
+complete model are significant, then SSEC should be much smaller than SSER, and the
+difference SSER - SSEC will be large.
+
+  Since SSE will always decrease when new terms are added to the model, the ques-
+tion is whether the difference SSER - SSEC is large enough to conclude that it is due
+  SECTION 12.9 ■ Comparing Nested Models (Optional) 745
+
+  to more than just an increase in the number of model terms and to chance. The formal
+  statistical test utilizes an F-statistic, as shown in the following box:
+
+  F-Test for Comparing Nested Models  g + bkxk
+  Reduced model: E1y2 = b0 + b1x1 + g + bgxg
+  Complete model: E1y2 = b0 + b1x1 + g + bgxg + bg + 1xg + 1 +
+  H0: bg + 1 = bg + 2 = g = bk = 0
+  Ha: At least one of the b parameters specified in H0 is nonzero.
+
+  Test statistic: Fc = 1SSER - SSEC2 > 1k - g2 SSEC>[n - 1k + 12]
+  1SSER - SSEC2 ># b’s tested in H0
+
+  =
+  MSEC
+
+  where
+
+  SSER = Sum of squared errors for the reduced model
+  SSEC = Sum of squared errors for the complete model
+  MSEC = Mean square error 1s22 for the complete model
+  k - g = Number of b parameters specified in H0 1i.e., number of b’s tested2
+  k + 1 = Number of b parameters in the complete model 1including b02
+
+  n = Total sample size
+
+  Rejection region: Fc 7 Fa
+  p@value: P1F 7 Fc2
+  where F is based on n1 = k - g numerator degrees of freedom and
+  n2 = n - 1k + 12 denominator degrees of freedom
+
+  When the assumptions listed in Section 12.1 about the random-error term are sat-
+
+  isfied, this F-statistic has an F-distribution with n1 and n2 df. Note that n1 is the number
+  of b parameters being tested and n2 is the number of degrees of freedom associated with
+  s2 in the complete model.
+
+ Example 12.12  Problem A botanist conducted an experiment to study the growth of carnations as a function
+  of the temperature x1 1°F2 in a greenhouse and the amount of fertilizer x2 [kilograms (kg)
+  FLOWER  per plot] applied to the soil. Twenty-seven plots of equal size were treated with fertilizer
+  in amounts varying between 50 and 60 kg per plot and were mechanically kept at constant
+Analyzing a Complete  temperatures between 80 and 100°F. Small carnation plants [approximately 15 centimeters
+  (cm) in height] were planted in each plot, and their height y (cm) was measured after a six-
+Second-order  week growing period. The resulting data are shown in Table 12.5.
+
+Model—Carnation
+
+Growth Data
+
+  Table 12.5 Temperature (x1), Amount of Fertilizer (x2), and Height ( y) of Carnations
+
+  x1  x2  y  x1  x2  y  x1  x2  y
+
+  80  50  50.8  90  50  63.4  100  50  46.6
+
+  80  50  50.7  90  50  61.6  100  50  49.1
+
+  80  50  49.4  90  50  63.4  100  50  46.4
+
+  80  55  93.7  90  55  93.8  100  55  69.8
+
+  80  55  90.9  90  55  92.1  100  55  72.5
+
+  80  55  90.9  90  55  97.4  100  55  73.2
+
+  80  60  74.5  90  60  70.9  100  60  38.7
+
+  80  60  73.0  90  60  68.8  100  60  42.5
+
+  80  60  71.2  90  60  71.3  100  60  41.4
+
+  Data Set: FLOWER
+746  CHAPTER 12 ■ Multiple Regression and Model Building
+
+  a. Fit a complete second-order model to the data.
+  b. Sketch the fitted model in three dimensions.
+  c. Do the data provide sufficient evidence to indicate that the second-order terms
+
+  b3, b4, and b5 contribute information relevant to the prediction of y?
+
+  Solution
+  a. The complete second-order model is
+
+  E1y2 = b0 + b1 x1 + b2 x2 + b3 x1 x2 + b4 x12 + b5 x22
+  The data in Table 12.5 were used to fit this model, and a portion of the SAS output is
+  shown in Figure 12.29.
+
+Figure 12.29
+
+SAS printout of complete
+second-order model for height.
+
+  The least squares prediction equation (rounded) is
+  yn = - 5,127.90 + 31.10x1 + 139.75x2 - .146x1x2 - .133x12 - 1.14x22
+
+  b. A three-dimensional graph of this prediction model, called a response surface, is
+  shown in Figure 12.30. Note that the height seems to be greatest for temperatures of
+
+  y
+
+  110
+
+  100
+
+  Height  90
+
+  80
+
+  70
+
+  60
+
+Figure 12.30  80 85  90  x2
+  Amount of fertilizer
+Plot of second-order least
+squares model for  95 100 52 54 56 58 60
+Example 12.12  x1
+
+  Temperature
+  SECTION 12.9 ■ Comparing Nested Models (Optional) 747
+
+  about 85–90°F and for applications of about 55–57 kg of fertilizer per plot.* Further
+  experimentation in these ranges might lead to a more precise determination of the
+  optimal temperature–fertilizer combination.
+
+  c. To determine whether the data provide sufficient information to indicate that the
+  second-order terms contribute information for the prediction of y, we wish to test
+
+  H0: b3 = b4 = b5 = 0
+
+  against the alternative hypothesis
+
+  Ha: At least one of the parameters b3, b4, and b5 differs from 0.
+
+  The first step in conducting the test is to drop the second-order terms out of the com-
+  plete (second-order) model and fit the reduced model
+
+  E1y2 = b0 + b1x1 + b2x2
+
+  to the data. The SAS printout for this model is shown in Figure 12.31.
+  The sums of squares for error, highlighted in Figures 12.29 and 12.31 for the com-
+
+  plete and reduced models, respectively, are
+
+  SSEC = 59.17843
+  SSER = 6,671.50852
+  and s2 for the complete model (highlighted on Figure 12.29) is
+  s2 = MSEC = 2.81802
+
+  Recall that n = 27, k = 5, and g = 2. Therefore, the calculated value of the
+  F-statistic, based on n1 = 1k - g2 = 3 numerator df and n2 = [n - 1k + 12] = 21
+
+  denominator df, is
+
+  F = = 1SSER - SSEC2 > 1k - g2 1SSER - SSEC2 > 1k - g2
+  SSEC>[n - 1k + 12]  MSEC
+
+  where n1 = 1k - g2 is equal to the number of parameters involved in H0. Therefore,
+
+  Test statistic: F =  16,671.50852 - 59.178432 >3  = 782.15
+
+  2.81802
+
+  The final step in the test is to compare this computed value of F with the tabulated
+
+  value based on n1 = 3 and n2 = 21 df. If we choose a = .05, then F.05 = 3.07 and
+  the rejection region is
+
+  Rejection region: F 7 3.07.
+
+Figure 12.31
+
+SAS printout of first-order
+model for height
+
+  *Students with a knowledge of calculus should note that we can solve for the exact temperature and amount of
+  fertilizer that maximize height in the least squares model by solving 0yn >0x1 = 0 and 0yn >0x2 = 0 for x1 and x2.
+  Sample estimates of these estimated optimal values are x1 = 86.25°F and x2 = 55.58 kg per plot.
+748  CHAPTER 12 ■ Multiple Regression and Model Building
+
+  Since the computed value of F falls in the rejection region (i.e., it exceeds
+  F.05 = 3.07), we reject H0 and conclude that at least one of the second-order terms
+  contributes information relevant to the prediction of y. Thus, the second-order
+  model appears to provide better predictions of y than does a first-order model.
+
+  Look Back Using special commands, you can get SAS to perform the desired nested-
+  model F-test. The test statistic and p-value for the preceding test are highlighted at the
+  bottom of the SAS printout in Figure 12.29.
+
+  ■ Now Work Exercise 12.120
+
+  The nested-model F-test can be used to determine whether any subset of terms
+  should be included in a complete model by testing the null hypothesis that a particular
+  set of b parameters simultaneously equals 0. For example, we may want to test whether
+  a set of interaction terms for quantitative variables or a set of main-effect terms for a
+  qualitative variable should be included in a model. If we reject H0, the complete model is
+  the better of the two nested models.
+
+  Suppose the F-test in Example 12.12 yielded a test statistic that did not fall into the
+  rejection region. Although we must be cautious about accepting H0, most practitioners
+  of regression analysis adopt the principle of parsimony. That is, in situations where two
+  competing models are found to have essentially the same predictive power (as in this
+  case), the model with the lesser number of b’s (i.e., the more parsimonious model) is
+  selected. On the basis of this principle, we would drop the three second-order terms and
+  select the straight-line (reduced) model over the second-order (complete) model.
+
+  A parsimonious model is a general linear model with a small number of b parameters.
+  In situations where two competing models have essentially the same predictive power
+  (as determined by an F-test), choose the more parsimonious of the two.
+
+  Guidelines for Selecting Preferred Model in a Nested Model F-Test
+
+  Conclusion  Preferred Model
+
+  Reject H0  S Complete Model
+
+  Fail to reject H0 S Reduced Model
+
+  When the candidate models in model building are nested models, the F-test de-
+  veloped in this section is the appropriate procedure to apply to compare the models.
+  However, if the models are not nested, this F-test is not applicable. In such a situation,
+  the analyst must base the choice of the best model on statistics such as R2a and s. It is
+  important to remember that decisions based on these and other numerical descriptive
+  measures of the adequacy of a model cannot be supported with a measure of reliability
+  and are often highly subjective in nature.
+
+Statistics IN Action Revisited Building a Model for Condominium Sale Price
+
+In the previous Statistics in Action Revisited section (p. 704), we  than straight-line) relationships and is
+used the six independent variables listed in Table SIA12.1 to fit  given by the equation
+a first-order model for the auction price (y) of a condominium
+unit. Although the model was deemed statistically useful in  E1y2 = b0 + b1 x1 + b2 x2 + b3 x1 x2
+predicting y, the standard deviation of the model (s = 21.8  + b4 1x122 + b5 1x222
+hundred dollars) was probably too large for the model to be
+“practically” useful. A more complicated model—one involving  The SAS printout for this model is
+higher order terms (interactions and squared terms)—needs to  shown in Figure SIA12.5. Note that
+be considered. We start with a second-order model involving  the global F-test for the model is sta-
+only the two quantitative independent variables FLOOR 1x12  tistically significant 1p@value 6 .00012.
+and DISTANCE 1x22. The model assumes curvilinear (rather
+  Are the higher (second)-order terms
+  in the model, namely, b3x1x2, b41x122,
+

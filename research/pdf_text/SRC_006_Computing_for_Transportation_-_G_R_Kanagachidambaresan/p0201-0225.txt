@@ -1,0 +1,1043 @@
+offloading of vehicle applications through edge computing and efficient resource
+management across Edge Nodes.
+
+  In Ref. [95], the study discusses the attainment of 5G and edge computing by
+deploying both micro and macro base stations, employing spectrum multiplexing,
+and utilizing cloud and fog computing architectures. It emphasizes the difficulties
+associated with managing mobility support, geographic distribution, and location
+awareness. Furthermore, it delves into the creation of fog computing architectures
+for vehicles and the effective deployment of tasks for multiple users. These
+innovations are geared towards enhancing sensitivity, interactivity, and the overall
+quality of experience within the CIoV environment.
+
+  In Ref. [96], the study revolves around the impact of 5G communication
+technology and fog computing in the context of the CIoV. Also, it underscores the
+supportive role of 5G technology in the integration of IoV and V2X. It proposes
+the adoption of fog computing to address handover issues among vehicles within
+the CIoV. Fog computing facilitates localized processing and storage of data,
+minimizing the necessity for extensive data transmission over long distances.
+These technological interventions are geared towards enhancing communication
+in vehicular ad-hoc networks (VANETs) and fostering trust among the
+interconnected entities in the CIoV ecosystem.
+
+  In Ref. [97], edge computing is a decentralized computing paradigm that,
+instead of depending on a centralized cloud server, places computation and data
+storage strategically close to the point of need. Its main goal is to reduce latency
+and improve connected devices’ quality of service. In 5G-enabled VANETs, edge
+computing plays a crucial role by dispersing computer power close to the
+vehicles. This facilitates expedited data processing and elevates overall network
+efficiency. Such an approach proves instrumental in the collaborative distribution
+of vehicular content in 5G-VANETs, effectively addressing challenges related to
+resource optimization, network utilization, and the efficiency of data sharing.
+
+  In Ref. [98], the performance of vehicular ad-hoc networks (VANETs) is
+significantly boosted by the 5G network, offering reliable and low-latency
+communication services. The anticipated surge in internet-connected vehicles,
+projected by 2020, underscores the pivotal role of VANETs as an integral element
+of the IoV. The synergy of edge computing, also referred to as fog computing,
+with 5G, contributes to the efficient oversight and management of the entire
+network. This collaborative approach allows for the deployment of services and
+applications at the top of the network, optimizing routing and switching
+equipment to enhance traffic efficiency, thereby ensuring both passenger and
+street safety. Positioned as a complement to 5G networks, edge computing
+operates by pushing computing services to the periphery of the radio network
+[99].
+  In conclusion, the integration of edge computing and 5G within the framework
+of the CIoV results in a transportation system that is not only more responsive
+and intelligent but also more efficient. Together, these technologies play a crucial
+role in improving safety, minimizing latency, and facilitating instantaneous
+decision-making, setting the groundwork for the evolution of a smart and
+interconnected transportation ecosystem.
+
+6.6 FUTURE DIRECTIONS
+
+In the future, efforts will be made to explore and suggest advanced security
+mechanisms and protocols to tackle the inherent security challenges in CIoV
+architectures. This involves examining encryption techniques, authentication
+methods, and anomaly detection systems tailored to the unique characteristics of
+vehicular networks. Additionally, there will be a focus on investigating techniques
+to preserve user privacy while facilitating effective data sharing among vehicles.
+This may include developing privacy-preserving algorithms or employing
+methods such as differential privacy to protect sensitive information.
+Furthermore, research and design efforts will be directed towards creating user-
+friendly interfaces for CIoV systems. This aims to ensure that both drivers and
+pedestrians can easily interact with and comprehend the information provided by
+intelligent vehicular networks. Considerations will include exploring augmented
+reality interfaces and voice-based interactions to enhance user experience. The
+energy efficiency challenges associated with CIoV, particularly in the context of
+resource-constrained devices within vehicles, will be addressed. This involves
+exploring energy-efficient communication protocols, implementing adaptive
+power management strategies, and considering sustainable approaches for
+powering CIoV devices. Ethical implications of CIoV will be scrutinized,
+encompassing issues related to data ownership, accountability, and decision-
+making in critical situations. Frameworks for responsible AI use in vehicular
+networks will be proposed, considering potential societal impacts. By addressing
+future research directions, this chapter aims to contribute to the continuous
+development and comprehension of CIoV, fostering advancements in safety,
+efficiency, and the overall intelligence of vehicular networks.
+
+6.7 CONCLUSION
+
+In conclusion, this chapter has provided a comprehensive overview of the
+evolution, architectures, challenges, and advancements in CIoV, elucidating its
+role in connecting CIoT with vehicular networks. Throughout this exploration, we
+have highlighted the critical aspects of complexity, security imperatives, and
+communication technologies, underscoring the transformative potential of
+integrating edge computing and 5G technologies. A multimodal approach presents
+a promising way to maximize the effectiveness of CIoV and realize its potential
+to transform transportation. In order to handle the inherent complexity of
+cognitive systems in dynamic vehicular environments, firstly, researchers and
+practitioners should concentrate on creating robust and adaptive algorithms. Real-
+time processing ought to be given priority in these algorithms so that drivers can
+make decisions quickly and adapt to changing road conditions. Secondly, CIoV
+security is a critical issue that must be addressed by putting cutting-edge intrusion
+detection systems, authentication methods, and encryption techniques into place.
+Establishing comprehensive standards and regulations that guarantee the security
+and privacy of CIoV systems and the data they generate will require cooperation
+between academia, industry, and policymakers. Moreover, a strategic approach
+should be taken to the integration of edge computing and 5G technologies.
+Reducing latency and guaranteeing dependable connectivity require careful
+consideration of communication protocols and network architecture. Additionally,
+fostering collaboration among stakeholders in the development and deployment
+of 5G-enabled edge computing solutions will be instrumental in achieving a
+seamless and efficient CIoV ecosystem. In essence, this chapter serves as a
+concise guide for both researchers and practitioners, offering insights and
+recommendations to navigate the complexities of CIoV. By implementing the
+proposed solutions and fostering ongoing innovation, we can collectively work
+towards realizing the full potential of CIoV in shaping the future of intelligent
+transportation.
+
+REFERENCES
+
+  1. Hudson, F.D. and Nichols, E.W., 2016. The internet of things and cognitive
+  computing. In Handbook of Statistics edited by V. N. Gudivada et al.
+  (Elsevier B.V., Amsterdam, 2016), pp. 341–373. ⏎
+
+  2. Weblink: Juniperresearch.com, 2015. ‘Internet of Things’ Connected Devices
+  to Almost Triple to over 38 billion Units by 2020. Available at:
+  https://www.juniperresearch.com/press/pressreleases/iot-connected-devices-
+  to-triple-to-38-bn-by-2020. ⏎
+
+  3. Singh, S., 2015. Critical reasons for crashes investigated in the national
+  motor vehicle crash causation survey (No. DOT HS 812 115). ⏎
+ 4. Fagnant, D.J. and Kockelman, K., 2015. Preparing a nation for autonomous
+  vehicles: opportunities, barriers, and policy recommendations.
+  Transportation Research Part A: Policy and Practice, 77, pp. 167–181. ⏎
+
+ 5. Savaglio, C. and Fortino, G., 2015. Autonomic and cognitive architectures
+  for the Internet of Things. In Internet and Distributed Computing Systems:
+  8th International Conference, IDCS 2015, Windsor, UK, September 2–4,
+  2015. Proceedings 8 (pp. 39–47). Springer International Publishing. ⏎
+
+ 6. Delhi, S.I.N., 2016. Automotive revolution & perspective towards 2030.
+  Auto Tech Review, 4(5), pp.20–25. ⏎
+
+ 7. Laghari, A.A., Wu, K., Laghari, R.A., Ali, M. and Khan, A.A., 2021. A
+  review and state of art of Internet of Things (IoT). Archives of
+  Computational Methods in Engineering, 29, pp. 1–19. ⏎
+
+ 8. Lombardi, M., Pascale, F. and Santaniello, D., 2021. Internet of things: a
+  general overview between architectures, protocols and applications.
+  Information, 12(2), p. 87. ⏎
+
+ 9. Meneghello, F., Calore, M., Zucchetto, D., Polese, M. and Zanella, A., 2019.
+  IoT: internet of threats? A survey of practical security vulnerabilities in real
+  IoT devices. IEEE Internet of Things Journal, 6(5), pp. 8182–8201. ⏎
+
+10. F. Al-Turjman and A. Radwan, October 2017. Data delivery in wireless
+  multimedia sensor networks: challenging and defying in the IoT era. IEEE
+  Wireless Communications, 24(5), pp. 126–131 doi:
+  10.1109/WCM.2017.1700054. ⏎
+
+11. Umamaheswari, S., Arun Kumar, S. and Sasikala, S., 2023. Expert systems
+  for improving the effectiveness of remote health monitoring in COVID-19
+  pandemic: a critical review. In Karrupusamy, P., Kalaiselvi, M., and Kumar,
+  R. (Eds.), System Design for Epidemics Using Machine Learning and Deep
+  Learning (pp.99–121). Wiley-Scrivener Publishing, Hoboken, NJ. ⏎
+
+12. Vermesan, O., Eisenhauer, M., Sundmaeker, H., Guillemin, P., Serrano, M.,
+  Tragos, E.Z., Valiño, J., Gluhak, A. and Bahr, R., 2022. Internet of things
+  cognitive transformation technology research trends and applications. In
+  Cognitive Hyperconnected Digital Transformation (pp. 17–95). River
+  Publishers, Denmark. ⏎
+
+13. Zhang, Y., Ma, X., Zhang, J., Hossain, M.S., Muhammad, G. and Amin,
+  S.U., 2019. Edge intelligence in the cognitive internet of things: improving
+  sensitivity and interactivity. IEEE Network, 33(3), pp. 58–64. ⏎
+
+14. Ploennigs, J., Ba, A. and Barry, M., 2017. Materializing the promises of
+  cognitive IoT: how cognitive buildings are shaping the way. IEEE Internet of
+  Things Journal, 5(4), pp.2367–2374. ⏎
+
+15. Vlacheas, P., Giaffreda, R., Stavroulaki, V., Kelaidonis, D., Foteinos, V.,
+  Poulios, G., Demestichas, P., Somov, A., Biswas, A.R. and Moessner, K.,
+  2013. Enabling smart cities through a cognitive management framework for
+  the internet of things. IEEE Communications Magazine, 51(6), pp. 102–111.
+  ⏎
+
+16. Li, F., Lam, K.Y., Li, X., Sheng, Z., Hua, J. and Wang, L., 2019. Advances
+  and emerging challenges in cognitive internet-of-things. IEEE Transactions
+  on Industrial Informatics, 16(8), pp. 5489–5496. ⏎
+
+17. Guerrero-Ibanez, J.A., Zeadally, S. and Contreras-Castillo, J., 2015.
+  Integration challenges of intelligent transportation systems with connected
+  vehicle, cloud computing, and internet of things technologies. IEEE Wireless
+  Communications, 22(6), pp. 122–128. ⏎
+
+18. Guerrero-Ibáñez, J., Zeadally, S. and Contreras-Castillo, J., 2018. Sensor
+  technologies for intelligent transportation systems. Sensors, 18(4), p. 1212.
+  ⏎
+
+19. Mishra, R., Singh, A. and Kumar, R., 2016, March. VANET security: issues,
+  challenges and solutions. In 2016 International Conference on Electrical,
+  Electronics, and Optimization Techniques (ICEEOT) (pp. 1050–1055).
+  IEEE, Chennai, India. ⏎
+
+20. Contreras-Castillo, J., Zeadally, S. and Guerrero-Ibañez, J.A., 2017. Internet
+  of vehicles: architecture, protocols, and security. IEEE internet of things
+  Journal, 5(5), pp. 3701–3709. ⏎
+
+21. Cooperation, A.P.E., 2014. White paper of internet of vehicles. In
+  Proceedings of the 50th Telecommunication and Information Working Group
+  Meeting, Brisbane, Australia (Vol. 29). ⏎
+
+22. Lengton, M., Verzijl, D. and Dervojeda, K., 2015. Internet of things:
+  connected cars. In Business Innovation Observatory. Business Innovation
+  Observatory, Brussels, Belgium. ⏎
+
+23. Yang, F., Wang, S., Li, J., Liu, Z. and Sun, Q., 2014. An overview of internet
+  of vehicles. China Communications, 11(10), pp. 1–15. ⏎
+
+24. Shuriya, B., Umamaheswari, S., Rajendran, A. and Sivaprakash, P., 2023,
+  June. One-dimensional dilated hypothesized learning method for intrusion
+  detection system under constraint resource environment. In 2023 2nd
+  International Conference on Advancements in Electrical, Electronics,
+  Communication, Computing and Automation (ICAECA) (pp. 1–6). IEEE,
+  Coimbatore, India. ⏎
+25. Qureshi, M.A., Noor, R.M., Shamshirband, S., Parveen, S., Shiraz, M. and
+  Gani, A., 2015. A survey on obstacle modeling patterns in radio propagation
+  models for vehicular ad hoc networks. Arabian Journal for Science and
+  Engineering, 40, pp. 1385–1407. ⏎
+
+26. Dubey, B.B., Chauhan, N., Chand, N. and Awasthi, L.K., 2015. Analyzing
+  and reducing impact of dynamic obstacles in vehicular ad-hoc networks.
+  Wireless Networks, 21, pp. 1631–1645. ⏎
+
+27. Sommer, C., Joerer, S., Segata, M., Tonguz, O.K., Cigno, R.L. and Dressler,
+  F., 2014. How shadowing hurts vehicular communications and how dynamic
+  beaconing can help. IEEE Transactions on Mobile Computing, 14(7), pp.
+  1411–1421. ⏎
+
+28. Yan, T., Zhang, W. and Wang, G., 2014. A grid-based on-road localization
+  system in VANET with linear error propagation. IEEE Transactions on
+  Wireless Communications, 13(2), pp. 861–875. ⏎
+
+29. Alam, N., Balaei, A.T. and Dempster, A.G., 2012. Relative positioning
+  enhancement in VANETs: a tight integration approach. IEEE Transactions
+  on Intelligent Transportation Systems, 14(1), pp. 47–55. ⏎
+
+30. Yao, J., Balaei, A.T., Hassan, M., Alam, N. and Dempster, A.G., 2011.
+  Improving cooperative positioning for vehicular networks. IEEE
+  Transactions on Vehicular Technology, 60(6), pp. 2810–2823. ⏎
+
+31. Yang, F., Wang, S., Li, J., Liu, Z. and Sun, Q., 2014. An overview of internet
+  of vehicles. China Communications, 11(10), pp. 1–15. ⏎
+
+32. Corser, G.P., Fu, H. and Banihani, A., 2016. Evaluating location privacy in
+  vehicular communications and applications. IEEE Transactions on
+  Intelligent Transportation Systems, 17(9), pp. 2658–2667. ⏎
+
+33. Huang, X., Yu, R., Kang, J., Wang, N., Maharjan, S. and Zhang, Y., 2016.
+  Software defined networking with pseudonym systems for secure vehicular
+  clouds. IEEE Access, 4, pp. 3522–3534. ⏎
+
+34. Ying, B., Makrakis, D. and Mouftah, H.T., 2013. Dynamic mix-zone for
+  location privacy in vehicular networks. IEEE Communications Letters,
+  17(8), pp. 1524–1527. ⏎
+
+35. Monteiro, M.E.P., Rebelatto, J.L. and Souza, R.D., 2015. Information-
+  theoretic location verification system with directional antennas for vehicular
+  networks. IEEE Transactions on Intelligent Transportation Systems, 17(1),
+  pp. 93–103. ⏎
+
+36. Malandrino, F., Borgiattino, C., Casetti, C., Chiasserini, C.F., Fiore, M. and
+  Sadao, R., 2014. Verification and inference of positions in vehicular
+  networks through anonymous beaconing. IEEE Transactions on Mobile
+  Computing, 13(10), pp. 2415–2428. ⏎
+
+37. Fogue, M., Martinez, F.J., Garrido, P., Fiore, M., Chiasserini, C.F., Casetti,
+  C., Cano, J.C., Calafate, C.T. and Manzoni, P., 2014. Securing warning
+  message dissemination in VANETs using cooperative neighbor position
+  verification. IEEE Transactions on Vehicular Technology, 64(6), pp. 2538–
+  2550. ⏎
+
+38. Karthikeyan, G., Yugesh, M., Umamaheswari, S., Sivashanmathi, A. and
+  Kanna, K.N., 2023, June. Integration of a state-of-the-art waste management
+  tracking system. In 2023 2nd International Conference on Advancements in
+  Electrical, Electronics, Communication, Computing and Automation
+  (ICAECA) (pp. 1–6). IEEE, Coimbatore, India. ⏎
+
+39. Sharma, S. and Kaushik, B., 2019. A survey on internet of vehicles:
+  applications, security issues & solutions. Vehicular Communications, 20, p.
+  100182. ⏎
+
+40. Contreras, J., Zeadally, S. and Guerrero-Ibanez, J.A., 2017. Internet of
+  vehicles: architecture, protocols, and security. IEEE Internet Things of
+  Journal, 99, pp. 1–9. ⏎
+
+41. Fagnant, D.J. and Kockelman, K., 2015. Preparing a nation for autonomous
+  vehicles: opportunities, barriers and policy recommendations.
+  Transportation Research Part A: Policy and Practice, 77, pp. 167–181. ⏎
+
+42. Umamaheswari, S., Arun Kumar, S. and Sasikala, S., 2023. Expert systems
+  for improving the effectiveness of remote health monitoring in COVID-19
+  pandemic: a critical review. In Karrupusamy, P., Kalaiselvi, M., and Kumar,
+  R. (Eds.), System Design for Epidemics Using Machine Learning and Deep
+  Learning (pp. 99–121). Wiley-Scrivener Publishing, Hoboken, NJ. ⏎
+
+43. Kumari, S.M. and Geethanjali, N., 2010. A survey on shortest path routing
+  algorithms for public transport travel. Global Journal of Computer Science
+  and Technology, 9(5), pp. 73–76. ⏎
+
+44. Pinggera, P., Ramos, S., Gehrig, S., Franke, U., Rother, C. and Mester, R.,
+  2016, October. Lost and found: detecting small road hazards for self-driving
+  vehicles. In 2016 IEEE/RSJ International Conference on Intelligent Robots
+  and Systems (IROS) (pp. 1099–1106). IEEE, Daejeon, South Korea. ⏎
+
+45. Lu, H., Liu, Q., Tian, D., Li, Y., Kim, H. and Serikawa, S., 2019. The
+  cognitive internet of vehicles for autonomous driving. IEEE Network, 33(3),
+  pp. 65–73. ⏎
+46. Paul, A., Daniel, A., Ahmad, A. and Rho, S., 2015. Cooperative cognitive
+  intelligence for internet of vehicles. IEEE Systems Journal, 11(3), pp. 1249–
+  1258. ⏎
+
+47. Rawat, D.B., Alsabet, R., Bajracharya, C. and Song, M., 2018. On the
+  performance of cognitive internet-of-vehicles with unlicensed user-mobility
+  and licensed user-activity. Computer Networks, 137, pp. 98–106. ⏎
+
+48. Jadaan, K., Zeater, S. and Abukhalil, Y., 2017. Connected vehicles: an
+  innovative transport technology. Procedia Engineering, 187, pp. 641–648. ⏎
+
+49. Qian, Y., Jiang, Y., Hu, L., Hossain, M.S., Alrashoud, M. and Al-Hammadi,
+  M., 2020. Blockchain-based privacy-aware content caching in cognitive
+  internet of vehicles. IEEE network, 34(2), pp. 46–51. ⏎
+
+50. Ding, N., Meng, X., Xia, W., Wu, D., Xu, L. and Chen, B., 2019.
+  Multivehicle coordinated lane change strategy in the roundabout under
+  internet of vehicles based on game theory and cognitive computing. IEEE
+  Transactions on Industrial Informatics, 16(8), pp. 5435–5443. ⏎
+
+51. Ding, N., Meng, X., Xia, W., Wu, D., Xu, L. and Chen, B., 2019.
+  Multivehicle coordinated lane change strategy in the roundabout under
+  internet of vehicles based on game theory and cognitive computing. IEEE
+  Transactions on Industrial Informatics, 16(8), pp. 5435–5443. ⏎
+
+52. Lu, N., Cheng, N., Zhang, N., Shen, X. and Mark, J.W., 2014. Connected
+  vehicles: solutions and challenges. IEEE Internet of Things Journal, 1(4),
+  pp. 289–299. ⏎
+
+53. Sun, Y., Wu, L., Wu, S., Li, S., Zhang, T., Zhang, L., Xu, J. and Xiong, Y.,
+  2015, October. Security and privacy in the internet of vehicles. In 2015
+  International Conference on Identification, Information, and Knowledge in
+  the Internet of Things (IIKI) (pp. 116–121). IEEE, Beijing, China. ⏎
+
+54. Hou, X., Li, Y., Chen, M., Wu, D., Jin, D. and Chen, S., 2016. Vehicular fog
+  computing: a viewpoint of vehicles as the infrastructures. IEEE Transactions
+  on Vehicular Technology, 65(6), pp. 3860–3873. ⏎
+
+55. Yan, G., Rawat, D.B. and Bista, B.B., 2012, July. Towards secure vehicular
+  clouds. In 2012 Sixth International Conference on Complex, Intelligent, and
+  Software Intensive Systems (pp. 370–375). IEEE, Palermo, Italy. ⏎
+
+56. Kaiwartya, O., Abdullah, A.H., Cao, Y., Altameem, A., Prasad, M., Lin, C.T.
+  and Liu, X., 2016. Internet of vehicles: motivation, layered architecture,
+  network model, challenges, and future aspects. IEEE Access, 4, pp. 5356–
+  5373. ⏎
+57. Chen, M., Tian, Y., Fortino, G., Zhang, J. and Humar, I., 2018. Cognitive
+  internet of vehicles. Computer Communications, 120, pp. 58–70. ⏎
+
+58. Bhatia, J., Modi, Y., Tanwar, S. and Bhavsar, M., 2019. Software defined
+  vehicular networks: a comprehensive review. International Journal of
+  Communication Systems, 32(12), p. e4005. ⏎
+
+59. Joy, J. and Gerla, M., 2017, July. Internet of vehicles and autonomous
+  connected car-privacy and security issues. In 2017 26th International
+  Conference on Computer Communication and Networks (ICCCN) (pp. 1–9).
+  IEEE, Vancouver, Canada. ⏎
+
+60. Othmane, L.B., Weffers, H., Mohamad, M.M. and Wolf, M., 2015. A survey
+  of security and privacy in connected vehicles. In Wireless Sensor and Mobile
+  Ad-Hoc Networks: Vehicular and Space Applications (pp.217–247).
+  Springer, New York. ⏎
+
+61. Feng, S. and Haykin, S., 2019. Cognitive risk control for anti-jamming V2V
+  communications in autonomous vehicle networks. IEEE Transactions on
+  Vehicular Technology, 68(10), pp. 9920–9934 ⏎
+
+62. Chang, H. and Ning, N., 2021. An intelligent multimode clustering
+  mechanism using driving pattern recognition in cognitive internet of
+  vehicles. Sensors, 21(22), p. 7588. ⏎
+
+63. Ouamna, H., Madini, Z. and Zouine, Y., 2021, May. Optimization of a V2V
+  communication in cognitive radio context. In 2021 7th International
+  Conference on Optimization and Applications (ICOA) (pp. 1–6). IEEE,
+  Wolfenbüttel, Germany. ⏎
+
+64. Kamal, M., Srivastava, G. and Tariq, M., 2020. Blockchain-based
+  lightweight and secured v2v communication in the internet of vehicles. IEEE
+  Transactions on Intelligent Transportation Systems, 22(7), pp. 3997–4004.
+  ⏎
+
+65. Umamaheswari, S. and Rohini, R., 2023, June. A novel dual band slotted
+  PIFA antenna for vehicle to vehicle and vehicle to infrastructure
+  communication. In 2023 2nd International Conference on Advancements in
+  Electrical, Electronics, Communication, Computing and Automation
+  (ICAECA) (pp. 1–5). IEEE, Coimbatore, India. ⏎
+
+66. He, Y., Wang, D., Huang, F., Zhang, R., Gu, X. and Pan, J., 2023. A V2I and
+  V2V collaboration framework to support emergency communications in
+  ABS-aided Internet of Vehicles. IEEE Transactions on Green
+  Communications and Networking, 7(4), pp. 2038–2051. ⏎
+67. Mekala, M.S., Dhiman, G., Patan, R., Kallam, S., Ramana, K., Yadav, K. and
+  Alharbi, A.O., 2022. Deep learning‐influenced joint vehicle‐to‐infrastructure
+  and vehicle‐to‐vehicle communication approach for internet of vehicles.
+  Expert Systems, 39(5), p. e12815. ⏎
+
+68. Wang, D., Zhang, Q., Liu, J. and Yao, D., 2019. A novel QoS-awared grid
+  routing protocol in the sensing layer of Internet of vehicles based on
+  reinforcement learning. IEEE Access, 7, pp. 185730–185739. ⏎
+
+69. Kumar, P.M., Manogaran, G., Sundarasekar, R., Chilamkurti, N. and
+  Varatharajan, R., 2018. Ant colony optimization algorithm with internet of
+  vehicles for intelligent traffic control system. Computer Networks, 144, pp.
+  154–162. ⏎
+
+70. Siegel, J.E., 2016. Data proxies, the cognitive layer, and application locality:
+  enablers of cloud-connected vehicles and next-generation internet of things
+  (Doctoral dissertation, Massachusetts Institute of Technology). ⏎
+
+71. Foteinos, V., Kelaidonis, D., Poulios, G., Vlacheas, P., Stavroulaki, V. and
+  Demestichas, P., 2013. Cognitive management for the internet of things: a
+  framework for enabling autonomous applications. IEEE Vehicular
+  Technology Magazine, 8(4), pp. 90–99. ⏎
+
+72. Yao, Z., Wu, S. and Wen, Y., 2019. Formation generation for multiple
+  unmanned vehicles using multi-agent hybrid social cognitive optimization
+  based on the internet of things. Sensors, 19(7), p. 1600. ⏎
+
+73. Mahmood, Z., 2020. Connected Vehicles in the Internet of Things. Springer
+  Nature SwitzerlandAG, Cham, Switzerland. ⏎
+
+74. Li, F., Lam, K.Y., Ni, Z., Niyato, D., Liu, X. and Wang, L., 2021. Cognitive
+  carrier resource optimization for internet-of-vehicles in 5G-enhanced smart
+  cities. IEEE Network, 36(1), pp. 174–180. ⏎
+
+75. Kombate, D., 2016, December. The Internet of vehicles based on 5G
+  communications. In 2016 IEEE International Conference on Internet of
+  Things (iThings) and IEEE Green Computing and Communications
+  (GreenCom) and IEEE Cyber, Physical and Social Computing (CPSCom)
+  and IEEE Smart Data (SmartData) (pp. 445–448). IEEE, Chengdu, China.
+  ⏎
+
+76. Mumtaz, S., Huq, K.M.S., Ashraf, M.I., Rodriguez, J., Monteiro, V. and
+  Politis, C., 2015. Cognitive vehicular communication for 5G. IEEE
+  Communications Magazine, 53(7), pp. 109–117. ⏎
+
+77. Almutairi, M.S., 2022. Deep learning-based solutions for 5G network and
+  5G-enabled Internet of vehicles: advances, meta-data analysis, and future
+  direction. Mathematical Problems in Engineering, 2022, pp. 1–27. ⏎
+
+78. Wan, S., Gu, R., Umer, T., Salah, K. and Xu, X., 2020. Toward offloading
+  internet of vehicles applications in 5G networks. IEEE Transactions on
+  Intelligent Transportation Systems, 22(7), pp. 4151–4159. ⏎
+
+79. Ning, Z., Zhang, K., Wang, X., Obaidat, M.S., Guo, L., Hu, X., Hu, B., Guo,
+  Y., Sadoun, B. and Kwok, R.Y., 2020. Joint computing and caching in 5G-
+  envisioned Internet of vehicles: a deep reinforcement learning-based traffic
+  control system. IEEE Transactions on Intelligent Transportation Systems,
+  22(8), pp. 5201–5212. ⏎
+
+80. Priya, K.H. and Umamaheswari, S., 2023, June. Next generation optimized
+  patch antenna for 5G applications. In 2023 2nd International Conference on
+  Advancements in Electrical, Electronics, Communication, Computing and
+  Automation (ICAECA) (pp. 1–5). IEEE, Coimbatore, India. ⏎
+
+81. Peter, D., Alavi, A., Javadi, B. and Fernandes, S.L. eds., 2020. The Cognitive
+  Approach in Cloud Computing and Internet of Things Technologies for
+  Surveillance Tracking Systems. Academic Press, Cambridge, Massachusetts,
+  USA. ⏎
+
+82. Sharma, S., Awan, M.B. and Mohan, S., 2017, December. Cloud enabled
+  cognitive radio adhoc vehicular networking (CRAVENET) with security
+  aware resource management and internet of vehicles (IoV) applications. In
+  2017 IEEE International Conference on Advanced Networks and
+  Telecommunications Systems (ANTS) (pp. 1–6). IEEE, Bhubaneswar, India.
+  ⏎
+
+83. Xu, X., Gu, R., Dai, F., Qi, L. and Wan, S., 2020. Multi-objective
+  computation offloading for internet of vehicles in cloud-edge computing.
+  Wireless Networks, 26, pp. 1611–1629. ⏎
+
+84. Chen, M. and Leung, V.C., 2018. From cloud-based communications to
+  cognition-based communications: a computing perspective. Computer
+  Communications, 128, pp. 74–79. ⏎
+
+85. Ning, Z., Zhang, K., Wang, X., Guo, L., Hu, X., Huang, J., Hu, B. and
+  Kwok, R.Y., 2020. Intelligent edge computing in internet of vehicles: a joint
+  computation offloading and caching solution. IEEE Transactions on
+  Intelligent Transportation Systems, 22(4), pp. 2212–2225. ⏎
+
+86. Dai, Y., Xu, D., Maharjan, S., Qiao, G. and Zhang, Y., 2019. Artificial
+  intelligence empowered edge computing and caching for internet of vehicles.
+  IEEE Wireless Communications, 26(3), pp. 12–18. ⏎
+87. Wang, K., Wang, X., Liu, X. and Jolfaei, A., 2020. Task offloading strategy
+  based on reinforcement learning computing in edge computing architecture
+  of internet of vehicles. IEEE Access, 8, pp. 173779–173789. ⏎
+
+88. Zhao, J., Sun, X., Li, Q. and Ma, X., 2020. Edge caching and computation
+  management for real-time internet of vehicles: an online and distributed
+  approach. IEEE Transactions on Intelligent Transportation Systems, 22(4),
+  pp. 2183–2197. ⏎
+
+89. Xu, X., Xue, Y., Qi, L., Yuan, Y., Zhang, X., Umer, T. and Wan, S., 2019. An
+  edge computing-enabled computation offloading method with privacy
+  preservation for internet of connected vehicles. Future Generation Computer
+  Systems, 96, pp. 89–100. ⏎
+
+90. Tragos, E.Z. and Angelakis, V., 2013, June. Cognitive radio inspired M2M
+  communications. In 2013 16th International Symposium on Wireless
+  Personal Multimedia Communications (WPMC) (pp. 1–5). IEEE, Atlantic
+  City, NJ, USA. ⏎
+
+91. Ding, F., Su, R., Tong, E., Zhang, D., Zhu, H. and Ismail, M.W.M., 2018.
+  Toward a M2M-based Internet of vehicles framework for wireless
+  monitoring applications. IEEE Access, 6, pp. 67699–67708. ⏎
+
+92. Zhang, Y., Yu, R., Nekovee, M., Liu, Y., Xie, S. and Gjessing, S., 2012.
+  Cognitive machine-to-machine communications: visions and potentials for
+  the smart grid. IEEE Network, 26(3), pp. 6–13. ⏎
+
+93. Rawat, P., Singh, K.D. and Bonnin, J.M., 2016. Cognitive radio for M2M
+  and internet of things: a survey. Computer Communications, 94, pp. 1–29. ⏎
+
+94. Wan, S., Li, X., Xue, Y., Lin, W. and Xu, X., 2020. Efficient computation
+  offloading for Internet of Vehicles in edge computing-assisted 5G networks.
+  The Journal of Supercomputing, 76, pp. 2518–2547. ⏎
+
+95. Zhou, P., Shen, K., Kumar, N., Zhang, Y., Hassan, M.M. and Hwang, K.,
+  2020. Communication-efficient offloading for mobile-edge computing in 5G
+  heterogeneous networks. IEEE Internet of Things Journal, 8(13), pp. 10237–
+  10247. ⏎
+
+96. Gao, J., Agyekum, K.O.B.O., Sifah, E.B., Acheampong, K.N., Xia, Q., Du,
+  X., Guizani, M. and Xia, H., 2019. A blockchain-SDN-enabled Internet of
+  vehicles environment for fog computing and 5G networks. IEEE Internet of
+  Things Journal, 7(5), pp. 4278–4291. ⏎
+
+97. Luo, G., Yuan, Q., Zhou, H., Cheng, N., Liu, Z., Yang, F. and Shen, X.S.,
+  2018. Cooperative vehicular content distribution in edge computing assisted
+  5G-VANET. China communications, 15(7), pp. 1–17. ⏎
+Index
+
+Note: Bold page numbers refer to tables and italic page numbers refer to
+figures.
+
+  accident management 28
+  actuator faults 111
+  adaptive mesh refinement (AMR) 80
+  adaptive traffic signal systems (ATSS) 47
+  advanced driver-assistance systems (ADAS) 131
+  advanced traffic management systems (ATMS)
+
+  ATSS 47
+  real-time traffic monitoring and control 46–47
+  traffic prediction systems 47
+  alerts 19
+  anomaly-based detection 19
+  anonymity challenges 28
+  anonymization 21–22
+  challenges and limitations 22–23
+  artificial intelligence (AI) 37–38
+  algorithm 24
+  autonomous driving 38
+  ML and, integration of 131, 132
+  predictive analytics 38
+  traffic management 38
+  authentication 20
+  driver 18
+  security measures in IoV 17
+  V2V and V2I 18
+  V2X communication 20
+  automated blocking 19
+  automatic toll collection systems 41
+  autonomous driving 38
+  autonomous vehicles (AVs) 128–129
+  blockchain, integration of
+  considerations in application 28
+  self-driving technology 27
+  telematics 28
+  challenges 130
+
+Bayesian-based calibration methodology 86–87
+Bayesian inference 113
+behavior-based detection 19
+behavior-based prevention 19
+big data
+
+  challenges 28
+  and real-time analytics
+
+  data analysis 42
+  data collection and storage 41–42
+blockchain technology 24
+  BC-based IoV 29, 29–30
+  data layer 27
+  decentralized ledger technology 26–27
+  autonomous vehicles 27–28
+brand image 14
+bus rapid transit (BRT) 134
+
+call and messaging data 12
+cellular vehicle-to-everything (C-V2X) 4, 6
+CityVerve project 1
+cloud services 12, 17
+cognitive computing technologies 36–37, 37
+
+  AI 37–38
+  autonomous driving 38
+  predictive analytics 38
+  traffic management 38
+
+  ATMS see advanced traffic management systems (ATMS)
+  big data and real-time analytics
+
+  data analysis 42
+  data collection and storage 41–42
+  challenges and considerations
+  data security and privacy rule 49
+  moral issues 49
+  technology and operations, difficulties with 49
+  cognitive computing technologies see cognitive computing
+  technologies
+  future directions and innovations 50
+  interconnections and applications 40
+  IoT
+  public transportation 41
+  smart sensors 40–41
+  V2X communication 41
+  ITS see intelligent transportation systems (ITS)
+  in ITS 45
+  ML
+  anomaly detection 39
+  demand forecasting 39
+  route optimisation 39
+  predictive maintenance 47
+  data analytics for mapping 48
+  IoT and sensor integration 48
+  resources, advantages and efficient use 48
+  transportation sector 35–36
+cognitive internet of things (CIoT) 139–140
+  architectural layers 140–141, 141
+  features of 140
+cognitive internet of vehicles (CIoV) 139, 141, 146–147
+  architecture and security challenges 147, 148, 148–149
+  communication technologies 147–150, 149–150
+  computing paradigm 146
+  evolution 142
+  5G-enabled 147
+  5G integration with fog/edge computing 150–151, 153
+  edge nodes 150–151
+  VANETs 151
+  future directions 152
+  IoV 142
+  communication protocols and standards 144
+  elements 143–144
+  ITS 142–143
+  pre-requesteries and challenges 143
+  research challenges 144–145
+  self-driving technology 145–146
+  VANET 143
+  security 152
+communication errors 111
+communication network risks 11
+compact urban design 133
+compliance with regulations 23
+connected and autonomous vehicle (CAV) integration 133
+connected car technology 130
+control system toolbox 109
+cooperative intelligent transport systems (C-ITS) protocols 7
+credentials protection 16, 18
+customer loyalty 15
+cyberattacks, resilience to 3
+cybersecurity threats
+  IoV 10–11
+  smart transportation 8–9
+
+data
+  breaches 11, 13
+  call and message 12
+  eavesdropping 9
+  excessive collection 12
+  extended retention 13
+  integrity 3
+  IoV data processing and analytic 4
+  location 12
+  manipulation and misuse 15
+  misuse 14
+  privacy concerns 10
+  sharing
+  and collaboration 3
+  opaque data sharing practices 13
+  with third parties 13
+  in transit 15
+data-driven fault detection techniques 108
+decentralized identifier (DID) 28
+dedicated short-range communications (DSRC) 4
+denial-of-service (DoS) 9
+digital signatures 18
+DI Pulse combustion model 64–65
+drivers
+
+  authentication 18
+  behavior 12
+dynamic masking 22
+dynamic thresholding 124
+
+edge computing 24, 150–151
+education and awareness 23–24
+electric vehicles (EVs) 128, 129
+
+  challenges 130
+  cost barriers 130
+electronic toll collection (ETC) 44–45
+encryption 10, 22
+  end-to-end 20
+  privacy concerns in IoV 15–16
+  security measures in IoV 17
+  V2X communication 20
+end-to-end encryption 20
+enhanced data encryption 24
+enhanced security 18
+experiments, fault detection and tolerance
+  result and analysis
+
+  acceleration data analysis 124
+  acceleration data visualization 122
+  correlation insights 124
+  fault detection visualization 122, 123
+  faulty interactions 124
+  force data analysis: force distribution 122
+  force data visualization 121
+  histogram for force distribution 122, 123
+  interpretation of results 122, 124
+  normal interactions 124
+  output of experiment 120
+  setup and MATLAB implementation
+  data acquisition 119
+  data processing and pre-processing 119
+  fault detection & tolerance 120
+  output of experiment 120
+  visualization and analysis 120
+explicit consent 23
+
+fault detection 124–125
+  data-driven fault detection
+  described 112
+  MATLAB implementation 113
+  in dynamic control 108–109
+  experiments see experiments, fault detection and tolerance
+  human factors in 118
+  human-machine interaction 107–108
+  integration with human feedback during 118–119
+  filtering and interpretation 119
+  real-time processing 119
+  relevance 118
+  user experience 119
+  variability 118–119
+  MATLAB ® tools and libraries 109
+  model-based method 111
+  MATLAB implementation 112
+  sensor fusion techniques
+  MATLAB implementation 114
+  sensor data 113
+  user-centered design principles 118
+
+faults
+  detection see fault detection
+  fault see fault tolerance
+  human-machine interaction
+  classification 110–111
+  detection and tolerance, importance of 107–108
+  impact on control performance and safety 111
+fault tolerance 124–125
+  in dynamic control 108–109
+  experiments see experiments, fault detection and tolerance
+  human factors in 118
+  human-machine interaction 107–108
+  integration with human feedback during 118–119
+  filtering and interpretation 119
+  real-time processing 119
+  relevance 118
+  user experience 119
+  variability 118–119
+  MATLAB ® tools and libraries 109
+  strategies
+  fault isolation and identification 115, 115–116
+  reconfiguration of control strategies 116
+  redundancy and backup systems 117
+  user-centered design principles 118
+finite element analysis (FEA) 84–85
+  boundary conditions for FE thermal analysis 85–87
+  3-D CFD and FEA co-simulation 87–91
+  3-D FEA 84–85
+firewalls
+  collaboration with 20
+  and intrusion detection/prevention systems 21
+5G in CIoV
+  5G-enabled 147
+  integration with fog/edge computing
+  edge nodes (ENs) 150–151
+  VANETs 151
+5G Network Integration 127
+fog computing 150–151
+Fourier’s law 56
+
+geolocation privacy 16, 17
+Google Lens app 37
+government surveillance 13
+GPS spoofing 9
+granular consent options 23
+greener cities 134
+grid convergence study
+
+  AMR 80
+  cut section of heavy-duty diesel engine at TDC 80–81, 81
+  cylinder pressures and gross heat release rates 81, 82
+GT-Suite
+  multi-physics ICE simulation see multi-physics ICE simulation
+  reduced-order piston thermal analysis 60
+
+hacking 10
+hashing 22
+health and well-being 12
+high-fidelity ICE simulations
+
+  FEA see finite element analysis (FEA)
+  injection parameter sensitivity
+
+  pressure, injection 92–94, 94, 95–96
+  timing, injection 91–92, 93, 94
+  reduced-order model calibration with data 97–99
+  combustion chamber-average heat transfer coefficients 97
+  combustion chamber surface heat fluxes 98
+  near-wall gas temperatures 98
+  3-D CFD see three-dimensional computational fluid dynamics (3-
+  D CFD)
+homogeneous charge compression ignition (HCCI) 100
+host-based IDS (HIDS) 19
+host-based IPS (HIPS) 19
+human-centered approaches 109
+human-in-the-loop simulations 109
+human-machine interaction
+  and control, previous research in 109
+  dynamic control
+  challenges in maintaining control and stability 110
+  described 109
+  faults
+  classification 110–111
+  detection and tolerance, importance of 107–108
+  impact on control performance and safety 111
+  interface and 118
+
+identity
+  spoofing 9
+  theft and fraud 14
+
+individual privacy concerns 14
+informed consent, lack of 13
+infotainment systems 12
+infrastructure authentication 20
+infrastructure vulnerabilities 10
+insecure transmission 13
+intelligent transportation systems (ITS) 1, 42, 142–143
+
+  case studies
+  London’s congestion charging scheme 46
+  Singapore’s electronic road pricing system 45–46
+  Stockholm’s congestion tax 46
+
+  cognitive computing 45
+  ETC 44–45
+  infrastructures 43
+  public transportation systems 44
+  TMS 43–44
+  V2X communication 44
+internal access controls 16
+internal combustion engines (ICEs) 53–54, 102
+  computational expense 94–96
+  high-fidelity simulations
+
+  finite element analysis 84–87
+  injection parameter sensitivity 91–94
+  reduced-order model calibration with data 97–98, 97–99
+  3-D CFD 76–84
+  3D CFD and FEA co-simulation 87–91
+  multi-physics simulation 60–61, 102
+  combustion model 62–67
+  system-level effects of TBCs 72–76
+  TBCs application 71–72
+  thermal model 67–70
+  valve model 61, 62
+  numerical tools for assessing future
+  gross heat release rates 101
+  HCCI 100
+  MI/AI 102
+  novel combustion processes 100
+  soot and NOx tradeoff exists 99–100
+  3-D CFD 100–101, 101
+  reduced-order models
+  high-fidelity simulation data, calibration with 97–98, 97–99
+  one-dimensional model 56–58
+  reduced-order piston thermal analysis 58–60
+  zero-dimensional model 55–56, 56
+internet of things (IoT) 2, 127, 130, 138, 139
+  cognitive see cognitive internet of things (CIoT)
+  public transportation 41
+  smart sensors 40–41
+  V2X communication 41
+internet of vehicles (IoV) 138, 142
+  advantages 2
+  architecture 4, 5
+  blockchain technology see blockchain technology
+  communication 6
+  C-ITS protocols 7
+  C-V2X 4, 6
+  DSRC 4
+  MQTT 6
+  V2I protocols 6
+  V2X 7
+  Wi-Fi (IEEE 802.11p) 6
+  communication protocols and standards 144
+  cybersecurity threats in smart transportation 8–9
+  described 1
+  elements 143–144
+  ethical implications 25–26
+  framework 1
+  future vision and challenges 24–26
+  ITS 142–143
+  pre-requesteries and challenges 143
+  privacy concerns see privacy concerns, in IoV
+  research challenges 144–145
+  security and privacy
+
+  measures 25
+  societal concerns, balancing 26
+  self-driving technology 145–146
+  threat landscape
+  attacks on infrastructure and communication see IoV
+  infrastructure and communication, attacks on
+  authentication 7
+  control of access 8
+  cybersecurity threats in smart transportation 8–9
+  enforcing policies 8
+  middleware used to be secure 8
+  preservation of trust 8
+  protection of privacy 8
+  reliability 7
+  security protocols 8
+  V2X communication 7
+  VANET 143
+inter-vehicle attacks 9
+intra-vehicle attacks 10
+intrusion detection systems (IDS) 10, 18–20
+intrusion prevention systems (IPS) 18–20
+IoV-enabled intelligent transportation systems 1
+IoV infrastructure and communication, attacks on
+  inter-vehicle 9
+  intra-vehicle 10
+  risks associated with connected vehicles
+  cybersecurity threats 10–11
+  infrastructure vulnerabilities 11
+  privacy concerns 11
+  regulatory and legal challenges 11
+  safety risks 11
+  threats, other 10
+
+Kalman filters/filtering 113, 114
+key distribution 20
+key rotation 20
+
+large eddy simulations (LES) 79
+  URANS vs. 79, 79–80
+
+legal and regulatory compliance 3
+legal liability 14
+legal protections 13
+liability
+
+  issues 11
+  legal 14
+locations
+  inference 13
+  tracking 11, 14
+logs 19
+London’s congestion charging scheme 46
+
+machine learning (ML)
+  AI and, integration of 131, 132
+  algorithm 24
+  anomaly detection 39
+  demand forecasting 39
+  route optimisation 39
+  and signal processing libraries 109
+
+malicious control 11
+man-in-the-middle attacks 10, 16
+MATLAB implementation
+
+  data-driven fault detection 113
+  and experimental setup
+
+  data acquisition 119
+  data processing and pre-processing 119
+  fault detection and tolerance 120
+  output of experiment 120
+  visualization and analysis 120
+  fault isolation and identification 115, 115–116
+  model-based fault detection methods 112
+  reconfiguration of control strategies 116
+  redundancy and backup systems 117
+  sensor fusion techniques 114
+MATLAB® Simulink 109
+message integrity 18
+message queuing telemetry transport (MQTT) 6
+minimal data collection 21
+mixed-use development 133
+mobile app communication 17
+model-based fault detection techniques 108
+multi-factor authentication (MFA) 18
+multimodal sensor integration 124
+multi-physics ICE simulation 58, 60–61, 102
+  combustion model
+
+  non-predictive 62–63, 63
+  predictive 64–67
+  semi-predictive 64
+  manifold dynamics 74–76
+  mass flow rates predicted by GT-Suite 75
+  pressure fluctuations in intake and exhaust 74, 74, 75
+  TBCs
+  application 71–72
+  system-level effects of 72–76
+  thermal model 67–70
+  internal wall temperatures 69
+  2-D views of the combustion chamber component
+  temperatures 70
+  valve model 61, 62
+
+natural language processing (NLP) 37
+network-based IDS (NIDS) 19
+network-based IPS (NIPS) 19
+network security 21
+Newton’s cooling formula 85
+

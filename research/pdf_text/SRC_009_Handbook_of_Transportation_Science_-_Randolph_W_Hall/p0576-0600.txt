@@ -1,0 +1,922 @@
+Supply Chains  577
+
+for consolidating shipments sent between metropolitan areas. Large metropolitan
+areas, such as Los Angeles, provide multiple gateways, though a single large gateway
+provides a richer set of routing options. This leads to the set of routing choices
+illustrated in Figure 15.8).
+
+  Shipment can be routed through either a minor gateway or a more distant, but
+  larger, gateway.
+  If the shipment travels via the minor gateway, it can either be routed through a
+  national hub or possibly a regional hub.
+  If the shipment travels via the major gateway, a direct route may be provided to
+  a major gateway in the vicinity of the destination, reducing longhaul travel
+  distance, eliminating a handling step, and compensating for longer local
+  distances.
+578  Handbook of Transportation Science
+
+It should be evident that the best route for any given origin destination pair depends
+on how other freight is routed, creating a highly interdependent optimization
+problem.
+
+  Timing is an important factor in the design of both wide and local area networks.
+Deliveries typically occur in the morning, pickups in the afternoon, and terminal-to-
+terminal operations in the evening, when businesses are closed. Whereas local
+stations are positioned to facilitate direct access to customers, gateways and hubs are
+less restricted, and in some instances can be situated outside of metropolitan areas. If
+next day deliveries are desired, aircraft may be used for some terminal routes, and the
+entire system will be choreographed to enable quick transfer between vehicles and
+tightly scheduled routes.
+
+Peer Structure A terminal is considered a peer if it falls at the same level in a
+hierarchy as another terminal. In Figure 15.9, regional terminals are peers. Local
+terminals, within the same region, are also peers. In a pure hierarchy, direct routes
+must strictly follow the diagram, having the structure of a tree. However, it is often
+advantageous to permit routes between peer terminals, or permit routes that cross
+regional boundaries. In addition, the top echelon of the hierarchy may have multiple
+terminals, in which case some peer-to-peer routing may be needed to complete
+deliveries.
+
+  Figure 15.10 provides an example of a “two-terminal” structure, meaning that
+shipments visit two peer terminals at the top echelon (Hall, 1987b). Figure 15.11
+provides an example of a “one-terminal” structure, meaning that shipments visit one
+terminal at the top echelon, but cross regional boundaries. The two terminal structure
+is advantageous for widely distributed origins and destinations with symmetrical flow
+patterns (i.e., the number of origins is comparable to the number of destinations, as in
+for-hire networks). The one terminal structure can be advantageous with
+asymmetrical flow patterns, as can occur in manufacturer supply and distribution
+Supply Chains  579
+
+networks. The decision of one pattern or another often rests on the number of routes
+required to connect the network, which depends on the number of origins and
+destinations served, along with the importance of minimizing travel distances through
+provision of extra terminals and more direct routes.
+580  Handbook of Transportation Science
+
+Multi-hop Network: In a multi-hop network, shipments are transported between
+terminals in steps (or hops), with some level of sorting occurring at each step along
+the way. Because handling and processing occurs multiple times, multi-hop is most
+viable when shipments are transported in large containers, which are not opened at
+intermediate stops. An example would be a rail network, where trains travel from
+classification yard to classification yard and only rail cars are sorted (not their
+contents). Multi-hop networks have also been used in regional trucking networks,
+where the majority of shipments are traveling short distances (hence, most shipments
+are not handled many times). Multi-hop is advantageous from the perspective of
+keeping driver route lengths shorts, so that they return home in a reasonable time, and
+from the perspective of minimizing the number of routes emanating from each
+terminal.
+
+  In a multi-hop network, each terminal is connected to its adjacent peers by a
+direct route. Each of these peers can than act as a consolidator for shipments
+traveling to more distant destinations, in the general direction of the adjacent peer
+(Figure 15.12). Because only a small number of routes is needed from each terminal,
+consolidation levels are high. The disadvantage is that shipments must be re-handled
+at each terminal, which is impractical if shipments travel very long distances.
+Supply Chains  581
+582  Handbook of Transportation Science
+
+Vehicular Consolidation Strategies
+
+Like terminals, vehicles can consolidate shipments traveling between multiple
+locations, but their capabilities are limited (Daganzo, 1987a, 1988). Whereas a
+terminal can quite readily group shipments among widely dispersed origins and
+destinations, vehicles are limited by the distance that they can travel in a reasonable
+tour – often no more than a driver can cover in a day. Also, vehicles are not designed
+to facilitate shipment sorting, which makes it difficult to mix pick-ups and deliveries
+on the same tour. For these reasons, vehicular consolidation is typically limited to
+tours that begin an end at a terminal, distributor, warehouse or factory (Hall, 1995a).
+
+  It should be kept in mind that a stop on a vehicle tour may either be a shipment
+origin or destination, or it may be a terminal. Thus, it is possible to connect terminals
+to each other with multi-stop tours. Nevertheless, the primary application of
+vehicular consolidation is in pickups from shipment origins and delivery to shipment
+destinations. This is because terminal networks are designed to provide sufficient
+consolidation to make it economical for direct connections among terminals. If flows
+are insufficient to permit direct connections, it is often advantageous to eliminate
+some of the terminals, or change the terminal hierarchy or peer structure in a manner
+that makes direct connections feasible.
+
+Pickup or Delivery: A common form of tour – especially among private carriers --
+is the pure pick-up or pure delivery route. The pure pick-up route (many-to-one),
+also called a collection route, may be used to bring supplies into a major production
+facility. Somewhat more common, the pure delivery route (one-to-many) may be
+used to distribute products to retailers or consumers (e.g., food deliveries to grocers,
+appliance deliveries to consumers). The latter is more prominent because supply
+chains have a tendency to expand at lower levels. This is most obviously true at the
+bottom level of the chain, as there are many more consumers than there are retailers,
+distributors, manufacturers, or raw material sources. Thus, with more points for
+delivery than pick-up, one-to many routes are more prominent than many-to-one.
+
+  In the absence of sequencing and timing restrictions (e.g., time windows), pure
+pickup or delivery routes are structured like Figure 15.13. The service region is
+partitioned into districts, each with sufficient work to fill a vehicle or workshift, and
+each district is served by a loop. Vehicles travel from a single node (e.g., a terminal,
+warehouse or factory) to multiple stops located in a district. The route consists of a
+line-haul portion (to and from the district) and a local portion (within the district;
+Daganzo 1984a, 1984b).
+Supply Chains  583
+
+Pickup and-Delivery/Common Node: Another common route type provides both
+pickup and delivery out of a single node, or location (Daganzo and Hall, 1993). For-
+hire carriers routinely operate in this manner out of their local terminals. Most
+commonly, deliveries and pick-ups occur in different parts or the day, the former in
+the morning and the latter in the afternoon. This approach coincides with natural
+work patterns, as deliveries are desired as early in the day as possible, whereas pick-
+ups are desired as late as possible, to provide as much work time as possible before
+fulfilling orders. A partition of pickups and deliveries is also desirable from the
+standpoint of shipment handling, as vehicles can be totally unloaded of deliveries
+prior to filling the space with pick-ups. In reality, some amount of intermixing of
+pick-ups and deliveries may occur, but only to a limited degree. Because supply
+chains have a tendency to expand at lower levels, mixed pick-up/delivery routes tend
+to make more deliveries than pick-ups, and also devote a greater portion of their day
+to deliveries than to pick-ups.
+
+  In the absence of sequencing and timing restrictions, mixed pickup and delivery
+routes are structured like Figure 15.14. The service region is partitioned into pickup
+districts and delivery districts. A loop is formed by pairing a delivery district with a
+pickup district, which are connected with a “deadhead” segment (empty travel). In
+some instances (e.g., when pickups and deliveries naturally occur in the same area)
+the pickup and delivery districts coincide, in which case the deadhead segment is
+eliminated.
+584  Handbook of Transportation Science
+
+Multiple Node Pickup or Delivery: In a multiple node route, a route may begin in
+the vicinity of one node (or terminal) and end in the vicinity of another. To complete
+a tour, the route may be paired with a “backhaul” route, which ends up in the vicinity
+of the original node. Or, in more complicated networks, routes may be combined
+into longer tours rooted from three or more nodes. The process reduces the empty
+mileage returning to a facility. A fundamental characteristic of such a network is that
+each node serves large regions, which encompass other nodes. This may occur, for
+instance, in manufacturer networks, where each node represents a manufacturing
+plant specializing in a particular product line. It is unlikely to occur in a for-hire
+transportation network, as each node (a terminal), would be assigned a unique, and
+non-intersecting, service territory.
+
+  Route structure depends on region, as illustrated in Figure 15.15 (Hall, 1991a).
+Loads delivered in the vicinity of a home terminal have a two-way, out-and-back,
+structure, like the pure pickup or pure delivery route in Figure 15.13. Loads
+delivered in the vicinity of another node (falling outside the “backhaul boundary” of
+a terminal) can either have a one-way orientation or a two-way orientation, according
+to the illustrated boundaries (one-way in the center, two-way in the periphery). In
+Euclidean space, a two-way territory is aligned along the boundary of an ellipse,
+having the two terminals as foci. A one-way territory is aligned perpendicular to the
+ellipse. The backhaul boundary is determined by solving the classic transportation
+problem. In Euclidean space, the boundary has a hyperbolic shape, with foci
+corresponding to the terminals (Hall, 1989b). In the case of multiple node networks
+(3 or more), boundaries are created from hyperbolic segments, again defined by
+solutions to transportation problems.
+Supply Chains  585
+
+General Pickup and Delivery: General intermixing of pickups and deliveries is rare
+for several reasons. First, shipment travel distances are usually too long to make it
+practical for a single route to provide the entire transportation service – both pickup
+and delivery (Daganzo, 1987a, 1988). Second, it is difficult to fully utilize a
+vehicle’s capacity, because new pick-ups can block access to upcoming deliveries.
+Third, intermixing forces the driver to sort shipments while in route. Without access
+to specialized sorting equipment, as can be constructed in terminals, the process is
+highly labor intensive. Last, shipments often need to be brought to a facility for
+processing and billing purposes.
+
+  Mixed pick-up and delivery is used by courier services, where shipments travel
+relatively short distances (up to about 50 miles), and shipments must be delivered
+within hours of a request. In such instances, the courier rarely carries more than a
+few shipments at a time, and operates something like a taxi service. These systems
+tend to be highly dynamic and unstructured. In some cases a small number of origins
+in close proximity may be paired with a small number of destinations -- in close
+proximity to each other, yet far from the origins -- to create a general pickup and
+delivery tour. This has the natural advantage of circumventing terminal handling, but
+practical applications are rare, as location patterns tend not to follow this structure.
+586  Handbook of Transportation Science
+
+scheduled tour, and is fed by multiple pickup and delivery routes (Kahmoun and
+Hall, 1996b). The backbone then operates as a sort of virtual terminal, connecting
+many locations. However, its practical application is limited to metropolitan regions;
+otherwise travel time delays become excessive. Mass transit systems frequently
+adopt this structure, with rail lines serving as the backbone and bus lines serving as
+the feeder system.
+
+  This discussion has assumed that vehicle routes can be characterized by
+geographic partitions of service regions into route territories. In reality, routes may
+be overlapping, for several reasons:
+
+  Deliveries or pick-ups must occur within designated time windows, which
+  may be better served by a vehicle from outside a normal territory, or by
+  establishing time-dependent territories (Chapter 12; Daganzo, 1987b).
+  Requests for service occur by a dynamic or random process, forcing areas to
+  be repeatedly served throughout the day (Hall, 1996).
+  Vehicles must cross into other territories to obtain shipments that fit within
+  available vehicle space, thus maximizing capacity utilization (Hall and
+  Daganzo, 1985; Hall, 1989d; Hall, 1994).
+Supply Chains  587
+
+  To maximize utilization of driver time, vehicles cross into other territories
+  to complete a stop with a desired duration, fitting within available workshift
+  time.
+  Inventory management at stops necessitates serving stops at particular times.
+  (Ukovich et al, 1998).
+  Driver learning makes it desirable to permanently assign some locations to a
+  fixed route, while other locations are reassigned daily to balance loads
+  (Zhong, 2002).
+
+  There are naturally many more variations on vehicle routing; interested readers
+should refer to Chapters 12 to 14.
+
+15.4 Optimizing Trade-offs in Logistics Costs
+
+  In Chapter 5, the models presented for dispatching optimize one type on
+consolidation trade-off: the balance between waiting cost and transportation cost
+when shipping on a single link of a network. At a strategic level, it is important to
+consider more than one transportation link, and to optimize the total logistics costs of
+a system. By total logistics costs, we mean those costs that are related to the
+movement of goods between locations in the supply chain, including the following:
+
+Inventory and Delay: These are functions of the frequency of service on
+transportation routes (see Chapter 5) and the time duration of transportation routes.
+
+Pickup and Delivery Routes: Initial and final routes that serve shipment origins
+and destinations, depending on the number of stops per route and the length of these
+routes.
+
+Terminal Routes: Routes that connect terminals to each other, depending on the
+length of number of routes needed to connect the network.
+
+Terminals: The number and size of terminals that need to be established and
+operated.
+
+As discussed in the prior sections, there are many ways to configure a distribution
+network. The best network for any given situation is the one that optimizes the
+balance between these costs while providing the desired level of service.
+
+Distance Modeling
+
+The length of transportation routes is one of the primary factors affecting these costs.
+For instance, the cost of local routes depends on the size of the region served by each
+local terminal. With a larger region, vehicles travel longer line-haul distance, adding
+to route length and reducing the number of stops that can be visited in a workshift.
+588  Handbook of Transportation Science
+
+The placement of terminals can also affect the length of terminals routes (Langevin
+and Campbell, 1996, survey distance approximation methods).
+
+  Transportation route lengths depend on the quality and topology of the network
+
+infrastructure. Within major cities, streets tend to follow a rectangular grid pattern,
+
+which leads to an average route length that is approximately 27% longer than a
+
+straight-line Euclidean path (representing the ratio or the average value of
+
++  for uniformly distributed Routes connecting major cities tend to be
+
+shorter than rectilinear paths, but still exceed straight-line distances by about 10-20%
+
+in the United States.
+
+  For a pure pickup or pure delivery route (without sequencing or timing
+constraints, and with uniformly and independently distributed stops), route length, L,
+may be approximated by a function of the type:
+
+where N is the number of stops served, d is the average distance from stops to
+terminal, c is the vehicle capacity measured in stops, is the stop density per unit
+area and k is a network specific parameter, in the range from .6 to .8 (Daganzo,
+1984b). The model has two components, representing line-haul distance and local
+distance. The average line-haul distance per stop declines as capacity increases, as
+more stops are served per trip. The local distance per stop does not depend on the
+capacity, but does depend on the distance separating stops on an optimal tour. This
+is a function of the stop density: when stops are closer together, local distance
+declines.
+
+  The average stop-terminal distance, d, depends on the size of the region served
+
+by the terminal, the placement of the terminal within the region and the network
+
+infrastructure. For a centrally located terminal within a circular region, uniformly
+
+distributed trip ends, and Euclidean distance,  where A is the region’s
+
+area, d becomes larger for non-circular regions, and for other distance metrics. For
+
+instance, for a centrally located terminal within a square region, rectilinear paths and
+
+uniformly distributed trip ends,  also increases when the terminal is
+
+displaced from the central point. On the other hand, clustering of trip ends tends to
+
+reduce average trip length, especially if it is possible to place terminals in the centers
+
+of clusters. There is a fairly large literature on distance calculations; readers may
+
+refer to Vaughan (1984), as well as Chapter 9.
+
+A Combined Vehicular and Temporal Model
+
+  Consider now a model that combines vehicle dispatch with vehicle routing
+(consolidation approaches 1 and 3). A region is partitioned into territories, each
+Supply Chains  589
+
+served by one vehicle. We wish to optimize two decisions: the size of territories
+(measured in stops), and the time interval between service. One possibility might be
+to create one long route that serves the entire region, with very frequent vehicle
+departures. At the other extreme, each individual stop might be served by its own
+route, but only very infrequently. Both options may result in the same average load
+sizes, and hence the same level of consolidation. However, the first option produces
+highly circuitous routes, while the second option produces long delays (due to low
+frequency). As might be expected, the optimum falls somewhere in between.
+
+  In examining a simple case, where stops are uniformly and independently
+distributed across a region, demand occurs at a constant rate, inventory costs occur at
+both origin and destination, and all stops are served from a common source, Burns et
+al (1985) obtained the following results:
+
+  The optimal territory size corresponds to vehicle capacity, no matter what
+  time interval is set for the tours. Routes should be made as long as possible,
+  without exceeding capacity, because transportation cost per stop is a
+  declining function of route length. Cost is then:
+
+where:
+
+d = average line-haul cost from terminal to stop
+T = interval between dispatches
+
+  = a fixed cost of visiting each stop (independent of distance)
+h = inventory holding cost, per unit time and unit demand
+V = vehicle capacity, measured in units of demand
+k = parameter representing distance metric, on the order of .6 to .8
+
+  = average local cost per unit distance
+  = demand rate, per stop
+  = stop density
+
+  The optimal time interval, T, equals:
+
+Eq. 15.3 is analogous to the basic economic order quantity model in Chapter 5.
+However, the optimal interval is a function of the local cost of serving a stop (the
+value in the parentheses of the numerator), and not the line-haul cost. Because the
+local cost tends to be much smaller than line-haul cost, T tends to be much smaller
+590  Handbook of Transportation Science
+
+for multiple stop tours than for single stop tours, and stops can be visited more
+frequently.
+
+Terminal Consolidation
+
+  By adding terminals, a distribution network can improve its capability to serve
+widely dispersed origins and destinations. For illustration, we consider a 2-terminal
+routing strategy, as shown in Figure 15.10. We assume that terminals are equally
+spaced on a square lattice within a square region, that shipments travel by rectilinear
+paths, and that shipment origins and destinations are independently and uniformly
+distributed. Then the following performance measures apply to the network (Hall,
+1984):
+
+where
+
+  x = length of side of square region
+  t = number of terminals
+  M = number of origins and destinations
+
+As indicated in Eqs. 15.4a and 15.6a, adding terminals to a network (increasing t) is
+advantageous from the perspective of reducing the average origin/destination to
+terminal trip length and route length. And although, the average terminal-to-terminal
+trip length is an increasing function of t, the entire trip length (origin to destination)
+always declines as t increases.
+
+  As more terminals are added to a network, costs do eventually rise for two
+reasons. First, the cost of building and operating terminals will increase faster than
+the transportation savings due to reduced trip length. Second, it will become
+impossible to fill vehicles to capacity without resorting to multiple stop tours on
+terminal-to-terminal routes. This is clearly seen in the equations for and which
+Supply Chains  591
+
+increase quadratically as t increases. For large values of t, freight flows are diluted
+among too many routes, leading to higher costs per unit freight and distance.
+
+  It should be noted that these trade-offs depend little on local pickup and
+delivery, as local territories are sized according to vehicle capacity, not linehaul trip
+length. There is, however, a natural dependency between the number of terminals, t,
+and the shipping interval, T. If T is enlarged, the demand per vehicle route will
+increase, which would make it economical to add terminals to the network.
+Nevertheless, because and are quadratic functions, the percentage increase in t
+would be substantially smaller than the percentage increase in T.
+
+  As already indicated, there are numerous variations in network design. While
+most networks encounter similar trade-offs – with respect to number of terminals,
+size of pickup/delivery territories, and shipping interval – the cost models are highly
+dependent on the particular situation. Daganzo (1999) provides numerous examples.
+
+Accounting For Different Requirements and Characteristics
+
+  Real supply chains exhibit considerable heterogeneity, in terms of spatial and
+temporal distribution of freight flows. Whereas average flows may point to a
+particular design, the specific flows from a particular origin or destination may
+demand something different. As a consequence, most networks exhibit a mixed
+structure, combining elements from different fundamental designs. For example:
+
+Bypass: When freight flow is sufficient, direct routes may be created between
+locations that would not normally be connected.
+
+Multiple Networks: Separate networks may be created to serve different classes of
+shipments.
+
+Multiple Stops: Locations with less than normal demand may be consolidated into a
+multi-stop route, when most other locations have direct routes.
+
+Alternate Frequency: Stops with less than normal, or greater than normal, demand
+may be served with different frequency, to achieve a better balance between
+waiting/inventory costs and transportation costs.
+
+  These are all complicated issues, as the decisions made for one location, or one
+origin-destination pair, affect the costs for others. Because distribution costs are
+inherently concave, the marginal cost for serving an additional unit of freight flow is
+less than the average cost. Therefore, not only is it impossible to determine the
+optimal route for one unit of flow without simultaneously knowing the flow patterns
+for all other shipments, but there is tremendous incentive to group different types of
+shipments and serve them in the same manner. Nevertheless, origin-destination pairs
+that generate large freight volumes ought to be treated differently than those that do
+592  Handbook of Transportation Science
+
+not; it is uneconomical to route a large load through a series of terminals when it
+could be loaded on a truck and sent direct to the destination. In a broad sense,
+system design might be viewed as a balancing act between exploiting the economies
+of consolidation and the needs to serve individual shipments or origin-destination
+pairs in a manner that is customized to their specific characteristics.
+
+  One of the key decisions is when to provide direct shipments between two
+locations, bypassing an intermediate terminal. If the network exhibits a concave cost
+structure, and arc flows are uncapacitated (as is often the case), then an optimal flow
+pattern will provide “all-or-nothing” routing for each origin-destination pair. This
+means that 100% of the flow for each pair will be assigned to a single path. In
+addition, in an optimal solution, it must be impossible to reduce the cost by
+reassigning the flow for any origin-destination pair to an alternate path. Thus, for
+Figure 15.17, the cost of a direct route must be less than or equal to the incremental
+cost of serving the freight flow on the terminal route, in order for it to be used.
+Likewise, if flow is transported on the terminal route, the cost of the direct route must
+be greater than or equal to the incremental savings due to removing the flow from the
+terminal route.
+
+  These are necessary, but not sufficient, conditions for optimality. In some
+instances, a locally optimal solution may place all flow on the terminal route, and
+another locally optimal solution may place all flow on direct routes. This is because
+the terminal route only becomes attractive once a “critical mass” of flow follows the
+route. The search for optimality depends on finding all of the locally optimal
+solutions, and comparing them to determine which is best. In simple networks, like
+Supply Chains  593
+
+Figure 15.17, the local optima can be found with a one dimensional search (Hall,
+1987a, 1989c); for any value of flow on the terminal arc, the incremental cost of
+adding or reducing flow can be calculated to assign origin-destination pairs to routes.
+Local optima occur when the flow assigned to the terminal route exactly matches
+By searching across different values of local optima can be identified.
+
+  A characteristic of distribution networks is that terminals may be used most in
+intermediate demand ranges. With very high demand, direct routes become
+economical. With very small demand – especially if the number of origin-destination
+pairs is small – there may be insufficient demand to reach a critical mass to justify
+terminal operation. This does not imply that terminals are abandoned completely,
+however. It may instead mean that shipments are sent via a for-hire network rather
+than via a private network (Hall, 1995b). Because the for-hire network has the
+capability of combining shipments from different companies, they have greater
+potential for achieving the critical mass needed to establish a terminal.
+
+  It is obvious that the scale economies in transportation have not driven the
+industry toward a single monopoly that manages to carry all goods through one
+network. Instead, we have many specialized networks, and many competing
+networks. Large truck-load or container load shipments bypass trucking terminals,
+and are often sent direct from origin-to-destination (or possibly via rail or ship
+terminals). Intermediate sized shipments are sent via less-than-truckload networks,
+which provide simple terminals for transferring pallets of boxes from one truck to
+another. Packages are sent via parcel networks, which operate more elaborate
+terminals for sorting and processing shipments. And mail is sent through postal
+networks, which provide highly automated systems for sorting and processing
+shipments. In each case, shipments flow in different quantities and rates, which
+necessitates a different solution. There is sufficient uniqueness to justify creating
+specialized networks. In the case of large freight carriers, like UPS and Federal
+Express, there may be incentives to establish two or more networks to serve different
+types of shipments. For instance, smaller shipments may be separated from large
+shipments, or overnight shipments may be separated from lower priority shipments.
+Smilowitz(2001).
+
+  Another important issue is determining optimal route and shipping frequencies.
+The complication here is maintaining synchronization among routes and among
+stops. For instance, suppose that a region is served by multi-stop tours that operate in
+a constant interval, but the shipping interval for individual stops is permitted to differ
+from the tour interval. As with network routing, concave costs and interdependency
+are important in this question. As indicated in Eq. 15.1, the cost of serving an
+individual stop depends on the stop density – the number of stops actually served per
+unit area each time the route is covered (Hall, 1985a, 1991b; Daganzo, 1985). This
+number may be less than the total number of stops available, as all stops are not
+served on all trips. If the shipping frequency is reduced for some stops, then the per-
+stop cost for serving the remaining stops will increase, which will in turn make it
+594  Handbook of Transportation Science
+
+desirable to reduce their shipping frequency. However, if the stop density is known,
+then frequencies can be optimized for individual stops. Thus, to optimize the entire
+tour, a search can be completed for the optimal stop density, from which shipping
+and tour frequencies can be derived.
+
+  To make such a route feasible, it should also be recognized that the shipping
+interval should be an integral multiple of the tour interval. In addition, efficient
+terminal operation demands some level of synchronization of incoming and outgoing
+routes. These issues are discussed in Chapter 5.
+
+  All of these factors are indicative of the need for optimization tools that can
+simultaneously optimize a huge number of decision variables in a non-linear cost
+environment. There are enormous challenges in achieving this goal, but progress is
+being made through faster computers, meta-heuristics and more efficient optimization
+codes.
+
+15.5 Final Comments
+
+  Supply chain networks are the mechanism for transforming raw materials into
+finished products, and delivering these products to consumers. Nodes in the supply
+chain network serve manufacturing related functions and consolidation related
+functions, often simultaneously. Whereas in transportation alone, goods are intended
+to be quickly sorted and processed in terminals, in the broader context of supply
+chains, goods may remain at a node for a longer period to serve additional purposes.
+Instead of transferring boxes from incoming vehicles to outgoing vehicles, the node
+may assemble the items into finished products, or simply store them for future use,
+while also consolidating them into loads.
+
+  Whether an organization relies on for-hire networks for distribution, or its own
+private network, depends on its needs to create a network of supply chain nodes for
+production and inventory. Grocers, for instance, not only operate large networks of
+retail stores but also large networks of distribution warehouses. The warehouses are
+needed because of food perishability, because many food products come from local
+sources, and because grocers handle sufficient volumes to justify the investments.
+Grocer warehouses serve multiple functions, while providing the same consolidation
+function as terminals in for-hire networks. Therefore, they do not use for-hire
+networks to get products from warehouses to consumers.
+
+  Book publishing, on the other hand, has none of the incentives seen in the
+grocery industry for establishing large networks. Nevertheless, publishers still have
+the ability to reach widely dispersed markets through for-hire transportation
+networks. In fact, it is the richness of the transportation infrastructure that enables
+our highly specialized, and technology focused, economy to function so well. By
+Supply Chains  595
+
+consolidating different types of products, produced by different firms at different
+times, relatively small companies can reach wide markets.
+
+  In some instances, a blend of for-hire and private networks is common. A
+company may depend more on for-hire networks for replacement parts than for
+original equipment, because demands for the latter are larger and more predictable.
+Or, in a multi-echelon structure, the distribution strategy may depend on the stocking
+level of the item. For instance, fast moving items may be stocked at all echelons, and
+distributed through a private network. Slow-moving items may only be stocked at the
+highest echelon (taking advantage of the “risk pooling” effect, due to averaging of
+demands across many locations), and distributed through for-hire networks
+(Blumenfeld et al, 1985). By exploiting the for-hire system, the supply network can
+be responsive for all types of items, even though inventories are kept small. Going
+one step further, the private network may be specifically designed to exploit the
+capabilities of the for-hire network by locating warehouses in the vicinity of major
+hub terminals (e.g., near Federal Express’ Memphis hub or UPS’ Louisville hub). In
+doing so, next-day deliveries can be guaranteed for orders that are placed late in the
+day.
+
+  As a final comment, availability and usage of information have had profound
+effects on supply chain management. Historically, retailers have provided the dual
+function of physically delivering products to customers and offering information to
+assist in product selection (sometimes, just by inspecting products). Retailers are
+now squeezed in both directions. First, small package companies (UPS and Federal
+Express in particular), with their extensive networks, have enabled distributors to
+rapidly deliver products direct to consumers from centralized locations. Second, the
+Internet is providing product information in a manner that sometimes replicates and
+even enhances information available at the store. In many product lines (media,
+replacement parts, etc.), the potential exists for eliminating retailers and perhaps local
+distributors. Enhanced multi-media tools may one day enable a consumer to
+visualize wearing a new outfit, eliminating the need to try it on at a store. But even
+this innovation would not mean the elimination of local entities for consolidating
+shipments. Instead of consolidating through inventory-stocking private networks,
+consolidation would occur through the terminals operated by for-hire networks.
+Thus, the technologies of the Internet and communication do not alter the
+fundamental economics of transportation for physical products.
+
+15.6 References
+
+Arntzen, B.C., G.G. Brown, T.P. Harrison and L.L. Trafton (1995). Global supply chain management at
+  Digital Equipment Corporation. Interfaces, 25:1, 69-93.
+
+Blumenfeld, D.E. R.W.Hall and W. Jordan (1985). Trade-off between freight expediting cost and safety
+  stock inventory costs, Journal of Business Logistics, 6, 79-100.
+
+Bollo, D. and M. Stumm (1998). Possible changes in logistic chain relationships due to Internet
+  developments. ITOR, 5, 427-445.
+596  Handbook of Transportation Science
+
+Brown, A.O., H.L. Lee, and R. Petrakian (2000). Xilinx improves its semiconductor supply chain using
+  product and process postponement. Interfaces, 30:4, 65-80.
+
+Brynjolfsson, E. and M.D. Smith (2000). Frictionless commerce? A Comparison of Internet and
+  conventional retailers. Management Science, 46, 563-585.
+
+Burns, L.D., R.W.Hall, D.E. Blumenfeld and C.F. Daganzo (1985). Distribution strategies that minimize
+  transportation and inventory costs, Operations Research, 33, 469-483.
+
+Campbell, J.F. (1993). Continuous and discrete demand hub location problems, Transportation
+  Research, 27B 473-482.
+
+Chen, F., Z. Drezner, J.K. Ryan and D. Simchi-Levi (2000). Quantifying the bullwhip effect in a simple
+  supply chain: the impact of forecast, lead times, and information. Management Science, 46, 436-
+  443.
+
+Daganzo, C.F. (1984a). The length of tours in zones of different shapes, Transportation Research, 18B,
+  135-146.
+
+Daganzo, C.F. (1984b). The distance traveled to visit N points with a maximum of C stops per vehicle: an
+  analytic model and an application. Transportation Science, 18, 331 -350.
+
+Daganzo, C.F. (1985). Supplying a single location from heterogeneous sources. Transportation
+  Research, 19B, 409-420.
+
+Daganzo, C.F. (1987a). The break-bulk role of terminals in many-to-many logistic networks. Operations
+  Research, 35, 543-555.
+
+Daganzo, C.F. (1987b). Modeling distribution problems with time windows. Transportation Science,
+  21, 171-179.
+
+Daganzo, C.F. (1988). A comparison of in-vehicle and out-of-vehicle freight consolidation strategies.
+  Transportation Research, 22B, 173-180.
+
+Daganzo, C.F. (1999). Logistics Systems Analysis, 3rd Edition. Springer Verlag: Heidelberg, Germany.
+Daganzo, C.F. and R.W. Hall (1993). A routing model for pickups and deliveries: no capacity restrictions
+
+  on the secondary items, Transportation Science, 27, 315-329.
+Dewan, R., M. Freimer, and A. Seidmann (2000). Organizing distribution channels for information
+
+  goods on the Internet. Management Science, 46, 483-495.
+Feitzinger, E. and H. Lee (1997). Mass customization at Hewlett Packard. Harvard Business Review.
+Garg, A. and C.S. Tang (1997). On postponement strategies for product families with multiple points of
+
+  differentiation. IIE Transactions, 29, 641-650.
+Hall, R.W. (1984). Travel distance through transportation terminals on a rectangular grid, Journal of the
+
+  Operational Research Society, 35, 1067-1078.
+Hall, R.W. (1985a). Determining vehicle dispatch frequency when shipping frequency differs among
+
+  suppliers, Transportation Research, 19B, 421-431.
+Hall, R.W. (1985b). Heuristics for selecting facility locations, Transportation and Logistics Review, 21,
+
+  353-373.
+Hall, R.W. (1987). Direct versus terminal freight routing on a network with concave costs,
+
+  Transportation Research, 21B, 287-298.
+Hall, R.W. (1987). Comparison of strategies for routing shipments through transportation terminals,
+
+  Transportation Research, 21A, 421-429.
+Hall, R.W. (1987). Consolidation strategy: inventory, vehicles and terminals, Journal of Business
+
+  Logistic, 8, 57-73.
+Hall, R.W. (1989a). Configuration of an overnight package air network, Transportation Research, 23A,
+
+  139-149.
+Hall, R.W. (1989b). Graphical interpretation of the transportation problem, Transportation Science, 23,
+
+  37-45.
+Hall, R.W. (1989c). Route choice on freight networks with concave costs and exclusive arcs,
+
+  Transportation Research, 23B, 177-194.
+Hall, R.W. (1989d). Vehicle packing, Transportation Research, 23B, 103-121.
+Hall, R.W. (1991a). Characteristics of multi-stop/multi-terminal delivery routes, (R.W.Hall)
+
+  Transportation Research, 25B, 391-403.
+Hall, R.W. (1991b). Comments on one warehouse multiple retailer systems with vehicle routing costs,
+
+  Management Science, 37, 1496-1497.
+Hall, R.W. (1991c). Route selection on freight networks with weight and volume constraints,
+
+  Transportation Research, 25B, 175-189.
+Supply Chains  597
+
+Hall, R.W. (1993). Design of local area freight networks, Transportation Research, 27B, 79-95.
+Hall, R.W. (1994). Use of continuous approximations within discrete algorithms for routing vehicles.
+
+  experimental results and interpretation, Networks, 24, 43-56.
+Hall, R.W. (1995a). The architecture of transportation systems, Transportation Research, 3C, 129-142.
+Hall, R.W. (1995b). Transportation with common carrier and private fleets: system assignment and
+
+  shipment frequency optimization, IIE Transactions, 27, 217-225.
+Hall, R.W. (1996). Pickup and delivery strategies for overnight carriers, Transportation Research, 30,
+
+  173-187.
+Hall, R.W. and C.F. Daganzo (1985). Vehicle miles for a freight carrier with two capacity constraints.
+
+  Transportation Research Record, No. 1038, 1985.
+Huang, J. (2001). Future space: a new blueprint for business architecture. Harvard Business Review.
+Kahmoun, M. and R.W. Hall (1996b), Design of express mail services for metropolitan regions, Journal
+
+  of Business Logistics 17, 265-302.
+Klincewicz, J.G. (1998). Hub location in backbone/tributary network design: a review. Location Science:
+
+  6, 307-335.
+Kuby, M.J. and G.R. Gray (1993). The hub network design problem with stopovers and feeders: the case
+
+  of Federal Express. Transportation Research, 27A, 1-12.
+Langevin, A., P. Mbaraga, and J.F. Campbell (1996). Continuous approximation models in freight
+
+  distribution: an overview. Transportation Research, 30B, 163-188.
+Lee, H.L. and C. Billington (1995). The evolution of supply-chain-management models and practices at
+
+  Hewlett-Packard. Interfaces, 25:5, 42-63.
+Lee, H.L., V. Padmanabhan and S.J. Whang (1997). Information distortion in a suppy chain: the
+
+  bullwhip effect. Management Science, 43, 546-558.
+Lee, H.L. and C.S. Tang (1997). Modelling the costs and benefits of delayed product differentiation.
+
+  Management Science, 43, 40-53.
+Newell, G.F. and C.F. Daganzo (1986). Design of multiple vehicle delivery tours—I. A ring-radial
+
+  network. Transportation Research, 20B, 345-364.
+Newell, G.F. and C.F. Daganzo (1986). Design of multiple vehicle delivery tours—II: Other metrics.
+
+  Transportation Research, 20B, 365-376.
+O'Kelly, M.E. (1986). The location of interacting hub facilities. Transportation Science, 20, 92-106
+O'Kelly, M.E., and D.L. Bryan (1998). Hub location with flow economies of scale. Transportation
+
+  Research, 32B, 605-616.
+Morrison, D. and R. Wise (2000). Beyond the exchange: the future of B2B. Harvard Business Review,
+
+  78:6, 86-96.
+Partyka, J.G. and Hall, R.W. (2000). On the road to service. OR/MS Today, August, 26-35.
+Simchi-Levi, D., P. Kaminsky and E. Simchi-Levi (2000). Designing and Managing the Supply Chain:
+
+  Concepts, Strategies and Cases, Irwin/McGraw-Hill: New York.
+Smilowitz, K.R. (2001). Design and Operation of Multimode, Multiservice Logistics Systems, Institute
+
+  of Transportation Studies Ph.D. Dissertation, University of California at Berkeley, UCB-ITS-DS-
+  2001-04.
+Ukovich, W., F. Baita and R. Pesenti (1998). Dynamic routing-and-inventory problems: a review.
+  Transportation Research, 32A, 585-596.
+Van Hoek, R.I. (2000). The role of third-party logistics providers in mass customization. International
+  Journal of Logistics Management, 11, 37-46.
+Vaughan, R. (1984). Approximate formulas for average distances associated with zones. Transportation
+  Science, 18, 231-244.
+Zhong, H.S. (2002). Ph.D. Dissertation, University of Southern California.
+  16 REVENUE MANAGEMENT
+
+  Garrett J. van Ryzin and Kalyan T. Talluri
+
+16.1 Introduction
+
+Revenue management (RM), refers to the collection of strategies and tactics by
+which airlines (and other transportation providers) manage demand for their ser-
+vices. This chapter surveys the methods used to perform this demand management
+function. While revenue management today is applied in a wide range of industries,
+our focus here is on airline and other transportation RM problems. The chapter is
+based on excerpted material from our forthcoming book, Talluri and van Ryzin,
+2002, The Theory and Practice of Revenue Management.
+
+Airline History
+
+The starting point for revenue management was the Airline Deregulation Act of
+1978. Passage of the act led to rapid change in the airline industry. New low-cost
+airlines entered the market and tapped into an entirely new – and vast – market for
+discretionary travel. The potential of this market was embodied in the rapid rise of
+PeopleExpress. The airline started in 1981 with a cost-efficient operation and fares
+50–70% lower than the major carriers. By 1984, its revenues were approaching
+$1B, and at the close of 1984 PeopleExpress posted a profit of $60M, its highest
+profit ever (Cross, 1997).
+
+  The result was a significant migration of price-sensitive discretionary travel-
+ers from major airlines to the new, low-cost competitors. Yet the major airlines
+had strengths that these new entrants lacked. They offered more frequent sched-
+ules, service to more cities, and an established brand-name and reputation. For
+many business travelers, schedule convenience and service was (and is still) more
+600  Handbook of Transportation Science
+
+important than price, so the threat posed by low-cost airlines was less acute in the
+business-traveler segment of the market.
+
+  Nevertheless, the cumulative losses in revenue from this shift in traffic to
+low-cost airlines was badly damaging the profits of major carriers. Among major
+airlines, a strategy to combat this trend and recapture the leisure passenger was
+needed.
+
+  Robert Crandall, American Airline’s CEO at the time, is widely credited with
+the breakthrough in solving this problem (the low fares and expanded service
+created by this new competition were less of a “problem” in the eyes of consumers
+and regulators). He recognized that the seats that were going unsold on many
+of American’s flights were already being “produced” at a very low cost. This is
+because the vast majority of the costs of a flight (capital costs, wages, fuel) are
+fixed, and the marginal cost to carry an additional passenger is almost zero. As a
+result, American could in fact afford to “compete on cost” with the upstarts using
+its surplus seats.
+
+  However, two problems had to be solved in order to execute this strategy.
+First, American needed to identifying the “surplus” seats on each flight. The
+scheme would not be profitable if a sale of a low price seat displaced one of their
+high-paying business customers.1 Second, they had to ensure that American’s
+business customers did not switch and buy the new low price products targeted at
+discretionary, leisure customers.
+
+  American solved these two problems using a combination of purchase restric-
+tions and capacity-controlled fares.2 Discounts had to be purchased 30 days
+in advance of departure and required a seven-day minimum stay, restrictions
+that prevented most business traveler from utilizing the new low fares. At the
+same time, American limited the number of such seats sold on each flight (it
+capacity-controlled the fares).
+
+  Initially, the capacity controls American used were based on setting aside a
+fixed portion of seats on each flights for the new low-fare products. However, as
+American gained experience with its Super-Saver fares, it realized that a more
+intelligent approach to capacity control was need to realize their full potential.
+American’s operations research staff therefore embarked on the development of
+what became known as the “DINAMO” system – the Dynamic Inventory Allocation
+and Maintenance Optimizer. Based on massively detailed statistical forecasts and
+optimization models, DINAMO determined automatically the number of seats to
+reserve for discounted products on each individual departure. DINAMO was, in
+essence, the first large-scale RM system.
+
+  DINAMO was implemented in full in January of 1985 along with a new fare
+program – entitled “Ultimate Super Saver Fares”. The DINAMO system allowed
+American to be much more aggressive in its pricing strategy. They now could
+Revenue Management  601
+
+post very low fares on a large number of individual flights, confident of their
+capability to accurately control the discounts on every individual departure. Indeed,
+this feature – of pricing aggressively and competitively at an aggregate, market
+level, while controlling capacity at a tactical, individual-departure level – still
+characterizes the practice of RM in the airline industry today.
+
+  PeopleExpress was especially hard hit by this move, as American repeat-
+edly matched or beat their prices in every market they served (Cross, 1997).
+PeopleExpress’s annual profit fell from an all time high in 1984 to a loss of over
+$160M by 1986. In just two short years they went bankrupt, and in September
+1986 the company was sold to Continental Airlines. This experience was repeated
+throughout the industry, and airlines that did not have RM capabilities quickly
+scrambled to get them.
+
+  As a result of this history, the practice of revenue management in the airline
+industry today is both pervasive and mature. Indeed, it’s no exaggeration to say that
+a large, modern airline today would quite simply not be able to operate profitably
+without revenue management. For example, American Airlines’ estimates that its
+RM practices generated $1.4 billion in additional incremental revenue over a three
+year period starting around 1988, Smith et al., 1992, a figure comparable to the
+airline’s total profits over this period.
+
+Components of an RM System
+
+Here, we briefly describe the generic components of a RM system at a high level.
+This serves to introduce the various components involved and gives an overview
+of the information flows, controls and design of the overall system.
+
+  Revenue management processes generally consist of the following four
+steps:
+
+(1) Data Collection Collect and store relevant historical data (prices, demand,
+  causal factors).
+
+(2) Estimation and Forecasting Estimate the parameters of the demand model.
+  Forecast demand and other relevant quantities, like no-show and cancellation
+  rates.
+
+(3) Optimization Find the optimal set of controls controls for the sale of inven-
+  tory (allocations, bid-prices, overbooking limits) to be applied until the next
+  re-optimization.
+
+(4) Control Control the sale of inventory using the optimized controls. This is
+  done either through the firm’s own transaction-processing systems (internet,
+  call centers) or through shared distribution systems (e.g. computer reservations
+  systems).
+602  Handbook of Transportation Science
+
+  The revenue management process typically involves cycling through these
+steps at repeated intervals. The frequency with which each step is performed is a
+function of many factors that include the volume of data and how fast it changes,
+the type of forecasting and optimization methods used and the relative importance
+the resulting decisions.
+
+Overview of Topics
+
+This Chapter mainly surveys the Steps 3 and 4 above, and even this coverage
+is somewhat abbreviated. Complete details as well as a treatment of forecasting
+and implementation issues are provided in Talluri and van Ryzin, 2002. McGill
+and van Ryzin, 1999 also provides an overview and annotated bibliography of the
+published academic literature in the field through 1998.
+
+  We first address the problems of capacity control. Section 16.2 looks at
+capacity controls for a single resource (seats on a single flight) which is sold to
+differentiated demand classes – the so-called “single-leg” problem in airline RM.
+Section 16.3 looks at the same capacity control decisions, but in a setting in which
+products require multiple resources – called the “network” setting. In the airline
+industry, the main motivation for network methods are to control availability of
+discount classes at the origin-destination (O&D) level rather than the flight (leg)
+level. Finally, Section 16.4 considers overbooking decisions and their relation to
+capacity controls.
+
+16.2 Single-resource Capacity Control
+
+The single-resource (single-leg) problem addresses optimally allocating capacity
+of a single resource to different demand segments. We begin by surveying the
+nontechnical issues surrounding this problem in the airline industry. The remainder
+of the section focuses on various models and methods for making capacity control
+decisions.
+
+Fare Classes
+
+As mentioned, the single-resource problem has its roots in the emergence of
+capacity-controlled discounted airfares shortly after the airline industry was dereg-
+ulated in the U.S. in the mid 1970’s. Today, most airlines offer discounts based on
+a relatively stable set of restrictions. These include advance purchase restrictions
+of 7, 14, 21 and 30 days, the requirement to stay a Saturday night and nonre-
+fundability and/or penalties for changes in the itinerary after purchase. Various
+combinations of these restrictions are used to define different fare products.
+

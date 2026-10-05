@@ -1,0 +1,628 @@
+OceanofPDF.com
+  Cognitive Computing for Smart
+
+  Automotive Transportation
+
+This reference book explores the integration of cognitive computing
+technologies in the automotive industry to enhance smart transportation
+systems. It focuses on how AI, machine learning, and data analytics can
+improve vehicle automation, safety, and efficiency. Automation can support
+driverless vehicle transportation and bridge the gap between manual control
+and fully automated navigation systems. The text introduces a discussion on
+numerous applications of cognitive computing in smart transportation,
+motion planning, situation awareness, dynamic driving, adaptive behavior,
+human intent measurement, and predictive analysis.
+
+Key Features:
+
+  Discusses basic concepts and architecture of cognitive computing for
+  vehicular systems.
+  Presents technologies to measure human intent for vehicle safety,
+  including emergency management systems (EMS).
+  Covers the perception and localization processes in autonomous
+  driving through LiDAR, GPS, and Stereo vision data with critical
+  decision-making and simulation results.
+  Elucidates the application of motion planning for smart transportation.
+  Covers visual perception technologies for advanced driver assistance
+  systems (ADAS) through deep learning.
+
+The text is primarily written for graduate students, academic researchers,
+and professionals in the fields of computer science, electrical engineering,
+automotive engineering, and civil engineering.
+
+  OceanofPDF.com
+Chapman & Hall/CRC Internet of Things: Data-
+
+Centric Intelligent Computing, Informatics, and
+
+Communication
+
+The role of adaptation, machine learning, computational intelligence, and
+data analytics in the field of IoT systems is becoming increasingly essential
+and intertwined. The capability of an intelligent system is growing
+depending upon various self-decision-making algorithms in IoT devices.
+IoT-based smart systems generate a large amount of data that cannot be
+processed by traditional data processing algorithms and applications.
+Hence, this book series involves different computational methods
+incorporated within the system with the help of analytics reasoning,
+learning methods, artificial intelligence, and sense-making in big data,
+which are most concerned in IoT-enabled environments.
+
+  This series focuses on attracting researchers and practitioners who are
+working in information technology and computer science in the fields of
+intelligent computing paradigm, big data, machine learning, sensor data,
+Internet of Things, and data sciences. The main aim of the series is to make
+available a range of books on all aspects of learning, analytics, and
+advanced intelligent systems and related technologies. This series will cover
+the theory, research, development, and applications of learning,
+computational analytics, data processing, and machine learning algorithms,
+as embedded in the fields of engineering, computer science, and
+information technology.
+
+Series Editors: Souvik Pal
+
+Energy Harvesting: Enabling IoT Transformations
+Deepti Agarwal, Kimmi Verma, and Shabana Urooj
+
+SDN-Supported Edge-Cloud Interplay for Next Generation Internet of
+Things
+Kshira Sagar Sahoo, Arun Solanki, Sambit Kumar Mishra, Bibhudatta
+Sahoo, and Anand Nayyar
+
+Internet of Things: Applications for Sustainable Development
+Niranjan Lal, Shamimul Qamar, Sanyam Agarwal, Ambuj Kumar Agarwal,
+and Sourabh Singh Verma
+
+Artificial Intelligence for Cognitive Modeling: Theory and Practice
+Pijush Dutta, Souvik Pal, Asok Kumar, and Korhan Cengiz
+
+Cognitive Predictive Maintenance Tools in Brain Diseases: Design and
+Analysis
+Shweta Gupta
+
+Assimilation of Blockchain Technology with IoT: Industry Perspectives
+R Anandan, D Akila, and Souvik Pal
+
+Cognitive Computing for Smart Automotive Transportation: Technology
+and Applications
+By G. R. Kanagachidambaresan, Archana Naganathan, Niresh Jayarajan,
+and Sheldon S. Williamson
+
+  OceanofPDF.com
+  Cognitive Computing for Smart
+  Automotive Transportation
+  Technology and Applications
+
+  Edited by
+G. R. Kanagachidambaresan, Archana Naganathan,
+
+  Niresh Jayarajan, and Sheldon S. Williamson
+
+  OceanofPDF.com
+Designed cover image: ShutterStock
+
+First edition published 2025
+by CRC Press
+2385 NW Executive Center Drive, Suite 320, Boca Raton FL 33431
+
+and by CRC Press
+4 Park Square, Milton Park, Abingdon, Oxon, OX14 4RN
+
+CRC Press is an imprint of Taylor & Francis Group, LLC
+
+© 2025 selection and editorial matter, G. R. Kanagachidambaresan,
+Archana Naganathan, Niresh Jayarajan, and Sheldon S. Williamson;
+individual chapters, the contributors
+
+Reasonable efforts have been made to publish reliable data and information,
+but the author and publisher cannot assume responsibility for the validity of
+all materials or the consequences of their use. The authors and publishers
+have attempted to trace the copyright holders of all material reproduced in
+this publication and apologize to copyright holders if permission to publish
+in this form has not been obtained. If any copyright material has not been
+acknowledged please write and let us know so we may rectify in any future
+reprint.
+
+Except as permitted under U.S. Copyright Law, no part of this book may be
+reprinted, reproduced, transmitted, or utilized in any form by any electronic,
+mechanical, or other means, now known or hereafter invented, including
+photocopying, microfilming, and recording, or in any information storage
+or retrieval system, without written permission from the publishers.
+
+For permission to photocopy or use material electronically from this work,
+access www.copyright.com or contact the Copyright Clearance Center, Inc.
+(CCC), 222 Rosewood Drive, Danvers, MA 01923, 978-750-8400. For
+works that are not available on CCC please contact
+mpkbookspermissions@tandf.co.uk
+Trademark notice: Product or corporate names may be trademarks or
+registered trademarks and are used only for identification and explanation
+without intent to infringe.
+
+ISBN: 9781032487403 (hbk)
+ISBN: 9781032491455 (pbk)
+ISBN: 9781003392330 (ebk)
+
+DOI: 10.1201/9781003392330
+
+Typeset in Times
+by codeMantra
+
+  OceanofPDF.com
+To students, scholars, friends, and family members.
+
+  OceanofPDF.com
+Contents
+
+ Preface
+ About the Authors
+ List of Contributors
+
+ Chapter 1 Research on Security and Privacy Issues in IoV-Enabled Smart Transportation Systems
+  Anjali Arora, Roshni Kapoor, M.d. Wazih, and Pradeep Kumar Sharma
+
+ Chapter 2 Smart Mobility: Cognitive Computing in Modern Transportation Systems
+  S. Delsi Robinsha, B. Amutha, D. Vanusha, and D. Vathana
+
+ Chapter 3 Internal Combustion Engine Simulations in the Era of High-Performance Computing
+  Avinash Ravikumar and Benjamin Lawler
+
+ Chapter 4 Fault Detection and Tolerance in Dynamic Control: Enhancing System Reliability and
+  Performance through Dynamic Fault Detection and Tolerance Mechanisms
+  P. Shudhi Rishaa, C. Shri Raghavi, M. P. Anbarasi, and J. Niresh
+
+ Chapter 5 Connected Cars, Connected Cities: The Rise of Smart Mobility
+  N. Murugu Nachippan and Balaji Vasudevan
+
+ Chapter 6 Analysis of Cognitive Internet of Vehicles and Its Challenges
+  S. Umamaheswari and G. Gowtham
+
+ Index
+
+  OceanofPDF.com
+Preface
+
+Automation has the potential to facilitate the transportation of driverless
+vehicles and to serve as a bridge between completely automated navigation
+systems and manual control. Cognitive computing offers a practical
+approach to artificial intelligence. These self-learning systems evolve into
+autonomous systems that are independent of human interventions by
+utilizing machine learning to emulate the human brain, thereby facilitating
+automation in a variety of application areas. The most recent advancements
+in the automotive industry are autonomous driving vehicles or connected
+automobiles. The introduction of cognitive computing technology has
+enabled the development of solutions that are on par with human
+intelligence for both in-vehicle intelligent systems and off-road vehicle
+diagnosis and maintenance. This is due to the self-learning and self-healing
+capabilities of cognitive computing technology, which have been employed
+to enhance vehicle safety. We are confident that these cognitive computing
+models will have a substantial future impact by resolving intricate problems
+with ambiguous solutions.
+
+  This edited volume examines the security features required in smart
+transportation, the role of cognitive computing in smart mobility, and a
+variety of applications of cognitive computing in the context of smart
+automotive transportation. This book also discusses the role of connected
+cars and fault detection mechanisms; the design of internal combustion (IC)
+engines for smart cars with high-performance computing; and the
+fundamental concepts and architecture of cognitive computing, motion
+planning, situation awareness, dynamic driving, adaptive behavior, human
+intent measurement, and predictive analysis.
+
+  This book is designed for a diverse audience, including advanced
+students, researchers, and industry practitioners. This resource will be
+beneficial for individuals who intend to conduct research in the field of
+cognitive computing, specifically in the context of autonomous and
+intelligent driving vehicles.
+
+  OceanofPDF.com
+About the Authors
+
+G. R. Kanagachidambaresan is a professor in the Department of
+Computer Science and Engineering at Vel Tech Rangarajan Dr. Sagunthala
+R&D Institute of Science and Technology. He earned his PhD from Anna
+University in 2017. Presently, he is handling funded projects from ISRO,
+DBT, and DRDO. He has authored books and articles in the area of IoT,
+wireless networks, and expert systems. He has worked as a consultant for
+several leading MNC companies. He is the managing director of Eazythings
+Technology Private Limited and a TEC committee member of DBT. He is
+also the editor in chief of the Next Generation Computing and
+Communication Engineering series.
+Archana Naganathan has been an assistant professor in the Department of
+Electrical and Electronics Engineering, PSG College of Technology,
+Coimbatore, India, for the past 13 years. Her research interests cover the
+areas of power electronics, optimization techniques, and hybrid electric
+vehicles. She has received a travel grant from DST for an international
+conference and has completed a DST project on a deep learning-based
+animal intrusion detection system with a grant of 30 lakhs. Currently, she is
+working on an IIT-IPTIF project in the area of Edge AI. She has published a
+patent in the area of power converters for electric vehicle charging and has
+published around 40 papers in various journals and conferences. She has
+authored 4 books. She earned a PhD degree from Anna University, Chennai,
+India, in 2017.
+Niresh Jayarajan holds a doctorate degree in the field of optimization and
+has been with PSG College of Technology since 2011. His areas of research
+include electric and hybrid vehicles, automotive electronics and
+optimization by using soft computing techniques, and unmanned aerial
+vehicles (UAVs). He is guiding doctoral scholars in the area of UAVs and
+electric vehicle. He serves as a reviewer for prestigious journals including
+Elsevier and Springer publication. He has published around 58
+international/national journals and around 7 national/international
+conferences in NIT/IIT institutes. In accordance, he has also published 7
+books under a reputed publishing banner.
+
+Sheldon S. Williamson (Fellow, IEEE) earned a B.E. (Hons.) degree in
+electrical engineering from the University of Mumbai, Mumbai, India, in
+1999. He earned M.S. and Ph.D. (Hons.) degrees in electrical engineering
+from the Illinois Institute of Technology, Chicago, IL, USA, in 2002 and
+2006, respectively. He is a professor with the Department of Electrical,
+Computer, and Software Engineering and the director of Smart
+Transportation Electrification and Energy Research (STEER) Group,
+Faculty of Engineering and Applied Sciences, Ontario Tech University,
+Oshawa, ON, Canada. His research interests include advanced power
+electronics, electric energy storage systems, and motor drives for
+transportation electrification. He holds the prestigious NSERC Canada
+Research Chair position in electric energy storage systems for
+transportation electrification.
+
+  OceanofPDF.com
+List of Contributors
+
+B. Amutha
+Faculty of Engineering and Technology, Department of Computing
+
+  Technologies, School of Computing
+SRM Institute of Science and Technology
+Kattankulathur (Chengalpattu District), Tamil Nadu, India
+
+M. P. Anbarasi
+Department of Robotics & Automation
+PSG College of Technology
+Coimbatore, Tamil Nadu, India
+
+Anjali Arora
+Department of Computer Science & Engineering
+Shri Ram Murti Smarak College of Engineering and Technology
+Bareilly, Uttar Pradesh, India
+
+S. Delsi Robinsha
+Faculty of Engineering and Technology, Department of Computing
+
+  Technologies, School of Computing
+SRM Institute of Science and Technology
+Kattankulathur (Chengalpattu District), Tamil Nadu, India
+
+G. Gowtham
+Department of Electronics and Communication Engineering
+Kumaraguru College of Technology
+Coimbatore, Tamil Nadu, India
+
+Roshni Kapoor
+Department of Computer Science & Engineering
+Shri Ram Murti Smarak College of Engineering and Technology
+Bareilly, Uttar Pradesh, India
+
+Benjamin Lawler
+Department of Automotive Engineering
+Clemson University
+Clemson, South Carolina
+
+N. Murugu Nachippan
+Department of Automobile Engineering
+Easwari Engineering College
+Chennai, Tamil Nadu, India
+
+J. Niresh
+Department of Automobile Engineering
+PSG College of Technology
+Coimbatore, Tamil Nadu, India
+
+Avinash Ravikumar
+Department of Automotive Engineering
+Clemson University
+Clemson, South Carolina
+
+Pradeep Kumar Sharma
+Department of Computer Science & Engineering
+Shri Ram Murti Smarak College of Engineering and Technology
+Bareilly, Uttar Pradesh, India
+
+C. Shri Raghavi
+Department of Robotics & Automation
+PSG College of Technology
+Coimbatore, Tamil Nadu, India
+
+P. Shudhi Rishaa
+Department of Robotics & Automation
+PSG College of Technology
+Coimbatore, Tamil Nadu, India
+
+S. Umamaheswari
+Department of Electronics and Communication Engineering
+Kumaraguru College of Technology
+Coimbatore, Tamil Nadu, India
+D. Vanusha
+Faculty of Engineering and Technology, Department of Computing
+
+  Technologies, School of Computing
+SRM Institute of Science and Technology
+Kattankulathur (Chengalpattu District), Tamil Nadu, India
+
+Balaji Vasudevan
+Department of Mechanical Engineering
+Vel Tech Rangarajan Dr. Sagunthala R&D Institute of Science and
+
+  Technology
+Chennai, Tamil Nadu, India
+
+D. Vathana
+Faculty of Engineering and Technology, Department of Computing
+
+  Technologies, School of Computing
+SRM Institute of Science and Technology
+Kattankulathur (Chengalpattu District), Tamil Nadu, India
+
+M.d. Wazih
+Department of Computer Science & Engineering
+Shri Ram Murti Smarak College of Engineering and Technology
+Bareilly, Uttar Pradesh, India
+
+  OceanofPDF.com
+1 Research on Security and Privacy Issues
+in IoV-Enabled Smart Transportation
+Systems
+
+  Anjali Arora, Roshni Kapoor, M.d. Wazih, and Pradeep Kumar Sharma
+
+DOI: 10.1201/9781003392330-1
+
+1.1 INTRODUCTION
+
+1.1.1 Introduction to IoV-Enabled Intelligent Transportation
+Systems
+
+The development of intelligent transportation systems (ITS) is changing how our cities
+and roads operate and what’s possible to drive on. Global travel efficiency, safety, and
+overall experience could all be enhanced with ITS [1]. Prominent organizations and
+localities are launching campaigns to support information and communication
+technology breakthroughs. Examples include British Telecom’s CityVerve project and
+IBM’s Smarter City program. The transportation scene is set to undergo a dramatic
+shift due to the rise of autonomous or semi-autonomous vehicles and powerful traffic
+forecasting systems. Furthermore, modern conveniences are being easily integrated
+into cars thanks to developments in car entertainment systems, which include
+Bluetooth connectivity, hands-free communication, and navigation aids. The term
+“Internet of Vehicles” (IoV) refers to this networked technology advancement in
+transportation that integrates automobiles, communication networks, and a range of
+features. The combination of various technologies is said as (IoV). The IoV integrates
+vehicles, communication networks, and various transportation infrastructure elements
+into a smart and interconnected system [2]. With advanced technologies, it enhances
+safety, efficiency, and overall mobility in urban and rural environments. The IoV
+framework is a mind-boggling system made out of various organization members, for
+example, vehicles, roadside units (RSUs), and individuals, imparting through remote
+networks. It is made up of IoV, which are frequently outfitted with radar, GPS, vision
+sensors, and other technologies. They can gather street climate information and
+constant traffic conditions and submit them to the cloud so that different users can
+design their courses ahead of time by getting to this information. Users who share data
+might confront extreme security and protection risks, like spillage of driver
+personality, current location, and navigation information. Simultaneously, due to high
+liquidity and unpredictability, in-vehicle networks are powerless to different dangers
+[3].
+
+1.1.2 Overview of the Internet of Vehicles (IoV)
+
+The IoV is a complex organization that utilizes sensors, programming, and innovation
+to interface vehicles with their surroundings, such as other vehicles, pedestrians, traffic
+signals, and parking facilities, allowing them to share data. IoV is an evolution in
+transportation and traffic management systems, enabling seamless communication
+between cars and infrastructure. It is built on the foundation of the Internet of Things
+(IoT) and vehicular ad hoc networks (VANETs) [4].
+
+  The future automated vehicles will have numerous associated end points and a large
+volume of information shared. Later on, any vehicle will be able to connect to
+anything at any time in a really adaptive, strong, and secure manner. 5G
+communication will be critical for these network connectivity requirements in order to
+supply the necessary services. 5G is generally suited for car-to-infrastructure networks
+due to its extremely low latency, high communication speed, and accessibility to a
+large volume of information interchange [5]. The following are some of the key
+advantages provided by IoV in terms of improving overall transportation
+infrastructure:
+
+  1. Reduced Traffic Congestion: IoV can optimize traffic patterns and alleviate
+  congestion by using vehicle data from sensors and real-time traffic monitoring.
+
+  2. Smart Parking Solutions: IoV provides smart parking solutions in densely
+  populated and congested metropolitan areas, reducing traffic congestion and
+  enhancing city traffic management.
+
+  3. Vehicle Maintenance: IoV allows automakers to use data to discover product
+  faults, while sensors offer drivers with regular updates on the status of their
+  vehicle, decreasing breakdowns and accidents.
+
+  4. Impact on Energy Conservation and Sustainability: IoV, when paired with
+  Edge artificial intelligence and analytics, dramatically contributes to energy
+  savings and reduces cities’ overall carbon footprint.
+
+The applications of IoV go beyond automobiles to include the entire traffic and
+transportation ecosystem. IoV can optimize fuel and energy resources by adding
+intelligent signals and lighting that monitor traffic conditions and change accordingly.
+Furthermore, IoV technology has the potential to greatly assist the environment by
+lowering carbon emissions through improved vehicle management and maintenance
+procedures. Connected automobiles significantly contribute to decreasing carbon
+emissions and enhancing global ecological sustainability. However, like with every
+technological innovation, IoV has its concerns, particularly in terms of security and
+protection, which should be tended to completely. To tackle these issues, the
+government is initiating programs and allocating funds to projects aimed at enhancing
+the effectiveness and efficiency of ITS [6,7].
+
+1.1.3 Importance of Security and Protection in Smart Transportation
+
+Security and protection are essential aspects in the design and implementation of ITS.
+As technology continues to advance, intelligent transportation solutions, such as
+connected vehicles, intelligent traffic management systems, and autonomous vehicles,
+provide a host of advantages; however, they also bring forth new challenges and risks
+[8,9]. Here are several reasons highlighting the importance of security and privacy in
+smart transportation:
+
+  1. Safety Concerns: Security breaches in smart transportation systems can have
+  direct consequences on safety. For example, unauthorized access to connected
+  vehicles could lead to malicious activities like tampering with critical systems or
+  taking control of the vehicle.
+
+  2. Data Integrity: Intelligent transportation is primarily dependent on data, which
+  include real-time traffic statistics, vehicle status, and navigation details. Ensuring
+  the integrity of these data is essential for making well-informed decisions and
+  upholding the reliability of the transportation system.
+
+  3. Personal Privacy: Connected vehicles and transportation infrastructure generate
+  massive amounts of data, which frequently include personal information.
+  Individual privacy must be protected by safeguarding these data. Illegitimate
+  entry into personal information may lead to identity theft, individual surveillance,
+  and various privacy concerns.
+
+  4. Resilience to Cyberattacks: Cyberattacks on ITS have the potential to disrupt
+  routine operations, cause accidents, or compromise the efficiency of the
+  transportation network. Building resilience to such attacks is vital to maintain the
+  reliability and functionality with regard to the transportation infrastructure.
+
+  5. Public Trust and Adoption: The public’s trust is essential for the successful
+  implementation ofITS. Apprehensions regarding security and privacy may
+  discourage individuals from utilizing these systems. Ensuring robust security
+  measures and privacy protection mechanisms can enhance public confidence in
+  smart transportation solutions.
+
+  6. Legal and Regulatory Compliance: Governments and regulatory agencies are
+  becoming more aware of the significance of security and privacy in smart
+  transportation. Compliance with legal and regulatory frameworks helps prevent
+  legal issues and ensures the implementation of smart transportation technologies
+  that are compatible with ethical and legal standards.
+
+  7. System Interoperability: A variety of interconnected components and devices
+  are used in intelligent transportation. Security measures must be implemented
+  together to ensure interoperability and secure communication among the various
+  components of the transportation ecosystem.
+  8. Protection against Physical and Cyber Threats: Smart transportation systems
+  are vulnerable to both physical and cyber threats. They include not only
+  cyberattacks on software and communication networks but also physical attacks
+  on infrastructure. Security measures are essential to protect against these diverse
+  threats.
+
+  9. Data Sharing and Collaboration: Collaborative efforts and data sharing among
+  different entities in the transportation ecosystem can lead to more efficient and
+  effective systems. However, this must be done with a strong emphasis on security
+  and privacy to prevent unauthorized access and misuse of sensitive information.
+
+1.2 IoV ARCHITECTURE AND ITS COMPONENTS
+
+In the realm of smart transportation, system architecture typically involves the design
+and organization of various components to enable efficient and secure communication
+among vehicles, infrastructure, and other entities. The architecture [10,11] may include
+elements such as:
+
+  1. Vehicle-to-Everything (V2X) Communication: This incorporates
+  communication between vehicles and different elements, including vehicle-to-
+  infrastructure (V2I), vehicle-to-pedestrian (V2P), and vehicle-to-vehicle (V2V)
+  communications.
+
+  2. Data Processing and Analytics: The architecture might include systems for
+  processing and analyzing the extensive data produced by connected vehicles. This
+  could entail utilizing cloud-based solutions, edge computing, or a hybrid
+  combination of both.
+
+  3. Security Measures: Considering the sensitivity of transportation systems,
+  security emerges as a crucial aspect. The architecture should include robust
+  security measures to protect data, communication channels, and the overall
+  system from cyber threats.
+
+  4. Sensors and IoT Devices: Smart transportation systems rely on various sensors
+  and IoT devices on vehicles and infrastructure to collect data related to traffic
+  conditions, road quality, and other relevant parameters.
+
+  5. Integration with Urban Infrastructure: The architecture may consider
+  integration with urban infrastructure elements, including traffic lights and road
+  signs, and smart city systems, to optimize traffic flow and enhance safety.
+
+  6. User Interfaces and Applications: For end-users, there may be applications or
+  user interfaces that provide real-time information, navigation assistance, and
+  other services.
+
+1.2.1 Communication Protocols in IoV
+In the context of IoT in smart transportation, various communication protocols are
+used for facilitating communication between vehicles and infrastructure. Some of the
+frequently employed communication protocols in the context of the IoV [12,13] for
+smart transportation encompass the following:
+
+  Dedicated Short-Range Communications (DSRC): DSRC is a wireless
+  communication protocol specifically designed for vehicular communication. It
+  works in the 5.9 GHz frequency range and provides low-latency, high-speed
+  communication among vehicles and roadside infrastructure. DSRC is generally
+  utilized for applications such as V2V communication, V2I communication, and
+  V2P communication in applications like ITS and connected vehicle environments
+  (Figure 1.1).
+
+  FIGURE 1.1 IoV architecture. ⏎
+
+  Cellular Vehicle-to-Everything (C-V2X): C-V2X stands as a nascent
+  communication technology that utilizes cellular networks for vehicle
+  communication. It is designed to support both low-latency, short-range
+  communication and wide-area communication (communication with cellular
+  infrastructure). C-V2X operates in licensed cellular bands and can leverage
+  existing LTE and 5G networks. C-V2X offers enhanced safety, traffic efficiency,
+  and infotainment services in smart transportation (Figure 1.2).
+  FIGURE 1.2 IoV communication. ⏎
+Wi-Fi (IEEE 802.11p): IEEE 802.11p, ordinarily alluded to as remote access in
+vehicular conditions, represents a Wi-Fi variant uniquely crafted for vehicular
+communication. It works inside the 5.9 GHz frequency range, delivering low-
+latency communication for V2V and V2I applications. IEEE 802.11p finds
+extensive use in applications like collision avoidance, traffic signal
+synchronization, and cooperative driving.
+Vehicle-to-Infrastructure (V2I) Protocols: Various protocols, often based on
+standard Internet protocols (such as IPv6), are used for communication between
+vehicles and infrastructure. These protocols enable vehicles to exchange
+information with traffic management systems, roadside units, and ITS. Examples
+of V2I protocols include simple network management protocol (SNMP), media-
+independent handover (MIH) protocols, and session initiation protocol (SIP).
+Message Queuing Telemetry Transport (MQTT): MQTT is a lightweight
+messaging protocol based on the publish/subscribe model, broadly utilized in IoT
+applications, including smart transportation. It guarantees efficient and reliable
+communication among vehicles, sensors, and cloud platforms. MQTT is suitable
+for low-power and low-bandwidth networks and enables real-time data exchange
+for applications like remote monitoring, traffic management, and fleet
+management.
+  Cooperative Intelligent Transport Systems (C-ITS) Protocols: C-ITS
+  protocols are standardized communication protocols used for ITS to support
+  cooperative driving and infrastructure-to-vehicle communication. These protocols
+  enable vehicles to exchange safety-related messages, such as cooperative
+  awareness messages (CAM) and decentralized environmental notification
+  messages (DENM). Examples of C-ITS protocols include ITS-G5, C-ITS
+  application layer messages (CALM), and ETSI ITS-G5 protocol suite.
+
+It’s crucial to emphasize that communication protocols used in IoV may differ based
+on the region, regulatory frameworks, and infrastructure availability. Additionally,
+advancements in cellular networks, such as the rollout of 5G, are anticipated to have a
+substantial impact in enabling advanced communication capabilities in smart
+transportation [14].
+
+1.2.2 V2X Communication
+
+V2X technology [15,16] involves utilizing ITS communication networks to transmit
+crucial information between vehicles and various components of the transportation
+infrastructure. This includes relaying safety alerts, weather updates, traffic conditions,
+and route data both from vehicles to the infrastructure and vice versa. V2X
+encompasses two primary aspects: V2V and V2I. In V2V, vehicles interact akin to
+VANETs, exchanging data on speed, position, and potential road hazards. V2I
+communication facilitates bidirectional wireless data exchange between vehicles and
+the road infrastructure. This includes elements like RFID readers, cameras, lane
+markings, traffic signals, streetlights, road signs, and parking meters. Smart vehicles
+outfitted with on-board units (OBUs) layout communication with RSUs, nearby IoT
+devices, and other OBUs as they traverse roadways. Through the V2X framework, a
+spectrum of signals and messages is transmitted and received to enhance roadway
+efficiency and safety for all travelers. However, while V2X bolsters system
+connectivity, it also introduces a new vulnerability that could be exploited by
+malicious entities [17].
+
+1.3 THREAT LANDSCAPE IN IOV
+
+The three primary points within ITS where security techniques must be applied include
+data collection, remote information transmission over the organization, and ensuing
+information investigation. This section discusses security measures to guarantee that
+the ITS will not be vulnerable to the aforementioned threats [18] (Figure 1.3).
+
