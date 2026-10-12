@@ -4,21 +4,16 @@ ACMS (Agentic Context-Aware Mobility System): a road-network editor (true-scale 
 interchanges, bus stops, OD demand) with a SUMO-style microscopic simulation. Vehicles follow the car ahead
 (Krauss), change lanes (LC2013), obey signals (Webster, TRANSYT, Synchro, SCATS, SCOOT, actuated), accept gaps;
 buses dwell at stops. Physics runs in real time on its own thread; each run's KPIs become an Excel workbook.
-This index is sent to the in-app assistant (System 2) with every request, and it is where coding agents start, so it
-stays short: detail is one file away, **`docs/architecture/<module>.md`**.
+This index is the in-app assistant's (System 2) context, sent with every request, and coding agents' map of the code
+(Layer 3; they start at `AGENTS.md`). Detail is one file away: **`docs/architecture/<module>.md`**.
 
-## 0. For every agent: work within a small context and a short wait
+## 0. For the assistant: a small context and a short wait
 
-The docs are large (sources.md, tests.md, ai_mode.md and simulation.md are 40–66k characters each): never load one
-whole. **Route: this index → the one file below → search it → read only the lines found.**
-
-- **In-app assistant:** `read_source` with `find` (words on one line; empty path searches every file) gives line
-  numbers; then `start_line`/`end_line` for ~30 lines. Network facts come from tools (`network_summary`, `describe`…),
-  never from docs. Ask a narrow tool (one junction) before a list. Tests cost time: `run_simulation` 10–30 min, one
-  seed, unless asked; an experiment's time is scenarios × seeds × minutes. Answer in a few lines.
-- **Coding agents:** grep for the function or heading, then read that range (offset/limit), and edit by its anchor.
-  Test with `tools/run_test.py <file> <words>` (only the matching tests, timed) before whole files; run the slow
-  files (`tests/CONTEXT.md` lists them) in the background with a timeout. Never `run_monitor.py`.
+The docs are large (sources.md, tests.md, ai_mode.md, simulation.md: 40–66k characters each): never load one whole.
+**Route: this index → the one file below → `read_source` with `find` (line numbers) → ~30 lines by
+`start_line`/`end_line`.** Network facts come from tools (`network_summary`, `describe`…), never from docs; ask a
+narrow tool (one junction) before a list. Tests cost time: `run_simulation` 10–30 min, one seed, unless asked; an
+experiment takes scenarios × seeds × minutes. Answer in a few lines.
 
 | Question about… | Read |
 |---|---|
@@ -54,7 +49,8 @@ Full list: [capabilities.md](docs/architecture/capabilities.md); placeholders: [
 ## 2. Layout
 
 ```
-AGENTS.md, CONTEXT.md      Coding agents: the rules, then routing to each folder's CONTEXT.md
+AGENTS.md, CONTEXT.md      Coding agents: Layer 0 (what always holds) and 1 (which stages)
+stages/                    Numbered stage contracts (code, campaign, research), each with its output/
 run.py, run_monitor.py     The editor; the test monitor window
 src/traffic_simulator/     The modules (map below)        tests/       Plain assert tests
 extensions/                Drop-in features               docs/        Module docs, sources, tests

@@ -12,3 +12,7 @@ references/*
 reports/
 *.egg-info/
 tools/eval_commands.json
+
+# Stage outputs are per run: kept for review, not in git
+stages/*/*/output/*
+!stages/*/*/output/.gitkeep

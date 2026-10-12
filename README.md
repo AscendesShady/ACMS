@@ -7,8 +7,8 @@
 - `ARCHITECTURE.md` — the index: capabilities, layout, conventions and a map of every module. The in-app
   assistant reads it with every request, so it stays short.
 - `docs/architecture/` — each module in full, plus flows, sources, tests and what isn't built yet.
-- `AGENTS.md`, `CONTEXT.md` and a `CONTEXT.md` in each folder — for coding agents: the rules, then what to read,
-  run and write for each kind of task (Interpretable Context Methodology).
+- `AGENTS.md`, `CONTEXT.md` and `stages/` — for coding agents (Interpretable Context Methodology): what always
+  holds, which stages a task takes, and for each numbered stage what to read, run and write to its `output/`.
 - `extensions/` — drop-in features (Extensions tab). `tools/` — the prompt campaign and the quick test runner.
 - `references/` — reference material kept on this PC (books, papers, SUMO notes; only the UI rulebook is in git).
   `reports/` — audits, campaign logs and agent records, also kept on this PC only.

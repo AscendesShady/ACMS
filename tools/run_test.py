@@ -22,7 +22,7 @@ from pathlib import Path
 os.environ.setdefault("QT_QPA_PLATFORM", "offscreen")  # as the Qt tests do, before anything imports PySide6
 
 
-SLOWEST_FIRST = ("test_experiments", "test_simulation", "test_scenario", "test_ai_mode")  # tests/CONTEXT.md's table
+SLOWEST_FIRST = ("test_experiments", "test_simulation", "test_scenario", "test_ai_mode")  # stages/code/03_test's list
 
 
 def run_all(jobs: int) -> int:
