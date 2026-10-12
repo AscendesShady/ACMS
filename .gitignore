@@ -10,3 +10,5 @@ references/*
 !references/CONTEXT.md
 !references/ui-ux-design-rulebook.md
 reports/
+*.egg-info/
+tools/eval_commands.json

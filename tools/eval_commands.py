@@ -1,12 +1,12 @@
 """How well local models turn requests into the right tool calls, against hand-written expectations.
 
-Not a unit test (it needs Ollama and takes minutes): run `python tests/eval_commands.py [model ...]`.
+Not a unit test (it needs Ollama and takes minutes): run `python tools/eval_commands.py [model ...]`.
 Each case is a request as a user types it (the first three are requests guided mode got wrong in the Research
 Log); the model chats with the app's own system prompt and the tools the app would offer it. Network tools run on
 a real grid; the window's tools (runs, demand, institutions' trips) answer with a stand-in result, so a case shows
 which tools the model chose and with what, not what they'd measure. A case passes when the calls include one of
 its expected sets, none of its forbidden tools, and its check holds. Prints a table per model and writes
-tests/eval_commands.json."""
+tools/eval_commands.json (not kept in git)."""
 
 import json
 import os

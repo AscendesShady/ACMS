@@ -392,7 +392,7 @@ Plain `assert` functions, run with `python tests/test_x.py` or all at once in `r
   stopped the build); a request offered the tools its words point to and planned by a fake model with tools
   (generate_grid offered, find_tools always, emergency tools not; the call after Apply; a follow-up keeping the
   tools used; no guided mode).
-- `eval_commands.py` (not run by the monitor: it needs Ollama): requests as users type them (the first three
+- `tools/eval_commands.py` (not a test file and not run by the monitor: it needs Ollama): requests as users type them (the first three
   guided mode got wrong), each against the tools it should and shouldn't call, for each local model: network
   tools run on a real grid, the window's tools answer with stand-ins; pass rate, seconds and input tokens.
 - The AI stress test (2026-10-05, not in the repository: a driver of the real window offscreen with the Research

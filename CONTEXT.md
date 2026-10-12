@@ -66,10 +66,10 @@ config/defaults.json         Default grid settings for a new network
 src/traffic_simulator/       The app's modules
 tests/                       Plain assert tests, one file per area
 extensions/                  Drop-in features (Extensions tab)
-tools/                       Scripts run by hand: the prompt campaign, run_test.py (quick, timed tests)
+tools/                       Scripts run by hand: the prompt campaign, run_test.py (tests), eval_commands.py (models)
 docs/                        Module docs (docs/architecture/), statistics catalogue
 references/                  Reference material: UI rulebook, SUMO notes, books, papers, theory, ICM paper (this PC only,
                              but the UI rulebook is in git)
 reports/                     Records: audits, campaigns, agent performance, theory gap (this PC only, not in git)
-research/                    The book-mining pipeline: PDF text, idea ledger, tool shortlist
+research/                    The book-mining pipeline: idea ledger, tool shortlist (its PDF text: references/pdf_text/)
 ```

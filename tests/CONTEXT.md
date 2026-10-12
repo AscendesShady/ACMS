@@ -16,7 +16,7 @@ Layer 2. You are here to add a test for a change, or to run the tests. Back to r
 
 Name the file after the module: `models.py` → `test_models.py`, `simulation.py` → `test_simulation.py`.
 Window and menu behaviour: `test_project.py`, `test_selection.py`. Tooltips: `test_tooltips.py`.
-Not run by the monitor (needs Ollama): `eval_commands.py`.
+Model evaluations that need Ollama aren't tests: `tools/eval_commands.py`.
 
 ## Process
 

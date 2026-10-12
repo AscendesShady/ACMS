@@ -1,5 +1,5 @@
 """The PDF ledger: tool ideas for the agentic simulator, read chunk by chunk from the PDFs in
-references/transportation_engineering_books/ and references/transportation_engineering_papers/ (their text in research/pdf_text/<source>/,
+references/transportation_engineering_books/ and references/transportation_engineering_papers/ (their text in references/pdf_text/<source>/,
 25 pages a chunk, made by research/extract.sh).
 
 Each source keeps two CSV files in research/ledger/ (the truth, one writer a source): <source>.chunks.csv, a row per
@@ -29,7 +29,7 @@ from pathlib import Path
 from traffic_simulator.xlsx import write_xlsx
 
 HERE = Path(__file__).resolve().parent
-TEXT, LEDGER, WORKBOOK = HERE / "pdf_text", HERE / "ledger", HERE / "tool_ideas.xlsx"
+TEXT, LEDGER, WORKBOOK = HERE.parent / "references" / "pdf_text", HERE / "ledger", HERE / "tool_ideas.xlsx"
 IDEA_FIELDS = ["topic", "idea", "tool", "does", "inputs", "outputs", "fits", "existing", "value", "effort", "pages",
                "cite", "notes"]
 IDEA_HELP = {

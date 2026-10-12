@@ -17,7 +17,7 @@ Back to routing: [../CONTEXT.md](../CONTEXT.md). Run every command from the repo
    ```sh
    sh research/extract.sh
    ```
-   Output: `research/pdf_text/<source>/pNNNN-NNNN.txt`.
+   Output: `references/pdf_text/<source>/pNNNN-NNNN.txt` (reference material: local, not in git).
 2. **Read and record**, one chunk at a time:
    ```powershell
    .venv\Scripts\python.exe research\ledger.py todo "<source>"          # chunks not read yet
