@@ -13,7 +13,9 @@
       Generate Network.
     - **Own Network:** the background to draw a network over (see background.py).
   - **Map controls** over the map's top-right corner (`NetworkView.set_corner`): Input Grid (only while
-    Demand Generator is open), Fit
+    Demand Generator is open), Power Saver (a leaf, checkable, `_power_saver`: the clock steps every 32 ms
+    instead of 16, so a run draws 30 frames a second, and on a GPU the map drops multisampling; the physics
+    is untouched; not remembered between sessions), Fit
     Network (the network itself), Reset View and Map Controls, whose click shows the mouse and keys and what draws
     the map (`map_controls`); hovering it, like every tooltip, gives only its name (five words at most).
   - **Input Grid** toggle (`show_grid`): the main area (`workspace`) shows the network or the OD

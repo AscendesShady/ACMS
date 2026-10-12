@@ -28,6 +28,7 @@ def test_the_warm_up_reads_the_index_not_the_module_files():
     assert assistant.DOCS == ("README.md", "ARCHITECTURE.md")
     prompt = assistant.system_prompt()
     assert "# ACMS Architecture" in prompt and "docs/architecture/<module>.md" in prompt
+    assert "## Setup" not in prompt and "## Setup" in assistant.system_prompt(tools=False)  # README: read_source
     detail = (ROOT / "docs" / "architecture" / "simulation.md").read_text(encoding="utf-8").splitlines()[2]
     assert detail and detail not in prompt  # a module file's own text isn't sent
 

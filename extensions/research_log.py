@@ -1,15 +1,16 @@
 """Research Log: every AI Mode step recorded for a paper.
 
-Ticked, each AI Mode answer (a step, or chat: a question, or a Watch my edits look) is written to a session
+Ticked, each AI Mode answer (a step, or chat), and each batch run (a step of kind "batch": its settings, the
+batch's and every run's workbooks with their SHA-256; MainWindow._log_step) is written to a session
 folder in the results folder, `ACMS research log <date time> <agent>/` (the AI agent of its first step, e.g. Ollama
-llama3.1-8b):
+llama3.1-8b; "no agent" when a batch came first):
 
     session.json    when it started and ended, the app and its code's SHA-256, Python, Qt and the OS: what to
                     cite and repeat; your verdict on the session and its note
     steps.csv       one row a step: prompt, what was understood, tools, decisions, changes, timings, tokens,
                     your verdict; the table to analyse
     report.html     the session's verdict, then every step as prompt -> what it understood -> what it did ->
-                    the map after -> its numbers
+                    the map or demand after (if changed) -> its numbers
     <folder>.odt    once the session ends: all of it as one document to read like a human (Word opens it): the
                     session's facts, then each step's prompt, editor update, understanding, plan, tool calls with
                     their arguments and results, the model's messages, reply, changes, map, files, numbers, verdict
@@ -17,11 +18,14 @@ llama3.1-8b):
                     line and the tools it was offered), plan.md (an approval card's plan),
                     calls.jsonl (each tool call: arguments, decision, result, when), reply.md, messages.json (the
                     model's raw messages, thinking included), changes.md (the network, demand and vehicle types
-                    it changed), map.png (the map after), artifacts.json (the workbooks it wrote, SHA-256),
-                    step.json (all of it, with the timings and tokens, and your verdict)
+                    it changed), map.png (the map after, if the network changed), demand.png (the OD matrix
+                    after, if the demand changed), artifacts.json (the workbooks it wrote, SHA-256),
+                    step.json (all of it, with the timings and tokens, and your verdict), activity.csv (with
+                    Watch my edits on: every click, entry, choice and edit the user made since the step before)
 
 and the results folder keeps `sessions.csv`: one row a session (its steps, how many of each verdict, the
-session's verdict). The snapshot of a step is its change list and the map's picture after it. Keys are never
+session's verdict). The snapshot of a step is its change list and a picture of what changed: the map if the
+network did, the OD matrix if the demand did, none if nothing changed. Keys are never
 written. Its panel marks the latest step As intended, Partly or Not as intended; End session closes the session
 (the next question starts another) and opens History, where any session's chats and the session itself are
 ranked. Everything is read back from the folders, so a session from another day can be ranked too. It uses the
@@ -49,8 +53,8 @@ from traffic_simulator.properties_panel import hint_label, icon_button
 
 NAME = "Research Log"
 ORDER = 5
-DESCRIPTION = ("Record every AI Mode step for research: your prompt, what the model understood, what it did, "
-               "the changes and a picture of the map after each, with timings, tokens and your verdicts on each "
+DESCRIPTION = ("Record every AI Mode step and batch run for research: your prompt, what the model understood, what it did, "
+               "the changes and a picture of what changed (the map or the demand), with timings, tokens and your verdicts on each "
                "chat and each session.")
 VERDICTS = ("as intended", "partly", "not as intended")
 COLUMNS = ["Step", "Kind", "Started", "Ended", "Provider", "Model", "Prompt", "Plan", "Tools offered", "Tools", "Applied", "Skipped", "Refused", "Reads", "Changes", "Model s", "Your decisions s",
@@ -59,6 +63,7 @@ COLUMNS = ["Step", "Kind", "Started", "Ended", "Provider", "Model", "Prompt", "P
 SESSION_COLUMNS = ["Session", "Started", "Ended", "Steps", "As intended", "Partly", "Not as intended", "Unmarked",
                    "Models", "Verdict", "Note", "Folder"]
 PREFIX = "ACMS research log "
+PICTURES = (("map.png", "The map after"), ("demand.png", "The demand after"))  # a step's snapshot pictures
 _VERDICT_BUTTONS = ((0xE8FB, "As intended", "as intended"), (0xE7BA, "Partly as intended", "partly"),
                     (0xE711, "Not as intended", "not as intended"))
 
@@ -179,11 +184,18 @@ def log(event: dict) -> None:
     changes = event.get("changes", [])
     (here / "changes.md").write_text("\n".join(f"- {line}" for line in changes) or "No change to the project.",
                                      encoding="utf-8")
-    if event.get("map_png"):
-        (here / "map.png").write_bytes(event["map_png"])
+    for key, name in (("map_png", "map.png"), ("demand_png", "demand.png")):
+        if event.get(key):
+            (here / name).write_bytes(event[key])
     artifacts = [{"path": path, "bytes": os.path.getsize(path), "sha256": _sha256(path)}
                  for call in calls for path in _files_in(call.get("result"))]
     _write_json(here / "artifacts.json", artifacts)
+    activity = event.get("activity") or []  # Watch my edits: what the user did since the last step
+    if activity:
+        with open(here / "activity.csv", "w", newline="", encoding="utf-8-sig") as file:
+            writer = csv.writer(file)
+            writer.writerow(["Time", "Seconds", "Kind", "Where", "What", "Value"])
+            writer.writerows(activity)
     usage = event.get("usage", [])
     decided = [c for c in calls if c.get("proposed_at") and c.get("decided_at")]
     _write_json(here / "step.json", {
@@ -191,7 +203,7 @@ def log(event: dict) -> None:
         "provider": event.get("provider"), "model": event.get("model"),
         "prompt": event.get("prompt"), "understood": understood, "network": event.get("network"),
         "calls": [{k: v for k, v in c.items() if k != "result"} for c in calls], "changes": changes,
-        "artifacts": artifacts, "error": event.get("error"),
+        "artifacts": artifacts, "error": event.get("error"), "activity_lines": len(activity),
         "timings_s": {"model": round(sum(u.get("total_s") or 0 for u in usage), 3),
                       "your_decisions": round(sum(c["decided_at"] - c["proposed_at"] for c in decided), 3),
                       "compute": round(sum(c.get("compute_s") or 0 for c in calls), 3),
@@ -218,7 +230,8 @@ def session_info(folder) -> dict:
 
 
 def steps(folder) -> list[dict]:
-    """A session's steps (chats) in order, each its step.json with its folder, reply and whether it has a map."""
+    """A session's steps (chats) in order, each its step.json with its folder, reply and its pictures
+    ([(file, caption)]: the map and/or the demand after it)."""
     found = []
     for here in sorted((Path(folder) / "steps").glob("[0-9]*")):
         record = _read_json(here / "step.json")
@@ -230,7 +243,8 @@ def steps(folder) -> list[dict]:
             reply = ""
         record.setdefault("verdict", "")
         record.setdefault("note", "")
-        found.append({**record, "folder": f"steps/{here.name}", "reply": reply, "has_map": (here / "map.png").is_file()})
+        found.append({**record, "folder": f"steps/{here.name}", "reply": reply,
+                      "pictures": [(name, caption) for name, caption in PICTURES if (here / name).is_file()]})
     return found
 
 
@@ -287,7 +301,8 @@ def _write_tables(folder: Path) -> None:
             + (f"<p><b>Reply:</b></p><pre>{e(step['reply'])}</pre>" if step["reply"] else "")
             + (f"<p class=error>Error: {e(str(step['error']))}</p>" if step.get("error") else "")
             + f"<h3>4. Snapshot</h3><ul>{changes}</ul>"
-            + (f"<img src='{step['folder']}/map.png' alt='The map after step {step['step']}'>" if step["has_map"] else "")
+            + "".join(f"<p>{caption}</p><img src='{step['folder']}/{name}' alt='{caption} step {step['step']}'>"
+                      for name, caption in step["pictures"])
             + f"<p class=numbers>Model {t.get('model')} s · your decisions {t.get('your_decisions')} s · compute "
               f"{t.get('compute')} s · total {t.get('total')} s · tokens {k.get('input')} in, {k.get('output')} out "
               f"({k.get('requests')} requests)"
@@ -318,7 +333,7 @@ def _write_document(folder: Path, every: list[dict], info: dict) -> Path:
     """The ended session as one document to read like a human, `<session folder name>.odt` (Word and LibreOffice
     open it): the session's facts and verdict, then each step's prompt with the editor update sent with it, what was
     understood, the plan, every tool call with its arguments, decision and result, the model's messages, the reply,
-    the changes, the map after, the files it wrote, timings, tokens and your verdict."""
+    the changes, the map or demand after, the files it wrote, timings, tokens and your verdict."""
     from PySide6.QtGui import QImage, QTextDocument, QTextDocumentWriter
 
     e = html.escape
@@ -374,10 +389,10 @@ def _write_document(folder: Path, every: list[dict], info: dict) -> Path:
             parts.append(f"<p><b>Error:</b> {e(str(step['error']))}</p>")
         parts.append("<h3>What changed</h3><ul>" + ("".join(f"<li>{e(line)}</li>" for line in step.get("changes") or [])
                                                      or "<li>No change to the project.</li>") + "</ul>")
-        if step["has_map"]:
-            image = QImage(str(here / "map.png"))
-            document.addResource(QTextDocument.ResourceType.ImageResource, QUrl(f"{step['folder']}/map.png"), image)
-            parts.append(f"<h3>The map after</h3><p><img src='{step['folder']}/map.png' width='{min(image.width(), 600)}'></p>")
+        for name, caption in step["pictures"]:
+            image = QImage(str(here / name))
+            document.addResource(QTextDocument.ResourceType.ImageResource, QUrl(f"{step['folder']}/{name}"), image)
+            parts.append(f"<h3>{caption}</h3><p><img src='{step['folder']}/{name}' width='{min(image.width(), 600)}'></p>")
         if step.get("artifacts"):
             parts.append("<h3>Files it wrote</h3><ul>" + "".join(
                 f"<li>{e(a['path'])} ({a['bytes']} bytes, SHA-256 {e(a['sha256'])})</li>" for a in step["artifacts"]) + "</ul>")
@@ -594,7 +609,6 @@ class History(QDialog):
         calls = "".join(f"<li><b>{e(c.get('tool', ''))}</b> {e(c.get('what') or '')} ({e(str(c.get('decision', '')))})</li>"
                         for c in step.get("calls") or []) or "<li>No tool used.</li>"
         changes = "".join(f"<li>{e(line)}</li>" for line in step.get("changes") or []) or "<li>No change.</li>"
-        picture = folder / step["folder"] / "map.png"
         self.detail.setHtml(
             f"<h3>Step {step['step']} · {e(str(step.get('model')))}</h3>"
             f"<p><b>Prompt:</b> {e(step.get('prompt') or '')}</p>"
@@ -603,7 +617,8 @@ class History(QDialog):
             + (f"<p><b>Reply:</b></p><p>{e(step['reply']).replace(chr(10), '<br>')}</p>" if step["reply"] else "")
             + (f"<p><b>Error:</b> {e(str(step['error']))}</p>" if step.get("error") else "")
             + f"<p><b>Changes:</b></p><ul>{changes}</ul>"
-            + (f"<p><img src='{QUrl.fromLocalFile(str(picture)).toString()}' width=420></p>" if step["has_map"] else "")
+            + "".join(f"<p><b>{caption}:</b></p><p><img src='{QUrl.fromLocalFile(str(folder / step['folder'] / name)).toString()}' "
+                      f"width=420></p>" for name, caption in step["pictures"])
             + (f"<p><b>Verdict:</b> {e(step['verdict'])}" + (f" · {e(step['note'])}" if step["note"] else "") + "</p>"
                if step["verdict"] else ""))
         self.chat_note.setText(step["note"])

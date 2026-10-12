@@ -22,6 +22,14 @@ APP = QApplication.instance() or QApplication([])
 MODES = VehicleModes().modes  # Bus (occupancy 20), Car (1.5), Bike (1)
 
 
+def test_the_excel_writer_names_every_sheet_apart():
+    with tempfile.TemporaryDirectory() as folder:  # these once took the same name over and over, for ever
+        names = ["A" * 31, "A" * 28 + " 2", "a" * 31, "A" * 31, "Roads", "roads", "x:y", "x y"]
+        path = write_xlsx(Path(folder) / "book.xlsx", [(name, [[1]]) for name in names])
+        written = list(read_xlsx(path))
+        assert len({name.lower() for name in written}) == len(names) and max(map(len, written)) <= 31
+
+
 def test_the_excel_writer_keeps_numbers_and_text():
     with tempfile.TemporaryDirectory() as folder:
         path = write_xlsx(Path(folder) / "book.xlsx", [
@@ -196,6 +204,59 @@ def test_in_the_window_a_run_ends_in_a_workbook():
         window.close()
 
 
+def test_every_live_run_ends_in_a_workbook_however_it_ends():
+    """Stopped before its first sample, its extras failing, its physics raising, a step still going at Stop:
+    each run's workbook is written (said "Incomplete" when something is missing), never before its physics ended."""
+    import threading
+
+    from PySide6.QtTest import QTest
+
+    from traffic_simulator.main import MainWindow
+
+    window = MainWindow()
+    with tempfile.TemporaryDirectory() as folder:
+        window.results_folder = Path(folder)
+        origins, _ = window._od_ends()
+        window._od_command("set_od_demand", {"origins": origins, "demand": "hourly", "value": 60})
+
+        def run_record() -> dict:
+            return {row[0]: row[1] for row in read_xlsx(window.last_results)["Run"][1:]}
+
+        window._run()  # at 1x: stopped well before the first 5 s sample
+        time.sleep(0.5)
+        window._stop_run()
+        assert window.last_results is not None and "Incomplete" not in run_record()
+        window.speed_combo.setCurrentIndex(window.speed_combo.findData(60))
+        reports = window.extensions.reports
+        window.extensions.reports = lambda *args: 1 / 0
+        try:
+            window._run()
+            time.sleep(0.3)
+            window._stop_run()
+        finally:
+            window.extensions.reports = reports
+        assert "ZeroDivisionError" in run_record()["Incomplete"] and "incomplete" in window.statusBar().currentMessage()
+        window._run()
+        time.sleep(0.3)
+        window.runner.simulation.step = lambda: 1 / 0  # the physics raises: the next display frame ends the run
+        while window.runner._thread.is_alive():
+            time.sleep(0.01)
+        window._frame(0.0)
+        assert window.runner is None and "The physics stopped" in run_record()["Incomplete"]
+        window._run()
+        time.sleep(0.3)
+        simulation, entered, release = window.runner.simulation, threading.Event(), threading.Event()
+        step, before = simulation.step, window.last_results
+        simulation.step = lambda: (entered.set(), release.wait(5), step())
+        assert entered.wait(2)
+        window._stop_runner()  # a step still going: the window carries on, nothing written yet
+        assert window.runner is None and window.last_results == before and "still going" in window.statusBar().currentMessage()
+        release.set()
+        QTest.qWait(1000)
+        assert window.last_results != before and window.last_results.exists()
+        window.close()
+
+
 def test_wait_time_passenger_delay_queues_and_the_named_workbook():
     """Wait is time at or below 0.1 m/s outside a bus stop (SUMO's waitingTime); passenger delay is each trip's
     delay × its occupancy; the mean queue is over the samples; the workbook is named by start, seed and model."""
@@ -235,6 +296,138 @@ def test_wait_time_passenger_delay_queues_and_the_named_workbook():
         assert read_me["TSP"] == "What TSP did." and read_me["AI model"] == "laya" and "Wait (s)" in read_me
         summary = {row[0]: row[1] for row in sheets["Summary"][1:]}
         assert summary["Mean wait per trip"] == 7.5 and "Passenger delay" in summary and "Mean queued at once" in summary
+
+
+def placed(simulation, mode, s, speed):
+    """A vehicle of `mode` from 1W to 1E, put `s` metres along its first lane at `speed` m/s."""
+    from traffic_simulator.vehicle import create_vehicle  # noqa: PLC0415
+
+    route = simulation.graph.route("1W", "1E")
+    vehicle = create_vehicle(mode, f"{mode.name}1", route, origin="1W", destination="1E")
+    vehicle.segment, vehicle.s, vehicle.speed = route[0].lanes[0], s, speed
+    vehicle.pose = vehicle.prev_pose = simulation._pose(vehicle)
+    simulation.vehicles.append(vehicle)
+    route[0].lanes[0].vehicles.append(vehicle)
+    return vehicle
+
+
+def test_a_free_bicycle_has_no_delay_against_its_own_free_speed():
+    """A bicycle riding at its own free speed (20 km/h × its speed factor) on a 50 km/h road loses time against the
+    road's limit (Delay, kept as it was) but none against its own free speed."""
+    network, bike = generate_network(1, 1), MODES[2]
+    simulation = Simulation(network, [], [bike])
+    vehicle = placed(simulation, bike, 50.0, 0.0)
+    vehicle.speed = simulation.frame().vehicles[0].free_speed
+    assert abs(vehicle.speed - 20 / 3.6 * vehicle.speed_factor) < 1e-9
+    with tempfile.TemporaryDirectory() as folder:
+        recorder = results.RunRecorder(network, [bike], folder=Path(folder) / "run")
+        recorder.sample(simulation.frame())
+        vehicle.s, simulation.time = vehicle.s + vehicle.speed * 10, 10.0
+        recorder.sample(simulation.frame())
+        assert recorder.totals["delay_s"] > 3 and recorder.totals["free_delay_s"] < 1e-9
+
+
+def test_vehicles_waiting_to_enter_are_counted_and_their_wait_reported():
+    """Demand that can't get onto the network (a 4 m entry road holds no car) still shows: as the entry wait and
+    the vehicles waiting, spawned = waiting + on the road + arrived."""
+    network = generate_network(1, 1, lanes_per_direction=1)
+    network.set_road_length("1W", 4)
+    simulation = Simulation(network, [PairDemand("1W", "1E", 600, None, [], "Random", (0, 100, 0))], MODES, seed=7)
+    with tempfile.TemporaryDirectory() as folder:
+        recorder = results.RunRecorder(network, MODES, folder=Path(folder) / "run")
+        while simulation.time < 120:
+            simulation.step()
+            if simulation.time % results.SAMPLE_S < DT / 2:
+                recorder.sample(simulation.frame())
+        k = recorder.kpis()
+        waiting = sum(len(queue) for queue in simulation.pending.values())
+        assert waiting > 10 and k["on_road"] == k["delay_veh_h"] == 0  # none got in: no delay on the road...
+        assert k["waiting_to_enter"] == waiting == k["spawned"] - k["arrived"] - k["on_road"]
+        assert k["entry_wait_veh_h"] > 0.2 and k["delay_with_entry_wait_veh_h"] == k["entry_wait_veh_h"]  # ...but this
+
+
+def test_person_delay_counts_the_people_on_board():
+    """A bus carrying 70 (its simulated load; its type assumes 20), stood still for 5 s mid-trip: 350 person-seconds,
+    and 70 people carried when it arrives."""
+    network, bus = generate_network(1, 1), MODES[0]
+    simulation = Simulation(network, [], [bus])
+    placed(simulation, bus, 50.0, 0.0).load = 70.0
+    assert simulation.frame().vehicles[0].people == 70.0
+    with tempfile.TemporaryDirectory() as folder:
+        recorder = results.RunRecorder(network, [bus], folder=Path(folder) / "run")
+        recorder.sample(simulation.frame())
+        simulation.time = 5.0
+        recorder.sample(simulation.frame())
+        assert abs(recorder.kpis()["person_delay_on_board_h"] * 3600 - 350) < 20  # unfinished: counted already
+        simulation.vehicles, simulation.time, simulation.arrived = [], 10.0, 1
+        recorder.sample(simulation.frame())
+        assert recorder.totals["people"] == 70.0 and recorder.totals["person_delay_s"] == 350.0
+
+
+def test_trip_times_are_exact_and_the_completion_rate_reported():
+    """Each trip's times are its exact insert and exit, as seen step by step (not the 5 s samples): road travel time
+    = exit − insert, system travel time = exit − requested departure; beside the means, the completion rate and the
+    unfinished share of what was spawned."""
+    network = generate_network(2, 2)
+    simulation = Simulation(network, demand(), MODES, seed=5)
+    on, times = {}, {}  # vehicle id -> when first on the road; (on, off) of each finished trip, step by step
+    with tempfile.TemporaryDirectory() as folder:
+        recorder = results.RunRecorder(network, MODES, folder=Path(folder) / "run")
+        while simulation.time < 600:
+            simulation.step()
+            now = {vehicle.id for vehicle in simulation.vehicles}
+            for vehicle_id in now:
+                on.setdefault(vehicle_id, simulation.time)
+            for vehicle_id in [v for v in on if v not in now and v not in times]:
+                times[vehicle_id] = (on[vehicle_id], simulation.time)
+            if simulation.time % results.SAMPLE_S < DT / 2:
+                recorder.sample(simulation.frame())
+        recorder._flush()
+        trips = results._csv(Path(folder) / "run" / "trips.csv")
+        column = {name: trips[0].index(name) for name in trips[0]}
+        assert trips[0] == results.TRIP_COLUMNS and len(trips) > 100
+        for row in trips[1:]:
+            entered, left = times[row[0]]
+            assert (row[column["Departed (s)"]], row[column["Arrived (s)"]]) == (round(entered, 1), round(left, 1))
+            assert abs(row[column["Trip time (s)"]] - (left - entered)) < 0.06
+            assert row[column["Requested departure (s)"]] <= entered - DT + 1e-6  # generated a step before, at least
+            assert row[column["System travel time (s)"]] >= row[column["Trip time (s)"]]
+        assert any(row[column["Trip time (s)"]] % results.SAMPLE_S for row in trips[1:])  # not whole samples
+        k = recorder.kpis()
+        assert k["mean_system_trip_s"] > k["mean_trip_s"] > 0
+        assert k["completion_rate"] == round(k["arrived"] / k["spawned"], 3) < 1
+        assert k["unfinished_share"] == round((k["on_road"] + k["waiting_to_enter"]) / k["spawned"], 3)
+        assert abs(k["completion_rate"] + k["unfinished_share"] - 1) < 0.002
+
+
+def test_a_warm_up_is_left_out_of_the_figures():
+    """measure_from_s: the KPIs count from its end (time, distance, trips that entered after it, throughput over the
+    measured hours); the per-minute rows go on for the whole run, and the Run sheet says where measuring began."""
+    network = generate_network(2, 2)
+    simulation = Simulation(network, demand(), MODES, seed=5)
+    with tempfile.TemporaryDirectory() as folder:
+        whole = results.RunRecorder(network, MODES, folder=Path(folder) / "whole")
+        warm = results.RunRecorder(network, MODES, folder=Path(folder) / "warm", measure_from_s=300)
+        while simulation.time < 600:
+            simulation.step()
+            if simulation.time % results.SAMPLE_S < DT / 2:
+                frame = simulation.frame()
+                whole.sample(frame)
+                warm.sample(frame)
+                if abs(simulation.time - 300) < DT / 2:
+                    at_300 = dict(whole.totals)
+        k = warm.kpis()
+        assert k["measure_from_s"] == 300 and k["arrived"] == whole.kpis()["arrived"]  # the counts: the whole run
+        assert abs(warm.totals["vehicle_s"] - (whole.totals["vehicle_s"] - at_300["vehicle_s"])) < 1e-6
+        assert k["throughput_vph"] == round((k["arrived"] - at_300["arrived"]) * 3600 / 300)
+        trips = results._csv(Path(folder) / "warm" / "trips.csv")[1:]
+        assert 0 < k["trips"] == len(trips) < whole.kpis()["trips"] and all(row[4] >= 300 for row in trips)
+        assert len(warm.minute_rows) == len(whole.minute_rows) == 10
+        path = warm.finish(Path(folder))
+        run = {row[0]: row[1] for row in read_xlsx(path)["Run"][1:]}
+        assert run["Measured from"] == "00:05:00"
+        summary = {row[0]: row[1] for row in read_xlsx(path)["Summary"][1:]}
+        assert summary["Measured from"] == "00:05:00" and summary["Completion rate"] == k["completion_rate"]
 
 
 def test_everything_is_exported_for_analysis():

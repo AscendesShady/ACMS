@@ -3,7 +3,16 @@
 Each follows its published method (§6); none is the commercial product, so its numbers won't match
 the real software exactly. Times in seconds; a cyclic profile has one bin per second of the cycle.
 
-- **Shared:** `webster(ratios)`; `critical_saturation(ratios)` (X = Y·C/(C − L) at Webster's cycle, the
+- **Clearance** (`clearance(speed, crossing)`): each signalised junction's own amber and all-red, by ITE's
+  kinematic change and clearance intervals on the level: amber Y = t + v/2a (t = 1 s perception-reaction,
+  a = 3.05 m/s², v its fastest approach's speed limit), all-red R = (W + L)/v (W its width stop line to far
+  stop line, L = 6.1 m); amber held to 3–6 s and all-red to 1–6 s (MUTCD), to 0.1 s. A 50 km/h, two-lane grid
+  junction gets 3.3 + 2.0 s, a 120 km/h six-lane one 6.0 (6.5 capped) + 2.1 s. `simulation.Signal` runs them and
+  every method below takes the junction's amber + all-red (`span`; `AMBER_S` + `ALL_RED_S`, 3 + 2 s, only
+  where no junction is given) for its lost time and phase starts.
+- **Shared:** `webster(ratios, span)` (C0 capped at 120 s; its greens fill that cycle with `fit_greens`, so a phase
+  held at its minimum green takes its time from the others, never lengthening the cycle past the cap; minimum greens
+  and clearances that can't fit in 120 s are refused); `critical_saturation(ratios)` (X = Y·C/(C − L) at Webster's cycle, the
   HCM's critical v/c; generate_demand sizes demand by it); `KERB_TURN_PER_LANE_VPH` (1,160) and
   `OFFSIDE_TURN_PER_LANE_VPH` (1,100), turning lanes' saturation flows measured on the simulated drivers
   (the flow ratios that use them are simulation.Graph's); `fit_greens(shares, cycle)` (greens that fill a cycle exactly,
@@ -51,9 +60,11 @@ the real software exactly. Times in seconds; a cyclic profile has one bin per se
 - **Calibrated to the simulated drivers** (the HCM's field method on SUMO's default passenger car at
   a signal with a standing queue, its 0.9 s startup delay; 4 seeds, an hour each, headways from the 5th queued vehicle on): saturation
   flow `SATURATION_PER_LANE_VPH` 2,060 veh/h per lane (measured 1.744 s, 2,064); start-up lost time
-  `START_UP_LOST_S` 1.8 s (1.82); amber used `AMBER_USED_S` 2.2 s of 3 (2.17); SCATS's standard space
-  time 0.9 s (0.88). Effective green = green + amber used − start-up lost; Webster's lost time per phase
-  is the start-up lost time, the all-red and the amber not used (4.6 s). TSP's controller estimates a queue's
+  `START_UP_LOST_S` 1.8 s (1.82); amber used `AMBER_USED_S` 2.8 s of 3.3 (2.77 over 4 seeds; 2.17 of 3 s
+  before drivers reacted to the amber before deciding to stop); SCATS's standard space
+  time 0.9 s (0.88). Effective green = green + amber used − start-up lost (the HCM's extension of effective
+  green e, the same whatever the amber); Webster's lost time per phase is the start-up lost time, the all-red
+  and the amber not used (tL = l1 + Y − e: 4.3 s at 3.3 + 2.0 s). TSP's controller estimates a queue's
   clearance with the same saturation headway and start-up lost time.
   `test_the_timing_methods_are_calibrated_to_the_simulated_drivers` re-measures all four, so a change
   to the drivers that moves them fails there.

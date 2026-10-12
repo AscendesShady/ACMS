@@ -37,17 +37,19 @@ def parse(reply: str) -> bool:
 
 class SignalAgent:
     def __init__(self, ask: Callable[[object], object] | None = None, wait_s: float | None = None,
-                 deadline_s: float | None = None) -> None:
+                 deadline_s: float | None = None, rule: bool | None = None) -> None:
         """`ask(question)` returns the model's reply: its text, or a dict with "answer" (or "reply", the
         text) and anything else worth keeping (model, tokens, P(yes)); it raises (or `ask` is None) when no
         model is connected. `wait_s`: decide() waits this long for an answer (unpaced headless runs); None:
-        never. `deadline_s`: how long an answer may take to count, in simulated seconds (None: any)."""
-        self._ask, self.wait_s, self.deadline_s = ask, wait_s, deadline_s
+        never. `deadline_s`: how long an answer may take to count, in simulated seconds (None: any). `rule`: what
+        an agent with nobody to ask answers, a batch's baselines: False never preempts, True always does, None
+        the extension's own (TSP: the plan, DEVL: clear the lane)."""
+        self._ask, self.wait_s, self.deadline_s, self.rule = ask, wait_s, deadline_s, rule
         self._lock = threading.Condition()
         self._answers: dict = {}  # key -> latest answer
         self._asked: dict = {}  # key -> the question last sent
         self._pending: dict = {}  # key -> [urgency, question]: waiting for the worker
-        self._flight: set = set()  # keys being asked now
+        self._flight: set = set()  # (generation, key) being asked now
         self._once: set = set()  # keys asked at most once
         self._details: dict = {}  # key -> the latest answer's record
         self._fell_back: set = set()  # keys not answered by the deadline: FALSE for good
@@ -65,21 +67,22 @@ class SignalAgent:
         with self._lock:
             if key in self._fell_back:
                 return False
+            flight = (self._generation, key)  # this run's question being asked (an earlier run's never blocks it)
             if self._ask is not None and not self._closed:
                 if once:
                     self._once.add(key)
                 if key in self._pending:
                     self._pending[key] = [urgency, question]  # not sent yet: the newer one goes instead
-                elif key not in self._flight and (key not in self._asked if key in self._once
-                                                  else self._asked.get(key) != question):
+                elif flight not in self._flight and (key not in self._asked if key in self._once
+                                                     else self._asked.get(key) != question):
                     self._pending[key] = [urgency, question]
                     self._start()
                     self._lock.notify_all()
-            if self.wait_s is not None and (key in self._pending or key in self._flight):
+            if self.wait_s is not None and (key in self._pending or flight in self._flight):
                 until = time.monotonic() + self.wait_s
-                while (key in self._pending or key in self._flight) and time.monotonic() < until:
+                while (key in self._pending or flight in self._flight) and time.monotonic() < until:
                     self._lock.wait(until - time.monotonic())
-                if key not in self._answers and (key in self._pending or key in self._flight):
+                if key not in self._answers and (key in self._pending or flight in self._flight):
                     self._pending.pop(key, None)  # past the deadline: the plan, whatever comes later
                     self._fell_back.add(key)
                     self._answers[key] = False
@@ -89,7 +92,7 @@ class SignalAgent:
 
     @property
     def asks(self) -> bool:
-        """Whether it has anyone to ask (a batch's No LLM agent hasn't)."""
+        """Whether it has anyone to ask (a batch's baseline agent hasn't)."""
         return self._ask is not None
 
     def withdraw(self, key) -> bool:
@@ -123,21 +126,20 @@ class SignalAgent:
             return len(self._pending)
 
     def _start(self) -> None:
-        if self._worker is None:
-            self._worker = threading.Thread(target=self._work, name="signal agent", daemon=True)
+        if self._worker is None:  # one a run (a generation): an earlier run's slow answer never holds up this one's
+            self._worker = threading.Thread(target=self._work, args=(self._generation,), name="signal agent", daemon=True)
             self._worker.start()
 
-    def _work(self) -> None:
+    def _work(self, generation: int) -> None:
         while True:
             with self._lock:
-                while not self._pending and not self._closed:
+                while not self._pending and not self._closed and generation == self._generation:
                     self._lock.wait()
-                if self._closed:
-                    return
+                if self._closed or generation != self._generation:
+                    return  # reset: the new run's questions have a worker of their own
                 key = min(self._pending, key=lambda k: self._pending[k][0])  # the most urgent first
                 _, question = self._pending.pop(key)
-                generation = self._generation
-                self._flight.add(key)
+                self._flight.add((generation, key))
                 self._asked[key] = question
                 self.asked += 1
             started = time.monotonic()
@@ -150,7 +152,7 @@ class SignalAgent:
                 record, error = {"answer": False}, str(exc)
             record.update(latency_s=round(time.monotonic() - started, 3), error=error, question=question)
             with self._lock:
-                self._flight.discard(key)
+                self._flight.discard((generation, key))
                 if generation == self._generation:  # else: asked before a reset, another run's question
                     if key in self._fell_back:  # too late: kept for the record, not used
                         record["fell_back"] = True
@@ -169,10 +171,17 @@ class SignalAgent:
             self._pending.clear()
             self._lock.notify_all()
 
+    @property
+    def generation(self) -> int:
+        """Which run this is: reset() moves it on (extensions tell a new run by it, however soon it starts)."""
+        return self._generation
+
     def reset(self) -> None:
         """Forget every question, answer and the log (a new run)."""
         with self._lock:
             self._generation += 1
+            self._worker = None  # the last run's ends after any question it is asking
+            self._lock.notify_all()
             for found in (self._answers, self._asked, self._pending, self._details):
                 found.clear()
             self._once.clear()

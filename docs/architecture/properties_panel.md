@@ -4,8 +4,13 @@
 - **Road:**
   - Fields: length, lanes/direction, lane changing, speed, direction (two-way / one-way /
     one-way reversed), "Tightest curve" (from stored curvature) and road type.
+  - Turn pockets: a "Pocket to <junction>" row for each junction end its traffic arrives at (none at a
+    boundary end): a list (None, Kerb or Offside, 1 or 2 lanes; tooltip "Turn pocket") and its length,
+    15–150 m ("Pocket length"). Applied with the other fields (`_pocket_fields`); a pocket at an end the
+    traffic no longer arrives at (made one-way) goes, and `Network.validate` refuses one that doesn't fit.
   - Apply is enabled only while a field differs from the road; Enter also applies.
-  - Changes are validated and reverted with a message if invalid.
+  - Changes are validated as a whole and reverted with a message if invalid: the whole network is put back
+    (the same object, as `call_tool` does), with no undo step and the saved state as it was.
 - **Node:**
   - Control: signalised / roundabout / uncontrolled. Slip roads past the junction then move out where
     it needs more room (`fit_slip_roads`: a roundabout); if they can't, the control stays as it was, with

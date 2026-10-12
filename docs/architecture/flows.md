@@ -28,4 +28,3 @@
    - Tool calls run on the UI thread: reads at once, edits after **Apply**.
    - Each applied edit → `_ai_edited` → redraw + one undo step.
    - Each message starts with the editor update (your changes since the last reply, selection).
-   - Watch mode: your edit → `_commit` → `editor_changed` → a look after a 2 s pause.

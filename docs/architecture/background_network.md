@@ -15,7 +15,9 @@
   OSM holds no signal timings (no established tag: a proposed `type=timing` relation is used 3 times in all), so a
   signalised junction starts with the editor's default, Webster from the demand at each Run; the Edit tab's
   Control and timing method (or `set_junction_control`) override any junction.
-- **An image** (`raster_graph`): the mask (`background.BackgroundPainter.road_mask`: the image scaled to
+- **An image** (`raster_graph`): the mask (`background.BackgroundPainter.road_mask`, traced off the GUI thread;
+  `BackgroundPainter.image` loads one image at a time under a lock, as PDFium, which renders a PDF page, isn't
+  thread-safe and the map may be drawing: the image scaled to
   about `resolution_m` a pixel, each pixel within `colour_tolerance` of the colour on red, green and
   blue) padded, specks under 30 pixels dropped, thinned by Zhang–Suen to one-pixel lines; `_trace` groups
   touching node pixels (not exactly two neighbours), traces the lines between them, loops too, prunes

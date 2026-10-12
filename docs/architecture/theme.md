@@ -12,3 +12,7 @@
   square, 26 × 26; a mini one (`role="mini"`) shows a small flat glyph but is clickable over the same 26 × 26.
 - A collapsible section's title (`role="section"`): semibold, left-aligned, a rule under it, filled
   only on hover, a focus outline for the keyboard.
+- **Clicks are seen:** every button turns `PRESSED` (#1e40af, a blue-800; a primary one `BANNER`) with a light blue
+  edge while held, and for `FLASH_MS` (250 ms) after the click (`ClickFlash`, an application event filter that
+  apply_theme installs once: the `flash` property, repolished), so even a quick click shows it was taken; a mini
+  button keeps its size. A checked tool button (the menu bar's eye while it watches) is the accent colour.

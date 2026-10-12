@@ -1,6 +1,6 @@
 # Statistics in transportation engineering: which method is used where
 
-A catalogue of the statistical methods in `transportation_engineering_books/` (SRC_001 to SRC_033), each with the
+A catalogue of the statistical methods in `references/transportation_engineering_books/` (SRC_001 to SRC_033), each with the
 transport problem the books apply it to, its underlying distribution or assumption, and the simulator
 tool it could become for agentic control of ACMS. Page numbers are **PDF pages** (not printed pages) and are
 written `020 p681` (book SRC_020, PDF page 681). Every pairing was read in the book's text. Where a book
@@ -35,7 +35,7 @@ means J.W. Weibull's accessibility axioms and "hazard" means natural hazard, not
 | % headways < 3 s | proportion | Percent time-spent-following (two-lane LOS) | 011 p236 | Detector headways → PTSF | % < 3 s (`read_detectors`) |
 | Headway CV; E(W) = E(h)(1 + CV²)/2 | random passenger arrival | Bus bunching, transit headway adherence LOS (CV ≤ 0.10 = A), passenger wait | 009 p127, p155; 011 p1012–1013; 013 p127; 023 p195 | Bus headways at a stop → CV, expected wait | Yes: `analyse_run` |
 | Ranked hourly volumes, K-factor, PHF | empirical | Design hour (30th highest hour), peaking | 011 p104–107; 022 p110–114 | Daily profile → design-hour demand | Daily curve exists |
-| Planning time index (95th-pct TT / free-flow TT), TTI, SD of travel time | empirical percentile | Travel-time reliability | 027 p39, p92–93; 029 p47 | Trips over seeds → PTI per OD | Yes: TTI, PTI per run and OD (`analyse_run`), compared in experiments |
+| Planning time index (95th-pct TT / free-flow TT), TTI, SD of travel time | empirical percentile | Travel-time reliability | 027 p39, p92–93; 029 p47 | Trips over seeds → PTI per OD | Yes: TTI, PTI and the buffer index (mean-based) per run and OD (`analyse_run`), compared in experiments |
 | Gini / Lorenz curve | inequality | Concentration of traffic on links, equity of transit access | 030 p646–649; 019 p111; 008 p107 | Link flows → Gini | Yes: `analyse_run` |
 | Box plot fences, z-score outliers, count-consistency (> 10 % up/downstream) | normal for z | Detector data QC, bad runs | 014 p66–67, p88–93; 033 §2.7; 027 p40, p78 | Detector series / runs → flagged outliers | No |
 | Exposure-normalised crash rates | harm / exposure | Deaths per veh-km; blackspot ranking (per km, per million entering, severity weights 12/3/1) | 009 p73–82; 024 p148–149; 022 p142–144 | Conflicts and veh-km per junction → ranked list | Veh-km recorded |

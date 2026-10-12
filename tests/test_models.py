@@ -154,6 +154,48 @@ def test_signal_placeholder_settings_are_validated():
         raise AssertionError(f"{phases} phases with {greens} should be rejected")
 
 
+def test_only_finite_numbers_pass_validation_or_a_file():
+    import json
+    import tempfile
+    from copy import deepcopy
+    from pathlib import Path
+
+    from traffic_simulator.models import BusStop
+    from traffic_simulator.network_io import load_network, save_network
+
+    network = generate_network(2, 2)
+    network.bus_stops["BS1"] = BusStop("BS1", "1,1-2,1", 100.0)
+    network.roads["1,1-2,1"].shape, network.roads["1,1-2,1"].curvature = [(250.0, 10.0)], [0.0, 0.0]
+    network.validate()
+    places = {"node": lambda n: n.nodes["1,1"], "road": lambda n: n.roads["1,1-2,1"], "stop": lambda n: n.bus_stops["BS1"],
+              "background": lambda n: n.background, "network": lambda n: n}
+    for bad in (float("nan"), float("inf"), float("-inf"), True):
+        for place, name, value in (("node", "x", bad), ("node", "supply_vph", bad), ("node", "cycle_max_s", bad),
+                                   ("node", "green_times_s", [30.0, bad]), ("road", "length_m", bad),
+                                   ("road", "speed_limit_kmh", bad), ("road", "shape", [(250.0, bad)]),
+                                   ("road", "curvature", [0.0, bad]), ("stop", "dwell_s", bad),
+                                   ("background", "opacity", bad), ("network", "default_spacing", bad)):
+            changed = deepcopy(network)
+            setattr(places[place](changed), name, value)
+            try:
+                changed.validate()
+            except ValueError:
+                continue
+            raise AssertionError(f"{place} {name} = {value} passed")
+    with tempfile.TemporaryDirectory() as folder:
+        path = Path(folder) / "network.json"
+        save_network(network, path)
+        document = json.loads(path.read_text(encoding="utf-8"))
+        document["nodes"][0]["x"] = float("nan")
+        path.write_text(json.dumps(document), encoding="utf-8")  # NaN, as Python writes it
+        try:
+            load_network(path)
+        except ValueError as exc:
+            assert "NaN" in str(exc)
+        else:
+            raise AssertionError("a file with NaN opened")
+
+
 def test_crossings_are_found_but_shared_junctions_are_not():
     network = generate_network(3, 4)  # rows y = 0, 500, 1000; columns x = 0, 500, 1000, 1500
     a, b = network.nodes["1,1"], network.nodes["2,3"]  # (0, 1000) -> (500, 0)
@@ -183,6 +225,71 @@ def test_split_road_keeps_settings_and_direction():
     assert boundary == "2E" and network.approach_roads["2E"].from_node == cut.id
     assert network.roads[inner].from_node == "4,2" and network.roads[inner].to_node == cut.id
     network.validate()
+
+
+def test_turn_pockets_are_validated_and_stay_at_their_ends():
+    from copy import deepcopy
+
+    network = generate_network(3, 4)  # 500 m blocks
+    road = network.roads["1,2-2,2"]
+    road.pockets = {"2,2": {"lanes": 1, "length_m": 60.0, "side": "kerb"},
+                    "1,2": {"lanes": 2, "length_m": 40.0, "side": "offside"}}
+    network.validate()
+    assert road.arrival_ends() == ("2,2", "1,2")
+
+    def pocket(**changes):
+        return {"lanes": 1, "length_m": 50.0, "side": "kerb", **changes}
+
+    def refused(edit, words: str) -> None:
+        trial = deepcopy(network)
+        edit(trial, trial.roads["1,2-2,2"])
+        try:
+            trial.validate()
+        except ValueError as exc:
+            assert words in str(exc), str(exc)
+        else:
+            raise AssertionError(f"accepted, though {words!r}")
+
+    refused(lambda n, r: r.pockets.update({"2,2": pocket(length_m=200.0)}), "15 to 150 m")
+    for bad in (pocket(lanes=3), pocket(lanes=True), pocket(lanes=1.0), pocket(side="left"), {"lanes": 1}):
+        refused(lambda n, r: r.pockets.update({"2,2": bad}), "needs lanes (1 or 2)")
+    refused(lambda n, r: n.approach_roads["1W"].pockets.update({"1W": pocket()}), "not at 1W")  # a boundary end
+    refused(lambda n, r: setattr(n.nodes["2,2"], "control", "roundabout"), "not at 2,2")
+    refused(lambda n, r: setattr(r, "lane_changing", False), "needs lane changing")
+    refused(lambda n, r: setattr(r, "direction", "one-way"), "doesn't arrive at 1,2")  # its traffic leaves 1,2
+    refused(lambda n, r: r.pockets.update({"2,2": pocket(length_m=150.0), "1,2": pocket(length_m=150.0)})
+            or n.set_road_length(r.id, 300.0), "too short")
+    refused(lambda n, r: n.move_bus_stop(n.add_bus_stop(r.id).id, 420.0), "bay is beside")
+    # Kept by the end it is at: reversing the road keeps them; splitting it leaves each on the part reaching its end.
+    network.reverse_road("1,2-2,2")
+    network.validate()
+    assert road.pockets["2,2"]["side"] == "kerb" and road.pockets["1,2"]["side"] == "offside"
+    first, second = network.split_road("1,2-2,2", network.add_node(200, 500).id)
+    assert network.roads[first].pockets == {"2,2": pocket(length_m=60.0)}
+    assert network.roads[second].pockets == {"1,2": {"lanes": 2, "length_m": 40.0, "side": "offside"}}
+    network.validate()
+    network.set_driving_side("right")  # relative to the driving side: the same pockets serve the same turns
+    assert network.roads[first].pockets == {"2,2": pocket(length_m=60.0)}
+    network.validate()
+
+
+def test_turn_pockets_are_saved_and_older_files_open_without_them():
+    import json
+    import tempfile
+    from pathlib import Path
+
+    from traffic_simulator.network_io import load_network, save_network
+
+    network = generate_network(2, 2)
+    network.roads["1,1-2,1"].pockets = {"2,1": {"lanes": 2, "length_m": 45.5, "side": "offside"}}
+    path = Path(tempfile.mkdtemp()) / "pockets.json"
+    save_network(network, path)
+    assert load_network(path).roads["1,1-2,1"].pockets == network.roads["1,1-2,1"].pockets
+    document = json.loads(path.read_text(encoding="utf-8"))
+    for record in document["roads"] + document["approach_roads"]:
+        del record["pockets"]  # a file from before turn pockets
+    path.write_text(json.dumps(document), encoding="utf-8")
+    assert all(road.pockets == {} for road in load_network(path).all_roads())
 
 
 if __name__ == "__main__":

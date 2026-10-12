@@ -286,7 +286,7 @@ def test_passengers_set_each_buss_dwell_and_load():
     capacity = round(CAPACITY_PER_M * 12.0)
     loads: dict = {}
     for stop, link, t, bus, boarded, alighted, left, load, dwell in rows:
-        before = loads.get(bus, 0.0)
+        before = loads.get(bus, 1.0)  # at first its type's occupancy (1 by default)
         assert load == before - alighted + boarded and 0 <= load <= capacity  # passengers kept count of
         standing = load > SEATED_SHARE * capacity
         assert abs(dwell - round(DOOR_S + alighted * ALIGHT_S + boarded * (BOARD_S + (STANDING_BOARD_S if standing else 0)), 1)) < 0.11
@@ -309,6 +309,38 @@ def test_passengers_set_each_buss_dwell_and_load():
         assert "boarding 0 to" in str(exc)
     else:
         raise AssertionError("a negative boarding rate is refused")
+
+
+def test_a_buss_first_stop_starts_from_its_occupancy():
+    """A bus with no load yet carries its type's occupancy into its first stop: all of them may alight there."""
+    from traffic_simulator.simulation import ALIGHT_S, DOOR_S  # noqa: PLC0415
+    from traffic_simulator.vehicle import create_vehicle  # noqa: PLC0415
+
+    network = generate_network(1, 2)
+    stop = network.add_bus_stop(ROAD, "forward")
+    stop.boarding_per_h, stop.alighting_percent = 0, 100
+    bus_type = VehicleMode("Bus", PALETTE[0], occupancy=20.0)
+    simulation = Simulation(network, [], [bus_type])
+    simulation.observe()
+    bus = create_vehicle(bus_type, "Bus1", simulation.graph.route("1W", "1E"))
+    dwell = simulation._serve(bus, simulation.graph.bays["1,1-2,1>"][0])
+    boarded, alighted, _, load, _ = simulation.observations()["boardings"][-1][4:]
+    assert (boarded, alighted, load) == (0, 20, 0.0) and isclose(dwell, DOOR_S + 20 * ALIGHT_S)  # 20 + 0 − 20 = 0
+
+
+def test_a_bus_is_known_by_its_class_not_its_name():
+    """Bus stops serve a type whose vehicle_class is bus, whatever it is called; a type from before vehicle_class
+    named Bus is a bus."""
+    network = generate_network(1, 2)
+    network.add_bus_stop(ROAD, "forward")
+
+    def stops(mode: VehicleMode) -> int:
+        simulation = Simulation(network, [], [mode])
+        simulation._spawn(PairDemand("1W", "1E", 100, None, [], "Random", (100,)), 0)
+        return len(next(vehicle for queue in simulation.pending.values() for vehicle in queue).stops)
+
+    assert stops(VehicleMode("Bus", PALETTE[0])) == stops(VehicleMode("City Bus", PALETTE[0], vehicle_class="bus")) == 1
+    assert stops(VehicleMode("Bus", PALETTE[0], vehicle_class="coach")) == 0  # the name alone no longer makes a bus
 
 
 if __name__ == "__main__":

@@ -4,7 +4,8 @@ Each function reads a run's KPIs with what it observed (`kpis["observed"]`: resu
 Simulation.observations(), as MainWindow._observed_kpis joins them), so the assistant's tools can ask any run of
 the session:
 - `junction_los`: control delay per approach and junction, graded A–F by the HCM 2000 (Exhibit 16-2 for signals,
-  17-2 / 17-22 for give-way and stop control), per 15-minute period too.
+  17-2 / 17-22 for give-way and stop control), per 15-minute period too; a roundabout entry's capacity, simulated
+  and by the HCM 6 (roundabouts.hcm_entry_capacity), against the flow circulating in front of it.
 - `diagnose_signal`: each signal's critical v/c, flow ratios, arrivals on green (arrival type, HCM Exhibit 16-11),
   HCM delay against the simulated one, spillback, and the likely causes ranked with a fix.
 - `run_health`: gridlock, demand that can't get in or has no route, a run too short for its trips or warm-up.
@@ -21,6 +22,8 @@ from collections import defaultdict
 
 from . import emissions, stats
 from .results import MINUTE_COLUMNS
+from .roundabouts import hcm_entry_capacity
+from .simulation import ROUNDABOUT_ENTRY_VPH, measured_capacity
 from .signal_timing import ALL_RED_S, AMBER_S, COORDINATED, effective, incremental_delay, webster
 
 # HCM 2000 control delay thresholds, s/veh: (upper bound, LOS); above the last, F
@@ -58,14 +61,16 @@ def queue_p95(observed: dict, road: str) -> float:
 
 def _approach_delays(observed: dict) -> dict[str, list[tuple[float, float]]]:
     """Each link ending at a junction: (when it left, control delay s) of every vehicle that drove it: its time on
-    the link and through the junction less that at free flow (the speed limit, then each turn's own speed)."""
+    the link and through the junction less that at its own free flow (its free speed on the link, then through the
+    turn it took; a log without it: the speed limit, then the mean of the turns' speeds)."""
     links, controls = observed.get("links", {}), observed.get("controls", {})
     found: dict = defaultdict(list)
-    for link, entered, took, *_ in observed.get("traversal_log", []):
+    for link, entered, took, *rest in observed.get("traversal_log", []):
         info = links.get(link)
         if info is None or info["to"] not in controls:
             continue
-        found[link].append((entered + took, max(0.0, took - info["free_s"] - info.get("cross_s", 0.0))))
+        free = rest[2] if len(rest) > 2 and rest[2] is not None else info["free_s"] + info.get("cross_s", 0.0)
+        found[link].append((entered + took, max(0.0, took - free)))
     return found
 
 
@@ -96,6 +101,12 @@ def junction_los(kpis: dict, every: bool = False, period_min: int = 15) -> dict:
             if share and saturation:
                 row["capacity_vph"] = round(saturation * share)
                 row["v_c"] = round(flow / (saturation * share), 2)
+        if "circulating" in info:  # a roundabout entry: its capacity against the flow circulating in front of it
+            moves = observed.get("turn_traversals", {})
+            vc = sum(moves.get(into, {}).get(out, (0,))[0] for into, out in info["circulating"]) * 3600 / seconds
+            capacity, hcm = measured_capacity(ROUNDABOUT_ENTRY_VPH, vc), hcm_entry_capacity(vc, info["lanes"])
+            row.update(circulating_vph=round(vc), capacity_vph=round(capacity), v_c=round(flow / capacity, 2),
+                       hcm_capacity_vph=None if hcm is None else round(hcm))
         q95, length = queue_p95(observed, info["road"]), info["length_m"]
         if q95:
             row.update(queue_p95_m=q95, queue_share_of_road=round(q95 / length, 2) if length else None)
@@ -128,7 +139,9 @@ def junction_los(kpis: dict, every: bool = False, period_min: int = 15) -> dict:
                       "speed limit (and each turn's own speed), as the HCM measures it (Appendix A of Ch 16).",
                       "Signals graded by HCM 2000 Exhibit 16-2; give-way, stop and roundabout entries by Exhibits "
                       "17-2 and 17-22 (HCM 2000 has no roundabout LOS; the HCM 2010 uses the same thresholds).",
-                      "v/c of a signal approach: its flow over saturation flow × green share of the cycle."]}
+                      "v/c of a signal approach: its flow over saturation flow × green share of the cycle.",
+                      "Roundabout entry: capacity measured on the simulated drivers against the flow circulating in "
+                      "front of it, beside the HCM 6 (Ch 22) entry capacity; the simulated ring is one lane."]}
 
 
 def _green_share(plan: dict, link: str) -> float | None:
@@ -165,7 +178,8 @@ def diagnose_signal(kpis: dict, junction: str | None = None) -> dict:
     for node in [junction] if junction else sorted(signals):
         plan = signals[node]
         cycle, phases = plan["cycle_s"], plan["phases"]
-        lost = len(phases) * (AMBER_S + ALL_RED_S)
+        span = plan.get("lost_s_per_phase", AMBER_S + ALL_RED_S)  # the junction's own amber and all-red
+        lost = len(phases) * span
         approaches, ratios = [], []
         for phase in phases:
             ys = []
@@ -203,7 +217,7 @@ def diagnose_signal(kpis: dict, junction: str | None = None) -> dict:
             ratios.append(max(ys, default=0.0))
         big_y = sum(ratios)
         xc = big_y * cycle / (cycle - lost) if cycle > lost else None
-        webster_cycle = round(webster(ratios)[0]) if big_y < 0.95 else None
+        webster_cycle = round(webster(ratios, span)[0]) if big_y < 0.95 else None
         report = {"junction": node, "method": plan["method"], "cycle_s": cycle, "flow_ratios": [round(y, 3) for y in ratios],
                   "Y": round(big_y, 3), "critical_v_c": None if xc is None else round(xc, 2), "webster_cycle_s": webster_cycle,
                   "approaches": approaches, "causes": _causes(plan, approaches, xc, webster_cycle)}
@@ -212,7 +226,8 @@ def diagnose_signal(kpis: dict, junction: str | None = None) -> dict:
     return {"signals": found, "notes": [
         "Flows are the vehicles that drove each approach in the run; saturation flows are the simulation's own "
         "(measured on its drivers, per lane and turn).",
-        "Effective green = green + 2.2 s of amber used - 1.8 s start-up lost (signal_timing.py); L = 5 s a phase.",
+        "Effective green = green + 2.8 s of amber used - 1.8 s start-up lost (signal_timing.py); L = the junction's "
+        "amber + all-red a phase (from its approach speed and width).",
         "Arrivals on green: vehicles that joined the queue or reached the stop line while their signal was green "
         "(HCM 2000 p16-19).",
         "The HCM's delay assumes nothing beyond the stop line holds traffic back; a simulated delay well above it "

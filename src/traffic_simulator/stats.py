@@ -203,13 +203,16 @@ def logit(utilities: dict) -> dict:
 def reliability(trips) -> dict:
     """Travel-time reliability from trips (trip seconds, delay seconds): the travel time index (mean trip
     time over mean free-flow time) and the planning time index (the 95th percentile of each trip's time over
-    its free-flow time; FHWA Toolbox III 2019, p92–93). Free-flow time = trip time − delay (against the
-    speed limit, as the run's Delay is)."""
+    its free-flow time; FHWA Toolbox III 2019, p92–93), and the buffer index, mean-based: (95th percentile − mean)
+    ÷ mean of the same per-trip ratios (FHWA's (TT95 − mean TT) ÷ mean TT, distance-normalised as the PTI is).
+    Free-flow time = trip time − delay (against the speed limit, as the run's Delay is)."""
     pairs = [(trip, trip - lost) for trip, lost in trips if trip > 0 and trip - lost > 0]
     if not pairs:
-        return {"tti": None, "pti": None}
-    return {"tti": round(sum(t for t, _ in pairs) / sum(f for _, f in pairs), 3),
-            "pti": round(percentile([t / f for t, f in pairs], 95), 3)}
+        return {"tti": None, "pti": None, "bi": None}
+    ratios = [t / f for t, f in pairs]
+    p95, mean = percentile(ratios, 95), sum(ratios) / len(ratios)
+    return {"tti": round(sum(t for t, _ in pairs) / sum(f for _, f in pairs), 3), "pti": round(p95, 3),
+            "bi": round((p95 - mean) / mean, 3)}
 
 
 def logsum(utilities: dict) -> float:

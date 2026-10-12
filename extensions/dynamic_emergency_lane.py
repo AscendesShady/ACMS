@@ -5,7 +5,7 @@ Signal Priority is for buses (see src/traffic_simulator/extensions.py for the ho
 Ticked, signal_override() runs inside every signal, for each arm of each signalised junction, every simulation step,
 after TSP's. Each junction (`_Junction`) shows the state it is given (its plan, or TSP's) unless it is clearing a lane:
 - detection, like TSP's check-in: an emergency vehicle (dispatched, or a type in EMERGENCY_TYPES) on an arm within
-  DETECT_S of the stop line at the arm's speed limit checks in, and its request (key "devl/junction/arm/vehicle")
+  DETECT_S of the stop line at the arm's speed limit, or held in a queue further out (`in_queue`), checks in, and its request (key "devl/junction/arm/vehicle")
   is asked once, through the run's signal agent, the soonest to arrive first. It checks out once it has left the arm.
   The agent reads the approach's telemetry (`telemetry`, schema SCHEMA, a JSON message kept in the run's feed and
   written beside a batch run's workbook as "devl telemetry.jsonl"): the vehicle (distance, speed, expected arrival,
@@ -44,7 +44,7 @@ ORDER = 3
 EMERGENCY_TYPES = ("emergency", "ambulance", "fire engine", "police")  # vehicle types it watches (any case)
 SCHEMA = "acms-devl-telemetry/1"
 QUEUED_KMH = 5.0  # slower than this, a vehicle ahead counts as queued
-DETECT_S = 30.0  # check-in: within this many seconds of the stop line at the arm's speed limit
+DETECT_S = 30.0  # check-in: within this many seconds of the stop line at the arm's speed limit, or held in a queue
 CLEAR_MAX_S = 60.0  # the longest one vehicle's lane stays green
 SIGNALS = {"G": "green", "Y": "amber", "R": "red"}
 KERBSIDE = 0  # the lane DEVL clears: the kerbside lane, whichever side traffic drives on
@@ -93,6 +93,11 @@ def is_emergency(vehicle: dict) -> bool:
     return bool(vehicle.get("emergency")) or str(vehicle.get("type", "")).lower() in EMERGENCY_TYPES
 
 
+def in_queue(vehicle: dict, ahead: list) -> bool:
+    """Whether a vehicle is held in a queue: slower than QUEUED_KMH with a vehicle ahead of it in its lane (`ahead`:
+    those nearer the stop line on its arm). With the distance, either checks it in."""
+    return vehicle["speed_kmh"] < QUEUED_KMH and any(other["lane"] == vehicle["lane"] for other in ahead)
+
 def telemetry(junction: str, arm: str, vehicle: dict, context: dict, state: str) -> dict:
     """The approach's telemetry for an emergency vehicle on it now (JSON-ready)."""
     view = context["arms"][arm]
@@ -128,6 +133,7 @@ class _Run:
 
     def __init__(self, agent) -> None:
         self.agent, self.junctions, self.requests, self.feed, self.last_t = agent, {}, {}, [], None
+        self.generation = getattr(agent, "generation", 0)  # the agent's run (SignalAgent.reset moves it on)
 
 
 class _Junction:
@@ -191,10 +197,12 @@ class _Junction:
         t, live = context["time_s"], set()
         for arm, view in context["arms"].items():
             reach = view["speed_limit_mps"] * DETECT_S
-            for vehicle in view["approaching"]:
-                if not is_emergency(vehicle) or vehicle["distance_m"] > reach:
-                    continue
+            for i, vehicle in enumerate(view["approaching"]):
                 key = f"devl/{self.junction}/{arm}/{vehicle['id']}"
+                on = self.run.requests.get(key)
+                if not is_emergency(vehicle) or not (vehicle["distance_m"] <= reach or in_queue(vehicle, view["approaching"][:i])
+                                                     or (on is not None and on["checked_out_s"] is None)):
+                    continue
                 live.add(key)
                 row = self.run.requests.get(key)
                 message = telemetry(self.junction, arm, vehicle, context, self.shown.get(arm, ("R",))[0])
@@ -216,7 +224,7 @@ class _Junction:
     def _ask(self, key: str, row: dict, message: dict, agent, model, t: float) -> None:
         """The request's answer, once it has reached the controller: TSP's rules (signal_agent.py)."""
         if row["no_agent"]:
-            row.update(answer=True, answered_s=t)  # the rule: clear the lane for every one
+            row.update(answer=getattr(agent, "rule", None) is not False, answered_s=t)  # the rule: every lane, or none
         else:
             wait, deadline = getattr(agent, "wait_s", None), getattr(agent, "deadline_s", None)
             agent.decide(key, question_for(row["system"], model, message), urgency=row["eta_at_s"], once=True)
@@ -277,11 +285,13 @@ class _Junction:
 
 
 def _run_for(agent, t: float) -> _Run:
-    """The run this agent's (or NOBODY's) junctions belong to; a new one when its time goes back or jumps."""
+    """The run this agent's (or NOBODY's) junctions belong to; a new one when its time goes back or jumps, or
+    its agent was reset (a new run, however soon after the last)."""
     global _latest
     key = agent if agent is not None else NOBODY
     run = _runs.get(key)
-    if run is None or run.last_t is None or t < run.last_t or t - run.last_t > 2:
+    if run is None or run.last_t is None or t < run.last_t or t - run.last_t > 2 \
+            or run.generation != getattr(agent, "generation", 0):  # or its agent reset: Stop, then Run at once
         run = _Run(agent)
         with _runs_lock:
             _runs.pop(key, None)
@@ -343,7 +353,7 @@ def report(agent) -> dict:
                ["Clearance granted (TRUE)", sum(bool(row["answer"]) for row in rows)],
                ["Refused (FALSE)", sum(row["answer"] is False and not row["fell_back"] for row in rows)],
                ["Fell back to the plan", sum(row["fell_back"] for row in rows)],
-               ["Decided by nobody (the rule)", sum(row["no_agent"] for row in rows)],
+               ["Decided by nobody (a baseline's rule)", sum(row["no_agent"] for row in rows)],
                ["Lanes cleared", len(cleared)], ["Lane green, in all (s)", round(sum(end - start for *_, start, end in cleared), 1)],
                ["Request to lane green, mean (s)", round(fmean(waits), 1) if waits else None],
                ["Agent latency, mean (s)", round(fmean(latencies), 2) if latencies else None],
@@ -352,8 +362,8 @@ def report(agent) -> dict:
                   "Lane green", "Checked out", "Latency (s)", "Guard", "Reason", "Error"]]
     for key, row in run.requests.items():
         details = found[key]
-        answer = "no LLM: TRUE" if row["no_agent"] else "no answer" if row["answered_s"] is None else \
-            "TRUE" if row["answer"] else "FALSE"
+        answer = ("baseline: " + ("TRUE" if row["answer"] else "FALSE")) if row["no_agent"] else \
+            "no answer" if row["answered_s"] is None else "TRUE" if row["answer"] else "FALSE"
         decisions.append([round(row["asked_s"], 1), row["junction"], row["approach"], row["lane"], row["vehicle"],
                           "none" if row["no_agent"] else f"System {row['system']}", details.get("model"), answer,
                           None if row["answered_s"] is None else round(row["answered_s"], 1), "yes" if row["fell_back"] else "",
@@ -373,7 +383,7 @@ def report(agent) -> dict:
 
 def panel():
     """Who decides each emergency vehicle's lane: System 1 or System 2 and its model, or Multiple: the models Batch
-    Run tests, each against the baseline (No LLM: the rule), and how (agent_choice.py)."""
+    Run tests, each against the baselines (Never, Always preempt), and how (agent_choice.py)."""
     global _choice, _figures
     widget = QWidget()
     form = QFormLayout(widget)

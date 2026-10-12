@@ -11,6 +11,7 @@ from pathlib import Path
 
 os.environ.setdefault("QT_QPA_PLATFORM", "offscreen")
 
+from PySide6.QtCore import QTimer  # noqa: E402
 from PySide6.QtWidgets import QApplication, QLabel, QLineEdit  # noqa: E402
 
 from test_results import read_xlsx  # noqa: E402
@@ -43,6 +44,73 @@ def window_with_demand(value=400):
     window._commit()
     window._od_command("set_od_demand", {"pairs": ["1W->1E", "1E->1W", "1N->1S"], "demand": "hourly", "value": value})
     return window
+
+
+def test_the_eye_the_research_log_and_a_batch_each_leave_a_dated_folder():
+    import json
+
+    window = window_with_demand()
+    window._extension("research_log").check.setChecked(True)
+    window.watch_action.setChecked(True)
+    done = window.run_batch([1], 2)  # no AI Mode step at all
+    window.watch_action.setChecked(False)
+    folders = sorted(path.name for path in window.results_folder.iterdir() if path.is_dir())
+    kinds = [next(kind for kind in ("ACMS activity ", "ACMS batch ", "ACMS research log ") if name.startswith(kind))
+             for name in folders]
+    assert kinds == ["ACMS activity ", "ACMS batch ", "ACMS research log "], folders  # three dated folders, one each
+    activity = next(window.results_folder.glob("ACMS activity *"))
+    assert (activity / "activity.csv").is_file()
+    session = next(window.results_folder.glob("ACMS research log *"))
+    step = json.loads((session / "steps" / "0001" / "step.json").read_text(encoding="utf-8"))
+    assert step["kind"] == "batch" and step["calls"][0]["tool"] == "run_batch" and step["calls"][0]["decision"] == "applied"
+    artifacts = json.loads((session / "steps" / "0001" / "artifacts.json").read_text(encoding="utf-8"))
+    paths = {Path(item["path"]).name for item in artifacts}
+    assert Path(done["file"]).name in paths and any(name.endswith("no-ai.xlsx") for name in paths)  # each with its SHA-256
+    assert not list((session / "steps" / "0001").glob("*.png"))  # a batch changes neither network nor demand: no picture
+    window._extension("research_log").module.end_session()
+    window.close()
+
+
+def test_batch_runs_seeds_override_the_menu_bars():
+    window = window_with_demand()
+    window.show()
+    batch = window._extension("batch_run")
+    labels = [label.text() for label in window.menuBar().cornerWidget().findChildren(QLabel)]
+    assert "Seed" in labels and window.seed_box.prefix() == ""  # its name beside the box, not in it
+    assert window.seed_box.isVisible() and not window.seed_overridden.isVisible()
+    batch.check.setChecked(True)  # Batch Run's own seeds count: the box gives way
+    APP.processEvents()
+    assert not window.seed_box.isVisible() and window.seed_overridden.isVisible()
+    assert window.seed_overridden.text() == "Overridden" and window.seed_overridden.toolTip() == "Batch Run's seeds"
+    batch.check.setChecked(False)
+    APP.processEvents()
+    assert window.seed_box.isVisible() and not window.seed_overridden.isVisible() and window.seed_box.value() == 42
+    window.close()
+
+
+def test_a_batch_goes_seed_by_seed_and_keeps_a_checkpoint():
+    window = window_with_demand()
+    window.results_folder = Path(tempfile.mkdtemp())
+    saved, write = [], experiments.batch_workbook
+
+    def checkpoint(path, batch, inputs):  # each save, then Stop once two runs have finished
+        saved.append([(run["scenario"], run["seed"]) for run in batch["runs"]])
+        if len(batch["runs"]) == 2:
+            window._cancel = True
+        return write(path, batch, inputs)
+
+    experiments.batch_workbook = checkpoint
+    try:
+        done = window.run_batch([1, 2], 1, test_tsp=True)  # the two baselines, Never and Always preempt
+    finally:
+        experiments.batch_workbook = write
+    agents = {scenario for scenario, _ in saved[1]}
+    assert saved[0] == saved[1][:1] and len(saved[1]) == 2  # a checkpoint after every run
+    assert {seed for _, seed in saved[1]} == {1} and len(agents) == 2  # seed 1 for both agents before seed 2
+    assert done["runs"] == 2 and done["of"] == 4
+    finished = next(row[1] for row in read_xlsx(Path(done["file"]))["Read me"] if row and row[0] == "Runs finished")
+    assert finished.startswith("2 of 4") and not list(window.results_folder.glob("*(saving)*"))
+    window.close()
 
 
 def test_the_statistics():
@@ -116,6 +184,38 @@ def test_a_headless_run_is_repeatable_and_recorded():
     assert experiments.measures_of(figures[0]) == experiments.measures_of(figures[1])  # the same seed, the same run
     simulation, _ = experiments.run_headless(network, demand, modes, 7, 300, cancelled=lambda: True)
     assert simulation.time == 0  # cancelled before the first step
+
+
+def test_a_headless_run_that_raises_still_leaves_its_workbook():
+    window = window_with_demand()
+    asked = []
+
+    def cancelled() -> bool:  # the run itself raises after 30 steps (each step asks)
+        asked.append(1)
+        if len(asked) > 30:
+            raise RuntimeError("the run broke")
+        return False
+
+    for broken in ("run", "analysis"):
+        folder = Path(tempfile.mkdtemp())
+        observed = window._observed_kpis
+        if broken == "analysis":
+            cancelled = lambda: False  # noqa: E731
+            window._observed_kpis = lambda *args: 1 / 0
+        try:
+            window._one_run(window.network, window._pair_demand(), window.vehicle_modes.modes, 1, 120, None, [], [],
+                            broken, lambda text: None, cancelled, folder)
+        except (RuntimeError, ZeroDivisionError):
+            pass
+        else:
+            raise AssertionError("its error goes on up")
+        finally:
+            window._observed_kpis = observed
+        written = list(folder.glob("*.xlsx"))
+        assert len(written) == 1, broken
+        run = {row[0]: row[1] for row in read_xlsx(written[0])["Run"][1:]}
+        assert ("the run broke" if broken == "run" else "ZeroDivisionError") in run["Incomplete"]
+    window.close()
 
 
 def test_signal_timing_bus_stops_institutions_and_the_map():
@@ -227,7 +327,7 @@ def test_the_assistant_tests_the_network_and_its_planning_is_kept():
 
     from traffic_simulator.ai_mode import _ToolRequest  # a refused proposal is in the journal too
     request = _ToolRequest({"id": "x", "name": "run_experiment", "arguments": {**args, "duration_min": 0}})
-    panel._tool_requested(panel._session, request)
+    panel._tool_requested(panel._session, panel._turn, request)
     assert "duration_min" in request.result["error"] and panel.journal[-1]["outcome"].startswith("refused")
 
     answer = window._runs_command("run_experiment", args)
@@ -291,6 +391,7 @@ def test_run_statistics_calibration_and_mode_choice():
             raise AssertionError(f"{tool} with no run")
     run = window._runs_command("run_simulation", {"duration_min": 10, "seed": 3})
     assert run["tti"] >= 1 and run["pti"] >= run["tti"] * 0.9  # reliability is among the headline figures
+    assert run["bi"] >= 0 and 0 <= run["unfinished_share"] < 1 and run["mean_system_trip_s"] >= run["mean_trip_s"]
     found = window._runs_command("analyse_run", {})
     assert found["run"] == "R1" and found["reliability"]["trips"] > 50 and found["reliability"]["p95_s"] >= found["reliability"]["median_s"]
     assert {"1W", "1E", "1N"} <= set(found["arrivals_per_minute"])
@@ -327,6 +428,14 @@ def test_run_statistics_calibration_and_mode_choice():
             assert reason in str(exc), (reason, exc)
             continue
         raise AssertionError(args)
+    try:  # a warm-up as long as the run would leave nothing to measure
+        window._runs_command("run_simulation", {"duration_min": 2, "measure_from_min": 2}, check_only=True)
+    except ValueError as exc:
+        assert "measure_from_min" in str(exc)
+    else:
+        raise AssertionError("a warm-up as long as the run")
+    warmed = window._runs_command("run_simulation", {"duration_min": 2, "seed": 3, "measure_from_min": 1})
+    assert window.tests[warmed["run"]]["kpis"]["measure_from_s"] == 60
     window.close()
 
 
@@ -491,6 +600,35 @@ def test_incidents_and_weather_in_runs_and_experiments():
     window.close()
 
 
+def test_lateral_position_in_runs_and_experiments():
+    # Lateral position and filtering (Simulation lateral) is a run setting: a headless run's, a scenario's (kept under a
+    # condition, set by a factor's level) and the assistant's run_simulation's, said on the workbook's Run sheet.
+    scenario = experiments.scenario_from({"name": "Dhaka", "lateral": True}, 0)
+    assert scenario.lateral and not experiments.scenario_from({"name": "Plain"}, 1).lateral
+    assert experiments.under(scenario, experiments.conditions_from([{"name": "peak", "demand_scale": 1.2},
+                                                                    {"name": "rain", "weather": "heavy rain"}])[0]).lateral
+    specs, _ = experiments.factorial([{"name": "lanes", "levels": [{"label": "kept"}, {"label": "weak", "lateral": True}]}])
+    assert [experiments.scenario_from(spec, i).lateral for i, spec in enumerate(specs)] == [False, True]
+    try:
+        experiments.scenario_from({"name": "Bad", "lateral": "yes"}, 0)
+    except ValueError as exc:
+        assert "lateral is true or false" in str(exc)
+    else:
+        raise AssertionError("a lateral that isn't true or false is refused")
+    network, modes = generate_network(1, 1), VehicleModes().modes
+    simulation, _ = experiments.run_headless(network, [PairDemand("1W", "1E", 600, None, [], "Poisson", (0, 50, 50))],
+                                             modes, 3, 120, lateral=True)
+    assert simulation.lateral and any(v.lat_m for v in simulation.vehicles)
+
+    window = window_with_demand(400)
+    run = window.ai_mode._execute
+    assert "lateral must be true or false" in run("run_simulation", {"duration_min": 1, "lateral": "yes"})["error"]
+    done = run("run_simulation", {"duration_min": 2, "seed": 1, "lateral": True})
+    settings = {row[0]: row[1] for row in read_xlsx(window.tests[done["run"]]["file"])["Run"][1:] if len(row) > 1}
+    assert settings["Lateral position (sublane)"] == "on"
+    window.close()
+
+
 def test_conditions_factorials_equilibrium_and_elastic_demand():
     found = experiments.conditions_from([{"name": "peak", "demand_scale": 1.2, "weight": 2}, {"name": "rain", "weather": "heavy rain"}])
     assert found[0]["demand_scale"] == 1.2 and found[1]["weather"] == "heavy rain" and found[1]["weight"] == 1.0
@@ -517,7 +655,8 @@ def test_conditions_factorials_equilibrium_and_elastic_demand():
     window = window_with_demand(400)
     run = window.ai_mode._execute
     road = next(iter(window.network.roads))
-    conditioned = run("run_experiment", {"duration_min": 2, "seeds": [1, 2], "scenarios": [
+    # 3 minutes: the grid's trips are about 2 km, so a 2-minute run finishes none and has no trip figures to compare
+    conditioned = run("run_experiment", {"duration_min": 3, "seeds": [1, 2], "scenarios": [
         {"name": "As built"}, {"name": "Wider", "changes": [{"tool": "update_roads", "args": {"roads": [road], "lanes_per_direction": 3}}]}],
         "conditions": [{"name": "today"}, {"name": "growth", "demand_scale": 1.4, "weight": 2}], "objective": "Delay"})
     assert conditioned["runs"] == 8 and set(conditioned["conditions"]["by_condition"]) == {"today", "growth"}
@@ -663,12 +802,7 @@ def test_emergency_vehicles_join_a_run_and_a_batch_tests_the_devl():
         assert list(simulation.emergency_trips.values())[0]["to"] == "2,1"
     finally:
         window._stop_runner()
-    try:
-        window.tsp_batch()  # TSP decided by System 1, and AI Mode's System 1 is Off
-    except ValueError as exc:
-        assert "AI Mode has none on" in str(exc)
-    else:
-        raise AssertionError("nobody to test: refused")
+    assert window.tsp_batch()["agents"] == []  # TSP decided by System 1, AI Mode's System 1 Off: the baseline alone
 
     _, _, start, end, _, every = window._extension("dispatch_emergency").module._lines[0]
     try:
@@ -680,8 +814,35 @@ def test_emergency_vehicles_join_a_run_and_a_batch_tests_the_devl():
     start.setCurrentText("1W")
     end.setCurrentText("1E")
     every.setValue(1)
-    done = window.run_batch([1], 5, test_tsp=False, test_devl=True)
-    book = read_xlsx(next(Path(done["folder"]).glob("*.xlsx")))
+    dispatch = window._extension("dispatch_emergency")
+    dispatch.check.setChecked(False)
+    assert window._tick_extension("dispatch_emergency") and dispatch.check.isChecked()  # Batch Run's Test DEVL does
+    seen, watch = [], QTimer()  # the menu bar's clock while the batch runs headless: its run's time, and its name
+    drawn = []  # Show runs on map (on at first): the batch's run drawn as it goes
+    watch.timeout.connect(lambda: seen.append((window.clock_label.text(), window.clock_label.toolTip(),
+                                               window.statusBar().currentMessage()))
+                          or drawn.append(window.scene.frame))
+    watch.start(100)
+    unpaced = experiments.run_headless  # paced at 60x here (5 s), so the clock and map are seen as it goes
+    experiments.run_headless = lambda *args, **kwargs: unpaced(*args, **{**kwargs, "speed": kwargs.get("speed") or 60})
+    try:
+        done = window.run_batch([1], 5, test_tsp=False, test_devl=True)
+    finally:
+        watch.stop()
+        experiments.run_headless = unpaced
+    assert any(text not in ("00:00:00", "0:00:00") for text, _, _ in seen), seen[:3]
+    assert any("Never preempt (baseline), seed 1:" in tip and "of 00:05:00" in tip for _, tip, _ in seen)  # by name
+    assert any(text == tip.split(": ")[1].split(" of")[0] for text, tip, _ in seen if "seed 1:" in tip)  # its time
+    assert any("left" in message for _, _, message in seen)  # the batch's time left
+    assert window.clock_label.toolTip() == "Simulation time" and not window._headless  # back to the live clock
+    shown = [frame for frame in drawn if frame is not None]
+    assert window.show_runs and shown and any(frame.vehicles for frame in shown)  # its cars on the map
+    assert window.scene.frame is None  # and gone once it ended
+    batch_book = read_xlsx(done["file"])  # the batch compares emergency travel time, labelled, lower better
+    labelled = {row[0]: row[1] for row in batch_book["Comparison"][1:] if row}
+    assert labelled.get("Emergency travel time, mean (dispatch to arrival)") == "s"
+    assert "Emergency vehicles arrived" in labelled and "emergency_trip_s" not in labelled
+    book = read_xlsx(next(Path(done["folder"]).glob("* seed 1 always.xlsx")))
     sheet = book["Emergency vehicles"]
     trips = [row for row in sheet[1:] if row and str(row[0]).startswith("Emergency")]
     fixed = [trip for trip in trips if trip[1:3] == ["1W", "1E"]]
@@ -692,11 +853,24 @@ def test_emergency_vehicles_join_a_run_and_a_batch_tests_the_devl():
     chosen = run["Random emergency vehicle (from the seed)"]  # seed 1's, within the 5 min run
     start_at, _, end_at, _, at = chosen.split(" ")
     assert start_at in window.places() and end_at in window.places() and "00:00:00" <= at <= "00:05:00"
-    again = window.run_batch([1], 5, test_tsp=False, test_devl=True)  # the same seed: the same random vehicle
+    window._show_runs_on_map(False)  # off: the map shows the network alone
+    drawn.clear()
+    watch.start(100)
+    experiments.run_headless = lambda *args, **kwargs: unpaced(*args, **{**kwargs, "speed": kwargs.get("speed") or 60})
+    try:
+        again = window.run_batch([1], 5, test_tsp=False, test_devl=True)  # the same seed: the same random vehicle
+    finally:
+        watch.stop()
+        experiments.run_headless = unpaced
+    assert drawn and not any(frame is not None for frame in drawn)
+    window._show_runs_on_map(True)
     book2 = read_xlsx(next(Path(again["folder"]).glob("*.xlsx")))
     assert {row[0]: row[1] for row in book2["Run"][1:] if len(row) > 1}["Random emergency vehicle (from the seed)"] == chosen
-    decisions = book["DEVL decisions"]  # the baseline, No LLM: the rule, every lane cleared
-    assert len(decisions) > 1 and {row[7] for row in decisions[1:]} == {"no LLM: TRUE"}
+    never = read_xlsx(next(Path(done["folder"]).glob("* seed 1 never.xlsx")))  # general traffic: no lane ever cleared
+    assert {row[7] for row in never["DEVL decisions"][1:]} == {"baseline: FALSE"}
+    assert {row[0]: row[1] for row in never["DEVL"][1:] if len(row) > 1}["Lanes cleared"] == 0
+    decisions = book["DEVL decisions"]  # Always preempt: the rule, every lane cleared
+    assert len(decisions) > 1 and {row[7] for row in decisions[1:]} == {"baseline: TRUE"}
     assert decisions[1][1:4] == ["1,1", "1W", 0] and isinstance(decisions[1][10], (int, float))  # its lane went green
     devl = {row[0]: row[1] for row in book["DEVL"][1:] if len(row) > 1}
     assert devl["Lanes cleared"] > 0 and devl["Lane green, in all (s)"] > 0

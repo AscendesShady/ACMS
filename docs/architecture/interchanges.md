@@ -24,7 +24,8 @@ Construction helpers:
   - `_transition(start, heading, end, end_heading, pull)`: a cubic Bézier with exact curvature
     `(x′y″ − y′x″)/(x′² + y′²)^{3/2}` at each segment's middle.
   - `_straight(x, y)`.
-- **`curve_speed_kmh(R)`:** `V = √(127·(e + f)·R)`, rounded down to 5 km/h, minimum 15.
+- **`curve_speed_kmh(R)`:** `V = √(127·(e + f)·R)`, rounded down to 5 km/h; under 15 km/h the exact value (no
+  floor faster than the bend allows). The simulation caps every lane at it for its road's tightest bend.
   It uses e = 0.06 (superelevation) and f = 0.15 (side friction).
 - **Placement:** `_existing_roads`, `roads_left_at_hub` and `_remove` find what Replace clears.
   The hub junction is kept if unselected roads still use it.
@@ -50,12 +51,15 @@ Layouts:
     kerb-turn rule (`Graph._kind`); both must carry that traffic. No kerb-side turn: refused.
   - **Layout:** both roads are split (`split_road`) at the same setback from the junction, at new
     uncontrolled nodes (`N…`), and a one-way `ramp` (one lane, `single_lane`, or two like interchange ramps)
-    joins them on a `_transition` curve leaving and rejoining at 45° towards the kerb. Both ends are
-    then kerb turns, so only the kerbside lane diverges onto it and it merges into the kerbside lane.
+    joins them on a `_transition` curve that leaves the arriving road along it and curves round to join the
+    leaving road along it (a quarter circle at a right angle), no kink at either node. The simulation takes a
+    ramp leaving or joining a road within 35° as a kerb turn (`Graph._kind`), so only the kerbside lane
+    diverges onto it and it merges into the kerbside lane; its speed is capped for its tightest bend.
   - **Setback** (`_plan_slip`): the smallest in 5 m steps that leaves `SLIP_ROOM_M` (40 m) of lane between
     the slip's nodes and the junction's line (stop line; a roundabout's give-way line), whose curve's middle
     clears both roads (their half width plus the slip's) and all of it the junction (a roundabout's
-    circle), leaving each road 20 m beyond. None: refused. Crossing another road: refused. The 40 m is for
+    circle), leaving each road 20 m beyond, and whose curve, at the speed its innermost lane allows, is no slower
+    than the two setbacks through the junction at the roads' limit (else free-flow routes would never take it). None: refused. Crossing another road: refused. The 40 m is for
     the queue and for room to exit into: a roundabout lets a vehicle in only with room on its exit lane.
 - `fit_slip_roads(network, junction)`: run when a junction's control changes (Edit tab, the assistant's
   `set_junction_control`). Each slip road past it (`_is_slip`: a one-way ramp between two uncontrolled

@@ -1,6 +1,18 @@
-"""Theme readability check. Run with `python tests/test_theme.py` (or the test monitor)."""
+"""Theme readability check, and a click seen on every button. Run with `python tests/test_theme.py` (or the test
+monitor)."""
 
-from traffic_simulator.theme import READABLE_PAIRS
+import os
+import time
+
+os.environ.setdefault("QT_QPA_PLATFORM", "offscreen")
+
+from PySide6.QtCore import Qt  # noqa: E402
+from PySide6.QtTest import QTest  # noqa: E402
+from PySide6.QtWidgets import QApplication, QPushButton  # noqa: E402
+
+from traffic_simulator.theme import FLASH_MS, PRESSED, READABLE_PAIRS, apply_theme  # noqa: E402
+
+APP = QApplication.instance() or QApplication([])
 
 
 def contrast(first: str, second: str) -> float:
@@ -18,6 +30,28 @@ def test_text_is_readable_on_every_background():
     weak = [(text, background, round(contrast(text, background), 2))
             for text, background in READABLE_PAIRS if contrast(text, background) < 4.5]
     assert not weak, weak
+
+
+def test_a_click_lights_the_button_for_a_moment():
+    apply_theme(APP)
+    apply_theme(APP)  # a second window: still one flash filter
+    assert APP._click_flash is not None
+    for role in ("", "primary", "mini"):
+        button = QPushButton("Go")
+        button.setProperty("role", role)
+        button.show()
+        APP.processEvents()
+        resting = button.grab().toImage().pixelColor(button.width() // 2, 3).name()
+        QTest.mouseClick(button, Qt.MouseButton.LeftButton)
+        APP.processEvents()
+        lit = button.grab().toImage().pixelColor(button.width() // 2, 3).name()
+        assert button.property("flash") and lit != resting, (role, resting, lit)  # seen at once
+        assert role == "primary" or lit == PRESSED
+        until = time.time() + FLASH_MS / 1000 + 0.3
+        while time.time() < until:
+            APP.processEvents()
+        assert not button.property("flash")  # then back as it was
+        button.close()
 
 
 if __name__ == "__main__":

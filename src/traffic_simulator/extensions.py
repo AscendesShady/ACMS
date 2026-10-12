@@ -43,7 +43,8 @@ Nothing runs until its box is ticked, and unticking it makes it neutral again.
 - log(event) runs on the UI thread once each AI Mode answer ends (a step): `event` is a plain dict of the
   prompt, what was understood (the model's Plan: line, the tools it was offered), every tool call with its arguments, plan, the user's
   decision, result and timings, the model's messages, tokens, the changes the step made (network, demand,
-  vehicle types) and `map_png`, the map as it was then (PNG bytes). The window builds it only while an
+  vehicle types) and `map_png`, the map as it was then (PNG bytes; only when the network changed) and
+  `demand_png`, the OD matrix (only when the demand changed). The window builds it only while an
   extension with log() is ticked (MainWindow._research_step).
 A file that fails to load, or any of these that raises, switches that extension off with the
 error and its line shown here; the editor and the run carry on.
@@ -126,11 +127,13 @@ class SignalOverrides:
     listed in `failed` for the tab to switch off and report. `agent` is the signal agent they ask, or a dict of
     one per extension name (a batch run's: TSP's and DEVL's models differ)."""
 
-    def __init__(self, extensions: list[Extension], agent) -> None:
+    def __init__(self, extensions: list[Extension], agent, sink: list | None = None) -> None:
         self.extensions = list(extensions)  # every one the run uses, for their reports
+        self.sink = sink  # the tab's list of failures from every run (ExtensionsPanel.report_failures)
         self.calls = [(extension, extension.module.signal_override) for extension in extensions]
         self.agent = agent
-        self.failed: list[tuple[Extension, str]] = []
+        self.failed: list[tuple[Extension, str]] = []  # this run's, as they happened
+        self.dropped: list[tuple[str, str]] = []  # every one dropped in this run, for its workbook (reports)
 
     def agent_of(self, extension: Extension):
         """The signal agent this extension asks."""
@@ -141,18 +144,21 @@ class SignalOverrides:
         for entry in list(self.calls):
             extension, override = entry
             try:
-                result = override(junction, arm, state, context, self.agent_of(extension))
+                result, own = override(junction, arm, state, context, self.agent_of(extension)), {}
                 if isinstance(result, tuple) and len(result) == 2 and isinstance(result[1], dict):
                     result, own = result
                     if not all(isinstance(index, int) and lane in ("G", "Y", "R") for index, lane in own.items()):
                         raise ValueError(f"signal_override returned lanes {own!r}, not {{lane index: G, Y or R}}")
-                    lanes.update(own)
                 if result not in ("G", "Y", "R"):
                     raise ValueError(f'signal_override returned {result!r}, not "G", "Y" or "R"')
-                state = result
+                state = result  # both checked first: one that fails leaves no lane behind
+                lanes.update(own)
             except (Exception, SystemExit) as exc:
                 self.calls.remove(entry)
                 self.failed.append((extension, describe_error(exc, extension.path)))
+                self.dropped.append((extension.name, self.failed[-1][1]))
+                if self.sink is not None:
+                    self.sink.append(self.failed[-1])
         return (state, lanes) if lanes else state
 
 
@@ -172,6 +178,7 @@ class ExtensionsPanel(QWidget):
         # ponytail: extensions redraw all their items, up to 10 times a second while the clock runs
         # (not every frame); if big grids stutter, let them keep static items and redraw only what animates.
         self._drawn_at = 0.0
+        self._failures: list[tuple[Extension, str]] = []  # signal overrides that raised in any run, not yet reported
         clock.ticked.connect(self._tick)
         layout = QVBoxLayout(self)
         layout.setContentsMargins(0, 0, 0, 0)
@@ -288,10 +295,7 @@ class ExtensionsPanel(QWidget):
             header.addSpacing(ARROW_PX + header.spacing())  # checkboxes line up, arrow or not
         header.addWidget(extension.check)
         header.addStretch(1)
-        layout.addLayout(header)
-        description = getattr(extension.module, "DESCRIPTION", "")
-        if description:
-            layout.addWidget(hint_label(str(description)))
+        layout.addLayout(header)  # no description under it: DESCRIPTION is for the assistant (read_extensions)
         if extension.controls is not None:
             layout.addWidget(extension.controls)
             row.setMinimumWidth(extension.controls.minimumSizeHint().width())  # folded, still as wide as open: no clipping
@@ -329,7 +333,7 @@ class ExtensionsPanel(QWidget):
         """The ticked extensions' signal overrides, for a run; None when none is ticked (neutral). `agent`:
         the signal agent they ask (a headless run's waits for answers); the window's live one by default."""
         ticked = [extension for extension in self.extensions if extension.on and extension.has("signal_override")]
-        return SignalOverrides(ticked, agent or self.agent) if ticked else None
+        return SignalOverrides(ticked, agent or self.agent, self._failures) if ticked else None
 
     def find(self, name: str) -> Extension:
         """An extension by its name (or file name), case aside; ValueError listing the names."""
@@ -348,7 +352,17 @@ class ExtensionsPanel(QWidget):
         `agent`: the one signal agent they ask, or one per extension name (a dict)."""
         chosen = [self.find(name) for name in names]
         with_override = [extension for extension in chosen if extension.has("signal_override")]
-        return SignalOverrides(with_override, agent or self.agent) if with_override else None
+        return SignalOverrides(with_override, agent or self.agent, self._failures) if with_override else None
+
+    def report_failures(self) -> list[str]:
+        """Switch off, saying why, each extension whose signal_override raised in any run since, live or headless
+        (a batch's, an experiment's): the physics threads only list them. The names, for a status line."""
+        names = []
+        while self._failures:  # appended by the physics threads, taken here: one each way, safe under the GIL
+            extension, message = self._failures.pop(0)
+            self.fail(extension, message)
+            names.append(extension.name)
+        return list(dict.fromkeys(names))
 
     @staticmethod
     def reports(overrides: SignalOverrides | None) -> list[dict]:
@@ -362,6 +376,10 @@ class ExtensionsPanel(QWidget):
                 except (Exception, SystemExit) as exc:
                     found.append({"sheets": [(f"{extension.name[:20]} report", [["Couldn't report"],
                                               [describe_error(exc, extension.path)]], "Its report() raised.")]})
+        if overrides is not None and overrides.dropped:
+            found.append({"sheets": [("Extensions dropped", [["Extension", "Why"], *map(list, overrides.dropped)],
+                                      "Its signal_override raised during the run: the run went on without it from "
+                                      "then (the signal plan stood), so the figures are not its alone.")]})
         return found
 
     @staticmethod

@@ -17,7 +17,7 @@ from pathlib import Path
 
 os.environ.setdefault("QT_QPA_PLATFORM", "offscreen")
 
-from PySide6.QtCore import QRectF  # noqa: E402
+from PySide6.QtCore import QPointF, QRectF  # noqa: E402
 from PySide6.QtGui import QColor, QImage, QPainter  # noqa: E402
 from PySide6.QtWidgets import QApplication  # noqa: E402
 
@@ -51,6 +51,7 @@ def near(image, x, y, colour):
 def render(scene, source: QRectF, size=(400, 200), painter_device=None):
     """The scene's `source` rectangle drawn onto a raster image (the offscreen, CPU path)."""
     image = QImage(*size, QImage.Format.Format_RGB32)
+    image.fill(0)  # where the source's aspect leaves it uncovered
     painter = QPainter(image)
     scene.render(painter, QRectF(0, 0, *size), source)
     painter.end()
@@ -75,6 +76,84 @@ def test_without_opengl_qpainter_draws_the_vehicles():
     assert scene.gpu.draws == 0 and not scene.gpu.failed  # a raster painter: the GPU path wasn't tried
     view = NetworkView(scene)
     assert not view.on_gpu and view.renderer == ""  # offscreen: raster, the driver not asked
+
+
+def differing(a, b):
+    """How many pixels (every other one each way) of two same-size images aren't near each other."""
+    return sum(not near(a, x, y, b.pixelColor(x, y).name()) for x in range(0, a.width(), 2) for y in range(0, a.height(), 2))
+
+
+def test_a_run_draws_the_still_network_once_and_keeps_it():
+    from PySide6.QtWidgets import QGraphicsItem, QGraphicsRectItem, QGraphicsView
+
+    from traffic_simulator.network_scene import STILL
+
+    no_contents = QGraphicsItem.GraphicsItemFlag.ItemHasNoContents
+    network = generate_network(2, 2)
+    scene = NetworkGraphicsScene(network)
+    scene.rebuild()
+    view = NetworkView(scene)
+    view.resize(420, 320)
+    view.show()  # offscreen: a hidden view resizes (and drops) its cache each paint
+    APP.processEvents()
+    view.fit_network()
+    editing, editing_render = view.viewport().grab().toImage(), render(scene, scene.network_rect)
+    still = [item for item in scene.items() if item.data(STILL)]
+    lamps = [lamp for lamp, _ in scene.signal_lamps.values()]
+    assert still and lamps and not any(lamp.data(STILL) for lamp in lamps)
+    assert view.cacheMode() == QGraphicsView.CacheModeFlag.CacheNone and not any(item.flags() & no_contents for item in still)
+
+    scene.show_frame(1.0, Frame(0.0, (), {}, 0, 0))  # a run: the still layer goes into the view's cache
+    assert scene.still_cached and view.cacheMode() == QGraphicsView.CacheModeFlag.CacheBackground
+    assert all(item.flags() & no_contents for item in still) and not any(lamp.flags() & no_contents for lamp in lamps)
+    running = view.viewport().grab().toImage()
+    assert differing(editing, running) == 0  # the same picture, drawn once
+    painted, paint_still = [], scene.paint_still
+    scene.paint_still = lambda painter, rect: (painted.append(rect), paint_still(painter, rect))
+    scene.show_frame(0.5, Frame(0.5, (), {}, 0, 0))
+    view.viewport().grab()
+    assert not painted  # the next frame: from the cache
+    view.scale(2, 2)  # zoomed: drawn again at the new scale
+    zoomed_running = view.viewport().grab().toImage()
+    assert painted
+    del scene.paint_still
+    assert differing(editing_render, render(scene, scene.network_rect)) == 0  # scene.render too (screenshots)
+    road = next(iter(network.roads.values()))
+    (x0, y0), *_, (x1, y1) = network.road_points(road)
+    x, y = (x0 + x1) / 2, (y0 + y1) / 2  # half way along the (straight) road
+    hits = [item.data(0) for item in scene.items(QPointF(x, y)) if item.data(0)]
+    assert ("road", road.id) in [tuple(hit) for hit in hits]  # still clickable
+
+    scene.set_selection("road", road.id)  # an edit mid-run: rebuilt, its new items cached too, the cache redrawn
+    assert all(item.flags() & no_contents for item in scene.items() if item.data(STILL))
+    selected_running = view.viewport().grab().toImage()
+    extra = QGraphicsRectItem(x - 5, y - 5, 10, 10)  # as an extension adds: drawn live, never cached
+    extra.setBrush(QColor("#ff00ff"))
+    scene.addItem(extra)
+    assert not extra.data(STILL) and not extra.flags() & no_contents
+    centre = view.mapFromScene(QPointF(x, y))
+    assert near(view.viewport().grab().toImage(), centre.x(), centre.y(), "#ff00ff")
+    scene.removeItem(extra)
+
+    scene.show_frame(1.0, None)  # the run is over: edit mode paints every item, as before
+    assert view.cacheMode() == QGraphicsView.CacheModeFlag.CacheNone
+    assert not any(item.flags() & no_contents for item in scene.items())
+    assert differing(selected_running, view.viewport().grab().toImage()) == 0
+    scene.set_selection("")
+    assert differing(zoomed_running, view.viewport().grab().toImage()) == 0
+
+
+def test_power_saver_draws_half_as_often():
+    from traffic_simulator.main import MainWindow
+
+    window = MainWindow()
+    window._ask_to_save = False
+    assert window.power_button.toolTip() == "Power Saver" and window.clock._timer.interval() == 16
+    window.power_button.setChecked(True)
+    assert window.clock._timer.interval() == 32
+    window.power_button.setChecked(False)
+    assert window.clock._timer.interval() == 16
+    window.close()
 
 
 def _child(name: str) -> str:
@@ -194,6 +273,16 @@ def child_speed():
     assert on_gpu * 20 < on_cpu, (on_gpu, on_cpu)
 
 
+def samples(view) -> int:
+    """The map's OpenGL framebuffer's multisampling (QOpenGLWidget.format() doesn't say: it reports the context's)."""
+    viewport = view.viewport()
+    viewport.makeCurrent()
+    try:
+        return viewport.context().functions().glGetIntegerv(0x80A9)  # GL_SAMPLES
+    finally:
+        viewport.doneCurrent()
+
+
 def child_window():
     """The editor itself, created but never put on screen, running traffic at 10×."""
     from PySide6.QtCore import Qt
@@ -226,6 +315,21 @@ def child_window():
     assert draws > 150, draws  # the vehicles went through the GPU every display frame (about 60 a second)...
     assert 0 < uploads <= draws  # ...and each physics frame was sent to it once, however often it was drawn
     assert runner.speed_now > 8, runner.speed_now  # drawing leaves the physics its pace
+    assert view.cacheMode() == view.CacheModeFlag.CacheBackground  # the still network: drawn once, kept
+    assert samples(view) == 4
+    window.power_button.setChecked(True)  # Power Saver: a new viewport without multisampling, still the GPU's
+    QTest.qWait(200)
+    draws = scene.gpu.draws
+    QTest.qWait(2000)
+    draws = scene.gpu.draws - draws
+    print(f"Power Saver: {draws} display frames in 2 s")
+    assert isinstance(view.viewport(), QOpenGLWidget) and samples(view) == 0
+    corner = window.power_button
+    assert view.childAt(corner.mapTo(view, corner.rect().center())) is corner  # still over the new viewport
+    assert 0 < draws <= 70 and not scene.gpu.failed, (draws, scene.gpu.failed)  # about 30 a second
+    window.power_button.setChecked(False)
+    QTest.qWait(200)
+    assert samples(view) == 4
     window._stop_run()
     window.close()
 

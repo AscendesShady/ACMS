@@ -7,7 +7,10 @@
    a one-way road entering.
 2. **Category:**
    - Mini: single lane with approaches ≤ 30 km/h.
-   - Otherwise single-lane, two-lane or three-lane by entry lanes.
+   - Otherwise single-lane, two-lane or three-lane by entry lanes. More than three (`MAX_ENTRY_LANES`) is
+     beyond the guide and refused with a ValueError naming the roundabout: `Network.validate` checks every
+     roundabout, so a road edit, a control change (Properties panel, `set_junction_control`) or a load that would
+     make one is refused, changing nothing; `build_edge` refuses a crossing roundabout before any road changes.
 3. **Design speed:** the fastest approach speed limit, held inside the category's
    recommended maximum entry speed range:
 
@@ -20,9 +23,15 @@
 4. **Inscribed circle diameter (ICD):** placed within the category's typical range in
    proportion to where the design speed sits in its range. Faster approaches get larger roundabouts.
 5. **Circulatory roadway:** 120 % of the widest entry (NCHRP 672: 100–120 %). The central
-   island is `ICD − 2 × width`, at least 2 m.
+   island is `ICD − 2 × width` (at least 5.6 m, a mini's), so ICD = island + 2 × width always.
 6. **Circulating speed:** the fastest-path relation `V = 3.4614 · R^0.3673` (mph, ft; −2 %
    cross slope), with R = island radius + 1.5 m.
+
+`hcm_entry_capacity(circulating_vph, lanes=1)` is the HCM 6th edition's (Ch 22) entry capacity against the
+circulating flow, with as many circulating lanes as entry lanes: one lane 1380·e^(−0.00102·v_c) (Eq 22-1), two
+1420·e^(−0.00085·v_c) + 1350·e^(−0.00092·v_c) (Eq 22-4); None for three (beyond the HCM). `analysis.junction_los`
+reports it beside the capacity measured on the simulated drivers (`simulation.ROUNDABOUT_ENTRY_VPH`), whose ring
+is one lane however many enter.
 
 The scene redraws roundabouts at this true diameter. A mini's island is painted grey
 (drive-over); others are landscaped green. Entries get a dashed give-way line at the circle.

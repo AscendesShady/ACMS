@@ -6,19 +6,48 @@
 - Start-up lost time 1.8 s against the HCM's default 2.0 s: SUMO's startupDelay can't reach 2.0 s
   without pulling the saturation flow below field values (drivers re-halting as they creep off).
 - Results: editing each vehicle type's occupancy in the tab (assumed), per-junction and per-signal KPIs in a run's
-  workbook (junction_los and diagnose_signal give them for the assistant's headless runs only), exact per-vehicle trip times (they are within a 5 s sample) and counts on roads
+  workbook (junction_los and diagnose_signal give them for the assistant's headless runs only), a vehicle class set in the tab (the assistant's `update_vehicle_type` sets it), a warm-up set for a live Run (only the assistant's run_simulation and run_experiment take one) and counts on roads
   crossed between two samples; Batch Run compares agents deciding TSP (or plain runs), not network variants (the
   assistant's `run_experiment` does those); a live run has no decision deadline (a batch's Decide within); a batch's runs share one process, so many at once at a fast pace fall behind the clock (the pace achieved is
   recorded and said), and plain (non-TSP) batches go one at a time; a replay needs the run's network and demand open (it reads only the seed, the simulated time and the feed); telemetry is TSP's only;
   pedestrians, gradual (sublane) lane changes, editing each type's behaviour in Mode Behavior.
+- Lateral position (opt-in, `Simulation(lateral=True)`; simulation.md) is SL2015 at its smallest: no vehicle
+  straddles two lanes or rides between them, only filtering types (motorcycle, moped, bicycle) move sideways (cars,
+  buses and the rest keep to their lane's kerb side, so a car can't pass a cyclist within a lane), lane changes are
+  still whole-lane hops, merges, the ring and junction entry room stay whole-lane, and the side a filtering vehicle
+  takes is chosen by room ahead, not SL2015's expected sublane speeds. No switch in the window (headless runs, the
+  assistant's run_simulation and run_experiment, scenarios), no `filters` box in the tab, and its behaviour isn't
+  validated against observed mixed traffic (theory reference concept 42).
 - Impatience in gap acceptance: a minor road facing a saturated major road waits for a gap
   however long that takes.
 - Roundabout and priority capacity are only used to size demand, not reported per approach in the Summary (the
-  assistant's junction_los grades each approach's delay).
+  assistant's junction_los grades each approach's delay and gives a roundabout entry's capacity, simulated and HCM 6).
+- Roundabout capacity at busy rings: a single-lane entry follows the HCM 6 curve within 10 % up to about 800 veh/h
+  circulating, but the one-lane ring (Krauss following at 25 km/h) fills at about 1,350–1,450 veh/h entering plus
+  circulating, so above that it falls faster (−28 % at 1,000, −59 % at 1,200; a two-lane entry more). The ring's
+  speed and following, not the gap acceptance, set that limit. No HCM capacity for a three-lane entry.
 - PCU in calculations: each vehicle type's PCU is kept, but capacities, demand sizing and results count
   vehicles, not passenger car units.
 - Multi-lane roundabout circulation: every ring is one path round, so a two-lane entry feeds it
   through one lane at a time and its capacity is a single lane's (measured).
+- Emergency braking at the line: Krauss never brakes harder than SUMO's emergency deceleration (9 m/s² for a car),
+  overshooting and counting the collision instead, but a vehicle refused at its line by `_move`'s in-step re-check
+  still stops there at once (rare; recorded in `emergency_braking` with its real deceleration). Collisions are
+  counted (`Simulation.collisions`, same lane and crossing), not resolved; roundabout rings aren't checked for
+  crossing overlaps, and a crossing ignores the vehicles' widths. Roundabout entry predicts where circulating
+  traffic will be at the ring's speed, so an occasional circulating car still brakes hard.
+- A step other than 0.5 s or the ballistic update in the window: only headless runs (`run_headless`) take them.
+- Curve speed along a road: a road's lanes are capped for its tightest bend over their whole length (no
+  anticipatory braking into, or speed-up out of, the bend); hand-drawn shapes without stored curvature aren't capped.
+- Turn pockets: lane drops and lanes added mid-road (only a pocket of 1–2 lanes before a signalised or
+  uncontrolled junction, one per approach, kerb or offside, not both), flares at roundabout entries, and pockets
+  from OpenStreetMap (`turn:lanes`). A pocket's taper is drawn and driven only for the lanes it moves; vehicles
+  change into it at once, as into any lane. The road's width (`width_m`) leaves pockets out, so stop lines and
+  junction boxes are sized without them. A pocket at a boundary end is refused (nothing turns there).
+- Roundabouts of more than three entry lanes (beyond NCHRP 672): refused, so an OpenStreetMap area or saved project
+  with one (a one-way road of 2 lanes per direction counts 4) is refused whole rather than given another control.
+- Change intervals per approach: each signalised junction has one amber and all-red, from its fastest approach and
+  on the level (no grades); optimise_signals' genome still sizes cycles with the 3 + 2 s defaults.
 - Generating trips from end supply/demand other than by the assistant's gravity model.
 - From OpenStreetMap: curvature on shaped roads (curve speeds come from the tagged limits), turn
   restrictions, lanes that differ by direction, the signals' own timings; junctions under 12 m apart
@@ -56,9 +85,19 @@
   override must keep amber and all-red safe); critical gap estimation (Raff); crossing (non rear-end) conflicts
   and post-encroachment time; offsets in optimise_signals. choose_modes keeps each pair's veh/h (a shift
   between types changes the people carried); its times come from free flow or one run. Route choice measures
-  link times only on links with 3 or more traversals; critical_links is static (free flow).
+  link and move times only with 3 or more traversals; free-flow routes price junctions by a control-delay prior with
+  no traffic, at the greens entered (not the run's timing, not the flows: a busy give-way looks as cheap as an empty
+  one until assign_routes measures it); critical_links is static (free flow).
+- Sub-hour demand: a peak-hour factor or 15-minute profile per hourly pair; signal timing and demand sizing use the
+  hour's mean flow, not V/PHF; daily curves have no sub-hour shape; the run's workbook doesn't list the quarters.
 - Emergency vehicles: other traffic doesn't yield to them or form a rescue lane (SUMO's bluelight device); they obey their signals (DEVL clears their lane at signalised junctions only, not at roundabouts or give-ways); a live run's DEVL decisions aren't in its workbook (a batch run's are).
 - Design and accessibility checks: acceleration and deceleration lane lengths, grades and access within 50 m of a
   junction (a building's door is a junction) aren't checked; emissions are a light car's only (no buses, lorries or
   motorcycles, no grades); accessibility counts opportunities by road at free flow or one run's times, not by bus or
   on foot; critical_links and its area closure are static.
+
+- Prompt campaign: automatic crash recovery is not implemented; an existing ledger prevents resubmission. Automatic Apply of actual validated cards is implemented for the user-authorized campaign. See `prompt_campaign.md`.
+
+- Campaign live update still requires one manual Extensions reload and tick when the external desktop helper is unavailable. Future approval cards are automatic after activation.
+
+The campaign does not retry or roll back partially applied failed tools. Only a uniquely identified unresolved Apply callback after a deadline halt supports live recovery; other crash/timeout states remain manual.

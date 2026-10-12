@@ -4,10 +4,18 @@ folder as the run goes, and written to an Excel workbook when it ends or is inte
 `RunRecorder.sample(frame)` is called by simulation.Runner on the physics thread every SAMPLE_S
 simulated seconds with the run's Frame. From each sample it adds up:
 - per vehicle: when it was first seen, the distance it drove (speed × time), its delay, the time
-  lost against its road's speed limit, Σ dt · max(0, 1 − v / v_limit), and its waiting time, the time
-  at or below 0.1 m/s outside a bus stop (SUMO's tripinfo waitingTime); a vehicle gone from the next
-  frame has arrived, and its trip (type, origin, destination, times, distance, delay, wait,
-  passengers) is kept, its passengers' delay (delay × occupancy) added up;
+  lost against its road's speed limit, Σ dt · max(0, 1 − v / v_limit) (whatever the vehicle: a bicycle
+  at its own 20 km/h loses time on a 50 km/h road), its delay against its own free speed
+  (VehicleState.free_speed: the limit × its speed factor, no faster than its top and desired speeds; not
+  while calling at a bus stop), and its waiting time, the time at or below 0.1 m/s outside a bus stop
+  (SUMO's tripinfo waitingTime); the people on board (VehicleState.people: a bus's simulated load) times
+  that own delay is added up every sample, unfinished trips too; a vehicle gone from the next
+  frame has arrived, and its trip (type, origin, destination, times, distance, delays, wait,
+  people on board) is kept, its passengers' delay (delay × people) added up. Its times are exact, from the
+  frame's `exits` (simulation.Frame): on the road (inserted) to off it, the road travel time, and from its
+  requested departure to off it, the system travel time (the wait to enter included);
+- vehicles generated but still waiting to enter (spawned − arrived − on the road) times the time: the
+  entry wait, kept apart from the delay of those on the road;
 - per road: vehicles entering it (a vehicle seen on it after another road), vehicle-seconds and
   vehicle-metres on it, and its queue: the vehicles on it slower than QUEUE_KMH, as a count and as
   a length per lane (their lengths plus 2.5 m gaps, over its lanes per direction);
@@ -18,8 +26,9 @@ Every minute the rows are appended to the folder's CSV files and the running tot
 into the .xlsx (Summary, Per minute, Roads, By type, Trips, and the sheets the run's extensions
 reported, `add_sheets`), named by when it started, its seed and the AI model that decided (`file_name`),
 and `recover` does that for folders a crash left behind. Passengers are vehicles × each type's `occupancy` (mode_behavior.VehicleMode),
-an assumption the workbook states. Sample-based: a trip's times are within SAMPLE_S, and a road
-crossed between two samples isn't counted as entered.
+an assumption the workbook states. Sample-based, apart from trip times: a road crossed between two samples isn't
+counted as entered. `measure_from_s` (a warm-up, default 0): the figures and trips count only after it (trips that
+entered the road in it are left out); the per-minute rows and spawned and arrived totals cover the whole run.
 """
 
 from __future__ import annotations
@@ -57,7 +66,8 @@ MINUTE_COLUMNS = ["Time (s)", "Clock", "Vehicles on the road", "Spawned (total)"
                   "Mean speed (km/h)", "Queued now (veh)", "Most queued this minute (veh)", "Delay (veh·h)",
                   "Distance (veh·km)"]
 TRIP_COLUMNS = ["Vehicle", "Type", "Origin", "Destination", "Departed (s)", "Arrived (s)", "Trip time (s)",
-                "Distance (m)", "Delay (s)", "Wait (s)", "People"]
+                "Distance (m)", "Delay (s)", "Wait (s)", "People", "Delay vs own free speed (s)",
+                "Requested departure (s)", "System travel time (s)"]
 ROAD_MINUTE_COLUMNS = ["Time (s)", "Clock", "Road", "Entered (veh)", "Flow (veh/h)", "Mean speed (km/h)",
                        "Most queued (veh)", "Delay (veh·h)"]
 # Level of service of a road by its travel speed as a share of its free-flow speed (here its speed limit): HCM 2010
@@ -104,7 +114,7 @@ class RunRecorder:
 
     def __init__(self, network, modes, folder: Path | None = None, name: str = "",
                  inputs: list[tuple[str, list[list]]] | None = None, run: list[tuple[str, object]] | None = None,
-                 seed: int | None = None, model: str = "") -> None:
+                 seed: int | None = None, model: str = "", measure_from_s: float = 0.0) -> None:
         started = self.started = datetime.now()
         self.seed, self.model = seed, model  # for its workbook's name
         self.folder = Path(folder or RUNS / f"run {started:%Y-%m-%d %H-%M-%S} {os.getpid()} {next(_numbers)}")
@@ -115,7 +125,8 @@ class RunRecorder:
         self.roads = {road.id: road_record(network, road) for road in network.all_roads()}
         self._limit = {road_id: max(info["limit_kmh"], 5.0) / 3.6 for road_id, info in self.roads.items()}
         self._lock = threading.Lock()
-        self._alive: dict[str, list] = {}  # id -> [first seen, type, origin, destination, metres, delay s, road, wait s]
+        # id -> [first seen, type, origin, destination, metres, delay s, road, wait s, link, own delay s, people on board]
+        self._alive: dict[str, list] = {}
         self._road = {road_id: dict.fromkeys(("entered", "vehicle_s", "vehicle_m", "delay_s", "queue_sum",
                                               "queue_max", "queue_m_max"), 0.0) for road_id in self.roads}
         # Each direction of a road (a link, "road>" from its from-node, "road<" back): entered, time, distance, delay
@@ -125,7 +136,10 @@ class RunRecorder:
         self.totals = {"time_s": 0.0, "samples": 0, "on_road": 0, "spawned": 0, "arrived": 0, "trips": 0,
                        "trip_s": 0.0, "trip_delay_s": 0.0, "people": 0.0, "vehicle_s": 0.0, "vehicle_m": 0.0,
                        "delay_s": 0.0, "queued_now": 0, "queued_max": 0, "by_type": {}, "wait_s": 0.0,
-                       "trip_wait_s": 0.0, "people_delay_s": 0.0, "queued_sum": 0}
+                       "trip_wait_s": 0.0, "people_delay_s": 0.0, "queued_sum": 0, "free_delay_s": 0.0,
+                       "trip_free_delay_s": 0.0, "person_delay_s": 0.0, "entry_wait_s": 0.0, "waiting": 0,
+                       "system_trip_s": 0.0, "measure_from_s": float(measure_from_s), "spawned_before": 0,
+                       "arrived_before": 0}
         self._minute = self._fresh_minute()
         self._trips: list[list] = []  # waiting to be appended
         # For the statistics (observed()): every trip, vehicles first seen per (origin, minute), and each road's
@@ -162,6 +176,9 @@ class RunRecorder:
     def sample(self, frame) -> None:
         """Add a frame of the run (the physics thread, every SAMPLE_S simulated seconds)."""
         with self._lock:
+            warm_up = self.totals["measure_from_s"]
+            if self.totals["time_s"] <= warm_up < frame.time and warm_up > 0:
+                self._measure_from_here()
             totals, minute = self.totals, self._minute
             dt = max(frame.time - totals["time_s"], 0.0)
             queued_at: dict[str, list[float]] = {}
@@ -171,12 +188,20 @@ class RunRecorder:
                 alive = self._alive.get(vehicle.id)
                 if alive is None:
                     alive = self._alive[vehicle.id] = [frame.time, vehicle.mode, vehicle.origin, vehicle.destination,
-                                                       0.0, 0.0, None, 0.0, None]
+                                                       0.0, 0.0, None, 0.0, None, 0.0, None]
                     self.entries[(vehicle.origin, int(frame.time // 60))] += 1
                 limit = self._limit.get(vehicle.road) or self._limit.get(alive[6], 50 / 3.6)
                 metres, lost = vehicle.speed * dt, dt * max(0.0, 1.0 - vehicle.speed / limit)
                 alive[4] += metres
                 alive[5] += lost
+                # Against its own free speed (the road's limit for a frame without it), times the people on board
+                free, people = getattr(vehicle, "free_speed", None) or limit, getattr(vehicle, "people", None)
+                alive[10] = people if people is not None else self.occupancy.get(vehicle.mode, 1.0)
+                own = 0.0 if getattr(vehicle, "place", "").startswith("bus stop ") else \
+                    dt * max(0.0, 1.0 - vehicle.speed / free)
+                alive[9] += own
+                totals["free_delay_s"] += own
+                totals["person_delay_s"] += own * alive[10]
                 if vehicle.speed <= WAIT_MPS and not getattr(vehicle, "place", "").startswith("bus stop "):
                     alive[7] += dt  # waiting (a bus at its stop is calling there, not waiting)
                     totals["wait_s"] += dt
@@ -211,19 +236,27 @@ class RunRecorder:
                 minute["vehicle_s"] += dt
                 minute["vehicle_m"] += metres
                 minute["delay_s"] += lost
-            for vehicle_id in [vehicle_id for vehicle_id in self._alive if vehicle_id not in seen]:  # arrived
-                first, kind, origin, destination, metres, lost, _, waited, _ = self._alive.pop(vehicle_id)
-                people = self.occupancy.get(kind, 1.0)
-                trip = frame.time - first
-                self._trips.append([vehicle_id, kind, origin, destination, round(first, 1), round(frame.time, 1),
-                                    round(trip, 1), round(metres, 1), round(lost, 1), round(waited, 1), people])
-                self.trip_log.append((origin, destination, kind, trip, lost, frame.time))
+            gone = [vehicle_id for vehicle_id in self._alive if vehicle_id not in seen]  # arrived
+            exits = {trip[0]: trip for trip in getattr(frame, "exits", ())} if gone else {}
+            for vehicle_id in gone:
+                first, kind, origin, destination, metres, lost, _, waited, _, own, people = self._alive.pop(vehicle_id)
+                # Exact (Frame.exits); a frame without them: from when it was first and last seen
+                _, requested, inserted, exited = exits.get(vehicle_id) or (vehicle_id, first, first, frame.time)
+                if inserted < totals["measure_from_s"]:
+                    continue  # on the road in the warm-up: not measured
+                trip, system = exited - inserted, exited - requested
+                self._trips.append([vehicle_id, kind, origin, destination, round(inserted, 1), round(exited, 1),
+                                    round(trip, 1), round(metres, 1), round(lost, 1), round(waited, 1), people,
+                                    round(own, 1), round(requested, 1), round(system, 1)])
+                self.trip_log.append((origin, destination, kind, trip, lost, exited))
                 totals["trips"] += 1
                 totals["trip_s"] += trip
+                totals["system_trip_s"] = totals.get("system_trip_s", 0.0) + system
                 totals["trip_delay_s"] += lost
                 totals["people"] += people
                 totals["trip_wait_s"] += waited
                 totals["people_delay_s"] += lost * people
+                totals["trip_free_delay_s"] += own
                 minute["people"] += people
                 by = totals["by_type"].setdefault(kind, {"trips": 0, "people": 0.0, "trip_s": 0.0, "delay_s": 0.0})
                 by["trips"] += 1
@@ -232,6 +265,10 @@ class RunRecorder:
                 by["delay_s"] += lost
                 by["wait_s"] = by.get("wait_s", 0.0) + waited
                 by["people_delay_s"] = by.get("people_delay_s", 0.0) + lost * people
+                by["free_delay_s"] = by.get("free_delay_s", 0.0) + own
+            # Generated but not yet on the road (vehicles are conserved: spawned = waiting + on the road + arrived)
+            waiting = max(frame.spawned - frame.arrived - len(frame.vehicles), 0)
+            totals["entry_wait_s"] += waiting * dt
             queued = sum(len(lengths) for lengths in queued_at.values())
             for road_id, road in self._road.items():
                 lengths = queued_at.get(road_id, ())
@@ -247,10 +284,22 @@ class RunRecorder:
             totals["queued_sum"] += queued
             before = totals["time_s"]
             totals.update(time_s=frame.time, samples=totals["samples"] + 1, on_road=len(frame.vehicles),
-                          spawned=frame.spawned, arrived=frame.arrived, queued_now=queued,
+                          spawned=frame.spawned, arrived=frame.arrived, queued_now=queued, waiting=waiting,
                           queued_max=max(totals["queued_max"], queued))
             if int(frame.time // 60) > int(before // 60):  # a simulated minute is complete
                 self._write_minute(frame.time)
+
+    def _measure_from_here(self) -> None:
+        """The warm-up is over: every figure starts again from zero at its end (the per-minute rows, vehicles first
+        seen per minute and the spawned and arrived totals carry on; trips that entered in it are left out)."""
+        old = self.totals
+        self.totals = dict.fromkeys(old, 0)
+        self.totals.update(by_type={}, time_s=old["measure_from_s"], measure_from_s=old["measure_from_s"],
+                           spawned=old["spawned"], arrived=old["arrived"], spawned_before=old["spawned"],
+                           arrived_before=old["arrived"])
+        for sums in [*self._road.values(), *self._link.values()]:
+            sums.update(dict.fromkeys(sums, 0))
+        self.trip_log, self.queues = [], defaultdict(Counter)
 
     def _write_minute(self, now: float) -> None:
         totals, minute = self.totals, self._minute
@@ -335,7 +384,8 @@ class RunRecorder:
 
     def finish(self, results: Path) -> Path | None:
         """The run ended (Stop, a new Run, a change to the network, closing): its workbook in `results`, the
-        working folder cleared. None if it recorded nothing."""
+        working folder cleared. None if it recorded nothing. Its `error` (it ended early, or lost part of what it
+        recorded) is on its Run sheet as "Incomplete"."""
         with self._lock:
             if self._live_lock is not None:
                 self._live_lock.close()
@@ -343,6 +393,10 @@ class RunRecorder:
                 shutil.rmtree(self.folder, ignore_errors=True)
                 return None
             self._flush()
+            if self.error:
+                meta = json.loads((self.folder / "meta.json").read_text(encoding="utf-8"))
+                meta["run"].append(["Incomplete", self.error])
+                (self.folder / "meta.json").write_text(json.dumps(meta, indent=1, default=str), encoding="utf-8")
             name = file_name(self.started, seed=self.seed, model=self.model)
             with _naming:
                 path = Path(results) / name
@@ -358,15 +412,17 @@ class RunRecorder:
 
 
 def kpis(totals: dict, road_totals: dict, roads: dict, occupancy: dict) -> dict:
-    """The network's KPIs from a run's running totals."""
-    hours = totals["time_s"] / 3600
+    """The network's KPIs from a run's running totals (measured after the warm-up, measure_from_s)."""
+    warm_up = totals.get("measure_from_s", 0.0)
+    seconds = totals["time_s"] - warm_up  # measured
+    hours = seconds / 3600
     per_hour = (lambda value: value / hours) if hours > 0 else (lambda value: 0.0)
     rows = []
     for road_id, road in road_totals.items():
         info = roads.get(road_id, {})
         rows.append({"road": road_id, "flow_vph": round(per_hour(road["entered"])),
                      "speed_kmh": round(road["vehicle_m"] / road["vehicle_s"] * 3.6, 1) if road["vehicle_s"] else None,
-                     "density_veh_km": round(road["vehicle_s"] / max(totals["time_s"], 1e-9) / max(info.get("length_m", 1) / 1000, 1e-6), 2),
+                     "density_veh_km": round(road["vehicle_s"] / max(seconds, 1e-9) / max(info.get("length_m", 1) / 1000, 1e-6), 2),
                      "queue_max": int(road["queue_max"]),
                      "queue_mean": round(road["queue_sum"] / max(totals["samples"], 1), 2),
                      "queue_m_max": round(road["queue_m_max"], 1), "delay_veh_h": round(road["delay_s"] / 3600, 3),
@@ -375,19 +431,31 @@ def kpis(totals: dict, road_totals: dict, roads: dict, occupancy: dict) -> dict:
     longest = max(rows, key=lambda row: (row["queue_max"], row["queue_m_max"]), default=None)
     trips, people, samples = totals["trips"], totals["people"], totals["samples"]
     people_delay = totals.get("people_delay_s", 0.0)  # (a crashed run's older totals lack the newer figures)
+    entry_wait = totals.get("entry_wait_s", 0.0)
+    spawned, unfinished = totals["spawned"], totals["on_road"] + totals.get("waiting", 0)
     return {
-        "time_s": totals["time_s"], "spawned": totals["spawned"], "arrived": totals["arrived"],
-        "on_road": totals["on_road"], "throughput_vph": round(per_hour(totals["arrived"])),
+        "time_s": totals["time_s"], "measure_from_s": warm_up, "spawned": spawned, "arrived": totals["arrived"],
+        "on_road": totals["on_road"], "waiting_to_enter": totals.get("waiting", 0),
+        # Of the vehicles spawned in the whole run: arrived, and still on the road or waiting to enter
+        "completion_rate": round(totals["arrived"] / spawned, 3) if spawned else None,
+        "unfinished_share": round(unfinished / spawned, 3) if spawned else None,
+        "throughput_vph": round(per_hour(totals["arrived"] - totals.get("arrived_before", 0))),
         "people": round(totals["people"], 1), "people_per_h": round(per_hour(totals["people"])),
         "mean_speed_kmh": round(totals["vehicle_m"] / totals["vehicle_s"] * 3.6, 1) if totals["vehicle_s"] else None,
         "vehicle_km": round(totals["vehicle_m"] / 1000, 2), "vehicle_h": round(totals["vehicle_s"] / 3600, 2),
         "delay_veh_h": round(totals["delay_s"] / 3600, 2),
+        "delay_vs_free_speed_veh_h": round(totals.get("free_delay_s", 0.0) / 3600, 2),
+        "entry_wait_veh_h": round(entry_wait / 3600, 2),
+        "delay_with_entry_wait_veh_h": round((totals["delay_s"] + entry_wait) / 3600, 2),
         "delay_s_per_km": round(totals["delay_s"] / (totals["vehicle_m"] / 1000), 1) if totals["vehicle_m"] > 1 else None,
         "trips": trips, "mean_trip_s": round(totals["trip_s"] / trips, 1) if trips else None,
+        "mean_system_trip_s": round(totals.get("system_trip_s", 0.0) / trips, 1) if trips else None,
         "mean_trip_delay_s": round(totals["trip_delay_s"] / trips, 1) if trips else None,
+        "mean_trip_delay_vs_free_speed_s": round(totals.get("trip_free_delay_s", 0.0) / trips, 1) if trips else None,
         "mean_wait_s": round(totals.get("trip_wait_s", 0.0) / trips, 1) if trips else None,
         "people_delay_h": round(people_delay / 3600, 2),
         "mean_person_delay_s": round(people_delay / people, 1) if people else None,
+        "person_delay_on_board_h": round(totals.get("person_delay_s", 0.0) / 3600, 2),
         "queued_mean": round(totals.get("queued_sum", 0) / samples, 1) if samples else None,
         "queued_now": totals["queued_now"], "queued_max": totals["queued_max"],
         "longest_queue": longest if longest and longest["queue_max"] else None,
@@ -397,7 +465,9 @@ def kpis(totals: dict, road_totals: dict, roads: dict, occupancy: dict) -> dict:
                            "mean_trip_s": round(by["trip_s"] / by["trips"], 1) if by["trips"] else None,
                            "mean_delay_s": round(by["delay_s"] / by["trips"], 1) if by["trips"] else None,
                            "mean_wait_s": round(by.get("wait_s", 0.0) / by["trips"], 1) if by["trips"] else None,
-                           "people_delay_h": round(by.get("people_delay_s", 0.0) / 3600, 2)}
+                           "people_delay_h": round(by.get("people_delay_s", 0.0) / 3600, 2),
+                           "mean_delay_vs_free_speed_s": round(by.get("free_delay_s", 0.0) / by["trips"], 1)
+                           if by["trips"] else None}
                     for kind, by in sorted(totals["by_type"].items())},
         "occupancy": occupancy,
     }
@@ -451,26 +521,47 @@ def workbook(folder: Path, path: str | Path) -> Path:
                ["Vehicles spawned", figures["spawned"], "veh", ""],
                ["Vehicles arrived", figures["arrived"], "veh", "trips completed"],
                ["Vehicles on the road at the end", figures["on_road"], "veh", ""],
+               ["Vehicles waiting to enter at the end", figures["waiting_to_enter"], "veh",
+                "spawned, not yet on the road: spawned = waiting + on the road + arrived"],
+               ["Completion rate", figures["completion_rate"], "", "arrived ÷ spawned, the whole run"],
+               ["Unfinished trips", figures["unfinished_share"], "",
+                "(on the road + waiting to enter at the end) ÷ spawned: trips the means below leave out"],
+               ["Measured from", clock(figures["measure_from_s"]), "h:m:s",
+                "the warm-up before it is left out of the figures below (not of the counts above or Per minute)"],
                ["Throughput", figures["throughput_vph"], "veh/h", "arrived ÷ simulated hours"],
-               ["People carried", figures["people"], "people", "arrived vehicles × each type's occupancy"],
+               ["People carried", figures["people"], "people",
+                "arrived vehicles × the people on board (a bus's simulated load, else its type's occupancy)"],
                ["Passenger throughput", figures["people_per_h"], "people/h", ""],
                ["Mean speed", figures["mean_speed_kmh"], "km/h", "distance ÷ time on the road, every vehicle"],
                ["Distance driven", figures["vehicle_km"], "veh·km", ""],
                ["Time on the road", figures["vehicle_h"], "veh·h", ""],
-               ["Delay", figures["delay_veh_h"], "veh·h", "time lost against the roads' speed limits"],
+               ["Delay", figures["delay_veh_h"], "veh·h",
+                "time lost against the roads' speed limits, whatever the vehicle (road-limit time loss)"],
                ["Delay per km", figures["delay_s_per_km"], "s/veh·km", ""],
-               ["Mean trip time", figures["mean_trip_s"], "s", "completed trips"],
+               ["Delay against own free speed", figures["delay_vs_free_speed_veh_h"], "veh·h",
+                "time lost against each vehicle's own free speed where it is (speed factor, top and desired speed; a "
+                "turn's speed), not at a bus stop"],
+               ["Entry wait", figures["entry_wait_veh_h"], "veh·h",
+                "vehicles spawned but waiting to enter × the time (SUMO's insertion delay); not in Delay"],
+               ["Delay with entry wait", figures["delay_with_entry_wait_veh_h"], "veh·h", "Delay + Entry wait"],
+               ["Mean trip time", figures["mean_trip_s"], "s",
+                "completed trips, on the road to off it (exact, to the step)"],
+               ["Mean system travel time", figures["mean_system_trip_s"], "s",
+                "completed trips, requested departure to off the road: the wait to enter included"],
                ["Mean delay per trip", figures["mean_trip_delay_s"], "s", ""],
+               ["Mean delay per trip against own free speed", figures["mean_trip_delay_vs_free_speed_s"], "s", ""],
                ["Mean wait per trip", figures["mean_wait_s"], "s",
                 f"time at or below {WAIT_MPS:g} m/s, not at a bus stop (SUMO's waitingTime)"],
                ["Passenger delay", figures["people_delay_h"], "person·h", "each completed trip's delay × its people"],
                ["Mean delay per passenger", figures["mean_person_delay_s"], "s", "passenger delay ÷ people carried"],
+               ["Person delay on board", figures["person_delay_on_board_h"], "person·h",
+                "each sample's delay against own free speed × the people on board then, unfinished trips too"],
                ["Mean queued at once", figures["queued_mean"], "veh", "whole network, over the samples"],
                ["Queued at the end", figures["queued_now"], "veh", f"slower than {meta['queue_kmh']:g} km/h"],
                ["Most queued at once", figures["queued_max"], "veh", "whole network"],
                ["Longest queue", f"{longest['queue_max']} veh on {longest['road']}" if longest else "none", "",
                 f"{longest['queue_m_max']:g} m a lane" if longest else ""],
-               ["Sampled every", meta["sample_s"], "s", "trip times are within one sample"],
+               ["Sampled every", meta["sample_s"], "s", "trip times are exact, not sampled"],
                ["Occupancy assumed", ", ".join(f"{kind} {people:g}" for kind, people in meta["occupancy"].items()),
                 "people a vehicle", "an assumption (Mode Behavior's vehicle types)"]]
     road_rows = [["Road", "From", "To", "Length (m)", "Lanes per direction", "Speed limit (km/h)", "Entered (veh)",
@@ -482,12 +573,14 @@ def workbook(folder: Path, path: str | Path) -> Path:
                           info.get("limit_kmh"), row["entered"], row["flow_vph"], row["speed_kmh"], row["density_veh_km"],
                           row["queue_max"], row["queue_mean"], row["queue_m_max"], row["delay_veh_h"]])
     type_rows = [["Type", "Trips", "People", "People per hour", "Mean trip time (s)", "Mean delay (s)", "Mean wait (s)",
-                  "Passenger delay (person·h)", "Occupancy"]]
+                  "Passenger delay (person·h)", "Occupancy", "Mean delay vs own free speed (s)"]]
     for kind, by in figures["by_type"].items():
         type_rows.append([kind, by["trips"], by["people"], by["people_per_h"], by["mean_trip_s"], by["mean_delay_s"],
-                          by["mean_wait_s"], by["people_delay_h"], meta["occupancy"].get(kind, 1.0)])
+                          by["mean_wait_s"], by["people_delay_h"], meta["occupancy"].get(kind, 1.0),
+                          by["mean_delay_vs_free_speed_s"]])
     network = [(name, rows) for name, rows in meta.get("inputs", [])]
     run = [["Setting", "Value"], *meta.get("run", []), ["Simulated", clock(figures["time_s"])],
+           ["Measured from", clock(figures["measure_from_s"])],
            ["Workbook written", datetime.now().isoformat(timespec="seconds")]]
     conditions = road_conditions(roads, (state or {}).get("links", {}), figures["time_s"])
     reported = [(name, rows) for name, rows, _ in extra] + [(name, rows) for name, rows, _ in analysis]
@@ -689,12 +782,12 @@ def input_sheets(network, demand, modes, plans: dict) -> list[tuple[str, list[li
                       *([round(share, 6) for share in shares] + [None] * (24 - len(shares)) if daily else [])])
     kinds = [["Vehicle type", "Headway (min; 0: no timetable)", "Occupancy (people)", "Length (m)", "Width (m)",
               "Top speed (km/h)", "Desired top speed (km/h)", "Acceleration (m/s²)", "Comfortable braking (m/s²)",
-              "Standstill gap (m)", "Reaction time τ (s)", "Imperfection σ", "Speed deviation", "Start-up delay (s)",
+              "Emergency braking (m/s²)", "Standstill gap (m)", "Reaction time τ (s)", "Imperfection σ", "Speed deviation", "Start-up delay (s)",
               "Colour"]]
     for mode in modes:
         kinds.append([mode.name, mode.headway_min, getattr(mode, "occupancy", 1.0), mode.length_m, mode.width_m,
                       mode.max_speed_kmh, None if mode.desired_max_kmh >= 1e4 else mode.desired_max_kmh, mode.accel,
-                      mode.decel, mode.min_gap_m, mode.tau_s, mode.sigma, mode.speed_dev, mode.startup_delay_s, mode.colour])
+                      mode.decel, getattr(mode, "emergency_decel", None), mode.min_gap_m, mode.tau_s, mode.sigma, mode.speed_dev, mode.startup_delay_s, mode.colour])
     signals = [["Junction", "Method", "Cycle (s)", "Green times (s)", "Offset (s)", "Group", "Other figures"]]
     for node_id, plan in sorted(plans.items()):
         greens = plan.get("greens_s") or plan.get("green_times_s") or plan.get("greens")
@@ -841,8 +934,8 @@ READ_ME = [
                         "delay. The GeoJSON beside the workbook carries the same on a map."),
     ("Roads by minute", "Each road each simulated minute: vehicles entering, flow, mean speed, most queued, delay."),
     ("By type", "Each vehicle type: trips, people, trip time, delay, wait and its passengers' delay."),
-    ("Trips", "Every completed trip: vehicle, type, origin, destination, when it left and arrived (within one sample), "
-              "time, distance, delay, wait, people."),
+    ("Trips", "Every completed trip measured: vehicle, type, origin, destination, when it got on the road and off it, "
+              "time, distance, delay, wait, people, when it asked to depart and its system travel time (exact)."),
     ("City", "Input: the network as a whole: place, extent, road length by type, speed limit and lanes, one-way "
              "share, junction control and timing methods, densities, graph indices, roundabouts, curves, stops."),
     ("Junctions", "Input: each junction's place, control, roads meeting, roundabout diameter, interchange, and its "
@@ -859,13 +952,26 @@ READ_ME = [
     ("Institutions", "Input: buildings placed on the map (their trips are not spawned by a run yet)."),
 ]
 DEFINITIONS = [
-    ("Throughput (veh/h)", "vehicles that completed their trip ÷ simulated hours"),
-    ("People (people/h)", "completed trips × the vehicle type's occupancy ÷ simulated hours"),
+    ("Throughput (veh/h)", "vehicles that completed their trip ÷ simulated hours (both after Measured from)"),
+    ("Trip time (s)", "a completed trip's road travel time: off its last lane − onto its first (exact, to the 0.5 s step)"),
+    ("System travel time (s)", "off its last lane − its requested departure: the trip time plus its wait to enter"),
+    ("Completion rate", "vehicles arrived ÷ spawned; 1 − it, the unfinished share, is still on the road or waiting to "
+                        "enter (the trip means count completed trips only)"),
+    ("People (people/h)", "completed trips × the people on board (a bus's simulated load, else its type's occupancy) "
+                          "÷ simulated hours"),
     ("Mean speed (km/h)", "distance driven ÷ time on the road, over every vehicle (space-mean speed)"),
-    ("Delay (veh·h)", "Σ over vehicles and samples of dt × max(0, 1 − speed ÷ the road's speed limit)"),
+    ("Delay (veh·h)", "Σ over vehicles and samples of dt × max(0, 1 − speed ÷ the road's speed limit): road-limit time "
+                      "loss, the same limit for every vehicle (a bicycle at its own 20 km/h loses time on a 50 km/h road)"),
+    ("Delay vs own free speed", "Σ over a vehicle's samples of dt × max(0, 1 − speed ÷ its own free speed there: the "
+                                "lane's limit or the turn's speed × its speed factor, no faster than its top and desired "
+                                "speeds), not while calling at a bus stop (SUMO's timeLoss)"),
+    ("Entry wait (veh·h)", "Σ over samples of dt × the vehicles spawned but not yet able to enter (spawned − arrived − "
+                           "on the road): demand held off the network, which Delay leaves out"),
+    ("Person delay on board (person·h)", "Σ over vehicles and samples of their delay vs own free speed × the people "
+                                         "on board then (a bus's simulated load, else its type's occupancy)"),
     ("Wait (s)", f"Σ over a vehicle's samples of dt while at or below {WAIT_MPS:g} m/s, not at a bus stop (SUMO's "
                  "tripinfo waitingTime)"),
-    ("Passenger delay (person·h)", "Σ over completed trips of the trip's delay × its vehicle type's occupancy"),
+    ("Passenger delay (person·h)", "Σ over completed trips of the trip's delay × the people on board as it arrived"),
     ("Queued (veh)", f"vehicles slower than {QUEUE_KMH:g} km/h at a sample"),
     ("Queue length a lane (m)", f"Σ (vehicle length + {GAP_M:g} m) of a road's queued vehicles ÷ its lanes per direction"),
     ("Flow on a road (veh/h)", "vehicles seen on it after another road ÷ simulated hours (a road crossed between two "
@@ -874,7 +980,7 @@ DEFINITIONS = [
     ("Level of service", "a road direction's mean speed as a share of its speed limit (free flow): A over 85 %, B over "
                          "67 %, C over 50 %, D over 40 %, E over 30 %, F at or below (HCM 2010 urban street segments)"),
     ("Travel time index", "travel time ÷ free-flow time (length ÷ speed limit)"),
-    ("Sampling", f"every {SAMPLE_S:g} simulated seconds; totals of spawned and arrived vehicles are exact; detectors, "
+    ("Sampling", f"every {SAMPLE_S:g} simulated seconds; trip times and totals of spawned and arrived vehicles are exact; detectors, "
                  "link times, conflicts and queue discharge are recorded every 0.5 s step"),
 ]
 

@@ -2,14 +2,14 @@
 
 create_vehicle() copies the type's attributes, as set in Mode Behavior, onto the vehicle: its
 name, colour and headway, its size, and how it drives (top speed, desired top speed, acceleration,
-comfortable braking, standstill gap, reaction time, imperfection), and draws its speed factor, as
+comfortable and emergency braking, standstill gap, reaction time, imperfection), and draws its speed factor, as
 SUMO does: each vehicle keeps to its own multiple of the speed limits, from normc(1, speedDev, 0.2,
 2), so about 95 % drive at 80-120 % of the limit. Where a vehicle is stays lane-relative
 and in metres: the piece of path it is on (a lane, or a turn through a junction; see
 simulation.py) and how far along it its front bumper is. x, y and heading are derived from that
 path's polyline, so a vehicle keeps to the road's geometry whatever shape the road is.
 
-Car following is the Krauss model, SUMO's default (reverse_engineering/simulation/
+Car following is the Krauss model, SUMO's default (references/reverse_engineering/simulation/
 car_following.md). Each step a vehicle drives at the fastest speed from which, after its
 reaction time τ, it could stop within the gap g plus the distance its leader needs to stop
 (SUMO's maximumSafeFollowSpeed, which its Krauss uses rather than the 1998 closed form):
@@ -18,8 +18,9 @@ reaction time τ, it could stop within the gap g plus the distance its leader ne
 
 no faster than it can accelerate to (v + a·Δt) or than its free speed (free_speed: SUMO's
 min(maxSpeed, limit × speedFactor, desiredMaxSpeed × speedFactor)), less a random "dawdle" (driver
-imperfection, next_speed). A red light or a junction it must wait at is a standing leader at the
-stop line.
+imperfection, next_speed), and never slower than its emergency braking allows (v − emergencyDecel·Δt). A red
+light or a junction it must wait at is a standing leader at the stop line. With the ballistic update (opt-in,
+Simulation step_method) the safe speed is SUMO's ballistic form instead (safe_speed's `dt`).
 """
 
 from __future__ import annotations
@@ -29,26 +30,36 @@ from dataclasses import dataclass, field
 from math import sqrt
 from typing import TYPE_CHECKING
 
+from .models import LANE_WIDTH_M
+
+# Lateral position (opt-in: Simulation lateral=True), SUMO's sublane model SL2015 at its smallest (Semrau & Erdmann
+# 2016; simulation/lane_changing.md): the least gap kept sideways to another vehicle (SUMO's minGapLat default) and the
+# fastest a vehicle moves sideways (SUMO's maxSpeedLat default, m/s), sumo.dlr.de/docs/Simulation/SublaneModel.html.
+# A type that filters (VehicleMode.filters: made as these classes) does so only if it fits in half a lane with that gap.
+MIN_GAP_LAT_M = 0.6
+MAX_SPEED_LAT = 1.0
+FILTERING_CLASSES = ("motorcycle", "moped", "bicycle")
+
 
 # Vehicle classes a type can be made as (create_vehicle_types, VehicleModes.create): SUMO's defaults for
 # each vClass (sumo.dlr.de/docs/Vehicle_Type_Parameter_Defaults): length, width, top speed, acceleration,
-# comfortable braking, standstill gap and speed deviation; a bicycle's desired top speed 20 km/h, as
-# the Bike type's. SUMO lists no braking for a coach: a bus's 4.0. Occupancy (people a vehicle carries,
-# for passenger throughput) is the app's assumption, not SUMO's.
+# comfortable and emergency braking (SUMO's decel and emergencyDecel), standstill gap and speed deviation; a
+# bicycle's desired top speed 20 km/h, as the Bike type's. SUMO lists no braking for a coach: a bus's 4.0 and 7.0.
+# Occupancy (people a vehicle carries, for passenger throughput) is the app's assumption, not SUMO's.
 VEHICLE_CLASSES = {
-    "passenger": dict(length_m=5.0, width_m=1.8, max_speed_kmh=200.0, accel=2.6, decel=4.5, min_gap_m=2.5, speed_dev=0.1, occupancy=1.5),
-    "taxi": dict(length_m=5.0, width_m=1.8, max_speed_kmh=200.0, accel=2.6, decel=4.5, min_gap_m=2.5, speed_dev=0.05, occupancy=1.5),
-    "bus": dict(length_m=12.0, width_m=2.5, max_speed_kmh=85.0, accel=1.2, decel=4.0, min_gap_m=2.5, speed_dev=0.1, occupancy=20.0),
-    "coach": dict(length_m=14.0, width_m=2.6, max_speed_kmh=100.0, accel=2.0, decel=4.0, min_gap_m=2.5, speed_dev=0.05, occupancy=30.0),
-    "delivery": dict(length_m=6.5, width_m=2.16, max_speed_kmh=200.0, accel=2.6, decel=4.5, min_gap_m=2.5, speed_dev=0.05, occupancy=1.0),
-    "truck": dict(length_m=7.1, width_m=2.4, max_speed_kmh=130.0, accel=1.3, decel=4.0, min_gap_m=2.5, speed_dev=0.05, occupancy=1.0),
-    "trailer": dict(length_m=16.5, width_m=2.55, max_speed_kmh=130.0, accel=1.0, decel=4.0, min_gap_m=2.5, speed_dev=0.05, occupancy=1.0),
-    "motorcycle": dict(length_m=2.2, width_m=0.9, max_speed_kmh=200.0, accel=6.0, decel=10.0, min_gap_m=2.5, speed_dev=0.1, occupancy=1.0),
-    "moped": dict(length_m=2.1, width_m=0.8, max_speed_kmh=45.0, accel=1.1, decel=7.0, min_gap_m=2.5, speed_dev=0.1, occupancy=1.0),
-    "bicycle": dict(length_m=1.6, width_m=0.65, max_speed_kmh=50.0, desired_max_kmh=20.0, accel=1.2, decel=3.0, min_gap_m=0.5, speed_dev=0.1, occupancy=1.0),
-    "tram": dict(length_m=22.0, width_m=2.4, max_speed_kmh=80.0, accel=1.0, decel=3.0, min_gap_m=2.5, speed_dev=0.0, occupancy=60.0),
-    "emergency": dict(length_m=6.5, width_m=2.16, max_speed_kmh=200.0, accel=2.6, decel=4.5, min_gap_m=2.5, speed_dev=0.0, occupancy=2.0),
-    "evehicle": dict(length_m=5.0, width_m=1.8, max_speed_kmh=200.0, accel=2.6, decel=4.5, min_gap_m=2.5, speed_dev=0.1, occupancy=1.5),
+    "passenger": dict(length_m=5.0, width_m=1.8, max_speed_kmh=200.0, accel=2.6, decel=4.5, emergency_decel=9.0, min_gap_m=2.5, speed_dev=0.1, occupancy=1.5),
+    "taxi": dict(length_m=5.0, width_m=1.8, max_speed_kmh=200.0, accel=2.6, decel=4.5, emergency_decel=9.0, min_gap_m=2.5, speed_dev=0.05, occupancy=1.5),
+    "bus": dict(length_m=12.0, width_m=2.5, max_speed_kmh=85.0, accel=1.2, decel=4.0, emergency_decel=7.0, min_gap_m=2.5, speed_dev=0.1, occupancy=20.0),
+    "coach": dict(length_m=14.0, width_m=2.6, max_speed_kmh=100.0, accel=2.0, decel=4.0, emergency_decel=7.0, min_gap_m=2.5, speed_dev=0.05, occupancy=30.0),
+    "delivery": dict(length_m=6.5, width_m=2.16, max_speed_kmh=200.0, accel=2.6, decel=4.5, emergency_decel=9.0, min_gap_m=2.5, speed_dev=0.05, occupancy=1.0),
+    "truck": dict(length_m=7.1, width_m=2.4, max_speed_kmh=130.0, accel=1.3, decel=4.0, emergency_decel=7.0, min_gap_m=2.5, speed_dev=0.05, occupancy=1.0),
+    "trailer": dict(length_m=16.5, width_m=2.55, max_speed_kmh=130.0, accel=1.0, decel=4.0, emergency_decel=7.0, min_gap_m=2.5, speed_dev=0.05, occupancy=1.0),
+    "motorcycle": dict(length_m=2.2, width_m=0.9, max_speed_kmh=200.0, accel=6.0, decel=10.0, emergency_decel=10.0, min_gap_m=2.5, speed_dev=0.1, occupancy=1.0),
+    "moped": dict(length_m=2.1, width_m=0.8, max_speed_kmh=45.0, accel=1.1, decel=7.0, emergency_decel=10.0, min_gap_m=2.5, speed_dev=0.1, occupancy=1.0),
+    "bicycle": dict(length_m=1.6, width_m=0.65, max_speed_kmh=50.0, desired_max_kmh=20.0, accel=1.2, decel=3.0, emergency_decel=7.0, min_gap_m=0.5, speed_dev=0.1, occupancy=1.0),
+    "tram": dict(length_m=22.0, width_m=2.4, max_speed_kmh=80.0, accel=1.0, decel=3.0, emergency_decel=7.0, min_gap_m=2.5, speed_dev=0.0, occupancy=60.0),
+    "emergency": dict(length_m=6.5, width_m=2.16, max_speed_kmh=200.0, accel=2.6, decel=4.5, emergency_decel=9.0, min_gap_m=2.5, speed_dev=0.0, occupancy=2.0),
+    "evehicle": dict(length_m=5.0, width_m=1.8, max_speed_kmh=200.0, accel=2.6, decel=4.5, emergency_decel=9.0, min_gap_m=2.5, speed_dev=0.1, occupancy=1.5),
 }
 
 # A dispatched emergency vehicle (Simulation.dispatch) when the project has no vehicle type called Emergency:
@@ -71,6 +82,7 @@ class Vehicle:
     max_speed: float  # m/s
     accel: float  # m/s²
     decel: float  # comfortable braking, m/s²
+    emergency_decel: float  # the hardest it can brake, m/s² (SUMO's emergencyDecel): no step slows it more
     min_gap: float  # m, standstill gap to the leader
     tau: float  # s, reaction time
     sigma: float  # 0-1, imperfection
@@ -80,7 +92,8 @@ class Vehicle:
     route: list = field(default_factory=list)  # the links it drives, origin end to destination end
     origin: str = ""
     destination: str = ""
-    depart_s: float = 0.0
+    depart_s: float = 0.0  # when it asked to depart (its trip's requested departure)
+    inserted_s: float | None = None  # when it got onto its first lane (None: still waiting to enter)
     # Where it is and what it's doing, kept by the simulation:
     leg: int = 0  # index in `route` of the link it's on, or leaving (while on a turn)
     segment: object = None  # the lane or turn it's on
@@ -108,16 +121,27 @@ class Vehicle:
     advice: float | None = None  # a speed cap, to drop in behind (or let pass) a vehicle in the lane it needs
     pose: tuple = (0.0, 0.0, 1.0, 0.0)  # centre x, y and heading ux, uy after the last step
     prev_pose: tuple = (0.0, 0.0, 1.0, 0.0)  # ...and the step before, to draw smooth motion between
+    # Lateral runs only (Simulation lateral): its centre's offset from its lane's or turn's centre line, metres towards
+    # (-uy, ux) (0 otherwise), and whether it may pass others within its lane (its type filters and it is narrow_enough)
+    lat_m: float = 0.0
+    filters: bool = False
+
+
+def narrow_enough(width_m: float) -> bool:
+    """Fits in half a lane with the lateral gap: may share a lane side by side and pass a queue within it."""
+    return width_m + MIN_GAP_LAT_M <= LANE_WIDTH_M / 2
 
 
 def create_vehicle(mode: VehicleMode, vehicle_id: str, route: list | None = None, depart_s: float = 0.0,
                    origin: str = "", destination: str = "", rng: _random.Random | None = None) -> Vehicle:
     """A vehicle of this type, with the type's attributes and colour, and its speed factor drawn
     with `rng` (none: exactly 1)."""
-    return Vehicle(vehicle_id, mode.name, mode.colour, mode.length_m, mode.width_m, mode.headway_min,
-                   mode.max_speed_kmh / 3.6, mode.accel, mode.decel, mode.min_gap_m, mode.tau_s, mode.sigma,
-                   mode.desired_max_kmh / 3.6, speed_factor(mode.speed_dev, rng), mode.startup_delay_s,
-                   list(route or []), origin, destination, depart_s)
+    vehicle = Vehicle(vehicle_id, mode.name, mode.colour, mode.length_m, mode.width_m, mode.headway_min,
+                      mode.max_speed_kmh / 3.6, mode.accel, mode.decel, mode.emergency_decel, mode.min_gap_m, mode.tau_s,
+                      mode.sigma, mode.desired_max_kmh / 3.6, speed_factor(mode.speed_dev, rng), mode.startup_delay_s,
+                      list(route or []), origin, destination, depart_s)
+    vehicle.filters = bool(getattr(mode, "filters", False)) and narrow_enough(mode.width_m)
+    return vehicle
 
 
 def speed_factor(deviation: float, rng: _random.Random | None) -> float:
@@ -156,26 +180,41 @@ def brake_gap(speed: float, decel: float, reaction_s: float = 0.0) -> float:
     return speed * speed / (2 * decel) + speed * reaction_s
 
 
-def safe_speed(vehicle: Vehicle, gap: float, leader_speed: float, leader_decel: float | None = None) -> float:
+def safe_speed(vehicle: Vehicle, gap: float, leader_speed: float, leader_decel: float | None = None,
+               dt: float | None = None) -> float:
     """The safe speed behind a leader `gap` metres ahead (already less the minimum gap) that
-    brakes at `leader_decel` (its own braking; the vehicle's when unknown)."""
+    brakes at `leader_decel` (its own braking; the vehicle's when unknown).
+    `dt`: the step of the ballistic update (None: Euler's). Then, as SUMO's maximumSafeStopSpeedBallistic, the speed
+    at the step's end v0 + a·Δt, where a is the even acceleration over τ from its speed v0 to v1 that leaves the room
+    to stop: τ(v0 + v1)/2 + v1²/2b = room; or, if it can't drive τ first (v0·τ ≥ 2·room), a = −v0²/2·room. Below
+    zero: it stops part way through the step (Simulation._move); no room at all: as hard as it can (−inf)."""
     b, tau = vehicle.decel, vehicle.tau
     room = gap + brake_gap(leader_speed, leader_decel or b)
+    if dt is None:
+        return -tau * b + sqrt((tau * b) ** 2 + 2 * b * room) if room > 0 else 0.0
+    v0 = vehicle.speed
     if room <= 0:
-        return 0.0
-    return -tau * b + sqrt((tau * b) ** 2 + 2 * b * room)
+        return -float("inf") if v0 > 0 else 0.0
+    if v0 * tau >= 2 * room:
+        return v0 - v0 * v0 / (2 * room) * dt
+    v1 = -b * tau / 2 + sqrt((b * tau / 2) ** 2 + b * (2 * room - tau * v0))
+    return v0 + (v1 - v0) / tau * dt
 
 
-def next_speed(vehicle: Vehicle, vsafe: float, limit: float, dt: float, rng) -> float:
+def next_speed(vehicle: Vehicle, vsafe: float, limit: float, dt: float, rng, ballistic: bool = False) -> float:
     """The speed for the coming step: as fast as the limits, acceleration and safety allow, less
     a random dawdle, as SUMO's default Krauss does it: σ·a·Δt·η (η uniform in [0, 1)), or σ·v·Δt·η
     while the speed v is still below one second's acceleration (a driver moving off does move off).
     Dawdling never brakes harder than comfortable, nor below that speed if it is braking harder
-    already; never negative, and a vsafe of zero stops it within the step."""
+    already; never negative, and a vsafe of zero stops it within the step. Nothing slows it by more than its
+    emergency braking (SUMO's emergencyDecel bound in finalizeSpeed): if that isn't enough, it overshoots, and the
+    run counts the collision. `ballistic`: a speed below zero is kept, meaning it stops part way through the step."""
     desired = min(limit, vehicle.max_speed, vehicle.speed + vehicle.accel * dt, vsafe)
     random = rng.random()
-    dawdle = vehicle.sigma * (desired if desired < vehicle.accel else vehicle.accel) * dt * random
-    return max(min(max(0.0, vehicle.speed - vehicle.decel * dt), desired), desired - dawdle, 0.0)
+    dawdle = vehicle.sigma * (max(desired, 0.0) if desired < vehicle.accel else vehicle.accel) * dt * random
+    low = -float("inf") if ballistic else 0.0
+    return max(min(max(low, vehicle.speed - vehicle.decel * dt), desired), desired - dawdle,
+               vehicle.speed - vehicle.emergency_decel * dt, low)
 
 
 def secure_gap(follower: Vehicle, follower_speed: float, leader_speed: float, leader_decel: float) -> float:

@@ -19,6 +19,7 @@ HOURS = 24
 ARRIVAL_PATTERNS = ["Random", "Poisson", "Binomial", "Negative binomial"]  # per OD pair
 DEGREES = (2, 3, 4, 5, 6)
 MIN_GAP_H = 0.25  # control points stay at least this far apart in time
+PEAK_QUARTER = 1  # a peak-hour factor's busiest 15 minutes: the hour's second (the first fills the network)
 # A weekday with a morning and an evening peak: a starting shape to tune.
 WEEKDAY = [(0.0, 0.06), (3.0, 0.03), (6.0, 0.35), (8.0, 1.0), (10.0, 0.55), (13.0, 0.62),
            (17.0, 0.95), (19.0, 0.5), (22.0, 0.18), (24.0, 0.06)]
@@ -58,6 +59,33 @@ class DailyProfile:
         """Control points sampled from the current curve, to tune by hand."""
         hours = [i * HOURS / (count - 1) for i in range(count)]
         return DailyProfile("points", [(hour, self.level(hour)) for hour in hours])
+
+
+def quarter_shares(values) -> tuple[float, ...]:
+    """Hourly demand's four 15-minute counts (or shares) as the hour's shares, adding up to 1; () for an even hour.
+    ValueError if they aren't four numbers, none negative, some above zero."""
+    try:
+        values = [float(v) for v in values]
+    except (TypeError, ValueError):
+        raise ValueError("quarters must be four numbers, one per 15 minutes of the hour.") from None
+    if len(values) != 4 or min(values) < 0 or not 0 < sum(values) < float("inf"):
+        raise ValueError("quarters must be four numbers, one per 15 minutes of the hour, none below zero.")
+    shares = tuple(v / sum(values) for v in values)
+    return () if max(shares) - min(shares) < 1e-9 else shares
+
+
+def phf_quarters(phf: float) -> tuple[float, ...]:
+    """The hour's 15-minute shares for a peak-hour factor PHF = V / (4·V15) (HCM 2000 Eq 7-2), 0.25 to 1: the busiest
+    quarter (PEAK_QUARTER) carries 1/(4·PHF) of the hour, the other three share the rest evenly; () for 1."""
+    if not 0.25 <= phf <= 1:
+        raise ValueError("peak_hour_factor must be 0.25 to 1.")
+    peak = 1 / (4 * phf)
+    return quarter_shares([peak if quarter == PEAK_QUARTER else (1 - peak) / 3 for quarter in range(4)])
+
+
+def phf_of(quarters) -> float:
+    """The peak-hour factor of an hour's 15-minute shares (1 for an even hour)."""
+    return 1 / (4 * max(quarters)) if quarters else 1.0
 
 
 def pchip(points: list[tuple[float, float]], x: float) -> float:

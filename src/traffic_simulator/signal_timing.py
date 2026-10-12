@@ -37,13 +37,19 @@ from dataclasses import dataclass, field
 from math import ceil, floor, sqrt
 from time import monotonic
 
-AMBER_S, ALL_RED_S = 3.0, 2.0
+AMBER_S, ALL_RED_S = 3.0, 2.0  # a junction's own come from its approach speed and width (clearance)
 SPAN_S = AMBER_S + ALL_RED_S  # after each green
+# ITE's kinematic change and clearance intervals: the driver's perception-reaction time, the deceleration
+# designed for (10 ft/s²) and the vehicle length crossing (20 ft); MUTCD 2009 §4D.26 holds the yellow
+# to 3-6 s and the red clearance to at most 6 s (the 1 s least is the app's).
+REACTION_S, DESIGN_DECEL, CLEARING_LENGTH_M = 1.0, 3.05, 6.1
+AMBER_RANGE_S, ALL_RED_RANGE_S = (3.0, 6.0), (1.0, 6.0)
 # Calibrated to the simulated drivers (SUMO's default passenger car, with its startupDelay set to
 # 0.9 s: mode_behavior.py) by the HCM's field method at a signal with a standing queue (4 seeds, an
 # hour each, headways from the 5th queued vehicle on): saturation headway 1.744 s, i.e. 2,064 veh/h
-# per lane; start-up lost time 1.82 s (the first four vehicles' excess over it); 2.17 s of the 3 s
-# amber used. Effective green = green + amber used − start-up lost.
+# per lane; start-up lost time 1.82 s (the first four vehicles' excess over it); 2.77 s of the 3.3 s
+# amber used (2.17 s of a 3 s one when drivers stopped without reacting first: _may_enter). Effective
+# green = green + amber used − start-up lost (the HCM's extension of effective green, e).
 # test_simulation.test_the_timing_methods_are_calibrated_to_the_simulated_drivers re-measures them.
 SATURATION_PER_LANE_VPH = 2060.0
 # Turning on a protected green, measured on the same drivers (a standing queue, 3 seeds of 50 min, per hour
@@ -51,7 +57,7 @@ SATURATION_PER_LANE_VPH = 2060.0
 KERB_TURN_PER_LANE_VPH = 1160.0
 OFFSIDE_TURN_PER_LANE_VPH = 1100.0
 START_UP_LOST_S = 1.8
-AMBER_USED_S = 2.2
+AMBER_USED_S = 2.8
 MIN_GREEN_S, MAX_CYCLE_S = 7.0, 120.0
 # TRANSYT: Robertson's platoon dispersion factor and travel time factor (TRANSYT's defaults); the
 # offline optimisers' step sizes and the time they may take at Run.
@@ -88,16 +94,27 @@ COORDINATED = ("transyt", "synchro", "scats", "scoot")  # a group of junctions o
 ADAPTIVE = ("scats", "scoot")
 
 
-def lost_time(phases: int) -> float:
-    """Webster's lost time: every phase's start-up lost time, all-red and the amber not used."""
-    return phases * (START_UP_LOST_S + ALL_RED_S + AMBER_S - AMBER_USED_S)
+def clearance(speed_mps: float, crossing_m: float) -> tuple[float, float]:
+    """(amber, all-red) for a junction approached at `speed_mps` and `crossing_m` across, stop line to
+    far side, by ITE's kinematic method on the level: amber Y = t + v / 2a, all-red R = (W + L) / v,
+    each within its MUTCD range and to 0.1 s."""
+    amber = REACTION_S + speed_mps / (2 * DESIGN_DECEL)
+    all_red = (crossing_m + CLEARING_LENGTH_M) / speed_mps
+    return (round(min(max(amber, AMBER_RANGE_S[0]), AMBER_RANGE_S[1]), 1),
+            round(min(max(all_red, ALL_RED_RANGE_S[0]), ALL_RED_RANGE_S[1]), 1))
+
+
+def lost_time(phases: int, span: float = SPAN_S) -> float:
+    """Webster's lost time: every phase's start-up lost time, all-red and the amber not used (`span`:
+    its amber plus all-red; the HCM's tL = l1 + Y − e)."""
+    return phases * (START_UP_LOST_S + span - AMBER_USED_S)
 
 
 def effective(green: float) -> float:
     return green + AMBER_USED_S - START_UP_LOST_S
 
 
-def webster(flow_ratios: list[float]) -> tuple[float, list[float]]:
+def webster(flow_ratios: list[float], span: float = SPAN_S) -> tuple[float, list[float]]:
     """(cycle, green per phase) by Webster's method (Road Research Technical Paper 39, 1958) from
     each phase's critical flow ratio y = q/s:
 
@@ -105,31 +122,33 @@ def webster(flow_ratios: list[float]) -> tuple[float, list[float]]:
         effective green g = (C0 − L)·y / Y,  shown green G = g − amber used + start-up lost time
 
     C0 is capped at MAX_CYCLE_S, and used at the cap when Y ≥ 0.95 (the junction is at or over
-    capacity); each green is at least MIN_GREEN_S. With no demand the greens split evenly."""
+    capacity); the greens fill it (fit_greens), each at least MIN_GREEN_S. With no demand the greens
+    split evenly. Minimum greens and clearances too long for the cap are refused."""
     count = len(flow_ratios)
-    lost = lost_time(count)
+    if count * (MIN_GREEN_S + span) > MAX_CYCLE_S:
+        raise ValueError(f"{count} phases of {MIN_GREEN_S:g} s minimum green and {span:g} s amber and all-red "
+                         f"need {count * (MIN_GREEN_S + span):g} s, more than the {MAX_CYCLE_S:g} s longest cycle.")
     total = sum(flow_ratios)
+    lost = lost_time(count, span)
     cycle = MAX_CYCLE_S if total >= 0.95 else min(MAX_CYCLE_S, (1.5 * lost + 5) / (1 - total))
-    cycle = max(cycle, count * (MIN_GREEN_S + SPAN_S))
-    shares = [ratio / total for ratio in flow_ratios] if total > 0 else [1 / count] * count
-    greens = [max(MIN_GREEN_S, (cycle - lost) * share - AMBER_USED_S + START_UP_LOST_S) for share in shares]
-    return sum(green + SPAN_S for green in greens), greens
+    greens = fit_greens(flow_ratios, cycle, span)
+    return sum(green + span for green in greens), greens
 
 
-def critical_saturation(flow_ratios: list[float]) -> float:
+def critical_saturation(flow_ratios: list[float], span: float = SPAN_S) -> float:
     """A junction's critical degree of saturation (flow over capacity, HCM's critical v/c) when
     Webster times it: X = Y·C / (C − L) with Webster's cycle C. It rises with the demand."""
-    cycle, _ = webster(flow_ratios)
-    return sum(flow_ratios) * cycle / (cycle - lost_time(len(flow_ratios)))
+    cycle, _ = webster(flow_ratios, span)
+    return sum(flow_ratios) * cycle / (cycle - lost_time(len(flow_ratios), span))
 
 
-def fit_greens(shares: list[float], cycle: float) -> list[float]:
-    """Shown greens that, with their ambers and all-reds, fill exactly `cycle`: the effective green
-    shared in proportion to `shares` (flow ratios: Webster's equisaturation), none below MIN_GREEN_S.
+def fit_greens(shares: list[float], cycle: float, span: float = SPAN_S) -> list[float]:
+    """Shown greens that, with their ambers and all-reds (`span` each), fill exactly `cycle`: the effective
+    green shared in proportion to `shares` (flow ratios: Webster's equisaturation), none below MIN_GREEN_S.
     A cycle too short for every minimum is lengthened to fit. No shares: even."""
     count = len(shares)
     least = effective(MIN_GREEN_S)
-    room = max(cycle - lost_time(count), count * least)  # effective green to share
+    room = max(cycle - lost_time(count, span), count * least)  # effective green to share
     weights = list(shares) if sum(shares) > 0 else [1.0] * count
     greens, free = [0.0] * count, list(range(count))
     while True:  # a phase whose share falls short of the minimum gets the minimum; the rest share the rest
@@ -146,12 +165,12 @@ def fit_greens(shares: list[float], cycle: float) -> list[float]:
     return [green - AMBER_USED_S + START_UP_LOST_S for green in greens]
 
 
-def phase_starts(greens: list[float], offset: float) -> list[float]:
+def phase_starts(greens: list[float], offset: float, span: float = SPAN_S) -> list[float]:
     """When each phase's green starts, from the first's at `offset`."""
     starts, t = [], offset
     for green in greens:
         starts.append(t)
-        t += green + SPAN_S
+        t += green + span
     return starts
 
 
@@ -279,8 +298,10 @@ class TimingModel:
     evenly); each stop line is a cyclic queue. The performance index (PI) is delay plus the stop
     weight per stop, per hour."""
 
-    def __init__(self, approaches: list[Approach], greens: dict[str, list[float]], cycle: int) -> None:
+    def __init__(self, approaches: list[Approach], greens: dict[str, list[float]], cycle: int,
+                 spans: dict[str, float] | None = None) -> None:
         self.cycle = int(cycle)
+        self.spans = spans or {}  # node -> its amber plus all-red, if not SPAN_S
         self.approaches = {approach.id: approach for approach in approaches}
         self.at: dict[str, list[Approach]] = defaultdict(list)  # node -> its approaches
         self.feeding: dict[str, list[Approach]] = defaultdict(list)  # approach id -> the approaches it feeds
@@ -295,7 +316,8 @@ class TimingModel:
     def mask(self, approach: Approach, greens=None, offset=None) -> list[bool]:
         greens = self.greens[approach.node] if greens is None else greens
         offset = self.offsets[approach.node] if offset is None else offset
-        return green_mask(self.cycle, phase_starts(greens, offset)[approach.phase], greens[approach.phase])
+        start = phase_starts(greens, offset, self.spans.get(approach.node, SPAN_S))[approach.phase]
+        return green_mask(self.cycle, start, greens[approach.phase])
 
     def arrivals(self, approach: Approach, departures: dict | None = None) -> list[float]:
         profile = [approach.uniform] * self.cycle
@@ -374,8 +396,9 @@ class TimingModel:
             if edge is None:
                 break
             _flow, upstream, downstream = edge
-            up_start = phase_starts(self.greens[upstream.node], 0.0)[upstream.phase]
-            down_start = phase_starts(self.greens[downstream.node], 0.0)[downstream.phase]
+            up_start = phase_starts(self.greens[upstream.node], 0.0, self.spans.get(upstream.node, SPAN_S))[upstream.phase]
+            down_start = phase_starts(self.greens[downstream.node], 0.0,
+                                      self.spans.get(downstream.node, SPAN_S))[downstream.phase]
             if upstream.node in placed:  # downstream's green starts as the platoon arrives
                 self.offsets[downstream.node] = (self.offsets[upstream.node] + up_start + downstream.travel_s
                                                  - down_start) % self.cycle
@@ -425,11 +448,12 @@ def hill_climb(model: TimingModel, greens: bool = True, budget_s: float = OPTIMI
     return True
 
 
-def common_cycle(ratios: dict[str, list[float]], low: float, high: float) -> int:
+def common_cycle(ratios: dict[str, list[float]], low: float, high: float, spans: dict[str, float] | None = None) -> int:
     """A coordinated group's cycle: its critical junction's (the longest of their Webster cycles),
     held within [low, high], and long enough for every junction's minimum greens."""
-    need = max(len(value) * (MIN_GREEN_S + SPAN_S) for value in ratios.values())
-    cycle = max(webster(value)[0] for value in ratios.values())
+    spans = spans or {}
+    need = max(len(value) * (MIN_GREEN_S + spans.get(node, SPAN_S)) for node, value in ratios.items())
+    cycle = max(webster(value, spans.get(node, SPAN_S))[0] for node, value in ratios.items())
     return int(ceil(max(min(max(cycle, low), high), need)))
 
 
@@ -457,23 +481,26 @@ def percentile_delay(phases: list[tuple[float, float]], greens: list[float], cyc
     return total / len(PERCENTILE_Z)
 
 
-def percentile_greens(phases: list[tuple[float, float]], cycle: float) -> list[float]:
+def percentile_greens(phases: list[tuple[float, float]], cycle: float, span: float = SPAN_S) -> list[float]:
     """Synchro's splits: greens in proportion to each phase's 90th percentile flow ratio."""
     ratios = []
     for flow, saturation in phases:
         arrivals = flow * cycle / 3600
         ratios.append((arrivals + PERCENTILE_Z[0] * sqrt(arrivals)) * 3600 / cycle / saturation)
-    return fit_greens(ratios, cycle)
+    return fit_greens(ratios, cycle, span)
 
 
-def synchro_cycle(junctions: dict[str, list[tuple[float, float]]], low: float, high: float) -> int:
+def synchro_cycle(junctions: dict[str, list[tuple[float, float]]], low: float, high: float,
+                  spans: dict[str, float] | None = None) -> int:
     """Synchro's common cycle: of the cycles from low to high in 5 s steps, the one with the least
     total percentile delay over the group, each junction on its percentile greens."""
-    need = max(len(phases) * (MIN_GREEN_S + SPAN_S) for phases in junctions.values())
+    spans = spans or {}
+    need = max(len(phases) * (MIN_GREEN_S + spans.get(node, SPAN_S)) for node, phases in junctions.items())
     first, last = int(ceil(max(low, need))), int(floor(max(high, need)))
     cycles = list(range(first, last + 1, CYCLE_STEP_S)) + ([last] if (last - first) % CYCLE_STEP_S else [])
-    return min(cycles, key=lambda cycle: sum(percentile_delay(phases, percentile_greens(phases, cycle), cycle)
-                                            for phases in junctions.values()))
+    return min(cycles, key=lambda cycle: sum(
+        percentile_delay(phases, percentile_greens(phases, cycle, spans.get(node, SPAN_S)), cycle)
+        for node, phases in junctions.items()))
 
 
 def synchro(model: TimingModel, budget_s: float = OPTIMISE_BUDGET_S) -> dict:
@@ -547,8 +574,9 @@ class ScatsJunction:
     won 2 of the last 3 votes. Its cycles keep its offset in the region."""
 
     def __init__(self, node: str, region: ScatsRegion, plans: list[list[float]], offset: float, target: float,
-                 report=None) -> None:
+                 report=None, span: float = SPAN_S) -> None:
         self.node, self.region, self.plans, self.offset, self.target = node, region, plans, offset, target
+        self.span = span  # its amber plus all-red
         self.report = report or (lambda node, plan: None)
         self.plan, self.votes = 0, deque(maxlen=3)
         self.lanes: dict[object, list] = {}  # lane -> [phase, green s, unoccupied s, vehicles]
@@ -578,7 +606,7 @@ class ScatsJunction:
         self.region.report(self.node, max(saturation) / self.target, t)
         cycle = realigned_length(t, self.region.reference, self.region.cycle, self.offset)
         current = [green for _, green in signal.phases]
-        options = [fit_greens(plan, cycle) for plan in self.plans]
+        options = [fit_greens(plan, cycle, self.span) for plan in self.plans]
 
         def predicted(greens: list[float]) -> float:  # the worst phase's DS on these greens
             return max(ds * effective(now) / effective(new) for ds, now, new in zip(saturation, current, greens))
@@ -638,8 +666,9 @@ class ScootJunction:
     links and on the links it feeds at its neighbours."""
 
     def __init__(self, node: str, region: ScootRegion, shares: list[float], offset: float, target: float,
-                 links: list[ScootLink], report=None) -> None:
+                 links: list[ScootLink], report=None, span: float = SPAN_S) -> None:
         self.node, self.region, self.shares, self.offset, self.target = node, region, list(shares), offset, target
+        self.span = span  # its amber plus all-red
         self.links = {link.id: link for link in links}
         self.report = report or (lambda node, plan: None)
         self.start = 0.0  # when its current cycle began
@@ -658,12 +687,12 @@ class ScootJunction:
         return roll(disperse(profile, link.lag_s), shift)
 
     def nominal(self) -> list[float]:
-        return fit_greens(self.shares, self.region.cycle)
+        return fit_greens(self.shares, self.region.cycle, self.span)
 
     def saturations(self, greens: list[float]) -> list[float]:
         """Each phase's degree of saturation on these greens: its most saturated link's arrivals per
         cycle over what its effective green can serve."""
-        cycle = round(sum(greens) + len(greens) * SPAN_S)
+        cycle = round(sum(greens) + len(greens) * self.span)
         saturation = [0.0] * len(greens)
         for link in self.links.values():
             if link.profile:
@@ -692,7 +721,7 @@ class ScootJunction:
             if index + 1 < count:
                 greens[index + 1] -= best
             signal.set_greens(greens)
-            room = max(self.region.cycle - lost_time(count), 1.0)  # the stored split moves by 1 s
+            room = max(self.region.cycle - lost_time(count, self.span), 1.0)  # the stored split moves by 1 s
             total = sum(self.shares) or 1.0
             shares = [share / total for share in self.shares]
             moved = (1.0 if best > 0 else -1.0) / room
@@ -703,7 +732,7 @@ class ScootJunction:
 
     def _cost(self, link: ScootLink, arrivals: list[float], greens: list[float]) -> float:
         cycle = len(arrivals)
-        start = phase_starts(greens, 0.0)[link.phase]
+        start = phase_starts(greens, 0.0, self.span)[link.phase]
         queue = cyclic_queue(arrivals, green_mask(cycle, start, greens[link.phase]), link.capacity)
         return queue.delay + link.stop_weight_s * queue.stops
 
@@ -719,7 +748,7 @@ class ScootJunction:
             fed = [link for link in neighbour.links.values() if link.source == self.node and link.profile]
             if fed:
                 theirs = neighbour.nominal()
-                total += sum(self._cost(link, neighbour.arrivals(link, cycle, delta), theirs) for link in fed)
+                total += sum(neighbour._cost(link, neighbour.arrivals(link, cycle, delta), theirs) for link in fed)
         return total
 
     def cycle_starts(self, signal, t: float) -> None:
@@ -740,7 +769,8 @@ class ScootJunction:
             best = min(costs, key=lambda delta: (costs[delta], abs(delta)))
             self.offset = (self.offset + best) % self.region.cycle
         self.region.review(t)
-        greens = fit_greens(self.shares, realigned_length(t, self.region.reference, self.region.cycle, self.offset))
+        greens = fit_greens(self.shares, realigned_length(t, self.region.reference, self.region.cycle, self.offset),
+                            self.span)
         signal.set_greens(greens)
         self.report(self.node, {"method": "scoot", "cycle_s": round(self.region.cycle, 1),
                                 "greens_s": [round(green, 1) for green in greens], "offset_s": round(self.offset, 1),
@@ -749,7 +779,7 @@ class ScootJunction:
 
 class ActuatedJunction:
     """Gap-out actuated control at one junction (HCM 2000 Ch 16 App. B; SUMO's MSActuatedTrafficLightLogic,
-    reverse_engineering/simulation/traffic_lights.md). A detector on each lane DETECTOR_GAP_S of travel upstream of
+    references/reverse_engineering/simulation/traffic_lights.md). A detector on each lane DETECTOR_GAP_S of travel upstream of
     the stop line places a call for its phase. A green runs at least MIN_GREEN_S, then on while vehicles keep
     crossing its detectors within UNIT_EXTENSION_S of each other, up to ACTUATED_MAX_GREEN_S; it rests in green while
     no other phase has a call. The next phase is the next one in turn with a call (none: the next in turn)."""

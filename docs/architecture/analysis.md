@@ -6,10 +6,12 @@ assistant's tools can ask any run of the session (`read_results` lists them).
 
 ## What a run observes for them (simulation.py, `observe()`)
 
-- `traversal_log`: every link a vehicle drove, (link, when it entered, seconds to the next link, type, id): the
-  time includes the junction at its end. `links[link]["cross_s"]`: the free time through that junction (each turn's
-  length at its own speed, the mean of the link's turns), so control delay leaves out the seconds a vehicle needs
-  to cross the box.
+- `traversal_log`: every link a vehicle drove, (link, when it entered, seconds to the next link, type, id, its own
+  free-flow seconds): the time includes the junction at its end; the free-flow seconds are the link and the turn
+  it took at its own free speed (`vehicle.free_speed`: speed factor, top and desired speed; None if the turn
+  wasn't seen). `links[link]["cross_s"]`: the free time through that junction (each turn's length at its own
+  speed, the mean of the link's turns), the fallback for a log without the vehicle's own, so control delay
+  leaves out the seconds a vehicle needs to cross the box.
 - `arrivals`: per signalised approach, vehicles that joined its queue or came within `ARRIVAL_ZONE_M` (5 m) of the
   stop line, and how many of them while their signal was green (the HCM's P, Eq 16-10).
 - `fuel`: millilitres burnt by cars and vans each step (emissions.py), by type and road, and their kilometres.
@@ -23,12 +25,16 @@ assistant's tools can ask any run of the session (`read_results` lists them).
 ## analysis.py
 
 - `junction_los(kpis)` (tool `junction_los`): control delay per approach = time on the approach and through the
-  junction − free-flow time (speed limit, then each turn's speed), the HCM's definition (HCM 2000 Ch 16 App. A).
+  junction − that vehicle's own free-flow time (its free speed on the link, then through the turn it took: a
+  bicycle at 20 km/h has none for riding slower than the limit), the HCM's definition (HCM 2000 Ch 16 App. A).
   Graded A–F: signals by Exhibit 16-2 (≤10, 20, 35, 55, 80 s), give-way, stop and roundabout entries by
   Exhibits 17-2 and 17-22 (≤10, 15, 25, 35, 50 s; HCM 2000 has no roundabout LOS, HCM 2010 uses these). Per
   junction the flow-weighted delay and its LOS, the worst approach; signal approaches' capacity
   (saturation × effective green ÷ cycle) and v/c; each approach's 95th-percentile queue against its road
-  (`queue_p95`); and a grid of LOS per 15-minute period (two whole periods or more).
+  (`queue_p95`); a roundabout entry's circulating flow (its link's `circulating` movements counted in
+  `turn_traversals`), its capacity measured on the simulated drivers (`ROUNDABOUT_ENTRY_VPH`) and v/c, and the
+  HCM 6 capacity beside it (`roundabouts.hcm_entry_capacity`); and a grid of LOS per 15-minute period (two whole
+  periods or more).
 - `diagnose_signal(kpis, junction)` (tool `diagnose_signal`): flow ratio y = q/s per phase (its busiest
   approach), Y, the critical v/c Xc = Y·C/(C − L) (L = 5 s a phase), Webster's cycle for the demand; per approach
   v/c, arrivals on green P, platoon ratio Rp = P/(g/C), arrival type and f_PA (Exhibits 16-11, 16-12), PF =

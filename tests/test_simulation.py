@@ -2,9 +2,14 @@
 lane changing, road geometry and spawning from the OD matrix.
 Run with `python tests/test_simulation.py` (or the test monitor)."""
 
+import hashlib
 import os
 import random
+import tempfile
 import time
+from pathlib import Path
+from itertools import accumulate
+from math import cos, pi, sin
 from statistics import mean, pvariance
 
 os.environ.setdefault("QT_QPA_PLATFORM", "offscreen")
@@ -16,9 +21,13 @@ from traffic_simulator.mode_behavior import PALETTE, VehicleMode  # noqa: E402
 from traffic_simulator.network_generator import generate_network  # noqa: E402
 from traffic_simulator.signal_timing import (AMBER_USED_S, SATURATION_PER_LANE_VPH, START_UP_LOST_S,  # noqa: E402
                                              STANDARD_SPACE_S, STOP_LINE_LOOP_M)
-from traffic_simulator.simulation import (DT, Lane, Loop, PairDemand, Runner, Simulation, Turn, arrivals,  # noqa: E402
-                                          webster)
-from traffic_simulator.vehicle import create_vehicle, free_speed, next_speed, safe_speed  # noqa: E402
+from traffic_simulator.simulation import (DT, FILTER_SPEED, TURN_SATURATION_VPH, Lane, Loop, PairDemand, Runner,  # noqa: E402
+                                          Simulation, Turn, _clear, arrivals, webster)
+from traffic_simulator.vehicle import (MAX_SPEED_LAT, VEHICLE_CLASSES, create_vehicle, free_speed, next_speed,  # noqa: E402
+                                       safe_speed, secure_gap)
+from traffic_simulator.geometry import polyline_length  # noqa: E402
+from traffic_simulator.interchanges import curve_speed_kmh  # noqa: E402
+from traffic_simulator.models import LANE_WIDTH_M, Network, Node, Road  # noqa: E402
 
 APP = QApplication.instance() or QApplication([])  # the window test needs one; widgets crash without it
 MODES = [VehicleMode("Bus", PALETTE[0], length_m=12.0, width_m=2.5, max_speed_kmh=85, accel=1.2, decel=4.0),
@@ -62,6 +71,161 @@ def test_krauss_never_hits_a_stopped_leader():
     assert car.speed < 0.1 and gap < 3  # stopped, close behind
 
 
+def test_a_reaction_time_under_a_step_collides_and_is_counted():
+    # Krauss keeps its gap only if the driver reacts no faster than a step (Mode Behavior refuses less): with
+    # tau 0.1 s and no standstill gap, a car 1 m behind one standing at the red runs into it, and the run counts
+    # the collision rather than hiding it. At tau = DT it doesn't.
+    for tau, collides in ((0.1, True), (DT, False)):
+        mode = VehicleMode("Car", PALETTE[1], tau_s=tau, min_gap_m=0.0)
+        simulation = Simulation(generate_network(1, 1, lanes_per_direction=1), [], [mode])
+        route = simulation.graph.route("1S", "1N")
+        lane = route[0].lanes[0]
+        for name, s in (("leader", lane.length - 0.3), ("follower", lane.length - 6.3)):
+            vehicle = create_vehicle(mode, name, route, origin="1S", destination="1N")
+            vehicle.segment, vehicle.s = lane, s
+            lane.vehicles.insert(0, vehicle)  # rearmost first
+            simulation.vehicles.append(vehicle)
+        run(simulation, 7)
+        assert (simulation.collisions > 0) == collides, (tau, simulation.collisions)
+
+
+def test_emergency_braking_is_bounded_recorded_and_what_it_cant_avoid_counted():
+    # SUMO's emergencyDecel: however hard Krauss asks, no step slows a car by more than 9 m/s² × DT, and each step
+    # harder than its comfortable 4.5 is recorded, with where. A car at 50 km/h 5 m behind one standing still can't
+    # stop in time: it runs into it, counted as a same-lane collision, not stopped dead.
+    car = create_vehicle(MODES[1], "Car1")
+    car.speed = 50 / 3.6
+    assert abs(next_speed(car, 0.0, 50 / 3.6, DT, random.Random(1)) - (car.speed - 9.0 * DT)) < 1e-9
+    simulation = Simulation(generate_network(1, 1, lanes_per_direction=1), [], MODES[1:2])
+    simulation.observe()
+    route = simulation.graph.route("1S", "1N")
+    lane = route[0].lanes[0]
+    for name, s, speed in (("standing", 60.0, 0.0), ("fast", 50.0, 50 / 3.6)):
+        vehicle = create_vehicle(MODES[1], name, route, origin="1S", destination="1N")
+        vehicle.segment, vehicle.s, vehicle.speed, vehicle.max_speed = lane, s, speed, speed
+        lane.vehicles.insert(0, vehicle)  # rearmost first
+        simulation.vehicles.append(vehicle)
+    fast, speeds = simulation.vehicles[1], [50 / 3.6]
+    while fast.speed > 0 and simulation.time < 10:
+        simulation.step()
+        speeds.append(fast.speed)
+    assert max(a - b for a, b in zip(speeds, speeds[1:])) <= 9.0 * DT + 1e-9, speeds
+    observed = simulation.observations()
+    assert simulation.collision_kinds["same lane"] > 0 and {e["kind"] for e in observed["collisions"]} == {"same lane"}
+    braking = [e for e in observed["emergency_braking"] if e["vehicle"] == "fast"]
+    assert len(braking) >= 2 and all(4.5 < e["decel"] <= 9.0 + 1e-6 and e["where"] == lane.link.road for e in braking)
+    assert observed["emergency_braking_count"] == simulation.emergency_braking >= len(braking)
+
+
+def test_the_ballistic_update_moves_at_the_mean_speed_and_stops_part_way():
+    # SUMO's step-method.ballistic, opt-in: a step moves (v + v')/2·Δt, and a car braking to a stop within the step
+    # goes only as far as it takes to stop (v²/2a), not on at its mean speed; Euler, the default, moves v'·Δt. Krauss's
+    # safe speed in its ballistic form keeps a car from hitting a standing leader. Other steps or methods are refused.
+    network = generate_network(1, 1, lanes_per_direction=1)
+    for method, speeds, moved in (("euler", (10.0, 12.0), 6.0), ("ballistic", (10.0, 12.0), 5.5),
+                                  ("ballistic", (10.0, -10.0), 1.25)):
+        simulation = Simulation(network, [], MODES[1:2], step_method=method)
+        lane = simulation.graph.route("1S", "1N")[0].lanes[0]
+        car = create_vehicle(MODES[1], "car", [lane.link])
+        car.segment, car.s, (car.speed, car.next_speed) = lane, 10.0, speeds
+        lane.vehicles.append(car)
+        simulation._move(car)
+        assert abs(car.s - 10.0 - moved) < 1e-9 and car.speed == max(speeds[1], 0.0), (method, speeds, car.s)
+    car, rng = create_vehicle(MODES[1], "Car1"), random.Random(1)
+    car.speed, gap = 50 / 3.6, 80.0
+    for _ in range(200):
+        new = next_speed(car, safe_speed(car, gap, 0.0, dt=DT), 50 / 3.6, DT, rng, ballistic=True)
+        gap -= (car.speed + new) / 2 * DT if new >= 0 else car.speed ** 2 * DT / (2 * (car.speed - new))
+        car.speed = max(new, 0.0)
+        assert gap > -1e-6
+    assert car.speed < 0.1 and gap < 3  # stopped, close behind
+    for bad in ({"step_s": 0.3}, {"step_method": "runge-kutta"}):
+        try:
+            Simulation(network, [], MODES[1:2], **bad)
+        except ValueError as error:
+            assert "step" in str(error)
+        else:
+            raise AssertionError(f"{bad} must be refused")
+
+
+def test_a_shorter_step_clears_about_the_same_traffic():
+    # A step-sensitivity check: the same seed at DT and DT/2 (step_s, for headless runs) clears about the same traffic
+    # through a signal; a 0.1 s step keeps its clock exact.
+    arrived = []
+    for step in (DT, DT / 2):
+        simulation = Simulation(generate_network(1, 1), [pair("1W", "1E", 900), pair("1S", "1N", 600)], MODES, seed=3,
+                                step_s=step)
+        run(simulation, 900)
+        arrived.append(simulation.arrived)
+    assert arrived[0] > 250 and abs(arrived[0] - arrived[1]) < 0.05 * arrived[0], arrived
+    simulation = Simulation(generate_network(1, 1), [], MODES, step_s=0.1)
+    run(simulation, 10)
+    assert simulation.time == 10.0
+
+
+def test_vehicles_over_a_crossing_point_at_once_are_a_crossing_collision():
+    # Detection only, SUMO's action "warn": two vehicles on crossing turns both over their conflict point (each front
+    # past it by less than its length) are a crossing collision at that junction; short of it or clear of it, not.
+    network = generate_network(1, 1)
+    network.node("1,1").control = "uncontrolled"
+    simulation = Simulation(network, [], MODES[1:2])
+    simulation.observe()
+    turn, (other, here, there, _) = next((t, c) for link in simulation.graph.arriving["1,1"] for t in link.turns.values()
+                                         for c in t.conflicts if c[0].lane_out is not t.lane_out and c[2] > 1.0)
+    a, b = create_vehicle(MODES[1], "a"), create_vehicle(MODES[1], "b")
+    for vehicle, segment, s in ((a, turn, here + 1.0), (b, other, there + 1.0)):
+        vehicle.segment, vehicle.s = segment, s
+        segment.vehicles.append(vehicle)
+        simulation.vehicles.append(vehicle)
+    simulation._crossing_collisions()
+    assert simulation.collisions == 1 and simulation.collision_kinds == {"crossing": 1}
+    assert simulation.observations()["collisions"] == [{"kind": "crossing", "where": "1,1", "t": 0.0, "vehicles": ["a", "b"]}]
+    for s in (there - 1.0, there + b.length_m + 0.5):  # short of the point, and its rear past it
+        b.s = s
+        simulation._crossing_collisions()
+    assert simulation.collisions == 1
+
+
+def test_vehicles_enter_only_as_fast_as_they_can_safely_brake():
+    # SUMO's departSpeed "max": 10 m short of a red stop line on a 120 km/h road, a car enters slowly enough to
+    # stop comfortably; behind a car at 50 km/h, slowly enough to keep the secure gap, not at its speed.
+    network = generate_network(1, 1, lanes_per_direction=1, speed_limit_kmh=120)
+    network.set_road_length("1S", 20)
+    simulation = Simulation(network, [], MODES[1:2])
+    simulation._spawn(pair("1S", "1N", 100, "Random", (100,)), 0)
+    simulation._insert()
+    car = simulation.vehicles[0]
+    entered = car.speed
+    simulation.step()
+    assert entered > 0 and entered - car.speed <= car.decel * DT + 1e-9, (entered, car.speed)
+    simulation = Simulation(generate_network(1, 1, lanes_per_direction=1), [], MODES[1:2])
+    route = simulation.graph.route("1W", "1E")
+    leader = create_vehicle(MODES[1], "leader", route, origin="1W", destination="1E")
+    leader.segment, leader.s, leader.speed = route[0].lanes[0], 12.5, 50 / 3.6
+    leader.segment.vehicles.append(leader)
+    simulation.vehicles.append(leader)
+    simulation._spawn(pair("1W", "1E", 100, "Random", (100,)), 0)
+    simulation._insert()
+    car = simulation.vehicles[-1]
+    gap = leader.s - leader.length_m - car.s
+    assert 0 < car.speed and gap >= secure_gap(car, car.speed, leader.speed, leader.decel) - 1e-9, (gap, car.speed)
+
+
+def test_a_bend_caps_the_lane_speed_however_high_the_limit():
+    # A 10 m radius quarter circle edited up to 50 km/h: its lane keeps to the bend's curve speed, 15 km/h (about
+    # 1.7 m/s² sideways); a tighter bend is slower still, with no floor faster than it allows.
+    radius = 10
+    points = [(radius * sin(pi * i / 24), radius - radius * cos(pi * i / 24)) for i in range(13)]
+    network = Network(horizontal_corridors=1, vertical_corridors=1)
+    network.nodes = {"A": Node("A", *points[0], None, None, control="uncontrolled"),
+                     "B": Node("B", *points[-1], None, None, control="uncontrolled")}
+    network.roads = {"A-B": Road("A-B", "A", "B", polyline_length(points), lanes_per_direction=1, speed_limit_kmh=50,
+                                 direction="one-way", shape=points[1:-1], curvature=[1 / radius] * 12, single_lane=True)}
+    network.validate()
+    lane = Simulation(network, [], MODES).graph.links["A-B>"].lanes[0]
+    assert abs(lane.speed * 3.6 - 15) < 1e-9 and curve_speed_kmh(radius) == 15 and curve_speed_kmh(1) < 10
+
+
 def test_lanes_follow_the_road_on_the_driving_side():
     for side, sign in (("left", -1), ("right", 1)):
         network = generate_network(1, 2, driving_side=side)  # 1,1 -> 2,1 runs east (+x), y down
@@ -71,6 +235,86 @@ def test_lanes_follow_the_road_on_the_driving_side():
         assert abs(east.lanes[0].points[0][1] - (y + sign * 1.5 * 3.5)) < 1e-6  # kerbside lane, keep side
         assert abs(east.lanes[1].points[0][1] - (y + sign * 0.5 * 3.5)) < 1e-6
         assert abs(east.lanes[0].length - (road.length_m - 2 * graph._trim("1,1", road))) < 1e-6  # stop lines
+
+
+def _pocket_run(network, demand, seconds, each_step=None):
+    simulation = Simulation(network, [pair(o, d, flow, "Poisson", (100,)) for o, d, flow in demand], MODES[1:2], seed=3)
+    run(simulation, seconds, each_step)
+    return simulation
+
+
+def test_turn_pockets_follow_the_driving_side_and_take_their_turns():
+    # A kerb pocket opens 40 m back from the stop line beside the kerbside lane; an offside pocket at the centre,
+    # the lanes moving over to the widened kerb side along the taper. Each mirrors with the driving side.
+    for side, sign in (("left", -1), ("right", 1)):
+        network = generate_network(1, 1, lanes_per_direction=1, driving_side=side)  # 1W -> 1,1 runs east, y down
+        network.road("1W").pockets = {"1,1": {"lanes": 1, "length_m": 40.0, "side": "kerb"}}
+        network.road("1E").pockets = {"1,1": {"lanes": 1, "length_m": 40.0, "side": "offside"}}
+        network.validate()
+        graph = Simulation(network, [], MODES[1:2]).graph
+        y = network.node("1,1").y
+        east, west = graph.links["1W>"], graph.links["1E<"]
+        pocket, through = east.lanes
+        assert east.pockets == (1, 0) and abs(pocket.start - (pocket.length - 40.0)) < 1e-9 and through.start == 0
+        assert abs(pocket.points[-1][1] - (y + sign * 1.5 * 3.5)) < 1e-6  # beyond the kerbside lane
+        assert abs(through.points[-1][1] - (y + sign * 0.5 * 3.5)) < 1e-6
+        kinds = {(index, turn.kind): turn.permitted for (index, _), turn in east.turns.items()}
+        assert kinds[(0, "kerb")] and not kinds[(0, "straight")] and kinds[(1, "straight")] and not kinds[(1, "kerb")]
+        through, pocket = west.lanes  # westbound: the kerb is on the other side of y
+        assert west.pockets == (0, 1) and pocket.start > 0 and through.start == 0
+        assert abs(through.points[0][1] - (y - sign * 0.5 * 3.5)) < 1e-6  # moved over along the taper
+        assert abs(through.points[-1][1] - (y - sign * 1.5 * 3.5)) < 1e-6 and abs(pocket.points[-1][1] - (y - sign * 0.5 * 3.5)) < 1e-6
+        # Signal timing loads a pocket's lanes with its turns and the other lanes with straight-on traffic.
+        kerb_into = next(after for (index, after), turn in east.turns.items() if turn.kind == "kerb")
+        moves = {("1W>", kerb_into): 900.0, ("1W>", "1E>"): 600.0}
+        assert abs(graph.arm_ratio("1W>", moves) - max(900 / TURN_SATURATION_VPH["kerb"], 600 / SATURATION_PER_LANE_VPH)) < 1e-12
+
+
+def test_turners_use_their_pocket_and_straight_on_traffic_passes():
+    network = generate_network(1, 1, lanes_per_direction=1)
+    network.road("1W").pockets = {"1,1": {"lanes": 1, "length_m": 40.0, "side": "kerb"}}
+    seen = {"turners in the pocket": set(), "others in it": 0, "turned from it": 0, "turned": 0}
+
+    def watch(simulation, before, _states):
+        pocket = simulation.graph.links["1W>"].lanes[0]
+        for vehicle in pocket.vehicles:
+            assert vehicle.s >= pocket.start - 1e-6  # only past where the pocket opens
+            if vehicle.destination == "1N":
+                seen["turners in the pocket"].add(vehicle.id)
+            else:
+                seen["others in it"] += 1
+        for vehicle in simulation.vehicles:
+            if isinstance(vehicle.segment, Turn) and before.get(vehicle.id) is not vehicle.segment \
+                    and vehicle.segment.lane_in.link.id == "1W>" and vehicle.destination == "1N":
+                seen["turned"] += 1
+                seen["turned from it"] += vehicle.segment.lane_in is pocket
+
+    simulation = _pocket_run(network, [("1W", "1N", 200), ("1W", "1E", 300)], 900, watch)
+    assert seen["others in it"] == 0 and len(seen["turners in the pocket"]) > 30
+    assert seen["turned from it"] >= 0.9 * seen["turned"] > 0, seen
+    assert simulation.arrived > 0.9 * simulation.spawned - 10 and simulation.collisions == 0
+
+
+def test_a_full_turn_pocket_blocks_the_lane_behind_it():
+    # Concept 15's turn-pocket overflow: at a priority T junction, offside turners give way to heavy oncoming
+    # traffic and fill a short pocket; the next turner waits in the through lane short of the pocket, and the
+    # straight-on traffic behind it waits too (one lane each way, so no way past).
+    network = generate_network(1, 1, lanes_per_direction=1)
+    network.delete_road("1N")
+    network.node("1,1").control = "uncontrolled"
+    network.road("1W").pockets = {"1,1": {"lanes": 1, "length_m": 15.0, "side": "offside"}}
+    blocked = []
+
+    def watch(simulation, _before, _states):
+        through, pocket = simulation.graph.links["1W>"].lanes
+        for behind, ahead in zip(through.vehicles, through.vehicles[1:]):
+            if ahead.destination == "1S" and ahead.s < pocket.start + 1.0 and ahead.speed < 0.1 \
+                    and behind.destination == "1E" and behind.speed < 0.1:
+                blocked.append(simulation.time)
+
+    simulation = _pocket_run(network, [("1W", "1S", 300), ("1W", "1E", 300), ("1E", "1W", 1300)], 600, watch)
+    assert len(pocket_vehicles := simulation.graph.links["1W>"].lanes[1].vehicles) >= 1 and blocked, pocket_vehicles
+    assert simulation.collisions == 0
 
 
 def test_arrival_patterns_follow_their_distributions():
@@ -94,6 +338,33 @@ def test_spawning_follows_the_flow_and_bus_headways():
     assert simulation.spawned_by_mode["Car"] > 8 * simulation.spawned_by_mode["Bike"]  # 85 % against 5 %
 
 
+def test_a_pairs_departures_ignore_changes_elsewhere():
+    """Common random numbers: each pair draws its arrivals, types, timetable, routes and drivers from streams of its
+    own, seeded from the run's seed, so slowing another pair's road and adding a pair (which changes every vehicle's
+    dawdling) leaves the pair's departures, types and speed factors exactly as they were."""
+    modes = [VehicleMode(**{**vars(mode), "headway_min": 10 if mode.name == "Bus" else 0}) for mode in MODES]
+
+    def departures(slower: bool, extra: bool):
+        network = generate_network(2, 2)
+        if slower:
+            for link in Simulation(network, [], modes).graph.route("1S", "1N"):
+                network.road(link.road).speed_limit_kmh = 20
+        demand = [pair("1W", "1E", 600), pair("1S", "1N", 600)] + ([pair("1E", "1W", 400)] if extra else [])
+        simulation, seen = Simulation(network, demand, modes, seed=11), {}
+
+        def record(sim, before, states):
+            for vehicle in [*sim.vehicles, *(v for queue in sim.pending.values() for v in queue)]:
+                if vehicle.origin == "1W":
+                    seen[vehicle.id] = (round(vehicle.depart_s, 6), vehicle.mode, round(vehicle.speed_factor, 6))
+
+        run(simulation, 900, record)
+        return simulation, sorted(seen.values())
+
+    (base, alone), (changed, beside) = departures(False, False), departures(True, True)
+    assert len(alone) > 100 and alone == beside and base.spawned < changed.spawned  # the same, though more ran
+    assert any(mode == "Bus" for _, mode, _ in alone)  # its timetable too
+
+
 def test_daily_demand_follows_its_curve():
     network = generate_network(2, 2)
     shares = [0.0] * 24
@@ -106,6 +377,20 @@ def test_daily_demand_follows_its_curve():
     spawned = simulation.spawned + sum(at < 3600 for at, *_ in simulation.departures)  # the first hour's still due
     run(simulation, 5400)
     assert simulation.spawned == spawned  # none in the second hour
+
+
+def test_hourly_demand_follows_its_peak_hour_factor():
+    from collections import Counter
+    from traffic_simulator.daily_profile import phf_quarters
+    network = generate_network(2, 2)
+    peaked = PairDemand("1W", "1E", 480, None, [], "Random", (0, 100, 0), quarters=phf_quarters(0.5))
+    simulation = Simulation(network, [peaked], MODES, seed=3)
+    for minute in range(60):  # each minute's arrivals, at the rate of its 15 minutes
+        simulation._count_arrivals(minute * 60.0)
+    counts = Counter(int(at // 900) for at, *_ in simulation.departures)
+    assert abs(counts[1] - 240) <= 4 and all(abs(counts[q] - 80) <= 4 for q in (0, 2, 3)), counts  # V/PHF for 15 min
+    daily = PairDemand("1W", "1E", None, 480, [1 / 24] * 24, "Random", (0, 100, 0), quarters=phf_quarters(0.5))
+    assert Simulation.rate_now(daily, 1000) == Simulation.rate(daily, 1000) == 20  # no PHF on a daily curve
 
 
 def test_demand_changes_reach_a_run_under_way():
@@ -152,9 +437,25 @@ def test_traffic_obeys_signals_and_never_overlaps():
                     seen["overlaps"] += 1
 
     run(simulation, 1200, check)
-    assert seen["red"] == 0 and seen["overlaps"] == 0, seen
+    assert seen["red"] == 0 and seen["overlaps"] == 0 and simulation.collisions == 0, (seen, simulation.collision_kinds)
     assert seen["green"] > 500 and seen["roundabout"] > 50 and seen["uncontrolled"] > 50, seen
     assert seen["lane changes"] > 100 and simulation.arrived > 300, seen
+
+
+def test_roundabout_entrants_are_never_stopped_dead_at_the_line():
+    # The audit's case: entrants let in from the other lanes are anticipated, and one already too close to stop
+    # comfortably goes unless a vehicle would be beside it, so no one brakes harder than SUMO's emergency
+    # braking for a car (9 m/s²) at the give-way line.
+    network = generate_network(1, 1)
+    network.node("1,1").control = "roundabout"
+    car = VehicleMode("Car", PALETTE[1], sigma=0.0, speed_dev=0.0)
+    demand = [pair(o, d, 180, "Poisson", (100,)) for o, d in (("1W", "1E"), ("1S", "1N"), ("1E", "1W"), ("1N", "1S"))]
+    simulation, hardest = Simulation(network, demand, [car], seed=19), 0.0
+    while simulation.time < 300:
+        before = {vehicle.id: vehicle.speed for vehicle in simulation.vehicles}
+        simulation.step()
+        hardest = max([hardest] + [(before[v.id] - v.speed) / DT for v in simulation.vehicles if v.id in before])
+    assert hardest <= 9.0 and simulation.arrived > 40 and simulation.collisions == 0, (hardest, simulation.arrived)
 
 
 def test_a_mirror_image_on_the_other_side_performs_alike():
@@ -167,21 +468,27 @@ def test_a_mirror_image_on_the_other_side_performs_alike():
         number, side = end[:-1], end[-1]
         return number + {"W": "E", "E": "W"}[side] if side in "WE" else f"{5 - int(number)}{side}"
 
-    def run_side(side, mirrored, seed):
+    def run_side(side, mirrored, seed, seconds=1200):
         network = generate_network(3, 4)
         network.set_driving_side(side)
         roundabout, free = ("3,2", "2,2") if mirrored else ("2,2", "3,2")
         network.node(roundabout).control, network.node(free).control = "roundabout", "uncontrolled"
         demand = [pair(mirror(o), mirror(d), 450) if mirrored else pair(o, d, 450) for o, d in pairs]
         simulation = Simulation(network, demand, MODES, seed=seed)
-        run(simulation, 1200)
-        return simulation.arrived
+        run(simulation, seconds)
+        turns = [[next(turn.kind for (_, to), turn in link.turns.items() if to == after.id)
+                  for link, after in zip(route, route[1:])]
+                 for route in (simulation.graph.route(p.origin, p.destination) for p in demand)]
+        return simulation.arrived, turns
 
-    as_given = sum(run_side("left", False, seed) for seed in (4, 5))
-    mirrored = sum(run_side("right", True, seed) for seed in (4, 5))
-    other_side = sum(run_side("right", False, seed) for seed in (4, 5))
+    (given_4, turns), (given_5, _) = run_side("left", False, 4), run_side("left", False, 5)
+    (mirrored_4, mirrored_turns), (mirrored_5, _) = run_side("right", True, 4), run_side("right", True, 5)
+    as_given, mirrored = given_4 + given_5, mirrored_4 + mirrored_5
     assert abs(mirrored - as_given) < 0.07 * as_given, (as_given, mirrored)
-    assert other_side > 1.15 * as_given, (as_given, other_side)  # kerb turns for the busiest movements
+    # Routes are side-neutral too: the mirror image's make the same turns. The same demand on the other side makes
+    # other ones (junction delay in route costs steers each side round its dearer turns, so neither side now clears
+    # clearly more than the other).
+    assert mirrored_turns == turns and run_side("right", False, 4, 0)[1] != turns
 
 
 def test_two_phase_signals_detour_offside_turns_by_a_u_turn():
@@ -206,6 +513,40 @@ def test_two_phase_signals_detour_offside_turns_by_a_u_turn():
         ("1S", "1,1"), ("1,1", "1,2"), ("1,2", "1,1"), ("1,1", "1W")]
     network.node("1,1").signal_phases, network.node("1,1").green_times_s = 4, [20.0] * 4
     assert nodes("1S", "1E", network)[:2] == [("1S", "1,1"), ("1,1", "2,1")]  # its own phase: turns right
+
+
+def test_route_costs_count_junction_delay_once():
+    from traffic_simulator.simulation import PRIORITY_CAPACITY_VPH, Graph
+    network = generate_network(3, 3)  # two-phase signals, driving on the left
+    network.node("2,2").control = "uncontrolled"
+    graph = Graph(network)
+    # Free flow: each move's control delay with no traffic at the greens entered, the turn's own length left out.
+    signal = graph.signals["1,1"]
+    into = graph.arriving["1,1"][0]
+    red = signal.cycle - signal.phases[signal.phase_of[into.id]][1]
+    assert {graph.control_delay[(into.id, after)] for (_, after), turn in into.turns.items()
+            if turn.kind != "uturn"} == {red * red / (2 * signal.cycle)}
+    give_way = 3600 / PRIORITY_CAPACITY_VPH[0][1] + 5  # HCM 2000 Eq 17-38 with nothing to give way to
+    moves = {(turn.kind, link.id in graph._major_arms("2,2")): graph.control_delay[(link.id, after)]
+             for link in graph.arriving["2,2"] for (_, after), turn in link.turns.items()}
+    assert moves[("straight", True)] == moves[("kerb", True)] == 0  # the major road
+    assert moves[("offside", True)] == moves[("straight", False)] == moves[("offside", False)] == give_way
+    leg, after = into, graph.links[next(after for _, after in into.turns)]
+    assert graph.free_move_time(leg, after) == leg.length / leg.speed + graph.control_delay[(leg.id, after.id)]
+    # Measured: a move's own time, else its link's over all moves; never both, nor the prior on top.
+    graph.choice = {"link_times_s": {leg.id: 100.0}, "turn_times_s": {leg.id: {after.id: 40.0}}}
+    other = next(graph.links[a] for _, a in leg.turns if a != after.id)
+    assert graph.move_time(leg, after) == 40.0 and graph.move_time(leg, other) == 100.0
+    assert graph.path_time([leg, after]) == 40.0 + after.length / after.speed  # its last link: no junction left
+    # A run measures each move: the link's traversals split by the next link taken.
+    simulation = Simulation(network, [pair("1W", "1E", 300), pair("2S", "2N", 300), pair("2W", "1N", 200)],
+                            MODES, seed=3)
+    simulation.observe()
+    run(simulation, 600)
+    seen = simulation.observations()
+    for link, (count, mean_s) in seen["traversals"].items():
+        moves = seen["turn_traversals"][link].values()
+        assert sum(n for n, _ in moves) == count and abs(sum(n * s for n, s in moves) / count - mean_s) < 1e-6
 
 
 def test_lane_changes_prepare_for_the_u_turn_and_the_turn_back():
@@ -316,9 +657,9 @@ def test_no_lane_changing_where_the_road_forbids_it():
 
 
 def test_webster_times_signals_from_the_demand():
-    # L = 2 x (1.8 start-up + 2 all-red + 0.8 amber unused) = 9.2 s: C0 = (1.5 x 9.2 + 5) / (1 - 0.5) = 37.6 s
+    # L = 2 x (1.8 start-up + 2 all-red + 0.2 amber unused) = 8 s: C0 = (1.5 x 8 + 5) / (1 - 0.5) = 34 s
     cycle, greens = webster([0.3, 0.2])
-    assert round(cycle, 6) == 37.6 and [round(green, 1) for green in greens] == [16.6, 11.0]  # (37.6 - 9.2) y/Y - 0.4
+    assert round(cycle, 6) == 34.0 and [round(green, 1) for green in greens] == [14.6, 9.4]  # (34 - 8) y/Y - 1
     cycle, greens = webster([0.0, 0.0])  # no demand: minimum greens
     assert round(cycle, 6) == 24.0 and [round(green, 6) for green in greens] == [7.0, 7.0]
     assert round(webster([0.6, 0.5])[0], 6) == 120.0  # over capacity: the longest cycle
@@ -330,7 +671,8 @@ def test_webster_times_signals_from_the_demand():
     plan = simulation.signal_plans["1,1"]  # east-west 1200 veh/h on 2 lanes, north-south 200
     ratios = [round(1200 / (2 * SATURATION_PER_LANE_VPH), 3), round(200 / (2 * SATURATION_PER_LANE_VPH), 3)]
     assert plan["method"] == "webster" and plan["flow_ratios"] == ratios
-    assert plan["greens_s"][0] > plan["greens_s"][1] + 5  # the busy phase gets the long green (the other its minimum)
+    # the busy phase gets the longer green, the other its minimum, inside Webster's cycle (it used to grow past it)
+    assert plan["greens_s"][0] > plan["greens_s"][1] == 7.0
     signal = simulation.graph.signals["1,1"]
     assert abs(signal.cycle - plan["cycle_s"]) < 0.1  # the plan is rounded to 0.1 s
     east_west = next(link for link in signal.phases[0][0])
@@ -368,8 +710,12 @@ def test_the_window_runs_and_stops_the_traffic():
     assert window.runner is runner and [pair.hourly for pair in runner.simulation._handed] == [300]
     window.undo()  # undoing a demand edit carries on too, back to the demand before it
     assert window.runner is runner and [pair.hourly for pair in runner.simulation._handed] == []
+    assert runner.simulation.graph.network is not window.network  # the run drives its own copy
+    window.results_folder = Path(tempfile.mkdtemp())  # the stopped run's workbook: not into the user's Documents
+    window.network.nodes["1,1"].control = "roundabout"  # an edit changes the network, then stops the run
     window.properties.edited.emit(None)  # a network edit during the run stops it
     assert window.runner is None and window.clock.time_s == 0 and not window.clock.running
+    assert window.last_kpis["observed"]["controls"]["1,1"] == "signalised"  # the results: the network it drove
     assert "error" in window._traffic({})
     window.close()
 
@@ -383,6 +729,9 @@ def test_the_runner_keeps_real_time_and_publishes_frames():
         # In step with the wall clock whenever it's read (however long the sleep really was):
         # never ahead, and behind by no more than a step or two and the latest publish.
         assert runner.frame.time >= 25 and -0.1 <= runner.target() - runner.frame.time <= 2.0
+        before = runner.target()
+        runner.set_speed(20)  # mid-run: carries on from where it stands, no jump (the pace swapped whole)
+        assert runner.speed == 20 and 0 <= runner.target() - before < 1.0
         runner.pause()
         held = runner.frame.time
         time.sleep(0.2)
@@ -398,6 +747,48 @@ def test_the_runner_keeps_real_time_and_publishes_frames():
     assert not runner._thread.is_alive()
 
 
+def test_the_runner_says_when_its_physics_fails_or_has_not_stopped():
+    import threading
+
+    simulation = Simulation(generate_network(1, 1), [], MODES)
+    simulation.step = lambda: 1 / 0
+    runner = Runner(simulation, speed=60)
+    runner.play()
+    runner._thread.join(2)
+    assert not runner.running and "ZeroDivisionError" in runner.error  # said, not left "running"
+    runner.play()
+    assert not runner.running and runner.stop(0.1)  # stopped for good
+    simulation, entered, release = Simulation(generate_network(1, 1), [], MODES), threading.Event(), threading.Event()
+    step = simulation.step
+    simulation.step = lambda: (entered.set(), release.wait(5), step())
+    runner = Runner(simulation, speed=60)
+    runner.play()
+    assert entered.wait(2)
+    assert runner.stop(0.1) is False  # a step still going: not ended
+    release.set()
+    assert runner.stop(2) and simulation.time == DT  # it ended after that step, none after
+
+
+def test_a_frame_shares_no_plan_with_the_run_or_another_frame():
+    simulation = Simulation(generate_network(1, 1), [], MODES)
+    frame, other = simulation.frame(), simulation.frame()
+    node = next(iter(frame.plans))
+    cycle = simulation.signal_plans[node]["cycle_s"]
+    frame.plans[node]["cycle_s"] = 1
+    frame.plans[node]["greens_s"].append(1)
+    frame.records()["signal_plans"][node]["greens_s"].append(1)
+    assert simulation.signal_plans[node]["cycle_s"] == cycle == other.plans[node]["cycle_s"]
+    assert frame.records()["signal_plans"][node]["greens_s"] == frame.plans[node]["greens_s"]  # records: a copy
+    assert other.plans[node]["greens_s"] == simulation.signal_plans[node]["greens_s"]
+    empty = type(frame)(0.0, (), {}, 0, 0)
+    try:
+        empty.plans["x"] = 1  # the default: read-only, so never one shared between frames
+    except TypeError:
+        pass
+    else:
+        raise AssertionError("a frame's default plans can be changed")
+
+
 def test_junction_saturation_by_control():
     """Degree of saturation at a roundabout (measured entry capacity against the circulating flow), a
     priority junction (against the flows it gives way to) and a signal (lane by lane, turns slower)."""
@@ -405,7 +796,7 @@ def test_junction_saturation_by_control():
     from traffic_simulator.simulation import (PRIORITY_CAPACITY_VPH, ROUNDABOUT_ENTRY_VPH, Graph,
                                               measured_capacity)
 
-    assert measured_capacity(ROUNDABOUT_ENTRY_VPH, 0) == 1450 and measured_capacity(ROUNDABOUT_ENTRY_VPH, 300) == 1015
+    assert measured_capacity(ROUNDABOUT_ENTRY_VPH, 0) == 1455 and measured_capacity(ROUNDABOUT_ENTRY_VPH, 300) == 1092.5
     assert measured_capacity(PRIORITY_CAPACITY_VPH, 5000) == 120  # held at the last point beyond the table
     network = generate_network(3, 3)
     network.nodes["2,2"].control = "roundabout"
@@ -415,7 +806,7 @@ def test_junction_saturation_by_control():
     entry = inbound[0]
     alone = {(entry.id, next(link.id for link in outbound if link.road != entry.road)): 600.0}
     x = graph.saturation("2,2", {}, alone)
-    assert abs(x - 600 / 1450) < 1e-9  # nothing circulating; the entry's lanes share one path round
+    assert abs(x - 600 / 1455) < 1e-9  # nothing circulating; the entry's lanes share one path round
     others = {(link.id, out.id): 300.0 for link in inbound if link is not entry for out in outbound if out.road != link.road}
     assert graph.saturation("2,2", {}, {**alone, **others}) > x  # circulating traffic in front: less capacity
 
@@ -486,6 +877,16 @@ def test_give_way_capacities_are_calibrated_to_the_simulated_drivers():
         assert abs(measured - expected) < 0.1 * expected, (control, measured, expected)
 
 
+def test_roundabout_entry_capacity_follows_the_hcm_while_the_ring_has_room():
+    """A single-lane entry held saturated against 0 and 800 veh/h circulating: within 15 % of the HCM 6 entry
+    capacity (Eq 22-1, roundabouts.hcm_entry_capacity). Above about 900 veh/h the one-lane ring itself is full."""
+    from traffic_simulator.roundabouts import hcm_entry_capacity
+
+    for circulating in (0, 800):
+        measured, hcm = _held_queue("roundabout", circulating), hcm_entry_capacity(circulating)
+        assert abs(measured - hcm) < 0.15 * hcm, (circulating, measured, hcm)
+
+
 
 def test_vehicles_know_what_they_are_heading_for():
     from traffic_simulator.interchanges import build_slip_road
@@ -537,6 +938,10 @@ def test_emergency_vehicles_are_dispatched_once_or_every_so_often():
         ("1W", "2E", 0.0), ("2,2", "1S", 0.0), ("1W", "2E", 60.0), ("1W", "2E", 120.0), ("2W", "1E", 150.0),
         ("1W", "2E", 180.0)]
     assert trips["Emergency2"]["arrived_s"] and simulation.spawned_by_mode["Emergency"] == 6
+    on_road = {vehicle.id for vehicle in simulation.vehicles}
+    arrived = [trip["id"] for trip in trips.values() if trip["arrived_s"] is not None]
+    assert arrived and not set(arrived) & on_road  # arrived (a junction or an end): off the network
+    assert "Emergency2" in arrived  # its destination an end; Emergency1's journey ends at a junction's stop line too
 
 
 def test_a_lane_obeys_its_own_signal_and_an_emergency_vehicle_keeps_to_the_kerbside_lane():
@@ -577,6 +982,21 @@ def test_an_emergency_vehicle_obeys_red_unless_its_arm_has_a_lane_green():
     assert simulation._signal_for(ambulance, offside) == "G"  # whichever lane it is in
     simulation._lane_states = {(link.id, 0): "Y"}  # the lane's amber: red again for it beside it
     assert simulation._signal_for(ambulance, offside) == "R"
+
+
+def test_a_driver_reacts_to_the_amber_before_braking_for_it():
+    simulation = Simulation(generate_network(1, 2), [], MODES)
+    link = simulation.graph.links["1,1-2,1>"]
+    turn = next(turn for (index, after), turn in link.turns.items() if simulation.graph.links[after].end == "1E")
+    car = create_vehicle(MODES[1], "car", [link, turn.lane_out.link])
+    car.segment, car.speed = turn.lane_in, 50 / 3.6  # SUMO's car: τ 1 s, 4.5 m/s² braking
+    car.s = turn.lane_in.length - 28.0  # 21.4 m to stop braking at once, 35.3 m reacting first
+    simulation._states = {**simulation._states, link.id: "Y"}
+    simulation._lane_states = {}
+    simulation._amber_from = {link.id: simulation.time}  # the amber has just come on: too close to stop, it goes
+    assert simulation._may_enter(car, turn)
+    simulation._amber_from = {link.id: simulation.time - 1.0}  # seen for a second, reacted already: it can stop
+    assert not simulation._may_enter(car, turn)
 
 def test_closed_lanes_are_left_in_good_time_and_a_blocked_road_stops_traffic():
     network = generate_network(1, 1)
@@ -773,6 +1193,124 @@ def test_weather_lowers_capacity_as_the_hcm_reports():
         assert "weather is one of" in str(exc)
     else:
         raise AssertionError("an unknown weather is refused")
+
+
+MOTO = VehicleMode("Moto", PALETTE[3], vehicle_class="motorcycle", **VEHICLE_CLASSES["motorcycle"])  # filters: by its class
+
+
+def _lateral_fingerprint(**options) -> str:
+    """A fixed-seed mixed run (motorcycles among the types) frozen: every vehicle's place, speed and pose, and the counts."""
+    modes = [MODES[0], MODES[1], MOTO]
+    demand = [pair(o, d, 600, split=(10, 50, 40)) for o, d in (("1W", "1E"), ("1S", "2N"), ("2E", "1W"))]
+    simulation = Simulation(generate_network(2, 2), demand, modes, seed=7, **options)
+    simulation.observe()
+    run(simulation, 300)
+    state = [(v.id, v.segment.name, v.s, v.speed, v.pose) for v in simulation.vehicles]
+    counts = (simulation.spawned, simulation.arrived, simulation.collisions, simulation.emergency_braking,
+              len(simulation.observations()["conflicts"]))
+    return hashlib.sha256(repr((state, counts)).encode()).hexdigest()
+
+
+def test_lateral_position_off_leaves_every_run_as_it_was():
+    # The run's every position, speed and count, bit for bit, as before lateral position existed (the digest was taken
+    # then); change it only for a deliberate change to the default model. On, with no type filtering, the traffic is the
+    # same too (only drawn at its lane's kerb side).
+    before = "d7816a6363d823107c13da579899f4f903ce21adbeaa94d32ec6f23ed19382a7"
+    assert _lateral_fingerprint() == _lateral_fingerprint(lateral=False) == before
+    plain = Simulation(generate_network(2, 2), [pair("1W", "1E", 900, split=(10, 50, 40))], [MODES[0], MODES[1], MOTO], seed=3)
+    still = Simulation(generate_network(2, 2), [pair("1W", "1E", 900, split=(10, 50, 40))],
+                       [MODES[0], MODES[1], VehicleMode(**{**MOTO.__dict__, "filters": False})], seed=3, lateral=True)
+    run(plain, 240)
+    run(still, 240)
+    assert [(v.id, v.s, v.speed) for v in plain.vehicles] == [(v.id, v.s, v.speed) for v in still.vehicles]
+    assert plain.arrived == still.arrived > 20 and all(v.lat_m == 0 for v in plain.vehicles)
+    assert all(abs(v.lat_m) == LANE_WIDTH_M / 2 - v.width_m / 2 for v in still.vehicles)
+
+
+def _red_queue(lateral: bool, kinds, red_s: float = 90.0):
+    """One lane to a signal held red for `red_s`, vehicles of `kinds` sent in that order: the simulation and a helper
+    adding one more."""
+    simulation = Simulation(generate_network(1, 1, lanes_per_direction=1), [], [MODES[1], MOTO], lateral=lateral)
+    simulation.signal_override = lambda node, road, state, context: "R" if simulation.time < red_s else "G"
+    route = simulation.graph.route("1W", "1E")
+
+    def add(mode, name):
+        vehicle = create_vehicle(mode, name, route, simulation.time, "1W", "1E")
+        vehicle.ahead, vehicle.route_m = simulation.graph.landmarks(route), list(accumulate(link.length for link in route))
+        simulation.pending[route[0].id].append(vehicle)
+        return vehicle
+
+    return simulation, [add(mode, f"{mode.name}{i}") for i, mode in enumerate(kinds)], add
+
+
+def test_motorcycles_filter_past_a_red_queue_to_the_stop_line_and_leave_first():
+    # Lateral position (SL2015 at its smallest): five cars queue at a red; three motorcycles behind them move sideways, no
+    # faster than SUMO's maxSpeedLat, ride past the queue within the lane (at most FILTER_SPEED while beside it) to the
+    # stop line, and are through before the third car. Without it they wait at the back and leave last.
+    order = {}
+    for lateral in (False, True):
+        simulation, vehicles, _ = _red_queue(lateral, [MODES[1]] * 5 + [MOTO] * 3)
+        cars, motos = vehicles[:5], vehicles[5:]
+        entered, sideways = [], 0.0
+        while simulation.time < 150:
+            lats = {v.id: v.lat_m for v in simulation.vehicles}
+            passing = [moto for moto in motos if moto in simulation.vehicles and isinstance(moto.segment, Lane) and any(
+                car in simulation.vehicles and car.segment is moto.segment and car.s - car.length_m < moto.s <= car.s
+                for car in cars)]  # beside a car with its front still ahead, as this step is planned
+            simulation.step()
+            assert all(moto.speed <= FILTER_SPEED + 1e-9 for moto in passing), [(m.id, m.speed) for m in passing]
+            for v in simulation.vehicles:
+                if isinstance(v.segment, Lane):
+                    sideways = max(sideways, abs(v.lat_m - lats.get(v.id, v.lat_m)))
+                    assert abs(v.lat_m) + v.width_m / 2 <= LANE_WIDTH_M / 2 + 1e-9  # within its lane
+                if isinstance(v.segment, Turn) and v.id not in entered:
+                    entered.append(v.id)
+            if abs(simulation.time - (90 - DT)) < 1e-9 and lateral:  # the end of the red
+                assert motos[0].s >= cars[0].s - 0.5 and min(m.s for m in motos) > cars[2].s, \
+                    [(v.id, round(v.s, 1), v.lat_m) for v in vehicles]
+                assert all(_clear(m.lat_m, m.width_m, car) for m in motos for car in cars)
+        assert simulation.collisions == 0 and len(entered) == 8
+        order[lateral] = entered
+        assert sideways <= MAX_SPEED_LAT * DT + 1e-9 and (sideways > 0) == lateral
+    assert order[False][-3:] == ["Moto5", "Moto6", "Moto7"]
+    assert set(order[True][:5]) >= {"Moto5", "Moto6", "Moto7"} and "Moto5" in order[True][:2], order[True]
+
+
+def test_side_by_side_in_a_lane_is_no_collision_and_overlapping_is():
+    # Lateral runs count a same-lane collision only when two vehicles overlap sideways as well (SUMO's sublane check);
+    # without lateral position, two vehicles at one place in a lane always collide.
+    counted = {}
+    for lateral, lats in ((False, (0.0, 0.0)), (True, (-1.3, 1.3)), (True, (0.0, 0.5))):
+        simulation = Simulation(generate_network(1, 1, lanes_per_direction=1), [], [MOTO], lateral=lateral)
+        lane = simulation.graph.route("1W", "1E")[0].lanes[0]
+        for name, lat in zip("ab", lats):
+            vehicle = create_vehicle(MOTO, name)
+            vehicle.segment, vehicle.s, vehicle.lat_m, vehicle.startup_delay = lane, 50.0, lat, 5.0  # stands still
+            lane.vehicles.append(vehicle)
+            simulation.vehicles.append(vehicle)
+        simulation.step()
+        counted[(lateral, lats)] = simulation.collisions
+        a, b = simulation.frame().vehicles  # drawn at their lateral places, and read_traffic says them
+        assert abs(((a.x - b.x) ** 2 + (a.y - b.y) ** 2) ** 0.5 - abs(lats[0] - lats[1])) < 1e-9
+        assert [v.get("lateral_m", 0.0) for v in simulation.frame().records()["vehicles"]] == list(lats)
+    assert counted == {(False, (0.0, 0.0)): 1, (True, (-1.3, 1.3)): 0, (True, (0.0, 0.5)): 1}, counted
+
+
+def test_a_car_follows_a_motorcycle_it_overlaps_and_passes_one_clear_of_it():
+    # A car keeps behind a motorcycle ahead in its lane that it overlaps sideways, at the kerb side as it is; one at the
+    # far side of the lane, clear of it with SUMO's minGapLat, is no leader: the car comes up beside it at the stop line.
+    for offside in (False, True):
+        simulation, (moto,), add = _red_queue(True, [MOTO], red_s=1e9)
+        run(simulation, 40)  # the motorcycle waits at the line
+        if offside:
+            moto.lat_m = simulation.graph.keep * (LANE_WIDTH_M / 2 - moto.width_m / 2)
+        car = add(MODES[1], "Car")
+        run(simulation, 120)
+        assert moto.speed < 0.1 and car.speed < 0.1 and simulation.collisions == 0
+        if offside:
+            assert car.s > moto.s - moto.length_m and _clear(car.lat_m, car.width_m, moto)  # beside it
+        else:
+            assert not _clear(car.lat_m, car.width_m, moto) and moto.s - moto.length_m - car.s >= car.min_gap - 0.5
 
 
 if __name__ == "__main__":

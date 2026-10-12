@@ -27,6 +27,9 @@
   Institutions is chosen switches the Demand drop-down back to the grid's demand (`MainWindow._cell_clicked`).
   - Flow in veh/h, or trips per day in daily mode ("—" = not entered); Enter jumps to the next cell.
   - Arrival pattern: Random, Poisson, Binomial or Negative binomial.
+  - PHF (hourly demand only; hidden for daily): the peak-hour factor, 0.25–1 (spin box, `ODCellPanel.phf`).
+    Setting it gives the pair `daily_profile.phf_quarters` (the hour's second 15 minutes at veh/h ÷ PHF);
+    1 is an even hour. It shows the PHF of whatever 15-minute shares the pair has.
   - Mode split: `ModeSplitSlider` has one zone per vehicle type from Mode Behavior, in its colours,
     and one handle between each pair of neighbours. The shares always sum to 100 %. There is one
     % box per type, four to a row. Typing a type's share moves the handle after it, so the next
@@ -76,6 +79,9 @@
   A demand tool naming no pairs works on every pair. `_type_in` types a tool's numbers (one undo step)
   and, for a degree of saturation, has `ODCellPanel.checker` (the window's `_check_demand`) run them,
   typing in the share that held; a failed check puts the matrix back.
-- `ODCell(flow, daily, profile, pattern, split)`: the data for one pair. `split` is one percent
-  per vehicle type, in Mode Behavior's order. Saved with the project (network_io) and in the undo
+- `ODCell(flow, daily, profile, pattern, split, quarters)`: the data for one pair. `split` is one percent
+  per vehicle type, in Mode Behavior's order; `quarters` the hourly demand's four 15-minute shares of the hour
+  (() even; a Run passes them as `PairDemand.quarters`). AI Mode's set_od_demand takes `peak_hour_factor` or
+  `quarters` (four 15-minute counts or shares) for hourly demand, refused for daily; its result and
+  read_od_matrix give each hourly pair's `peak_hour_factor` and `quarters`. Saved with the project (network_io) and in the undo
   history.

@@ -46,6 +46,9 @@ MEASURES = [("throughput_vph", "Throughput", "veh/h", True), ("people_per_h", "P
             ("arrived", "Trips completed", "veh", True),
             ("tti", "Travel time index", "trip time ÷ free-flow time", False),
             ("pti", "Planning time index", "95th percentile of trip ÷ free-flow time", False),
+            ("bi", "Buffer index (mean-based)", "(95th percentile − mean) ÷ mean of trip ÷ free-flow time", False),
+            ("mean_system_trip_s", "Mean system travel time", "s", False),
+            ("unfinished_share", "Unfinished trips", "share of spawned", False),
             ("conflicts", "Rear-end conflicts (TTC < 1.5 s)", "events", False),
             ("mean_wait_s", "Mean wait per trip", "s", False), ("queued_mean", "Mean queued at once", "veh", False),
             ("people_delay_h", "Passenger delay", "person·h", False),
@@ -68,7 +71,18 @@ AGENT_MEASURES = [("tsp_requests", "Bus requests", "requests", None), ("tsp_true
                   ("agent_rejected", "Answers rejected by the guard", "requests", False),
                   ("tsp_off_plan_s", "Time off the plan", "s", None),
                   ("agent_agrees_estimate", "Decisions agreeing with the person-delay estimate", "%", None),
-                  ("tsp_back_to_plan_s", "Back to the plan after the bus, mean", "s", False)]
+                  ("tsp_back_to_plan_s", "Back to the plan after the bus, mean", "s", False),
+                  # Test DEVL: its emergency vehicles (main.emergency_report) and DEVL's own figures
+                  ("emergency_trips", "Emergency vehicles dispatched", "vehicles", None),
+                  ("emergency_arrived", "Emergency vehicles arrived", "vehicles", True),
+                  ("emergency_trip_s", "Emergency travel time, mean (dispatch to arrival)", "s", False),
+                  ("devl_requests", "DEVL requests", "requests", None),
+                  ("devl_true", "DEVL lane cleared (TRUE)", "requests", None),
+                  ("devl_fell_back", "DEVL fell back at the deadline", "requests", False),
+                  ("devl_cleared", "Lanes cleared", "times", None),
+                  ("devl_lane_green_s", "Lane green, in all", "s", None),
+                  ("devl_to_green_s", "Request to lane green, mean", "s", False),
+                  ("devl_latency_s", "DEVL agent latency, mean", "s", False)]
 
 
 def summary(values: list[float]) -> dict:
@@ -134,6 +148,7 @@ class Scenario:
     random_incidents: dict | None = None  # {"per_hour", "for_min", "lanes"}: drawn for each seed (draw_incidents)
     meters: list = field(default_factory=list)  # ramp meters: [{"road", "target_occupancy_percent" | "rate_vph"}]
     assign_routes: dict | None = None  # route choice found for it before its runs: {"iterations", "until_gap"}
+    lateral: bool = False  # lateral position and filtering in its runs (Simulation lateral)
 
 
 INCIDENT_KEYS = ("road", "lanes", "at_min", "for_min", "from_m", "length_m", "direction", "speed_kmh")
@@ -238,13 +253,15 @@ def under(scenario: Scenario, condition: dict) -> Scenario:
     return Scenario(f"{scenario.name} | {condition['name']}", scenario.changes,
                     scenario.demand_scale * condition["demand_scale"], scenario.extensions,
                     scenario.incidents + condition["incidents"], condition["weather"] or scenario.weather,
-                    condition["random_incidents"] or scenario.random_incidents, scenario.meters, scenario.assign_routes)
+                    condition["random_incidents"] or scenario.random_incidents, scenario.meters, scenario.assign_routes,
+                    scenario.lateral)
 
 
 def factorial(factors) -> tuple[list[dict], list[str]]:
     """Scenarios for every combination of 1 to 3 factors' levels (a full factorial design; Snell, Applied Statistics,
     Examples J-N): `factors` [{"name": "signals", "levels": [{"label": "webster", "changes": [...]}, {"label":
-    "transyt", "changes": [...]}]}, ...]; a level may also give demand_scale, extensions, weather, incidents, meters.
+    "transyt", "changes": [...]}]}, ...]; a level may also give demand_scale, extensions, weather, incidents, meters,
+    lateral.
     Returns (the scenario specs, named "signals=webster, tsp=on"; the factors' names)."""
     if not isinstance(factors, list) or not 1 <= len(factors) <= 3 or not all(
             isinstance(f, dict) and f.get("name") and isinstance(f.get("levels"), list) and len(f["levels"]) >= 2
@@ -263,7 +280,9 @@ def factorial(factors) -> tuple[list[dict], list[str]]:
                               "incidents": spec["incidents"] + list(level.get("incidents") or []),
                               "meters": spec["meters"] + list(level.get("meters") or []),
                               **({"weather": level["weather"]} if level.get("weather") else
-                                 {"weather": spec["weather"]} if spec.get("weather") else {})})
+                                 {"weather": spec["weather"]} if spec.get("weather") else {}),
+                              **({"lateral": level["lateral"]} if "lateral" in level else
+                                 {"lateral": spec["lateral"]} if "lateral" in spec else {})})
         specs = grown
     return specs, [str(factor["name"]) for factor in factors]
 
@@ -358,6 +377,8 @@ def scenario_from(spec: dict, index: int) -> Scenario:
     weather = str(spec.get("weather") or "clear").lower()
     if weather not in WEATHER:
         raise ValueError(f"Scenario {index + 1}: weather is one of {', '.join(WEATHER)}.")
+    if not isinstance(spec.get("lateral", False), bool):
+        raise ValueError(f"Scenario {index + 1}: lateral is true or false.")
     random_incidents = spec.get("random_incidents") or None
     if random_incidents is not None and not isinstance(random_incidents, dict):
         raise ValueError(f"Scenario {index + 1}: random_incidents is {{\"per_hour\": 2, \"for_min\": 15, \"lanes\": 1}}.")
@@ -371,7 +392,7 @@ def scenario_from(spec: dict, index: int) -> Scenario:
         assign = {"iterations": int(assign.get("iterations", 4)), "until_gap": float(assign.get("until_gap", 0.02))}
     return Scenario(str(spec.get("name") or f"Scenario {index + 1}").strip()[:60], changes, scale, [str(e) for e in extensions],
                     incidents_from(spec.get("incidents"), f"Scenario {index + 1}: "), weather, random_incidents,
-                    meters_from(spec.get("meters"), f"Scenario {index + 1}: "), assign)
+                    meters_from(spec.get("meters"), f"Scenario {index + 1}: "), assign, spec.get("lateral", False))
 
 
 def scenario_network(network, scenario: Scenario, allowed: set[str]):
@@ -399,15 +420,21 @@ def scaled(demand: list, scale: float) -> list:
 
 def run_headless(network, demand, modes, seed: int, duration_s: float, override=None, recorder=None,
                  progress=None, cancelled=lambda: False, observe: bool = False, speed: float | None = None,
-                 dispatches=(), incidents=(), weather: str = "clear", meters=()):
+                 dispatches=(), incidents=(), weather: str = "clear", meters=(), on_frame=None,
+                 step_s: float = DT, step_method: str = "euler", lateral: bool = False):
     """A run without drawing: step until `duration_s`, sampling a RunRecorder every SAMPLE_S, as fast as the
     CPU allows, or with `speed` in step with the wall clock (simulated seconds a real second, as a live run:
     an agent answering in the background then costs its real latency, and the run never pauses for it).
     `recorder` is one, or a function making it from the Simulation (so it can see the signal plans).
     `dispatches`: emergency vehicles sent at the start, (from, to, every seconds; 0: once[, seconds later])
-    (Simulation.dispatch). `incidents`, `weather`: apply_conditions.
+    (Simulation.dispatch). `incidents`, `weather`: apply_conditions. `on_frame(simulation)`: after every step, on
+    this (the worker's) thread, so it may take a frame safely (the window shows a batch's run on the map, taking one
+    at most 10 times a real second). `step_s`, `step_method`: the step's length (DT, or 0.25 or 0.1 s to check
+    the results don't depend on it) and Euler or ballistic update (Simulation). `lateral`: lateral position and
+    filtering (Simulation lateral).
     Returns (the Simulation, the recorder); the Simulation's time says how far it got if cancelled."""
-    simulation = Simulation(deepcopy(network), demand, modes, seed=seed)
+    simulation = Simulation(deepcopy(network), demand, modes, seed=seed, step_s=step_s, step_method=step_method,
+                            lateral=lateral)
     apply_conditions(simulation, list(incidents), weather, list(meters))
     simulation.signal_override = override
     for origin, destination, every_s, *after_s in dispatches:
@@ -427,8 +454,10 @@ def run_headless(network, demand, modes, seed: int, duration_s: float, override=
         if recorder is not None and simulation.time + 1e-9 >= next_sample:
             recorder.sample(simulation.frame())
             next_sample += SAMPLE_S
-        if progress is not None and int(simulation.time / DT) % 120 == 0:
-            progress(simulation.time)
+        if progress is not None and abs(simulation.time - round(simulation.time)) < 1e-6:  # each simulated second: the
+            progress(simulation.time)  # menu bar's clock ticks with it in a paced batch
+        if on_frame is not None:
+            on_frame(simulation)
     return simulation, recorder
 
 
@@ -461,7 +490,7 @@ def holds(network, demand, modes, seed: int, override=None, progress=None, cance
         simulation.step()
         if mark is None and simulation.time >= end - HOLD_WINDOW_MINUTES * 60:
             mark = (in_network(), simulation.spawned)
-        if progress is not None and int(simulation.time / DT) % 120 == 0:
+        if progress is not None and int(simulation.time / simulation.dt) % 120 == 0:
             progress(simulation.time)
     if mark is None:  # stopped early
         return {"holds": None}
@@ -849,6 +878,14 @@ def safety(kpis: dict, ttc_s: float = CONFLICT_TTC_S, every: bool = False) -> di
                        "A surrogate, not crashes: use it to compare designs, not to predict crash numbers.",
                        "The simulated drivers keep safe gaps (Krauss), so short TTCs are rare: a few a road an hour "
                        "means stop-start traffic, not reckless driving."]
+    # Collisions (overlaps the drivers failed to avoid: a model fault to look into, not a crash rate) and emergency
+    # braking (harder than comfortable), each by where; runs saved before these were recorded have neither
+    for key in ("collisions", "emergency_braking"):
+        if key in observed:
+            events = observed[key]
+            result[key] = {"count": len(events), "by_where": dict(Counter(e["where"] for e in events).most_common(6))}
+            if key == "collisions":
+                result[key]["by_kind"] = dict(Counter(e["kind"] for e in events))
     return result
 
 
@@ -985,7 +1022,8 @@ HEADLINE = [("people_per_h", "Passenger throughput increase", True),
             ("queued_max", "Queue reduction (most queued at once)", False),
             ("mean_wait_s", "Vehicle wait time reduction (per trip)", False),
             ("mean_trip_delay_s", "Vehicle delay reduction (per trip)", False),
-            ("throughput_vph", "Vehicle throughput increase", True)]
+            ("throughput_vph", "Vehicle throughput increase", True),
+            ("emergency_trip_s", "Emergency travel time reduction", False)]  # with Test DEVL
 
 
 def averaged(runs: list[dict]) -> list[dict]:
@@ -1011,7 +1049,7 @@ def headline_sheet(comparison: list[dict]) -> list[list]:
              "Difference CI ±", "p", "Clear?", "Better?"]]
     if not comparison:
         return rows
-    labels = {key: label for key, label, *_ in MEASURES}
+    labels = {key: label for key, label, *_ in MEASURES + AGENT_MEASURES}
     figures = list(dict.fromkeys(row["figure"] for row in comparison))
     picks = [(labels[key], name, up) for key, name, up in HEADLINE]
     for ending, what in ((" mean delay (s)", "delay"), (" mean wait (s)", "wait time")):
@@ -1037,17 +1075,20 @@ def batch_workbook(path, batch: dict, inputs: list) -> Path:
     agents = batch["agents"]
     read_me = [["ACMS batch run", ""], ["Started", batch["started"]], ["Seeds", ", ".join(map(str, batch["seeds"]))],
                ["Times each", batch["times"]], ["Simulated each run", clock(batch["duration_s"])],
+               ["Runs finished", f"{len(batch['runs'])} of {batch.get('planned', len(batch['runs']))}"
+                                 + ("" if len(batch["runs"]) >= batch.get("planned", 0) else
+                                    " (a checkpoint, rewritten after every run, or a batch cut short)")],
                ["Agents", ", ".join(agent["label"] for agent in agents)], ["Baseline", agents[0]["label"]],
                ["Decision deadline", f"{batch['deadline_s']:g} simulated s" if batch.get("tsp") else "none (TSP not ticked)"],
                ["Pace", f"{batch['speed']:g}x real time" if batch.get("speed") else "as fast as the CPU allows"],
                ["Runs at once", f"{batch.get('at_once', 1)}, never two on one model server"],
                ["Each run's workbook", batch.get("folder", "")], ["", ""],
-               ["How it ran", "Every agent ran every seed, the times asked, headless. With TSP ticked, each run kept in step "
+               ["How it ran", "Every agent ran every seed, the times asked, headless, seed by seed (every agent on a seed before the next), so a batch cut short still compares on the seeds it finished. With TSP ticked, each run kept in step "
                               "with the wall clock at the pace above and never paused: the junctions published their "
                               "telemetry (JSON, each run's telemetry.jsonl beside its workbook), the agent answered each bus "
                               "request in the background, the soonest-arriving bus first, and an answer counted from when it "
-                              "reached the controller; none by the deadline: the plan. No LLM: the controllers run with no "
-                              "agent, every request falling back to the plan."],
+                              "reached the controller; none by the deadline: the plan. The baselines: the controllers run with no "
+                              "agent, Never preempt falling back to the plan on every request, Always preempt granting every one."],
                ["How it compares", "A seed's repeats are averaged, then each agent is compared with the baseline (the first "
                                    "agent) by a paired t over the seeds (common random numbers), at 95 % widened by "
                                    "Bonferroni for several agents; 'clear' when the interval leaves out zero (one seed: open)."],
@@ -1112,9 +1153,11 @@ def _analysis_sheets(kpis: dict, observed: dict, sheets: list) -> None:
             ["85th percentile trip time", rel.get("p85_s"), "s", ""], ["95th percentile trip time", rel.get("p95_s"), "s", ""],
             ["Travel time index", rel.get("tti"), "", "mean trip time / mean free-flow time"],
             ["Planning time index", rel.get("pti"), "", "95th percentile of trip / free-flow time (FHWA)"],
+            ["Buffer index (mean-based)", rel.get("bi"), "", "(95th percentile − mean) / mean of trip / free-flow time"],
             ["Flow concentration (Gini)", analysed["flow_gini"], "", "road flows: 0 even, towards 1 on few roads"]]
     if steady:
-        rows += [["Warm-up", steady["warm_up_min"], "min", "MSER-5 on the vehicles on the road"],
+        rows += [["Warm-up", steady["warm_up_min"], "min", "MSER-5 on the vehicles on the road: measure from it "
+                                                            "(measure_from_min) to leave it out of the figures"],
                  ["Minutes after warm-up", steady["minutes_after"], "min", ""]]
         for key, label in (("throughput_vph", "Steady throughput"), ("mean_speed_kmh", "Steady mean speed")):
             found = steady.get(key)
@@ -1124,9 +1167,11 @@ def _analysis_sheets(kpis: dict, observed: dict, sheets: list) -> None:
                              f"lag-1 autocorrelation {found['lag1_autocorrelation']})"])
     sheets.append(["Run statistics", rows, "The run's trip-time reliability, warm-up, steady state and flow concentration."])
     if rel.get("least_reliable_pairs"):
-        sheets.append(["Reliability by OD", [["OD pair", "Trips", "Travel time index", "Planning time index"]] +
-                       [[r["pair"], r["trips"], r["tti"], r["pti"]] for r in rel["least_reliable_pairs"]],
-                       "Every OD pair with 5 trips or more: travel time and planning time indexes, least reliable first."])
+        sheets.append(["Reliability by OD", [["OD pair", "Trips", "Travel time index", "Planning time index",
+                                              "Buffer index (mean-based)"]] +
+                       [[r["pair"], r["trips"], r["tti"], r["pti"], r["bi"]] for r in rel["least_reliable_pairs"]],
+                       "Every OD pair with 5 trips or more: travel time, planning time and buffer indexes, least "
+                       "reliable first."])
     if analysed["arrivals_per_minute"]:
         sheets.append(["Arrivals", [["Origin", "Minutes", "Mean a minute", "Variance", "Index of dispersion", "p (Poisson)",
                                      "Verdict"]] +

@@ -7,8 +7,9 @@ text/background pair in READABLE_PAIRS keeps WCAG contrast of at least 4.5:1
 
 from __future__ import annotations
 
+from PySide6.QtCore import QEvent, QObject, QTimer
 from PySide6.QtGui import QColor, QPalette
-from PySide6.QtWidgets import QApplication
+from PySide6.QtWidgets import QAbstractButton, QApplication
 
 WINDOW = "#3b4048"  # window and panel background
 SURFACE = "#33383f"  # inputs, tables, lists
@@ -19,12 +20,13 @@ DISABLED_TEXT = "#8f97a0"
 ACCENT = "#2563eb"  # the one primary action, active tools, selection
 ACCENT_EDGE = "#60a5fa"  # focus rings and selection outlines
 BANNER = "#1e3a8a"  # next-step banner, selected grid cell
+PRESSED = "#1e40af"  # a button while pressed, and for a moment after it is clicked (ClickFlash)
 TOOLTIP = "#23272c"
 # Status text on grey (test monitor): light tints keep contrast.
 STATUS = {"running": "#93c5fd", "passed": "#86efac", "failed": "#fca5a5", "waiting": "#fcd34d"}
 
 READABLE_PAIRS = [
-    (TEXT, WINDOW), (TEXT, SURFACE), (TEXT, BUTTON), (TEXT, ACCENT), (TEXT, BANNER), (TEXT, TOOLTIP),
+    (TEXT, WINDOW), (TEXT, SURFACE), (TEXT, BUTTON), (TEXT, ACCENT), (TEXT, BANNER), (TEXT, TOOLTIP), (TEXT, PRESSED),
     (SECONDARY_TEXT, WINDOW), (SECONDARY_TEXT, SURFACE),
     *((colour, WINDOW) for colour in STATUS.values()), *((colour, SURFACE) for colour in STATUS.values()),
 ]
@@ -82,7 +84,39 @@ QToolTip {{ background: {TOOLTIP}; color: {TEXT}; border: 1px solid #6b7280; }}
 QMenuBar {{ padding: 5px 6px; }}
 QMenuBar::item {{ padding: 3px 8px; border-radius: 4px; background: transparent; }}
 QMenuBar::item:selected, QMenuBar::item:pressed {{ background: #565d66; }}
+QToolButton {{ border: 1px solid transparent; border-radius: 4px; padding: 2px; }}
+QToolButton:hover {{ background: #565d66; }}
+QToolButton:checked {{ background: {ACCENT}; border-color: {ACCENT_EDGE}; }}
+QPushButton:pressed, QToolButton:pressed, QPushButton[role="mini"]:pressed, QPushButton[role="section"]:pressed,
+QPushButton[flash="true"], QToolButton[flash="true"], QPushButton[role="mini"][flash="true"] {{
+    background: {PRESSED}; border: 1px solid {ACCENT_EDGE}; color: {TEXT}; }}
+QPushButton[role="primary"]:pressed, QPushButton[role="primary"][flash="true"] {{ background: {BANNER}; border-color: {TEXT}; }}
+QPushButton[role="mini"]:pressed, QPushButton[role="mini"][flash="true"] {{ border: none; }}
+QPushButton[role="section"][flash="true"], QPushButton[role="section"]:checked:pressed {{ background: {PRESSED}; }}
 """
+FLASH_MS = 250  # how long a clicked button stays lit, so a click is seen even when it is quick
+
+
+class ClickFlash(QObject):
+    """Every button lights up (PRESSED) for FLASH_MS after a click, as well as while it is held down, so the user
+    can see each click was taken. Installed on the application by apply_theme."""
+
+    def eventFilter(self, watched, event) -> bool:  # noqa: N802 - Qt's name
+        if event.type() == QEvent.Type.MouseButtonRelease and isinstance(watched, QAbstractButton) \
+                and watched.isEnabled() and watched.rect().contains(event.position().toPoint()):
+            _lit(watched, True)
+            QTimer.singleShot(FLASH_MS, lambda button=watched: _lit(button, False))
+        return False
+
+
+def _lit(button: QAbstractButton, on: bool) -> None:
+    try:
+        button.setProperty("flash", on)
+        button.style().unpolish(button)
+        button.style().polish(button)
+        button.update()
+    except RuntimeError:  # the click closed or deleted it
+        pass
 
 
 def apply_theme(app: QApplication) -> None:
@@ -104,3 +138,6 @@ def apply_theme(app: QApplication) -> None:
         palette.setColor(QPalette.ColorGroup.Disabled, role, QColor(DISABLED_TEXT))
     app.setPalette(palette)
     app.setStyleSheet(APP_STYLE)
+    if getattr(app, "_click_flash", None) is None:  # once per application, however many windows
+        app._click_flash = ClickFlash(app)
+        app.installEventFilter(app._click_flash)

@@ -208,6 +208,19 @@ def test_source_reading_stays_inside_the_project():
     assert doc["text"].startswith("1: # simulation.py")
     for path in ("../README.md", ".venv/pyvenv.cfg", "C:/Windows/win.ini"):
         assert "Can't read" in refused(generate_network(1, 1), "read_source", path=path)
+    # find: the lines holding every word, so a question reads a few lines instead of whole pages
+    found = run(generate_network(1, 1), "read_source", find="Webster MAX_CYCLE_S")  # everywhere: line numbers, not pages
+    assert found["hits"] and all("webster" in h["text"].lower() and "max_cycle_s" in h["text"].lower() for h in found["hits"])
+    hit = run(generate_network(1, 1), "read_source", path="src/traffic_simulator/signal_timing.py",
+              find="MAX_CYCLE_S =")["hits"][0]
+    page = run(generate_network(1, 1), "read_source", path=hit["path"], start_line=hit["line"], end_line=hit["line"])
+    assert "MAX_CYCLE_S" in page["text"]
+    one = run(generate_network(1, 1), "read_source", path="docs/architecture/sources.md", find="roundabout")
+    assert one["hits"] and {h["path"] for h in one["hits"]} == {"docs/architecture/sources.md"}
+    assert "fewer" in run(generate_network(1, 1), "read_source", find="zz" + "qx nothing")["next"]  # built here, so this line has no match
+    assert "Can't read" in refused(generate_network(1, 1), "read_source", path="../README.md", find="a")
+    long = run(generate_network(1, 1), "read_source", path="docs/architecture/sources.md")
+    assert long["lines"].startswith(f"1-{tools.READ_LINES} of") and long["next_start_line"] == tools.READ_LINES + 1
 
 
 def test_changes_are_described_for_the_assistant():
@@ -424,6 +437,39 @@ def test_each_request_is_offered_the_tools_its_words_point_to():
     assert {"add_bus_stop", "update_bus_stop"} <= {spec["name"] for spec in have}  # now the model can call them
     assert "Nothing new" in tools.expand_tools({"need": "bus stops"}, have)["note"]
     assert "error" in tools.expand_tools({}, have)
+    # fewer, smaller specs (the 2026-10-05 stress test): the whole-study tool only for a request with several parts,
+    # the demand models only when their words are used, the signal tools not for a junction alone
+    assert "build_scenario" in offered("make a 6 by 5 grid, signals everywhere, then run it with busy traffic")
+    assert "build_scenario" not in offered("widen road 2,2-3,2 and delete junction 1,1")
+    assert not {"set_signal_timing", "optimise_signals"} & offered("delete junction 1,1")
+    assert "choose_modes" not in offered("give it busy traffic") and "choose_modes" in offered("choose a mode split")
+    assert {"update_institution", "scale_demand"} <= offered("increase the population")
+    assert "read_source" in offered("how do I save my API key?")
+    assert "generate_demand" in offered("genrate demnd for the netwrk at 0.8 degree of saturtion")
+
+
+def test_a_grid_of_impossible_blocks_is_refused():
+    network = generate_network(4, 4)
+    for spacing in (3, 50000):  # the stress test's "50000 x 50000 m with 3 m blocks"
+        assert "spacing_m must be 20-2000 m" in refused(network, "generate_grid", horizontal=3, vertical=3,
+                                                        spacing_m=spacing)
+    assert len(network.nodes) == 16  # left as it was
+    assert run(network, "generate_grid", horizontal=3, vertical=3, spacing_m=250)["junctions"] == 9
+
+
+def test_an_invented_tool_is_refused_with_the_nearest_real_ones():
+    try:
+        tools.normalise("teleport_vehicles", {})
+    except tools.ToolError as exc:
+        assert "can't do that" in str(exc) and "find_tools" in str(exc)
+    else:
+        raise AssertionError("an invented tool must be refused")
+    try:
+        tools.normalise("list_junction", {})
+    except tools.ToolError as exc:
+        assert "Named alike: list_junctions" in str(exc) and "can't do that" in str(exc)  # alike isn't the same
+    else:
+        raise AssertionError("a misspelt tool must be refused")
 
 
 def test_a_signal_method_other_than_the_one_asked_for_is_caught():
@@ -491,6 +537,25 @@ def test_lists_sent_as_broken_json_text_are_repaired_or_refused_precisely():
         assert "must be one of" in str(exc)
     else:
         raise AssertionError("an unclear choice is refused")
+
+
+def test_update_roads_sets_and_removes_a_turn_pocket():
+    network = generate_network(3, 4)
+    result = run(network, "update_roads", roads=["1,2-2,2"], pocket_junction="2,2", pocket_side="offside",
+                 pocket_length_m=60)
+    assert result["updated"][0]["turn_pockets"] == {"2,2": {"lanes": 1, "length_m": 60.0, "side": "offside"}}
+    assert any("turn pockets" in line for line in result["changed"])
+    assert "turn pocket at → 2,2" in tools.describe_call("update_roads", {"roads": ["1,2-2,2"], "pocket_junction": "2,2"})
+    before = network.roads["1,2-2,2"].pockets
+    assert "15 to 150 m" in refused(network, "update_roads", roads=["1,2-2,2"], pocket_junction="2,2", pocket_length_m=500)
+    assert "not at 1W" in refused(network, "update_roads", roads=["1W"], pocket_junction="1W")
+    assert "pocket_junction" in refused(network, "update_roads", roads=["1,2-2,2"], pocket_lanes=2)
+    assert network.roads["1,2-2,2"].pockets == before  # refused: as it was
+    run(network, "update_roads", roads=["1,2-2,2"], pocket_junction="1,2", pocket_lanes=2)  # a kerb pocket, 50 m
+    run(network, "update_roads", roads=["1,2-2,2"], direction="one-way")  # its traffic leaves 1,2 now: that one goes
+    assert network.roads["1,2-2,2"].pockets == before
+    run(network, "update_roads", roads=["1,2-2,2"], pocket_junction="2,2", pocket_lanes=0)
+    assert network.roads["1,2-2,2"].pockets == {}
 
 
 if __name__ == "__main__":

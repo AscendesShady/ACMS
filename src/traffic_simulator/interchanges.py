@@ -22,7 +22,6 @@ from .models import LANE_WIDTH_M, Network, Node
 FREEWAY_SPEED_KMH = 100.0
 RAMP_SPEED_KMH = 60.0
 LOOP_SPEED_KMH = 40.0
-SLIP_ANGLE_DEG = 45.0  # a slip road leaves and rejoins its roads at this angle
 SLIP_ROOM_M = 40.0  # lane kept between a slip road's nodes and its junction: queues, and room to exit into
 MARGIN_M = 40.0  # ordinary road kept between the interchange and each selected junction
 # Minimum-radius relation R = V^2 / (127 (e + f)): 6 % superelevation, side friction 0.15
@@ -121,9 +120,10 @@ def _arc(cx: float, cy: float, radius: float, start_deg: float, end_deg: float) 
 
 
 def curve_speed_kmh(radius_m: float) -> float:
-    """Highest speed (km/h, rounded down to 5) for a bend of this radius."""
+    """Highest speed (km/h, rounded down to 5) for a bend of this radius; under 15 km/h, the exact
+    speed (rounding would reach 0, and a floor would be faster than the bend allows)."""
     speed = (127 * (SUPERELEVATION + SIDE_FRICTION) * radius_m) ** 0.5
-    return max(15.0, 5 * floor(speed / 5))
+    return 5 * floor(speed / 5) if speed >= 15 else speed
 
 
 def _spiral(x0: float, radius: float, turn_deg: float) -> list[CurvePoint]:
@@ -608,27 +608,29 @@ def _plan_slip(network: Network, junction: str, roads, lines, single_lane: bool,
     `lines` run from the junction out along the arriving and the leaving road. The setback is the
     smallest (5 m steps) that leaves SLIP_ROOM_M of lane between the slip's nodes and where the
     junction's lanes end (its stop line, a roundabout's give-way line), at which the curve's middle
-    clears both roads and all of it the junction (a roundabout's circle), leaving each road 20 m beyond. It leaves and rejoins at SLIP_ANGLE_DEG, so
-    both ends are kerb turns and only the kerbside lane takes it."""
-    keep = 1.0 if network.driving_side == "left" else -1.0
+    clears both roads and all of it the junction (a roundabout's circle), leaving each road 20 m beyond. It leaves
+    the arriving road along it and curves round to join the leaving road along it (a quarter circle at a right
+    angle), so it tapers out of and into their kerbside lanes; the simulation takes a ramp leaving or joining a
+    road at a small angle as a kerb turn (Simulation._kind), so only the kerbside lane takes it. Its curve is
+    also wide enough that, at the speed its innermost lane allows, it is no slower than the two setbacks through
+    the junction at the roads' limit: otherwise routes (free-flow times) would never take it."""
     width = (1 if single_lane else 2) * LANE_WIDTH_M
     clearance = (max(road.width_m for road in roads) + width) / 2
     inset = max(network.lane_inset(junction, road) for road in roads)
     hub = network.nodes[junction]
     longest = min(polyline_length(line) for line in lines) - 20.0
-    turn = -keep * radians(SLIP_ANGLE_DEG)  # towards the kerb side
-
-    def turned(x: float, y: float, angle: float) -> tuple[float, float]:
-        return x * cos(angle) - y * sin(angle), x * sin(angle) + y * cos(angle)
+    limit = min(road.speed_limit_kmh for road in roads)
 
     room = inset + max(road.width_m for road in roads) / 2 + SLIP_ROOM_M  # the junction's line, the slip node's edge, lanes between
     for setback in range(5 * ceil(room / 5), int(longest) + 1, 5):
         (sx, sy, ax, ay), (ex, ey, vx, vy) = (point_along(line, setback) for line in lines)
-        pieces = _transition((sx, sy), turned(-ax, -ay, turn), (ex, ey), turned(vx, vy, -turn), 0.39)
+        pieces = _transition((sx, sy), (-ax, -ay), (ex, ey), (vx, vy), 0.39)
         mx, my, _ = pieces[len(pieces) // 2]
         near = min(distance_to_segment((mx, my), p, q) for line in lines for p, q in zip(line, line[1:]))
         outside = min(hypot(x - hub.x, y - hub.y) for x, y, _ in pieces) >= inset + width / 2
-        if near >= clearance and outside:
+        inner = 1 / max(abs(kappa) for *_, kappa in pieces) - (width - LANE_WIDTH_M) / 2  # innermost lane's radius
+        quick = polyline_length([(sx, sy), *((x, y) for x, y, _ in pieces)]) / min(limit, curve_speed_kmh(inner))             <= 2 * setback / limit
+        if near >= clearance and outside and quick:
             break
     else:
         raise ValueError(f"Not enough room for a slip road past {junction}: its roads are too short.")

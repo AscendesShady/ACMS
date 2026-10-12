@@ -160,6 +160,8 @@ def test_batch_run_takes_seeds_like_pages_and_a_duration():
     assert "from the ACMS window" in labels()
     # Only time, seeds and two ticks: TSP's models and how are the TSP tab's
     test_tsp, test_devl = controls.findChildren(QCheckBox)
+    show = next(button for button in controls.findChildren(QPushButton) if button.toolTip() == "Show runs on map")
+    assert show.isCheckable() and show.isChecked()  # the batch's run drawn on the map, at first
     assert not controls.findChildren(QSlider) and not controls.findChildren(ChoiceButtons)
     assert [box.isChecked() for box in (test_tsp, test_devl)] == [False, False]
 
@@ -168,20 +170,26 @@ def test_batch_run_takes_seeds_like_pages_and_a_duration():
                        "times": 2, "servers": {"System 1: Laya": "laya", "System 2: grok-4": "grok"}}
     devl_plan = {"agents": ["System 2: llama3"], "deadline_s": 20, "speed": 1, "at_once": 4, "times": 2,
                  "servers": {"System 2: llama3": "local"}}
-    panel.app = SimpleNamespace(tsp_batch=lambda: plan, devl_batch=lambda: devl_plan,
+    ticked, shown = [], []
+    panel.app = SimpleNamespace(tsp_batch=lambda: plan, devl_batch=lambda: devl_plan, tick_extension=ticked.append,
+                                show_runs=shown.append,
                                 run_batch=lambda *args, **kwargs: asked.append(
                                     (args, kwargs)) or {"file": "batch.xlsx", "runs": 18, "of": 18, "folder": "runs"})
     test_tsp.setChecked(True)
-    # 90 min × 3 seeds × (2 models + No LLM) × 2 times = 27 h; 4 at once, but Laya's 6 and Grok's 6 one after another
-    assert "18 runs: 90 min × 3 seeds × 3 agents (with No LLM) × 2 times = 27.0 h; 4 at once at 1×: about 9.0 h " \
+    # 90 min × 3 seeds × (2 models + 2 baselines) × 2 times = 36 h; 4 at once, but Laya's 6 and Grok's 6 one after another
+    assert "24 runs: 90 min × 3 seeds × 4 agents (with both baselines) × 2 times = 36.0 h; 4 at once at 1×: about 9.0 h " \
            "(one run a model server at a time)" in labels()
     plan.update(speed=5, servers={"System 1: Laya": "laya", "System 2: grok-4": "laya"}, at_once=2)
     test_tsp.setChecked(False)  # changed in the TSP tab: the count follows
     test_tsp.setChecked(True)
     assert "2 at once at 5×: about 3.6 h (one run a model server" in labels()  # 12 on Laya: 12 × 90 min / 5
     plan.update(servers={"System 1: Laya": "laya", "System 2: grok-4": "grok"}, at_once=4, speed=1)
-    test_devl.setChecked(True)  # both: every TSP agent with every DEVL agent, 3 × 2
-    assert "Different" not in labels() and "36 runs: 90 min × 3 seeds × 6 agents (with No LLM) × 2 times = 54.0 h" in labels()
+    test_devl.setChecked(True)  # both: every TSP agent with every DEVL agent, 4 × 3
+    assert ticked == ["dispatch_emergency"]  # Test DEVL ticks Dispatch Emergency Vehicle: its fleet is what each run sends
+    show.setChecked(False)
+    show.setChecked(True)
+    assert shown == [False, True]  # the window draws the batch's run on the map, or not
+    assert "Different" not in labels() and "72 runs: 90 min × 3 seeds × 12 agents (with both baselines) × 2 times = 108.0 h" in labels()
     devl_plan["speed"] = 2
     test_devl.setChecked(False)
     test_devl.setChecked(True)
@@ -196,10 +204,10 @@ def test_batch_run_takes_seeds_like_pages_and_a_duration():
                                            "speed": 1, "at_once": 4, "test_tsp": True, "test_devl": True,
                                            "devl_agents": ["System 2: llama3"], "devl_deadline_s": 20})]
     assert "Saved batch.xlsx" in labels()
-    plan["agents"] = []  # nothing picked: it says so, and can't start
+    plan["agents"] = []  # nothing picked: its baselines alone, said plainly, and it can start
     test_tsp.setChecked(False)
     test_tsp.setChecked(True)
-    assert "Pick a model in the TSP tab" in labels() and not start.isEnabled()
+    assert "TSP decided by the baselines only (never and always preempt)" in labels() and start.isEnabled()
     panel.set_settings(batch, {"Test TSP": "no", "Test DEVL": "no"})  # as the assistant's set_extension does
     assert start.isEnabled()  # plain runs again
     start.click()
@@ -255,15 +263,17 @@ def test_tsp_and_devl_are_decided_by_a_system_and_its_model_or_multiple():
     panel = ExtensionsPanel(NetworkGraphicsScene(network), SimulationClock(), EXTENSIONS_DIR)
     assert [extension.name for extension in panel.extensions] == [
         "Batch Run", "Transit Signal Priority (TSP)", "Dynamic Emergency Vehicle Lane (DEVL)", "Dispatch Emergency Vehicle",
-        "Research Log"]
-    batch, tsp, devl, dispatch, research = panel.extensions
+        "Research Log", "Campaign Apply"]
+    batch, tsp, devl, dispatch, research, campaign = panel.extensions
+    assert campaign.has("draw") and not campaign.on and not campaign.check.isChecked()
     assert batch.arrow and tsp.arrow and devl.arrow and dispatch.arrow and research.arrow  # each has settings
     assert research.has("log") and not panel.wants("log")  # the log hook, asked for only while ticked
     assert panel.signal_override() is None  # TSP unticked: runs pass no override at all
     tsp.check.setChecked(True)
     overrides = panel.signal_override()
     assert overrides is not None and [extension for extension, _ in overrides.calls] == [tsp]
-    options = [{"label": "No LLM (baseline)", "provider": "", "system": "", "model": "", "name": "no-llm"},
+    options = [{"label": "Never preempt (baseline)", "provider": "", "system": "", "model": "", "name": "never", "rule": False},
+               {"label": "Always preempt (baseline)", "provider": "", "system": "", "model": "", "name": "always", "rule": True},
                {"label": "System 1: Jev", "provider": "jev", "system": "1", "model": "jev", "name": "jev"},
                {"label": "System 1: Laya", "provider": "laya", "system": "1", "model": "laya", "name": "laya"},
                {"label": "System 2: llama3", "provider": "local", "system": "2", "model": "llama3", "name": "llama3"},
@@ -288,7 +298,7 @@ def test_tsp_and_devl_are_decided_by_a_system_and_its_model_or_multiple():
         assert extension.module.batch_settings()["agents"] == ["System 2: grok-4"]
         panel.set_settings(extension, {"Decided by": "Multiple"})
         slider, pace = extension.controls.findChild(QSlider), extension.controls.findChildren(ChoiceButtons)[1]
-        assert not agents.isHidden() and model.isHidden() and agents.labels() == [o["label"] for o in options[1:]]
+        assert not agents.isHidden() and model.isHidden() and agents.labels() == [o["label"] for o in options[2:]]  # the models: not the baselines
         assert (slider.minimum(), slider.maximum()) == (1, 280) and [b.text() for b in pace.group.buttons()] == ["1×", "2×", "5×", "10×"]
         panel.set_settings(extension, {"Models": "system 1: laya, System 2: grok-4", "Decide within": 45, "Pace": "5×",
                                        "Times each": 2})
@@ -369,6 +379,45 @@ def test_tsp_keeps_the_plan_unless_priority_acts_and_returns_to_it_after_the_bus
     assert len(finished) >= len(episodes) - 1  # all back on the plan, but one perhaps still on its way at the end
     assert all(episode[0] <= episode[1] <= episode[2] <= episode[1] + 2 * cycle for episode in finished)  # within 2 cycles
     agent.decisions.clear()
+
+
+def test_a_run_started_at_once_after_a_stop_starts_afresh():
+    """The live window keeps one signal agent: Stop, then Run within a step or two, is still a new run for TSP and
+    DEVL (the agent's reset tells them), not the stopped one's controllers carried on."""
+    from traffic_simulator.signal_agent import SignalAgent
+
+    network = generate_network(2, 2)
+    panel = ExtensionsPanel(NetworkGraphicsScene(network), SimulationClock(), EXTENSIONS_DIR)
+    tsp, devl = (next(extension for extension in panel.extensions if extension.path.name == name)
+                 for name in ("transit_signal_priority.py", "dynamic_emergency_lane.py"))
+    agent = SignalAgent(lambda question: "FALSE")
+    seen = []
+    for _ in range(2):  # Run, one step, Stop; Run again at once (MainWindow._run resets the agent)
+        agent.reset()
+        simulation = Simulation(network, [], [], seed=1)
+        simulation.signal_override = panel.overrides_for([tsp.name, devl.name], agent=agent)
+        simulation.step()
+        seen.append((tsp.module._runs[agent], devl.module._runs[agent]))
+    agent.close()
+    (tsp_first, devl_first), (tsp_again, devl_again) = seen
+    assert tsp_again is not tsp_first and devl_again is not devl_first
+
+
+def test_a_new_runs_question_never_waits_on_the_last_runs():
+    """The stopped run's question still being asked doesn't hold up the new run's for the same key."""
+    import threading
+
+    from traffic_simulator.signal_agent import SignalAgent
+
+    release = threading.Event()
+    agent = SignalAgent(lambda question: (question == "new" or release.wait(5)) and {"answer": question == "new"},
+                        wait_s=0.01)
+    agent.decide("bus 1", "old", once=True)  # times out at once; its answer still being asked
+    agent.reset()
+    agent.wait_s = 2
+    assert agent.decide("bus 1", "new", once=True) is True and not agent.fell_back("bus 1")
+    release.set()
+    agent.close()
 
 
 def test_tsp_looks_ahead_on_copies_of_the_run_when_asked_to():
@@ -550,6 +599,28 @@ def test_no_priority_for_a_bus_whose_exit_lane_is_full():
     assert not here._room(request) and here._gate(request, here.controller) is False  # refused, whatever the agent
     assert here.controller.log[-1][1] == "BLOCKED" and here.controller.log[-1][2]["phase"] == request.phase_id
     module.tsp_agent.decisions.clear()
+    # check-in: within the distance OR held in a queue further out; once in, in until it leaves the arm
+    arm, t = next(iter(here.x)), here.now + 1
+    far = here.x[arm] + 100
+    car = {"id": "car", "type": "Car", "distance_m": far - 8, "speed_kmh": 0.0, "lane": 0}
+
+    def detect(*vehicles):
+        view = {**here.view, "crossing": [], "arms": {name: {**info, "approaching": list(vehicles) if name == arm else []}
+                                                      for name, info in here.view["arms"].items()}}
+        here._detect(view, t)
+
+    detect(car, {"id": "far bus", "type": "Bus", "distance_m": far, "speed_kmh": 30.0, "lane": 0})
+    assert "far bus" not in here.checked_in  # out of reach and moving: not yet
+    detect(car, {"id": "far bus", "type": "Bus", "distance_m": far, "speed_kmh": 2.0, "lane": 0})
+    assert "far bus" in here.checked_in  # held in the queue behind the car: in
+    detect({"id": "far bus", "type": "Bus", "distance_m": far - 20, "speed_kmh": 30.0, "lane": 0})
+    assert "far bus" in here.checked_in  # the queue moves on, still out of reach: stays in
+    detect()
+    assert "far bus" not in here.checked_in  # left the arm: out
+    devl = next(extension for extension in panel.extensions if extension.path.name == "dynamic_emergency_lane.py").module
+    queued = {"speed_kmh": 2.0, "lane": 0}
+    assert devl.in_queue(queued, [{"lane": 0}]) and not devl.in_queue(queued, [{"lane": 1}])  # behind one in its lane
+    assert not devl.in_queue({"speed_kmh": 30.0, "lane": 0}, [{"lane": 0}])  # moving: not queued
 
 
 def test_what_came_of_each_request():
@@ -731,7 +802,7 @@ def test_devl_clears_the_kerbside_lane_for_an_emergency_vehicle_and_flashes_its_
         "1,1": [("1W", 0)], "2,1": [("1,1-2,1", 0)], "3,1": [("2,1-3,1", 0)]}
     report = module.report(None)
     summary = dict(row for row in report["sheets"][0][1][1:])
-    assert summary["Lanes cleared"] == 3 and summary["Decided by nobody (the rule)"] == 3
+    assert summary["Lanes cleared"] == 3 and summary["Decided by nobody (a baseline's rule)"] == 3
     assert report["measures"]["devl_cleared"] == 3 and report["files"][0][0] == "devl telemetry.jsonl"
     feed = [json.loads(line) for line in report["files"][0][1].splitlines()]
     assert feed[0]["schema"] == "acms-devl-telemetry/1" and feed[0]["emergency_vehicle"]["eta_s"] > 0
@@ -766,7 +837,9 @@ def test_devl_asks_the_agent_once_per_junction_and_clears_only_on_true():
         return ask(question)
 
     for agent, cleared in ((SignalAgent(ask, wait_s=5), {"2,1", "3,1"}),
-                           (SignalAgent(None), {"1,1", "2,1", "3,1"}),  # No LLM: the rule
+                           (SignalAgent(None), {"1,1", "2,1", "3,1"}),  # nobody to ask: the rule
+                           (SignalAgent(None, rule=True), {"1,1", "2,1", "3,1"}),  # Always preempt
+                           (SignalAgent(None, rule=False), set()),  # Never preempt: general traffic
                            (SignalAgent(slow, deadline_s=0.5), set())):  # every answer too late: the plan
         simulation, run, log = devl_run(network, module, agent, demand=[])
         assert {junction for junction, here in run.junctions.items() if here.cleared} == cleared, agent
@@ -895,8 +968,23 @@ def test_signal_overrides_act_inside_the_signals_and_errors_switch_them_off():
         while simulation.time < 10:
             simulation.step()  # raises from 5 s: dropped at once, the run carries on
         assert [extension for extension, _ in overrides.calls] == [force] and len(overrides.failed) == 1
-        panel.fail(*overrides.failed.pop())
+        assert panel.report_failures() == [broken.name]  # any run's, live or headless (a batch's): switched off
         assert not broken.on and broken.error == "Switched off: Line 3: ZeroDivisionError: division by zero"
+        assert panel.report_failures() == []  # reported once
+        dropped = [sheet for report in panel.reports(overrides) for sheet in report.get("sheets", [])
+                   if sheet[0] == "Extensions dropped"]
+        assert dropped and dropped[0][1][1] == [broken.name, broken.error[len("Switched off: "):]]  # its workbook says so
+
+
+def test_a_dropped_signal_override_leaves_no_lane_behind():
+    from traffic_simulator.extensions import Extension, SignalOverrides
+
+    def made(name, returns):
+        return Extension(Path(name + ".py"), SimpleNamespace(signal_override=lambda *args: returns), on=True)
+
+    bad, good = made("bad", ("INVALID", {0: "G"})), made("good", ("Y", {1: "G"}))
+    assert SignalOverrides([bad, good], None)("1,1", "N", "R", {}) == ("Y", {1: "G"})  # the bad one: no effect
+    assert SignalOverrides([good, bad], None)("1,1", "N", "R", {}) == ("Y", {1: "G"})
 
 
 def test_the_signal_agent_never_waits():

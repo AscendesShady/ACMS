@@ -1,10 +1,11 @@
 # 8. Tests
 
 Plain `assert` functions, run with `python tests/test_x.py` or all at once in `run_monitor.py`:
-- `test_simulation.py`: an emergency vehicle dispatched two and a half minutes later; an emergency vehicle obeying red, but going on its arm's kerbside lane green from whichever lane it is in (not on that lane's amber); a lane obeying its own signal (an override's lane state: only the kerbside lane goes through, on either driving side, lane 0) and emergency vehicles keeping to that lane before each signal; emergency vehicles dispatched from an end or a junction, once or every minute, an impossible route refused; junction saturation by control (roundabout entry capacity, falling with circulating
+- `test_simulation.py`: a reaction time of 0.1 s with no standstill gap running into a car standing at red, counted in `collisions` (none at τ = DT); a car at 50 km/h 5 m behind a standing one slowing by no more than 9 m/s² a step, each harder step than 4.5 m/s² recorded as emergency braking with its road, and the collision it can't avoid counted as same lane; the ballistic update moving (v + v′)/2·Δt and only to the stop point when it stops within the step (Euler v′·Δt), its safe speed never hitting a standing leader, a 0.3 s step or an unknown method refused; the same seed at 0.5 and 0.25 s clearing about the same traffic through a signal (within 5 %), and a 0.1 s step's clock exact; two vehicles over a crossing point at once a crossing collision at that junction, short of it or clear of it not; a car inserted 10 m from a red stop line on a 120 km/h road braking no harder than comfortable, and one inserted 2.5 m behind a car at 50 km/h keeping the secure gap; a 10 m radius bend edited to 50 km/h capping its lane at 15 km/h (a 1 m radius under 10 km/h, no floor); the audit's roundabout (seed 19, four straight movements at 180 veh/h, σ 0) braking no harder than 9 m/s², with no collision; an emergency vehicle dispatched two and a half minutes later; an emergency vehicle obeying red, but going on its arm's kerbside lane green from whichever lane it is in (not on that lane's amber); a lane obeying its own signal (an override's lane state: only the kerbside lane goes through, on either driving side, lane 0) and emergency vehicles keeping to that lane before each signal; emergency vehicles dispatched from an end or a junction, once or every minute, an impossible route refused; junction saturation by control (roundabout entry capacity, falling with circulating
   traffic; a priority junction's minor arm against its major flows; a signal's arm lane by lane, turns slower);
   the give-way capacities re-measured on the simulated drivers (a minor arm and a roundabout entry held
-  saturated, within 10 % of the tables); vehicles made from their type; Krauss stopping behind a standing leader;
+  saturated, within 10 % of the tables); a single-lane roundabout entry held saturated against 0 and 800 veh/h
+  circulating within 15 % of the HCM 6 entry capacity; vehicles made from their type; Krauss stopping behind a standing leader;
   SUMO's speed factors (mean 1, deviation 0.1, about 95 % within 0.8–1.2, none below 0.2) and free
   speeds (a bicycle at its desired 20 km/h); the timing methods calibrated to the simulated drivers
   (an hour of a standing queue by the HCM's field method: saturation flow within 4 %, start-up lost
@@ -12,10 +13,14 @@ Plain `assert` functions, run with `python tests/test_x.py` or all at once in `r
   none of the queue held at the line by the vehicle ahead of it;
   lanes on the driving side and cut at stop lines; arrival patterns' means and variances (Random
   exact, binomial < Poisson < negative binomial); spawn totals and bus headways; daily demand
-  following its curve; 20 minutes of busy traffic through signals, a roundabout and an uncontrolled
-  junction: no entry on red and no overlaps; the physics side-neutral (a network and its mirror image
+  following its curve; hourly demand at PHF 0.5 counting 240 arrivals in the hour's second 15 minutes and 80 in
+  each other (V/PHF), a daily pair taking no PHF; route costs counting junction delay once (each move's prior
+  r²/2C at a signal at its entered greens, 3600/c + 5 s for a give-way move, none for the major road's straight
+  and kerb moves; a measured move time used alone, else the link's, never both; a run's per-move traversals
+  adding up to each link's); 20 minutes of busy traffic through signals, a roundabout and an uncontrolled
+  junction: no entry on red, no overlaps and no collision counted (same lane or crossing); the physics side-neutral (a network and its mirror image
   driven on the other side, demand and junctions mirrored, clearing the same traffic within 7 % over
-  two seeds, while the same demand on the other side, a different turn mix, clears over 15 % more);
+  two seeds, and its routes making the same turns, while the same demand on the other side makes others);
   two-phase signals with no offside turns and their
   detours (straight on and U-turn back, the kerb-side fallback by a boundary end, mirrored driving on
   the right, a four-phase junction keeping its turn) and each lane's reach along the route; 20
@@ -24,12 +29,15 @@ Plain `assert` functions, run with `python tests/test_x.py` or all at once in `r
   no lane change undone, some U-turns clearing on amber, nobody stuck; no lane changes
   where roads forbid them; each vehicle's next landmark (slip road, signal, roundabout, in route order)
   closing in as it drives, and in `read_traffic`; Webster's
-  cycle and greens against hand-worked numbers, the busy phase getting the long green and the run
+  cycle and greens against hand-worked numbers, the busy phase getting the long green (the other its minimum, inside
+  Webster's cycle); a driver at the amber's onset 28 m from the line at 50 km/h going on
+  (it can't stop after reacting), and stopping once it has seen the amber a second; the run
   using the plan, Fixed time keeping its greens; the runner keeping real time on its thread,
   pausing and changing speed; the window's Run (Webster note in the junction editor), live signal
   heads, `read_traffic` data, a demand edit and its undo carrying the run on, and a network edit
   stopping it; demand handed to a run under way: from the next minute, a removed pair's flow and bus
   timetable stopping, a new pair's starting, a pair with no route listed.
+- `test_simulation.py` also, lateral position (`Simulation(lateral=)`): off, a fixed-seed mixed run (motorcycles among the types) bit for bit as before it existed (a SHA-256 digest of every position, speed, pose and count, taken then; change it only for a deliberate change to the default model), and on with no type filtering the same traffic (only drawn at the kerb side); five cars queued at a red and three motorcycles behind them moving sideways no faster than 1 m/s a second, staying in their lane, passing the queue at 30 km/h at most, at the stop line by the end of the red and through before the third car (without it, last), no collision; two motorcycles side by side in a lane no collision, overlapping sideways one (without lateral position, side by side is one), drawn apart by their offsets and `read_traffic` giving `lateral_m`; a car stopping behind a motorcycle at a red that it overlaps sideways, and coming up beside one at the lane's far side.
 - `test_bus_stops.py`: a stop placed mid-way and clamped clear of the junctions (a roundabout's
   circle too), followed through reversal, one-way, a split and deletion; each new stop in the middle
   of the longest free stretch, at a road end when only the ends have room, and refused with nothing
@@ -44,7 +52,9 @@ Plain `assert` functions, run with `python tests/test_x.py` or all at once in `r
   a second stop placed clear of the first.
 - `test_signal_timing.py`: Robertson's dispersion (the recurrence, every vehicle kept); the cyclic
   queue against the hand-worked uniform delay q·r²/2(1 − q/s), stops and over capacity; the HCM delay
-  against a hand calculation; greens filling a cycle with their minimums; SCATS's DS, its cycle rising
+  against a hand calculation; greens filling a cycle with their minimums; Webster's minimum greens inside its 120 s cap
+  (0.94 against 0: 120 s, not 127.4) and an impossible minimum cycle refused; each junction's ITE amber and all-red
+  (3.3 + 2.0 s at 50 km/h, 6 s amber at most) run by its signal; SCATS's DS, its cycle rising
   by at most 6 s a cycle under saturation and falling under target, a split plan chosen on its second
   vote; SCOOT's split moving 4 s to the busier phase (1 s stored), its cycle up 4 s over target and
   down 8 s under it; realigning to an offset; TRANSYT on a four-junction corridor (one cycle, a better
@@ -59,6 +69,23 @@ Plain `assert` functions, run with `python tests/test_x.py` or all at once in `r
   timing (every junction, added ones, saved, an unknown method refused),
   drag, end naming (1.5E), signal validation, crossings, splits.
 - `test_geometry.py`: polyline primitives, including the nearest point along a line.
+- Overlap and ordering fixes, each test failing on the old code: `test_project.py` (Open starts its own undo
+  history), `test_simulation.py` (a live run drives its own copy: an edit that stops it leaves its results
+  describing the network it ran), `test_mode_behavior.py` (Undo with a name half typed, the window active:
+  no rename, Redo still there), `test_extensions.py` (`report_failures` switching a failed override off once,
+  its run's Extensions dropped sheet), `test_background.py` (four threads loading one PDF page: rendered once,
+  the same image), `test_activity.py` (the eye clicked: logged once each way), `test_extensions.py` (Stop then
+  Run at once: TSP's and DEVL's state new, the agent's reset telling them), `test_simulation.py` (a speed change
+  mid-run carrying on from where the run stands).
+- Failure-isolation fixes, each test failing on the old code: `test_selection.py` (a refused road edit, lanes,
+  reversal and a zero speed: the same network as the history's, no undo step), `test_extensions.py` (a dropped
+  signal override, before or after a valid one, leaving no lane behind), `test_ai_mode.py` (a tool call queued
+  before Stop answered, never run), `test_project.py` (a conversation with `messages: null` refusing Open with
+  the network, path, history and conversation as they were).
+- `test_busy.py`: while a test runs, Run and Play off with "Busy: Batch run", Play not starting a run, a second
+  test refused naming the first, Batch Run's Start waiting with the reason, all back after; a live run refusing a
+  test; closing mid-test stopping the test, its caller getting the result, then the window closing; Stop during
+  an applied edit leaving it applied, the assistant not thinking and a newer card unanswered.
 - `test_gpu.py`: CPU stand-ins told from GPUs; without OpenGL QPainter drawing the vehicles (half way, turned)
   and the offscreen view not asking; and in a child process on the Windows display driver, drawing into a
   hidden framebuffer (headless): the renderer a real GPU; the vehicles from one instanced draw where they
@@ -66,7 +93,12 @@ Plain `assert` functions, run with `python tests/test_x.py` or all at once in `r
   again); 5,000 vehicles sent once and each display frame under 2 ms (0.03 ms here) and over 20× faster
   than QPainter; and the editor itself, never put on screen, running traffic at 10×: an OpenGL viewport,
   every display frame's vehicles through the GPU (about 60 a second), each physics frame sent once, and
-  the physics keeping over 8× of 10×. It fails on a PC without a usable GPU.
+  the physics keeping over 8× of 10×, then Power Saver: a new OpenGL viewport with no multisampling
+  (GL_SAMPLES 0, then 4 again), about 30 frames a second. It fails on a PC without a usable GPU. Offscreen too: a
+  run caches the still layer (the view in CacheBackground, its items not painting yet still clicked, the
+  lamps live) with the same picture as edit mode, the next frame not drawing it again, zooming, an edit
+  mid-run and an extension's item all shown, and edit mode back after the run; Power Saver's button
+  doubling the clock's step and back.
 - `test_selection.py`: a line meeting a box (through it, from inside, across a corner, passing by);
   a window taking only the junction inside it and a crossing box its four roads too, a bus stop's bay
   by window and by crossing, and everything boxed deleted to an empty, valid network; and in the
@@ -75,7 +107,18 @@ Plain `assert` functions, run with `python tests/test_x.py` or all at once in `r
   box while Add Node is on (its click still places a node); Ctrl+clicking roads in and out of the
   selection, Add Slip Road shown only for two roads meeting at a junction, its menu (Single lane, Two
   lanes) building a single-lane slip road, undone in one step; its junction made a roundabout in the
-  Edit tab moving it out.
+  Edit tab moving it out. A turn pocket set in the panel ("Pocket to 2,2" and "to 1,2" rows, Apply only once
+  changed): saved on the road, its widened carriageway drawn, one undo step taking both away; one on a road
+  with lane changing switched off refused with a message, the road as it was.
+- Turn pockets: `test_models.py` (each refusal: too long, bad lanes or side, at a boundary end or a
+  roundabout, no lane changing, at an end the traffic leaves, too short for both, beside a bus bay; reversing,
+  splitting and the driving side keeping each at its end; saved and loaded, an older file without them
+  opening); `test_simulation.py` (the pocket's lanes where the map draws them on both driving sides, an
+  offside pocket's lanes moved over, the turns each lane takes, its lane loads in the signal timing; turners
+  only in the pocket and only past where it opens, at least 90 % turning from it, the rest arriving; a 15 m
+  offside pocket at a priority T full against heavy oncoming traffic, the next turner stopped short of it in
+  the through lane with straight-on traffic stopped behind it); `test_network_tools.py` (`update_roads` setting,
+  refusing, dropping on one-way and removing a pocket).
 - `test_background.py` (no test reaches the internet; a stand-in answers for Nominatim): place search by
   its usage policy (the tiles' User-Agent, the URL, the pole left out, the cache, nothing found, an
   unreadable answer, offline, at least a second between requests) and in the window (one place under the
@@ -116,15 +159,18 @@ Plain `assert` functions, run with `python tests/test_x.py` or all at once in `r
   lanes, speed and bridges, both ways) and back, the records saved, loaded and validated; and 20
   minutes of traffic through a flipped trumpet: no overlaps, and arrivals within 5 % of a trumpet
   built for that side. A slip road on either driving side, one lane or two, from the roads in either order: one-way,
-  between two uncontrolled nodes, on the fastest route, entered and left only from the kerbside lane,
+  between two uncontrolled nodes, a curve tangent to both roads (no kink, longer than its chord), on the fastest route, entered and left only from the kerbside lane,
   carrying traffic; refused (nothing changed) straight on, for roads that don't meet, and with no room;
   a two-way road refused as single-lane. A slip road moved out once when its junction becomes a
   roundabout (40 m of lane to the give-way line, all of it outside the circle), and 30 minutes of four
   flows through roundabout and slip each arriving near their rate; refused, changing nothing, on roads
   too short for it.
-- `test_roundabouts.py`: categories, diameters and circulating speed.
+- `test_roundabouts.py`: categories, diameters and circulating speed; four entry lanes refused (by the design, by
+  `set_junction_control` and `Network.validate`, changing nothing; by `build_edge` at a crossing before any road changes);
+  the HCM 6 entry capacity (Eq 22-1 at 0 and 1,000 veh/h, Eq 22-4 for two lanes, none for three).
 - `test_history.py`: undo/redo and merging.
-- `test_theme.py`: contrast of every text/background pair.
+- `test_theme.py`: contrast of every text/background pair; a click lighting a plain, primary and mini button
+  (PRESSED at once, back after FLASH_MS), one flash filter however many windows.
 - `test_create_tab.py`: the two sections opening and closing (Generate Network open at start, road settings,
   signal timing and grid size in it); the chosen signal timing kept as the network's default, reaching a new
   junction and every junction of a generated grid, undo restoring it; the driving
@@ -153,14 +199,14 @@ Plain `assert` functions, run with `python tests/test_x.py` or all at once in `r
   and saying where it saved, no model picked refusing Start, the ticks set by `set_settings` (off: plain runs
   again); the tab's order (Batch Run, TSP, DEVL, Dispatch); TSP and DEVL alike: System 1 / System 2 / Multiple,
   Model listing System 1's models then System 2's and set by label, a long Models list showing 10 rows and scrolling, its first and last both ticked by a click each (not toggled back by the release), a double click two toggles, the list closing at once, Multiple showing Models (listing the agents but
-  No LLM, ticked by label in any case, an unlisted one refused), the 1–280 s slider, Pace, Runs at once and Times
+  the two baselines, ticked by label in any case, an unlisted one refused), the 1–280 s slider, Pace, Runs at once and Times
   each, all set by `set_settings` as the assistant does, and `batch_settings()` giving them; TSP's picked model in
   its questions' `choice`; DEVL all off with no emergency vehicle; TSP handing the run
   no override while unticked; ticked with nothing granted, the run the plain run, signal for signal and vehicle
   for vehicle (the plan kept); with TRUE written at one junction for 15 min: no red entries, no failures,
   check-ins and check-outs, holds or truncations there only, the others never leaving their plans, every
   junction on its plan showing it exactly, and each priority episode back on the plan within two cycles of
-  its last bus; a full exit lane refusing a TRUE (BLOCKED, logged with its phase); each request's outcome from
+  its last bus; a full exit lane refusing a TRUE (BLOCKED, logged with its phase); a bus checking in within the distance or held in a queue further out (not while moving out there), staying in as the queue moves on, out once it leaves the arm, and DEVL's `in_queue`; each request's outcome from
   its answer and the controller's log (served, not needed, blocked, not feasible, refused, rejected, fell
   back, too late, withdrawn, no answer); with a waiting
   agent for System 1 and then System 2: one question per bus request, both reading the junction's JSON
@@ -179,15 +225,16 @@ Plain `assert` functions, run with `python tests/test_x.py` or all at once in `r
   signals with traffic checking in at each in turn and getting through, each junction clearing only the
   kerbside lane of its arm, every other arm red, green then amber then the plan; its DEVL sheet, measures and
   telemetry feed; the lane signal flashing while cleared, dark otherwise); DEVL's agent asked once per junction
-  (FALSE at the first: only the others cleared; No LLM: the rule, all three; answers past the deadline: none, fell
+  (FALSE at the first: only the others cleared; nobody to ask and Always preempt: the rule, all three; Never preempt: none; answers past the deadline: none, fell
   back), its telemetry and both systems' forms, and its DEVL decisions sheet; Dispatch Emergency Vehicle's schedules (Random small and flat, never picking the
   other end, Dispatch Selected sending none unticked and the ticked one, + adding a row, Dispatch Fleet sending none
   when one can't go, then each on its frequency, After sending one later, − deleting the ticked row; Random Emergency: the same seed the same vehicle, another seed another, never a pair
   that can't go, and why not when nothing can); an override really changing the signals
   vehicles obey, FALSE restoring the plans, and a raising one dropped and switched off with its line;
   the signal agent never waiting, not asking the same question twice, FALSE on errors or with no model.
-- `test_mode_behavior.py`: only a timetabled type has a headway (Bus yes, Car and Bike refused, `timetabled`
-  set and cleared by `update`; Add asks whether to keep one); a clicked type showing its headway (typed straight in,
+- `test_mode_behavior.py`: emergency braking by SUMO's class (car 9, bus, bicycle and truck 7 m/s²), comfortable braking above it refused by `update` and in a saved project, an older type given its class's; only a timetabled type has a headway (Bus yes, Car and Bike refused, `timetabled`
+  set and cleared by `update`; Add asks whether to keep one); a reaction time under the 0.5 s step refused, saying
+  why (0.5 s accepted); a clicked type showing its headway (typed straight in,
   no "No timetable" text; hidden for a bike), PCU (defaults 2 / 1 / 0.2, out of range refused, one undo step) and occupancy; the assistant's vehicle types: listed, bad ones refused before asking (a name taken,
   an unknown kind, a headway too long, over 8 types) with none added, a tram on a timetable and a truck made
   with SUMO's defaults and their occupancies, one undo step for both; shares handed on in proportion, the slider with four types, types
@@ -195,12 +242,18 @@ Plain `assert` functions, run with `python tests/test_x.py` or all at once in `r
   a headway fixing the bus share (flows typed digit by digit, the locked handle, other shares and
   more flow moving only Car and Bike); the tab order and names; undo and redo of a deleted type
   and of a headway.
+- `test_mode_behavior.py` also: `filters` true for a type made as a motorcycle, moped or bicycle (and the default Bike), false for a car, bus or van; a vehicle filtering only if narrow enough (a 1.5 m wide motorcycle not); `update` setting it, refusing anything but true or false; kept through a saved type, one saved before it taking it from its class, and a saved one that isn't true or false refused.
+- `test_experiments.py` also: a batch going seed by seed (both baselines on seed 1 before seed 2) with its workbook saved after every run, a batch stopped after two of four keeping them ("Runs finished 2 of 4", no "(saving)" file left); the eye, the Research Log and a batch each leaving a dated folder (the batch a
+  Research Log step with its workbooks' checksums and no picture, since nothing changed); a DEVL batch's Comparison labelling emergency travel time (s) and arrivals; a batch's run drawn on the map while Show runs on map is on (vehicles), none when
+  it's off, the map cleared after; the Seed box named beside it and given way to "Overridden" while Batch Run is ticked.
+- `test_experiments.py` also: lateral position as a run setting: a scenario's `lateral` (kept under a condition, set by a factor's level, refused unless true or false), `run_headless(lateral=True)` placing vehicles off their lanes' centre lines, the assistant's run_simulation refusing a lateral that isn't true or false and saying "on" on the workbook's Run sheet.
 - `test_project.py`: the Seed box seeding the run and recorded; a project saved (asked where first, then
   Ctrl+S to its file) and opened with its hourly and daily pairs and curves, four vehicle types with a
-  headway, a roundabout, seed, speed and the demand shown; bad parts refused by name (seed, same ends,
-  colour, pattern, a negative flow) with nothing changed; an older network-only file opening with no
+  headway, a roundabout, seed, speed, an hourly pair's peak-hour factor and the demand shown; bad parts refused by
+  name (seed, same ends, colour, pattern, negative quarters, a negative flow) with nothing changed; an older network-only file opening with no
   demand and the default types; unsaved changes in the title and asked about before closing (Cancel stays,
   Discard closes).
+- `test_project.py` also: a type's `filters` (Bike's switched off) kept through Save and Open.
 - `test_results.py`: the Excel writer (numbers stay numbers, text escaped, control characters dropped,
   sheet names made legal); wait time from hand-made frames (a bus in its bay not waiting, at 0.05 m/s
   waiting), passenger delay as delay × occupancy, the mean queue over the samples, the workbook named by
@@ -217,11 +270,43 @@ Plain `assert` functions, run with `python tests/test_x.py` or all at once in `r
   results before a run, the Results page running, Export mid-run (the run carrying on), Stop saving the
   workbook in the results folder and the page showing the last run and its path. (Checked by hand too:
   the workbook opens in Excel 16, its sums matching.)
+- Every run ends in a workbook (audit 2026-10-07 SE-04, 05, 06, 08, 09, 10): `test_results.py` (sheet names
+  colliding by length, case and a taken " 2" all written apart; a live run stopped before its first sample,
+  one whose extensions' reports raise, one whose physics raises (the next display frame ends it) and one
+  stopped mid-step (nothing written until the step ends, the window carrying on) each leaving a workbook,
+  Incomplete saying why), `test_experiments.py` (a headless run whose run or analysis raises still leaving its
+  workbook, its error going on up), `test_simulation.py` (a Runner whose step raises: not running, its
+  error said, Play refused; `stop` False while a step is still going, no step after it; a frame's plans its
+  own, the default read-only), `test_extensions.py` (a new run's question for a key the last run is still
+  asking answered at once) and `test_models.py` (NaN, ±infinity and True refused in coordinates, flows,
+  greens, cycle limits, lengths, speeds, shape, curvature, dwell, the background and the network's defaults;
+  a file with NaN refused).
+- Random streams, exact trip times and the warm-up (theory gap report 2026-10-11, steps 1, 2 and 6):
+  `test_simulation.py` (a pair's departures, types and speed factors, its bus timetable too, the same on the same
+  seed when another pair's road is slowed and a pair is added; fails with one shared stream),
+  `test_results.py` (each trip's departed, arrived and trip time equal its insert and exit seen step by step, not
+  whole 5 s samples; its system travel time at least its trip time; the completion rate and unfinished share of
+  what was spawned; a 5 min warm-up of a 10 min run: distance and time counted only after it, throughput over the
+  measured hours, only trips that entered after it, Per minute rows for the whole run, Measured from on the Run and
+  Summary sheets), `test_stats.py` (the buffer index, mean-based: nine free trips and one at 3× free give 0.75),
+  `test_experiments.py` (run_simulation's headline with the buffer index, unfinished share and system travel
+  time; a warm-up as long as the run refused; `measure_from_min` reaching the run's KPIs).
+- Measuring by each vehicle and its passengers (audit 2026-10-07 TE-05 to 09): `test_results.py` (a bicycle riding
+  freely at its own free speed: road-limit Delay, none against its own free speed; demand held off a 4 m entry
+  road: no delay on the road but the entry wait and the vehicles waiting, spawned = waiting + on the road +
+  arrived; a bus carrying 70 though its type assumes 20, stood 5 s mid-trip: 350 person-seconds before it
+  arrives, 70 people carried), `test_analysis.py` (control delay against the vehicle's own free-flow time, the
+  approach's for an older log; every traversal logged with it), `test_bus_stops.py` (a bus's first stop
+  starting from its type's occupancy: all 20 alight, dwell door + 20 × 1.7 s; loads counted from the
+  occupancy; bus stops for a type whose vehicle_class is bus, called City Bus, none for one called Bus made
+  as a coach) and `test_mode_behavior.py` (vehicle_class kept through a rename, set by create's kind, changed
+  by update, an unknown one refused there and in a saved project; an older type named Bus inferred a bus).
 - `test_summary.py`: the Network page (layout, flows, linked design-check problems), the Demand page
   (totals, chart data, OD vs ends check, busiest pairs) and the AI Usage page (requests, tokens,
   local memory).
 - `test_daily_profile.py`: the free curve through its points without overshoot, hourly shares,
-  polynomial fits and conversions.
+  polynomial fits and conversions; a peak-hour factor's quarters (PHF = V/4·V15 back from them, the peak in the
+  second quarter, the rest even, 1 even, HCM 2000's 4,300/4,800 example) and bad quarters or PHFs refused.
 - `test_institutions.py`: where a building can stand (a road, its verge, a roundabout, another
   building, clear ground) and refusals changing nothing; placing as move, click (refused on a road),
   scroll (the links it reaches, never inside its walls), click; trips by shift (students, residents both
@@ -239,7 +324,8 @@ Plain `assert` functions, run with `python tests/test_x.py` or all at once in `r
   types, an observed 30 % by car calibrated, a mode left out, Apply setting the split, undone), institution_mode_split
   checked then applied, a Run's demand holding its trips, undo and redo, Delete and Esc.
 - `test_od_matrix.py`: demand tools saying which demand a Run uses (and when they switched it), demand left
-  out meaning the kind shown, a pattern alone for an empty pair refused, a check that tries and puts back,
+  out meaning the kind shown, hourly demand's PHF box and set_od_demand's peak_hour_factor or quarters (read back
+  by read_od_matrix; out of range, not four, daily or for a pair with no hourly demand refused; hidden for daily), a pattern alone for an empty pair refused, a check that tries and puts back,
   the same values again refused; hourly and daily demand kept apart, switched by the Demand drop-down, which
   shows each one's options (Institutions its own panel), switching writes nothing; the grid zooming at the cursor (the same cell
   under it), panning by a right drag without selecting, Fit Grid leaving nothing to scroll, the zoom
@@ -285,6 +371,11 @@ Plain `assert` functions, run with `python tests/test_x.py` or all at once in `r
   Roads by minute, the analysis sheets, roads' bus stops and WKT shape; its GeoJSON with each direction's level of
   service; the network alone exported with WGS84 coordinates near the placed map; in the window, Export with no
   run saving the network and its GeoJSON.
+- `test_activity.py`: Watch my edits in the menu bar (a logger only, its name as tooltip, in a dated folder)
+  logging a click by the button's name, a number's final value once, a tab, a map selection, an edit's change,
+  Ctrl+Z's action and a password as "(hidden)", between its on and off lines, never the question box the app
+  cleared; each step's lines taken once; a Random pick logged once as "set" and a click's message as "shown",
+  never the clock; controls named and read as the user sees them. `test_research_log.py` also: a step's activity.csv.
 - `test_research_log.py`: against the real AI Mode panel and a fake Ollama, with Research Log ticked: the session folder named by its time and agent (Ollama small-3b,
   session.json's agent); a build step's folder (the prompt; the model's own Plan: line and the tools it was offered, no guided column; the
   build_scenario call applied, with its plan and result; the change list naming the grid and each pair's demand; a
@@ -311,10 +402,15 @@ Plain `assert` functions, run with `python tests/test_x.py` or all at once in `r
 - `test_ai_mode.py` also: the conversation loop's recoveries (a failed call not run again; a silent thinking model
   asked again without thinking; Ollama's unparsable tool call retried, then a nudge, then the app's note of what
   ran; a reply sent as an "answer" tool; 12 rounds ended with a note; a two-part request's second tool, named
-  in the model's own Plan: line but not called, asked for once, and its reason accepted if it says none is needed), the Plan: line read, the context size's
+  in the model's own Plan: line but not called, asked for once, and its reason accepted if it says none is needed;
+  a plan with nothing done reminded with a call required, once; every call refused ending the reply with the app's
+  note, on screen too; the app's ending note shown), the Plan: line read, the context size's
   steps. `test_network_tools.py` also: each request offered the tools its words point to (the requests guided mode
   got wrong; "busy" not a bus; a greeting gets the core only; a follow-up keeps the tools used; find_tools adding
-  bus stop tools), broken JSON lists repaired or refused saying where, a misspelt choice read.
+  bus stop tools; build_scenario only for a several-part request, the demand models only for their words, no
+  signal tools for a junction alone, population, how-to questions getting read_source, misspelt demand words), an
+  invented tool refused saying the app can't do it (tools named alike given only as options), broken JSON lists
+  repaired or refused saying where, a misspelt choice read.
 - `test_agent_tools.py`: route choice (one route when off, three shared by path-size logit, a slow link
   losing share faster at a higher θ, assign loading every alternative, bad settings refused, saved and
   loaded); an observed headless run (passages, link times, stop lines, bus arrivals; analyse_run's steady
@@ -329,8 +425,8 @@ Plain `assert` functions, run with `python tests/test_x.py` or all at once in `r
   Empirical Bayes; k-means finding three clusters, envelopes (a day inside its own, a shifted profile failing
   all four), Holt, MSER-5, batch means, Gini, nested logit reducing to logit and breaking IIA; the paired interval (clear on shared seeds,
   open with one), replications needed; the dispersion test telling the four arrival patterns apart; GEH and
-  the calibration scores, logit shares, the travel time and planning time indexes.
-- `test_experiments.py`: emergency vehicles joining a live run (none before it starts, unknown places and no route refused), System 1 off refusing a TSP batch, a batch with Test DEVL (a blank line refused; each run's Emergency vehicles sheet with every dispatch, arrivals and each run's random emergency vehicle from its seed, the same again on that seed; its DEVL decisions, No LLM's; an unknown DEVL model refused); the largest share of a demand that holds (the whole, then bisection; nothing held;
+  the calibration scores, logit shares, the travel time, planning time and buffer indexes.
+- `test_experiments.py`: emergency vehicles joining a live run (none before it starts, unknown places and no route refused), System 1 off refusing a TSP batch, a batch with Test DEVL (a blank line refused; each run's Emergency vehicles sheet with every dispatch, arrivals and each run's random emergency vehicle from its seed, the same again on that seed; its DEVL decisions, Always preempt's all TRUE and Never preempt's all FALSE with no lane cleared; an unknown DEVL model refused); the largest share of a demand that holds (the whole, then bisection; nothing held;
   stopped), daily demand at its busiest hour, a run telling a light demand that holds from one that piles up;
   the statistics (a mean's interval by Student's t, Welch's difference clear or
   not, one seed left open, seeds read from ranges, better or worse by the figure's direction; shared seeds
@@ -354,23 +450,31 @@ Plain `assert` functions, run with `python tests/test_x.py` or all at once in `r
   missing workbook.
 - `test_tooltips.py`: every tooltip in the window (widgets, tabs, actions, map items; the road, junction and
   end editors, hourly, daily and institution demand, each building kind, System 2's status) five words at most.
+- `test_ai_mode.py`: a reply that streams one event then goes silent fails at `STALL_TIMEOUT_S`, not the 600 s
+  start-up limit. `test_network_tools.py`: `read_source` `find` (every file, or one; lines with every word, then that
+  line read; no match says try fewer words; outside the project refused), a page `READ_LINES` long.
+- `test_ai_mode.py`: a long conversation cut to fit the context window (sent as it is when it fits; the
+  conversation itself unchanged; within the budget; the system prompt and latest message kept, saying what went;
+  older tool results a stub; every kept tool call with its result; one oversized result cut, its call kept).
 - `test_ai_mode.py`: Stop against a server gone quiet, before its reply starts and after one event (Cancelled
-  within 2 s, the server seeing each request dropped); a tool call written as text made (a tool offered, its arguments an object; others and
-  broken JSON ignored) and the answer carrying on; every tool's parameters sent to Gemini with only the schema keywords it accepts (the
+  within 2 s, the server seeing each request dropped); a tool call written as text made (a tool offered, its arguments an object, or
+  one shaped as a call naming a tool that doesn't exist, so it is refused; a bare name and broken JSON ignored) and
+  the answer carrying on; a call required as Gemini's mode ANY and xAI's tool_choice (a name not offered dropped);
+  the system prompt with the index and README_NOTE for a model with tools, README in full without; every tool's parameters sent to Gemini with only the schema keywords it accepts (the
   build_scenario form's structure kept, its strictness kept for the others); the guard (decide_tsp booleans and the words true/false accepted, "maybe", a missing
   activate, "call decide_tsp: activate true" and "It is not true that…" rejected as text, a bare TRUE accepted;
   System 1's P(yes) outside 0–1 or not a number, for any of its questions, rejected; TRUE only when all
   are yes, the lowest its P(yes), each in its reason); a batch in the window with Test TSP (TSP not ticked;
   Grok listed with its usual model once its key is on the PC; no model, only the baseline or an unknown one
   refused; the baseline added, first), paced at 60× (taking the clock time it should;
-  fake Laya, and fake Ollama calling decide_tsp(activate=true) with a reason): agents listed (No LLM,
-  System 1: Laya, System 2's models), no agent or an unknown one refused before anything runs, 2 seeds × 3
-  agents giving 6 runs, TSP's choice put back, the batch workbook's sheets, Headline and Agents, each run's
-  workbook named by seed and model with its TSP sheet (Laya's TRUE, No LLM's none), deadline and pace, 4 at once
+  fake Laya, and fake Ollama calling decide_tsp(activate=true) with a reason): agents listed (Never then Always preempt,
+  System 1: Laya, System 2's models), no agent or an unknown one refused before anything runs, 2 seeds × 4
+  agents giving 8 runs, TSP's choice put back, the batch workbook's sheets, Headline and Agents, each run's
+  workbook named by seed and model with its TSP sheet (Laya's TRUE, Never preempt's none, Always preempt's some), deadline and pace, 4 at once
   taking about a third of the time one after another would, each run's pace achieved and falling behind said,
-  No LLM's runs side by side giving what they give alone (each run its own state), the
+  Never preempt's runs side by side giving what they give alone (each run its own state), the
   telemetry Laya read, the telemetry.jsonl beside it, System 2's answers by the tool with its reason, and plain
-  each decision in the feed with what the agent reported; Laya's, llama's and No LLM's seed-1 runs replayed from
+  each decision in the feed with what the agent reported; Laya's, llama's and both baselines' seed-1 runs replayed from
   their feeds the same as they ran (Summary, every trip, and each decision's answer, model, outcome and guard),
   a run with no feed refused; plain runs once TSP is unticked; each provider's streamed thinking kept apart from its answer; Export History as
   Markdown and JSON (the chat, the editor updates, tool calls and results, the thinking, the journal);
@@ -383,13 +487,14 @@ Plain `assert` functions, run with `python tests/test_x.py` or all at once in `r
   and the real System 2 panel (offscreen, fake Ollama):
   - warm-up gate;
   - editor updates and selection;
-  - watch mode;
+  - the menu bar's eye logging only (an edit sends the model nothing);
   - restore and clear.
 - `test_docs.py`: the ARCHITECTURE.md index at most 150 lines, every module in its module map, every
-  linked doc present, and the warm-up sending the index, not the module files.
+  linked doc present, and the warm-up sending the index, not the module files (nor README to a model with tools).
 - `test_analysis.py`: the fuel model's published figures (idle α, cruising and accelerating rates) and only light
   motor vehicles counted; the HCM tables (LOS thresholds, arrival types, f_PA); junction LOS on a real run (every
-  signalised approach graded, delay without the junction's crossing time, 15-minute periods); a signal's diagnosis
+  signalised approach graded, delay without the junction's crossing time, 15-minute periods); a roundabout's entries
+  with their circulating flow, simulated capacity, v/c and the HCM 6 capacity beside it; a signal's diagnosis
   (flow ratios, Xc, PF, HCM delay against simulated, causes with their fixes; an overloaded signal over capacity);
   a run's CO2 by type and road; run health (gridlock, vehicles unable to enter, no route); slow links only where no
   signal explains them; invariants (a starved arm, an emergency vehicle held, agent errors, a clean run passing);
@@ -413,3 +518,9 @@ Plain `assert` functions, run with `python tests/test_x.py` or all at once in `r
   (TSP looking ahead on copies of the run when asked); `test_transit_signal_priority.py` (the person-delay
   estimate weighing passengers against the cross streets); `test_signal_timing.py` (every method, actuated and
   max-pressure among them, running the traffic safely); `test_network_tools.py` (the new tools pinned).
+
+- `test_prompt_campaign.py`: exact DOCX text and IDs, the confirmed 900-prompt order, refusal of malformed sequences and duplicate launches, multiple and reentrant Apply handling, and real Qt/log integration requiring automatic Apply for both prompt groups with a fake Ollama.
+
+- Campaign live update: retains the pending request, index and ledger, installs only the driver method, and refuses halted campaign recovery.
+
+The campaign Qt regression injects `KeyError("all")` into an approved scenario execution and checks that the pending worker receives an error and the next completion is recorded without resubmission.

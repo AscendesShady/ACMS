@@ -24,6 +24,28 @@ def test_shares_split_the_day():
     assert DailyProfile("poly", [], [-1.0]).shares() == [1 / HOURS] * HOURS  # zero all day: even
 
 
+def test_a_peak_hour_factor_shapes_the_hours_quarters():
+    from traffic_simulator.daily_profile import PEAK_QUARTER, phf_of, phf_quarters, quarter_shares
+    quarters = phf_quarters(0.8)
+    assert abs(sum(quarters) - 1) < 1e-12 and abs(phf_of(quarters) - 0.8) < 1e-12  # PHF = V / (4·V15)
+    assert quarters[PEAK_QUARTER] == max(quarters) and len(set(round(q, 12) for q in quarters)) == 2  # the rest even
+    assert phf_quarters(1) == () and phf_of(()) == 1 and phf_quarters(0.25)[PEAK_QUARTER] == 1  # even; all at once
+    assert quarter_shares([1000, 1200, 1100, 1000]) == (1000 / 4300, 1200 / 4300, 1100 / 4300, 1000 / 4300)
+    assert abs(phf_of(quarter_shares([1000, 1200, 1100, 1000])) - 4300 / 4800) < 1e-12  # HCM 2000's example
+    for bad in ([1, 2, 3], [1, -1, 1, 1], [0, 0, 0, 0], ["a"] * 4, None):
+        try:
+            quarter_shares(bad)
+        except ValueError:
+            continue
+        raise AssertionError(bad)
+    for bad in (0.2, 1.1):
+        try:
+            phf_quarters(bad)
+        except ValueError:
+            continue
+        raise AssertionError(bad)
+
+
 def test_polynomials_fit_and_convert():
     exact = [0.2, -1.0, 3.0, -1.5]  # a cubic
     samples = [(i / 50, sum(a * (i / 50) ** k for k, a in enumerate(exact))) for i in range(51)]

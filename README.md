@@ -107,9 +107,10 @@ of its tools, for when you describe a whole study.
 
 ### 4. Chat alongside the assistant
 
-After **Start**, the model warms up by reading this README and the [ARCHITECTURE.md](ARCHITECTURE.md) index
-(capabilities and a map of every module; it reads a module's file in `docs/architecture/` when it needs the detail); the question box unlocks once it's
-ready, and the status bar shows who's connected, e.g. **Llama is watching**.
+After **Start**, the model warms up by reading the [ARCHITECTURE.md](ARCHITECTURE.md) index
+(capabilities and a map of every module; it reads a module's file in `docs/architecture/`, or this README, when it
+needs the detail; a model that can't use tools reads this README up front); the question box unlocks once it's
+ready, and the status bar shows who's connected, e.g. **Llama is ready**.
 
 - Ask for demand by how busy it should be ("80 % saturated"): it sizes it from the junctions'
   capacity (signals, roundabouts, priority junctions, measured on the simulated drivers), or scales the
@@ -128,12 +129,17 @@ ready, and the status bar shows who's connected, e.g. **Llama is watching**.
   needs, which design holds up in rain, an incident or a busier peak (conditions, factorial designs), what a
   change is worth (benefit-cost), or for a design audit (Green Book sight lines, turning paths) and what
   residents can reach: each is a tool with its sources (docs/architecture/analysis.md, network_checks.md).
-- The row of icons under **Chat with** holds Start, Available Tools, **Rescan PC**, **Watch my edits**
-  (the eye: off by default; each look costs a request; comments after you pause editing),
+- The row of icons under **Chat with** holds Start, Available Tools, **Rescan PC**,
   **Export History…** (the arrow: saves the chat, everything the assistant observed and its thinking,
   as Markdown or JSON) and **Clear Conversation…** (the bin). Hover a
   button for its name.
 - The conversation is saved in the project file; **Clear Conversation…** forgets it.
+- **Watch my edits** (the eye in the menu bar, off by default) records everything you do while it's on: every
+  click, menu choice and shortcut, drop-down choice, text or number you enter (its final value), tab, map click
+  and selection, what each click fills in or shows (a Random pick, a message), and every change to the network,
+  demand and vehicle types, each with its time, in
+  `activity.csv` in a dated folder, `ACMS activity <date time>`, in Documents\ACMS results (and, with the Research Log on, in each step's
+  folder). It only records: the assistant never looks at your edits by itself, it answers when you ask.
 
 Local models need tool support to see or change the network (llama3.1, llama3.2, gemma4…;
 phi3 can't). Keep this README, ARCHITECTURE.md and `docs/` next to `src/` when copying the app.
@@ -196,15 +202,20 @@ the run observed (detectors, link travel times, queue discharge at signals, conf
 reliability). A **GeoJSON** of the network and its results is saved beside it for QGIS or any GIS (in latitude and
 longitude when the map is placed). Before any run, **Export** saves the network alone.
 
-**Batch Run** (Extensions tab) runs every seed × agent × time headless. Tick **Test TSP** (TSP needn't be
+**Batch Run** (Extensions tab) runs every seed × agent × time headless. While it goes, the menu bar's clock shows
+its run's time (hover it for each run by name; Never preempt is the baseline), the status bar how long is left, and the
+map draws that run's vehicles unless you switch off **Show runs on map** (the pin beside Start). Its seeds
+override the menu bar's (which reads **Overridden** while Batch Run is ticked). Tick **Test TSP** (TSP needn't be
 ticked in the tab), then pick any number of **Models** (a dropdown of ticks: Jev, Laya, your Ollama models,
-Grok and Gemini when their keys are saved); each is tested against the baseline, **No LLM** (the
-coordinated plan), which always runs too, seed by seed. **Decide within**
+Grok and Gemini when their keys are saved); each is tested against two baselines,
+**Never preempt** (general traffic: the coordinated plan) and **Always preempt** (every request granted), which
+always run too, seed by seed, so each model sits between the two ends. **Decide within**
 (1–280 simulated s) is each answer's deadline (missed: the plan), and **Pace** (1×, 2×, 5×, 10×) keeps the
-runs in step with the clock: they never pause, so a slow model pays for its latency (× the pace). **Runs at once** (1–8)
+runs where a model decides in step with the clock (the baselines, which wait for no one, run as fast as the
+computer allows): they never pause, so a slow model pays for its latency (× the pace). **Runs at once** (1–8)
 sets how many go side by side (never two on one model server, so none waits behind another's questions; each
 run records the pace it kept). Its workbook's **Headline** gives each agent's
-passenger throughput increase and its passenger delay, queue and wait time reductions against No LLM,
+passenger throughput increase and its passenger delay, queue and wait time reductions against Never preempt (Always preempt is listed beside them),
 with confidence intervals.
 
 Simulated time is the model's own clock (0.5 s a step): a run's results don't depend on how fast it went, except

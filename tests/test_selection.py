@@ -130,6 +130,70 @@ def test_ctrl_clicking_two_meeting_roads_offers_add_slip_road():
     window.close()
 
 
+def test_a_refused_road_edit_leaves_the_network_as_it_was():
+    from traffic_simulator.main import MainWindow
+
+    window = MainWindow()
+    window.install_network(generate_network(3, 4))
+    window._commit()
+    network, steps = window.network, len(window.history.undo_stack)
+    window.select("road", "1,2-2,2")
+    window.properties.lanes.setValue(3)
+    window.properties.direction.set_value(2)  # reversed too: its swap is put back as well
+    window.properties.speed.setCurrentText("0")  # refused
+    warned = []
+    real, QMessageBox.warning = QMessageBox.warning, lambda *args: warned.append(args[2])
+    try:
+        window.properties.apply_button.click()
+    finally:
+        QMessageBox.warning = real
+    assert warned and window.network is network and len(window.history.undo_stack) == steps
+    assert network == window.history.current[0]  # lanes, speed and ends: what the history holds
+    window.close()
+
+
+def test_a_turn_pocket_is_set_drawn_undone_and_refused_in_the_panel():
+    from PySide6.QtWidgets import QGraphicsPolygonItem
+
+    from traffic_simulator.main import MainWindow
+    from traffic_simulator.network_scene import ROAD_COLOR
+
+    window = MainWindow()
+    window.install_network(generate_network(3, 4))
+    window._commit()
+
+    def surfaces() -> int:  # widened carriageway pieces (the pocket's) and bus bays, in the road's colour
+        return sum(isinstance(item, QGraphicsPolygonItem) and item.brush().color() == ROAD_COLOR
+                   for item in window.scene.items())
+
+    before, steps = surfaces(), len(window.history.undo_stack)
+    window.select("road", "1,2-2,2")
+    panel = window.properties
+    rows = [(panel.road_form.labelForField(row).text(), kind, length) for row, kind, length in panel.pocket_rows]
+    assert [text for text, *_ in rows] == ["Pocket to 2,2", "Pocket to 1,2"] and not panel.apply_button.isEnabled()
+    _, kind, length = rows[0]
+    kind.setCurrentIndex(kind.findData("offside 2"))
+    length.setValue(60)
+    assert panel.apply_button.isEnabled()
+    panel.apply_button.click()
+    assert window.network.roads["1,2-2,2"].pockets == {"2,2": {"lanes": 2, "length_m": 60.0, "side": "offside"}}
+    assert surfaces() == before + 1 and len(window.history.undo_stack) == steps + 1
+    window.undo()
+    assert window.network.roads["1,2-2,2"].pockets == {} and surfaces() == before
+    window.select("road", "1,2-2,2")
+    panel.pocket_rows[1][1].setCurrentIndex(1)  # a kerb pocket at 1,2, on a road without lane changing: refused
+    panel.lane_changing.setChecked(False)
+    warned = []
+    real, QMessageBox.warning = QMessageBox.warning, lambda *args: warned.append(args[2])
+    try:
+        panel.apply_button.click()
+    finally:
+        QMessageBox.warning = real
+    assert warned and "lane changing" in warned[0] and window.network.roads["1,2-2,2"].pockets == {}
+    assert window.network.roads["1,2-2,2"].lane_changing
+    window.close()
+
+
 if __name__ == "__main__":
     for name, check in list(globals().items()):
         if name.startswith("test_"):

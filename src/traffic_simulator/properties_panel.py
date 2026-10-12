@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from copy import deepcopy
+
 from PySide6.QtCore import QEvent, QSize, Qt, Signal
 from PySide6.QtGui import (QColor, QFont, QFontDatabase, QIcon, QKeySequence, QPainter, QPixmap, QShortcut,
                            QStandardItem, QStandardItemModel)
@@ -29,7 +31,7 @@ from PySide6.QtWidgets import (
 )
 
 from .interchanges import fit_slip_roads
-from .models import MAX_BOARDING_PER_H, MAX_DWELL_S, BusStop, Network, Node, Road
+from .models import MAX_BOARDING_PER_H, MAX_DWELL_S, POCKET_LENGTH_M, BusStop, Network, Node, Road
 from .roundabouts import design_roundabout
 from .signal_timing import SATURATION_PER_LANE_VPH
 from .theme import TEXT
@@ -418,13 +420,38 @@ class PropertiesPanel(QWidget):
             ("Road type", self.road_type),
         ):
             form.addRow(label, widget)
+        # A turn pocket on the approach to each junction end its traffic arrives at: its side and lanes, its length.
+        # The rows are labelled with that end's ID (show_object) and hidden at boundary ends.
+        self.road_form, self.pocket_rows = form, []
+        for _ in range(2):
+            kind, pocket_length = QComboBox(), QDoubleSpinBox()
+            for text, value in (("None", None), ("Kerb, 1 lane", "kerb 1"), ("Kerb, 2 lanes", "kerb 2"),
+                                ("Offside, 1 lane", "offside 1"), ("Offside, 2 lanes", "offside 2")):
+                kind.addItem(text, value)
+            kind.setToolTip("Turn pocket")
+            pocket_length.setRange(*POCKET_LENGTH_M)
+            pocket_length.setDecimals(1)
+            pocket_length.setSuffix(" m")
+            pocket_length.setToolTip("Pocket length")
+            row = QWidget()
+            row_layout = QHBoxLayout(row)
+            row_layout.setContentsMargins(0, 0, 0, 0)
+            row_layout.addWidget(kind, 1)
+            row_layout.addWidget(pocket_length)
+            form.addRow("Turn pocket", row)
+            kind.currentIndexChanged.connect(lambda _=0, spin=pocket_length, combo=kind:
+                                             spin.setEnabled(combo.currentData() is not None))
+            self.pocket_rows.append((row, kind, pocket_length))
+        self.pocket_ends: list[str] = []  # the junction each shown row is for
         form.addRow(road_type_note)
         form.addRow(buttons)
         # Apply is enabled only while the fields differ from the road, so it's clear
         # whether edits are pending; Enter applies them too.
         for signal in (self.length.valueChanged, self.lanes.valueChanged, self.lane_changing.toggled,
                        self.speed.currentTextChanged, self.direction.changed,
-                       self.road_type.currentTextChanged):
+                       self.road_type.currentTextChanged,
+                       *(widget.currentIndexChanged for _, widget, _ in self.pocket_rows),
+                       *(widget.valueChanged for _, _, widget in self.pocket_rows)):
             signal.connect(self._refresh_apply)
         _on_enter(self.road_fields, self.apply_changes)
 
@@ -651,6 +678,15 @@ class PropertiesPanel(QWidget):
             self.road_type.setCurrentText(selected.road_type)
             tightest = max((abs(kappa) for kappa in selected.curvature), default=0.0)
             self.curve_radius.setText(f"{1 / tightest:.1f} m radius" if tightest else "Straight")
+            self.pocket_ends = [end for end in selected.arrival_ends() if end in self.network.nodes]
+            for index, (row, kind, pocket_length) in enumerate(self.pocket_rows):
+                self.road_form.setRowVisible(row, index < len(self.pocket_ends))
+                if index < len(self.pocket_ends):
+                    self.road_form.labelForField(row).setText(f"Pocket to {self.pocket_ends[index]}")
+                    pocket = selected.pockets.get(self.pocket_ends[index])
+                    kind.setCurrentIndex(kind.findData(f"{pocket['side']} {pocket['lanes']}") if pocket else 0)
+                    pocket_length.setValue(pocket["length_m"] if pocket else 50.0)
+                    pocket_length.setEnabled(pocket is not None)
             self._refresh_apply()
             a, b = selected.from_node, selected.to_node
             self.bus_stop_menu.clear()
@@ -721,12 +757,22 @@ class PropertiesPanel(QWidget):
     def _road_field_values(self) -> tuple:
         return (round(self.length.value(), 2), self.lanes.value(), self.lane_changing.isChecked(),
                 self.speed.currentText().strip(), self.direction.value(),
-                self.road_type.currentText().strip())
+                self.road_type.currentText().strip(), self._pocket_fields())
+
+    def _pocket_fields(self) -> dict:
+        """The turn pockets the form shows: end -> Road.pockets entry."""
+        found = {}
+        for end, (_, kind, pocket_length) in zip(self.pocket_ends, self.pocket_rows):
+            if kind.currentData():
+                side, lanes = kind.currentData().split()
+                found[end] = {"lanes": int(lanes), "length_m": round(pocket_length.value(), 1), "side": side}
+        return found
 
     @staticmethod
     def _road_values(road: Road) -> tuple:
         return (round(road.length_m, 2), road.lanes_per_direction, road.lane_changing,
-                f"{road.speed_limit_kmh:g}", 0 if road.direction == "two-way" else 1, road.road_type)
+                f"{road.speed_limit_kmh:g}", 0 if road.direction == "two-way" else 1, road.road_type,
+                {end: {**pocket, "length_m": round(pocket["length_m"], 1)} for end, pocket in road.pockets.items()})
 
     def _refresh_apply(self) -> None:
         if isinstance(self.selected, Road):
@@ -736,6 +782,7 @@ class PropertiesPanel(QWidget):
         if not isinstance(self.selected, Road) or self.network is None:
             return
         road_id = self.selected.id
+        before = deepcopy(self.network)  # a refused edit puts every field back, not just the form
         try:
             speed_limit = float(self.speed.currentText())
             if round(self.length.value(), 2) != round(self.selected.length_m, 2):
@@ -751,8 +798,12 @@ class PropertiesPanel(QWidget):
                 self.network.reverse_road(road_id)  # a curve's points and curvature flip too
             road.road_type = self.road_type.currentText().strip() or "urban"
             road.single_lane = road.single_lane and road.direction == "one-way" and road.lanes_per_direction == 1
+            if self._pocket_fields() != self._road_values(self.selected)[-1]:  # as shown (unchanged: kept exactly)
+                road.pockets = self._pocket_fields()
+            road.pockets = {end: pocket for end, pocket in road.pockets.items() if end in road.arrival_ends()}
             self.network.validate()
         except ValueError as exc:
+            vars(self.network).update(vars(before))  # the same Network object, as it was (call_tool's way)
             QMessageBox.warning(self, "Invalid road properties", str(exc))
             self.show_object("road", self.network.road(road_id))
             return
@@ -960,6 +1011,7 @@ class PropertiesPanel(QWidget):
             node, before = self.selected, self.selected.control
             node.control = self.control.value()
             try:
+                self.network.validate()  # a roundabout with more entry lanes than its design covers: refused
                 fit_slip_roads(self.network, node.id)  # slip roads past it clear of a roundabout's circle
             except ValueError as exc:
                 node.control = before

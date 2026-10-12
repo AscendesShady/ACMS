@@ -10,8 +10,8 @@ stays locked (the prompt gate) until the model is ready. Replies stream in, and 
 model can look at the open network and propose changes (network_tools.py): reads run
 at once, every change waits for Apply or Skip, and applied changes are undoable.
 Each message carries an editor update (the user's changes since the last reply and the
-map selection), the conversation is saved with the project, and watch mode can look
-at the user's edits by itself.
+map selection), and the conversation is saved with the project. It answers only when asked: the menu bar's
+Watch my edits is the window's activity log (activity.py), not the assistant's.
 Requests run on a background thread; tools always run here on the UI thread.
 """
 
@@ -42,10 +42,6 @@ WINDOWS_ENVIRONMENTS = (  # (root, path) as winreg names: user first, then syste
     ("HKEY_LOCAL_MACHINE", r"SYSTEM\CurrentControlSet\Control\Session Manager\Environment"),
 )
 READY = "Ask about the simulator or your network"
-WATCH_PAUSE_MS = 2000  # watch mode looks once the user has paused editing this long
-WATCH_PROMPT = ("(Watch mode) I just made the changes in the editor update. If something looks wrong "
-                "or could work better for the network, say so briefly and propose a fix; otherwise "
-                "reply with one short sentence. Don't repeat earlier advice.")
 
 
 TOOLS_NOTE = "Available tools"  # the transcript's speaker for Available Tools' list (not saved)
@@ -142,8 +138,8 @@ class _Relay(QObject):
     """Carries a background request's events back to the UI thread."""
 
     done = Signal(int, str, object, object)  # session, job ("warm"/"answer"), result, error
-    text = Signal(int, str, str)  # session, speaker, streamed text
-    tool = Signal(int, object)  # session, _ToolRequest: answer it, then set its done event
+    text = Signal(int, int, str, str)  # session, turn, speaker, streamed text
+    tool = Signal(int, int, object)  # session, turn, _ToolRequest: answer it, then set its done event
     listed = Signal(int, str, object, object)  # session, provider, its chat models, error
     system_1 = Signal(str, object, object)  # System 1 choice, Laya's health, error
 
@@ -155,7 +151,7 @@ class AIModePanel(QWidget):
 
     # What System 2 is doing, for the window's status bar: rich text ("" hides it) and a tooltip.
     indicator = Signal(str, str)
-    status_line = "Off"  # the same in plain text, e.g. "Llama is watching (llama3.1:8b)"
+    status_line = "Off"  # the same in plain text, e.g. "Llama is ready (llama3.1:8b)"
 
     def __init__(self, parent: QWidget | None = None) -> None:
         super().__init__(parent)
@@ -211,24 +207,20 @@ class AIModePanel(QWidget):
         self.local_models.activated.connect(self._choose_model)
         self.local_models_label = QLabel("Local model")
         form.addRow(self.local_models_label, self.local_models)
-        # One row of icon buttons across the page: Start/Restart, Available Tools, Rescan PC, Watch my edits,
-        # Export History, Clear Conversation.
+        # One row of icon buttons across the page: Start/Restart, Available Tools, Rescan PC, Export History,
+        # Clear Conversation.
         self.start_button = icon_button(*START, "primary")
         self.start_button.clicked.connect(self.start)
         self.tools_button = icon_button(0xE90F, "Available Tools")
         self.tools_button.clicked.connect(self.show_tools)
         rescan = icon_button(0xE721, "Rescan PC")
         rescan.clicked.connect(self.rescan)
-        self.watch = icon_button(0xE7B3, "Watch my edits")
-        self.watch.setCheckable(True)
-        self.watch.toggled.connect(lambda: self._indicate())
         self.export_button = icon_button(0xE896, "Export History…")
         self.export_button.clicked.connect(self.export_history)
         self.clear_button = icon_button(0xE74D, "Clear Conversation…", "danger")
         self.clear_button.clicked.connect(self.clear_conversation)
         start_row = QHBoxLayout()
-        for button in (self.start_button, self.tools_button, rescan, self.watch, self.export_button,
-                       self.clear_button):
+        for button in (self.start_button, self.tools_button, rescan, self.export_button, self.clear_button):
             start_row.addWidget(button)
         start_row.addStretch(1)
         form.addRow(start_row)
@@ -288,8 +280,6 @@ class AIModePanel(QWidget):
         self._busy_timer.timeout.connect(self._show_busy)
         self._render_timer = QTimer(self, singleShot=True, interval=60)  # streamed text: redraw at most ~16/s
         self._render_timer.timeout.connect(self._render)
-        self._watch_timer = QTimer(self, singleShot=True, interval=WATCH_PAUSE_MS)
-        self._watch_timer.timeout.connect(self._watch_look)
         self._host = None  # the window's network and map; see attach()
         self._session = self._turn = 0
         self._running = False  # a warm-up or answer is on its way
@@ -298,7 +288,6 @@ class AIModePanel(QWidget):
         self._connected = ("", "")  # (provider, model) started with Start, even if still warming up
         self._last_api: dict[str, str] = {}  # each provider's last started model, picked again next time
         self._activity = "off"  # see _indicate()
-        self._turn_kind = "answering"
         self._system = ""  # the system prompt the connected model warmed up with
         self._tools = None  # tool specs, or None when this chat has none
         self._pending: _ToolRequest | None = None  # an edit waiting for Apply or Skip
@@ -425,9 +414,8 @@ class AIModePanel(QWidget):
         self.prompt.setPlaceholderText(placeholder)
 
     def _indicate(self, activity: str | None = None) -> None:
-        """Tell the window what System 2 is doing, e.g. "Llama is watching". `activity` is
-        off, chosen (picked, not started), setup, warming, error, ready, answering, looking
-        (watch mode) or approval."""
+        """Tell the window what System 2 is doing, e.g. "Llama is ready". `activity` is
+        off, chosen (picked, not started), setup, warming, error, ready, answering or approval."""
         self._activity = activity or self._activity
         provider = self._provider()
         if not provider or self._activity == "off":
@@ -435,15 +423,13 @@ class AIModePanel(QWidget):
             self.indicator.emit("", "")
             return
         model = self._model or self._wanted
-        watching = self.watch.isChecked()
         state, words = {
             "chosen": ("idle", "is selected: press Start"),
             "setup": ("failed", f"needs {assistant.KEY_NAMES.get(provider, 'a key')}"),
             "warming": ("running", "is warming up…"),
             "error": ("failed", "couldn't start"),
-            "ready": ("passed", "is watching" if watching else "is ready"),
+            "ready": ("passed", "is ready"),
             "answering": ("running", "is answering…"),
-            "looking": ("running", "is looking at your edits…"),
             "approval": ("waiting", "is waiting for your approval"),
         }[self._activity]
         detail = f" ({html.escape(model)})" if model_label(model) != model else ""
@@ -507,7 +493,7 @@ class AIModePanel(QWidget):
                 except Exception:  # noqa: BLE001 - the tool itself reports any problem
                     pass
             request = _ToolRequest(call)
-            relay.tool.emit(session, request)
+            relay.tool.emit(session, turn, request)
             while not request.done.wait(0.2):
                 if cancelled():
                     return {"error": "Stopped by the user."}
@@ -515,7 +501,8 @@ class AIModePanel(QWidget):
 
         def target() -> None:
             try:
-                result = work(lambda text, speaker: relay.text.emit(session, speaker, text), run_tool, cancelled)
+                result = work(lambda text, speaker: relay.text.emit(session, turn, speaker, text), run_tool,
+                              cancelled)
                 relay.done.emit(session, job, result, None)
             except Cancelled:
                 relay.done.emit(session, job, STOPPED, None)
@@ -557,7 +544,7 @@ class AIModePanel(QWidget):
         history = list(self.history)
         self._gate(False, "Warming up…")
         self._indicate("warming")
-        self._busy(f"Warming up: {wanted} is reading README.md and ARCHITECTURE.md"
+        self._busy(f"Warming up: {wanted} is reading " + ("ARCHITECTURE.md" if tools else "README.md and ARCHITECTURE.md")
                    + (" and the conversation…" if history else "…"))
 
         def warm_up(on_text, run_tool, cancelled):
@@ -596,32 +583,31 @@ class AIModePanel(QWidget):
             + ([f"selection {selected}"] if selection["ids"] else [])
         return "\n".join(lines), shared
 
-    def _ask(self, prompt: str, shown: str | None) -> None:
-        """Send `prompt` after the editor update. `shown` is what the transcript shows as the
-        user's words; None for a watch-mode look, which shows only what was shared."""
+    def _ask(self, prompt: str, shown: str) -> None:
+        """Send `prompt` after the editor update. `shown` is what the transcript shows as the user's words."""
         if not self.prompt.isEnabled():
             return
         provider, model, tools = self._provider(), self._model, self._tools
         key = self.keys().get(assistant.KEY_NAMES.get(provider, ""), "")
         context, shared = self._context()
         self._seen = self._snapshot()  # the assistant now knows the network as it is
-        if shown:
-            self._say("You", shown)
+        self._say("You", shown)
         if shared:
-            self._say(None, ("Shared with the assistant: " if shown else "Watch mode is looking at ")
-                      + ", ".join(shared))
+            self._say(None, "Shared with the assistant: " + ", ".join(shared))
         self._gate(False, "Answering…")
         self._busy(f"{model} is thinking…")
-        self._turn_kind = "answering" if shown else "looking"
-        self._indicate(self._turn_kind)
+        self._indicate("answering")
         self._stopping(True)
         messages = [{"role": "system", "content": self._system}, *self.history,
                     {"role": "user", "content": context + prompt}]
-        # The tools this request most likely needs (network_tools.tools_for), and those the conversation has used;
-        # find_tools adds others mid-answer, and a tool the model names that it wasn't offered is added as it runs.
-        used = {call.get("name") for message in self.history for call in message.get("tool_calls") or []}
+        # The tools this request most likely needs (network_tools.tools_for), and those used in the last two exchanges
+        # (all of a long conversation's grew the offer, and every request, without end); find_tools adds others
+        # mid-answer, and a tool the model names that it wasn't offered is added as it runs.
+        asked = [i for i, message in enumerate(self.history) if message["role"] == "user"]
+        recent = self.history[asked[-2]:] if len(asked) >= 2 else self.history
+        used = {call.get("name") for message in recent for call in message.get("tool_calls") or []}
         offered = network_tools.tools_for(prompt, used) if tools else None
-        self._step = {"kind": "prompt" if shown else "watch", "prompt": shown or prompt, "editor_update": context,
+        self._step = {"kind": "prompt", "prompt": shown, "editor_update": context,
                       "provider": provider, "model": model, "started": time.time(), "calls": [],
                       "tools_offered": [spec["name"] for spec in offered or []],
                       "before": self._host.state() if self._host else None}
@@ -650,18 +636,6 @@ class AIModePanel(QWidget):
                 return assistant.converse(provider, model, messages, key, None, speak, run_tool, cancelled), None
 
         self._run("answer", answer)
-
-    def editor_changed(self) -> None:
-        """The window calls this after each undoable change. Watch mode looks once the user
-        pauses; changes made while the assistant is busy go with its next look or message."""
-        if self.watch.isChecked() and not self._running:
-            self._watch_timer.start()
-
-    def _watch_look(self) -> None:
-        if not (self.watch.isChecked() and self.prompt.isEnabled() and self._seen is not None):
-            return
-        if network_tools.describe_changes(self._seen, self._host.network()):
-            self._ask(WATCH_PROMPT, None)
 
     def _stopping(self, answering: bool) -> None:
         """Stop in Ask's place while an answer comes in."""
@@ -751,8 +725,8 @@ class AIModePanel(QWidget):
         self._seen = self._snapshot()
         self._render()
 
-    def _streamed(self, session: int, speaker: str, text: str) -> None:
-        if session != self._session:
+    def _streamed(self, session: int, turn: int, speaker: str, text: str) -> None:
+        if (session, turn) != (self._session, self._turn):  # queued before a Stop, a new chat or another project
             return
         if not self._shown or self._shown[-1][0] != speaker:
             self._shown.append([speaker, ""])
@@ -762,10 +736,10 @@ class AIModePanel(QWidget):
         if not self._render_timer.isActive():
             self._render_timer.start()
 
-    def _tool_requested(self, session: int, request: _ToolRequest) -> None:
+    def _tool_requested(self, session: int, turn: int, request: _ToolRequest) -> None:
         call = request.call
-        if session != self._session:
-            request.result = {"error": "The chat was restarted."}
+        if (session, turn) != (self._session, self._turn):  # queued before Stop (or a restart): never run
+            request.result = {"error": "The chat was restarted." if session != self._session else "Stopped by the user."}
             request.done.set()
             return
         try:  # every tool's arguments in the shapes its schema gives, or refused saying what it takes
@@ -836,11 +810,17 @@ class AIModePanel(QWidget):
             return
         call = request.call
         line = network_tools.describe_call(call["name"], call["arguments"])
-        decided = time.time()
+        decided, turn = time.time(), self._turn
         if apply:
             self.proposal.hide()  # no second Apply while it runs (a test can take a while)
             self._busy(f"Applying: {line}…")
-            result = self._execute(call["name"], call["arguments"])
+            try:
+                result = self._execute(call["name"], call["arguments"])
+            except Exception as exc:
+                # Qt reports slot exceptions but otherwise leaves the worker
+                # waiting forever for request.done. Always deliver the failure.
+                result = {"error": f"Apply failed: {type(exc).__name__}: {exc}. "
+                                   "The operation may have partially changed the project; inspect it before retrying."}
             self._say(None, f"Couldn't apply: {line}. {result['error']}" if "error" in result else f"Applied: {line}")
             self.log(call["name"], call["arguments"], f"applied by the user; couldn't: {result['error']}"
                      if "error" in result else "applied by the user")
@@ -851,9 +831,11 @@ class AIModePanel(QWidget):
         if request.record is not None:
             request.record.update(decision="applied" if apply else "skipped", decided_at=decided, result=result,
                                   compute_s=round(time.time() - decided, 3) if apply else 0.0)
+        if self._turn != turn:  # stopped (or cleared, or asked anew) while it ran: the change stands, no one waits
+            return
         self._settle_pending(result)
         self._busy(f"{self._model} is thinking…")
-        self._indicate(self._turn_kind)
+        self._indicate("answering")
 
     def _settle_pending(self, result: dict) -> None:
         """Answer the waiting edit (if any) and put its card away."""
@@ -981,8 +963,6 @@ class AIModePanel(QWidget):
             self._gate(True, READY)
             self._indicate("ready")
             self.prompt.setFocus()
-        if self.watch.isChecked():
-            self._watch_timer.start()  # edits made while it was busy
 
     # --- Keys and local models -------------------------------------------------------
 
@@ -1087,11 +1067,15 @@ class AIModePanel(QWidget):
                                     + (f" ({families})." if families else "."))
 
     def agent_options(self) -> list[dict]:
-        """Who a batch run can put in charge of TSP, as found by the last scan: No LLM (the baseline), System 1's
+        """Who a batch run can put in charge of TSP or DEVL, as found by the last scan: the two baselines (Never
+        preempt, general traffic, first; Always preempt: each with a `rule` and no system), System 1's
         (Jev, Laya) and System 2's (every Ollama model; Grok and Gemini whenever their keys are on this PC, each
         with the model last started in System 2, else the provider's usual one). Each: label, system, provider,
         model and name (for the run's file name)."""
-        options = [{"label": "No LLM (baseline)", "system": "", "provider": "", "model": "", "name": "no-llm"}]
+        options = [{"label": "Never preempt (baseline)", "system": "", "provider": "", "model": "", "name": "never",
+                    "rule": False},
+                   {"label": "Always preempt (baseline)", "system": "", "provider": "", "model": "", "name": "always",
+                    "rule": True}]
         for index in range(1, self.system_1.count()):
             provider = self.system_1.itemData(index)
             options.append({"label": f"System 1: {assistant.PROVIDER_NAMES[provider]}", "system": "1",

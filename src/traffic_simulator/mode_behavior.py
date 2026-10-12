@@ -21,6 +21,7 @@ from PySide6.QtWidgets import (QDoubleSpinBox, QFormLayout, QGridLayout, QGroupB
                                QSpinBox, QVBoxLayout, QWidget)
 
 from .properties_panel import hint_label, styled_button
+from .simulation import DT
 
 # The dataviz reference palette's categorical slots (dark-surface steps), in fixed order. Checked
 # on the app's greys: every check passes; magenta and green sit under 3:1 against the grey, so a
@@ -47,6 +48,9 @@ class VehicleMode:
     desired_max_kmh: float = 1e4  # the fastest it wants to go (a bicycle's is 20 km/h); none for a car
     accel: float = 2.6  # m/s²
     decel: float = 4.5  # comfortable braking, m/s²
+    # The hardest it can brake, m/s² (SUMO's emergencyDecel), no less than decel. None (a project saved before it):
+    # its vehicle class's (vehicle.VEHICLE_CLASSES), or decel if that is harder.
+    emergency_decel: float | None = None
     min_gap_m: float = 2.5  # standstill gap to the vehicle ahead
     tau_s: float = 1.0  # driver's reaction time / desired time headway
     sigma: float = 0.5  # driver imperfection (Krauss dawdling), 0-1
@@ -56,6 +60,22 @@ class VehicleMode:
     # Passenger car units: the road space one vehicle takes against a car (UK DMRB TA 79/99: bus 2, pedal cycle
     # 0.2). Kept with the project; no calculation uses it yet.
     pcu: float = 1.0
+    # What it is, whatever it's called (a vehicle.VEHICLE_CLASSES kind): a "bus" calls at bus stops and gets transit
+    # priority. Kept through renames; a type without one (a project saved before it) named Bus is a bus.
+    vehicle_class: str = ""
+    # In a lateral run (Simulation lateral), may it pass others within its lane, filtering (if narrow_enough). None (a
+    # project saved before it): yes for a motorcycle, moped or bicycle (vehicle.FILTERING_CLASSES), else no.
+    filters: bool | None = None
+
+    def __post_init__(self) -> None:
+        if not self.vehicle_class:
+            self.vehicle_class = "bus" if self.name.strip().lower() == "bus" else "passenger"
+        if self.filters is None:
+            from .vehicle import FILTERING_CLASSES  # noqa: PLC0415 - vehicle.py has no Qt
+            self.filters = self.vehicle_class in FILTERING_CLASSES
+        if self.emergency_decel is None:
+            from .vehicle import VEHICLE_CLASSES  # noqa: PLC0415 - vehicle.py has no Qt
+            self.emergency_decel = max(VEHICLE_CLASSES.get(self.vehicle_class, {}).get("emergency_decel", 9.0), self.decel)
 
 
 def whole_percent(weights, total: int = 100) -> list[int]:
@@ -109,7 +129,8 @@ class VehicleModes(QObject):
                                   accel=1.2, decel=4.0, occupancy=20.0, pcu=2.0),
                       VehicleMode("Car", PALETTE[1], occupancy=1.5),
                       VehicleMode("Bike", PALETTE[2], length_m=1.6, width_m=0.65, max_speed_kmh=50.0,
-                                  desired_max_kmh=20.0, accel=1.2, decel=3.0, min_gap_m=0.5, pcu=0.2)]
+                                  desired_max_kmh=20.0, accel=1.2, decel=3.0, min_gap_m=0.5, pcu=0.2,
+                                  vehicle_class="bicycle")]
         self.default_split: tuple[int, ...] = (10, 85, 5)  # a new OD pair's shares
 
     def names(self) -> list[str]:
@@ -140,8 +161,9 @@ class VehicleModes(QObject):
     def create(self, specs: list, check_only: bool = False) -> list[int]:
         """Add vehicle types made as SUMO vehicle classes (vehicle.VEHICLE_CLASSES): each spec a dict of
         name, kind, and optionally headway_min and occupancy. All are checked first, so a refusal
-        (ValueError, saying why) adds none. Returns the new types' indexes."""
-        from .vehicle import VEHICLE_CLASSES  # noqa: PLC0415 - vehicle.py has no Qt
+        (ValueError, saying why) adds none. A motorcycle, moped or bicycle filters (VehicleMode.filters). Returns the new
+        types' indexes."""
+        from .vehicle import FILTERING_CLASSES, VEHICLE_CLASSES  # noqa: PLC0415 - vehicle.py has no Qt
 
         if not isinstance(specs, list) or not specs or not all(isinstance(spec, dict) for spec in specs):
             raise ValueError("Give the types as a list, e.g. [{\"name\": \"Tram\", \"kind\": \"tram\"}].")
@@ -168,8 +190,10 @@ class VehicleModes(QObject):
         for spec in specs:
             index = self.add(str(spec["name"]), timetabled=bool(spec.get("headway_min")))
             mode = self.modes[index]
-            for key, value in VEHICLE_CLASSES[str(spec["kind"]).strip().lower()].items():
+            mode.vehicle_class = str(spec["kind"]).strip().lower()
+            for key, value in VEHICLE_CLASSES[mode.vehicle_class].items():
                 setattr(mode, key, value)
+            mode.filters = mode.vehicle_class in FILTERING_CLASSES
             if spec.get("occupancy") is not None:
                 mode.occupancy = float(spec["occupancy"])
             if spec.get("headway_min"):
@@ -178,20 +202,28 @@ class VehicleModes(QObject):
         return made
 
     FIGURES = {"length_m": (0.3, 60), "width_m": (0.3, 5), "max_speed_kmh": (5, 400), "accel": (0.1, 10),
-               "decel": (0.5, 10), "min_gap_m": (0, 20), "tau_s": (0.1, 5), "sigma": (0, 1), "speed_dev": (0, 1),
+               "decel": (0.5, 10), "emergency_decel": (0.5, 15), "min_gap_m": (0, 20), "tau_s": (DT, 5), "sigma": (0, 1), "speed_dev": (0, 1),
                "occupancy": OCCUPANCY_RANGE, "pcu": PCU_RANGE}  # update()'s figures and their ranges
+    # A reaction time shorter than the simulation's step can't be kept to: the driver reacts only once a step, so
+    # following that close collides (SUMO warns of the same, sumo.dlr.de/docs/Simulation/Safety.html).
+    WHY = {"tau_s": f" (no shorter than the {DT:g} s simulation step, or vehicles collide)"}
 
     def update(self, name: str, changes: dict, check_only: bool = False) -> int:
-        """Change a type by name: new_name, timetabled, headway_min or FIGURES. All checked first (ValueError, saying
-        why, changes nothing). Returns its index."""
+        """Change a type by name: new_name, timetabled, headway_min, vehicle_class (what it is: its size and speeds
+        stay), filters (lateral runs: passes others within its lane) or FIGURES. All checked first (ValueError, saying why, changes nothing). Returns its index."""
+        from .vehicle import VEHICLE_CLASSES  # noqa: PLC0415 - vehicle.py has no Qt
+
         index = next((i for i, mode in enumerate(self.modes) if mode.name.lower() == str(name).strip().lower()), None)
         if index is None:
             raise ValueError(f"No vehicle type called {name}; there are {', '.join(self.names())}.")
-        unknown = set(changes) - set(self.FIGURES) - {"new_name", "timetabled", "headway_min"}
+        unknown = set(changes) - set(self.FIGURES) - {"new_name", "timetabled", "headway_min", "vehicle_class", "filters"}
         if unknown or not changes:
-            raise ValueError(f"Give what changes: new_name, timetabled, headway_min or {', '.join(self.FIGURES)}.")
-        if not isinstance(changes.get("timetabled", True), bool):
-            raise ValueError("timetabled must be true or false.")
+            raise ValueError(f"Give what changes: new_name, timetabled, headway_min, vehicle_class, filters or "
+                             f"{', '.join(self.FIGURES)}.")
+        if "vehicle_class" in changes and changes["vehicle_class"] not in VEHICLE_CLASSES:
+            raise ValueError(f"vehicle_class must be one of {', '.join(VEHICLE_CLASSES)}.")
+        if not isinstance(changes.get("timetabled", True), bool) or not isinstance(changes.get("filters", True), bool):
+            raise ValueError("timetabled and filters must be true or false.")
         if "new_name" in changes and (problem := self.problem_with_name(str(changes["new_name"]), index)):
             raise ValueError(problem)
         headway = changes.get("headway_min", 0)
@@ -201,7 +233,11 @@ class VehicleModes(QObject):
             raise ValueError(f"{self.modes[index].name} has no headway: it isn't timetabled.")
         for key, (low, high) in self.FIGURES.items():
             if key in changes and not (isinstance(changes[key], (int, float)) and low <= changes[key] <= high):
-                raise ValueError(f"{key} must be {low:g} to {high:g}.")
+                raise ValueError(f"{key} must be {low:g} to {high:g}{self.WHY.get(key, '')}.")
+        decel = changes.get("decel", self.modes[index].decel)
+        if decel > changes.get("emergency_decel", self.modes[index].emergency_decel):
+            raise ValueError(f"decel ({decel:g}) must be no more than emergency_decel, the hardest it can brake "
+                             f"({changes.get('emergency_decel', self.modes[index].emergency_decel):g}).")
         if check_only:
             return index
         mode = self.modes[index]
@@ -210,6 +246,10 @@ class VehicleModes(QObject):
                 setattr(mode, key, float(changes[key]))
         if "new_name" in changes:
             mode.name = str(changes["new_name"]).strip()
+        if "vehicle_class" in changes:
+            mode.vehicle_class = changes["vehicle_class"]
+        if "filters" in changes:
+            mode.filters = changes["filters"]
         if "timetabled" in changes:
             mode.timetabled = changes["timetabled"]
             mode.headway_min = mode.headway_min if mode.timetabled else 0
@@ -350,8 +390,11 @@ class ModeBehaviorPanel(QWidget):
             if index == self.picked:
                 self._pick(index)
             return
-        while self.rows.count():
-            gone = self.rows.takeAt(0).widget()
+        outgoing = [self.rows.takeAt(0).widget() for _ in range(self.rows.count())]
+        for gone in outgoing:  # all silent before any hides: a half-typed name isn't a rename of the types an undo
+            gone.blockSignals(True)  # restored, and the focus passing through them picks no type that may be gone
+            gone.removeEventFilter(self)
+        for gone in outgoing:
             gone.hide()
             gone.deleteLater()  # later: a name box may be mid-signal
         self.names = []

@@ -92,10 +92,13 @@ def test_each_step_is_recorded_for_research():
         panel.start_button.click()
         settle(idle)
 
+        window.watch_action.setChecked(True)  # Watch my edits: what the user did before the step goes with it
+        window.activity.log("entry", "Seed", "7")
         ask("Build me a 3x2 grid, run it 5 minutes")
         settle(lambda: not panel.proposal.isHidden())
         panel.apply_button.click()
         settle(idle)
+        window.watch_action.setChecked(False)
         folders = list(window.results_folder.glob("ACMS research log *"))
         assert len(folders) == 1
         session, step = folders[0], folders[0] / "steps" / "0001"
@@ -104,6 +107,9 @@ def test_each_step_is_recorded_for_research():
         assert re.fullmatch(r"ACMS research log \d{4}-\d\d-\d\d \d\d-\d\d-\d\d Ollama small-3b", session.name), session.name
         assert log.agent_name("gemini", "gemini-2.5-flash") == "Gemini gemini-2.5-flash" and log.agent_name(None, None) == "no agent"
         assert "Build me a 3x2 grid" in (step / "prompt.md").read_text(encoding="utf-8")  # 1. the prompt
+        with open(step / "activity.csv", encoding="utf-8-sig") as file:  # and what the user did before it
+            done = list(csv.DictReader(file))
+        assert any(row["Kind"] == "entry" and row["What"] == "Seed" and row["Value"] == "7" for row in done)
         understood = json.loads((step / "understood.json").read_text(encoding="utf-8"))  # 2. what it understood
         assert understood["plan"] == "build a 3x2 grid and run it 5 minutes with build_scenario."  # its own Plan: line
         assert "build_scenario" in understood["tools_offered"] and "find_tools" in understood["tools_offered"]
@@ -113,7 +119,8 @@ def test_each_step_is_recorded_for_research():
         assert "Build a 3 x 2 grid" in (step / "plan.md").read_text(encoding="utf-8")
         changes = (step / "changes.md").read_text(encoding="utf-8")  # 4. the snapshot: changes and the map
         assert "a 3 x 2 grid (3 columns, 2 rows)" in changes and "Demand 1W->1E: hourly none" in changes
-        assert (step / "map.png").read_bytes()[:8] == b"\x89PNG\r\n\x1a\n"
+        assert (step / "map.png").read_bytes()[:8] == b"\x89PNG\r\n\x1a\n"  # the network changed: the map
+        assert (step / "demand.png").read_bytes()[:8] == b"\x89PNG\r\n\x1a\n"  # and the demand: the OD matrix
         artifacts = json.loads((step / "artifacts.json").read_text(encoding="utf-8"))
         workbook = next(a for a in artifacts if a["path"].endswith(".xlsx"))
         assert workbook["sha256"] == hashlib.sha256(Path(workbook["path"]).read_bytes()).hexdigest()
@@ -130,6 +137,7 @@ def test_each_step_is_recorded_for_research():
         assert rows[1]["Tools"] == "" and rows[1]["Reply"] == "ok" and rows[1]["Verdict"] == "as intended"
         assert rows[1]["Note"] == "clear answer"
         assert json.loads((session / "steps" / "0002" / "step.json").read_text(encoding="utf-8"))["verdict"] == "as intended"
+        assert not list((session / "steps" / "0002").glob("*.png"))  # nothing changed: no picture
         report = (session / "report.html").read_text(encoding="utf-8")
         assert "steps/0001/map.png" in report and "verdict: as intended" in report and "Build me a 3x2 grid" in report
 

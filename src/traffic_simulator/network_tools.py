@@ -36,7 +36,7 @@ from . import map_tiles
 from .map_tiles import Frame, mercator
 from .models import BUS_STOP_DIRECTIONS, MAX_BOARDING_PER_H, SIGNAL_METHODS, Network, Road
 from .network_generator import generate_network
-from .roundabouts import design_roundabout
+from .roundabouts import MAX_ENTRY_LANES, design_roundabout
 from .simulation import Graph
 from . import scenario, stats
 from .stats import geh
@@ -44,7 +44,8 @@ from .vehicle import VEHICLE_CLASSES
 
 ROOT = Path(__file__).resolve().parents[2]
 LIST_LIMIT = 150  # rows per list; filters narrow bigger networks
-READ_LINES = 400  # lines per read_source call
+READ_LINES = 150  # lines per read_source call (a page of sources.md is ~2.5k tokens; find narrows it first)
+FIND_HITS = 25  # matching lines a read_source find returns
 CONTROLS = ("signalised", "roundabout", "uncontrolled")
 # The background image's road pixels, supplied by the window (background.BackgroundPainter.road_mask), so this
 # module stays free of Qt: (background, colour, tolerance, metres a pixel) -> (width, height, mask, affine, metres).
@@ -103,9 +104,13 @@ _SCENARIO = {"type": "object", "properties": {
                       "drivers re-route (and a new road can make things worse: Braess)."},
     "meters": {"type": "array", "items": {"type": "object"}, "description": "Ramp meters on on-ramps (a road ending "
                "at a merge): [{\"road\": id, \"target_occupancy_percent\": 20}] (ALINEA: the rate follows the main "
-               "road's occupancy past the merge) or {\"road\": id, \"rate_vph\": 600} (fixed), 240-1800 veh/h."}},
+               "road's occupancy past the merge) or {\"road\": id, \"rate_vph\": 600} (fixed), 240-1800 veh/h."},
+    "lateral": {"type": "boolean", "description": "Lateral position (sublane): motorcycles, mopeds and bicycles "
+                "share lanes and filter past queues to the stop line (weak lane discipline). Default false."}},
              "required": ["name"]}
-_CONDITIONS = {key: _SCENARIO["properties"][key] for key in ("incidents", "weather", "meters")}
+_CONDITIONS = {key: _SCENARIO["properties"][key] for key in ("incidents", "weather", "meters", "lateral")}
+_MEASURE_FROM = {"measure_from_min": {"type": "number", "description": "Warm-up left out of the figures: measure from "
+                                      "this minute (default 0; analyse_run's MSER-5 warm-up suggests one)."}}
 
 TOOLS = [
     # Read: run straight away.
@@ -128,8 +133,11 @@ TOOLS = [
                     "(one-way roads considered), dead ends, very short roads, curves posted faster than "
                     "their radius allows, roundabouts too big for their roads."},
     {"name": "read_source", "edits": False,
-     "description": "Read the app's own source, tests or docs. Empty path lists the readable files.",
+     "description": "Read the app's own source, tests or docs. Empty path lists the readable files. Use find "
+                    "first (words that must all be on a line; in one file, or every readable file when path is "
+                    "empty): it gives line numbers, then read just those lines with start_line and end_line.",
      "parameters": _object({"path": {"type": "string", "description": "e.g. src/traffic_simulator/roundabouts.py"},
+                            "find": {"type": "string", "description": "e.g. 'buffer index'"},
                             "start_line": {"type": "integer"}, "end_line": {"type": "integer"}})},
     {"name": "get_selection", "edits": False, "parameters": _object(),
      "description": "What the user has selected on the map right now."},
@@ -154,7 +162,8 @@ TOOLS = [
                     "from, and its people a day each way. A Run spawns their vehicle trips (catchment to door and "
                     "back) beside the OD matrix's."},
     {"name": "list_vehicle_types", "edits": False, "parameters": _object(),
-     "description": "The vehicle types (Mode Behavior), in order: each one's name, timetabled (may it have a headway; "
+     "description": "The vehicle types (Mode Behavior), in order: each one's name, vehicle_class (what it is, whatever "
+                    "it's called: a bus calls at bus stops), timetabled (may it have a headway; "
                     "a car or bike never), headway (a timetable, e.g. a bus every 10 min), occupancy, size, top speed, acceleration, braking, standstill gap, reaction "
                     "time, imperfection, speed deviation and PCU (passenger car units; kept, not used in any calculation "
                     "yet); the default split between them; the kinds create_vehicle_types can make. desired_max_kmh "
@@ -170,22 +179,28 @@ TOOLS = [
          "properties": {"name": {"type": "string"}, "kind": {"type": "string", "enum": list(VEHICLE_CLASSES)},
                         "headway_min": {"type": "integer"}, "occupancy": {"type": "number"}}}}}, ("types",))},
     {"name": "update_vehicle_type", "edits": True,
-     "description": "Change an existing vehicle type: new_name, timetabled (true lets it have a headway; false clears "
+     "description": "Change an existing vehicle type: new_name, vehicle_class (what it is: a bus calls at bus stops; "
+                    "its figures stay), timetabled (true lets it have a headway; false clears "
                     "it), headway_min (0-120; a timetable; only a timetabled type), occupancy (people a "
-                    "vehicle), length_m, width_m, max_speed_kmh, accel, decel, min_gap_m, tau_s (reaction time), "
-                    "sigma (imperfection 0-1), speed_dev, pcu (passenger car units, 0.1-10). Give only what changes.",
+                    "vehicle), length_m, width_m, max_speed_kmh, accel, decel (comfortable braking), "
+                    "emergency_decel (the hardest it can brake, no less than decel), min_gap_m, tau_s (reaction time), "
+                    "sigma (imperfection 0-1), speed_dev, pcu (passenger car units, 0.1-10), filters (in a lateral run "
+                    "it passes queues within its lane, if narrow). Give only what changes.",
      "parameters": _object({"name": {"type": "string"}, "new_name": {"type": "string"}, "timetabled": {"type": "boolean"},
+                            "vehicle_class": {"type": "string", "enum": list(VEHICLE_CLASSES)},
                             "headway_min": {"type": "integer"},
                             "occupancy": {"type": "number"}, "length_m": {"type": "number"}, "width_m": {"type": "number"},
                             "max_speed_kmh": {"type": "number"}, "accel": {"type": "number"}, "decel": {"type": "number"},
-                            "min_gap_m": {"type": "number"}, "tau_s": {"type": "number"}, "sigma": {"type": "number"},
-                            "speed_dev": {"type": "number"}, "pcu": {"type": "number"}}, ("name",))},
+                            "emergency_decel": {"type": "number"}, "min_gap_m": {"type": "number"}, "tau_s": {"type": "number"}, "sigma": {"type": "number"},
+                            "speed_dev": {"type": "number"}, "pcu": {"type": "number"},
+                            "filters": {"type": "boolean"}}, ("name",))},
     {"name": "read_od_matrix", "edits": False, "parameters": _object(),
      "description": "The Demand Generator's OD matrix: its origin and destination boundary ends, which "
                     "demand it shows (hourly veh/h or daily trips/day: a Run uses the kind shown), every pair's "
                     "hourly_vph and daily_trips (pairs with none are left out; pairs_with_data_count 0 means the "
                     "matrix is empty), what most pairs share under usual (arrival pattern, split between the "
-                    "vehicle_types, daily curve) and any pair that differs under different. Read it before "
+                    "vehicle_types, daily curve, hourly demand's peak_hour_factor and quarters: each 15 minutes' "
+                    "share of the hour) and any pair that differs under different. Read it before "
                     "changing demand."},
     {"name": "set_od_demand", "edits": True,
      "description": "Enter demand in the OD matrix the way the user does in the Demand Generator: select the "
@@ -197,6 +212,12 @@ TOOLS = [
      "parameters": _object({**_PAIRS, "demand": {"type": "string", "enum": ["hourly", "daily"]},
                             "value": {"type": "number", "description": "veh/h (hourly) or trips per day (daily)."},
                             "arrival_pattern": {"type": "string", "enum": ARRIVAL_PATTERNS},
+                            "peak_hour_factor": {"type": "number", "description": "Hourly demand only, 0.25-1 "
+                                                 "(HCM PHF = V / 4·V15): the hour's second 15 minutes run at "
+                                                 "veh/h ÷ PHF, the other three share the rest. 1 = even."},
+                            "quarters": {"type": "array", "items": {"type": "number"}, "description":
+                                         "Hourly demand only, instead of peak_hour_factor: the hour's four "
+                                         "15-minute counts (or shares), e.g. [200, 300, 250, 250]."},
                             "mode_split": {"type": "array", "description": "Percent of trips per vehicle type "
                                            "(names from read_od_matrix's vehicle_types), adding up to 100; types "
                                            "left out get 0, e.g. [{\"mode\": \"Bus\", \"percent\": 20}, "
@@ -268,7 +289,8 @@ TOOLS = [
                     "the Demand Generator shows. It records the KPIs, saves a results workbook and returns the "
                     "headline figures and a run id (R1, R2...). One run is one sample: to compare designs use "
                     "run_experiment with several seeds.",
-     "parameters": _object({"duration_min": {"type": "number"}, "seed": {"type": "integer"}, **_CONDITIONS},
+     "parameters": _object({"duration_min": {"type": "number"}, "seed": {"type": "integer"}, **_CONDITIONS,
+                            **_MEASURE_FROM},
                            ("duration_min",))},
     {"name": "run_experiment", "edits": True,
      "description": "Test network designs against each other: every scenario (the first is the baseline; a "
@@ -278,12 +300,12 @@ TOOLS = [
                     "±precision_percent; over 20: unstable), and each scenario's difference from the baseline by a "
                     "paired t-test on the shared seeds (common random numbers) with its p-value, interval (95 %, "
                     "Bonferroni-widened for several scenarios: confidence says) and whether it is clear (the "
-                    "interval leaves out zero). Figures include the travel time index and planning time index "
-                    f"(reliability). Saves an experiment workbook. At most {6} scenarios, {20} seeds, {60} runs. Use "
+                    "interval leaves out zero). Figures include the travel time, planning time and buffer indexes "
+                    f"(reliability) and the unfinished share of trips. Saves an experiment workbook. At most {6} scenarios, {20} seeds, {60} runs. Use "
                     "at least 3 seeds to tell designs apart; say the question being tested in `question`.",
      "parameters": _object({"scenarios": {"type": "array", "items": _SCENARIO},
                             "seeds": {"type": "array", "items": {"type": "integer"}, "description": "e.g. [1, 2, 3, 4, 5]"},
-                            "duration_min": {"type": "number"}, "question": {"type": "string"},
+                            "duration_min": {"type": "number"}, "question": {"type": "string"}, **_MEASURE_FROM,
                             "precision_percent": {"type": "number", "description": "For replications_needed: "
                                                   "the mean within ± this % (default 5)."},
                             "conditions": {"type": "array", "items": {"type": "object"}, "description": "2-6 conditions "
@@ -310,8 +332,8 @@ TOOLS = [
      "parameters": _object({"runs": _IDS}, ("runs",))},
     {"name": "analyse_run", "edits": False,
      "description": "Statistics of one run (an id from read_results; the latest run if left out): travel-time "
-                    "reliability (trip time mean, SD, CV, median, 85th and 95th percentiles; travel time index and "
-                    "planning time index, network-wide and the least reliable OD pairs), each origin end's arrivals "
+                    "reliability (trip time mean, SD, CV, median, 85th and 95th percentiles; travel time, planning time "
+                    "and buffer indexes, network-wide and the least reliable OD pairs), each origin end's arrivals "
                     "per minute against Poisson (index of dispersion, chi-square p: random, regular or bunched), and "
                     "each road's 95th-percentile queue against its length (spillback where it reaches it).",
      "parameters": _object({"id": {"type": "string"}})},
@@ -339,7 +361,8 @@ TOOLS = [
      "description": "Safety surrogate for a run (id; the latest if left out): rear-end conflicts (time to collision "
                     "under 1.5 s), severe ones (TTC under 1 s or braking over 3.35 m/s² needed), per road with the rate "
                     "per million vehicle-km, a safety performance function across roads (Poisson or negative binomial "
-                    "on flow and length) and the roads ranked by their Empirical Bayes excess (blackspots). ttc_s sets "
+                    "on flow and length) and the roads ranked by their Empirical Bayes excess (blackspots); also any "
+                    "collisions (same lane or crossing, by road or junction) and emergency braking. ttc_s sets "
                     "the threshold (0.5-3, default 1.5).",
      "parameters": _object({"id": {"type": "string"}, "ttc_s": {"type": "number"},
                             "speed_change_kmh": {"type": "array", "items": {"type": "number"}, "description": "[before, "
@@ -535,7 +558,7 @@ TOOLS = [
                             "dispatch_now": {"type": "boolean"}}, ("schedules",))},
     {"name": "start_batch", "edits": True,
      "description": "Start Batch Run: every seed (like \"1-4\" or \"3, 7, 9\") runs duration_min simulated "
-                    "minutes, headless, against the baseline (No LLM). test_devl: the emergency vehicle schedules "
+                    "minutes, headless, against the baselines (never, always preempt). test_devl: the emergency vehicle schedules "
                     "dispatched in each run, the DEVL tab's models deciding the lanes; test_tsp: the TSP tab's "
                     "models deciding bus priority. Pick those models, the pace, runs at once and times each with "
                     "set_extension first (read_extensions shows them). Saves each run's workbook and a batch "
@@ -650,14 +673,19 @@ TOOLS = [
     {"name": "update_roads", "edits": True,
      "description": "Change road settings; give only what changes. add_lanes 1 adds a lane each way to each road "
                     "(\"add a lane\"), -1 removes one; lanes_per_direction sets a number instead. direction 'one-way' "
-                    "keeps traffic from -> to, 'reverse' makes it one-way the other way. length_m slides the far end.",
+                    "keeps traffic from -> to, 'reverse' makes it one-way the other way. length_m slides the far end. "
+                    "pocket_junction (an end its traffic arrives at) sets a turn pocket on that approach: "
+                    "pocket_lanes 1-2 (0 removes it), pocket_length_m 15-150, pocket_side 'kerb' (kerb turns) or "
+                    "'offside' (offside turns, U-turns).",
      "parameters": _object({"roads": _IDS, "lanes_per_direction": {"type": "integer"},
                             "add_lanes": {"type": "integer", "description": "Lanes to add each way (negative: remove)."},
                             "speed_limit_kmh": {"type": "number"},
                             "direction": {"type": "string", "enum": ["two-way", "one-way", "reverse"]},
                             "lane_changing": {"type": "boolean"},
                             "road_type": {"type": "string", "description": "A label only: changes no behaviour."},
-                            "length_m": {"type": "number"}}, ("roads",))},
+                            "length_m": {"type": "number"}, "pocket_junction": {"type": "string"},
+                            "pocket_lanes": {"type": "integer"}, "pocket_length_m": {"type": "number"},
+                            "pocket_side": {"type": "string", "enum": ["kerb", "offside"]}}, ("roads",))},
     {"name": "add_junction", "edits": True, "description": "Add an off-grid junction (named N1, N2, ...).",
      "parameters": _object({"x": {"type": "number"}, "y": {"type": "number"}}, ("x", "y"))},
     {"name": "add_road", "edits": True, "description": "Connect two junctions with a new two-way road.",
@@ -757,7 +785,8 @@ TOOLS = [
                     "default; demand retimes them at Run). Omitted settings keep the current ones.",
      "parameters": _object({"horizontal": {"type": "integer", "description": "Rows: roads running east-west."},
                             "vertical": {"type": "integer", "description": "Columns: roads running north-south."},
-                            "spacing_m": {"type": "number", "description": "Metres between neighbouring roads."},
+                            "spacing_m": {"type": "number", "minimum": 20, "maximum": 2000,
+                                          "description": "Metres between neighbouring roads."},
                             "driving_side": {"type": "string", "enum": ["left", "right"]},
                             "speed_limit_kmh": {"type": "number"}, "lanes_per_direction": {"type": "integer"},
                             "lane_changing": {"type": "boolean"},
@@ -796,26 +825,30 @@ FIND_TOOLS = "find_tools"
 CORE_TOOLS = ("network_summary", "describe", "list_roads", "list_junctions", "show_on_map", "get_selection",
               "note_plan", FIND_TOOLS)
 TOOL_GROUPS = {  # name: (words that point to it, as regex stems; its tools)
-    "build": (r"build|creat|make|city|cities|town|grid|network|replac|new\b|block|layout|dense|road|street|lane|"
-              r"junction|intersection|roundabout|interchange|slip|delete|remov|move|connect|\d+\s*m\b|\d+\s*km\b",
+    "build": (r"build|city|cities|town|grid|network|replac|new\b|block|layout|dense|road|street|lane|"
+              r"junction|intersection|roundabout|interchange|slip|pocket|delete|remov|move|connect|\d+\s*m\b|\d+\s*km\b",
               ("generate_grid", "add_junction", "add_road", "update_roads", "delete_objects", "move_junctions",
-               "add_boundary_end", "set_junction_control", "build_interchange", "add_slip_road", "build_scenario")),
+               "add_boundary_end", "set_junction_control", "build_interchange", "add_slip_road")),
     "place": (r"\bmap\b|openstreetmap|\bosm\b|background|image|picture|real\b|district|neighbo|suburb",
-              ("place_map", "network_from_background", "build_scenario")),
-    "demand": (r"demand|traffic|trip|\bod\b|matrix|flow|bus(?:y|ier|iest)|heav|light\b|quiet|peak|rush|saturat|veh|"
-               r"hourly|daily|day\b|volume|count|calibrat|gravity|mode|elastic|induced|car\b|cars\b|more\b|less\b|"
-               r"fewer|increas|decreas|double|halve|half|grow",
-               ("read_od_matrix", "generate_demand", "set_od_demand", "scale_demand", "shape_daily_curve",
-                "set_end_flows", "calibrate_demand", "choose_modes", "equilibrate_demand")),
+              ("place_map", "network_from_background")),
+    "demand": (r"dema?nd|traffic|trip|\bod\b|matrix|flow|bus(?:y|ier|iest)|heav|light\b|quiet|peak|rush|satur|veh|"
+               r"hourly|volume|gravity|car\b|cars\b|more\b|less\b|fewer|increas|decreas|double|halve|half|grow|populat",
+               ("read_od_matrix", "generate_demand", "set_od_demand", "scale_demand", "set_end_flows")),
+    # the demand models: each spec is long (choose_modes 2.5k characters), so only words about them offer them
+    "demand_models": (r"\bmodes?\b|mode split|logit|share|fare|calibrat|\bcounts?\b|elastic|induced|equilibr|daily|"
+                      r"\bday\b|curve|profile|24\s*h|weekday",
+                      ("shape_daily_curve", "calibrate_demand", "choose_modes", "equilibrate_demand")),
+    # a whole study in one call; offered when a request has several parts (STUDY_GROUPS) or says it is one
+    "study": (r"stud(?:y|ies)|scenario builder|end.to.end|from scratch", ("build_scenario",)),
     "institutions": (r"institution|instituition|building|school|hospital|office|shop|home|house|resident|people|"
-                     r"dense|land use|employ|catchment|block",
+                     r"populat|dense|land use|employ|catchment|block",
                      ("list_institutions", "deploy_institutions", "place_institution", "update_institution",
                       "institution_mode_split")),
     "run": (r"simulat|\brun|test|result|perform|throughput|delay|speed|queue|slow|congest|jam|how (?:well|bad|good)|"
             r"peak|busiest|worst|live",
             ("run_simulation", "read_results", "analyse_run", "check_run_health", "read_traffic", "compare_runs")),
     "signals": (r"signal|traffic light|timing|phase|cycle|green|webster|transyt|synchro|scats|scoot|actuat|pressure|"
-                r"junction|intersection|slow|\blos\b|level of service|optimi",
+                r"slow|\blos\b|level of service|optimi",
                 ("set_signal_timing", "set_junction_control", "junction_los", "diagnose_signal", "optimise_signals")),
     "experiment": (r"compar|what if|would|does|\bif\b|scenario|experiment|versus|\bvs\b|better|worse|cut|reduc|"
                    r"improv|effect|seed|alternativ|option|worth|cost|benefit|rank|power|robust|weather|rain|incident",
@@ -834,7 +867,8 @@ TOOL_GROUPS = {  # name: (words that point to it, as regex stems; its tools)
                    r"dispatch|research log|complian|sensitiv",
                    ("read_extensions", "set_extension", "schedule_emergency", "start_batch", "replay_run",
                     "test_agent_compliance", "read_decisions", "decision_sensitivity")),
-    "docs": (r"\bcode\b|source|function|module|formula|implement|where does", ("read_source",)),
+    "docs": (r"\bcode\b|source|function|module|formula|implement|where does|how (?:do|can) i\b|how to\b|readme|"
+             r"setup|set up|install|api key|\bkeys?\b|button|menu|shortcut|undo", ("read_source",)),
 }
 # Capitalised words that aren't place names (a request naming a place gets the map's tools)
 _NOT_PLACES = {"Webster", "Synchro", "Transyt", "Scats", "Scoot", "Krauss", "Poisson", "Excel", "Ollama", "Grok",
@@ -851,12 +885,19 @@ def _places_named(request: str) -> bool:
     return False
 
 
+STUDY_GROUPS = {"build", "place", "demand", "run", "signals", "experiment"}  # 3 or more of them: a whole study
+
+
 def tool_groups(text: str) -> list[str]:
-    """The groups whose words the text uses (TOOL_GROUPS), and "place" when it names somewhere."""
+    """The groups whose words the text uses (TOOL_GROUPS), "place" when it names somewhere, and "study" when it
+    touches three or more of STUDY_GROUPS or both builds and tests (build it, run it: build_scenario's kind)."""
     lowered = text.lower()
     found = [name for name, (pattern, _) in TOOL_GROUPS.items() if re.search(pattern, lowered)]
     if "place" not in found and _places_named(text):
         found.append("place")
+    builds, tests = {"build", "place"} & set(found), {"run", "experiment"} & set(found)
+    if "study" not in found and (len(STUDY_GROUPS.intersection(found)) >= 3 or builds and tests):
+        found.append("study")
     return found
 
 
@@ -982,6 +1023,8 @@ def _road_info(network: Network, road: Road) -> dict:
         info["overpass"] = True
     if road.single_lane:
         info["single_lane"] = True
+    if road.pockets:
+        info["turn_pockets"] = road.pockets
     if road.id in network.approach_roads:
         info["boundary_road"] = True
     if _tightest(road):
@@ -1042,6 +1085,11 @@ def build_edge(network: Network, start: str, target: str | None, x: float = 0.0,
         roads = sorted({road_id for *_, road_id in crossings})
         raise ValueError(f"The new road would cross {', '.join(roads)}. Choose crossings='roundabout' "
                          "(a roundabout at each crossing) or 'overpass' (bridge over them).")
+    if crossings and crossing == "roundabout":  # each roundabout's widest entry: the new road's or a crossed road's
+        lanes = max(network.default_lanes_per_direction, *(network.road(road_id).lanes_each_way for *_, road_id in crossings))
+        if lanes > MAX_ENTRY_LANES:
+            raise ValueError(f"A roundabout with {lanes} lanes entering from one road is more than NCHRP Report 672 "
+                             f"designs (up to {MAX_ENTRY_LANES}). Choose crossings='overpass'.")
     junctions = []
     if crossings and crossing == "roundabout":
         for _, cross_x, cross_y, road_id in crossings:
@@ -1205,17 +1253,26 @@ def analyse_network(network: Network) -> dict:
     return findings
 
 
-def read_source(network: Network, path: str = "", start_line: int = 1, end_line: int = 0) -> dict:
+def read_source(network: Network, path: str = "", start_line: int = 1, end_line: int = 0, find: str = "") -> dict:
     del network  # the source, not the network
     found = {*ROOT.glob("*.md"), *ROOT.glob("*.py"), *(ROOT / "src" / "traffic_simulator").glob("*.py"),
              *(ROOT / "tests").glob("*.py"), *(ROOT / "config").glob("*.json"),
              *(ROOT / "docs" / "architecture").glob("*.md")}
     files = sorted(file.relative_to(ROOT).as_posix() for file in found)
+    target = (ROOT / path).resolve() if path else None
+    if target is not None and target not in found:  # also refuses anything outside the project, e.g. "../secrets"
+        raise ToolError(f"Can't read {path!r}. Readable files: {', '.join(files)}")
+    if find:  # the lines holding every word, so a question reads a few lines rather than whole pages
+        words = str(find).lower().split()
+        hits = [{"path": name, "line": number, "text": line.strip()[:200]}
+                for name in ([target.relative_to(ROOT).as_posix()] if target else files)
+                for number, line in enumerate((ROOT / name).read_text(encoding="utf-8").splitlines(), 1)
+                if all(word in line.lower() for word in words)]
+        return {"find": find, "hits": hits[:FIND_HITS], "more": max(len(hits) - FIND_HITS, 0),
+                "next": "read_source with that path, start_line a few lines before the hit and end_line ~30 after"
+                if hits else "No line has all those words: try fewer or other words."}
     if not path:
         return {"files": files}
-    target = (ROOT / path).resolve()
-    if target not in found:  # also refuses anything outside the project, e.g. "../secrets"
-        raise ToolError(f"Can't read {path!r}. Readable files: {', '.join(files)}")
     lines = target.read_text(encoding="utf-8").splitlines()
     start = max(1, _int(start_line or 1))
     end = min(len(lines), _int(end_line or 0) or len(lines), start + READ_LINES - 1)
@@ -1246,12 +1303,15 @@ def set_junction_control(network: Network, junctions, control: str) -> dict:
 
 
 def update_roads(network: Network, roads, lanes_per_direction=None, speed_limit_kmh=None, direction=None,
-                 lane_changing=None, road_type=None, length_m=None, add_lanes=None) -> dict:
+                 lane_changing=None, road_type=None, length_m=None, add_lanes=None, pocket_junction=None,
+                 pocket_lanes=None, pocket_length_m=None, pocket_side=None) -> dict:
     ids = _ids(roads)
     for road_id in ids:
         network.road(road_id)  # KeyError for an unknown road, before anything changes
     if add_lanes is not None and lanes_per_direction is not None:
         raise ValueError("Give add_lanes or lanes_per_direction, not both.")
+    if not pocket_junction and any(value is not None for value in (pocket_lanes, pocket_length_m, pocket_side)):
+        raise ValueError("Name pocket_junction: the end of the road the turn pocket is on the approach to.")
     if direction not in (None, "two-way", "one-way", "reverse"):
         raise ValueError("direction must be 'two-way', 'one-way' or 'reverse'.")
     for road_id in ids:
@@ -1274,7 +1334,15 @@ def update_roads(network: Network, roads, lanes_per_direction=None, speed_limit_
             network.reverse_road(road_id)  # a curve's points and curvature flip too
         if direction:
             road.direction = "two-way" if direction == "two-way" else "one-way"
+            road.pockets = {end: pocket for end, pocket in road.pockets.items() if end in road.arrival_ends()}
         road.single_lane = road.single_lane and road.direction == "one-way" and road.lanes_per_direction == 1
+        if pocket_junction:  # Network.validate (run_tool) checks where it is and that it fits
+            pocket = dict(road.pockets.get(str(pocket_junction), {"lanes": 1, "length_m": 50.0, "side": "kerb"}))
+            pocket.update({key: cast(value) for key, cast, value in (("lanes", _int, pocket_lanes),
+                           ("length_m", float, pocket_length_m), ("side", str, pocket_side)) if value is not None})
+            road.pockets = {**road.pockets, str(pocket_junction): pocket}
+            if not pocket["lanes"]:
+                del road.pockets[str(pocket_junction)]
     return {"updated": [_road_info(network, network.road(road_id)) for road_id in ids]}
 
 
@@ -1373,8 +1441,16 @@ def set_end_flows(network: Network, end: str, supply_vph=None, demand_vph=None) 
     return {"end": end, "supply_vph": node.supply_vph, "demand_vph": node.demand_vph}
 
 
+GRID_SPACING_M = (20.0, 2000.0)  # generate_grid's block length: shorter than a junction, longer than an arterial's
+
+
 def generate_grid(network: Network, horizontal: int, vertical: int, spacing_m=None, driving_side=None,
                   speed_limit_kmh=None, lanes_per_direction=None, lane_changing=None, signal_method=None) -> dict:
+    if spacing_m is not None and not GRID_SPACING_M[0] <= float(spacing_m) <= GRID_SPACING_M[1]:
+        # the stress test's 50,000 x 50,000 m city of 3 x 3 junctions became 12.5 and 50 km blocks
+        raise ToolError(f"spacing_m must be {GRID_SPACING_M[0]:g}-{GRID_SPACING_M[1]:g} m (city blocks are about "
+                        "200-400 m). For a bigger area use more columns and rows, up to 20 each; tell the user the "
+                        "size you can build.")
     fresh = generate_network(
         _int(horizontal), _int(vertical), float(spacing_m or network.default_spacing),
         driving_side or network.driving_side, float(speed_limit_kmh or network.default_speed_limit_kmh),
@@ -2645,8 +2721,11 @@ def normalise(name: str, args) -> dict:
     commas). ToolError, saying what the tool takes, for an unknown or missing argument or a value that
     can't be read, so the model can call again."""
     tool = next((tool for tool in TOOLS if tool["name"] == name), None)
-    if tool is None:
-        raise ToolError(f"There is no tool called {name!r}.")
+    if tool is None:  # small models invent tools for what the app can't do (teleport_vehicles, set_population)
+        close = difflib.get_close_matches(str(name), [tool["name"] for tool in TOOLS], n=3, cutoff=0.6)
+        raise ToolError(f"There is no tool called {name!r}." + (f" Named alike: {', '.join(close)}; use one only if it "
+                        "does what the user asked." if close else "") + " If no tool does it, the app can't do that: "
+                        "tell the user so, or call find_tools with what you need.")
     if args in (None, ""):
         args = {}
     if isinstance(args, str):
@@ -2842,7 +2921,7 @@ def describe_changes(before: Network, after: Network, limit: int = 25) -> list[s
         changes = [f"{label} {getattr(old, key)} → {getattr(new, key)}"
                    for key, label in (("lanes_per_direction", "lanes/direction"), ("speed_limit_kmh", "speed"),
                                       ("direction", "direction"), ("lane_changing", "lane changing"),
-                                      ("road_type", "type"), ("overpass", "overpass"))
+                                      ("road_type", "type"), ("overpass", "overpass"), ("pockets", "turn pockets"))
                    if getattr(old, key) != getattr(new, key)]
         if (old.from_node, old.to_node) == (new.to_node, new.from_node):
             changes.append(f"now runs {new.from_node} → {new.to_node}")
@@ -2940,7 +3019,8 @@ def describe_call(name: str, args: dict) -> str:
     if name == "update_roads":
         labels = {"lanes_per_direction": "lanes/direction", "add_lanes": "lanes added each way", "speed_limit_kmh": "speed (km/h)",
                   "direction": "direction", "lane_changing": "lane changing", "road_type": "type",
-                  "length_m": "length (m)"}
+                  "length_m": "length (m)", "pocket_junction": "turn pocket at", "pocket_lanes": "pocket lanes",
+                  "pocket_length_m": "pocket length (m)", "pocket_side": "pocket side"}
         changes = ", ".join(f"{label} → {a[key]}" for key, label in labels.items() if a.get(key) is not None)
         return f"Change road {listed('roads')}: {changes or 'nothing'}"
     if name == "add_junction":
@@ -3085,6 +3165,8 @@ def describe_call(name: str, args: dict) -> str:
         split = a.get("mode_split")
         parts = [f"{a['value']} {unit}" if a.get("value") is not None else "",
                  f"{a['arrival_pattern']} arrivals" if a.get("arrival_pattern") else "",
+                 f"peak-hour factor {a['peak_hour_factor']}" if a.get("peak_hour_factor") is not None else
+                 "15-minute quarters" if a.get("quarters") is not None else "",
                  " · ".join(f"{mode} {share}%" for mode, share in _split_items(split))]
         return f"Set {a.get('demand', '')} demand for {which}: {', '.join(p for p in parts if p) or 'no change'}"\
             .replace("Set  demand", "Set demand")

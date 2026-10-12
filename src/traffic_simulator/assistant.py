@@ -55,11 +55,24 @@ LAYA_LOG = Path(tempfile.gettempdir()) / f"acms-laya-{os.getpid()}.log"  # what 
 PREFERRED = {"grok": ("grok-4",), "gemini": ("gemini-flash-latest", "gemini-2.5-flash")}
 NOT_CHAT = ("imagine", "tts", "image", "banana", "lyria", "embedding")  # image, speech, music models
 API_TIMEOUT_S, LOCAL_TIMEOUT_S = 180, 600  # a local model may first load from disk
+STALL_TIMEOUT_S = 90  # once a reply streams, a server silent this long has stalled: fail now, not after the above
 MAX_TOOL_ROUNDS = 12  # tool calls and replies in one answer before giving up
-WARM_UP = ("In one or two sentences, confirm you have read README.md and ARCHITECTURE.md "
+# The context budget, in tokens. Past its window a model fails quietly (Ollama cuts the reply off, or drops the start
+# of the prompt: the instructions and documents), so every request is trimmed to fit first (fit). ACMS_NUM_CTX sets a
+# local model's window (default 32k, what an 8 GB GPU holds for a 4B model; 16384 for a 12B one).
+try:
+    LOCAL_CONTEXT_TOKENS = max(4096, int(os.environ.get("ACMS_NUM_CTX") or 32768))
+except ValueError:
+    LOCAL_CONTEXT_TOKENS = 32768
+API_CONTEXT_TOKENS = 131072  # hosted models' windows are larger; this keeps their cost per request bounded too
+REPLY_TOKENS = 4096  # kept free for the reply
+CHARS_PER_TOKEN = 3.0  # on the safe side: JSON and code run near 3 characters a token, prose 4-5
+STUB = '{"note": "an earlier tool result, left out to fit the context window"}'
+CUT = " ... (cut to fit the context window: ask for less, e.g. one road, or a line range)"
+WARM_UP = ("In one or two sentences, confirm you have read the documents "
            "and say what you can help with.")
 RESUME = ("You are joining this conversation now, restored from the project. In one or two "
-          "sentences, confirm you have read README.md, ARCHITECTURE.md and the conversation, "
+          "sentences, confirm you have read the documents and the conversation, "
           "and say where we left off.")
 EDITOR_NOTE = (
     "\n\nThe user edits the network alongside you. Their messages may start with an [Editor "
@@ -108,6 +121,13 @@ TOOLS_NOTE = (
     "replications_needed is above the seeds run, say more seeds are needed."
     "\n- \"why is junction X slow\": run_simulation if there is no run yet, then diagnose_signal (a signal) or "
     "junction_los."
+    "\n- \"more people\", \"increase the population\": there is no population figure. With institutions "
+    "(list_institutions), update_institution raises their people; else scale_demand. Say which you used and that "
+    "trips, not residents, are what changed."
+    "\n- Things the app doesn't have (a metro, a harbour, an airport, a stadium, a university, weather on the "
+    "open network, deaths): say so in one line. Don't put something else in their place, and don't call a tool "
+    "that doesn't exist. When a number is past a tool's limit, tell the user the limit and do what fits only once "
+    "they agree."
     "\n- A question about an idea (\"what is a level of service?\"): answer from the documents, no tools."
     "\n\nGrid junction '1,1' is the bottom-left one; positions are metres with x to the right and y downward. Name "
     "only OD pairs the matrix has (read_od_matrix), none for every pair. While the user's run goes, read_traffic shows "
@@ -141,10 +161,15 @@ class ToolsUnsupported(AssistantError):
     """This local model can't call tools; chat without them."""
 
 
+README_NOTE = ("\n\nREADME.md (setup, keys, the editor's controls, the Research Log) isn't included here: call "
+               "read_source with path README.md when the user asks how to use the app.")
+
+
 def system_prompt(tools: bool = True) -> str:
-    """The instructions plus both documents, in full."""
+    """The instructions plus the documents in full: both without tools; with tools only ARCHITECTURE.md (README.md
+    is a quarter of every request's input, and read_source fetches it when a question needs it)."""
     parts = []
-    for name in DOCS:
+    for name in DOCS if not tools else DOCS[1:]:
         try:
             parts.append(f"<document name=\"{name}\">\n{(ROOT / name).read_text(encoding='utf-8')}\n</document>")
         except OSError as exc:
@@ -156,7 +181,7 @@ def system_prompt(tools: bool = True) -> str:
         "module, function or source you rely on. If the documents don't cover something, "
         "say so instead of guessing. Quote formulas, numbers and sources exactly as the "
         "documents give them; never make up a formula. Keep answers short unless asked for detail."
-        + EDITOR_NOTE + (TOOLS_NOTE if tools else "") + "\n\n" + "\n\n".join(parts)
+        + EDITOR_NOTE + (TOOLS_NOTE + README_NOTE if tools else "") + "\n\n" + "\n\n".join(parts)
     )
 
 
@@ -268,9 +293,17 @@ def _events(url: str, payload: dict, headers: dict | None = None, timeout_s: flo
     sockets, finished = [], threading.Event()
     if cancelled:
         threading.Thread(target=_cut_when, args=(cancelled, sockets, finished), daemon=True).start()
+    limit = timeout_s
     try:
         with _open(url, payload, headers, timeout_s, local, sockets) as reply:
             for raw in reply:
+                if limit > STALL_TIMEOUT_S:  # the first words came: a later silence is a stall, not a slow start
+                    limit = STALL_TIMEOUT_S
+                    for sock in sockets:
+                        try:
+                            sock.settimeout(limit)
+                        except OSError:
+                            pass
                 if cancelled and cancelled():
                     raise Cancelled("Stopped.")
                 line = raw.decode("utf-8").strip()
@@ -292,7 +325,7 @@ def _events(url: str, payload: dict, headers: dict | None = None, timeout_s: flo
             raise
         if isinstance(exc, ValueError):
             raise AssistantError(f"{urlsplit(url).netloc} sent a reply that isn't JSON.") from exc
-        raise _network_error(url, exc, timeout_s) from exc
+        raise _network_error(url, exc, limit) from exc
     finally:
         finished.set()
     if cancelled and cancelled():  # the cut socket read as the end of the reply
@@ -442,6 +475,52 @@ def _arguments(value) -> dict:
     return parsed if isinstance(parsed, dict) else {"_unreadable_arguments": str(value)}
 
 
+def _chars(message: dict) -> int:
+    """What a message adds to a request: its words and its tool calls (a model's thinking isn't sent back)."""
+    calls = message.get("tool_calls")
+    return len(message.get("content") or "") + (len(json.dumps(calls, default=str)) if calls else 0)
+
+
+def fit(messages: list[dict], tokens: int, tools: list[dict] | None = None) -> list[dict]:
+    """`messages` cut to about `tokens` with the tools' schemas, so a request never overflows the model's window:
+    older exchanges' tool results become a stub first, then the oldest exchanges go whole (a user message and
+    everything after it up to the next, so each tool call keeps its result), then the current exchange's longest
+    tool results are cut. The system prompt and the latest user message always stay; the list passed in is never
+    changed. A request that still doesn't fit is sent as it is."""
+    budget = tokens * CHARS_PER_TOKEN - len(json.dumps(tools or []))
+
+    def size(part: list[dict]) -> int:
+        return sum(_chars(message) for message in part)
+
+    if size(messages) <= budget:
+        return messages
+    system = [message for message in messages[:1] if message["role"] == "system"]
+    rest = messages[len(system):]
+    starts = [0] + [i for i, message in enumerate(rest) if message["role"] == "user" and i > 0]
+    turns = [rest[a:b] for a, b in zip(starts, starts[1:] + [len(rest)])]
+    older = [[{**m, "content": STUB} if m["role"] == "tool" and len(m.get("content") or "") > len(STUB) else m
+              for m in turn] for turn in turns[:-1]]
+    current = list(turns[-1]) if turns else []
+    dropped = 0
+    while older and size(system) + sum(size(turn) for turn in older) + size(current) > budget:
+        older.pop(0)
+        dropped += 1
+    if dropped and system:
+        system = [{**system[0], "content": system[0]["content"] + f"\n\n({dropped} earlier exchange"
+                   f"{'s were' if dropped > 1 else ' was'} left out to fit the model's context window.)"}]
+    kept = [message for turn in older for message in turn]
+    over = size(system) + size(kept) + size(current) - budget
+    for i in sorted((i for i, m in enumerate(current) if m["role"] == "tool"), key=lambda i: -len(current[i]["content"])):
+        if over <= 0:
+            break
+        text = current[i]["content"]
+        keep = max(len(text) - int(over) - len(CUT), 200)
+        if keep < len(text):
+            current[i] = {**current[i], "content": text[:keep] + CUT}
+            over -= len(text) - keep - len(CUT)
+    return system + kept + current
+
+
 def context_size(tokens: int) -> int:
     """Ollama's num_ctx for about `tokens`: the next of 16k, 32k, 64k... A request with another num_ctx reloads the
     model and drops its cache of the prompt read so far, so a size that only steps up now and then lets every
@@ -454,10 +533,15 @@ def context_size(tokens: int) -> int:
 
 
 def stream_chat(provider: str, model: str, messages: list[dict], key: str = "", tools: list[dict] | None = None,
-                on_text=None, cancelled=None, think: bool | None = None) -> dict:
+                on_text=None, cancelled=None, think: bool | None = None, require: list[str] | None = None) -> dict:
     """The model's next message (see the module docstring), passing text to `on_text` as it
     streams in. `tools` are network_tools.tool_specs() entries; `cancelled()` stops early. `think` False: an
-    Ollama thinking model answers without thinking first (None: as the model does by default)."""
+    Ollama thinking model answers without thinking first (None: as the model does by default). `require`: tool
+    names it must call one of, for Gemini (function calling mode ANY) and xAI (tool_choice); Ollama has no such
+    option and is only asked."""
+    require = [name for name in require or [] if any(tool["name"] == name for tool in tools or [])]
+    window = LOCAL_CONTEXT_TOKENS if provider == "local" else API_CONTEXT_TOKENS
+    messages = fit(messages, window - REPLY_TOKENS, tools)
     started, first = time.monotonic(), None
     tokens = {"input_tokens": None, "output_tokens": None, "cached_tokens": None}
 
@@ -476,6 +560,8 @@ def stream_chat(provider: str, model: str, messages: list[dict], key: str = "", 
     if provider == "gemini":
         raw = []
         request = _gemini_request(messages, tools)
+        if require:
+            request["toolConfig"] = {"functionCallingConfig": {"mode": "ANY", "allowedFunctionNames": require}}
         for event in _events(f"{GEMINI_URL}/models/{model}:streamGenerateContent?alt=sse",
                              request, {"x-goog-api-key": key}, cancelled=cancelled):
             candidate = (event.get("candidates") or [{}])[0]
@@ -503,6 +589,9 @@ def stream_chat(provider: str, model: str, messages: list[dict], key: str = "", 
                    "stream_options": {"include_usage": True}}  # else xAI streams no token counts
         if tools:
             payload["tools"] = [{"type": "function", "function": tool} for tool in tools]
+        if require:
+            payload["tool_choice"] = {"type": "function", "function": {"name": require[0]}} if len(require) == 1 \
+                else "required"
         pending: dict[int, dict] = {}
         for event in _events(f"{XAI_URL}/chat/completions", payload, {"Authorization": f"Bearer {key}"},
                              cancelled=cancelled):
@@ -527,11 +616,11 @@ def stream_chat(provider: str, model: str, messages: list[dict], key: str = "", 
                  for index, slot in sorted(pending.items())]
         reply = {"role": "assistant", "content": "".join(text), "tool_calls": calls}
     else:
-        # Ollama's default context window is a few thousand tokens and silently cuts off the
-        # documents; size it to the conversation (about 3 characters a token) plus room to reply.
-        size = (sum(len(message["content"]) for message in messages) + len(json.dumps(tools or []))) // 3 + 4096
+        # Ollama's default context window is a few thousand tokens and silently cuts off the documents; size it to
+        # the request (fit has already kept it within LOCAL_CONTEXT_TOKENS) plus room to reply, never past the cap.
+        size = int((sum(_chars(message) for message in messages) + len(json.dumps(tools or []))) / CHARS_PER_TOKEN)
         payload = {"model": model, "messages": _openai_messages(messages, ollama=True), "stream": True,
-                   "options": {"num_ctx": context_size(size)}}
+                   "options": {"num_ctx": min(context_size(size + REPLY_TOKENS), LOCAL_CONTEXT_TOKENS)}}
         if tools:
             payload["tools"] = [{"type": "function", "function": tool} for tool in tools]
         if think is not None:
@@ -541,7 +630,8 @@ def stream_chat(provider: str, model: str, messages: list[dict], key: str = "", 
                                  cancelled=cancelled):
                 if event.get("done"):
                     tokens.update(input_tokens=event.get("prompt_eval_count"), output_tokens=event.get("eval_count"),
-                                  cached_tokens=event.get("prompt_eval_cached_count"))
+                                  cached_tokens=event.get("prompt_eval_cached_count"),
+                                  done_reason=event.get("done_reason"), num_ctx=payload["options"]["num_ctx"])
                 message = event.get("message") or {}
                 if message.get("thinking"):  # a thinking model's reasoning, sent apart from its answer
                     thoughts.append(message["thinking"])
@@ -556,6 +646,9 @@ def stream_chat(provider: str, model: str, messages: list[dict], key: str = "", 
             if tools and "does not support tools" in str(exc):
                 raise ToolsUnsupported(f"{model} can't use tools.") from exc
             raise
+        if tokens.get("done_reason") == "length" and text:  # the window filled mid-reply: say so, not a silent cut
+            text.append("\n\n(Cut off: the model's context window is full. Start a new chat, or ask for less.)")
+            say(text[-1])
         reply = {"role": "assistant", "content": "".join(text), "tool_calls": calls}
     if thoughts:
         reply["thinking"] = "".join(thoughts)
@@ -564,11 +657,17 @@ def stream_chat(provider: str, model: str, messages: list[dict], key: str = "", 
     if not reply["content"] and "tool_calls" not in reply:
         raise NoAnswer(f"{PROVIDER_NAMES.get(provider, provider)} sent no answer.")
     total = time.monotonic() - started
-    USAGE.append({"provider": provider, "model": model, "at": time.time(), "first_s": first if first is not None
-                  else total, "total_s": total, **tokens})  # tool calls only: "first" is when they came
-    _last.usage = USAGE[-1]
-    del USAGE[:-500]
+    _record({"provider": provider, "model": model, "at": time.time(), "first_s": first if first is not None
+             else total, "total_s": total, **tokens})  # tool calls only: "first" is when they came
     return reply
+
+
+def _record(usage: dict) -> None:
+    """One request's figures: this thread's own last (never another thread's, read back from the list: a batch's
+    runs ask side by side), then the session's list."""
+    _last.usage = usage
+    USAGE.append(usage)
+    del USAGE[:-500]
 
 
 def last_usage() -> dict:
@@ -622,16 +721,20 @@ def planned_tools(plan: str, names) -> list[str]:
 
 def calls_in_text(text: str, tools: list[dict]) -> list[dict]:
     """Tool calls a model wrote as text instead of making them (llama3.1 often does: `{"name": "describe",
-    "parameters": {"id": "2,2"}}`): each JSON object naming a tool offered, with its arguments as an object."""
+    "parameters": {"id": "2,2"}}`): each JSON object naming a tool offered, with its arguments as an object; and each
+    shaped as a call (a name and a parameters or arguments object) naming a tool that isn't offered or doesn't exist
+    (llama3.2 3B wrote `teleport_vehicles` as its answer), so the app refuses it and the model must answer instead."""
     names, calls, decoder, start = {tool["name"] for tool in tools}, [], json.JSONDecoder(), text.find("{")
     while start != -1:
         try:
             found, end = decoder.raw_decode(text, start)
         except ValueError:
             found, end = None, start + 1
-        if isinstance(found, dict) and found.get("name") in names:
+        if isinstance(found, dict) and isinstance(found.get("name"), str):
+            shaped = "parameters" in found or "arguments" in found
             arguments = found.get("parameters", found.get("arguments", {}))
-            if isinstance(arguments, dict):
+            if isinstance(arguments, dict) and (found["name"] in names or
+                                                (shaped and re.fullmatch(r"[a-z][a-z0-9_]{2,}", found["name"]))):
                 calls.append({"id": f"text{len(calls) + 1}", "name": found["name"], "arguments": arguments})
         start = text.find("{", end)
     return calls
@@ -641,17 +744,19 @@ MALFORMED = ("syntax error", "error parsing", "failed to parse")  # Ollama could
 NUDGE = "(The app: carry on. Call the next tool you planned, or answer the user.)"
 
 
-def _next_reply(provider, model, messages, key, tools, on_text, cancelled) -> dict | None:
+def _next_reply(provider, model, messages, key, tools, on_text, cancelled, require=None) -> dict | None:
     """The model's next message; for a local model that sends nothing (all of it in its thinking) or a tool call
     Ollama can't parse (qwen3.5 4B: "XML syntax error"), asked again without thinking, then once more with a
-    nudge (left in `messages`). None if it still can't: the caller ends the answer."""
+    nudge (left in `messages`). None if it still can't: the caller ends the answer. `require`: tool names it must
+    call one of (stream_chat)."""
     attempts = [{}] if provider != "local" else [{}, {"think": False}, {"think": False, "nudge": True}]
     for attempt in attempts:
         if attempt.get("nudge"):
             messages.append({"role": "user", "content": NUDGE})
         try:
             return stream_chat(provider, model, messages, key, tools, on_text, cancelled,
-                               **({"think": attempt["think"]} if "think" in attempt else {}))
+                               **({"think": attempt["think"]} if "think" in attempt else {}),
+                               **({"require": require} if require else {}))
         except NoAnswer:
             if provider != "local":
                 raise
@@ -670,12 +775,14 @@ def converse(provider: str, model: str, messages: list[dict], key: str = "", too
     wait there for the user's approval.
     """
     messages = list(messages)
-    start, reminded = len(messages), False
+    start, reminded, require = len(messages), 0, None
     failed = set()  # calls that came back with an error: made again unchanged, they aren't run (small models loop)
+    outcomes = []  # each call's result: True ran, False refused
     for _ in range(MAX_TOOL_ROUNDS):
-        reply = _next_reply(provider, model, messages, key, tools, on_text, cancelled)
+        reply = _next_reply(provider, model, messages, key, tools, on_text, cancelled, require)
+        require = None
         if reply is None:  # a local model that kept failing to say anything: end with what was done, not an error
-            return _ended(messages, "the model stopped without a reply")
+            return _ended(messages, "the model stopped without a reply", on_text)
         if "tool_calls" not in reply and tools:
             calls = calls_in_text(reply.get("content") or "", tools)
             if calls:
@@ -689,11 +796,21 @@ def converse(provider: str, model: str, messages: list[dict], key: str = "", too
                 on_text(text)
         messages.append(reply)
         if "tool_calls" not in reply:
-            missing = [] if reminded or not tools else unfinished(messages[start:], {tool["name"] for tool in tools})
+            # reminded once; a reply that is only a plan, up to 3 times (each such reminder requires the call)
+            plan_only = _only_a_plan(reply.get("content"))
+            missing = [] if reminded >= (3 if plan_only else 1) or not tools else \
+                unfinished(messages[start:], {tool["name"] for tool in tools})
             if not missing:
+                if outcomes and not any(outcomes):  # llama3.2 3B claimed success after every call was refused
+                    note = REFUSED_NOTE
+                    reply["content"] = (reply.get("content") or "").rstrip() + "\n\n" + note
+                    if on_text:
+                        on_text("\n\n" + note)
                 return messages
-            reminded = True  # once: its own plan named tools it never called (the second part of a request, often)
+            reminded += 1  # its own plan named tools it never called (the second part of a request, often)
             messages.append({"role": "user", "content": FOLLOW_THROUGH.format(", ".join(missing))})
+            if not outcomes or plan_only:  # a plan, then the turn ended (Gemini 3.5 Flash Lite, again when only
+                require = missing          # reminded): a call, required
             continue
         for call in reply["tool_calls"]:
             same = (call["name"], json.dumps(call.get("arguments"), sort_keys=True, default=str))
@@ -704,29 +821,42 @@ def converse(provider: str, model: str, messages: list[dict], key: str = "", too
                 result = run_tool(call) if run_tool else {"error": "Tools aren't available here."}
                 if isinstance(result, dict) and "error" in result:
                     failed.add(same)
+            if call["name"] not in ("find_tools", "note_plan"):  # bookkeeping, not doing
+                outcomes.append(not (isinstance(result, dict) and "error" in result))
             messages.append({"role": "tool", "id": call["id"], "name": call["name"],
                              "content": json.dumps(result)})
-    return _ended(messages, f"it made {MAX_TOOL_ROUNDS} rounds of tool calls without answering, so the app stopped it")
+    return _ended(messages, f"it made {MAX_TOOL_ROUNDS} rounds of tool calls without answering, so the app stopped it",
+                  on_text)
 
 
 ANSWER_TOOLS = ("answer", "respond", "reply", "final_answer", "say")  # tools small models invent for their reply
 FOLLOW_THROUGH = ("(The app: your Plan named {} but you haven't called it. Call it now for that part of the "
                   "request, or say in one line why it isn't needed.)")
+REFUSED_NOTE = "(The app: every tool call in this answer was refused, so nothing was changed.)"
+
+
+def _only_a_plan(text: str | None) -> bool:
+    """Whether a reply is a Plan: line and nothing else (no answer, no reason a step isn't needed)."""
+    return bool(plan_line([text])) and not re.sub(r"(?im)^[\s*_#>-]*plan[\s*_]*:.*$", "", text or "").strip()
 
 
 def unfinished(answer: list[dict], names) -> list[str]:
-    """Tools the answer's own Plan: line names (`names`: those it could call) that it never called."""
-    said = [m.get("content") or "" for m in answer if m.get("role") == "assistant"]
+    """Tools the answer's own Plan: lines name (`names`: those it could call) that it never called; every line, not
+    only the first (Gemini planned list_institutions, called it, then planned scale_demand and stopped)."""
+    said = "\n".join(m.get("content") or "" for m in answer if m.get("role") == "assistant")
+    plans = " ".join(re.findall(r"(?im)^[\s*_#>-]*plan[\s*_]*:[\s*_]*(.+)$", said))
     called = {call["name"] for m in answer if m.get("role") == "assistant" for call in m.get("tool_calls") or []}
-    return [name for name in planned_tools(plan_line(said), names) if name not in called]
+    return [name for name in planned_tools(plans, names) if name not in called]
 
 
-def _ended(messages: list[dict], why: str) -> list[dict]:
+def _ended(messages: list[dict], why: str, on_text=None) -> list[dict]:
     """The answer ended by the app, not the model: a note of why and of the tools that ran, as the last reply (the
-    step keeps its record and the user sees what was done)."""
+    step keeps its record and, through `on_text`, the user sees what was done)."""
     done = [m["name"] for m in messages if m.get("role") == "tool" and not m.get("content", "").startswith('{"error"')]
-    messages.append({"role": "assistant", "content": f"(The app: {why}."
-                     + (f" What ran: {', '.join(done)}.)" if done else " Nothing ran.)")})
+    note = f"(The app: {why}." + (f" What ran: {', '.join(done)}.)" if done else " Nothing ran.)")
+    messages.append({"role": "assistant", "content": note})
+    if on_text:
+        on_text("\n\n" + note)
     return messages
 
 
@@ -834,11 +964,9 @@ def system_one(provider: str, state, questions: dict, key: str = "", timeout_s: 
     if not isinstance(reply.get("answers"), dict):
         raise AssistantError(f"{PROVIDER_NAMES[provider]} sent no answers.")
     total, usage = time.monotonic() - started, reply.get("usage") or {}
-    USAGE.append({"provider": provider, "model": reply.get("model", SYSTEM_ONE_MODEL), "at": time.time(),
-                  "first_s": total, "total_s": total, "input_tokens": usage.get("input_tokens"),
-                  "output_tokens": usage.get("output_tokens"), "cached_tokens": None})
-    _last.usage = USAGE[-1]
-    del USAGE[:-500]
+    _record({"provider": provider, "model": reply.get("model", SYSTEM_ONE_MODEL), "at": time.time(),
+             "first_s": total, "total_s": total, "input_tokens": usage.get("input_tokens"),
+             "output_tokens": usage.get("output_tokens"), "cached_tokens": None})
     return reply
 
 

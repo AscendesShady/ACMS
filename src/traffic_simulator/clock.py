@@ -56,6 +56,10 @@ class SimulationClock(QObject):
         self.time_s = 0.0
         self.ticked.emit(self.time_s)
 
+    def set_step_ms(self, ms: int) -> None:
+        """Milliseconds between steps (STEP_MS; Power Saver's twice that): the time each covers follows."""
+        self._timer.setInterval(ms)
+
     def _step(self) -> None:
         now = time.monotonic()
         self.advance((now - self._last) * self.speed)

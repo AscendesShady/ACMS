@@ -74,6 +74,38 @@ def test_junction_level_of_service_on_a_real_run():
     delays = [j["control_delay_s"] for j in found["junctions"]]
     assert delays == sorted(delays, reverse=True)
     assert found["periods"] is None  # 20 min: one whole 15-min period, and a grid needs two
+    assert all(entry[5] > 0 for entry in observed["traversal_log"][:50])  # each with its own free-flow time
+
+
+def test_control_delay_is_against_each_vehicles_own_free_flow():
+    """A bicycle crossing in its own free-flow time (20 km/h) has no control delay, though slower than the limit; a
+    log from before the free-flow time falls back on the approach's (the limit, then the mean turn)."""
+    observed = {"links": {"a": {"to": "1,1", "free_s": 10.0, "cross_s": 2.0}}, "controls": {"1,1": "signalised"},
+                "traversal_log": [("a", 0.0, 30.0, "Bike", "Bike1", 30.0), ("a", 5.0, 15.0, "Car", "Car2")]}
+    assert analysis._approach_delays(observed)["a"] == [(30.0, 0.0), (20.0, 3.0)]
+
+
+def test_roundabout_entries_report_simulated_and_hcm_capacity():
+    """A roundabout's approaches: the flow circulating in front of each entry (the movements whose ring passes it),
+    the capacity measured on the simulated drivers against it, and the HCM 6 entry capacity beside it."""
+    from math import exp
+
+    network = generate_network(1, 1, lanes_per_direction=1)
+    network.node("1,1").control = "roundabout"
+    ends = sorted(network.approach_nodes)
+    demand = [PairDemand(o, d, 150.0, None, [], "Random", (100,)) for o in ends for d in ends if o != d]
+    modes = [VehicleMode("Car", "#888888")]
+    recorder = results.RunRecorder(network, modes, folder=Path(tempfile.mkdtemp()) / "run")
+    simulation, recorder = experiments.run_headless(network, demand, modes, 1, 15 * 60, recorder=recorder, observe=True)
+    kpis = recorder.kpis()
+    kpis["observed"] = {**recorder.observed(), **simulation.observations()}
+    junction, = analysis.junction_los(kpis)["junctions"]
+    assert junction["control"] == "roundabout" and len(junction["approaches"]) == 4
+    for approach in junction["approaches"]:
+        vc = approach["circulating_vph"]
+        assert 200 < vc < 700  # two or three of the other arms' movements pass each entry, 150 veh/h each
+        assert abs(approach["hcm_capacity_vph"] - 1380 * exp(-0.00102 * vc)) <= 1
+        assert approach["capacity_vph"] > approach["flow_vph"] and approach["v_c"] < 1
 
 
 def test_signal_diagnosis_on_a_real_run():

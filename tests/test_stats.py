@@ -44,9 +44,11 @@ def test_calibration_scores_logit_and_reliability():
     assert stats.fit([(100, 100)] * 3)["rmse_vph"] == 0 and round(stats.geh(400, 600), 2) == 8.94
     shares = stats.logit({"Car": -0.5, "Bus": -1.5})
     assert abs(sum(shares.values()) - 1) < 1e-12 and abs(shares["Car"] - 1 / (1 + 2.718281828 ** -1)) < 1e-6
-    assert stats.reliability([(100, 0)] * 10) == {"tti": 1.0, "pti": 1.0}  # no delay: free flow
+    assert stats.reliability([(100, 0)] * 10) == {"tti": 1.0, "pti": 1.0, "bi": 0.0}  # no delay: free flow
     assert stats.reliability([(200, 100)] * 19 + [(400, 300)])["pti"] > stats.reliability([(200, 100)] * 20)["pti"]
-    assert stats.reliability([]) == {"tti": None, "pti": None}
+    assert stats.reliability([]) == {"tti": None, "pti": None, "bi": None}
+    # Buffer index, mean-based: nine free trips and one taking 3× free; ratios' 95th percentile 2.1, mean 1.2
+    assert stats.reliability([(100, 0)] * 9 + [(300, 200)]) == {"tti": 1.2, "pti": 2.1, "bi": 0.75}
 
 
 def test_anova_signed_rank_and_regressions():

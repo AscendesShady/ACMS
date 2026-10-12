@@ -29,8 +29,8 @@ from PySide6.QtWidgets import (
 from . import gpu
 from .geometry import nearest_along, offset_polyline, point_along, polyline_length, sub_polyline
 from .institutions import KINDS, Placement, links
-from .models import (BAY_ENTRY_M, BAY_LENGTH_M, BAY_STOP_M, BAY_WIDTH_M, LANE_WIDTH_M, BusStop, Institution, Network,
-                     Node, Road, bay_depth, stop_line_inset)
+from .models import (BAY_ENTRY_M, BAY_LENGTH_M, BAY_STOP_M, BAY_WIDTH_M, LANE_WIDTH_M, POCKET_TAPER_M, BusStop,
+                     Institution, Network, Node, Road, bay_depth, stop_line_inset)
 from .properties_panel import ICON_FONTS
 from .roundabouts import design_roundabout
 from .signal_timing import ADAPTIVE, STOP_LINE_LOOP_M, UPSTREAM_LOOP_AT_M, UPSTREAM_LOOP_M
@@ -54,6 +54,10 @@ BUS_STOP_PAINT = QColor("#f7cf28")  # bay markings and the stop's flag
 DETECTOR_COLOR = QColor("#8fdcf5")  # loop detectors' outlines
 BUILDING_COLOR = QColor("#8a7a66")  # an institution's roof
 BUS_STOP_NUDGE_M, BUS_STOP_SHIFT_NUDGE_M = 0.5, 5.0  # an arrow key's step, and with Shift
+VEHICLE_Z = 8  # the vehicle layer: above roads and signals, below labels and end markers
+# Item data key: the item is in the still layer, what rebuild() draws under the vehicles (but the
+# signal lamps). During a run the view caches it with the background (NetworkGraphicsScene.cache_still).
+STILL = 1
 
 
 def _screen_pen(color: QColor, pixels: float) -> QPen:
@@ -85,6 +89,7 @@ class NetworkGraphicsScene(QGraphicsScene):
     redrawn = Signal()  # after every rebuild(), which clears the scene: extensions draw again
     placement_changed = Signal()  # the building being placed moved, was set down or its circle changed
     placed = Signal()  # the second click: `placing` is where it goes and how far its circle reaches
+    still_cached_changed = Signal(bool)  # a run started (the still layer is cached) or ended
 
     def __init__(self, network: Network | None = None) -> None:
         super().__init__()
@@ -119,6 +124,7 @@ class NetworkGraphicsScene(QGraphicsScene):
         self.placing: Placement | None = None
         self._zone: tuple | None = None  # the selected institution's (x, y, radius, links)
         self.hidden = False  # the whole network hidden: the background's place or scale is set first
+        self.still_cached = False  # a run is on: the still layer is drawn once, with the background
 
     def set_network(self, network: Network) -> None:
         self.network = network
@@ -310,6 +316,13 @@ class NetworkGraphicsScene(QGraphicsScene):
         self.network_rect = bounds  # what Fit Network fits (the vehicle layer covers the whole scene)
         rect = bounds.adjusted(-margin, -margin, margin, margin)
         self.setSceneRect(self.extent(rect) if self.extent else rect)  # with the background's image or map
+        for item in self.items():  # extensions' items come later (redrawn): they never join it
+            if item.zValue() < VEHICLE_Z:
+                item.setData(STILL, True)
+        for lamp, _ in self.signal_lamps.values():
+            lamp.setData(STILL, False)  # a run lights them each frame
+        if self.still_cached:
+            self._hold_still()
         self.vehicle_layer = VehicleLayer(self)
         self.addItem(self.vehicle_layer)
         states, self._signal_states = self._signal_states, None
@@ -333,8 +346,45 @@ class NetworkGraphicsScene(QGraphicsScene):
         """Draw a published frame of a run (None: no run): vehicles part way to their latest
         step, signals lit. Frames the physics published in between are simply skipped."""
         self.frame, self.frame_alpha = frame, alpha
+        self.cache_still(frame is not None)
         self.show_signals(frame.signals if frame else None)
         self.vehicle_layer.update()
+
+    def cache_still(self, on: bool) -> None:
+        """During a run the still layer is drawn once with the background (drawBackground) and the view
+        keeps it (QGraphicsView.CacheBackground) until the view moves or zooms or the map is rebuilt, so a
+        display frame draws only what moves. Its items still take clicks and tooltips; they just don't
+        paint themselves. Edit mode, with no frames to draw, paints them as ever."""
+        if on != self.still_cached:
+            self.still_cached = on
+            self._hold_still()
+            self.still_cached_changed.emit(on)
+
+    def _hold_still(self) -> None:
+        for item in self.items():
+            if item.data(STILL):
+                item.setFlag(QGraphicsItem.GraphicsItemFlag.ItemHasNoContents, self.still_cached)
+        self.invalidate(self.sceneRect(), QGraphicsScene.SceneLayer.BackgroundLayer)  # the views' caches
+
+    def drawBackground(self, painter: QPainter, rect: QRectF) -> None:  # type intentionally inherited from Qt
+        super().drawBackground(painter, rect)
+        self.paint_still(painter, rect)
+
+    def paint_still(self, painter: QPainter, rect: QRectF) -> None:
+        """While a run is on: the still layer's items over `rect`, in their stacking order."""
+        if not self.still_cached:
+            return
+        t = painter.worldTransform()
+        pad = 4 / max(hypot(t.m11(), t.m12()), 1e-9)  # screen-sized outlines reach a few pixels past an item
+        option = QStyleOptionGraphicsItem()
+        for item in self.items(rect.adjusted(-pad, -pad, pad, pad), Qt.ItemSelectionMode.IntersectsItemBoundingRect,
+                               Qt.SortOrder.AscendingOrder):
+            if item.data(STILL) and item.isVisible():
+                option.exposedRect = item.boundingRect()
+                painter.save()
+                painter.setTransform(item.sceneTransform(), True)
+                item.paint(painter, option)
+                painter.restore()
 
     def _keep_side(self) -> float:
         """+1 when traffic keeps left, -1 when it keeps right."""
@@ -400,6 +450,8 @@ class NetworkGraphicsScene(QGraphicsScene):
             marking.setPen(pen)
             marking.setZValue(2 + lift)
             self.addItem(marking)
+        for end, pocket in road.pockets.items():
+            self._draw_pocket(road, points, end, pocket, lift)
 
         # Stop lines cross only the lanes arriving at each junction end. Traffic
         # travelling along the road (u) keeps to -n on the left, so arrivals at
@@ -421,12 +473,13 @@ class NetworkGraphicsScene(QGraphicsScene):
         stops = []
         if (to_end := stop_at(road.to_node)) is not None:
             x, y, back_x, back_y = point_along(points[::-1], to_end[0])
-            stops.append((x, y, -back_x, -back_y, -side, to_end[1]))
+            stops.append((x, y, -back_x, -back_y, -side, to_end[1], road.to_node))
         if not one_way and (from_end := stop_at(road.from_node)) is not None:
-            stops.append((*point_along(points, from_end[0]), side, from_end[1]))
-        for anchor_x, anchor_y, ux, uy, lane_side, give_way in stops:
+            stops.append((*point_along(points, from_end[0]), side, from_end[1], road.from_node))
+        for anchor_x, anchor_y, ux, uy, lane_side, give_way, end in stops:
             nx, ny = -uy, ux
-            near, far = (-half, half) if one_way else (0.0, lane_side * half)
+            wider = road.pockets[end]["lanes"] * LANE_WIDTH_M if end in road.pockets else 0.0  # across a turn pocket
+            near, far = -lane_side * half if one_way else 0.0, lane_side * (half + wider)
             stop_line = QGraphicsLineItem(anchor_x + nx * near, anchor_y + ny * near,
                                           anchor_x + nx * far, anchor_y + ny * far)
             pen = QPen(QColor("#ffffff"), STOP_LINE_WIDTH, Qt.PenStyle.SolidLine, Qt.PenCapStyle.FlatCap)
@@ -448,6 +501,45 @@ class NetworkGraphicsScene(QGraphicsScene):
         hit.setData(0, ("road", road.id))
         hit.setZValue(4 + lift)
         self.addItem(hit)
+
+    def _draw_pocket(self, road: Road, points: Points, end: str, pocket: dict, lift: float) -> None:
+        """A turn pocket (Road.pockets) as simulation.py lays out its lanes: the carriageway widened on its
+        traffic's kerb side, over a taper and then the pocket, a lane line beside each lane it adds and a turn
+        arrow in each of the pocket's lanes."""
+        line = points if end == road.to_node else points[::-1]  # its traffic's way
+        total, keep, extra = polyline_length(line), self._keep_side(), pocket["lanes"]
+        stop = total - self.network.lane_inset(end, road)  # type: ignore[union-attr]
+        opens = stop - pocket["length_m"]
+        count = road.lanes_each_way
+        half = count / 2 if road.direction == "one-way" else count  # lanes between the centre line and the kerb
+
+        def at(d: float, lanes_out: float) -> tuple[float, float]:  # `lanes_out` lane widths kerbward of the centre
+            x, y, ux, uy = point_along(line, d)
+            return x + uy * keep * lanes_out * LANE_WIDTH_M, y - ux * keep * lanes_out * LANE_WIDTH_M
+
+        along = [opens - POCKET_TAPER_M + (total - opens + POCKET_TAPER_M) * i / 40 for i in range(41)]
+        outer = [at(d, half + extra * min(max((d - opens + POCKET_TAPER_M) / POCKET_TAPER_M, 0.0), 1.0)) for d in along]
+        surface = QGraphicsPolygonItem(QPolygonF([QPointF(*p) for p in [at(d, half) for d in along] + outer[::-1]]))
+        surface.setBrush(ROAD_COLOR)
+        surface.setPen(QPen(Qt.PenStyle.NoPen))
+        surface.setZValue(1 + lift)
+        self.addItem(surface)
+        pen = QPen(QColor("#bcc5c5"), LANE_LINE_WIDTH, Qt.PenStyle.DashLine, Qt.PenCapStyle.FlatCap)
+        pen.setDashPattern([LANE_DASH_M / LANE_LINE_WIDTH, LANE_GAP_M / LANE_LINE_WIDTH])
+        for k in range(extra):  # the old kerb edge, and between two pocket lanes
+            marking = QGraphicsPathItem(_path([at(opens + (stop - opens) * i / 20, half + k) for i in range(21)]))
+            marking.setPen(pen)
+            marking.setZValue(2 + lift)
+            self.addItem(marking)
+        kerb = pocket["side"] == "kerb"
+        for k in range(extra):  # lane k's centre (simulation.Graph._add_links's offsets in the pocket)
+            index = k if kerb else count + k
+            x, y = at(stop - 6.0, half + extra - 0.5 - index)
+            _, _, ux, uy = point_along(line, stop - 6.0)
+            turn = 0.6 if kerb else -0.6  # leaning towards the kerb or the offside
+            dx, dy = ux + uy * keep * turn, uy - ux * keep * turn
+            size = hypot(dx, dy)
+            self._add_lane_arrow(x, y, dx / size, dy / size, 2 + lift)
 
     def _draw_bus_stop(self, stop: BusStop) -> None:
         """A bus stop: a bay beside the kerb of each direction it serves, the shape buses drive
@@ -635,8 +727,10 @@ class NetworkGraphicsScene(QGraphicsScene):
             stop = network.lane_inset(node.id, road)  # type: ignore[union-attr]
             count = road.lanes_each_way
             half = count / 2 if road.direction == "one-way" else count
-            for index in range(count):
-                lane = offset_polyline(line, -keep * (half - 0.5 - index) * LANE_WIDTH_M)  # as simulation.py
+            # SCATS's loops at the stop line: across a turn pocket's lanes too, where the pocket has moved them
+            extra = road.pockets[node.id]["lanes"] if scats and node.id in road.pockets else 0
+            for index in range(count + extra):
+                lane = offset_polyline(line, -keep * (half + extra - 0.5 - index) * LANE_WIDTH_M)  # as simulation.py
                 end = polyline_length(lane) - stop
                 if scats:
                     first, last = end - STOP_LINE_LOOP_M, end
@@ -814,7 +908,7 @@ class VehicleLayer(QGraphicsItem):
     def __init__(self, scene: NetworkGraphicsScene) -> None:
         super().__init__()
         self._scene = scene
-        self.setZValue(8)  # above roads and signals, below labels and end markers
+        self.setZValue(VEHICLE_Z)
 
     def boundingRect(self) -> QRectF:  # type intentionally inherited from Qt
         return self._scene.sceneRect()
@@ -860,6 +954,9 @@ class NetworkView(QGraphicsView):
         super().__init__(scene)
         self.setRenderHints(QPainter.RenderHint.Antialiasing | QPainter.RenderHint.TextAntialiasing)
         self.setViewportUpdateMode(QGraphicsView.ViewportUpdateMode.SmartViewportUpdate)
+        self._panning = False
+        self._pan_start = QPoint()
+        self._tool_cursor = Qt.CursorShape.ArrowCursor
         # The OpenGL renderer the map would draw with; on a real GPU it gets an OpenGL viewport with 4x
         # multisampling (the GPU redraws the whole view each frame, as OpenGL views are meant to), and the
         # vehicles their instanced shader. Without one (a CPU stand-in such as llvmpipe, or no OpenGL at
@@ -868,21 +965,38 @@ class NetworkView(QGraphicsView):
         self.renderer = "" if QGuiApplication.platformName() in ("offscreen", "minimal") else gpu.renderer()
         self.on_gpu = bool(self.renderer) and not gpu.software(self.renderer)
         if self.on_gpu:
-            opengl = QOpenGLWidget()
-            surface = QSurfaceFormat()
-            surface.setSamples(4)  # the default version: Windows drivers give their newest, 3.3 or more for the shader
-            opengl.setFormat(surface)
-            self.setViewport(opengl)
-            self.setViewportUpdateMode(QGraphicsView.ViewportUpdateMode.FullViewportUpdate)
+            self._use_opengl(4)
         self.setTransformationAnchor(QGraphicsView.ViewportAnchor.AnchorUnderMouse)
         self.setResizeAnchor(QGraphicsView.ViewportAnchor.AnchorViewCenter)
         self.setDragMode(QGraphicsView.DragMode.NoDrag)
-        self._panning = False
-        self._pan_start = QPoint()
-        self._tool_cursor = Qt.CursorShape.ArrowCursor
         self.viewport().setMouseTracking(True)  # moves without a button too: the map's position readout
         self.background = None  # background.BackgroundPainter: the network's background, behind the scene
         self._corner: QWidget | None = None
+        # During a run the background and the still network are drawn once and kept (scene.cache_still).
+        scene.still_cached_changed.connect(lambda on: self.setCacheMode(
+            QGraphicsView.CacheModeFlag.CacheBackground if on else QGraphicsView.CacheModeFlag.CacheNone))
+
+    def _use_opengl(self, samples: int) -> None:
+        opengl = QOpenGLWidget()
+        surface = QSurfaceFormat()
+        surface.setSamples(samples)  # the default version: Windows drivers give their newest, 3.3 or more for the shader
+        opengl.setFormat(surface)
+        self.setViewport(opengl)  # the vehicles' shader is built again in the new context (gpu.VehicleRenderer)
+        self.setViewportUpdateMode(QGraphicsView.ViewportUpdateMode.FullViewportUpdate)
+        opengl.setMouseTracking(True)
+        opengl.setCursor(self._tool_cursor)
+        if getattr(self, "_corner", None) is not None:
+            self._corner.raise_()  # a new viewport is stacked over the map's corner controls
+
+    def set_power_saver(self, on: bool) -> None:
+        """Power Saver: on a GPU, the map without multisampling (its edges still antialiased by QPainter)."""
+        if self.on_gpu:
+            self._use_opengl(0 if on else 4)
+
+    def redraw(self) -> None:
+        """The background changed (a map tile arrived, it moved): drawn again, and the run's cache of it."""
+        self.resetCachedContent()
+        self.viewport().update()
 
     def set_corner(self, widget: QWidget) -> None:
         """Controls kept over the map's top-right corner (fit, reset, help)."""
@@ -903,10 +1017,12 @@ class NetworkView(QGraphicsView):
 
     def drawBackground(self, painter: QPainter, rect: QRectF) -> None:  # type intentionally inherited from Qt
         network = self.scene().network
+        painter.setRenderHints(self.renderHints())  # a run's cache is drawn with a painter of its own
         if self.background is None or network is None:
-            super().drawBackground(painter, rect)
+            super().drawBackground(painter, rect)  # the scene's: its colour, and during a run the still layer
             return
         self.background.paint(painter, rect, network.background, self.transform().m11() * self.devicePixelRatioF())
+        self.scene().paint_still(painter, rect)
 
     def drawForeground(self, painter: QPainter, rect: QRectF) -> None:  # type intentionally inherited from Qt
         super().drawForeground(painter, rect)

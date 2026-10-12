@@ -18,6 +18,17 @@ Dataclasses:
   `validate` refuses it on any other road, and an edit that makes the road two-way or wider clears it.
   `lanes` (across the road), `lanes_each_way` (each direction its traffic runs) and `width_m` are what the
   map, the simulation, roundabout design and the rest read: one place for a road's lanes.
+  `pockets` (turn pockets, short turn lanes): end node id → `{"lanes": 1 or 2, "length_m", "side": "kerb" |
+  "offside"}`, on the approach to an end its traffic arrives at (`arrival_ends()`). A kerb pocket takes kerb
+  turns, an offside one offside turns and U-turns. It opens `length_m` back from the stop line; the carriageway
+  widens on that traffic's kerb side over `POCKET_TAPER_M` (20 m) before it (an offside pocket's through lanes
+  move over to the kerb side there). `width_m` leaves pockets out. `pocket_problem` (run by `validate`) checks
+  each one: the end is a signalised or uncontrolled junction (not a boundary end, and not a roundabout, which
+  NCHRP 672 sizes without flares); lanes 1–2, length `POCKET_LENGTH_M` 15–150 m, a known side; the road allows
+  lane changing and isn't single-lane; no bus bay serving that traffic overlaps the widened stretch; and all of
+  the road's pockets and tapers fit between its stop lines. Pockets are kept by end node: `reverse_road` keeps
+  them; `split_road` gives each to the part that reaches its end; `_retie` renames the key. Relative to the
+  driving side, so `set_driving_side` leaves them as they are and each keeps serving the same turns.
 - `BusStop(id, road, distance_m, direction, dwell_s)`: a bay beside the kerb. `distance_m` is the
   bay's middle, metres along the road's centre line from its `from_node`; `direction` is `"forward"`
   (from → to), `"backward"` or `"both"`; `dwell_s` is how long each bus stands at it (20 s by
@@ -99,7 +110,9 @@ Dataclasses:
   (`node`, `end`, `road`, `bus_stop`). A window (`crossing` false) takes what lies wholly inside:
   a junction or end by its point, a road by every point of its line, a stop by its bay's stretch of road.
   A crossing box takes whatever it touches (`polyline_meets_box`).
-- `validate()`: every invariant, including IDs, references, positive lengths and speeds,
+- `validate()`: every invariant, including finite numbers in every number field of the network, its junctions,
+  roads (shape points and curvature too), bus stops and background (`number_problem`: no NaN, ±infinity, text or
+  bool, which every sign check would let through), IDs, references, positive lengths and speeds,
   control types, 2 or 4 phases with positive greens, a known timing method with sensible limits, one
   curvature value per segment, and bus
   stops on known roads with a valid direction and a dwell time of 0 to 600 s, and institutions (`institution_problem`).

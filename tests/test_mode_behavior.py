@@ -183,6 +183,35 @@ def test_the_assistant_creates_vehicle_types_as_sumo_classes():
     window.close()
 
 
+def test_a_types_vehicle_class_outlives_its_name():
+    """What a type is (its vehicle_class: a bus calls at bus stops) is kept through a rename, set by the kind it is
+    made as, changed only when asked, saved and checked; a type saved before it, named Bus, is a bus."""
+    from dataclasses import asdict
+
+    from traffic_simulator.mode_behavior import VehicleMode
+    from traffic_simulator.network_io import project_problem
+
+    modes = VehicleModes()
+    assert [mode.vehicle_class for mode in modes.modes] == ["bus", "passenger", "bicycle"]
+    modes.update("Bus", {"new_name": "City Bus"})
+    modes.create([{"name": "Express", "kind": "bus", "headway_min": 15}])
+    modes.update("Car", {"vehicle_class": "taxi"})
+    assert [mode.vehicle_class for mode in modes.modes] == ["bus", "taxi", "bicycle", "bus"]
+    try:
+        modes.update("Car", {"vehicle_class": "hovercraft"})
+    except ValueError as exc:
+        assert "vehicle_class must be one of" in str(exc)
+    else:
+        raise AssertionError("an unknown class is refused")
+    types = {"types": [asdict(mode) for mode in modes.modes], "default_split": list(modes.default_split)}
+    assert project_problem({"vehicle_types": types}) is None
+    types["types"][1]["vehicle_class"] = "hovercraft"
+    assert "vehicle_class must be one of" in project_problem({"vehicle_types": types})
+    old = {key: value for key, value in asdict(modes.modes[0]).items() if key != "vehicle_class"}
+    assert VehicleMode(**{**old, "name": "Bus"}).vehicle_class == "bus"
+    assert VehicleMode(**{**old, "name": "Coach"}).vehicle_class == "passenger"
+
+
 def test_a_headway_is_typed_and_a_clicked_type_shows_its_values():
     from PySide6.QtCore import Qt
     from PySide6.QtTest import QTest
@@ -244,6 +273,105 @@ def test_only_a_timetabled_type_has_a_headway():
     modes.update("Car", {"timetabled": False})  # and loses it with the timetable
     assert modes.modes[1].headway_min == 0
     assert modes.modes[modes.add("Lorry")].timetabled is False
+
+
+def test_a_reaction_time_shorter_than_a_step_is_refused():
+    modes = VehicleModes()
+    try:
+        modes.update("Car", {"tau_s": 0.1})  # Krauss can't keep a gap the driver reacts to faster than a step
+    except ValueError as error:
+        assert "simulation step" in str(error), error
+    else:
+        raise AssertionError("a reaction time under the 0.5 s step must be refused: vehicles would collide")
+    assert modes.modes[1].tau_s == 1.0 and modes.update("Car", {"tau_s": 0.5}) == 1 and modes.modes[1].tau_s == 0.5
+
+
+def test_emergency_braking_is_sumos_by_class_and_no_softer_than_comfortable():
+    # SUMO's emergencyDecel by vClass (passenger 9, bus and bicycle 7, a made truck 7); comfortable braking above it is
+    # refused, by update and in a saved project; a type saved before it gets its class's, or its decel if harder.
+    from dataclasses import asdict
+
+    from traffic_simulator.mode_behavior import VehicleMode
+    from traffic_simulator.network_io import project_problem
+
+    modes = VehicleModes()
+    modes.create([{"name": "Truck", "kind": "truck"}])
+    assert [mode.emergency_decel for mode in modes.modes] == [7.0, 9.0, 7.0, 7.0]
+    for changes in ({"decel": 9.5}, {"emergency_decel": 4.0}, {"decel": 6.0, "emergency_decel": 5.0}):
+        try:
+            modes.update("Car", changes)
+        except ValueError as error:
+            assert "emergency_decel" in str(error), error
+        else:
+            raise AssertionError(f"{changes} must be refused: comfortable braking harder than the hardest")
+    assert (modes.modes[1].decel, modes.modes[1].emergency_decel) == (4.5, 9.0)  # a refusal changes nothing
+    modes.update("Car", {"decel": 9.5, "emergency_decel": 12.0})
+    types = {"types": [asdict(mode) for mode in modes.modes], "default_split": list(modes.default_split)}
+    assert project_problem({"vehicle_types": types}) is None and types["types"][1]["emergency_decel"] == 12.0
+    types["types"][1]["emergency_decel"] = 9.0
+    assert "no more than emergency_decel" in project_problem({"vehicle_types": types})
+    old = {key: value for key, value in asdict(modes.modes[1]).items() if key != "emergency_decel"}
+    assert VehicleMode(**old).emergency_decel == 9.5 and VehicleMode("Bike", "#000000", vehicle_class="bicycle").emergency_decel == 7.0
+
+
+def test_two_wheelers_filter_by_their_class_and_it_is_kept():
+    # Lateral runs (Simulation lateral): a motorcycle, moped or bicycle filters past queues within its lane; a car or
+    # bus never; the assistant may change it; a project keeps it, and one saved before it gets it by the type's class.
+    from dataclasses import asdict
+
+    from traffic_simulator.mode_behavior import VehicleMode
+    from traffic_simulator.network_io import project_problem
+    from traffic_simulator.vehicle import create_vehicle
+
+    modes = VehicleModes()
+    modes.create([{"name": "Moto", "kind": "motorcycle"}, {"name": "Scooter", "kind": "moped"}, {"name": "Van", "kind": "delivery"}])
+    assert [mode.filters for mode in modes.modes] == [False, False, True, True, True, False]  # Bus, Car, Bike, ...
+    assert create_vehicle(modes.modes[3], "m").filters and not create_vehicle(modes.modes[1], "c").filters
+    wide = VehicleMode("Wide", "#000000", vehicle_class="motorcycle", width_m=1.5)  # too wide to share half a lane
+    assert wide.filters and not create_vehicle(wide, "w").filters
+    modes.update("Moto", {"filters": False})
+    for bad in ({"filters": "yes"}, {"filters": 1}):
+        try:
+            modes.update("Car", bad)
+        except ValueError as exc:
+            assert "filters must be true or false" in str(exc)
+        else:
+            raise AssertionError(f"{bad} must be refused")
+    records = [asdict(mode) for mode in modes.modes]
+    types = {"types": records, "default_split": list(modes.default_split)}
+    assert project_problem({"vehicle_types": types}) is None
+    assert [VehicleMode(**record).filters for record in records] == [False, False, True, False, True, False]
+    old = {key: value for key, value in records[4].items() if key != "filters"}  # saved before it: by its class
+    assert VehicleMode(**old).filters is True
+    records[1]["filters"] = "yes"
+    assert "filters must be true or false" in project_problem({"vehicle_types": types})
+
+
+def test_undo_leaves_a_half_typed_name_alone():
+    from PySide6.QtTest import QTest
+
+    from traffic_simulator.main import MainWindow
+
+    window = MainWindow()
+    window._ask_to_save = False
+    window.show()
+    window.activateWindow()
+    QTest.qWaitForWindowActive(window)  # the name box really has the focus, as on screen
+    window.tabs.setCurrentWidget(window.behavior_tab)
+    window.vehicle_modes.add("Tram")
+    window._commit()
+    before = [mode.name for mode in window.vehicle_modes.modes]
+    box = window.behavior_tab.names[1]
+    box.setFocus()
+    APP.processEvents()
+    box.setText("Auto")  # typed, not Entered, then Edit > Undo from the menu
+    window.undo()
+    APP.processEvents()
+    assert [mode.name for mode in window.vehicle_modes.modes] == before[:-1]  # the add undone, no rename applied
+    assert window.history.redo_stack  # so Redo still brings the Tram back
+    window.redo()
+    assert [mode.name for mode in window.vehicle_modes.modes] == before
+    window.close()
 
 
 if __name__ == "__main__":

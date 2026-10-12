@@ -5,7 +5,13 @@
   - Lane lines: dashed 3 m / 9 m where lane changing is allowed, solid where not.
   - Two-way roads get a yellow centre divider; one-way roads have none and show an ahead
     arrow in every lane.
-  - Stop lines cross only the arriving lanes; roundabout entries get give-way dashes.
+  - Stop lines cross only the arriving lanes (and a turn pocket's); roundabout entries get give-way dashes.
+  - Turn pockets (`_draw_pocket`, `Road.pockets`): the carriageway widened on that traffic's kerb side,
+    from nothing over the 20 m taper to the pocket's lanes along the pocket, on into the junction; a dashed
+    lane line beside each lane it adds; a turn arrow leaning to the kerb or the offside in each pocket lane,
+    6 m before the stop line. Laid out as the simulation lays out the lanes (an offside pocket's through
+    lanes move over to the kerb side), so vehicles drive on what is drawn. SCATS's stop-line loops cover
+    the pocket's lanes too, where the lanes are there.
   - Overpasses draw above the roads below them (`OVERPASS_LIFT`) with parapets over each crossing.
 - **Nodes:**
   - Signalised and roundabout junctions get a box or the true-size roundabout.
@@ -52,6 +58,18 @@
   colour. Each is drawn part way (`frame_alpha`) between its last two simulated poses, so motion is
   smooth at any frame rate; zoomed far out they stay visible (QPainter: dots under 3 px; the shader: at
   least 2 px each side). `show_frame(alpha, signals)` draws a frame.
+- **Still layer, cached during a run:** what `rebuild()` draws under the vehicles (z below `VEHICLE_Z`,
+  but the signal lamps) is tagged `STILL`. While a run is on (`show_frame` with a frame;
+  `cache_still`) those items get `ItemHasNoContents`: they still take clicks and tooltips but don't paint
+  themselves; `paint_still` draws them in their stacking order from the background (the scene's
+  `drawBackground`, or the view's over its map), and the view keeps that in Qt's `CacheBackground`
+  pixmap. A display frame then draws only the cached image, the lamps, the vehicles, labels, markers and
+  extensions' items. The cache is drawn again when the view zooms or resizes, for the strip a pan
+  exposes, after any `rebuild()` (an edit or selection mid-run invalidates the background layer) and
+  when the background changes (`NetworkView.redraw`: a map tile arrived, it moved). Extensions' items
+  never join it, so they draw over the whole still layer during a run. Edit mode paints every item as
+  before. Measured (8 × 8 grid, 1,713 items, RTX 3070, 1600 × 900): 4.7 ms a display frame before, 1.5
+  ms cached.
 
 `NetworkView`:
 - **GPU:** `renderer` is the OpenGL renderer the driver offers (`gpu.renderer()`, asked through a hidden
@@ -60,6 +78,9 @@
   (Windows drivers give their newest; the vehicles' shader needs 3.3). A CPU stand-in (`gpu.software`:
   llvmpipe, GDI Generic, Basic Render Driver, SwiftShader) or no OpenGL keeps the raster viewport, which is
   faster than OpenGL emulated on the CPU. Offscreen (tests) it stays raster without asking.
+- `set_power_saver(on)` (the Power Saver button): on a GPU, a new `QOpenGLWidget` viewport without
+  multisampling (or with 4× again); QPainter's antialiasing still smooths edges. The vehicles' shader is
+  rebuilt in the new context. Raster viewports have no multisampling to drop.
 - Wheel zooms at the cursor; right or middle drag pans.
 - F fits the network with a 90 px screen margin; R resets the view.
 - `set_corner(widget)` keeps the map's controls over its top-right corner (8 px in, re-placed on resize).

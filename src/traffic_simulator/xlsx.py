@@ -62,9 +62,11 @@ def write_xlsx(path: str | Path, sheets: list[tuple[str, list[list]]]) -> Path:
     """Write the sheets, (name, rows), to a workbook at `path` (written whole, then moved into place)."""
     names, used = [], set()
     for name, _ in sheets:
-        clean = re.sub(r"[\[\]:*?/\\]", " ", name).strip()[:31] or "Sheet"
-        while clean.lower() in used:
-            clean = clean[:28] + f" {len(used)}"
+        clean = base = re.sub(r"[\[\]:*?/\\]", " ", name).strip()[:31] or "Sheet"
+        number = 1
+        while clean.lower() in used:  # taken (Excel ignores case): " 2", " 3"… on the name, cut to make room
+            number += 1
+            clean = base[:31 - len(f" {number}")] + f" {number}"
         used.add(clean.lower())
         names.append(clean)
     target = Path(path)

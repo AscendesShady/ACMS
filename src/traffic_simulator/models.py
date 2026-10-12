@@ -7,7 +7,7 @@ All geometry is vector: continuous coordinates in metres, roads as polylines
 from __future__ import annotations
 
 import re
-from dataclasses import asdict, dataclass, field
+from dataclasses import asdict, dataclass, field, fields
 from math import floor, hypot, isfinite, sqrt
 from typing import Any
 
@@ -21,6 +21,11 @@ LANE_WIDTH_M = 3.5
 BAY_ENTRY_M, BAY_STOP_M, BAY_EXIT_M = 15.0, 15.0, 10.0
 BAY_LENGTH_M = BAY_ENTRY_M + BAY_STOP_M + BAY_EXIT_M
 BAY_WIDTH_M = 3.0
+# A turn pocket (Road.pockets): 1 or 2 short lanes for the turns on one side, opening this far back from the stop
+# line; the carriageway widens on its traffic's kerb side over POCKET_TAPER_M before it.
+POCKET_SIDES = ("kerb", "offside")
+POCKET_LENGTH_M = (15.0, 150.0)
+POCKET_TAPER_M = 20.0
 BUS_STOP_DIRECTIONS = ("forward", "backward", "both")  # forward: traffic from_node → to_node
 MAX_DWELL_S = 600.0  # a bus stop's longest dwell time: a ten-minute layover
 MAX_BOARDING_PER_H = 5000.0  # passengers arriving at one stop to board, an hour
@@ -103,6 +108,14 @@ class Road:
     curvature: list[float] = field(default_factory=list)
     # A one-way road of one lane (a single-lane slip road); lanes_per_direction is then 1.
     single_lane: bool = False
+    # Turn pockets on the approach to the ends its traffic arrives at: end node id -> {"lanes": 1 or 2, "length_m":
+    # back from the stop line, "side": "kerb" (for kerb turns) or "offside" (offside turns and U-turns)}. Relative to
+    # the driving side, so a change of side keeps each pocket serving the same turns.
+    pockets: dict = field(default_factory=dict)
+
+    def arrival_ends(self) -> tuple[str, ...]:
+        """The nodes its traffic arrives at: a one-way road's to_node, a two-way road's both ends."""
+        return (self.to_node,) if self.direction == "one-way" else (self.to_node, self.from_node)
 
     @property
     def lanes(self) -> int:
@@ -180,6 +193,25 @@ def institution_problem(item: Institution) -> str | None:
     return None
 
 
+def finite(value) -> bool:
+    """A real number: not a bool (True is no length), text, NaN or ±infinity."""
+    return isinstance(value, (int, float)) and not isinstance(value, bool) and isfinite(value)
+
+
+def number_problem(item) -> str | None:
+    """The first of a dataclass's number fields (float, int, a list of them or of points) holding anything but finite
+    numbers, or None. Every range check after it then holds: NaN passes every comparison's `not`."""
+    for spec in fields(item):
+        if spec.type in ("float", "int", "int | None") or spec.type.startswith("list["):
+            value = getattr(item, spec.name)
+            if value is None and spec.type == "int | None":
+                continue
+            values = value if isinstance(value, list) else [value]
+            if not all(finite(x) for v in values for x in (v if isinstance(v, (list, tuple)) else [v])):
+                return spec.name
+    return None
+
+
 @dataclass
 class Background:
     """What the map shows behind the network: a solid colour, an image (PNG, JPG or a PDF page) laid
@@ -210,8 +242,12 @@ def route_choice_problem(choice) -> str | None:
         return "Route choice must be an object."
     if not choice:
         return None
-    if set(choice) - {"theta_per_min", "routes", "link_times_s"}:
-        return "Route choice takes theta_per_min, routes and link_times_s."
+    if set(choice) - {"theta_per_min", "routes", "link_times_s", "turn_times_s"}:
+        return "Route choice takes theta_per_min, routes, link_times_s and turn_times_s."
+    turns = choice.get("turn_times_s", {})
+    if not isinstance(turns, dict) or any(not isinstance(moves, dict) or any(
+            not isinstance(v, (int, float)) or v <= 0 for v in moves.values()) for moves in turns.values()):
+        return "Route choice's turn_times_s are positive seconds by link id, then next link id."
     theta, routes, times = choice.get("theta_per_min", 0.5), choice.get("routes", 3), choice.get("link_times_s", {})
     if not isinstance(theta, (int, float)) or not 0.01 <= theta <= 10:
         return "Route choice's theta_per_min must be 0.01 to 10."
@@ -331,6 +367,7 @@ class Network:
         """Move one end of a road from node `old` to node `new`, renaming it "from-to"."""
         road.from_node, road.to_node = (new if road.from_node == old else road.from_node,
                                         new if road.to_node == old else road.to_node)
+        road.pockets = {new if end == old else end: pocket for end, pocket in road.pockets.items()}
         roads = self.roads if road.id in self.roads else self.approach_roads
         new_id = f"{road.from_node}-{road.to_node}"
         if new_id != road.id and new_id not in self.roads and new_id not in self.approach_roads:
@@ -520,6 +557,7 @@ class Network:
         first_bends, second_bends = (bends[:cut + 1], bends[cut:]) if bends else ([], [])
         settings = {key: getattr(road, key) for key in ("lanes_per_direction", "lane_changing",
                                                         "speed_limit_kmh", "direction", "road_type", "overpass", "single_lane")}
+        pockets = road.pockets  # each stays at its end, on the part that reaches it
         if road_id in self.approach_roads:
             if road.from_node in self.approach_nodes:  # end -> inner: the boundary road ends at the cut
                 inner = self.add_road(node_id, road.to_node)
@@ -539,6 +577,7 @@ class Network:
         for part in parts:
             for key, value in settings.items():
                 setattr(part, key, value)
+            part.pockets = {end: dict(pocket) for end, pocket in pockets.items() if end in (part.from_node, part.to_node)}
             part.length_m = self.road_geometry_length(part)
         for stop in self.bus_stops.values():  # a bus stop stays where it was, on the part it is on
             if stop.road == road_id:
@@ -717,6 +756,8 @@ class Network:
         problem = route_choice_problem(self.route_choice)
         if problem:
             raise ValueError(problem)
+        if found := number_problem(self):
+            raise ValueError(f"The network's {found} must be a finite number.")
         if not 1 <= self.horizontal_corridors <= 20:
             raise ValueError("Horizontal corridor count must be between 1 and 20.")
         if not 1 <= self.vertical_corridors <= 20:
@@ -740,6 +781,8 @@ class Network:
         for key, node in combined_nodes.items():
             if key != node.id:
                 raise ValueError(f"Node dictionary key does not match ID {node.id!r}.")
+            if found := number_problem(node):
+                raise ValueError(f"Node {node.id}: {found} must be finite numbers.")
             if node.control not in {"signalised", "roundabout", "uncontrolled"}:
                 raise ValueError(f"Node {node.id} has an invalid control type.")
             if node.supply_vph < 0 or node.demand_vph < 0:
@@ -756,6 +799,8 @@ class Network:
         for key, road in combined_roads.items():
             if key != road.id:
                 raise ValueError(f"Road dictionary key does not match ID {road.id!r}.")
+            if found := number_problem(road):
+                raise ValueError(f"Road {road.id}: {found} must be finite numbers.")
             if road.from_node not in combined_nodes or road.to_node not in combined_nodes:
                 raise ValueError(f"Road {road.id} references an unknown node.")
             if road.from_node == road.to_node:
@@ -772,7 +817,14 @@ class Network:
                 raise ValueError(f"Road {road.id} has an invalid direction.")
             if road.single_lane and (road.direction != "one-way" or road.lanes_per_direction != 1):
                 raise ValueError(f"Road {road.id}: only a one-way road of 1 lane per direction can be single-lane.")
+        from .roundabouts import design_roundabout  # it imports this module
+
+        for node in self.nodes.values():
+            if node.control == "roundabout":
+                design_roundabout(self, node.id)  # refuses more entry lanes than NCHRP Report 672 designs for
         bg = self.background
+        if found := number_problem(bg):
+            raise ValueError(f"The background's {found} must be finite numbers.")
         if bg.kind not in BACKGROUND_KINDS or not re.fullmatch(r"#[0-9a-fA-F]{6}", str(bg.colour)):
             raise ValueError(f"The background must be one of {', '.join(BACKGROUND_KINDS)}, with a colour like #075322.")
         if not (bg.width_m > 0 and 0 <= bg.opacity <= 1 and bg.page >= 0 and -85.06 <= bg.lat <= 85.06
@@ -786,12 +838,14 @@ class Network:
             raise ValueError("The background's lock must be true or false, and its reference line two different "
                              "image points and a positive length.")
         for name, axis in self.interchanges.items():
-            if not (isinstance(axis, list) and len(axis) == 4 and all(isinstance(value, (int, float)) for value in axis)
+            if not (isinstance(axis, list) and len(axis) == 4 and all(finite(value) for value in axis)
                     and abs(hypot(axis[2], axis[3]) - 1) < 1e-6):
                 raise ValueError(f"Interchange {name} needs where it was built and the freeway's unit direction.")
         for key, stop in self.bus_stops.items():
             if key != stop.id:
                 raise ValueError(f"Bus stop dictionary key does not match ID {stop.id!r}.")
+            if found := number_problem(stop):
+                raise ValueError(f"Bus stop {stop.id}: {found} must be a finite number.")
             if stop.road not in combined_roads:
                 raise ValueError(f"Bus stop {stop.id} is on an unknown road.")
             if stop.direction not in BUS_STOP_DIRECTIONS or not isinstance(stop.distance_m, (int, float)):
@@ -808,6 +862,49 @@ class Network:
                 raise ValueError(f"Institution dictionary key does not match ID {item.id!r}.")
             if (problem := institution_problem(item)) is not None:
                 raise ValueError(problem)
+        for road in self.all_roads():
+            if (problem := self.pocket_problem(road)) is not None:
+                raise ValueError(problem)
+
+    def pocket_problem(self, road: Road) -> str | None:
+        """Why a road's turn pockets (Road.pockets) can't be built, or None. Each is at a signalised or uncontrolled
+        junction its traffic arrives at (a roundabout's entries are sized by NCHRP 672, without flares), on a road
+        that allows lane changing (vehicles change into it), clear of the bus bays beside its traffic; the pockets
+        and their tapers fit between the stop lines."""
+        pockets = road.pockets
+        if not isinstance(pockets, dict):
+            return f"Road {road.id}'s turn pockets must be an object by end junction."
+        if not pockets:
+            return None
+        if not road.lane_changing or road.single_lane:
+            return f"Road {road.id} needs lane changing for a turn pocket: vehicles change lanes into it."
+        length = self.road_geometry_length(road)
+        room = length - self.lane_inset(road.from_node, road) - self.lane_inset(road.to_node, road)
+        low, high = POCKET_LENGTH_M
+        for end, pocket in pockets.items():
+            if end not in road.arrival_ends():
+                return f"Road {road.id}: its traffic doesn't arrive at {end}, so it can't have a turn pocket there."
+            if end not in self.nodes or self.nodes[end].control == "roundabout":
+                return f"Road {road.id}: turn pockets go at signalised or uncontrolled junctions, not at {end}."
+            if not (isinstance(pocket, dict) and set(pocket) == {"lanes", "length_m", "side"}
+                    and type(pocket["lanes"]) is int and pocket["lanes"] in (1, 2) and finite(pocket["length_m"])
+                    and pocket["side"] in POCKET_SIDES):
+                return f"Road {road.id}: its turn pocket at {end} needs lanes (1 or 2), length_m and side (kerb or offside)."
+            if not low <= pocket["length_m"] <= high:
+                return f"Road {road.id}: its turn pocket at {end} must be {low:g} to {high:g} m long."
+            room -= pocket["length_m"] + POCKET_TAPER_M
+            # where the carriageway is widened, metres from from_node
+            zone = (length - self.lane_inset(end, road) - pocket["length_m"] - POCKET_TAPER_M, length) \
+                if end == road.to_node else (0.0, self.lane_inset(end, road) + pocket["length_m"] + POCKET_TAPER_M)
+            for stop in self.bus_stops.values():
+                middle = self.bus_stop_distance(stop) if stop.road == road.id else None
+                if middle is not None and (end == road.to_node) in self.bus_stop_sides(stop) \
+                        and middle - BAY_LENGTH_M / 2 < zone[1] and middle + BAY_LENGTH_M / 2 > zone[0]:
+                    return f"Road {road.id}: bus stop {stop.id}'s bay is beside its turn pocket at {end}; move one."
+        if room < 0:
+            return (f"Road {road.id} is too short for its turn pockets: each needs its length and {POCKET_TAPER_M:g} m "
+                    "of taper between the stop lines.")
+        return None
 
     def configuration(self) -> dict[str, Any]:
         return {

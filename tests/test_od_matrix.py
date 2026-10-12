@@ -202,6 +202,34 @@ def test_the_assistant_works_the_same_controls():
     assert all(matrix.cells[pair].profile.points for pair in pairs) and len(undo_steps) == 4
 
 
+def test_hourly_demand_takes_a_peak_hour_factor_or_quarters():
+    matrix, panel = setup()
+    panel.flow.setValue(400)  # 1W -> 1E
+    assert matrix.cells[("1W", "1E")].quarters == () and panel.phf.value() == 1.0 and panel.phf.isVisible()
+    panel.phf.setValue(0.8)  # the spin box: the busiest 15 minutes at 400 / 0.8 veh/h
+    quarters = matrix.cells[("1W", "1E")].quarters
+    assert abs(max(quarters) - 1 / 3.2) < 1e-12 and abs(sum(quarters) - 1) < 1e-12
+    done = panel.command("set_od_demand", {"pairs": ["1W->1E"], "quarters": [100, 150, 100, 50]})
+    assert done["quarters"] == [0.25, 0.375, 0.25, 0.125] and done["peak_hour_factor"] == round(1 / 1.5, 3)
+    assert abs(panel.phf.value() - 0.67) < 1e-9  # the box shows the profile's PHF
+    read = panel.command("read_od_matrix", {})
+    assert read["usual"]["quarters"] == [0.25, 0.375, 0.25, 0.125]
+    for args, message in (({"pairs": ["1W->1E"], "peak_hour_factor": 0.1}, "0.25 to 1"),
+                          ({"pairs": ["1W->1E"], "quarters": [1, 2]}, "four numbers"),
+                          ({"pairs": ["1W->1E"], "demand": "daily", "peak_hour_factor": 0.9}, "hourly demand only"),
+                          ({"pairs": ["1W->2E"], "peak_hour_factor": 0.9}, "no hourly demand yet")):
+        try:
+            panel.command("set_od_demand", args)
+        except ValueError as exc:
+            assert message in str(exc), (message, str(exc))
+        else:
+            raise AssertionError(f"{args} should have been refused")
+    panel.command("set_od_demand", {"pairs": ["1W->1E"], "peak_hour_factor": 1})
+    assert matrix.cells[("1W", "1E")].quarters == ()  # 1: an even hour
+    daily(panel)
+    assert not panel.phf.isVisible()  # no PHF on a daily curve
+
+
 def test_demand_tools_say_which_demand_a_run_uses_and_refuse_what_does_nothing():
     app = QApplication.instance() or QApplication([])
     matrix = ODMatrix()

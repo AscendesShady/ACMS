@@ -13,9 +13,9 @@ from PySide6.QtWidgets import QApplication  # noqa: E402
 from traffic_simulator.mode_behavior import PALETTE, VehicleMode  # noqa: E402
 from traffic_simulator.network_generator import generate_network  # noqa: E402
 from traffic_simulator.signal_timing import (  # noqa: E402
-    SPAN_S, STANDARD_SPACE_S, Approach, ScatsJunction, ScatsRegion, ScootJunction, ScootLink, ScootRegion, TimingModel, cyclic_queue,
+    MAX_CYCLE_S, MIN_GREEN_S, SPAN_S, STANDARD_SPACE_S, Approach, ScatsJunction, ScatsRegion, ScootJunction, ScootLink, ScootRegion, TimingModel, cyclic_queue,
     degree_of_saturation, disperse, fit_greens, hcm_delay, hill_climb, incremental_delay, percentile_greens,
-    effective, realigned_length, synchro_cycle)
+    clearance, effective, realigned_length, synchro_cycle, webster)
 from traffic_simulator.simulation import Loop, PairDemand, Simulation, Turn  # noqa: E402
 
 APP = QApplication.instance() or QApplication([])
@@ -58,6 +58,32 @@ def test_greens_fill_the_cycle_and_keep_their_minimum():
     tight = fit_greens([0.5, 0.01, 0.01], 60)
     assert isclose(tight[1], 7.0) and isclose(tight[2], 7.0) and isclose(sum(tight) + 3 * SPAN_S, 60)  # the minimum
     assert isclose(sum(fit_greens([0.2, 0.2], 10)) + 2 * SPAN_S, 24)  # too short a cycle: lengthened to the minimums
+
+
+def test_webster_keeps_its_minimum_greens_within_the_longest_cycle():
+    for ratios in ([0.94, 0.0], [0.94, 0.0, 0.0, 0.0], [0.9, 0.04]):  # one phase saturated, the rest on their minimum
+        cycle, greens = webster(ratios)
+        assert isclose(cycle, MAX_CYCLE_S) and min(greens) >= MIN_GREEN_S - 1e-9, (ratios, cycle, greens)
+    cycle, greens = webster([0.5, 0.1])  # C0 = (1.5 x 8 + 5) / 0.4 = 42.5 s: the minimum taken inside it
+    assert isclose(cycle, 42.5) and isclose(greens[1], MIN_GREEN_S)
+    try:
+        webster([0.1] * 4, span=25.0)  # 4 x (7 + 25) s can't fit in 120 s
+        raise AssertionError("an impossible minimum cycle was accepted")
+    except ValueError as error:
+        assert "120" in str(error)
+
+
+def test_a_junctions_clearance_follows_its_approach_speed_and_width():
+    assert clearance(50 / 3.6, 21.8) == (3.3, 2.0)  # ITE: 1 + 13.9 / 6.1 s amber, (21.8 + 6.1) / 13.9 s all-red
+    assert clearance(120 / 3.6, 65.5) == (6.0, 2.1)  # 6.5 s amber held to MUTCD's 6 s
+    assert clearance(20 / 3.6, 10.0) == (3.0, 2.9)  # at least 3 s amber
+    fast = Simulation(generate_network(1, 1, lanes_per_direction=3, speed_limit_kmh=70), [], CAR)
+    signal = fast.graph.signals["1,1"]
+    assert signal.amber > 4.0 and signal.all_red >= 1.0  # faster and wider than the 3 + 2 s default
+    link = next(iter(signal.phase_of))
+    green = signal.phases[signal.phase_of[link]][1]
+    assert signal.state(link, green + signal.amber - 0.1) == "Y" and signal.state(link, green + signal.amber + 0.1) == "R"
+    assert isclose(signal.cycle, sum(green for _, green in signal.phases) + len(signal.phases) * signal.span)
 
 
 def test_scats_measures_saturation_and_moves_the_cycle():

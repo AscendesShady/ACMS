@@ -258,7 +258,7 @@ def priority(junction: str, context: dict, request=None, controller=None, agent=
                                    "answer": None, "answered_s": None, "fell_back": False, "withdrawn": False,
                                    "estimate": message["person_delay"]}
         run.open.setdefault(junction, set()).add(key)
-        if not getattr(agent, "asks", True):  # nobody to ask (a batch's No LLM): the plan, from the start
+        if not getattr(agent, "asks", True):  # nobody to ask (a batch's baseline): its rule, from the start
             row.update(no_agent=True)
     if row["answered_s"] is None:
         wait, deadline = getattr(agent, "wait_s", None), getattr(agent, "deadline_s", None)
@@ -267,8 +267,8 @@ def priority(junction: str, context: dict, request=None, controller=None, agent=
             if line is not None:
                 row.update(answer=line["activate"], answered_s=line["time_s"], fell_back=line["fell_back"],
                            no_agent=bool(line.get("no_agent")))
-        elif row.get("no_agent"):
-            row.update(answer=False, answered_s=t)
+        elif row.get("no_agent"):  # Never preempt: the plan; Always preempt: priority for every request
+            row.update(answer=getattr(agent, "rule", None) is True, answered_s=t)
         else:
             agent.decide(key, question_for(row["system"], message), urgency=t + message["request"]["eta_s"], once=True)
             answer = agent.answer_of(key)

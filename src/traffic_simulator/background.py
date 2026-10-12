@@ -12,6 +12,7 @@ network (models.Background), so they are saved with it and undone like any edit.
 
 from __future__ import annotations
 
+import threading
 from cmath import phase
 from collections import OrderedDict
 from copy import deepcopy
@@ -70,6 +71,9 @@ class BackgroundPainter(QObject):
         self.tiles = TileStore(folder, ready=lambda *_: self.tile_ready.emit(), **kwargs)
         self.places = PlaceSearch(ready=self.found.emit)  # emitted from its thread: Qt queues it to ours
         self._images: dict[tuple, QImage | None] = {}
+        # Loading is one at a time: the assistant traces roads off the GUI thread (road_mask) while the map may be
+        # drawing, and a PDF page is rendered by PDFium, which is not thread-safe
+        self._loading = threading.Lock()
         self._pixmaps: OrderedDict[tuple[int, int, int], QPixmap] = OrderedDict()
         self.marks: list[tuple[float, float, str]] = []
         self.line: tuple[float, float, float, float, str] | None = None  # Measure's line: x1, y1, x2, y2, label
@@ -82,13 +86,14 @@ class BackgroundPainter(QObject):
             key = (path, background.page, Path(path).stat().st_mtime)
         except OSError:
             return None
-        if key not in self._images:
-            if path.lower().endswith(".pdf"):
-                self._images[key] = _pdf_page(path, background.page)
-            else:
-                image = QImage(path)
-                self._images[key] = None if image.isNull() else image
-        return self._images[key]
+        with self._loading:
+            if key not in self._images:
+                if path.lower().endswith(".pdf"):
+                    self._images[key] = _pdf_page(path, background.page)
+                else:
+                    image = QImage(path)
+                    self._images[key] = None if image.isNull() else image
+            return self._images[key]
 
     def image_transform(self, background: Background) -> QTransform | None:
         """Image pixels to scene metres: scaled to its width, turned about its top-left corner, placed."""

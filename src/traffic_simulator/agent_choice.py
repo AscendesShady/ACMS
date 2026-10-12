@@ -3,7 +3,7 @@
 Decided by: System 1, System 2 or Multiple. With System 1 or 2, **Model** picks which of that system's models
 answers (AI Mode's agent_options: System 1's Jev or Laya; System 2's Ollama models, Grok and Gemini), live runs and
 a batch's alike; none listed: AI Mode's own choice. Multiple is for Batch Run: **Models** (a dropdown of ticks), each
-tested against the baseline (No LLM), and the batch's **Decide within** (each answer's deadline, simulated s), **Pace**
+tested against the baselines (Never, Always preempt), and the batch's **Decide within** (each answer's deadline, simulated s), **Pace**
 (simulated seconds a real second), **Runs at once** and **Times each** (shown under Multiple, used by any batch). A
 live run asks the System chosen last. `batch_settings()` gives Batch Run what to test.
 """

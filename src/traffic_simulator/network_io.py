@@ -3,7 +3,7 @@
 A project file is one JSON document: the network (its configuration, nodes, roads, ends, bus stops,
 institutions, interchanges and background, as a network file always had), plus `format` (what it is
 and its version), `demand` (the OD matrix: which demand is shown and every pair entered, each with its
-hourly flow, trips a day and their curve, arrival pattern and split between vehicle types),
+hourly flow and its 15-minute shares, trips a day and their curve, arrival pattern and split between vehicle types),
 `vehicle_types` (every type and the default split) and `run` (the seed and speed), and the AI Mode
 conversation. JSON, not JSON Lines: a project is one nested document, read and checked as a whole
 before anything changes; JSON Lines suits streams of records appended one by one. A file without the
@@ -19,8 +19,9 @@ from typing import Any
 import re
 from math import isfinite
 
-from .daily_profile import ARRIVAL_PATTERNS, DEGREES, HOURS
+from .daily_profile import ARRIVAL_PATTERNS, DEGREES, HOURS, quarter_shares
 from .models import Background, BusStop, Institution, Network, Node, Road
+from .vehicle import VEHICLE_CLASSES
 
 PROJECT_FORMAT = {"app": "ACMS project", "version": 2}
 MAX_SEED = 2**31 - 1
@@ -44,8 +45,13 @@ def save_network(network: Network, path: str | Path, conversation: dict | None =
         document["conversation"] = conversation
     target = Path(path)
     part = target.with_name(target.name + ".part")
-    part.write_text(json.dumps(document, indent=2), encoding="utf-8")
+    part.write_text(json.dumps(document, indent=2, allow_nan=False), encoding="utf-8")  # NaN isn't JSON
     part.replace(target)
+
+
+def _not_a_number(name: str):
+    """json.loads' parse_constant: NaN, Infinity and -Infinity (Python writes them; JSON has none) are refused."""
+    raise ValueError(f"{name} is not a number")
 
 
 def _number(value, low: float, high: float) -> bool:
@@ -87,11 +93,18 @@ def project_problem(project: dict) -> str | None:
                 return f"Vehicle type {mode.get('name')}: its headway must be 0 to 120 minutes."
             if not isinstance(mode.get("timetabled", False), bool):
                 return f"Vehicle type {mode.get('name')}: timetabled must be true or false."
+            if not isinstance(mode.get("filters", False), (bool, type(None))):  # none: by its class (VehicleMode)
+                return f"Vehicle type {mode.get('name')}: filters must be true or false."
             if mode.get("headway_min") and mode.get("timetabled") is False:
                 return f"Vehicle type {mode.get('name')}: it has a headway but isn't timetabled."
+            if mode.get("vehicle_class", "bus") not in VEHICLE_CLASSES:  # none: inferred from its name (VehicleMode)
+                return f"Vehicle type {mode.get('name')}: vehicle_class must be one of {', '.join(VEHICLE_CLASSES)}."
             for key, value in mode.items():
-                if key not in ("name", "colour", "headway_min", "timetabled") and not _number(value, 0, 1e5):
+                if key not in ("name", "colour", "headway_min", "timetabled", "vehicle_class", "filters") \
+                        and not _number(value, 0, 1e5):
                     return f"Vehicle type {mode.get('name')}: {key} must be a number, not below zero."
+            if mode.get("emergency_decel") is not None and mode.get("decel", 4.5) > mode["emergency_decel"]:
+                return f"Vehicle type {mode.get('name')}: decel must be no more than emergency_decel."
         split = types.get("default_split")
         count = len(modes)
         if not (isinstance(split, list) and len(split) == count and all(isinstance(v, int) and v >= 0 for v in split)
@@ -117,6 +130,11 @@ def project_problem(project: dict) -> str | None:
                 return f"Demand {name}: its trips a day must be 0 to 2,000,000."
             if pair.get("pattern", "Random") not in ARRIVAL_PATTERNS:
                 return f"Demand {name}: its arrival pattern must be one of {', '.join(ARRIVAL_PATTERNS)}."
+            if pair.get("quarters") is not None:  # older files have none: an even hour
+                try:
+                    quarter_shares(pair["quarters"])
+                except ValueError as exc:
+                    return f"Demand {name}: its {exc}"
             split = pair.get("split")
             if not (isinstance(split, list) and all(isinstance(v, int) and v >= 0 for v in split) and sum(split) == 100
                     and (count is None or len(split) == count)):
@@ -135,7 +153,7 @@ def project_problem(project: dict) -> str | None:
 def saved_project(path: str | Path) -> dict:
     """A project file's demand, vehicle_types and run (those it has), checked. ValueError says what's wrong."""
     try:
-        document = json.loads(Path(path).read_text(encoding="utf-8"))
+        document = json.loads(Path(path).read_text(encoding="utf-8"), parse_constant=_not_a_number)
     except (OSError, ValueError) as exc:
         raise ValueError(f"Could not read the project: {exc}") from exc
     project = {key: document[key] for key in ("demand", "vehicle_types", "run") if key in document}
@@ -163,8 +181,8 @@ def _require_list(document: dict[str, Any], key: str) -> list[dict[str, Any]]:
 
 def load_network(path: str | Path) -> Network:
     try:
-        document = json.loads(Path(path).read_text(encoding="utf-8"))
-    except (OSError, json.JSONDecodeError) as exc:
+        document = json.loads(Path(path).read_text(encoding="utf-8"), parse_constant=_not_a_number)
+    except (OSError, ValueError) as exc:
         raise ValueError(f"Could not read network JSON: {exc}") from exc
     if not isinstance(document, dict) or not isinstance(document.get("network"), dict):
         raise ValueError("JSON must contain a network configuration object.")

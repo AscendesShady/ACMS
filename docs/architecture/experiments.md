@@ -1,7 +1,11 @@
 # experiments.py: network testing (no Qt)
 
 - `run_headless(network, demand, modes, seed, duration_s, override, recorder, progress, cancelled, observe,
-  speed, dispatches)` (`dispatches`: emergency vehicles sent at the start, (from, to, every s[, s later])): a Simulation of copies of the inputs stepped as fast as the CPU allows (no wall clock), or with
+  speed, dispatches, …, step_s, step_method, lateral)` (`step_s`: `DT`, or 0.25 or 0.1 s, to check the results don't depend on
+  the step; `step_method`: "euler" or the opt-in "ballistic", simulation.md; `lateral`: lateral position and
+  filtering, simulation.md; `dispatches`: emergency vehicles sent at the start, (from, to, every s[, s later]); `progress(t)`
+  each simulated second, for the menu bar's clock; `on_frame(simulation)` after every step, on the run's thread, so the
+  window can take a frame for the map): a Simulation of copies of the inputs stepped as fast as the CPU allows (no wall clock), or with
   `speed` in step with the wall clock (simulated seconds a real second, sleeping when ahead, as a live run;
   a batch with TSP), a
   `results.RunRecorder` (or a function making one from the Simulation, for its signal plans) sampled every
@@ -25,14 +29,15 @@
   (the changes through `network_tools.run_tool` on a copy, only tools in the allowed set), `scaled(demand)`.
 - `summary(values)` (n, mean, SD, the 95 % half-width by Student's t, `stats.t_quantile`),
   `difference(base, other, confidence)` (Welch's interval, its p; `clear` when it leaves out zero; open with
-  one seed), `compare(runs, scenarios, precision)` over `MEASURES` (with the travel time and planning time
-  indexes) and per vehicle type (`measures_of`): each scenario's `replications_needed` (`stats.replications`,
+  one seed), `compare(runs, scenarios, precision)` over `MEASURES` (with the travel time, planning time and buffer
+  indexes, the mean system travel time and the unfinished share of trips) and per vehicle type (`measures_of`): each scenario's `replications_needed` (`stats.replications`,
   ±precision at 95 %; over `UNSTABLE_RUNS` 20 the window reports it as `unstable`) and its difference from
   the baseline, paired over the seeds both ran (`stats.paired`; Welch when none pair), at 95 % widened by
   Bonferroni to 1 − 0.05/k for k scenarios (`confidence`), with `test`, `p`, `ci`, `clear`, `better`;
   `headline(kpis)`.
 - `analyse_run(observed)` (from `RunRecorder.observed()`): reliability (trip time mean, SD, CV, median,
-  85th and 95th percentiles, TTI and PTI, the least reliable pairs with 5 trips or more), each origin's
+  85th and 95th percentiles, TTI, PTI and the buffer index BI, mean-based, the least reliable pairs with 5
+  trips or more), each origin's
   arrivals per whole minute against Poisson (`stats.dispersion`), and the ten roads whose 95th-percentile
   queue is the largest share of their length (`spills_back` when it reaches it).
   `check_calibration(kpis, counts)`: each counted road's measured flow, GEH, and `stats.fit`'s scores.
@@ -51,7 +56,11 @@
   `CONFLICT_TTC_S` 1.5 s, an experiment measure). `compare` also gives, with 3 or more scenarios, an ANOVA per
   figure (`stats.anova`: randomized block with the seeds as blocks), Wilcoxon's signed-rank p beside each
   paired difference, and for mean speed the power model's crash change (`speed_risk`).
-- `analyse_run(kpis)` adds the warm-up by MSER-5 on the vehicles on the road and the steady state's
+- A warm-up: run_simulation and run_experiment take `measure_from_min` (0 to under duration_min, else refused),
+  handed to each run's `RunRecorder(measure_from_s=)` (`MainWindow._one_run`; results.md), so their KPIs and
+  comparisons count from it. A headless caller of `run_headless` gives its own recorder the same.
+- `analyse_run(kpis)` adds the warm-up by MSER-5 on the vehicles on the road (the Run statistics sheet suggests
+  it as `measure_from_min`) and the steady state's
   throughput and mean speed by batch means, the Gini of road flows, and `bus_stops`: each line's (OD pair's)
   headways at each stop, cv against its timetable and HCM 2000's headway adherence LOS (Exhibit 27-8, 6 buses
   an hour or more), and the expected wait.
@@ -61,13 +70,15 @@
   `QUEUE_GAP_S` 4 s): the saturation headway from the 5th vehicle, saturation flow, start-up lost time.
 - `safety(kpis, ttc_s)`: conflicts under the threshold per road, severe ones (TTC < 1 s or DRAC > 3.35 m/s²),
   the rate per million veh-km, a safety performance function across roads (`stats.poisson_regression` with
-  ln km as offset; NB2 α when overdispersed) and the Empirical Bayes excess ranking.
+  ln km as offset; NB2 α when overdispersed) and the Empirical Bayes excess ranking; with them, the run's recorded
+  `collisions` (count, by road or junction, by kind: same lane or crossing) and `emergency_braking` (count, by where).
 - `series(kpis, what, road, interval_min)`: a run's values per interval (network throughput, mean speed, on
   the road, queued; trip time by arrival; a road's flow or space-mean speed from its detectors), for
   `forecast` (stats.holt) and `check_calibration(kpis, counts, profiles)`'s FHWA 2019 envelopes
   (`stats.envelopes`: Criteria I–IV against the representative day).
 - The window also runs `assign_routes` (`MainWindow._assign_routes`: the method of successive averages over
-  `_quick_run`s, each with the route choice so far, the link times moved 1/n of the way to those measured, the
+  `_quick_run`s, each with the route choice so far, the link and move times (`link_times_s`, `turn_times_s`,
+  each move's own junction delay counted once: `Graph.move_time`) moved 1/n of the way to those measured, the
   relative gap Σq·Σ_r P_r(T_r − T_min) / Σq·T_min per iteration, then set on the network as one undo step) and
   `optimise_signals` (`_optimise_signals`: a genetic algorithm over fixed-time cycles and splits, every
   candidate scored on the same seeds without workbooks, one elite, tournament selection, blend crossover,
@@ -79,35 +90,44 @@
   both workbooks use.
 - **Batch runs** (the Batch Run extension, `MainWindow.run_batch(seeds, minutes, times, agents, deadline_s, speed,
   at_once, test_tsp)`): `test_tsp` (Batch Run's Test TSP; None: whether TSP is ticked) runs TSP, ticked in the tab
-  or not, `agents` being the models to test; the baseline, No LLM, always runs too, first. Everything is checked
+  or not, `agents` being the models to test; the two baselines, Never preempt (general traffic) and Always preempt, always run too, first. Everything is checked
   first (no run going, demand, at least one model, each found and with its key,
-  1 to `MAX_AT_ONCE` 8 at once), then every agent × seed × time headless (`_in_background`, Stop ends it).
+  1 to `MAX_AT_ONCE` 8 at once), then every agent × seed × time headless (`_in_background`, Stop ends it),
+  seed by seed: every agent on a seed (and its times) before the next seed, so a batch cut short has every agent
+  on the seeds it finished and still compares, pair by pair. The batch's workbook is a checkpoint: rewritten after
+  every finished run (written beside it as "… (saving).xlsx" and swapped in whole, so a crash mid-write keeps the
+  last one; skipped while the file is open in Excel), its Read me saying "Runs finished: n of N". Each run's own
+  workbook is saved as it ends, as before.
   With TSP ticked up to `at_once` go side by side on worker threads, but never two on one model server (a
-  provider: Ollama, Laya, Jev, Grok, Gemini; No LLM is none), so no run's questions wait behind another's;
+  provider: Ollama, Laya, Jev, Grok, Gemini; a baseline is none), so no run's questions wait behind another's;
   a run that raises stops the others and is the batch's error. Each records the pace it achieved
   (`pace_achieved`, simulated over wall seconds while it stepped; under 90 % of the pace asked, the batch says
   so: fewer at once or a slower pace). Plain batches go one at a time, as fast as the CPU allows (side by side
   they'd only share one process's CPU). Laya is started first
   if asked for, and each agent's model warmed up with one throwaway request, `_warm_up`, so its loading isn't
-  charged to its first run), each through `_one_run` paced at the batch's `speed` (1–60, the panel's 1×, 2×, 5×, 10×)
-  with its own signal agent that never waits (`deadline_s` the batch's Decide within, in simulated s; No
-  LLM: nobody asked), answering in its agent's own system (the question carries both), each saving its
+  charged to its first run), each through `_one_run` paced at the batch's `speed` (1–60, the panel's 1×, 2×, 5×, 10×) when a model answers in
+  it (a baseline and its emergency fleet depend on the seed alone: as fast as the CPU allows, about 25 s a
+  simulated hour for ~400 vehicles)
+  with its own signal agent that never waits (`deadline_s` the batch's Decide within, in simulated s; a
+  baseline: nobody asked, `SignalAgent(rule=)` answering, False never, True always), answering in its agent's own system (the question carries both), each saving its
   workbook named by seed and model, and its telemetry feed beside it, in `ACMS batch <date time> runs`.
   Without Test TSP the runs are plain (one agent, "No TSP"). **`MainWindow.replay_run(workbook)`** (Batch Run's
   Replay a run) runs one of them again: the seed (Run sheet) and simulated time (Summary) from its workbook,
   headless and unpaced, TSP's agent a `Replay` of the telemetry feed beside it (each decision at its recorded
   simulated time, no model asked), saving `… <model>-replay.xlsx` and comparing its Summary with the original's
   (`same`, or the figures that differ: the network or demand open isn't the run's). Then `averaged(runs)` makes each (agent,
-  seed)'s repeats one (every figure's mean), `compare` sets each agent against the first (No LLM when
-  ticked) paired over the seeds, and `batch_workbook` writes `ACMS batch <date time>.xlsx` (`batch_name`):
+  seed)'s repeats one (every figure's mean), `compare` sets each agent against the first (Never preempt when
+  ticked; Always preempt is an agent beside it, the other end of the bracket) paired over the seeds, and `batch_workbook` writes `ACMS batch <date time>.xlsx` (`batch_name`):
   **Read me** (seeds, times, duration, agents, baseline, deadline, how it ran and compared), **Headline**
   (`headline_sheet`: per agent, `HEADLINE`'s passenger throughput increase, passenger delay and delay per
   passenger reduction, queue reductions (mean and most queued), vehicle wait time and delay reductions,
-  vehicle throughput increase, and each type's delay and wait reduction: baseline and agent means, the
+  vehicle throughput increase, emergency travel time reduction (Test DEVL), and each type's delay and wait
+  reduction: baseline and agent means, the
   increase or reduction in % (positive: better), difference, interval, p, clear, better), **Comparison**,
   **Agents** (system, provider, model, runs, and the means of `AGENT_MEASURES`), **Runs** (every run, its
   repeat, workbook and figures) and the inputs.
-- **Conditions a scenario meets** (`Scenario.incidents`, `weather`, `random_incidents`, `meters`, `assign_routes`;
+- **Conditions a scenario meets** (`Scenario.incidents`, `weather`, `random_incidents`, `meters`, `assign_routes`,
+  `lateral` (lateral position and filtering, true or false; kept under a condition, a factor's level may set it);
   `run_headless(incidents, weather, meters)` through `apply_conditions`, which checks every road and lane first):
   `incidents_from` (lanes closed or a work zone's limit on a road, from `at_min` for `for_min`; simulation.md's
   `close`), `draw_incidents` (random incidents, Poisson at `per_hour`, on roads weighted by length, from each seed's

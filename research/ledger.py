@@ -1,5 +1,5 @@
 """The PDF ledger: tool ideas for the agentic simulator, read chunk by chunk from the PDFs in
-transportation_engineering_books/ and transportation_engineering_papers/ (their text in research/pdf_text/<source>/,
+references/transportation_engineering_books/ and references/transportation_engineering_papers/ (their text in research/pdf_text/<source>/,
 25 pages a chunk, made by research/extract.sh).
 
 Each source keeps two CSV files in research/ledger/ (the truth, one writer a source): <source>.chunks.csv, a row per

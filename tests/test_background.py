@@ -693,6 +693,39 @@ def test_a_place_found_by_name_goes_under_the_networks_centre():
     _close(window, tiles)
 
 
+def test_an_image_loads_once_whichever_thread_asks():
+    """The assistant traces roads off the GUI thread while the map draws: a PDF page (PDFium isn't thread-safe)
+    is rendered once, one load at a time."""
+    import threading
+
+    from traffic_simulator import background as module
+
+    with tempfile.TemporaryDirectory() as folder:
+        path = Path(folder) / "plan.pdf"
+        path.write_bytes(b"%PDF")  # only stat()ed: the renderer is stood in for
+        rendered, render = [], module._pdf_page
+
+        def slow(file, page):
+            rendered.append(threading.current_thread().name)
+            time.sleep(0.2)
+            image = QImage(40, 20, QImage.Format.Format_RGB32)
+            image.fill(QColor("#ffffff"))
+            return image
+
+        module._pdf_page = slow
+        try:
+            painter, background = BackgroundPainter(), Background(kind="image", image=str(path), width_m=100)
+            got = []
+            threads = [threading.Thread(target=lambda: got.append(painter.image(background))) for _ in range(4)]
+            for thread in threads:
+                thread.start()
+            for thread in threads:
+                thread.join()
+        finally:
+            module._pdf_page = render
+        assert len(rendered) == 1 and len(got) == 4 and all(image is got[0] for image in got)
+
+
 if __name__ == "__main__":
     for name, check in list(globals().items()):
         if name.startswith("test_"):

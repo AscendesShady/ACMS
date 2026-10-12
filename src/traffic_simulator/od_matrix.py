@@ -48,7 +48,7 @@ from PySide6.QtWidgets import (
 )
 
 from . import theme
-from .daily_profile import ARRIVAL_PATTERNS, DEGREES, HOURS, MIN_GAP_H, DailyProfile
+from .daily_profile import ARRIVAL_PATTERNS, DEGREES, HOURS, MIN_GAP_H, DailyProfile, phf_of, phf_quarters, quarter_shares
 from .institutions import KINDS, catchment, door, hourly_people, hourly_trips, shares
 from .mode_behavior import VehicleModes, fixed_split, redistribute, whole_percent
 from .models import MAX_AREA_M2, Institution, Network, institution_problem
@@ -77,6 +77,7 @@ class ODCell:
     profile: DailyProfile = field(default_factory=DailyProfile)  # how the day's trips spread
     pattern: str = "Random"
     split: tuple[int, ...] = DEFAULT_SPLIT  # percent per vehicle type, in Mode Behavior's order; sums to 100
+    quarters: tuple[float, ...] = ()  # hourly demand: each 15 minutes' share of the hour (its PHF); () even
 
 
 def _mode_text(names: list[str], split: tuple[int, ...]) -> str:
@@ -740,10 +741,18 @@ class ODCellPanel(QWidget):
         self.flow.setToolTip("Trips per hour")
         self.pattern = QComboBox()
         self.pattern.addItems(ARRIVAL_PATTERNS)
+        # Hourly demand's peak-hour factor (HCM): the busiest 15 minutes run at the hour's flow / PHF.
+        self.phf = QDoubleSpinBox()
+        self.phf.setRange(0.25, 1.0)
+        self.phf.setDecimals(2)
+        self.phf.setSingleStep(0.05)
+        self.phf.setToolTip("Peak-hour factor")
         self.modes = ModeSplitSlider(matrix.vehicle_modes)
         self.flow_label = QLabel("Flow")
         form.addRow(self.flow_label, self.flow)
         form.addRow("Arrival pattern", self.pattern)
+        self.phf_label = QLabel("PHF")
+        form.addRow(self.phf_label, self.phf)
         form.addRow("Modes", self.modes)
         # One box per vehicle type: swatch + name (the legend) over its number box.
         self.mode_shares: list[QSpinBox] = []
@@ -840,6 +849,7 @@ class ODCellPanel(QWidget):
 
         self.flow.valueChanged.connect(lambda: self._edited("flow"))
         self.pattern.currentIndexChanged.connect(lambda: self._edited("pattern"))
+        self.phf.valueChanged.connect(lambda: self._edited("quarters"))
         self.modes.changed.connect(lambda: self._edited("modes"))
         self.modes.changed.connect(self._sync_shares)
         self.curve.changed.connect(lambda: self._edited("profile"))
@@ -884,7 +894,7 @@ class ODCellPanel(QWidget):
         self.pair_label.setText(f"{count} pairs selected" if count > 1 else f"From {pair[0]} to {pair[1]}")
         self.selection_hint.setVisible(count > 1)
         self.clear_button.setText(f"Clear {count} Cells" if count > 1 else "Clear Cell")
-        for widget in (self.flow, self.pattern, self.modes):
+        for widget in (self.flow, self.pattern, self.phf, self.modes):
             widget.blockSignals(True)  # loading a cell must not mark it as entered
         daily = self.matrix.mode == "daily"
         self.flow_label.setText("Trips per day" if daily else "Flow")
@@ -897,9 +907,12 @@ class ODCellPanel(QWidget):
         value = self.matrix.value(cell)
         self.flow.setValue(-1 if value is None else value)
         self.pattern.setCurrentText(cell.pattern)
+        self.phf.setValue(phf_of(cell.quarters))
+        self.phf.setVisible(not daily)  # no PHF on a daily curve
+        self.phf_label.setVisible(not daily)
         self.modes.set_split(self.matrix.split_of(cell), set(self.matrix.vehicle_modes.vehicles_per_hour()))
         self._sync_shares()
-        for widget in (self.flow, self.pattern, self.modes):
+        for widget in (self.flow, self.pattern, self.phf, self.modes):
             widget.blockSignals(False)
         self._show_profile(cell.profile)
         self._refresh_copy()
@@ -921,6 +934,8 @@ class ODCellPanel(QWidget):
                 cell.profile = deepcopy(self.curve.profile)
             elif field == "pattern":
                 cell.pattern = self.pattern.currentText()
+            elif field == "quarters":
+                cell.quarters = phf_quarters(self.phf.value())
             else:
                 cell.split = self.modes.split()  # the other types' proportions, as set
             self.matrix.cells[pair] = cell
@@ -1178,7 +1193,7 @@ class ODCellPanel(QWidget):
         if self.planner is None:
             raise ValueError("Demand can't be generated here: there's no network to measure routes on.")
         scope = self._pairs_from(args)
-        demand, _, pattern, shares = self._demand_plan({**args, "value": 0})  # checks demand, pattern, split
+        demand, _, pattern, shares, _ = self._demand_plan({**args, "value": 0})  # checks demand, pattern, split
         plan, info = self.planner(scope, {**args, "demand": demand}, *self._demand_now(demand, scope))
         if check_only:
             return {"ok": True}
@@ -1359,13 +1374,23 @@ class ODCellPanel(QWidget):
             table.setRangeSelected(QTableWidgetSelectionRange(row, column, row, column), True)
 
     def _demand_plan(self, args: dict) -> tuple:
-        """(demand, value, pattern, shares) from set_od_demand's arguments, checked; nothing changes."""
+        """(demand, value, pattern, shares, quarters) from set_od_demand's arguments, checked; nothing changes."""
         demand = args.get("demand") or self.matrix.mode
         if demand not in UNITS:
             raise ValueError("demand must be 'hourly' (veh/h) or 'daily' (trips per day).")
         value, pattern, split = args.get("value"), args.get("arrival_pattern"), _parsed(args.get("mode_split"))
-        if value is None and not pattern and split is None:
-            raise ValueError("Give a value, an arrival_pattern and/or a mode_split.")
+        phf, quarters = args.get("peak_hour_factor"), _parsed(args.get("quarters"))
+        if value is None and not pattern and split is None and phf is None and quarters is None:
+            raise ValueError("Give a value, an arrival_pattern, a mode_split and/or a peak_hour_factor or quarters.")
+        if phf is not None or quarters is not None:
+            if demand == "daily":
+                raise ValueError("A peak-hour factor or 15-minute quarters apply to hourly demand only (the daily "
+                                 "curve shapes daily demand).")
+            if phf is not None and quarters is not None:
+                raise ValueError("Give peak_hour_factor or quarters, not both.")
+            if phf is not None and not isinstance(phf, (int, float)):
+                raise ValueError("peak_hour_factor must be a number, 0.25 to 1.")
+            quarters = phf_quarters(phf) if phf is not None else quarter_shares(quarters)
         if value is not None:
             value = round(float(value))
             top = 2_000_000 if demand == "daily" else 100_000
@@ -1378,9 +1403,9 @@ class ODCellPanel(QWidget):
             pattern = matches[0]
         if split is not None:
             shares = self._shares_from(split)
-        return demand, value, pattern, None if split is None else shares
+        return demand, value, pattern, None if split is None else shares, quarters
 
-    def _set_demand(self, pairs: list[tuple[str, str]], demand: str, value, pattern, shares) -> dict:
+    def _set_demand(self, pairs: list[tuple[str, str]], demand: str, value, pattern, shares, quarters=None) -> dict:
         self._show_mode(demand)
         self._select(pairs)
         if value is not None:
@@ -1393,10 +1418,17 @@ class ODCellPanel(QWidget):
             for box, share in zip(self.mode_shares, shares[:-1]):  # typed into the boxes in turn: the
                 box.setValue(share)  # slider moves, and the last type takes the rest
             self._edited("modes")
+        if quarters is not None:  # straight onto the pairs: the PHF box shows them but types only its own shape
+            for pair in pairs:
+                cell = self.matrix.cell(pair)
+                cell.quarters = quarters
+                self.matrix.cells[pair] = cell
+            self.show_current()
         cell = self.matrix.cell(pairs[0])
         result = {"pairs": [f"{o}->{d}" for o, d in pairs], "demand": demand,
                   "value": self.matrix.value(cell), "unit": UNITS[demand], "arrival_pattern": cell.pattern,
-                  "mode_split": dict(zip(self.matrix.vehicle_modes.names(), self.matrix.split_of(cell)))}
+                  "mode_split": dict(zip(self.matrix.vehicle_modes.names(), self.matrix.split_of(cell))),
+                  **(_quarters_record(cell) if demand == "hourly" else {})}
         timed = [f"{mode.name} every {mode.headway_min} min" for mode in self.matrix.vehicle_modes.modes
                  if mode.headway_min]
         if timed:
@@ -1449,10 +1481,11 @@ class ODCellPanel(QWidget):
         cells = {f"{o}->{d}": cell for (o, d), cell in matrix.cells.items()
                  if o in matrix.origins and d in matrix.destinations and (cell.flow is not None or cell.daily is not None)}
         options = {pair: {"arrival_pattern": cell.pattern, "mode_split": dict(zip(names, matrix.split_of(cell))),
-                          **({"daily_curve": _curve_record(cell.profile)} if cell.daily is not None else {})}
+                          **({"daily_curve": _curve_record(cell.profile)} if cell.daily is not None else {}),
+                          **({"quarters": [0.25] * 4, **_quarters_record(cell)} if cell.flow is not None else {})}
                    for pair, cell in cells.items()}
         usual: dict = {}
-        for key in ("arrival_pattern", "mode_split", "daily_curve"):
+        for key in ("arrival_pattern", "mode_split", "daily_curve", "peak_hour_factor", "quarters"):
             seen = [json.dumps(option[key]) for option in options.values() if key in option]
             if seen:
                 usual[key] = json.loads(max(set(seen), key=seen.count))
@@ -1464,6 +1497,12 @@ class ODCellPanel(QWidget):
                 "hourly_vph": {pair: cell.flow for pair, cell in cells.items() if cell.flow is not None},
                 "daily_trips": {pair: cell.daily for pair, cell in cells.items() if cell.daily is not None},
                 "usual": usual, "different": {pair: values for pair, values in different.items() if values}}
+
+
+def _quarters_record(cell: ODCell) -> dict:
+    """An hourly pair's peak-hour factor, and its 15-minute shares of the hour when they aren't even."""
+    return {"peak_hour_factor": round(phf_of(cell.quarters), 3),
+            **({"quarters": [round(share, 4) for share in cell.quarters]} if cell.quarters else {})}
 
 
 def _parsed(value):

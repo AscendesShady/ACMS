@@ -2,7 +2,7 @@
 (src/traffic_simulator/transit_signal_priority.py), gated by one TRUE/FALSE per bus request from
 the agent (src/traffic_simulator/agent_transit_signal_priority.py). Nothing agent-side lives here:
 its panel says who decides (agent_choice.py): System 1 or System 2 and which of its models, or Multiple, for
-Batch Run: the models it tests, each against the baseline (No LLM, the plan), and how (Decide within, Pace,
+Batch Run: the models it tests, each against the baselines (Never, Always preempt), and how (Decide within, Pace,
 Runs at once, Times each: batch_settings(), which Batch Run reads). A live run asks the System chosen last.
 
 Ticked, signal_override() runs inside every signal, for each arm of each signalised junction,
@@ -13,7 +13,7 @@ coordinated plan, exactly, unless priority is acting for a bus:
   the green ended clear the junction, (distance across + 12 m) / 8 m/s) is put in the plan's state (`sync`) and offered the buses; only if it acts (holds
   the bus's green, up to 15 s, or brings it forward) does it take over, from exactly where the plan is.
 - a bus on an arm within the check-in distance (the speed limit x the longest wait for its phase's
-  green) checks in; it checks out once it has left the junction. While it is checked in, the agent's
+  green), or held in a queue further out (slower than 5 km/h behind a vehicle in its lane), checks in; it checks out once it has left the junction. While it is checked in, the agent's
   TRUE/FALSE for its request is read once a second: TRUE lets the controller act, within its limits,
   unless the bus's exit lane has no room for it (then BLOCKED: no priority can help it through);
   FALSE: the plan.
@@ -58,7 +58,7 @@ tsp_agent = importlib.reload(importlib.import_module("traffic_simulator.agent_tr
 NAME = "Transit Signal Priority (TSP)"
 ORDER = 2
 
-BUS_TYPES = ("bus",)  # vehicle types that get priority (Mode Behavior names, any case)
+BUS_TYPES = ("bus",)  # vehicle classes that get priority (a type's vehicle_class, whatever it is called)
 V_CROSS = 8.0  # m/s, a bus's speed across the junction
 V_LO_SHARE = 0.4  # slowest expected bus speed, as a share of the speed limit
 L_BUS = 12.0  # m
@@ -111,6 +111,7 @@ class _Run:
     def __init__(self, agent) -> None:
         self.junctions: dict = {}
         self.last_t, self.agent, self.backlog, self.record = None, agent, {}, tsp_agent.Run()
+        self.generation = getattr(agent, "generation", 0)  # the agent's run (SignalAgent.reset moves it on)
 
 
 class _Junction:
@@ -245,10 +246,12 @@ class _Junction:
         controller, seen = self.controller, set()
         for arm, info in view["arms"].items():
             for i, vehicle in enumerate(info["approaching"]):
-                if vehicle["type"].lower() not in BUS_TYPES or vehicle["distance_m"] > self.x[arm]:
-                    continue
                 bus, speed = vehicle["id"], vehicle["speed_kmh"] / 3.6
                 ahead = sum(other["lane"] == vehicle["lane"] for other in info["approaching"][:i])
+                queued = ahead and vehicle["speed_kmh"] < tsp_agent.QUEUED_KMH  # held in a queue, however far out
+                if vehicle.get("class", vehicle["type"].lower()) not in BUS_TYPES or not (
+                        vehicle["distance_m"] <= self.x[arm] or queued or bus in self.checked_in):
+                    continue
                 if bus in self.checked_in:
                     controller.on_update(bus, vehicle["distance_m"], speed, ahead, t)
                 else:
@@ -387,7 +390,9 @@ def signal_override(junction: str, arm: str, state: str, context: dict, signal_a
     global _latest
     key, t = signal_agent if signal_agent is not None else NOBODY, context["time_s"]
     run = _runs.get(key)
-    if run is None or run.last_t is None or t < run.last_t or t - run.last_t > 2:  # a new run, or ticked again
+    # A new run: its time went back or jumped (ticked again), or its agent was reset (Stop, then Run at once)
+    if run is None or run.last_t is None or t < run.last_t or t - run.last_t > 2 \
+            or run.generation != getattr(signal_agent, "generation", 0):
         run = _Run(signal_agent)
         with _runs_lock:
             _runs.pop(key, None)
@@ -446,7 +451,7 @@ def report(agent) -> dict:
     holds = sum(found.count("HOLD") for found in events.values())
     truncations = sum(found.count("TRUNCATE") for found in events.values())
     answered = [row for row in rows if row["answer"] is not None and not row["fell_back"] and not row["late"]
-                and not row.get("no_agent")]
+                and not (row.get("no_agent") and not row["answer"])]  # Never preempt's rows aren't decisions
     activated = sum(row["answer"] is True for row in answered)
     latency = _stats([row["latency_s"] for row in rows])
     delay = _stats([row["answered_s"] - row["asked_s"] for row in answered])
@@ -584,7 +589,7 @@ OUTCOMES = {"served": "TRUE, and the controller held the bus's green or brought 
             "blocked": "TRUE, but the bus's exit lane had no room: refused, nothing could get it through",
             "not feasible": "TRUE, but no extension or early green could serve it in time",
             "refused": "FALSE: the plan",
-            "no LLM": "nobody to ask (the baseline): the plan",
+            "no LLM": "nobody to ask (Never preempt, the baseline): the plan",
             "rejected": "the answer wasn't a decision (the guard): the plan",
             "fell back": "no answer within the deadline, or an error: the plan",
             "too late": "the answer reached the controller after the bus had gone",
@@ -595,8 +600,8 @@ OUTCOMES = {"served": "TRUE, and the controller held the bus's green or brought 
 def outcome(row: dict, log: list) -> str:
     """What came of a request (OUTCOMES), from the agent's answer and what its junction's controller logged for
     its phase between the request and its release."""
-    if row.get("no_agent"):
-        return "no LLM"
+    if row.get("no_agent") and not row["answer"]:
+        return "no LLM"  # Never preempt: the plan; Always preempt goes on to what the controllers did
     if row["withdrawn"]:
         return "withdrawn"
     if str(row.get("guard") or "").startswith("rejected"):

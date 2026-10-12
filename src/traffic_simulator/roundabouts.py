@@ -4,10 +4,14 @@ The HCM's roundabout chapter covers capacity; the geometric guidance it relies
 on is NCHRP Report 672 (FHWA, "Roundabouts: An Informational Guide", 2nd ed.):
 
 - a category by entry lanes, each with a recommended maximum entry design
-  speed and a typical inscribed circle diameter (ICD) range;
+  speed and a typical inscribed circle diameter (ICD) range; it covers up to three
+  entry lanes, so more are refused;
 - a circulatory roadway 100-120 % as wide as the widest entry (120 % here);
 - the fastest-path speed-radius relation V = 3.4614 R^0.3673 (mph, ft) for the
   circulatory roadway's -2 % cross slope, used to report the circulating speed.
+
+`hcm_entry_capacity` is the HCM 6th edition's entry capacity against the circulating
+flow, the analytical check analysis.junction_los reports beside the simulated one.
 
 The design speed is the fastest approach limit held inside the category's
 entry-speed range; it places the ICD within the category's typical range, so
@@ -17,6 +21,7 @@ faster approaches get a larger roundabout.
 from __future__ import annotations
 
 from dataclasses import dataclass
+from math import exp
 
 from .models import LANE_WIDTH_M, Network
 
@@ -31,6 +36,7 @@ CATEGORIES = {
 MINI_MAX_APPROACH_KMH = 30.0
 CIRCULATORY_SHARE_OF_ENTRY = 1.2
 PATH_OFFSET_FROM_ISLAND_M = 1.5  # fastest-path vehicle centre line, from the island edge
+MAX_ENTRY_LANES = 3  # the guide's largest category
 
 
 @dataclass(frozen=True)
@@ -46,6 +52,18 @@ class RoundaboutDesign:
     mini: bool
 
 
+def hcm_entry_capacity(circulating_vph: float, lanes: int = 1) -> float | None:
+    """HCM 6th ed. (Ch 22) entry capacity, veh/h, of an entry of `lanes` lanes
+    against `circulating_vph` (cars as passenger cars), with as many circulating lanes as entry lanes as NCHRP 672
+    designs them: one lane 1380·e^(−0.00102·v_c) (Eq 22-1); two lanes 1420·e^(−0.00085·v_c) (right) +
+    1350·e^(−0.00092·v_c) (left) (Eq 22-4). None for three: beyond the HCM's roundabout equations."""
+    if lanes == 1:
+        return 1380 * exp(-0.00102 * circulating_vph)
+    if lanes == 2:
+        return 1420 * exp(-0.00085 * circulating_vph) + 1350 * exp(-0.00092 * circulating_vph)
+    return None
+
+
 def fastest_path_speed_kmh(radius_m: float) -> float:
     """NCHRP 672 speed on a path of this radius with a -2 % cross slope."""
     return 3.4614 * (radius_m / 0.3048) ** 0.3673 * 1.609344
@@ -56,14 +74,17 @@ def design_roundabout(network: Network, node_id: str) -> RoundaboutDesign:
     # Lanes entering the roundabout: one direction of a two-way road, all of a one-way one.
     entering = [road.lanes_each_way for road in roads if road.direction == "two-way" or road.to_node == node_id]
     entry_lanes = max(entering or [1])
+    if entry_lanes > MAX_ENTRY_LANES:
+        raise ValueError(f"Roundabout {node_id}: {entry_lanes} lanes enter from one road; NCHRP Report 672 designs "
+                         f"roundabouts of up to {MAX_ENTRY_LANES} entry lanes. Use fewer lanes, or a signal.")
     approach_speed = max([road.speed_limit_kmh for road in roads] or [network.default_speed_limit_kmh])
     mini = entry_lanes == 1 and approach_speed <= MINI_MAX_APPROACH_KMH
-    name, (low_speed, high_speed), (low_icd, high_icd) = CATEGORIES["mini" if mini else min(entry_lanes, 3)]
+    name, (low_speed, high_speed), (low_icd, high_icd) = CATEGORIES["mini" if mini else entry_lanes]
     design_speed = min(max(approach_speed, low_speed), high_speed)
     share = (design_speed - low_speed) / (high_speed - low_speed)
     inscribed = low_icd + share * (high_icd - low_icd)
     width = CIRCULATORY_SHARE_OF_ENTRY * entry_lanes * LANE_WIDTH_M
-    island = max(inscribed - 2 * width, 2.0)
+    island = inscribed - 2 * width  # at least 5.6 m: a mini's smallest ICD less its circulatory roadway
     circulating = fastest_path_speed_kmh(island / 2 + PATH_OFFSET_FROM_ISLAND_M)
     return RoundaboutDesign(name, entry_lanes, approach_speed, design_speed, inscribed, width,
                             island, circulating, mini)

@@ -6,10 +6,27 @@
   waiting time (dt while at or below `WAIT_MPS` 0.1 m/s and not in a bus stop's bay: SUMO's tripinfo
   `waitingTime`, a stop's dwell not counting) and keeps when it was first seen; a vehicle missing from the
   next frame has arrived, and its trip (type, origin, destination, departed, arrived, time, distance, delay,
-  wait, people = its type's `occupancy`) is kept, its **passenger delay** (delay × people) added up. Each
+  wait, people = the people on board as it arrived, delay vs own free speed, requested departure, system
+  travel time) is kept, its **passenger delay** (delay × people) added up. Its times are exact, from the
+  frame's `exits` (simulation.md): departed and arrived are when it got on the road and off it (to the 0.5 s
+  step), its trip time (road travel time) the difference, and its **system travel time** off the road less
+  its requested departure (the wait to enter included; a frame without `exits`: first and last seen). That delay is **road-limit time loss**: the same limit for every vehicle, so a
+  bicycle riding freely at its 20 km/h loses time on a 50 km/h road. Beside it, each vehicle's **delay vs own
+  free speed** (dt · max(0, 1 − v / `VehicleState.free_speed`): the lane's limit or the turn's speed × its speed
+  factor, no faster than its top and desired speeds, SUMO's timeLoss; nothing while it calls at a bus stop),
+  and that times the people on board then (`VehicleState.people`: a bus's simulated load, else its type's
+  occupancy), every sample, unfinished trips too: the **person delay on board**. Vehicles spawned but not yet
+  on the road (`spawned − arrived − on the road`: every vehicle is one of the three) times dt is the **entry
+  wait**, demand held off the network that the delay on the road leaves out. Each
   sample's queued vehicles add up too, for the mean queued at once (`queued_mean`). `kpis()` adds
   `mean_wait_s` (per completed trip), `people_delay_h` (person·h), `mean_person_delay_s` (passenger delay ÷
-  people carried), `queued_mean`, and per type `mean_wait_s` and `people_delay_h` (older totals read as 0).
+  people carried), `queued_mean`, `delay_vs_free_speed_veh_h`, `mean_trip_delay_vs_free_speed_s`,
+  `person_delay_on_board_h`, `waiting_to_enter` (now), `entry_wait_veh_h`, `delay_with_entry_wait_veh_h`
+  (road-limit delay + entry wait), `mean_system_trip_s`, the **completion rate** (`completion_rate`, arrived ÷
+  spawned) and the **unfinished share** (`unfinished_share`, on the road + waiting to enter ÷ spawned) beside the
+  completed-trip means, and per type `mean_wait_s`, `people_delay_h` and
+  `mean_delay_vs_free_speed_s` (older totals read as 0). The Summary, By type and Trips sheets show them,
+  after the columns they had.
   Per road: vehicles entering (seen on it after another road), vehicle-seconds and -metres, delay, and its
   queue: vehicles slower than `QUEUE_KMH` 5 km/h, counted and as a length a lane (lengths + 2.5 m over its
   lanes per direction), its most and mean. Each simulated minute appends a row to `minutes.csv` (on the
@@ -19,13 +36,21 @@
   seconds), the vehicles first seen per origin and minute (`entries`) and each road's queue (metres a lane,
   rounded) at every sample that had one (`queues`); `observed()` hands them out (experiments.analyse_run,
   choose_modes' `from_run`). `kpis()` (any thread, under its lock) gives the network's figures, with the
-  travel time index `tti` and planning time index `pti` (`stats.reliability`; not in the workbook's Summary,
+  travel time index `tti`, planning time index `pti` and buffer index `bi` (`stats.reliability`; not in the workbook's Summary,
   which is made from the saved totals); `export(path)` a workbook now;
   `finish(results)` the workbook when the run ends (`MainWindow._stop_runner`: Stop, a new Run, a change to
-  the network, closing, after one last sample) and clears the folder, or nothing if it recorded nothing.
+  the network, closing, its physics failing, after one last sample, the part-sample, so a run stopped before
+  its first 5 s still has one) and clears the folder, or nothing if it simulated nothing. Its `error` (why the
+  run ended early or what is missing from it) is the Run sheet's **Incomplete** row.
+- **Warm-up** (`RunRecorder(measure_from_s=)`, 0 by default: everything counts): when the first sample past it
+  comes, `_measure_from_here` starts every figure again from zero there (totals, roads, links, trips, queues;
+  `kpis()` then divides by the measured hours, throughput by the arrivals since), and trips that got on the road
+  before it are left out of the trips and their means. The per-minute rows, the vehicles first seen per minute
+  and the spawned and arrived counts (so the completion rate) cover the whole run. The Summary and Run sheets
+  say **Measured from**; analyse_run's MSER-5 warm-up suggests a value (experiments.md).
 - **`workbook(folder, path)`**, named by when the run started, its seed and the AI model that decided TSP
   (`file_name(started, recovered, seed, model)`: `ACMS results 2026-09-30 14-05-33 seed 42 laya.xlsx`; the
-  model is Jev's or Laya's provider, System 2's model id, `no-llm` when TSP had nobody to ask, `no-ai` without
+  model is Jev's or Laya's provider, System 2's model id, `never` or `always` for a batch's baselines, `no-llm` when TSP had nobody to ask, `no-ai` without
   TSP; given to `RunRecorder(seed=, model=)` and kept in `meta.json`), made to hand to an independent analyst:
   **Read me** (the run's start, the seed, the AI model, how to
   repeat it, what each sheet holds, every figure's definition, the assumptions), **Summary** (each KPI, its
@@ -55,19 +80,25 @@
   same run; the workbook records it.
 - **`xlsx.write_xlsx(path, sheets)`**: Office Open XML SpreadsheetML by hand (zipfile): numbers as numbers,
   other values as inline strings (escaped, XML's forbidden control characters dropped), a bold frozen
-  header, columns sized from the first 200 rows, sheet names made legal (31 characters, no []:*?/\),
+  header, columns sized from the first 200 rows, sheet names made legal (31 characters, no []:*?/\) and
+  unique whatever their case (a taken one gets " 2", " 3"…, cut to make room),
   written to a `.part` file and moved into place. **`xlsx.read_xlsx(path)`** reads such a workbook back (each
   sheet's rows, numbers as floats): a replay reads a run's seed and simulated time with it, and the tests read
   workbooks with it.
 - **Occupancy**: `mode_behavior.VehicleMode.occupancy`, people a vehicle carries: Bus 20, Car 1.5, Bike 1, a
-  new type 1 (assumptions, not editable in the tab yet, stated on the page and in the workbook).
+  new type 1 (assumptions, not editable in the tab yet, stated on the page and in the workbook). A bus calling
+  at stops with passengers carries its simulated load instead (from its occupancy at its first stop), which
+  the Frame hands the recorder.
 - **The window**: results go to Documents\ACMS results (offscreen, i.e. tests: a temporary folder);
   **Export** (the menu bar corner) saves a workbook of the run so far (with TSP's sheets as they stand: its
   agent's decisions, latency and tokens, and the analysis of what it has observed so far), the run carrying on,
   or copies the last run's; with neither, it saves the network alone (`network_workbook`: Read me, City, the
   inputs, Settings, and its GeoJSON). A run's end (`MainWindow._stop_runner`) and each headless run
   (`_one_run`) add the extensions' reports (`ExtensionsPanel.reports`) and the analysis sheets
-  (`add_analysis`) before the workbook is written.
+  (`add_analysis`) before the workbook is written (`MainWindow._end_recording`). Every run that ends, however
+  it ends (stopped, cancelled, its physics or its extras raising), writes its workbook: the extras as far as
+  they go, what failed in its Incomplete row and the status bar; a headless run's error then goes on up to
+  its caller. `_quick_run` (a search's KPIs) keeps none, by design.
 - **Everything for analysis** (every run, the user's live ones too):
   - **Road conditions**: each direction of each road (link: "road>" from its from-node, "road<" back, from the
     lane in each sample's `place`), its flow, flow a lane, mean speed and its share of the limit, level of service

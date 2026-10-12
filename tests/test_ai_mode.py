@@ -182,8 +182,10 @@ def test_gemini_gets_only_the_schema_keywords_it_accepts():
 def test_assistant_streams_each_providers_api():
     restore = _serve_providers()
     try:
-        prompt = assistant.system_prompt()  # both documents, in full, plus how to use the tools
-        assert "# ACMS Architecture" in prompt and "# ACMS — Agentic Context-Aware Mobility System" in prompt
+        prompt = assistant.system_prompt()  # the index in full, plus how to use the tools; README on demand
+        readme = "# ACMS — Agentic Context-Aware Mobility System"
+        assert "# ACMS Architecture" in prompt and readme not in prompt and assistant.README_NOTE in prompt
+        assert readme in assistant.system_prompt(tools=False)  # a model without read_source gets both
         assert assistant.TOOLS_NOTE in prompt and assistant.TOOLS_NOTE not in assistant.system_prompt(tools=False)
         messages = [{"role": "system", "content": prompt}, {"role": "user", "content": "hello"},
                     {"role": "assistant", "content": "hi"}, {"role": "user", "content": "roundabouts?"}]
@@ -213,7 +215,7 @@ def test_assistant_streams_each_providers_api():
         assert 0 <= local["first_s"] <= local["total_s"]
         path, _, body = _Providers.seen[-1]
         assert path == "/api/chat" and body["stream"] is True
-        assert body["options"]["num_ctx"] * 3 > len(prompt)  # the documents fit the context window
+        assert body["options"]["num_ctx"] * 4 > len(prompt)  # the documents fit the context window
 
         assert assistant.default_model("gemini", ["gemini-2.5-pro", "gemini-flash-latest"]) == "gemini-flash-latest"
         assert assistant.default_model("grok", ["grok-build-0.1", "grok-4.3"]) == "grok-4.3"
@@ -229,10 +231,14 @@ def test_assistant_streams_each_providers_api():
 
 def test_a_tool_call_written_as_text_is_made():
     tools = [{"name": "describe"}, {"name": "network_summary"}]
-    text = 'I will call describe. {"name": "describe", "parameters": {"id": "2,2"}} then {"name": "nope", "arguments": {}}'
+    text = 'I will call describe. {"name": "describe", "parameters": {"id": "2,2"}}'
     assert assistant.calls_in_text(text, tools) == [{"id": "text1", "name": "describe", "arguments": {"id": "2,2"}}]
     assert assistant.calls_in_text('{"name": "network_summary"} {broken', tools)[0]["arguments"] == {}
     assert assistant.calls_in_text("a set {1, 2} and no call", tools) == []
+    # a call-shaped object naming a tool that doesn't exist is made too, so the app refuses it (llama3.2 3B wrote
+    # {"name": "teleport_vehicles", ...} as its whole answer); a bare {"name": ...} that isn't a tool is just text
+    invented = '{"name": "teleport_vehicles", "parameters": {"junctions": "1,1"}} {"name": "Bob"}'
+    assert [c["name"] for c in assistant.calls_in_text(invented, tools)] == ["teleport_vehicles"]
     replies = iter([{"role": "assistant", "content": text}, {"role": "assistant", "content": "2,2 is a roundabout."}])
     saved, assistant.stream_chat = assistant.stream_chat, lambda *args: next(replies)
     try:  # llama3.1 wrote the call as text: it is made, and the answer goes on
@@ -269,7 +275,8 @@ def test_the_conversation_loop_recovers_from_small_models_habits():
                                       None, lambda c: ran.append(c) or {"error": "Unknown id '9,9'."})
         assert len(ran) == 1  # the repeat isn't run: it is told so
         assert json.loads(messages[4]["content"])["error_type"] == "repeated"
-        assert asked[-1] is False and messages[-1]["content"] == "There is no junction 9,9."  # asked again, not thinking
+        assert asked[-1] is False  # asked again, not thinking
+        assert messages[-1]["content"] == "There is no junction 9,9.\n\n" + assistant.REFUSED_NOTE  # its one call refused
     finally:
         assistant.stream_chat = saved
 
@@ -337,6 +344,39 @@ def test_the_conversation_loop_recovers_from_small_models_habits():
         assistant.stream_chat = lambda *args, **kwargs: next(done)
         messages = assistant.converse("local", "m", [{"role": "user", "content": "x"}], "", tools, None, lambda c: {})
         assert messages[-1]["content"].startswith("update_roads isn't needed")  # reminded once, then its word stands
+        # a plan and nothing done (Gemini 3.5 Flash Lite sent its Plan: line twice): the reminder requires a call
+        asked = []
+        plan_only = iter([{"role": "assistant", "content": "Plan: widen it -> update_roads"},
+                          {"role": "assistant", "content": "", "tool_calls": [{"id": "1", "name": "update_roads",
+                                                                                "arguments": {"roads": ["9,9-9,8"]}}]},
+                          {"role": "assistant", "content": "Done: road 9,9-9,8 now has 6 lanes."}])
+
+        def fake(*args, **kwargs):
+            asked.append(kwargs.get("require"))
+            return next(plan_only)
+
+        assistant.stream_chat = fake
+        shown = []
+        messages = assistant.converse("gemini", "m", [{"role": "user", "content": "x"}], "", tools, shown.append,
+                                      lambda c: {"error": "Unknown id '9,9-9,8'."})
+        assert asked == [None, ["update_roads"], None]  # required once, on the reminder only
+        # every call refused, yet it claims success: the app says nothing changed, in the reply and on screen
+        assert messages[-1]["content"].endswith(assistant.REFUSED_NOTE) and assistant.REFUSED_NOTE in shown[-1]
+        # a read, then a reply that is only a Plan: line (Gemini, asked to raise the population): required too
+        asked.clear()
+        plan_only = iter([{"role": "assistant", "content": "Plan: look -> list_junctions"},  # a plan, nothing done
+                          {"role": "assistant", "content": "", "tool_calls": [{"id": "1", "name": "list_junctions",
+                                                                                "arguments": {}}]},
+                          {"role": "assistant", "content": "Plan: widen it -> update_roads"},  # a second plan, again
+                          {"role": "assistant", "content": "", "tool_calls": [{"id": "2", "name": "update_roads",
+                                                                                "arguments": {}}]},
+                          {"role": "assistant", "content": "Done."}])
+        assistant.converse("gemini", "m", [{"role": "user", "content": "x"}], "", tools, None, lambda c: {"ok": True})
+        assert asked == [None, ["list_junctions"], None, ["update_roads"], None]  # each plan-only reply, a call required
+        assert assistant._only_a_plan("**Plan:** x -> y") and not assistant._only_a_plan("Plan: x -> y\nNot needed: ok.")
+        ended = []
+        assistant._ended([], "it stopped", ended.append)
+        assert ended == ["\n\n(The app: it stopped. Nothing ran.)"]  # the app's own note reaches the transcript
     finally:
         assistant.stream_chat = saved
     assert assistant.planned_tools("set roads -> list_junctions, update_roads, nope", {"list_junctions", "update_roads"}) \
@@ -345,6 +385,32 @@ def test_the_conversation_loop_recovers_from_small_models_habits():
     assert assistant.plan_line(["no plan here"]) == ""
     # Ollama's context size steps up rarely, so its cache of the prompt survives from one round to the next
     assert [assistant.context_size(n) for n in (1000, 16384, 16385, 40000)] == [16384, 16384, 32768, 65536]
+
+
+def test_a_long_conversation_is_cut_to_fit_the_context_window():
+    def exchange(n, result_chars):
+        return [{"role": "user", "content": f"ask {n}"},
+                {"role": "assistant", "content": "", "tool_calls": [{"id": f"c{n}", "name": "list_roads", "arguments": {}}]},
+                {"role": "tool", "id": f"c{n}", "name": "list_roads", "content": "r" * result_chars},
+                {"role": "assistant", "content": f"answer {n}"}]
+
+    system = {"role": "system", "content": "s" * 3000}
+    short = [system, *exchange(1, 100)]
+    assert assistant.fit(short, 10000) is short  # within the budget: sent as it is
+    messages = [system, *(m for n in range(40) for m in exchange(n, 6000)), {"role": "user", "content": "latest"}]
+    copy = json.loads(json.dumps(messages))
+    sent = assistant.fit(messages, 2000)  # the stubs alone are too long: the oldest exchanges go too
+    assert messages == copy  # the conversation itself is never changed
+    assert sum(assistant._chars(m) for m in sent) <= 2000 * assistant.CHARS_PER_TOKEN and len(sent) < len(messages)
+    assert sent[-1]["content"] == "latest" and sent[0]["content"].startswith("s" * 3000)
+    assert "left out to fit" in sent[0]["content"]  # says what went
+    assert all(m["content"] == assistant.STUB for m in sent if m["role"] == "tool")  # older results: a stub
+    calls = {c["id"] for m in sent for c in m.get("tool_calls") or []}
+    assert calls == {m["id"] for m in sent if m["role"] == "tool"}  # every call kept keeps its result, and back
+    huge = [system, *exchange(0, 100000)]  # one result bigger than the window: cut, the call kept
+    cut = assistant.fit(huge, 8000)
+    assert len(cut) == len(huge) and cut[3]["content"].endswith(assistant.CUT)
+    assert sum(assistant._chars(m) for m in cut) <= 8000 * assistant.CHARS_PER_TOKEN
 
 
 def test_tool_calls_round_trip_for_each_provider():
@@ -378,6 +444,15 @@ def test_tool_calls_round_trip_for_each_provider():
                 assert "parameters" not in declarations[1]  # Gemini refuses empty objects
             else:
                 assert body["messages"][3]["tool_name"] == "describe"
+        # a call required (the plan-only reminder): Gemini's mode ANY, xAI's tool_choice; a name not offered is dropped
+        ask = [{"role": "user", "content": "What is 2,2?"}]
+        assistant.stream_chat("gemini", "gemini-2.5-flash", ask, "k", tools, require=["describe", "nope"])
+        assert _Providers.seen[-1][2]["toolConfig"] == {"functionCallingConfig": {"mode": "ANY",
+                                                                                   "allowedFunctionNames": ["describe"]}}
+        assistant.stream_chat("grok", "grok-4.3", ask, "k", tools, require=["describe"])
+        assert _Providers.seen[-1][2]["tool_choice"] == {"type": "function", "function": {"name": "describe"}}
+        assistant.stream_chat("grok", "grok-4.3", ask, "k", tools)
+        assert "tool_choice" not in _Providers.seen[-1][2]
         try:
             assistant.converse("local", "no-tools", [{"role": "user", "content": "hi"}], tools=tools)
         except assistant.ToolsUnsupported:
@@ -408,7 +483,7 @@ class _Silent(BaseHTTPRequestHandler):
             self.wfile.write(b'{"message": {"content": "hi"}}\n')
             self.wfile.flush()
         if self.rfile.read(1) == b"":
-            _Silent.dropped.append(self.path)
+            type(self).dropped.append(self.path)
 
     def log_message(self, *args):
         pass
@@ -437,6 +512,31 @@ def test_stop_cuts_a_silent_server():
     finally:
         server.shutdown()
         server.server_close()
+
+
+class _Stalled(_Silent):
+    dropped = []  # its own, so Stop's test counts only its own requests
+
+
+def test_a_reply_that_stalls_fails_at_the_stall_limit_not_the_start_one():
+    server = HTTPServer(("127.0.0.1", 0), _Stalled)
+    threading.Thread(target=server.serve_forever, daemon=True).start()
+    saved, assistant.STALL_TIMEOUT_S = assistant.STALL_TIMEOUT_S, 0.5
+    started, got = time.monotonic(), []
+    try:  # one event, then silence: the first words came, so the long start-up limit no longer applies
+        for event in assistant._events(f"http://127.0.0.1:{server.server_address[1]}/during", {}, local=True):
+            got.append(event)
+    except assistant.Cancelled:
+        raise AssertionError("nobody stopped it")
+    except assistant.AssistantError:
+        pass
+    else:
+        raise AssertionError("a stalled reply must fail")
+    finally:
+        assistant.STALL_TIMEOUT_S = saved
+        server.shutdown()
+        server.server_close()
+    assert len(got) == 1 and time.monotonic() - started < 5  # not LOCAL_TIMEOUT_S (600 s)
 
 
 class _SystemOne(BaseHTTPRequestHandler):
@@ -609,40 +709,41 @@ def test_a_batch_compares_no_llm_system_1_and_system_2_deciding_tsp():
             else:
                 os.environ["GROK_API_KEY"] = saved_key
         labels = [option["label"] for option in window.ai_mode.agent_options()]
-        assert labels[0] == "No LLM (baseline)" and "System 1: Laya" in labels and "System 2: llama3:latest" in labels
+        assert labels[:2] == ["Never preempt (baseline)", "Always preempt (baseline)"] and "System 1: Laya" in labels and "System 2: llama3:latest" in labels
         assert "System 2: grok-4" in labels  # the provider's usual model, none started
         window._od_command("set_od_demand", {"pairs": ["1W->1E", "1E->1W"], "demand": "hourly", "value": 300,
                                              "mode_split": [{"mode": "Bus", "percent": 40}, {"mode": "Car", "percent": 60}]})
         tsp = window._tsp()
         assert not tsp.on  # Test TSP runs it, ticked in the Extensions tab or not
-        for agents, words in (([], "Tick at least one model"), (["No LLM (baseline)"], "Tick at least one model"),
-                              (["System 9"], "Not found on this PC")):
+        for agents, words in ((["System 9"], "Not found on this PC"),):
             try:
                 window.run_batch([1], 3, agents=agents, test_tsp=True)
             except ValueError as exc:
                 assert words in str(exc)
             else:
                 raise AssertionError("a batch with no model, or one not found, must be refused before it runs")
-        chosen = ["No LLM (baseline)", "System 1: Laya", "System 2: llama3:latest"]
+        chosen = ["Never preempt (baseline)", "Always preempt (baseline)", "System 1: Laya", "System 2: llama3:latest"]
         started = time.monotonic()  # the models only: the baseline always runs, first
-        done = window.run_batch([1, 2], 3, 1, agents=chosen[1:], deadline_s=5, speed=60, at_once=4, test_tsp=True)
+        done = window.run_batch([1, 2], 3, 1, agents=chosen[2:], deadline_s=5, speed=60, at_once=4, test_tsp=True)
         took = time.monotonic() - started
         # 3 s a run at 60x, side by side; Laya's two and llama's two one after another: about 6 s, not 18
         assert 2 * 3 * 0.9 <= took < 6 * 3 * 0.8, took
-        assert done["runs"] == done["of"] == 6 and tsp.module.tsp_agent.system == "1"  # its choice untouched
+        assert done["runs"] == done["of"] == 8 and tsp.module.tsp_agent.system == "1"  # its choice untouched
 
         def runs_of(book):
             rows = read_xlsx(book)["Runs"]
             return {(row[1], row[2]): dict(zip(rows[0], row)) for row in rows[1:]}
 
         together = runs_of(done["file"])
-        paces = [run["pace_achieved"] for run in together.values()]  # 4 at 60x can outrun one process's CPU
+        paces = [run["pace_achieved"] for (agent, _), run in together.items() if "baseline" not in agent]
+        assert len(paces) == 4  # 4 at 60x can outrun one process's CPU; the baseline isn't paced at all:
+        assert all(run.get("pace_achieved") is None for (agent, _), run in together.items() if "baseline" in agent)
         assert all(0 < pace <= 61 for pace in paces)  # recorded, never above the pace asked
         assert ("note" in done) == any(pace < 0.9 * 60 for pace in paces)  # and falling behind is said
         alone = runs_of(window.run_batch([1, 2], 3, 1, agents=["System 1: Laya"], deadline_s=5, speed=60,
                                          at_once=1, test_tsp=True)["file"])
         for seed in (1.0, 2.0):  # each run its own state: side by side as alone, to the vehicle
-            side, own = together[("No LLM (baseline)", seed)], alone[("No LLM (baseline)", seed)]
+            side, own = together[("Never preempt (baseline)", seed)], alone[("Never preempt (baseline)", seed)]
             assert all(side[key] == own[key] for key in ("people_per_h", "mean_trip_delay_s", "queued_mean",
                                                          "tsp_requests", "tsp_greens_cut")), seed
         sheets = read_xlsx(done["file"])
@@ -653,9 +754,10 @@ def test_a_batch_compares_no_llm_system_1_and_system_2_deciding_tsp():
         agents = {row[0]: row for row in sheets["Agents"][1:]}
         assert set(agents) == set(chosen) and agents["System 1: Laya"][1:4] == ["System 1", "laya", "jev-latest"]
         names = sorted(path.name for path in Path(done["folder"]).glob("*.xlsx"))
-        assert len(names) == 6 and any(" seed 1 laya" in name for name in names)
-        assert any(" seed 2 llama3-latest" in name for name in names) and any(" seed 2 no-llm" in name for name in names)
-        laya = read_xlsx(next(Path(done["folder"]).glob("* seed 1 laya.xlsx")))
+        assert len(names) == 8 and any(" seed 1 laya" in name for name in names)
+        assert any(" seed 2 llama3-latest" in name for name in names) and any(" seed 2 never" in name for name in names)
+        # Seed 2's runs: seed 1's go first, while each model is cold, and at 60x most of their answers miss the deadline
+        laya = read_xlsx(next(Path(done["folder"]).glob("* seed 2 laya.xlsx")))
         figures = {row[0]: row[1] for row in laya["TSP"][1:] if len(row) > 1 and row[0]}
         assert figures["Bus requests"] > 0 and figures["Priority given (TRUE)"] > 0 and figures["Model"] == "jev-1.13.0"
         run = {row[0]: row[1] for row in laya["Run"][1:]}
@@ -665,21 +767,24 @@ def test_a_batch_compares_no_llm_system_1_and_system_2_deciding_tsp():
         assert decided and json.loads(decided[0][read])["schema"] == "acms-tsp-telemetry/1"  # what Laya read
         out = laya["Agent decisions"][0].index("Outcome")
         assert {row[out] for row in laya["Agent decisions"][1:] if len(row) > out} <= set(tsp.module.OUTCOMES)
-        feed = [json.loads(line) for line in next(Path(done["folder"]).glob("* seed 1 laya telemetry.jsonl"))
+        feed = [json.loads(line) for line in next(Path(done["folder"]).glob("* seed 2 laya telemetry.jsonl"))
                 .read_text(encoding="utf-8").splitlines()]
         kinds = {message["type"] for message in feed}
         assert {"tsp_request", "tsp_decision"} <= kinds <= {"tsp_request", "tsp_decision", "tsp_withdrawn", "tsp_late_answer"}
         assert {"request", "spat", "approaches"} <= set(feed[0])
         decision = next(message for message in feed if message["type"] == "tsp_decision" and not message["fell_back"])
         assert decision["model"] == "jev-1.13.0" and decision["guard"] == "accepted"  # what the agent reported
-        llama = read_xlsx(next(Path(done["folder"]).glob("* seed 1 llama3-latest.xlsx")))
+        llama = read_xlsx(next(Path(done["folder"]).glob("* seed 2 llama3-latest.xlsx")))
         figures = {row[0]: row[1] for row in llama["TSP"][1:] if len(row) > 1 and row[0]}
         assert 0 < figures["Answered by the tool"] <= figures["Bus requests"] - figures["Bus gone before it was asked"]
         assert figures["Priority given (TRUE)"] > 0  # decide_tsp(activate=true), read as data
         assert any(len(row) > 12 and row[11] == "tool" and row[12] == "bus at red" for row in llama["Agent decisions"][1:])
-        plain = read_xlsx(next(Path(done["folder"]).glob("* seed 1 no-llm.xlsx")))
-        assert {row[0]: row[1] for row in plain["TSP"][1:] if len(row) > 1 and row[0]}["Priority given (TRUE)"] == 0
-        for name in ("laya", "llama3-latest", "no-llm"):  # replayed from its feed, no model asked: the run again, exactly
+        plain = read_xlsx(next(Path(done["folder"]).glob("* seed 1 never.xlsx")))
+        assert {row[0]: row[1] for row in plain["Run"][1:]}["Pace (simulated s a real s)"] == "as fast as the CPU allows"
+        assert {row[0]: row[1] for row in plain["TSP"][1:] if len(row) > 1 and row[0]}["Priority given (TRUE)"] == 0  # Never preempt
+        always = read_xlsx(next(Path(done["folder"]).glob("* seed 1 always.xlsx")))
+        assert {row[0]: row[1] for row in always["TSP"][1:] if len(row) > 1 and row[0]}["Priority given (TRUE)"] > 0
+        for name in ("laya", "llama3-latest", "never", "always"):  # replayed from its feed, no model asked: the run again, exactly
             book = next(Path(done["folder"]).glob(f"* seed 1 {name}.xlsx"))
             replayed = window.replay_run(book)
             assert replayed["same"] and f"{name}-replay.xlsx" in replayed["file"], replayed
@@ -800,6 +905,26 @@ def test_available_tools_lists_every_tool_before_start():
     window.close()
 
 
+def test_a_tool_call_queued_before_stop_never_runs():
+    os.environ.setdefault("QT_QPA_PLATFORM", "offscreen")
+    from PySide6.QtWidgets import QApplication
+
+    from traffic_simulator.ai_mode import _ToolRequest
+    from traffic_simulator.main import MainWindow
+
+    app = QApplication.instance() or QApplication([])
+    window = MainWindow()
+    panel = window.ai_mode
+    request = _ToolRequest({"id": "old", "name": "network_summary", "arguments": {}})
+    worker = threading.Thread(target=panel._relay.tool.emit, args=(panel._session, panel._turn, request))
+    worker.start()
+    worker.join()  # from the worker's thread: queued for the UI thread, not yet delivered
+    panel.stop()
+    app.processEvents()
+    assert request.done.is_set() and request.result == {"error": "Stopped by the user."}  # answered, not run
+    window.close()
+
+
 def test_system_2_shares_edits_and_keeps_the_conversation():
     """The real chat panel against the fake Ollama: warm-up, editor updates,
     watch mode, save/restore and clear."""
@@ -887,15 +1012,17 @@ def test_system_2_shares_edits_and_keeps_the_conversation():
         settle(idle)
         assert "changed the network" not in last_question()  # nothing new since its last reply
 
-        panel.watch.setChecked(True)
-        assert "Llama is watching" in window.ai_status.text()
-        panel._watch_timer.setInterval(50)
+        window.watch_action.setChecked(True)  # the menu bar's eye is a logger: the model never looks by itself
+        assert "Llama is ready" in window.ai_status.text() and not hasattr(panel, "watch")
         asked = len(panel.history)
         window.network.nodes["3,2"].control = "uncontrolled"
         window.model_updated()
-        settle(lambda: len(panel.history) > asked and idle())
-        assert "(Watch mode)" in last_question() and "3,2: signalised → uncontrolled" in last_question()
-        panel.watch.setChecked(False)
+        waited = time.time()
+        while time.time() - waited < 2.5:  # longer than the old watch mode's 2 s pause
+            app.processEvents()
+            time.sleep(0.02)
+        assert len(panel.history) == asked and idle()  # nothing sent: the edit waits for the user's next message
+        window.watch_action.setChecked(False)
 
         steps = len(window.history.undo_stack)  # demand tools work the Demand Generator's controls
         done = panel._execute("set_od_demand", {"pairs": ["1W->1E"], "demand": "hourly", "value": 250})
@@ -906,20 +1033,20 @@ def test_system_2_shares_edits_and_keeps_the_conversation():
         from traffic_simulator.ai_mode import _ToolRequest  # a bad proposal is refused before asking
         request = _ToolRequest({"id": "x", "name": "set_od_demand",
                                 "arguments": {"pairs": ["1W->9Z"], "demand": "hourly", "value": 5}})
-        panel._tool_requested(panel._session, request)
+        panel._tool_requested(panel._session, panel._turn, request)
         assert request.done.is_set() and panel._pending is None and "No such origin" in request.result["error"]
         request = _ToolRequest({"id": "y", "name": "set_junction_control",
                                 "arguments": {"junctions": ["1E"], "control": "roundabout"}})
-        panel._tool_requested(panel._session, request)  # network edits are tried on a copy
+        panel._tool_requested(panel._session, panel._turn, request)  # network edits are tried on a copy
         assert request.done.is_set() and "not a junction" in request.result["error"]
         assert window.network.approach_nodes["1E"].control == "signalised"  # the real network untouched
         request = _ToolRequest({"id": "z", "name": "set_end_flows", "arguments": {"flows": [{"end": "1W"}]}})
-        panel._tool_requested(panel._session, request)  # a call it can't read: refused, saying what it takes
+        panel._tool_requested(panel._session, panel._turn, request)  # a call it can't read: refused, saying what it takes
         assert request.done.is_set() and panel._pending is None
         assert "set_end_flows takes end (text, required)" in request.result["error"]
         request = _ToolRequest({"id": "w", "name": "set_od_demand",
                                 "arguments": {"pair": "1W->1E", "Demand": "HOURLY", "value": "40"}})
-        panel._tool_requested(panel._session, request)  # one it can: pairs, hourly and 40, then asked
+        panel._tool_requested(panel._session, panel._turn, request)  # one it can: pairs, hourly and 40, then asked
         assert panel._pending is request and request.call["arguments"] == {"pairs": "1W->1E", "demand": "hourly",
                                                                            "value": 40.0}
         panel._decide(False)
