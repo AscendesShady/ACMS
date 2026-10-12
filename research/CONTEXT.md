@@ -30,6 +30,8 @@ Back to routing: [../CONTEXT.md](../CONTEXT.md). Run every command from the repo
 
 ## Outputs
 
+- `research/statistics_catalogue.md`: every statistical method found in the books, with the problem it
+  is used for, its pages, and whether ACMS has it (`stats.py` is built from it).
 - `research/ledger/*.csv` (the truth), `research/tool_ideas.xlsx` (rebuilt from them; never edit it by hand).
 
 ## Done when

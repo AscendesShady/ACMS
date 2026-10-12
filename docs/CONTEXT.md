@@ -38,7 +38,3 @@ Then check the docs still hold together:
 ## Done when
 
 - `tests\test_docs.py` prints `ok`, and a reader of the module doc would predict the new behaviour.
-
-## Other files here
-
-- `statistics_catalogue.md`: the statistics the tools use and where each comes from (Layer 3).

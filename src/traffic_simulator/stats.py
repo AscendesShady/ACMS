@@ -1,4 +1,4 @@
-"""Statistics for the agent's tools (no Qt, standard library only), from docs/statistics_catalogue.md.
+"""Statistics for the agent's tools (no Qt, standard library only), from research/statistics_catalogue.md.
 
 - Distributions: Student's t (two-sided p and critical value at any confidence) and the χ² upper tail,
   from the regularized incomplete beta and gamma functions (continued fractions, Numerical Recipes).

@@ -109,18 +109,18 @@ def build() -> None:
 
 def existing() -> None:
     """research/acms_tools.md again, from the app as it is: the assistant's tools (network_tools.TOOLS, the first
-    sentence of each), then docs/architecture/capabilities.md and not_built.md: the `existing` column's reference."""
+    sentence of each), the `existing` column's reference. What the app does and lacks beyond its tools stays in
+    docs/architecture/capabilities.md and not_built.md (pointed to, not copied, so nothing drifts)."""
     from traffic_simulator.network_tools import TOOLS
 
-    docs = HERE.parent / "docs" / "architecture"
     lines = ["# ACMS today: the assistant's tools and what the app does", "",
              "Generated from src/traffic_simulator/network_tools.py (TOOLS) for research/ledger.py's `existing` column "
              "(`ledger.py existing` writes it again).", "", f"## The assistant's {len(TOOLS)} tools", ""]
     for tool in TOOLS:
         first = re.split(r"(?<=\.)\s", tool["description"].strip(), maxsplit=1)[0]
         lines.append(f"- **{tool['name']}**{' (changes)' if tool.get('edits') else ''}: {first}")
-    for title, name in (("Capabilities", "capabilities.md"), ("Not built yet", "not_built.md")):
-        lines += ["", f"## {title} (docs/architecture/{name})", "", (docs / name).read_text(encoding="utf-8").strip()]
+    lines += ["", "What the app does beyond its tools, and what it lacks: docs/architecture/capabilities.md and "
+              "not_built.md (read those too before marking an idea new)."]
     (HERE / "acms_tools.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
     print(f"research/acms_tools.md: {len(TOOLS)} tools")
 

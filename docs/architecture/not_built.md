@@ -79,7 +79,7 @@
   counts on a road both ways together; incidents, work zones and ramp meters aren't drawn on the map; weather is
   one condition for the whole run; a fork's adaptive or actuated signals hold their current greens (TSP's
   look-ahead), and only TSP looks ahead (DEVL doesn't).
-- Statistics from docs/statistics_catalogue.md not built yet: probit and mixed logit; departure-time choice;
+- Statistics from research/statistics_catalogue.md not built yet: probit and mixed logit; departure-time choice;
   power-law deterrence and Poisson ML gravity calibration from an observed matrix; SARIMA, Kalman filters and
   learned forecasters; Bayesian incident detection; fuzzy and reinforcement-learning signal controllers (an
   override must keep amber and all-red safe); critical gap estimation (Raff); crossing (non rear-end) conflicts
