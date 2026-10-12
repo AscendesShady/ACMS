@@ -55,6 +55,7 @@ LAYA_LOG = Path(tempfile.gettempdir()) / f"acms-laya-{os.getpid()}.log"  # what 
 PREFERRED = {"grok": ("grok-4",), "gemini": ("gemini-flash-latest", "gemini-2.5-flash")}
 NOT_CHAT = ("imagine", "tts", "image", "banana", "lyria", "embedding")  # image, speech, music models
 API_TIMEOUT_S, LOCAL_TIMEOUT_S = 180, 600  # a local model may first load from disk
+KEEP_ALIVE = "30m"  # Ollama keeps the model loaded this long after a request (its default, 5 min, reloads after a pause)
 STALL_TIMEOUT_S = 90  # once a reply streams, a server silent this long has stalled: fail now, not after the above
 MAX_TOOL_ROUNDS = 12  # tool calls and replies in one answer before giving up
 # The context budget, in tokens. Past its window a model fails quietly (Ollama cuts the reply off, or drops the start
@@ -481,26 +482,48 @@ def _chars(message: dict) -> int:
     return len(message.get("content") or "") + (len(json.dumps(calls, default=str)) if calls else 0)
 
 
+def compact(value):
+    """A tool result as the model reads it: a list of three or more records becomes {"columns": [...], "rows":
+    [[...]]}, each key once rather than once a row, all the way down. With JSON sent without spaces, a long list
+    (list_roads) is about half the characters; the result itself (the Research Log's, the app's) is unchanged."""
+    if isinstance(value, dict):
+        return {key: compact(item) for key, item in value.items()}
+    if isinstance(value, (list, tuple)):
+        items = [compact(item) for item in value]
+        if len(items) >= 3 and all(isinstance(item, dict) for item in items):
+            columns = list(dict.fromkeys(key for item in items for key in item))
+            return {"columns": columns, "rows": [[item.get(key) for key in columns] for item in items]}
+        return items
+    return value
+
+
 def fit(messages: list[dict], tokens: int, tools: list[dict] | None = None) -> list[dict]:
-    """`messages` cut to about `tokens` with the tools' schemas, so a request never overflows the model's window:
-    older exchanges' tool results become a stub first, then the oldest exchanges go whole (a user message and
-    everything after it up to the next, so each tool call keeps its result), then the current exchange's longest
-    tool results are cut. The system prompt and the latest user message always stay; the list passed in is never
-    changed. A request that still doesn't fit is sent as it is."""
+    """`messages` kept small and within about `tokens` with the tools' schemas, so a request never overflows the
+    model's window and reads no more than it needs (a local model's time grows with what it reads). Always: tool
+    results more than one exchange back become a stub (the replies say what they found; the previous exchange's
+    stay whole, for a follow-up). Then, only past the budget: the previous exchange's results become a stub too,
+    the oldest exchanges go whole (a user message and everything after it up to the next, so each tool call keeps
+    its result), then the current exchange's longest tool results are cut. The system prompt and the latest user
+    message always stay; the list passed in is never changed. A request that still doesn't fit is sent as it is."""
     budget = tokens * CHARS_PER_TOKEN - len(json.dumps(tools or []))
 
     def size(part: list[dict]) -> int:
         return sum(_chars(message) for message in part)
 
-    if size(messages) <= budget:
-        return messages
+    def stubbed(turn: list[dict]) -> list[dict]:
+        return [{**m, "content": STUB} if m["role"] == "tool" and len(m.get("content") or "") > len(STUB) else m
+                for m in turn]
+
     system = [message for message in messages[:1] if message["role"] == "system"]
     rest = messages[len(system):]
     starts = [0] + [i for i, message in enumerate(rest) if message["role"] == "user" and i > 0]
     turns = [rest[a:b] for a, b in zip(starts, starts[1:] + [len(rest)])]
-    older = [[{**m, "content": STUB} if m["role"] == "tool" and len(m.get("content") or "") > len(STUB) else m
-              for m in turn] for turn in turns[:-1]]
+    older = [stubbed(turn) for turn in turns[:-2]] + turns[-2:-1]
     current = list(turns[-1]) if turns else []
+    if size(system) + sum(size(turn) for turn in older) + size(current) <= budget:
+        light = system + [message for turn in older for message in turn] + current
+        return messages if light == messages else light
+    older = [stubbed(turn) for turn in older]
     dropped = 0
     while older and size(system) + sum(size(turn) for turn in older) + size(current) > budget:
         older.pop(0)
@@ -620,14 +643,18 @@ def stream_chat(provider: str, model: str, messages: list[dict], key: str = "", 
         # the request (fit has already kept it within LOCAL_CONTEXT_TOKENS) plus room to reply, never past the cap.
         size = int((sum(_chars(message) for message in messages) + len(json.dumps(tools or []))) / CHARS_PER_TOKEN)
         payload = {"model": model, "messages": _openai_messages(messages, ollama=True), "stream": True,
-                   "options": {"num_ctx": min(context_size(size + REPLY_TOKENS), LOCAL_CONTEXT_TOKENS)}}
+                   "options": {"num_ctx": min(context_size(size + REPLY_TOKENS), LOCAL_CONTEXT_TOKENS)},
+                   "keep_alive": KEEP_ALIVE}
         if tools:
             payload["tools"] = [{"type": "function", "function": tool} for tool in tools]
         if think is not None:
             payload["think"] = think
+        # The long first-words limit is for loading from disk; a model already in memory gets the hosted one
+        loaded = ollama_loaded() or []
+        warm = any(model in (entry.get("name"), entry.get("model")) for entry in loaded)
         try:
-            for event in _events(ollama_url("/api/chat"), payload, timeout_s=LOCAL_TIMEOUT_S, local=True,
-                                 cancelled=cancelled):
+            for event in _events(ollama_url("/api/chat"), payload, timeout_s=API_TIMEOUT_S if warm else LOCAL_TIMEOUT_S,
+                                 local=True, cancelled=cancelled):
                 if event.get("done"):
                     tokens.update(input_tokens=event.get("prompt_eval_count"), output_tokens=event.get("eval_count"),
                                   cached_tokens=event.get("prompt_eval_cached_count"),
@@ -824,7 +851,7 @@ def converse(provider: str, model: str, messages: list[dict], key: str = "", too
             if call["name"] not in ("find_tools", "note_plan"):  # bookkeeping, not doing
                 outcomes.append(not (isinstance(result, dict) and "error" in result))
             messages.append({"role": "tool", "id": call["id"], "name": call["name"],
-                             "content": json.dumps(result)})
+                             "content": json.dumps(compact(result), separators=(",", ":"), default=str)})
     return _ended(messages, f"it made {MAX_TOOL_ROUNDS} rounds of tool calls without answering, so the app stopped it",
                   on_text)
 

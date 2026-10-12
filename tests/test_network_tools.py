@@ -220,7 +220,10 @@ def test_source_reading_stays_inside_the_project():
     assert "fewer" in run(generate_network(1, 1), "read_source", find="zz" + "qx nothing")["next"]  # built here, so this line has no match
     assert "Can't read" in refused(generate_network(1, 1), "read_source", path="../README.md", find="a")
     long = run(generate_network(1, 1), "read_source", path="docs/architecture/sources.md")
-    assert long["lines"].startswith(f"1-{tools.READ_LINES} of") and long["next_start_line"] == tools.READ_LINES + 1
+    end = int(long["lines"].split("-")[1].split()[0])  # a page is whole lines up to READ_CHARS (sources.md's are long)
+    assert len(long["text"]) <= tools.READ_CHARS and long["next_start_line"] == end + 1 and end < tools.READ_LINES
+    on = run(generate_network(1, 1), "read_source", path="docs/architecture/sources.md", start_line=end + 1)
+    assert on["text"].startswith(f"{end + 1}: ")
 
 
 def test_changes_are_described_for_the_assistant():

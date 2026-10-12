@@ -28,6 +28,9 @@ Layer 2. You are here to fix a bug or change behaviour in `src/traffic_simulator
 | KPIs and the run's workbook | `results.py`, `xlsx.py` |
 | headless runs, experiments, statistics | `experiments.py`, `stats.py`, `analysis.py` |
 | what the assistant can read / change | `network_tools.py` (tools), `assistant.py` (models), `ai_mode.py` (chat panel) |
+| the assistant's context window, trimming, timeouts | `assistant.py` (`fit`, `STALL_TIMEOUT_S`), `network_tools.read_source` (`find`), `ARCHITECTURE.md` §0 |
+| turn pockets | `models.Road.pockets` (validate), `simulation.Graph._add_links` / `_add_turns`, `network_scene._draw_pocket` |
+| random streams, trip times, collisions, lateral filtering | `simulation.Simulation` (`_rng`, `_exited`, `_crossing_collisions`, `_sidestep`) |
 | the main window, menus, Run / Stop / Export | `main.py` |
 | drawing the map | `network_scene.py`, `gpu.py` |
 | colours | `theme.py` (tokens only) |

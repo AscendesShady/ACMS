@@ -450,6 +450,10 @@ Plain `assert` functions, run with `python tests/test_x.py` or all at once in `r
   missing workbook.
 - `test_tooltips.py`: every tooltip in the window (widgets, tabs, actions, map items; the road, junction and
   end editors, hourly, daily and institution demand, each building kind, System 2's status) five words at most.
+- `test_ai_mode.py`: tool results reach the model compact (records as columns and rows, untouched for the app,
+  two records left alone, list_roads under half); results two exchanges back a stub even with room to spare, the
+  previous exchange's whole; the Ollama request keeps the model loaded. `test_network_tools.py`: a read_source
+  page is whole lines up to `READ_CHARS`, the next page following on.
 - `test_ai_mode.py`: a reply that streams one event then goes silent fails at `STALL_TIMEOUT_S`, not the 600 s
   start-up limit. `test_network_tools.py`: `read_source` `find` (every file, or one; lines with every word, then that
   line read; no match says try fewer words; outside the project refused), a page `READ_LINES` long.

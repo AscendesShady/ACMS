@@ -4,6 +4,10 @@ Layer 1 of this repository's Interpretable Context Methodology (ICM) layout. Lay
 (what ACMS is, the rules); read it first. This file routes your task to **one** folder. That folder's
 `CONTEXT.md` lists what to read, what to do (with exact commands) and what to write. Read only what it lists.
 
+**Budget.** Search before you read and read only the lines found; never load a whole doc over ~300 lines; test the
+functions you touched with `tools/run_test.py` before whole files; run slow files in the background
+(`AGENTS.md` § Budget). The in-app assistant follows the same route (`ARCHITECTURE.md` §0).
+
 ## 1. Route your task
 
 | I want to… | Open | It sends you to |
@@ -15,7 +19,9 @@ Layer 1 of this repository's Interpretable Context Methodology (ICM) layout. Lay
 | Read or act on an audit, campaign or agent-performance record | [reports/CONTEXT.md](reports/CONTEXT.md) | the report's folder |
 | Run the prompt stress-test campaign | [tools/CONTEXT.md](tools/CONTEXT.md) | `docs/architecture/prompt_campaign.md` |
 | Mine the books and papers for tool ideas | [research/CONTEXT.md](research/CONTEXT.md) | |
-| Look something up (UI rules, SUMO notes, books) | [references/CONTEXT.md](references/CONTEXT.md) | |
+| Look something up (UI rules, SUMO notes, books, the theory reference) | [references/CONTEXT.md](references/CONTEXT.md) | |
+| Bring the simulation in line with the theory reference | [reports/CONTEXT.md](reports/CONTEXT.md) | `reports/theory_gap_2026-10-11/gap_report.md` |
+| Change how the in-app assistant fits its context window or times out | [src/traffic_simulator/CONTEXT.md](src/traffic_simulator/CONTEXT.md) | `docs/architecture/ai_mode.md` § Context budget (`assistant.fit`, `STALL_TIMEOUT_S`, `read_source` find) |
 
 ## 2. A code change is four stages, in this order
 
@@ -23,7 +29,7 @@ Layer 1 of this repository's Interpretable Context Methodology (ICM) layout. Lay
 |---|---|---|
 | 1. Understand | [src/traffic_simulator/CONTEXT.md](src/traffic_simulator/CONTEXT.md) § Inputs | you can name the file and function to change |
 | 2. Change | [src/traffic_simulator/CONTEXT.md](src/traffic_simulator/CONTEXT.md) § Process | the code does it, validated before it changes anything |
-| 3. Test | [tests/CONTEXT.md](tests/CONTEXT.md) | a new test fails without the change and every affected test file prints `ok` |
+| 3. Test | [tests/CONTEXT.md](tests/CONTEXT.md) | a new test fails without the change; the touched tests pass in `tools/run_test.py`, then every affected file prints `ok` |
 | 4. Document | [docs/CONTEXT.md](docs/CONTEXT.md) | the module doc, `tests.md` and (if a method changed) `sources.md` say what the code now does |
 
 Never skip stage 3 or 4. If a stage fails, go back one stage; don't start the next.
@@ -46,7 +52,7 @@ Never skip stage 3 or 4. If a stage fails, go back one stage; don't start the ne
 .venv\Scripts\python.exe tools\run_test.py tests\test_simulation.py webster   # only matching tests, timed (quick)
 .venv\Scripts\python.exe tests\test_geometry.py              # one test file: prints "ok"
 .venv\Scripts\python.exe run_monitor.py                      # every test, in a window
-Get-ChildItem tests\test_*.py | ForEach-Object { Write-Host $_.Name; .venv\Scripts\python.exe $_.FullName }   # every test, no window
+.venv\Scripts\python.exe tools\run_test.py --all -j 4         # every test file, 4 at a time, no window
 ```
 
 ## 5. Folder map
@@ -60,9 +66,10 @@ config/defaults.json         Default grid settings for a new network
 src/traffic_simulator/       The app's modules
 tests/                       Plain assert tests, one file per area
 extensions/                  Drop-in features (Extensions tab)
-tools/                       Scripts run by hand (the prompt campaign)
+tools/                       Scripts run by hand: the prompt campaign, run_test.py (quick, timed tests)
 docs/                        Module docs (docs/architecture/), statistics catalogue
-references/                  Reference material: UI rulebook, SUMO study notes, books, papers, ICM paper
-reports/                     Records: audits, prompt campaigns, agent performance
+references/                  Reference material: UI rulebook, SUMO notes, books, papers, theory, ICM paper (this PC only,
+                             but the UI rulebook is in git)
+reports/                     Records: audits, campaigns, agent performance, theory gap (this PC only, not in git)
 research/                    The book-mining pipeline: PDF text, idea ledger, tool shortlist
 ```

@@ -54,8 +54,9 @@
 - **Stop:** ends an answer at once; that question is left out of the conversation. A model that has gone
   quiet (still loading, or stalled) is cut off too: `assistant._events` shuts the request's socket within
   0.2 s (`_cut_when`), so the app doesn't wait out the timeout and the server drops the request. Without a Stop, a
-  reply waits up to `API_TIMEOUT_S` (180 s) or `LOCAL_TIMEOUT_S` (600 s: loading a model from disk) for its first
-  words; once it streams, `STALL_TIMEOUT_S` (90 s) of silence ends it as stalled. The
+  reply waits up to `API_TIMEOUT_S` (180 s) for its first words, a local model too when Ollama has it loaded
+  (`/api/ps`), else `LOCAL_TIMEOUT_S` (600 s: loading from disk); every local request asks Ollama to keep the
+  model loaded `KEEP_ALIVE` (30 min; its own default, 5 min, reloaded it after a pause); once it streams, `STALL_TIMEOUT_S` (90 s) of silence ends it as stalled. The
   worker's streamed text and tool calls carry its session and turn (`_Relay`): one still queued when Stop,
   Restart, Clear or another project changes them is dropped, a tool call answered "Stopped by the user."
   without running, so the worker isn't left waiting.
@@ -92,7 +93,8 @@
       - dead ends and roads under 15 m;
       - curves posted faster than `curve_speed_kmh` allows;
       - roundabouts too big for their roads.
-    - `read_source`: the app's own files, limited to the project, `READ_LINES` (150) a page; `find` returns the
+    - `read_source`: the app's own files, limited to the project, a page of whole lines up to `READ_CHARS`
+      (6,000 characters) and `READ_LINES` (150) (by lines alone, sources.md's long rows made one page 63.6k); `find` returns the
       lines holding every word (one file, or every readable file with no path; `FIND_HITS` 25) with their numbers,
       so a question reads ~30 lines instead of a page of a 40–66k-character doc.
     - `get_selection` and `show_on_map`: select an object and centre the map on it.
@@ -469,14 +471,20 @@
   - **Context budget** (`assistant.fit`, in `stream_chat` before every request): a model past its window fails
     quietly (Ollama cuts the reply off or drops the start of the prompt; 82 % of a 190-prompt campaign's replies
     were cut), so each request is trimmed to its window less `REPLY_TOKENS` (4096), counted at `CHARS_PER_TOKEN`
-    3 (JSON and code run near 3) with the tools' schemas and tool calls included: older exchanges' tool results
-    become a stub, then the oldest exchanges go whole (each tool call keeps its result; the system prompt says how
+    3 (JSON and code run near 3) with the tools' schemas and tool calls included. Always, budget or not, tool
+    results more than one exchange back are a stub (`STUB`; the previous exchange's stay whole for a follow-up):
+    a local model's time grows with what it reads, and the same stub every time keeps Ollama's cached prefix.
+    Past the budget: the previous exchange's results become a stub too, then the oldest exchanges go whole (each tool call keeps its result; the system prompt says how
     many went), then the current exchange's longest results are cut (`CUT` says so). The system prompt and the
     latest message always stay; the saved conversation is untouched. The window: `LOCAL_CONTEXT_TOKENS` (the
     `ACMS_NUM_CTX` environment variable, default 32768; 16384 for a 12B model on an 8 GB GPU), else
     `API_CONTEXT_TOKENS` (131072); `num_ctx` never asks past it. Ollama's `done_reason` and `num_ctx` go in each
     usage record, and a reply stopped by a full window ends saying so. ARCHITECTURE.md, sent with every request,
-    is kept to an index (about 9.5k characters; the system prompt about 15k).
+    is kept to an index (about 10.6k characters; the system prompt about 16.6k). It is the same every request, so
+    Ollama reads it once and reuses it: trimming it saves window, not time, and it is not varied per request.
+  - **Compact results** (`assistant.compact`): what the model reads of a tool result is JSON without spaces, a
+    list of three or more records as `{"columns", "rows"}` (each key once); the result kept by the app and the
+    Research Log is unchanged. list_roads on an 8 x 8 grid: 24.2k → 3.3k characters (with `LIST_LIMIT` 60 rows).
   - **Measured** (2026-10-05, qwen3.5 4B on an RTX 3070, the stress test: 30 prompts written by another model,
     the real window offscreen with the Research Log ticked, each from a fresh 4 x 4 grid; Documents\ACMS
     results\AI stress test). Before the steady context size and the later fixes, then after, on the 15 prompts

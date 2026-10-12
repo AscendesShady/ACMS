@@ -31,10 +31,11 @@ Not run by the monitor (needs Ollama): `eval_commands.py`.
    It prints each test's seconds and PASS/FAIL, then `ok`. A failure: read the traceback, go back to stage 2.
 5. At the end, run each affected file whole (`.venv\Scripts\python.exe tests\test_<area>.py`, prints `ok`). Run a slow
    file (table below) in the background with a timeout and wait for it to finish; don't poll it. Everything, before a
-   big change is finished (about 15 min one by one; 4 at a time is faster):
+   big change is finished, every file 4 at a time, slowest first (about 15 min one by one):
    ```powershell
-   Get-ChildItem tests\test_*.py | ForEach-Object { Write-Host $_.Name; .venv\Scripts\python.exe $_.FullName }
+   .venv\Scripts\python.exe tools\run_test.py --all -j 4
    ```
+   It prints each file's seconds and `ok` or `FAILED` (with that file's last lines), then `N of N files ok`.
 6. Go to stage 4: [../docs/CONTEXT.md](../docs/CONTEXT.md).
 
 ## Slow tests (seconds of tests, measured 2026-10-12, four files at once)

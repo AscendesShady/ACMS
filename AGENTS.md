@@ -20,6 +20,7 @@ Windows, PowerShell, Python 3.12 in `.venv`.
 .venv\Scripts\python.exe run.py                     # the editor
 .venv\Scripts\python.exe tools\run_test.py tests\test_simulation.py webster   # only matching tests, timed
 .venv\Scripts\python.exe tests\test_geometry.py     # one test file (prints "ok")
+.venv\Scripts\python.exe tools\run_test.py --all -j 4   # every test file, 4 at a time (~4–5 min)
 .venv\Scripts\python.exe run_monitor.py             # every test, live, with Run Again (a person's tool)
 ```
 

@@ -43,10 +43,10 @@ whole. **Route: this index → the one file below → search it → read only th
 | Vehicle types | Up to 8; timetables; a vehicle class each [behaviour editing in the tab] | [mode_behavior.md](docs/architecture/mode_behavior.md) |
 | Simulation | Krauss, LC2013, gap acceptance, junction delay in route costs once, route choice (logit), random streams per pair, closures, work zones, weather, emergency braking bound, optional ballistic update and shorter step (headless), optional lateral position: two-wheelers filter (headless), collisions counted (same lane, crossing) [pedestrians] | [simulation.md](docs/architecture/simulation.md) |
 | Clock | Run, Play/Pause, Stop, speed 1–60×, Seed, Export; every stopped or failed run exports | [clock.md](docs/architecture/clock.md) |
-| Results | KPIs every 5 s (delay vs road limit and own free speed, person delay, entry wait); exact trip times, completion rate, warm-up; workbook, GeoJSON, crash recovery [signal/junction KPIs] | [results.md](docs/architecture/results.md) |
+| Results | KPIs every 5 s (delay vs road limit and own free speed, person delay, entry wait); exact trip and system travel times, completion rate, buffer index, warm-up (assistant); workbook, GeoJSON, crash recovery [signal/junction KPIs] | [results.md](docs/architecture/results.md) |
 | Testing | Headless runs; experiments over seeds (paired, ANOVA, factorials, equilibrium); LOS, diagnosis, health, resilience, emissions, accessibility, design audit, benefit-cost, safety, calibration [parallel runs] | [experiments.md](docs/architecture/experiments.md) |
-| AI Mode | System 2 chat (Grok, Gemini, Ollama) with tools, offered by the request's words; System 1 (Jev, Laya) answers yes/no signal questions [System 1 elsewhere] | [ai_mode.md](docs/architecture/ai_mode.md) |
-| Extensions | TSP, Dynamic Emergency Vehicle Lane, Batch Run, Dispatch Emergency, Research Log, Campaign Apply [traffic yielding to emergency vehicles] | [extensions.md](docs/architecture/extensions.md) |
+| AI Mode | System 2 chat (Grok, Gemini, Ollama) with tools, offered by the request's words; each request trimmed to its context window (`ACMS_NUM_CTX`), docs searched with `read_source` find, a stalled reply ended at 90 s; System 1 (Jev, Laya) answers yes/no signal questions [System 1 elsewhere] | [ai_mode.md](docs/architecture/ai_mode.md) |
+| Extensions | TSP, Dynamic Emergency Vehicle Lane, Batch Run, Dispatch Emergency, Research Log (each AI step; a picture only of what changed: map or OD matrix), Campaign Apply [traffic yielding to emergency vehicles] | [extensions.md](docs/architecture/extensions.md) |
 | Projects, Summary | One validated JSON project; View Summary pages | [network_io.md](docs/architecture/network_io.md), [summary.md](docs/architecture/summary.md) |
 
 Full list: [capabilities.md](docs/architecture/capabilities.md); placeholders: [not_built.md](docs/architecture/not_built.md).
@@ -59,7 +59,8 @@ run.py, run_monitor.py     The editor; the test monitor window
 src/traffic_simulator/     The modules (map below)        tests/       Plain assert tests
 extensions/                Drop-in features               docs/        Module docs, sources, tests
 config/defaults.json       New-grid defaults              references/  UI rulebook, SUMO notes, books, theory
-tools/, reports/, research/  Prompt campaign; audits and agent records; book mining
+tools/                     Prompt campaign; tools/run_test.py (quick, timed tests)
+reports/, references/       On this PC only (git keeps the UI rulebook); research/: book mining
 ```
 
 Python ≥ 3.10 and PySide6 only. Each module's doc is `docs/architecture/<module>.md`, else the one named.

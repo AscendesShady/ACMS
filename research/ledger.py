@@ -13,6 +13,7 @@ ranking and what was only skimmed), so the work can be picked up where it stoppe
     .venv/Scripts/python.exe research/ledger.py done SOURCE CHUNK "what it covers" [verdict]
     .venv/Scripts/python.exe research/ledger.py build                the workbook again
     .venv/Scripts/python.exe research/ledger.py status               chunks read and ideas, per source
+    .venv/Scripts/python.exe research/ledger.py existing             research/acms_tools.md again, from the app as it is
 """
 
 from __future__ import annotations
@@ -106,6 +107,24 @@ def build() -> None:
         print("tool_ideas.xlsx is open elsewhere: not rebuilt this time (the CSVs have the row).")
 
 
+def existing() -> None:
+    """research/acms_tools.md again, from the app as it is: the assistant's tools (network_tools.TOOLS, the first
+    sentence of each), then docs/architecture/capabilities.md and not_built.md: the `existing` column's reference."""
+    from traffic_simulator.network_tools import TOOLS
+
+    docs = HERE.parent / "docs" / "architecture"
+    lines = ["# ACMS today: the assistant's tools and what the app does", "",
+             "Generated from src/traffic_simulator/network_tools.py (TOOLS) for research/ledger.py's `existing` column "
+             "(`ledger.py existing` writes it again).", "", f"## The assistant's {len(TOOLS)} tools", ""]
+    for tool in TOOLS:
+        first = re.split(r"(?<=\.)\s", tool["description"].strip(), maxsplit=1)[0]
+        lines.append(f"- **{tool['name']}**{' (changes)' if tool.get('edits') else ''}: {first}")
+    for title, name in (("Capabilities", "capabilities.md"), ("Not built yet", "not_built.md")):
+        lines += ["", f"## {title} (docs/architecture/{name})", "", (docs / name).read_text(encoding="utf-8").strip()]
+    (HERE / "acms_tools.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
+    print(f"research/acms_tools.md: {len(TOOLS)} tools")
+
+
 def main(args: list[str]) -> None:
     LEDGER.mkdir(exist_ok=True)
     command = args[0] if args else "status"
@@ -141,6 +160,8 @@ def main(args: list[str]) -> None:
         build()
     elif command == "help":
         print(json.dumps(IDEA_HELP, indent=1))
+    elif command == "existing":
+        existing()
     else:
         for source in sources():
             print(f"{len(_rows(LEDGER / f'{source}.chunks.csv')):3d}/{len(chunks(source)):3d} read, "

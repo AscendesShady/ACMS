@@ -216,6 +216,7 @@ def test_assistant_streams_each_providers_api():
         path, _, body = _Providers.seen[-1]
         assert path == "/api/chat" and body["stream"] is True
         assert body["options"]["num_ctx"] * 4 > len(prompt)  # the documents fit the context window
+        assert body["keep_alive"] == assistant.KEEP_ALIVE  # loaded between questions, not reloaded after 5 min
 
         assert assistant.default_model("gemini", ["gemini-2.5-pro", "gemini-flash-latest"]) == "gemini-flash-latest"
         assert assistant.default_model("grok", ["grok-build-0.1", "grok-4.3"]) == "grok-4.3"
@@ -387,6 +388,19 @@ def test_the_conversation_loop_recovers_from_small_models_habits():
     assert [assistant.context_size(n) for n in (1000, 16384, 16385, 40000)] == [16384, 16384, 32768, 65536]
 
 
+def test_tool_results_reach_the_model_compact():
+    roads = {"roads": [{"id": f"r{i}", "lanes": 2, **({"overpass": True} if i == 1 else {})} for i in range(4)], "count": 4}
+    sent = assistant.compact(roads)
+    assert sent == {"roads": {"columns": ["id", "lanes", "overpass"],
+                              "rows": [["r0", 2, None], ["r1", 2, True], ["r2", 2, None], ["r3", 2, None]]}, "count": 4}
+    assert roads["roads"][1] == {"id": "r1", "lanes": 2, "overpass": True}  # the result itself is untouched
+    assert assistant.compact([{"a": 1}, {"a": 2}]) == [{"a": 1}, {"a": 2}]  # two records stay as they are
+    from traffic_simulator.network_generator import generate_network
+
+    big = network_tools.run_tool(generate_network(8, 8), "list_roads", {})
+    assert len(json.dumps(assistant.compact(big), separators=(",", ":"))) < len(json.dumps(big)) / 2
+
+
 def test_a_long_conversation_is_cut_to_fit_the_context_window():
     def exchange(n, result_chars):
         return [{"role": "user", "content": f"ask {n}"},
@@ -397,6 +411,10 @@ def test_a_long_conversation_is_cut_to_fit_the_context_window():
     system = {"role": "system", "content": "s" * 3000}
     short = [system, *exchange(1, 100)]
     assert assistant.fit(short, 10000) is short  # within the budget: sent as it is
+    three = [system, *exchange(1, 5000), *exchange(2, 5000), {"role": "user", "content": "and now?"}]
+    light = assistant.fit(three, 100000)  # room to spare, yet results two exchanges back are a stub: less to read
+    results = [m["content"] for m in light if m["role"] == "tool"]
+    assert results == [assistant.STUB, "r" * 5000] and len(light) == len(three)  # the previous exchange's stay whole
     messages = [system, *(m for n in range(40) for m in exchange(n, 6000)), {"role": "user", "content": "latest"}]
     copy = json.loads(json.dumps(messages))
     sent = assistant.fit(messages, 2000)  # the stubs alone are too long: the oldest exchanges go too

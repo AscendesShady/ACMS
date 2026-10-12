@@ -43,8 +43,9 @@ from .stats import geh
 from .vehicle import VEHICLE_CLASSES
 
 ROOT = Path(__file__).resolve().parents[2]
-LIST_LIMIT = 150  # rows per list; filters narrow bigger networks
-READ_LINES = 150  # lines per read_source call (a page of sources.md is ~2.5k tokens; find narrows it first)
+LIST_LIMIT = 60  # rows per list; filters narrow bigger networks (150 rows of roads were ~25k characters a call)
+READ_LINES = 150  # lines per read_source call at most...
+READ_CHARS = 6000  # ...and characters: sources.md's table rows are long (150 of its lines were 63k characters)
 FIND_HITS = 25  # matching lines a read_source find returns
 CONTROLS = ("signalised", "roundabout", "uncontrolled")
 # The background image's road pixels, supplied by the window (background.BackgroundPainter.road_mask), so this
@@ -1276,9 +1277,17 @@ def read_source(network: Network, path: str = "", start_line: int = 1, end_line:
     lines = target.read_text(encoding="utf-8").splitlines()
     start = max(1, _int(start_line or 1))
     end = min(len(lines), _int(end_line or 0) or len(lines), start + READ_LINES - 1)
+    shown, used = [], 0
+    for number, line in enumerate(lines[start - 1:end], start):  # whole lines up to READ_CHARS; a longer one is cut
+        text = f"{number}: {line}"
+        if shown and used + len(text) > READ_CHARS:
+            break
+        shown.append(text if len(text) <= READ_CHARS else text[:READ_CHARS] + " ... (line cut)")
+        used += len(shown[-1]) + 1
+    end = start + len(shown) - 1
     result = {"path": target.relative_to(ROOT).as_posix(), "lines": f"{start}-{end} of {len(lines)}",
-              "text": "\n".join(f"{number}: {line}" for number, line in enumerate(lines[start - 1:end], start))}
-    if end < len(lines) and not end_line:
+              "text": "\n".join(shown)}
+    if end < len(lines) and (not end_line or end < _int(end_line)):
         result["next_start_line"] = end + 1
     return result
 

@@ -4,8 +4,14 @@
 
 - `src/traffic_simulator/` — application and domain implementation.
 - `config/defaults.json` — editable default network settings.
-- `ARCHITECTURE.md` — the index: capabilities, layout, conventions and a map of every module.
+- `ARCHITECTURE.md` — the index: capabilities, layout, conventions and a map of every module. The in-app
+  assistant reads it with every request, so it stays short.
 - `docs/architecture/` — each module in full, plus flows, sources, tests and what isn't built yet.
+- `AGENTS.md`, `CONTEXT.md` and a `CONTEXT.md` in each folder — for coding agents: the rules, then what to read,
+  run and write for each kind of task (Interpretable Context Methodology).
+- `extensions/` — drop-in features (Extensions tab). `tools/` — the prompt campaign and the quick test runner.
+- `references/` — reference material kept on this PC (books, papers, SUMO notes; only the UI rulebook is in git).
+  `reports/` — audits, campaign logs and agent records, also kept on this PC only.
 
 ## Setup
 
@@ -19,10 +25,31 @@ C:\Python312\python.exe -m venv .venv
 ```powershell
 .venv\Scripts\python.exe run.py          # network editor
 .venv\Scripts\python.exe run_monitor.py  # test monitor: live progress, Run Again
+.venv\Scripts\python.exe tools\run_test.py tests\test_simulation.py webster   # just the matching tests, timed
+.venv\Scripts\python.exe tools\run_test.py --all -j 4    # every test file, 4 at a time
 ```
 
 The editor also starts with `.venv\Scripts\acms.exe` or
 `python -m traffic_simulator.main`.
+
+## Building and running a network
+
+- **Roads:** select a road to set its lanes, speed and direction, and a **turn pocket** at each junction it arrives
+  at (kerb or offside, 1–2 lanes, 15–150 m): turners move into it, and a full pocket holds up the lane behind.
+  **Slip roads** (Ctrl+click two roads that meet, then **Add Slip Road**) curve smoothly out of and back into their roads, sized so they
+  are quicker than the junction they bypass.
+- **Demand:** an OD pair's hourly flow can take a **PHF** (peak-hour factor, 0.25–1): the hour's busiest
+  quarter runs at the flow ÷ PHF. The assistant can also set four 15-minute counts.
+- **Run, Pause, Play, Stop:** every run writes its workbook to Documents\ACMS results when it ends, however it
+  ends: Stop, a new Run, a network edit, closing the window or a failure. A run that didn't finish normally says
+  **Incomplete** on its Run sheet. A crash is recovered at the next start.
+- **What a run reports:** delay against the road limit and against each vehicle's own free speed, person delay
+  by the people on board, the wait of vehicles not yet able to enter, exact trip and system travel times,
+  completion rate, travel time, planning time and buffer indexes, collisions (same lane and crossing) and
+  emergency braking. Junction LOS shows each roundabout entry's simulated and HCM 6 capacity.
+- **Only through the assistant (not the Run button yet):** a warm-up left out of the figures
+  (`measure_from_min`), two-wheelers filtering past queues (`lateral`), and the step method or a shorter step for
+  checking results.
 
 ## Institutions: trips from buildings
 
@@ -60,7 +87,9 @@ the path of `laya.exe` (with its `.gguf` beside it) as **`LAYA_EXE`**, e.g.
 Ollama already ships; the app lends it Ollama's copy.
 
 For local models, install [Ollama](https://ollama.com) and pull a model that can use tools,
-e.g. `ollama pull llama3.1` (set `OLLAMA_HOST` if Ollama isn't on `127.0.0.1:11434`).
+e.g. `ollama pull llama3.1` (set `OLLAMA_HOST` if Ollama isn't on `127.0.0.1:11434`). A local model's context
+window is 32k tokens unless you set **`ACMS_NUM_CTX`** (e.g. `setx ACMS_NUM_CTX 16384` for a 12B model on an
+8 GB GPU): each request is trimmed to fit it, so nothing is cut off silently.
 
 ### 2. Run the program and pick from the dropdowns
 
@@ -98,7 +127,7 @@ by how much, and what to be careful of. Workbooks go to Documents\ACMS results.
 there is no fixed form, so you can ask in your own words, follow up, change your mind or ask something new.
 Before acting it writes one line starting **Plan:** saying what it understood and which tools it will call, so
 you can see its reading before you approve anything. Each request is offered only the tools its words point to
-(a dozen to forty of the 78, and those used earlier in the chat); it can ask for more with find_tools. Fewer tools
+(a dozen to forty of the 78, and those used in the last two exchanges); it can ask for more with find_tools. Fewer tools
 make a small local model choose better and read less: the tools alone are about 16k tokens. The prompt gives it
 recipes for what people ask most ("a city of 2 x 1.5 km", "demand from buildings", "busy traffic" as a
 level and not a place, what-ifs on a copy). A call that failed isn't made again unchanged, and a thinking model
@@ -134,6 +163,12 @@ ready, and the status bar shows who's connected, e.g. **Llama is ready**.
   as Markdown or JSON) and **Clear Conversation…** (the bin). Hover a
   button for its name.
 - The conversation is saved in the project file; **Clear Conversation…** forgets it.
+- A long chat never overflows the model: when a request would not fit its context window, older tool results
+  are shortened and the oldest exchanges left out (the saved conversation keeps them all), and a reply cut off
+  by a full window says so. It looks up the documents a few lines at a time (`read_source` with `find`).
+- A model that goes quiet mid-reply is given up on after 90 s; before its first words it may take up to 3 minutes
+  (10 for a local model loading from disk). Stop ends it at once. A local model stays loaded for 30 minutes after
+  each question, so a pause doesn't cost a reload.
 - **Watch my edits** (the eye in the menu bar, off by default) records everything you do while it's on: every
   click, menu choice and shortcut, drop-down choice, text or number you enter (its final value), tab, map click
   and selection, what each click fills in or shows (a Random pick, a message), and every change to the network,
@@ -152,7 +187,7 @@ Tick **Research Log** in the Extensions tab and every AI Mode step is recorded i
 (`ACMS research log <date time> <agent>`, e.g. `… 2026-10-04 10-06-29 Ollama llama3.1-8b`): **1** your prompt, **2** what the model understood (its own Plan: line, and the tools it was
 offered), **3** what it did (each tool, the plan you approved or skipped, the results, the workbooks it
 wrote with their checksums), and **4** a snapshot: the list of changes to the network, demand and vehicle types, and a
-picture of the map after the step. Each step also has its timings (the model's, your deciding, the computer's) and
+picture of what changed: the map if the network did, the OD matrix if the demand did, none if nothing changed. Each step also has its timings (the model's, your deciding, the computer's) and
 tokens. `steps.csv` has a row a step for analysis, and `report.html` shows them all. When the session ends, a
 document named after its folder (`.odt`, which Word opens) holds all of it to read through like a report. `session.json` records the app's
 version and a checksum of its code, so the results can be tied to the code that made them. Keys are never written.
@@ -218,7 +253,7 @@ run records the pace it kept). Its workbook's **Headline** gives each agent's
 passenger throughput increase and its passenger delay, queue and wait time reductions against Never preempt (Always preempt is listed beside them),
 with confidence intervals.
 
-Simulated time is the model's own clock (0.5 s a step): a run's results don't depend on how fast it went, except
+Simulated time is the model's own clock (0.5 s a step; the assistant's tests can use 0.25 or 0.1 s): a run's results don't depend on how fast it went, except
 for an AI agent's thinking time. Without an agent, a batch runs as fast as the computer allows. The assistant's own
 tests (run_simulation, experiments, the Scenario Builder, optimise_signals) also run as fast as the computer allows:
 with TSP or DEVL ticked they pause for each answer, and the decision takes effect after the model's real latency in

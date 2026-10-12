@@ -8,7 +8,7 @@ Back to routing: [../CONTEXT.md](../CONTEXT.md). Run every command from the repo
 | Layer | File | Read |
 |---|---|---|
 | 3 | `references/transportation_engineering_books/*.pdf`, `references/transportation_engineering_papers/*.pdf` | the sources (not in git) |
-| 3 | `research/acms_tools.md` | the assistant's tools today (so an idea isn't one we already have) |
+| 3 | `research/acms_tools.md` | the assistant's tools today (so an idea isn't one we already have); rebuild it first with `.venv\Scripts\python.exe research\ledger.py existing` |
 | 4 | `research/ledger/<source>.chunks.csv`, `<source>.ideas.csv` | what has been read and found so far |
 
 ## Process
