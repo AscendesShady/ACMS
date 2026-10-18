@@ -18,13 +18,13 @@ the session:
 from __future__ import annotations
 
 import statistics
-from collections import defaultdict
+from collections import Counter, defaultdict
 
 from . import emissions, stats
 from .results import MINUTE_COLUMNS
-from .roundabouts import hcm_entry_capacity
+from .roundabouts import hcm_entry_capacity, tanner_entry_capacity
 from .simulation import ROUNDABOUT_ENTRY_VPH, measured_capacity
-from .signal_timing import ALL_RED_S, AMBER_S, COORDINATED, effective, incremental_delay, webster
+from .signal_timing import ALL_RED_S, AMBER_S, COORDINATED, effective, incremental_delay, lost_time, webster
 
 # HCM 2000 control delay thresholds, s/veh: (upper bound, LOS); above the last, F
 SIGNAL_LOS = ((10, "A"), (20, "B"), (35, "C"), (55, "D"), (80, "E"))  # Exhibit 16-2
@@ -107,6 +107,8 @@ def junction_los(kpis: dict, every: bool = False, period_min: int = 15) -> dict:
             capacity, hcm = measured_capacity(ROUNDABOUT_ENTRY_VPH, vc), hcm_entry_capacity(vc, info["lanes"])
             row.update(circulating_vph=round(vc), capacity_vph=round(capacity), v_c=round(flow / capacity, 2),
                        hcm_capacity_vph=None if hcm is None else round(hcm))
+            if info["lanes"] == 1:  # against a bunched one-lane ring, which the HCM's random stream isn't
+                row["tanner_capacity_vph"] = round(tanner_entry_capacity(vc))
         q95, length = queue_p95(observed, info["road"]), info["length_m"]
         if q95:
             row.update(queue_p95_m=q95, queue_share_of_road=round(q95 / length, 2) if length else None)
@@ -179,7 +181,7 @@ def diagnose_signal(kpis: dict, junction: str | None = None) -> dict:
         plan = signals[node]
         cycle, phases = plan["cycle_s"], plan["phases"]
         span = plan.get("lost_s_per_phase", AMBER_S + ALL_RED_S)  # the junction's own amber and all-red
-        lost = len(phases) * span
+        lost = lost_time(len(phases), span)  # the HCM's t_L = l1 + Y - e a phase, as Webster times it (not Y + all-red)
         approaches, ratios = [], []
         for phase in phases:
             ys = []
@@ -314,6 +316,15 @@ def run_health(kpis: dict) -> dict:
         problems.append({"problem": "demand can't get in", "detail": f"{waiting} vehicles waiting at their origin at the "
                          "end: " + ", ".join(f"{link} {n}" for link, n in worst) + ".",
                          "fix": "The first junction or road from those ends is full: more lanes there, or less demand."})
+    teleports = observed.get("teleports", [])
+    checks["teleports"] = len(teleports)
+    if teleports:  # each a vehicle stuck TIME_TO_TELEPORT_S at a queue's front, moved on (a gridlock broken)
+        where = Counter(event["from"] for event in teleports).most_common(5)
+        problems.append({"problem": "gridlock broken by teleports", "detail": f"{len(teleports)} vehicles stood 5 min at a "
+                         "queue's front and were moved on along their routes, as SUMO does: from " +
+                         ", ".join(f"{link} {n}" for link, n in where) + ".",
+                         "fix": "The junctions those links lead to lock up: signalise them (set_junction_control) or "
+                                "lower the demand; the run's figures are right, but that gridlock is real."})
     unreachable = observed.get("unreachable", [])
     checks["unreachable_pairs"] = unreachable
     if unreachable:
@@ -438,12 +449,13 @@ def invariants(kpis: dict, reported: dict | None = None, starve_s: float = STARV
     once, gridlock, and agent errors (its extension's report). Empty: it kept every one."""
     observed = kpis["observed"]
     broken = []
-    end = observed.get("observed_s") or kpis["time_s"]
+    start = observed.get("observed_from_s", 0.0)  # recorded from the end of a warm-up
+    end = start + (observed.get("observed_s") or kpis["time_s"])
     arrivals, links = observed.get("arrivals", {}), observed.get("links", {})
     for link, (arrived, _) in arrivals.items():
         if not arrived:
             continue
-        times = [0.0] + list(observed.get("green_starts", {}).get(link, [])) + [end]
+        times = [start] + list(observed.get("green_starts", {}).get(link, [])) + [end]
         gap = max(b - a for a, b in zip(times, times[1:]))
         if gap > starve_s:
             broken.append({"invariant": "no arm starved", "where": f"{link} at {links.get(link, {}).get('to')}",

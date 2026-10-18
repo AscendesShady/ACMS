@@ -1,7 +1,10 @@
 # background_network.py: a network from the background (no Qt)
 
-- **OpenStreetMap** (`overpass_query`, `fetch_osm`, `osm_graph`): one Overpass API request (`OVERPASS_URLS`, the
-  next tried when one is busy; the app's User-Agent) for every way of the chosen `CLASSES` in the area's
+- **OpenStreetMap** (`overpass_query`, `fetch_osm`, `osm_graph`): one Overpass API request (`OVERPASS_URLS`: three, the
+  next tried when one is busy, then all again after `OVERPASS_RETRY_S`, each given `OVERPASS_TIMEOUT_S` (40 s; at 90 a
+  live build waited 6.5 minutes when all were down); each answer kept in `OSM_CACHE` by its query: a copy younger than
+  `OSM_FRESH_DAYS` (7) is used without asking any server, an older one when no server answers, either said to be a
+  copy, from when and why (`cached_at`, `cached_why`); the app's User-Agent) for every way of the chosen `CLASSES` in the area's
   WGS84 bounds (not areas, not private), with their nodes. Each point goes through the map's georeference
   (`Frame.to_scene`), each way is cut to the area (Liang–Barsky), and a border node is made where it
   crosses the edge. Ways split into streets at nodes two ways share. A way's tags give its lanes per
@@ -27,11 +30,14 @@
   become boundary ends; the road width is the road pixels over the lines' length, and the lanes that
   width over 7 m (1–4).
 - **`build(template, graph)`**: roundabout rings become one junction each at their centre; junctions within
-  `MERGE_M` 12 m become one (a dual carriageway's two crossings); a node on two alike streets goes (one
+  `MERGE_M` 20 m become one (a dual carriageway's crossing, mapped as 2-4 nodes 12-19 m apart: as
+  separate junctions, 2-3 cars of room between them gridlocked Dhanmondi; SUMO's netconvert joins such clusters too); a node on two alike streets goes (one
   street through it). A junction is a roundabout, signalised (3 or more arms and a junction signal within
   `SIGNAL_M` 30 m) or uncontrolled (a priority junction: its two most nearly aligned arms are the major road). Streets
   become roads with their shapes; two between the same junctions, a loop, or one crossing the whole area
   are cut in half with a junction there; one reaching the edge ends in a boundary end (`add_end`), after a
-  bend junction near the edge if it curves, reversed if its traffic comes in. Ends are added in order along
+  bend junction near the edge if it curves, reversed if its traffic comes in. An entry road shorter than
+  `ENTRY_ROAD_M` (60 m; cut just past a junction) is carried on out along its line to that length: a 5–15 m stub
+  held one car, so traffic waited off the network and a demand check called real demand a jam (Dhanmondi). Ends are added in order along
   each side, so they are numbered 1, 2, 3 (E/W from the bottom, N/S from the left). Refused: no roads, or
   over `MAX_JUNCTIONS` (800).

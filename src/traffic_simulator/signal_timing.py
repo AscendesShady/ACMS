@@ -52,13 +52,22 @@ AMBER_RANGE_S, ALL_RED_RANGE_S = (3.0, 6.0), (1.0, 6.0)
 # green = green + amber used − start-up lost (the HCM's extension of effective green, e).
 # test_simulation.test_the_timing_methods_are_calibrated_to_the_simulated_drivers re-measures them.
 SATURATION_PER_LANE_VPH = 2060.0
-# Turning on a protected green, measured on the same drivers (a standing queue, 3 seeds of 50 min, per hour
-# of effective green): they slow for the curve, so a turning lane discharges at little more than half that.
-KERB_TURN_PER_LANE_VPH = 1160.0
-OFFSIDE_TURN_PER_LANE_VPH = 1100.0
+# Turning on a protected green, measured on the same drivers (a standing queue of one turn at a 4-phase signal, 3
+# seeds of 30 min, headways from the 5th vehicle on): they slow for the curve, at low-speed turning friction with a
+# floor per kind (simulation.JUNCTION_TURN_FRICTION, JUNCTION_TURN_MIN_KMH), to 0.87 and 0.91 of straight-on (HCM
+# 2000 f_RT 0.85, f_LT 0.95 protected; RR67 0.87-0.91). Re-measured 2026-10-13: at open-road friction and a 15 km/h
+# floor they were 1160 and 1100, 53-56 % (audit M4).
+KERB_TURN_PER_LANE_VPH = 1770.0
+OFFSIDE_TURN_PER_LANE_VPH = 1860.0
+# A U-turn still turns at the 25 km/h floor: the offside turn's figure measured at that floor (crediting it the
+# offside 1860 had a 3x2 grid, whose two-phase signals detour offside turns by U-turn, jam at X 0.65).
+UTURN_PER_LANE_VPH = 1550.0
 START_UP_LOST_S = 1.8
 AMBER_USED_S = 2.8
 MIN_GREEN_S, MAX_CYCLE_S = 7.0, 120.0
+# Webster's cycle at light demand runs under 25 s (7 s greens): no shorter than this, a practical floor (FHWA
+# Signal Timing Manual; Webster's own 25 s), so a pedestrian or a slow start still gets a usable green
+MIN_CYCLE_S = 30.0
 # TRANSYT: Robertson's platoon dispersion factor and travel time factor (TRANSYT's defaults); the
 # offline optimisers' step sizes and the time they may take at Run.
 DISPERSION_ALPHA, DISPERSION_BETA = 0.35, 0.8
@@ -75,6 +84,7 @@ CYCLE_STEP_S = 5
 STANDARD_SPACE_S = 0.9
 SCATS_CYCLE_CHANGE_S = 6.0
 SCATS_VOTES = 2  # of the last 3 cycles
+SCATS_SMOOTH = 3  # cycles a junction's DS is averaged over before the region hears it
 # SCOOT: its optimisers' steps, how often the cycle is reviewed, how far below target before it
 # shortens, how much each cycle's counts weigh in the profile.
 SCOOT_SPLIT_S, SCOOT_OFFSET_S = 4.0, 4.0
@@ -89,6 +99,7 @@ UPSTREAM_LOOP_AT_M, UPSTREAM_LOOP_M = 15.0, 2.0
 # Actuated control (gap-out) and max-pressure: SUMO's actuated defaults, max-gap 3 s and a detector 2 s of travel before
 # the stop line (sumo.dlr.de, Traffic Lights: actuated); the longest green, the app's choice.
 UNIT_EXTENSION_S, DETECTOR_GAP_S, ACTUATED_MAX_GREEN_S = 3.0, 2.0, 50.0
+MAX_RED_S = 2 * ACTUATED_MAX_GREEN_S  # max-pressure: a phase with traffic red this long goes next
 ACTUATED = ("actuated", "max_pressure")  # each junction on its own, its greens decided step by step
 COORDINATED = ("transyt", "synchro", "scats", "scoot")  # a group of junctions on one common cycle
 ADAPTIVE = ("scats", "scoot")
@@ -130,7 +141,7 @@ def webster(flow_ratios: list[float], span: float = SPAN_S) -> tuple[float, list
                          f"need {count * (MIN_GREEN_S + span):g} s, more than the {MAX_CYCLE_S:g} s longest cycle.")
     total = sum(flow_ratios)
     lost = lost_time(count, span)
-    cycle = MAX_CYCLE_S if total >= 0.95 else min(MAX_CYCLE_S, (1.5 * lost + 5) / (1 - total))
+    cycle = MAX_CYCLE_S if total >= 0.95 else min(MAX_CYCLE_S, max(MIN_CYCLE_S, (1.5 * lost + 5) / (1 - total)))
     greens = fit_greens(flow_ratios, cycle, span)
     return sum(green + span for green in greens), greens
 
@@ -569,9 +580,12 @@ class ScatsRegion(_Region):
 
 class ScatsJunction:
     """SCATS at one junction. Its stop-line loops measure each lane's degree of saturation during its
-    green; each cycle it reports the highest (over its target) to the region and votes for the split
+    green; each cycle it reports its most saturated phase (over its target) to the region and votes for the split
     plan, of its four, that would even out its phases' saturation best; a plan is used once it has
-    won 2 of the last 3 votes. Its cycles keep its offset in the region."""
+    won 2 of the last 3 votes. Its cycles keep its offset in the region. A phase's DS is its lanes' DS weighted by
+    the vehicles each passed, and the region hears its mean over the last SCATS_SMOOTH cycles: the worst single
+    lane of one cycle is biased up and noisy, and took a corridor's cycle to its 120 s cap at DS 0.6-0.7 (audit
+    2026-10-13, M1)."""
 
     def __init__(self, node: str, region: ScatsRegion, plans: list[list[float]], offset: float, target: float,
                  report=None, span: float = SPAN_S) -> None:
@@ -581,6 +595,7 @@ class ScatsJunction:
         self.plan, self.votes = 0, deque(maxlen=3)
         self.lanes: dict[object, list] = {}  # lane -> [phase, green s, unoccupied s, vehicles]
         self.saturation = [0.0] * len(plans[0])
+        self.reported: deque = deque(maxlen=SCATS_SMOOTH)  # its latest cycles' worst phase DS over target
 
     def add_lane(self, lane, phase: int) -> None:
         self.lanes[lane] = [phase, 0.0, 0.0, 0]
@@ -596,14 +611,17 @@ class ScatsJunction:
         pass  # SCATS's strategic decisions are made once a cycle
 
     def cycle_starts(self, signal, t: float) -> None:
-        saturation = [0.0] * len(self.saturation)
+        weighted, passed = [0.0] * len(self.saturation), [0] * len(self.saturation)
         for record in self.lanes.values():
             phase, green, unoccupied, vehicles = record
-            if green > 0:
-                saturation[phase] = max(saturation[phase], degree_of_saturation(green, unoccupied, vehicles))
+            if green > 0 and vehicles:
+                weighted[phase] += degree_of_saturation(green, unoccupied, vehicles) * vehicles
+                passed[phase] += vehicles
             record[1:] = [0.0, 0.0, 0]
+        saturation = [w / n if n else 0.0 for w, n in zip(weighted, passed)]
         self.saturation = saturation
-        self.region.report(self.node, max(saturation) / self.target, t)
+        self.reported.append(max(saturation) / self.target)
+        self.region.report(self.node, sum(self.reported) / len(self.reported), t)
         cycle = realigned_length(t, self.region.reference, self.region.cycle, self.offset)
         current = [green for _, green in signal.phases]
         options = [fit_greens(plan, cycle, self.span) for plan in self.plans]
@@ -833,21 +851,26 @@ class MaxPressureJunction:
     intersections", Transportation Research Part C 36; Wei et al. 2019's PressLight form): each phase's pressure is,
     over its approaches, the vehicles on them less the mean on the links they feed (`pressure(links)`, from the
     simulation: Varaiya's link occupancy x, moving or queued). Once a green has run MIN_GREEN_S it ends as soon as another phase's pressure is higher, and that
-    phase goes next (not the next in turn); it ends at ACTUATED_MAX_GREEN_S at most."""
+    phase goes next (not the next in turn); it ends at ACTUATED_MAX_GREEN_S at most. A phase with traffic that has
+    been red MAX_RED_S goes next whatever the pressures (a maximum red: Varaiya's stability bounds the queues, not
+    one vehicle's wait; two busy arms passed the green between them while a light one waited 300 s)."""
 
     def __init__(self, node: str, groups: list, pressure, report=None) -> None:
         self.node, self.groups, self.pressure = node, groups, pressure
         self.chosen: int | None = None
         self.report = report or (lambda node, plan: None)
+        self.red_since = {phase: 0.0 for phase in range(len(groups))}  # when each phase's last green ended
 
     def phase_starts(self, signal, index: int, t: float) -> None:
         self.chosen = None
+        self.red_since.pop(index, None)  # green now
         signal.set_green(index, MIN_GREEN_S)
 
     def cycle_starts(self, signal, t: float) -> None:
         self.report(self.node, {"greens_s": [round(green, 1) for _, green in signal.phases]})
 
     def next_phase(self, signal, finished: int, t: float) -> int:
+        self.red_since[finished] = t
         return self.chosen if self.chosen is not None else (finished + 1) % len(signal.phases)
 
     def check(self, signal, t: float) -> None:
@@ -860,6 +883,11 @@ class MaxPressureJunction:
             return
         pressures = [self.pressure(group) for group in self.groups]
         best = max(range(len(pressures)), key=lambda p: (pressures[p], p == index))
+        starved = [p for p, since in self.red_since.items() if p != index and pressures[p] > 0 and t - since >= MAX_RED_S]
+        if starved:  # the one red longest goes next
+            self.chosen = min(starved, key=lambda p: self.red_since[p])
+            signal.set_green(index, into)
+            return
         if (best != index and pressures[best] > pressures[index]) or into >= ACTUATED_MAX_GREEN_S:
             self.chosen = best if best != index else (index + 1) % len(self.groups)
             signal.set_green(index, into)

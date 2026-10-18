@@ -36,13 +36,17 @@ Dataclasses:
   5,000) and `alighting_percent` (the share of a bus's load getting off, 0–100): either above 0 and the dwell
   comes from the passengers instead (simulation.md, Bus stops).
 - `Institution(id, kind, x, y, area_m2, radius_m, people, employees, shift_start_h, shift_end_h, car_share,
-  mode_shares)`:
+  mode_shares, height_m=None)`:
   a building that makes trips (institutions.py). `kind` is one of `INSTITUTION_KINDS` (Residential, School,
   Hospital, Office, Shop); (x, y) is its square footprint's centre; `radius_m` its circle of influence;
   the shift in hours after midnight. `institution_problem` checks the figures (a known kind; area 1 m² to
   1 km²; a circle from its own walls to `MAX_INFLUENCE_M` 3 km; whole people and employees; a shift that
   starts and ends at different times; car share 0–100 %; `mode_shares` people % by mode name, each 0–100 and
   adding up to 100, or empty). `radius_m` is its catchment (institutions.md).
+- `Institution.height_m`: optional total visual height including the roof, 0.5–300 finite metres (no bool/text).
+  `institution_problem` validates it before placement/load. None preserves an explicitly assumed kind default
+  (`BUILDING_HEIGHTS_M`: Residential 9, School 7.2, Hospital/Office 18, Shop 4.5), not measured site data.
+  Footprint area, catchment, people and the demand model do not depend on height.
 - `Network`: the single source of truth. It holds `nodes` / `roads` (internal),
   `approach_nodes` / `approach_roads` (boundary ends), `bus_stops`, `institutions` and the defaults. Vehicles are
   not part of the network: a run makes them (simulation.py).

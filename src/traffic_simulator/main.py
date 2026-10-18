@@ -64,7 +64,7 @@ from traffic_simulator.clock import STEP_MS, SimulationClock, clock_text
 from traffic_simulator import (accessibility, analysis, assistant, design_checks, experiments, network_tools, results,
                                scenario, stats)
 from traffic_simulator.signal_agent import INSTRUCTIONS, SignalAgent
-from traffic_simulator.simulation import DT, Graph, PairDemand, Runner, Simulation
+from traffic_simulator.simulation import DT, Graph, PairDemand, Runner, Simulation, path_size_logit
 from traffic_simulator.geometry import point_along
 from traffic_simulator.history import History
 from traffic_simulator.institutions import place, run_demand
@@ -77,7 +77,7 @@ from traffic_simulator.interchanges import (
     roads_left_at_hub,
 )
 from traffic_simulator.mode_behavior import ModeBehaviorPanel, VehicleMode, VehicleModes
-from traffic_simulator.models import Network, route_choice_problem
+from traffic_simulator.models import Network, institution_problem, route_choice_problem
 from traffic_simulator.network_generator import generate_network
 from traffic_simulator.network_io import MAX_SEED, load_network, save_network, saved_conversation, saved_project
 from traffic_simulator.network_scene import NetworkGraphicsScene, NetworkView
@@ -88,7 +88,7 @@ from traffic_simulator.properties_panel import (ICON_FONTS, ChoiceButtons, Colla
                                                 align_form_labels, describe_group, glyph_icon, hint_label,
                                                 icon_button, styled_button, TIMING_METHODS)
 from traffic_simulator.summary import SummaryPanel
-from traffic_simulator.theme import STATUS, apply_theme
+from traffic_simulator.theme import STATUS, apply_theme, float_glass
 from traffic_simulator.xlsx import read_xlsx
 
 
@@ -213,7 +213,7 @@ class MainWindow(QMainWindow):
         super().__init__()
         self.setWindowTitle(f"Untitled[*] — {TITLE}")
         self.resize(1280, 800)
-        # The editor always wears its grey theme, whatever the Windows light/dark setting.
+        # One desktop workspace palette, whatever the Windows light/dark setting.
         apply_theme(QApplication.instance())
         self.network: Network = generate_network(
             DEFAULT_HORIZONTAL_CORRIDORS,
@@ -288,29 +288,34 @@ class MainWindow(QMainWindow):
 
     def _build_ui(self) -> None:
         root = QWidget()
+        root.setObjectName("appShell")
         layout = QHBoxLayout(root)
+        layout.setContentsMargins(12, 8, 12, 8)
+        layout.setSpacing(12)
         sidebar = QFrame()
         side_layout = QVBoxLayout(sidebar)
+        side_layout.setContentsMargins(12, 12, 12, 12)
+        side_layout.setSpacing(8)
         # Scrolls instead of forcing the window taller when the road editor is open.
         side_scroll = QScrollArea()
         side_scroll.setWidget(sidebar)
         side_scroll.setWidgetResizable(True)
         side_scroll.setFrameShape(QFrame.Shape.NoFrame)
         side_scroll.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        side_scroll.setObjectName("sidebar")  # theme.py: the opaque control panel
 
         title = QLabel("ACMS")
         title.setToolTip("Agentic Context-Aware Mobility System")
-        title.setStyleSheet("font-size: 18px; font-weight: 700;")
+        title.setProperty("role", "brand")
         self.page_title = QLabel()  # the open tab's name: the tabs themselves are icons
-        self.page_title.setStyleSheet("font-size: 13px; font-weight: 600;")
+        self.page_title.setProperty("role", "pageTitle")
         title_row = QHBoxLayout()
         title_row.addWidget(title)
         title_row.addSpacing(8)
         title_row.addWidget(self.page_title)
         title_row.addStretch(1)
         side_layout.addLayout(title_row)
-        side_layout.addWidget(hint_label("Build a road grid, then refine it on the map. "
-                                         "All distances are in metres."))
+        side_layout.addWidget(hint_label("Build and refine networks. Distances in metres."))
 
         # Two sections that open and close: Generate Network (driving side for the whole network, what new
         # roads and signals get, and a grid of them) and a network of your own over a colour, image or map.
@@ -371,9 +376,9 @@ class MainWindow(QMainWindow):
         create_layout.addStretch(1)
 
         # The map's own controls, over its top-right corner: fit, reset, and the mouse and keys.
-        corner = QWidget()
+        corner = float_glass(QWidget())  # a floating glass bar: the map shows through it
         row = QHBoxLayout(corner)
-        row.setContentsMargins(0, 0, 0, 0)
+        row.setContentsMargins(6, 4, 6, 4)
         row.setSpacing(4)
         self.fit_button = icon_button(0xE9A6, "Fit Network")
         self.reset_button = icon_button(0xE80F, "Reset View")
@@ -399,7 +404,20 @@ class MainWindow(QMainWindow):
         self.power_button = icon_button(0xE8BE, "Power Saver")  # a leaf
         self.power_button.setCheckable(True)
         self.power_button.toggled.connect(self._power_saver)
-        for button in (self.grid_toggles[0], self.power_button, self.fit_button, self.reset_button, self.help_button):
+        self.isometric_button = icon_button(0xE809, "3D View")  # native TiltUp glyph, including Windows 10
+        self.isometric_button.setCheckable(True)
+        self.isometric_button.toggled.connect(self.view.set_isometric)
+        self.view.projection_changed.connect(self.isometric_button.setChecked)
+        self.buildings_button = icon_button(0xEC06, "Show Buildings")  # native CityNext glyph
+        self.buildings_button.setCheckable(True)
+        self.buildings_button.setChecked(self.scene.buildings_visible)
+        self.buildings_button.toggled.connect(self.scene.set_buildings_visible)
+        self.scene.buildings_changed.connect(self.buildings_button.setChecked)
+        self.map_controls += ("\n3D View: orthographic isometric camera, 45 degree yaw, 35.3 degree elevation, zero roll"
+                              "\nIn 3D View, selection boxes follow the world grid. Zoom never changes simulation speed.")
+        self.map_controls += "\nShow Buildings: display institution footprints and labels; demand is unchanged."
+        for button in (self.grid_toggles[0], self.isometric_button, self.buildings_button, self.power_button,
+                       self.fit_button, self.reset_button, self.help_button):
             row.addWidget(button)
         self.view.set_corner(corner)
 
@@ -446,9 +464,10 @@ class MainWindow(QMainWindow):
         self.od_panel.checker = self._check_demand  # a degree of saturation, checked in a run
         self.od_panel.calibrator = lambda flows, args: network_tools.calibration_plan(self.network, flows, args)
         self.od_panel.equilibrator = self._equilibrate_demand
-        self.od_panel.chooser = lambda pairs, args, values: network_tools.mode_plan(  # choose_modes' logit
+        self.od_panel.chooser = lambda pairs, args, values, current=None: network_tools.mode_plan(  # choose_modes
             self.network, pairs, args, self.vehicle_modes.modes, values,
-            self._run_test(str(args["from_run"]))["kpis"]["observed"]["trips"] if args.get("from_run") else None)
+            self._run_test(str(args["from_run"]))["kpis"]["observed"]["trips"] if args.get("from_run") else None,
+            current)
         self.od_matrix.corner.insertWidget(0, self.grid_toggles[1])
         demand_layout.addWidget(self.od_panel)
         demand_layout.addStretch(1)
@@ -569,6 +588,7 @@ class MainWindow(QMainWindow):
                 action.setIcon(glyph_icon(chr(glyph), self.icon_font, 14))
         bar.addActions([self.run_action, self.play_action, self.pause_action, self.stop_action])
         self.clock_label = hint_label(clock_text(0))
+        self.clock_label.setProperty("role", "clock")
         self.clock_label.setProperty("activity_skip", True)  # it ticks all the time: Watch my edits leaves it out
         self.clock_label.setWordWrap(False)
         self.clock_label.setToolTip("Simulation time")
@@ -614,7 +634,7 @@ class MainWindow(QMainWindow):
         edge = QWidget()
         edge.setFixedWidth(8)  # keeps the last icon clear of the window edge
         bar.addWidget(edge)
-        self.menuBar().setCornerWidget(bar, Qt.Corner.TopRightCorner)
+        self.menuBar().setCornerWidget(float_glass(bar), Qt.Corner.TopRightCorner)  # the run controls: a glass bar
         clock.ticked.connect(self._frame)
         clock.state_changed.connect(self._show_clock_state)
         self._show_clock_state(False)
@@ -885,8 +905,9 @@ class MainWindow(QMainWindow):
         def check(share, progress, cancelled):
             sized = [replace(pair, hourly=pair.hourly * share) if (pair.origin, pair.destination) in scope else pair
                      for pair in demand]
-            return experiments.holds(network, sized, modes, seed, override, cancelled=cancelled, progress=lambda t: progress(
-                f"{share:.0%} of the demand, {results.clock(t)} of {results.clock(minutes * 60)}"))
+            return experiments.holds_by_majority(  # a borderline verdict confirmed on two more seeds
+                lambda s: experiments.holds(network, sized, modes, s, override, cancelled=cancelled, progress=lambda t: progress(
+                    f"{share:.0%} of the demand, seed {s}, {results.clock(t)} of {results.clock(minutes * 60)}")), seed)
 
         share, tried = self._in_background(lambda progress, cancelled: experiments.largest_holding(
             lambda s: check(s, progress, cancelled)), "Checking the demand in a run")
@@ -895,8 +916,14 @@ class MainWindow(QMainWindow):
         if share is None:
             return None, {**report, "checked": False, "note": "Stopped by the user: not checked."}
         if share == 0:
-            raise ValueError(f"The simulation jams even at {tried[-1][0]:.0%} of that demand: vehicles pile up. "
-                             "Look at the network (run_simulation, read_traffic) before sizing demand.")
+            controls = [node.control for node in self.network.nodes.values()]
+            giving_way = controls.count("uncontrolled")
+            advice = (f" {giving_way} of its {len(controls)} junctions only give way (an OpenStreetMap network marks few "
+                      "signals): signalising the busiest (set_junction_control, control 'signalised'), or main roads "
+                      "only (network_from_background, road_classes 'main'), may let demand hold."
+                      if giving_way > len(controls) / 2 else "")
+            raise ValueError(f"The simulation jams even at {tried[-1][0]:.0%} of that demand: vehicles pile up."
+                             f"{advice} Look at the network (run_simulation, read_traffic) before sizing demand.")
         note = ("It held in the run." if share == 1 else
                 f"At that size the simulation jammed (vehicles piled up), so {share:.0%} of it is kept: the largest "
                 "share that held. The capacity model's saturation figures are for the size before this check.")
@@ -1037,22 +1064,30 @@ class MainWindow(QMainWindow):
                 minutes = int(float(args.get("duration_min") or 0))
             except (TypeError, ValueError):
                 raise ValueError("duration_min is a whole number of minutes.") from None
-            return batch.module.start(str(args.get("seeds") or ""), minutes, test_tsp, test_devl, check_only)
+            seeds = args.get("seeds") or ""  # a list as the schema asks, or text like "1-4" as the panel takes
+            seeds = ", ".join(map(str, experiments.seeds_from(seeds))) if isinstance(seeds, list) else str(seeds)
+            return batch.module.start(seeds, minutes, test_tsp, test_devl, check_only)
         if self.runner is not None or self._testing:
             raise ValueError("A run is going on: stop it first (the menu bar's Stop), then test.")
-        duration = float(args.get("duration_min") or (30 if tool in ("assign_routes", "build_scenario") else 0))
+        duration = float(args.get("duration_min") or (30 if tool in ("assign_routes", "build_scenario") else
+                                                      20 if tool == "parameter_sensitivity" else 0))
         if not 1 <= duration <= experiments.MAX_MINUTES:
             raise ValueError(f"duration_min must be 1 to {experiments.MAX_MINUTES} simulated minutes.")
         if not 0 <= float(args.get("measure_from_min") or 0) < duration:
             raise ValueError("measure_from_min must be 0 or more and less than duration_min.")
         modes = deepcopy(self.vehicle_modes.modes)
-        demand = self._pair_demand()
+        # A test (at most MAX_MINUTES) of daily demand runs its busiest hour, as the demand check sizes it: from
+        # midnight it would see the night's few trips and report no congestion
+        raw = self._pair_demand()
+        peak_hour, demand = experiments.busiest_hour(raw), experiments.at_busiest_hour(raw)
         if tool == "assign_routes":
             return self._assign_routes(args, demand, modes, duration, check_only)
         if tool == "build_scenario":
             return self._build_scenario(args, check_only)
         if tool == "optimise_signals":
             return self._optimise_signals(args, demand, modes, duration, check_only)
+        if tool == "parameter_sensitivity":
+            return self._parameter_sensitivity(args, demand, modes, duration, check_only)
         if tool == "run_simulation":
             if not demand:
                 raise ValueError(f"There's no demand to test with: the OD matrix has no {self.od_matrix.mode} demand "
@@ -1097,6 +1132,9 @@ class MainWindow(QMainWindow):
                       **experiments.headline(kpis), **({"agent_timing": AGENT_TIMING} if override is not None else {})}
             health = analysis.run_health(kpis)  # a broken run said at once, with what to do (ChatSUMO's recovery loop)
             answer["health"] = "fine" if health["healthy"] else health["problems"]
+            if peak_hour is not None:
+                answer["demand_simulated"] = (f"daily demand at its busiest hour, {peak_hour:02d}:00-{peak_hour + 1:02d}:00, "
+                                              "held for the whole run")
             if simulated < duration * 60 - 1:
                 answer["note"] = "Stopped by the user before the end: the figures are of the part simulated."
             return answer
@@ -1272,8 +1310,16 @@ class MainWindow(QMainWindow):
                     for run in test["experiment"]["runs"]]
         if not isinstance(rows, list) or not rows or not all(isinstance(row, dict) for row in rows):
             raise ValueError("Give data (a list of objects) or an experiment id.")
-        y, xs = str(args.get("y")), [str(x) for x in network_tools._ids(args.get("x") or [])]
-        logs = set(network_tools._ids(args.get("log") or []))
+        def keyed(name: str) -> str:  # a comparison's label ("Delay") is its runs' key (delay_veh_h)
+            if args.get("experiment") and not any(name in row for row in rows):
+                try:
+                    return self._figure_key(name)
+                except ValueError:
+                    return name
+            return name
+
+        y, xs = keyed(str(args.get("y"))), [keyed(str(x)) for x in network_tools._ids(args.get("x") or [])]
+        logs = {keyed(name) for name in network_tools._ids(args.get("log") or [])}
         names = [y, *xs]
         missing = [name for name in names if not any(name in row for row in rows)]
         if missing:
@@ -1341,15 +1387,19 @@ class MainWindow(QMainWindow):
                 "turn_times_measured": sum(map(len, choice.get("turn_times_s", {}).values())), "iterations": history, "busiest_pairs": shares,
                 **({"converged": bool(gaps) and gaps[-1] <= until_gap} if until_gap is not None else {}),
                 "note": "Every run now draws each vehicle's route by these shares (saved with the network; Ctrl+Z "
-                        "undoes it). A relative gap falling towards 0 means the routes are settling (equilibrium)."}
+                        "undoes it). The relative gap is the share of the flow off its logit share: towards 0, the routes are settling "
+                        "(stochastic user equilibrium)."}
 
     def _equilibrium(self, network, demand, modes, seed, duration, iterations, choice, override, progress, cancelled,
                      until_gap=None, label="Route choice") -> tuple[dict, list]:
         """Route choice towards equilibrium by the method of successive averages over headless runs (Handbook of
         Transportation Science p391-392): each iteration runs with the link times so far, measures each link's
-        traversal time and moves the times 1/n of the way to it; the relative gap (time spent on the routes chosen
-        over that on the shortest, less 1) says how settled it is, and `until_gap` stops it once that low. Returns
-        (route choice, each iteration's figures). `network` is changed (its route_choice)."""
+        traversal time and moves the times 1/n of the way to it, every run on the same seed (common random numbers:
+        a new seed each time kept the gap at 0.05-0.09 by noise alone). The relative gap is the share of the flow off
+        its logit share at the times just measured (½Σ|P − P_logit|, 0 at stochastic user equilibrium); the time spent
+        over that on the fastest route (`excess_cost`) has a positive floor under logit choice, so it never falls to 0.
+        `until_gap` stops it once the gap is that low. Returns (route choice, each iteration's figures). `network` is
+        changed (its route_choice)."""
         choice = deepcopy(choice)
         rates = {(pair.origin, pair.destination): pair.hourly for pair in experiments.at_busiest_hour(demand)}
         history = []
@@ -1357,7 +1407,7 @@ class MainWindow(QMainWindow):
             if cancelled():
                 break
             network.route_choice = deepcopy(choice)
-            kpis = self._quick_run(network, demand, modes, seed + n - 1, duration * 60, override, progress, cancelled,
+            kpis = self._quick_run(network, demand, modes, seed, duration * 60, override, progress, cancelled,
                                    f"{label}, iteration {n} of {iterations}")
             observed = kpis["observed"]
             measured = {link: mean for link, (count, mean) in observed["traversals"].items() if count >= 3}
@@ -1375,16 +1425,21 @@ class MainWindow(QMainWindow):
                         turns.setdefault(link, {})[after] = round(was + (mean - was) / n, 2)
             network.route_choice = {**choice, "link_times_s": new, "turn_times_s": turns}
             priced = Graph(network)
-            spent = best = 0.0
+            spent = best = off = total = 0.0
+            theta = float(choice.get("theta_per_min", 0.5))
             for pair, q in rates.items():
                 options = graph.route_shares(*pair)
                 costs = [priced.path_time(path) for _, path in options]
                 if costs:
                     spent += q * sum(share * cost for (share, _), cost in zip(options, costs))
                     best += q * min(costs)
-            gap = round((spent - best) / best, 4) if best else None
-            history.append({"iteration": n, "seed": seed + n - 1, "mean_trip_s": kpis["mean_trip_s"],
-                            "delay_veh_h": kpis["delay_veh_h"], "links_measured": len(measured), "relative_gap": gap})
+                    aims = path_size_logit([path for _, path in options], costs, theta)
+                    off += q * sum(abs(share - aim) for (share, _), aim in zip(options, aims)) / 2
+                    total += q
+            gap = round(off / total, 4) if total else None
+            history.append({"iteration": n, "seed": seed, "mean_trip_s": kpis["mean_trip_s"],
+                            "delay_veh_h": kpis["delay_veh_h"], "links_measured": len(measured), "relative_gap": gap,
+                            "excess_cost": round((spent - best) / best, 4) if best else None})
             choice["link_times_s"], choice["turn_times_s"] = new, turns
             if until_gap is not None and gap is not None and gap <= until_gap:
                 break
@@ -1535,7 +1590,9 @@ class MainWindow(QMainWindow):
         """equilibrate_demand's numbers: elastic demand (induced or suppressed traffic; Rodrigue, Geography of Transport
         Systems, and the HCM's demand elasticity): each pair's veh/h moved towards q0 × (t / t_ref)^elasticity, t its
         mean trip time in a headless run with the demand so far, t_ref in the reference run (before the change), by
-        successive averages (q += (target − q) / n) until no pair moves more than 2 %. Returns (plan, report)."""
+        successive averages (q += (target − q) / n) until every pair is within 2 % of its target (the residual, not the
+        step, which shrinks as 1/n by itself). Trips still on the road at the end count with their time so far (only
+        finished trips understated a jam's times). Returns (plan, report)."""
         elasticity = float(args.get("elasticity", -0.5))
         iterations = int(args.get("iterations") or 3)
         duration = float(args.get("duration_min") or 30)
@@ -1550,10 +1607,14 @@ class MainWindow(QMainWindow):
         reference = self._run_test(str(args["reference"]))
         if self.runner is not None or self._testing:
             raise ValueError("A run is going on: stop it first.")
-        before: dict = defaultdict(list)
-        for origin, destination, _kind, trip, *_ in reference["kpis"]["observed"]["trips"]:
-            before[(origin, destination)].append(trip)
-        reference_s = {pair: statistics.fmean(times) for pair, times in before.items() if len(times) >= 2}
+        def times(observed) -> dict:  # each pair's trip times, the unfinished ones' so far too
+            found: dict = defaultdict(list)
+            for origin, destination, _kind, trip, *_ in [*observed["trips"], *observed.get("unfinished", [])]:
+                found[(origin, destination)].append(trip)
+            return found
+
+        before = times(reference["kpis"]["observed"])
+        reference_s = {pair: statistics.fmean(found) for pair, found in before.items() if len(found) >= 2}
         if not any(pair in reference_s for pair in flows):
             raise ValueError(f"{reference['id']} has no trips of these pairs (2 or more each): run the reference again.")
         if check_only:
@@ -1572,19 +1633,17 @@ class MainWindow(QMainWindow):
                           PairDemand(pair[0], pair[1], value, None, [], "Random", (100,)) for pair, value in q.items()]
                 kpis = self._quick_run(network, demand, modes, seed, duration * 60, override, progress, cancelled,
                                        f"Elastic demand, iteration {n} of {iterations}")
-                now: dict = defaultdict(list)
-                for origin, destination, _kind, trip, *_ in kpis["observed"]["trips"]:
-                    now[(origin, destination)].append(trip)
-                moved = 0.0
+                now, moved, gap = times(kpis["observed"]), 0.0, 0.0
                 for pair, base in flows.items():
                     if pair in reference_s and len(now.get(pair, ())) >= 2:
                         target = base * (statistics.fmean(now[pair]) / reference_s[pair]) ** elasticity
                         step = (target - q[pair]) / n
+                        gap = max(gap, abs(target - q[pair]) / max(q[pair], 1.0))
                         moved = max(moved, abs(step) / max(q[pair], 1.0))
                         q[pair] += step
-                history.append({"iteration": n, "total_vph": round(sum(q.values())), "largest_change": round(moved, 3),
+                history.append({"iteration": n, "total_vph": round(sum(q.values())), "largest_change": round(moved, 3), "largest_gap": round(gap, 3),
                                 "mean_trip_s": kpis["mean_trip_s"]})
-                if moved <= 0.02:
+                if gap <= 0.02:  # at equilibrium: its runs' times give back the demand they were run with
                     break
             return q, history
 
@@ -1618,6 +1677,14 @@ class MainWindow(QMainWindow):
         label, up = labels.get(key, (key, None))
         return groups, label, up
 
+    @staticmethod
+    def _baseline_of(names: list[str], scenario: str) -> str:
+        """The baseline a scenario is compared with: the first design under the same condition ("B | rain" against
+        "A | rain", not the first condition's "A | peak"), or the first scenario when there are no conditions."""
+        if " | " in scenario and " | " in names[0]:
+            return f"{names[0].split(' | ')[0]} | {scenario.split(' | ', 1)[1]}"
+        return names[0]
+
     def _power_analysis(self, args: dict) -> dict:
         """power_analysis: seeds needed for a paired comparison, from an experiment's per-seed differences or from
         an sd and a difference given (stats.paired_power, seeds_for_power, detectable)."""
@@ -1631,15 +1698,17 @@ class MainWindow(QMainWindow):
             if len(names) < 2:
                 raise ValueError("That experiment has one scenario: nothing to compare.")
             other = str(args.get("scenario") or names[1])
-            if other not in groups or other == names[0]:
-                raise ValueError(f"scenario is one of {', '.join(names[1:])} (each is compared with {names[0]}).")
-            base = groups[names[0]]
+            baseline = self._baseline_of(names, other)
+            if other not in groups or other == baseline or baseline not in groups:
+                raise ValueError(f"scenario is one of {', '.join(names[1:])} (each is compared with {names[0]}"
+                                 f"{', under its own condition' if ' | ' in names[0] else ''}).")
+            base = groups[baseline]
             shared = [s for s in base if s in groups[other] and None not in (base[s], groups[other][s])]
             if len(shared) < 2:
                 raise ValueError("Fewer than 2 seeds ran both: run the experiment on 2 or more shared seeds first.")
             differences = [groups[other][s] - base[s] for s in shared]
             sd, observed = statistics.stdev(differences), statistics.fmean(differences)
-            found.update(figure=label, baseline=names[0], scenario=other, seeds_now=len(shared),
+            found.update(figure=label, baseline=baseline, scenario=other, seeds_now=len(shared),
                          observed_difference=round(observed, 3), sd_of_differences=round(sd, 3))
             difference = float(args["difference"]) if args.get("difference") is not None else observed
         else:
@@ -1675,8 +1744,10 @@ class MainWindow(QMainWindow):
         experiment = test["experiment"]
         names = [spec["name"] for spec in experiment["scenarios"]]
         scenario = str(args.get("scenario") or (names[1] if len(names) > 1 else ""))
-        if scenario not in names[1:]:
-            raise ValueError(f"scenario is one of {', '.join(names[1:]) or '(none: one scenario)'} (each against {names[0]}).")
+        baseline = self._baseline_of(names, scenario)
+        if scenario not in names[1:] or scenario == baseline or baseline not in names:
+            raise ValueError(f"scenario is one of {', '.join(names[1:]) or '(none: one scenario)'} (each against {names[0]}"
+                             f"{', under its own condition' if ' | ' in names[0] else ''}).")
         try:
             capital = float(args["capital_cost"])
         except (KeyError, TypeError, ValueError):
@@ -1688,18 +1759,22 @@ class MainWindow(QMainWindow):
         if capital < 0 or values["hours_per_year"] <= 0 or not 1 <= values["years"] <= 100 or not rates \
                 or any(not 0 <= r <= 20 for r in rates):
             raise ValueError("capital_cost 0 or more, hours_per_year above 0, years 1-100, discount rates 0-20 %.")
-        hours = experiment["duration_s"] / 3600
+        hours = (experiment["duration_s"] - experiment.get("measure_from_s", 0.0)) / 3600  # the figures' window
         runs = {(run["scenario"], run["seed"]): run["measures"] for run in experiment["runs"]}
         yearly = []
         for seed in experiment["seeds"]:
-            base, other = runs.get((names[0], seed)), runs.get((scenario, seed))
+            base, other = runs.get((baseline, seed)), runs.get((scenario, seed))
             if base is None or other is None:
                 continue
 
             def saved(key, base=base, other=other):
-                return ((base.get(key) or 0.0) - (other.get(key) or 0.0)) / hours  # a simulated hour's worth
+                return ((base.get(key) or 0.0) - (other.get(key) or 0.0)) / hours  # a measured hour's worth
 
-            hourly = (saved("people_delay_h") * values["value_of_time_per_h"]
+            # Everyone's delay, not only finished trips': on board (people_delay_h counts only trips that
+            # ended, so a scenario letting more finish showed more delay) and waiting to get on the road
+            people = "person_delay_on_board_h" if "person_delay_on_board_h" in base else "people_delay_h"
+            occupancy = (base.get("people_per_h") or 0.0) / max(base.get("throughput_vph") or 0.0, 1.0) or 1.0
+            hourly = ((saved(people) + saved("entry_wait_veh_h") * occupancy) * values["value_of_time_per_h"]
                       + saved("vehicle_km") * values["cost_per_veh_km"]
                       + saved("co2_kg") / 1000 * values["carbon_per_tonne"])
             yearly.append(hourly * values["hours_per_year"])
@@ -1720,11 +1795,21 @@ class MainWindow(QMainWindow):
             ranges = [{"rate_percent": rate, "bcr_low": appraise(mean - half, rate)["bcr"],
                        "bcr_high": appraise(mean + half, rate)["bcr"]} for rate in rates]
         flips = len({row["npv"] > 0 for row in by_rate}) > 1
-        return {"experiment": test["id"], "scenario": scenario, "baseline": names[0], "seeds": len(yearly),
+        served = [statistics.fmean(runs[(name, seed)].get("arrived") or 0.0 for seed in experiment["seeds"]
+                                   if (name, seed) in runs) for name in (baseline, scenario)]
+        caution = None
+        if served[0] and abs(served[1] - served[0]) > 0.05 * served[0]:  # more or fewer trips, not the same trips faster
+            caution = (f"{scenario} completes {(served[1] - served[0]) / served[0]:+.0%} trips against {baseline}: its "
+                       "vehicle-km and delay differ partly because it serves a different number of trips, not only "
+                       "because each is faster or slower.")
+        return {"experiment": test["id"], "scenario": scenario, "baseline": baseline, "seeds": len(yearly),
+                **({"caution": caution} if caution else {}),
                 "yearly_benefit": round(mean), "yearly_benefit_ci95": None if half is None else round(half),
                 "by_discount_rate": by_rate, "bcr_interval_over_seeds": ranges, "decision_flips_with_rate": flips,
                 "assumptions": {**values, "discount_rates_percent": rates},
-                "note": "Benefits are person-hours of delay, vehicle-km and car CO2 saved (conflicts aren't crashes, so "
+                "note": "Benefits are person-hours of delay (everyone on board, finished or not, and waiting to enter), "
+                        "vehicle-km and car CO2 saved over the measured hours, after any warm-up (conflicts aren't "
+                        "crashes, so "
                         "they aren't valued). value_of_time_per_h, cost_per_veh_km, carbon_per_tonne and "
                         "hours_per_year (default 500: two peak hours, 250 days) are assumptions: give your own."}
 
@@ -1758,7 +1843,7 @@ class MainWindow(QMainWindow):
         duration = float(args.get("duration_min") or 15)
         if not 5 <= duration <= 60:
             raise ValueError("duration_min must be 5 to 60.")
-        demand = self._pair_demand()
+        demand = experiments.at_busiest_hour(self._pair_demand())  # daily: its busiest hour, as run_simulation
         if not demand:
             raise ValueError("There's no demand to check with: enter or generate some first.")
         if self.runner is not None or self._testing:
@@ -1796,7 +1881,7 @@ class MainWindow(QMainWindow):
         duration = float(args.get("duration_min") or 10)
         if not 1 <= len(seeds) <= 5 or not 3 <= duration <= 60:
             raise ValueError("seeds: 1 to 5; duration_min: 3 to 60.")
-        demand = self._pair_demand()
+        demand = experiments.at_busiest_hour(self._pair_demand())  # daily: its busiest hour, as run_simulation
         if not demand:
             raise ValueError("There's no demand to test with: enter or generate some first.")
         if self.runner is not None or self._testing:
@@ -1842,6 +1927,7 @@ class MainWindow(QMainWindow):
         passed = [run for run in runs if not run["broken"]]
         return {"extension": extension.name, "decided_by": model or "its tab's choice", "runs": len(runs),
                 "passed": len(passed), "pass_rate": round(len(passed) / len(runs), 3) if runs else None,
+                "conditions": [condition[0] for condition in battery],  # a lane closed is left out on a short road
                 "failures": [run for run in runs if run["broken"]][:12],
                 "invariants": [f"no signal arm with traffic left without a green over {analysis.STARVE_S:g} s",
                                f"no emergency vehicle standing still over {analysis.EMERGENCY_STANDSTILL_S:g} s at once",
@@ -1946,9 +2032,44 @@ class MainWindow(QMainWindow):
                         "should; one that flips none is ignored. Read the flips against the same-again rate: a model that "
                         "changes its answer to the same question isn't relying on anything."}
 
+    def _parameter_sensitivity(self, args: dict, demand, modes, duration: float, check_only: bool) -> dict:
+        """parameter_sensitivity: the network and demand as they are, run with each calibration parameter 10 %
+        either side (experiments.parameter_sensitivity), in the background."""
+        if not demand:
+            raise ValueError(f"There's no demand to test with: the OD matrix has no {self.od_matrix.mode} demand. "
+                             "Enter or generate some first.")
+        names = network_tools._ids(args.get("parameters") or list(experiments.SENSITIVITY_PARAMETERS))
+        unknown = [name for name in names if name not in experiments.SENSITIVITY_PARAMETERS]
+        if unknown:
+            raise ValueError(f"parameters are some of {', '.join(experiments.SENSITIVITY_PARAMETERS)}.")
+        seeds = experiments.seeds_from(args.get("seeds")) or [self.seed_box.value(), self.seed_box.value() + 1]
+        if len(seeds) > 5 or not all(0 <= seed <= MAX_SEED for seed in seeds):
+            raise ValueError(f"seeds: one to five, each 0 to {MAX_SEED:,}.")
+        step = float(args.get("step") or experiments.SENSITIVITY_STEP)
+        if not 0.05 <= step <= 0.3:
+            raise ValueError("step must be 0.05 to 0.3 (0.1 = 10 % either side).")
+        if check_only:
+            return {"ok": True, "runs": (1 + 2 * len(names)) * len(seeds)}
+        network, measure_from_s = deepcopy(self.network), float(args.get("measure_from_min") or 0) * 60
+        found = self._in_background(
+            lambda progress, cancelled: experiments.parameter_sensitivity(
+                network, demand, modes, seeds, duration * 60, names, step, measure_from_s, progress, cancelled),
+            "Parameter sensitivity")
+        if found is None:
+            raise ValueError("Stopped before every run was done: no elasticities.")
+        return {**found, "duration_min": duration,
+                "note": "Elasticity: the percent change in a figure for a 1 % change in the parameter. Beyond about 0.5 "
+                        "(either sign) the results lean on that parameter, so calibrate it to local counts first; near "
+                        "0 it hardly matters here. An interval wider than its value means more seeds are needed."}
+
     def _run_test(self, identifier: str) -> dict:
         """A headless run of this session by id (R1...), or the latest when none is given."""
         runs = [test for test in self.tests.values() if test["kind"] == "run"]
+        latest = list(self.tests.values())[-1] if self.tests else None
+        if not identifier and latest is not None and latest["kind"] != "run":  # "the latest" would be an older run
+            raise ValueError(f"The latest test is {latest['id']}, an experiment: its runs aren't read one by one. Give "
+                             f"a run id ({', '.join(t['id'] for t in runs) or 'none yet'}), or run_simulation the "
+                             "design to analyse (read_results gives the experiment's comparison).")
         test = self.tests.get(identifier.upper()) if identifier else (runs[-1] if runs else None)
         if test is None or test["kind"] != "run":
             raise ValueError(f"No run called {identifier or '(the latest)'}: run_simulation first. This session's runs: "
@@ -2044,6 +2165,7 @@ class MainWindow(QMainWindow):
         names = [s.name for s in scenarios]
         experiment = {"id": experiment_id, "started": started.isoformat(timespec="seconds"), "seeds": seeds,
                       "duration_s": duration * 60, "question": str(args.get("question") or ""),
+                      "measure_from_s": float(args.get("measure_from_min") or 0) * 60,  # its runs' warm-up
                       "scenarios": [{"name": s.name, "demand_scale": s.demand_scale, "extensions": s.extensions,
                                      "changes": s.changes, "weather": s.weather, "incidents": s.incidents,
                                      "random_incidents": s.random_incidents, "meters": s.meters,
@@ -2067,14 +2189,23 @@ class MainWindow(QMainWindow):
                                                inputs, self.ai_mode.journal)
         self.tests[experiment_id] = {"id": experiment_id, "kind": "experiment", "what": experiment["question"] or
                                      " vs ".join(names), "seeds": seeds, "experiment": experiment, "file": str(path)}
-        answer = {"experiment": experiment_id, "file": str(path), "runs": len(runs), "of": total,
+        experiment["objective"] = label
+        shown = self._compact(experiment["comparison"], label)
+        answer = {"experiment": experiment_id, "file": str(path), "runs": len(runs), "of": total, "objective": label,
                   **({"agent_timing": AGENT_TIMING} if experiment.get("agent_timing") else {}),
-                  "comparison": self._compact(experiment["comparison"])}
+                  "comparison": shown}
+        if len(shown) < len(experiment["comparison"]):
+            answer["more"] = (f"{len(experiment['comparison']) - len(shown)} more rows (every figure, each vehicle "
+                              "type's) are in the workbook; rank_scenarios ranks any figure.")
+        if len(designs) == 1 and not conditions:  # one design and nothing to set it against
+            answer["note"] = ("One scenario: nothing was compared. Put the network as it is first "
+                              "({\"name\": \"baseline\"}), then the change.")
         for key in ("conditions", "factorial"):
             if key in experiment:
                 answer[key] = _rounded(experiment[key])
         if len(runs) < total:
-            answer["note"] = "Stopped by the user: only the finished runs are compared."
+            answer["note"] = "Stopped by the user: only the finished runs are compared." + (
+                " " + answer["note"] if answer.get("note") else "")
         if len(seeds) < 3:
             answer["caution"] = "Fewer than 3 seeds: the intervals are wide or open; don't call a difference from this."
         unstable = sorted({f"{row['figure']} ({row['scenario']})" for row in experiment["comparison"]
@@ -2119,23 +2250,34 @@ class MainWindow(QMainWindow):
                 "note": "An interaction p under 0.05: one factor's effect depends on the other's level, so compare the "
                         "cell means, not the factors one at a time."}
 
+    LEAD_FIGURES = ("Delay", "Mean trip time", "Throughput", "Unfinished trips")  # an experiment's answer leads with
+
     @staticmethod
-    def _compact(comparison: list[dict]) -> list[dict]:
-        """An experiment's comparison, rounded, for the model."""
+    def _compact(comparison: list[dict], objective: str | None = None) -> list[dict]:
+        """An experiment's comparison, rounded, for the model: the objective's figure and LEAD_FIGURES, each with its
+        unit (some 100 rows of every figure buried the one asked about for a small model; the workbook has them all).
+        A difference is called better or worse only when clear; else "not told apart"."""
         def r(value):
             return round(value, 2) if isinstance(value, float) else value
+        lead = [objective, *MainWindow.LEAD_FIGURES] if objective else list(MainWindow.LEAD_FIGURES)
+        kept = [row for row in comparison if row["figure"] in lead]
+        kept.sort(key=lambda row: lead.index(row["figure"]))
         rows = []
-        for row in comparison:
-            item = {"figure": row["figure"], "scenario": row["scenario"], "mean": r(row["mean"]), "ci95": r(row["ci95"]),
-                    "n": row["n"], "replications_needed": row.get("replications_needed")}
+        for row in kept or comparison:
+            item = {"figure": row["figure"], "unit": row.get("unit"), "scenario": row["scenario"], "mean": r(row["mean"]),
+                    "ci95": r(row["ci95"]), "n": row["n"], "replications_needed": row.get("replications_needed")}
             if "vs_baseline_diff" in row:
+                clear = row["vs_baseline_clear"]
                 item.update(diff=r(row["vs_baseline_diff"]), diff_ci=r(row["vs_baseline_ci"]),
                             p=None if row["vs_baseline_p"] is None else round(row["vs_baseline_p"], 4),
-                            confidence=round(row["confidence"], 4), test=row["vs_baseline_test"],
-                            change_percent=r(row["vs_baseline_percent"]), clear=row["vs_baseline_clear"],
-                            better=row.get("better"))
+                            interval_level=round(row["confidence"], 4), test=row["vs_baseline_test"],
+                            change_percent=r(row["vs_baseline_percent"]), clear=clear,
+                            **({"better": row.get("better")} if clear and row.get("better") is not None
+                               else {"verdict": "not told apart"} if clear is False else {}))
                 if row.get("vs_baseline_wilcoxon_p") is not None:
                     item["wilcoxon_p"] = round(row["vs_baseline_wilcoxon_p"], 4)
+                if row.get("vs_baseline_p_holm") is not None:  # adjusted across the ~20 figures tested at once
+                    item["p_adjusted"] = round(row["vs_baseline_p_holm"], 4)
                 if row.get("speed_risk"):
                     item["speed_risk"] = row["speed_risk"]
             if row.get("anova"):
@@ -2167,7 +2309,8 @@ class MainWindow(QMainWindow):
                     "longest_queues": sorted(kpis["roads"], key=lambda row: -row["queue_max"])[:10]}
         experiment = test["experiment"]
         return {"id": test["id"], "question": experiment["question"], "seeds": experiment["seeds"],
-                "scenarios": experiment["scenarios"], "file": test["file"], "comparison": self._compact(experiment["comparison"])}
+                "scenarios": experiment["scenarios"], "file": test["file"],
+                "comparison": self._compact(experiment["comparison"], experiment.get("objective"))}
 
     def _compare_runs(self, ids: list[str]) -> dict:
         tests = [self.tests.get(i.upper()) for i in ids]
@@ -3030,9 +3173,16 @@ class MainWindow(QMainWindow):
     def _traffic(self, args: dict) -> dict:
         """The live run for the assistant (read_traffic): its latest published frame."""
         if self.runner is None:
-            return {"error": "No run is going: the user presses Run (▷ ↻ in the menu bar corner) to start one."}
-        road = args.get("road") or None
-        return self.runner.frame.records(str(road) if road else None, int(args.get("limit") or 100))
+            return {"error": "No live run is going (the user presses Run, ▷ ↻ in the menu bar corner, to start one). "
+                             "run_simulation's runs are headless: read them with read_results or analyse_run."}
+        road = str(args.get("road") or "") or None
+        known = {*self.network.roads, *self.network.approach_roads, *self.network.nodes, *self.network.approach_nodes}
+        if road and road not in known:  # a wrong id once matched nothing and said so only as "matching 0"
+            own = network_tools._road_from_other_end(self.network, road)
+            if own is None:
+                return network_tools.explain_error(f"Unknown id '{road}'.", self.network)
+            road = own
+        return self.runner.frame.records(road, int(args.get("limit") or 100))
 
     def _pair_demand(self) -> list[PairDemand]:
         """Every OD pair with demand of the kind the Demand Generator shows, for a run, and the institutions'
@@ -3111,6 +3261,7 @@ class MainWindow(QMainWindow):
         self.institution_panel.placing_changed.connect(self._placing)
         self.institution_panel.delete_requested.connect(self._delete_institution)
         self.institution_panel.split_requested.connect(self._open_mode_split)
+        self.institution_panel.height_requested.connect(self._set_institution_height)
         self.scene.placement_changed.connect(lambda: self.institution_panel.show_step(self.scene.placing))
         self.scene.placed.connect(self._place_institution)
         self.properties.drag_button.toggled.connect(self.toggle_drag)
@@ -3613,6 +3764,22 @@ class MainWindow(QMainWindow):
         self.statusBar().showMessage(f"{self._network_summary()} • Placed {item.id} {item.kind}. Click it to see "
                                      "its circle of influence.")
         self._commit(stop_run=False)
+
+    def _set_institution_height(self, identifier: str, height: float) -> None:
+        """An appearance edit: validate first, save/undo normally and keep a live run going."""
+        item = self.network.institutions.get(identifier)
+        if item is None:
+            return
+        candidate = replace(item, height_m=height)
+        if problem := institution_problem(candidate):
+            self.statusBar().showMessage(problem, 8000)
+            return
+        if item.height_m == height:
+            return
+        item.height_m = height
+        self.scene.rebuild()
+        self.institution_panel.show_selected(self.network, item)
+        self._commit(("institution_height", identifier), stop_run=False)
 
     def _institution_split(self, args: dict, check_only: bool, who: str = "the assistant") -> dict:
         """institution_mode_split (and the Mode split window's Apply): each institution's logit split

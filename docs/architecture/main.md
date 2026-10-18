@@ -1,6 +1,9 @@
 # main.py: the main window (Qt)
 
 - **Sidebar tabs:**
+  - **Workspace shell:** 12 px horizontal gutters and panel padding, matte slate sidebar, blue ACMS brand
+    and a separate page-title role. The short introduction keeps the metres unit visible. Only presentation
+    properties, spacing and typography differ; tab order, controls, actions and signal connections are shared.
   - **Create Network:** two `Collapsible` sections, fields at their natural size:
     - **Generate Network** (open at start): Driving side, applied to the whole network at once
       (`set_driving_side`: interchanges mirrored, the scene redrawn, one undo step, a run stopped,
@@ -13,7 +16,10 @@
       Generate Network.
     - **Own Network:** the background to draw a network over (see background.py).
   - **Map controls** over the map's top-right corner (`NetworkView.set_corner`): Input Grid (only while
-    Demand Generator is open), Power Saver (a leaf, checkable, `_power_saver`: the clock steps every 32 ms
+    Demand Generator is open), 3D View (checkable, `isometric_button`: an orthographic isometric view,
+    same world geometry, frame, time, centre and zoom; off returns to top-down), Show Buildings (the city
+    glyph, `buildings_button`: session visibility of institution footprints/labels/catchments, demand unchanged),
+    Power Saver (a leaf, checkable, `_power_saver`: the clock steps every 32 ms
     instead of 16, so a run draws 30 frames a second, and on a GPU the map drops multisampling; the physics
     is untouched; not remembered between sessions), Fit
     Network (the network itself), Reset View and Map Controls, whose click shows the mouse and keys and what draws
@@ -32,13 +38,17 @@
     Road beside Delete Selected; its menu picks Single lane or Two lanes (`add_slip_road`: `build_slip_road`,
     the slip selected, one undo step).
   - **Mode Behavior:** the vehicle types: rename, add, delete. It comes before the Demand
-    Generator, which splits trips between them.
+    Generator, which splits trips between them. Click a type for its Colour chooser: twelve fixed paints or
+    Random (stable per-vehicle display paint, retaining the type colour for charts). Saved and undoable.
   - **Demand Generator:** the Demand drop-down and the OD pair editor; the OD matrix replaces the
     map when it opens (Input Grid brings the map back), except with Institutions chosen: the map, to
     build on. Placing (`_placing`, `_place_institution`) ends the Edit and background tools; the building
     is one undo step and a run carries on (undoing it too, `_restore`). Esc, another tab or another
     Demand choice stops placing. Clicking a building selects it and opens Demand Generator →
     Institutions; Del deletes it.
+    Institution placement and selection both offer total **Height** in metres. `_set_institution_height`
+    validates a copied record first, updates scenery and its cache, and commits a merged undo step with
+    `stop_run=False`. Heights save with institutions; Undo/Redo preserve a live Runner as for institution edits.
   - **AI Mode:** keys and the System 2 chat; the status bar always shows which model is connected.
   - **View Summary:** the project at a glance, rebuilt whenever the tab opens or the project
     changes while it's open.
@@ -55,7 +65,7 @@
     the open tab's name heads the sidebar beside "ACMS" (`page_title`, `_name_open_tab`). Without either
     font the tabs show their names.
   - The sidebar is as wide as its tab row or its widest page needs (each page's minimum width), plus
-    its margins and scrollbar, and no wider (about 408 px: the Extensions page's rows are as wide as their settings,
+    its margins and scrollbar, and no wider (about 417 px with Segoe UI: the Extensions page's rows are as wide as their settings,
     open or folded), so the map gets the rest. The tab row spans the sidebar
     (document mode, expanding tabs), and every page's margins line up with its edges.
 - **Canvas tools:** Add Node, Add Edge and Drag to Adjust are mutually exclusive.

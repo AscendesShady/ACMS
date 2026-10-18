@@ -612,7 +612,10 @@ class AIModePanel(QWidget):
                       "tools_offered": [spec["name"] for spec in offered or []],
                       "before": self._host.state() if self._host else None}
 
+        tag = self._step["started"]
+
         def answer(on_text, run_tool, cancelled):
+            assistant.USAGE_TAG.value = tag  # this worker's requests are this step's
             speak = lambda text: on_text(text, model)  # noqa: E731
 
             def call_tool(call: dict):
@@ -628,10 +631,19 @@ class AIModePanel(QWidget):
                     return refused
                 if offered is not None and call.get("name") not in {spec["name"] for spec in offered}:
                     offered.extend(spec for spec in network_tools.tool_specs() if spec["name"] == call.get("name"))
-                return run_tool(call)
+                repaired = "; ".join(filter(None, (
+                    network_tools.fold_incident(call.get("name", ""), call.get("arguments")),
+                    network_tools.drop_strays(call.get("name", ""), call.get("arguments")),
+                    network_tools.repair_ends(self._host.network(), call.get("name", ""), call.get("arguments"), prompt)
+                ))) if shown and self._host else None
+                result = run_tool(call)
+                if repaired and isinstance(result, dict):
+                    result["read_as"] = repaired  # the model learns the network's own ends
+                return result
 
             try:
-                return assistant.converse(provider, model, messages, key, offered, speak, call_tool, cancelled), tools
+                return assistant.converse(provider, model, messages, key, offered, speak, call_tool, cancelled,
+                                          network_tools.EDIT_TOOLS), tools
             except ToolsUnsupported:  # Ollama didn't say, then refused: carry on without tools
                 return assistant.converse(provider, model, messages, key, None, speak, run_tool, cancelled), None
 
@@ -752,11 +764,19 @@ class AIModePanel(QWidget):
             request.done.set()
             return
         line = network_tools.describe_call(call["name"], call["arguments"])
+        checked = time.time()  # the check runs the edit on a copy: an OpenStreetMap download is timed here
         problem = self._check(call["name"], call["arguments"]) if call["name"] in network_tools.EDIT_TOOLS else None
+        check_s = round(time.time() - checked, 3)
+        if problem and problem.startswith("Nothing would change"):  # already as asked: an answer, not a refusal
+            request.result = network_tools.already_so(problem)  # (qwen3.5 read it as failing and gave up)
+            self._record_call(call, what=line, decision="already so", result=request.result, check_s=check_s)
+            self._say(None, f"Already so: {line}.")
+            request.done.set()
+            return
         if problem:  # refused before asking: the user only ever approves changes that can work
             self.log(call["name"], call["arguments"], f"refused: {problem}")
             request.result = {"error": f"{problem} Nothing was changed and the user wasn't asked."}
-            self._record_call(call, what=line, decision="refused: check", result=request.result)
+            self._record_call(call, what=line, decision="refused: check", result=request.result, check_s=check_s)
             self._say(None, f"Not proposed: {line}. {problem}")
             request.done.set()
             return
@@ -767,7 +787,7 @@ class AIModePanel(QWidget):
             self.proposal_text.setText(f"<b>Proposed change</b><br>{line}")
             request.record = self._record_call(call, what=network_tools.describe_call(call["name"], call["arguments"]),
                                                plan=_plain(self._preview) if self._preview else None,
-                                               decision="waiting", proposed_at=time.time())
+                                               decision="waiting", proposed_at=time.time(), check_s=check_s)
             self.proposal.show()
             self.apply_button.setFocus()
             self._busy("Waiting for you to apply or skip the change…")
@@ -901,7 +921,7 @@ class AIModePanel(QWidget):
         replies = [m.get("content") for m in messages if m.get("role") == "assistant" and m.get("content")]
         step.update(messages=messages, reply=replies[-1] if replies else "", plan=assistant.plan_line(replies),
                     error="stopped by the user" if result is STOPPED else (error or ""),
-                    usage=[dict(u) for u in assistant.USAGE if step["started"] - 1 <= u.get("at", 0) <= step["ended"] + 1])
+                    usage=[dict(u) for u in assistant.USAGE if u.get("tag") == step["started"]])
         self._host.step(step)
 
     def log(self, tool: str, args, outcome: str, kind: str = "tool call") -> None:

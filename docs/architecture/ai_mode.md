@@ -74,7 +74,8 @@
     `run_tool`): what small models send is read in the shapes the schema gives (a close misspelling or a
     plural takes the parameter's name, `ends` → `end`; numbers, whole numbers and true/false sent as text
     become them; a choice matches whatever its case; a one-item list where one value is wanted is that value;
-    nulls are left out; lists stay as sent). An unknown or missing argument, or a value that can't be read,
+    nulls are left out, and so is text meaning nothing (`_NOTHING`: "None", "null", "n/a"…, which llama3.2
+    sends for every optional argument, even ones the tool lacks), a real 0 kept; lists stay as sent). An unknown or missing argument, or a value that can't be read,
     is refused before anything runs, the error giving the tool's signature (`signature`), e.g.
     "set_end_flows takes end (text, required), supply_vph (number), demand_vph (number)".
   - **Edits that change nothing** (`run_tool`: the network equal before and after) are refused ("Nothing
@@ -148,7 +149,9 @@
       pair would get any demand (flows only at one end, or a total under 1 a pair) it is refused, saying
       why, and the matrix is left as it was.
       - `degree_of_saturation` (instead of `total`, 0.1–1.2) sizes the demand: the gravity model's
-        shares are scaled (bisection, `_fit_saturation`) until the most saturated junction meets it,
+        shares are scaled (bisection, `_fit_saturation`) until the most saturated junction meets it, or the
+        longest queue fills `STORAGE_LIMIT` (half) of its link (`Graph.storage_ratio`; short links spill back
+        before X reaches the target, and the result's `sized_by` says which bound held),
         by `Graph.saturation` on every pair routed as a Run routes it (`Graph.assign`):
         - signalised: the critical X = Y·C/(C − L) at Webster's cycle (`signal_timing.critical_saturation`)
           with the Run's own lane-based flow ratios (`Graph.arm_ratio`), matching its Webster plan;
@@ -320,7 +323,7 @@
       times (`turn_times_s`, junction delay counted once: simulation.md) by successive averages over `iterations` headless runs, or `off`; one undo step) and `optimise_signals` (a
       genetic algorithm over fixed-time settings for `junctions`, up to 120 runs without workbooks; returns
       the `set_signal_timing` to apply and changes nothing). Both pass the signal agent's waiting form, as
-      the other headless runs do. `assign_routes` takes `until_gap` (stop once the relative gap is under it;
+      the other headless runs do. `assign_routes` takes `until_gap` (stop once the relative gap, the share of flow off its logit share, is under it;
       `MainWindow._equilibrium`, shared with run_experiment's scenarios).
     - `run_simulation` and run_experiment's scenarios also take `incidents`, `weather`, `random_incidents`,
       `meters`, `assign_routes` and `lateral` (lateral position and filtering, said on the workbook's Run sheet;
@@ -336,7 +339,9 @@
       difference), `rank_scenarios` (all pairs: ANOVA, Friedman, paired differences with Bonferroni and Wilcoxon,
       compact letters), `read_decisions` (an agent's decisions in a run with their outcome, telemetry and
       person-delay estimate), `benefit_cost` (`_benefit_cost`: a scenario against the baseline in money, NPV and
-      BCR at 3.5, 4 and 7 %, the BCR's range over the seeds); `analyse_safety` takes `speed_change_kmh` (the power
+      BCR at 3.5, 4 and 7 %, the BCR's range over the seeds; everyone's delay, on board finished or not
+      (`person_delay_on_board_h`) and waiting to enter (`entry_wait_veh_h` × the run's occupancy), over the hours
+      measured after the warm-up; a `caution` when the scenario completes over 5 % more or fewer trips); `analyse_safety` takes `speed_change_kmh` (the power
       model's change in crashes).
     - Checks on the network (network_checks.md): `design_audit` (Green Book sight, turning paths, skew, lane
       balance; Safer Roads junction spacing), `accessibility_report` (what residents reach, a road's closure's
@@ -344,7 +349,8 @@
     - Edits that run tests: `preflight_check` (`_preflight`: a run at a tenth of the demand for slow links and
       one at half for gridlock), `test_agent_compliance` (`_compliance`: an agent's extension on a fixed battery,
       as is, 30 % more demand, heavy rain with a lane closed, each run's invariants), `decision_sensitivity`
-      (TSP's decisions re-asked with one fact changed, and unchanged for consistency), and `equilibrate_demand`
+      (TSP's decisions re-asked with one fact changed, and unchanged for consistency), `parameter_sensitivity`
+      (`_parameter_sensitivity`: each calibration parameter ±10 % on common seeds, experiments.md), and `equilibrate_demand`
       (an OD tool: elastic demand, od_matrix.md).
     - `set_extension`: tick or untick an extension by name (or its short name, "TSP") and fill its
       panel's fields by their labels (`ExtensionsPanel.find`, `set_settings`; a missing field or choice refused).
@@ -437,20 +443,77 @@
     (`normalise`) gives the tools named alike only as options, and says that if none does it the app can't, so the
     model tells the user (`close_all_roads` is spelt like `list_roads` but isn't it). When every call of an answer was
     refused, the app ends the reply with `REFUSED_NOTE` ("every tool call in this answer was refused, so nothing was
-    changed"), on screen too (llama3.2 3B claimed "the city was created" after each call was refused); the app's own
+    changed"), on screen too (llama3.2 3B claimed "the city was created" after each call was refused). A reply whose
+    figures (at least 3, and half of them; or one of 1,000 or more, not a year: qwen3.5 said 1,269 veh/h could enter
+    where its tool said 3,119 was kept) come from no tool result of the answer nor the request ends with
+    `UNGROUNDED_NOTE` (`ungrounded`; llama3.2 made up a refused run's results). A tool refused and never run in an
+    answer gets one reminder (`RETRY`, quoting the refusal) to call it again corrected or say why not. A tool refused
+    `MAX_REFUSALS` (3) times in an answer isn't run again in it (`error_type` "gave_up": tell the user what couldn't be
+    done, or ask; no RETRY for it): llama3.2 3B called set_end_flows 7 times with new wrong arguments, to the round
+    limit at 110k input tokens. A reply that claims a change (`CLAIM`: "I've set…", "has been added", "Done") when no
+    tool ran in the answer gets one reminder (`CLAIMED`: call the tool, or say plainly it wasn't done), then, still
+    claiming, `NOTHING_RAN_NOTE`. The app's ending note (`_ended`) lists what ran in this answer only. Usage records
+    carry the asking step's tag (`USAGE_TAG`, a thread-local), so a step counts its own requests. An Ollama model's
+    own prompt count, when above the estimate, sizes its next num_ctx (`_CHARS_PER_TOKEN_SEEN`). A request that
+    ends with no answer is recorded too (`no_answer`; qwen3.5 thought for 40 s, then said nothing, uncounted before).
+    End names
+    copied from an example that are neither the network's nor in the request (`repair_ends`) are dropped, every end
+    used and said so in `read_as` ("None" there is no end). Another tool's argument is dropped and said so in `read_as` (`drop_strays`: llama3.2
+    sent set_od_demand's peak_hour_factor to generate_demand on every try); `normalise` called directly refuses it,
+    naming the tool it belongs to. A mean_trip_km of 0 is no length (the default decay);
+    an empty mode_split is none, and fractions adding up to 1 are percent (`ODMatrixPanel._shares_from`); generate_demand
+    with nothing to size it by names degree_of_saturation first.
+    A traffic level put in a choice of another kind (`LEVEL_WORDS`: demand "peak") is read as the degree_of_saturation
+    it means (`_level_read`: busy/peak 0.85, medium 0.65, light 0.4) when the tool takes one and none in range was
+    given (llama3.2 sent 0 after the refusal), else the refusal says which to give; a total, or with no level word a
+    degree_of_saturation, of 0 is llama3.2's filler, so none (`_ZERO_IS_NONE` in `normalise`: width_m, height_m,
+    resolution_m, total, mean_trip_km, degree_of_saturation, when optional);
+    place_map's note says network_from_background takes no arguments. the app's own
     ending note (`_ended`) is now shown as well, not only kept in the record. **Plan follow-through**
     (`unfinished`, `planned_tools`): the Plan: line ends "-> tool, tool" (TOOLS_NOTE's example); when the model
     gives its final answer while tools its own plan names (of those it was offered) were never called, the app
     reminds it once (`FOLLOW_THROUGH`: call it, or say in one line why it isn't needed), so the second part of a
-    two-part request isn't dropped. When the answer has done nothing yet (a `Plan:` line and the turn ended: Gemini
+    two-part request isn't dropped. Once an edit (`converse(edits=…)`: `EDIT_TOOLS`) has run, tools a later Plan: line
+    adds don't count, the first line's still do (llama3.2 3B built the network, re-planned with update_roads and
+    add_boundary_end, and reminded, called them with made-up arguments). When the answer has done nothing yet (a `Plan:` line and the turn ended: Gemini
     3.5 Flash Lite did so in 12 of 15 prompts, and sent the same line again when only reminded), the reminder's request
     requires a call to the planned tools (`stream_chat(require=…)`: Gemini's function calling mode ANY with
-    `allowedFunctionNames`, xAI's `tool_choice`; Ollama has no such option and is only reminded). A signal method the request doesn't name while it names another
+    `allowedFunctionNames`, xAI's `tool_choice`; Ollama has no such option and is only reminded, up to 3 times).
+    Lines of only names and arrows count as plan (`_only_a_plan`: llama3.2 3B's second plan line). A signal method the request doesn't name while it names another
     (`network_tools.contradicts`, from `AIModePanel._ask`'s `call_tool`: qwen3.5 4B, asked for SCOOT, thought
     SCOOT and sent scats) isn't run: the model is told what the user asked for (`error_type`
-    "not_what_was_asked"). A road named from its other end ("2,2-2,3" for 2,3-2,2) is that road (`run_tool`
+    "not_what_was_asked"). So is `generate_grid` for a request naming a real place and no grid (`_places_named`; llama3.2 3B, asked for
+    Dhanmondi's roads, placed the map then built a 5 x 6 grid): it is told to use network_from_background. A road named from its other end ("2,2-2,3" for 2,3-2,2) is that road (`run_tool`
     runs again with the road's own id and says so in `read_as`; `explain_error` suggests it first), and ids sent
-    as objects are refused saying how to call (`_ids`).
+    as objects are refused saying how to call (`_ids`). Ids are read however a small model lists them: "2,2; 3,3",
+    Python's "['3,3']" (`_repaired_json` falls back to `ast.literal_eval`, JSON's kinds only), and "all" where a
+    tool takes ids (`ALL_IDS`: update_roads every road, set_junction_control every junction, set_signal_timing
+    every signalised one; never delete or move). An id that exists nowhere is a KeyError in every edit tool
+    (`_junction` and the rest), so the other-end retry and `did_you_mean` work for all; a boundary end given as a
+    junction, or a junction as an end, says which it is. An edit that would change nothing comes back as
+    `already_so` (unchanged, "tell the user so"), not a refusal (qwen3.5, asked to retime a Webster signal with
+    Webster, read the refusal as failing). Tool accuracy, 2026-10-13 (`tools/eval_commands.py`, 22 everyday
+    tasks, `reports/tool_accuracy_2026-10-13/`), also gave: set_junction_control's before → after (`changed`);
+    set_signal_timing naming every unsignalised junction at once, phases 2 or 4, one green a phase, greens alone
+    meaning fixed and refused with another method; update_roads speed 5-130 and pocket settings left with no
+    pocket junction ignored; update_institution's car_share a percent (0.4 refused as 40 %'s fraction) and its
+    before → after; generate_grid's result in the description's columns x rows, and width_m/height_m for a size in
+    metres (horizontal 1500 refused as a count, not metres); y grows south in move_junctions, add_junction and
+    add_boundary_end; list_junctions and list_roads with a filter saying how many in all; run_simulation's
+    incident fields given at its top level read as one incident (`fold_incident`); set_od_demand's value per
+    pair and the matrix total; read_od_matrix's totals; read_traffic refusing unknown roads, with the matching
+    vehicles' mean speed and stops; the run headline's completion rate, unfinished percent and warm-up;
+    daily demand tested at its busiest hour (`demand_simulated`), not from midnight; an experiment's answer
+    leading with its objective and four lead figures with units (`LEAD_FIGURES`; the rest counted in `more`),
+    `interval_level` for the per-row confidence and "not told apart" for a difference that isn't clear;
+    analysis tools refusing "the latest" when the latest test is an experiment; scenarios under conditions
+    compared with their own condition's baseline (`_baseline_of`); start_batch seeds a list. A second round:
+    degree_of_saturation given as a level word ("busy") read as its figure, and a level word said again beside a
+    degree given left out (`_level_read`); update_roads given a road's two junctions ["2,2", "3,2"] reads that road
+    (`read_as`); "list_junctions" or "list_roads" in place of ids means all; delete_objects of the two junctions of
+    a road the request names (and not the junctions themselves) refused by `contradicts` (llama3.2 deleted
+    junctions 4,4 and 4,3, and every road at them, for "delete road 4,4-4,3"); the analysis tools offered for a
+    request about counts, validation or observed data (`TOOL_GROUPS`).
     - Measured on 8 two-part requests (qwen3.5 4B, 2026-10-05, each second part changing something, checked by
       the arguments that ran): with the follow-through 6/8, without it 6/8 but "generate busy traffic and run it"
       planned and never done (with it, reminded once, both done); with the road-id and method checks 8/8 (the

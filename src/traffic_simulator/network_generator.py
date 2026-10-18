@@ -54,9 +54,9 @@ def generate_network(
     signal_method: str = "webster",
 ) -> Network:
     if not 1 <= horizontal_corridors <= 20:
-        raise ValueError("Horizontal corridors must be between 1 and 20.")
+        raise ValueError("horizontal (rows, roads running east-west) must be 1 to 20.")
     if not 1 <= vertical_corridors <= 20:
-        raise ValueError("Vertical corridors must be between 1 and 20.")
+        raise ValueError("vertical (columns, roads running north-south) must be 1 to 20.")
     if default_spacing <= 0:
         raise ValueError("Default spacing must be positive.")
     if driving_side not in {"left", "right"}:

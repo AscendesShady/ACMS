@@ -36,17 +36,33 @@
   Bonferroni to 1 − 0.05/k for k scenarios (`confidence`), with `test`, `p`, `ci`, `clear`, `better`;
   `headline(kpis)`.
 - `analyse_run(observed)` (from `RunRecorder.observed()`): reliability (trip time mean, SD, CV, median,
-  85th and 95th percentiles, TTI, PTI and the buffer index BI, mean-based, the least reliable pairs with 5
-  trips or more), each origin's
+  85th and 95th percentiles, TTI, PTI and the buffer index BI, all from each trip's time over its free-flow time at
+  its own free speed (a bike's is its own, not the limit), TTI and BI on the same mean, PTI a spread across the run's
+  trips, not FHWA's across days; the least reliable pairs with 5 trips or more; trips still on the road are in
+  `RunRecorder.observed()["unfinished"]`), each origin's
   arrivals per whole minute against Poisson (`stats.dispersion`), and the ten roads whose 95th-percentile
   queue is the largest share of their length (`spills_back` when it reaches it).
   `check_calibration(kpis, counts)`: each counted road's measured flow, GEH, and `stats.fit`'s scores.
 - `holds(network, demand, modes, seed, ...)`: one `HOLD_MINUTES` (45) headless run; it holds unless the
   vehicles in the network and waiting to enter grow over the last `HOLD_WINDOW_MINUTES` (15) by more than
   `HOLD_BUILD_UP` (5 %) of those setting off, and by at least `HOLD_MIN_PILE` (25: a light demand's
-  few vehicles swing more than that by chance). `largest_holding(check)`: the whole demand, else the largest
-  share that holds by bisection (`HOLD_STEPS` 4). `at_busiest_hour(demand)`: daily pairs as veh/h in the
-  network's busiest hour. The window's `_check_demand` uses them (AI Mode, generate_demand).
+  few vehicles swing more than that by chance). Where a pair's hour is uneven (a peak-hour factor or quarters), the
+  busiest quarter (`PEAK_QUARTER`) is judged the same way too (`peak_quarter_build_up`), its count at the start scaled by the rise in arrivals (more vehicles
+  are on the road at once with no queue, Little's law; uncorrected, X 0.6 at PHF 0.85 read 0.07-0.09): the last window came after it
+  and saw its queue draining (PHF 0.7 at X 0.85 ran the peak quarter at X 1.21 and passed). `holds_by_majority(check,
+  seed)`: a verdict within half the threshold either side of it (`BORDERLINE`) goes to three seeds' majority (one
+  seed's largest holding share had come out 0.875, 0.875 or 0.75). `largest_holding(check)`: the whole demand, else
+  the largest share that holds by bisection (`HOLD_STEPS` 4). `at_busiest_hour(demand)`: daily pairs as veh/h in the
+  network's busiest hour; `busiest_hour(demand)` which hour. The window's `_check_demand` uses them (AI Mode,
+  generate_demand); its headless tests run daily demand at that hour too. `run_headless(observe=True)` records
+  from the recorder's warm-up.
+- `parameter_sensitivity(network, demand, modes, seeds, duration_s, parameters, step, ...)`: a run as it is and one
+  with each of `SENSITIVITY_PARAMETERS` (tau_s: every vehicle type's; critical_gap_s, ring_timegap_s: the
+  Simulation's, set through `run_headless(params=…)`; `varied`) at ×(1 ± `SENSITIVITY_STEP`, 0.1), on the same seeds;
+  per parameter and `SENSITIVITY_MEASURES` figure, the central-difference elasticity (Y₊ − Y₋) / (2·step·Y₀), mean over
+  the seeds with its 95 % interval (FHWA Traffic Analysis Toolbox III's calibration step). None if stopped. AI Mode's
+  parameter_sensitivity (`MainWindow._parameter_sensitivity`: the open network and demand, 1 to 5 seeds, default the
+  run seed and the next, 20 simulated minutes, in the background).
 - `experiment_workbook(path, experiment, inputs, journal)`, named by `experiment_name(started)`.
 - Limits: `MAX_SCENARIOS` 6, `MAX_SEEDS` 20, `MAX_RUNS` 60, `MAX_MINUTES` 240. The window runs it
   (`MainWindow._runs_command`, see AI Mode); a run's workbook names are numbered when two start in the
@@ -70,7 +86,8 @@
   `QUEUE_GAP_S` 4 s): the saturation headway from the 5th vehicle, saturation flow, start-up lost time.
 - `safety(kpis, ttc_s)`: conflicts under the threshold per road, severe ones (TTC < 1 s or DRAC > 3.35 m/s²),
   the rate per million veh-km, a safety performance function across roads (`stats.poisson_regression` with
-  ln km as offset; NB2 α when overdispersed) and the Empirical Bayes excess ranking; with them, the run's recorded
+  ln km as offset; NB2 α when overdispersed) and the Empirical Bayes excess ranking (a Poisson fit makes EB the
+  expectation, no excess anywhere: then by z = (conflicts − expected)/√expected, `ranked_by`); with them, the run's recorded
   `collisions` (count, by road or junction, by kind: same lane or crossing) and `emergency_braking` (count, by where).
 - `series(kpis, what, road, interval_min)`: a run's values per interval (network throughput, mean speed, on
   the road, queued; trip time by arrival; a road's flow or space-mean speed from its detectors), for
@@ -79,7 +96,11 @@
 - The window also runs `assign_routes` (`MainWindow._assign_routes`: the method of successive averages over
   `_quick_run`s, each with the route choice so far, the link and move times (`link_times_s`, `turn_times_s`,
   each move's own junction delay counted once: `Graph.move_time`) moved 1/n of the way to those measured, the
-  relative gap Σq·Σ_r P_r(T_r − T_min) / Σq·T_min per iteration, then set on the network as one undo step) and
+  relative gap per iteration, the share of flow off its path-size logit share at the times just measured
+  (½Σq·Σ_r|P_r − P_r^logit| / Σq, 0 at stochastic user equilibrium; `excess_cost` Σq·Σ_r P_r(T_r − T_min) / Σq·T_min
+  beside it has a positive floor under logit choice, about 0.10 on a 3 x 3 grid), every iteration on the same seed
+  (a new seed each time held the gap at 0.05-0.09 by noise; on one seed it fell from 0.07 to 0.004 in 4), then set on
+  the network as one undo step) and
   `optimise_signals` (`_optimise_signals`: a genetic algorithm over fixed-time cycles and splits, every
   candidate scored on the same seeds without workbooks, one elite, tournament selection, blend crossover,
   Gaussian mutation; the best against the current plans by the paired test).
@@ -153,5 +174,7 @@
   tests with tie corrections (`friedman` with seeds as blocks, `kruskal_wallis`, `mann_whitney`); `all_pairs`
   (every pair by the paired t, or Mann–Whitney unpaired, Bonferroni over the pairs, with compact letters: designs
   sharing a letter aren't told apart); `paired_power`, `seeds_for_power`, `detectable` (power of the paired test,
-  seeds needed for 80 %, the smallest difference found); `two_way_anova`; and the earlier summary, paired, anova,
+  exact by the noncentral t, seeds needed for 80 %, the smallest difference found); `holm` (Holm's adjusted p:
+  `compare` gives each scenario's p across its figures as `vs_baseline_p_holm`, the workbook's last Comparison
+  column and the assistant's `p_adjusted`); `two_way_anova`; and the earlier summary, paired, anova,
   signed_rank, regression, count models, logit, k-means, envelopes, Holt and MSER.

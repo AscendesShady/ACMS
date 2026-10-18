@@ -11,7 +11,12 @@ stop, v²·Δt/2(v − v′), with Krauss's safe speed in its ballistic form. Ea
 comfortable `decel` is counted in `emergency_braking` (and, observed, recorded: when, which, its type, the road or
 junction, how hard); Krauss never brakes harder than its `emergency_decel`, but a vehicle refused at the line by
 `_move`'s re-check (a foe entered a crossing turn earlier in the same step) still stops there at once, rare and
-recorded with its real deceleration. After the moves, collisions are counted in `collisions`, SUMO's collision
+recorded with its real deceleration. A vehicle that has stood `TIME_TO_TELEPORT_S` (300 s, SUMO's
+`--time-to-teleport` default) at the front of its lane is taken off the road and queued to enter its route's next
+link (`_teleport_jammed`, after algorithms/vehicle_removal.md's transfer), so a gridlock's cycle breaks instead of
+freezing the run (not one held by a closure on its lane: that block is meant); counted in `teleports`, observed with where; `time_to_teleport_s` 0 turns it off (`critical_gap_s` and `ring_timegap_s`, the gap acceptance, are per run too, from
+`CRITICAL_GAP_S` and `RING_TIMEGAP_S`, for `experiments.parameter_sensitivity`); its trip keeps
+its first `inserted_s`. After the moves, collisions are counted in `collisions`, SUMO's collision
 action "warn" (algorithms/collision_handling.md: counted, nothing removed or teleported), by kind in
 `collision_kinds`: `"same lane"`, a front past the rear ahead in its lane or turn (vehicle-steps), and
 `"crossing"`, two vehicles on crossing turns of a junction (`Turn.conflicts`) both over their conflict point at
@@ -36,7 +41,7 @@ vehicle on them are looked at; a merge is the same lane's check once both are on
     it is made short of it. Leaving links' turns lead into whole lanes only. a path through a junction from an arriving lane to a leaving lane. Classed kerb-side,
     straight, offside (across oncoming traffic) or U-turn (back along its road) by the angle between
     them (`_kind`); a ramp leaving or joining a road within 35° (a slip road's tangential taper) is a kerb
-    turn when its first or last 10 m bend to the kerb side, otherwise straight. A cubic Bézier, with its speed capped by `curve_speed_kmh` of its radius, but not below 15 km/h (the path is schematic, and the turning saturation flows were measured at that) (a U-turn
+    turn when its first or last 10 m bend to the kerb side, otherwise straight. A cubic Bézier, with its speed capped by low-speed turning friction (`JUNCTION_TURN_FRICTION` 0.35, AASHTO; √(127·f·R)), not below `JUNCTION_TURN_MIN_KMH` (kerb 30, offside 35, U-turn and straight 25 km/h: the path is schematic, tighter than a car steers, so the floors stand in for a real curb radius and bring turning flows to the HCM's 85-95 % of straight-on), and the turning saturation flows were measured at that; a give-way movement at an uncontrolled junction at most `GIVE_WAY_KMH` 17, drivers slowing to look (a U-turn
     swings out into the junction rather than turning on the stop lines); at a roundabout, an entry
     curve, an arc round the ring (radius at the middle of the circulatory roadway; clockwise when
     driving on the left) and an exit curve (a U-turn goes almost all the way round).
@@ -57,8 +62,11 @@ vehicle on them are looked at; a merge is the same lane's check once both are on
     count), so nothing gridlocks.
   - Conflicts: where two turns' paths cross (`segment_hit`) or merge into one lane, with who gives
     way: a U-turn to everything else (on the same green); an offside turn to oncoming traffic on the
-    same green; a minor arm of an uncontrolled junction to the major road (the two arms most nearly
-    in line).
+    same green; a minor arm of an uncontrolled junction to the major road (`_major_arms`: the two arms of the
+    highest road class, `ROAD_PRIORITY` as SUMO's netconvert ranks OSM types, the most nearly in line among them;
+    a grid's roads are one class, so in line), and a minor offside turn also to the other minor arm's straight and
+    kerb movements (HCM 2000's ranks: rank 4 gives way to rank 3; first-come before). An imported trunk no longer gives way to a residential lane that
+    happens to line up better: on Dhanmondi that had gridlocked the network.
   - `Signal`: a signalised junction's phases in turn, each green followed by its amber and all-red
     (`signal_timing.clearance` from its fastest approach and its width: 3.3 s and 2.0 s on the default grid). Two phases: east-west arms, then north-south; four: each arm alone, in turn round the
     junction. Fixed-time: the same greens every cycle, the first phase's green starting `offset` s
@@ -67,27 +75,33 @@ vehicle on them are looked at; a merge is the same lane's check once both are on
     and each phase starts, which may change the greens (and so the cycle) from then on.
 - **Signal timing** (`_time_signals`, before the run; `signal_plans`; the methods in signal_timing.py).
   `Graph.assign` routes every pair's veh/h and `Graph.saturation` gives a junction's degree of saturation
-  by its control (see AI Mode's generate_demand); `design_flows` routes every pair's flow along its fastest path and adds up the veh/h arriving on
+  by its control (see AI Mode's generate_demand) and `Graph.storage_ratio` its worst queue over the room behind it
+  (a signal's red queue per arm and the HCM's 95th-percentile queue, Eq 17-37, for give-way movements, over
+  `STORAGE_M_PER_VEHICLE` 7.5 m a vehicle); `design_flows` routes every pair's flow along its fastest path and adds up the veh/h arriving on
   each arm and making each movement (link to next link; daily demand: at the network's busiest hour).
   Each phase's critical flow ratio y is its busiest arm's (`Graph.arm_ratio`), lane by lane
-  (`_lane_load`): kerb turns load the kerbside lane at 1,160 veh/h and offside turns and U-turns the
-  offside lane at 1,100, straight-on traffic (2,060 veh/h per lane) fills whichever lanes have room;
+  (`_lane_load`): kerb turns load the kerbside lane at 1,770 veh/h, offside turns the offside lane at 1,860 and
+  U-turns it at 1,550 (still turned at the 25 km/h floor), straight-on traffic (2,060 veh/h per lane) fills whichever lanes have room;
   where any lane may turn, all share. A turn pocket's lanes share its side's turns and nothing else, and
   straight-on traffic fills the other lanes; the busiest of all is the ratio. All three are calibrated to the simulated drivers (below); turning
   drivers slow for the curve. `saturation_vph` (an arm's flow over its ratio) is the saturation flow
   TRANSYT, Synchro and SCOOT get for it (`Simulation.saturation_vph`).
   - `Graph.saturation` (sizing demand): signals as above; roundabout entries and priority movements by
     capacities measured on the simulated drivers (`ROUNDABOUT_ENTRY_VPH`, `PRIORITY_CAPACITY_VPH`,
-    `measured_capacity`: straight lines between the points, held beyond the last); a roundabout entry's
+    `measured_capacity`: straight lines between the points, held beyond the last; a priority movement giving way to
+    none, the major road, at its lane's saturation flow); the priority table, re-measured with drivers slowing to
+    look, is within about 10 % of HCM 2000 Eq 17-3 for a minor right turn, and a 2 x 2 grid of give-way junctions
+    sized to X 0.85 and 1.0 holds (it was about 2.3 times optimistic); a roundabout entry's
     circulating flow is the movements whose ring passes it (`Graph.circulating`). The roundabout table
-    follows the HCM 6 entry capacity within 10 % up to about 800 veh/h circulating; beyond, the one-lane
-    ring itself fills (entering + circulating about 1,350–1,450 veh/h), so it falls faster (−28 % at 1,000).
+    follows the HCM 6 entry capacity within 10 % up to about 800 veh/h circulating; beyond, it falls faster
+    (−28 % at 1,000): the ring's traffic bunches (2.25–2.5 s headways) where the HCM assumes a random stream, as
+    Tanner's formula predicts (`roundabouts.tanner_entry_capacity`; not_built.md).
   - Webster: each junction alone, `webster(flow ratios)`.
   - Fixed time: the greens entered.
   - Actuated and max-pressure (`signal_timing.ACTUATED`, `_actuate`): each junction on its own, its greens decided
     step by step, starting from Webster's plan. Actuated: a loop on each lane `DETECTOR_GAP_S` (2 s) of travel
     before its stop line places a call for its phase (`ActuatedJunction.detect`). Max-pressure: each phase's
-    pressure is the vehicles on its approaches less the mean of those standing (under `HELD_MPS`, 5 km/h) on the
+    pressure is the vehicles within `PRESSURE_ZONE_M` (100 m) of its stop lines less the mean of those standing (under `HELD_MPS`, 5 km/h) on the
     links they feed. `Signal.set_green` ends the running green now; `_position` takes the phase the controller
     names next (`next_phase`). The plan each settles on is reported to `signal_plans`.
   - TRANSYT, Synchro, SCATS, SCOOT (`_coordinate`): every junction with the method is one group on a
@@ -117,11 +131,11 @@ vehicle on them are looked at; a merge is the same lane's check once both are on
     in it), else the link's measured time over all its moves (`link_times_s`, an average junction delay
     already in it), else free flow plus a control-delay prior; never two of them. The prior
     (`Graph.control_delay`, `free_move_time`) is each move's expected control delay with no traffic, at the
-    greens entered on the junction: a signal r²/2C (HCM 2000 Eq 16-11 at X → 0, r = C − its phase's green:
-    11.7 s at the default 30 s greens); a move that gives way to another arm's traffic (a minor arm, an
+    greens entered on the junction: a signal r²/2C (HCM 2000 Eq 16-11 at X → 0, r = C − its phase's effective green g,
+    shown green + amber used − start-up lost: 11.1 s at the default 30 s greens); a move that gives way to another arm's traffic (a minor arm, an
     offside turn across the major road, a U-turn, a merge; not a diverge from its own road) or a roundabout
     entry 3600/c + 5 s (HCM 2000 Eq 17-38 at no conflicting flow; c the measured capacity at none,
-    `PRIORITY_CAPACITY_VPH` / `ROUNDABOUT_ENTRY_VPH`: 6.8 s, 7.5 s). A turn's own length isn't counted (a wide
+    `PRIORITY_CAPACITY_VPH` / `ROUNDABOUT_ENTRY_VPH`: 7.8 s, 7.5 s). A turn's own length isn't counted (a wide
     offside curve would look cheaper than a tight kerb one). So an offside turn at a priority junction costs
     more than a kerb one, and a slip road is taken for the signal it bypasses.
   - Routes: least `free_move_time` (Dijkstra over moves), cached per pair; pairs with no route are
@@ -357,7 +371,8 @@ vehicle on them are looked at; a merge is the same lane's check once both are on
   metres along it, origin, destination, the landmark it is heading to: kind, id, metres, its own
   `free_speed` where it is (`vehicle.free_speed` of the lane's limit or the turn's speed) and the `people`
   on board: a bus's simulated load, else its type's occupancy; results.py measures by them; `lat_m`, 0 unless
-  lateral), the
+  lateral; display-only `vehicle_class`, `random_colour` and `emergency` metadata, with backward-compatible
+  defaults), the
   signal states and plans, counts, and `exits`: the trips finished in the last `EXITS_KEPT_S` (id,
   requested departure, on the road, off it). It never changes
   once made, so any thread may read it: its plans are its own copy (`detached`), so neither the run's
@@ -380,7 +395,11 @@ vehicle on them are looked at; a merge is the same lane's check once both are on
   then ends the run as it returns, no step after it.
 - `advance(target, budget)` steps synchronously (tests, tools); `signal_states()` for the map;
   counts: `spawned`, `spawned_by_mode`, `arrived`, `pending`, `unreachable`.
-- `observe()` (headless tests: `experiments.run_headless(observe=True)`) turns on per-step recording in
+- `link_entries` counts every vehicle entering each link (inserted, or off a turn), and each `Frame` carries a copy
+  (`entries`): results counts road flows from it, exactly (5-s samples had missed 39 % of a 40 m road's).
+- `observe(keep, from_s)` (headless tests: `experiments.run_headless(observe=True)`, `from_s` the recorder's
+  warm-up, so conflicts, fuel, detectors and link times leave it out as the KPIs do: `observed_from_s`,
+  `observed_s` the time recorded, the collision, teleport and braking counts from then) turns on per-step recording in
   `_observe()`, after each step: each vehicle passing the middle of its lane (a detector: road, link, lane,
   time interpolated within the step, speed, length, type), each link's traversal time (entering its lanes
   to entering the next link's, the junction included; also by the next link, `turn_traversals`

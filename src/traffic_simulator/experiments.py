@@ -33,7 +33,8 @@ from statistics import stdev
 
 from . import stats
 from .results import MINUTE_COLUMNS, SAMPLE_S, RunRecorder, clock
-from .simulation import DT, Simulation
+from .daily_profile import PEAK_QUARTER
+from .simulation import CRITICAL_GAP_S, DT, RING_TIMEGAP_S, Simulation
 from .xlsx import write_xlsx
 
 MAX_SCENARIOS, MAX_SEEDS, MAX_RUNS, MAX_MINUTES = 6, 20, 60, 240
@@ -44,14 +45,16 @@ MEASURES = [("throughput_vph", "Throughput", "veh/h", True), ("people_per_h", "P
             ("delay_s_per_km", "Delay per km", "s/veh·km", False), ("mean_trip_s", "Mean trip time", "s", False),
             ("mean_trip_delay_s", "Mean delay per trip", "s", False), ("queued_max", "Most queued at once", "veh", False),
             ("arrived", "Trips completed", "veh", True),
-            ("tti", "Travel time index", "trip time ÷ free-flow time", False),
-            ("pti", "Planning time index", "95th percentile of trip ÷ free-flow time", False),
+            ("tti", "Travel time index", "mean of trip ÷ free-flow time", False),
+            ("pti", "Planning time index", "95th percentile of trip ÷ free-flow time, within the run", False),
             ("bi", "Buffer index (mean-based)", "(95th percentile − mean) ÷ mean of trip ÷ free-flow time", False),
             ("mean_system_trip_s", "Mean system travel time", "s", False),
             ("unfinished_share", "Unfinished trips", "share of spawned", False),
             ("conflicts", "Rear-end conflicts (TTC < 1.5 s)", "events", False),
             ("mean_wait_s", "Mean wait per trip", "s", False), ("queued_mean", "Mean queued at once", "veh", False),
             ("people_delay_h", "Passenger delay", "person·h", False),
+            ("person_delay_on_board_h", "Passenger delay on board", "person·h", False),  # unfinished trips too
+            ("entry_wait_veh_h", "Entry wait", "veh·h", False),
             ("mean_person_delay_s", "Mean delay per passenger", "s", False),
             ("co2_kg", "CO2 of cars and vans", "kg", False),
             ("vehicle_km", "Distance driven", "veh·km", None),
@@ -421,7 +424,7 @@ def scaled(demand: list, scale: float) -> list:
 def run_headless(network, demand, modes, seed: int, duration_s: float, override=None, recorder=None,
                  progress=None, cancelled=lambda: False, observe: bool = False, speed: float | None = None,
                  dispatches=(), incidents=(), weather: str = "clear", meters=(), on_frame=None,
-                 step_s: float = DT, step_method: str = "euler", lateral: bool = False):
+                 step_s: float = DT, step_method: str = "euler", lateral: bool = False, params: dict | None = None):
     """A run without drawing: step until `duration_s`, sampling a RunRecorder every SAMPLE_S, as fast as the
     CPU allows, or with `speed` in step with the wall clock (simulated seconds a real second, as a live run:
     an agent answering in the background then costs its real latency, and the run never pauses for it).
@@ -431,18 +434,20 @@ def run_headless(network, demand, modes, seed: int, duration_s: float, override=
     this (the worker's) thread, so it may take a frame safely (the window shows a batch's run on the map, taking one
     at most 10 times a real second). `step_s`, `step_method`: the step's length (DT, or 0.25 or 0.1 s to check
     the results don't depend on it) and Euler or ballistic update (Simulation). `lateral`: lateral position and
-    filtering (Simulation lateral).
+    filtering (Simulation lateral). `params`: Simulation attributes set before it starts (critical_gap_s...).
     Returns (the Simulation, the recorder); the Simulation's time says how far it got if cancelled."""
     simulation = Simulation(deepcopy(network), demand, modes, seed=seed, step_s=step_s, step_method=step_method,
                             lateral=lateral)
+    for name, value in (params or {}).items():
+        setattr(simulation, name, value)
     apply_conditions(simulation, list(incidents), weather, list(meters))
     simulation.signal_override = override
     for origin, destination, every_s, *after_s in dispatches:
         simulation.dispatch(origin, destination, every_s, *after_s)
-    if observe:
-        simulation.observe()
     if callable(recorder) and not isinstance(recorder, RunRecorder):
         recorder = recorder(simulation)
+    if observe:  # from the recorder's warm-up, so the observed figures (conflicts, fuel, LOS...) match its KPIs
+        simulation.observe(from_s=recorder.totals["measure_from_s"] if isinstance(recorder, RunRecorder) else 0.0)
     next_sample, started = SAMPLE_S, time.monotonic()
     while simulation.time < duration_s - 1e-9 and not cancelled():
         if speed:
@@ -473,31 +478,78 @@ def at_busiest_hour(demand: list) -> list:
     so a short run tests the peak."""
     if all(pair.hourly is not None for pair in demand):
         return list(demand)
-    hour = max(range(24), key=lambda h: sum(Simulation.rate(pair, h * 3600) for pair in demand))
+    hour = busiest_hour(demand)
     return [replace(pair, hourly=Simulation.rate(pair, hour * 3600), daily=None, shares=[]) for pair in demand]
 
 
+def busiest_hour(demand: list) -> int | None:
+    """The hour (0-23) daily pairs' curves give the most trips in; None when every pair is hourly."""
+    if all(pair.hourly is not None for pair in demand):
+        return None
+    return max(range(24), key=lambda h: sum(Simulation.rate(pair, h * 3600) for pair in demand))
+
+
 def holds(network, demand, modes, seed: int, override=None, progress=None, cancelled=lambda: False) -> dict:
-    """One HOLD_MINUTES headless run: whether vehicles pile up (see HOLD_BUILD_UP) and by how much."""
+    """One HOLD_MINUTES headless run: whether vehicles pile up (see HOLD_BUILD_UP) and by how much. Where some
+    pair's hour is uneven (a peak-hour factor or quarters), its busiest quarter (PEAK_QUARTER) is judged too: the
+    last window alone came after it and saw the queue it built draining (PHF 0.7 sized to X 0.85 ran its peak
+    quarter at X 1.21 and passed; HCM sizes on V/PHF)."""
     simulation = Simulation(deepcopy(network), demand, modes, seed=seed)
     simulation.signal_override = override
-    mark, end = None, HOLD_MINUTES * 60
+    end = HOLD_MINUTES * 60
+    windows = [end - HOLD_WINDOW_MINUTES * 60]  # where each judged window starts (each lasts HOLD_WINDOW_MINUTES)
+    if any(max(getattr(pair, "quarters", ()) or (0.25,)) > 0.25 + 1e-9 for pair in demand):
+        windows.insert(0, PEAK_QUARTER * 15 * 60)
+    marks: dict = {}  # window start -> (in network, spawned) then, and at its end
 
     def in_network() -> int:
         return len(simulation.vehicles) + sum(len(queue) for queue in simulation.pending.values())
 
     while simulation.time < end - 1e-9 and not cancelled():
         simulation.step()
-        if mark is None and simulation.time >= end - HOLD_WINDOW_MINUTES * 60:
-            mark = (in_network(), simulation.spawned)
+        for start in windows:
+            if start not in marks and simulation.time >= start:
+                marks[start] = [(in_network(), simulation.spawned), None]
+            if start in marks and marks[start][1] is None and simulation.time >= start + HOLD_WINDOW_MINUTES * 60:
+                marks[start][1] = (in_network(), simulation.spawned)
         if progress is not None and int(simulation.time / simulation.dt) % 120 == 0:
             progress(simulation.time)
-    if mark is None:  # stopped early
+    if len(marks) < len(windows) or any(after is None for _, after in marks.values()):  # stopped early
         return {"holds": None}
-    piled = in_network() - mark[0]
-    build_up = piled / max(simulation.spawned - mark[1], 1)
-    return {"holds": build_up <= HOLD_BUILD_UP or piled < HOLD_MIN_PILE, "build_up": round(build_up, 3),
-            "in_network": in_network()}
+    judged = []
+    for start in windows:
+        (before, spawned_before), (after, spawned_after) = marks[start]
+        if start != windows[-1] and spawned_before:  # the peak quarter: arrivals rise into it, so more vehicles are on
+            # the road at once without any queue (Little's law, N = λT): expect the count to rise with the rate
+            rate = (spawned_after - spawned_before) / (HOLD_WINDOW_MINUTES * 60) / (spawned_before / start)
+            before *= max(1.0, rate)
+        piled = after - before
+        judged.append((piled / max(spawned_after - spawned_before, 1), piled))
+    build_up, piled = judged[-1]
+    found = {"holds": all(b <= HOLD_BUILD_UP or p < HOLD_MIN_PILE for b, p in judged), "build_up": round(build_up, 3),
+             "in_network": in_network()}
+    if len(judged) > 1:
+        found["peak_quarter_build_up"] = round(judged[0][0], 3)
+    return found
+
+
+BORDERLINE = (0.5 * HOLD_BUILD_UP, 1.5 * HOLD_BUILD_UP)  # a build-up this close to the line: one seed can't say
+
+
+def holds_by_majority(check, seed: int) -> dict:
+    """`check(seed)` -> holds()'s answer, on one seed when that is clear, else the majority of three (seed and the
+    next two): on one seed a signal grid's largest holding share came out 0.875, 0.875 and 0.75, and a build-up sat
+    exactly on HOLD_BUILD_UP (audit 2026-10-13, M7). Runs more only for borderline verdicts."""
+    first = check(seed)
+    deciding = max(first.get("build_up") or 0.0, first.get("peak_quarter_build_up") or 0.0)
+    if first["holds"] is None or not BORDERLINE[0] <= deciding <= BORDERLINE[1]:
+        return first
+    others = [check(seed + offset) for offset in (1, 2)]
+    if any(other["holds"] is None for other in others):
+        return {"holds": None}
+    votes = [first, *others]
+    return {**first, "holds": sum(bool(vote["holds"]) for vote in votes) >= 2, "seeds": [seed, seed + 1, seed + 2],
+            "build_ups": [vote.get("build_up") for vote in votes]}
 
 
 def largest_holding(check, steps: int = HOLD_STEPS) -> tuple[float, list]:
@@ -517,12 +569,78 @@ def largest_holding(check, steps: int = HOLD_STEPS) -> tuple[float, list]:
     return low, tried
 
 
+# Calibration parameters a sensitivity sweep varies, each by ±SENSITIVITY_STEP of its value with the others as they
+# are (FHWA Traffic Analysis Toolbox III, calibration: how much each moves the results; the theory reference's
+# concept 58), and the figures it reads
+SENSITIVITY_PARAMETERS = {"tau_s": "drivers' reaction time (desired headway), every vehicle type",
+                          "critical_gap_s": "give-way critical gap (minor road and offside turns)",
+                          "ring_timegap_s": "roundabout entry time gap"}
+SENSITIVITY_STEP = 0.1
+SENSITIVITY_MEASURES = ("throughput_vph", "mean_speed_kmh", "mean_trip_delay_s", "queued_max")
+
+
+def varied(modes: list, parameter: str | None, factor: float) -> tuple[list, dict]:
+    """The vehicle types and the Simulation attributes (run_headless params) with `parameter` scaled by `factor`."""
+    if parameter == "tau_s":
+        return [replace(mode, tau_s=max(DT, mode.tau_s * factor)) for mode in modes], {}
+    if parameter == "critical_gap_s":
+        return modes, {"critical_gap_s": {kind: gap * factor for kind, gap in CRITICAL_GAP_S.items()}}
+    if parameter == "ring_timegap_s":
+        return modes, {"ring_timegap_s": RING_TIMEGAP_S * factor}
+    return modes, {}
+
+
+def parameter_sensitivity(network, demand, modes, seeds: list[int], duration_s: float,
+                          parameters=tuple(SENSITIVITY_PARAMETERS), step: float = SENSITIVITY_STEP,
+                          measure_from_s: float = 0.0, progress=None, cancelled=lambda: False) -> dict:
+    """Each parameter at ×(1 − step) and ×(1 + step), on the same seeds as a run of them all as they are (common
+    random numbers): per parameter and figure, the elasticity, (Y₊ − Y₋) / (2·step·Y₀), the percent change in the
+    figure for a percent change in the parameter (central difference), as a mean over the seeds with its 95 %
+    interval. Large ones are what calibration must get right; near 0, what it can leave. None if stopped."""
+    runs = [(None, 1.0)] + [(name, factor) for name in parameters for factor in (1 - step, 1 + step)]
+    figures: dict = {}
+    for seed in seeds:
+        for index, (name, factor) in enumerate(runs):
+            if cancelled():
+                return None
+            if progress:
+                progress(f"Seed {seed}: run {index + 1} of {len(runs)}"
+                         + (f" ({name} × {factor:g})" if name else " (as it is)"))
+            run_modes, params = varied(modes, name, factor)
+            _, recorder = run_headless(network, demand, run_modes, seed, duration_s, cancelled=cancelled, params=params,
+                                       recorder=RunRecorder(network, run_modes, measure_from_s=measure_from_s))
+            if cancelled():
+                return None
+            kpis = recorder.kpis()
+            figures[(seed, name, factor)] = {key: kpis.get(key) for key in SENSITIVITY_MEASURES}
+    found = {}
+    for name in parameters:
+        found[name] = {"what": SENSITIVITY_PARAMETERS[name]}
+        for key in SENSITIVITY_MEASURES:
+            per_seed = []
+            for seed in seeds:
+                base, low, high = (figures[(seed, n, f)].get(key) for n, f in ((None, 1.0), (name, 1 - step),
+                                                                             (name, 1 + step)))
+                if None not in (base, low, high) and base:
+                    per_seed.append((high - low) / (2 * step * base))
+            spread = summary(per_seed)
+            found[name][key] = {"elasticity": None if spread["mean"] is None else round(spread["mean"], 2),
+                                "ci95": None if spread["ci95"] is None else round(spread["ci95"], 2)}
+    return {"parameters": found, "step": step, "seeds": list(seeds), "runs": len(runs) * len(seeds),
+            "as_it_is": {key: summary([figures[(seed, None, 1.0)][key] for seed in seeds])["mean"]
+                         for key in SENSITIVITY_MEASURES}}
+
+
 def headline(kpis: dict) -> dict:
     """The KPIs a tool hands back: the network's figures and per type, without the per-road table."""
     keep = {key: kpis.get(key) for key, *_ in MEASURES}
     keep.update(time=clock(kpis["time_s"]), spawned=kpis["spawned"], on_road=kpis["on_road"],
                 vehicle_km=kpis["vehicle_km"], longest_queue=kpis["longest_queue"],
-                by_type=kpis["by_type"])
+                by_type=kpis["by_type"], completion_rate=kpis.get("completion_rate"))
+    share = keep.pop("unfinished_share", None)  # a 0-1 share was read as a percent: given as one
+    keep["unfinished_percent"] = None if share is None else round(100 * share, 1)
+    if kpis.get("measure_from_s"):  # the figures leave out the warm-up; spawned and arrived count the whole run
+        keep["measured_from"] = clock(kpis["measure_from_s"])
     return keep
 
 
@@ -579,6 +697,10 @@ def compare(runs: list[dict], scenarios: list[str], precision: float = 0.05) -> 
             if overall is not None:
                 row["anova"] = {"design": overall["design"], "f": round(overall["f"], 2), "p": round(overall["p"], 4)}
             rows.append(row)
+    for name in scenarios[1:]:  # some 20 figures tested at once: each p adjusted across them (Holm)
+        mine = [row for row in rows if row["scenario"] == name and "vs_baseline_p" in row]
+        for row, adjusted in zip(mine, stats.holm([row["vs_baseline_p"] for row in mine])):
+            row["vs_baseline_p_holm"] = adjusted
     return rows
 
 
@@ -733,7 +855,7 @@ def series(kpis: dict, what: str, road: str | None = None, interval_min: int = 1
         raise ValueError(f"The run has no road called {road!r} (give road for flow or speed).")
     buckets = defaultdict(list)
     for passage in passages:
-        buckets[int(passage[3] // span)].append(passage[4])
+        buckets[int((passage[3] - observed.get("observed_from_s", 0.0)) // span)].append(passage[4])  # after a warm-up
     if what == "flow":
         return [len(buckets[i]) * 3600 / span for i in range(count)]
     return [len(buckets[i]) / sum(1 / v for v in buckets[i]) * 3.6 if buckets[i] else 0.0 for i in range(count)]
@@ -865,11 +987,14 @@ def safety(kpis: dict, ttc_s: float = CONFLICT_TTC_S, every: bool = False) -> di
             site["expected"] = round(mu, 2)
             site["eb_estimate"] = round(stats.empirical_bayes(site["conflicts"], mu, alpha), 2)
             site["excess"] = round(site["eb_estimate"] - mu, 2)
+            site["z"] = round((site["conflicts"] - mu) / sqrt(mu), 2) if mu > 0 else 0.0
         result["spf"] = {"form": "conflicts = km × exp(b0) × flow^b1", "b0": round(fit["coefficients"][0], 3),
                          "b1": round(fit["coefficients"][1], 3), "b1_se": round(fit["se"][1], 3),
                          "dispersion": round(fit["dispersion"], 2), "alpha": round(alpha, 3),
                          "model": "negative binomial (overdispersed)" if alpha else "Poisson"}
-        result["ranked"] = sorted(usable, key=lambda s: -s["excess"])[:None if every else 10]
+        # A Poisson fit (α 0) gives EB = μ, every excess 0: then the observed count's departure z = (y − μ)/√μ ranks
+        result["ranked"] = sorted(usable, key=lambda s: (-s["excess"], -s["z"]))[:None if every else 10]
+        result["ranked_by"] = "EB excess (then z)" if alpha else "z = (conflicts − expected)/√expected (Poisson: EB = expected)"
     else:
         result["ranked"] = sorted(sites, key=lambda s: -s["per_million_veh_km"])[:None if every else 10]
         result["note"] = ("Too few roads with conflicts (or flows too alike) for a safety performance function: "
@@ -1001,14 +1126,15 @@ def comparison_sheet(comparison: list[dict]) -> list[list]:
     """compare()'s rows as a sheet: per figure and scenario, its summary and the difference from the baseline."""
     rows = [["Figure", "Unit", "Scenario", "Runs", "Mean", "SD", "95 % CI ±", "Runs needed", "Difference vs baseline",
              "Test", "Confidence", "Difference CI ±", "p", "Change (%)", "Clear?", "Better?", "Wilcoxon p",
-             "ANOVA p (all scenarios)"]]
+             "ANOVA p (all scenarios)", "Holm p (across figures)"]]
     for row in comparison:
         rows.append([row["figure"], row["unit"], row["scenario"], row["n"], _rounded(row["mean"]), _rounded(row["sd"]),
                      _rounded(row["ci95"]), row.get("replications_needed"), _rounded(row.get("vs_baseline_diff")),
                      row.get("vs_baseline_test"), _rounded(row.get("confidence"), 4), _rounded(row.get("vs_baseline_ci")),
                      _rounded(row.get("vs_baseline_p"), 4), _rounded(row.get("vs_baseline_percent"), 1),
                      _yes(row.get("vs_baseline_clear")), _yes(row.get("better")),
-                     _rounded(row.get("vs_baseline_wilcoxon_p"), 4), (row.get("anova") or {}).get("p")])
+                     _rounded(row.get("vs_baseline_wilcoxon_p"), 4), (row.get("anova") or {}).get("p"),
+                     _rounded(row.get("vs_baseline_p_holm"), 4)])
     return rows
 
 
@@ -1151,8 +1277,8 @@ def _analysis_sheets(kpis: dict, observed: dict, sheets: list) -> None:
             ["Mean trip time", rel.get("mean_s"), "s", ""], ["Trip time SD", rel.get("sd_s"), "s", ""],
             ["Trip time CV", rel.get("cv"), "", "SD / mean"], ["Median trip time", rel.get("median_s"), "s", ""],
             ["85th percentile trip time", rel.get("p85_s"), "s", ""], ["95th percentile trip time", rel.get("p95_s"), "s", ""],
-            ["Travel time index", rel.get("tti"), "", "mean trip time / mean free-flow time"],
-            ["Planning time index", rel.get("pti"), "", "95th percentile of trip / free-flow time (FHWA)"],
+            ["Travel time index", rel.get("tti"), "", "mean of trip / own free-flow time"],
+            ["Planning time index", rel.get("pti"), "", "95th percentile of trip / free-flow time across this run's trips (FHWA's is across days)"],
             ["Buffer index (mean-based)", rel.get("bi"), "", "(95th percentile − mean) / mean of trip / free-flow time"],
             ["Flow concentration (Gini)", analysed["flow_gini"], "", "road flows: 0 even, towards 1 on few roads"]]
     if steady:

@@ -82,8 +82,8 @@ from .signal_timing import (ACTUATED, ADAPTIVE, ALL_RED_S, AMBER_S, COORDINATED,
                             OPTIMISE_BUDGET_S, ActuatedJunction, MaxPressureJunction,
                             SATURATION_PER_LANE_VPH, STOP_LINE_LOOP_M, UPSTREAM_LOOP_AT_M, UPSTREAM_LOOP_M,
                             Approach, ScatsJunction, ScatsRegion, ScootJunction, ScootLink, ScootRegion, TimingModel,
-                            clearance, common_cycle, critical_saturation, fit_greens, KERB_TURN_PER_LANE_VPH, OFFSIDE_TURN_PER_LANE_VPH, percentile_greens, synchro, synchro_cycle,
-                            transyt, webster)
+                            clearance, common_cycle, critical_saturation, fit_greens, KERB_TURN_PER_LANE_VPH, OFFSIDE_TURN_PER_LANE_VPH, UTURN_PER_LANE_VPH, percentile_greens, synchro, synchro_cycle,
+                            effective, transyt, webster)
 from .emissions import fuel_rate_ml_s, light_motor
 from .vehicle import (EMERGENCY_MODE, MAX_SPEED_LAT, MIN_GAP_LAT_M, Vehicle, brake_gap, create_vehicle, free_speed,
                       next_speed, safe_speed, secure_gap, start_up)
@@ -97,6 +97,28 @@ COUNT_INTERVAL_S = 60.0  # arrivals are counted, per the pattern, in one-minute 
 EXITS_KEPT_S = 60.0  # a finished trip's exact times stay in the frames this long (results sample every 5 s)
 NEG_BINOMIAL_K = 2.0  # dispersion: variance = mean + mean²/k
 CRITICAL_GAP_S = {"offside": 4.5, "minor": 5.0}
+# A give-way movement at an uncontrolled junction is driven at most this fast through it: drivers slow to look at
+# the line, so a queue follows on at a yield's follow-up headway, not the open road's. Measured: the minor arm's
+# capacity with nothing to give way to, about HCM 6's yield entry (3600 / t_f with t_f 2.61 s: 1,380 veh/h, as
+# Eq 22-1); kept at the line's 1,974 veh/h it was twice HCM's at light major flows (audit 2026-10-13, M3).
+GIVE_WAY_KMH = 17.0
+PRESSURE_ZONE_M = 100.0  # max-pressure counts an approach's vehicles this near its stop line (a detection zone)
+STORAGE_M_PER_VEHICLE = 7.5  # a queued car and its gap (5 m and 2.5 m): a lane of L metres holds L / 7.5 (storage_ratio)
+# Side friction for a turn at a junction (AASHTO Green Book, low-speed turning roadways and intersection curves:
+# about 0.32-0.38 at 20-30 km/h): v = sqrt(127 f R) km/h, no superelevation
+JUNCTION_TURN_FRICTION = 0.35
+# A schematic path is tighter than a car steers: a turn is driven at least this fast, the speed of the path a car
+# takes (kerb about 20 m, crossing the junction about 28 m at that friction). Calibrated so turning lanes discharge as
+# the HCM has it (2026-10-13): kerb 1,773 veh/h a lane, 0.87 of straight-on (HCM 2000 f_RT 0.85); offside 1,862,
+# 0.91 (HCM f_LT 0.95 protected, RR67 0.87-0.91); at one 25 km/h floor they were 0.78 and 0.76
+JUNCTION_TURN_MIN_KMH = {"kerb": 30.0, "offside": 35.0, "uturn": 25.0, "straight": 25.0}
+TIME_TO_TELEPORT_S = 300.0  # SUMO's --time-to-teleport default: a vehicle stuck this long at its lane's front jumps on
+# A road's class decides an uncontrolled junction's major road, as SUMO's netconvert ranks OSM highway types
+# (data/typemap/osmNetconvert.typ.xml: motorway 13 ... living_street 3; a *_link one below its road). Roads the
+# app makes ("urban", "ramp") are 0, so a grid's major road is still the pair most nearly in line.
+ROAD_PRIORITY = {"motorway": 13, "trunk": 12, "primary": 11, "secondary": 10, "tertiary": 9, "unclassified": 5,
+                 "residential": 4, "living_street": 3, "service": 2, "motorway_link": 12, "trunk_link": 11,
+                 "primary_link": 10, "secondary_link": 9, "tertiary_link": 8}
 # A roundabout entrant joins only where the circulating vehicle behind would still be this long (at its speed)
 # plus a car length short of the entry when it joins: SUMO's occupation-interval test with a time gap
 # (MSLink::blockedAtTime, jmTimegapMinor), calibrated so the measured entry capacity (ROUNDABOUT_ENTRY_VPH)
@@ -104,16 +126,22 @@ CRITICAL_GAP_S = {"offside": 4.5, "minor": 5.0}
 # critical gap of about 2.8 s at the ring's 25 km/h.
 RING_TIMEGAP_S = 0.5
 TURN_SATURATION_VPH = {"straight": SATURATION_PER_LANE_VPH, "kerb": KERB_TURN_PER_LANE_VPH,
-                       "offside": OFFSIDE_TURN_PER_LANE_VPH, "uturn": OFFSIDE_TURN_PER_LANE_VPH}
+                       "offside": OFFSIDE_TURN_PER_LANE_VPH, "uturn": UTURN_PER_LANE_VPH}
 # Give-way capacity, measured on the simulated drivers (one approach held saturated against random priority
 # traffic, 3 seeds of 50 min a point; test_simulation re-measures some): (veh/h it gives way to, veh/h).
-# The HCM's gap-acceptance formula doesn't fit the priority one: these drivers take short gaps at low priority
-# flows and few at high ones. A single-lane roundabout entry follows HCM 6 Eq 22-1 (roundabouts.hcm_entry_capacity)
-# within 10 % up to about 800 veh/h circulating (1458, 1235, 1007, 762, 546 at 0–800); beyond, the one-lane ring
-# itself fills (358 at 1000, 168 at 1200: −28 %, −59 %), and a two-lane entry falls faster (1449, 1191, 936,
-# 684, 461, 256, 100).
-PRIORITY_CAPACITY_VPH = ((0, 1990), (200, 1420), (400, 1050), (600, 710), (800, 510), (1000, 320), (1200, 225),
-                         (1400, 185), (1600, 120))  # per lane of a minor arm (one and two lanes alike)
+# Priority: re-measured 2026-10-13 with drivers slowing to GIVE_WAY_KMH at the line (3 seeds of 20 min a point,
+# one and two lanes averaged per lane): within about 10 % of HCM 2000 Eq 17-3 for a minor right turn (t_c 6.2 s,
+# t_f 3.3 s: 1091, 654, 388, 228 at 0, 400, 800, 1200), where before (kept at speed to the line) it was 1.8-2.2
+# times HCM's at light priority flows and sized grids of give-way junctions to demand they jammed under. With every
+# arm of the crossing loaded (turns too) the minor arm carries as much or more. A single-lane roundabout entry follows HCM 6 Eq 22-1 (roundabouts.hcm_entry_capacity)
+# within 10 % up to about 800 veh/h circulating (1458, 1235, 1007, 762, 546 at 0–800); beyond, it falls faster
+# (358 at 1000, 168 at 1200: −28 %, −59 %), and a two-lane entry more (1449, 1191, 936, 684, 461, 256, 100). Not
+# the ring filling (Krauss allows 1,600–1,700 veh/h at its speed; it carries 1,350–1,450): its traffic bunches at
+# headways of 2.25–2.5 s, and the HCM's Siegloch curve assumes a random stream. Tanner's formula with that bunching
+# (roundabouts.tanner_entry_capacity) gives the same fall (341 and 208 at Δ 2.25 s; measured 2026-10-13). No speed
+# or RING_TIMEGAP_S lifts 1000–1200 without breaking 10 % at 0–600 (the follow-up and Δ both come from Krauss).
+PRIORITY_CAPACITY_VPH = ((0, 1265), (200, 950), (400, 670), (600, 500), (800, 370), (1000, 260), (1200, 185),
+                         (1400, 155), (1600, 105))  # per lane of a minor arm (one and two lanes alike)
 ROUNDABOUT_ENTRY_VPH = ((0, 1455), (200, 1215), (400, 970), (600, 725), (800, 505), (1000, 305),
                         (1200, 135))  # per entry, one and two lanes averaged: the ring is one path round
 
@@ -352,6 +380,9 @@ class VehicleState(NamedTuple):
     free_speed: float | None = None
     people: float | None = None
     lat_m: float = 0.0  # lateral runs: its offset from its lane's centre line (Vehicle.lat_m; x, y include it)
+    vehicle_class: str = ""  # display skin metadata; no change to dimensions or motion
+    random_colour: bool = False
+    emergency: bool = False
 
 
 class Frame(NamedTuple):
@@ -366,6 +397,10 @@ class Frame(NamedTuple):
     plans: Mapping = MappingProxyType({})
     # The trips finished in the last EXITS_KEPT_S: (vehicle id, requested departure s, on the road s, off it s)
     exits: tuple = ()
+    # link id -> vehicles that have entered it since the run began, every one counted as it entered (results
+    # counts road flows from these: 5-s samples missed most entries to a 40 m road); None: not known (a frame
+    # made by hand)
+    entries: Mapping | None = None
 
     def records(self, road: str | None = None, limit: int | None = 100) -> dict:
         """Plain data for an AI (the assistant's read_traffic): the time, counts, signals and each
@@ -376,8 +411,11 @@ class Frame(NamedTuple):
         for (junction, arm), state in self.signals.items():
             signals[junction][arm] = {"G": "green", "Y": "amber", "R": "red"}[state]
         return {
-            "time_s": round(self.time, 1), "on_road": len(self.vehicles), "spawned": self.spawned,
+            "time_s": round(self.time, 1), "on_road_network": len(self.vehicles), "spawned": self.spawned,
             "arrived": self.arrived, "matching": len(vehicles), "shown": len(shown),
+            # over every matching vehicle, not only those listed: a model averaging the list gets it wrong
+            "matching_mean_speed_kmh": round(sum(v.speed for v in vehicles) * 3.6 / len(vehicles), 1) if vehicles else None,
+            "matching_stopped": sum(v.speed < 5 / 3.6 for v in vehicles),
             "vehicles": [{"id": v.id, "type": v.mode, "x_m": round(v.x, 1), "y_m": round(v.y, 1),
                           "heading_deg": round(atan2(v.uy, v.ux) * 180 / pi, 1),
                           "speed_kmh": round(v.speed * 3.6, 1), "road": v.road, "place": v.place,
@@ -386,7 +424,7 @@ class Frame(NamedTuple):
                           **({"heading_to": {"kind": v.heading_to, "id": v.heading_to_id,
                                              "distance_m": round(v.heading_to_m, 1)}} if v.heading_to else {})}
                          for v in shown],
-            "signals": dict(signals), "signal_plans": detached(self.plans),
+            **({} if road else {"signals": dict(signals), "signal_plans": detached(self.plans)}),  # a road asked: its cars
         }
 
 
@@ -511,6 +549,19 @@ def _unit(points: list, at_end: bool) -> tuple[float, float]:
     return (bx - ax) / length, (by - ay) / length
 
 
+def path_size_logit(paths: list, times: list[float], theta_per_min: float) -> list[float]:
+    """Each route's share by path-size logit (Ben-Akiva & Bierlaire): P ∝ exp(−θ·T/60 + ln PS),
+    PS = Σ_a (l_a / L) / (routes using a), so routes sharing links aren't counted as separate options."""
+    users = Counter(link.id for path in paths for link in {link.id: link for link in path}.values())
+    utilities = {}
+    for index, (path, time) in enumerate(zip(paths, times)):
+        length = sum(link.length for link in path)
+        size = sum(link.length / length / users[link.id] for link in {link.id: link for link in path}.values())
+        utilities[index] = -theta_per_min * time / 60 + log(size)
+    shares = logit(utilities)
+    return [shares[index] for index in range(len(paths))]
+
+
 class Graph:
     """Links, lanes, turns, signals and routes, built from a network snapshot."""
 
@@ -553,7 +604,7 @@ class Graph:
     def _control_delays(self) -> dict[tuple[str, str], float]:
         """(link id, next link id) -> the move's expected control delay with no traffic, seconds: free-flow routing's
         junction cost (route), at the greens entered. A signal: the uniform delay at X → 0, r²/2C (HCM 2000 Eq
-        16-11), r = C − its phase's green. A movement that gives way to another arm's (a minor arm, an offside turn
+        16-11), r = C − its phase's effective green g (shown green + amber used − start-up lost). A movement that gives way to another arm's (a minor arm, an offside turn
         across the major road, a U-turn, a merge; not a diverge from its own road) or a roundabout entry: the HCM's
         control delay at no conflicting flow, 3600/c + 5 s (HCM 2000 Eq 17-38: the 5 s to slow down and pull away),
         c the measured capacity at no priority traffic (PRIORITY_CAPACITY_VPH, ROUNDABOUT_ENTRY_VPH). A turn's own length is not counted: a wide offside curve
@@ -561,7 +612,7 @@ class Graph:
         delays = {}
         for link in self.links.values():
             signal = self.signals.get(link.end)
-            red = signal.cycle - signal.phases[signal.phase_of[link.id]][1] \
+            red = max(signal.cycle - effective(signal.phases[signal.phase_of[link.id]][1]), 0.0) \
                 if signal is not None and link.id in signal.phase_of else 0.0
             for (_, after), turn in link.turns.items():
                 delay = red * red / (2 * signal.cycle) if red else 0.0
@@ -777,9 +828,10 @@ class Graph:
                         (p3[0] - u3[0] * pull, p3[1] - u3[1] * pull), p3)
         angle = abs(atan2(u0[0] * u3[1] - u0[1] * u3[0], u0[0] * u3[0] + u0[1] * u3[1]))
         radius = chord / (2 * sin(angle / 2)) if angle > 0.05 else float("inf")
-        # The path through a junction is schematic, often tighter than a car steers: its curve speed is kept at
-        # 15 km/h or more, the turning speed the turning saturation flows were measured at (signal_timing).
-        bend = max(curve_speed_kmh(radius), 15.0) / 3.6 if radius < 1e6 else lane.speed
+        # A junction turn's speed from AASHTO's low-speed turning friction (JUNCTION_TURN_FRICTION, no superelevation),
+        # not the open road's 0.21: at that, turning lanes discharged at 53-56 % of straight-on, where the HCM has
+        # 85-95 % (audit 2026-10-13, M4). The path is schematic, often tighter than a car steers: at least 15 km/h.
+        bend = max(sqrt(127 * JUNCTION_TURN_FRICTION * radius), JUNCTION_TURN_MIN_KMH.get(kind, 25.0)) / 3.6             if radius < 1e6 else lane.speed
         speed = min(lane.speed, out.speed, bend)
         return Turn(node_id, lane, out, kind, permitted, points, polyline_length(points), speed)
 
@@ -833,12 +885,23 @@ class Graph:
                 elif signal:
                     give_way = same_green and first.kind == "offside" and second.kind != "offside"
                 else:
-                    give_way = (first.lane_in.link.id not in major or first.lane_out.link.id not in major) and \
-                               second.lane_in.link.id in major and second.lane_out.link.id in major
+                    first_major = first.lane_in.link.id in major and first.lane_out.link.id in major
+                    second_major = second.lane_in.link.id in major and second.lane_out.link.id in major
+                    # HCM 2000's movement ranks (Ch 17): the major road first; among the minor movements an offside
+                    # turn (rank 4) gives way to the other minor arm's straight and kerb movements (rank 3), which
+                    # first-come had let it cross, so neither the run nor the capacity model counted that flow
+                    give_way = (not first_major and second_major) or \
+                        (not first_major and not second_major and first.kind == "offside"
+                         and second.kind in ("straight", "kerb"))
                 first.conflicts.append((second, spot[0], spot[1], give_way))
+        if signal is None:  # a give-way movement: drivers slow to look at the line (GIVE_WAY_KMH)
+            for turn in turns:
+                if any(give_way for *_, give_way in turn.conflicts):
+                    turn.speed = min(turn.speed, GIVE_WAY_KMH / 3.6)
 
     def _major_arms(self, node_id: str) -> set[str]:
-        """An uncontrolled junction's major road: the two arms most nearly in line. Their links."""
+        """An uncontrolled junction's major road: the two arms of the highest road class (ROAD_PRIORITY, as SUMO's
+        netconvert ranks OSM types), the most nearly in line among them. A grid's roads are one class: in line."""
         arms: dict[str, tuple[float, float]] = {}
         for link in self.arriving[node_id]:
             ux, uy = _unit(link.lanes[0].points, at_end=True)
@@ -849,8 +912,10 @@ class Graph:
         if len(roads) < 3:
             pair = set(roads)
         else:
+            rank = {road: ROAD_PRIORITY.get(self.network.road(road).road_type, 0) for road in roads}
             pair = set(min(((a, b) for i, a in enumerate(roads) for b in roads[i + 1:]),
-                           key=lambda ab: arms[ab[0]][0] * arms[ab[1]][0] + arms[ab[0]][1] * arms[ab[1]][1]))
+                           key=lambda ab: (-rank[ab[0]] - rank[ab[1]],  # a residential lane never outranks the trunk
+                                           arms[ab[0]][0] * arms[ab[1]][0] + arms[ab[0]][1] * arms[ab[1]][1])))
         return {link.id for link in self.links.values() if link.road in pair and node_id in (link.start, link.end)}
 
     @staticmethod
@@ -900,8 +965,11 @@ class Graph:
         - Roundabout: each entry's flow over its measured capacity (ROUNDABOUT_ENTRY_VPH) against the
           circulating flow in front of it, the movements whose ring passes that entry.
         - Priority (uncontrolled): each give-way movement's flow over its measured capacity per lane
-          (PRIORITY_CAPACITY_VPH) against the movements it gives way to (a movement with none to give way to:
-          the table's first point), lane by lane as at a signal (_lane_load)."""
+          (PRIORITY_CAPACITY_VPH) against the movements it gives way to, the opposite minor arm's straight and
+          kerb movements among them for a minor offside turn (HCM ranks, _add_conflicts); a movement giving way to
+          none at its lane's saturation flow (TURN_SATURATION_VPH); lane by lane as at a signal (_lane_load). On a
+          2 x 2 grid of give-way junctions, demand sized to X 0.85 and 1.0 holds on 3 of 3 seeds and 1.2 starts to
+          jam (2026-10-13; before, X 0.45 jammed: about 2.3 times optimistic)."""
         if node_id in self.signals:
             return critical_saturation(self.flow_ratios(node_id, moves), self.signals[node_id].span)
         arriving = self.arriving[node_id]
@@ -921,10 +989,77 @@ class Graph:
             foes = {after: {(other.lane_in.link.id, other.lane_out.link.id) for (_, out), turn in link.turns.items()
                             if out == after for other, _, _, give_way in turn.conflicts if give_way}
                     for (_, after) in link.turns}
-            if any(foes.values()):
-                x = self._lane_load(link, lambda after, flow, kind: flow / measured_capacity(
-                    PRIORITY_CAPACITY_VPH, sum(moves.get(foe, 0.0) for foe in foes[after])), moves)
+            if any(foes.values()):  # a movement giving way to none (the major road) at its lane's saturation flow
+                x = self._lane_load(link, lambda after, flow, kind: flow / (measured_capacity(
+                    PRIORITY_CAPACITY_VPH, sum(moves.get(foe, 0.0) for foe in foes[after])) if foes[after]
+                    else TURN_SATURATION_VPH[kind]), moves)
                 worst = x if worst is None else max(worst, x)
+        return worst
+
+    def storage_ratio(self, node_id: str, moves: dict) -> float | None:
+        """The fullest arriving link's queue over the vehicles its lanes hold (HCM's queue storage ratio), under these
+        movements: a signal's arm the deterministic most queued per lane, λr/(1 − λ/s) (arrivals over its effective red
+        at Webster's timing and while it clears); a give-way movement or roundabout entry HCM 2000 Eq 17-37's 95th
+        percentile queue, 900T[(x − 1) + √((x − 1)² + (3600/c)x/(150T))]c/3600, T 0.25 h. Over 1: the queue reaches
+        the junction behind (spillback), which judging each junction alone can't see (Graph.saturation). None where no
+        one waits."""
+        def holds(link) -> float:
+            return max(link.length / STORAGE_M_PER_VEHICLE, 1.0)
+
+        def q95(x: float, c: float) -> float:
+            t, x = 0.25, min(x, 3.0)
+            return 900 * t * ((x - 1) + sqrt((x - 1) ** 2 + (3600 / max(c, 1.0)) * x / (150 * t))) * c / 3600
+
+        worst = None
+        if node_id in self.signals:
+            signal = self.signals[node_id]
+            ratios = self.flow_ratios(node_id, moves)
+            if not any(ratios):
+                return None
+            cycle, greens = webster(ratios, signal.span)
+            for (group, _), green in zip(signal.phases, greens):
+                red = cycle - effective(green)
+                for link_id in group:
+                    link = self.links[link_id]
+                    y = self.arm_ratio(link_id, moves)  # its busiest lane's flow over saturation flow
+                    if y > 0:
+                        queue = y * SATURATION_PER_LANE_VPH / 3600 * red / max(1 - y, 0.05)
+                        worst = max(worst or 0.0, queue / holds(link))
+                    # A movement giving way on its green (a U-turn, an offside turn's detour at two phases) waits
+                    # for gaps in its lane: its own queue, at the give-way capacity against the flows it yields to
+                    # at their rate in its green (on 80 m links waiting U-turners filled the offside lanes)
+                    for (_, after), turn in link.turns.items():
+                        foes = [(o.lane_in.link.id, o.lane_out.link.id) for o, _, _, give_way in turn.conflicts if give_way]
+                        flow = moves.get((link_id, after), 0.0)
+                        if foes and flow:
+                            green_share = max(effective(green) / cycle, 0.1)
+                            capacity = measured_capacity(PRIORITY_CAPACITY_VPH,
+                                                         sum(moves.get(foe, 0.0) for foe in foes) / green_share)
+                            worst = max(worst or 0.0, q95(flow / (capacity * green_share), capacity * green_share)
+                                        / holds(link))
+            return worst
+        for link in self.arriving[node_id]:
+            flow = sum(rate for (into, _), rate in moves.items() if into == link.id)
+            if not flow:
+                continue
+            if node_id in self.roundabouts:
+                passing = self.circulating(link)
+                if passing is None:
+                    continue
+                capacity = measured_capacity(ROUNDABOUT_ENTRY_VPH, sum(moves.get(move, 0.0) for move in passing))
+                queue = q95(flow / capacity, capacity) / max(len(link.lanes), 1)
+            else:
+                foes = {after: {(other.lane_in.link.id, other.lane_out.link.id) for (_, out), turn in link.turns.items()
+                                if out == after for other, _, _, give_way in turn.conflicts if give_way}
+                        for (_, after) in link.turns}
+                if not any(foes.values()):
+                    continue
+                x = self._lane_load(link, lambda after, rate, kind: rate / (measured_capacity(
+                    PRIORITY_CAPACITY_VPH, sum(moves.get(foe, 0.0) for foe in foes[after])) if foes[after]
+                    else TURN_SATURATION_VPH[kind]), moves)
+                lane_flow = flow / len(link.lanes)
+                queue = q95(x, lane_flow / x) if x > 0 else 0.0
+            worst = max(worst or 0.0, queue / holds(link))
         return worst
 
     def arm_ratio(self, link_id: str, moves: dict) -> float:
@@ -1057,15 +1192,9 @@ class Graph:
                     for link in path:
                         penalty[link.id] *= ROUTE_PENALTY
                 paths = list(found.values())
-                users = Counter(link_id for ids in found for link_id in set(ids))
-                theta = float(self.choice.get("theta_per_min", 0.5))
-                utilities = {}
-                for index, path in enumerate(paths):
-                    length = sum(link.length for link in path)
-                    size = sum(link.length / length / users[link.id] for link in {link.id: link for link in path}.values())
-                    utilities[index] = -theta * self.path_time(path) / 60 + log(size)
-                shares = logit(utilities)
-                self._shares[key] = [(shares[index], path) for index, path in enumerate(paths)]
+                shares = path_size_logit(paths, [self.path_time(path) for path in paths],
+                                         float(self.choice.get("theta_per_min", 0.5)))
+                self._shares[key] = list(zip(shares, paths))
         return self._shares[key]
 
     def pick_route(self, origin: str, destination: str, rng: random.Random) -> list[Link] | None:
@@ -1173,6 +1302,11 @@ class Simulation:
         # Collisions, SUMO's action "warn" (counted, never resolved): vehicle-steps a front was past the rear ahead in its
         # lane or turn ("same lane"), and pairs on crossing junction turns both over their conflict point ("crossing")
         self.collisions = 0
+        self.teleports = 0  # vehicles taken out of a gridlock (_teleport_jammed)
+        self.link_entries: Counter = Counter()  # link id -> vehicles that entered it (inserted, or off a turn)
+        self.time_to_teleport_s = TIME_TO_TELEPORT_S  # 0: never (a run that must show its gridlock as it is)
+        # Gap acceptance, this run's (experiments.parameter_sensitivity varies them): give-way and roundabout entry
+        self.critical_gap_s, self.ring_timegap_s = dict(CRITICAL_GAP_S), RING_TIMEGAP_S
         self.collision_kinds: Counter = Counter()
         self.emergency_braking = 0  # vehicle-steps braking harder than comfortable (at most its emergency_decel)
         self.spawned_by_mode: Counter = Counter()
@@ -1343,8 +1477,10 @@ class Simulation:
                                         lambda occupied, passed, phase=phase: (occupied or passed) and
                                         controller.detect(phase, self.time, signal)))
         else:
-            def on(link) -> int:  # Varaiya's x upstream: the vehicles on the approach, moving or not
-                return sum(len(lane.vehicles) for lane in link.lanes)
+            def on(link) -> int:  # Varaiya's x upstream: the vehicles near the line, moving or not (PRESSURE_ZONE_M:
+                # the whole 500 m link counted one still half a minute away, and held a side road's lone car 52 s)
+                return sum(1 for lane in link.lanes for vehicle in lane.vehicles
+                           if lane.length - vehicle.s <= PRESSURE_ZONE_M)
 
             def held(link) -> int:  # downstream, only what can block the junction: vehicles standing in a queue
                 return sum(1 for lane in link.lanes for vehicle in lane.vehicles if vehicle.speed < HELD_MPS)
@@ -1771,8 +1907,10 @@ class Simulation:
                         leader = self._lane_leader(vehicle, rear)
                         vehicle.speed = min(self._limit(vehicle), safe_speed(vehicle, *leader) if leader else inf)
                         _place(lane, vehicle)
+                        self.link_entries[lane.link.id] += 1
                         vehicle.pose = vehicle.prev_pose = self._pose(vehicle)
-                        vehicle.inserted_s = self.time + self.dt  # on the road from the end of this step
+                        if vehicle.inserted_s is None:  # on the road from the end of this step (once: a teleport
+                            vehicle.inserted_s = self.time + self.dt  # back onto its route keeps its trip's start)
                         self.vehicles.append(vehicle)
                         queue.popleft()
                         break
@@ -2012,7 +2150,7 @@ class Simulation:
                 state = self._lane_state(other.lane_in) if signal else "G"
                 if state == "R":
                     continue
-                gap = CRITICAL_GAP_S["offside" if signal else "minor"]
+                gap = self.critical_gap_s["offside" if signal else "minor"]
                 for foe in other.lane_in.vehicles:
                     if foe.turn is other:
                         distance = other.lane_in.length - foe.s
@@ -2058,7 +2196,7 @@ class Simulation:
                             mine = min(vehicle.speed, turn.speed)
                             short = to_it - mine * ((other.lane_in.length - foe.s if waiting else -foe.s)
                                                     + other.ring[0]) / other.speed
-                            margin = RING_TIMEGAP_S * turn.speed
+                            margin = self.ring_timegap_s * turn.speed
                             if to_it < foe.length_m + vehicle.length_m + margin or \
                                     -vehicle.length_m - foe.min_gap - margin < short < foe.length_m + vehicle.min_gap + margin:
                                 return False
@@ -2068,7 +2206,7 @@ class Simulation:
                     if leaves < to_us:
                         continue  # it exits before reaching us
                     speed = min(foe.speed, other.speed)
-                    margin = 0.0 if committed else RING_TIMEGAP_S * speed  # either side: a foe may speed up or slow
+                    margin = 0.0 if committed else self.ring_timegap_s * speed  # either side: a foe may speed up or slow
                     if to_us < foe.length_m + vehicle.length_m:
                         return False
                     # Short of our entry by then (< 0: past); yet to commit, also as if it kept a faster speed in.
@@ -2316,6 +2454,7 @@ class Simulation:
             else:
                 over, next_piece = vehicle.s - segment.length, segment.lane_out
                 vehicle.leg, vehicle.came_from = vehicle.leg + 1, segment
+                self.link_entries[next_piece.link.id] += 1
             segment.vehicles.remove(vehicle)
             vehicle.segment, vehicle.s = next_piece, over
             _place(next_piece, vehicle)
@@ -2587,6 +2726,30 @@ class Simulation:
             return x - uy * vehicle.lat_m, y + ux * vehicle.lat_m, ux, uy
         return pose
 
+    def _teleport_jammed(self) -> None:
+        """SUMO's jam teleport (time-to-teleport, 300 s by default; references/reverse_engineering/algorithms/
+        vehicle_removal.md, MSVehicleTransfer): a vehicle that has stood TIME_TO_TELEPORT_S at the front of its lane
+        is taken off the road and waits to enter the next link of its route, off the network, so a gridlock's cycle
+        (each queue's front waiting on the next queue) breaks instead of freezing the run. Counted (`teleports`) and,
+        observed, recorded where. A vehicle on its route's last link, on a turn, in a bay or held by a closure on
+        its lane (a deliberate block, not a gridlock) stays."""
+        if not self.time_to_teleport_s:
+            return
+        for vehicle in [v for v in self.vehicles if v.waiting_s >= self.time_to_teleport_s]:
+            lane = vehicle.segment
+            if (not isinstance(lane, Lane) or lane.vehicles[-1] is not vehicle or vehicle.leg + 1 >= len(vehicle.route)
+                    or (lane.link.id, lane.index) in self._closed):
+                continue
+            lane.vehicles.remove(vehicle)
+            self.vehicles.remove(vehicle)
+            vehicle.leg += 1  # ponytail: straight to the next link's queue; SUMO also charges its travel time
+            vehicle.segment, vehicle.s, vehicle.speed, vehicle.waiting_s = None, 0.0, 0.0, 0.0
+            vehicle.turn, vehicle.may_enter = None, False
+            self.pending[vehicle.route[vehicle.leg].id].append(vehicle)
+            self.teleports += 1
+            if self.observed is not None:
+                self.observed["teleports"].append({"t": round(self.time, 1), "vehicle": vehicle.id, "from": lane.link.id})
+
     def _collided(self, kind: str, where: str, first: Vehicle, second: Vehicle) -> None:
         """A collision, SUMO's action "warn": counted (collisions, collision_kinds) and, observed, recorded; nothing is
         removed or moved."""
@@ -2682,6 +2845,7 @@ class Simulation:
             self._change_lanes(vehicle)
             if self.lateral:
                 self._sidestep(vehicle)
+        self._teleport_jammed()
         self._insert()
         for loop, read in self._loops:  # the adaptive signals' detectors
             read(*loop.read())
@@ -2694,7 +2858,7 @@ class Simulation:
             self._observe()
         self._time_step_signals()  # for the next step: what the map shows is what vehicles obey
 
-    def observe(self, keep: int | None = None) -> None:
+    def observe(self, keep: int | None = None, from_s: float = 0.0) -> None:
         """From now on, each step records (headless tests; observations()): each vehicle passing the middle of
         its lane (a detector: time, speed, length), each link's traversal time (entering its lanes to entering
         the next link's, the junction included; also by that next link, the move made), rear-end conflicts (time to collision under CONFLICT_TTC_S
@@ -2705,24 +2869,37 @@ class Simulation:
         the fuel light motor vehicles burnt each step (emissions.py), by type and road; each collision (_collided) and
         each step a vehicle braked harder than comfortable (emergency braking: when, which, where, how hard).
         `keep`: the most passages, conflicts, stop-line crossings and traversals kept, the latest (a live run's memory);
-        None: all."""
-        def events():
-            return deque(maxlen=keep) if keep else []
-
-        self.observed = {"passages": events(), "traversals": defaultdict(lambda: [0, 0.0]),
-                         "turn_traversals": defaultdict(lambda: [0, 0.0]), "conflicts": events(),
-                         "stops": events(), "stop_lines": events(), "traversal_log": events(), "boardings": events(),
-                         "fuel_ml": defaultdict(float), "fuel_road_ml": defaultdict(float), "fuel_km": defaultdict(float),
-                         "arrivals": defaultdict(lambda: [0, 0]), "green_starts": defaultdict(list),
-                         "emergency_standstill": defaultdict(float), "collisions": events(),
-                         "emergency_braking": events()}
+        None: all. `from_s`: a warm-up: what was recorded before it is dropped when the run reaches it (vehicles on
+        their way are still followed, so a link entered before and left after counts), and the run's counts of
+        collisions, teleports and emergency braking are given from then (the KPIs' measure_from_s)."""
+        self._observe_keep, self._observe_from = keep, float(from_s)
+        self._fresh_observed()
         self._speed_seen: dict[str, float] = {}  # vehicle id -> its speed at the last step (its acceleration)
         self._arrived_at: dict[str, str] = {}  # vehicle id -> the signalised approach it last arrived on (HCM's P)
         self._seen: dict[str, tuple] = {}  # vehicle id -> (link id, s, entered, segment, stopped on this link)
         self._active: dict[str, dict] = {}  # follower id -> its open conflict
         self._green_since: dict[str, float] = {}
 
+    def _fresh_observed(self) -> None:
+        """Empty records (observe), and the run's counts they start from."""
+        keep = self._observe_keep
+
+        def events():
+            return deque(maxlen=keep) if keep else []
+
+        self._observed_base = (Counter(self.collision_kinds), self.teleports, self.emergency_braking, self.time)
+        self.observed = {"passages": events(), "traversals": defaultdict(lambda: [0, 0.0]),
+                         "turn_traversals": defaultdict(lambda: [0, 0.0]), "conflicts": events(),
+                         "stops": events(), "stop_lines": events(), "traversal_log": events(), "boardings": events(),
+                         "fuel_ml": defaultdict(float), "fuel_road_ml": defaultdict(float), "fuel_km": defaultdict(float),
+                         "arrivals": defaultdict(lambda: [0, 0]), "green_starts": defaultdict(list),
+                         "emergency_standstill": defaultdict(float), "collisions": events(), "teleports": events(),
+                         "emergency_braking": events()}
+
     def _observe(self) -> None:
+        if self._observe_from and self.time >= self._observe_from:  # the warm-up is over: record from here
+            self._observe_from = 0.0
+            self._fresh_observed()
         now, observed, seen = self.time, self.observed, {}
         for link_id, state in self._states.items():
             if state == "G" and self._green_since.get(link_id, (None, "R"))[1] != "G":
@@ -2745,8 +2922,10 @@ class Simulation:
                     middle = segment.length / 2
                     if before[1] < middle <= vehicle.s:
                         moved = vehicle.s - before[1]
-                        observed["passages"].append((link.road, link.id, segment.index, now - self.dt * (vehicle.s - middle) / moved,
-                                                     moved / self.dt, vehicle.length_m, vehicle.mode))
+                        at = now - self.dt * (vehicle.s - middle) / moved
+                        if at >= self._observed_base[3]:  # crossed within the step that ended the warm-up: before it
+                            observed["passages"].append((link.road, link.id, segment.index, at,
+                                                         moved / self.dt, vehicle.length_m, vehicle.mode))
                     seen[vehicle.id] = (link.id, vehicle.s, before[2], segment, before[4] or vehicle.speed < 0.5)
                 else:
                     if before is not None and before[0] is not None:
@@ -2848,9 +3027,10 @@ class Simulation:
                 "arrivals": {link: tuple(found) for link, found in self.observed["arrivals"].items()},
                 "green_starts": {link: list(found) for link, found in self.observed["green_starts"].items()},
                 "emergency_standstill": dict(self.observed["emergency_standstill"]),
-                "collisions": list(self.observed["collisions"]), "collision_counts": dict(self.collision_kinds),
+                "collisions": list(self.observed["collisions"]), "collision_counts": dict(self.collision_kinds - self._observed_base[0]),
+                "teleports": list(self.observed["teleports"]), "teleport_count": self.teleports - self._observed_base[1],
                 "emergency_braking": list(self.observed["emergency_braking"]),
-                "emergency_braking_count": self.emergency_braking, "step_s": self.dt, "step_method": self.step_method,
+                "emergency_braking_count": self.emergency_braking - self._observed_base[2], "step_s": self.dt, "step_method": self.step_method,
                 "fuel": {"by_type_ml": dict(self.observed["fuel_ml"]), "by_road_ml": dict(self.observed["fuel_road_ml"]),
                          "by_type_km": dict(self.observed["fuel_km"])},
                 "signals": signals, "controls": {node: graph.network.node(node).control for node in graph.network.nodes},
@@ -2860,18 +3040,21 @@ class Simulation:
                 "closures": [{"link": c.link, "lanes": list(c.lanes), "from_m": c.from_m, "to_m": c.to_m,
                               "start_s": c.start_s, "end_s": None if c.end_s == inf else c.end_s,
                               "speed_kmh": None if c.speed is None else round(c.speed * 3.6)} for c in self.closures],
-                "links": links, "observed_s": self.time}
+                # what was recorded covers this long, from observed_from_s (after a warm-up: observe's from_s)
+                "links": links, "observed_s": self.time - self._observed_base[3], "observed_from_s": self._observed_base[3]}
 
     def frame(self) -> Frame:
         """The run as it is now, frozen (see Frame)."""
+        random_colours = {mode.name for mode in self.modes if getattr(mode, "random_colour", False)}
         vehicles = tuple(VehicleState(v.id, v.mode, v.colour, v.length_m, v.width_m, *v.pose, v.prev_pose,
                                       v.speed, v.segment.node if isinstance(v.segment, Turn) else v.segment.link.road,
                                       v.segment.name, v.s, v.origin, v.destination, *self._heading_to(v),
                                       free_speed(v, v.segment.speed),
-                                      v.load if v.load is not None else self._people.get(v.mode, 1.0), v.lat_m)
+                                      v.load if v.load is not None else self._people.get(v.mode, 1.0), v.lat_m,
+                                      self._classes.get(v.mode, ""), v.mode in random_colours, v.emergency)
                          for v in self.vehicles)
         return Frame(self.time, vehicles, self.signal_states(), self.spawned, self.arrived, detached(self.signal_plans),
-                     tuple(self._exits))
+                     tuple(self._exits), dict(self.link_entries))
 
     @staticmethod
     def _heading_to(vehicle: Vehicle) -> tuple[str, str, float]:

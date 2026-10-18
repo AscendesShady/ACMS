@@ -272,7 +272,7 @@ def report(spec: dict, done: list[dict]) -> str:
     if demand:
         busiest = demand.get("degree_of_saturation") or {}
         top = next(iter(busiest.items()), None)
-        lines.append(f"**Demand**: {demand.get('total_made', '?')} {demand.get('unit', 'veh/h')} over "
+        lines.append(f"**Demand**: {demand.get('total_now', demand.get('total_made', '?'))} {demand.get('unit', 'veh/h')} over "
                      f"{demand.get('pairs_with_demand', '?')} OD pairs, mean trip {demand.get('mean_trip_km', '?')} km"
                      + (f"; busiest junction {top[0]} at {top[1]:.0%} of capacity" if top else "")
                      + (f"; {demand['checked_in_a_run']['note'].rstrip('.')}" if isinstance(demand.get("checked_in_a_run"), dict)

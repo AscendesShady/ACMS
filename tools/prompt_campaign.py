@@ -59,7 +59,10 @@ def manifest(user: Path, adversarial: Path, prefix='A', count=100) -> list[dict]
 class Campaign:
     """Qt event-loop driver. Applies validated cards for both approved prompt sets."""
 
-    def __init__(self, window, plan, output: Path, timeout=3600):
+    def __init__(self, window, plan, output: Path, timeout=3600, isolate=False):
+        """`isolate`: each prompt starts from the project as it was at the start (saved to baseline.json, its hash in
+        the ledger) and an empty conversation, so one prompt's network or failure isn't the next one's (2026-10-11:
+        19 % of one block's failures came from an earlier prompt replacing the network)."""
         from PySide6.QtCore import QTimer
         self.window, self.panel, self.plan = window, window.ai_mode, plan
         self.output, self.timeout = output, timeout
@@ -71,6 +74,14 @@ class Campaign:
         self.index, self.phase, self.active, self.began = 0, 'select', None, time.monotonic()
         self.failure = None
         self._applying = None
+        self.baseline, self._reset_for = None, None
+        if isolate:
+            from traffic_simulator.network_io import save_network
+            self.baseline = output / 'baseline.json'
+            save_network(window.network, self.baseline, None, window._project())
+            window._ask_to_save = False  # reloading it never asks
+            self.record('baseline', path=str(self.baseline),
+                        sha256=hashlib.sha256(self.baseline.read_bytes()).hexdigest())
         self.panel._relay.done.connect(self.finished)
         self.timer = QTimer(window)
         self.timer.timeout.connect(self.tick)
@@ -94,6 +105,10 @@ class Campaign:
         self.failure = error
         self.timer.stop()
         self.record('halted', error=error)
+        try:  # the Research Log's session closed as on completion, so its report covers the steps that ran
+            self.window.extensions.find('Research Log').module.end_session()
+        except Exception as closing:  # noqa: BLE001  the halt is recorded; a log that can't close is said too
+            self.record('research_log_not_closed', error=repr(closing))
         self.window.statusBar().showMessage('Campaign halted: ' + error)
 
     def finished(self, session, job, result, error):
@@ -159,6 +174,11 @@ class Campaign:
         if self.phase == 'select':
             if self.panel._running or self.panel._pending is not None:
                 return
+            if self.baseline is not None and self._reset_for != self.index:
+                if not self.window.load_file(str(self.baseline)):
+                    raise RuntimeError('The baseline project could not be reloaded')
+                self._reset_for = self.index
+                self.record('reset', id=item['id'])
             if self.panel._model != item['model']:
                 local = self.panel.provider.findData('local')
                 model = self.panel.local_models.findText(item['model'])
@@ -193,6 +213,7 @@ def main():
     parser.add_argument('--adversarial-count', type=int, default=100)
     parser.add_argument('--output', type=Path, default=ROOT / 'reports/prompt_campaign')
     parser.add_argument('--preflight', action='store_true')
+    parser.add_argument('--isolate', action='store_true', help='each prompt from the starting project, a new chat')
     args = parser.parse_args()
     plan = manifest(args.user, args.adversarial, args.adversarial_prefix, args.adversarial_count)
     if args.preflight:
@@ -209,7 +230,7 @@ def main():
     apply_theme(app)
     window = MainWindow()
     window.show()
-    campaign = Campaign(window, plan, args.output)
+    campaign = Campaign(window, plan, args.output, isolate=args.isolate)
     return app.exec()
 
 

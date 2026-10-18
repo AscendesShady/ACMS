@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from collections import defaultdict
-from math import hypot, sqrt
+from math import cos, hypot, radians, sin, sqrt, tan
 
 from PySide6.QtCore import QPoint, QPointF, QRectF, Qt, Signal
 from PySide6.QtGui import (
@@ -26,7 +26,7 @@ from PySide6.QtWidgets import (
     QWidget,
 )
 
-from . import gpu
+from . import asset_mesh, building_assets, gpu, vehicle_assets
 from .geometry import nearest_along, offset_polyline, point_along, polyline_length, sub_polyline
 from .institutions import KINDS, Placement, links
 from .models import (BAY_ENTRY_M, BAY_LENGTH_M, BAY_STOP_M, BAY_WIDTH_M, LANE_WIDTH_M, POCKET_TAPER_M, BusStop,
@@ -34,7 +34,7 @@ from .models import (BAY_ENTRY_M, BAY_LENGTH_M, BAY_STOP_M, BAY_WIDTH_M, LANE_WI
 from .properties_panel import ICON_FONTS
 from .roundabouts import design_roundabout
 from .signal_timing import ADAPTIVE, STOP_LINE_LOOP_M, UPSTREAM_LOOP_AT_M, UPSTREAM_LOOP_M
-from .theme import ACCENT_EDGE, STATUS, TEXT
+from .theme import ACCENT_EDGE, BUILDING_PAINTS, SHADOW, STATUS, TEXT, VEHICLE_INKS, VEHICLE_PAINTS
 
 
 # Everything physical is drawn to scale in metres. Only labels and selection
@@ -58,6 +58,26 @@ VEHICLE_Z = 8  # the vehicle layer: above roads and signals, below labels and en
 # Item data key: the item is in the still layer, what rebuild() draws under the vehicles (but the
 # signal lamps). During a run the view caches it with the background (NetworkGraphicsScene.cache_still).
 STILL = 1
+ISOMETRIC_YAW_DEG = 45.0
+ISOMETRIC_ELEVATION_DEG = 35.264389682754654  # true isometric; a camera angle, not a simulation parameter
+
+
+def projection_transform(isometric: bool = False, scale: float = 1.0) -> QTransform:
+    """World metres to orthographic ground coordinates. No perspective, roll or direction-dependent timing."""
+    if not isometric:
+        return QTransform.fromScale(scale, scale)
+    yaw, elevation = radians(ISOMETRIC_YAW_DEG), radians(ISOMETRIC_ELEVATION_DEG)
+    return QTransform(scale * cos(yaw), scale * sin(elevation) * sin(yaw),
+                      -scale * sin(yaw), scale * sin(elevation) * cos(yaw), 0, 0)
+
+
+def projection_lift() -> QPointF:
+    """A metre of cosmetic body height, expressed in the ground plane for Qt's affine painter.
+
+    The ground transform maps this to straight screen-up with length cos(elevation); world footprints stay put.
+    """
+    yaw, elevation = radians(ISOMETRIC_YAW_DEG), radians(ISOMETRIC_ELEVATION_DEG)
+    return QPointF(-sin(yaw) / tan(elevation), -cos(yaw) / tan(elevation))
 
 
 def _screen_pen(color: QColor, pixels: float) -> QPen:
@@ -76,7 +96,82 @@ def _path(points: Points) -> QPainterPath:
     return path
 
 
+class BuildingItem(QGraphicsItem):
+    """One institution, with the exact ground footprint in 2D and metre-height architecture in 2.5D."""
+
+    def __init__(self, scene, institution):
+        super().__init__()
+        self.owner, self.institution = scene, institution
+        self.side = sqrt(institution.area_m2)
+        self.height_m = building_assets.height(institution)
+        half, lift = self.side / 2, projection_lift() * self.height_m
+        self.footprint = QRectF(-half, -half, self.side, self.side)
+        self.bounds = self.footprint.united(self.footprint.translated(lift)).adjusted(-2, -2, 2, 2)
+        self.faces = building_assets.mesh(institution.kind, institution.area_m2, self.height_m)
+        self._shape_3d = None
+        self.setPos(institution.x, institution.y)
+        self.setData(0, ("institution", institution.id))
+        self.setZValue(5)
+        self.setToolTip(f"Height {self.height_m:g} m" + (" (assumed)" if institution.height_m is None else ""))
+
+    def boundingRect(self):
+        return self.bounds
+
+    def shape(self):
+        if self.owner.isometric and self._shape_3d is not None:
+            return self._shape_3d
+        path = QPainterPath()
+        if not self.owner.isometric:
+            path.addRect(self.footprint)
+        else:
+            lift = projection_lift()
+            for face in self.faces:
+                points = [asset_mesh.expand(p, self.side, self.side) for p in face.vertices]
+                polygon = QPolygonF([QPointF(x, y) + lift * z for x, y, z in points])
+                part = QPainterPath()
+                part.addPolygon(polygon)
+                path = path.united(part)
+            self._shape_3d = path
+        return path
+
+    def paint(self, painter, option, widget=None):
+        selected = self.owner.selection == ("institution", self.institution.id)
+        t = painter.worldTransform()
+        if not self.owner.isometric or abs(t.m12()) + abs(t.m21()) < 1e-9:
+            painter.setBrush(BUILDING_COLOR)
+            painter.setPen(_screen_pen(SELECTED_COLOR if selected else QColor(SHADOW), 3 if selected else 1))
+            painter.drawRect(self.footprint)
+            return
+        lift = projection_lift()
+        camera = (-lift.x(), -lift.y(), 1.)
+        body, roof = BUILDING_PAINTS[self.institution.kind]
+        inks = (VEHICLE_INKS[0], roof, *VEHICLE_INKS[2:])
+        shadow = QColor(SHADOW)
+        shadow.setAlpha(65)
+        painter.setPen(Qt.PenStyle.NoPen)
+        painter.setBrush(shadow)
+        painter.drawRect(self.footprint.translated(1.5, 1.5))
+        faces = []
+        for face in self.faces:
+            points = [asset_mesh.expand(p, self.side, self.side) for p in face.vertices]
+            n = asset_mesh.normal(points)
+            if sum(a * b for a, b in zip(n, camera)) <= 1e-9:
+                continue
+            depth = sum(sum(a * b for a, b in zip(p, camera)) for p in points) / len(points)
+            shade = .68 + .32 * max(0., (-.6 * n[0] - .8 * n[1] + n[2]) / sqrt(2))
+            faces.append((depth, face.ink, points, shade))
+        for _, ink, points, shade in sorted(faces, key=lambda f: (f[1] in (0, 3), f[0])):
+            colour = QColor(body if ink < 0 else inks[ink])
+            painter.setBrush(QColor.fromRgbF(colour.redF() * shade, colour.greenF() * shade, colour.blueF() * shade))
+            painter.drawPolygon(QPolygonF([QPointF(x, y) + lift * z for x, y, z in points]))
+        if selected:
+            painter.setBrush(Qt.BrushStyle.NoBrush)
+            painter.setPen(_screen_pen(SELECTED_COLOR, 2))
+            painter.drawRect(self.footprint)
+
+
 class NetworkGraphicsScene(QGraphicsScene):
+    buildings_changed = Signal(bool)
     # (kind, id, x, y): the clicked object and the click point in metres. kind is
     # "road", "node", "entry" (end supply marker), "exit" (end demand marker)
     # "bus_stop", "institution" or "" for empty canvas. The last value is True for Ctrl/Shift+click.
@@ -107,6 +202,9 @@ class NetworkGraphicsScene(QGraphicsScene):
         # The run as last published (simulation.Frame): set by the main window, drawn each frame.
         self.frame = None
         self.frame_alpha = 1.0  # where between the last two simulated steps to draw vehicles
+        self.isometric = False  # display only; neither this nor the camera enters the network or published frame
+        self.buildings_visible = True
+        self._building_items: list[QGraphicsItem] = []
         self.gpu = gpu.VehicleRenderer()  # draws them on the GPU when the view is OpenGL (kept across rebuilds)
         self.signal_lamps: dict[tuple[str, str], tuple[QGraphicsEllipseItem, QColor]] = {}
         self._signal_states: dict | None = None
@@ -149,6 +247,25 @@ class NetworkGraphicsScene(QGraphicsScene):
         if hidden != self.hidden:
             self.hidden = hidden
             self.rebuild()
+
+    def set_buildings_visible(self, visible: bool) -> None:
+        """Show/hide institution visuals only. Demand, selection and camera bounds stay intact."""
+        visible = bool(visible)
+        if visible == self.buildings_visible:
+            return
+        self.buildings_visible = visible
+        for item in self._building_items:
+            item.setVisible(visible and not self.hidden)
+        self.invalidate(self.sceneRect(), QGraphicsScene.SceneLayer.AllLayers)
+        self.buildings_changed.emit(visible)
+
+    def project_building_labels(self):
+        lift = projection_lift() if self.isometric else QPointF()
+        for item in self._building_items:
+            if isinstance(item, QGraphicsTextItem) and item.data(2):
+                x, y, height = item.data(2)
+                item.setPos(QPointF(x, y) + lift * height)
+        self.invalidate(self.sceneRect(), QGraphicsScene.SceneLayer.AllLayers)
 
     def set_placing(self, area_m2: float | None) -> None:
         """Start placing a building this big, or resize the one being placed; None stops."""
@@ -223,7 +340,7 @@ class NetworkGraphicsScene(QGraphicsScene):
             shift = event.screenPos() - event.buttonDownScreenPos(Qt.MouseButton.LeftButton)
             if self._band is None and shift.manhattanLength() < 4:
                 return  # still a click
-            crossing = pos.x() < start.x()  # AutoCAD: right to left crosses, left to right is a window
+            crossing = shift.x() < 0  # screen right to left, including in the rotated orthographic view
             if self._band is None:
                 self._band = QGraphicsRectItem()
                 self._band.setZValue(20)
@@ -266,7 +383,7 @@ class NetworkGraphicsScene(QGraphicsScene):
                 self.removeItem(self._band)
                 self._band = None
                 self.boxed.emit(rect.left(), rect.top(), rect.right(), rect.bottom(),
-                                event.scenePos().x() < start.x(), additive)
+                                event.screenPos().x() < event.buttonDownScreenPos(Qt.MouseButton.LeftButton).x(), additive)
             event.accept()
             return
         if self._tool_held and event.button() == Qt.MouseButton.LeftButton:
@@ -289,6 +406,7 @@ class NetworkGraphicsScene(QGraphicsScene):
 
     def rebuild(self) -> None:
         self.clear()
+        self._building_items = []
         self.signal_lamps = {}
         if self.network is None:
             return
@@ -316,6 +434,9 @@ class NetworkGraphicsScene(QGraphicsScene):
         self.network_rect = bounds  # what Fit Network fits (the vehicle layer covers the whole scene)
         rect = bounds.adjusted(-margin, -margin, margin, margin)
         self.setSceneRect(self.extent(rect) if self.extent else rect)  # with the background's image or map
+        for item in self._building_items:
+            item.setVisible(self.buildings_visible)
+        self.project_building_labels()
         for item in self.items():  # extensions' items come later (redrawn): they never join it
             if item.zValue() < VEHICLE_Z:
                 item.setData(STILL, True)
@@ -391,7 +512,7 @@ class NetworkGraphicsScene(QGraphicsScene):
         return 1.0 if self.network.driving_side == "left" else -1.0  # type: ignore[union-attr]
 
     def _add_label(self, text: str, x: float, y: float, dx: float, dy: float,
-                   pixels: int = 13, family: str = "Segoe UI") -> None:
+                   pixels: int = 13, family: str = "Segoe UI") -> QGraphicsTextItem:
         """Screen-sized label placed beside world point (x, y), pushed towards (dx, dy).
 
         (dx, dy) is -1/0/1 per axis (or a unit vector): the label's near edge
@@ -416,6 +537,7 @@ class NetworkGraphicsScene(QGraphicsScene):
                                                     dy * (height / 2 + gap) - height / 2))
         label.setZValue(10)
         self.addItem(label)
+        return label
 
     def _draw_road(self, road: Road) -> None:
         points = self.network.road_points(road)  # type: ignore[union-attr]
@@ -833,17 +955,16 @@ class NetworkGraphicsScene(QGraphicsScene):
         of influence and the junctions and ends it reaches show too (drawForeground)."""
         half = sqrt(item.area_m2) / 2
         selected = self.selection == ("institution", item.id)
-        roof = QGraphicsRectItem(item.x - half, item.y - half, 2 * half, 2 * half)
-        roof.setBrush(BUILDING_COLOR)
-        roof.setPen(_screen_pen(SELECTED_COLOR, 3) if selected else _screen_pen(QColor("#111719"), 1))
-        roof.setData(0, ("institution", item.id))
-        roof.setToolTip(f"{item.kind}: {item.people:,} people, {item.employees:,} staff")  # its name is above it
-        roof.setZValue(5)
+        roof = BuildingItem(self, item)
         self.addItem(roof)
+        self._building_items.append(roof)
         family = next((family for family in ICON_FONTS if family in QFontDatabase.families()), None)
         if family:
-            self._add_label(chr(KINDS[item.kind].glyph), item.x, item.y, 0, 0, 18, family)
-        self._add_label(f"{item.id} {item.kind}", item.x, item.y - half, 0, -1)
+            self._building_items.append(self._add_label(chr(KINDS[item.kind].glyph), item.x, item.y, 0, 0, 18, family))
+        self._building_items.append(self._add_label(f"{item.id} {item.kind}", item.x, item.y - half, 0, -1))
+        for label in self._building_items[-2:]:
+            if isinstance(label, QGraphicsTextItem):
+                label.setData(2, (label.pos().x(), label.pos().y(), building_assets.height(item)))
         if selected:
             self._zone = (item.x, item.y, item.radius_m, links(self.network, item.x, item.y, item.radius_m))  # type: ignore[arg-type]
 
@@ -865,7 +986,7 @@ class NetworkGraphicsScene(QGraphicsScene):
                 painter.drawRect(footprint)
             if placing.radius_m is not None:
                 self._paint_zone(painter, placing.x, placing.y, placing.radius_m, placing.links)
-        elif self._zone is not None:
+        elif self._zone is not None and self.buildings_visible:
             self._paint_zone(painter, *self._zone)
 
     def _paint_zone(self, painter: QPainter, x: float, y: float, radius: float, reached: list[str]) -> None:
@@ -878,7 +999,7 @@ class NetworkGraphicsScene(QGraphicsScene):
         painter.setPen(pen)
         painter.setBrush(fill)
         painter.drawEllipse(QPointF(x, y), radius, radius)
-        pixel = 1 / max(painter.worldTransform().m11(), 1e-9)  # a screen pixel in metres
+        pixel = 1 / max(QStyleOptionGraphicsItem.levelOfDetailFromTransform(painter.worldTransform()), 1e-9)
         painter.setPen(_screen_pen(colour, 3))
         painter.setBrush(Qt.BrushStyle.NoBrush)
         for node_id in reached:
@@ -898,7 +1019,7 @@ class NetworkGraphicsScene(QGraphicsScene):
 
 class VehicleLayer(QGraphicsItem):
     """Every vehicle of a run's latest frame in one item. On the map's OpenGL viewport the scene's
-    gpu.VehicleRenderer draws them all in one instanced call, each frame's poses sent to the GPU once;
+    gpu.VehicleRenderer draws one instanced batch per appearance, each frame's poses sent to the GPU once;
     elsewhere (the raster viewport, tests) QPainter draws them grouped by colour. Either way each
     vehicle is drawn part way (frame_alpha) between its last two simulated poses, so motion stays
     smooth at any frame rate, and zoomed far out they stay visible (dots, or a few pixels)."""
@@ -918,17 +1039,24 @@ class VehicleLayer(QGraphicsItem):
         if frame is None or not frame.vehicles:
             return
         alpha = self._scene.frame_alpha
-        if self._scene.gpu.draw(painter, frame, alpha, self.OUTLINE):
+        transform = painter.worldTransform()
+        # Legacy scene.render exports remain top-down; an isometric view supplies the yaw/elevation transform.
+        isometric = self._scene.isometric and abs(transform.m12()) + abs(transform.m21()) > 1e-9
+        lift = projection_lift() if isometric else None
+        if self._scene.gpu.draw(painter, frame, alpha, self.OUTLINE, lift):
             return
         groups: dict[str, list] = defaultdict(list)
         for vehicle in frame.vehicles:
             (x0, y0, ux0, uy0), (x1, y1, ux1, uy1) = vehicle.prev, (vehicle.x, vehicle.y, vehicle.ux, vehicle.uy)
             ux, uy = ux0 + (ux1 - ux0) * alpha, uy0 + (uy1 - uy0) * alpha
             norm = hypot(ux, uy) or 1.0
-            groups[vehicle.colour].append((x0 + (x1 - x0) * alpha, y0 + (y1 - y0) * alpha, ux / norm, uy / norm,
-                                           vehicle.length_m / 2, vehicle.width_m / 2))
+            groups[vehicle_assets.paint_colour(vehicle, VEHICLE_PAINTS)].append(
+                (x0 + (x1 - x0) * alpha, y0 + (y1 - y0) * alpha, ux / norm, uy / norm,
+                 vehicle.length_m / 2, vehicle.width_m / 2, vehicle_assets.style(vehicle)))
         pixels_per_metre = QStyleOptionGraphicsItem.levelOfDetailFromTransform(painter.worldTransform())
-        dots = pixels_per_metre * 4.5 < 3  # a car would be under 3 px long
+        dots = not isometric and pixels_per_metre * 4.5 < 3  # isometric bodies keep their real footprint
+        yaw = radians(ISOMETRIC_YAW_DEG)
+        near = QPointF(sin(yaw), cos(yaw))
         for colour, shapes in groups.items():
             if dots:
                 pen = QPen(QColor(colour), 4, Qt.PenStyle.SolidLine, Qt.PenCapStyle.RoundCap)
@@ -938,17 +1066,70 @@ class VehicleLayer(QGraphicsItem):
                 continue
             painter.setPen(QPen(self.OUTLINE, 0.1))
             painter.setBrush(QColor(colour))
-            for x, y, ux, uy, half_length, half_width in shapes:
-                painter.drawPolygon(QPolygonF([
+            for x, y, ux, uy, half_length, half_width, skin in shapes:
+                if skin:
+                    self._paint_mesh(painter, skin, colour, x, y, ux, uy, 2 * half_length, 2 * half_width, lift,
+                                     pixels_per_metre*2*half_width>=5)
+                    continue
+                painter.setPen(QPen(self.OUTLINE, 0.1))
+                painter.setBrush(QColor(colour))
+                footprint = QPolygonF([
                     QPointF(x + ux * half_length - uy * half_width, y + uy * half_length + ux * half_width),
                     QPointF(x + ux * half_length + uy * half_width, y + uy * half_length - ux * half_width),
                     QPointF(x - ux * half_length + uy * half_width, y - uy * half_length - ux * half_width),
                     QPointF(x - ux * half_length - uy * half_width, y - uy * half_length + ux * half_width),
-                ]))
+                ])
+                if lift is None:
+                    painter.drawPolygon(footprint)
+                    roof_offset = QPointF()
+                else:
+                    # Height is a cosmetic skin only. Footprints still use the frame's exact L/W.
+                    roof_offset = lift * (2 * half_width * gpu.BODY_HEIGHT_RATIO)
+                    roof = QPolygonF([point + roof_offset for point in footprint])
+                    normals = ((ux, uy), (uy, -ux), (-ux, -uy), (-uy, ux))
+                    base_colour = QColor(colour)
+                    for index, (nx, ny) in enumerate(normals):
+                        if nx * near.x() + ny * near.y() <= 0:
+                            continue
+                        following = (index + 1) % 4
+                        shade = 0.7 + 0.15 * (nx * -0.6 + ny * -0.8)
+                        painter.setBrush(QColor.fromRgbF(base_colour.redF() * shade, base_colour.greenF() * shade,
+                                                        base_colour.blueF() * shade))
+                        painter.drawPolygon(QPolygonF([footprint[index], footprint[following],
+                                                       roof[following], roof[index]]))
+                    painter.setBrush(base_colour)
+                    painter.drawPolygon(roof)
+
+    @staticmethod
+    def _paint_mesh(painter, skin, colour, x, y, ux, uy, length, width, lift, detail=True):
+        """Opaque faces, sorted within the object; the GPU uses these same metre-expanded meshes."""
+        camera = (-lift.x(), -lift.y(), 1.) if lift else (0., 0., 1.)
+        faces = []
+        fit = asset_mesh.wheel_fit(skin, length, width)
+        for face in (asset_mesh.vehicle_mesh(skin) if detail else asset_mesh.vehicle_low_mesh(skin)):
+            points = [asset_mesh.expand(p, length, width, fit) for p in face.vertices]
+            if face.part == 1 and skin not in (6, 7) and lift:
+                side = -uy * camera[0] + ux * camera[1]
+                if sum(p[1] for p in points) * side < 0:
+                    continue  # the opaque body hides the far-side tyres
+            world = [(ux * a - uy * b, uy * a + ux * b, z) for a, b, z in points]
+            n = asset_mesh.normal(world)
+            if sum(a * b for a, b in zip(n, camera)) <= 1e-9:
+                continue
+            depth = sum(sum(a * b for a, b in zip(p, camera)) for p in world) / len(world)
+            shade = .68 + .32 * max(0., (-.6 * n[0] - .8 * n[1] + n[2]) / sqrt(2))
+            faces.append((depth, world, face.ink, shade))
+        painter.setPen(Qt.PenStyle.NoPen)
+        for _, points, ink, shade in sorted(faces, key=lambda f: (f[2] in (0, 2, 3, 4), f[0])):
+            base = QColor(colour if ink < 0 else VEHICLE_INKS[ink])
+            painter.setBrush(QColor.fromRgbF(base.redF() * shade, base.greenF() * shade, base.blueF() * shade))
+            painter.drawPolygon(QPolygonF([QPointF(x + a, y + b) + (lift * z if lift else QPointF())
+                                           for a, b, z in points]))
 
 
 class NetworkView(QGraphicsView):
     pointed = Signal(float, float)  # the mouse moved over the map, to this scene point (metres)
+    projection_changed = Signal(bool)
 
     def __init__(self, scene: NetworkGraphicsScene) -> None:
         super().__init__(scene)
@@ -957,6 +1138,7 @@ class NetworkView(QGraphicsView):
         self._panning = False
         self._pan_start = QPoint()
         self._tool_cursor = Qt.CursorShape.ArrowCursor
+        self.isometric = False
         # The OpenGL renderer the map would draw with; on a real GPU it gets an OpenGL viewport with 4x
         # multisampling (the GPU redraws the whole view each frame, as OpenGL views are meant to), and the
         # vehicles their instanced shader. Without one (a CPU stand-in such as llvmpipe, or no OpenGL at
@@ -975,6 +1157,7 @@ class NetworkView(QGraphicsView):
         # During a run the background and the still network are drawn once and kept (scene.cache_still).
         scene.still_cached_changed.connect(lambda on: self.setCacheMode(
             QGraphicsView.CacheModeFlag.CacheBackground if on else QGraphicsView.CacheModeFlag.CacheNone))
+        scene.buildings_changed.connect(lambda _: self.redraw())
 
     def _use_opengl(self, samples: int) -> None:
         opengl = QOpenGLWidget()
@@ -997,6 +1180,33 @@ class NetworkView(QGraphicsView):
         """The background changed (a map tile arrived, it moved): drawn again, and the run's cache of it."""
         self.resetCachedContent()
         self.viewport().update()
+
+    def projection_scale(self) -> float:
+        """Orthographic pixels per metre before ground foreshortening; zoom never changes world distances."""
+        compression = sin(radians(ISOMETRIC_ELEVATION_DEG)) if self.isometric else 1.0
+        return sqrt(abs(self.transform().determinant()) / compression)
+
+    def set_isometric(self, on: bool) -> None:
+        """Switch only the camera/vehicle skin, retaining the same frame, centre, zoom, tools and selection."""
+        on = bool(on)
+        if on == self.isometric:
+            return
+        centre = self.mapToScene(self.viewport().rect().center())
+        scale = self.projection_scale()
+        self.isometric = self.scene().isometric = on
+        self.scene().project_building_labels()
+        anchor = self.transformationAnchor()
+        self.setTransformationAnchor(QGraphicsView.ViewportAnchor.NoAnchor)
+        try:
+            self.setTransform(projection_transform(on, scale))
+            self.centerOn(centre)
+            # Scrollbars round to integer pixels. Retain the fractional offset so repeated toggles never drift.
+            correction = self.mapToScene(self.viewport().rect().center()) - centre
+            self.translate(correction.x(), correction.y())
+        finally:
+            self.setTransformationAnchor(anchor)
+        self.redraw()
+        self.projection_changed.emit(on)
 
     def set_corner(self, widget: QWidget) -> None:
         """Controls kept over the map's top-right corner (fit, reset, help)."""
@@ -1021,7 +1231,7 @@ class NetworkView(QGraphicsView):
         if self.background is None or network is None:
             super().drawBackground(painter, rect)  # the scene's: its colour, and during a run the still layer
             return
-        self.background.paint(painter, rect, network.background, self.transform().m11() * self.devicePixelRatioF())
+        self.background.paint(painter, rect, network.background, self.projection_scale() * self.devicePixelRatioF())
         self.scene().paint_still(painter, rect)
 
     def drawForeground(self, painter: QPainter, rect: QRectF) -> None:  # type intentionally inherited from Qt
@@ -1043,7 +1253,7 @@ class NetworkView(QGraphicsView):
             event.accept()
             return
         factor = 1.18 if event.angleDelta().y() > 0 else 1 / 1.18
-        current = self.transform().m11()
+        current = self.projection_scale()
         if 0.0005 < current * factor < 100.0:
             self.scale(factor, factor)
         event.accept()
@@ -1085,15 +1295,15 @@ class NetworkView(QGraphicsView):
         # in metres would clip them on large networks.
         margin = 90
         view = self.viewport().rect()
-        scale = min((view.width() - 2 * margin) / rect.width(),
-                    (view.height() - 2 * margin) / rect.height())
+        projected = projection_transform(self.isometric).mapRect(rect)
+        scale = min((view.width() - 2 * margin) / projected.width(),
+                    (view.height() - 2 * margin) / projected.height())
         if scale > 0:
-            self.resetTransform()
-            self.scale(scale, scale)
+            self.setTransform(projection_transform(self.isometric, scale))
             self.centerOn(rect.center())
 
     def reset_view(self) -> None:
-        self.resetTransform()
+        self.setTransform(projection_transform(self.isometric))
         self.centerOn(self.scene().sceneRect().center())
 
     ARROWS = {Qt.Key.Key_Left: (-1, 0), Qt.Key.Key_Right: (1, 0), Qt.Key.Key_Up: (0, -1), Qt.Key.Key_Down: (0, 1)}
@@ -1101,7 +1311,10 @@ class NetworkView(QGraphicsView):
     def keyPressEvent(self, event) -> None:  # type intentionally inherited from Qt
         if event.key() in self.ARROWS:  # with a bus stop selected they nudge it, otherwise they scroll
             shift = event.modifiers() & Qt.KeyboardModifier.ShiftModifier
-            if self.scene().nudge_bus_stop(*self.ARROWS[event.key()],
+            inverse, invertible = self.transform().inverted()
+            direction = inverse.map(QPointF(*self.ARROWS[event.key()])) - inverse.map(QPointF())
+            norm = hypot(direction.x(), direction.y()) or 1.0
+            if invertible and self.scene().nudge_bus_stop(direction.x() / norm, direction.y() / norm,
                                            BUS_STOP_SHIFT_NUDGE_M if shift else BUS_STOP_NUDGE_M):
                 event.accept()
                 return

@@ -30,6 +30,24 @@ def daily(panel):
     panel.demand.setCurrentIndex(panel.demand.findData("daily"))  # the Demand drop-down
 
 
+def test_a_demand_cut_by_its_check_leads_with_what_was_kept():
+    from traffic_simulator.od_matrix import _lead_with_what_was_kept
+
+    # qwen3.5 told the user 6,420 veh/h when the check had kept 47 (Dhanmondi): the kept figure now comes first
+    info = {"method": "gravity", "total_asked": 6503, "total_made": 6420, "junction_controls": {"N41": "uncontrolled",
+            "N66": "signalised"}, "checked_in_a_run": {"kept": "6%"}}
+    _lead_with_what_was_kept(info, 0.06, 47)
+    assert list(info)[:2] == ["total_now", "kept_after_check"] and info["total_now"] == 47
+    assert "6% of 6420" in info["kept_after_check"] and info["total_before_check"] == 6420 and "total_made" not in info
+    assert "N41" in info["to_hold_more"] and "N66" not in info["to_hold_more"]  # only those that give way
+    most = {"total_made": 1000, "junction_controls": {"N41": "uncontrolled"}}
+    _lead_with_what_was_kept(most, 0.8, 800)
+    assert most["total_now"] == 800 and "to_hold_more" not in most  # most of it held: no advice
+    scaled = {"factor": 2.0, "total_before": 500, "total_after": 1000}  # scale_demand's keys, cut by its check
+    _lead_with_what_was_kept(scaled, 0.5, 500)
+    assert "50% of 1000" in scaled["kept_after_check"] and scaled["factor"] == 1.0 and "total_after" not in scaled
+
+
 def test_hourly_and_daily_demand_are_kept_apart():
     matrix, panel = setup()
     assert [panel.demand.itemData(i) for i in range(panel.demand.count())] == ["hourly", "daily", "institutions"]
@@ -189,6 +207,8 @@ def test_the_assistant_works_the_same_controls():
     assert set(read["different"]) <= {"1W->1E", "1W->2E"} and read["pairs_with_data_count"] == 2  # ...exceptions apart
     for args, message in (({"pairs": ["9X->1E"], "demand": "hourly", "value": 5}, "No such origin"),
                           ({"origins": ["1W"], "demand": "daily", "mode_split": {"bus": 50, "car": 60}}, "adding up to 100"),
+                          ({"origins": ["1W"], "demand": "daily", "mode_split": [0.4, 0.6]}, "one each for"),
+                          ({"pairs": ["1W->1E"], "demand": "hourly", "mode_split": []}, "Give a value"),  # [] is none
                           ({"pairs": ["1W->1E"], "demand": "hourly"}, "Give a value")):
         try:
             panel.command("set_od_demand", args)
@@ -197,6 +217,9 @@ def test_the_assistant_works_the_same_controls():
         else:
             raise AssertionError(f"{args} should have been refused")
     assert undo_steps == [None, None, None]  # refusals changed nothing
+    assert panel._shares_from([0.3, 0.6, 0.1]) == [30, 60, 10]  # fractions (llama3.2) read as percent
+    for written in ("1W-1E", "1W->>1E", "1W => 1E", "1W - 1E"):  # pairs as small models write them
+        assert panel._pairs_from({"pairs": [written]}) == [("1W", "1E")], written
     panel.command("shape_daily_curve", {"preset": "weekday"})  # no pairs named: every pair
     pairs = [(o, d) for o in matrix.origins for d in matrix.destinations if o != d]
     assert all(matrix.cells[pair].profile.points for pair in pairs) and len(undo_steps) == 4

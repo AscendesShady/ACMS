@@ -99,6 +99,24 @@ Plain `assert` functions, run with `python tests/test_x.py` or all at once in `r
   lamps live) with the same picture as edit mode, the next frame not drawing it again, zooming, an edit
   mid-run and an extension's item all shown, and edit mode back after the run; Power Saver's button
   doubling the clock's step and back.
+- `test_projection.py`: parallel and translation-invariant orthographic projection, upright height and labels;
+  natural screen-speed foreshortening at equal world speed; frame/alpha, physical dimensions, zoom, centre,
+  selection, project snapshot, undo and live clock/Runner retained across toggles; Fit/Reset/wheel respecting
+  the camera; inverse-projected clicks and pointer coordinates, screen-direction crossing boxes with world
+  bounds, bus-stop arrow nudges; exact raster vehicle L/W at four zooms with no dot/body enlargement.
+  `QT_QPA_PLATFORM=windows python tests/test_projection.py --gpu` explicitly checks the real GPU in a hidden
+  framebuffer: isometric roof/pose parity with raster, no minimum body enlargement and one shared pose upload.
+- `test_vehicle_assets.py`: fixed/random colour controls and save/undo/redo, atomic refusal and old-project
+  defaults; stable paint and renamed class/dispatch appearances; identical seeded motion with random on/off;
+  shaped high-detail models inside physical footprints (including extreme edited L/W), round tyres at normal
+  proportions, tapered empty car corners, raised/sloping glass and truly open bicycle-frame gaps. Buildings
+  hide with labels/hit targets, preserving records/frame/camera; explicit total heights keep every roof vertex
+  inside the footprint and [0,H], project screen-up in metres, change only the 3D image and retain 2D picking.
+  Height defaults are labelled assumed, invalid values refuse without insertion, JSON/old files round-trip,
+  height does not change demand, and selected-height edits plus Undo/Redo preserve a live Runner and camera.
+  `--gpu` additionally checks actual framebuffer silhouettes/open gaps, random paints and solid coplanar bus
+  windows against raster, one upload across camera changes, and depth independent of instance order. Negative
+  controls replace meshes with bricks or remove glazing depth bias and must fail these regressions.
 - `test_selection.py`: a line meeting a box (through it, from inside, across a corner, passing by);
   a window taking only the junction inside it and a crossing box its four roads too, a bus stop's bay
   by window and by crossing, and everything boxed deleted to an empty, valid network; and in the
@@ -119,6 +137,68 @@ Plain `assert` functions, run with `python tests/test_x.py` or all at once in `r
   offside pocket at a priority T full against heavy oncoming traffic, the next turner stopped short of it in
   the through lane with straight-on traffic stopped behind it); `test_network_tools.py` (`update_roads` setting,
   refusing, dropping on one-way and removing a pocket).
+- `test_simulation.py`: an uncontrolled junction's major road follows the trunk, whichever way it runs; a vehicle
+  stuck the teleport time at its lane's front jumps to its route's next link (not before, not when off), keeping its
+  trip's start. `test_analysis.py`: run_health names teleports and where.
+  `test_ai_mode.py`: figures no tool gave flagged (made-up results 5, measured ones and a numbered list 0); a refused
+  call reminded once, run corrected, no note after. `test_network_tools.py`: invented ends dropped only when the user
+  named none and none is real; a level word or another tool's argument refused saying where it goes.
+  `test_od_matrix.py`: a demand cut by its check leads with what was kept, advice for junctions that only give way.
+  `test_experiments.py`: a demand that never holds names the junctions that only give way, not when signalised.
+  `test_background_network.py`: busy Overpass servers tried again after a pause, then the copy kept for that query. A dual
+  carriageway crossing mapped as four nodes 15 m apart is one junction.
+- `test_background_network.py`: a road cut 7 m past a junction at the area's edge still gets a 60 m entry road,
+  carried on along its own line.
+- `test_network_tools.py`: arguments sent as text meaning nothing ("None", "null", "n/a") left out, under real
+  or unknown names, a real 0 kept, a required one sent so still missing, a real value under no name still refused;
+  an invented grid for a request naming a place caught, a grid asked for or no place named let through.
+- 2026-10-13 improvement plan. `test_ai_mode.py`: a tool refused three times not run again in that answer; a change
+  claimed with no tool run questioned once, then noted (owning up, or a plain answer, left alone); tools a later
+  plan adds after an edit ran not pushed, the first plan's still; usage tagged by the asking thread; "What ran" of
+  this answer only; an Ollama model counting more tokens than estimated sizing its next window by its count.
+  `test_background_network.py`: an area fetched this week read from its copy with no server asked, an older copy
+  only when none answers. `test_prompt_campaign.py`: an isolated campaign keeping its baseline and reloading it with a
+  new chat before each prompt; a halt closing the Research Log. `test_od_matrix.py`: "1W-1E", "1W->>1E", "1W => 1E"
+  read as 1W->1E; fractions as percent; an empty split as none. `test_experiments.py`: a sensitivity sweep's
+  elasticities (no roundabout: the ring gap's exactly 0; a longer reaction time slower), stopped gives None, and
+  the assistant's parameter_sensitivity refused without demand or with an unknown parameter or step, then run.
+  `test_simulation.py`: a full closure holds its queue past the teleport time. `test_analysis.py`: Tanner's capacity
+  (1379, 521, 377, 255 at 0–1,200 veh/h) and beside the HCM's for a light ring. `test_ai_mode.py`: a request answering
+  nothing still recorded; a single made-up figure of 1,000 or more flagged, a year not. `test_network_tools.py`: a
+  size or total of 0 left out.
+- Traffic audit fixes, 2026-10-13. `test_experiments.py`: a warm-up left out of what is observed (passages, fuel,
+  traversals after it); a 2 x 2 grid of give-way junctions holding the demand sized to X 0.85; the demand check judging
+  an uneven hour's busiest quarter (PHF 0.7 at X 0.85 fails, 0.85 at X 0.6 holds); a borderline verdict going to three
+  seeds; calibrated demand meeting the counts when loaded on the simulation's own routes; mode choice moving people so
+  the cars change (1,000 to 348 with 70 % to the bus); benefit_cost's caution when fewer trips are served.
+  `test_results.py`: a 40 m road's flow counts every vehicle that entered it. `test_signal_timing.py`: max-pressure
+  never starves a light arm (its wait under MAX_RED_S plus an amber, no teleport); SCATS keeps a short cycle at
+  moderate load. `test_simulation.py`: give-way drivers slow to look and a minor offside turn gives way by HCM rank; the
+  fixed-seed digest renewed for the new turn speeds.
+- Open audit problems, 2026-10-18. `test_experiments.py`: demand on short links sized by what they hold
+  (`sized_by` storage, under the X-only size). `test_signal_timing.py`: max-pressure serving a lone side-road car
+  soon (its detection zone). `test_simulation.py`: Webster's shortest cycle 30 s (`MIN_CYCLE_S`); a route-cost prior
+  at the effective red; the fixed-seed digest renewed for the per-kind turn floors. `test_network_tools.py`: the
+  X-sizing tests run with the storage bound off; the demand check's peak quarter discounting the rise in arrivals
+  (X 0.6 at PHF 0.85 holds). `test_experiments.py`: a passage crossed in the step that ended the warm-up left out. Its experiments run 5 simulated minutes (2-3 were shorter than a trip across the grid, so throughput read ~0). `test_prompt_campaign.py`: a 3x2 build's demand at X 0.65 holds again with U-turns at
+  their own rate (`UTURN_PER_LANE_VPH`). `test_gpu.py`: Power Saver's rate counted in display frames (`frames`), as
+  `draws` now counts one call per appearance.
+- Low-severity audit items, 2026-10-18. `test_stats.py`: exact paired power (0.401 at n 5, 0.565 at n 20 and d 0.5, α
+  with no difference); Holm's adjusted p; TTI and BI on one mean; a Poisson safety fit ranking sites by z.
+  `test_results.py`: a free bicycle's trip at TTI 1 against its own free speed. `test_simulation.py`: path-size logit
+  shares. `test_experiments.py`: route choice on one seed with `excess_cost` beside the logit gap; elastic demand
+  stopping on the residual (`largest_gap`). `test_institutions.py`: residents spread over three hours; staff commuting
+  at 1.1 a car; school drop-off cars driving on; an office's default near ITE 710's per-employee rate.
+- Tool accuracy, 2026-10-13. `test_network_tools.py`: ids read as "all", "2,2; 3,3" and Python's "['4,4-4,3']";
+  an unknown junction "Unknown id", an end given as a junction (and back) said so; every unsignalised junction
+  named at once; greens with a method other than fixed refused, one a phase, alone meaning fixed; a grid's result
+  in columns x rows; incident fields beside run_simulation's read as one incident (and the two field lists kept
+  equal); lanes 13 refused, a speed outside 5-130 refused. `test_od_matrix.py`: scale_demand cut by its check
+  reports its own total and factor. `test_simulation.py`: read_traffic for a road gives its cars' mean speed and
+  stops, without the signal plans. `test_experiments.py`: an experiment's answer leads with its objective and the
+  lead figures with units, the rest counted; start_batch takes a seed list.
+- `test_background.py`: Hide Background (an image's plan drawn, then only the colour, then the plan again; the
+  project, its undo history and its saved state unchanged; no eye for a plain colour).
 - `test_background.py` (no test reaches the internet; a stand-in answers for Nominatim): place search by
   its usage policy (the tiles' User-Agent, the URL, the pole left out, the cache, nothing found, an
   unreadable answer, offline, at least a second between requests) and in the window (one place under the
@@ -170,7 +250,11 @@ Plain `assert` functions, run with `python tests/test_x.py` or all at once in `r
   the HCM 6 entry capacity (Eq 22-1 at 0 and 1,000 veh/h, Eq 22-4 for two lanes, none for three).
 - `test_history.py`: undo/redo and merging.
 - `test_theme.py`: contrast of every text/background pair; a click lighting a plain, primary and mini button
-  (PRESSED at once, back after FLASH_MS), one flash filter however many windows.
+  (PRESSED at once, back after FLASH_MS), one flash filter however many windows; checked native controls have
+  a contrasting checkmark/dot inside their indicator; keyboard focus keeps a button's size and text bounds.
+  `tools/preview_ui.py --output reports/ui-preview --width 1280 --height 800` captures all seven tabs and both
+  AI pages, plus JSON layout measurements, using CPU/offscreen Qt. On Windows it locates the installed font
+  directory explicitly. This does not verify native Windows window chrome or the OpenGL renderer.
 - `test_create_tab.py`: the two sections opening and closing (Generate Network open at start, road settings,
   signal timing and grid size in it); the chosen signal timing kept as the network's default, reaching a new
   junction and every junction of a generated grid, undo restoring it; the driving
@@ -394,7 +478,10 @@ Plain `assert` functions, run with `python tests/test_x.py` or all at once in `r
   tools used; no guided mode).
 - `tools/eval_commands.py` (not a test file and not run by the monitor: it needs Ollama): requests as users type them (the first three
   guided mode got wrong), each against the tools it should and shouldn't call, for each local model: network
-  tools run on a real grid, the window's tools answer with stand-ins; pass rate, seconds and input tokens.
+  tools run on a real grid, the window's tools answer with stand-ins; pass rate, seconds and input tokens. 22 cases
+  (2026-10-13: the 8 first ones and 14 everyday tasks, each checking the arguments too: road, value, weather, ids);
+  each call goes through what AI Mode does first (contradicts, fold_incident, drop_strays, repair_ends,
+  normalise), only calls that ran count, and an edit that changes nothing is already so. `EVAL_OUT` names the JSON.
 - The AI stress test (2026-10-05, not in the repository: a driver of the real window offscreen with the Research
   Log ticked): 30 prompts written by another model (terse, typos, non-native English, multi-step, questions),
   each from a fresh 4 x 4 grid, every approval card applied, each step graded in the Research Log by its expected

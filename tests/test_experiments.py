@@ -167,6 +167,97 @@ def test_a_scenario_changes_only_a_copy():
     assert experiments.scaled(demand, 2)[0].hourly == 600 and demand[0].hourly == 300
 
 
+def test_demand_on_short_links_is_sized_by_what_they_hold():
+    # A grid of 40 m give-way links: each junction alone holds X 0.85, but the queues fill the short links and spill
+    # back; sizing stops when a link's 95th-percentile queue reaches STORAGE_LIMIT of its length, and that holds
+    network = generate_network(2, 2, 40.0)
+    for node in network.nodes.values():
+        node.control = "uncontrolled"
+    ends = sorted(network.approach_nodes)
+    plan, info = tools.demand_plan(network, [(o, d) for o in ends for d in ends if o != d],
+                                   {"demand": "hourly", "degree_of_saturation": 0.85})
+    assert "spill back" in info["sized_by"]
+    demand = [PairDemand(o, d, value, None, [], "Random", (0, 100, 0)) for (o, d), value in plan.items()]
+    assert experiments.holds(network, demand, VehicleModes().modes, seed=1)["holds"]
+    long, _ = tools.demand_plan(generate_network(2, 2), [(o, d) for o in ends for d in ends if o != d],
+                                {"demand": "hourly", "degree_of_saturation": 0.85})
+    assert sum(long.values()) > sum(plan.values())  # 500 m links: the junctions' X binds, as before
+
+
+def test_the_demand_check_judges_the_busiest_quarter_of_an_uneven_hour():
+    from traffic_simulator.daily_profile import phf_quarters
+
+    network = generate_network(2, 2)
+    ends = sorted(network.approach_nodes)
+    pairs = [(o, d) for o in ends for d in ends if o != d]
+    found = []
+    for x, phf in ((0.85, 0.7), (0.6, 0.85)):  # its peak quarter at X 1.21: over; at X 0.71: fine
+        plan, _ = tools.demand_plan(network, pairs, {"demand": "hourly", "degree_of_saturation": x})
+        demand = [PairDemand(o, d, v, None, [], "Random", (0, 100, 0), quarters=phf_quarters(phf)) for (o, d), v in plan.items()]
+        found.append(experiments.holds(network, demand, VehicleModes().modes, seed=1))
+    assert found[0]["holds"] is False and found[0]["peak_quarter_build_up"] > experiments.HOLD_BUILD_UP
+    assert found[1]["holds"] is True and "peak_quarter_build_up" in found[1]
+
+
+def test_mode_choice_moves_people_so_the_vehicles_change_with_them():
+    # A pair's people (vehicles x occupancy now) ride the new split: a shift from cars (1.5 aboard) to a bus (20)
+    # takes cars off the road; before, the vehicles stayed and only their split changed (audit 2026-10-13, M6)
+    network, modes = generate_network(2, 2), VehicleModes().modes
+    pair = ("1W", "1E")
+    alternatives = [{"mode": "Car", "cost_per_km": 25}, {"mode": "Bus", "cost": 50, "constant": 1.0}]
+    plan, info = tools.mode_plan(network, [pair], {"alternatives": alternatives}, modes, {pair: 1000.0},
+                                 current={pair: {"Bus": 0.0, "Car": 1.0, "Bike": 0.0}})
+    people = info["pairs"][0]["people_percent"]
+    expected = 1000 * 1.5 * (people["Car"] / 100 / 1.5 + people["Bus"] / 100 / 20)  # Bus untimetabled here
+    assert people["Bus"] > 0 and abs(info["values"][pair] - expected) < 1 and info["vehicles_after"] < 1000  # % rounded
+    _, kept = tools.mode_plan(network, [pair], {"alternatives": alternatives}, modes, {pair: 1000.0})
+    assert "values" not in kept  # no split given: the vehicles are left as they are
+
+
+def test_a_grid_of_give_way_junctions_holds_the_demand_sized_for_it():
+    # Sized to X 0.85 by the capacity model, a 2 x 2 grid of uncontrolled junctions jammed (it held only to about
+    # X 0.4) until give-way drivers slowed to look, minor offside turns gave way by HCM rank and the table was
+    # re-measured (audit 2026-10-13, H1)
+    network = generate_network(2, 2)
+    for node in network.nodes.values():
+        node.control = "uncontrolled"
+    ends = sorted(network.approach_nodes)
+    plan, _ = tools.demand_plan(network, [(o, d) for o in ends for d in ends if o != d],
+                                {"demand": "hourly", "degree_of_saturation": 0.85})
+    demand = [PairDemand(o, d, value, None, [], "Random", (0, 100, 0)) for (o, d), value in plan.items()]
+    assert experiments.holds(network, demand, VehicleModes().modes, seed=1)["holds"]
+
+
+def test_a_warm_up_is_left_out_of_what_is_observed_too():
+    from traffic_simulator.results import RunRecorder
+
+    network, modes = generate_network(2, 2), VehicleModes().modes
+    demand = [PairDemand("1W", "1E", 900.0, None, [], "Random", (0, 100, 0)),
+              PairDemand("1N", "1S", 600.0, None, [], "Random", (0, 100, 0))]
+    whole = experiments.run_headless(network, demand, modes, 5, 600, recorder=RunRecorder(network, modes),
+                                     observe=True)[0].observations()
+    warm = experiments.run_headless(network, demand, modes, 5, 600, observe=True,
+                                    recorder=RunRecorder(network, modes, measure_from_s=300))[0].observations()
+    assert whole["observed_from_s"] == 0 and warm["observed_from_s"] == 300 and abs(warm["observed_s"] - 300) < 1
+    assert all(passage[3] >= 300 for passage in warm["passages"])  # detectors, fuel, conflicts: after it only
+    assert 0 < sum(warm["fuel"]["by_type_ml"].values()) < sum(whole["fuel"]["by_type_ml"].values())
+    assert sum(n for n, _ in warm["traversals"].values()) < sum(n for n, _ in whole["traversals"].values())
+
+
+def test_a_sensitivity_sweep_gives_each_parameters_elasticity():
+    network, modes = generate_network(2, 2), VehicleModes().modes
+    demand = [PairDemand("1W", "1E", 900.0, None, [], "Random", (0, 100, 0)),
+              PairDemand("1N", "1S", 600.0, None, [], "Random", (0, 100, 0))]
+    found = experiments.parameter_sensitivity(network, demand, modes, [3], 600, ("tau_s", "ring_timegap_s"))
+    assert found["runs"] == 5 and set(found["parameters"]) == {"tau_s", "ring_timegap_s"}
+    ring = found["parameters"]["ring_timegap_s"]  # no roundabout here: the same seed runs the same, elasticity 0
+    assert all(ring[key]["elasticity"] == 0 for key in experiments.SENSITIVITY_MEASURES)
+    assert found["parameters"]["tau_s"]["mean_speed_kmh"]["elasticity"] < 0  # longer headways: slower
+    assert experiments.parameter_sensitivity(network, demand, modes, [3], 600, cancelled=lambda: True) is None
+    tau = experiments.varied(modes, "tau_s", 0.1)[0]
+    assert all(mode.tau_s >= experiments.DT for mode in tau) and modes[0].tau_s == VehicleModes().modes[0].tau_s
+
+
 def test_a_headless_run_is_repeatable_and_recorded():
     from traffic_simulator import results
 
@@ -226,7 +317,7 @@ def test_signal_timing_bus_stops_institutions_and_the_map():
     assert (node.signal_method, node.signal_phases, node.green_times_s) == ("fixed", 2, [30.0, 25.0]) and "2,2" in timed["timed"]
     assert "method must be" in refused(network, "set_signal_timing", junctions=["2,2"], method="guess")
     network.nodes["3,2"].control = "uncontrolled"
-    assert "isn't signalised" in refused(network, "set_signal_timing", junctions=["3,2"], method="fixed")
+    assert "is not signalised" in refused(network, "set_signal_timing", junctions=["3,2"], method="fixed")
 
     stop = tools.run_tool(network, "add_bus_stop", {"road": "1,1-2,1", "dwell_s": 25})
     assert stop["added"] == "BS1" and network.bus_stops["BS1"].dwell_s == 25
@@ -240,7 +331,7 @@ def test_signal_timing_bus_stops_institutions_and_the_map():
     school = place(network, "School", x, y, 6000, 100)
     updated = tools.run_tool(network, "update_institution", {"id": school.id, "people": 900, "radius_m": 400})
     assert network.institutions[school.id].people == 900 and updated["reaches"]
-    assert "No institution" in refused(network, "update_institution", id="IN99", people=1)
+    assert "Unknown id" in refused(network, "update_institution", id="IN99", people=1)
 
     asked = []
     tools.place_download = lambda url: asked.append(url) or json.dumps(
@@ -263,6 +354,22 @@ def test_calibration_meets_the_counts():
     row = info["counts"][0]
     assert row["geh_after"] < 0.5 < row["geh_before"]
     assert abs(tools.geh(600, 600)) < 1e-9 and round(tools.geh(400, 600), 2) == 8.94
+    # Fitted on the routes the simulation drives: the matrix loaded on them meets the counts (on shortest-distance
+    # routes, a fit of GEH 0 loaded GEH 17-24 in the simulation)
+    from collections import Counter
+
+    from traffic_simulator.simulation import Graph
+    grid = generate_network(3, 3)
+    ends = sorted(grid.approach_nodes)
+    prior = {(o, d): 50.0 for o in ends for d in ends if o != d}
+    counted = {"1,2-2,2": 600, "2,2-2,1": 300}
+    fitted, _ = tools.calibration_plan(grid, prior, {"counts": [{"road": r, "vph": v} for r, v in counted.items()]})
+    graph, load = Graph(grid), Counter()
+    for pair, value in fitted.items():
+        for share, route in graph.route_shares(*pair):
+            for link in route:
+                load[link.road] += value * share
+    assert all(tools.geh(load[road], vph) < 1 for road, vph in counted.items()), load
     for counts, reason in (([{"road": "9,9-8,8", "vph": 5}], "No road"), ([{"road": road, "vph": -1}], "vph")):
         try:
             tools.calibration_plan(network, flows, {"counts": counts})
@@ -308,7 +415,7 @@ def test_the_assistant_tests_the_network_and_its_planning_is_kept():
     assert panel.journal[-1]["kind"] == "plan" and "One lane" in panel.journal[-1]["what"]
 
     built = deepcopy(window.network)
-    args = {"question": "Does one lane on 1,1-2,1 add delay?", "duration_min": 2, "seeds": "1-2", "scenarios": [
+    args = {"question": "Does one lane on 1,1-2,1 add delay?", "duration_min": 5, "seeds": "1-2", "scenarios": [
         {"name": "As built"},
         {"name": "One lane", "changes": [{"tool": "update_roads", "args": {"roads": ["1,1-2,1"], "lanes_per_direction": 1}}]},
         {"name": "Busier", "demand_scale": 1.5}]}
@@ -338,22 +445,35 @@ def test_the_assistant_tests_the_network_and_its_planning_is_kept():
     assert {"Read me", "Comparison", "Scenarios", "Runs", "Planning journal"} <= set(sheets)
     assert any("One lane" in str(cell) for row in sheets["Planning journal"] for cell in row)
     assert len(sheets["Runs"]) == 7 and all(Path(row[3]).exists() for row in sheets["Runs"][1:])  # each run's workbook
-    busier = [row for row in answer["comparison"] if row["scenario"] == "Busier" and row["figure"] == "Trips completed"][0]
-    assert busier["diff"] > 0  # half as much demand again: more trips
-    assert busier["test"].startswith("paired") and busier["confidence"] == 0.975 and "replications_needed" in busier
+    busier = [row for row in answer["comparison"] if row["scenario"] == "Busier" and row["figure"] == "Throughput"][0]
+    assert busier["diff"] > 0 and busier["unit"] == "veh/h"  # half as much demand again: more through
+    assert busier["test"].startswith("paired") and busier["interval_level"] == 0.975 and "replications_needed" in busier
+    lead = [row["figure"] for row in answer["comparison"]]  # the objective and the lead figures, not ~100 rows
+    assert lead[0] == answer["objective"] and set(lead) <= {answer["objective"], *window.LEAD_FIGURES}
+    assert "more rows" in answer["more"] and all("confidence" not in row for row in answer["comparison"])
     read = window._runs_command("read_results", {"id": "e1"})
     assert read["question"] == args["question"] and read["seeds"] == [1, 2]
 
     from traffic_simulator.main import MainWindow
 
     empty = MainWindow()  # no demand: refused, not run with zeros that look like results
-    try:
-        empty._runs_command("run_simulation", {"duration_min": 1}, check_only=True)
-    except ValueError as exc:
-        assert "no demand to test with" in str(exc)
-    else:
-        raise AssertionError("a run with no demand should be refused")
+    for tool in ("run_simulation", "parameter_sensitivity"):
+        try:
+            empty._runs_command(tool, {"duration_min": 1}, check_only=True)
+        except ValueError as exc:
+            assert "no demand to test with" in str(exc).lower(), exc
+        else:
+            raise AssertionError(f"{tool} with no demand should be refused")
     empty.close()
+    for args, why in (({"parameters": ["speed"]}, "parameters are some of"), ({"step": 0.9}, "step must be")):
+        try:
+            window._runs_command("parameter_sensitivity", {"duration_min": 1, **args}, check_only=True)
+        except ValueError as exc:
+            assert why in str(exc), exc
+        else:
+            raise AssertionError(args)
+    swept = window._runs_command("parameter_sensitivity", {"duration_min": 1, "seeds": [4], "parameters": ["tau_s"]})
+    assert swept["runs"] == 3 and "elasticity" in swept["parameters"]["tau_s"]["throughput_vph"] and "note" in swept
     first = window._runs_command("run_simulation", {"duration_min": 1, "seed": 9})
     again = window._runs_command("run_simulation", {"duration_min": 1, "seed": 9})
     assert (first["run"], again["run"]) == ("R1", "R2") and Path(first["file"]).exists() and first["file"] != again["file"]
@@ -391,7 +511,7 @@ def test_run_statistics_calibration_and_mode_choice():
             raise AssertionError(f"{tool} with no run")
     run = window._runs_command("run_simulation", {"duration_min": 10, "seed": 3})
     assert run["tti"] >= 1 and run["pti"] >= run["tti"] * 0.9  # reliability is among the headline figures
-    assert run["bi"] >= 0 and 0 <= run["unfinished_share"] < 1 and run["mean_system_trip_s"] >= run["mean_trip_s"]
+    assert run["bi"] >= 0 and 0 <= run["unfinished_percent"] < 100 and run["mean_system_trip_s"] >= run["mean_trip_s"]
     found = window._runs_command("analyse_run", {})
     assert found["run"] == "R1" and found["reliability"]["trips"] > 50 and found["reliability"]["p95_s"] >= found["reliability"]["median_s"]
     assert {"1W", "1E", "1N"} <= set(found["arrivals_per_minute"])
@@ -514,9 +634,9 @@ def test_the_assistant_works_every_extension():
             continue
         raise AssertionError(args)
     batch = window._extension("batch_run").controls
-    done = run("start_batch", {"seeds": "1-2", "duration_min": 1})
+    done = run("start_batch", {"seeds": [1, 2], "duration_min": 1})  # a list, as the schema asks
     assert done["runs"] == done["of"] == 2 and Path(done["file"]).is_file()
-    assert batch.findChild(QLineEdit).text() == "1-2" and "Saved" in " ".join(l.text() for l in batch.findChildren(QLabel))
+    assert batch.findChild(QLineEdit).text() == "1, 2" and "Saved" in " ".join(l.text() for l in batch.findChildren(QLabel))
     assert "No workbook at" in run("replay_run", {"path": "nowhere.xlsx"})["error"]
     window.close()
 
@@ -544,7 +664,7 @@ def test_the_assistant_analyses_runs_and_experiments():
     assert found["baseline"] == first["run"] and "Different seeds" in found["caution"]
     assert "two different runs" in run("resilience", {"baseline": first["run"], "disrupted": first["run"]})["error"]
 
-    experiment = run("run_experiment", {"duration_min": 3, "seeds": [1, 2, 3], "scenarios": [
+    experiment = run("run_experiment", {"duration_min": 5, "seeds": [1, 2, 3], "scenarios": [
         {"name": "As built"}, {"name": "Busier", "demand_scale": 1.5}, {"name": "Quieter", "demand_scale": 0.5}]})
     power = run("power_analysis", {"experiment": experiment["experiment"], "figure": "Delay", "scenario": "Busier"})
     assert power["seeds_now"] == 3 and power["sd_of_differences"] >= 0 and power["curve"]
@@ -678,6 +798,7 @@ def test_conditions_factorials_equilibrium_and_elastic_demand():
     assert routed["runs"] == 2 and "error" not in routed
     settled = run("assign_routes", {"iterations": 2, "duration_min": 2, "until_gap": 0.5})
     assert "converged" in settled and settled["iterations"]
+    assert len({step["seed"] for step in settled["iterations"]}) == 1 and all("excess_cost" in step for step in settled["iterations"])
 
     before = run("run_simulation", {"duration_min": 6, "seed": 3})
     window.network.route_choice = {}
@@ -688,6 +809,7 @@ def test_conditions_factorials_equilibrium_and_elastic_demand():
     assert "elasticity must be below 0" in run("equilibrate_demand", {"reference": before["run"], "elasticity": 0.5})["error"]
     grown = run("equilibrate_demand", {"reference": before["run"], "iterations": 2, "duration_min": 6})
     assert grown["total_vph_after"] > grown["total_vph_before"] and grown["changed_percent"] > 0  # induced traffic
+    assert all("largest_gap" in step for step in grown["iterations"])  # stopped on the residual, not the step
     assert sum(cell.flow or 0 for cell in window.od_matrix.cells.values()) > total_before  # typed into the grid
     window.close()
 
@@ -757,6 +879,7 @@ def test_the_assistant_audits_designs_access_and_value():
     factor = (1 - 1.07 ** -30) / 0.07
     assert abs(high["pv_benefits"] - value["yearly_benefit"] * factor) <= abs(value["yearly_benefit"]) * 0.01 + 2
     assert high["pv_costs"] == 1_000_000 and value["bcr_interval_over_seeds"] is not None
+    assert "trips against" in value["caution"]  # 60 % of the demand: fewer trips served, said so
     assert "capital_cost" in run("benefit_cost", {"experiment": experiment["experiment"]})["error"]
     assert "scenario is one of" in run("benefit_cost", {"experiment": experiment["experiment"], "capital_cost": 1,
                                                         "scenario": "nothing"})["error"]
@@ -895,6 +1018,17 @@ def test_the_largest_share_of_a_demand_that_holds():
     assert experiments.largest_holding(lambda share: {"holds": True})[0] == 1.0  # holds: one run
     assert experiments.largest_holding(lambda share: {"holds": False})[0] == 0.0  # nothing held
     assert experiments.largest_holding(lambda share: {"holds": None})[0] is None  # stopped
+    # One seed decides a clear verdict; a borderline one (build-up near HOLD_BUILD_UP) goes to three seeds' majority
+    seen = []
+
+    def by_seed(seed, build_ups={1: 0.06, 2: 0.03, 3: 0.04}):
+        seen.append(seed)
+        return {"holds": build_ups[seed] <= experiments.HOLD_BUILD_UP, "build_up": build_ups[seed]}
+
+    verdict = experiments.holds_by_majority(by_seed, 1)
+    assert seen == [1, 2, 3] and verdict["holds"] is True and verdict["build_ups"] == [0.06, 0.03, 0.04]
+    seen.clear()
+    assert experiments.holds_by_majority(lambda seed: {"holds": False, "build_up": 0.4}, 1)["holds"] is False
     curve = [0.0] * 24
     curve[8] = 1.0
     daily = PairDemand("1W", "1E", None, 2400, curve, "Random", (0, 100, 0))
@@ -909,6 +1043,27 @@ def test_a_run_shows_whether_the_network_holds_a_demand():
     assert light["holds"] and abs(light["build_up"]) <= experiments.HOLD_BUILD_UP
     heavy = experiments.holds(network, [PairDemand("1W", "1E", 5000, None, [], "Random", (0, 100, 0))], modes, seed=1)
     assert heavy["holds"] is False and heavy["build_up"] > 0.3  # far over what a green can pass: it piles up
+
+
+def test_a_demand_that_never_holds_says_what_might_help():
+    # qwen3.5, Dhanmondi from OpenStreetMap (243 of 246 junctions give way): the bare "jams even at 6 %" left it guessing
+    window = window_with_demand()
+    for node in window.network.nodes.values():
+        node.control = "uncontrolled"
+    window._in_background = lambda work, what: (0, [(1.0, {"holds": False}), (0.06, {"holds": False})])
+    try:
+        window._check_demand([("1W", "1E")])
+    except ValueError as exc:
+        assert "jams even at 6%" in str(exc) and "only give way" in str(exc) and "set_junction_control" in str(exc)
+    else:
+        raise AssertionError("nothing held: refused")
+    for node in window.network.nodes.values():
+        node.control = "signalised"
+    try:
+        window._check_demand([("1W", "1E")])
+    except ValueError as exc:
+        assert "only give way" not in str(exc)  # signalised already: no such advice
+    window.close()
 
 
 def test_the_window_checks_a_sized_demand_in_a_run():

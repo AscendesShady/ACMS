@@ -15,6 +15,7 @@ change the user approves agree.
 
 from __future__ import annotations
 
+import ast
 import difflib
 import heapq
 import json
@@ -23,7 +24,7 @@ import re
 import time
 from collections import Counter, defaultdict
 from copy import deepcopy
-from math import cos, exp, hypot, isfinite, log, radians, sin, sqrt
+from math import ceil, cos, exp, hypot, isfinite, log, radians, sin, sqrt
 from pathlib import Path
 
 from . import background_network
@@ -74,7 +75,13 @@ _PAIRS = {  # which OD pairs a demand tool works on
     "destinations": {"type": "array", "items": {"type": "string"},
                      "description": "Instead of pairs: end names like \"1E\" (not pairs); every pair to them."},
 }
-_SATURATION = ("Instead of a total or factor: size the demand so the most loaded junction (signalised, roundabout "
+# The kind of demand and how arrivals are spread: never how busy (llama3.2 sent demand "peak", arrival_pattern "heavy")
+_DEMAND_KIND = {"type": "string", "enum": ["hourly", "daily"],
+                "description": "The kind: hourly (veh/h) or daily (trips/day), not how busy (that's degree_of_saturation)."}
+_ARRIVALS = {"type": "string", "enum": ARRIVAL_PATTERNS,
+             "description": "How arrivals are spread in time, not how busy (that's degree_of_saturation)."}
+_SATURATION = ("Instead of a total or factor (the way to say how busy: light 0.4, medium 0.65, busy, peak or rush hour "
+               "0.85): size the demand so the most loaded junction (signalised, roundabout "
                "or priority) runs at this flow/capacity, e.g. 0.8 (busy), 0.95 (near capacity); 0.1-1.2. The "
                "capacities are measured on the simulated drivers; the demand is then run headless for 45 simulated "
                "minutes (a few minutes; more if it must be backed off) and, if vehicles pile up, cut to the largest "
@@ -117,7 +124,8 @@ TOOLS = [
     # Read: run straight away.
     {"name": "network_summary", "edits": False, "parameters": _object(),
      "description": "Overview of the open network: defaults, junctions by control type, road counts, "
-                    "boundary ends with their flows, and the extent in metres. Call this first."},
+                    "boundary ends with their set_end_flows weights (generate_demand's inputs, not the traffic a Run "
+                    "sends: read_od_matrix has that), and the extent in metres. Call this first."},
     {"name": "list_roads", "edits": False,
      "description": "Roads with their settings. 'one-way' traffic runs from -> to. Filter on big networks.",
      "parameters": _object({"node": {"type": "string", "description": "Only roads touching this junction or end."},
@@ -151,7 +159,8 @@ TOOLS = [
                     "amber, red per arriving road), and each vehicle's id, type, position (x_m, y_m; y "
                     "points down), heading (degrees, 0 = east, clockwise on screen), speed (km/h), road and "
                     "lane or junction turn, metres along it, origin and destination. Read it again to see "
-                    "how things change. Filter by road id; limit caps the vehicles listed (default 100).",
+                    "how things change. Filter by road id; limit caps the vehicles listed (default 100). Only the "
+                    "user's live Run: run_simulation's headless runs are read with read_results or analyse_run.",
      "parameters": _object({"road": {"type": "string", "description": "a road or junction id"},
                             "limit": {"type": "integer"}})},
     # Demand: the OD matrix, worked through the Demand Generator's own controls (ai_mode.py
@@ -183,8 +192,9 @@ TOOLS = [
      "description": "Change an existing vehicle type: new_name, vehicle_class (what it is: a bus calls at bus stops; "
                     "its figures stay), timetabled (true lets it have a headway; false clears "
                     "it), headway_min (0-120; a timetable; only a timetabled type), occupancy (people a "
-                    "vehicle), length_m, width_m, max_speed_kmh, accel, decel (comfortable braking), "
-                    "emergency_decel (the hardest it can brake, no less than decel), min_gap_m, tau_s (reaction time), "
+                    "vehicle), length_m, width_m, max_speed_kmh, accel (m/s², 0.1-10), decel (comfortable braking, "
+                    "m/s², 0.5-10), emergency_decel (the hardest it can brake, m/s², 0.5-15, no less than decel), "
+                    "min_gap_m, tau_s (reaction time, s), "
                     "sigma (imperfection 0-1), speed_dev, pcu (passenger car units, 0.1-10), filters (in a lateral run "
                     "it passes queues within its lane, if narrow). Give only what changes.",
      "parameters": _object({"name": {"type": "string"}, "new_name": {"type": "string"}, "timetabled": {"type": "boolean"},
@@ -201,8 +211,8 @@ TOOLS = [
                     "hourly_vph and daily_trips (pairs with none are left out; pairs_with_data_count 0 means the "
                     "matrix is empty), what most pairs share under usual (arrival pattern, split between the "
                     "vehicle_types, daily curve, hourly demand's peak_hour_factor and quarters: each 15 minutes' "
-                    "share of the hour) and any pair that differs under different. Read it before "
-                    "changing demand."},
+                    "share of the hour) and any pair that differs under different; total_hourly_vph and "
+                    "total_daily_trips: the whole matrix. Read it before changing demand."},
     {"name": "set_od_demand", "edits": True,
      "description": "Enter demand in the OD matrix the way the user does in the Demand Generator: select the "
                     "pairs, type the value, pick the arrival pattern, set each vehicle type's share on the "
@@ -210,9 +220,11 @@ TOOLS = [
                     "Give only what changes; a pattern or split alone needs pairs that already have that "
                     "demand. Use only end names read_od_matrix lists. A Run uses the kind the matrix shows, "
                     "and entering the other kind switches it (runs_use in the result).",
-     "parameters": _object({**_PAIRS, "demand": {"type": "string", "enum": ["hourly", "daily"]},
-                            "value": {"type": "number", "description": "veh/h (hourly) or trips per day (daily)."},
-                            "arrival_pattern": {"type": "string", "enum": ARRIVAL_PATTERNS},
+     "parameters": _object({**_PAIRS, "demand": _DEMAND_KIND,
+                            "value": {"type": "number", "description": "veh/h (hourly) or trips per day (daily) "
+                                      "for EACH pair named, not a total shared out (that's generate_demand total); "
+                                      "no pairs, origins or destinations = every pair."},
+                            "arrival_pattern": _ARRIVALS,
                             "peak_hour_factor": {"type": "number", "description": "Hourly demand only, 0.25-1 "
                                                  "(HCM PHF = V / 4·V15): the hour's second 15 minutes run at "
                                                  "veh/h ÷ PHF, the other three share the rest. 1 = even."},
@@ -254,7 +266,7 @@ TOOLS = [
                     "saturation (flow/capacity) of the most loaded junctions (signals as Webster times them, "
                     "roundabout entries, priority junctions' give-way movements; daily demand at its busiest hour). "
                     "To change demand already entered, keeping its pattern, use scale_demand.",
-     "parameters": _object({**_PAIRS, "demand": {"type": "string", "enum": ["hourly", "daily"]},
+     "parameters": _object({**_PAIRS, "demand": _DEMAND_KIND,
                             "total": {"type": "number", "description": "veh/h (hourly) or trips per day (daily), "
                                                                        "when the ends' flows shouldn't set it."},
                             "degree_of_saturation": {"type": "number", "description": _SATURATION},
@@ -263,7 +275,7 @@ TOOLS = [
                             "mean_trip_km": {"type": "number", "description": "Instead of distance_decay_per_km: "
                                              "fit the decay so the mean trip is this long (from a survey or "
                                              "counts; Hyman's calibration). The result gives mean_trip_km either way."},
-                            "arrival_pattern": {"type": "string", "enum": ARRIVAL_PATTERNS},
+                            "arrival_pattern": _ARRIVALS,
                             "mode_split": {"type": "array", "description": "As in set_od_demand.",
                                            "items": {"type": "object", "required": ["mode", "percent"],
                                                      "properties": {"mode": {"type": "string"},
@@ -271,8 +283,9 @@ TOOLS = [
     {"name": "equilibrate_demand", "edits": True,
      "description": "Elastic demand (induced or suppressed traffic) after a change to the network: each OD pair's hourly "
                     "demand moves towards demand × (trip time now / trip time before)^elasticity, by headless runs "
-                    "(iterations, default 3, of duration_min, default 30) until it settles. reference: the run (R1...) "
-                    "of the network before the change. elasticity -0.5 by default (usual: -0.3 to -0.8). A faster "
+                    "(iterations 1-6, default 3, of duration_min 5-240, default 30) until it settles. reference: the "
+                    "run (R1...) of the network before the change. elasticity -2 to below 0, -0.5 by default (usual: "
+                    "-0.3 to -0.8). Hourly demand only. A faster "
                     "network then carries more trips: test the design again with it.",
      "parameters": _object({"reference": {"type": "string"}, "elasticity": {"type": "number"},
                             "iterations": {"type": "integer"}, "duration_min": {"type": "number"}}, ("reference",))},
@@ -303,7 +316,10 @@ TOOLS = [
                     "Bonferroni-widened for several scenarios: confidence says) and whether it is clear (the "
                     "interval leaves out zero). Figures include the travel time, planning time and buffer indexes "
                     f"(reliability) and the unfinished share of trips. Saves an experiment workbook. At most {6} scenarios, {20} seeds, {60} runs. Use "
-                    "at least 3 seeds to tell designs apart; say the question being tested in `question`.",
+                    "at least 3 seeds to tell designs apart; say the question being tested in `question`. The answer "
+                    "leads with the objective and delay, trip time, throughput and unfinished trips (every figure is "
+                    "in the workbook). For a scenario described in plain words (a place, a grid, a traffic level), "
+                    "build_scenario.",
      "parameters": _object({"scenarios": {"type": "array", "items": _SCENARIO},
                             "seeds": {"type": "array", "items": {"type": "integer"}, "description": "e.g. [1, 2, 3, 4, 5]"},
                             "duration_min": {"type": "number"}, "question": {"type": "string"}, **_MEASURE_FROM,
@@ -339,7 +355,8 @@ TOOLS = [
                     "each road's 95th-percentile queue against its length (spillback where it reaches it).",
      "parameters": _object({"id": {"type": "string"}})},
     {"name": "check_calibration", "edits": False,
-     "description": "Validate a run (id; the latest if left out) against field data. `counts` [{\"road\": id, "
+     "description": "Validate a run (id; the latest if left out) against field data, such as traffic counts the "
+                    "user gives. `counts` [{\"road\": id, "
                     "\"vph\": n}] (both directions of a two-way road together) beside the run's measured flows: each "
                     "count's GEH, the share under 5 (the target is 85 %), RMSE and %RMSE, MAPE, the slope of counted on "
                     "modelled (1 = no bias, above 1: the run is low) and R². `profiles` (FHWA Toolbox III 2019): "
@@ -372,7 +389,7 @@ TOOLS = [
     {"name": "forecast", "edits": False,
      "description": "Forecast a run's series (id; the latest if left out) by Holt's exponential smoothing, fitted to "
                     "it: `what` throughput, mean_speed, on_road, queued, trip_time, or a road's flow or speed (give "
-                    "road); interval_min (default 1), horizon (intervals ahead, default 10). Returns the forecasts with "
+                    "road); interval_min (default 1), horizon (intervals ahead, 1-60, default 10). Returns the forecasts with "
                     "rough 95 % intervals and the hold-out accuracy against the naive forecast.",
      "parameters": _object({"id": {"type": "string"}, "what": {"type": "string", "enum": [
          "throughput", "mean_speed", "on_road", "queued", "trip_time", "flow", "speed"]}, "road": {"type": "string"},
@@ -389,7 +406,9 @@ TOOLS = [
                     "vehicle-km and car CO2 saved per simulated hour, valued (value_of_time_per_h, cost_per_veh_km, "
                     "carbon_per_tonne), over hours_per_year and years (default 30); NPV and benefit-cost ratio at "
                     "discount_rates_percent (default 3.5, 4, 7) against capital_cost (and annual_cost); the BCR's "
-                    "range over the seeds and whether the decision flips with the rate.",
+                    "range over the seeds and whether the decision flips with the rate. Money in whole currency "
+                    "units, not cents (defaults: 15 an hour of time, 0.15 a vehicle-km, 100 a tonne of CO2, 500 "
+                    "hours a year).",
      "parameters": _object({"experiment": {"type": "string"}, "scenario": {"type": "string"},
                             "capital_cost": {"type": "number"}, "annual_cost": {"type": "number"},
                             "value_of_time_per_h": {"type": "number"}, "cost_per_veh_km": {"type": "number"},
@@ -413,8 +432,9 @@ TOOLS = [
                             "beta_per_min": {"type": "number"}, "close_road": {"type": "string"}})},
     {"name": "regress", "edits": False,
      "description": "Least-squares regression with t-tests, R² and F: `y` on `x` (names) over `data` (a list of "
-                    "objects) or over an experiment's runs (`experiment` id: each run's figures, keyed as in its "
-                    "comparison, plus demand_scale). `log` names take their natural log (e.g. a volume-delay or "
+                    "objects) or over an experiment's runs (`experiment` id: each run's figures, by their key like "
+                    "delay_veh_h or their label like Delay, plus demand_scale). `log` names take their natural log "
+                    "(e.g. a volume-delay or "
                     "elasticity fit).",
      "parameters": _object({"y": {"type": "string"}, "x": {"type": "array", "items": {"type": "string"}},
                             "data": {"type": "array", "items": {"type": "object"}}, "experiment": {"type": "string"},
@@ -439,12 +459,14 @@ TOOLS = [
     {"name": "preflight_check", "edits": True,
      "description": "Check the network before trusting tests (FHWA Toolbox III): a run at a tenth of the demand listing "
                     "links driven far slower than free flow with no signal to explain it (a fault in the network), and "
-                    "a run at half the demand checked for gridlock and blocked entries. duration_min each (default 15).",
+                    "a run at half the demand checked for gridlock and blocked entries. duration_min each (5-60, "
+                    "default 15).",
      "parameters": _object({"duration_min": {"type": "number"}, "seed": {"type": "integer"}})},
     {"name": "resilience", "edits": False,
      "description": "A disrupted run against the same seed's undisrupted run (both ids): minute by minute, when the "
                     "disruption starts, the biggest drop, minutes to recover, performance kept and extra vehicle-hours "
-                    "(the resilience triangle). measure: throughput (default), speed or on_road.",
+                    "(the resilience triangle). measure: throughput (default), speed or on_road. Make the two with "
+                    "run_simulation on one seed: once as it is, once with incidents.",
      "parameters": _object({"baseline": {"type": "string"}, "disrupted": {"type": "string"},
                             "measure": {"type": "string", "enum": ["throughput", "speed", "on_road"]}},
                            ("baseline", "disrupted"))},
@@ -457,13 +479,14 @@ TOOLS = [
      "description": "How many seeds a comparison needs (paired t-test). From an experiment (id) and a figure (as in "
                     "its comparison) for one scenario against the baseline, or from sd (of the per-seed differences) "
                     "and difference: the seeds needed for 80 % and 90 % power, the smallest difference the "
-                    "experiment's seeds (or `seeds`) can find, and a power curve.",
+                    "experiment's seeds (or `seeds`: a number of seeds, not a list) can find, and a power curve.",
      "parameters": _object({"experiment": {"type": "string"}, "figure": {"type": "string"},
                             "scenario": {"type": "string"}, "difference": {"type": "number"}, "sd": {"type": "number"},
                             "power": {"type": "number"}, "seeds": {"type": "integer"}})},
     {"name": "test_agent_compliance", "edits": True,
      "description": "Test an agent-decided extension (TSP or DEVL, as its tab chooses the model) on a fixed battery: "
-                    "the network as it is, 30 % more demand, heavy rain and a lane closed, each on `seeds` (default "
+                    "the network as it is, 30 % more demand, heavy rain and a lane closed on the longest road (when it "
+                    "has 2+ lanes; the result lists the conditions run), each on `seeds` (default "
                     "1, 2) for duration_min (default 10); with DEVL, emergency vehicles every 4 minutes. Every run is "
                     "checked: no signal arm starved, no emergency vehicle held over 30 s, no gridlock, no agent "
                     "errors. Returns the pass rate and each failure with its evidence.",
@@ -483,6 +506,17 @@ TOOLS = [
                     "asked again keeps it. It asks the model several times a decision.",
      "parameters": _object({"id": {"type": "string"}, "sample": {"type": "integer"},
                             "perturbations": {"type": "array", "items": {"type": "string"}}})},
+    {"name": "parameter_sensitivity", "edits": True,
+     "description": "How much the results depend on the model's calibration parameters: the current network and demand "
+                    "run as it is and with each parameter 10 % lower and higher (tau_s: drivers' reaction time; "
+                    "critical_gap_s: give-way gap; ring_timegap_s: roundabout entry gap), on the same seeds; each "
+                    "figure's elasticity (percent change per percent change of the parameter) with its 95 % interval. "
+                    "Several runs per seed (1 + 2 per parameter).",
+     "parameters": _object({"parameters": {"type": "array", "items": {"type": "string",
+                                                                      "enum": ["tau_s", "critical_gap_s", "ring_timegap_s"]}},
+                            "seeds": {"type": "array", "items": {"type": "integer"}},
+                            "duration_min": {"type": "number"}, "measure_from_min": {"type": "number"},
+                            "step": {"type": "number", "description": "the change, 0.05 to 0.3 (default 0.1)"}})},
     {"name": "rank_scenarios", "edits": False,
      "description": "Rank every scenario of an experiment (id) on one figure (as in its comparison), all pairs, not "
                     "just against the baseline: randomized-block ANOVA and Friedman's rank test (no normality "
@@ -507,7 +541,9 @@ TOOLS = [
                     "route choice, a baseline run with its statistics, the reports asked for, and each what-if as a "
                     "paired experiment against the network as built), shows the user the plan to apply once, runs it "
                     "as one undo step and returns a plain report with the measured numbers. Prefer it whenever the user "
-                    "describes a scenario to build or changes to compare.",
+                    "describes a scenario to build or changes to compare in plain words. Its what-ifs are only the "
+                    "listed changes (an empty where means the busiest, or all); for exact roads, junctions or any "
+                    "other edit, use run_experiment.",
      "parameters": scenario.SCHEMA},
     {"name": "assign_routes", "edits": True,
      "description": "Route choice for every run that follows (it is saved with the network): each OD pair gets up "
@@ -515,7 +551,7 @@ TOOLS = [
                     "times, theta_per_min (default 0.5: higher, more to the fastest). iterations (0-10, default 4): "
                     "headless runs of duration_min, each measuring the link times and averaging them in (the method of "
                     "successive averages, toward stochastic user equilibrium); 0 uses free-flow times. off: true "
-                    "puts every vehicle back on the fastest route; until_gap (e.g. 0.02) stops once the relative gap is "
+                    "puts every vehicle back on the fastest route; until_gap (e.g. 0.02) stops once the relative gap (share of flow off its logit share) is "
                     "that low (settled). Returns each iteration's relative gap and the busiest pairs' route shares.",
      "parameters": _object({"iterations": {"type": "integer"}, "duration_min": {"type": "number"},
                             "seed": {"type": "integer"}, "theta_per_min": {"type": "number"},
@@ -558,13 +594,14 @@ TOOLS = [
                                                "after_min": {"type": "integer", "description": "0-120"}}}},
                             "dispatch_now": {"type": "boolean"}}, ("schedules",))},
     {"name": "start_batch", "edits": True,
-     "description": "Start Batch Run: every seed (like \"1-4\" or \"3, 7, 9\") runs duration_min simulated "
+     "description": "Start Batch Run: every seed (a list, like [1, 2, 3, 4]) runs duration_min simulated "
                     "minutes, headless, against the baselines (never, always preempt). test_devl: the emergency vehicle schedules "
                     "dispatched in each run, the DEVL tab's models deciding the lanes; test_tsp: the TSP tab's "
                     "models deciding bus priority. Pick those models, the pace, runs at once and times each with "
                     "set_extension first (read_extensions shows them). Saves each run's workbook and a batch "
                     "workbook comparing the models; it takes as long as the Batch Run tab says.",
-     "parameters": _object({"seeds": {"type": "string"}, "duration_min": {"type": "integer"},
+     "parameters": _object({"seeds": {"type": "array", "items": {"type": "integer"}, "description": "e.g. [1, 2, 3, 4]"},
+                            "duration_min": {"type": "integer"},
                             "test_tsp": {"type": "boolean"}, "test_devl": {"type": "boolean"}},
                            ("seeds", "duration_min"))},
     {"name": "replay_run", "edits": True,
@@ -633,7 +670,9 @@ TOOLS = [
                     "target_saturation_percent (50-110, SCATS and SCOOT), stop_weight_s (TRANSYT and SCOOT). Give "
                     "only what changes. The junctions must be signalised (set_junction_control).",
      "parameters": _object({"junctions": _IDS, "method": {"type": "string", "enum": list(SIGNAL_METHODS)},
-                            "phases": {"type": "integer"}, "green_times_s": {"type": "array", "items": {"type": "number"}},
+                            "phases": {"type": "integer", "description": "2 or 4"},
+                            "green_times_s": {"type": "array", "items": {"type": "number"},
+                                              "description": "seconds, one a phase; given alone they mean method fixed"},
                             "cycle_min_s": {"type": "number"}, "cycle_max_s": {"type": "number"},
                             "target_saturation_percent": {"type": "number"}, "stop_weight_s": {"type": "number"}},
                            ("junctions",))},
@@ -674,7 +713,8 @@ TOOLS = [
     {"name": "update_roads", "edits": True,
      "description": "Change road settings; give only what changes. add_lanes 1 adds a lane each way to each road "
                     "(\"add a lane\"), -1 removes one; lanes_per_direction sets a number instead. direction 'one-way' "
-                    "keeps traffic from -> to, 'reverse' makes it one-way the other way. length_m slides the far end. "
+                    "keeps traffic from -> to, 'reverse' makes it one-way the other way. speed_limit_kmh 5-130. length_m "
+                    "moves the road's to-junction along it (that junction's other roads stretch too). "
                     "pocket_junction (an end its traffic arrives at) sets a turn pocket on that approach: "
                     "pocket_lanes 1-2 (0 removes it), pocket_length_m 15-150, pocket_side 'kerb' (kerb turns) or "
                     "'offside' (offside turns, U-turns).",
@@ -687,17 +727,24 @@ TOOLS = [
                             "length_m": {"type": "number"}, "pocket_junction": {"type": "string"},
                             "pocket_lanes": {"type": "integer"}, "pocket_length_m": {"type": "number"},
                             "pocket_side": {"type": "string", "enum": ["kerb", "offside"]}}, ("roads",))},
-    {"name": "add_junction", "edits": True, "description": "Add an off-grid junction (named N1, N2, ...).",
+    {"name": "add_junction", "edits": True,
+     "description": "Add an off-grid junction (named N1, N2, ...) at (x, y) metres: x grows east, y grows SOUTH "
+                    "(down the screen). Connect it with add_road.",
      "parameters": _object({"x": {"type": "number"}, "y": {"type": "number"}}, ("x", "y"))},
-    {"name": "add_road", "edits": True, "description": "Connect two junctions with a new two-way road.",
+    {"name": "add_road", "edits": True,
+     "description": "Connect two junctions (ids like '2,2' or 'N12', not boundary ends) with a new two-way road. "
+                    "A road out to the edge is add_boundary_end; a turning lane cutting a corner is add_slip_road.",
      "parameters": _object({"from_junction": {"type": "string"}, "to_junction": {"type": "string"},
                             "crossings": _CROSSINGS}, ("from_junction", "to_junction"))},
     {"name": "add_boundary_end", "edits": True,
-     "description": "Add a boundary end at (x, y) joined to a junction; named by side and position, e.g. 1.5E.",
+     "description": "Add a boundary end (where traffic enters and leaves) at (x, y) metres joined to a junction "
+                    "by a new road; x grows east, y grows SOUTH (down the screen). Named by side and position, "
+                    "e.g. 1.5E.",
      "parameters": _object({"from_junction": {"type": "string"}, "x": {"type": "number"},
                             "y": {"type": "number"}, "crossings": _CROSSINGS}, ("from_junction", "x", "y"))},
     {"name": "move_junctions", "edits": True,
-     "description": "Move junctions or ends by (dx, dy) metres; only their roads stretch.",
+     "description": "Move junctions or ends by (dx, dy) metres; only their roads stretch. x grows east, y grows "
+                    "SOUTH (down the screen): 50 m north is dy -50.",
      "parameters": _object({"junctions": _IDS, "dx": {"type": "number"}, "dy": {"type": "number"}},
                            ("junctions", "dx", "dy"))},
     {"name": "delete_objects", "edits": True,
@@ -780,18 +827,23 @@ TOOLS = [
                             "road_colour": {"type": "string"}, "colour_tolerance": {"type": "number"},
                             "resolution_m": {"type": "number"}})},
     {"name": "generate_grid", "edits": True,
-     "description": "Replace the whole network with a new grid (undoable). \"6 by 5\" or \"6x5\" is 6 columns "
+     "description": "Replace the whole network with a new abstract grid (undoable); for a real place's roads use "
+                    "place_map then network_from_background instead. \"6 by 5\" or \"6x5\" is 6 columns "
                     "(vertical 6) and 5 rows (horizontal 5); its size is (vertical - 1) x spacing_m wide and "
-                    "(horizontal - 1) x spacing_m tall. signal_method: how its signals are timed (the network's "
+                    "(horizontal - 1) x spacing_m tall; for a size in metres give width_m and height_m instead. "
+                    "signal_method: how its signals are timed (the network's "
                     "default; demand retimes them at Run). Omitted settings keep the current ones.",
-     "parameters": _object({"horizontal": {"type": "integer", "description": "Rows: roads running east-west."},
-                            "vertical": {"type": "integer", "description": "Columns: roads running north-south."},
+     "parameters": _object({"horizontal": {"type": "integer", "description": "Rows: roads running east-west, 1 to 20."},
+                            "vertical": {"type": "integer", "description": "Columns: roads running north-south, 1 to 20."},
                             "spacing_m": {"type": "number", "minimum": 20, "maximum": 2000,
                                           "description": "Metres between neighbouring roads."},
                             "driving_side": {"type": "string", "enum": ["left", "right"]},
                             "speed_limit_kmh": {"type": "number"}, "lanes_per_direction": {"type": "integer"},
                             "lane_changing": {"type": "boolean"},
-                            "signal_method": {"type": "string", "enum": list(SIGNAL_METHODS)}}, ("horizontal", "vertical"))},
+                            "signal_method": {"type": "string", "enum": list(SIGNAL_METHODS)},
+                            "width_m": {"type": "number", "description": "A size in metres instead of horizontal and "
+                                        "vertical: the rows and columns are worked out (blocks widened to fit 20)."},
+                            "height_m": {"type": "number"}})},
 ]
 EDIT_TOOLS = {tool["name"] for tool in TOOLS if tool["edits"]}
 OD_TOOLS = {"read_od_matrix", "set_od_demand", "shape_daily_curve", "generate_demand", "scale_demand", "calibrate_demand",
@@ -800,6 +852,7 @@ OD_TOOLS = {"read_od_matrix", "set_od_demand", "shape_daily_curve", "generate_de
 RUN_TOOLS = {"run_simulation", "run_experiment", "read_results", "compare_runs", "set_extension", "read_extensions",
              "junction_los", "diagnose_signal", "check_run_health", "preflight_check", "resilience", "emissions_report",
              "power_analysis", "rank_scenarios", "test_agent_compliance", "read_decisions", "decision_sensitivity",
+             "parameter_sensitivity",
              "design_audit", "accessibility_report", "benefit_cost",
              "schedule_emergency", "start_batch", "replay_run", "analyse_run",
              "check_calibration", "read_detectors", "analyse_safety", "forecast", "critical_links", "regress",
@@ -855,12 +908,15 @@ TOOL_GROUPS = {  # name: (words that point to it, as regex stems; its tools)
                    r"improv|effect|seed|alternativ|option|worth|cost|benefit|rank|power|robust|weather|rain|incident",
                    ("note_plan", "run_experiment", "read_results", "compare_runs", "rank_scenarios", "power_analysis",
                     "benefit_cost", "assign_routes", "preflight_check")),
-    "analysis": (r"analy|safe|crash|conflict|detector|forecast|predict|calibrat|regress|emission|co2|fuel|resilien|"
+    "analysis": (r"analy|safe|crash|conflict|detector|forecast|predict|calibrat|\bcounts?\b|validat|observed|regress|emission|"
+                 r"co2|fuel|resilien|"
                  r"incident|critical|vulnerab|index|indices|design|sight|audit|access|reach|equity|gini|why|reliab|"
+                 r"sensitiv|elastic|parameter|"
                  r"route|cluster",
                  ("analyse_network", "analyse_run", "read_detectors", "analyse_safety", "forecast", "check_calibration",
                   "regress", "emissions_report", "resilience", "junction_los", "diagnose_signal", "critical_links",
-                  "network_indices", "design_audit", "accessibility_report", "cluster_conditions", "assign_routes")),
+                  "network_indices", "design_audit", "accessibility_report", "cluster_conditions", "assign_routes",
+                  "parameter_sensitivity")),
     "transit": (r"\bbus(?:es)?\b|bus stop|\bstops?\b|transit|passenger|vehicle type|truck|lorry|bike|bicycle|taxi|van\b|fleet|headway|tram",
                 ("add_bus_stop", "update_bus_stop", "list_vehicle_types", "create_vehicle_types",
                  "update_vehicle_type")),
@@ -916,11 +972,25 @@ def tools_for(request: str, used=()) -> list[dict]:
 def contradicts(name: str, args: dict, request: str) -> str | None:
     """Why a call goes against the user's own words, or None: a signal method (an argument named method or
     *_method) the request doesn't name while it names another (qwen3.5 4B, asked for SCOOT, thought SCOOT and sent
-    scats). Only methods: their names are alike and none is an everyday word."""
+    scats). Only methods: their names are alike and none is an everyday word. And an invented grid for a request that
+    names a real place and no grid (llama3.2 3B, asked for Dhanmondi's roads, placed the map, then built a 5 x 6 grid)."""
     tool = next((tool for tool in TOOLS if tool["name"] == name), None)
     if tool is None or not isinstance(args, dict):
         return None
     words = request.lower().replace("-", " ")
+    if name == "delete_objects":  # a road the user named, its two junctions deleted instead (with every road at them)
+        ids = [str(item).strip() for item in _ids(args.get("ids") or [])]
+        for road in re.findall(r"[\w.]+,[\w.]+-[\w.]+,[\w.]+|N\d+-N\d+", request):
+            ends = road.split("-", 1) if road.startswith("N") else re.split(r"-(?=[\w.]+,)", road, maxsplit=1)
+            rest = request.replace(road, " ")  # a junction the user names apart from the road is theirs to delete
+            named = [end for end in ends if re.search(rf"(?<![\w.,-]){re.escape(end)}(?![\w.,-])", rest)]
+            if road not in ids and len(ends) == 2 and set(ends) <= set(ids) and not named:
+                return (f"The user asked to delete road {road}, but this deletes its junctions {ends[0]} and {ends[1]} "
+                        f"(and every road at them). Call again with ids [\"{road}\"].")
+    if name == "generate_grid" and _places_named(request) and "grid" not in words:
+        return ("The user asked for a real place's roads, not an invented grid: generate_grid would put a made-up grid "
+                "in its place. Use place_map (if the map isn't there yet), then network_from_background; or tell the "
+                "user why that can't be done.")
     for key, spec in tool["parameters"].get("properties", {}).items():
         value = args.get(key)
         if not (key == "method" or key.endswith("_method")) or "enum" not in spec or not isinstance(value, str):
@@ -930,6 +1000,66 @@ def contradicts(name: str, args: dict, request: str) -> str | None:
             return (f"The user asked for {', '.join(map(str, named))}, but this call sets {key} {value!r}. Call again "
                     f"with what they asked for, or say why not.")
     return None
+
+
+ENDS_ARGS = ("pairs", "origins", "destinations")  # the demand tools' end names
+
+
+# One incident's fields: experiments.INCIDENT_KEYS (experiments imports from here, never here from it)
+INCIDENT_FIELDS = ("road", "lanes", "at_min", "for_min", "from_m", "length_m", "direction", "speed_kmh")
+
+
+def fold_incident(name: str, args) -> str | None:
+    """An incident's fields sent beside run_simulation's own arguments instead of in `incidents` (llama3.2 3B, asked
+    to close a lane for 10 minutes, sent lanes, at_min, for_min… at the top and was refused): made the one incident
+    they describe. Changes `args`; returns a note for the result, or None."""
+    if name != "run_simulation" or not isinstance(args, dict) or args.get("incidents") not in (None, "", [], "[]") \
+            or not any(key in args for key in ("lanes", "at_min", "for_min")):
+        return None
+    incident = {key: args.pop(key) for key in INCIDENT_FIELDS if key in args}
+    args["incidents"] = [incident]
+    return f"the incident fields given beside run_simulation's were read as one incident: {incident}"
+
+
+def drop_strays(name: str, args) -> str | None:
+    """Drop arguments another tool takes and `name` doesn't (llama3.2 3B sent set_od_demand's peak_hour_factor to
+    generate_demand on every try, though each refusal named its owner): the call runs on what it does take.
+    Changes `args`; returns a note for the result, or None."""
+    tool = next((tool for tool in TOOLS if tool["name"] == name), None)
+    if tool is None or not isinstance(args, dict):
+        return None
+    properties = tool["parameters"]["properties"]
+    strays = {key: [t["name"] for t in TOOLS if key in t["parameters"]["properties"]][:2] for key in list(args)
+              if key not in properties and _parameter_for(str(key), properties) is None}
+    strays = {key: owners for key, owners in strays.items() if owners}
+    for key in strays:
+        args.pop(key)
+    return "; ".join(f"{key} is {' or '.join(owners)}'s, not {name}'s, so it was left out"
+                     for key, owners in strays.items()) or None
+
+
+def repair_ends(network: Network, name: str, args, request: str) -> str | None:
+    """Drop end names that are neither in the network nor in the user's request, when every one given is such:
+    the model copied them from an example ("1W" on an OpenStreetMap network whose ends are 2N, 9.5E...; llama3.2 3B,
+    asked for the peak hour), so it meant every end. Changes `args`; returns a note for the result, or None (a
+    real end, or one the user named, is left for the tool to check)."""
+    if not isinstance(args, dict) or not any(args.get(key) for key in ENDS_ARGS) or \
+            not any(key in tool["parameters"]["properties"] for tool in TOOLS if tool["name"] == name for key in ENDS_ARGS):
+        return None
+    given = set()
+    for key in ENDS_ARGS:
+        value = args.get(key)
+        items = value if isinstance(value, list) else [value] if value else []
+        for item in items:
+            given.update(part.strip() for part in re.split(r"\s*(?:-+>*|=+>|→|>+|\bto\b|,)\s*", str(item))
+                         if part.strip(" []") and part.strip().lower() not in _NOTHING)  # "None": left out, no end
+    words = request.lower()
+    if not given or any(end in network.approach_nodes or end.lower() in words for end in given):
+        return None
+    dropped = {key: args.pop(key) for key in ENDS_ARGS if key in args}
+    return (f"{', '.join(sorted(given))} {'is' if len(given) == 1 else 'are'} no end of this network and the user "
+            f"named none, so every end was used "
+            f"(dropped {', '.join(dropped)}). Its ends: {', '.join(sorted(network.approach_nodes)[:20])}…")
 
 
 def expand_tools(args: dict, offered: list[dict]) -> dict:
@@ -956,12 +1086,12 @@ def expand_tools(args: dict, offered: list[dict]) -> dict:
 # --- Helpers -----------------------------------------------------------------------------
 
 def _ids(value) -> list[str]:
-    """A list of IDs; small models sometimes send the list as JSON text."""
+    """A list of IDs; small models sometimes send the list as JSON text, or as "2,2; 3,3" (never split on commas:
+    ids hold them)."""
     if isinstance(value, str) and value.strip().startswith("["):
-        try:
-            value = json.loads(value)
-        except ValueError:
-            pass
+        value = _parsed_json(value.strip())  # JSON, repaired, or Python's ['3,3']
+    if isinstance(value, str) and ";" in value:
+        value = [part.strip() for part in value.split(";") if part.strip()]
     items = value if isinstance(value, list) else [value]
     if any(isinstance(item, dict) for item in items):  # qwen3.5 4B sent [{"road": ..., "speed_limit_kmh": 30}, ...]
         raise ValueError("Ids are text like '2,2' or '1,1-2,1', not objects: give the ids alone, the settings as "
@@ -999,7 +1129,18 @@ def _repaired_json(text: str):
     try:
         return json.loads(fixed)
     except ValueError:
+        pass
+    try:  # Python's own spelling, "['3,3']" (llama3.2 3B): literals only, nothing run
+        found = ast.literal_eval(text.strip())
+    except (ValueError, SyntaxError, MemoryError, RecursionError):
         raise first from None
+    try:  # JSON's kinds only: '[{"name" "a"}]' is Python's list of a set, not what was meant
+        json.dumps(found)
+    except (TypeError, ValueError):
+        raise first from None
+    if not isinstance(found, (list, dict)):
+        raise first
+    return found
 
 
 def _int(value) -> int:
@@ -1140,14 +1281,20 @@ def network_summary(network: Network) -> dict:
 def list_roads(network: Network, node: str = "", direction: str = "") -> dict:
     roads = [road for road in network.all_roads()
              if (not node or node in (road.from_node, road.to_node)) and (not direction or road.direction == direction)]
-    return _limited([_road_info(network, road) for road in roads], "roads")
+    found = _limited([_road_info(network, road) for road in roads], "roads")
+    if node or direction:  # filtered: how many in all
+        found["filter"] = f"{len(roads)} of the network's {len(network.roads) + len(network.approach_roads)} roads"
+    return found
 
 
 def list_junctions(network: Network, control: str = "") -> dict:
     rows = [{"id": node.id, "x": round(node.x, 1), "y": round(node.y, 1), "control": node.control,
              "roads": len(_roads_at(network, node.id))}
             for node in network.nodes.values() if not control or node.control == control]
-    return _limited(rows, "junctions")
+    found = _limited(rows, "junctions")
+    if control:  # filtered: how many in all, so "0 uncontrolled" isn't read as "0 junctions" (llama3.2 3B)
+        found["filter"] = f"control {control}: {len(rows)} of the network's {len(network.nodes)} junctions"
+    return found
 
 
 def describe(network: Network, id: str) -> dict:  # noqa: A002 - the model's argument name
@@ -1299,10 +1446,8 @@ def set_junction_control(network: Network, junctions, control: str) -> dict:
     if control not in CONTROLS:
         raise ValueError(f"control must be one of {', '.join(CONTROLS)}.")
     for node_id in ids:
-        if node_id not in network.nodes:
-            raise ValueError(f"{node_id} is not a junction.")
-        network.nodes[node_id].control = control
-    result = {"changed": ids, "control": control}
+        network.nodes[_junction(network, node_id)].control = control
+    result = {"junctions": ids, "control": control}  # what changed, before -> after: run_tool's `changed`
     moved = [slip for node_id in ids for slip in fit_slip_roads(network, node_id)]  # clear of a roundabout's circle
     if moved:
         result["slip_roads_moved_out"] = moved
@@ -1319,10 +1464,14 @@ def update_roads(network: Network, roads, lanes_per_direction=None, speed_limit_
         network.road(road_id)  # KeyError for an unknown road, before anything changes
     if add_lanes is not None and lanes_per_direction is not None:
         raise ValueError("Give add_lanes or lanes_per_direction, not both.")
-    if not pocket_junction and any(value is not None for value in (pocket_lanes, pocket_length_m, pocket_side)):
-        raise ValueError("Name pocket_junction: the end of the road the turn pocket is on the approach to.")
+    if not pocket_junction:
+        if (pocket_lanes is not None and _int(pocket_lanes) > 0) or pocket_length_m is not None:
+            raise ValueError("Name pocket_junction: the end of the road the turn pocket is on the approach to.")
+        pocket_lanes = pocket_side = None  # 0 lanes or a side with no pocket named: a small model's filler
     if direction not in (None, "two-way", "one-way", "reverse"):
         raise ValueError("direction must be 'two-way', 'one-way' or 'reverse'.")
+    if speed_limit_kmh is not None and not 5 <= float(speed_limit_kmh) <= 130:  # as the incident zones' limits
+        raise ValueError("speed_limit_kmh must be 5 to 130.")
     for road_id in ids:
         if length_m is not None:
             network.set_road_length(road_id, float(length_m))
@@ -1360,7 +1509,20 @@ def add_junction(network: Network, x: float, y: float) -> dict:
     return {"added": node.id, "x": node.x, "y": node.y}
 
 
+def _junction(network: Network, node_id: str) -> str:
+    """`node_id` if it is a junction; a boundary end refused saying so; an unknown id a KeyError (run_tool says
+    "Unknown id", explain_error the nearest ids)."""
+    node_id = str(node_id)
+    if node_id in network.nodes:
+        return node_id
+    if node_id in network.approach_nodes:
+        raise ValueError(f"{node_id} is a boundary end, not a junction: junction ids are like '2,2' or 'N12' "
+                         "(list_junctions); a road to the edge is add_boundary_end.")
+    raise KeyError(node_id)
+
+
 def add_road(network: Network, from_junction: str, to_junction: str, crossings: str | None = None) -> dict:
+    _junction(network, from_junction), _junction(network, to_junction)
     road, roundabouts = build_edge(network, str(from_junction), str(to_junction), crossing=crossings)
     return {"added": road.id, "roundabouts_added": roundabouts, "overpass": road.overpass}
 
@@ -1386,8 +1548,8 @@ def delete_objects(network: Network, ids) -> dict:
     nodes = {**network.nodes, **network.approach_nodes}
     unknown = [item for item in ids if item not in roads and item not in nodes and item not in network.bus_stops
                and item not in network.institutions]
-    if unknown:
-        raise ValueError(f"No road, node, bus stop or institution called {', '.join(unknown)}.")
+    if unknown:  # run_tool tries a road named from its other end, else says "Unknown id" with the nearest
+        raise KeyError(unknown[0])
     for stop_id in ids:  # bus stops and institutions first, then roads; a node then takes whatever roads it still has
         network.bus_stops.pop(stop_id, None)
         network.institutions.pop(stop_id, None)
@@ -1441,7 +1603,9 @@ def add_slip_road(network: Network, roads, single_lane=False) -> dict:
 
 def set_end_flows(network: Network, end: str, supply_vph=None, demand_vph=None) -> dict:
     if end not in network.approach_nodes:
-        raise ValueError(f"{end} is not a boundary end.")
+        if end in network.nodes:
+            raise ValueError(f"{end} is a junction, not a boundary end: ends are like '1W' or '3N' (network_summary).")
+        raise KeyError(end)
     node = network.approach_nodes[end]
     if supply_vph is not None:
         node.supply_vph = float(supply_vph)
@@ -1453,8 +1617,22 @@ def set_end_flows(network: Network, end: str, supply_vph=None, demand_vph=None) 
 GRID_SPACING_M = (20.0, 2000.0)  # generate_grid's block length: shorter than a junction, longer than an arterial's
 
 
-def generate_grid(network: Network, horizontal: int, vertical: int, spacing_m=None, driving_side=None,
-                  speed_limit_kmh=None, lanes_per_direction=None, lane_changing=None, signal_method=None) -> dict:
+def generate_grid(network: Network, horizontal=None, vertical=None, spacing_m=None, driving_side=None,
+                  speed_limit_kmh=None, lanes_per_direction=None, lane_changing=None, signal_method=None,
+                  width_m=None, height_m=None) -> dict:
+    if width_m is not None or height_m is not None:  # a size in metres: the rows and columns that make it
+        width, height = float(width_m or height_m), float(height_m or width_m)
+        spacing = float(spacing_m or network.default_spacing)
+        if max(width, height) / spacing > 19:  # at most 20 a side: wider blocks instead
+            spacing = 10 * ceil(max(width, height) / 19 / 10)
+        spacing_m = spacing
+        vertical, horizontal = round(width / spacing) + 1, round(height / spacing) + 1
+    if horizontal is None or vertical is None:
+        raise ValueError("Give horizontal and vertical (rows and columns, 1 to 20), or width_m and height_m.")
+    for name, count in (("horizontal", horizontal), ("vertical", vertical)):
+        if _int(count) > 20:  # llama3.2 3B sent horizontal 1500, vertical 2000 for a 2000 x 1500 m city
+            raise ValueError(f"{name} is a count of {'rows' if name == 'horizontal' else 'columns'} (1 to 20), not "
+                             "metres: for a size in metres give width_m and height_m instead.")
     if spacing_m is not None and not GRID_SPACING_M[0] <= float(spacing_m) <= GRID_SPACING_M[1]:
         # the stress test's 50,000 x 50,000 m city of 3 x 3 junctions became 12.5 and 50 km blocks
         raise ToolError(f"spacing_m must be {GRID_SPACING_M[0]:g}-{GRID_SPACING_M[1]:g} m (city blocks are about "
@@ -1467,7 +1645,8 @@ def generate_grid(network: Network, horizontal: int, vertical: int, spacing_m=No
         network.default_lane_changing if lane_changing is None else _bool(lane_changing),
         signal_method or network.default_signal_method)
     vars(network).update(vars(fresh))  # same object: the window keeps its reference
-    return {"generated": f"{horizontal} x {vertical} grid", "junctions": len(network.nodes),
+    return {"generated": f"{vertical} x {horizontal} grid ({vertical} columns, {horizontal} rows)",
+            "junctions": len(network.nodes),
             "roads": len(network.roads), "boundary_ends": len(network.approach_nodes)}
 
 
@@ -1512,7 +1691,7 @@ def place_institution(network: Network, kind, near=None, x=None, y=None, radius_
     elif near is not None:
         node = next((n for n in network.all_nodes() if n.id == str(near)), None)
         if node is None:
-            raise ValueError(f"No junction or end called {near}.")
+            raise KeyError(str(near))
         angles = [45 + 90 * i for i in range(4)] + [90 * i for i in range(4)] + [22.5 + 45 * i for i in range(8)]
         spots = ((node.x + d * cos(radians(a)), node.y + d * sin(radians(a))) for d in range(int(sqrt(area) / 2) + 10, 1000, 10)
                  for a in angles)
@@ -1613,7 +1792,9 @@ def _background_graph(network: Network, road_classes="all", width_m=1200.0, heig
                                                   max(lat for lat, _ in corners), max(lon for _, lon in corners), classes)
         document = _cached(("osm", query), lambda: background_network.fetch_osm(query))
         graph = background_network.osm_graph(document, lambda lat, lon: frame.to_scene(*mercator(lat, lon)), rect)
-        return graph, f"OpenStreetMap road data, {road_classes} roads, {width:g} x {height:g} m round the network's centre"
+        copy = f" (a copy kept from {document['cached_at']}: {document.get('cached_why', '')})"             if document.get("cached_at") else ""
+        return graph, (f"OpenStreetMap road data, {road_classes} roads, {width:g} x {height:g} m round the network's "
+                       f"centre{copy}")
     if background.kind == "image":
         if not re.fullmatch(r"#[0-9a-fA-F]{6}", str(road_colour or "")):
             raise ValueError("Say the colour of the roads on the image: road_colour like '#ffffff'. Ask the user if "
@@ -1632,8 +1813,8 @@ def _background_graph(network: Network, road_classes="all", width_m=1200.0, heig
                                                    lambda px, py: (a * px + c * py + e, b * px + d * py + f), metres)
 
         return _cached(key, trace), f"the image's {road_colour} roads, traced at {resolution:g} m a pixel"
-    raise ValueError("The background is a plain colour: open an image or choose the map (Create Network > Own "
-                     "Network) first.")
+    raise ValueError("The background is a plain colour: call place_map with the place first (or the user opens "
+                     "an image: Create Network > Own Network), then network_from_background.")
 
 
 def network_from_background(network: Network, road_classes="all", width_m=1200.0, height_m=1200.0, road_colour=None,
@@ -1707,6 +1888,9 @@ def _route_lengths(network: Network, sources) -> dict:
 
 
 SATURATION_RANGE = (0.1, 1.2)
+# Demand sizing stops before a link's 95th-percentile queue fills this share of it (HCM's queue storage ratio: 1 is
+# failure; queues on neighbouring short links interact well before it)
+STORAGE_LIMIT = 0.5
 
 
 def _design_hour(trips: dict, shares: dict | None) -> int | None:
@@ -1734,18 +1918,32 @@ def _saturations(graph: Graph, flows: dict, moves: dict) -> dict[str, float]:
     return {node: x for node, x in found.items() if x is not None}
 
 
-def _fit_saturation(graph: Graph, fixed: dict, scaled: dict, target: float, shares: dict | None) -> float:
+def _fit_saturation(graph: Graph, fixed: dict, scaled: dict, target: float,
+                    shares: dict | None) -> tuple[float, str]:
     """The factor on `scaled` ({pair: veh/h, or trips/day with shares}) that brings the most saturated
-    junction to `target`, the `fixed` pairs staying as they are. X rises with the factor: bisection."""
+    junction to `target`, the `fixed` pairs staying as they are, or first fills a link with its queue (its queue
+    storage ratio reaching 1, Graph.storage_ratio: a short link spills back into the junction behind long before
+    either junction reaches its X; an 80 m signal grid sized to X 0.6 jammed). Both rise with the factor: bisection
+    on whichever binds first. (factor, "saturation" or "storage": which bound it)."""
     if not SATURATION_RANGE[0] <= target <= SATURATION_RANGE[1]:
         raise ValueError("degree_of_saturation must be 0.1 to 1.2 (0.8 = 80 % of capacity).")
     hour = _design_hour({**fixed, **scaled}, shares)
     base, extra = _load(graph, fixed, shares, hour), _load(graph, scaled, shares, hour)
 
-    def worst(factor: float) -> float:
-        flows, moves = ({key: a.get(key, 0.0) + factor * b.get(key, 0.0) for key in {*a, *b}}
-                        for a, b in zip(base, extra))
-        return max(_saturations(graph, flows, moves).values(), default=0.0)
+    def loaded(factor: float):
+        return ({key: a.get(key, 0.0) + factor * b.get(key, 0.0) for key in {*a, *b}} for a, b in zip(base, extra))
+
+    def worst(factor: float) -> float:  # the binding share of its limit: X over target, or a queue over its storage
+        flows, moves = loaded(factor)
+        x = max(_saturations(graph, flows, moves).values(), default=0.0)
+        spill = max((graph.storage_ratio(node, moves) or 0.0 for node in graph.network.nodes), default=0.0)
+        return max(x, spill / STORAGE_LIMIT * target)
+
+    def bound(factor: float) -> str:
+        flows, moves = loaded(factor)
+        x = max(_saturations(graph, flows, moves).values(), default=0.0)
+        spill = max((graph.storage_ratio(node, moves) or 0.0 for node in graph.network.nodes), default=0.0)
+        return "storage" if spill / STORAGE_LIMIT * target > x else "saturation"
 
     floor_x = worst(0.0)
     if worst(1.0) <= floor_x:
@@ -1761,7 +1959,7 @@ def _fit_saturation(graph: Graph, fixed: dict, scaled: dict, target: float, shar
     for _ in range(40):
         middle = (low + high) / 2
         low, high = (middle, high) if worst(middle) < target else (low, middle)
-    return high
+    return high, bound(high)
 
 
 def _saturation_report(graph: Graph, trips: dict, shares: dict | None) -> dict:
@@ -1836,7 +2034,7 @@ def demand_plan(network: Network, pairs: list, args: dict, values: dict | None =
     target = args.get("degree_of_saturation")
     if target is not None:  # sized below, once the routes are known: any total does
         target = float(target)
-        if args.get("total") not in (None, ""):
+        if args.get("total") not in (None, "", 0):  # 0: a small model's filler, no total
             raise ValueError("Give total or degree_of_saturation, not both.")
         if not SATURATION_RANGE[0] <= target <= SATURATION_RANGE[1]:
             raise ValueError("degree_of_saturation must be 0.1 to 1.2 (0.8 = 80 % of capacity).")
@@ -1848,8 +2046,9 @@ def demand_plan(network: Network, pairs: list, args: dict, values: dict | None =
     else:
         total = (sum(supply.values()) or sum(wanted.values())) * days
         if not total:
-            raise ValueError("Give total (veh/h hourly, trips per day daily), or set the ends' supply and demand "
-                             "first (set_end_flows).")
+            raise ValueError("Give degree_of_saturation for how busy (light 0.4, medium 0.65, busy or peak 0.85), "
+                             "or total (veh/h hourly, trips per day daily), or set the ends' supply and demand first "
+                             "(set_end_flows).")
         note = "Totals from the ends' flows" + (" (veh/h × 24 for a day)." if days > 1 else ".")
     by_o = supply if any(supply.values()) else dict.fromkeys(origins, 1.0)
     by_d = wanted if any(wanted.values()) else dict.fromkeys(destinations, 1.0)
@@ -1857,7 +2056,7 @@ def demand_plan(network: Network, pairs: list, args: dict, values: dict | None =
     arrive = {d: total * by_d[d] / sum(by_d.values()) for d in destinations}
     routes = _route_lengths(network, origins)
     km = {(o, d): routes[o][d] / 1000 for o, d in pairs if d in routes[o]}
-    fitted = args.get("mean_trip_km")
+    fitted = args.get("mean_trip_km") or None  # 0 km is no trip: a small model's filler (llama3.2), not a length
     if fitted is not None:  # Hyman's method: the decay whose balanced matrix has this mean trip length
         if args.get("distance_decay_per_km") is not None:
             raise ValueError("Give mean_trip_km or distance_decay_per_km, not both.")
@@ -1882,7 +2081,7 @@ def demand_plan(network: Network, pairs: list, args: dict, values: dict | None =
     others = {pair: float(value) for pair, value in (values or {}).items() if value and pair not in set(pairs)}
     graph = Graph(network)
     if target is not None:  # every pair scaled until the most saturated junction is at the target
-        factor = _fit_saturation(graph, others, trips, target, shares)
+        factor, sized_by = _fit_saturation(graph, others, trips, target, shares)
         trips = {pair: value * factor for pair, value in trips.items()}
         total = sum(trips.values())
     plan = {pair: round(value) for pair, value in trips.items() if round(value) > 0}
@@ -1904,6 +2103,8 @@ def demand_plan(network: Network, pairs: list, args: dict, values: dict | None =
     info.update(_saturation_report(graph, {**others, **plan}, shares))
     if target is not None:
         info["degree_of_saturation_target"] = target
+        if sized_by == "storage":
+            info["sized_by"] = "a link's queue fills its length before any junction reaches that degree of saturation (short links spill back into the junction behind): sized to what the links hold instead"
     if note:
         info["note"] = note
     return plan, info
@@ -1930,7 +2131,7 @@ def scale_plan(network: Network, values: dict, pairs: list, args: dict, shares: 
         if not 0.01 <= factor <= 100:
             raise ValueError("factor must be 0.01 to 100.")
     else:
-        factor = _fit_saturation(graph, others, scaled, float(target), shares)
+        factor, sized_by = _fit_saturation(graph, others, scaled, float(target), shares)
     plan = {pair: round(value * factor) for pair, value in scaled.items()}
     if not any(plan.values()):
         raise ValueError(f"A factor of {factor:.3g} rounds every pair's demand to 0: nothing would be left. "
@@ -1943,19 +2144,36 @@ def scale_plan(network: Network, values: dict, pairs: list, args: dict, shares: 
     info.update(_saturation_report(graph, {**others, **plan}, shares))
     if target is not None:
         info["degree_of_saturation_target"] = float(target)
+        if sized_by == "storage":
+            info["sized_by"] = "a link's queue fills its length before any junction reaches that degree of saturation (short links spill back into the junction behind): sized to what the links hold instead"
     return plan, info
 
 
 def set_signal_timing(network: Network, junctions, method=None, phases=None, green_times_s=None, cycle_min_s=None,
                       cycle_max_s=None, target_saturation_percent=None, stop_weight_s=None) -> dict:
-    ids = _ids(junctions)
-    for node_id in ids:
-        if node_id not in network.nodes:
-            raise ValueError(f"{node_id} is not a junction.")
-        if network.nodes[node_id].control != "signalised":
-            raise ValueError(f"{node_id} isn't signalised: make it signalised first (set_junction_control).")
+    ids = [_junction(network, node_id) for node_id in _ids(junctions)]
+    unsignalised = [node_id for node_id in ids if network.nodes[node_id].control != "signalised"]
+    if unsignalised:  # all of them at once, so one call can put them right
+        raise ValueError(f"{', '.join(unsignalised)} {'is' if len(unsignalised) == 1 else 'are'} not signalised: "
+                         "make them signalised first (set_junction_control), or leave them out.")
     if method is not None and method not in SIGNAL_METHODS:
         raise ValueError(f"method must be one of {', '.join(SIGNAL_METHODS)}.")
+    if phases is not None and _int(phases) not in (2, 4):
+        raise ValueError("phases must be 2 or 4.")
+    greens = None if green_times_s is None else \
+        [float(g) for g in (json.loads(green_times_s) if isinstance(green_times_s, str) else green_times_s)]
+    note = "Each Run times them by their method, from its demand (fixed: the greens given)."
+    if greens is not None:  # greens are only ever used by a fixed plan: given alone, they mean one
+        if method not in (None, "fixed"):
+            raise ValueError(f"green_times_s are only used by method fixed; {method} times the greens from demand. "
+                             "Give method fixed with them, or leave them out.")
+        for node_id in ids:
+            count = _int(phases) if phases is not None else network.nodes[node_id].signal_phases
+            if len(greens) != count:
+                raise ValueError(f"green_times_s needs one green a phase: {node_id} has {count} phases, "
+                                 f"{len(greens)} greens given" + (" (or give phases too)." if phases is None else "."))
+        if method is None:
+            method, note = "fixed", "Fixed time with the greens given (they are used only by a fixed plan)."
     for node_id in ids:
         node = network.nodes[node_id]
         if method is not None:
@@ -1964,8 +2182,8 @@ def set_signal_timing(network: Network, junctions, method=None, phases=None, gre
             node.signal_phases = _int(phases)
             if len(node.green_times_s) != node.signal_phases:
                 node.green_times_s = (node.green_times_s * 2)[:node.signal_phases]
-        if green_times_s is not None:
-            node.green_times_s = [float(g) for g in (json.loads(green_times_s) if isinstance(green_times_s, str) else green_times_s)]
+        if greens is not None:
+            node.green_times_s = list(greens)
         if cycle_min_s is not None:
             node.cycle_min_s = float(cycle_min_s)
         if cycle_max_s is not None:
@@ -1980,7 +2198,7 @@ def set_signal_timing(network: Network, junctions, method=None, phases=None, gre
                                 "cycle_limits_s": [network.nodes[node_id].cycle_min_s, network.nodes[node_id].cycle_max_s],
                                 "target_saturation_percent": round(network.nodes[node_id].target_saturation * 100)}
                       for node_id in ids},
-            "note": "Each Run times them by their method, from its demand (fixed: the greens given)."}
+            "note": note}
 
 
 place_download = None  # stands in for the network in tests: url -> bytes
@@ -2025,7 +2243,8 @@ def place_map(network: Network, place=None, lat=None, lon=None, rotation_deg=Non
     if rotation_deg is not None:
         background.map_rotation_deg = float(rotation_deg)
     return {"placed": name, "lat": background.lat, "lon": background.lon,
-            "note": "That place is under the network's centre; network_from_background builds its roads."}
+            "note": "That place is under the network's centre. Next, to use its roads: network_from_background with no "
+                    "arguments (it reads this map; it takes no place)."}
 
 
 def _passengers_problem(boarding_per_h, alighting_percent) -> str | None:
@@ -2080,8 +2299,17 @@ def update_bus_stop(network: Network, stop, distance_m=None, direction=None, dwe
 def update_institution(network: Network, id, people=None, employees=None, shift_start_h=None, shift_end_h=None,  # noqa: A002
                        car_share=None, radius_m=None) -> dict:
     if id not in network.institutions:
-        raise ValueError(f"No institution called {id}.")
+        raise KeyError(id)
     item = network.institutions[id]
+    if car_share is not None and not (1 <= float(car_share) <= 100 or float(car_share) == 0):
+        raise ValueError(f"car_share is a percent, 0 to 100 ({float(car_share) * 100:g}, not {float(car_share):g}, "
+                         "for that share)." if 0 < float(car_share) < 1 else "car_share is a percent, 0 to 100.")
+    for key, value, low, high in (("shift_start_h", shift_start_h, 0, 24), ("shift_end_h", shift_end_h, 0, 24),
+                                  ("radius_m", radius_m, 10, 5000)):
+        if value is not None and not low <= float(value) <= high:
+            raise ValueError(f"{key} must be {low} to {high}.")
+    before = {key: getattr(item, key) for key in ("people", "employees", "shift_start_h", "shift_end_h", "car_share",
+                                                  "radius_m")}
     if car_share is not None:
         item.mode_shares = {}  # a share typed in replaces the mode split
     for key, value in (("people", people), ("employees", employees)):
@@ -2091,7 +2319,8 @@ def update_institution(network: Network, id, people=None, employees=None, shift_
                        ("radius_m", radius_m)):
         if value is not None:
             setattr(item, key, float(value))
-    return {"updated": id, "reaches": links(network, item.x, item.y, item.radius_m)}
+    changed = {key: f"{old:g} -> {getattr(item, key):g}" for key, old in before.items() if getattr(item, key) != old}
+    return {"updated": id, "changed": changed or "nothing", "reaches": links(network, item.x, item.y, item.radius_m)}
 
 
 def _routes(network: Network, pairs) -> dict:
@@ -2124,9 +2353,11 @@ def _routes(network: Network, pairs) -> dict:
 
 def calibration_plan(network: Network, flows: dict, args: dict) -> tuple[dict, dict]:
     """calibrate_demand's numbers, nothing changed: the prior hourly flows `flows` {(o, d): veh/h} scaled
-    so the roads' modelled flows (each pair on its shortest route) meet the counts, ME2's multiplicative
-    balancing (Van Zuylen and Willumsen 1980): T_od ← T_od × (count_a / modelled_a) for each counted road a
-    on its route, repeated."""
+    so the roads' modelled flows meet the counts, ME2's multiplicative balancing (Van Zuylen and Willumsen 1980):
+    T_od ← T_od × (count_a / modelled_a)^p_od,a for each counted road a, repeated. p_od,a is the share of the
+    pair's vehicles that drive road a on the routes the simulation gives them (Graph.route_shares: fastest, with a
+    two-phase signal's offside turn as an out-and-back, counted each time it is driven), not the shortest
+    distance: on those, 80 of a 3 x 3 grid's 132 pairs went another way, and a fit of GEH 0 loaded 16.8-23.7."""
     counts = args.get("counts")
     if isinstance(counts, str):
         counts = _parsed_json(counts)
@@ -2145,23 +2376,29 @@ def calibration_plan(network: Network, flows: dict, args: dict) -> tuple[dict, d
     if not prior:
         raise ValueError("There's no hourly demand to start from: enter some first (set_od_demand or generate_demand).")
     iterations = max(1, min(_int(args.get("iterations") or 50), 500))
-    routes = _routes(network, list(prior))
-    on = {road: [pair for pair, path in routes.items() if road in path] for road in wanted}
+    graph = Graph(network)
+    use: dict = {road: {} for road in wanted}  # road -> {pair: vehicles on it per vehicle of the pair}
+    for pair in prior:
+        for share, route in graph.route_shares(*pair):
+            for link in route:
+                if link.road in use:
+                    use[link.road][pair] = use[link.road].get(pair, 0.0) + share
+    on = {road: pairs for road, pairs in use.items()}
     uncovered = [road for road, pairs in on.items() if not pairs]
     if len(uncovered) == len(wanted):
         raise ValueError(f"No OD pair's route uses {', '.join(uncovered)}: the counts can't be met by this demand.")
 
     def modelled(trips):
-        return {road: sum(trips[pair] for pair in pairs) for road, pairs in on.items()}
+        return {road: sum(trips[pair] * p for pair, p in pairs.items()) for road, pairs in on.items()}
 
     before, trips = modelled(prior), dict(prior)
     for _ in range(iterations):
         for road, pairs in on.items():
-            now = sum(trips[pair] for pair in pairs)
+            now = sum(trips[pair] * p for pair, p in pairs.items())
             if now > 0:
                 factor = wanted[road] / now
-                for pair in pairs:
-                    trips[pair] *= factor
+                for pair, p in pairs.items():
+                    trips[pair] *= factor ** min(p, 1.0)
     after = modelled(trips)
     plan = {pair: round(value) for pair, value in trips.items() if round(value) > 0}
     if not plan:
@@ -2170,8 +2407,8 @@ def calibration_plan(network: Network, flows: dict, args: dict) -> tuple[dict, d
     rows = [{"road": road, "counted_vph": wanted[road], "before_vph": round(before[road]), "after_vph": round(after[road]),
              "geh_before": round(geh(before[road], wanted[road]), 2), "geh_after": round(geh(after[road], wanted[road]), 2)}
             for road in wanted]
-    info = {"method": "ME2 multiplicative balancing (Van Zuylen and Willumsen 1980) on shortest routes, from the "
-                      "demand entered", "counts": rows, "iterations": iterations,
+    info = {"method": "ME2 multiplicative balancing (Van Zuylen and Willumsen 1980) on the routes the simulation "
+                      "drives, from the demand entered", "counts": rows, "iterations": iterations,
             "fits": sum(row["geh_after"] < 5 for row in rows), "of": len(rows),
             "total_before_vph": round(sum(prior.values())), "total_after_vph": sum(plan.values())}
     if uncovered:
@@ -2314,13 +2551,18 @@ def institution_split(network: Network, item, modes: list, args: dict) -> tuple[
     return percent, info
 
 
-def mode_plan(network: Network, pairs: list, args: dict, modes: list, values: dict, trips=None) -> tuple[dict, dict]:
+def mode_plan(network: Network, pairs: list, args: dict, modes: list, values: dict, trips=None,
+              current: dict | None = None) -> tuple[dict, dict]:
     """choose_modes' split, nothing changed: per pair with demand ({pair: value} in `values`), each
     alternative's utility U = constant + β_ivt·IVT + β_ovt·OVT + β_cost·cost, its people share by
     multinomial logit, and the vehicle split over the untimetabled types (people ÷ occupancy). IVT is
     the mean trip time of that pair and type in `trips` (a run's (origin, destination, type, trip s, delay s)),
     else the free-flow time along the shortest route at min(type's speed, limit); OVT is the out-of-vehicle
-    minutes given plus half the type's headway (random arrival at a timetabled stop). {pair: {type: share}}."""
+    minutes given plus half the type's headway (random arrival at a timetabled stop). {pair: {type: share}}.
+    With `current` ({pair: {type: share}}, the split the pair has now), each pair's people (its vehicles × their
+    mean occupancy now) ride the new split, so its vehicles change: info["values"] {pair: veh/h or trips/day}. A
+    shift to fuller vehicles then means fewer of them (with the vehicles kept, a shift to the bus left car traffic
+    as it was: audit 2026-10-13, M6); people on a timetabled type add no vehicles (its runs are fixed)."""
     alternatives = _parsed_json(args.get("alternatives")) if isinstance(args.get("alternatives"), str) else args.get("alternatives")
     names = {mode.name.lower(): mode for mode in modes}
     if not isinstance(alternatives, list) or len(alternatives) < 2 or not all(isinstance(a, dict) for a in alternatives):
@@ -2356,7 +2598,7 @@ def mode_plan(network: Network, pairs: list, args: dict, modes: list, values: di
     for origin, destination, kind, trip_s, *_ in trips or ():
         measured[(origin, destination, kind)].append(trip_s)
     routes = _routes(network, scope)
-    plan, rows, elasticities = {}, [], defaultdict(lambda: {"cost": [], "in_vehicle": []})
+    plan, rows, elasticities, new_values = {}, [], defaultdict(lambda: {"cost": [], "in_vehicle": []}), {}
     for pair in scope:
         if pair not in routes:
             continue
@@ -2387,6 +2629,10 @@ def mode_plan(network: Network, pairs: list, args: dict, modes: list, values: di
                     for name, share in people.items() if not names[name.lower()].headway_min}
         total = sum(vehicles.values())
         plan[pair] = {name: share / total for name, share in vehicles.items()}
+        if current and current.get(pair):  # people now: vehicles × mean occupancy; then the vehicles they need
+            occupancy = sum(share * getattr(names[name.lower()], "occupancy", 1.0)
+                            for name, share in current[pair].items() if name.lower() in names)
+            new_values[pair] = values[pair] * occupancy * total
         rows.append({"pair": f"{pair[0]}->{pair[1]}", "km": round(km, 2), "times_from": " and ".join(sorted(sources)),
                      "logsum": round(top, 3),
                      "people_percent": {name: round(100 * share, 1) for name, share in people.items()},
@@ -2407,7 +2653,10 @@ def mode_plan(network: Network, pairs: list, args: dict, modes: list, values: di
                         "share is reported but the split goes to the other types.")
     if len(rows) > 12:
         info["more_pairs"] = len(rows) - 12
-    # ponytail: the pairs' veh/h stay as they are (a shift to fuller vehicles carries more people); scale_demand changes them
+    if new_values:
+        info["values"] = new_values
+        info["vehicles_before"], info["vehicles_after"] = (round(sum(values[p] for p in new_values)),
+                                                           round(sum(new_values.values())))
     return plan, info
 
 
@@ -2708,6 +2957,21 @@ _FUNCTIONS = {function.__name__: function for function in (
 _KINDS = {"string": "text", "number": "number", "integer": "whole number", "boolean": "true/false",
           "array": "list", "object": "object"}
 _TRUE, _FALSE = {"true", "yes", "on", "1"}, {"false", "no", "off", "0"}
+# Text a model sends for an argument it means to leave out (llama3.2 fills every optional one with "None" or "null"):
+# left out like a null, never read as a value ("None" is no arrival pattern, "null" no seed)
+_NOTHING = {"", "none", "null", "nil", "undefined", "n/a"}
+# Optional numbers no tool means as 0 (an area of no size, no trips, a trip of no length, no traffic): a 0 is left
+# out as above (llama3.2 sent network_from_background height_m 0, generate_demand total 0 and mean_trip_km 0)
+_ZERO_IS_NONE = {"width_m", "height_m", "resolution_m", "total", "mean_trip_km", "degree_of_saturation",
+                 # llama3.2 sent update_roads lanes_per_direction 0, add_lanes 0 (no change), length_m 0 and
+                 # pocket_length_m 0 for every setting it left alone, and was refused for the speed limit it asked
+                 "lanes_per_direction", "add_lanes", "length_m", "pocket_length_m", "phases", "cycle_min_s",
+                 "cycle_max_s", "target_saturation_percent", "spacing_m"}
+# A traffic level a model puts in a choice of another kind (demand "peak", arrival_pattern "heavy"): read as the
+# degree_of_saturation it means (_SATURATION's levels) where the tool takes one and none was given, else refused
+LEVEL_WORDS = {**dict.fromkeys(("peak", "peak hour", "rush", "rush hour", "busy", "heavy", "high", "congested"), 0.85),
+               **dict.fromkeys(("medium", "moderate", "normal", "off-peak", "off peak"), 0.65),
+               **dict.fromkeys(("light", "low", "quiet"), 0.4)}
 
 
 def signature(name: str) -> str:
@@ -2726,7 +2990,7 @@ def normalise(name: str, args) -> dict:
     """The model's arguments for `name` in the shapes its schema gives, before anything runs: a close
     misspelling or a plural (ends -> end) takes the parameter's name; numbers, whole numbers and true/false
     sent as text become them; a choice is matched whatever its case; a one-item list where one value is
-    wanted is that value; nulls are left out. Lists stay as sent (the tools read them: ids like "2,2" hold
+    wanted is that value; nulls, and text meaning nothing ("None", "null"), are left out. Lists stay as sent (the tools read them: ids like "2,2" hold
     commas). ToolError, saying what the tool takes, for an unknown or missing argument or a value that
     can't be read, so the model can call again."""
     tool = next((tool for tool in TOOLS if tool["name"] == name), None)
@@ -2742,19 +3006,53 @@ def normalise(name: str, args) -> dict:
     if not isinstance(args, dict):
         raise ToolError(f"Arguments must be an object. {signature(name)}.")
     properties, required = tool["parameters"]["properties"], tool["parameters"]["required"]
+    args = _level_read(args, properties)
     out: dict = {}
     for key, value in args.items():
+        if value is None or isinstance(value, str) and value.strip().lower() in _NOTHING:
+            continue  # left out: it says nothing, even under a name the tool doesn't have
         target = key if key in properties else _parameter_for(str(key), properties)
-        if target is None:
-            raise ToolError(f"{name} has no argument {key!r}. {signature(name)}.")
+        if target is None:  # another tool's argument (place for place_map) says where it belongs
+            owners = [tool["name"] for tool in TOOLS if key in tool["parameters"]["properties"]][:3]
+            raise ToolError(f"{name} has no argument {key!r}" + (f" ({key} is {' or '.join(owners)}'s)" if owners else "")
+                            + f". {signature(name)}.")
         if target in out:
             raise ToolError(f"{name} got {target} twice (as {key!r} too). {signature(name)}.")
-        if value is not None:
-            out[target] = _coerced(name, target, properties[target], value)
+        if target in _ZERO_IS_NONE and target not in required and str(value).strip() in ("0", "0.0"):
+            continue  # a size, total or level of 0 can't be meant: llama3.2's filler for a number it doesn't know
+        spec = properties[target]
+        if spec.get("type") == "string" and "enum" not in spec and target not in required \
+                and str(value).strip().lower() in ("false", "true", "0"):
+            continue  # an id or name given as true/false/0 (pocket_junction "false"): filler, not an id
+        out[target] = _coerced(name, target, properties[target], value)
     missing = [key for key in required if out.get(key) in (None, "", [])]
     if missing:
         raise ToolError(f"{name} needs {', '.join(missing)}. {signature(name)}.")
     return out
+
+
+def _level_read(args: dict, properties: dict) -> dict:
+    """A level word in a choice of another kind (llama3.2: demand "peak", then degree_of_saturation 0 when refused)
+    as the degree_of_saturation it means, when the tool takes one and none in range was given; a 0 with no level
+    word is the filler it sends for a number it doesn't know (llama3.2), so not given."""
+    if "degree_of_saturation" not in properties:
+        return args
+    given = args.get("degree_of_saturation")
+    if isinstance(given, str) and given.strip().lower() in LEVEL_WORDS:  # the level itself ("busy", llama3.2)
+        args = {**args, "degree_of_saturation": LEVEL_WORDS[given.strip().lower()]}
+    levels = [key for key, value in args.items() if "enum" in properties.get(key, {}) and isinstance(value, str)
+              and value.strip().lower() in LEVEL_WORDS]
+    level = levels[0] if levels else None
+    try:
+        x = float(args.get("degree_of_saturation"))
+    except (TypeError, ValueError):
+        x = None
+    if x is not None and SATURATION_RANGE[0] <= x <= SATURATION_RANGE[1]:  # a level word beside it says it again
+        return {key: value for key, value in args.items() if key not in levels}
+    if level is not None:
+        word = args[level].strip().lower()
+        return {**{key: value for key, value in args.items() if key != level}, "degree_of_saturation": LEVEL_WORDS[word]}
+    return {key: value for key, value in args.items() if key != "degree_of_saturation"} if x == 0 else args
 
 
 def _parameter_for(key: str, properties: dict) -> str | None:
@@ -2784,7 +3082,12 @@ def _coerced(name: str, key: str, spec: dict, value):
                                               n=2, cutoff=0.8)
             match = [c for c in spec["enum"] if len(close) == 1 and str(c).lower() == close[0]]
         if not match:
-            raise ToolError(f"{key} must be one of {', '.join(map(str, spec['enum']))}, not {value!r}.")
+            level = str(value).strip().lower() in LEVEL_WORDS  # llama3.2: arrival_pattern "heavy", demand "peak"
+            here = any(t["name"] == name and "degree_of_saturation" in t["parameters"]["properties"] for t in TOOLS)
+            raise ToolError(f"{key} must be one of {', '.join(map(str, spec['enum']))}, not {value!r}." + (
+                f" {value!r} is how busy traffic is, which {key} isn't: leave {key} out and give degree_of_saturation "
+                + ("" if here else "to generate_demand (or scale_demand, once there is demand) ")
+                + "(light 0.4, medium 0.65, busy or peak 0.85, near capacity 0.95)." if level else ""))
         return match[0]
     if kind == "string":
         return value if isinstance(value, str) else str(value) if isinstance(value, (int, float)) else value
@@ -2836,8 +3139,18 @@ def run_tool(network: Network, name: str, args: dict) -> dict:
     function = _FUNCTIONS.get(name)
     if function is None:
         raise ToolError(f"There is no tool called {name!r}.")
-    args = normalise(name, args)
+    args = _every(network, name, normalise(name, args))
     flipped: dict = {}  # road ids named from the other end ("2,2-2,3" for 2,3-2,2), and the road's own id
+    if name == "update_roads":  # its two junctions for one road (llama3.2 3B sent roads ["2,2", "3,2"] for 2,2-3,2)
+        try:
+            ends = _ids(args.get("roads") or [])
+        except ValueError:  # objects in the list: the tool refuses them below, saying how
+            ends = []
+        road = next((f"{a}-{b}" for a, b in (ends, ends[::-1]) if f"{a}-{b}" in network.roads), None) \
+            if len(ends) == 2 and all(end in network.nodes for end in ends) else None
+        if road:
+            flipped[f"{ends[0]}, {ends[1]}"] = road
+            args = {**args, "roads": [road]}
     while True:
         before = deepcopy(network) if name in EDIT_TOOLS else None
         try:
@@ -2865,6 +3178,24 @@ def run_tool(network: Network, name: str, args: dict) -> dict:
             if isinstance(exc, TypeError):
                 raise ToolError(f"Bad arguments for {name}: {exc}. {signature(name)}.") from exc
             raise ToolError(str(exc)) from exc
+
+
+# "all" where a tool takes ids: what it means for that tool (small models send roads "all" for "every road", and the
+# system prompt asks to retime "every signalised one"); deleting or moving everything isn't offered
+ALL_IDS = {("update_roads", "roads"): lambda network: [road.id for road in network.all_roads()],
+           ("set_junction_control", "junctions"): lambda network: list(network.nodes),
+           ("set_signal_timing", "junctions"): lambda network: [node_id for node_id, node in network.nodes.items()
+                                                                 if node.control == "signalised"]}
+_ALL_WORDS = {"all", "every", "*", "all roads", "all junctions", "every road", "every junction", "all signals",
+              "list_junctions", "list_roads"}  # the listing tool named for what it lists (llama3.2 3B)
+
+
+def _every(network: Network, name: str, args: dict) -> dict:
+    """`args` with an "all" in place of ids (ALL_IDS) as the ids it means."""
+    for (tool, key), ids in ALL_IDS.items():
+        if tool == name and str(args.get(key)).strip("[]'\" ").lower() in _ALL_WORDS:
+            args = {**args, key: ids(network)}
+    return args
 
 
 def _road_from_other_end(network: Network, road_id: str) -> str | None:
@@ -2986,6 +3317,12 @@ ERROR_KINDS = (  # (what the message says, its type, what to do): ChatSUMO's str
     (("must be", "is one of", "takes ", "give ", "needs "), "bad_argument", "Call again with the value the message asks for."),
     (("nothing would change",), "no_change", "It is like that already: nothing to do."),
 )
+
+
+def already_so(message: str) -> dict:
+    """An edit that would change nothing, as the answer it is: what was asked is how it already is."""
+    return {"unchanged": True, "already": message,
+            "note": "Nothing needed changing: it is like that already. Tell the user so; don't call it again."}
 
 
 def explain_error(message: str, network: Network | None = None) -> dict:

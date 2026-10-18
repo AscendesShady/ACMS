@@ -5,10 +5,12 @@ a bridge; an image's roads traced from its pixels; generate_demand through the D
 controls, one undo step; and in the window, each as one undo step.
 Run with `python tests/test_background_network.py` (or the test monitor)."""
 
+import hashlib
 import json
 import os
 from copy import deepcopy
 import tempfile
+import time
 from math import hypot
 from pathlib import Path
 
@@ -22,6 +24,8 @@ from traffic_simulator.map_tiles import Frame  # noqa: E402
 from traffic_simulator.network_generator import generate_network  # noqa: E402
 
 APP = QApplication.instance() or QApplication([])
+background_network.OSM_CACHE = Path(tempfile.mkdtemp())  # never the user's own cache of road data
+background_network.OSM_FRESH_DAYS = 0  # each test's stand-in server answers (the cache test turns it on)
 LONDON = (51.5072, -0.1276)
 
 
@@ -115,6 +119,106 @@ def test_the_maps_roads_come_from_openstreetmap_data():
     tools.run_tool(network, "set_junction_control", {"junctions": [branch.id], "control": "signalised"})
     assert network.nodes[branch.id].control == "signalised" and network.nodes[branch.id].signal_method == "webster"
     network.validate()  # overridden by hand (or the assistant): an ordinary signalised junction, Webster to start
+
+
+def test_a_road_cut_just_past_a_junction_still_has_room_to_enter():
+    # Dhanmondi: roads clipped a few metres past a junction left 5-15 m entry stubs holding one car each, so traffic
+    # waited off the network and the demand check called any real demand a jam
+    network, (cx, cy), at = on_the_map()
+
+    def post(url, data):
+        nodes, number = [], [0]
+
+        def node(dx, dy):
+            number[0] += 1
+            lat, lon = at(dx, dy)
+            nodes.append({"type": "node", "id": number[0], "lat": lat, "lon": lon})
+            return number[0]
+        junction = node(293, 0)  # 7 m inside the east edge of a 600 m square
+        ways = [{"type": "way", "id": 1001, "nodes": [node(-500, 0), junction, node(500, 0)], "tags": {"highway": "primary"}},
+                {"type": "way", "id": 1002, "nodes": [node(293, -200), junction, node(293, 200)], "tags": {"highway": "residential"}}]
+        return json.dumps({"elements": nodes + ways}).encode()
+
+    real, background_network.post = background_network.post, post
+    try:
+        args = {"width_m": 600, "height_m": 600}
+        tools.prepare(network, "network_from_background", args)
+        tools.run_tool(network, "network_from_background", args)
+    finally:
+        background_network.post = real
+    network.validate()
+    entries = [road for road in network.all_roads() if road.from_node in network.approach_nodes
+               or road.to_node in network.approach_nodes]
+    assert entries and min(road.length_m for road in entries) >= background_network.ENTRY_ROAD_M - 0.5
+    east = max(network.approach_nodes.values(), key=lambda end: end.x)  # carried on out along the road's own line
+    assert abs(east.y - cy) < 1 and east.x - cx > 293 + background_network.ENTRY_ROAD_M - 1
+
+
+def test_a_dual_carriageway_crossing_is_one_junction():
+    # OSM maps two dual carriageways crossing as four nodes ~15 m apart; as four junctions, 2-3 cars of room between
+    # them gridlocked Dhanmondi. They are one junction now, as SUMO's netconvert joins such clusters.
+    network, (cx, cy), at = on_the_map()
+
+    def post(url, data):
+        nodes, number = [], [0]
+
+        def node(dx, dy):
+            number[0] += 1
+            lat, lon = at(dx, dy)
+            nodes.append({"type": "node", "id": number[0], "lat": lat, "lon": lon})
+            return number[0]
+        a, b, c, d = node(-7.5, -7.5), node(7.5, -7.5), node(7.5, 7.5), node(-7.5, 7.5)  # the crossing's four corners
+        ways = [([node(-250, -7.5), a, b, node(250, -7.5)], "yes"), ([node(250, 7.5), c, d, node(-250, 7.5)], "yes"),
+                ([node(-7.5, 250), d, a, node(-7.5, -250)], "yes"), ([node(7.5, -250), b, c, node(7.5, 250)], "yes")]
+        return json.dumps({"elements": nodes + [{"type": "way", "id": 1000 + i, "nodes": refs,
+                                                 "tags": {"highway": "primary", "oneway": oneway}}
+                                                for i, (refs, oneway) in enumerate(ways)]}).encode()
+
+    real, background_network.post = background_network.post, post
+    try:
+        args = {"width_m": 400, "height_m": 400}
+        tools.prepare(network, "network_from_background", args)
+        tools.run_tool(network, "network_from_background", args)
+    finally:
+        background_network.post = real
+    network.validate()
+    middle = [node for node in network.nodes.values() if hypot(node.x - cx, node.y - cy) < 30]
+    assert len(middle) == 1, [(node.id, round(node.x - cx), round(node.y - cy)) for node in middle]
+
+
+def test_busy_overpass_servers_are_tried_again_after_a_pause():
+    tried, waited = [], []
+
+    def post(url, data):  # every server busy on the first round (a live Dhanmondi run met 504s and timeouts)
+        tried.append(url)
+        if len(tried) <= len(background_network.OVERPASS_URLS):
+            raise OSError("HTTP Error 504: Gateway Timeout")
+        return json.dumps({"elements": []}).encode()
+
+    real, sleep = background_network.post, background_network.time.sleep
+    background_network.post, background_network.time.sleep = post, waited.append
+    background_network.OSM_FRESH_DAYS = 7
+    try:
+        assert background_network.fetch_osm("query") == {"elements": []}  # and kept
+        tried.clear()
+        background_network.post = lambda url, data: (tried.append(url), (_ for _ in ()).throw(OSError("timed out")))[1]
+        copy = background_network.fetch_osm("query")  # kept this week: used without asking, said so
+        assert copy["elements"] == [] and "last 7 days" in copy["cached_why"] and tried == []
+        kept = background_network.OSM_CACHE / f"{hashlib.sha256(b'query').hexdigest()[:32]}.json"
+        old = time.time() - (background_network.OSM_FRESH_DAYS + 1) * 86400
+        os.utime(kept, (old, old))
+        copy = background_network.fetch_osm("query")  # older, and none answers: the copy kept, said so
+        assert copy["elements"] == [] and "didn't answer" in copy["cached_why"] and             len(tried) == 2 * len(background_network.OVERPASS_URLS)
+        try:
+            background_network.fetch_osm("another area")
+        except ValueError as exc:  # nothing kept for it: the error
+            assert "each tried twice" in str(exc)
+        else:
+            raise AssertionError("no server answered and nothing was kept")
+    finally:
+        background_network.post, background_network.time.sleep = real, sleep
+        background_network.OSM_FRESH_DAYS = 0
+    assert waited == [background_network.OVERPASS_RETRY_S] * 3  # one pause before each second round
 
 
 def test_an_images_roads_are_traced_from_its_pixels():
@@ -222,7 +326,8 @@ def test_generate_demand_works_the_demand_generators_controls():
     assert {pair: cell.flow for pair, cell in matrix.cells.items() if cell.flow} == \
         {pair: value * 2 if pair[0] == "1W" else value for pair, value in made.items()}
     info = panel.command("scale_demand", {"degree_of_saturation": 0.8})  # every pair, to 80 % of capacity
-    assert abs(max(info["degree_of_saturation"].values()) - 0.8) <= 0.02 and len(steps) == 2
+    x = max(info["degree_of_saturation"].values())  # 0.8, or under it where a link's queue storage binds first
+    assert (abs(x - 0.8) <= 0.02 or ("sized_by" in info and 0.6 < x < 0.8)) and len(steps) == 2
     sized = {pair: cell.flow for pair, cell in matrix.cells.items() if cell.flow}
     panel.checker = lambda pairs: (0.5, {"checked": True, "kept": "50%"})  # the run held only half of it
     info = panel.command("scale_demand", {"factor": 1})

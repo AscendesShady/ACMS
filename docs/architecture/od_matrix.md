@@ -54,6 +54,9 @@
     column or every empty cell.
   - Clear removes the demand of the kind shown from the selected pairs.
 - `InstitutionPanel` (Demand → Institutions): one icon button per building type (`institutions.KINDS`);
+  a **Height** box accompanies both placement and selected-building details (total including roof, metres).
+  Untouched type defaults remain labelled assumptions and save as None; editing saves an explicit height.
+  A selected edit emits `height_requested`, validated by MainWindow, saved/undoable without stopping a run.
   picking one loads its kind's default figures into the form (Area, the people its kind has, e.g.
   Students, Employees, Shift from–to, By car) with the car trips they make and their busiest hours, and
   starts placing on the map (`placing_changed`, the area; the footprint follows the Area box). The
@@ -69,16 +72,26 @@
 - `ODCellPanel.planner` (set by the window: `network_tools.demand_plan` on its network) gives
   `generate_demand` its numbers; `_generate` types them in, one undo step (see AI Mode).
   `ODCellPanel.calibrator` (`network_tools.calibration_plan`) does the same for `calibrate_demand`
-  (`_calibrate`: the hourly flows fitted to counts, typed in, one undo step), and
+  (`_calibrate`: the hourly flows fitted to counts on the routes the simulation drives, `Graph.route_shares`,
+  typed in, one undo step; on shortest-distance routes a fit of GEH 0 had loaded GEH 17-24), `chooser`
+  (`network_tools.mode_plan`) for `choose_modes` (`_choose`: each pair's people, its vehicles times their mean
+  occupancy now, ride the new split, so its vehicles change with it, typed in with the split), and
   `ODCellPanel.scaler` (`network_tools.scale_plan`) for `scale_demand` (`_scale`), and
   `ODCellPanel.equilibrator` (`MainWindow._equilibrate_demand`) for `equilibrate_demand` (`_equilibrate`: hourly
   flows moved to their elastic equilibrium, q₀·(t/t_ref)^ε with t from headless runs and t_ref from a reference
-  run before the change, by successive averages until no pair moves over 2 %; typed in, one undo step). The planner and
+  run before the change, by successive averages until every pair is within 2 % of its target (the residual, not the
+  step, which shrinks by itself; `largest_gap`), trips still on the road counted with their time so far; typed in,
+  one undo step). The planner and
   scaler get the matrix's demand of that kind and, for daily demand, each pair's 24 hourly shares
   (`_demand_now`), so a degree of saturation counts the pairs left out and the busiest hour.
-  A demand tool naming no pairs works on every pair. `_type_in` types a tool's numbers (one undo step)
+  A demand tool naming no pairs works on every pair; a pair is "1W->1E", or as small models write it ("1W-1E",
+  "1W->>1E", "1W=>1E", "1W to 1E": `_pairs_from`; no end name has a "-"). An empty mode_split is none, and fractions
+  adding up to 1 are percent (`_shares_from`). `_type_in` types a tool's numbers (one undo step)
   and, for a degree of saturation, has `ODCellPanel.checker` (the window's `_check_demand`) run them,
-  typing in the share that held; a failed check puts the matrix back.
+  typing in the share that held; a failed check puts the matrix back. A cut demand's result leads with what the
+  matrix now holds (`_lead_with_what_was_kept`: `total_now`, `kept_after_check`; the made total as
+  `total_before_check`, as qwen3.5 had reported it as kept) and, under half kept, `to_hold_more`: the busiest junctions
+  that only give way and what might let more hold (signalising them, or main roads only).
 - `ODCell(flow, daily, profile, pattern, split, quarters)`: the data for one pair. `split` is one percent
   per vehicle type, in Mode Behavior's order; `quarters` the hourly demand's four 15-minute shares of the hour
   (() even; a Run passes them as `PairDemand.quarters`). AI Mode's set_od_demand takes `peak_hour_factor` or

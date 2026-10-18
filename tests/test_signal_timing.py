@@ -248,6 +248,53 @@ def test_every_method_runs_the_traffic_safely_and_the_adaptive_ones_adapt():
             assert now == start, method
 
 
+def test_scats_keeps_a_short_cycle_at_moderate_load():
+    # A corridor at DS 0.6-0.8 (target 0.9): each phase's DS weighted by its lanes' vehicles and smoothed over cycles;
+    # the worst single lane of one cycle had pushed the cycle from 40 s to its 120 s cap (audit 2026-10-13, M1)
+    network = generate_network(1, 3)
+    for node in network.nodes.values():
+        node.signal_method = "scats"
+    car = [VehicleMode("Car", PALETTE[1])]
+    demand = [PairDemand(o, d, q, None, [], "Poisson", (100,)) for o, d, q in (("1W", "1E", 1500), ("1E", "1W", 1500))]
+    demand += [PairDemand(f"{c}S", f"{c}N", 150, None, [], "Poisson", (100,)) for c in (1, 2, 3)]
+    simulation = Simulation(network, demand, car, seed=4)
+    while simulation.time < 1200:
+        simulation.step()
+    cycles = {plan.get("cycle_s") for plan in simulation.signal_plans.values()}
+    assert cycles and max(cycles) < 70, cycles
+
+
+def test_max_pressure_never_starves_a_light_arm():
+    from traffic_simulator.signal_timing import MAX_RED_S
+
+    # 4 phases, two busy arms facing each other and a light one: the busy two passed the green between them and
+    # the light arm's vehicles waited 300 s (then teleported) before the maximum red
+    network = generate_network(1, 1)
+    node = network.node("1,1")
+    node.signal_method, node.signal_phases, node.green_times_s = "max_pressure", 4, [20.0] * 4
+    car = [VehicleMode("Car", PALETTE[1])]
+    demand = [PairDemand(o, d, q, None, [], "Poisson", (100,)) for o, d, q in (("1W", "1E", 1000), ("1E", "1W", 1000),
+                                                                                 ("1S", "1N", 40))]
+    simulation, worst = Simulation(network, demand, car, seed=1), 0.0
+    while simulation.time < 1200:
+        simulation.step()
+        worst = max([worst] + [v.waiting_s for v in simulation.vehicles if v.origin == "1S"])
+    assert simulation.teleports == 0 and worst < MAX_RED_S + 25, worst  # its red, then the busy green's amber
+
+
+def test_max_pressure_serves_a_lone_side_road_car_soon():
+    # Pressure counts the vehicles near the line (PRESSURE_ZONE_M), not the whole 500 m approach: a main road's cars
+    # still half a minute away had held a lone side-road car 52 s
+    network = generate_network(1, 1)
+    network.node("1,1").signal_method = "max_pressure"
+    demand = [PairDemand(o, d, q, None, [], "Poisson", (100,)) for o, d, q in (("1W", "1E", 300), ("1S", "1N", 20))]
+    simulation, worst = Simulation(network, demand, [VehicleMode("Car", PALETTE[1])], seed=1), 0.0
+    while simulation.time < 1800:
+        simulation.step()
+        worst = max([worst] + [v.waiting_s for v in simulation.vehicles if v.origin == "1S"])
+    assert worst < 25, worst
+
+
 def test_tsp_follows_an_adaptive_plan():
     from pathlib import Path
 

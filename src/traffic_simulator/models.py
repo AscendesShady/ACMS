@@ -33,6 +33,8 @@ SIGNAL_METHODS = ("webster", "transyt", "synchro", "scats", "scoot", "actuated",
 BACKGROUND_KINDS = ("colour", "image", "map")
 INSTITUTION_KINDS = ("Residential", "School", "Hospital", "Office", "Shop")  # institutions.KINDS details each
 MAX_AREA_M2, MAX_INFLUENCE_M = 1_000_000.0, 3000.0  # a building's footprint (1 km²) and its circle's radius
+BUILDING_HEIGHTS_M = {"Residential": 9.0, "School": 7.2, "Hospital": 18.0, "Office": 18.0, "Shop": 4.5}
+MAX_BUILDING_HEIGHT_M = 300.0  # visual height in metres; no traffic or demand calculation uses it
 
 
 def stop_line_inset(road_width: float, road_length: float) -> float:
@@ -164,6 +166,7 @@ class Institution:
     # percent of people and employees by each mode ("Walk" and vehicle type names), from a mode split
     # (network_tools.institution_split); empty: only car_share is known (by car, the rest not on the roads)
     mode_shares: dict = field(default_factory=dict)
+    height_m: float | None = None  # None: explicitly assumed kind default, not a surveyed height
 
 
 def institution_problem(item: Institution) -> str | None:
@@ -178,6 +181,8 @@ def institution_problem(item: Institution) -> str | None:
         return f"Institution {item.id} needs whole numbers of people and employees, not below zero."
     if not 1 <= item.area_m2 <= MAX_AREA_M2:
         return f"Institution {item.id}'s area must be 1 to {MAX_AREA_M2:,.0f} m²."
+    if item.height_m is not None and (not finite(item.height_m) or not .5 <= item.height_m <= MAX_BUILDING_HEIGHT_M):
+        return f"Institution {item.id}'s height must be 0.5 to {MAX_BUILDING_HEIGHT_M:g} m."
     if not sqrt(item.area_m2) / 2 <= item.radius_m <= MAX_INFLUENCE_M:
         return (f"Institution {item.id}'s circle of influence must reach at least its own walls and at most "
                 f"{MAX_INFLUENCE_M:g} m.")

@@ -14,15 +14,21 @@ Each building is a zone of the four-step model: generation, distribution, mode s
   nearest first (equally near: by name).
 - **Generation.** `hourly_people(item)`: people arriving and leaving in each hour, any mode: everyone makes
   one trip each way a day; employees in the hours the shift starts and ends, and so do people who come
-  together; the others evenly through the shift (`_through`, past midnight too); residents leave at the
-  start and come back at the end. `hourly_trips(item)`: the same by car (its Car share).
+  together; the others evenly through the shift (`_through`, past midnight too); residents leave round the
+  start and come back round the end (`RESIDENT_SPREAD`, a quarter the hour before, half in it, a quarter after).
+  `_groups(item)` keeps employees and the people apart (each with whether they commute: staff and residents).
+  `hourly_trips(item)`: the same by car (its Car share). An office's default visitors (500 a day: business
+  visits and staff's midday trips) bring it to ITE 710's 3.3 car trips a day per employee, scaled to its car
+  share.
 - **Distribution.** `door(network, item)`: its nearest junction (not a boundary end; equally near, the first by
   name), where its trips start and end. `catchment(network, item)`: the junctions and ends in its circle but the
   door: where its people come from, an equal share each (the circle of influence is the catchment).
 - **Mode split.** `shares(item)`: people % by mode, its `mode_shares` (set by `network_tools.institution_split`,
   a logit: network_tools.md) or else `car_share` by Car and the rest on foot (`WALK`). `vehicle_split(item,
-  modes)`: vehicles a person (share ÷ occupancy over the untimetabled types; walkers and timetabled riders add
-  none: riders take the network's buses), each type's share of them, and mode names no type has.
+  modes, commute)`: vehicles a person (share ÷ occupancy over the untimetabled types, a commute's at most
+  `COMMUTE_OCCUPANCY` 1.1, NHTS 2017; walkers and timetabled riders add none: riders take the network's buses),
+  each type's share of them, and mode names no type has. A school's pupils are `escorted`: each car that brings or
+  fetches one drives on again, so its pupils' vehicles go both ways at the start and at the end.
 - **To a Run.** `run_demand(network, modes, daily)`: each building's trips as `simulation.PairDemand`s:
   catchment → door arriving, door → catchment leaving, each pair `timetabled=False` (no timetable of its own).
   Daily: the trips a day spread in the building's own hourly profile. Hourly: each pair's flow in the design
@@ -30,5 +36,8 @@ Each building is a zone of the four-step model: generation, distribution, mode s
   say which buildings make no trips (no catchment, an unknown mode). `MainWindow._pair_demand` adds them to
   the OD matrix's pairs, so a Run, a test and an experiment spawn them.
 - `place(network, kind, x, y, area, radius, ...)`: adds `IN#`, everything checked first.
+- `place` also accepts optional `height_m`; it is validated with the other figures before insertion and saved
+  with the institution. None uses an assumed kind default in `building_assets.height`. Height affects drawing
+  only; generation, catchment distribution, mode split and the run demand remain unchanged.
 - `Placement`: the placing steps (`move`, `click`, `grow` by `GROW` 1.15 a wheel step, from the
   building's walls to 3 km; `resize`). The first click starts the circle just past its corners.

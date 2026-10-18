@@ -64,6 +64,20 @@ def hcm_entry_capacity(circulating_vph: float, lanes: int = 1) -> float | None:
     return None
 
 
+def tanner_entry_capacity(circulating_vph: float, headway_s: float = 2.0, critical_s: float = 4.98,
+                          follow_up_s: float = 2.61) -> float:
+    """Tanner's (1962) entry capacity, veh/h, against a bunched circulating stream: no gap within `headway_s` (Δ,
+    the shortest headway in it: 2.0 s for one circulating lane, Akçelik / SIDRA; Troutbeck's bunched exponential),
+    C = q(1 − Δq)·e^(−q(t_c − Δ)) / (1 − e^(−q·t_f)), q in veh/s. The critical and follow-up headways are those
+    HCM 6 Eq 22-1 implies (t_f = 3600/1380, t_c − t_f/2 = 1/0.00102 s per 3600). Below about 800 veh/h it is near
+    the HCM's curve; above, lower, as a one-lane ring's bunched traffic leaves fewer gaps than the HCM's random
+    stream (the simulation's single-lane entries fall the same way)."""
+    q = circulating_vph / 3600
+    if q <= 0:
+        return 3600 / follow_up_s
+    return max(0.0, 3600 * q * (1 - headway_s * q) * exp(-q * (critical_s - headway_s)) / (1 - exp(-q * follow_up_s)))
+
+
 def fastest_path_speed_kmh(radius_m: float) -> float:
     """NCHRP 672 speed on a path of this radius with a -2 % cross slope."""
     return 3.4614 * (radius_m / 0.3048) ** 0.3673 * 1.609344

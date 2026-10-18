@@ -7,6 +7,7 @@ Run with `python tests/test_background.py` (or the test monitor)."""
 import json
 import os
 import tempfile
+from copy import deepcopy
 from dataclasses import replace
 import time
 import urllib.request
@@ -382,6 +383,34 @@ def test_the_tools_line_the_background_up_and_the_readout_follows_the_mouse():
     window.close()
     window.background_painter.tiles._pool.shutdown(wait=True)  # its downloads done before the folder goes
     tiles.cleanup()
+    folder.cleanup()
+
+
+def test_hide_background_shows_the_roads_alone_without_changing_the_project():
+    from traffic_simulator.main import MainWindow
+
+    window = MainWindow()
+    panel, painter = window.background_panel, window.background_painter
+    folder = tempfile.TemporaryDirectory()
+    picture = Path(folder.name) / "plan.png"
+    image = QImage(40, 20, QImage.Format.Format_RGB32)
+    image.fill(QColor("#cc2222"))
+    image.save(str(picture))
+    window.network.background = Background(kind="image", image=str(picture), x_m=0, y_m=0, width_m=100, colour="#000000")
+    window._commit()
+    panel.show_background(window.network.background)
+    assert not panel.hide_button.isHidden() and panel.hide_button.toolTip() == "Hide Background"
+    before, undo, unsaved = deepcopy(window.network.background), len(window.history.undo_stack), window.unsaved()
+    assert draw(painter, window.network.background).pixelColor(50, 20).name() == "#cc2222"  # the plan shows
+    panel.hide_button.click()
+    assert painter.hidden and draw(painter, window.network.background).pixelColor(50, 20).name() == "#000000"
+    assert window.network.background == before and len(window.history.undo_stack) == undo and window.unsaved() == unsaved
+    panel.hide_button.click()  # and back
+    assert not painter.hidden and draw(painter, window.network.background).pixelColor(50, 20).name() == "#cc2222"
+    panel.show_background(Background(colour="#123456"))
+    assert panel.hide_button.isHidden()  # a plain colour has nothing to hide
+    window._ask_to_save = False
+    window.close()
     folder.cleanup()
 
 

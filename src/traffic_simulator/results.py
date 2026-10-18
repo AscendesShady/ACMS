@@ -132,6 +132,7 @@ class RunRecorder:
         # Each direction of a road (a link, "road>" from its from-node, "road<" back): entered, time, distance, delay
         self._link: dict[str, dict] = {}
         self._road_minute: dict[str, list] = {}  # road -> [entered, vehicle s, vehicle m, most queued, delay s]
+        self._entries_seen: dict[str, int] = {}  # link id -> the run's entries to it at the last sample (Frame.entries)
         self._minute_start = 0.0
         self.totals = {"time_s": 0.0, "samples": 0, "on_road": 0, "spawned": 0, "arrived": 0, "trips": 0,
                        "trip_s": 0.0, "trip_delay_s": 0.0, "people": 0.0, "vehicle_s": 0.0, "vehicle_m": 0.0,
@@ -144,7 +145,7 @@ class RunRecorder:
         self._trips: list[list] = []  # waiting to be appended
         # For the statistics (observed()): every trip, vehicles first seen per (origin, minute), and each road's
         # queue (metres a lane, rounded) at every sample it had one
-        self.trip_log: list[tuple] = []  # (origin, destination, type, trip s, delay s, arrived s)
+        self.trip_log: list[tuple] = []  # (origin, destination, type, trip s, delay vs own free speed s, arrived s)
         self.minute_rows: list[list] = []  # the Per minute rows (MINUTE_COLUMNS)
         self.entries: Counter = Counter()
         self.queues: dict[str, Counter] = defaultdict(Counter)
@@ -181,6 +182,20 @@ class RunRecorder:
                 self._measure_from_here()
             totals, minute = self.totals, self._minute
             dt = max(frame.time - totals["time_s"], 0.0)
+            # Entries counted by the run as they happened (each direction of a road, U-turns too); a frame without
+            # them (made by hand) falls back to a vehicle seen on a new road at a sample
+            exact = getattr(frame, "entries", None) is not None
+            if exact:
+                for link_id, count in frame.entries.items():
+                    new = count - self._entries_seen.get(link_id, 0)
+                    self._entries_seen[link_id] = count
+                    road_id = link_id.rstrip("<>")
+                    if new and road_id in self._road:
+                        self._road[road_id]["entered"] += new
+                        self._road_minute.setdefault(road_id, [0, 0.0, 0.0, 0, 0.0])[0] += new
+                    if new:
+                        self._link.setdefault(link_id, {"entered": 0, "vehicle_s": 0.0, "vehicle_m": 0.0,
+                                                        "delay_s": 0.0})["entered"] += new
             queued_at: dict[str, list[float]] = {}
             seen = set()
             for vehicle in frame.vehicles:
@@ -208,7 +223,7 @@ class RunRecorder:
                 road = self._road.get(vehicle.road)
                 if road is not None:
                     by_minute = self._road_minute.setdefault(vehicle.road, [0, 0.0, 0.0, 0, 0.0])
-                    if alive[6] != vehicle.road:
+                    if alive[6] != vehicle.road and not exact:
                         road["entered"] += 1
                         by_minute[0] += 1
                     road["vehicle_s"] += dt
@@ -223,7 +238,7 @@ class RunRecorder:
                     link_id = place.rsplit(" lane ", 1)[0]
                     link = self._link.setdefault(link_id, {"entered": 0, "vehicle_s": 0.0, "vehicle_m": 0.0, "delay_s": 0.0})
                     if alive[8] != link_id:
-                        link["entered"] += 1
+                        link["entered"] += 0 if exact else 1
                         alive[8] = link_id
                     link["vehicle_s"] += dt
                     link["vehicle_m"] += metres
@@ -248,7 +263,7 @@ class RunRecorder:
                 self._trips.append([vehicle_id, kind, origin, destination, round(inserted, 1), round(exited, 1),
                                     round(trip, 1), round(metres, 1), round(lost, 1), round(waited, 1), people,
                                     round(own, 1), round(requested, 1), round(system, 1)])
-                self.trip_log.append((origin, destination, kind, trip, lost, exited))
+                self.trip_log.append((origin, destination, kind, trip, own, exited))  # own: a bike's free flow is its own
                 totals["trips"] += 1
                 totals["trip_s"] += trip
                 totals["system_trip_s"] = totals.get("system_trip_s", 0.0) + system
@@ -339,9 +354,14 @@ class RunRecorder:
 
     def observed(self) -> dict:
         """What the run's statistics are worked from (experiments.analyse_run): the trips, vehicles first seen
-        per (origin, minute), each road's queue histogram, the samples taken and the roads."""
+        per (origin, minute), each road's queue histogram, the samples taken and the roads; `unfinished`, the vehicles
+        still on the road (origin, destination, type, seconds on it so far: a lower bound on their trip)."""
         with self._lock:
-            return {"trips": list(self.trip_log), "entries": dict(self.entries), "samples": self.totals["samples"],
+            now, start = self.totals["time_s"], self.totals["measure_from_s"]
+            unfinished = [(alive[2], alive[3], alive[1], round(now - alive[0], 1)) for alive in self._alive.values()
+                          if alive[0] >= start]
+            return {"trips": list(self.trip_log), "unfinished": unfinished, "entries": dict(self.entries),
+                    "samples": self.totals["samples"],
                     "minute_rows": [list(row) for row in self.minute_rows],
                     "minutes": int(self.totals["time_s"] // 60), "roads": self.roads,
                     "queues": {road: dict(counts) for road, counts in self.queues.items()}}

@@ -36,7 +36,8 @@
   seconds), the vehicles first seen per origin and minute (`entries`) and each road's queue (metres a lane,
   rounded) at every sample that had one (`queues`); `observed()` hands them out (experiments.analyse_run,
   choose_modes' `from_run`). `kpis()` (any thread, under its lock) gives the network's figures, with the
-  travel time index `tti`, planning time index `pti` and buffer index `bi` (`stats.reliability`; not in the workbook's Summary,
+  travel time index `tti`, planning time index `pti` and buffer index `bi` (`stats.reliability`, against each
+  vehicle's own free speed: `trip_log` keeps that delay; not in the workbook's Summary,
   which is made from the saved totals); `export(path)` a workbook now;
   `finish(results)` the workbook when the run ends (`MainWindow._stop_runner`: Stop, a new Run, a change to
   the network, closing, its physics failing, after one last sample, the part-sample, so a run stopped before

@@ -19,7 +19,11 @@ The harness waits for every answer and verifies its exact prompt in Research
 Log before advancing. It records a checksummed manifest and an append-only,
 flushed ledger in `reports/prompt_campaign`. Research Log retains its normal
 output location. A ledger already present prevents an accidental duplicate
-launch. Errors and one-hour deadlines halt advancement without retry. A crash
+launch. Errors and one-hour deadlines halt advancement without retry; a halt closes
+the Research Log's session, as completion does, so its report covers the steps that
+ran. `--isolate` (`Campaign(isolate=True)`): the starting project is saved to
+`baseline.json` (its hash in the ledger) and reloaded, with an empty conversation,
+before each prompt, so one prompt's network or failure isn't the next one's. A crash
 between submission intent and recorded completion needs manual reconciliation
 with Research Log: exactly-once delivery across a crash is not promised.
 

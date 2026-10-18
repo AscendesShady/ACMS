@@ -33,10 +33,11 @@ assistant's tools can ask any run of the session (`read_results` lists them).
   (saturation × effective green ÷ cycle) and v/c; each approach's 95th-percentile queue against its road
   (`queue_p95`); a roundabout entry's circulating flow (its link's `circulating` movements counted in
   `turn_traversals`), its capacity measured on the simulated drivers (`ROUNDABOUT_ENTRY_VPH`) and v/c, and the
-  HCM 6 capacity beside it (`roundabouts.hcm_entry_capacity`); and a grid of LOS per 15-minute period (two whole
+  HCM 6 capacity beside it (`roundabouts.hcm_entry_capacity`), and for a one-lane entry Tanner's against a bunched ring
+  (`tanner_entry_capacity`, `tanner_capacity_vph`: below the HCM's above about 800 veh/h circulating, as the simulation is); and a grid of LOS per 15-minute period (two whole
   periods or more).
 - `diagnose_signal(kpis, junction)` (tool `diagnose_signal`): flow ratio y = q/s per phase (its busiest
-  approach), Y, the critical v/c Xc = Y·C/(C − L) (L = 5 s a phase), Webster's cycle for the demand; per approach
+  approach), Y, the critical v/c Xc = Y·C/(C − L) (L = `signal_timing.lost_time`, as Webster's), Webster's cycle for the demand; per approach
   v/c, arrivals on green P, platoon ratio Rp = P/(g/C), arrival type and f_PA (Exhibits 16-11, 16-12), PF =
   (1 − P)·f_PA/(1 − g/C) (≤ 1 for types 3–6), the HCM delay d1·PF + d2 (Eqs 16-11, 16-12, k = 0.5, T = 0.25 h:
   `signal_timing.incremental_delay`) against the simulated delay, spillback (95th-percentile queue ≥ 90 % of the
@@ -45,7 +46,8 @@ assistant's tools can ask any run of the session (`read_results` lists them).
   (a coordinated method with arrival type 1–2 on a busy approach), held beyond the signal (simulated delay over
   twice the HCM's and 20 s more: an exit, lane changes or the next junction), spillback; each with the tool to fix it.
 - `run_health(kpis)` (tool `check_run_health`): gridlock (3 minutes running with vehicles on the road, none
-  arriving, under 3 km/h), vehicles waiting at their origin (over 10 and 5 % of those spawned), pairs with no
+  arriving, under 3 km/h), a gridlock the teleports broke (`teleports`: how many, from which links), vehicles
+  waiting at their origin (over 10 and 5 % of those spawned), pairs with no
   route, over half the vehicles still on the road, an MSER-5 warm-up of half the run or more, signal approaches
   over capacity; each with what to do (FHWA Toolbox III, error checking).
 - `slow_links(kpis)` (tool `preflight_check`'s low-demand run): links whose mean traversal is over 1.5 × free

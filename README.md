@@ -27,6 +27,7 @@ C:\Python312\python.exe -m venv .venv
 .venv\Scripts\python.exe run_monitor.py  # test monitor: live progress, Run Again
 .venv\Scripts\python.exe tools\run_test.py tests\test_simulation.py webster   # just the matching tests, timed
 .venv\Scripts\python.exe tools\run_test.py --all -j 4    # every test file, 4 at a time
+.venv\Scripts\python.exe tools\preview_ui.py --output reports/ui-preview  # desktop screenshots and layout record
 ```
 
 The editor also starts with `.venv\Scripts\acms.exe` or
@@ -34,10 +35,31 @@ The editor also starts with `.venv\Scripts\acms.exe` or
 
 ## Building and running a network
 
+- **3D View:** the map's tilt icon toggles an orthographic isometric view (45 degree yaw, 35.3 degree elevation,
+  zero roll). Wheel zooms; **F** fits the projected network; **R** resets zoom while keeping the chosen view.
+  Roads and vehicles keep their world dimensions and simulation speeds. Motion into the screen naturally looks
+  slower through foreshortening. Toggle back at any time without restarting the run. The view choice is not saved
+  in the project file.
+- **Vehicle styling:** cars have tapered bodies, raised cabins, sloped glass and separate wheels in three
+  variants. Bicycles and motorbikes have tyres, open frames, handlebars and riders; buses and vans have distinct
+  cabs and windows. Both views use the same low-poly geometry. Physical length and width stay unchanged.
+  In **Mode Behavior**, click a type and choose its **Colour**. **Random** gives each vehicle stable varied paint
+  throughout the run; the choice is saved with the project and supports Undo. Demand charts keep the type colour.
+  Choose paint before Run: like other vehicle-type edits, changing it stops an active run.
+- **Show Buildings:** the city icon beside 3D View hides/shows placed institutions, their labels and selected
+  catchments. It changes visibility only: institutions and their demand remain. Placement previews still show
+  while you add a building. Buildings start visible; this display choice lasts for the session.
+- **Building heights:** 3D View extrudes the existing metre-scaled footprints into structures with facades and
+  roofs. In **Demand Generator → Institutions**, set **Height** when placing or selecting a building.
+  Height includes the roof, is saved and undoable, and can be edited during a run. Old files use labelled
+  assumed defaults: Residential 9 m, School 7.2 m, Hospital/Office 18 m, Shop 4.5 m. Set a measured height when
+  available. Height changes leave 2D footprints, catchments and traffic demand unchanged.
 - **Roads:** select a road to set its lanes, speed and direction, and a **turn pocket** at each junction it arrives
   at (kerb or offside, 1–2 lanes, 15–150 m): turners move into it, and a full pocket holds up the lane behind.
   **Slip roads** (Ctrl+click two roads that meet, then **Add Slip Road**) curve smoothly out of and back into their roads, sized so they
   are quicker than the junction they bypass.
+- **Background:** once you've drawn the roads over a map or plan, **Hide Background** (the eye beside Lock in
+  Create → Background) hides it to show the roads alone; press it again to bring it back. It changes nothing saved.
 - **Demand:** an OD pair's hourly flow can take a **PHF** (peak-hour factor, 0.25–1): the hour's busiest
   quarter runs at the flow ÷ PHF. The assistant can also set four 15-minute counts.
 - **Run, Pause, Play, Stop:** every run writes its workbook to Documents\ACMS results when it ends, however it

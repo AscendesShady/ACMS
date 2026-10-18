@@ -206,7 +206,7 @@ def log(event: dict) -> None:
         "artifacts": artifacts, "error": event.get("error"), "activity_lines": len(activity),
         "timings_s": {"model": round(sum(u.get("total_s") or 0 for u in usage), 3),
                       "your_decisions": round(sum(c["decided_at"] - c["proposed_at"] for c in decided), 3),
-                      "compute": round(sum(c.get("compute_s") or 0 for c in calls), 3),
+                      "compute": round(sum((c.get("compute_s") or 0) + (c.get("check_s") or 0) for c in calls), 3),
                       "total": round((event.get("ended") or 0) - (event.get("started") or 0), 3)},
         "tokens": {"input": sum(u.get("input_tokens") or 0 for u in usage),
                    "output": sum(u.get("output_tokens") or 0 for u in usage), "requests": len(usage)},

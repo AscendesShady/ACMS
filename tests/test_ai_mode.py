@@ -111,6 +111,9 @@ class _Providers(BaseHTTPRequestHandler):
                           {"candidates": [{"content": {"parts": [{"text": "gemini"}]}}],
                            "usageMetadata": {"promptTokenCount": 50, "candidatesTokenCount": 3,
                                              "thoughtsTokenCount": 7}}])
+        elif body["model"] == "silent":  # thinks, then says nothing
+            self._stream([{"message": {"content": "", "thinking": "hmm"}, "done": False},
+                          {"message": {"content": ""}, "done": True, "prompt_eval_count": 9, "eval_count": 3}], sse=False)
         elif body["model"] == "no-tools" and body.get("tools"):
             self.send_response(400)
             self.end_headers()
@@ -126,7 +129,8 @@ class _Providers(BaseHTTPRequestHandler):
                          if wants_tool else
                          [{"message": {"content": "", "thinking": "mulling"}, "done": False},
                           {"message": {"content": "hi "}, "done": False}, {"message": {"content": "ollama"}, "done": False},
-                          {"message": {"content": ""}, "done": True, "prompt_eval_count": 60, "eval_count": 4}],
+                          {"message": {"content": ""}, "done": True, "eval_count": 4,
+                           "prompt_eval_count": 100_000 if body["model"] == "dense" else 60}],  # dense: more tokens
                          sse=False)
 
     def log_message(self, *args):
@@ -212,11 +216,27 @@ def test_assistant_streams_each_providers_api():
         assert (grok["input_tokens"], grok["output_tokens"], grok["cached_tokens"]) == (40, 2, 32)
         assert (gemini["input_tokens"], gemini["output_tokens"]) == (50, 10)  # thinking counts as output
         assert (local["input_tokens"], local["output_tokens"], local["model"]) == (60, 4, "llama3:latest")
+        assistant.USAGE_TAG.value = 7.0  # a step's requests carry its tag; another thread's (signal agent) don't
+        assistant._record({"provider": "local"})
+        other = threading.Thread(target=assistant._record, args=({"provider": "local"},))
+        other.start()
+        other.join()
+        assistant.USAGE_TAG.value = None
+        assert [u["tag"] for u in assistant.USAGE[-2:]] == [7.0, None]
         assert 0 <= local["first_s"] <= local["total_s"]
         path, _, body = _Providers.seen[-1]
         assert path == "/api/chat" and body["stream"] is True
         assert body["options"]["num_ctx"] * 4 > len(prompt)  # the documents fit the context window
         assert body["keep_alive"] == assistant.KEEP_ALIVE  # loaded between questions, not reloaded after 5 min
+        sizes = [(assistant.stream_chat("local", "dense", messages), _Providers.seen[-1][2]["options"]["num_ctx"])[1]
+                 for _ in range(2)]  # its tokenizer counts more than estimated: the next window is sized by its count
+        assert sizes[0] < sizes[1] == assistant.LOCAL_CONTEXT_TOKENS
+        try:
+            assistant.stream_chat("local", "silent", messages)
+        except assistant.NoAnswer:
+            assert assistant.USAGE[-1]["no_answer"] and assistant.USAGE[-1]["output_tokens"] == 3  # its time counted
+        else:
+            raise AssertionError("a reply of nothing is no answer")
 
         assert assistant.default_model("gemini", ["gemini-2.5-pro", "gemini-flash-latest"]) == "gemini-flash-latest"
         assert assistant.default_model("grok", ["grok-build-0.1", "grok-4.3"]) == "grok-4.3"
@@ -238,6 +258,12 @@ def test_a_tool_call_written_as_text_is_made():
     assert assistant.calls_in_text("a set {1, 2} and no call", tools) == []
     # a call-shaped object naming a tool that doesn't exist is made too, so the app refuses it (llama3.2 3B wrote
     # {"name": "teleport_vehicles", ...} as its whole answer); a bare {"name": ...} that isn't a tool is just text
+    # written as a function call (llama3.2 3B: network_from_background({...}) as its whole reply): made too, offered
+    # tools only; a name in prose without its brackets, or brackets that aren't one object, is just text
+    called = 'Plan: ... network_from_background({"road_classes": "all", "road_colour": null}) then network_summary()'
+    assert [(c["name"], c["arguments"]) for c in assistant.calls_in_text(called, tools + [{"name": "network_from_background"}])] \
+        == [("network_from_background", {"road_classes": "all", "road_colour": None}), ("network_summary", {})]
+    assert assistant.calls_in_text("I used describe to look, and list_roads(2) too", tools) == []
     invented = '{"name": "teleport_vehicles", "parameters": {"junctions": "1,1"}} {"name": "Bob"}'
     assert [c["name"] for c in assistant.calls_in_text(invented, tools)] == ["teleport_vehicles"]
     replies = iter([{"role": "assistant", "content": text}, {"role": "assistant", "content": "2,2 is a roundabout."}])
@@ -265,7 +291,7 @@ def test_the_conversation_loop_recovers_from_small_models_habits():
 
     def fake(*args, **kwargs):
         asked.append(kwargs.get("think"))
-        if kwargs.get("think") is False:
+        if kwargs.get("think") is False or "was refused" in args[2][-1]["content"]:  # reminded once: it says why again
             return {"role": "assistant", "content": "There is no junction 9,9."}
         return next(stream)
 
@@ -276,7 +302,7 @@ def test_the_conversation_loop_recovers_from_small_models_habits():
                                       None, lambda c: ran.append(c) or {"error": "Unknown id '9,9'."})
         assert len(ran) == 1  # the repeat isn't run: it is told so
         assert json.loads(messages[4]["content"])["error_type"] == "repeated"
-        assert asked[-1] is False  # asked again, not thinking
+        assert False in asked  # asked again, not thinking (then reminded of the refusal once)
         assert messages[-1]["content"] == "There is no junction 9,9.\n\n" + assistant.REFUSED_NOTE  # its one call refused
     finally:
         assistant.stream_chat = saved
@@ -350,7 +376,8 @@ def test_the_conversation_loop_recovers_from_small_models_habits():
         plan_only = iter([{"role": "assistant", "content": "Plan: widen it -> update_roads"},
                           {"role": "assistant", "content": "", "tool_calls": [{"id": "1", "name": "update_roads",
                                                                                 "arguments": {"roads": ["9,9-9,8"]}}]},
-                          {"role": "assistant", "content": "Done: road 9,9-9,8 now has 6 lanes."}])
+                          {"role": "assistant", "content": "Done: road 9,9-9,8 now has 6 lanes."},
+                          {"role": "assistant", "content": "Done: road 9,9-9,8 now has 6 lanes."}])  # reminded: claims again
 
         def fake(*args, **kwargs):
             asked.append(kwargs.get("require"))
@@ -360,7 +387,7 @@ def test_the_conversation_loop_recovers_from_small_models_habits():
         shown = []
         messages = assistant.converse("gemini", "m", [{"role": "user", "content": "x"}], "", tools, shown.append,
                                       lambda c: {"error": "Unknown id '9,9-9,8'."})
-        assert asked == [None, ["update_roads"], None]  # required once, on the reminder only
+        assert asked == [None, ["update_roads"], None, None]  # required once, on the plan reminder only
         # every call refused, yet it claims success: the app says nothing changed, in the reply and on screen
         assert messages[-1]["content"].endswith(assistant.REFUSED_NOTE) and assistant.REFUSED_NOTE in shown[-1]
         # a read, then a reply that is only a Plan: line (Gemini, asked to raise the population): required too
@@ -375,9 +402,13 @@ def test_the_conversation_loop_recovers_from_small_models_habits():
         assistant.converse("gemini", "m", [{"role": "user", "content": "x"}], "", tools, None, lambda c: {"ok": True})
         assert asked == [None, ["list_junctions"], None, ["update_roads"], None]  # each plan-only reply, a call required
         assert assistant._only_a_plan("**Plan:** x -> y") and not assistant._only_a_plan("Plan: x -> y\nNot needed: ok.")
+        assert assistant._only_a_plan("Plan: x -> y\ny -> x, y")  # llama3.2 3B's arrow lines are plan too
+        assert not assistant._only_a_plan("Plan: x -> y\nThis built it.\ny -> x")
         ended = []
         assistant._ended([], "it stopped", ended.append)
         assert ended == ["\n\n(The app: it stopped. Nothing ran.)"]  # the app's own note reaches the transcript
+        earlier = [{"role": "tool", "name": "place_map", "content": "{}"}, {"role": "user", "content": "now demand"}]
+        assert assistant._ended(earlier, "it stopped", None, 2)[-1]["content"].endswith("Nothing ran.)")  # this answer's
     finally:
         assistant.stream_chat = saved
     assert assistant.planned_tools("set roads -> list_junctions, update_roads, nope", {"list_junctions", "update_roads"}) \
@@ -386,6 +417,98 @@ def test_the_conversation_loop_recovers_from_small_models_habits():
     assert assistant.plan_line(["no plan here"]) == ""
     # Ollama's context size steps up rarely, so its cache of the prompt survives from one round to the next
     assert [assistant.context_size(n) for n in (1000, 16384, 16385, 40000)] == [16384, 16384, 32768, 65536]
+
+
+def test_figures_no_tool_gave_are_flagged():
+    asked = {"role": "user", "content": "Run a headless simulation for 20 minutes"}
+    refused = [asked, {"role": "tool", "content": '{"error": "There is no demand to test with"}'}]
+    made_up = ("The results are: total vehicle-km 123456.7, average speed 36.2 km/h, total travel time 3412.5 min, "
+               "average travel time 136.5 min, total stops 1234")  # llama3.2 3B, after its run was refused
+    assert assistant.ungrounded(made_up, refused) == 5
+    measured = [asked, {"role": "tool", "content": '{"throughput_vph": 5970.4, "demand_vph": 8494, "mean_speed_kmh": 23.81}'}]
+    assert assistant.ungrounded("Throughput 5,970 veh/h (70% of 8,494), mean speed 23.8 km/h over 20 minutes", measured) == 0
+    assert assistant.ungrounded("1. place the map 2. trace its roads 3. run it", measured) == 0  # numbering isn't figures
+    kept = [asked, {"role": "tool", "content": '{"total_now": 3119, "kept_after_check": "38% of 7516"}'}]
+    assert assistant.ungrounded("Only 1,269 vehicles per hour could enter (38% of what was asked).", kept) == 1
+    assert assistant.ungrounded("Kept 3,119 veh/h (38 %), per the HCM 2000 and FHWA 2019.", kept) == 0  # years aren't
+    assert "unchecked" in assistant.UNGROUNDED_NOTE.format(5)
+
+
+def test_a_refused_call_is_tried_again_once_when_reminded():
+    # llama3.2 3B sent arrival_pattern "peak", was told to use degree_of_saturation, and stopped; reminded once, it can
+    wrong = {"id": "c1", "name": "generate_demand", "arguments": {"arrival_pattern": "peak"}}
+    right = {"id": "c2", "name": "generate_demand", "arguments": {"degree_of_saturation": 0.85}}
+    script = iter([{"role": "assistant", "content": "", "tool_calls": [wrong]},
+                   {"role": "assistant", "content": "Plan: set the peak demand -> generate_demand"},  # gives up
+                   {"role": "assistant", "content": "", "tool_calls": [right]},
+                   {"role": "assistant", "content": "Peak-hour demand is set."}])
+    sent = []
+    saved, assistant.stream_chat = assistant.stream_chat, lambda *args, **kwargs: (sent.append(args[2][-1]), next(script))[1]
+
+    def run(call):
+        return {"error": "'peak' is how busy traffic is: give degree_of_saturation"} if "arrival_pattern" in call["arguments"] \
+            else {"total_now": 6420}
+    try:
+        messages = assistant.converse("local", "m", [{"role": "user", "content": "Set the demand for the peak hour."}], "",
+                                      [{"name": "generate_demand"}], None, run)
+    finally:
+        assistant.stream_chat = saved
+    reminder = sent[2]["content"]
+    assert "generate_demand was refused" in reminder and "degree_of_saturation" in reminder  # the error, quoted
+    assert messages[-1]["content"] == "Peak-hour demand is set."  # it ran this time: no note
+    assert sum("was refused" in (m.get("content") or "") for m in messages if m["role"] == "user") == 1  # once only
+
+
+def test_a_change_claimed_with_no_tool_run_is_questioned_then_noted():
+    sent = []
+
+    def converse(*replies):
+        script = iter({"role": "assistant", "content": text} for text in replies)
+        saved, assistant.stream_chat = assistant.stream_chat, \
+            lambda *args, **kwargs: (sent.append(args[2][-1]["content"]), next(script))[1]
+        try:
+            return assistant.converse("local", "m", [{"role": "user", "content": "x"}], "", [{"name": "update_roads"}],
+                                      None, lambda call: {"ok": True})
+        finally:
+            assistant.stream_chat = saved
+
+    messages = converse("I've set every road to 40 km/h.", "Every road has been set to 40 km/h.")
+    assert sent[-1] == assistant.CLAIMED and messages[-1]["content"].endswith(assistant.NOTHING_RAN_NOTE)
+    messages = converse("Done.", "Sorry: I didn't change anything; say which roads.")
+    assert messages[-1]["content"] == "Sorry: I didn't change anything; say which roads."  # owned up: no note
+    sent.clear()
+    assert converse("There are 16 junctions.")[-1]["content"] == "There are 16 junctions." and len(sent) == 1
+
+
+def test_tools_a_plan_adds_after_an_edit_ran_are_not_pushed():
+    # llama3.2 3B: placed the map, planned, built the network, then re-planned with update_roads (no one asked)
+    ok = lambda name: {"role": "tool", "name": name, "content": "{}"}  # noqa: E731
+    answer = [{"role": "assistant", "content": "", "tool_calls": [{"name": "place_map"}]}, ok("place_map"),
+              {"role": "assistant", "content": "Plan: build it -> place_map, network_from_background"},
+              {"role": "assistant", "content": "", "tool_calls": [{"name": "network_from_background"}]},
+              ok("network_from_background"),
+              {"role": "assistant", "content": "Plan: build it -> network_from_background, update_roads"}]
+    names, edits = {"place_map", "network_from_background", "update_roads"}, {"place_map", "network_from_background"}
+    assert assistant.unfinished(answer, names, edits) == []  # the first plan is done; the later addition isn't pushed
+    assert assistant.unfinished(answer, names) == ["update_roads"]  # told nothing of edits: every line counts
+    assert assistant.unfinished(answer[:3], names, edits) == ["network_from_background"]  # the first plan still counts
+
+
+def test_a_tool_refused_again_and_again_is_not_run_again_in_that_answer():
+    # llama3.2 3B called set_end_flows 7 times, each with new wrong arguments, until the round limit
+    calls = [{"id": f"c{i}", "name": "set_end_flows", "arguments": {"supply": i}} for i in range(5)]
+    script = iter([*({"role": "assistant", "content": "", "tool_calls": [call]} for call in calls),
+                   {"role": "assistant", "content": "I couldn't set the flows: no end was named."}])
+    saved, assistant.stream_chat = assistant.stream_chat, lambda *args, **kwargs: next(script)
+    ran = []
+    try:
+        messages = assistant.converse("local", "m", [{"role": "user", "content": "x"}], "", [{"name": "set_end_flows"}],
+                                      None, lambda call: ran.append(call) or {"error": "set_end_flows needs end."})
+    finally:
+        assistant.stream_chat = saved
+    assert len(ran) == assistant.MAX_REFUSALS  # the rest weren't run, and the model was told why
+    assert sum('"gave_up"' in m["content"] for m in messages if m["role"] == "tool") == 5 - assistant.MAX_REFUSALS
+    assert messages[-1]["content"].startswith("I couldn't set the flows")
 
 
 def test_tool_results_reach_the_model_compact():
@@ -1044,7 +1167,7 @@ def test_system_2_shares_edits_and_keeps_the_conversation():
 
         steps = len(window.history.undo_stack)  # demand tools work the Demand Generator's controls
         done = panel._execute("set_od_demand", {"pairs": ["1W->1E"], "demand": "hourly", "value": 250})
-        assert done["value"] == 250 and window.od_matrix.cells[("1W", "1E")].flow == 250
+        assert done["value_each"] == 250 and window.od_matrix.cells[("1W", "1E")].flow == 250
         assert window.od_panel.flow.value() == 250 and len(window.history.undo_stack) == steps + 1
         assert "No such origin" in panel._execute("set_od_demand", {"pairs": ["9X->1E"], "demand": "hourly",
                                                                   "value": 1})["error"]

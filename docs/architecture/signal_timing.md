@@ -10,11 +10,12 @@ the real software exactly. Times in seconds; a cyclic profile has one bin per se
   junction gets 3.3 + 2.0 s, a 120 km/h six-lane one 6.0 (6.5 capped) + 2.1 s. `simulation.Signal` runs them and
   every method below takes the junction's amber + all-red (`span`; `AMBER_S` + `ALL_RED_S`, 3 + 2 s, only
   where no junction is given) for its lost time and phase starts.
-- **Shared:** `webster(ratios, span)` (C0 capped at 120 s; its greens fill that cycle with `fit_greens`, so a phase
+- **Shared:** `webster(ratios, span)` (C0 between `MIN_CYCLE_S` 30 s and 120 s; its greens fill that cycle with `fit_greens`, so a phase
   held at its minimum green takes its time from the others, never lengthening the cycle past the cap; minimum greens
   and clearances that can't fit in 120 s are refused); `critical_saturation(ratios)` (X = Y·C/(C − L) at Webster's cycle, the
-  HCM's critical v/c; generate_demand sizes demand by it); `KERB_TURN_PER_LANE_VPH` (1,160) and
-  `OFFSIDE_TURN_PER_LANE_VPH` (1,100), turning lanes' saturation flows measured on the simulated drivers
+  HCM's critical v/c; generate_demand sizes demand by it); `KERB_TURN_PER_LANE_VPH` (1,770) and
+  `OFFSIDE_TURN_PER_LANE_VPH` (1,860), `UTURN_PER_LANE_VPH` (1,550, at the 25 km/h U-turn floor), turning lanes' saturation flows measured on the simulated drivers (86-90 %
+  of straight-on with the per-kind turn floors, within the HCM's 85-95 %; 76-78 % at a 25 km/h floor)
   (the flow ratios that use them are simulation.Graph's); `fit_greens(shares, cycle)` (greens that fill a cycle exactly,
   effective green in proportion to the shares, none below 7 s); `phase_starts`, `green_mask` (the
   effective green, the start-up lost time after the green starts to the amber used); `disperse` (Robertson's platoon
@@ -43,7 +44,9 @@ the real software exactly. Times in seconds; a cyclic profile has one bin per se
 - **SCATS** (`ScatsRegion`, `ScatsJunction`): each lane's degree of saturation during its green,
   DS = (g − (T − t·h))/g from its stop-line loop's unoccupied time T and the h vehicles that crossed
   it (standard space time t = 0.9 s, measured). Once a cycle the region's cycle moves towards the length that would
-  bring its most saturated junction (its highest lane DS over its target) to target, by at most 6 s;
+  bring its most saturated junction to target, by at most 6 s: a junction's DS is its most saturated phase's, a
+  phase's its lanes' DS weighted by the vehicles each passed, averaged over its last `SCATS_SMOOTH` (3) cycles (the
+  worst single lane of one cycle took a corridor at DS 0.6-0.7 to the 120 s cap);
   each junction votes for the split plan, of four (equisaturation, even, the busiest phase +25 %, −25 %),
   that would even out its phases' DS best, and uses a plan once it wins 2 of the last 3 votes.
 - **SCOOT** (`ScootRegion`, `ScootJunction`, `ScootLink`): each link's counts in each second of the
@@ -73,7 +76,9 @@ the real software exactly. Times in seconds; a cyclic profile has one bin per se
   vehicles cross its detectors within `UNIT_EXTENSION_S` (3 s, SUMO's max-gap) of each other, up to
   `ACTUATED_MAX_GREEN_S` (50 s); it rests in green with no other call; next, the next phase in turn with a call.
 - **Max-pressure** (`MaxPressureJunction`; Varaiya 2013, Wei et al. 2019's PressLight form): each phase's pressure
-  from the simulation (`pressure(links)`); after `MIN_GREEN_S` a green ends as soon as another phase's pressure is
-  higher, which goes next (not in turn), and at `ACTUATED_MAX_GREEN_S` at most. Both are in `ACTUATED` (each
+  from the simulation (`pressure(links)`, vehicles within `PRESSURE_ZONE_M` 100 m of the line, a detection zone); after `MIN_GREEN_S` a green ends as soon as another phase's pressure is
+  higher, which goes next (not in turn), and at `ACTUATED_MAX_GREEN_S` at most; a phase with traffic red
+  `MAX_RED_S` (100 s) goes next whatever the pressures (two busy arms had passed the green between them while a
+  light one waited 300 s and was teleported). Both are in `ACTUATED` (each
   junction on its own, not a coordinated group) and in `models.SIGNAL_METHODS`; simulation.md wires them.
 - Limits: SCATS's tactical control (ending a green early on a gap) isn't built inside a SCATS region.

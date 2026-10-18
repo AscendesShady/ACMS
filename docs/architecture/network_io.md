@@ -16,6 +16,9 @@
   bring the previous project back under this one's name, where Save would overwrite it). Unsaved changes (`unsaved`: another undo
   state, seed or speed than when saved or opened) show as * in the title and are asked about (Save, Discard,
   Cancel) before closing or opening another; offscreen (tests) never asks.
+- Vehicle types include `random_colour` (boolean, defaults false for older projects). True varies only the
+  rendered vehicle paint; the saved `colour` remains a valid hex categorical colour for charts. Invalid flag
+  values are refused before save/load changes anything. Camera and building-visibility choices stay session-only.
 - `save_network(network, path, conversation=None)`: synchronises lengths, validates, writes JSON with
   `network` (configuration), `nodes`, `roads`, `approach_nodes`, `approach_roads`, `bus_stops`
   (older files without it load with none), `institutions` (older files: none), `interchanges` (older files: none, so their interchanges
@@ -29,3 +32,6 @@
   stored `length_m` disagrees with the node geometry. Curves (`shape`, `curvature`),
   `overpass` and turn pockets (`pockets`; older files' roads have none) round-trip exactly.
 - `route_choice` is saved beside the network's records and loaded back (older files have none: off).
+- Institution records include optional `height_m` (finite 0.5–300 m, total including roof). Older records without
+  it load as None, using the labelled assumed type height. `institution_problem` rejects invalid heights before
+  installation, and the normal network/project save and undo paths preserve explicit heights.

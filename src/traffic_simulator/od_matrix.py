@@ -51,7 +51,8 @@ from . import theme
 from .daily_profile import ARRIVAL_PATTERNS, DEGREES, HOURS, MIN_GAP_H, DailyProfile, phf_of, phf_quarters, quarter_shares
 from .institutions import KINDS, catchment, door, hourly_people, hourly_trips, shares
 from .mode_behavior import VehicleModes, fixed_split, redistribute, whole_percent
-from .models import MAX_AREA_M2, Institution, Network, institution_problem
+from .models import BUILDING_HEIGHTS_M, MAX_AREA_M2, MAX_BUILDING_HEIGHT_M, Institution, Network, institution_problem
+from .building_assets import height as building_height
 from .properties_panel import hint_label, icon_button, styled_button
 
 # Categorical slots 1-3 of the dataviz reference palette (its dark-surface steps), in
@@ -1223,7 +1224,7 @@ class ODCellPanel(QWidget):
                 info["checked_in_a_run"] = report
                 if share is not None and share < 1:
                     type_values({pair: round(value * share) for pair, value in typed.items()}, False)
-                    info["total_kept"] = sum(round(value * share) for value in typed.values())
+                    _lead_with_what_was_kept(info, share, sum(round(value * share) for value in typed.values()))
         except Exception:
             self.matrix.cells = before
             self.matrix.refresh()
@@ -1287,7 +1288,8 @@ class ODCellPanel(QWidget):
         if self.equilibrator is None:
             raise ValueError("Demand can't be equilibrated here: there's no network to run.")
         if self.matrix.mode != "hourly":
-            raise ValueError("equilibrate_demand works on hourly demand: show the hourly matrix first.")
+            raise ValueError("equilibrate_demand works on hourly demand: the matrix shows daily (set_od_demand or "
+                             "generate_demand with demand 'hourly' switches it).")
         flows = {pair: cell.flow for pair, cell in self.matrix.cells.items()
                  if cell.flow and pair[0] in self.matrix.origins and pair[1] in self.matrix.destinations}
         if not flows:
@@ -1315,18 +1317,22 @@ class ODCellPanel(QWidget):
         if self.chooser is None:
             raise ValueError("Modes can't be chosen here: there's no network to route on.")
         demand, scope = self.matrix.mode, self._pairs_from(args)
-        plan, info = self.chooser(scope, args, self._demand_now(demand, scope)[0])
+        names = self.matrix.vehicle_modes.names()
+        current = {pair: {name: share / 100 for name, share in zip(names, self.matrix.split_of(self.matrix.cell(pair)))}
+                   for pair in scope}  # its people now ride the new split: its vehicles change with it
+        plan, info = self.chooser(scope, args, self._demand_now(demand, scope)[0], current)
         if check_only:
             return {"ok": True}
-        names = self.matrix.vehicle_modes.names()
+        values = info.get("values", {})
         groups: dict[tuple, list] = defaultdict(list)
         for pair, shares in plan.items():
-            groups[tuple(whole_percent([shares.get(name, 0.0) for name in names]))].append(pair)
+            value = round(values[pair]) if pair in values else None
+            groups[(tuple(whole_percent([shares.get(name, 0.0) for name in names])), value)].append(pair)
         before = deepcopy(self.matrix.cells)
         self.blockSignals(True)
         try:
-            for split, pairs in groups.items():
-                self._set_demand(pairs, demand, None, None, list(split))
+            for (split, value), pairs in groups.items():
+                self._set_demand(pairs, demand, value, None, list(split))
         finally:
             self.blockSignals(False)
         if self.matrix.cells == before:
@@ -1343,7 +1349,9 @@ class ODCellPanel(QWidget):
         if named:
             pairs = []
             for item in named if isinstance(named, list) else [named]:
-                parts = item if isinstance(item, (list, tuple)) else re.split(r"\s*(?:->|→|>|\bto\b|,)\s*", str(item).strip())
+                # "1W->1E", and as small models write it: "1W-1E", "1W->>1E", "1W=>1E", "1W to 1E" (no end has a "-")
+                parts = item if isinstance(item, (list, tuple)) else \
+                    re.split(r"\s*(?:-+>*|=+>|→|>+|\bto\b|,)\s*", str(item).strip())
                 if len(parts) != 2:
                     raise ValueError(f"Can't read the pair {item!r}; write it as \"origin->destination\", e.g. \"1W->1E\".")
                 pairs.append((str(parts[0]).strip(), str(parts[1]).strip()))
@@ -1379,6 +1387,7 @@ class ODCellPanel(QWidget):
         if demand not in UNITS:
             raise ValueError("demand must be 'hourly' (veh/h) or 'daily' (trips per day).")
         value, pattern, split = args.get("value"), args.get("arrival_pattern"), _parsed(args.get("mode_split"))
+        split = split if split not in ([], {}) else None  # empty: llama3.2's filler, no split given
         phf, quarters = args.get("peak_hour_factor"), _parsed(args.get("quarters"))
         if value is None and not pattern and split is None and phf is None and quarters is None:
             raise ValueError("Give a value, an arrival_pattern, a mode_split and/or a peak_hour_factor or quarters.")
@@ -1425,8 +1434,11 @@ class ODCellPanel(QWidget):
                 self.matrix.cells[pair] = cell
             self.show_current()
         cell = self.matrix.cell(pairs[0])
-        result = {"pairs": [f"{o}->{d}" for o, d in pairs], "demand": demand,
-                  "value": self.matrix.value(cell), "unit": UNITS[demand], "arrival_pattern": cell.pattern,
+        total = sum(self.matrix.value(c) or 0 for c in self.matrix.cells.values())
+        result = {"pairs": [f"{o}->{d}" for o, d in pairs][:20], "pairs_set": len(pairs), "demand": demand,
+                  "value_each": self.matrix.value(cell), "unit": UNITS[demand],
+                  "matrix_total": total,  # every pair's, so "each" isn't read as the total
+                  "arrival_pattern": cell.pattern,
                   "mode_split": dict(zip(self.matrix.vehicle_modes.names(), self.matrix.split_of(cell))),
                   **(_quarters_record(cell) if demand == "hourly" else {})}
         timed = [f"{mode.name} every {mode.headway_min} min" for mode in self.matrix.vehicle_modes.modes
@@ -1438,7 +1450,8 @@ class ODCellPanel(QWidget):
 
     def _shares_from(self, split) -> list[int]:
         """Whole percent per vehicle type, in Mode Behavior's order, from a mode_split given as
-        {name: percent}, [{"mode": name, "percent": n}, ...] or one number per type. Types left out get 0."""
+        {name: percent}, [{"mode": name, "percent": n}, ...] or one number per type. Types left out get 0.
+        Fractions adding up to 1 are read as percent (llama3.2 sent [0.4, 0.6])."""
         names = self.matrix.vehicle_modes.names()
         if isinstance(split, list) and split and all(isinstance(item, dict) for item in split):
             split = {str(item.get("mode", "")): item.get("percent", 0) for item in split}
@@ -1450,12 +1463,14 @@ class ODCellPanel(QWidget):
                                  "(set in the Mode Behavior tab).")
             split = [given.get(name.lower(), 0) for name in names]
         try:
-            shares = [round(float(share)) for share in split]
+            given = [float(share) for share in split]
         except (TypeError, ValueError):
             raise ValueError(f"mode_split must give a percent for the vehicle types {', '.join(names)}.") from None
+        scale = 100 if given and abs(sum(given) - 1) < 0.01 else 1
+        shares = [round(share * scale) for share in given]
         if len(shares) != len(names) or min(shares) < 0 or sum(shares) != 100:
-            raise ValueError(f"mode_split must give {', '.join(names)} percentages adding up to 100 "
-                             f"(got {shares}).")
+            raise ValueError(f"mode_split must give {len(names)} percentages, one each for {', '.join(names)} in that "
+                             f"order, adding up to 100 (got {[f'{share:g}' for share in given]}).")
         return shares
 
     def _shape_curve(self, pairs: list[tuple[str, str]], profile: DailyProfile) -> dict:
@@ -1494,6 +1509,9 @@ class ODCellPanel(QWidget):
         total = sum(1 for o in matrix.origins for d in matrix.destinations if o != d)
         return {"showing": matrix.mode, "vehicle_types": names, "origins": matrix.origins,
                 "destinations": matrix.destinations, "pairs_total": total, "pairs_with_data_count": len(cells),
+                # the whole matrix, so a "how much demand" question isn't a small model's sum of dozens of pairs
+                "total_hourly_vph": round(sum(cell.flow or 0 for cell in cells.values())),
+                "total_daily_trips": round(sum(cell.daily or 0 for cell in cells.values())),
                 "hourly_vph": {pair: cell.flow for pair, cell in cells.items() if cell.flow is not None},
                 "daily_trips": {pair: cell.daily for pair, cell in cells.items() if cell.daily is not None},
                 "usual": usual, "different": {pair: values for pair, values in different.items() if values}}
@@ -1503,6 +1521,28 @@ def _quarters_record(cell: ODCell) -> dict:
     """An hourly pair's peak-hour factor, and its 15-minute shares of the hour when they aren't even."""
     return {"peak_hour_factor": round(phf_of(cell.quarters), 3),
             **({"quarters": [round(share, 4) for share in cell.quarters]} if cell.quarters else {})}
+
+
+def _lead_with_what_was_kept(info: dict, share: float, kept: float) -> None:
+    """A demand the check cut: the result starts with what the matrix now holds (qwen3.5 reported the 6,420 veh/h
+    made as the demand when 47 were kept), the made total renamed; under half kept, the busiest junctions that
+    only give way are named with what could let more hold (the model decides: signalise them, or main roads)."""
+    made = info.pop("total_made", None)
+    if made is None:  # scale_demand's: its total after scaling, and the factor that the check then cut too
+        made = info.pop("total_after", None)
+        if isinstance(info.get("factor"), (int, float)):
+            info["factor"] = round(info["factor"] * share, 3)
+    rest = dict(info)
+    info.clear()
+    info.update({"total_now": kept, "kept_after_check": f"{share:.0%} of {made} (the rest jammed in a run)",
+                 **rest, "total_before_check": made})
+    if share < 0.5:
+        giving_way = [node for node, control in (info.get("junction_controls") or {}).items() if control == "uncontrolled"]
+        if giving_way:
+            info["to_hold_more"] = (f"The busiest junctions only give way: {', '.join(giving_way)}. Signalising them "
+                                    "(set_junction_control, control 'signalised'), or main roads only "
+                                    "(network_from_background, road_classes 'main'), may let more demand hold; then "
+                                    "generate_demand again. Tell the user what was kept either way.")
 
 
 def _parsed(value):
@@ -1589,6 +1629,7 @@ class InstitutionPanel(QWidget):
     placing_changed = Signal(object)  # the footprint (m²) of the building to place now, or None: not placing
     delete_requested = Signal(str)  # the selected building's Delete
     split_requested = Signal(str)  # the selected building's Mode split
+    height_requested = Signal(str, float)  # selected institution's total visual height, metres
 
     def __init__(self) -> None:
         super().__init__()
@@ -1621,6 +1662,13 @@ class InstitutionPanel(QWidget):
         self.area.setSingleStep(500)
         self.area.setSuffix(" m²")
         self.area.setToolTip("Footprint area")
+        self.height = QDoubleSpinBox()
+        self.height.setRange(.5, MAX_BUILDING_HEIGHT_M)
+        self.height.setDecimals(1)
+        self.height.setSuffix(" m")
+        self.height.setToolTip("Total building height")
+        self.height_explicit = False
+        self.height_note = hint_label("Assumed type default; adjust to measured height.")
         self.people = QSpinBox()
         self.people.setRange(0, 1_000_000)
         self.people.setSingleStep(50)
@@ -1640,6 +1688,8 @@ class InstitutionPanel(QWidget):
         self.car_share.setSuffix(" %")
         self.car_share.setToolTip("Share arriving by car")
         form.addRow("Area", self.area)
+        form.addRow("Height", self.height)
+        form.addRow(self.height_note)
         form.addRow(self.people_label, self.people)
         form.addRow("Employees", self.employees)
         form.addRow("Shift", shift)
@@ -1667,12 +1717,23 @@ class InstitutionPanel(QWidget):
         details.addLayout(heading)
         self.details = hint_label()
         details.addWidget(self.details)
+        height_form = QFormLayout()
+        self.selected_height = QDoubleSpinBox()
+        self.selected_height.setRange(.5, MAX_BUILDING_HEIGHT_M)
+        self.selected_height.setDecimals(1)
+        self.selected_height.setSuffix(" m")
+        self.selected_height.setToolTip("Total building height")
+        self.selected_height.valueChanged.connect(lambda value: self.selected and
+                                                  self.height_requested.emit(self.selected.id, value))
+        height_form.addRow("Height", self.selected_height)
+        details.addLayout(height_form)
         layout.addWidget(self.details_box)
         outer = QVBoxLayout(self)
         outer.setContentsMargins(0, 0, 0, 0)
         outer.addWidget(group)
 
         self.area.valueChanged.connect(self._area_changed)
+        self.height.valueChanged.connect(self._height_changed)
         for box in (self.people, self.employees, self.car_share):
             box.valueChanged.connect(self._preview)
         for box in (self.shift_start, self.shift_end):
@@ -1685,7 +1746,12 @@ class InstitutionPanel(QWidget):
         start, end = self.shift_start.time(), self.shift_end.time()
         return {"people": self.people.value(), "employees": self.employees.value(),
                 "shift_start_h": start.hour() + start.minute() / 60, "shift_end_h": end.hour() + end.minute() / 60,
-                "car_share": float(self.car_share.value())}
+                "car_share": float(self.car_share.value()),
+                "height_m": self.height.value() if self.height_explicit else None}
+
+    def _height_changed(self):
+        self.height_explicit = True
+        self.height_note.setText("Total height, including the roof.")
 
     def end_placing(self) -> None:
         """Stop placing (placed, Esc, or another tab): no building picked."""
@@ -1703,10 +1769,13 @@ class InstitutionPanel(QWidget):
             self.kind = name
             kind = KINDS[name]
             area, people, employees, start, end, car = kind.defaults
-            boxes = (self.area, self.people, self.employees, self.car_share, self.shift_start, self.shift_end)
+            boxes = (self.area, self.height, self.people, self.employees, self.car_share, self.shift_start, self.shift_end)
             for box in boxes:
                 box.blockSignals(True)
             self.area.setValue(area)
+            self.height.setValue(BUILDING_HEIGHTS_M[name])
+            self.height_explicit = False
+            self.height_note.setText("Assumed type default; adjust to measured height.")
             self.people.setValue(people)
             self.employees.setValue(employees)
             self.car_share.setValue(car)
@@ -1762,6 +1831,9 @@ class InstitutionPanel(QWidget):
         """A building clicked on the map: its figures, its mode split, its door and where its people come from."""
         self.selected = item
         if item is not None:
+            self.selected_height.blockSignals(True)
+            self.selected_height.setValue(building_height(item))
+            self.selected_height.blockSignals(False)
             kind = KINDS[item.kind]
             arrive, _ = hourly_people(item)
             split = " · ".join(f"{name} {percent:.0f} %" for name, percent in shares(item).items())
@@ -1777,6 +1849,8 @@ class InstitutionPanel(QWidget):
                 lines.append(f"Catchment {item.radius_m:.0f} m reaches no junction or end but its door, so its "
                              f"{sum(arrive):,.0f} people a day have nowhere to come from: no trips in a Run.")
             self.details_title.setText(f"{item.id} {item.kind}")
+            lines.append(f"Height {building_height(item):g} m" +
+                         (" (assumed type default; adjust to measured height)." if item.height_m is None else " (including roof)."))
             self.details.setText("\n".join(lines))
         self._refresh()
 

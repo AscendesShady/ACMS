@@ -20,8 +20,10 @@
     (prompt), `prompt`, `editor_update` (what was sent before it), `provider`,
     `model`, `started`/`ended`, `plan` (the model's Plan: line), `tools_offered`, `calls` (each tool call: `tool`, `arguments`, `what`, `plan` (the approval
     card's), `decision` (read, applied, skipped, not decided, refused: arguments, refused: check), `result`, `at`,
-    `proposed_at`/`decided_at`, `compute_s`), `messages` (the model's, thinking included), `reply`, `error`,
-    `usage` (each model request's tokens and seconds, `assistant.USAGE`), `changes` (the step's changes to the
+    `proposed_at`/`decided_at`, `compute_s`, `check_s`: an edit's check before its card, an OpenStreetMap
+    download included; compute counts both), `messages` (the model's, thinking included), `reply`, `error`,
+    `usage` (each model request's tokens and seconds, `assistant.USAGE`, those tagged with this step's start by
+    `assistant.USAGE_TAG`: not another thread's that ended meanwhile), `changes` (the step's changes to the
     network, demand and vehicle types, `MainWindow._state_changes`), `map_png` (the map view as it is after it,
     `_map_png`; only when the network changed), `demand_png` (the OD matrix after it, `_demand_png`; only when the
     demand changed), `results_folder`, `project_file` and `network`. The window takes the state before a step and builds

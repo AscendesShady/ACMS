@@ -17,7 +17,8 @@ from PySide6.QtWidgets import QApplication  # noqa: E402
 
 from traffic_simulator import network_tools as tools  # noqa: E402
 from traffic_simulator.institutions import (GROW, Placement, _through, catchment, door, footprint_problem,  # noqa: E402
-                                            hourly_people, hourly_trips, links, place, run_demand, vehicle_split)
+                                            hourly_people, hourly_trips, links, place, run_demand, vehicle_split,
+                                            COMMUTE_OCCUPANCY, KINDS)
 from traffic_simulator.mode_behavior import VehicleModes  # noqa: E402
 from traffic_simulator.models import Institution, institution_problem  # noqa: E402
 from traffic_simulator.simulation import Simulation  # noqa: E402
@@ -90,7 +91,11 @@ def test_trips_follow_the_shift_and_are_shared_by_the_links():
     assert arrive[8] == leave[15] == (600 + 50) * 0.3 and sum(arrive) == sum(leave) == 195
     homes = Institution("IN2", "Residential", 0, 0, 4000, 400, 400, 0, 8.0, 17.5, 50)
     arrive, leave = hourly_trips(homes)
-    assert leave[8] == arrive[17] == 200 and sum(arrive) == 200  # residents drive out, then home
+    assert (leave[7], leave[8], leave[9]) == (arrive[16], arrive[17], arrive[18]) == (50, 100, 50)  # out, then home,
+    assert sum(arrive) == sum(leave) == 200  # spread over the hours round the shift's start and end (RESIDENT_SPREAD)
+    office = KINDS["Office"].defaults  # ITE 710: about 3.3 car trips a day per employee at ~95 % by car
+    staff_car = 2 * office[2] * office[5] / 100 / COMMUTE_OCCUPANCY
+    assert 0.85 * 3.3 * office[2] * office[5] / 95 < staff_car + 2 * office[1] * office[5] / 100 / 1.5 < 1.15 * 3.3 * office[2] * office[5] / 95
     shop = Institution("IN3", "Shop", 0, 0, 3000, 400, 1200, 0, 9.0, 21.0, 100)
     arrive, _ = hourly_trips(shop)
     assert arrive[8] == 0 and abs(arrive[9] - 100) < 1e-9 and abs(sum(arrive) - 1200) < 1e-9  # evenly, all day
@@ -164,12 +169,15 @@ def test_its_trips_go_into_a_run_catchment_to_door_and_back():
     assert abs(per_person - 0.4) < 1e-9 and split[0] == 0 and abs(split[1] - 0.5) < 1e-9
     daily, notes = run_demand(network, modes, daily=True)
     origins = catchment(network, school)
-    assert len(daily) == 2 * len(origins) and not notes and all(not pair.timetabled for pair in daily)
+    assert len(daily) == 4 * len(origins) and not notes and all(not pair.timetabled for pair in daily)  # staff, pupils
     arriving = [pair for pair in daily if pair.destination == "1,1"]
     assert {pair.origin for pair in arriving} == set(origins)
-    assert abs(sum(pair.daily for pair in arriving) - 650 * 0.4) < 1e-6 and arriving[0].shares[8] == 1  # 08:00
+    staff = 50 * (0.30 / COMMUTE_OCCUPANCY + 0.20)  # commuting: at most 1.1 to a car
+    pupils = 600 * 0.4 * 2  # each car that brings or fetches a pupil drives on again: in and out, morning and afternoon
+    assert abs(sum(pair.daily for pair in arriving) - (staff + pupils)) < 1e-6 and arriving[0].shares[8] == 1  # 08:00
+    assert any(pair.origin == "1,1" and abs(pair.shares[8] - 0.5) < 1e-9 for pair in daily)  # drop-off cars drive on
     hourly, notes = run_demand(network, modes, daily=False)
-    assert "08:00-09:00" in notes[0] and abs(sum(p.hourly for p in hourly) - 650 * 0.4) < 1e-6  # the design hour
+    assert "08:00-09:00" in notes[0] and abs(sum(p.hourly for p in hourly) - (staff + pupils)) < 1e-6  # the design hour
     simulation = Simulation(network, hourly, modes, seed=3)
     while simulation.time < 600:
         simulation.step()
@@ -191,7 +199,7 @@ def test_a_tool_places_one_near_a_junction_with_its_catchment():
                                                          "people": 2000})
     assert network.institutions[there["placed"]].radius_m == 900 and network.institutions[there["placed"]].people == 2000
     for args, message in (({"kind": "Castle", "near": "2,2"}, "kind must be"), ({"kind": "Shop"}, "Give near"),
-                          ({"kind": "Shop", "near": "9,9"}, "No junction"), ({"kind": "Shop", "x": 500, "y": 500},
+                          ({"kind": "Shop", "near": "9,9"}, "Unknown id"), ({"kind": "Shop", "x": 500, "y": 500},
                                                                              "can't stand")):
         try:
             tools.run_tool(network, "place_institution", args)

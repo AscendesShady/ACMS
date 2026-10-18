@@ -85,6 +85,12 @@ def test_control_delay_is_against_each_vehicles_own_free_flow():
     assert analysis._approach_delays(observed)["a"] == [(30.0, 0.0), (20.0, 3.0)]
 
 
+def test_tanners_capacity_falls_below_the_hcm_against_a_busy_ring():
+    from traffic_simulator.roundabouts import tanner_entry_capacity  # one bunched lane, Δ 2 s
+    assert [round(tanner_entry_capacity(vc)) for vc in (0, 800, 1000, 1200)] == [1379, 521, 377, 255]
+    assert tanner_entry_capacity(1000, headway_s=2.25) < tanner_entry_capacity(1000)  # more bunched, fewer gaps
+
+
 def test_roundabout_entries_report_simulated_and_hcm_capacity():
     """A roundabout's approaches: the flow circulating in front of each entry (the movements whose ring passes it),
     the capacity measured on the simulated drivers against it, and the HCM 6 entry capacity beside it."""
@@ -105,6 +111,7 @@ def test_roundabout_entries_report_simulated_and_hcm_capacity():
         vc = approach["circulating_vph"]
         assert 200 < vc < 700  # two or three of the other arms' movements pass each entry, 150 veh/h each
         assert abs(approach["hcm_capacity_vph"] - 1380 * exp(-0.00102 * vc)) <= 1
+        assert abs(approach["tanner_capacity_vph"] / approach["hcm_capacity_vph"] - 1) < 0.12  # near it this light
         assert approach["capacity_vph"] > approach["flow_vph"] and approach["v_c"] < 1
 
 
@@ -114,7 +121,8 @@ def test_signal_diagnosis_on_a_real_run():
     assert len(found["signals"]) == 9
     for signal in found["signals"]:
         assert abs(signal["Y"] - sum(signal["flow_ratios"])) < 0.01
-        lost = len(signal["flow_ratios"]) * 5.0  # amber 3 s + all-red 2 s a phase
+        from traffic_simulator.signal_timing import lost_time
+        lost = lost_time(len(signal["flow_ratios"]), 5.0)  # start-up lost + amber 3 s + all-red 2 s - amber used
         assert abs(signal["critical_v_c"] - signal["Y"] * signal["cycle_s"] / (signal["cycle_s"] - lost)) < 0.02
         assert signal["causes"]  # at least "none found"
         for approach in signal["approaches"]:
@@ -174,6 +182,10 @@ def test_run_health_finds_what_makes_a_run_untrustworthy():
     assert not found["healthy"] and set(problems) >= {"gridlock", "demand can't get in", "pairs with no route",
                                                       "most trips unfinished"}
     assert found["checks"]["gridlock"] == [{"from_min": 4, "minutes": 5}] and "1W> 40" in problems["demand can't get in"]["detail"]
+    moved = {**good, "observed": {**good["observed"], "teleports": [{"t": 400, "vehicle": "Car9", "from": "N72-N205>"}] * 3}}
+    found = analysis.run_health(moved)  # a gridlock the teleports broke: said, and where
+    assert not found["healthy"] and found["checks"]["teleports"] == 3
+    assert "N72-N205> 3" in {p["problem"]: p for p in found["problems"]}["gridlock broken by teleports"]["detail"]
 
 
 def test_slow_links_need_no_signal_to_blame():

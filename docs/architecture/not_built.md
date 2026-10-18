@@ -3,8 +3,10 @@
 - SCATS's tactical control (ending a green early on a gap: the `actuated` method does it per junction, not inside a
   SCATS region); groups of coordinated junctions other than "every junction with the method"; actuated and
   max-pressure junctions aren't coordinated with each other.
-- Start-up lost time 1.8 s against the HCM's default 2.0 s: SUMO's startupDelay can't reach 2.0 s
-  without pulling the saturation flow below field values (drivers re-halting as they creep off).
+- Start-up lost time 1.8 s against the HCM's default 2.0 s (re-measured 2026-10-18 by the HCM's field method:
+  1.80 s over 86 queues; the audit's 1.3 s was an earlier measurement): SUMO's startupDelay can't reach 2.0 s
+  without pulling the saturation flow below field values (drivers re-halting as they creep off). Capacity is
+  optimistic by 0.2 s a phase, under 1 % at a 60 s cycle.
 - Results: editing each vehicle type's occupancy in the tab (assumed), per-junction and per-signal KPIs in a run's
   workbook (junction_los and diagnose_signal give them for the assistant's headless runs only), a vehicle class set in the tab (the assistant's `update_vehicle_type` sets it), a warm-up set for a live Run (only the assistant's run_simulation and run_experiment take one) and counts on roads
   crossed between two samples; Batch Run compares agents deciding TSP (or plain runs), not network variants (the
@@ -22,10 +24,20 @@
   however long that takes.
 - Roundabout and priority capacity are only used to size demand, not reported per approach in the Summary (the
   assistant's junction_los grades each approach's delay and gives a roundabout entry's capacity, simulated and HCM 6).
+- Turning paths at junctions: a real curb radius per junction isn't modelled; turns are held to a speed floor per
+  kind (`JUNCTION_TURN_MIN_KMH`) that brings turning saturation flows to 86-90 % of straight-on.
+- Give-way junctions' capacity model (demand sizing) errs safe: a 2 x 2 grid sized to X 1.0 holds and 1.2 starts to
+  jam (15-20 % conservative, as roundabouts); spillback is bounded by each link's queue storage (`STORAGE_LIMIT`, calibrated on 40-500 m grids), not by
+  simulating the queues' interaction.
 - Roundabout capacity at busy rings: a single-lane entry follows the HCM 6 curve within 10 % up to about 800 veh/h
-  circulating, but the one-lane ring (Krauss following at 25 km/h) fills at about 1,350–1,450 veh/h entering plus
-  circulating, so above that it falls faster (−28 % at 1,000, −59 % at 1,200; a two-lane entry more). The ring's
-  speed and following, not the gap acceptance, set that limit. No HCM capacity for a three-lane entry.
+  circulating, then falls faster (−28 % at 1,000, −59 % at 1,200; a two-lane entry more). The ring doesn't fill
+  (Krauss allows 1,600–1,700 veh/h at its speed): its traffic bunches at 2.25–2.5 s headways, where the HCM's
+  Siegloch curve assumes a random stream, and Tanner's bunched formula (`roundabouts.tanner_entry_capacity`, shown
+  beside the HCM in junction_los) predicts the fall. Checked 2026-10-13 (3 seeds × 20 min a point): no ring speed or
+  `RING_TIMEGAP_S` lifts 1,000–1,200 without going over 10 % at 0–600, since the follow-up headway and the bunching
+  both come from Krauss following; separating them would need a mechanism SUMO doesn't have. The ring runs at its
+  curve speed rounded down to 5 km/h (25 km/h for a 25 m radius), the properties panel shows the NCHRP fastest-path
+  speed (28 km/h). No HCM capacity for a three-lane entry.
 - PCU in calculations: each vehicle type's PCU is kept, but capacities, demand sizing and results count
   vehicles, not passenger car units.
 - Multi-lane roundabout circulation: every ring is one path round, so a two-lane entry feeds it
@@ -37,6 +49,10 @@
   crossing overlaps, and a crossing ignores the vehicles' widths. Roundabout entry predicts where circulating
   traffic will be at the ring's speed, so an occasional circulating car still brakes hard.
 - A step other than 0.5 s or the ballistic update in the window: only headless runs (`run_headless`) take them.
+  Step sensitivity (3 x 3 grid at X 0.8, 2 seeds, 2026-10-18): mean trip time Euler 215 s at 0.1 s, 248 s at 0.5 s
+  (+15 %); ballistic 232 s and 235 s (+1 %). Seeds alone vary ±10 % there. SUMO's Krauss (Euler, 0.5 s) is kept as
+  the default, so absolute times carry that step's bias; compare designs at the same step and method (every
+  comparison tool does).
 - Curve speed along a road: a road's lanes are capped for its tightest bend over their whole length (no
   anticipatory braking into, or speed-up out of, the bend); hand-drawn shapes without stored curvature aren't capped.
 - Turn pockets: lane drops and lanes added mid-road (only a pocket of 1–2 lanes before a signalised or
@@ -55,11 +71,12 @@
   in one colour only (outlined roads trace as two lines); a busy rendered map traces in pieces
   (labels and casings break its roads; a London OSM screenshot gave 64 parts), so over the map the
   OSM data is the way.
-- Institutions: trips from beyond the catchment (a gravity model over the whole city) and trips between
+- Institutions: trips by purpose beyond commuting and escorting (a type's occupancy for the rest), older pupils
+  driving themselves; trips from beyond the catchment (a gravity model over the whole city) and trips between
   buildings; catchment places weighted by distance, population or road capacity instead of equal shares; walking
   measured along the roads, not across blocks; bus riders don't load the buses; one mode split for people and
   employees alike; a what-if (run_experiment, build_scenario) can't add a building's trips, since a test's demand
-  is fixed before its scenarios are built; editing a placed building's figures in its panel (update_institution
+  is fixed before its scenarios are built; editing a placed building's demand figures in its panel (height is editable; update_institution
   can).
 - Road types changing behaviour (the label is stored only).
 - Bus lines calling at some stops only; passengers' destinations (alighting is a share of the load at each stop),

@@ -29,6 +29,12 @@
   - Each change is one undo step: the snapshot holds the types too.
 - Colours come from the dataviz palette's 8 categorical slots, in fixed order. A type keeps its
   colour; a new type takes the first free one.
+- The selected type's **Colour** chooser offers twelve paint colours and **Random**. `set_colour(index, colour)`
+  validates a hex colour before editing; None sets `random_colour=True` and retains the categorical `colour`.
+  Fixed paint clears the flag and sets that type colour. Random paint is display-only, chosen by stable vehicle
+  ID in `vehicle_assets`, with no simulation RNG draws or frame-to-frame flicker. Charts retain the type colour.
+  The flag defaults false for old projects, is validated on load/save, and follows the normal undo snapshot.
+  It also follows the existing type-edit policy: editing a type stops an active run; the next Run uses the choice.
 - `ModeBehaviorPanel` (the Mode Behavior tab) shows each type's colour swatch, name box and Delete button only
   (rebuilt on add, delete and undo; the outgoing rows are silenced before any is hidden, so a half-typed name isn't
   applied to the types an undo restored, and the focus passing through them picks nothing),

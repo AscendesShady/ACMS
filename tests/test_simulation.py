@@ -19,9 +19,9 @@ from PySide6.QtWidgets import QApplication  # noqa: E402
 
 from traffic_simulator.mode_behavior import PALETTE, VehicleMode  # noqa: E402
 from traffic_simulator.network_generator import generate_network  # noqa: E402
-from traffic_simulator.signal_timing import (AMBER_USED_S, SATURATION_PER_LANE_VPH, START_UP_LOST_S,  # noqa: E402
+from traffic_simulator.signal_timing import (AMBER_USED_S, SATURATION_PER_LANE_VPH, START_UP_LOST_S, effective,  # noqa: E402
                                              STANDARD_SPACE_S, STOP_LINE_LOOP_M)
-from traffic_simulator.simulation import (DT, FILTER_SPEED, TURN_SATURATION_VPH, Lane, Loop, PairDemand, Runner,  # noqa: E402
+from traffic_simulator.simulation import (DT, FILTER_SPEED, TIME_TO_TELEPORT_S, TURN_SATURATION_VPH, Lane, Loop, PairDemand, Runner,  # noqa: E402
                                           Simulation, Turn, _clear, arrivals, webster)
 from traffic_simulator.vehicle import (MAX_SPEED_LAT, VEHICLE_CLASSES, create_vehicle, free_speed, next_speed,  # noqa: E402
                                        safe_speed, secure_gap)
@@ -491,6 +491,47 @@ def test_a_mirror_image_on_the_other_side_performs_alike():
     assert mirrored_turns == turns and run_side("right", False, 4, 0)[1] != turns
 
 
+def test_a_vehicle_stuck_for_the_teleport_time_jumps_on_along_its_route():
+    # A gridlock's cycle (Dhanmondi: three queues each waiting on the next) froze whole runs; as SUMO does after
+    # time-to-teleport, the front vehicle stuck that long leaves the road and waits to enter its route's next link
+    network = generate_network(3, 1)
+    simulation = Simulation(network, [PairDemand("1W", "1E", 600, None, [], "Random", (0, 100, 0))], MODES, seed=1)
+    while not simulation.vehicles:
+        simulation.step()
+    vehicle = simulation.vehicles[0]
+    lane, leg = vehicle.segment, vehicle.leg
+    vehicle.waiting_s = TIME_TO_TELEPORT_S - simulation.dt
+    simulation._teleport_jammed()
+    assert vehicle in simulation.vehicles and simulation.teleports == 0  # not yet
+    vehicle.waiting_s = TIME_TO_TELEPORT_S
+    simulation.time_to_teleport_s = 0  # off: a run showing its gridlock as it is
+    simulation._teleport_jammed()
+    assert vehicle in simulation.vehicles
+    simulation.time_to_teleport_s = TIME_TO_TELEPORT_S
+    simulation._teleport_jammed()
+    assert vehicle not in simulation.vehicles and vehicle not in lane.vehicles and simulation.teleports == 1
+    assert vehicle.leg == leg + 1 and vehicle in simulation.pending[vehicle.route[leg + 1].id]  # off the road, on its way
+    inserted = vehicle.inserted_s
+    while vehicle not in simulation.vehicles:
+        simulation.step()
+    assert vehicle.segment.link is vehicle.route[leg + 1] and vehicle.inserted_s == inserted  # its trip keeps its start
+
+
+def test_the_major_road_of_an_uncontrolled_junction_is_the_higher_class():
+    # An OpenStreetMap trunk road gave way to a residential lane that happened to line up better (Dhanmondi
+    # gridlocked); as SUMO's netconvert does, the road class decides first, the geometry only between equals
+    for major, minor in (("trunk", "residential"), ("residential", "trunk")):
+        network = generate_network(3, 3)
+        network.node("2,2").control = "uncontrolled"
+        for road in network.all_roads():
+            if "2,2" in (road.from_node, road.to_node):
+                vertical = network.node(road.from_node).x == network.node(road.to_node).x
+                road.road_type = major if vertical else minor
+        graph = Simulation(network, [], MODES).graph
+        chosen = {graph.links[link].road for link in graph._major_arms("2,2")}
+        assert all(network.road(road).road_type == "trunk" for road in chosen) and len(chosen) == 2, chosen
+
+
 def test_two_phase_signals_detour_offside_turns_by_a_u_turn():
     def nodes(origin, destination, network):
         return [(link.start, link.end) for link in Simulation(network, [], MODES).graph.route(origin, destination)]
@@ -515,6 +556,18 @@ def test_two_phase_signals_detour_offside_turns_by_a_u_turn():
     assert nodes("1S", "1E", network)[:2] == [("1S", "1,1"), ("1,1", "2,1")]  # its own phase: turns right
 
 
+def test_path_size_logit_shares_routes():
+    from types import SimpleNamespace
+
+    from traffic_simulator.simulation import path_size_logit
+
+    a, b, c = (SimpleNamespace(id=name, length=100.0) for name in "abc")
+    assert path_size_logit([[a], [b]], [60.0, 60.0], 0.5) == [0.5, 0.5]  # alike: even
+    assert path_size_logit([[a], [b]], [60.0, 120.0], 0.5)[0] > 0.6  # a minute faster: e^0.5 to 1
+    shared = path_size_logit([[a, c], [b, c], [a]], [60.0, 60.0, 60.0], 0.5)  # b-c overlaps least (PS 0.75, not 0.5)
+    assert abs(sum(shared) - 1) < 1e-12 and shared[1] > shared[0] and abs(shared[0] - shared[2]) < 1e-12
+
+
 def test_route_costs_count_junction_delay_once():
     from traffic_simulator.simulation import PRIORITY_CAPACITY_VPH, Graph
     network = generate_network(3, 3)  # two-phase signals, driving on the left
@@ -523,7 +576,7 @@ def test_route_costs_count_junction_delay_once():
     # Free flow: each move's control delay with no traffic at the greens entered, the turn's own length left out.
     signal = graph.signals["1,1"]
     into = graph.arriving["1,1"][0]
-    red = signal.cycle - signal.phases[signal.phase_of[into.id]][1]
+    red = signal.cycle - effective(signal.phases[signal.phase_of[into.id]][1])  # the effective red, C - g
     assert {graph.control_delay[(into.id, after)] for (_, after), turn in into.turns.items()
             if turn.kind != "uturn"} == {red * red / (2 * signal.cycle)}
     give_way = 3600 / PRIORITY_CAPACITY_VPH[0][1] + 5  # HCM 2000 Eq 17-38 with nothing to give way to
@@ -660,8 +713,8 @@ def test_webster_times_signals_from_the_demand():
     # L = 2 x (1.8 start-up + 2 all-red + 0.2 amber unused) = 8 s: C0 = (1.5 x 8 + 5) / (1 - 0.5) = 34 s
     cycle, greens = webster([0.3, 0.2])
     assert round(cycle, 6) == 34.0 and [round(green, 1) for green in greens] == [14.6, 9.4]  # (34 - 8) y/Y - 1
-    cycle, greens = webster([0.0, 0.0])  # no demand: minimum greens
-    assert round(cycle, 6) == 24.0 and [round(green, 6) for green in greens] == [7.0, 7.0]
+    cycle, greens = webster([0.0, 0.0])  # no demand: the shortest cycle, MIN_CYCLE_S, shared evenly
+    assert round(cycle, 6) == 30.0 and [round(green, 6) for green in greens] == [10.0, 10.0]
     assert round(webster([0.6, 0.5])[0], 6) == 120.0  # over capacity: the longest cycle
     network = generate_network(3, 4)
     network.node("2,2").signal_method = "fixed"  # keeps its entered greens
@@ -703,7 +756,8 @@ def test_the_window_runs_and_stops_the_traffic():
     seen = window._traffic({"road": "1W", "limit": 5})  # what an AI reads: the latest frame, live
     assert seen["time_s"] >= 60 and all(v["road"] == "1W" and v["type"] in ("Bus", "Car", "Bike")
                                         and "speed_kmh" in v and "x_m" in v for v in seen["vehicles"])
-    assert seen["shown"] <= 5 and set(seen["signals"]) == {node for node, _ in frame.signals}
+    assert seen["shown"] <= 5 and "signals" not in seen  # a road asked: its cars, not every signal
+    assert set(window._traffic({"limit": 5})["signals"]) == {node for node, _ in frame.signals}
     runner = window.runner
     window.od_matrix.cells[("1W", "1E")] = ODCell(flow=300, split=(10, 85, 5))
     window.od_panel.changed.emit(None)  # a demand edit (the user's or the assistant's): the run carries on
@@ -741,7 +795,9 @@ def test_the_runner_keeps_real_time_and_publishes_frames():
         time.sleep(0.5)
         assert runner.frame.time >= held + 25  # 0.5 s at 60x
         record = runner.frame.records(limit=3)
-        assert record["on_road"] == len(runner.frame.vehicles) and record["shown"] <= 3
+        assert record["on_road_network"] == len(runner.frame.vehicles) and record["shown"] <= 3
+        assert record["matching_stopped"] <= record["matching"] and "signals" in record
+        assert "signals" not in runner.frame.records("1,1-2,1")  # a road asked: its cars, not every signal plan
     finally:
         runner.stop()
     assert not runner._thread.is_alive()
@@ -789,6 +845,28 @@ def test_a_frame_shares_no_plan_with_the_run_or_another_frame():
         raise AssertionError("a frame's default plans can be changed")
 
 
+def test_give_way_drivers_slow_to_look_and_minor_turns_give_way_by_rank():
+    from traffic_simulator.simulation import GIVE_WAY_KMH, Graph
+
+    graph = Graph(_uncontrolled_crossing())
+    major = graph._major_arms("1,1")
+    turns = [turn for link in graph.arriving["1,1"] for turn in link.turns.values()]
+    giving = [turn for turn in turns if any(gives for *_, gives in turn.conflicts)]
+    assert giving and all(turn.speed <= GIVE_WAY_KMH / 3.6 + 1e-9 for turn in giving)  # slowed at the line
+    on_major = [turn for turn in turns if turn.lane_in.link.id in major and turn.lane_out.link.id in major]
+    assert on_major and not any(turn in giving for turn in on_major)  # the major road gives way to no one
+    # HCM's ranks: a minor offside turn gives way to the other minor arm's straight-on traffic (rank 4 to rank 3)
+    offside = next(turn for turn in turns if turn.kind == "offside" and turn.lane_in.link.id not in major)
+    yields_to = {(other.lane_in.link.id, other.kind) for other, _, _, gives in offside.conflicts if gives}
+    assert any(link not in major and kind == "straight" for link, kind in yields_to), yields_to
+
+
+def _uncontrolled_crossing():
+    network = generate_network(1, 1)
+    network.node("1,1").control = "uncontrolled"
+    return network
+
+
 def test_junction_saturation_by_control():
     """Degree of saturation at a roundabout (measured entry capacity against the circulating flow), a
     priority junction (against the flows it gives way to) and a signal (lane by lane, turns slower)."""
@@ -797,7 +875,7 @@ def test_junction_saturation_by_control():
                                               measured_capacity)
 
     assert measured_capacity(ROUNDABOUT_ENTRY_VPH, 0) == 1455 and measured_capacity(ROUNDABOUT_ENTRY_VPH, 300) == 1092.5
-    assert measured_capacity(PRIORITY_CAPACITY_VPH, 5000) == 120  # held at the last point beyond the table
+    assert measured_capacity(PRIORITY_CAPACITY_VPH, 5000) == 105  # held at the last point beyond the table
     network = generate_network(3, 3)
     network.nodes["2,2"].control = "roundabout"
     network.nodes["2,1"].control = "uncontrolled"
@@ -814,7 +892,7 @@ def test_junction_saturation_by_control():
     minor = next(link for link in graph.arriving["2,1"] if link.id not in major)
     across = next(turn.lane_out.link.id for turn in minor.turns.values() if turn.kind == "straight")
     x = graph.saturation("2,1", {}, {(minor.id, across): 200.0})
-    assert abs(x - 200 / 1990 / len(minor.lanes)) < 1e-9  # no priority traffic to wait for
+    assert abs(x - 200 / 1265 / len(minor.lanes)) < 1e-9  # no priority traffic to wait for: still slowed to look
     through = {(link.id, out.id): 600.0 for link in graph.arriving["2,1"] if link.id in major
                for out in graph.leaving["2,1"] if out.id in major and out.road != link.road}
     assert graph.saturation("2,1", {}, {(minor.id, across): 200.0, **through}) > x
@@ -1215,7 +1293,7 @@ def test_lateral_position_off_leaves_every_run_as_it_was():
     # The run's every position, speed and count, bit for bit, as before lateral position existed (the digest was taken
     # then); change it only for a deliberate change to the default model. On, with no type filtering, the traffic is the
     # same too (only drawn at its lane's kerb side).
-    before = "d7816a6363d823107c13da579899f4f903ce21adbeaa94d32ec6f23ed19382a7"
+    before = "4d886e55744933b11500f63cc4c861515853b5c9e8502ea4311585dbc0f0a3cd"  # 2026-10-18: turn floors per kind, U-turn rate, Webster minimum cycle
     assert _lateral_fingerprint() == _lateral_fingerprint(lateral=False) == before
     plain = Simulation(generate_network(2, 2), [pair("1W", "1E", 900, split=(10, 50, 40))], [MODES[0], MODES[1], MOTO], seed=3)
     still = Simulation(generate_network(2, 2), [pair("1W", "1E", 900, split=(10, 50, 40))],

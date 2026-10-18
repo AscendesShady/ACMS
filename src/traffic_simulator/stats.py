@@ -13,7 +13,7 @@
 - `logit`, `nested_logit`, `logsum`: multinomial and nested logit choice probabilities from utilities (Gumbel
   errors; Washington et al. ch. 13; Handbook of Transportation Science p22–26).
 - `f_sf`, `anova`: one-way or randomized-block ANOVA (seeds as blocks; McClave & Sincich §10.2–10.4);
-  `signed_rank`: Wilcoxon's signed-rank test, exact (Washington et al. p125–160).
+  `signed_rank`: Wilcoxon's signed-rank test, exact (Washington et al. p125–160); `holm`: Holm's adjusted p.
 - `ols`: least squares with t, p, R², F (Washington et al. ch. 3); `poisson_regression`: log-linear count
   model by IRLS with an offset, NB2 overdispersion α by moments, Pearson dispersion (Washington et al.
   p631–662); `empirical_bayes` (Hauer: w = 1/(1 + αμ)).
@@ -201,17 +201,18 @@ def logit(utilities: dict) -> dict:
 
 
 def reliability(trips) -> dict:
-    """Travel-time reliability from trips (trip seconds, delay seconds): the travel time index (mean trip
-    time over mean free-flow time) and the planning time index (the 95th percentile of each trip's time over
-    its free-flow time; FHWA Toolbox III 2019, p92–93), and the buffer index, mean-based: (95th percentile − mean)
-    ÷ mean of the same per-trip ratios (FHWA's (TT95 − mean TT) ÷ mean TT, distance-normalised as the PTI is).
-    Free-flow time = trip time − delay (against the speed limit, as the run's Delay is)."""
+    """Travel-time reliability from trips (trip seconds, delay seconds), all from each trip's ratio of its time to
+    its free-flow time: the travel time index (their mean), the planning time index (their 95th percentile; FHWA
+    Toolbox III 2019, p92–93) and the buffer index, (95th percentile − mean) ÷ mean (FHWA's (TT95 − mean TT) ÷ mean
+    TT, distance-normalised as the PTI is), one mean for both. Free-flow time = trip time − delay, the delay against
+    the vehicle's own free speed (a bike's free flow is its own, not the limit). The spread is across one run's
+    trips, not FHWA's across days."""
     pairs = [(trip, trip - lost) for trip, lost in trips if trip > 0 and trip - lost > 0]
     if not pairs:
         return {"tti": None, "pti": None, "bi": None}
     ratios = [t / f for t, f in pairs]
     p95, mean = percentile(ratios, 95), sum(ratios) / len(ratios)
-    return {"tti": round(sum(t for t, _ in pairs) / sum(f for _, f in pairs), 3), "pti": round(p95, 3),
+    return {"tti": round(mean, 3), "pti": round(p95, 3),
             "bi": round((p95 - mean) / mean, 3)}
 
 
@@ -576,6 +577,18 @@ def normal_sf(z: float) -> float:
     return 0.5 * erfc(z / sqrt(2))
 
 
+def holm(ps: list) -> list:
+    """Holm's step-down adjustment of p-values tested together (the family-wise error held at α; McClave &
+    Sincich §10.3's Bonferroni, made uniformly more powerful): the i-th smallest p times (m − i + 1), kept
+    non-decreasing, at most 1. None stays None."""
+    order = sorted((p, i) for i, p in enumerate(ps) if p is not None)
+    adjusted, running = list(ps), 0.0
+    for rank, (p, i) in enumerate(order):
+        running = max(running, min(1.0, (len(order) - rank) * p))
+        adjusted[i] = running
+    return adjusted
+
+
 def _ranks(values: list[float]) -> list[float]:
     """Each value's rank, 1 for the smallest, ties at their mean rank."""
     order = sorted(range(len(values)), key=values.__getitem__)
@@ -661,14 +674,24 @@ def mann_whitney(a: list[float], b: list[float]) -> dict | None:
 
 def paired_power(sd: float, difference: float, n: int, alpha: float = 0.05) -> float:
     """Power of the two-sided paired t-test with n pairs to find a true mean difference `difference` when the
-    differences' SD is `sd` (the noncentral t approximated by a shifted central t; McClave & Sincich §8.7)."""
+    differences' SD is `sd`: exact, P(|T'| > t_crit) for the noncentral t T' = (Z + δ)/S, δ = |difference|·√n/sd,
+    S = √(χ²_ν/ν), ν = n − 1, by Simpson's rule over S's density (G*Power gives 0.401 at n 5, δ/√n 1; the
+    shifted central t had 0.31)."""
     if n < 2:
         return 0.0
     if sd <= 0:
         return 1.0 if difference else 0.0
-    critical = t_quantile(1 - alpha, n - 1)
-    shift = abs(difference) * sqrt(n) / sd
-    return t_sf(critical - shift, n - 1) + (1 - t_sf(-critical - shift, n - 1))
+    nu, critical, shift = n - 1, t_quantile(1 - alpha, n - 1), abs(difference) * sqrt(n) / sd
+    top, steps = 1 + 12 / sqrt(2 * nu), 2000
+    log_norm = nu / 2 * log(nu) - (nu / 2 - 1) * log(2) - lgamma(nu / 2)
+
+    def at(s: float) -> float:
+        density = exp(log_norm + (nu - 1) * log(s) - nu * s * s / 2) if s > 0 else (1.0 if nu == 1 else 0.0) * exp(log_norm)
+        return density * (normal_sf(critical * s - shift) + normal_sf(critical * s + shift))
+
+    h = top / steps
+    total = at(0.0) + at(top) + sum((4 if i % 2 else 2) * at(i * h) for i in range(1, steps))
+    return min(1.0, total * h / 3)
 
 
 def seeds_for_power(sd: float, difference: float, power: float = 0.8, alpha: float = 0.05, most: int = 1000) -> int | None:

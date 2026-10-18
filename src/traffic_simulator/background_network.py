@@ -19,20 +19,34 @@ roads traced from a background image. The AI Mode tool network_tools.network_fro
 
 from __future__ import annotations
 
+import hashlib
 import json
+import os
 import re
+import time
 import urllib.parse
 import urllib.request
 from collections import Counter, defaultdict
 from dataclasses import dataclass, field
 from math import floor, hypot
+from pathlib import Path
 
 from .map_tiles import USER_AGENT
 from .models import LANE_WIDTH_M, Network
 
 OVERPASS_URL = "https://overpass-api.de/api/interpreter"
 # Tried in turn when one is busy (a timeout, a 5xx): public Overpass servers listed on the OSM wiki.
-OVERPASS_URLS = (OVERPASS_URL, "https://overpass.kumi.systems/api/interpreter")
+OVERPASS_URLS = (OVERPASS_URL, "https://overpass.kumi.systems/api/interpreter",
+                 "https://overpass.private.coffee/api/interpreter")
+OVERPASS_RETRY_S = 5.0  # all busy (504s and timeouts come in bursts): once more round them after this pause
+# Seconds a server may take (the query asks it for 5 fewer). At 90, six tries took a live build 6.5 minutes when
+# every server was down; a 1.2 km area answers in about 10 s.
+OVERPASS_TIMEOUT_S = 40
+# Each answer kept here by its query (the same area and size): when no server answers, the last copy is used and
+# said to be one (a live Dhanmondi test met all three servers down, twice each, in two of four runs). A copy
+# younger than OSM_FRESH_DAYS is used without asking (roads change slowly; delete the folder for a fresh download).
+OSM_CACHE = Path(os.environ.get("LOCALAPPDATA") or Path.home() / ".cache") / "ACMS" / "osm-roads"
+OSM_FRESH_DAYS = 7
 # OSM highway=* taken as a road: its speed limit (km/h) and lanes per direction when its tags don't say.
 CLASSES = {
     "motorway": (100, 2), "trunk": (80, 2), "primary": (60, 1), "secondary": (50, 1), "tertiary": (50, 1),
@@ -46,9 +60,16 @@ LEVELS = {"main": tuple(name for name in CLASSES if not name.startswith(("unclas
 # engine leaves), blinker (flashing amber: priority rules apply), ramp_meter, level_crossing, lane (lane
 # control), bus_priority, tram_priority and on_demand (dark or green until called), no.
 JUNCTION_SIGNALS = ("signal", "traffic_lights", "yes", "junction")
-MERGE_M = 12.0  # junctions nearer than this become one (a dual carriageway's two crossings, say)
+# Junctions nearer than this become one: a dual carriageway's crossing is mapped as 2-4 nodes 12-19 m apart (Dhanmondi:
+# three signals with their own plans, and four give-way nodes in a loop), with 2-3 cars of room between them, which
+# gridlocked the network. At 12 m, a quarter of a peak demand jammed (130 vehicles stuck); at 20 m it held, none
+# stuck. SUMO's netconvert joins such clusters too (junctions.join, tls.join-dist 20 m).
+MERGE_M = 20.0
 SIGNAL_M = 30.0  # a traffic signal node this near a junction signalises it
 MAX_JUNCTIONS = 800  # more is too big a network to edit and run; a smaller area or main roads only
+# A road leaving the area becomes an entry road at least this long: clipped just past a junction it was a stub of
+# 5-15 m that held one car, so traffic waited off the network and a check called any real demand a jam (Dhanmondi)
+ENTRY_ROAD_M = 60.0
 MPH = 1.609344
 
 
@@ -81,21 +102,42 @@ class Graph:
 
 def overpass_query(south: float, west: float, north: float, east: float, classes: tuple) -> str:
     """Every drivable way of these classes in the box, with all their nodes (tags included)."""
-    return (f'[out:json][timeout:60];way["highway"~"^({"|".join(classes)})$"]["area"!="yes"]'
+    return (f'[out:json][timeout:{OVERPASS_TIMEOUT_S - 5}];way["highway"~"^({"|".join(classes)})$"]["area"!="yes"]'
             f'["access"!~"^(no|private)$"]({south:.6f},{west:.6f},{north:.6f},{east:.6f});(._;>;);out body;')
 
 
 def post(url: str, data: bytes) -> bytes:
     """The network (tests put a stand-in here): an identifying User-Agent, as OSM's services ask."""
     request = urllib.request.Request(url, data=data, headers={"User-Agent": USER_AGENT})
-    with urllib.request.urlopen(request, timeout=90) as response:
+    with urllib.request.urlopen(request, timeout=OVERPASS_TIMEOUT_S) as response:
         return response.read()
 
 
 def fetch_osm(query: str) -> dict:
-    """The roads' data, from the first Overpass server that answers."""
+    """The roads' data: this very query's copy if younger than OSM_FRESH_DAYS, else from the first Overpass server
+    that answers, else the older copy. A copy says so (`cached_at`, `cached_why`)."""
+    kept = OSM_CACHE / f"{hashlib.sha256(query.encode()).hexdigest()[:32]}.json"
+
+    def copy(why: str) -> dict | None:
+        try:
+            document = json.loads(kept.read_text(encoding="utf-8"))
+            document["cached_at"] = time.strftime("%Y-%m-%d %H:%M", time.localtime(kept.stat().st_mtime))
+            document["cached_why"] = why
+            return document
+        except (OSError, ValueError, TypeError):
+            return None
+
+    try:
+        fresh = time.time() - kept.stat().st_mtime < OSM_FRESH_DAYS * 86400
+    except OSError:
+        fresh = False
+    document = copy(f"downloaded in the last {OSM_FRESH_DAYS} days") if fresh else None
+    if document is not None:
+        return document
     failures = []
-    for url in OVERPASS_URLS:
+    for attempt, url in enumerate(OVERPASS_URLS * 2):  # every server, then (after a pause) every one again
+        if attempt == len(OVERPASS_URLS):
+            time.sleep(OVERPASS_RETRY_S)
         try:
             document = json.loads(post(url, urllib.parse.urlencode({"data": query}).encode()))
             break
@@ -103,8 +145,17 @@ def fetch_osm(query: str) -> dict:
             failures.append(f"{urllib.parse.urlparse(url).netloc}: {exc}")
         except ValueError as exc:
             raise ValueError("OpenStreetMap's Overpass API sent an answer that couldn't be read.") from exc
-    else:
-        raise ValueError(f"Couldn't reach OpenStreetMap's Overpass API ({'; '.join(failures)}). Try again in a minute.")
+    if document is None:  # the last answer for this very area, said to be a copy and how old
+        document = copy("OpenStreetMap's servers didn't answer")
+    elif isinstance(document, dict) and isinstance(document.get("elements"), list):
+        try:
+            kept.parent.mkdir(parents=True, exist_ok=True)
+            kept.write_text(json.dumps(document), encoding="utf-8")
+        except OSError:
+            pass  # no cache: the next outage just can't fall back
+    if document is None:
+        raise ValueError(f"Couldn't reach OpenStreetMap's Overpass API ({'; '.join(failures[-len(OVERPASS_URLS):])}, "
+                         "each tried twice). Try again in a minute.")
     if not isinstance(document, dict) or not isinstance(document.get("elements"), list):
         raise ValueError("OpenStreetMap's Overpass API sent no road data.")
     return document
@@ -567,8 +618,12 @@ def build(template: Network, graph: Graph) -> Network:
                 road.shape = [tuple(point) for point in points[1:mid]]
                 dress(road, street, not inbound)
                 inner = corner.id
-            if hypot(far[0] - fresh.nodes[inner].x, far[1] - fresh.nodes[inner].y) < 1.0:
+            stub = hypot(far[0] - fresh.nodes[inner].x, far[1] - fresh.nodes[inner].y)
+            if stub < 1.0:
                 continue
+            if stub < ENTRY_ROAD_M:  # cut just past a junction: carried on out along its line, room to enter
+                far = (fresh.nodes[inner].x + (far[0] - fresh.nodes[inner].x) * ENTRY_ROAD_M / stub,
+                       fresh.nodes[inner].y + (far[1] - fresh.nodes[inner].y) * ENTRY_ROAD_M / stub)
             road = fresh.add_end(inner, *far)
             dress(road, street, not inbound)
             continue

@@ -58,6 +58,9 @@ API_TIMEOUT_S, LOCAL_TIMEOUT_S = 180, 600  # a local model may first load from d
 KEEP_ALIVE = "30m"  # Ollama keeps the model loaded this long after a request (its default, 5 min, reloads after a pause)
 STALL_TIMEOUT_S = 90  # once a reply streams, a server silent this long has stalled: fail now, not after the above
 MAX_TOOL_ROUNDS = 12  # tool calls and replies in one answer before giving up
+# Refusals of one tool in one answer before it isn't run again in that answer: llama3.2 3B called set_end_flows 7
+# and generate_demand 9 times with new wrong arguments each time, to the round limit (110k input tokens a step)
+MAX_REFUSALS = 3
 # The context budget, in tokens. Past its window a model fails quietly (Ollama cuts the reply off, or drops the start
 # of the prompt: the instructions and documents), so every request is trimmed to fit first (fit). ACMS_NUM_CTX sets a
 # local model's window (default 32k, what an 8 GB GPU holds for a 4B model; 16384 for a 12B one).
@@ -68,6 +71,9 @@ except ValueError:
 API_CONTEXT_TOKENS = 131072  # hosted models' windows are larger; this keeps their cost per request bounded too
 REPLY_TOKENS = 4096  # kept free for the reply
 CHARS_PER_TOKEN = 3.0  # on the safe side: JSON and code run near 3 characters a token, prose 4-5
+# A local model's own count, where it was lower (more tokens than CHARS_PER_TOKEN gave): its next num_ctx is sized by
+# it, so the window isn't too small for its tokenizer (a cache only lowers the count, so it never lowers this wrongly)
+_CHARS_PER_TOKEN_SEEN: dict[str, float] = {}
 STUB = '{"note": "an earlier tool result, left out to fit the context window"}'
 CUT = " ... (cut to fit the context window: ask for less, e.g. one road, or a line range)"
 WARM_UP = ("In one or two sentences, confirm you have read the documents "
@@ -144,6 +150,9 @@ TOOLS_NOTE = (
 # ponytail: kept for this run only; persist it if usage history across sessions matters.
 USAGE: list[dict] = []
 _last = threading.local()  # each thread's last request record (last_usage)
+# What this thread's requests are for (`USAGE_TAG.value`, set by the asker: AI Mode's step), kept in each record as
+# "tag", so a step counts its own requests, not ones that ended in its time from another thread (signal agent)
+USAGE_TAG = threading.local()
 
 
 class AssistantError(Exception):
@@ -641,7 +650,8 @@ def stream_chat(provider: str, model: str, messages: list[dict], key: str = "", 
     else:
         # Ollama's default context window is a few thousand tokens and silently cuts off the documents; size it to
         # the request (fit has already kept it within LOCAL_CONTEXT_TOKENS) plus room to reply, never past the cap.
-        size = int((sum(_chars(message) for message in messages) + len(json.dumps(tools or []))) / CHARS_PER_TOKEN)
+        chars = sum(_chars(message) for message in messages) + len(json.dumps(tools or []))
+        size = int(chars / _CHARS_PER_TOKEN_SEEN.get(model, CHARS_PER_TOKEN))
         payload = {"model": model, "messages": _openai_messages(messages, ollama=True), "stream": True,
                    "options": {"num_ctx": min(context_size(size + REPLY_TOKENS), LOCAL_CONTEXT_TOKENS)},
                    "keep_alive": KEEP_ALIVE}
@@ -659,6 +669,8 @@ def stream_chat(provider: str, model: str, messages: list[dict], key: str = "", 
                     tokens.update(input_tokens=event.get("prompt_eval_count"), output_tokens=event.get("eval_count"),
                                   cached_tokens=event.get("prompt_eval_cached_count"),
                                   done_reason=event.get("done_reason"), num_ctx=payload["options"]["num_ctx"])
+                    if (event.get("prompt_eval_count") or 0) > size:  # more tokens than estimated: size by this
+                        _CHARS_PER_TOKEN_SEEN[model] = chars / event["prompt_eval_count"]
                 message = event.get("message") or {}
                 if message.get("thinking"):  # a thinking model's reasoning, sent apart from its answer
                     thoughts.append(message["thinking"])
@@ -681,17 +693,20 @@ def stream_chat(provider: str, model: str, messages: list[dict], key: str = "", 
         reply["thinking"] = "".join(thoughts)
     if not reply["tool_calls"]:
         del reply["tool_calls"]
-    if not reply["content"] and "tool_calls" not in reply:
-        raise NoAnswer(f"{PROVIDER_NAMES.get(provider, provider)} sent no answer.")
     total = time.monotonic() - started
+    empty = not reply["content"] and "tool_calls" not in reply
     _record({"provider": provider, "model": model, "at": time.time(), "first_s": first if first is not None
-             else total, "total_s": total, **tokens})  # tool calls only: "first" is when they came
+             else total, "total_s": total, **tokens,  # tool calls only: "first" is when they came
+             **({"no_answer": True} if empty else {})})  # its time counted too (qwen3.5 thinking 40 s, then nothing)
+    if empty:
+        raise NoAnswer(f"{PROVIDER_NAMES.get(provider, provider)} sent no answer.")
     return reply
 
 
 def _record(usage: dict) -> None:
     """One request's figures: this thread's own last (never another thread's, read back from the list: a batch's
     runs ask side by side), then the session's list."""
+    usage.setdefault("tag", getattr(USAGE_TAG, "value", None))
     _last.usage = usage
     USAGE.append(usage)
     del USAGE[:-500]
@@ -764,6 +779,19 @@ def calls_in_text(text: str, tools: list[dict]) -> list[dict]:
                                                 (shaped and re.fullmatch(r"[a-z][a-z0-9_]{2,}", found["name"]))):
                 calls.append({"id": f"text{len(calls) + 1}", "name": found["name"], "arguments": arguments})
         start = text.find("{", end)
+    for match in re.finditer(r"\b([a-z][a-z0-9_]{2,})\(\s*", text):  # name({...}) or name(): llama3.2 3B wrote
+        if match.group(1) not in names:                               # network_from_background({...}) as its reply
+            continue
+        if text.startswith(")", match.end()):
+            arguments = {}
+        else:
+            try:
+                arguments, end = decoder.raw_decode(text, match.end())
+            except ValueError:
+                continue
+            if not isinstance(arguments, dict) or not text[end:].lstrip().startswith(")"):
+                continue
+        calls.append({"id": f"text{len(calls) + 1}", "name": match.group(1), "arguments": arguments})
     return calls
 
 
@@ -795,21 +823,24 @@ def _next_reply(provider, model, messages, key, tools, on_text, cancelled, requi
 
 
 def converse(provider: str, model: str, messages: list[dict], key: str = "", tools: list[dict] | None = None,
-             on_text=None, run_tool=None, cancelled=None) -> list[dict]:
+             on_text=None, run_tool=None, cancelled=None, edits=frozenset()) -> list[dict]:
     """`messages` plus the model's answer: its tool calls, their results and its final reply.
 
     `run_tool(call)` returns a JSON-ready result for {"id", "name", "arguments"}; edits
-    wait there for the user's approval.
+    wait there for the user's approval. `edits`: the tools that change the project (see `unfinished`).
     """
     messages = list(messages)
     start, reminded, require = len(messages), 0, None
     failed = set()  # calls that came back with an error: made again unchanged, they aren't run (small models loop)
+    refusals: dict[str, int] = {}  # per tool: at MAX_REFUSALS it isn't run again in this answer
     outcomes = []  # each call's result: True ran, False refused
+    refused, succeeded, retried = {}, set(), False  # tools refused and never run: one reminder to try them again
+    claimed = False  # a change claimed with no tool run: reminded once (CLAIMED)
     for _ in range(MAX_TOOL_ROUNDS):
         reply = _next_reply(provider, model, messages, key, tools, on_text, cancelled, require)
         require = None
         if reply is None:  # a local model that kept failing to say anything: end with what was done, not an error
-            return _ended(messages, "the model stopped without a reply", on_text)
+            return _ended(messages, "the model stopped without a reply", on_text, start)
         if "tool_calls" not in reply and tools:
             calls = calls_in_text(reply.get("content") or "", tools)
             if calls:
@@ -826,10 +857,27 @@ def converse(provider: str, model: str, messages: list[dict], key: str = "", too
             # reminded once; a reply that is only a plan, up to 3 times (each such reminder requires the call)
             plan_only = _only_a_plan(reply.get("content"))
             missing = [] if reminded >= (3 if plan_only else 1) or not tools else \
-                unfinished(messages[start:], {tool["name"] for tool in tools})
+                unfinished(messages[start:], {tool["name"] for tool in tools}, edits)
             if not missing:
-                if outcomes and not any(outcomes):  # llama3.2 3B claimed success after every call was refused
+                again = next(((name, error) for name, error in refused.items()
+                              if name not in succeeded and refusals.get(name, 0) < MAX_REFUSALS), None)
+                if again and not retried:  # llama3.2 3B stopped after one refusal that said exactly what to change
+                    retried = True
+                    messages.append({"role": "user", "content": RETRY.format(again[0], again[1][:300])})
+                    continue
+                said = reply.get("content") or ""
+                if tools and not outcomes and CLAIM.search(said) and not claimed:  # done, it says; nothing ran
+                    claimed = True
+                    messages.append({"role": "user", "content": CLAIMED})
+                    continue
+                note = None
+                if tools and not outcomes and CLAIM.search(said):  # reminded, and it still says so
+                    note = NOTHING_RAN_NOTE
+                elif outcomes and not any(outcomes):  # llama3.2 3B claimed success after every call was refused
                     note = REFUSED_NOTE
+                elif outcomes and (unchecked := ungrounded(reply.get("content") or "", messages[start - 1:])):
+                    note = UNGROUNDED_NOTE.format(unchecked)  # llama3.2 3B made up a run's results it never had
+                if note:
                     reply["content"] = (reply.get("content") or "").rstrip() + "\n\n" + note
                     if on_text:
                         on_text("\n\n" + note)
@@ -844,42 +892,94 @@ def converse(provider: str, model: str, messages: list[dict], key: str = "", too
             if same in failed:
                 result = {"error": "You made this exact call before and it failed. Change it as that error said, "
                                    "try another tool, or ask the user.", "error_type": "repeated"}
+            elif refusals.get(call["name"], 0) >= MAX_REFUSALS:
+                result = {"error": f"{call['name']} was refused {MAX_REFUSALS} times in this answer, so it isn't run "
+                                   "again now. Tell the user in one or two lines what you couldn't do and why (the "
+                                   "last refusal says), or ask them for what's missing.", "error_type": "gave_up"}
             else:
                 result = run_tool(call) if run_tool else {"error": "Tools aren't available here."}
                 if isinstance(result, dict) and "error" in result:
                     failed.add(same)
+                    refusals[call["name"]] = refusals.get(call["name"], 0) + 1
             if call["name"] not in ("find_tools", "note_plan"):  # bookkeeping, not doing
                 outcomes.append(not (isinstance(result, dict) and "error" in result))
+                if outcomes[-1]:
+                    succeeded.add(call["name"])
+                else:
+                    refused.setdefault(call["name"], str(result.get("error") if isinstance(result, dict) else result))
             messages.append({"role": "tool", "id": call["id"], "name": call["name"],
                              "content": json.dumps(compact(result), separators=(",", ":"), default=str)})
     return _ended(messages, f"it made {MAX_TOOL_ROUNDS} rounds of tool calls without answering, so the app stopped it",
-                  on_text)
+                  on_text, start)
 
 
 ANSWER_TOOLS = ("answer", "respond", "reply", "final_answer", "say")  # tools small models invent for their reply
 FOLLOW_THROUGH = ("(The app: your Plan named {} but you haven't called it. Call it now for that part of the "
                   "request, or say in one line why it isn't needed.)")
 REFUSED_NOTE = "(The app: every tool call in this answer was refused, so nothing was changed.)"
+# A reply saying a change was made when no tool ran in the answer (qwen3.5 4B, 39 of 190 campaign prompts: asked to
+# act, it answered as if it had): reminded once, then noted
+CLAIM = re.compile(r"(?i)^\s*\**done\b|\b(?:i(?:'ve| have)|(?:has|have) been|(?:is|are) now)\s+(?:now\s+)?(?:added|set|"
+                   r"changed|built|created|updated|applied|placed|generated|removed|deleted|widened|signali[sz]ed|"
+                   r"made|ran|run|closed|opened|moved|connected|increased|reduced|scaled)\b")
+CLAIMED = ("(The app: your reply says a change was made, but no tool ran in this answer, so nothing changed. Call the "
+           "tool now, or tell the user plainly that it wasn't done.)")
+NOTHING_RAN_NOTE = "(The app: no tool ran in this answer, so nothing was changed.)"
+RETRY = ("(The app: {} was refused: {} Do what that says and call it again, or the tool it points to; or tell the user "
+         "in one line why it can't be done.)")
+UNGROUNDED_NOTE = ("(The app: {} of the figures in this reply come from no tool result in this answer, so they are "
+                   "unchecked; ask for the tool's own numbers.)")
+
+
+def ungrounded(text: str, answer: list[dict]) -> int:
+    """How many of a reply's figures no tool result of this answer (nor the user's request, `answer[0]`) gives,
+    within 1 % (rounding); 0 unless at least 3 and at least half of them are, or one is 1,000 or more (not a year):
+    a headline figure no tool gave (qwen3.5 4B said 1,269 veh/h could enter where its tool said 3,119 was kept).
+    Single digits (a list's numbering) aren't counted, and a few small figures worked out from the results (70 % of
+    demand) don't reach it."""
+    def figures(value: str) -> list[float]:
+        return [float(n.replace(",", "")) for n in re.findall(r"(?<![\w.])\d[\d,]*(?:\.\d+)?", value or "")
+                if n.replace(",", "").replace(".", "", 1).isdigit()]
+    said = [x for x in figures(text) if x >= 10 or x != int(x)]
+    known = [y for m in answer if m.get("role") in ("tool", "user") for y in figures(m.get("content") or "")]
+    unsourced = [x for x in said if not any(abs(x - y) <= max(0.01 * abs(y), 0.051) for y in known)]
+    big = [x for x in unsourced if x >= 1000 and not (x == int(x) and 1900 <= x <= 2099)]
+    return len(unsourced) if big or (len(unsourced) >= 3 and len(unsourced) * 2 >= len(said)) else 0
 
 
 def _only_a_plan(text: str | None) -> bool:
-    """Whether a reply is a Plan: line and nothing else (no answer, no reason a step isn't needed)."""
-    return bool(plan_line([text])) and not re.sub(r"(?im)^[\s*_#>-]*plan[\s*_]*:.*$", "", text or "").strip()
+    """Whether a reply is a Plan: line and nothing else (no answer, no reason a step isn't needed); lines of only
+    names and arrows ("network_from_background -> place_map": llama3.2 3B's second plan line) are plan too."""
+    rest = re.sub(r"(?im)^[\s*_#>-]*plan[\s*_]*:.*$", "", text or "")
+    rest = re.sub(r"(?m)^[\w \t,()\"']*->[\w \t,()\"'>-]*$", "", rest)
+    return bool(plan_line([text])) and not rest.strip()
 
 
-def unfinished(answer: list[dict], names) -> list[str]:
+def unfinished(answer: list[dict], names, edits=frozenset()) -> list[str]:
     """Tools the answer's own Plan: lines name (`names`: those it could call) that it never called; every line, not
-    only the first (Gemini planned list_institutions, called it, then planned scale_demand and stopped)."""
-    said = "\n".join(m.get("content") or "" for m in answer if m.get("role") == "assistant")
-    plans = " ".join(re.findall(r"(?im)^[\s*_#>-]*plan[\s*_]*:[\s*_]*(.+)$", said))
+    only the first (Gemini planned list_institutions, called it, then planned scale_demand and stopped). Once one of
+    `edits` has run, a later line's tools don't count, the first line's still do: llama3.2 3B built the network, then
+    re-planned with update_roads and add_boundary_end, and reminded, called them with made-up arguments."""
+    lines, edited = [], False
+    for m in answer:
+        if m.get("role") == "assistant":
+            found = re.findall(r"(?im)^[\s*_#>-]*plan[\s*_]*:[\s*_]*(.+)$", m.get("content") or "")
+            if edited:  # an edit ran: only a first plan still counts
+                found = [] if lines else found[:1]
+            lines += found
+        elif m.get("role") == "tool" and m.get("name") in edits and not (m.get("content") or "").startswith('{"error"'):
+            edited = True
+    plans = " ".join(lines)
     called = {call["name"] for m in answer if m.get("role") == "assistant" for call in m.get("tool_calls") or []}
     return [name for name in planned_tools(plans, names) if name not in called]
 
 
-def _ended(messages: list[dict], why: str, on_text=None) -> list[dict]:
-    """The answer ended by the app, not the model: a note of why and of the tools that ran, as the last reply (the
-    step keeps its record and, through `on_text`, the user sees what was done)."""
-    done = [m["name"] for m in messages if m.get("role") == "tool" and not m.get("content", "").startswith('{"error"')]
+def _ended(messages: list[dict], why: str, on_text=None, start: int = 0) -> list[dict]:
+    """The answer ended by the app, not the model: a note of why and of the tools that ran in it (`messages[start:]`:
+    not the conversation's earlier answers), as the last reply (the step keeps its record and, through `on_text`, the
+    user sees what was done)."""
+    done = [m["name"] for m in messages[start:]
+            if m.get("role") == "tool" and not m.get("content", "").startswith('{"error"')]
     note = f"(The app: {why}." + (f" What ran: {', '.join(done)}.)" if done else " Nothing ran.)")
     messages.append({"role": "assistant", "content": note})
     if on_text:

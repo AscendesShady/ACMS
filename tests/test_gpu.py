@@ -305,10 +305,10 @@ def child_window():
     window._od_command("set_od_demand", {"origins": origins, "demand": "hourly", "value": 120})
     window.speed_combo.setCurrentIndex(window.speed_combo.findData(10))
     window.run_action.trigger()
-    draws, uploads = scene.gpu.draws, scene.gpu.uploads
+    draws, uploads = scene.gpu.frames, scene.gpu.uploads
     QTest.qWait(6000)  # a minute of traffic
     frame, runner = window.runner.frame, window.runner
-    draws, uploads = scene.gpu.draws - draws, scene.gpu.uploads - uploads
+    draws, uploads = scene.gpu.frames - draws, scene.gpu.uploads - uploads
     print(f"{len(frame.vehicles)} vehicles; {draws} display frames drawn on the GPU, {uploads} physics frames sent; "
           f"physics at {runner.speed_now:.1f}x of 10x")
     assert frame.vehicles and not scene.gpu.failed, scene.gpu.failed
@@ -319,9 +319,9 @@ def child_window():
     assert samples(view) == 4
     window.power_button.setChecked(True)  # Power Saver: a new viewport without multisampling, still the GPU's
     QTest.qWait(200)
-    draws = scene.gpu.draws
+    draws = scene.gpu.frames
     QTest.qWait(2000)
-    draws = scene.gpu.draws - draws
+    draws = scene.gpu.frames - draws
     print(f"Power Saver: {draws} display frames in 2 s")
     assert isinstance(view.viewport(), QOpenGLWidget) and samples(view) == 0
     corner = window.power_button

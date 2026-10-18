@@ -93,6 +93,8 @@ def project_problem(project: dict) -> str | None:
                 return f"Vehicle type {mode.get('name')}: its headway must be 0 to 120 minutes."
             if not isinstance(mode.get("timetabled", False), bool):
                 return f"Vehicle type {mode.get('name')}: timetabled must be true or false."
+            if not isinstance(mode.get("random_colour", False), bool):
+                return f"Vehicle type {mode.get('name')}: random_colour must be true or false."
             if not isinstance(mode.get("filters", False), (bool, type(None))):  # none: by its class (VehicleMode)
                 return f"Vehicle type {mode.get('name')}: filters must be true or false."
             if mode.get("headway_min") and mode.get("timetabled") is False:
@@ -100,7 +102,7 @@ def project_problem(project: dict) -> str | None:
             if mode.get("vehicle_class", "bus") not in VEHICLE_CLASSES:  # none: inferred from its name (VehicleMode)
                 return f"Vehicle type {mode.get('name')}: vehicle_class must be one of {', '.join(VEHICLE_CLASSES)}."
             for key, value in mode.items():
-                if key not in ("name", "colour", "headway_min", "timetabled", "vehicle_class", "filters") \
+                if key not in ("name", "colour", "headway_min", "timetabled", "vehicle_class", "filters", "random_colour") \
                         and not _number(value, 0, 1e5):
                     return f"Vehicle type {mode.get('name')}: {key} must be a number, not below zero."
             if mode.get("emergency_decel") is not None and mode.get("decel", 4.5) > mode["emergency_decel"]:

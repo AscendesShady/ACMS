@@ -15,18 +15,20 @@ from copy import deepcopy
 from dataclasses import dataclass
 from itertools import count
 from math import floor
+import re
 
 from PySide6.QtCore import QEvent, QObject, QTimer, Signal
-from PySide6.QtWidgets import (QDoubleSpinBox, QFormLayout, QGridLayout, QGroupBox, QLabel, QLineEdit, QMessageBox,
+from PySide6.QtWidgets import (QComboBox, QDoubleSpinBox, QFormLayout, QGridLayout, QGroupBox, QLabel, QLineEdit, QMessageBox,
                                QSpinBox, QVBoxLayout, QWidget)
 
 from .properties_panel import hint_label, styled_button
 from .simulation import DT
+from .theme import VEHICLE_PAINTS
 
 # The dataviz reference palette's categorical slots (dark-surface steps), in fixed order. Checked
 # on the app's greys: every check passes; magenta and green sit under 3:1 against the grey, so a
 # mode is never shown by colour alone (the % boxes and this tab name each one).
-PALETTE = ("#3987e5", "#d95926", "#199e70", "#c98500", "#d55181", "#008300", "#9085e9", "#e66767")
+PALETTE = VEHICLE_PAINTS[:8]
 MAX_MODES = len(PALETTE)  # past eight, colours stop being told apart reliably
 MAX_HEADWAY_MIN = 120
 PCU_RANGE = (0.1, 10.0)
@@ -66,6 +68,7 @@ class VehicleMode:
     # In a lateral run (Simulation lateral), may it pass others within its lane, filtering (if narrow_enough). None (a
     # project saved before it): yes for a motorcycle, moped or bicycle (vehicle.FILTERING_CLASSES), else no.
     filters: bool | None = None
+    random_colour: bool = False  # display paint varies per vehicle; categorical colour stays with the type
 
     def __post_init__(self) -> None:
         if not self.vehicle_class:
@@ -230,7 +233,8 @@ class VehicleModes(QObject):
         if not (isinstance(headway, (int, float)) and float(headway).is_integer() and 0 <= headway <= MAX_HEADWAY_MIN):
             raise ValueError(f"headway_min must be a whole 1 to {MAX_HEADWAY_MIN} minutes, or 0 for no timetable.")
         if headway and not changes.get("timetabled", self.modes[index].timetabled):
-            raise ValueError(f"{self.modes[index].name} has no headway: it isn't timetabled.")
+            raise ValueError(f"{self.modes[index].name} has no headway: it isn't timetabled (give timetabled true in the "
+                             "same call).")
         for key, (low, high) in self.FIGURES.items():
             if key in changes and not (isinstance(changes[key], (int, float)) and low <= changes[key] <= high):
                 raise ValueError(f"{key} must be {low:g} to {high:g}{self.WHY.get(key, '')}.")
@@ -278,9 +282,23 @@ class VehicleModes(QObject):
         if not 0 <= minutes <= MAX_HEADWAY_MIN:
             raise ValueError(f"A headway is 1 to {MAX_HEADWAY_MIN} minutes, or 0 for no timetable.")
         if minutes and not self.modes[index].timetabled:
-            raise ValueError(f"{self.modes[index].name} has no headway: it isn't timetabled.")
+            raise ValueError(f"{self.modes[index].name} has no headway: it isn't timetabled (give timetabled true in the "
+                             "same call).")
         self.modes[index].headway_min = int(minutes)
         self.changed.emit("headway", index)
+
+    def set_colour(self, index: int, colour: str | None) -> None:
+        """None chooses stable random vehicle paint, retaining the type's categorical colour."""
+        if not 0 <= index < len(self.modes) or (colour is not None and
+                                               not re.fullmatch(r"#[0-9a-fA-F]{6}", str(colour))):
+            raise ValueError("Choose a vehicle type and a colour like #3987e5, or Random.")
+        mode = self.modes[index]
+        if mode.random_colour == (colour is None) and (colour is None or mode.colour == colour):
+            return
+        mode.random_colour = colour is None
+        if colour is not None:
+            mode.colour = colour
+        self.changed.emit("colour", index)
 
     def set_pcu(self, index: int, pcu: float) -> None:
         """The type's passenger car units (a car is 1)."""
@@ -341,6 +359,14 @@ class ModeBehaviorPanel(QWidget):
         self.details_title = QLabel()
         self.details_title.setStyleSheet("font-weight: 600;")
         details.addRow(self.details_title)
+        self.colour = QComboBox()
+        for name, colour in zip(("Blue", "Orange", "Teal", "Gold", "Pink", "Green", "Lavender", "Coral",
+                                 "White", "Grey", "Sand", "Charcoal"), VEHICLE_PAINTS):
+            self.colour.addItem(name, colour)
+        self.colour.addItem("Random", None)
+        self.colour.setToolTip("Vehicle paint colour")
+        self.colour.currentIndexChanged.connect(self._set_colour)
+        details.addRow("Colour", self.colour)
         self.headway = NumberBox()
         self.headway.setRange(0, MAX_HEADWAY_MIN)
         self.headway.setSuffix(" min")
@@ -370,14 +396,14 @@ class ModeBehaviorPanel(QWidget):
         types_layout.addWidget(hint_label(
             "The Demand Generator splits trips between these types. Renaming keeps every OD pair's "
             "shares; a new type starts at 0 %; deleting one hands its share to the others in "
-            "proportion. Click a type for its headway, PCU and occupancy. Only a timetabled type (chosen "
+            "proportion. Click a type for its colour, headway, PCU and occupancy. Only a timetabled type (chosen "
             "when it's added) has a headway: e.g. a bus every 10 min fixes that type's share in each pair at "
             "60 ÷ headway vehicles an hour; the other types share the rest. Ctrl+Z undoes any of these."))
         layout.addWidget(types)
         layout.addWidget(hint_label(
-            "Each type's vehicles are made with its colour and, for now, SUMO's default size, top speed, "
-            "acceleration, braking and gaps for a bus, car or bike (see vehicle.py); setting them here "
-            "comes next."))
+            "Random gives each vehicle a stable paint colour; demand charts keep the type colour. "
+            "Simple vehicle skins follow the vehicle class. Colour and styling leave physical dimensions "
+            "and driving behaviour unchanged."))
         layout.addStretch(1)
         vehicle_modes.changed.connect(self._rebuild)
         self._rebuild()
@@ -434,12 +460,26 @@ class ModeBehaviorPanel(QWidget):
         mode = self.vehicle_modes.modes[row]
         self.picked = row
         self.details_title.setText(mode.name)
+        self.colour.blockSignals(True)
+        custom = self.colour.findText("Custom")
+        if custom >= 0:
+            self.colour.removeItem(custom)
+        colour_index = self.colour.findData(None if mode.random_colour else mode.colour)
+        if colour_index < 0:
+            self.colour.addItem("Custom", mode.colour)
+            colour_index = self.colour.count() - 1
+        self.colour.setCurrentIndex(colour_index)
+        self.colour.blockSignals(False)
         for box, value in ((self.headway, mode.headway_min), (self.pcu, mode.pcu), (self.occupancy, mode.occupancy)):
             box.blockSignals(True)
             box.setValue(value)
             box.blockSignals(False)
         self.details_form.setRowVisible(self.headway, mode.timetabled)  # a car or bike has none
         self.details.show()
+
+    def _set_colour(self, index: int) -> None:
+        if index >= 0 and 0 <= self.picked < len(self.vehicle_modes.modes):
+            self.vehicle_modes.set_colour(self.picked, self.colour.itemData(index))
 
     def _set_headway(self, minutes: int) -> None:
         if 0 <= self.picked < len(self.vehicle_modes.modes):

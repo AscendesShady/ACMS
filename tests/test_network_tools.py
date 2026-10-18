@@ -47,6 +47,7 @@ def test_the_assistant_can_do_only_what_its_tools_say():
         "preflight_check",  # two checking runs
         "equilibrate_demand",  # elastic demand, by runs
         "test_agent_compliance", "decision_sensitivity",  # the agent's battery of runs; re-asking it
+        "parameter_sensitivity",  # runs with each calibration parameter varied
         "assign_routes", "optimise_signals",  # route choice saved on the network; a long search
         "build_scenario"}  # a described scenario built and tested in one go
     assert tools.TYPE_TOOLS == {"list_vehicle_types", "create_vehicle_types", "update_vehicle_type"}
@@ -57,7 +58,8 @@ def test_the_assistant_can_do_only_what_its_tools_say():
                                "read_extensions", "schedule_emergency", "start_batch", "replay_run",
                                "junction_los", "diagnose_signal", "check_run_health", "preflight_check", "resilience",
                                "emissions_report", "power_analysis", "rank_scenarios", "test_agent_compliance",
-                               "read_decisions", "decision_sensitivity", "design_audit", "accessibility_report",
+                               "read_decisions", "decision_sensitivity", "parameter_sensitivity", "design_audit",
+                               "accessibility_report",
                                "benefit_cost",
                                "analyse_run", "check_calibration", "read_detectors", "analyse_safety", "forecast",
                                "critical_links", "regress", "assign_routes", "optimise_signals", "build_scenario",
@@ -74,6 +76,41 @@ def test_arguments_are_read_as_the_schema_gives_or_refused_saying_what_the_tool_
     assert tools.normalise("set_end_flows", '{"end": ["3W"], "demand_vph": 7}') == {"end": "3W", "demand_vph": 7.0}
     assert tools.normalise("set_junction_control", {"junction": ["2,2"], "control": "ROUNDABOUT"}) ==         {"junctions": ["2,2"], "control": "roundabout"}  # lists stay as sent: ids like 2,2 hold commas
     assert tools.normalise("run_simulation", {"duration_min": "30", "seed": 4.0}) == {"duration_min": 30.0, "seed": 4}
+    # llama3.2 fills every optional argument it means to leave out, real names or not (a live Dhanmondi run): left out
+    assert tools.normalise("run_simulation", {"duration_min": "20", "seed": "null", "weather": "null", "incidents": "[]",
+                                              "lateral": "false", "measure_from_min": "0"}) == \
+        {"duration_min": 20.0, "incidents": [], "lateral": False, "measure_from_min": 0.0}  # a real 0 stays
+    assert tools.normalise("generate_demand", {"demand": "hourly", "arrival_pattern": "None", "pairs": " NONE ",
+                                               "factor": "None", "total": "n/a"}) == {"demand": "hourly"}
+    # a level in a choice of another kind is the degree of saturation it means (llama3.2: demand "peak", then 0 when
+    # refused), where the tool takes one and none in range was given; else refused saying where it goes
+    assert tools.normalise("generate_demand", {"demand": "peak", "degree_of_saturation": "0", "total": "0"}) == \
+        {"degree_of_saturation": 0.85}  # and a total of 0 is none
+    assert tools.normalise("network_from_background", {"width_m": 1200, "height_m": 0.0}) == {"width_m": 1200.0}
+    assert tools.normalise("generate_demand", {"arrival_pattern": "light"}) == {"degree_of_saturation": 0.4}
+    assert tools.normalise("generate_demand", {"degree_of_saturation": 0.0, "demand": "hourly"}) == {"demand": "hourly"}
+    assert tools.normalise("generate_demand", {"degree_of_saturation": "busy"}) == {"degree_of_saturation": 0.85}
+    assert tools.normalise("generate_demand", {"demand": "heavy", "arrival_pattern": "heavy", "degree_of_saturation": 0.6}
+                           ) == {"degree_of_saturation": 0.6}  # the level said again beside the one given: left out
+    stray ={"demand": "hourly", "peak_hour_factor": 0.85, "frobnicate": 1}  # another tool's, and no tool's
+    assert "set_od_demand's" in tools.drop_strays("generate_demand", stray) and stray == {"demand": "hourly", "frobnicate": 1}
+    assert tools.drop_strays("generate_demand", {"Demand": "hourly"}) is None  # its own, misspelt: normalise reads it
+    for name, args, why in (("run_simulation", {"duration_min": 20, "weather": "heavy"}, "degree_of_saturation"),
+                            ("set_od_demand", {"arrival_pattern": "rush hour"}, "to generate_demand"),
+                            ("network_from_background", {"place": "Dhanmondi"}, "place_map's")):  # another tool's
+        try:
+            tools.normalise(name, args)
+        except tools.ToolError as exc:
+            assert why in str(exc), exc
+        else:
+            raise AssertionError(args)
+    for args, why in (({"duration_min": "None"}, "needs duration_min"), ({"duration_min": 5, "factor": 2}, "no argument")):
+        try:
+            tools.normalise("run_simulation", args)
+        except tools.ToolError as exc:
+            assert why in str(exc), exc
+        else:
+            raise AssertionError(args)  # a required one sent as nothing, or a real value under no name: refused
     for name, args, message in (
             ("set_end_flows", {"flows": [{"end": "3W"}]}, "has no argument 'flows'. set_end_flows takes end (text, required)"),
             ("set_end_flows", {"end": ["3W", "1E"]}, "takes one value; call set_end_flows once for each"),
@@ -165,11 +202,11 @@ def test_edits_go_through_the_model_and_roll_back_on_failure():
     assert (road.from_node, road.direction, road.lanes_per_direction) == ("2,1", "one-way", 3)
     before = network.as_records()
     assert "lanes_per_direction" in refused(network, "update_roads", roads=["1,1-2,1", "1,2-2,2"],
-                                            lanes_per_direction=0)
-    assert "positive speed limit" in refused(network, "update_roads", roads=["1,2-2,2"], speed_limit_kmh=-5)
+                                            lanes_per_direction=13)
+    assert "speed_limit_kmh must be 5 to 130" in refused(network, "update_roads", roads=["1,2-2,2"], speed_limit_kmh=-5)
     assert "add_junction needs y. add_junction takes x (number, required)" in refused(network, "add_junction", x=1)
     assert network.as_records() == before  # nothing half-applied
-    assert "is not a junction" in refused(network, "set_junction_control", junctions=["1E"], control="roundabout")
+    assert "is a boundary end, not a junction" in refused(network, "set_junction_control", junctions=["1E"], control="roundabout")
 
 
 def test_new_roads_ask_how_to_cross_and_interchanges_build():
@@ -284,6 +321,7 @@ def test_a_gravity_model_generates_demand_balanced_to_the_ends():
     target = (steep + flat_info["mean_trip_km"]) / 2  # Hyman: the decay fitted to a mean trip length
     fitted, info = tools.demand_plan(network, pairs, {"demand": "hourly", "mean_trip_km": target})
     assert abs(info["mean_trip_km"] - target) < 0.02 and 0 < info["distance_decay_per_km"] < 3 and "Hyman" in info["method"]
+    assert "Hyman" not in tools.demand_plan(network, pairs, {"demand": "hourly", "mean_trip_km": 0})[1]["method"]  # filler
     for args, message in (({"demand": "hourly", "mean_trip_km": 99}, "mean_trip_km must be"),
                           ({"demand": "hourly", "mean_trip_km": target, "distance_decay_per_km": 1}, "not both")):
         try:
@@ -323,6 +361,20 @@ def test_a_gravity_model_generates_demand_balanced_to_the_ends():
     assert plan and info["pairs_rounded_to_0"] > 0  # the pairs a small total leaves at 0 are said, not hidden
 
 
+def _x_alone(test):
+    """Run `test` with demand sized by the junctions' X alone (no queue storage bound: its own test is in
+    test_experiments)."""
+    def run():
+        kept, tools.STORAGE_LIMIT = tools.STORAGE_LIMIT, 1e9
+        try:
+            test()
+        finally:
+            tools.STORAGE_LIMIT = kept
+    run.__name__, run.__doc__ = test.__name__, test.__doc__
+    return run
+
+
+@_x_alone
 def test_demand_is_sized_to_a_degree_of_saturation():
     network = generate_network(3, 3)  # signalised junctions
     ends = sorted(network.approach_nodes)
@@ -354,6 +406,7 @@ def test_demand_is_sized_to_a_degree_of_saturation():
         assert set(info["junction_controls"].values()) == {control}
 
 
+@_x_alone
 def test_demand_already_entered_is_scaled():
     network = generate_network(3, 3)
     values = {("1W", "3E"): 400, ("1N", "1S"): 300, ("2W", "2E"): 200}
@@ -486,6 +539,76 @@ def test_a_signal_method_other_than_the_one_asked_for_is_caught():
     assert tools.contradicts("generate_grid", {"horizontal": 2, "vertical": 2, "signal_method": "fixed"},
                              "a grid with actuated signals")
     assert tools.contradicts("add_bus_stop", {"road": "1,1-2,1", "direction": "forward"}, "on both sides") is None
+
+
+def test_an_invented_grid_for_a_named_place_is_caught():
+    grid = {"horizontal": 6, "vertical": 5}  # llama3.2 3B, asked for Dhanmondi's roads, placed the map then built this
+    asked = "Build the road network of Dhanmondi, Dhaka, Bangladesh by selecting it from the map."
+    assert "network_from_background" in tools.contradicts("generate_grid", grid, asked)
+    for fine in ("Build me a 3x2 grid, run it 5 minutes", "Make a grid like the streets of Dhanmondi, Dhaka",
+                 "Create a new network with 4 columns and 3 rows"):  # a grid asked for, or no place named
+        assert tools.contradicts("generate_grid", grid, fine) is None, fine
+    assert tools.contradicts("network_from_background", {}, asked) is None
+
+
+def test_an_incident_given_beside_a_runs_arguments_is_that_incident():
+    from traffic_simulator import experiments
+
+    assert tools.INCIDENT_FIELDS == experiments.INCIDENT_KEYS  # the same fields, kept in two modules
+    args = {"duration_min": 30, "road": "2,2-3,2", "lanes": 1, "at_min": 5, "for_min": 10}  # llama3.2 3B
+    assert "one incident" in tools.fold_incident("run_simulation", args)
+    assert args == {"duration_min": 30, "incidents": [{"road": "2,2-3,2", "lanes": 1, "at_min": 5, "for_min": 10}]}
+    given = {"duration_min": 30, "incidents": [{"road": "1,1-2,1"}], "lanes": 1}
+    assert tools.fold_incident("run_simulation", given) is None and "lanes" in given  # incidents given: left alone
+
+
+def test_ids_are_read_however_a_small_model_lists_them():
+    network = generate_network(4, 4)
+    tools.run_tool(network, "update_roads", {"roads": "all", "speed_limit_kmh": 40})
+    assert all(road.speed_limit_kmh == 40 for road in network.all_roads())  # "all": every road
+    done = tools.run_tool(network, "set_junction_control", {"junctions": "2,2; 3,3", "control": "roundabout"})
+    assert done["junctions"] == ["2,2", "3,3"] and "2,2: signalised → roundabout" in done["changed"]
+    assert tools.run_tool(network, "delete_objects", {"ids": "['4,4-4,3']"})["deleted"] == ["4,4-4,3"]  # Python's list
+    timed = tools.run_tool(network, "set_signal_timing", {"junctions": "all", "method": "fixed", "green_times_s": [30, 20]})
+    assert "2,2" not in timed["timed"] and "1,1" in timed["timed"]  # "all" signals: the roundabouts aren't
+    for name, args, why in (("set_junction_control", {"junctions": ["9,9"], "control": "roundabout"}, "Unknown id '9,9'"),
+                            ("add_road", {"from_junction": "1W", "to_junction": "2,2"}, "is a boundary end, not a junction"),
+                            ("set_end_flows", {"end": "2,3", "supply_vph": 100}, "is a junction, not a boundary end"),
+                            ("set_signal_timing", {"junctions": ["2,2", "3,3"]}, "2,2, 3,3 are not signalised"),
+                            ("set_signal_timing", {"junctions": ["1,1"], "method": "webster", "green_times_s": [30, 20]},
+                             "only used by method fixed"),
+                            ("set_signal_timing", {"junctions": ["1,1"], "phases": 4, "green_times_s": [30, 20]},
+                             "one green a phase"),
+                            ("update_institution", {"id": "IN9"}, "Unknown id 'IN9'")):
+        try:
+            tools.run_tool(network, name, args)
+        except tools.ToolError as exc:
+            assert why in str(exc), (name, exc)
+        else:
+            raise AssertionError((name, args))
+    widened = tools.run_tool(network, "update_roads", {"roads": ["1,2", "2,2"], "lanes_per_direction": 3})
+    assert widened["read_as"] == {"1,2, 2,2": "1,2-2,2"} and network.road("1,2-2,2").lanes_per_direction == 3
+    asked = "Delete road 1,3-2,3"  # llama3.2 3B deleted its two junctions (and every road at them) instead
+    assert "Call again with ids [\"1,3-2,3\"]" in tools.contradicts("delete_objects", {"ids": ["1,3", "2,3"]}, asked)
+    assert tools.contradicts("delete_objects", {"ids": ["1,3", "2,3"]}, "Delete junctions 1,3 and 2,3") is None
+    greens = tools.run_tool(network, "set_signal_timing", {"junctions": ["1,1"], "green_times_s": [25, 35]})
+    assert greens["timed"]["1,1"]["method"] == "fixed"  # greens given alone mean a fixed plan
+    assert tools.run_tool(network, "generate_grid", {"horizontal": 5, "vertical": 6})["generated"].startswith(
+        "6 x 5 grid (6 columns, 5 rows)")
+
+
+def test_ends_copied_from_an_example_mean_every_end():
+    network = generate_network(2, 2)  # ends 1W, 1E, 1N...; 99W is none of them
+    asked = "Set the traffic demand for the peak hour."  # llama3.2 3B sent origins ["1W"] on a network without one
+    args = {"origins": ["99W"], "degree_of_saturation": 0.85}
+    note = tools.repair_ends(network, "generate_demand", args, asked)
+    assert "every end" in note and args == {"degree_of_saturation": 0.85}
+    assert tools.repair_ends(network, "generate_demand", {"origins": "None", "pairs": "[]"}, asked) is None  # left out, no end
+    for name, kept, request in (("generate_demand", {"origins": ["99W"]}, "demand from 99W please"),  # the user named it
+                                ("set_od_demand", {"pairs": ["1W->99W"]}, asked),  # one real end: the tool checks it
+                                ("run_simulation", {"origins": ["99W"]}, asked)):  # a tool without ends
+        before = dict(kept)
+        assert tools.repair_ends(network, name, kept, request) is None and kept == before, name
 
 
 def test_a_road_named_from_its_other_end_is_that_road():

@@ -77,7 +77,7 @@ def test_a_headless_run_observes_and_is_analysed():
     network.add_bus_stop("2,1-3,1", "both")
     modes = VehicleModes().modes
     modes[0].headway_min = 4
-    kpis = observed_run(network, modes=modes)
+    kpis = observed_run(network, minutes=30, modes=modes)  # long enough for 3+ queued cycles at a stop line
     observed = kpis["observed"]
     assert observed["passages"] and observed["traversals"] and observed["stop_lines"] and observed["stops"]
     assert kpis["tti"] >= 1
@@ -90,14 +90,20 @@ def test_a_headless_run_observes_and_is_analysed():
     row = found["detectors"][0]
     assert row["space_mean_kmh"] <= row["time_mean_kmh"] + 1e-6  # harmonic ≤ arithmetic
     assert row["v15_kmh"] <= row["v50_kmh"] <= row["v85_kmh"] and row["flow_vph"] > 0
-    discharge = [r for r in found["stop_lines"] if r["cycles"] >= 3]
-    assert discharge and all(1700 <= r["saturation_flow_vphpl"] <= 2400 for r in discharge)  # calibrated: ~2,060
+    assert all(1500 <= r["saturation_flow_vphpl"] <= 2600 for r in found["stop_lines"])  # few cycles here: rough
+    # The stop-line discharge on an approach held saturated, enough cycles to measure: the calibrated ~2,060 per lane
+    single = generate_network(1, 1)
+    saturated = [PairDemand("1W", "1E", 1800, None, [], "Random", (0, 100, 0)),
+                 PairDemand("1N", "1S", 500, None, [], "Random", (0, 100, 0))]
+    simulation, _ = experiments.run_headless(single, saturated, modes, 7, 900, observe=True)
+    discharge = [r for r in experiments.discharge(simulation.observations()) if r["cycles"] >= 3]
+    assert discharge and all(1900 <= r["saturation_flow_vphpl"] <= 2250 for r in discharge), discharge
     refused(lambda: experiments.detectors(kpis, "9,9-8,8"), "No vehicle passed")
     safety = experiments.safety(kpis, 3.0)
     assert safety["conflicts"] >= experiments.safety(kpis)["conflicts"]  # a looser threshold finds more
     refused(lambda: experiments.safety(kpis, 9), "ttc_s")
     flow = experiments.series(kpis, "flow", "1,1-2,1", 5)
-    assert len(flow) == 3 and all(v >= 0 for v in flow) and len(experiments.series(kpis, "throughput", None, 5)) == 3
+    assert len(flow) == 6 and all(v >= 0 for v in flow) and len(experiments.series(kpis, "throughput", None, 5)) == 6
     refused(lambda: experiments.series(kpis, "flow", None), "no road")
 
 

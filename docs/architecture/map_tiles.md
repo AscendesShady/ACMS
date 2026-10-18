@@ -76,7 +76,9 @@
     image pixels exactly on their points, setting the width, corner and turn at once (one undo step);
     the same image point twice is refused and asked again. The picks show as marked crosses.
     **Lock** (an image or the map) pins it: Move, Two Points and the place, size and turn fields are
-    off until it is unlocked (one undo step each way). **Measure** (any background, the network too):
+    off until it is unlocked (one undo step each way). **Hide Background** (the eye beside Lock; an image or the map)
+    draws only the background colour, so the roads drawn over it stand alone (`BackgroundPainter.hidden`); it is
+    only the view: not saved with the project, not an edit or an undo step, and the eye again shows it. **Measure** (any background, the network too):
     click two points, A and B; the line follows the mouse after the first click, and the banner gives
     the distance in metres (two decimals); another click starts a new line. Over an image, **Set
     Scale…** then asks the line's true length and resizes the image about A by true / measured (the

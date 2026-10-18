@@ -69,7 +69,7 @@ Python ≥ 3.10 and PySide6 only. Each module's doc is `docs/architecture/<modul
 | network_io.py | Save / load validated JSON projects | no |
 | interchanges.py | Trumpet, diamond, SPUI, slip roads; curve speed | no |
 | roundabouts.py | Roundabout design (NCHRP 672) | no |
-| network_scene.py | Draws the network; map clicks and drags | Qt |
+| network_scene.py | Top-down/orthographic 2.5D network, map clicks and drags | Qt |
 | properties_panel.py | Editor for the selected road, node or end | Qt |
 | od_matrix.py | OD matrix, cell and curve editors, Institutions panel | Qt |
 | institutions.py | Buildings' doors, catchments, trips and modes | no |
@@ -79,6 +79,9 @@ Python ≥ 3.10 and PySide6 only. Each module's doc is `docs/architecture/<modul
 | map_tiles.py | WGS84 ↔ scene metres, OSM tiles, place search | no |
 | mode_behavior.py | Vehicle types tab | Qt |
 | vehicle.py | A vehicle from its type; Krauss following | no |
+| vehicle_assets.py | Shared display-only vehicle skins and stable random paint | no |
+| asset_mesh.py | Shared low-poly vehicle meshes and material faces | no |
+| building_assets.py | Metre-height institution structures and assumed defaults | no |
 | simulation.py | Lane graph, signals, junctions, lane changes, demand, Runner thread | no |
 | signal_agent.py | TRUE/FALSE answers for signal overrides (→ simulation.md) | no |
 | signal_timing.py | Webster, TRANSYT, Synchro, SCATS, SCOOT, clearance | no |
@@ -100,7 +103,7 @@ Python ≥ 3.10 and PySide6 only. Each module's doc is `docs/architecture/<modul
 | activity.py | Watch my edits: user actions to CSV (→ clock.md) | Qt |
 | extensions.py | Extensions tab: loads, draws, isolates errors | Qt |
 | history.py | Snapshot undo/redo | no |
-| theme.py | Grey theme tokens and contrast pairs | Qt |
+| theme.py | Desktop workspace theme, native control states, floating glass bars and contrast pairs | Qt |
 | main.py | Main window: tabs, tools, dialogs, file menu | Qt |
 | ai_mode.py | AI Mode tab: chat, prompt gate, change approval | Qt |
 | assistant.py | Grok, Gemini, Ollama back end; context budget; System 1 (→ ai_mode.md) | no |

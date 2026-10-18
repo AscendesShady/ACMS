@@ -8,7 +8,8 @@ os.environ.setdefault("QT_QPA_PLATFORM", "offscreen")
 
 from PySide6.QtCore import Qt  # noqa: E402
 from PySide6.QtTest import QTest  # noqa: E402
-from PySide6.QtWidgets import QApplication, QPushButton  # noqa: E402
+from PySide6.QtWidgets import (QApplication, QCheckBox, QPushButton, QRadioButton, QStyle,
+                               QStyleOptionButton)  # noqa: E402
 
 from traffic_simulator.theme import FLASH_MS, PRESSED, READABLE_PAIRS, apply_theme  # noqa: E402
 
@@ -52,6 +53,50 @@ def test_a_click_lights_the_button_for_a_moment():
             APP.processEvents()
         assert not button.property("flash")  # then back as it was
         button.close()
+
+
+def test_checked_controls_have_a_visible_mark_inside_the_indicator():
+    """A checkmark/dot distinguishes checked controls without relying only on a blue fill."""
+    apply_theme(APP)
+    for kind, element in ((QCheckBox, QStyle.SubElement.SE_CheckBoxIndicator),
+                          (QRadioButton, QStyle.SubElement.SE_RadioButtonIndicator)):
+        button = kind("Allowed")
+        button.setChecked(True)
+        button.show()
+        APP.processEvents()
+        option = QStyleOptionButton()
+        button.initStyleOption(option)
+        rect = button.style().subElementRect(element, option, button).adjusted(4, 4, -4, -4)
+        image = button.grab().toImage()
+        colours = [image.pixelColor(x, y) for x in range(rect.left(), rect.right() + 1)
+                   for y in range(rect.top(), rect.bottom() + 1)]
+        # The old indicator was a uniform blue square/disc, with no checkmark or dot at all.
+        darkest = min(colours, key=lambda c: c.lightnessF())
+        lightest = max(colours, key=lambda c: c.lightnessF())
+        assert contrast(darkest.name(), lightest.name()) >= 3, kind.__name__
+        button.close()
+
+
+def test_keyboard_focus_keeps_button_content_and_size_stable():
+    apply_theme(APP)
+    button = QPushButton("Generate Network")
+    button.show()
+    APP.processEvents()
+    button.clearFocus()
+    APP.processEvents()
+
+    def bounds():
+        option = QStyleOptionButton()
+        button.initStyleOption(option)
+        return button.sizeHint(), button.style().subElementRect(QStyle.SubElement.SE_PushButtonContents,
+                                                                option, button)
+
+    resting = bounds()
+    button.setFocus(Qt.FocusReason.TabFocusReason)
+    APP.processEvents()
+    assert button.hasFocus()
+    assert bounds() == resting  # a thicker focus border used to move the text and change the size hint
+    button.close()
 
 
 if __name__ == "__main__":

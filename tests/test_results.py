@@ -60,6 +60,24 @@ def recorded(seconds: float, folder: Path, finish=True):
     return simulation, recorder
 
 
+def test_a_short_roads_flow_counts_every_vehicle_that_entered_it():
+    # 40 m roads: a vehicle crosses one in about 3 s, so 5-s samples missed some 39 % of them (GEH 11 on a perfect run)
+    network, modes = generate_network(2, 2, 40.0), VehicleModes().modes
+    simulation = Simulation(network, [PairDemand("1W", "1E", 700.0, None, [], "Random", (0, 100, 0))], modes, seed=3)
+    recorder = results.RunRecorder(network, modes)
+    while simulation.time < 600:
+        simulation.step()
+        if abs(simulation.time % results.SAMPLE_S) < 1e-6:
+            recorder.sample(simulation.frame())
+    entered = {row["road"]: row["entered"] for row in recorder.kpis()["roads"]}
+    exact = {}
+    for link_id, count in simulation.link_entries.items():
+        exact[link_id.rstrip("<>")] = exact.get(link_id.rstrip("<>"), 0) + count
+    short = [road for road in exact if road in entered and network.road(road).length_m < 60]
+    assert short and sum(exact[road] for road in short) > 50  # they carried traffic
+    assert all(entered[road] == exact[road] for road in short), [(r, entered[r], exact[r]) for r in short]
+
+
 def test_real_traffic_gives_the_networks_kpis_minute_by_minute():
     with tempfile.TemporaryDirectory() as folder:
         work = Path(folder) / "run test"
@@ -325,6 +343,10 @@ def test_a_free_bicycle_has_no_delay_against_its_own_free_speed():
         vehicle.s, simulation.time = vehicle.s + vehicle.speed * 10, 10.0
         recorder.sample(simulation.frame())
         assert recorder.totals["delay_s"] > 3 and recorder.totals["free_delay_s"] < 1e-9
+        simulation.vehicles.clear()  # it arrives: its reliability is against its own free speed (TTI 1, not 2.5)
+        simulation.time = 10.5
+        recorder.sample(simulation.frame())
+        assert recorder.trip_log[-1][4] < 1e-9 and recorder.kpis()["tti"] == 1.0
 
 
 def test_vehicles_waiting_to_enter_are_counted_and_their_wait_reported():

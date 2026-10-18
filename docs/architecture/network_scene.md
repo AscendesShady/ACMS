@@ -53,11 +53,26 @@
 - **Drag mode:** `drag_nodes` set → mouse drags call `network.move_nodes` live, and
   `drag_finished` ends one undo step.
 - **Vehicles:** one `VehicleLayer` item draws every vehicle of the run. On the OpenGL viewport the
-  scene's `gpu.VehicleRenderer` (kept across rebuilds) draws them all in one instanced call; elsewhere
+  scene's `gpu.VehicleRenderer` (kept across rebuilds) draws one instanced batch per present style; elsewhere
   (the raster viewport, tests, or if the shader can't be built) QPainter draws them in one pass grouped by
   colour. Each is drawn part way (`frame_alpha`) between its last two simulated poses, so motion is
   smooth at any frame rate; zoomed far out they stay visible (QPainter: dots under 3 px; the shader: at
-  least 2 px each side). `show_frame(alpha, signals)` draws a frame.
+  least 2 px each side in top-down). `show_frame(alpha, frame)` draws a frame.
+- **Vehicle models:** `vehicle_assets` selects appearance and stable random paint; `asset_mesh` supplies actual
+  low-poly geometry shared by raster/GPU: tapered car bodies, raised sloped cabins, separate wheels and open
+  bike frames/riders. Mesh coordinates expand inside the frame's physical L/W, and motion remains continuous.
+  Below five projected pixels of width, details give way to cached low-poly silhouettes. See `asset_mesh.md`.
+- **Buildings:** `BuildingItem` retains the square footprint in 2D, and paints metre-height facades and roofs
+  from `building_assets` in 2.5D. `height_m` includes the roof; None uses a labelled assumed type default.
+  The footprint/catchment/demand never scales with height. Roof labels move with the projection; scenery bounds
+  reserve extrusion space so toggles need no network rebuild. Buildings remain below traffic and analytical
+  overlays in the Qt scene; they do not share the vehicle GPU depth buffer.
+- **Building visibility:** `set_buildings_visible(on)` hides/shows placed institutions' footprints, icons and
+  name labels, and gates the selected catchment. Hidden buildings receive no map clicks. It invalidates the
+  still-layer background cache even during a run, and emits `buildings_changed` for the corner control.
+  Network records, demand, selection, frame/alpha, camera and scene/Fit bounds are unchanged. Rebuilds and
+  whole-network hiding preserve the setting. Default visible; session-only. Active placement previews remain
+  visible so building placement stays usable while existing buildings are hidden.
 - **Still layer, cached during a run:** what `rebuild()` draws under the vehicles (z below `VEHICLE_Z`,
   but the signal lamps) is tagged `STILL`. While a run is on (`show_frame` with a frame;
   `cache_still`) those items get `ItemHasNoContents`: they still take clicks and tooltips but don't paint
@@ -72,6 +87,27 @@
   ms cached.
 
 `NetworkView`:
+- **3D View:** an optional orthographic 2.5D camera, off at startup: 45 degree yaw, 35.2643897 degree
+  elevation, zero roll. `projection_transform` maps world `(x, y)` metres to
+  `(cos(yaw)*x - sin(yaw)*y, sin(elevation)*(sin(yaw)*x + cos(yaw)*y))`, followed by uniform zoom and pan.
+  The matrix is affine: parallels stay parallel, scale does not depend on distance. `projection_lift` maps
+  display-only body height straight screen-up. The road network, lane widths, frame poses, speed and collision
+  dimensions are never projected back into the simulation. Equal world speed naturally looks slower along
+  foreshortened directions; there is no motion compensation or direction snapping.
+- `set_isometric(on)` changes only the view and vehicle skin, using the same frame and interpolation alpha.
+  It preserves the world point at the viewport centre, orthographic scale (including fractional pixel offsets),
+  selection, tools, clock and running Runner. No new timers, simulation steps or network rebuilds are needed.
+  It emits `projection_changed` to keep the map's checkable 3D View control in step. This is a session display
+  choice, not part of the project/network JSON.
+- **Vehicle skin:** isometric bodies use the frame's exact length and width, at every depth and zoom. There
+  is no minimum body size or dot substitution in this view. The raster and instanced GPU paths shade two
+  visible mesh faces with fixed matte lighting. Car cabins, cycles and commercial bodies have distinct height
+  profiles; these are display geometry, not new vehicle collision dimensions. Only old frames without class
+  metadata retain the plain `0.7 * width` cuboid. Roads stay planar; buildings have explicit visual heights.
+  Vehicle GPU meshes use depth testing; Qt scenery retains its existing scene layers.
+  Legacy `scene.render` exports remain top-down. World-aligned selection boxes appear as ground diamonds;
+  crossing/window follows screen drag direction, and their emitted bounds stay in world metres. Labels remain
+  upright through `ItemIgnoresTransformations`. Bus-stop arrow keys are inverse-projected before nudging.
 - **GPU:** `renderer` is the OpenGL renderer the driver offers (`gpu.renderer()`, asked through a hidden
   offscreen surface) and `on_gpu` whether it is a real GPU. Only then is the viewport a `QOpenGLWidget`
   with 4× multisampling (full-viewport updates, as OpenGL views are meant to repaint), the default version
@@ -81,7 +117,9 @@
 - `set_power_saver(on)` (the Power Saver button): on a GPU, a new `QOpenGLWidget` viewport without
   multisampling (or with 4× again); QPainter's antialiasing still smooths edges. The vehicles' shader is
   rebuilt in the new context. Raster viewports have no multisampling to drop.
-- Wheel zooms at the cursor; right or middle drag pans.
-- F fits the network with a 90 px screen margin; R resets the view.
+- Wheel changes orthographic scale at the cursor; right or middle drag pans. Background tiles choose detail
+  from that scale rather than one rotated matrix coefficient; images and maps share the ground transform.
+- F fits the projected network bounds with a 90 px screen margin; R restores unit zoom and recentres,
+  retaining the active top-down/isometric orientation.
 - `set_corner(widget)` keeps the map's controls over its top-right corner (8 px in, re-placed on resize).
 - Tool cursors show the active tool.

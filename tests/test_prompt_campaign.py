@@ -68,8 +68,8 @@ def test_real_qt_campaign_without_real_prompt_submissions():
         return execute(name, args)
     window.ai_mode._execute = raise_on_second_apply
     try:
-        campaign = runner.Campaign(window, plan, folder / 'campaign', timeout=30)
-        deadline = time.monotonic() + 40
+        campaign = runner.Campaign(window, plan, folder / 'campaign', timeout=30, isolate=True)
+        deadline = time.monotonic() + 120  # each build checks its demand in headless runs (three seeds if borderline)
         while campaign.phase != 'complete' and campaign.failure is None and time.monotonic() < deadline:
             fake.APP.processEvents()
             time.sleep(.01)
@@ -77,6 +77,9 @@ def test_real_qt_campaign_without_real_prompt_submissions():
         assert campaign.phase == 'complete'
         rows = [json.loads(line) for line in campaign.path.read_text(encoding='utf-8').splitlines()]
         assert [r['id'] for r in rows if r['event'] == 'submitted'] == ['N001','N002']
+        # isolated: the starting project kept once, and each prompt began from it with a new chat
+        assert rows[0]['event'] == 'baseline' and [r['id'] for r in rows if r['event'] == 'reset'] == ['N001', 'N002']
+        assert all(not message.get('content', '').startswith('N001') for message in window.ai_mode.history)
         assert [r['prompt'] for r in rows if r['event'] == 'completed'] == [p['prompt'] for p in plan]
         assert [r['tool'] for r in rows if r['event'] == 'applied'] == ['build_scenario', 'build_scenario']
         assert len([r for r in rows if r['event'] == 'apply_intent']) == 2
@@ -139,6 +142,21 @@ def test_multiple_cards_and_reentrant_apply():
     else:
         assert False, 'Must not apply a card from another prompt'
     assert len(clicks) == 2
+
+
+def test_a_halted_campaign_closes_its_research_log():
+    from types import SimpleNamespace as NS
+    campaign = runner.Campaign.__new__(runner.Campaign)
+    events, closed = [], []
+    campaign.record = lambda event, **fields: events.append(event)
+    campaign.timer = NS(stop=lambda: None)
+    log = NS(module=NS(end_session=lambda: closed.append(True)))
+    campaign.window = NS(extensions=NS(find=lambda name: log), statusBar=lambda: NS(showMessage=lambda text: None))
+    campaign.stop('Deadline exceeded')
+    assert events == ['halted'] and closed == [True]  # its report covers the steps that ran
+    log.module.end_session = lambda: 1 / 0
+    campaign.stop('again')
+    assert events[-1] == 'research_log_not_closed'
 
 
 def test_live_update_retains_pending_request_and_ledger():

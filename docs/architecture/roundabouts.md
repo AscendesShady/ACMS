@@ -31,7 +31,10 @@
 circulating flow, with as many circulating lanes as entry lanes: one lane 1380·e^(−0.00102·v_c) (Eq 22-1), two
 1420·e^(−0.00085·v_c) + 1350·e^(−0.00092·v_c) (Eq 22-4); None for three (beyond the HCM). `analysis.junction_los`
 reports it beside the capacity measured on the simulated drivers (`simulation.ROUNDABOUT_ENTRY_VPH`), whose ring
-is one lane however many enter.
+is one lane however many enter. `tanner_entry_capacity(circulating_vph, headway_s=2.0, …)` is Tanner's (1962)
+against a bunched stream (no gap within Δ: 2.0 s for one circulating lane, Akçelik), with the critical and
+follow-up headways the HCM's Eq 22-1 implies (4.98 s, 2.61 s): near the HCM's curve to about 800 veh/h, below it
+beyond, as the simulated ring is.
 
 The scene redraws roundabouts at this true diameter. A mini's island is painted grey
 (drive-over); others are landscaped green. Entries get a dashed give-way line at the circle.

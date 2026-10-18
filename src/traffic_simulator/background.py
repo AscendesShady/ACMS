@@ -78,6 +78,7 @@ class BackgroundPainter(QObject):
         self.marks: list[tuple[float, float, str]] = []
         self.line: tuple[float, float, float, float, str] | None = None  # Measure's line: x1, y1, x2, y2, label
         self.outline: QRectF | None = None  # the hidden network's extent while its place on the map is chosen
+        self.hidden = False  # Hide Background: only its colour drawn, to see the roads alone; a view, never saved
 
     def image(self, background: Background) -> QImage | None:
         """The background's image (a PDF's page rendered), loaded once per file, page and change."""
@@ -171,7 +172,7 @@ class BackgroundPainter(QObject):
         """Fill `rect` (scene metres) with the background at this scale."""
         colour = QColor(background.colour)
         painter.fillRect(rect, colour)
-        if background.kind == "colour":
+        if background.kind == "colour" or self.hidden:
             return
         painter.save()
         painter.setRenderHint(QPainter.RenderHint.Antialiasing, False)  # no blended seams between tiles
@@ -418,6 +419,11 @@ class BackgroundPanel(QWidget):
         self.lock_button.setCheckable(True)
         self.lock_button.clicked.connect(lambda checked: self._set("locked", checked))
         row.addWidget(self.lock_button)
+        # Hide Background: the roads alone once they're drawn over it; only the view, so not an edit or an undo step
+        self.hide_button = icon_button(0xE890, "Hide Background")  # an eye
+        self.hide_button.setCheckable(True)
+        self.hide_button.toggled.connect(self._hide)
+        row.addWidget(self.hide_button)
         self.align_button = icon_button(0xE718, "Two Points")
         self.measure_button = icon_button(0xECC6, "Measure")  # ruler glyph
         for button, name in ((self.move_button, "move"), (self.align_button, "align"),
@@ -503,6 +509,7 @@ class BackgroundPanel(QWidget):
         self.colour_label.setVisible(background.kind == "colour")
         self.swatches_row.setVisible(background.kind == "colour")
         self.lock_button.setVisible(background.kind != "colour")
+        self.hide_button.setVisible(background.kind != "colour")
         self.move_button.setVisible(background.kind != "colour" and self.tool != "locate")
         self.use_button.setVisible(self.tool == "locate")
         self.align_button.setVisible(image)
@@ -532,6 +539,11 @@ class BackgroundPanel(QWidget):
         if background.locked:
             return False
         return background.kind == "image" if tool == "align" else background.kind in ("image", "map")
+
+    def _hide(self, hidden: bool) -> None:
+        """Hide Background on or off: the map is drawn again (tile_ready redraws it), the project unchanged."""
+        self.painter.hidden = hidden
+        self.painter.tile_ready.emit()
 
     def _set(self, name: str, value) -> None:
         network = self._network()

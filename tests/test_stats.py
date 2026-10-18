@@ -47,6 +47,8 @@ def test_calibration_scores_logit_and_reliability():
     assert stats.reliability([(100, 0)] * 10) == {"tti": 1.0, "pti": 1.0, "bi": 0.0}  # no delay: free flow
     assert stats.reliability([(200, 100)] * 19 + [(400, 300)])["pti"] > stats.reliability([(200, 100)] * 20)["pti"]
     assert stats.reliability([]) == {"tti": None, "pti": None, "bi": None}
+    mixed = stats.reliability([(1000, 0), (20, 10)])  # a long free trip, a short slow one: one mean for TTI and BI
+    assert mixed["tti"] == 1.5 and mixed["bi"] == round((mixed["pti"] - 1.5) / 1.5, 3)
     # Buffer index, mean-based: nine free trips and one taking 3× free; ratios' 95th percentile 2.1, mean 1.2
     assert stats.reliability([(100, 0)] * 9 + [(300, 200)]) == {"tti": 1.2, "pti": 2.1, "bi": 0.75}
 
@@ -76,6 +78,20 @@ def test_anova_signed_rank_and_regressions():
     bunched = [poisson(2.718281828459045 ** (0.5 + 0.8 * x[0]) * rng.gammavariate(2, 0.5)) for x in xs]
     assert stats.poisson_regression(xs, bunched)["dispersion"] > 2  # gamma-mixed: overdispersed
     assert stats.empirical_bayes(10, 2, 0) == 2 and abs(stats.empirical_bayes(10, 2, 1e9) - 10) < 1e-6
+
+
+def test_a_poisson_safety_fit_ranks_sites_by_their_departure():
+    from traffic_simulator import experiments
+
+    counts, flows = [1, 2, 2, 3, 3, 6], [300, 400, 500, 600, 700, 800]  # not overdispersed: EB = μ, no excess
+    roads = [{"road": f"r{i}", "flow_vph": f, "vehicle_km": 10.0, "delay_veh_h": 0.0} for i, f in enumerate(flows)]
+    observed = {"conflicts": [{"road": f"r{i}", "link": f"r{i}>", "t": 1.0, "type": "Car", "leader_type": "Car",
+                               "speed_kmh": 30.0, "ttc_min": 1.0, "drac_max": 1.0} for i, c in enumerate(counts) for _ in range(c)],
+                "links": {f"r{i}>": {"road": f"r{i}", "length_m": 500.0} for i in range(6)}}
+    found = experiments.safety({"roads": roads, "observed": observed})
+    assert found["spf"]["model"] == "Poisson" and found["ranked_by"].startswith("z")
+    z = [site["z"] for site in found["ranked"]]
+    assert z == sorted(z, reverse=True) and found["ranked"][0]["road"] == "r5"  # 6 against 5.0 expected
 
 
 def test_lopsided_counts_and_failed_analyses_never_stop_a_workbook():
@@ -164,6 +180,14 @@ def test_power_of_a_paired_comparison():
     smallest = stats.detectable(1.0, 10, 0.8)
     assert abs(stats.paired_power(1.0, smallest, 10) - 0.8) < 0.03  # the detectable difference has that power
     assert stats.seeds_for_power(1.0, 0.0) is None and stats.paired_power(0.0, 1.0, 3) == 1.0
+    # exact noncentral t (G*Power): few seeds no longer understated (the shifted central t gave 0.31 at n 5)
+    assert abs(stats.paired_power(1.0, 1.0, 5) - 0.401) < 0.002 and abs(stats.paired_power(1.0, 0.5, 20) - 0.565) < 0.002
+    assert abs(stats.paired_power(1.0, 0.0, 8) - 0.05) < 1e-3  # no difference: found at the test's α
+
+
+def test_holm_adjusts_p_values_tested_together():
+    assert stats.holm([0.01, 0.04, None, 0.03, 0.2]) == [0.04, 0.09, None, 0.09, 0.2]
+    assert stats.holm([0.5]) == [0.5] and stats.holm([]) == [] and stats.holm([0.3, 0.4]) == [0.6, 0.6]
 
 
 if __name__ == "__main__":
