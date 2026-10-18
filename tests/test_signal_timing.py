@@ -64,8 +64,8 @@ def test_webster_keeps_its_minimum_greens_within_the_longest_cycle():
     for ratios in ([0.94, 0.0], [0.94, 0.0, 0.0, 0.0], [0.9, 0.04]):  # one phase saturated, the rest on their minimum
         cycle, greens = webster(ratios)
         assert isclose(cycle, MAX_CYCLE_S) and min(greens) >= MIN_GREEN_S - 1e-9, (ratios, cycle, greens)
-    cycle, greens = webster([0.5, 0.1])  # C0 = (1.5 x 8 + 5) / 0.4 = 42.5 s: the minimum taken inside it
-    assert isclose(cycle, 42.5) and isclose(greens[1], MIN_GREEN_S)
+    cycle, greens = webster([0.5, 0.1])  # C0 = (1.5 x 8.8 + 5) / 0.4 = 45.5 s: the minimum taken inside it
+    assert isclose(cycle, 45.5) and isclose(greens[1], MIN_GREEN_S)
     try:
         webster([0.1] * 4, span=25.0)  # 4 x (7 + 25) s can't fit in 120 s
         raise AssertionError("an impossible minimum cycle was accepted")

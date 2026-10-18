@@ -33,7 +33,18 @@
   - The sidebar scrolls only when the open tab needs it: its `OpenPageTabs` size to the open page
     rather than the tallest, height for width included, re-measuring when a page's layout changes. Every
     tab, and both AI Mode pages, fits a 1280 × 800 window (the chat's transcript is at least 220 px).
-  - **Edit Network:** Add Node, Add Edge (Connection or End) and the selection editor. Ctrl+click adds a
+  - **Edit Network:** its own tabs, Roads and Metro (`edit_tabs`), above the next-step banner and the selection
+    editor. **Metro** (Metro Rail): Start deployment (`metro_button`, a train icon, checkable) and a summary of the
+    lines, stops and km of track (`_show_metro_summary`, after every redraw). Deploying (`toggle_metro`,
+    `metro_clicked`): every left click on the map is a stop; the first waits (`scene.metro_pending`, drawn) until the
+    second makes the line (`add_metro_line`), and each after it joins the line's last stop (`add_metro_stop`); one too
+    near is refused with its reason in the banner. A right-click (`view.right_clicked`), Esc, another tool or tab
+    finishes it and asks (`_accept_metro_line`, with the line's service: a train every, speed, carriages a train, passengers a carriage,
+    fare, prefilled with `METRO_SERVICE`'s assumed values and labelled so): **Accept** keeps the line as final, one undo step, never edited after
+    (a new deployment is always a new line); **Delete** removes it and its stops, leaving no undo step. A lone first stop
+    is dropped without asking. Nothing is an undo step while deploying (undo merges only edits within 1.5 s); Ctrl+Z
+    then takes back the unfinished line alone.
+  - **Edit Network → Roads:** Add Node, Add Edge (Connection or End) and the selection editor. Ctrl+click adds a
     road to the selection or takes it out (`_toggle_road`); two roads meeting at a junction show Add Slip
     Road beside Delete Selected; its menu picks Single lane or Two lanes (`add_slip_road`: `build_slip_road`,
     the slip selected, one undo step).
@@ -68,7 +79,7 @@
     its margins and scrollbar, and no wider (about 417 px with Segoe UI: the Extensions page's rows are as wide as their settings,
     open or folded), so the map gets the rest. The tab row spans the sidebar
     (document mode, expanding tabs), and every page's margins line up with its edges.
-- **Canvas tools:** Add Node, Add Edge and Drag to Adjust are mutually exclusive.
+- **Canvas tools:** Add Node, Add Edge, Drag to Adjust and metro deployment are mutually exclusive.
   A banner says the next step, and Esc leaves a tool or clears the selection.
 - **`_build_edge`:** detects crossings before adding a road and asks: **Merge into
   Roundabout** (a roundabout node at each crossing; both roads split there) or

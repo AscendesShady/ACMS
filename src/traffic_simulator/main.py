@@ -28,6 +28,7 @@ from PySide6.QtWidgets import (
     QComboBox,
     QDialog,
     QDialogButtonBox,
+    QDoubleSpinBox,
     QFileDialog,
     QFormLayout,
     QFrame,
@@ -62,12 +63,14 @@ from traffic_simulator.extensions import ExtensionsPanel
 from traffic_simulator.activity import ActivityLog
 from traffic_simulator.clock import STEP_MS, SimulationClock, clock_text
 from traffic_simulator import (accessibility, analysis, assistant, design_checks, experiments, network_tools, results,
-                               scenario, stats)
+                               scenario, stats, weaving)
 from traffic_simulator.signal_agent import INSTRUCTIONS, SignalAgent
 from traffic_simulator.simulation import DT, Graph, PairDemand, Runner, Simulation, path_size_logit
+from traffic_simulator.metro import METRO, loads as metro_loads, places as metro_places
 from traffic_simulator.geometry import point_along
 from traffic_simulator.history import History
-from traffic_simulator.institutions import place, run_demand
+from traffic_simulator.institutions import hourly_people, place, run_demand
+from traffic_simulator.institutions import shares as institution_shares
 from traffic_simulator.interchanges import (
     build_diamond,
     build_slip_road,
@@ -77,13 +80,13 @@ from traffic_simulator.interchanges import (
     roads_left_at_hub,
 )
 from traffic_simulator.mode_behavior import ModeBehaviorPanel, VehicleMode, VehicleModes
-from traffic_simulator.models import Network, institution_problem, route_choice_problem
+from traffic_simulator.models import METRO_SERVICE, Network, institution_problem, route_choice_problem
 from traffic_simulator.network_generator import generate_network
 from traffic_simulator.network_io import MAX_SEED, load_network, save_network, saved_conversation, saved_project
 from traffic_simulator.network_scene import NetworkGraphicsScene, NetworkView
 from traffic_simulator.network_tools import build_edge, delete_objects, edge_crossings
 from traffic_simulator.daily_profile import DailyProfile, quarter_shares
-from traffic_simulator.od_matrix import ModeSplitDialog, ODCell, ODCellPanel, ODMatrix
+from traffic_simulator.od_matrix import MetroMatrix, ModeSplitDialog, ODCell, ODCellPanel, ODMatrix
 from traffic_simulator.properties_panel import (ICON_FONTS, ChoiceButtons, Collapsible, OpenPageTabs, PropertiesPanel,
                                                 align_form_labels, describe_group, glyph_icon, hint_label,
                                                 icon_button, styled_button, TIMING_METHODS)
@@ -423,6 +426,9 @@ class MainWindow(QMainWindow):
 
         edit_tab = QWidget()
         edit_layout = QVBoxLayout(edit_tab)
+        roads_page = QWidget()  # Edit Network's own tabs: Roads (junctions and roads) and Metro (rail lines)
+        roads_layout = QVBoxLayout(roads_page)
+        roads_layout.setContentsMargins(0, 0, 0, 0)
         tools = QGroupBox("Add to Network")
         tools_layout = QVBoxLayout(tools)
         self.add_node_button = styled_button("Add Node", tooltip="Place a new junction")
@@ -442,7 +448,23 @@ class MainWindow(QMainWindow):
         edge_form.setContentsMargins(0, 0, 0, 0)
         edge_form.addRow("Edge type", self.edge_kind)
         tools_layout.addWidget(self.edge_type_row)
-        edit_layout.addWidget(tools)
+        roads_layout.addWidget(tools)
+        metro_page = QWidget()
+        metro_layout = QVBoxLayout(metro_page)
+        metro_layout.setContentsMargins(0, 0, 0, 0)
+        metro_box = QGroupBox("Metro Rail")
+        metro_row = QHBoxLayout(metro_box)
+        self.metro_button = icon_button(0xE7C0, "Start deployment")  # a train: each click a stop, right-click ends
+        self.metro_button.setCheckable(True)
+        metro_row.addWidget(self.metro_button)
+        self.metro_summary = hint_label()  # its lines, stops and track
+        metro_row.addWidget(self.metro_summary, 1)
+        metro_layout.addWidget(metro_box)
+        self.edit_tabs = OpenPageTabs()
+        self.edit_tabs.addTab(roads_page, "Roads")
+        self.edit_tabs.addTab(metro_page, "Metro")
+        edit_layout.addWidget(self.edit_tabs)
+        self.metro_line: str | None = None  # the line a deployment is extending
         self.mode_hint = hint_label()  # next-step banner, shown only while a tool is active
         self.mode_hint.setProperty("role", "banner")
         edit_layout.addWidget(self.mode_hint)
@@ -529,6 +551,8 @@ class MainWindow(QMainWindow):
         self.workspace = QStackedWidget()
         self.workspace.addWidget(self.view)
         self.workspace.addWidget(self.od_matrix)
+        self.metro_matrix = MetroMatrix()  # Demand Generator → Metro: the metro's own OD matrix
+        self.workspace.addWidget(self.metro_matrix)
         layout.addWidget(self.workspace, 1)
         self.setCentralWidget(root)
         # Wide enough for the tab row and the widest page, plus the sidebar's margins and scrollbar. Measured
@@ -1014,6 +1038,12 @@ class MainWindow(QMainWindow):
             return self._benefit_cost(args)
         if tool == "design_audit":
             return design_checks.audit(self.network, self.vehicle_modes.modes)
+        if tool == "weaving_los":
+            return self._weaving_los(args)
+        if tool == "metro_report":
+            if not self.network.metro_lines:
+                raise ValueError("No metro lines: deploy one first (Edit Network > Metro).")
+            return self._metro_report()
         if tool == "accessibility_report":
             measured = None
             if args.get("id"):
@@ -1585,6 +1615,31 @@ class MainWindow(QMainWindow):
                 "note": "Apply only if the difference is clear and better; check with run_experiment on new seeds "
                         "(the search fits these seeds). The open network is unchanged.",
                 **({"agent_timing": AGENT_TIMING} if override is not None else {})}
+
+    def _weaving_los(self, args: dict) -> dict:
+        """weaving_los: the HCM 2000 Ch 24 on every weaving segment, its movements from the demand (the busiest hour,
+        each pair's vehicles in PCU by its split, at its peak quarter: V / PHF, Eq 24-1) on the routes a Run takes; a
+        run's own speed and density beside it when one is given."""
+        modes = self.vehicle_modes.modes
+        rates: dict = defaultdict(float)
+        for pair in experiments.at_busiest_hour(self._pair_demand()):
+            pcu = sum(share / 100 * float(getattr(mode, "pcu", 1.0)) for share, mode in zip(pair.split, modes)) or 1.0
+            peak = 4 * max(pair.quarters) if getattr(pair, "quarters", ()) else 1.0
+            rates[(pair.origin, pair.destination)] += (pair.hourly or 0.0) * pcu * peak
+        rows = weaving.report(Graph(self.network), dict(rates))
+        found = {"segments": rows, "method": "HCM 2000 Chapter 24 (Eqs 24-1 to 24-6, Exhibits 24-2, 24-5 to 24-8)",
+                 "flows": "pc/h at each pair's peak 15 minutes, the busiest hour, on the routes a Run takes"}
+        if not rows:
+            found["note"] = ("No weaving segments: no uncontrolled merge followed within 750 m by a diverge, with the "
+                             "second road joining and leaving on the kerb side.")
+        if args.get("id"):
+            test = self._run_test(str(args["id"]))
+            kpis, observed = test["kpis"], test["kpis"].get("observed", {})
+            hours = float(observed.get("observed_s") or kpis.get("time_s") or 0.0) / 3600
+            for row in rows:
+                row.update(weaving.measured(row, observed, hours))
+            found["run"] = test["id"]
+        return found
 
     def _equilibrate_demand(self, flows: dict, args: dict, check_only: bool = False) -> tuple[dict, dict]:
         """equilibrate_demand's numbers: elastic demand (induced or suppressed traffic; Rodrigue, Geography of Transport
@@ -3252,6 +3307,14 @@ class MainWindow(QMainWindow):
         self.properties.slip_road_requested.connect(self.add_slip_road)
         self.add_node_button.toggled.connect(self.toggle_add_node)
         self.add_edge_button.toggled.connect(self.toggle_add_edge)
+        self.metro_button.toggled.connect(self.toggle_metro)
+        self.scene.redrawn.connect(self._show_metro_summary)  # whatever changed the network: an edit, undo, a file
+        self.scene.redrawn.connect(lambda: self.workspace.currentWidget() is self.metro_matrix
+                                   and self.metro_matrix.show_network(self.network))
+        self.metro_matrix.changed.connect(self._commit)
+        self.scene.metro_clicked.connect(self.metro_clicked)
+        self.view.right_clicked.connect(lambda: self.metro_button.setChecked(False))  # ends a deployment
+        self.edit_tabs.currentChanged.connect(lambda: self._end_modes_except(None))
         self.edge_kind.changed.connect(self._refresh_mode)
         self.tabs.currentChanged.connect(self.tab_changed)
         self.tabs.currentChanged.connect(lambda: self.show_grid(self.tabs.currentWidget() is self.demand_tab
@@ -3321,6 +3384,16 @@ class MainWindow(QMainWindow):
                 hint = f"From {self.edge_start}: click empty space where the boundary end goes."
             else:
                 hint = f"From {self.edge_start}: click the junction to connect to."
+        elif self.metro_button.isChecked():
+            cursor = cross
+            if self.metro_line in self.network.metro_lines:
+                stops = self.network.metro_lines[self.metro_line].stops
+                hint = (f"{self.metro_line}: {len(stops)} stops. Click the map for the next stop, joined to "
+                        f"{stops[-1]}. Right-click finishes.")
+            elif self.scene.metro_pending is not None:
+                hint = "First stop placed: click the next stop. Right-click finishes."
+            else:
+                hint = "Click the map for the line's first stop. Right-click finishes."
         elif self.properties.drag_button.isChecked():
             cursor = Qt.CursorShape.SizeAllCursor
             _, identifier = self.scene.selection or ("", "")
@@ -3496,7 +3569,7 @@ class MainWindow(QMainWindow):
         if self.tabs.currentWidget() is self.demand_tab and self.od_matrix.selected_pairs():
             self.od_matrix.clear_selection()  # the OD Pair editor goes with it
             return
-        tools = (self.add_node_button, self.add_edge_button, self.properties.drag_button)
+        tools = (self.add_node_button, self.add_edge_button, self.properties.drag_button, self.metro_button)
         if any(button.isChecked() for button in tools):
             self._end_modes_except(None)
         else:
@@ -3552,8 +3625,8 @@ class MainWindow(QMainWindow):
             self.properties.delete_node()
 
     def _end_modes_except(self, keep: QPushButton | None) -> None:
-        """Add Node, Add Edge and Drag to Adjust all capture canvas clicks: one at a time."""
-        for button in (self.add_node_button, self.add_edge_button, self.properties.drag_button):
+        """Add Node, Add Edge, Drag to Adjust and metro deployment all capture canvas clicks: one at a time."""
+        for button in (self.add_node_button, self.add_edge_button, self.properties.drag_button, self.metro_button):
             if button is not keep:
                 button.setChecked(False)
 
@@ -3571,10 +3644,14 @@ class MainWindow(QMainWindow):
         self._refresh_summary()
 
     def show_grid(self, on: bool) -> None:
-        """The main area shows the input grid (the OD matrix) or the network; both toggles follow."""
+        """The main area shows the input grid (the OD matrix; the metro's, with Demand on Metro) or the network; both
+        toggles follow."""
         for toggle in self.grid_toggles:
             toggle.setChecked(on)
-        self.workspace.setCurrentWidget(self.od_matrix if on else self.view)
+        metro = on and self.od_panel.demand.currentData() == "metro"
+        if metro:
+            self.metro_matrix.show_network(self.network)
+        self.workspace.setCurrentWidget(self.metro_matrix if metro else self.od_matrix if on else self.view)
         self._refresh_grid()
 
     def _refresh_grid(self) -> None:
@@ -3623,6 +3700,125 @@ class MainWindow(QMainWindow):
         if checked:
             self._end_modes_except(self.add_node_button)
         self._refresh_mode()
+
+    def toggle_metro(self, checked: bool) -> None:
+        """Start deployment: every map click a metro stop, the second making a new line and each one after it
+        extending it; unchecked (a right-click, Esc, another tool or tab) the deployment ends and the line is
+        accepted, final (one undo step; no later edits), or deleted (`_accept_metro_line`). A first stop with no
+        second is dropped: a line needs track."""
+        if checked:
+            self._end_modes_except(self.metro_button)
+        elif self.metro_line in self.network.metro_lines:
+            line = self.network.metro_lines[self.metro_line]
+            summary = f"{line.id}: {len(line.stops)} stops, {self.network.metro_length_m(line.id) / 1000:.2f} km of track"
+            service = self._accept_metro_line(summary)
+            if service is not None:
+                for name, value in service.items():
+                    setattr(line, name, value)
+                self.statusBar().showMessage(f"{self._network_summary()} • Metro {summary}, a train every "
+                                             f"{line.headway_min:g} min, accepted")
+                self._commit()
+            else:
+                self.network.delete_metro_line(line.id)
+                self.statusBar().showMessage(f"{self._network_summary()} • Metro {line.id} deleted")
+        self.metro_line, self.scene.metro_pending = None, None
+        self.scene.metro_deploying = checked
+        self.scene.rebuild()
+        self._refresh_mode()
+
+    def metro_clicked(self, x: float, y: float) -> None:
+        """A stop where the map was clicked while deploying: the first waits for the second, which makes the
+        line; then each joins the line's last stop. Refused (too near the last stop) says why and changes nothing.
+        Nothing is an undo step until the line is accepted (toggle_metro)."""
+        if self.metro_line is not None and self.metro_line not in self.network.metro_lines:
+            self.metro_line = None  # undone while deploying: start a new line
+        try:
+            if self.metro_line is not None:
+                self.network.add_metro_stop(self.metro_line, x, y)
+            elif self.scene.metro_pending is None:
+                self.scene.metro_pending = (x, y)
+            else:
+                self.metro_line = self.network.add_metro_line(self.scene.metro_pending, (x, y)).id
+                self.scene.metro_pending = None
+        except ValueError as exc:
+            self._show_hint(f"{exc} Click elsewhere, or right-click to finish.")
+            return
+        self.scene.rebuild()
+        self._refresh_mode()
+
+    def _accept_metro_line(self, summary: str) -> dict | None:
+        """The finished line: accepted with its service (headway, speed, carriages a train and passengers a carriage,
+        fare: assumed values until changed, METRO_SERVICE) as final, never edited after; or deleted (None)."""
+        dialog = QDialog(self)
+        dialog.setWindowTitle("Finish metro line")
+        layout = QVBoxLayout(dialog)
+        layout.addWidget(QLabel(f"Metro {summary}. Accept it as final, or delete it?"))
+        note = hint_label("Assumed service: set this line's own.")
+        layout.addWidget(note)
+        form, boxes = QFormLayout(), {}
+        for name, label, suffix in (("headway_min", "A train every", " min"), ("speed_kmh", "Speed, stops included",
+                                                                               " km/h"),
+                                    ("cars_per_train", "Carriages a train", ""),
+                                    ("car_capacity", "Passengers a carriage", ""), ("fare_cents", "Fare", " ¢")):
+            default, low, high = METRO_SERVICE[name]
+            box = QSpinBox() if isinstance(default, int) else QDoubleSpinBox()
+            box.setRange(low, high)
+            box.setSuffix(suffix)
+            box.setValue(default)
+            form.addRow(label, box)
+            boxes[name] = box
+        layout.addLayout(form)
+        buttons = QDialogButtonBox()
+        accept = buttons.addButton("Accept", QDialogButtonBox.ButtonRole.AcceptRole)
+        buttons.addButton("Delete", QDialogButtonBox.ButtonRole.DestructiveRole).clicked.connect(dialog.reject)
+        accept.clicked.connect(dialog.accept)
+        accept.setDefault(True)
+        layout.addWidget(buttons)
+        if dialog.exec() != QDialog.DialogCode.Accepted:
+            return None
+        return {name: box.value() for name, box in boxes.items()}
+
+    def _show_metro_summary(self) -> None:
+        """Lines, stops and track; and each line's busiest segment at the design hour against its capacity."""
+        network = self.network
+        lines = len(network.metro_lines)
+        if not lines:
+            self.metro_summary.setText("No metro lines yet")
+            return
+        km = sum(network.metro_length_m(line_id) for line_id in network.metro_lines) / 1000
+        text = [f"{lines} line{'s' * (lines != 1)}, {len(network.metro_stops)} stops, {km:.2f} km of track"]
+        report = self._metro_report()
+        for row in report["lines"]:
+            if row["riders_per_h"]:
+                text.append(f"{row['line']}: {row['peak_load_per_h']:,} an hour at its busiest ({row['peak_segment']}), "
+                            f"{row['v_c']:.0%} of {row['capacity_per_h_each_way']:,}"
+                            + (" – over capacity" if row["over_capacity"] else ""))
+        self.metro_summary.setText("\n".join(text))
+
+    def _metro_report(self) -> dict:
+        """metro_report: the metro's passengers at the design hour (the hour the most ride), on their lines
+        (metro.loads): its own OD matrix (Network.metro_demand, the same every hour) and each building's metro riders,
+        its metro share of the people arriving and leaving, between its door station and its catchment's stations in
+        equal shares (metro.places), as its trips go."""
+        network, by_hour = self.network, []  # (board, alight, passengers each hour)
+        for pair, people in network.metro_demand.items():
+            board, alight = pair.split("->")
+            by_hour.append((board, alight, [people] * 24))
+        for item in network.institutions.values():
+            share = institution_shares(item).get(METRO, 0.0) / 100
+            entrance, stations = metro_places(network, item)
+            if not share or not stations:
+                continue
+            arrive, leave = hourly_people(item)
+            for station in stations:
+                by_hour.append((station, entrance, [people * share / len(stations) for people in arrive]))
+                by_hour.append((entrance, station, [people * share / len(stations) for people in leave]))
+        hour = max(range(24), key=lambda h: sum(hours[h] for *_, hours in by_hour)) if by_hour else 8
+        report = metro_loads(network, [(board, alight, hours[hour]) for board, alight, hours in by_hour])
+        return {"design_hour": f"{hour:02d}:00-{hour + 1:02d}:00", **report,
+                "method": "passengers on their line (no transfers), each stop-to-stop segment's load each way against "
+                          "HCM 2000 Eq 27-28's capacity, (60 / headway) trains x carriages x passengers a carriage x "
+                          "PHF 0.75"}
 
     def toggle_drag(self, checked: bool) -> None:
         self.scene.drag_nodes = []
@@ -3733,7 +3929,7 @@ class MainWindow(QMainWindow):
     def _cell_clicked(self, *_) -> None:
         """A grid cell clicked from another tab (the Input Grid toggle): its editor is the Demand
         Generator's, so that tab opens, on the grid's hourly or daily demand."""
-        if self.od_panel.demand.currentData() == "institutions":
+        if self.od_panel.demand.currentData() in ("institutions", "metro"):
             self.od_panel.demand.setCurrentIndex(self.od_panel.demand.findData(self.od_matrix.mode))
         if self.tabs.currentWidget() is not self.demand_tab:
             selection = [(index.row(), index.column()) for index in self.od_matrix.table.selectedIndexes()]
@@ -3812,7 +4008,8 @@ class MainWindow(QMainWindow):
         if item is None:
             return
         modes = self.vehicle_modes.modes
-        alternatives = [{"mode": "Walk"}, *(network_tools.default_alternative(mode) for mode in modes)]
+        alternatives = [{"mode": "Walk"}, *(network_tools.default_alternative(mode) for mode in modes),
+                        *([{"mode": METRO}] if self.network.metro_lines else [])]  # its cost: added to the line's fare
         dialog = ModeSplitDialog(self, f"{item.id} {item.kind}",
                                  lambda args: network_tools.institution_split(self.network, item, modes, args),
                                  alternatives, network_tools.LOGIT_DEFAULTS, network_tools.WALK_KMH)
@@ -4018,6 +4215,7 @@ class MainWindow(QMainWindow):
             self._refresh_grid()
             return
         if self.history.commit(self._snapshot(), merge_key):
+            self._show_metro_summary()  # riders come and go with demand and buildings' splits as well as lines
             self._refresh_grid()  # the assistant may add or remove an end while the grid shows
             self._refresh_undo_actions()
             self._show_saved()
@@ -4029,6 +4227,13 @@ class MainWindow(QMainWindow):
         self.redo_action.setEnabled(bool(self.history.redo_stack))
 
     def undo(self) -> None:
+        if self.metro_button.isChecked():  # deploying: the unfinished line isn't an undo step yet; it goes alone
+            if self.metro_line in self.network.metro_lines:
+                self.network.delete_metro_line(self.metro_line)
+            self.metro_line = None
+            self.metro_button.setChecked(False)
+            self.statusBar().showMessage("The unfinished metro line was taken back.")
+            return
         self._restore(self.history.undo(), "Undone. Ctrl+Y redoes it.", "Nothing to undo.")
 
     def redo(self) -> None:

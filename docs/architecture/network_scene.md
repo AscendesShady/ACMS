@@ -42,6 +42,11 @@
   click sets it down, then `NetworkView.wheelEvent` hands the wheel to `grow_placing` (the view doesn't
   zoom) and the circle grows or shrinks; the second click emits `placed`. `placement_changed` after each
   step. Right or middle drag still pans.
+- **Metro** (`_draw_metro`, `METRO_Z` 7.5: above roads and signals, below vehicles): each line's track straight stop to
+  stop (`METRO_LINE`, 4 px), each stop a ringed marker (`METRO_STOP`, `METRO_STOP_RADIUS_M` 12 m) labelled with its ID,
+  and a deployment's pending first stop. While `metro_deploying`, a left click emits `metro_clicked(x, y)` before
+  anything else. `NetworkView.right_clicked`: a right press and release that panned under `RIGHT_CLICK_PX` (4 px), so
+  a right drag still pans.
 - **Clicks:** clickable items carry `data(0) = (kind, id)`. The `clicked(kind, id, x, y,
   additive)` signal reports the object (`road`, `node`, `entry`, `exit`, `bus_stop`, `institution` or `""`) and the
   point in metres; Ctrl/Shift makes `additive` true.

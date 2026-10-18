@@ -34,7 +34,7 @@ from .models import (BAY_ENTRY_M, BAY_LENGTH_M, BAY_STOP_M, BAY_WIDTH_M, LANE_WI
 from .properties_panel import ICON_FONTS
 from .roundabouts import design_roundabout
 from .signal_timing import ADAPTIVE, STOP_LINE_LOOP_M, UPSTREAM_LOOP_AT_M, UPSTREAM_LOOP_M
-from .theme import ACCENT_EDGE, BUILDING_PAINTS, SHADOW, STATUS, TEXT, VEHICLE_INKS, VEHICLE_PAINTS
+from .theme import ACCENT_EDGE, BUILDING_PAINTS, METRO_LINE, METRO_STOP, SHADOW, STATUS, TEXT, VEHICLE_INKS, VEHICLE_PAINTS
 
 
 # Everything physical is drawn to scale in metres. Only labels and selection
@@ -55,6 +55,9 @@ DETECTOR_COLOR = QColor("#8fdcf5")  # loop detectors' outlines
 BUILDING_COLOR = QColor("#8a7a66")  # an institution's roof
 BUS_STOP_NUDGE_M, BUS_STOP_SHIFT_NUDGE_M = 0.5, 5.0  # an arrow key's step, and with Shift
 VEHICLE_Z = 8  # the vehicle layer: above roads and signals, below labels and end markers
+METRO_Z = 7.5  # metro track and stops: above roads and signals, below the vehicles
+METRO_STOP_RADIUS_M = 12.0  # a stop's marker on the map
+RIGHT_CLICK_PX = 4  # a right press and release moving less than this is a click, not a pan
 # Item data key: the item is in the still layer, what rebuild() draws under the vehicles (but the
 # signal lamps). During a run the view caches it with the background (NetworkGraphicsScene.cache_still).
 STILL = 1
@@ -184,6 +187,7 @@ class NetworkGraphicsScene(QGraphicsScene):
     redrawn = Signal()  # after every rebuild(), which clears the scene: extensions draw again
     placement_changed = Signal()  # the building being placed moved, was set down or its circle changed
     placed = Signal()  # the second click: `placing` is where it goes and how far its circle reaches
+    metro_clicked = Signal(float, float)  # a left click while deploying metro (metro_deploying): a stop goes there
     still_cached_changed = Signal(bool)  # a run started (the still layer is cached) or ended
 
     def __init__(self, network: Network | None = None) -> None:
@@ -214,6 +218,8 @@ class NetworkGraphicsScene(QGraphicsScene):
         self._tool_held = False
         self.group: set[tuple[str, str]] = set()  # a selection box's objects
         self.box_select = True  # dragging over empty map draws a selection box (off while a tool is on)
+        self.metro_deploying = False  # Edit Network → Metro's Start deployment: each left click places a stop
+        self.metro_pending: tuple[float, float] | None = None  # a deployment's first stop, until the second makes the line
         self._box: tuple[QPointF, bool] | None = None  # where the press was, additive?
         self._band: QGraphicsRectItem | None = None
         self.network_rect = QRectF()
@@ -298,6 +304,10 @@ class NetworkGraphicsScene(QGraphicsScene):
                 self.placed.emit()
             self.update()
             self.placement_changed.emit()
+            event.accept()
+            return
+        if self.metro_deploying:  # deploying metro: every click is a stop (the window adds it)
+            self.metro_clicked.emit(pos.x(), pos.y())
             event.accept()
             return
         if self.background_tool is not None and self.background_tool.press(pos.x(), pos.y()):
@@ -427,6 +437,7 @@ class NetworkGraphicsScene(QGraphicsScene):
         self._zone = None
         for item in self.network.institutions.values():
             self._draw_institution(item)
+        self._draw_metro()
         bounds = self.itemsBoundingRect()
         margin = max(80.0, min(max(bounds.width(), bounds.height()) * 0.05, 500.0))
         if bounds.isNull():
@@ -729,6 +740,33 @@ class NetworkGraphicsScene(QGraphicsScene):
             tick.setPen(_screen_pen(SELECTED_COLOR, 1.5))
             tick.setZValue(10)
             self.addItem(tick)
+
+    def _draw_metro(self) -> None:
+        """Each metro line's track, straight stop to stop, and its stops: a platform marker ringed in the track's
+        colour and labelled; a deployment's pending first stop too. Above the roads, below the vehicles."""
+        network, line_colour = self.network, QColor(METRO_LINE)
+        for line in network.metro_lines.values():
+            stops = [network.metro_stops[stop_id] for stop_id in line.stops]
+            track = QGraphicsPathItem(_path([(stop.x, stop.y) for stop in stops]))
+            track.setPen(_screen_pen(line_colour, 4))
+            track.setToolTip(f"Metro {line.id}: {len(stops)} stops, {network.metro_length_m(line.id) / 1000:.2f} km")
+            track.setZValue(METRO_Z)
+            self.addItem(track)
+            for stop in stops:
+                self._draw_metro_stop(stop.x, stop.y, stop.id, f"{stop.id} (metro {line.id})")
+        if self.metro_pending is not None:
+            self._draw_metro_stop(*self.metro_pending, "", "First stop: click the next")
+
+    def _draw_metro_stop(self, x: float, y: float, name: str, tooltip: str) -> None:
+        marker = QGraphicsEllipseItem(x - METRO_STOP_RADIUS_M, y - METRO_STOP_RADIUS_M,
+                                      2 * METRO_STOP_RADIUS_M, 2 * METRO_STOP_RADIUS_M)
+        marker.setBrush(QColor(METRO_STOP))
+        marker.setPen(_screen_pen(QColor(METRO_LINE), 3))
+        marker.setToolTip(tooltip)
+        marker.setZValue(METRO_Z + 0.1)
+        self.addItem(marker)
+        if name:
+            self._add_label(name, x, y - METRO_STOP_RADIUS_M, 0, -1, pixels=11)
 
     def nudge_bus_stop(self, dx: float, dy: float, metres: float) -> bool:
         """Move the selected bus stop `metres` along its road the way its road runs nearest the
@@ -1130,6 +1168,7 @@ class VehicleLayer(QGraphicsItem):
 class NetworkView(QGraphicsView):
     pointed = Signal(float, float)  # the mouse moved over the map, to this scene point (metres)
     projection_changed = Signal(bool)
+    right_clicked = Signal()  # a right press and release that didn't pan (finishes a metro deployment)
 
     def __init__(self, scene: NetworkGraphicsScene) -> None:
         super().__init__(scene)
@@ -1137,6 +1176,7 @@ class NetworkView(QGraphicsView):
         self.setViewportUpdateMode(QGraphicsView.ViewportUpdateMode.SmartViewportUpdate)
         self._panning = False
         self._pan_start = QPoint()
+        self._pan_moved = 0  # pixels a right or middle drag has panned: under RIGHT_CLICK_PX, a right click
         self._tool_cursor = Qt.CursorShape.ArrowCursor
         self.isometric = False
         # The OpenGL renderer the map would draw with; on a real GPU it gets an OpenGL viewport with 4x
@@ -1262,6 +1302,7 @@ class NetworkView(QGraphicsView):
         if event.button() in (Qt.MouseButton.MiddleButton, Qt.MouseButton.RightButton):
             self._panning = True
             self._pan_start = event.position().toPoint()
+            self._pan_moved = 0
             self.viewport().setCursor(Qt.CursorShape.ClosedHandCursor)
             event.accept()
             return
@@ -1273,6 +1314,7 @@ class NetworkView(QGraphicsView):
         if self._panning:
             delta = event.position().toPoint() - self._pan_start
             self._pan_start = event.position().toPoint()
+            self._pan_moved += delta.manhattanLength()
             self.horizontalScrollBar().setValue(self.horizontalScrollBar().value() - delta.x())
             self.verticalScrollBar().setValue(self.verticalScrollBar().value() - delta.y())
             event.accept()
@@ -1283,6 +1325,8 @@ class NetworkView(QGraphicsView):
         if self._panning and event.button() in (Qt.MouseButton.MiddleButton, Qt.MouseButton.RightButton):
             self._panning = False
             self.viewport().setCursor(self._tool_cursor)
+            if event.button() == Qt.MouseButton.RightButton and self._pan_moved < RIGHT_CLICK_PX:
+                self.right_clicked.emit()
             event.accept()
             return
         super().mouseReleaseEvent(event)

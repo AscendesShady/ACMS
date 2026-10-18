@@ -60,6 +60,16 @@ vehicle on them are looked at; a merge is the same lane's check once both are on
     straight-on traffic keeps its lane counted from the first whole lane. Other turns exist but are only taken after
     standing 8 s at the line in the wrong lane while free to go (impatience; waiting at a red doesn't
     count), so nothing gridlocks.
+  - Ramps (`Graph._ramp_lanes`: lane-to-lane connections as SUMO's, laid out as the HCM 2000 Ch 24 draws ramps): where a ramp joins or leaves a
+    road along it on the kerb side at a junction without signals, the joining ramp lands on the kerbside lanes and the
+    road on the offside ones (a lane added between them is the auxiliary lane); leaving, the ramp is taken from the
+    kerbside lanes and the road on from the offside ones, at most one lane shared (Green Book §10.9.5.9's lane
+    balance). Weaving vehicles then change lanes by the strategic rules below (`reach`): on a Type A weave at 2,500
+    veh/h the link ran 75 km/h at 600 m, 60 at 300, 22 at 150 (HCM 84, 75, 65; the old mapping, where nothing had to
+    change lanes, ran 70-86 at any length and teleported 6-7 vehicles in 25 min). At such a junction nothing crosses the
+    road's other carriageway (no offside turns: a diamond's on-ramp had joined the opposite carriageway across the
+    freeway) nor turns back on a road of `RAMP_UTURN_MAX_KMH` (80 km/h) or more: a freeway has no median opening, while
+    an arterial's slip-road junction keeps the median U-turn a two-phase signal's detour needs.
   - Conflicts: where two turns' paths cross (`segment_hit`) or merge into one lane, with who gives
     way: a U-turn to everything else (on the same green); an offside turn to oncoming traffic on the
     same green; a minor arm of an uncontrolled junction to the major road (`_major_arms`: the two arms of the
@@ -132,7 +142,7 @@ vehicle on them are looked at; a merge is the same lane's check once both are on
     already in it), else free flow plus a control-delay prior; never two of them. The prior
     (`Graph.control_delay`, `free_move_time`) is each move's expected control delay with no traffic, at the
     greens entered on the junction: a signal r²/2C (HCM 2000 Eq 16-11 at X → 0, r = C − its phase's effective green g,
-    shown green + amber used − start-up lost: 11.1 s at the default 30 s greens); a move that gives way to another arm's traffic (a minor arm, an
+    shown green + amber used − start-up lost: 11.3 s at the default 30 s greens); a move that gives way to another arm's traffic (a minor arm, an
     offside turn across the major road, a U-turn, a merge; not a diverge from its own road) or a roundabout
     entry 3600/c + 5 s (HCM 2000 Eq 17-38 at no conflicting flow; c the measured capacity at none,
     `PRIORITY_CAPACITY_VPH` / `ROUNDABOUT_ENTRY_VPH`: 7.8 s, 7.5 s). A turn's own length isn't counted (a wide
@@ -149,8 +159,9 @@ vehicle on them are looked at; a merge is the same lane's check once both are on
     How it drives at each comes from its turn there: the signal, giving way to the ring, the kerbside lane
     and the slip's curve speed.
 - **Junctions** (algorithms/junction_behaviour.md): a vehicle within 150 m asks whether it may enter
-  its turn (`_may_enter`): not on red, nor amber if it can stop comfortably after reacting (its τ less the time
-  the amber has shown, so a driver already braking for it isn't pushed through) — unless it has waited at
+  its turn (`_may_enter`): not on red, nor amber if it can stop in time braking at max(min(3.0, emergency
+  decel), decel), SUMO's rule with no reaction distance (`AMBER_STOP_DECEL`, tls.yellow.min-decel; MSVehicle.cpp:2792):
+  drivers then use 2.4 s of the amber, nearer the HCM's e = 2.0 s than the 2.8 s a reaction distance left — unless it has waited at
   the line for a gap it gives way to: then it goes on amber as the oncoming traffic stops; no
   vehicle on a crossing or merging turn short of the conflict point, counting the tail of one just
   driven out (never overridden); its give-way gaps: nobody it gives way to reaching the conflict

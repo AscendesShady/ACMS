@@ -30,6 +30,10 @@ Each finding names the object, what the rule asks and what is there; every rule 
   between two junctions on an arterial (2 or more lanes each way, or 60 km/h or more) shorter than 250 m.
 - **Lane balance** (§10.9.5.9): at a junction without signals, a merge of two links into one needs at least their
   lanes less one beyond it; a diverge into two, at least their lanes less one before it.
+- **Weaving** (HCM 2000 Ch 24, weaving.md): each merge followed within 750 m by a diverge, its type and what it can
+  take (weaving flow, volume ratio); an on-ramp and off-ramp that close with no auxiliary lane (the merge and
+  diverge interact; one between them makes a Type A weave); a layout Exhibit 24-5 calls infeasible. `weaving_los`
+  grades them with the demand.
 - Not checked, and said: acceleration and deceleration lane lengths (Tables 10-4, 10-6 are images in the copy),
   grades (the network has none), access within 50 m of a junction (checklist items 11 and 37; here a building's
   door is a junction).

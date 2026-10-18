@@ -21,7 +21,7 @@
   values are refused before save/load changes anything. Camera and building-visibility choices stay session-only.
 - `save_network(network, path, conversation=None)`: synchronises lengths, validates, writes JSON with
   `network` (configuration), `nodes`, `roads`, `approach_nodes`, `approach_roads`, `bus_stops`
-  (older files without it load with none), `institutions` (older files: none), `interchanges` (older files: none, so their interchanges
+  (older files without it load with none), `institutions` (older files: none), `metro_stops`, `metro_lines` and `metro_demand` (older files: none), `interchanges` (older files: none, so their interchanges
   aren't mirrored on a change of side) and `background` (older files: the default grass green;
   an image is saved as its file's path)
   (older files' static mock-up `vehicles` are ignored on load),

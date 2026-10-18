@@ -52,7 +52,7 @@
 - **What these drivers do at a signal** (SUMO's default passenger car with the 0.9 s startup delay, a
   standing queue, the HCM's field method; 4 seeds, an hour each): saturation headway 1.744 s,
   2,064 veh/h per lane (within field values of about 1,800–2,100); start-up lost time 1.82 s (the
-  HCM's default is 2.0 s); 2.17 s of the 3 s amber used. The timing methods are calibrated to these
+  HCM's default is 2.0 s); 2.37 s of the 3.3 s amber used (SUMO's amber rule; the HCM's e is 2.0 s). The timing methods are calibrated to these
   (signal_timing.py).
 - `secure_gap` (SUMO's getSecureGap) is the gap lane changing needs: the follower's stopping
   distance with reaction, less the leader's, plus the standstill gap.

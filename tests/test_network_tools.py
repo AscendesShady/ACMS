@@ -56,7 +56,8 @@ def test_the_assistant_can_do_only_what_its_tools_say():
                               "calibrate_demand", "choose_modes"}
     assert tools.RUN_TOOLS == {"run_simulation", "run_experiment", "read_results", "compare_runs", "set_extension",
                                "read_extensions", "schedule_emergency", "start_batch", "replay_run",
-                               "junction_los", "diagnose_signal", "check_run_health", "preflight_check", "resilience",
+                               "junction_los", "weaving_los", "metro_report", "diagnose_signal", "check_run_health", "preflight_check",
+                               "resilience",
                                "emissions_report", "power_analysis", "rank_scenarios", "test_agent_compliance",
                                "read_decisions", "decision_sensitivity", "parameter_sensitivity", "design_audit",
                                "accessibility_report",

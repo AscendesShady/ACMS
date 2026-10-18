@@ -26,6 +26,7 @@ from dataclasses import dataclass, field
 from math import hypot, sqrt
 
 from .geometry import polyline_meets_box
+from .metro import METRO
 from .models import (INSTITUTION_KINDS, MAX_AREA_M2, MAX_INFLUENCE_M, Institution, Network,
                      institution_problem)
 from .roundabouts import design_roundabout
@@ -163,13 +164,13 @@ def shares(item: Institution) -> dict[str, float]:
 def vehicle_split(item: Institution, modes: list, commute: bool = False) -> tuple[float, list[float], list[str]]:
     """Vehicles per person (the sum of share / occupancy over the untimetabled types; a commute's occupancy at most
     COMMUTE_OCCUPANCY), each type's share of those vehicles (in `modes`' order, as a pair's split), and the modes it
-    can't put on the road: names no type has. Walkers and timetabled riders (they ride the buses) add no vehicle."""
+    can't put on the road: names no type has. Walkers, metro riders and timetabled riders (they ride the buses) add no vehicle."""
     by_name = {mode.name.lower(): (index, mode) for index, mode in enumerate(modes)}
     vehicles, unknown = [0.0] * len(modes), []
     for name, percent in shares(item).items():
         found = by_name.get(name.lower())
         if found is None:
-            if name != WALK and percent:
+            if name not in (WALK, METRO) and percent:  # walkers and metro riders add no vehicles
                 unknown.append(name)
             continue
         index, mode = found

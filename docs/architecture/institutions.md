@@ -26,7 +26,8 @@ Each building is a zone of the four-step model: generation, distribution, mode s
 - **Mode split.** `shares(item)`: people % by mode, its `mode_shares` (set by `network_tools.institution_split`,
   a logit: network_tools.md) or else `car_share` by Car and the rest on foot (`WALK`). `vehicle_split(item,
   modes, commute)`: vehicles a person (share ÷ occupancy over the untimetabled types, a commute's at most
-  `COMMUTE_OCCUPANCY` 1.1, NHTS 2017; walkers and timetabled riders add none: riders take the network's buses),
+  `COMMUTE_OCCUPANCY` 1.1, NHTS 2017; walkers, metro riders and timetabled riders add none: riders take the network's
+  buses),
   each type's share of them, and mode names no type has. A school's pupils are `escorted`: each car that brings or
   fetches one drives on again, so its pupils' vehicles go both ways at the start and at the end.
 - **To a Run.** `run_demand(network, modes, daily)`: each building's trips as `simulation.PairDemand`s:

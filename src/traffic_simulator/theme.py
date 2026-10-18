@@ -52,6 +52,8 @@ STATUS = {"running": "#93c5fd", "passed": "#86efac", "failed": "#fca5a5", "waiti
 VEHICLE_PAINTS = ("#3987e5", "#d95926", "#199e70", "#c98500", "#d55181", "#008300", "#9085e9", "#e66767",
                   "#e2e8f0", "#64748b", "#c4aa7d", "#263241")
 VEHICLE_INKS = ("#21394c", "#17222c", "#fff0bf", "#ee4148", "#438bff", "#e8edf0")
+# Metro rail on the map (non-text detail): a line's track and its stops' platform marker, ringed in the track colour.
+METRO_LINE, METRO_STOP = "#d946ef", "#f8fafc"
 BUILDING_PAINTS = {"Residential": ("#c3aa8b", "#886354"), "School": ("#d7c8a2", "#657d7b"),
                    "Hospital": ("#c6d4d9", "#69858e"), "Office": ("#a2b0bc", "#495c6f"),
                    "Shop": ("#c8b294", "#597e68")}

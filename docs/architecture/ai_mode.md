@@ -182,7 +182,8 @@
       reports the factor, totals before and after and the junctions' saturation; a degree of saturation is
       checked in a run as above.
     - `choose_modes`: each pair's split by multinomial logit (`network_tools.mode_plan`, the Demand
-      Generator's `ODCellPanel.chooser`): for each of the `alternatives` (vehicle types), U = constant +
+      Generator's `ODCellPanel.chooser`): for each of the `alternatives` (vehicle types; road pairs never take the
+      metro, which has its own OD matrix: metro.md), U = constant +
       in_vehicle_per_min × in-vehicle minutes + out_of_vehicle_per_min × (out_of_vehicle_min + half its
       headway) + cost × (cost + cost_per_km × route km), `coefficients` by default HCM 2000's (−0.025, −0.050
       a minute, −0.005 a cent). In-vehicle minutes are `from_run`'s mean measured trip time of that pair and
@@ -222,7 +223,9 @@
       catchment `radius_m` (default 10 m past its 4th nearest junction or end); returns its door and catchment.
     - `institution_mode_split` (the window, `MainWindow._institution_split`; checked first, its preview the shares):
       each of `institutions` (all by default) split by `network_tools.institution_split`: a multinomial logit
-      between Walk and the vehicle types on the trips from each catchment place to the door (route km; vehicle
+      between Walk and the vehicle types on the trips from each catchment place to the door, and, with metro lines,
+      Metro or Walk from each station of its door station's line inside its circle (those stations are places too,
+      as the junctions are: metro.md) (route km; vehicle
       types as choose_modes, Walk all out-of-vehicle at `walk_kmh`, default 5), averaged over the catchment;
       `alternatives` default to Walk and every type with stated assumed attributes (`default_alternative`);
       `observed_percent` calibrates the constants (Train 2009 §2.8). Sets `mode_shares` (and `car_share` to Car's)
@@ -332,7 +335,11 @@
       ANOVA) and `objective` (the figure they're judged on, delay by default). A run's answer carries `health`
       ("fine" or its problems, analysis.run_health).
     - Reads on runs and experiments (analysis.md): `junction_los` (control delay and LOS per approach and
-      junction, by 15-minute period), `diagnose_signal` (one signal's flow ratios, v/c, arrival type, HCM delay
+      junction, by 15-minute period), `metro_report` (metro.md: each line's riders, busiest segment against HCM
+      2000 Eq 27-28's capacity, stop boardings, at the design hour, from the metro OD matrix and the buildings' metro
+      riders; words like metro, rail, station, transit offer it), `weaving_los` (weaving.md: each weaving segment's HCM 2000 Ch 24 speeds,
+      density, LOS and capacity from the demand, a run's own speed and density beside them; words like weave,
+      ramp, freeway, merge offer it), `diagnose_signal` (one signal's flow ratios, v/c, arrival type, HCM delay
       against simulated, causes worst first with the tool to fix each), `check_run_health`, `emissions_report`,
       `resilience` (a disrupted run against the same seed's undisrupted one), `power_analysis` (`_power_analysis`:
       seeds for 80 and 90 % power, the smallest detectable difference, a power curve, from an experiment or sd and
@@ -344,7 +351,7 @@
       measured after the warm-up; a `caution` when the scenario completes over 5 % more or fewer trips); `analyse_safety` takes `speed_change_kmh` (the power
       model's change in crashes).
     - Checks on the network (network_checks.md): `design_audit` (Green Book sight, turning paths, skew, lane
-      balance; Safer Roads junction spacing), `accessibility_report` (what residents reach, a road's closure's
+      balance; Safer Roads junction spacing; HCM weaving segments), `accessibility_report` (what residents reach, a road's closure's
       loss), and `critical_links`'s single points of failure and `area` closure.
     - Edits that run tests: `preflight_check` (`_preflight`: a run at a tenth of the demand for slow links and
       one at half for gridlock), `test_agent_compliance` (`_compliance`: an agent's extension on a fixed battery,
@@ -429,7 +436,9 @@
     Research Log), then calls them in the same reply; recipes for what users ask most (a city of W x H m, demand
     from buildings, a traffic level word, a real place, simulate, what-if on a copy, a slow junction, a question
     about an idea, "more people" (there is no population figure: update_institution or scale_demand, saying which),
-    things the app doesn't have (a metro, a stadium: say so, put nothing else in their place, call no invented tool;
+    the metro as the user's own network (they draw lines and fill its OD matrix; the assistant reads metro_report
+    and buildings' metro shares), things the app doesn't have (a stadium, a harbour: say so, put nothing else in their
+    place, call no invented tool;
     a number past a tool's limit: say the limit first)); the honesty rules (an error means nothing happened; quote the results' own numbers).
   - **The loop** (`assistant.converse`): a call that failed is not run again unchanged (the model is told so,
     `error_type` "repeated"); a local model that sends nothing (all of it in its thinking: `NoAnswer`) or a tool

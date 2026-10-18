@@ -16,6 +16,9 @@
   arterial (2 or more lanes each way, or 60 km/h or more) at least 250 m apart.
 - Lane balance (§10.9.5.9): past a merge of two roads at least their lanes less one; before a diverge into two, at
   least their lanes less one.
+- Weaving (HCM 2000 Chapter 24, weaving.py): each merge followed within 750 m by a diverge, its type (Exhibit 24-5)
+  and what that type can take (p24-9); one with no auxiliary lane between is two ramp junctions that close; a layout
+  Exhibit 24-5 calls infeasible (one movement needing 1 lane change and the other 2 or more) is flagged as such.
 Not checked: acceleration and deceleration lane lengths (Tables 10-4 and 10-6 aren't readable in the copy used),
 grades (the network has none), access near junctions (a building's door is a junction here).
 """
@@ -24,6 +27,7 @@ from __future__ import annotations
 
 from math import atan2, cos, degrees, hypot, pi, radians, sin, sqrt
 
+from . import weaving
 from .geometry import polyline_meets_box
 from .models import LANE_WIDTH_M, Network
 
@@ -100,7 +104,7 @@ def audit(network: Network, modes: list) -> dict:
 
     boxes = _boxes(network)
     findings: dict = {"sight_on_curves": [], "intersection_sight": [], "turning_paths": [], "skew": [],
-                      "junction_spacing": [], "lane_balance": []}
+                      "junction_spacing": [], "lane_balance": [], "weaving": []}
     for road in network.all_roads():  # sight on curves
         bends = [abs(k) for k in road.curvature if k]
         if not bends:
@@ -192,9 +196,17 @@ def audit(network: Network, modes: list) -> dict:
             if len(arriving[0].lanes) < needed:
                 findings["lane_balance"].append({"junction": node_id, "kind": "diverge", "lanes_in": len(arriving[0].lanes),
                                                  "lanes_out": [len(l.lanes) for l in leaving], "needs_at_least": needed})
+    for segment in weaving.segments(graph):  # a merge closely followed by a diverge (HCM 2000 Ch 24)
+        kind = segment["type"]
+        note = (f"Type {kind} weave: weaving flow at most {weaving.WEAVING_FLOW_MAX[kind]:.0f} pc/h; weaving_los "
+                "grades it with the demand" if kind in weaving.CONSTANTS else
+                "on-ramp and off-ramp under 750 m apart with no auxiliary lane: the merge and diverge interact; "
+                "an auxiliary lane between them makes it a Type A weave" if kind == "ramp junctions" else
+                "not a feasible weave (Exhibit 24-5): one movement needs 1 lane change and the other 2 or more")
+        findings["weaving"].append({**segment, **weaving.limits(segment), "note": note})
     counts = {name: len(rows) for name, rows in findings.items()}
     return {"findings": {name: rows[:20] for name, rows in findings.items()}, "counts": counts,
             "design_vehicle": heaviest[0], "buildings_checked": len(boxes),
             "not_checked": "speed-change lane lengths, grades, access within 50 m of junctions (doors are junctions here)",
             "rules": "AASHTO Green Book 2018 (Eqs 3-2, 3-37, 9-1; Tables 2-5b, 9-6; §9.5.2, §10.9.5.9); Towards Safer "
-                     "Roads in Developing Countries (TRL 1991) Ch 7 checklist B12."}
+                     "Roads in Developing Countries (TRL 1991) Ch 7 checklist B12; HCM 2000 Ch 24 (weaving)."}

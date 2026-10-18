@@ -31,6 +31,7 @@ from . import background_network
 from .daily_profile import ARRIVAL_PATTERNS
 from .geometry import distance_to_segment
 from .institutions import KINDS, WALK, catchment, door, footprint_problem, hourly_people, links, place, shares
+from .metro import METRO, METRO_WALK_M, WALK_KMH, door as metro_door, places as metro_places, ride as metro_ride
 from .interchanges import (build_diamond, build_slip_road, build_trumpet, curve_speed_kmh, fit_slip_roads, guess_stem,
                            pair_legs)
 from . import map_tiles
@@ -420,7 +421,8 @@ TOOLS = [
      "description": "Check the network's design against the AASHTO Green Book and a road safety checklist: sight "
                     "distance on curves and at junctions without signals (against the placed buildings), turns too "
                     "tight for the largest vehicle type, junction legs meeting under 75 degrees, arterial junctions "
-                    "under 250 m apart, lane balance at merges and diverges; each finding with the rule.",
+                    "under 250 m apart, lane balance at merges and diverges, weaving segments under 750 m (HCM 2000 "
+                    "Ch 24: type and limits; ramps closing with no auxiliary lane); each finding with the rule.",
      "parameters": _object()},
     {"name": "accessibility_report", "edits": False,
      "description": "What people can reach (Levine; Hansen): from each junction, jobs, school places, hospitals and "
@@ -445,6 +447,22 @@ TOOLS = [
                     "by the HCM 2000 (signals Exhibit 16-2; give-way, stop and roundabout entries 17-2), signal "
                     "approaches' v/c, 95th-percentile queues against their road, and LOS per 15-minute period.",
      "parameters": _object({"id": {"type": "string"}})},
+    {"name": "weaving_los", "edits": False,
+     "description": "Freeway weaving segments (a merge followed within 750 m by a diverge) by the HCM 2000 Ch 24: each "
+                    "one's type, length and lanes, its four movements' pc/h from the demand on the routes a Run takes, "
+                    "weaving and nonweaving speeds, density, LOS A-F and capacity with what bounds it; with a run (id), "
+                    "the simulated speed and density on it too. Ramps with no auxiliary lane are listed as ramp "
+                    "junctions.",
+     "parameters": _object({"id": {"type": "string"}})},
+    {"name": "metro_report", "edits": False,
+     "description": "The metro lines' loads at the design hour (the hour most ride): the metro's own OD matrix (station "
+                    "to station, M1->M2) and the buildings' metro riders between their stations, on their line (no "
+                    "transfers); each line's riders, "
+                    "passenger-km, busiest stop-to-stop segment and its load each way against capacity (HCM 2000 Eq "
+                    "27-28: 60 / headway trains x carriages x passengers a carriage x PHF 0.75), over capacity "
+                    "flagged; boardings and "
+                    "alightings a stop; riders no line serves.",
+     "parameters": _object()},
     {"name": "diagnose_signal", "edits": False,
      "description": "Why a signal performs as it does in a run (id; the latest if left out), each signalised junction "
                     "or the one given: flow ratios, critical v/c and Webster's cycle for the demand, per approach v/c, "
@@ -626,7 +644,8 @@ TOOLS = [
                     "cent: give costs in cents). In-vehicle minutes come from from_run's measured trips of that pair "
                     "and type (a run id, e.g. R1) where it has them, else free flow along the shortest route. The "
                     "logit shares are people; each type's vehicles are its people over its occupancy, and timetabled "
-                    "types keep their timetable. Pairs keep their veh/h. nests make it a nested logit. Also returns "
+                    "types keep their timetable. A pair's people stay; its vehicles change with the split. Road pairs "
+                    "never take the metro (it has its own OD matrix). nests make it a nested logit. Also returns "
                     "the value of time, each mode's mean direct elasticities and each pair's logsum (a change's "
                     "benefit is the change in logsum over -cost, cents a trip). Works the Demand Generator's controls.",
      "parameters": _object({**_PAIRS,
@@ -788,7 +807,11 @@ TOOLS = [
                     "headway; walking: its minutes at walk_kmh) + cost x (cost + cost_per_km x km), averaged over the "
                     "catchment. observed_percent (e.g. {\"Car\": 30}) calibrates the constants until the model gives "
                     "those shares (the others keep their relative odds). Defaults are stated in the result. Sets "
-                    "mode_shares; a Run's vehicles are people x share / occupancy (walkers none, bus riders on the buses).",
+                    "mode_shares; a Run's vehicles are people x share / occupancy (walkers none, bus riders on the buses). "
+                    "With metro lines, the metro stations of its door station's line (the nearest within 800 m) inside "
+                    "its circle are places its people come from too, as the junctions are: there they choose \"Metro\" "
+                    "(the ride, half the headway, the walk on; cost the line's fare plus any given) or Walk; riders add "
+                    "no vehicles.",
      "parameters": _object({"institutions": _IDS,
                             "alternatives": {"type": "array", "description": "The modes to choose between: Walk and "
                                              "vehicle types, e.g. [{\"mode\": \"Walk\"}, {\"mode\": \"Car\", "
@@ -850,7 +873,8 @@ OD_TOOLS = {"read_od_matrix", "set_od_demand", "shape_daily_curve", "generate_de
             "equilibrate_demand",
             "choose_modes"}  # the Demand Generator runs them
 RUN_TOOLS = {"run_simulation", "run_experiment", "read_results", "compare_runs", "set_extension", "read_extensions",
-             "junction_los", "diagnose_signal", "check_run_health", "preflight_check", "resilience", "emissions_report",
+             "junction_los", "weaving_los", "metro_report", "diagnose_signal", "check_run_health", "preflight_check", "resilience",
+             "emissions_report",
              "power_analysis", "rank_scenarios", "test_agent_compliance", "read_decisions", "decision_sensitivity",
              "parameter_sensitivity",
              "design_audit", "accessibility_report", "benefit_cost",
@@ -885,6 +909,10 @@ TOOL_GROUPS = {  # name: (words that point to it, as regex stems; its tools)
                "add_boundary_end", "set_junction_control", "build_interchange", "add_slip_road")),
     "place": (r"\bmap\b|openstreetmap|\bosm\b|background|image|picture|real\b|district|neighbo|suburb",
               ("place_map", "network_from_background")),
+    "metro": (r"metro|rail|subway|underground|\btube\b|train|station|transit|ridership|crowd",
+              ("metro_report", "choose_modes", "institution_mode_split")),
+    "freeway": (r"weav|freeway|motorway|highway|ramp|merge|diverg|auxiliary|interchange",
+                ("weaving_los", "design_audit", "build_interchange", "add_slip_road")),
     "demand": (r"dema?nd|traffic|trip|\bod\b|matrix|flow|bus(?:y|ier|iest)|heav|light\b|quiet|peak|rush|satur|veh|"
                r"hourly|volume|gravity|car\b|cars\b|more\b|less\b|fewer|increas|decreas|double|halve|half|grow|populat",
                ("read_od_matrix", "generate_demand", "set_od_demand", "scale_demand", "set_end_flows")),
@@ -2418,7 +2446,12 @@ def calibration_plan(network: Network, flows: dict, args: dict) -> tuple[dict, d
 
 # HCM 2000's default mode-choice utility (p1057-1058): U = -0.025 IVT - 0.050 OVT - 0.005 cost (minutes, cents)
 LOGIT_DEFAULTS = {"in_vehicle_per_min": -0.025, "out_of_vehicle_per_min": -0.050, "cost": -0.005}
-WALK_KMH = 5.0  # assumed walking speed for an institution's mode split (walk_kmh changes it)
+
+
+def metro_cost(alternative: dict, ride: dict) -> float:
+    """A metro ride's cost: its line's fare, plus an alternative's own cost and cost_per_km (on the km ridden). WALK_KMH
+    (metro.py) is also an institution's walk_kmh by default."""
+    return ride["cost"] + float(alternative.get("cost") or 0) + float(alternative.get("cost_per_km") or 0) * ride["km"]
 
 
 def default_alternative(mode) -> dict:
@@ -2438,17 +2471,20 @@ def institution_split(network: Network, item, modes: list, args: dict) -> tuple[
     observed_percent calibrates the observed modes' constants, c += ln(observed / predicted) until they match
     (Train 2009, section 2.8); the other modes share the rest in the model's proportions."""
     names = {mode.name.lower(): mode for mode in modes}
+    by_metro = bool(network.metro_lines) and METRO.lower() not in names  # the network's metro as a mode
+    offered = ", ".join(["Walk", *(m.name for m in modes), *([METRO] if by_metro else [])])
     given = _parsed_json(args["alternatives"]) if isinstance(args.get("alternatives"), str) else args.get("alternatives")
     assumed = not given
     if assumed:
-        given = [{"mode": WALK}, *(default_alternative(mode) for mode in modes)]
+        given = [{"mode": WALK}, *(default_alternative(mode) for mode in modes), *([{"mode": METRO}] if by_metro else [])]
     if not isinstance(given, list) or len(given) < 2 or not all(isinstance(a, dict) for a in given):
         raise ValueError(f"Give 2 or more alternatives like [{{\"mode\": \"Walk\"}}, {{\"mode\": \"Car\", "
-                         f"\"cost_per_km\": 15}}]; modes: Walk, {', '.join(m.name for m in modes)}.")
+                         f"\"cost_per_km\": 15}}]; modes: {offered}.")
     chosen = [WALK if str(a.get("mode", "")).strip().lower() == "walk" else
+              METRO if by_metro and str(a.get("mode", "")).strip().lower() == METRO.lower() else
               getattr(names.get(str(a.get("mode", "")).strip().lower()), "name", None) for a in given]
     if None in chosen or len(set(chosen)) != len(chosen):
-        raise ValueError(f"Each alternative is a different mode: Walk, {', '.join(m.name for m in modes)}.")
+        raise ValueError(f"Each alternative is a different mode: {offered}.")
     coefficients = {**LOGIT_DEFAULTS, **(args.get("coefficients") or {})}
     if set(coefficients) != set(LOGIT_DEFAULTS) or any(not isinstance(v, (int, float)) or v > 0 for v in coefficients.values()):
         raise ValueError(f"coefficients are {', '.join(LOGIT_DEFAULTS)}, each 0 or below (more time or cost is worse).")
@@ -2484,7 +2520,7 @@ def institution_split(network: Network, item, modes: list, args: dict) -> tuple[
              for origin in origins if (origin, entrance) in routes]
     if not trips:
         raise ValueError(f"No route from {item.id}'s catchment to its door {entrance}.")
-    attributes = []  # per origin: {mode: (IVT, OVT, cost)}
+    attributes = []  # per place (a junction or end of its circle, or a station): {mode: (IVT, OVT, cost)}
     for origin, roads in trips:
         km = sum(road.length_m for road in roads) / 1000
         found = {}
@@ -2494,11 +2530,29 @@ def institution_split(network: Network, item, modes: list, args: dict) -> tuple[
             if mode == WALK:
                 found[mode] = (0.0, ovt + km / walk_kmh * 60, cost)
                 continue
+            if mode == METRO:  # the roads' places don't ride the metro: its own stations are places (below)
+                continue
             vehicle = names[mode.lower()]
             top = min(vehicle.max_speed_kmh, vehicle.desired_max_kmh)
             ivt = sum(road.length_m / (min(top, road.speed_limit_kmh) / 3.6) for road in roads) / 60
             found[mode] = (ivt, ovt + vehicle.headway_min / 2, cost)
         attributes.append((origin, km, found))
+    # The stations in its circle are places its people come from too, as the junctions are (each an equal share):
+    # there, the metro to its door station and the walk on, or walking all the way
+    station_door, stations = metro_places(network, item) if METRO in alternatives else (None, [])
+    walk_on = metro_door(network, item.x, item.y)[1] / 1000 / walk_kmh * 60 if station_door else 0.0
+    rides = {}
+    for station in stations:
+        trip = rides[station] = metro_ride(network, station, station_door)
+        stop = network.metro_stops[station]
+        km = hypot(stop.x - item.x, stop.y - item.y) / 1000
+        metro_alternative = alternatives[METRO]
+        found = {METRO: (trip["ivt_min"], float(metro_alternative.get("out_of_vehicle_min") or 0) + trip["wait_min"]
+                         + walk_on, metro_cost(metro_alternative, trip))}
+        if WALK in alternatives:
+            found[WALK] = (0.0, float(alternatives[WALK].get("out_of_vehicle_min") or 0) + km / walk_kmh * 60,
+                           float(alternatives[WALK].get("cost") or 0))
+        attributes.append((station, km, found))
     constants = {mode: float(alternative.get("constant") or 0) for mode, alternative in alternatives.items()}
 
     def predict() -> tuple[dict, list]:
@@ -2506,7 +2560,7 @@ def institution_split(network: Network, item, modes: list, args: dict) -> tuple[
                                           + coefficients["out_of_vehicle_per_min"] * ovt + coefficients["cost"] * cost
                                           for mode, (ivt, ovt, cost) in found.items()}))
                 for origin, km, found in attributes]
-        return {mode: sum(row[2][mode] for row in rows) / len(rows) for mode in alternatives}, rows
+        return {mode: sum(row[2].get(mode, 0.0) for row in rows) / len(rows) for mode in alternatives}, rows
 
     predicted, rows = predict()
     steps = 0
@@ -2545,9 +2599,17 @@ def institution_split(network: Network, item, modes: list, args: dict) -> tuple[
         info["assumed"] = ("Walk, and every vehicle type: timetabled ones a 5 min walk to the stop and a 100 cent fare, "
                            "the others 3 min to park and 15 cents a km; give alternatives to change them, and "
                            "observed_percent to calibrate to known shares")
-    timed = [mode for mode in alternatives if mode != WALK and names[mode.lower()].headway_min]
+    timed = [mode for mode in alternatives if mode not in (WALK, METRO) and names[mode.lower()].headway_min]
     if timed:
         info["note"] = f"{', '.join(timed)} riders ride the network's timetabled buses: they add no vehicles of their own."
+    if METRO in alternatives:
+        info["metro"] = {"door": station_door, "stations": stations, "places": len(attributes),
+                         "rides": [{"from": station, **{k: round(v, 2) if isinstance(v, float) else v
+                                                        for k, v in trip.items()}} for station, trip in rides.items()],
+                         "note": (f"The stations of its door station's line inside its circle are places its people "
+                                  f"come from, as the junctions are; its door station is the nearest within "
+                                  f"{METRO_WALK_M:g} m. Riders add no vehicles." if station_door else
+                                  f"No station within {METRO_WALK_M:g} m of it: nobody comes by metro.")}
     return percent, info
 
 

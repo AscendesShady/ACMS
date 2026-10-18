@@ -248,8 +248,9 @@ def test_a_sensitivity_sweep_gives_each_parameters_elasticity():
     network, modes = generate_network(2, 2), VehicleModes().modes
     demand = [PairDemand("1W", "1E", 900.0, None, [], "Random", (0, 100, 0)),
               PairDemand("1N", "1S", 600.0, None, [], "Random", (0, 100, 0))]
-    found = experiments.parameter_sensitivity(network, demand, modes, [3], 600, ("tau_s", "ring_timegap_s"))
-    assert found["runs"] == 5 and set(found["parameters"]) == {"tau_s", "ring_timegap_s"}
+    # three seeds: τ's effect is small on one (its share in the amber rule went with SUMO's rule, 2026-10-18)
+    found = experiments.parameter_sensitivity(network, demand, modes, [1, 2, 3], 600, ("tau_s", "ring_timegap_s"))
+    assert found["runs"] == 15 and set(found["parameters"]) == {"tau_s", "ring_timegap_s"}
     ring = found["parameters"]["ring_timegap_s"]  # no roundabout here: the same seed runs the same, elasticity 0
     assert all(ring[key]["elasticity"] == 0 for key in experiments.SENSITIVITY_MEASURES)
     assert found["parameters"]["tau_s"]["mean_speed_kmh"]["elasticity"] < 0  # longer headways: slower
@@ -850,7 +851,7 @@ def test_the_assistant_audits_designs_access_and_value():
     run = window.ai_mode._execute
     audit = run("design_audit", {})
     assert set(audit["counts"]) == {"sight_on_curves", "intersection_sight", "turning_paths", "skew", "junction_spacing",
-                                    "lane_balance"} and "Green Book" in audit["rules"]
+                                    "lane_balance", "weaving"} and "Green Book" in audit["rules"]
     assert "No buildings" in run("accessibility_report", {})["error"]
     tools.deploy_institutions(window.network, 8, seed=2)
     access = run("accessibility_report", {"budgets_min": [10]})

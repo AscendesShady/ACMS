@@ -97,6 +97,8 @@ Python ≥ 3.10 and PySide6 only. Each module's doc is `docs/architecture/<modul
 | analysis.py | Junction LOS, signal diagnosis, health, resilience, fuel | no |
 | emissions.py | Fuel and CO2, Biggs–Akçelik (→ analysis.md) | no |
 | design_checks.py | Design audit, Green Book (→ network_checks.md) | no |
+| weaving.py | Freeway weaving, HCM 2000 Ch 24 (→ weaving.md) | no |
+| metro.py | The metro's own network: rides, buildings' stations, line loads (→ metro.md) | no |
 | accessibility.py | Cumulative / Hansen accessibility (→ network_checks.md) | no |
 | summary.py | View Summary tab | Qt |
 | clock.py | Run / Pause / Play / Stop clock | Qt |

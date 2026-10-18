@@ -66,6 +66,21 @@ def test_diamond_replaces_the_junction_and_exits_on_the_keep_side():
             assert set(FREEWAY) | set(CROSSROAD) <= reachable(network, leg)
 
 
+def test_a_diamonds_ramps_join_and_leave_only_their_own_carriageway():
+    from traffic_simulator.simulation import Graph
+
+    for side in ("left", "right"):
+        network = generate_network(3, 4, driving_side=side)
+        name = build_diamond(network, FREEWAY, CROSSROAD)
+        graph = Graph(network)
+        for node in (node for node in network.nodes.values() if node.id.startswith(name + ".")):
+            if node.control == "uncontrolled":  # on the freeway: nothing crosses the other carriageway or turns back
+                kinds = {turn.kind for link in graph.arriving[node.id] for turn in link.turns.values()}
+                assert kinds <= {"straight", "kerb"}, (side, node.id, kinds)
+        ends = sorted(network.approach_nodes)
+        assert all(graph.route(o, d) is not None for o in ends for d in ends if o != d)  # every trip still has a way
+
+
 def test_spui_meets_at_one_signal():
     network = generate_network(3, 4)
     name = build_diamond(network, FREEWAY, CROSSROAD, single_point=True)

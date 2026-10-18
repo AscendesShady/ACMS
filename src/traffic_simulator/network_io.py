@@ -17,10 +17,10 @@ from pathlib import Path
 from typing import Any
 
 import re
-from math import isfinite
+from math import ceil, isfinite
 
 from .daily_profile import ARRIVAL_PATTERNS, DEGREES, HOURS, quarter_shares
-from .models import Background, BusStop, Institution, Network, Node, Road
+from .models import METRO_SERVICE, Background, BusStop, Institution, MetroLine, MetroStop, Network, Node, Road
 from .vehicle import VEHICLE_CLASSES
 
 PROJECT_FORMAT = {"app": "ACMS project", "version": 2}
@@ -35,7 +35,8 @@ def save_network(network: Network, path: str | Path, conversation: dict | None =
     network.synchronize_road_lengths()
     network.validate()
     document = {"network": network.configuration(), **network.as_records(), "background": asdict(network.background),
-                "interchanges": network.interchanges, "route_choice": network.route_choice}
+                "interchanges": network.interchanges, "route_choice": network.route_choice,
+                "metro_demand": network.metro_demand}
     if project is not None:
         problem = project_problem(project)
         if problem:
@@ -227,6 +228,7 @@ def load_network(path: str | Path) -> Network:
         network.interchanges = {str(name): list(axis) if isinstance(axis, list) else axis
                                 for name, axis in interchanges.items()}
         network.route_choice = document.get("route_choice") or {}  # older files have none: fastest routes
+        network.metro_demand = dict(document.get("metro_demand") or {})  # older files have none
         if isinstance(document.get("background"), dict):  # older files have none: the default
             network.background = Background(**document["background"])
         for record in _require_list(document, "bus_stops"):  # older files have none
@@ -239,6 +241,21 @@ def load_network(path: str | Path) -> Network:
             if item.id in network.institutions:
                 raise ValueError(f"Duplicate institution ID: {item.id}")
             network.institutions[item.id] = item
+        for record in _require_list(document, "metro_stops"):  # older files have none
+            stop = MetroStop(**record)
+            if stop.id in network.metro_stops:
+                raise ValueError(f"Duplicate metro stop ID: {stop.id}")
+            network.metro_stops[stop.id] = stop
+        for record in _require_list(document, "metro_lines"):
+            if "train_capacity" in record:  # saved before carriages: the fewest carriages that hold it (400 each at most)
+                record = dict(record)
+                total = record.pop("train_capacity")
+                cars = max(1, ceil(total / METRO_SERVICE["car_capacity"][2])) if isinstance(total, (int, float)) else 1
+                record.update(cars_per_train=cars, car_capacity=round(total / cars) if isinstance(total, (int, float)) else total)
+            line = MetroLine(**record)
+            if line.id in network.metro_lines:
+                raise ValueError(f"Duplicate metro line ID: {line.id}")
+            network.metro_lines[line.id] = line
         # Older files also list static mock-up vehicles; vehicles now come from the simulation.
         if not network.approach_nodes and not network.approach_roads:
             # Files produced by the initial editor did not persist approaches;

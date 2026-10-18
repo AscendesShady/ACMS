@@ -710,9 +710,9 @@ def test_no_lane_changing_where_the_road_forbids_it():
 
 
 def test_webster_times_signals_from_the_demand():
-    # L = 2 x (1.8 start-up + 2 all-red + 0.2 amber unused) = 8 s: C0 = (1.5 x 8 + 5) / (1 - 0.5) = 34 s
+    # L = 2 x (1.8 start-up + 2 all-red + 0.6 amber unused) = 8.8 s: C0 = (1.5 x 8.8 + 5) / (1 - 0.5) = 36.4 s
     cycle, greens = webster([0.3, 0.2])
-    assert round(cycle, 6) == 34.0 and [round(green, 1) for green in greens] == [14.6, 9.4]  # (34 - 8) y/Y - 1
+    assert round(cycle, 6) == 36.4 and [round(green, 1) for green in greens] == [16.0, 10.4]  # (36.4 - 8.8) y/Y - 0.6
     cycle, greens = webster([0.0, 0.0])  # no demand: the shortest cycle, MIN_CYCLE_S, shared evenly
     assert round(cycle, 6) == 30.0 and [round(green, 6) for green in greens] == [10.0, 10.0]
     assert round(webster([0.6, 0.5])[0], 6) == 120.0  # over capacity: the longest cycle
@@ -1062,19 +1062,18 @@ def test_an_emergency_vehicle_obeys_red_unless_its_arm_has_a_lane_green():
     assert simulation._signal_for(ambulance, offside) == "R"
 
 
-def test_a_driver_reacts_to_the_amber_before_braking_for_it():
+def test_a_driver_stops_at_the_amber_when_it_can_brake_in_time():
     simulation = Simulation(generate_network(1, 2), [], MODES)
     link = simulation.graph.links["1,1-2,1>"]
     turn = next(turn for (index, after), turn in link.turns.items() if simulation.graph.links[after].end == "1E")
     car = create_vehicle(MODES[1], "car", [link, turn.lane_out.link])
-    car.segment, car.speed = turn.lane_in, 50 / 3.6  # SUMO's car: τ 1 s, 4.5 m/s² braking
-    car.s = turn.lane_in.length - 28.0  # 21.4 m to stop braking at once, 35.3 m reacting first
+    car.segment, car.speed = turn.lane_in, 50 / 3.6  # SUMO's car: 4.5 m/s² braking, 21.4 m to stop from 50 km/h
     simulation._states = {**simulation._states, link.id: "Y"}
     simulation._lane_states = {}
-    simulation._amber_from = {link.id: simulation.time}  # the amber has just come on: too close to stop, it goes
-    assert simulation._may_enter(car, turn)
-    simulation._amber_from = {link.id: simulation.time - 1.0}  # seen for a second, reacted already: it can stop
+    car.s = turn.lane_in.length - 28.0  # room to stop: it stops (SUMO's rule, no reaction distance)
     assert not simulation._may_enter(car, turn)
+    car.s = turn.lane_in.length - 18.0  # too close to stop at its braking: it goes on
+    assert simulation._may_enter(car, turn)
 
 def test_closed_lanes_are_left_in_good_time_and_a_blocked_road_stops_traffic():
     network = generate_network(1, 1)
@@ -1293,7 +1292,7 @@ def test_lateral_position_off_leaves_every_run_as_it_was():
     # The run's every position, speed and count, bit for bit, as before lateral position existed (the digest was taken
     # then); change it only for a deliberate change to the default model. On, with no type filtering, the traffic is the
     # same too (only drawn at its lane's kerb side).
-    before = "4d886e55744933b11500f63cc4c861515853b5c9e8502ea4311585dbc0f0a3cd"  # 2026-10-18: turn floors per kind, U-turn rate, Webster minimum cycle
+    before = "cca0bc19915d235be4f51df6b1df07cf64cb0cebc6bc86a9248ba090bd58acf6"  # 2026-10-18: turn floors, U-turn rate, minimum cycle, SUMO amber rule
     assert _lateral_fingerprint() == _lateral_fingerprint(lateral=False) == before
     plain = Simulation(generate_network(2, 2), [pair("1W", "1E", 900, split=(10, 50, 40))], [MODES[0], MODES[1], MOTO], seed=3)
     still = Simulation(generate_network(2, 2), [pair("1W", "1E", 900, split=(10, 50, 40))],

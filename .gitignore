@@ -16,3 +16,6 @@ tools/eval_commands.json
 # Stage outputs are per run: kept for review, not in git
 stages/*/*/output/*
 !stages/*/*/output/.gitkeep
+
+# SUMO source checkout (eclipse-sumo/sumo), local reference only
+sumo/

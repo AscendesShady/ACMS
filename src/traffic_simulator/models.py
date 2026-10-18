@@ -34,6 +34,10 @@ BACKGROUND_KINDS = ("colour", "image", "map")
 INSTITUTION_KINDS = ("Residential", "School", "Hospital", "Office", "Shop")  # institutions.KINDS details each
 MAX_AREA_M2, MAX_INFLUENCE_M = 1_000_000.0, 3000.0  # a building's footprint (1 km²) and its circle's radius
 BUILDING_HEIGHTS_M = {"Residential": 9.0, "School": 7.2, "Hospital": 18.0, "Office": 18.0, "Shop": 4.5}
+# Metro rail (Edit Network → Metro): stops placed on the map, each line's track running stop to stop. Two stops of a
+# line closer than this would have overlapping platforms (a six-car metro train is about 140 m): the app's floor.
+METRO_MIN_SPACING_M = 150.0
+MAX_METRO_DEMAND = 100_000.0  # passengers an hour between two stations
 MAX_BUILDING_HEIGHT_M = 300.0  # visual height in metres; no traffic or demand calculation uses it
 
 
@@ -146,6 +150,46 @@ class BusStop:
     # the share of each bus's load getting off. Both 0: no passengers, every bus stands dwell_s.
     boarding_per_h: float = 0.0
     alighting_percent: float = 0.0
+
+
+@dataclass(slots=True)
+class MetroStop:
+    """A metro station: a point on the map (metres), apart from the roads (the line runs underground or raised)."""
+    id: str  # M1, M2... in the order placed: the metro's own network and OD matrix are labelled by them
+    x: float
+    y: float
+
+
+@dataclass(slots=True)
+class MetroLine:
+    """A metro line: its stops in order, the track running straight from each to the next, and its service (set
+    when it is accepted; the defaults are assumptions, METRO_SERVICE)."""
+    id: str  # ML1, ML2... in the order deployed
+    stops: list[str] = field(default_factory=list)
+    headway_min: float = 5.0  # minutes between trains each way
+    speed_kmh: float = 35.0  # commercial speed, stops' dwell included
+    cars_per_train: int = 5  # carriages a train (HCM 2000 Eq 27-28's N_c)
+    car_capacity: int = 200  # passengers a carriage carries, standing included (Eq 27-28's P_c)
+    fare_cents: float = 100.0  # a trip's fare
+
+    @property
+    def train_capacity(self) -> int:
+        """Passengers a train carries: its carriages times a carriage's passengers."""
+        return self.cars_per_train * self.car_capacity
+
+
+# The service a line gets unless set (Edit Network → Metro's Accept dialog): assumptions, each with its range.
+METRO_SERVICE = {"headway_min": (5.0, 1.0, 60.0), "speed_kmh": (35.0, 10.0, 120.0), "cars_per_train": (5, 1, 12),
+                 "car_capacity": (200, 20, 400), "fare_cents": (100.0, 0.0, 5000.0)}
+
+
+def metro_line_problem(line: MetroLine) -> str | None:
+    """What is wrong with a metro line's service, or None."""
+    for name, (_, low, high) in METRO_SERVICE.items():
+        value = getattr(line, name)
+        if not isinstance(value, (int, float)) or isinstance(value, bool) or not isfinite(value) or not low <= value <= high:
+            return f"Metro line {line.id}'s {name.replace('_', ' ')} must be {low:g} to {high:g}."
+    return None
 
 
 @dataclass(slots=True)
@@ -273,6 +317,11 @@ class Network:
     approach_roads: dict[str, Road] = field(default_factory=dict)
     bus_stops: dict[str, BusStop] = field(default_factory=dict)
     institutions: dict[str, Institution] = field(default_factory=dict)  # placed in Demand Generator → Institutions
+    metro_stops: dict[str, MetroStop] = field(default_factory=dict)  # Edit Network → Metro
+    metro_lines: dict[str, MetroLine] = field(default_factory=dict)
+    # The metro's own OD matrix (Demand Generator → Metro): passengers an hour, "M1->M2": people. Apart from the roads'
+    # demand; institutions add their metro riders on top (metro.md).
+    metro_demand: dict[str, float] = field(default_factory=dict)
     # Each interchange (its nodes are named "DI1.1", "DI1.2", ...): [x, y, ux, uy], where it was built
     # and the freeway's direction there. A change of driving side mirrors it across the freeway's normal.
     interchanges: dict[str, list[float]] = field(default_factory=dict)
@@ -749,6 +798,55 @@ class Network:
         self.bus_stops[stop.id] = stop
         return stop
 
+    def add_metro_line(self, first: tuple[float, float], second: tuple[float, float]) -> MetroLine:
+        """A metro line from its first two stops, named ML1, ML2... in the order deployed, the track joining them.
+        Checked first, as add_metro_stop: a refusal (ValueError) changes nothing."""
+        self._metro_stop_problem(None, *first)
+        self._metro_stop_problem(first, *second)
+        number = 1
+        while f"ML{number}" in self.metro_lines:
+            number += 1
+        line = MetroLine(f"ML{number}")
+        self.metro_lines[line.id] = line
+        for x, y in (first, second):
+            self.add_metro_stop(line.id, x, y)
+        return line
+
+    def add_metro_stop(self, line_id: str, x: float, y: float) -> MetroStop:
+        """A stop at (x, y) at the end of the line, named M1, M2...; the track joins it to the line's last stop.
+        Refused, changing nothing, off the map's numbers or nearer the line's last stop than METRO_MIN_SPACING_M."""
+        line = self.metro_lines[line_id]
+        last = self.metro_stops[line.stops[-1]] if line.stops else None
+        self._metro_stop_problem((last.x, last.y) if last else None, x, y)
+        number = 1
+        while f"M{number}" in self.metro_stops:
+            number += 1
+        stop = MetroStop(f"M{number}", float(x), float(y))
+        self.metro_stops[stop.id] = stop
+        line.stops.append(stop.id)
+        return stop
+
+    @staticmethod
+    def _metro_stop_problem(after: tuple[float, float] | None, x: float, y: float) -> None:
+        if not all(isinstance(v, (int, float)) and not isinstance(v, bool) and isfinite(v) for v in (x, y)):
+            raise ValueError("A metro stop needs a place on the map.")
+        if after is not None and hypot(x - after[0], y - after[1]) < METRO_MIN_SPACING_M:
+            raise ValueError(f"Too near the line's last stop: stops on a line are at least {METRO_MIN_SPACING_M:g} m "
+                             "apart (their platforms would overlap).")
+
+    def delete_metro_line(self, line_id: str) -> None:
+        """Remove the line and its stops (a stop is on one line only), and the metro demand to or from them."""
+        gone = set(self.metro_lines.pop(line_id).stops)
+        for stop_id in gone:
+            del self.metro_stops[stop_id]
+        self.metro_demand = {pair: people for pair, people in self.metro_demand.items()
+                             if not set(pair.split("->")) & gone}
+
+    def metro_length_m(self, line_id: str) -> float:
+        """The line's track length, stop to stop."""
+        points = [self.metro_stops[stop_id] for stop_id in self.metro_lines[line_id].stops]
+        return sum(hypot(b.x - a.x, b.y - a.y) for a, b in zip(points, points[1:]))
+
     def move_bus_stop(self, stop_id: str, distance_m: float) -> None:
         """Slide a bus stop along its road: its middle `distance_m` from the from_node, kept clear
         of the junctions."""
@@ -867,6 +965,27 @@ class Network:
                 raise ValueError(f"Institution dictionary key does not match ID {item.id!r}.")
             if (problem := institution_problem(item)) is not None:
                 raise ValueError(problem)
+        for key, stop in self.metro_stops.items():
+            if key != stop.id or not all(isinstance(v, (int, float)) and not isinstance(v, bool) and isfinite(v)
+                                         for v in (stop.x, stop.y)):
+                raise ValueError(f"Metro stop {stop.id} needs its own ID and a place on the map in metres.")
+        on_lines = [stop_id for line in self.metro_lines.values() for stop_id in line.stops]
+        for key, line in self.metro_lines.items():
+            if key != line.id or not isinstance(line.stops, list) or len(line.stops) < 2:
+                raise ValueError(f"Metro line {line.id} needs its own ID and two stops or more.")
+            if any(stop_id not in self.metro_stops for stop_id in line.stops):
+                raise ValueError(f"Metro line {line.id} has a stop that isn't on the map.")
+            if (problem := metro_line_problem(line)) is not None:
+                raise ValueError(problem)
+        if len(on_lines) != len(set(on_lines)) or set(on_lines) != set(self.metro_stops):
+            raise ValueError("Each metro stop is on exactly one line.")
+        for pair, people in self.metro_demand.items():
+            ends = pair.split("->") if isinstance(pair, str) else []
+            if len(ends) != 2 or ends[0] == ends[1] or not all(end in self.metro_stops for end in ends):
+                raise ValueError(f"Metro demand {pair!r} needs two different stations, as \"M1->M2\".")
+            if not isinstance(people, (int, float)) or isinstance(people, bool) or not isfinite(people) \
+                    or not 0 <= people <= MAX_METRO_DEMAND:
+                raise ValueError(f"Metro demand {pair} must be 0 to {MAX_METRO_DEMAND:,.0f} passengers an hour.")
         for road in self.all_roads():
             if (problem := self.pocket_problem(road)) is not None:
                 raise ValueError(problem)
@@ -932,5 +1051,7 @@ class Network:
                 "approach_roads": [asdict(item) for item in self.approach_roads.values()],
                 "bus_stops": [asdict(item) for item in self.bus_stops.values()],
                 "institutions": [asdict(item) for item in self.institutions.values()],
+                "metro_stops": [asdict(item) for item in self.metro_stops.values()],
+                "metro_lines": [asdict(item) for item in self.metro_lines.values()],
             }
         )

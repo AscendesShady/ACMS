@@ -108,6 +108,19 @@
 - Sub-hour demand: a peak-hour factor or 15-minute profile per hourly pair; signal timing and demand sizing use the
   hour's mean flow, not V/PHF; daily curves have no sub-hour shape; the run's workbook doesn't list the quarters.
 - Emergency vehicles: other traffic doesn't yield to them or form a rescue lane (SUMO's bluelight device); they obey their signals (DEVL clears their lane at signalised junctions only, not at roundabouts or give-ways); a live run's DEVL decisions aren't in its workbook (a batch run's are).
+- Weaving: the simulated drivers weave by SUMO's LC2013 rules as simplified here (whole-lane hops, a 10 s look-ahead
+  per change), harsher than the HCM on short weaves: a Type A weave at 2,500 veh/h ran 10 % under the HCM's speed at
+  600 m, 20 % at 300 m and 66 % at 150 m, where every weaver is urgent from the start (SUMO's lcAssertive and
+  lcCooperative, which users tune for this, aren't modelled). Ramp lanes (`Graph._ramp_lanes`) apply only to roads
+  typed "ramp" (interchanges and slip roads; an OpenStreetMap motorway link isn't typed so). Two-sided weaves, offside
+  ramps, Chapter 25's ramp junctions (merge and diverge alone) and the weaving length measured gore to gore (here node
+  to node) aren't built.
+- Metro rail: its own network and OD matrix, drawn on by institutions (metro.md), but no trains run in the
+  simulation (riders just leave the roads), a trip uses one line (no transfers between lines or to buses; demand
+  between lines can't be entered), walks to a station are straight-line, not along the roads, its loads are at one
+  design hour (the OD matrix the same every hour; no crowding feeding back into the choice), and car trips to
+  stations (park-and-ride, drop-offs) aren't made. Road OD pairs never take the metro, by design. An accepted line is final by design (accept or delete
+  when it is finished; no later edits); undo still takes it back. Lines don't branch or join (each stop on one line).
 - Design and accessibility checks: acceleration and deceleration lane lengths, grades and access within 50 m of a
   junction (a building's door is a junction) aren't checked; emissions are a light car's only (no buses, lorries or
   motorcycles, no grades); accessibility counts opportunities by road at free flow or one run's times, not by bus or

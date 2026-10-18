@@ -17,6 +17,8 @@
 - **Vehicle assets:** `VEHICLE_PAINTS` holds twelve body paints (its first eight are the categorical type
   palette); `VEHICLE_INKS` holds glass, trim, lamps, red/blue markings and white equipment. They are non-text
   map details. The Colour chooser uses labelled choices; type identity never relies on random paint alone.
+- **Metro:** `METRO_LINE` (the track, a fuchsia that stands apart from roads and the map's paints) and `METRO_STOP`
+  (a stop's platform marker, ringed in the track colour). Non-text map details.
 - **Building materials:** `BUILDING_PAINTS` gives each institution kind a wall and roof paint; glazing,
   signage and trim reuse vehicle material ink tokens. These are non-text scenery materials, under a fixed
   matte light. Contact shadows reuse `SHADOW` with translucency.

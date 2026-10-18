@@ -43,6 +43,19 @@ Dataclasses:
   1 km²; a circle from its own walls to `MAX_INFLUENCE_M` 3 km; whole people and employees; a shift that
   starts and ends at different times; car share 0–100 %; `mode_shares` people % by mode name, each 0–100 and
   adding up to 100, or empty). `radius_m` is its catchment (institutions.md).
+- `MetroStop(id, x, y)` and `MetroLine(id, stops)` in `Network.metro_stops` / `metro_lines` (Edit Network → Metro):
+  a stop is a point in metres, apart from the roads; a line is its stops in order, the track running straight from
+  each to the next (`metro_length_m`). `add_metro_line(first, second)` makes ML1, ML2... from its first two stops
+  (stations M1, M2...: the metro's own network and OD matrix are labelled by them), and `add_metro_stop(line, x, y)`
+  extends it; both are checked first (finite numbers, at least
+  `METRO_MIN_SPACING_M` 150 m from the line's last stop, so platforms don't overlap: the app's floor) and a refusal
+  changes nothing. `validate`: every line has its own ID and two stops or more, all on the map, and each stop is on
+  exactly one line. `Network.metro_demand` is the metro's own OD matrix, {"M1->M2": passengers an hour}, each pair two
+  different stations, 0 to `MAX_METRO_DEMAND` 100,000 (`validate`). `delete_metro_line` removes a line, its stops and
+  the metro demand to or from them. A line's service (`headway_min`, `speed_kmh`,
+  `cars_per_train`, `car_capacity`, `fare_cents`; `train_capacity` their product; `METRO_SERVICE`'s assumed defaults
+  and ranges, `metro_line_problem`): metro.md.
+  Listed in `as_records`.
 - `Institution.height_m`: optional total visual height including the roof, 0.5–300 finite metres (no bool/text).
   `institution_problem` validates it before placement/load. None preserves an explicitly assumed kind default
   (`BUILDING_HEIGHTS_M`: Residential 9, School 7.2, Hospital/Office 18, Shop 4.5), not measured site data.

@@ -64,7 +64,8 @@
   the map (`show_selected`) shows its figures, its mode shares (logit, or its car share), its door, its
   catchment and its people a day, with **Mode split** (`split_requested`) and Delete (Del).
 - `ModeSplitDialog` (the selected building's Mode split, opened by `MainWindow._open_mode_split`): a row per
-  mode (Walk and each vehicle type: use it, out-of-vehicle minutes, cost ¢, cost ¢/km, observed %), the three
+  mode (Walk, each vehicle type, and Metro when the network has lines: use it, out-of-vehicle minutes, cost ¢ (Metro: on
+  top of the line's fare), cost ¢/km, observed %), the three
   coefficients and the walking speed, prefilled with `network_tools.default_alternative`, `LOGIT_DEFAULTS` and
   `WALK_KMH`; the shares, people and vehicles a day, mean trip and constants update as they change (`compute`:
   `network_tools.institution_split`); **Apply** (`applied`, the arguments) goes through
@@ -98,3 +99,8 @@
   `quarters` (four 15-minute counts or shares) for hourly demand, refused for daily; its result and
   read_od_matrix give each hourly pair's `peak_hour_factor` and `quarters`. Saved with the project (network_io) and in the undo
   history.
+- `MetroMatrix` (Demand → **Metro passengers (per hour)**, in the main area in place of the grid): the metro's own OD
+  matrix, stations M1, M2... as rows (from) and columns (to), each cell `Network.metro_demand`'s passengers an hour.
+  A number typed sets it (an undo step), 0 or blank clears it, anything else (or past 100,000) is refused and the cell
+  put back; the diagonal and pairs on different lines (no transfers: no ride) can't be typed in. Apart from the roads'
+  demand: road pairs never ride the metro (metro.md). The panel shows one line on how (`metro_hint`).

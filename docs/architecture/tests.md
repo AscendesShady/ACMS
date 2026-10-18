@@ -30,8 +30,8 @@ Plain `assert` functions, run with `python tests/test_x.py` or all at once in `r
   where roads forbid them; each vehicle's next landmark (slip road, signal, roundabout, in route order)
   closing in as it drives, and in `read_traffic`; Webster's
   cycle and greens against hand-worked numbers, the busy phase getting the long green (the other its minimum, inside
-  Webster's cycle); a driver at the amber's onset 28 m from the line at 50 km/h going on
-  (it can't stop after reacting), and stopping once it has seen the amber a second; the run
+  Webster's cycle); a driver at 50 km/h at the amber stopping 28 m from the line (21.4 m to stop: SUMO's rule, no
+  reaction distance) and going on 18 m from it; the run
   using the plan, Fixed time keeping its greens; the runner keeping real time on its thread,
   pausing and changing speed; the window's Run (Webster note in the junction editor), live signal
   heads, `read_traffic` data, a demand edit and its undo carrying the run on, and a network edit
@@ -183,6 +183,33 @@ Plain `assert` functions, run with `python tests/test_x.py` or all at once in `r
   (X 0.6 at PHF 0.85 holds). `test_experiments.py`: a passage crossed in the step that ended the warm-up left out. Its experiments run 5 simulated minutes (2-3 were shorter than a trip across the grid, so throughput read ~0). `test_prompt_campaign.py`: a 3x2 build's demand at X 0.65 holds again with U-turns at
   their own rate (`UTURN_PER_LANE_VPH`). `test_gpu.py`: Power Saver's rate counted in display frames (`frames`), as
   `draws` now counts one call per appearance.
+- `test_metro.py` also: loads on a line (segments each way, the busiest, passenger-km, stations' boardings, passengers
+  on another line not served; HCM 2000 Eq 27-28's 9,000 an hour; over capacity at 12,000); the metro's own OD matrix in
+  the window (stations M1..., a number set as an undo step, text refused, another line's pair refused and not
+  editable, metro_report and the summary loading it, a building's metro riders added at its stations, undo); the
+  metro OD saved and loaded, refused for a station to itself, an unknown station or a bad number, and dropped with
+  its line.
+- `test_metro.py` also: a line's service defaults (5 carriages of 200: 1,000 a train) and a headway of 0 refused; a
+  line saved before carriages loading as the fewest carriages that hold it (900: 3 x 300); a ride between stops within the walk
+  rides station to station on one line (km, minutes, wait, fare; none to itself or to another line); a building's
+  door station within the walk; road pairs refused the metro in choose_modes; a building whose circle holds stations of
+  its door's line drawing metro riders from them (they are places, as its junctions), one with none drawing none;
+  metro riders adding no vehicles in vehicle_split.
+- `test_metro.py`: a line as its stops in order and its length; too-near, non-finite and too-short refusals changing
+  nothing; a second line; a one-stop line refused by `validate`; metro saved and loaded; deployment through the
+  window (a pending first stop, a refused near click, stops joined, the summary, no undo step while deploying, a
+  right-click finishing and accepting as one undo step, Esc finishing and deleting with no step, Ctrl+Z while
+  deploying taking back only the unfinished line, a lone first stop dropped without asking); a right click
+  told from a right-drag pan.
+- `test_weaving.py`: the HCM 2000's Example Problems 1 and 2 (speeds, lanes needed, density, LOS; capacity within
+  1 % of Exhibit 24-8), denser and slower with more flow or less length, the weaving-flow cap, basic segment
+  capacities; Exhibit 24-5's types from lane changes; segments found (Type A with an auxiliary lane, ramp junctions
+  without one, an infeasible layout; none past 750 m, at a signal, on a grid or a diamond); the four movements'
+  pc/h from the demand, a busy weave's warnings, the design audit's notes and a headless run's speed and density on
+  it; weaving_los through AI Mode (no segments on a grid; on a weave: PCU, constrained, warned, simulated figures);
+  the simulation's ramp lanes (the road lands offside, the ramp kerbside; the off-ramp only from the kerbside lanes)
+  and a 150 m weave running under 0.6 of a 600 m one's speed, no more than one teleport. `test_interchanges.py`: a
+  diamond's freeway junctions with only straight and kerb-side turns, both driving sides, every trip still routed.
 - Low-severity audit items, 2026-10-18. `test_stats.py`: exact paired power (0.401 at n 5, 0.565 at n 20 and d 0.5, α
   with no difference); Holm's adjusted p; TTI and BI on one mean; a Poisson safety fit ranking sites by z.
   `test_results.py`: a free bicycle's trip at TTI 1 against its own free speed. `test_simulation.py`: path-size logit

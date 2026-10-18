@@ -47,8 +47,9 @@ AMBER_RANGE_S, ALL_RED_RANGE_S = (3.0, 6.0), (1.0, 6.0)
 # Calibrated to the simulated drivers (SUMO's default passenger car, with its startupDelay set to
 # 0.9 s: mode_behavior.py) by the HCM's field method at a signal with a standing queue (4 seeds, an
 # hour each, headways from the 5th queued vehicle on): saturation headway 1.744 s, i.e. 2,064 veh/h
-# per lane; start-up lost time 1.82 s (the first four vehicles' excess over it); 2.77 s of the 3.3 s
-# amber used (2.17 s of a 3 s one when drivers stopped without reacting first: _may_enter). Effective
+# per lane; start-up lost time 1.82 s (the first four vehicles' excess over it); 2.37 s of the 3.3 s
+# amber used, re-measured 2026-10-18 with SUMO's amber rule (stop if it can brake in time, no reaction distance:
+# Simulation._may_enter; 2.77 s with an ITE reaction distance; the HCM's e is 2.0 s). Effective
 # green = green + amber used − start-up lost (the HCM's extension of effective green, e).
 # test_simulation.test_the_timing_methods_are_calibrated_to_the_simulated_drivers re-measures them.
 SATURATION_PER_LANE_VPH = 2060.0
@@ -63,7 +64,7 @@ OFFSIDE_TURN_PER_LANE_VPH = 1860.0
 # offside 1860 had a 3x2 grid, whose two-phase signals detour offside turns by U-turn, jam at X 0.65).
 UTURN_PER_LANE_VPH = 1550.0
 START_UP_LOST_S = 1.8
-AMBER_USED_S = 2.8
+AMBER_USED_S = 2.4
 MIN_GREEN_S, MAX_CYCLE_S = 7.0, 120.0
 # Webster's cycle at light demand runs under 25 s (7 s greens): no shorter than this, a practical floor (FHWA
 # Signal Timing Manual; Webster's own 25 s), so a pedestrian or a slow start still gets a usable green

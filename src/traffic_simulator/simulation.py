@@ -186,6 +186,10 @@ CONFLICT_TTC_S = 3.0  # observed rear-end conflicts: time to collision under thi
 LOOKAHEAD_M = 150.0
 STOP_MARGIN_M = 0.3
 LANE_CHANGE_COOLDOWN_S = 3.0
+# At a ramp junction, no U-turn on a road this fast or faster: a freeway has no median opening (FHWA's median U-turn,
+# FHWA-SA-14-069, is an arterial's); slower, a slip road's junction keeps it for two-phase signals' detours
+RAMP_UTURN_MAX_KMH = 80.0
+AMBER_STOP_DECEL = 3.0  # SUMO's tls.yellow.min-decel: the least braking a driver takes to stop at amber
 # Lateral runs (Simulation lateral): a filtering vehicle passes vehicles in its lane no faster than this, and only
 # those no faster than this (no lane splitting at speed): NSW's lane-filtering limit, 30 km/h (Road Rules 2014 r151A).
 FILTER_SPEED = 30 / 3.6
@@ -783,9 +787,17 @@ class Graph:
     def _add_turns(self, node_id: str) -> None:
         node = self.network.node(node_id)
         ring = self.roundabouts.get(node_id)
+        # Where a ramp joins or leaves a road without a signal (an interchange's or a slip road's), the road is a divided
+        # one: nothing crosses its other carriageway or turns back on it (a diamond's on-ramp had joined the opposite
+        # carriageway across the freeway, and the freeway's traffic crossed it into the other side's off-ramp)
+        ramp_junction = node.control == "uncontrolled" and any(
+            self.network.road(link.road).road_type == "ramp" for link in (*self.arriving[node_id], *self.leaving[node_id]))
+        ramp_lanes = self._ramp_lanes(node_id) if ramp_junction else {}
         for arrive in self.arriving[node_id]:
             for leave in self.leaving[node_id]:
                 kind = self._kind(arrive, leave)
+                if ramp_junction and (kind == "offside" or kind == "uturn" and arrive.speed >= RAMP_UTURN_MAX_KMH / 3.6):
+                    continue  # an arterial's slip road keeps the median U-turn a two-phase signal's detour needs
                 if kind == "uturn" and not self._two_phase(arrive.start):
                     continue  # U-turns only where a detour needs one (_add_detours)
                 if kind == "offside" and self._two_phase(node_id):
@@ -809,12 +821,58 @@ class Graph:
                         target = last - (min(count_in - 1 - lane.index, last - first) if pocket == "offside" else 0)
                     else:
                         target = first + min(max(lane.index - kerb_in, 0), last - first)
+                    if (fixed := ramp_lanes.get((arrive.id, leave.id))) is not None:
+                        target, permitted = fixed[lane.index][0], fixed[lane.index][1] or not arrive.lane_changing
                     out = leave.lanes[target]
                     if ring:
                         turn = self._ring_turn(node, ring, lane, out, kind, permitted)
                     else:
                         turn = self._curve_turn(node_id, lane, out, kind, permitted)
                     arrive.turns[(lane.index, leave.id)] = turn
+
+    def _ramp_lanes(self, node_id: str) -> dict:
+        """(arriving link, leaving link) -> [(lane out, permitted) for each lane in], where a ramp joins or leaves a road
+        along it on the kerb side (lane-to-lane connections, as SUMO's NBEdge::Connection, laid out as the
+        HCM 2000 Ch 24 draws ramps): joining, the ramp takes
+        the kerbside lanes and the road the offside ones, so a lane added between them is the auxiliary lane a weave
+        uses; leaving, the ramp is reached from as many kerbside lanes as it has and the road on from as many offside
+        ones. At most one lane is shared (lane balance, Green Book §10.9.5.9): a ramp wider than that uses its kerbside
+        lanes only. Other lanes' turns are kept, not permitted (only after impatience), so the strategic lane changes
+        (`reach`) do the weaving. Off-ramps had been reached from every lane, and the road's lanes had landed on the
+        kerb side with the on-ramp's: nothing changed lanes."""
+        ramp = {link.id: self.network.road(link.road).road_type == "ramp"
+                for link in (*self.arriving[node_id], *self.leaving[node_id])}
+        found = {}
+
+        def split(pairs: list) -> tuple | None:  # (the road, the ramp) of two movements, by kind and road type
+            kinds = {pair: self._kind(*pair) for pair in pairs}
+            mains = [pair for pair, kind in kinds.items() if kind == "straight" and not (ramp[pair[0].id] or ramp[pair[1].id])]
+            sides = [pair for pair, kind in kinds.items() if kind == "kerb"]
+            return (mains[0], sides[0]) if len(pairs) == 2 and len(mains) == 1 and len(sides) == 1 else None
+
+        def through(pair) -> bool:
+            return self._kind(*pair) not in ("uturn", "offside") and not any(link.pockets != (0, 0) for link in pair)
+
+        for leave in self.leaving[node_id]:  # merges: two links into this one
+            pairs = split([(arrive, leave) for arrive in self.arriving[node_id] if through((arrive, leave))])
+            if pairs and ramp[pairs[1][0].id]:
+                n = len(leave.lanes)
+                (main, _), (side, _) = pairs
+                usable = max(1, min(len(side.lanes), n + 1 - len(main.lanes)))  # lane balance: one lane shared at most
+                found[(side.id, leave.id)] = [(min(i, n - 1), i < usable) for i in range(len(side.lanes))]
+                found[(main.id, leave.id)] = [(min(max(n - len(main.lanes) + i, 0), n - 1), True)
+                                              for i in range(len(main.lanes))]
+        for arrive in self.arriving[node_id]:  # diverges: this link into two
+            pairs = split([(arrive, leave) for leave in self.leaving[node_id] if through((arrive, leave))])
+            if pairs and ramp[pairs[1][1].id]:
+                n = len(arrive.lanes)
+                (_, main), (_, side) = pairs
+                ramp_n, main_n = len(side.lanes), len(main.lanes)
+                usable = max(1, min(ramp_n, n + 1 - main_n))
+                found[(arrive.id, side.id)] = [(min(j, ramp_n - 1), j < usable) for j in range(n)]
+                found[(arrive.id, main.id)] = [(min(max(j - (n - main_n), 0), main_n - 1), j >= n - main_n)
+                                               for j in range(n)]
+        return found
 
     def _curve_turn(self, node_id: str, lane: Lane, out: Lane, kind: str, permitted: bool) -> Turn:
         p0, p3 = lane.points[-1], out.points[0]
@@ -1345,7 +1403,6 @@ class Simulation:
         self._waiting: dict[int, list] = {}
         self._passenger_rng = random.Random(f"passengers {seed}")
         self._states: dict[str, str] = {}
-        self._amber_from: dict = {}  # link id or (link id, lane index) -> when its amber began
         self._lane_states: dict[tuple[str, int], str] = {}  # (link id, lane index) -> its own state (an override's)
         self._box_m: dict[str, float] = {}  # distance across each signalised junction, for overrides
         self._time_step_signals()
@@ -2025,9 +2082,6 @@ class Simulation:
                         state, own = state
                         lanes.update({(link.id, index): lane_state for index, lane_state in own.items()})
                 states[link.id] = state
-        was = {**self._states, **self._lane_states}
-        self._amber_from = {key: self._amber_from.get(key, self.time) if was.get(key) == "Y" else self.time
-                            for key, state in {**states, **lanes}.items() if state == "Y"}
         self._states, self._lane_states = states, lanes
 
     def _junction_view(self, node: str, signal: Signal) -> dict:
@@ -2086,13 +2140,11 @@ class Simulation:
         # Waited at the line all green for a gap it gives way to: it goes on amber, once the oncoming
         # traffic stops for its own amber (_gaps_clear), as drivers turning across traffic do.
         clearing = state == "Y" and vehicle.speed < 0.1 and any(give_way for *_, give_way in turn.conflicts)
-        # On amber it stops if it can after reacting (its τ, as the amber's own ITE timing allows for) less the time
-        # it has seen the amber: one that has begun to brake for it isn't then pushed through.
-        stops = False
-        if state == "Y":
-            since = self._amber_from.get((lane.link.id, lane.index), self._amber_from.get(lane.link.id, self.time))
-            reacting = max(0.0, vehicle.tau - (self.time - since))
-            stops = distance >= brake_gap(vehicle.speed, vehicle.decel, reacting)
+        # On amber it stops if it can brake in time, SUMO's rule (MSVehicle.cpp:2792-2807: no reaction distance,
+        # at max(min(tls.yellow.min-decel 3.0, emergencyDecel), decel)): drivers then use 2.5 s of the amber, nearer the
+        # HCM's e = 2.0 s than the 2.7 s an ITE reaction distance (τ) left them (2026-10-18)
+        stops = state == "Y" and distance >= brake_gap(vehicle.speed, max(min(AMBER_STOP_DECEL, vehicle.emergency_decel),
+                                                                          vehicle.decel))
         if state == "R" or (stops and not clearing):
             return False
         if not turn.permitted and not vehicle.emergency:  # in a lane its turn isn't made from: impatient only while it could go

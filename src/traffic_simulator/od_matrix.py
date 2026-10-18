@@ -51,7 +51,8 @@ from . import theme
 from .daily_profile import ARRIVAL_PATTERNS, DEGREES, HOURS, MIN_GAP_H, DailyProfile, phf_of, phf_quarters, quarter_shares
 from .institutions import KINDS, catchment, door, hourly_people, hourly_trips, shares
 from .mode_behavior import VehicleModes, fixed_split, redistribute, whole_percent
-from .models import BUILDING_HEIGHTS_M, MAX_AREA_M2, MAX_BUILDING_HEIGHT_M, Institution, Network, institution_problem
+from .models import (BUILDING_HEIGHTS_M, MAX_AREA_M2, MAX_BUILDING_HEIGHT_M, MAX_METRO_DEMAND, Institution, Network,
+                     institution_problem)
 from .building_assets import height as building_height
 from .properties_panel import hint_label, icon_button, styled_button
 
@@ -443,6 +444,75 @@ class _CellDelegate(QStyledItemDelegate):
         return True
 
 
+class MetroMatrix(QWidget):
+    """Demand Generator → Metro: the metro's own OD matrix, passengers an hour between its stations (M1, M2...),
+    rows from, columns to (Network.metro_demand, apart from the roads' demand). A number typed in a cell sets it, 0 or
+    blank clears it, anything else is refused and the cell put back; the diagonal and pairs on different lines (no
+    transfers: no ride between them) can't be typed in. `changed` after each edit (an undo step)."""
+
+    changed = Signal()
+
+    def __init__(self) -> None:
+        super().__init__()
+        self.network: Network | None = None
+        self.title = QLabel("Metro passengers an hour, station to station")
+        self.title.setStyleSheet("font-weight: 600;")
+        self.table = QTableWidget()
+        self.table.itemChanged.connect(self._edited)
+        layout = QVBoxLayout(self)
+        layout.addWidget(self.title)
+        layout.addWidget(self.table, 1)
+        self.empty = hint_label("No metro stations yet: deploy a line in Edit Network > Metro.")
+        layout.addWidget(self.empty)
+
+    def show_network(self, network: Network) -> None:
+        """Rows and columns for the network's stations, in number order, each cell its passengers an hour."""
+        self.network = network
+        stations = sorted(network.metro_stops, key=lambda stop_id: int(stop_id[1:]) if stop_id[1:].isdigit() else 0)
+        line_of = {stop_id: line.id for line in network.metro_lines.values() for stop_id in line.stops}
+        self.stations, self.line_of = stations, line_of
+        table = self.table
+        table.blockSignals(True)
+        table.clear()
+        table.setRowCount(len(stations))
+        table.setColumnCount(len(stations))
+        table.setHorizontalHeaderLabels(stations)
+        table.setVerticalHeaderLabels(stations)
+        for index, stop_id in enumerate(stations):
+            for header in (table.horizontalHeaderItem(index), table.verticalHeaderItem(index)):
+                header.setToolTip(f"Line {line_of.get(stop_id, '')}")
+        for row, board in enumerate(stations):
+            for column, alight in enumerate(stations):
+                people = network.metro_demand.get(f"{board}->{alight}")
+                item = QTableWidgetItem("" if people is None else f"{people:g}")
+                if board == alight or line_of.get(board) != line_of.get(alight):
+                    item.setFlags(Qt.ItemFlag.ItemIsEnabled)  # no ride: the same station, or another line
+                    item.setToolTip("No direct ride" if board != alight else "")
+                table.setItem(row, column, item)
+        table.blockSignals(False)
+        self.table.setVisible(bool(stations))
+        self.empty.setVisible(not stations)
+
+    def _edited(self, item: QTableWidgetItem) -> None:
+        board, alight = self.stations[item.row()], self.stations[item.column()]
+        key, text = f"{board}->{alight}", item.text().strip()
+        try:
+            people = float(text) if text else 0.0
+            if not (0 <= people <= MAX_METRO_DEMAND) or (people and (board == alight
+                                                                     or self.line_of[board] != self.line_of[alight])):
+                raise ValueError  # out of range, or no ride between them
+        except ValueError:
+            self.table.blockSignals(True)
+            item.setText(f"{self.network.metro_demand[key]:g}" if key in self.network.metro_demand else "")
+            self.table.blockSignals(False)
+            return
+        if people:
+            self.network.metro_demand[key] = people
+        else:
+            self.network.metro_demand.pop(key, None)
+        self.changed.emit()
+
+
 class ODMatrix(QWidget):
     """The grid. Rows are origins (from), columns destinations (to). It zooms and pans like the
     map: the wheel zooms at the cursor, a right or middle drag pans, and its title row has Zoom Out,
@@ -713,7 +783,8 @@ class ODCellPanel(QWidget):
         self.demand.addItem("Hourly demand (veh/h)", "hourly")
         self.demand.addItem("Daily demand (veh/day)", "daily")
         self.demand.addItem("Institutions", "institutions")
-        self.demand.setToolTip("Hourly or daily demand")
+        self.demand.addItem("Metro passengers (per hour)", "metro")  # the metro's own OD matrix (MetroMatrix)
+        self.demand.setToolTip("Which demand to edit")
         self.demand.currentIndexChanged.connect(self._demand_chosen)
         demand_form = QFormLayout()
         demand_form.addRow("Demand", self.demand)
@@ -722,6 +793,9 @@ class ODCellPanel(QWidget):
         # The OD Pair editor shows only while a cell is selected; until then, one line says how.
         self.empty_hint = hint_label("Click a cell in the grid to edit its demand.")
         self.empty_hint.setToolTip("Ctrl+click to select several")
+        self.metro_hint = hint_label("Type passengers an hour between stations in the grid. Stations on different "
+                                     "lines have no direct ride. Buildings near stations add their own riders.")
+        self.metro_hint.hide()
         self.pair_group = group = QGroupBox("OD Pair")
         layout = QVBoxLayout(group)
         self.fields = QWidget()
@@ -845,6 +919,7 @@ class ODCellPanel(QWidget):
         outer.setContentsMargins(0, 0, 0, 0)
         outer.addLayout(demand_form)
         outer.addWidget(self.empty_hint)
+        outer.addWidget(self.metro_hint)
         outer.addWidget(group)
         outer.addWidget(self.institutions)
 
@@ -872,14 +947,15 @@ class ODCellPanel(QWidget):
         """Hourly or daily: the OD pair editor over the grid. Institutions: its panel (the map)."""
         kind = self.demand.currentData()
         self.institutions.setVisible(kind == "institutions")
-        if kind != "institutions":
+        self.metro_hint.setVisible(kind == "metro")
+        if kind in ("hourly", "daily"):
             self.matrix.set_mode(kind)
         self._show_editor()
         self.demand_chosen.emit(kind)
 
     def _show_editor(self) -> None:
         """The OD Pair editor while a cell is selected (hourly or daily); else the one-line hint."""
-        pairs = self.demand.currentData() != "institutions"
+        pairs = self.demand.currentData() in ("hourly", "daily")
         picked = self.matrix.current_pair() is not None
         self.pair_group.setVisible(pairs and picked)
         self.empty_hint.setVisible(pairs and not picked)

@@ -63,8 +63,8 @@ the real software exactly. Times in seconds; a cyclic profile has one bin per se
 - **Calibrated to the simulated drivers** (the HCM's field method on SUMO's default passenger car at
   a signal with a standing queue, its 0.9 s startup delay; 4 seeds, an hour each, headways from the 5th queued vehicle on): saturation
   flow `SATURATION_PER_LANE_VPH` 2,060 veh/h per lane (measured 1.744 s, 2,064); start-up lost time
-  `START_UP_LOST_S` 1.8 s (1.82); amber used `AMBER_USED_S` 2.8 s of 3.3 (2.77 over 4 seeds; 2.17 of 3 s
-  before drivers reacted to the amber before deciding to stop); SCATS's standard space
+  `START_UP_LOST_S` 1.8 s (1.81); amber used `AMBER_USED_S` 2.4 s of 3.3 (2.37 over 4 seeds, 2026-10-18, with SUMO's
+  amber rule; 2.77 when drivers reacted first; the HCM's e is 2.0 s); SCATS's standard space
   time 0.9 s (0.88). Effective green = green + amber used − start-up lost (the HCM's extension of effective
   green e, the same whatever the amber); Webster's lost time per phase is the start-up lost time, the all-red
   and the amber not used (tL = l1 + Y − e: 4.3 s at 3.3 + 2.0 s). TSP's controller estimates a queue's

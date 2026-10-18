@@ -50,7 +50,7 @@ def test_a_demand_cut_by_its_check_leads_with_what_was_kept():
 
 def test_hourly_and_daily_demand_are_kept_apart():
     matrix, panel = setup()
-    assert [panel.demand.itemData(i) for i in range(panel.demand.count())] == ["hourly", "daily", "institutions"]
+    assert [panel.demand.itemData(i) for i in range(panel.demand.count())] == ["hourly", "daily", "institutions", "metro"]
     daily(panel)
     panel.demand.setCurrentIndex(panel.demand.findData("institutions"))  # its own panel, not the pair editor
     assert panel.institutions.isVisible() and not panel.pair_group.isVisible() and matrix.mode == "daily"
